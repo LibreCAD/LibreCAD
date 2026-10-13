@@ -5094,8 +5094,9 @@ constexpr const char *kTraceMarker = "LibreCAD_TRACE";
 constexpr const char *kSolidMarker = "LibreCAD_SOLID";
 constexpr const char *k3dFaceMarker = "LibreCAD_3DFACE";
 // RS_Insert expands its block into derived children and therefore cannot own
-// imported ATTRIB entities directly. Keep the rendered child tagged with its
-// INSERT identity so the writer can rebuild the native child sequence.
+// imported ATTRIB entities directly. The rendered sibling text names its
+// INSERT by lineage (RS_Entity::ownerLineage()) and is tagged with what a
+// text does not model, so the writer can rebuild the native child sequence.
 constexpr const char *kInsertAttribMarker = "LibreCAD_INSERT_ATTRIB";
 constexpr const char *kInsertAttribMTextMarker = "LibreCAD_INSERT_ATTRIB_MTEXT";
 constexpr const char *kInsertAttribMTextXDataMarker =
@@ -5442,7 +5443,6 @@ void appendTypeSidecar(RS_Entity *entity, const char *marker,
                        std::vector<std::shared_ptr<DRW_Variant>> payload);
 
 struct InsertAttribSidecar {
-  unsigned long long ownerId = 0;
   int ordinal = -1;
   int flags = 0;
   int fieldLength = 0;
@@ -5626,13 +5626,8 @@ void appendTypeSidecar(RS_Entity *entity, const char *marker,
 }
 
 void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
-                               unsigned long long ownerId, int ordinal) {
-  const std::uint64_t id = static_cast<std::uint64_t>(ownerId);
+                               int ordinal) {
   std::vector<std::shared_ptr<DRW_Variant>> payload;
-  payload.push_back(std::make_shared<DRW_Variant>(
-      1071, static_cast<std::int32_t>(id & 0xFFFFFFFFu)));
-  payload.push_back(
-      std::make_shared<DRW_Variant>(1071, static_cast<std::int32_t>(id >> 32)));
   payload.push_back(std::make_shared<DRW_Variant>(1070, std::int32_t{ordinal}));
   payload.push_back(
       std::make_shared<DRW_Variant>(1070, std::int32_t{attrib.attribFlags}));
@@ -6168,7 +6163,6 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
   bool inGroup = false;
   bool inMTextGroup = false;
   bool inMTextCommonGroup = false;
-  int seenOwnerParts = 0;
   int seenValues = 0;
   int seenStrings = 0;
   int seenPoints = 0;
@@ -6183,8 +6177,6 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
   int expectedColumnHeights = -1;
   int expectedAnnotativeBytes = -1;
   int seenAnnotativeBytes = 0;
-  std::uint32_t ownerLow = 0;
-  std::uint32_t ownerHigh = 0;
   bool foundMarker = false;
   bool foundMTextMarker = false;
   bool foundMTextXDataMarker = false;
@@ -6421,21 +6413,7 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
     }
     if (!inGroup)
       continue;
-    if (value->code() == 1071) {
-      std::int64_t integerValue = 0;
-      if (readXDataInteger(value.get(), 1071, integerValue) !=
-              XDataReadResult::Valid ||
-          integerValue < 0 ||
-          static_cast<std::uint64_t>(integerValue) >
-              std::numeric_limits<std::uint32_t>::max()) {
-        return std::nullopt;
-      }
-      const auto part = static_cast<std::uint32_t>(integerValue);
-      if (seenOwnerParts++ == 0)
-        ownerLow = part;
-      else if (seenOwnerParts == 2)
-        ownerHigh = part;
-    } else if (value->code() == 1070) {
+    if (value->code() == 1070) {
       std::int64_t integerValue = 0;
       if (readXDataInteger(value.get(), 1070, integerValue, false) !=
               XDataReadResult::Valid ||
@@ -6512,8 +6490,6 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
     }
   }
 
-  sidecar.ownerId =
-      (static_cast<unsigned long long>(ownerHigh) << 32) | ownerLow;
   sidecar.hasMText =
       foundMTextMarker && mtextSchema == kInsertAttribMTextSchema &&
       expectedColumnHeights >= 0 &&
@@ -6533,9 +6509,8 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
     return std::nullopt;
   // Every value of the main group is always written: one that is missing
   // makes the sidecar unusable.
-  if (!foundMarker || seenOwnerParts != 2 || sidecar.ownerId == 0 ||
-      sidecar.ordinal < 0 || seenValues < 9 || seenStrings < 2 ||
-      seenPoints != 7 || seenDoubles < 2) {
+  if (!foundMarker || sidecar.ordinal < 0 || seenValues < 9 ||
+      seenStrings < 2 || seenPoints != 7 || seenDoubles < 2) {
     return std::nullopt;
   }
   return sidecar;
@@ -6559,20 +6534,6 @@ void removeInsertAttribSidecar(DRW_Entity &entity) {
       filtered.push_back(value);
   }
   entity.extData = std::move(filtered);
-}
-
-bool isGeneratedInsertAttrib(const RS_Entity *entity) {
-  if (entity == nullptr || !entity->hasDrwExtData())
-    return false;
-  for (const auto &value : entity->getDrwExtData()) {
-    if (!value || value->code() != 1001 ||
-        value->type() != DRW_Variant::STRING || value->content.s == nullptr)
-      continue;
-    const std::string marker = value->c_str();
-    if (marker == kInsertAttribMarker || marker == kInsertAttribMTextMarker)
-      return true;
-  }
-  return false;
 }
 } // namespace
 
@@ -7904,7 +7865,7 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert &data) {
       mt->setParent(m_currentContainer);
       setEntityAttributes(mt, att.get());
       mt->setVisible(attributeVisible && att->mtext->visible);
-      appendInsertAttribSidecar(mt, attribute, entity->getId(), ordinal++);
+      appendInsertAttribSidecar(mt, attribute, ordinal++);
       mt->setOwnerLineage(entity->lineage());
       mt->update();
       m_currentContainer->addEntity(mt);
@@ -7942,8 +7903,7 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert &data) {
     auto textEntity = std::make_unique<RS_Text>(m_currentContainer, td);
     setEntityAttributes(textEntity.get(), att.get());
     textEntity->setVisible(attributeVisible);
-    appendInsertAttribSidecar(textEntity.get(), *att, entity->getId(),
-                              ordinal++);
+    appendInsertAttribSidecar(textEntity.get(), *att, ordinal++);
     textEntity->setOwnerLineage(entity->lineage());
     textEntity->update();
     m_currentContainer->addEntity(textEntity.release());
@@ -11208,6 +11168,13 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   m_writeFailed = false;
   m_dxfLeftOutRawRecords = 0;
   m_dxfLeftOut.clear();
+  // What becomes of each block attribute's text is the same for every
+  // callback of this export, the DWG handle pre-pass included.
+  buildInsertAttribPlan();
+  struct InsertAttribPlanGuard {
+    InsertAttribPlan &plan;
+    ~InsertAttribPlanGuard() { plan = {}; }
+  } insertAttribPlanGuard{m_insertAttribPlan};
 
   // check if we can write to that directory:
 #ifndef Q_OS_WIN
@@ -12456,6 +12423,79 @@ void RS_FilterDXFRW::prepareBlocks() {
 }
 
 /**
+ * Decides, for the export in progress, what becomes of each text read as a
+ * block attribute. A text names its INSERT by lineage (RS_Entity::lineage()):
+ * the pair survives the clones that replace either on an edit, and a copy of
+ * both is a pair of its own. One pass per container; deleted entities take no
+ * part.
+ */
+void RS_FilterDXFRW::buildInsertAttribPlan() {
+  m_insertAttribPlan = {};
+  if (m_graphic == nullptr)
+    return;
+  const auto showsNothing = [](const RS_Entity *text) {
+    if (!text->getFlag(RS2::FlagVisible))
+      return true;
+    return text->rtti() == RS2::EntityText
+               ? static_cast<const RS_Text *>(text)->getText().isEmpty()
+               : static_cast<const RS_MText *>(text)->getText().isEmpty();
+  };
+  const auto scan = [this, &showsNothing](RS_EntityContainer *container) {
+    if (container == nullptr)
+      return;
+    std::map<unsigned long long, const RS_Entity *> inserts;
+    std::vector<RS_Entity *> texts;
+    for (RS_Entity *entity : *container) {
+      if (entity == nullptr || entity->getFlag(RS2::FlagDeleted))
+        continue;
+      if (entity->rtti() == RS2::EntityInsert) {
+        // The first keeps a lineage two INSERTs share (clones put into a
+        // container without an undo section).
+        inserts.emplace(entity->lineage(), entity);
+      } else if (entity->ownerLineage() != 0 &&
+                 (entity->rtti() == RS2::EntityText ||
+                  entity->rtti() == RS2::EntityMText)) {
+        texts.push_back(entity);
+      }
+    }
+    std::map<const RS_Entity *, std::vector<std::pair<int, RS_Entity *>>> found;
+    for (RS_Entity *text : texts) {
+      const auto owner = inserts.find(text->ownerLineage());
+      if (owner != inserts.end()) {
+        if (const auto sidecar = extractInsertAttribSidecar(text)) {
+          found[owner->second].emplace_back(sidecar->ordinal, text);
+          continue;
+        }
+      }
+      // No INSERT writes this text. One that shows is written as a text of its
+      // own (writeText(), writeMText()); a hidden or empty one was data of its
+      // INSERT only and no selection can reach it.
+      if (showsNothing(text))
+        m_insertAttribPlan.leftOut.insert(text);
+    }
+    for (auto &[insert, attributes] : found) {
+      // Container order decides between texts of one ordinal.
+      std::stable_sort(attributes.begin(), attributes.end(),
+                       [](const auto &lhs, const auto &rhs) {
+                         return lhs.first < rhs.first;
+                       });
+      auto &children = m_insertAttribPlan.children[insert];
+      children.reserve(attributes.size());
+      for (const auto &attribute : attributes) {
+        children.push_back(attribute.second);
+        m_insertAttribPlan.claimed.insert(attribute.second);
+      }
+    }
+  };
+  scan(m_graphic);
+  for (unsigned i = 0; i < m_graphic->countBlocks(); ++i) {
+    RS_Block *block = m_graphic->blockAt(i);
+    if (block != nullptr && !block->isDeleted())
+      scan(block);
+  }
+}
+
+/**
  * Writes block records (just the name, not the entities in it).
  */
 void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
@@ -12464,6 +12504,7 @@ void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
 
   m_dxfBlockInsertHandles.clear();
   std::map<std::uint32_t, std::size_t> sourceHandleCounts;
+  std::set<std::uint32_t> attribChildHandles;
   std::set<std::uint32_t> rawEntityHandles;
   std::set<std::uint32_t> rawObjectHandles;
   auto scanEntities = [&](RS_EntityContainer *container) {
@@ -12472,12 +12513,17 @@ void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
     for (RS_Entity *entity :
          lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
       if (entity == nullptr || entity->getFlag(RS2::FlagDeleted) ||
-          isGeneratedInsertAttrib(entity)) {
+          m_insertAttribPlan.leftOut.count(entity) != 0) {
         continue;
       }
       const std::uint32_t sourceHandle = entity->sourceHandle();
-      if (sourceHandle != 0)
-        ++sourceHandleCounts[sourceHandle];
+      if (sourceHandle == 0)
+        continue;
+      ++sourceHandleCounts[sourceHandle];
+      // An ATTRIB is counted, so that a handle it shares names no entity, but
+      // it takes its handle when its INSERT is written.
+      if (isInsertAttribChild(entity))
+        attribChildHandles.insert(sourceHandle);
     }
   };
 
@@ -12559,6 +12605,8 @@ void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
       continue;
     }
     if (count != 1)
+      continue;
+    if (attribChildHandles.count(sourceHandle) != 0)
       continue;
     if (rawEntityHandles.count(sourceHandle) != 0 ||
         rawObjectHandles.count(sourceHandle) != 0) {
@@ -15250,11 +15298,11 @@ void RS_FilterDXFRW::prepareDwgEntityHandleMap() {
                                       RS_EntityContainer *container) {
     if (container == nullptr)
       return;
-    // INSERT attributes are encoded inside the parent INSERT frame; they do
-    // not own independent output handles.
-    const auto hasOwnFrame = [](const RS_Entity *entity) {
+    // An INSERT's attribute texts are encoded inside its frame, and a text
+    // the plan leaves out is not written: neither owns an output handle.
+    const auto hasOwnFrame = [this](const RS_Entity *entity) {
       return entity != nullptr && !entity->getFlag(RS2::FlagDeleted) &&
-             !isGeneratedInsertAttrib(entity);
+             !hasNoOwnRecord(entity);
     };
     const std::vector<RS_Entity *> entities =
         lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities();
@@ -15264,20 +15312,6 @@ void RS_FilterDXFRW::prepareDwgEntityHandleMap() {
                     [&hasOwnFrame](const RS_Entity *entity) {
                       return hasOwnFrame(entity) && entity->sourceHandle() != 0;
                     });
-    // Count the ATTRIBs writeInsert() will gather for each INSERT: sibling
-    // texts tagged with the INSERT's id.
-    std::map<unsigned long long, std::size_t> attributeCounts;
-    if (reserveAll) {
-      for (const RS_Entity *candidate : *container) {
-        if (candidate == nullptr ||
-            (candidate->rtti() != RS2::EntityText &&
-             candidate->rtti() != RS2::EntityMText))
-          continue;
-        const auto sidecar = extractInsertAttribSidecar(candidate);
-        if (sidecar)
-          ++attributeCounts[sidecar->ownerId];
-      }
-    }
 
     const auto reserve = [&](RS_Entity *entity) {
       const std::uint32_t sourceHandle = entity->sourceHandle();
@@ -15313,13 +15347,13 @@ void RS_FilterDXFRW::prepareDwgEntityHandleMap() {
 
       if (!reserveAll || entity->rtti() != RS2::EntityInsert)
         return;
-      const auto count = attributeCounts.find(entity->getId());
-      if (count == attributeCounts.end())
+      const auto planned = m_insertAttribPlan.children.find(entity);
+      if (planned == m_insertAttribPlan.children.end())
         return;
       // One handle per ATTRIB, then the SEQEND.
       std::vector<std::uint32_t> childHandles;
-      childHandles.reserve(count->second + 1);
-      for (std::size_t index = 0; index <= count->second; ++index) {
+      childHandles.reserve(planned->second.size() + 1);
+      for (std::size_t index = 0; index <= planned->second.size(); ++index) {
         const std::uint32_t childHandle = m_dwgW->allocNextHandle();
         if (childHandle == 0) {
           m_writeFailed = true;
@@ -17277,7 +17311,7 @@ bool RS_FilterDXFRW::prepareDwgEntityWritePlans() {
     for (RS_Entity *entity :
          lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
       if (entity == nullptr || entity->getFlag(RS2::FlagDeleted) ||
-          isGeneratedInsertAttrib(entity) || entity->sourceHandle() == 0) {
+          hasNoOwnRecord(entity) || entity->sourceHandle() == 0) {
         continue;
       }
 
@@ -29694,7 +29728,9 @@ bool RS_FilterDXFRW::reconstructSingleFrameSidecars(
 }
 
 void RS_FilterDXFRW::writeEntity(RS_Entity *e) {
-  if (e == nullptr || isGeneratedInsertAttrib(e))
+  // A block attribute's text is written by its INSERT (writeInsert()), or not
+  // at all (buildInsertAttribPlan()).
+  if (e == nullptr || hasNoOwnRecord(e))
     return;
   DwgEntityProductionResult production = DwgEntityProductionResult::SingleFrame;
 #ifdef DWGSUPPORT
@@ -30630,27 +30666,19 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
 
   // RS_Insert cannot retain ATTRIB children internally: update() rebuilds
   // its expanded block cache. Reconstruct the native sequence from the
-  // hidden/rendered sibling text records tagged during import, then let the
+  // sibling texts buildInsertAttribPlan() gave this INSERT, then let the
   // libdxfrw writer allocate and link the child handles.
-  if (i->getParent() != nullptr) {
+  {
     std::vector<std::pair<InsertAttribSidecar, RS_Entity *>> attributes;
-    for (RS_Entity *candidate : *i->getParent()) {
-      if (candidate == nullptr || candidate == i)
-        continue;
-      const auto sidecar = extractInsertAttribSidecar(candidate);
-      if (!sidecar || sidecar->ownerId != i->getId())
-        continue;
-      if (candidate->rtti() != RS2::EntityText &&
-          candidate->rtti() != RS2::EntityMText)
-        continue;
-      attributes.emplace_back(*sidecar, candidate);
+    const auto planned = m_insertAttribPlan.children.find(i);
+    if (planned != m_insertAttribPlan.children.end()) {
+      attributes.reserve(planned->second.size());
+      for (RS_Entity *candidate : planned->second) {
+        // buildInsertAttribPlan() admitted only texts whose sidecar parses.
+        if (auto sidecar = extractInsertAttribSidecar(candidate))
+          attributes.emplace_back(std::move(*sidecar), candidate);
+      }
     }
-    std::sort(attributes.begin(), attributes.end(),
-              [](const auto &lhs, const auto &rhs) {
-                if (lhs.first.ordinal != rhs.first.ordinal)
-                  return lhs.first.ordinal < rhs.first.ordinal;
-                return lhs.second->getId() < rhs.second->getId();
-              });
 
     for (const auto &[sidecar, candidate] : attributes) {
       DRW_Attrib attrib;
@@ -30954,6 +30982,8 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
       removeMTextOcsSidecar(*text);
     }
   }
+  // The private groups of a block attribute's text never leave the program.
+  removeInsertAttribSidecar(*text);
   text->basePoint.x = t->getInsertionPoint().x;
   text->basePoint.y = t->getInsertionPoint().y;
   text->height = t->getHeight();
@@ -31081,6 +31111,19 @@ void RS_FilterDXFRW::writeText(RS_Text *t) {
     text.thickness = ocs->thickness;
     removeTextOcsSidecar(text);
   }
+  if (t->ownerLineage() != 0) {
+    // A block attribute no INSERT claims is written on its own, in the plane
+    // of the ATTRIB it was read as.
+    if (const auto attribute = extractInsertAttribSidecar(t)) {
+      text.basePoint.z = attribute->basePoint.z;
+      text.secPoint.z = attribute->secPoint.z;
+      text.extPoint = attribute->extPoint;
+      text.thickness = attribute->thickness;
+    }
+  }
+  // The groups that carried it are private to this program, whatever put them
+  // on the text.
+  removeInsertAttribSidecar(text);
   text.basePoint.x = t->getInsertionPoint().x;
   text.basePoint.y = t->getInsertionPoint().y;
   text.height = t->getHeight();

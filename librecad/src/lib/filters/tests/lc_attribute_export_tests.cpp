@@ -37,14 +37,18 @@
 #include <cstdlib>
 #include <filesystem>
 #include <fstream>
+#include <memory>
 #include <string>
 #include <system_error>
+#include <utility>
 #include <vector>
 
 #include <QFile>
+#include <QList>
 #include <QString>
 
 #include "drw_entities.h"
+#include "lc_copyutils.h"
 #include "lc_drwnullinterface.h"
 #include "lc_filtertestsupport.h"
 #include "lc_sourcefonts.h"
@@ -52,6 +56,7 @@
 #include "rs_block.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
+#include "rs_modification.h"
 #include "rs_mtext.h"
 #include "rs_text.h"
 
@@ -410,6 +415,230 @@ std::filesystem::path externalSample(const char* name) {
     const std::filesystem::path file = std::filesystem::path(directory) / name;
     std::error_code error;
     return std::filesystem::is_regular_file(file, error) ? file : std::filesystem::path();
+}
+
+// A block reference with four attributes of one line: NAME and NOTE show,
+// the value of BLANK is empty and CODE is hidden. (An ATTRIB without a group
+// 1 at all is not read: the DXF reader gives the whole file up.) With
+// handles, every record has one, as in a file of another program.
+std::string attributedInsertRecords(const bool handles) {
+    const auto handle = [handles](const char* value) {
+        return handles ? std::string("5\n") + value + "\n" : std::string();
+    };
+    return "0\nINSERT\n" + handle("1A0") + "8\n0\n2\nTAG\n10\n0\n20\n0\n66\n1\n"
+           "0\nATTRIB\n" + handle("1A1") + "8\n0\n10\n1\n20\n2\n40\n1\n1\nfirst\n2\nNAME\n70\n0\n"
+           "0\nATTRIB\n" + handle("1A2") + "8\n0\n10\n1\n20\n6\n40\n1\n1\nsecond\n2\nNOTE\n70\n0\n"
+           "0\nATTRIB\n" + handle("1A3") + "8\n0\n10\n1\n20\n8\n40\n1\n1\n\n2\nBLANK\n70\n0\n"
+           "0\nATTRIB\n" + handle("1A4") + "8\n0\n10\n1\n20\n10\n40\n1\n1\nsecret\n2\nCODE\n70\n1\n"
+           "0\nSEQEND\n" + handle("1A5") + "8\n0\n";
+}
+
+// The block of that reference: a line, and no attribute definition, which
+// would open as one more text.
+std::string tagBlockDxf(const bool handles) {
+    return std::string("0\nBLOCK\n8\n0\n2\nTAG\n70\n0\n10\n0\n20\n0\n3\nTAG\n0\nLINE\n")
+           + (handles ? "5\n1B0\n" : "") + "8\n0\n10\n0\n20\n0\n11\n5\n21\n0\n0\nENDBLK\n8\n0\n";
+}
+
+// The block reference in the drawing itself, with a line after it: a handle
+// taken and not used would lie inside the chain of a DWG 2000.
+std::string attributedInsertDxf(const bool handles) {
+    return "0\nSECTION\n2\nBLOCKS\n" + tagBlockDxf(handles) + "0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
+           + attributedInsertRecords(handles) + "0\nLINE\n" + (handles ? "5\n1A6\n" : "")
+           + "8\n0\n10\n20\n20\n0\n11\n30\n21\n0\n0\nENDSEC\n0\nEOF\n";
+}
+
+// The same block reference inside the block OUTER, which the drawing inserts once.
+std::string nestedAttributedInsertDxf() {
+    return "0\nSECTION\n2\nBLOCKS\n" + tagBlockDxf(false)
+           + "0\nBLOCK\n8\n0\n2\nOUTER\n70\n0\n10\n0\n20\n0\n3\nOUTER\n" + attributedInsertRecords(false)
+           + "0\nENDBLK\n8\n0\n0\nENDSEC\n"
+             "0\nSECTION\n2\nENTITIES\n0\nINSERT\n8\n0\n2\nOUTER\n10\n0\n20\n0\n0\nENDSEC\n0\nEOF\n";
+}
+
+// What a drawing, or a block of it, shows of block references and texts, on
+// one line: each block reference by its insertion x with the values of the
+// texts that belong to it, in their order; the values of the other texts,
+// sorted; how many of those are hidden; and the number of lines.
+std::string contentOf(const RS_EntityContainer& container) {
+    struct Reference {
+        long m_x;
+        unsigned long long m_lineage;
+        std::vector<std::string> m_values;
+    };
+    std::vector<Reference> references;
+    for (const RS_Entity* entity : container) {
+        if (entity != nullptr && !entity->isDeleted() && entity->rtti() == RS2::EntityInsert) {
+            const double x = static_cast<const RS_Insert*>(entity)->getInsertionPoint().x;
+            references.push_back({std::lround(x), entity->lineage(), {}});
+        }
+    }
+    std::stable_sort(references.begin(), references.end(),
+                     [](const Reference& lhs, const Reference& rhs) { return lhs.m_x < rhs.m_x; });
+    std::vector<std::string> others;
+    int hidden = 0;
+    int lines = 0;
+    for (const RS_Entity* entity : container) {
+        if (entity == nullptr || entity->isDeleted()) {
+            continue;
+        }
+        std::string value;
+        if (entity->rtti() == RS2::EntityLine) {
+            ++lines;
+            continue;
+        }
+        if (entity->rtti() == RS2::EntityText) {
+            value = static_cast<const RS_Text*>(entity)->getText().toStdString();
+        }
+        else if (entity->rtti() == RS2::EntityMText) {
+            value = static_cast<const RS_MText*>(entity)->getText().toStdString();
+        }
+        else {
+            continue;
+        }
+        const auto owner = std::find_if(references.begin(), references.end(), [entity](const Reference& reference) {
+            return reference.m_lineage == entity->ownerLineage();
+        });
+        if (owner != references.end()) {
+            owner->m_values.push_back(value);
+        }
+        else {
+            others.push_back(value);
+            hidden += entity->getFlag(RS2::FlagVisible) ? 0 : 1;
+        }
+    }
+    std::sort(others.begin(), others.end());
+    const auto joined = [](const std::vector<std::string>& values) {
+        std::string all;
+        for (std::size_t i = 0; i < values.size(); ++i) {
+            all += (i == 0 ? "" : "|") + values[i];
+        }
+        return all;
+    };
+    std::string line;
+    for (const Reference& reference : references) {
+        line += "INSERT@" + std::to_string(reference.m_x) + "[" + joined(reference.m_values) + "] ";
+    }
+    return line + "TEXT[" + joined(others) + "] hidden=" + std::to_string(hidden) + " LINE=" + std::to_string(lines);
+}
+
+// The same of a saved file, opened through the filter: of the drawing, or of
+// one of its blocks.
+std::string readBack(const std::filesystem::path& file, const Target& from, const char* block = nullptr) {
+    CAPTURE(file.filename().string());
+    RS_Graphic reopened;
+    REQUIRE(lc::test::importDrawing(reopened, file, from.m_format));
+    if (block == nullptr) {
+        return contentOf(reopened);
+    }
+    const RS_Block* found = reopened.findBlock(block);
+    REQUIRE(found != nullptr);
+    return contentOf(*found);
+}
+
+// Saves the drawing to each of the formats and expects every file to open
+// with the same content. Returns the DXF files, for a look at their records.
+std::vector<std::filesystem::path> saveAll(const Bench& bench, EditableDrawing& drawing, const std::string& variant,
+                                           const std::vector<const char*>& formats, const std::string& expected,
+                                           const char* block = nullptr) {
+    std::vector<std::filesystem::path> dxfFiles;
+    for (const char* format : formats) {
+        const Target to = target(format);
+        CAPTURE(variant, to.m_name);
+        const auto file = save(bench, drawing, variant, to);
+        CHECK(readBack(file, to, block) == expected);
+        if (to.m_dxf) {
+            checkWrittenDxf(file);
+            dxfFiles.push_back(file);
+        }
+    }
+    return dxfFiles;
+}
+
+// The tags of the attributes of a written DXF, in file order.
+std::vector<std::string> attributeTags(const std::filesystem::path& file) {
+    std::vector<std::string> tags;
+    for (const DxfRecord& record : lc::test::dxfRecords(file, "ATTRIB")) {
+        const std::vector<std::string> tag = record.own(2);
+        tags.push_back(tag.empty() ? std::string() : tag.front());
+    }
+    return tags;
+}
+
+// The one attribute with a tag in a written DXF.
+DxfRecord attributeRecord(const std::filesystem::path& file, const std::string& tag) {
+    std::vector<DxfRecord> found;
+    for (const DxfRecord& record : lc::test::dxfRecords(file, "ATTRIB")) {
+        if (record.own(2) == std::vector<std::string>{tag}) {
+            found.push_back(record);
+        }
+    }
+    CAPTURE(file.filename().string(), tag);
+    REQUIRE(found.size() == 1);
+    return found.front();
+}
+
+// Opens the fixture with handles and makes sure that the drawing knows one
+// for each of its entities. (A drawing opened from a DXF that LibreCAD saved
+// would know them too, but no DWG can be saved from one: its VPORT *ACTIVE
+// is found twice, which is not a matter of attributes.)
+void loadWithHandles(const Bench& bench, EditableDrawing& drawing, const std::string& name) {
+    loadDxf(bench, attributedInsertDxf(true), drawing, name);
+    REQUIRE(drawing.m_graphic.count() == 6);
+    for (const RS_Entity* entity : drawing.m_graphic) {
+        REQUIRE(entity != nullptr);
+        REQUIRE(entity->sourceHandle() != 0);
+    }
+}
+
+// The block reference the drawing shows at an insertion x.
+const RS_Insert* referenceAt(EditableDrawing& drawing, const double x) {
+    const RS_Insert* found = nullptr;
+    for (const RS_Insert* insert : drawing.live<RS_Insert>(RS2::EntityInsert)) {
+        if (std::abs(insert->getInsertionPoint().x - x) < 1e-9) {
+            REQUIRE(found == nullptr);
+            found = insert;
+        }
+    }
+    REQUIRE(found != nullptr);
+    return found;
+}
+
+// The text of one line the drawing shows with a value at an insertion x; the
+// attributes of the fixture are at 1.
+const RS_Text* lineText(EditableDrawing& drawing, const std::string& value, const double x = 1.0) {
+    const RS_Text* found = nullptr;
+    for (const RS_Text* text : drawing.live<RS_Text>(RS2::EntityText)) {
+        if (text->getText().toStdString() == value && std::abs(text->getInsertionPoint().x - x) < 1e-9) {
+            REQUIRE(found == nullptr);
+            found = text;
+        }
+    }
+    REQUIRE(found != nullptr);
+    return found;
+}
+
+// What a tool is given: the entities of a selection.
+QList<RS_Entity*> selection(const std::vector<const RS_Entity*>& entities) {
+    QList<RS_Entity*> list;
+    for (const RS_Entity* entity : entities) {
+        list.append(const_cast<RS_Entity*>(entity));
+    }
+    return list;
+}
+
+// What the Move tool does in one step: without copies the entities are
+// replaced by moved clones; with copies they stay and the clones are added.
+void moveEntities(EditableDrawing& drawing, const std::vector<const RS_Entity*>& entities, const RS_Vector& offset,
+                  const int copies = 0) {
+    RS_MoveData data;
+    data.offset = offset;
+    data.keepOriginals = copies > 0;
+    data.multipleCopies = copies > 1;
+    data.number = copies;
+    drawing.modify([&](LC_DocumentModificationBatch& ctx) {
+        RS_Modification::move(data, selection(entities), false, ctx);
+    });
 }
 
 } // namespace
@@ -807,6 +1036,501 @@ TEST_CASE("the MTEXT of an attribute keeps line-spacing style 2 and never stores
             CHECK(record.embedded(42).empty());
             CHECK(record.embedded(43).empty());
         }
+    }
+}
+
+// The tools never change an entity: they put a changed clone in its place and
+// flag the original deleted, and an undo flags the clone instead. A copy is a
+// clone too. What is an attribute of which block reference therefore cannot
+// hang on the objects themselves.
+
+TEST_CASE("an attribute text replaced or undone or erased is written once",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-owner]") {
+    const Bench bench("attr_owner_edit");
+    const std::vector<const char*> formats{"dxf2018", "dxf2007", "dwg2018", "dwg2013", "dwg2000"};
+    const std::vector<std::string> allTags{"NAME", "NOTE", "BLANK", "CODE"};
+    EditableDrawing drawing;
+    loadWithHandles(bench, drawing, "fixture");
+    const RS_Insert* insert = referenceAt(drawing, 0);
+    for (const RS_Text* text : drawing.live<RS_Text>(RS2::EntityText)) {
+        REQUIRE(text->ownerLineage() == insert->lineage());
+    }
+
+    for (const auto& file :
+         saveAll(bench, drawing, "untouched", formats, "INSERT@0[first|second||secret] TEXT[] hidden=0 LINE=1")) {
+        CHECK(attributeTags(file) == allTags);
+    }
+
+    drawing.edit(lineText(drawing, "first"), [](RS_Text& text) { text.setText("edited"); });
+    for (const auto& file :
+         saveAll(bench, drawing, "edited", formats, "INSERT@0[edited|second||secret] TEXT[] hidden=0 LINE=1")) {
+        CHECK(attributeTags(file) == allTags);
+    }
+
+    REQUIRE(drawing.m_graphic.undo());
+    for (const auto& file :
+         saveAll(bench, drawing, "undone", formats, "INSERT@0[first|second||secret] TEXT[] hidden=0 LINE=1")) {
+        CHECK(attributeTags(file) == allTags);
+    }
+
+    REQUIRE(drawing.m_graphic.redo());
+    saveAll(bench, drawing, "redone", formats, "INSERT@0[edited|second||secret] TEXT[] hidden=0 LINE=1");
+    REQUIRE(drawing.m_graphic.undo());
+
+    drawing.erase(lineText(drawing, "second"));
+    for (const auto& file :
+         saveAll(bench, drawing, "erased", formats, "INSERT@0[first||secret] TEXT[] hidden=0 LINE=1")) {
+        CHECK(attributeTags(file) == std::vector<std::string>{"NAME", "BLANK", "CODE"});
+    }
+}
+
+TEST_CASE("a multi-line attribute edited the way the application edits is written once",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-owner]") {
+    const Bench bench("attr_owner_multiline");
+    for (const bool handles : {false, true}) {
+        const std::string name = handles ? "handles" : "plain";
+        CAPTURE(name);
+        AttributeDxf fixture;
+        fixture.m_handles = handles;
+        EditableDrawing drawing;
+        load(bench, fixture, drawing, name + "_source");
+        const RS_MText* imported = only<RS_MText>(drawing, RS2::EntityMText);
+
+        // The text of the attribute in a saved file. The formats before 2018
+        // hold it as a text of one line.
+        const auto savedText = [&](const std::string& variant, const Target& to) {
+            CAPTURE(variant, to.m_name);
+            const auto file = save(bench, drawing, name + "_" + variant, to);
+            if (to.m_dxf) {
+                checkWrittenDxf(file);
+                CHECK(lc::test::dxfRecords(file, "ATTRIB").size() == 1);
+                CHECK(lc::test::dxfRecords(file, "TEXT").empty());
+                CHECK(lc::test::dxfRecords(file, "MTEXT").empty());
+            }
+            EditableDrawing reopened;
+            REQUIRE(lc::test::importDrawing(reopened.m_graphic, file, to.m_format));
+            CHECK(reopened.live<RS_Insert>(RS2::EntityInsert).size() == 1);
+            const RS_Entity* text = attributeText(reopened);
+            CHECK((text->rtti() == RS2::EntityMText) == to.m_embedsMText);
+            return text->rtti() == RS2::EntityMText ? static_cast<const RS_MText*>(text)->getText().toStdString()
+                                                    : static_cast<const RS_Text*>(text)->getText().toStdString();
+        };
+
+        drawing.edit(imported, [](RS_MText& text) { text.setText("XYZ"); });
+        for (const Target& to : kTargets) {
+            CHECK(savedText("edited", to) == "XYZ");
+        }
+
+        // Undone, the attribute is the one of the file again; what a format
+        // before 2018 shows of it is not this case's.
+        REQUIRE(drawing.m_graphic.undo());
+        for (const Target& to : kTargets) {
+            const std::string text = savedText("undone", to);
+            if (to.m_embedsMText) {
+                CHECK(text == "my text\nsecond line");
+            }
+        }
+
+        REQUIRE(drawing.m_graphic.redo());
+        for (const Target& to : kTargets) {
+            CHECK(savedText("redone", to) == "XYZ");
+        }
+    }
+}
+
+TEST_CASE("a block reference replaced by an edit keeps its attributes",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-owner]") {
+    const Bench bench("attr_owner_reference_edit");
+    const std::vector<const char*> formats{"dxf2018", "dwg2018", "dwg2000"};
+    EditableDrawing drawing;
+    loadWithHandles(bench, drawing, "fixture");
+    const RS_Insert* insert = referenceAt(drawing, 0);
+
+    // The block reference alone: its attributes stay where their texts are.
+    moveEntities(drawing, {insert}, RS_Vector(50.0, 0.0));
+    for (const auto& file : saveAll(bench, drawing, "reference_moved", formats,
+                                    "INSERT@50[first|second||secret] TEXT[] hidden=0 LINE=1")) {
+        CHECK(attributeTags(file).size() == 4);
+        CHECK(lc::test::dxfRecords(file, "TEXT").empty());
+        CHECK(lc::test::sameValues({"1"}, attributeRecord(file, "NAME").own(10)));
+    }
+
+    REQUIRE(drawing.m_graphic.undo());
+    saveAll(bench, drawing, "move_undone", formats, "INSERT@0[first|second||secret] TEXT[] hidden=0 LINE=1");
+
+    // With the texts a selection takes. A hidden text is in no selection: it
+    // stays an attribute of the block reference, where it was.
+    moveEntities(drawing, {insert, lineText(drawing, "first"), lineText(drawing, "second")}, RS_Vector(50.0, 0.0));
+    for (const auto& file : saveAll(bench, drawing, "all_moved", formats,
+                                    "INSERT@50[first|second||secret] TEXT[] hidden=0 LINE=1")) {
+        CHECK(attributeTags(file).size() == 4);
+        CHECK(lc::test::dxfRecords(file, "TEXT").empty());
+        CHECK(lc::test::sameValues({"51"}, attributeRecord(file, "NAME").own(10)));
+        CHECK(lc::test::sameValues({"51"}, attributeRecord(file, "NOTE").own(10)));
+        CHECK(lc::test::sameValues({"1"}, attributeRecord(file, "CODE").own(10)));
+    }
+    REQUIRE(drawing.m_graphic.undo());
+
+    // Any other edit of the block reference is a clone in its place as well.
+    drawing.edit(insert, [](RS_Insert& reference) { reference.rotate(RS_Vector(0.0, 0.0), M_PI / 2.0); });
+    for (const auto& file : saveAll(bench, drawing, "reference_rotated", formats,
+                                    "INSERT@0[first|second||secret] TEXT[] hidden=0 LINE=1")) {
+        CHECK(attributeTags(file).size() == 4);
+        CHECK(lc::test::sameValues({"90"}, onlyRecord(file, "INSERT").own(50)));
+    }
+}
+
+TEST_CASE("each copy of a block reference writes its own attribute texts",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-owner]") {
+    const Bench bench("attr_owner_copies");
+    const std::vector<const char*> formats{"dxf2018", "dwg2018", "dwg2000"};
+
+    for (const bool handles : {true, false}) {
+        const std::string name = handles ? "handles" : "plain";
+        CAPTURE(name);
+        EditableDrawing drawing;
+        if (handles) {
+            loadWithHandles(bench, drawing, name);
+        }
+        else {
+            loadDxf(bench, attributedInsertDxf(false), drawing, name);
+        }
+        const RS_Insert* insert = referenceAt(drawing, 0);
+        const RS_Text* nameText = lineText(drawing, "first");
+        const RS_Text* noteText = lineText(drawing, "second");
+
+        // Two copies of the block reference and of the two texts a selection
+        // takes; the originals stay.
+        moveEntities(drawing, {insert, nameText, noteText}, RS_Vector(50.0, 0.0), 2);
+        std::vector<unsigned long long> lineages{insert->lineage()};
+        for (const double x : {50.0, 100.0}) {
+            CAPTURE(x);
+            const RS_Insert* copy = referenceAt(drawing, x);
+            CHECK(std::find(lineages.begin(), lineages.end(), copy->lineage()) == lineages.end());
+            lineages.push_back(copy->lineage());
+            CHECK(copy->sourceHandle() == 0);
+            for (const char* value : {"first", "second"}) {
+                const RS_Text* text = lineText(drawing, value, x + 1.0);
+                CHECK(text->ownerLineage() == copy->lineage());
+                CHECK(text->sourceHandle() == 0);
+            }
+        }
+        CHECK(nameText->ownerLineage() == insert->lineage());
+        CHECK(noteText->ownerLineage() == insert->lineage());
+
+        // An edit of a copy's text, then of the original's: each stays with
+        // its own block reference, whatever the order of the texts in the drawing.
+        drawing.edit(lineText(drawing, "first", 51.0), [](RS_Text& text) { text.setText("one"); });
+        for (const auto& file :
+             saveAll(bench, drawing, name + "_copy_edited", formats,
+                     "INSERT@0[first|second||secret] INSERT@50[one|second] INSERT@100[first|second] "
+                     "TEXT[] hidden=0 LINE=1")) {
+            CHECK(lc::test::dxfRecords(file, "INSERT").size() == 3);
+            CHECK(attributeTags(file).size() == 8);
+            CHECK(lc::test::dxfRecords(file, "TEXT").empty());
+        }
+        drawing.edit(nameText, [](RS_Text& text) { text.setText("zero"); });
+        saveAll(bench, drawing, name + "_original_edited", formats,
+                "INSERT@0[zero|second||secret] INSERT@50[one|second] INSERT@100[first|second] "
+                "TEXT[] hidden=0 LINE=1");
+    }
+
+    // The Rotate and the Scale tool number their copies as the Move tool does.
+    for (const char* tool : {"rotate", "scale"}) {
+        CAPTURE(tool);
+        EditableDrawing drawing;
+        loadDxf(bench, attributedInsertDxf(false), drawing, tool);
+        const QList<RS_Entity*> selected =
+            selection({referenceAt(drawing, 0), lineText(drawing, "first"), lineText(drawing, "second")});
+        drawing.modify([&](LC_DocumentModificationBatch& ctx) {
+            if (std::string(tool) == "rotate") {
+                RS_RotateData data;
+                data.center = RS_Vector(0.0, -50.0);
+                data.angle = M_PI / 6.0;
+                data.keepOriginals = true;
+                data.multipleCopies = true;
+                data.number = 2;
+                REQUIRE(RS_Modification::rotate(data, selected, false, ctx));
+            }
+            else {
+                RS_ScaleData data;
+                data.referencePoint = RS_Vector(-10.0, 0.0);
+                data.factor = RS_Vector(2.0, 2.0);
+                data.keepOriginals = true;
+                data.multipleCopies = true;
+                data.number = 2;
+                REQUIRE(RS_Modification::scale(data, selected, false, ctx));
+            }
+        });
+
+        // In the order of the drawing: the two copies of the block reference,
+        // those of NAME, those of NOTE, after what the file had.
+        const std::vector<const RS_Insert*> references = drawing.live<RS_Insert>(RS2::EntityInsert);
+        const std::vector<const RS_Text*> texts = drawing.live<RS_Text>(RS2::EntityText);
+        REQUIRE(references.size() == 3);
+        REQUIRE(texts.size() == 8);
+        CHECK(references[1]->lineage() != references[0]->lineage());
+        CHECK(references[2]->lineage() != references[0]->lineage());
+        CHECK(references[2]->lineage() != references[1]->lineage());
+        for (const std::size_t copy : {std::size_t{1}, std::size_t{2}}) {
+            CAPTURE(copy);
+            CHECK(texts[3 + copy]->getText().toStdString() == "first");
+            CHECK(texts[3 + copy]->ownerLineage() == references[copy]->lineage());
+            CHECK(texts[5 + copy]->getText().toStdString() == "second");
+            CHECK(texts[5 + copy]->ownerLineage() == references[copy]->lineage());
+        }
+    }
+}
+
+TEST_CASE("an attribute text without its block reference is written as text",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-owner]") {
+    const Bench bench("attr_owner_orphans");
+    const std::vector<const char*> formats{"dxf2018", "dxf2007", "dwg2018", "dwg2000"};
+    const std::vector<std::string> shown{"first", "second"};
+
+    // A text that shows is kept as a text of its own. The hidden one and the
+    // empty one were data of the block reference only: nothing is written
+    // for them, and in a DWG 2000 no handle is spent on them.
+    SECTION("the block reference erased, then the erase undone") {
+        EditableDrawing drawing;
+        loadWithHandles(bench, drawing, "erase");
+        drawing.erase(referenceAt(drawing, 0));
+        for (const auto& file : saveAll(bench, drawing, "erased", formats, "TEXT[first|second] hidden=0 LINE=1")) {
+            CHECK(lc::test::dxfRecords(file, "INSERT").empty());
+            CHECK(lc::test::dxfRecords(file, "ATTRIB").empty());
+            std::vector<std::string> values;
+            for (const DxfRecord& record : lc::test::dxfRecords(file, "TEXT")) {
+                REQUIRE(record.own(1).size() == 1);
+                values.push_back(record.own(1).front());
+            }
+            CHECK(values == shown);
+        }
+
+        REQUIRE(drawing.m_graphic.undo());
+        for (const auto& file :
+             saveAll(bench, drawing, "erase_undone", formats, "INSERT@0[first|second||secret] TEXT[] hidden=0 LINE=1")) {
+            CHECK(attributeTags(file).size() == 4);
+            CHECK(lc::test::dxfRecords(file, "TEXT").empty());
+        }
+    }
+
+    SECTION("the block reference exploded") {
+        EditableDrawing drawing;
+        loadWithHandles(bench, drawing, "explode");
+        const RS_Insert* insert = referenceAt(drawing, 0);
+        const_cast<RS_Insert*>(insert)->update();
+        drawing.modify([&](LC_DocumentModificationBatch& ctx) {
+            REQUIRE(RS_Modification::explode(selection({insert}), ctx));
+        });
+        // The line of the block is in the drawing now.
+        for (const auto& file : saveAll(bench, drawing, "exploded", formats, "TEXT[first|second] hidden=0 LINE=2")) {
+            CHECK(lc::test::dxfRecords(file, "INSERT").empty());
+            CHECK(lc::test::dxfRecords(file, "ATTRIB").empty());
+            CHECK(lc::test::dxfRecords(file, "TEXT").size() == 2);
+        }
+    }
+
+    SECTION("a text copied without its block reference") {
+        EditableDrawing drawing;
+        loadWithHandles(bench, drawing, "lone_copy");
+        const RS_Insert* insert = referenceAt(drawing, 0);
+        const RS_Text* nameText = lineText(drawing, "first");
+        moveEntities(drawing, {nameText}, RS_Vector(0.0, -30.0), 1);
+        // A later copy of the block reference with its texts does not take
+        // the lone copy for one of its own.
+        moveEntities(drawing, {insert, nameText, lineText(drawing, "second")}, RS_Vector(50.0, 0.0), 1);
+        for (const auto& file : saveAll(bench, drawing, "lone_copy", formats,
+                                        "INSERT@0[first|second||secret] INSERT@50[first|second] "
+                                        "TEXT[first] hidden=0 LINE=1")) {
+            CHECK(attributeTags(file).size() == 6);
+            CHECK(lc::test::dxfRecords(file, "TEXT").size() == 1);
+        }
+    }
+
+    SECTION("a text whose note of its attribute cannot be read") {
+        EditableDrawing drawing;
+        loadWithHandles(bench, drawing, "unreadable");
+        // The first number of the note is the place of the attribute among
+        // those of its block reference; there is no place -1.
+        drawing.edit(lineText(drawing, "second"), [](RS_Text& text) {
+            std::vector<std::shared_ptr<DRW_Variant>> data = text.getDrwExtData();
+            bool inNote = false;
+            bool changed = false;
+            for (auto& value : data) {
+                REQUIRE(value != nullptr);
+                if (value->code() == 1001) {
+                    inNote = std::string(value->c_str()) == kPrivateApplication;
+                }
+                else if (inNote && value->code() == 1070 && !changed) {
+                    value = std::make_shared<DRW_Variant>(1070, -1);
+                    changed = true;
+                }
+            }
+            REQUIRE(changed);
+            text.setDrwExtData(std::move(data));
+        });
+        for (const auto& file : saveAll(bench, drawing, "unreadable", formats,
+                                        "INSERT@0[first||secret] TEXT[second] hidden=0 LINE=1")) {
+            CHECK(attributeTags(file) == std::vector<std::string>{"NAME", "BLANK", "CODE"});
+            CHECK(lc::test::dxfRecords(file, "TEXT").size() == 1);
+        }
+    }
+
+    SECTION("a multi-line attribute text") {
+        AttributeDxf fixture;
+        fixture.m_handles = true;
+        EditableDrawing drawing;
+        load(bench, fixture, drawing, "multiline");
+        drawing.erase(only<RS_Insert>(drawing, RS2::EntityInsert));
+        for (const char* format : formats) {
+            const Target to = target(format);
+            CAPTURE(to.m_name);
+            const auto file = save(bench, drawing, "multiline_erased", to);
+            if (to.m_dxf) {
+                checkWrittenDxf(file);
+                CHECK(lc::test::dxfRecords(file, "INSERT").empty());
+                CHECK(lc::test::dxfRecords(file, "ATTRIB").empty());
+                CHECK(onlyRecord(file, "MTEXT").own(1) == std::vector<std::string>{"my text\\Psecond line"});
+            }
+            EditableDrawing reopened;
+            REQUIRE(lc::test::importDrawing(reopened.m_graphic, file, to.m_format));
+            CHECK(reopened.live<RS_Insert>(RS2::EntityInsert).empty());
+            const RS_MText* text = only<RS_MText>(reopened, RS2::EntityMText);
+            CHECK(text->ownerLineage() == 0);
+            CHECK(text->getText().toStdString() == "my text\nsecond line");
+            CHECK(text->getInsertionPoint().distanceTo(RS_Vector(1.0, 4.0)) < 1e-9);
+            CHECK(text->getHeight() == 9.0);
+            CHECK(text->getVAlign() == RS_MTextData::VATop);
+        }
+    }
+
+    // Application data of a file is kept as it is read, so a text can carry
+    // the private name without ever having been an attribute here. It is a
+    // text like any other, and the data stays out of the file all the same.
+    SECTION("a text of a file that has data under the private name") {
+        EditableDrawing drawing;
+        loadDxf(bench,
+                "0\nSECTION\n2\nENTITIES\n0\nTEXT\n8\n0\n10\n1\n20\n2\n40\n1\n1\nplain text\n"
+                "1001\nLibreCAD_INSERT_ATTRIB\n1070\n0\n0\nENDSEC\n0\nEOF\n",
+                drawing, "foreign");
+        const RS_Text* text = only<RS_Text>(drawing, RS2::EntityText);
+        REQUIRE(text->ownerLineage() == 0);
+        REQUIRE(text->hasDrwExtData());
+        for (const auto& file : saveAll(bench, drawing, "foreign", formats, "TEXT[plain text] hidden=0 LINE=0")) {
+            CHECK(lc::test::dxfRecords(file, "TEXT").size() == 1);
+        }
+    }
+}
+
+TEST_CASE("attributes of a block reference inside a block definition",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-owner]") {
+    const Bench bench("attr_owner_nested");
+    EditableDrawing drawing;
+    loadDxf(bench, nestedAttributedInsertDxf(), drawing);
+    RS_Block* outer = drawing.m_graphic.findBlock("OUTER");
+    REQUIRE(outer != nullptr);
+    REQUIRE(contentOf(*outer) == "INSERT@0[first|second||secret] TEXT[] hidden=0 LINE=0");
+
+    // An edit in the block editor is an undo step of the block.
+    RS_Text* nameText = nullptr;
+    for (RS_Entity* entity : *outer) {
+        if (entity != nullptr && entity->rtti() == RS2::EntityText
+            && static_cast<RS_Text*>(entity)->getText() == "first") {
+            nameText = static_cast<RS_Text*>(entity);
+        }
+    }
+    REQUIRE(nameText != nullptr);
+    auto* edited = static_cast<RS_Text*>(nameText->clone());
+    edited->setText("edited");
+    edited->update();
+    REQUIRE(outer->undoableModify(&drawing.m_viewport, [&](LC_DocumentModificationBatch& ctx) {
+        ctx.replace(nameText, edited);
+        ctx.dontSetActiveLayerAndPen();
+        return true;
+    }));
+    for (const auto& file : saveAll(bench, drawing, "block_edit", {"dxf2018", "dwg2018"},
+                                    "INSERT@0[edited|second||secret] TEXT[] hidden=0 LINE=0", "OUTER")) {
+        CHECK(attributeTags(file) == std::vector<std::string>{"NAME", "NOTE", "BLANK", "CODE"});
+    }
+
+    // Exploding the reference of OUTER brings copies of the texts into the
+    // drawing and no block reference with them. Whether the hidden text of
+    // the block shows there is not this case's.
+    const RS_Insert* reference = only<RS_Insert>(drawing, RS2::EntityInsert);
+    const_cast<RS_Insert*>(reference)->update();
+    drawing.modify([&](LC_DocumentModificationBatch& ctx) {
+        REQUIRE(RS_Modification::explode(selection({reference}), ctx));
+    });
+    const auto exploded = save(bench, drawing, "exploded", target("dxf2018"));
+    checkWrittenDxf(exploded);
+    RS_Graphic reopened;
+    REQUIRE(lc::test::importDrawing(reopened, exploded, RS2::FormatDXFRW2018));
+    const std::string model = contentOf(reopened);
+    CAPTURE(model);
+    CHECK(model.find("INSERT@") == std::string::npos);
+    std::vector<std::string> values;
+    for (const RS_Entity* entity : reopened) {
+        if (entity != nullptr && entity->rtti() == RS2::EntityText) {
+            values.push_back(static_cast<const RS_Text*>(entity)->getText().toStdString());
+        }
+    }
+    CHECK(std::count(values.begin(), values.end(), "edited") == 1);
+    CHECK(std::count(values.begin(), values.end(), "second") == 1);
+    CHECK(std::count(values.begin(), values.end(), "first") == 0);
+}
+
+TEST_CASE("texts sharing a source handle get handles of their own",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-owner]") {
+    const Bench bench("attr_owner_shared_handle");
+    EditableDrawing drawing;
+    loadWithHandles(bench, drawing, "fixture");
+    const RS_Text* nameText = lineText(drawing, "first");
+
+    // A clone put into the drawing without an undo step: two texts that show,
+    // with one handle and one place among the attributes.
+    RS_Entity* twin = nameText->clone();
+    drawing.m_graphic.addEntity(twin);
+    REQUIRE(twin->sourceHandle() == nameText->sourceHandle());
+
+    // checkWrittenDxf() looks for a handle that two records have.
+    for (const auto& file : saveAll(bench, drawing, "twin", {"dxf2018", "dxf2007", "dwg2018"},
+                                    "INSERT@0[first|first|second||secret] TEXT[] hidden=0 LINE=1")) {
+        CHECK(attributeTags(file) == std::vector<std::string>{"NAME", "NAME", "NOTE", "BLANK", "CODE"});
+    }
+}
+
+TEST_CASE("pasted attribute texts stay with the pasted block reference",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-owner]") {
+    const Bench bench("attr_owner_paste");
+    EditableDrawing source;
+    loadWithHandles(bench, source, "fixture");
+    QList<RS_Entity*> copied =
+        selection({referenceAt(source, 0), lineText(source, "first"), lineText(source, "second")});
+    source.m_graphic.select(copied, true);
+    LC_CopyUtils::copy(RS_Vector(0.0, 0.0), copied, &source.m_graphic);
+    source.m_graphic.select(copied, false);
+
+    // Twice into another drawing: each paste is a block reference with its
+    // two texts, new to that drawing.
+    EditableDrawing drawing;
+    for (const double x : {0.0, 50.0}) {
+        drawing.modify([&](LC_DocumentModificationBatch& ctx) {
+            LC_CopyUtils::paste(LC_CopyUtils::RS_PasteData(RS_Vector(x, 0.0)), &drawing.m_graphic, ctx);
+        });
+    }
+    REQUIRE(drawing.live<RS_Insert>(RS2::EntityInsert).size() == 2);
+    REQUIRE(drawing.live<RS_Text>(RS2::EntityText).size() == 4);
+    for (const RS_Entity* entity : drawing.m_graphic) {
+        REQUIRE(entity != nullptr);
+        CHECK(entity->sourceHandle() == 0);
+    }
+    CHECK(referenceAt(drawing, 0)->lineage() != referenceAt(drawing, 50)->lineage());
+
+    drawing.edit(lineText(drawing, "first", 51.0), [](RS_Text& text) { text.setText("pasted"); });
+    for (const auto& file : saveAll(bench, drawing, "pasted", {"dxf2018", "dwg2018"},
+                                    "INSERT@0[first|second] INSERT@50[pasted|second] TEXT[] hidden=0 LINE=0")) {
+        CHECK(attributeTags(file).size() == 4);
+        CHECK(lc::test::dxfRecords(file, "TEXT").empty());
     }
 }
 

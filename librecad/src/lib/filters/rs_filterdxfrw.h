@@ -2411,6 +2411,16 @@ protected:
 private:
   void prepareBlocks();
   void prepareDxfEntityHandleMap();
+  void buildInsertAttribPlan();
+  /** A text its INSERT writes as an ATTRIB. */
+  bool isInsertAttribChild(const RS_Entity *entity) const {
+    return m_insertAttribPlan.claimed.count(entity) != 0;
+  }
+  /** A text without a record of its own: an ATTRIB of its INSERT, or left out. */
+  bool hasNoOwnRecord(const RS_Entity *entity) const {
+    return isInsertAttribChild(entity) ||
+           m_insertAttribPlan.leftOut.count(entity) != 0;
+  }
   void writeEntity(RS_Entity *e);
 #ifdef DWGSUPPORT
   void prepareDwgEntityHandleMap();
@@ -3210,6 +3220,20 @@ private:
   QHash<RS_Entity *, QString> m_noNameBlock;
   /** Planned DXF INSERT handles grouped by their referenced block name. */
   std::map<QString, std::vector<std::uint32_t>> m_dxfBlockInsertHandles;
+  /**
+   * What becomes of the texts read as block attributes, for the export in
+   * progress. Built by buildInsertAttribPlan() before either writer starts,
+   * emptied when fileExport() returns.
+   */
+  struct InsertAttribPlan {
+    /** The sibling texts each INSERT writes as its ATTRIBs, in attribute order. */
+    std::map<const RS_Entity *, std::vector<RS_Entity *>> children;
+    /** All of those: written inside their INSERT, never as records of their own. */
+    std::set<const RS_Entity *> claimed;
+    /** Texts no INSERT claims that show nothing (hidden or empty): not written. */
+    std::set<const RS_Entity *> leftOut;
+  };
+  InsertAttribPlan m_insertAttribPlan;
   /** Numbered paper spaces written, empty, for the layouts naming them. */
   std::vector<std::string> m_dxfExtraPaperSpaces;
   /** Source handles of the objects the DXF being written holds. */
