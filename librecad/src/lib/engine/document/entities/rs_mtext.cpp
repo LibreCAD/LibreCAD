@@ -51,6 +51,8 @@ constexpr double g_defaultTabInterval = 4.0 * g_layoutHeight;
 constexpr double g_rightToLeftTabSpaces = 4.0;
 // A paragraph command that is longer than this is taken for text.
 constexpr qsizetype g_maxParagraphCommandLength = 256;
+// A font command or a stack that is longer than this is taken for text.
+constexpr qsizetype g_maxInlineCommandLength = 256;
 
 /**
  * Skips a decimal number such as "-3", "1.5" or ".5" at @p pos.
@@ -186,6 +188,132 @@ qsizetype paragraphCommandEnd(const QString& text, const qsizetype start) {
         }
     }
     return hasProperty ? end : -1;
+}
+
+/**
+ * Finds the ";" that closes the arguments of a font command, such as the one
+ * of "\fArial|b0|i0|c0|p34;". The arguments are on one line and hold neither
+ * a command nor a brace.
+ *
+ * @param text the content of the MText
+ * @param start the index of the first character after the "f" or "F"
+ * @return the index of the closing ";", or -1 if this is not a font command
+ */
+qsizetype fontCommandEnd(const QString& text, const qsizetype start) {
+    const qsizetype limit = std::min(text.size(), start + g_maxInlineCommandLength);
+    for (qsizetype pos = start; pos < limit; ++pos) {
+        switch (text.at(pos).unicode()) {
+            case ';':
+                return pos;
+            case '\\':
+            case '{':
+            case '}':
+            case 0x0A:
+            case 0x0D:
+                return -1;
+            default:
+                break;
+        }
+    }
+    return -1;
+}
+
+/**
+ * Finds the end of an MTEXT command that takes one value: a height "\H2.5x;",
+ * a width "\W0.8x;", a tracking "\T1.2;", an oblique angle "\Q15;", a colour
+ * "\C1;" or "\c255;", an alignment "\A1;".
+ *
+ * As with a paragraph command, only one that follows the grammar from its
+ * letter to its ";" is accepted: the "\H" of "C:\Home" stays text.
+ *
+ * @param text the content of the MText
+ * @param start the index of the letter
+ * @return the index of the closing ";", or -1 if this is not such a command
+ */
+qsizetype valueCommandEnd(const QString& text, const qsizetype start) {
+    const qsizetype end = text.size();
+    qsizetype pos = start + 1;
+    switch (text.at(start).unicode()) {
+        case 'H': // height
+        case 'W': // width factor
+        case 'T': // tracking
+            if (!skipNumber(text, pos, end)) {
+                return -1;
+            }
+            // "x": a multiple of the current value
+            if (pos < end && text.at(pos) == QChar('x')) {
+                ++pos;
+            }
+            break;
+
+        case 'Q': // oblique angle
+            if (!skipNumber(text, pos, end)) {
+                return -1;
+            }
+            break;
+
+        case 'C': // colour by index
+        case 'c': { // colour by value
+            const qsizetype digits = pos;
+            while (pos < end && text.at(pos) >= QChar('0') && text.at(pos) <= QChar('9')) {
+                ++pos;
+            }
+            if (pos == digits) {
+                return -1;
+            }
+            break;
+        }
+
+        case 'A': // alignment in the line: bottom, middle, top
+            if (pos >= end || text.at(pos) < QChar('0') || text.at(pos) > QChar('2')) {
+                return -1;
+            }
+            ++pos;
+            break;
+
+        default:
+            return -1;
+    }
+    return pos < end && text.at(pos) == QChar(';') ? pos : -1;
+}
+
+/**
+ * Reads the stack of a "\S" command, such as "1^2;", "1/2;" or "1#2;", as the
+ * text it was typed as: both parts with their separator between them. A
+ * backslash makes the next character an ordinary one.
+ *
+ * A stack has a separator; without one, as in "\Share;", this is text.
+ *
+ * @param text the content of the MText
+ * @param start the index of the first character after the "S"
+ * @param typed receives the stack as plain text
+ * @return the index of the closing ";", or -1 if this is not a stack
+ */
+qsizetype stackCommandEnd(const QString& text, const qsizetype start, QString& typed) {
+    const qsizetype limit = std::min(text.size(), start + g_maxInlineCommandLength);
+    QString stack;
+    bool separated = false;
+    for (qsizetype pos = start; pos < limit; ++pos) {
+        char16_t c = text.at(pos).unicode();
+        if (c == '\\' && pos + 1 < limit) {
+            c = text.at(++pos).unicode();
+        }
+        else if (c == ';') {
+            if (!separated) {
+                return -1;
+            }
+            typed = stack;
+            return pos;
+        }
+        else if (c == '^' || c == '/' || c == '#') {
+            separated = true;
+        }
+        if (c == 0x0A || c == 0x0D) {
+            return -1;
+        }
+        stack.append(c < 0x20 ? QChar(' ') : QChar(c));
+    }
+    return -1;
 }
 
 /**
@@ -425,6 +553,164 @@ int RS_MText::getNumberOfLines() const {
     return 1 + std::count_if(m_data.text.cbegin(), m_data.text.cend(), [](QChar c) {
         return c.unicode() == 0xA;
     });
+}
+
+/**
+ * The content of an MText on one line, without its codes.
+ *
+ * @p text is MTEXT content the way RS_FilterDXFRW::toNativeString() leaves it:
+ * line breaks, tabs and the special characters are the characters themselves,
+ * every other code is still spelled out. What is typed in LibreCAD is taken
+ * the same way, with "\P", "\~" and "%%d" still as codes.
+ */
+QString RS_MText::toPlainLine(const QString& text) {
+    QString plain;
+    plain.reserve(text.size());
+    // A run of line breaks is one space, and only between two pieces of text.
+    bool lineBreak = false;
+    const auto append = [&plain, &lineBreak](const QChar c) {
+        if (lineBreak && !plain.isEmpty()) {
+            plain.append(QChar(' '));
+        }
+        lineBreak = false;
+        plain.append(c);
+    };
+
+    const qsizetype size = text.size();
+    for (qsizetype i = 0; i < size; ++i) {
+        const char16_t c = text.at(i).unicode();
+        if (c == 0x0A || c == 0x0D) {
+            lineBreak = true;
+            continue;
+        }
+        if (c < 0x20) {
+            // a tab, or a control character that a line has no place for
+            append(QChar(' '));
+            continue;
+        }
+        if (c == '{' || c == '}') {
+            // the scope of the commands inside
+            continue;
+        }
+        if (c == '%' && i + 2 < size && text.at(i + 1) == QChar('%')) {
+            // the codes RS_FilterDXFRW::toNativeString() decodes, typed here
+            char16_t special = 0;
+            switch (text.at(i + 2).toLower().unicode()) {
+                case 'c':
+                    special = 0x2300;
+                    break;
+                case 'd':
+                    special = 0x00B0;
+                    break;
+                case 'p':
+                    special = 0x00B1;
+                    break;
+                default:
+                    break;
+            }
+            if (special != 0) {
+                append(QChar(special));
+                i += 2;
+                continue;
+            }
+        }
+        if (c != '\\') {
+            append(QChar(c));
+            continue;
+        }
+        if (i + 1 >= size) {
+            // a backslash that ends the text is not drawn either
+            break;
+        }
+
+        qsizetype commandEnd = -1;
+        const char16_t command = text.at(i + 1).unicode();
+        switch (command) {
+            case '\\':
+            case '{':
+            case '}':
+                append(QChar(command));
+                commandEnd = i + 1;
+                break;
+
+            case 0x0A:
+                // "\\P" in a file is a backslash and a "P"; toNativeString()
+                // took the "\P" in it for a line break
+                append(QChar('\\'));
+                append(QChar('P'));
+                commandEnd = i + 1;
+                break;
+
+            case 'P': // new paragraph
+            case 'N': // new column
+                lineBreak = true;
+                commandEnd = i + 1;
+                break;
+
+            case '~': // a space that does not break
+                append(QChar(' '));
+                commandEnd = i + 1;
+                break;
+
+            case 'L': // underline
+            case 'l':
+            case 'O': // overline
+            case 'o':
+            case 'K': // strike through
+            case 'k':
+            case 'X': // wrap at the dimension line
+                commandEnd = i + 1;
+                break;
+
+            case 'S': {
+                QString typed;
+                commandEnd = stackCommandEnd(text, i + 2, typed);
+                if (commandEnd >= 0) {
+                    for (const QChar part : typed) {
+                        append(part);
+                    }
+                }
+                break;
+            }
+
+            case 'f':
+                if (i + 2 < size && text.at(i + 2) == QChar('{')) {
+                    // "\f{name}": the font change of update()
+                    const qsizetype closing =
+                        QStringView(text).mid(i + 3, g_maxInlineCommandLength).indexOf(QChar('}'));
+                    commandEnd = closing < 0 ? i + 2 : i + 3 + closing;
+                    break;
+                }
+                [[fallthrough]];
+            case 'F':
+                commandEnd = fontCommandEnd(text, i + 2);
+                break;
+
+            case 'H':
+            case 'W':
+            case 'T':
+            case 'Q':
+            case 'C':
+            case 'c':
+            case 'A':
+                commandEnd = valueCommandEnd(text, i + 1);
+                break;
+
+            case 'p':
+                commandEnd = paragraphCommandEnd(text, i + 1);
+                break;
+
+            default:
+                break;
+        }
+        if (commandEnd < 0) {
+            // not a command: the backslash is text, and so is what follows it
+            append(QChar('\\'));
+            continue;
+        }
+        i = commandEnd;
+    }
+    return plain;
 }
 
 /**
