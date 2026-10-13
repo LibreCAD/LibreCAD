@@ -828,6 +828,7 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-13 | P5 DXF inventory allocation preflight repair | In progress | Frozen private `librecad-dxf-inventory-preflight.zWvzRh`; two-path successor, source only | Root and independent peer approve direct borrowed-value sizing before owning copies and native appData alias allocation. Complete429-source identities verify; ten authored cases include actual2,048-value/reactor N and N−1 limits | Unbuilt/unrun; fresh normal/sanitizer driver under preparation. Existing DWG helpers are unchanged. Neutral DXF Complete is not Carrier Known or unique ownership; footer-alias rejection remains a future Carrier-adaptation gate |
 | 2026-10-13 | P5 DXF inventory first fresh validation | In progress | Exact zW source in `librecad-dxf-collector-driver.Bxtz0l`; original normal36473/ASan58176 retained | Both configure/build steps exit0 with49 fresh TUs. Both drivers exit2 before runtime: actual dependency audit refuses selected Qt's resolved `qtbase/6.11.2_1` headers outside the declared Qt meta-package root. All429-source/26-direct-input before/after checks0 | No runtime acceptance or successful complete build audit. Independently verify the selected Qt module relationship and use a distinct narrowly corrected driver; do not broaden the allowlist to all Homebrew or overwrite these runs |
 | 2026-10-13 | P5 DXF inventory corrected-provider validation | In progress | Source-identical `librecad-dxf-collector-qt.4exo5A`; original normal61763/ASan31332 retained | Normal terminal0:168,934 / 73 unfiltered and530 / 10 expanded. Both lanes freshly compile49 TUs and pass actual dependency/archive/link audits; ASan unfiltered also exits0:168,934 / 73, but expanded run aborts−6 during Catch teardown after its printed530 / 10 footer. All429-source/50-direct/104-artifact after-checks0 | Sanitizer lane terminal2, not accepted. Isolate the framework-only failure without disabling container checks; a printed assertion footer is not process success. Neutral inventory only: no unique carrier ownership, whole graph, filter or activation |
+| 2026-10-13 | P5 isolated test-framework sanitizer diagnostic | In progress | Frozen `librecad-catch-compatibility.FXQ12O`; original51412 retained, no production source linked | Fresh strict instrumented C++ test compile/link0; unfiltered0:3 / 1. Expanded `[compatibility] --success` aborts134 with ASan container-overflow during Catch configuration, before test execution. Clean environment; ten input and six built-artifact before/after checks0; lane terminal1 | A framework-only reproduction, not proof that the original teardown failure is identical or harmless. Exact installed Catch3.16.1 archives remain uninstrumented. Rebuild the exact version coherently with instrumentation and rerun without container-detector suppression; collector sanitizer acceptance remains open |
 | 2026-10-12 | P5 current STYLE catalog materialization | In progress | Frozen private `librecad-style-materialize.7PRrg9`; ten-path source-only proposal, not integrated or built | Complete root/peer source review requires changes for old-name fallback resurrection and independent header/legacy/dimension references. Sealed original catalog follows the live style list; one detached current emission plan resolves body and outer references independently | Separate source successor required. Header ABI changed: no old Tp archive acceptance. Add matching registrations, exact fixture assets/actual STYLE records and reviewed unsafe/paint repair before fresh coherent builds. No full STYLE history wire graph, carrier/loaded restoration or activation |
 | 2026-10-13 | P5 current STYLE consumer successor | In progress | Frozen private `librecad-style-successor.HcEKWL`; fourteen cumulative paths, source only | Root and independent peer approve the bounded source successor; all5,856 source paths/hashes verify. Pre-open legacy/dimension/header checks prevent stale aliases; literal regressions retain DXF/DWG actual STYLE references and prior-file preservation | Unbuilt/unrun. Combine full inherited letters prerequisites and reviewed unsafe/paint repair, register catalog sources/tests, and rebuild all matching ABI consumers. Outer-only opaque-profile unchanged-save policy and full carrier remain pending |
 | 2026-10-13 | P4/P5 coherent STYLE and letters assembly | In progress | Frozen private `librecad-style-letters-combined.GYQ5Hq`; nineteen-path delta from Hc, source only | Root/peer approve complete2,674-line source delta and closure; all5,862 source identities verify. Full seventeen-path letters prerequisite union, catalog registrations and committed canonical scope test are included; all fourteen Hc-owned files remain exact | Unbuilt/unrun. Application-plus35-target driver held for a distinct reviewed host-common successor; both after-checks must run independently on failure. No stale ABI archive, allocator duplication, activation or completion claim |
@@ -2719,6 +2720,38 @@ its failure log is
 Keep all predecessor/current artifacts unchanged. No application/qmake,
 unique-ownership/DXF Carrier Known, full drawing/model/STYLE, filter two-pass,
 loaded restoration, saved activation or P5 completion is established.
+
+#### Isolated framework-only sanitizer diagnostic
+
+Root and an independent peer read the complete eleven-line standard-C++ test,
+driver, README and ten-input manifest before the one original invocation:
+`bash /private/tmp/librecad-catch-compatibility.FXQ12O/run-reviewed.sh --run-reviewed`.
+Manifest SHA256 is
+`611a5f0a93059a8db49a8bbe3cfff279154008503a6193313db629a681db0b65`.
+The new test owns a `vector<string>` and checks its ordinary values. Its fresh
+O1/g strict GNU++17 TU and link use address/undefined sanitizers and frame
+pointers, the selected Xcode SDK, and only the exact installed Catch2 3.16.1
+static archives. Actual link-map/runtime records contain no LibreCAD, Qt or
+native library. The process uses an empty inherited environment; leak detection
+alone is disabled. No container detector or compiler instrumentation is disabled.
+
+Original session51412 closes1. Compile/link0; the unfiltered process exits0
+with3 assertions / 1 case. The expanded `[compatibility] --success` process
+aborts134 with ASan container-overflow in Catch configuration/string trimming
+before test execution. Ten direct-input and six built-artifact after-checks0.
+Status SHA256 is
+`3a3be7ced989c5ccb734d35309d23371183e8520c6470702c13bf818de53049f`;
+failure log is
+`83223e8f27a5410b7b74affc7123916161350137f74860905fa3862d81d07c14`;
+binary is
+`2a5bd67db1a98a4d8c3aa4cdd11c171250d8a50d09c976395cb22b2b4c9cc3e5`.
+This establishes a failure with no production code linked, not identity with
+the collector's teardown failure, a proven false positive, or acceptance of
+the collector. Retain both failures unchanged. The next check must use the
+exact official Catch3.16.1 source, a freshly instrumented matching framework
+and fresh matching test/helper objects, with actual dependency/link audits and
+no detector suppression. Do not modify the user's existing Catch submodule or
+global installation to obtain that diagnostic closure.
 
 ### Private immutable fresh embedded import history
 
