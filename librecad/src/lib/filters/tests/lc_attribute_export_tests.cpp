@@ -41,10 +41,14 @@
 #include <system_error>
 #include <vector>
 
+#include <QFile>
 #include <QString>
 
+#include "drw_entities.h"
+#include "lc_drwnullinterface.h"
 #include "lc_filtertestsupport.h"
 #include "lc_sourcefonts.h"
+#include "libdwgr.h"
 #include "rs_block.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
@@ -184,12 +188,30 @@ std::string attdefDxf() {
            "1\ndefault text\\Psecond line\n73\n1\n44\n1.0\n";
 }
 
-// A drawing with one MTEXT that belongs to no block reference.
+// A drawing with one MTEXT that belongs to no block reference. Without a
+// spacing style the MTEXT has no group 73.
 std::string standaloneMTextDxf(const std::string& spacingStyle) {
+    const std::string group73 = spacingStyle.empty() ? std::string() : "73\n" + spacingStyle + "\n";
     return "0\nSECTION\n2\nENTITIES\n0\nMTEXT\n100\nAcDbEntity\n8\n0\n100\nAcDbMText\n"
-           "10\n1\n20\n4\n30\n0\n40\n9\n41\n80\n71\n1\n72\n5\n1\nmy text\\Psecond line\n73\n"
-           + spacingStyle + "\n44\n1.0\n0\nENDSEC\n0\nEOF\n";
+           "10\n1\n20\n4\n30\n0\n40\n9\n41\n80\n71\n1\n72\n5\n1\nmy text\\Psecond line\n"
+           + group73 + "44\n1.0\n0\nENDSEC\n0\nEOF\n";
 }
+
+// The line-spacing style of an MTEXT is its group 73: 1 is "at least", 2 is
+// "exact", and without the group it is 1. A file may hold another value: 0
+// is what earlier builds of LibreCAD stored in the MTEXT of an attribute.
+struct SpacingStyleRow {
+    const char* m_name;                             // also the start of the file names
+    const char* m_group73;                          // empty: the MTEXT has no such group
+    RS_MTextData::MTextLineSpacingStyle m_style;    // what the drawing shows
+    const char* m_written;                          // group 73 of a file saved from the drawing
+};
+const SpacingStyleRow kSpacingStyleRows[] = {
+    {"absent", "", RS_MTextData::AtLeast, "1"},
+    {"one", "1", RS_MTextData::AtLeast, "1"},
+    {"two", "2", RS_MTextData::Exact, "2"},
+    {"zero", "0", RS_MTextData::AtLeast, "1"},
+};
 
 // Writes a DXF text to <name>.dxf of the case and opens it. Returns the file.
 std::filesystem::path loadDxf(const Bench& bench, const std::string& dxf, EditableDrawing& drawing,
@@ -363,6 +385,19 @@ void checkRepeatsSource(const DxfRecord& source, const std::filesystem::path& wr
             CHECK(lc::test::sameValues(source.embedded(code), record.embedded(code)));
         }
     }
+}
+
+// What libdxfrw reads of a DWG, without the filter in between: the block
+// references with their attributes.
+struct DwgContent : lc::test::NullDrwInterface {
+    std::vector<DRW_Insert> m_inserts;
+    void addInsert(const DRW_Insert& insert) override { m_inserts.push_back(insert); }
+};
+
+void readDwg(const std::filesystem::path& file, DwgContent& content) {
+    CAPTURE(file.filename().string());
+    dwgRW reader(QFile::encodeName(lc::test::toQString(file)).constData());
+    REQUIRE(reader.read(&content, false));
 }
 
 // A drawing of AutoCAD's own that is not in the repository; empty when the
@@ -689,6 +724,89 @@ TEST_CASE("the single-line and the standalone fixture open as the texts they des
         const DxfRecord record = onlyRecord(out, "MTEXT");
         CHECK(record.own(1) == std::vector<std::string>{"my text\\Psecond line"});
         CHECK(record.own(73) == std::vector<std::string>{"1"});
+    }
+}
+
+TEST_CASE("a standalone MTEXT keeps its line-spacing style",
+          "[attribute-export][mtext][filter][dxf][dwg][mtext-spacing]") {
+    const Bench bench("mtext_spacing_style");
+    for (const SpacingStyleRow& row : kSpacingStyleRows) {
+        CAPTURE(row.m_name);
+        EditableDrawing drawing;
+        loadDxf(bench, standaloneMTextDxf(row.m_group73), drawing, std::string(row.m_name) + "_source");
+        CHECK(only<RS_MText>(drawing, RS2::EntityMText)->getLineSpacingStyle() == row.m_style);
+
+        for (const Target& to : kTargets) {
+            CAPTURE(to.m_name);
+            const auto out = save(bench, drawing, row.m_name, to);
+            EditableDrawing reopened;
+            REQUIRE(lc::test::importDrawing(reopened.m_graphic, out, to.m_format));
+            CHECK(only<RS_MText>(reopened, RS2::EntityMText)->getLineSpacingStyle() == row.m_style);
+
+            if (to.m_dxf) {
+                checkWrittenDxf(out);
+            }
+            // What a DWG holds is read here as the DXF that the drawing it
+            // opens as is saved to.
+            const auto dxf =
+                to.m_dxf ? out : save(bench, reopened, std::string(row.m_name) + "_" + to.m_name, target("dxf2007"));
+            CHECK(onlyRecord(dxf, "MTEXT").own(73) == std::vector<std::string>{row.m_written});
+        }
+    }
+}
+
+TEST_CASE("the MTEXT of an attribute keeps line-spacing style 2 and never stores 0",
+          "[attribute-export][attrib][filter][dxf][dwg][mtext-spacing]") {
+    const Bench bench("attr_spacing_style");
+    for (const SpacingStyleRow& row : kSpacingStyleRows) {
+        if (std::string(row.m_group73).empty()) {
+            continue;   // AutoCAD always writes the group in the MTEXT of an attribute
+        }
+        CAPTURE(row.m_name);
+        AttributeDxf fixture = AttributeDxf::rich();
+        fixture.m_spacingStyle = row.m_group73;
+        EditableDrawing drawing;
+        const DxfRecord source =
+            onlyRecord(load(bench, fixture, drawing, std::string(row.m_name) + "_source"), "ATTRIB");
+        REQUIRE(source.embedded(73) == std::vector<std::string>{row.m_group73});
+        CHECK(only<RS_MText>(drawing, RS2::EntityMText)->getLineSpacingStyle() == row.m_style);
+
+        for (const char* format : {"dxf2018", "dwg2018"}) {
+            const Target to = target(format);
+            CAPTURE(to.m_name);
+            const auto out = save(bench, drawing, row.m_name, to);
+            EditableDrawing reopened;
+            REQUIRE(lc::test::importDrawing(reopened.m_graphic, out, to.m_format));
+            CHECK(only<RS_MText>(reopened, RS2::EntityMText)->getLineSpacingStyle() == row.m_style);
+
+            if (to.m_dxf) {
+                checkWrittenDxf(out);
+            }
+            else {
+                // The value in the DWG itself: the drawing shows a 0 as it
+                // shows a 1.
+                DwgContent content;
+                readDwg(out, content);
+                REQUIRE(content.m_inserts.size() == 1);
+                REQUIRE(content.m_inserts.front().attlist.size() == 1);
+                const auto& attribute = content.m_inserts.front().attlist.front();
+                REQUIRE(attribute != nullptr);
+                REQUIRE(attribute->mtext != nullptr);
+                CHECK(std::to_string(attribute->mtext->linespacingStyle) == row.m_written);
+            }
+            // The MTEXT in a DWG is read as the DXF of the drawing it opens as.
+            const auto dxf =
+                to.m_dxf ? out : save(bench, reopened, std::string(row.m_name) + "_" + to.m_name, target("dxf2018"));
+            const DxfRecord record = onlyRecord(dxf, "ATTRIB");
+            CHECK(record.embedded(73) == std::vector<std::string>{row.m_written});
+            // A value that reads as the default is no edit of the attribute:
+            // the factor and the text with its font code are the file's, and
+            // no measured size (42, 43) is added.
+            CHECK(lc::test::sameValues(source.embedded(44), record.embedded(44)));
+            CHECK(record.embedded(1) == source.embedded(1));
+            CHECK(record.embedded(42).empty());
+            CHECK(record.embedded(43).empty());
+        }
     }
 }
 

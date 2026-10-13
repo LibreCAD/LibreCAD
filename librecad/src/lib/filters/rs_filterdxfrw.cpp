@@ -187,6 +187,17 @@ void setMTextRtlMarker(DRW_Text &text, std::int32_t layout) {
   text.extData = std::move(filtered);
 }
 
+// MTEXT group 73, in DWG the BS after the text: 1 = at least, 2 = exact.
+// A file may hold another value (0 in the embedded MTEXT of older LibreCAD
+// DWG output); it reads as the default and is not written back.
+RS_MTextData::MTextLineSpacingStyle mtextLineSpacingStyle(const DRW_MText &mtext) {
+  return mtext.linespacingStyle == 2 ? RS_MTextData::Exact : RS_MTextData::AtLeast;
+}
+
+std::uint16_t mtextLineSpacingCode(RS_MTextData::MTextLineSpacingStyle style) {
+  return style == RS_MTextData::Exact ? 2 : 1;
+}
+
 
 constexpr int kImportedSplineFallbackSamples = 96;
 
@@ -8146,11 +8157,7 @@ RS_MText *RS_FilterDXFRW::mtextEntityFromDRW(const DRW_MText &data) {
     dir = RS_MTextData::ByStyle;
   }
 
-  if (data.linespacingStyle == 1) {
-    lss = RS_MTextData::AtLeast;
-  } else {
-    lss = RS_MTextData::Exact;
-  }
+  lss = mtextLineSpacingStyle(data);
   QString mtext = toNativeString(QString::fromUtf8(data.text.c_str()));
   QString sty = QString::fromUtf8(data.style.c_str());
   prepareTextStyleName(sty);
@@ -30678,11 +30685,10 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         mtext->alignH = static_cast<DRW_Text::HAlign>(
             data.drawingDirection == RS_MTextData::TopToBottom ? 3 :
             data.drawingDirection == RS_MTextData::ByStyle ? 5 : 1);
-        mtext->alignV = static_cast<DRW_Text::VAlign>(
-            data.lineSpacingStyle == RS_MTextData::Exact ? 2 : 1);
         mtext->interlin = data.lineSpacingFactor;
-        mtext->linespacingStyle =
-            data.lineSpacingStyle == RS_MTextData::Exact ? 2 : 1;
+        // Always the model's style: 1 and 2 read back as themselves, and no
+        // other source value may reach the file.
+        mtext->linespacingStyle = mtextLineSpacingCode(data.lineSpacingStyle);
         if (sidecar.hasMText) {
           const auto &saved = sidecar.mtext;
           DRW_MText original;
@@ -30727,8 +30733,6 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
               ? toDxfString(data.text, m_dwgW == nullptr).toUtf8().toStdString() : saved.text;
           mtext->textgen = saved.textgen;
           mtext->alignH = static_cast<DRW_Text::HAlign>(saved.alignH);
-          mtext->linespacingStyle =
-              static_cast<std::uint16_t>(saved.linespacingStyle);
           mtext->interlin = saved.interlin;
           mtext->m_backgroundFlags = saved.backgroundFlags;
           mtext->m_backgroundScale = saved.backgroundScale;
@@ -30799,12 +30803,8 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
                 data.drawingDirection == RS_MTextData::TopToBottom ? 3 :
                 data.drawingDirection == RS_MTextData::ByStyle ? 5 : 1);
           }
-          if (spacingEdited) {
-            mtext->alignV = static_cast<DRW_Text::VAlign>(
-                data.lineSpacingStyle == RS_MTextData::Exact ? 2 : 1);
-            mtext->linespacingStyle = data.lineSpacingStyle == RS_MTextData::Exact ? 2 : 1;
+          if (spacingEdited)
             mtext->interlin = data.lineSpacingFactor;
-          }
           if (positionEdited) {
             mtext->basePoint.x = data.insertionPoint.x;
             mtext->basePoint.y = data.insertionPoint.y;
@@ -31038,11 +31038,7 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
     // Marker 1 preserves old drawings; marker 2 stores logical Unicode RTL.
     setMTextRtlMarker(*text, t->getDrawingDirection() == RS_MTextData::RightToLeft
         ? (t->getData().legacyRtlLayout ? kLegacyRtlLayout : kLogicalRtlLayout) : 0);
-    if (t->getLineSpacingStyle() == RS_MTextData::AtLeast) {
-      text->alignV = static_cast<DRW_Text::VAlign>(1);
-    } else {
-      text->alignV = static_cast<DRW_Text::VAlign>(2);
-    }
+    txt2.linespacingStyle = mtextLineSpacingCode(t->getLineSpacingStyle());
 
     text->text = toDxfString(t->getText(), m_dwgW == nullptr).toUtf8().data();
     //        text->widthscale =t->getWidth();
