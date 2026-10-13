@@ -13252,7 +13252,7 @@ TEST_CASE("RS_FilterDXFRW distinguishes imported and generated active VPORTs",
       source.dwgAdvancedMetadata().addVport(vport);
       if (value.markImported) {
         source.dwgAdvancedMetadata().setSourceDwgVersion(DRW::AC1018);
-        source.dwgAdvancedMetadata().markVportsImportedFromDwg();
+        source.dwgAdvancedMetadata().markVportsImported();
       }
     }
 
