@@ -433,7 +433,7 @@ protected:
     bool m_lastDashValid = false;
     RS2::LineType m_lastDashLineType = RS2::SolidLine;
     double m_lastDashScreenWidth = 0.;
-    double m_lastDashDpmm = 0.;
+    double m_lastDashDeviceScale = 0.;
     double m_cachedDpmm = 0.;
     double m_minCircleDrawingRadius = 2.0;
     double m_minArcDrawingRadius = 0.8;

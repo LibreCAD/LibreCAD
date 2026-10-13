@@ -25,6 +25,7 @@
 
 #include <functional>
 
+#include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
 #include <QImage>
@@ -35,6 +36,7 @@
 #include "lc_overlayentity.h"
 #include "lc_overlaysmanager.h"
 #include "lc_printviewportrenderer.h"
+#include "lc_printpreviewviewrenderer.h"
 #include "lc_ref_snap_mark.h"
 #include "rs_color.h"
 #include "rs_line.h"
@@ -60,6 +62,7 @@ public:
     using LC_GraphicViewRenderer::setPenForDraftEntity;
     using LC_GraphicViewRenderer::setPenForEntity;
     using LC_GraphicViewRenderer::setPenForOverlayEntity;
+    using LC_GraphicViewRenderer::setupPainter;
     void beginPass() { doSetupBeforeContainerDraw(); }
 };
 
@@ -67,6 +70,14 @@ class TestPrintRenderer final : public LC_PrintViewportRenderer {
 public:
     using LC_PrintViewportRenderer::LC_PrintViewportRenderer;
     using LC_PrintViewportRenderer::setPenForPrintingEntity;
+    using LC_PrintViewportRenderer::setupPainter;
+};
+
+class TestPreviewRenderer final : public LC_PrintPreviewViewRenderer {
+public:
+    using LC_PrintPreviewViewRenderer::LC_PrintPreviewViewRenderer;
+    using LC_PrintPreviewViewRenderer::setPenForPrintingEntity;
+    using LC_PrintPreviewViewRenderer::setupPainter;
 };
 
 struct GreenPen final : LC_OverlayDrawable {
@@ -81,6 +92,52 @@ void installMarker(RS_Painter& painter, const RS2::LineType lineType) {
 }
 
 } // namespace
+
+TEST_CASE("drawing, draft, preview and print keep the same model-space dash lengths",
+          "[gui][pen][linetype]") {
+    (void)lc::test::application();
+    LC_GraphicViewport viewport;
+    viewport.setSize(640, 480);
+    QImage image(640, 480, QImage::Format_RGB32);
+    RS_Painter painter(&image);
+    RS_Line line{RS_Vector{0., 0.}, RS_Vector{100., 0.}};
+    line.setPen(testPen(RS2::DashLine));
+    std::function<void()> prepare;
+    SECTION("drawing") {
+        prepare = [&] {
+            TestViewRenderer renderer(&viewport, &image);
+            renderer.setupPainter(&painter);
+            renderer.setPenForEntity(&painter, &line, false);
+        };
+    }
+    SECTION("draft") {
+        prepare = [&] {
+            TestViewRenderer renderer(&viewport, &image);
+            renderer.setupPainter(&painter);
+            renderer.setPenForDraftEntity(&painter, &line, false);
+        };
+    }
+    SECTION("print preview") {
+        prepare = [&] {
+            TestPreviewRenderer renderer(&viewport, &image);
+            renderer.setupPainter(&painter);
+            renderer.setPenForPrintingEntity(&painter, &line);
+        };
+    }
+    SECTION("print and image export") {
+        prepare = [&] {
+            TestPrintRenderer renderer(&viewport, &painter);
+            renderer.setupPainter(&painter);
+            renderer.setPenForPrintingEntity(&painter, &line);
+        };
+    }
+    for (const double zoom : {0.5, 4.0, 1.0}) {
+        viewport.zoomIn(zoom / viewport.getFactor().x);
+        prepare();
+        REQUIRE(painter.pen().style() == Qt::CustomDashLine);
+        CHECK(painter.pen().dashPattern().front() / zoom == Catch::Approx(12.0));
+    }
+}
 
 TEST_CASE("a run of selected entities keeps advancing the selection dash phase",
           "[gui][pen][linetype]") {

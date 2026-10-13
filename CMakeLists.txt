@@ -3071,6 +3071,11 @@ if (BUILD_TESTS)
         librecad/src/ui/view/tests/qg_graphicview_draft_lines_tests.cpp)
     # Isolate GUI tests from the text tests' static offscreen bootstraps.
     add_librecad_filter_micro_test(
+        librecad_painter_tests
+        librecad/src/lib/gui/tests/rs_painter_tests.cpp)
+    target_sources(librecad_painter_tests PRIVATE
+        librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp)
+    add_librecad_filter_micro_test(
         librecad_dock_layout_tests
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp)
     target_sources(librecad_dock_layout_tests PRIVATE ${LIBRECAD_RES})
@@ -3340,6 +3345,10 @@ if (BUILD_TESTS)
             ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
     endif()
     if (LIBRECAD_REGISTER_INTEGRATION_TESTS)
+        add_test(NAME librecad_painter_tests
+            COMMAND $<TARGET_FILE:librecad_painter_tests> --reporter compact)
+        set_tests_properties(librecad_painter_tests PROPERTIES
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
         add_test(NAME librecad_console_svg_tests
             COMMAND $<TARGET_FILE:librecad_lc_consolesvgexporttests>
                 "[console]" --reporter compact)

@@ -90,17 +90,13 @@ namespace {
             && radiusY > 0.;
     }
 
-    // Screen units per pattern millimetre. Both the dash pattern and the dash
-    // offset are scaled by it.
-    double dashPatternScale(const double screenWidth, double dpmm) {
-        // dash pattern is in mm
-        // d*dpmm/screenWidth, so, the scaling factor k = dpmm/screenWidth
-        dpmm = std::max(dpmm, 1e-6);
-        return dpmm / std::max(screenWidth, 1.);
+    // Qt measures dashes and offsets in pen widths; a zero-width pen uses one pixel.
+    double dashPatternScale(const double screenWidth, const double deviceScale) {
+        return std::max(deviceScale, 1e-6) / (screenWidth > 0. ? screenWidth : 1.);
     }
 
     // Convert from LibreCAD line style pattern to QPen Dash Pattern.
-    // QPen dash pattern by default is in the unit of pixel
+    // Pattern lengths are in drawing units, not device pixels.
     QVector<qreal> rsToQDashPattern(const RS2::LineType t, const double k) {
         const RS_LineTypePattern* linePattern = RS_LineTypePattern::getPattern(t);
         if (linePattern == nullptr) {
@@ -110,7 +106,7 @@ namespace {
         }
         QVector<qreal> dashPattern = linePattern->pattern;
         std::transform(dashPattern.begin(), dashPattern.end(), dashPattern.begin(), [k](const qreal d) {
-            return std::max(k * std::abs(d), 1.);
+            return k * std::abs(d);
         });
         dashPattern.resize(dashPattern.size() - dashPattern.size() % 2);
         return dashPattern;
@@ -1576,11 +1572,14 @@ void RS_Painter::setPen(const RS_Pen& pen) {
 
     double screenWidth = pen.getScreenWidth();
     if (style == Qt::CustomDashLine) {
-        const double dpmm = getDpmmCached();
-        const double k = dashPatternScale(screenWidth/*p.widthF()*/, dpmm);
-        // The pattern depends only on the line type, width and resolution.
+        double deviceScale = m_viewport ? std::abs(toGuiDX(1.0)) : getDpmmCached();
+        // Cosmetic dashes use physical pixels rather than logical viewport pixels.
+        if (m_viewport && screenWidth == 0.0)
+            deviceScale *= getDevicePixelRatio();
+        const double k = dashPatternScale(screenWidth, deviceScale);
+        // Rebuild when the line type, width or viewport scale changes.
         if (!m_lastDashValid || m_lastDashLineType != lineType
-            || m_lastDashScreenWidth != screenWidth || m_lastDashDpmm != dpmm) {
+            || m_lastDashScreenWidth != screenWidth || m_lastDashDeviceScale != deviceScale) {
             QVector<qreal> dashPattern = rsToQDashPattern(lineType, k);
             if (dashPattern.isEmpty()) {
                 style = Qt::SolidLine;
@@ -1590,7 +1589,7 @@ void RS_Painter::setPen(const RS_Pen& pen) {
                 m_lastDashValid = true;
                 m_lastDashLineType = lineType;
                 m_lastDashScreenWidth = screenWidth;
-                m_lastDashDpmm = dpmm;
+                m_lastDashDeviceScale = deviceScale;
             }
         }
         if (style == Qt::CustomDashLine) {

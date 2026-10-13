@@ -25,10 +25,14 @@
 #include <cmath>
 #include <filesystem>
 
+#include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
 
 #include <QApplication>
+#include <QBuffer>
 #include <QImage>
+#include <QPdfWriter>
 #include <QPixmap>
 
 #include "lc_graphicviewport.h"
@@ -37,6 +41,7 @@
 #include "rs_color.h"
 #include "rs_graphic.h"
 #include "rs_line.h"
+#include "rs_linetypepattern.h"
 #include "rs_painter.h"
 #include "rs_pen.h"
 #include "rs_settings.h"
@@ -232,6 +237,98 @@ TEST_CASE("RS_Painter builds dashed pens from line type, width and offset",
     painter.setPen(dashed);
     CHECK(painter.pen().dashPattern() == blackDashed.dashPattern());
     CHECK(painter.pen().dashOffset() == 0.0);
+}
+
+TEST_CASE("dash lengths and phase retain drawing-unit scale across zoom and lineweights",
+          "[gui][painter][linetype]") {
+    (void)application();
+    PenTestPainter rig;
+    LC_GraphicViewport viewport;
+    viewport.setSize(640, 480);
+    for (const auto lineType : {RS2::DashLine, RS2::DotLine, RS2::DashDotLine}) {
+        const auto& pattern = RS_LineTypePattern::getPattern(lineType)->pattern;
+        for (const double zoom : {0.5, 4.0, 1.0, 4.0}) {
+            viewport.zoomIn(zoom / viewport.getFactor().x);
+            rig.painter.setViewPort(&viewport);
+            for (const double width : {0.0, 0.5, 1.0, 4.0}) {
+                RS_Pen pen = testPen(lineType, width);
+                pen.setDashOffset(-3.0);
+                rig.painter.setPen(pen);
+                const QPen actual = rig.painter.pen();
+                const double unit = (width > 0.0 ? width : 1.0) / zoom;
+                REQUIRE(actual.dashPattern().size() == pattern.size());
+                for (qsizetype i = 0; i < pattern.size(); ++i)
+                    CHECK(actual.dashPattern()[i] * unit == Catch::Approx(std::abs(pattern[i])));
+                CHECK(actual.dashOffset() * unit == Catch::Approx(-3.0));
+            }
+        }
+    }
+}
+
+TEST_CASE("viewport dash scale is independent of image DPI", "[gui][painter][linetype]") {
+    (void)application();
+    LC_GraphicViewport viewport;
+    viewport.setSize(640, 480);
+    viewport.zoomIn(2.0);
+    for (const int dpmm : {4, 24}) {
+        QImage image(640, 480, QImage::Format_RGB32);
+        image.setDotsPerMeterX(dpmm * 1000);
+        image.setDotsPerMeterY(dpmm * 1000);
+        RS_Painter painter(&image);
+        painter.setViewPort(&viewport);
+        painter.setPen(testPen(RS2::DashLine, 0.0));
+        CHECK(painter.pen().dashPattern() == QVector<qreal>{24.0, 12.0});
+    }
+}
+
+TEST_CASE("zooming preserves the rendered number of dashes", "[gui][painter][linetype]") {
+    (void)application();
+    const int dpr = GENERATE(1, 2);
+    for (const double zoom : {0.25, 1.0, 2.0, 4.0}) {
+        QImage image(640, 100, QImage::Format_RGB32);
+        image.setDevicePixelRatio(dpr);
+        image.fill(Qt::white);
+        LC_GraphicViewport viewport;
+        viewport.setSize(image.width() / dpr, image.height() / dpr);
+        viewport.zoomIn(zoom);
+        RS_Painter painter(&image);
+        painter.setViewPort(&viewport);
+        painter.setPenCapStyle(Qt::FlatCap);
+        painter.setPen(testPen(RS2::DashLine, 0.0));
+        painter.drawLine(QPointF(10, 20), QPointF(10 + 51 * zoom, 20));
+        REQUIRE(painter.end());
+        int dashes = 0;
+        bool previous = false;
+        for (int x = 0; x < image.width(); ++x) {
+            const bool dark = qGray(image.pixel(x, 20 * dpr)) < 128;
+            dashes += dark && !previous;
+            previous = dark;
+        }
+        CHECK(dashes == 3);
+    }
+}
+
+TEST_CASE("PDF dash lengths retain drawing-unit scale at different resolutions",
+          "[gui][painter][print][linetype]") {
+    (void)application();
+    for (const int dpi : {72, 600}) {
+        QBuffer output;
+        REQUIRE(output.open(QIODevice::WriteOnly));
+        QPdfWriter writer(&output);
+        writer.setResolution(dpi);
+        LC_GraphicViewport viewport;
+        viewport.setSize(writer.width(), writer.height());
+        const double scale = dpi / 72.0;
+        viewport.zoomIn(scale);
+        RS_Painter painter(&writer);
+        REQUIRE(painter.isActive());
+        painter.setViewPort(&viewport);
+        painter.setPen(testPen(RS2::DashLine, 0.5));
+        CHECK(painter.pen().dashPattern().front() * 0.5 / scale == Catch::Approx(12.0));
+        painter.drawLine(QPointF(0, 10), QPointF(100 * scale, 10));
+        REQUIRE(painter.end());
+        CHECK(output.data().startsWith("%PDF-"));
+    }
 }
 
 TEST_CASE("RS_Painter re-installs a pen that noCapStyle() replaced", "[gui][painter]") {
