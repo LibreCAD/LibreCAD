@@ -350,6 +350,14 @@ public:
   void writeEntities() override { m_rw->writeInsert(&m_insert); }
 };
 
+// Emits a single MTEXT on write.
+class MTextEmitter : public StubInterface {
+public:
+  DRW_MText m_mtext;
+  dxfRW *m_rw = nullptr;
+  void writeEntities() override { m_rw->writeMText(&m_mtext); }
+};
+
 class MissingBlockRecordEmitter : public StubInterface {
 public:
   dxfRW *m_rw = nullptr;
@@ -2635,6 +2643,76 @@ TEST_CASE("DXF MTEXT rejects out-of-range line spacing fields",
 
   readMalformed("65536", "lc_mtext_linespacing_overflow.dxf");
   readMalformed("-1", "lc_mtext_linespacing_negative.dxf");
+}
+
+TEST_CASE("DXF MTEXT writers store line spacing style 1 or 2 only",
+          "[dxf][mtext][mtext-spacing]") {
+  // Group 73 defines 1 (at least) and 2 (exact). A file may hold another
+  // value (earlier builds wrote 0 into an attribute's MTEXT); it is not
+  // copied out.
+  struct Case {
+    int stored;
+    int written;
+  };
+  const Case cases[] = {{0, 1}, {1, 1}, {2, 2}, {7, 1}};
+
+  SECTION("standalone MTEXT") {
+    for (const Case &c : cases) {
+      CAPTURE(c.stored);
+      const auto path = std::filesystem::temp_directory_path() /
+          ("lc_mtext_spacing_style_" + std::to_string(c.stored) + ".dxf");
+      std::filesystem::remove(path);
+
+      MTextEmitter em;
+      em.m_mtext.layer = "0";
+      em.m_mtext.height = 1.0;
+      em.m_mtext.text = "x";
+      em.m_mtext.linespacingStyle = static_cast<std::uint16_t>(c.stored);
+      {
+        dxfRW w(path.string().c_str());
+        em.m_rw = &w;
+        REQUIRE(w.write(&em, DRW::AC1021, false));
+      }
+
+      MTextCapture cap;
+      {
+        dxfRW r(path.string().c_str());
+        REQUIRE(r.read(&cap, /*ext=*/true));
+      }
+      std::filesystem::remove(path);
+      REQUIRE(cap.m_callCount == 1);
+      CHECK(cap.m_captured.text == "x");
+      CHECK(cap.m_captured.linespacingStyle == c.written);
+    }
+  }
+
+  SECTION("MTEXT of a multi-line attribute") {
+    for (const Case &c : cases) {
+      CAPTURE(c.stored);
+      DRW_Attrib attrib;
+      attrib.layer = "0";
+      attrib.tag = "LABEL";
+      attrib.text = "x";
+      attrib.basePoint = DRW_Coord(1.0, 2.0, 0.0);
+      attrib.height = 1.0;
+      attrib.attVersion = 1;
+      attrib.m_attributeType = 2;
+      attrib.mtext = std::make_unique<DRW_MText>();
+      attrib.mtext->basePoint = DRW_Coord(1.0, 2.0, 0.0);
+      attrib.mtext->height = 1.0;
+      attrib.mtext->text = "x";
+      attrib.mtext->linespacingStyle = static_cast<std::uint16_t>(c.stored);
+
+      const std::string name =
+          "lc_attrib_spacing_style_" + std::to_string(c.stored) + ".dxf";
+      const auto path = writeOnlyAttrib(attrib, name.c_str());
+      const DRW_Attrib att = readOnlyAttrib(path);
+      std::filesystem::remove(path);
+      REQUIRE(att.mtext);
+      CHECK(att.mtext->text == "x");
+      CHECK(att.mtext->linespacingStyle == c.written);
+    }
+  }
 }
 
 TEST_CASE("DXF MTEXT skips its group-101 embedded object",

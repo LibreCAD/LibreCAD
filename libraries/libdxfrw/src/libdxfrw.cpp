@@ -4863,7 +4863,7 @@ bool dxfRW::writeEmbeddedMText(DRW_MText *ent) {
         writer->writeDouble(43, ent->m_r2018ExtentsHeight);
     if (!hasXAxis && ent->angle != 0.0)
         writer->writeDouble(50, ent->angle);
-    writer->writeInt16(73, ent->linespacingStyle);
+    writer->writeInt16(73, ent->writtenLinespacingStyle());
     writer->writeDouble(44, ent->interlin);
     if (ent->m_backgroundFlags != 0) {
         writer->writeDouble(45, ent->m_backgroundScale);
@@ -5349,7 +5349,7 @@ bool dxfRW::writeMText(DRW_MText *ent){
             writer->writeDouble(21, ent->secPoint.y);
             writer->writeDouble(31, ent->secPoint.z);
         }
-        writer->writeInt16(73, ent->linespacingStyle);  // linespacing style (was: alignV)
+        writer->writeInt16(73, ent->writtenLinespacingStyle());  // linespacing style
         writer->writeDouble(44, ent->interlin);
 //RLZ ... 11, 21, 31 needed?
         if (!ent->extData.empty() && !writeExtData(ent->extData))
