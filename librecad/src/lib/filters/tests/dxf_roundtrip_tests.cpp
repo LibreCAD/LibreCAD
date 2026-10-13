@@ -3860,6 +3860,33 @@ TEST_CASE("DWG export replaces an existing file and leaves no other file",
 
   std::filesystem::remove_all(directory);
 }
+
+TEST_CASE("DWG export does not move a directory out of its way",
+          "[dwg][roundtrip][filter][export]") {
+  ensureSettings();
+  const std::filesystem::path directory = tmpFile("dwg_export_onto_directory");
+  std::filesystem::remove_all(directory);
+  // A directory has the name the export is to write.
+  const std::filesystem::path taken = directory / "drawing.dwg";
+  REQUIRE(std::filesystem::create_directories(taken));
+  writeText((taken / "kept.txt").string(), "kept");
+
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  graphic.addEntity(new RS_Line(
+      &graphic, RS_LineData(RS_Vector(0.0, 0.0), RS_Vector(10.0, 0.0))));
+  {
+    RS_FilterDXFRW filter;
+    CHECK_FALSE(filter.fileExport(
+        graphic, QString::fromStdString(taken.string()), RS2::FormatDWG));
+  }
+  // Neither under a backup name with a drawing in its place, nor emptied.
+  CHECK(entryNames(directory) == std::vector<std::string>{"drawing.dwg"});
+  CHECK(std::filesystem::is_directory(taken));
+  CHECK(entryNames(taken) == std::vector<std::string>{"kept.txt"});
+
+  std::filesystem::remove_all(directory);
+}
 #endif
 
 namespace {
