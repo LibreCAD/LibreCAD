@@ -6652,6 +6652,42 @@ int textGenerationFlags(RS_TextData::TextGeneration generation, int stored) {
     return 4;
   return (stored & 6) == 6 ? 6 : 0;
 }
+
+// The MTEXT embedded in an attribute names no linetype record of its own in
+// a file LibreCAD writes: only the three keywords survive.
+std::string embeddedMTextLineType(const std::string &sourceName) {
+  const std::string name = normalizeDwgTableName(sourceName);
+  if (name == "BYBLOCK" || name == "CONTINUOUS")
+    return name;
+  return "BYLAYER";
+}
+
+// A DWG R2018 MTEXT that is not annotative repeats its placement in a second
+// block (ODA 20.4.46, "redundant fields"); AutoCAD writes version 4 and the
+// default flag there. The model holds one placement, so the block is written
+// from the fields it repeats. sourceAnnotative: the attribute was read from a
+// DWG whose embedded MTEXT was annotative and carried a scale payload; only
+// then is a clear "not annotative" bit a stored fact and kept.
+void completeEmbeddedMTextForDwg(DRW_MText &mtext, bool sourceAnnotative) {
+  // DXF may give the direction as group 50 only; DWG has only the x-axis.
+  if (mtext.secPoint.x == 0.0 && mtext.secPoint.y == 0.0 &&
+      mtext.secPoint.z == 0.0) {
+    const double angle = mtext.angle * M_PI / 180.0;
+    mtext.secPoint = DRW_Coord(std::cos(angle), std::sin(angle), 0.0);
+  }
+  if (!sourceAnnotative)
+    mtext.m_r2018IsNotAnnotative = true;
+  if (!mtext.m_r2018IsNotAnnotative)
+    return;
+  if (mtext.m_r2018Version == 0) {
+    mtext.m_r2018Version = 4;
+    mtext.m_r2018DefaultFlag = true;
+  }
+  mtext.m_r2018Attachment = mtext.textgen;
+  mtext.m_r2018XAxisDir = mtext.secPoint;
+  mtext.m_r2018InsertionPoint = mtext.basePoint;
+  mtext.m_r2018RectWidth = mtext.widthscale;
+}
 } // namespace
 
 /**
@@ -16614,8 +16650,9 @@ QString RS_FilterDXFRW::exportReport() const {
   for (const auto &[what, count] : m_dxfLeftOut)
     lines << QStringLiteral("%1 × %2").arg(count).arg(QString::fromStdString(what));
   if (m_exportAttribScaleDataLeftOut > 0) {
-    lines << QObject::tr("annotation scale data of %1 multi-line attribute(s)",
-                         "RS_FilterDXFRW")
+    lines << QObject::tr(
+                 "annotation scale or column data of %1 multi-line attribute(s)",
+                 "RS_FilterDXFRW")
                  .arg(m_exportAttribScaleDataLeftOut);
   }
 #ifdef DWGSUPPORT
@@ -19583,6 +19620,9 @@ void RS_FilterDXFRW::writeLayers() {
           !stageDwgTableRecordIdentity(DwgWriteSourceKind::TableRecord,
                                        sourceHandle, lay.handle))
         m_writeFailed = true;
+      else
+        m_dwgWriteLayerHandleByName[normalizeDwgTableName(lay.name)] =
+            lay.handle;
     } else {
       // The plot style (390) is named only if its placeholder is written.
       lay.handlePlotS.clear();
@@ -30913,7 +30953,7 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
           // The annotation-scale payload and the column layout are opaque
           // here. They go out only next to the untouched text they were
           // read with, and the payload only if the APPID it names is
-          // written too; exportReport() says when a payload stays behind.
+          // written too; exportReport() says when either stays behind.
           // A copy has no source handle, and may come from another drawing,
           // where the handle of the APPID names something else.
           std::uint32_t annotativeAppHandle = 0;
@@ -30928,7 +30968,8 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
                             saved.annotativeAppHandle);
             keepScaleState = false;
           }
-          if (!keepScaleState && !saved.annotativeData.empty())
+          if (!keepScaleState && (!saved.annotativeData.empty() ||
+                                  saved.r2018ColumnType != 0))
             ++m_exportAttribScaleDataLeftOut;
           // RS_MText::setText() takes a leading \A0; \A1; \A2; out of the
           // text and makes it the vertical alignment. A stored text with such
@@ -30948,6 +30989,12 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
             mtext->alignH = static_cast<DRW_Text::HAlign>(saved.alignH);
           if (!spacingEdited)
             mtext->interlin = saved.interlin;
+          // What the source record held besides its layout is replayed as
+          // far as it is a value. A handle is not, nor a flag that says one
+          // follows: it named an object of the source file, and in the file
+          // being written that number is another object or none. The R2018
+          // repeats of the placement are written last, from what they
+          // repeat (completeEmbeddedMTextForDwg()).
           mtext->m_backgroundFlags = saved.backgroundFlags;
           mtext->m_backgroundScale = saved.backgroundScale;
           mtext->m_backgroundColor = saved.backgroundColor;
@@ -30956,11 +31003,6 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
           mtext->m_r2018Version =
               static_cast<std::uint16_t>(saved.r2018Version);
           mtext->m_r2018DefaultFlag = saved.r2018DefaultFlag;
-          mtext->m_r2018AppIdHandle = saved.r2018AppIdHandle;
-          mtext->m_r2018Attachment = saved.r2018Attachment;
-          mtext->m_r2018XAxisDir = saved.r2018XAxisDir;
-          mtext->m_r2018InsertionPoint = saved.r2018InsertionPoint;
-          mtext->m_r2018RectWidth = saved.r2018RectWidth;
           mtext->m_r2018RectHeight = saved.r2018RectHeight;
           mtext->m_r2018ExtentsHeight = saved.r2018ExtentsHeight;
           mtext->m_r2018ExtentsWidth = saved.r2018ExtentsWidth;
@@ -30979,49 +31021,30 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
             mtext->m_r2018AnnotativeAppHandle = annotativeAppHandle;
           }
           mtext->m_r2018ReallyLocked = saved.reallyLocked;
-          mtext->setHasDataStorageBinaryData(saved.hasDataStorageBinaryData);
-          mtext->reactorHandles = saved.reactorHandles;
-          mtext->xDictHandle = saved.xDictHandle;
-          mtext->color = saved.color;
-          mtext->color24 = saved.color24;
-          mtext->colorName = saved.colorName;
+          // A colour-book reference names an AcDbColor object of the source
+          // file, and its index field holds no colour: without the reference
+          // the MTEXT is ByLayer.
+          if (!saved.hasAcDbColorHandle) {
+            mtext->color = saved.color;
+            mtext->color24 = saved.color24;
+          }
           mtext->transparency = saved.transparency;
-          mtext->setDwgAcDbColorHandle(saved.hasAcDbColorHandle,
-                                       saved.acDbColorHandle);
           mtext->ltypeScale = saved.ltypeScale;
-          mtext->lineType = saved.lineType;
+          mtext->lineType = embeddedMTextLineType(saved.lineType);
           mtext->visible = saved.visible;
           mtext->lWeight =
               static_cast<DRW_LW_Conv::lineWidth>(saved.lineWeight);
-          mtext->material = saved.material;
-          mtext->shadow = static_cast<DRW::ShadowMode>(saved.shadow);
-          mtext->shadowHandle = saved.shadowHandle;
-          mtext->plotStyle = static_cast<int>(saved.plotStyle);
-          mtext->fullVisualStyleHandle = saved.fullVisualStyleHandle;
-          mtext->faceVisualStyleHandle = saved.faceVisualStyleHandle;
-          mtext->edgeVisualStyleHandle = saved.edgeVisualStyleHandle;
-          mtext->setDwgLayerHandle(saved.layerHandle);
-          mtext->setDwgLinetypeHandle(saved.linetypeHandle);
-          mtext->styleH.ref = saved.styleHandle;
           mtext->basePoint = saved.basePoint;
           mtext->secPoint = saved.secPoint;
           mtext->extPoint = saved.extPoint;
-          // The R2018 block of a DWG record repeats the attachment.
-          if (mtext->textgen != saved.textgen)
-            mtext->m_r2018Attachment = mtext->textgen;
           if (positionEdited) {
             mtext->basePoint.x = data.insertionPoint.x;
             mtext->basePoint.y = data.insertionPoint.y;
-            mtext->m_r2018InsertionPoint = mtext->basePoint;
             attrib.basePoint.x = data.insertionPoint.x;
             attrib.basePoint.y = data.insertionPoint.y;
           }
-          if (angleEdited) {
+          if (angleEdited)
             mtext->secPoint = DRW_Coord(std::cos(data.angle), std::sin(data.angle), 0.0);
-            mtext->m_r2018XAxisDir = mtext->secPoint;
-          }
-          if (widthEdited) mtext->m_r2018RectWidth = data.width;
-          if (styleEdited) mtext->styleH.ref = 0;
           if (layoutEdited) {
             mtext->m_r2018ExtentsWidth = source->getUsedTextWidth();
             mtext->m_r2018ExtentsHeight = source->getUsedTextHeight();
@@ -31059,12 +31082,18 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         attrib.widthscale = sidecar.widthFactor;
         attrib.textgen = sidecar.textgen & 6;
         if (m_dwgW != nullptr) {
+          // The MTEXT refers to the text style and the layer of its
+          // attribute by the handles they have in the file being written.
           const auto style = m_dwgWriteTextStyleHandleByName.find(
               normalizeDwgTableName(mtext->style));
           if (style != m_dwgWriteTextStyleHandleByName.end()) {
             attrib.styleH.ref = style->second;
             mtext->styleH.ref = style->second;
           }
+          const auto layer = m_dwgWriteLayerHandleByName.find(
+              normalizeDwgTableName(attrib.layer));
+          if (layer != m_dwgWriteLayerHandleByName.end())
+            mtext->setDwgLayerHandle(layer->second);
         }
         if (!embedsMText) {
           attrib.attVersion = 0;
@@ -31074,6 +31103,14 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
           // only; type 0 or 1 would be written as a single line without it.
           if (attrib.m_attributeType <= 1)
             attrib.m_attributeType = 2;
+          if (m_dwgW != nullptr) {
+            // AutoCAD writes class version 0 for a multi-line attribute too.
+            attrib.attVersion = 0;
+            completeEmbeddedMTextForDwg(
+                *mtext, sidecar.hasMText &&
+                            !sidecar.mtext.r2018IsNotAnnotative &&
+                            !sidecar.mtext.annotativeData.empty());
+          }
           attrib.mtext = std::move(mtext);
         }
       } else {

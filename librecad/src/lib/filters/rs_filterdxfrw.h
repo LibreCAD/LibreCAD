@@ -322,6 +322,7 @@ protected:
     std::map<std::uint32_t, std::uint32_t> blockHandleRemap;
     std::set<std::uint32_t> duplicateBlockHandles;
     std::map<std::string, std::uint32_t> ltypeHandleByName;
+    std::map<std::string, std::uint32_t> layerHandleByName;
     std::map<std::string, std::uint32_t> textStyleHandleByName;
   };
 
@@ -359,6 +360,7 @@ protected:
     checkpoint.blockHandleRemap = m_dwgWriteBlockHandleRemap;
     checkpoint.duplicateBlockHandles = m_dwgWriteDuplicateBlockHandles;
     checkpoint.ltypeHandleByName = m_dwgWriteLTypeHandleByName;
+    checkpoint.layerHandleByName = m_dwgWriteLayerHandleByName;
     checkpoint.textStyleHandleByName = m_dwgWriteTextStyleHandleByName;
     return checkpoint;
   }
@@ -396,6 +398,7 @@ protected:
     m_dwgWriteBlockHandleRemap = checkpoint.blockHandleRemap;
     m_dwgWriteDuplicateBlockHandles = checkpoint.duplicateBlockHandles;
     m_dwgWriteLTypeHandleByName = checkpoint.ltypeHandleByName;
+    m_dwgWriteLayerHandleByName = checkpoint.layerHandleByName;
     m_dwgWriteTextStyleHandleByName = checkpoint.textStyleHandleByName;
   }
 
@@ -430,6 +433,7 @@ protected:
     m_dwgWriteReferenceReceipts.clear();
     m_dwgWriteOptionalDropReceipts.clear();
     m_dwgWriteLTypeHandleByName.clear();
+    m_dwgWriteLayerHandleByName.clear();
     m_dwgWriteTextStyleHandleByName.clear();
   }
 
@@ -1931,6 +1935,7 @@ protected:
   // Name-based table identities used when source numeric handles are not
   // portable across DWG files.
   std::map<std::string, std::uint32_t> m_dwgWriteLTypeHandleByName;
+  std::map<std::string, std::uint32_t> m_dwgWriteLayerHandleByName;
   std::map<std::string, std::uint32_t> m_dwgWriteTextStyleHandleByName;
 };
 #endif
@@ -3112,10 +3117,10 @@ private:
   std::size_t m_dxfLeftOutRawRecords = 0;
   // What the codec left out of the DXF last exported (dxfRW::leftOut()).
   std::map<std::string, std::size_t> m_dxfLeftOut;
-  // Multi-line attributes whose stored annotation-scale payload the last
-  // export did not write: only DWG R2018 can hold it, and only for attribute
-  // text that was not edited. Counted by writeInsert(), reported by
-  // exportReport().
+  // Multi-line attributes whose stored annotation-scale payload or column
+  // layout the last export did not write: only DWG R2018 can hold them, and
+  // only for attribute text that was not edited. Counted by writeInsert(),
+  // reported by exportReport().
   std::size_t m_exportAttribScaleDataLeftOut = 0;
   // Normalised names of the built-in LTYPE records written by writeLType()
   // during writeLTypes(); imported raw records with these names are skipped.

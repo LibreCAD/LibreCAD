@@ -29359,31 +29359,36 @@ TEST_CASE("RS_FilterDXFRW preserves nested INSERT ATTRIB MTEXT XDATA",
   REQUIRE(dwgReadIface.m_inserts.size() == 1);
   REQUIRE(dwgReadIface.m_inserts.front().attlist.size() == 1);
   REQUIRE(dwgReadIface.m_inserts.front().attlist.front()->mtext != nullptr);
-  const DRW_MText &dwgMText =
-      *dwgReadIface.m_inserts.front().attlist.front()->mtext;
-  CHECK(dwgMText.reactorHandles == std::vector<std::uint32_t>{0x31u, 0x32u});
-  CHECK(dwgMText.xDictHandle == 0x33u);
-  CHECK(dwgMText.hasDataStorageBinaryData());
+  const DRW_Attrib &dwgAttribute =
+      *dwgReadIface.m_inserts.front().attlist.front();
+  const DRW_MText &dwgMText = *dwgAttribute.mtext;
+  // The MTEXT of the source refers to objects by handles of the source file,
+  // which are other objects, or none, in the exported file. No such
+  // reference is written: the layer is the attribute's own, the linetype is
+  // ByLayer, and a colour of a colour book is ByLayer without its name. What
+  // is a value and no reference is kept.
+  CHECK(dwgMText.reactorHandles.empty());
+  CHECK(dwgMText.xDictHandle == 0u);
+  CHECK_FALSE(dwgMText.hasDataStorageBinaryData());
   CHECK(dwgMText.color == 256);
-  CHECK(dwgMText.colorName == "Book$Entry");
+  CHECK(dwgMText.colorName.empty());
   CHECK(dwgMText.transparency == 0x03000080);
-  CHECK(dwgMText.hasDwgAcDbColorHandle());
-  CHECK(dwgMText.dwgAcDbColorHandle() == 0x35u);
+  CHECK_FALSE(dwgMText.hasDwgAcDbColorHandle());
+  CHECK(dwgMText.dwgAcDbColorHandle() == 0u);
   CHECK(dwgMText.ltypeScale == Catch::Approx(1.25));
   // Neither drawing has a layer 0x3C or a linetype 0x3D: the exported MTEXT
   // is on the attribute's layer and takes the linetype from it.
   CHECK(dwgMText.lineType == "BYLAYER");
   CHECK_FALSE(dwgMText.visible);
   CHECK(dwgMText.lWeight == DRW_LW_Conv::width05);
-  CHECK(dwgMText.material == 0x36u);
-  CHECK(dwgMText.shadow == DRW::IgnoreShadows);
-  CHECK(dwgMText.shadowHandle == 0x37u);
-  CHECK(dwgMText.plotStyle == 0x38u);
-  CHECK(dwgMText.fullVisualStyleHandle == 0x39u);
-  CHECK(dwgMText.faceVisualStyleHandle == 0x3Au);
-  CHECK(dwgMText.edgeVisualStyleHandle == 0x3Bu);
-  CHECK(dwgMText.dwgLayerHandle() ==
-        dwgReadIface.m_inserts.front().attlist.front()->dwgLayerHandle());
+  CHECK(dwgMText.material == DRW::MaterialByLayer);
+  CHECK(dwgMText.shadow == DRW::CastAndReceieveShadows);
+  CHECK(dwgMText.shadowHandle == 0u);
+  CHECK(dwgMText.plotStyle == DRW::DefaultPlotStyle);
+  CHECK(dwgMText.fullVisualStyleHandle == 0u);
+  CHECK(dwgMText.faceVisualStyleHandle == 0u);
+  CHECK(dwgMText.edgeVisualStyleHandle == 0u);
+  CHECK(dwgMText.dwgLayerHandle() == dwgAttribute.dwgLayerHandle());
   CHECK(dwgMText.dwgLinetypeHandle() == 0u);
 
   std::remove(path.c_str());

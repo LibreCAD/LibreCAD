@@ -59,6 +59,7 @@
 #include "rs_block.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
+#include "rs_layer.h"
 #include "rs_modification.h"
 #include "rs_mtext.h"
 #include "rs_text.h"
@@ -441,13 +442,28 @@ void checkRepeatsSource(const DxfRecord& source, const std::filesystem::path& wr
 
 // What libdxfrw reads of a DWG, without the filter in between: the block
 // references with their attributes, and the handle of every registered
-// application by its name.
+// application, layer and text style by its name.
 struct DwgContent : lc::test::NullDrwInterface {
     std::vector<DRW_Insert> m_inserts;
     std::map<std::string, std::uint32_t> m_applications;
+    std::map<std::string, std::uint32_t> m_layers;
+    std::map<std::string, std::uint32_t> m_textStyles;
     void addInsert(const DRW_Insert& insert) override { m_inserts.push_back(insert); }
     void addAppId(const DRW_AppId& application) override { m_applications[application.name] = application.handle; }
+    void addLayer(const DRW_Layer& layer) override { m_layers[layer.name] = layer.handle; }
+    void addTextStyle(const DRW_Textstyle& style) override { m_textStyles[style.name] = style.handle; }
 };
+
+// The handle of the record with a name, whatever its letter case; 0 when
+// there is none.
+std::uint32_t handleNamed(const std::map<std::string, std::uint32_t>& records, const std::string& name) {
+    for (const auto& [recordName, handle] : records) {
+        if (QString::fromStdString(recordName).compare(QString::fromStdString(name), Qt::CaseInsensitive) == 0) {
+            return handle;
+        }
+    }
+    return 0;
+}
 
 void readDwg(const std::filesystem::path& file, DwgContent& content) {
     CAPTURE(file.filename().string());
@@ -556,6 +572,12 @@ bool setStoredMTextContent(RS_Entity& text, const std::string& stored) {
                                   std::make_shared<DRW_Variant>(1000, stored));
 }
 
+// The column layout of the MTEXT: 0 for none, 1 for columns of one height.
+bool setStoredMTextColumnType(RS_Entity& text, const int type) {
+    return setStoredAttributePart(text, std::string(kPrivateApplication) + "_MTEXT", 1070, 10,
+                                  std::make_shared<DRW_Variant>(1070, type));
+}
+
 // The annotation-scale data of the attribute that AttributeDwgSource writes,
 // and the name of the application the data belongs to. What the bytes mean
 // is not known here; a DWG 2018 holds them next to the MTEXT of a multi-line
@@ -563,18 +585,44 @@ bool setStoredMTextContent(RS_Entity& text, const std::string& stored) {
 const std::vector<std::uint8_t> kScaleData{0x01, 0x7F, 0xFE};
 constexpr std::uint16_t kScaleDataShort = 0x72;
 const char* const kScaleApplication = "LC_SCALE_APP";
-// What an export says when it left such data out.
-const char* const kScaleDataLeftOut = "annotation scale data of 1 multi-line attribute(s)";
+// What an export says when it left such data out, or a column layout, which
+// is kept and left out by the same rule.
+const char* const kScaleDataLeftOut = "annotation scale or column data of 1 multi-line attribute(s)";
+
+// The layer and the text style of the attribute that AttributeDwgSource
+// writes with references, and the handles its MTEXT refers by. A DWG names
+// every record by a handle, a number of that one file: these are no records
+// of the source, and in a file saved from it they are whatever that file
+// happens to have there.
+const char* const kAttributeLayer = "LCATTR";
+const char* const kAttributeStyle = "LCNOTE";
+constexpr std::uint32_t kForeignOwner = 0x3Fu;
+const std::vector<std::uint32_t> kForeignReactors{0x31u, 0x32u};
+constexpr std::uint32_t kForeignDictionary = 0x33u;
+constexpr std::uint32_t kForeignColor = 0x35u;
+constexpr std::uint32_t kForeignMaterial = 0x36u;
+constexpr std::uint32_t kForeignShadow = 0x37u;
+constexpr std::uint32_t kForeignPlotStyle = 0x38u;
+constexpr std::uint32_t kForeignVisualStyle = 0x39u;    // and the two after it
+constexpr std::uint32_t kForeignLayer = 0x3Cu;
+constexpr std::uint32_t kForeignLinetype = 0x3Du;
+constexpr std::uint32_t kForeignApplication = 0x3Eu;
+constexpr int kMTextTransparency = 0x03000080;
 
 // Writes a DWG 2018 with one block reference and one multi-line attribute
-// that has annotation-scale data, through libdxfrw: no DXF can hold the data,
-// and no drawing of another program is copied. The value of the attribute
-// itself is not empty, so that the cases on this source do not depend on
-// what a format without the MTEXT gets as the value.
+// through libdxfrw: no DXF can hold what the MTEXT of the attribute has
+// here, and no drawing of another program is copied. That is annotation-scale
+// data, or, with references, every reference to another record that the
+// MTEXT inside an attribute can have. The value of the attribute itself is
+// not empty, so that the cases on this source do not depend on what a format
+// without the MTEXT gets as the value.
 struct AttributeDwgSource : lc::test::NullDrwInterface {
     double m_angle = 0.0;                   // of the text, in radians
     bool m_dataNamesNoApplication = false;  // the data names a handle that no record of the file has
+    bool m_references = false;              // no scale data: a layer, a text style and the references
     std::uint32_t m_scaleApplication = 0;   // after write(): the handle of LC_SCALE_APP in the file
+    std::uint32_t m_layer = 0;              // with references: the handle of the layer in the file
+    std::uint32_t m_style = 0;              // and of the text style
 
     void write(const std::filesystem::path& file) {
         CAPTURE(file.filename().string());
@@ -585,10 +633,27 @@ struct AttributeDwgSource : lc::test::NullDrwInterface {
         REQUIRE(written);
         REQUIRE(m_insertWritten);
         REQUIRE(m_scaleApplication != 0);
+        REQUIRE((m_layer != 0) == m_references);
+        REQUIRE((m_style != 0) == m_references);
     }
 
     // The callbacks only note what went wrong: libdxfrw calls them, and an
     // exception of a failed REQUIRE would not get past it.
+    void writeLayers() override {
+        DRW_Layer layer;
+        layer.name = kAttributeLayer;
+        if (m_references && m_writer != nullptr && m_writer->addLayer(&layer)) {
+            m_layer = layer.handle;
+        }
+    }
+    void writeTextstyles() override {
+        DRW_Textstyle style;
+        style.name = kAttributeStyle;
+        style.font = "txt";
+        if (m_references && m_writer != nullptr && m_writer->addTextstyle(&style)) {
+            m_style = style.handle;
+        }
+    }
     void writeAppId() override {
         DRW_AppId application;
         application.name = kScaleApplication;
@@ -629,10 +694,42 @@ struct AttributeDwgSource : lc::test::NullDrwInterface {
         mtext.alignH = DRW_Text::HLeft;
         mtext.interlin = 1.0;
         mtext.text = "line 1\\Pline 2";
-        mtext.m_r2018IsNotAnnotative = false;
-        mtext.m_r2018AnnotativeData = kScaleData;
-        mtext.m_r2018AnnotativeUnknown = kScaleDataShort;
-        mtext.m_r2018AnnotativeAppHandle = m_dataNamesNoApplication ? 0x7F0u : m_scaleApplication;
+        if (m_references) {
+            attribute->layer = kAttributeLayer;
+            attribute->styleH.ref = m_style;
+            mtext.styleH.ref = m_style;
+            mtext.m_r2018IsNotAnnotative = true;
+            mtext.m_r2018AppIdHandle = kForeignApplication;
+            mtext.parentHandle = kForeignOwner;
+            mtext.reactorHandles = kForeignReactors;
+            mtext.xDictHandle = kForeignDictionary;
+            mtext.setHasDataStorageBinaryData(true);
+            // A colour of a colour book: the MTEXT names the record of the
+            // colour, and the number in its place is no colour (256 is "by
+            // layer").
+            mtext.color = 256;
+            mtext.colorName = "Book$Entry";
+            mtext.setDwgAcDbColorHandle(true, kForeignColor);
+            mtext.transparency = kMTextTransparency;
+            mtext.ltypeScale = 1.25;
+            mtext.lWeight = DRW_LW_Conv::width05;
+            mtext.material = kForeignMaterial;
+            mtext.shadow = DRW::IgnoreShadows;
+            mtext.shadowHandle = kForeignShadow;
+            mtext.plotStyle = static_cast<int>(kForeignPlotStyle);
+            mtext.fullVisualStyleHandle = kForeignVisualStyle;
+            mtext.faceVisualStyleHandle = kForeignVisualStyle + 1;
+            mtext.edgeVisualStyleHandle = kForeignVisualStyle + 2;
+            mtext.setDwgLayerHandle(kForeignLayer);
+            mtext.lineType.clear();
+            mtext.setDwgLinetypeHandle(kForeignLinetype);
+        }
+        else {
+            mtext.m_r2018IsNotAnnotative = false;
+            mtext.m_r2018AnnotativeData = kScaleData;
+            mtext.m_r2018AnnotativeUnknown = kScaleDataShort;
+            mtext.m_r2018AnnotativeAppHandle = m_dataNamesNoApplication ? 0x7F0u : m_scaleApplication;
+        }
         insert.attlist.push_back(std::move(attribute));
         m_insertWritten = m_writer->writeInsert(&insert);
     }
@@ -666,7 +763,7 @@ void checkScaleDataKept(const Saved& saved, const AttributeDwgSource& source) {
     // two files gave the application the same handle.
     REQUIRE(application != source.m_scaleApplication);
     CHECK(mtext.m_r2018AnnotativeAppHandle == application);
-    CHECK(saved.m_report.find("annotation scale data") == std::string::npos);
+    CHECK(saved.m_report.find("annotation scale") == std::string::npos);
 }
 
 // A save that left the data out says so, and has the block reference and
@@ -1317,20 +1414,44 @@ TEST_CASE("a block with a multi-line attribute definition keeps the definition's
 TEST_CASE("a rotated attribute read from DXF keeps its angle through DWG 2018",
           "[attribute-export][attrib][filter][dxf][dwg][attrib-geometry]") {
     const Bench bench("attr_angle_dwg2018");
-    // The direction as AutoCAD writes it: the x-axis of the MTEXT, and the
-    // angle on the attribute itself.
-    AttributeDxf fixture;
-    fixture.m_textExtra = "50\n30\n";
-    fixture.m_mtextExtra = "11\n0.8660254037844387\n21\n0.5\n31\n0\n";
-    EditableDrawing drawing;
-    load(bench, fixture, drawing);
-    const double angle = 30.0 * M_PI / 180.0;
-    CHECK(only<RS_MText>(drawing, RS2::EntityMText)->getAngle() == Catch::Approx(angle).margin(1e-9));
+    struct Variant {
+        const char* m_name;
+        const char* m_ownAngle;     // group 50 of the attribute itself
+        const char* m_direction;    // of the MTEXT
+        double m_degrees;
+    };
+    const std::vector<Variant> variants{
+        // The direction as AutoCAD writes it: the x-axis of the MTEXT, and
+        // the angle on the attribute itself.
+        {"x_axis", "50\n30\n", "11\n0.8660254037844387\n21\n0.5\n31\n0\n", 30.0},
+        // And as the angle of the MTEXT alone, which a DXF may have in its
+        // place. A DWG has the x-axis and nothing else.
+        {"angle", "", "50\n75\n", 75.0},
+    };
+    for (const Variant& variant : variants) {
+        CAPTURE(variant.m_name);
+        AttributeDxf fixture;
+        fixture.m_textExtra = variant.m_ownAngle;
+        fixture.m_mtextExtra = variant.m_direction;
+        EditableDrawing drawing;
+        load(bench, fixture, drawing, std::string(variant.m_name) + "_source");
+        const double angle = variant.m_degrees * M_PI / 180.0;
+        CHECK(only<RS_MText>(drawing, RS2::EntityMText)->getAngle() == Catch::Approx(angle).margin(1e-9));
 
-    const auto out = save(bench, drawing, "untouched", target("dwg2018"));
-    EditableDrawing reopened;
-    REQUIRE(lc::test::importDrawing(reopened.m_graphic, out, RS2::FormatDWG2018));
-    CHECK(only<RS_MText>(reopened, RS2::EntityMText)->getAngle() == Catch::Approx(angle).margin(1e-9));
+        const auto out = save(bench, drawing, variant.m_name, target("dwg2018"));
+        EditableDrawing reopened;
+        REQUIRE(lc::test::importDrawing(reopened.m_graphic, out, RS2::FormatDWG2018));
+        CHECK(only<RS_MText>(reopened, RS2::EntityMText)->getAngle() == Catch::Approx(angle).margin(1e-9));
+
+        // In the file the direction is the x-axis. And the MTEXT is marked
+        // as not annotative: a DXF has no annotation scales for it.
+        DwgContent content;
+        readDwg(out, content);
+        const DRW_MText& mtext = onlyEmbeddedMText(content);
+        CHECK(mtext.secPoint.x == Catch::Approx(std::cos(angle)).margin(1e-9));
+        CHECK(mtext.secPoint.y == Catch::Approx(std::sin(angle)).margin(1e-9));
+        CHECK(mtext.m_r2018IsNotAnnotative);
+    }
 }
 
 // The fixtures that the cases above do not use open as what their names say.
@@ -2082,6 +2203,169 @@ TEST_CASE("a pasted annotative attribute is saved without its scale data",
 
     const Target to = target("dwg2018");
     checkScaleDataLeftOut(saveWithReport(bench, drawing, "pasted", to), to);
+}
+
+// A column layout of the MTEXT is kept and left out by the rule of the
+// annotation-scale data: only a DWG 2018 has a place for it, and the drawing
+// shows one layout of the text, without columns. No file that these cases
+// can write has columns in the MTEXT of an attribute, so the layout is put
+// here straight into what the text keeps of its attribute.
+TEST_CASE("a column layout in the MTEXT of an attribute is saved with the untouched text or reported",
+          "[attribute-export][attrib][filter][dxf][dwg][annotative]") {
+    const Bench bench("attr_columns");
+    AttributeDxf fixture;
+    fixture.m_handles = true;
+    for (const bool edited : {false, true}) {
+        for (const char* format : kScaleDataFormats) {
+            const Target to = target(format);
+            const std::string name = edited ? "edited" : "untouched";
+            CAPTURE(name, to.m_name);
+            EditableDrawing drawing;
+            load(bench, fixture, drawing, name + "_" + to.m_name + "_source");
+            const RS_MText* shown = only<RS_MText>(drawing, RS2::EntityMText);
+            REQUIRE(setStoredMTextColumnType(*const_cast<RS_MText*>(shown), 1));
+            if (edited) {
+                drawing.edit(shown, [](RS_MText& text) { text.setText("changed\ntext"); });
+            }
+            const Saved saved = saveWithReport(bench, drawing, name, to);
+            CAPTURE(saved.m_report);
+            const bool kept = !edited && to.m_embedsMText && !to.m_dxf;
+            CHECK((saved.m_report.find(kScaleDataLeftOut) == std::string::npos) == kept);
+        }
+    }
+
+    // Without columns there is nothing to report.
+    EditableDrawing drawing;
+    load(bench, fixture, drawing, "no_columns_source");
+    CHECK(saveWithReport(bench, drawing, "no_columns", target("dxf2007")).m_report.find("column")
+          == std::string::npos);
+}
+
+// A DWG names a record by its handle, a number that means something in the
+// file it is in only: a save gives every record a handle of its own. What
+// the MTEXT inside an attribute refers to in a saved file has to be a record
+// of that file: the layer and the text style of its attribute, and the
+// linetype "by layer", which needs no record. A reference that the drawing
+// knows nothing about is not saved at all: the number it had in the file it
+// was read from is another record in the saved file, or none.
+TEST_CASE("the MTEXT of an attribute saved to DWG 2018 refers to records of the saved file",
+          "[attribute-export][attrib][filter][dwg][embedded-mtext]") {
+    const Bench bench("attr_dwg_references");
+    AttributeDwgSource source;
+    source.m_references = true;
+    const std::filesystem::path file = bench.m_out.file("source.dwg");
+    source.write(file);
+    {
+        // The source has what this case is about.
+        DwgContent content;
+        readDwg(file, content);
+        const DRW_MText& mtext = onlyEmbeddedMText(content);
+        REQUIRE(onlyDwgAttribute(content).dwgLayerHandle() == source.m_layer);
+        REQUIRE(mtext.styleH.ref == source.m_style);
+        REQUIRE(mtext.dwgLayerHandle() == kForeignLayer);
+        REQUIRE(mtext.dwgLinetypeHandle() == kForeignLinetype);
+        REQUIRE(mtext.reactorHandles == kForeignReactors);
+        REQUIRE(mtext.xDictHandle == kForeignDictionary);
+        REQUIRE(mtext.dwgAcDbColorHandle() == kForeignColor);
+        REQUIRE(mtext.m_r2018AppIdHandle == kForeignApplication);
+    }
+
+    struct Variant {
+        const char* m_name;
+        std::function<void(RS_MText&)> m_edit;  // none: untouched
+    };
+    const std::vector<Variant> variants{
+        {"untouched", nullptr},
+        {"edited",
+         [](RS_MText& text) {
+             text.move(RS_Vector(2.0, 1.0));
+             text.setAngle(0.5);
+             text.setVAlign(RS_MTextData::VABottom);
+             text.setHAlign(RS_MTextData::HARight);
+         }},
+    };
+    for (const Variant& variant : variants) {
+        CAPTURE(variant.m_name);
+        EditableDrawing drawing;
+        REQUIRE(lc::test::importDrawing(drawing.m_graphic, file, RS2::FormatDWG2018));
+        const RS_MText* shown = only<RS_MText>(drawing, RS2::EntityMText);
+        REQUIRE(shown->getStyle().compare(kAttributeStyle, Qt::CaseInsensitive) == 0);
+        REQUIRE(shown->getLayer() != nullptr);
+        REQUIRE(shown->getLayer()->getName().compare(kAttributeLayer, Qt::CaseInsensitive) == 0);
+        if (variant.m_edit) {
+            shown = drawing.edit(shown, variant.m_edit);
+        }
+        const auto out = save(bench, drawing, variant.m_name, target("dwg2018"));
+
+        DwgContent written;
+        readDwg(out, written);
+        const DRW_Attrib& attribute = onlyDwgAttribute(written);
+        const DRW_MText& mtext = onlyEmbeddedMText(written);
+        const std::uint32_t layer = handleNamed(written.m_layers, kAttributeLayer);
+        const std::uint32_t style = handleNamed(written.m_textStyles, kAttributeStyle);
+        const std::uint32_t acad = handleNamed(written.m_applications, "ACAD");
+        CAPTURE(layer, style, acad, source.m_layer, source.m_style);
+        REQUIRE(layer != 0);
+        REQUIRE(style != 0);
+        REQUIRE(acad != 0);
+        // A handle copied from the source would pass for the right one if
+        // the two files gave the record the same handle.
+        REQUIRE(layer != source.m_layer);
+        REQUIRE(style != source.m_style);
+        REQUIRE(layer != kForeignLayer);
+        REQUIRE(acad != kForeignApplication);
+
+        // The layer and the text style of the attribute, by their handles in
+        // this file, for the attribute and for its MTEXT alike.
+        CHECK(attribute.dwgLayerHandle() == layer);
+        CHECK(mtext.dwgLayerHandle() == layer);
+        CHECK(attribute.styleH.ref == style);
+        CHECK(mtext.styleH.ref == style);
+        CHECK(mtext.dwgLinetypeHandle() == 0u);
+        CHECK(mtext.lineType == "BYLAYER");
+        // The application that the R2018 fields of the MTEXT name: none, as
+        // AutoCAD writes it, or ACAD, which every file has.
+        CAPTURE(mtext.m_r2018AppIdHandle);
+        CHECK((mtext.m_r2018AppIdHandle == 0u || mtext.m_r2018AppIdHandle == acad));
+        CHECK(mtext.m_r2018IsNotAnnotative);
+
+        // No other reference, and no flag that says there is one.
+        CHECK(mtext.parentHandle == DRW::NoHandle);
+        CHECK(mtext.reactorHandles.empty());
+        CHECK(mtext.xDictHandle == 0u);
+        CHECK_FALSE(mtext.hasDataStorageBinaryData());
+        CHECK_FALSE(mtext.hasDwgAcDbColorHandle());
+        CHECK(mtext.colorName.empty());
+        CHECK(mtext.color == 256);
+        CHECK(mtext.material == DRW::MaterialByLayer);
+        CHECK(mtext.shadow == DRW::CastAndReceieveShadows);
+        CHECK(mtext.shadowHandle == 0u);
+        CHECK(mtext.plotStyle == DRW::DefaultPlotStyle);
+        CHECK(mtext.fullVisualStyleHandle == 0u);
+        CHECK(mtext.faceVisualStyleHandle == 0u);
+        CHECK(mtext.edgeVisualStyleHandle == 0u);
+
+        // What is a value and no reference is kept.
+        CHECK(mtext.transparency == kMTextTransparency);
+        CHECK(mtext.ltypeScale == 1.25);
+        CHECK(mtext.lWeight == DRW_LW_Conv::width05);
+
+        if (variant.m_edit) {
+            CHECK(mtext.textgen == 9);
+            CHECK(mtext.basePoint.x == Catch::Approx(shown->getInsertionPoint().x).margin(1e-9));
+            CHECK(mtext.basePoint.y == Catch::Approx(shown->getInsertionPoint().y).margin(1e-9));
+            CHECK(mtext.secPoint.x == Catch::Approx(std::cos(0.5)).margin(1e-9));
+            CHECK(mtext.secPoint.y == Catch::Approx(std::sin(0.5)).margin(1e-9));
+        }
+
+        // And the file opens as what the drawing shows.
+        EditableDrawing reopened;
+        REQUIRE(lc::test::importDrawing(reopened.m_graphic, out, RS2::FormatDWG2018));
+        const RS_MText* again = only<RS_MText>(reopened, RS2::EntityMText);
+        checkSameMText(*shown, *again);
+        REQUIRE(again->getLayer() != nullptr);
+        CHECK(again->getLayer()->getName().compare(kAttributeLayer, Qt::CaseInsensitive) == 0);
+    }
 }
 
 // The attribute's own value. Next to its MTEXT it is not shown: AutoCAD
