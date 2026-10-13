@@ -2359,35 +2359,61 @@ TEST_CASE("an attribute text without its block reference is written as text",
         checkPlane(save(bench, fromDwg, "mtext_plane_dwg2018", target("dxf2018")));
     }
 
-    // A DWG has the direction of an MTEXT as its x-axis and nothing else.
+    // A DWG has the direction of an MTEXT as its x-axis and nothing else. The
+    // MTEXT of an attribute can have its direction as an angle alone (group
+    // 50): a DXF is saved with the angle, as its file was, and a DWG with the
+    // x-axis that says the same.
     SECTION("a turned multi-line text keeps its direction") {
-        AttributeDxf fixture;
-        fixture.m_handles = true;
-        fixture.m_mtextExtra = "11\n0\n21\n1\n31\n0\n";
-        EditableDrawing drawing;
-        load(bench, fixture, drawing, "mtext_turned");
-        REQUIRE(only<RS_MText>(drawing, RS2::EntityMText)->getAngle() == Catch::Approx(M_PI / 2.0).margin(1e-9));
-        drawing.erase(only<RS_Insert>(drawing, RS2::EntityInsert));
-        for (const char* format : {"dwg2018", "dwg2000", "dxf2018", "dxf2007"}) {
-            const Target to = target(format);
-            CAPTURE(to.m_name);
-            const auto file = save(bench, drawing, "mtext_turned_erased", to);
-            EditableDrawing reopened;
-            REQUIRE(lc::test::importDrawing(reopened.m_graphic, file, to.m_format));
-            const RS_MText* text = only<RS_MText>(reopened, RS2::EntityMText);
-            CHECK(text->getAngle() == Catch::Approx(M_PI / 2.0).margin(1e-9));
-            CHECK(text->getInsertionPoint().distanceTo(RS_Vector(1.0, 4.0)) < 1e-9);
-        }
-        // Turned in the drawing since, it has the new direction and not the
-        // one of its file.
-        drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [](RS_MText& text) { text.setAngle(1.0); });
-        for (const char* format : {"dwg2018", "dxf2018"}) {
-            const Target to = target(format);
-            CAPTURE(to.m_name);
-            const auto file = save(bench, drawing, "mtext_turned_again", to);
-            EditableDrawing reopened;
-            REQUIRE(lc::test::importDrawing(reopened.m_graphic, file, to.m_format));
-            CHECK(only<RS_MText>(reopened, RS2::EntityMText)->getAngle() == Catch::Approx(1.0).margin(1e-9));
+        struct Variant {
+            const char* m_name;
+            const char* m_direction;            // of the MTEXT of the attribute
+            std::vector<std::string> m_axis;    // 11 and 21 of the MTEXT in a saved DXF
+        };
+        const std::vector<Variant> variants{
+            {"x_axis", "11\n0\n21\n1\n31\n0\n", {"0", "1"}},
+            {"angle", "50\n90\n", {}},
+        };
+        for (const Variant& variant : variants) {
+            CAPTURE(variant.m_name);
+            const std::string name = std::string("mtext_turned_") + variant.m_name;
+            AttributeDxf fixture;
+            fixture.m_handles = true;
+            fixture.m_mtextExtra = variant.m_direction;
+            EditableDrawing drawing;
+            load(bench, fixture, drawing, name);
+            REQUIRE(only<RS_MText>(drawing, RS2::EntityMText)->getAngle() == Catch::Approx(M_PI / 2.0).margin(1e-9));
+            drawing.erase(only<RS_Insert>(drawing, RS2::EntityInsert));
+            for (const char* format : {"dwg2018", "dwg2000", "dxf2018", "dxf2007"}) {
+                const Target to = target(format);
+                CAPTURE(to.m_name);
+                const auto file = save(bench, drawing, name + "_erased", to);
+                if (to.m_dxf) {
+                    const DxfRecord record = onlyRecord(file, "MTEXT");
+                    std::vector<std::string> axis = record.own(11);
+                    for (const std::string& y : record.own(21)) {
+                        axis.push_back(y);
+                    }
+                    CAPTURE(axis, record.own(50));
+                    CHECK(lc::test::sameValues(variant.m_axis, axis));
+                    CHECK(lc::test::sameValues({"90"}, record.own(50)));
+                }
+                EditableDrawing reopened;
+                REQUIRE(lc::test::importDrawing(reopened.m_graphic, file, to.m_format));
+                const RS_MText* text = only<RS_MText>(reopened, RS2::EntityMText);
+                CHECK(text->getAngle() == Catch::Approx(M_PI / 2.0).margin(1e-9));
+                CHECK(text->getInsertionPoint().distanceTo(RS_Vector(1.0, 4.0)) < 1e-9);
+            }
+            // Turned in the drawing since, it has the new direction and not
+            // the one of its file.
+            drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [](RS_MText& text) { text.setAngle(1.0); });
+            for (const char* format : {"dwg2018", "dwg2000", "dxf2018"}) {
+                const Target to = target(format);
+                CAPTURE(to.m_name);
+                const auto file = save(bench, drawing, name + "_again", to);
+                EditableDrawing reopened;
+                REQUIRE(lc::test::importDrawing(reopened.m_graphic, file, to.m_format));
+                CHECK(only<RS_MText>(reopened, RS2::EntityMText)->getAngle() == Catch::Approx(1.0).margin(1e-9));
+            }
         }
     }
 
