@@ -6542,6 +6542,73 @@ bool fitsDxfLine(const std::string &value) {
          value.find('\n') == std::string::npos &&
          value.find('\0') == std::string::npos;
 }
+
+// From the alignment point of a single-line text to its baseline left point,
+// before rotation, when nothing of the text is drawn: the vertical offsets
+// RS_Text::update() uses for a capital letter, and no width.
+RS_Vector emptyTextFirstPointOffset(RS_TextData::VAlign valign,
+                                    RS_TextData::HAlign halign, double height) {
+  if (halign == RS_TextData::HAAligned || halign == RS_TextData::HAFit)
+    return RS_Vector(0.0, 0.0);
+  if (halign == RS_TextData::HAMiddle)
+    return RS_Vector(0.0, -height / 2.0);
+  switch (valign) {
+  case RS_TextData::VATop:
+    return RS_Vector(0.0, -height);
+  case RS_TextData::VAMiddle:
+    return RS_Vector(0.0, -height / 2.0);
+  case RS_TextData::VABottom:
+    return RS_Vector(0.0, height / 3.0);
+  case RS_TextData::VABaseline:
+  default:
+    return RS_Vector(0.0, 0.0);
+  }
+}
+
+// Points and justification of a single-line ATTRIB: group 10 the baseline
+// left point, group 11 the point the text is aligned to. RS_Text keeps the
+// aligned point as its insertion point and, once laid out, the baseline left
+// point as its second point; an aligned or fitted text has its two ends there.
+// A text without a glyph has no borders, and its second point is not usable.
+void setSingleLineAttribPlacement(DRW_Attrib &attrib, const RS_Text &text) {
+  const RS_TextData::HAlign halign = text.getHAlign();
+  const RS_TextData::VAlign valign = text.getVAlign();
+  attrib.alignH = static_cast<DRW_Text::HAlign>(static_cast<int>(halign));
+  attrib.alignV = static_cast<DRW_Text::VAlign>(static_cast<int>(valign));
+  const RS_Vector insertion = text.getInsertionPoint();
+  RS_Vector first = insertion;
+  RS_Vector alignment = insertion;
+  if (halign == RS_TextData::HAAligned || halign == RS_TextData::HAFit) {
+    alignment = text.getSecondPoint();
+  } else if (halign != RS_TextData::HALeft ||
+             valign != RS_TextData::VABaseline) {
+    const RS_Vector second = text.getSecondPoint();
+    if (text.count() > 0 && second.valid && std::isfinite(second.x) &&
+        std::isfinite(second.y)) {
+      first = second;
+    } else {
+      RS_Vector offset =
+          emptyTextFirstPointOffset(valign, halign, text.getHeight());
+      offset.rotate(text.getAngle());
+      first = insertion + offset;
+    }
+  }
+  attrib.basePoint.x = first.x;
+  attrib.basePoint.y = first.y;
+  attrib.secPoint.x = alignment.x;
+  attrib.secPoint.y = alignment.y;
+}
+
+// Group 71 of a single-line text: 2 backward, 4 upside down. RS_Text holds
+// one of them at most and is read as neither from a record that has both;
+// such a record keeps both while the text is still neither.
+int textGenerationFlags(RS_TextData::TextGeneration generation, int stored) {
+  if (generation == RS_TextData::Backward)
+    return 2;
+  if (generation == RS_TextData::UpsideDown)
+    return 4;
+  return (stored & 6) == 6 ? 6 : 0;
+}
 } // namespace
 
 /**
@@ -30951,6 +31018,10 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         attrib.height = data.height;
         attrib.style = mtext->style;
         attrib.angle = mtext->angle;
+        // The MTEXT has neither: they are the ATTRIB's own, as read. Of group
+        // 71 only the two flags there are, backward and upside down.
+        attrib.widthscale = sidecar.widthFactor;
+        attrib.textgen = sidecar.textgen & 6;
         if (m_dwgW != nullptr) {
           const auto style = m_dwgWriteTextStyleHandleByName.find(
               normalizeDwgTableName(mtext->style));
@@ -30971,10 +31042,7 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         }
       } else {
         const auto *source = static_cast<const RS_Text *>(candidate);
-        attrib.basePoint.x = source->getInsertionPoint().x;
-        attrib.basePoint.y = source->getInsertionPoint().y;
-        attrib.secPoint.x = source->getSecondPoint().x;
-        attrib.secPoint.y = source->getSecondPoint().y;
+        setSingleLineAttribPlacement(attrib, *source);
         attrib.height = source->getHeight();
         attrib.widthscale = source->getWidthRel();
         attrib.text =
@@ -30983,22 +31051,8 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
                 .toStdString();
         attrib.style = source->getStyle().toUtf8().toStdString();
         attrib.angle = source->getAngle() * 180.0 / M_PI;
-        attrib.alignH = static_cast<DRW_Text::HAlign>(
-            static_cast<int>(source->getHAlign()));
-        attrib.alignV = static_cast<DRW_Text::VAlign>(
-            static_cast<int>(source->getVAlign()));
-        switch (source->getTextGeneration()) {
-        case RS_TextData::Backward:
-          attrib.textgen = 2;
-          break;
-        case RS_TextData::UpsideDown:
-          attrib.textgen = 4;
-          break;
-        case RS_TextData::None:
-        default:
-          attrib.textgen = 0;
-          break;
-        }
+        attrib.textgen =
+            textGenerationFlags(source->getTextGeneration(), sidecar.textgen);
       }
       removeInsertAttribSidecar(attrib);
       in.attlist.push_back(std::make_shared<DRW_Attrib>(std::move(attrib)));

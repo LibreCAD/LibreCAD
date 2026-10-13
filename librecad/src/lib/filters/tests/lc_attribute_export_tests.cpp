@@ -975,6 +975,74 @@ void moveEntities(EditableDrawing& drawing, const std::vector<const RS_Entity*>&
     });
 }
 
+// The record of an attribute of one line in AutoCAD's group order: the first
+// point, the height and the value, then what the case puts into the text
+// part of the record (71, 72 and the alignment point, as it needs them), and
+// in the attribute part the tag and the vertical justification.
+std::string singleLineAttrib(const std::string& tag, const std::string& x, const std::string& y,
+                             const std::string& height, const std::string& value, const std::string& textGroups,
+                             const std::string& verticalJustification = "0") {
+    return "0\nATTRIB\n100\nAcDbEntity\n8\n0\n100\nAcDbText\n10\n" + x + "\n20\n" + y + "\n30\n0\n40\n" + height
+           + "\n1\n" + value + "\n7\niso3098\n" + textGroups + "100\nAcDbAttribute\n280\n0\n2\n" + tag
+           + "\n70\n0\n74\n" + verticalJustification + "\n280\n1\n";
+}
+
+// A block reference with such attributes.
+std::string singleLineAttributesDxf(const std::vector<std::string>& attributes) {
+    std::string dxf = "0\nSECTION\n2\nBLOCKS\n0\nBLOCK\n8\n0\n2\nTITLE\n70\n0\n10\n0\n20\n0\n3\nTITLE\n"
+                      "0\nENDBLK\n8\n0\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
+                      "0\nINSERT\n100\nAcDbEntity\n8\n0\n100\nAcDbBlockReference\n66\n1\n2\nTITLE\n"
+                      "10\n0\n20\n0\n30\n0\n";
+    for (const std::string& attribute : attributes) {
+        dxf += attribute;
+    }
+    return dxf + "0\nSEQEND\n100\nAcDbEntity\n8\n0\n0\nENDSEC\n0\nEOF\n";
+}
+
+// The text of one line the drawing shows with a value, wherever it is.
+const RS_Text* textWithValue(EditableDrawing& drawing, const std::string& value) {
+    const RS_Text* found = nullptr;
+    for (const RS_Text* text : drawing.live<RS_Text>(RS2::EntityText)) {
+        if (text->getText().toStdString() == value) {
+            REQUIRE(found == nullptr);
+            found = text;
+        }
+    }
+    CAPTURE(value);
+    REQUIRE(found != nullptr);
+    return found;
+}
+
+// The groups of the attribute itself with these codes as numbers, one after
+// another; a code the record does not have gives none. QString::toDouble()
+// does not follow the locale.
+std::vector<double> ownNumbers(const DxfRecord& record, const std::vector<int>& codes) {
+    std::vector<double> numbers;
+    for (const int code : codes) {
+        for (const std::string& value : record.own(code)) {
+            bool isNumber = false;
+            numbers.push_back(QString::fromStdString(value).toDouble(&isNumber));
+            CAPTURE(code, value);
+            REQUIRE(isNumber);
+        }
+    }
+    return numbers;
+}
+
+// True when the lists are as long as each other and no pair is further apart
+// than 1e-9: a point of a file is where it should be, not near it.
+bool sameNumbers(const std::vector<double>& expected, const std::vector<double>& actual) {
+    if (expected.size() != actual.size()) {
+        return false;
+    }
+    for (std::size_t i = 0; i < expected.size(); ++i) {
+        if (!(std::abs(expected[i] - actual[i]) <= 1e-9)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 } // namespace
 
 TEST_CASE("an untouched multi-line attribute is written back as it was read",
@@ -2301,6 +2369,254 @@ TEST_CASE("a multi-line attribute keeps its MTEXT in the formats of 2018 whateve
             }
         }
     }
+}
+
+// A justified text is placed by its alignment point (group 11) and its
+// justification (72, and 74 in an attribute); its first point (group 10) is
+// where its baseline starts. The drawing has the alignment point as the
+// insertion point of the text and works the first point out when it lays the
+// text out. An aligned text has its two ends in the two points.
+
+TEST_CASE("a justified single-line attribute does not move when it is saved",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-geometry]") {
+    const Bench bench("attr_single_line_points");
+    // TOP has the numbers of an attribute that AutoCAD wrote: top left, its
+    // first point one height below its alignment point.
+    const std::string source = singleLineAttributesDxf({
+        singleLineAttrib("TOP", "994.5582906791903", "41.70948425675614", "1.720654456209621", "hello",
+                         "11\n994.5582906791903\n21\n43.43013871296577\n31\n0\n", "3"),
+        singleLineAttrib("CENTER", "6.95", "0.45", "0.1", "A", "72\n1\n11\n7\n21\n0.45\n31\n0\n"),
+        singleLineAttrib("LEFT", "3", "5", "1", "left", ""),
+        singleLineAttrib("ALIGNED", "10", "20", "1", "ends", "72\n3\n11\n14\n21\n20\n31\n0\n"),
+    });
+    const auto checkPlaces = [](EditableDrawing& drawing) {
+        const RS_Vector top(994.5582906791903, 43.43013871296577);
+        CHECK(textWithValue(drawing, "hello")->getInsertionPoint().distanceTo(top) < 1e-9);
+        CHECK(textWithValue(drawing, "A")->getInsertionPoint().distanceTo(RS_Vector(7.0, 0.45)) < 1e-9);
+        CHECK(textWithValue(drawing, "left")->getInsertionPoint().distanceTo(RS_Vector(3.0, 5.0)) < 1e-9);
+        const RS_Text* aligned = textWithValue(drawing, "ends");
+        CHECK(aligned->getInsertionPoint().distanceTo(RS_Vector(10.0, 20.0)) < 1e-9);
+        CHECK(aligned->getSecondPoint().distanceTo(RS_Vector(14.0, 20.0)) < 1e-9);
+    };
+
+    for (const char* format : {"dxf2018", "dxf2007", "dwg2013"}) {
+        const Target to = target(format);
+        auto drawing = std::make_unique<EditableDrawing>();
+        loadDxf(bench, source, *drawing, std::string(to.m_name) + "_source");
+        checkPlaces(*drawing);
+
+        // The first points that the first save wrote, by tag: a point that is
+        // worked out has to come out the same from the file it was saved to.
+        std::map<std::string, std::vector<double>> firstSave;
+        for (int round = 1; round <= 3; ++round) {
+            CAPTURE(to.m_name, round);
+            const auto out = save(bench, *drawing, "round" + std::to_string(round), to);
+            auto reopened = std::make_unique<EditableDrawing>();
+            REQUIRE(lc::test::importDrawing(reopened->m_graphic, out, to.m_format));
+            checkPlaces(*reopened);
+            drawing = std::move(reopened);
+            if (!to.m_dxf) {
+                continue;
+            }
+            checkWrittenDxf(out);
+            {
+                const DxfRecord record = attributeRecord(out, "TOP");
+                const std::vector<double> points = ownNumbers(record, {10, 20, 11, 21});
+                CAPTURE(points);
+                CHECK(sameNumbers({994.5582906791903, 43.43013871296577 - 1.720654456209621, 994.5582906791903,
+                                   43.43013871296577},
+                                  points));
+                CHECK(record.own(72).empty());
+                CHECK(record.own(74) == std::vector<std::string>{"3"});
+            }
+            {
+                // Half the width of the letter to the left of the point it is
+                // centred on, and on its line.
+                const DxfRecord record = attributeRecord(out, "CENTER");
+                const std::vector<double> points = ownNumbers(record, {10, 20, 11, 21});
+                CAPTURE(points);
+                REQUIRE(points.size() == 4);
+                CHECK(points[0] < 7.0);
+                CHECK(points[0] > 6.9);
+                CHECK(sameNumbers({0.45, 7.0, 0.45}, {points[1], points[2], points[3]}));
+                CHECK(record.own(72) == std::vector<std::string>{"1"});
+                CHECK(record.own(74).empty());
+            }
+            {
+                const DxfRecord record = attributeRecord(out, "LEFT");
+                CHECK(sameNumbers({3.0, 5.0}, ownNumbers(record, {10, 20})));
+                CHECK(record.own(11).empty());
+                CHECK(record.own(72).empty());
+                CHECK(record.own(74).empty());
+            }
+            {
+                const DxfRecord record = attributeRecord(out, "ALIGNED");
+                const std::vector<double> points = ownNumbers(record, {10, 20, 11, 21});
+                CAPTURE(points);
+                CHECK(sameNumbers({10.0, 20.0, 14.0, 20.0}, points));
+                CHECK(record.own(72) == std::vector<std::string>{"3"});
+            }
+            for (const char* tag : {"TOP", "CENTER", "LEFT", "ALIGNED"}) {
+                const std::vector<double> first = ownNumbers(attributeRecord(out, tag), {10, 20});
+                if (round == 1) {
+                    firstSave[tag] = first;
+                }
+                CAPTURE(tag, first, firstSave[tag]);
+                CHECK(sameNumbers(firstSave[tag], first));
+            }
+        }
+    }
+}
+
+TEST_CASE("an attribute keeps its own width factor and text generation flags",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-geometry]") {
+    const Bench bench("attr_width_generation");
+
+    // A multi-line text has neither. The 41 and the 71 of the attribute
+    // itself are for the value of the attribute, where that is what is shown.
+    SECTION("the width factor and the generation flags of a multi-line attribute") {
+        AttributeDxf fixture;
+        fixture.m_textExtra = "41\n0.8\n71\n2\n";
+        for (const char* format : {"dxf2018", "dxf2007", "dwg2018", "dwg2013"}) {
+            const Target to = target(format);
+            CAPTURE(to.m_name);
+            EditableDrawing drawing;
+            load(bench, fixture, drawing, std::string(to.m_name) + "_source");
+            REQUIRE(attributeText(drawing)->rtti() == RS2::EntityMText);
+            const auto out = save(bench, drawing, "width", to);
+            if (to.m_dxf) {
+                checkWrittenDxf(out);
+                const DxfRecord record = onlyRecord(out, "ATTRIB");
+                CHECK(sameNumbers({0.8}, ownNumbers(record, {41})));
+                // Next to the MTEXT the attribute has a second 71, its type.
+                const std::vector<std::string> generation = record.own(71);
+                REQUIRE(generation.size() == (to.m_embedsMText ? 2u : 1u));
+                CHECK(generation.front() == "2");
+            }
+            else {
+                DwgContent content;
+                readDwg(out, content);
+                CHECK(onlyDwgAttribute(content).widthscale == 0.8);
+                CHECK(onlyDwgAttribute(content).textgen == 2);
+            }
+        }
+    }
+
+    // Group 71 of a text: 2 for backward, 4 for upside down, 6 for both. A
+    // text of the drawing is one of the two at most, and a 6 is shown as
+    // neither: it is kept as long as the drawing does not say otherwise. A
+    // value that means nothing, such as a 3, is shown as neither too and is
+    // written as 0, so that the text is shown the same when it is read back.
+    SECTION("the generation flags of a single-line attribute") {
+        struct Row {
+            const char* m_name;
+            const char* m_stored;                       // group 71 of the source
+            bool m_edited;
+            RS_TextData::TextGeneration m_generation;   // what an edit makes of the text
+            int m_written;
+        };
+        const std::vector<Row> rows{
+            {"both", "6", false, RS_TextData::None, 6},
+            {"both_to_backward", "6", true, RS_TextData::Backward, 2},
+            {"backward", "2", false, RS_TextData::None, 2},
+            {"backward_to_none", "2", true, RS_TextData::None, 0},
+            {"none_to_upside_down", "0", true, RS_TextData::UpsideDown, 4},
+            {"another_value", "3", false, RS_TextData::None, 0},
+        };
+        for (const Row& row : rows) {
+            AttributeDxf fixture = plainAttributeDxf("FLAGS");
+            fixture.m_textExtra = std::string("71\n") + row.m_stored + "\n";
+            for (const char* format : {"dxf2007", "dxf2018", "dwg2013"}) {
+                const Target to = target(format);
+                CAPTURE(row.m_name, to.m_name);
+                EditableDrawing drawing;
+                load(bench, fixture, drawing, std::string(row.m_name) + "_" + to.m_name + "_source");
+                if (row.m_edited) {
+                    drawing.edit(only<RS_Text>(drawing, RS2::EntityText), [&](RS_Text& text) {
+                        text.setTextGeneration(row.m_generation);
+                    });
+                }
+                const auto out = save(bench, drawing, row.m_name, to);
+                if (to.m_dxf) {
+                    checkWrittenDxf(out);
+                    CHECK(onlyRecord(out, "ATTRIB").own(71) == std::vector<std::string>{std::to_string(row.m_written)});
+                }
+                else {
+                    DwgContent content;
+                    readDwg(out, content);
+                    CHECK(onlyDwgAttribute(content).textgen == row.m_written);
+                }
+            }
+        }
+    }
+}
+
+// A text with no letter to draw has no size, and the first point of a
+// justified one cannot be worked out from its letters: it is the alignment
+// point, lowered as a capital letter would be. A value of blanks is such a
+// text, and so is the empty value of an attribute that was not filled in.
+TEST_CASE("the first point of a single-line attribute with nothing to draw stays at its alignment point",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-geometry]") {
+    const Bench bench("attr_blank_first_point");
+    // Height 2, aligned to (50,20): to the right on the baseline, in the
+    // middle, and centred with the vertical middle. The last column is how
+    // far below the alignment point the baseline of a capital letter is.
+    struct Kind {
+        const char* m_name;
+        const char* m_horizontal;
+        const char* m_vertical;
+        double m_below;
+    };
+    const std::vector<Kind> kinds{{"RIGHT", "72\n2\n", "0", 0.0}, {"MIDDLE", "72\n4\n", "0", 1.0},
+                                  {"CENTER", "72\n1\n", "2", 1.0}};
+    std::vector<std::string> attributes;
+    for (const char* value : {"", "   "}) {
+        for (const Kind& kind : kinds) {
+            const std::string tag = std::string(*value == '\0' ? "EMPTY_" : "BLANK_") + kind.m_name;
+            attributes.push_back(singleLineAttrib(tag, "50", "20", "2", value,
+                                                  std::string(kind.m_horizontal) + "11\n50\n21\n20\n31\n0\n",
+                                                  kind.m_vertical));
+        }
+    }
+    const auto checkPlaces = [](EditableDrawing& drawing) {
+        const std::vector<const RS_Text*> texts = drawing.live<RS_Text>(RS2::EntityText);
+        CHECK(texts.size() == 6);
+        for (const RS_Text* text : texts) {
+            CAPTURE(text->getInsertionPoint().x, text->getInsertionPoint().y);
+            CHECK(text->getInsertionPoint().distanceTo(RS_Vector(50.0, 20.0)) < 1e-9);
+        }
+    };
+    const auto checkRecords = [&kinds](const std::filesystem::path& file) {
+        for (const char* prefix : {"EMPTY_", "BLANK_"}) {
+            for (const Kind& kind : kinds) {
+                const std::string tag = std::string(prefix) + kind.m_name;
+                const std::vector<double> points = ownNumbers(attributeRecord(file, tag), {10, 20, 11, 21});
+                CAPTURE(file.filename().string(), tag, points);
+                CHECK(sameNumbers({50.0, 20.0 - kind.m_below, 50.0, 20.0}, points));
+            }
+        }
+    };
+
+    EditableDrawing drawing;
+    loadDxf(bench, singleLineAttributesDxf(attributes), drawing);
+    checkPlaces(drawing);
+
+    const Target dxf = target("dxf2007");
+    const auto direct = save(bench, drawing, "untouched", dxf);
+    checkWrittenDxf(direct);
+    checkRecords(direct);
+    EditableDrawing reopened;
+    REQUIRE(lc::test::importDrawing(reopened.m_graphic, direct, dxf.m_format));
+    checkPlaces(reopened);
+
+    // The same through a DWG, whose content is read as the DXF that the
+    // drawing it opens as is saved to.
+    const Target dwg = target("dwg2013");
+    const auto viaDwg = save(bench, drawing, "untouched", dwg);
+    EditableDrawing fromDwg;
+    REQUIRE(lc::test::importDrawing(fromDwg.m_graphic, viaDwg, dwg.m_format));
+    checkPlaces(fromDwg);
+    checkRecords(save(bench, fromDwg, "untouched_dwg2013", dxf));
 }
 
 // Local only: the drawing is AutoCAD's and is not in the repository.
