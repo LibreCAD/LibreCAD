@@ -193,12 +193,19 @@ private:
     }
     void appendScalar(char32_t scalar, Range source) {
         const int start = int(paragraph().text.size());
-        const QString value = QString::fromUcs4(&scalar, 1);
-        paragraph().text += value;
-        paragraph().scalars.push_back({scalar, {start, int(value.size())}, source});
+        // Not QString::fromUcs4(): it takes U+FEFF for a byte order mark and
+        // drops it, and the scalar would then own no unit of the text.
+        const int length = QChar::requiresSurrogates(scalar) ? 2 : 1;
+        if (length == 2) {
+            paragraph().text += QChar(QChar::highSurrogate(scalar));
+            paragraph().text += QChar(QChar::lowSurrogate(scalar));
+        } else {
+            paragraph().text += QChar(char16_t(scalar));
+        }
+        paragraph().scalars.push_back({scalar, {start, length}, source});
         if (!paragraph().spans.empty() && paragraph().spans.back().style == style)
-            paragraph().spans.back().text.length += int(value.size());
-        else paragraph().spans.push_back({{start, int(value.size())}, style});
+            paragraph().spans.back().text.length += length;
+        else paragraph().spans.push_back({{start, length}, style});
     }
     void appendLiteral(int begin, int limit) {
         position = begin;

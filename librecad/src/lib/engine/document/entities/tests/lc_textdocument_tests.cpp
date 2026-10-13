@@ -669,7 +669,7 @@ TEST_CASE("Parser limits fail explicitly without truncating saved text", "[textd
 TEST_CASE("Seeded malformed and scoped inputs retain complete source provenance", "[textdocument][property]") {
     std::mt19937 random(0x06280644);
     const ushort units[] = {'A', 'B', ' ', '\t', '\n', '\\', '{', '}', ';', '^', 'S', 'H', 'f', 'C', '2',
-                             0x628, 0x64e, 0x200d, 0x200c, 0x2067, 0x2069, 0xd83d, 0xde00};
+                             0x628, 0x64e, 0x200d, 0x200c, 0x2067, 0x2069, 0xfeff, 0xd83d, 0xde00};
     for (int sample = 0; sample < 200; ++sample) {
         QString source;
         for (int i = 0; i < 80; ++i) source += QChar(units[random() % (sizeof(units) / sizeof(units[0]))]);
@@ -679,4 +679,40 @@ TEST_CASE("Seeded malformed and scoped inputs retain complete source provenance"
         CHECK(document.source == source);
         checkProvenance(document);
     }
+}
+
+TEST_CASE("U+FEFF is a scalar of the text and not a byte order mark", "[textdocument]") {
+    const QChar mark(0xfeff);
+    const QString sources[] = {QString(mark), QString(3, mark), QStringLiteral("a") + mark + QStringLiteral("b"),
+                               QString(mark) + QStringLiteral("ب") + mark};
+    for (const QString &source : sources) {
+        for (const auto syntax : {Document::Syntax::Plain, Document::Syntax::MText}) {
+            auto options = mtextOptions();
+            options.syntax = syntax;
+            const auto document = Document::parse(source, options);
+            REQUIRE(document.paragraphs.size() == 1);
+            CHECK(document.paragraphs.front().text == source);
+            CHECK(document.paragraphs.front().scalars.size() == std::size_t(source.size()));
+            CHECK(document.diagnostics.empty());
+            checkProvenance(document);
+        }
+    }
+    auto options = mtextOptions();
+    options.decodeDxfEscapes = true;
+    // Escaped in the text, literal and escaped in the two parts of a stack.
+    const QString source = QStringLiteral("a\\U+FEFFb\\S") + mark + QStringLiteral("^\\U+FEFF;");
+    const auto document = Document::parse(source, options);
+    REQUIRE(document.paragraphs.size() == 1);
+    const auto &paragraph = document.paragraphs.front();
+    CHECK(paragraph.text == QStringLiteral("a") + mark + QStringLiteral("b\ufffc"));
+    REQUIRE(paragraph.scalars.size() == 4);
+    CHECK(paragraph.scalars[1].value == 0xfeff);
+    CHECK(paragraph.scalars[1].text == Range{1, 1});
+    CHECK(paragraph.scalars[1].source == Range{1, 7});
+    REQUIRE(paragraph.objects.size() == 1);
+    CHECK(paragraph.objects.front().upper->paragraphs.front().text == QString(mark));
+    CHECK(paragraph.objects.front().lower->paragraphs.front().text == QString(mark));
+    checkProvenance(document);
+    checkProvenance(*paragraph.objects.front().upper);
+    checkProvenance(*paragraph.objects.front().lower);
 }
