@@ -1541,17 +1541,25 @@ TEST_CASE("a rotated attribute read from DXF keeps its angle in the formats of 2
         double m_degrees;
         std::vector<std::string> m_axis;        // 11 and 21 of the MTEXT in a saved DXF
         std::vector<std::string> m_angle;       // and its 50
+        const char* m_marker;                   // of the embedded object
     };
     const std::vector<Variant> variants{
         // As AutoCAD writes it: the x-axis, and the angle on the attribute.
-        {"x_axis", "50\n30\n", "11\n0.8660254037844387\n21\n0.5\n31\n0\n", 30.0, {"0.8660254037844387", "0.5"}, {}},
+        {"x_axis", "50\n30\n", "11\n0.8660254037844387\n21\n0.5\n31\n0\n", 30.0, {"0.8660254037844387", "0.5"}, {},
+         "101"},
         // An x-axis need not have the length 1; it is the file's all the same.
-        {"long_x_axis", "50\n45\n", "11\n2\n21\n2\n31\n0\n", 45.0, {"2", "2"}, {}},
-        {"angle", "", "50\n75\n", 75.0, {}, {"75"}},
+        {"long_x_axis", "50\n45\n", "11\n2\n21\n2\n31\n0\n", 45.0, {"2", "2"}, {}, "101"},
+        {"angle", "", "50\n75\n", 75.0, {}, {"75"}, "101"},
         // As earlier versions of LibreCAD wrote a text that was rotated in
         // the drawing: the x-axis the file came with, and after it the angle.
         // The last of the two counts, and the axis is not written again.
-        {"stale_x_axis", "", "11\n1\n21\n0\n31\n0\n50\n30\n", 30.0, {}, {"30"}},
+        {"stale_x_axis", "", "11\n1\n21\n0\n31\n0\n50\n30\n", 30.0, {}, {"30"}, "101"},
+        // And as they wrote a rotated attribute that came from a DWG, behind
+        // the marker of then: the x-axis of the text itself, and after it
+        // the angle all the same.
+        {"x_axis_and_angle", "", "11\n0.8660254037844387\n21\n0.5\n31\n0\n50\n30\n", 30.0, {}, {"30"}, "100"},
+        {"x_axis_and_angle_150", "", "11\n-0.8660254037844387\n21\n0.5\n31\n0\n50\n150\n", 150.0, {}, {"150"},
+         "100"},
     };
     const auto checkDirection = [](const DxfRecord& record, const std::vector<std::string>& axis,
                                    const std::vector<std::string>& angle) {
@@ -1566,6 +1574,7 @@ TEST_CASE("a rotated attribute read from DXF keeps its angle in the formats of 2
     for (const Variant& variant : variants) {
         CAPTURE(variant.m_name);
         AttributeDxf fixture;
+        fixture.m_marker = variant.m_marker;
         fixture.m_textExtra = variant.m_ownAngle;
         fixture.m_mtextExtra = variant.m_direction;
         EditableDrawing drawing;
