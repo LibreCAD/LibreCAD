@@ -3233,6 +3233,7 @@ TEST_CASE("DXF filter propagates typed writer rejection",
   RS_FilterDXFRW filter;
   CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out),
                                 RS2::FormatDXFRW));
+  CHECK_FALSE(std::filesystem::exists(out));
   std::filesystem::remove(out);
 }
 
@@ -5122,6 +5123,7 @@ TEST_CASE("DXF export rejects duplicate raw self-handles",
   RS_FilterDXFRW filter;
   CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out),
                                 RS2::FormatDXFRW));
+  CHECK_FALSE(std::filesystem::exists(out));
   std::filesystem::remove(out);
 }
 
@@ -6858,6 +6860,7 @@ TEST_CASE("DXF export rejects malformed typed conversion sidecars",
   RS_FilterDXFRW filter;
   CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out),
                                 RS2::FormatDXFRW));
+  CHECK_FALSE(std::filesystem::exists(out));
   CHECK(countRecords(out, "POINT") == 0);
 
   std::filesystem::remove(out);

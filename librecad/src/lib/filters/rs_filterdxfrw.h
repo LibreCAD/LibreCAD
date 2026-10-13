@@ -2276,6 +2276,7 @@ public:
   void writeObjects() override;
   bool finalizeDwgWrite() override;
   bool finalizeDwgWriteStructure() override;
+  bool finalizeDxfWrite() override;
   void collectDwgAppIds() override;
   void writeAppId() override;
 

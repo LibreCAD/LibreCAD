@@ -27009,6 +27009,12 @@ void RS_FilterDXFRW::writeAppId() {
   }
 }
 
+bool RS_FilterDXFRW::finalizeDxfWrite() {
+  // A failure latched in any DXF write callback reaches dxfRW here, before
+  // it replaces the destination.
+  return !m_writeFailed;
+}
+
 bool RS_FilterDXFRW::finalizeDwgWrite() {
 #ifdef DWGSUPPORT
   if (m_dwgW != nullptr) {
