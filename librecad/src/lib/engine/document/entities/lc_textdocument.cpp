@@ -12,10 +12,10 @@
 #include <limits>
 
 bool LC_TextDocument::Style::operator==(const Style &s) const {
-    return font == s.font && fontSpecification == s.fontSpecification && language == s.language &&
-           heightFactor == s.heightFactor && widthFactor == s.widthFactor && obliqueDegrees == s.obliqueDegrees &&
+    return heightFactor == s.heightFactor && widthFactor == s.widthFactor && obliqueDegrees == s.obliqueDegrees &&
            color == s.color && trueColor == s.trueColor && underline == s.underline &&
-           overline == s.overline && strikeThrough == s.strikeThrough;
+           overline == s.overline && strikeThrough == s.strikeThrough &&
+           sameText(font, s.font) && sameText(fontSpecification, s.fontSpecification) && sameText(language, s.language);
 }
 
 std::vector<LC_TextDocument::Range> LC_TextDocument::Paragraph::sourceRanges(int start, int length) const {
@@ -203,9 +203,21 @@ private:
             paragraph().text += QChar(char16_t(scalar));
         }
         paragraph().scalars.push_back({scalar, {start, length}, source});
-        if (!paragraph().spans.empty() && paragraph().spans.back().style == style)
-            paragraph().spans.back().text.length += length;
-        else paragraph().spans.push_back({{start, length}, style});
+        auto &spans = paragraph().spans;
+        if (!spans.empty() && spans.back().style == style) {
+            // A font command that repeats the name of the span's font holds the
+            // name in a buffer of its own. The span takes the buffers of the
+            // style here, so that the two names are compared once and not again
+            // for every scalar that follows.
+            auto &held = spans.back().style;
+            if (held.font.constData() != style.font.constData() ||
+                held.fontSpecification.constData() != style.fontSpecification.constData() ||
+                held.language.constData() != style.language.constData())
+                held = style;
+            spans.back().text.length += length;
+        } else {
+            spans.push_back({{start, length}, style});
+        }
     }
     void appendLiteral(int begin, int limit) {
         position = begin;

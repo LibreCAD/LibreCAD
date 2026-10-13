@@ -23,6 +23,12 @@ public:
         int end() const { return start + length; }
         bool operator==(const Range &other) const { return start == other.start && length == other.length; }
     };
+    // Equal text. A copy of a string shares its buffer, and that is looked at
+    // before the characters are: a font name or a source can be as long as the
+    // whole text, and styles and sources are compared once per scalar or stack.
+    template <typename Text> static bool sameText(const Text &a, const Text &b) {
+        return a.size() == b.size() && (a.constData() == b.constData() || a == b);
+    }
     struct Style {
         QString font;
         QString fontSpecification;

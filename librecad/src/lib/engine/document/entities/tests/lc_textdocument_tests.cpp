@@ -716,3 +716,70 @@ TEST_CASE("U+FEFF is a scalar of the text and not a byte order mark", "[textdocu
     checkProvenance(*paragraph.objects.front().upper);
     checkProvenance(*paragraph.objects.front().lower);
 }
+
+TEST_CASE("Styles are equal by value, whichever buffers hold their text", "[textdocument]") {
+    Document::Style first, second;
+    for (QString Document::Style::*member : {&Document::Style::font, &Document::Style::fontSpecification}) {
+        first.*member = QString(40, QChar('F'));
+        second.*member = QString(40, QChar('F'));
+        REQUIRE((first.*member).constData() != (second.*member).constData());
+        CHECK(first == second);
+        (second.*member)[39] = QChar('G');
+        CHECK_FALSE(first == second);
+        second.*member = QString(39, QChar('F'));
+        CHECK_FALSE(first == second);
+        second.*member = first.*member;
+        CHECK(first == second);
+    }
+    first.language = QByteArray(8, 'a');
+    second.language = QByteArray(8, 'a');
+    REQUIRE(first.language.constData() != second.language.constData());
+    CHECK(first == second);
+    second.language[7] = 'b';
+    CHECK_FALSE(first == second);
+    second.language = first.language;
+    first.font = QString();
+    second.font = QStringLiteral("");
+    CHECK(first == second);
+    for (const int field : {0, 1, 2, 3, 4, 5, 6, 7}) {
+        auto other = first;
+        switch (field) {
+        case 0: other.heightFactor = 2; break;
+        case 1: other.widthFactor = 2; break;
+        case 2: other.obliqueDegrees = 2; break;
+        case 3: other.color = 2; break;
+        case 4: other.trueColor = true; break;
+        case 5: other.underline = true; break;
+        case 6: other.overline = true; break;
+        default: other.strikeThrough = true; break;
+        }
+        INFO(field);
+        CHECK_FALSE(first == other);
+    }
+}
+
+TEST_CASE("A font command that repeats the name continues the span", "[textdocument]") {
+    const QString name(64, QChar('F'));
+    const QString other = name.left(63) + QStringLiteral("G");
+    // abc: the name once more after a. d: underlined in a scope. e: the scope
+    // has closed. f: a name of the same length that differs in its last letter.
+    const QString source = QStringLiteral("\\f") + name + QStringLiteral(";a\\f") + name + QStringLiteral(";bc{\\Ld}e\\f") +
+                           other + QStringLiteral(";f");
+    const auto document = Document::parse(source, mtextOptions());
+    REQUIRE(document.paragraphs.size() == 1);
+    const auto &paragraph = document.paragraphs.front();
+    CHECK(paragraph.text == QStringLiteral("abcdef"));
+    REQUIRE(paragraph.spans.size() == 4);
+    CHECK(paragraph.spans[0].text == Range{0, 3});
+    CHECK(paragraph.spans[1].text == Range{3, 1});
+    CHECK(paragraph.spans[2].text == Range{4, 1});
+    CHECK(paragraph.spans[3].text == Range{5, 1});
+    for (int span = 0; span < 3; ++span) {
+        CHECK(paragraph.spans[span].style.font == name);
+        CHECK(paragraph.spans[span].style.fontSpecification == name);
+        CHECK(paragraph.spans[span].style.underline == (span == 1));
+    }
+    CHECK(paragraph.spans[3].style.font == other);
+    CHECK(document.diagnostics.empty());
+    checkProvenance(document);
+}

@@ -324,7 +324,8 @@ LC_TextLayout::Result LC_TextLayout::paragraphImpl(const LC_TextDocument::Paragr
                 range.length <= object.source.end() - range.start;
         };
         if (!childRange(object.upper->sourceRange) || !childRange(object.lower->sourceRange) ||
-            object.upper->sourceRange.end() > object.lower->sourceRange.start || object.upper->source != object.lower->source)
+            object.upper->sourceRange.end() > object.lower->sourceRange.start ||
+            !LC_TextDocument::sameText(object.upper->source, object.lower->source))
             return invalid(Code::InvalidParagraph, QStringLiteral("Stack children do not retain ordered original-source ownership"));
         placed.text = run.text; placed.source = object.source; placed.separator = object.separator;
         placed.paint = *document.styleAt(run.text.start);
@@ -653,7 +654,7 @@ LC_TextLayout::BlockResult LC_TextLayout::blockImpl(const LC_TextDocument &docum
         return fail(Code::InvalidParagraph, QStringLiteral("Invalid parsed block or original-source range"));
     if (document.source.size() > hardInputLimit || document.paragraphs.size() > options.maximumParagraphs - context.paragraphs)
         return fail(Code::ComplexityLimit, QStringLiteral("The recursive block source or paragraph budget was exceeded"));
-    if (context.canonicalSource && document.source != *context.canonicalSource)
+    if (context.canonicalSource && !LC_TextDocument::sameText(document.source, *context.canonicalSource))
         return fail(Code::InvalidParagraph, QStringLiteral("Recursive parsed blocks do not share the canonical original source"));
     // paragraph() has no outer original string. Its first parsed child supplies
     // the canonical source for all children/descendants, not for the paragraph.

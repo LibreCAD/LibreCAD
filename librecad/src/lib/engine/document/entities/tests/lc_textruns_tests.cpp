@@ -467,3 +467,26 @@ TEST_CASE("Many font and paint spans retain shared contexts without text copies"
     CHECK(at(nested, 0).script == QChar::Script_Latin);
     CHECK(at(nested, int(nested.text.size()) - 1).script == QChar::Script_Latin);
 }
+
+TEST_CASE("Equal font names held in separate buffers stay one item", "[textruns][format]") {
+    const QString name(48, QChar('F'));
+    const QString other = name.left(47) + QStringLiteral("G");
+    // The second command repeats the name of the first, and the underline keeps
+    // the two spans apart: one item of three letters, in two spans. The last
+    // name has the same length and differs in its last letter.
+    const QString source = QStringLiteral("\\f") + name + QStringLiteral(";ب\\f") + name + QStringLiteral(";\\Lبب\\f") +
+                           other + QStringLiteral(";ب");
+    const auto document = Document::parse(source, mtextOptions());
+    REQUIRE(document.ok());
+    const auto &logical = document.paragraphs.front();
+    REQUIRE(logical.spans.size() == 3);
+    REQUIRE(logical.spans[0].style.font.constData() != logical.spans[1].style.font.constData());
+    const auto paragraph = Runs::itemize(logical);
+    checkInvariants(logical, paragraph);
+    REQUIRE(paragraph.runs.size() == 2);
+    CHECK(paragraph.runs[0].text == Range{0, 3});
+    CHECK(paragraph.runs[0].style.font == name);
+    CHECK(paragraph.runs[1].text == Range{3, 1});
+    CHECK(paragraph.runs[1].style.font == other);
+    CHECK(paragraph.contexts.size() == 1);
+}

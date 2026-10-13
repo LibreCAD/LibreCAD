@@ -13,9 +13,10 @@
 #include <utility>
 
 bool LC_TextRuns::ShapingStyle::operator==(const ShapingStyle &s) const {
-    return font == s.font && fontSpecification == s.fontSpecification &&
-           language == s.language && heightFactor == s.heightFactor &&
-           widthFactor == s.widthFactor && obliqueDegrees == s.obliqueDegrees;
+    return heightFactor == s.heightFactor && widthFactor == s.widthFactor &&
+           obliqueDegrees == s.obliqueDegrees && LC_TextDocument::sameText(font, s.font) &&
+           LC_TextDocument::sameText(fontSpecification, s.fontSpecification) &&
+           LC_TextDocument::sameText(language, s.language);
 }
 
 namespace {
@@ -309,9 +310,12 @@ LC_TextRuns::Paragraph LC_TextRuns::itemize(const LC_TextDocument::Paragraph &pa
             resolveScripts(units, first, end, graphemeForUnit, options.fallbackScript);
             for (int item = first; item < end;) {
                 int itemEnd = item + 1;
+                // The style is compared with the unit before: the units of one
+                // span share the buffers of its font names, the first unit of
+                // the run may hold equal names in buffers of another span.
                 while (itemEnd < end && units[itemEnd].kind == units[item].kind &&
                        units[itemEnd].script == units[item].script &&
-                       units[itemEnd].style == units[item].style) ++itemEnd;
+                       units[itemEnd].style == units[itemEnd - 1].style) ++itemEnd;
                 Run run;
                 run.kind = units[item].kind;
                 run.text = {units[item].text.start, units[itemEnd - 1].text.end() - units[item].text.start};
