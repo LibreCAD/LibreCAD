@@ -2639,6 +2639,7 @@ if (BUILD_TESTS)
         librecad/src/cmd/tests/rs_commands_tests.cpp
         librecad/src/lib/engine/undo/tests/rs_undo_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/lc_attrib_embedded_mtext_dwg_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_handseed_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_app_vars_tests.cpp
@@ -2727,6 +2728,7 @@ if (BUILD_TESTS)
         librecad/src/ui/components/pen/tests/qg_widgetpen_tests.cpp
         librecad/src/ui/dialogs/tests/lc_dialog_tests.cpp
         librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreewidget_tests.cpp
+        librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreemodel_tests.cpp
         librecad/src/plugins/tests/qc_actiongetselect_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
         librecad/src/lib/gui/tests/lc_scrollmodel_tests.cpp
@@ -2738,6 +2740,7 @@ if (BUILD_TESTS)
         librecad/src/main/tests/console_command_utils_tests.cpp
         librecad/src/main/tests/lc_pdfprintlooptests.cpp
         librecad/src/main/tests/lc_consoleimporttests.cpp
+        librecad/src/main/tests/lc_consolesvgexporttests.cpp
         # Shapelib safety-net tests.  shapelib sources are compiled into
         # librecad_lib (SHARED_SOURCES) since Phase 1b, so the test target
         # only needs the test file itself.
@@ -2809,6 +2812,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/lc_attrib_embedded_mtext_dwg_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_app_vars_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_handseed_tests.cpp
@@ -2825,6 +2829,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/i18n_caret_nfc_tests.cpp
         librecad/src/lib/filters/tests/i18n_codec_tests.cpp
         librecad/src/lib/filters/tests/datastorage_tests.cpp
+        librecad/src/main/tests/lc_consolesvgexporttests.cpp
     )
     qt_add_executable(librecad_fast_tests
         EXCLUDE_FROM_ALL
@@ -2865,6 +2870,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/lc_attrib_embedded_mtext_dwg_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_app_vars_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_handseed_tests.cpp
@@ -3110,6 +3116,12 @@ if (BUILD_TESTS)
         get_filename_component(test_stem "${test_source}" NAME_WE)
         add_librecad_filter_micro_test("librecad_${test_stem}" "${test_source}")
     endforeach()
+    # slotFileExport is defined in console_dxf2png.cpp and the LC_Console
+    # helpers in console_command_utils.cpp (application sources, no main()),
+    # so the SVG export test compiles both translation units directly.
+    target_sources(librecad_lc_consolesvgexporttests PRIVATE
+        librecad/src/main/console_command_utils.cpp
+        librecad/src/main/console_dxf2png.cpp)
 
     # A parser-only lane for the tight implementation loop.  The existing
     # librecad_*_fast_tests targets intentionally exercise the LibreCAD filter,
@@ -3120,6 +3132,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/lc_attrib_embedded_mtext_dwg_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_handseed_tests.cpp
         librecad/src/lib/filters/tests/dynblock_tests.cpp
@@ -3327,6 +3340,11 @@ if (BUILD_TESTS)
             ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
     endif()
     if (LIBRECAD_REGISTER_INTEGRATION_TESTS)
+        add_test(NAME librecad_console_svg_tests
+            COMMAND $<TARGET_FILE:librecad_lc_consolesvgexporttests>
+                "[console]" --reporter compact)
+        set_tests_properties(librecad_console_svg_tests PROPERTIES
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
         add_test(NAME librecad_dwg_fast_tests
             COMMAND $<TARGET_FILE:librecad_dwg_fast_tests>
                 ${LIBRECAD_FAST_TEST_EXCLUDES}

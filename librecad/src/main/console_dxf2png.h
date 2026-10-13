@@ -24,9 +24,25 @@
 #ifndef CONSOLE_DXF2PNG_H
 #define CONSOLE_DXF2PNG_H
 
+#include <QSize>
+#include <QString>
+
+class RS_Graphic;
+
 int console_dxf2png(int argc, char* argv[]);
 int console_dwg2png(int argc, char* argv[]);
 int console_dxf2svg(int argc, char* argv[]);
 int console_dwg2svg(int argc, char* argv[]);
+
+// Paint the graphic with RS_Painter into the named file. Raster formats are
+// written as images; "SVG" is painted through a QSvgGenerator. Returns true
+// only if the file was written.
+bool slotFileExport(RS_Graphic* graphic,
+                    const QString& name,
+                    const QString& format,
+                    const QSize& size,
+                    const QSize& borders,
+                    bool black,
+                    bool bw = true);
 
 #endif

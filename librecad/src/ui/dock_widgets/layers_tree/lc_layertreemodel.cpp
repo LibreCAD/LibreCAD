@@ -30,7 +30,7 @@
 #include "rs_layer.h"
 #include "rs_layerlist.h"
 
-LC_LayerTreeModel::LC_LayerTreeModel(QObject * parent, LC_LayerTreeModelOptions *options) :QAbstractItemModel(parent) {
+LC_LayerTreeModel::LC_LayerTreeModel(QObject * parent, std::unique_ptr<LC_LayerTreeModelOptions> options) :QAbstractItemModel(parent) {
     m_iconLayerVisible = QIcon(":/icons/visible.lci");
     m_iconLayerHidden = QIcon(":/icons/not_visible.lci");
     m_iconLayerDefreeze = QIcon(":/icons/unlocked.lci");
@@ -46,9 +46,13 @@ LC_LayerTreeModel::LC_LayerTreeModel(QObject * parent, LC_LayerTreeModelOptions 
     m_iconLayerAlternatePosition = QIcon(":/icons/rotate.lci");
     m_iconLayerInformationalNotes = QIcon(":/icons/mtext.lci");
 
-    m_rootItem = new LC_LayerTreeItem();
-    m_options = options;
+    m_rootItem = std::make_unique<LC_LayerTreeItem>();
+    m_options = std::move(options);
 }
+
+// defined here, where the item and options types the model owns are complete
+LC_LayerTreeModel::~LC_LayerTreeModel() = default;
+
 /**
  * Returns amount of child for item defined by given index.
  * if index is invalid, returns number of top-level items
@@ -58,7 +62,7 @@ LC_LayerTreeModel::LC_LayerTreeModel(QObject * parent, LC_LayerTreeModelOptions 
 int LC_LayerTreeModel::rowCount ( const QModelIndex & parent ) const {
     const LC_LayerTreeItem* parentItem = nullptr;
     if (!parent.isValid()) {
-        parentItem = m_rootItem;
+        parentItem = m_rootItem.get();
     }
     else {
         parentItem = getItemForIndex(parent);
@@ -94,7 +98,7 @@ QModelIndex LC_LayerTreeModel::parent ( const QModelIndex & index ) const {
         if (childItem != nullptr) {
             const LC_LayerTreeItem *parentItem = childItem->parent();
 
-            if (parentItem != m_rootItem){
+            if (parentItem != m_rootItem.get()){
                 return createIndex(parentItem->row(), 0, parentItem);
             }
         }
@@ -116,7 +120,7 @@ QModelIndex LC_LayerTreeModel::index(const int row, const int column, const QMod
     const LC_LayerTreeItem* parentItem = nullptr;
 
     if (!parent.isValid()) {
-        parentItem = m_rootItem;
+        parentItem = m_rootItem.get();
     }
     else {
         parentItem = getItemForIndex(parent);
@@ -147,9 +151,7 @@ void LC_LayerTreeModel::setLayerList(const RS_LayerList* ll) {
     beginResetModel();
 
     m_rootItem -> invalidate();
-    delete m_rootItem;
-
-    m_rootItem = new LC_LayerTreeItem();
+    m_rootItem = std::make_unique<LC_LayerTreeItem>();
 
     if (ll == nullptr) {
         endResetModel();
@@ -251,7 +253,7 @@ void LC_LayerTreeModel::rebuildModel(const QList<RS_Layer*> &layersList, const R
             }
         }
 
-        LC_LayerTreeItem* virtualRoot = m_rootItem;
+        LC_LayerTreeItem* virtualRoot = m_rootItem.get();
 
         if (m_flatMode){
             // do nothing here, no need to restore tree structure
@@ -698,7 +700,7 @@ bool LC_LayerTreeModel::isValidRestructure(const LC_LayerTreeItem*  source, cons
 
     // prohibit dropping into own parent, allow dropping to viewport
     if (destination->parent() == nullptr) {
-        if (source->parent() == m_rootItem){ // avoid duplication of top-level items
+        if (source->parent() == m_rootItem.get()){ // avoid duplication of top-level items
             return false;
         }
        return true;

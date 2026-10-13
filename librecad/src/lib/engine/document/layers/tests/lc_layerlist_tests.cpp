@@ -486,6 +486,18 @@ TEST_CASE("A library insert keeps nothing of the library drawing's layers", "[la
     checkOwnLayers(destination.m_graphic);
 }
 
+namespace {
+
+/// what the layer dock does: QG_LayerWidget::layerAdded() makes every added layer the current one
+class ActivatesAddedLayers final : public RS_LayerListListener {
+public:
+    explicit ActivatesAddedLayers(RS_Graphic& graphic) : m_graphic{graphic} {}
+    void layerAdded(RS_Layer* layer) override { m_graphic.activateLayer(layer); }
+    RS_Graphic& m_graphic;
+};
+
+}
+
 TEST_CASE("A library insert preserves entity and layer pens from DXF", "[layers][copy][library][3014]") {
     const QTemporaryDir directory;
     REQUIRE(directory.isValid());
@@ -494,11 +506,14 @@ TEST_CASE("A library insert preserves entity and layer pens from DXF", "[layers]
     const RS_Pen explicitPen(RS_Color(80, 90, 100), RS2::Width09, RS2::DashDotLine);
     const RS_Pen byBlock(RS2::FlagByBlock, RS2::WidthByBlock, RS2::LineByBlock);
     const RS_Pen sourcePens[] = {byLayer, byLayer, explicitPen, byBlock, byLayer};
+    const RS_Pen detailsPen(RS_Color(0, 0, 255), RS2::Width03, RS2::DotLine);
+    RS_Pen wallsPen(RS_Color(255, 0, 0), RS2::Width05, RS2::DashLine);
     {
         Drawing part;
         RS_Layer* walls = part.addLayer(QStringLiteral("WALLS"));
+        walls->setPen(wallsPen);
         RS_Layer* details = part.addLayer(QStringLiteral("DETAILS"));
-        details->setPen(RS_Pen(RS_Color(0, 0, 255), RS2::Width03, RS2::DotLine));
+        details->setPen(detailsPen);
         RS_Layer* layers[] = {walls, details, details, details, part.m_graphic.findLayer(QStringLiteral("0"))};
         for (int i = 0; i < 5; ++i) {
             auto* line = new RS_Line(&part.m_graphic, RS_LineData(RS_Vector(0, i), RS_Vector(10, i)));
@@ -510,20 +525,25 @@ TEST_CASE("A library insert preserves entity and layer pens from DXF", "[layers]
     }
 
     auto library = std::make_unique<Drawing>();
-    REQUIRE(RS_FileIO::instance()->fileImport(library->m_graphic, path, RS2::FormatDXFRW));
+    // with a callback: without one, a failed import waits in a message box
+    REQUIRE(RS_FileIO::instance()->fileImport(library->m_graphic, path, RS2::FormatDXFRW,
+                                              [](bool, const QString&) { return false; }));
     Drawing destination;
     RS_Layer* insertionLayer = destination.addLayer(QStringLiteral("INSERTION"));
     insertionLayer->setPen(RS_Pen(RS_Color(0, 255, 0), RS2::Width04, RS2::SolidLine));
     destination.m_graphic.activateLayer(insertionLayer);
     SECTION("missing layers keep the imported settings") {}
     SECTION("an existing destination layer keeps its settings") {
-        destination.addLayer(QStringLiteral("WALLS"))->setPen(
-            RS_Pen(RS_Color(255, 0, 255), RS2::Width07, RS2::DashDotLine));
+        wallsPen = RS_Pen(RS_Color(255, 0, 255), RS2::Width07, RS2::DashDotLine);
+        destination.addLayer(QStringLiteral("WALLS"))->setPen(wallsPen);
     }
+    ActivatesAddedLayers dock(destination.m_graphic);
+    destination.m_graphic.addLayerListListener(&dock);
     destination.modify([&](LC_DocumentModificationBatch& ctx) {
         RS_Modification::libraryInsert(LC_LibraryInsertData(RS_Vector{0, 0}, 1, 0, "PART", &library->m_graphic),
                                        &destination.m_graphic, ctx);
     });
+    destination.m_graphic.removeLayerListListener(&dock);
     library.reset();
     destination.m_graphic.updateInserts();
 
@@ -534,10 +554,14 @@ TEST_CASE("A library insert preserves entity and layer pens from DXF", "[layers]
     auto* insert = dynamic_cast<RS_Insert*>(destination.m_graphic.entityAt(0));
     REQUIRE(insert != nullptr);
     REQUIRE(insert->count() == 5);
+    // on the layer that was current when the insert started, not on the imported one the dock moved on to
+    CHECK(insert->getLayer(false) == insertionLayer);
     RS_Layer* walls = destination.m_graphic.findLayer(QStringLiteral("WALLS"));
     RS_Layer* details = destination.m_graphic.findLayer(QStringLiteral("DETAILS"));
     REQUIRE(walls != nullptr);
     REQUIRE(details != nullptr);
+    CHECK(walls->getPen() == wallsPen);
+    CHECK(details->getPen() == detailsPen);
     const RS_Pen expected[] = {walls->getPen(), details->getPen(), explicitPen,
                               insertionLayer->getPen(), insertionLayer->getPen()};
     for (int i = 0; i < 5; ++i) {

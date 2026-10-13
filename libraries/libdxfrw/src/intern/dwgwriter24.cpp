@@ -14,6 +14,7 @@
 #include "dwgwriter24.h"
 #include "dwgutil.h"
 #include "../drw_entities.h"
+#include <algorithm>
 #include <cctype>
 #include <limits>
 
@@ -260,6 +261,30 @@ bool dwgWriter24::encodeEntity(DRW_Entity *ent) {
                 styleIt != m_writingCtx.mlineStyleMap.end())
                 mline->styleHandle = styleIt->second;
         }
+    }
+    // The MTEXT embedded in a multi-line attribute names a layer, a linetype
+    // and a text style by handle. One that was read from another drawing says
+    // nothing here, where the table records have handles of their own: keep it
+    // only if this drawing has such a record, else use what the attribute has.
+    if (auto *attrib = dynamic_cast<DRW_Attrib *>(ent);
+        attrib != nullptr && attrib->mtext != nullptr) {
+        const auto names = [](const auto& table, std::uint32_t handle) {
+            return std::any_of(table.cbegin(), table.cend(),
+                               [handle](const auto& record) {
+                                   return record.second == handle;
+                               });
+        };
+        DRW_MText& embedded = *attrib->mtext;
+        if (!names(m_writingCtx.layerMap, embedded.dwgLayerHandle()))
+            embedded.setDwgLayerHandle(ent->layerH.ref);
+        if (embedded.dwgLinetypeHandle() != 0
+            && !names(m_writingCtx.ltypeMap, embedded.dwgLinetypeHandle())) {
+            embedded.setDwgLinetypeHandle(0);
+            if (embedded.lineType.empty())
+                embedded.lineType = "BYLAYER";
+        }
+        if (!names(m_writingCtx.styleMap, embedded.styleH.ref))
+            embedded.styleH.ref = attrib->styleH.ref;
     }
     prepareBlockOwnedEntity(*ent);
     if (!canRecordBlockOwnedEntity(*ent))
