@@ -31125,15 +31125,15 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
           original.textgen = saved.textgen;
           original.alignH = static_cast<DRW_Text::HAlign>(saved.alignH);
           original.linespacingStyle = static_cast<std::uint16_t>(saved.linespacingStyle);
-          original.interlin = saved.interlin;
-          original.basePoint = saved.basePoint;
           original.extData = saved.xdata;
           original.height = saved.originalHeight;
           original.widthscale = saved.originalWidth;
-          original.angle = mtext->angle;
-          original.style = mtext->style;
           const std::unique_ptr<RS_MText> imported(mtextEntityFromDRW(original));
           auto before = imported->getData();
+          // Position, line spacing, angle and style as imported depend on the
+          // filter that read the file (a file of an old LibreCAD, the text
+          // style of its header, the code page) and on a round trip through
+          // degrees: what the text remembers of them stands in.
           before.insertionPoint = RS_Vector(saved.originalPosition.x, saved.originalPosition.y);
           before.lineSpacingFactor = saved.originalSpacing;
           before.angle = saved.originalAngle;

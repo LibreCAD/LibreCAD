@@ -4078,6 +4078,35 @@ TEST_CASE("an untouched multi-line attribute keeps the direction and the line sp
         const auto edited = save(bench, drawing, "edited", to);
         CHECK(lc::test::sameValues({"2"}, onlyRecord(edited, "ATTRIB").embedded(44)));
     }
+
+    // Such a file has a bottom-aligned text by the lowest point of its last
+    // line, and the drawing shows it lower by what hangs below the baseline
+    // there. The filter that saves is not the one that read the file: it
+    // cannot work that out again, and the text is not moved for it.
+    SECTION("the place of a bottom-aligned text of a file of an old LibreCAD") {
+        AttributeDxf fixture;
+        fixture.m_attachment = "7";
+        fixture.m_mtextPoint = "10\n1\n20\n14\n30\n0\n";
+        fixture.m_text = "first\\Pgyp";
+        EditableDrawing drawing;
+        loadDxf(bench, "999\ndxflib 2.5.0.0\n0\nSECTION\n2\nHEADER\n0\nENDSEC\n" + fixture.str(), drawing);
+        const RS_MText* shown = only<RS_MText>(drawing, RS2::EntityMText);
+        REQUIRE(shown->getVAlign() == RS_MTextData::VABottom);
+        const RS_Vector place = shown->getInsertionPoint();
+        REQUIRE(std::abs(place.x - 1.0) < 1e-9);
+        REQUIRE(place.y < 14.0 - 1e-3);
+        const auto out = save(bench, drawing, "untouched", to);
+        const DxfRecord record = onlyRecord(out, "ATTRIB");
+        CHECK(sameNumbers({1.0, 14.0}, embeddedNumbers(record, {10, 20})));
+        // Nor is it taken for edited, which would give it its measured size.
+        CHECK(record.embedded(42).empty());
+        CHECK(record.embedded(43).empty());
+
+        // Moved in the drawing, it is where the drawing has it.
+        drawing.edit(shown, [](RS_MText& text) { text.move(RS_Vector(5.0, 0.0)); });
+        const auto moved = save(bench, drawing, "moved", to);
+        CHECK(sameNumbers({place.x + 5.0, place.y}, embeddedNumbers(onlyRecord(moved, "ATTRIB"), {10, 20})));
+    }
 }
 
 // Group 71 of an MTEXT is its attachment point, 72 its direction, 73 and 44
