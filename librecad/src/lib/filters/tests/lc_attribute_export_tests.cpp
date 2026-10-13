@@ -1722,6 +1722,13 @@ TEST_CASE("a hidden attribute is saved hidden the way its file had it",
             if (to.m_dxf) {
                 checkWrittenDxf(out);
             }
+            else {
+                // A text of one line keeps what it has of its attribute
+                // under the private names, as a multi-line text does.
+                DwgContent content;
+                readDwg(out, content);
+                checkNoPrivateApplication(content);
+            }
             for (const Row& row : rows) {
                 checkSaved(out, to, row.m_tag, row.m_invisible, row.m_flags);
             }
@@ -3557,7 +3564,9 @@ TEST_CASE("the first point of a single-line attribute with nothing to draw stays
     EditableDrawing fromDwg;
     REQUIRE(lc::test::importDrawing(fromDwg.m_graphic, viaDwg, dwg.m_format));
     checkPlaces(fromDwg);
-    checkRecords(save(bench, fromDwg, "untouched_dwg2013", dxf));
+    const auto again = save(bench, fromDwg, "untouched_dwg2013", dxf);
+    checkWrittenDxf(again);
+    checkRecords(again);
 }
 
 // The attribute itself is a text of one line: its value, which a format
