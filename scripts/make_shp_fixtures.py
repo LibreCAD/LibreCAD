@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 Generate the corpus-gap fixtures called out in Phase 4a of
-docs/plan_shp_native_filter.md, two for the DBF LTYPE column and one for the
-LAYER column.
+docs/plan_shp_native_filter.md, two for the DBF LTYPE column, one for the
+LAYER column and four for the code page of the DBF.
 
 Produces these generated fixtures under test_data/shp/ (existing files require
 --force; externally sourced fixtures are not modified):
@@ -36,6 +36,10 @@ Produces these generated fixtures under test_data/shp/ (existing files require
   layer_point.shp/.shx/.dbf -- the same with a LAYER column of
                              LAYER_POINT_VALUES, for the layer names
                              RS_FilterSHP creates.
+  cp1252_cpg, cp1252_ldid, cp932_cpg, cp1250_ldid (.shp/.shx/.dbf, and .cpg
+                             for the first and third) -- one SHPT_POINT record
+                             with LAYER, LTYPE and NAME values in the code
+                             page of the name, see CODE_PAGE_FIXTURES.
 
 Pure-stdlib `struct`-packing. No GDAL / no shapelib dependency.
 
@@ -63,6 +67,7 @@ against libraries/shapelib/src/shpopen.cpp):
   SHP record: <int32 BE offset in 16-bit words> <int32 BE contentLength>.
 """
 import argparse
+import codecs
 import json
 import os
 import struct
@@ -276,7 +281,7 @@ def write_shp_shx(basename: Path, shp_type: int, records: list, bbox=None):
 DEFAULT_DBF_FIELDS = [("FID", "N", 11, 0, lambda i: str(i))]
 
 
-def write_minimal_dbf(basename: Path, n_records: int, fields=None):
+def write_minimal_dbf(basename: Path, n_records: int, fields=None, ldid=0):
     """Write a minimal dBase III file with `fields` and n_records rows.
 
     Required because shapelib's open path is happy without a .dbf, but the
@@ -286,7 +291,8 @@ def write_minimal_dbf(basename: Path, n_records: int, fields=None):
     this parameter existed regenerate identically.
 
     Numeric ('N') values are right-justified and character ('C') values
-    left-justified in their field width, per dBase III.
+    left-justified in their field width, per dBase III.  `ldid` is the
+    language driver byte, which names the code page of the values.
     """
     if fields is None:
         fields = DEFAULT_DBF_FIELDS
@@ -296,13 +302,15 @@ def write_minimal_dbf(basename: Path, n_records: int, fields=None):
     #   bytes 4-7: LE int32 nRecords
     #   bytes 8-9: LE int16 header length
     #   bytes 10-11: LE int16 record length
-    #   bytes 12-31: reserved zero
+    #   bytes 12-28: reserved zero
+    #   byte 29: language driver ID
+    #   bytes 30-31: reserved zero
     n_fields = len(fields)
     header_len = 32 + 32 * n_fields + 1  # +1 for terminator
     record_len = 1 + sum(f[2] for f in fields)  # deletion flag + field widths
-    header = struct.pack("<BBBBIHH20s",
+    header = struct.pack("<BBBBIHH17sB2s",
                          0x03, 100, 1, 1, n_records, header_len, record_len,
-                         b"\x00" * 20)
+                         b"\x00" * 17, ldid, b"\x00" * 2)
     # Field descriptor (32 bytes): name (11 bytes, null-padded), type,
     #   4 reserved, length (1 byte), decimals (1 byte), 14 reserved
     field_descriptors = b""
@@ -472,13 +480,60 @@ def write_column_points(root: Path, stem: str, column: str, values: list):
                       + [(column, "C", 32, 0, lambda i: values[i - 1])])
 
 
+# The LAYER, LTYPE and NAME values of one POINT, in a code page that the DBF
+# declares: in a .cpg file, or in the language driver byte of its header, by
+# ESRI's table (0x57 is 1252, 0xC8 is 1250).  Each has characters ISO-8859-1
+# lacks.  The cp1252 label ends in the byte 0x81, which that code page leaves
+# undefined.  Of the cp932 label, the second byte of U+4E88 is 0x5C, a
+# backslash, the half-width katakana are one byte each, and the end is what
+# DXF, but no shapefile, reads as a code for U+7BA1.
+#   stem: (Python codec, .cpg content, language driver byte, the values)
+WESTERN_TEXT = ("Rue de l\u2019\u00c9glise", "N\u0153ud",
+                "Caf\u00e9 \u2013 5 \u20ac\u0081")
+CODE_PAGE_FIXTURES = {
+    "cp1252_cpg": ("cp1252", "1252", 0, WESTERN_TEXT),
+    "cp1252_ldid": ("cp1252", None, 0x57, WESTERN_TEXT),
+    "cp932_cpg": ("cp932", "Shift_JIS", 0,
+                  ("\u9053\u8def", "\u7834\u7dda",
+                   "\u4e88\u5b9a\uff76\uff9e\uff7d\u7ba1\\U+7BA1")),
+    "cp1250_ldid": ("cp1250", None, 0xC8,
+                    ("\u0160achta", "p\u0159eru\u0161ovan\u00e1",
+                     "\u017dlu\u0165ou\u010dk\u00fd k\u016f\u0148")),
+}
+
+
+# A character the code page lacks is written as its ISO-8859-1 byte.
+codecs.register_error(
+    "undefined_byte",
+    lambda e: (e.object[e.start:e.end].encode("latin-1"), e.end))
+
+
+def write_code_page_point(root: Path, stem: str):
+    """One POINT at (10, 20) with the values of CODE_PAGE_FIXTURES[stem].
+
+    RS_FilterSHP names a layer after the LAYER value, puts the LTYPE value on
+    the entity pen and writes the NAME value as a label."""
+    codec, cpg, ldid, values = CODE_PAGE_FIXTURES[stem]
+    write_shp_shx(root / stem, SHPT_POINT,
+                  [(SHPT_POINT, build_point_payload(10.0, 20.0))],
+                  bbox=(10.0, 20.0, 10.0, 20.0, 0.0, 0.0, 0.0, 0.0))
+    # write_minimal_dbf() writes one byte for each character of a value.
+    columns = [(name, "C", 32, 0,
+                text.encode(codec, "undefined_byte").decode("latin-1"))
+               for name, text in zip(("LAYER", "LTYPE", "NAME"), values)]
+    write_minimal_dbf(root / stem, n_records=1,
+                      fields=DEFAULT_DBF_FIELDS + columns, ldid=ldid)
+    if cpg is not None:
+        (root / stem).with_suffix(".cpg").write_text(cpg, encoding="ascii")
+
+
 # ---- inventory update ------------------------------------------------------
 
 def update_inventory(root: Path):
     """Add the newly-generated fixtures to test_data/shp_inventory.json under
-    the "generated_z_types", "generated_hostile", "generated_linetype" and
-    "generated_layer" buckets so their expected sizes/types can be
-    cross-checked programmatically."""
+    the "generated_z_types", "generated_hostile", "generated_linetype",
+    "generated_layer" and "generated_code_page" buckets so their expected
+    sizes/types can be cross-checked programmatically."""
     inv_path = root.parent / "shp_inventory.json"
     if not inv_path.exists():
         print(f"[warn] {inv_path} not found — skipping inventory update",
@@ -531,6 +586,13 @@ def update_inventory(root: Path):
          "generator": "scripts/make_shp_fixtures.py",
          "expect": "each DBF LAYER value becomes a legal layer name"},
     ]
+    inv["generated_code_page"] = [
+        {"name": stem + ".shp", "shp_size": sz(stem + ".shp"),
+         "has_shx": True, "has_prj": False,
+         "generator": "scripts/make_shp_fixtures.py",
+         "expect": "LAYER, LTYPE and NAME are read as " + codec}
+        for stem, (codec, _cpg, _ldid, _values) in CODE_PAGE_FIXTURES.items()
+    ]
     with inv_path.open("w", encoding="utf-8") as f:
         json.dump(inv, f, indent=2)
         f.write("\n")
@@ -566,6 +628,10 @@ def main():
         "ltype_point.shp", "ltype_point.shx", "ltype_point.dbf",
         "ltype_many.shp", "ltype_many.shx", "ltype_many.dbf",
         "layer_point.shp", "layer_point.shx", "layer_point.dbf",
+        "cp1252_cpg.shp", "cp1252_cpg.shx", "cp1252_cpg.dbf", "cp1252_cpg.cpg",
+        "cp1252_ldid.shp", "cp1252_ldid.shx", "cp1252_ldid.dbf",
+        "cp932_cpg.shp", "cp932_cpg.shx", "cp932_cpg.dbf", "cp932_cpg.cpg",
+        "cp1250_ldid.shp", "cp1250_ldid.shx", "cp1250_ldid.dbf",
     ]
     existing = [f for f in generated if (root / f).exists()]
     if existing and not args.force:
@@ -582,6 +648,8 @@ def main():
     write_column_points(root, "ltype_point", "LTYPE", LTYPE_POINT_VALUES)
     write_column_points(root, "ltype_many", "LTYPE", LTYPE_MANY_VALUES)
     write_column_points(root, "layer_point", "LAYER", LAYER_POINT_VALUES)
+    for stem in CODE_PAGE_FIXTURES:
+        write_code_page_point(root, stem)
     update_inventory(root)
     print(f"Wrote {len(generated)} fixture file(s) to {root}")
     return 0

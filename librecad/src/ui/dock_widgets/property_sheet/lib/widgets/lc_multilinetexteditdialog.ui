@@ -58,7 +58,7 @@
             <item>
                 <widget class="QPlainTextEdit" name="plainTextEdit">
                     <property name="tabChangesFocus">
-                        <bool>true</bool>
+                        <bool>false</bool>
                     </property>
                     <property name="lineWrapMode">
                         <enum>QPlainTextEdit::WidgetWidth</enum>

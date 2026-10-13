@@ -284,6 +284,12 @@ void RS_Text::update() {
                 scalar = QChar::surrogateToUcs4(ch, m_data.text.at(i + 1));
                 ++offset;
             }
+            if (scalar == '\t') {
+                // A single line has no tab stops. Every release has drawn the
+                // "^I" of a DXF file as four spaces.
+                letterPos += space * 4.0;
+                continue;
+            }
             const auto category = QChar::category(scalar);
             if (category == QChar::Other_Format ||
                 category == QChar::Other_Control) {

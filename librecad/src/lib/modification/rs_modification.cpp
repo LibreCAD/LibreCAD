@@ -345,6 +345,9 @@ void RS_Modification::libraryInsert(const LC_LibraryInsertData& data, RS_Graphic
     Q_ASSERT(src != nullptr);
     Q_ASSERT(destination != nullptr);
 
+    // The insert goes on the layer that is current now: the layer dock makes
+    // every layer it sees added the current one, the library's included.
+    RS_Layer* const insertLayer = destination->getActiveLayer();
     RS_LayerList* srcLayers = src->getLayerList();
     if (srcLayers != nullptr) {
         for (const RS_Layer* layer : *srcLayers) {
@@ -386,7 +389,7 @@ void RS_Modification::libraryInsert(const LC_LibraryInsertData& data, RS_Graphic
             RS_Entity* clone = e->clone();
             clone->clearDwgProvenance(provenance);
             LC_CopyUtils::doCopyEntityLayer(clone, destination, src);
-            block->addByBlockEntity(clone);
+            block->addEntity(clone);
         }
 
         destination->addBlock(block);
@@ -400,7 +403,7 @@ void RS_Modification::libraryInsert(const LC_LibraryInsertData& data, RS_Graphic
 
     ctx += insert;
 
-    insert->setLayer(destination->getActiveLayer());
+    insert->setLayer(insertLayer != nullptr ? insertLayer : destination->getActiveLayer());
     insert->setPen(RS_Pen(RS_Color(RS2::FlagByLayer), RS2::WidthByLayer, RS2::LineByLayer));
     insert->update();
 

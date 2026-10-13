@@ -92,7 +92,7 @@
     <name>DlgParabola</name>
     <message>
         <source>Parabola</source>
-        <translation type="vanished">帕拉博拉</translation>
+        <translation type="vanished">拋物線</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -100,11 +100,11 @@
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Points on Spline</source>
-        <translation type="vanished">在 Spline 有分</translation>
+        <translation type="vanished">樣條曲線上的點</translation>
     </message>
     <message>
         <source>Control Points</source>
@@ -123,7 +123,7 @@
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Closed</source>
@@ -131,11 +131,11 @@
     </message>
     <message>
         <source>If selected, spline points are used</source>
-        <translation type="vanished">如果被選取, 就使用示意图點</translation>
+        <translation type="vanished">若選取,則使用雲形線控制點</translation>
     </message>
     <message>
         <source>Spline Points</source>
-        <translation type="vanished">樣條曲線點</translation>
+        <translation type="vanished">雲形線點</translation>
     </message>
     <message>
         <source>If selected, control points are used</source>
@@ -147,7 +147,7 @@
     </message>
     <message>
         <source>Points on Spline</source>
-        <translation type="vanished">在 Spline 有分</translation>
+        <translation type="vanished">雲形線上的點</translation>
     </message>
 </context>
 <context>
@@ -202,7 +202,7 @@
     </message>
     <message>
         <source>Specify size (width, height)</source>
-        <translation type="vanished">指定大小 (宽度, 高度)</translation>
+        <translation type="vanished">指定大小(寬度,高度)</translation>
     </message>
     <message>
         <source>Specify corners type
@@ -212,7 +212,7 @@
     </message>
     <message>
         <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">指定相角貝爾長度 (x,y)</translation>
+        <translation type="vanished">指定轉角倒角長度(x,y)</translation>
     </message>
     <message>
         <source>Specify corner radius</source>
@@ -235,7 +235,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>由于是多線的一部分而未分出。 先放出多管線.</translation>
+        <translation>未被分割,因為它是聚合線的一部分.請先炸開聚合線.</translation>
     </message>
 </context>
 <context>
@@ -243,7 +243,7 @@
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="88"/>
         <source>Block cannot contain an insert of itself.</source>
-        <translation type="unfinished">Block 無法自動插入 .</translation>
+        <translation type="unfinished">圖塊不能包含對其本身的插入.</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="95"/>
@@ -253,8 +253,7 @@
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="97"/>
-        <source>
-This block cannot be inserted.</source>
+        <source>This block cannot be inserted.</source>
         <translation type="unfinished">此區塊無法被插入 .</translation>
     </message>
     <message>
@@ -265,7 +264,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="278"/>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="291"/>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">無效的運算式</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="373"/>
@@ -337,12 +336,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_block_explode.cpp" line="62"/>
         <source>Select to explode container</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">選取要炸開的容器</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_block_explode.cpp" line="63"/>
         <source>Select and explode</source>
-        <translation type="unfinished">選擇并爆炸</translation>
+        <translation type="unfinished">選取並炸開</translation>
     </message>
 </context>
 <context>
@@ -411,7 +410,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>同步到相邻的 Dim</translation>
+        <translation>鎖定至相鄰標註</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="319"/>
@@ -421,7 +420,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="322"/>
         <source>Enter dimension line angle:</source>
-        <translation>輸入尺寸行角度 :</translation>
+        <translation>輸入標註線角度：</translation>
     </message>
 </context>
 <context>
@@ -429,17 +428,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="207"/>
         <source>Specify first point</source>
-        <translation>指定第一分</translation>
+        <translation>指定第一點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Specify leader end point</source>
-        <translation>指定首端點</translation>
+        <translation>指定引線終點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Change Ordinate</source>
-        <translation>變更整齊</translation>
+        <translation>修改座標標註</translation>
     </message>
 </context>
 <context>
@@ -447,7 +446,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinaterebase.cpp" line="42"/>
         <source>Select and rebase</source>
-        <translation>選擇和再基准</translation>
+        <translation>選取並重設基準點</translation>
     </message>
 </context>
 <context>
@@ -455,17 +454,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="164"/>
         <source>Specify dimension to pick the style</source>
-        <translation>指定取取樣式的尺寸</translation>
+        <translation>指定標註以套用其樣式</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="167"/>
         <source>Specify dimension to apply style</source>
-        <translation>指定應用樣式的大小</translation>
+        <translation>指定標註以套用樣式</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="167"/>
         <source>Do not apply style override</source>
-        <translation>不要用樣式覆蓋</translation>
+        <translation>不套用樣式覆蓋</translation>
     </message>
 </context>
 <context>
@@ -484,7 +483,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Counterclockwise</source>
-        <translation type="vanished">逆时针</translation>
+        <translation type="vanished">逆時針</translation>
     </message>
     <message>
         <source>Pick angle from the drawing</source>
@@ -500,7 +499,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation type="vanished">有時</translation>
+        <translation type="vanished">順時針</translation>
     </message>
     <message>
         <source>Central angle of the arc</source>
@@ -512,7 +511,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Length of the arc</source>
-        <translation type="vanished">弧的長度</translation>
+        <translation type="vanished">弧長</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -520,19 +519,19 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Pick radius from drawing</source>
-        <translation type="vanished">从圖取半徑</translation>
+        <translation type="vanished">從圖面中選取半徑</translation>
     </message>
     <message>
         <source>Pick height from drawing</source>
-        <translation type="vanished">从畫取高度</translation>
+        <translation type="vanished">從圖面中選取高度</translation>
     </message>
     <message>
         <source>Pick length from drawing</source>
-        <translation type="vanished">从畫取長度</translation>
+        <translation type="vanished">從圖面中選取長度</translation>
     </message>
     <message>
         <source>Pick angle from drawing</source>
-        <translation type="vanished">从畫取角度</translation>
+        <translation type="vanished">從圖面中選取角度</translation>
     </message>
 </context>
 <context>
@@ -5085,7 +5084,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
         <source>Entity geometry length</source>
-        <translation>实体几何長度</translation>
+        <translation>實體幾何長度</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
@@ -7956,7 +7955,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="47"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="65"/>
@@ -8941,7 +8940,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="41"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="47"/>
@@ -9499,7 +9498,7 @@ Are you sure you are going to discard changes?</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Ordinate</source>
@@ -10965,7 +10964,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="42"/>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="99"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="123"/>
@@ -12649,7 +12648,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="91"/>
         <source>Geometric Characteristics</source>
-        <translation>几何特征</translation>
+        <translation>幾何特性</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="117"/>
@@ -13971,7 +13970,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="47"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="59"/>
@@ -14229,7 +14228,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="60"/>
         <source>Geometry</source>
-        <translation type="unfinished">几何</translation>
+        <translation type="unfinished">幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="60"/>
@@ -14929,7 +14928,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="44"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="57"/>
@@ -15187,7 +15186,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="35"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="41"/>
@@ -17828,7 +17827,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="41"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="68"/>
@@ -18434,7 +18433,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.ui" line="76"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.ui" line="79"/>
@@ -24369,7 +24368,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="41"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="56"/>
@@ -25588,7 +25587,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="35"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="63"/>
@@ -26184,7 +26183,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_polyline.ui" line="41"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_polyline.ui" line="69"/>
@@ -26634,42 +26633,42 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="134"/>
         <source>Pick resolved</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">確定選取</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="134"/>
         <source>Pick resolved pen from entity and make it active</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">從物件擷取畫筆屬性並設為目前使用</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="135"/>
         <source>Pen pick commands</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">畫筆吸取指令</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="151"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">套用</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="151"/>
         <source>Applies active pen to selected entities</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">將目前的畫筆屬性套用到所選取的圖元</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="152"/>
         <source>From layer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">依圖層</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="152"/>
         <source>Pen of active layer becomes active pen</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">使用目前圖層的畫筆作為目前畫筆</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="153"/>
         <source>Pen applying commands</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">畫筆套用指令</translation>
     </message>
 </context>
 <context>
@@ -26677,12 +26676,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="34"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">中心</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="34"/>
         <source>Center point of arc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">圓弧中心點</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="40"/>
@@ -26697,7 +26696,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="46"/>
         <source>Diameter</source>
-        <translation type="unfinished">相</translation>
+        <translation type="unfinished">直徑</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="46"/>
@@ -26707,22 +26706,22 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="52"/>
         <source>Is Reversed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">已反轉</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="52"/>
         <source>Clockwise direction if reversed, counterclockwise otherwise</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">若反轉則為順時針方向，否則為逆時針方向</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="59"/>
         <source>Start Angle</source>
-        <translation type="unfinished">啟動角度</translation>
+        <translation type="unfinished">起始角度</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="59"/>
         <source>Start angle of arc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">圓弧起始角度</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="65"/>
@@ -26732,27 +26731,27 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="65"/>
         <source>End angle of arc</source>
-        <translation type="unfinished">弧的端角</translation>
+        <translation type="unfinished">圓弧結束角度</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="73"/>
         <source>Start Point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">起始點</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="73"/>
         <source>Start point of arc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">圓弧起始點</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="77"/>
         <source>End Point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">終點</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="77"/>
         <source>End point of arc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">圓弧終止點</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
@@ -26762,200 +26761,200 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
         <source>Total angle of arc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">圓弧總角度</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="87"/>
         <source>Circumference</source>
         <comment>arc</comment>
-        <translation type="unfinished">圓形</translation>
+        <translation type="unfinished">圓弧</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="87"/>
         <source>Total linear length of arc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">圓弧總長度</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="94"/>
         <source>Chord Length</source>
-        <translation type="unfinished">和弦長度</translation>
+        <translation type="unfinished">弦長</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="94"/>
         <source>Distance between end points of arc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">圓弧端點間距</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="100"/>
         <source>Sagitta</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">弧高</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="100"/>
         <source>Height of arc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">圓弧高</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="106"/>
         <source>Bulge</source>
-        <translation type="unfinished">散列</translation>
+        <translation type="unfinished">凸度</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="106"/>
         <source>Bulge of arc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">圓弧凸度</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="131"/>
         <source>Tangental Arc (start)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">相切圓弧(起始點)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="132"/>
         <source>Create tangental arc in start point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">於起始點建立切線圓弧</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="132"/>
         <source>Tangental Arc (end)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">相切圓弧(終點)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="133"/>
         <source>Create tangental arc in end point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">於終點建立相切圓弧</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="134"/>
         <source>Create tangental arc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">建立相切圓弧</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="137"/>
         <source>Concentric arcs creation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">建立同心圓弧</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="138"/>
         <source>Offset</source>
-        <translation type="unfinished">偏移</translation>
+        <translation type="unfinished">偏移複製</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="138"/>
         <source>Create parallel arc via offset</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">透過偏移建立平行圓弧</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="139"/>
         <source>Parallel (Point)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">平行線(通過點)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="139"/>
         <source>Create parallel arc by point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">透過點建立平行圓弧</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="142"/>
         <source>Arc trimming or dividing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">圓弧修剪或分割</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="143"/>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">等分</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="143"/>
         <source>Divide arc in specified point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">於指定點分割圓弧</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
         <source>Trim</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">修剪</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
         <source>Trim the arc by other entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">藉由其他圖元修剪圓弧</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="147"/>
         <source>Creation of circle tangental to arc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">建立與圓弧相切的圓</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="148"/>
         <source>Tangent Circle (2 P)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">相切圓(2點)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="148"/>
         <source>Create tangental circle by 2 points</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">透過2點建立相切圓</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="149"/>
         <source>Tangent Circle (2 E, 1 P)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">相切圓(2圖元,1點)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="149"/>
         <source>Create tangental circle by 2 entitites and 1 point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">透過2個圖元與1個點建立相切圓</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="152"/>
         <source>Creation of circle tangental</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">建立相切圓</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="153"/>
         <source>Tangent Circle (3 E)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">相切圓(3圖元)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="153"/>
         <source>Create tangental circle by 3 entities</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">透過3個圖元建立相切圓</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="154"/>
         <source>Tangent Circle (2 E, R)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">相切圓(2圖元,半徑)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="154"/>
         <source>Create tangental circle by 2 points and radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">透過2點與半徑建立相切圓</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="157"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="162"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="167"/>
         <source>Creation of line tangental to circle</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">建立與圓相切的直線</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="158"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">正切 (P, C)</translation>
+        <translation type="unfinished">相切(點, 圓/圓弧)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="158"/>
         <source>Create line tangental to arc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">建立與圓弧相切的直線</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="159"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">正切 (C, C)</translation>
+        <translation type="unfinished">相切(圓, 圓)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="159"/>
         <source>Create line tangental for two circles/arcs</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">建立兩圓(弧)公切線</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="163"/>
@@ -26965,17 +26964,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="163"/>
         <source>Create line orthogonal to arc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">建立與圓弧正交的直線</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="164"/>
         <source>Tangent Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">相切正交</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="164"/>
         <source>Create arc tangental line orthogonal to line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">建立與圓弧相切且與直線正交的直線</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="168"/>
@@ -37708,7 +37707,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="41"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="53"/>
@@ -37758,7 +37757,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="47"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="61"/>
@@ -37946,7 +37945,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">如果选中, 该星會被畫出為多線 .</translation>
+        <translation type="vanished">若勾選,此星形將繪製為多段線 .</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -37967,27 +37966,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="31"/>
         <source>If checked, symmetric star will be created</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">若勾選，將建立對稱星形</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="37"/>
         <source>Rays number</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">射線數量</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="37"/>
         <source>Number of rays</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">射線數量</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="43"/>
         <source>Round outer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">外側圓角</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="43"/>
         <source>If checked, outer edges will be rounded</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">若勾選,外側邊緣將進行倒圓角處理</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="50"/>
@@ -38245,7 +38244,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.ui" line="83"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.ui" line="86"/>
@@ -40317,7 +40316,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>X Coordinate of arc&apos;s center</source>
@@ -40424,7 +40423,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -40440,7 +40439,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="vanished">Y 圓心的坐标</translation>
+        <translation type="vanished">Y 圓心的座標</translation>
     </message>
     <message>
         <source>Center (x):</source>
@@ -40448,7 +40447,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>X Coordinate of circle&apos;s center</source>
-        <translation type="vanished">X 圓心的坐标</translation>
+        <translation type="vanished">X 圓心的座標</translation>
     </message>
     <message>
         <source>Pen</source>
@@ -40475,7 +40474,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -40517,7 +40516,7 @@ This recursively modifies all entities of the Block itself.</source>
     <name>QG_DlgEllipse</name>
     <message>
         <source>Ellipse</source>
-        <translation type="vanished">椭圆</translation>
+        <translation type="vanished">橢圓</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -40529,7 +40528,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Rotation angle for the major axis of ellipse, degrees</source>
@@ -40693,7 +40692,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -40824,7 +40823,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Insertion point (y):</source>
@@ -40923,7 +40922,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>End point (x):</source>
@@ -43377,12 +43376,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5633"/>
         <source>Restores program geometry/layout to original state</source>
-        <translation>將程式几何/放出回原狀態</translation>
+        <translation>將程式介面與版面配置還原為初始狀態</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5649"/>
         <source>Restores the program settings to its original state</source>
-        <translation>將程式設定恢复到原狀態</translation>
+        <translation>將程式設定還原為初始狀態</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -43397,7 +43396,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="121"/>
         <source>Invert horizontal scrolling direction</source>
-        <translation>倒轉水平滚动方向</translation>
+        <translation>反轉水平捲動方向</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="163"/>
@@ -43427,7 +43426,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1773"/>
         <source>Adaptive</source>
-        <translation>有适应性</translation>
+        <translation>自適應</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1778"/>
@@ -43437,7 +43436,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1783"/>
         <source>Spiderweb</source>
-        <translation>蜘蛛网</translation>
+        <translation>蜘蛛網</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1609"/>
@@ -46054,7 +46053,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Position (y):</source>
@@ -46093,7 +46092,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Defines whether polyline is closed contour</source>
@@ -46261,7 +46260,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Degree:</source>
@@ -56644,11 +56643,11 @@ Point: (%8 , %9)</source>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation type="vanished">逆時针</translation>
+        <translation type="vanished">逆時針</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation type="vanished">有時</translation>
+        <translation type="vanished">順時針</translation>
     </message>
 </context>
 <context>
@@ -56742,7 +56741,7 @@ Point: (%8 , %9)</source>
     <name>Ui_RoundOptions</name>
     <message>
         <source>Round Options</source>
-        <translation type="vanished">回合選項</translation>
+        <translation type="vanished">倒圓角選項</translation>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
@@ -56758,7 +56757,7 @@ Point: (%8 , %9)</source>
     </message>
     <message>
         <source>Rounding radius</source>
-        <translation type="vanished">四舍五入半徑</translation>
+        <translation type="vanished">四捨五入半徑</translation>
     </message>
     <message>
         <source>Pick radius from drawing</source>

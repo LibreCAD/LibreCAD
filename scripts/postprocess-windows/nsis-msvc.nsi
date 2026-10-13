@@ -34,11 +34,11 @@ SetCompressor /SOLID lzma
 ;--------------------------------
 ; Architecture suffix, install directory, and registry view
 ; /DAMD64 or /DARM64 passed by build-windows.bat; default is x86
-!if defined(AMD64)
+!ifdef AMD64
     !define ARCH_SUFFIX "x64"
     !define INSTALL_DIR "$PROGRAMFILES64\LibreCAD"
     !define REG_VIEW 64
-!elseif defined(ARM64)
+!else ifdef ARM64
     !define ARCH_SUFFIX "arm64"
     !define INSTALL_DIR "$PROGRAMFILES64\LibreCAD"
     !define REG_VIEW 64
@@ -110,9 +110,9 @@ VIAddVersionKey "LegalCopyright" "LibreCAD Team"
     !define Qt_Version "5.15.2"
 !endif
 !ifndef Arch_Suffix
-    !if defined(AMD64)
+    !ifdef AMD64
         !define Arch_Suffix "_64"
-    !elseif defined(ARM64)
+    !else ifdef ARM64
         !define Arch_Suffix "_arm64"
     !else
         !define Arch_Suffix ""
