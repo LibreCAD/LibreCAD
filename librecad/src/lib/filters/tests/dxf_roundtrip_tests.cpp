@@ -3800,6 +3800,68 @@ TEST_CASE("DXF export follows an extension dictionary moved off a structural han
   std::filesystem::remove(out);
 }
 
+#ifdef DWGSUPPORT
+namespace {
+// The names of everything in a directory, hidden files included.
+std::vector<std::string> entryNames(const std::filesystem::path &directory) {
+  std::vector<std::string> names;
+  for (const auto &entry : std::filesystem::directory_iterator(directory))
+    names.push_back(entry.path().filename().string());
+  std::sort(names.begin(), names.end());
+  return names;
+}
+} // namespace
+
+TEST_CASE("DWG export replaces an existing file and leaves no other file",
+          "[dwg][roundtrip][filter][export]") {
+  ensureSettings();
+  // A directory of its own, so that whatever the export leaves beside its
+  // output is seen.
+  const std::filesystem::path directory = tmpFile("dwg_export_twice");
+  std::filesystem::remove_all(directory);
+  REQUIRE(std::filesystem::create_directory(directory));
+  const QString out =
+      QString::fromStdString((directory / "drawing.dwg").string());
+  const std::vector<std::string> outputOnly{"drawing.dwg"};
+
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  graphic.addEntity(new RS_Line(
+      &graphic, RS_LineData(RS_Vector(0.0, 0.0), RS_Vector(10.0, 0.0))));
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, out, RS2::FormatDWG));
+  }
+  CHECK(entryNames(directory) == outputOnly);
+
+  // The second export meets the file of the first, as every Save of a
+  // drawing after its first one does. Windows refused it: the export could
+  // not remove the placeholder of its backup name while it held that open.
+  graphic.addEntity(new RS_Line(
+      &graphic, RS_LineData(RS_Vector(0.0, 10.0), RS_Vector(10.0, 10.0))));
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, out, RS2::FormatDWG));
+  }
+  CHECK(entryNames(directory) == outputOnly);
+
+  RS_Graphic reloaded;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reloaded, out, RS2::FormatDWG));
+  }
+  // Both lines: the file is the second export, not the first.
+  int lines = 0;
+  for (RS_Entity *e : reloaded) {
+    if (e->rtti() == RS2::EntityLine)
+      ++lines;
+  }
+  CHECK(lines == 2);
+
+  std::filesystem::remove_all(directory);
+}
+#endif
+
 namespace {
 // An R2000 drawing whose dictionary and ACME_THING LibreCAD keeps only as
 // raw DXF; the MATERIAL is kept both raw and typed.

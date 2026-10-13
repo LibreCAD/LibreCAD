@@ -11561,8 +11561,12 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       if (!backup.open())
         return false;
       const QString backupPath = backup.fileName();
-      backup.close();
-      if (!QFile::remove(backupPath) || !QFile::rename(file, backupPath)) {
+      // Release the reserved name through the object, as for the staged path
+      // above: QTemporaryFile::close() keeps the native handle, and Windows
+      // deletes no file that is open without FILE_SHARE_DELETE. A static
+      // QFile::remove() of this path failed there, so no DWG could be saved
+      // over an existing file.
+      if (!backup.remove() || !QFile::rename(file, backupPath)) {
         QFile::remove(backupPath);
         return false;
       }
