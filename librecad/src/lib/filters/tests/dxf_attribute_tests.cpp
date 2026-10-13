@@ -2497,6 +2497,67 @@ TEST_CASE("DXF MTEXT rejects out-of-range line spacing fields",
   readMalformed("-1", "lc_mtext_linespacing_negative.dxf");
 }
 
+TEST_CASE("DXF MTEXT skips its group-101 embedded object",
+          "[dxf][mtext][embedded-mtext]") {
+  // MTEXT 3EC of ACadSharp's sample_AC1032_ascii.dxf (written by AutoCAD
+  // 2018), without its handle and owner groups. The embedded object holds
+  // the column data and reuses the MTEXT codes: its 10 is the x-axis, its 11
+  // the insertion point, its 40 the width, its 71 the column type and its 73
+  // the auto-height flag.
+  const std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nMTEXT\n100\nAcDbEntity\n8\n0\n"
+      "100\nAcDbMText\n10\n183.5889280790413\n20\n5.226370718413136\n30\n0.0\n"
+      "40\n1.0\n41\n15.74141424498748\n46\n0.0\n71\n1\n72\n5\n"
+      "1\nthis is a Mtext^Jwith multiple lines in it\n73\n1\n44\n1.0\n"
+      "101\nEmbedded Object\n70\n1\n10\n1.0\n20\n0.0\n30\n0.0\n"
+      "11\n183.5889280790413\n21\n5.226370718413136\n31\n0.0\n"
+      "40\n15.74141424498748\n41\n0.0\n"
+      "42\n13.49522510231923\n43\n2.944292860391086\n71\n2\n72\n1\n"
+      "44\n15.74141424498748\n45\n110.2231670381195\n73\n0\n74\n0\n46\n0.0\n"
+      "1001\nACAD\n1000\nkept\n"
+      "0\nENDSEC\n0\nEOF\n";
+
+  MTextCapture cap;
+  readDxf(dxf, cap, "lc_mtext_embedded_column_object.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_MText &mtext = cap.m_captured;
+  CHECK(mtext.basePoint.x == 183.5889280790413);
+  CHECK(mtext.basePoint.y == 5.226370718413136);
+  CHECK(mtext.basePoint.z == 0.0);
+  CHECK(mtext.height == 1.0);
+  CHECK(mtext.widthscale == 15.74141424498748);
+  CHECK(mtext.textgen == 1);
+  CHECK(static_cast<int>(mtext.alignH) == 5);
+  CHECK(mtext.text == "this is a Mtext^Jwith multiple lines in it");
+  CHECK(mtext.linespacingStyle == 1);
+  CHECK(mtext.interlin == 1.0);
+  CHECK(mtext.angle == 0.0);
+  CHECK(mtext.secPoint.x == 0.0);
+  CHECK(mtext.secPoint.y == 0.0);
+  CHECK(mtext.m_r2018ExtentsWidth == 0.0);
+  CHECK(mtext.m_r2018ExtentsHeight == 0.0);
+  CHECK(mtext.m_backgroundScale == 0.0);
+  // The XDATA follows the embedded object and is the MTEXT's.
+  REQUIRE(mtext.extData.size() == 2);
+  CHECK(mtext.extData[0]->code() == 1001);
+  CHECK(std::string(mtext.extData[0]->c_str()) == "ACAD");
+  CHECK(std::string(mtext.extData[1]->c_str()) == "kept");
+
+  // A group 101 with another value opens nothing.
+  std::string other = dxf;
+  const std::string marker = "101\nEmbedded Object\n";
+  const std::size_t at = other.find(marker);
+  REQUIRE(at != std::string::npos);
+  other.replace(at, marker.size(), "101\nSomething else\n");
+  MTextCapture otherCap;
+  readDxf(other, otherCap, "lc_mtext_other_group_101.dxf");
+  REQUIRE(otherCap.m_callCount == 1);
+  CHECK(otherCap.m_captured.basePoint.x == 1.0);
+  CHECK(otherCap.m_captured.linespacingStyle == 0);
+}
+
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DXF INSERT collects one trailing ATTRIB into attlist", "[dxf][attrib]") {
   InsertCapture cap;

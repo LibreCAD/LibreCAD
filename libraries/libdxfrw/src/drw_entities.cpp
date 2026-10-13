@@ -12730,6 +12730,18 @@ bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t 
 }
 
 bool DRW_MText::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // R2018 appends the column data of an MTEXT as `101 / Embedded Object`.
+    // That object reuses the MTEXT group codes with other meanings (10 is the
+    // x-axis, 11 the insertion point, 40 the width, 71 the column type, 73 the
+    // auto-height flag ...), so none of it may reach the fields below.  XDATA
+    // follows the object and is still the entity's.
+    if (code == 101) {
+        if (reader->getString() == "Embedded Object")
+            m_dxfInEmbeddedObject = true;
+        return true;
+    }
+    if (m_dxfInEmbeddedObject && code < 1000)
+        return true;
     switch (code) {
     case 1:
         text += reader->getString();
@@ -12792,6 +12804,7 @@ void DRW_MText::resetDwgState() {
     m_backgroundColor = 0;
     m_backgroundTransparency = 0;
     hasXAxisVec = false;
+    m_dxfInEmbeddedObject = false;
     m_r2018IsNotAnnotative = false;
     m_r2018ReallyLocked = false;
     m_r2018Version = 0;

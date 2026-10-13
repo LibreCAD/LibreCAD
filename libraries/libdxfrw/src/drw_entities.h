@@ -1900,6 +1900,7 @@ public:
     std::uint32_t m_r2018AnnotativeAppHandle = 0;
 private:
     bool hasXAxisVec; /* renamed by djm for better description */
+    bool m_dxfInEmbeddedObject = false; /*!< DXF: past a 101 / Embedded Object marker, whose groups are skipped */
 };
 
 //! Class to handle RTEXT (RText, AutoCAD Express Tools "reactive text").
