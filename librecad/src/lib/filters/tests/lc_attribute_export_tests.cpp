@@ -1740,8 +1740,10 @@ TEST_CASE("a rotated attribute read from DXF keeps its angle in the formats of 2
 TEST_CASE("a standalone MTEXT keeps a rotation made in the drawing",
           "[attribute-export][mtext][filter][dxf][dwg][attrib-geometry]") {
     const Bench bench("mtext_turned");
-    // A text at 30 degrees: as AutoCAD writes it, and with the angle alone.
+    // A text at 30 degrees: as AutoCAD writes it, with an x-axis that is
+    // longer than 1, and with the angle alone.
     const std::string xAxis = "11\n0.8660254037844335\n21\n0.5000000000000089\n31\n0.0\n";
+    const std::string longAxis = "11\n1.73205080756887\n21\n1.0\n31\n0.0\n";
     const std::string angleAlone = "50\n30\n";
     using Turn = std::function<bool(EditableDrawing&, const RS_MText*)>;
     const Turn rotate = [](EditableDrawing& drawing, const RS_MText* text) {
@@ -1773,14 +1775,18 @@ TEST_CASE("a standalone MTEXT keeps a rotation made in the drawing",
         std::string m_direction;    // of the MTEXT in the source
         Turn m_turn;                // none: the text is left alone
         bool m_hasAxis;             // a DXF saved from the drawing has an x-axis
+        std::vector<double> m_sameAxis;     // and it is this one, the source's (11, 21)
     };
     const std::vector<Row> rows{
-        {"untouched", xAxis, nullptr, true},
-        {"rotated", xAxis, rotate, true},
-        {"mirrored", xAxis, mirror, true},
-        {"angle_set", xAxis, setAngle, true},
-        {"angle_alone", angleAlone, nullptr, false},
-        {"angle_alone_rotated", angleAlone, rotate, false},
+        {"untouched", xAxis, nullptr, true, {0.8660254037844335, 0.5000000000000089}},
+        // The x-axis of a file is its own, whatever its length, until the
+        // text is turned.
+        {"long_axis", longAxis, nullptr, true, {1.73205080756887, 1.0}},
+        {"rotated", xAxis, rotate, true, {}},
+        {"mirrored", xAxis, mirror, true, {}},
+        {"angle_set", xAxis, setAngle, true, {}},
+        {"angle_alone", angleAlone, nullptr, false, {}},
+        {"angle_alone_rotated", angleAlone, rotate, false, {}},
     };
     for (const Row& row : rows) {
         for (const char* format : {"dxf2018", "dxf2007", "dxf2000", "dwg2018", "dwg2000"}) {
@@ -1814,10 +1820,10 @@ TEST_CASE("a standalone MTEXT keeps a rotation made in the drawing",
                 else {
                     CHECK(axis.empty());
                 }
-                if (row.m_hasAxis && !row.m_turn) {
-                    // Left alone, the x-axis is the file's to the last digit.
-                    CHECK(record.own(11) == std::vector<std::string>{"0.8660254037844335"});
-                    CHECK(record.own(21) == std::vector<std::string>{"0.5000000000000089"});
+                if (!row.m_sameAxis.empty()) {
+                    // The same numbers to the last bit, however they are
+                    // spelled.
+                    CHECK(axis == row.m_sameAxis);
                 }
             }
             else {
@@ -1826,8 +1832,11 @@ TEST_CASE("a standalone MTEXT keeps a rotation made in the drawing",
                 REQUIRE(written.m_mtexts.size() == 1);
                 const DRW_Coord& axis = written.m_mtexts.front().secPoint;
                 CAPTURE(axis.x, axis.y, axis.z);
-                CHECK(std::hypot(axis.x, axis.y) == Catch::Approx(1.0).margin(1e-9));
+                CHECK(std::hypot(axis.x, axis.y) >= 1.0 - 1e-9);
                 CHECK(sameDirection(std::atan2(axis.y, axis.x), angle));
+                if (!row.m_sameAxis.empty()) {
+                    CHECK(std::vector<double>{axis.x, axis.y} == row.m_sameAxis);
+                }
             }
 
             EditableDrawing reopened;
