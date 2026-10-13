@@ -161,7 +161,14 @@ void LC_ActionDrawCircle2PointsRadius::onMouseLeftButtonRelease(const int status
 
 void LC_ActionDrawCircle2PointsRadius::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
     deletePreview();
+    // LC_ActionDrawCircleBase::init() resets the action for every status. A step back from the choice of the center
+    // asks for the second point again, of the first point that was given.
+    const RS_Vector point1 = m_actionData->point1;
     initPrevious(status);
+    if (status == SelectCenter) {
+        m_actionData->point1 = point1;
+        moveRelativeZero(point1);
+    }
 }
 
 void LC_ActionDrawCircle2PointsRadius::onCoordinateEvent(const int status, [[maybe_unused]] bool isZero, const RS_Vector& coord) {

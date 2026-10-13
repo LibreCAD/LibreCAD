@@ -84,6 +84,17 @@ struct TwoPointsRadius final : LC_ActionDrawCircle2PointsRadius {
         coordinateEvent(&event);
     }
     std::vector<const RS_Circle*> previewed() const { return circlesOf(*m_preview); }
+    // the right mouse button: a step back
+    void back() {
+        const LC_MouseEvent event = lc::test::eventAt(0., 0.);
+        onMouseRightButtonRelease(getStatus(), &event);
+    }
+    // Escape, as RS_EventHandler::back() sends it to the action
+    void escape() {
+        QMouseEvent event(QEvent::MouseButtonRelease, QPointF(0., 0.), QPointF(0., 0.), Qt::RightButton, Qt::RightButton,
+                          Qt::NoModifier);
+        mouseReleaseEvent(&event);
+    }
 
     // the mouse events of the view, at the pixel of a point of the drawing
     void mouseTo(const RS_Vector& point) {
@@ -336,6 +347,87 @@ TEST_CASE("Circle 2 Points Radius: a second point further than a diameter from t
     action.click(3., 10.);
     REQUIRE(f.drawn().size() == 1);
     checkCircle(f.drawn().front(), {3., 4.}, 5.);
+}
+
+TEST_CASE("Circle 2 Points Radius: a step back from the choice of the center asks for the second point of the first",
+          "[circle-2points-radius]") {
+    // The right mouse button and Escape go a status back, and the action is reset for every status it comes to
+    // (LC_ActionDrawCircleBase::init()). The first point went with the second, and every second point was refused
+    // then: as further than a diameter from a point that was not there.
+    Radius5 f;
+    TwoPointsRadius& action = *f.m_action;
+    action.click(0., 0.);
+    action.click(6., 0.);
+    REQUIRE(action.getStatus() == TwoPointsRadius::SelectCenter);
+
+    SECTION("with the right mouse button") { action.back(); }
+    SECTION("with Escape") { action.escape(); }
+    REQUIRE(action.getStatus() == TwoPointsRadius::SetPoint2);
+
+    // (0, 8) is on the circles around (3, 4) and (-3, 4) with the first point (0, 0)
+    action.move(0., 8.);
+    REQUIRE(action.previewed().size() == 1);
+    CHECK(action.previewed().front()->getCenter().distanceTo(RS_Vector{0., 0.}) == Catch::Approx(5.));
+    action.click(0., 8.);
+    CHECK(f.m_context.m_messages.isEmpty());
+    REQUIRE(action.getStatus() == TwoPointsRadius::SelectCenter);
+
+    action.click(10., 4.);
+    REQUIRE(f.drawn().size() == 1);
+    checkCircle(f.drawn().front(), {3., 4.}, 5.);
+    CHECK(action.getStatus() == TwoPointsRadius::SetPoint1);
+}
+
+TEST_CASE("Circle 2 Points Radius: a step back from the choice of the center leaves nothing of the second point",
+          "[circle-2points-radius]") {
+    Radius5 f;
+    TwoPointsRadius& action = *f.m_action;
+    const LC_GraphicViewport& viewport = *f.m_view.getViewPort();
+    action.click(0., 0.);
+    action.click(6., 0.);
+    action.move(3., 10.);
+    REQUIRE(action.previewed().size() == 1);
+    REQUIRE(viewport.getRelativeZero().distanceTo(RS_Vector{6., 0.}) < 1e-9);
+
+    action.back();
+    REQUIRE(action.getStatus() == TwoPointsRadius::SetPoint2);
+    // coordinates are relative to the first point, as they were for the second point before
+    CHECK(viewport.getRelativeZero().distanceTo(RS_Vector{0., 0.}) < 1e-9);
+    // no circle through (6, 0), where the mouse is further than a diameter from the first point
+    action.move(20., 0.);
+    CHECK(action.previewed().empty());
+
+    // a point that far is refused with its distance to the first point: 12
+    action.click(12., 0.);
+    CHECK(action.getStatus() == TwoPointsRadius::SetPoint2);
+    REQUIRE(f.m_context.m_messages.size() == 1);
+    CHECK(f.m_context.m_messages.constFirst().contains("12"));
+    CHECK(f.drawn().empty());
+}
+
+TEST_CASE("Circle 2 Points Radius: steps back from the second point ask for a first point, and end the action",
+          "[circle-2points-radius]") {
+    Radius5 f;
+    TwoPointsRadius& action = *f.m_action;
+    action.click(0., 0.);
+    action.click(6., 0.);
+    action.back();
+    REQUIRE(action.getStatus() == TwoPointsRadius::SetPoint2);
+    action.back();
+    REQUIRE(action.getStatus() == TwoPointsRadius::SetPoint1);
+
+    // a circle of other points: (20, 0) and (26, 0) are on the circles around (23, 4) and (23, -4)
+    action.click(20., 0.);
+    action.click(26., 0.);
+    REQUIRE(action.getStatus() == TwoPointsRadius::SelectCenter);
+    action.click(23., 10.);
+    REQUIRE(f.drawn().size() == 1);
+    checkCircle(f.drawn().front(), {23., 4.}, 5.);
+    CHECK(f.m_context.m_messages.isEmpty());
+
+    REQUIRE(action.getStatus() == TwoPointsRadius::SetPoint1);
+    action.back();
+    CHECK(action.isFinished());
 }
 
 TEST_CASE("Circle 2 Points Radius: no circle is drawn while the radius is too small for the two points",
