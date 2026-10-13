@@ -22,6 +22,8 @@
 
 #include "lc_printviewportrenderer.h"
 
+#include <QPaintEngine>
+
 #include "lc_graphicviewport.h"
 #include "rs_document.h"
 #include "rs_entitycontainer.h"
@@ -114,7 +116,7 @@ void LC_PrintViewportRenderer::setPenForPrintingEntity(RS_Painter *painter, RS_E
             }*/
             // fixme - not sure about this check. However, without it, lines will stay transparent and then disappear on zooming out.
             //  Probably some other threshold value (instead 1) should be used?
-            if (screenWidth < 1){
+            if (screenWidth < 1 && painter->paintEngine()->type() != QPaintEngine::SVG) {
                 screenWidth = 0.0;
             }
             pen.setScreenWidth(screenWidth);
