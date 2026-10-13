@@ -241,6 +241,22 @@ bool hasMTextAlignmentPrefix(const QString &text) {
          text.startsWith(QLatin1StringView("\\A2;"));
 }
 
+// The x axis direction of an MTEXT (group 11, WCS) for a text drawn at
+// `angle`. The stored direction is kept while it says that angle: it is what
+// the file had and may point out of the drawing plane. A record read with a
+// rotation angle alone has none; DXF keeps the angle in group 50 and such a
+// record stays as it was, DWG has no other place for it.
+DRW_Coord mtextXAxis(double angle, const DRW_Coord &stored, bool angleEdited,
+                     bool required) {
+  const DRW_Coord fromAngle(std::cos(angle), std::sin(angle), 0.0);
+  const double length = std::hypot(stored.x, stored.y);
+  if (!(length > 0.0))
+    return required || angleEdited ? fromAngle : stored;
+  const bool sameAngle = std::fabs(stored.x / length - fromAngle.x) < 1.0e-9 &&
+                         std::fabs(stored.y / length - fromAngle.y) < 1.0e-9;
+  return sameAngle ? stored : fromAngle;
+}
+
 
 constexpr int kImportedSplineFallbackSamples = 96;
 
@@ -6642,6 +6658,114 @@ void setSingleLineAttribPlacement(DRW_Attrib &attrib, const RS_Text &text) {
   attrib.secPoint.y = alignment.y;
 }
 
+// Axes of the object coordinate system of an extrusion direction: the
+// arbitrary axis algorithm, with the limits of DRW_Entity::calculateAxis().
+struct OcsAxes {
+  DRW_Coord x{1.0, 0.0, 0.0};
+  DRW_Coord y{0.0, 1.0, 0.0};
+  DRW_Coord z{0.0, 0.0, 1.0};
+  bool world = true;
+};
+
+OcsAxes ocsAxes(DRW_Coord normal) {
+  OcsAxes axes;
+  if (!std::isfinite(normal.x) || !std::isfinite(normal.y) ||
+      !std::isfinite(normal.z))
+    return axes;
+  normal.unitize();
+  if (normal.x == 0.0 && normal.y == 0.0 && normal.z >= 0.0)
+    return axes; // +Z, or no direction at all
+  axes.world = false;
+  axes.z = normal;
+  if (std::fabs(normal.x) < 0.015625 && std::fabs(normal.y) < 0.015625)
+    axes.x = DRW_Coord(normal.z, 0.0, -normal.x);
+  else
+    axes.x = DRW_Coord(-normal.y, normal.x, 0.0);
+  axes.x.unitize();
+  axes.y = DRW_Coord(normal.y * axes.x.z - normal.z * axes.x.y,
+                     normal.z * axes.x.x - normal.x * axes.x.z,
+                     normal.x * axes.x.y - normal.y * axes.x.x);
+  axes.y.unitize();
+  return axes;
+}
+
+// A WCS point in that system; the inverse of DRW_Entity::extrudePoint().
+DRW_Coord wcsToOcs(const OcsAxes &axes, const DRW_Coord &point) {
+  if (axes.world)
+    return point;
+  return DRW_Coord(
+      point.x * axes.x.x + point.y * axes.x.y + point.z * axes.x.z,
+      point.x * axes.y.x + point.y * axes.y.y + point.z * axes.y.z,
+      point.x * axes.z.x + point.y * axes.z.y + point.z * axes.z.z);
+}
+
+bool sameXY(const DRW_Coord &a, const DRW_Coord &b) {
+  const double tolerance =
+      1.0e-9 * std::max({1.0, std::fabs(a.x), std::fabs(a.y)});
+  return std::fabs(a.x - b.x) <= tolerance && std::fabs(a.y - b.y) <= tolerance;
+}
+
+// From the alignment point of a single-line text to its baseline left point,
+// before rotation, as RS_Text::update() lays the text out, the one place
+// that knows it. An empty value, one of spaces only or a missing font leaves
+// RS_Text without a glyph and without usable borders.
+RS_Vector singleLineFirstPointOffset(const QString &text, const QString &style,
+                                     double height, double widthFactor,
+                                     RS_TextData::VAlign valign,
+                                     RS_TextData::HAlign halign) {
+  const RS_Vector origin(0.0, 0.0);
+  const RS_TextData d(origin, origin, height, widthFactor, valign, halign,
+                      RS_TextData::None, text, style, 0.0, RS2::Update);
+  const RS_Text probe(nullptr, d);
+  const RS_Vector first = probe.getSecondPoint();
+  if (probe.count() == 0 || !first.valid || !std::isfinite(first.x) ||
+      !std::isfinite(first.y))
+    return emptyTextFirstPointOffset(valign, halign, height);
+  return first;
+}
+
+// The TEXT part of a multi-line ATTRIB, kept in step with the MTEXT shown in
+// its place as AutoCAD does: justification from the attachment point, group
+// 11 the MTEXT insertion point, group 10 the baseline left point. The MTEXT
+// is in WCS, the ATTRIB in its OCS. attrib.text, extPoint and widthscale
+// must be final.
+void setMultilineAttribPlacement(DRW_Attrib &attrib, const DRW_MText &mtext,
+                                 const RS_MTextData &data,
+                                 const InsertAttribSidecar &sidecar,
+                                 bool firstPointEdited) {
+  const auto halign =
+      static_cast<RS_TextData::HAlign>(static_cast<int>(data.halign));
+  const auto valign =
+      static_cast<RS_TextData::VAlign>(3 - static_cast<int>(data.valign));
+  attrib.alignH = static_cast<DRW_Text::HAlign>(static_cast<int>(halign));
+  attrib.alignV = static_cast<DRW_Text::VAlign>(static_cast<int>(valign));
+  attrib.angle = mtext.angle;
+  const OcsAxes axes = ocsAxes(attrib.extPoint);
+  attrib.secPoint = wcsToOcs(axes, mtext.basePoint);
+  // The first point that was read belongs to the justification, the
+  // alignment point and the value it was read with.
+  if (!firstPointEdited &&
+      sidecar.alignH == static_cast<int>(attrib.alignH) &&
+      sidecar.alignV == static_cast<int>(attrib.alignV) &&
+      sameXY(sidecar.secPoint, attrib.secPoint) &&
+      attrib.text == sidecar.value) {
+    attrib.basePoint = sidecar.basePoint;
+    return;
+  }
+  attrib.basePoint = attrib.secPoint;
+  // Group 11 and the justification place the text. In another plane than
+  // the world's the rotation is not converted, so no offset is derived
+  // from it either.
+  if (!axes.world)
+    return;
+  RS_Vector offset = singleLineFirstPointOffset(
+      RS_FilterDXFRW::toNativeString(QString::fromUtf8(attrib.text.c_str())),
+      data.style, data.height, attrib.widthscale, valign, halign);
+  offset.rotate(data.angle);
+  attrib.basePoint.x += offset.x;
+  attrib.basePoint.y += offset.y;
+}
+
 // Group 71 of a single-line text: 2 backward, 4 upside down. RS_Text holds
 // one of them at most and is read as neither from a record that has both;
 // such a record keeps both while the text is still neither.
@@ -6669,12 +6793,6 @@ std::string embeddedMTextLineType(const std::string &sourceName) {
 // DWG whose embedded MTEXT was annotative and carried a scale payload; only
 // then is a clear "not annotative" bit a stored fact and kept.
 void completeEmbeddedMTextForDwg(DRW_MText &mtext, bool sourceAnnotative) {
-  // DXF may give the direction as group 50 only; DWG has only the x-axis.
-  if (mtext.secPoint.x == 0.0 && mtext.secPoint.y == 0.0 &&
-      mtext.secPoint.z == 0.0) {
-    const double angle = mtext.angle * M_PI / 180.0;
-    mtext.secPoint = DRW_Coord(std::cos(angle), std::sin(angle), 0.0);
-  }
   if (!sourceAnnotative)
     mtext.m_r2018IsNotAnnotative = true;
   if (!mtext.m_r2018IsNotAnnotative)
@@ -30904,8 +31022,6 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         mtext->basePoint =
             DRW_Coord(data.insertionPoint.x, data.insertionPoint.y,
                       sidecar.basePoint.z);
-        mtext->secPoint =
-            DRW_Coord(std::cos(data.angle), std::sin(data.angle), 0.0);
         mtext->extPoint = sidecar.extPoint;
         mtext->height = data.height;
         mtext->widthscale = data.width;
@@ -30913,7 +31029,12 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         mtext->style = data.style.toUtf8().toStdString();
         mtext->angle = data.angle * 180.0 / M_PI;
         setMTextLayout(*mtext, data);
+        DRW_Coord storedXAxis;
         bool textEdited = false;
+        bool angleEdited = false;
+        // Whether anything changed that the first point of the ATTRIB
+        // itself depends on; without stored MTEXT fields nothing says no.
+        bool firstPointEdited = true;
         if (sidecar.hasMText) {
           const auto &saved = sidecar.mtext;
           DRW_MText original;
@@ -30943,13 +31064,16 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
           const bool spacingEdited = data.lineSpacingStyle != before.lineSpacingStyle ||
                                      data.lineSpacingFactor != before.lineSpacingFactor;
           const bool positionEdited = data.insertionPoint != before.insertionPoint;
-          const bool angleEdited = data.angle != before.angle;
+          angleEdited = data.angle != before.angle;
           const bool widthEdited = data.width != before.width;
           const bool styleEdited = data.style != before.style;
+          const bool heightEdited = data.height != before.height;
           const bool layoutEdited = textEdited || attachmentEdited ||
                                     directionEdited || spacingEdited || positionEdited ||
                                     angleEdited || widthEdited || styleEdited ||
-                                    data.height != before.height;
+                                    heightEdited;
+          firstPointEdited = textEdited || attachmentEdited || positionEdited ||
+                             angleEdited || heightEdited || styleEdited;
           // The annotation-scale payload and the column layout are opaque
           // here. They go out only next to the untouched text they were
           // read with, and the payload only if the APPID it names is
@@ -31035,27 +31159,19 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
           mtext->lWeight =
               static_cast<DRW_LW_Conv::lineWidth>(saved.lineWeight);
           mtext->basePoint = saved.basePoint;
-          mtext->secPoint = saved.secPoint;
-          mtext->extPoint = saved.extPoint;
           if (positionEdited) {
             mtext->basePoint.x = data.insertionPoint.x;
             mtext->basePoint.y = data.insertionPoint.y;
-            attrib.basePoint.x = data.insertionPoint.x;
-            attrib.basePoint.y = data.insertionPoint.y;
           }
-          if (angleEdited)
-            mtext->secPoint = DRW_Coord(std::cos(data.angle), std::sin(data.angle), 0.0);
+          mtext->extPoint = saved.extPoint;
+          storedXAxis = saved.secPoint;
           if (layoutEdited) {
             mtext->m_r2018ExtentsWidth = source->getUsedTextWidth();
             mtext->m_r2018ExtentsHeight = source->getUsedTextHeight();
           }
-          if (layoutEdited) {
-            attrib.basePoint = mtext->basePoint;
-            attrib.secPoint = attrib.basePoint;
-            attrib.alignH = static_cast<DRW_Text::HAlign>(data.halign);
-            attrib.alignV = static_cast<DRW_Text::VAlign>(3 - static_cast<int>(data.valign));
-          }
         }
+        mtext->secPoint =
+            mtextXAxis(data.angle, storedXAxis, angleEdited, m_dwgW != nullptr);
         // One marker in one record: the XDATA of an ATTRIB record is the
         // ATTRIB's in DXF, and the embedded MTEXT of a DWG has none.
         setMTextRtlMarker(attrib, rtlLayoutOf(data));
@@ -31076,11 +31192,13 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         }
         attrib.height = data.height;
         attrib.style = mtext->style;
-        attrib.angle = mtext->angle;
         // The MTEXT has neither: they are the ATTRIB's own, as read. Of group
         // 71 only the two flags there are, backward and upside down.
         attrib.widthscale = sidecar.widthFactor;
         attrib.textgen = sidecar.textgen & 6;
+        // attrib.text is final here: the first point is laid out from it.
+        setMultilineAttribPlacement(attrib, *mtext, data, sidecar,
+                                    firstPointEdited);
         if (m_dwgW != nullptr) {
           // The MTEXT refers to the text style and the layer of its
           // attribute by the handles they have in the file being written.

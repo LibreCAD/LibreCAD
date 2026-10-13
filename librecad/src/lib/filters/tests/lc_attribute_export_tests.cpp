@@ -1126,6 +1126,20 @@ std::vector<double> ownNumbers(const DxfRecord& record, const std::vector<int>& 
     return numbers;
 }
 
+// The same of the groups of its MTEXT.
+std::vector<double> embeddedNumbers(const DxfRecord& record, const std::vector<int>& codes) {
+    std::vector<double> numbers;
+    for (const int code : codes) {
+        for (const std::string& value : record.embedded(code)) {
+            bool isNumber = false;
+            numbers.push_back(QString::fromStdString(value).toDouble(&isNumber));
+            CAPTURE(code, value);
+            REQUIRE(isNumber);
+        }
+    }
+    return numbers;
+}
+
 // True when the lists are as long as each other and no pair is further apart
 // than 1e-9: a point of a file is where it should be, not near it.
 bool sameNumbers(const std::vector<double>& expected, const std::vector<double>& actual) {
@@ -1138,6 +1152,37 @@ bool sameNumbers(const std::vector<double>& expected, const std::vector<double>&
         }
     }
     return true;
+}
+
+// The first point and the alignment point of the attribute itself in a
+// record: 10, 20, 11, 21. Next to its MTEXT a record has the alignment point
+// a second time, in front of the MTEXT, and the two have to be one point.
+std::vector<double> ownPlace(const DxfRecord& record) {
+    const std::vector<double> first = ownNumbers(record, {10, 20});
+    const std::vector<double> x = ownNumbers(record, {11});
+    const std::vector<double> y = ownNumbers(record, {21});
+    REQUIRE(first.size() == 2);
+    REQUIRE(!x.empty());
+    REQUIRE(x.size() == y.size());
+    for (std::size_t i = 1; i < x.size(); ++i) {
+        CHECK(x[i] == x.front());
+        CHECK(y[i] == y.front());
+    }
+    return {first[0], first[1], x.front(), y.front()};
+}
+
+// Group 72 of the attribute itself as a record has to have it: the
+// horizontal justification when the text is not left-aligned, and next to an
+// MTEXT a second 72, a 0 that goes with the attribute type.
+std::vector<std::string> ownGroup72(const char* justification, const Target& to) {
+    std::vector<std::string> values;
+    if (*justification != '\0') {
+        values.emplace_back(justification);
+    }
+    if (to.m_embedsMText) {
+        values.emplace_back("0");
+    }
+    return values;
 }
 
 // How often a record names the application "LibreCad", under which the
@@ -1411,22 +1456,40 @@ TEST_CASE("a block with a multi-line attribute definition keeps the definition's
     CHECK(only<RS_MText>(drawing, RS2::EntityMText)->getText().toStdString() == "my text\nsecond line");
 }
 
-TEST_CASE("a rotated attribute read from DXF keeps its angle through DWG 2018",
+TEST_CASE("a rotated attribute read from DXF keeps its angle in the formats of 2018",
           "[attribute-export][attrib][filter][dxf][dwg][attrib-geometry]") {
-    const Bench bench("attr_angle_dwg2018");
+    const Bench bench("attr_angle_2018");
+    // The direction of an MTEXT is its x-axis (11, 21, 31) or its angle (50),
+    // and a DWG has the x-axis only. A DXF is saved with the one its file
+    // had, so that the record of an untouched attribute stays as it was.
     struct Variant {
         const char* m_name;
-        const char* m_ownAngle;     // group 50 of the attribute itself
-        const char* m_direction;    // of the MTEXT
+        const char* m_ownAngle;                 // group 50 of the attribute itself
+        const char* m_direction;                // of the MTEXT
         double m_degrees;
+        std::vector<std::string> m_axis;        // 11 and 21 of the MTEXT in a saved DXF
+        std::vector<std::string> m_angle;       // and its 50
     };
     const std::vector<Variant> variants{
-        // The direction as AutoCAD writes it: the x-axis of the MTEXT, and
-        // the angle on the attribute itself.
-        {"x_axis", "50\n30\n", "11\n0.8660254037844387\n21\n0.5\n31\n0\n", 30.0},
-        // And as the angle of the MTEXT alone, which a DXF may have in its
-        // place. A DWG has the x-axis and nothing else.
-        {"angle", "", "50\n75\n", 75.0},
+        // As AutoCAD writes it: the x-axis, and the angle on the attribute.
+        {"x_axis", "50\n30\n", "11\n0.8660254037844387\n21\n0.5\n31\n0\n", 30.0, {"0.8660254037844387", "0.5"}, {}},
+        // An x-axis need not have the length 1; it is the file's all the same.
+        {"long_x_axis", "50\n45\n", "11\n2\n21\n2\n31\n0\n", 45.0, {"2", "2"}, {}},
+        {"angle", "", "50\n75\n", 75.0, {}, {"75"}},
+        // As earlier versions of LibreCAD wrote a text that was rotated in
+        // the drawing: the x-axis the file came with, and after it the angle.
+        // The last of the two counts, and the axis is not written again.
+        {"stale_x_axis", "", "11\n1\n21\n0\n31\n0\n50\n30\n", 30.0, {}, {"30"}},
+    };
+    const auto checkDirection = [](const DxfRecord& record, const std::vector<std::string>& axis,
+                                   const std::vector<std::string>& angle) {
+        std::vector<std::string> written = record.embedded(11);
+        for (const std::string& y : record.embedded(21)) {
+            written.push_back(y);
+        }
+        CAPTURE(written, record.embedded(50));
+        CHECK(lc::test::sameValues(axis, written));
+        CHECK(lc::test::sameValues(angle, record.embedded(50)));
     };
     for (const Variant& variant : variants) {
         CAPTURE(variant.m_name);
@@ -1436,7 +1499,15 @@ TEST_CASE("a rotated attribute read from DXF keeps its angle through DWG 2018",
         EditableDrawing drawing;
         load(bench, fixture, drawing, std::string(variant.m_name) + "_source");
         const double angle = variant.m_degrees * M_PI / 180.0;
-        CHECK(only<RS_MText>(drawing, RS2::EntityMText)->getAngle() == Catch::Approx(angle).margin(1e-9));
+        const RS_MText* shown = only<RS_MText>(drawing, RS2::EntityMText);
+        CHECK(shown->getAngle() == Catch::Approx(angle).margin(1e-9));
+
+        const auto dxf = save(bench, drawing, variant.m_name, target("dxf2018"));
+        checkWrittenDxf(dxf);
+        checkDirection(onlyRecord(dxf, "ATTRIB"), variant.m_axis, variant.m_angle);
+        EditableDrawing fromDxf;
+        REQUIRE(lc::test::importDrawing(fromDxf.m_graphic, dxf, RS2::FormatDXFRW2018));
+        CHECK(only<RS_MText>(fromDxf, RS2::EntityMText)->getAngle() == Catch::Approx(angle).margin(1e-9));
 
         const auto out = save(bench, drawing, variant.m_name, target("dwg2018"));
         EditableDrawing reopened;
@@ -1448,9 +1519,34 @@ TEST_CASE("a rotated attribute read from DXF keeps its angle through DWG 2018",
         DwgContent content;
         readDwg(out, content);
         const DRW_MText& mtext = onlyEmbeddedMText(content);
-        CHECK(mtext.secPoint.x == Catch::Approx(std::cos(angle)).margin(1e-9));
-        CHECK(mtext.secPoint.y == Catch::Approx(std::sin(angle)).margin(1e-9));
+        CAPTURE(mtext.secPoint.x, mtext.secPoint.y);
+        CHECK(std::hypot(mtext.secPoint.x, mtext.secPoint.y) >= 1.0 - 1e-9);
+        CHECK(std::atan2(mtext.secPoint.y, mtext.secPoint.x) == Catch::Approx(angle).margin(1e-9));
         CHECK(mtext.m_r2018IsNotAnnotative);
+
+        // Rotated in the drawing, the text has one direction, the new one,
+        // whichever way its file had the old one.
+        const RS_MText* turned = drawing.edit(shown, [](RS_MText& text) { text.setAngle(1.0); });
+        const auto turnedDxf = save(bench, drawing, std::string(variant.m_name) + "_turned", target("dxf2018"));
+        const DxfRecord turnedRecord = onlyRecord(turnedDxf, "ATTRIB");
+        checkDirection(turnedRecord,
+                       {QString::number(std::cos(1.0), 'g', 17).toStdString(),
+                        QString::number(std::sin(1.0), 'g', 17).toStdString()},
+                       {});
+        // The attribute itself turns with its MTEXT, about the alignment
+        // point (1,4): its baseline starts one height below along the
+        // turned text.
+        CHECK(sameNumbers({1.0 + 9.0 * std::sin(1.0), 4.0 - 9.0 * std::cos(1.0), 1.0, 4.0}, ownPlace(turnedRecord)));
+        CHECK(sameNumbers({1.0 * 180.0 / M_PI}, ownNumbers(turnedRecord, {50})));
+        for (const char* format : {"dxf2018", "dwg2018"}) {
+            const Target to = target(format);
+            CAPTURE(to.m_name);
+            const auto file = to.m_dxf ? turnedDxf
+                                       : save(bench, drawing, std::string(variant.m_name) + "_turned", to);
+            EditableDrawing again;
+            REQUIRE(lc::test::importDrawing(again.m_graphic, file, to.m_format));
+            checkSameMText(*turned, *only<RS_MText>(again, RS2::EntityMText));
+        }
     }
 }
 
@@ -2919,6 +3015,368 @@ TEST_CASE("the first point of a single-line attribute with nothing to draw stays
     REQUIRE(lc::test::importDrawing(fromDwg.m_graphic, viaDwg, dwg.m_format));
     checkPlaces(fromDwg);
     checkRecords(save(bench, fromDwg, "untouched_dwg2013", dxf));
+}
+
+// The attribute itself is a text of one line: its value, which a format
+// without its MTEXT shows, with a first point (10), an alignment point (11)
+// and a justification (72, 74) of its own. AutoCAD keeps them in step with
+// the MTEXT: the alignment point is the insertion point of the MTEXT, the
+// justification follows its attachment point, and the first point is where
+// the baseline of the value starts. In the sample it wrote, a top-left
+// attribute of height 1.72 at y 28.75 has its first point at y 27.03.
+
+// A multi-line attribute, top left at (1,4) with a text of one line in a
+// font of the drawing. The first point of its file is not where it is worked
+// out here, a quarter above: kept and worked out give different numbers.
+AttributeDxf offsetFirstPointDxf() {
+    AttributeDxf fixture;
+    fixture.m_firstPoint = "10\n1\n20\n-4.75\n30\n0\n";
+    fixture.m_text = "ABC";
+    fixture.m_style = "iso3098";
+    fixture.m_direction = "1";
+    return fixture;
+}
+
+TEST_CASE("an edited multi-line attribute gets its own points and justification from its MTEXT",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-geometry]") {
+    const Bench bench("attr_outer_edited");
+
+    SECTION("a change of the text") {
+        EditableDrawing drawing;
+        load(bench, offsetFirstPointDxf(), drawing);
+        drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [](RS_MText& text) { text.setText("ABD"); });
+        std::filesystem::path saved2018;
+        for (const char* format : {"dxf2018", "dxf2007"}) {
+            const Target to = target(format);
+            CAPTURE(to.m_name);
+            const auto out = save(bench, drawing, "text", to);
+            checkWrittenDxf(out);
+            const DxfRecord record = onlyRecord(out, "ATTRIB");
+            const std::vector<double> place = ownPlace(record);
+            CAPTURE(place);
+            // The first point is worked out: one height below the alignment
+            // point, and no longer the -4.75 of the file.
+            CHECK(sameNumbers({1.0, -5.0, 1.0, 4.0}, place));
+            CHECK(record.own(74) == std::vector<std::string>{"3"});
+            CHECK(record.own(72) == ownGroup72("", to));
+            if (to.m_embedsMText) {
+                saved2018 = out;
+            }
+        }
+
+        // The saved file opened and saved again, with nothing changed, to a
+        // format that shows the value: the same record, and a text of one
+        // line where the multi-line text was.
+        EditableDrawing reopened;
+        REQUIRE(lc::test::importDrawing(reopened.m_graphic, saved2018, RS2::FormatDXFRW2018));
+        const Target older = target("dxf2007");
+        const auto again = save(bench, reopened, "text_reopened", older);
+        const DxfRecord record = onlyRecord(again, "ATTRIB");
+        CHECK(sameNumbers({1.0, -5.0, 1.0, 4.0}, ownPlace(record)));
+        CHECK(record.own(74) == std::vector<std::string>{"3"});
+        CHECK(record.own(72).empty());
+        EditableDrawing shown;
+        REQUIRE(lc::test::importDrawing(shown.m_graphic, again, older.m_format));
+        const RS_Text* text = only<RS_Text>(shown, RS2::EntityText);
+        CHECK(text->getText().toStdString() == "ABD");
+        CHECK(text->getInsertionPoint().distanceTo(RS_Vector(1.0, 4.0)) < 1e-9);
+        CHECK(text->getVAlign() == RS_TextData::VATop);
+        CHECK(text->getHAlign() == RS_TextData::HALeft);
+    }
+
+    SECTION("another attachment point and another place") {
+        EditableDrawing drawing;
+        load(bench, offsetFirstPointDxf(), drawing);
+        const RS_MText* moved = drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [](RS_MText& text) {
+            text.setHAlign(RS_MTextData::HARight);
+            text.setVAlign(RS_MTextData::VAMiddle);
+            text.move(RS_Vector(6.0, 4.0));
+        });
+        REQUIRE(moved->getInsertionPoint().distanceTo(RS_Vector(7.0, 8.0)) < 1e-12);
+        for (const char* format : {"dxf2018", "dxf2007", "dwg2013"}) {
+            const Target to = target(format);
+            CAPTURE(to.m_name);
+            const auto out = save(bench, drawing, "right_middle", to);
+            std::vector<double> place;
+            if (to.m_dxf) {
+                checkWrittenDxf(out);
+                const DxfRecord record = onlyRecord(out, "ATTRIB");
+                place = ownPlace(record);
+                CAPTURE(place);
+                CHECK(sameNumbers({7.0, 8.0}, {place[2], place[3]}));
+                CHECK(record.own(74) == std::vector<std::string>{"2"});
+                CHECK(record.own(72) == ownGroup72("2", to));
+            }
+            if (to.m_embedsMText) {
+                // The value next to the MTEXT is empty, and nothing has a
+                // width: half a height below the alignment point.
+                CHECK(sameNumbers({7.0, 3.5}, {place[0], place[1]}));
+                continue;
+            }
+            // Without the MTEXT the value is the text. Its first point is
+            // where a text of one line, right-aligned to (7,8) by its
+            // middle, starts: the very point that the text opened from the
+            // file works out for itself.
+            EditableDrawing shown;
+            REQUIRE(lc::test::importDrawing(shown.m_graphic, out, to.m_format));
+            const RS_Text* text = only<RS_Text>(shown, RS2::EntityText);
+            CHECK(text->getText().toStdString() == "ABC");
+            CHECK(text->getInsertionPoint().distanceTo(RS_Vector(7.0, 8.0)) < 1e-9);
+            CHECK(text->getHAlign() == RS_TextData::HARight);
+            CHECK(text->getVAlign() == RS_TextData::VAMiddle);
+            if (to.m_dxf) {
+                CHECK(place[0] < 7.0);
+                CHECK(place[1] > -1.0);
+                CHECK(place[1] < 8.0);
+                CHECK(text->getSecondPoint().distanceTo(RS_Vector(place[0], place[1])) < 1e-6);
+            }
+        }
+    }
+}
+
+TEST_CASE("an untouched multi-line attribute keeps its first point while its record is written as it was",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-geometry]") {
+    const Bench bench("attr_outer_untouched");
+
+    SECTION("the numbers of an attribute that AutoCAD wrote") {
+        AttributeDxf fixture;
+        fixture.m_firstPoint = "10\n977.2814835151885\n20\n27.03015976727258\n30\n0\n";
+        fixture.m_height = "1.720654456209621";
+        fixture.m_alignmentPoint = "11\n977.2814835151885\n21\n28.7508142234822\n31\n0\n";
+        fixture.m_mtextPoint = "10\n977.2814835151885\n20\n28.7508142234822\n30\n0\n";
+        fixture.m_text = "my multi line text";
+        const std::vector<double> points{977.2814835151885, 27.03015976727258, 977.2814835151885, 28.7508142234822};
+        EditableDrawing drawing;
+        load(bench, fixture, drawing);
+
+        // Number for number: nothing is worked out for a record that is
+        // written as it was read.
+        const auto direct = save(bench, drawing, "untouched", target("dxf2018"));
+        CHECK(ownPlace(onlyRecord(direct, "ATTRIB")) == points);
+        CHECK(onlyRecord(direct, "ATTRIB").own(74) == std::vector<std::string>{"3"});
+
+        // The same through a DWG, which is read here as the DXF that the
+        // drawing it opens as is saved to.
+        const auto dwg = save(bench, drawing, "untouched", target("dwg2018"));
+        EditableDrawing fromDwg;
+        REQUIRE(lc::test::importDrawing(fromDwg.m_graphic, dwg, RS2::FormatDWG2018));
+        const auto viaDwg = save(bench, fromDwg, "untouched_dwg2018", target("dxf2018"));
+        CHECK(ownPlace(onlyRecord(viaDwg, "ATTRIB")) == points);
+        CHECK(onlyRecord(viaDwg, "ATTRIB").own(74) == std::vector<std::string>{"3"});
+
+        // A format without the MTEXT gets the text as the value, which is
+        // not the empty value the first point was read with. Worked out, the
+        // point is AutoCAD's: one height below the alignment point.
+        const auto older = save(bench, drawing, "untouched", target("dxf2007"));
+        const std::vector<double> place = ownPlace(onlyRecord(older, "ATTRIB"));
+        CAPTURE(place);
+        REQUIRE(place.size() == 4);
+        CHECK(place[2] == points[2]);
+        CHECK(place[3] == points[3]);
+        CHECK(sameNumbers({points[0], points[1]}, {place[0], place[1]}));
+        CHECK(onlyRecord(older, "ATTRIB").own(74) == std::vector<std::string>{"3"});
+    }
+
+    SECTION("a first point that is not where it would be worked out") {
+        const auto firstPoint = [](const std::filesystem::path& file) {
+            return ownNumbers(onlyRecord(file, "ATTRIB"), {10, 20});
+        };
+        const std::vector<double> kept{1.0, -4.75};
+        const std::vector<double> workedOut{1.0, -5.0};
+        {
+            EditableDrawing drawing;
+            load(bench, offsetFirstPointDxf(), drawing, "kept_source");
+            CHECK(firstPoint(save(bench, drawing, "kept", target("dxf2018"))) == kept);
+            const auto dwg = save(bench, drawing, "kept", target("dwg2018"));
+            EditableDrawing fromDwg;
+            REQUIRE(lc::test::importDrawing(fromDwg.m_graphic, dwg, RS2::FormatDWG2018));
+            CHECK(firstPoint(save(bench, fromDwg, "kept_dwg2018", target("dxf2018"))) == kept);
+            // The value changes with the format, and the point with it.
+            CHECK(sameNumbers(workedOut, firstPoint(save(bench, drawing, "kept", target("dxf2007")))));
+
+            // The line spacing moves nothing of the attribute itself.
+            drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [](RS_MText& text) {
+                text.setLineSpacingFactor(1.25);
+            });
+            CHECK(firstPoint(save(bench, drawing, "spacing", target("dxf2018"))) == kept);
+        }
+        {
+            // With the text as the value in the file already, a format
+            // without the MTEXT writes the record as it was too.
+            AttributeDxf fixture = offsetFirstPointDxf();
+            fixture.m_value = "ABC";
+            EditableDrawing drawing;
+            load(bench, fixture, drawing, "value_source");
+            CHECK(firstPoint(save(bench, drawing, "value", target("dxf2007"))) == kept);
+            CHECK(firstPoint(save(bench, drawing, "value", target("dxf2018"))) == kept);
+        }
+        {
+            // Another height: the point is one new height below.
+            EditableDrawing drawing;
+            load(bench, offsetFirstPointDxf(), drawing, "height_source");
+            drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [](RS_MText& text) { text.setHeight(3.0); });
+            CHECK(sameNumbers({1.0, 1.0}, firstPoint(save(bench, drawing, "height", target("dxf2018")))));
+        }
+    }
+
+    // A record as earlier versions of LibreCAD wrote it: the attribute
+    // itself at the place of the MTEXT without a justification, and only the
+    // copy of the alignment point in front of the MTEXT. Its first point
+    // belongs to no justification that is written now.
+    SECTION("a record without a justification gets one") {
+        AttributeDxf fixture = offsetFirstPointDxf();
+        fixture.m_firstPoint = "10\n1\n20\n4\n30\n0\n";
+        fixture.m_alignmentPoint.clear();
+        fixture.m_verticalJustification = "0";
+        fixture.m_typeGroups = "71\n2\n72\n0\n11\n1\n21\n4\n31\n0\n";
+        for (const char* format : {"dxf2018", "dxf2007"}) {
+            const Target to = target(format);
+            CAPTURE(to.m_name);
+            EditableDrawing drawing;
+            load(bench, fixture, drawing, std::string(to.m_name) + "_source");
+            const DxfRecord record = onlyRecord(save(bench, drawing, "untouched", to), "ATTRIB");
+            CHECK(sameNumbers({1.0, -5.0, 1.0, 4.0}, ownPlace(record)));
+            CHECK(record.own(74) == std::vector<std::string>{"3"});
+            CHECK(record.own(72) == ownGroup72("", to));
+        }
+    }
+}
+
+// A block reference seen from below has the extrusion (0,0,-1), and so have
+// its attributes. The points of the attribute itself are in the coordinate
+// system of that extrusion, in which x is mirrored; those of its MTEXT are
+// in the coordinate system of the drawing.
+TEST_CASE("the points of an extruded multi-line attribute stay in its own coordinate system",
+          "[attribute-export][attrib][filter][dxf][attrib-geometry]") {
+    const Bench bench("attr_outer_extruded");
+    const std::string down = "210\n0\n220\n0\n230\n-1\n";
+    AttributeDxf fixture;
+    fixture.m_insertGroups = "10\n0\n20\n0\n30\n0\n" + down;
+    fixture.m_firstPoint = "10\n-5\n20\n4\n30\n0\n";
+    fixture.m_value = "fallback";
+    fixture.m_alignmentPoint.clear();
+    fixture.m_verticalJustification = "0";
+    fixture.m_textTail = down;
+    fixture.m_typeGroups = "71\n2\n72\n0\n11\n5\n21\n4\n31\n0\n";
+    fixture.m_mtextPoint = "10\n5\n20\n4\n30\n0\n";
+    fixture.m_text = "ABC";
+    fixture.m_style = "iso3098";
+    fixture.m_direction = "1";
+    fixture.m_mtextExtra = down;
+
+    struct Variant {
+        const char* m_name;
+        std::function<void(RS_MText&)> m_edit;  // none: untouched
+        std::vector<double> m_own;              // first point and alignment point of the attribute itself
+        std::vector<double> m_mtext;            // insertion point of the MTEXT
+    };
+    const std::vector<Variant> variants{
+        {"untouched", nullptr, {-5.0, 4.0, -5.0, 4.0}, {5.0, 4.0}},
+        {"text", [](RS_MText& text) { text.setText("ABD"); }, {-5.0, 4.0, -5.0, 4.0}, {5.0, 4.0}},
+        {"moved", [](RS_MText& text) { text.move(RS_Vector(2.0, 1.0)); }, {-7.0, 5.0, -7.0, 5.0}, {7.0, 5.0}},
+    };
+    for (const Variant& variant : variants) {
+        for (const char* format : {"dxf2018", "dxf2007"}) {
+            const Target to = target(format);
+            CAPTURE(variant.m_name, to.m_name);
+            EditableDrawing drawing;
+            load(bench, fixture, drawing, std::string(variant.m_name) + "_" + to.m_name + "_source");
+            const RS_MText* shown = only<RS_MText>(drawing, RS2::EntityMText);
+            REQUIRE(shown->getInsertionPoint().distanceTo(RS_Vector(5.0, 4.0)) < 1e-12);
+            if (variant.m_edit) {
+                shown = drawing.edit(shown, variant.m_edit);
+            }
+            const auto out = save(bench, drawing, variant.m_name, to);
+            checkWrittenDxf(out);
+            const DxfRecord record = onlyRecord(out, "ATTRIB");
+            const std::vector<double> place = ownPlace(record);
+            CAPTURE(place);
+            CHECK(sameNumbers(variant.m_own, place));
+            CHECK(record.own(74) == std::vector<std::string>{"3"});
+            CHECK(lc::test::sameValues({"-1"}, record.own(230)));
+
+            EditableDrawing reopened;
+            REQUIRE(lc::test::importDrawing(reopened.m_graphic, out, to.m_format));
+            if (!to.m_embedsMText) {
+                // A text of one line is shown at the point of its file.
+                const RS_Text* text = only<RS_Text>(reopened, RS2::EntityText);
+                CHECK(text->getInsertionPoint().distanceTo(RS_Vector(variant.m_own[2], variant.m_own[3])) < 1e-9);
+                CHECK(text->getVAlign() == RS_TextData::VATop);
+                continue;
+            }
+            CHECK(sameNumbers(variant.m_mtext, embeddedNumbers(record, {10, 20})));
+            checkSameMText(*shown, *only<RS_MText>(reopened, RS2::EntityMText));
+            // Opened and saved again with nothing changed: the same points.
+            const auto again = save(bench, reopened, std::string(variant.m_name) + "_reopened", to);
+            CHECK(sameNumbers(variant.m_own, ownPlace(onlyRecord(again, "ATTRIB"))));
+        }
+    }
+
+    // A record whose attribute has the points of its MTEXT as they are, in
+    // the coordinate system of the drawing, as a version of LibreCAD wrote
+    // it after an edit. Its first point belongs to an alignment point that
+    // is not written again.
+    AttributeDxf mirrored = fixture;
+    mirrored.m_firstPoint = "10\n5\n20\n4\n30\n0\n";
+    mirrored.m_alignmentPoint = "11\n5\n21\n4\n31\n0\n";
+    mirrored.m_verticalJustification = "3";
+    mirrored.m_typeGroups = "71\n2\n72\n0\n";
+    EditableDrawing drawing;
+    load(bench, mirrored, drawing, "mirrored_source");
+    REQUIRE(only<RS_MText>(drawing, RS2::EntityMText)->getInsertionPoint().distanceTo(RS_Vector(5.0, 4.0)) < 1e-12);
+    const DxfRecord record = onlyRecord(save(bench, drawing, "mirrored", target("dxf2018")), "ATTRIB");
+    CHECK(sameNumbers({-5.0, 4.0, -5.0, 4.0}, ownPlace(record)));
+    CHECK(sameNumbers({5.0, 4.0}, embeddedNumbers(record, {10, 20})));
+}
+
+// A text with no letter to draw has no size. Next to its MTEXT the value of
+// an attribute is empty as a rule, and the first point of a right-aligned or
+// a centred empty value must not be a width away that is no width: it is the
+// alignment point, lowered or raised as for a capital letter.
+TEST_CASE("the first point of a multi-line attribute with nothing to draw stays at its alignment point",
+          "[attribute-export][attrib][filter][dxf][attrib-geometry]") {
+    const Bench bench("attr_outer_blank");
+    struct Kind {
+        const char* m_name;
+        const char* m_attachment;       // group 71 of the MTEXT
+        const char* m_horizontal;       // group 72 of the attribute itself
+        const char* m_vertical;         // and its group 74
+        double m_below;                 // the baseline of a capital letter below the alignment point
+    };
+    const std::vector<Kind> kinds{{"top_right", "3", "2", "3", 9.0}, {"middle_right", "6", "2", "2", 4.5},
+                                  {"bottom_centre", "8", "1", "1", -3.0}};
+    for (const Kind& kind : kinds) {
+        AttributeDxf fixture = offsetFirstPointDxf();
+        fixture.m_attachment = kind.m_attachment;
+        for (const bool emptied : {false, true}) {
+            for (const char* format : {"dxf2018", "dxf2007"}) {
+                const Target to = target(format);
+                const std::string name = std::string(kind.m_name) + (emptied ? "_emptied" : "_untouched");
+                CAPTURE(name, to.m_name);
+                EditableDrawing drawing;
+                load(bench, fixture, drawing, name + "_" + to.m_name + "_source");
+                if (emptied) {
+                    drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [](RS_MText& text) { text.setText(""); });
+                }
+                const DxfRecord record = onlyRecord(save(bench, drawing, name, to), "ATTRIB");
+                const std::vector<double> place = ownPlace(record);
+                CAPTURE(place);
+                CHECK(record.own(74) == std::vector<std::string>{kind.m_vertical});
+                CHECK(record.own(72) == ownGroup72(kind.m_horizontal, to));
+                CHECK(sameNumbers({1.0, 4.0}, {place[2], place[3]}));
+                if (emptied || to.m_embedsMText) {
+                    // The value is empty.
+                    CHECK(sameNumbers({1.0, 4.0 - kind.m_below}, {place[0], place[1]}));
+                }
+                else {
+                    // The value is the text, which has a width.
+                    CHECK(place[0] < 1.0);
+                    CHECK(place[0] > 1.0 - 9.0 * 3.0);
+                    CHECK(std::abs(place[1] - (4.0 - kind.m_below)) < 9.0);
+                }
+            }
+        }
+    }
 }
 
 // A multi-line text takes a "\A0;", "\A1;" or "\A2;" at the start of its
