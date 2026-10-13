@@ -76,9 +76,9 @@ LC_LayerTreeWidget::LC_LayerTreeWidget(const QG_ActionHandler* ah, QWidget* pare
 }
 
 void LC_LayerTreeWidget::initTreeModel(){
-    auto *options = new LC_LayerTreeModelOptions();
+    auto options = std::make_unique<LC_LayerTreeModelOptions>();
     options->load();
-    m_layerTreeModel = new LC_LayerTreeModel(this, options);
+    m_layerTreeModel = new LC_LayerTreeModel(this, std::move(options));
     m_layerTreeModel->setFlatMode(m_flatListMode);
 }
 
