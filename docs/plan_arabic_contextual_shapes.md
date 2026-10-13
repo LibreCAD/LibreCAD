@@ -821,9 +821,14 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-12 | P5 fresh embedded filter consumer | In progress | Original revisions retained; reviewed owner freeze cgivVy and coherent source `librecad-history-consumer-final.TpAEe7` | Original17464 builds application/all31 targets0, then exits42 on unset selection-fixture flag. SSJCiX93271 fixture-only compile exits2 at protected API. Correct public flag/list GgaMI2/94753 passes fresh fixture743 / 13 and three unchanged helper suites, then exits42 at unchanged scopeguard4,984 / 16 with12 failures/8 cases; listed source/input-after checks0, later26 suites unrun | Old5,833-file manifest omits17 hidden non-C++ files. Six failures are missing fixture reads; six modern exports expose the STYLE gap and missing actual STYLE records. Preserve success expectations and add exact assets/catalog. No coherent runtime, full carrier, loaded restoration or activation acceptance |
 | 2026-10-12 | P5 native letters and normal explode | In progress | Private nJ11IJ/failed rPuxGU preserved; narrow Csh2Qp repair and separate continuations, not integrated or committed | Original fixture compile exits 2; initial six-suite replay has 1,300,193 / 95 with two failures. Incremental40131 exits 2 at missing external-header receipt;214BnJ/34434 exits 2 at protected test API. Fixture-only G6nym3/29629 terminal 0:1,385,240 / 96, separate mark34,883 / 1; all25 fresh objects/six links and10,571-input-after checks pass | The initial single-group expectation was wrongly dismissed from two-GID evidence alone: actual rlig/unsafe-boundary trace confirms a separate mandatory grouping defect. Current two-group diagnostic does not close letters acceptance. Fresh application/OFF/ASan/fault/serialized and current-authority gates remain required |
 | 2026-10-12 | P5 independent canonical embedded DXF boundary | In progress | Private normal e2Dv8i and sanitizer p9dA3K; exact matching reviewed native archives reused, one fresh strict test TU per lane | Sessions90905/78893 both terminal 0:710 / 6 each; actual instrumentation/link audited, identical paired output; ezdxf semantic checks and paired-output audit errors0/fixes0. Upstream424/own11 before/after checks pass; independent bounded reviews approve | Bounded ASCII DXF2018 group101/body/outer-XDATA check only, not fresh production/application build. Full-model carrier, whole-filter save/reopen, DWG/pre2018 and broader `P5-EMBEDDED-DXF-001` acceptance remain open |
-| 2026-10-13 | P5 canonical native DXF checkpoint | In progress | Exact parent737f plus eight owned source/build paths in `librecad-canonical-checkpoint.yDMeyb`; scoped checkpoint prepared | Fresh ON40185/OFF9829/whole-native ASan29388 all exit0:710 / 6 and CTest each;38 fresh project TUs/87 private dependencies/exact36 native members audited. Owned qmake14514 native build/recheck and all5,833-source/direct-input checks0. Existing-API probe fails6 / 11 before, passes17 / 17 after; paired ezdxf audit errors0/fixes0 | Checkpoint exact eight paths plus plan only; exclude verified APIs and unrelated WIP. Original shallow qmake56680 result retained, not owned-shadow acceptance. No application, full filter/carrier, DWG/pre2018, activation or P5 completion |
+| 2026-10-13 | P5 canonical native DXF checkpoint | Complete | `54d5adb7f` — `Preserve canonical embedded DXF scope`; exact parent737f plus eight tested source/build paths and plan | Fresh ON40185/OFF9829/whole-native ASan29388 all exit0:710 / 6 and CTest each;38 fresh project TUs/87 private dependencies/exact36 native members audited. Owned qmake14514 native build/recheck and all5,833-source/direct-input checks0. Existing-API probe fails6 / 11 before, passes17 / 17 after; paired ezdxf audit errors0/fixes0. Independent review approves; all committed blobs match tested inputs | Bounded checkpoint only; verified APIs and unrelated WIP excluded. Original shallow qmake56680 retained, not owned-shadow acceptance. No application, full filter/carrier, DWG/pre2018, activation or P5 completion |
+| 2026-10-13 | P5 native verified writer checkpoint | Complete | `P5-NATIVE-VERIFIED-CP-001` — `Verify native DXF and DWG saves before publication`; seven source/build paths plus plan | Fresh ON22725/OFF97138/whole-native ASan42247 each exit0:279 / 3 plus CTest. Exact38 fresh TUs/88 private dependencies/native36-member archive/link checks pass. Owned qmake74039 builds36 native TUs and passes no-op recheck; complete5,834-source/six-direct-input before/after checks0. Root/peer approve bounded source and corrected evidence scripts | Per-call native LINE oracle only, not full model/STYLE/carrier fidelity. Callback sees flushed/closed owned stage; rejection/throw preserves prior destination. Application, two-pass filter save, Windows, activation and P5 completion remain open |
 | 2026-10-12 | P5 native DXF source observer | In progress | Private `librecad-dxf-observer.G6LIgu`; reviewed nine-path seam, not integrated or committed | Original fresh normal29839 and whole-native ASan/UBSan16714 both terminal0:168,404 / 63 each, including11 observer cases. Actual48-TU/dependency/archive/link audits and428-source/446-normal or447-sanitizer-input before/after checks pass; root independently rechecks both audits | Native warning policy unchanged/helper12strict; external libraries uninstrumented, leaks disabled only. Observer events do not bound prior native extraction allocation or establish collector grammar, Complete/whole-graph, filter, application/qmake or activation acceptance |
+| 2026-10-13 | P5 neutral DXF inventory collector | In progress | Frozen private `librecad-dxf-inventory.AccI1m`; four-path source-only proposal | Root reads the complete1,021-line delta and nine authored cases. Tiny modern source grammar accounts for callback-less SEQEND; DXF rows stay separate from DWG rows. Source review requires temporary-alias byte preflight before allocation | Separate successor requested; unbuilt/unrun. Complete inventory must not imply unique carrier ownership or DXF Carrier Known. Full tables/blocks/embedded bodies and Carrier adaptation remain pending |
+| 2026-10-13 | P5 DXF inventory allocation preflight repair | In progress | Frozen private `librecad-dxf-inventory-preflight.zWvzRh`; two-path successor, source only | Root and independent peer approve direct borrowed-value sizing before owning copies and native appData alias allocation. Complete429-source identities verify; ten authored cases include actual2,048-value/reactor N and N−1 limits | Unbuilt/unrun; fresh normal/sanitizer driver under preparation. Existing DWG helpers are unchanged. Neutral DXF Complete is not Carrier Known or unique ownership; footer-alias rejection remains a future Carrier-adaptation gate |
 | 2026-10-12 | P5 current STYLE catalog materialization | In progress | Frozen private `librecad-style-materialize.7PRrg9`; ten-path source-only proposal, not integrated or built | Complete root/peer source review requires changes for old-name fallback resurrection and independent header/legacy/dimension references. Sealed original catalog follows the live style list; one detached current emission plan resolves body and outer references independently | Separate source successor required. Header ABI changed: no old Tp archive acceptance. Add matching registrations, exact fixture assets/actual STYLE records and reviewed unsafe/paint repair before fresh coherent builds. No full STYLE history wire graph, carrier/loaded restoration or activation |
+| 2026-10-13 | P5 current STYLE consumer successor | In progress | Frozen private `librecad-style-successor.HcEKWL`; fourteen cumulative paths, source only | Root and independent peer approve the bounded source successor; all5,856 source paths/hashes verify. Pre-open legacy/dimension/header checks prevent stale aliases; literal regressions retain DXF/DWG actual STYLE references and prior-file preservation | Unbuilt/unrun. Combine full inherited letters prerequisites and reviewed unsafe/paint repair, register catalog sources/tests, and rebuild all matching ABI consumers. Outer-only opaque-profile unchanged-save policy and full carrier remain pending |
+| 2026-10-13 | P4/P5 coherent STYLE and letters assembly | In progress | Frozen private `librecad-style-letters-combined.GYQ5Hq`; nineteen-path delta from Hc, source only | Root/peer approve complete2,674-line source delta and closure; all5,862 source identities verify. Full seventeen-path letters prerequisite union, catalog registrations and committed canonical scope test are included; all fourteen Hc-owned files remain exact | Unbuilt/unrun. Application-plus35-target driver held for a distinct reviewed host-common successor; both after-checks must run independently on failure. No stale ABI archive, allocator duplication, activation or completion claim |
 
 For every executed check, record its exact command and filters, exit status,
 result/test count, tested revision and candidate-tree state, build configuration,
@@ -2547,8 +2552,43 @@ precompiler path/source audit,36 fresh native compilations, exact archive,
 no-op dependency recheck and complete source/input checks0. It builds only the
 native library, not the application. `ROOT_RESULTS.md` retains all lane and
 artifact identities. The exact eight source/build paths plus this plan are
-ready for a scoped checkpoint; full filter/carrier/STYLE/history, activation,
+committed as `54d5adb7fe55cf32f26ab52851e68a81af096c77`. Root independently
+checks the parent, exact nine committed paths, every tested source blob and the
+reviewed plan identity; the index is empty and unrelated WIP remains unstaged.
+Full filter/carrier/STYLE/history, activation,
 DWG/pre2018, whole application and the broader finding remain open.
+
+### Native verified writer checkpoint
+
+The bounded source `/private/tmp/librecad-native-verified-checkpoint.JjaoZf`
+is an actual archive of54d5 plus only five native API files, thirteen CMake
+registration lines and an independent154-line LINE test. Its complete5,834-file
+manifest is `254174ca4e7581da5b50732d8fa151ad3cd4eff9954123c0ce221922000a4e2b`.
+Root and peer approve the full source/test/registration. Pre-run evidence review
+tightens exact unique source sets, approved dependency paths and unconditional
+terminal checks; the original unexecuted scripts remain preserved separately.
+
+Original ON22725/OFF97138/ASan42247 all close0, each279 / 3 plus registered
+CTest. All36 native and two strict test/helper TUs compile freshly; exact source
+sets, flags,88 private compiler dependencies, native archive membership and
+link checks pass. ASan/UBSan instruments all38 project TUs and link at O1/g
+with frame pointers; actual binary imports42 ASan/13 UBSan symbols and links
+the ASan runtime. External libraries remain uninstrumented; leak detection
+alone is disabled, with no suppression or allocator override. Nested owned
+qmake74039 closes0 with exact36 source/compile/archive checks and a no-op
+dependency recheck. All complete source and six direct-input before/after
+checks pass; no build or test lane is retried.
+
+The actual native LINE callback rereads DWG2013/2018 and ASCII/binary
+DXF2013/2018 before publication. Acceptance, rejection/throw cleanup and
+prior-file preservation, same-writer rejected retry then ordinary write, null
+verifier/interface, invalid version and throwing emission are covered.
+Ordinary write remains unchecked; verifier context is not sticky. Callback
+stage mutation/reentry is excluded, and DTO/interface side effects are not
+rolled back. This checkpoint does not establish complete payload/graph/current
+authority, application/Windows, filter two-pass save, Arabic activation or P5
+completion. Exact lane commands, logs and archive identities remain in
+`ROOT_RESULTS.md` under the checkpoint directory.
 
 ### Private parser-backed DWG inventory validation
 
@@ -2855,6 +2895,28 @@ not reused Tp objects. A separately frozen successor must add the missing exact
 external fixture assets, actual STYLE records for modern-positive scope tests,
 build registrations and the independently reviewed unsafe-grouping repair.
 
+The separate successor `/private/tmp/librecad-style-successor.HcEKWL` has
+fourteen cumulative paths versus Tp and seven paths versus7PR. Immediate patch
+SHA256 is `93e17f5ab70098adfe01444c1ed735647f01ade3a28b769114bfb64f42502024`;
+complete5,856-file manifest is
+`2dbf26138afa7fa8dafb202d057ddc41b2127051f38fd2f830d97a1a82208158`.
+Root and independent peer approve its bounded source changes; independent
+complete path/hash checks pass. Only successfully prepared sealed modern hosts
+and proved deleted-owner attributes bypass legacy font-name synthesis. Root/
+block TEXT/MTEXT/plain ATTRIB, dimension overrides/definitions and explicit
+`$TEXTSTYLE`/`$DIMTXSTY` consumers are checked before opening the destination;
+unsupported old-name references refuse instead of guessing a remap. The final
+fallback independently excludes catalog-owned original names.
+
+The source-only tests cover actual DXF2018/DWG2018 body/outer STYLE references,
+five mixed legacy-consumer refusals, nonfirst-header rename/removal refusals and
+new typed STYLE handle consumption by ordinary TEXT in DWG2013/2018. Scope
+fixtures now contain actual STANDARD STYLE records; all three external assets
+match the committed checkpoint byte for byte. No compiler or runtime has
+validated this ABI-changing successor. Its combined tree must explicitly add
+the full inherited letters prerequisites, unsafe/paint repair and catalog
+registrations, not only overlay the latest eight-path letters patch.
+
 The independent external fixture also exposes a separate preservation policy
 gap: an opaque profile on the outer ATTRIB with an absent body profile is
 correctly Unavailable, but the blanket current-profile save guard rejects an
@@ -2865,9 +2927,11 @@ current common attributes match an owned import baseline. Existing history
 does not retain that complete common-attribute baseline; ordinary import
 normalizes `BYLAYER` to `ByLayer`, so exact whole-DTO equality conservatively
 refuses typical unchanged input. An explicit baseline extension and target
-reread proof remain pending; no exception is implemented or authorized by this
-record. Profile Replace/Remove must not acquire durable authority merely from
-an unchanged outer capsule; full carrier restoration remains separate.
+reread proof remain pending. A separate source-only prototype is authorized
+after root review of actual import/common/export paths; no exception is yet
+implemented, integrated or validated. Profile Replace/Remove must not acquire
+durable authority merely from an unchanged outer capsule; full carrier
+restoration remains separate.
 
 ### STYLE provenance and ownership validation
 

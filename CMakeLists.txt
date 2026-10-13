@@ -3541,6 +3541,19 @@ if (BUILD_TESTS)
     endif()
     add_test(NAME libdxfrw_dxf_embedded_scope_tests
         COMMAND libdxfrw_dxf_embedded_scope_tests)
+    # Explicit per-call verified writes are independent of model/carrier code.
+    add_libdxfrw_fast_test(libdxfrw_verified_write_tests
+        librecad/src/lib/filters/tests/dwg_dxf_verified_write_tests.cpp)
+    target_include_directories(libdxfrw_verified_write_tests PRIVATE
+        libraries/libdxfrw/tests/fuzz)
+    target_compile_definitions(libdxfrw_verified_write_tests PRIVATE
+        LC_VERIFIED_STAGE_TEST_ROOT="${CMAKE_CURRENT_BINARY_DIR}")
+    if(NOT MSVC)
+        target_compile_options(libdxfrw_verified_write_tests PRIVATE
+            -Wall -Wextra -Werror -pedantic)
+    endif()
+    add_test(NAME libdxfrw_verified_write_tests
+        COMMAND libdxfrw_verified_write_tests)
     add_libdxfrw_fast_test(libdxfrw_slow_tests
                            ${LIBDXFRW_SLOW_DWG_TEST_SOURCES})
 

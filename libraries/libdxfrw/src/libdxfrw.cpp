@@ -1444,7 +1444,21 @@ void dxfRW::resetDxfWriteSession() {
     m_leftOut.clear();
 }
 
-bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) try {
+bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
+    return writeImpl(interface_, ver, bin, nullptr, nullptr);
+}
+
+bool dxfRW::writeVerified(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                         DRW_StagedFileVerifier verifier, void* context) {
+    if (!verifier) {
+        error = DRW::BAD_OPEN;
+        return false;
+    }
+    return writeImpl(interface_, ver, bin, verifier, context);
+}
+
+bool dxfRW::writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                     DRW_StagedFileVerifier verifier, void* context) try {
     if (!isSupportedDxfWriteVersion(ver)) {
         error = DRW::BAD_VERSION;
         return false;
@@ -1611,7 +1625,7 @@ bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) try {
     writer.reset();
     if (!isOk)
         return failWrite();
-    if (!output.commit())
+    if (!(verifier ? output.commitVerified(verifier, context) : output.commit()))
         return failWrite();
     return true;
 }
