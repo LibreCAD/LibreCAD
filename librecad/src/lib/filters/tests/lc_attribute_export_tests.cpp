@@ -592,6 +592,8 @@ bool setStoredMTextColumnType(RS_Entity& text, const int type) {
 const std::vector<std::uint8_t> kScaleData{0x01, 0x7F, 0xFE};
 constexpr std::uint16_t kScaleDataShort = 0x72;
 const char* const kScaleApplication = "LC_SCALE_APP";
+// The handle of the application ACAD, which is the same in every DWG.
+constexpr std::uint32_t kAcadApplication = 0x14u;
 // What an export says when it left such data out, or a column layout, which
 // is kept and left out by the same rule.
 const char* const kScaleDataLeftOut = "annotation scale or column data of 1 multi-line attribute(s)";
@@ -626,6 +628,7 @@ constexpr int kMTextTransparency = 0x03000080;
 struct AttributeDwgSource : lc::test::NullDrwInterface {
     double m_angle = 0.0;                   // of the text, in radians
     bool m_dataNamesNoApplication = false;  // the data names a handle that no record of the file has
+    bool m_dataNamesAcad = false;           // the data names ACAD, not the application of its own
     bool m_references = false;              // no scale data: a layer, a text style and the references
     std::uint32_t m_scaleApplication = 0;   // after write(): the handle of LC_SCALE_APP in the file
     std::uint32_t m_layer = 0;              // with references: the handle of the layer in the file
@@ -735,7 +738,13 @@ struct AttributeDwgSource : lc::test::NullDrwInterface {
             mtext.m_r2018IsNotAnnotative = false;
             mtext.m_r2018AnnotativeData = kScaleData;
             mtext.m_r2018AnnotativeUnknown = kScaleDataShort;
-            mtext.m_r2018AnnotativeAppHandle = m_dataNamesNoApplication ? 0x7F0u : m_scaleApplication;
+            mtext.m_r2018AnnotativeAppHandle = m_scaleApplication;
+            if (m_dataNamesNoApplication) {
+                mtext.m_r2018AnnotativeAppHandle = 0x7F0u;
+            }
+            else if (m_dataNamesAcad) {
+                mtext.m_r2018AnnotativeAppHandle = kAcadApplication;
+            }
         }
         insert.attlist.push_back(std::move(attribute));
         m_insertWritten = m_writer->writeInsert(&insert);
@@ -2633,6 +2642,33 @@ TEST_CASE("an untouched annotative attribute keeps its scale data in DWG 2018",
             }
         }
     }
+
+    // The data can name ACAD, the application every drawing has. A save
+    // leaves that record to libdxfrw, which gives it the handle it has in
+    // every DWG: the data names it by that handle and is kept.
+    AttributeDwgSource source;
+    source.m_dataNamesAcad = true;
+    const std::filesystem::path file = bench.m_out.file("acad_source.dwg");
+    source.write(file);
+    {
+        DwgContent content;
+        readDwg(file, content);
+        REQUIRE(handleNamed(content.m_applications, "ACAD") == kAcadApplication);
+        REQUIRE(onlyEmbeddedMText(content).m_r2018AnnotativeAppHandle == kAcadApplication);
+    }
+    EditableDrawing drawing;
+    REQUIRE(lc::test::importDrawing(drawing.m_graphic, file, RS2::FormatDWG2018));
+    const Saved saved = saveWithReport(bench, drawing, "acad", target("dwg2018"));
+    DwgContent written;
+    readDwg(saved.m_file, written);
+    const DRW_MText& mtext = onlyEmbeddedMText(written);
+    CHECK(mtext.m_r2018AnnotativeData == kScaleData);
+    CHECK(mtext.m_r2018AnnotativeUnknown == kScaleDataShort);
+    CHECK_FALSE(mtext.m_r2018IsNotAnnotative);
+    CHECK(handleNamed(written.m_applications, "ACAD") == kAcadApplication);
+    CHECK(mtext.m_r2018AnnotativeAppHandle == kAcadApplication);
+    CAPTURE(saved.m_report);
+    CHECK(saved.m_report.find("annotation scale") == std::string::npos);
 }
 
 TEST_CASE("annotative attribute data that names no application of the drawing is left out",
