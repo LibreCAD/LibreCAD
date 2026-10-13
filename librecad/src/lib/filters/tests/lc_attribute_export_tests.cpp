@@ -2433,8 +2433,8 @@ TEST_CASE("copies of a block reference and its text stay pairs when one of the t
         CHECK(kept->isDeleted() == false);
         CHECK(drawing.live<RS_Insert>(RS2::EntityInsert).size() == (row.m_textLocked ? 2u : 3u));
 
-        const RS_Insert* far = referenceAt(drawing, 100);
-        CHECK(lineText(drawing, "first", 101.0)->ownerLineage() == far->lineage());
+        const RS_Insert* second = referenceAt(drawing, 100);
+        CHECK(lineText(drawing, "first", 101.0)->ownerLineage() == second->lineage());
         // The clones of the text have one value; a value of its own for each
         // shows in every format which block reference has which.
         drawing.edit(lineText(drawing, "first", 51.0), [](RS_Text& text) { text.setText("near"); });
