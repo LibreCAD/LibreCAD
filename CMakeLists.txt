@@ -2698,6 +2698,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/lc_dxf_reopen_dwg_export_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_shape_name_tests.cpp
         librecad/src/lib/filters/tests/lc_export_commit_tests.cpp
+        librecad/src/lib/filters/tests/lc_attribute_export_tests.cpp
         librecad/src/lib/filters/tests/dxf_closed_spline_tests.cpp
         librecad/src/lib/filters/tests/jww_import_tests.cpp
         librecad/src/lib/filters/tests/byte_identity_harness.cpp
@@ -2835,6 +2836,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/datastorage_tests.cpp
         librecad/src/main/tests/lc_consolesvgexporttests.cpp
         librecad/src/lib/filters/tests/lc_export_commit_tests.cpp
+        librecad/src/lib/filters/tests/lc_attribute_export_tests.cpp
     )
     qt_add_executable(librecad_fast_tests
         EXCLUDE_FROM_ALL
@@ -2965,6 +2967,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
         librecad/src/lib/filters/tests/dxf_string_codec_tests.cpp
         librecad/src/lib/filters/tests/entity_metadata_tests.cpp
+        librecad/src/lib/filters/tests/lc_attribute_export_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_r2007_codepage_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_reopen_dwg_export_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_shape_name_tests.cpp
