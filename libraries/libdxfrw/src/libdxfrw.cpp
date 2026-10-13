@@ -4798,14 +4798,22 @@ bool dxfRW::writeTable(DRW_Table *ent){
 // Chunk on UTF-8 codepoint boundaries so a multi-byte character (or its
 // codepage/DBCS encoding, or a \U+/\M+ escape) is never split across the
 // group-3/group-1 records. Encoded per-codepoint chunks stay <=250 bytes.
+// A caret code (^I, ^J, "^ ") is one character of the text as well: its caret
+// stays in the group of the character after it.
 void dxfRW::writeMTextContent(const std::string& utf8) {
+    const auto codePointLength = [&utf8](std::size_t at) {
+        const unsigned char c = static_cast<unsigned char>(utf8[at]);
+        const std::size_t n = (c < 0x80) ? 1 : ((c >> 5) == 0x6) ? 2
+                            : ((c >> 4) == 0xE) ? 3 : ((c >> 3) == 0x1E) ? 4 : 1;
+        return std::min(n, utf8.size() - at);
+    };
     std::vector<std::string> chunks;
     std::string cur;
     for (std::size_t p = 0; p < utf8.size(); ) {
-        unsigned char c = static_cast<unsigned char>(utf8[p]);
-        std::size_t cl = (c < 0x80) ? 1 : ((c >> 5) == 0x6) ? 2
-                       : ((c >> 4) == 0xE) ? 3 : ((c >> 3) == 0x1E) ? 4 : 1;
-        if (p + cl > utf8.size()) cl = utf8.size() - p;
+        std::size_t cl = codePointLength(p);
+        // Carets pair from the left: of "^^" the second is the character.
+        if (utf8[p] == '^' && p + cl < utf8.size())
+            cl += codePointLength(p + cl);
         std::string enc = writer->fromUtf8String(utf8.substr(p, cl));
         if (!cur.empty() && cur.size() + enc.size() > 250) {
             chunks.push_back(cur);

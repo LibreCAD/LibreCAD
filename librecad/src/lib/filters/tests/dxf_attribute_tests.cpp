@@ -3705,6 +3705,128 @@ TEST_CASE("DXF ATTRIB writes the embedded MTEXT as ezdxf and AutoCAD read it",
   }
 }
 
+TEST_CASE("DXF MTEXT content is not cut inside a caret code",
+          "[dxf][mtext][attrib][embedded-mtext]") {
+  // A caret and the character after it (^I, ^J, "^ ") are one character of
+  // the text. AutoCAD and ezdxf never end a group 3 on the caret: a reader
+  // may decode each group on its own.
+  struct Case {
+    const char *name;
+    std::string text;
+  };
+  const Case cases[] = {
+      {"tab", std::string(249, 'a') + "^Itail"},
+      {"caret", std::string(249, 'x') + "^ 2 more"},
+      {"two_carets", std::string(248, 'a') + "^^Itail"},
+      {"two_chunks",
+       std::string(249, 'a') + "b" + std::string(249, 'c') + "^Jend"},
+  };
+
+  // The values of groups 3 and 1 of the first `recordName` record, from the
+  // group with the value `marker` on (from the start without one). Blanks
+  // are kept: they are text.
+  const auto textGroups = [](const std::filesystem::path &path,
+                             const std::string &recordName,
+                             const std::string &marker) {
+    const auto trim = [](std::string token) {
+      if (!token.empty() && token.back() == '\r')
+        token.pop_back();
+      const std::size_t first = token.find_first_not_of(" \t");
+      return first == std::string::npos ? std::string() : token.substr(first);
+    };
+    std::ifstream in(path);
+    std::string codeLine, value;
+    std::vector<std::string> values;
+    bool inRecord = false;
+    bool afterMarker = false;
+    while (std::getline(in, codeLine) && std::getline(in, value)) {
+      if (!value.empty() && value.back() == '\r')
+        value.pop_back();
+      const std::string code = trim(codeLine);
+      if (code == "0") {
+        if (inRecord)
+          break;
+        inRecord = trim(value) == recordName;
+        afterMarker = inRecord && marker.empty();
+        continue;
+      }
+      if (inRecord && !afterMarker)
+        afterMarker = value == marker;
+      else if (inRecord && (code == "3" || code == "1"))
+        values.push_back(value);
+    }
+    return values;
+  };
+  // Carets pair from the left: of "^^" the second is the character.
+  const auto endsOnCaret = [](const std::string &value) {
+    bool open = false;
+    for (const char c : value)
+      open = !open && c == '^';
+    return open;
+  };
+  const auto checkChunks = [&](const std::vector<std::string> &chunks,
+                               const std::string &text) {
+    REQUIRE(chunks.size() >= 2);
+    std::string joined;
+    for (std::size_t i = 0; i < chunks.size(); ++i) {
+      CAPTURE(i, chunks[i]);
+      CHECK(chunks[i].size() <= 250);
+      CHECK_FALSE(endsOnCaret(chunks[i]));
+      joined += chunks[i];
+    }
+    CHECK(joined == text);
+  };
+
+  for (const Case &c : cases) {
+    CAPTURE(c.name);
+
+    // The MTEXT of a multi-line attribute.
+    DRW_Attrib attrib;
+    attrib.tag = "LABEL";
+    attrib.text = "fallback";
+    attrib.basePoint = DRW_Coord(1.0, -5.0, 0.0);
+    attrib.height = 9.0;
+    attrib.mtext = std::make_unique<DRW_MText>();
+    attrib.mtext->basePoint = DRW_Coord(1.0, 4.0, 0.0);
+    attrib.mtext->height = 9.0;
+    attrib.mtext->text = c.text;
+    const std::string attribName =
+        std::string("lc_attrib_caret_") + c.name + ".dxf";
+    const auto attribPath = writeOnlyAttrib(attrib, attribName.c_str());
+    checkChunks(textGroups(attribPath, "ATTRIB", "Embedded Object"), c.text);
+    const DRW_Attrib att = readOnlyAttrib(attribPath);
+    std::filesystem::remove(attribPath);
+    REQUIRE(att.mtext);
+    CHECK(att.mtext->text == c.text);
+
+    // An MTEXT of its own, in a format of 2018 and in an older one.
+    for (const DRW::Version version : {DRW::AC1032, DRW::AC1015}) {
+      CAPTURE(static_cast<int>(version));
+      const auto path = std::filesystem::temp_directory_path() /
+          (std::string("lc_mtext_caret_") + c.name + ".dxf");
+      std::filesystem::remove(path);
+      MTextEmitter em;
+      em.m_mtext.layer = "0";
+      em.m_mtext.height = 1.0;
+      em.m_mtext.text = c.text;
+      {
+        dxfRW w(path.string().c_str());
+        em.m_rw = &w;
+        REQUIRE(w.write(&em, version, false));
+      }
+      checkChunks(textGroups(path, "MTEXT", std::string()), c.text);
+      MTextCapture cap;
+      {
+        dxfRW r(path.string().c_str());
+        REQUIRE(r.read(&cap, /*ext=*/true));
+      }
+      std::filesystem::remove(path);
+      REQUIRE(cap.m_callCount == 1);
+      CHECK(cap.m_captured.text == c.text);
+    }
+  }
+}
+
 // image-wipeout-71: DXF code 71 (clip boundary type) was not stored by
 // DRW_Image::parseCode.  After the fix, code 71 in IMAGE and WIPEOUT entities
 // is captured in DRW_Image::m_clipBoundaryType.  Also verifies that
