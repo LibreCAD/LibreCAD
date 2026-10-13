@@ -2639,6 +2639,7 @@ if (BUILD_TESTS)
         librecad/src/cmd/tests/rs_commands_tests.cpp
         librecad/src/lib/engine/undo/tests/rs_undo_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/lc_attrib_embedded_mtext_dwg_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_handseed_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_app_vars_tests.cpp
@@ -2811,6 +2812,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/lc_attrib_embedded_mtext_dwg_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_app_vars_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_handseed_tests.cpp
@@ -2868,6 +2870,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/lc_attrib_embedded_mtext_dwg_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_app_vars_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_handseed_tests.cpp
@@ -3129,6 +3132,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/lc_attrib_embedded_mtext_dwg_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_handseed_tests.cpp
         librecad/src/lib/filters/tests/dynblock_tests.cpp

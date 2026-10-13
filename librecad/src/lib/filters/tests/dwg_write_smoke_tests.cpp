@@ -8078,6 +8078,8 @@ public:
     mtext->interlin = 1.0;
     mtext->text = value;
     mtext->m_r2018IsNotAnnotative = true;
+    // An attribute has no place for this bit; it must not leak into the
+    // fields that follow the MTEXT.
     mtext->m_r2018ReallyLocked = true;
     mtext->m_r2018AppIdHandle = 0x14u;
     mtext->m_r2018AnnotativeData = {0x01, 0x7F, 0xFE};
@@ -16948,7 +16950,7 @@ TEST_CASE("dwgRW round-trips AC1032 INSERT ATTRIB ownership",
   CHECK(insert.attlist.front()->keepDuplicateRecords == 0);
   REQUIRE(insert.seqendH.ref != DRW::NoHandle);
   REQUIRE(insert.attlist.front()->mtext != nullptr);
-  CHECK(insert.attlist.front()->mtext->m_r2018ReallyLocked);
+  CHECK_FALSE(insert.attlist.front()->mtext->m_r2018ReallyLocked);
   CHECK(insert.attlist.front()->mtext->m_r2018AppIdHandle == 0x14u);
   CHECK(insert.attlist.front()->mtext->styleH.ref == 0x13u);
   CHECK(insert.attlist.front()->mtext->m_r2018AnnotativeData ==
@@ -16965,7 +16967,9 @@ TEST_CASE("dwgRW round-trips AC1032 INSERT ATTRIB ownership",
   CHECK(insert.attlist.front()->mtext->hasDwgAcDbColorHandle());
   CHECK(insert.attlist.front()->mtext->dwgAcDbColorHandle() == 0x35u);
   CHECK(insert.attlist.front()->mtext->ltypeScale == Catch::Approx(1.25));
-  CHECK(insert.attlist.front()->mtext->lineType.empty());
+  // 0x3C and 0x3D are no layer and no linetype of this drawing, so the MTEXT
+  // is on the attribute's layer and takes the linetype from it.
+  CHECK(insert.attlist.front()->mtext->lineType == "BYLAYER");
   CHECK_FALSE(insert.attlist.front()->mtext->visible);
   CHECK(insert.attlist.front()->mtext->lWeight == DRW_LW_Conv::width05);
   CHECK(insert.attlist.front()->mtext->material == 0x36u);
@@ -16975,8 +16979,9 @@ TEST_CASE("dwgRW round-trips AC1032 INSERT ATTRIB ownership",
   CHECK(insert.attlist.front()->mtext->fullVisualStyleHandle == 0x39u);
   CHECK(insert.attlist.front()->mtext->faceVisualStyleHandle == 0x3Au);
   CHECK(insert.attlist.front()->mtext->edgeVisualStyleHandle == 0x3Bu);
-  CHECK(insert.attlist.front()->mtext->dwgLayerHandle() == 0x3Cu);
-  CHECK(insert.attlist.front()->mtext->dwgLinetypeHandle() == 0x3Du);
+  CHECK(insert.attlist.front()->mtext->dwgLayerHandle() ==
+        insert.attlist.front()->dwgLayerHandle());
+  CHECK(insert.attlist.front()->mtext->dwgLinetypeHandle() == 0u);
   CHECK(insert.attlist.front()->text == "line 1");
   CHECK(insert.attlist.front()->mtext->text == "line 1\\Pline 2");
 
@@ -29123,7 +29128,7 @@ TEST_CASE("RS_FilterDXFRW receives AC1032 INSERT ATTRIB content",
   const DRW_MText &exportedMText =
       *exportedRead.m_inserts.front().attlist.front()->mtext;
   CHECK(exportedMText.m_r2018IsNotAnnotative);
-  CHECK(exportedMText.m_r2018ReallyLocked);
+  CHECK_FALSE(exportedMText.m_r2018ReallyLocked);
   CHECK(exportedMText.m_r2018AppIdHandle == 0x14u);
   CHECK(exportedMText.m_r2018AnnotativeData ==
         std::vector<std::uint8_t>{0x01, 0x7F, 0xFE});
@@ -29153,6 +29158,63 @@ TEST_CASE("RS_FilterDXFRW receives AC1032 INSERT ATTRIB content",
 
   std::remove(path.c_str());
   std::remove(exportedPath.c_str());
+}
+
+TEST_CASE("RS_FilterDXFRW exports an AutoCAD-form multi-line attribute",
+          "[dxf-write][filter-roundtrip][attrib][ac1032]") {
+  ensureQtSettings();
+  // Written by the ODA File Converter, in the form AutoCAD uses; see
+  // lc_attrib_embedded_mtext_dwg_tests.cpp.
+  const std::string sourcePath =
+      std::string(LIBRECAD_TEST_DIR) + "/lc_multiline_attrib_ac1032.dwg";
+  REQUIRE(std::filesystem::is_regular_file(sourcePath));
+  const std::string exportedPath =
+      tempPath("filter_autocad_form_multiline_attrib_r2018.dxf");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(sourcePath),
+                              RS2::FormatDWG));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(exportedPath),
+                              RS2::FormatDXFRW2018));
+  }
+
+  InsertAttributeRoundTripIface exported;
+  {
+    dxfRW reader(exportedPath.c_str());
+    const bool readOk = reader.read(&exported, /*ext=*/false);
+    INFO("DXF read error: " << reader.getError());
+    REQUIRE(readOk);
+  }
+  std::remove(exportedPath.c_str());
+
+  REQUIRE(exported.m_inserts.size() == 1);
+  const DRW_Attrib *multiLine = nullptr;
+  const DRW_Attrib *singleLine = nullptr;
+  for (const auto &attribute : exported.m_inserts.front().attlist) {
+    REQUIRE(attribute != nullptr);
+    if (attribute->tag == "ML_TAG")
+      multiLine = attribute.get();
+    else if (attribute->tag == "SL_TAG")
+      singleLine = attribute.get();
+  }
+  // The export replays what the import stored: 70 = 104 and 73 = 293 while
+  // the embedded MTEXT was not read in AutoCAD's form.
+  REQUIRE(multiLine != nullptr);
+  CHECK(multiLine->attribFlags == 0);
+  CHECK(multiLine->m_fieldLength == 0);
+  CHECK(multiLine->lockPosition);
+  CHECK(multiLine->m_attributeType == 2);
+  REQUIRE(multiLine->mtext != nullptr);
+  CHECK(multiLine->mtext->text == "value line 1\\Pvalue line 2");
+
+  REQUIRE(singleLine != nullptr);
+  CHECK(singleLine->text == "single value");
+  CHECK(singleLine->attribFlags == 8);
 }
 
 TEST_CASE("RS_FilterDXFRW preserves nested INSERT ATTRIB MTEXT XDATA",
@@ -29299,7 +29361,9 @@ TEST_CASE("RS_FilterDXFRW preserves nested INSERT ATTRIB MTEXT XDATA",
   CHECK(dwgMText.hasDwgAcDbColorHandle());
   CHECK(dwgMText.dwgAcDbColorHandle() == 0x35u);
   CHECK(dwgMText.ltypeScale == Catch::Approx(1.25));
-  CHECK(dwgMText.lineType.empty());
+  // Neither drawing has a layer 0x3C or a linetype 0x3D: the exported MTEXT
+  // is on the attribute's layer and takes the linetype from it.
+  CHECK(dwgMText.lineType == "BYLAYER");
   CHECK_FALSE(dwgMText.visible);
   CHECK(dwgMText.lWeight == DRW_LW_Conv::width05);
   CHECK(dwgMText.material == 0x36u);
@@ -29309,8 +29373,9 @@ TEST_CASE("RS_FilterDXFRW preserves nested INSERT ATTRIB MTEXT XDATA",
   CHECK(dwgMText.fullVisualStyleHandle == 0x39u);
   CHECK(dwgMText.faceVisualStyleHandle == 0x3Au);
   CHECK(dwgMText.edgeVisualStyleHandle == 0x3Bu);
-  CHECK(dwgMText.dwgLayerHandle() == 0x3Cu);
-  CHECK(dwgMText.dwgLinetypeHandle() == 0x3Du);
+  CHECK(dwgMText.dwgLayerHandle() ==
+        dwgReadIface.m_inserts.front().attlist.front()->dwgLayerHandle());
+  CHECK(dwgMText.dwgLinetypeHandle() == 0u);
 
   std::remove(path.c_str());
   std::remove(exportedPath.c_str());
