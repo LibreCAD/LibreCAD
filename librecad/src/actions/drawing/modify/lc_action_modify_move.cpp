@@ -96,7 +96,9 @@ void LC_ActionModifyMove::doTriggerSelectionUpdate(const bool keepSelected, cons
 }
 
 void LC_ActionModifyMove::doTriggerCompletion([[maybe_unused]] bool success) {
-    finish();
+    if (!m_actionData->createCopy) {
+        finish();
+    }
 }
 
 void LC_ActionModifyMove::onMouseMoveEventSelected(const int status, const LC_MouseEvent* e) {
