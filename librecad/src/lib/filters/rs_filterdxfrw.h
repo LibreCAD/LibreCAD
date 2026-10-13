@@ -2329,6 +2329,14 @@ public:
   //!   callers that may write either pass caretCodes = (m_dwgW == nullptr).
   static QString toDxfString(const QString &str, bool caretCodes = true);
   static QString toNativeString(const QString &data);
+  //! The value of a single-line text (TEXT, ATTRIB, ATTDEF). It has no MTEXT
+  //! markup: "\P", "\~" and "{\f...;}" are ordinary characters there, as in
+  //! the path "D:\PROJECTS\PLAN.dwg". Only the %%C, %%D and %%P symbols and
+  //! the caret codes of toDxfString() are converted, so a line feed is the
+  //! control character "^J" in an ASCII DXF value and itself in a DWG string.
+  static QString toDxfSingleLineString(const QString &str,
+                                       bool caretCodes = true);
+  static QString toNativeSingleLineString(const QString &data);
 
   /** Build an LC_SplinePoints from a DRW_Spline boundary edge of a hatch
    *  loop. Degrees 1, 2, and 3 all converge to a quadratic spline-points
