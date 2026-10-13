@@ -136,6 +136,33 @@ STYLE/ligature/paint-order findings, coherent fault/sanitizer gates, certified
 platform dependencies, packaged resources/licenses and independent Arabic
 visual review. Private work and historical failures are not promoted to passes.
 
+### CI portability repair: 2026-10-13
+
+The first hosted run of `e8521de01` exposes two compile failures before tests:
+[Headless ON](https://github.com/LibreCAD/LibreCAD/actions/runs/38449735668/job/115477246318)
+uses Qt 6.4's deferred `QStringBuilder`, whereas local Qt 6.11 accepted the
+stored `auto` concatenations; calls to `.size()` fail. Materialize all stored
+concatenations in the parser/bidi suites as `QString`, also avoiding references
+to expired temporary operands. Do not disable `QT_USE_QSTRINGBUILDER` or remove
+assertions. The separate
+[Linux format job](https://github.com/LibreCAD/LibreCAD/actions/runs/38449735224/job/115477245064)
+rejects the enum/integer conditional in the public layout-handle lookup under
+`-Wextra -Werror`; cast the existing `NoHandle` sentinel to the declared return
+type without changing its value or warning policy.
+
+Both original errors reproduce from immutable `e8521de01` sources in disposable
+Ubuntu 24.04/ARM64 with GCC 13.3, Qt 6.4.2 and the exact Catch2 3.8.1 gitlink.
+The corrected public header passes `-Wall -Wextra -Werror -pedantic` there.
+Incremental macOS ON18/18 and OFF16/16 pass with every assertion retained.
+Linux ON16/16 and OFF16/16 pass. With system HarfBuzz 8.3, the four certified
+installed-resource cases explicitly skip as designed; those skips are not
+certified-profile acceptance. Both previously failing format test translation
+units compile with their actual `-Wall -Wextra -Werror -pedantic` target flags.
+Linux format validation is compile-only; both format runtime suites pass on
+macOS. The unchanged Linux format core/full application is not rebuilt for this
+bounded correction. Hosted retries remain pending. No package or sanitizer
+acceptance is claimed; the primary dirty checkout is untouched.
+
 | Earlier assumption | Revised requirement |
 | --- | --- |
 | Four presentation forms plus lam–alef provide complete Arabic support | They are a limited fallback, not complete Amiri shaping; use the font's GSUB, GPOS and GDEF tables |
@@ -4070,6 +4097,8 @@ candidate. Reconcile source thread state separately from finding state.
 | Finding ID | Source feedback reference | Severity and location | Reviewed head and base | Required resolution | State | Fix commit and validation |
 | --- | --- | --- | --- | --- | --- | --- |
 | Populate before P7a | Link prepublication review records; retain PR comment/review identities when available | Import prepublication findings; add PR review findings as discovered | Retain original revisions | Apply the resolution and verification rules below | Record actual state | Link existing or new evidence |
+| P7-CI-QT64-001 | Headless ON job115477246318, run38449735668 | Mandatory CI portability; stored QString concatenations in parser/bidi tests | Published `e8521de01` | Materialize QString values, preserving deferred-builder compilation and every assertion; audit adjacent stored concatenations for temporary lifetimes | Locally verified; hosted retry pending | Original failure reproduced with GCC13.3/Qt6.4.2/Catch3.8.1. Corrected Linux ON16/16 and OFF16/16 pass; Mac ON18/18 and OFF16/16 pass. Four Linux registry cases explicitly skip for the non-certified system engine |
+| P7-CI-GCC-001 | Linux format job115477245064, run38449735224 | Mandatory strict compilation; public block-record layout handle lookup | Published `e8521de01` | Cast the existing NoHandle sentinel to uint32_t without changing lookup semantics or disabling warnings | Locally verified; hosted retry pending | Original GCC enum/integer error reproduced. Corrected header and both failing format test translation units compile with strict flags. Mac format runtime scope710/6 and verified279/3 pass; Linux full-format runtime not rerun |
 | P7-MASTER-INTEGRATION-001 | 2026-10-13 GitHub metadata and six local merge conflicts | Mandatory compatibility; MTEXT layout, tests and filter writer ownership | Published `c40da2c8c`, master `7a8d24ddf` | Retain current master's refined indentation/paragraph/width contracts while preserving source state, empty-line guards and both export cleanup mechanisms | Locally verified; hosted pending | Merge `ba1719dcc`; fresh native library/bidi/source/writer checks and qmake MTEXT compile pass after the width correction below; no whole-feature acceptance |
 | P5-WIDTH-RECONCILE-001 | Fresh merged native bidi suite at `ba1719dcc` | Mandatory compatibility; standalone MTEXT output width | Merge `ba1719dcc`, master `7a8d24ddf` | Validate the selected serialized width, not an invalid reference value deliberately replaced by master's measured-width fallback; keep strict ATTRIB width checks where raw width is actually emitted | Locally verified; hosted pending | Before: 1/84 native cases fails on infinity. After: complete bidi535,371/84 passes, with same-filter DXF/DWG fallback export/reopen for all existing samples; source1,065/14 and writer290/4 pass |
 | P7-CI-DISCOVERY-001 | Published workflow/test-registration audit | Mandatory CI correctness; unfiltered CTest invoked after building an incomplete executable list | Published `c40da2c8c`, master `8cd8b521b` | Build both registered scope/verified binaries and keep the format lane independent of optional font dependencies | Locally verified; hosted pending | Fresh ON format scope710/6 and verified279/3 pass; Linux/Windows build lists include both binaries and explicitly select OpenType OFF. Existing master SVG target retained |

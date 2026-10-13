@@ -81,7 +81,7 @@ public:
     std::uint32_t resolveBlockRecordLayoutHandle(std::uint32_t handle) const {
         auto it = blockRecordMap.find(handle);
         return (it != blockRecordMap.end()) ? it->second.layoutHandle
-                                            : DRW::NoHandle;
+                                            : static_cast<std::uint32_t>(DRW::NoHandle);
     }
     std::unordered_map<std::uint32_t, std::string> lineTypeNameMap;
     std::unordered_map<std::uint32_t, BlockRecordInfo> blockRecordMap;

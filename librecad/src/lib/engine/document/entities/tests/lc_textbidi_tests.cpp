@@ -145,7 +145,7 @@ TEST_CASE("Chinese RTL reverses Han runs but preserves numeric values",
   for (const QString &number : {QStringLiteral("123"), QStringLiteral("12.5"),
                                 QStringLiteral("1,234.56"), QStringLiteral("12/34"),
                                 QStringLiteral("CAD123")}) {
-    const auto input = chinese + number;
+    const QString input = chinese + number;
     CHECK(visualText(input, Qt::LeftToRight) == input);
     CHECK(visualText(input, Qt::LayoutDirectionAuto) == input);
     CHECK(visualText(input, Qt::RightToLeft) == number + reversed);
@@ -160,15 +160,15 @@ TEST_CASE("Chinese RTL reverses Han runs but preserves numeric values",
   }
   CHECK(visualText(chinese + QStringLiteral("\u4e00\u4e8c\u4e09"), Qt::RightToLeft) ==
         QStringLiteral("\u4e09\u4e8c\u4e00") + reversed);
-  const auto explicitLtr = QChar(0x2066) + chinese + "123" + QChar(0x2069);
+  const QString explicitLtr = QChar(0x2066) + chinese + "123" + QChar(0x2069);
   CHECK(visualText(explicitLtr, Qt::RightToLeft) == chinese + "123");
-  const auto nested = QStringLiteral("\u2066\u202a") + chinese + QChar(0x2069);
+  const QString nested = QStringLiteral("\u2066\u202a") + chinese + QChar(0x2069);
   const auto projected = lc::textbidi::directionalText(nested + chinese, Qt::RightToLeft);
   CHECK(projected.text.startsWith(nested + QStringLiteral("\u2067\u202e")));
-  const auto strayPdf = QString(QChar(0x2066)) + QChar(0x202c) + chinese + QChar(0x2069);
+  const QString strayPdf = QString(QChar(0x2066)) + QChar(0x202c) + chinese + QChar(0x2069);
   CHECK(lc::textbidi::directionalText(strayPdf, Qt::RightToLeft).text == strayPdf);
   const char32_t supplementary[] = {0x20000, 0xe0100, 0x20001};
-  const auto input = QString::fromUcs4(supplementary, 3) + "123";
+  const QString input = QString::fromUcs4(supplementary, 3) + "123";
   const auto clusters = lc::textbidi::visualClusters(input, Qt::RightToLeft);
   REQUIRE(clusters.size() == 5);
   CHECK(clusters[3].start == 4);
@@ -204,7 +204,7 @@ TEST_CASE("Bidi ordering is font-independent and preserves numeric runs",
 TEST_CASE("Chinese projection preserves explicit scope ownership and paragraph resets",
           "[textbidi][chinese][projection]") {
   const auto han = QStringLiteral("\u4e2d\u6587");
-  const auto wrappedHan = QStringLiteral("\u2067\u202e") + han +
+  const QString wrappedHan = QStringLiteral("\u2067\u202e") + han +
                           QStringLiteral("\u202c\u2069");
   const QString cases[] = {
       // PDF removes embeddings, never an isolate. Each PDI removes its most
@@ -451,7 +451,7 @@ TEST_CASE("Shaping levels precede L1 and do not invent levels for X9 joiners",
 TEST_CASE("Shaping analysis breaks context at empty and unmatched isolates",
           "[textbidi][shaping]") {
   for (char16_t isolate : {char16_t(0x2066), char16_t(0x2067), char16_t(0x2068)}) {
-    const auto input = QChar(0x0628) + QString(QChar(isolate)) +
+    const QString input = QChar(0x0628) + QString(QChar(isolate)) +
                        QChar(0x2069) + QChar(0x0628);
     const auto resolved = lc::qtbidi::resolveForShaping(input, Qt::LeftToRight);
     CHECK(resolved.shapingLevels.front() == 1);

@@ -229,7 +229,7 @@ TEST_CASE("Numeric MTEXT commands accept only an immediate optional semicolon", 
     const auto text = QString::fromUcs4(U"ب\U0001F600");
     for (const auto &example : examples) {
         for (const bool semicolon : {false, true}) {
-            const auto prefix = example.command + (semicolon ? QStringLiteral(";") : QString());
+            const QString prefix = example.command + (semicolon ? QStringLiteral(";") : QString());
             const auto document = Document::parse(prefix + text, options);
             INFO(document.source.toStdString());
             REQUIRE(document.paragraphs.size() == 1);
@@ -319,7 +319,7 @@ TEST_CASE("Incomplete numeric spellings stay literal and cannot swallow later co
                                  QStringLiteral("\\H1..5"), QStringLiteral("\\W2.3.4"), QStringLiteral("\\Q1e2.3"),
                                  QStringLiteral("\\C+5"), QStringLiteral("\\c-5"), QStringLiteral("\\H٢")}) {
         for (const bool semicolon : {false, true}) {
-            const auto spelling = malformed + (semicolon ? QStringLiteral(";") : QString());
+            const QString spelling = malformed + (semicolon ? QStringLiteral(";") : QString());
             const auto document = Document::parse(QStringLiteral("{") + spelling + QStringLiteral("}\\C2;ب"), mtextOptions());
             INFO(document.source.toStdString());
             CHECK(document.paragraphs.front().text == spelling + QStringLiteral("ب"));
@@ -343,7 +343,7 @@ TEST_CASE("Incomplete unsigned exponents recognize only active caret whitespace"
     options.initialStyle.obliqueDegrees = 12;
     for (const auto &command : {QStringLiteral("\\H1e"), QStringLiteral("\\W1E"), QStringLiteral("\\Q1e")}) {
         for (const char code : {'I', 'J', 'K', 'L', 'M'}) {
-            const auto caret = QStringLiteral("^") + QChar(code);
+            const QString caret = QStringLiteral("^") + QChar(code);
             const auto document = Document::parse(command + caret + QStringLiteral("\\C2;ب"), options);
             INFO(document.source.toStdString());
             const bool paragraphBreak = code == 'J' || code == 'M'; // Existing native caret policy.
@@ -563,7 +563,7 @@ TEST_CASE("Malformed commands cannot split valid scalars or consume another para
     checkProvenance(scalarDocument);
     for (const auto separator : {QChar(0x2028), QChar(0x2029), QChar('\n'), QChar('\r')}) {
         for (const QString &prefix : {QStringLiteral("\\Hbad"), QStringLiteral("\\f{bad"), QStringLiteral("\\"), QStringLiteral("^")}) {
-            const auto source = prefix + separator + QStringLiteral("ب;ج");
+            const QString source = prefix + separator + QStringLiteral("ب;ج");
             const auto document = Document::parse(source, mtextOptions());
             REQUIRE(document.paragraphs.size() == 2);
             CHECK(document.paragraphs.back().text == QStringLiteral("ب;ج"));
