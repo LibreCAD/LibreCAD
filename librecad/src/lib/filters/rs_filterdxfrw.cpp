@@ -6791,11 +6791,14 @@ RS_Vector singleLineFirstPointOffset(const QString &text, const QString &style,
 // its place as AutoCAD does: justification from the attachment point, group
 // 11 the MTEXT insertion point, group 10 the baseline left point. The MTEXT
 // is in WCS, the ATTRIB in its OCS. attrib.text, extPoint and widthscale
-// must be final.
+// must be final. shownValue is attrib.text as a reader shows it: a text of
+// one line, in which "\P", "\~" and a font in braces are characters with a
+// width.
 void setMultilineAttribPlacement(DRW_Attrib &attrib, const DRW_MText &mtext,
                                  const RS_MTextData &data,
                                  const InsertAttribSidecar &sidecar,
-                                 bool firstPointEdited) {
+                                 bool firstPointEdited,
+                                 const QString &shownValue) {
   const auto halign =
       static_cast<RS_TextData::HAlign>(static_cast<int>(data.halign));
   const auto valign =
@@ -6821,9 +6824,9 @@ void setMultilineAttribPlacement(DRW_Attrib &attrib, const DRW_MText &mtext,
   // from it either.
   if (!axes.world)
     return;
-  RS_Vector offset = singleLineFirstPointOffset(
-      RS_FilterDXFRW::toNativeString(QString::fromUtf8(attrib.text.c_str())),
-      data.style, data.height, attrib.widthscale, valign, halign);
+  RS_Vector offset =
+      singleLineFirstPointOffset(shownValue, data.style, data.height,
+                                 attrib.widthscale, valign, halign);
   offset.rotate(data.angle);
   attrib.basePoint.x += offset.x;
   attrib.basePoint.y += offset.y;
@@ -31330,12 +31333,20 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         const bool keepStored =
             embedsMText ? !textEdited || sidecar.value.empty()
                         : !textEdited && plain.isEmpty();
-        // A value read from a DWG may hold what a line of a DXF cannot.
+        // A value read from a DWG may hold what a line of a DXF cannot. The
+        // stored value is in the spelling of its file and goes out as it is;
+        // the line is a single-line value like that of any ATTRIB, in which
+        // a backslash of the text is a backslash and no code. Either is laid
+        // out below as the text of one line it stands for.
+        QString shownValue = plain;
         if (keepStored && (m_dwgW != nullptr || fitsDxfLine(sidecar.value))) {
           attrib.text = sidecar.value;
+          shownValue = toNativeSingleLineString(
+              QString::fromUtf8(sidecar.value.c_str()));
         } else {
-          attrib.text =
-              toDxfString(plain, m_dwgW == nullptr).toUtf8().toStdString();
+          attrib.text = toDxfSingleLineString(plain, m_dwgW == nullptr)
+                            .toUtf8()
+                            .toStdString();
         }
         attrib.height = data.height;
         attrib.style = mtext->style;
@@ -31343,9 +31354,10 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         // 71 only the two flags there are, backward and upside down.
         attrib.widthscale = sidecar.widthFactor;
         attrib.textgen = sidecar.textgen & 6;
-        // attrib.text is final here: the first point is laid out from it.
+        // attrib.text is final here: the first point is laid out from the
+        // text it stands for.
         setMultilineAttribPlacement(attrib, *mtext, data, sidecar,
-                                    firstPointEdited);
+                                    firstPointEdited, shownValue);
         if (m_dwgW != nullptr) {
           // The MTEXT refers to the text style and the layer of its
           // attribute by the handles they have in the file being written.
