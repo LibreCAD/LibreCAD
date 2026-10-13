@@ -142,7 +142,11 @@ QString externalFixture() {
 }
 QByteArray fixtureBytes() {
     QFile file(externalFixture()); REQUIRE(file.open(QIODevice::ReadOnly));
-    return file.readAll();
+    // A Windows checkout holds the fixture with CRLF line ends. The records
+    // that the tests replace are spelled with LF, as is the copy they write.
+    QByteArray bytes = file.readAll();
+    bytes.replace("\r\n", "\n");
+    return bytes;
 }
 void writeBytes(const QString &path, const QByteArray &bytes) {
     QFile file(path); REQUIRE(file.open(QIODevice::WriteOnly));
