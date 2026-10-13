@@ -796,6 +796,9 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-12 | P5 owned carrier framing and local graph checks | In progress | Frozen private proposal `librecad-embedded-carrier.FQfVV6`; not integrated or committed | Strict normal and whole-native-source O1 ASan/UBSan unfiltered suites each pass 147,724 / 38; typed DWG2013/2018 and ASCII/binary DXF2013/2018 transport included. Independent source review finds two local graph defects; literal before regression fails 26 / 2,819, both repaired. Final 421-file manifest and private dependency checks pass | Bounded carrier/value-stream and controlled-fixture links only. Complete inventory is a caller precondition; arbitrary drawing/raw-reference authority, actual filter consumption, target agreement, full root/current/STYLE restoration, atomic save and activation remain open |
 | 2026-10-12 | P5 carrier and observed-target admission | In progress | Frozen private proposal `librecad-carrier-admission.Sh5lLK`; not integrated or committed | Strict normal and whole-native-source O1 ASan/UBSan unfiltered suites each pass 166,588 / 44. Exact Top6, intended complete-envelope, absent/body/version/format and byte-budget negatives pass; six actual typed two-pass fixtures retain stable links and baseline. Complete source and additive test reviews approve; 423-file manifest checks pass | Known model access requires every local admission check. Fixture callback inventories deliberately remain Incomplete; actual whole-drawing inventory, filter consumption, STYLE/current/history restoration and atomic destination publication remain open |
 | 2026-10-12 | P5 immutable fresh embedded import history | In progress | Frozen private proposal `librecad-history-bounded.1y6GN1`; not integrated or committed | Strict normal, disabled-helper and whole-native-source O1 ASan/UBSan lanes each pass History 143 / 9, State 420 / 9, Current 331 / 10, model 102,708 / 13 and retained native 540 / 9. STYLE budget regression fails before and passes after preflight repair; root source review and frozen input checks approve | Fresh embedded ATTRIB only. Actual selective filter integration is separate; no loaded-carrier factory, STYLE catalog proof, saved-profile activation or application acceptance is established |
+| 2026-10-12 | P5 verified native destination publication seam | In progress | Frozen private proposal `librecad-verified-writers-reviewed.fZwPVN`; not integrated or committed | Independent source and evidence reviews approve explicit per-call verified DXF/DWG writes. Fresh strict normal and whole-native-source O1 ASan/UBSan each pass 175,314 / 56; actual DWG and ASCII/binary DXF2013/2018 accept/reject/throw/retry checks and all 424 source identities pass | Closed-stage rejection preserves the prior destination. Actual complete inventory, frozen current/STYLE/topology, both rereads, full intended payload, application integration and activation remain required |
+| 2026-10-12 | P5 actual DWG read-session inventory | In progress | Frozen private proposal `librecad-read-inventory.4jPCJ7`; not integrated or committed | Root source review approves the bounded 12-path seam. Fresh strict normal session 2826 configures and builds all 36 native TUs, then exits 2 on collector `typeid(*unique_ptr)` warnings; no test runs. All 426 source identities verify before/after. A separate reference-binding repair is authorized, not yet validated | DWG-only bounded common-link/dictionary inventory, not a universal body-reference graph. Corrected build/runtime, DXF observer/finalization, filter consumption, detached loaded restoration and save publication remain unfinished |
+| 2026-10-12 | P5 fresh embedded filter consumer | In progress | Original private proposal `librecad-history-consumer.w7hlpo`; separate narrow revision under review | Actual original ATTRIB capture, pre-collapse STYLE catalog, postconstructor history sealing and selective write preparation compile. Root and independent review identify a late profile-Replace refusal; revised pre-open guard and prior-file regression compile but have not run | Compile/source evidence only. Coherent registration/application/runtime validation, STYLE materialization, complete carrier and loaded restoration remain required; no wire acceptance or activation |
 
 For every executed check, record its exact command and filters, exit status,
 result/test count, tested revision and candidate-tree state, build configuration,
@@ -2375,6 +2378,51 @@ proposal. `HANDOFF.md`, `run-normal-full-limits.log`, `run-asan-full.log` and
 provenance, filter consumption, STYLE/current/history restoration and verified
 destination publication remain mandatory separate gates.
 
+### Private verified native publication boundary
+
+`/private/tmp/librecad-verified-stage.kWM8GZ` adds a synchronous read-only verifier
+after successful flush/close of the owned adjacent stage and before the existing
+platform replacement. A rejected or throwing verifier removes only the private
+stage. Independent review finds nested null-verifier reentry could abort the
+active outer stage; the actual before selector exits 42 with 2 / 8 failures.
+The guard-before-abort repair passes fresh strict normal and O1 ASan/UBSan,
+each 93 / 9. Its four-input manifest is
+`5ad0d3412481832e45fbd0055cff50a407ac7e9bfc667ba58ff850e4b568614c`.
+Original stream-exception-mask hardening and other platforms are not claimed.
+
+The separate frozen native consumer
+`/private/tmp/librecad-verified-writers-reviewed.fZwPVN` adds named
+`dxfRW::writeVerified` and `dwgRW::writeVerified` entry points. The verifier must
+be nonnull; its explicit context is per call. Neither is stored in the writer
+or added to its interface vtable. Ordinary writes keep their existing API. Verification runs
+after native finalization and writer destruction; invalid or failed writes do
+not invoke it. Encoding may mutate DTOs, so a filter must emit private copies;
+there is no live-document rollback or same-writer/interface reentrancy support.
+
+Fresh strict normal session 5018 and whole-native-source O1 ASan/UBSan session
+72404 each finish configure/build/unfiltered runtime/source checks with exit 0:
+175,314 assertions / 56 cases. Actual typed DWG2013/2018 and ASCII/binary
+DXF2013/2018 stages cover accept, reject, exception, prior-target preservation,
+cleanup, same-object retry, context changes and subsequent ordinary writes.
+Their callback inventories remain Incomplete: rereading alone does not admit
+a Known model. Independent audit verifies all 46 private project translation
+units and the sanitizer link, with external libraries uninstrumented, leaks
+disabled, no detector suppression and no allocator override. All 424 input
+hashes pass before/after both lanes.
+
+The complete source manifest is
+`2c7de760750d51ad8493e648d2a7223fe54bb990881c0293f55fe6849a0d283e`;
+the lossless ten-path patch is
+`b1704307c8a47941a0c8fd24fdbd2d9c60c53c6c7c5763496f86e3a629263eb7`.
+The original unbuilt Xxd90x patch omitted a trailing context line; its failed
+dry-run is an artifact-generation failure, not compiler evidence. Independent
+review also corrected one qualified test include before any compilation.
+`REVIEW_HANDOFF.md`, `run-lane.sh`, lane statuses and runtime logs retain these
+identities and the final evidence. Integrate additively with canonical101 and
+newer History/Current/filter revisions. Production two-pass freezing, complete
+parser-backed inventories, exact Top6 and intended complete-model agreement,
+coherent application acceptance and activation remain open.
+
 ### Private immutable fresh embedded import history
 
 The separately frozen proposal `/private/tmp/librecad-history-bounded.1y6GN1`
@@ -2715,13 +2763,19 @@ and prepared-block failure executables exiting 0. The native exhaustive process
 remains running in session 64685; its partial contexts are not a full pass.
 `/private/tmp/librecad-text-history.SZMJHz/current-fault-status.log` retains
 terminal status separately from progress diagnostics and original interrupted
-history. Fresh coherent OFF application/all-26-target, whole-private-source O1
-ASan/UBSan application/all-22-non-fault-target and qmake application lanes are
-running separately. The root driver is `run-root-lane.sh`, SHA256
+history. Fresh coherent OFF application and all 26 targets now build with exit
+0; all 22 non-fault suites pass unfiltered with 1,906,116 assertions / 306 cases,
+and both manifest checks pass. Original session 33916 finishes with exit 0;
+`root-off-status.log` and matching runtime logs preserve exact results. OFF
+builds the allocator executables but deliberately does not run those overrides.
+Whole-private-source O1 ASan/UBSan application/all-22-non-fault-target and qmake
+application lanes remain running separately. The root driver is
+`run-root-lane.sh`, SHA256
 `cf52ef04fbc7a23e662fcce6fe076f2b34f4cf41c7afd5960bec721861a4ae37`.
 Each lane preserves commands/statuses and manifest-before/after checks; no root
-lane runs an allocator override. Their results and the scoped source checkpoint
-remain Pending. This does not establish native explode or durable wire transport.
+lane runs an allocator override. The remaining lane results, exhaustive native
+fault result and scoped source checkpoint remain Pending. This does not
+establish native explode or durable wire transport.
 
 ### Private durable block repair validation
 
