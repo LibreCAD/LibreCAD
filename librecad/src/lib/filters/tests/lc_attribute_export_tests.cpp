@@ -411,8 +411,13 @@ void checkSameMText(const RS_MText& expected, const RS_MText& actual) {
     CHECK(actual.getAngle() == Catch::Approx(expected.getAngle()).margin(1e-9));
     CAPTURE(actual.getStyle().toStdString(), expected.getStyle().toStdString());
     CHECK(actual.getStyle().compare(expected.getStyle(), Qt::CaseInsensitive) == 0);
-    CHECK(actual.getMin().distanceTo(expected.getMin()) < 1e-6);
-    CHECK(actual.getMax().distanceTo(expected.getMax()) < 1e-6);
+    // A text with nothing to draw has no box, before and after.
+    CHECK(actual.getMin().valid == expected.getMin().valid);
+    CHECK(actual.getMax().valid == expected.getMax().valid);
+    if (expected.getMin().valid && expected.getMax().valid) {
+        CHECK(actual.getMin().distanceTo(expected.getMin()) < 1e-6);
+        CHECK(actual.getMax().distanceTo(expected.getMax()) < 1e-6);
+    }
 }
 
 // The groups of an untouched multi-line attribute that a save has to repeat.
@@ -1229,6 +1234,11 @@ TEST_CASE("an untouched multi-line attribute is written back as it was read",
         EditableDrawing reopened;
         REQUIRE(lc::test::importDrawing(reopened.m_graphic, direct, RS2::FormatDXFRW2018));
         checkSameMText(*imported, *only<RS_MText>(reopened, RS2::EntityMText));
+        // The file that LibreCAD wrote, opened and saved with nothing
+        // changed, repeats the source as well.
+        const auto again = save(bench, reopened, std::string(preset.m_name) + "_again", target("dxf2018"));
+        checkWrittenDxf(again);
+        checkRepeatsSource(source, again);
 
         // The same through a DWG: its content is read here as the drawing it
         // opens as, and as the DXF that drawing is saved to.
@@ -3664,6 +3674,453 @@ TEST_CASE("a standalone MTEXT is saved with the alignment and the direction and 
             CHECK(again->getLineSpacingFactor() == Catch::Approx(1.25).margin(1e-9));
             CHECK(again->getInsertionPoint().distanceTo(shown->getInsertionPoint()) < 1e-9);
         }
+    }
+}
+
+// The tools change one thing of a text at a time: the property sheet a
+// number or a choice, Move its place, Rotate its angle. The text editor can
+// change several in one step. Each time a changed clone takes the place of
+// the text. The cases below make such a change and save the drawing to every
+// format.
+
+namespace {
+
+// One change, and where a written DXF has it: the codes of the groups of the
+// attribute itself that follow the change, the codes of the groups of its
+// MTEXT that do, and what the MTEXT holds of the property afterwards.
+struct OneEdit {
+    const char* m_name;
+    std::function<void(RS_MText&)> m_change;
+    std::vector<int> m_own;
+    std::vector<int> m_mtext;
+    std::vector<std::pair<int, std::vector<std::string>>> m_written;
+    const char* m_plain = nullptr;      // of a change of the content: the new text on one line
+};
+
+// The groups of the attribute itself in a record, or those of its MTEXT, as
+// "code=value" in the order of the file, without the groups of some codes.
+std::vector<std::string> groupsWithout(const DxfRecord& record, const bool ofMText, const std::vector<int>& codes) {
+    const std::size_t at = record.embeddedAt();
+    const std::size_t first = ofMText ? at + 1 : 1;
+    const std::size_t last = ofMText ? record.m_groups.size() : at;
+    std::vector<std::string> groups;
+    for (std::size_t i = first; i < last; ++i) {
+        const lc::test::DxfGroup& group = record.m_groups[i];
+        if (std::find(codes.begin(), codes.end(), group.m_code) == codes.end()) {
+            groups.push_back(std::to_string(group.m_code) + "=" + group.m_value);
+        }
+    }
+    return groups;
+}
+
+} // namespace
+
+TEST_CASE("an edit of one property of a multi-line attribute is saved",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-edit]") {
+    const Bench bench("attr_edit_one");
+    const QString typed = QStringLiteral("    ABC\n\tDEF \u03a9");
+    // In an MTEXT a line break is "\P" and a tab "^I"; on one line each of
+    // them is a blank.
+    const std::string typedInMText = std::string("    ABC\\P^IDEF ") + kCapitalOmega;
+    const std::string typedOnOneLine = std::string("    ABC  DEF ") + kCapitalOmega;
+    const std::vector<OneEdit> edits{
+        {"text", [&](RS_MText& text) { text.setText(typed); }, {1}, {1}, {{1, {typedInMText}}}, typedOnOneLine.c_str()},
+        {"no_text", [](RS_MText& text) { text.setText(QString()); }, {1}, {1}, {{1, {""}}}, ""},
+        {"width", [](RS_MText& text) { text.setWidth(120.0); }, {}, {41}, {{41, {"120"}}}},
+        // The attribute itself is justified as its MTEXT is attached, and
+        // its first point is where the baseline of its value then starts.
+        {"right", [](RS_MText& text) { text.setHAlign(RS_MTextData::HARight); }, {10, 72}, {71}, {{71, {"3"}}}},
+        {"middle", [](RS_MText& text) { text.setVAlign(RS_MTextData::VAMiddle); }, {20, 74}, {71}, {{71, {"4"}}}},
+        {"spacing", [](RS_MText& text) { text.setLineSpacingFactor(1.25); }, {}, {44}, {{44, {"1.25"}}}},
+        // The setter is an overload of the getter.
+        {"exact", [](RS_MText& text) { text.getLineSpacingStyle(RS_MTextData::Exact); }, {}, {73}, {{73, {"2"}}}},
+        // A right-to-left text is written as left-to-right, with the note.
+        {"right_to_left", [](RS_MText& text) { text.setDrawingDirection(RS_MTextData::RightToLeft); }, {}, {72},
+         {{72, {"1"}}}},
+        {"place", [](RS_MText& text) { text.setInsertionPoint(RS_Vector(7.0, 8.0)); }, {10, 20, 11, 21}, {10, 20},
+         {{10, {"7"}}, {20, {"8"}}}},
+        // A rotated MTEXT has its direction as an x-axis, not as an angle.
+        {"angle", [](RS_MText& text) { text.setAngle(0.5); }, {10, 20, 50}, {11, 21, 31},
+         {{11, {QString::number(std::cos(0.5), 'g', 17).toStdString()}},
+          {21, {QString::number(std::sin(0.5), 'g', 17).toStdString()}},
+          {50, {}}}},
+        {"height", [](RS_MText& text) { text.setHeight(12.0); }, {20, 40}, {40}, {{40, {"12"}}}},
+        {"style", [](RS_MText& text) { text.setStyle("unicode"); }, {7}, {7}, {{7, {"unicode"}}}},
+        // The text editor changes several things in one step. Middle right
+        // is attachment point 6.
+        {"all_at_once",
+         [&](RS_MText& text) {
+             text.setText(typed);
+             text.setWidth(120.0);
+             text.setHAlign(RS_MTextData::HARight);
+             text.setVAlign(RS_MTextData::VAMiddle);
+             text.setLineSpacingFactor(1.25);
+             text.getLineSpacingStyle(RS_MTextData::Exact);
+             text.setDrawingDirection(RS_MTextData::RightToLeft);
+             text.setInsertionPoint(RS_Vector(7.0, 8.0));
+             text.setAngle(0.5);
+             text.setHeight(12.0);
+             text.setStyle("unicode");
+         },
+         {1, 7, 10, 20, 11, 21, 40, 50, 72, 74},
+         {1, 7, 10, 20, 11, 21, 31, 40, 41, 44, 71, 72, 73},
+         {{1, {typedInMText}},
+          {41, {"120"}},
+          {71, {"6"}},
+          {44, {"1.25"}},
+          {73, {"2"}},
+          {72, {"1"}},
+          {10, {"7"}},
+          {20, {"8"}},
+          {11, {QString::number(std::cos(0.5), 'g', 17).toStdString()}},
+          {21, {QString::number(std::sin(0.5), 'g', 17).toStdString()}},
+          {50, {}},
+          {40, {"12"}},
+          {7, {"unicode"}}},
+         typedOnOneLine.c_str()},
+    };
+    // Not a matter of any change: the handles, which a new text style
+    // shifts; the right-to-left note, which is counted instead; and the
+    // size of the text as it was measured, which only a changed MTEXT gets.
+    const auto besides = [](std::vector<int> codes, const std::vector<int>& more) {
+        codes.insert(codes.end(), more.begin(), more.end());
+        return codes;
+    };
+    const std::vector<int> neverOwn{5, 330, 1001, 1071};
+    const std::vector<int> neverMText{42, 43, 1001, 1071};
+
+    struct Preset {
+        const char* m_name;
+        AttributeDxf m_fixture;
+        const char* m_plain;    // the text of the fixture on one line
+    };
+    const std::vector<Preset> presets{{"autocad", AttributeDxf{}, "my text second line"},
+                                      {"rich", AttributeDxf::rich(), "ABC DEF"}};
+
+    for (const Preset& preset : presets) {
+        // The file that every drawing below is opened from, and its
+        // attribute as each DXF format has it with nothing changed.
+        EditableDrawing untouched;
+        const auto source = load(bench, preset.m_fixture, untouched, std::string(preset.m_name) + "_source");
+        std::map<std::string, DxfRecord> asRead;
+        for (const Target& to : kTargets) {
+            if (to.m_dxf) {
+                asRead[to.m_name] =
+                    onlyRecord(save(bench, untouched, std::string(preset.m_name) + "_untouched", to), "ATTRIB");
+            }
+        }
+
+        for (const OneEdit& edit : edits) {
+            for (const Target& to : kTargets) {
+                const std::string name = std::string(preset.m_name) + "_" + edit.m_name;
+                CAPTURE(name, to.m_name);
+                EditableDrawing drawing;
+                REQUIRE(lc::test::importDrawing(drawing.m_graphic, source, RS2::FormatDXFRW2018));
+                const RS_MText* model = drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), edit.m_change);
+
+                // A row that fails is not to hide the rows after it.
+                const auto out = bench.m_out.file(name + "_" + to.m_name + to.m_suffix);
+                const bool saved = lc::test::exportDrawing(drawing.m_graphic, out, to.m_format);
+                CHECK(saved);
+                if (!saved) {
+                    continue;
+                }
+
+                std::vector<double> place;  // of the attribute itself in a DXF: 10, 20, 11, 21
+                if (to.m_dxf) {
+                    // The attribute is in the file once, as an attribute.
+                    checkWrittenDxf(out);
+                    CHECK(lc::test::dxfRecords(out, "TEXT").empty());
+                    CHECK(lc::test::dxfRecords(out, "MTEXT").empty());
+                    const std::vector<DxfRecord> records = lc::test::dxfRecords(out, "ATTRIB");
+                    CHECK(records.size() == 1);
+                    if (records.size() != 1) {
+                        continue;
+                    }
+                    // The change is in the groups it belongs to and in no
+                    // other group of the record.
+                    const DxfRecord& record = records.front();
+                    const DxfRecord& before = asRead.at(to.m_name);
+                    const std::vector<int> own = besides(edit.m_own, neverOwn);
+                    const std::vector<int> ofMText = besides(edit.m_mtext, neverMText);
+                    CHECK(groupsWithout(record, false, own) == groupsWithout(before, false, own));
+                    CHECK(groupsWithout(record, true, ofMText) == groupsWithout(before, true, ofMText));
+                    CHECK(rightToLeftNotes(record)
+                          == (model->getDrawingDirection() == RS_MTextData::RightToLeft ? 1 : 0));
+                    // The attribute itself goes with its MTEXT, also where
+                    // the MTEXT is written and no program shows the
+                    // attribute's own text: as high, as turned, in the same
+                    // style, with the insertion point as its alignment
+                    // point and justified as the MTEXT is attached.
+                    place = ownPlace(record);
+                    const RS_Vector at = model->getInsertionPoint();
+                    CHECK(sameNumbers({at.x, at.y}, {place[2], place[3]}));
+                    CHECK(sameNumbers({model->getHeight()}, ownNumbers(record, {40})));
+                    CHECK(sameNumbers({model->getAngle() * 180.0 / M_PI}, ownNumbers(record, {50})));
+                    // Left is no group 72 at all.
+                    const std::string horizontal = model->getHAlign() == RS_MTextData::HALeft
+                                                       ? std::string()
+                                                       : std::to_string(static_cast<int>(model->getHAlign()));
+                    CHECK(record.own(72) == ownGroup72(horizontal.c_str(), to));
+                    CHECK(record.own(74)
+                          == std::vector<std::string>{std::to_string(3 - static_cast<int>(model->getVAlign()))});
+                    const std::vector<std::string> ownStyle = record.own(7);
+                    CAPTURE(ownStyle, model->getStyle().toStdString());
+                    CHECK(ownStyle.size() == 1);
+                    CHECK((ownStyle.size() == 1
+                           && model->getStyle().compare(QString::fromStdString(ownStyle.front()), Qt::CaseInsensitive)
+                                  == 0));
+                    if (to.m_embedsMText) {
+                        checkEmbeddedMTextPlace(record);
+                        for (const auto& [code, values] : edit.m_written) {
+                            CAPTURE(code, record.embedded(code));
+                            CHECK(lc::test::sameValues(values, record.embedded(code)));
+                        }
+                    }
+                    // An empty value, which AutoCAD leaves next to the
+                    // MTEXT, has no width: its first point is the alignment
+                    // point, lowered along the turned text as for a capital
+                    // letter. No text here is attached by its bottom.
+                    if (to.m_embedsMText && record.own(1) == std::vector<std::string>{""}) {
+                        REQUIRE(model->getVAlign() != RS_MTextData::VABottom);
+                        const double below =
+                            model->getHeight() * (model->getVAlign() == RS_MTextData::VATop ? 1.0 : 0.5);
+                        CAPTURE(place);
+                        CHECK(sameNumbers({at.x + below * std::sin(model->getAngle()),
+                                           at.y - below * std::cos(model->getAngle())},
+                                          {place[0], place[1]}));
+                    }
+                }
+
+                EditableDrawing reopened;
+                const bool opened = lc::test::importDrawing(reopened.m_graphic, out, to.m_format);
+                CHECK(opened);
+                if (!opened) {
+                    continue;
+                }
+                CHECK(reopened.live<RS_Insert>(RS2::EntityInsert).size() == 1);
+                const std::vector<const RS_MText*> multiLine = reopened.live<RS_MText>(RS2::EntityMText);
+                const std::vector<const RS_Text*> oneLine = reopened.live<RS_Text>(RS2::EntityText);
+                if (to.m_embedsMText) {
+                    // The file opens as what the drawing shows, where it
+                    // shows it.
+                    CHECK(oneLine.empty());
+                    CHECK(multiLine.size() == 1);
+                    if (multiLine.size() == 1) {
+                        checkSameMText(*model, *multiLine.front());
+                    }
+                    continue;
+                }
+                // A format without the MTEXT shows the attribute as a text
+                // of one line: the text without line breaks and codes, as
+                // high, as turned and in the style of the multi-line text,
+                // and justified at its insertion point as it is attached.
+                CHECK(multiLine.empty());
+                CHECK(oneLine.size() == 1);
+                if (oneLine.size() != 1) {
+                    continue;
+                }
+                const RS_Text* text = oneLine.front();
+                CHECK(text->getText().toStdString() == (edit.m_plain != nullptr ? edit.m_plain : preset.m_plain));
+                CHECK(text->getHeight() == Catch::Approx(model->getHeight()).margin(1e-9));
+                CHECK(text->getAngle() == Catch::Approx(model->getAngle()).margin(1e-9));
+                CAPTURE(text->getStyle().toStdString(), model->getStyle().toStdString());
+                CHECK(text->getStyle().compare(model->getStyle(), Qt::CaseInsensitive) == 0);
+                CHECK(text->getInsertionPoint().distanceTo(model->getInsertionPoint()) < 1e-9);
+                // The two kinds of text count the vertical alignments in
+                // opposite orders: top is 0 of three there and 3 of four here.
+                CHECK(static_cast<int>(text->getHAlign()) == static_cast<int>(model->getHAlign()));
+                CHECK(static_cast<int>(text->getVAlign()) == 3 - static_cast<int>(model->getVAlign()));
+                // The first point of the attribute in a DXF is the point
+                // that the text works out for itself as the start of its
+                // baseline. A text with nothing to draw works none out.
+                if (to.m_dxf && !text->getText().isEmpty()) {
+                    CAPTURE(place, text->getSecondPoint().x, text->getSecondPoint().y);
+                    CHECK(text->getSecondPoint().distanceTo(RS_Vector(place[0], place[1])) < 1e-6);
+                }
+            }
+        }
+    }
+}
+
+// An undo puts the text of the file back in the place of the clone, which
+// stays in the drawing, flagged deleted. The save is then the save of the
+// untouched drawing: the record of the file, with the codes of its content
+// that the text of the drawing does not keep.
+TEST_CASE("an undone edit of a multi-line attribute leaves its record as the file had it",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-edit]") {
+    const Bench bench("attr_edit_undone");
+    struct Preset {
+        const char* m_name;
+        AttributeDxf m_fixture;
+    };
+    const std::vector<Preset> presets{{"autocad", AttributeDxf{}}, {"rich", AttributeDxf::rich()}};
+    // But for the handles: the clone took none, and the test is not about
+    // which numbers the records get.
+    const std::vector<int> handles{5, 330};
+    for (const Preset& preset : presets) {
+        const std::string name = preset.m_name;
+        EditableDrawing untouched;
+        const auto source = load(bench, preset.m_fixture, untouched, name + "_source");
+        EditableDrawing drawing;
+        REQUIRE(lc::test::importDrawing(drawing.m_graphic, source, RS2::FormatDXFRW2018));
+        const RS_MText* imported = only<RS_MText>(drawing, RS2::EntityMText);
+        drawing.edit(imported, [](RS_MText& text) {
+            text.setText(QStringLiteral("XYZ"));
+            text.setHeight(12.0);
+        });
+        REQUIRE(only<RS_MText>(drawing, RS2::EntityMText) != imported);
+        REQUIRE(drawing.m_graphic.undo());
+        REQUIRE(only<RS_MText>(drawing, RS2::EntityMText) == imported);
+
+        for (const Target& to : kTargets) {
+            CAPTURE(name, to.m_name);
+            const auto out = save(bench, drawing, name + "_undone", to);
+            if (to.m_dxf) {
+                checkWrittenDxf(out);
+                CHECK(lc::test::dxfRecords(out, "TEXT").empty());
+                CHECK(lc::test::dxfRecords(out, "MTEXT").empty());
+                const DxfRecord record = onlyRecord(out, "ATTRIB");
+                const DxfRecord asRead = onlyRecord(save(bench, untouched, name + "_untouched", to), "ATTRIB");
+                CHECK(groupsWithout(record, false, handles) == groupsWithout(asRead, false, handles));
+                CHECK(groupsWithout(record, true, {}) == groupsWithout(asRead, true, {}));
+            }
+            EditableDrawing reopened;
+            REQUIRE(lc::test::importDrawing(reopened.m_graphic, out, to.m_format));
+            CHECK(reopened.live<RS_Insert>(RS2::EntityInsert).size() == 1);
+            const RS_Entity* shown = attributeText(reopened);
+            REQUIRE((shown->rtti() == RS2::EntityMText) == to.m_embedsMText);
+            if (to.m_embedsMText) {
+                checkSameMText(*imported, *static_cast<const RS_MText*>(shown));
+            }
+        }
+        // The file itself, for the preset whose content has a code.
+        if (name == "rich") {
+            const DxfRecord record = onlyRecord(bench.m_out.file("rich_undone_dxf2018.dxf"), "ATTRIB");
+            CHECK(record.embedded(1) == std::vector<std::string>{"{\\fArial;ABC}\\PDEF"});
+        }
+    }
+}
+
+// A file that LibreCAD saved has the attribute as LibreCAD writes it, and
+// its records have handles. Opened and changed again, the attribute is in
+// the next file once, with the second change.
+TEST_CASE("an attribute edited again after a save and a reopen is saved with the second edit",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-edit]") {
+    const Bench bench("attr_edit_again");
+    struct First {
+        const char* m_name;
+        QString m_text;
+    };
+    const std::vector<First> firsts{{"text", QStringLiteral("    ABC\n\tDEF \u03a9")}, {"no_text", QString()}};
+    for (const First& first : firsts) {
+        for (const Target& to : kTargets) {
+            const std::string name = first.m_name;
+            CAPTURE(name, to.m_name);
+            EditableDrawing drawing;
+            load(bench, AttributeDxf{}, drawing, name + "_" + to.m_name + "_source");
+            drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [&](RS_MText& text) {
+                text.setText(first.m_text);
+                text.setDrawingDirection(RS_MTextData::RightToLeft);
+            });
+            const auto saved = save(bench, drawing, name + "_first", to);
+
+            // The file of the first save, opened: a multi-line text where
+            // the format has the MTEXT, a text of one line where it has not.
+            EditableDrawing second;
+            REQUIRE(lc::test::importDrawing(second.m_graphic, saved, to.m_format));
+            const RS_Entity* shown = attributeText(second);
+            REQUIRE((shown->rtti() == RS2::EntityMText) == to.m_embedsMText);
+            if (to.m_embedsMText) {
+                const auto* text = static_cast<const RS_MText*>(shown);
+                REQUIRE(text->getDrawingDirection() == RS_MTextData::RightToLeft);
+                second.edit(text, [](RS_MText& changed) {
+                    changed.setText(QStringLiteral("new text"));
+                    changed.setDrawingDirection(RS_MTextData::LeftToRight);
+                });
+            }
+            else {
+                second.edit(static_cast<const RS_Text*>(shown),
+                            [](RS_Text& changed) { changed.setText(QStringLiteral("new text")); });
+            }
+            const auto again = save(bench, second, name + "_second", to);
+
+            if (to.m_dxf) {
+                checkWrittenDxf(again);
+                CHECK(lc::test::dxfRecords(again, "TEXT").empty());
+                CHECK(lc::test::dxfRecords(again, "MTEXT").empty());
+                const DxfRecord record = onlyRecord(again, "ATTRIB");
+                if (to.m_embedsMText) {
+                    CHECK(record.embedded(1) == std::vector<std::string>{"new text"});
+                    CHECK(record.embedded(72) == std::vector<std::string>{"1"});
+                    CHECK(rightToLeftNotes(record) == 0);
+                }
+                else {
+                    CHECK(record.own(1) == std::vector<std::string>{"new text"});
+                }
+            }
+            else if (to.m_embedsMText) {
+                DwgContent content;
+                readDwg(again, content);
+                CHECK(rightToLeftNotes(onlyDwgAttribute(content)) == 0);
+            }
+
+            EditableDrawing reopened;
+            REQUIRE(lc::test::importDrawing(reopened.m_graphic, again, to.m_format));
+            CHECK(reopened.live<RS_Insert>(RS2::EntityInsert).size() == 1);
+            const RS_Entity* last = attributeText(reopened);
+            REQUIRE((last->rtti() == RS2::EntityMText) == to.m_embedsMText);
+            if (to.m_embedsMText) {
+                const auto* text = static_cast<const RS_MText*>(last);
+                CHECK(text->getText().toStdString() == "new text");
+                CHECK(text->getDrawingDirection() == RS_MTextData::LeftToRight);
+            }
+            else {
+                CHECK(static_cast<const RS_Text*>(last)->getText().toStdString() == "new text");
+            }
+        }
+    }
+}
+
+// The spacing of the lines of an MTEXT is a factor (group 44) and the way it
+// is applied (73): 2 where a taller letter does not push the lines apart.
+// The drawing has both, and a change of the one does not reset the other.
+TEST_CASE("a change of the line-spacing factor alone keeps exact line spacing",
+          "[attribute-export][attrib][filter][dxf][dwg][keep]") {
+    const Bench bench("attr_edit_spacing");
+    for (const char* format : {"dxf2018", "dwg2018"}) {
+        const Target to = target(format);
+        CAPTURE(to.m_name);
+        EditableDrawing drawing;
+        load(bench, AttributeDxf::rich(), drawing, std::string(to.m_name) + "_source");
+        const RS_MText* imported = only<RS_MText>(drawing, RS2::EntityMText);
+        REQUIRE(imported->getLineSpacingStyle() == RS_MTextData::Exact);
+        REQUIRE(imported->getLineSpacingFactor() == 1.0);
+        const RS_MText* model = drawing.edit(imported, [](RS_MText& text) { text.setLineSpacingFactor(1.25); });
+
+        const auto out = save(bench, drawing, "factor", to);
+        if (to.m_dxf) {
+            checkWrittenDxf(out);
+            const DxfRecord record = onlyRecord(out, "ATTRIB");
+            CHECK(record.embedded(73) == std::vector<std::string>{"2"});
+            CHECK(lc::test::sameValues({"1.25"}, record.embedded(44)));
+            // Nor does it cost the content the codes that the drawing does
+            // not keep.
+            CHECK(record.embedded(1) == std::vector<std::string>{"{\\fArial;ABC}\\PDEF"});
+        }
+        else {
+            DwgContent content;
+            readDwg(out, content);
+            const DRW_MText& mtext = onlyEmbeddedMText(content);
+            CHECK(mtext.linespacingStyle == 2);
+            CHECK(mtext.interlin == Catch::Approx(1.25).margin(1e-12));
+        }
+
+        EditableDrawing reopened;
+        REQUIRE(lc::test::importDrawing(reopened.m_graphic, out, to.m_format));
+        const RS_MText* again = only<RS_MText>(reopened, RS2::EntityMText);
+        CHECK(again->getLineSpacingStyle() == RS_MTextData::Exact);
+        checkSameMText(*model, *again);
     }
 }
 
