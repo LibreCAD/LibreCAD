@@ -35,6 +35,12 @@ namespace LC_CreationCircle {
     std::vector<RS_Circle> createTan3(const std::vector<RS_AtomicEntity*>& circles);
     RS_VectorSolutions createTan1_2P(const RS_AtomicEntity* circle, const std::vector<RS_Vector>& points);
     RS_VectorSolutions createTan2(const std::vector<RS_AtomicEntity*>& circles, double r);
+    /**
+     * Whether a circle of the radius passes through the two points: whether they are no further apart than its
+     * diameter, within the rounding of their coordinates. create2PRadius() has a center for these points, and for
+     * no others.
+     */
+    bool canCreate2PRadius(const RS_Vector& point1, const RS_Vector& point2, double radius);
     bool create2PRadius(const RS_Vector& point1, const RS_Vector& point2, double radius, RS_Vector& altCenter, RS_CircleData& m_circleData);
 }
 
