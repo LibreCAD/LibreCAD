@@ -11442,7 +11442,9 @@ DRW_Attrib::DRW_Attrib(const DRW_Attrib& o)
       lockPosition(o.lockPosition), attVersion(o.attVersion),
       m_attributeType(o.m_attributeType),
       keepDuplicateRecords(o.keepDuplicateRecords),
-      mtext(o.mtext ? std::make_unique<DRW_MText>(*o.mtext) : nullptr) {}
+      mtext(o.mtext ? std::make_unique<DRW_MText>(*o.mtext) : nullptr),
+      dxfInAttributeSubclass(o.dxfInAttributeSubclass),
+      dxfEmbeddedMarker(o.dxfEmbeddedMarker) {}
 DRW_Attrib& DRW_Attrib::operator=(const DRW_Attrib& o) {
     if (this != &o) {
         DRW_Text::operator=(o);
@@ -11454,11 +11456,18 @@ DRW_Attrib& DRW_Attrib::operator=(const DRW_Attrib& o) {
         m_attributeType = o.m_attributeType;
         keepDuplicateRecords = o.keepDuplicateRecords;
         mtext = o.mtext ? std::make_unique<DRW_MText>(*o.mtext) : nullptr;
+        dxfInAttributeSubclass = o.dxfInAttributeSubclass;
+        dxfEmbeddedMarker = o.dxfEmbeddedMarker;
     }
     return *this;
 }
 DRW_Attrib::DRW_Attrib(DRW_Attrib&&) noexcept = default;
 DRW_Attrib& DRW_Attrib::operator=(DRW_Attrib&&) noexcept = default;
+
+bool DRW_Attrib::hasAmbiguousLegacyEmbeddedXData() const {
+    return dxfEmbeddedMarker == EmbeddedDxfMarker::Legacy100
+        && mtext != nullptr && !mtext->extData.empty();
+}
 
 DRW_GeoPositionMarker::~DRW_GeoPositionMarker() = default;
 DRW_GeoPositionMarker::DRW_GeoPositionMarker(
@@ -12033,17 +12042,25 @@ bool DRW_GeoPositionMarker::encodeDwg(DRW::Version v, dwgBufferW *buf,
 }
 
 bool DRW_Attrib::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
-    // Multi-line ATTRIB (R2018+, ODA spec §20.4.4): an embedded MTEXT object
-    // is introduced by the DXF subclass marker `100 / Embedded Object` (NOT
-    // `AcDbMText`).  After the marker, the standard MTEXT group codes follow
-    // (10/20/30 insertion, 11/21/31 X-axis, 40 height, 41 rect width, 71
-    // attachment point, 72 drawing direction, 1 formatted text, etc.), then
-    // the ATTRIB-specific tail (tag=2, prompt=3 for ATTDEF, flags=70,
-    // lock-position=280) which we must NOT route into the embedded MText.
+    // Autodesk's embedded-object boundary is group 101, not a group-100
+    // subclass. Native MTEXT fields follow; XDATA at the end belongs to the
+    // encapsulating ATTRIB/ATTDEF, not to the embedded object.
+    if (code == 101) {
+        if (reader->getString() != "Embedded Object" || mtext)
+            return false;
+        mtext = std::make_unique<DRW_MText>();
+        dxfEmbeddedMarker = EmbeddedDxfMarker::Canonical101;
+        dxfInAttributeSubclass = false;
+        if (attVersion == 0) attVersion = 1;
+        return true;
+    }
     if (code == 100) {
         const std::string sub = reader->getString();
-        if (sub == "Embedded Object" && !mtext) {
+        if (sub == "Embedded Object") {
+            if (mtext)
+                return false;
             mtext = std::make_unique<DRW_MText>();
+            dxfEmbeddedMarker = EmbeddedDxfMarker::Legacy100;
             if (attVersion == 0) attVersion = 1;
         }
         dxfInAttributeSubclass = sub == "AcDbAttribute"
@@ -12063,9 +12080,15 @@ bool DRW_Attrib::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
             return true;
         }
     }
-    // Inside the embedded MText scope, route MTEXT-owned codes to mtext but
-    // keep ATTRIB-specific tail codes for ATTRIB / ATTDEF handling below.
+    if (code >= 1000 && dxfEmbeddedMarker != EmbeddedDxfMarker::Legacy100)
+        return DRW_Text::parseCode(code, reader);
+    // A legacy group-100 file may contain a historical ATTRIB tail. Preserve
+    // that read compatibility, while retaining its postmarker XDATA opaquely
+    // in mtext with explicit ambiguous provenance. Canonical group-101 native
+    // fields include MTEXT's group-3 continuation strings, even for ATTDEF.
     if (mtext) {
+        if (dxfEmbeddedMarker == EmbeddedDxfMarker::Canonical101)
+            return mtext->parseCode(code, reader);
         switch (code) {
         case 2:    // tag (ATTRIB-specific; group 1 in MText is text body)
         case 3:    // prompt (ATTDEF-specific)
@@ -12114,6 +12137,7 @@ void DRW_Attrib::resetAttribDwgState() {
     keepDuplicateRecords = 0;
     mtext.reset();
     dxfInAttributeSubclass = false;
+    dxfEmbeddedMarker = EmbeddedDxfMarker::None;
 }
 
 bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
@@ -12332,6 +12356,8 @@ bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t 
 }
 
 bool DRW_Attdef::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    if (mtext && embeddedDxfMarker() == EmbeddedDxfMarker::Canonical101)
+        return DRW_Attrib::parseCode(code, reader);
     switch (code) {
     case 3:
         prompt = reader->getUtf8String();

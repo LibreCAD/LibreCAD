@@ -1765,6 +1765,13 @@ public:
 class DRW_Attrib : public DRW_Text {
     SETENTFRIENDS
 public:
+    // DXF-only read provenance. Group 100 was emitted by older LibreCAD
+    // versions but is not a valid embedded-object boundary. Its trailing
+    // XDATA is retained, not evidence of either embedded or outer ownership.
+    enum class EmbeddedDxfMarker { None, Canonical101, Legacy100 };
+    EmbeddedDxfMarker embeddedDxfMarker() const { return dxfEmbeddedMarker; }
+    bool hasAmbiguousLegacyEmbeddedXData() const;
+
     DRW_Attrib() {
         eType = DRW::ATTRIB;
         attribFlags = 0;
@@ -1794,16 +1801,19 @@ public:
     std::uint8_t attVersion;         /*!< version byte (R2010+); 0=plain TEXT-style, >0=MText-style */
     std::uint8_t m_attributeType;    /*!< R2018+ attribute type: 1=single-line, 2=multi-line ATTRIB, 4=multi-line ATTDEF */
     std::uint8_t keepDuplicateRecords = 0; /*!< DXF xrecord duplicate-record policy */
-    /* MText-style payload (R2010+).  Non-null iff attVersion > 0 (DWG) or the
-       AcDbMText nested subclass was seen (DXF).  Carries the multi-line text
+    /* MText-style payload (R2010+).  Non-null iff attVersion > 0 (DWG) or an
+       embedded-object marker was seen (DXF). Carries the multi-line text
        and formatting (paragraph breaks, font runs, etc.) that the single-line
-       `text` field can't represent. */
+       `text` field can't represent. For Legacy100 only, extData retains the
+       ambiguous postmarker stream opaquely: do not activate or infer its
+       scope. Canonical101 trailing XDATA belongs to this outer ATTRIB. */
     std::unique_ptr<DRW_MText> mtext;
 
 protected:
     // DXF R2018 places the attribute type in the AcDbAttribute subclass,
     // where code 71 otherwise means TEXT generation flags.
     bool dxfInAttributeSubclass = false;
+    EmbeddedDxfMarker dxfEmbeddedMarker = EmbeddedDxfMarker::None;
 };
 
 //! Class to handle ATTDEF entities (block attribute definition).

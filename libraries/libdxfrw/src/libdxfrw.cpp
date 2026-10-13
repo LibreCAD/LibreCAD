@@ -4793,7 +4793,13 @@ bool dxfRW::writeEmbeddedMText(DRW_MText *ent) {
     if (ent == nullptr)
         return false;
 
-    writer->writeString(100, "Embedded Object");
+    // Embedded objects have no independent XDATA frame in DXF. A caller
+    // must retain that payload through an explicit outer carrier instead.
+    if (!ent->extData.empty()) {
+        m_writeError = true;
+        return false;
+    }
+    writer->writeString(101, "Embedded Object");
     writer->writeDouble(10, ent->basePoint.x);
     writer->writeDouble(20, ent->basePoint.y);
     writer->writeDouble(30, ent->basePoint.z);
@@ -4832,8 +4838,6 @@ bool dxfRW::writeEmbeddedMText(DRW_MText *ent) {
         writer->writeInt16(63, ent->m_backgroundColor);
         writer->writeInt32(441, ent->m_backgroundTransparency);
     }
-    if (!ent->extData.empty() && !writeExtData(ent->extData))
-        return false;
     return !writer->hasWriteError();
 }
 
@@ -4859,7 +4863,8 @@ bool dxfRW::writeAttrib(DRW_Attrib *ent,
         || ent->m_fieldLength > std::numeric_limits<std::uint16_t>::max()
         || (ent->mtext != nullptr
             && (!isValidDxfEntityFields(*ent->mtext)
-                || !isSafeDxfRecordText(ent->mtext->text))))
+                || !isSafeDxfRecordText(ent->mtext->text)
+                || !ent->mtext->extData.empty())))
     {
         m_writeError = true;
         return false;
@@ -4925,7 +4930,8 @@ bool dxfRW::writeAttdef(DRW_Attdef *ent,
         || ent->m_fieldLength > std::numeric_limits<std::uint16_t>::max()
         || (ent->mtext != nullptr
             && (!isValidDxfEntityFields(*ent->mtext)
-                || !isSafeDxfRecordText(ent->mtext->text))))
+                || !isSafeDxfRecordText(ent->mtext->text)
+                || !ent->mtext->extData.empty())))
     {
         m_writeError = true;
         return false;

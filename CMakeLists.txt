@@ -3531,6 +3531,16 @@ if (BUILD_TESTS)
                            ${LIBDXFRW_FAST_DWG_TEST_SOURCES})
     add_libdxfrw_fast_test(libdxfrw_dxf_fast_tests
                            ${LIBDXFRW_FAST_DXF_TEST_SOURCES})
+    # Canonical embedded-object framing must work without the application.
+    add_libdxfrw_fast_test(libdxfrw_dxf_embedded_scope_tests
+        librecad/src/lib/filters/tests/dxf_embeddedtext_scope_tests.cpp)
+    target_link_libraries(libdxfrw_dxf_embedded_scope_tests PRIVATE Qt6::Core)
+    if(NOT MSVC)
+        target_compile_options(libdxfrw_dxf_embedded_scope_tests PRIVATE
+            -Wall -Wextra -Werror -pedantic)
+    endif()
+    add_test(NAME libdxfrw_dxf_embedded_scope_tests
+        COMMAND libdxfrw_dxf_embedded_scope_tests)
     add_libdxfrw_fast_test(libdxfrw_slow_tests
                            ${LIBDXFRW_SLOW_DWG_TEST_SOURCES})
 
