@@ -313,7 +313,7 @@
         <location filename="../src/actions/dock_widgets/library/lc_action_block_library_insert.cpp" line="194"/>
         <location filename="../src/actions/dock_widgets/library/lc_action_block_library_insert.cpp" line="208"/>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">無效的表達式</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/library/lc_action_block_library_insert.cpp" line="237"/>
@@ -639,12 +639,12 @@
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_3points.cpp" line="236"/>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">指定第二點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_3points.cpp" line="239"/>
         <source>Specify third point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">指定第三點</translation>
     </message>
 </context>
 <context>
@@ -652,7 +652,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="293"/>
         <source>Length of chord should be non-zero</source>
-        <translation type="unfinished">和弦的长度不是零</translation>
+        <translation type="unfinished">弦長必須為非零值</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="435"/>
@@ -661,7 +661,7 @@
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="487"/>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="514"/>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">無效的表達式</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="510"/>
@@ -671,7 +671,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="535"/>
         <source>Specify center</source>
-        <translation type="unfinished">指定中心</translation>
+        <translation type="unfinished">指定中心點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="539"/>
@@ -691,13 +691,13 @@
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
         <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="unfinished">指定末端角度或 [angle/ chordlen]</translation>
+        <translation type="unfinished">指定結束角度 或 [角度/弦長]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="552"/>
         <source>Alternative Arc</source>
-        <translation type="unfinished">替代弧</translation>
+        <translation type="unfinished">替代圓弧</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="552"/>
@@ -707,7 +707,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
         <source>Specify chord length (negative for alt point):</source>
-        <translation type="unfinished">指定和弦長度( 替代點的負數 ) :</translation>
+        <translation type="unfinished">指定弦長（負值表示替代點）:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
@@ -735,39 +735,39 @@
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="299"/>
         <source>Specify end point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">指定終點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="299"/>
         <source>Alternate Arc</source>
-        <translation type="unfinished">替代弧</translation>
+        <translation type="unfinished">替代圓弧</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawBoundingBox</name>
     <message>
         <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="vanished">選擇要邊界框 (要輸入以完成) 的單位</translation>
+        <translation type="vanished">選取定界框的圖元（按Enter鍵完成）</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
         <source>Select entities for bounding box</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">選取定界框的圖元</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="163"/>
         <source>Select and draw</source>
-        <translation>選擇并畫出</translation>
+        <translation>選取並繪製</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="163"/>
         <source>Select contour</source>
-        <translation>選擇相向</translation>
+        <translation>選取輪廓</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="98"/>
         <source>Note: Bounding box was created for world coordinate system.</source>
-        <translation>注意：邊界框是為世界座標系統而建立。</translation>
+        <translation>注意：定界框已針對世界坐標系建立.</translation>
     </message>
 </context>
 <context>
@@ -775,17 +775,17 @@
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="275"/>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">無效的表達式</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="295"/>
         <source>Select first entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">選取第一個圖元</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="299"/>
         <source>Select second entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">選取第二個圖元</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="299"/>
@@ -803,7 +803,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">選取圓、圓弧或橢圓</translation>
     </message>
 </context>
 <context>
@@ -811,16 +811,16 @@
     <message>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation type="vanished">radius=%1 對於所選點來說太小
-點之間的距離=%2 大於直徑=%3</translation>
+        <translation type="vanished">半徑=%1 對於所選取的點而言太小 
+        兩點之間的距離=%2 大於直徑=%3</translation>
     </message>
     <message>
         <source>Select from two possible circle centers</source>
-        <translation type="vanished">從兩個可能的圓心中選擇</translation>
+        <translation type="vanished">從兩個可能的圓心之中選取</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="vanished">指定第一分</translation>
+        <translation type="vanished">指定第一點</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -841,12 +841,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points.cpp" line="157"/>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">指定第一點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points.cpp" line="160"/>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">指定第二點</translation>
     </message>
 </context>
 <context>
@@ -855,8 +855,8 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points_radius.cpp" line="178"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished">radius=%1 對於所選點來說太小
-點之間的距離=%2 大於直徑=%3</translation>
+        <translation type="unfinished">半徑=%1 對於所選取的點而言太小 
+        兩點之間的距離=%2 大於直徑=%3</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points_radius.cpp" line="191"/>
@@ -866,12 +866,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points_radius.cpp" line="213"/>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">指定第一點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points_radius.cpp" line="216"/>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">指定第二點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points_radius.cpp" line="219"/>
@@ -889,17 +889,17 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_3points.cpp" line="176"/>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">指定第一點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_3points.cpp" line="179"/>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">指定第二點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_3points.cpp" line="182"/>
         <source>Specify third point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">指定第三點</translation>
     </message>
 </context>
 <context>
@@ -1268,7 +1268,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line.cpp" line="269"/>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">指定第一點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line.cpp" line="291"/>
@@ -1380,7 +1380,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="511"/>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">指定第二點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="515"/>
@@ -1528,12 +1528,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>LC_ActionDrawLinePoints</name>
     <message>
         <source>Specify First Point</source>
-        <translation type="vanished">指定第一分</translation>
+        <translation type="vanished">指定第一點</translation>
     </message>
     <message>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">指定第二個點
+        <translation type="vanished">指定第二點
 或 [number|x|y|angle|p|edges|distance]</translation>
     </message>
     <message>
@@ -1779,7 +1779,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="388"/>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">指定第二點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="392"/>
@@ -1836,7 +1836,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_snake.cpp" line="504"/>
         <source>Specify first point</source>
-        <translation>指定第一分</translation>
+        <translation>指定第一點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_snake.cpp" line="513"/>
@@ -2010,7 +2010,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="280"/>
         <source>Specify first point</source>
-        <translation>指定第一分</translation>
+        <translation>指定第一點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="284"/>
@@ -2053,13 +2053,13 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="579"/>
         <source>Specify First Point</source>
-        <translation type="unfinished">指定第一分</translation>
+        <translation type="unfinished">指定第一點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="583"/>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="unfinished">指定第二個點
+        <translation type="unfinished">指定第二點
 或 [number|x|y|angle|p|edges|distance]</translation>
     </message>
     <message>
@@ -2245,7 +2245,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="767"/>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">指定第一點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="787"/>
@@ -2340,12 +2340,12 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="578"/>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="596"/>
         <source>Specify first point first</source>
-        <translation>第一分先指定</translation>
+        <translation>先指定第一點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="587"/>
         <source>Specify width or second point first</source>
-        <translation>在先指定寬度或第二點</translation>
+        <translation>先指定寬度或第二點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="616"/>
@@ -2603,7 +2603,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/text/lc_action_draw_text.cpp" line="249"/>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">指定第二點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/text/lc_action_draw_text.cpp" line="253"/>
@@ -4162,7 +4162,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="460"/>
         <source>Snap Intersection</source>
-        <translation>抓取相交區</translation>
+        <translation>鎖點交點</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="525"/>
@@ -4675,11 +4675,11 @@ Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
         <translation>角度 :%1
-相補 :%2
-相補 :%3
-替代 :%4
-開始邊緣點 (%5,%6)
-交接點 : (%7,%8)
+餘角：%2
+補角：%3
+替代角度：%4
+起始邊界點：(%5 , %6)
+交點：(%7, %8)
 結束邊緣點 (%9,%10)</translation>
     </message>
     <message>
@@ -4711,7 +4711,7 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="213"/>
         <source>Intersection:</source>
-        <translation>相接區 :</translation>
+        <translation>交點：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="215"/>
@@ -4921,7 +4921,7 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="323"/>
         <source>Intersection:</source>
-        <translation>相接區 :</translation>
+        <translation>交點：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="165"/>
@@ -5413,7 +5413,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="183"/>
         <source>Intersection:</source>
-        <translation type="unfinished">相接區 :</translation>
+        <translation type="unfinished">交點：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="184"/>
@@ -5747,7 +5747,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="135"/>
         <source>Intersection:</source>
-        <translation>相接區 :</translation>
+        <translation>交點：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="188"/>
@@ -6355,12 +6355,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="131"/>
         <source>Intersection:</source>
-        <translation type="unfinished">相接區 :</translation>
+        <translation type="unfinished">交點：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="133"/>
         <source>Intersection 2:</source>
-        <translation type="unfinished">第2分節:</translation>
+        <translation type="unfinished">第二交點：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="217"/>
@@ -8470,17 +8470,21 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_break_divide_options_filler.cpp" line="34"/>
         <source>If checked, sеgments between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">
+        若勾選此項，將會移除交點之間的線段。
+        若未勾選，圖元將會於交點處被分割。</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_break_divide_options_filler.cpp" line="43"/>
         <source>Remove selected</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">移除選取項目</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_break_divide_options_filler.cpp" line="44"/>
         <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">
+        若勾選此項，將會移除所選的線段。
+        否則，所選線段將會保留，而其餘的線段將會被移除。</translation>
     </message>
 </context>
 <context>
@@ -8493,17 +8497,21 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_break_divide_options_widget.ui" line="45"/>
         <source>If checked, segments between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">
+        若勾選此項，將會移除交點之間的線段。
+        若未勾選，圖元將會於交點處被分割。</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_break_divide_options_widget.ui" line="48"/>
         <source>Remove Segments</source>
-        <translation type="unfinished">移除片段</translation>
+        <translation type="unfinished">移除線段</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_break_divide_options_widget.ui" line="55"/>
         <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="unfinished">如果檢查了, 所選取的部分會被移除 。 否則所選取的片段會活下來并取出所剩片段.</translation>
+        <translation type="unfinished">
+        若勾選此項，將會移除所選的線段。
+        否則，所選線段將會保留，而其餘的線段將會被移除。</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_break_divide_options_widget.ui" line="58"/>
@@ -8521,7 +8529,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_line_options_filler.cpp" line="30"/>
         <source>Offset of line&apos;s length from original lines</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">與原始線段的長度偏移量</translation>
     </message>
 </context>
 <context>
@@ -16780,7 +16788,7 @@ Please specify a different value.</source>
     </message>
     <message>
         <source>To Intersection</source>
-        <translation type="vanished">到相交區</translation>
+        <translation type="vanished">至交點</translation>
     </message>
     <message>
         <source>Fixed Length</source>
@@ -16824,7 +16832,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="48"/>
         <source>To Intersection</source>
-        <translation type="unfinished">到相交區</translation>
+        <translation type="unfinished">至交點</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="49"/>
@@ -16977,7 +16985,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="322"/>
         <source>To Intersection</source>
-        <translation type="unfinished">到相交區</translation>
+        <translation type="unfinished">至交點</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="327"/>
@@ -51090,7 +51098,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="949"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>相接區分</translation>
+        <translation>鎖點交點</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="950"/>
@@ -52972,7 +52980,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="vanished">指定第二個點</translation>
+        <translation type="vanished">指定第二點</translation>
     </message>
 </context>
 <context>
@@ -53021,11 +53029,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="vanished">指定第一個點</translation>
+        <translation type="vanished">指定第一點</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="vanished">指定第二個點</translation>
+        <translation type="vanished">指定第二點</translation>
     </message>
 </context>
 <context>
@@ -53036,15 +53044,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="vanished">指定第一個點</translation>
+        <translation type="vanished">指定第一點</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="vanished">指定第二個點</translation>
+        <translation type="vanished">指定第二點</translation>
     </message>
     <message>
         <source>Specify third point</source>
-        <translation type="vanished">指定第三個點</translation>
+        <translation type="vanished">指定第三點</translation>
     </message>
 </context>
 <context>
@@ -53361,23 +53369,23 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Select to hatch</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">選取以進行填充</translation>
     </message>
     <message>
         <source>Select to hatch (Enter to complete)</source>
-        <translation type="vanished">選擇要孵出 (輸入以完成)</translation>
+        <translation type="vanished">選取以進行填充（按Enter鍵完成）</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
-        <translation>在選取后立即抓取</translation>
+        <translation>選取後立即填充</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawImage</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="vanished">不正確的表示式</translation>
+        <translation type="vanished">無效的表達式</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -53400,7 +53408,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionDrawLine</name>
     <message>
         <source>Specify first point</source>
-        <translation type="vanished">指定第一個點</translation>
+        <translation type="vanished">指定第一點</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
@@ -53490,12 +53498,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="116"/>
         <source>Specify first point</source>
-        <translation>指定第一個點</translation>
+        <translation>指定第一點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="119"/>
         <source>Specify second point</source>
-        <translation>指定第二個點</translation>
+        <translation>指定第二點</translation>
     </message>
 </context>
 <context>
@@ -53738,7 +53746,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="vanished">指定第一個點</translation>
+        <translation type="vanished">指定第一點</translation>
     </message>
     <message>
         <source>Alternative Arc</source>
@@ -53792,7 +53800,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="vanished">指定第二個點</translation>
+        <translation type="vanished">指定第二點</translation>
     </message>
     <message>
         <source>Enter text:</source>
@@ -53833,17 +53841,17 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="179"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="189"/>
         <source>Select to cut</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">選取以剪下</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="184"/>
         <source>Select to copy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">選取以複製</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="190"/>
         <source>Copy right after selection</source>
-        <translation>在選取后再复制</translation>
+        <translation>選取後立即複製</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="204"/>
@@ -53863,7 +53871,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="208"/>
         <source>Paste Multiple</source>
-        <translation>貼多</translation>
+        <translation>多重貼上</translation>
     </message>
 </context>
 <context>
@@ -53910,9 +53918,9 @@ Supplementary: %3
 Alternative: %4
 </source>
         <translation>角度 :%1
-相補 :%2
-相補 :%3
-替代 :%4</translation>
+餘角：%2
+補角：%3
+替代角度：%4</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="139"/>
@@ -53923,22 +53931,22 @@ Alternative: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
         <translation>角度 :%1
-相補 :%2
-相補 :%3
-替代 :%4
-相交 : (%5,%6)
-相接區 : @ (%7,%8)</translation>
+餘角：%2
+補角：%3
+替代角度：%4
+交點：(%5 , %6)
+交點：@(%7, %8)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="254"/>
         <source>Restart with first line selection</source>
-        <translation>以第一行選擇重新啟動</translation>
+        <translation>從第一條線段選取重新開始</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="273"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="290"/>
         <source>Angle Info</source>
-        <translation>角度信息</translation>
+        <translation>角度資訊</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="273"/>
@@ -53950,13 +53958,13 @@ Intersection :@(%7, %8)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="273"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="290"/>
         <source>Complementary:</source>
-        <translation>相補:</translation>
+        <translation>餘角：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="274"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="291"/>
         <source>Supplementary:</source>
-        <translation>补充:</translation>
+        <translation>補角：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="274"/>
@@ -53967,37 +53975,37 @@ Intersection :@(%7, %8)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="275"/>
         <source>Line From:</source>
-        <translation>从行:</translation>
+        <translation>起始線段：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="275"/>
         <source>Line To:</source>
-        <translation>行到:</translation>
+        <translation>目標線段：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="276"/>
         <source>Line Angle 1:</source>
-        <translation>第1行:</translation>
+        <translation>線段 1 角度：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="276"/>
         <source>Line Angle 2:</source>
-        <translation>第2行:</translation>
+        <translation>線段 2 角度：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Intersection:</source>
-        <translation>相接區 :</translation>
+        <translation>交點：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Line 1 Angle:</source>
-        <translation>第1行角度:</translation>
+        <translation>線段 1 角度：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Line 2 Angle:</source>
-        <translation>第2行角度:</translation>
+        <translation>線段 2 角度：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="254"/>
@@ -54289,7 +54297,7 @@ Point: (%8 , %9)</source>
     </message>
     <message>
         <source>Intersection:</source>
-        <translation type="vanished">相接區 :</translation>
+        <translation type="vanished">交點：</translation>
     </message>
     <message>
         <source>Point 1:</source>
@@ -54900,11 +54908,11 @@ Point: (%8 , %9)</source>
     </message>
     <message>
         <source>Intersection:</source>
-        <translation type="vanished">相接區 :</translation>
+        <translation type="vanished">交點：</translation>
     </message>
     <message>
         <source>Intersection 2:</source>
-        <translation type="vanished">第2分節:</translation>
+        <translation type="vanished">第二交點：</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
@@ -55257,7 +55265,7 @@ Point: (%8 , %9)</source>
     </message>
     <message>
         <source>Select child entities</source>
-        <translation type="vanished">選擇子实体</translation>
+        <translation type="vanished">選取子圖元</translation>
     </message>
     <message>
         <source>Choose second point of intersection line</source>
@@ -55424,7 +55432,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1347"/>
         <source>Intersection</source>
-        <translation>相交</translation>
+        <translation>交點</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1349"/>
