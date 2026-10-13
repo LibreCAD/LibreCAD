@@ -6150,7 +6150,7 @@ bool decodeInsertAttribMTextCommon(
   int hasDataStorage = 0;
   int reactorCount = 0;
   if (!nextInteger(index, 1070, schema) ||
-      (schema != 1 && schema != kInsertAttribMTextCommonSchema) ||
+      schema != kInsertAttribMTextCommonSchema ||
       !nextInteger(index, 1070, hasDataStorage) ||
       (hasDataStorage != 0 && hasDataStorage != 1) ||
       !nextInteger(index, 1070, reactorCount) || reactorCount < 0 ||
@@ -6169,8 +6169,6 @@ bool decodeInsertAttribMTextCommon(
   }
   if (!nextHandle(index, decoded.xDictHandle))
     return false;
-  if (schema == 1)
-    return index == encoded.size();
 
   int hasAcDbColor = 0;
   int visible = 0;
