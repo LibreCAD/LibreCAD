@@ -335,13 +335,21 @@ bool slotFileExport(RS_Graphic* graphic, const QString& name,
     if (!file.open(QIODevice::WriteOnly))
         return false;
 
+    // The output is produced in memory and written to the file in one piece
+    // at the end. A write that is cut short, on a full disk or at a file-size
+    // limit, is not an error to QSvgGenerator, and QSaveFile::commit() does
+    // not report one either: it would replace the file by the part that fit.
+    QBuffer output;
+    if (!output.open(QIODevice::WriteOnly))
+        return false;
+
     QPixmap picture(svg ? QSize() : size);
     QSvgGenerator vector;
     QPaintDevice* buffer = &picture;
     if (svg) {
         vector.setSize(size);
         vector.setViewBox(QRectF(QPointF(0, 0), size));
-        vector.setOutputDevice(&file);
+        vector.setOutputDevice(&output);
         buffer = &vector;
     } else if (picture.isNull()) {
         return false;
@@ -403,10 +411,17 @@ bool slotFileExport(RS_Graphic* graphic, const QString& name,
         return false;
 
     if (!svg) {
-        QImageWriter writer{&file, format.toLatin1()};
+        QImageWriter writer{&output, format.toLatin1()};
         if (!writer.write(picture.toImage()))
             return false;
     }
+
+    // Large output is written at once, and the count tells whether all of it
+    // was. Small output stays in the file's buffer, and flush() tells.
+    // Without commit() the file that was there is left alone.
+    const QByteArray& bytes = output.data();
+    if (file.write(bytes) != bytes.size() || !file.flush())
+        return false;
     return file.commit();
 }
 

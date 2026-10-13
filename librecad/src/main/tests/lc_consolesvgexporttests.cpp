@@ -265,9 +265,28 @@ TEST_CASE("console image export preserves existing output after a short write", 
     SourceFonts fonts;
     const QTemporaryDir dir;
     REQUIRE(dir.isValid());
+    // A file keeps a small output in its buffer until it is flushed and
+    // writes a large one at once. Neither failure is an error to
+    // QSaveFile::commit(): with Qt 6.4 the small export replaced the file by
+    // its first 512 bytes, and the large SVG does so with any Qt.
+    const bool large = GENERATE(false, true);
+    QByteArray entities = kSmallEntities;
+    for (int i = 0; large && i < 600; ++i) {
+        const QByteArray x = QByteArray::number(i % 200);
+        entities += "0\nLINE\n8\n0\n10\n" + x + "\n20\n0\n11\n" + x + ".5\n21\n100\n";
+    }
     RS_Graphic graphic;
-    importDrawing(dir, graphic, kSmallEntities);
-    const auto format = GENERATE("SVG", "PNG");
+    importDrawing(dir, graphic, entities);
+    const QString format = GENERATE("SVG", "PNG");
+    CAPTURE(large, format.toStdString());
+
+    // What the limit cuts short, and for the large SVG past the write buffer.
+    const QString whole = dir.filePath("whole");
+    REQUIRE(slotFileExport(&graphic, whole, format, QSize(1200, 800), QSize(5, 5), false, false));
+    REQUIRE(QFileInfo(whole).size() > 512);
+    if (large && format == "SVG")
+        REQUIRE(QFileInfo(whole).size() > 16384);
+
     const QByteArray previous("previous nonempty export\n");
     const QString out = writeFile(dir, "existing", previous);
     bool result;

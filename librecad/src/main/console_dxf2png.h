@@ -36,7 +36,8 @@ int console_dwg2svg(int argc, char* argv[]);
 
 // Paint the graphic with RS_Painter into the named file. Raster formats are
 // written as images; "SVG" is painted through a QSvgGenerator. Returns true
-// only if the file was written.
+// only if the file was written; a file of that name is replaced only by the
+// whole output.
 bool slotFileExport(RS_Graphic* graphic,
                     const QString& name,
                     const QString& format,
