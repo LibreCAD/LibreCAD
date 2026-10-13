@@ -3666,6 +3666,8 @@ TEST_CASE("DXF ATTRIB writes the embedded MTEXT as ezdxf and AutoCAD read it",
     attrib.text = "fallback";
     attrib.basePoint = DRW_Coord(1.0, -5.0, 0.0);
     attrib.height = 9.0;
+    // A type that says nothing of an MTEXT: some files have none.
+    attrib.m_attributeType = 0;
     attrib.mtext = std::make_unique<DRW_MText>();
     attrib.mtext->basePoint = DRW_Coord(1.0, 4.0, 0.0);
     attrib.mtext->angle = 30.0;
@@ -3677,6 +3679,13 @@ TEST_CASE("DXF ATTRIB writes the embedded MTEXT as ezdxf and AutoCAD read it",
     const DxfGroups groups = dxfRecordGroups(path, "ATTRIB");
     const std::size_t m = checkEmbeddedMTextRecord(groups);
     const auto marker = groups.begin() + m;
+
+    // With an MTEXT the attribute is a multi-line one, whatever type it
+    // came with: the type after the lock flag says so.
+    REQUIRE(m >= 6);
+    CHECK(groups[m - 6].first == "280");
+    CHECK(groups[m - 5].first == "71");
+    CHECK(groups[m - 5].second == "2");
 
     const auto rotations = groupValues(marker, groups.end(), "50");
     REQUIRE(rotations.size() == 1);
@@ -3701,6 +3710,7 @@ TEST_CASE("DXF ATTRIB writes the embedded MTEXT as ezdxf and AutoCAD read it",
     CHECK(att.mtext->secPoint.x == 0.0);
     CHECK(att.mtext->secPoint.y == 0.0);
     CHECK(att.mtext->text == "rotated");
+    CHECK(att.m_attributeType == 2);
     std::filesystem::remove(path);
   }
 }
