@@ -2533,6 +2533,28 @@ TEST_CASE("texts sharing a source handle get handles of their own",
     }
 }
 
+TEST_CASE("of two block references with one lineage the first has the attribute texts",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-owner]") {
+    const Bench bench("attr_owner_shared_lineage");
+    EditableDrawing drawing;
+    loadWithHandles(bench, drawing, "fixture");
+    const RS_Insert* insert = referenceAt(drawing, 0);
+
+    // A clone put into the drawing without an undo step: two block
+    // references that show, and the texts name both by their one lineage.
+    RS_Entity* twin = insert->clone();
+    twin->clearDwgProvenance(RS_Entity::Identity);
+    twin->move(RS_Vector(50.0, 0.0));
+    drawing.m_graphic.addEntity(twin);
+    REQUIRE(twin->lineage() == insert->lineage());
+
+    for (const auto& file : saveAll(bench, drawing, "twin", {"dxf2018", "dxf2007", "dwg2018", "dwg2000"},
+                                    "INSERT@0[first|second||secret] INSERT@50[] TEXT[] hidden=0 LINE=1")) {
+        CHECK(attributeTags(file) == std::vector<std::string>{"NAME", "NOTE", "BLANK", "CODE"});
+        CHECK(lc::test::dxfRecords(file, "TEXT").empty());
+    }
+}
+
 TEST_CASE("pasted attribute texts stay with the pasted block reference",
           "[attribute-export][attrib][filter][dxf][dwg][attrib-owner]") {
     const Bench bench("attr_owner_paste");

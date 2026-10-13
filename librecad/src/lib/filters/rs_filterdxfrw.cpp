@@ -12735,19 +12735,26 @@ void RS_FilterDXFRW::buildInsertAttribPlan() {
   const auto scan = [this, &showsNothing](RS_EntityContainer *container) {
     if (container == nullptr)
       return;
-    std::map<unsigned long long, const RS_Entity *> inserts;
     std::vector<RS_Entity *> texts;
     for (RS_Entity *entity : *container) {
-      if (entity == nullptr || entity->getFlag(RS2::FlagDeleted))
-        continue;
-      if (entity->rtti() == RS2::EntityInsert) {
+      if (entity != nullptr && !entity->getFlag(RS2::FlagDeleted) &&
+          entity->ownerLineage() != 0 &&
+          (entity->rtti() == RS2::EntityText ||
+           entity->rtti() == RS2::EntityMText)) {
+        texts.push_back(entity);
+      }
+    }
+    // Most containers hold no text of an attribute, whatever the number of
+    // their INSERTs: those are looked up only for a text that names one.
+    if (texts.empty())
+      return;
+    std::map<unsigned long long, const RS_Entity *> inserts;
+    for (const RS_Entity *entity : *container) {
+      if (entity != nullptr && !entity->getFlag(RS2::FlagDeleted) &&
+          entity->rtti() == RS2::EntityInsert) {
         // The first keeps a lineage two INSERTs share (clones put into a
         // container without an undo section).
         inserts.emplace(entity->lineage(), entity);
-      } else if (entity->ownerLineage() != 0 &&
-                 (entity->rtti() == RS2::EntityText ||
-                  entity->rtti() == RS2::EntityMText)) {
-        texts.push_back(entity);
       }
     }
     std::map<const RS_Entity *, std::vector<std::pair<int, RS_Entity *>>> found;
