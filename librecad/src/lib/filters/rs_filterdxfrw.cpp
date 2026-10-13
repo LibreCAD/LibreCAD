@@ -244,16 +244,20 @@ bool hasMTextAlignmentPrefix(const QString &text) {
 // The x axis direction of an MTEXT (group 11, WCS) for a text drawn at
 // `angle`. The stored direction is kept while it says that angle: it is what
 // the file had and may point out of the drawing plane. A record read with a
-// rotation angle alone has none; DXF keeps the angle in group 50 and such a
-// record stays as it was, DWG has no other place for it.
+// rotation angle alone has none, all three zero; DXF keeps the angle in
+// group 50 and such a record stays as it was, DWG has no other place for it.
 DRW_Coord mtextXAxis(double angle, const DRW_Coord &stored, bool angleEdited,
                      bool required) {
   const DRW_Coord fromAngle(std::cos(angle), std::sin(angle), 0.0);
-  const double length = std::hypot(stored.x, stored.y);
-  if (!(length > 0.0))
+  if (stored.x == 0.0 && stored.y == 0.0 && stored.z == 0.0)
     return required || angleEdited ? fromAngle : stored;
-  const bool sameAngle = std::fabs(stored.x / length - fromAngle.x) < 1.0e-9 &&
-                         std::fabs(stored.y / length - fromAngle.y) < 1.0e-9;
+  // The angle a reader takes from the axis, as DRW_MText::updateAngle()
+  // does. An axis along Z alone, of a text that runs up a vertical face, is
+  // an axis like any other: it reads as the angle of its two zeros, and the
+  // direction of that angle is no replacement for it.
+  const double read = std::atan2(stored.y, stored.x);
+  const bool sameAngle = std::fabs(std::cos(read) - fromAngle.x) < 1.0e-9 &&
+                         std::fabs(std::sin(read) - fromAngle.y) < 1.0e-9;
   return sameAngle ? stored : fromAngle;
 }
 

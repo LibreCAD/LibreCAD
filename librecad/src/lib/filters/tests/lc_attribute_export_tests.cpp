@@ -1640,16 +1640,20 @@ TEST_CASE("a rotated attribute read from DXF keeps its angle in the formats of 2
         const char* m_ownAngle;                 // group 50 of the attribute itself
         const char* m_direction;                // of the MTEXT
         double m_degrees;
-        std::vector<std::string> m_axis;        // 11 and 21 of the MTEXT in a saved DXF
+        std::vector<std::string> m_axis;        // 11, 21 and 31 of the MTEXT in a saved DXF
         std::vector<std::string> m_angle;       // and its 50
         const char* m_marker;                   // of the embedded object
     };
     const std::vector<Variant> variants{
         // As AutoCAD writes it: the x-axis, and the angle on the attribute.
-        {"x_axis", "50\n30\n", "11\n0.8660254037844387\n21\n0.5\n31\n0\n", 30.0, {"0.8660254037844387", "0.5"}, {},
-         "101"},
+        {"x_axis", "50\n30\n", "11\n0.8660254037844387\n21\n0.5\n31\n0\n", 30.0,
+         {"0.8660254037844387", "0.5", "0"}, {}, "101"},
         // An x-axis need not have the length 1; it is the file's all the same.
-        {"long_x_axis", "50\n45\n", "11\n2\n21\n2\n31\n0\n", 45.0, {"2", "2"}, {}, "101"},
+        {"long_x_axis", "50\n45\n", "11\n2\n21\n2\n31\n0\n", 45.0, {"2", "2", "0"}, {}, "101"},
+        // Nor a part in the drawing plane: a text that runs up a wall, the
+        // plane across X, has an x-axis along Z. In the drawing it reads as
+        // the angle 0, and the direction of that angle is not its x-axis.
+        {"z_axis", "", "210\n1\n220\n0\n230\n0\n11\n0\n21\n0\n31\n1\n", 0.0, {"0", "0", "1"}, {}, "101"},
         {"angle", "", "50\n75\n", 75.0, {}, {"75"}, "101"},
         // As earlier versions of LibreCAD wrote a text that was rotated in
         // the drawing: the x-axis the file came with, and after it the angle.
@@ -1665,8 +1669,10 @@ TEST_CASE("a rotated attribute read from DXF keeps its angle in the formats of 2
     const auto checkDirection = [](const DxfRecord& record, const std::vector<std::string>& axis,
                                    const std::vector<std::string>& angle) {
         std::vector<std::string> written = record.embedded(11);
-        for (const std::string& y : record.embedded(21)) {
-            written.push_back(y);
+        for (const int code : {21, 31}) {
+            for (const std::string& value : record.embedded(code)) {
+                written.push_back(value);
+            }
         }
         CAPTURE(written, record.embedded(50));
         CHECK(lc::test::sameValues(axis, written));
@@ -1701,8 +1707,13 @@ TEST_CASE("a rotated attribute read from DXF keeps its angle in the formats of 2
         DwgContent content;
         readDwg(out, content);
         const DRW_MText& mtext = onlyEmbeddedMText(content);
-        CAPTURE(mtext.secPoint.x, mtext.secPoint.y);
-        CHECK(std::hypot(mtext.secPoint.x, mtext.secPoint.y) >= 1.0 - 1e-9);
+        CAPTURE(mtext.secPoint.x, mtext.secPoint.y, mtext.secPoint.z);
+        if (std::string(variant.m_name) == "z_axis") {
+            CHECK(sameNumbers({0.0, 0.0, 1.0}, {mtext.secPoint.x, mtext.secPoint.y, mtext.secPoint.z}));
+        }
+        else {
+            CHECK(std::hypot(mtext.secPoint.x, mtext.secPoint.y) >= 1.0 - 1e-9);
+        }
         CHECK(std::atan2(mtext.secPoint.y, mtext.secPoint.x) == Catch::Approx(angle).margin(1e-9));
         CHECK(mtext.m_r2018IsNotAnnotative);
 
@@ -1713,7 +1724,7 @@ TEST_CASE("a rotated attribute read from DXF keeps its angle in the formats of 2
         const DxfRecord turnedRecord = onlyRecord(turnedDxf, "ATTRIB");
         checkDirection(turnedRecord,
                        {QString::number(std::cos(1.0), 'g', 17).toStdString(),
-                        QString::number(std::sin(1.0), 'g', 17).toStdString()},
+                        QString::number(std::sin(1.0), 'g', 17).toStdString(), "0"},
                        {});
         // The attribute itself turns with its MTEXT, about the alignment
         // point (1,4): its baseline starts one height below along the
@@ -1736,15 +1747,20 @@ TEST_CASE("a rotated attribute read from DXF keeps its angle in the formats of 2
 // the x-axis its file had next to it: a reader takes the x-axis where a
 // record has both, so the two have to be one direction, and a text that was
 // turned in the drawing cannot keep the x-axis of its file. In a DWG the
-// x-axis is all there is, also for a text that never had one.
+// x-axis is all there is, also for a text that never had one. A text that
+// runs up a wall has an x-axis along Z: no direction in the drawing, where
+// it reads as the angle 0, and the x-axis of its file as much as any other.
 TEST_CASE("a standalone MTEXT keeps a rotation made in the drawing",
           "[attribute-export][mtext][filter][dxf][dwg][attrib-geometry]") {
     const Bench bench("mtext_turned");
     // A text at 30 degrees: as AutoCAD writes it, with an x-axis that is
-    // longer than 1, and with the angle alone.
+    // longer than 1, and with the angle alone. And one on a wall, the plane
+    // across X, that runs up or down it.
     const std::string xAxis = "11\n0.8660254037844335\n21\n0.5000000000000089\n31\n0.0\n";
     const std::string longAxis = "11\n1.73205080756887\n21\n1.0\n31\n0.0\n";
     const std::string angleAlone = "50\n30\n";
+    const std::string upAWall = "210\n1\n220\n0\n230\n0\n11\n0\n21\n0\n31\n1\n";
+    const std::string downAWall = "210\n1\n220\n0\n230\n0\n11\n0\n21\n0\n31\n-1\n";
     using Turn = std::function<bool(EditableDrawing&, const RS_MText*)>;
     const Turn rotate = [](EditableDrawing& drawing, const RS_MText* text) {
         RS_RotateData data;
@@ -1773,20 +1789,26 @@ TEST_CASE("a standalone MTEXT keeps a rotation made in the drawing",
     struct Row {
         const char* m_name;
         std::string m_direction;    // of the MTEXT in the source
+        double m_degrees;           // the angle the drawing reads it at
         Turn m_turn;                // none: the text is left alone
         bool m_hasAxis;             // a DXF saved from the drawing has an x-axis
-        std::vector<double> m_sameAxis;     // and it is this one, the source's (11, 21)
+        std::vector<double> m_sameAxis;     // and it is this one, the source's (11, 21, 31)
     };
     const std::vector<Row> rows{
-        {"untouched", xAxis, nullptr, true, {0.8660254037844335, 0.5000000000000089}},
+        {"untouched", xAxis, 30.0, nullptr, true, {0.8660254037844335, 0.5000000000000089, 0.0}},
         // The x-axis of a file is its own, whatever its length, until the
         // text is turned.
-        {"long_axis", longAxis, nullptr, true, {1.73205080756887, 1.0}},
-        {"rotated", xAxis, rotate, true, {}},
-        {"mirrored", xAxis, mirror, true, {}},
-        {"angle_set", xAxis, setAngle, true, {}},
-        {"angle_alone", angleAlone, nullptr, false, {}},
-        {"angle_alone_rotated", angleAlone, rotate, false, {}},
+        {"long_axis", longAxis, 30.0, nullptr, true, {1.73205080756887, 1.0, 0.0}},
+        {"rotated", xAxis, 30.0, rotate, true, {}},
+        {"mirrored", xAxis, 30.0, mirror, true, {}},
+        {"angle_set", xAxis, 30.0, setAngle, true, {}},
+        {"angle_alone", angleAlone, 30.0, nullptr, false, {}},
+        {"angle_alone_rotated", angleAlone, 30.0, rotate, false, {}},
+        // Also the one along Z, in a DWG too: the direction of the angle 0
+        // in its place would lie along the normal of this text.
+        {"up_a_wall", upAWall, 0.0, nullptr, true, {0.0, 0.0, 1.0}},
+        {"down_a_wall", downAWall, 0.0, nullptr, true, {0.0, 0.0, -1.0}},
+        {"up_a_wall_rotated", upAWall, 0.0, rotate, true, {}},
     };
     for (const Row& row : rows) {
         for (const char* format : {"dxf2018", "dxf2007", "dxf2000", "dwg2018", "dwg2000"}) {
@@ -1796,13 +1818,17 @@ TEST_CASE("a standalone MTEXT keeps a rotation made in the drawing",
             loadDxf(bench, standaloneMTextDxf("1", row.m_direction), drawing,
                     std::string(row.m_name) + "_" + to.m_name + "_source");
             const RS_MText* read = only<RS_MText>(drawing, RS2::EntityMText);
-            REQUIRE(sameDirection(read->getAngle(), M_PI / 6.0));
+            const double sourceAngle = row.m_degrees * M_PI / 180.0;
+            REQUIRE(sameDirection(read->getAngle(), sourceAngle));
             if (row.m_turn) {
                 REQUIRE(row.m_turn(drawing, read));
             }
             const RS_MText* shown = only<RS_MText>(drawing, RS2::EntityMText);
             const double angle = shown->getAngle();
-            REQUIRE(sameDirection(angle, M_PI / 6.0) == !row.m_turn);
+            REQUIRE(sameDirection(angle, sourceAngle) == !row.m_turn);
+            // An x-axis that is kept and has no part in the drawing plane
+            // gives no direction to compare.
+            const bool alongZ = !row.m_sameAxis.empty() && row.m_sameAxis[0] == 0.0 && row.m_sameAxis[1] == 0.0;
 
             const auto out = save(bench, drawing, row.m_name, to);
             if (to.m_dxf) {
@@ -1811,10 +1837,10 @@ TEST_CASE("a standalone MTEXT keeps a rotation made in the drawing",
                 const std::vector<double> written = ownNumbers(record, {50});
                 REQUIRE(written.size() == 1);
                 CHECK(sameDirection(written.front() * M_PI / 180.0, angle));
-                const std::vector<double> axis = ownNumbers(record, {11, 21});
+                const std::vector<double> axis = ownNumbers(record, {11, 21, 31});
                 CAPTURE(written, axis);
                 if (row.m_hasAxis) {
-                    REQUIRE(axis.size() == 2);
+                    REQUIRE(axis.size() == 3);
                     CHECK(sameDirection(std::atan2(axis[1], axis[0]), angle));
                 }
                 else {
@@ -1832,10 +1858,12 @@ TEST_CASE("a standalone MTEXT keeps a rotation made in the drawing",
                 REQUIRE(written.m_mtexts.size() == 1);
                 const DRW_Coord& axis = written.m_mtexts.front().secPoint;
                 CAPTURE(axis.x, axis.y, axis.z);
-                CHECK(std::hypot(axis.x, axis.y) >= 1.0 - 1e-9);
+                if (!alongZ) {
+                    CHECK(std::hypot(axis.x, axis.y) >= 1.0 - 1e-9);
+                }
                 CHECK(sameDirection(std::atan2(axis.y, axis.x), angle));
                 if (!row.m_sameAxis.empty()) {
-                    CHECK(std::vector<double>{axis.x, axis.y} == row.m_sameAxis);
+                    CHECK(std::vector<double>{axis.x, axis.y, axis.z} == row.m_sameAxis);
                 }
             }
 
