@@ -1632,6 +1632,7 @@ void LC_LayerTreeWidget::doCreateLayersCopy(const QModelIndex &sourceIndex, bool
     QHash<RS_Layer *, RS_Layer *> layersMap = m_layerTreeModel->createLayersCopy(sourceIndex);
     if (!layersMap.empty()) {
         m_graphic->undoableModify(m_graphicView->getViewPort(), [this, layersMap,duplicateEntities](LC_DocumentModificationBatch& ctx)-> bool {
+                                      ctx.dontSetActiveLayerAndPen();
                                       QHashIterator<RS_Layer*, RS_Layer*> iter{layersMap};
                                       while (iter.hasNext()) {
                                           iter.next();
@@ -1723,6 +1724,7 @@ void LC_LayerTreeWidget::doMoveSelectionToLayer(const LC_LayerTreeItem* layerIte
         bool removeOriginals = !duplicate;
         m_document->undoableModify(m_graphicView->getViewPort(),
                                    [ removeOriginals, targetLayer, resolvePens, selectedEntities](LC_DocumentModificationBatch& ctx)-> bool {
+                                       ctx.dontSetActiveLayerAndPen();
                                        for (const auto en : selectedEntities) {
                                            // iterate over all entities
                                            if (!en->isParentSelected()) {
