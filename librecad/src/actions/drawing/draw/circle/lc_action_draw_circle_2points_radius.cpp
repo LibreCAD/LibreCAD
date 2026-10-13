@@ -102,7 +102,7 @@ void LC_ActionDrawCircle2PointsRadius::onMouseMoveEvent(const int status, const 
 
         case SetPoint2: {
             mouse = getSnapAngleAwarePoint(e, m_actionData->point1, mouse, true);
-            if (mouse.distanceTo(m_actionData->point1) <= 2. * m_radius) {
+            if (LC_CreationCircle::canCreate2PRadius(m_actionData->point1, mouse, m_radius)) {
                 m_actionData->point2 = mouse;
             }
 
@@ -182,7 +182,8 @@ void LC_ActionDrawCircle2PointsRadius::onCoordinateEvent(const int status, [[may
         }
         case SetPoint2: {
             const double distance = coord.distanceTo(m_actionData->point1);
-            if (distance <= 2. * m_radius) {
+            // as create2PRadius() has it: a diameter may round to more than twice the radius
+            if (LC_CreationCircle::canCreate2PRadius(m_actionData->point1, coord, m_radius)) {
                 m_actionData->point2 = coord;
                 addSnappedPointToVisualSnap(coord);
                 moveRelativeZero(coord);
