@@ -46,6 +46,7 @@
 #include <filesystem>
 #include <fstream>
 #include <functional>
+#include <iterator>
 #include <limits>
 #include <map>
 #include <memory>
@@ -1711,6 +1712,19 @@ public:
     return DwgWriteFailureTestAccess::injectCommittedIdentity(
         *this, SourceKind::Entity, 0xBEEFu,
         DRW::DwgModelSpaceEndBlockEntityHandle);
+  }
+};
+
+// Fails the export in the last callback of the low-level writer without
+// telling that writer, which then completes and publishes the staged file.
+// Only fileExport is left to see the failure, as it is for a write that
+// dropped typed items.
+class PublishedThenFailedDwgFilter final : public RS_FilterDXFRW {
+public:
+  bool finalizeDwgWriteStructure() override {
+    const bool finalized = RS_FilterDXFRW::finalizeDwgWriteStructure();
+    DwgWriteFailureTestAccess::latch(*this);
+    return finalized;
   }
 };
 #endif
@@ -3503,6 +3517,53 @@ TEST_CASE("RS_FilterDXFRW rolls back late structure publication",
 
   std::remove(failedPath.c_str());
   std::remove(successPath.c_str());
+}
+
+TEST_CASE("RS_FilterDXFRW removes the staged file of a failed export",
+          "[dwg-write][transaction][filter][safety]") {
+  ensureQtSettings();
+
+  RS_Graphic source;
+  source.initForNewDocument();
+  source.addEntity(new RS_Line(
+      &source, RS_LineData(RS_Vector(0.0, 0.0), RS_Vector(10.0, 10.0))));
+
+  // A directory of its own, so that whatever the export leaves in it is seen.
+  const std::filesystem::path directory = tempPath("failed_export_staging");
+  std::filesystem::remove_all(directory);
+  REQUIRE(std::filesystem::create_directory(directory));
+  const std::filesystem::path path = directory / "drawing.dwg";
+  const auto entryNames = [&directory] {
+    std::vector<std::string> names;
+    for (const auto &entry : std::filesystem::directory_iterator(directory))
+      names.push_back(entry.path().filename().string());
+    return names;
+  };
+
+  SECTION("to a new file") {
+    PublishedThenFailedDwgFilter filter;
+    CHECK_FALSE(filter.fileExport(source, QString::fromStdString(path.string()),
+                                  RS2::FormatDWG2013));
+    CHECK(entryNames() == std::vector<std::string>{});
+  }
+
+  SECTION("onto an existing file, which it keeps") {
+    const std::string previous = "the previous drawing";
+    {
+      std::ofstream out(path, std::ios::binary);
+      out << previous;
+    }
+    PublishedThenFailedDwgFilter filter;
+    CHECK_FALSE(filter.fileExport(source, QString::fromStdString(path.string()),
+                                  RS2::FormatDWG2013));
+    CHECK(entryNames() == std::vector<std::string>{"drawing.dwg"});
+    std::ifstream in(path, std::ios::binary);
+    const std::string kept((std::istreambuf_iterator<char>(in)),
+                           std::istreambuf_iterator<char>());
+    CHECK(kept == previous);
+  }
+
+  std::filesystem::remove_all(directory);
 }
 
 TEST_CASE("RS_FilterDXFRW clears deferred table failure state on reuse",

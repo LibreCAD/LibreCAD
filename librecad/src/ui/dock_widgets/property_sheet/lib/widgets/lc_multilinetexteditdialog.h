@@ -42,6 +42,9 @@ public:
     QString getText() const;
     void setText(const QString& text) const;
 
+protected:
+    bool eventFilter(QObject* watched, QEvent* event) override;
+
 private
     slots :
     void on_buttonBox_clicked(QAbstractButton* button);

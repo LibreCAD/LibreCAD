@@ -37,7 +37,7 @@ positioned native CAD outlines from the shaped glyphs.
 | Architectural review baseline | `628a1ba845931a37b8d745a8ad08d4731615812c` |
 | Workflow review checkout | `ea5696771e74c4f22ae73fc7b031149a1b69a305` |
 | Review date | 2026-10-11 |
-| PR workflow refinement date | 2026-10-12; planning only, with P7a/P7b/P7c still Planned |
+| PR workflow refinement date | 2026-10-13; #3099 remains an early draft, with P7a incomplete and P7b/P7c pending |
 | State | Implementation in progress; baseline/probe and headless services under validation; entity rendering and release gates pending |
 | Execution requirement | During authorized implementation, require intermediate scoped commits, explicit validation, plan updates, draft PR creation and revision-bound deep PR refinement; a plan-only update does not authorize implementation or publication |
 | Primary delivery | Opt-in, versioned OpenType font profile with correct ordinary Arabic shaping and common diacritics |
@@ -62,10 +62,65 @@ Ordinary tatweel and combining marks are not deferred with those features.
 Automatic wrapping and a full MTEXT paragraph editor remain separate work.
 Preserve explicit line breaks and reference-width data; expose shaped advances
 and safe break information so future wrapping can reshape at actual boundaries.
-Coordinate shared metrics with the [MTEXT indentation plan](/Users/dli/dev/LibreCAD/docs/plan_mtext_indentation_3032.md)
+Coordinate shared metrics with the [MTEXT indentation plan](plan_mtext_indentation_3032.md)
 without absorbing that entire project into Arabic support.
 
 ## Corrections to the earlier approach
+
+### PR #3099 refinement: 2026-10-13
+
+This round updates the published foundations at `c40da2c8c`, not the private
+TEXT/MTEXT integration. The primary dirty checkout remains untouched. Current
+master `8cd8b521b` is merged without rewriting published history. Its refined
+#3061 indentation, paragraph-command, tab and width contracts supersede the
+older prerequisite implementation and tests retained in the initial draft.
+Canonical-source APIs, empty-line border guards and scoped writer ownership
+remain; staged DWG cleanup from master is retained alongside those guards.
+
+The opt-in `librecad_text_foundation_tests` aggregate builds sixteen headless
+executables without the application library. Register them with
+`LIBRECAD_REGISTER_TEXT_FOUNDATION_TESTS=ON`, then run the `text-foundation`
+CTest label. The separate allocation-failure executable stays isolated from
+Catch. Native rendering, external Unicode conformance, GUI, package and slow
+outline suites are not silently included in this bounded target.
+
+Reproduction from a clean checkout with Qt6, Catch2 v3 and the enabled backend's
+public development dependencies:
+
+```sh
+set -e
+for backend in ON OFF; do
+    build="build-text-$backend"
+    cmake -S . -B "$build" -G Ninja -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_TESTS=ON -DLIBRECAD_ENABLE_OPENTYPE="$backend" \
+        -DLIBRECAD_REGISTER_TEXT_FOUNDATION_TESTS=ON
+    cmake --build "$build" --target librecad_text_foundation_tests --parallel 2
+    ctest --test-dir "$build" -L text-foundation --no-tests=error --verbose
+done
+```
+
+Fresh macOS/AppleClang 21, Qt 6.11.2, HarfBuzz 14.6.0 and FreeType 2.14.3:
+ON passes all sixteen foundation executables and both registered format
+executables (18/18); OFF passes all sixteen foundation executables (16/16).
+The format suites retain 710 assertions/6 cases and 279/3 respectively.
+The ON layout suite passes 715,036/16, shaper 639,014/7 and registry 128/7.
+No certified-engine registry cases skip in that local ON run. OFF checks
+backend-unavailable contracts, not equivalent shaping coverage. Workflow lint
+passes. Native merged-application and qmake compile validation are in progress;
+this paragraph is not a whole-PR or sanitizer acceptance claim.
+
+The new Ubuntu ON/OFF workflow uses system dependencies and records actual
+engine versions plus verbose test/skip logs as artifacts. A different HarfBuzz
+version intentionally skips certified installed-resource cases: such a green
+job is system-engine regression coverage, not certified-profile acceptance.
+DWG/DXF CI explicitly selects the legacy backend and builds both newly
+registered format binaries before unfiltered CTest. Release-build defaults are
+unchanged; missing release dependency and package coverage remains a blocker.
+
+Outstanding gates are still the native adapters/consumers and persistence,
+STYLE/ligature/paint-order findings, coherent fault/sanitizer gates, certified
+platform dependencies, packaged resources/licenses and independent Arabic
+visual review. Private work and historical failures are not promoted to passes.
 
 | Earlier assumption | Revised requirement |
 | --- | --- |
@@ -3626,10 +3681,10 @@ count, erase failed validation history or turn an unverified fix into a pass.
 | Review dispositions and presentation | Title/body distinguish compiled OpenType availability from font/profile activation, list unpublished private WIP and preserve failed sanitizer history. Complete reviewer walkthrough and independent per-area refinement remain pending |
 | Feedback reconciliation | Creation snapshot verified; no external reviewer requested and no review disposition claimed. Retrieve revision-bound feedback/checks during P7b/P7c; queued checks are not passes |
 | Remote operation reconciliation | Exact owned-branch dry-run/push0; remote79d1 verified. Connector creation denied403 before creation; existing authenticated browser then created exactly one draft. GitHub readback and task attachment succeed; no authentication/permission changes, force push, tags or duplicate PR |
-| Integration status | GitHub reports mergeable=false/dirty. UI lists six conflicts: CMakeLists.txt, indentation plan, rs_mtext.cpp/.h, text_bidi_regression_tests.cpp and rs_filterdxfrw.cpp. Target advanced12 commits with eight overlapping paths; upstream #3061 contains broader indentation refinements than the retained local prerequisite commits. Reconciliation and clean integration validation remain pending |
-| Validation and findings | P0–P5 mandatory implementation/findings remain open as recorded; no PR-wide acceptance. Native scope/verified executables are CTest-registered but not built by the grouped DWG/DXF workflow recipe; HarfBuzz dependency provisioning, platform/release lanes and portable documentation links/evidence remain pending |
+| Integration status | 2026-10-13 refinement merges master `8cd8b521b`, retaining #3061's refined layout/width contracts and tests, canonical source APIs, empty-line guards, writer ownership and upstream staged-DWG cleanup. All six conflicts are resolved in the isolated candidate; native merged regressions and remote mergeability readback remain pending |
+| Validation and findings | Fresh local CMake ON18/18 and OFF16/16 bounded executables pass. qmake6 ON/OFF configuration and focused font/shaper compiles pass; ON also compiles merged rs_mtext.cpp. Workflow lint passes. New opt-in sixteen-suite headless CI and corrected format build lists are present; hosted results pending. System-engine skips are explicit, not certified resource acceptance. P0–P5 mandatory findings and P6 release dependencies/packages remain open |
 | Evidence invalidation | Initial candidate and target recorded above; compare code/resources/dependencies and exact head/base after every corrective update. A plan-only publication record does not validate the application or close an existing finding |
-| Next action | Continue P5 scoped implementation/validation, reconcile master without discarding unrelated WIP, repair CI/discovery and portable reproduction gaps, then independently refine the complete committed candidate. Keep this early PR draft until all readiness gates pass |
+| Next action | Finish merged native regressions and verify the corrective push/checks; continue P5 scoped implementation, then supply certified platform dependencies/packages and independently refine the complete committed candidate. Do not publish unrelated private WIP; keep this early PR draft until all readiness gates pass |
 
 #### P7a Create and verify the draft PR
 
@@ -4001,6 +4056,10 @@ candidate. Reconcile source thread state separately from finding state.
 | Finding ID | Source feedback reference | Severity and location | Reviewed head and base | Required resolution | State | Fix commit and validation |
 | --- | --- | --- | --- | --- | --- | --- |
 | Populate before P7a | Link prepublication review records; retain PR comment/review identities when available | Import prepublication findings; add PR review findings as discovered | Retain original revisions | Apply the resolution and verification rules below | Record actual state | Link existing or new evidence |
+| P7-MASTER-INTEGRATION-001 | 2026-10-13 GitHub metadata and six local merge conflicts | Mandatory compatibility; MTEXT layout, tests and filter writer ownership | Published `c40da2c8c`, master `8cd8b521b` | Retain current master's refined indentation/paragraph/width contracts while preserving source state, empty-line guards and both export cleanup mechanisms | Fixed pending native verification | Isolated merge has no conflict markers; qmake compiles merged MTEXT. Current native regression run remains pending; no whole-feature acceptance |
+| P7-CI-DISCOVERY-001 | Published workflow/test-registration audit | Mandatory CI correctness; unfiltered CTest invoked after building an incomplete executable list | Published `c40da2c8c`, master `8cd8b521b` | Build both registered scope/verified binaries and keep the format lane independent of optional font dependencies | Locally verified; hosted pending | Fresh ON format scope710/6 and verified279/3 pass; Linux/Windows build lists include both binaries and explicitly select OpenType OFF. Existing master SVG target retained |
+| P7-HEADLESS-CI-001 | Published CMake/CI audit | P2 regression coverage; sixteen excluded, unregistered foundation executables | Published `c40da2c8c` | Add one opt-in aggregate/label and ON/OFF workflow without application rebuilds; preserve separate allocator-failure runner and actual engine/skip evidence | Locally verified; hosted pending | Fresh ON16/16, OFF16/16, actionlint pass. Ubuntu uses system engines; certified-resource skips remain visible in verbose artifacts and are not acceptance |
+| P6-RELEASE-DEPS-001 | 2026-10-13 release-workflow audit | Mandatory release/build completeness; default-ON backend versus missing public dependencies | Published `c40da2c8c`, master `8cd8b521b` | Provision/version/audit HarfBuzz and FreeType on all supported release architectures, universal macOS libraries, runtime resources and third-party notices; validate ON/OFF packages | Open | Existing release Linux/CodeQL lists omit HarfBuzz development packages; Windows has no public backend dependencies; macOS builds only universal FreeType. Private dependency/package proposals are excluded from this scoped update; keep draft |
 | P5-SIDECAR-001 | Independent embedded-sidecar baseline audit; retention finding above | Mandatory data preservation; `appendInsertAttribSidecar`, `decodeInsertAttribMTextXData` and ATTRIB extraction/export | HEAD `a8ade2677`; no PR/base review claimed | Lossless compatible retention, explicit failure instead of dropped ATTRIB, regressions and independent verification | Open | No verified fix or transport acceptance yet |
 | P5-FILTER-LIFETIME-001 | Mixed-tree diagnostic and coherent baseline/repair; cross-format lifetime finding above | Mandatory crash/lifetime failure; `RS_FilterDXFRW::fileExport`, `prepareDRWDimStyleText` and writer/version selection | Baseline `9e50184ff`; verified repair `37d2c614d` and exact source/test identities above; no PR/base review claimed | Writer ownership on all exits, same-instance cross-format/version/retry and exception regressions with independent normal/sanitizer verification | Verified | `37d2c614d`: registered ON/OFF/ASan 290 / 4 and applications pass; independent review approves and committed identities match; final whole-PR review still required |
 | P5-EMBEDDED-DXF-001 | Independent Autodesk/ezdxf wire audit; marker and namespace finding above | Mandatory format/metadata authority; `writeEmbeddedMText`, `DRW_Attrib::parseCode` and ATTRIB/ATTDEF output | Merged canonical101/verified native closure juU83Q and bounded normal/sanitizer wire replays e2Dv8i/p9dA3K; no PR/base review claimed | Canonical group-101/body/outer-XDATA ordering, external fixture/reader verification, conservative legacy reading and lossless embedded carrier | Open | Independently audited native ASCII DXF2018 boundary passes710 / 6 in both lanes with identical output and ezdxf semantic checks; paired-output audit errors0/fixes0. No full-model carrier or whole-filter save/reopen acceptance; broader contract remains open |

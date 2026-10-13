@@ -2529,6 +2529,8 @@ option (LIBRECAD_REGISTER_FORMAT_TESTS
         "Register separate DWG and DXF parser lanes with CTest" OFF)
 option (LIBRECAD_REGISTER_CROSS_READ_SMOKE
         "Register the cross-reader DWG fixture smoke test with CTest" OFF)
+option (LIBRECAD_REGISTER_TEXT_FOUNDATION_TESTS
+        "Register headless text/source-state foundation tests with CTest" OFF)
 
 if (BUILD_TESTS)
     enable_testing()
@@ -2662,6 +2664,7 @@ if (BUILD_TESTS)
         librecad/src/lib/creation/tests/lc_action_draw_line_parallel_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_fast_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_circle_center_point_tests.cpp
+        librecad/src/lib/creation/tests/lc_action_draw_circle_2points_radius_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_polyline_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_spline_tests.cpp
         librecad/src/lib/creation/tests/lc_closedshapetoolstests.cpp
@@ -2756,6 +2759,7 @@ if (BUILD_TESTS)
         librecad/src/ui/components/pen/tests/qg_widgetpen_tests.cpp
         librecad/src/ui/dialogs/tests/lc_dialog_tests.cpp
         librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreewidget_tests.cpp
+        librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreemodel_tests.cpp
         librecad/src/plugins/tests/qc_actiongetselect_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
         librecad/src/lib/gui/tests/lc_scrollmodel_tests.cpp
@@ -2767,6 +2771,7 @@ if (BUILD_TESTS)
         librecad/src/main/tests/console_command_utils_tests.cpp
         librecad/src/main/tests/lc_pdfprintlooptests.cpp
         librecad/src/main/tests/lc_consoleimporttests.cpp
+        librecad/src/main/tests/lc_consolesvgexporttests.cpp
         # Shapelib safety-net tests.  shapelib sources are compiled into
         # librecad_lib (SHARED_SOURCES) since Phase 1b, so the test target
         # only needs the test file itself.
@@ -2801,6 +2806,7 @@ if (BUILD_TESTS)
 
     add_executable(librecad_text_bidi_tests EXCLUDE_FROM_ALL
         ${LIBRECAD_TEST_SETTINGS_ISOLATION_SOURCE}
+        ${LIBRECAD_TEST_TEMP_DIRECTORY_SOURCE}
         librecad/src/main/lc_release_label.cpp
         librecad/src/lib/engine/document/entities/tests/text_bidi_regression_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp
@@ -3041,6 +3047,33 @@ if (BUILD_TESTS)
     set_target_properties(librecad_text_font_registry_tests PROPERTIES
         AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
 
+    set(LIBRECAD_TEXT_FOUNDATION_TARGETS
+        librecad_text_bidi_headless_tests
+        librecad_text_document_tests
+        librecad_text_source_codec_tests
+        librecad_output_transaction_tests
+        librecad_embedded_text_xdata_tests
+        librecad_embedded_text_model_tests
+        librecad_text_profile_tests
+        librecad_text_profile_binding_tests
+        librecad_text_style_authority_tests
+        librecad_text_profile_binding_copy_failure_tests
+        librecad_text_source_state_tests
+        librecad_text_runs_tests
+        librecad_text_runs_shaping_tests
+        librecad_text_layout_tests
+        librecad_text_shaper_tests
+        librecad_text_font_registry_tests)
+    add_custom_target(librecad_text_foundation_tests
+        DEPENDS ${LIBRECAD_TEXT_FOUNDATION_TARGETS})
+    if(LIBRECAD_REGISTER_TEXT_FOUNDATION_TESTS)
+        foreach(test_target IN LISTS LIBRECAD_TEXT_FOUNDATION_TARGETS)
+            add_test(NAME ${test_target} COMMAND ${test_target})
+            set_tests_properties(${test_target} PROPERTIES
+                LABELS text-foundation TIMEOUT 120)
+        endforeach()
+    endif()
+
     add_executable(librecad_bidi_conformance EXCLUDE_FROM_ALL
         libraries/qtbidi/tests/unicode_conformance.cpp)
     target_include_directories(librecad_bidi_conformance PRIVATE libraries/qtbidi)
@@ -3070,6 +3103,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/i18n_caret_nfc_tests.cpp
         librecad/src/lib/filters/tests/i18n_codec_tests.cpp
         librecad/src/lib/filters/tests/datastorage_tests.cpp
+        librecad/src/main/tests/lc_consolesvgexporttests.cpp
     )
     qt_add_executable(librecad_fast_tests
         EXCLUDE_FROM_ALL
@@ -3395,6 +3429,12 @@ if (BUILD_TESTS)
         get_filename_component(test_stem "${test_source}" NAME_WE)
         add_librecad_filter_micro_test("librecad_${test_stem}" "${test_source}")
     endforeach()
+    # slotFileExport is defined in console_dxf2png.cpp and the LC_Console
+    # helpers in console_command_utils.cpp (application sources, no main()),
+    # so the SVG export test compiles both translation units directly.
+    target_sources(librecad_lc_consolesvgexporttests PRIVATE
+        librecad/src/main/console_command_utils.cpp
+        librecad/src/main/console_dxf2png.cpp)
 
     # A parser-only lane for the tight implementation loop.  The existing
     # librecad_*_fast_tests targets intentionally exercise the LibreCAD filter,
@@ -3635,6 +3675,11 @@ if (BUILD_TESTS)
             ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
     endif()
     if (LIBRECAD_REGISTER_INTEGRATION_TESTS)
+        add_test(NAME librecad_console_svg_tests
+            COMMAND $<TARGET_FILE:librecad_lc_consolesvgexporttests>
+                "[console]" --reporter compact)
+        set_tests_properties(librecad_console_svg_tests PROPERTIES
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
         add_test(NAME librecad_dwg_fast_tests
             COMMAND $<TARGET_FILE:librecad_dwg_fast_tests>
                 ${LIBRECAD_FAST_TEST_EXCLUDES}

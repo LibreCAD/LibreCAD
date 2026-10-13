@@ -23,11 +23,15 @@
 
 #include "lc_multilinetexteditdialog.h"
 
+#include <QKeyEvent>
+
+#include "lc_textedit.h"
 #include "ui_lc_multilinetexteditdialog.h"
 
 LC_MultilineTextEditDialog::LC_MultilineTextEditDialog(QWidget* parent)
     : QDialog(parent), ui(new Ui::LC_MultilineTextEditDialog) {
     ui->setupUi(this);
+    ui->plainTextEdit->installEventFilter(this);
 
     setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) | Qt::WindowCloseButtonHint | Qt::WindowMaximizeButtonHint);
 }
@@ -44,6 +48,21 @@ void LC_MultilineTextEditDialog::setReadOnly(const bool value) const {
     else {
         ui->buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     }
+}
+
+/**
+ * Tab types a tab in the text box, so Shift+Tab and Ctrl+Tab are what reaches
+ * the buttons from the keyboard.
+ */
+bool LC_MultilineTextEditDialog::eventFilter(QObject* watched, QEvent* event) {
+    if (watched == ui->plainTextEdit && event->type() == QEvent::KeyPress
+        && !ui->plainTextEdit->isReadOnly() && !ui->plainTextEdit->tabChangesFocus()) {
+        if (const int step = LC_TextEdit::focusStepOf(*static_cast<QKeyEvent*>(event))) {
+            focusNextPrevChild(step > 0);
+            return true;
+        }
+    }
+    return QDialog::eventFilter(watched, event);
 }
 
 void LC_MultilineTextEditDialog::setText(const QString& text) const {

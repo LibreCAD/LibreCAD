@@ -285,6 +285,15 @@ public:
         return m_usedTextHeight;
     }
 
+    /**
+     * @return true if the text holds a paragraph command ("\\p...;"). Such a
+     * command is not drawn and not laid out, so the used width says less about
+     * the room the text needs elsewhere than the width it was given.
+     */
+    bool hasParagraphCommands() const {
+        return m_hasParagraphCommands;
+    }
+
     //	virtual double getLength() const {
     //		return -1.0;
     //	}
@@ -349,7 +358,7 @@ protected:
       Kind kind = Char;
       QChar codepoint;         ///< for Char
       RS_Font *font = nullptr; ///< for Char: active font when parsed
-      double width = 0.0;      ///< for Space: advance width
+      double width = 0.0;      ///< for Space: advance width; for Tab: advance in a right-to-left line
       QString upperText;       ///< for Stack: upper text (super-/numerator)
       QString lowerText;       ///< for Stack: lower text (sub-/denominator)
     };
@@ -357,8 +366,8 @@ protected:
     double updateAddLine(LC_TextLine* textLine, int lineCounter, double leadingAdvance);
     void addLetter(LC_TextLine& oneLine, QString letter, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition);
     double flushBidiLine(LC_TextLine &oneLine,
-                       std::vector<LC_BidiSegment> &segments,
-                       const RS_Vector &letterSpace, RS_Vector &letterPosition);
+                         std::vector<LC_BidiSegment> &segments,
+                         const RS_Vector &letterSpace, RS_Vector &letterPosition);
     void alignVertically();
     static RS_MText* createUpperLower(QString text, const RS_MTextData& data, const RS_Vector& position);
     RS_MTextData m_data;
@@ -367,7 +376,9 @@ protected:
                                       const LC_TextEntityState *preparedState = nullptr);
 
     /**
-     * Text width used by the current contents of this text entity.
+     * Text width used by the current contents of this text entity: the widest
+     * line, measured over its ink. A left-attached line is measured from the
+     * insertion point instead, so that its indentation counts.
      * This property is updated by the update method.
      * @see update
      */
@@ -378,6 +389,8 @@ protected:
      * @see update
      */
     double m_usedTextHeight = 0.;
+    /** Set by update(): the text holds a paragraph command. */
+    bool m_hasParagraphCommands = false;
     void rotateLinesRefs() const;
     RS_Entity* cloneProxy() const override;
 };

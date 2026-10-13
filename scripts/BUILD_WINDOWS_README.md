@@ -103,15 +103,18 @@ build-windows.bat
 
 Output: `windows\LibreCAD.exe` (portable version)
 
-### Force Architecture
+### Check the Architecture
 
-Override automatic architecture detection:
+The runtime libraries and the installer follow the program that was built:
+`build-windows.bat` reads the architecture from `windows\LibreCAD.exe`, not
+from the machine it runs on. Set `LC_ARCH` to have the build stop when the
+program is not what you expect:
 
 ```batch
 set LC_ARCH=AMD64
 build-windows.bat
 
-rem or for ARM64
+rem or x86, or ARM64
 set LC_ARCH=ARM64
 build-windows.bat
 ```
@@ -176,7 +179,7 @@ Or visit: https://chocolatey.org/install
 | Variable | Purpose | Example |
 |----------|---------|---------|
 | `Qt6_DIR` | Qt installation path | `C:\Qt\6.9.0\msvc2022_64` |
-| `LC_ARCH` | Force architecture | `AMD64` or `ARM64` |
+| `LC_ARCH` | Expected architecture; the build stops if the program is another | `x86`, `AMD64` or `ARM64` |
 | `LC_SKIP_NSIS` | Skip installer creation | `1` to skip |
 | `LC_NSIS_FILE` | Custom NSIS script | `custom.nsi` |
 | `TRANSLATIONS_DIR` | Qt translations path | Auto-detected from Qt6_DIR |
