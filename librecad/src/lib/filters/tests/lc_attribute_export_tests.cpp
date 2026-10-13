@@ -428,7 +428,7 @@ void checkRepeatsSource(const DxfRecord& source, const std::filesystem::path& wr
         CAPTURE(code);
         CHECK(lc::test::sameValues(source.embedded(code), record.embedded(code)));
     }
-    for (const int code : {7, 90, 45, 63}) {
+    for (const int code : {7, 90, 45, 63, 421, 441}) {
         CAPTURE(code);
         if (!source.embedded(code).empty()) {
             CHECK(lc::test::sameValues(source.embedded(code), record.embedded(code)));
@@ -1259,6 +1259,63 @@ TEST_CASE("an untouched multi-line attribute is written back as it was read",
         const auto viaDwg = save(bench, fromDwg, std::string(preset.m_name) + "_dwg2018", target("dxf2018"));
         checkWrittenDxf(viaDwg);
         checkRepeatsSource(source, viaDwg);
+    }
+}
+
+// The background of an MTEXT has a colour by number (group 63) and can have
+// a true colour next to it (group 421), which is the colour then. AutoCAD
+// writes the nearest numbered colour with it; ezdxf writes 0.
+TEST_CASE("the background of an attribute's MTEXT keeps its true colour",
+          "[attribute-export][attrib][filter][dxf][keep]") {
+    const Bench bench("attr_background");
+    struct Variant {
+        const char* m_name;
+        const char* m_background;
+        std::vector<std::string> m_number;
+        std::vector<std::string> m_trueColour;
+    };
+    const std::vector<Variant> variants{
+        {"autocad", "90\n1\n63\n97\n421\n3568962\n45\n1.25\n441\n0\n", {"97"}, {"3568962"}},
+        {"ezdxf", "45\n1.5\n90\n1\n63\n0\n421\n16711680\n", {"0"}, {"16711680"}},
+        // Without a true colour none is written, and the attribute is as
+        // much a multi-line one as the others.
+        {"number_only", "90\n1\n63\n97\n45\n1.25\n441\n0\n", {"97"}, {}},
+    };
+    const Target to = target("dxf2018");
+    for (const Variant& variant : variants) {
+        const std::string name = variant.m_name;
+        CAPTURE(name);
+        AttributeDxf fixture;
+        fixture.m_mtextTail = variant.m_background;
+        EditableDrawing drawing;
+        const DxfRecord source = onlyRecord(load(bench, fixture, drawing, name + "_source"), "ATTRIB");
+        REQUIRE(source.embedded(421) == variant.m_trueColour);
+        const auto checkBackground = [&](const std::filesystem::path& file) {
+            checkWrittenDxf(file);
+            const DxfRecord record = onlyRecord(file, "ATTRIB");
+            CAPTURE(file.filename().string());
+            CHECK(record.embedded(90) == std::vector<std::string>{"1"});
+            CHECK(record.embedded(63) == variant.m_number);
+            CHECK(record.embedded(421) == variant.m_trueColour);
+        };
+
+        const auto untouched = save(bench, drawing, name, to);
+        checkBackground(untouched);
+        checkRepeatsSource(source, untouched);
+        // The file that LibreCAD wrote keeps it through another save.
+        EditableDrawing reopened;
+        REQUIRE(lc::test::importDrawing(reopened.m_graphic, untouched, to.m_format));
+        checkBackground(save(bench, reopened, name + "_again", to));
+        // A DWG is saved all the same; what it holds of the background is
+        // not this case's.
+        const Target dwg = target("dwg2018");
+        CHECK(shownAttribute(save(bench, drawing, name, dwg), dwg).m_multiLine);
+
+        // The background is no part of the text: an edit leaves it alone.
+        drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [](RS_MText& text) { text.setText("changed"); });
+        const auto edited = save(bench, drawing, name + "_edited", to);
+        checkBackground(edited);
+        CHECK(onlyRecord(edited, "ATTRIB").embedded(1) == std::vector<std::string>{"changed"});
     }
 }
 

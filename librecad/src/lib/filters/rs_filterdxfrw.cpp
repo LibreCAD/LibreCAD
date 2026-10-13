@@ -5529,6 +5529,7 @@ struct InsertAttribSidecar {
     int backgroundFlags = 0;
     double backgroundScale = 0.0;
     int backgroundColor = 0;
+    int backgroundTrueColor = -1; // group 421; -1: none
     int backgroundTransparency = 0;
     bool r2018IsNotAnnotative = false;
     int r2018Version = 0;
@@ -5789,6 +5790,12 @@ void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
       1071, static_cast<std::int32_t>(mtext.styleH.ref)));
   mtextPayload.push_back(std::make_shared<DRW_Variant>(
       1071, static_cast<std::int32_t>(mtext.m_r2018AnnotativeAppHandle)));
+  // The true colour of the background, only where there is one: the reader
+  // of this group takes no negative number.
+  if (mtext.m_backgroundTrueColor >= 0) {
+    mtextPayload.push_back(std::make_shared<DRW_Variant>(
+        1071, static_cast<std::int32_t>(mtext.m_backgroundTrueColor)));
+  }
   mtextPayload.push_back(std::make_shared<DRW_Variant>(1040, mtext.interlin));
   mtextPayload.push_back(
       std::make_shared<DRW_Variant>(1040, mtext.m_backgroundScale));
@@ -6380,6 +6387,9 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
           break;
         case 5:
           sidecar.mtext.annotativeAppHandle = number;
+          break;
+        case 6:
+          sidecar.mtext.backgroundTrueColor = static_cast<int>(number);
           break;
         default:
           break;
@@ -31197,6 +31207,7 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
           mtext->m_backgroundFlags = saved.backgroundFlags;
           mtext->m_backgroundScale = saved.backgroundScale;
           mtext->m_backgroundColor = saved.backgroundColor;
+          mtext->m_backgroundTrueColor = saved.backgroundTrueColor;
           mtext->m_backgroundTransparency = saved.backgroundTransparency;
           mtext->m_r2018IsNotAnnotative = saved.r2018IsNotAnnotative;
           mtext->m_r2018Version =
