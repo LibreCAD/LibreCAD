@@ -1615,7 +1615,10 @@ void RS_Painter::setPen(const RS_Pen& pen, const DashSpace dashSpace) {
     m_lastUsedPen.setCapStyle(m_penCapStyle);
 
     QPen devicePen = m_lastUsedPen;
-    if (style == Qt::CustomDashLine && paintEngine()->type() == QPaintEngine::Raster
+    // A painter that could not begin on its device, as on a view squashed to
+    // no height, has no paint engine.
+    const QPaintEngine* engine = paintEngine();
+    if (style == Qt::CustomDashLine && engine != nullptr && engine->type() == QPaintEngine::Raster
             && (screenWidth == 0.0 || screenWidth == 1.0)) {
         auto pattern = devicePen.dashPattern();
         // Qt's fast stroker caps dashes at 1024 pixels. Step past its one-pixel

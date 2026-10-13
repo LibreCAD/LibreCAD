@@ -395,6 +395,27 @@ TEST_CASE("large raster dashes retain length phase and lineweight", "[gui][paint
     }
 }
 
+TEST_CASE("RS_Painter takes a dashed pen on a device it could not begin on",
+          "[gui][painter][linetype]") {
+    (void)application();
+    // A view squashed to no height gives its painter a pixmap without pixels.
+    // The painter is not active then and has no paint engine to ask for its type.
+    QPixmap empty;
+    RS_Painter painter(&empty);
+    REQUIRE_FALSE(painter.isActive());
+    // Without a viewport first, then with the squashed view's.
+    LC_GraphicViewport viewport;
+    viewport.setSize(10, 0);
+    for (const bool withViewport : {false, true}) {
+        if (withViewport)
+            painter.setViewPort(&viewport);
+        for (const double width : {0.0, 1.0, 2.0}) {
+            painter.setPen(testPen(RS2::DashLine, width));
+            CHECK(painter.getPen().getLineType() == RS2::DashLine);
+        }
+    }
+}
+
 TEST_CASE("RS_Painter re-installs a pen that noCapStyle() replaced", "[gui][painter]") {
     (void)application();
 
