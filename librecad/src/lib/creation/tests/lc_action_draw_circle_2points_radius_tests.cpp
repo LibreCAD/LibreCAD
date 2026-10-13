@@ -588,7 +588,8 @@ TEST_CASE("Circle 2 Points Radius: a rounded diameter is accepted after stepping
     REQUIRE(action.getStatus() == TwoPointsRadius::SelectCenter);
     action.move(first.x + 5., first.y + 3.);
     REQUIRE(f.drawn().size() == 1);
-    checkCircle(f.drawn().front(), (first + second) * 0.5, 5.);
+    CHECK(f.drawn().front()->getCenter().distanceTo((first + second) * 0.5) < 1e-9);
+    CHECK(f.drawn().front()->getRadius() == 5.);
     CHECK(action.getStatus() == TwoPointsRadius::SetPoint1);
     CHECK(f.m_context.m_messages.isEmpty());
 }
