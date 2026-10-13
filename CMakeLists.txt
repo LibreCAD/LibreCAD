@@ -2848,6 +2848,20 @@ if (BUILD_TESTS)
     set_target_properties(librecad_text_source_codec_tests PROPERTIES
         AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
 
+    # Owned-stage validation is independent of Qt and the font backend.
+    add_executable(librecad_output_transaction_tests EXCLUDE_FROM_ALL
+        libraries/libdxfrw/src/intern/dwg_dxf_output_transaction.cpp
+        librecad/src/lib/filters/tests/dwg_dxf_output_transaction_tests.cpp)
+    target_include_directories(librecad_output_transaction_tests PRIVATE
+        libraries/libdxfrw/src)
+    target_link_libraries(librecad_output_transaction_tests PRIVATE
+        Catch2::Catch2WithMain)
+    target_compile_features(librecad_output_transaction_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_output_transaction_tests PRIVATE
+        LC_VERIFIED_STAGE_TEST_ROOT="${CMAKE_CURRENT_BINARY_DIR}")
+    set_target_properties(librecad_output_transaction_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+
     # Raw embedded metadata retention is independent of Qt and the font backend.
     add_executable(librecad_embedded_text_xdata_tests EXCLUDE_FROM_ALL
         librecad/src/lib/filters/lc_embeddedtextxdata.cpp

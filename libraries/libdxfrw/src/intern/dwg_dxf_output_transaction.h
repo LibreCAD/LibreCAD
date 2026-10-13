@@ -43,6 +43,13 @@ public:
 
     bool open();
     bool commit();
+    /// Inspect the flushed, closed private file before atomic publication.
+    /// Verification runs synchronously and must not change the staged file.
+    /// Rejection or an exception aborts the transaction, preserving the target.
+    /// The verifier is responsible for semantic and reread validation; this
+    /// class provides only the owned-stage publication boundary.
+    using StagedFileVerifier = bool (*)(const std::filesystem::path&, void*);
+    bool commitVerified(StagedFileVerifier verifier, void* context);
     void abort() noexcept;
 
     [[nodiscard]] bool isOpen() const noexcept { return m_stream.is_open(); }
@@ -51,12 +58,15 @@ public:
 private:
     bool createExclusiveTemporary();
     bool publish();
+    bool finishWrite();
+    bool finishPublish();
 
     std::filesystem::path m_target;
     std::filesystem::path m_temporary;
     std::ios::openmode m_mode;
     std::ofstream m_stream;
     bool m_committed {false};
+    bool m_finalizing {false};
 };
 
 #endif // DWG_DXF_OUTPUT_TRANSACTION_H
