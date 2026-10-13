@@ -27,7 +27,9 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <algorithm>
 #include <array>
+#include <cmath>
 #include <cstdint>
 #include <filesystem>
 #include <fstream>
@@ -35,6 +37,7 @@
 #include <list>
 #include <limits>
 #include <memory>
+#include <set>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -572,6 +575,143 @@ bool tryReadDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   const bool result = reader.read(&cap, /*ext=*/true);
   std::filesystem::remove(path);
   return result;
+}
+
+// AutoCAD 2018's multi-line ATTRIB (INSERT 79C of ACadSharp's
+// sample_AC1032_ascii.dxf, lines 21917-21990, without its handle and owner
+// groups), cut at the embedded-object marker so a test can choose the marker
+// and what follows the object.
+std::string acadMultiLineAttribDxf(const std::string &marker,
+                                   const std::string &embeddedExtra = {},
+                                   const std::string &afterEmbedded = {}) {
+  return std::string(
+             "0\nSECTION\n2\nENTITIES\n"
+             "0\nINSERT\n100\nAcDbEntity\n8\n0\n"
+             "100\nAcDbBlockReference\n66\n1\n2\nmy_block_v2\n"
+             "10\n-3024.44381838633\n20\n1.950953660512254\n30\n0.0\n"
+             "41\n4.191133180547077\n42\n4.191133180547077\n43\n4.191133180547077\n"
+             "0\nATTRIB\n100\nAcDbEntity\n8\n0\n"
+             "100\nAcDbText\n10\n977.2814835151885\n20\n27.03015976727258\n30\n0.0\n"
+             "40\n1.720654456209621\n1\n\n"
+             "11\n977.2814835151885\n21\n28.7508142234822\n31\n0.0\n"
+             "100\nAcDbAttribute\n280\n0\n2\nMULTI_LINE_ATT\n70\n0\n"
+             "74\n3\n280\n1\n71\n2\n72\n0\n"
+             "11\n977.2814835151885\n21\n28.7508142234822\n31\n0.0\n") +
+         marker +
+         "10\n977.2814835151885\n20\n28.7508142234822\n30\n0.0\n"
+         "40\n1.720654456209621\n41\n0.0\n46\n0.0\n71\n1\n72\n5\n"
+         "1\nmy multi line text for the attrrib\n73\n1\n44\n1.0\n" +
+         embeddedExtra + afterEmbedded +
+         "0\nSEQEND\n100\nAcDbEntity\n8\n0\n"
+         "0\nENDSEC\n0\nEOF\n";
+}
+
+// The only ATTRIB of the only INSERT of `dxf`.
+DRW_Attrib readOnlyAttrib(const std::string &dxf, const char *name) {
+  InsertCapture cap;
+  readDxf(dxf, cap, name);
+  REQUIRE(cap.m_callCount == 1);
+  REQUIRE(cap.m_captured.attlist.size() == 1);
+  return *cap.m_captured.attlist[0];
+}
+
+// The same, of a DXF file on disk.
+DRW_Attrib readOnlyAttrib(const std::filesystem::path &path) {
+  InsertCapture cap;
+  dxfRW reader(path.string().c_str());
+  REQUIRE(reader.read(&cap, /*ext=*/true));
+  REQUIRE(cap.m_callCount == 1);
+  REQUIRE(cap.m_captured.attlist.size() == 1);
+  return *cap.m_captured.attlist[0];
+}
+
+// Writes one INSERT carrying `attrib` as DXF 2018 and returns the file's path.
+std::filesystem::path writeOnlyAttrib(const DRW_Attrib &attrib, const char *name,
+                                      bool binary = false) {
+  const auto path = std::filesystem::temp_directory_path() / name;
+  std::filesystem::remove(path);
+  AttribEmitter em;
+  em.m_insert.name = "TITLE";
+  em.m_insert.layer = "0";
+  em.m_insert.attlist.push_back(std::make_shared<DRW_Attrib>(attrib));
+  dxfRW w(path.string().c_str());
+  em.m_rw = &w;
+  REQUIRE(w.write(&em, DRW::AC1032, binary));
+  return path;
+}
+
+using DxfGroups = std::vector<std::pair<std::string, std::string>>;
+
+// The (code, value) pairs of the first `recordName` record, tokens trimmed.
+DxfGroups dxfRecordGroups(const std::filesystem::path &path,
+                          const std::string &recordName) {
+  const auto trim = [](std::string token) {
+    if (!token.empty() && token.back() == '\r')
+      token.pop_back();
+    const std::size_t first = token.find_first_not_of(" \t");
+    return first == std::string::npos ? std::string() : token.substr(first);
+  };
+  std::ifstream in(path);
+  std::string codeLine, valueLine;
+  DxfGroups groups;
+  bool inRecord = false;
+  while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
+    const std::string code = trim(codeLine);
+    if (code == "0") {
+      if (inRecord)
+        break;
+      inRecord = trim(valueLine) == recordName;
+      continue;
+    }
+    if (inRecord)
+      groups.emplace_back(code, trim(valueLine));
+  }
+  return groups;
+}
+
+// The values of the `code` groups in [first, last).
+std::vector<std::string> groupValues(DxfGroups::const_iterator first,
+                                     DxfGroups::const_iterator last,
+                                     const std::string &code) {
+  std::vector<std::string> values;
+  for (; first != last; ++first) {
+    if (first->first == code)
+      values.push_back(first->second);
+  }
+  return values;
+}
+
+// What ezdxf (lldxf/extendedtags.py, entities/attrib.py) needs of a record
+// with an embedded MTEXT: the subclasses, then `101 / Embedded Object`, then
+// only AcDbMText groups, then only XDATA. Returns the marker's index.
+std::size_t checkEmbeddedMTextRecord(const DxfGroups &groups) {
+  const auto isMarker = [](const auto &group) {
+    return group.second == "Embedded Object";
+  };
+  const auto marker = std::find_if(groups.begin(), groups.end(), isMarker);
+  REQUIRE(marker != groups.end());
+  CHECK(marker->first == "101");
+  CHECK(std::count_if(groups.begin(), groups.end(), isMarker) == 1);
+  static const std::set<std::string> mtextCodes{
+      "10", "20", "30", "40", "41", "46", "71", "72", "3",  "1",
+      "7",  "210", "220", "230", "11", "21", "31", "42", "43", "50",
+      "73", "44", "45", "90", "63", "421", "431", "441"};
+  const auto xdata = std::find_if(marker, groups.end(), [](const auto &group) {
+    return group.first == "1001";
+  });
+  for (auto it = groups.begin(); it != marker; ++it)
+    CHECK(std::stoi(it->first) < 1000);
+  for (auto it = std::next(marker); it != xdata; ++it) {
+    INFO("group " << it->first << " inside the embedded object");
+    CHECK(mtextCodes.count(it->first) == 1);
+  }
+  std::set<std::string> apps;
+  for (auto it = xdata; it != groups.end(); ++it) {
+    CHECK(std::stoi(it->first) >= 1000);
+    if (it->first == "1001")
+      CHECK(apps.insert(it->second).second);
+  }
+  return static_cast<std::size_t>(marker - groups.begin());
 }
 
 bool hasStringGroup(const DRW_RawDxfObject &obj, int code, const char *value) {
@@ -3007,6 +3147,483 @@ TEST_CASE("DXF ATTDEF writer emits attribute definition fields",
     CHECK(attdef.m_fieldLength == 12);
     CHECK(attdef.alignV == DRW_Text::VMiddle);
     CHECK(attdef.lockPosition == true);
+  }
+}
+
+TEST_CASE("DXF ATTRIB reads AutoCAD's group-101 embedded MTEXT",
+          "[dxf][attrib][embedded-mtext]") {
+  const DRW_Attrib att =
+      readOnlyAttrib(acadMultiLineAttribDxf("101\nEmbedded Object\n"),
+                     "lc_attrib_acad_embedded_mtext.dxf");
+
+  // The ATTRIB keeps its own groups: none of the embedded ones replaces them.
+  CHECK(att.tag == "MULTI_LINE_ATT");
+  CHECK(att.text.empty());
+  CHECK(att.basePoint.x == 977.2814835151885);
+  CHECK(att.basePoint.y == 27.03015976727258);
+  CHECK(att.secPoint.y == 28.7508142234822);
+  CHECK(att.height == 1.720654456209621);
+  CHECK(att.widthscale == 1.0);
+  CHECK(att.alignH == DRW_Text::HLeft);
+  CHECK(att.alignV == DRW_Text::VTop);
+  CHECK(att.m_fieldLength == 0);
+  CHECK(att.attribFlags == 0);
+  CHECK(att.lockPosition);
+  CHECK(att.m_attributeType == 2);
+  CHECK(att.extData.empty());
+
+  REQUIRE(att.mtext);
+  const DRW_MText &mtext = *att.mtext;
+  CHECK(mtext.basePoint.x == 977.2814835151885);
+  CHECK(mtext.basePoint.y == 28.7508142234822);
+  CHECK(mtext.height == 1.720654456209621);
+  CHECK(mtext.widthscale == 0.0);
+  CHECK(mtext.m_r2018RectHeight == 0.0);
+  CHECK(mtext.textgen == 1);
+  CHECK(static_cast<int>(mtext.alignH) == 5);
+  CHECK(mtext.text == "my multi line text for the attrrib");
+  CHECK(mtext.linespacingStyle == 1);
+  CHECK(mtext.interlin == 1.0);
+  CHECK(mtext.angle == 0.0);
+  CHECK(mtext.secPoint.x == 0.0);
+  CHECK(mtext.secPoint.y == 0.0);
+  CHECK(mtext.secPoint.z == 0.0);
+  CHECK(mtext.extData.empty());
+}
+
+TEST_CASE("DXF ATTDEF reads AutoCAD's group-101 embedded MTEXT",
+          "[dxf][attdef][embedded-mtext]") {
+  // ATTDEF 796 of the same sample (lines 9257-9331), without its handle and
+  // owner groups. The sample's embedded text is empty; here it comes in
+  // chunks, whose group 3 must not be taken for the prompt.
+  const std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nATTDEF\n100\nAcDbEntity\n8\n0\n"
+      "100\nAcDbText\n10\n954.8074779573491\n20\n5.983872386390424\n30\n0.0\n"
+      "40\n0.4105463563400821\n1\n\n"
+      "11\n954.8074779573491\n21\n6.394418742730506\n31\n0.0\n"
+      "100\nAcDbAttributeDefinition\n280\n0\n"
+      "3\nthis is an example of prompt\n2\nMULTI_LINE_ATT\n70\n0\n"
+      "74\n3\n280\n1\n71\n4\n72\n0\n"
+      "11\n954.8074779573491\n21\n6.394418742730506\n31\n0.0\n"
+      "101\nEmbedded Object\n"
+      "10\n954.8074779573491\n20\n6.394418742730506\n30\n0.0\n"
+      "40\n0.4105463563400821\n41\n0.0\n46\n0.0\n71\n1\n72\n5\n"
+      "3\nfirst chunk,\n3\nsecond chunk,\n1\nlast\n73\n1\n44\n1.0\n"
+      "0\nENDSEC\n0\nEOF\n";
+
+  RawEntityCapture cap;
+  readDxf(dxf, cap, "lc_attdef_acad_embedded_mtext.dxf");
+
+  REQUIRE(cap.m_entities.empty());
+  REQUIRE(cap.m_attdefs.size() == 1);
+  const DRW_Attdef &attdef = cap.m_attdefs.front();
+  CHECK(attdef.prompt == "this is an example of prompt");
+  CHECK(attdef.tag == "MULTI_LINE_ATT");
+  CHECK(attdef.m_attributeType == 4);
+  CHECK(attdef.lockPosition);
+  CHECK(attdef.alignV == DRW_Text::VTop);
+  CHECK(attdef.basePoint.y == 5.983872386390424);
+  CHECK(attdef.widthscale == 1.0);
+  CHECK(attdef.text.empty());
+  REQUIRE(attdef.mtext);
+  CHECK(attdef.mtext->text == "first chunk,second chunk,last");
+  CHECK(attdef.mtext->basePoint.y == 6.394418742730506);
+  CHECK(attdef.mtext->widthscale == 0.0);
+}
+
+TEST_CASE("DXF ATTRIB embedded MTEXT groups", "[dxf][attrib][embedded-mtext]") {
+  const std::string marker = "101\nEmbedded Object\n";
+  const std::string xAxis60 = "11\n0.5\n21\n0.8660254037844386\n31\n0.0\n";
+
+  SECTION("an x-axis sets the angle") {
+    const DRW_Attrib att = readOnlyAttrib(acadMultiLineAttribDxf(marker, xAxis60),
+                                          "lc_attrib_embedded_axis.dxf");
+    REQUIRE(att.mtext);
+    CHECK(std::abs(att.mtext->angle - 60.0) < 1e-9);
+    CHECK(att.mtext->secPoint.x == 0.5);
+    CHECK(att.mtext->secPoint.y == 0.8660254037844386);
+    // The ATTRIB's own alignment point is not the MTEXT's x-axis.
+    CHECK(att.secPoint.x == 977.2814835151885);
+    CHECK(att.angle == 0.0);
+  }
+
+  SECTION("a rotation drops the x-axis") {
+    const DRW_Attrib att = readOnlyAttrib(acadMultiLineAttribDxf(marker, "50\n30\n"),
+                                          "lc_attrib_embedded_rotation.dxf");
+    REQUIRE(att.mtext);
+    CHECK(att.mtext->angle == 30.0);
+    CHECK(att.mtext->secPoint.x == 0.0);
+    CHECK(att.mtext->secPoint.y == 0.0);
+    CHECK(att.mtext->secPoint.z == 0.0);
+  }
+
+  SECTION("the last of rotation and x-axis prevails") {
+    const DRW_Attrib axisLast = readOnlyAttrib(
+        acadMultiLineAttribDxf(marker, "50\n30\n" + xAxis60),
+        "lc_attrib_embedded_rotation_axis.dxf");
+    REQUIRE(axisLast.mtext);
+    CHECK(std::abs(axisLast.mtext->angle - 60.0) < 1e-9);
+    CHECK(axisLast.mtext->secPoint.x == 0.5);
+
+    const DRW_Attrib rotationLast = readOnlyAttrib(
+        acadMultiLineAttribDxf(marker, xAxis60 + "50\n30\n"),
+        "lc_attrib_embedded_axis_rotation.dxf");
+    REQUIRE(rotationLast.mtext);
+    CHECK(rotationLast.mtext->angle == 30.0);
+    CHECK(rotationLast.mtext->secPoint.x == 0.0);
+    CHECK(rotationLast.mtext->secPoint.y == 0.0);
+  }
+
+  SECTION("group 46 is the defined height") {
+    const DRW_Attrib att = readOnlyAttrib(acadMultiLineAttribDxf(marker, "46\n12.5\n"),
+                                          "lc_attrib_embedded_height.dxf");
+    REQUIRE(att.mtext);
+    CHECK(att.mtext->m_r2018RectHeight == 12.5);
+  }
+
+  SECTION("XDATA after the object is the ATTRIB's") {
+    const DRW_Attrib att = readOnlyAttrib(
+        acadMultiLineAttribDxf(marker, {},
+                               "1001\nACAD\n1000\nkept\n1001\nLibreCad\n1071\n2\n"),
+        "lc_attrib_embedded_xdata.dxf");
+    REQUIRE(att.mtext);
+    REQUIRE(att.extData.size() == 4);
+    CHECK(std::string(att.extData[0]->c_str()) == "ACAD");
+    CHECK(std::string(att.extData[1]->c_str()) == "kept");
+    CHECK(std::string(att.extData[2]->c_str()) == "LibreCad");
+    CHECK(att.extData[3]->i_val() == 2);
+    CHECK(att.mtext->extData.empty());
+  }
+
+  SECTION("attribute groups after the marker are not the ATTRIB's") {
+    const DRW_Attrib att = readOnlyAttrib(
+        acadMultiLineAttribDxf(marker, "2\nOTHER\n70\n1\n280\n0\n"),
+        "lc_attrib_embedded_attribute_codes.dxf");
+    REQUIRE(att.mtext);
+    CHECK(att.tag == "MULTI_LINE_ATT");
+    CHECK(att.attribFlags == 0);
+    CHECK(att.lockPosition);
+  }
+
+  SECTION("a second embedded object is skipped") {
+    // The shape in which ACadSharp appends the column data of the MTEXT.
+    const DRW_Attrib att = readOnlyAttrib(
+        acadMultiLineAttribDxf(
+            marker, {},
+            "101\nEmbedded Object\n70\n1\n10\n0.0\n20\n1.0\n30\n0.0\n"
+            "11\n5.0\n21\n6.0\n31\n0.0\n40\n99.0\n41\n0.0\n42\n3.0\n43\n4.0\n"
+            "71\n2\n72\n1\n44\n99.0\n45\n7.0\n73\n0\n74\n0\n46\n8.0\n50\n45\n"
+            "1\nsecond\n1001\nACAD\n1000\nkept\n"),
+        "lc_attrib_second_embedded_object.dxf");
+    CHECK(att.attribFlags == 0);
+    CHECK(att.alignV == DRW_Text::VTop);
+    CHECK(att.tag == "MULTI_LINE_ATT");
+    CHECK(att.text.empty());
+    CHECK(att.extData.size() == 2);
+    REQUIRE(att.mtext);
+    const DRW_MText &mtext = *att.mtext;
+    CHECK(mtext.text == "my multi line text for the attrrib");
+    CHECK(mtext.basePoint.x == 977.2814835151885);
+    CHECK(mtext.basePoint.y == 28.7508142234822);
+    CHECK(mtext.height == 1.720654456209621);
+    CHECK(mtext.widthscale == 0.0);
+    CHECK(mtext.textgen == 1);
+    CHECK(static_cast<int>(mtext.alignH) == 5);
+    CHECK(mtext.linespacingStyle == 1);
+    CHECK(mtext.interlin == 1.0);
+    CHECK(mtext.m_r2018RectHeight == 0.0);
+    CHECK(mtext.m_r2018ExtentsWidth == 0.0);
+    CHECK(mtext.m_backgroundScale == 0.0);
+    CHECK(mtext.angle == 0.0);
+    CHECK(mtext.secPoint.x == 0.0);
+    CHECK(mtext.secPoint.y == 0.0);
+    CHECK(mtext.extData.empty());
+  }
+
+  SECTION("a group 101 with another value opens nothing") {
+    const DRW_Attrib att =
+        readOnlyAttrib(acadMultiLineAttribDxf("101\nSomething else\n"),
+                       "lc_attrib_other_group_101.dxf");
+    CHECK(att.mtext == nullptr);
+    CHECK(att.tag == "MULTI_LINE_ATT");
+  }
+
+  SECTION("a true-colour background keeps its colour index") {
+    const DRW_Attrib att = readOnlyAttrib(
+        acadMultiLineAttribDxf(marker,
+                               "90\n1\n63\n1\n421\n16711680\n45\n1.5\n441\n0\n"),
+        "lc_attrib_embedded_true_colour.dxf");
+    REQUIRE(att.mtext);
+    CHECK(att.mtext->m_backgroundFlags == 1);
+    CHECK(att.mtext->m_backgroundColor == 1);
+    CHECK(att.mtext->m_backgroundTrueColor == 16711680);
+    CHECK(att.mtext->m_backgroundScale == 1.5);
+
+    // Group 63 takes 16 bits: with the true colour in it the write failed.
+    const auto path = writeOnlyAttrib(att, "lc_attrib_embedded_true_colour_out.dxf");
+    const DxfGroups groups = dxfRecordGroups(path, "ATTRIB");
+    const std::size_t m = checkEmbeddedMTextRecord(groups);
+    CHECK(groupValues(groups.begin() + m, groups.end(), "63") ==
+          std::vector<std::string>{"1"});
+    CHECK(groupValues(groups.begin() + m, groups.end(), "421") ==
+          std::vector<std::string>{"16711680"});
+    const DRW_Attrib again = readOnlyAttrib(path);
+    REQUIRE(again.mtext);
+    CHECK(again.mtext->m_backgroundColor == 1);
+    CHECK(again.mtext->m_backgroundTrueColor == 16711680);
+    std::filesystem::remove(path);
+  }
+
+  SECTION("the marker makes the attribute multi-line without a group 71") {
+    const std::string embedded =
+        "101\nEmbedded Object\n10\n1\n20\n4\n40\n1\n71\n1\n72\n1\n1\nEmbedded\n";
+    const DRW_Attrib att = readOnlyAttrib(
+        "0\nSECTION\n2\nENTITIES\n"
+        "0\nINSERT\n8\n0\n2\nTITLE\n10\n0\n20\n0\n66\n1\n"
+        "0\nATTRIB\n8\n0\n100\nAcDbText\n10\n1\n20\n4\n40\n1\n"
+        "100\nAcDbAttribute\n2\nT\n70\n0\n" +
+            embedded + "0\nSEQEND\n8\n0\n0\nENDSEC\n0\nEOF\n",
+        "lc_attrib_embedded_no_type.dxf");
+    REQUIRE(att.mtext);
+    CHECK(att.m_attributeType == 2);
+    CHECK(att.attVersion == 1);
+    CHECK(att.textgen == 0);
+    CHECK(att.mtext->textgen == 1);
+    CHECK(att.mtext->text == "Embedded");
+
+    RawEntityCapture cap;
+    readDxf("0\nSECTION\n2\nENTITIES\n"
+            "0\nATTDEF\n8\n0\n100\nAcDbText\n10\n1\n20\n4\n40\n1\n"
+            "100\nAcDbAttributeDefinition\n3\nPrompt\n2\nT\n70\n0\n" +
+                embedded + "0\nENDSEC\n0\nEOF\n",
+            cap, "lc_attdef_embedded_no_type.dxf");
+    REQUIRE(cap.m_attdefs.size() == 1);
+    REQUIRE(cap.m_attdefs.front().mtext);
+    CHECK(cap.m_attdefs.front().m_attributeType == 4);
+    CHECK(cap.m_attdefs.front().prompt == "Prompt");
+  }
+}
+
+TEST_CASE("DXF ATTRIB still reads the group-100 marker of earlier LibreCAD builds",
+          "[dxf][attrib][embedded-mtext]") {
+  // A rotated attribute as those builds wrote it: marker 100, a stale x-axis
+  // in front of the rotation, and the MTEXT's XDATA list before the ATTRIB's.
+  const DRW_Attrib att = readOnlyAttrib(
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nINSERT\n8\n0\n2\nTITLE\n10\n0\n20\n0\n66\n1\n"
+      "0\nATTRIB\n8\n0\n100\nAcDbText\n10\n1\n20\n4\n30\n0\n40\n9\n1\nfallback\n"
+      "50\n30\n41\n1\n7\niso3098\n"
+      "100\nAcDbAttribute\n2\nLABEL\n70\n0\n73\n0\n280\n0\n71\n2\n72\n0\n"
+      "11\n1\n21\n4\n31\n0\n"
+      "100\nEmbedded Object\n10\n1\n20\n4\n30\n0\n40\n9\n41\n80\n71\n1\n72\n1\n"
+      "1\n{\\fArial;ABC}\\PDEF\n7\niso3098\n11\n1\n21\n0\n31\n0\n50\n30\n"
+      "73\n2\n44\n1\n"
+      "1001\nLibreCad\n1071\n2\n1001\nLibreCad\n1071\n2\n"
+      "0\nSEQEND\n8\n0\n0\nENDSEC\n0\nEOF\n",
+      "lc_attrib_legacy_embedded_marker.dxf");
+
+  REQUIRE(att.mtext);
+  CHECK(att.mtext->text == "{\\fArial;ABC}\\PDEF");
+  CHECK(att.mtext->widthscale == 80.0);
+  CHECK(att.mtext->linespacingStyle == 2);
+  CHECK(att.mtext->style == "iso3098");
+  CHECK(att.mtext->angle == 30.0);
+  CHECK(att.mtext->secPoint.x == 0.0);
+  CHECK(att.mtext->secPoint.y == 0.0);
+  CHECK(att.mtext->secPoint.z == 0.0);
+  CHECK(att.text == "fallback");
+  CHECK(att.widthscale == 1.0);
+  CHECK(att.angle == 30.0);
+  CHECK(att.m_attributeType == 2);
+  // Both lists are the record's, so the ATTRIB's.
+  const auto isMarkerValue = [](const std::shared_ptr<DRW_Variant> &value) {
+    return value->code() == 1071 && value->i_val() == 2;
+  };
+  CHECK(att.extData.size() == 4);
+  CHECK(std::count_if(att.extData.begin(), att.extData.end(), isMarkerValue) == 2);
+  CHECK(att.mtext->extData.empty());
+
+  DRW_Attrib copy(att);
+  copy.extData.clear();
+  const auto path = writeOnlyAttrib(copy, "lc_attrib_legacy_embedded_marker_out.dxf");
+  const DxfGroups groups = dxfRecordGroups(path, "ATTRIB");
+  const std::size_t m = checkEmbeddedMTextRecord(groups);
+  const auto rotations = groupValues(groups.begin() + m, groups.end(), "50");
+  REQUIRE(rotations.size() == 1);
+  CHECK(std::stod(rotations.front()) == 30.0);
+  CHECK(groupValues(groups.begin() + m, groups.end(), "11").empty());
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DXF ATTRIB writes the embedded MTEXT as ezdxf and AutoCAD read it",
+          "[dxf][attrib][embedded-mtext][dxf_roundtrip]") {
+  const std::string text = std::string(250, 'A') + std::string(250, 'B') + "tail";
+  const auto markerItems = [] {
+    return std::vector<std::shared_ptr<DRW_Variant>>{
+        std::make_shared<DRW_Variant>(1001, std::string{"LibreCad"}),
+        std::make_shared<DRW_Variant>(1071, 2)};
+  };
+
+  SECTION("justified attribute under an extrusion and an x-axis") {
+    DRW_Attrib attrib;
+    attrib.tag = "LABEL";
+    attrib.text = "fallback";
+    attrib.extPoint = DRW_Coord(0.0, 0.0, -1.0);
+    attrib.basePoint = DRW_Coord(-1.0, -5.0, 0.0);
+    attrib.secPoint = DRW_Coord(-1.0, 4.0, 0.0);
+    attrib.alignV = DRW_Text::VTop;
+    attrib.height = 9.0;
+    attrib.style = "NOTES";
+    attrib.extData = markerItems();
+    attrib.mtext = std::make_unique<DRW_MText>();
+    DRW_MText &mtext = *attrib.mtext;
+    mtext.basePoint = DRW_Coord(1.0, 4.0, 0.0);
+    mtext.secPoint = DRW_Coord(std::cos(0.5), std::sin(0.5), 0.0);
+    mtext.angle = 0.5 * ARAD;
+    mtext.height = 9.0;
+    mtext.widthscale = 80.0;
+    mtext.textgen = 1;
+    mtext.alignH = static_cast<DRW_Text::HAlign>(5);
+    mtext.text = text;
+    mtext.style = "NOTES";
+    mtext.linespacingStyle = 2;
+    mtext.interlin = 1.25;
+    mtext.extData = markerItems();
+
+    for (const bool binary : {false, true}) {
+      CAPTURE(binary);
+      const auto path = writeOnlyAttrib(
+          attrib,
+          binary ? "lc_attrib_embedded_write_binary.dxf"
+                 : "lc_attrib_embedded_write_ascii.dxf",
+          binary);
+
+      if (!binary) {
+        const DxfGroups groups = dxfRecordGroups(path, "ATTRIB");
+        const std::size_t m = checkEmbeddedMTextRecord(groups);
+        const auto marker = groups.begin() + m;
+        const auto xdata =
+            std::find_if(marker, groups.end(), [](const auto &group) {
+              return group.first == "1001";
+            });
+
+        // The attribute type, a flag and the copy of the ATTRIB's own
+        // alignment point end the AcDbAttribute groups.
+        REQUIRE(m >= 5);
+        CHECK(groups[m - 5].first == "71");
+        CHECK(groups[m - 5].second == "2");
+        CHECK(groups[m - 4].first == "72");
+        CHECK(groups[m - 4].second == "0");
+        CHECK(groups[m - 3].first == "11");
+        CHECK(std::stod(groups[m - 3].second) == -1.0);
+        CHECK(groups[m - 2].first == "21");
+        CHECK(std::stod(groups[m - 2].second) == 4.0);
+        CHECK(groups[m - 1].first == "31");
+        CHECK(std::stod(groups[m - 1].second) == 0.0);
+        const auto ownX = groupValues(groups.begin(), marker, "11");
+        const auto ownY = groupValues(groups.begin(), marker, "21");
+        REQUIRE(ownX.size() == 2);
+        REQUIRE(ownY.size() == 2);
+        CHECK(std::stod(ownX.front()) == -1.0);
+        CHECK(std::stod(ownY.front()) == 4.0);
+
+        // The object opens as AutoCAD's does.
+        REQUIRE(groups.size() > m + 8);
+        const char *const opening[] = {"10", "20", "30", "40",
+                                       "41", "46", "71", "72"};
+        for (std::size_t i = 0; i < 8; ++i)
+          CHECK(groups[m + 1 + i].first == opening[i]);
+
+        // Long text goes out in chunks, like MTEXT.
+        const auto chunks = groupValues(marker, xdata, "3");
+        const auto last = groupValues(marker, xdata, "1");
+        REQUIRE(chunks.size() == 2);
+        REQUIRE(last.size() == 1);
+        CHECK(chunks[0].size() <= 250);
+        CHECK(chunks[1].size() <= 250);
+        CHECK(last[0].size() <= 250);
+        CHECK(chunks[0] + chunks[1] + last[0] == text);
+
+        // The direction is written once.
+        CHECK(groupValues(marker, xdata, "11").size() == 1);
+        CHECK(groupValues(marker, xdata, "21").size() == 1);
+        CHECK(groupValues(marker, xdata, "31").size() == 1);
+        CHECK(groupValues(marker, xdata, "50").empty());
+        CHECK(groupValues(marker, xdata, "73") == std::vector<std::string>{"2"});
+        // One XDATA list: the ATTRIB's.
+        CHECK(groupValues(groups.begin(), groups.end(), "1001") ==
+              std::vector<std::string>{"LibreCad"});
+        CHECK(groupValues(groups.begin(), groups.end(), "1071") ==
+              std::vector<std::string>{"2"});
+      }
+
+      const DRW_Attrib att = readOnlyAttrib(path);
+      REQUIRE(att.mtext);
+      CHECK(att.mtext->text == text);
+      CHECK(std::abs(att.mtext->angle - 0.5 * ARAD) < 1e-9);
+      CHECK(att.mtext->style == "NOTES");
+      CHECK(att.mtext->basePoint.x == 1.0);
+      CHECK(att.mtext->basePoint.y == 4.0);
+      CHECK(att.mtext->widthscale == 80.0);
+      CHECK(att.mtext->linespacingStyle == 2);
+      CHECK(att.mtext->interlin == 1.25);
+      CHECK(att.extData.size() == 2);
+      CHECK(att.mtext->extData.empty());
+      CHECK(att.text == "fallback");
+      CHECK(att.basePoint.x == -1.0);
+      CHECK(att.basePoint.y == -5.0);
+      CHECK(att.secPoint.x == -1.0);
+      CHECK(att.secPoint.y == 4.0);
+      CHECK(att.alignV == DRW_Text::VTop);
+      CHECK(att.extPoint.z == -1.0);
+      CHECK(att.m_attributeType == 2);
+      std::filesystem::remove(path);
+    }
+  }
+
+  SECTION("unjustified attribute with a rotation") {
+    DRW_Attrib attrib;
+    attrib.tag = "LABEL";
+    attrib.text = "fallback";
+    attrib.basePoint = DRW_Coord(1.0, -5.0, 0.0);
+    attrib.height = 9.0;
+    attrib.mtext = std::make_unique<DRW_MText>();
+    attrib.mtext->basePoint = DRW_Coord(1.0, 4.0, 0.0);
+    attrib.mtext->angle = 30.0;
+    attrib.mtext->height = 9.0;
+    attrib.mtext->text = "rotated";
+
+    const auto path =
+        writeOnlyAttrib(attrib, "lc_attrib_embedded_write_rotation.dxf");
+    const DxfGroups groups = dxfRecordGroups(path, "ATTRIB");
+    const std::size_t m = checkEmbeddedMTextRecord(groups);
+    const auto marker = groups.begin() + m;
+
+    const auto rotations = groupValues(marker, groups.end(), "50");
+    REQUIRE(rotations.size() == 1);
+    CHECK(std::stod(rotations.front()) == 30.0);
+    CHECK(groupValues(marker, groups.end(), "11").empty());
+    // An unjustified ATTRIB has no alignment point of its own: the copy
+    // before the marker is the MTEXT insertion point.
+    REQUIRE(m >= 3);
+    CHECK(groups[m - 3].first == "11");
+    CHECK(std::stod(groups[m - 3].second) == 1.0);
+    CHECK(groups[m - 2].first == "21");
+    CHECK(std::stod(groups[m - 2].second) == 4.0);
+    CHECK(groups[m - 1].first == "31");
+    CHECK(std::stod(groups[m - 1].second) == 0.0);
+    CHECK(groupValues(groups.begin(), marker, "11").size() == 1);
+    // Group 46 is always written.
+    CHECK(groupValues(marker, groups.end(), "46").size() == 1);
+
+    const DRW_Attrib att = readOnlyAttrib(path);
+    REQUIRE(att.mtext);
+    CHECK(att.mtext->angle == 30.0);
+    CHECK(att.mtext->secPoint.x == 0.0);
+    CHECK(att.mtext->secPoint.y == 0.0);
+    CHECK(att.mtext->text == "rotated");
+    std::filesystem::remove(path);
   }
 }
 

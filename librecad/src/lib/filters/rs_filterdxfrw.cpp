@@ -7874,7 +7874,7 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert &data) {
         att->visible && (att->attribFlags & 0x1) == 0;
 
     // Multi-line ATTRIB (R2018+, ODA spec §20.4.4 Attribute type 2/4):
-    // libdxfrw saw the `100 / Embedded Object` DXF subclass marker on the
+    // libdxfrw saw the `101 / Embedded Object` DXF marker on the
     // ATTRIB and populated att->mtext from the embedded MTEXT body.
     // Render it as RS_MText so the multi-line content + formatting codes
     // survive; the plain `text` field is the single-line fallback.
@@ -8105,7 +8105,7 @@ void RS_FilterDXFRW::prepareTextStyleName(QString &sty) const {
  * Builds an RS_MText entity from a DRW_MText payload, applying the same
  * alignment/drawing-direction/line-spacing/legacy-correction logic that
  * addMText() uses.  Shared between addMText() (standalone MTEXT entities) and
- * addInsert() (block attributes whose `100 / Embedded Object` DXF subclass
+ * addInsert() (block attributes whose `101 / Embedded Object` DXF marker
  * produced an att->mtext payload).  Returns a freshly-constructed entity not
  * yet attached to any container; the caller is responsible for
  * setEntityAttributes() and appending.
@@ -30664,7 +30664,8 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         mtext->basePoint =
             DRW_Coord(data.insertionPoint.x, data.insertionPoint.y,
                       sidecar.hasBasePoint ? sidecar.basePoint.z : 0.0);
-        mtext->secPoint = mtext->basePoint;
+        mtext->secPoint =
+            DRW_Coord(std::cos(data.angle), std::sin(data.angle), 0.0);
         mtext->extPoint =
             sidecar.hasExtPoint ? sidecar.extPoint : DRW_Coord{0.0, 0.0, 1.0};
         mtext->height = data.height;

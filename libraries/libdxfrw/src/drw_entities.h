@@ -1795,7 +1795,7 @@ public:
     std::uint8_t m_attributeType;    /*!< R2018+ attribute type: 1=single-line, 2=multi-line ATTRIB, 4=multi-line ATTDEF */
     std::uint8_t keepDuplicateRecords = 0; /*!< DXF xrecord duplicate-record policy */
     /* MText-style payload (R2010+).  Non-null iff attVersion > 0 (DWG) or the
-       AcDbMText nested subclass was seen (DXF).  Carries the multi-line text
+       `101 / Embedded Object` marker was seen (DXF).  Carries the multi-line text
        and formatting (paragraph breaks, font runs, etc.) that the single-line
        `text` field can't represent. */
     std::unique_ptr<DRW_MText> mtext;
@@ -1875,6 +1875,7 @@ public:
     std::int32_t m_backgroundFlags = 0;
     double m_backgroundScale = 0.0; /*!< background-fill box scale (DWG BitDouble) */
     int m_backgroundColor = 0;
+    std::int32_t m_backgroundTrueColor = -1; /*!< background-fill true colour, code 421; -1 = none (DXF only) */
     std::int32_t m_backgroundTransparency = 0;
     bool m_r2018IsNotAnnotative = false;
     bool m_r2018ReallyLocked = false;

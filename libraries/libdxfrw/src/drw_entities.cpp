@@ -12416,21 +12416,35 @@ bool DRW_GeoPositionMarker::encodeDwg(DRW::Version v, dwgBufferW *buf,
 }
 
 bool DRW_Attrib::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
-    // Multi-line ATTRIB (R2018+, ODA spec §20.4.4): an embedded MTEXT object
-    // is introduced by the DXF subclass marker `100 / Embedded Object` (NOT
-    // `AcDbMText`).  After the marker, the standard MTEXT group codes follow
-    // (10/20/30 insertion, 11/21/31 X-axis, 40 height, 41 rect width, 71
-    // attachment point, 72 drawing direction, 1 formatted text, etc.), then
-    // the ATTRIB-specific tail (tag=2, prompt=3 for ATTDEF, flags=70,
-    // lock-position=280) which we must NOT route into the embedded MText.
-    if (code == 100) {
+    // Multi-line ATTRIB / ATTDEF (R2018+).  AutoCAD ends the AcDbAttribute
+    // groups with the attribute type (71), a flag (72) and a copy of the
+    // alignment point (11/21/31), then opens the MTEXT with the marker
+    // `101 / Embedded Object`.  From there to the XDATA, or to the end of the
+    // record, every group is the embedded object's: the AcDbMText groups
+    // 10/20/30 insertion, 40 height, 41 width, 46 defined height, 71
+    // attachment, 72 direction, 3/1 text, 7 style, 210 extrusion, 11/21/31
+    // x-axis, 50 rotation, 73/44 line spacing and the background groups.
+    // ezdxf and ACadSharp read the record the same way.  LibreCAD wrote the
+    // marker as group 100 until this was corrected; that spelling is still
+    // read.
+    if (code == 100 || code == 101) {
         const std::string sub = reader->getString();
-        if (sub == "Embedded Object" && !mtext) {
+        if (sub == "Embedded Object") {
+            // A further embedded object (ACadSharp appends the MTEXT column
+            // data this way) is not modelled: the MTEXT skips its groups.
+            if (mtext)
+                return mtext->parseCode(101, reader);
             mtext = std::make_unique<DRW_MText>();
             if (attVersion == 0) attVersion = 1;
+            // The marker makes the attribute multi-line even in a record that
+            // has no group 71; the DWG encoder drops the MTEXT of a type 1.
+            if (m_attributeType <= 1)
+                m_attributeType = eType == DRW::ATTDEF ? 4 : 2;
+            return true;
         }
-        dxfInAttributeSubclass = sub == "AcDbAttribute"
-            || sub == "AcDbAttributeDefinition";
+        if (code == 100)
+            dxfInAttributeSubclass = sub == "AcDbAttribute"
+                || sub == "AcDbAttributeDefinition";
         return true;
     }
     if (dxfInAttributeSubclass && !mtext) {
@@ -12446,18 +12460,23 @@ bool DRW_Attrib::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
             return true;
         }
     }
-    // Inside the embedded MText scope, route MTEXT-owned codes to mtext but
-    // keep ATTRIB-specific tail codes for ATTRIB / ATTDEF handling below.
-    if (mtext) {
-        switch (code) {
-        case 2:    // tag (ATTRIB-specific; group 1 in MText is text body)
-        case 3:    // prompt (ATTDEF-specific)
-        case 70:   // ATTRIB flags
-        case 280:  // ATTRIB lock-position
-            break; // fall through to ATTRIB handling below
-        default:
-            return mtext->parseCode(code, reader);
+    // Past the marker everything short of XDATA goes to the embedded MTEXT,
+    // group 3 (more text) included; AutoCAD, ezdxf and LibreCAD all write the
+    // attribute's own groups before the marker.  XDATA is the ATTRIB's.
+    if (mtext && code < 1000) {
+        const bool parsed = mtext->parseCode(code, reader);
+        // No end-of-entity hook runs for an embedded MTEXT, so its rotation is
+        // settled as the groups arrive.  The last of 11/21/31 (WCS x-axis) and
+        // 50 prevails, as for MTEXT, and the other is not kept: earlier
+        // LibreCAD builds wrote a stale axis in front of the angle, and the
+        // writer emits whichever of the two is set.
+        if (!mtext->m_dxfInEmbeddedObject) {
+            if (code == 11 || code == 21)
+                mtext->updateAngle();
+            else if (code == 50)
+                mtext->secPoint = DRW_Coord{0.0, 0.0, 0.0};
         }
+        return parsed;
     }
     switch (code) {
     case 2:
@@ -12609,14 +12628,13 @@ bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t 
 }
 
 bool DRW_Attdef::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
-    switch (code) {
-    case 3:
+    // Group 3 is the prompt only up to the embedded-object marker; after it
+    // the group carries MTEXT content.
+    if (code == 3 && !mtext) {
         prompt = reader->getUtf8String();
-        break;
-    default:
-        return DRW_Attrib::parseCode(code, reader);
+        return true;
     }
-    return true;
+    return DRW_Attrib::parseCode(code, reader);
 }
 
 bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
@@ -12773,6 +12791,9 @@ bool DRW_MText::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     case 43:
         m_r2018ExtentsHeight = reader->getDouble();
         break;
+    case 46:
+        m_r2018RectHeight = reader->getDouble();
+        break;
     case 45:
         m_backgroundScale = reader->getDouble();
         break;
@@ -12783,7 +12804,8 @@ bool DRW_MText::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         m_backgroundFlags = reader->getInt32();
         break;
     case 421:
-        m_backgroundColor = reader->getInt32();
+        // True colour of the background fill; 63 keeps its ACI.
+        m_backgroundTrueColor = reader->getInt32();
         break;
     case 441:
         m_backgroundTransparency = reader->getInt32();
@@ -12802,6 +12824,7 @@ void DRW_MText::resetDwgState() {
     m_backgroundFlags = 0;
     m_backgroundScale = 0.0;
     m_backgroundColor = 0;
+    m_backgroundTrueColor = -1;
     m_backgroundTransparency = 0;
     hasXAxisVec = false;
     m_dxfInEmbeddedObject = false;

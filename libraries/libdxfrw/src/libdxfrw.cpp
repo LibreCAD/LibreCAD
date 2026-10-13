@@ -4794,21 +4794,50 @@ bool dxfRW::writeTable(DRW_Table *ent){
     return !writer->hasWriteError();
 }
 
+// MTEXT content: group-3 chunks, the rest in group 1.
+// Chunk on UTF-8 codepoint boundaries so a multi-byte character (or its
+// codepage/DBCS encoding, or a \U+/\M+ escape) is never split across the
+// group-3/group-1 records. Encoded per-codepoint chunks stay <=250 bytes.
+void dxfRW::writeMTextContent(const std::string& utf8) {
+    std::vector<std::string> chunks;
+    std::string cur;
+    for (std::size_t p = 0; p < utf8.size(); ) {
+        unsigned char c = static_cast<unsigned char>(utf8[p]);
+        std::size_t cl = (c < 0x80) ? 1 : ((c >> 5) == 0x6) ? 2
+                       : ((c >> 4) == 0xE) ? 3 : ((c >> 3) == 0x1E) ? 4 : 1;
+        if (p + cl > utf8.size()) cl = utf8.size() - p;
+        std::string enc = writer->fromUtf8String(utf8.substr(p, cl));
+        if (!cur.empty() && cur.size() + enc.size() > 250) {
+            chunks.push_back(cur);
+            cur.clear();
+        }
+        cur += enc;
+        p += cl;
+    }
+    chunks.push_back(cur);  // final (group 1); empty when text is empty
+    for (std::size_t k = 0; k + 1 < chunks.size(); ++k)
+        writer->writeString(3, chunks[k]);
+    writer->writeString(1, chunks.back());
+}
+
 bool dxfRW::writeEmbeddedMText(DRW_MText *ent) {
     if (ent == nullptr)
         return false;
 
-    writer->writeString(100, "Embedded Object");
+    // AutoCAD (R2018+) opens an embedded object with group 101, and ezdxf
+    // finds the MTEXT of a multi-line ATTRIB by it. The object runs to the end
+    // of the record or to the XDATA, which is the host entity's: nothing of
+    // ent->extData is written here.
+    writer->writeString(101, "Embedded Object");
     writer->writeDouble(10, ent->basePoint.x);
     writer->writeDouble(20, ent->basePoint.y);
     writer->writeDouble(30, ent->basePoint.z);
     writer->writeDouble(40, ent->height);
     writer->writeDouble(41, ent->widthscale);
-    if (ent->m_r2018RectHeight != 0.0)
-        writer->writeDouble(46, ent->m_r2018RectHeight);
+    writer->writeDouble(46, ent->m_r2018RectHeight);
     writer->writeInt16(71, ent->textgen);
     writer->writeInt16(72, ent->alignH);
-    writer->writeUtf8String(1, ent->text);
+    writeMTextContent(ent->text);
     if (!ent->style.empty())
         writer->writeUtf8String(7, ent->style);
     if (ent->extPoint.x != 0.0 || ent->extPoint.y != 0.0
@@ -4817,8 +4846,13 @@ bool dxfRW::writeEmbeddedMText(DRW_MText *ent) {
         writer->writeDouble(220, ent->extPoint.y);
         writer->writeDouble(230, ent->extPoint.z);
     }
-    if (ent->secPoint.x != 0.0 || ent->secPoint.y != 0.0
-        || ent->secPoint.z != 0.0) {
+    // The rotation goes out once: as the WCS x-axis, AutoCAD's spelling, when
+    // the caller has one, else as the angle. secPoint must be the direction
+    // that angle describes, or zero; readers disagree on which of 11 and 50
+    // wins when both are present.
+    const bool hasXAxis = ent->secPoint.x != 0.0 || ent->secPoint.y != 0.0
+        || ent->secPoint.z != 0.0;
+    if (hasXAxis) {
         writer->writeDouble(11, ent->secPoint.x);
         writer->writeDouble(21, ent->secPoint.y);
         writer->writeDouble(31, ent->secPoint.z);
@@ -4827,7 +4861,7 @@ bool dxfRW::writeEmbeddedMText(DRW_MText *ent) {
         writer->writeDouble(42, ent->m_r2018ExtentsWidth);
     if (ent->m_r2018ExtentsHeight != 0.0)
         writer->writeDouble(43, ent->m_r2018ExtentsHeight);
-    if (ent->angle != 0.0)
+    if (!hasXAxis && ent->angle != 0.0)
         writer->writeDouble(50, ent->angle);
     writer->writeInt16(73, ent->linespacingStyle);
     writer->writeDouble(44, ent->interlin);
@@ -4835,10 +4869,10 @@ bool dxfRW::writeEmbeddedMText(DRW_MText *ent) {
         writer->writeDouble(45, ent->m_backgroundScale);
         writer->writeInt32(90, ent->m_backgroundFlags);
         writer->writeInt16(63, ent->m_backgroundColor);
+        if (ent->m_backgroundTrueColor >= 0)
+            writer->writeInt32(421, ent->m_backgroundTrueColor);
         writer->writeInt32(441, ent->m_backgroundTransparency);
     }
-    if (!ent->extData.empty() && !writeExtData(ent->extData))
-        return false;
     return !writer->hasWriteError();
 }
 
@@ -4846,13 +4880,20 @@ bool dxfRW::writeAttributeR2018Features(DRW_Attrib *ent) {
     if (ent == nullptr || version < DRW::AC1032 || !ent->mtext)
         return true;
     std::uint8_t attributeType = ent->m_attributeType;
-    if (attributeType == 1)
+    if (attributeType <= 1)
         attributeType = ent->eType == DRW::ATTDEF ? 4 : 2;
     writer->writeInt16(71, attributeType);
-    writer->writeInt16(72, 0); // R2018 keep-duplicate-records placeholder.
-    writer->writeDouble(11, ent->mtext->basePoint.x);
-    writer->writeDouble(21, ent->mtext->basePoint.y);
-    writer->writeDouble(31, ent->mtext->basePoint.z);
+    writer->writeInt16(72, 0); // 0 in AutoCAD's files; not the lock-position flag (280)
+    // AutoCAD repeats the alignment point of AcDbText here, in the ATTRIB's
+    // OCS. An unjustified ATTRIB has none: it gets the MTEXT insertion point,
+    // where a justified one would have it.
+    const bool justified = ent->alignH != DRW_Text::HLeft
+        || ent->alignV != DRW_Text::VBaseLine;
+    const DRW_Coord& alignment =
+        justified ? ent->secPoint : ent->mtext->basePoint;
+    writer->writeDouble(11, alignment.x);
+    writer->writeDouble(21, alignment.y);
+    writer->writeDouble(31, alignment.z);
     return writeEmbeddedMText(ent->mtext.get());
 }
 
@@ -5293,32 +5334,7 @@ bool dxfRW::writeMText(DRW_MText *ent){
         writer->writeDouble(41, ent->widthscale);
         writer->writeInt16(71, ent->textgen);
         writer->writeInt16(72, ent->alignH);
-        // Chunk on UTF-8 codepoint boundaries so a multi-byte character (or
-        // its codepage/DBCS encoding, or a \U+/\M+ escape) is never split
-        // across the group-3/group-1 records. The previous code split the
-        // post-codec byte string at a fixed 250 bytes, corrupting DBCS pairs
-        // and escape sequences. Encoded per-codepoint chunks stay <=250 bytes;
-        // for pure-ASCII text the output is byte-identical to the old 250-split.
-        const std::string& utf8 = ent->text;
-        std::vector<std::string> chunks;
-        std::string cur;
-        for (std::size_t p = 0; p < utf8.size(); ) {
-            unsigned char c = static_cast<unsigned char>(utf8[p]);
-            std::size_t cl = (c < 0x80) ? 1 : ((c >> 5) == 0x6) ? 2
-                           : ((c >> 4) == 0xE) ? 3 : ((c >> 3) == 0x1E) ? 4 : 1;
-            if (p + cl > utf8.size()) cl = utf8.size() - p;
-            std::string enc = writer->fromUtf8String(utf8.substr(p, cl));
-            if (!cur.empty() && cur.size() + enc.size() > 250) {
-                chunks.push_back(cur);
-                cur.clear();
-            }
-            cur += enc;
-            p += cl;
-        }
-        chunks.push_back(cur);  // final (group 1); empty when text is empty
-        for (std::size_t k = 0; k + 1 < chunks.size(); ++k)
-            writer->writeString(3, chunks[k]);
-        writer->writeString(1, chunks.back());
+        writeMTextContent(ent->text);
         writer->writeString(7, ent->style);
         writer->writeDouble(210, ent->extPoint.x);
         writer->writeDouble(220, ent->extPoint.y);
@@ -5434,13 +5450,11 @@ bool dxfRW::writeGeoPositionMarker(DRW_GeoPositionMarker *ent) {
     writer->writeBool(290, ent->m_enableFrameText);
     if (ent->m_enableFrameText) {
         // The DXF form stores the embedded object's insertion point separately
-        // before the standard Embedded Object MTEXT subclass.
+        // before the Embedded Object marker and the MTEXT groups it opens.
         writer->writeDouble(11, ent->m_position.x);
         writer->writeDouble(21, ent->m_position.y);
         writer->writeDouble(31, ent->m_position.z);
-        DRW_MText embedded(*ent->mtext);
-        embedded.extData.clear();
-        if (!writeEmbeddedMText(&embedded))
+        if (!writeEmbeddedMText(ent->mtext.get()))
             return false;
     }
     if (!ent->extData.empty() && !writeExtData(ent->extData))

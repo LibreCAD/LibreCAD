@@ -29345,7 +29345,9 @@ TEST_CASE("RS_FilterDXFRW preserves nested INSERT ATTRIB MTEXT XDATA",
   bool sawDouble = false;
   bool sawCoordinate = false;
   bool sawBinary = false;
-  for (const auto &value : attribute.mtext->extData) {
+  // XDATA follows the embedded object and is the ATTRIB's.
+  CHECK(attribute.mtext->extData.empty());
+  for (const auto &value : attribute.extData) {
     if (!value)
       continue;
     if (value->code() == 1001 && value->type() == DRW_Variant::STRING &&

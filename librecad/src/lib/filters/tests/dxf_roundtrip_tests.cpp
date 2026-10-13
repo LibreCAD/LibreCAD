@@ -544,16 +544,21 @@ bool containsLine(const std::string &path, const std::string &expected) {
   return false;
 }
 
-std::string embeddedAttributeDxf(bool background = true) {
+// `marker` is the group code of the embedded-object marker: 101 as AutoCAD
+// writes it, 100 as LibreCAD wrote it before. `tail` follows the object.
+std::string embeddedAttributeDxf(bool background = true,
+                                 const char *marker = "101",
+                                 const std::string &tail = {}) {
   return std::string(
       "0\nSECTION\n2\nBLOCKS\n0\nBLOCK\n8\n0\n2\nTITLE\n70\n0\n10\n0\n20\n0\n3\nTITLE\n"
       "0\nENDBLK\n8\n0\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
       "0\nINSERT\n8\n0\n2\nTITLE\n10\n0\n20\n0\n66\n1\n"
       "0\nATTRIB\n8\n0\n100\nAcDbText\n10\n1\n20\n4\n40\n9\n1\nfallback\n"
-      "100\nAcDbAttribute\n2\nLABEL\n70\n0\n71\n2\n"
-      "100\nEmbedded Object\n10\n1\n20\n4\n40\n9\n41\n80\n71\n1\n72\n1\n"
-      "1\n{\\fArial;ABC}\\PDEF\n7\niso3098\n73\n2\n44\n1\n90\n") +
-      (background ? "1\n" : "0\n") + "45\n1.5\n63\n3\n"
+      "100\nAcDbAttribute\n2\nLABEL\n70\n0\n71\n2\n") +
+      marker +
+      "\nEmbedded Object\n10\n1\n20\n4\n40\n9\n41\n80\n71\n1\n72\n1\n"
+      "1\n{\\fArial;ABC}\\PDEF\n7\niso3098\n73\n2\n44\n1\n90\n" +
+      (background ? "1\n" : "0\n") + "45\n1.5\n63\n3\n" + tail +
       "0\nSEQEND\n8\n0\n0\nENDSEC\n0\nEOF\n";
 }
 
@@ -1038,6 +1043,12 @@ TEST_CASE("Unedited embedded MTEXT keeps raw formatting and background metadata"
     CHECK(std::stod(scales.front()) == 1.5);
     const auto appIds = recordGroupValues(dxf, "ATTRIB", "1001");
     CHECK(std::find(appIds.begin(), appIds.end(), "LibreCAD_INSERT_ATTRIB_MTEXT") == appIds.end());
+    // The embedded object is opened by group 101, as AutoCAD writes it.
+    CHECK(recordGroupValues(dxf, "ATTRIB", "101") ==
+          std::vector<std::string>{"Embedded Object"});
+    const auto subclasses = recordGroupValues(dxf, "ATTRIB", "100");
+    CHECK(std::find(subclasses.begin(), subclasses.end(), "Embedded Object") ==
+          subclasses.end());
   }
 }
 
