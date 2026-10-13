@@ -30913,11 +30913,6 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
  * Writes the given mText entity to the file.
  */
 void RS_FilterDXFRW::writeMText(const RS_MText *t) {
-  if (m_version != 1009 && (!std::isfinite(t->getWidth()) || t->getWidth() < 0.0)) {
-    m_writeFailed = true;
-    LC_ERR << "Cannot export MTEXT with invalid reference width";
-    return;
-  }
   DRW_Text *text;
   DRW_Text txt1;
   DRW_MText txt2;
@@ -31042,6 +31037,11 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
       } else if (std::isfinite(given) && given > text->widthscale) {
         text->widthscale = given;
       }
+    }
+    if (!std::isfinite(text->widthscale) || text->widthscale < 0.0) {
+      m_writeFailed = true;
+      LC_ERR << "Cannot export MTEXT with invalid output width";
+      return;
     }
     txt2.interlin = t->getLineSpacingFactor();
 

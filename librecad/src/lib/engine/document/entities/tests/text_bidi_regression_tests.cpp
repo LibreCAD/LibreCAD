@@ -1981,8 +1981,16 @@ TEST_CASE("MText with a paragraph command keeps the width it was given",
     bool isNumber = false;
     const double width = mtextGroup(path, 41).toDouble(&isNumber);
     REQUIRE(isNumber);
-    CHECK_THAT(width, WithinAbs(sample.saved == Saved::Given ? sample.givenWidth
-                                                             : source->getUsedTextWidth(), 1e-6));
+    const double expected = sample.saved == Saved::Given ? sample.givenWidth : source->getUsedTextWidth();
+    CHECK_THAT(width, WithinAbs(expected, 1e-6));
+    const QString dwgPath = directory.filePath(QString("width_%1.dwg").arg(index));
+    REQUIRE(writer.fileExport(original, dwgPath, RS2::FormatDWG2004));
+    RS_Graphic restored;
+    RS_FilterDXFRW reader;
+    REQUIRE(reader.fileImport(restored, dwgPath, RS2::FormatDWG2004));
+    const auto *restoredText = findMText(restored);
+    REQUIRE(restoredText);
+    CHECK_THAT(restoredText->getWidth(), WithinAbs(expected, 1e-6));
   }
 }
 

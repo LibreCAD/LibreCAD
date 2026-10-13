@@ -71,7 +71,7 @@ without absorbing that entire project into Arabic support.
 
 This round updates the published foundations at `c40da2c8c`, not the private
 TEXT/MTEXT integration. The primary dirty checkout remains untouched. Current
-master `8cd8b521b` is merged without rewriting published history. Its refined
+master `7a8d24ddf` is merged without rewriting published history. Its refined
 #3061 indentation, paragraph-command, tab and width contracts supersede the
 older prerequisite implementation and tests retained in the initial draft.
 Canonical-source APIs, empty-line border guards and scoped writer ownership
@@ -106,8 +106,22 @@ The format suites retain 710 assertions/6 cases and 279/3 respectively.
 The ON layout suite passes 715,036/16, shaper 639,014/7 and registry 128/7.
 No certified-engine registry cases skip in that local ON run. OFF checks
 backend-unavailable contracts, not equivalent shaping coverage. Workflow lint
-passes. Native merged-application and qmake compile validation are in progress;
-this paragraph is not a whole-PR or sanitizer acceptance claim.
+passes. The fresh coherent native library and regression binaries build.
+Native bidi passes 535,371 assertions/84 cases, source state 1,065/14, writer
+lifetime 290/4, outlines 12,326/8, pen inheritance 39/4 and child replacement
+55/4. The separate child-replacement allocator injector passes all six
+precommit failures with zero postcommit allocations. qmake6 ON/OFF configure
+and focused font/shaper compiles pass; ON also compiles merged MTEXT and the
+corrected filter. This is not whole-PR, application-package or sanitizer
+acceptance.
+
+Commit `ba1719dcc` records the merge and CI target/discovery fixes. Its first
+native run fails one master regression (535,287/535,288 assertions): the stale
+draft guard rejects an invalid *unused* reference width. The corrective slice
+validates the final serialized width instead and extends the unchanged master
+case through same-filter DXF/DWG export and reopen. The complete native bidi
+replay passes as recorded above; the initial failure is retained here rather
+than erased. No private adapter or release-packaging work is included.
 
 The new Ubuntu ON/OFF workflow uses system dependencies and records actual
 engine versions plus verbose test/skip logs as artifacts. A different HarfBuzz
@@ -3681,10 +3695,10 @@ count, erase failed validation history or turn an unverified fix into a pass.
 | Review dispositions and presentation | Title/body distinguish compiled OpenType availability from font/profile activation, list unpublished private WIP and preserve failed sanitizer history. Complete reviewer walkthrough and independent per-area refinement remain pending |
 | Feedback reconciliation | Creation snapshot verified; no external reviewer requested and no review disposition claimed. Retrieve revision-bound feedback/checks during P7b/P7c; queued checks are not passes |
 | Remote operation reconciliation | Exact owned-branch dry-run/push0; remote79d1 verified. Connector creation denied403 before creation; existing authenticated browser then created exactly one draft. GitHub readback and task attachment succeed; no authentication/permission changes, force push, tags or duplicate PR |
-| Integration status | 2026-10-13 refinement merges master `8cd8b521b`, retaining #3061's refined layout/width contracts and tests, canonical source APIs, empty-line guards, writer ownership and upstream staged-DWG cleanup. All six conflicts are resolved in the isolated candidate; native merged regressions and remote mergeability readback remain pending |
-| Validation and findings | Fresh local CMake ON18/18 and OFF16/16 bounded executables pass. qmake6 ON/OFF configuration and focused font/shaper compiles pass; ON also compiles merged rs_mtext.cpp. Workflow lint passes. New opt-in sixteen-suite headless CI and corrected format build lists are present; hosted results pending. System-engine skips are explicit, not certified resource acceptance. P0–P5 mandatory findings and P6 release dependencies/packages remain open |
+| Integration status | Commit `ba1719dcc` merges master `7a8d24ddf`, retaining #3061's refined layout/width contracts and tests, canonical source APIs, empty-line guards, writer ownership and upstream staged-DWG cleanup. All six conflicts are resolved. Fresh coherent native library and merged regressions pass after correcting the unused-width guard; remote mergeability readback remains pending |
+| Validation and findings | Fresh local CMake ON18/18 and OFF16/16 bounded executables pass; native bidi535,371/84, source1,065/14, writer290/4, outline12,326/8, pen39/4, replacement55/4 and isolated replacement allocator pass. qmake6 ON/OFF configure/font/shaper compiles and ON MTEXT/filter compiles pass. Workflow lint passes. New sixteen-suite headless CI and corrected format build lists are present; hosted results pending. System-engine skips are explicit, not certified resource acceptance. Mandatory integration findings and P6 release dependencies/packages remain open |
 | Evidence invalidation | Initial candidate and target recorded above; compare code/resources/dependencies and exact head/base after every corrective update. A plan-only publication record does not validate the application or close an existing finding |
-| Next action | Finish merged native regressions and verify the corrective push/checks; continue P5 scoped implementation, then supply certified platform dependencies/packages and independently refine the complete committed candidate. Do not publish unrelated private WIP; keep this early PR draft until all readiness gates pass |
+| Next action | Verify the corrective push/checks; continue P5 scoped implementation, then supply certified platform dependencies/packages and independently refine the complete committed candidate. Do not publish unrelated private WIP; keep this early PR draft until all readiness gates pass |
 
 #### P7a Create and verify the draft PR
 
@@ -4056,7 +4070,8 @@ candidate. Reconcile source thread state separately from finding state.
 | Finding ID | Source feedback reference | Severity and location | Reviewed head and base | Required resolution | State | Fix commit and validation |
 | --- | --- | --- | --- | --- | --- | --- |
 | Populate before P7a | Link prepublication review records; retain PR comment/review identities when available | Import prepublication findings; add PR review findings as discovered | Retain original revisions | Apply the resolution and verification rules below | Record actual state | Link existing or new evidence |
-| P7-MASTER-INTEGRATION-001 | 2026-10-13 GitHub metadata and six local merge conflicts | Mandatory compatibility; MTEXT layout, tests and filter writer ownership | Published `c40da2c8c`, master `8cd8b521b` | Retain current master's refined indentation/paragraph/width contracts while preserving source state, empty-line guards and both export cleanup mechanisms | Fixed pending native verification | Isolated merge has no conflict markers; qmake compiles merged MTEXT. Current native regression run remains pending; no whole-feature acceptance |
+| P7-MASTER-INTEGRATION-001 | 2026-10-13 GitHub metadata and six local merge conflicts | Mandatory compatibility; MTEXT layout, tests and filter writer ownership | Published `c40da2c8c`, master `7a8d24ddf` | Retain current master's refined indentation/paragraph/width contracts while preserving source state, empty-line guards and both export cleanup mechanisms | Locally verified; hosted pending | Merge `ba1719dcc`; fresh native library/bidi/source/writer checks and qmake MTEXT compile pass after the width correction below; no whole-feature acceptance |
+| P5-WIDTH-RECONCILE-001 | Fresh merged native bidi suite at `ba1719dcc` | Mandatory compatibility; standalone MTEXT output width | Merge `ba1719dcc`, master `7a8d24ddf` | Validate the selected serialized width, not an invalid reference value deliberately replaced by master's measured-width fallback; keep strict ATTRIB width checks where raw width is actually emitted | Locally verified; hosted pending | Before: 1/84 native cases fails on infinity. After: complete bidi535,371/84 passes, with same-filter DXF/DWG fallback export/reopen for all existing samples; source1,065/14 and writer290/4 pass |
 | P7-CI-DISCOVERY-001 | Published workflow/test-registration audit | Mandatory CI correctness; unfiltered CTest invoked after building an incomplete executable list | Published `c40da2c8c`, master `8cd8b521b` | Build both registered scope/verified binaries and keep the format lane independent of optional font dependencies | Locally verified; hosted pending | Fresh ON format scope710/6 and verified279/3 pass; Linux/Windows build lists include both binaries and explicitly select OpenType OFF. Existing master SVG target retained |
 | P7-HEADLESS-CI-001 | Published CMake/CI audit | P2 regression coverage; sixteen excluded, unregistered foundation executables | Published `c40da2c8c` | Add one opt-in aggregate/label and ON/OFF workflow without application rebuilds; preserve separate allocator-failure runner and actual engine/skip evidence | Locally verified; hosted pending | Fresh ON16/16, OFF16/16, actionlint pass. Ubuntu uses system engines; certified-resource skips remain visible in verbose artifacts and are not acceptance |
 | P6-RELEASE-DEPS-001 | 2026-10-13 release-workflow audit | Mandatory release/build completeness; default-ON backend versus missing public dependencies | Published `c40da2c8c`, master `8cd8b521b` | Provision/version/audit HarfBuzz and FreeType on all supported release architectures, universal macOS libraries, runtime resources and third-party notices; validate ON/OFF packages | Open | Existing release Linux/CodeQL lists omit HarfBuzz development packages; Windows has no public backend dependencies; macOS builds only universal FreeType. Private dependency/package proposals are excluded from this scoped update; keep draft |
