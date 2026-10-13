@@ -1872,8 +1872,9 @@ protected:
 public:
     double interlin;              /*!< linespacing factor, code 44 */
     std::uint16_t linespacingStyle = 1; /*!< linespacing style, code 73 (1=at least, 2=exact) */
-    /*! Code 73 as a writer stores it: 2 (exact) or 1 (at least). A file may
-     *  hold 0 or another value no reader defines; it is never copied out. */
+    /*! Code 73 as the DXF writers store it: 2 (exact) or 1 (at least). A file
+     *  may hold 0 or another value no reader defines; a DXF never gets it.
+     *  The DWG encoders write the member as it is. */
     std::uint16_t writtenLinespacingStyle() const { return linespacingStyle == 2 ? 2 : 1; }
     std::int32_t m_backgroundFlags = 0;
     double m_backgroundScale = 0.0; /*!< background-fill box scale (DWG BitDouble) */
