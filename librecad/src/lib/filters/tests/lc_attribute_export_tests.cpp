@@ -335,18 +335,6 @@ DxfRecord onlyRecord(const std::filesystem::path& file, const std::string& type)
 // to read and never belongs in a file.
 const char* const kPrivateApplication = "LibreCAD_INSERT_ATTRIB";
 
-// True when a record of the file has application data under such a name.
-bool hasPrivateAttributeData(const std::filesystem::path& file) {
-    for (const DxfRecord& record : lc::test::dxfRecords(file)) {
-        for (const lc::test::DxfGroup& group : record.m_groups) {
-            if (group.m_code == 1001 && group.m_value.rfind(kPrivateApplication, 0) == 0) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
 // What holds for every DXF written from a drawing that was opened from a
 // DXF: no handle twice, and the private names nowhere, not even in the table
 // of applications.
@@ -474,6 +462,17 @@ void readDwg(const std::filesystem::path& file, DwgContent& content) {
     CAPTURE(file.filename().string());
     dwgRW reader(QFile::encodeName(lc::test::toQString(file)).constData());
     REQUIRE(reader.read(&content, false));
+}
+
+// A DWG lists the applications that have data in it. The private names have
+// none there, and a name in the list would be handed on to every file saved
+// from the drawing that the DWG opens as.
+void checkNoPrivateApplication(const DwgContent& content) {
+    for (const auto& [name, handle] : content.m_applications) {
+        CAPTURE(name, handle);
+        const QString listed = QString::fromStdString(name);
+        CHECK_FALSE(listed.startsWith(QLatin1String(kPrivateApplication), Qt::CaseInsensitive));
+    }
 }
 
 // The one attribute of the one block reference of a DWG.
@@ -1243,16 +1242,14 @@ TEST_CASE("an untouched multi-line attribute is written back as it was read",
         // The same through a DWG: its content is read here as the drawing it
         // opens as, and as the DXF that drawing is saved to.
         const auto dwg = save(bench, drawing, preset.m_name, target("dwg2018"));
+        DwgContent written;
+        readDwg(dwg, written);
+        checkNoPrivateApplication(written);
         EditableDrawing fromDwg;
         REQUIRE(lc::test::importDrawing(fromDwg.m_graphic, dwg, RS2::FormatDWG2018));
         checkSameMText(*imported, *only<RS_MText>(fromDwg, RS2::EntityMText));
         const auto viaDwg = save(bench, fromDwg, std::string(preset.m_name) + "_dwg2018", target("dxf2018"));
-        // The DWG export registers every application name it finds on the
-        // entities before the private data is taken off them, so the DWG
-        // lists the two private names, without data, and the drawing opened
-        // from it keeps the list. No record may have the data.
-        CHECK(lc::test::duplicateDxfHandles(viaDwg).empty());
-        CHECK_FALSE(hasPrivateAttributeData(viaDwg));
+        checkWrittenDxf(viaDwg);
         checkRepeatsSource(source, viaDwg);
     }
 }
@@ -2420,6 +2417,7 @@ TEST_CASE("the MTEXT of an attribute saved to DWG 2018 refers to records of the 
         REQUIRE(style != source.m_style);
         REQUIRE(layer != kForeignLayer);
         REQUIRE(acad != kForeignApplication);
+        checkNoPrivateApplication(written);
 
         // The layer and the text style of the attribute, by their handles in
         // this file, for the attribute and for its MTEXT alike.
@@ -3514,6 +3512,10 @@ TEST_CASE("a right-to-left attribute is noted once in its record",
                 DwgContent content;
                 readDwg(out, content);
                 CHECK(rightToLeftNotes(onlyDwgAttribute(content)) == 1);
+                // The note is data of the file and has its application
+                // there; what the text keeps of its attribute has none.
+                CHECK(handleNamed(content.m_applications, "LibreCad") != 0);
+                checkNoPrivateApplication(content);
             }
             if (!to.m_embedsMText) {
                 continue;   // a text of one line has no direction

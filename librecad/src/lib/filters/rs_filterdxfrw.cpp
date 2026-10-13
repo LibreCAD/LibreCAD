@@ -6573,17 +6573,21 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
   return sidecar;
 }
 
+// The names under which a text keeps what it was read with as a block
+// attribute.
+bool isInsertAttribSidecarMarker(const std::string &marker) {
+  return marker == kInsertAttribMarker || marker == kInsertAttribMTextMarker ||
+         marker == kInsertAttribMTextXDataMarker ||
+         marker == kInsertAttribMTextCommonMarker;
+}
+
 void removeInsertAttribSidecar(DRW_Entity &entity) {
   std::vector<std::shared_ptr<DRW_Variant>> filtered;
   bool inGroup = false;
   for (const auto &value : entity.extData) {
     if (value && value->code() == 1001 &&
         value->type() == DRW_Variant::STRING && value->content.s != nullptr) {
-      const std::string marker = value->c_str();
-      inGroup = marker == kInsertAttribMarker ||
-                marker == kInsertAttribMTextMarker ||
-                marker == kInsertAttribMTextXDataMarker ||
-                marker == kInsertAttribMTextCommonMarker;
+      inGroup = isInsertAttribSidecarMarker(value->c_str());
       if (inGroup)
         continue;
     }
@@ -26961,7 +26965,8 @@ void RS_FilterDXFRW::collectDwgAppIds() {
     return;
 
   std::set<std::string> emittedNames;
-  const auto collectExtData = [this, &emittedNames](const auto &extData) {
+  const auto collectExtData = [this, &emittedNames](const auto &extData,
+                                                    bool ofText = false) {
     for (const auto &value : extData) {
       if (value == nullptr || value->code() != 1001 ||
           value->type() != DRW_Variant::STRING || value->content.s == nullptr ||
@@ -26969,6 +26974,11 @@ void RS_FilterDXFRW::collectDwgAppIds() {
         continue;
       }
       const std::string name = *value->content.s;
+      // What a text keeps of its block attribute is never written with it
+      // (removeInsertAttribSidecar()): no data of the file is under these
+      // names, and a drawing opened from the file would hand them on.
+      if (ofText && isInsertAttribSidecarMarker(name))
+        continue;
       if (!emittedNames.insert(normalizeDwgTableName(name)).second)
         continue;
       DRW_AppId appId;
@@ -26982,7 +26992,9 @@ void RS_FilterDXFRW::collectDwgAppIds() {
         !entity->hasDrwExtData()) {
       return;
     }
-    collectExtData(entity->getDrwExtData());
+    collectExtData(entity->getDrwExtData(),
+                   entity->rtti() == RS2::EntityText ||
+                       entity->rtti() == RS2::EntityMText);
   };
   const auto collectFromContainer = [&collectFromEntity](
                                         const RS_EntityContainer *container) {
