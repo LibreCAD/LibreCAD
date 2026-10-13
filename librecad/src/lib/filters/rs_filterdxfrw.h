@@ -3064,6 +3064,11 @@ private:
   bool stageDwgTableRecordIdentity(DwgWriteSourceKind kind,
                                    std::uint32_t sourceHandle,
                                    std::uint32_t outputHandle);
+  // The output handle of the APPID record a DWG source handle names, for a
+  // reference replayed from source data. False if this export writes no
+  // such record; a null handle resolves to itself.
+  bool resolveDwgWriteAppIdHandle(std::uint32_t sourceHandle,
+                                  std::uint32_t *outputHandle) const;
   bool commitDwgTableRecordIdentities();
   bool commitDwgTableControlIdentities();
   bool commitDwgGeneratedEntityWrite(std::uint32_t outputHandle);
@@ -3107,6 +3112,11 @@ private:
   std::size_t m_dxfLeftOutRawRecords = 0;
   // What the codec left out of the DXF last exported (dxfRW::leftOut()).
   std::map<std::string, std::size_t> m_dxfLeftOut;
+  // Multi-line attributes whose stored annotation-scale payload the last
+  // export did not write: only DWG R2018 can hold it, and only for attribute
+  // text that was not edited. Counted by writeInsert(), reported by
+  // exportReport().
+  std::size_t m_exportAttribScaleDataLeftOut = 0;
   // Normalised names of the built-in LTYPE records written by writeLType()
   // during writeLTypes(); imported raw records with these names are skipped.
   std::set<std::string> m_builtinLTypeNames;

@@ -11168,6 +11168,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   m_writeFailed = false;
   m_dxfLeftOutRawRecords = 0;
   m_dxfLeftOut.clear();
+  m_exportAttribScaleDataLeftOut = 0;
   // What becomes of each block attribute's text is the same for every
   // callback of this export, the DWG handle pre-pass included.
   buildInsertAttribPlan();
@@ -15107,6 +15108,38 @@ bool RS_FilterDXFRW::stageDwgTableRecordIdentity(DwgWriteSourceKind kind,
   return true;
 }
 
+bool RS_FilterDXFRW::resolveDwgWriteAppIdHandle(
+    std::uint32_t sourceHandle, std::uint32_t *outputHandle) const {
+  if (outputHandle != nullptr)
+    *outputHandle = 0;
+  if (sourceHandle == DRW::NoHandle)
+    return true;
+  if (m_dwgW == nullptr || m_graphic == nullptr)
+    return false;
+  // Only an APPID record qualifies: the ledger keeps layers, styles and the
+  // other table records under the same kind.
+  for (const auto &entry :
+       m_graphic->dwgAdvancedMetadata().appIdTableEntries()) {
+    if (entry.second.handle != sourceHandle)
+      continue;
+    std::uint32_t resolved = 0;
+    if (normalizeDwgTableName(entry.first) == "ACAD") {
+      // writeAppId() leaves this record, and its handle, to the codec.
+      resolved = DRW::DwgAcadAppIdHandle;
+    } else {
+      const DwgWriteIdentityLookup state = lookupDwgWriteIdentity(
+          DwgWriteSourceKind::TableRecord, sourceHandle, &resolved);
+      if (state != DwgWriteIdentityLookup::Selected &&
+          state != DwgWriteIdentityLookup::Committed)
+        return false;
+    }
+    if (outputHandle != nullptr)
+      *outputHandle = resolved;
+    return resolved != 0;
+  }
+  return false;
+}
+
 bool RS_FilterDXFRW::commitDwgTableRecordIdentities() {
   if (m_dwgW == nullptr)
     return true;
@@ -16463,6 +16496,11 @@ QString RS_FilterDXFRW::exportReport() const {
   }
   for (const auto &[what, count] : m_dxfLeftOut)
     lines << QStringLiteral("%1 × %2").arg(count).arg(QString::fromStdString(what));
+  if (m_exportAttribScaleDataLeftOut > 0) {
+    lines << QObject::tr("annotation scale data of %1 multi-line attribute(s)",
+                         "RS_FilterDXFRW")
+                 .arg(m_exportAttribScaleDataLeftOut);
+  }
 #ifdef DWGSUPPORT
   if (m_lastDwgWriteSkipCounters.total() > 0) {
     lines << QObject::tr("%1 object(s) DWG cannot hold", "RS_FilterDXFRW")
@@ -30680,6 +30718,14 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
       }
     }
 
+    // Only an AC1032 file holds the MTEXT of a multi-line attribute, and
+    // only its DWG form has fields for an annotation-scale payload or a
+    // column layout.
+    const bool embedsMText =
+        (m_dwgW != nullptr ? m_dwgW->getVersion() : m_dxfExportVersion) >=
+        DRW::AC1032;
+    const bool writesAttribScaleState = embedsMText && m_dwgW != nullptr;
+
     for (const auto &[sidecar, candidate] : attributes) {
       DRW_Attrib attrib;
       getEntityAttributes(&attrib, candidate);
@@ -30754,11 +30800,26 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
                                     directionEdited || spacingEdited || positionEdited ||
                                     angleEdited || widthEdited || styleEdited ||
                                     data.height != before.height;
-          if (layoutEdited && (saved.r2018ColumnType != 0 || !saved.annotativeData.empty())) {
-            m_writeFailed = true;
-            LC_ERR << "Cannot export edited MTEXT attribute columns or annotative layout";
-            return;
+          // The annotation-scale payload and the column layout are opaque
+          // here. They go out only next to the untouched text they were
+          // read with, and the payload only if the APPID it names is
+          // written too; exportReport() says when a payload stays behind.
+          // A copy has no source handle, and may come from another drawing,
+          // where the handle of the APPID names something else.
+          std::uint32_t annotativeAppHandle = 0;
+          bool keepScaleState = writesAttribScaleState && !layoutEdited &&
+                                candidate->sourceHandle() != 0;
+          if (keepScaleState && !saved.annotativeData.empty() &&
+              !resolveDwgWriteAppIdHandle(saved.annotativeAppHandle,
+                                          &annotativeAppHandle)) {
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                            "RS_FilterDXFRW: ATTRIB annotation scale data "
+                            "names APPID 0x%X, which is not written",
+                            saved.annotativeAppHandle);
+            keepScaleState = false;
           }
+          if (!keepScaleState && !saved.annotativeData.empty())
+            ++m_exportAttribScaleDataLeftOut;
           mtext->text = textEdited
               ? toDxfString(data.text, m_dwgW == nullptr).toUtf8().toStdString() : saved.text;
           mtext->textgen = saved.textgen;
@@ -30780,18 +30841,20 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
           mtext->m_r2018RectHeight = saved.r2018RectHeight;
           mtext->m_r2018ExtentsHeight = saved.r2018ExtentsHeight;
           mtext->m_r2018ExtentsWidth = saved.r2018ExtentsWidth;
-          mtext->m_r2018ColumnType =
-              static_cast<std::uint16_t>(saved.r2018ColumnType);
-          mtext->m_r2018ColumnCount = saved.r2018ColumnCount;
-          mtext->m_r2018ColumnWidth = saved.r2018ColumnWidth;
-          mtext->m_r2018ColumnGutter = saved.r2018ColumnGutter;
-          mtext->m_r2018ColumnAutoHeight = saved.r2018ColumnAutoHeight;
-          mtext->m_r2018ColumnFlowReversed = saved.r2018ColumnFlowReversed;
-          mtext->m_r2018ColumnHeights = saved.r2018ColumnHeights;
-          mtext->m_r2018AnnotativeData = saved.annotativeData;
-          mtext->m_r2018AnnotativeUnknown =
-              static_cast<std::uint16_t>(saved.annotativeUnknown);
-          mtext->m_r2018AnnotativeAppHandle = saved.annotativeAppHandle;
+          if (keepScaleState) {
+            mtext->m_r2018ColumnType =
+                static_cast<std::uint16_t>(saved.r2018ColumnType);
+            mtext->m_r2018ColumnCount = saved.r2018ColumnCount;
+            mtext->m_r2018ColumnWidth = saved.r2018ColumnWidth;
+            mtext->m_r2018ColumnGutter = saved.r2018ColumnGutter;
+            mtext->m_r2018ColumnAutoHeight = saved.r2018ColumnAutoHeight;
+            mtext->m_r2018ColumnFlowReversed = saved.r2018ColumnFlowReversed;
+            mtext->m_r2018ColumnHeights = saved.r2018ColumnHeights;
+            mtext->m_r2018AnnotativeData = saved.annotativeData;
+            mtext->m_r2018AnnotativeUnknown =
+                static_cast<std::uint16_t>(saved.annotativeUnknown);
+            mtext->m_r2018AnnotativeAppHandle = annotativeAppHandle;
+          }
           mtext->m_r2018ReallyLocked = saved.reallyLocked;
           mtext->setHasDataStorageBinaryData(saved.hasDataStorageBinaryData);
           mtext->reactorHandles = saved.reactorHandles;

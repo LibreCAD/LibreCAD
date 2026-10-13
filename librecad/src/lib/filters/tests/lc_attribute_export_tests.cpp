@@ -34,9 +34,12 @@
 #include <algorithm>
 #include <cmath>
 #include <cstddef>
+#include <cstdint>
 #include <cstdlib>
 #include <filesystem>
 #include <fstream>
+#include <functional>
+#include <map>
 #include <memory>
 #include <string>
 #include <system_error>
@@ -274,6 +277,22 @@ std::filesystem::path save(const Bench& bench, EditableDrawing& drawing, const s
     return file;
 }
 
+// A saved file and what the export said it left out, one item per line.
+struct Saved {
+    std::filesystem::path m_file;
+    std::string m_report;
+};
+
+// Saves as save() does, with a filter that is asked for its report afterwards.
+Saved saveWithReport(const Bench& bench, EditableDrawing& drawing, const std::string& variant, const Target& to) {
+    const std::filesystem::path file = bench.m_out.file(variant + "_" + to.m_name + to.m_suffix);
+    CAPTURE(file.filename().string());
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(drawing.m_graphic, lc::test::toQString(file), to.m_format));
+    lc::test::keepForInspection(file);
+    return {file, filter.exportReport().toStdString()};
+}
+
 // The one record of a type in a written DXF.
 DxfRecord onlyRecord(const std::filesystem::path& file, const std::string& type) {
     const std::vector<DxfRecord> records = lc::test::dxfRecords(file, type);
@@ -393,16 +412,211 @@ void checkRepeatsSource(const DxfRecord& source, const std::filesystem::path& wr
 }
 
 // What libdxfrw reads of a DWG, without the filter in between: the block
-// references with their attributes.
+// references with their attributes, and the handle of every registered
+// application by its name.
 struct DwgContent : lc::test::NullDrwInterface {
     std::vector<DRW_Insert> m_inserts;
+    std::map<std::string, std::uint32_t> m_applications;
     void addInsert(const DRW_Insert& insert) override { m_inserts.push_back(insert); }
+    void addAppId(const DRW_AppId& application) override { m_applications[application.name] = application.handle; }
 };
 
 void readDwg(const std::filesystem::path& file, DwgContent& content) {
     CAPTURE(file.filename().string());
     dwgRW reader(QFile::encodeName(lc::test::toQString(file)).constData());
     REQUIRE(reader.read(&content, false));
+}
+
+// The MTEXT of the one attribute of the one block reference of a DWG.
+const DRW_MText& onlyEmbeddedMText(const DwgContent& content) {
+    REQUIRE(content.m_inserts.size() == 1);
+    REQUIRE(content.m_inserts.front().attlist.size() == 1);
+    REQUIRE(content.m_inserts.front().attlist.front() != nullptr);
+    REQUIRE(content.m_inserts.front().attlist.front()->mtext != nullptr);
+    return *content.m_inserts.front().attlist.front()->mtext;
+}
+
+// The annotation-scale data of the attribute that AttributeDwgSource writes,
+// and the name of the application the data belongs to. What the bytes mean
+// is not known here; a DWG 2018 holds them next to the MTEXT of a multi-line
+// attribute, and no other format has a place for them.
+const std::vector<std::uint8_t> kScaleData{0x01, 0x7F, 0xFE};
+constexpr std::uint16_t kScaleDataShort = 0x72;
+const char* const kScaleApplication = "LC_SCALE_APP";
+// What an export says when it left such data out.
+const char* const kScaleDataLeftOut = "annotation scale data of 1 multi-line attribute(s)";
+
+// Writes a DWG 2018 with one block reference and one multi-line attribute
+// that has annotation-scale data, through libdxfrw: no DXF can hold the data,
+// and no drawing of another program is copied. The value of the attribute
+// itself is not empty, so that the cases on this source do not depend on
+// what a format without the MTEXT gets as the value.
+struct AttributeDwgSource : lc::test::NullDrwInterface {
+    double m_angle = 0.0;                   // of the text, in radians
+    bool m_dataNamesNoApplication = false;  // the data names a handle that no record of the file has
+    std::uint32_t m_scaleApplication = 0;   // after write(): the handle of LC_SCALE_APP in the file
+
+    void write(const std::filesystem::path& file) {
+        CAPTURE(file.filename().string());
+        dwgRW writer(QFile::encodeName(lc::test::toQString(file)).constData());
+        m_writer = &writer;
+        const bool written = writer.write(this, DRW::AC1032, false);
+        m_writer = nullptr;
+        REQUIRE(written);
+        REQUIRE(m_insertWritten);
+        REQUIRE(m_scaleApplication != 0);
+    }
+
+    // The callbacks only note what went wrong: libdxfrw calls them, and an
+    // exception of a failed REQUIRE would not get past it.
+    void writeAppId() override {
+        DRW_AppId application;
+        application.name = kScaleApplication;
+        if (m_writer != nullptr && m_writer->addAppId(&application)) {
+            m_scaleApplication = application.handle;
+        }
+    }
+    void writeBlocks() override {
+        if (m_writer != nullptr) {
+            m_block = m_writer->defineBlock("TITLE", DRW_Coord{0.0, 0.0, 0.0});
+        }
+    }
+    void writeEntities() override {
+        if (m_writer == nullptr || m_block == 0) {
+            return;
+        }
+        DRW_Insert insert;
+        insert.basePoint = DRW_Coord{10.0, 20.0, 0.0};
+        insert.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+        insert.blockRecH.ref = m_block;
+        auto attribute = std::make_shared<DRW_Attrib>();
+        attribute->basePoint = DRW_Coord{10.0, 20.0, 0.0};
+        attribute->secPoint = attribute->basePoint;
+        attribute->extPoint = DRW_Coord{0.0, 0.0, 1.0};
+        attribute->height = 2.5;
+        attribute->text = "line 1";
+        attribute->tag = "NOTE";
+        attribute->attVersion = 1;
+        attribute->m_attributeType = 2;
+        attribute->mtext = std::make_unique<DRW_MText>();
+        DRW_MText& mtext = *attribute->mtext;
+        mtext.basePoint = attribute->basePoint;
+        mtext.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+        mtext.secPoint = DRW_Coord{std::cos(m_angle), std::sin(m_angle), 0.0};
+        mtext.widthscale = 20.0;
+        mtext.height = 2.5;
+        mtext.textgen = 1;
+        mtext.alignH = DRW_Text::HLeft;
+        mtext.interlin = 1.0;
+        mtext.text = "line 1\\Pline 2";
+        mtext.m_r2018IsNotAnnotative = false;
+        mtext.m_r2018AnnotativeData = kScaleData;
+        mtext.m_r2018AnnotativeUnknown = kScaleDataShort;
+        mtext.m_r2018AnnotativeAppHandle = m_dataNamesNoApplication ? 0x7F0u : m_scaleApplication;
+        insert.attlist.push_back(std::move(attribute));
+        m_insertWritten = m_writer->writeInsert(&insert);
+    }
+
+private:
+    dwgRW* m_writer = nullptr;
+    std::uint32_t m_block = 0;
+    bool m_insertWritten = false;
+};
+
+// The formats the cases on that source save to; the one that holds the data
+// comes first.
+const std::vector<const char*> kScaleDataFormats{"dwg2018", "dxf2018", "dxf2007", "dxf2000", "dwg2013", "dwg2000"};
+
+// A DWG 2018 that was saved with the data: the bytes and the number after
+// them are the source's, and nothing is reported. The data names its
+// application by handle, and a save gives every record a handle of its own,
+// so the handle is the one of the application in the saved file, which is
+// not the number the source had.
+void checkScaleDataKept(const Saved& saved, const AttributeDwgSource& source) {
+    CAPTURE(saved.m_file.filename().string());
+    DwgContent written;
+    readDwg(saved.m_file, written);
+    const DRW_MText& mtext = onlyEmbeddedMText(written);
+    CHECK(mtext.m_r2018AnnotativeData == kScaleData);
+    CHECK(mtext.m_r2018AnnotativeUnknown == kScaleDataShort);
+    CHECK_FALSE(mtext.m_r2018IsNotAnnotative);
+    REQUIRE(written.m_applications.count(kScaleApplication) == 1);
+    const std::uint32_t application = written.m_applications[kScaleApplication];
+    // A handle copied from the source would pass for the right one if the
+    // two files gave the application the same handle.
+    REQUIRE(application != source.m_scaleApplication);
+    CHECK(mtext.m_r2018AnnotativeAppHandle == application);
+    CHECK(saved.m_report.find("annotation scale data") == std::string::npos);
+}
+
+// A save that left the data out says so, and has the block reference and
+// its attribute all the same. In a DWG 2018 the attribute is still marked as
+// annotative.
+void checkScaleDataLeftOut(const Saved& saved, const Target& to) {
+    CAPTURE(saved.m_file.filename().string(), saved.m_report);
+    CHECK(saved.m_report.find(kScaleDataLeftOut) != std::string::npos);
+    if (to.m_dxf) {
+        CHECK(lc::test::duplicateDxfHandles(saved.m_file).empty());
+        CHECK(lc::test::dxfRecords(saved.m_file, "INSERT").size() == 1);
+        CHECK(lc::test::dxfRecords(saved.m_file, "ATTRIB").size() == 1);
+    }
+    else if (to.m_embedsMText) {
+        DwgContent written;
+        readDwg(saved.m_file, written);
+        const DRW_MText& mtext = onlyEmbeddedMText(written);
+        CHECK(mtext.m_r2018AnnotativeData.empty());
+        CHECK_FALSE(mtext.m_r2018IsNotAnnotative);
+    }
+}
+
+// One change of an annotative attribute at a time, saved to every format.
+// The drawing shows one layout of the text, so it cannot vouch for the data
+// next to a text the data was not read with: the save succeeds without it.
+// The change is made the way the tools make it, by a clone in the place of
+// the text, or on the text itself, as a plugin makes it.
+void checkEditedAnnotativeAttribute(const Bench& bench, const bool onTheTextItself) {
+    AttributeDwgSource source;
+    source.m_angle = 0.7;
+    const std::filesystem::path file = bench.m_out.file("source.dwg");
+    source.write(file);
+
+    struct Edit {
+        const char* m_name;
+        std::function<void(RS_MText&)> m_change;
+    };
+    const std::vector<Edit> edits{
+        {"text", [](RS_MText& text) { text.setText("changed\ntext"); }},
+        {"move", [](RS_MText& text) { text.move(RS_Vector(5.0, 0.0)); }},
+        {"height", [](RS_MText& text) { text.setHeight(12.0); }},
+        {"angle", [](RS_MText& text) { text.setAngle(1.0); }},
+        {"style", [](RS_MText& text) { text.setStyle("iso3098"); }},
+    };
+    for (const Edit& edit : edits) {
+        for (const char* format : kScaleDataFormats) {
+            const Target to = target(format);
+            CAPTURE(edit.m_name, to.m_name);
+            EditableDrawing drawing;
+            REQUIRE(lc::test::importDrawing(drawing.m_graphic, file, RS2::FormatDWG2018));
+            const RS_MText* imported = only<RS_MText>(drawing, RS2::EntityMText);
+            if (onTheTextItself) {
+                auto* text = const_cast<RS_MText*>(imported);
+                edit.m_change(*text);
+                text->update();
+            }
+            else {
+                drawing.edit(imported, edit.m_change);
+            }
+
+            const Saved saved = saveWithReport(bench, drawing, edit.m_name, to);
+            checkScaleDataLeftOut(saved, to);
+            if (to.m_embedsMText && std::string(edit.m_name) == "text") {
+                EditableDrawing reopened;
+                REQUIRE(lc::test::importDrawing(reopened.m_graphic, saved.m_file, to.m_format));
+                CHECK(reopened.live<RS_Insert>(RS2::EntityInsert).size() == 1);
+                CHECK(only<RS_MText>(reopened, RS2::EntityMText)->getText().toStdString() == "changed\ntext");
+            }
+        }
+    }
 }
 
 // A drawing of AutoCAD's own that is not in the repository; empty when the
@@ -1532,6 +1746,136 @@ TEST_CASE("pasted attribute texts stay with the pasted block reference",
         CHECK(attributeTags(file).size() == 4);
         CHECK(lc::test::dxfRecords(file, "TEXT").empty());
     }
+}
+
+// An attribute can be annotative. Its MTEXT then has data for the annotation
+// scales, which only a DWG 2018 holds and which is kept here as it was read.
+// It goes back into a DWG 2018 next to a text that is as it was read, and no
+// save is refused over it: what stays behind is named in the export report.
+
+TEST_CASE("an untouched annotative attribute keeps its scale data in DWG 2018",
+          "[attribute-export][attrib][filter][dxf][dwg][annotative]") {
+    const Bench bench("attr_scale_untouched");
+    int variant = 0;
+    // A turned text too: the angle the drawing shows of it is not always
+    // the number the file has, and must not pass for a change.
+    for (const double angle : {0.0, 0.7}) {
+        const std::string name = "angle" + std::to_string(variant++);
+        CAPTURE(name);
+        AttributeDwgSource source;
+        source.m_angle = angle;
+        const std::filesystem::path file = bench.m_out.file(name + "_source.dwg");
+        source.write(file);
+
+        for (const char* format : kScaleDataFormats) {
+            const Target to = target(format);
+            CAPTURE(to.m_name);
+            EditableDrawing drawing;
+            REQUIRE(lc::test::importDrawing(drawing.m_graphic, file, RS2::FormatDWG2018));
+            REQUIRE(only<RS_MText>(drawing, RS2::EntityMText)->getAngle() == Catch::Approx(angle).margin(1e-9));
+            const Saved saved = saveWithReport(bench, drawing, name, to);
+            if (to.m_embedsMText && !to.m_dxf) {
+                checkScaleDataKept(saved, source);
+            }
+            else {
+                checkScaleDataLeftOut(saved, to);
+            }
+        }
+    }
+}
+
+TEST_CASE("annotative attribute data that names no application of the drawing is left out",
+          "[attribute-export][attrib][filter][dwg][annotative]") {
+    const Bench bench("attr_scale_no_app");
+    AttributeDwgSource source;
+    source.m_dataNamesNoApplication = true;
+    const std::filesystem::path file = bench.m_out.file("source.dwg");
+    source.write(file);
+
+    // The data names its application by a handle of the file it was read
+    // from. Where that is no application the drawing has, there is nothing
+    // the data could name in the saved file.
+    EditableDrawing drawing;
+    REQUIRE(lc::test::importDrawing(drawing.m_graphic, file, RS2::FormatDWG2018));
+    const Target to = target("dwg2018");
+    checkScaleDataLeftOut(saveWithReport(bench, drawing, "untouched", to), to);
+}
+
+TEST_CASE("an annotative attribute changed on the text itself is saved without its scale data",
+          "[attribute-export][attrib][filter][dxf][dwg][annotative]") {
+    const Bench bench("attr_scale_in_place");
+    checkEditedAnnotativeAttribute(bench, true);
+}
+
+TEST_CASE("an annotative attribute edited the way the application edits is saved without its scale data",
+          "[attribute-export][attrib][filter][dxf][dwg][annotative]") {
+    const Bench bench("attr_scale_edited");
+    checkEditedAnnotativeAttribute(bench, false);
+}
+
+TEST_CASE("undoing the edit of an annotative attribute restores its scale data",
+          "[attribute-export][attrib][filter][dxf][dwg][annotative]") {
+    const Bench bench("attr_scale_undone");
+    AttributeDwgSource source;
+    source.m_angle = 0.7;
+    const std::filesystem::path file = bench.m_out.file("source.dwg");
+    source.write(file);
+
+    EditableDrawing drawing;
+    REQUIRE(lc::test::importDrawing(drawing.m_graphic, file, RS2::FormatDWG2018));
+    drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [](RS_MText& text) { text.setText("changed\ntext"); });
+    REQUIRE(drawing.m_graphic.undo());
+    REQUIRE(only<RS_MText>(drawing, RS2::EntityMText)->getText().toStdString() == "line 1\nline 2");
+
+    for (const char* format : kScaleDataFormats) {
+        const Target to = target(format);
+        CAPTURE(to.m_name);
+        const Saved saved = saveWithReport(bench, drawing, "undone", to);
+        if (to.m_embedsMText && !to.m_dxf) {
+            checkScaleDataKept(saved, source);
+        }
+        else {
+            checkScaleDataLeftOut(saved, to);
+        }
+    }
+}
+
+TEST_CASE("a pasted annotative attribute is saved without its scale data",
+          "[attribute-export][attrib][filter][dwg][annotative]") {
+    const Bench bench("attr_scale_pasted");
+    AttributeDwgSource source;
+    const std::filesystem::path file = bench.m_out.file("source.dwg");
+    source.write(file);
+
+    EditableDrawing from;
+    REQUIRE(lc::test::importDrawing(from.m_graphic, file, RS2::FormatDWG2018));
+    QList<RS_Entity*> copied =
+        selection({only<RS_Insert>(from, RS2::EntityInsert), only<RS_MText>(from, RS2::EntityMText)});
+    from.m_graphic.select(copied, true);
+    LC_CopyUtils::copy(RS_Vector(0.0, 0.0), copied, &from.m_graphic);
+    from.m_graphic.select(copied, false);
+
+    // Pasted where it was copied from, in place of the attribute of a drawing
+    // that was opened from the same file: the text is as it was read, and the
+    // handle its data names is the same application here. But a copy may as
+    // well come from a drawing in which that handle is something else, and
+    // nothing tells the two apart: a copy has no handle of a file.
+    EditableDrawing drawing;
+    REQUIRE(lc::test::importDrawing(drawing.m_graphic, file, RS2::FormatDWG2018));
+    const RS_Vector place = only<RS_MText>(drawing, RS2::EntityMText)->getInsertionPoint();
+    drawing.erase(only<RS_MText>(drawing, RS2::EntityMText));
+    drawing.erase(only<RS_Insert>(drawing, RS2::EntityInsert));
+    drawing.modify([&](LC_DocumentModificationBatch& ctx) {
+        LC_CopyUtils::paste(LC_CopyUtils::RS_PasteData(RS_Vector(0.0, 0.0)), &drawing.m_graphic, ctx);
+    });
+    const RS_MText* pasted = only<RS_MText>(drawing, RS2::EntityMText);
+    REQUIRE(pasted->sourceHandle() == 0);
+    REQUIRE(pasted->ownerLineage() == only<RS_Insert>(drawing, RS2::EntityInsert)->lineage());
+    REQUIRE(pasted->getInsertionPoint().distanceTo(place) < 1e-12);
+    REQUIRE(pasted->getText().toStdString() == "line 1\nline 2");
+
+    const Target to = target("dwg2018");
+    checkScaleDataLeftOut(saveWithReport(bench, drawing, "pasted", to), to);
 }
 
 // Local only: the drawing is AutoCAD's and is not in the repository.
