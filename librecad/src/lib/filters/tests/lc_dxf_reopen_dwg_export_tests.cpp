@@ -35,6 +35,7 @@
 #include <cstddef>
 #include <filesystem>
 #include <fstream>
+#include <iterator>
 #include <string>
 
 #include <QCoreApplication>
@@ -160,8 +161,8 @@ std::string dxfWithViewports(const std::string& records) {
 TEST_CASE("a drawing saved as DXF and opened again is saved as DWG",
           "[dxf][dwg][filter][vport]") {
     ensureSettings();
-    const Format dxf = GENERATE(from_range(kDxfFormats));
-    const Format dwg = GENERATE(from_range(kDwgFormats));
+    const Format dxf = GENERATE(from_range(std::begin(kDxfFormats), std::end(kDxfFormats)));
+    const Format dwg = GENERATE(from_range(std::begin(kDwgFormats), std::end(kDwgFormats)));
     CAPTURE(dxf.m_name, dwg.m_name);
 
     const std::string saved = tempPath(std::string(dxf.m_name) + ".dxf");
@@ -208,7 +209,7 @@ TEST_CASE("a DXF that declares its viewports is saved as DWG",
                   viewportRecord("29", "*Active") + viewportRecord("2A", "*Active"), 2, 1},
         Viewports{"the active viewport and a named one",
                   viewportRecord("29", "*Active") + viewportRecord("2A", "LEFT"), 2, 2});
-    const Format dwg = GENERATE(from_range(kDwgFormats));
+    const Format dwg = GENERATE(from_range(std::begin(kDwgFormats), std::end(kDwgFormats)));
     CAPTURE(viewports.m_label, dwg.m_name);
 
     const std::string src = tempPath("declared.dxf");

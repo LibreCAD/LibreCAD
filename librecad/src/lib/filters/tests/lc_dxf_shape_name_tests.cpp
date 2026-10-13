@@ -33,6 +33,7 @@
 #include <cstddef>
 #include <filesystem>
 #include <fstream>
+#include <iterator>
 #include <string>
 
 #include <QCoreApplication>
@@ -143,7 +144,7 @@ TEST_CASE("a DXF with a SHAPE that has no name is read",
 TEST_CASE("a SHAPE read from a DWG is saved as DXF and the DXF opens",
           "[dxf][filter][shape][roundtrip]") {
     ensureSettings();
-    const Format dxf = GENERATE(from_range(kDxfFormats));
+    const Format dxf = GENERATE(from_range(std::begin(kDxfFormats), std::end(kDxfFormats)));
     CAPTURE(dxf.m_name);
 
     RS_Graphic graphic;
