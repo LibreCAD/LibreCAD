@@ -198,6 +198,49 @@ std::uint16_t mtextLineSpacingCode(RS_MTextData::MTextLineSpacingStyle style) {
   return style == RS_MTextData::Exact ? 2 : 1;
 }
 
+// The private right-to-left marker a model text needs, 0 for none. Marker 1
+// preserves old drawings; marker 2 stores logical Unicode RTL.
+std::int32_t rtlLayoutOf(const RS_MTextData &data) {
+  if (data.drawingDirection != RS_MTextData::RightToLeft)
+    return 0;
+  return data.legacyRtlLayout ? kLegacyRtlLayout : kLogicalRtlLayout;
+}
+
+// Attachment, drawing direction and line spacing of a model text as MTEXT
+// stores them (groups 71, 72, 73, 44).
+// DXF MTEXT group 72: 1=LeftToRight, 3=TopToBottom, 5=ByStyle. RightToLeft
+// has no DXF encoding: it is written as LeftToRight so that other readers see
+// a well-defined direction, and setMTextRtlMarker() carries the preference.
+void setMTextLayout(DRW_MText &mtext, const RS_MTextData &data) {
+  mtext.textgen =
+      static_cast<int>(data.valign) * 3 + static_cast<int>(data.halign) + 1;
+  switch (data.drawingDirection) {
+  case RS_MTextData::TopToBottom:
+    mtext.alignH = static_cast<DRW_Text::HAlign>(3);
+    break;
+  case RS_MTextData::ByStyle:
+    mtext.alignH = static_cast<DRW_Text::HAlign>(5);
+    break;
+  case RS_MTextData::LeftToRight:
+  case RS_MTextData::RightToLeft:
+  default:
+    mtext.alignH = static_cast<DRW_Text::HAlign>(1);
+    break;
+  }
+  // Always the model's style: 1 and 2 read back as themselves, and no other
+  // source value may reach the file.
+  mtext.linespacingStyle = mtextLineSpacingCode(data.lineSpacingStyle);
+  mtext.interlin = data.lineSpacingFactor;
+}
+
+// RS_MText::setText() takes a leading \A0; \A1; \A2; out of the text and
+// makes it the vertical alignment.
+bool hasMTextAlignmentPrefix(const QString &text) {
+  return text.startsWith(QLatin1StringView("\\A0;")) ||
+         text.startsWith(QLatin1StringView("\\A1;")) ||
+         text.startsWith(QLatin1StringView("\\A2;"));
+}
+
 
 constexpr int kImportedSplineFallbackSamples = 96;
 
@@ -30829,15 +30872,7 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         mtext->text = toDxfString(data.text, m_dwgW == nullptr).toUtf8().toStdString();
         mtext->style = data.style.toUtf8().toStdString();
         mtext->angle = data.angle * 180.0 / M_PI;
-        mtext->textgen = static_cast<int>(data.valign) * 3 +
-                         static_cast<int>(data.halign) + 1;
-        mtext->alignH = static_cast<DRW_Text::HAlign>(
-            data.drawingDirection == RS_MTextData::TopToBottom ? 3 :
-            data.drawingDirection == RS_MTextData::ByStyle ? 5 : 1);
-        mtext->interlin = data.lineSpacingFactor;
-        // Always the model's style: 1 and 2 read back as themselves, and no
-        // other source value may reach the file.
-        mtext->linespacingStyle = mtextLineSpacingCode(data.lineSpacingStyle);
+        setMTextLayout(*mtext, data);
         bool textEdited = false;
         if (sidecar.hasMText) {
           const auto &saved = sidecar.mtext;
@@ -30860,8 +30895,9 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
           before.angle = saved.originalAngle;
           before.style = QString::fromUtf8(saved.originalStyle.c_str());
           textEdited = data.text != before.text;
-          const bool attachmentEdited = data.halign != before.halign ||
-                                        data.valign != before.valign;
+          const bool valignEdited = data.valign != before.valign;
+          const bool attachmentEdited =
+              data.halign != before.halign || valignEdited;
           const bool directionEdited = data.drawingDirection != before.drawingDirection ||
                                        data.legacyRtlLayout != before.legacyRtlLayout;
           const bool spacingEdited = data.lineSpacingStyle != before.lineSpacingStyle ||
@@ -30894,11 +30930,24 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
           }
           if (!keepScaleState && !saved.annotativeData.empty())
             ++m_exportAttribScaleDataLeftOut;
-          mtext->text = textEdited
-              ? toDxfString(data.text, m_dwgW == nullptr).toUtf8().toStdString() : saved.text;
-          mtext->textgen = saved.textgen;
-          mtext->alignH = static_cast<DRW_Text::HAlign>(saved.alignH);
-          mtext->interlin = saved.interlin;
+          // RS_MText::setText() takes a leading \A0; \A1; \A2; out of the
+          // text and makes it the vertical alignment. A stored text with such
+          // a prefix goes out only next to the vertical alignment it was read
+          // with; any other stored text keeps its inline codes when only the
+          // attachment changes.
+          const bool replayText =
+              !textEdited &&
+              !(valignEdited &&
+                hasMTextAlignmentPrefix(
+                    toNativeString(QString::fromUtf8(saved.text.c_str()))));
+          if (replayText)
+            mtext->text = saved.text;
+          if (replayText && !attachmentEdited)
+            mtext->textgen = saved.textgen;
+          if (!directionEdited)
+            mtext->alignH = static_cast<DRW_Text::HAlign>(saved.alignH);
+          if (!spacingEdited)
+            mtext->interlin = saved.interlin;
           mtext->m_backgroundFlags = saved.backgroundFlags;
           mtext->m_backgroundScale = saved.backgroundScale;
           mtext->m_backgroundColor = saved.backgroundColor;
@@ -30953,25 +31002,13 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
           mtext->edgeVisualStyleHandle = saved.edgeVisualStyleHandle;
           mtext->setDwgLayerHandle(saved.layerHandle);
           mtext->setDwgLinetypeHandle(saved.linetypeHandle);
-          DRW_MText cleanMText;
-          cleanMText.extData = std::move(saved.xdata);
-          removeInsertAttribSidecar(cleanMText);
-          mtext->extData = std::move(cleanMText.extData);
           mtext->styleH.ref = saved.styleHandle;
           mtext->basePoint = saved.basePoint;
           mtext->secPoint = saved.secPoint;
           mtext->extPoint = saved.extPoint;
-          if (attachmentEdited) {
-            mtext->textgen = static_cast<int>(data.valign) * 3 + static_cast<int>(data.halign) + 1;
+          // The R2018 block of a DWG record repeats the attachment.
+          if (mtext->textgen != saved.textgen)
             mtext->m_r2018Attachment = mtext->textgen;
-          }
-          if (directionEdited) {
-            mtext->alignH = static_cast<DRW_Text::HAlign>(
-                data.drawingDirection == RS_MTextData::TopToBottom ? 3 :
-                data.drawingDirection == RS_MTextData::ByStyle ? 5 : 1);
-          }
-          if (spacingEdited)
-            mtext->interlin = data.lineSpacingFactor;
           if (positionEdited) {
             mtext->basePoint.x = data.insertionPoint.x;
             mtext->basePoint.y = data.insertionPoint.y;
@@ -30996,10 +31033,9 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
             attrib.alignV = static_cast<DRW_Text::VAlign>(3 - static_cast<int>(data.valign));
           }
         }
-        const auto rtlLayout = data.drawingDirection == RS_MTextData::RightToLeft
-            ? (data.legacyRtlLayout ? kLegacyRtlLayout : kLogicalRtlLayout) : 0;
-        setMTextRtlMarker(*mtext, rtlLayout);
-        setMTextRtlMarker(attrib, rtlLayout);
+        // One marker in one record: the XDATA of an ATTRIB record is the
+        // ATTRIB's in DXF, and the embedded MTEXT of a DWG has none.
+        setMTextRtlMarker(attrib, rtlLayoutOf(data));
         // The value of the ATTRIB itself. Next to its MTEXT it is the value
         // the file came with, which AutoCAD leaves empty; once the text has
         // changed, a value that was there follows it. Without the MTEXT it is
@@ -31174,41 +31210,12 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
       }
     }
   } else {
-    if (t->getHAlign() == RS_MTextData::HALeft) {
-      text->textgen = 1;
-    } else if (t->getHAlign() == RS_MTextData::HACenter) {
-      text->textgen = 2;
-    } else if (t->getHAlign() == RS_MTextData::HARight) {
-      text->textgen = 3;
-    }
-    if (t->getVAlign() == RS_MTextData::VAMiddle) {
-      text->textgen += 3;
-    } else if (t->getVAlign() == RS_MTextData::VABottom) {
-      text->textgen += 6;
-    }
-    // DXF MTEXT group 72: 1=LeftToRight, 3=TopToBottom, 5=ByStyle.
-    // RightToLeft has no DXF encoding — fall through to LeftToRight so
-    // other readers see a well-defined direction. The RTL preference is
-    // round-tripped via XDATA (app id "LibreCad", code 1071) below; on
-    // re-import we restore the flag if the marker is present, otherwise
-    // the entity reads as LTR.
-    switch (t->getDrawingDirection()) {
-    case RS_MTextData::TopToBottom:
-      text->alignH = static_cast<DRW_Text::HAlign>(3);
-      break;
-    case RS_MTextData::ByStyle:
-      text->alignH = static_cast<DRW_Text::HAlign>(5);
-      break;
-    case RS_MTextData::LeftToRight:
-    case RS_MTextData::RightToLeft:
-    default:
-      text->alignH = static_cast<DRW_Text::HAlign>(1);
-      break;
-    }
-    // Marker 1 preserves old drawings; marker 2 stores logical Unicode RTL.
-    setMTextRtlMarker(*text, t->getDrawingDirection() == RS_MTextData::RightToLeft
-        ? (t->getData().legacyRtlLayout ? kLegacyRtlLayout : kLogicalRtlLayout) : 0);
-    txt2.linespacingStyle = mtextLineSpacingCode(t->getLineSpacingStyle());
+    const RS_MTextData data = t->getData();
+    setMTextLayout(txt2, data);
+    // The RTL preference is round-tripped via XDATA (app id "LibreCad", code
+    // 1071); on re-import we restore the flag if the marker is present,
+    // otherwise the entity reads as LTR.
+    setMTextRtlMarker(*text, rtlLayoutOf(data));
 
     text->text = toDxfString(t->getText(), m_dwgW == nullptr).toUtf8().data();
     //        text->widthscale =t->getWidth();
@@ -31224,7 +31231,6 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
         text->widthscale = given;
       }
     }
-    txt2.interlin = t->getLineSpacingFactor();
 
     if (m_dwgW) {
       if (!m_dwgW->writeMText(static_cast<DRW_MText *>(text)))

@@ -1043,6 +1043,24 @@ bool sameNumbers(const std::vector<double>& expected, const std::vector<double>&
     return true;
 }
 
+// How often a record names the application "LibreCad", under which the
+// drawing notes a right-to-left text: the formats have no such direction.
+int rightToLeftNotes(const DxfRecord& record) {
+    return static_cast<int>(std::count_if(record.m_groups.begin(), record.m_groups.end(),
+                                          [](const lc::test::DxfGroup& group) {
+                                              return group.m_code == 1001 && group.m_value == "LibreCad";
+                                          }));
+}
+
+// The same of the application data of an entity read from a DWG.
+int rightToLeftNotes(const DRW_Entity& entity) {
+    return static_cast<int>(std::count_if(entity.extData.begin(), entity.extData.end(),
+                                          [](const std::shared_ptr<DRW_Variant>& value) {
+                                              return value != nullptr && value->code() == 1001
+                                                     && std::string("LibreCad") == value->c_str();
+                                          }));
+}
+
 } // namespace
 
 TEST_CASE("an untouched multi-line attribute is written back as it was read",
@@ -2617,6 +2635,294 @@ TEST_CASE("the first point of a single-line attribute with nothing to draw stays
     REQUIRE(lc::test::importDrawing(fromDwg.m_graphic, viaDwg, dwg.m_format));
     checkPlaces(fromDwg);
     checkRecords(save(bench, fromDwg, "untouched_dwg2013", dxf));
+}
+
+// A multi-line text takes a "\A0;", "\A1;" or "\A2;" at the start of its
+// content for its vertical alignment: the drawing has the content without it
+// and the alignment it names, whatever the attachment point (group 71) of the
+// file says. An untouched attribute is saved with the content and the
+// attachment point it was read with. Once one of the two is changed, a
+// content with such a start cannot go out next to another vertical alignment:
+// the file would open with the alignment of the start again.
+TEST_CASE("the content and the attachment point of a multi-line attribute are saved as a pair",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-geometry]") {
+    const Bench bench("attr_alignment_start");
+    struct Variant {
+        const char* m_name;
+        std::function<void(RS_MText&)> m_edit;      // none: untouched
+        const char* m_attachment;                   // group 71 of the MTEXT in a DXF
+        const char* m_content;                      // its group 1
+    };
+
+    // Top left by its attachment point, the vertical middle by its content.
+    SECTION("a content that starts with an alignment") {
+        AttributeDxf fixture;
+        fixture.m_text = R"(\A1;Line1\PLine2)";
+        const std::vector<Variant> variants{
+            {"untouched", nullptr, "1", R"(\A1;Line1\PLine2)"},
+            {"text", [](RS_MText& text) { text.setText(QStringLiteral("Line1\nChanged")); }, "4",
+             R"(Line1\PChanged)"},
+            {"bottom", [](RS_MText& text) { text.setVAlign(RS_MTextData::VABottom); }, "7", R"(Line1\PLine2)"},
+            // The vertical alignment is still the one the content starts with.
+            {"centre", [](RS_MText& text) { text.setHAlign(RS_MTextData::HACenter); }, "5", R"(\A1;Line1\PLine2)"},
+        };
+        for (const Variant& variant : variants) {
+            for (const char* format : {"dxf2018", "dwg2018"}) {
+                const Target to = target(format);
+                CAPTURE(variant.m_name, to.m_name);
+                EditableDrawing drawing;
+                load(bench, fixture, drawing, std::string(variant.m_name) + "_" + to.m_name + "_source");
+                const RS_MText* shown = only<RS_MText>(drawing, RS2::EntityMText);
+                REQUIRE(shown->getText().toStdString() == "Line1\nLine2");
+                REQUIRE(shown->getVAlign() == RS_MTextData::VAMiddle);
+                if (variant.m_edit) {
+                    shown = drawing.edit(shown, variant.m_edit);
+                }
+                const auto out = save(bench, drawing, variant.m_name, to);
+                if (to.m_dxf) {
+                    checkWrittenDxf(out);
+                    const DxfRecord record = onlyRecord(out, "ATTRIB");
+                    CHECK(record.embedded(71) == std::vector<std::string>{variant.m_attachment});
+                    CHECK(record.embedded(1) == std::vector<std::string>{variant.m_content});
+                }
+                // The file opens as what the drawing shows, where it shows it.
+                EditableDrawing reopened;
+                REQUIRE(lc::test::importDrawing(reopened.m_graphic, out, to.m_format));
+                checkSameMText(*shown, *only<RS_MText>(reopened, RS2::EntityMText));
+            }
+        }
+    }
+
+    // The content of the file has codes that the text of the drawing does
+    // not keep, a font here. A change of the alignment alone does not cost them.
+    SECTION("a content without one keeps its codes when the alignment changes") {
+        const std::vector<Variant> variants{
+            {"bottom", [](RS_MText& text) { text.setVAlign(RS_MTextData::VABottom); }, "7", R"({\fArial;ABC}\PDEF)"},
+            {"right", [](RS_MText& text) { text.setHAlign(RS_MTextData::HARight); }, "3", R"({\fArial;ABC}\PDEF)"},
+        };
+        for (const Variant& variant : variants) {
+            for (const char* format : {"dxf2018", "dwg2018"}) {
+                const Target to = target(format);
+                CAPTURE(variant.m_name, to.m_name);
+                EditableDrawing drawing;
+                load(bench, AttributeDxf::rich(), drawing, std::string(variant.m_name) + "_" + to.m_name + "_source");
+                const RS_MText* shown = drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), variant.m_edit);
+                const auto out = save(bench, drawing, variant.m_name, to);
+                EditableDrawing reopened;
+                REQUIRE(lc::test::importDrawing(reopened.m_graphic, out, to.m_format));
+                checkSameMText(*shown, *only<RS_MText>(reopened, RS2::EntityMText));
+                // What a DWG holds is read as the DXF that the drawing it
+                // opens as is saved to.
+                const auto dxf = to.m_dxf ? out : save(bench, reopened, std::string(variant.m_name) + "_" + to.m_name,
+                                                       target("dxf2018"));
+                const DxfRecord record = onlyRecord(dxf, "ATTRIB");
+                CHECK(record.embedded(71) == std::vector<std::string>{variant.m_attachment});
+                CHECK(record.embedded(1) == std::vector<std::string>{variant.m_content});
+            }
+        }
+    }
+}
+
+// The note belongs to the attribute: the application data of a record is
+// its own, and the MTEXT inside the attribute of a DWG has none.
+TEST_CASE("a right-to-left attribute is noted once in its record",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-geometry]") {
+    const Bench bench("attr_right_to_left");
+    AttributeDxf fixture;
+    fixture.m_mtextTail = "1001\nLibreCad\n1071\n2\n";
+
+    SECTION("three saves to DXF 2018") {
+        const Target to = target("dxf2018");
+        auto drawing = std::make_unique<EditableDrawing>();
+        load(bench, fixture, *drawing);
+        for (int round = 1; round <= 3; ++round) {
+            CAPTURE(round);
+            CHECK(only<RS_MText>(*drawing, RS2::EntityMText)->getDrawingDirection() == RS_MTextData::RightToLeft);
+            const auto out = save(bench, *drawing, "round" + std::to_string(round), to);
+            checkWrittenDxf(out);
+            CHECK(rightToLeftNotes(onlyRecord(out, "ATTRIB")) == 1);
+            auto reopened = std::make_unique<EditableDrawing>();
+            REQUIRE(lc::test::importDrawing(reopened->m_graphic, out, to.m_format));
+            drawing = std::move(reopened);
+        }
+        CHECK(only<RS_MText>(*drawing, RS2::EntityMText)->getDrawingDirection() == RS_MTextData::RightToLeft);
+    }
+
+    SECTION("every format") {
+        for (const Target& to : kTargets) {
+            CAPTURE(to.m_name);
+            EditableDrawing drawing;
+            load(bench, fixture, drawing, std::string(to.m_name) + "_source");
+            const auto out = save(bench, drawing, "untouched", to);
+            if (to.m_dxf) {
+                checkWrittenDxf(out);
+                CHECK(rightToLeftNotes(onlyRecord(out, "ATTRIB")) == 1);
+            }
+            else {
+                DwgContent content;
+                readDwg(out, content);
+                CHECK(rightToLeftNotes(onlyDwgAttribute(content)) == 1);
+            }
+            if (!to.m_embedsMText) {
+                continue;   // a text of one line has no direction
+            }
+            EditableDrawing reopened;
+            REQUIRE(lc::test::importDrawing(reopened.m_graphic, out, to.m_format));
+            CHECK(only<RS_MText>(reopened, RS2::EntityMText)->getDrawingDirection() == RS_MTextData::RightToLeft);
+            const auto again = save(bench, reopened, std::string("again_") + to.m_name, target("dxf2018"));
+            CHECK(rightToLeftNotes(onlyRecord(again, "ATTRIB")) == 1);
+        }
+    }
+
+    // The note says how the text is laid out: 2 by the rules of Unicode, 1
+    // the way older versions of LibreCAD did, which a drawing of theirs keeps.
+    SECTION("the note of an old drawing stays the old one") {
+        AttributeDxf old;
+        old.m_mtextTail = "1001\nLibreCad\n1071\n1\n";
+        const auto noted = [](const DxfRecord& record) {
+            std::vector<std::string> values;
+            for (const lc::test::DxfGroup& group : record.m_groups) {
+                if (group.m_code == 1071) {
+                    values.push_back(group.m_value);
+                }
+            }
+            return values;
+        };
+        for (const char* format : {"dxf2018", "dxf2007", "dwg2018"}) {
+            const Target to = target(format);
+            CAPTURE(to.m_name);
+            EditableDrawing drawing;
+            load(bench, old, drawing, std::string(to.m_name) + "_source");
+            const RS_MText* shown = only<RS_MText>(drawing, RS2::EntityMText);
+            REQUIRE(shown->getDrawingDirection() == RS_MTextData::RightToLeft);
+            REQUIRE(shown->getData().legacyRtlLayout);
+            const auto out = save(bench, drawing, "old", to);
+            if (to.m_dxf) {
+                CHECK(noted(onlyRecord(out, "ATTRIB")) == std::vector<std::string>{"1"});
+            }
+            if (to.m_embedsMText) {
+                EditableDrawing reopened;
+                REQUIRE(lc::test::importDrawing(reopened.m_graphic, out, to.m_format));
+                CHECK(only<RS_MText>(reopened, RS2::EntityMText)->getData().legacyRtlLayout);
+            }
+        }
+    }
+
+    SECTION("no note once the text is left-to-right") {
+        for (const Target& to : kTargets) {
+            CAPTURE(to.m_name);
+            EditableDrawing drawing;
+            load(bench, fixture, drawing, std::string(to.m_name) + "_source");
+            drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [](RS_MText& text) {
+                text.setDrawingDirection(RS_MTextData::LeftToRight);
+            });
+            const auto out = save(bench, drawing, "left_to_right", to);
+            if (to.m_dxf) {
+                checkWrittenDxf(out);
+                const DxfRecord record = onlyRecord(out, "ATTRIB");
+                CHECK(rightToLeftNotes(record) == 0);
+                if (to.m_embedsMText) {
+                    CHECK(record.embedded(72) == std::vector<std::string>{"1"});
+                }
+            }
+            else {
+                DwgContent content;
+                readDwg(out, content);
+                CHECK(rightToLeftNotes(onlyDwgAttribute(content)) == 0);
+            }
+        }
+    }
+}
+
+// The direction and the line spacing of an untouched attribute are those of
+// its file, also where the drawing has them differently: a right-to-left
+// text has its direction in the note and not in group 72, and the line
+// spacing of a file that an old LibreCAD wrote is read a little smaller.
+TEST_CASE("an untouched multi-line attribute keeps the direction and the line spacing of its file",
+          "[attribute-export][attrib][filter][dxf][attrib-geometry]") {
+    const Bench bench("attr_layout_kept");
+    const Target to = target("dxf2018");
+
+    SECTION("the direction next to the right-to-left note") {
+        AttributeDxf fixture;   // direction 5: by the text style
+        fixture.m_mtextTail = "1001\nLibreCad\n1071\n2\n";
+        EditableDrawing drawing;
+        load(bench, fixture, drawing);
+        REQUIRE(only<RS_MText>(drawing, RS2::EntityMText)->getDrawingDirection() == RS_MTextData::RightToLeft);
+        const auto out = save(bench, drawing, "untouched", to);
+        CHECK(onlyRecord(out, "ATTRIB").embedded(72) == std::vector<std::string>{"5"});
+    }
+
+    SECTION("the line spacing of a file of an old LibreCAD") {
+        AttributeDxf fixture;
+        fixture.m_spacingFactor = "1.5";
+        EditableDrawing drawing;
+        // The comment at the start names the library that wrote the file; it
+        // is looked at when the header of the file is read.
+        loadDxf(bench, "999\ndxflib 2.5.0.0\n0\nSECTION\n2\nHEADER\n0\nENDSEC\n" + fixture.str(), drawing);
+        const RS_MText* shown = only<RS_MText>(drawing, RS2::EntityMText);
+        REQUIRE(std::abs(shown->getLineSpacingFactor() - 1.44) < 1e-9);
+        const auto out = save(bench, drawing, "untouched", to);
+        CHECK(lc::test::sameValues({"1.5"}, onlyRecord(out, "ATTRIB").embedded(44)));
+
+        // Changed in the drawing, it is the spacing of the drawing.
+        drawing.edit(shown, [](RS_MText& text) { text.setLineSpacingFactor(2.0); });
+        const auto edited = save(bench, drawing, "edited", to);
+        CHECK(lc::test::sameValues({"2"}, onlyRecord(edited, "ATTRIB").embedded(44)));
+    }
+}
+
+// Group 71 of an MTEXT is its attachment point, 72 its direction, 73 and 44
+// its line spacing. A right-to-left text is written as left-to-right, with
+// the note.
+TEST_CASE("a standalone MTEXT is saved with the alignment and the direction and the spacing of the drawing",
+          "[attribute-export][mtext][filter][dxf][dwg][attrib-geometry]") {
+    const Bench bench("mtext_layout_groups");
+    struct Row {
+        const char* m_name;
+        RS_MTextData::MTextDrawingDirection m_direction;
+        const char* m_group72;
+        int m_notes;
+    };
+    const std::vector<Row> rows{
+        {"by_style", RS_MTextData::ByStyle, "5", 0},
+        {"top_to_bottom", RS_MTextData::TopToBottom, "3", 0},
+        {"left_to_right", RS_MTextData::LeftToRight, "1", 0},
+        {"right_to_left", RS_MTextData::RightToLeft, "1", 1},
+    };
+    for (const Row& row : rows) {
+        for (const Target& to : kTargets) {
+            CAPTURE(row.m_name, to.m_name);
+            EditableDrawing drawing;
+            // Top left, by style, exact spacing of 1.
+            loadDxf(bench, standaloneMTextDxf("2"), drawing, std::string(row.m_name) + "_" + to.m_name + "_source");
+            const RS_MText* shown = drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [&](RS_MText& text) {
+                text.setVAlign(RS_MTextData::VAMiddle);
+                text.setHAlign(RS_MTextData::HARight);
+                text.setDrawingDirection(row.m_direction);
+                text.setLineSpacingFactor(1.25);
+            });
+            const auto out = save(bench, drawing, row.m_name, to);
+            if (to.m_dxf) {
+                checkWrittenDxf(out);
+                const DxfRecord record = onlyRecord(out, "MTEXT");
+                CHECK(record.own(71) == std::vector<std::string>{"6"});
+                CHECK(record.own(72) == std::vector<std::string>{row.m_group72});
+                CHECK(record.own(73) == std::vector<std::string>{"2"});
+                CHECK(sameNumbers({1.25}, ownNumbers(record, {44})));
+                CHECK(rightToLeftNotes(record) == row.m_notes);
+            }
+            EditableDrawing reopened;
+            REQUIRE(lc::test::importDrawing(reopened.m_graphic, out, to.m_format));
+            const RS_MText* again = only<RS_MText>(reopened, RS2::EntityMText);
+            CHECK(again->getVAlign() == shown->getVAlign());
+            CHECK(again->getHAlign() == shown->getHAlign());
+            CHECK(again->getDrawingDirection() == shown->getDrawingDirection());
+            CHECK(again->getLineSpacingStyle() == shown->getLineSpacingStyle());
+            CHECK(again->getLineSpacingFactor() == Catch::Approx(1.25).margin(1e-9));
+            CHECK(again->getInsertionPoint().distanceTo(shown->getInsertionPoint()) < 1e-9);
+        }
+    }
 }
 
 // Local only: the drawing is AutoCAD's and is not in the repository.
