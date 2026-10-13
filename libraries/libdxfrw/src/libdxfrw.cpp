@@ -1611,6 +1611,11 @@ bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) try {
     writer.reset();
     if (!isOk)
         return failWrite();
+    // The write callbacks are void: one can fail without touching the stream.
+    // Ask before publishing, so a rejected traversal leaves the destination
+    // exactly as it was.
+    if (!iface->finalizeDxfWrite())
+        return failWrite();
     if (!output.commit())
         return failWrite();
     return true;

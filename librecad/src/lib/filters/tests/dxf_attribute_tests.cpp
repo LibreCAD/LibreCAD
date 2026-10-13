@@ -31,10 +31,12 @@
 #include <cstdint>
 #include <filesystem>
 #include <fstream>
+#include <iterator>
 #include <list>
 #include <limits>
 #include <memory>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
@@ -488,6 +490,26 @@ public:
   void writeEntities() override { m_rw->writeLine(&m_line); }
 };
 
+// Writes one LINE, then answers finalizeDxfWrite() as told.
+class FinalizeAnswer : public StubInterface {
+public:
+  dxfRW *m_rw = nullptr;
+  bool m_accept = true;
+  bool m_throw = false;
+  int m_asked = 0;
+  void writeEntities() override {
+    DRW_Line line;
+    line.secPoint = DRW_Coord{1.0, 1.0, 0.0};
+    m_rw->writeLine(&line);
+  }
+  bool finalizeDxfWrite() override {
+    ++m_asked;
+    if (m_throw)
+      throw std::runtime_error("rejected");
+    return m_accept;
+  }
+};
+
 class ThreeDLineCapture : public StubInterface {
 public:
   int m_callCount = 0;
@@ -770,6 +792,86 @@ TEST_CASE("DXF writers reject non-finite doubles before output",
   }
   CHECK(std::filesystem::file_size(path) == 0);
   std::filesystem::remove(path);
+}
+
+// The write callbacks of DRW_Interface are void: an implementation can find
+// that it must not save and has no way to say so through the stream. dxfRW
+// asks once, after the last callback and before the temporary file replaces
+// the destination.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DXF writer publishes only what the interface accepts",
+          "[dxf][writer][transaction]") {
+  const auto directory =
+      std::filesystem::temp_directory_path() / "lc_dxf_finalize_hook";
+  const auto path = directory / "out.dxf";
+  const auto entries = [&directory] {
+    return std::distance(std::filesystem::directory_iterator(directory),
+                         std::filesystem::directory_iterator());
+  };
+  const auto bytes = [&path] {
+    std::ifstream in(path, std::ios::binary);
+    return std::string(std::istreambuf_iterator<char>(in),
+                       std::istreambuf_iterator<char>());
+  };
+
+  for (const DRW::Version version :
+       {DRW::AC1009, DRW::AC1015, DRW::AC1032}) {
+    CAPTURE(static_cast<int>(version));
+    std::filesystem::remove_all(directory);
+    REQUIRE(std::filesystem::create_directories(directory));
+
+    {
+      // Rejected with no file at the destination: none appears, and the
+      // writer's temporary file is gone.
+      FinalizeAnswer iface;
+      iface.m_accept = false;
+      dxfRW writer(path.string().c_str());
+      iface.m_rw = &writer;
+      CHECK_FALSE(writer.write(&iface, version, false));
+      CHECK(iface.m_asked == 1);
+      CHECK(entries() == 0);
+    }
+    {
+      // An exception from the hook is a rejection.
+      FinalizeAnswer iface;
+      iface.m_throw = true;
+      dxfRW writer(path.string().c_str());
+      iface.m_rw = &writer;
+      CHECK_FALSE(writer.write(&iface, version, false));
+      CHECK(iface.m_asked == 1);
+      CHECK(entries() == 0);
+    }
+
+    {
+      std::ofstream existing(path, std::ios::binary | std::ios::trunc);
+      REQUIRE(existing.good());
+      existing << "existing DXF content";
+    }
+    const std::string before = bytes();
+    REQUIRE(before == "existing DXF content");
+    {
+      // Rejected over an existing file: the file keeps every byte.
+      FinalizeAnswer iface;
+      iface.m_accept = false;
+      dxfRW writer(path.string().c_str());
+      iface.m_rw = &writer;
+      CHECK_FALSE(writer.write(&iface, version, false));
+      CHECK(iface.m_asked == 1);
+      CHECK(bytes() == before);
+      CHECK(entries() == 1);
+    }
+    {
+      // Accepted: asked once, and the destination is replaced.
+      FinalizeAnswer iface;
+      dxfRW writer(path.string().c_str());
+      iface.m_rw = &writer;
+      REQUIRE(writer.write(&iface, version, false));
+      CHECK(iface.m_asked == 1);
+      CHECK(bytes().find("LINE") != std::string::npos);
+      CHECK(entries() == 1);
+    }
+  }
+  std::filesystem::remove_all(directory);
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
