@@ -27,6 +27,7 @@
 
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
 
 #include <QImage>
 
@@ -172,6 +173,49 @@ TEST_CASE("a run of selected entities keeps advancing the selection dash phase",
     renderer.setPenForEntity(&painter, &second, false);
     CHECK(painter.pen().style() == Qt::CustomDashLine);
     CHECK(painter.pen().dashOffset() != firstPhase);
+}
+
+TEST_CASE("selected short lines retain screen-space highlight dashes", "[gui][pen][linetype]") {
+    (void)lc::test::application();
+    const bool draft = GENERATE(false, true);
+    const int dpr = GENERATE(1, 2);
+    QImage image(600, 80, QImage::Format_RGB32);
+    image.setDevicePixelRatio(dpr);
+    LC_GraphicViewport viewport;
+    viewport.setSize(image.width() / dpr, image.height() / dpr);
+    QVector<qreal> pattern;
+    for (const double zoom : {1.0, 200.0, 0.5}) {
+        image.fill(Qt::white);
+        viewport.setOffsetAndFactor(10, viewport.getHeight() - 20, zoom);
+        RS_Painter painter(&image);
+        TestViewRenderer renderer(&viewport, &image);
+        renderer.setupPainter(&painter);
+        RS_Line line(RS_Vector(0.0, 0.0), RS_Vector(1.0, 0.0));
+        line.setPen(testPen(RS2::SolidLine));
+        line.setFlag(RS2::FlagSelected);
+        if (draft)
+            renderer.setPenForDraftEntity(&painter, &line, false);
+        else
+            renderer.setPenForEntity(&painter, &line, false);
+        if (pattern.isEmpty())
+            pattern = painter.pen().dashPattern();
+        CHECK(painter.pen().dashPattern() == pattern);
+        QPen pixelPen = painter.pen();
+        pixelPen.setColor(Qt::black);
+        painter.QPainter::setPen(pixelPen);
+        line.draw(&painter);
+        REQUIRE(painter.end());
+        if (zoom == 200.0) {
+            int runs = 0;
+            bool previous = false;
+            for (int x = 0; x < image.width(); ++x) {
+                const bool dark = qGray(image.pixel(x, 20 * dpr)) < 128;
+                runs += dark && !previous;
+                previous = dark;
+            }
+            CHECK(runs > 1);
+        }
+    }
 }
 
 TEST_CASE("the pen cache ignores the dash offset of solid pens", "[gui][pen][linetype]") {

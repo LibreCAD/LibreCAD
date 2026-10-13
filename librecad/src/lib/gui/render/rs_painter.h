@@ -200,7 +200,9 @@ public:
 //    void drawHandle(const RS_Vector& p, const RS_Color& c, int size=-1);
 
     RS_Pen getPen() const;
+    enum class DashSpace { Model, Screen };
     void setPen(const RS_Pen& pen);
+    void setPen(const RS_Pen& pen, DashSpace dashSpace);
     void setPen(const RS_Color& color);
     void setPen(int r, int g, int b);
     void disablePen();

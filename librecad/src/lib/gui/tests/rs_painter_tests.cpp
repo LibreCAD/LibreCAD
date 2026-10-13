@@ -331,6 +331,70 @@ TEST_CASE("PDF dash lengths retain drawing-unit scale at different resolutions",
     }
 }
 
+TEST_CASE("screen-space dash pens remain independent of viewport zoom", "[gui][painter][linetype]") {
+    (void)application();
+    PenTestPainter rig;
+    LC_GraphicViewport viewport;
+    viewport.setSize(640, 480);
+    const RS_Pen pen = testPen(RS2::DashLineTiny, 0.0);
+    QVector<qreal> screenPattern;
+    for (const double zoom : {1.0, 200.0, 0.5}) {
+        viewport.setOffsetAndFactor(0, 0, zoom);
+        rig.painter.setViewPort(&viewport);
+        rig.painter.setPen(pen, RS_Painter::DashSpace::Screen);
+        if (screenPattern.isEmpty())
+            screenPattern = rig.painter.pen().dashPattern();
+        CHECK(rig.painter.pen().dashPattern() == screenPattern);
+        rig.painter.setPen(pen);
+        CHECK(rig.painter.pen().dashPattern().front() == Catch::Approx(2.0 * zoom));
+        rig.painter.setPen(pen, RS_Painter::DashSpace::Screen);
+        CHECK(rig.painter.pen().dashPattern() == screenPattern);
+    }
+}
+
+TEST_CASE("large raster dashes retain length phase and lineweight", "[gui][painter][linetype]") {
+    (void)application();
+    const int dpr = GENERATE(1, 2);
+    const bool antialias = GENERATE(false, true);
+    const double zoom = GENERATE(100.0, 200.0);
+    QImage image(8000, 80, QImage::Format_RGB32);
+    image.setDevicePixelRatio(dpr);
+    LC_GraphicViewport viewport;
+    viewport.setSize(image.width() / dpr, image.height() / dpr);
+    viewport.setOffsetAndFactor(10, viewport.getHeight() - 20, zoom);
+    RS_Painter painter(&image);
+    painter.setViewPort(&viewport);
+    painter.setPenCapStyle(Qt::FlatCap);
+    painter.setRenderHint(QPainter::Antialiasing, antialias);
+    RS_Line line(RS_Vector(0.0, 0.0), RS_Vector(36.0, 0.0));
+    // Reuse the painter across fallback, normal, and fallback-again pens.
+    for (const double width : {0.0, 1.0, 2.0, 0.0}) {
+        for (const double offset : {0.0, 3.0}) {
+            image.fill(Qt::white);
+            RS_Pen pen = testPen(RS2::DashLine, width);
+            pen.setDashOffset(offset);
+            painter.setPen(pen);
+            const QPen installed = painter.pen();
+            painter.setPen(pen);
+            CHECK(painter.pen() == installed);
+            line.draw(&painter);
+            const int start = 10 * dpr;
+            const int row = 20 * dpr;
+            int end = start;
+            while (end < image.width() && (qGray(image.pixel(end, row)) < 250
+                    || qGray(image.pixel(end, row - 1)) < 250))
+                ++end;
+            CHECK(end - start == Catch::Approx((12.0 - offset) * zoom * dpr).margin(1.0));
+            const int gap = start + static_cast<int>((15.0 - offset) * zoom * dpr);
+            CHECK(qGray(image.pixel(gap, row)) == 255);
+            double coverage = 0.0;
+            for (int y = 0; y < image.height(); ++y)
+                coverage += (255 - qGray(image.pixel(start + 2 * dpr, y))) / 255.0;
+            CHECK(coverage == Catch::Approx(width == 0.0 ? 1.0 : width * dpr).margin(0.02));
+        }
+    }
+}
+
 TEST_CASE("RS_Painter re-installs a pen that noCapStyle() replaced", "[gui][painter]") {
     (void)application();
 
