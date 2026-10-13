@@ -440,19 +440,21 @@ void checkRepeatsSource(const DxfRecord& source, const std::filesystem::path& wr
 
 // What libdxfrw reads of a DWG, without the filter in between: the block
 // references with their attributes, the texts of their own, and the handle
-// of every registered application, layer and text style by its name.
+// of every registered application, layer, linetype and text style by its name.
 struct DwgContent : lc::test::NullDrwInterface {
     std::vector<DRW_Insert> m_inserts;
     std::vector<DRW_Text> m_texts;
     std::vector<DRW_MText> m_mtexts;
     std::map<std::string, std::uint32_t> m_applications;
     std::map<std::string, std::uint32_t> m_layers;
+    std::map<std::string, std::uint32_t> m_lineTypes;
     std::map<std::string, std::uint32_t> m_textStyles;
     void addInsert(const DRW_Insert& insert) override { m_inserts.push_back(insert); }
     void addText(const DRW_Text& text) override { m_texts.push_back(text); }
     void addMText(const DRW_MText& text) override { m_mtexts.push_back(text); }
     void addAppId(const DRW_AppId& application) override { m_applications[application.name] = application.handle; }
     void addLayer(const DRW_Layer& layer) override { m_layers[layer.name] = layer.handle; }
+    void addLType(const DRW_LType& lineType) override { m_lineTypes[lineType.name] = lineType.handle; }
     void addTextStyle(const DRW_Textstyle& style) override { m_textStyles[style.name] = style.handle; }
 };
 
@@ -606,11 +608,14 @@ const char* const kScaleDataLeftOut = "annotation scale or column data of 1 mult
 
 // The layer and the text style of the attribute that AttributeDwgSource
 // writes with references, and the handles its MTEXT refers by. A DWG names
-// every record by a handle, a number of that one file: these are no records
-// of the source, and in a file saved from it they are whatever that file
-// happens to have there.
+// every record by a handle, a number of that one file. The embedded layer
+// and linetype are real, distinct records of the source; the other foreign
+// references are not registered deliberately by this fixture. None grants an
+// association with the same number in a file saved from the source.
 const char* const kAttributeLayer = "LCATTR";
 const char* const kAttributeStyle = "LCNOTE";
+const char* const kEmbeddedSourceLayer = "LCBODY";
+const char* const kEmbeddedSourceLinetype = "LCBODY_DASH";
 constexpr std::uint32_t kForeignOwner = 0x3Fu;
 const std::vector<std::uint32_t> kForeignReactors{0x31u, 0x32u};
 constexpr std::uint32_t kForeignDictionary = 0x33u;
@@ -619,8 +624,6 @@ constexpr std::uint32_t kForeignMaterial = 0x36u;
 constexpr std::uint32_t kForeignShadow = 0x37u;
 constexpr std::uint32_t kForeignPlotStyle = 0x38u;
 constexpr std::uint32_t kForeignVisualStyle = 0x39u;    // and the two after it
-constexpr std::uint32_t kForeignLayer = 0x3Cu;
-constexpr std::uint32_t kForeignLinetype = 0x3Du;
 constexpr std::uint32_t kForeignApplication = 0x3Eu;
 constexpr int kMTextTransparency = 0x03000080;
 
@@ -639,6 +642,8 @@ struct AttributeDwgSource : lc::test::NullDrwInterface {
     std::uint32_t m_scaleApplication = 0;   // after write(): the handle of LC_SCALE_APP in the file
     std::uint32_t m_layer = 0;              // with references: the handle of the layer in the file
     std::uint32_t m_style = 0;              // and of the text style
+    std::uint32_t m_embeddedLayer = 0;      // distinct source records used by the embedded MTEXT
+    std::uint32_t m_embeddedLinetype = 0;
 
     void write(const std::filesystem::path& file) {
         CAPTURE(file.filename().string());
@@ -651,15 +656,32 @@ struct AttributeDwgSource : lc::test::NullDrwInterface {
         REQUIRE(m_scaleApplication != 0);
         REQUIRE((m_layer != 0) == m_references);
         REQUIRE((m_style != 0) == m_references);
+        REQUIRE((m_embeddedLayer != 0) == m_references);
+        REQUIRE((m_embeddedLinetype != 0) == m_references);
+        if (m_references) {
+            REQUIRE(m_embeddedLayer != m_layer);
+        }
     }
 
     // The callbacks only note what went wrong: libdxfrw calls them, and an
     // exception of a failed REQUIRE would not get past it.
+    void writeLTypes() override {
+        DRW_LType lineType;
+        lineType.updateValues(kEmbeddedSourceLinetype, "Embedded MTEXT source", 2, 1.0, {0.5, -0.5});
+        if (m_references && m_writer != nullptr && m_writer->addLType(&lineType)) {
+            m_embeddedLinetype = lineType.handle;
+        }
+    }
     void writeLayers() override {
         DRW_Layer layer;
         layer.name = kAttributeLayer;
         if (m_references && m_writer != nullptr && m_writer->addLayer(&layer)) {
             m_layer = layer.handle;
+        }
+        DRW_Layer embeddedLayer;
+        embeddedLayer.name = kEmbeddedSourceLayer;
+        if (m_references && m_writer != nullptr && m_writer->addLayer(&embeddedLayer)) {
+            m_embeddedLayer = embeddedLayer.handle;
         }
     }
     void writeTextstyles() override {
@@ -736,9 +758,9 @@ struct AttributeDwgSource : lc::test::NullDrwInterface {
             mtext.fullVisualStyleHandle = kForeignVisualStyle;
             mtext.faceVisualStyleHandle = kForeignVisualStyle + 1;
             mtext.edgeVisualStyleHandle = kForeignVisualStyle + 2;
-            mtext.setDwgLayerHandle(kForeignLayer);
+            mtext.setDwgLayerHandle(m_embeddedLayer);
             mtext.lineType.clear();
-            mtext.setDwgLinetypeHandle(kForeignLinetype);
+            mtext.setDwgLinetypeHandle(m_embeddedLinetype);
         }
         else {
             mtext.m_r2018IsNotAnnotative = false;
@@ -3154,8 +3176,11 @@ TEST_CASE("the MTEXT of an attribute saved to DWG 2018 refers to records of the 
         const DRW_MText& mtext = onlyEmbeddedMText(content);
         REQUIRE(onlyDwgAttribute(content).dwgLayerHandle() == source.m_layer);
         REQUIRE(mtext.styleH.ref == source.m_style);
-        REQUIRE(mtext.dwgLayerHandle() == kForeignLayer);
-        REQUIRE(mtext.dwgLinetypeHandle() == kForeignLinetype);
+        REQUIRE(handleNamed(content.m_layers, kEmbeddedSourceLayer) == source.m_embeddedLayer);
+        REQUIRE(handleNamed(content.m_lineTypes, kEmbeddedSourceLinetype) == source.m_embeddedLinetype);
+        REQUIRE(mtext.dwgLayerHandle() == source.m_embeddedLayer);
+        REQUIRE(mtext.dwgLayerHandle() != onlyDwgAttribute(content).dwgLayerHandle());
+        REQUIRE(mtext.dwgLinetypeHandle() == source.m_embeddedLinetype);
         REQUIRE(mtext.reactorHandles == kForeignReactors);
         REQUIRE(mtext.xDictHandle == kForeignDictionary);
         REQUIRE(mtext.dwgAcDbColorHandle() == kForeignColor);
@@ -3204,7 +3229,7 @@ TEST_CASE("the MTEXT of an attribute saved to DWG 2018 refers to records of the 
         // the two files gave the record the same handle.
         REQUIRE(layer != source.m_layer);
         REQUIRE(style != source.m_style);
-        REQUIRE(layer != kForeignLayer);
+        REQUIRE(layer != source.m_embeddedLayer);
         REQUIRE(acad != kForeignApplication);
         checkNoPrivateApplication(written);
 
@@ -3216,10 +3241,11 @@ TEST_CASE("the MTEXT of an attribute saved to DWG 2018 refers to records of the 
         CHECK(mtext.styleH.ref == style);
         CHECK(mtext.dwgLinetypeHandle() == 0u);
         CHECK(mtext.lineType == "BYLAYER");
-        // The application that the R2018 fields of the MTEXT name: none, as
-        // AutoCAD writes it, or ACAD, which every file has.
+        // The full-form R2018 fields name no application: the filter's fresh
+        // MTEXT does not copy that source reference, and the Full writer
+        // keeps its null value instead of the legacy Short default ACAD.
         CAPTURE(mtext.m_r2018AppIdHandle);
-        CHECK((mtext.m_r2018AppIdHandle == 0u || mtext.m_r2018AppIdHandle == acad));
+        CHECK(mtext.m_r2018AppIdHandle == 0u);
         CHECK(mtext.m_r2018IsNotAnnotative);
 
         // No other reference, and no flag that says there is one.

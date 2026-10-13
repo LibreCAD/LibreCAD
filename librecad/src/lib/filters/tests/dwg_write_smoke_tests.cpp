@@ -29136,7 +29136,9 @@ TEST_CASE("RS_FilterDXFRW receives AC1032 INSERT ATTRIB content",
       *exportedRead.m_inserts.front().attlist.front()->mtext;
   CHECK(exportedMText.m_r2018IsNotAnnotative);
   CHECK_FALSE(exportedMText.m_r2018ReallyLocked);
-  CHECK(exportedMText.m_r2018AppIdHandle == 0x14u);
+  // The full R2018 body is rebuilt without a source-file registered APPID.
+  // Its separate annotative application reference below is still retained.
+  CHECK(exportedMText.m_r2018AppIdHandle == 0u);
   CHECK(exportedMText.m_r2018AnnotativeData ==
         std::vector<std::uint8_t>{0x01, 0x7F, 0xFE});
   CHECK(exportedMText.m_r2018AnnotativeUnknown == 0x72);
