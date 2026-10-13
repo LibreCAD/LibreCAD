@@ -29235,13 +29235,19 @@ TEST_CASE("RS_FilterDXFRW preserves nested INSERT ATTRIB MTEXT XDATA",
   CHECK(attribute.m_attributeType == 2);
   CHECK(attribute.mtext->text == "line 1\\Pline 2");
 
+  // DXF frames the multi-line text as an embedded object (group 101), which
+  // has no XDATA of its own: what follows it belongs to the ATTRIB. The data
+  // put on the attribute's text is therefore read back on the attribute.
+  CHECK(attribute.embeddedDxfMarker() ==
+        DRW_Attrib::EmbeddedDxfMarker::Canonical101);
+  CHECK(attribute.mtext->extData.empty());
   bool sawApp = false;
   bool sawString = false;
   bool sawInteger = false;
   bool sawDouble = false;
   bool sawCoordinate = false;
   bool sawBinary = false;
-  for (const auto &value : attribute.mtext->extData) {
+  for (const auto &value : attribute.extData) {
     if (!value)
       continue;
     if (value->code() == 1001 && value->type() == DRW_Variant::STRING &&
