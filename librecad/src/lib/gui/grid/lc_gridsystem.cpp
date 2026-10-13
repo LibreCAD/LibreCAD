@@ -144,7 +144,7 @@ void LC_GridSystem::draw(RS_Painter* painter, LC_GraphicViewport* view) {
 void LC_GridSystem::drawMetaGrid(RS_Painter* painter, LC_GraphicViewport* view) {
     auto pen = RS_Pen(m_gridOptions->metaGridColor, RS2::Width00, m_gridOptions->metaGridLineType);
     pen.setScreenWidth(m_gridOptions->metaGridLineWidthPx);
-    painter->setPen(pen);
+    painter->setPen(pen, RS_Painter::DashSpace::Screen);
     painter->noCapStyle();
     drawMetaGridLines(painter, view);
 }
@@ -153,7 +153,7 @@ void LC_GridSystem::drawGrid(RS_Painter* painter, LC_GraphicViewport* view) {
     if (m_gridOptions->drawLines || m_hasAxisIndefinite) {
         auto pen = RS_Pen(m_gridOptions->gridColorLine, RS2::Width00, m_gridOptions->gridLineType);
         pen.setScreenWidth(m_gridOptions->gridWidthPx);
-        painter->setPen(pen);
+        painter->setPen(pen, RS_Painter::DashSpace::Screen);
         painter->noCapStyle();
         drawGridLines(painter, view);
     }
