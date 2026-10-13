@@ -2272,6 +2272,100 @@ TEST_CASE("an attribute text without its block reference is written as text",
         }
     }
 
+    // A text has neither an elevation nor a thickness, and it lies in the
+    // plane of the drawing. Its attribute had all of that, and the record of
+    // the text has a place for each: 30 and 31 for the two points, 39, and
+    // 210 to 230 for the direction the plane faces.
+    SECTION("a text of one line stays in the plane of its attribute") {
+        EditableDrawing drawing;
+        loadDxf(bench,
+                singleLineAttributesDxf({"0\nATTRIB\n100\nAcDbEntity\n8\n0\n100\nAcDbText\n39\n2\n"
+                                         "10\n1\n20\n2\n30\n5\n40\n1\n1\nlone\n72\n1\n11\n3\n21\n2\n31\n5\n"
+                                         "210\n0\n220\n0\n230\n-1\n"
+                                         "100\nAcDbAttribute\n280\n0\n2\nNOTE\n70\n0\n280\n1\n"}),
+                drawing, "plane");
+        drawing.erase(only<RS_Insert>(drawing, RS2::EntityInsert));
+        for (const char* format : {"dxf2018", "dxf2007"}) {
+            const Target to = target(format);
+            CAPTURE(to.m_name);
+            const auto file = save(bench, drawing, "plane_erased", to);
+            checkWrittenDxf(file);
+            CHECK(lc::test::dxfRecords(file, "ATTRIB").empty());
+            const DxfRecord record = onlyRecord(file, "TEXT");
+            CHECK(record.own(1) == std::vector<std::string>{"lone"});
+            CHECK(lc::test::sameValues({"5"}, record.own(30)));
+            CHECK(lc::test::sameValues({"5"}, record.own(31)));
+            CHECK(lc::test::sameValues({"2"}, record.own(39)));
+            CHECK(lc::test::sameValues({"0", "0", "-1"}, {record.own(210).front(), record.own(220).front(),
+                                                           record.own(230).front()}));
+        }
+    }
+
+    // A multi-line text is written as an MTEXT, which has an elevation, a
+    // direction its plane faces, and the direction of its text as an x-axis.
+    // The MTEXT of the attribute had them, and they are not those of the
+    // attribute's own record: here that one lies flat at elevation 0.
+    SECTION("a multi-line text stays in the plane of its MTEXT") {
+        AttributeDxf fixture;
+        fixture.m_handles = true;
+        fixture.m_mtextPoint = "10\n1\n20\n4\n30\n7\n";
+        fixture.m_mtextExtra = "210\n0\n220\n0\n230\n-1\n";
+        EditableDrawing drawing;
+        load(bench, fixture, drawing, "mtext_plane");
+        drawing.erase(only<RS_Insert>(drawing, RS2::EntityInsert));
+        const auto checkPlane = [](const std::filesystem::path& file) {
+            checkWrittenDxf(file);
+            CHECK(lc::test::dxfRecords(file, "ATTRIB").empty());
+            const DxfRecord record = onlyRecord(file, "MTEXT");
+            CAPTURE(file.filename().string());
+            CHECK(lc::test::sameValues({"1", "4", "7"}, {record.own(10).front(), record.own(20).front(),
+                                                        record.own(30).front()}));
+            CHECK(lc::test::sameValues({"0", "0", "-1"}, {record.own(210).front(), record.own(220).front(),
+                                                           record.own(230).front()}));
+        };
+        checkPlane(save(bench, drawing, "mtext_plane_erased", target("dxf2018")));
+        checkPlane(save(bench, drawing, "mtext_plane_erased", target("dxf2007")));
+        // A DWG has the same fields: the drawing opened from it is saved
+        // with what they held.
+        const auto dwg = save(bench, drawing, "mtext_plane_erased", target("dwg2018"));
+        EditableDrawing fromDwg;
+        REQUIRE(lc::test::importDrawing(fromDwg.m_graphic, dwg, RS2::FormatDWG2018));
+        CHECK(only<RS_MText>(fromDwg, RS2::EntityMText)->ownerLineage() == 0);
+        checkPlane(save(bench, fromDwg, "mtext_plane_dwg2018", target("dxf2018")));
+    }
+
+    // A DWG has the direction of an MTEXT as its x-axis and nothing else.
+    SECTION("a turned multi-line text keeps its direction") {
+        AttributeDxf fixture;
+        fixture.m_handles = true;
+        fixture.m_mtextExtra = "11\n0\n21\n1\n31\n0\n";
+        EditableDrawing drawing;
+        load(bench, fixture, drawing, "mtext_turned");
+        REQUIRE(only<RS_MText>(drawing, RS2::EntityMText)->getAngle() == Catch::Approx(M_PI / 2.0).margin(1e-9));
+        drawing.erase(only<RS_Insert>(drawing, RS2::EntityInsert));
+        for (const char* format : {"dwg2018", "dwg2000", "dxf2018", "dxf2007"}) {
+            const Target to = target(format);
+            CAPTURE(to.m_name);
+            const auto file = save(bench, drawing, "mtext_turned_erased", to);
+            EditableDrawing reopened;
+            REQUIRE(lc::test::importDrawing(reopened.m_graphic, file, to.m_format));
+            const RS_MText* text = only<RS_MText>(reopened, RS2::EntityMText);
+            CHECK(text->getAngle() == Catch::Approx(M_PI / 2.0).margin(1e-9));
+            CHECK(text->getInsertionPoint().distanceTo(RS_Vector(1.0, 4.0)) < 1e-9);
+        }
+        // Turned in the drawing since, it has the new direction and not the
+        // one of its file.
+        drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [](RS_MText& text) { text.setAngle(1.0); });
+        for (const char* format : {"dwg2018", "dxf2018"}) {
+            const Target to = target(format);
+            CAPTURE(to.m_name);
+            const auto file = save(bench, drawing, "mtext_turned_again", to);
+            EditableDrawing reopened;
+            REQUIRE(lc::test::importDrawing(reopened.m_graphic, file, to.m_format));
+            CHECK(only<RS_MText>(reopened, RS2::EntityMText)->getAngle() == Catch::Approx(1.0).margin(1e-9));
+        }
+    }
+
     // Application data of a file is kept as it is read, so a text can carry
     // the private name without ever having been an attribute here. It is a
     // text like any other, and the data stays out of the file all the same.

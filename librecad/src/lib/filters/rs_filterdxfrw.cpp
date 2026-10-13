@@ -31404,6 +31404,16 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
       text->extPoint = ocs->extrusion;
       static_cast<DRW_MText *>(text)->secPoint = ocs->xAxis;
       removeMTextOcsSidecar(*text);
+    } else if (t->ownerLineage() != 0) {
+      // A block attribute no INSERT claims is written on its own, in the
+      // plane of the MTEXT it was read with.
+      if (const auto attribute = extractInsertAttribSidecar(t);
+          attribute && attribute->hasMText) {
+        text->basePoint.z = attribute->mtext.basePoint.z;
+        text->extPoint = attribute->mtext.extPoint;
+        static_cast<DRW_MText *>(text)->secPoint = mtextXAxis(
+            t->getAngle(), attribute->mtext.secPoint, false, m_dwgW != nullptr);
+      }
     }
   }
   // The private groups of a block attribute's text never leave the program.
