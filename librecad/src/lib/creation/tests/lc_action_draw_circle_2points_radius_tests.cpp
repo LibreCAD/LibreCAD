@@ -566,6 +566,33 @@ TEST_CASE("Circle 2 Points Radius: steps back from the second point ask for a fi
     CHECK(action.isFinished());
 }
 
+TEST_CASE("Circle 2 Points Radius: a rounded diameter is accepted after stepping back from center selection",
+          "[circle-2points-radius]") {
+    Radius5 f;
+    TwoPointsRadius& action = *f.m_action;
+    const RS_Vector first{3.3e6, -4.7e6};
+    action.type(first.x, first.y);
+    action.type(first.x + 6., first.y);
+    REQUIRE(action.getStatus() == TwoPointsRadius::SelectCenter);
+    action.move(first.x + 3., first.y + 10.);
+    REQUIRE(action.previewed().size() == 1);
+
+    SECTION("with the right mouse button") { action.back(); }
+    SECTION("with Escape") { action.escape(); }
+    REQUIRE(action.getStatus() == TwoPointsRadius::SetPoint2);
+    CHECK(f.m_view.getViewPort()->getRelativeZero().distanceTo(first) == 0.);
+
+    const RS_Vector second{std::nextafter(first.x + 10., first.x + 20.), first.y};
+    REQUIRE(second.distanceTo(first) > 10.);
+    action.type(second.x, second.y);
+    REQUIRE(action.getStatus() == TwoPointsRadius::SelectCenter);
+    action.move(first.x + 5., first.y + 3.);
+    REQUIRE(f.drawn().size() == 1);
+    checkCircle(f.drawn().front(), (first + second) * 0.5, 5.);
+    CHECK(action.getStatus() == TwoPointsRadius::SetPoint1);
+    CHECK(f.m_context.m_messages.isEmpty());
+}
+
 TEST_CASE("Circle 2 Points Radius: no circle is drawn while the radius is too small for the two points",
           "[circle-2points-radius]") {
     Radius5 f;
