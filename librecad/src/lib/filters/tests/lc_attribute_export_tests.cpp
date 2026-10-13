@@ -858,13 +858,14 @@ std::filesystem::path externalSample(const char* name) {
 // A block reference with four attributes of one line: NAME and NOTE show,
 // the value of BLANK is empty and CODE is hidden. (An ATTRIB without a group
 // 1 at all is not read: the DXF reader gives the whole file up.) With
-// handles, every record has one, as in a file of another program.
-std::string attributedInsertRecords(const bool handles) {
+// handles, every record has one, as in a file of another program. The first
+// attribute can be given groups after its handle: its dictionary, its reactors.
+std::string attributedInsertRecords(const bool handles, const std::string& ofFirstAttribute = {}) {
     const auto handle = [handles](const char* value) {
         return handles ? std::string("5\n") + value + "\n" : std::string();
     };
     return "0\nINSERT\n" + handle("1A0") + "8\n0\n2\nTAG\n10\n0\n20\n0\n66\n1\n"
-           "0\nATTRIB\n" + handle("1A1") + "8\n0\n10\n1\n20\n2\n40\n1\n1\nfirst\n2\nNAME\n70\n0\n"
+           "0\nATTRIB\n" + handle("1A1") + ofFirstAttribute + "8\n0\n10\n1\n20\n2\n40\n1\n1\nfirst\n2\nNAME\n70\n0\n"
            "0\nATTRIB\n" + handle("1A2") + "8\n0\n10\n1\n20\n6\n40\n1\n1\nsecond\n2\nNOTE\n70\n0\n"
            "0\nATTRIB\n" + handle("1A3") + "8\n0\n10\n1\n20\n8\n40\n1\n1\n\n2\nBLANK\n70\n0\n"
            "0\nATTRIB\n" + handle("1A4") + "8\n0\n10\n1\n20\n10\n40\n1\n1\nsecret\n2\nCODE\n70\n1\n"
@@ -879,19 +880,23 @@ std::string tagBlockDxf(const bool handles) {
 }
 
 // The block reference in the drawing itself, with a line after it: a handle
-// taken and not used would lie inside the chain of a DWG 2000.
-std::string attributedInsertDxf(const bool handles) {
+// taken and not used would lie inside the chain of a DWG 2000. A section of
+// objects can follow the entities.
+std::string attributedInsertDxf(const bool handles, const std::string& ofFirstAttribute = {},
+                                const std::string& objects = {}) {
     return "0\nSECTION\n2\nBLOCKS\n" + tagBlockDxf(handles) + "0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
-           + attributedInsertRecords(handles) + "0\nLINE\n" + (handles ? "5\n1A6\n" : "")
-           + "8\n0\n10\n20\n20\n0\n11\n30\n21\n0\n0\nENDSEC\n0\nEOF\n";
+           + attributedInsertRecords(handles, ofFirstAttribute) + "0\nLINE\n" + (handles ? "5\n1A6\n" : "")
+           + "8\n0\n10\n20\n20\n0\n11\n30\n21\n0\n0\nENDSEC\n" + objects + "0\nEOF\n";
 }
 
 // The same block reference inside the block OUTER, which the drawing inserts once.
-std::string nestedAttributedInsertDxf() {
+std::string nestedAttributedInsertDxf(const std::string& ofFirstAttribute = {}, const std::string& objects = {}) {
     return "0\nSECTION\n2\nBLOCKS\n" + tagBlockDxf(false)
-           + "0\nBLOCK\n8\n0\n2\nOUTER\n70\n0\n10\n0\n20\n0\n3\nOUTER\n" + attributedInsertRecords(false)
+           + "0\nBLOCK\n8\n0\n2\nOUTER\n70\n0\n10\n0\n20\n0\n3\nOUTER\n"
+           + attributedInsertRecords(false, ofFirstAttribute)
            + "0\nENDBLK\n8\n0\n0\nENDSEC\n"
-             "0\nSECTION\n2\nENTITIES\n0\nINSERT\n8\n0\n2\nOUTER\n10\n0\n20\n0\n0\nENDSEC\n0\nEOF\n";
+             "0\nSECTION\n2\nENTITIES\n0\nINSERT\n8\n0\n2\nOUTER\n10\n0\n20\n0\n0\nENDSEC\n"
+           + objects + "0\nEOF\n";
 }
 
 // What a drawing, or a block of it, shows of block references and texts, on
@@ -2226,6 +2231,78 @@ TEST_CASE("an attribute text without its block reference is written as text",
             CHECK(lc::test::dxfRecords(file, "TEXT").size() == 1);
         }
     }
+}
+
+// An attribute can have what every entity can: an extension dictionary and
+// reactors. AutoCAD gives a multi-line attribute a dictionary in every file
+// older than 2018, which has no MTEXT for it. A DWG names every record by a
+// handle, so such an attribute is given its handle before its block
+// reference is written, and in a DWG 2000 that has to be the handle its
+// place after the block reference comes with.
+TEST_CASE("a block reference whose attribute has a dictionary or a reactor saves to DWG",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-owner]") {
+    const Bench bench("attr_owner_references");
+    const std::vector<const char*> formats{"dwg2000", "dwg2004", "dwg2007", "dwg2010",
+                                           "dwg2013", "dwg2018", "dxf2018", "dxf2007"};
+    // The dictionary as AutoCAD writes it: owned by the attribute, with a
+    // record of what a newer file would have.
+    const std::string dictionary = "0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+                                   "0\nDICTIONARY\n5\n1C0\n330\n1A1\n100\nAcDbDictionary\n281\n1\n"
+                                   "3\nACAD_XREC_ROUNDTRIP\n360\n1C1\n"
+                                   "0\nXRECORD\n5\n1C1\n330\n1C0\n100\nAcDbXrecord\n280\n1\n0\nENDSEC\n";
+    // An object that anything can refer to: a dictionary of the drawing's own.
+    const std::string listed = "0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+                               "3\nLC_ATTRIBUTE_TEST\n350\n1C0\n"
+                               "0\nDICTIONARY\n5\n1C0\n330\nC\n100\nAcDbDictionary\n281\n1\n0\nENDSEC\n";
+    struct Variant {
+        const char* m_name;
+        const char* m_groups;       // of the first attribute, after its handle
+        std::string m_objects;
+        bool m_handles;
+    };
+    const std::vector<Variant> variants{
+        {"dictionary", "102\n{ACAD_XDICTIONARY\n360\n1C0\n102\n}\n", dictionary, true},
+        {"reactor", "102\n{ACAD_REACTORS\n330\n1C0\n102\n}\n", listed, true},
+        // The entities of a file need not have handles: then no handle of
+        // the saved file is taken ahead for them, and those of the
+        // attributes are taken when their block reference is written.
+        {"reactor_no_handles", "102\n{ACAD_REACTORS\n330\n1C0\n102\n}\n", listed, false},
+        // A material is a reference like these, and one that a copy keeps.
+        {"material", "347\n1C0\n", listed, true},
+    };
+    for (const Variant& variant : variants) {
+        const std::string name = variant.m_name;
+        CAPTURE(name);
+        EditableDrawing drawing;
+        loadDxf(bench, attributedInsertDxf(variant.m_handles, variant.m_groups, variant.m_objects), drawing,
+                name + "_source");
+        // The text has what this case is about.
+        const RS_Text* first = lineText(drawing, "first");
+        REQUIRE((first->xDictHandle() == 0x1C0u || first->reactorHandles() == std::vector<quint32>{0x1C0u}
+                 || first->materialHandle() == 0x1C0u));
+        REQUIRE((first->sourceHandle() != 0) == variant.m_handles);
+
+        for (const auto& file :
+             saveAll(bench, drawing, name, formats, "INSERT@0[first|second||secret] TEXT[] hidden=0 LINE=1")) {
+            CHECK(attributeTags(file) == std::vector<std::string>{"NAME", "NOTE", "BLANK", "CODE"});
+        }
+
+        // And so does the clone that an edit puts in the place of the text,
+        // and a copy of the block reference with its texts next to it.
+        drawing.edit(first, [](RS_Text& text) { text.setText("edited"); });
+        saveAll(bench, drawing, name + "_edited", formats, "INSERT@0[edited|second||secret] TEXT[] hidden=0 LINE=1");
+        moveEntities(drawing, {referenceAt(drawing, 0), lineText(drawing, "edited"), lineText(drawing, "second")},
+                     RS_Vector(50.0, 0.0), 1);
+        saveAll(bench, drawing, name + "_copied", formats,
+                "INSERT@0[edited|second||secret] INSERT@50[edited|second] TEXT[] hidden=0 LINE=1");
+    }
+
+    // The same inside a block definition, whose entities are a chain of
+    // their own.
+    EditableDrawing nested;
+    loadDxf(bench, nestedAttributedInsertDxf("102\n{ACAD_REACTORS\n330\n1C0\n102\n}\n", listed), nested,
+            "nested_source");
+    saveAll(bench, nested, "nested", formats, "INSERT@0[first|second||secret] TEXT[] hidden=0 LINE=0", "OUTER");
 }
 
 TEST_CASE("attributes of a block reference inside a block definition",

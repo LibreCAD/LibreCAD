@@ -30999,6 +30999,7 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
   // its expanded block cache. Reconstruct the native sequence from the
   // sibling texts buildInsertAttribPlan() gave this INSERT, then let the
   // libdxfrw writer allocate and link the child handles.
+  std::vector<const RS_Entity *> attributeTexts;
   {
     std::vector<std::pair<InsertAttribSidecar, RS_Entity *>> attributes;
     const auto planned = m_insertAttribPlan.children.find(i);
@@ -31010,6 +31011,43 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
           attributes.emplace_back(std::move(*sidecar), candidate);
       }
     }
+#ifdef DWGSUPPORT
+    // An ATTRIB with a reference of its own (a reactor, an extension
+    // dictionary) needs its handle before it is written: getEntityAttributes()
+    // selects an identity for it. In an R2000 owner chain that has to be the
+    // handle of its place after the INSERT. prepareDwgEntityHandleMap() took
+    // those handles for a container with source-backed entities; for any
+    // other they are taken here, in the order the writer would take them.
+    if (m_dwgW != nullptr && !attributes.empty()) {
+      auto reserved = m_dwgWriteInsertChildHandlesByEntity.find(i);
+      if (reserved == m_dwgWriteInsertChildHandlesByEntity.end() &&
+          m_dwgW->getVersion() <= DRW::AC1015) {
+        if (in.handle == 0)
+          in.handle = m_dwgW->allocNextHandle();
+        // One handle per ATTRIB, then the SEQEND.
+        std::vector<std::uint32_t> childHandles;
+        childHandles.reserve(attributes.size() + 1);
+        for (std::size_t index = 0; index <= attributes.size(); ++index)
+          childHandles.push_back(m_dwgW->allocNextHandle());
+        if (in.handle == 0 ||
+            std::find(childHandles.cbegin(), childHandles.cend(), 0u) !=
+                childHandles.cend()) {
+          m_writeFailed = true;
+          return;
+        }
+        reserved = m_dwgWriteInsertChildHandlesByEntity
+                       .emplace(i, std::move(childHandles))
+                       .first;
+      }
+      if (reserved != m_dwgWriteInsertChildHandlesByEntity.end() &&
+          reserved->second.size() == attributes.size() + 1) {
+        for (std::size_t index = 0; index < attributes.size(); ++index) {
+          m_dwgWriteGeneratedEntityHandleByEntity.emplace(
+              attributes[index].second, reserved->second[index]);
+        }
+      }
+    }
+#endif
 
     // Only an AC1032 file holds the MTEXT of a multi-line attribute, and
     // only its DWG form has fields for an annotation-scale payload or a
@@ -31019,7 +31057,9 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         DRW::AC1032;
     const bool writesAttribScaleState = embedsMText && m_dwgW != nullptr;
 
+    attributeTexts.reserve(attributes.size());
     for (const auto &[sidecar, candidate] : attributes) {
+      attributeTexts.push_back(candidate);
       DRW_Attrib attrib;
       getEntityAttributes(&attrib, candidate);
       attrib.tag = sidecar.tag;
@@ -31287,14 +31327,11 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
   if (m_dwgW) {
 #ifdef DWGSUPPORT
     // Keep the ATTRIB..SEQEND handles taken in prepareDwgEntityHandleMap()
-    // next to this INSERT's own handle in an R2000 owner chain.
+    // next to this INSERT's own handle in an R2000 owner chain. The ATTRIBs
+    // have them already (see above).
     const auto childIt = m_dwgWriteInsertChildHandlesByEntity.find(i);
     if (childIt != m_dwgWriteInsertChildHandlesByEntity.end() &&
-        childIt->second.size() == in.attlist.size() + 1 &&
-        std::all_of(in.attlist.cbegin(), in.attlist.cend(),
-                    [](const auto &attrib) {
-                      return attrib != nullptr && attrib->handle == 0;
-                    })) {
+        childIt->second.size() == in.attlist.size() + 1) {
       for (std::size_t index = 0; index < in.attlist.size(); ++index)
         in.attlist[index]->handle = childIt->second[index];
       in.seqendH.ref = childIt->second.back();
@@ -31305,6 +31342,18 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
       return;
     }
 #ifdef DWGSUPPORT
+    // The ATTRIBs are written inside the frame of the INSERT, and no
+    // writeEntity() commits them: the identities selected for those with
+    // references of their own are final here. They are no entities of a
+    // block record, so their source handles are not noted as emitted.
+    for (const RS_Entity *text : attributeTexts) {
+      const auto selected = m_dwgWriteEntityHandleByEntity.find(text);
+      if (selected != m_dwgWriteEntityHandleByEntity.end() &&
+          !commitDwgWriteIdentity(DwgWriteSourceKind::Entity,
+                                  selected->second)) {
+        m_writeFailed = true;
+      }
+    }
     const DwgWriteReferenceReceipt receipt{DwgWriteSourceKind::Entity,
                                            i->sourceHandle(),
                                            in.handle,
