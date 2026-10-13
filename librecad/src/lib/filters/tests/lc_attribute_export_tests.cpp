@@ -2375,6 +2375,68 @@ TEST_CASE("each copy of a block reference writes its own attribute texts",
     }
 }
 
+// A tool does not replace an entity on a locked layer: the original stays
+// and each clone of it is one more entity. Of a block reference and a text
+// of it, one may be replaced and the other not. Clone number n of the text
+// belongs to clone number n of the block reference all the same, whichever of
+// the two took the place of its original.
+TEST_CASE("copies of a block reference and its text stay pairs when one of the two is on a locked layer",
+          "[attribute-export][attrib][filter][dxf][dwg][attrib-owner]") {
+    const Bench bench("attr_owner_locked");
+    const std::vector<const char*> formats{"dxf2018", "dwg2018", "dwg2000"};
+    struct Row {
+        const char* m_name;
+        bool m_textLocked;      // else the block reference
+        const char* m_expected;
+    };
+    const std::vector<Row> rows{
+        // The block reference moved and has what it had, the text that
+        // stayed too. The first clone of the text is a text of its own.
+        {"text_locked", true, "INSERT@50[first|second||secret] INSERT@100[far] TEXT[near] hidden=0 LINE=1"},
+        // The block reference stayed, and the text that moved is still its,
+        // in its place among the attributes. The first clone of the block
+        // reference has no text.
+        {"reference_locked", false,
+         "INSERT@0[near|second||secret] INSERT@50[] INSERT@100[far] TEXT[] hidden=0 LINE=1"},
+    };
+    for (const Row& row : rows) {
+        CAPTURE(row.m_name);
+        EditableDrawing drawing;
+        loadDxf(bench, attributedInsertDxf(false), drawing, row.m_name);
+        const RS_Insert* insert = referenceAt(drawing, 0);
+        const RS_Text* nameText = lineText(drawing, "first");
+        drawing.m_graphic.addLayer(new RS_Layer("LOCKED"));
+        RS_Layer* locked = drawing.m_graphic.findLayer("LOCKED");
+        REQUIRE(locked != nullptr);
+        const RS_Entity* kept = row.m_textLocked ? static_cast<const RS_Entity*>(nameText) : insert;
+        const_cast<RS_Entity*>(kept)->setLayer(locked);
+        locked->lock(true);
+
+        // The Move tool with two copies and without the originals.
+        RS_MoveData data;
+        data.offset = RS_Vector(50.0, 0.0);
+        data.multipleCopies = true;
+        data.number = 2;
+        drawing.modify([&](LC_DocumentModificationBatch& ctx) {
+            RS_Modification::move(data, selection({insert, nameText}), false, ctx);
+        });
+        locked->lock(false);
+        CHECK(kept->isDeleted() == false);
+        CHECK(drawing.live<RS_Insert>(RS2::EntityInsert).size() == (row.m_textLocked ? 2u : 3u));
+
+        const RS_Insert* far = referenceAt(drawing, 100);
+        CHECK(lineText(drawing, "first", 101.0)->ownerLineage() == far->lineage());
+        // The clones of the text have one value; a value of its own for each
+        // shows in every format which block reference has which.
+        drawing.edit(lineText(drawing, "first", 51.0), [](RS_Text& text) { text.setText("near"); });
+        drawing.edit(lineText(drawing, "first", 101.0), [](RS_Text& text) { text.setText("far"); });
+        for (const auto& file : saveAll(bench, drawing, row.m_name, formats, row.m_expected)) {
+            CHECK(lc::test::dxfRecords(file, "INSERT").size() == (row.m_textLocked ? 2u : 3u));
+            CHECK(lc::test::dxfRecords(file, "TEXT").size() == (row.m_textLocked ? 1u : 0u));
+        }
+    }
+}
+
 TEST_CASE("an attribute text without its block reference is written as text",
           "[attribute-export][attrib][filter][dxf][dwg][attrib-owner]") {
     const Bench bench("attr_owner_orphans");

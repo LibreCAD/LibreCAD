@@ -1035,3 +1035,77 @@ TEST_CASE("A text on a locked layer stays with its moved block reference and its
     CHECK(copy->ownerLineage() != 0);
     CHECK(copy->ownerLineage() != insertLineage);
 }
+
+TEST_CASE("Copies of a block reference and of its text on a locked layer are pairs copy by copy", "[copy][lineage]") {
+    Drawing d;
+    const OwnedText pair = addOwnedText(d);
+    const auto insertLineage = pair.m_insert->lineage();
+    const auto textLineage = pair.m_text->lineage();
+    RS_Layer* locked = d.addLayer("LOCKED");
+    pair.m_text->setLayer(locked);
+    locked->lock(true);
+
+    d.modify([&](LC_DocumentModificationBatch& ctx) {
+        RS_Modification::move(moveBy(RS_Vector{50, 0}, false, 2), {pair.m_insert, pair.m_text}, false, ctx);
+    });
+
+    // The block reference was replaced by its first clone; the text could not be, so both its clones are
+    // texts more.
+    REQUIRE(d.live(RS2::EntityInsert).size() == 2);
+    REQUIRE(d.live(RS2::EntityText).size() == 3);
+    CHECK(atX<RS_Insert>(d, RS2::EntityInsert, 50)->lineage() == insertLineage);
+    CHECK_FALSE(pair.m_text->isDeleted());
+    CHECK(pair.m_text->lineage() == textLineage);
+    CHECK(pair.m_text->ownerLineage() == insertLineage);
+
+    // The second clone of each is the second copy of the pair.
+    const RS_Insert* secondInsert = atX<RS_Insert>(d, RS2::EntityInsert, 100);
+    const RS_Text* secondText = atX<RS_Text>(d, RS2::EntityText, 100);
+    CHECK(secondInsert->lineage() != insertLineage);
+    CHECK(secondText->lineage() != textLineage);
+    CHECK(secondText->ownerLineage() == secondInsert->lineage());
+
+    // The first clone of the text lies next to the block reference that has the original: it belongs to none.
+    const RS_Text* firstText = atX<RS_Text>(d, RS2::EntityText, 50);
+    CHECK(firstText->lineage() != textLineage);
+    CHECK(firstText->ownerLineage() != 0);
+    for (const RS_Entity* insert : d.live(RS2::EntityInsert)) {
+        CHECK(insert->lineage() != firstText->ownerLineage());
+    }
+}
+
+TEST_CASE("Copies of a block reference on a locked layer and of its text are pairs copy by copy", "[copy][lineage]") {
+    Drawing d;
+    const OwnedText pair = addOwnedText(d);
+    const auto insertLineage = pair.m_insert->lineage();
+    const auto textLineage = pair.m_text->lineage();
+    RS_Layer* locked = d.addLayer("LOCKED");
+    pair.m_insert->setLayer(locked);
+    locked->lock(true);
+
+    d.modify([&](LC_DocumentModificationBatch& ctx) {
+        RS_Modification::move(moveBy(RS_Vector{50, 0}, false, 2), {pair.m_insert, pair.m_text}, false, ctx);
+    });
+
+    // The text was replaced by its first clone, which still belongs to the block reference that stayed.
+    REQUIRE(d.live(RS2::EntityInsert).size() == 3);
+    REQUIRE(d.live(RS2::EntityText).size() == 2);
+    CHECK_FALSE(pair.m_insert->isDeleted());
+    CHECK(pair.m_insert->lineage() == insertLineage);
+    const RS_Text* firstText = atX<RS_Text>(d, RS2::EntityText, 50);
+    CHECK(firstText->lineage() == textLineage);
+    CHECK(firstText->ownerLineage() == insertLineage);
+
+    // The second clone of each is the second copy of the pair, and the first clone of the block reference
+    // has no text.
+    const RS_Insert* firstInsert = atX<RS_Insert>(d, RS2::EntityInsert, 50);
+    const RS_Insert* secondInsert = atX<RS_Insert>(d, RS2::EntityInsert, 100);
+    const RS_Text* secondText = atX<RS_Text>(d, RS2::EntityText, 100);
+    CHECK(firstInsert->lineage() != insertLineage);
+    CHECK(secondInsert->lineage() != insertLineage);
+    CHECK(secondInsert->lineage() != firstInsert->lineage());
+    CHECK(secondText->ownerLineage() == secondInsert->lineage());
+    for (const RS_Entity* text : d.live(RS2::EntityText)) {
+        CHECK(text->ownerLineage() != firstInsert->lineage());
+    }
+}

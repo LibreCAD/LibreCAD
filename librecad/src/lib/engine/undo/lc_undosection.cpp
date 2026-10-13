@@ -73,21 +73,25 @@ void LC_UndoSection::undoableAdd(RS_Entity* e) const {
         e->clearDwgProvenance(RS_Entity::Identity);
     }
     // The same for what a block reference, or an entity that belongs to one, is in the drawing, read from
-    // a file with handles or not. Any other is a copy: copy number n of an entity belongs to copy number n
+    // a file with handles or not. Any other is a copy: clone number n of an entity belongs to clone number n
     // of what the entity belonged to, so a block reference copied with its attribute texts keeps them and
-    // one copied alone has none.
-    if (hasTrackedLineage(e) && !m_freedLineages.remove(e->lineage())) {
-        const int copy = ++m_copiesAdded[e->lineage()];
-        e->setLineage(copyLineage(e->lineage(), copy));
-        if (e->ownerLineage() != 0) {
-            e->setOwnerLineage(copyLineage(e->ownerLineage(), copy));
+    // one copied alone has none. The clone that takes the place of a deleted original has a number too: of a
+    // block reference and its text, one may be deleted and the other, on a locked layer, not.
+    if (hasTrackedLineage(e)) {
+        const unsigned long long original = e->lineage();
+        const int number = ++m_clonesAdded[original];
+        if (!m_freedLineages.remove(original)) {
+            e->setLineage(copyLineage(original, number));
+            if (e->ownerLineage() != 0) {
+                e->setOwnerLineage(copyLineage(e->ownerLineage(), number));
+            }
         }
     }
     m_document->undoableAdd(e);
 }
 
-unsigned long long LC_UndoSection::copyLineage(const unsigned long long lineage, const int copy) const {
-    unsigned long long& made = m_copyLineages[{lineage, copy}];
+unsigned long long LC_UndoSection::copyLineage(const unsigned long long lineage, const int number) const {
+    unsigned long long& made = m_copyLineages[{lineage, number}];
     if (made == 0) {
         made = RS_Entity::newLineage();
     }

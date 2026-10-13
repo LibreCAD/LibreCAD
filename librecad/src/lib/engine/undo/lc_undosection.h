@@ -70,12 +70,12 @@ private:
     mutable QSet<quint32> m_freedHandles;
     /** Lineages of the tracked entities this section deleted and no added entity has taken yet. */
     mutable QSet<unsigned long long> m_freedLineages;
-    /** How many copies of an entity, by its lineage, this section has added. */
-    mutable QHash<unsigned long long, int> m_copiesAdded;
-    /** The lineage this section gave a copy, by the lineage copied and the number of the copy. */
+    /** How many clones of an entity, by its lineage, this section has added: copies, and the one that took its place. */
+    mutable QHash<unsigned long long, int> m_clonesAdded;
+    /** The lineage this section gave a copy, by the lineage copied and the number of the clone. */
     mutable std::map<std::pair<unsigned long long, int>, unsigned long long> m_copyLineages;
 
-    unsigned long long copyLineage(unsigned long long lineage, int copy) const;
+    unsigned long long copyLineage(unsigned long long lineage, int number) const;
 };
 
 #endif
