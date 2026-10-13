@@ -17,10 +17,18 @@
 // with the nearer center. Points a diameter apart have one, centered between them: it is drawn without a choice,
 // as soon as the mouse moves. Since the construction moved to LC_CreationCircle (#2540) the action took a center
 // only where there were two, so the one circle was not drawn, or was drawn around a center left from before.
+//
+// Points are a diameter apart within a tolerance: their distance is known no better than their coordinates and the
+// diameter are. A second point given at the diameter and an angle from the first, @10<30 for the radius of 5, has
+// rounded coordinates, and is found a little further than the diameter in some directions and a little nearer in
+// others. Further, it was refused as out of reach; nearer, it had two circles to choose from wherever the radius
+// or the coordinates were large.
 
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
+#include <algorithm>
+#include <cmath>
 #include <memory>
 #include <vector>
 
@@ -33,6 +41,7 @@
 #include "lc_graphicviewport.h"
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
+#include "rs_line.h"
 #include "rs_math.h"
 #include "rs_preview.h"
 
@@ -66,6 +75,7 @@ struct TwoPointsRadius final : LC_ActionDrawCircle2PointsRadius {
     using LC_ActionDrawCircle2PointsRadius::SelectCenter;
     using LC_ActionDrawCircle2PointsRadius::SetPoint1;
     using LC_ActionDrawCircle2PointsRadius::SetPoint2;
+    using LC_ActionDrawCircle2PointsRadius::m_showRefEntitiesOnPreview;
 
     // as RS_PreviewActionInterface::mouseMoveEvent() does it: the preview of a mouse move starts empty
     void move(const double x, const double y) {
@@ -84,6 +94,18 @@ struct TwoPointsRadius final : LC_ActionDrawCircle2PointsRadius {
         coordinateEvent(&event);
     }
     std::vector<const RS_Circle*> previewed() const { return circlesOf(*m_preview); }
+    // where the reference line of the preview ends, which is drawn from the first point to the second. RS_Preview
+    // keeps the reference entities apart.
+    RS_Vector previewedSecondPoint() const {
+        RS_EntityContainer references(nullptr, false);
+        m_preview->addReferenceEntitiesToContainer(&references);
+        for (const RS_Entity* entity : references) {
+            if (entity->rtti() == RS2::EntityRefLine) {
+                return static_cast<const RS_Line*>(entity)->getEndpoint();
+            }
+        }
+        return RS_Vector{false};
+    }
 
     // the mouse events of the view, at the pixel of a point of the drawing
     void mouseTo(const RS_Vector& point) {
@@ -148,16 +170,24 @@ TEST_CASE("LC_CreationCircle::create2PRadius gives the centers of the circles of
         CHECK(circle.center.distanceTo({3., 4.}) < 1e-9);
         CHECK(otherCenter.distanceTo({3., -4.}) < 1e-9);
         CHECK(circle.radius == 5.);
+        CHECK(LC_CreationCircle::canCreate2PRadius({0., 0.}, {6., 0.}, 5.));
     }
     SECTION("one, for points a diameter apart: no other center to choose from") {
         CHECK_FALSE(LC_CreationCircle::create2PRadius({0., 0.}, {10., 0.}, 5., otherCenter, circle));
         REQUIRE(circle.center.valid);
         CHECK(circle.center.distanceTo({5., 0.}) < 1e-9);
         CHECK(circle.radius == 5.);
+        CHECK(LC_CreationCircle::canCreate2PRadius({0., 0.}, {10., 0.}, 5.));
     }
     SECTION("none, for points further apart") {
         circle.center = RS_Vector{1., 2.};
         CHECK_FALSE(LC_CreationCircle::create2PRadius({0., 0.}, {12., 0.}, 5., otherCenter, circle));
+        CHECK_FALSE(circle.center.valid);
+        CHECK_FALSE(LC_CreationCircle::canCreate2PRadius({0., 0.}, {12., 0.}, 5.));
+    }
+    SECTION("none, for a point that is not valid") {
+        CHECK_FALSE(LC_CreationCircle::canCreate2PRadius({0., 0.}, RS_Vector{false}, 5.));
+        CHECK_FALSE(LC_CreationCircle::create2PRadius({0., 0.}, RS_Vector{false}, 5., otherCenter, circle));
         CHECK_FALSE(circle.center.valid);
     }
 }
@@ -182,6 +212,111 @@ TEST_CASE("LC_CreationCircle::create2PRadius has the middle of a diameter for th
                 REQUIRE(circle.radius == radius);
             }
         }
+    }
+}
+
+TEST_CASE("LC_CreationCircle::create2PRadius has one circle for a diameter given by its length, in any direction of it",
+          "[circle-2points-radius]") {
+    // The second point is at twice the radius and an angle from the first. The largest of the coordinates and the
+    // diameter says how far its distance from the first rounds from the diameter: little among small numbers, and
+    // more than RS_TOLERANCE where the first point is far from the origin, or from the radius of 262144, where the
+    // last digit of the diameter is 1.2e-10.
+    const RS_Vector origins[] = {{0., 0.}, {12.3, 45.6}, {1234.5, -987.25}, {3.3e6, -4.7e6}, {5.1e8, 4.9e8}};
+    unsigned further = 0;
+    unsigned nearer = 0;
+    for (const RS_Vector& first : origins) {
+        for (const double radius : {1e-3, 5., 1000., 262144., 1e6, 1.7e9}) {
+            const double largest = std::max({2. * radius, std::abs(first.x), std::abs(first.y)});
+            for (int tenth = 0; tenth < 3600; ++tenth) {
+                const RS_Vector second = first + RS_Vector::polar(2. * radius, RS_Math::deg2rad(tenth / 10.));
+                const double beyond = second.distanceTo(first) - 2. * radius;
+                further += beyond > 0. ? 1 : 0;
+                nearer += beyond < 0. ? 1 : 0;
+                RS_CircleData circle;
+                RS_Vector otherCenter;
+                CAPTURE(first.x, first.y, radius, tenth, beyond);
+                REQUIRE(LC_CreationCircle::canCreate2PRadius(first, second, radius));
+                REQUIRE_FALSE(LC_CreationCircle::create2PRadius(first, second, radius, otherCenter, circle));
+                REQUIRE(circle.center.valid);
+                REQUIRE(circle.center.distanceTo((first + second) * 0.5) < 1e-12 * largest);
+                REQUIRE(circle.radius == radius);
+            }
+        }
+    }
+    // the directions are of both kinds
+    CHECK(further > 3600);
+    CHECK(nearer > 3600);
+}
+
+TEST_CASE("LC_CreationCircle::create2PRadius takes for a diameter what the rounding of the numbers may make of one",
+          "[circle-2points-radius]") {
+    RS_CircleData circle;
+    RS_Vector otherCenter;
+    // one circle, around the middle of the chord
+    const auto checkDiameter = [&](const RS_Vector& first, const RS_Vector& second, const double radius) {
+        CAPTURE(second.x - first.x);
+        CHECK(LC_CreationCircle::canCreate2PRadius(first, second, radius));
+        CHECK_FALSE(LC_CreationCircle::create2PRadius(first, second, radius, otherCenter, circle));
+        REQUIRE(circle.center.valid);
+        CHECK(circle.center.x == 0.5 * (first.x + second.x));
+        CHECK(circle.center.y == 0.5 * (first.y + second.y));
+        CHECK(circle.radius == radius);
+    };
+    const auto checkOutOfReach = [&](const RS_Vector& first, const RS_Vector& second, const double radius) {
+        CAPTURE(second.x - first.x);
+        circle.center = RS_Vector{1., 2.};
+        CHECK_FALSE(LC_CreationCircle::canCreate2PRadius(first, second, radius));
+        CHECK_FALSE(LC_CreationCircle::create2PRadius(first, second, radius, otherCenter, circle));
+        CHECK_FALSE(circle.center.valid);
+    };
+    // two circles, with their centers at a distance on either side of the chord, which is along x. The distance is
+    // sqrt(r * d) for a chord shorter than the diameter by d, and d is as the second point is rounded.
+    const auto checkTwoCenters = [&](const RS_Vector& first, const RS_Vector& second, const double radius,
+                                     const double fromChord) {
+        CAPTURE(second.x - first.x);
+        CHECK(LC_CreationCircle::canCreate2PRadius(first, second, radius));
+        REQUIRE(LC_CreationCircle::create2PRadius(first, second, radius, otherCenter, circle));
+        for (const RS_Vector& center : {circle.center, otherCenter}) {
+            CHECK(std::abs(center.y - first.y) == Catch::Approx(fromChord).epsilon(1e-3));
+            CHECK(center.distanceTo(first) == Catch::Approx(radius));
+            CHECK(center.distanceTo(second) == Catch::Approx(radius));
+        }
+        CHECK((circle.center.y - first.y) * (otherCenter.y - first.y) < 0.);
+    };
+
+    SECTION("RS_TOLERANCE, among small numbers") {
+        // with the radius of 5 the diameter reaches from (0, 0) to (10, 0)
+        const RS_Vector first{0., 0.};
+        checkDiameter(first, {10. + 5e-11, 0.}, 5.);
+        checkDiameter(first, {10. - 5e-11, 0.}, 5.);
+        checkOutOfReach(first, {10. + 2e-10, 0.}, 5.);
+        checkTwoCenters(first, {10. - 1e-8, 0.}, 5., std::sqrt(5e-9 * (10. - 5e-9)));
+    }
+    SECTION("the rounding of the diameter, of a large circle") {
+        // the diameter of 2000000 has 2.3e-10 for its last digit: its neighbours are further from it than RS_TOLERANCE
+        const RS_Vector first{0., 0.};
+        const double further = std::nextafter(2e6, 3e6);
+        const double nearer = std::nextafter(2e6, 0.);
+        REQUIRE(further - 2e6 > RS_TOLERANCE);
+        REQUIRE(2e6 - nearer > RS_TOLERANCE);
+        checkDiameter(first, {further, 0.}, 1e6);
+        checkDiameter(first, {nearer, 0.}, 1e6);
+        // not by what is measured there: a millionth more is out of reach, and a millionth less has the centers of
+        // two circles a unit from the chord
+        checkOutOfReach(first, {2e6 + 1e-6, 0.}, 1e6);
+        checkTwoCenters(first, {2e6 - 1e-6, 0.}, 1e6, 1.);
+    }
+    SECTION("the rounding of the coordinates, far from the origin") {
+        // by 500000000 the coordinates are in steps of 6e-8, whatever the radius
+        const RS_Vector first{5e8, 5e8};
+        const double further = std::nextafter(5e8 + 10., 6e8);
+        const double nearer = std::nextafter(5e8 + 10., 0.);
+        REQUIRE(further - (5e8 + 10.) > RS_TOLERANCE);
+        REQUIRE((5e8 + 10.) - nearer > RS_TOLERANCE);
+        checkDiameter(first, {further, 5e8}, 5.);
+        checkDiameter(first, {nearer, 5e8}, 5.);
+        checkOutOfReach(first, {5e8 + 10. + 1e-4, 5e8}, 5.);
+        checkTwoCenters(first, {5e8 + 10. - 1e-4, 5e8}, 5., std::sqrt(5e-5 * 10.));
     }
 }
 
@@ -368,11 +503,12 @@ TEST_CASE("Circle 2 Points Radius: the circle through points a diameter apart is
           "[circle-2points-radius]") {
     Radius5 f;
     TwoPointsRadius& action = *f.m_action;
-    const RS_Vector first{12.3, 45.6};
+    RS_Vector first{12.3, 45.6};
+    double diameter = 10.;
     unsigned circles = 0;
     // the second point is given at the length of the diameter and an angle: @10<angle
-    const auto secondPoint = [&first](const int tenth) {
-        return first + RS_Vector::polar(10., RS_Math::deg2rad(tenth / 10.));
+    const auto secondPoint = [&first, &diameter](const int tenth) {
+        return first + RS_Vector::polar(diameter, RS_Math::deg2rad(tenth / 10.));
     };
     const auto checkDrawnAtMouseMove = [&](const RS_Vector& second, const double radius) {
         action.move(first.x + 3., first.y + 20.);
@@ -383,6 +519,22 @@ TEST_CASE("Circle 2 Points Radius: the circle through points a diameter apart is
         REQUIRE(circle->getCenter().distanceTo((first + second) * 0.5) < 1e-9);
         REQUIRE(circle->getRadius() == radius);
         REQUIRE(action.getStatus() == TwoPointsRadius::SetPoint1);
+    };
+    // With half the diameter for the radius of the tool options. The coordinates of the second point round to more
+    // than a diameter from the first in some directions, and to less in others: it is taken in all of them, and
+    // has the one circle.
+    const auto checkDrawnInAllDirections = [&](const int tenthsApart) {
+        action.setRadius(0.5 * diameter);
+        for (int tenth = 0; tenth < 3600; tenth += tenthsApart) {
+            const RS_Vector second = secondPoint(tenth);
+            action.type(first.x, first.y);
+            action.type(second.x, second.y);
+            CAPTURE(tenth);
+            REQUIRE(action.getStatus() == TwoPointsRadius::SelectCenter);
+            checkDrawnAtMouseMove(second, 0.5 * diameter);
+        }
+        CHECK(circles == 3600 / tenthsApart);
+        CHECK(f.m_context.m_messages.isEmpty());
     };
 
     SECTION("with half the distance of the points for the radius") {
@@ -399,21 +551,49 @@ TEST_CASE("Circle 2 Points Radius: the circle through points a diameter apart is
         }
     }
     SECTION("with the radius of 5") {
-        for (int tenth = 0; tenth < 3600; ++tenth) {
-            const RS_Vector second = secondPoint(tenth);
-            action.type(first.x, first.y);
-            action.type(second.x, second.y);
-            if (action.getStatus() != TwoPointsRadius::SelectCenter) {
-                // the coordinates of the second point round to more than a diameter from the first: it is not taken
-                action.init(0);
-                continue;
-            }
-            CAPTURE(tenth);
-            checkDrawnAtMouseMove(second, 5.);
-        }
-        // of the directions, those whose coordinates do not round to more than a diameter
-        CHECK(circles > 360);
+        checkDrawnInAllDirections(1);
     }
+    // by the degree, as LC_CreationCircle::create2PRadius has these by the tenth
+    SECTION("with the radius of 5, far from the origin") {
+        first = RS_Vector{3.3e6, -4.7e6};
+        checkDrawnInAllDirections(10);
+    }
+    SECTION("with the radius of 1000") {
+        // where a diameter that rounds to less had two circles, with their centers further apart than 1e-5
+        diameter = 2000.;
+        checkDrawnInAllDirections(10);
+    }
+    SECTION("with the radius of 1000000") {
+        // where the last digit of the diameter is more than RS_TOLERANCE
+        diameter = 2e6;
+        checkDrawnInAllDirections(10);
+    }
+}
+
+TEST_CASE("Circle 2 Points Radius: the mouse is the second point a diameter from the first, in any direction",
+          "[circle-2points-radius]") {
+    // The mouse snaps to a point at a diameter from the first. The reference line of the preview is the chord: it
+    // ends at the mouse where that is taken for the second point, and where the mouse was last within reach
+    // otherwise.
+    Radius5 f;
+    TwoPointsRadius& action = *f.m_action;
+    action.m_showRefEntitiesOnPreview = true;
+    const RS_Vector first{12.3, 45.6};
+    const RS_Vector within{first.x + 1., first.y};
+    action.click(first.x, first.y);
+    for (int tenth = 0; tenth < 3600; ++tenth) {
+        const RS_Vector second = first + RS_Vector::polar(10., RS_Math::deg2rad(tenth / 10.));
+        action.move(within.x, within.y);
+        action.move(second.x, second.y);
+        CAPTURE(tenth);
+        REQUIRE(action.previewedSecondPoint().distanceTo(second) == 0.);
+    }
+
+    action.move(within.x, within.y);
+    action.move(first.x + 12., first.y);
+    CHECK(action.previewedSecondPoint().distanceTo(within) == 0.);
+    CHECK(action.getStatus() == TwoPointsRadius::SetPoint2);
+    CHECK(f.drawn().empty());
 }
 
 TEST_CASE("Circle 2 Points Radius: the mouse events of the view draw the one circle through points a diameter apart",
