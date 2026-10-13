@@ -29471,9 +29471,10 @@ TEST_CASE("RS_FilterDXFRW drops malformed INSERT ATTRIB sidecars atomically",
           std::string{value->c_str()} == "LibreCAD_INSERT_ATTRIB_MTEXT";
       continue;
     }
-    if (inMTextGroup && value->code() == 1070 && seenMText1070++ == 15) {
-      // Schema 2 field 15 declares three annotative bytes. Make the
-      // sidecar structurally invalid without touching the source DWG.
+    if (inMTextGroup && value->code() == 1070 && seenMText1070++ == 14) {
+      // The fifteenth 1070 value of the MTEXT sidecar declares three
+      // annotative bytes. Make the sidecar structurally invalid without
+      // touching the source DWG.
       value = std::make_shared<DRW_Variant>(1070, 4);
       changed = true;
       break;
