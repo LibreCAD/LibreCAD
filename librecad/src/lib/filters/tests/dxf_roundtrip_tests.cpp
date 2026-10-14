@@ -5466,11 +5466,11 @@ TEST_CASE("DXF FIELD XDATA survives filter DXF and DWG round trips",
             "7\nACFD_FIELD_VALUE\n93\n0\n90\n2\n140\n2\n"
             "94\n0\n300\n\n302\n\n304\nACVALUE_END\n"
             "301\n\n98\n0\n"
-            "1001\nFIELD_EED\n1000\nfield payload\n1070\n7\n"
+            "1001\nFIELD_EED\n1000\nfield payload\n1070\n32768\n"
             "0\nFIELDLIST\n5\nE3\n330\nC\n"
             "100\nAcDbIdSet\n90\n1\n290\n0\n330\nE0\n"
             "100\nAcDbFieldList\n"
-            "1001\nFIELDLIST_EED\n1000\nfield list payload\n1070\n8\n"
+            "1001\nFIELDLIST_EED\n1000\nfield list payload\n1070\n65535\n"
             "0\nENDSEC\n0\nEOF\n");
 
   RS_Graphic graphic;
@@ -5494,13 +5494,13 @@ TEST_CASE("DXF FIELD XDATA survives filter DXF and DWG round trips",
   CHECK(recordGroupValues(out, "FIELD", "1000")
         == std::vector<std::string>{"field payload"});
   CHECK(recordGroupValues(out, "FIELD", "1070")
-        == std::vector<std::string>{"7"});
+        == std::vector<std::string>{"32768"});
   CHECK(recordGroupValues(out, "FIELDLIST", "1001")
         == std::vector<std::string>{"FIELDLIST_EED"});
   CHECK(recordGroupValues(out, "FIELDLIST", "1000")
         == std::vector<std::string>{"field list payload"});
   CHECK(recordGroupValues(out, "FIELDLIST", "1070")
-        == std::vector<std::string>{"8"});
+        == std::vector<std::string>{"65535"});
 
 #ifdef DWGSUPPORT
   {
@@ -5523,10 +5523,10 @@ TEST_CASE("DXF FIELD XDATA survives filter DXF and DWG round trips",
   REQUIRE(fieldListExtData.size() == 3);
   CHECK(std::string(fieldExtData[0]->c_str()) == "FIELD_EED");
   CHECK(std::string(fieldExtData[1]->c_str()) == "field payload");
-  CHECK(fieldExtData[2]->i_val() == 7);
+  CHECK(fieldExtData[2]->i_val() == -32768);
   CHECK(std::string(fieldListExtData[0]->c_str()) == "FIELDLIST_EED");
   CHECK(std::string(fieldListExtData[1]->c_str()) == "field list payload");
-  CHECK(fieldListExtData[2]->i_val() == 8);
+  CHECK(fieldListExtData[2]->i_val() == -1);
 #endif
 
   std::filesystem::remove(src);
