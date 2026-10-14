@@ -27,10 +27,7 @@
 
 #include <QApplication>
 #include <QCoreApplication>
-#include <QImageWriter>
-#include <QSaveFile>
 #include <QtCore>
-#include <QtSvg>
 
 #include "console_command_utils.h"
 #include "main.h"
@@ -39,8 +36,7 @@
 #include "qg_dialogfactory.h"
 
 #include "console_dxf2png.h"
-#include "lc_graphicviewport.h"
-#include "lc_printviewportrenderer.h"
+#include "lc_imageexporter.h"
 #include "main.h"
 #include "qc_applicationwindow.h"
 #include "qg_dialogfactory.h"
@@ -50,7 +46,6 @@
 #include "rs_fontlist.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
-#include "rs_painter.h"
 #include "rs_patternlist.h"
 #include "rs_settings.h"
 #include "rs_system.h"
@@ -320,129 +315,17 @@ static void touchGraphic(RS_Graphic* graphic){
     graphic->fitToPage(); // fit and center
 }
 
-namespace {
-
-// Passes what is written on to another device and remembers a write that the
-// device did not take whole. QSvgGenerator writes through a text stream that
-// stops at the first short write and tells nobody.
-class WriteCheckingDevice : public QIODevice {
-public:
-    explicit WriteCheckingDevice(QIODevice& target) : m_target(target) {
-        open(QIODevice::WriteOnly);
-    }
-    bool failed() const { return m_failed; }
-
-protected:
-    qint64 readData(char*, qint64) override { return -1; }
-    qint64 writeData(const char* data, const qint64 size) override {
-        const qint64 written = m_target.write(data, size);
-        if (written != size)
-            m_failed = true;
-        return written;
-    }
-
-private:
-    QIODevice& m_target;
-    bool m_failed = false;
-};
-
-} // namespace
-
 bool slotFileExport(RS_Graphic* graphic, const QString& name,
         const QString& format, const QSize& size, const QSize& borders, const bool black, const bool bw) {
-
-    if (graphic==nullptr) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-                "QC_ApplicationWindow::slotFileExport: "
-                "no graphic");
-        return false;
-    }
-
-    const bool svg = format.compare(QStringLiteral("svg"), Qt::CaseInsensitive) == 0;
-    QSaveFile file{name};
-    if (!file.open(QIODevice::WriteOnly))
-        return false;
-
-    QPixmap picture(svg ? QSize() : size);
-    WriteCheckingDevice checkedFile{file};
-    QSvgGenerator vector;
-    QPaintDevice* buffer = &picture;
-    if (svg) {
-        vector.setSize(size);
-        vector.setViewBox(QRectF(QPointF(0, 0), size));
-        vector.setOutputDevice(&checkedFile);
-        buffer = &vector;
-    } else if (picture.isNull()) {
-        return false;
-    }
-
-    RS_Painter painter(buffer);
-    if (!painter.isActive())
-        return false;
-
-    if (svg) {
-        // Vector detail must survive zooming, even when smaller than a pixel.
-        painter.setMinCircleDrawingRadius(0.0);
-        painter.setMinArcDrawingRadius(0.0);
-        painter.setMinEllipseMajorRadius(0.0);
-        painter.setMinEllipseMinorRadius(0.0);
-        painter.setMinLineDrawingLen(0.0);
-    }
-    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-
-    if (black) {
-        painter.setBackground( Qt::black);
-        if (bw) {
-            painter.setDrawingMode( RS2::ModeWB);
-        }
-    }
-    else {
-        painter.setBackground(Qt::white);
-        if (bw) {
-            painter.setDrawingMode( RS2::ModeBW);
-        }
-    }
-
-    painter.eraseRect(0,0, size.width(), size.height());
-
-    LC_GraphicViewport viewport;
-    viewport.setSize(size.width(), size.height());
-    viewport.setBorders(borders.width(), borders.height(), borders.width(), borders.height());
-
-    viewport.setDocument(graphic);
-    viewport.loadSettings();
-    viewport.zoomAuto(false);
-
-
-    LC_PrintViewportRenderer renderer(&viewport, &painter);
-    renderer.loadSettings();
-
-    if (black) {
-        renderer.setBackground(Qt::black);
-    } else {
-        renderer.setBackground(Qt::white);
-    }
-
-    renderer.render();
-
-    // QSvgGenerator flushes its document when painting ends, not at destruction.
-    const bool painted = painter.end();
-    QApplication::restoreOverrideCursor();
-    if (!painted)
-        return false;
-
-    if (!svg) {
-        QImageWriter writer{&file, format.toLatin1()};
-        if (!writer.write(picture.toImage()))
-            return false;
-    }
-    // commit() flushes what is still buffered, and before Qt 6.8.2 it puts the
-    // file in place even when that flush could not write everything
-    // (QTBUG-132332). Flush here, where the result can be seen.
-    return !checkedFile.failed()
-        && file.error() == QFileDevice::NoError
-        && file.flush()
-        && file.commit();
+    // The same exporter as File > Export as image.
+    LC_ImageExporter::ExportOptions options;
+    options.fileName = name;
+    options.format = format;
+    options.size = size;
+    options.borders = borders;
+    options.backgroundBlack = black;
+    options.blackAndWhite = bw;
+    return LC_ImageExporter{}.exportToImage(graphic, options);
 }
 
 /////////////////

@@ -34,15 +34,11 @@
 #include <QTemporaryDir>
 #include <QXmlStreamReader>
 
-#ifdef Q_OS_UNIX
-#include <csignal>
-#include <sys/resource.h>
-#endif
-
 #include "console_command_utils.h"
 #include "console_dxf2png.h"
 #include "lc_actiontestsupport.h"
 #include "lc_plot_settings.h"
+#include "lc_testfilesizelimit.h"
 #include "rs_debug.h"
 #include "rs_fontlist.h"
 #include "rs_graphic.h"
@@ -141,36 +137,6 @@ QMap<QString, int> svgElementCounts(const QByteArray& svg) {
     REQUIRE(counts.value("svg") == 1);
     return counts;
 }
-
-#ifdef Q_OS_UNIX
-// Restore process-wide state before Catch2 reports any failed assertions.
-class FileSizeLimit {
-public:
-    FileSizeLimit() {
-        REQUIRE(getrlimit(RLIMIT_FSIZE, &m_previous) == 0);
-        if (m_previous.rlim_max < 512)
-            SKIP("The process file-size limit is already below the test limit");
-        m_previousSignal = std::signal(SIGXFSZ, SIG_IGN);
-        REQUIRE(m_previousSignal != SIG_ERR);
-        rlimit limited = m_previous;
-        limited.rlim_cur = 512;
-        if (setrlimit(RLIMIT_FSIZE, &limited) != 0) {
-            std::signal(SIGXFSZ, m_previousSignal);
-            FAIL("Could not set the test file-size limit");
-        }
-    }
-    ~FileSizeLimit() {
-        setrlimit(RLIMIT_FSIZE, &m_previous);
-        std::signal(SIGXFSZ, m_previousSignal);
-    }
-    FileSizeLimit(const FileSizeLimit&) = delete;
-    FileSizeLimit& operator=(const FileSizeLimit&) = delete;
-
-private:
-    rlimit m_previous{};
-    void (*m_previousSignal)(int) = SIG_DFL;
-};
-#endif
 
 } // namespace
 
@@ -272,7 +238,7 @@ TEST_CASE("console image export preserves existing output after a short write", 
     const QString out = writeFile(dir, "existing", previous);
     bool result;
     {
-        FileSizeLimit limit;
+        lc::test::FileSizeLimit limit;
         result = slotFileExport(&graphic, out, format, QSize(1200, 800), QSize(5, 5), false, false);
     }
     CHECK_FALSE(result);
@@ -304,7 +270,7 @@ TEST_CASE("console SVG export preserves existing output after a short write of a
     const QString out = writeFile(dir, "existing", previous);
     bool result;
     {
-        FileSizeLimit limit;
+        lc::test::FileSizeLimit limit;
         result = slotFileExport(&graphic, out, "SVG", QSize(1200, 800), QSize(5, 5), false, false);
     }
     CHECK_FALSE(result);

@@ -2761,6 +2761,7 @@ if (BUILD_TESTS)
         librecad/src/ui/dock_widgets/ucs_list/tests/lc_ucslistmodel_tests.cpp
         librecad/src/ui/dock_widgets/views_list/tests/lc_namedviewsmodel_tests.cpp
         librecad/src/lib/generators/layers/tests/lc_layersexporter_tests.cpp
+        librecad/src/lib/generators/image/tests/lc_imageexporter_tests.cpp
         librecad/src/ui/main/persistence/tests/lc_documentsstorage_tests.cpp
         librecad/src/ui/main/tests/lc_mdiwindow_close_tests.cpp
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp
@@ -3424,6 +3425,9 @@ if (BUILD_TESTS)
     target_sources(librecad_painter_tests PRIVATE
         librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp)
     add_librecad_filter_micro_test(
+        librecad_image_exporter_tests
+        librecad/src/lib/generators/image/tests/lc_imageexporter_tests.cpp)
+    add_librecad_filter_micro_test(
         librecad_dock_layout_tests
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp)
     target_sources(librecad_dock_layout_tests PRIVATE ${LIBRECAD_RES})
@@ -3721,6 +3725,10 @@ if (BUILD_TESTS)
         add_test(NAME librecad_painter_tests
             COMMAND $<TARGET_FILE:librecad_painter_tests> --reporter compact)
         set_tests_properties(librecad_painter_tests PROPERTIES
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
+        add_test(NAME librecad_image_exporter_tests
+            COMMAND $<TARGET_FILE:librecad_image_exporter_tests> --reporter compact)
+        set_tests_properties(librecad_image_exporter_tests PROPERTIES
             ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
         add_test(NAME librecad_console_svg_tests
             COMMAND $<TARGET_FILE:librecad_lc_consolesvgexporttests>

@@ -23,13 +23,55 @@
 
 #include "lc_imageexporter.h"
 
+#include <QBuffer>
 #include <QImageWriter>
+#include <QPixmap>
+#include <QSaveFile>
 #include <QSvgGenerator>
 
 #include "lc_graphicviewport.h"
 #include "lc_printviewportrenderer.h"
 #include "rs_graphic.h"
 #include "rs_painter.h"
+
+namespace {
+
+// Passes what is written on to another device and remembers a write that the
+// device did not take whole. QSvgGenerator writes through a text stream that
+// stops at the first short write and tells nobody.
+class WriteCheckingDevice : public QIODevice {
+public:
+    explicit WriteCheckingDevice(QIODevice& target) : m_target(target) {
+        open(QIODevice::WriteOnly);
+    }
+    bool failed() const { return m_failed; }
+
+protected:
+    qint64 readData(char*, qint64) override { return -1; }
+    qint64 writeData(const char* data, const qint64 size) override {
+        const qint64 written = m_target.write(data, size);
+        if (written != size)
+            m_failed = true;
+        return written;
+    }
+
+private:
+    QIODevice& m_target;
+    bool m_failed = false;
+};
+
+// A write the file takes only in part may leave no error behind.
+QString writeError(const QFileDevice& file) {
+    return file.error() == QFileDevice::NoError
+        ? LC_ImageExporter::tr("The file could not be written completely.")
+        : file.errorString();
+}
+
+QString drawError(const QSize& size) {
+    return LC_ImageExporter::tr("Could not draw an image of %1 x %2 pixels.").arg(size.width()).arg(size.height());
+}
+
+} // namespace
 
 LC_ImageExporter::LC_ImageExporter(QObject* parent)
     : QObject{parent} {
@@ -45,49 +87,94 @@ bool LC_ImageExporter::exportToImage(RS_Graphic* graphic, const ExportOptions& o
     // 4) custom background color (i.e transparent)?
     // 5) only visible layers(?)
 
-    const bool exportToSvg = options.format.toLower() == "svg";
-    if (exportToSvg) {
-        return exportGraphicToSVG(graphic, options);
+    m_errorString.clear();
+    if (graphic == nullptr) {
+        m_errorString = tr("There is no drawing to export.");
+        return false;
     }
-    return exportGraphicToImage(graphic,options);
-}
 
-bool LC_ImageExporter::exportGraphicToSVG(RS_Graphic* graphic, const ExportOptions& options) {
-    const QSize size = options.size;
-    QSvgGenerator svgGenerator;
-    prepareSVGGenerator(options, size, svgGenerator);
-    QPaintDevice* buffer = &svgGenerator;
-    renderGraphic(graphic, options, buffer);
+    // The image is written to a temporary file, which takes the place of the
+    // named one only once all of it is written: a failed export leaves an
+    // existing file as it was.
+    QSaveFile file{options.fileName};
+    if (!file.open(QIODevice::WriteOnly)) {
+        m_errorString = file.errorString();
+        return false;
+    }
+
+    const bool exportToSvg = options.format.toLower() == "svg";
+    const bool written = exportToSvg
+        ? exportGraphicToSVG(graphic, options, file)
+        : exportGraphicToImage(graphic, options, file);
+    if (!written) {
+        return false;
+    }
+
+    // commit() flushes what is still buffered, and before Qt 6.8.2 it puts the
+    // file in place even when that flush could not write everything
+    // (QTBUG-132332). Flush here, where the result can be seen.
+    if (file.error() != QFileDevice::NoError || !file.flush() || !file.commit()) {
+        m_errorString = writeError(file);
+        return false;
+    }
     return true;
 }
 
-bool LC_ImageExporter::exportGraphicToImage(RS_Graphic* graphic, const ExportOptions& options) {
-    const QSize size = options.size;
-    auto pixMap = QPixmap(size);
-    QPaintDevice* buffer = &pixMap;
-    renderGraphic(graphic, options, buffer);
-    return savePixmapToImage(options, pixMap);
+bool LC_ImageExporter::exportGraphicToSVG(RS_Graphic* graphic, const ExportOptions& options, QFileDevice& output) {
+    WriteCheckingDevice checkedOutput{output};
+    QSvgGenerator svgGenerator;
+    prepareSVGGenerator(options, options.size, svgGenerator, &checkedOutput);
+    const bool rendered = renderGraphic(graphic, options, &svgGenerator, true);
+    if (checkedOutput.failed()) {
+        m_errorString = writeError(output);
+        return false;
+    }
+    return rendered;
 }
 
-bool LC_ImageExporter::savePixmapToImage(const ExportOptions& options, const QPixmap &pixMap) {
-    const QImage img = pixMap.toImage();
-    QImageWriter iio;
-    iio.setFileName(options.fileName);
-    iio.setFormat(options.format.toLatin1());
-
-    bool ret = false;
-    if (iio.write(img)) {
-        ret = true;
+bool LC_ImageExporter::exportGraphicToImage(RS_Graphic* graphic, const ExportOptions& options, QFileDevice& output) {
+    auto pixMap = QPixmap(options.size);
+    if (pixMap.isNull()) {
+        m_errorString = drawError(options.size);
+        return false;
     }
-    else {
-        //  QString error=iio.errorString();
-        // fixme - sand - files - add error reporting
-    }
-    return ret;
+    return renderGraphic(graphic, options, &pixMap, false) && savePixmapToImage(options, pixMap, output);
 }
 
-void LC_ImageExporter::renderGraphic(RS_Graphic* graphic, const ExportOptions& options, QPaintDevice* buffer) {
+bool LC_ImageExporter::savePixmapToImage(const ExportOptions& options, const QPixmap &pixMap, QFileDevice& output) {
+    // Some writers seek back in what they write (TIFF does, and on a device
+    // that cannot seek it writes a file nobody can read), and not all of them
+    // check that each write is taken whole. Encode in memory, then write the
+    // result in one piece that is checked.
+    QBuffer encoded;
+    encoded.open(QIODevice::WriteOnly);
+    QImageWriter iio{&encoded, options.format.toLatin1()};
+    if (!iio.write(pixMap.toImage())) {
+        m_errorString = iio.errorString();
+        return false;
+    }
+    if (output.write(encoded.data()) != encoded.size()) {
+        m_errorString = writeError(output);
+        return false;
+    }
+    return true;
+}
+
+bool LC_ImageExporter::renderGraphic(RS_Graphic* graphic, const ExportOptions& options, QPaintDevice* buffer,
+                                     const bool vector) {
     RS_Painter painter(buffer);
+    if (!painter.isActive()) {
+        m_errorString = drawError(options.size);
+        return false;
+    }
+    if (vector) {
+        // Vector detail must survive zooming, even when smaller than a pixel.
+        painter.setMinCircleDrawingRadius(0.0);
+        painter.setMinArcDrawingRadius(0.0);
+        painter.setMinEllipseMajorRadius(0.0);
+        painter.setMinEllipseMinorRadius(0.0);
+        painter.setMinLineDrawingLen(0.0);
+    }
     preparePainter(options, painter);
 
     // fixme - sand - rework to more generic printing (add progress or confirmation ?)
@@ -98,6 +185,13 @@ void LC_ImageExporter::renderGraphic(RS_Graphic* graphic, const ExportOptions& o
     renderer.loadSettings(); // sets white paper
     renderer.setBackground(options.backgroundBlack ? Qt::black : Qt::white);
     renderer.render();
+
+    // QSvgGenerator writes its document when painting ends, not at destruction.
+    if (!painter.end()) {
+        m_errorString = drawError(options.size);
+        return false;
+    }
+    return true;
 }
 
 void LC_ImageExporter::preparePainter(const ExportOptions& options, RS_Painter& painter) {
@@ -110,10 +204,10 @@ void LC_ImageExporter::preparePainter(const ExportOptions& options, RS_Painter& 
 }
 
 void LC_ImageExporter::prepareSVGGenerator(const ExportOptions& options, const QSize size,
-                                           QSvgGenerator& svgGenerator) {
+                                           QSvgGenerator& svgGenerator, QIODevice* output) {
     svgGenerator.setSize(size);
     svgGenerator.setViewBox(QRectF(QPointF(0, 0), size));
-    svgGenerator.setFileName(options.fileName);
+    svgGenerator.setOutputDevice(output);
 }
 
 void LC_ImageExporter::prepareViewport(RS_Graphic* graphic, const ExportOptions& options, LC_GraphicViewport &viewport) {
@@ -122,6 +216,6 @@ void LC_ImageExporter::prepareViewport(RS_Graphic* graphic, const ExportOptions&
     const auto borderHeight = options.borders.height();
     viewport.setBorders(borderWidth, borderHeight, borderWidth, borderHeight);
     viewport.setDocument(graphic);
-    viewport.zoomAuto(false);
     viewport.loadSettings();
+    viewport.zoomAuto(false);
 }
