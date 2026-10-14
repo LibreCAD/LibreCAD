@@ -15538,7 +15538,7 @@ TEST_CASE("RS_FilterDXFRW keeps a SORTENTSTABLE sort key that names no object",
   const auto format = GENERATE(RS2::FormatDWG, RS2::FormatDWG2004,
                               RS2::FormatDWG2007, RS2::FormatDWG2010,
                               RS2::FormatDWG2013, RS2::FormatDWG2018);
-  const std::uint32_t freeKey = GENERATE(0xC62u, 0xC70u);
+  const std::uint32_t freeKey = GENERATE(0xC62u, 0xF000u);
   CAPTURE(format, freeKey);
 
   RS_Graphic source;

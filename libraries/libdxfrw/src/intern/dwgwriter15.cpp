@@ -1338,8 +1338,8 @@ bool prepareDwgEedRefs(
                 const auto layer = context.layerMap.find(
                     toUpperCase(*value->content.s));
                 if (layer == context.layerMap.end()) {
-                    // Omit the whole application's data; dropping one item
-                    // would change the layout the application reads.
+                    // Omit the whole application group: removing one item
+                    // would change the application's data layout.
                     appIdRefs.back().leftOut = true;
                     layerRefs.resize(applicationLayerRefs);
                     ++applicationsLeftOut;
