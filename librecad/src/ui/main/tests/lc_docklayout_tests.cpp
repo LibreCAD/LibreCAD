@@ -16,7 +16,9 @@
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
 #include "qg_graphicview.h"
+#include "qg_layerwidget.h"
 #include "rs_debug.h"
+#include "rs_layer.h"
 #include "rs_system.h"
 #include "qg_blockwidget.h"
 #include "rs_block.h"
@@ -234,6 +236,58 @@ TEST_CASE("Draft toggling preserves the drawing title", "[.gui][draft][3018]") {
             ? normalTitle + " [" + QC_ApplicationWindow::tr("Draft Mode") + "]" : normalTitle;
         CHECK(mdi->windowTitle() == expectedTitle);
         settle(0);
+    }
+}
+
+TEST_CASE("Opening a drawing keeps its saved current layer", "[.gui][dock-window][saved-current-layer]") {
+    DockFixture fixture;
+    auto& window = fixture.window;
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    for (const int flags : {0, 4, 1, 5}) {
+        CAPTURE(flags);
+        const QString fileName = directory.filePath(QString("layer-%1.dxf").arg(flags));
+        QFile file(fileName);
+        REQUIRE(file.open(QIODevice::WriteOnly));
+        const QByteArray dxf =
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n9\n$CLAYER\n8\nSaved\n"
+            "0\nENDSEC\n0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n2\n"
+            "0\nLAYER\n5\n10\n2\n0\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+            "0\nLAYER\n5\n11\n2\nSaved\n70\n" + QByteArray::number(flags) +
+            "\n62\n1\n6\nCONTINUOUS\n0\nENDTAB\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n0\nLINE\n5\n20\n8\nSaved\n"
+            "10\n0\n20\n0\n11\n10\n21\n0\n0\nENDSEC\n0\nEOF\n";
+        REQUIRE(file.write(dxf) == dxf.size());
+        file.close();
+
+        window.openFile(fileName);
+        settle(0);
+        auto* mdi = window.getCurrentMDIWindow();
+        REQUIRE(mdi != nullptr);
+        auto* graphic = mdi->getGraphic();
+        REQUIRE(graphic != nullptr);
+        const QString expectedName = (flags & 1) ? "0" : "Saved";
+        auto* expected = graphic->findLayer(expectedName);
+        REQUIRE(expected != nullptr);
+        auto* saved = graphic->findLayer("Saved");
+        REQUIRE(saved != nullptr);
+        CHECK(graphic->getActiveLayer() == expected);
+        CHECK(saved->isLocked() == bool(flags & 4));
+        CHECK(saved->isFrozen() == bool(flags & 1));
+        CHECK_FALSE(graphic->getActiveLayer()->isFrozen());
+
+        auto* label = window.findChild<QLabel*>("lActiveLayerName");
+        REQUIRE(label != nullptr);
+        CHECK(label->text() == expectedName);
+        auto* widget = window.findChild<QG_LayerWidget*>();
+        REQUIRE(widget != nullptr);
+        auto* table = widget->findChild<QTableView*>();
+        REQUIRE(table != nullptr);
+        auto* model = dynamic_cast<QG_LayerModel*>(table->model());
+        REQUIRE(model != nullptr);
+        CHECK(model->getActiveLayer() == expected);
+        CHECK(table->currentIndex().row() == model->getIndex(expected).row());
+        CHECK_FALSE(graphic->isModified());
     }
 }
 
