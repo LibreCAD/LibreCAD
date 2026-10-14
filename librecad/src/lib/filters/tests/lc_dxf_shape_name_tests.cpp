@@ -21,10 +21,12 @@
 
 // A DXF SHAPE names a shape of a shape file in group 2. A DWG holds the number
 // of the shape instead; its name is in the .shx file, which a program that
-// converts the DWG usually does not have. LibreCAD therefore writes a SHAPE it
-// read from a DWG without group 2, and LibreDWG and ACadSharp write an empty
-// name. The DXF reader refused the whole file over such a SHAPE, so a DWG with
-// a shape, saved as DXF, could not be opened again.
+// converts the DWG usually does not have. LibreDWG and ACadSharp write such a
+// SHAPE with an empty name, and LibreCAD wrote it without group 2. The DXF
+// reader refused the whole file over such a SHAPE, so a DWG with a shape,
+// saved as DXF, could not be opened again. The reader now takes it, and the
+// writer leaves it out and says so: a SHAPE without a name names no shape, and
+// ODA drops it on reading.
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/generators/catch_generators.hpp>
@@ -90,6 +92,26 @@ std::size_t countLines(RS_Graphic& graphic) {
     return lines;
 }
 
+// The number of SHAPE records in a written DXF.
+std::size_t countShapeRecords(const std::string& path) {
+    std::ifstream in(path, std::ios::binary);
+    std::size_t shapes = 0;
+    std::string code;
+    std::string value;
+    const auto trim = [](std::string& text) {
+        while (!text.empty() && (text.back() == '\r' || text.back() == ' '))
+            text.pop_back();
+        text.erase(0, text.find_first_not_of(' '));
+    };
+    while (std::getline(in, code) && std::getline(in, value)) {
+        trim(code);
+        trim(value);
+        if (code == "0" && value == "SHAPE")
+            ++shapes;
+    }
+    return shapes;
+}
+
 // A SHAPE between two lines; nameGroup is what the file has for group 2.
 std::string drawingWithShape(const std::string& nameGroup) {
     return
@@ -141,7 +163,7 @@ TEST_CASE("a DXF with a SHAPE that has no name is read",
     CHECK(shapes.front().scale == 2.5);
 }
 
-TEST_CASE("a SHAPE read from a DWG is saved as DXF and the DXF opens",
+TEST_CASE("a SHAPE read from a DWG is left out of the DXF, which opens",
           "[dxf][filter][shape][roundtrip]") {
     ensureSettings();
     const Format dxf = GENERATE(from_range(std::begin(kDxfFormats), std::end(kDxfFormats)));
@@ -167,7 +189,9 @@ TEST_CASE("a SHAPE read from a DWG is saved as DXF and the DXF opens",
     {
         RS_FilterDXFRW filter;
         REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), dxf.m_type));
+        CHECK(filter.exportReport().toStdString() == "1 × SHAPE without a name");
     }
+    CHECK(countShapeRecords(out) == 0);
 
     RS_Graphic reopened;
     reopened.initForNewDocument();
@@ -178,10 +202,57 @@ TEST_CASE("a SHAPE read from a DWG is saved as DXF and the DXF opens",
     std::filesystem::remove(out);
 
     CHECK(countLines(reopened) == 1);
+    CHECK(reopened.dwgAdvancedMetadata().shapes().empty());
+}
+
+TEST_CASE("a DXF SHAPE that has no name is left out when the drawing is saved",
+          "[dxf][filter][shape][roundtrip]") {
+    ensureSettings();
+    struct NameGroup {
+        const char* m_label;
+        const char* m_group;
+        std::size_t m_written;
+        const char* m_report;
+    };
+    const NameGroup nameGroup = GENERATE(
+        NameGroup{"no group 2", "", 0, "1 × SHAPE without a name"},
+        NameGroup{"an empty name, as LibreDWG and ACadSharp write it", "2\n\n", 0,
+                  "1 × SHAPE without a name"},
+        NameGroup{"the name AutoCAD writes", "2\nMY-SHAPE\n", 1, ""});
+    CAPTURE(nameGroup.m_label);
+
+    const std::string src = tempPath("resave-src.dxf");
+    std::ofstream(src, std::ios::binary) << drawingWithShape(nameGroup.m_group);
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    {
+        RS_FilterDXFRW filter;
+        REQUIRE(filter.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+    }
+    std::filesystem::remove(src);
+
+    const std::string out = tempPath("resave-out.dxf");
+    {
+        RS_FilterDXFRW filter;
+        REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+        CHECK(filter.exportReport().toStdString() == nameGroup.m_report);
+    }
+    CHECK(countShapeRecords(out) == nameGroup.m_written);
+
+    RS_Graphic reopened;
+    reopened.initForNewDocument();
+    {
+        RS_FilterDXFRW filter;
+        CHECK(filter.fileImport(reopened, QString::fromStdString(out), RS2::FormatDXFRW));
+    }
+    std::filesystem::remove(out);
+
+    CHECK(countLines(reopened) == 2);
     const auto& shapes = reopened.dwgAdvancedMetadata().shapes();
-    REQUIRE(shapes.size() == 1);
-    CHECK(shapes.front().styleName.empty());
-    CHECK(shapes.front().insertionPoint.x == 15.25);
-    CHECK(shapes.front().insertionPoint.y == -20.5);
-    CHECK(shapes.front().scale == 2.5);
+    REQUIRE(shapes.size() == nameGroup.m_written);
+    if (!shapes.empty()) {
+        CHECK(shapes.front().styleName == "MY-SHAPE");
+        CHECK(shapes.front().insertionPoint.x == 15.25);
+        CHECK(shapes.front().scale == 2.5);
+    }
 }
