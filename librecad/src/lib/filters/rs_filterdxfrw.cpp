@@ -4207,9 +4207,27 @@ int versionIdFromDwgMagic(const QString &filePath) {
 
 // Expand NoUpdate INSERTs even after a failed read, which the caller may keep.
 void updateImportedInserts(RS_Graphic &graphic) {
-  // RS_Insert::update() resolves nested definitions with its own cycle/depth limits.
+  // BLOCK_CONTROL order is not a dependency order. Resolve definition-owned
+  // INSERTs first, from their referenced blocks outward, so model-space
+  // INSERT expansion never snapshots an unresolved nested definition.
+  std::set<RS_Block *> resolvedBlocks;
+  std::set<RS_Block *> resolvingBlocks;
+  const auto updateBlockInserts = [&](auto &&self, RS_Block *block) -> void {
+    if (block == nullptr || resolvedBlocks.find(block) != resolvedBlocks.end())
+      return;
+    if (!resolvingBlocks.insert(block).second)
+      return; // RS_Insert::update() will reject the reference cycle.
+    for (RS_Entity *entity : *block) {
+      if (entity == nullptr || entity->rtti() != RS2::EntityInsert)
+        continue;
+      self(self, static_cast<RS_Insert *>(entity)->getBlockForInsert());
+    }
+    block->updateInserts();
+    resolvingBlocks.erase(block);
+    resolvedBlocks.insert(block);
+  };
   for (unsigned i = 0; i < graphic.countBlocks(); ++i)
-    graphic.blockAt(i)->updateInserts();
+    updateBlockInserts(updateBlockInserts, graphic.blockAt(i));
   graphic.updateInserts();
 }
 
