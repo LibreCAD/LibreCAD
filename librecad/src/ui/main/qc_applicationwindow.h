@@ -176,6 +176,8 @@ public slots:
     void slotFileNewFromTemplate();
     /** opens a document */
     void slotFileOpen();
+    /** explicitly recovers UTF-8 text in a mislabeled old LibreCAD DXF */
+    void slotFileOpenLegacyLibreCadUtf8();
     void slotEditActiveBlock();
     void slotFileOpenRecent(const QAction* action);
     /** saves a document */
@@ -328,7 +330,8 @@ public:
     /**
  * opens the given file.
  */
-    void openFile(const QString& fileName, RS2::FormatType type);
+    void openFile(const QString& fileName, RS2::FormatType type,
+                  RS2::DxfTextEncoding encoding = RS2::DxfTextEncoding::Declared);
     void notifyCurrentDrawingOptionsChanged();
     void changeDrawingOptions(int tabToShowIndex);
     void closeWindow(QC_MDIWindow* win) override;

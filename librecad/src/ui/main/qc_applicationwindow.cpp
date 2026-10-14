@@ -28,11 +28,14 @@
 **********************************************************************/
 
 #include "qc_applicationwindow.h"
+#include "rs_system.h"
 
 #include <QCloseEvent>
 #include <QApplication>
 #include <QGuiApplication>
 #include <QDockWidget>
+#include <QFileDialog>
+#include <QFileInfo>
 #include <QLayout>
 #include <QMenuBar>
 #include <QMdiArea>
@@ -1574,6 +1577,29 @@ void QC_ApplicationWindow::slotFileOpen() {
     }
 }
 
+void QC_ApplicationWindow::slotFileOpenLegacyLibreCadUtf8() {
+    const QString explanation = tr(
+        "Use this only for known old LibreCAD R12–R2004 DXF files that contain "
+        "UTF-8 text but declare the ANSI_1252 code page. This is not "
+        "automatic encoding detection.\n\n"
+        "The original opens in a separate document. Mixed encodings and raw "
+        "metadata are not guaranteed to recover correctly. Review the result, "
+        "then use Save As to save a corrected copy instead of replacing the original.");
+    if (QMessageBox::warning(this, tr("Legacy LibreCAD DXF recovery"), explanation,
+                             QMessageBox::Ok | QMessageBox::Cancel,
+                             QMessageBox::Cancel) != QMessageBox::Ok) {
+        return;
+    }
+
+    const QString directory = LC_GET_ONE_STR("Paths", "Open", RS_SYSTEM->getHomeDir());
+    const QString fileName = QFileDialog::getOpenFileName(
+        this, tr("Open Legacy LibreCAD DXF (UTF-8)"), directory,
+        tr("DXF drawings (*.dxf *.DXF)"));
+    if (!fileName.isEmpty()) {
+        openFile(fileName, RS2::FormatDXFRW, RS2::DxfTextEncoding::LegacyLibreCadUtf8);
+    }
+}
+
 void QC_ApplicationWindow::slotEditActiveBlock() {
     QC_MDIWindow* parent = getCurrentMDIWindow();
     if (parent == nullptr) {
@@ -1689,7 +1715,16 @@ int QC_ApplicationWindow::maybeSurfaceBlocksDock(RS_Graphic *graphic) {
   return hits;
 }
 
-void QC_ApplicationWindow::openFile(const QString& fileName, const RS2::FormatType type) {
+void QC_ApplicationWindow::openFile(const QString& fileName, const RS2::FormatType type,
+                                  const RS2::DxfTextEncoding encoding) {
+    const bool legacyUtf8 = encoding == RS2::DxfTextEncoding::LegacyLibreCadUtf8;
+    if (legacyUtf8 && QFileInfo(fileName).suffix().compare(QLatin1String("dxf"), Qt::CaseInsensitive) != 0) {
+        const QString message = tr("Legacy LibreCAD UTF-8 recovery opens DXF files only. "
+                                   "Use ordinary Open for DWG and other formats.");
+        m_commandWidget->appendHistory(message);
+        QMessageBox::information(this, tr("Legacy LibreCAD DXF recovery"), message);
+        return;
+    }
     if (!QFileInfo::exists(fileName)) {
         m_commandWidget->appendHistory(tr("File '%1' does not exist. Opening aborted").arg(fileName));
         return;
@@ -1709,7 +1744,7 @@ void QC_ApplicationWindow::openFile(const QString& fileName, const RS2::FormatTy
     // open the file in the new view:
     bool success = false;
     if (QFileInfo::exists(fileName)) {
-        success = w->loadDocument(fileName, type);
+        success = w->loadDocument(fileName, type, encoding);
     }
     else {
         const QString msg = tr("Cannot open the file\n%1\nPlease check its existence and permissions.").arg(fileName);
@@ -1749,14 +1784,24 @@ void QC_ApplicationWindow::openFile(const QString& fileName, const RS2::FormatTy
     const auto graphicView = w->getGraphicView();
     autoZoomAfterLoad(graphicView);
     const auto graphic = graphicView->getGraphic(true);
-    if (graphic != nullptr) {
+    if (graphic != nullptr && !legacyUtf8) {
         graphic->setModified(false);
     }
 
     int blocksWithGeometry = maybeSurfaceBlocksDock(graphic);
     QString message;
     int messageTimeout = 0;
-    if (blocksWithGeometry > 0) {
+    if (legacyUtf8) {
+      message = tr("Loaded with legacy LibreCAD UTF-8 recovery: %1. "
+                   "Use Save As to save a corrected copy. Mixed encodings and raw "
+                   "metadata are not guaranteed to recover correctly.").arg(fileName);
+      if (blocksWithGeometry > 0) {
+        message += tr(" Modelspace is empty; %n block(s) in the Blocks dock contain geometry.",
+                      "", blocksWithGeometry);
+      }
+      m_commandWidget->appendHistory(message);
+      messageTimeout = 10000;
+    } else if (blocksWithGeometry > 0) {
       message = tr("Loaded %1 — modelspace is empty; %n block(s) in the Blocks "
                    "dock contain geometry.",
                    "", blocksWithGeometry)

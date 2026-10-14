@@ -82,6 +82,11 @@ namespace {
     bool canSaveInPlace(const RS_Graphic* graphic) {
         return RS_FileIO::instance()->canExport(graphic->getFormatType());
     }
+
+    QString recoveryCopyName(const QString& fileName) {
+        const QFileInfo info(fileName);
+        return info.dir().filePath(info.completeBaseName() + QStringLiteral("_recovered.dxf"));
+    }
 }
 
 LC_DocumentsStorage::LC_DocumentsStorage() = default;
@@ -94,7 +99,12 @@ bool LC_DocumentsStorage::saveDocument(RS_Document* document, RS_GraphicView * g
         document->setGraphicView(graphicView);
         RS_Graphic* graphic = document->getGraphic();
         const auto fileName = graphic->getFilename();
-        if (fileName.isEmpty()) {
+        if (graphic->isDxfRecoverySourceFile(fileName)) {
+            RS_DIALOGFACTORY->commandMessage(
+                tr("The original legacy DXF is protected. Choose a different name for the recovered drawing."));
+            result = doSaveGraphicAs(graphic, graphicView, cancelled,
+                                     recoveryCopyName(fileName), graphic->getFormatType());
+        } else if (fileName.isEmpty()) {
             result = doSaveGraphicAs(graphic, graphicView, cancelled);
         } else if (!canSaveInPlace(graphic)) {
             // writing another format under the file's name would destroy it
@@ -163,7 +173,9 @@ bool LC_DocumentsStorage::saveDocumentAs(const RS_Document* document, RS_Graphic
     bool result = false;
     if (document != nullptr) {
         RS_Graphic* graphic = document->getGraphic();
-        const auto fileName = graphic->getFilename();
+        auto fileName = graphic->getFilename();
+        if (graphic->isDxfRecoverySourceFile(fileName))
+            fileName = recoveryCopyName(fileName);
         result = doSaveGraphicAs(graphic, graphicView, cancelled, fileName);
     }
     return result;
@@ -173,12 +185,13 @@ bool LC_DocumentsStorage::loadDocument(const RS_Document *document, const QStrin
     return loadDocument(document, fileName, RS2::FormatUnknown);
 }
 
-bool LC_DocumentsStorage::loadDocument(const RS_Document* document, const QString& fileName, const RS2::FormatType type) const {
+bool LC_DocumentsStorage::loadDocument(const RS_Document* document, const QString& fileName, const RS2::FormatType type,
+                                      const RS2::DxfTextEncoding encoding) const {
     bool result = false;
     if (document != nullptr && !fileName.isEmpty()) {
         // cosmetics..
         qApp->processEvents(QEventLoop::AllEvents, 1000);
-        result = loadGraphic(document->getGraphic(), fileName, type);
+        result = loadGraphic(document->getGraphic(), fileName, type, encoding);
     } else {
         //statusBar()->showMessage(tr("Opening aborted"), 2000);
     }
@@ -220,10 +233,11 @@ bool LC_DocumentsStorage::loadGraphicFromTemplate(RS_Graphic* graphic, const QSt
     return ret;
 }
 
-bool LC_DocumentsStorage::loadGraphic(RS_Graphic* graphic,  const QString &filename, const RS2::FormatType type) const {
+bool LC_DocumentsStorage::loadGraphic(RS_Graphic* graphic, const QString &filename, const RS2::FormatType type,
+                                     const RS2::DxfTextEncoding encoding) const {
     graphic->initForNewDocument();
 
-    const bool ret = RS_FileIO::instance()->fileImport(*graphic, filename, type);
+    const bool ret = RS_FileIO::instance()->fileImport(*graphic, filename, type, nullptr, encoding);
 
     if (ret) {
         graphic->onLoadingCompleted();
@@ -235,7 +249,7 @@ bool LC_DocumentsStorage::loadGraphic(RS_Graphic* graphic,  const QString &filen
         // so Save does not silently rewrite the user's file without notice.
         const bool importMutated = graphic->takeImportGeometryMutated();
         graphic->markSaved(finfo.lastModified());
-        if (importMutated)
+        if (importMutated || !graphic->dxfRecoverySourceFile().isEmpty())
             graphic->setModified(true);
     }
     return ret;
@@ -252,6 +266,13 @@ bool LC_DocumentsStorage::doSave(RS_Graphic* graphic, const bool sameFile) {
 //	------------------------------------------------------
     const QString filename = graphic->getFilename();
 
+    // Refuse before making a backup or changing either on-disk file.
+    if (graphic->isDxfRecoverySourceFile(filename)) {
+        RS_DIALOGFACTORY->commandMessage(
+            tr("The original legacy DXF is protected. Save the recovered drawing to a different file."));
+        return false;
+    }
+
     const QFileInfo finfo(filename);
     const QDateTime fileLastModifyTime = finfo.lastModified();
     const QDateTime graphicLastSaveTime = graphic->getLastSaveTime();
@@ -267,7 +288,7 @@ bool LC_DocumentsStorage::doSave(RS_Graphic* graphic, const bool sameFile) {
 
     const QString& actualName = filename;
     if (LC_GET_ONE_BOOL("Defaults","AutoBackupDocument", true)) {
-        backupDrawingFile(filename);
+        backupDrawingFile(filename, graphic);
     }
 
     /*	Save drawing file if able to created associated object. */
@@ -287,7 +308,7 @@ bool LC_DocumentsStorage::doSave(RS_Graphic* graphic, const bool sameFile) {
         const QString autosaveFilename = graphic->getAutoSaveFileName();
         QFile autosaveFile(autosaveFilename);
 
-        if (autosaveFile.exists()) {
+        if (autosaveFile.exists() && !graphic->isDxfRecoverySourceFile(autosaveFilename)) {
             autosaveFile.remove();
         }
     }
@@ -329,6 +350,8 @@ bool LC_DocumentsStorage::autoSaveGraphic(RS_Graphic* graphic, QString& fileName
 }
 
 bool LC_DocumentsStorage::exportGraphics(RS_Graphic* graphic, const QString& fileName, const RS2::FormatType formatType) {
+    if (graphic->isDxfRecoverySourceFile(fileName))
+        return false;
     graphic->setFilename(fileName);
     graphic->setFormatType(formatType);
     if (!fileName.isEmpty()) {
@@ -343,6 +366,11 @@ bool LC_DocumentsStorage::exportGraphics(RS_Graphic* graphic, const QString& fil
 }
 
 bool LC_DocumentsStorage::saveGraphicAs(RS_Graphic* graphic, const QString &filename, const RS2::FormatType type, const bool forceSave) {
+    if (graphic->isDxfRecoverySourceFile(filename)) {
+        RS_DIALOGFACTORY->commandMessage(
+            tr("The original legacy DXF is protected. Save the recovered drawing to a different file."));
+        return false;
+    }
     bool ret = false;
 
     // Check/memorize if file name we want to use as new file
@@ -359,7 +387,14 @@ bool LC_DocumentsStorage::saveGraphicAs(RS_Graphic* graphic, const QString &file
     const QFileInfo finfo(filename);
 
     // Keep the recovery copy beside the destination drawing.
-    const QString autosaveFileName = createAutoSaveFileName(finfo);
+    QString autosaveFileName = createAutoSaveFileName(finfo);
+    // A source literally named #copy.dxf must not also be the corrected
+    // copy's autosave. Retain a DXF extension and avoid any existing aliases.
+    QString recoveryPrefix = QStringLiteral("#recovered_");
+    while (graphic->isDxfRecoverySourceFile(autosaveFileName)) {
+        autosaveFileName = createAutoSaveFileName(finfo, recoveryPrefix);
+        recoveryPrefix.prepend('#');
+    }
     graphic->setAutosaveFileName(autosaveFileName);
 
     // When drawing is saved using a different name than the actual
@@ -374,7 +409,7 @@ bool LC_DocumentsStorage::saveGraphicAs(RS_Graphic* graphic, const QString &file
     if (ret) {
         // Save was successful, remove old autosave file.
         QFile autoSaveFile(autosaveFilenameSaved);
-        if (autoSaveFile.exists()) {
+        if (autoSaveFile.exists() && !graphic->isDxfRecoverySourceFile(autosaveFilenameSaved)) {
             autoSaveFile.remove();
         }
     } else {
@@ -386,15 +421,21 @@ bool LC_DocumentsStorage::saveGraphicAs(RS_Graphic* graphic, const QString &file
     return ret;
 }
 
-bool LC_DocumentsStorage::backupDrawingFile(const QString &drawingFileName) {
+bool LC_DocumentsStorage::backupDrawingFile(const QString &drawingFileName, const RS_Graphic* graphic) {
     const QString backupFileSuffix = LC_GET_ONE_STR("Defaults", "BackupFileSuffix", "~");
-    return backupDrawingFile(drawingFileName, backupFileSuffix);
+    return backupDrawingFile(drawingFileName, backupFileSuffix, graphic);
 }
 
-bool LC_DocumentsStorage::backupDrawingFile(const QString &drawingFileName, const QString& backupSuffix) {
+bool LC_DocumentsStorage::backupDrawingFile(const QString &drawingFileName, const QString& backupSuffix,
+                                           const RS_Graphic* graphic) {
     bool ret = false;
     if (!drawingFileName.isEmpty() && !backupSuffix.isEmpty()) {
         const auto backupFileName = backupFilePath(drawingFileName + backupSuffix);
+        if (graphic != nullptr && graphic->isDxfRecoverySourceFile(backupFileName)) {
+            RS_DIALOGFACTORY->commandMessage(
+                tr("Skipped a backup that would replace the protected original legacy DXF."));
+            return false;
+        }
         auto drawingFile = QFile(drawingFileName);
         if (drawingFile.exists()) {
             auto backupFile = QFile(backupFileName);

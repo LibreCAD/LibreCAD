@@ -57,7 +57,8 @@ public:
     std::unique_ptr<RS_FilterInterface> getExportFilter(const QString& fileName, RS2::FormatType t) const;
 
     bool fileImport(RS_Graphic& graphic, const QString& file, RS2::FormatType type = RS2::FormatUnknown,
-        std::function<bool(bool /*partial*/, const QString& /*errorMsg*/)> errorCallback = nullptr) const;
+        std::function<bool(bool /*partial*/, const QString& /*errorMsg*/)> errorCallback = nullptr,
+        RS2::DxfTextEncoding encoding = RS2::DxfTextEncoding::Declared) const;
 
     bool fileExport(RS_Graphic& graphic, const QString& file, RS2::FormatType type = RS2::FormatUnknown) const;
     /** What the last fileExport() left out, one item per line (RS_FilterInterface::exportReport). */
