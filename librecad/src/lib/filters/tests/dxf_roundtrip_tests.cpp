@@ -1806,22 +1806,32 @@ TEST_CASE("DXF imports expand INSERTs after complete and partial reads",
           "[dxf][filter][partial][insert]") {
   ensureSettings();
   lc::test::QuietLog quiet;
-  const bool partial = GENERATE(false, true);
+  const auto readError = GENERATE(DRW::BAD_NONE, DRW::BAD_READ_ENTITIES, DRW::BAD_READ_BLOCKS);
+  const bool partial = readError != DRW::BAD_NONE;
   const bool direct = GENERATE(false, true);
+  CAPTURE(readError, direct);
   const std::string src = tmpFile("partial_inserts.dxf");
-  writeText(src,
-            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n0\nENDSEC\n"
+  const std::string blocks =
             "0\nSECTION\n2\nBLOCKS\n"
             "0\nBLOCK\n8\n0\n2\nOUTER\n70\n0\n10\n0.0\n20\n0.0\n30\n0.0\n"
             "0\nINSERT\n8\n0\n2\nINNER\n10\n10.0\n20\n0.0\n"
             "0\nENDBLK\n8\n0\n"
             "0\nBLOCK\n8\n0\n2\nINNER\n70\n0\n10\n0.0\n20\n0.0\n30\n0.0\n"
             "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n11\n2.0\n21\n0.0\n"
-            "0\nENDBLK\n8\n0\n0\nENDSEC\n"
+            "0\nENDBLK\n8\n0\n";
+  const std::string entities =
             "0\nSECTION\n2\nENTITIES\n"
             "0\nINSERT\n8\n0\n2\nOUTER\n10\n100.0\n20\n50.0\n"
-            "0\nINSERT\n8\n0\n2\nABSENT\n10\n0.0\n20\n0.0\n"
-                + std::string(partial ? "0\nLINE\n8\n0\n10\n0.0\n" : "0\nENDSEC\n0\nEOF\n"));
+            "0\nINSERT\n8\n0\n2\nABSENT\n10\n0.0\n20\n0.0\n";
+  // Put ENTITIES first to retain model-space references when BLOCKS is truncated.
+  const std::string body = readError == DRW::BAD_READ_BLOCKS
+      ? entities + "0\nENDSEC\n" + blocks + "0\nBLOCK\n8\n0\n2\nCUT\n70\n0\n10\n0.0\n"
+      : blocks + "0\nENDSEC\n" + entities
+            + (partial ? "0\nLINE\n8\n0\n10\n0.0\n" : "0\nENDSEC\n0\nEOF\n");
+  writeText(src, "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n0\nENDSEC\n" + body);
+  const QString expectedError = readError == DRW::BAD_READ_BLOCKS
+      ? QObject::tr("error reading DXF/DWG blocks", "RS_FilterDXFRW")
+      : QObject::tr("error reading DXF/DWG entities", "RS_FilterDXFRW");
 
   RS_Graphic graphic;
   graphic.initForNewDocument();
@@ -1829,13 +1839,15 @@ TEST_CASE("DXF imports expand INSERTs after complete and partial reads",
   if (direct) {
     RS_FilterDXFRW filter;
     CHECK(filter.fileImport(graphic, path, RS2::FormatDXFRW) == !partial);
+    if (partial)
+      CHECK(filter.lastError() == expectedError);
   } else {
     int callbacks = 0;
     REQUIRE(RS_FileIO::instance()->fileImport(
         graphic, path, RS2::FormatUnknown, [&](bool hasData, const QString &error) {
           ++callbacks;
           CHECK(hasData);
-          CHECK(error == QObject::tr("error reading DXF/DWG entities", "RS_FilterDXFRW"));
+          CHECK(error == expectedError);
           return hasData;
         }));
     CHECK(callbacks == (partial ? 1 : 0));
@@ -1857,6 +1869,7 @@ TEST_CASE("DXF imports expand INSERTs after complete and partial reads",
   CHECK(inner->count() == 1);
   auto *absent = dynamic_cast<RS_Insert *>(graphic.entityAt(1));
   REQUIRE(absent != nullptr);
+  CHECK(absent->getBlockForInsert() == nullptr);
   CHECK(absent->count() == 0);
   std::filesystem::remove(src);
 }
