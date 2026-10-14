@@ -138,6 +138,18 @@ bool isLibreCadApp(const std::shared_ptr<DRW_Variant> &tag) {
          tag->content.s && *tag->content.s == "LibreCad";
 }
 
+bool hasXDataApplication(const std::vector<std::shared_ptr<DRW_Variant>> &extData,
+                         const std::string &application) {
+  for (const auto &tag : extData) {
+    if (tag != nullptr && tag->code() == 1001 &&
+        tag->type() == DRW_Variant::STRING && tag->content.s != nullptr &&
+        *tag->content.s == application) {
+      return true;
+    }
+  }
+  return false;
+}
+
 std::int32_t mtextRtlLayout(const DRW_Entity &entity) {
   std::int32_t layout = 0;
   bool inLibreCad = false;
@@ -7399,23 +7411,27 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline &data) {
   }
   if (data.width != 0.0 || data.elevation != 0.0 || data.thickness != 0.0 ||
       !defaultExtrusion || hasVertexMetadata) {
-    std::vector<std::shared_ptr<DRW_Variant>> ext;
-    ext.push_back(std::make_shared<DRW_Variant>(
-        1001, std::string("LibreCAD_LWPOLYLINE")));
-    ext.push_back(std::make_shared<DRW_Variant>(1040, data.width));
-    ext.push_back(std::make_shared<DRW_Variant>(
-        1040, reflectedOcs ? -data.elevation : data.elevation));
-    ext.push_back(std::make_shared<DRW_Variant>(
-        1040, reflectedOcs ? -data.thickness : data.thickness));
-    ext.push_back(
-        std::make_shared<DRW_Variant>(1010, DRW_Coord{0.0, 0.0, 1.0}));
-    ext.push_back(std::make_shared<DRW_Variant>(
-        1070, std::int32_t{static_cast<int>(data.vertlist.size())}));
-    for (const auto &v : data.vertlist) {
-      ext.push_back(std::make_shared<DRW_Variant>(1040, v ? v->stawidth : 0.0));
-      ext.push_back(std::make_shared<DRW_Variant>(1040, v ? v->endwidth : 0.0));
+    // Keep XDATA read from the source entity. The width sidecar is an
+    // additional LibreCAD-owned group, not a replacement for imported data.
+    std::vector<std::shared_ptr<DRW_Variant>> ext = data.extData;
+    if (!hasXDataApplication(ext, "LibreCAD_LWPOLYLINE")) {
       ext.push_back(std::make_shared<DRW_Variant>(
-          1071, std::int32_t{v ? v->identifier : 0}));
+          1001, std::string("LibreCAD_LWPOLYLINE")));
+      ext.push_back(std::make_shared<DRW_Variant>(1040, data.width));
+      ext.push_back(std::make_shared<DRW_Variant>(
+          1040, reflectedOcs ? -data.elevation : data.elevation));
+      ext.push_back(std::make_shared<DRW_Variant>(
+          1040, reflectedOcs ? -data.thickness : data.thickness));
+      ext.push_back(
+          std::make_shared<DRW_Variant>(1010, DRW_Coord{0.0, 0.0, 1.0}));
+      ext.push_back(std::make_shared<DRW_Variant>(
+          1070, std::int32_t{static_cast<int>(data.vertlist.size())}));
+      for (const auto &v : data.vertlist) {
+        ext.push_back(std::make_shared<DRW_Variant>(1040, v ? v->stawidth : 0.0));
+        ext.push_back(std::make_shared<DRW_Variant>(1040, v ? v->endwidth : 0.0));
+        ext.push_back(std::make_shared<DRW_Variant>(
+            1071, std::int32_t{v ? v->identifier : 0}));
+      }
     }
     polyline->setDrwExtData(std::move(ext));
   }
@@ -7968,29 +7984,31 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline &data) {
   }
   if (is2dPolyline && (data.basePoint.z != 0.0 || data.thickness != 0.0 ||
                        reflectedOcs || hasVertexMetadata)) {
-    std::vector<std::shared_ptr<DRW_Variant>> ext;
-    ext.push_back(std::make_shared<DRW_Variant>(
-        1001, std::string("LibreCAD_LWPOLYLINE")));
-    ext.push_back(std::make_shared<DRW_Variant>(1040, 0.0));
-    ext.push_back(std::make_shared<DRW_Variant>(
-        1040, reflectedOcs ? -data.basePoint.z : data.basePoint.z));
-    ext.push_back(std::make_shared<DRW_Variant>(
-        1040, reflectedOcs ? -data.thickness : data.thickness));
-    ext.push_back(
-        std::make_shared<DRW_Variant>(1010, DRW_Coord{0.0, 0.0, 1.0}));
-    ext.push_back(std::make_shared<DRW_Variant>(
-        1070, std::int32_t{static_cast<int>(data.vertlist.size())}));
-    for (const auto &vertex : data.vertlist) {
-      const double startWidth = vertex && vertex->stawidth != 0.0
-                                    ? vertex->stawidth
-                                    : data.defstawidth;
-      const double endWidth = vertex && vertex->endwidth != 0.0
-                                  ? vertex->endwidth
-                                  : data.defendwidth;
-      ext.push_back(std::make_shared<DRW_Variant>(1040, startWidth));
-      ext.push_back(std::make_shared<DRW_Variant>(1040, endWidth));
+    std::vector<std::shared_ptr<DRW_Variant>> ext = data.extData;
+    if (!hasXDataApplication(ext, "LibreCAD_LWPOLYLINE")) {
       ext.push_back(std::make_shared<DRW_Variant>(
-          1071, std::int32_t{vertex ? vertex->identifier : 0}));
+          1001, std::string("LibreCAD_LWPOLYLINE")));
+      ext.push_back(std::make_shared<DRW_Variant>(1040, 0.0));
+      ext.push_back(std::make_shared<DRW_Variant>(
+          1040, reflectedOcs ? -data.basePoint.z : data.basePoint.z));
+      ext.push_back(std::make_shared<DRW_Variant>(
+          1040, reflectedOcs ? -data.thickness : data.thickness));
+      ext.push_back(
+          std::make_shared<DRW_Variant>(1010, DRW_Coord{0.0, 0.0, 1.0}));
+      ext.push_back(std::make_shared<DRW_Variant>(
+          1070, std::int32_t{static_cast<int>(data.vertlist.size())}));
+      for (const auto &vertex : data.vertlist) {
+        const double startWidth = vertex && vertex->stawidth != 0.0
+                                      ? vertex->stawidth
+                                      : data.defstawidth;
+        const double endWidth = vertex && vertex->endwidth != 0.0
+                                    ? vertex->endwidth
+                                    : data.defendwidth;
+        ext.push_back(std::make_shared<DRW_Variant>(1040, startWidth));
+        ext.push_back(std::make_shared<DRW_Variant>(1040, endWidth));
+        ext.push_back(std::make_shared<DRW_Variant>(
+            1071, std::int32_t{vertex ? vertex->identifier : 0}));
+      }
     }
     polyline->setDrwExtData(std::move(ext));
   }

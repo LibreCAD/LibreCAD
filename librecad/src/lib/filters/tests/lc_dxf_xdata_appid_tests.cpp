@@ -134,6 +134,7 @@ std::string drawingWithWidePolyline(const std::string& appIdTable) {
            "0\nLWPOLYLINE\n5\n100\n330\n1F\n100\nAcDbEntity\n8\n0\n100\nAcDbPolyline\n"
            "90\n3\n70\n0\n43\n0.5\n"
            "10\n0.0\n20\n0.0\n10\n10.0\n20\n0.0\n10\n10.0\n20\n5.0\n"
+           "1001\nLC_IMPORTED_POLYLINE\n1000\nkept with the width\n"
            "0\nENDSEC\n0\nEOF\n";
 }
 
@@ -270,8 +271,10 @@ TEST_CASE("a polyline read with a width is written with LibreCAD_LWPOLYLINE regi
     REQUIRE(lc::test::exportDrawing(graphic, out, dxf.m_type));
 
     CHECK(xdataApplications(out).count("LIBRECAD_LWPOLYLINE") == 1);
+    CHECK(xdataApplications(out).count("LC_IMPORTED_POLYLINE") == 1);
     checkEveryApplicationRegisteredOnce(out);
     CHECK(registeredApplications(out).count("LIBRECAD_LWPOLYLINE") == 1);
+    CHECK(registeredApplications(out).count("LC_IMPORTED_POLYLINE") == 1);
 }
 
 TEST_CASE("the line types of a dimension style in R2000 and R2004 XDATA are registered",
