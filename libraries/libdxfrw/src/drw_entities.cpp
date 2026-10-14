@@ -4468,14 +4468,15 @@ bool encodeEedItem(DRW::Version version, const DRW_Variant& value,
         output.putRawDouble(value.d_val());
         return output.isGood();
     case 1070:
+        // DXF input stores the raw 16-bit field in an int32_t. Accept the
+        // full unsigned bit pattern before writing it back to DWG.
         if (value.type() != DRW_Variant::INTEGER
             || value.i_val() < std::numeric_limits<std::int16_t>::min()
-            || value.i_val() > std::numeric_limits<std::int16_t>::max()) {
+            || value.i_val() > std::numeric_limits<std::uint16_t>::max()) {
             return false;
         }
         output.putRawChar8(70);
-        output.putRawShort16(static_cast<std::uint16_t>(
-            static_cast<std::int16_t>(value.i_val())));
+        output.putRawShort16(static_cast<std::uint16_t>(value.i_val()));
         return output.isGood();
     case 1071: {
         std::int64_t integer = 0;
