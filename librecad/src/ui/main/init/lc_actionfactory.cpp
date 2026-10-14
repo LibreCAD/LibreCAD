@@ -824,7 +824,6 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
     const bool additiveSelection = LC_GET_ONE_BOOL("Selection", "Additivity", true);
     map["SelectionModeToggle"]->setChecked(additiveSelection);
 
-    connect(m_appWin, &QC_ApplicationWindow::printPreviewChanged, map["FilePrint"], &QAction::setChecked);
     connect(m_appWin, &QC_ApplicationWindow::printPreviewChanged, map["FilePrintPreview"], &QAction::setChecked);
     connect(m_appWin, &QC_ApplicationWindow::gridChanged, map["ViewGrid"], &QAction::setChecked);
     connect(m_appWin, &QC_ApplicationWindow::draftChanged, map["ViewDraft"], &QAction::setChecked);
