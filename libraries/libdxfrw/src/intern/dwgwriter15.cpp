@@ -4078,8 +4078,13 @@ std::uint32_t dwgWriter15::addTextstyle(const DRW_Textstyle& ts) {
     if (m_dwgTableRecordsComplete)
         return 0;
     std::string upper = toUpperCase(ts.name);
-    if (upper.empty())
-        return 0;
+    if (upper.empty()) {
+        if ((ts.flags & 1) == 0)
+            return 0;
+        const std::uint32_t handle = m_handles.next();
+        m_pendingStyles.emplace_back(handle, ts);
+        return handle;
+    }
     const auto existing = m_writingCtx.styleMap.find(upper);
     if (existing != m_writingCtx.styleMap.end()) {
         if (existing->second == DRW::DwgStandardTextStyleHandle) {
