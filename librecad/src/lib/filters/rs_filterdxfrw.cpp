@@ -11523,7 +11523,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   this->m_graphic = &g;
   m_writeFailed = false;
   m_dxfLeftOutRawRecords = 0;
-  m_exportLeftOut.clear();
+  m_writeLeftOut.clear();
   m_exportAttribScaleDataLeftOut = 0;
   // What becomes of each block attribute's text is the same for every
   // callback of this export, the DWG handle pre-pass included.
@@ -11784,7 +11784,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       reserveAll(md.spatialIndexes(), "SPATIAL_INDEX");
       reserveAll(md.dictionariesWithDefault(), "DICTIONARYWDFLT");
       reserveAll(md.sortEntsTables(), "SORTENTSTABLE");
-      // Free sort keys must not collide with handles allocated by this export.
+      // Sort keys need not name objects; reserve them before allocating handles.
       for (const auto &record : md.sortEntsTables()) {
         if (record.replayState !=
             LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
@@ -11912,7 +11912,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     }
     bool success = m_dwgW->write(this, dwgVer, false) && !m_writeFailed;
     m_lastDwgWriteSkipCounters = m_dwgW->getWriteSkipCounters();
-    m_exportLeftOut = m_dwgW->leftOut();
+    m_writeLeftOut = m_dwgW->leftOut();
     m_lastDwgOptionalReferenceDropCount = dwgWriteOptionalReferenceDropCount();
     if (!success) {
       RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -12707,7 +12707,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   //    bool success = m_dxfW->write(this, exportVersion, false); //ascii
   const bool success =
       m_dxfW->write(this, exportVersion, binary) && !m_writeFailed; // binary
-  m_exportLeftOut = m_dxfW->leftOut();
+  m_writeLeftOut = m_dxfW->leftOut();
   activeWriter.reset();
 
   if (!success) {
@@ -16871,7 +16871,7 @@ QString RS_FilterDXFRW::exportReport() const {
                          "this version cannot hold", "RS_FilterDXFRW")
                  .arg(m_dxfLeftOutRawRecords);
   }
-  for (const auto &[what, count] : m_exportLeftOut)
+  for (const auto &[what, count] : m_writeLeftOut)
     lines << QStringLiteral("%1 × %2").arg(count).arg(QString::fromStdString(what));
   if (m_exportAttribScaleDataLeftOut > 0) {
     lines << QObject::tr(
@@ -25726,11 +25726,11 @@ void RS_FilterDXFRW::writeObjects() {
           const bool freeSortHandle =
               effectiveSortStatus == DwgWriteReferenceStatus::Missing ||
               effectiveSortStatus == DwgWriteReferenceStatus::Suppressed;
-          if (freeSortHandle) {
-            // Sort keys need not name objects. fileExport() reserved this value.
+          // A free sort key is an ordering value, not an object reference.
+          if (freeSortHandle)
             sortHandle = sourceSortHandle;
-          } else if (!isLiveDwgWriteReference(effectiveSortStatus) ||
-                     sortHandle == 0) {
+          if ((!freeSortHandle && !isLiveDwgWriteReference(effectiveSortStatus)) ||
+              sortHandle == 0) {
             const DwgWriteReferenceStatus dropStatus =
                 effectiveSortStatus == DwgWriteReferenceStatus::Ambiguous
                     ? DwgWriteReferenceStatus::Ambiguous

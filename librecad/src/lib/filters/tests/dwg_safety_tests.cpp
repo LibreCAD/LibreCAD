@@ -3,6 +3,7 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2026 LibreCAD (librecad.org)
+** Copyright (C) 2026 Dongxu Li (github.com/dxli)
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as published by
@@ -2036,7 +2037,6 @@ public:
     using dwgWriter15::emitBlockRecord;
     using dwgWriter15::emitControlObject;
     using dwgWriter15::finishObject;
-    using dwgWriter15::prepareEntityEed;
     using dwgWriter::registerRawObjectClass;
 
     void setVersionForTest(DRW::Version value) { m_version = value; }
@@ -2870,6 +2870,7 @@ public:
     dwgRW* m_writer = nullptr;
     bool m_lineWritten = false;
     bool m_onlyLostLineWritten = false;
+    bool m_lostFirst = false;
     std::vector<DRW_Line> m_lines;
     std::map<std::string, std::size_t> m_layerEedSizes;
 
@@ -2885,6 +2886,7 @@ public:
     static void addLost(std::vector<std::shared_ptr<DRW_Variant>>& data) {
         data.push_back(std::make_shared<DRW_Variant>(1001, "LC_LOST"));
         data.push_back(std::make_shared<DRW_Variant>(1002, "{"));
+        data.push_back(std::make_shared<DRW_Variant>(1003, "KEPT_LAYER", true));
         data.push_back(
             std::make_shared<DRW_Variant>(1003, "NO_SUCH_LAYER", true));
         data.push_back(std::make_shared<DRW_Variant>(1003, "ALSO_MISSING", true));
@@ -2912,8 +2914,11 @@ public:
     void writeEntities() override {
         DRW_Line line;
         line.secPoint = DRW_Coord{10.0, 5.0, 0.0};
+        if (m_lostFirst)
+            addLost(line.extData);
         addKept(line.extData);
-        addLost(line.extData);
+        if (!m_lostFirst)
+            addLost(line.extData);
         m_lineWritten = m_writer->writeLine(&line);
 
         DRW_Line onlyLost;
@@ -2940,6 +2945,8 @@ std::vector<std::string> eedStrings(const DRW_Entity& entity) {
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DWG export leaves out application data naming a missing layer",
           "[dwg][eed][xdata][writer]") {
+    const bool lostFirst = GENERATE(false, true);
+    CAPTURE(lostFirst);
     for (const DRW::Version version :
          {DRW::AC1015, DRW::AC1018, DRW::AC1021, DRW::AC1024, DRW::AC1027,
           DRW::AC1032}) {
@@ -2951,6 +2958,7 @@ TEST_CASE("DWG export leaves out application data naming a missing layer",
                 .string();
 
         LeftOutApplicationIface written;
+        written.m_lostFirst = lostFirst;
         std::map<std::string, std::size_t> leftOut;
         {
             dwgRW writer(path.c_str());
@@ -3379,17 +3387,29 @@ TEST_CASE("DWG writer rollback restores XDATA omission counts",
     DRW_Header header;
     std::ofstream stream;
     DwgClassPhaseWriterProbe writer(&stream, &header);
-    DRW_AppId app;
-    app.name = "LC_LOST";
-    REQUIRE(writer.addAppId(app) != 0);
+    writer.setVersionForTest(DRW::AC1015);
+    const auto initial = writer.checkpointCompoundWrite();
     DRW_Line line;
-    line.extData = {std::make_shared<DRW_Variant>(1001, "LC_LOST"),
+    line.extData = {std::make_shared<DRW_Variant>(1001, "ACAD"),
                     std::make_shared<DRW_Variant>(1003, "NO_SUCH_LAYER", true)};
-    const auto checkpoint = writer.checkpointCompoundWrite();
-    REQUIRE(writer.prepareEntityEed(line));
-    REQUIRE(writer.leftOut().size() == 1u);
-    CHECK(writer.leftOut().begin()->second == 1u);
-    writer.rollbackCompoundWrite(checkpoint);
+    REQUIRE(writer.encodeEntity(&line));
+    const std::map<std::string, std::size_t> once{
+        {"application data naming a layer not in the drawing", 1u}};
+    CHECK(writer.leftOut() == once);
+
+    // A missing block is rejected after preparing its application data.
+    DRW_Insert invalid;
+    invalid.extData = line.extData;
+    CHECK_FALSE(writer.encodeEntity(&invalid));
+    CHECK(writer.leftOut() == once);
+
+    const auto committed = writer.checkpointPublicTransaction();
+    line.handle = 0;
+    REQUIRE(writer.encodeEntity(&line));
+    CHECK(writer.leftOut().begin()->second == 2u);
+    writer.rollbackCompoundWrite(committed);
+    CHECK(writer.leftOut() == once);
+    writer.rollbackCompoundWrite(initial);
     CHECK(writer.leftOut().empty());
 }
 
