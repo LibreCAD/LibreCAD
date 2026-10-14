@@ -42,6 +42,22 @@ struct DirectionalText {
 };
 DirectionalText directionalText(const QString &text, Qt::LayoutDirection direction);
 
+// A source-mapped input to shaping itemization, not a visual glyph ordering.
+// shapingLevels/displayLevels are indexed by original UTF-16 code unit.
+// -1 denotes an X9-excluded character whose joining effect must be retained.
+// contextBreaks has text.size()+1 entries indexed by gaps between source units;
+// a true entry prevents shaping context from crossing an isolate or separator.
+// Generated controls in the Chinese RTL projection also create source-gap
+// boundaries. Font/script/language itemization is the layout service's job.
+struct ShapingAnalysis {
+    DirectionalText projection;
+    int base = 0;
+    std::vector<int> shapingLevels;
+    std::vector<quint8> displayLevels;
+    std::vector<bool> contextBreaks;
+};
+ShapingAnalysis shapingAnalysis(const QString &text, Qt::LayoutDirection direction);
+
 // Font-independent visual order; callers retain their own font metrics.
 std::vector<Cluster> visualClusters(const QString &text,
                                     Qt::LayoutDirection direction,

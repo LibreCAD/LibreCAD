@@ -1765,6 +1765,17 @@ public:
 class DRW_Attrib : public DRW_Text {
     SETENTFRIENDS
 public:
+    // DXF-only read provenance: how the record spelled the marker of its
+    // embedded MTEXT. AutoCAD writes group 101; LibreCAD wrote group 100
+    // until that was corrected. Both are read the same way, and the XDATA
+    // that follows the embedded object is the ATTRIB's with either.
+    enum class EmbeddedDxfMarker { None, Canonical101, Legacy100 };
+    EmbeddedDxfMarker embeddedDxfMarker() const { return dxfEmbeddedMarker; }
+    // Whether a record with the old marker carries XDATA on its embedded
+    // MTEXT. The reader puts none there, and the DXF writer writes none from
+    // there: true only for a value that a caller built that way.
+    bool hasAmbiguousLegacyEmbeddedXData() const;
+
     DRW_Attrib() {
         eType = DRW::ATTRIB;
         attribFlags = 0;
@@ -1804,6 +1815,7 @@ protected:
     // DXF R2018 places the attribute type in the AcDbAttribute subclass,
     // where code 71 otherwise means TEXT generation flags.
     bool dxfInAttributeSubclass = false;
+    EmbeddedDxfMarker dxfEmbeddedMarker = EmbeddedDxfMarker::None;
 };
 
 //! Class to handle ATTDEF entities (block attribute definition).

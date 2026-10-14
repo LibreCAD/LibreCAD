@@ -145,7 +145,7 @@ TEST_CASE("Chinese RTL reverses Han runs but preserves numeric values",
   for (const QString &number : {QStringLiteral("123"), QStringLiteral("12.5"),
                                 QStringLiteral("1,234.56"), QStringLiteral("12/34"),
                                 QStringLiteral("CAD123")}) {
-    const auto input = chinese + number;
+    const QString input = chinese + number;
     CHECK(visualText(input, Qt::LeftToRight) == input);
     CHECK(visualText(input, Qt::LayoutDirectionAuto) == input);
     CHECK(visualText(input, Qt::RightToLeft) == number + reversed);
@@ -160,15 +160,15 @@ TEST_CASE("Chinese RTL reverses Han runs but preserves numeric values",
   }
   CHECK(visualText(chinese + QStringLiteral("\u4e00\u4e8c\u4e09"), Qt::RightToLeft) ==
         QStringLiteral("\u4e09\u4e8c\u4e00") + reversed);
-  const auto explicitLtr = QChar(0x2066) + chinese + "123" + QChar(0x2069);
+  const QString explicitLtr = QChar(0x2066) + chinese + "123" + QChar(0x2069);
   CHECK(visualText(explicitLtr, Qt::RightToLeft) == chinese + "123");
-  const auto nested = QStringLiteral("\u2066\u202a") + chinese + QChar(0x2069);
+  const QString nested = QStringLiteral("\u2066\u202a") + chinese + QChar(0x2069);
   const auto projected = lc::textbidi::directionalText(nested + chinese, Qt::RightToLeft);
   CHECK(projected.text.startsWith(nested + QStringLiteral("\u2067\u202e")));
-  const auto strayPdf = QString(QChar(0x2066)) + QChar(0x202c) + chinese + QChar(0x2069);
+  const QString strayPdf = QString(QChar(0x2066)) + QChar(0x202c) + chinese + QChar(0x2069);
   CHECK(lc::textbidi::directionalText(strayPdf, Qt::RightToLeft).text == strayPdf);
   const char32_t supplementary[] = {0x20000, 0xe0100, 0x20001};
-  const auto input = QString::fromUcs4(supplementary, 3) + "123";
+  const QString input = QString::fromUcs4(supplementary, 3) + "123";
   const auto clusters = lc::textbidi::visualClusters(input, Qt::RightToLeft);
   REQUIRE(clusters.size() == 5);
   CHECK(clusters[3].start == 4);
@@ -199,6 +199,75 @@ TEST_CASE("Bidi ordering is font-independent and preserves numeric runs",
   CHECK(visualText(QString::fromUtf8(u8"שלום") + QChar(0x2029) + "Main 123",
                    Qt::LayoutDirectionAuto) ==
         reversed + QChar(0x2029) + "Main 123");
+}
+
+TEST_CASE("Chinese projection preserves explicit scope ownership and paragraph resets",
+          "[textbidi][chinese][projection]") {
+  const auto han = QStringLiteral("\u4e2d\u6587");
+  const QString wrappedHan = QStringLiteral("\u2067\u202e") + han +
+                          QStringLiteral("\u202c\u2069");
+  const QString cases[] = {
+      // PDF removes embeddings, never an isolate. Each PDI removes its most
+      // recent isolate and the embeddings above it, preserving outer scopes.
+      QStringLiteral("\u202a\u2066\u202b\u2067\u202d") + han +
+          QStringLiteral("\u202c\u2069") + han + QStringLiteral("\u202c\u2069") +
+          han + QChar(0x202c) + han,
+      QStringLiteral("\u2067\u202c") + han + QChar(0x2069) + han,
+      // An unmatched PDI must not consume an embedding.
+      QStringLiteral("\u202b\u2069") + han + QChar(0x202c) + han,
+      QStringLiteral("\u202b\u2066\u202d\u202b") + han + QChar(0x2069) +
+          han + QChar(0x202c) + han,
+      // B resets both scope stacks, including before an unmatched PDI or a
+      // new isolate. Test both newline and U+2029 paragraph separators.
+      QStringLiteral("\u2066\u202b") + han + QStringLiteral("\n\u2069") + han,
+      QStringLiteral("\u2066\u202b\u2029\u2067\u202d") + han + QChar(0x2069) + han};
+  for (const auto &input : cases) {
+    const auto projection = lc::textbidi::directionalText(input, Qt::RightToLeft);
+    CHECK(projection.text == input.left(input.size() - han.size()) + wrappedHan);
+    REQUIRE(projection.displayPositions.size() == std::size_t(input.size() + 1));
+    QString restored;
+    for (int i = 0; i < int(projection.sourcePositions.size()); ++i) {
+      const int source = projection.sourcePositions[i];
+      if (source >= 0) {
+        REQUIRE(source < input.size());
+        CHECK(projection.text.at(i) == input.at(source));
+        CHECK(projection.displayPositions[source] == i);
+        restored += projection.text.at(i);
+      }
+    }
+    CHECK(restored == input);
+    CHECK(projection.displayPositions.back() == projection.text.size());
+    for (const auto direction : {Qt::LeftToRight, Qt::LayoutDirectionAuto}) {
+      const auto unchanged = lc::textbidi::directionalText(input, direction);
+      CHECK(unchanged.text == input);
+      for (int i = 0; i <= input.size(); ++i) CHECK(unchanged.displayPositions[i] == i);
+    }
+  }
+}
+
+TEST_CASE("Chinese projection handles adversarial unmatched PDI without repeated scope scans",
+          "[textbidi][chinese][projection][limits]") {
+  // A long embedding-only prefix followed by unmatched PDI previously caused
+  // a full unchanged-stack scan for every PDI. No machine-speed assertion:
+  // exercise the adversarial shape and assert exact projection/provenance.
+  constexpr int count = 65536;
+  const auto han = QStringLiteral("\u4e2d\u6587");
+  const QString prefix = QString(count, QChar(0x202a)) + QString(count, QChar(0x2069)) + han + '\n';
+  const QString input = prefix + han;
+  const auto projection = lc::textbidi::directionalText(input, Qt::RightToLeft);
+  CHECK(projection.text == prefix + QStringLiteral("\u2067\u202e") + han +
+                           QStringLiteral("\u202c\u2069"));
+  REQUIRE(projection.sourcePositions.size() == std::size_t(input.size() + 4));
+  REQUIRE(projection.displayPositions.size() == std::size_t(input.size() + 1));
+  for (int i = 0; i < input.size(); ++i) {
+    const int display = projection.displayPositions[i];
+    REQUIRE(display >= 0);
+    REQUIRE(display < projection.text.size());
+    CHECK(projection.sourcePositions[display] == i);
+    CHECK(projection.text.at(display) == input.at(i));
+  }
+  CHECK(std::count(projection.sourcePositions.begin(), projection.sourcePositions.end(), -1) == 4);
+  CHECK(projection.displayPositions.back() == projection.text.size());
 }
 
 TEST_CASE("Bidi ordering keeps graphemes and malformed UTF-16 intact",
@@ -359,4 +428,105 @@ TEST_CASE("Supplementary boundary neutrals do not prevent L1 whitespace reset",
     CHECK(levels[3] == levels[4]);
     CHECK(visualText(input, Qt::LeftToRight) == alef + " ");
   }
+}
+
+TEST_CASE("Shaping levels precede L1 and do not invent levels for X9 joiners",
+          "[textbidi][shaping]") {
+  const auto trailingJoiner = QStringLiteral("\u0628\u200d");
+  const auto resolved = lc::qtbidi::resolveForShaping(trailingJoiner, Qt::LeftToRight);
+  CHECK(resolved.display.base == 0);
+  CHECK(resolved.shapingLevels == std::vector<int>{1, -1});
+  CHECK(resolved.display.levels == std::vector<quint8>{1, 0});
+  CHECK(resolved.isolateBoundaries == std::vector<bool>{false, false});
+
+  const auto embedded = QStringLiteral("\u202b\u0628 \u200d\u202c");
+  const auto embeddedResolved = lc::qtbidi::resolveForShaping(embedded, Qt::LeftToRight);
+  CHECK(embeddedResolved.shapingLevels == std::vector<int>{-1, 1, 1, -1, -1});
+  CHECK(embeddedResolved.display.levels[2] == 0);
+  const auto source = lc::textbidi::shapingAnalysis(embedded, Qt::LeftToRight);
+  CHECK(source.shapingLevels == embeddedResolved.shapingLevels);
+  CHECK(source.contextBreaks == std::vector<bool>{true, false, false, false, false, true});
+}
+
+TEST_CASE("Shaping analysis breaks context at empty and unmatched isolates",
+          "[textbidi][shaping]") {
+  for (char16_t isolate : {char16_t(0x2066), char16_t(0x2067), char16_t(0x2068)}) {
+    const QString input = QChar(0x0628) + QString(QChar(isolate)) +
+                       QChar(0x2069) + QChar(0x0628);
+    const auto resolved = lc::qtbidi::resolveForShaping(input, Qt::LeftToRight);
+    CHECK(resolved.shapingLevels.front() == 1);
+    CHECK(resolved.shapingLevels.back() == 1);
+    CHECK(resolved.isolateBoundaries == std::vector<bool>{false, true, true, false});
+    const auto source = lc::textbidi::shapingAnalysis(input, Qt::LeftToRight);
+    CHECK(source.contextBreaks == std::vector<bool>{true, true, true, true, true});
+  }
+  for (const auto input : {QStringLiteral("\u0628\u2069\u0628"),
+                           QStringLiteral("\u0628\u2067\u0628")}) {
+    const auto source = lc::textbidi::shapingAnalysis(input, Qt::LeftToRight);
+    CHECK(source.contextBreaks == std::vector<bool>{true, true, true, true});
+  }
+}
+
+TEST_CASE("Shaping metadata covers supplementary and malformed UTF-16",
+          "[textbidi][shaping]") {
+  for (const char32_t scalar : {char32_t(0xe0001), char32_t(0x1d173)}) {
+    const auto neutral = QString::fromUcs4(&scalar, 1);
+    // Exercise both the LTR fast path and full bidi analysis.
+    for (const auto prefix : {QStringLiteral("a"), QStringLiteral("\u0628")}) {
+      const auto resolved = lc::qtbidi::resolveForShaping(prefix + neutral, Qt::LeftToRight);
+      REQUIRE(resolved.shapingLevels.size() == 3);
+      CHECK(resolved.shapingLevels[1] == -1);
+      CHECK(resolved.shapingLevels[2] == -1);
+      CHECK(resolved.display.levels[1] == resolved.display.levels[2]);
+    }
+  }
+  const char32_t adlam = 0x1e900;
+  const auto supplementary = QString::fromUcs4(&adlam, 1);
+  const auto resolved = lc::qtbidi::resolveForShaping(supplementary, Qt::LeftToRight);
+  CHECK(resolved.shapingLevels == std::vector<int>{1, 1});
+  for (const auto input : {QString(), QString(QChar(0xd83d)), QString(QChar(0xde00))}) {
+    const auto source = lc::textbidi::shapingAnalysis(input, Qt::LeftToRight);
+    CHECK(source.shapingLevels.size() == input.size());
+    CHECK(source.displayLevels.size() == input.size());
+    REQUIRE(source.contextBreaks.size() == input.size() + 1);
+    CHECK(source.contextBreaks.front());
+    CHECK(source.contextBreaks.back());
+  }
+}
+
+TEST_CASE("Shaping source maps preserve the Chinese display-only projection",
+          "[textbidi][shaping][chinese]") {
+  const auto input = QStringLiteral("\u0628\u4e2d\u6587\u0628");
+  const auto source = lc::textbidi::shapingAnalysis(input, Qt::RightToLeft);
+  CHECK(source.projection.text == lc::textbidi::directionalText(input, Qt::RightToLeft).text);
+  const auto projected = lc::qtbidi::resolveForShaping(source.projection.text, Qt::RightToLeft);
+  CHECK(source.base == projected.display.base);
+  for (int i = 0; i < input.size(); ++i) {
+    const int display = source.projection.displayPositions[i];
+    CHECK(source.shapingLevels[i] == projected.shapingLevels[display]);
+    CHECK(source.displayLevels[i] == projected.display.levels[display]);
+  }
+  CHECK(source.contextBreaks == std::vector<bool>{true, true, false, true, true});
+}
+
+TEST_CASE("Shaping metadata retains legacy paragraph display results",
+          "[textbidi][shaping]") {
+  const QString cases[] = {
+      {}, QStringLiteral("abc"), QStringLiteral("a\u00adb"),
+      QStringLiteral("\u0628\u200d"), QStringLiteral("\u200c\u0628"),
+      QStringLiteral("\u0628\u2066\u2069\u0628"),
+      QStringLiteral("\u202d\u202eA\u202c\u2069\u202eB"),
+      QStringLiteral("\u0628 \t\u0628\nA\r\n\u0628")};
+  for (const auto &input : cases) {
+    for (const auto direction : {Qt::LeftToRight, Qt::RightToLeft, Qt::LayoutDirectionAuto}) {
+      const auto original = lc::qtbidi::resolve(input, direction);
+      const auto shaping = lc::qtbidi::resolveForShaping(input, direction);
+      CHECK(shaping.display.base == original.base);
+      CHECK(shaping.display.levels == original.levels);
+      CHECK(shaping.shapingLevels.size() == input.size());
+      CHECK(shaping.isolateBoundaries.size() == input.size());
+    }
+  }
+  const auto separators = lc::textbidi::shapingAnalysis(QStringLiteral("A\tB\nC"), Qt::LeftToRight);
+  CHECK(separators.contextBreaks == std::vector<bool>{true, true, true, true, true, true});
 }

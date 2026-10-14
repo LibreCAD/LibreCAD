@@ -81,7 +81,7 @@ public:
     std::uint32_t resolveBlockRecordLayoutHandle(std::uint32_t handle) const {
         auto it = blockRecordMap.find(handle);
         return (it != blockRecordMap.end()) ? it->second.layoutHandle
-                                            : DRW::NoHandle;
+                                            : static_cast<std::uint32_t>(DRW::NoHandle);
     }
     std::unordered_map<std::uint32_t, std::string> lineTypeNameMap;
     std::unordered_map<std::uint32_t, BlockRecordInfo> blockRecordMap;
@@ -117,6 +117,10 @@ public:
     void setBinary(bool b) {binFile = b;}
 
     [[nodiscard]] bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
+    /// Requires a nonnull per-call verifier; ordinary write remains unchecked.
+    [[nodiscard]] bool writeVerified(DRW_Interface *interface_, DRW::Version ver,
+                                    bool bin, DRW_StagedFileVerifier verifier,
+                                    void* context);
     bool writeLineType(DRW_LType *ent);
     bool writeLayer(DRW_Layer *ent);
     bool writeDimstyle(DRW_Dimstyle *ent);
@@ -381,6 +385,8 @@ public:
     DRW_WritingContext* getWritingContext() { return &m_writingContext; }
 
 private:
+    bool writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                   DRW_StagedFileVerifier verifier, void* context);
     enum class DxfEntityBoundary {
         NextEntity,
         EndSection,

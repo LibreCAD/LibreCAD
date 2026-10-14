@@ -250,6 +250,10 @@ public:
     /// kept for API symmetry with `dxfRW::write`.  Returns true on
     /// success, false on error; error code accessible via `getError()`.
     [[nodiscard]] bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
+    /// Requires a nonnull per-call verifier; ordinary write remains unchecked.
+    [[nodiscard]] bool writeVerified(DRW_Interface *interface_, DRW::Version ver,
+                                    bool bin, DRW_StagedFileVerifier verifier,
+                                    void* context);
 
     struct WriteSkipCounters {
         std::size_t entityWrites { 0 };
@@ -687,6 +691,8 @@ bool testReader();
     friend class dwgReader;
 
 private:
+    bool writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                   DRW_StagedFileVerifier verifier, void* context);
     friend class DwgCompoundWriteTestAccess;
     friend class DwgWriteFailureTestAccess;
 

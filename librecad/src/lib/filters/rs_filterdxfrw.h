@@ -3255,9 +3255,11 @@ private:
   std::set<std::uint32_t> m_dxfEmittedObjectHandles;
   QHash<QString, QString> m_fontList;
   bool m_oldMText = false;
+  // Non-owning active-export observers; local RAII owners clear before delete.
   dxfRW *m_dxfW{nullptr};
   dxfRW *m_dxfR{nullptr};
 #ifdef DWGSUPPORT
+  // Null outside the current fileExport() operation, including failed saves.
   dwgRW *m_dwgW{nullptr};
   DwgExportAdmissionPlan m_dwgExportAdmissionPlan;
   DwgFieldWritePlan m_dwgFieldWritePlan;

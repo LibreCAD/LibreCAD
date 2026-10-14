@@ -183,6 +183,32 @@ void mouseEvent(LC_TextEdit &edit, QEvent::Type type, const QPoint &position,
 }
 } // namespace
 
+TEST_CASE("MText empty lines retain invalid bounds through alignment and transforms",
+          "[text][bidi][empty-bounds]") {
+  SourceFonts fonts;
+  REQUIRE(RS_FONTLIST->requestFont("iso3098"));
+  for (const auto &value : {QString(), QStringLiteral(" \t\n\t"), QString(QChar(0x2066))}) {
+    for (const auto horizontal : {RS_MTextData::HALeft, RS_MTextData::HACenter, RS_MTextData::HARight}) {
+      for (const auto vertical : {RS_MTextData::VATop, RS_MTextData::VAMiddle, RS_MTextData::VABottom}) {
+        auto data = mtextData(value);
+        data.halign = horizontal;
+        data.valign = vertical;
+        data.angle = 0.5;
+        RS_MText text(nullptr, data);
+        CHECK_FALSE(text.getMin().valid);
+        CHECK_FALSE(text.getMax().valid);
+        CHECK(text.getUsedTextWidth() == 0.0);
+        CHECK(std::isfinite(text.getUsedTextHeight()));
+        text.rotate({0.0, 0.0}, 0.5);
+        text.scale({0.0, 0.0}, {2.0, 2.0});
+        CHECK_FALSE(text.getMin().valid);
+        CHECK_FALSE(text.getMax().valid);
+        CHECK(text.getCanonicalText() == value);
+      }
+    }
+  }
+}
+
 TEST_CASE("RTL entity geometry preserves numbers", "[text][bidi][issue1859]") {
   SourceFonts fonts;
   for (const QString &value :
@@ -1955,8 +1981,16 @@ TEST_CASE("MText with a paragraph command keeps the width it was given",
     bool isNumber = false;
     const double width = mtextGroup(path, 41).toDouble(&isNumber);
     REQUIRE(isNumber);
-    CHECK_THAT(width, WithinAbs(sample.saved == Saved::Given ? sample.givenWidth
-                                                             : source->getUsedTextWidth(), 1e-6));
+    const double expected = sample.saved == Saved::Given ? sample.givenWidth : source->getUsedTextWidth();
+    CHECK_THAT(width, WithinAbs(expected, 1e-6));
+    const QString dwgPath = directory.filePath(QString("width_%1.dwg").arg(index));
+    REQUIRE(writer.fileExport(original, dwgPath, RS2::FormatDWG2004));
+    RS_Graphic restored;
+    RS_FilterDXFRW reader;
+    REQUIRE(reader.fileImport(restored, dwgPath, RS2::FormatDWG2004));
+    const auto *restoredText = findMText(restored);
+    REQUIRE(restoredText);
+    CHECK_THAT(restoredText->getWidth(), WithinAbs(expected, 1e-6));
   }
 }
 

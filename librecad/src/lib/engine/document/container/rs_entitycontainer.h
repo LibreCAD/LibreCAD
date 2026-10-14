@@ -30,6 +30,7 @@
 #include <QList>
 
 #include "rs_entity.h"
+class LC_SelectedSet;
 
 /**
  * Class representing a tree of entities.
@@ -270,6 +271,26 @@ public:
     RS_Entity* cloneProxy() const override;
 
 protected:
+    class OwnedReplacement {
+    public:
+        OwnedReplacement(OwnedReplacement &&) noexcept = default;
+        OwnedReplacement &operator=(OwnedReplacement &&) noexcept = default;
+        OwnedReplacement(const OwnedReplacement &) = delete;
+        OwnedReplacement &operator=(const OwnedReplacement &) = delete;
+        // Explicitly postcommit: listeners observe complete new geometry and
+        // caller-published metrics. Listener exceptions are NOT build failures.
+        void notify();
+    private:
+        friend class RS_EntityContainer;
+        OwnedReplacement() = default;
+        std::vector<LC_SelectedSet*> m_changed;
+    };
+    // Fresh uniquely-owned, unparented top-level children with already computed
+    // bounds only. Rejects non-owners without consuming input. All allocation,
+    // validation and selection preparation precede the no-fail commit. The
+    // model thread must not mutate selection/reenter during prepare/commit.
+    OwnedReplacement replaceOwnedEntities(std::vector<std::unique_ptr<RS_Entity>> &&incoming);
+
     /**
      * @brief getLoops for hatch, split closed loops into single simple loops. All returned containers are owned by
      * the returned object.

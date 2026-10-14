@@ -35,8 +35,19 @@ struct Paragraph {
     int base = 0;
 };
 
+// Shaping uses levels after I2, before L1 and the display-only BN adjustment.
+// All arrays are indexed by UTF-16 code unit. X9-excluded characters have no
+// resolved shaping level (represented by -1), but remain in the logical text:
+// in particular, ZWJ/ZWNJ must still be available to the shaping engine.
+struct ShapingParagraph {
+    Paragraph display;
+    std::vector<int> shapingLevels;
+    std::vector<bool> isolateBoundaries;
+};
+
 // Resolve one paragraph without fonts or a GUI application.
 Paragraph resolve(const QString &text, Qt::LayoutDirection direction);
+ShapingParagraph resolveForShaping(const QString &text, Qt::LayoutDirection direction);
 std::vector<int> reorder(const std::vector<quint8> &levels);
 
 } // namespace lc::qtbidi
