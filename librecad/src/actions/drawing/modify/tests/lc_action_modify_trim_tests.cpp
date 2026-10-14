@@ -34,6 +34,8 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <algorithm>
+#include <memory>
+#include <utility>
 
 #include "lc_action_modify_trim.h"
 #include "lc_actiontestsupport.h"
@@ -60,7 +62,6 @@ public:
     using LC_ActionModifyTrim::ChooseLimitEntity;
     using LC_ActionModifyTrim::ChooseTrimEntity;
     using LC_ActionModifyTrim::m_limitEntity;
-    using LC_ActionModifyTrim::onMouseMoveEvent;
     using RS_PreviewActionInterface::m_preview;
     using RS_PreviewActionInterface::m_showRefEntitiesOnPreview;
 
@@ -70,15 +71,42 @@ public:
         onMouseLeftButtonRelease(getStatus(), &e);
     }
 
-    /// A mouse move, handled in the status the action is in.
+    /// A mouse move, handled in the status the action is in, between the two halves
+    /// RS_PreviewActionInterface brackets every mouse move with.
     void hover(const RS_Vector& point) {
+        deletePreviewAndHighlights();
         LC_MouseEvent e = eventAt(point.x, point.y);
         onMouseMoveEvent(getStatus(), &e);
+        drawPreviewAndHighlights();
     }
 };
 
 using Trim = TrimProbe<false>;
 using TrimTwo = TrimProbe<true>;
+
+/// A line that counts how many of its instances are alive, its copies included.
+class CountingLine final : public RS_Line {
+public:
+    CountingLine(RS_EntityContainer* parent, const RS_LineData& data, std::shared_ptr<int> live)
+        : RS_Line(parent, data), m_live(std::move(live)) {
+        ++*m_live;
+    }
+
+    CountingLine(const CountingLine& other) : RS_Line(other), m_live(other.m_live) {
+        ++*m_live;
+    }
+
+    ~CountingLine() override {
+        --*m_live;
+    }
+
+    RS_Entity* clone() const override {
+        return new CountingLine(*this);
+    }
+
+private:
+    std::shared_ptr<int> m_live;
+};
 
 RS_Line* addLine(RS_Graphic& graphic, const RS_Vector& from, const RS_Vector& to) {
     auto* line = new RS_Line(&graphic, RS_LineData(from, to));
@@ -232,8 +260,7 @@ TEST_CASE("Trim cuts at a spline where the line crosses it, wherever the spline 
 
     SECTION("in the preview") {
         f.m_action->m_showRefEntitiesOnPreview = true;
-        LC_MouseEvent e = eventAt(20.0, 70.0);
-        f.m_action->onMouseMoveEvent(Trim::ChooseTrimEntity, &e);
+        f.m_action->hover({20.0, 70.0});
 
         // a reference point marks where the line is cut; RS_Preview keeps reference entities apart
         RS_EntityContainer references(nullptr, false);
@@ -285,4 +312,28 @@ TEST_CASE("Trim cuts at a line inside a block reference, also after the referenc
     CHECK(trimmed->getStartpoint().distanceTo({50.0, 0.0}) < RS_TOLERANCE);
     CHECK(trimmed->getEndpoint().distanceTo({100.0, 0.0}) < RS_TOLERANCE);
     CHECK_FALSE(containsDeleted(*insert));
+}
+
+TEST_CASE("the Trim preview releases the trimmed copies it does not show", "[actions][modify][trim]") {
+    // every mouse move over an entity to trim makes a trimmed copy of it, which the
+    // preview shows for some entities only, and the rest used to be leaked
+    ActionFixture<Trim> f;
+    const auto live = std::make_shared<int>(0);
+    addLine(f.m_graphic, {50.0, -50.0}, {50.0, 50.0});
+    f.m_graphic.addEntity(new CountingLine(&f.m_graphic, RS_LineData({0.0, 0.0}, {100.0, 0.0}), live));
+
+    f.m_action->click({50.0, 25.0});
+    REQUIRE(f.m_action->getStatus() == Trim::ChooseTrimEntity);
+
+    for (const bool showReferences : {true, false}) {
+        f.m_action->m_showRefEntitiesOnPreview = showReferences;
+        f.m_action->hover({75.0, 0.0});
+        const int afterFirstMove = *live;
+        for (int i = 0; i < 20; ++i) {
+            f.m_action->hover({75.0, 0.0});
+        }
+
+        INFO("reference entities shown: " << showReferences);
+        CHECK(*live == afterFirstMove);
+    }
 }

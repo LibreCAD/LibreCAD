@@ -155,18 +155,22 @@ void LC_ActionModifyTrim::previewTrim(RS_Entity* entityToTrimCandidate, RS_Entit
             LC_DocumentModificationBatch ctx;
             const LC_TrimResult trimResult = RS_Modification::trim(trimCoordinates, atomicTrimCandidate, limitCoordinates, limitingEntity,
                                                                    m_both, ctx);
+            // trim() hands back new entities, and the batch it filled in is a local that frees
+            // nothing, so what the preview does not take is released below
+            bool previewOwnsTrimmed1 = false;
+            bool previewOwnsTrimmed2 = false;
             if (trimResult.result) {
                 trimInvalid = false;
                 highlightHover(entityToTrimCandidate);
                 if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(trimResult.intersection1);
-                    previewRefTrimmedEntity(trimResult.trimmed1, entityToTrimCandidate);
+                    previewOwnsTrimmed1 = previewRefTrimmedEntity(trimResult.trimmed1, entityToTrimCandidate);
                     if (trimResult.intersection2.valid) {
                         previewRefPoint(trimResult.intersection2);
                     }
                     if (m_both) {
                         if (trimResult.trimmed2 != nullptr) {
-                            previewRefTrimmedEntity(trimResult.trimmed2, limitingEntity);
+                            previewOwnsTrimmed2 = previewRefTrimmedEntity(trimResult.trimmed2, limitingEntity);
                         }
                     }
                     if (isInfoCursorForModificationEnabled()) {
@@ -178,6 +182,12 @@ void LC_ActionModifyTrim::previewTrim(RS_Entity* entityToTrimCandidate, RS_Entit
                         builder.toInfoCursorZone2(false);
                     }
                 }
+            }
+            if (!previewOwnsTrimmed1) {
+                delete trimResult.trimmed1;
+            }
+            if (!previewOwnsTrimmed2) {
+                delete trimResult.trimmed2;
             }
         }
     }
@@ -281,7 +291,10 @@ RS2::CursorType LC_ActionModifyTrim::doGetMouseCursor([[maybe_unused]] int statu
     return RS2::SelectCursor;
 }
 
-void LC_ActionModifyTrim::previewRefTrimmedEntity(RS_Entity* trimmed, const RS_Entity* original) const {
+/**
+ * @return whether the preview took the trimmed entity; if not, it is the caller's to release
+ */
+bool LC_ActionModifyTrim::previewRefTrimmedEntity(RS_Entity* trimmed, const RS_Entity* original) const {
     const int rtti = trimmed->rtti();
     switch (rtti) {
         case RS2::EntityLine: {
@@ -331,11 +344,13 @@ void LC_ActionModifyTrim::previewRefTrimmedEntity(RS_Entity* trimmed, const RS_E
           // Parabola has no reversed-direction toggle; just preview the
           // resulting (already-trimmed) entity.
           previewEntity(trimmed);
-          break;
+          return true;
         }
         default: {
             previewEntity(trimmed);
             RS_DEBUG->print("RS_ActionModifyTrim::unhandled trimmed entity type");
+            return true;
         }
     }
+    return false;
 }
