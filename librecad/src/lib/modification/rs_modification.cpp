@@ -1551,8 +1551,12 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
                     return engineFailure(copy.status);
                 }
                 if (copy.entities.empty()) {
+                    // Trimmed away entirely, as it is at any larger distance on this
+                    // side: a point left at D, nearest the source at f, has on its
+                    // way to f a point d < D from f and no nearer to the source,
+                    // which would be left at d.
                     result.stoppedBy = LC_OffsetSourceStatus::Vanished;
-                    break; // trimmed away entirely, as it is at any larger distance on this side
+                    break;
                 }
                 if (!addUsage(usage, copy.usage)) {
                     return LC_OffsetSourceStatus::LimitExceeded;

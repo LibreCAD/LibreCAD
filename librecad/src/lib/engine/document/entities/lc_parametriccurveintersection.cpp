@@ -84,6 +84,51 @@ bool isMonotone(const LC_Interval& dx, const LC_Interval& dy) {
     return hi - lo < 0.5 * M_PI;
 }
 
+/** The angle between two directions, in [0, pi]. */
+double angleBetween(const RS_Vector& a, const RS_Vector& b) {
+    return std::atan2(std::abs(a.x * b.y - a.y * b.x), a.x * b.x + a.y * b.y);
+}
+
+/**
+ * The directions a derivative box holds, as angles from @p reference in
+ * [lo, hi]; false when the box holds zero, and so every direction.
+ */
+bool directions(const LC_Interval& dx, const LC_Interval& dy, const double reference, double& lo, double& hi) {
+    if (!dx.isValid() || !dy.isValid() || !std::isfinite(dx.width()) || !std::isfinite(dy.width()) ||
+        (dx.containsZero() && dy.containsZero())) {
+        return false;
+    }
+    const double centre = std::atan2(mid(dy), mid(dx));
+    lo = 0.0;
+    hi = 0.0;
+    for (const double x : {dx.lo(), dx.hi()}) {
+        for (const double y : {dy.lo(), dy.hi()}) {
+            const double delta = std::remainder(std::atan2(y, x) - centre, 2.0 * M_PI);
+            lo = std::min(lo, delta);
+            hi = std::max(hi, delta);
+        }
+    }
+    const double shift = std::remainder(centre - reference, 2.0 * M_PI);
+    lo += shift;
+    hi += shift;
+    return true;
+}
+
+/**
+ * Two derivative boxes whose directions together lie in an open half plane:
+ * pieces with such tangents that share an end are monotone along the middle
+ * direction together, and meet nowhere else.
+ */
+bool jointlyMonotone(const LC_Interval& dx1, const LC_Interval& dy1, const LC_Interval& dx2, const LC_Interval& dy2) {
+    const double reference = std::atan2(mid(dy1), mid(dx1));
+    double lo1 = 0.0;
+    double hi1 = 0.0;
+    double lo2 = 0.0;
+    double hi2 = 0.0;
+    return directions(dx1, dy1, reference, lo1, hi1) && directions(dx2, dy2, reference, lo2, hi2) &&
+           std::max(hi1, hi2) - std::min(lo1, lo2) < M_PI;
+}
+
 struct Leaf {
     std::size_t segment;
     std::size_t branch;
@@ -94,6 +139,8 @@ struct Leaf {
     bool monotone;
     LC_Interval x;
     LC_Interval y;
+    LC_Interval dx;
+    LC_Interval dy;
 };
 
 struct Bounds {
@@ -119,6 +166,9 @@ public:
         result.status = buildLeaves();
         if (result.status == LC_IntersectionStatus::Ok) {
             result.status = findJoins();
+        }
+        if (result.status == LC_IntersectionStatus::Ok) {
+            result.status = findCorners();
         }
         if (result.status == LC_IntersectionStatus::Ok) {
             for (const auto& [i, j] : candidatePairs()) {
@@ -180,8 +230,8 @@ private:
                         return LC_IntersectionStatus::LimitExceeded;
                     }
                     const std::size_t branch = m_segments[s].branch;
-                    m_leaves.push_back(
-                        Leaf{s, branch, m_branchLeaves[branch]++, box.a, box.b, monotone, bounds.x, bounds.y});
+                    m_leaves.push_back(Leaf{s, branch, m_branchLeaves[branch]++, box.a, box.b, monotone, bounds.x,
+                                            bounds.y, bounds.dx, bounds.dy});
                     continue;
                 }
                 const double half = box.a + 0.5 * (box.b - box.a);
@@ -220,14 +270,70 @@ private:
         return LC_IntersectionStatus::Ok;
     }
 
+    /**
+     * Where consecutive leaves of a branch on two segments together turn
+     * through a half turn or more, a corner, as where trimming joined two
+     * branches where they cross: they may meet again away from it. Such a
+     * pair is examined like any other but next to the corner, which reaches
+     * as far as its two sides stay within the tolerance of each other.
+     */
+    LC_IntersectionStatus findCorners() {
+        m_smoothNext.assign(m_leaves.size(), true);
+        for (std::size_t i = 0; i + 1 < m_leaves.size(); ++i) {
+            const Leaf& p = m_leaves[i];
+            const Leaf& q = m_leaves[i + 1];
+            if (p.branch != q.branch || p.segment == q.segment || jointlyMonotone(p.dx, p.dy, q.dx, q.dy)) {
+                continue;
+            }
+            RS_Vector point;
+            RS_Vector before;
+            RS_Vector start;
+            RS_Vector after;
+            if (!m_curves.evaluate(p.segment, p.b, point, before) || !m_curves.evaluate(q.segment, q.a, start, after) ||
+                !isFinite(point)) {
+                return LC_IntersectionStatus::InvalidInput;
+            }
+            // two sides that leave the corner an angle apart part by the
+            // tolerance after tol / (2 sin(angle / 2)) or so; one that turns
+            // back along the other is the corner that far, as far as the two
+            // leaves reach
+            double radius = 2.0 * m_options.tolerance;
+            if (before.magnitude() > 0.0 && after.magnitude() > 0.0) {
+                const double opening = angleBetween(before * -1.0, after);
+                const double reach = std::max(farthest(p.x, p.y, point), farthest(q.x, q.y, point));
+                if (2.0 * std::sin(0.5 * opening) * reach > m_options.tolerance) {
+                    radius = std::max(radius, m_options.tolerance / (2.0 * std::sin(0.5 * opening)));
+                }
+                else {
+                    radius = std::max(radius, reach);
+                }
+            }
+            m_smoothNext[i] = false;
+            m_corners.push_back(Corner{p.branch, point, radius});
+        }
+        return LC_IntersectionStatus::Ok;
+    }
+
     bool hasPredecessor(const std::size_t branch) const {
         return std::any_of(m_joins.begin(), m_joins.end(), [branch](const Join& j) { return j.to == branch; });
     }
 
-    /** Consecutive leaves of a branch, or across a join, share an end and nothing else. */
+    /** Consecutive leaves of a branch, either side of a corner (findCorners()). */
+    bool atCorner(const Leaf& p, const Leaf& q) const {
+        if (p.branch != q.branch || (p.order + 1 != q.order && q.order + 1 != p.order)) {
+            return false;
+        }
+        const Leaf& first = (p.order < q.order) ? p : q;
+        return !m_smoothNext[static_cast<std::size_t>(&first - m_leaves.data())];
+    }
+
+    /**
+     * Consecutive leaves of a branch, but at a corner, or across a join, share
+     * an end and nothing else.
+     */
     bool adjacent(const Leaf& p, const Leaf& q) const {
         if (p.branch == q.branch && (p.order + 1 == q.order || q.order + 1 == p.order)) {
-            return true;
+            return !atCorner(p, q);
         }
         for (const Join& j : m_joins) {
             const std::size_t lastOfFrom = m_branchLeaves[j.from] - 1;
@@ -270,8 +376,17 @@ private:
         return pairs;
     }
 
-    /** Both boxes lie within twice the tolerance of a join between their branches. */
+    /**
+     * Both boxes lie within twice the tolerance of a join between their
+     * branches, or near enough a corner of theirs to be the corner itself.
+     */
     bool insideJoin(const Leaf& p, const Bounds& bp, const Leaf& q, const Bounds& bq) const {
+        for (const Corner& c : m_corners) {
+            if (p.branch == c.branch && q.branch == c.branch && farthest(bp.x, bp.y, c.point) <= c.radius &&
+                farthest(bq.x, bq.y, c.point) <= c.radius) {
+                return true;
+            }
+        }
         const double radius = 2.0 * m_options.tolerance;
         for (const Join& j : m_joins) {
             const bool between = (p.branch == j.from && q.branch == j.to) || (p.branch == j.to && q.branch == j.from);
@@ -291,6 +406,10 @@ private:
     };
 
     LC_IntersectionStatus solvePair(const Leaf& p, const Leaf& q) {
+        // The two sides of a corner meet again where the Krawczyk test proves
+        // it; what it cannot tell apart within the tolerance runs back along
+        // the corner, whose sides need not cross there at all.
+        const bool corner = atCorner(p, q);
         std::vector<Pair> stack{{p.a, p.b, q.a, q.b, 0}};
         while (!stack.empty()) {
             const Pair box = stack.back();
@@ -304,6 +423,11 @@ private:
                 return LC_IntersectionStatus::AmbiguousTopology;
             }
             if (gap(bp.x, bp.y, bq.x, bq.y) > 0.0 || insideJoin(p, bp, q, bq) || bridged(p, q, box)) {
+                continue;
+            }
+            const double sizeP = std::hypot(bp.x.width(), bp.y.width());
+            const double sizeQ = std::hypot(bq.x.width(), bq.y.width());
+            if (corner && sizeP <= m_options.tolerance && sizeQ <= m_options.tolerance) {
                 continue;
             }
             {
@@ -320,6 +444,9 @@ private:
                 }
             }
             if (box.depth >= m_options.maxDepth) {
+                if (corner) {
+                    continue;
+                }
                 const LC_IntersectionStatus status = classifyContact(p, q, box);
                 if (status != LC_IntersectionStatus::Ok) {
                     return status;
@@ -327,8 +454,6 @@ private:
                 continue;
             }
             // split the side whose image is larger
-            const double sizeP = std::hypot(bp.x.width(), bp.y.width());
-            const double sizeQ = std::hypot(bq.x.width(), bq.y.width());
             if (sizeP >= sizeQ) {
                 const double h = box.a0 + 0.5 * (box.a1 - box.a0);
                 stack.push_back({box.a0, h, box.b0, box.b1, box.depth + 1});
@@ -771,6 +896,15 @@ private:
     std::vector<Leaf> m_leaves;
     std::vector<std::size_t> m_branchLeaves;
     std::vector<Join> m_joins;
+    struct Corner {
+        std::size_t branch;
+        RS_Vector point;
+        /** Boxes within this of the point are the corner itself. */
+        double radius;
+    };
+    std::vector<Corner> m_corners;
+    /** Per leaf: the next leaf of its branch runs on from it without a corner. */
+    std::vector<bool> m_smoothNext;
     struct Found {
         LC_ParametricIntersection x;
         std::size_t reachBranch;

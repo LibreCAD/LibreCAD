@@ -71,8 +71,11 @@
  *
  * Trimmed mode, the drawing tools' mode (makeOffsetOptions()), removes from
  * the noded Direct offset the parts provably nearer to the source than the
- * distance, less the tolerance budget, and fails where it cannot decide. It
- * may leave nothing: Ok with no branches.
+ * distance, less the tolerance budget, and fails where it cannot decide. As
+ * nearness changes only where the offset meets itself, the other side's
+ * offset or the circles of radius |d| about an open source's ends, a part
+ * hidden anywhere is removed whole, as is a short one that leaves such a
+ * crossing towards the source. It may leave nothing: Ok with no branches.
  *
  * RegionBoundary mode, programmatic only, takes the region a closed source
  * encloses under the fill rule and returns the boundary of that region grown

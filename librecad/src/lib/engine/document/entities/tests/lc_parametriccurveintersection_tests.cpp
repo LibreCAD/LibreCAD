@@ -266,6 +266,34 @@ TEST_CASE("Branches that retrace each other are ambiguous, not a crossing", "[cu
     CHECK(intersect({&first, &overlapping}).status == LC_IntersectionStatus::AmbiguousTopology);
 }
 
+TEST_CASE("The two sides of a corner in a branch may cross again", "[curve-offset][topology]") {
+    // As trimming joins the offsets on the two sides of a swallowtail where
+    // they cross: one quadratic piece on each side of the corner (-10, 0),
+    // each monotone, consecutive along the branch, and meeting again on the
+    // axis at x = 7.6. Consecutive leaves were taken to share their end only.
+    const RS_Spline lens = makeSpline(2, {{12, -2}, {1, 4}, {-10, 0}, {1, -4}, {12, 2}}, {0, 0, 0, 1, 1, 2, 2, 2});
+    REQUIRE(sampledCrossings({&lens}) == 1);
+    const LC_IntersectionResult result = intersect({&lens});
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    REQUIRE(result.intersections.size() == 1); // not the corner itself
+    CHECK(result.intersections.front().kind == Kind::Transverse);
+    CHECK(result.intersections.front().point.distanceTo(RS_Vector{7.6, 0.0}) < 1e-9);
+}
+
+TEST_CASE("A branch that turns back along itself at a corner does not cross itself", "[curve-offset][topology]") {
+    // within the tolerance of its other side all the way, the side after the
+    // corner is the corner: no crossing, and no box-by-box search of it
+    const RS_Spline spike = makeSpline(1, {{10, 0}, {0, 0}, {10, 1e-12}}, {0, 0, 1, 2, 2});
+    const LC_IntersectionResult result = intersect({&spike});
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    CHECK(result.intersections.empty());
+    // turned back at a small angle, it leaves the tolerance and is a corner only
+    const RS_Spline wedge = makeSpline(1, {{10, 0}, {0, 0}, {10, 1}}, {0, 0, 1, 2, 2});
+    const LC_IntersectionResult open = intersect({&wedge});
+    REQUIRE(open.status == LC_IntersectionStatus::Ok);
+    CHECK(open.intersections.empty());
+}
+
 TEST_CASE("The intersections do not depend on the order of the branches", "[curve-offset][topology]") {
     const RS_Spline loop = makeSpline(3, {{0, 0}, {15, 10}, {-5, 10}, {10, 0}}, {0, 0, 0, 0, 1, 1, 1, 1});
     const RS_Spline a = line({-1, 3}, {11, 3});
