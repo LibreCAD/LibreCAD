@@ -9568,7 +9568,6 @@ bool dxfRW::processShape() {
     DRW_DBG("dxfRW::processShape\n");
     int code;
     DRW_Shape shape;
-    bool hasStyleName = false;
     bool hasInsertionX = false;
     bool hasInsertionY = false;
     bool hasSize = false;
@@ -9580,7 +9579,10 @@ bool dxfRW::processShape() {
             DRW_DBG(nextentity); DRW_DBG("\n");
             if (!acceptEntityCallbackBoundary())
                 return setError(DRW::BAD_READ_ENTITIES);
-            if (!hasStyleName || !hasInsertionX || !hasInsertionY || !hasSize)
+            // The name (group 2) may be missing or empty: a DWG holds the
+            // number of the shape, not its name, so what converts one without
+            // the shape file has no name to write.
+            if (!hasInsertionX || !hasInsertionY || !hasSize)
                 return setError(DRW::BAD_CODE_PARSED);
             const auto finite = [](const DRW_Coord& point) {
                 return std::isfinite(point.x) && std::isfinite(point.y)
@@ -9599,8 +9601,6 @@ bool dxfRW::processShape() {
             return true;
         }
 
-        if (code == 2)
-            hasStyleName = !reader->getUtf8String().empty();
         hasInsertionX = hasInsertionX || code == 10;
         hasInsertionY = hasInsertionY || code == 20;
         hasSize = hasSize || code == 40;

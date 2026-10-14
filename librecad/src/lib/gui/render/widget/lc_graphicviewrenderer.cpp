@@ -466,7 +466,7 @@ void LC_GraphicViewRenderer::setPenForOverlayEntity(RS_Painter* painter, const R
             pen.setColor(m_colorVisualSnapGuideEntities); // fixme - cache pen for snap marks in painter!
             const auto ent = static_cast<const LC_RefSnapConstructionLine*>(e);
             setupRefSnapEntityPen(painter, pen, ent, e->getFlag(RS2::FlagInVisualSnap));
-            painter->setPen(pen);
+            painter->setPen(pen, RS_Painter::DashSpace::Screen);
             break;
         }
         case RS2::EntitySnapCircle: {
@@ -474,7 +474,7 @@ void LC_GraphicViewRenderer::setPenForOverlayEntity(RS_Painter* painter, const R
             pen.setColor(m_colorVisualSnapGuideEntities); // fixme - cache pen for snap marks in painter!
             const auto ent = static_cast<const LC_RefSnapCircle*>(e);
             setupRefSnapEntityPen(painter, pen, ent, e->getFlag(RS2::FlagInVisualSnap));
-            painter->setPen(pen);
+            painter->setPen(pen, RS_Painter::DashSpace::Screen);
             break;
         }
         case RS2::EntitySnapArc: {
@@ -482,7 +482,7 @@ void LC_GraphicViewRenderer::setPenForOverlayEntity(RS_Painter* painter, const R
             pen.setColor(m_colorVisualSnapGuideEntities); // fixme - cache pen for snap marks in painter!
             const auto ent = static_cast<const LC_RefSnapCircle*>(e);
             setupRefSnapEntityPen(painter, pen, ent, e->getFlag(RS2::FlagInVisualSnap));
-            painter->setPen(pen);
+            painter->setPen(pen, RS_Painter::DashSpace::Screen);
             break;
         }
         case RS2::EntitySnapLine:{
@@ -490,7 +490,7 @@ void LC_GraphicViewRenderer::setPenForOverlayEntity(RS_Painter* painter, const R
             RS_Pen pen = e->getPen(true);
             const auto ent = static_cast<const LC_RefSnapLine*>(e);
             setupRefSnapEntityPen(painter, pen, ent, e->getFlag(RS2::FlagInVisualSnap));
-            painter->setPen(pen);
+            painter->setPen(pen, RS_Painter::DashSpace::Screen);
             break;
         }
         default: {
@@ -639,7 +639,7 @@ void LC_GraphicViewRenderer::setPenForEntity(RS_Painter* painter, const RS_Entit
     setPenTime += setPenTimer.nsecsElapsed(); painterSetPenTimer.start();
 #endif
     m_lastPaintedPattern = pen.getLineType() != RS2::SolidLine;
-    painter->setPen(pen);
+    painter->setPen(pen, selected && !overlayPaint ? RS_Painter::DashSpace::Screen : RS_Painter::DashSpace::Model);
 #ifdef DEBUG_RENDERING
     painterSetPenTime += painterSetPenTimer.nsecsElapsed();
 
@@ -722,7 +722,7 @@ void LC_GraphicViewRenderer::setPenForDraftEntity(RS_Painter* painter, const RS_
 
     // LC_ERR << "PEN " << pen.getColor().name() << "Width: " << pen.getWidth() <<  " | " << pen.getScreenWidth() << " LT " << pen.getLineType();
     m_lastPaintedPattern = pen.getLineType() != RS2::SolidLine;
-    painter->setPen(pen);
+    painter->setPen(pen, selected && !overlayPaint ? RS_Painter::DashSpace::Screen : RS_Painter::DashSpace::Model);
 #ifdef DEBUG_RENDERING
     setPenTime += setPenTimer.nsecsElapsed();
 #endif

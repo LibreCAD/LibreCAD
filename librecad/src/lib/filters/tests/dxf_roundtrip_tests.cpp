@@ -61,6 +61,7 @@
 #include "rs_dimaligned.h"
 #include "rs_dimension.h"
 #include "rs_insert.h"
+#include "rs_text.h"
 #include "rs_fileio.h"
 #include "rs_filterdxf1.h"
 #include "rs_filterdxfrw.h"
@@ -666,6 +667,142 @@ TEST_CASE("DXF round-trip keeps frozen-layer entities visible after thaw",
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
+}
+
+namespace {
+
+// A block reference with one single-line ATTRIB at (1, 4) and a TEXT at
+// (1, 9), both holding @p value as it is spelt in an ASCII DXF file.
+std::string singleLineTextDxf(const std::string &value) {
+  return "0\nSECTION\n2\nBLOCKS\n"
+         "0\nBLOCK\n8\n0\n2\nTITLE\n70\n0\n10\n0\n20\n0\n3\nTITLE\n"
+         "0\nENDBLK\n8\n0\n0\nENDSEC\n"
+         "0\nSECTION\n2\nENTITIES\n"
+         "0\nINSERT\n8\n0\n2\nTITLE\n10\n0\n20\n0\n66\n1\n"
+         "0\nATTRIB\n8\n0\n100\nAcDbText\n10\n1\n20\n4\n40\n2.5\n1\n" +
+         value +
+         "\n100\nAcDbAttribute\n2\nPATH\n70\n0\n"
+         "0\nSEQEND\n8\n0\n"
+         "0\nTEXT\n8\n0\n100\nAcDbText\n10\n1\n20\n9\n40\n2.5\n1\n" +
+         value + "\n0\nENDSEC\n0\nEOF\n";
+}
+
+// The value of the single-line text whose insertion point is at height @p y.
+std::string singleLineTextAt(RS_Graphic &graphic, double y) {
+  for (RS_Entity *entity : graphic) {
+    if (entity == nullptr || entity->rtti() != RS2::EntityText)
+      continue;
+    const auto *text = static_cast<const RS_Text *>(entity);
+    if (std::abs(text->getInsertionPoint().y - y) < 1e-6)
+      return text->getText().toStdString();
+  }
+  return "<no single-line text>";
+}
+
+} // namespace
+
+// A single-line value (TEXT, ATTRIB) has no MTEXT markup: its backslashes are
+// ordinary characters, as in the path of a title block. Reading "\P" as a
+// line break left a line feed in the attribute, and the DXF writer refuses a
+// record that holds one.
+TEST_CASE("Single-line text and attribute values keep their backslashes",
+          "[dxf][dwg][roundtrip][filter][attrib][text]") {
+  ensureSettings();
+
+  struct Case {
+    const char *name;
+    std::string dxf;    // the value in the source file
+    QString native;     // the value of the entity
+    std::string saved;  // the value an ASCII DXF export writes
+    bool dwg = true;    // whether a DWG reads the value back
+  };
+  const std::vector<Case> cases{
+      {"plain", "plain", QStringLiteral("plain"), "plain"},
+      {"paragraph", R"(D:\PROJECTS\PLAN.dwg)",
+       QStringLiteral(R"(D:\PROJECTS\PLAN.dwg)"), R"(D:\PROJECTS\PLAN.dwg)"},
+      {"program_files", R"(C:\Program Files\x)",
+       QStringLiteral(R"(C:\Program Files\x)"), R"(C:\Program Files\x)"},
+      {"hard_space", R"(\\SERVER\~TMP\A.dwg)",
+       QStringLiteral(R"(\\SERVER\~TMP\A.dwg)"), R"(\\SERVER\~TMP\A.dwg)"},
+      {"font_tag", R"({\fArial|b0;Title})",
+       QStringLiteral(R"({\fArial|b0;Title})"), R"({\fArial|b0;Title})"},
+      {"tab", "A^IB", QStringLiteral("A\tB"), "A^IB"},
+      {"line_feed", "A^JB", QStringLiteral("A\nB"), "A^JB"},
+      // A DWG string holds the caret itself, and the import takes it for the
+      // start of a caret code: that is not a matter of single-line text.
+      {"caret", "A^ B", QStringLiteral("A^B"), "A^ B", false},
+      {"degree", "45%%d", QStringLiteral("45\u00B0"), "45%%D"},
+  };
+
+  struct Format {
+    const char *name;
+    RS2::FormatType type;
+    bool dxf;
+  };
+  const std::vector<Format> formats{
+      {"dxf2018", RS2::FormatDXFRW2018, true},
+      {"dxf2007", RS2::FormatDXFRW, true},
+      {"dxf2000", RS2::FormatDXFRW2000, true},
+      {"dxf12", RS2::FormatDXFRW12, true},
+      {"dwg2018", RS2::FormatDWG2018, false},
+      {"dwg2000", RS2::FormatDWG, false},
+  };
+
+  for (const Case &item : cases) {
+    const std::string src =
+        tmpFile((std::string("single_line_") + item.name + "_src.dxf").c_str());
+    writeText(src, singleLineTextDxf(item.dxf));
+    const std::string native = item.native.toStdString();
+
+    RS_Graphic graphic;
+    {
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                                RS2::FormatDXFRW));
+    }
+    {
+      INFO("imported value of case " << item.name);
+      CHECK(singleLineTextAt(graphic, 4.0) == native);
+      CHECK(singleLineTextAt(graphic, 9.0) == native);
+    }
+
+    for (const Format &format : formats) {
+      if (!format.dxf && !item.dwg)
+        continue;
+      INFO("case " << item.name << " saved as " << format.name);
+      const std::string out = tmpFile(
+          (std::string("single_line_") + item.name + "_" + format.name +
+           (format.dxf ? ".dxf" : ".dwg"))
+              .c_str());
+      std::filesystem::remove(out);
+      bool exported = false;
+      {
+        RS_FilterDXFRW filter;
+        exported = filter.fileExport(graphic, QString::fromStdString(out),
+                                     format.type);
+      }
+      CHECK(exported);
+      if (!exported)
+        continue;
+      if (format.dxf) {
+        CHECK(recordGroupValues(out, "ATTRIB", "1") ==
+              std::vector<std::string>{item.saved});
+        CHECK(recordGroupValues(out, "TEXT", "1") ==
+              std::vector<std::string>{item.saved});
+      }
+
+      RS_Graphic reloaded;
+      {
+        RS_FilterDXFRW filter;
+        REQUIRE(filter.fileImport(reloaded, QString::fromStdString(out),
+                                  format.type));
+      }
+      CHECK(singleLineTextAt(reloaded, 4.0) == native);
+      CHECK(singleLineTextAt(reloaded, 9.0) == native);
+      std::filesystem::remove(out);
+    }
+    std::filesystem::remove(src);
+  }
 }
 
 TEST_CASE("DXF INSERT attribute visibility combines common and attribute flags",

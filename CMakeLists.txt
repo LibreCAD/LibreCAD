@@ -2604,6 +2604,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/tests/rs_pen_tests.cpp
         librecad/src/lib/actions/tests/lc_snappercatchtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
+        librecad/src/actions/drawing/modify/tests/lc_action_modify_move_tests.cpp
         librecad/src/actions/drawing/draw/curve/tests/lc_actiondrawdualtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_offset_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_offsetmatrixtests.cpp
@@ -2696,6 +2697,8 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/lc_dxf_r2007_codepage_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_pre2007_codepage_tests.cpp
         librecad/src/lib/filters/tests/dxf_legacy_name_reference_tests.cpp
+        librecad/src/lib/filters/tests/lc_dxf_reopen_dwg_export_tests.cpp
+        librecad/src/lib/filters/tests/lc_dxf_shape_name_tests.cpp
         librecad/src/lib/filters/tests/dxf_closed_spline_tests.cpp
         librecad/src/lib/filters/tests/jww_import_tests.cpp
         librecad/src/lib/filters/tests/byte_identity_harness.cpp
@@ -2964,6 +2967,8 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/lc_dxf_r2007_codepage_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_pre2007_codepage_tests.cpp
         librecad/src/lib/filters/tests/dxf_legacy_name_reference_tests.cpp
+        librecad/src/lib/filters/tests/lc_dxf_reopen_dwg_export_tests.cpp
+        librecad/src/lib/filters/tests/lc_dxf_shape_name_tests.cpp
         librecad/src/lib/filters/tests/mleader_dxf_context_tests.cpp
     )
     add_executable(librecad_dxf_fast_tests
@@ -3074,6 +3079,11 @@ if (BUILD_TESTS)
         librecad_draft_lines_tests
         librecad/src/ui/view/tests/qg_graphicview_draft_lines_tests.cpp)
     # Isolate GUI tests from the text tests' static offscreen bootstraps.
+    add_librecad_filter_micro_test(
+        librecad_painter_tests
+        librecad/src/lib/gui/tests/rs_painter_tests.cpp)
+    target_sources(librecad_painter_tests PRIVATE
+        librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp)
     add_librecad_filter_micro_test(
         librecad_dock_layout_tests
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp)
@@ -3344,6 +3354,10 @@ if (BUILD_TESTS)
             ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
     endif()
     if (LIBRECAD_REGISTER_INTEGRATION_TESTS)
+        add_test(NAME librecad_painter_tests
+            COMMAND $<TARGET_FILE:librecad_painter_tests> --reporter compact)
+        set_tests_properties(librecad_painter_tests PROPERTIES
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
         add_test(NAME librecad_console_svg_tests
             COMMAND $<TARGET_FILE:librecad_lc_consolesvgexporttests>
                 "[console]" --reporter compact)
