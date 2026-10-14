@@ -3768,7 +3768,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="83"/>
         <source>Workspaces</source>
-        <translation>工作區域</translation>
+        <translation>工作空間</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="83"/>
@@ -4423,7 +4423,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="678"/>
         <source>&amp;New</source>
-        <translation>新創建 (&amp;N)</translation>
+        <translation>新建(&amp;N)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="679"/>
@@ -7723,7 +7723,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="59"/>
         <source>License</source>
-        <translation>駕照</translation>
+        <translation>授權</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="87"/>
@@ -9464,7 +9464,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="93"/>
         <source>License</source>
-        <translation>駕照</translation>
+        <translation>授權</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="94"/>
@@ -22396,7 +22396,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
         <source>&amp;Workspaces</source>
-        <translation type="unfinished">工作區( W)</translation>
+        <translation>工作空間(W)</translation>
     </message>
 </context>
 <context>
@@ -22497,7 +22497,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="242"/>
         <source>Workspaces</source>
-        <translation type="unfinished">工作區域</translation>
+        <translation>工作空間</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="309"/>
@@ -22638,43 +22638,43 @@ Please specify a different value.</source>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="94"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="260"/>
         <source>&amp;Select</source>
-        <translation>選取(S)</translation>
+        <translation>選取(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="122"/>
         <source>&amp;Help</source>
-        <translation>幫助(H)</translation>
+        <translation>幫助(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="125"/>
         <source>On&amp;line Docs</source>
-        <translation>線上說明文件(L)</translation>
+        <translation>線上說明文件(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="126"/>
         <source>&amp;Wiki</source>
-        <translation>維基說明文件(W)</translation>
+        <translation>維基說明文件(&amp;W)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="127"/>
         <source>User&apos;s &amp;Manual</source>
-        <translation>使用者手冊(M)</translation>
+        <translation>使用者手冊(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="128"/>
         <source>&amp;Commands</source>
-        <translation>命令(C)</translation>
+        <translation>命令(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="129"/>
         <source>&amp;Style Sheets</source>
-        <translation>樣式表(S)</translation>
+        <translation>樣式表(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="131"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="430"/>
         <source>Wid&amp;gets</source>
-        <translation>視窗元件(G)</translation>
+        <translation>視窗元件(&amp;G)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="135"/>
@@ -22684,151 +22684,151 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="142"/>
         <source>&amp;Forum</source>
-        <translation>討論區(F)</translation>
+        <translation>討論區(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="143"/>
         <source>Zulip &amp;Chat</source>
-        <translation>Zulip 討論區(C)</translation>
+        <translation>Zulip 討論區(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="145"/>
         <source>&amp;Submit Error</source>
-        <translation>回報錯誤(S)</translation>
+        <translation>回報錯誤(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="146"/>
         <source>&amp;Request Feature</source>
-        <translation>功能建議(R)</translation>
+        <translation>功能建議(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="147"/>
         <source>&amp;Releases Page</source>
-        <translation>發行版本頁面(R)</translation>
+        <translation>發行版本頁面(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="152"/>
         <source>&amp;Dev Snapshot Release</source>
-        <translation>開發預覽版(D)</translation>
+        <translation>開發預覽版(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="158"/>
         <source>&amp;Donate</source>
-        <translation>贊助(D)</translation>
+        <translation>贊助(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="174"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="212"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="246"/>
         <source>&amp;Line</source>
-        <translation>直線(L)</translation>
+        <translation>直線(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="178"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="213"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="247"/>
         <source>Poin&amp;t</source>
-        <translation>點(T)</translation>
+        <translation>點(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="182"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="214"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="248"/>
         <source>&amp;Circle</source>
-        <translation>圓(C)</translation>
+        <translation>圓(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="186"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="215"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="250"/>
         <source>&amp;Arc</source>
-        <translation>圓弧(A)</translation>
+        <translation>圓弧(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="190"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="217"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="252"/>
         <source>Poly&amp;gon</source>
-        <translation>多邊形(G)</translation>
+        <translation>多邊形(&amp;G)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="194"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="219"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="254"/>
         <source>Splin&amp;e</source>
-        <translation>雲形線(E)</translation>
+        <translation>雲形線(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="198"/>
         <source>Ellip&amp;se</source>
-        <translation>橢圓(S)</translation>
+        <translation>橢圓(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="202"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="221"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="258"/>
         <source>&amp;Polyline</source>
-        <translation>聚合線(P)</translation>
+        <translation>聚合線(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="206"/>
         <source>&amp;Other</source>
-        <translation>其他(O)</translation>
+        <translation>其他(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="211"/>
         <source>&amp;Draw</source>
-        <translation>繪圖(D)</translation>
+        <translation>繪圖(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="220"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="256"/>
         <source>&amp;Ellipse</source>
-        <translation>橢圓(E)</translation>
+        <translation>橢圓(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="223"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="265"/>
         <source>Ot&amp;her</source>
-        <translation>其他(H)</translation>
+        <translation>其他(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="228"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="267"/>
         <source>&amp;Modify</source>
-        <translation>修改(M)</translation>
+        <translation>修改(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="230"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="270"/>
         <source>&amp;Order</source>
-        <translation>順序(L)</translation>
+        <translation>順序(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="234"/>
         <source>&amp;Dimensions</source>
-        <translation>標註(D)</translation>
+        <translation>標註(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="238"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="269"/>
         <source>&amp;Info</source>
-        <translation>資訊(I)</translation>
+        <translation>資訊(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="244"/>
         <source>&amp;Tools</source>
-        <translation>工具(T)</translation>
+        <translation>工具(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="263"/>
         <source>Dime&amp;nsion</source>
-        <translation>標註(N)</translation>
+        <translation>標註(&amp;N)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="276"/>
         <source>&amp;File</source>
-        <translation>檔案(F)</translation>
+        <translation>檔案(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="284"/>
@@ -22848,32 +22848,32 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="322"/>
         <source>&amp;Options</source>
-        <translation>選項(O)</translation>
+        <translation>選項(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="336"/>
         <source>&amp;Edit</source>
-        <translation>編輯(E)</translation>
+        <translation>編輯(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="357"/>
         <source>&amp;View</source>
-        <translation>檢視(V)</translation>
+        <translation>檢視(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="386"/>
         <source>&amp;Views Restore</source>
-        <translation>還原視圖(V)</translation>
+        <translation>還原視圖(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="399"/>
         <source>Pl&amp;ugins</source>
-        <translation>外掛(U)</translation>
+        <translation>外掛(&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="405"/>
         <source>&amp;Workspace</source>
-        <translation>工作區(W)</translation>
+        <translation>工作空間(&amp;W)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="415"/>
@@ -22888,37 +22888,37 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="458"/>
         <source>CAD Wid&amp;gets</source>
-        <translation>CAD 工具視窗(G)</translation>
+        <translation>CAD 工具視窗(&amp;G)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="483"/>
         <source>&amp;Toolbars</source>
-        <translation>工具列(T)</translation>
+        <translation>工具列(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="504"/>
         <source>&amp;CAD Toolbars</source>
-        <translation>CAD 工具列(C)</translation>
+        <translation>CAD 工具列(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="581"/>
         <source>&amp;Drawings</source>
-        <translation>圖面(D)</translation>
+        <translation>圖面(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="589"/>
         <source>Ta&amp;b mode</source>
-        <translation>頁籤模式(B)</translation>
+        <translation>頁籤模式(&amp;B)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="593"/>
         <source>&amp;Window mode</source>
-        <translation>視窗模式(W)</translation>
+        <translation>視窗模式(&amp;W)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="598"/>
         <source>&amp;Layout</source>
-        <translation>佈局(L)</translation>
+        <translation>佈局(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="602"/>
@@ -22943,7 +22943,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="623"/>
         <source>East</source>
-        <translation type="unfinished">東</translation>
+        <translation>東</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="627"/>
@@ -22953,32 +22953,32 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="632"/>
         <source>&amp;Arrange</source>
-        <translation>排列(A)</translation>
+        <translation>排列(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="636"/>
         <source>&amp;Maximized</source>
-        <translation>最大化(M)</translation>
+        <translation>最大化(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="640"/>
         <source>&amp;Cascade</source>
-        <translation>重疊排列(C)</translation>
+        <translation>重疊排列(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="641"/>
         <source>&amp;Tile</source>
-        <translation>並排(T)</translation>
+        <translation>並排(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="642"/>
         <source>Tile &amp;Vertically</source>
-        <translation>垂直並排(V)</translation>
+        <translation>垂直並排(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="643"/>
         <source>Tile &amp;Horizontally</source>
-        <translation>水平並排</translation>
+        <translation>水平並排(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="690"/>
@@ -39551,17 +39551,17 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="529"/>
         <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="537"/>
         <source>Saving Workspaces</source>
-        <translation>保存工作區域</translation>
+        <translation>保存工作空間</translation>
     </message>
     <message>
         <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="530"/>
         <source>Can&apos;t open workspaces file for writing. Workspaces were not exported. File: </source>
-        <translation>無法開啟工作區檔案以寫入 。 未匯出工作區 。 文件:</translation>
+        <translation>無法開啟工作空間檔案以寫入 。 未匯出工作區 。 文件:</translation>
     </message>
     <message>
         <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="538"/>
         <source>Workspaces file does not exists.</source>
-        <translation>工作區檔案不存在 .</translation>
+        <translation>工作空間檔案不存在 .</translation>
     </message>
 </context>
 <context>
@@ -51956,7 +51956,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="138"/>
         <source>License</source>
-        <translation>駕照</translation>
+        <translation>授權</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="97"/>
@@ -53360,7 +53360,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Select to hatch</source>
-        <translation type="unfinished">選取以進行填充</translation>
+        <translation>選取以進行填充</translation>
     </message>
     <message>
         <source>Select to hatch (Enter to complete)</source>
@@ -53832,7 +53832,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="179"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="189"/>
         <source>Select to cut</source>
-        <translation type="unfinished">選取以剪下</translation>
+        <translation>選取以剪下</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="184"/>
