@@ -24,26 +24,39 @@
 #ifndef LC_TEXTSTYLELIST_H
 #define LC_TEXTSTYLELIST_H
 #include <QList>
+#include <memory>
 
 #include "lc_textstyle.h"
 
 class LC_TextStyleList{
 public:
     LC_TextStyleList();
-    virtual ~LC_TextStyleList() = default;
+    LC_TextStyleList(const LC_TextStyleList &other);
+    LC_TextStyleList &operator=(const LC_TextStyleList &other);
+    virtual ~LC_TextStyleList();
     void clear();
     unsigned int count() const;
     LC_TextStyle* at(unsigned int i) const;
+    // Owns accepted pointers. A distinct duplicate-name input is deleted and
+    // the existing record retained; adding the same pointer twice is a no-op.
     void addStyle(LC_TextStyle* style);
+    // Import/upsert explicitly replaces an existing normalized-name record;
+    // the old pointer is invalidated. Returned pointer is owned by this list.
+    // Re-wrapping any already-owned pointer is a no-op, including renamed
+    // duplicate names; it cannot duplicate ownership in a second slot.
+    LC_TextStyle *upsertStyle(std::unique_ptr<LC_TextStyle> style);
     void remove(LC_TextStyle* style);
     void remove(const QString& name);
-    LC_TextStyle* find(const QString& name);
+    LC_TextStyle* find(const QString& name) const;
+    // Transfers ownership, reusing pointers already owned by this list safely.
+    // Null/repeated pointers and duplicate names are coalesced, first wins.
     void replace(const QList<LC_TextStyle*>& newStylesList);
     const QList<LC_TextStyle*>* getStyles() const {return &m_styles;}
     LC_TextStyle* getActiveStyle() const {return m_activeStyle;}
     bool isModified() const {return m_modified;}
     void setModified(const bool modified) {m_modified = modified;}
 private:
+    void swapState(LC_TextStyleList &other) noexcept;
     QList<LC_TextStyle*> m_styles;
     LC_TextStyle *m_activeStyle = nullptr;
     bool m_modified = false;

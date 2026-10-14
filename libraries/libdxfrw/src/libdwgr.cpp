@@ -1214,7 +1214,21 @@ bool dwgRW::encodeEntityForWrite(DRW_Entity *ent,
     return recordWriteResult(WriteSkipKind::Entity, true);
 }
 
-bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) try {
+bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
+    return writeImpl(interface_, ver, bin, nullptr, nullptr);
+}
+
+bool dwgRW::writeVerified(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                         DRW_StagedFileVerifier verifier, void* context) {
+    if (!verifier) {
+        error = DRW::BAD_OPEN;
+        return false;
+    }
+    return writeImpl(interface_, ver, bin, verifier, context);
+}
+
+bool dwgRW::writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                     DRW_StagedFileVerifier verifier, void* context) try {
     // The 'bin' parameter is accepted only for signature symmetry with
     // dxfRW::write — DWG is always binary on disk.
     (void)bin;
@@ -1369,7 +1383,7 @@ bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) try {
     ok = finalOk;
     writer.reset();
     if (ok && !filestr.fail())
-        ok = output.commit();
+        ok = verifier ? output.commitVerified(verifier, context) : output.commit();
     else
         output.abort();
     if (!ok)

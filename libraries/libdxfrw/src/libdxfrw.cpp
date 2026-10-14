@@ -1244,6 +1244,7 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
         reader = std::make_unique<dxfReaderAscii>(&filestr);
     }
 
+    reader->setDxfTextEncoding(m_dxfTextEncoding);
     bool isOk {processDxf()};
     filestr.close();
     version = (DRW::Version) reader->getVersion();
@@ -1270,6 +1271,7 @@ bool dxfRW::readAscii(DRW_Interface *interface_, bool ext, std::string& content)
     iface = interface_;
     std::istringstream strstream(content);
     reader = std::make_unique<dxfReaderAscii>(&strstream);
+    reader->setDxfTextEncoding(m_dxfTextEncoding);
     bool isOk {processDxf()};
     version = (DRW::Version) reader->getVersion();
     m_sourceVersion = reader->getSourceVersion();
@@ -1444,7 +1446,21 @@ void dxfRW::resetDxfWriteSession() {
     m_leftOut.clear();
 }
 
-bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) try {
+bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
+    return writeImpl(interface_, ver, bin, nullptr, nullptr);
+}
+
+bool dxfRW::writeVerified(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                         DRW_StagedFileVerifier verifier, void* context) {
+    if (!verifier) {
+        error = DRW::BAD_OPEN;
+        return false;
+    }
+    return writeImpl(interface_, ver, bin, verifier, context);
+}
+
+bool dxfRW::writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                     DRW_StagedFileVerifier verifier, void* context) try {
     if (!isSupportedDxfWriteVersion(ver)) {
         error = DRW::BAD_VERSION;
         return false;
@@ -1616,7 +1632,7 @@ bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) try {
     // exactly as it was.
     if (!iface->finalizeDxfWrite())
         return failWrite();
-    if (!output.commit())
+    if (!(verifier ? output.commitVerified(verifier, context) : output.commit()))
         return failWrite();
     return true;
 }
@@ -4323,7 +4339,7 @@ bool dxfRW::writeArcDimension(DRW_DimArc *d) {
     if (version >= DRW::AC1024)
         writer->writeInt16(280, 0);   // AcDbDimension version, 0 = R2010+
     if (!d->getName().empty())
-        writer->writeString(2, d->getName());
+        writer->writeUtf8String(2, d->getName());
     writer->writeDouble(10, d->getArcDefPoint().x);
     writer->writeDouble(20, d->getArcDefPoint().y);
     writer->writeDouble(30, d->getArcDefPoint().z);
@@ -4382,7 +4398,7 @@ bool dxfRW::writeLargeRadialDimension(DRW_DimLargeRadial *d) {
     if (version >= DRW::AC1024)
         writer->writeInt16(280, 0);
     if (!d->getName().empty())
-        writer->writeString(2, d->getName());
+        writer->writeUtf8String(2, d->getName());
     writer->writeDouble(10, d->getCenterPoint().x);
     writer->writeDouble(20, d->getCenterPoint().y);
     writer->writeDouble(30, d->getCenterPoint().z);
@@ -4470,7 +4486,7 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
         if (version >= DRW::AC1024)
             writer->writeInt16(280, 0);   // AcDbDimension version, 0 = R2010+
         if (!ent->getName().empty()){
-            writer->writeString(2, ent->getName());
+            writer->writeUtf8String(2, ent->getName());
         }
         writer->writeDouble(10, ent->getDefPoint().x);
         writer->writeDouble(20, ent->getDefPoint().y);
@@ -5343,7 +5359,7 @@ bool dxfRW::writeMText(DRW_MText *ent){
         writer->writeInt16(71, ent->textgen);
         writer->writeInt16(72, ent->alignH);
         writeMTextContent(ent->text);
-        writer->writeString(7, ent->style);
+        writer->writeUtf8String(7, ent->style);
         writer->writeDouble(210, ent->extPoint.x);
         writer->writeDouble(220, ent->extPoint.y);
         writer->writeDouble(230, ent->extPoint.z);

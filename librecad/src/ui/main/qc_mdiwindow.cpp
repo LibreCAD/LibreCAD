@@ -357,9 +357,10 @@ bool QC_MDIWindow::loadDocumentFromTemplate(const QString& fileName, const RS2::
 /**
  * Opens the given file in this MDI window.
  */
-bool QC_MDIWindow::loadDocument(const QString& fileName, const RS2::FormatType type) {
+bool QC_MDIWindow::loadDocument(const QString& fileName, const RS2::FormatType type,
+                               const RS2::DxfTextEncoding encoding) {
     removeWidgetsListeners();
-    const bool loaded = LC_DocumentsStorage{}.loadDocument(m_document, fileName, type);
+    const bool loaded = LC_DocumentsStorage{}.loadDocument(m_document, fileName, type, encoding);
     if (loaded) {
         const RS_Graphic* graphic = m_document->getGraphic();
         if (graphic != nullptr) {

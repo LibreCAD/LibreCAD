@@ -870,72 +870,60 @@ void RS_Entity::setPenAndLayerToActive() {
 
 RS_Pen RS_Entity::getPenResolved() const {
     RS_Pen p = m_pImpl->pen;
-    // use parental attributes (e.g. vertex of a polyline, block
-    // entities when they are drawn in block documents):
-    if (m_parent != nullptr && m_parent->rtti() != RS2::EntityGraphic) {
-        //if pen is invalid gets all from parent
-        if (!p.isValid()) {
-            p = m_parent->getPen(false);
-        }
-        //pen is valid, verify byBlock parts
-        const RS_EntityContainer* ep = m_parent;
-        //If parent is byblock check parent.parent (nested blocks)
-        while (p.isColorByBlock()) {
-            if (ep != nullptr) {
-                p.setColorFromPen(m_parent->getPen(false)); // fixme - check whether resolved pen is actually needed there...
-                ep = ep->m_parent;
-            }
-            else {
-                break;
-            }
-        }
-        ep = m_parent;
-        while (p.isWidthByBlock()) {
-            if (ep != nullptr) {
-                p.setWidthFromPen(m_parent->getPen(false)); // fixme - check whether resolved pen is actually needed there...
-                ep = ep->m_parent;
-            }
-            else {
-                break;
-            }
-        }
-        ep = m_parent;
-        while (p.isLineTypeByBlock()) {
-            if (ep != nullptr) {
-                p.setLineTypeFromPen(m_parent->getPen(false)); // fixme - check whether resolved pen is actually needed there...
-                ep = ep->m_parent;
-            }
-            else {
-                break;
-            }
+    const RS_Entity *owner = this;
+    // Invalid container pens mean transparent inheritance, not a default pen.
+    // Graphic is a document boundary, never a containing INSERT's block pen.
+    while (!p.isValid() && owner->m_parent != nullptr && owner->m_parent->rtti() != RS2::EntityGraphic) {
+        owner = owner->m_parent;
+        p = owner->getPen(false);
+    }
+    if (!p.isValid()) return p;
+    const RS_Entity *colorOwner=owner, *widthOwner=owner, *typeOwner=owner;
+    // Only a ByBlock component looks further up. This function runs for every
+    // entity of every repaint, and most pens have no such component.
+    if (p.isColorByBlock() || p.isWidthByBlock() || p.isLineTypeByBlock()) {
+        for (const RS_Entity *ancestor=owner->m_parent;
+             ancestor != nullptr && ancestor->rtti() != RS2::EntityGraphic;
+             ancestor=ancestor->m_parent) {
+            const RS_Pen inherited=ancestor->getPen(false);
+            if (!inherited.isValid()) continue;
+            if (p.isColorByBlock()) { p.setColorFromPen(inherited);colorOwner=ancestor; }
+            if (p.isWidthByBlock()) { p.setWidthFromPen(inherited);widthOwner=ancestor; }
+            if (p.isLineTypeByBlock()) { p.setLineTypeFromPen(inherited);typeOwner=ancestor; }
+            if (!p.isColorByBlock()&&!p.isWidthByBlock()&&!p.isLineTypeByBlock()) break;
         }
     }
 
-    // use layer's color:
+    // Each ByLayer component belongs to the nearest valid pen that supplied
+    // that component. A child's own layer must not replace an INSERT's layer
+    // after ByBlock has explicitly inherited the INSERT's ByLayer component.
     const bool colorByLayer = p.isColorByLayer();
     const bool widthByLayer = p.isWidthByLayer();
     const bool lineByLayer = p.isLineTypeByLayer();
     if (colorByLayer || widthByLayer || lineByLayer) {
         // Drop dangling layer pointers left on block members after import
         // (updateInserts crash: getName/getPen on freed RS_Layer).
-        RS_Layer *l = validatedLayer(getLayerResolved());
-        // check byLayer attributes:
-        if (l != nullptr) {
-            // Copy by value — avoids holding a reference into layer storage.
-            const RS_Pen layerPen = l->getPen();
-            if (colorByLayer) {
-                p.setColorFromPen(layerPen);
+        // An ancestor that has no layer leaves the layer of this entity in
+        // charge, as it was before the components were told apart.
+        const auto layerOf = [this](const RS_Entity *supplier) {
+            RS_Layer *layer = supplier->validatedLayer(supplier->getLayerResolved());
+            if (layer == nullptr && supplier != this)
+                layer = validatedLayer(getLayerResolved());
+            return layer;
+        };
+        if (colorOwner == widthOwner && widthOwner == typeOwner) {
+            // The rule: one entity supplies all three components. One lookup
+            // and one copy of the layer's pen, on every repaint of every entity.
+            if (RS_Layer *layer = layerOf(colorOwner)) {
+                const RS_Pen layerPen = layer->getPen();
+                if (colorByLayer) p.setColorFromPen(layerPen);
+                if (widthByLayer) p.setWidthFromPen(layerPen);
+                if (lineByLayer) p.setLineTypeFromPen(layerPen);
             }
-
-            // use layer's width:
-            if (widthByLayer) {
-                p.setWidthFromPen(layerPen);
-            }
-
-            // use layer's linetype:
-            if (lineByLayer) {
-                p.setLineTypeFromPen(layerPen);
-            }
+        } else {
+            if (colorByLayer) if (RS_Layer *layer = layerOf(colorOwner)) p.setColorFromPen(layer->getPen());
+            if (widthByLayer) if (RS_Layer *layer = layerOf(widthOwner)) p.setWidthFromPen(layer->getPen());
+            if (lineByLayer) if (RS_Layer *layer = layerOf(typeOwner)) p.setLineTypeFromPen(layer->getPen());
         }
     }
     return p;

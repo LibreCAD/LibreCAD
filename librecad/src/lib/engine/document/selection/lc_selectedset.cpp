@@ -25,8 +25,28 @@
 
 #include "rs_entity.h"
 #include "rs_layer.h"
+#include <utility>
 
 LC_SelectedSet::LC_SelectedSet() = default;
+
+LC_SelectedSet::PreparedRemoval LC_SelectedSet::prepareRemoval(const std::unordered_set<RS_Entity*> &candidates) const {
+    PreparedRemoval prepared;
+    prepared.remaining.reserve(m_entitiesList.size());
+    prepared.removed.reserve(m_entitiesList.size());
+    for (auto *entity:std::as_const(m_entitiesList)) {
+        if (candidates.find(entity)!=candidates.end()) prepared.removed.push_back(entity);
+        else prepared.remaining.push_back(entity);
+    }
+    return prepared;
+}
+
+bool LC_SelectedSet::commitRemoval(PreparedRemoval &&prepared) noexcept {
+    if (prepared.removed.empty()) return false;
+    m_entitiesList.swap(prepared.remaining);
+    for (auto *entity:std::as_const(prepared.removed))
+        if (entity) entity->RS_Entity::setSelectionFlag(false);
+    return true;
+}
 
 /**
  * Tells the listeners that still listen (see LC_SelectedSetListener::selectedSetDestroyed()): a dock

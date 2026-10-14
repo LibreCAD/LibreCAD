@@ -81,7 +81,7 @@ public:
     std::uint32_t resolveBlockRecordLayoutHandle(std::uint32_t handle) const {
         auto it = blockRecordMap.find(handle);
         return (it != blockRecordMap.end()) ? it->second.layoutHandle
-                                            : DRW::NoHandle;
+                                            : static_cast<std::uint32_t>(DRW::NoHandle);
     }
     std::unordered_map<std::uint32_t, std::string> lineTypeNameMap;
     std::unordered_map<std::uint32_t, BlockRecordInfo> blockRecordMap;
@@ -106,9 +106,21 @@ public:
      */
     [[nodiscard]] bool read(DRW_Interface *interface_, bool ext);
     [[nodiscard]] bool readAscii(DRW_Interface *interface_, bool ext, std::string& content);
+    /** Select before read()/readAscii(); the choice applies to each new reader.
+     * Recovery interprets only known pre-R2007 default/ANSI_1252 DXF input as
+     * UTF-8. It cannot identify mixed encodings or recover arbitrary raw
+     * metadata. No header or writer encoding is changed; save a corrected copy.
+     */
+    void setDxfTextEncoding(DRW::DxfTextEncoding encoding) noexcept {
+        m_dxfTextEncoding = encoding;
+    }
     void setBinary(bool b) {binFile = b;}
 
     [[nodiscard]] bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
+    /// Requires a nonnull per-call verifier; ordinary write remains unchecked.
+    [[nodiscard]] bool writeVerified(DRW_Interface *interface_, DRW::Version ver,
+                                    bool bin, DRW_StagedFileVerifier verifier,
+                                    void* context);
     bool writeLineType(DRW_LType *ent);
     bool writeLayer(DRW_Layer *ent);
     bool writeDimstyle(DRW_Dimstyle *ent);
@@ -373,6 +385,8 @@ public:
     DRW_WritingContext* getWritingContext() { return &m_writingContext; }
 
 private:
+    bool writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                   DRW_StagedFileVerifier verifier, void* context);
     enum class DxfEntityBoundary {
         NextEntity,
         EndSection,
@@ -638,6 +652,7 @@ private:
     std::string codePage;
     bool binFile {false};
     std::unique_ptr<dxfReader> reader;
+    DRW::DxfTextEncoding m_dxfTextEncoding {DRW::DxfTextEncoding::Declared};
     std::unique_ptr<dxfWriter> writer;
     DRW_Interface *iface {nullptr};
     DRW_Header header;

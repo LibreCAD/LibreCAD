@@ -28,6 +28,7 @@
 #define RS_TEXT_H
 
 #include "rs_entitycontainer.h"
+#include "lc_textentitystate.h"
 
 /**
  * Holds the m_data that defines a text entity.
@@ -123,6 +124,8 @@ struct RS_TextData {
     DrawingDirection drawingDirection = ByContent;
     /** Text string */
     QString text;
+    /** Canonical source and explicit profile edit authority; never shaped text. */
+    LC_TextEntityState textState;
     /** Text style name */
     QString style;
     /** Rotation angle */
@@ -233,8 +236,22 @@ public:
         return m_data.text;
     }
 
+    QString getCanonicalText() const { return m_data.textState.source(); }
+    const LC_TextEntityState &getTextState() const { return m_data.textState; }
+    const LC_TextEntityState::Error &getTextStateError() const { return m_textStateError; }
+    LC_TextEntityState::Error importText(const LC_TextEntityState::Import &, const QString &compatibilityInput);
+    // compatibilityInput is the legacy interpretation BEFORE one leading
+    // alignment directive is stripped, not necessarily the final getText().
+    LC_TextEntityState::Error setCanonicalText(const QString &, const QString &compatibilityInput,
+                                              const LC_TextEntityState::Convention &);
+    const LC_TextProfileBinding &getTextProfile() const { return m_data.textState.profile(); }
+    LC_TextEntityState::CurrentProfile getCurrentTextProfile() const { return m_data.textState.currentProfile(); }
+    LC_TextProfile::Error replaceTextProfile(const LC_TextProfile::Value &value) { return m_data.textState.replaceProfile(value); }
+    LC_TextProfile::Error removeTextProfile() { return m_data.textState.removeProfile(); }
+    void resetTextProfile() { m_data.textState.resetProfile(); }
+
     void setStyle(const QString& s) {
-        m_data.style = s;
+        m_data.style = s.isNull() ? QString{} : QString(s.constData(), s.size());
     }
 
     QString getStyle() const {
@@ -285,6 +302,9 @@ public:
 
 protected:
     RS_TextData m_data;
+    LC_TextEntityState::Error m_textStateError;
+    LC_TextEntityState::Error applyText(const QString &, bool constructor,
+                                      const LC_TextEntityState *preparedState = nullptr);
 
     /**
      * Text width used by the current contents of this text entity.

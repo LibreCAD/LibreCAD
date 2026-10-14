@@ -10116,7 +10116,7 @@ bool DRW_LWPolyline::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_
 bool DRW_MLine::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     switch (code) {
     case 2:
-        styleName = reader->getString();
+        styleName = reader->getUtf8String();
         break;
     case 340:
         styleHandle = static_cast<std::uint32_t>(reader->getHandleString());
@@ -11569,7 +11569,9 @@ DRW_Attrib::DRW_Attrib(const DRW_Attrib& o)
       lockPosition(o.lockPosition), attVersion(o.attVersion),
       m_attributeType(o.m_attributeType),
       keepDuplicateRecords(o.keepDuplicateRecords),
-      mtext(o.mtext ? std::make_unique<DRW_MText>(*o.mtext) : nullptr) {}
+      mtext(o.mtext ? std::make_unique<DRW_MText>(*o.mtext) : nullptr),
+      dxfInAttributeSubclass(o.dxfInAttributeSubclass),
+      dxfEmbeddedMarker(o.dxfEmbeddedMarker) {}
 DRW_Attrib& DRW_Attrib::operator=(const DRW_Attrib& o) {
     if (this != &o) {
         DRW_Text::operator=(o);
@@ -11581,11 +11583,18 @@ DRW_Attrib& DRW_Attrib::operator=(const DRW_Attrib& o) {
         m_attributeType = o.m_attributeType;
         keepDuplicateRecords = o.keepDuplicateRecords;
         mtext = o.mtext ? std::make_unique<DRW_MText>(*o.mtext) : nullptr;
+        dxfInAttributeSubclass = o.dxfInAttributeSubclass;
+        dxfEmbeddedMarker = o.dxfEmbeddedMarker;
     }
     return *this;
 }
 DRW_Attrib::DRW_Attrib(DRW_Attrib&&) noexcept = default;
 DRW_Attrib& DRW_Attrib::operator=(DRW_Attrib&&) noexcept = default;
+
+bool DRW_Attrib::hasAmbiguousLegacyEmbeddedXData() const {
+    return dxfEmbeddedMarker == EmbeddedDxfMarker::Legacy100
+        && mtext != nullptr && !mtext->extData.empty();
+}
 
 DRW_GeoPositionMarker::~DRW_GeoPositionMarker() = default;
 DRW_GeoPositionMarker::DRW_GeoPositionMarker(
@@ -12435,6 +12444,9 @@ bool DRW_Attrib::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
             if (mtext)
                 return mtext->parseCode(101, reader);
             mtext = std::make_unique<DRW_MText>();
+            // Which spelling the record had; both are read the same way.
+            dxfEmbeddedMarker = code == 101 ? EmbeddedDxfMarker::Canonical101
+                                            : EmbeddedDxfMarker::Legacy100;
             if (attVersion == 0) attVersion = 1;
             // The marker makes the attribute multi-line even in a record that
             // has no group 71; the DWG encoder drops the MTEXT of a type 1.
@@ -12516,6 +12528,7 @@ void DRW_Attrib::resetAttribDwgState() {
     keepDuplicateRecords = 0;
     mtext.reset();
     dxfInAttributeSubclass = false;
+    dxfEmbeddedMarker = EmbeddedDxfMarker::None;
 }
 
 bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
@@ -18859,7 +18872,7 @@ bool DRW_Dimension::parseCode(int code, const std::unique_ptr<dxfReader>& reader
         text = reader->getUtf8String();
         break;
     case 2:
-        name = reader->getString();
+        name = reader->getUtf8String();
         break;
     case 3:
         style = reader->getUtf8String();

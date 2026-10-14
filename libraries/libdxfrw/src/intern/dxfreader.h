@@ -70,6 +70,9 @@ public:
     int getVersion(){return decoder.getVersion();}
     void setVersion(const std::string &v, bool dxfFormat){decoder.setVersion(v, dxfFormat);}
     void setCodePage(const std::string &c){decoder.setCodePage(c, true);}
+    void setDxfTextEncoding(DRW::DxfTextEncoding encoding) noexcept {
+        decoder.setDxfTextEncoding(encoding);
+    }
     std::string getCodePage(){ return decoder.getCodePage();}
     DRW::Version getSourceVersion() const { return decoder.getSourceVersion(); }
     bool hasSourceVersion() const { return decoder.hasSourceVersion(); }
