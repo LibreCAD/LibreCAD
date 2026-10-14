@@ -49,7 +49,8 @@ public slots:
     void slotPenChanged(const RS_Pen &pen) const;
     void slotFileNew() const;
     bool loadDocumentFromTemplate(const QString &fileName, RS2::FormatType type) const;
-    bool loadDocument(const QString &fileName, RS2::FormatType type);
+    bool loadDocument(const QString &fileName, RS2::FormatType type,
+                      RS2::DxfTextEncoding encoding = RS2::DxfTextEncoding::Declared);
     bool saveDocument(bool &cancelled, bool isAutoSave = false);
     bool autoSaveDocument(QString &autosaveFileName) const;
     bool saveDocumentAs(bool &cancelled);

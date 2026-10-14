@@ -43,6 +43,9 @@
 #include "rs_settings.h"
 #include "rs_units.h"
 
+#include <filesystem>
+#include <QFileInfo>
+
 namespace {
     // default paper size A4: 210x297 mm
     const RS_Vector g_paperSizeA4{210., 297.};
@@ -304,12 +307,31 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
 void RS_Graphic::initForNewDocument() {
     RS_DEBUG->print("RS_Graphic::newDoc: before clear, autosaveFilename='%s'", m_autosaveFilename.toLatin1().data());
     m_dwgAdvancedMetadata.clear();
+    m_dxfRecoverySourceFile.clear();
     clear();
     clearLayers();
     clearBlocks();
     addLayer(new RS_Layer("0"));
     setModified(false);
     RS_DEBUG->print("RS_Graphic::newDoc: after clear, autosaveFilename='%s'", m_autosaveFilename.toLatin1().data());
+}
+
+bool RS_Graphic::isDxfRecoverySourceFile(const QString& file) const {
+    if (m_dxfRecoverySourceFile.isEmpty() || file.isEmpty())
+        return false;
+    // equivalent() also catches hard links; canonical paths alone do not.
+    std::error_code error;
+    if (std::filesystem::equivalent(
+            std::filesystem::u8path(m_dxfRecoverySourceFile.toUtf8().constData()),
+            std::filesystem::u8path(file.toUtf8().constData()), error))
+        return true;
+    const auto sourcePath = QFileInfo(m_dxfRecoverySourceFile).absoluteFilePath();
+    const auto targetPath = QFileInfo(file).absoluteFilePath();
+#ifdef Q_OS_WIN
+    return sourcePath.compare(targetPath, Qt::CaseInsensitive) == 0;
+#else
+    return sourcePath == targetPath;
+#endif
 }
 
 void RS_Graphic::clearVariables() {

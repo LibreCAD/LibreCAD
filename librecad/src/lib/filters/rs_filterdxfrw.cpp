@@ -4389,7 +4389,15 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
   } else {
 #endif
 
+    // A caller may explicitly accept a partial import via RS_FileIO's error
+    // callback. Protect the original before parsing, not only on full success.
+    if (m_dxfTextEncoding == RS2::DxfTextEncoding::LegacyLibreCadUtf8)
+      m_graphic->setDxfRecoverySourceFile(QFileInfo(file).absoluteFilePath());
     m_dxfR = new dxfRW(QFile::encodeName(file));
+    m_dxfR->setDxfTextEncoding(
+        m_dxfTextEncoding == RS2::DxfTextEncoding::LegacyLibreCadUtf8
+            ? DRW::DxfTextEncoding::LegacyLibreCadUtf8
+            : DRW::DxfTextEncoding::Declared);
 
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file");
     if (RS_Debug::D_DEBUGGING == RS_DEBUG->getLevel()) {
@@ -11465,6 +11473,13 @@ void RS_FilterDXFRW::addHeader(const DRW_Header *data) {
  */
 bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                                 const RS2::FormatType type) {
+  // Also protect callers using the filter directly rather than RS_FileIO.
+  if (g.isDxfRecoverySourceFile(file)) {
+    m_errorCode = DRW::BAD_OPEN;
+    RS_DIALOGFACTORY->commandMessage(QObject::tr(
+        "The original legacy DXF is protected. Save the recovered drawing to a different file."));
+    return false;
+  }
   RS_DEBUG->print("RS_FilterDXFDW::fileExport: exporting file '%s'...",
                   (const char *)QFile::encodeName(file));
   RS_DEBUG->print("RS_FilterDXFDW::fileExport: file type '%d'", type);

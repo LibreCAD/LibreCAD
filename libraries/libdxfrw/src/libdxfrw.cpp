@@ -1244,6 +1244,7 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
         reader = std::make_unique<dxfReaderAscii>(&filestr);
     }
 
+    reader->setDxfTextEncoding(m_dxfTextEncoding);
     bool isOk {processDxf()};
     filestr.close();
     version = (DRW::Version) reader->getVersion();
@@ -1270,6 +1271,7 @@ bool dxfRW::readAscii(DRW_Interface *interface_, bool ext, std::string& content)
     iface = interface_;
     std::istringstream strstream(content);
     reader = std::make_unique<dxfReaderAscii>(&strstream);
+    reader->setDxfTextEncoding(m_dxfTextEncoding);
     bool isOk {processDxf()};
     version = (DRW::Version) reader->getVersion();
     m_sourceVersion = reader->getSourceVersion();
@@ -4323,7 +4325,7 @@ bool dxfRW::writeArcDimension(DRW_DimArc *d) {
     if (version >= DRW::AC1024)
         writer->writeInt16(280, 0);   // AcDbDimension version, 0 = R2010+
     if (!d->getName().empty())
-        writer->writeString(2, d->getName());
+        writer->writeUtf8String(2, d->getName());
     writer->writeDouble(10, d->getArcDefPoint().x);
     writer->writeDouble(20, d->getArcDefPoint().y);
     writer->writeDouble(30, d->getArcDefPoint().z);
@@ -4382,7 +4384,7 @@ bool dxfRW::writeLargeRadialDimension(DRW_DimLargeRadial *d) {
     if (version >= DRW::AC1024)
         writer->writeInt16(280, 0);
     if (!d->getName().empty())
-        writer->writeString(2, d->getName());
+        writer->writeUtf8String(2, d->getName());
     writer->writeDouble(10, d->getCenterPoint().x);
     writer->writeDouble(20, d->getCenterPoint().y);
     writer->writeDouble(30, d->getCenterPoint().z);
@@ -4470,7 +4472,7 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
         if (version >= DRW::AC1024)
             writer->writeInt16(280, 0);   // AcDbDimension version, 0 = R2010+
         if (!ent->getName().empty()){
-            writer->writeString(2, ent->getName());
+            writer->writeUtf8String(2, ent->getName());
         }
         writer->writeDouble(10, ent->getDefPoint().x);
         writer->writeDouble(20, ent->getDefPoint().y);
@@ -5343,7 +5345,7 @@ bool dxfRW::writeMText(DRW_MText *ent){
         writer->writeInt16(71, ent->textgen);
         writer->writeInt16(72, ent->alignH);
         writeMTextContent(ent->text);
-        writer->writeString(7, ent->style);
+        writer->writeUtf8String(7, ent->style);
         writer->writeDouble(210, ent->extPoint.x);
         writer->writeDouble(220, ent->extPoint.y);
         writer->writeDouble(230, ent->extPoint.z);

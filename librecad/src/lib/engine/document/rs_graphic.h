@@ -316,6 +316,13 @@ public:
     */
     QString getFilename() const {return m_filename;}
 
+    /** Original of a legacy UTF-8 recovery import, protected for this document
+     * session even after Save As. Not serialized into the corrected drawing.
+     */
+    void setDxfRecoverySourceFile(const QString& file) { m_dxfRecoverySourceFile = file; }
+    const QString& dxfRecoverySourceFile() const { return m_dxfRecoverySourceFile; }
+    bool isDxfRecoverySourceFile(const QString& file) const;
+
     /**
      * @return Auto-save file name of the document currently loaded.
      */
@@ -376,6 +383,7 @@ private:
 
     /** File name of the document or empty for a new document. */
     QString m_filename;
+    QString m_dxfRecoverySourceFile;
     /** Auto-save file name of document. */
     QString m_autosaveFilename;
 

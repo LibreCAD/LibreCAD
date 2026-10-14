@@ -210,6 +210,29 @@ TEST_CASE("Draft toggling preserves the drawing title", "[.gui][draft][3018]") {
     }
 }
 
+TEST_CASE("Legacy UTF-8 recovery has a separate File menu action", "[.gui][legacy-utf8-ui]") {
+    DockFixture fixture;
+    auto& window = fixture.window;
+    auto* ordinary = window.getAction("FileOpen");
+    auto* recovery = window.getAction("FileOpenLegacyLibreCadUtf8");
+    REQUIRE(ordinary != nullptr);
+    REQUIRE(recovery != nullptr);
+    CHECK(ordinary != recovery);
+    CHECK(ordinary->shortcuts().contains(QKeySequence(QKeySequence::Open)));
+    CHECK(recovery->shortcuts().isEmpty());
+    CHECK_FALSE(recovery->isCheckable());
+    bool besideOrdinaryOpen = false;
+    for (auto* topLevel : window.menuBar()->actions()) {
+        if (auto* menu = topLevel->menu()) {
+            const auto actions = menu->actions();
+            const int index = actions.indexOf(ordinary);
+            if (index >= 0)
+                besideOrdinaryOpen = actions.value(index + 1) == recovery;
+        }
+    }
+    CHECK(besideOrdinaryOpen);
+}
+
 TEST_CASE("First-run maximization fits the available client area", "[.gui][dock-window]") {
     DockFixture fixture;
     auto& window = fixture.window;

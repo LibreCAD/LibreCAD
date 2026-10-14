@@ -145,6 +145,15 @@ namespace RS2 {
         , FormatDXFRW2013 /**< DXF format. v2013. */
     };
 
+    /** Input-only, per-file policy for old LibreCAD DXFs mislabeled ANSI_1252.
+     * The same bytes can be valid in both encodings: never select legacy mode
+     * by guessing, and never use it as an export encoding.
+     */
+    enum class DxfTextEncoding {
+        Declared,
+        LegacyLibreCadUtf8
+    };
+
     /*
         Entity types returned by the rtti() method.
 

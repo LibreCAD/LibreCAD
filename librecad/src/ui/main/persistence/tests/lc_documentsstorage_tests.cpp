@@ -32,6 +32,8 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <filesystem>
+
 #include <QApplication>
 #include <QCheckBox>
 #include <QDateTime>
@@ -51,6 +53,7 @@
 #include "rs_graphic.h"
 #include "rs_line.h"
 #include "rs_settings.h"
+#include "rs_text.h"
 
 namespace {
 
@@ -60,7 +63,8 @@ void ensureApp() {
     // saveDocument() sets an override cursor, which needs a QGuiApplication.
     // rs_mtext_bidi_tests.cpp creates one before any test runs, so this is not
     // a QApplication, and a failed import (it shows a QMessageBox) aborts:
-    // every file these tests open must import.
+    // Ordinary opens must import. Intentional partial failures below call the
+    // native filter or supply an error callback, avoiding that default dialog.
     static int argc = 1;
     static char arg0[] = "librecad_tests";
     static char* argv[] = {arg0, nullptr};
@@ -212,6 +216,26 @@ void writeDxf(const QString& path) {
     REQUIRE(RS_FileIO::instance()->fileExport(graphic, path, RS2::FormatDXFRW));
 }
 
+void writeLegacyUtf8Dxf(const QString& path) {
+    const QByteArray drawing(
+        "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n"
+        "9\n$DWGCODEPAGE\n3\nANSI_1252\n0\nENDSEC\n"
+        "0\nSECTION\n2\nENTITIES\n0\nTEXT\n5\n20\n100\nAcDbEntity\n8\n0\n100\nAcDbText\n"
+        "10\n0\n20\n0\n40\n2.5\n1\n45\xC2\xB0\n"
+        "0\nENDSEC\n0\nEOF\n");
+    QFile file(path);
+    REQUIRE(file.open(QIODevice::WriteOnly));
+    REQUIRE(file.write(drawing) == drawing.size());
+}
+
+QString soleText(const RS_Graphic& graphic) {
+    for (const auto* entity : graphic) {
+        if (entity->rtti() == RS2::EntityText)
+            return static_cast<const RS_Text*>(entity)->getText();
+    }
+    return {};
+}
+
 /** Makes a directory read-only for as long as it lives. */
 class ReadOnlyDirectory {
 public:
@@ -231,6 +255,386 @@ private:
 };
 
 } // namespace
+
+TEST_CASE("Legacy DXF recovery saves a corrected copy and protects its original",
+          "[documentsstorage][save][legacyutf8]") {
+    ensureApp();
+    QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    const QString source = dir.filePath("legacy.dxf");
+    const QString copy = dir.filePath("corrected.dxf");
+    writeLegacyUtf8Dxf(source);
+    const auto original = contents(source);
+    TestStorage storage;
+    RS_Graphic graphic;
+    REQUIRE(storage.loadDocument(&graphic, source, RS2::FormatUnknown,
+                                  RS2::DxfTextEncoding::LegacyLibreCadUtf8));
+    CHECK(soleText(graphic) == QString::fromUtf8("45\xC2\xB0"));
+    CHECK(graphic.isModified());
+    CHECK(graphic.isDxfRecoverySourceFile(source));
+    CHECK(graphic.getFilename() == source);
+
+    storage.m_answer = copy;
+    storage.m_answerType = RS2::FormatDXFRW2000;
+    bool cancelled = false;
+    REQUIRE(save(storage, graphic, cancelled));
+    CHECK_FALSE(cancelled);
+    CHECK(storage.m_asked == 1);
+    CHECK(storage.m_askedName == dir.filePath("legacy_recovered.dxf"));
+    CHECK(graphic.getFilename() == copy);
+    CHECK_FALSE(graphic.isModified());
+    CHECK(contents(source) == original);
+    CHECK(contents(copy).contains("45%%D")); // TEXT uses the standard DXF degree escape.
+    CHECK_FALSE(contents(copy).contains("45\xC2\xB0"));
+    CHECK_FALSE(QFile::exists(source + "~"));
+
+    RS_Graphic reopened;
+    open(storage, reopened, copy);
+    CHECK(soleText(reopened) == QString::fromUtf8("45\xC2\xB0"));
+    CHECK(reopened.dxfRecoverySourceFile().isEmpty());
+    CHECK_FALSE(reopened.isModified());
+
+    // Protection lasts for the recovery document, not just its first Save As.
+    edit(graphic);
+    REQUIRE(save(storage, graphic, cancelled));
+    CHECK(storage.m_asked == 1);
+    storage.m_answer = source;
+    CHECK_FALSE(storage.saveDocumentAs(&graphic, nullptr, cancelled));
+    CHECK_FALSE(cancelled);
+    CHECK(graphic.getFilename() == copy);
+    CHECK(graphic.isDxfRecoverySourceFile(source));
+    CHECK(contents(source) == original);
+    CHECK_FALSE(QFile::exists(source + "~"));
+}
+
+TEST_CASE("Cancelled and failed recovery saves preserve source and session state",
+          "[documentsstorage][save][legacyutf8]") {
+    ensureApp();
+    QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    const QString source = dir.filePath("legacy.dxf");
+    writeLegacyUtf8Dxf(source);
+    const auto original = contents(source);
+    TestStorage storage;
+    RS_Graphic graphic;
+    REQUIRE(storage.loadDocument(&graphic, source, RS2::FormatUnknown,
+                                  RS2::DxfTextEncoding::LegacyLibreCadUtf8));
+    const auto autosave = graphic.getAutoSaveFileName();
+    bool cancelled = false;
+    CHECK(save(storage, graphic, cancelled));
+    CHECK(cancelled);
+    CHECK(graphic.isModified());
+    CHECK(contents(source) == original);
+
+    storage.m_answer = dir.filePath("missing/copy.dxf");
+    CHECK_FALSE(save(storage, graphic, cancelled));
+    CHECK_FALSE(cancelled);
+    CHECK(graphic.getFilename() == source);
+    CHECK(graphic.getAutoSaveFileName() == autosave);
+    CHECK(graphic.getFormatType() == RS2::FormatDXFRW2000);
+    CHECK(graphic.isModified());
+    CHECK(graphic.isDxfRecoverySourceFile(source));
+    CHECK(contents(source) == original);
+
+    // A subsequent ordinary open must not inherit either policy or protection.
+    open(storage, graphic, source);
+    CHECK(soleText(graphic) == QString::fromUtf8("45\xC3\x82\xC2\xB0"));
+    CHECK(graphic.dxfRecoverySourceFile().isEmpty());
+    CHECK_FALSE(graphic.isModified());
+}
+
+TEST_CASE("Recovery export refuses original paths and filesystem aliases",
+          "[documentsstorage][save][legacyutf8]") {
+    ensureApp();
+    QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    const QString source = dir.filePath("legacy.dxf");
+    writeLegacyUtf8Dxf(source);
+    const auto original = contents(source);
+    TestStorage storage;
+    RS_Graphic graphic;
+    REQUIRE(storage.loadDocument(&graphic, source, RS2::FormatUnknown,
+                                  RS2::DxfTextEncoding::LegacyLibreCadUtf8));
+
+    QString target = source;
+    SECTION("same file") {}
+    SECTION("relative path components") { target = dir.filePath("./legacy.dxf"); }
+    SECTION("symbolic link") {
+        target = dir.filePath("alias.dxf");
+        std::error_code error;
+        std::filesystem::create_symlink(std::filesystem::u8path(source.toStdString()),
+                                        std::filesystem::u8path(target.toStdString()), error);
+        if (error)
+            SKIP("filesystem does not permit symbolic links");
+    }
+    SECTION("hard link") {
+        target = dir.filePath("alias.dxf");
+        std::error_code error;
+        std::filesystem::create_hard_link(std::filesystem::u8path(source.toStdString()),
+                                          std::filesystem::u8path(target.toStdString()), error);
+        if (error)
+            SKIP("filesystem does not permit hard links");
+    }
+    CHECK(graphic.isDxfRecoverySourceFile(target));
+    CHECK_FALSE(RS_FileIO::instance()->fileExport(graphic, target, RS2::FormatDXFRW2000));
+    RS_FilterDXFRW direct;
+    CHECK_FALSE(direct.fileExport(graphic, target, RS2::FormatDXFRW2000));
+    storage.m_answer = target;
+    bool cancelled = false;
+    CHECK_FALSE(storage.saveDocumentAs(&graphic, nullptr, cancelled));
+    CHECK(graphic.getFilename() == source);
+    CHECK(graphic.isModified());
+    CHECK(contents(source) == original);
+    CHECK(contents(target) == original);
+    CHECK_FALSE(QFile::exists(source + "~"));
+}
+
+TEST_CASE("Recovery Save As never cleans up or autosaves over a prefix-named original",
+          "[documentsstorage][save][legacyutf8]") {
+    ensureApp();
+    for (bool hideBackups : {false, true}) {
+        for (const QString& sourceName : {QStringLiteral("#copy.dxf"), QStringLiteral(".#copy.dxf")}) {
+            CAPTURE(hideBackups, sourceName.toStdString());
+            QTemporaryDir dir;
+            REQUIRE(dir.isValid());
+            TestStorage storage;
+            SettingGuard hidden{RS_SETTINGS, "Defaults", "HideBackupFiles"};
+            hidden.set(hideBackups);
+            const QString source = dir.filePath(sourceName);
+            const QString copy = dir.filePath("copy.dxf");
+            writeLegacyUtf8Dxf(source);
+            const QByteArray original = contents(source);
+            REQUIRE_FALSE(original.isEmpty());
+            RS_Graphic graphic;
+            REQUIRE(storage.loadDocument(&graphic, source, RS2::FormatUnknown,
+                                          RS2::DxfTextEncoding::LegacyLibreCadUtf8));
+#ifdef Q_OS_WIN
+            const QString preferredAutosave = dir.filePath("#copy.dxf");
+#else
+            const QString preferredAutosave = dir.filePath(hideBackups ? ".#copy.dxf" : "#copy.dxf");
+#endif
+            // This literal expectation is independent of the new collision loop.
+            REQUIRE(storage.createAutoSaveFileName(QFileInfo(copy)) == preferredAutosave);
+            storage.m_answer = copy;
+            storage.m_answerType = RS2::FormatDXFRW2000;
+            bool cancelled = false;
+            REQUIRE(save(storage, graphic, cancelled));
+            CHECK_FALSE(cancelled);
+            CHECK(graphic.getFilename() == copy);
+            CHECK_FALSE(graphic.isModified());
+            CHECK(contents(source) == original);
+            CHECK(contents(copy).contains("45%%D"));
+            const QString autosave = graphic.getAutoSaveFileName();
+            REQUIRE_FALSE(autosave.isEmpty());
+            CHECK_FALSE(graphic.isDxfRecoverySourceFile(autosave));
+            if (preferredAutosave == source)
+                CHECK(autosave != preferredAutosave);
+            else
+                CHECK(autosave == preferredAutosave);
+
+            // Subsequent ordinary autosave must use the safe alternate, not
+            // merely avoid removing the source during the first Save As.
+            edit(graphic);
+            QString writtenAutosave;
+            REQUIRE(storage.autoSaveDocument(&graphic, nullptr, writtenAutosave));
+            CHECK(writtenAutosave == autosave);
+            CHECK(isDxf(contents(autosave)));
+            CHECK(contents(source) == original);
+            RS_Graphic recoveredAutosave;
+            open(storage, recoveredAutosave, autosave);
+            CHECK(hasEditedLine(recoveredAutosave));
+            REQUIRE(save(storage, graphic, cancelled));
+            CHECK_FALSE(QFile::exists(autosave));
+            CHECK(contents(source) == original);
+        }
+    }
+}
+
+TEST_CASE("Recovery Save As retains an old autosave path that aliases its original",
+          "[documentsstorage][save][legacyutf8]") {
+    ensureApp();
+    QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    TestStorage storage;
+    const QString source = dir.filePath("legacy.dxf");
+    const QString copy = dir.filePath("corrected.dxf");
+    writeLegacyUtf8Dxf(source);
+    const QByteArray original = contents(source);
+    RS_Graphic graphic;
+    REQUIRE(storage.loadDocument(&graphic, source, RS2::FormatUnknown,
+                                  RS2::DxfTextEncoding::LegacyLibreCadUtf8));
+    QString oldAutosave = source;
+    SECTION("literal source path") {}
+    SECTION("symbolic alias") {
+        oldAutosave = dir.filePath("old-autosave.dxf");
+        std::error_code error;
+        std::filesystem::create_symlink(std::filesystem::u8path(source.toStdString()),
+                                        std::filesystem::u8path(oldAutosave.toStdString()), error);
+        if (error)
+            SKIP("filesystem does not permit symbolic links");
+    }
+    SECTION("hard-link alias") {
+        oldAutosave = dir.filePath("old-autosave.dxf");
+        std::error_code error;
+        std::filesystem::create_hard_link(std::filesystem::u8path(source.toStdString()),
+                                          std::filesystem::u8path(oldAutosave.toStdString()), error);
+        if (error)
+            SKIP("filesystem does not permit hard links");
+    }
+    REQUIRE(graphic.isDxfRecoverySourceFile(oldAutosave));
+    graphic.setAutosaveFileName(oldAutosave);
+    storage.m_answer = copy;
+    storage.m_answerType = RS2::FormatDXFRW2000;
+    bool cancelled = false;
+    REQUIRE(storage.saveDocumentAs(&graphic, nullptr, cancelled));
+    CHECK_FALSE(cancelled);
+    CHECK(contents(source) == original);
+    CHECK(contents(oldAutosave) == original);
+    CHECK(graphic.getFilename() == copy);
+    CHECK_FALSE(graphic.isDxfRecoverySourceFile(graphic.getAutoSaveFileName()));
+    edit(graphic);
+    QString autosave;
+    REQUIRE(storage.autoSaveDocument(&graphic, nullptr, autosave));
+    CHECK(isDxf(contents(autosave)));
+    REQUIRE(save(storage, graphic, cancelled));
+    CHECK_FALSE(QFile::exists(autosave));
+    CHECK(contents(source) == original);
+    CHECK(contents(oldAutosave) == original);
+}
+
+TEST_CASE("Recovery backup destinations cannot replace the original or its aliases",
+          "[documentsstorage][backup][legacyutf8]") {
+    ensureApp();
+    QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    TestStorage storage;
+    SettingGuard suffixSetting{RS_SETTINGS, "Defaults", "BackupFileSuffix"};
+    const QString suffix = QStringLiteral(".original.dxf");
+    suffixSetting.set(suffix);
+    const QString copy = dir.filePath("copy.dxf");
+    const QString backup = copy + suffix;
+    QString source;
+    enum class Alias { None, Symbolic, HardLink };
+    Alias alias = Alias::None;
+    SECTION("literal custom-suffix source") { source = backup; }
+    SECTION("symbolic backup alias") { source = dir.filePath("legacy.dxf"); alias = Alias::Symbolic; }
+    SECTION("hard-link backup alias") { source = dir.filePath("legacy.dxf"); alias = Alias::HardLink; }
+    REQUIRE_FALSE(source.isEmpty());
+    writeLegacyUtf8Dxf(source);
+    const QByteArray original = contents(source);
+    writeDxf(copy);
+    const QByteArray priorCopy = contents(copy);
+    if (alias != Alias::None) {
+        std::error_code error;
+        if (alias == Alias::Symbolic)
+            std::filesystem::create_symlink(std::filesystem::u8path(source.toStdString()),
+                                            std::filesystem::u8path(backup.toStdString()), error);
+        else
+            std::filesystem::create_hard_link(std::filesystem::u8path(source.toStdString()),
+                                              std::filesystem::u8path(backup.toStdString()), error);
+        if (error)
+            SKIP("filesystem does not permit the requested link");
+    }
+    RS_Graphic graphic;
+    REQUIRE(storage.loadDocument(&graphic, source, RS2::FormatUnknown,
+                                  RS2::DxfTextEncoding::LegacyLibreCadUtf8));
+    REQUIRE(graphic.isDxfRecoverySourceFile(backup));
+    CHECK_FALSE(storage.backupDrawingFile(copy, suffix, &graphic));
+    CHECK(contents(source) == original);
+    CHECK(contents(backup) == original);
+    CHECK(contents(copy) == priorCopy);
+
+    // Skipping this unsafe optional backup must not prevent writing the
+    // corrected destination or leave the recovered document unsaved.
+    storage.m_answer = copy;
+    storage.m_answerType = RS2::FormatDXFRW2000;
+    bool cancelled = false;
+    REQUIRE(storage.saveDocumentAs(&graphic, nullptr, cancelled));
+    CHECK_FALSE(cancelled);
+    CHECK(graphic.getFilename() == copy);
+    CHECK_FALSE(graphic.isModified());
+    CHECK(contents(copy).contains("45%%D"));
+    CHECK(contents(source) == original);
+    CHECK(contents(backup) == original);
+    edit(graphic);
+    QString autosave;
+    REQUIRE(storage.autoSaveDocument(&graphic, nullptr, autosave));
+    CHECK(isDxf(contents(autosave)));
+    REQUIRE(save(storage, graphic, cancelled));
+    CHECK(contents(source) == original);
+    CHECK(contents(backup) == original);
+}
+
+TEST_CASE("An accepted partial legacy DXF import still protects its original",
+          "[documentsstorage][save][legacyutf8]") {
+    ensureApp();
+    QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    TestStorage storage;
+    const QString source = dir.filePath("partial.dxf");
+    writeLegacyUtf8Dxf(source);
+    QByteArray malformed = contents(source);
+    const QByteArray end("0\nENDSEC\n0\nEOF\n");
+    REQUIRE(malformed.endsWith(end));
+    malformed.chop(end.size());
+    // The first TEXT is delivered at this next entity boundary. The second
+    // one has its own valid handle but no height, forcing native read failure.
+    malformed += "0\nTEXT\n5\n21\n100\nAcDbEntity\n8\n0\n100\nAcDbText\n"
+                 "10\n1\n20\n1\n1\nmissing height\n0\nENDSEC\n0\nEOF\n";
+    {
+        QFile file(source);
+        REQUIRE(file.open(QIODevice::WriteOnly | QIODevice::Truncate));
+        REQUIRE(file.write(malformed) == malformed.size());
+    }
+    const QByteArray original = contents(source);
+    RS_Graphic nativePartial;
+    RS_FilterDXFRW nativeReader;
+    nativeReader.setDxfTextEncoding(RS2::DxfTextEncoding::LegacyLibreCadUtf8);
+    REQUIRE_FALSE(nativeReader.fileImport(nativePartial, source, RS2::FormatDXFRW2000));
+    CHECK(soleText(nativePartial) == QString::fromUtf8("45\xC2\xB0"));
+    CHECK(nativePartial.isDxfRecoverySourceFile(source));
+
+    RS_Graphic graphic;
+    graphic.setFilename(source);
+    graphic.setAutosaveFileName(dir.filePath("#partial.dxf"));
+    graphic.setModified(true);
+    int callbackCount = 0;
+    bool partialReported = false;
+    QString reportedError;
+    REQUIRE(RS_FileIO::instance()->fileImport(
+        graphic, source, RS2::FormatDXFRW,
+        [&](bool partial, const QString& message) {
+            ++callbackCount;
+            partialReported = partial;
+            reportedError = message;
+            return true;
+        }, RS2::DxfTextEncoding::LegacyLibreCadUtf8));
+    CHECK(callbackCount == 1);
+    CHECK(partialReported);
+    CHECK_FALSE(reportedError.isEmpty());
+    CHECK(soleText(graphic) == QString::fromUtf8("45\xC2\xB0"));
+    CHECK_FALSE(graphic.isEmpty());
+    CHECK(graphic.isDxfRecoverySourceFile(source));
+    const QString oldFilename = graphic.getFilename();
+    const QString oldAutosave = graphic.getAutoSaveFileName();
+    const RS2::FormatType oldFormat = graphic.getFormatType();
+    REQUIRE(graphic.isModified());
+    CHECK_FALSE(RS_FileIO::instance()->fileExport(graphic, source, RS2::FormatDXFRW2000));
+    // Save All delegates to this same per-document Save path. Refusing the
+    // original must leave all session state and the partial progress intact.
+    storage.m_answer = source;
+    bool cancelled = false;
+    CHECK_FALSE(save(storage, graphic, cancelled));
+    CHECK_FALSE(cancelled);
+    CHECK(graphic.getFilename() == oldFilename);
+    CHECK(graphic.getAutoSaveFileName() == oldAutosave);
+    CHECK(graphic.getFormatType() == oldFormat);
+    CHECK(graphic.isModified());
+    CHECK(graphic.isDxfRecoverySourceFile(source));
+    CHECK(soleText(graphic) == QString::fromUtf8("45\xC2\xB0"));
+    CHECK(contents(source) == original);
+    CHECK_FALSE(QFile::exists(source + "~"));
+}
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("A drawing that failed to save stays modified", "[documentsstorage][save]") {
