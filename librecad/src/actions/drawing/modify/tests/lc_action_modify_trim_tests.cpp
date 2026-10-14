@@ -3,6 +3,7 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2026 LibreCAD.org
+** Copyright (C) 2026 Dongxu Li
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -32,6 +33,7 @@
 // is rebuilt, as all are when a layer is shown or hidden.
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
 
 #include <algorithm>
 #include <memory>
@@ -41,6 +43,7 @@
 #include "lc_actiontestsupport.h"
 #include "rs_block.h"
 #include "rs_insert.h"
+#include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_point.h"
@@ -336,4 +339,109 @@ TEST_CASE("the Trim preview releases the trimmed copies it does not show", "[act
         INFO("reference entities shown: " << showReferences);
         CHECK(*live == afterFirstMove);
     }
+}
+
+TEST_CASE("Trim Two keeps each line's layer and pen when the trim reverses its inputs",
+          "[actions][modify][trim][attributes]") {
+    const bool reversePick = GENERATE(false, true);
+    const bool atStart = GENERATE(false, true);
+    const bool crossing = GENERATE(false, true);
+    const bool byLayer = GENERATE(false, true);
+    CAPTURE(reversePick, atStart, crossing, byLayer);
+    ActionFixture<TrimTwo> f;
+    const RS_Pen firstPen(RS_Color(255, 0, 0), RS2::Width11, RS2::DashLine);
+    const RS_Pen secondPen(RS_Color(0, 255, 0), RS2::Width07, RS2::DotLine);
+    const RS_Pen activePen(RS_Color(0, 0, 255), RS2::Width17, RS2::DashDotLine);
+    const RS_Pen byLayerPen(RS_Color(RS2::FlagByLayer), RS2::WidthByLayer, RS2::LineByLayer);
+    auto* firstLayer = new RS_Layer(QStringLiteral("First"));
+    auto* secondLayer = new RS_Layer(QStringLiteral("Second"));
+    auto* activeLayer = new RS_Layer(QStringLiteral("Active"));
+    firstLayer->setPen(firstPen);
+    secondLayer->setPen(secondPen);
+    f.m_graphic.addLayer(firstLayer);
+    f.m_graphic.addLayer(secondLayer);
+    f.m_graphic.addLayer(activeLayer);
+    f.m_graphic.activateLayer(activeLayer);
+    f.m_graphic.setActivePen(activePen);
+
+    RS_Line* horizontal = addLine(f.m_graphic, {0.0, 0.0}, {100.0, 0.0});
+    const RS_Vector bottom{50.0, crossing ? -50.0 : 0.0};
+    const RS_Vector top{50.0, 50.0};
+    RS_Line* vertical = addLine(f.m_graphic, atStart ? bottom : top, atStart ? top : bottom);
+    horizontal->setLayer(firstLayer);
+    vertical->setLayer(secondLayer);
+    horizontal->setPen(byLayer ? byLayerPen : firstPen);
+    vertical->setPen(byLayer ? byLayerPen : secondPen);
+
+    f.m_action->click(reversePick ? RS_Vector{50.0, 30.0} : RS_Vector{75.0, 0.0});
+    REQUIRE(f.m_action->getStatus() == TrimTwo::ChooseTrimEntity);
+    f.m_action->click(reversePick ? RS_Vector{75.0, 0.0} : RS_Vector{50.0, 30.0});
+    CHECK(f.m_action->getStatus() == TrimTwo::ChooseLimitEntity);
+    REQUIRE(horizontal->isDeleted());
+    CHECK(vertical->isDeleted() == (crossing || reversePick));
+
+    const RS_Entity* horizontalAfter = nullptr;
+    const RS_Entity* verticalAfter = nullptr;
+    unsigned visible = 0;
+    for (const RS_Entity* entity : f.m_graphic) {
+        if (entity->isDeleted()) continue;
+        ++visible;
+        if (entity->getStartpoint().y == 0.0 && entity->getEndpoint().y == 0.0)
+            horizontalAfter = entity;
+        else
+            verticalAfter = entity;
+    }
+    REQUIRE(visible == 2);
+    REQUIRE(horizontalAfter != nullptr);
+    REQUIRE(verticalAfter != nullptr);
+    CHECK(horizontalAfter->getStartpoint().distanceTo({50.0, 0.0}) < RS_TOLERANCE);
+    CHECK(horizontalAfter->getEndpoint().distanceTo({100.0, 0.0}) < RS_TOLERANCE);
+    const auto checkAttributes = [&] {
+        CHECK(horizontalAfter->getLayer(false) == firstLayer);
+        CHECK(verticalAfter->getLayer(false) == secondLayer);
+        CHECK(horizontalAfter->getPen(false) == (byLayer ? byLayerPen : firstPen));
+        CHECK(verticalAfter->getPen(false) == (byLayer ? byLayerPen : secondPen));
+        CHECK(horizontalAfter->getPen(true) == firstPen);
+        CHECK(verticalAfter->getPen(true) == secondPen);
+        CHECK(f.m_graphic.getActiveLayer() == activeLayer);
+        CHECK(f.m_graphic.getActivePen() == activePen);
+    };
+    checkAttributes();
+    REQUIRE(f.m_graphic.undo());
+    CHECK_FALSE(horizontal->isDeleted());
+    CHECK_FALSE(vertical->isDeleted());
+    CHECK(horizontalAfter->isDeleted());
+    REQUIRE(f.m_graphic.redo());
+    CHECK(horizontal->isDeleted());
+    CHECK_FALSE(horizontalAfter->isDeleted());
+    CHECK_FALSE(verticalAfter->isDeleted());
+    checkAttributes();
+}
+
+TEST_CASE("Trim Two previews the actual source line at a T junction", "[actions][modify][trim][preview]") {
+    ActionFixture<TrimTwo> f;
+    const auto live = std::make_shared<int>(0);
+    auto* horizontal = new CountingLine(&f.m_graphic, RS_LineData({0.0, 0.0}, {100.0, 0.0}), live);
+    f.m_graphic.addEntity(horizontal);
+    RS_Line* vertical = addLine(f.m_graphic, {50.0, 0.0}, {50.0, 50.0});
+    f.m_action->click({75.0, 0.0});
+    REQUIRE(f.m_action->getStatus() == TrimTwo::ChooseTrimEntity);
+    f.m_action->m_showRefEntitiesOnPreview = true;
+    f.m_action->hover({50.0, 30.0});
+    const int afterFirstHover = *live;
+    for (int i = 0; i < 5; ++i) {
+        f.m_action->hover({50.0, 30.0});
+        CHECK(*live == afterFirstHover);
+        RS_EntityContainer references(nullptr, false);
+        f.m_action->m_preview->addReferenceEntitiesToContainer(&references);
+        const auto line = std::find_if(references.begin(), references.end(), [](const RS_Entity* entity) {
+            return entity->rtti() == RS2::EntityRefLine;
+        });
+        REQUIRE(line != references.end());
+        CHECK((*line)->getStartpoint().distanceTo({0.0, 0.0}) < RS_TOLERANCE);
+        CHECK((*line)->getEndpoint().distanceTo({50.0, 0.0}) < RS_TOLERANCE);
+    }
+    CHECK_FALSE(horizontal->isDeleted());
+    CHECK_FALSE(vertical->isDeleted());
+    CHECK_FALSE(canUndo(f.m_graphic));
 }

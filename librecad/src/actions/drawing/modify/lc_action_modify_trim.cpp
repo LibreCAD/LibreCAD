@@ -116,8 +116,10 @@ bool LC_ActionModifyTrim::doTriggerModifications(LC_DocumentModificationBatch& c
                                                                m_limitEntity, m_both, ctx);
 
         if (trimResult.trimmed1 != nullptr) {
-            trimResult.trimmed1->setPen(m_trimEntity->getPen(false));
-            trimResult.trimmed1->setLayer(m_trimEntity->getLayer(false));
+            // trim() may swap its inputs; the batch records the actual replacement source.
+            const RS_Entity* trimmedSource = ctx.entitiesToDelete.first();
+            trimResult.trimmed1->setPen(trimmedSource->getPen(false));
+            trimResult.trimmed1->setLayer(trimmedSource->getLayer(false));
 
             if (m_both) {
                 if (trimResult.trimmed2 != nullptr) {
@@ -161,10 +163,11 @@ void LC_ActionModifyTrim::previewTrim(RS_Entity* entityToTrimCandidate, RS_Entit
             bool previewOwnsTrimmed2 = false;
             if (trimResult.result) {
                 trimInvalid = false;
-                highlightHover(entityToTrimCandidate);
+                const RS_Entity* trimmedSource = ctx.entitiesToDelete.first();
+                highlightHover(trimmedSource);
                 if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(trimResult.intersection1);
-                    previewOwnsTrimmed1 = previewRefTrimmedEntity(trimResult.trimmed1, entityToTrimCandidate);
+                    previewOwnsTrimmed1 = previewRefTrimmedEntity(trimResult.trimmed1, trimmedSource);
                     if (trimResult.intersection2.valid) {
                         previewRefPoint(trimResult.intersection2);
                     }
