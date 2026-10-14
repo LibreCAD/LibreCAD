@@ -48,6 +48,7 @@
 #include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_modification.h"
+#include "rs_text.h"
 
 namespace {
 
@@ -231,6 +232,41 @@ QStringList addedDangling(const std::filesystem::path& path) {
         added.removeAll(problem);
     }
     return added;
+}
+
+// A block reference and a text that belongs to it, as the DXF filter reads a block attribute: the text is
+// a sibling of the block reference and names it by lineage.
+struct OwnedText {
+    RS_Insert* m_insert = nullptr;
+    RS_Text* m_text = nullptr;
+};
+
+OwnedText addOwnedText(Drawing& d) {
+    d.addBlock("PART", [](RS_Block& b) {
+        b.addEntity(new RS_Line(&b, RS_LineData(RS_Vector{0, 0}, RS_Vector{1, 0})));
+    });
+    OwnedText pair;
+    pair.m_insert = d.addInsert("PART", RS_Vector{0, 0});
+    pair.m_text = d.add(new RS_Text(&d.m_graphic,
+                                    RS_TextData(RS_Vector{0, 2}, RS_Vector{0, 2}, 1.0, 1.0, RS_TextData::VABaseline,
+                                                RS_TextData::HALeft, RS_TextData::None, "value", "standard", 0.0)));
+    pair.m_text->setOwnerLineage(pair.m_insert->lineage());
+    return pair;
+}
+
+// The live entity of a type whose insertion point has this x.
+template <typename T>
+T* atX(const Drawing& d, const RS2::EntityType type, const double x) {
+    T* found = nullptr;
+    for (RS_Entity* e : d.live(type)) {
+        auto* candidate = static_cast<T*>(e);
+        if (std::abs(candidate->getInsertionPoint().x - x) < 1e-9) {
+            REQUIRE(found == nullptr);
+            found = candidate;
+        }
+    }
+    REQUIRE(found != nullptr);
+    return found;
 }
 
 } // namespace
@@ -831,4 +867,245 @@ TEST_CASE("Pasting onto the points it removes in the same batch does not take ov
     const auto lines = destination.live(RS2::EntityLine);
     REQUIRE(lines.size() == 1);
     checkIdentity(lines.front(), 0);
+}
+
+TEST_CASE("A replacement keeps the lineage and the owner of what it replaces", "[copy][lineage]") {
+    Drawing d;
+    const OwnedText pair = addOwnedText(d);
+    const auto insertLineage = pair.m_insert->lineage();
+    const auto textLineage = pair.m_text->lineage();
+    REQUIRE(insertLineage != 0);
+    REQUIRE(textLineage != 0);
+    REQUIRE(textLineage != insertLineage);
+    CHECK(pair.m_insert->ownerLineage() == 0);
+
+    // A clone is what it was made from until an undo section says otherwise.
+    RS_Entity* movedInsert = pair.m_insert->clone();
+    movedInsert->move(RS_Vector{50, 0});
+    CHECK(movedInsert->lineage() == insertLineage);
+    d.modify([&](LC_DocumentModificationBatch& ctx) {
+        ctx.replace(pair.m_insert, movedInsert);
+    });
+    CHECK(movedInsert->lineage() == insertLineage);
+
+    RS_Entity* editedText = pair.m_text->clone();
+    d.modify([&](LC_DocumentModificationBatch& ctx) {
+        ctx.replace(pair.m_text, editedText);
+    });
+    CHECK(editedText->lineage() == textLineage);
+    CHECK(editedText->ownerLineage() == insertLineage);
+
+    // What was replaced keeps its own too, so an undo brings the same pair back.
+    REQUIRE(d.m_graphic.undo());
+    REQUIRE(d.m_graphic.undo());
+    REQUIRE(d.live() == QList<RS_Entity*>{pair.m_insert, pair.m_text});
+    CHECK(pair.m_insert->lineage() == insertLineage);
+    CHECK(pair.m_text->lineage() == textLineage);
+    CHECK(pair.m_text->ownerLineage() == insertLineage);
+    REQUIRE(d.m_graphic.redo());
+    REQUIRE(d.m_graphic.redo());
+    REQUIRE(d.live() == QList<RS_Entity*>{movedInsert, editedText});
+    CHECK(editedText->ownerLineage() == movedInsert->lineage());
+}
+
+TEST_CASE("Moving into several copies keeps the lineage with the first", "[copy][lineage]") {
+    Drawing d;
+    const OwnedText pair = addOwnedText(d);
+    const auto insertLineage = pair.m_insert->lineage();
+    const auto textLineage = pair.m_text->lineage();
+
+    d.modify([&](LC_DocumentModificationBatch& ctx) {
+        RS_Modification::move(moveBy(RS_Vector{50, 0}, false, 3), {pair.m_insert, pair.m_text}, false, ctx);
+    });
+
+    REQUIRE(d.live(RS2::EntityInsert).size() == 3);
+    REQUIRE(d.live(RS2::EntityText).size() == 3);
+    CHECK(atX<RS_Insert>(d, RS2::EntityInsert, 50)->lineage() == insertLineage);
+    CHECK(atX<RS_Text>(d, RS2::EntityText, 50)->lineage() == textLineage);
+    CHECK(atX<RS_Text>(d, RS2::EntityText, 50)->ownerLineage() == insertLineage);
+    // The other two are copies: new lineages, and each text belongs to the block reference of its own copy.
+    QSet<unsigned long long> lineages{insertLineage, textLineage};
+    for (const double x : {100.0, 150.0}) {
+        const RS_Insert* insert = atX<RS_Insert>(d, RS2::EntityInsert, x);
+        const RS_Text* text = atX<RS_Text>(d, RS2::EntityText, x);
+        CHECK_FALSE(lineages.contains(insert->lineage()));
+        lineages.insert(insert->lineage());
+        CHECK_FALSE(lineages.contains(text->lineage()));
+        lineages.insert(text->lineage());
+        CHECK(insert->ownerLineage() == 0);
+        CHECK(text->ownerLineage() == insert->lineage());
+    }
+}
+
+TEST_CASE("Copies that keep their originals get lineages of their own and stay paired", "[copy][lineage]") {
+    Drawing d;
+    const OwnedText pair = addOwnedText(d);
+    const auto insertLineage = pair.m_insert->lineage();
+    const auto textLineage = pair.m_text->lineage();
+
+    d.modify([&](LC_DocumentModificationBatch& ctx) {
+        RS_Modification::move(moveBy(RS_Vector{50, 0}, true, 2), {pair.m_insert, pair.m_text}, false, ctx);
+    });
+
+    REQUIRE(d.live(RS2::EntityInsert).size() == 3);
+    REQUIRE(d.live(RS2::EntityText).size() == 3);
+    CHECK(pair.m_insert->lineage() == insertLineage);
+    CHECK(pair.m_text->lineage() == textLineage);
+    CHECK(pair.m_text->ownerLineage() == insertLineage);
+    QSet<unsigned long long> lineages{insertLineage, textLineage};
+    for (const double x : {50.0, 100.0}) {
+        const RS_Insert* insert = atX<RS_Insert>(d, RS2::EntityInsert, x);
+        const RS_Text* text = atX<RS_Text>(d, RS2::EntityText, x);
+        CHECK_FALSE(lineages.contains(insert->lineage()));
+        lineages.insert(insert->lineage());
+        CHECK_FALSE(lineages.contains(text->lineage()));
+        lineages.insert(text->lineage());
+        CHECK(text->ownerLineage() == insert->lineage());
+    }
+
+    // A copy of a copy is a pair of its own again, in a later undo section too.
+    RS_Insert* copiedInsert = atX<RS_Insert>(d, RS2::EntityInsert, 50);
+    RS_Text* copiedText = atX<RS_Text>(d, RS2::EntityText, 50);
+    d.modify([&](LC_DocumentModificationBatch& ctx) {
+        RS_Modification::move(moveBy(RS_Vector{0, 30}, true), {copiedInsert, copiedText}, false, ctx);
+    });
+    REQUIRE(d.live(RS2::EntityInsert).size() == 4);
+    REQUIRE(d.live(RS2::EntityText).size() == 4);
+    const RS_Entity* newestInsert = d.live(RS2::EntityInsert).back();
+    const RS_Entity* newestText = d.live(RS2::EntityText).back();
+    CHECK_FALSE(lineages.contains(newestInsert->lineage()));
+    CHECK_FALSE(lineages.contains(newestText->lineage()));
+    CHECK(newestText->ownerLineage() == newestInsert->lineage());
+    CHECK(copiedText->ownerLineage() == copiedInsert->lineage());
+
+    // A text copied without its block reference belongs to none that exists.
+    d.modify([&](LC_DocumentModificationBatch& ctx) {
+        RS_Modification::move(moveBy(RS_Vector{0, -30}, true), {pair.m_text}, false, ctx);
+    });
+    const RS_Entity* loneText = d.live(RS2::EntityText).back();
+    CHECK(loneText->ownerLineage() != 0);
+    for (const RS_Entity* insert : d.live(RS2::EntityInsert)) {
+        CHECK(insert->lineage() != loneText->ownerLineage());
+    }
+    CHECK(pair.m_text->ownerLineage() == insertLineage);
+}
+
+TEST_CASE("An entity that is no block reference and belongs to none keeps its lineage when copied", "[copy][lineage]") {
+    Drawing d;
+    RS_Line* line = d.addLine(0);
+    const auto lineage = line->lineage();
+
+    d.modify([&](LC_DocumentModificationBatch& ctx) {
+        RS_Modification::move(moveBy(RS_Vector{0, 5}, true, 2), {line}, false, ctx);
+    });
+
+    // Nothing tells such entities apart by lineage, so no undo section spends anything on them.
+    const auto lines = d.live();
+    REQUIRE(lines.size() == 3);
+    for (const RS_Entity* e : lines) {
+        CHECK(e->lineage() == lineage);
+        CHECK(e->ownerLineage() == 0);
+    }
+}
+
+TEST_CASE("A text on a locked layer stays with its moved block reference and its copy belongs to none",
+          "[copy][lineage]") {
+    Drawing d;
+    const OwnedText pair = addOwnedText(d);
+    const auto insertLineage = pair.m_insert->lineage();
+    const auto textLineage = pair.m_text->lineage();
+    RS_Layer* locked = d.addLayer("LOCKED");
+    pair.m_text->setLayer(locked);
+    locked->lock(true);
+
+    d.modify([&](LC_DocumentModificationBatch& ctx) {
+        RS_Modification::move(moveBy(RS_Vector{50, 0}, false), {pair.m_insert, pair.m_text}, false, ctx);
+    });
+
+    // The block reference was replaced; the text could not be, so its clone is one more text.
+    REQUIRE(d.live(RS2::EntityInsert).size() == 1);
+    REQUIRE(d.live(RS2::EntityText).size() == 2);
+    const RS_Insert* moved = atX<RS_Insert>(d, RS2::EntityInsert, 50);
+    CHECK(moved->lineage() == insertLineage);
+    CHECK_FALSE(pair.m_text->isDeleted());
+    CHECK(pair.m_text->lineage() == textLineage);
+    CHECK(pair.m_text->ownerLineage() == insertLineage);
+    const RS_Text* copy = atX<RS_Text>(d, RS2::EntityText, 50);
+    CHECK(copy->lineage() != textLineage);
+    CHECK(copy->ownerLineage() != 0);
+    CHECK(copy->ownerLineage() != insertLineage);
+}
+
+TEST_CASE("Copies of a block reference and of its text on a locked layer are pairs copy by copy", "[copy][lineage]") {
+    Drawing d;
+    const OwnedText pair = addOwnedText(d);
+    const auto insertLineage = pair.m_insert->lineage();
+    const auto textLineage = pair.m_text->lineage();
+    RS_Layer* locked = d.addLayer("LOCKED");
+    pair.m_text->setLayer(locked);
+    locked->lock(true);
+
+    d.modify([&](LC_DocumentModificationBatch& ctx) {
+        RS_Modification::move(moveBy(RS_Vector{50, 0}, false, 2), {pair.m_insert, pair.m_text}, false, ctx);
+    });
+
+    // The block reference was replaced by its first clone; the text could not be, so both its clones are
+    // texts more.
+    REQUIRE(d.live(RS2::EntityInsert).size() == 2);
+    REQUIRE(d.live(RS2::EntityText).size() == 3);
+    CHECK(atX<RS_Insert>(d, RS2::EntityInsert, 50)->lineage() == insertLineage);
+    CHECK_FALSE(pair.m_text->isDeleted());
+    CHECK(pair.m_text->lineage() == textLineage);
+    CHECK(pair.m_text->ownerLineage() == insertLineage);
+
+    // The second clone of each is the second copy of the pair.
+    const RS_Insert* secondInsert = atX<RS_Insert>(d, RS2::EntityInsert, 100);
+    const RS_Text* secondText = atX<RS_Text>(d, RS2::EntityText, 100);
+    CHECK(secondInsert->lineage() != insertLineage);
+    CHECK(secondText->lineage() != textLineage);
+    CHECK(secondText->ownerLineage() == secondInsert->lineage());
+
+    // The first clone of the text lies next to the block reference that has the original: it belongs to none.
+    const RS_Text* firstText = atX<RS_Text>(d, RS2::EntityText, 50);
+    CHECK(firstText->lineage() != textLineage);
+    CHECK(firstText->ownerLineage() != 0);
+    for (const RS_Entity* insert : d.live(RS2::EntityInsert)) {
+        CHECK(insert->lineage() != firstText->ownerLineage());
+    }
+}
+
+TEST_CASE("Copies of a block reference on a locked layer and of its text are pairs copy by copy", "[copy][lineage]") {
+    Drawing d;
+    const OwnedText pair = addOwnedText(d);
+    const auto insertLineage = pair.m_insert->lineage();
+    const auto textLineage = pair.m_text->lineage();
+    RS_Layer* locked = d.addLayer("LOCKED");
+    pair.m_insert->setLayer(locked);
+    locked->lock(true);
+
+    d.modify([&](LC_DocumentModificationBatch& ctx) {
+        RS_Modification::move(moveBy(RS_Vector{50, 0}, false, 2), {pair.m_insert, pair.m_text}, false, ctx);
+    });
+
+    // The text was replaced by its first clone, which still belongs to the block reference that stayed.
+    REQUIRE(d.live(RS2::EntityInsert).size() == 3);
+    REQUIRE(d.live(RS2::EntityText).size() == 2);
+    CHECK_FALSE(pair.m_insert->isDeleted());
+    CHECK(pair.m_insert->lineage() == insertLineage);
+    const RS_Text* firstText = atX<RS_Text>(d, RS2::EntityText, 50);
+    CHECK(firstText->lineage() == textLineage);
+    CHECK(firstText->ownerLineage() == insertLineage);
+
+    // The second clone of each is the second copy of the pair, and the first clone of the block reference
+    // has no text.
+    const RS_Insert* firstInsert = atX<RS_Insert>(d, RS2::EntityInsert, 50);
+    const RS_Insert* secondInsert = atX<RS_Insert>(d, RS2::EntityInsert, 100);
+    const RS_Text* secondText = atX<RS_Text>(d, RS2::EntityText, 100);
+    CHECK(firstInsert->lineage() != insertLineage);
+    CHECK(secondInsert->lineage() != insertLineage);
+    CHECK(secondInsert->lineage() != firstInsert->lineage());
+    CHECK(secondText->ownerLineage() == secondInsert->lineage());
+    for (const RS_Entity* text : d.live(RS2::EntityText)) {
+        CHECK(text->ownerLineage() != firstInsert->lineage());
+    }
 }

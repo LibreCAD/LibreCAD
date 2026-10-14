@@ -616,6 +616,7 @@ private:
     bool writeExtData(const std::vector<std::shared_ptr<DRW_Variant>> &ed);
     bool writeEmbeddedMText(DRW_MText *ent);
     bool writeAttributeR2018Features(DRW_Attrib *ent);
+    void writeMTextContent(const std::string& utf8);
     /*!< F4 — emit a 330 owner handle for a typed data-only OBJECT (the record's
      * parentHandle when nonzero, else root dict "C" so it is reachable and not
      * pruned as an orphan); no-op pre-R2000 (DXF has no OBJECTS 330 then). */

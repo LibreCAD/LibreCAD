@@ -96,7 +96,8 @@ public:
      */
     /**
      * What the last export left out or simplified because the file format or
-     * version cannot hold it, one item per line; empty if nothing.
+     * version cannot hold it, or because it could not be rebuilt after an
+     * edit, one item per line; empty if nothing.
      */
     virtual QString exportReport() const {
         return {};

@@ -8175,6 +8175,7 @@ class InsertAttributeRoundTripIface : public EmptyIface {
 public:
   dwgRW *m_writer{nullptr};
   std::uint32_t m_blockRecH{0};
+  std::function<void(DRW_Attrib &)> configureAttribute;
   std::vector<DRW_Insert> m_inserts;
   std::vector<DRW_DwgFramePublication> m_framePublications;
 
@@ -8205,6 +8206,8 @@ public:
     attrib->m_attributeType = 2;
     attrib->keepDuplicateRecords = 0xA6;
     attrib->mtext = MultilineAttributeWriteIface::makeMText("line 1\\Pline 2");
+    if (configureAttribute)
+      configureAttribute(*attrib);
     insert.attlist.push_back(std::move(attrib));
 
     REQUIRE(m_writer->writeInsert(&insert));
@@ -29063,6 +29066,10 @@ TEST_CASE("RS_FilterDXFRW receives AC1032 INSERT ATTRIB content",
       tempPath("filter_insert_multiline_attrib_exported_ac1032.dwg");
   {
     InsertAttributeRoundTripIface writeIface;
+    // The payload must name an APPID record of the file to be replayed.
+    writeIface.configureAttribute = [](DRW_Attrib &attribute) {
+      attribute.mtext->m_r2018AnnotativeAppHandle = 0x14u;
+    };
     dwgRW writer(path.c_str());
     writeIface.m_writer = &writer;
     REQUIRE(writer.write(&writeIface, DRW::AC1032, /*bin=*/false));
@@ -29129,11 +29136,13 @@ TEST_CASE("RS_FilterDXFRW receives AC1032 INSERT ATTRIB content",
       *exportedRead.m_inserts.front().attlist.front()->mtext;
   CHECK(exportedMText.m_r2018IsNotAnnotative);
   CHECK_FALSE(exportedMText.m_r2018ReallyLocked);
-  CHECK(exportedMText.m_r2018AppIdHandle == 0x14u);
+  // The full R2018 body is rebuilt without a source-file registered APPID.
+  // Its separate annotative application reference below is still retained.
+  CHECK(exportedMText.m_r2018AppIdHandle == 0u);
   CHECK(exportedMText.m_r2018AnnotativeData ==
         std::vector<std::uint8_t>{0x01, 0x7F, 0xFE});
   CHECK(exportedMText.m_r2018AnnotativeUnknown == 0x72);
-  CHECK(exportedMText.m_r2018AnnotativeAppHandle == 0x24u);
+  CHECK(exportedMText.m_r2018AnnotativeAppHandle == 0x14u);
 
   RS_Graphic exportedGraphic;
   {
@@ -29303,7 +29312,9 @@ TEST_CASE("RS_FilterDXFRW preserves nested INSERT ATTRIB MTEXT XDATA",
   bool sawDouble = false;
   bool sawCoordinate = false;
   bool sawBinary = false;
-  for (const auto &value : attribute.mtext->extData) {
+  // XDATA follows the embedded object and is the ATTRIB's.
+  CHECK(attribute.mtext->extData.empty());
+  for (const auto &value : attribute.extData) {
     if (!value)
       continue;
     if (value->code() == 1001 && value->type() == DRW_Variant::STRING &&
@@ -29350,31 +29361,36 @@ TEST_CASE("RS_FilterDXFRW preserves nested INSERT ATTRIB MTEXT XDATA",
   REQUIRE(dwgReadIface.m_inserts.size() == 1);
   REQUIRE(dwgReadIface.m_inserts.front().attlist.size() == 1);
   REQUIRE(dwgReadIface.m_inserts.front().attlist.front()->mtext != nullptr);
-  const DRW_MText &dwgMText =
-      *dwgReadIface.m_inserts.front().attlist.front()->mtext;
-  CHECK(dwgMText.reactorHandles == std::vector<std::uint32_t>{0x31u, 0x32u});
-  CHECK(dwgMText.xDictHandle == 0x33u);
-  CHECK(dwgMText.hasDataStorageBinaryData());
+  const DRW_Attrib &dwgAttribute =
+      *dwgReadIface.m_inserts.front().attlist.front();
+  const DRW_MText &dwgMText = *dwgAttribute.mtext;
+  // The MTEXT of the source refers to objects by handles of the source file,
+  // which are other objects, or none, in the exported file. No such
+  // reference is written: the layer is the attribute's own, the linetype is
+  // ByLayer, and a colour of a colour book is ByLayer without its name. What
+  // is a value and no reference is kept.
+  CHECK(dwgMText.reactorHandles.empty());
+  CHECK(dwgMText.xDictHandle == 0u);
+  CHECK_FALSE(dwgMText.hasDataStorageBinaryData());
   CHECK(dwgMText.color == 256);
-  CHECK(dwgMText.colorName == "Book$Entry");
+  CHECK(dwgMText.colorName.empty());
   CHECK(dwgMText.transparency == 0x03000080);
-  CHECK(dwgMText.hasDwgAcDbColorHandle());
-  CHECK(dwgMText.dwgAcDbColorHandle() == 0x35u);
+  CHECK_FALSE(dwgMText.hasDwgAcDbColorHandle());
+  CHECK(dwgMText.dwgAcDbColorHandle() == 0u);
   CHECK(dwgMText.ltypeScale == Catch::Approx(1.25));
   // Neither drawing has a layer 0x3C or a linetype 0x3D: the exported MTEXT
   // is on the attribute's layer and takes the linetype from it.
   CHECK(dwgMText.lineType == "BYLAYER");
   CHECK_FALSE(dwgMText.visible);
   CHECK(dwgMText.lWeight == DRW_LW_Conv::width05);
-  CHECK(dwgMText.material == 0x36u);
-  CHECK(dwgMText.shadow == DRW::IgnoreShadows);
-  CHECK(dwgMText.shadowHandle == 0x37u);
-  CHECK(dwgMText.plotStyle == 0x38u);
-  CHECK(dwgMText.fullVisualStyleHandle == 0x39u);
-  CHECK(dwgMText.faceVisualStyleHandle == 0x3Au);
-  CHECK(dwgMText.edgeVisualStyleHandle == 0x3Bu);
-  CHECK(dwgMText.dwgLayerHandle() ==
-        dwgReadIface.m_inserts.front().attlist.front()->dwgLayerHandle());
+  CHECK(dwgMText.material == DRW::MaterialByLayer);
+  CHECK(dwgMText.shadow == DRW::CastAndReceieveShadows);
+  CHECK(dwgMText.shadowHandle == 0u);
+  CHECK(dwgMText.plotStyle == DRW::DefaultPlotStyle);
+  CHECK(dwgMText.fullVisualStyleHandle == 0u);
+  CHECK(dwgMText.faceVisualStyleHandle == 0u);
+  CHECK(dwgMText.edgeVisualStyleHandle == 0u);
+  CHECK(dwgMText.dwgLayerHandle() == dwgAttribute.dwgLayerHandle());
   CHECK(dwgMText.dwgLinetypeHandle() == 0u);
 
   std::remove(path.c_str());
@@ -29427,9 +29443,10 @@ TEST_CASE("RS_FilterDXFRW drops malformed INSERT ATTRIB sidecars atomically",
           std::string{value->c_str()} == "LibreCAD_INSERT_ATTRIB_MTEXT";
       continue;
     }
-    if (inMTextGroup && value->code() == 1070 && seenMText1070++ == 15) {
-      // Schema 2 field 15 declares three annotative bytes. Make the
-      // sidecar structurally invalid without touching the source DWG.
+    if (inMTextGroup && value->code() == 1070 && seenMText1070++ == 14) {
+      // The fifteenth 1070 value of the MTEXT sidecar declares three
+      // annotative bytes. Make the sidecar structurally invalid without
+      // touching the source DWG.
       value = std::make_shared<DRW_Variant>(1070, 4);
       changed = true;
       break;
