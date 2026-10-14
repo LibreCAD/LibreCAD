@@ -55,6 +55,7 @@
 #include "lc_dimstyle.h"
 #include "lc_dimarc.h"
 #include "lc_dwgadvancedmetadata.h"
+#include "lc_filtertestsupport.h"
 #include "lc_linetypenames.h"
 #include "lc_mleader.h"
 #include "lc_containertraverser.h"
@@ -71,6 +72,7 @@
 #include "rs_entity.h"
 #include "rs_block.h"
 #include "rs_layer.h"
+#include "rs_leader.h"
 #include "rs_line.h"
 #include "rs_linetypepattern.h"
 #include "rs_pen.h"
@@ -6387,6 +6389,117 @@ TEST_CASE("RS_EntityContainer::updateDimensions(true) forces a dimension "
   // its plain update(), which would keep replaying the explicit position.
   graphic.updateDimensions(true);
   CHECK(dimension->getMiddleOfText().distanceTo(autoPosition) < 1e-9);
+}
+
+namespace {
+
+const RS_Vector kLeaderVertices[] = {{0.0, 0.0}, {10.0, 10.0}, {20.0, 10.0}};
+
+RS_Leader *addTestLeader(RS_EntityContainer &owner, const bool arrow) {
+  auto *leader = new RS_Leader(&owner, RS_LeaderData(arrow, QString()));
+  for (const auto &vertex : kLeaderVertices)
+    leader->addVertex(vertex);
+  leader->update();
+  owner.addEntity(leader);
+  return leader;
+}
+
+void checkLeaderGeometry(const RS_Leader &leader, const RS_Vector &offset) {
+  const int firstLine = leader.hasArrowHead() ? 1 : 0;
+  REQUIRE(leader.count() == 2 + firstLine);
+  if (firstLine)
+    CHECK(leader.entityAt(0)->rtti() == RS2::EntitySolid);
+  for (int segment = 0; segment < 2; ++segment) {
+    const auto *line = leader.entityAt(segment + firstLine);
+    REQUIRE(line->rtti() == RS2::EntityLine);
+    CHECK(line->getStartpoint().distanceTo(kLeaderVertices[segment] + offset) < 1e-9);
+    CHECK(line->getEndpoint().distanceTo(kLeaderVertices[segment + 1] + offset) < 1e-9);
+  }
+}
+
+} // namespace
+
+TEST_CASE("Dimension updates preserve leaders and ordinary dimension labels",
+          "[dimension][leader][regression]") {
+  ensureSettings();
+  const lc::test::QuietLog quietLog;
+  const bool arrow = GENERATE(false, true);
+  const bool autoText = GENERATE(false, true);
+  CAPTURE(arrow, autoText);
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto *leader = addTestLeader(graphic, arrow);
+  auto *block = new RS_Block(&graphic, RS_BlockData("CALLOUT", {0.0, 0.0}, false));
+  addTestLeader(*block, arrow);
+  graphic.addBlock(block);
+  const RS_Vector offset{100.0, 0.0};
+  auto *insert = new RS_Insert(&graphic, RS_InsertData("CALLOUT", offset,
+      {1.0, 1.0}, 0.0, 1, 1, {0.0, 0.0}));
+  graphic.addEntity(insert);
+  RS_DimensionData data;
+  data.definitionPoint = {50.0, 20.0};
+  auto *dimension = new RS_DimAligned(&graphic, data, {{0.0, 0.0}, {100.0, 0.0}});
+  graphic.addEntity(dimension);
+
+  graphic.onLoadingCompleted();
+  checkLeaderGeometry(*leader, {0.0, 0.0});
+  REQUIRE(insert->count() == 1);
+  REQUIRE(insert->entityAt(0)->rtti() == RS2::EntityDimLeader);
+  const auto *insertedLeader = static_cast<const RS_Leader *>(insert->entityAt(0));
+  checkLeaderGeometry(*insertedLeader, offset);
+
+  const RS_Vector automatic = dimension->getMiddleOfText();
+  const RS_Vector manual = automatic + RS_Vector(0.0, 25.0);
+  dimension->setMiddleOfText(manual);
+  dimension->updateDim(false);
+  REQUIRE(dimension->getMiddleOfText().distanceTo(manual) < 1e-9);
+  CHECK(graphic.updateDimensions(autoText) == 3);
+  CHECK(dimension->getGenericData().autoText == autoText);
+  CHECK(dimension->getMiddleOfText().distanceTo(autoText ? automatic : manual) < 1e-9);
+  checkLeaderGeometry(*leader, {0.0, 0.0});
+  checkLeaderGeometry(*insertedLeader, offset);
+
+  leader->setVisible(false);
+  CHECK(graphic.updateDimensions(autoText) == 3);
+  CHECK(graphic.updateVisibleDimensions(autoText) == 2);
+  checkLeaderGeometry(*leader, {0.0, 0.0});
+  leader->markDeleted();
+  CHECK(graphic.updateDimensions(autoText) == 2);
+  checkLeaderGeometry(*leader, {0.0, 0.0});
+}
+
+TEST_CASE("Opening and saving DXF or DWG keeps leader vertices and arrow flags",
+          "[dxf][dwg][roundtrip][filter][dimension][leader][regression]") {
+  ensureSettings();
+  const lc::test::QuietLog quietLog;
+  const auto format = GENERATE(RS2::FormatDXFRW, RS2::FormatDWG,
+      RS2::FormatDWG2004, RS2::FormatDWG2007, RS2::FormatDWG2010,
+      RS2::FormatDWG2013, RS2::FormatDWG2018);
+  const bool arrow = GENERATE(false, true);
+  CAPTURE(format, arrow);
+  const lc::test::OutputDirectory directory("leader_reopen");
+  const auto drawn = directory.file(format == RS2::FormatDXFRW ? "drawn.dxf" : "drawn.dwg");
+  const auto saved = directory.file("saved.dxf");
+  {
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addTestLeader(graphic, arrow);
+    REQUIRE(lc::test::exportDrawing(graphic, drawn, format));
+  }
+
+  RS_Graphic graphic;
+  REQUIRE(lc::test::importDrawing(graphic, drawn, format));
+  graphic.onLoadingCompleted();
+  REQUIRE(graphic.count() == 1);
+  REQUIRE(graphic.entityAt(0)->rtti() == RS2::EntityDimLeader);
+  checkLeaderGeometry(*static_cast<const RS_Leader *>(graphic.entityAt(0)), {0.0, 0.0});
+  REQUIRE(lc::test::exportDrawing(graphic, saved, RS2::FormatDXFRW));
+  const auto leaders = lc::test::dxfRecords(saved, "LEADER");
+  REQUIRE(leaders.size() == 1);
+  CHECK(lc::test::sameValues({"0", "10", "20"}, leaders.front().own(10)));
+  CHECK(lc::test::sameValues({"0", "10", "10"}, leaders.front().own(20)));
+  CHECK(lc::test::sameValues({arrow ? "1" : "0"}, leaders.front().own(71)));
+  CHECK(lc::test::sameValues({"3"}, leaders.front().own(76)));
 }
 
 TEST_CASE("DXF DSTYLE linetype references resolve high handles",
