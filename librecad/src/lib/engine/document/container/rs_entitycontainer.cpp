@@ -637,8 +637,7 @@ int RS_EntityContainer::updateDimensions(const bool autoText) {
             continue;
         }
         if (e->rtti() == RS2::EntityDimLeader) {
-            // only through its own update(): a leader is a dimension too, but its
-            // doUpdateDim() draws nothing, so updateDim() would leave it empty
+            // updateDim() clears leaders; only their own update() rebuilds them.
             updatedDimsCount++;
             e->update();
         }
