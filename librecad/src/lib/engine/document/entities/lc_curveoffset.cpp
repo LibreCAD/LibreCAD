@@ -3831,11 +3831,6 @@ LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d
     };
     // Removes loop @p k, joining the branch before it, cut at @p t, to the one
     // after it, cut at @p u, where they cross; a ring if they are one branch.
-    enum class Splice {
-        Failed,
-        Joined,
-        Ring
-    };
     const auto splice = [&](const size_t k, const double t, const OffsetJet& qa, const double u,
                             const OffsetJet& qb) {
         const size_t n = branches.size();
@@ -3846,19 +3841,19 @@ LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d
             // the only other branch runs out of the loop and back into it: a ring
             LC_OffsetBranch ring = branches[before];
             if (!cut(ring, wrapSeam(t), qa, meet, true) || !cut(ring, wrapSeam(u), qb, meet, false)) {
-                return Splice::Failed;
+                return false;
             }
             ring.closed = true;
             ring.startEnd = LC_OffsetBranchEnd::Free;
             ring.endEnd = LC_OffsetBranchEnd::Free;
             removed += 3; // the loop and its two wings
             branches.assign(1, std::move(ring));
-            return Splice::Ring;
+            return true;
         }
         LC_OffsetBranch front = branches[before];
         LC_OffsetBranch back = branches[after];
         if (!cut(front, wrapSeam(t), qa, meet, true) || !cut(back, wrapSeam(u), qb, meet, false)) {
-            return Splice::Failed;
+            return false;
         }
         removed += 3; // the loop and its two wings
         front.cubicPieces.insert(front.cubicPieces.end(), back.cubicPieces.begin(), back.cubicPieces.end());
@@ -3867,7 +3862,7 @@ LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d
         for (const size_t gone : {std::max(k, after), std::min(k, after)}) {
             branches.erase(branches.begin() + static_cast<std::ptrdiff_t>(gone));
         }
-        return Splice::Joined;
+        return true;
     };
     // A swallowtail no wider than twice the merge tolerance is collapsed
     // otherwise, but the sides on either side of it still cross: a loop below
@@ -3950,11 +3945,7 @@ LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d
             OffsetJet atB;
             if (swallowtailCrossing(loop.cubicPieces.front().provenance.sourceT0,
                                     loop.cubicPieces.back().provenance.sourceT1, a0, b1, crossA, crossB, atA, atB)) {
-                const Splice spliced = splice(k, crossA, atA, crossB, atB);
-                if (spliced == Splice::Ring) {
-                    return LC_CurveOffsetStatus::Ok;
-                }
-                if (spliced == Splice::Joined) {
+                if (splice(k, crossA, atA, crossB, atB)) {
                     k = static_cast<size_t>(-1); // indices moved: start over
                     continue;
                 }
@@ -4081,11 +4072,7 @@ LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d
             qa.point.distanceTo(qb.point) > (below ? options.tolerance.evaluation : options.tolerance.nodeMerge)) {
             continue;
         }
-        const Splice spliced = splice(k, t, qa, u, qb);
-        if (spliced == Splice::Ring) {
-            return LC_CurveOffsetStatus::Ok;
-        }
-        if (spliced == Splice::Joined) {
+        if (splice(k, t, qa, u, qb)) {
             k = static_cast<size_t>(-1); // indices moved: start over
         }
     }

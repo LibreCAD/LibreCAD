@@ -705,13 +705,7 @@ void openFirst(Offset& offset) {
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("An elliptic arc's lens is not trimmed away with its wings", "[curve-offset][ellipse]") {
-    // a = 100, b = 50 from 15 to 315 degrees, inwards nearly by b: the offset
-    // closes into a lens with corners on the major axis, and everything else
-    // is hidden. Trimming joined the two sides of the left vertex's
-    // swallowtail where they cross; noding then never compared the pieces
-    // on either side of that join, which meet again at the right corner, and
-    // the one fragment left was hidden as a whole: Ok, and nothing at all,
-    // from d = 48.728 to 49.484
+    // Missing the second corner hid the entire lens for d = 48.728 to 49.484.
     const RS_Ellipse arc = ellipse(100.0, 0.5, degrees(15.0), degrees(315.0));
     for (const double d : {48.75, 49.1823583129, 49.45}) {
         INFO("d = " << d);
@@ -727,10 +721,7 @@ TEST_CASE("An elliptic arc's lens is not trimmed away with its wings", "[curve-o
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("The wings past an elliptic arc's lens are trimmed", "[curve-offset][ellipse]") {
-    // a = 100, b = 80 from 30 to 330 degrees at d = b (1 - 1e-4): a lens about
-    // 3.4 long with corners at (+-0.8485, 0). With its right corner missed as
-    // above, the hidden wings past it, up to 11.46 nearer to the source than
-    // d, were kept with the lens: one spline 48.3 long
+    // The missed corner kept hidden wings, making a 3.4-long lens 48.3 long.
     const RS_Ellipse arc = ellipse(100.0, 0.8, degrees(30.0), degrees(330.0));
     const double d = 79.992;
     const double x = cornerX(100.0, 80.0, d);
@@ -739,12 +730,8 @@ TEST_CASE("The wings past an elliptic arc's lens are trimmed", "[curve-offset][e
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("A trimmed fragment hidden anywhere is hidden throughout", "[curve-offset][ellipse]") {
-    // a = 100, b = 2 from 45 to 360 degrees at d = b: the offset of 45 to 90
-    // degrees runs from (70.67, -0.585), only 0.83 from the ellipse's bottom,
-    // to its centre, where the offsets of both vertices touch at the distance
-    // itself. Probed near the centre, where it is hidden by less than the
-    // tolerance, it was kept. What is left is the offset of the bottom right
-    // below the arc's gap, between the circles of radius d about its ends.
+    // A probe near the centre kept a fragment hidden by 1.17 near its other end.
+    // Only the bottom-right offset between the endpoint circles survives.
     const RS_Ellipse arc = ellipse(100.0, 0.02, degrees(45.0), 0.0);
     const double d = 2.0;
     const Offset offset = offsetOf(arc, kLeft, d);
@@ -780,19 +767,14 @@ TEST_CASE("Trimmed elliptic arcs keep every part that is left", "[curve-offset][
         }
     }
     SECTION("a = 100, b = 20 from 0 to 359 degrees: the lens, without the stub past its corner") {
-        // just short of the radius of curvature at the arc's end, 4.0439, the
-        // offset of its last 0.66 degrees runs 0.0022 past the right corner, by
-        // less than the tolerance nearer to the source than d: kept, the chain
-        // ran through its own start
+        // A sub-tolerance stub past the right corner made the chain cross its start.
         const RS_Ellipse arc = ellipse(100.0, 0.2, 0.0, degrees(359.0));
         const double d = 4.039896572532948;
         const double x = cornerX(100.0, 20.0, d);
         checkOffset(offsetOf(arc, kLeft, d), curveOf(arc), d, {true}, {{x, 0.0}, {-x, 0.0}});
     }
     SECTION("a = 100, b = 80 from 240 to 285 degrees at 1.1 a: the offset from the start's circle") {
-        // past the cusp next to the arc's start, the offset leaves the circle
-        // of radius d about the start: the corner rule must not take the
-        // fragment's own foot for the circle's centre
+        // The corner rule must distinguish the fragment's own foot from the cap centre.
         const RS_Ellipse arc = ellipse(100.0, 0.8, degrees(240.0), degrees(285.0));
         const double d = 110.0;
         const Offset offset = offsetOf(arc, kLeft, d);
@@ -804,12 +786,8 @@ TEST_CASE("Trimmed elliptic arcs keep every part that is left", "[curve-offset][
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("Whole ellipses just past b^2/a or just short of b keep their offset", "[curve-offset][ellipse]") {
-    // a = 100. Just past b^2/a the swallowtails at the vertices are smaller
-    // than the merge tolerance; collapsed, their sides still cross in the
-    // exact offset, a loop noding could not resolve: AmbiguousTopology, or
-    // LimitExceeded after seconds. The failures of a sweep, about 6% of the
-    // distances within 1.5% above b^2/a, and some 1e-5 short of b, at the
-    // distances as it computed them.
+    // Sweep failures at their original distances: collapsed swallowtails still
+    // crossed below tolerance, causing AmbiguousTopology or LimitExceeded.
     struct Case {
         double ratio;
         double rotation;
@@ -866,21 +844,15 @@ TEST_CASE("Whole ellipses just past b^2/a or just short of b keep their offset",
         const double x = cornerX(100.0, 100.0 * c.ratio, c.d);
         checkOffset(offsetOf(e, kLeft, c.d), curveOf(e), c.d, {true}, {c.centre + along * x, c.centre - along * x});
     }
-    // A circle drawn as an ellipse, 1e-4 of its radius short of it, stalls
-    // everywhere: noding its little circle compared box after box about the
-    // joins of its pieces until it gave up (LimitExceeded).
+    // Near a circle's radius, noding exhausted its budget at the piece joins.
     const RS_Ellipse circle = ellipse(100.0, 1.0);
     checkOffset(offsetOf(circle, kLeft, 99.99), curveOf(circle), 99.99, {true});
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("A trimmed offset runs on through the corner it is cut at", "[curve-offset][ellipse]") {
-    // a = 100, b = 30 from 10.25 to 369.75 degrees: the circle of radius d
-    // about the arc's start crosses the offset 0.026 past its right corner,
-    // (90.1699, 0). The sliver between them, hidden by less than the
-    // tolerance, was kept, and the chain ended at its far end, apart from the
-    // piece that leaves the corner for the arc's end: two entities. The same
-    // arc run the other way gave one.
+    // A cap crossing 0.026 past the corner left a hidden sliver and split the chain.
+    // Reversing the source already gave one entity.
     const double d = 9.791476538117758;
     const double x = cornerX(100.0, 30.0, d);
     const RS_Ellipse arc = ellipse(100.0, 0.3, degrees(10.25), degrees(9.75));
@@ -891,9 +863,7 @@ TEST_CASE("A trimmed offset runs on through the corner it is cut at", "[curve-of
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("A trimmed elliptic arc keeps a piece apart from its lens", "[curve-offset][ellipse]") {
-    // a = 100, b = 20 from 15 to 315 degrees at d = 15: the lens, corners at
-    // (+-64.8074, 0), and apart from it the offset next to the arc's start,
-    // from (87.6202, -6.8443) to the circle of radius d about the arc's end
+    // A separate piece next to the arc's start is valid, not a hidden wing.
     const RS_Ellipse arc = ellipse(100.0, 0.2, degrees(15.0), degrees(315.0));
     const double d = 15.0;
     const double x = cornerX(100.0, 20.0, d);
@@ -907,10 +877,7 @@ TEST_CASE("A trimmed elliptic arc keeps a piece apart from its lens", "[curve-of
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("Nothing left of an elliptic arc's inward offset stays nothing farther in", "[curve-offset][ellipse]") {
-    // A point D from an arc whose nearest point is an inner one has, d < D
-    // along the same normal, a point d from it: what is left at D was left at
-    // d. Modify > Offset ends a copy series at the first copy with nothing
-    // left on that ground, so a false "nothing" also cut the series short.
+    // A false empty result also terminates a multiple-copy series prematurely.
     const RS_Ellipse arc = ellipse(100.0, 0.5, degrees(15.0), degrees(315.0));
     for (int k = 0; k <= 24; ++k) {
         const double d = 48.05 + 0.1 * k;

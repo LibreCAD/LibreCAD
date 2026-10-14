@@ -121,18 +121,14 @@ struct LC_IntersectionResult {
  * Every place where the branches meet, other than where consecutive pieces of a
  * branch, or branches joined at a cusp, share an end. Segments are split into
  * leaves whose tangent directions span less than a right angle, which cannot
- * cross themselves, nor their neighbours where the branch runs on without
- * turning a corner; pairs of leaves with overlapping bounds are resolved by
- * interval exclusion and a Krawczyk uniqueness test, and a root it proves
- * unique is refined by Newton steps. A box that stays undecided is a tangent
- * contact when the branches come within the tolerance and stay on one side of
- * each other, a crossing when they change sides, and ambiguous otherwise, as
- * where they retrace each other. At a corner between consecutive segments of a
- * branch, where their tangents together span a half turn or more, the leaves on
- * either side may meet again away from it: only roots the Krawczyk test proves
- * count there, and next to the corner, as far as its sides stay within the
- * tolerance of each other, nothing does. The result does not depend on the
- * order in which pairs are examined.
+ * cross themselves; neighbours are skipped only when jointly monotone.
+ * Pairs with overlapping bounds are resolved by interval exclusion and a
+ * Krawczyk uniqueness test, and a root it proves unique is refined by Newton
+ * steps. An undecided box is a tangent contact when the branches stay within
+ * tolerance on one side of each other, a crossing when they change sides,
+ * and ambiguous otherwise, as where they retrace each other. A corner's shared
+ * endpoint is excluded only for its joined segments within twice the tolerance;
+ * unresolved corner pairs fail at the depth limit. Results are pair-order independent.
  */
 LC_IntersectionResult findIntersections(const LC_ParametricCurves& curves, const LC_IntersectionOptions& options);
 

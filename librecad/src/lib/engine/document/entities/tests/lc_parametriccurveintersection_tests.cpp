@@ -294,6 +294,44 @@ TEST_CASE("A branch that turns back along itself at a corner does not cross itse
     CHECK(open.intersections.empty());
 }
 
+TEST_CASE("A corner exclusion does not hide later crossings on its branch", "[curve-offset][topology]") {
+    const RS_Spline branch = makeSpline(2,
+        {{8, 1}, {1, 0}, {0, 0}, {1, 0}, {8, -1}, {8, -2}, {4, -2}, {4, 0}, {4, 2}},
+        {0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 4});
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-9;
+    options.maxDepth = 80;
+    const LC_IntersectionResult result = findIntersections(SplineCurves{{&branch}}, options);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    CHECK(std::any_of(result.intersections.begin(), result.intersections.end(), [](const auto& crossing) {
+        return crossing.parameterA < 1.0 && crossing.parameterB > 3.0 && crossing.kind == Kind::Transverse &&
+               crossing.point.distanceTo(RS_Vector{4, 4.0 / 9.0}) < 1e-9;
+    }));
+}
+
+TEST_CASE("Unresolved corner intersections respect the depth limit", "[curve-offset][topology]") {
+    const RS_Spline lens = makeSpline(2, {{12, -2}, {1, 4}, {-10, 0}, {1, -4}, {12, 2}},
+                                     {0, 0, 0, 1, 1, 2, 2, 2});
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-9;
+    options.maxDepth = 0;
+    CHECK(findIntersections(SplineCurves{{&lens}}, options).status == LC_IntersectionStatus::LimitExceeded);
+}
+
+TEST_CASE("Curved sides of a tangent corner can separate and cross again", "[curve-offset][topology]") {
+    const RS_Spline branch = makeSpline(3,
+        {{8, -0.8}, {5, 1.0 / 15.0}, {1, 0}, {0, 0}, {1, 0}, {5, -1.0 / 15.0}, {8, 0.8}},
+        {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2});
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-9;
+    options.maxDepth = 80;
+    const LC_IntersectionResult result = findIntersections(SplineCurves{{&branch}}, options);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    CHECK(std::any_of(result.intersections.begin(), result.intersections.end(), [](const auto& crossing) {
+        return crossing.kind == Kind::Transverse && crossing.point.distanceTo(RS_Vector{0.928, 0}) < 1e-9;
+    }));
+}
+
 TEST_CASE("The intersections do not depend on the order of the branches", "[curve-offset][topology]") {
     const RS_Spline loop = makeSpline(3, {{0, 0}, {15, 10}, {-5, 10}, {10, 0}}, {0, 0, 0, 0, 1, 1, 1, 1});
     const RS_Spline a = line({-1, 3}, {11, 3});
