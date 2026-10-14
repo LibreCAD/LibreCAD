@@ -36,7 +36,6 @@
 #include <functional>
 #include <initializer_list>
 #include <memory>
-#include <string>
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -656,104 +655,6 @@ TEST_CASE("Hiding all layers never hides the current one", "[layers][active]") {
         CHECK(doors->isFrozen());
         CHECK(graphic.getActiveLayer() == wall1);
     }
-}
-
-// The list keeps a visible layer active: when the active layer is hidden or
-// removed, it makes another one active by itself. It told nobody, so the status
-// bar, the pen tool bar and the layer docks kept showing the layer that was
-// active before. The listeners are told after the change that hid or removed
-// the layer, when the list is settled.
-
-namespace {
-
-/// what a listener hears of the layers, and whether the list is settled when it hears of an active layer
-class ActiveLayerRecorder final : public RS_LayerListListener {
-public:
-    explicit ActiveLayerRecorder(const RS_LayerList& list) : m_list{list} {}
-
-    void layerActivated(RS_Layer* layer) override {
-        m_events << QStringLiteral("activated ") + (layer != nullptr ? layer->getName() : QStringLiteral("nothing"));
-        m_settled = m_settled && layer != nullptr && m_list.contains(layer) && !layer->isFrozen()
-            && m_list.getActive() == layer;
-    }
-    void layerToggled(RS_Layer*) override { m_events << QStringLiteral("toggled"); }
-    void layerRemoved(RS_Layer*) override { m_events << QStringLiteral("removed"); }
-    void layerEdited(RS_Layer*) override { m_events << QStringLiteral("edited"); }
-
-    std::string events() const { return m_events.join(QStringLiteral(", ")).toStdString(); }
-
-    const RS_LayerList& m_list;
-    QStringList m_events;
-    bool m_settled = true;
-};
-
-} // namespace
-
-TEST_CASE("Listeners hear of the layer made active in place of a hidden or removed one", "[layers][active]") {
-    (void)lc::test::application();
-    RS_Graphic graphic;
-    graphic.initForNewDocument();
-    RS_Layer* zero = graphic.findLayer(QStringLiteral("0"));
-    REQUIRE(zero != nullptr);
-    auto* doors = new RS_Layer(QStringLiteral("Doors"));
-    auto* walls = new RS_Layer(QStringLiteral("Walls"));
-    graphic.addLayer(doors);
-    graphic.addLayer(walls);
-    graphic.activateLayer(walls);
-    REQUIRE(graphic.getActiveLayer() == walls);
-
-    ActiveLayerRecorder recorder(*graphic.getLayerList());
-    graphic.addLayerListListener(&recorder);
-
-    SECTION("hiding the active layer, as its eye icon in a layer dock does") {
-        graphic.toggleLayer(walls);
-        CHECK(graphic.getActiveLayer() == zero);
-        CHECK(recorder.events() == "toggled, activated 0");
-    }
-    SECTION("hiding the layers selected in the Layer List, the active one among them") {
-        graphic.toggleFreezeLayers({doors, walls});
-        CHECK(graphic.getActiveLayer() == zero);
-        CHECK(recorder.events() == "toggled, activated 0");
-    }
-    SECTION("hiding layers of the Layer Tree, the active one among them") {
-        graphic.setFreezeLayers({}, {zero, walls});
-        CHECK(graphic.getActiveLayer() == doors);
-        CHECK(recorder.events() == "toggled, activated Doors");
-    }
-    SECTION("removing the active layer") {
-        graphic.removeLayer(walls);
-        CHECK(graphic.getActiveLayer() == zero);
-        CHECK(recorder.events() == "removed, activated 0");
-    }
-    SECTION("editing the active layer into a hidden one") {
-        RS_Layer hidden(*walls);
-        hidden.freeze(true);
-        graphic.editLayer(walls, hidden);
-        CHECK(graphic.getActiveLayer() == zero);
-        CHECK(recorder.events() == "edited, activated 0");
-    }
-    SECTION("loading a file that hides the active layer") {
-        // a DXF file whose layer 0 is frozen: its layer 0 is merged into the one
-        // of the new drawing, which is the active layer
-        graphic.activateLayer(zero);
-        auto* frozenZero = new RS_Layer(QStringLiteral("0"));
-        frozenZero->freeze(true);
-        graphic.addLayer(frozenZero);
-        REQUIRE(zero->isFrozen());
-        REQUIRE(graphic.getActiveLayer() == zero);
-        REQUIRE(recorder.m_events.isEmpty());
-        graphic.onLoadingCompleted();
-        CHECK(graphic.getActiveLayer() == doors);
-        CHECK(recorder.events() == "activated Doors");
-    }
-    SECTION("hiding or removing another layer keeps the active one, and says nothing of it") {
-        graphic.toggleLayer(doors);
-        graphic.removeLayer(doors);
-        CHECK(graphic.getActiveLayer() == walls);
-        CHECK(recorder.events() == "toggled, removed");
-    }
-    CHECK(recorder.m_settled);
-    graphic.removeLayerListListener(&recorder);
 }
 
 // find() looks a name up in an index and add() inserts in name order, where

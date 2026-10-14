@@ -239,20 +239,16 @@ void RS_LayerList::remove(RS_Layer* layerToRemove) {
 
     setModified(true);
 
-    // Select a survivor before notifying listeners, and tell them of it once the layer is gone.
-    bool replaced = false;
+    // Select a survivor before notifying listeners.
     if (m_activeLayer == layerToRemove) {
         m_activeLayer = nullptr;
-        replaced = ensureActiveLayerIsVisible();
+        ensureActiveLayerIsVisible();
     }
 
     fireLayerRemoved(layerToRemove);
 
     // now it's save to delete the layer
     delete layerToRemove;
-    if (replaced) {
-        fireActiveLayerReplaced();
-    }
 }
 
 /**
@@ -265,11 +261,8 @@ void RS_LayerList::edit(RS_Layer* layer, const RS_Layer& source) {
         return;
     }
     *layer = source;
-    const bool replaced = ensureActiveLayerIsVisible();
+    ensureActiveLayerIsVisible();
     fireLayerEdited(layer);
-    if (replaced) {
-        fireActiveLayerReplaced();
-    }
 }
 
 void RS_LayerList::fireLayerEdited(RS_Layer* layer) {
@@ -343,15 +336,12 @@ void RS_LayerList::toggle(RS_Layer* layer) {
 
     // set flags
     layer->toggle();
-    const bool replaced = ensureActiveLayerIsVisible();
+    ensureActiveLayerIsVisible();
     setModified(true);
 
     // Notify listeners:
     for (auto* l : std::as_const(m_layerListListeners)) {
             l->layerToggled(layer);
-    }
-    if (replaced) {
-        fireActiveLayerReplaced();
     }
 }
 
@@ -429,11 +419,8 @@ void RS_LayerList::freezeAll(const bool freeze) {
             at(l)->freeze(freeze);
         }
     }
-    const bool replaced = ensureActiveLayerIsVisible();
+    ensureActiveLayerIsVisible();
     fireLayerToggled();
-    if (replaced) {
-        fireActiveLayerReplaced();
-    }
 }
 
 void RS_LayerList::fireLayerActivated() {
@@ -505,11 +492,8 @@ void RS_LayerList::setFreezeMulti(const QList<RS_Layer*>& layersEnable, const QL
             layer->freeze(true);
         }
     }
-    const bool replaced = ensureActiveLayerIsVisible();
+    ensureActiveLayerIsVisible();
     fireLayerToggled();
-    if (replaced) {
-        fireActiveLayerReplaced();
-    }
 }
 
 void RS_LayerList::setLockMulti(const QList<RS_Layer*>& layersToUnlock, const QList<RS_Layer*>& layersToLock) {
@@ -574,16 +558,13 @@ void RS_LayerList::toggleFreezeMulti(const QList<RS_Layer*>& layers) {
             toggled.insert(layer);
         }
     }
-    const bool replaced = ensureActiveLayerIsVisible();
+    ensureActiveLayerIsVisible();
     fireLayerToggled();
-    if (replaced) {
-        fireActiveLayerReplaced();
-    }
 }
 
-bool RS_LayerList::ensureActiveLayerIsVisible() {
+void RS_LayerList::ensureActiveLayerIsVisible() {
     if (m_layerSet.contains(m_activeLayer) && !m_activeLayer->isFrozen()) {
-        return false;
+        return;
     }
 
     RS_Layer* fallback = nullptr;
@@ -603,23 +584,12 @@ bool RS_LayerList::ensureActiveLayerIsVisible() {
         fallback = m_layerSet.contains(m_activeLayer) ? m_activeLayer
                                                      : (m_layers.isEmpty() ? nullptr : m_layers.first());
         if (fallback == nullptr) {
-            return false;
+            return;
         }
         fallback->freeze(false);
     }
     if (fallback != m_activeLayer) {
         activate(fallback);
-        return true;
-    }
-    return false;
-}
-
-/**
- * Tells the listeners which layer ensureActiveLayerIsVisible() made active.
- */
-void RS_LayerList::fireActiveLayerReplaced() const {
-    for (const auto l : m_layerListListeners) {
-        l->activeLayerReplaced(m_activeLayer);
     }
 }
 

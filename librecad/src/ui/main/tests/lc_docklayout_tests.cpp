@@ -2,8 +2,6 @@
 // Copyright (C) 2026 librecad.org
 // Copyright (C) 2026 Dongxu Li (github.com/dxli)
 
-#include <string>
-
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/reporters/catch_reporter_event_listener.hpp>
 #include <catch2/reporters/catch_reporter_registrars.hpp>
@@ -13,16 +11,12 @@
 #include <QJsonObject>
 
 #include "lc_actiontestsupport.h"
-#include "lc_layertreemodel.h"
-#include "lc_layertreewidget.h"
 #include "lc_testsettingsisolation.h"
 #include "lc_workspacesmanager.h"
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
 #include "qg_graphicview.h"
-#include "qg_layerwidget.h"
 #include "rs_debug.h"
-#include "rs_layer.h"
 #include "rs_system.h"
 #include "qg_blockwidget.h"
 #include "rs_block.h"
@@ -214,118 +208,6 @@ TEST_CASE("Draft toggling preserves the drawing title", "[.gui][draft][3018]") {
         CHECK(mdi->windowTitle() == expectedTitle);
         settle(0);
     }
-}
-
-namespace {
-/// the name of the active layer in the status bar (QG_ActiveLayerName)
-std::string statusBarLayer(const QC_ApplicationWindow& window) {
-    const auto* label = window.findChild<QLabel*>(QStringLiteral("lActiveLayerName"));
-    REQUIRE(label != nullptr);
-    return label->text().toStdString();
-}
-}
-
-// Hidden, the active layer is replaced by another one, which the status bar and
-// the docks showed only after the user activated a layer.
-TEST_CASE("Hiding the active layer from a layer dock shows the layer made active", "[.gui][active-layer-ui]") {
-    DockFixture fixture;
-    auto& window = fixture.window;
-    window.slotFileNewFromDefaultTemplate();
-    settle(0);
-    auto* mdi = window.getCurrentMDIWindow();
-    REQUIRE(mdi != nullptr);
-    RS_Graphic* graphic = mdi->getGraphic();
-    REQUIRE(graphic != nullptr);
-    RS_Layer* zero = graphic->findLayer(QStringLiteral("0"));
-    REQUIRE(zero != nullptr);
-    auto* walls = new RS_Layer(QStringLiteral("Walls"));
-    graphic->addLayer(walls);
-    // as a click on its name does
-    graphic->activateLayer(walls, true);
-    settle(0);
-    REQUIRE(graphic->getActiveLayer() == walls);
-    REQUIRE(statusBarLayer(window) == "Walls");
-
-    SECTION("the eye icon of the Layer List") {
-        auto* dock = window.findChild<QG_LayerWidget*>();
-        REQUIRE(dock != nullptr);
-        auto* table = dock->findChild<QTableView*>();
-        REQUIRE(table != nullptr);
-        auto* model = dynamic_cast<QG_LayerModel*>(table->model());
-        REQUIRE(model != nullptr);
-        const int row = model->getIndex(walls).row();
-        REQUIRE(table->currentIndex().row() == row);
-        emit table->clicked(model->index(row, QG_LayerModel::COLUMN_VISIBLE));
-        settle(0);
-        REQUIRE(walls->isFrozen());
-        REQUIRE(graphic->getActiveLayer() == zero);
-        CHECK(statusBarLayer(window) == "0");
-        CHECK(table->currentIndex().row() == model->getIndex(zero).row());
-    }
-    SECTION("the eye icon of the Layer Tree") {
-        auto* tree = window.getLayerTreeWidget();
-        REQUIRE(tree != nullptr);
-        auto* view = tree->findChild<QTreeView*>();
-        REQUIRE(view != nullptr);
-        auto* model = dynamic_cast<LC_LayerTreeModel*>(view->model());
-        REQUIRE(model != nullptr);
-        const QModelIndexList hits = model->match(model->index(0, 0, QModelIndex()), Qt::UserRole,
-                                                  walls->getName(), 1, Qt::MatchExactly | Qt::MatchRecursive);
-        REQUIRE(hits.size() == 1);
-        int eye = -1;
-        for (int column = 0; column < model->columnCount(hits.first().parent()); ++column) {
-            if (model->translateColumn(column) == LC_LayerTreeModel::COLUMN_VISIBLE) {
-                eye = column;
-            }
-        }
-        REQUIRE(eye >= 0);
-        emit view->clicked(hits.first().siblingAtColumn(eye));
-        settle(0);
-        REQUIRE(walls->isFrozen());
-        REQUIRE(graphic->getActiveLayer() == zero);
-        CHECK(statusBarLayer(window) == "0");
-    }
-    graphic->setModified(false);
-}
-
-// A change of visibility leaves the Layer List where it was scrolled to (#1515),
-// also when the layer made active is out of view.
-TEST_CASE("Hiding the active layer keeps the scroll position of the Layer List", "[.gui][active-layer-ui]") {
-    DockFixture fixture;
-    auto& window = fixture.window;
-    window.slotFileNewFromDefaultTemplate();
-    settle(0);
-    auto* mdi = window.getCurrentMDIWindow();
-    REQUIRE(mdi != nullptr);
-    RS_Graphic* graphic = mdi->getGraphic();
-    REQUIRE(graphic != nullptr);
-    RS_Layer* last = nullptr;
-    for (int i = 0; i < 60; ++i) {
-        last = new RS_Layer(QStringLiteral("Layer %1").arg(i, 2, 10, QLatin1Char('0')));
-        graphic->addLayer(last);
-    }
-    graphic->activateLayer(last, true);
-    auto* layers = window.findChild<QDockWidget*>(QStringLiteral("layer_dockwidget"));
-    REQUIRE(layers != nullptr);
-    window.requestDockVisible(layers);
-    settle();
-    auto* table = layers->findChild<QTableView*>();
-    REQUIRE(table != nullptr);
-    REQUIRE(table->isVisible());
-    QScrollBar* bar = table->verticalScrollBar();
-    REQUIRE(bar->maximum() > 0);
-    bar->setValue(bar->maximum());
-    const int scrolled = bar->value();
-    auto* model = dynamic_cast<QG_LayerModel*>(table->model());
-    REQUIRE(model != nullptr);
-
-    emit table->clicked(model->index(model->getIndex(last).row(), QG_LayerModel::COLUMN_VISIBLE));
-    settle(0);
-    REQUIRE(last->isFrozen());
-    REQUIRE(graphic->getActiveLayer() == graphic->findLayer(QStringLiteral("0")));
-    CHECK(statusBarLayer(window) == "0");
-    CHECK(bar->value() == scrolled);
-    graphic->setModified(false);
 }
 
 TEST_CASE("Legacy UTF-8 recovery has a separate File menu action", "[.gui][legacy-utf8-ui]") {

@@ -1509,13 +1509,6 @@ void QG_GraphicView::setOffset([[maybe_unused]] const int ox, [[maybe_unused]] c
     adjustOffsetControls();
 }
 
-/**
- * The layer list made another layer active in place of one that was hidden or removed. Nobody chose
- * that layer, so the selected entities stay where they are: unlike layerActivated(), this does not
- * move them to it ("ModifyEntitiesToActiveLayer").
- */
-void QG_GraphicView::activeLayerReplaced([[maybe_unused]] RS_Layer* layer) {}
-
 void QG_GraphicView::layerActivated(RS_Layer* layer) {
     const bool applyLayerToSelectedEntities = LC_GET_ONE_BOOL("Modify", "ModifyEntitiesToActiveLayer");
 

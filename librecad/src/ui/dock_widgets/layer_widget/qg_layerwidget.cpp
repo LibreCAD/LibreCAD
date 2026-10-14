@@ -472,8 +472,6 @@ void QG_LayerWidget::activateLayer(RS_Layer* layer, const bool updateScroll) con
 
     // remember selected status of the layer
     const bool selected = layer->isSelectedInLayerList();
-    // making the row current scrolls to it
-    const int yPos = m_layerView->verticalScrollBar()->value();
 
     m_layerView->setCurrentIndex(idx);
     m_layerModel->setActiveLayer(layer);
@@ -490,6 +488,7 @@ void QG_LayerWidget::activateLayer(RS_Layer* layer, const bool updateScroll) con
     m_layerView->selectionModel()->select(QItemSelection(idx, idx), selFlag);
 
     if (!updateScroll) {
+        const int yPos = m_layerView->verticalScrollBar()->value();
         m_layerView->verticalScrollBar()->setValue(yPos);
     }
 

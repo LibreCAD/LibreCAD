@@ -138,14 +138,7 @@ protected:
     friend class RS_Graphic;
 
 private:
-    /**
-     * Makes a visible layer the active one when the active layer is hidden or not listed, without
-     * telling the listeners.
-     * @return true if another layer is active now: tell the listeners with fireActiveLayerReplaced()
-     *         once they know of the change that hid or removed the layer.
-     */
-    bool ensureActiveLayerIsVisible();
-    void fireActiveLayerReplaced() const;
+    void ensureActiveLayerIsVisible();
 
     //! layers in the graphic
     QList<RS_Layer*> m_layers;

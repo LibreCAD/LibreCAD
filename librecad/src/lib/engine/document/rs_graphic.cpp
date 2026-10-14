@@ -207,7 +207,7 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
 RS_Graphic::~RS_Graphic() = default;
 
 void RS_Graphic::onLoadingCompleted() {
-    const bool activeLayerReplaced = m_layerList.ensureActiveLayerIsVisible();
+    m_layerList.ensureActiveLayerIsVisible();
 
     const auto fallBackDimStyleFromVars = m_dimstyleList.getFallbackDimStyleFromVars();
     fallBackDimStyleFromVars->fillByDefaults(); // cleanup (is it redundant?)
@@ -230,10 +230,6 @@ void RS_Graphic::onLoadingCompleted() {
         m_dimstyleList.mergeStyles();
     }
     updateDimensions(true);
-    // the drawing is loaded: the listeners may read it
-    if (activeLayerReplaced) {
-        m_layerList.fireActiveLayerReplaced();
-    }
 }
 
 /**
