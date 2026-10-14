@@ -4423,13 +4423,25 @@ bool encodeEedItem(DRW::Version version, const DRW_Variant& value,
         putEedRawHandleLE(output, resolvedLayerHandle);
         return output.isGood();
     case 1004: {
-        if (value.type() != DRW_Variant::BINARY || value.binary() == nullptr
-            || value.binary()->size() > std::numeric_limits<std::uint8_t>::max()) {
-            return false;
+        // The DXF readers keep a binary chunk as the hex text of the file,
+        // the DWG reader as bytes; the DXF writer takes either. Write the
+        // bytes of both.
+        constexpr std::size_t maxBytes = std::numeric_limits<std::uint8_t>::max();
+        std::vector<std::uint8_t> decoded;
+        const std::vector<std::uint8_t>* bytes = nullptr;
+        if (value.type() == DRW_Variant::BINARY) {
+            bytes = value.binary();
+        } else if (value.type() == DRW_Variant::STRING
+                   && value.content.s != nullptr
+                   && value.content.s->size() <= 2 * maxBytes
+                   && decodeHexBytes(*value.content.s, decoded)) {
+            bytes = &decoded;
         }
+        if (bytes == nullptr || bytes->size() > maxBytes)
+            return false;
         output.putRawChar8(4);
-        output.putRawChar8(static_cast<std::uint8_t>(value.binary()->size()));
-        output.putBytes(value.binary()->data(), value.binary()->size());
+        output.putRawChar8(static_cast<std::uint8_t>(bytes->size()));
+        output.putBytes(bytes->data(), bytes->size());
         return output.isGood();
     }
     case 1005: {

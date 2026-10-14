@@ -26108,6 +26108,200 @@ TEST_CASE("DWG entity EED round-trips standard XDATA values",
   }
 }
 
+// A DXF reader keeps a binary chunk (group 1004) as the hex text of the file.
+// The DWG writer took bytes only, so XDATA read from a DXF failed every save
+// of the drawing as DWG.
+TEST_CASE("DWG entity EED writes binary chunks held as DXF hex text",
+          "[dwg-write][entity][eed]") {
+  std::string largestHex;
+  std::vector<std::uint8_t> largestBytes;
+  for (unsigned byte = 0; byte < 255; ++byte) {
+    static const char digits[] = "0123456789abcdef";
+    largestHex += digits[byte >> 4];
+    largestHex += digits[byte & 0xFU];
+    largestBytes.push_back(static_cast<std::uint8_t>(byte));
+  }
+  const std::vector<std::vector<std::uint8_t>> expected{
+      {0x01, 0x02}, {0xA0, 0xB1, 0xC2}, {}, largestBytes, {0x7F}};
+
+  for (const DRW::Version version : {DRW::AC1015, DRW::AC1018, DRW::AC1021,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032}) {
+    CAPTURE(static_cast<int>(version));
+    const std::string path = tempPath(
+        "entity_eed_hex_" + std::to_string(static_cast<int>(version)) + ".dwg");
+    std::remove(path.c_str());
+
+    EntityEedRoundTripIface writeIface;
+    writeIface.m_line.basePoint = DRW_Coord{1.0, 2.0, 0.0};
+    writeIface.m_line.secPoint = DRW_Coord{3.0, 4.0, 0.0};
+    writeIface.m_line.extData = {
+        std::make_shared<DRW_Variant>(1001, "XAPP"),
+        std::make_shared<DRW_Variant>(1004, std::string{"0102"}),
+        std::make_shared<DRW_Variant>(1004, std::string{"A0b1C2"}),
+        std::make_shared<DRW_Variant>(1004, std::string{}),
+        std::make_shared<DRW_Variant>(1004, largestHex),
+        std::make_shared<DRW_Variant>(1004, std::vector<std::uint8_t>{0x7F}),
+    };
+
+    dwgRW writer(path.c_str());
+    writeIface.m_writer = &writer;
+    REQUIRE(writer.write(&writeIface, version, false));
+    CHECK(writeIface.m_entityWritten);
+    requireNoWriteSkips(writer.getWriteSkipCounters());
+    // The caller's values, which RS_Entity shares, are left as they were.
+    REQUIRE(writeIface.m_line.extData[1]->type() == DRW_Variant::STRING);
+    CHECK(std::string(writeIface.m_line.extData[1]->c_str()) == "0102");
+
+    EntityEedRoundTripIface readIface;
+    dwgRW reader(path.c_str());
+    REQUIRE(reader.read(&readIface, false));
+    REQUIRE(readIface.m_lines.size() == 1);
+    const auto &eed = readIface.m_lines.front().extData;
+    REQUIRE(eed.size() == expected.size() + 1);
+    CHECK(std::string(eed[0]->c_str()) == "XAPP");
+    for (std::size_t index = 0; index < expected.size(); ++index) {
+      CAPTURE(index);
+      const auto &chunk = eed[index + 1];
+      CHECK(chunk->code() == 1004);
+      REQUIRE(chunk->type() == DRW_Variant::BINARY);
+      CHECK(*chunk->binary() == expected[index]);
+    }
+    requireCleanDwgWriteReopen(writer.getWriteSkipCounters(), reader);
+
+    std::remove(path.c_str());
+  }
+}
+
+TEST_CASE("DWG entity EED rejects binary chunk text that is not hex bytes",
+          "[dwg-write][entity][eed][safety]") {
+  // Odd length, a character that is no hex digit, one byte over a chunk.
+  for (const std::string &text : {std::string{"ABC"}, std::string{"0G"},
+                                   std::string(2 * 256, '0')}) {
+    for (const DRW::Version version : {DRW::AC1015, DRW::AC1032}) {
+      CAPTURE(text.size(), static_cast<int>(version));
+      const std::string path = tempPath("entity_eed_bad_hex.dwg");
+      std::remove(path.c_str());
+
+      EntityEedRoundTripIface iface;
+      iface.m_line.basePoint = DRW_Coord{1.0, 2.0, 0.0};
+      iface.m_line.secPoint = DRW_Coord{3.0, 4.0, 0.0};
+      iface.m_line.extData = {
+          std::make_shared<DRW_Variant>(1001, "XAPP"),
+          std::make_shared<DRW_Variant>(1004, text),
+      };
+
+      dwgRW writer(path.c_str());
+      iface.m_writer = &writer;
+      CHECK_FALSE(writer.write(&iface, version, false));
+      CHECK_FALSE(iface.m_entityWritten);
+      CHECK(writer.getWriteSkipCounters().entityWrites == 1);
+      CHECK(writer.getError() == DRW::BAD_OPEN);
+      CHECK_FALSE(std::filesystem::exists(path));
+    }
+  }
+}
+
+namespace {
+
+// Table records and objects reach the same EED encoder as entities.
+class TableObjectHexEedIface final : public EmptyIface {
+public:
+  dwgRW *m_writer{nullptr};
+  bool m_layerAdded{false};
+  bool m_xrecordWritten{false};
+  std::vector<DRW_Variant> m_layerEed;
+  std::vector<DRW_Variant> m_xrecordEed;
+
+  static void addHexEed(DRW_TableEntry &entry, const char *appName,
+                        const char *hex) {
+    REQUIRE(entry.addExtData(std::make_unique<DRW_Variant>(1001, appName)));
+    REQUIRE(entry.addExtData(
+        std::make_unique<DRW_Variant>(1004, std::string{hex})));
+  }
+
+  void writeLayers() override {
+    DRW_Layer layer;
+    layer.name = "HEX_EED";
+    addHexEed(layer, "LAYER_HEX", "0102");
+    m_layerAdded = m_writer->addLayer(&layer);
+  }
+
+  void collectDwgAppIds() override {
+    DRW_AppId appId;
+    appId.name = "XRECORD_HEX";
+    REQUIRE(m_writer->addAppId(&appId));
+  }
+
+  void writeObjects() override {
+    DRW_XRecord xrecord;
+    xrecord.handle = 0x7B0u;
+    xrecord.parentHandle = 0xCu;
+    xrecord.m_values.emplace_back(70, static_cast<std::int32_t>(42));
+    addHexEed(xrecord, "XRECORD_HEX", "A0B1C2");
+    m_xrecordWritten = m_writer->writeXRecord(&xrecord);
+  }
+
+  void addLayer(const DRW_Layer &layer) override {
+    if (layer.name == "HEX_EED")
+      copyEed(layer, m_layerEed);
+  }
+
+  void addXRecord(const DRW_XRecord &xrecord) override {
+    if (xrecord.handle == 0x7B0u)
+      copyEed(xrecord, m_xrecordEed);
+  }
+
+private:
+  static void copyEed(const DRW_TableEntry &entry,
+                      std::vector<DRW_Variant> &eed) {
+    for (const DRW_Variant *value : entry.extData) {
+      if (value != nullptr)
+        eed.push_back(*value);
+    }
+  }
+};
+
+} // namespace
+
+TEST_CASE("DWG table and object EED write binary chunks held as DXF hex text",
+          "[dwg-write][table][xrecord][eed]") {
+  const auto checkEed = [](const std::vector<DRW_Variant> &eed,
+                           const char *appName,
+                           const std::vector<std::uint8_t> &bytes) {
+    REQUIRE(eed.size() == 2);
+    CHECK(eed[0].code() == 1001);
+    CHECK(std::string(eed[0].c_str()) == appName);
+    CHECK(eed[1].code() == 1004);
+    REQUIRE(eed[1].type() == DRW_Variant::BINARY);
+    CHECK(*eed[1].binary() == bytes);
+  };
+
+  for (const DRW::Version version : {DRW::AC1015, DRW::AC1018, DRW::AC1021,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032}) {
+    CAPTURE(static_cast<int>(version));
+    const std::string path =
+        tempPath("table_object_eed_hex_" +
+                 std::to_string(static_cast<int>(version)) + ".dwg");
+    std::remove(path.c_str());
+
+    TableObjectHexEedIface writeIface;
+    dwgRW writer(path.c_str());
+    writeIface.m_writer = &writer;
+    REQUIRE(writer.write(&writeIface, version, false));
+    CHECK(writeIface.m_layerAdded);
+    CHECK(writeIface.m_xrecordWritten);
+
+    TableObjectHexEedIface readIface;
+    dwgRW reader(path.c_str());
+    REQUIRE(reader.read(&readIface, false));
+    checkEed(readIface.m_layerEed, "LAYER_HEX", {0x01, 0x02});
+    checkEed(readIface.m_xrecordEed, "XRECORD_HEX", {0xA0, 0xB1, 0xC2});
+    requireCleanDwgWriteReopen(writer.getWriteSkipCounters(), reader);
+
+    std::remove(path.c_str());
+  }
+}
+
 TEST_CASE("DWG entity EED requires a registered APPID",
           "[dwg-write][entity][eed][safety]") {
   const std::string path = tempPath("entity_eed_missing_appid.dwg");
