@@ -101,6 +101,11 @@ Domenech). They are the reference the R2018 embedded-MTEXT layout is checked
 against bit for bit; the drawing itself is not redistributed, and the test
 that imports it skips when it is absent.
 
+The same file holds one object record of the R14 drawing of that collection,
+`samples/sample_AC1014.dwg`: its PDF underlay (handle 0xD07, 56 bytes), whose
+last handle names the PDFDEFINITION 0xD06. It is the reference for the
+definition handle of an underlay in a DWG older than R2000.
+
 ## Baseline corpus cleanup
 
 The baseline `origin/master` testdata inventory contained 27 DWGs. This change

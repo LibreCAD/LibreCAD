@@ -58,7 +58,9 @@ protected:
     bool m_both = false;
 
     void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
-    void previewRefTrimmedEntity(RS_Entity *trimmed, const RS_Entity *original) const;
+    RS_Entity* catchLimitEntity(const LC_MouseEvent* e) const;
+    void setLimitEntity(RS_Entity* entity);
+    bool previewRefTrimmedEntity(RS_Entity *trimmed, const RS_Entity *original) const;
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateActionPrompt() override;
     void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;

@@ -87,6 +87,10 @@ class RS_Block;
 class RS_Pen;
 class TwoStackedLabels;
 
+namespace LC_Printing {
+    enum class PrinterType;
+}
+
 struct AreasToggleActions {
     QAction* left{nullptr};
     QAction* right{nullptr};
@@ -193,7 +197,7 @@ public slots:
     /** close all files; return false == operation cancelled */
     void slotFileCloseAll();
     /** prints the current file */
-    void slotFilePrint(bool printPDF = false);
+    void slotFilePrint();
     void slotFilePrintPDF();
     /** shows print preview of the current file */
     void slotFilePrintPreview(bool on);
@@ -369,6 +373,7 @@ public:
 
 protected:
     friend struct LC_DockLayoutTestAccess;
+    void doPrint(LC_Printing::PrinterType printerType);
     bool closePrintPreview(QC_MDIWindow* parent);
     void openPrintPreview(QC_MDIWindow* parent);
     bool doSaveAllFiles();
