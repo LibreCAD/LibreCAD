@@ -32,39 +32,21 @@
 #include <string>
 
 #include <QByteArray>
-#include <QCoreApplication>
 #include <QFile>
 #include <QObject>
 #include <QString>
 #include <QTemporaryDir>
 
+#include "lc_filtertestsupport.h"
 #include "rs_block.h"
 #include "rs_entity.h"
 #include "rs_fileio.h"
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
-#include "rs_settings.h"
 #include "rs_vector.h"
 
 namespace {
-
-void ensureSettings() {
-    static int argc = 1;
-    static char arg0[] = "librecad_tests";
-    static char* argv[] = {arg0, nullptr};
-    static QCoreApplication* app = QCoreApplication::instance()
-                                       ? QCoreApplication::instance()
-                                       : new QCoreApplication(argc, argv);
-    static bool ready = [] {
-        QCoreApplication::setOrganizationName("LibreCAD");
-        QCoreApplication::setApplicationName("LibreCAD-tests");
-        RS_Settings::init("LibreCAD", "LibreCAD-tests");
-        return true;
-    }();
-    (void)app;
-    (void)ready;
-}
 
 // R12 records: no handles needed. Numbers are written as text so that the
 // fixtures do not depend on the C locale.
@@ -167,7 +149,8 @@ void checkSquareAt(RS_Insert& insert, double x, double y) {
 
 TEST_CASE("an INSERT read before a read error shows its block when the drawing is opened",
           "[dxf][filter][partial][insert]") {
-    ensureSettings();
+    lc::test::ensureSettings();
+    lc::test::QuietLog quiet;
     QTemporaryDir dir;
     REQUIRE(dir.isValid());
     const QString path = writeDxf(dir, "cut_after_insert.dxf", kCutAfterInsert);
@@ -188,7 +171,8 @@ TEST_CASE("an INSERT read before a read error shows its block when the drawing i
 
 TEST_CASE("the DXF filter expands the INSERTs it read when it reports a read error",
           "[dxf][filter][partial][insert]") {
-    ensureSettings();
+    lc::test::ensureSettings();
+    lc::test::QuietLog quiet;
     QTemporaryDir dir;
     REQUIRE(dir.isValid());
     const QString path = writeDxf(dir, "cut_after_insert.dxf", kCutAfterInsert);
@@ -207,9 +191,13 @@ TEST_CASE("the DXF filter expands the INSERTs it read when it reports a read err
     checkSquareAt(*insert, 100.0, 50.0);
 }
 
-TEST_CASE("the INSERTs inside the blocks of a partly read drawing are expanded",
+TEST_CASE("nested INSERTs expand independently of block definition order",
           "[dxf][filter][partial][insert]") {
-    ensureSettings();
+    lc::test::ensureSettings();
+    lc::test::QuietLog quiet;
+    bool partial = true;
+    SECTION("after a read error") {}
+    SECTION("after a complete read") { partial = false; }
     QTemporaryDir dir;
     REQUIRE(dir.isValid());
     // OUTER comes first and holds an INSERT of INNER, defined after it.
@@ -219,13 +207,15 @@ TEST_CASE("the INSERTs inside the blocks of a partly read drawing are expanded",
     const QString path = writeDxf(dir, "cut_after_nested_insert.dxf",
                                   kHeader + dxfSection("BLOCKS", blocks)
                                       + "0\nSECTION\n2\nENTITIES\n"
-                                      + dxfInsert("OUTER", "100.0", "100.0") + kCutEntity);
+                                      + dxfInsert("OUTER", "100.0", "100.0")
+                                      + (partial ? kCutEntity : "0\nENDSEC\n0\nEOF\n"));
     REQUIRE_FALSE(path.isEmpty());
 
     RS_Graphic graphic;
     const PartialOpen outcome = openKeepingPartial(graphic, path);
     REQUIRE(outcome.m_opened);
-    CHECK(outcome.m_partial);
+    CHECK(outcome.m_partial == partial);
+    CHECK(outcome.m_callbacks == (partial ? 1 : 0));
 
     // The model-space INSERT shows the circle of OUTER and the line of INNER.
     RS_Insert* outer = findInsert(graphic, "OUTER");
@@ -246,7 +236,8 @@ TEST_CASE("the INSERTs inside the blocks of a partly read drawing are expanded",
 
 TEST_CASE("the INSERTs of a partly read block table are expanded as far as it was read",
           "[dxf][filter][partial][insert]") {
-    ensureSettings();
+    lc::test::ensureSettings();
+    lc::test::QuietLog quiet;
     QTemporaryDir dir;
     REQUIRE(dir.isValid());
     // ENTITIES comes before BLOCKS here, so that the drawing holds INSERTs when
@@ -285,4 +276,63 @@ TEST_CASE("the INSERTs of a partly read block table are expanded as far as it wa
     REQUIRE(absent != nullptr);
     CHECK(absent->getBlockForInsert() == nullptr);
     CHECK(absent->count() == 0);
+}
+
+TEST_CASE("a cyclic block does not prevent recovery of independent INSERTs",
+          "[dxf][filter][partial][insert]") {
+    lc::test::ensureSettings();
+    lc::test::QuietLog quiet;
+    QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    const std::string blocks = dxfBlock("A", dxfInsert("B", "0.0", "0.0"))
+                               + dxfBlock("B", dxfInsert("A", "0.0", "0.0")) + kSquare;
+    const QString path = writeDxf(dir, "cut_after_cycle.dxf",
+                                  kHeader + dxfSection("BLOCKS", blocks)
+                                      + "0\nSECTION\n2\nENTITIES\n"
+                                      + dxfInsert("A", "0.0", "0.0")
+                                      + dxfInsert("SQUARE", "100.0", "50.0") + kCutEntity);
+    REQUIRE_FALSE(path.isEmpty());
+    RS_Graphic graphic;
+    const PartialOpen outcome = openKeepingPartial(graphic, path);
+    REQUIRE(outcome.m_opened);
+    CHECK(outcome.m_partial);
+    auto* cyclic = findInsert(graphic, "A");
+    REQUIRE(cyclic != nullptr);
+    CHECK(cyclic->count() == 0);
+    auto* square = findInsert(graphic, "SQUARE");
+    REQUIRE(square != nullptr);
+    checkSquareAt(*square, 100.0, 50.0);
+}
+
+TEST_CASE("partial imports retain the INSERT nesting limit",
+          "[dxf][filter][partial][insert]") {
+    lc::test::ensureSettings();
+    lc::test::QuietLog quiet;
+    QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    const std::size_t depth = RS_InsertExpansionBudget::DefaultMaxNestingDepth + 1;
+    std::string blocks = kSquare;
+    for (std::size_t i = 0; i < depth; ++i) {
+        const std::string entities = i + 1 == depth
+                                        ? dxfLine("0.0", "0.0", "1.0", "0.0")
+                                        : dxfInsert("DEPTH" + std::to_string(i + 1), "0.0", "0.0");
+        blocks += dxfBlock("DEPTH" + std::to_string(i), entities);
+    }
+    const QString path = writeDxf(dir, "cut_after_deep_insert.dxf",
+                                  kHeader + dxfSection("BLOCKS", blocks)
+                                      + "0\nSECTION\n2\nENTITIES\n"
+                                      + dxfInsert("DEPTH0", "0.0", "0.0")
+                                      + dxfInsert("SQUARE", "100.0", "50.0") + kCutEntity);
+    REQUIRE_FALSE(path.isEmpty());
+    RS_Graphic graphic;
+    const PartialOpen outcome = openKeepingPartial(graphic, path);
+    REQUIRE(outcome.m_opened);
+    CHECK(outcome.m_partial);
+    auto* deep = findInsert(graphic, "DEPTH0");
+    REQUIRE(deep != nullptr);
+    REQUIRE(deep->getBlockForInsert() != nullptr);
+    CHECK(deep->count() == 0);
+    auto* square = findInsert(graphic, "SQUARE");
+    REQUIRE(square != nullptr);
+    checkSquareAt(*square, 100.0, 50.0);
 }
