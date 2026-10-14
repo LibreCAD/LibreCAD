@@ -4423,13 +4423,22 @@ bool encodeEedItem(DRW::Version version, const DRW_Variant& value,
         putEedRawHandleLE(output, resolvedLayerHandle);
         return output.isGood();
     case 1004: {
-        if (value.type() != DRW_Variant::BINARY || value.binary() == nullptr
-            || value.binary()->size() > std::numeric_limits<std::uint8_t>::max()) {
+        std::vector<std::uint8_t> decoded;
+        const auto* bytes = value.type() == DRW_Variant::BINARY ? value.binary() : nullptr;
+        // DXF imports retain binary chunks as hexadecimal strings.
+        if (value.type() == DRW_Variant::STRING && value.content.s != nullptr) {
+            if (value.content.s->size() > 2U * std::numeric_limits<std::uint8_t>::max()
+                || !decodeHexBytes(*value.content.s, decoded)) {
+                return false;
+            }
+            bytes = &decoded;
+        }
+        if (bytes == nullptr || bytes->size() > std::numeric_limits<std::uint8_t>::max()) {
             return false;
         }
         output.putRawChar8(4);
-        output.putRawChar8(static_cast<std::uint8_t>(value.binary()->size()));
-        output.putBytes(value.binary()->data(), value.binary()->size());
+        output.putRawChar8(static_cast<std::uint8_t>(bytes->size()));
+        output.putBytes(bytes->data(), bytes->size());
         return output.isGood();
     }
     case 1005: {

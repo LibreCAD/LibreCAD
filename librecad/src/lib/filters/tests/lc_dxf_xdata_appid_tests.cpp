@@ -33,6 +33,7 @@
 #include <catch2/generators/catch_generators.hpp>
 #include <catch2/generators/catch_generators_range.hpp>
 
+#include <algorithm>
 #include <cctype>
 #include <filesystem>
 #include <fstream>
@@ -44,7 +45,9 @@
 #include <vector>
 
 #include "drw_base.h"
+#include "drw_entities.h"
 #include "drw_objects.h"
+#include "intern/dwgbufferw.h"
 #include "lc_dimstyle.h"
 #include "lc_dimstyleslist.h"
 #include "lc_dwgadvancedmetadata.h"
@@ -127,15 +130,37 @@ RS_Line* lineWithXData(RS_EntityContainer* parent, const double y,
 
 // A polyline with a width of 0.5; the width is kept as LibreCAD_LWPOLYLINE
 // XDATA, which an APPID table may name in another case.
-std::string drawingWithWidePolyline(const std::string& appIdTable) {
+std::string drawingWithWidePolyline(const std::string& appIdTable,
+                                    const std::string& extData =
+                                        "1001\nLC_IMPORTED_POLYLINE\n1000\nkept with the width\n",
+                                    bool lightweight = true) {
+    const std::string polyline = lightweight
+        ? "0\nLWPOLYLINE\n5\n100\n330\n1F\n100\nAcDbEntity\n8\n0\n100\nAcDbPolyline\n"
+          "90\n3\n70\n0\n43\n0.5\n"
+          "10\n0.0\n20\n0.0\n10\n10.0\n20\n0.0\n10\n10.0\n20\n5.0\n" + extData
+        : "0\nPOLYLINE\n5\n100\n100\nAcDbEntity\n8\n0\n100\nAcDb2dPolyline\n"
+          "66\n1\n70\n0\n10\n0\n20\n0\n30\n0\n40\n0.5\n41\n0.75\n" + extData +
+          "0\nVERTEX\n8\n0\n10\n0\n20\n0\n30\n0\n"
+          "0\nVERTEX\n8\n0\n10\n10\n20\n0\n30\n0\n"
+          "0\nVERTEX\n8\n0\n10\n10\n20\n5\n30\n0\n0\nSEQEND\n8\n0\n";
     return "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1032\n0\nENDSEC\n"
            "0\nSECTION\n2\nTABLES\n" + appIdTable + "0\nENDSEC\n"
-           "0\nSECTION\n2\nENTITIES\n"
-           "0\nLWPOLYLINE\n5\n100\n330\n1F\n100\nAcDbEntity\n8\n0\n100\nAcDbPolyline\n"
-           "90\n3\n70\n0\n43\n0.5\n"
-           "10\n0.0\n20\n0.0\n10\n10.0\n20\n0.0\n10\n10.0\n20\n5.0\n"
-           "1001\nLC_IMPORTED_POLYLINE\n1000\nkept with the width\n"
+           "0\nSECTION\n2\nENTITIES\n" + polyline +
            "0\nENDSEC\n0\nEOF\n";
+}
+
+std::vector<lc::test::DxfGroup> applicationData(const lc::test::DxfRecord& record,
+                                               const std::string& application) {
+    std::vector<lc::test::DxfGroup> result;
+    bool inGroup = false;
+    for (const auto& group : record.m_groups) {
+        if (group.m_code == 1001) {
+            inGroup = upper(group.m_value) == upper(application);
+        } else if (inGroup) {
+            result.push_back(group);
+        }
+    }
+    return result;
 }
 
 // R2000 and R2004 keep the line types of a dimension style in XDATA of
@@ -275,6 +300,120 @@ TEST_CASE("a polyline read with a width is written with LibreCAD_LWPOLYLINE regi
     checkEveryApplicationRegisteredOnce(out);
     CHECK(registeredApplications(out).count("LIBRECAD_LWPOLYLINE") == 1);
     CHECK(registeredApplications(out).count("LC_IMPORTED_POLYLINE") == 1);
+}
+
+TEST_CASE("wide polylines keep imported XDATA through repeated DXF and DWG saves",
+          "[dxf][dwg][filter][xdata][appid][lwpolyline][polyline][regression]") {
+    lc::test::ensureSettings();
+    const lc::test::QuietLog quiet;
+    const bool lightweight = GENERATE(false, true);
+    const std::string oldMarker = GENERATE(std::string(), std::string("LibreCAD_LWPOLYLINE"),
+                                           std::string("librecad_lwpolyline"));
+    const Format format = GENERATE(
+        Format{RS2::FormatDXFRW12, "dxf-r12"}, Format{RS2::FormatDXFRW14, "dxf-r14"},
+        Format{RS2::FormatDXFRW2000, "dxf-2000"}, Format{RS2::FormatDXFRW2004, "dxf-2004"},
+        Format{RS2::FormatDXFRW, "dxf-2007"}, Format{RS2::FormatDXFRW2010, "dxf-2010"},
+        Format{RS2::FormatDXFRW2013, "dxf-2013"}, Format{RS2::FormatDXFRW2018, "dxf-2018"},
+        Format{RS2::FormatDWG, "dwg-2000"}, Format{RS2::FormatDWG2004, "dwg-2004"},
+        Format{RS2::FormatDWG2007, "dwg-2007"}, Format{RS2::FormatDWG2010, "dwg-2010"},
+        Format{RS2::FormatDWG2013, "dwg-2013"}, Format{RS2::FormatDWG2018, "dwg-2018"});
+    CAPTURE(lightweight, oldMarker, format.m_name);
+    const bool dwg = std::string(format.m_name).rfind("dwg-", 0) == 0;
+    std::string extData =
+        "1001\nLC_TEST_POLYLINE_APP\n1000\nkeep this text\n1002\n{\n1002\n{\n"
+        "1004\n007FFF\n1010\n1\n1020\n2\n1030\n3\n1040\n4.5\n"
+        "1070\n12\n1071\n1234567\n1002\n}\n1002\n}\n";
+    if (!oldMarker.empty()) {
+        extData += "1001\n" + oldMarker + "\n1040\n999\n1000\nstale metadata\n";
+    }
+    extData += "1001\nLibreCAD_LWPOLYLINE_USER\n1000\nkeep this group too\n1070\n42\n";
+
+    const lc::test::OutputDirectory directory("lc_polyline_imported_xdata");
+    const auto in = directory.file("in.dxf");
+    std::ofstream(in, std::ios::binary) << drawingWithWidePolyline("", extData, lightweight);
+    const auto source = lc::test::dxfRecords(in, lightweight ? "LWPOLYLINE" : "POLYLINE");
+    REQUIRE(source.size() == 1);
+    auto graphic = std::make_unique<RS_Graphic>();
+    REQUIRE(lc::test::importDrawing(*graphic, in, RS2::FormatDXFRW));
+
+    for (int pass = 0; pass < 3; ++pass) {
+        CAPTURE(pass);
+        graphic->onLoadingCompleted();
+        REQUIRE(graphic->count() == 1);
+        REQUIRE(graphic->entityAt(0)->rtti() == RS2::EntityPolyline);
+        std::vector<std::string> applications;
+        for (const auto& value : graphic->entityAt(0)->getDrwExtData()) {
+            if (value && value->code() == 1001 && value->type() == DRW_Variant::STRING && value->content.s) {
+                applications.push_back(upper(*value->content.s));
+            }
+        }
+        for (const char* application :
+             {"LC_TEST_POLYLINE_APP", "LIBRECAD_LWPOLYLINE_USER", "LIBRECAD_LWPOLYLINE"}) {
+            CAPTURE(application);
+            CHECK(std::count(applications.begin(), applications.end(), application) == 1);
+        }
+        if (pass == 2)
+            break;
+        const auto out = directory.file("pass" + std::to_string(pass) + (dwg ? ".dwg" : ".dxf"));
+        REQUIRE(lc::test::exportDrawing(*graphic, out, format.m_type));
+        if (!dwg)
+            checkEveryApplicationRegisteredOnce(out);
+        auto reopened = std::make_unique<RS_Graphic>();
+        REQUIRE(lc::test::importDrawing(*reopened, out, format.m_type));
+        graphic = std::move(reopened);
+    }
+
+    const auto out = directory.file("final.dxf");
+    REQUIRE(lc::test::exportDrawing(*graphic, out, RS2::FormatDXFRW2018));
+    checkEveryApplicationRegisteredOnce(out);
+    const auto polylines = lc::test::dxfRecords(out, "LWPOLYLINE");
+    REQUIRE(polylines.size() == 1);
+    REQUIRE(polylines.front().own(1001).size() == 3);
+    for (const char* application : {"LC_TEST_POLYLINE_APP", "LibreCAD_LWPOLYLINE_USER"}) {
+        CAPTURE(application);
+        const auto expected = applicationData(source.front(), application);
+        const auto actual = applicationData(polylines.front(), application);
+        REQUIRE(actual.size() == expected.size());
+        for (std::size_t i = 0; i < expected.size(); ++i) {
+            CHECK(actual[i].m_code == expected[i].m_code);
+            CHECK(lc::test::sameValues({expected[i].m_value}, {actual[i].m_value}));
+        }
+    }
+    if (lightweight) {
+        CHECK(lc::test::sameValues({"0.5"}, polylines.front().own(43)));
+    } else {
+        CHECK(lc::test::sameValues({"0.5", "0.5", "0.5"}, polylines.front().own(40)));
+        CHECK(lc::test::sameValues({"0.75", "0.75", "0.75"}, polylines.front().own(41)));
+    }
+}
+
+TEST_CASE("DWG EED accepts checked hexadecimal XDATA binary chunks",
+          "[dwg][filter][eed][xdata][regression]") {
+    const auto version = GENERATE(DRW::AC1015, DRW::AC1018, DRW::AC1021,
+                                   DRW::AC1024, DRW::AC1027, DRW::AC1032);
+    const std::string hex = GENERATE(std::string("007FFF"), std::string("007fFf"),
+                                     std::string(), std::string("0"), std::string("0G"),
+                                     std::string(510, '0'), std::string(512, '0'));
+    CAPTURE(version, hex);
+    DRW_Variant app(1001, std::string("LC_TEST_POLYLINE_APP"));
+    DRW_Variant chunk(1004, hex);
+    dwgBufferW encoded;
+    const bool valid = DRW_Entity::encodeDwgEed(version, {&app, &chunk}, {{0, 0x30}}, {}, 1252, encoded);
+    if (hex == "0" || hex == "0G" || hex.size() > 510) {
+        CHECK_FALSE(valid);
+    } else {
+        REQUIRE(valid);
+        const std::vector<std::uint8_t> bytes = hex.size() == 510
+            ? std::vector<std::uint8_t>(255, 0)
+            : hex.empty() ? std::vector<std::uint8_t>{} : std::vector<std::uint8_t>{0, 0x7F, 0xFF};
+        DRW_Variant binary(1004, bytes);
+        dwgBufferW expected;
+        REQUIRE(DRW_Entity::encodeDwgEed(version, {&app, &binary}, {{0, 0x30}}, {}, 1252, expected));
+        CHECK(encoded.data() == expected.data());
+    }
+    DRW_Variant wrongType(1004, std::int32_t{7});
+    dwgBufferW invalid;
+    CHECK_FALSE(DRW_Entity::encodeDwgEed(version, {&app, &wrongType}, {{0, 0x30}}, {}, 1252, invalid));
 }
 
 TEST_CASE("the line types of a dimension style in R2000 and R2004 XDATA are registered",
