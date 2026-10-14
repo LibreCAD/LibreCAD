@@ -11784,6 +11784,20 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       reserveAll(md.spatialIndexes(), "SPATIAL_INDEX");
       reserveAll(md.dictionariesWithDefault(), "DICTIONARYWDFLT");
       reserveAll(md.sortEntsTables(), "SORTENTSTABLE");
+      // A sort handle need not name an object: it is the value an entity is
+      // drawn in the order of. One that names nothing keeps its value
+      // (writeObjects()), so no object written must take it.
+      for (const auto &record : md.sortEntsTables()) {
+        if (record.replayState !=
+            LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+          continue;
+        for (const std::uint32_t sortHandle : record.sortHandles) {
+          if (sortHandle == DRW::NoHandle)
+            continue;
+          m_dwgW->reserveHandle(sortHandle);
+          highWater = std::max<std::uint32_t>(highWater, sortHandle);
+        }
+      }
       reserveAll(md.dbColors(), "DBCOLOR");
       reserveAll(md.underlayDefinitions(), "UNDERLAYDEFINITION");
       reserveAll(md.pointCloudDefinitions(), "POINTCLOUDDEF");
@@ -25700,6 +25714,25 @@ void RS_FilterDXFRW::writeObjects() {
               sortTargetKind = DwgWriteSourceKind::RawCarrier;
               effectiveSortStatus = DwgWriteReferenceStatus::Committed;
             }
+          }
+          if (effectiveSortStatus == DwgWriteReferenceStatus::Missing ||
+              effectiveSortStatus == DwgWriteReferenceStatus::Suppressed) {
+            // The sort handle "does not have to point to an entity" (ODA,
+            // SORTENTSTABLE): it is the value the entity is drawn in the
+            // order of, and AutoCAD writes values no object has. One that
+            // names no object written keeps its value, as in a DXF
+            // (dxfRW::writeSortEntsTable()); fileExport() reserved it.
+            // The entities are written under new handles, all above it, so
+            // the entity is drawn before them: before the entity it was
+            // ordered against, and before the others of its block too.
+            entityHandles.push_back(entityHandle);
+            sortHandles.push_back(sourceSortHandle);
+            pendingReferences.push_back(
+                {true, sourceEntityHandle, entityHandle,
+                 entityTargetKind, DwgWriteReferenceStatus::Committed,
+                 "SORTENTSTABLE entity", static_cast<std::uint32_t>(i),
+                 DRW::DwgSoftPointer, true});
+            continue;
           }
           if (!isLiveDwgWriteReference(effectiveSortStatus) ||
               sortHandle == 0) {

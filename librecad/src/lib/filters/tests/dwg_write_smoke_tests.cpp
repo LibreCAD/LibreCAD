@@ -15484,7 +15484,9 @@ TEST_CASE("RS_FilterDXFRW rejects a zero CURVEPATH entity reference",
   std::remove(path.c_str());
 }
 
-TEST_CASE("RS_FilterDXFRW rejects a SORTENTSTABLE row with a missing sort key",
+// A sort handle need not name an object (ODA, SORTENTSTABLE); AutoCAD
+// writes such values. See lc_dwg_export_sortents_key_tests.cpp.
+TEST_CASE("RS_FilterDXFRW keeps a SORTENTSTABLE sort key that names no object",
           "[dwg-write][sortentstable][references]") {
   ensureQtSettings();
 
@@ -15505,10 +15507,26 @@ TEST_CASE("RS_FilterDXFRW rejects a SORTENTSTABLE row with a missing sort key",
 
   const std::string path = tempPath("filter_sortentstable_missing_sort.dwg");
   std::remove(path.c_str());
-  RS_FilterDXFRW filter;
-  CHECK_FALSE(filter.fileExport(source, QString::fromStdString(path),
-                                RS2::FormatDWG2013));
-  CHECK_FALSE(std::filesystem::exists(path));
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(source, QString::fromStdString(path),
+                              RS2::FormatDWG2013));
+  }
+
+  RS_Graphic imported;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(imported, QString::fromStdString(path),
+                              RS2::FormatDWG));
+  }
+  const auto &tables = imported.dwgAdvancedMetadata().sortEntsTables();
+  const auto written =
+      std::find_if(tables.begin(), tables.end(), [](const auto &candidate) {
+        return candidate.handle == 0xC52u;
+      });
+  REQUIRE(written != tables.end());
+  REQUIRE(written->sortHandles.size() == 1u);
+  CHECK(written->sortHandles.front() == 0xDEADu);
 
   std::remove(path.c_str());
 }
