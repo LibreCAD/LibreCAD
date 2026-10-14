@@ -2636,6 +2636,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/tests/rs_pen_tests.cpp
         librecad/src/lib/actions/tests/lc_snappercatchtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
+        librecad/src/actions/drawing/modify/tests/lc_action_modify_trim_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_move_tests.cpp
         librecad/src/actions/drawing/draw/curve/tests/lc_actiondrawdualtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_offset_tests.cpp
@@ -3437,6 +3438,9 @@ if (BUILD_TESTS)
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp)
     target_sources(librecad_dock_layout_tests PRIVATE ${LIBRECAD_RES})
     set_target_properties(librecad_dock_layout_tests PROPERTIES AUTORCC ON)
+    add_librecad_filter_micro_test(
+        librecad_printing_tests
+        librecad/src/lib/printing/tests/lc_printingtests.cpp)
     add_librecad_filter_micro_test(
         librecad_translation_fallback_tests
         librecad/src/lib/engine/tests/rs_system_translation_tests.cpp)

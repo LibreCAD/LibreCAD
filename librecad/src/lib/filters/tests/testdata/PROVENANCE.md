@@ -109,6 +109,11 @@ license as above. Their extended data names a layer, and is the reference
 the byte order of such an item is checked against. The drawings are not
 redistributed.
 
+The same file holds one object record of the R14 drawing of that collection,
+`samples/sample_AC1014.dwg`: its PDF underlay (handle 0xD07, 56 bytes), whose
+last handle names the PDFDEFINITION 0xD06. It is the reference for the
+definition handle of an underlay in a DWG older than R2000.
+
 ## Baseline corpus cleanup
 
 The baseline `origin/master` testdata inventory contained 27 DWGs. This change

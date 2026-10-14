@@ -6791,11 +6791,14 @@ RS_Vector singleLineFirstPointOffset(const QString &text, const QString &style,
 // its place as AutoCAD does: justification from the attachment point, group
 // 11 the MTEXT insertion point, group 10 the baseline left point. The MTEXT
 // is in WCS, the ATTRIB in its OCS. attrib.text, extPoint and widthscale
-// must be final.
+// must be final. shownValue is attrib.text as a reader shows it: a text of
+// one line, in which "\P", "\~" and a font in braces are characters with a
+// width.
 void setMultilineAttribPlacement(DRW_Attrib &attrib, const DRW_MText &mtext,
                                  const RS_MTextData &data,
                                  const InsertAttribSidecar &sidecar,
-                                 bool firstPointEdited) {
+                                 bool firstPointEdited,
+                                 const QString &shownValue) {
   const auto halign =
       static_cast<RS_TextData::HAlign>(static_cast<int>(data.halign));
   const auto valign =
@@ -6821,9 +6824,9 @@ void setMultilineAttribPlacement(DRW_Attrib &attrib, const DRW_MText &mtext,
   // from it either.
   if (!axes.world)
     return;
-  RS_Vector offset = singleLineFirstPointOffset(
-      RS_FilterDXFRW::toNativeString(QString::fromUtf8(attrib.text.c_str())),
-      data.style, data.height, attrib.widthscale, valign, halign);
+  RS_Vector offset =
+      singleLineFirstPointOffset(shownValue, data.style, data.height,
+                                 attrib.widthscale, valign, halign);
   offset.rotate(data.angle);
   attrib.basePoint.x += offset.x;
   attrib.basePoint.y += offset.y;
@@ -6852,11 +6855,12 @@ std::string embeddedMTextLineType(const std::string &sourceName) {
 // A DWG R2018 MTEXT that is not annotative repeats its placement in a second
 // block (ODA 20.4.46, "redundant fields"); AutoCAD writes version 4 and the
 // default flag there. The model holds one placement, so the block is written
-// from the fields it repeats. sourceAnnotative: the attribute was read from a
-// DWG whose embedded MTEXT was annotative and carried a scale payload; only
-// then is a clear "not annotative" bit a stored fact and kept.
-void completeEmbeddedMTextForDwg(DRW_MText &mtext, bool sourceAnnotative) {
-  if (!sourceAnnotative)
+// from the fields it repeats. keepsScaleData: the attribute was read from a
+// DWG whose embedded MTEXT was annotative, and its scale payload is written
+// again; only then is a clear "not annotative" bit kept. A clear bit with no
+// payload after it is no form that AutoCAD writes.
+void completeEmbeddedMTextForDwg(DRW_MText &mtext, bool keepsScaleData) {
+  if (!keepsScaleData)
     mtext.m_r2018IsNotAnnotative = true;
   if (!mtext.m_r2018IsNotAnnotative)
     return;
@@ -12129,6 +12133,18 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       if (e.handle != 0)
         m_dxfW->reserveHandle(e.handle);
       registerClassFor(e.name); // custom ENTITIES need a CLASS too
+    }
+    // These polylines are written as native underlays by writeEntities().
+    for (RS_Entity *entity :
+         lc::LC_ContainerTraverser{g, RS2::ResolveNone}.entities()) {
+      DwgUnderlaySidecar sidecar;
+      if (!entity->getFlag(RS2::FlagDeleted) &&
+          parseDwgUnderlaySidecar(entity, sidecar)) {
+        const auto kind = sidecar.value.kind;
+        registerClassFor(kind == DRW_Underlay::DGN ? "DGNUNDERLAY"
+                         : kind == DRW_Underlay::DWF ? "DWFUNDERLAY"
+                                                    : "PDFUNDERLAY");
+      }
     }
     std::vector<DRW_RawDxfSection> rawSections;
     for (const DRW_RawDxfSection &section : metadata.rawDxfSections()) {
@@ -28150,7 +28166,8 @@ void RS_FilterDXFRW::writeEntities() {
     // RS_Shape model) -> re-emit as typed AcDbShape so DWG->DXF preserves them.
     // Group 2 is the resolved SHAPEFILE/STYLE record name (the glyph index is
     // not round- trippable without the .shx; this matches libredwg/ACadSharp
-    // output).
+    // output). A shape file's record usually has no name: dxfRW::writeShape
+    // leaves such a SHAPE out and reports it.
     for (const auto &rec : m_graphic->dwgAdvancedMetadata().shapes()) {
       DRW_Shape shape;
       shape.handle = rec.handle;
@@ -31215,6 +31232,8 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         // Whether anything changed that the first point of the ATTRIB
         // itself depends on; without stored MTEXT fields nothing says no.
         bool firstPointEdited = true;
+        // Whether the annotation-scale payload of the source is written.
+        bool scaleDataWritten = false;
         if (sidecar.hasMText) {
           const auto &saved = sidecar.mtext;
           DRW_MText original;
@@ -31275,6 +31294,7 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
           if (!keepScaleState && (!saved.annotativeData.empty() ||
                                   saved.r2018ColumnType != 0))
             ++m_exportAttribScaleDataLeftOut;
+          scaleDataWritten = keepScaleState && !saved.annotativeData.empty();
           // RS_MText::setText() takes a leading \A0; \A1; \A2; out of the
           // text and makes it the vertical alignment. A stored text with such
           // a prefix goes out only next to the vertical alignment it was read
@@ -31366,12 +31386,20 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         const bool keepStored =
             embedsMText ? !textEdited || sidecar.value.empty()
                         : !textEdited && plain.isEmpty();
-        // A value read from a DWG may hold what a line of a DXF cannot.
+        // A value read from a DWG may hold what a line of a DXF cannot. The
+        // stored value is in the spelling of its file and goes out as it is;
+        // the line is a single-line value like that of any ATTRIB, in which
+        // a backslash of the text is a backslash and no code. Either is laid
+        // out below as the text of one line it stands for.
+        QString shownValue = plain;
         if (keepStored && (m_dwgW != nullptr || fitsDxfLine(sidecar.value))) {
           attrib.text = sidecar.value;
+          shownValue = toNativeSingleLineString(
+              QString::fromUtf8(sidecar.value.c_str()));
         } else {
-          attrib.text =
-              toDxfString(plain, m_dwgW == nullptr).toUtf8().toStdString();
+          attrib.text = toDxfSingleLineString(plain, m_dwgW == nullptr)
+                            .toUtf8()
+                            .toStdString();
         }
         attrib.height = data.height;
         attrib.style = mtext->style;
@@ -31379,9 +31407,10 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         // 71 only the two flags there are, backward and upside down.
         attrib.widthscale = sidecar.widthFactor;
         attrib.textgen = sidecar.textgen & 6;
-        // attrib.text is final here: the first point is laid out from it.
+        // attrib.text is final here: the first point is laid out from the
+        // text it stands for.
         setMultilineAttribPlacement(attrib, *mtext, data, sidecar,
-                                    firstPointEdited);
+                                    firstPointEdited, shownValue);
         if (m_dwgW != nullptr) {
           // The MTEXT refers to the text style and the layer of its
           // attribute by the handles they have in the file being written.
@@ -31403,9 +31432,8 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
             // AutoCAD writes class version 0 for a multi-line attribute too.
             attrib.attVersion = 0;
             completeEmbeddedMTextForDwg(
-                *mtext, sidecar.hasMText &&
-                            !sidecar.mtext.r2018IsNotAnnotative &&
-                            !sidecar.mtext.annotativeData.empty());
+                *mtext,
+                scaleDataWritten && !sidecar.mtext.r2018IsNotAnnotative);
           }
           attrib.mtext = std::move(mtext);
         }
