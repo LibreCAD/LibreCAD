@@ -131,6 +131,23 @@ TEST_CASE("RS_Ellipse::getNearestPointOnEntity") {
     REQUIRE(nearest.valid == true);
 }
 
+TEST_CASE("RS_Ellipse::getNearestPointOnEntity finds a critical point inside an arc",
+          "[rs_ellipse][nearest]") {
+    // The whole ellipse is nearest below the major axis, but that point is
+    // outside the upper arc. The arc's nearest point is an interior critical
+    // point, not the nearer of its two endpoints.
+    const RS_Ellipse arc(nullptr, {RS_Vector(0., 0.), RS_Vector(10., 0.), 0.5, 0., M_PI, false});
+    const RS_Vector query(-6.94615, -0.02215);
+    double distance = -1.;
+    const RS_Vector nearest = arc.getNearestPointOnEntity(query, true, &distance);
+
+    REQUIRE(nearest.valid);
+    REQUIRE(arc.isPointOnEntity(nearest, 1e-9));
+    REQUIRE(nearest.y > 1.);
+    REQUIRE(distance < 3.0001);
+    REQUIRE(std::abs(nearest.distanceTo(query) - distance) < 1e-12);
+}
+
 TEST_CASE("RS_Ellipse::getNearestPointOnEntity for points on the axes", "[rs_ellipse][nearest]") {
     // For a point on an axis the quartic has double roots that the solver can miss: at the major vertex
     // it found no real root, and inside the ellipse on the major axis it missed the nearest points off
