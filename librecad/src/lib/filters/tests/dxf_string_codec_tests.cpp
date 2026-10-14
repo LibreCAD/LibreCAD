@@ -378,3 +378,56 @@ TEST_CASE("toNativeString: malformed inputs return deterministically",
     (void)RS_FilterDXFRW::toNativeString(QStringLiteral("trailing {\\f"));
     SUCCEED("all malformed inputs returned without crash or hang");
 }
+
+// ---- Single-line text (TEXT, ATTRIB, ATTDEF): no MTEXT markup ----
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Single-line strings: MTEXT markup is ordinary text",
+          "[dxf_codec][single_line]") {
+    for (const QString& text : {QStringLiteral(R"(D:\PROJECTS\PLAN.dwg)"),
+                                QStringLiteral(R"(C:\Program Files\x)"),
+                                QStringLiteral(R"(\\SERVER\~TMP\A.dwg)"),
+                                QStringLiteral(R"({\fArial|b0;Title})"),
+                                QStringLiteral(R"({\H2.5x;tall}{\C1;red})")}) {
+        CAPTURE(text.toStdString());
+        CHECK(RS_FilterDXFRW::toNativeSingleLineString(text) == text);
+        CHECK(RS_FilterDXFRW::toDxfSingleLineString(text) == text);
+        CHECK(RS_FilterDXFRW::toDxfSingleLineString(text, false) == text);
+    }
+    // The same values are markup in MTEXT content.
+    CHECK(RS_FilterDXFRW::toNativeString(QStringLiteral(R"(D:\PROJECTS\PLAN.dwg)")) ==
+          QStringLiteral("D:\nROJECTS\nLAN.dwg"));
+    CHECK(RS_FilterDXFRW::toNativeString(QStringLiteral(R"(\~TMP)")) == QStringLiteral(" TMP"));
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Single-line strings: symbols and caret codes are converted",
+          "[dxf_codec][single_line]") {
+    CHECK(RS_FilterDXFRW::toNativeSingleLineString(QStringLiteral("45%%d %%C10 %%p0.1")) ==
+          QStringLiteral("45\u00B0 \u230010 \u00B10.1"));
+    CHECK(RS_FilterDXFRW::toNativeSingleLineString(QStringLiteral("A^IB^JC^MD^ E")) ==
+          QStringLiteral("A\tB\nC\rD^E"));
+
+    CHECK(RS_FilterDXFRW::toDxfSingleLineString(QStringLiteral("45\u00B0 \u230010 \u220510 \u00B10.1")) ==
+          QStringLiteral("45%%D %%C10 %%C10 %%P0.1"));
+    CHECK(RS_FilterDXFRW::toDxfSingleLineString(QStringLiteral("x\ty^z")) == QStringLiteral("x^Iy^ z"));
+    CHECK(RS_FilterDXFRW::toDxfSingleLineString(QStringLiteral("x\ty^z"), false) == QStringLiteral("x\ty^z"));
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Single-line strings: a line feed is a control character, not \\P",
+          "[dxf_codec][single_line]") {
+    // An ASCII DXF value cannot hold a line feed, and "\P" would read back as
+    // a backslash and a P.
+    CHECK(RS_FilterDXFRW::toDxfSingleLineString(QStringLiteral("a\nb")) == QStringLiteral("a^Jb"));
+    CHECK(RS_FilterDXFRW::toDxfSingleLineString(QStringLiteral("a\nb"), false) == QStringLiteral("a\nb"));
+    CHECK(RS_FilterDXFRW::toDxfString(QStringLiteral("a\nb")) == QStringLiteral(R"(a\Pb)"));
+
+    for (const QString& text : {QStringLiteral("a\nb"), QStringLiteral("x\ty"), QStringLiteral("c\rd"),
+                                QStringLiteral("p^q"), QStringLiteral("^^\t^"),
+                                QStringLiteral(R"(D:\PROJECTS\PLAN.dwg)"),
+                                QStringLiteral("45\u00B0 \u230010 \u00B10.1")}) {
+        CAPTURE(text.toStdString());
+        CHECK(RS_FilterDXFRW::toNativeSingleLineString(RS_FilterDXFRW::toDxfSingleLineString(text)) == text);
+    }
+}

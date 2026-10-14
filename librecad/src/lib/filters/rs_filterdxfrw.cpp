@@ -7855,7 +7855,8 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert &data) {
 
     QString sty = QString::fromUtf8(att->style.c_str());
     prepareTextStyleName(sty);
-    QString text = toNativeString(QString::fromUtf8(att->text.c_str()));
+    QString text =
+        toNativeSingleLineString(QString::fromUtf8(att->text.c_str()));
 
     RS_TextData td(refPoint, secPoint, att->height, att->widthscale, valign,
                    halign, dir, text, sty, att->angle * M_PI / 180,
@@ -8202,7 +8203,8 @@ void RS_FilterDXFRW::addText(const DRW_Text &data) {
     dir = RS_TextData::None;
   }
 
-  const QString text = toNativeString(QString::fromUtf8(data.text.c_str()));
+  const QString text =
+      toNativeSingleLineString(QString::fromUtf8(data.text.c_str()));
 
   prepareTextStyleName(sty);
 
@@ -30723,7 +30725,10 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         attrib.secPoint.y = source->getSecondPoint().y;
         attrib.height = source->getHeight();
         attrib.widthscale = source->getWidthRel();
-        attrib.text = source->getText().toUtf8().toStdString();
+        attrib.text =
+            toDxfSingleLineString(source->getText(), m_dwgW == nullptr)
+                .toUtf8()
+                .toStdString();
         attrib.style = source->getStyle().toUtf8().toStdString();
         attrib.angle = source->getAngle() * 180.0 / M_PI;
         attrib.alignH = static_cast<DRW_Text::HAlign>(
@@ -30968,7 +30973,8 @@ void RS_FilterDXFRW::writeText(RS_Text *t) {
       }*/
 
   if (!t->getText().isEmpty()) {
-    text.text = toDxfString(t->getText(), m_dwgW == nullptr).toUtf8().data();
+    text.text =
+        toDxfSingleLineString(t->getText(), m_dwgW == nullptr).toUtf8().data();
     if (m_dwgW) {
       if (!m_dwgW->writeText(&text))
         m_writeFailed = true;
@@ -32814,6 +32820,7 @@ DRW_LW_Conv::lineWidth RS_FilterDXFRW::widthToNumber(RS2::LineWidth width) {
   return DRW_LW_Conv::widthDefault;
 }
 
+namespace {
 /**
  * Converts a native unicode string into a DXF encoded string.
  *
@@ -32821,15 +32828,26 @@ DRW_LW_Conv::lineWidth RS_FilterDXFRW::widthToNumber(RS2::LineWidth width) {
  * - %%%c for a diameter sign
  * - %%%d for a degree sign
  * - %%%p for a plus/minus sign
+ *
+ * @param paragraphBreaks A line feed is the MTEXT paragraph break "\P".
+ *   Single-line text has no such code: its line feed is a control character
+ *   like any other.
  */
-QString RS_FilterDXFRW::toDxfString(const QString &str, const bool caretCodes) {
+QString dxfEncodedString(const QString &str, const bool caretCodes,
+                         const bool paragraphBreaks) {
   QString res;
   res.reserve(str.length() + 16);
 
   for (const QChar &qchar : str) {
     switch (qchar.unicode()) {
     case 0x0A:
-      res.append(uR"(\P)");
+      if (paragraphBreaks) {
+        res.append(uR"(\P)");
+      } else if (caretCodes) {
+        res.append(u"^J");
+      } else {
+        res.append(qchar);
+      }
       break;
     case 0x5E: // '^' starts a caret code (toNativeString); "^ " is a literal one
       if (caretCodes) {
@@ -32859,6 +32877,57 @@ QString RS_FilterDXFRW::toDxfString(const QString &str, const bool caretCodes) {
     }
   }
   return res;
+}
+
+/**
+ * Decodes the caret codes of a DXF text value. AutoCAD caret convention:
+ * ^X → chr((X-64) mod 126); ^Space → '^' literal. Mirrors ezdxf
+ * tools/text.py:501, so ^J is LF, ^M is CR and ^I is TAB.
+ */
+QString decodeCaretCodes(const QString &text) {
+  QString decoded;
+  decoded.reserve(text.size());
+  for (int k = 0; k < text.size(); ++k) {
+    const QChar ch = text.at(k);
+    if (ch.unicode() == 0x5E /* '^' */ && k + 1 < text.size()) {
+      const QChar nx = text.at(k + 1);
+      if (nx.unicode() == 0x20) {
+        decoded.append(QChar(0x5E)); // ^space → literal ^
+      } else {
+        const int code = (static_cast<int>(nx.unicode()) - 64) % 126;
+        decoded.append(
+            QChar(static_cast<ushort>(code < 0 ? code + 126 : code)));
+      }
+      ++k; // consume the X
+    } else {
+      decoded.append(ch);
+    }
+  }
+  return decoded;
+}
+
+/**
+ * Replaces the diameter / degree / plus-minus codes — a case-insensitive
+ * match of %%c / %%C etc. — by their signs.
+ * (RLZ: Empty_set is 0x2205, diameter is 0x2300 — needs to be in all fonts.)
+ */
+void decodeTextSymbols(QString &text) {
+  text.replace(QLatin1StringView("%%c"), QStringLiteral("⌀"),
+               Qt::CaseInsensitive);
+  text.replace(QLatin1StringView("%%d"), QStringLiteral("°"),
+               Qt::CaseInsensitive);
+  text.replace(QLatin1StringView("%%p"), QStringLiteral("±"),
+               Qt::CaseInsensitive);
+}
+} // namespace
+
+QString RS_FilterDXFRW::toDxfString(const QString &str, const bool caretCodes) {
+  return dxfEncodedString(str, caretCodes, true);
+}
+
+QString RS_FilterDXFRW::toDxfSingleLineString(const QString &str,
+                                              const bool caretCodes) {
+  return dxfEncodedString(str, caretCodes, false);
 }
 
 /**
@@ -32902,43 +32971,23 @@ QString RS_FilterDXFRW::toNativeString(const QString &data) {
   }
   res.append(data.mid(j));
 
-  // AutoCAD caret convention: ^X → chr((X-64) mod 126); ^Space → '^'
-  // literal. Mirrors ezdxf tools/text.py:501. Run BEFORE the \P/\~ pass
-  // so ^J (LF), ^M (CR), ^I (TAB) decode first; also subsumes the prior
-  // hard-coded "^I → 4 spaces" rule with the general formula (^I → TAB).
-  QString caretDecoded;
-  caretDecoded.reserve(res.size());
-  for (int k = 0; k < res.size(); ++k) {
-    const QChar ch = res.at(k);
-    if (ch.unicode() == 0x5E /* '^' */ && k + 1 < res.size()) {
-      const QChar nx = res.at(k + 1);
-      if (nx.unicode() == 0x20) {
-        caretDecoded.append(QChar(0x5E)); // ^space → literal ^
-      } else {
-        const int code = (static_cast<int>(nx.unicode()) - 64) % 126;
-        caretDecoded.append(
-            QChar(static_cast<ushort>(code < 0 ? code + 126 : code)));
-      }
-      ++k; // consume the X
-    } else {
-      caretDecoded.append(ch);
-    }
-  }
-  res = std::move(caretDecoded);
+  // Run BEFORE the \P/\~ pass so ^J (LF), ^M (CR), ^I (TAB) decode first;
+  // also subsumes the prior hard-coded "^I → 4 spaces" rule with the general
+  // formula (^I → TAB).
+  res = decodeCaretCodes(res);
 
   // Replace literal escape sequences. Each replace() mutates in place;
   // the prior `res = res.replace(...)` was an unnecessary self-assignment.
   res.replace(QLatin1StringView("\\P"), QLatin1StringView("\n")); // line feed
   res.replace(QLatin1StringView("\\~"), QLatin1StringView(" "));  // space
-  // diameter / degree / plus-minus — case-insensitive match of %%c / %%C etc.
-  // (RLZ: Empty_set is 0x2205, diameter is 0x2300 — needs to be in all fonts.)
-  res.replace(QLatin1StringView("%%c"), QStringLiteral("⌀"),
-              Qt::CaseInsensitive);
-  res.replace(QLatin1StringView("%%d"), QStringLiteral("°"),
-              Qt::CaseInsensitive);
-  res.replace(QLatin1StringView("%%p"), QStringLiteral("±"),
-              Qt::CaseInsensitive);
+  decodeTextSymbols(res);
 
+  return res;
+}
+
+QString RS_FilterDXFRW::toNativeSingleLineString(const QString &data) {
+  QString res = decodeCaretCodes(data);
+  decodeTextSymbols(res);
   return res;
 }
 
