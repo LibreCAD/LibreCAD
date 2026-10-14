@@ -1340,10 +1340,8 @@ bool prepareDwgEedRefs(
                 const auto layer = context.layerMap.find(
                     toUpperCase(*value->content.s));
                 if (layer == context.layerMap.end()) {
-                    // The item holds a layer handle, and the drawing has no
-                    // such layer. The data of this application is left out
-                    // whole: an item less would shift what the application
-                    // reads after it.
+                    // Omit the whole application group: removing one item
+                    // would change the application's data layout.
                     appIdRefs.back().leftOut = true;
                     layerRefs.resize(applicationLayerRefs);
                     leavingOut = true;

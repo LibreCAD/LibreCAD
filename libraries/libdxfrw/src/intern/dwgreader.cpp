@@ -3197,9 +3197,7 @@ bool readDwgEed(DRW::Version version, dwgBuffer &buffer,
           break;
         }
         case 3: {
-          // The layer handle in eight bytes, most significant first like the
-          // entity handle of code 5 ("even if the leading ones are 0", ODA
-          // specification 28): AutoCAD writes it so.
+          // Eight bytes, most significant first, like the entity handle (code 5).
           if (itemBuffer.numRemainingBytes() < 8)
             return false;
           std::uint64_t ref = 0;
@@ -3215,11 +3213,8 @@ bool readDwgEed(DRW::Version version, dwgBuffer &buffer,
           // EED layer references are always eight bytes on disk. Keep
           // a valid wide reference even though the in-memory layer map
           // is currently keyed by 32-bit DWG handles.
-          //
-          // LibreCAD wrote the bytes least significant first. Only one of
-          // the two orders can be a 32-bit handle, so a reference that is
-          // none as written is looked up the other way round; it names a
-          // layer only if the drawing has one there.
+          // Try LibreCAD's old byte order only when the canonical value is
+          // too wide; parseAttribs() still requires an existing layer.
           std::uint64_t layer = ref;
           if (layer > std::numeric_limits<std::uint32_t>::max())
             layer = byteSwapped(ref);

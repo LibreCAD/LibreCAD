@@ -3,6 +3,7 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2026 LibreCAD.org
+** Copyright (C) 2026 Dongxu Li (github.com/dxli)
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -36,32 +37,14 @@
 #include <string>
 #include <vector>
 
-#include <QCoreApplication>
 #include <QString>
 
+#include "lc_filtertestsupport.h"
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
 #include "rs_line.h"
-#include "rs_settings.h"
 
 namespace {
-
-void ensureSettings() {
-    static int argc = 1;
-    static char arg0[] = "librecad_tests";
-    static char* argv[] = {arg0, nullptr};
-    static QCoreApplication* app = QCoreApplication::instance()
-                                       ? QCoreApplication::instance()
-                                       : new QCoreApplication(argc, argv);
-    static bool ready = [] {
-        QCoreApplication::setOrganizationName("LibreCAD");
-        QCoreApplication::setApplicationName("LibreCAD-tests");
-        RS_Settings::init("LibreCAD", "LibreCAD-tests");
-        return true;
-    }();
-    (void)app;
-    (void)ready;
-}
 
 std::string tempPath(const std::string& name) {
     return (std::filesystem::temp_directory_path() /
@@ -131,7 +114,8 @@ std::vector<std::string> strings(const RS_Entity& entity) {
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DWG export leaves out XDATA that names a missing layer and reports it",
           "[dwg][dxf][filter][xdata]") {
-    ensureSettings();
+    lc::test::ensureSettings();
+    lc::test::QuietLog quiet;
     const Format dwg = GENERATE(from_range(std::begin(kDwgFormats), std::end(kDwgFormats)));
     CAPTURE(dwg.m_name);
 
@@ -164,9 +148,8 @@ TEST_CASE("DWG export leaves out XDATA that names a missing layer and reports it
           == std::vector<std::string>{"LC_KEPT", "{", "KEPT_LAYER", "kept", "}"});
 
     // Nothing is left out of a drawing whose data names its own layers.
-    RS_FilterDXFRW again;
-    CHECK(again.fileExport(fromDwg, QString::fromStdString(out), dwg.m_type));
-    CHECK(again.exportReport().isEmpty());
+    CHECK(exporter.fileExport(fromDwg, QString::fromStdString(out), dwg.m_type));
+    CHECK(exporter.exportReport().isEmpty());
 
     std::filesystem::remove(src);
     std::filesystem::remove(out);

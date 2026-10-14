@@ -3,6 +3,7 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2026 LibreCAD.org
+** Copyright (C) 2026 Dongxu Li (github.com/dxli)
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -38,35 +39,17 @@
 #include <set>
 #include <string>
 
-#include <QCoreApplication>
 #include <QString>
 
 #include "drw_objects.h"
 #include "lc_containertraverser.h"
 #include "lc_dwgadvancedmetadata.h"
+#include "lc_filtertestsupport.h"
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
 #include "rs_line.h"
-#include "rs_settings.h"
 
 namespace {
-
-void ensureSettings() {
-    static int argc = 1;
-    static char arg0[] = "librecad_tests";
-    static char* argv[] = {arg0, nullptr};
-    static QCoreApplication* app = QCoreApplication::instance()
-                                       ? QCoreApplication::instance()
-                                       : new QCoreApplication(argc, argv);
-    static bool ready = [] {
-        QCoreApplication::setOrganizationName("LibreCAD");
-        QCoreApplication::setApplicationName("LibreCAD-tests");
-        RS_Settings::init("LibreCAD", "LibreCAD-tests");
-        return true;
-    }();
-    (void)app;
-    (void)ready;
-}
 
 struct Format {
     RS2::FormatType m_type;
@@ -97,7 +80,8 @@ RS_Line* addLine(RS_Graphic& drawing, std::uint32_t handle, double y) {
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DWG export keeps a SORTENTSTABLE sort handle that names no object",
           "[dwg][filter][sortentstable]") {
-    ensureSettings();
+    lc::test::ensureSettings();
+    lc::test::QuietLog quiet;
     const Format dwg = GENERATE(from_range(std::begin(kDwgFormats), std::end(kDwgFormats)));
     // A free value between the handles, as AutoCAD writes it, and one above
     // every handle of the drawing, which the export must not hand out.
