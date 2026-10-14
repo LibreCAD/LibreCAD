@@ -235,7 +235,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>未被分割.因為它是聚合線的一部分.請先炸開聚合線.</translation>
+        <translation>無法進行分割，因為它是聚合線的一部分。請先將聚合線分解。</translation>
     </message>
 </context>
 <context>
@@ -686,7 +686,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="546"/>
         <source>Specify start angle:</source>
-        <translation type="unfinished">指定起始角度:</translation>
+        <translation>指定起始角度：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
@@ -702,7 +702,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="552"/>
         <source>Specify included angle:</source>
-        <translation type="unfinished">指定夾角:</translation>
+        <translation>指定夾角：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
@@ -2638,42 +2638,42 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="597"/>
         <source>&amp;Window Zoom</source>
-        <translation>縮放視窗(&amp;W)</translation>
+        <translation>視窗縮放(&amp;W)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="338"/>
         <source>Zoom &amp;Panning</source>
-        <translation>縮放( P)</translation>
+        <translation>縮放與平移(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
         <source>Select Entity</source>
-        <translation>選擇實體</translation>
+        <translation>選擇圖元</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="247"/>
         <source>Select Window</source>
-        <translation>選擇視窗</translation>
+        <translation>選取視窗</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="248"/>
         <source>Deselect Window</source>
-        <translation>取消選擇視窗</translation>
+        <translation>取消選取視窗</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="249"/>
         <source>(De-)Select &amp;Contour</source>
-        <translation>(去-) 選擇相關( C)</translation>
+        <translation>選擇/取消選擇輪廓(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="250"/>
         <source>Select Intersected Entities</source>
-        <translation>選擇相交的实体</translation>
+        <translation>選擇相交圖元</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="251"/>
         <source>Deselect Intersected Entities</source>
-        <translation>取消選取被分割的实体</translation>
+        <translation>取消選擇相交圖元</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
@@ -2683,12 +2683,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
         <source>&amp;Points</source>
-        <translation>點( P)</translation>
+        <translation>點(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="206"/>
         <source>&amp;2 Points</source>
-        <translation>2 點</translation>
+        <translation>2點(&amp;2)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="207"/>
@@ -2714,12 +2714,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211"/>
         <source>&amp;Parallel</source>
-        <translation>平行線(P)</translation>
+        <translation>平行線(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="212"/>
         <source>Parallel through point</source>
-        <translation>相并通點</translation>
+        <translation>通過點平行線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="192"/>
@@ -2729,22 +2729,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="213"/>
         <source>Bisector</source>
-        <translation>二相</translation>
+        <translation>角平分線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="214"/>
         <source>Tangent (P,C)</source>
-        <translation>正切 (P, C)</translation>
+        <translation>切線（P、C）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="215"/>
         <source>Tangent (C,C)</source>
-        <translation>正切 (C, C)</translation>
+        <translation>切線（C、C）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="216"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>正正弦( O)</translation>
+        <translation>切線正交線(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217"/>
@@ -2759,178 +2759,178 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="193"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>多邊形 (中心,頂點)(&amp;Y)</translation>
+        <translation>多邊形（中心點、頂點）(&amp;Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation>波列根 (Cen, Tan)</translation>
+        <translation>多邊形（中心點、邊切點）(&amp;Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="195"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>多邊形 (頂點,頂點)(&amp;N)</translation>
+        <translation>多邊形（頂點、頂點）(&amp;N)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="219"/>
         <source>Snake</source>
-        <translation>蛇</translation>
+        <translation>蛇形線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="220"/>
         <source>Snake (X)</source>
-        <translation>蛇 (X)</translation>
+        <translation>蛇形線（X）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="221"/>
         <source>Snake (Y)</source>
-        <translation>蛇 (Y)</translation>
+        <translation>蛇形線（Y）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="198"/>
         <source>Rectangle (1 Point)</source>
-        <translation>矩形(1分)</translation>
+        <translation>矩形（1點）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="199"/>
         <source>Rectangle (2 Points)</source>
-        <translation>矩形(2分)</translation>
+        <translation>矩形（2點）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="200"/>
         <source>Rectangle (3 Points)</source>
-        <translation>矩形 (3分)</translation>
+        <translation>矩形（3點）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="197"/>
         <source>Star</source>
-        <translation>有星</translation>
+        <translation>星形線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222"/>
         <source>Angle From Line</source>
-        <translation>从行角度</translation>
+        <translation>依直線夾角繪線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="223"/>
         <source>Orthogonal From Line</source>
-        <translation>从行取正弦</translation>
+        <translation>依直線正交線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="224"/>
         <source>From Point To Line</source>
-        <translation>从點到行</translation>
+        <translation>由點至線繪線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="227"/>
         <source>Slice/Divide Line</source>
-        <translation>切片/分出行</translation>
+        <translation>切割/分割直線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228"/>
         <source>Slice/Divide Circle</source>
-        <translation>切片/分出相圈</translation>
+        <translation>切割/分割圓</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="236"/>
         <source>Line of Points</source>
-        <translation>點行</translation>
+        <translation>點列直線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
         <source>Center, &amp;Point</source>
-        <translation>中心, 點(&amp;P)</translation>
+        <translation>中心點與點(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
         <source>By Arc</source>
-        <translation>按弧</translation>
+        <translation>依圓弧</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="263"/>
         <source>Center, &amp;Radius</source>
-        <translation>在中心( R)</translation>
+        <translation>中心點、半徑（&amp;R）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="264"/>
         <source>2 Points</source>
-        <translation>2 點</translation>
+        <translation>2點</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="265"/>
         <source>2 Points, Radius</source>
-        <translation>2 點，半徑</translation>
+        <translation>兩點、半徑</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="266"/>
         <source>3 Points</source>
-        <translation>3 點</translation>
+        <translation>3點</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="267"/>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="286"/>
         <source>&amp;Concentric</source>
-        <translation>中心( C)</translation>
+        <translation>同心圓（&amp;C）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="268"/>
         <source>Circle &amp;Inscribed</source>
-        <translation>已寫入( I)</translation>
+        <translation>內切圓（&amp;I）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="272"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>切向，2 點(&amp;O)</translation>
+        <translation>相切、兩點（&amp;O）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278"/>
         <source>&amp;Center, Point, Angles</source>
-        <translation>中心、 點、 角度( C)</translation>
+        <translation>中心點、點、角度（&amp;C）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="281"/>
         <source>&amp;3 Points</source>
-        <translation>3 點</translation>
+        <translation>3點（&amp;3）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="287"/>
         <source>Arc &amp;Tangential</source>
-        <translation>弧形( T)</translation>
+        <translation>相切圓弧（&amp;T）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="312"/>
         <source>&amp;Ellipse (Axis)</source>
-        <translation>椭圆( A)</translation>
+        <translation>橢圓 (軸心)（&amp;E）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="313"/>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation>椭圆 &amp; 弧 (轴)</translation>
+        <translation>橢圓弧 (軸心)（&amp;A）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="314"/>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>椭圆相關點( F)</translation>
+        <translation>橢圓 (焦點)（&amp;F）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="315"/>
         <source>Ellipse &amp;4 Point</source>
-        <translation>椭圆( 四) 點</translation>
+        <translation>四點橢圓（&amp;4）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>椭圆中心與 &amp; 3 點</translation>
+        <translation>橢圓中心與三點（&amp;3）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317"/>
         <source>Ellipse &amp;Inscribed</source>
-        <translation>椭圆已寫入( I)</translation>
+        <translation>內切橢圓（&amp;I）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="297"/>
         <source>&amp;Spline</source>
-        <translation>分行( S)</translation>
+        <translation>雲形線（&amp;S）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
@@ -2940,22 +2940,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="226"/>
         <source>Center Mark</source>
-        <translation>中</translation>
+        <translation>中心標記</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269"/>
         <source>Tangential 2 Entities, Radius</source>
-        <translation>切向 2 实体, 半徑</translation>
+        <translation>相切兩圖元、半徑</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="270"/>
         <source>Tangential 2 Entities, 1 Point</source>
-        <translation>切向 2 個实体, 1 分</translation>
+        <translation>相切兩圖元、1個點</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271"/>
         <source>Tangential &amp;3 Entities</source>
-        <translation>切向 &amp; 3 實體</translation>
+        <translation>相切3圖元（&amp;3）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="284"/>
@@ -2980,7 +2980,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
         <source>&amp;Insert spline points</source>
-        <translation>插入示範點( I)</translation>
+        <translation>插入雲形線點（&amp;I）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="323"/>
@@ -3095,7 +3095,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="688"/>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation>匯出為 CA&amp;M/ Plain SVG...</translation>
+        <translation>匯出為 CAM/標準SVG(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="675"/>
@@ -3111,7 +3111,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="707"/>
         <source>Re-dock Widgets</source>
-        <translation>重新锁定元件</translation>
+        <translation type="unfinished">重設浮動視窗停靠位置</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="324"/>
@@ -3171,7 +3171,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="350"/>
         <source>&amp;Linear</source>
-        <translation>啟動( L)</translation>
+        <translation>線性標註(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="352"/>
@@ -3196,7 +3196,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
         <source>&amp;Leader</source>
-        <translation>領導( L)</translation>
+        <translation>引線(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
@@ -3391,52 +3391,52 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="600"/>
         <source>&amp;Main Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>主選單(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="693"/>
         <source>Left Dock Area</source>
-        <translation type="unfinished"></translation>
+        <translation>左側停靠區</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="694"/>
         <source>Right Dock Area</source>
-        <translation type="unfinished"></translation>
+        <translation>右側停靠區</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="695"/>
         <source>Top Dock Area</source>
-        <translation type="unfinished"></translation>
+        <translation>頂部停靠區</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="696"/>
         <source>Bottom Dock Area</source>
-        <translation type="unfinished"></translation>
+        <translation>底部停靠區</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="697"/>
         <source>Floating Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>浮動視窗</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="698"/>
         <source>Left Toolbar Area</source>
-        <translation type="unfinished"></translation>
+        <translation>左側工具列區域</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="699"/>
         <source>Right Toolbar Area</source>
-        <translation type="unfinished"></translation>
+        <translation>右側工具列區域</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="700"/>
         <source>Top Toolbar Area</source>
-        <translation type="unfinished"></translation>
+        <translation>頂部工具列區域</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="701"/>
         <source>Bottom Toolbar Area</source>
-        <translation type="unfinished"></translation>
+        <translation>底部工具列區域</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="751"/>
@@ -3863,7 +3863,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="229"/>
         <source>Radiant Line</source>
-        <translation type="unfinished"></translation>
+        <translation>放射線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="237"/>
@@ -3938,7 +3938,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="296"/>
         <source>&amp;Hyperbola &amp;Foci Point</source>
-        <translation>&amp; Hyperbola 和相關點</translation>
+        <translation>雙曲線（&amp;H） 焦點（&amp;F）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="300"/>
@@ -4268,17 +4268,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="608"/>
         <source>&amp;Isometric Left Grid</source>
-        <translation>二相左网格( I)</translation>
+        <translation>等角投影左側格線（&amp;I）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="609"/>
         <source>&amp;Isometric Top Grid</source>
-        <translation>二相上网格( I)</translation>
+        <translation>等角投影頂部格線（&amp;I）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
         <source>&amp;Isometric Right Grid</source>
-        <translation>偏右网格( I)</translation>
+        <translation>等角投影右側格線（&amp;I）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
@@ -4428,7 +4428,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="679"/>
         <source>New From &amp;Template</source>
-        <translation>从樣本中新增( T)</translation>
+        <translation>從範本建立(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="680"/>
@@ -4488,7 +4488,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="601"/>
         <source>&amp;Fullscreen</source>
-        <translation>全屏( F)</translation>
+        <translation>全屏(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="602"/>
@@ -31097,7 +31097,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="180"/>
         <source>Create radiant line from center point</source>
-        <translation type="unfinished"></translation>
+        <translation>從中心點建立放射線</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="183"/>
@@ -45873,7 +45873,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="20"/>
         <source>Export as CAM/plain SVG</source>
-        <translation>匯出為 CAM/ Plain SVG</translation>
+        <translation>匯出為 CAM/標準SVG</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="60"/>
