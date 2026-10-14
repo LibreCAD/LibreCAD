@@ -2041,13 +2041,17 @@ void QC_ApplicationWindow::slotFileCloseAll() {
 }
 
 void QC_ApplicationWindow::slotFilePrintPDF() {
-    slotFilePrint(true);
+    doPrint(LC_Printing::PrinterType::PDF);
 }
 
 /**
  * Menu file -> print.
  */
-void QC_ApplicationWindow::slotFilePrint(const bool printPDF) {
+void QC_ApplicationWindow::slotFilePrint() {
+    doPrint(LC_Printing::PrinterType::Printer);
+}
+
+void QC_ApplicationWindow::doPrint(const LC_Printing::PrinterType printerType) {
     QC_MDIWindow* w = getCurrentMDIWindow();
     if (w == nullptr) {
         return;
@@ -2061,9 +2065,7 @@ void QC_ApplicationWindow::slotFilePrint(const bool printPDF) {
 
     const RS_Graphic* graphic = w->getDocument()->getGraphic();
     if (graphic != nullptr) {
-        using namespace LC_Printing;
-        const PrinterType type = printPDF ? PrinterType::PDF : PrinterType::Printer;
-        print(*w, type);
+        LC_Printing::print(*w, printerType);
     }
 }
 
