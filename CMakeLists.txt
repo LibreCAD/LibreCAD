@@ -2636,6 +2636,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/tests/rs_pen_tests.cpp
         librecad/src/lib/actions/tests/lc_snappercatchtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
+        librecad/src/actions/drawing/modify/tests/lc_action_modify_trim_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_move_tests.cpp
         librecad/src/actions/drawing/draw/curve/tests/lc_actiondrawdualtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_offset_tests.cpp
