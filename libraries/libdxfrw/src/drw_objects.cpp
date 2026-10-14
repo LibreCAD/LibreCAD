@@ -129,11 +129,10 @@ bool objectBodyIsEmpty(const dwgBuffer *buf, DRW::Version version,
         && currentObjectDwgBit(buf) == bodyEnd;
 }
 
-// ODA handle reference codes (dwg_spec.txt §2.13). Emits a null handle
-// (code 0) when ref==0, which is the canonical NULL encoding.
+// Preserve the reference type for null handles as well (ODA §2.13).
 dwgHandle makeRefW(std::uint32_t ref, std::uint8_t code) {
     dwgHandle h;
-    h.code = ref ? code : 0;
+    h.code = code;
     h.ref = ref;
     h.ref64 = ref;
     h.size = 0;
@@ -158,7 +157,6 @@ void putCommonObjectHandlePrefix(dwgBufferW* hb, std::uint32_t ownerRef,
 dwgHandle writeHandleWithCode(const dwgHandle& handle, std::uint8_t code) {
     return makeRefW(handle.ref, code);
 }
-dwgHandle makeNullHandleW() { dwgHandle h; h.code = 0; h.size = 0; h.ref = 0; return h; }
 
 void seekObjectHandleStream(DRW::Version version, dwgBuffer *buf,
                             std::uint32_t objSize,
@@ -6866,7 +6864,7 @@ bool DRW_Dimstyle::encodeDwg(DRW::Version version, dwgBufferW *buf,
 
     hb->putHandle(makeRefW(kDimstyleControl, DRW::DwgSoftPointer));
     hb->putHandle(makeRefW(0, DRW::DwgSoftPointer));
-    hb->putHandle(makeNullHandleW()); // external-reference block
+    hb->putHandle(makeRefW(0, DRW::DwgHardPointer)); // external-reference block
     hb->putHandle(makeRefW(dimtxstyH.ref, DRW::DwgHardPointer));
     if (version >= DRW::AC1015) {
         hb->putHandle(makeRefW(dimldrblkH.ref, DRW::DwgHardPointer));
@@ -7946,7 +7944,7 @@ bool DRW_AppId::encodeDwg(DRW::Version version, dwgBufferW *buf,
 
     putCommonObjectHandlePrefix(hb, kAppIdControl, reactorCount,
                                 xDictFlag, &reactorHandles, xDictHandle);
-    hb->putHandle(makeNullHandleW());  // XRef null
+    hb->putHandle(makeRefW(0, DRW::DwgHardPointer));  // XRef null
     return buf->isGood() && sb->isGood() && hb->isGood();
 }
 

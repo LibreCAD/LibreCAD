@@ -374,6 +374,67 @@ TEST_CASE("a DWG SHAPE gets its DXF glyph name from its SHX file",
 }
 
 #ifdef DWGSUPPORT
+TEST_CASE("native DWG line-only interoperability controls round-trip",
+          "[dwg][filter][container][roundtrip]") {
+    ensureSettings();
+    const auto format = GENERATE(RS2::FormatDWG, RS2::FormatDWG2004,
+                                 RS2::FormatDWG2007, RS2::FormatDWG2010,
+                                 RS2::FormatDWG2013, RS2::FormatDWG2018);
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    const QString out = QDir(qEnvironmentVariable("LIBRECAD_SHAPE_OUTPUT", directory.path()))
+                            .filePath(QStringLiteral("control-%1.dwg").arg(format));
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    graphic.addEntity(new RS_Line(&graphic, {RS_Vector(0., 0.), RS_Vector(10., 5.)}));
+    RS_FilterDXFRW writer;
+    REQUIRE(writer.fileExport(graphic, out, format));
+    RS_Graphic reopened;
+    RS_FilterDXFRW reader;
+    REQUIRE(reader.fileImport(reopened, out, format));
+    CHECK(countLines(reopened) == 1);
+}
+
+TEST_CASE("ODA-audited native DWG exports retain lines and SHAPEs",
+          "[dwg][filter][shape][oda][external-fixture]") {
+    const QString directory = qEnvironmentVariable("LIBRECAD_ODA_OUTPUT");
+    if (directory.isEmpty())
+        SKIP("Set LIBRECAD_ODA_OUTPUT to the audited native-DWG output directory");
+    ensureSettings();
+    const auto format = GENERATE(RS2::FormatDWG, RS2::FormatDWG2004,
+                                 RS2::FormatDWG2007, RS2::FormatDWG2010,
+                                 RS2::FormatDWG2013, RS2::FormatDWG2018);
+    const bool shapes = GENERATE(false, true);
+    const QString path = QDir(directory).filePath(
+        QStringLiteral("%1-%2.dwg").arg(shapes ? "shapes" : "control").arg(format));
+    CAPTURE(path);
+    REQUIRE_FALSE(QFileInfo::exists(path + ".err"));
+    REQUIRE(QFileInfo::exists(path));
+    RS_Graphic graphic;
+    RS_FilterDXFRW reader;
+    REQUIRE(reader.fileImport(graphic, path, RS2::FormatDWG2018));
+    CHECK(countLines(graphic) == 1);
+    REQUIRE(graphic.dwgAdvancedMetadata().shapes().size() == (shapes ? 2u : 0u));
+    std::set<std::string> fonts;
+    for (const auto& shape : graphic.dwgAdvancedMetadata().shapes()) {
+        CHECK(shape.shapeIndex == 130);
+        CHECK(shape.color == 3);
+        CHECK(shape.scale == 2.5);
+        CHECK(shape.widthFactor == 1.25);
+        CHECK(shape.thickness == 0.5);
+        CHECK(shape.rotation == 0.25);
+        CHECK(shape.oblique == 0.125);
+        CHECK(shape.insertionPoint.x == 15.25);
+        CHECK(shape.insertionPoint.y == -20.5);
+        const auto& styles = graphic.dwgAdvancedMetadata().textStyles();
+        const auto style = styles.find(shape.shapeFileHandle);
+        REQUIRE(style != styles.end());
+        fonts.insert(style->second.font);
+    }
+    if (shapes)
+        CHECK(fonts == std::set<std::string>{"missing-first.shx", "missing-second.shx"});
+}
+
 TEST_CASE("SHAPE export keeps a local SHX reachable from a different directory",
           "[dwg][dxf][filter][shape][shx][roundtrip]") {
     ensureSettings();
@@ -697,5 +758,55 @@ TEST_CASE("external SHAPE sample exports with registered XDATA applications",
             CHECK(applications.count(QString::fromStdString(name).toUpper().toStdString()) == 1);
         }
     }
+}
+
+TEST_CASE("external SHAPE geometry exports native R2018 DWG",
+          "[dwg][filter][shape][external-fixture]") {
+    const QString fixture = qEnvironmentVariable("LIBRECAD_SHAPE_FIXTURE");
+    if (fixture.isEmpty())
+        SKIP("Set LIBRECAD_SHAPE_FIXTURE to exercise a corpus DWG");
+    ensureSettings();
+    QTemporaryDir temporary;
+    REQUIRE(temporary.isValid());
+    RS_Graphic source;
+    RS_FilterDXFRW reader;
+    REQUIRE(reader.fileImport(source, fixture, RS2::FormatDWG));
+    const auto& metadata = source.dwgAdvancedMetadata();
+    REQUIRE_FALSE(metadata.shapes().empty());
+    // Isolate actual corpus geometry from unrelated DataStorage replay policy.
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    graphic.addEntity(new RS_Line(&graphic, {RS_Vector(0., 0.), RS_Vector(10., 5.)}));
+    for (const auto& record : metadata.shapes()) {
+        const auto style = metadata.textStyles().find(record.shapeFileHandle);
+        REQUIRE(style != metadata.textStyles().end());
+        graphic.dwgAdvancedMetadata().addTextStyleName(style->second);
+        DRW_Shape shape;
+        shape.handle = record.handle;
+        shape.color = record.color;
+        shape.m_shapeFileHandle = record.shapeFileHandle;
+        shape.m_shapeIndex = record.shapeIndex;
+        shape.m_insertionPoint = record.insertionPoint;
+        shape.m_extrusion = record.extrusion;
+        shape.m_scale = record.scale;
+        shape.m_rotation = record.rotation;
+        shape.m_oblique = record.oblique;
+        shape.m_widthFactor = record.widthFactor;
+        shape.m_thickness = record.thickness;
+        graphic.dwgAdvancedMetadata().addShape(shape, record.sourceDirectory);
+    }
+    const QString path = QDir(qEnvironmentVariable("LIBRECAD_SHAPE_OUTPUT", temporary.path()))
+                             .filePath("sample-shape-geometry.dwg");
+    RS_FilterDXFRW writer;
+    REQUIRE(writer.fileExport(graphic, path, RS2::FormatDWG2018));
+    INFO(writer.exportReport().toStdString());
+    RS_Graphic reopened;
+    RS_FilterDXFRW reReader;
+    REQUIRE(reReader.fileImport(reopened, path, RS2::FormatDWG2018));
+    CHECK(countLines(reopened) == countLines(graphic));
+    REQUIRE(reopened.dwgAdvancedMetadata().shapes().size()
+            == graphic.dwgAdvancedMetadata().shapes().size());
+    CHECK(reopened.dwgAdvancedMetadata().shapes().front().shapeIndex
+          == graphic.dwgAdvancedMetadata().shapes().front().shapeIndex);
 }
 #endif

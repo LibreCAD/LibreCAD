@@ -70,9 +70,13 @@ data:
 | --- | --- |
 | `ordinary_enc_AC1015.dwg` | `80690dc45b2e32b4d378df4be860c51c6b3c952400aa762eb73a654e93a728dd` |
 | `ordinary_enc_AC1018.dwg` | `981b982b7e6414e5dd6cd6b33a88c8e385d14f298b125faba4c94e80dec15f96` |
-| `ordinary_enc_AC1021.dwg` | `25685bec2d9d537a2f04dfd081f2a0933078cc19c59ebc3473dc011dfad970c8` |
+| `ordinary_enc_AC1021.dwg` | `00b4f1e9757236304c2f7c17b56c12c7ee217f8bc8cb9fdc9b97cda39ac3d136` |
 | `ordinary_enc_AC1027.dwg` | `a0ebf245e570bf0dc337c696330b7ea883feaebb7c4e781de8d77ac723815f83` |
 | `ordinary_enc_ac1027_ansi932.dwg` | `449a386ccc677dcb93848f583d812afcfd0194631973406394e782233c463aba` |
+
+The AC1021 fixture was regenerated after correcting the R2007 control-handle
+stream boundaries, file-header protection, and section-name termination. Its source remains the
+`dwgRW preserves ordinary entity ENC side channels by version` test interface.
 
 The larger LibreDWG `TS1.dwg` and modeler examples remain external-only. Set
 `LIBRECAD_EXTERNAL_DWG_FIXTURE_DIR` to a LibreDWG test-data root to run the

@@ -35,6 +35,16 @@
 class DRW_TextCodec;
 class DRW_Entity;
 
+/// Section record indices used in m_sectionOffsets / m_sectionSizes.
+namespace recno {
+    constexpr std::uint8_t HEADER    = 0;
+    constexpr std::uint8_t CLASSES   = 1;
+    constexpr std::uint8_t HANDLES   = 2;
+    constexpr std::uint8_t UNKNOWN   = 3;
+    constexpr std::uint8_t TEMPLATE  = 4;
+    constexpr std::uint8_t AUXHEADER = 5;
+}
+
 /// DWG CLASSES section entry used by custom-class object/entity writers.
 /// DWG custom class numbers start at 500; fixed built-in object types are not
 /// represented here.
@@ -622,6 +632,13 @@ public:
             (std::max)(m_header->getHandSeed(), highWaterHandle()), requiredSeed);
         if (seed <= maxHandle)
             return false;
+        const auto headerSection = m_sectionOffsets.find(recno::HEADER);
+        const auto headerSize = m_sectionSizes.find(recno::HEADER);
+        if (headerSection == m_sectionOffsets.end()
+            || headerSize == m_sectionSizes.end() || headerSize->second < 38u
+            || headerSection->second > m_buf.size()
+            || headerSize->second > m_buf.size() - headerSection->second)
+            return false;
         const std::uint8_t bytes[] = {
             static_cast<std::uint8_t>(seed >> 24),
             static_cast<std::uint8_t>(seed >> 16),
@@ -631,6 +648,12 @@ public:
         if (!m_buf.patchRawBytesAtBit(m_headerHandseedBitOffset, bytes,
                                       sizeof(bytes)))
             return false;
+        // HEADER is sentinel + RL size + data + CRC + sentinel in every
+        // supported version. Refresh before modern writers package the section.
+        const std::size_t crcOffset = static_cast<std::size_t>(headerSection->second)
+            + headerSize->second - 18u;
+        m_buf.patchRawShort16(crcOffset,
+            m_buf.crc16(0xC0C1, headerSection->second + 16u, crcOffset));
         m_header->setHandSeed(seed);
         return true;
     }
@@ -1850,7 +1873,7 @@ protected:
     /// final flush copies to `m_stream` in one `write()` call.
     dwgBufferW m_buf;
 
-    /// Per-section start byte offsets, indexed by `secEnum::DWGSection`.
+    /// Per-section start byte offsets, indexed by `recno`.
     /// Populated as each section begins emitting; consumed by `finalize()`
     /// to back-patch the file-header section locator records.
     std::map<int, std::uint32_t> m_sectionOffsets;

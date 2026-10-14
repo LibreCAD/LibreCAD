@@ -576,7 +576,7 @@ const std::array<std::uint64_t, 256>& crc64MirroredTable() {
     static const auto table = makeCrc64Table([](std::uint64_t value) {
         for (int bit = 0; bit < 8; ++bit)
             value = (value & 1U)
-                ? (value >> 1) ^ 0xc96c5795d7870f42ULL
+                ? (value >> 1) ^ 0x95ac9329ac4bc9b5ULL
                 : value >> 1;
         return value;
     });
@@ -607,18 +607,19 @@ std::uint64_t calculateCrc64(std::uint64_t seed, const std::uint8_t* data,
 
     switch (sz) {
     case 7:
-        updateByte(data[0]); updateByte(data[1]);
         updateByte(data[2]); updateByte(data[3]);
+        updateByte(data[0]); updateByte(data[1]);
         updateByte(data[4]); updateByte(data[5]); updateByte(data[6]);
         break;
     case 6:
-        updateByte(data[0]); updateByte(data[1]);
         updateByte(data[2]); updateByte(data[3]);
+        updateByte(data[0]); updateByte(data[1]);
         updateByte(data[4]); updateByte(data[5]);
         break;
     case 5:
+        updateByte(data[2]); updateByte(data[3]);
         updateByte(data[0]); updateByte(data[1]);
-        updateByte(data[2]); updateByte(data[3]); updateByte(data[4]);
+        updateByte(data[4]);
         break;
     case 4:
         updateByte(data[2]); updateByte(data[3]);

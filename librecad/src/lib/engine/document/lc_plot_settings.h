@@ -240,8 +240,8 @@ private:
     double m_plotWindowLowerLeftY = 0.0;
     double m_plotWindowUpperRightX = 0.0;
     double m_plotWindowUpperRightY = 0.0;
-    double m_customPrintScalePaperUnitsNumerator = 0.0;
-    double m_customPrintScaleDrawingUnitsDenominator = 0.0;
+    double m_customPrintScalePaperUnitsNumerator = 1.0;
+    double m_customPrintScaleDrawingUnitsDenominator = 1.0;
     int m_plotLayoutFlag = 0;
     int m_plotPaperUnits  = 0;
     int m_plotRotation = 0;
@@ -250,7 +250,7 @@ private:
     int m_shadePlotMode = 0;
     int m_shadePlotResolutionMode  = 0;
     int m_shadePlotCustomDPI  = 0;
-    double m_standardScaleFactor  = 0.0;
+    double m_standardScaleFactor  = 1.0;
     double m_paperImageOriginX = 0.0;
     double m_paperImageOriginY = 0.0;
 

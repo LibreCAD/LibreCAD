@@ -4226,10 +4226,10 @@ TEST_CASE("R18+ CLASSES writes its eight-byte unknown tail",
                   classesBegin + sentinelSize);
     REQUIRE(classesEnd != std::string::npos);
     REQUIRE(classesEnd >= classesBegin + sentinelSize + sizeof(std::uint32_t) +
-                              sizeof(std::uint16_t) +
-                              dwgSpec::kClassesUnknownTailBytes);
+                              sizeof(std::uint16_t));
 
-    const size_t tail = classesEnd - dwgSpec::kClassesUnknownTailBytes;
+    const size_t tail = classesEnd + sentinelSize;
+    REQUIRE(tail + dwgSpec::kClassesUnknownTailBytes <= bytes.size());
     for (size_t i = 0; i < dwgSpec::kClassesUnknownTailBytes; ++i)
       CHECK(bytes[tail + i] == 0);
 
@@ -32000,6 +32000,26 @@ public:
   }
 };
 
+class LinkedLineProbe final : public DRW_Line {
+public:
+  explicit LinkedLineProbe(const DRW_Line& line) : DRW_Line(line) {}
+  std::uint32_t previous() const { return prevEntLink; }
+  std::uint32_t next() const { return nextEntLink; }
+  bool explicitLinks() const { return haveNextLinks == 0; }
+};
+
+void checkExplicitLineChain(std::vector<DRW_Line> lines) {
+  std::sort(lines.begin(), lines.end(), [](const auto& a, const auto& b) {
+    return a.handle < b.handle;
+  });
+  for (std::size_t i = 0; i < lines.size(); ++i) {
+    const LinkedLineProbe line(lines[i]);
+    CHECK(line.explicitLinks());
+    CHECK(line.previous() == (i == 0 ? 0 : lines[i - 1].handle));
+    CHECK(line.next() == (i + 1 == lines.size() ? 0 : lines[i + 1].handle));
+  }
+}
+
 void readOwnerChainDwg(const std::string &path, DwgOwnerChainIface &iface) {
   dwgRW reader(path.c_str());
   REQUIRE(reader.read(&iface, /*ext=*/false));
@@ -32012,9 +32032,9 @@ const RS2::FormatType kMixedHandleFormats[] = {
     RS2::FormatDWG2018};
 } // namespace
 
-// R2000 entities carry nolinks=1, so an owner's entity chain is implied by
-// consecutive handles and the writer refuses an owner whose handles leave a
-// gap. Source-backed entities used to get their output handles before the
+// The R2000 writer retains its contiguous handle allocation contract, while
+// explicit links terminate each owner chain. Source-backed entities used to
+// get their output handles before the
 // table records were written and everything else only when encoded, so
 // opening a drawing and adding one entity made every Save As R2000 DWG fail
 // with BAD_OPEN.
@@ -32064,8 +32084,10 @@ TEST_CASE("RS_FilterDXFRW saves source-handled and new entities together",
           std::max(readIface.lines[0].handle, readIface.lines[1].handle);
       CHECK(low != DRW::NoHandle);
       CHECK(low != high);
-      if (format == RS2::FormatDWG)
+      if (format == RS2::FormatDWG) {
         CHECK(high == low + 1u);
+        checkExplicitLineChain(readIface.lines);
+      }
       std::remove(path.c_str());
     }
   }
@@ -32116,6 +32138,7 @@ TEST_CASE("RS_FilterDXFRW saves a block mixing source-handled and new "
       CHECK(std::max(readIface.lines[0].handle, readIface.lines[1].handle) ==
             std::min(readIface.lines[0].handle, readIface.lines[1].handle) +
                 1u);
+      checkExplicitLineChain(readIface.lines);
     }
     REQUIRE(readIface.inserts.size() == 1u);
     CHECK(readIface.inserts.front().name == "MIXED");

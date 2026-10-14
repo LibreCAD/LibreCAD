@@ -4693,9 +4693,9 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf,
     // legacy path (bit 0 + null handle) while round-tripping a real xdict.
     // R2000 (AC1015): no xDictFlag bit; reader's xDictFlag stays 0 so it ALWAYS
     // reads an xdic handle — same emit rule applies.
-    // R2013+ (AC1027+): reader reads xDictFlag then reads haveNextLinks (bit restored).
+    // R2013+ (AC1027+): xDictFlag is followed by the DataStorage flag.
     if (version == DRW::AC1015) {
-        buf->putBit(1);  // nolinks=1 (R2000: no prev/next chain)
+        buf->putBit(m_dwgWriteExplicitLinks ? 0 : 1);
     } else {
         buf->putBit(0);  // xDictFlag=0 (xdic present; real-or-null handle follows)
         if (version > DRW::AC1024) {
@@ -4848,6 +4848,13 @@ bool DRW_Entity::encodeDwgEntHandle(DRW::Version version, dwgBufferW *buf,
     // reader and the cross-project handle-stream contract.
     if (version > DRW::AC1015 && hasAcDbColorH)
         putHardPointerHandle(hb, acDbColorHandle);
+
+    if (version == DRW::AC1015 && m_dwgWriteExplicitLinks) {
+        // Fixed widths let the writer finalize owner chains after all entities
+        // are known without moving object frames or their handle-map offsets.
+        hb->putFixedHandle(4, 4, prevEntLink);
+        hb->putFixedHandle(4, 4, nextEntLink);
+    }
 
     // Layer handle (R2000+ unconditional).  Hard pointer.
     dwgHandle lH;
