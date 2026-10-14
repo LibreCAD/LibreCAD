@@ -27,10 +27,15 @@
 #include <catch2/generators/catch_generators.hpp>
 
 #include <QByteArray>
+#include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QImage>
+#include <QImageWriter>
 #include <QMap>
+#include <QPainter>
 #include <QSize>
+#include <QSvgRenderer>
 #include <QTemporaryDir>
 #include <QXmlStreamReader>
 
@@ -42,10 +47,12 @@
 #include "console_command_utils.h"
 #include "console_dxf2png.h"
 #include "lc_actiontestsupport.h"
+#include "lc_imageexporter.h"
 #include "lc_plot_settings.h"
 #include "rs_debug.h"
 #include "rs_fontlist.h"
 #include "rs_graphic.h"
+#include "rs_line.h"
 #include "rs_settings.h"
 #include "rs_system.h"
 
@@ -140,6 +147,23 @@ QMap<QString, int> svgElementCounts(const QByteArray& svg) {
     REQUIRE_FALSE(reader.hasError());
     REQUIRE(counts.value("svg") == 1);
     return counts;
+}
+
+QList<QByteArray> rasterFormats() {
+    QList<QByteArray> formats;
+    const auto supported = QImageWriter::supportedImageFormats();
+    for (const QByteArray format : {"bmp", "jpg", "png", "ppm", "tif", "webp"}) {
+        if (supported.contains(format))
+            formats.append(format);
+    }
+    return formats;
+}
+
+void addColoredLine(RS_Graphic& graphic) {
+    graphic.initForNewDocument();
+    auto* line = new RS_Line(&graphic, RS_Vector(0, 0), RS_Vector(100, 100));
+    line->setPen(RS_Pen(RS_Color(Qt::red), RS2::Width07, RS2::SolidLine));
+    graphic.addEntity(line);
 }
 
 #ifdef Q_OS_UNIX
@@ -247,36 +271,122 @@ TEST_CASE("console image export rejects an invalid output path", "[console][svg]
     CHECK(QApplication::overrideCursor() == nullptr);
 }
 
-TEST_CASE("console raster export still writes a PNG", "[console][png]") {
+TEST_CASE("console raster exports read back at the requested size", "[console][png]") {
     REQUIRE(lc::test::application() != nullptr);
     SourceFonts fonts;
     const QTemporaryDir dir;
     REQUIRE(dir.isValid());
     RS_Graphic graphic;
     importDrawing(dir, graphic, kTextEntity);
-    const QString out = dir.filePath("drawing.png");
-    REQUIRE(slotFileExport(&graphic, out, "PNG", QSize(1200, 800), QSize(5, 5), false, false));
-    CHECK(readFile(out).startsWith(QByteArray::fromHex("89504e470d0a1a0a")));
+    const auto formats = rasterFormats();
+    REQUIRE(formats.contains("png"));
+    for (const auto& format : formats) {
+        CAPTURE(format.toStdString());
+        const QString out = dir.filePath("drawing." + QString::fromLatin1(format));
+        REQUIRE(slotFileExport(&graphic, out, QString::fromLatin1(format),
+                               QSize(1200, 800), QSize(5, 5), false, false));
+        CHECK(QImage(out).size() == QSize(1200, 800));
+    }
+    CHECK(readFile(dir.filePath("drawing.png")).startsWith(QByteArray::fromHex("89504e470d0a1a0a")));
+}
+
+TEST_CASE("image exporter rejects invalid requests without replacing output", "[console][export]") {
+    REQUIRE(lc::test::application() != nullptr);
+    const auto format = GENERATE("SVG", "PNG");
+    CAPTURE(format);
+    const QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    RS_Graphic graphic;
+    addColoredLine(graphic);
+    const QByteArray previous("previous export\n");
+    const QString out = writeFile(dir, "existing", previous);
+    LC_ImageExporter exporter;
+    LC_ImageExporter::ExportOptions options{out, format, {200, 200}, {10, 10}, false, false};
+    CHECK_FALSE(exporter.exportToImage(nullptr, options));
+    for (const QSize size : {QSize(), QSize(0, 200), QSize(200, 0), QSize(-1, 200)}) {
+        CAPTURE(size.width(), size.height());
+        options.size = size;
+        CHECK_FALSE(exporter.exportToImage(&graphic, options));
+        CHECK(readFile(out) == previous);
+    }
+    options.size = {200, 200};
+    options.format = "not-an-image-format";
+    CHECK_FALSE(exporter.exportToImage(&graphic, options));
+    CHECK(readFile(out) == previous);
+    options.format = format;
+    options.fileName = dir.filePath("missing/output");
+    CHECK_FALSE(exporter.exportToImage(&graphic, options));
+    CHECK(QDir(dir.path()).entryList(QDir::Files | QDir::Hidden) == QStringList{"existing"});
+}
+
+TEST_CASE("image exporter honors monochrome on either background", "[console][export]") {
+    REQUIRE(lc::test::application() != nullptr);
+    const auto format = GENERATE("SVG", "PNG");
+    const bool black = GENERATE(false, true);
+    const bool monochrome = GENERATE(false, true);
+    CAPTURE(format, black, monochrome);
+    const QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    RS_Graphic graphic;
+    addColoredLine(graphic);
+    LC_ImageExporter::ExportOptions options{dir.filePath("colors"), format, {200, 200}, {10, 10}, black, monochrome};
+    REQUIRE(LC_ImageExporter{}.exportToImage(&graphic, options));
+    QImage image(options.size, QImage::Format_RGB32);
+    image.fill(Qt::transparent);
+    if (QString::fromLatin1(format) == "SVG") {
+        QSvgRenderer svg(options.fileName);
+        REQUIRE(svg.isValid());
+        QPainter painter(&image);
+        svg.render(&painter);
+    } else {
+        REQUIRE(image.load(options.fileName));
+    }
+    REQUIRE(image.size() == options.size);
+    const QRgb background = QColor(black ? Qt::black : Qt::white).rgb();
+    CHECK(image.pixel(0, 0) == background);
+    int ink = 0, colored = 0;
+    for (int y = 0; y < image.height(); ++y) {
+        for (int x = 0; x < image.width(); ++x) {
+            const QRgb pixel = image.pixel(x, y);
+            ink += pixel != background;
+            colored += qRed(pixel) != qGreen(pixel) || qGreen(pixel) != qBlue(pixel);
+        }
+    }
+    CHECK(ink > 0);
+    CHECK((colored > 0) == !monochrome);
 }
 
 #ifdef Q_OS_UNIX
-TEST_CASE("console image export preserves existing output after a short write", "[console][svg]") {
+TEST_CASE("console image export rolls back a short write", "[console][svg]") {
     REQUIRE(lc::test::application() != nullptr);
     SourceFonts fonts;
     const QTemporaryDir dir;
     REQUIRE(dir.isValid());
     RS_Graphic graphic;
     importDrawing(dir, graphic, kSmallEntities);
-    const auto format = GENERATE("SVG", "PNG");
+    const bool existing = GENERATE(false, true);
+    CAPTURE(existing);
     const QByteArray previous("previous nonempty export\n");
-    const QString out = writeFile(dir, "existing", previous);
-    bool result;
-    {
-        FileSizeLimit limit;
-        result = slotFileExport(&graphic, out, format, QSize(1200, 800), QSize(5, 5), false, false);
+    auto formats = rasterFormats();
+    formats.prepend("svg");
+    for (const auto& format : formats) {
+        CAPTURE(format.toStdString());
+        const QString out = dir.filePath("existing");
+        if (existing)
+            writeFile(dir, "existing", previous);
+        const auto before = QDir(dir.path()).entryList(QDir::Files | QDir::Hidden);
+        bool result;
+        {
+            FileSizeLimit limit;
+            result = slotFileExport(&graphic, out, QString::fromLatin1(format), QSize(1200, 800), QSize(5, 5), false, false);
+        }
+        CHECK_FALSE(result);
+        CHECK(QFileInfo::exists(out) == existing);
+        if (existing)
+            CHECK(readFile(out) == previous);
+        CHECK(QDir(dir.path()).entryList(QDir::Files | QDir::Hidden) == before);
+        QFile::remove(out);
     }
-    CHECK_FALSE(result);
-    CHECK(readFile(out) == previous);
     CHECK(QApplication::overrideCursor() == nullptr);
 }
 

@@ -36,6 +36,7 @@
 #include "rs_entitycontainer.h"
 #include "rs_line.h"
 #include "rs_modification.h"
+#include "rs_polyline.h"
 #include "rs_vector.h"
 
 TEST_CASE("RS_Modification::trim does not cast a container limit entity",
@@ -80,6 +81,47 @@ TEST_CASE("RS_Modification::trim still trims against an atomic limit entity",
                                                        true, ctx);
     CHECK(result.trimmed1 != nullptr);
     CHECK(result.trimmed2 != nullptr);
+
+    qDeleteAll(ctx.entitiesToAdd);
+}
+
+TEST_CASE("RS_Modification::trim replaces only entities the document holds itself",
+          "[rs_modification][trim]") {
+    // trim() adds the trimmed copies to the document. A segment replaced so leaves a gap in
+    // its polyline, and a line of a spline or block reference is freed by its owner while
+    // the undo history still holds it.
+    RS_Polyline polyline{nullptr};
+    polyline.addVertex(RS_Vector{0.0, 0.0});
+    polyline.addVertex(RS_Vector{10.0, 0.0});
+    polyline.addVertex(RS_Vector{10.0, 10.0});
+    auto* segment = static_cast<RS_AtomicEntity*>(polyline.entityAt(0));
+    REQUIRE(segment->rtti() == RS2::EntityLine);
+
+    LC_DocumentModificationBatch ctx;
+
+    SECTION("a limit is not trimmed with the other entity") {
+        RS_Line toTrim{nullptr, RS_Vector{5.0, -5.0}, RS_Vector{5.0, 5.0}};
+        const LC_TrimResult result = RS_Modification::trim(RS_Vector{5.0, 4.0}, &toTrim,
+                                                           RS_Vector{2.0, 0.0}, segment, true, ctx);
+        CHECK(result.trimmed1 != nullptr);
+        CHECK(result.trimmed2 == nullptr);
+        CHECK_FALSE(ctx.entitiesToDelete.contains(segment));
+    }
+
+    SECTION("nor instead of the other entity") {
+        // the line starts on the segment, so trim() would trim the segment by the line
+        RS_Line toTrim{nullptr, RS_Vector{5.0, 0.0}, RS_Vector{5.0, 5.0}};
+        RS_Modification::trim(RS_Vector{5.0, 4.0}, &toTrim, RS_Vector{2.0, 0.0}, segment, true, ctx);
+        CHECK_FALSE(ctx.entitiesToDelete.contains(segment));
+    }
+
+    SECTION("nor as the entity to trim") {
+        RS_Line limit{nullptr, RS_Vector{5.0, -5.0}, RS_Vector{5.0, 5.0}};
+        const LC_TrimResult result = RS_Modification::trim(RS_Vector{2.0, 0.0}, segment,
+                                                           RS_Vector{5.0, 4.0}, &limit, false, ctx);
+        CHECK_FALSE(result.result);
+        CHECK(ctx.entitiesToDelete.isEmpty());
+    }
 
     qDeleteAll(ctx.entitiesToAdd);
 }

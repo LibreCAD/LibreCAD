@@ -637,10 +637,11 @@ int RS_EntityContainer::updateDimensions(const bool autoText) {
             continue;
         }
         if (e->rtti() == RS2::EntityDimLeader) {
+            // updateDim() clears leaders; only their own update() rebuilds them.
             updatedDimsCount++;
             e->update();
         }
-        if (RS_Information::isDimension(e->rtti())) {
+        else if (RS_Information::isDimension(e->rtti())) {
             const auto dimension = static_cast<RS_Dimension*>(e);
             // update and reposition label: honor the caller's autoText request
             // (update() alone leaves the dimension's own cached autoText flag,
