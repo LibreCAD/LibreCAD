@@ -377,6 +377,9 @@ public:
         std::uint32_t handleRef{0};
         std::uint64_t rawHandleRef{0};
         bool useRawHandleRef{false};
+        // Writing only: on an APPID (1001), the application's data is left
+        // out of the object.
+        bool leftOut{false};
     };
     std::vector<PendingHandleRef> pendingAppIdResolutions;
     std::vector<PendingHandleRef> pendingLayerRefResolutions;

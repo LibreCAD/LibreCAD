@@ -11520,6 +11520,9 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   m_writeFailed = false;
   m_dxfLeftOutRawRecords = 0;
   m_dxfLeftOut.clear();
+#ifdef DWGSUPPORT
+  m_dwgLeftOut.clear();
+#endif
   m_exportAttribScaleDataLeftOut = 0;
   // What becomes of each block attribute's text is the same for every
   // callback of this export, the DWG handle pre-pass included.
@@ -11586,6 +11589,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     }
     m_exactColor = false;
     m_lastDwgWriteSkipCounters = {};
+    m_dwgLeftOut.clear();
     m_lastDwgOptionalReferenceDropCount = 0;
     // Keep failed filter-side validation from exposing a partial target.
     // The low-level writer already removes its own incomplete output, but
@@ -11896,6 +11900,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     }
     bool success = m_dwgW->write(this, dwgVer, false) && !m_writeFailed;
     m_lastDwgWriteSkipCounters = m_dwgW->getWriteSkipCounters();
+    m_dwgLeftOut = m_dwgW->leftOut();
     m_lastDwgOptionalReferenceDropCount = dwgWriteOptionalReferenceDropCount();
     if (!success) {
       RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -16855,6 +16860,8 @@ QString RS_FilterDXFRW::exportReport() const {
     lines << QObject::tr("%1 object(s) DWG cannot hold", "RS_FilterDXFRW")
                  .arg(m_lastDwgWriteSkipCounters.total());
   }
+  for (const auto &[what, count] : m_dwgLeftOut)
+    lines << QStringLiteral("%1 × %2").arg(count).arg(QString::fromStdString(what));
 #endif
   return lines.join(QLatin1Char('\n'));
 }

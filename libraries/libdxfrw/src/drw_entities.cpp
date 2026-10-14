@@ -4371,13 +4371,6 @@ void putEedRawHandleBE(dwgBufferW& buffer, std::uint64_t handle) {
     }
 }
 
-void putEedRawHandleLE(dwgBufferW& buffer, std::uint64_t handle) {
-    for (unsigned index = 0; index < 8; ++index) {
-        buffer.putRawChar8(static_cast<std::uint8_t>(
-            (handle >> (index * 8U)) & 0xFFU));
-    }
-}
-
 bool encodeEedItem(DRW::Version version, const DRW_Variant& value,
                    dwgBufferW& textEncoder, dwgBufferW& output,
                    std::uint64_t resolvedLayerHandle,
@@ -4417,10 +4410,11 @@ bool encodeEedItem(DRW::Version version, const DRW_Variant& value,
         return output.isGood();
     }
     case 1003:
+        // Most significant byte first, as AutoCAD writes the layer handle.
         if (value.type() != DRW_Variant::STRING || resolvedLayerHandle == 0)
             return false;
         output.putRawChar8(3);
-        putEedRawHandleLE(output, resolvedLayerHandle);
+        putEedRawHandleBE(output, resolvedLayerHandle);
         return output.isGood();
     case 1004: {
         if (value.type() != DRW_Variant::BINARY || value.binary() == nullptr
@@ -4517,6 +4511,8 @@ bool DRW_Entity::encodeDwgEed(
     std::uint32_t appHandle = 0;
     std::uint32_t groupDepth = 0;
     std::uint32_t chunkCount = 0;
+    // The current application's data is left out of the object.
+    bool leavingOut = false;
     dwgBufferW payload;
     const auto flush = [&]() {
         if (payload.data().empty() || payload.data().size()
@@ -4539,21 +4535,25 @@ bool DRW_Entity::encodeDwgEed(
         if (value == nullptr)
             return false;
         if (value->code() == 1001) {
-            if (index != currentAppStart) {
+            if (index != currentAppStart && !leavingOut) {
                 if (groupDepth != 0 || !flush())
                     return false;
             }
             const PendingHandleRef* appIdRef = findEedWriteRef(appIdRefs, index);
-            if (appIdRef == nullptr || appIdRef->handleRef == 0) {
+            if (appIdRef == nullptr
+                || (appIdRef->handleRef == 0 && !appIdRef->leftOut)) {
                 return false;
             }
             appHandle = appIdRef->handleRef;
             currentAppStart = index + 1;
             groupDepth = 0;
+            leavingOut = appIdRef->leftOut;
             continue;
         }
         if (index < currentAppStart)
             return false;
+        if (leavingOut)
+            continue;
         if (value->code() == 1002) {
             if (value->type() != DRW_Variant::STRING || value->content.s == nullptr)
                 return false;
@@ -4592,7 +4592,9 @@ bool DRW_Entity::encodeDwgEed(
         }
         payload.putBytes(item.data().data(), item.data().size());
     }
-    if (currentAppStart == 0 || groupDepth != 0 || !flush())
+    if (currentAppStart == 0)
+        return false;
+    if (!leavingOut && (groupDepth != 0 || !flush()))
         return false;
     output.putBitShort(0);
     return output.isGood();

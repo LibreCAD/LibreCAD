@@ -3277,6 +3277,8 @@ private:
       m_dwgDataStorageCommitReceipts;
   std::set<std::uint32_t> m_dwgWriteDataStorageKnownHandles;
   dwgRW::WriteSkipCounters m_lastDwgWriteSkipCounters;
+  // What the DWG writer left out of objects it wrote (dwgRW::leftOut()).
+  std::map<std::string, std::size_t> m_dwgLeftOut;
   std::size_t m_lastDwgOptionalReferenceDropCount{0};
   // Test-only boundary between class admission and later section callbacks.
   std::function<void()> m_dwgPostClassesTestHook;

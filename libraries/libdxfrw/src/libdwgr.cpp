@@ -885,6 +885,7 @@ std::unordered_map<std::string, size_t> dwgRW::getSkippedUnsupportedObjects() co
 
 void dwgRW::resetWriteSkipCounters() {
     m_writeSkipCounters = {};
+    m_leftOut.clear();
     m_requiredWriteFailure = false;
     m_successfulEntityWrites = 0;
     m_lastSuccessfulEntityHandle = 0;
@@ -1381,6 +1382,7 @@ bool dwgRW::writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
     const bool secondHeaderOk = handlesOk && writer->writeSecondHeader();
     const bool finalOk = secondHeaderOk && writer->finalize();
     ok = finalOk;
+    m_leftOut = writer->leftOut();
     writer.reset();
     if (ok && !filestr.fail())
         ok = verifier ? output.commitVerified(verifier, context) : output.commit();

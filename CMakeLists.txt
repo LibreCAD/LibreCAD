@@ -2673,6 +2673,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/undo/tests/rs_undo_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/lc_attrib_embedded_mtext_dwg_tests.cpp
+        librecad/src/lib/filters/tests/lc_dwg_eed_layer_reference_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_handseed_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_app_vars_tests.cpp
@@ -2732,6 +2733,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/lc_dxf_reopen_dwg_export_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_shape_name_tests.cpp
         librecad/src/lib/filters/tests/lc_export_commit_tests.cpp
+        librecad/src/lib/filters/tests/lc_dwg_export_xdata_layer_tests.cpp
         librecad/src/lib/filters/tests/lc_attribute_export_tests.cpp
         librecad/src/lib/filters/tests/dxf_closed_spline_tests.cpp
         librecad/src/lib/filters/tests/jww_import_tests.cpp
@@ -3096,6 +3098,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/lc_attrib_embedded_mtext_dwg_tests.cpp
+        librecad/src/lib/filters/tests/lc_dwg_eed_layer_reference_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_app_vars_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_handseed_tests.cpp
@@ -3114,6 +3117,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/datastorage_tests.cpp
         librecad/src/main/tests/lc_consolesvgexporttests.cpp
         librecad/src/lib/filters/tests/lc_export_commit_tests.cpp
+        librecad/src/lib/filters/tests/lc_dwg_export_xdata_layer_tests.cpp
         librecad/src/lib/filters/tests/lc_attribute_export_tests.cpp
     )
     qt_add_executable(librecad_fast_tests
@@ -3156,6 +3160,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/lc_attrib_embedded_mtext_dwg_tests.cpp
+        librecad/src/lib/filters/tests/lc_dwg_eed_layer_reference_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_app_vars_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_handseed_tests.cpp
@@ -3165,6 +3170,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/eed_tests.cpp
         librecad/src/lib/filters/tests/datastorage_tests.cpp
         librecad/src/lib/filters/tests/lc_export_commit_tests.cpp
+        librecad/src/lib/filters/tests/lc_dwg_export_xdata_layer_tests.cpp
     )
     add_executable(librecad_dwg_fast_tests
         EXCLUDE_FROM_ALL
@@ -3486,6 +3492,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/lc_attrib_embedded_mtext_dwg_tests.cpp
+        librecad/src/lib/filters/tests/lc_dwg_eed_layer_reference_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_handseed_tests.cpp
         librecad/src/lib/filters/tests/dynblock_tests.cpp

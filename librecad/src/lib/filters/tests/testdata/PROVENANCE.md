@@ -101,6 +101,14 @@ Domenech). They are the reference the R2018 embedded-MTEXT layout is checked
 against bit for bit; the drawing itself is not redistributed, and the test
 that imports it skips when it is absent.
 
+`lc_dwg_eed_layer_reference_tests.cpp` holds, as byte arrays, one more object
+record of drawings AutoCAD saved: the TEXT "XData Layer" (handle 0x91B) of
+ACadSharp's `samples/sample_AC1014.dwg` (AutoCAD R14, 81 bytes) and
+`samples/sample_AC1015.dwg` (AutoCAD 2000, 73 bytes), same project and
+license as above. Their extended data names a layer, and is the reference
+the byte order of such an item is checked against. The drawings are not
+redistributed.
+
 ## Baseline corpus cleanup
 
 The baseline `origin/master` testdata inventory contained 27 DWGs. This change

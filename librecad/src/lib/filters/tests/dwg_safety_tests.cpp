@@ -2998,23 +2998,36 @@ TEST_CASE("DWG writer preserves unchanged wide EED layer references",
     CHECK(layerRef->rawDwgLayerReference() == 0x0102030405060708ULL);
     std::filesystem::remove(path);
 
+    // Written to another version, or renamed, the reference names no layer
+    // of the drawing: the line is written without the application's data.
     for (const auto mode : {DwgWideEedWriteProbe::Mode::Unchanged,
                             DwgWideEedWriteProbe::Mode::Edited}) {
-        const auto rejectedPath = std::filesystem::temp_directory_path()
+        const auto leftOutPath = std::filesystem::temp_directory_path()
             / (mode == DwgWideEedWriteProbe::Mode::Unchanged
                    ? "libdxfrw_cross_version_wide_eed.dwg"
                    : "libdxfrw_edited_wide_eed.dwg");
-        std::filesystem::remove(rejectedPath);
-        DwgWideEedWriteProbe rejectedInterface(mode);
+        std::filesystem::remove(leftOutPath);
+        DwgWideEedWriteProbe leftOutInterface(mode);
         {
-        dwgRW writer(rejectedPath.string().c_str());
-            rejectedInterface.writer = &writer;
+            dwgRW writer(leftOutPath.string().c_str());
+            leftOutInterface.writer = &writer;
             const DRW::Version target = mode == DwgWideEedWriteProbe::Mode::Unchanged
                 ? DRW::AC1027 : DRW::AC1032;
-            CHECK_FALSE(writer.write(&rejectedInterface, target, /*bin=*/false));
+            CHECK(writer.write(&leftOutInterface, target, /*bin=*/false));
+            const std::map<std::string, std::size_t> expected{
+                {"application data naming a layer not in the drawing", 1u}};
+            CHECK(writer.leftOut() == expected);
         }
-        CHECK_FALSE(rejectedInterface.writeSucceeded);
-        CHECK_FALSE(std::filesystem::exists(rejectedPath));
+        CHECK(leftOutInterface.writeSucceeded);
+
+        DwgWideEedWriteProbe leftOutRead;
+        {
+            dwgRW reader(leftOutPath.string().c_str());
+            REQUIRE(reader.read(&leftOutRead, /*ext=*/false));
+        }
+        REQUIRE(leftOutRead.lines.size() == 1u);
+        CHECK(leftOutRead.lines.front().extData.empty());
+        std::filesystem::remove(leftOutPath);
     }
 }
 
@@ -25154,8 +25167,9 @@ TEST_CASE("DWG R2007 EED decodes surrogate pairs", "[dwg][safety]") {
 }
 
 TEST_CASE("DWG EED preserves wide layer references", "[dwg][safety]") {
+    // Most significant byte first, as AutoCAD writes the handle.
     auto bytes = makeEed(
-        {3, 0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01});
+        {3, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08});
     dwgBuffer buffer(bytes.data(), bytes.size());
     std::vector<DwgEedChunk> chunks;
 
