@@ -193,8 +193,10 @@ bool hasUsableEllipseData(const RS_EllipseData& data) {
         }
 
         // Newton-Raphson steps from the elliptic angle of a point near the closest one, taken while they do
-        // not move away from the point. Updates theta, and returns the squared distance at it.
-        double polishTheta(double& theta) const {
+        // not move away from the point. Steps stop at low and high, the angles of the ends of an arc, which
+        // run counterclockwise from low without a jump. Updates theta, and returns the squared distance at it.
+        double polishTheta(double& theta, const double low = -std::numeric_limits<double>::infinity(),
+                           const double high = std::numeric_limits<double>::infinity()) const {
             double best = ds2(theta);
             for (short i = 0; i < 8; ++i) {
                 const double d2 = ds2D2(theta);
@@ -202,7 +204,13 @@ bool hasUsableEllipseData(const RS_EllipseData& data) {
                 if (!(d2 > 0.)) {
                     break;
                 }
-                const double next = theta - ds2D1(theta) / d2;
+                double next = theta - ds2D1(theta) / d2;
+                if (next < low) {
+                    next = low;
+                }
+                else if (next > high) {
+                    next = high;
+                }
                 const double d = ds2(next);
                 if (!(d <= best)) {
                     break;
@@ -718,6 +726,21 @@ RS_Vector RS_Ellipse::doGetNearestPointOnEntity(const RS_Vector& coord, const bo
     // minima and maxima. The global minimum is the critical point with the
     // smallest squared distance, so simply compare distances and keep the
     // smallest; no second-derivative test is needed.
+    // On an elliptic arc the squared distance is least at a critical point on the arc or at an end, so only
+    // those count: the nearest point of the whole ellipse can be off the arc while another critical point on
+    // the arc is nearer than both ends. For the upper half of an ellipse and a point inside, just below the
+    // major axis near a vertex, the nearest point of the whole ellipse is on the lower half, but the upper
+    // half has a point nearer than the vertex.
+    // The angles of the arc run counterclockwise from low to high without a jump. An arc whose angles do
+    // not differ is the whole ellipse, as for RS_Math::isAngleBetween().
+    const bool arcOnly = onEntity && isEllipticArc()
+        && RS_Math::getAngleDifferenceU(getAngle2(), getAngle1()) >= RS_TOLERANCE_ANGLE;
+    double low = -std::numeric_limits<double>::infinity();
+    double high = std::numeric_limits<double>::infinity();
+    if (arcOnly) {
+        low = isReversed() ? getAngle2() : getAngle1();
+        high = low + RS_Math::getAngleDifference(getAngle1(), getAngle2(), isReversed());
+    }
     RS_Vector const query = ret;
     double theta = 0.;
     for (const auto &[cosTheta, sinTheta] : directions) {
@@ -725,15 +748,35 @@ RS_Vector RS_Ellipse::doGetNearestPointOnEntity(const RS_Vector& coord, const bo
       double d = (vp3 - query).squared();
       if (d >= dDistance)
         continue;
+      double angle = std::atan2(sinTheta, cosTheta);
+      if (arcOnly) {
+        angle = low + RS_Math::correctAngle(angle - low);
+        if (angle > high)
+          continue;
+      }
       ret = vp3;
       dDistance = d;
-      theta = std::atan2(sinTheta, cosTheta);
+      theta = angle;
+    }
+    if (arcOnly) {
+        // the ends, at the angles of the entity: an end comes back as the start or end point itself
+        const std::pair<double, double> ends[] = {{low, low}, {isReversed() ? getAngle1() : getAngle2(), high}};
+        for (const auto& [angle, unwrapped] : ends) {
+            const RS_Vector vp3{a * std::cos(angle), b * std::sin(angle)};
+            const double d = (vp3 - query).squared();
+            if (d < dDistance) {
+                ret = vp3;
+                dDistance = d;
+                theta = unwrapped;
+            }
+        }
     }
     // Refine the angle of the nearest candidate. The angle from a root carries the root's error divided by
     // the sine, which is small near a vertex: within 1e-4 of one the distance was up to 1e-5 too large.
     // The stationary points for a point on an axis are only close to those for a point near it.
-    const double polished = ClosestEllipticPoint{a, b, query}.polishTheta(theta);
-    if (polished < dDistance) {
+    // On an arc the steps keep to it; one that ends at an end of the arc keeps that end point.
+    const double polished = ClosestEllipticPoint{a, b, query}.polishTheta(theta, low, high);
+    if (polished < dDistance && theta != low && theta != high) {
         ret = RS_Vector{a * std::cos(theta), b * std::sin(theta)};
         dDistance = polished;
     }
@@ -750,13 +793,6 @@ RS_Vector RS_Ellipse::doGetNearestPointOnEntity(const RS_Vector& coord, const bo
     ret.rotate(getAngle());
     ret.move(getCenter());
     //    ret=vp2;
-    if (onEntity) {
-        if (!RS_Math::isAngleBetween(getEllipseAngle(ret), getAngle1(), getAngle2(), isReversed())) {
-            // not on entity, use the nearest endpoint
-            //std::cout<<"not on ellipse, ( "<<getAngle1()<<" "<<getEllipseAngle(ret)<<" "<<getAngle2()<<" ) reversed= "<<isReversed()<<"\n";
-            ret = getNearestEndpoint(coord, nullptr,dist);
-        }
-    }
 
     //    if(! ret.valid) {
     //        std::cout<<"RS_Ellipse::getNearestOnEntity() returns invalid by mistake. This should not happen!"<<std::endl;
