@@ -10116,7 +10116,7 @@ bool DRW_LWPolyline::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_
 bool DRW_MLine::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     switch (code) {
     case 2:
-        styleName = reader->getString();
+        styleName = reader->getUtf8String();
         break;
     case 340:
         styleHandle = static_cast<std::uint32_t>(reader->getHandleString());
@@ -18823,7 +18823,7 @@ bool DRW_Dimension::parseCode(int code, const std::unique_ptr<dxfReader>& reader
         text = reader->getUtf8String();
         break;
     case 2:
-        name = reader->getString();
+        name = reader->getUtf8String();
         break;
     case 3:
         style = reader->getUtf8String();

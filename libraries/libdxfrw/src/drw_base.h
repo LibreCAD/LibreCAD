@@ -85,6 +85,16 @@ enum Version {
     AC1032,       //!< AutoCAD 2018/2019/2020
 };
 
+/** Input interpretation for DXF text; it never changes export encoding.
+ * LegacyLibreCadUtf8 is an explicit recovery choice for known pre-R2007
+ * DXF files whose default/ANSI_1252 header mislabeled UTF-8 text. The same
+ * bytes can be valid Windows-1252, so this is not automatic detection.
+ */
+enum class DxfTextEncoding {
+    Declared,
+    LegacyLibreCadUtf8
+};
+
 const std::unordered_map< const char*, DRW::Version > dwgVersionStrings {
     { "MC0.0", DRW::MC00 },
     { "AC1.2", DRW::AC12 },

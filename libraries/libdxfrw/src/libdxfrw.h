@@ -106,6 +106,14 @@ public:
      */
     [[nodiscard]] bool read(DRW_Interface *interface_, bool ext);
     [[nodiscard]] bool readAscii(DRW_Interface *interface_, bool ext, std::string& content);
+    /** Select before read()/readAscii(); the choice applies to each new reader.
+     * Recovery interprets only known pre-R2007 default/ANSI_1252 DXF input as
+     * UTF-8. It cannot identify mixed encodings or recover arbitrary raw
+     * metadata. No header or writer encoding is changed; save a corrected copy.
+     */
+    void setDxfTextEncoding(DRW::DxfTextEncoding encoding) noexcept {
+        m_dxfTextEncoding = encoding;
+    }
     void setBinary(bool b) {binFile = b;}
 
     [[nodiscard]] bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
@@ -637,6 +645,7 @@ private:
     std::string codePage;
     bool binFile {false};
     std::unique_ptr<dxfReader> reader;
+    DRW::DxfTextEncoding m_dxfTextEncoding {DRW::DxfTextEncoding::Declared};
     std::unique_ptr<dxfWriter> writer;
     DRW_Interface *iface {nullptr};
     DRW_Header header;

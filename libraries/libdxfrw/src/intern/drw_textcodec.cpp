@@ -21,6 +21,7 @@ DRW_TextCodec::~DRW_TextCodec() = default;
 void DRW_TextCodec::setVersion(DRW::Version v, bool dxfFormat){
     sourceVersion = v;
     m_sourceVersionSet = v != DRW::UNKNOWNV;
+    m_legacyDxfInputEligible = false;
     switch (v)
     {
         case DRW::UNKNOWNV:
@@ -40,7 +41,7 @@ void DRW_TextCodec::setVersion(DRW::Version v, bool dxfFormat){
         {
             version = DRW::AC1009;
             cp = "ANSI_1252";
-            setCodePage( cp, dxfFormat);
+            configureCodePage( cp, dxfFormat);
             break;
         }
 
@@ -52,7 +53,7 @@ void DRW_TextCodec::setVersion(DRW::Version v, bool dxfFormat){
             version = DRW::AC1015;
 //            if (cp.empty()) { //codepage not set, initialize ??
                 cp = "ANSI_1252";
-                setCodePage( cp, dxfFormat);
+                configureCodePage( cp, dxfFormat);
 //          }
             break;
         }
@@ -65,11 +66,11 @@ void DRW_TextCodec::setVersion(DRW::Version v, bool dxfFormat){
             version = DRW::AC1021;
             if (dxfFormat) {
                 cp = "UTF-8";
-                setCodePage(cp, dxfFormat);
+                configureCodePage(cp, dxfFormat);
             } else {
                 if (cp.empty() || cp == "ANSI_1252") {
                     cp = "UTF-16";
-                    setCodePage(cp, dxfFormat);
+                    configureCodePage(cp, dxfFormat);
                 }
             }
             break;
@@ -81,6 +82,7 @@ void DRW_TextCodec::setVersion(const std::string &v, bool dxfFormat){
     version = DRW::UNKNOWNV;
     sourceVersion = DRW::UNKNOWNV;
     m_sourceVersionSet = false;
+    m_legacyDxfInputEligible = false;
     for (const auto& [verName, verId] : DRW::dwgVersionStrings)
     {
         if ( v == verName ) {
@@ -92,7 +94,19 @@ void DRW_TextCodec::setVersion(const std::string &v, bool dxfFormat){
 }
 
 void DRW_TextCodec::setCodePage(const std::string &c, bool dxfFormat){
+    configureCodePage(c, dxfFormat, true);
+}
+
+void DRW_TextCodec::configureCodePage(const std::string &c, bool dxfFormat,
+                                     bool explicitDeclaration){
     cp = correctCodePage(c);
+    // Only an explicit DXF declaration updates this gate. Internal default
+    // selection by setVersion() must not erase a preceding non-1252 choice.
+    if (dxfFormat && explicitDeclaration)
+        m_legacyDxfCodePageAllowed = cp == "ANSI_1252";
+    m_legacyDxfInputEligible = dxfFormat && m_sourceVersionSet
+        && sourceVersion >= DRW::AC1006 && sourceVersion <= DRW::AC1018
+        && cp == "ANSI_1252" && m_legacyDxfCodePageAllowed;
     conv.reset();
     if (dxfFormat && m_sourceVersionSet && version == DRW::AC1021) {
         // R2007+ DXF text is UTF-8 whatever $DWGCODEPAGE says (LibreCAD 2.2
@@ -151,6 +165,14 @@ void DRW_TextCodec::setCodePage(const std::string &c, bool dxfFormat){
 }
 
 std::string DRW_TextCodec::toUtf8(std::string_view s) {
+    if (m_dxfTextEncoding == DRW::DxfTextEncoding::LegacyLibreCadUtf8
+        && m_legacyDxfInputEligible) {
+        // The base converter keeps UTF-8 bytes while still interpreting DXF
+        // Unicode/MIF escapes. Leave conv alone: fromUtf8() must encode the
+        // declared output codepage, even on a codec used for recovery input.
+        DRW_Converter utf8(nullptr, 0);
+        return utf8.toUtf8(s);
+    }
     return conv->toUtf8(s);
 }
 
