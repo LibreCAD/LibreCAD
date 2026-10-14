@@ -11523,10 +11523,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   this->m_graphic = &g;
   m_writeFailed = false;
   m_dxfLeftOutRawRecords = 0;
-  m_dxfLeftOut.clear();
-#ifdef DWGSUPPORT
-  m_dwgLeftOut.clear();
-#endif
+  m_exportLeftOut.clear();
   m_exportAttribScaleDataLeftOut = 0;
   // What becomes of each block attribute's text is the same for every
   // callback of this export, the DWG handle pre-pass included.
@@ -11593,7 +11590,6 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     }
     m_exactColor = false;
     m_lastDwgWriteSkipCounters = {};
-    m_dwgLeftOut.clear();
     m_lastDwgOptionalReferenceDropCount = 0;
     // Keep failed filter-side validation from exposing a partial target.
     // The low-level writer already removes its own incomplete output, but
@@ -11788,9 +11784,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       reserveAll(md.spatialIndexes(), "SPATIAL_INDEX");
       reserveAll(md.dictionariesWithDefault(), "DICTIONARYWDFLT");
       reserveAll(md.sortEntsTables(), "SORTENTSTABLE");
-      // A sort handle need not name an object: it is the value an entity is
-      // drawn in the order of. One that names nothing keeps its value
-      // (writeObjects()), so no object written must take it.
+      // Free sort keys must not collide with handles allocated by this export.
       for (const auto &record : md.sortEntsTables()) {
         if (record.replayState !=
             LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
@@ -11918,7 +11912,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     }
     bool success = m_dwgW->write(this, dwgVer, false) && !m_writeFailed;
     m_lastDwgWriteSkipCounters = m_dwgW->getWriteSkipCounters();
-    m_dwgLeftOut = m_dwgW->leftOut();
+    m_exportLeftOut = m_dwgW->leftOut();
     m_lastDwgOptionalReferenceDropCount = dwgWriteOptionalReferenceDropCount();
     if (!success) {
       RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -12713,7 +12707,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   //    bool success = m_dxfW->write(this, exportVersion, false); //ascii
   const bool success =
       m_dxfW->write(this, exportVersion, binary) && !m_writeFailed; // binary
-  m_dxfLeftOut = m_dxfW->leftOut();
+  m_exportLeftOut = m_dxfW->leftOut();
   activeWriter.reset();
 
   if (!success) {
@@ -16877,7 +16871,7 @@ QString RS_FilterDXFRW::exportReport() const {
                          "this version cannot hold", "RS_FilterDXFRW")
                  .arg(m_dxfLeftOutRawRecords);
   }
-  for (const auto &[what, count] : m_dxfLeftOut)
+  for (const auto &[what, count] : m_exportLeftOut)
     lines << QStringLiteral("%1 × %2").arg(count).arg(QString::fromStdString(what));
   if (m_exportAttribScaleDataLeftOut > 0) {
     lines << QObject::tr(
@@ -16890,8 +16884,6 @@ QString RS_FilterDXFRW::exportReport() const {
     lines << QObject::tr("%1 object(s) DWG cannot hold", "RS_FilterDXFRW")
                  .arg(m_lastDwgWriteSkipCounters.total());
   }
-  for (const auto &[what, count] : m_dwgLeftOut)
-    lines << QStringLiteral("%1 × %2").arg(count).arg(QString::fromStdString(what));
 #endif
   return lines.join(QLatin1Char('\n'));
 }
@@ -25731,27 +25723,14 @@ void RS_FilterDXFRW::writeObjects() {
               effectiveSortStatus = DwgWriteReferenceStatus::Committed;
             }
           }
-          if (effectiveSortStatus == DwgWriteReferenceStatus::Missing ||
-              effectiveSortStatus == DwgWriteReferenceStatus::Suppressed) {
-            // The sort handle "does not have to point to an entity" (ODA,
-            // SORTENTSTABLE): it is the value the entity is drawn in the
-            // order of, and AutoCAD writes values no object has. One that
-            // names no object written keeps its value, as in a DXF
-            // (dxfRW::writeSortEntsTable()); fileExport() reserved it.
-            // The entities are written under new handles, all above it, so
-            // the entity is drawn before them: before the entity it was
-            // ordered against, and before the others of its block too.
-            entityHandles.push_back(entityHandle);
-            sortHandles.push_back(sourceSortHandle);
-            pendingReferences.push_back(
-                {true, sourceEntityHandle, entityHandle,
-                 entityTargetKind, DwgWriteReferenceStatus::Committed,
-                 "SORTENTSTABLE entity", static_cast<std::uint32_t>(i),
-                 DRW::DwgSoftPointer, true});
-            continue;
-          }
-          if (!isLiveDwgWriteReference(effectiveSortStatus) ||
-              sortHandle == 0) {
+          const bool freeSortHandle =
+              effectiveSortStatus == DwgWriteReferenceStatus::Missing ||
+              effectiveSortStatus == DwgWriteReferenceStatus::Suppressed;
+          if (freeSortHandle) {
+            // Sort keys need not name objects. fileExport() reserved this value.
+            sortHandle = sourceSortHandle;
+          } else if (!isLiveDwgWriteReference(effectiveSortStatus) ||
+                     sortHandle == 0) {
             const DwgWriteReferenceStatus dropStatus =
                 effectiveSortStatus == DwgWriteReferenceStatus::Ambiguous
                     ? DwgWriteReferenceStatus::Ambiguous
@@ -25773,10 +25752,11 @@ void RS_FilterDXFRW::writeObjects() {
                entityTargetKind, DwgWriteReferenceStatus::Committed,
                "SORTENTSTABLE entity", static_cast<std::uint32_t>(i),
                DRW::DwgSoftPointer, true});
-          pendingReferences.push_back(
-              {true, sourceSortHandle, sortHandle, sortTargetKind,
-               DwgWriteReferenceStatus::Committed, "SORTENTSTABLE sort",
-               static_cast<std::uint32_t>(i), DRW::DwgNullReference, false});
+          if (!freeSortHandle)
+            pendingReferences.push_back(
+                {true, sourceSortHandle, sortHandle, sortTargetKind,
+                 DwgWriteReferenceStatus::Committed, "SORTENTSTABLE sort",
+                 static_cast<std::uint32_t>(i), DRW::DwgNullReference, false});
         }
         if (m_writeFailed) {
           hasBlockedReplay = true;

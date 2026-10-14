@@ -1306,7 +1306,6 @@ bool prepareDwgEedRefs(
     bool haveAppId = false;
     // The layer references of the current application start here.
     std::size_t applicationLayerRefs = 0;
-    bool leavingOut = false;
     try {
         for (std::size_t index = 0; index < extData.size(); ++index) {
             const auto& value = extData[index];
@@ -1323,14 +1322,13 @@ bool prepareDwgEedRefs(
                     return false;
                 appIdRefs.push_back({index, appId->second});
                 applicationLayerRefs = layerRefs.size();
-                leavingOut = false;
                 haveAppId = true;
             } else if (value->code() == 1003) {
                 if (!haveAppId || value->type() != DRW_Variant::STRING
                     || value->content.s == nullptr || value->content.s->empty()) {
                     return false;
                 }
-                if (leavingOut)
+                if (appIdRefs.back().leftOut)
                     continue;
                 if (value->canReplayDwgRawLayerReference(version)) {
                     layerRefs.push_back(
@@ -1340,13 +1338,10 @@ bool prepareDwgEedRefs(
                 const auto layer = context.layerMap.find(
                     toUpperCase(*value->content.s));
                 if (layer == context.layerMap.end()) {
-                    // The item holds a layer handle, and the drawing has no
-                    // such layer. The data of this application is left out
-                    // whole: an item less would shift what the application
-                    // reads after it.
+                    // Omit the whole application's data; dropping one item
+                    // would change the layout the application reads.
                     appIdRefs.back().leftOut = true;
                     layerRefs.resize(applicationLayerRefs);
-                    leavingOut = true;
                     ++applicationsLeftOut;
                     continue;
                 }

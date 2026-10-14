@@ -15484,25 +15484,78 @@ TEST_CASE("RS_FilterDXFRW rejects a zero CURVEPATH entity reference",
   std::remove(path.c_str());
 }
 
-// A sort handle need not name an object (ODA, SORTENTSTABLE); AutoCAD
-// writes such values. See lc_dwg_export_sortents_key_tests.cpp.
+TEST_CASE("RS_FilterDXFRW omits and reports XDATA naming a missing layer",
+          "[dwg-write][filter][eed][xdata]") {
+  ensureQtSettings();
+  const auto format = GENERATE(RS2::FormatDWG, RS2::FormatDWG2004,
+                              RS2::FormatDWG2007, RS2::FormatDWG2010,
+                              RS2::FormatDWG2013, RS2::FormatDWG2018);
+  const bool lostFirst = GENERATE(false, true);
+  CAPTURE(format, lostFirst);
+  RS_Graphic source;
+  source.initForNewDocument();
+  auto *line = new RS_Line(&source, {RS_Vector{0.0, 0.0}, RS_Vector{10.0, 5.0}});
+  std::vector<std::shared_ptr<DRW_Variant>> data{
+      std::make_shared<DRW_Variant>(1001, "LC_KEPT"),
+      std::make_shared<DRW_Variant>(1003, "0", true),
+      std::make_shared<DRW_Variant>(1000, "kept"),
+      std::make_shared<DRW_Variant>(1001, "LC_LOST"),
+      std::make_shared<DRW_Variant>(1003, "NO_SUCH_LAYER", true),
+      std::make_shared<DRW_Variant>(1000, "lost")};
+  if (lostFirst)
+    std::rotate(data.begin(), data.begin() + 3, data.end());
+  line->setDrwExtData(std::move(data));
+  source.addEntity(line);
+  const std::string path = tempPath("filter_missing_xdata_layer.dwg");
+  RS_FilterDXFRW exporter;
+  REQUIRE(exporter.fileExport(source, QString::fromStdString(path), format));
+  CHECK(exporter.exportReport().contains(
+      QStringLiteral("application data naming a layer not in the drawing")));
+  const std::string dxf = tempPath("filter_missing_xdata_layer.dxf");
+  REQUIRE(exporter.fileExport(source, QString::fromStdString(dxf), RS2::FormatDXFRW));
+  CHECK(exporter.exportReport().isEmpty());
+  std::remove(dxf.c_str());
+
+  RS_Graphic imported;
+  RS_FilterDXFRW reader;
+  REQUIRE(reader.fileImport(imported, QString::fromStdString(path), RS2::FormatDWG));
+  REQUIRE(imported.count() == 1);
+  const auto &kept = imported.entityAt(0)->getDrwExtData();
+  REQUIRE(kept.size() == 3u);
+  CHECK(std::string(kept[0]->c_str()) == "LC_KEPT");
+  CHECK(std::string(kept[1]->c_str()) == "0");
+  CHECK(kept[1]->isLayerRef());
+  CHECK(std::string(kept[2]->c_str()) == "kept");
+  REQUIRE(exporter.fileExport(imported, QString::fromStdString(path), format));
+  CHECK(exporter.exportReport().isEmpty());
+  std::remove(path.c_str());
+}
+
+// A sort handle need not name an object (ODA, SORTENTSTABLE).
 TEST_CASE("RS_FilterDXFRW keeps a SORTENTSTABLE sort key that names no object",
           "[dwg-write][sortentstable][references]") {
   ensureQtSettings();
+  const auto format = GENERATE(RS2::FormatDWG, RS2::FormatDWG2004,
+                              RS2::FormatDWG2007, RS2::FormatDWG2010,
+                              RS2::FormatDWG2013, RS2::FormatDWG2018);
+  const std::uint32_t freeKey = GENERATE(0xC62u, 0xC70u);
+  CAPTURE(format, freeKey);
 
   RS_Graphic source;
   source.initForNewDocument();
-  auto *line = new RS_Line(
-      &source, RS_LineData{RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}});
-  line->setSourceHandle(0xC51u);
-  source.addEntity(line);
+  for (const auto &[handle, y] : {std::pair{0xC61u, 0.0}, std::pair{0xC63u, 1.0}}) {
+    auto *line = new RS_Line(
+        &source, RS_LineData{RS_Vector{0.0, y}, RS_Vector{10.0, y}});
+    line->setSourceHandle(handle);
+    source.addEntity(line);
+  }
 
   DRW_SortEntsTable table;
-  table.handle = 0xC52u;
+  table.handle = 0xC64u;
   table.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
   table.m_blockOwnerHandle = DRW::DwgModelSpaceBlockRecordHandle;
-  table.m_entityHandles = {line->sourceHandle()};
-  table.m_sortHandles = {0xDEADu};
+  table.m_entityHandles = {0xC61u, 0xC63u};
+  table.m_sortHandles = {0xC63u, freeKey};
   source.dwgAdvancedMetadata().addSortEntsTable(table);
 
   const std::string path = tempPath("filter_sortentstable_missing_sort.dwg");
@@ -15510,7 +15563,7 @@ TEST_CASE("RS_FilterDXFRW keeps a SORTENTSTABLE sort key that names no object",
   {
     RS_FilterDXFRW filter;
     REQUIRE(filter.fileExport(source, QString::fromStdString(path),
-                              RS2::FormatDWG2013));
+                              format));
   }
 
   RS_Graphic imported;
@@ -15522,11 +15575,20 @@ TEST_CASE("RS_FilterDXFRW keeps a SORTENTSTABLE sort key that names no object",
   const auto &tables = imported.dwgAdvancedMetadata().sortEntsTables();
   const auto written =
       std::find_if(tables.begin(), tables.end(), [](const auto &candidate) {
-        return candidate.handle == 0xC52u;
+        return candidate.handle == 0xC64u;
       });
   REQUIRE(written != tables.end());
-  REQUIRE(written->sortHandles.size() == 1u);
-  CHECK(written->sortHandles.front() == 0xDEADu);
+  REQUIRE(written->entityHandles.size() == 2u);
+  REQUIRE(written->sortHandles.size() == 2u);
+  CHECK(written->sortHandles[0] == written->entityHandles[1]);
+  CHECK(written->sortHandles[1] == freeKey);
+  CHECK(written->sortHandles[1] < written->sortHandles[0]);
+  std::set<std::uint32_t> entityHandles;
+  for (RS_Entity *entity : imported)
+    entityHandles.insert(entity->sourceHandle());
+  CHECK(entityHandles.count(freeKey) == 0u);
+  CHECK(entityHandles.count(written->entityHandles[0]) == 1u);
+  CHECK(entityHandles.count(written->entityHandles[1]) == 1u);
 
   std::remove(path.c_str());
 }

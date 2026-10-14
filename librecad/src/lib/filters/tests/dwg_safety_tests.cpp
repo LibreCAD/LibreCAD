@@ -495,6 +495,7 @@ public:
     using dwgReader::readDwgHandles;
     using dwgReader::readDwgBlocks;
     using dwgReader::readDwgEntities;
+    using dwgReader::parseAttribs;
     using dwgReader::readDwgEntity;
     using dwgReader::readDwgObject;
     using dwgReader::readDwgObjects;
@@ -2035,6 +2036,7 @@ public:
     using dwgWriter15::emitBlockRecord;
     using dwgWriter15::emitControlObject;
     using dwgWriter15::finishObject;
+    using dwgWriter15::prepareEntityEed;
     using dwgWriter::registerRawObjectClass;
 
     void setVersionForTest(DRW::Version value) { m_version = value; }
@@ -2863,6 +2865,123 @@ private:
     Mode m_mode;
 };
 
+class LeftOutApplicationIface final : public DwgReadProbe {
+public:
+    dwgRW* m_writer = nullptr;
+    bool m_lineWritten = false;
+    bool m_onlyLostLineWritten = false;
+    std::vector<DRW_Line> m_lines;
+    std::map<std::string, std::size_t> m_layerEedSizes;
+
+    static void addKept(std::vector<std::shared_ptr<DRW_Variant>>& data) {
+        data.push_back(std::make_shared<DRW_Variant>(1001, "LC_KEPT"));
+        data.push_back(std::make_shared<DRW_Variant>(1002, "{"));
+        data.push_back(
+            std::make_shared<DRW_Variant>(1003, "KEPT_LAYER", true));
+        data.push_back(std::make_shared<DRW_Variant>(1000, "kept"));
+        data.push_back(std::make_shared<DRW_Variant>(1002, "}"));
+    }
+
+    static void addLost(std::vector<std::shared_ptr<DRW_Variant>>& data) {
+        data.push_back(std::make_shared<DRW_Variant>(1001, "LC_LOST"));
+        data.push_back(std::make_shared<DRW_Variant>(1002, "{"));
+        data.push_back(
+            std::make_shared<DRW_Variant>(1003, "NO_SUCH_LAYER", true));
+        data.push_back(std::make_shared<DRW_Variant>(1003, "ALSO_MISSING", true));
+        data.push_back(std::make_shared<DRW_Variant>(1000, "lost"));
+        data.push_back(std::make_shared<DRW_Variant>(1002, "}"));
+    }
+
+    void writeLayers() override {
+        DRW_Layer kept;
+        kept.name = "KEPT_LAYER";
+        REQUIRE(kept.addExtData(std::make_unique<DRW_Variant>(1001, "LC_LOST")));
+        REQUIRE(kept.addExtData(
+            std::make_unique<DRW_Variant>(1003, "NO_SUCH_LAYER", true)));
+        REQUIRE(m_writer->addLayer(&kept));
+    }
+
+    void writeAppId() override {
+        for (const char* name : {"LC_KEPT", "LC_LOST"}) {
+            DRW_AppId appId;
+            appId.name = name;
+            REQUIRE(m_writer->addAppId(&appId));
+        }
+    }
+
+    void writeEntities() override {
+        DRW_Line line;
+        line.secPoint = DRW_Coord{10.0, 5.0, 0.0};
+        addKept(line.extData);
+        addLost(line.extData);
+        m_lineWritten = m_writer->writeLine(&line);
+
+        DRW_Line onlyLost;
+        onlyLost.secPoint = DRW_Coord{-10.0, 5.0, 0.0};
+        addLost(onlyLost.extData);
+        m_onlyLostLineWritten = m_writer->writeLine(&onlyLost);
+    }
+
+    void addLine(const DRW_Line& line) override { m_lines.push_back(line); }
+    void addLayer(const DRW_Layer& layer) override {
+        m_layerEedSizes[layer.name] = layer.extData.size();
+    }
+};
+
+std::vector<std::string> eedStrings(const DRW_Entity& entity) {
+    std::vector<std::string> values;
+    for (const auto& value : entity.extData) {
+        if (value != nullptr && value->type() == DRW_Variant::STRING)
+            values.emplace_back(value->c_str());
+    }
+    return values;
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DWG export leaves out application data naming a missing layer",
+          "[dwg][eed][xdata][writer]") {
+    for (const DRW::Version version :
+         {DRW::AC1015, DRW::AC1018, DRW::AC1021, DRW::AC1024, DRW::AC1027,
+          DRW::AC1032}) {
+        INFO("version " << static_cast<int>(version));
+        const std::string path =
+            (std::filesystem::temp_directory_path()
+             / ("lc_dwg_eed_layer_left_out_"
+                + std::to_string(static_cast<int>(version)) + ".dwg"))
+                .string();
+
+        LeftOutApplicationIface written;
+        std::map<std::string, std::size_t> leftOut;
+        {
+            dwgRW writer(path.c_str());
+            written.m_writer = &writer;
+            REQUIRE(writer.write(&written, version, false));
+            leftOut = writer.leftOut();
+        }
+        CHECK(written.m_lineWritten);
+        CHECK(written.m_onlyLostLineWritten);
+        // Two lines and a layer each lost LC_LOST's data.
+        REQUIRE(leftOut.size() == 1u);
+        CHECK(leftOut.begin()->first
+              == "application data naming a layer not in the drawing");
+        CHECK(leftOut.begin()->second == 3u);
+
+        LeftOutApplicationIface read;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&read, false));
+        }
+        std::remove(path.c_str());
+        REQUIRE(read.m_lines.size() == 2u);
+        CHECK(eedStrings(read.m_lines[0])
+              == std::vector<std::string>{"LC_KEPT", "{", "KEPT_LAYER",
+                                          "kept", "}"});
+        CHECK(read.m_lines[0].extData[2]->isLayerRef());
+        CHECK(read.m_lines[1].extData.empty());
+        CHECK(read.m_layerEedSizes["KEPT_LAYER"] == 0u);
+    }
+}
+
 class DwgInsertCompoundWriteProbe final : public DwgReadProbe {
 public:
     dwgRW* writer = nullptr;
@@ -3253,6 +3372,25 @@ TEST_CASE("DWG writer rollback restores class-instance accounting",
 
     writer.rollbackCompoundWrite(checkpoint);
     CHECK(writer.classInstanceEmissionCountForTest(500) == 0u);
+}
+
+TEST_CASE("DWG writer rollback restores XDATA omission counts",
+          "[dwg][safety][writer][eed][transaction]") {
+    DRW_Header header;
+    std::ofstream stream;
+    DwgClassPhaseWriterProbe writer(&stream, &header);
+    DRW_AppId app;
+    app.name = "LC_LOST";
+    REQUIRE(writer.addAppId(app) != 0);
+    DRW_Line line;
+    line.extData = {std::make_shared<DRW_Variant>(1001, "LC_LOST"),
+                    std::make_shared<DRW_Variant>(1003, "NO_SUCH_LAYER", true)};
+    const auto checkpoint = writer.checkpointCompoundWrite();
+    REQUIRE(writer.prepareEntityEed(line));
+    REQUIRE(writer.leftOut().size() == 1u);
+    CHECK(writer.leftOut().begin()->second == 1u);
+    writer.rollbackCompoundWrite(checkpoint);
+    CHECK(writer.leftOut().empty());
 }
 
 TEST_CASE("DWG writer rejects classes discovered after CLASSES emission",
@@ -25164,6 +25302,102 @@ TEST_CASE("DWG R2007 EED decodes surrogate pairs", "[dwg][safety]") {
     REQUIRE(chunks.size() == 1);
     REQUIRE(chunks.front().items.size() == 1);
     CHECK(std::string(chunks.front().items.front().c_str()) == "\xF0\x9F\x98\x80");
+}
+
+// TEXT 0x91B of ACadSharp's samples/sample_AC1014.dwg (AutoCAD R14), from the
+// object type to the end of the handles: the bytes after the record's size.
+const std::uint8_t kAutoCadR14Text[] = {
+    0x40, 0x40, 0x82, 0x46, 0xD0, 0xD5, 0x20, 0x8F, 0xD0, 0x20, 0x00, 0x30,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x8F, 0x50, 0x20, 0x18, 0xBA, 0x04,
+    0x00, 0x01, 0x5E, 0xD0, 0x42, 0x26, 0x92, 0x32, 0x4C, 0x02, 0x82, 0x07,
+    0xD1, 0x84, 0xB9, 0xBA, 0x01, 0x6A, 0x96, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x05,
+    0x35, 0x2A, 0x18, 0xB0, 0x88, 0xC2, 0xE8, 0xC2, 0x40, 0x98, 0xC2, 0xF2,
+    0xCA, 0xE4, 0x01, 0x51, 0x82, 0x88, 0x82, 0x88, 0x8F,
+};
+
+// The same TEXT in samples/sample_AC1015.dwg (AutoCAD 2000).
+const std::uint8_t kAutoCadR2000Text[] = {
+    0x40, 0x46, 0x80, 0x80, 0x00, 0x00, 0x82, 0x46, 0xD0, 0xD5, 0x20, 0x8F,
+    0xD0, 0x20, 0x00, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x8F, 0x50,
+    0x20, 0x19, 0x5D, 0x08, 0x77, 0xFC, 0x21, 0x13, 0x49, 0x19, 0x26, 0x01,
+    0x41, 0x03, 0xE8, 0xC2, 0x5C, 0xDD, 0x00, 0xB5, 0x4B, 0x03, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0xF0, 0x3F, 0x43, 0x16, 0x11, 0x18, 0x5D, 0x18,
+    0x48, 0x13, 0x18, 0x5E, 0x59, 0x5C, 0x80, 0x0C, 0x14, 0x44, 0x14, 0x44,
+    0x7F,
+};
+
+
+TEST_CASE("DWG EED layer references match AutoCAD TEXT records",
+          "[dwg][safety][eed][xdata]") {
+    struct Record {
+        DRW::Version version;
+        std::vector<std::uint8_t> bytes;
+        std::uint32_t eedBit;
+    };
+    const Record records[] = {
+        {DRW::AC1014, {std::begin(kAutoCadR14Text), std::end(kAutoCadR14Text)}, 34},
+        {DRW::AC1015, {std::begin(kAutoCadR2000Text), std::end(kAutoCadR2000Text)}, 66}
+    };
+    for (auto record : records) {
+        CAPTURE(record.version);
+        DRW_TextCodec codec;
+        codec.setVersion(record.version, false);
+        dwgBuffer buffer(record.bytes.data(), record.bytes.size(), &codec);
+        DwgTextProbe text;
+        REQUIRE(text.parseDwg(record.version, &buffer, 0));
+        CHECK(text.handle == 0x91Bu);
+        CHECK(text.text == "XData Layer");
+        REQUIRE(text.extData.size() == 4u);
+        CHECK(text.extData[2]->rawDwgLayerReference() == 0x8F5u);
+        REQUIRE(text.pendingLayerRefResolutions.size() == 1u);
+        CHECK(text.pendingLayerRefResolutions.front().indexInExtData == 2u);
+        CHECK(text.pendingLayerRefResolutions.front().handleRef == 0x8F5u);
+
+        std::uint8_t empty = 0;
+        DwgEntityReaderProbe names(std::make_unique<dwgBuffer>(&empty, 1));
+        names.setVersionForTest(record.version);
+        names.addLayerForTest(0x8F5u, "APP_LAYER");
+        names.addAppIdForTest(0x8FDu, "LAYER_APP");
+        names.parseAttribs(&text);
+        CHECK(std::string(text.extData[0]->c_str()) == "LAYER_APP");
+        CHECK(std::string(text.extData[1]->c_str()) == "{");
+        CHECK(std::string(text.extData[2]->c_str()) == "APP_LAYER");
+        CHECK(text.extData[2]->isLayerRef());
+        CHECK(std::string(text.extData[3]->c_str()) == "}");
+
+        std::vector<DRW_Variant*> items;
+        for (const auto& item : text.extData)
+            items.push_back(item.get());
+        dwgBufferW written;
+        REQUIRE(DRW_Entity::encodeDwgEed(
+            DRW::AC1015, items, {{0u, 0x8FDu}}, {{2u, 0x8F5u}}, 30, written));
+        REQUIRE(written.bitCount() == 140u);
+        auto bytes = written.data();
+        dwgBuffer actual(bytes.data(), bytes.size());
+        REQUIRE(buffer.setPosition(record.eedBit / 8));
+        buffer.setBitPos(record.eedBit % 8);
+        for (unsigned bit = 0; bit < 140; ++bit)
+            CHECK(actual.getBit() == buffer.getBit());
+    }
+}
+
+TEST_CASE("DWG EED resolves canonical and legacy layer byte orders",
+          "[dwg][safety][eed][xdata]") {
+    const bool legacy = GENERATE(false, true);
+    auto bytes = makeEed(legacy
+        ? std::vector<std::uint8_t>{3, 0xF5, 0x08, 0, 0, 0, 0, 0, 0}
+        : std::vector<std::uint8_t>{3, 0, 0, 0, 0, 0, 0, 0x08, 0xF5});
+    dwgBuffer buffer(bytes.data(), bytes.size());
+    std::vector<DwgEedChunk> chunks;
+    REQUIRE(readDwgEed(DRW::AC1015, buffer, chunks));
+    REQUIRE(chunks.size() == 1u);
+    REQUIRE(chunks.front().items.size() == 1u);
+    CHECK(chunks.front().items.front().rawDwgLayerReference()
+          == (legacy ? 0xF508000000000000ULL : 0x8F5u));
+    REQUIRE(chunks.front().layerRefs.size() == 1u);
+    CHECK(chunks.front().layerRefs.front().itemIndex == 0u);
+    CHECK(chunks.front().layerRefs.front().handleRef == 0x8F5u);
 }
 
 TEST_CASE("DWG EED preserves wide layer references", "[dwg][safety]") {

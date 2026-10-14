@@ -3215,11 +3215,8 @@ bool readDwgEed(DRW::Version version, dwgBuffer &buffer,
           // EED layer references are always eight bytes on disk. Keep
           // a valid wide reference even though the in-memory layer map
           // is currently keyed by 32-bit DWG handles.
-          //
-          // LibreCAD wrote the bytes least significant first. Only one of
-          // the two orders can be a 32-bit handle, so a reference that is
-          // none as written is looked up the other way round; it names a
-          // layer only if the drawing has one there.
+          // Recover legacy LibreCAD byte order only when the canonical
+          // value cannot fit the reader's 32-bit layer map.
           std::uint64_t layer = ref;
           if (layer > std::numeric_limits<std::uint32_t>::max())
             layer = byteSwapped(ref);
