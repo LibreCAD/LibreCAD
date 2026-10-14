@@ -31,12 +31,12 @@ USA.
 | Issue | [LibreCAD #3032](https://github.com/LibreCAD/LibreCAD/issues/3032), "Reincorporate paragraph indentation for MText while maintaining left alignment", opened 2026-10-08. No sample drawing, no screenshot, no comments by 2026-10-11 |
 | Target | `origin/master`. `origin/2.2.1` has the same leading-space defect; back-porting A1 is decision D5 |
 | Reviewed code | `628a1ba84` (`origin/master`, 2026-10-11). The first version of this plan reviewed `6242f6e43`; the one commit in between (#3055) changes `lc_dialog.cpp`, a base of the MText dialog, and adds its tests |
-| State | D1 to D6 were accepted as recommended on 2026-10-11. A0, A1, A2a, A3.1, A4 and B1 are implemented by the pull request that adds this file (#3061), which was then reviewed in depth; see "Implementation". A2b, A3.2, A3.3 and B2 to B5 are open. The result has not been tried by hand in the running application |
+| State | D1 to D6 were accepted as recommended on 2026-10-11. A0, A1, A2a, A3.1, A4 and B1 are implemented by merged #3061; see "Implementation". A3.3 is implemented by follow-up #3059. A2b, A3.2 and B2 to B5 are open. Native application and external-CAD smoke checks remain outstanding |
 | Cause of the report | `4b5cd9d9e` "MText: fix alignment" on master (2024-05-17, the fix for #1786 "MTEXT alignment is broken"), back-ported as `933d5378c` (2024-06-17), first in 2.2.1_rc3 and released in v2.2.1: every left-attached line is moved by its ink minimum, which cancels leading spaces |
 | Second regression, master only | `117c8710b` (#2603, 2026-06-17): DXF `^I` now becomes U+0009, which is drawn as nothing. Every release drew four spaces |
 | First delivery | A0, A1, A2a and A3.1: leading spaces indent again, a Tab advances again, and the saved width covers the indented line. With D2 and D6 accepted, A4 and B1 are part of it |
 | Decisions | D1 to D6 accepted as recommended, 2026-10-11 |
-| Other work on the issue | Draft #3059 implements the first version of this plan |
+| Other work on the issue | #3059 is narrowed to the independent embedded-attribute export fix (A3.3), on top of merged #3061 |
 
 Track A restores whitespace indentation and is independently useful. Track B
 adds paragraph formatting, which no LibreCAD release has had. Do not claim that
@@ -238,7 +238,7 @@ All six were accepted as recommended on 2026-10-11. D5 is carried out as
 | A2b. Stops in logical RightToLeft lines | Open | - | Flow-origin placement matches the Qt oracle |
 | A3.1. Saved width covers the line | Done | `e12c9fb6e`, `3e4cbb8a6`, `aca5fd66f` | Group 41 is not smaller than indent plus ink in DXF R2000, R2007, R2018 and DWG R2004 |
 | A3.2. Width policy | Open; accepted for a later change | - | Binding and non-binding boxes both survive |
-| A3.3. Embedded attribute text | Open, independent of the issue | - | Edited attribute text is saved; unedited records are unchanged |
+| A3.3. Embedded attribute text | Done in #3059, but for three defects next to it that are corrected separately (see A3.3); not checked with another CAD program | - | An edit made with a tool is saved once, in every format; a save without a change repeats the record; a format without the MTEXT gets the text as the value |
 | A4. Tab key and input paths | Done | `24af2b21d`, `3e4cbb8a6`, `aca5fd66f` | Key events that carry their character; both dialogs, the property editor and the tool options; Shift+Tab and Ctrl+Tab as the ways out |
 | B0. Paragraph scope | Decided by D1 and D6 | - | B1 now; B2 to B5 stay conditional |
 | B1. Paragraph commands are not drawn | Done | `e12c9fb6e`, `3e4cbb8a6` | Commands hidden and not applied; other text literal |
@@ -681,6 +681,89 @@ to B3.
 ### A3.3. Embedded Attribute Text
 
 This is independent of the issue and can be a separate change.
+
+#3059 does this on top of merged #3061 (`cb7c07584`). It leaves the merged
+layout, the editors and the A3.1 width policy as they are; A3.2 remains open,
+and the first draft's export of the declared width is not carried over. What
+it does, where it departs from the steps as they are written below, and how it
+was checked:
+
+- **Which text is an attribute.** The tools edit by putting a changed clone in
+  the place of an entity, and a copy is a clone too. A text read from an
+  ATTRIB therefore names its block reference by a lineage, which a clone has
+  in common with what it was made from. An edited attribute is written once,
+  an undone edit or an erased text not at all, a moved block reference keeps
+  its attributes, and a copy of a block reference with its texts has its own.
+  A text that no block reference claims is written as a TEXT or MTEXT of its
+  own when it shows something.
+- **Edits (steps 1 and 2).** The text of the drawing wins wherever it differs
+  from the record it was read from. To tell, the text keeps the values that
+  the import gave it next to that record, in memory only and in one layout. A
+  save without a change repeats the record with its inline codes, and a
+  degree to radian round trip is no rotation. A content that starts with
+  `\A0;`, `\A1;` or `\A2;` is written only next to the vertical alignment it
+  was read with.
+- **The value of the ATTRIB itself (step 3).** Only DXF and DWG R2018 hold the
+  MTEXT of an attribute. In every other format the value is the text on one
+  line without codes (`RS_MText::toPlainLine()`), edited or not: AutoCAD
+  leaves the value empty, and it is all such a format shows. Next to the MTEXT
+  a value from the file stays, an empty one also after an edit, and one that
+  was there follows an edited text.
+- **The place of the ATTRIB itself.** Group 11 is the insertion point of the
+  MTEXT in the coordinate system of the ATTRIB, groups 72 and 74 follow the
+  attachment point, and group 10 is where the baseline of the value starts.
+  The first point of the file is kept only while its record is written
+  unchanged. A justified single-line attribute was written with groups 10 and
+  11 swapped, on master too, and moved with every save; no longer.
+- **The embedded object in DXF.** It is opened by `101 / Embedded Object`, as
+  AutoCAD writes it and ezdxf expects it; group 100, which LibreCAD wrote, is
+  still read. Its content is cut into group 3 chunks like that of a standalone
+  MTEXT, which is not what step 4 says. A standalone MTEXT skips the embedded
+  object that AutoCAD appends for columns.
+- **Line spacing.** Group 73 is written from the drawing as 1 or 2, for a
+  standalone MTEXT too, and only 2 is read as exact.
+- **What the drawing cannot rebuild (step 5).** An edited attribute is written
+  without its annotation-scale payload and column layout, which the model
+  cannot rebuild; the export report names what was left out. Only DWG R2018
+  holds either, and only next to the untouched text it was read with. Step 5
+  wanted them kept. The first version of #3059 refused the save instead, in
+  every format and for autosave too.
+- **Handles (step 5).** In DWG R2018 the MTEXT inside an attribute names the
+  layer and the text style of its attribute by their handles in the file
+  being written. A handle of the file it was read from is another object
+  there, or none, and is not written.
+- **A DXF export that the filter refuses** leaves no file and replaces none.
+
+Not done by #3059:
+
+- The fields of the MTEXT inside an attribute are read from DWG and written
+  to it in an order that is not AutoCAD's. That is corrected separately.
+- A DWG export onto an existing file fails on Windows. That is corrected
+  separately.
+- The value of a single-line attribute is read as if it were MTEXT content,
+  so the `\P` of a path becomes a line break. That is corrected separately.
+- A text that is not selected together with its block reference, a hidden
+  attribute for one, stays behind when the reference is moved or copied.
+- For a block reference with another extrusion than (0,0,1), the first point
+  of the ATTRIB itself is its alignment point, and its rotation is not
+  converted.
+
+| Check | Result |
+| --- | --- |
+| `lc_attribute_export_tests.cpp`, tag `[attribute-export]`, in `librecad_dxf_fast_tests`, which CI builds | 50 cases. One needs AutoCAD's own sample drawing and is skipped without it |
+| Its case on single edits: each property changed alone by a clone in the place of the text, then all at once, on two fixtures, saved to nine formats | The change is in the groups it belongs to and in no other; a format of 2018 opens as the drawing shows it, any other as one line with the same height, angle, style, place and justification |
+| Sixteen ways to lose one property of an edit, or the edit as a whole, put into the export one at a time | Each turns that case red; a lost property in the rows of that property |
+| `librecad_dxf_fast_tests`, `librecad_dwg_fast_tests`, `librecad_dwg_write_fast_tests`, `librecad_text_bidi_tests` | 664, 985 (4 skipped), 415 and 76 cases pass |
+| `librecad_tests`, the complete executable | 3511 cases: 3440 pass, 71 are skipped, none fails |
+| ezdxf 1.4.4 on the 433 DXF files that the cases write | All load, none with an audit error. Each of the 148 attributes written with an MTEXT has it for ezdxf too |
+| 317 sample drawings, 53 of them with attributes, saved to five formats before and after | The same 127 of 265 saves succeed. Every changed ATTRIB record is one of the changes above |
+
+Not checked: Windows and Linux; AutoCAD or another CAD program on a saved
+file. The DWG output was read back by LibreCAD only: LibreDWG reads the MTEXT
+inside an attribute in the same field order as LibreCAD does, so it is no
+second opinion.
+
+The steps as they were planned, before #3059:
 
 1. Encode the embedded text with `toDxfString()`, with the same caret mode as
    the standalone writer. As read, a line break in an edited attribute fails

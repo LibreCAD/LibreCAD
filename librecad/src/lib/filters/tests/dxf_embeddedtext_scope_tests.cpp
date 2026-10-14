@@ -240,7 +240,7 @@ TEST_CASE("Canonical embedded native group3 is continuation not ATTDEF prompt", 
     CHECK(capture.definitions.front().prompt != continuation.toStdString());
 }
 
-TEST_CASE("Legacy100 keeps trailing metadata opaque and provenance survives value operations", "[dxf-embedded-scope][headless]") {
+TEST_CASE("Legacy100 marker is read like the canonical one and its provenance survives value operations", "[dxf-embedded-scope][headless]") {
     QTemporaryDir temporary; REQUIRE(temporary.isValid());
     auto bytes = fixtureBytes();
     const QByteArray marker("101\nEmbedded Object"); REQUIRE(bytes.count(marker) == 2);
@@ -249,43 +249,61 @@ TEST_CASE("Legacy100 keeps trailing metadata opaque and provenance survives valu
     ScopeInterface capture; const auto name = path.toStdString(); dxfRW reader(name.c_str());
     REQUIRE(reader.read(&capture, false)); REQUIRE(capture.attributes.size() == 1); REQUIRE(capture.definitions.size() == 1);
     DRW_Attrib expected; configure(expected);
+    // XDATA is the ATTRIB's with either spelling of the marker, wherever it
+    // stands in the record: the embedded MTEXT has none of its own.
+    Tags outer{std::make_shared<DRW_Variant>(1001, std::string("OuterScope")),
+        std::make_shared<DRW_Variant>(1000, std::string("pre-marker-owned"))};
+    outer.insert(outer.end(), expected.extData.begin(), expected.extData.end());
     for (const DRW_Attrib *actual : {static_cast<const DRW_Attrib *>(&capture.attributes.front()),
                                     static_cast<const DRW_Attrib *>(&capture.definitions.front())}) {
         REQUIRE(actual->mtext); CHECK(actual->text == "OUTER-FALLBACK");
         CHECK(actual->mtext->text == expected.mtext->text);
         CHECK(actual->embeddedDxfMarker() == DRW_Attrib::EmbeddedDxfMarker::Legacy100);
-        CHECK(actual->hasAmbiguousLegacyEmbeddedXData());
-        exact(actual->mtext->extData, expected.extData);
-        const Tags premarker{std::make_shared<DRW_Variant>(1001, std::string("OuterScope")),
-            std::make_shared<DRW_Variant>(1000, std::string("pre-marker-owned"))};
-        exact(actual->extData, premarker);
+        CHECK(actual->mtext->extData.empty());
+        CHECK_FALSE(actual->hasAmbiguousLegacyEmbeddedXData());
+        exact(actual->extData, outer);
         DRW_Attrib copied(*actual); DRW_Attrib assigned; assigned = *actual;
         CHECK(copied.embeddedDxfMarker() == actual->embeddedDxfMarker());
-        CHECK(assigned.hasAmbiguousLegacyEmbeddedXData());
-        exact(copied.mtext->extData, expected.extData); exact(assigned.mtext->extData, expected.extData);
+        CHECK(assigned.embeddedDxfMarker() == actual->embeddedDxfMarker());
+        exact(copied.extData, outer); exact(assigned.extData, outer);
         struct Resettable : DRW_Attrib { using DRW_Attrib::resetAttribDwgState; } resettable;
         static_cast<DRW_Attrib &>(resettable) = *actual;
         resettable.resetAttribDwgState();
         CHECK(resettable.embeddedDxfMarker() == DRW_Attrib::EmbeddedDxfMarker::None);
         CHECK_FALSE(resettable.hasAmbiguousLegacyEmbeddedXData()); CHECK_FALSE(resettable.mtext);
-        DRW_Attrib moved(std::move(copied)); CHECK(moved.hasAmbiguousLegacyEmbeddedXData());
+        // Only a value that a caller builds can hold XDATA on the embedded MTEXT.
+        copied.mtext->extData = expected.extData;
+        CHECK(copied.hasAmbiguousLegacyEmbeddedXData());
+        DRW_Attrib moved(std::move(copied));
+        CHECK(moved.embeddedDxfMarker() == DRW_Attrib::EmbeddedDxfMarker::Legacy100);
+        CHECK(moved.hasAmbiguousLegacyEmbeddedXData());
     }
 }
 
-TEST_CASE("Native DXF refuses independent embedded metadata rather than silently reassigning it", "[dxf-embedded-scope][headless]") {
+TEST_CASE("Native DXF writes the host's XDATA and nothing of an embedded MTEXT's own", "[dxf-embedded-scope][headless]") {
     QTemporaryDir temporary; REQUIRE(temporary.isValid());
     const auto mode = GENERATE(0, 1, 2);
+    INFO("writer dispatch " << mode);
     ScopeInterface source; source.mode = mode; configure(source.attribute); configure(source.definition);
+    source.definition.m_attributeType = 4;
     for (auto *value : {&source.attribute, static_cast<DRW_Attrib *>(&source.definition)}) {
         value->mtext->extData = {std::make_shared<DRW_Variant>(1001, std::string("EmbeddedScope")),
-                                std::make_shared<DRW_Variant>(1000, std::string("opaque retained raw"))};
+                                std::make_shared<DRW_Variant>(1000, std::string("embedded-only payload"))};
     }
-    const auto path = temporary.filePath("refused.dxf").toStdString();
-    dxfRW writer(path.c_str()); source.writer = &writer;
-    CHECK_FALSE(writer.write(&source, DRW::AC1032, false));
-    CHECK_FALSE(source.lastEntityWriteSucceeded);
+    const auto path = temporary.filePath("embedded-xdata.dxf");
+    const auto name = path.toStdString();
+    dxfRW writer(name.c_str()); source.writer = &writer;
+    // An embedded object has no XDATA frame in DXF. The write is not refused
+    // for it: the record carries the XDATA of the ATTRIB or ATTDEF only.
+    REQUIRE(writer.write(&source, DRW::AC1032, false));
+    CHECK(source.lastEntityWriteSucceeded);
     CHECK(source.attribute.mtext->extData.size() == 2);
-    CHECK(*source.attribute.mtext->extData.back()->content.s == "opaque retained raw");
+    CHECK(*source.attribute.mtext->extData.back()->content.s == "embedded-only payload");
+    QFile written(path); REQUIRE(written.open(QIODevice::ReadOnly));
+    CHECK_FALSE(written.readAll().contains("embedded-only payload"));
+    ScopeInterface capture; dxfRW reader(name.c_str()); REQUIRE(reader.read(&capture, false));
+    if (mode == 0) { REQUIRE(capture.attributes.size() == 1); nativeAndOuter(capture.attributes.front()); }
+    else { REQUIRE(capture.definitions.size() == 1); nativeAndOuter(capture.definitions.front()); }
 }
 
 TEST_CASE("Native DXF paired writer fixture is independently readable", "[dxf-embedded-scope][headless]") {

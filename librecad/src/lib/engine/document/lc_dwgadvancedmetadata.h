@@ -1111,7 +1111,7 @@ public:
     std::vector<std::shared_ptr<DRW_Variant>> extData;
     std::vector<std::uint32_t> reactorHandles;
     std::uint32_t xDictHandle = 0;
-    bool importedFromDwg = false;
+    bool imported = false;
     ReplayState replayState = ReplayState::ReplayAllowed;
   };
 
@@ -7093,22 +7093,12 @@ public:
   // gate raw-replay (both emit + CLASSES registration) on source==target.
   void setSourceDwgVersion(DRW::Version v) { m_sourceDwgVersion = v; }
   DRW::Version sourceDwgVersion() const { return m_sourceDwgVersion; }
-  // Mark records delivered by the DWG reader. Records added later through
-  // the generic metadata API must not inherit imported-carrier identity.
-  void markVportsImportedFromDwg() {
+  // Mark records delivered by a file reader, DWG or DXF. Records added later
+  // through the generic metadata API must not inherit imported-carrier
+  // identity.
+  void markVportsImported() {
     for (VportRecord &record : m_vports)
-      record.importedFromDwg = true;
-  }
-  bool isImportedVportSource(std::uint32_t handle,
-                             const std::string &name) const {
-    if (handle == 0)
-      return false;
-    return std::any_of(m_vports.cbegin(), m_vports.cend(),
-                       [handle, &name](const VportRecord &record) {
-                         return record.importedFromDwg &&
-                                record.handle == handle &&
-                                tableNameEquals(record.name, name);
-                       });
+      record.imported = true;
   }
   const std::vector<ViewRecord> &views() const { return m_views; }
   const std::vector<UcsRecord> &ucsRecords() const { return m_ucsRecords; }
