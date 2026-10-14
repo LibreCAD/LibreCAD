@@ -811,8 +811,9 @@ void checkScaleDataKept(const Saved& saved, const AttributeDwgSource& source) {
 }
 
 // A save that left the data out says so, and has the block reference and
-// its attribute all the same. In a DWG 2018 the attribute is still marked as
-// annotative.
+// its attribute all the same. In a DWG 2018 the MTEXT is then one without
+// annotation scales, as AutoCAD writes such a one: the mark "annotative" with
+// no data after it is no form that AutoCAD writes.
 void checkScaleDataLeftOut(const Saved& saved, const Target& to) {
     CAPTURE(saved.m_file.filename().string(), saved.m_report);
     CHECK(saved.m_report.find(kScaleDataLeftOut) != std::string::npos);
@@ -826,7 +827,11 @@ void checkScaleDataLeftOut(const Saved& saved, const Target& to) {
         readDwg(saved.m_file, written);
         const DRW_MText& mtext = onlyEmbeddedMText(written);
         CHECK(mtext.m_r2018AnnotativeData.empty());
-        CHECK_FALSE(mtext.m_r2018IsNotAnnotative);
+        CHECK(mtext.m_r2018IsNotAnnotative);
+        CHECK(mtext.m_r2018Version == 4);
+        CHECK(mtext.m_r2018DefaultFlag);
+        CHECK(mtext.m_r2018AppIdHandle == 0u);
+        CHECK(mtext.m_r2018ColumnType == 0);
     }
 }
 
@@ -4034,6 +4039,125 @@ TEST_CASE("an edited multi-line attribute gets its own points and justification 
                 CHECK(text->getSecondPoint().distanceTo(RS_Vector(place[0], place[1])) < 1e-6);
             }
         }
+    }
+
+    // The value is a text of one line: "\P", "\~" and a font in braces are
+    // characters of it like any other, and each has its width. The first
+    // point of a text that ends at its alignment point is where all of them
+    // start, which is again the point that the text opened from the file
+    // works out for itself, and the point it is saved with from there. A
+    // DWG has the characters themselves where a DXF has a code for a caret,
+    // and the same first point: what the value shows is one text.
+    SECTION("a value with a backslash or a caret is laid out as the characters it has") {
+        struct Row {
+            const char* m_name;
+            const char* m_typed;    // in an MTEXT "\\" is a backslash, "\{" a brace
+            const char* m_inDxf;
+            const char* m_shown;    // also the value in a DWG
+        };
+        const std::vector<Row> rows{
+            {"paragraph", R"(C:\\Plans\\x)", R"(C:\Plans\x)", R"(C:\Plans\x)"},
+            {"hard_space", R"(a\\~b)", R"(a\~b)", R"(a\~b)"},
+            {"font", R"(\{\\fArial|b0;T\})", R"({\fArial|b0;T})", R"({\fArial|b0;T})"},
+            {"caret", "a^Jb", "a^ Jb", "a^Jb"},
+        };
+        const Target dxf = target("dxf2007");
+        const Target dwg = target("dwg2013");
+        for (const Row& row : rows) {
+            const std::string name = std::string("coded_") + row.m_name;
+            CAPTURE(name);
+            EditableDrawing drawing;
+            load(bench, offsetFirstPointDxf(), drawing, name + "_source");
+            drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [&](RS_MText& text) {
+                text.setText(QString::fromLatin1(row.m_typed));
+                text.setHAlign(RS_MTextData::HARight);
+            });
+            // The first point of the attribute in a file, of either kind.
+            const auto firstPoint = [](const std::filesystem::path& file, const Target& of) {
+                if (of.m_dxf) {
+                    const std::vector<double> place = ownPlace(onlyRecord(file, "ATTRIB"));
+                    return RS_Vector(place[0], place[1]);
+                }
+                DwgContent content;
+                readDwg(file, content);
+                const DRW_Coord& point = onlyDwgAttribute(content).basePoint;
+                return RS_Vector(point.x, point.y);
+            };
+            // The text a file opens with has the value, ends at (1,4) and
+            // starts where the file says; saved from there, the file says
+            // the same again.
+            const auto checkShown = [&](const std::filesystem::path& file, const Target& of, const RS_Vector& first) {
+                CAPTURE(of.m_name);
+                EditableDrawing shown;
+                REQUIRE(lc::test::importDrawing(shown.m_graphic, file, of.m_format));
+                const RS_Text* text = only<RS_Text>(shown, RS2::EntityText);
+                CHECK(text->getText().toStdString() == row.m_shown);
+                CHECK(text->getInsertionPoint().distanceTo(RS_Vector(1.0, 4.0)) < 1e-9);
+                CHECK(text->getHAlign() == RS_TextData::HARight);
+                CHECK(text->getVAlign() == RS_TextData::VATop);
+                CAPTURE(first.x, first.y, text->getSecondPoint().x, text->getSecondPoint().y);
+                CHECK(text->getSecondPoint().distanceTo(first) < 1e-6);
+                const auto again = save(bench, shown, name + "_reopened", of);
+                CHECK(attributeValueIn(again, of) == attributeValueIn(file, of));
+                CHECK(firstPoint(again, of).distanceTo(first) < 1e-6);
+            };
+
+            const auto inDxf = save(bench, drawing, name, dxf);
+            checkWrittenDxf(inDxf);
+            CHECK(attributeValueIn(inDxf, dxf) == row.m_inDxf);
+            const RS_Vector first = firstPoint(inDxf, dxf);
+            CHECK(first.x < 1.0);
+            checkShown(inDxf, dxf, first);
+
+            const auto inDwg = save(bench, drawing, name, dwg);
+            CHECK(attributeValueIn(inDwg, dwg) == row.m_shown);
+            CHECK(firstPoint(inDwg, dwg).distanceTo(first) < 1e-6);
+            // A caret of a DWG is read as the start of a code.
+            if (std::string(row.m_shown).find('^') == std::string::npos) {
+                checkShown(inDwg, dwg, first);
+            }
+        }
+    }
+
+    // The value that a file came with stays next to the MTEXT while the text
+    // is as it was. It is a text of one line too: once the attribute ends at
+    // another point, its first point is where a text of one line with that
+    // value starts, the backslashes and the letters after them included.
+    SECTION("a stored value with a backslash is laid out as the characters it has") {
+        const std::string value = R"(C:\Plans\x)";
+        AttributeDxf fixture = offsetFirstPointDxf();
+        fixture.m_value = value;
+        EditableDrawing drawing;
+        load(bench, fixture, drawing, "stored_source");
+        drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [](RS_MText& text) {
+            text.setHAlign(RS_MTextData::HARight);
+            text.move(RS_Vector(6.0, 0.0));
+        });
+        const RS_Vector end(7.0, 4.0);
+        const RS_TextData data(end, end, 9.0, 1.0, RS_TextData::VATop, RS_TextData::HARight, RS_TextData::None,
+                               QString::fromStdString(value), QStringLiteral("iso3098"), 0.0, RS2::Update);
+        const RS_Text line(nullptr, data);
+        const RS_Vector start = line.getSecondPoint();
+        CAPTURE(start.x, start.y);
+        REQUIRE(start.x < 7.0 - 9.0);
+
+        const Target dxf = target("dxf2018");
+        const auto inDxf = save(bench, drawing, "stored", dxf);
+        checkWrittenDxf(inDxf);
+        CHECK(attributeValueIn(inDxf, dxf) == value);
+        const std::vector<double> place = ownPlace(onlyRecord(inDxf, "ATTRIB"));
+        CAPTURE(place);
+        CHECK(sameNumbers({7.0, 4.0}, {place[2], place[3]}));
+        CHECK(start.distanceTo(RS_Vector(place[0], place[1])) < 1e-6);
+
+        const Target dwg = target("dwg2018");
+        const auto inDwg = save(bench, drawing, "stored", dwg);
+        DwgContent content;
+        readDwg(inDwg, content);
+        const DRW_Attrib& attribute = onlyDwgAttribute(content);
+        CHECK(attribute.text == value);
+        CAPTURE(attribute.basePoint.x, attribute.basePoint.y);
+        CHECK(start.distanceTo(RS_Vector(attribute.basePoint.x, attribute.basePoint.y)) < 1e-6);
     }
 }
 

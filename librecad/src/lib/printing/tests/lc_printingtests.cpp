@@ -51,10 +51,14 @@ public:
 
     void draw(RS_Painter* painter) override {
         screenWidth = painter->pen().widthF();
+        color = painter->pen().color();
+        drawingMode = painter->getDrawingMode();
         RS_Line::draw(painter);
     }
 
     double screenWidth = -1.0;
+    QColor color;
+    RS2::DrawingMode drawingMode = RS2::ModeAuto;
 };
 
 // A new drawing holding one line.
@@ -98,6 +102,32 @@ TEST_CASE("Export to PDF writes a file it can write", "[printing][pdf]") {
     const QString fileName = dir.filePath("drawing.pdf");
     CHECK(printToPdf(drawing, fileName));
     CHECK(QFileInfo(fileName).size() > 0);
+}
+
+TEST_CASE("Printed colors follow the requested drawing mode", "[printing][pdf][issue3105]") {
+    REQUIRE(lc::test::application() != nullptr);
+    const auto mode = GENERATE(RS2::ModeAuto, RS2::ModeFull, RS2::ModeBW, RS2::ModeWB);
+    CAPTURE(mode);
+    const QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    graphic.setUnit(RS2::Millimeter);
+    graphic.setPaperInsertionBase(RS_Vector{0.0, 0.0});
+    auto* line = new RecordingLine{&graphic, RS_LineData{RS_Vector{20.0, 20.0}, RS_Vector{60.0, 20.0}}};
+    line->setPen(RS_Pen{RS_Color(Qt::red), RS2::Width11, RS2::SolidLine});
+    graphic.addEntity(line);
+
+    QPrinter printer{QPrinter::HighResolution};
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setOutputFileName(dir.filePath("colors.pdf"));
+    printer.setFullPage(true);
+    printer.setPageSize(QPageSize{QPageSize::A4});
+    REQUIRE(LC_Printing::printGraphic(printer, graphic, mode, false));
+    CHECK(line->drawingMode == mode);
+    const QColor expected(mode == RS2::ModeBW ? Qt::black : mode == RS2::ModeWB ? Qt::white : Qt::red);
+    CHECK(line->color == expected);
 }
 
 TEST_CASE("Printed lineweights follow plot scale, not dimension scale", "[printing][pdf][lineweight]") {

@@ -5586,9 +5586,13 @@ bool dxfRW::writeMesh(DRW_Mesh *ent) {
 bool dxfRW::writeShape(DRW_Shape *ent) {
     if (!preflightEntity(ent))
         return false;
-    // DXF SHAPE (AcDbShape). The DWG stores only a glyph index; the glyph name
-    // lives in the external .shx and is unrecoverable, so group 2 carries the
-    // SHAPEFILE/STYLE record name (resolved on read), matching libredwg/ACadSharp.
+    // DXF SHAPE (AcDbShape). A reader finds the shape by its name, group 2, in
+    // the shape files of the drawing. The DWG stores only a glyph index; the
+    // glyph name lives in the external .shx and is unrecoverable, so group 2
+    // carries the SHAPEFILE/STYLE record name (resolved on read), matching
+    // libredwg/ACadSharp. A shape file's record usually has no name, and a
+    // SHAPE without one names no shape (ODA drops it on reading): it is left
+    // out and counted in leftOut().
     // m_rotation/m_oblique are radians (DRW_Shape::parseDwg keeps them un-scaled,
     // unlike DRW_Text) -> convert to DXF degrees.
     const auto finite = [](const DRW_Coord& point) {
@@ -5602,6 +5606,10 @@ bool dxfRW::writeShape(DRW_Shape *ent) {
         m_writeError = true;
         return false;
     }
+    if (ent->m_styleName.empty()) {
+        noteLeftOut("SHAPE without a name");
+        return true;
+    }
     EntityRecordScope scope(*this, ent);
     writer->writeString(0, "SHAPE");
     if (!writeEntity(ent))
@@ -5614,8 +5622,7 @@ bool dxfRW::writeShape(DRW_Shape *ent) {
     writer->writeDouble(20, ent->m_insertionPoint.y);
     writer->writeDouble(30, ent->m_insertionPoint.z);
     writer->writeDouble(40, ent->m_scale);            // size
-    if (!ent->m_styleName.empty())
-        writer->writeUtf8String(2, ent->m_styleName); // shape (style) name
+    writer->writeUtf8String(2, ent->m_styleName);     // shape (style) name
     writer->writeDouble(50, ent->m_rotation * ARAD);  // radians -> degrees
     if (ent->m_widthFactor != 1.0)
         writer->writeDouble(41, ent->m_widthFactor);

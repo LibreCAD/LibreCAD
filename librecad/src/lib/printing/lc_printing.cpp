@@ -123,7 +123,6 @@ bool LC_Printing::printGraphic(QPrinter& printer, RS_Graphic& graphic, const RS2
     if (!painter.isActive()) {
         return false;
     }
-    painter.setDrawingMode(drawingMode);
 
     QMarginsF margins = printer.pageLayout().margins(QPageLayout::Millimeter);
     //        LC_ERR << "Printer margins (mm): " << margins.left()<<": "<<margins.top()<<" : "<<margins.right()<<" : "<<margins.bottom();
@@ -147,6 +146,7 @@ bool LC_Printing::printGraphic(QPrinter& printer, RS_Graphic& graphic, const RS2
     viewport.loadSettings();
     renderer.loadSettings();
 
+    renderer.setDrawingMode(drawingMode);
     renderer.setLineWidthScaling(scaleLineWidth);
 
     RS2::Unit unit = graphic.getUnit();
@@ -235,7 +235,6 @@ void LC_Printing::print(QC_MDIWindow &mdiWindow, PrinterType printerType) {
     bool bStartPrinting = false;
     if (printerType == PrinterType::PDF) {
         printer.setOutputFormat(QPrinter::PdfFormat);
-        printer.setColorMode(QPrinter::Color);
         printer.setResolution(1200);
         // Issue #1897, exporting PDF margins to to follow the drawing settings
         QPageLayout pdfLayout = printer.pageLayout();

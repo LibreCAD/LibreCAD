@@ -5544,6 +5544,85 @@ TEST_CASE("DXF SHAPE preserves typed fields", "[dxf][shape]") {
   CHECK(cap.m_line.secPoint.y == 7.0);
 }
 
+// A DXF SHAPE is found by its name (group 2) in the shape files of the
+// drawing. A DWG holds the number of the shape instead, and the name is in the
+// .shx file, so a SHAPE converted from a DWG may have no name. Such a record
+// names no shape: ODA drops it, and LibreCAD reads it only to keep the file.
+TEST_CASE("DXF writer leaves out a SHAPE that has no name",
+          "[dxf][writer][shape]") {
+  class ShapeEmitter : public StubInterface {
+  public:
+    dxfRW *m_rw = nullptr;
+    std::vector<bool> m_results;
+
+    void writeEntities() override {
+      DRW_Line before;
+      before.secPoint = DRW_Coord(10.0, 5.0, 0.0);
+      m_results.push_back(m_rw->writeLine(&before));
+      DRW_Shape nameless;
+      nameless.m_insertionPoint = DRW_Coord(15.25, -20.5, 0.0);
+      nameless.m_scale = 2.5;
+      m_results.push_back(m_rw->writeShape(&nameless));
+      DRW_Shape named;
+      named.m_styleName = "MY-SHAPE";
+      named.m_insertionPoint = DRW_Coord(1.0, 2.0, 0.0);
+      named.m_scale = 3.0;
+      m_results.push_back(m_rw->writeShape(&named));
+      DRW_Line after;
+      after.basePoint = DRW_Coord(4.0, 5.0, 0.0);
+      after.secPoint = DRW_Coord(6.0, 7.0, 0.0);
+      m_results.push_back(m_rw->writeLine(&after));
+    }
+  };
+
+  for (const DRW::Version version :
+       {DRW::AC1009, DRW::AC1015, DRW::AC1021, DRW::AC1032}) {
+    CAPTURE(static_cast<int>(version));
+    const auto path = std::filesystem::temp_directory_path() /
+                      ("lc_dxf_shape_without_name_" +
+                       std::to_string(static_cast<int>(version)) + ".dxf");
+    std::filesystem::remove(path);
+
+    ShapeEmitter emitter;
+    {
+      dxfRW writer(path.string().c_str());
+      emitter.m_rw = &writer;
+      REQUIRE(writer.write(&emitter, version, false));
+      CHECK(emitter.m_results == std::vector<bool>{true, true, true, true});
+      REQUIRE(writer.leftOut().size() == 1);
+      CHECK(writer.leftOut().count("SHAPE without a name") == 1);
+      CHECK(writer.leftOut().cbegin()->second == 1);
+    }
+
+    const auto groups = readGroups(path);
+    std::vector<std::string> shapeNames;
+    for (std::size_t i = 0; i < groups.size(); ++i) {
+      if (groups[i] != std::make_pair(std::string("0"), std::string("SHAPE")))
+        continue;
+      std::string name = "(none)";
+      for (std::size_t j = i + 1; j < groups.size() && groups[j].first != "0";
+           ++j) {
+        if (groups[j].first == "2")
+          name = groups[j].second;
+      }
+      shapeNames.push_back(name);
+    }
+    CHECK(shapeNames == std::vector<std::string>{"MY-SHAPE"});
+
+    // And the file opens, with everything that was written.
+    ShapeCapture cap;
+    {
+      dxfRW reader(path.string().c_str());
+      CHECK(reader.read(&cap, false));
+    }
+    CHECK(cap.m_callCount == 1);
+    CHECK(cap.m_captured.m_styleName == "MY-SHAPE");
+    CHECK(cap.m_captured.m_insertionPoint.x == 1.0);
+    CHECK(cap.m_lineCallCount == 2);
+    std::filesystem::remove(path);
+  }
+}
+
 TEST_CASE("DXF CAMERA preserves its view reference and writes back",
           "[dxf][camera]") {
   CameraCapture readCapture;

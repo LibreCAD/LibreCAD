@@ -77,6 +77,15 @@ namespace {
                || static_cast<const RS_Insert&>(entity).lastSourceEditSucceeded();
     }
 
+    // RS_Modification::trim() replaces what it trims by a copy it adds to the document, which is right only for
+    // an entity the document holds itself. A segment of a polyline would leave a gap in it, and a line of a block
+    // reference, dimension or spline would be freed by its owner when that rebuilds its lines, while the undo
+    // history still holds it.
+    bool isReplaceableByTrim(const RS_Entity& entity) {
+        const RS_EntityContainer* parent = entity.getParent();
+        return parent == nullptr || parent->isDocument();
+    }
+
     RS_VectorSolutions findIntersection(const RS_Entity& trimEntity, const RS_Entity& limitEntity, double tolerance = 1e-4) {
         RS_VectorSolutions sol;
         if (limitEntity.isAtomic()) {
@@ -2003,16 +2012,17 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord, RS_AtomicEntity*
     // A container limit entity can still bound a one-sided trim, but it must never
     // be cast to RS_AtomicEntity: trimStartpoint(), trimEndpoint() and getTrimPoint()
     // are declared only there, so dispatching them through a container pointer calls
-    // whatever occupies the same vtable slot.
-    const bool limitIsAtomic = limitEntity->isAtomic();
-    if (both && !limitIsAtomic) {
+    // whatever occupies the same vtable slot. Nor is a limit the document does not
+    // hold itself trimmed, see isReplaceableByTrim().
+    const bool limitTrimmable = limitEntity->isAtomic() && isReplaceableByTrim(*limitEntity);
+    if (both && !limitTrimmable) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_Modification::trim: limitEntity is not atomic, trimming one entity only");
+                        "RS_Modification::trim: limitEntity cannot be trimmed, trimming one entity only");
     }
 
     LC_TrimResult result;
 
-    if (trimEntity->isLocked() || !trimEntity->isVisible()) {
+    if (trimEntity->isLocked() || !trimEntity->isVisible() || !isReplaceableByTrim(*trimEntity)) {
         return result;
     }
 
@@ -2033,7 +2043,7 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord, RS_AtomicEntity*
     }
 
     if (!sol.hasValid()) {
-        if (both && limitIsAtomic) {
+        if (both && limitTrimmable) {
             return trim(limitCoord, static_cast<RS_AtomicEntity*>(limitEntity), trimCoord, trimEntity, false, ctx);
         }
         return result;
@@ -2067,7 +2077,7 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord, RS_AtomicEntity*
     }
 
     // remove limit entity from view:
-    const bool trimBoth = both && limitIsAtomic && !limitEntity->isLocked() && limitEntity->isVisible();
+    const bool trimBoth = both && limitTrimmable && !limitEntity->isLocked() && limitEntity->isVisible();
     if (trimBoth) {
         trimmed2 = static_cast<RS_AtomicEntity*>(limitEntity->clone());
     }
