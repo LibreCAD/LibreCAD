@@ -4287,7 +4287,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
       m_errorCode = dwgr.getError();
       return false;
     }
-    m_graphic->dwgAdvancedMetadata().markVportsImportedFromDwg();
+    m_graphic->dwgAdvancedMetadata().markVportsImported();
   } else {
 #endif
 
@@ -4319,6 +4319,9 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
       // The whole file, so every TABLES entry including BLOCK_RECORD, has now
       // been read while m_dxfR (and its reading context) is still alive.
       resolvePendingDimStyleArrowBlocks();
+      // The VPORT records are the file's own, as those of a DWG are. The DWG
+      // writer refuses an "*Active" record that no reader delivered.
+      m_graphic->dwgAdvancedMetadata().markVportsImported();
     }
     // graphic->setAutoUpdateBorders(true);
 
@@ -19876,12 +19879,7 @@ void RS_FilterDXFRW::writeVports() {
     if (m_dwgW->getVersion() >= DRW::AC1015 && hasViewportEntityReferences) {
       prepareDwgEntityHandleMap();
     }
-    const std::uint32_t activeSourceHandle = vp.handle;
-    const bool importedActiveSource =
-        activeSourceHandle != 0 &&
-        activeSourceHandle != DRW_Vport::kDwgActiveHandle &&
-        metadata.isImportedVportSource(activeSourceHandle, vp.name);
-    const std::uint32_t sourceHandle = activeSourceHandle;
+    const std::uint32_t sourceHandle = vp.handle;
     if (!m_dwgW->addVport(&vp)) {
       m_writeFailed = true;
       return;
@@ -19969,12 +19967,11 @@ void RS_FilterDXFRW::writeVports() {
           normalizedName.begin(), normalizedName.end(), normalizedName.begin(),
           [](unsigned char c) { return static_cast<char>(std::toupper(c)); });
       if (normalizedName == "*ACTIVE") {
-        // The writer always emits the canonical active record. An
-        // imported copy with its fixed source identity is therefore
-        // already represented; any other active-name record is an
-        // ambiguous second table identity.
-        if (record.handle == DRW_Vport::kDwgActiveHandle ||
-            (importedActiveSource && record.handle == activeSourceHandle))
+        // The writer always emits the canonical active record. It stands
+        // for every active record a reader delivered: a drawing with tiled
+        // viewports has one for each of them. An active-name record from
+        // anywhere else is an ambiguous second table identity.
+        if (record.handle == DRW_Vport::kDwgActiveHandle || record.imported)
           continue;
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_FilterDXFRW: duplicate generated DWG VPORT "
