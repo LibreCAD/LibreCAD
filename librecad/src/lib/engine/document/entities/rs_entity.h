@@ -539,6 +539,23 @@ public:
     quint32 sourceHandle() const;
     void setSourceHandle(quint32 h);
 
+    /**
+     * What this entity is across the clones that replace it when it is edited. A clone has the lineage of
+     * the entity it was made from. An undo section gives a new one to a block reference, or to an entity
+     * that belongs to one, that it adds without it taking the place of one it deleted
+     * (LC_UndoSection::undoableAdd()); other entities keep theirs. Lives in memory only.
+     */
+    unsigned long long lineage() const;
+    void setLineage(unsigned long long lineage);
+    /** A lineage no entity has. */
+    static unsigned long long newLineage();
+    /**
+     * The lineage of the entity this one belongs to, 0 for none: the block reference of a block
+     * attribute's text. Entities copied together keep belonging together (LC_UndoSection::undoableAdd()).
+     */
+    unsigned long long ownerLineage() const;
+    void setOwnerLineage(unsigned long long lineage);
+
     /** What clearDwgProvenance() clears, as bits. */
     enum DwgProvenance : unsigned {
         /** The source handle, extension dictionary and reactors: one live entity at most holds them. */

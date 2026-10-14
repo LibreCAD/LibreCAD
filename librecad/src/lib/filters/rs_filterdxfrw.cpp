@@ -138,6 +138,20 @@ bool isLibreCadApp(const std::shared_ptr<DRW_Variant> &tag) {
          tag->content.s && *tag->content.s == "LibreCad";
 }
 
+std::int32_t mtextRtlLayout(const DRW_Entity &entity) {
+  std::int32_t layout = 0;
+  bool inLibreCad = false;
+  for (const auto &tag : entity.extData) {
+    if (tag && tag->code() == 1001)
+      inLibreCad = isLibreCadApp(tag);
+    if (inLibreCad && tag && tag->code() == 1071 &&
+        tag->type() == DRW_Variant::INTEGER &&
+        (tag->content.i == kLegacyRtlLayout || tag->content.i == kLogicalRtlLayout))
+      layout = std::max(layout, tag->content.i);
+  }
+  return layout;
+}
+
 void setMTextRtlMarker(DRW_Text &text, std::int32_t layout) {
   decltype(text.extData) filtered;
   bool inLibreCad = false;
@@ -173,6 +187,80 @@ void setMTextRtlMarker(DRW_Text &text, std::int32_t layout) {
   text.extData = std::move(filtered);
 }
 
+// MTEXT group 73, in DWG the BS after the text: 1 = at least, 2 = exact.
+// A file may hold another value (0 in the embedded MTEXT of older LibreCAD
+// DWG output); it reads as the default and is not written back.
+RS_MTextData::MTextLineSpacingStyle mtextLineSpacingStyle(const DRW_MText &mtext) {
+  return mtext.linespacingStyle == 2 ? RS_MTextData::Exact : RS_MTextData::AtLeast;
+}
+
+std::uint16_t mtextLineSpacingCode(RS_MTextData::MTextLineSpacingStyle style) {
+  return style == RS_MTextData::Exact ? 2 : 1;
+}
+
+// The private right-to-left marker a model text needs, 0 for none. Marker 1
+// preserves old drawings; marker 2 stores logical Unicode RTL.
+std::int32_t rtlLayoutOf(const RS_MTextData &data) {
+  if (data.drawingDirection != RS_MTextData::RightToLeft)
+    return 0;
+  return data.legacyRtlLayout ? kLegacyRtlLayout : kLogicalRtlLayout;
+}
+
+// Attachment, drawing direction and line spacing of a model text as MTEXT
+// stores them (groups 71, 72, 73, 44).
+// DXF MTEXT group 72: 1=LeftToRight, 3=TopToBottom, 5=ByStyle. RightToLeft
+// has no DXF encoding: it is written as LeftToRight so that other readers see
+// a well-defined direction, and setMTextRtlMarker() carries the preference.
+void setMTextLayout(DRW_MText &mtext, const RS_MTextData &data) {
+  mtext.textgen =
+      static_cast<int>(data.valign) * 3 + static_cast<int>(data.halign) + 1;
+  switch (data.drawingDirection) {
+  case RS_MTextData::TopToBottom:
+    mtext.alignH = static_cast<DRW_Text::HAlign>(3);
+    break;
+  case RS_MTextData::ByStyle:
+    mtext.alignH = static_cast<DRW_Text::HAlign>(5);
+    break;
+  case RS_MTextData::LeftToRight:
+  case RS_MTextData::RightToLeft:
+  default:
+    mtext.alignH = static_cast<DRW_Text::HAlign>(1);
+    break;
+  }
+  // Always the model's style: 1 and 2 read back as themselves, and no other
+  // source value may reach the file.
+  mtext.linespacingStyle = mtextLineSpacingCode(data.lineSpacingStyle);
+  mtext.interlin = data.lineSpacingFactor;
+}
+
+// RS_MText::setText() takes a leading \A0; \A1; \A2; out of the text and
+// makes it the vertical alignment.
+bool hasMTextAlignmentPrefix(const QString &text) {
+  return text.startsWith(QLatin1StringView("\\A0;")) ||
+         text.startsWith(QLatin1StringView("\\A1;")) ||
+         text.startsWith(QLatin1StringView("\\A2;"));
+}
+
+// The x axis direction of an MTEXT (group 11, WCS) for a text drawn at
+// `angle`. The stored direction is kept while it says that angle: it is what
+// the file had and may point out of the drawing plane. A record read with a
+// rotation angle alone has none, all three zero; DXF keeps the angle in
+// group 50 and such a record stays as it was, DWG has no other place for it.
+DRW_Coord mtextXAxis(double angle, const DRW_Coord &stored, bool angleEdited,
+                     bool required) {
+  const DRW_Coord fromAngle(std::cos(angle), std::sin(angle), 0.0);
+  if (stored.x == 0.0 && stored.y == 0.0 && stored.z == 0.0)
+    return required || angleEdited ? fromAngle : stored;
+  // The angle a reader takes from the axis, as DRW_MText::updateAngle()
+  // does. An axis along Z alone, of a text that runs up a vertical face, is
+  // an axis like any other: it reads as the angle of its two zeros, and the
+  // direction of that angle is no replacement for it.
+  const double read = std::atan2(stored.y, stored.x);
+  const bool sameAngle = std::fabs(std::cos(read) - fromAngle.x) < 1.0e-9 &&
+                         std::fabs(std::sin(read) - fromAngle.y) < 1.0e-9;
+  return sameAngle ? stored : fromAngle;
+}
+
 
 constexpr int kImportedSplineFallbackSamples = 96;
 
@@ -190,6 +278,16 @@ std::string normalizeDwgTableName(const std::string &name) {
       normalized.begin(), normalized.end(), normalized.begin(),
       [](unsigned char c) { return static_cast<char>(std::toupper(c)); });
   return normalized;
+}
+
+// The handle the DWG being written has for the table record of a name, 0 if
+// it has none: a DWG names a layer or a text style by the handle of its
+// record, and the codec writes the handle of "0" or STANDARD for none.
+std::uint32_t dwgWriteHandleByName(
+    const std::map<std::string, std::uint32_t> &handles,
+    const std::string &name) {
+  const auto found = handles.find(normalizeDwgTableName(name));
+  return found == handles.end() ? 0 : found->second;
 }
 
 std::string normalizeDwgDataStorageHandleKey(std::string value) {
@@ -5069,14 +5167,16 @@ constexpr const char *kTraceMarker = "LibreCAD_TRACE";
 constexpr const char *kSolidMarker = "LibreCAD_SOLID";
 constexpr const char *k3dFaceMarker = "LibreCAD_3DFACE";
 // RS_Insert expands its block into derived children and therefore cannot own
-// imported ATTRIB entities directly. Keep the rendered child tagged with its
-// INSERT identity so the writer can rebuild the native child sequence.
+// imported ATTRIB entities directly. The rendered sibling text names its
+// INSERT by lineage (RS_Entity::ownerLineage()) and is tagged with what a
+// text does not model, so the writer can rebuild the native child sequence.
 constexpr const char *kInsertAttribMarker = "LibreCAD_INSERT_ATTRIB";
 constexpr const char *kInsertAttribMTextMarker = "LibreCAD_INSERT_ATTRIB_MTEXT";
 constexpr const char *kInsertAttribMTextXDataMarker =
     "LibreCAD_INSERT_ATTRIB_MTEXT_XDATA";
 constexpr const char *kInsertAttribMTextCommonMarker =
     "LibreCAD_INSERT_ATTRIB_MTEXT_COMMON";
+constexpr int kInsertAttribMTextSchema = 3;
 constexpr int kInsertAttribMTextXDataSchema = 1;
 constexpr int kInsertAttribMTextCommonSchema = 2;
 constexpr int kMaxInsertAttribMTextXDataValues = 4096;
@@ -5416,28 +5516,34 @@ void appendTypeSidecar(RS_Entity *entity, const char *marker,
                        std::vector<std::shared_ptr<DRW_Variant>> payload);
 
 struct InsertAttribSidecar {
-  unsigned long long ownerId = 0;
   int ordinal = -1;
   int flags = 0;
   int fieldLength = 0;
   int attVersion = 0;
   int attributeType = 1;
   bool lockPosition = false;
+  int textgen = 0; // ATTRIB group 71, generation flags
+  int alignH = 0;  // ATTRIB group 72 as read
+  int alignV = 0;  // ATTRIB group 74 as read
+  bool recordVisible = true; // common group 60 of the ATTRIB as read
   std::string tag;
-  std::string value;
-  bool hasValue = false;
+  std::string value; // ATTRIB group 1 as read, in the file's own spelling
   struct MText {
-    int schemaVersion = 0;
     std::string text;
-    bool hasText = false;
     int textgen = 1;
     int alignH = 1;
-    int alignV = 1;
     int linespacingStyle = 1;
     double interlin = 1.0;
+    double originalHeight = 0.0;
+    double originalWidth = 0.0;
+    double originalAngle = 0.0;
+    double originalSpacing = 1.0;
+    DRW_Coord originalPosition;
+    std::string originalStyle;
     int backgroundFlags = 0;
     double backgroundScale = 0.0;
     int backgroundColor = 0;
+    int backgroundTrueColor = -1; // group 421; -1: none
     int backgroundTransparency = 0;
     bool r2018IsNotAnnotative = false;
     int r2018Version = 0;
@@ -5488,19 +5594,13 @@ struct InsertAttribSidecar {
     DRW_Coord basePoint;
     DRW_Coord secPoint;
     DRW_Coord extPoint{0.0, 0.0, 1.0};
-    bool hasBasePoint = false;
-    bool hasSecPoint = false;
-    bool hasExtPoint = false;
   } mtext;
   bool hasMText = false;
-  DRW_Coord basePoint;
-  DRW_Coord secPoint;
+  DRW_Coord basePoint; // ATTRIB group 10, OCS
+  DRW_Coord secPoint;  // ATTRIB group 11, OCS
   DRW_Coord extPoint{0.0, 0.0, 1.0};
   double thickness = 0.0;
-  bool hasBasePoint = false;
-  bool hasSecPoint = false;
-  bool hasExtPoint = false;
-  bool hasThickness = false;
+  double widthFactor = 1.0; // ATTRIB group 41
 };
 } // namespace
 
@@ -5601,13 +5701,8 @@ void appendTypeSidecar(RS_Entity *entity, const char *marker,
 }
 
 void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
-                               unsigned long long ownerId, int ordinal) {
-  const std::uint64_t id = static_cast<std::uint64_t>(ownerId);
+                               int ordinal) {
   std::vector<std::shared_ptr<DRW_Variant>> payload;
-  payload.push_back(std::make_shared<DRW_Variant>(
-      1071, static_cast<std::int32_t>(id & 0xFFFFFFFFu)));
-  payload.push_back(
-      std::make_shared<DRW_Variant>(1071, static_cast<std::int32_t>(id >> 32)));
   payload.push_back(std::make_shared<DRW_Variant>(1070, std::int32_t{ordinal}));
   payload.push_back(
       std::make_shared<DRW_Variant>(1070, std::int32_t{attrib.attribFlags}));
@@ -5619,6 +5714,17 @@ void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
       1070, std::int32_t{attrib.m_attributeType}));
   payload.push_back(std::make_shared<DRW_Variant>(
       1070, std::int32_t{attrib.lockPosition ? 1 : 0}));
+  // The TEXT part of the record that the text entity does not model.
+  payload.push_back(std::make_shared<DRW_Variant>(
+      1070, static_cast<std::int32_t>(attrib.textgen)));
+  payload.push_back(std::make_shared<DRW_Variant>(
+      1070, static_cast<std::int32_t>(attrib.alignH)));
+  payload.push_back(std::make_shared<DRW_Variant>(
+      1070, static_cast<std::int32_t>(attrib.alignV)));
+  // The record's own visibility: the text is hidden for the attribute's
+  // invisible flag as well, and the two are not one in a file.
+  payload.push_back(std::make_shared<DRW_Variant>(
+      1070, std::int32_t{attrib.visible ? 1 : 0}));
   payload.push_back(
       std::make_shared<DRW_Variant>(1000, std::string{attrib.tag}));
   payload.push_back(
@@ -5627,6 +5733,11 @@ void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
   payload.push_back(std::make_shared<DRW_Variant>(1011, attrib.secPoint));
   payload.push_back(std::make_shared<DRW_Variant>(1012, attrib.extPoint));
   payload.push_back(std::make_shared<DRW_Variant>(1040, attrib.thickness));
+  // A value that is no number would make the reader drop the attribute.
+  payload.push_back(std::make_shared<DRW_Variant>(
+      1040, std::isfinite(attrib.widthscale) && attrib.widthscale > 0.0
+                ? attrib.widthscale
+                : 1.0));
   appendTypeSidecar(entity, kInsertAttribMarker, std::move(payload));
 
   if (!attrib.mtext)
@@ -5640,8 +5751,9 @@ void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
     return;
   }
   std::vector<std::shared_ptr<DRW_Variant>> mtextPayload;
-  // Schema 2 adds the embedded-MTEXT annotative payload and lock bit.
-  mtextPayload.push_back(std::make_shared<DRW_Variant>(1070, 2));
+  // The group also retains modeled geometry for detecting edits at export.
+  mtextPayload.push_back(
+      std::make_shared<DRW_Variant>(1070, kInsertAttribMTextSchema));
   const std::size_t maxChunkBytes = 240;
   const std::size_t chunkCount =
       mtext.text.empty()
@@ -5653,8 +5765,6 @@ void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
       1070, static_cast<std::int32_t>(mtext.textgen)));
   mtextPayload.push_back(std::make_shared<DRW_Variant>(
       1070, static_cast<std::int32_t>(mtext.alignH)));
-  mtextPayload.push_back(std::make_shared<DRW_Variant>(
-      1070, static_cast<std::int32_t>(mtext.alignV)));
   mtextPayload.push_back(std::make_shared<DRW_Variant>(
       1070, static_cast<std::int32_t>(mtext.linespacingStyle)));
   mtextPayload.push_back(std::make_shared<DRW_Variant>(
@@ -5694,6 +5804,12 @@ void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
       1071, static_cast<std::int32_t>(mtext.styleH.ref)));
   mtextPayload.push_back(std::make_shared<DRW_Variant>(
       1071, static_cast<std::int32_t>(mtext.m_r2018AnnotativeAppHandle)));
+  // The true colour of the background, only where there is one: the reader
+  // of this group takes no negative number.
+  if (mtext.m_backgroundTrueColor >= 0) {
+    mtextPayload.push_back(std::make_shared<DRW_Variant>(
+        1071, static_cast<std::int32_t>(mtext.m_backgroundTrueColor)));
+  }
   mtextPayload.push_back(std::make_shared<DRW_Variant>(1040, mtext.interlin));
   mtextPayload.push_back(
       std::make_shared<DRW_Variant>(1040, mtext.m_backgroundScale));
@@ -5709,6 +5825,12 @@ void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
       std::make_shared<DRW_Variant>(1040, mtext.m_r2018ColumnWidth));
   mtextPayload.push_back(
       std::make_shared<DRW_Variant>(1040, mtext.m_r2018ColumnGutter));
+  const auto modeled = static_cast<const RS_MText *>(entity)->getData();
+  mtextPayload.push_back(std::make_shared<DRW_Variant>(1040, modeled.height));
+  mtextPayload.push_back(std::make_shared<DRW_Variant>(1040, modeled.width));
+  mtextPayload.push_back(std::make_shared<DRW_Variant>(1040, modeled.angle));
+  mtextPayload.push_back(
+      std::make_shared<DRW_Variant>(1040, modeled.lineSpacingFactor));
   for (double height : mtext.m_r2018ColumnHeights)
     mtextPayload.push_back(std::make_shared<DRW_Variant>(1040, height));
   for (std::uint8_t byte : mtext.m_r2018AnnotativeData)
@@ -5721,6 +5843,10 @@ void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
       std::make_shared<DRW_Variant>(1010, mtext.m_r2018XAxisDir));
   mtextPayload.push_back(
       std::make_shared<DRW_Variant>(1011, mtext.m_r2018InsertionPoint));
+  mtextPayload.push_back(std::make_shared<DRW_Variant>(
+      1010, DRW_Coord(modeled.insertionPoint.x, modeled.insertionPoint.y, 0.0)));
+  mtextPayload.push_back(std::make_shared<DRW_Variant>(
+      1000, modeled.style.toUtf8().toStdString()));
   for (std::size_t offset = 0; offset < mtext.text.size();) {
     std::size_t length = std::min(maxChunkBytes, mtext.text.size() - offset);
     while (length > 0 && offset + length < mtext.text.size() &&
@@ -6050,7 +6176,7 @@ bool decodeInsertAttribMTextCommon(
   int hasDataStorage = 0;
   int reactorCount = 0;
   if (!nextInteger(index, 1070, schema) ||
-      (schema != 1 && schema != kInsertAttribMTextCommonSchema) ||
+      schema != kInsertAttribMTextCommonSchema ||
       !nextInteger(index, 1070, hasDataStorage) ||
       (hasDataStorage != 0 && hasDataStorage != 1) ||
       !nextInteger(index, 1070, reactorCount) || reactorCount < 0 ||
@@ -6069,8 +6195,6 @@ bool decodeInsertAttribMTextCommon(
   }
   if (!nextHandle(index, decoded.xDictHandle))
     return false;
-  if (schema == 1)
-    return index == encoded.size();
 
   int hasAcDbColor = 0;
   int visible = 0;
@@ -6122,19 +6246,20 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
   bool inGroup = false;
   bool inMTextGroup = false;
   bool inMTextCommonGroup = false;
-  int seenOwnerParts = 0;
   int seenValues = 0;
   int seenStrings = 0;
+  int seenPoints = 0;
+  int seenDoubles = 0;
+  int mtextSchema = 0;
   int seenMText1070 = 0;
   int seenMText1071 = 0;
   int seenMText1040 = 0;
   int seenMText1010 = 0;
+  int seenMTextStrings = 0;
   std::vector<std::shared_ptr<DRW_Variant>> encodedMTextXData;
   int expectedColumnHeights = -1;
   int expectedAnnotativeBytes = -1;
   int seenAnnotativeBytes = 0;
-  std::uint32_t ownerLow = 0;
-  std::uint32_t ownerHigh = 0;
   bool foundMarker = false;
   bool foundMTextMarker = false;
   bool foundMTextXDataMarker = false;
@@ -6183,10 +6308,11 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
         const int number = static_cast<int>(integerValue);
         switch (seenMText1070++) {
         case 0:
-          sidecar.mtext.schemaVersion = number;
+          mtextSchema = number;
           break;
         case 1:
-          sidecar.mtext.hasText = number > 0;
+          // The number of text chunks: the chunks are the strings after the
+          // first one.
           break;
         case 2:
           sidecar.mtext.textgen = number;
@@ -6195,49 +6321,46 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
           sidecar.mtext.alignH = number;
           break;
         case 4:
-          sidecar.mtext.alignV = number;
-          break;
-        case 5:
           sidecar.mtext.linespacingStyle = number;
           break;
-        case 6:
+        case 5:
           sidecar.mtext.backgroundFlags = number;
           break;
-        case 7:
+        case 6:
           sidecar.mtext.r2018IsNotAnnotative = number != 0;
           break;
-        case 8:
+        case 7:
           sidecar.mtext.r2018Version = number;
           break;
-        case 9:
+        case 8:
           sidecar.mtext.r2018DefaultFlag = number != 0;
           break;
-        case 10:
+        case 9:
           sidecar.mtext.r2018Attachment = number;
           break;
-        case 11:
+        case 10:
           sidecar.mtext.r2018ColumnType = number;
           break;
-        case 12:
+        case 11:
           sidecar.mtext.r2018ColumnAutoHeight = number != 0;
           break;
-        case 13:
+        case 12:
           sidecar.mtext.r2018ColumnFlowReversed = number != 0;
           break;
-        case 14:
+        case 13:
           expectedColumnHeights = number;
           if (number >= 0 && number <= 10000) {
             sidecar.mtext.r2018ColumnHeights.reserve(
                 static_cast<std::size_t>(number));
           }
           break;
-        case 15:
+        case 14:
           expectedAnnotativeBytes = number;
           break;
-        case 16:
+        case 15:
           sidecar.mtext.annotativeUnknown = number;
           break;
-        case 17:
+        case 16:
           sidecar.mtext.reallyLocked = number != 0;
           break;
         default:
@@ -6279,6 +6402,9 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
         case 5:
           sidecar.mtext.annotativeAppHandle = number;
           break;
+        case 6:
+          sidecar.mtext.backgroundTrueColor = static_cast<int>(number);
+          break;
         default:
           break;
         }
@@ -6313,6 +6439,18 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
         case 7:
           sidecar.mtext.r2018ColumnGutter = number;
           break;
+        case 8:
+          sidecar.mtext.originalHeight = number;
+          break;
+        case 9:
+          sidecar.mtext.originalWidth = number;
+          break;
+        case 10:
+          sidecar.mtext.originalAngle = number;
+          break;
+        case 11:
+          sidecar.mtext.originalSpacing = number;
+          break;
         default:
           sidecar.mtext.r2018ColumnHeights.push_back(number);
           break;
@@ -6327,21 +6465,21 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
         switch (seenMText1010++) {
         case 0:
           sidecar.mtext.basePoint = point;
-          sidecar.mtext.hasBasePoint = true;
           break;
         case 1:
           sidecar.mtext.secPoint = point;
-          sidecar.mtext.hasSecPoint = true;
           break;
         case 2:
           sidecar.mtext.extPoint = point;
-          sidecar.mtext.hasExtPoint = true;
           break;
         case 3:
           sidecar.mtext.r2018XAxisDir = point;
           break;
         case 4:
           sidecar.mtext.r2018InsertionPoint = point;
+          break;
+        case 5:
+          sidecar.mtext.originalPosition = point;
           break;
         default:
           break;
@@ -6352,29 +6490,16 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
             XDataReadResult::Valid) {
           return std::nullopt;
         }
-        sidecar.mtext.text += text;
+        if (seenMTextStrings++ == 0)
+          sidecar.mtext.originalStyle = text;
+        else
+          sidecar.mtext.text += text;
       }
-      sidecar.hasMText =
-          sidecar.mtext.schemaVersion == 1 || sidecar.mtext.schemaVersion == 2;
       continue;
     }
     if (!inGroup)
       continue;
-    if (value->code() == 1071) {
-      std::int64_t integerValue = 0;
-      if (readXDataInteger(value.get(), 1071, integerValue) !=
-              XDataReadResult::Valid ||
-          integerValue < 0 ||
-          static_cast<std::uint64_t>(integerValue) >
-              std::numeric_limits<std::uint32_t>::max()) {
-        return std::nullopt;
-      }
-      const auto part = static_cast<std::uint32_t>(integerValue);
-      if (seenOwnerParts++ == 0)
-        ownerLow = part;
-      else if (seenOwnerParts == 2)
-        ownerHigh = part;
-    } else if (value->code() == 1070) {
+    if (value->code() == 1070) {
       std::int64_t integerValue = 0;
       if (readXDataInteger(value.get(), 1070, integerValue, false) !=
               XDataReadResult::Valid ||
@@ -6401,6 +6526,18 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
       case 5:
         sidecar.lockPosition = number != 0;
         break;
+      case 6:
+        sidecar.textgen = number;
+        break;
+      case 7:
+        sidecar.alignH = number;
+        break;
+      case 8:
+        sidecar.alignV = number;
+        break;
+      case 9:
+        sidecar.recordVisible = number != 0;
+        break;
       default:
         break;
       }
@@ -6411,10 +6548,8 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
       }
       if (seenStrings++ == 0)
         sidecar.tag = text;
-      else if (seenStrings == 2) {
+      else if (seenStrings == 2)
         sidecar.value = text;
-        sidecar.hasValue = true;
-      }
     } else if (value->code() >= 1010 && value->code() <= 1012) {
       DRW_Coord point;
       if (readXDataCoord(value.get(), value->code(), point) !=
@@ -6423,39 +6558,36 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
       }
       if (value->code() == 1010) {
         sidecar.basePoint = point;
-        sidecar.hasBasePoint = true;
+        seenPoints |= 1;
       } else if (value->code() == 1011) {
         sidecar.secPoint = point;
-        sidecar.hasSecPoint = true;
+        seenPoints |= 2;
       } else {
         sidecar.extPoint = point;
-        sidecar.hasExtPoint = true;
+        seenPoints |= 4;
       }
     } else if (value->code() == 1040) {
-      double thickness = 0.0;
-      if (readXDataDouble(value.get(), 1040, thickness) !=
+      double number = 0.0;
+      if (readXDataDouble(value.get(), 1040, number) !=
           XDataReadResult::Valid) {
         return std::nullopt;
       }
-      sidecar.thickness = thickness;
-      sidecar.hasThickness = true;
+      if (seenDoubles++ == 0)
+        sidecar.thickness = number;
+      else if (seenDoubles == 2)
+        sidecar.widthFactor = number;
     }
   }
 
-  sidecar.ownerId =
-      (static_cast<unsigned long long>(ownerHigh) << 32) | ownerLow;
-  if (sidecar.hasMText) {
-    sidecar.hasMText =
-        expectedColumnHeights >= 0 &&
-        static_cast<int>(sidecar.mtext.r2018ColumnHeights.size()) ==
-            expectedColumnHeights;
-    if (sidecar.mtext.schemaVersion >= 2) {
-      sidecar.hasMText =
-          sidecar.hasMText && expectedAnnotativeBytes >= 0 &&
-          static_cast<int>(sidecar.mtext.annotativeData.size()) ==
-              expectedAnnotativeBytes;
-    }
-  }
+  sidecar.hasMText =
+      foundMTextMarker && mtextSchema == kInsertAttribMTextSchema &&
+      expectedColumnHeights >= 0 &&
+      static_cast<int>(sidecar.mtext.r2018ColumnHeights.size()) ==
+          expectedColumnHeights &&
+      expectedAnnotativeBytes >= 0 &&
+      static_cast<int>(sidecar.mtext.annotativeData.size()) ==
+          expectedAnnotativeBytes &&
+      seenMText1040 >= 12 && seenMText1010 >= 6 && seenMTextStrings > 0;
   if (foundMTextMarker && !sidecar.hasMText)
     return std::nullopt;
   if (foundMTextXDataMarker &&
@@ -6464,11 +6596,21 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
   if (foundMTextCommonMarker &&
       !decodeInsertAttribMTextCommon(encodedMTextCommon, sidecar.mtext))
     return std::nullopt;
-  if (!foundMarker || seenOwnerParts != 2 || sidecar.ownerId == 0 ||
-      sidecar.ordinal < 0) {
+  // Every value of the main group is always written: one that is missing
+  // makes the sidecar unusable.
+  if (!foundMarker || sidecar.ordinal < 0 || seenValues < 10 ||
+      seenStrings < 2 || seenPoints != 7 || seenDoubles < 2) {
     return std::nullopt;
   }
   return sidecar;
+}
+
+// The names under which a text keeps what it was read with as a block
+// attribute.
+bool isInsertAttribSidecarMarker(const std::string &marker) {
+  return marker == kInsertAttribMarker || marker == kInsertAttribMTextMarker ||
+         marker == kInsertAttribMTextXDataMarker ||
+         marker == kInsertAttribMTextCommonMarker;
 }
 
 void removeInsertAttribSidecar(DRW_Entity &entity) {
@@ -6477,11 +6619,7 @@ void removeInsertAttribSidecar(DRW_Entity &entity) {
   for (const auto &value : entity.extData) {
     if (value && value->code() == 1001 &&
         value->type() == DRW_Variant::STRING && value->content.s != nullptr) {
-      const std::string marker = value->c_str();
-      inGroup = marker == kInsertAttribMarker ||
-                marker == kInsertAttribMTextMarker ||
-                marker == kInsertAttribMTextXDataMarker ||
-                marker == kInsertAttribMTextCommonMarker;
+      inGroup = isInsertAttribSidecarMarker(value->c_str());
       if (inGroup)
         continue;
     }
@@ -6491,18 +6629,216 @@ void removeInsertAttribSidecar(DRW_Entity &entity) {
   entity.extData = std::move(filtered);
 }
 
-bool isGeneratedInsertAttrib(const RS_Entity *entity) {
-  if (entity == nullptr || !entity->hasDrwExtData())
-    return false;
-  for (const auto &value : entity->getDrwExtData()) {
-    if (!value || value->code() != 1001 ||
-        value->type() != DRW_Variant::STRING || value->content.s == nullptr)
-      continue;
-    const std::string marker = value->c_str();
-    if (marker == kInsertAttribMarker || marker == kInsertAttribMTextMarker)
-      return true;
+// A line of an ASCII DXF file cannot hold these; a string read from a DWG can.
+bool fitsDxfLine(const std::string &value) {
+  return value.find('\r') == std::string::npos &&
+         value.find('\n') == std::string::npos &&
+         value.find('\0') == std::string::npos;
+}
+
+// From the alignment point of a single-line text to its baseline left point,
+// before rotation, when nothing of the text is drawn: the vertical offsets
+// RS_Text::update() uses for a capital letter, and no width.
+RS_Vector emptyTextFirstPointOffset(RS_TextData::VAlign valign,
+                                    RS_TextData::HAlign halign, double height) {
+  if (halign == RS_TextData::HAAligned || halign == RS_TextData::HAFit)
+    return RS_Vector(0.0, 0.0);
+  if (halign == RS_TextData::HAMiddle)
+    return RS_Vector(0.0, -height / 2.0);
+  switch (valign) {
+  case RS_TextData::VATop:
+    return RS_Vector(0.0, -height);
+  case RS_TextData::VAMiddle:
+    return RS_Vector(0.0, -height / 2.0);
+  case RS_TextData::VABottom:
+    return RS_Vector(0.0, height / 3.0);
+  case RS_TextData::VABaseline:
+  default:
+    return RS_Vector(0.0, 0.0);
   }
-  return false;
+}
+
+// Points and justification of a single-line ATTRIB: group 10 the baseline
+// left point, group 11 the point the text is aligned to. RS_Text keeps the
+// aligned point as its insertion point and, once laid out, the baseline left
+// point as its second point; an aligned or fitted text has its two ends there.
+// A text without a glyph has no borders, and its second point is not usable.
+void setSingleLineAttribPlacement(DRW_Attrib &attrib, const RS_Text &text) {
+  const RS_TextData::HAlign halign = text.getHAlign();
+  const RS_TextData::VAlign valign = text.getVAlign();
+  attrib.alignH = static_cast<DRW_Text::HAlign>(static_cast<int>(halign));
+  attrib.alignV = static_cast<DRW_Text::VAlign>(static_cast<int>(valign));
+  const RS_Vector insertion = text.getInsertionPoint();
+  RS_Vector first = insertion;
+  RS_Vector alignment = insertion;
+  if (halign == RS_TextData::HAAligned || halign == RS_TextData::HAFit) {
+    alignment = text.getSecondPoint();
+  } else if (halign != RS_TextData::HALeft ||
+             valign != RS_TextData::VABaseline) {
+    const RS_Vector second = text.getSecondPoint();
+    if (text.count() > 0 && second.valid && std::isfinite(second.x) &&
+        std::isfinite(second.y)) {
+      first = second;
+    } else {
+      RS_Vector offset =
+          emptyTextFirstPointOffset(valign, halign, text.getHeight());
+      offset.rotate(text.getAngle());
+      first = insertion + offset;
+    }
+  }
+  attrib.basePoint.x = first.x;
+  attrib.basePoint.y = first.y;
+  attrib.secPoint.x = alignment.x;
+  attrib.secPoint.y = alignment.y;
+}
+
+// Axes of the object coordinate system of an extrusion direction: the
+// arbitrary axis algorithm, with the limits of DRW_Entity::calculateAxis().
+struct OcsAxes {
+  DRW_Coord x{1.0, 0.0, 0.0};
+  DRW_Coord y{0.0, 1.0, 0.0};
+  DRW_Coord z{0.0, 0.0, 1.0};
+  bool world = true;
+};
+
+OcsAxes ocsAxes(DRW_Coord normal) {
+  OcsAxes axes;
+  if (!std::isfinite(normal.x) || !std::isfinite(normal.y) ||
+      !std::isfinite(normal.z))
+    return axes;
+  normal.unitize();
+  if (normal.x == 0.0 && normal.y == 0.0 && normal.z >= 0.0)
+    return axes; // +Z, or no direction at all
+  axes.world = false;
+  axes.z = normal;
+  if (std::fabs(normal.x) < 0.015625 && std::fabs(normal.y) < 0.015625)
+    axes.x = DRW_Coord(normal.z, 0.0, -normal.x);
+  else
+    axes.x = DRW_Coord(-normal.y, normal.x, 0.0);
+  axes.x.unitize();
+  axes.y = DRW_Coord(normal.y * axes.x.z - normal.z * axes.x.y,
+                     normal.z * axes.x.x - normal.x * axes.x.z,
+                     normal.x * axes.x.y - normal.y * axes.x.x);
+  axes.y.unitize();
+  return axes;
+}
+
+// A WCS point in that system; the inverse of DRW_Entity::extrudePoint().
+DRW_Coord wcsToOcs(const OcsAxes &axes, const DRW_Coord &point) {
+  if (axes.world)
+    return point;
+  return DRW_Coord(
+      point.x * axes.x.x + point.y * axes.x.y + point.z * axes.x.z,
+      point.x * axes.y.x + point.y * axes.y.y + point.z * axes.y.z,
+      point.x * axes.z.x + point.y * axes.z.y + point.z * axes.z.z);
+}
+
+bool sameXY(const DRW_Coord &a, const DRW_Coord &b) {
+  const double tolerance =
+      1.0e-9 * std::max({1.0, std::fabs(a.x), std::fabs(a.y)});
+  return std::fabs(a.x - b.x) <= tolerance && std::fabs(a.y - b.y) <= tolerance;
+}
+
+// From the alignment point of a single-line text to its baseline left point,
+// before rotation, as RS_Text::update() lays the text out, the one place
+// that knows it. An empty value, one of spaces only or a missing font leaves
+// RS_Text without a glyph and without usable borders.
+RS_Vector singleLineFirstPointOffset(const QString &text, const QString &style,
+                                     double height, double widthFactor,
+                                     RS_TextData::VAlign valign,
+                                     RS_TextData::HAlign halign) {
+  const RS_Vector origin(0.0, 0.0);
+  const RS_TextData d(origin, origin, height, widthFactor, valign, halign,
+                      RS_TextData::None, text, style, 0.0, RS2::Update);
+  const RS_Text probe(nullptr, d);
+  const RS_Vector first = probe.getSecondPoint();
+  if (probe.count() == 0 || !first.valid || !std::isfinite(first.x) ||
+      !std::isfinite(first.y))
+    return emptyTextFirstPointOffset(valign, halign, height);
+  return first;
+}
+
+// The TEXT part of a multi-line ATTRIB, kept in step with the MTEXT shown in
+// its place as AutoCAD does: justification from the attachment point, group
+// 11 the MTEXT insertion point, group 10 the baseline left point. The MTEXT
+// is in WCS, the ATTRIB in its OCS. attrib.text, extPoint and widthscale
+// must be final.
+void setMultilineAttribPlacement(DRW_Attrib &attrib, const DRW_MText &mtext,
+                                 const RS_MTextData &data,
+                                 const InsertAttribSidecar &sidecar,
+                                 bool firstPointEdited) {
+  const auto halign =
+      static_cast<RS_TextData::HAlign>(static_cast<int>(data.halign));
+  const auto valign =
+      static_cast<RS_TextData::VAlign>(3 - static_cast<int>(data.valign));
+  attrib.alignH = static_cast<DRW_Text::HAlign>(static_cast<int>(halign));
+  attrib.alignV = static_cast<DRW_Text::VAlign>(static_cast<int>(valign));
+  attrib.angle = mtext.angle;
+  const OcsAxes axes = ocsAxes(attrib.extPoint);
+  attrib.secPoint = wcsToOcs(axes, mtext.basePoint);
+  // The first point that was read belongs to the justification, the
+  // alignment point and the value it was read with.
+  if (!firstPointEdited &&
+      sidecar.alignH == static_cast<int>(attrib.alignH) &&
+      sidecar.alignV == static_cast<int>(attrib.alignV) &&
+      sameXY(sidecar.secPoint, attrib.secPoint) &&
+      attrib.text == sidecar.value) {
+    attrib.basePoint = sidecar.basePoint;
+    return;
+  }
+  attrib.basePoint = attrib.secPoint;
+  // Group 11 and the justification place the text. In another plane than
+  // the world's the rotation is not converted, so no offset is derived
+  // from it either.
+  if (!axes.world)
+    return;
+  RS_Vector offset = singleLineFirstPointOffset(
+      RS_FilterDXFRW::toNativeString(QString::fromUtf8(attrib.text.c_str())),
+      data.style, data.height, attrib.widthscale, valign, halign);
+  offset.rotate(data.angle);
+  attrib.basePoint.x += offset.x;
+  attrib.basePoint.y += offset.y;
+}
+
+// Group 71 of a single-line text: 2 backward, 4 upside down. RS_Text holds
+// one of them at most and is read as neither from a record that has both;
+// such a record keeps both while the text is still neither.
+int textGenerationFlags(RS_TextData::TextGeneration generation, int stored) {
+  if (generation == RS_TextData::Backward)
+    return 2;
+  if (generation == RS_TextData::UpsideDown)
+    return 4;
+  return (stored & 6) == 6 ? 6 : 0;
+}
+
+// The MTEXT embedded in an attribute names no linetype record of its own in
+// a file LibreCAD writes: only the three keywords survive.
+std::string embeddedMTextLineType(const std::string &sourceName) {
+  const std::string name = normalizeDwgTableName(sourceName);
+  if (name == "BYBLOCK" || name == "CONTINUOUS")
+    return name;
+  return "BYLAYER";
+}
+
+// A DWG R2018 MTEXT that is not annotative repeats its placement in a second
+// block (ODA 20.4.46, "redundant fields"); AutoCAD writes version 4 and the
+// default flag there. The model holds one placement, so the block is written
+// from the fields it repeats. sourceAnnotative: the attribute was read from a
+// DWG whose embedded MTEXT was annotative and carried a scale payload; only
+// then is a clear "not annotative" bit a stored fact and kept.
+void completeEmbeddedMTextForDwg(DRW_MText &mtext, bool sourceAnnotative) {
+  if (!sourceAnnotative)
+    mtext.m_r2018IsNotAnnotative = true;
+  if (!mtext.m_r2018IsNotAnnotative)
+    return;
+  if (mtext.m_r2018Version == 0) {
+    mtext.m_r2018Version = 4;
+    mtext.m_r2018DefaultFlag = true;
+  }
+  mtext.m_r2018Attachment = mtext.textgen;
+  mtext.m_r2018XAxisDir = mtext.secPoint;
+  mtext.m_r2018InsertionPoint = mtext.basePoint;
+  mtext.m_r2018RectWidth = mtext.widthscale;
 }
 } // namespace
 
@@ -7821,16 +8157,21 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert &data) {
         att->visible && (att->attribFlags & 0x1) == 0;
 
     // Multi-line ATTRIB (R2018+, ODA spec §20.4.4 Attribute type 2/4):
-    // libdxfrw saw the `100 / Embedded Object` DXF subclass marker on the
+    // libdxfrw saw the `101 / Embedded Object` DXF marker on the
     // ATTRIB and populated att->mtext from the embedded MTEXT body.
     // Render it as RS_MText so the multi-line content + formatting codes
     // survive; the plain `text` field is the single-line fallback.
     if (att->mtext) {
-      auto *mt = mtextEntityFromDRW(*att->mtext);
+      DRW_Attrib attribute(*att);
+      // Embedded DWG MTEXT has no EED frame; its private RTL marker is on ATTRIB.
+      if (!mtextRtlLayout(*attribute.mtext))
+        setMTextRtlMarker(*attribute.mtext, mtextRtlLayout(attribute));
+      auto *mt = mtextEntityFromDRW(*attribute.mtext);
       mt->setParent(m_currentContainer);
       setEntityAttributes(mt, att.get());
       mt->setVisible(attributeVisible && att->mtext->visible);
-      appendInsertAttribSidecar(mt, *att, entity->getId(), ordinal++);
+      appendInsertAttribSidecar(mt, attribute, ordinal++);
+      mt->setOwnerLineage(entity->lineage());
       mt->update();
       m_currentContainer->addEntity(mt);
       continue;
@@ -7867,8 +8208,8 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert &data) {
     auto textEntity = std::make_unique<RS_Text>(m_currentContainer, td);
     setEntityAttributes(textEntity.get(), att.get());
     textEntity->setVisible(attributeVisible);
-    appendInsertAttribSidecar(textEntity.get(), *att, entity->getId(),
-                              ordinal++);
+    appendInsertAttribSidecar(textEntity.get(), *att, ordinal++);
+    textEntity->setOwnerLineage(entity->lineage());
     textEntity->update();
     m_currentContainer->addEntity(textEntity.release());
   }
@@ -8048,7 +8389,7 @@ void RS_FilterDXFRW::prepareTextStyleName(QString &sty) const {
  * Builds an RS_MText entity from a DRW_MText payload, applying the same
  * alignment/drawing-direction/line-spacing/legacy-correction logic that
  * addMText() uses.  Shared between addMText() (standalone MTEXT entities) and
- * addInsert() (block attributes whose `100 / Embedded Object` DXF subclass
+ * addInsert() (block attributes whose `101 / Embedded Object` DXF marker
  * produced an att->mtext payload).  Returns a freshly-constructed entity not
  * yet attached to any container; the caller is responsible for
  * setEntityAttributes() and appending.
@@ -8083,11 +8424,7 @@ RS_MText *RS_FilterDXFRW::mtextEntityFromDRW(const DRW_MText &data) {
     dir = RS_MTextData::ByStyle;
   }
 
-  if (data.alignV == 1) {
-    lss = RS_MTextData::AtLeast;
-  } else {
-    lss = RS_MTextData::Exact;
-  }
+  lss = mtextLineSpacingStyle(data);
   QString mtext = toNativeString(QString::fromUtf8(data.text.c_str()));
   QString sty = QString::fromUtf8(data.style.c_str());
   prepareTextStyleName(sty);
@@ -8122,26 +8459,7 @@ RS_MText *RS_FilterDXFRW::mtextEntityFromDRW(const DRW_MText &data) {
   // else→ByStyle), matching the DXF MTEXT group 72 spec. There is no DXF
   // value for RightToLeft; that flag round-trips via XDATA below — when
   // an MTEXT carries a "LibreCad" + 1071 marker, restore the RTL setting.
-  std::int32_t rtlLayout = 0;
-  for (size_t k = 0; k + 1 < data.extData.size(); ++k) {
-    const auto &appTag = data.extData[k];
-    if (!appTag || appTag->code() != 1001 ||
-        appTag->type() != DRW_Variant::STRING || appTag->content.s == nullptr ||
-        *appTag->content.s != "LibreCad")
-      continue;
-    // Walk subsequent entries until the next 1001 (next app block).
-    for (size_t j = k + 1; j < data.extData.size(); ++j) {
-      const auto &v = data.extData[j];
-      if (!v)
-        continue;
-      if (v->code() == 1001)
-        break;
-      if (v->code() == 1071 && v->type() == DRW_Variant::INTEGER &&
-          (v->content.i == kLegacyRtlLayout || v->content.i == kLogicalRtlLayout)) {
-        rtlLayout = std::max(rtlLayout, v->content.i);
-      }
-    }
-  }
+  const auto rtlLayout = mtextRtlLayout(data);
   if (rtlLayout != 0)
     dir = RS_MTextData::RightToLeft;
 
@@ -11155,6 +11473,14 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   m_writeFailed = false;
   m_dxfLeftOutRawRecords = 0;
   m_dxfLeftOut.clear();
+  m_exportAttribScaleDataLeftOut = 0;
+  // What becomes of each block attribute's text is the same for every
+  // callback of this export, the DWG handle pre-pass included.
+  buildInsertAttribPlan();
+  struct InsertAttribPlanGuard {
+    InsertAttribPlan &plan;
+    ~InsertAttribPlanGuard() { plan = {}; }
+  } insertAttribPlanGuard{m_insertAttribPlan};
 
   // check if we can write to that directory:
 #ifndef Q_OS_WIN
@@ -12403,6 +12729,86 @@ void RS_FilterDXFRW::prepareBlocks() {
 }
 
 /**
+ * Decides, for the export in progress, what becomes of each text read as a
+ * block attribute. A text names its INSERT by lineage (RS_Entity::lineage()):
+ * the pair survives the clones that replace either on an edit, and a copy of
+ * both is a pair of its own. One pass per container; deleted entities take no
+ * part.
+ */
+void RS_FilterDXFRW::buildInsertAttribPlan() {
+  m_insertAttribPlan = {};
+  if (m_graphic == nullptr)
+    return;
+  const auto showsNothing = [](const RS_Entity *text) {
+    if (!text->getFlag(RS2::FlagVisible))
+      return true;
+    return text->rtti() == RS2::EntityText
+               ? static_cast<const RS_Text *>(text)->getText().isEmpty()
+               : static_cast<const RS_MText *>(text)->getText().isEmpty();
+  };
+  const auto scan = [this, &showsNothing](RS_EntityContainer *container) {
+    if (container == nullptr)
+      return;
+    std::vector<RS_Entity *> texts;
+    for (RS_Entity *entity : *container) {
+      if (entity != nullptr && !entity->getFlag(RS2::FlagDeleted) &&
+          entity->ownerLineage() != 0 &&
+          (entity->rtti() == RS2::EntityText ||
+           entity->rtti() == RS2::EntityMText)) {
+        texts.push_back(entity);
+      }
+    }
+    // Most containers hold no text of an attribute, whatever the number of
+    // their INSERTs: those are looked up only for a text that names one.
+    if (texts.empty())
+      return;
+    std::map<unsigned long long, const RS_Entity *> inserts;
+    for (const RS_Entity *entity : *container) {
+      if (entity != nullptr && !entity->getFlag(RS2::FlagDeleted) &&
+          entity->rtti() == RS2::EntityInsert) {
+        // The first keeps a lineage two INSERTs share (clones put into a
+        // container without an undo section).
+        inserts.emplace(entity->lineage(), entity);
+      }
+    }
+    std::map<const RS_Entity *, std::vector<std::pair<int, RS_Entity *>>> found;
+    for (RS_Entity *text : texts) {
+      const auto owner = inserts.find(text->ownerLineage());
+      if (owner != inserts.end()) {
+        if (const auto sidecar = extractInsertAttribSidecar(text)) {
+          found[owner->second].emplace_back(sidecar->ordinal, text);
+          continue;
+        }
+      }
+      // No INSERT writes this text. One that shows is written as a text of its
+      // own (writeText(), writeMText()); a hidden or empty one was data of its
+      // INSERT only and no selection can reach it.
+      if (showsNothing(text))
+        m_insertAttribPlan.leftOut.insert(text);
+    }
+    for (auto &[insert, attributes] : found) {
+      // Container order decides between texts of one ordinal.
+      std::stable_sort(attributes.begin(), attributes.end(),
+                       [](const auto &lhs, const auto &rhs) {
+                         return lhs.first < rhs.first;
+                       });
+      auto &children = m_insertAttribPlan.children[insert];
+      children.reserve(attributes.size());
+      for (const auto &attribute : attributes) {
+        children.push_back(attribute.second);
+        m_insertAttribPlan.claimed.insert(attribute.second);
+      }
+    }
+  };
+  scan(m_graphic);
+  for (unsigned i = 0; i < m_graphic->countBlocks(); ++i) {
+    RS_Block *block = m_graphic->blockAt(i);
+    if (block != nullptr && !block->isDeleted())
+      scan(block);
+  }
+}
+
+/**
  * Writes block records (just the name, not the entities in it).
  */
 void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
@@ -12411,6 +12817,7 @@ void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
 
   m_dxfBlockInsertHandles.clear();
   std::map<std::uint32_t, std::size_t> sourceHandleCounts;
+  std::set<std::uint32_t> attribChildHandles;
   std::set<std::uint32_t> rawEntityHandles;
   std::set<std::uint32_t> rawObjectHandles;
   auto scanEntities = [&](RS_EntityContainer *container) {
@@ -12419,12 +12826,17 @@ void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
     for (RS_Entity *entity :
          lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
       if (entity == nullptr || entity->getFlag(RS2::FlagDeleted) ||
-          isGeneratedInsertAttrib(entity)) {
+          m_insertAttribPlan.leftOut.count(entity) != 0) {
         continue;
       }
       const std::uint32_t sourceHandle = entity->sourceHandle();
-      if (sourceHandle != 0)
-        ++sourceHandleCounts[sourceHandle];
+      if (sourceHandle == 0)
+        continue;
+      ++sourceHandleCounts[sourceHandle];
+      // An ATTRIB is counted, so that a handle it shares names no entity, but
+      // it takes its handle when its INSERT is written.
+      if (isInsertAttribChild(entity))
+        attribChildHandles.insert(sourceHandle);
     }
   };
 
@@ -12506,6 +12918,8 @@ void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
       continue;
     }
     if (count != 1)
+      continue;
+    if (attribChildHandles.count(sourceHandle) != 0)
       continue;
     if (rawEntityHandles.count(sourceHandle) != 0 ||
         rawObjectHandles.count(sourceHandle) != 0) {
@@ -15006,6 +15420,38 @@ bool RS_FilterDXFRW::stageDwgTableRecordIdentity(DwgWriteSourceKind kind,
   return true;
 }
 
+bool RS_FilterDXFRW::resolveDwgWriteAppIdHandle(
+    std::uint32_t sourceHandle, std::uint32_t *outputHandle) const {
+  if (outputHandle != nullptr)
+    *outputHandle = 0;
+  if (sourceHandle == DRW::NoHandle)
+    return true;
+  if (m_dwgW == nullptr || m_graphic == nullptr)
+    return false;
+  // Only an APPID record qualifies: the ledger keeps layers, styles and the
+  // other table records under the same kind.
+  for (const auto &entry :
+       m_graphic->dwgAdvancedMetadata().appIdTableEntries()) {
+    if (entry.second.handle != sourceHandle)
+      continue;
+    std::uint32_t resolved = 0;
+    if (normalizeDwgTableName(entry.first) == "ACAD") {
+      // writeAppId() leaves this record, and its handle, to the codec.
+      resolved = DRW::DwgAcadAppIdHandle;
+    } else {
+      const DwgWriteIdentityLookup state = lookupDwgWriteIdentity(
+          DwgWriteSourceKind::TableRecord, sourceHandle, &resolved);
+      if (state != DwgWriteIdentityLookup::Selected &&
+          state != DwgWriteIdentityLookup::Committed)
+        return false;
+    }
+    if (outputHandle != nullptr)
+      *outputHandle = resolved;
+    return resolved != 0;
+  }
+  return false;
+}
+
 bool RS_FilterDXFRW::commitDwgTableRecordIdentities() {
   if (m_dwgW == nullptr)
     return true;
@@ -15197,11 +15643,11 @@ void RS_FilterDXFRW::prepareDwgEntityHandleMap() {
                                       RS_EntityContainer *container) {
     if (container == nullptr)
       return;
-    // INSERT attributes are encoded inside the parent INSERT frame; they do
-    // not own independent output handles.
-    const auto hasOwnFrame = [](const RS_Entity *entity) {
+    // An INSERT's attribute texts are encoded inside its frame, and a text
+    // the plan leaves out is not written: neither owns an output handle.
+    const auto hasOwnFrame = [this](const RS_Entity *entity) {
       return entity != nullptr && !entity->getFlag(RS2::FlagDeleted) &&
-             !isGeneratedInsertAttrib(entity);
+             !hasNoOwnRecord(entity);
     };
     const std::vector<RS_Entity *> entities =
         lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities();
@@ -15211,20 +15657,6 @@ void RS_FilterDXFRW::prepareDwgEntityHandleMap() {
                     [&hasOwnFrame](const RS_Entity *entity) {
                       return hasOwnFrame(entity) && entity->sourceHandle() != 0;
                     });
-    // Count the ATTRIBs writeInsert() will gather for each INSERT: sibling
-    // texts tagged with the INSERT's id.
-    std::map<unsigned long long, std::size_t> attributeCounts;
-    if (reserveAll) {
-      for (const RS_Entity *candidate : *container) {
-        if (candidate == nullptr ||
-            (candidate->rtti() != RS2::EntityText &&
-             candidate->rtti() != RS2::EntityMText))
-          continue;
-        const auto sidecar = extractInsertAttribSidecar(candidate);
-        if (sidecar)
-          ++attributeCounts[sidecar->ownerId];
-      }
-    }
 
     const auto reserve = [&](RS_Entity *entity) {
       const std::uint32_t sourceHandle = entity->sourceHandle();
@@ -15260,13 +15692,13 @@ void RS_FilterDXFRW::prepareDwgEntityHandleMap() {
 
       if (!reserveAll || entity->rtti() != RS2::EntityInsert)
         return;
-      const auto count = attributeCounts.find(entity->getId());
-      if (count == attributeCounts.end())
+      const auto planned = m_insertAttribPlan.children.find(entity);
+      if (planned == m_insertAttribPlan.children.end())
         return;
       // One handle per ATTRIB, then the SEQEND.
       std::vector<std::uint32_t> childHandles;
-      childHandles.reserve(count->second + 1);
-      for (std::size_t index = 0; index <= count->second; ++index) {
+      childHandles.reserve(planned->second.size() + 1);
+      for (std::size_t index = 0; index <= planned->second.size(); ++index) {
         const std::uint32_t childHandle = m_dwgW->allocNextHandle();
         if (childHandle == 0) {
           m_writeFailed = true;
@@ -16376,6 +16808,12 @@ QString RS_FilterDXFRW::exportReport() const {
   }
   for (const auto &[what, count] : m_dxfLeftOut)
     lines << QStringLiteral("%1 × %2").arg(count).arg(QString::fromStdString(what));
+  if (m_exportAttribScaleDataLeftOut > 0) {
+    lines << QObject::tr(
+                 "annotation scale or column data of %1 multi-line attribute(s)",
+                 "RS_FilterDXFRW")
+                 .arg(m_exportAttribScaleDataLeftOut);
+  }
 #ifdef DWGSUPPORT
   if (m_lastDwgWriteSkipCounters.total() > 0) {
     lines << QObject::tr("%1 object(s) DWG cannot hold", "RS_FilterDXFRW")
@@ -17224,7 +17662,7 @@ bool RS_FilterDXFRW::prepareDwgEntityWritePlans() {
     for (RS_Entity *entity :
          lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
       if (entity == nullptr || entity->getFlag(RS2::FlagDeleted) ||
-          isGeneratedInsertAttrib(entity) || entity->sourceHandle() == 0) {
+          hasNoOwnRecord(entity) || entity->sourceHandle() == 0) {
         continue;
       }
 
@@ -19341,6 +19779,9 @@ void RS_FilterDXFRW::writeLayers() {
           !stageDwgTableRecordIdentity(DwgWriteSourceKind::TableRecord,
                                        sourceHandle, lay.handle))
         m_writeFailed = true;
+      else
+        m_dwgWriteLayerHandleByName[normalizeDwgTableName(lay.name)] =
+            lay.handle;
     } else {
       // The plot style (390) is named only if its placeholder is written.
       lay.handlePlotS.clear();
@@ -26563,7 +27004,8 @@ void RS_FilterDXFRW::collectDwgAppIds() {
     return;
 
   std::set<std::string> emittedNames;
-  const auto collectExtData = [this, &emittedNames](const auto &extData) {
+  const auto collectExtData = [this, &emittedNames](const auto &extData,
+                                                    bool ofText = false) {
     for (const auto &value : extData) {
       if (value == nullptr || value->code() != 1001 ||
           value->type() != DRW_Variant::STRING || value->content.s == nullptr ||
@@ -26571,6 +27013,11 @@ void RS_FilterDXFRW::collectDwgAppIds() {
         continue;
       }
       const std::string name = *value->content.s;
+      // What a text keeps of its block attribute is never written with it
+      // (removeInsertAttribSidecar()): no data of the file is under these
+      // names, and a drawing opened from the file would hand them on.
+      if (ofText && isInsertAttribSidecarMarker(name))
+        continue;
       if (!emittedNames.insert(normalizeDwgTableName(name)).second)
         continue;
       DRW_AppId appId;
@@ -26584,7 +27031,9 @@ void RS_FilterDXFRW::collectDwgAppIds() {
         !entity->hasDrwExtData()) {
       return;
     }
-    collectExtData(entity->getDrwExtData());
+    collectExtData(entity->getDrwExtData(),
+                   entity->rtti() == RS2::EntityText ||
+                       entity->rtti() == RS2::EntityMText);
   };
   const auto collectFromContainer = [&collectFromEntity](
                                         const RS_EntityContainer *container) {
@@ -26969,6 +27418,12 @@ void RS_FilterDXFRW::writeAppId() {
     if (normalizeDwgTableName(entry.first) != "ACAD")
       emitAppId(entry.second);
   }
+}
+
+bool RS_FilterDXFRW::finalizeDxfWrite() {
+  // A failure latched in any DXF write callback reaches dxfRW here, before
+  // it replaces the destination.
+  return !m_writeFailed;
 }
 
 bool RS_FilterDXFRW::finalizeDwgWrite() {
@@ -29635,7 +30090,9 @@ bool RS_FilterDXFRW::reconstructSingleFrameSidecars(
 }
 
 void RS_FilterDXFRW::writeEntity(RS_Entity *e) {
-  if (e == nullptr || isGeneratedInsertAttrib(e))
+  // A block attribute's text is written by its INSERT (writeInsert()), or not
+  // at all (buildInsertAttribPlan()).
+  if (e == nullptr || hasNoOwnRecord(e))
     return;
   DwgEntityProductionResult production = DwgEntityProductionResult::SingleFrame;
 #ifdef DWGSUPPORT
@@ -30571,47 +31028,96 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
 
   // RS_Insert cannot retain ATTRIB children internally: update() rebuilds
   // its expanded block cache. Reconstruct the native sequence from the
-  // hidden/rendered sibling text records tagged during import, then let the
+  // sibling texts buildInsertAttribPlan() gave this INSERT, then let the
   // libdxfrw writer allocate and link the child handles.
-  if (i->getParent() != nullptr) {
+  std::vector<const RS_Entity *> attributeTexts;
+  {
     std::vector<std::pair<InsertAttribSidecar, RS_Entity *>> attributes;
-    for (RS_Entity *candidate : *i->getParent()) {
-      if (candidate == nullptr || candidate == i)
-        continue;
-      const auto sidecar = extractInsertAttribSidecar(candidate);
-      if (!sidecar || sidecar->ownerId != i->getId())
-        continue;
-      if (candidate->rtti() != RS2::EntityText &&
-          candidate->rtti() != RS2::EntityMText)
-        continue;
-      attributes.emplace_back(*sidecar, candidate);
+    const auto planned = m_insertAttribPlan.children.find(i);
+    if (planned != m_insertAttribPlan.children.end()) {
+      attributes.reserve(planned->second.size());
+      for (RS_Entity *candidate : planned->second) {
+        // buildInsertAttribPlan() admitted only texts whose sidecar parses.
+        if (auto sidecar = extractInsertAttribSidecar(candidate))
+          attributes.emplace_back(std::move(*sidecar), candidate);
+      }
     }
-    std::sort(attributes.begin(), attributes.end(),
-              [](const auto &lhs, const auto &rhs) {
-                if (lhs.first.ordinal != rhs.first.ordinal)
-                  return lhs.first.ordinal < rhs.first.ordinal;
-                return lhs.second->getId() < rhs.second->getId();
-              });
+#ifdef DWGSUPPORT
+    // An ATTRIB with a reference of its own (a reactor, an extension
+    // dictionary) needs its handle before it is written: getEntityAttributes()
+    // selects an identity for it. In an R2000 owner chain that has to be the
+    // handle of its place after the INSERT. prepareDwgEntityHandleMap() took
+    // those handles for a container with source-backed entities; for any
+    // other they are taken here, in the order the writer would take them.
+    if (m_dwgW != nullptr && !attributes.empty()) {
+      auto reserved = m_dwgWriteInsertChildHandlesByEntity.find(i);
+      if (reserved == m_dwgWriteInsertChildHandlesByEntity.end() &&
+          m_dwgW->getVersion() <= DRW::AC1015) {
+        if (in.handle == 0)
+          in.handle = m_dwgW->allocNextHandle();
+        // One handle per ATTRIB, then the SEQEND.
+        std::vector<std::uint32_t> childHandles;
+        childHandles.reserve(attributes.size() + 1);
+        for (std::size_t index = 0; index <= attributes.size(); ++index)
+          childHandles.push_back(m_dwgW->allocNextHandle());
+        if (in.handle == 0 ||
+            std::find(childHandles.cbegin(), childHandles.cend(), 0u) !=
+                childHandles.cend()) {
+          m_writeFailed = true;
+          return;
+        }
+        reserved = m_dwgWriteInsertChildHandlesByEntity
+                       .emplace(i, std::move(childHandles))
+                       .first;
+      }
+      if (reserved != m_dwgWriteInsertChildHandlesByEntity.end() &&
+          reserved->second.size() == attributes.size() + 1) {
+        for (std::size_t index = 0; index < attributes.size(); ++index) {
+          m_dwgWriteGeneratedEntityHandleByEntity.emplace(
+              attributes[index].second, reserved->second[index]);
+        }
+      }
+    }
+#endif
 
+    // Only an AC1032 file holds the MTEXT of a multi-line attribute, and
+    // only its DWG form has fields for an annotation-scale payload or a
+    // column layout.
+    const bool embedsMText =
+        (m_dwgW != nullptr ? m_dwgW->getVersion() : m_dxfExportVersion) >=
+        DRW::AC1032;
+    const bool writesAttribScaleState = embedsMText && m_dwgW != nullptr;
+
+    attributeTexts.reserve(attributes.size());
     for (const auto &[sidecar, candidate] : attributes) {
+      attributeTexts.push_back(candidate);
       DRW_Attrib attrib;
       getEntityAttributes(&attrib, candidate);
       attrib.tag = sidecar.tag;
       attrib.attribFlags = static_cast<std::uint8_t>(sidecar.flags);
+      // A text is hidden when the record of its ATTRIB is invisible, when
+      // the attribute has the invisible flag, or when its MTEXT is invisible
+      // (addInsert()). While the text is as the import left it, the record
+      // gets its own visibility back: the flag alone must not make an
+      // invisible entity of it. Only a DWG of AC1032 has the visibility of
+      // the MTEXT; elsewhere the record keeps the text hidden in its stead.
+      // A visibility changed in the drawing since is written as it is.
+      const bool mtextHidden = sidecar.hasMText && !sidecar.mtext.visible;
+      const bool mtextKeepsItsOwn = embedsMText && m_dwgW != nullptr;
+      const bool shownAsRead = sidecar.recordVisible &&
+                               (sidecar.flags & 0x1) == 0 && !mtextHidden;
+      if (attrib.visible == shownAsRead) {
+        attrib.visible =
+            sidecar.recordVisible && (!mtextHidden || mtextKeepsItsOwn);
+      }
       attrib.m_fieldLength = sidecar.fieldLength;
       attrib.attVersion = static_cast<std::uint8_t>(sidecar.attVersion);
       attrib.m_attributeType = static_cast<std::uint8_t>(sidecar.attributeType);
       attrib.lockPosition = sidecar.lockPosition;
-      if (sidecar.hasValue)
-        attrib.text = sidecar.value;
-      if (sidecar.hasBasePoint)
-        attrib.basePoint = sidecar.basePoint;
-      if (sidecar.hasSecPoint)
-        attrib.secPoint = sidecar.secPoint;
-      if (sidecar.hasExtPoint)
-        attrib.extPoint = sidecar.extPoint;
-      if (sidecar.hasThickness)
-        attrib.thickness = sidecar.thickness;
+      attrib.basePoint = sidecar.basePoint;
+      attrib.secPoint = sidecar.secPoint;
+      attrib.extPoint = sidecar.extPoint;
+      attrib.thickness = sidecar.thickness;
 
       if (candidate->rtti() == RS2::EntityMText) {
         const auto *source = static_cast<const RS_MText *>(candidate);
@@ -30619,107 +31125,217 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         auto mtext = std::make_unique<DRW_MText>();
         mtext->basePoint =
             DRW_Coord(data.insertionPoint.x, data.insertionPoint.y,
-                      sidecar.hasBasePoint ? sidecar.basePoint.z : 0.0);
-        mtext->secPoint = mtext->basePoint;
-        mtext->extPoint =
-            sidecar.hasExtPoint ? sidecar.extPoint : DRW_Coord{0.0, 0.0, 1.0};
+                      sidecar.basePoint.z);
+        mtext->extPoint = sidecar.extPoint;
         mtext->height = data.height;
         mtext->widthscale = data.width;
-        mtext->text = data.text.toUtf8().toStdString();
+        mtext->text = toDxfString(data.text, m_dwgW == nullptr).toUtf8().toStdString();
         mtext->style = data.style.toUtf8().toStdString();
         mtext->angle = data.angle * 180.0 / M_PI;
-        mtext->textgen = static_cast<int>(data.valign) * 3 +
-                         static_cast<int>(data.halign) + 1;
-        mtext->alignH = static_cast<DRW_Text::HAlign>(
-            data.drawingDirection == RS_MTextData::TopToBottom ? 3 : 1);
-        mtext->alignV = static_cast<DRW_Text::VAlign>(
-            data.lineSpacingStyle == RS_MTextData::Exact ? 2 : 1);
-        mtext->interlin = data.lineSpacingFactor;
-        mtext->linespacingStyle =
-            data.lineSpacingStyle == RS_MTextData::Exact ? 2 : 1;
+        setMTextLayout(*mtext, data);
+        DRW_Coord storedXAxis;
+        bool textEdited = false;
+        bool angleEdited = false;
+        // Whether anything changed that the first point of the ATTRIB
+        // itself depends on; without stored MTEXT fields nothing says no.
+        bool firstPointEdited = true;
         if (sidecar.hasMText) {
           const auto &saved = sidecar.mtext;
-          if (saved.hasText)
+          DRW_MText original;
+          original.text = saved.text;
+          original.textgen = saved.textgen;
+          original.alignH = static_cast<DRW_Text::HAlign>(saved.alignH);
+          original.linespacingStyle = static_cast<std::uint16_t>(saved.linespacingStyle);
+          original.extData = saved.xdata;
+          original.height = saved.originalHeight;
+          original.widthscale = saved.originalWidth;
+          const std::unique_ptr<RS_MText> imported(mtextEntityFromDRW(original));
+          auto before = imported->getData();
+          // Position, line spacing, angle and style as imported depend on the
+          // filter that read the file (a file of an old LibreCAD, the text
+          // style of its header, the code page) and on a round trip through
+          // degrees: what the text remembers of them stands in.
+          before.insertionPoint = RS_Vector(saved.originalPosition.x, saved.originalPosition.y);
+          before.lineSpacingFactor = saved.originalSpacing;
+          before.angle = saved.originalAngle;
+          before.style = QString::fromUtf8(saved.originalStyle.c_str());
+          textEdited = data.text != before.text;
+          const bool valignEdited = data.valign != before.valign;
+          const bool attachmentEdited =
+              data.halign != before.halign || valignEdited;
+          const bool directionEdited = data.drawingDirection != before.drawingDirection ||
+                                       data.legacyRtlLayout != before.legacyRtlLayout;
+          const bool spacingEdited = data.lineSpacingStyle != before.lineSpacingStyle ||
+                                     data.lineSpacingFactor != before.lineSpacingFactor;
+          const bool positionEdited = data.insertionPoint != before.insertionPoint;
+          angleEdited = data.angle != before.angle;
+          const bool widthEdited = data.width != before.width;
+          const bool styleEdited = data.style != before.style;
+          const bool heightEdited = data.height != before.height;
+          const bool layoutEdited = textEdited || attachmentEdited ||
+                                    directionEdited || spacingEdited || positionEdited ||
+                                    angleEdited || widthEdited || styleEdited ||
+                                    heightEdited;
+          firstPointEdited = textEdited || attachmentEdited || positionEdited ||
+                             angleEdited || heightEdited || styleEdited;
+          // The annotation-scale payload and the column layout are opaque
+          // here. They go out only next to the untouched text they were
+          // read with, and the payload only if the APPID it names is
+          // written too; exportReport() says when either stays behind.
+          // A copy has no source handle, and may come from another drawing,
+          // where the handle of the APPID names something else.
+          std::uint32_t annotativeAppHandle = 0;
+          bool keepScaleState = writesAttribScaleState && !layoutEdited &&
+                                candidate->sourceHandle() != 0;
+          if (keepScaleState && !saved.annotativeData.empty() &&
+              !resolveDwgWriteAppIdHandle(saved.annotativeAppHandle,
+                                          &annotativeAppHandle)) {
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                            "RS_FilterDXFRW: ATTRIB annotation scale data "
+                            "names APPID 0x%X, which is not written",
+                            saved.annotativeAppHandle);
+            keepScaleState = false;
+          }
+          if (!keepScaleState && (!saved.annotativeData.empty() ||
+                                  saved.r2018ColumnType != 0))
+            ++m_exportAttribScaleDataLeftOut;
+          // RS_MText::setText() takes a leading \A0; \A1; \A2; out of the
+          // text and makes it the vertical alignment. A stored text with such
+          // a prefix goes out only next to the vertical alignment it was read
+          // with; any other stored text keeps its inline codes when only the
+          // attachment changes. A text read from a DWG may hold what a line
+          // of a DXF cannot: there the text of the drawing goes in its place.
+          const bool replayText =
+              !textEdited &&
+              (m_dwgW != nullptr || fitsDxfLine(saved.text)) &&
+              !(valignEdited &&
+                hasMTextAlignmentPrefix(
+                    toNativeString(QString::fromUtf8(saved.text.c_str()))));
+          if (replayText)
             mtext->text = saved.text;
-          mtext->textgen = saved.textgen;
-          mtext->alignH = static_cast<DRW_Text::HAlign>(saved.alignH);
-          mtext->alignV = static_cast<DRW_Text::VAlign>(saved.alignV);
-          mtext->linespacingStyle =
-              static_cast<std::uint16_t>(saved.linespacingStyle);
-          mtext->interlin = saved.interlin;
+          if (replayText && !attachmentEdited)
+            mtext->textgen = saved.textgen;
+          if (!directionEdited)
+            mtext->alignH = static_cast<DRW_Text::HAlign>(saved.alignH);
+          if (!spacingEdited)
+            mtext->interlin = saved.interlin;
+          // What the source record held besides its layout is replayed as
+          // far as it is a value. A handle is not, nor a flag that says one
+          // follows: it named an object of the source file, and in the file
+          // being written that number is another object or none. The R2018
+          // repeats of the placement are written last, from what they
+          // repeat (completeEmbeddedMTextForDwg()).
           mtext->m_backgroundFlags = saved.backgroundFlags;
           mtext->m_backgroundScale = saved.backgroundScale;
           mtext->m_backgroundColor = saved.backgroundColor;
+          mtext->m_backgroundTrueColor = saved.backgroundTrueColor;
           mtext->m_backgroundTransparency = saved.backgroundTransparency;
           mtext->m_r2018IsNotAnnotative = saved.r2018IsNotAnnotative;
           mtext->m_r2018Version =
               static_cast<std::uint16_t>(saved.r2018Version);
           mtext->m_r2018DefaultFlag = saved.r2018DefaultFlag;
-          mtext->m_r2018AppIdHandle = saved.r2018AppIdHandle;
-          mtext->m_r2018Attachment = saved.r2018Attachment;
-          mtext->m_r2018XAxisDir = saved.r2018XAxisDir;
-          mtext->m_r2018InsertionPoint = saved.r2018InsertionPoint;
-          mtext->m_r2018RectWidth = saved.r2018RectWidth;
           mtext->m_r2018RectHeight = saved.r2018RectHeight;
           mtext->m_r2018ExtentsHeight = saved.r2018ExtentsHeight;
           mtext->m_r2018ExtentsWidth = saved.r2018ExtentsWidth;
-          mtext->m_r2018ColumnType =
-              static_cast<std::uint16_t>(saved.r2018ColumnType);
-          mtext->m_r2018ColumnCount = saved.r2018ColumnCount;
-          mtext->m_r2018ColumnWidth = saved.r2018ColumnWidth;
-          mtext->m_r2018ColumnGutter = saved.r2018ColumnGutter;
-          mtext->m_r2018ColumnAutoHeight = saved.r2018ColumnAutoHeight;
-          mtext->m_r2018ColumnFlowReversed = saved.r2018ColumnFlowReversed;
-          mtext->m_r2018ColumnHeights = saved.r2018ColumnHeights;
-          mtext->m_r2018AnnotativeData = saved.annotativeData;
-          mtext->m_r2018AnnotativeUnknown =
-              static_cast<std::uint16_t>(saved.annotativeUnknown);
-          mtext->m_r2018AnnotativeAppHandle = saved.annotativeAppHandle;
+          if (keepScaleState) {
+            mtext->m_r2018ColumnType =
+                static_cast<std::uint16_t>(saved.r2018ColumnType);
+            mtext->m_r2018ColumnCount = saved.r2018ColumnCount;
+            mtext->m_r2018ColumnWidth = saved.r2018ColumnWidth;
+            mtext->m_r2018ColumnGutter = saved.r2018ColumnGutter;
+            mtext->m_r2018ColumnAutoHeight = saved.r2018ColumnAutoHeight;
+            mtext->m_r2018ColumnFlowReversed = saved.r2018ColumnFlowReversed;
+            mtext->m_r2018ColumnHeights = saved.r2018ColumnHeights;
+            mtext->m_r2018AnnotativeData = saved.annotativeData;
+            mtext->m_r2018AnnotativeUnknown =
+                static_cast<std::uint16_t>(saved.annotativeUnknown);
+            mtext->m_r2018AnnotativeAppHandle = annotativeAppHandle;
+          }
           mtext->m_r2018ReallyLocked = saved.reallyLocked;
-          mtext->setHasDataStorageBinaryData(saved.hasDataStorageBinaryData);
-          mtext->reactorHandles = saved.reactorHandles;
-          mtext->xDictHandle = saved.xDictHandle;
-          mtext->color = saved.color;
-          mtext->color24 = saved.color24;
-          mtext->colorName = saved.colorName;
+          // A colour-book reference names an AcDbColor object of the source
+          // file, and its index field holds no colour: without the reference
+          // the MTEXT is ByLayer.
+          if (!saved.hasAcDbColorHandle) {
+            mtext->color = saved.color;
+            mtext->color24 = saved.color24;
+          }
           mtext->transparency = saved.transparency;
-          mtext->setDwgAcDbColorHandle(saved.hasAcDbColorHandle,
-                                       saved.acDbColorHandle);
           mtext->ltypeScale = saved.ltypeScale;
-          mtext->lineType = saved.lineType;
+          mtext->lineType = embeddedMTextLineType(saved.lineType);
           mtext->visible = saved.visible;
           mtext->lWeight =
               static_cast<DRW_LW_Conv::lineWidth>(saved.lineWeight);
-          mtext->material = saved.material;
-          mtext->shadow = static_cast<DRW::ShadowMode>(saved.shadow);
-          mtext->shadowHandle = saved.shadowHandle;
-          mtext->plotStyle = static_cast<int>(saved.plotStyle);
-          mtext->fullVisualStyleHandle = saved.fullVisualStyleHandle;
-          mtext->faceVisualStyleHandle = saved.faceVisualStyleHandle;
-          mtext->edgeVisualStyleHandle = saved.edgeVisualStyleHandle;
-          mtext->setDwgLayerHandle(saved.layerHandle);
-          mtext->setDwgLinetypeHandle(saved.linetypeHandle);
-          DRW_MText cleanMText;
-          cleanMText.extData = std::move(saved.xdata);
-          removeInsertAttribSidecar(cleanMText);
-          mtext->extData = std::move(cleanMText.extData);
-          mtext->styleH.ref = saved.styleHandle;
-          if (saved.hasBasePoint)
-            mtext->basePoint = saved.basePoint;
-          if (saved.hasSecPoint)
-            mtext->secPoint = saved.secPoint;
-          if (saved.hasExtPoint)
-            mtext->extPoint = saved.extPoint;
+          mtext->basePoint = saved.basePoint;
+          if (positionEdited) {
+            mtext->basePoint.x = data.insertionPoint.x;
+            mtext->basePoint.y = data.insertionPoint.y;
+          }
+          mtext->extPoint = saved.extPoint;
+          storedXAxis = saved.secPoint;
+          if (layoutEdited) {
+            mtext->m_r2018ExtentsWidth = source->getUsedTextWidth();
+            mtext->m_r2018ExtentsHeight = source->getUsedTextHeight();
+          }
         }
-        if (!sidecar.hasValue)
-          attrib.text = mtext->text;
-        attrib.mtext = std::move(mtext);
+        mtext->secPoint =
+            mtextXAxis(data.angle, storedXAxis, angleEdited, m_dwgW != nullptr);
+        // One marker in one record: the XDATA of an ATTRIB record is the
+        // ATTRIB's in DXF, and the embedded MTEXT of a DWG has none.
+        setMTextRtlMarker(attrib, rtlLayoutOf(data));
+        // The value of the ATTRIB itself. Next to its MTEXT it is the value
+        // the file came with, which AutoCAD leaves empty; once the text has
+        // changed, a value that was there follows it. Without the MTEXT it is
+        // all a reader gets: the text on one line, without codes.
+        const QString plain = RS_MText::toPlainLine(data.text);
+        const bool keepStored =
+            embedsMText ? !textEdited || sidecar.value.empty()
+                        : !textEdited && plain.isEmpty();
+        // A value read from a DWG may hold what a line of a DXF cannot.
+        if (keepStored && (m_dwgW != nullptr || fitsDxfLine(sidecar.value))) {
+          attrib.text = sidecar.value;
+        } else {
+          attrib.text =
+              toDxfString(plain, m_dwgW == nullptr).toUtf8().toStdString();
+        }
+        attrib.height = data.height;
+        attrib.style = mtext->style;
+        // The MTEXT has neither: they are the ATTRIB's own, as read. Of group
+        // 71 only the two flags there are, backward and upside down.
+        attrib.widthscale = sidecar.widthFactor;
+        attrib.textgen = sidecar.textgen & 6;
+        // attrib.text is final here: the first point is laid out from it.
+        setMultilineAttribPlacement(attrib, *mtext, data, sidecar,
+                                    firstPointEdited);
+        if (m_dwgW != nullptr) {
+          // The MTEXT refers to the text style and the layer of its
+          // attribute by the handles they have in the file being written.
+          mtext->styleH.ref = dwgWriteHandleByName(
+              m_dwgWriteTextStyleHandleByName, mtext->style);
+          if (const std::uint32_t layer = dwgWriteHandleByName(
+                  m_dwgWriteLayerHandleByName, attrib.layer))
+            mtext->setDwgLayerHandle(layer);
+        }
+        if (!embedsMText) {
+          attrib.attVersion = 0;
+          attrib.m_attributeType = 1;
+        } else {
+          // DRW_Attrib::encodeDwg() embeds the MTEXT in a multi-line ATTRIB
+          // only; type 0 or 1 would be written as a single line without it.
+          if (attrib.m_attributeType <= 1)
+            attrib.m_attributeType = 2;
+          if (m_dwgW != nullptr) {
+            // AutoCAD writes class version 0 for a multi-line attribute too.
+            attrib.attVersion = 0;
+            completeEmbeddedMTextForDwg(
+                *mtext, sidecar.hasMText &&
+                            !sidecar.mtext.r2018IsNotAnnotative &&
+                            !sidecar.mtext.annotativeData.empty());
+          }
+          attrib.mtext = std::move(mtext);
+        }
       } else {
         const auto *source = static_cast<const RS_Text *>(candidate);
-        attrib.basePoint.x = source->getInsertionPoint().x;
-        attrib.basePoint.y = source->getInsertionPoint().y;
-        attrib.secPoint.x = source->getSecondPoint().x;
-        attrib.secPoint.y = source->getSecondPoint().y;
+        setSingleLineAttribPlacement(attrib, *source);
         attrib.height = source->getHeight();
         attrib.widthscale = source->getWidthRel();
         attrib.text =
@@ -30728,22 +31344,14 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
                 .toStdString();
         attrib.style = source->getStyle().toUtf8().toStdString();
         attrib.angle = source->getAngle() * 180.0 / M_PI;
-        attrib.alignH = static_cast<DRW_Text::HAlign>(
-            static_cast<int>(source->getHAlign()));
-        attrib.alignV = static_cast<DRW_Text::VAlign>(
-            static_cast<int>(source->getVAlign()));
-        switch (source->getTextGeneration()) {
-        case RS_TextData::Backward:
-          attrib.textgen = 2;
-          break;
-        case RS_TextData::UpsideDown:
-          attrib.textgen = 4;
-          break;
-        case RS_TextData::None:
-        default:
-          attrib.textgen = 0;
-          break;
-        }
+        attrib.textgen =
+            textGenerationFlags(source->getTextGeneration(), sidecar.textgen);
+      }
+      // Of one line or of several: in a DWG the ATTRIB names its text style
+      // by the handle of the style's record.
+      if (m_dwgW != nullptr) {
+        attrib.styleH.ref = dwgWriteHandleByName(
+            m_dwgWriteTextStyleHandleByName, attrib.style);
       }
       removeInsertAttribSidecar(attrib);
       in.attlist.push_back(std::make_shared<DRW_Attrib>(std::move(attrib)));
@@ -30752,14 +31360,11 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
   if (m_dwgW) {
 #ifdef DWGSUPPORT
     // Keep the ATTRIB..SEQEND handles taken in prepareDwgEntityHandleMap()
-    // next to this INSERT's own handle in an R2000 owner chain.
+    // next to this INSERT's own handle in an R2000 owner chain. The ATTRIBs
+    // have them already (see above).
     const auto childIt = m_dwgWriteInsertChildHandlesByEntity.find(i);
     if (childIt != m_dwgWriteInsertChildHandlesByEntity.end() &&
-        childIt->second.size() == in.attlist.size() + 1 &&
-        std::all_of(in.attlist.cbegin(), in.attlist.cend(),
-                    [](const auto &attrib) {
-                      return attrib != nullptr && attrib->handle == 0;
-                    })) {
+        childIt->second.size() == in.attlist.size() + 1) {
       for (std::size_t index = 0; index < in.attlist.size(); ++index)
         in.attlist[index]->handle = childIt->second[index];
       in.seqendH.ref = childIt->second.back();
@@ -30770,6 +31375,18 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
       return;
     }
 #ifdef DWGSUPPORT
+    // The ATTRIBs are written inside the frame of the INSERT, and no
+    // writeEntity() commits them: the identities selected for those with
+    // references of their own are final here. They are no entities of a
+    // block record, so their source handles are not noted as emitted.
+    for (const RS_Entity *text : attributeTexts) {
+      const auto selected = m_dwgWriteEntityHandleByEntity.find(text);
+      if (selected != m_dwgWriteEntityHandleByEntity.end() &&
+          !commitDwgWriteIdentity(DwgWriteSourceKind::Entity,
+                                  selected->second)) {
+        m_writeFailed = true;
+      }
+    }
     const DwgWriteReferenceReceipt receipt{DwgWriteSourceKind::Entity,
                                            i->sourceHandle(),
                                            in.handle,
@@ -30804,13 +31421,30 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
 
   getEntityAttributes(text, t);
   if (m_version != 1009) {
+    // The x axis the record was read with; zero: it had none.
+    DRW_Coord storedXAxis;
     if (const auto ocs = extractMTextOcsSidecar(t)) {
       text->basePoint.z = ocs->elevation;
       text->extPoint = ocs->extrusion;
-      static_cast<DRW_MText *>(text)->secPoint = ocs->xAxis;
+      storedXAxis = ocs->xAxis;
       removeMTextOcsSidecar(*text);
+    } else if (t->ownerLineage() != 0) {
+      // A block attribute no INSERT claims is written on its own, in the
+      // plane of the MTEXT it was read with.
+      if (const auto attribute = extractInsertAttribSidecar(t);
+          attribute && attribute->hasMText) {
+        text->basePoint.z = attribute->mtext.basePoint.z;
+        text->extPoint = attribute->mtext.extPoint;
+        storedXAxis = attribute->mtext.secPoint;
+      }
     }
+    // A text turned in the drawing since no longer has that direction, and
+    // a reader takes group 11 for the direction where a record has it.
+    txt2.secPoint =
+        mtextXAxis(t->getAngle(), storedXAxis, false, m_dwgW != nullptr);
   }
+  // The private groups of a block attribute's text never leave the program.
+  removeInsertAttribSidecar(*text);
   text->basePoint.x = t->getInsertionPoint().x;
   text->basePoint.y = t->getInsertionPoint().y;
   text->height = t->getHeight();
@@ -30863,45 +31497,12 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
       }
     }
   } else {
-    if (t->getHAlign() == RS_MTextData::HALeft) {
-      text->textgen = 1;
-    } else if (t->getHAlign() == RS_MTextData::HACenter) {
-      text->textgen = 2;
-    } else if (t->getHAlign() == RS_MTextData::HARight) {
-      text->textgen = 3;
-    }
-    if (t->getVAlign() == RS_MTextData::VAMiddle) {
-      text->textgen += 3;
-    } else if (t->getVAlign() == RS_MTextData::VABottom) {
-      text->textgen += 6;
-    }
-    // DXF MTEXT group 72: 1=LeftToRight, 3=TopToBottom, 5=ByStyle.
-    // RightToLeft has no DXF encoding — fall through to LeftToRight so
-    // other readers see a well-defined direction. The RTL preference is
-    // round-tripped via XDATA (app id "LibreCad", code 1071) below; on
-    // re-import we restore the flag if the marker is present, otherwise
-    // the entity reads as LTR.
-    switch (t->getDrawingDirection()) {
-    case RS_MTextData::TopToBottom:
-      text->alignH = static_cast<DRW_Text::HAlign>(3);
-      break;
-    case RS_MTextData::ByStyle:
-      text->alignH = static_cast<DRW_Text::HAlign>(5);
-      break;
-    case RS_MTextData::LeftToRight:
-    case RS_MTextData::RightToLeft:
-    default:
-      text->alignH = static_cast<DRW_Text::HAlign>(1);
-      break;
-    }
-    // Marker 1 preserves old drawings; marker 2 stores logical Unicode RTL.
-    setMTextRtlMarker(*text, t->getDrawingDirection() == RS_MTextData::RightToLeft
-        ? (t->getData().legacyRtlLayout ? kLegacyRtlLayout : kLogicalRtlLayout) : 0);
-    if (t->getLineSpacingStyle() == RS_MTextData::AtLeast) {
-      text->alignV = static_cast<DRW_Text::VAlign>(1);
-    } else {
-      text->alignV = static_cast<DRW_Text::VAlign>(2);
-    }
+    const RS_MTextData data = t->getData();
+    setMTextLayout(txt2, data);
+    // The RTL preference is round-tripped via XDATA (app id "LibreCad", code
+    // 1071); on re-import we restore the flag if the marker is present,
+    // otherwise the entity reads as LTR.
+    setMTextRtlMarker(*text, rtlLayoutOf(data));
 
     text->text = toDxfString(t->getText(), m_dwgW == nullptr).toUtf8().data();
     //        text->widthscale =t->getWidth();
@@ -30917,9 +31518,10 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
         text->widthscale = given;
       }
     }
-    txt2.interlin = t->getLineSpacingFactor();
 
     if (m_dwgW) {
+      text->styleH.ref = dwgWriteHandleByName(m_dwgWriteTextStyleHandleByName,
+                                              text->style);
       if (!m_dwgW->writeMText(static_cast<DRW_MText *>(text)))
         m_writeFailed = true;
       return;
@@ -30942,6 +31544,19 @@ void RS_FilterDXFRW::writeText(RS_Text *t) {
     text.thickness = ocs->thickness;
     removeTextOcsSidecar(text);
   }
+  if (t->ownerLineage() != 0) {
+    // A block attribute no INSERT claims is written on its own, in the plane
+    // of the ATTRIB it was read as.
+    if (const auto attribute = extractInsertAttribSidecar(t)) {
+      text.basePoint.z = attribute->basePoint.z;
+      text.secPoint.z = attribute->secPoint.z;
+      text.extPoint = attribute->extPoint;
+      text.thickness = attribute->thickness;
+    }
+  }
+  // The groups that carried it are private to this program, whatever put them
+  // on the text.
+  removeInsertAttribSidecar(text);
   text.basePoint.x = t->getInsertionPoint().x;
   text.basePoint.y = t->getInsertionPoint().y;
   text.height = t->getHeight();
@@ -30973,6 +31588,8 @@ void RS_FilterDXFRW::writeText(RS_Text *t) {
     text.text =
         toDxfSingleLineString(t->getText(), m_dwgW == nullptr).toUtf8().data();
     if (m_dwgW) {
+      text.styleH.ref = dwgWriteHandleByName(m_dwgWriteTextStyleHandleByName,
+                                             text.style);
       if (!m_dwgW->writeText(&text))
         m_writeFailed = true;
       return;
