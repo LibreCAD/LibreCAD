@@ -23,15 +23,9 @@
 #ifndef LC_IMAGEEXPORTER_H
 #define LC_IMAGEEXPORTER_H
 
-#include <QObject>
-#include <QSize>
-#include <QString>
+#include <QSvgGenerator>
 
 class QFileDevice;
-class QIODevice;
-class QPaintDevice;
-class QPixmap;
-class QSvgGenerator;
 class RS_Painter;
 class LC_GraphicViewport;
 class RS_Graphic;
@@ -48,14 +42,7 @@ public:
         bool blackAndWhite = false;
     };
     explicit LC_ImageExporter(QObject* parent = nullptr);
-    /**
-     * Draws the graphic into options.fileName, as SVG or in a raster format
-     * QImageWriter knows. The file is put in place only once the whole image is
-     * written, so an export that fails leaves an existing file as it was.
-     * @return true if the file was written; otherwise errorString() says why.
-     */
     bool exportToImage(RS_Graphic* graphic, const ExportOptions& options);
-    QString errorString() const {return m_errorString;}
 protected:
     void prepareViewport(RS_Graphic* graphic, const ExportOptions& options, LC_GraphicViewport& viewport);
     void preparePainter(const ExportOptions& options, RS_Painter& painter);
@@ -64,7 +51,5 @@ protected:
     bool savePixmapToImage(const ExportOptions& options, const QPixmap &pixMap, QFileDevice& output);
     bool exportGraphicToImage(RS_Graphic* graphic, const ExportOptions& options, QFileDevice& output);
     bool renderGraphic(RS_Graphic* graphic, const ExportOptions& options, QPaintDevice* buffer, bool vector);
-private:
-    QString m_errorString;
 };
 #endif

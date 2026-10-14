@@ -317,15 +317,7 @@ static void touchGraphic(RS_Graphic* graphic){
 
 bool slotFileExport(RS_Graphic* graphic, const QString& name,
         const QString& format, const QSize& size, const QSize& borders, const bool black, const bool bw) {
-    // The same exporter as File > Export as image.
-    LC_ImageExporter::ExportOptions options;
-    options.fileName = name;
-    options.format = format;
-    options.size = size;
-    options.borders = borders;
-    options.backgroundBlack = black;
-    options.blackAndWhite = bw;
-    return LC_ImageExporter{}.exportToImage(graphic, options);
+    return LC_ImageExporter{}.exportToImage(graphic, {name, format, size, borders, black, bw});
 }
 
 /////////////////

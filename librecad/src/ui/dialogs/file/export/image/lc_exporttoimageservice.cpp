@@ -23,9 +23,6 @@
 
 #include "lc_exporttoimageservice.h"
 
-#include <QDir>
-#include <QMessageBox>
-
 #include "lc_appwindowdialogsinvoker.h"
 #include "lc_imageexporter.h"
 #include "qc_applicationwindow.h"
@@ -57,16 +54,13 @@ bool LC_ExportToImageService::exportGraphicsToImage(RS_Graphic* graphic, const Q
         LC_ImageExporter exporter;
 
         const bool ret = exporter.exportToImage(graphic, options);
-        QApplication::restoreOverrideCursor();
         if (ret) {
             const QString message = tr("Exported: %1").arg(fileName);
             m_appWin->showStatusMessage(message, 20000);
         } else {
             m_appWin->showStatusMessage(tr("Export failed!"), 2000);
-            QMessageBox::warning(m_appWin, tr("Export as image"),
-                                 tr("Could not export the drawing to %1.").arg(QDir::toNativeSeparators(fileName))
-                                 + "\n\n" + exporter.errorString());
         }
+        QApplication::restoreOverrideCursor();
         return ret;
     }
     return true;

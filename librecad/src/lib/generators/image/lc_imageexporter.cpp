@@ -57,17 +57,6 @@ protected:
     }
 };
 
-// A write the file takes only in part may leave no error behind.
-QString writeError(const QFileDevice& file) {
-    return file.error() == QFileDevice::NoError
-        ? LC_ImageExporter::tr("The file could not be written completely.")
-        : file.errorString();
-}
-
-QString drawError(const QSize& size) {
-    return LC_ImageExporter::tr("Could not draw an image of %1 x %2 pixels.").arg(size.width()).arg(size.height());
-}
-
 } // namespace
 
 LC_ImageExporter::LC_ImageExporter(QObject* parent)
@@ -84,22 +73,12 @@ bool LC_ImageExporter::exportToImage(RS_Graphic* graphic, const ExportOptions& o
     // 4) custom background color (i.e transparent)?
     // 5) only visible layers(?)
 
-    m_errorString.clear();
-    if (graphic == nullptr) {
-        m_errorString = tr("There is no drawing to export.");
-        return false;
-    }
-    if (options.size.isEmpty()) {
-        m_errorString = drawError(options.size);
+    if (graphic == nullptr || options.size.isEmpty()) {
         return false;
     }
 
-    // The image is written to a temporary file, which takes the place of the
-    // named one only once all of it is written: a failed export leaves an
-    // existing file as it was.
     WriteCheckingFile file{options.fileName};
     if (!file.open(QIODevice::WriteOnly)) {
-        m_errorString = file.errorString();
         return false;
     }
 
@@ -107,18 +86,8 @@ bool LC_ImageExporter::exportToImage(RS_Graphic* graphic, const ExportOptions& o
     const bool written = exportToSvg
         ? exportGraphicToSVG(graphic, options, file)
         : exportGraphicToImage(graphic, options, file);
-    if (!written) {
-        return false;
-    }
-
-    // commit() flushes what is still buffered, and before Qt 6.8.2 it puts the
-    // file in place even when that flush could not write everything
-    // (QTBUG-132332). Flush here, where the result can be seen.
-    if (file.error() != QFileDevice::NoError || !file.flush() || !file.commit()) {
-        m_errorString = writeError(file);
-        return false;
-    }
-    return true;
+    // Before Qt 6.8.2, commit() ignores a failed flush (QTBUG-132332).
+    return written && file.error() == QFileDevice::NoError && file.flush() && file.commit();
 }
 
 bool LC_ImageExporter::exportGraphicToSVG(RS_Graphic* graphic, const ExportOptions& options, QFileDevice& output) {
@@ -129,27 +98,19 @@ bool LC_ImageExporter::exportGraphicToSVG(RS_Graphic* graphic, const ExportOptio
 
 bool LC_ImageExporter::exportGraphicToImage(RS_Graphic* graphic, const ExportOptions& options, QFileDevice& output) {
     auto pixMap = QPixmap(options.size);
-    if (pixMap.isNull()) {
-        m_errorString = drawError(options.size);
-        return false;
-    }
-    return renderGraphic(graphic, options, &pixMap, false) && savePixmapToImage(options, pixMap, output);
+    return !pixMap.isNull() && renderGraphic(graphic, options, &pixMap, false)
+        && savePixmapToImage(options, pixMap, output);
 }
 
 bool LC_ImageExporter::savePixmapToImage(const ExportOptions& options, const QPixmap &pixMap, QFileDevice& output) {
     QImageWriter iio{&output, options.format.toLatin1()};
-    if (!iio.write(pixMap.toImage())) {
-        m_errorString = iio.errorString();
-        return false;
-    }
-    return true;
+    return iio.write(pixMap.toImage());
 }
 
 bool LC_ImageExporter::renderGraphic(RS_Graphic* graphic, const ExportOptions& options, QPaintDevice* buffer,
                                      const bool vector) {
     RS_Painter painter(buffer);
     if (!painter.isActive()) {
-        m_errorString = drawError(options.size);
         return false;
     }
     if (vector) {
@@ -174,11 +135,7 @@ bool LC_ImageExporter::renderGraphic(RS_Graphic* graphic, const ExportOptions& o
     renderer.render();
 
     // QSvgGenerator writes its document when painting ends, not at destruction.
-    if (!painter.end()) {
-        m_errorString = drawError(options.size);
-        return false;
-    }
-    return true;
+    return painter.end();
 }
 
 void LC_ImageExporter::preparePainter(const ExportOptions& options, RS_Painter& painter) {
