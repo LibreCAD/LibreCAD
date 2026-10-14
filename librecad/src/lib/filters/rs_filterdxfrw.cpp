@@ -11530,7 +11530,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   m_dxfLeftOutRawRecords = 0;
   m_dxfLeftOut.clear();
   m_shapeLeftOut.clear();
-  m_shapeExportDirectory = QFileInfo(file).absolutePath();
+  m_shapeExportDirectory = QFileInfo(file).absoluteDir().canonicalPath();
   m_exportAttribScaleDataLeftOut = 0;
   // What becomes of each block attribute's text is the same for every
   // callback of this export, the DWG handle pre-pass included.
@@ -15708,14 +15708,6 @@ void RS_FilterDXFRW::prepareDwgEntityHandleMap() {
   // SHAPEs follow the RS_Entity frames in each owner's allocation range;
   // their identities are selected only by the native metadata writer.
   const bool contiguousOwnerChains = m_dwgW->getVersion() <= DRW::AC1015;
-  const auto canonicalOwner = [](std::uint32_t handle) {
-    if (handle == DRW::NoHandle ||
-        handle == DRW::DxfModelSpaceBlockRecordHandle)
-      return DRW::DwgModelSpaceBlockRecordHandle;
-    if (handle == DRW::DxfPaperSpaceBlockRecordHandle)
-      return DRW::DwgPaperSpaceBlockRecordHandle;
-    return handle;
-  };
   std::map<std::uint32_t, std::vector<const DRW_Shape *>> shapesByOwner;
   std::map<std::string, std::vector<const DRW_Shape *>> shapesByBlockName;
   std::set<std::uint32_t> shapeHandles;
@@ -15730,7 +15722,7 @@ void RS_FilterDXFRW::prepareDwgEntityHandleMap() {
         shapesByBlockName[normalizeDwgTableName(prepared.ownerBlockName)]
             .push_back(&shape);
       } else {
-        shapesByOwner[canonicalOwner(shape.parentHandle)].push_back(&shape);
+        shapesByOwner[shape.parentHandle].push_back(&shape);
       }
     }
   }
@@ -20356,6 +20348,10 @@ void RS_FilterDXFRW::writeTextstyles() {
 }
 
 bool RS_FilterDXFRW::writeTextStyleRecord(DRW_Textstyle &textStyle) {
+  if (const auto path = m_shapeFileResolvedPaths.find(textStyle.handle);
+      path != m_shapeFileResolvedPaths.end()) {
+    textStyle.font = path->second.toStdString();
+  }
   if (m_dwgW != nullptr) {
     if (hasDxfTableAppDataUnsupportedByDwg(textStyle)) {
       RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -20376,11 +20372,6 @@ bool RS_FilterDXFRW::writeTextStyleRecord(DRW_Textstyle &textStyle) {
     }
     m_writeFailed = true;
     return false;
-  }
-  if (const auto path = m_shapeFileResolvedPaths.find(textStyle.handle);
-      path != m_shapeFileResolvedPaths.end()) {
-    textStyle.font = QDir(m_shapeExportDirectory)
-                         .relativeFilePath(path->second).toStdString();
   }
   return noteDxfWrite(m_dxfW->writeTextstyle(&textStyle));
 }
@@ -27594,11 +27585,14 @@ void RS_FilterDXFRW::writeAppId() {
   // preserves flags/application data and records the source-handle remap.
   emitRequired("ACAD"); // The codec owns this record and maps it to handle 12.
   const auto collectExtData = [&emitRequired](const auto &extData,
-                                               bool ofText = false) {
+                                              bool ofText = false) {
     for (const auto &value : extData) {
       const DRW_Variant *tag = nullptr;
       if constexpr (std::is_pointer_v<std::decay_t<decltype(value)>>)
         tag = value;
+      else if constexpr (std::is_same_v<std::decay_t<decltype(value)>,
+                                        DRW_Variant>)
+        tag = &value;
       else
         tag = value.get();
       std::string name;
@@ -27612,39 +27606,36 @@ void RS_FilterDXFRW::writeAppId() {
       }
     }
   };
-  std::vector<const RS_Entity *> pending{m_graphic};
+  const auto collectFromContainer = [&collectExtData](
+                                       const RS_EntityContainer *container) {
+    if (container == nullptr || container->getFlag(RS2::FlagDeleted))
+      return;
+    // Match the entity sweep, not the render caches inside text, INSERTs,
+    // dimensions, polylines and hatches. Nested INSERTs use block definitions.
+    for (const RS_Entity *entity :
+         lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
+      if (entity->getFlag(RS2::FlagDeleted))
+        continue;
+      const bool ofText = entity->rtti() == RS2::EntityText ||
+                          entity->rtti() == RS2::EntityMText;
+      collectExtData(entity->getDrwExtData(), ofText);
+      if (ofText) {
+        if (const auto attribute = extractInsertAttribSidecar(entity))
+          collectExtData(attribute->mtext.xdata);
+      }
+    }
+  };
+  collectFromContainer(m_graphic);
   for (unsigned index = 0; index < m_graphic->countBlocks(); ++index)
-    pending.push_back(m_graphic->blockAt(index));
-  std::unordered_set<const RS_Entity *> visited;
-  while (!pending.empty()) {
-    const RS_Entity *entity = pending.back();
-    pending.pop_back();
-    if (entity == nullptr || entity->getFlag(RS2::FlagDeleted) ||
-        !visited.insert(entity).second)
-      continue;
-    const bool ofText = entity->rtti() == RS2::EntityText ||
-                        entity->rtti() == RS2::EntityMText;
-    collectExtData(entity->getDrwExtData(), ofText);
-    if (ofText) {
-      if (const auto attribute = extractInsertAttribSidecar(entity))
-        collectExtData(attribute->mtext.xdata);
-    }
-    // INSERT children are a rendered cache. The block definitions above are
-    // the authoritative source, including nested block references.
-    if (entity->isContainer() && entity->rtti() != RS2::EntityInsert &&
-        entity->rtti() != RS2::EntityText &&
-        entity->rtti() != RS2::EntityMText &&
-        entity->rtti() != RS2::EntityHatch) {
-      for (const RS_Entity *child :
-           *static_cast<const RS_EntityContainer *>(entity))
-        pending.push_back(child);
-    }
-  }
+    collectFromContainer(m_graphic->blockAt(index));
 
-  const auto collectRecords = [&collectExtData](const auto &records) {
+  const auto collectRecords = [this, &collectExtData](const auto &records,
+                                                      bool ofDictionary = false) {
     for (const auto &record : records) {
       if (record.replayState ==
-          LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+              LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed &&
+          (!ofDictionary ||
+           m_dxfSuppressedObjectHandles.count(record.handle) == 0))
         collectExtData(record.extData);
     }
   };
@@ -27669,7 +27660,7 @@ void RS_FilterDXFRW::writeAppId() {
   collectRecords(metadata.modelerGeometry());
   collectRecords(metadata.fields());
   collectRecords(metadata.fieldLists());
-  collectRecords(metadata.dictionaries());
+  collectRecords(metadata.dictionaries(), true);
   collectRecords(metadata.xrecords());
   collectRecords(metadata.groups());
   collectRecords(metadata.mlineStyles());
@@ -27692,7 +27683,7 @@ void RS_FilterDXFRW::writeAppId() {
   collectRecords(metadata.spatialIndexes());
   collectRecords(metadata.layerIndexes());
   collectRecords(metadata.dictionaryVars());
-  collectRecords(metadata.dictionariesWithDefault());
+  collectRecords(metadata.dictionariesWithDefault(), true);
   collectRecords(metadata.sortEntsTables());
   collectRecords(metadata.underlayDefinitions());
   collectRecords(metadata.imageDefinitions());
@@ -27730,20 +27721,19 @@ void RS_FilterDXFRW::writeAppId() {
             style->getName().toStdString()))
       collectExtData(source->extData);
   }
-  const auto collectRawGroups = [&emitRequired](const auto &groups) {
-    for (const DRW_Variant &value : groups) {
-      std::string name;
-      if (readXDataMarker(&value, name) == XDataReadResult::Valid &&
-          !name.empty())
-        emitRequired(name);
-    }
-  };
-  for (const auto &record : metadata.rawDxfObjects())
-    collectRawGroups(record.groups);
-  for (const auto &record : metadata.rawDxfEntities())
-    collectRawGroups(record.groups);
-  for (const auto &section : metadata.rawDxfSections())
-    collectRawGroups(section.m_groups);
+  for (const auto &record : metadata.rawDxfObjects()) {
+    if (replaysInDxfExport(record.m_version) &&
+        m_dxfSuppressedObjectHandles.count(record.handle) == 0)
+      collectExtData(record.groups);
+  }
+  for (const auto &record : metadata.rawDxfEntities()) {
+    if (replaysInDxfExport(record.m_version))
+      collectExtData(record.groups);
+  }
+  for (const auto &section : metadata.rawDxfSections()) {
+    if (replaysInDxfExport(section.m_version))
+      collectExtData(section.m_groups);
+  }
 
   // These applications are generated by prepareDRWDimStyleExtData(), after
   // this callback. Entity sidecar markers are discovered from the document.
@@ -28101,7 +28091,7 @@ void RS_FilterDXFRW::prepareShapesForExport() {
         if (inserted)
           it->second = LC_ShxShapeNames::read(path);
         if (it->second)
-          m_shapeFileResolvedPaths[style.handle] = QFileInfo(path).absoluteFilePath();
+          m_shapeFileResolvedPaths[style.handle] = QFileInfo(path).canonicalFilePath();
         return it->second ? &*it->second : nullptr;
       }
       return nullptr;
@@ -28151,7 +28141,10 @@ void RS_FilterDXFRW::prepareShapesForExport() {
         else if (name == "*PAPER_SPACE")
           shape.parentHandle = DRW::DwgPaperSpaceBlockRecordHandle;
       }
-      for (unsigned i = 0; i < m_graphic->countBlocks(); ++i) {
+      // A source space handle may normalize to an unrelated block's source
+      // handle. Match ordinary blocks only while still in source identity.
+      for (unsigned i = 0; space == metadata.spaceBlockRecords().end() &&
+                           i < m_graphic->countBlocks(); ++i) {
         const RS_Block *block = m_graphic->blockAt(i);
         if (block == nullptr || block->isDeleted())
           continue;
@@ -28188,26 +28181,9 @@ void RS_FilterDXFRW::prepareShapesForExport() {
       if (const auto it = metadata.textStyles().find(rec.shapeFileHandle);
           it != metadata.textStyles().end() && (it->second.flags & 1) != 0)
         style = &it->second;
-      if (m_dxfW != nullptr) {
-        if (rec.shapeFileHandle == 0) {
-          shape.m_styleName = rec.styleName; // Already a DXF glyph name.
-        } else if (style != nullptr) {
-          if (const auto *names = namesFor(*style, rec.sourceDirectory)) {
-            if (const auto it = names->find(rec.shapeIndex); it != names->end())
-              shape.m_styleName = it->second;
-          }
-        }
-        if (shape.m_styleName.empty())
-          ++m_shapeLeftOut["SHAPE without a name"];
-        else
-          m_shapesToExport.push_back({std::move(shape), ownerBlockName});
-        continue;
-      }
-#ifdef DWGSUPPORT
-      if (m_dwgW == nullptr)
-        continue;
       // A DXF has no numeric index or STYLE reference. Resolve its glyph
       // against the available shape-file directories, rejecting ambiguity.
+      // This also locates its SHX for DXF Save As into another directory.
       if (rec.shapeFileHandle == 0 && !rec.styleName.empty()) {
         bool ambiguous = false;
         for (const auto &[handle, candidate] : metadata.textStyles()) {
@@ -28229,6 +28205,24 @@ void RS_FilterDXFRW::prepareShapesForExport() {
         if (ambiguous)
           style = nullptr;
       }
+      const auto *names = style != nullptr
+                              ? namesFor(*style, rec.sourceDirectory) : nullptr;
+      if (m_dxfW != nullptr) {
+        if (rec.shapeFileHandle == 0) {
+          shape.m_styleName = rec.styleName; // Already a DXF glyph name.
+        } else if (names != nullptr) {
+          if (const auto it = names->find(rec.shapeIndex); it != names->end())
+            shape.m_styleName = it->second;
+        }
+        if (shape.m_styleName.empty())
+          ++m_shapeLeftOut["SHAPE without a name"];
+        else
+          m_shapesToExport.push_back({std::move(shape), ownerBlockName});
+        continue;
+      }
+#ifdef DWGSUPPORT
+      if (m_dwgW == nullptr)
+        continue;
       if (style == nullptr || shape.m_shapeIndex == 0) {
         ++m_shapeLeftOut["SHAPE without a resolved shape-file STYLE or index"];
         continue;

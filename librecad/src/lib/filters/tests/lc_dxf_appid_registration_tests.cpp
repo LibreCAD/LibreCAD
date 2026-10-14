@@ -5,6 +5,7 @@
  */
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
 
 #include <algorithm>
 #include <cctype>
@@ -19,6 +20,7 @@
 #include "lc_drwnullinterface.h"
 #include "lc_filtertestsupport.h"
 #include "libdxfrw.h"
+#include "rs_polyline.h"
 
 namespace {
 
@@ -167,9 +169,22 @@ TEST_CASE("DXF registers sidecar applications generated on import", "[dxf][appid
     RS_Graphic drawing;
     REQUIRE(lc::test::importDrawing(drawing, source, RS2::FormatDXFRW));
     REQUIRE(drawing.count() >= 6);
+    std::size_t previewChildren = 0;
+    for (RS_Entity *entity : drawing) {
+        if (auto *polyline = dynamic_cast<RS_Polyline *>(entity)) {
+            for (RS_Entity *child : *polyline) {
+                child->setDrwExtData({
+                    std::make_shared<DRW_Variant>(1001, "APPID.PREVIEW_ONLY"),
+                    std::make_shared<DRW_Variant>(1000, "render-cache payload")});
+                ++previewChildren;
+            }
+        }
+    }
+    REQUIRE(previewChildren > 0);
     const auto exported = output.file("exported.dxf");
     REQUIRE(lc::test::exportDrawing(drawing, exported, RS2::FormatDXFRW2013));
     const auto applications = checkRegisteredXData(exported);
+    CHECK(applications.count("APPID.PREVIEW_ONLY") == 0);
     CHECK(lc::test::dxfRecords(exported, "PDFUNDERLAY").size() == 1);
     CHECK(lc::test::dxfRecords(exported, "PDFDEFINITION").size() == 1);
     for (const char* name : {"LibreCAD_SOLID", "LibreCAD_LWPOLYLINE", "LibreCAD_MLINE",
@@ -182,6 +197,57 @@ TEST_CASE("DXF registers sidecar applications generated on import", "[dxf][appid
     const auto secondSave = output.file("second-save.dxf");
     REQUIRE(lc::test::exportDrawing(reopened, secondSave, RS2::FormatDXFRW2013));
     checkRegisteredXData(secondSave);
+}
+
+TEST_CASE("DXF registers private marker names only for retained XDATA", "[dxf][appid-registration]") {
+    lc::test::ensureSettings();
+    lc::test::QuietLog quiet;
+    const auto retainedCarrier = GENERATE(0, 1, 2); // None, LINE, opaque OBJECT.
+    CAPTURE(retainedCarrier);
+    lc::test::OutputDirectory output("lc_dxf_appid_private");
+    const auto source = output.file("source.dxf");
+    const std::vector<std::string> privateNames{
+        "LibreCAD_INSERT_ATTRIB", "LibreCAD_INSERT_ATTRIB_MTEXT",
+        "LibreCAD_INSERT_ATTRIB_MTEXT_XDATA", "LibreCAD_INSERT_ATTRIB_MTEXT_COMMON"};
+    std::string privateXData;
+    for (const auto &name : privateNames)
+        privateXData += "1001\n" + name + "\n1000\nprivate payload\n";
+    std::string fixture =
+        "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1027\n0\nENDSEC\n"
+        "0\nSECTION\n2\nENTITIES\n"
+        "0\nTEXT\n5\n900\n8\n0\n10\n0\n20\n0\n40\n1\n1\nText\n" + privateXData +
+        "1001\nRetained.Text\n1000\ntext payload\n"
+        "0\nMTEXT\n5\n901\n8\n0\n10\n0\n20\n2\n40\n1\n1\nMText\n" + privateXData +
+        "1001\nRetained.MText\n1000\nmtext payload\n";
+    if (retainedCarrier == 1)
+        fixture += "0\nLINE\n5\n902\n8\n0\n10\n0\n20\n0\n11\n1\n21\n1\n" + privateXData;
+    fixture += "0\nENDSEC\n";
+    if (retainedCarrier == 2)
+        fixture += "0\nSECTION\n2\nOBJECTS\n0\nAPPID_TEST_OPAQUE\n5\nA00\n" + privateXData +
+                   "0\nENDSEC\n";
+    fixture += "0\nEOF\n";
+    writeFixture(source, fixture);
+    RS_Graphic drawing;
+    REQUIRE(lc::test::importDrawing(drawing, source, RS2::FormatDXFRW));
+    const auto exported = output.file("exported.dxf");
+    REQUIRE(lc::test::exportDrawing(drawing, exported, RS2::FormatDXFRW2013));
+    const auto applications = checkRegisteredXData(exported);
+    CHECK(applications.count("RETAINED.TEXT") == 1);
+    CHECK(applications.count("RETAINED.MTEXT") == 1);
+    for (const auto &name : privateNames) {
+        CAPTURE(name);
+        CHECK(applications.count(normalizedName(name)) == (retainedCarrier == 0 ? 0 : 1));
+    }
+    std::set<std::string> retainedNames;
+    for (const auto &record : lc::test::dxfRecords(exported)) {
+        for (const auto &name : record.own(1001)) {
+            if (std::find(privateNames.begin(), privateNames.end(), name) == privateNames.end())
+                continue;
+            CHECK(record.type() == (retainedCarrier == 1 ? "LINE" : "APPID_TEST_OPAQUE"));
+            retainedNames.insert(name);
+        }
+    }
+    CHECK(retainedNames.size() == (retainedCarrier == 0 ? 0 : privateNames.size()));
 }
 
 TEST_CASE("DXF registers nested and duplicate XDATA names using imported APPID identities",
@@ -294,4 +360,54 @@ TEST_CASE("DXF registers dimension XDATA generated after the APPID table", "[dxf
         CHECK(generated.count(name) == 1);
         CHECK(applications.count(name) == 1);
     }
+}
+
+TEST_CASE("DXF APPID collection follows raw replay and typed fallback policies", "[dxf][appid-registration]") {
+    lc::test::ensureSettings();
+    lc::test::QuietLog quiet;
+    const auto format = GENERATE(RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
+    const auto groupType = GENERATE("DICTIONARY", "ACDBDICTIONARYWDFLT");
+    CAPTURE(format, groupType);
+    lc::test::OutputDirectory output("lc_dxf_appid_replay");
+    const auto source = output.file("source.dxf");
+    writeFixture(source,
+        "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1027\n0\nENDSEC\n"
+        "0\nSECTION\n2\nENTITIES\n"
+        "0\nAPPID_TEST_ENTITY\n5\nA01\n1001\nRaw.Entity\n1000\nentity payload\n"
+        "0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n"
+        "0\nDICTIONARY\n5\nC\n330\n0\n281\n1\n3\nACAD_GROUP\n350\nA10\n"
+        "0\n" + std::string(groupType) + "\n5\nA10\n330\nC\n281\n1\n" +
+        (std::string(groupType) == "ACDBDICTIONARYWDFLT" ? "340\nA02\n" : "") +
+        "1001\nSuppressed.Group\n1000\ngroup payload\n"
+        "0\nAPPID_TEST_OPAQUE\n5\nA02\n1001\nRaw.Object\n1000\nobject payload\n"
+        "0\nSUN\n5\nA04\n90\n1\n290\n1\n40\n1\n1001\nTyped.Sun\n1000\nsun payload\n"
+        "0\nENDSEC\n0\nSECTION\n2\nAPPID_TEST_SECTION\n"
+        "0\nAPPID_TEST_RECORD\n5\nA03\n1001\nRaw.Section\n1000\nsection payload\n"
+        "0\nENDSEC\n0\nEOF\n");
+    RS_Graphic drawing;
+    REQUIRE(lc::test::importDrawing(drawing, source, RS2::FormatDXFRW));
+    REQUIRE(drawing.dwgAdvancedMetadata().rawDxfEntities().size() == 1);
+    REQUIRE(drawing.dwgAdvancedMetadata().rawDxfSections().size() == 1);
+    REQUIRE(drawing.dwgAdvancedMetadata().suns().size() == 1);
+    const auto &rawObjects = drawing.dwgAdvancedMetadata().rawDxfObjects();
+    REQUIRE(std::any_of(rawObjects.begin(), rawObjects.end(), [](const auto &record) {
+        return record.handle == 0xA10;
+    }));
+    const auto exported = output.file("exported.dxf");
+    REQUIRE(lc::test::exportDrawing(drawing, exported, format));
+    const auto applications = checkRegisteredXData(exported);
+    const std::size_t rawCount = format == RS2::FormatDXFRW2013 ? 1 : 0;
+    for (const char *name : {"RAW.ENTITY", "RAW.OBJECT", "RAW.SECTION"}) {
+        CAPTURE(name);
+        CHECK(applications.count(name) == rawCount);
+    }
+    CHECK(lc::test::dxfRecords(exported, "APPID_TEST_ENTITY").size() == rawCount);
+    CHECK(lc::test::dxfRecords(exported, "APPID_TEST_OPAQUE").size() == rawCount);
+    CHECK(lc::test::dxfRecords(exported, "APPID_TEST_RECORD").size() == rawCount);
+    CHECK(applications.count("SUPPRESSED.GROUP") == 0);
+    CHECK(applications.count("TYPED.SUN") == 1);
+    REQUIRE(lc::test::dxfRecords(exported, "SUN").size() == 1);
+    CHECK(lc::test::dxfRecords(exported, "SUN").front().own(1001) == std::vector<std::string>{"Typed.Sun"});
+    RS_Graphic reopened;
+    REQUIRE(lc::test::importDrawing(reopened, exported, RS2::FormatDXFRW));
 }

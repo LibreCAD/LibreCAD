@@ -40,7 +40,9 @@
 #include <string>
 
 #include <QCoreApplication>
+#include <QDir>
 #include <QFile>
+#include <QFileInfo>
 #include <QString>
 #include <QTemporaryDir>
 
@@ -372,6 +374,94 @@ TEST_CASE("a DWG SHAPE gets its DXF glyph name from its SHX file",
 }
 
 #ifdef DWGSUPPORT
+TEST_CASE("SHAPE export keeps a local SHX reachable from a different directory",
+          "[dwg][dxf][filter][shape][shx][roundtrip]") {
+    ensureSettings();
+    const auto format = GENERATE(RS2::FormatDXFRW, RS2::FormatDWG2018);
+    const bool named = GENERATE(false, true);
+    const bool symlinkedOutput = GENERATE(false, true);
+    QTemporaryDir source;
+    QTemporaryDir destination;
+    REQUIRE(source.isValid());
+    REQUIRE(destination.isValid());
+    QString outputDirectory = destination.path();
+    if (symlinkedOutput) {
+        outputDirectory = source.filePath("output-link");
+        std::error_code error;
+        std::filesystem::create_directory_symlink(destination.path().toStdString(),
+                                                  outputDirectory.toStdString(), error);
+        if (error)
+            SKIP("Directory symlinks are unavailable on this system");
+    }
+    QFile shx(source.filePath("symbols.shx"));
+    REQUIRE(shx.open(QIODevice::WriteOnly));
+    REQUIRE(shx.write(shapeFileBytes()) == shapeFileBytes().size());
+    shx.close();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    graphic.setFilename(source.filePath("source.dxf"));
+    addShapeFileStyle(graphic, "symbols.shx");
+    if (named) {
+        DRW_Shape shape;
+        shape.handle = 0x889;
+        shape.m_styleName = "MY-SHAPE";
+        graphic.dwgAdvancedMetadata().addShape(shape);
+    } else {
+        addNumberedShape(graphic);
+    }
+    const QString out = QDir(outputDirectory).filePath(format == RS2::FormatDXFRW
+                                                         ? "shape.dxf" : "shape.dwg");
+    RS_FilterDXFRW writer;
+    REQUIRE(writer.fileExport(graphic, out, format));
+    CHECK(writer.exportReport().isEmpty());
+    RS_Graphic reopened;
+    RS_FilterDXFRW reader;
+    REQUIRE(reader.fileImport(reopened, out, format));
+    REQUIRE(reopened.dwgAdvancedMetadata().shapes().size() == 1);
+    bool foundStyle = false;
+    for (const auto &[handle, style] : reopened.dwgAdvancedMetadata().textStyles()) {
+        if ((style.flags & 1) == 0)
+            continue;
+        foundStyle = true;
+        CHECK(QFileInfo(QString::fromStdString(style.font)).isAbsolute());
+        CHECK(QFileInfo(QDir(destination.path()).filePath(QString::fromStdString(style.font)))
+                  .canonicalFilePath() == QFileInfo(shx.fileName()).canonicalFilePath());
+    }
+    CHECK(foundStyle);
+}
+
+TEST_CASE("SHAPE space ownership is resolved before structural handle aliases",
+          "[dwg][dxf][filter][shape][roundtrip]") {
+    ensureSettings();
+    const auto format = GENERATE(RS2::FormatDXFRW, RS2::FormatDWG,
+                                 RS2::FormatDWG2018);
+    QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    QFile shx(dir.filePath("symbols.shx"));
+    REQUIRE(shx.open(QIODevice::WriteOnly));
+    REQUIRE(shx.write(shapeFileBytes()) == shapeFileBytes().size());
+    shx.close();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto *block = new RS_Block(&graphic, RS_BlockData("Symbols", RS_Vector(0., 0.), false));
+    block->setSourceHandle(DRW::DwgModelSpaceBlockRecordHandle);
+    graphic.addBlock(block);
+    graphic.dwgAdvancedMetadata().addSpaceBlockRecord(0x700, "*Model_Space");
+    addShapeFileStyle(graphic, "symbols.shx");
+    addNumberedShape(graphic, 0x889, 0x887, 0x700);
+    const QString out = dir.filePath(format == RS2::FormatDXFRW ? "shape.dxf" : "shape.dwg");
+    RS_FilterDXFRW writer;
+    REQUIRE(writer.fileExport(graphic, out, format));
+    CHECK(writer.exportReport().isEmpty());
+    RS_Graphic reopened;
+    RS_FilterDXFRW reader;
+    REQUIRE(reader.fileImport(reopened, out, format));
+    const auto &shapes = reopened.dwgAdvancedMetadata().shapes();
+    REQUIRE(shapes.size() == 1);
+    CHECK(shapes.front().ownerBlockName.empty());
+    CHECK(shapes.front().space == DRW::ModelSpace);
+}
+
 TEST_CASE("DWG export preserves SHAPE indices and unnamed shape-file STYLEs",
           "[dwg][filter][shape][roundtrip]") {
     ensureSettings();
@@ -388,7 +478,8 @@ TEST_CASE("DWG export preserves SHAPE indices and unnamed shape-file STYLEs",
     addShapeFileStyle(graphic, "missing-second.shx", 0x987);
     addNumberedShape(graphic);
     addNumberedShape(graphic, 0x989, 0x987);
-    const QString out = dir.filePath("shapes.dwg");
+    const QString out = QDir(qEnvironmentVariable("LIBRECAD_SHAPE_OUTPUT", dir.path()))
+                            .filePath(QStringLiteral("shapes-%1.dwg").arg(format));
     RS_FilterDXFRW filter;
     REQUIRE(filter.fileExport(graphic, out, format));
     CHECK(filter.exportReport().isEmpty());
