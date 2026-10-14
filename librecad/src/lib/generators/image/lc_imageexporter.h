@@ -25,6 +25,7 @@
 
 #include <QSvgGenerator>
 
+class QFileDevice;
 class RS_Painter;
 class LC_GraphicViewport;
 class RS_Graphic;
@@ -37,18 +38,18 @@ public:
         QString format;
         QSize size;
         QSize borders;
-        bool backgroundBlack;
-        bool blackAndWhite;
+        bool backgroundBlack = false;
+        bool blackAndWhite = false;
     };
     explicit LC_ImageExporter(QObject* parent = nullptr);
     bool exportToImage(RS_Graphic* graphic, const ExportOptions& options);
 protected:
     void prepareViewport(RS_Graphic* graphic, const ExportOptions& options, LC_GraphicViewport& viewport);
     void preparePainter(const ExportOptions& options, RS_Painter& painter);
-    void prepareSVGGenerator(const ExportOptions& options, QSize size, QSvgGenerator& svgGenerator);
-    bool exportGraphicToSVG(RS_Graphic* graphic, const ExportOptions& options);
-    bool savePixmapToImage(const ExportOptions& options, const QPixmap &pixMap);
-    bool exportGraphicToImage(RS_Graphic* graphic, const ExportOptions& options);
-    void renderGraphic(RS_Graphic* graphic, const ExportOptions& options, QPaintDevice* buffer);
+    void prepareSVGGenerator(const ExportOptions& options, QSvgGenerator& svgGenerator, QIODevice* output);
+    bool exportGraphicToSVG(RS_Graphic* graphic, const ExportOptions& options, QFileDevice& output);
+    bool savePixmapToImage(const ExportOptions& options, const QPixmap &pixMap, QFileDevice& output);
+    bool exportGraphicToImage(RS_Graphic* graphic, const ExportOptions& options, QFileDevice& output);
+    bool renderGraphic(RS_Graphic* graphic, const ExportOptions& options, QPaintDevice* buffer, bool vector);
 };
 #endif

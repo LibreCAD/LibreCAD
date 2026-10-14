@@ -543,3 +543,32 @@ TEST_CASE("image export draws black and white entities in white on a black backg
     CHECK((image.pixel(0, 0) & 0xffffff) == 0);
     CHECK(countPixels(image, qRgb(255, 255, 255)) > 300);
 }
+
+TEST_CASE("print renderer survives a painter that could not begin", "[gui][print]") {
+    (void)application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    // Narrower than a pixel at this scale: the renderer asks the paint engine
+    // whether it writes SVG, which keeps such a pen.
+    auto* line = new RS_Line(&graphic, RS_Vector(0, 0), RS_Vector(1000, 0));
+    line->setPen(RS_Pen(RS_Color(0, 0, 0), RS2::Width07, RS2::SolidLine));
+    graphic.addEntity(line);
+
+    // As on an SVG generator whose file could not be opened.
+    QPixmap nothing;
+    RS_Painter painter(&nothing);
+    REQUIRE_FALSE(painter.isActive());
+    REQUIRE(painter.paintEngine() == nullptr);
+    LC_GraphicViewport viewport;
+    viewport.setSize(200, 200);
+    viewport.setBorders(10, 10, 10, 10);
+    viewport.setDocument(&graphic);
+    viewport.loadSettings();
+    viewport.zoomAuto(false);
+    LC_PrintViewportRenderer renderer(&viewport, &painter);
+    renderer.loadSettings();
+    renderer.setBackground(Qt::white);
+    renderer.render();
+
+    CHECK_FALSE(painter.isActive());
+}

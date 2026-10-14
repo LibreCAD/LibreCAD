@@ -24,12 +24,40 @@
 #include "lc_imageexporter.h"
 
 #include <QImageWriter>
+#include <QPixmap>
+#include <QSaveFile>
 #include <QSvgGenerator>
 
 #include "lc_graphicviewport.h"
 #include "lc_printviewportrenderer.h"
 #include "rs_graphic.h"
 #include "rs_painter.h"
+
+namespace {
+
+// Some encoders ignore short writes or failed seeks. Cancel the transaction
+// permanently, while retaining real file seeking for formats such as TIFF.
+class WriteCheckingFile final : public QSaveFile {
+public:
+    using QSaveFile::QSaveFile;
+
+    bool seek(const qint64 position) override {
+        const bool result = QSaveFile::seek(position);
+        if (!result)
+            cancelWriting();
+        return result;
+    }
+
+protected:
+    qint64 writeData(const char* data, const qint64 size) override {
+        const qint64 written = QSaveFile::writeData(data, size);
+        if (written != size)
+            cancelWriting();
+        return written;
+    }
+};
+
+} // namespace
 
 LC_ImageExporter::LC_ImageExporter(QObject* parent)
     : QObject{parent} {
@@ -45,49 +73,54 @@ bool LC_ImageExporter::exportToImage(RS_Graphic* graphic, const ExportOptions& o
     // 4) custom background color (i.e transparent)?
     // 5) only visible layers(?)
 
+    if (graphic == nullptr || options.size.isEmpty()) {
+        return false;
+    }
+
+    WriteCheckingFile file{options.fileName};
+    if (!file.open(QIODevice::WriteOnly)) {
+        return false;
+    }
+
     const bool exportToSvg = options.format.toLower() == "svg";
-    if (exportToSvg) {
-        return exportGraphicToSVG(graphic, options);
-    }
-    return exportGraphicToImage(graphic,options);
+    const bool written = exportToSvg
+        ? exportGraphicToSVG(graphic, options, file)
+        : exportGraphicToImage(graphic, options, file);
+    // Before Qt 6.8.2, commit() ignores a failed flush (QTBUG-132332).
+    return written && file.error() == QFileDevice::NoError && file.flush() && file.commit();
 }
 
-bool LC_ImageExporter::exportGraphicToSVG(RS_Graphic* graphic, const ExportOptions& options) {
-    const QSize size = options.size;
+bool LC_ImageExporter::exportGraphicToSVG(RS_Graphic* graphic, const ExportOptions& options, QFileDevice& output) {
     QSvgGenerator svgGenerator;
-    prepareSVGGenerator(options, size, svgGenerator);
-    QPaintDevice* buffer = &svgGenerator;
-    renderGraphic(graphic, options, buffer);
-    return true;
+    prepareSVGGenerator(options, svgGenerator, &output);
+    return renderGraphic(graphic, options, &svgGenerator, true);
 }
 
-bool LC_ImageExporter::exportGraphicToImage(RS_Graphic* graphic, const ExportOptions& options) {
-    const QSize size = options.size;
-    auto pixMap = QPixmap(size);
-    QPaintDevice* buffer = &pixMap;
-    renderGraphic(graphic, options, buffer);
-    return savePixmapToImage(options, pixMap);
+bool LC_ImageExporter::exportGraphicToImage(RS_Graphic* graphic, const ExportOptions& options, QFileDevice& output) {
+    auto pixMap = QPixmap(options.size);
+    return !pixMap.isNull() && renderGraphic(graphic, options, &pixMap, false)
+        && savePixmapToImage(options, pixMap, output);
 }
 
-bool LC_ImageExporter::savePixmapToImage(const ExportOptions& options, const QPixmap &pixMap) {
-    const QImage img = pixMap.toImage();
-    QImageWriter iio;
-    iio.setFileName(options.fileName);
-    iio.setFormat(options.format.toLatin1());
-
-    bool ret = false;
-    if (iio.write(img)) {
-        ret = true;
-    }
-    else {
-        //  QString error=iio.errorString();
-        // fixme - sand - files - add error reporting
-    }
-    return ret;
+bool LC_ImageExporter::savePixmapToImage(const ExportOptions& options, const QPixmap &pixMap, QFileDevice& output) {
+    QImageWriter iio{&output, options.format.toLatin1()};
+    return iio.write(pixMap.toImage());
 }
 
-void LC_ImageExporter::renderGraphic(RS_Graphic* graphic, const ExportOptions& options, QPaintDevice* buffer) {
+bool LC_ImageExporter::renderGraphic(RS_Graphic* graphic, const ExportOptions& options, QPaintDevice* buffer,
+                                     const bool vector) {
     RS_Painter painter(buffer);
+    if (!painter.isActive()) {
+        return false;
+    }
+    if (vector) {
+        // Vector detail must survive zooming, even when smaller than a pixel.
+        painter.setMinCircleDrawingRadius(0.0);
+        painter.setMinArcDrawingRadius(0.0);
+        painter.setMinEllipseMajorRadius(0.0);
+        painter.setMinEllipseMinorRadius(0.0);
+        painter.setMinLineDrawingLen(0.0);
+    }
     preparePainter(options, painter);
 
     // fixme - sand - rework to more generic printing (add progress or confirmation ?)
@@ -97,23 +130,25 @@ void LC_ImageExporter::renderGraphic(RS_Graphic* graphic, const ExportOptions& o
     auto renderer = LC_PrintViewportRenderer(&viewport, &painter);
     renderer.loadSettings(); // sets white paper
     renderer.setBackground(options.backgroundBlack ? Qt::black : Qt::white);
+    renderer.setDrawingMode(options.blackAndWhite
+        ? (options.backgroundBlack ? RS2::ModeWB : RS2::ModeBW) : RS2::ModeAuto);
     renderer.render();
+
+    // QSvgGenerator writes its document when painting ends, not at destruction.
+    return painter.end();
 }
 
 void LC_ImageExporter::preparePainter(const ExportOptions& options, RS_Painter& painter) {
     const bool black = options.backgroundBlack;
     painter.setBackground(black ? Qt::black : Qt::white);
-    if (options.blackAndWhite) {
-        painter.setDrawingMode(black ? RS2::ModeWB : RS2::ModeBW);
-    }
     painter.eraseRect(0, 0, options.size.width(), options.size.height());
 }
 
-void LC_ImageExporter::prepareSVGGenerator(const ExportOptions& options, const QSize size,
-                                           QSvgGenerator& svgGenerator) {
-    svgGenerator.setSize(size);
-    svgGenerator.setViewBox(QRectF(QPointF(0, 0), size));
-    svgGenerator.setFileName(options.fileName);
+void LC_ImageExporter::prepareSVGGenerator(const ExportOptions& options,
+                                           QSvgGenerator& svgGenerator, QIODevice* output) {
+    svgGenerator.setSize(options.size);
+    svgGenerator.setViewBox(QRectF(QPointF(0, 0), options.size));
+    svgGenerator.setOutputDevice(output);
 }
 
 void LC_ImageExporter::prepareViewport(RS_Graphic* graphic, const ExportOptions& options, LC_GraphicViewport &viewport) {
@@ -122,6 +157,6 @@ void LC_ImageExporter::prepareViewport(RS_Graphic* graphic, const ExportOptions&
     const auto borderHeight = options.borders.height();
     viewport.setBorders(borderWidth, borderHeight, borderWidth, borderHeight);
     viewport.setDocument(graphic);
-    viewport.zoomAuto(false);
     viewport.loadSettings();
+    viewport.zoomAuto(false);
 }
