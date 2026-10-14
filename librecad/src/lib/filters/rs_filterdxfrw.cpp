@@ -12115,6 +12115,18 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         m_dxfW->reserveHandle(e.handle);
       registerClassFor(e.name); // custom ENTITIES need a CLASS too
     }
+    // These polylines are written as native underlays by writeEntities().
+    for (RS_Entity *entity :
+         lc::LC_ContainerTraverser{g, RS2::ResolveNone}.entities()) {
+      DwgUnderlaySidecar sidecar;
+      if (!entity->getFlag(RS2::FlagDeleted) &&
+          parseDwgUnderlaySidecar(entity, sidecar)) {
+        const auto kind = sidecar.value.kind;
+        registerClassFor(kind == DRW_Underlay::DGN ? "DGNUNDERLAY"
+                         : kind == DRW_Underlay::DWF ? "DWFUNDERLAY"
+                                                    : "PDFUNDERLAY");
+      }
+    }
     std::vector<DRW_RawDxfSection> rawSections;
     for (const DRW_RawDxfSection &section : metadata.rawDxfSections()) {
       if (replaysInDxfExport(section.m_version))

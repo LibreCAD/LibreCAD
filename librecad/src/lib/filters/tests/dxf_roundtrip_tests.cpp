@@ -1983,6 +1983,79 @@ TEST_CASE("DXF filter preserves fixture-backed EED binary items",
   std::filesystem::remove(out2);
 }
 
+TEST_CASE("DXF filter registers CLASS records for reconstructed underlays",
+          "[dxf][roundtrip][filter][classes][underlay]") {
+  ensureSettings();
+  lc::test::QuietLog quiet;
+  lc::test::OutputDirectory directory("underlay_classes");
+  const auto [kind, className] = GENERATE(table<std::string, std::string>({
+      {"PDF", "AcDbPdfReference"}, {"DGN", "AcDbDgnReference"},
+      {"DWF", "AcDbDwfReference"}}));
+  const auto [format, acadVersion] = GENERATE(table<RS2::FormatType, std::string>({
+      {RS2::FormatDXFRW14, "AC1014"}, {RS2::FormatDXFRW2000, "AC1015"},
+      {RS2::FormatDXFRW2004, "AC1018"}, {RS2::FormatDXFRW, "AC1021"},
+      {RS2::FormatDXFRW2010, "AC1024"}, {RS2::FormatDXFRW2013, "AC1027"},
+      {RS2::FormatDXFRW2018, "AC1032"},
+      {RS2::FormatDXFRW12, "AC1021"}}));
+  const bool sourceClass = GENERATE(false, true);
+  CAPTURE(kind, acadVersion, format, sourceClass);
+  const std::string recordName = kind + "UNDERLAY";
+  std::string source = "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\n" +
+                       acadVersion + "\n0\nENDSEC\n";
+  if (sourceClass) {
+    source += "0\nSECTION\n2\nCLASSES\n0\nCLASS\n1\n" + recordName +
+              "\n2\n" + className + "\n3\nUNDERLAY_TEST\n90\n4095\n";
+    if (acadVersion >= "AC1018")
+      source += "91\n7\n";
+    source += "280\n1\n281\n1\n0\nENDSEC\n";
+  }
+  source += "0\nSECTION\n2\nENTITIES\n";
+  for (const char* handle : {"101", "102", "103"}) {
+    source += "0\n" + recordName + "\n5\n" + handle +
+              "\n8\n0\n100\nAcDbUnderlayReference\n340\n200\n"
+              "10\n0\n20\n0\n30\n0\n280\n2\n281\n100\n282\n0\n";
+  }
+  source += "0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n0\n" + kind +
+            "DEFINITION\n5\n200\n330\n0\n100\nAcDbUnderlayDefinition\n"
+            "1\nsheet\n2\n1\n0\nENDSEC\n0\nEOF\n";
+  const auto input = directory.file("source.dxf");
+  writeText(input.string(), source);
+  RS_Graphic graphic;
+  REQUIRE(lc::test::importDrawing(graphic, input, RS2::FormatDXFRW));
+  REQUIRE(graphic.getEntityList().size() == 3);
+  graphic.getEntityList().back()->setFlag(RS2::FlagDeleted);
+
+  const auto output = directory.file("output.dxf");
+  REQUIRE(lc::test::exportDrawing(graphic, output, format));
+  if (format == RS2::FormatDXFRW12) {
+    CHECK_FALSE(containsLine(output.string(), "CLASSES"));
+    CHECK(countRecords(output.string(), recordName) == 0);
+    return;
+  }
+  CHECK(countRecords(output.string(), recordName) == 2);
+  int classCount = 0;
+  for (const auto& cls : lc::test::dxfRecords(output, "CLASS")) {
+    if (cls.own(1) != std::vector<std::string>{recordName})
+      continue;
+    ++classCount;
+    CHECK(cls.own(2) == std::vector<std::string>{className});
+    CHECK(cls.own(3) == std::vector<std::string>{sourceClass ? "UNDERLAY_TEST" : "ObjectDBX Classes"});
+    CHECK(cls.own(90) == std::vector<std::string>{"4095"});
+    CHECK(cls.own(280) == std::vector<std::string>{sourceClass ? "1" : "0"});
+    CHECK(cls.own(281) == std::vector<std::string>{"1"});
+    if (acadVersion >= "AC1018")
+      CHECK(cls.own(91) == std::vector<std::string>{"2"});
+  }
+  CHECK(classCount == 1);
+
+  for (RS_Entity* entity : graphic)
+    entity->setFlag(RS2::FlagDeleted);
+  const auto emptyOutput = directory.file("deleted.dxf");
+  REQUIRE(lc::test::exportDrawing(graphic, emptyOutput, format));
+  CHECK(countRecords(emptyOutput.string(), recordName) == 0);
+  CHECK(classRecordNames(emptyOutput.string()).count(recordName) == (sourceClass ? 1 : 0));
+}
+
 TEST_CASE("DXF filter preserves fixture-backed CLASS and raw entity",
           "[dxf][roundtrip][filter][classes][raw]") {
   ensureSettings();
