@@ -67,6 +67,45 @@ without absorbing that entire project into Arabic support.
 
 ## Corrections to the earlier approach
 
+### Current-master integration and bounded repairs: 2026-10-13
+
+This update starts at published head `648bbfcb4` and merges master `f94ca6eab`
+without rewriting history. It incorporates #3090, #3091, #3098 and #3102;
+private adapters and the primary checkout remain untouched. Concurrent merge
+`d7457620e` is retained with its reviewed master export/reader semantics.
+#3099 stays draft.
+
+- Master's attribute lineage, edit/move/Undo export, pre-2018 flattening,
+  angle/X-axis precedence and safe-save veto supersede the older attribute
+  implementation in this branch. The veto runs before the optional staged-file
+  verifier; failed traversals neither verify nor replace an existing file.
+- Canonical-source state, output-width validation, scoped writer lifetime and explicit
+  verified-write APIs remain. Legacy group-100 trailing XDATA is stored on its
+  outer ATTRIB, as on master; marker provenance survives value operations.
+  Both marker forms retain MTEXT continuation chunks, including on ATTDEF.
+  Embedded objects have no independent DXF XDATA frame: as on master, the writer
+  emits only the host's XDATA. Inert model capture/transport is still pending.
+- CMake and qmake now default to OpenType **OFF** until application integration
+  and release dependencies are ready. Explicit ON remains available and is
+  tested separately; the exact certified-engine policy is not weakened.
+- Informational parser notices are bounded without becoming fatal. Malformed
+  input and actual resource limits still fail. Argumentless `\\N` and `\\X`
+  breaks no longer consume subsequent text through a semicolon. Column and
+  dimension-specific positioning are not implemented by this paragraph model.
+- `librecad_text_native_tests` groups the six formerly uncovered native programs;
+  the integration option registers their `text-native` CTest label. Linux and
+  both Windows format lanes now build/run them. The isolated allocator program
+  is never linked into Catch or the application. The two low-level format tests
+  are no longer registered in default trees that do not build their targets.
+- New project source/test files carry both LibreCAD.org and Dongxu Li copyright
+  notices. Third-party font/license notices are unchanged.
+
+Fresh default-OFF Release foundations pass 16/16 on macOS; default qmake
+configuration and workflow lint pass. Fresh enabled application/native/full
+suite validation is in progress. This checkpoint does not close remaining
+P5/P7, parser parity/control-layout, outline tolerance/precision, mutation,
+certified-engine, packaging/license or independent Arabic visual-review gates.
+
 ### PR #3099 refinement: 2026-10-13
 
 This round updates the published foundations at `c40da2c8c`, not the private

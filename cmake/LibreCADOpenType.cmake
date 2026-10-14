@@ -1,11 +1,12 @@
 # This file is part of LibreCAD, a 2D CAD program.
 # Copyright (C) 2026 LibreCAD.org
+# Copyright (C) 2026 Dongxu Li
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 # Explicit core dependencies for the optional native OpenType backend. Qt's
 # internal HarfBuzz implementation is not a public development dependency.
 option(LIBRECAD_ENABLE_OPENTYPE
-    "Build native OpenType shaping (does not change legacy font selection)" ON)
+    "Build native OpenType shaping (does not change legacy font selection)" OFF)
 
 add_library(lc_opentype_dependencies INTERFACE)
 add_library(LibreCAD::OpenType ALIAS lc_opentype_dependencies)

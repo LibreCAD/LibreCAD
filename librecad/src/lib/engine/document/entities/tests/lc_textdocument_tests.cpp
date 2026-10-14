@@ -1,6 +1,7 @@
 /****************************************************************************
 ** This file is part of LibreCAD, a 2D CAD program.
 ** Copyright (C) 2026 LibreCAD.org
+** Copyright (C) 2026 Dongxu Li
 ** SPDX-License-Identifier: GPL-2.0-or-later
 ****************************************************************************/
 #include "lc_textdocument.h"
@@ -83,6 +84,35 @@ TEST_CASE("Plain logical documents preserve Unicode and literal syntax", "[textd
     CHECK(document.paragraphs[0].text == source);
     CHECK(document.diagnostics.empty());
     checkProvenance(document);
+}
+
+TEST_CASE("Informational font modifiers do not exhaust the parser", "[textdocument][limits]") {
+    const QString source = QStringLiteral("{\\fArial|b0|i0|c0|p34;word}").repeated(1025);
+    auto options = mtextOptions();
+    for (const int limit : {0, 1, 1024}) {
+        options.maxDiagnostics = limit;
+        const auto document = Document::parse(source, options);
+        REQUIRE(document.ok());
+        CHECK(document.source == source);
+        REQUIRE(document.paragraphs.size() == 1);
+        CHECK(document.paragraphs.front().text == QStringLiteral("word").repeated(1025));
+        CHECK(document.diagnostics.size() == std::size_t(limit));
+    }
+    options.maxScopeDepth = 0;
+    CHECK_FALSE(Document::parse(source, options).ok());
+}
+
+TEST_CASE("Argumentless MTEXT breaks keep the following text", "[textdocument]") {
+    for (const auto *command : {"\\P", "\\N", "\\X"}) {
+        const QString source = QStringLiteral("<>") + QString::fromLatin1(command) + QStringLiteral("above; below");
+        const auto document = Document::parse(source, mtextOptions());
+        REQUIRE(document.ok());
+        CHECK(document.source == source);
+        REQUIRE(document.paragraphs.size() == 2);
+        CHECK(document.paragraphs[0].text == QStringLiteral("<>"));
+        CHECK(document.paragraphs[1].text == QStringLiteral("above; below"));
+        checkProvenance(document);
+    }
 }
 
 TEST_CASE("Scalar provenance and graphemes are separate UTF16 maps", "[textdocument]") {

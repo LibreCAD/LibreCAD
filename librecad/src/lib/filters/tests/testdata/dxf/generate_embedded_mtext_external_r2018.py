@@ -1,4 +1,7 @@
 """Independent ezdxf 1.4.3 embedded ATTRIB/ATTDEF native-scope fixture."""
+# Copyright (C) 2026 LibreCAD.org
+# Copyright (C) 2026 Dongxu Li
+# SPDX-License-Identifier: GPL-2.0-or-later
 import sys
 import ezdxf
 

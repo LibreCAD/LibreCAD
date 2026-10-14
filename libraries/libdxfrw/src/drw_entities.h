@@ -1765,11 +1765,15 @@ public:
 class DRW_Attrib : public DRW_Text {
     SETENTFRIENDS
 public:
-    // DXF-only read provenance. Group 100 was emitted by older LibreCAD
-    // versions but is not a valid embedded-object boundary. Its trailing
-    // XDATA is retained, not evidence of either embedded or outer ownership.
+    // DXF-only read provenance: how the record spelled the marker of its
+    // embedded MTEXT. AutoCAD writes group 101; LibreCAD wrote group 100
+    // until that was corrected. Both are read the same way, and the XDATA
+    // that follows the embedded object is the ATTRIB's with either.
     enum class EmbeddedDxfMarker { None, Canonical101, Legacy100 };
     EmbeddedDxfMarker embeddedDxfMarker() const { return dxfEmbeddedMarker; }
+    // Whether a record with the old marker carries XDATA on its embedded
+    // MTEXT. The reader puts none there, and the DXF writer writes none from
+    // there: true only for a value that a caller built that way.
     bool hasAmbiguousLegacyEmbeddedXData() const;
 
     DRW_Attrib() {
@@ -1801,12 +1805,10 @@ public:
     std::uint8_t attVersion;         /*!< version byte (R2010+); 0=plain TEXT-style, >0=MText-style */
     std::uint8_t m_attributeType;    /*!< R2018+ attribute type: 1=single-line, 2=multi-line ATTRIB, 4=multi-line ATTDEF */
     std::uint8_t keepDuplicateRecords = 0; /*!< DXF xrecord duplicate-record policy */
-    /* MText-style payload (R2010+).  Non-null iff attVersion > 0 (DWG) or an
-       embedded-object marker was seen (DXF). Carries the multi-line text
+    /* MText-style payload (R2010+).  Non-null iff attVersion > 0 (DWG) or the
+       `101 / Embedded Object` marker was seen (DXF).  Carries the multi-line text
        and formatting (paragraph breaks, font runs, etc.) that the single-line
-       `text` field can't represent. For Legacy100 only, extData retains the
-       ambiguous postmarker stream opaquely: do not activate or infer its
-       scope. Canonical101 trailing XDATA belongs to this outer ATTRIB. */
+       `text` field can't represent. */
     std::unique_ptr<DRW_MText> mtext;
 
 protected:
@@ -1882,9 +1884,14 @@ protected:
 public:
     double interlin;              /*!< linespacing factor, code 44 */
     std::uint16_t linespacingStyle = 1; /*!< linespacing style, code 73 (1=at least, 2=exact) */
+    /*! Code 73 as the DXF writers store it: 2 (exact) or 1 (at least). A file
+     *  may hold 0 or another value no reader defines; a DXF never gets it.
+     *  The DWG encoders write the member as it is. */
+    std::uint16_t writtenLinespacingStyle() const { return linespacingStyle == 2 ? 2 : 1; }
     std::int32_t m_backgroundFlags = 0;
     double m_backgroundScale = 0.0; /*!< background-fill box scale (DWG BitDouble) */
     int m_backgroundColor = 0;
+    std::int32_t m_backgroundTrueColor = -1; /*!< background-fill true colour, code 421; -1 = none (DXF only) */
     std::int32_t m_backgroundTransparency = 0;
     bool m_r2018IsNotAnnotative = false;
     bool m_r2018ReallyLocked = false;
@@ -1910,6 +1917,7 @@ public:
     std::uint32_t m_r2018AnnotativeAppHandle = 0;
 private:
     bool hasXAxisVec; /* renamed by djm for better description */
+    bool m_dxfInEmbeddedObject = false; /*!< DXF: past a 101 / Embedded Object marker, whose groups are skipped */
 };
 
 //! Class to handle RTEXT (RText, AutoCAD Express Tools "reactive text").

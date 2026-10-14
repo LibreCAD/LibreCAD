@@ -3725,8 +3725,9 @@ TEST_CASE("DXF SHAPE requires its identifying geometry fields",
   const std::string prefix =
       "0\nSECTION\n2\nENTITIES\n";
   const std::string suffix = "0\nENDSEC\n0\nEOF\n";
+  // The name (group 2) is not among them: a SHAPE converted from a DWG has
+  // none, see lc_dxf_shape_name_tests.cpp.
   const std::vector<std::string> malformed = {
-      "0\nSHAPE\n10\n0\n20\n0\n40\n1\n",
       "0\nSHAPE\n2\nTEST\n20\n0\n40\n1\n",
       "0\nSHAPE\n2\nTEST\n10\n0\n20\n0\n"};
 

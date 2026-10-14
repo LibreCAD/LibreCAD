@@ -1,6 +1,7 @@
 /****************************************************************************
 ** This file is part of LibreCAD, a 2D CAD program.
 ** Copyright (C) 2026 LibreCAD.org
+** Copyright (C) 2026 Dongxu Li
 ** SPDX-License-Identifier: GPL-2.0-or-later
 ****************************************************************************/
 #include "lc_textdocument.h"
@@ -177,6 +178,7 @@ private:
     void diagnostic(Code code, Range source, const char *message, bool fatal = false) {
         if (failed) return;
         if (int(result.diagnostics.size()) >= options.maxDiagnostics) {
+            if (code == Code::UnsupportedFormat && !fatal) return;
             result.diagnostics.push_back({Code::ResourceLimit, source, QStringLiteral("Text diagnostic limit exceeded"), true});
             failed = true;
             return;
@@ -442,7 +444,9 @@ private:
         if (command == '~') {
             position += 2; appendScalar(0xa0, {start, 2}); token(Kind::Escape, start, logicalStart); return true;
         }
-        if (command == 'P') { position += 2; breakParagraph({start, 2}); return true; }
+        if (command == 'P' || command == 'N' || command == 'X') {
+            position += 2; breakParagraph({start, 2}); return true;
+        }
         if (command == 'L' || command == 'l' || command == 'O' || command == 'o' || command == 'K' || command == 'k') {
             if (command == 'L' || command == 'l') style.underline = command == 'L';
             if (command == 'O' || command == 'o') style.overline = command == 'O';

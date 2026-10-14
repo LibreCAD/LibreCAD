@@ -1,6 +1,7 @@
 /****************************************************************************
 ** This file is part of LibreCAD, a 2D CAD program.
 ** Copyright (C) 2026 LibreCAD.org
+** Copyright (C) 2026 Dongxu Li
 ** SPDX-License-Identifier: GPL-2.0-or-later
 ****************************************************************************/
 #ifndef LC_TEXTSHAPER_H

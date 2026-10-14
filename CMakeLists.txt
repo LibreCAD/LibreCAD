@@ -2636,6 +2636,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/tests/rs_pen_tests.cpp
         librecad/src/lib/actions/tests/lc_snappercatchtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
+        librecad/src/actions/drawing/modify/tests/lc_action_modify_move_tests.cpp
         librecad/src/actions/drawing/draw/curve/tests/lc_actiondrawdualtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_offset_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_offsetmatrixtests.cpp
@@ -2726,6 +2727,10 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dxf_layer0_declared_tests.cpp
         librecad/src/lib/filters/tests/dxf_unknown_version_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_r2007_codepage_tests.cpp
+        librecad/src/lib/filters/tests/lc_dxf_reopen_dwg_export_tests.cpp
+        librecad/src/lib/filters/tests/lc_dxf_shape_name_tests.cpp
+        librecad/src/lib/filters/tests/lc_export_commit_tests.cpp
+        librecad/src/lib/filters/tests/lc_attribute_export_tests.cpp
         librecad/src/lib/filters/tests/dxf_closed_spline_tests.cpp
         librecad/src/lib/filters/tests/jww_import_tests.cpp
         librecad/src/lib/filters/tests/byte_identity_harness.cpp
@@ -3106,6 +3111,8 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/i18n_codec_tests.cpp
         librecad/src/lib/filters/tests/datastorage_tests.cpp
         librecad/src/main/tests/lc_consolesvgexporttests.cpp
+        librecad/src/lib/filters/tests/lc_export_commit_tests.cpp
+        librecad/src/lib/filters/tests/lc_attribute_export_tests.cpp
     )
     qt_add_executable(librecad_fast_tests
         EXCLUDE_FROM_ALL
@@ -3155,6 +3162,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dwg_safety_tests.cpp
         librecad/src/lib/filters/tests/eed_tests.cpp
         librecad/src/lib/filters/tests/datastorage_tests.cpp
+        librecad/src/lib/filters/tests/lc_export_commit_tests.cpp
     )
     add_executable(librecad_dwg_fast_tests
         EXCLUDE_FROM_ALL
@@ -3235,7 +3243,10 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
         librecad/src/lib/filters/tests/dxf_string_codec_tests.cpp
         librecad/src/lib/filters/tests/entity_metadata_tests.cpp
+        librecad/src/lib/filters/tests/lc_attribute_export_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_r2007_codepage_tests.cpp
+        librecad/src/lib/filters/tests/lc_dxf_reopen_dwg_export_tests.cpp
+        librecad/src/lib/filters/tests/lc_dxf_shape_name_tests.cpp
         librecad/src/lib/filters/tests/mleader_dxf_context_tests.cpp
     )
     add_executable(librecad_dxf_fast_tests
@@ -3357,6 +3368,23 @@ if (BUILD_TESTS)
     target_compile_definitions(librecad_text_outline_tests PRIVATE
         LC_OPENTYPE_TEST_FONT_PATH="${CMAKE_CURRENT_SOURCE_DIR}/librecad/support/fonts/opentype/amiri-1.003/Amiri-Regular.ttf")
     target_link_libraries(librecad_text_outline_tests PRIVATE LibreCAD::OpenType)
+    set(LIBRECAD_TEXT_NATIVE_TARGETS
+        librecad_text_source_tests
+        librecad_filter_writer_lifetime_tests
+        librecad_entity_pen_inheritance_tests
+        librecad_entity_container_replace_tests
+        librecad_entity_container_replace_failure_tests
+        librecad_text_outline_tests)
+    add_custom_target(librecad_text_native_tests
+        DEPENDS ${LIBRECAD_TEXT_NATIVE_TARGETS})
+    if(LIBRECAD_REGISTER_INTEGRATION_TESTS)
+        foreach(test_target IN LISTS LIBRECAD_TEXT_NATIVE_TARGETS)
+            add_test(NAME ${test_target} COMMAND ${test_target})
+            set_tests_properties(${test_target} PROPERTIES
+                LABELS text-native
+                ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
+        endforeach()
+    endif()
     add_librecad_filter_micro_test(
         librecad_dwg_smoke_tests
         librecad/src/lib/filters/tests/dwg_smoke_tests.cpp)
@@ -3588,8 +3616,6 @@ if (BUILD_TESTS)
         target_compile_options(libdxfrw_dxf_embedded_scope_tests PRIVATE
             -Wall -Wextra -Werror -pedantic)
     endif()
-    add_test(NAME libdxfrw_dxf_embedded_scope_tests
-        COMMAND libdxfrw_dxf_embedded_scope_tests)
     # Explicit per-call verified writes are independent of model/carrier code.
     add_libdxfrw_fast_test(libdxfrw_verified_write_tests
         librecad/src/lib/filters/tests/dwg_dxf_verified_write_tests.cpp)
@@ -3601,8 +3627,12 @@ if (BUILD_TESTS)
         target_compile_options(libdxfrw_verified_write_tests PRIVATE
             -Wall -Wextra -Werror -pedantic)
     endif()
-    add_test(NAME libdxfrw_verified_write_tests
-        COMMAND libdxfrw_verified_write_tests)
+    if(LIBRECAD_REGISTER_INTEGRATION_TESTS OR LIBRECAD_REGISTER_FORMAT_TESTS OR LIBRECAD_REGISTER_FULL_TESTS)
+        add_test(NAME libdxfrw_dxf_embedded_scope_tests
+            COMMAND libdxfrw_dxf_embedded_scope_tests)
+        add_test(NAME libdxfrw_verified_write_tests
+            COMMAND libdxfrw_verified_write_tests)
+    endif()
     add_libdxfrw_fast_test(libdxfrw_slow_tests
                            ${LIBDXFRW_SLOW_DWG_TEST_SOURCES})
 

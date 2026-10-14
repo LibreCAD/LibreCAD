@@ -1,6 +1,7 @@
 /****************************************************************************
 ** This file is part of LibreCAD, a 2D CAD program.
 ** Copyright (C) 2026 LibreCAD.org
+** Copyright (C) 2026 Dongxu Li
 ** SPDX-License-Identifier: GPL-2.0-or-later
 ****************************************************************************/
 #include "lc_textsourcecodec.h"
@@ -388,7 +389,8 @@ TEST_CASE("Codec budgets validate complete outputs and recursive work before suc
     settings = options(false); settings.maxScopeDepth = 0;
     failed(QStringLiteral("{ب^I}"), settings, Code::ResourceLimit);
     settings = options(false); settings.maxDiagnostics = 0;
-    failed(QStringLiteral("\\Zopaque;^I"), settings, Code::ResourceLimit);
+    converted(QStringLiteral("\\Zopaque;^I"), QStringLiteral("\\Zopaque;\t"), settings);
+    failed(QStringLiteral("\\!^I"), settings, Code::ResourceLimit);
     settings = options(true); settings.maxOutputBytes = 1;
     const auto bytes = Codec::transcode(QByteArray("\t"), settings);
     CHECK_FALSE(bytes); CHECK_FALSE(bytes.source); CHECK(bytes.error.code == Code::ResourceLimit);

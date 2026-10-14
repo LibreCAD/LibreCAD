@@ -260,6 +260,20 @@ public:
     LC_TextProfile::Error replaceTextProfile(const LC_TextProfile::Value &value) { return m_data.textState.replaceProfile(value); }
     LC_TextProfile::Error removeTextProfile() { return m_data.textState.removeProfile(); }
     void resetTextProfile() { m_data.textState.resetProfile(); }
+    /**
+     * @return @p text, the content of an MText, as one line of plain text: what
+     * a TEXT or a single-line ATTRIB can hold of it.
+     *
+     * The content is read the way a program that knows MTEXT reads it, not the
+     * way update() draws it: formatting commands and the braces that scope them
+     * are left out, a stack is the text it was typed as, a tab is a space, and
+     * a run of line breaks is one space where it stands between two pieces of
+     * text. The commands without arguments (underline, overline, strike
+     * through, line and column breaks) always count. A command with arguments
+     * counts only if it is complete up to its ";", as a paragraph command does
+     * in update(); otherwise its backslash is text.
+     */
+    static QString toPlainLine(const QString& text);
 
     void setStyle(const QString& s) {
         m_data.style = s.isNull() ? QString{} : QString(s.constData(), s.size());

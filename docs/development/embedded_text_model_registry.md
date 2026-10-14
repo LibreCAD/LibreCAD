@@ -360,8 +360,12 @@ isolated override policy is not approved by this registry.
 
 Legacy: 1 U8 marker (None0, Canonical1011, Legacy1002), 2 Bool ambiguousRaw,
 3 Utf16 ownership diagnostic. Use actual `embeddedDxfMarker()` and
-`hasAmbiguousLegacyEmbeddedXData()`. Legacy100 postmarker raw remains opaque;
-neither retaining it nor rebuilding a body establishes embedded/outer scope.
+`hasAmbiguousLegacyEmbeddedXData()`. Trailing XDATA is stored on the outer
+attribute, including Legacy100 input, consistently with master's reader.
+Marker provenance survives copies, moves and assignment. The reader does not
+create independent embedded XDATA; the ambiguity helper detects only a legacy
+value that a caller constructed with XDATA on its embedded MTEXT. Such data has
+no DXF frame and is not emitted there; callers must not rely on it as transport.
 Canonical101 trailing XDATA belongs to the outer attribute.
 
 TargetWireBaseline: 1 U8 format (Dxf0,Dwg1), 2 U32 actual DRW version,

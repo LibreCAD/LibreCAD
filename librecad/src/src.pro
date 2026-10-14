@@ -33,8 +33,8 @@ CONFIG += c++17
 
 # Native OpenType shaping is available only through an explicit, versioned font
 # profile; enabling the backend does not replace any existing LFF font. Pass
-# LIBRECAD_ENABLE_OPENTYPE=false to qmake for a legacy-only build.
-isEmpty(LIBRECAD_ENABLE_OPENTYPE): LIBRECAD_ENABLE_OPENTYPE = true
+# LIBRECAD_ENABLE_OPENTYPE=true to qmake to build the experimental backend.
+isEmpty(LIBRECAD_ENABLE_OPENTYPE): LIBRECAD_ENABLE_OPENTYPE = false
 !contains(LIBRECAD_ENABLE_OPENTYPE, ^(true|false)$): error("LIBRECAD_ENABLE_OPENTYPE must be true or false")
 equals(LIBRECAD_ENABLE_OPENTYPE, true) {
     DEFINES += LC_WITH_OPENTYPE=1

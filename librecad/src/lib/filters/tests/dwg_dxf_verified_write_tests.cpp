@@ -1,6 +1,7 @@
 /****************************************************************************
 ** This file is part of LibreCAD, a 2D CAD program.
 ** Copyright (C) 2026 LibreCAD.org
+** Copyright (C) 2026 Dongxu Li
 ** SPDX-License-Identifier: GPL-2.0-or-later
 ****************************************************************************/
 #include "libdwgr.h"
@@ -57,8 +58,9 @@ struct Capture final : FuzzNullInterface {
 };
 template<class Writer> struct Output final : FuzzNullInterface {
     Writer &writer;
-    bool emitted=false,throwing=false;
+    bool emitted=false,throwing=false,acceptTraversal=true;
     explicit Output(Writer &w):writer(w) {}
+    bool finalizeDxfWrite() override { return acceptTraversal; }
     void writeEntities() override {
         if (throwing) throw std::runtime_error("simulated native emission failure");
         auto line=literalLine();emitted=writer.writeLine(&line);
@@ -151,4 +153,29 @@ TEST_CASE("Native verified retries and ordinary writes do not retain callback co
 }
 TEST_CASE("Native invalid or throwing emissions never verify or replace a prior file","[verified-native-write][invalid]") {
     invalidCase<dwgRW>(false);invalidCase<dxfRW>(false);invalidCase<dxfRW>(true);
+}
+
+TEST_CASE("DXF traversal veto precedes verification and leaves the destination intact", "[verified-native-write][veto]") {
+    for (const bool binary : {false, true}) {
+        Fixture fixture;
+        const auto path = fixture.destination.string();
+        dxfRW writer(path.c_str());
+        Output<dxfRW> output(writer);
+        output.acceptTraversal = false;
+        Verification verifier;
+        verifier.destination = fixture.destination;
+        verifier.version = DRW::AC1032;
+        verifier.binary = binary;
+        CHECK_FALSE(writer.writeVerified(&output, DRW::AC1032, binary, &Verification::inspect, &verifier));
+        CHECK(output.emitted);
+        CHECK(verifier.calls == 0);
+        CHECK(contents(fixture.destination) == "old destination");
+        CHECK(fixture.files() == 1);
+        CHECK_FALSE(writer.write(&output, DRW::AC1032, binary));
+        CHECK(contents(fixture.destination) == "old destination");
+        output.acceptTraversal = true;
+        REQUIRE(writer.writeVerified(&output, DRW::AC1032, binary, &Verification::inspect, &verifier));
+        CHECK(verifier.calls == 1);
+        CHECK(fixture.files() == 1);
+    }
 }

@@ -5,6 +5,7 @@ The cmap reader is independent; shaping still uses HarfBuzz's hb-shape CLI.
 This is not an independent shaping-engine comparison.
 """
 # Copyright (C) 2026 LibreCAD.org
+# Copyright (C) 2026 Dongxu Li
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 import argparse
