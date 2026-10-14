@@ -28126,7 +28126,8 @@ void RS_FilterDXFRW::writeEntities() {
     // RS_Shape model) -> re-emit as typed AcDbShape so DWG->DXF preserves them.
     // Group 2 is the resolved SHAPEFILE/STYLE record name (the glyph index is
     // not round- trippable without the .shx; this matches libredwg/ACadSharp
-    // output).
+    // output). A shape file's record usually has no name: dxfRW::writeShape
+    // leaves such a SHAPE out and reports it.
     for (const auto &rec : m_graphic->dwgAdvancedMetadata().shapes()) {
       DRW_Shape shape;
       shape.handle = rec.handle;
