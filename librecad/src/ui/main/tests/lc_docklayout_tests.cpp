@@ -239,12 +239,12 @@ TEST_CASE("Draft toggling preserves the drawing title", "[.gui][draft][3018]") {
     }
 }
 
-TEST_CASE("Opening a drawing keeps its saved current layer", "[.gui][saved-current-layer]") {
+TEST_CASE("Opening a drawing keeps its saved current layer", "[.gui][dock-window][saved-current-layer]") {
     DockFixture fixture;
     auto& window = fixture.window;
     QTemporaryDir directory;
     REQUIRE(directory.isValid());
-    for (const int flags : {0, 4, 1}) {
+    for (const int flags : {0, 4, 1, 5}) {
         CAPTURE(flags);
         const QString fileName = directory.filePath(QString("layer-%1.dxf").arg(flags));
         QFile file(fileName);
@@ -266,11 +266,14 @@ TEST_CASE("Opening a drawing keeps its saved current layer", "[.gui][saved-curre
         REQUIRE(mdi != nullptr);
         auto* graphic = mdi->getGraphic();
         REQUIRE(graphic != nullptr);
-        const QString expectedName = flags == 1 ? "0" : "Saved";
+        const QString expectedName = (flags & 1) ? "0" : "Saved";
         auto* expected = graphic->findLayer(expectedName);
         REQUIRE(expected != nullptr);
+        auto* saved = graphic->findLayer("Saved");
+        REQUIRE(saved != nullptr);
         CHECK(graphic->getActiveLayer() == expected);
-        CHECK(graphic->findLayer("Saved")->isLocked() == (flags == 4));
+        CHECK(saved->isLocked() == bool(flags & 4));
+        CHECK(saved->isFrozen() == bool(flags & 1));
         CHECK_FALSE(graphic->getActiveLayer()->isFrozen());
 
         auto* label = window.findChild<QLabel*>("lActiveLayerName");
@@ -282,6 +285,7 @@ TEST_CASE("Opening a drawing keeps its saved current layer", "[.gui][saved-curre
         REQUIRE(table != nullptr);
         auto* model = dynamic_cast<QG_LayerModel*>(table->model());
         REQUIRE(model != nullptr);
+        CHECK(model->getActiveLayer() == expected);
         CHECK(table->currentIndex().row() == model->getIndex(expected).row());
         CHECK_FALSE(graphic->isModified());
     }
