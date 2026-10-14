@@ -23,7 +23,6 @@
 
 #include "lc_imageexporter.h"
 
-#include <QBuffer>
 #include <QImageWriter>
 #include <QPixmap>
 #include <QSaveFile>
@@ -36,28 +35,26 @@
 
 namespace {
 
-// Passes what is written on to another device and remembers a write that the
-// device did not take whole. QSvgGenerator writes through a text stream that
-// stops at the first short write and tells nobody.
-class WriteCheckingDevice : public QIODevice {
+// Some encoders ignore short writes or failed seeks. Cancel the transaction
+// permanently, while retaining real file seeking for formats such as TIFF.
+class WriteCheckingFile final : public QSaveFile {
 public:
-    explicit WriteCheckingDevice(QIODevice& target) : m_target(target) {
-        open(QIODevice::WriteOnly);
+    using QSaveFile::QSaveFile;
+
+    bool seek(const qint64 position) override {
+        const bool result = QSaveFile::seek(position);
+        if (!result)
+            cancelWriting();
+        return result;
     }
-    bool failed() const { return m_failed; }
 
 protected:
-    qint64 readData(char*, qint64) override { return -1; }
     qint64 writeData(const char* data, const qint64 size) override {
-        const qint64 written = m_target.write(data, size);
+        const qint64 written = QSaveFile::writeData(data, size);
         if (written != size)
-            m_failed = true;
+            cancelWriting();
         return written;
     }
-
-private:
-    QIODevice& m_target;
-    bool m_failed = false;
 };
 
 // A write the file takes only in part may leave no error behind.
@@ -92,11 +89,15 @@ bool LC_ImageExporter::exportToImage(RS_Graphic* graphic, const ExportOptions& o
         m_errorString = tr("There is no drawing to export.");
         return false;
     }
+    if (options.size.isEmpty()) {
+        m_errorString = drawError(options.size);
+        return false;
+    }
 
     // The image is written to a temporary file, which takes the place of the
     // named one only once all of it is written: a failed export leaves an
     // existing file as it was.
-    QSaveFile file{options.fileName};
+    WriteCheckingFile file{options.fileName};
     if (!file.open(QIODevice::WriteOnly)) {
         m_errorString = file.errorString();
         return false;
@@ -121,15 +122,9 @@ bool LC_ImageExporter::exportToImage(RS_Graphic* graphic, const ExportOptions& o
 }
 
 bool LC_ImageExporter::exportGraphicToSVG(RS_Graphic* graphic, const ExportOptions& options, QFileDevice& output) {
-    WriteCheckingDevice checkedOutput{output};
     QSvgGenerator svgGenerator;
-    prepareSVGGenerator(options, options.size, svgGenerator, &checkedOutput);
-    const bool rendered = renderGraphic(graphic, options, &svgGenerator, true);
-    if (checkedOutput.failed()) {
-        m_errorString = writeError(output);
-        return false;
-    }
-    return rendered;
+    prepareSVGGenerator(options, svgGenerator, &output);
+    return renderGraphic(graphic, options, &svgGenerator, true);
 }
 
 bool LC_ImageExporter::exportGraphicToImage(RS_Graphic* graphic, const ExportOptions& options, QFileDevice& output) {
@@ -142,19 +137,9 @@ bool LC_ImageExporter::exportGraphicToImage(RS_Graphic* graphic, const ExportOpt
 }
 
 bool LC_ImageExporter::savePixmapToImage(const ExportOptions& options, const QPixmap &pixMap, QFileDevice& output) {
-    // Some writers seek back in what they write (TIFF does, and on a device
-    // that cannot seek it writes a file nobody can read), and not all of them
-    // check that each write is taken whole. Encode in memory, then write the
-    // result in one piece that is checked.
-    QBuffer encoded;
-    encoded.open(QIODevice::WriteOnly);
-    QImageWriter iio{&encoded, options.format.toLatin1()};
+    QImageWriter iio{&output, options.format.toLatin1()};
     if (!iio.write(pixMap.toImage())) {
         m_errorString = iio.errorString();
-        return false;
-    }
-    if (output.write(encoded.data()) != encoded.size()) {
-        m_errorString = writeError(output);
         return false;
     }
     return true;
@@ -184,6 +169,8 @@ bool LC_ImageExporter::renderGraphic(RS_Graphic* graphic, const ExportOptions& o
     auto renderer = LC_PrintViewportRenderer(&viewport, &painter);
     renderer.loadSettings(); // sets white paper
     renderer.setBackground(options.backgroundBlack ? Qt::black : Qt::white);
+    renderer.setDrawingMode(options.blackAndWhite
+        ? (options.backgroundBlack ? RS2::ModeWB : RS2::ModeBW) : RS2::ModeAuto);
     renderer.render();
 
     // QSvgGenerator writes its document when painting ends, not at destruction.
@@ -197,16 +184,13 @@ bool LC_ImageExporter::renderGraphic(RS_Graphic* graphic, const ExportOptions& o
 void LC_ImageExporter::preparePainter(const ExportOptions& options, RS_Painter& painter) {
     const bool black = options.backgroundBlack;
     painter.setBackground(black ? Qt::black : Qt::white);
-    if (options.blackAndWhite) {
-        painter.setDrawingMode(black ? RS2::ModeWB : RS2::ModeBW);
-    }
     painter.eraseRect(0, 0, options.size.width(), options.size.height());
 }
 
-void LC_ImageExporter::prepareSVGGenerator(const ExportOptions& options, const QSize size,
+void LC_ImageExporter::prepareSVGGenerator(const ExportOptions& options,
                                            QSvgGenerator& svgGenerator, QIODevice* output) {
-    svgGenerator.setSize(size);
-    svgGenerator.setViewBox(QRectF(QPointF(0, 0), size));
+    svgGenerator.setSize(options.size);
+    svgGenerator.setViewBox(QRectF(QPointF(0, 0), options.size));
     svgGenerator.setOutputDevice(output);
 }
 

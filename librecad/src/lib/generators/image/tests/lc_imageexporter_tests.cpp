@@ -3,6 +3,7 @@
  * This file is part of the LibreCAD project, a 2D CAD program
  *
  * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 Dongxu Li (github.com/dxli)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -43,8 +44,25 @@
 #include "rs_ellipse.h"
 #include "rs_graphic.h"
 #include "rs_line.h"
+#include "rs_painter.h"
 
 namespace {
+
+class RecordingLine : public RS_Line {
+public:
+    using RS_Line::RS_Line;
+
+    void draw(RS_Painter* painter) override {
+        drawn = true;
+        color = painter->pen().color();
+        mode = painter->getDrawingMode();
+        RS_Line::draw(painter);
+    }
+
+    bool drawn = false;
+    QColor color;
+    RS2::DrawingMode mode = RS2::ModeAuto;
+};
 
 // A few lines, a circle, an arc and an ellipse, as File > Export as image gets
 // them from a new drawing. The drawing is large enough for the default pen of
@@ -126,13 +144,15 @@ TEST_CASE("image export writes an SVG document", "[gui][export][svg]") {
     while (!reader.atEnd()) {
         reader.readNext();
         if (reader.isStartElement()) {
-            svgElements += reader.name() == QLatin1String("svg") ? 1 : 0;
-            shapes += reader.name() != QLatin1String("svg") && reader.name() != QLatin1String("g") ? 1 : 0;
+            const auto name = reader.name();
+            svgElements += name == QLatin1String("svg") ? 1 : 0;
+            shapes += name == QLatin1String("polyline") || name == QLatin1String("circle")
+                || name == QLatin1String("path") || name == QLatin1String("ellipse") ? 1 : 0;
         }
     }
     CHECK_FALSE(reader.hasError());
     CHECK(svgElements == 1);
-    CHECK(shapes > 0);
+    CHECK(shapes >= 7);
 }
 
 TEST_CASE("image export writes raster images that read back", "[gui][export]") {
@@ -166,9 +186,79 @@ TEST_CASE("image export reports an output it cannot open", "[gui][export]") {
     CHECK_FALSE(QFileInfo::exists(dir.filePath("missing")));
 }
 
-#ifdef Q_OS_UNIX
-TEST_CASE("image export keeps the existing file after a short write", "[gui][export]") {
+TEST_CASE("image export honors monochrome on either background", "[gui][export][color]") {
     REQUIRE(lc::test::application() != nullptr);
+    const auto format = GENERATE("svg", "png");
+    const bool black = GENERATE(false, true);
+    const bool monochrome = GENERATE(false, true);
+    CAPTURE(format, black, monochrome);
+    const QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto* line = new RecordingLine(&graphic, RS_Vector(0, 0), RS_Vector(100, 0));
+    line->setPen(RS_Pen(RS_Color(Qt::red), RS2::Width00, RS2::SolidLine));
+    graphic.addEntity(line);
+    auto options = exportOptions(dir.filePath("colors"), format);
+    options.backgroundBlack = black;
+    options.blackAndWhite = monochrome;
+
+    REQUIRE(LC_ImageExporter{}.exportToImage(&graphic, options));
+    REQUIRE(line->drawn);
+    CHECK(line->mode == (monochrome ? (black ? RS2::ModeWB : RS2::ModeBW) : RS2::ModeAuto));
+    CHECK(line->color == QColor(monochrome ? (black ? Qt::white : Qt::black) : Qt::red));
+}
+
+TEST_CASE("image export rejects empty dimensions without replacing a file", "[gui][export][validation]") {
+    REQUIRE(lc::test::application() != nullptr);
+    const auto format = GENERATE("svg", "png");
+    const auto size = GENERATE(QSize(), QSize(0, 800), QSize(1200, 0), QSize(-1, 800));
+    CAPTURE(format, size.width(), size.height());
+    const QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    RS_Graphic graphic;
+    addDrawing(graphic);
+    const QByteArray previous("previous export\n");
+    const QString out = writeFile(dir, "existing", previous);
+    auto options = exportOptions(out, format);
+    options.size = size;
+    LC_ImageExporter exporter;
+
+    CHECK_FALSE(exporter.exportToImage(&graphic, options));
+    CHECK_FALSE(exporter.errorString().isEmpty());
+    CHECK(readFile(out) == previous);
+    CHECK(QDir(dir.path()).entryList(QDir::Files | QDir::Hidden).size() == 1);
+}
+
+TEST_CASE("image export reports failures and clears its error on success", "[gui][export][validation]") {
+    REQUIRE(lc::test::application() != nullptr);
+    const QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    RS_Graphic graphic;
+    addDrawing(graphic);
+    const QByteArray previous("previous export\n");
+    const QString out = writeFile(dir, "existing", previous);
+    LC_ImageExporter exporter;
+    auto options = exportOptions(out, "not-an-image-format");
+
+    CHECK_FALSE(exporter.exportToImage(nullptr, options));
+    CHECK_FALSE(exporter.errorString().isEmpty());
+    CHECK_FALSE(exporter.exportToImage(&graphic, options));
+    CHECK_FALSE(exporter.errorString().isEmpty());
+    CHECK(readFile(out) == previous);
+    CHECK(QDir(dir.path()).entryList(QDir::Files | QDir::Hidden).size() == 1);
+
+    options.format = "PNG";
+    REQUIRE(exporter.exportToImage(&graphic, options));
+    CHECK(exporter.errorString().isEmpty());
+    CHECK(QImage(out).size() == options.size);
+}
+
+#ifdef Q_OS_UNIX
+TEST_CASE("image export rolls back a short write", "[gui][export]") {
+    REQUIRE(lc::test::application() != nullptr);
+    const bool existing = GENERATE(false, true);
+    CAPTURE(existing);
     const QTemporaryDir dir;
     REQUIRE(dir.isValid());
     RS_Graphic graphic;
@@ -179,15 +269,23 @@ TEST_CASE("image export keeps the existing file after a short write", "[gui][exp
     formats.prepend("svg");
     for (const QByteArray& format : formats) {
         CAPTURE(format.toStdString());
-        const QString out = writeFile(dir, "existing." + QString::fromLatin1(format), previous);
+        const QString out = dir.filePath("drawing." + QString::fromLatin1(format));
+        if (existing) {
+            writeFile(dir, QFileInfo(out).fileName(), previous);
+        }
+        LC_ImageExporter exporter;
         bool result;
         {
             lc::test::FileSizeLimit limit;
-            result = exportDrawing(graphic, out, QString::fromLatin1(format));
+            result = exporter.exportToImage(&graphic, exportOptions(out, QString::fromLatin1(format)));
         }
         CHECK_FALSE(result);
-        CHECK(readFile(out) == previous);
-        CHECK(QFileInfo(out).dir().entryList(QDir::Files).size() == 1);
+        CHECK_FALSE(exporter.errorString().isEmpty());
+        CHECK(QFileInfo::exists(out) == existing);
+        if (existing) {
+            CHECK(readFile(out) == previous);
+        }
+        CHECK(QFileInfo(out).dir().entryList(QDir::Files | QDir::Hidden).size() == (existing ? 1 : 0));
         QFile::remove(out);
     }
 }

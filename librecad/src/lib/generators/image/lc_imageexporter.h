@@ -59,7 +59,7 @@ public:
 protected:
     void prepareViewport(RS_Graphic* graphic, const ExportOptions& options, LC_GraphicViewport& viewport);
     void preparePainter(const ExportOptions& options, RS_Painter& painter);
-    void prepareSVGGenerator(const ExportOptions& options, QSize size, QSvgGenerator& svgGenerator, QIODevice* output);
+    void prepareSVGGenerator(const ExportOptions& options, QSvgGenerator& svgGenerator, QIODevice* output);
     bool exportGraphicToSVG(RS_Graphic* graphic, const ExportOptions& options, QFileDevice& output);
     bool savePixmapToImage(const ExportOptions& options, const QPixmap &pixMap, QFileDevice& output);
     bool exportGraphicToImage(RS_Graphic* graphic, const ExportOptions& options, QFileDevice& output);
