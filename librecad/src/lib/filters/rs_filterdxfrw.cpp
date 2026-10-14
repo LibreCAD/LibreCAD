@@ -27402,6 +27402,139 @@ void RS_FilterDXFRW::collectDwgAppIds() {
 #endif
 }
 
+namespace {
+// Calls visit() with the XDATA of each record of the lists that an export
+// replays.
+template <typename Visit, typename... Lists>
+void forEachReplayedRecordExtData(Visit &&visit, const Lists &...lists) {
+  const auto visitList = [&visit](const auto &list) {
+    for (const auto &record : list) {
+      if (record.replayState ==
+          LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+        visit(record.extData);
+    }
+  };
+  (visitList(lists), ...);
+}
+} // namespace
+
+std::vector<std::string> RS_FilterDXFRW::dxfXDataApplications() {
+  std::vector<std::string> names;
+  std::set<std::string> seen;
+  const auto addName = [&names, &seen](const std::string &name) {
+    if (!name.empty() && seen.insert(normalizeDwgTableName(name)).second)
+      names.push_back(name);
+  };
+  const auto addFrom = [&addName](const auto &extData, bool ofText = false) {
+    for (const auto &value : extData) {
+      if (value == nullptr || value->code() != 1001 ||
+          value->type() != DRW_Variant::STRING || value->content.s == nullptr)
+        continue;
+      // What a text keeps of its block attribute is never written with it
+      // (removeInsertAttribSidecar()).
+      if (ofText && isInsertAttribSidecarMarker(*value->content.s))
+        continue;
+      addName(*value->content.s);
+    }
+  };
+  const auto &metadata = m_graphic->dwgAdvancedMetadata();
+
+  // Table records keep the XDATA of the records they were read from; a
+  // dimension style also has XDATA of its own (prepareDRWDimStyleExtData()).
+  for (const auto &entry : metadata.lineTypeTableEntries())
+    addFrom(entry.second.extData);
+  const RS_LayerList *layers = m_graphic->getLayerList();
+  for (unsigned i = 0; i < layers->count(); ++i) {
+    if (const auto *source = metadata.findLayerTableEntryByName(
+            layers->at(i)->getName().toUtf8().toStdString()))
+      addFrom(source->extData);
+  }
+  for (const auto &entry : metadata.textStyleTableEntries())
+    addFrom(entry.second.extData);
+  if (const auto *active = metadata.findVportTableEntryByName("*Active"))
+    addFrom(active->extData);
+  forEachReplayedRecordExtData(addFrom, metadata.views(),
+                               metadata.ucsRecords(), metadata.vports());
+  for (const auto &entry : metadata.appIdTableEntries())
+    addFrom(entry.second.extData);
+  for (const LC_DimStyle *style :
+       *m_graphic->getDimStyleList()->getStylesList()) {
+    DRW_Dimstyle written;
+    prepareDRWDimStyle(written, style);
+    addFrom(written.extData);
+    if (const auto *source =
+            metadata.findDimStyleTableEntryByName(written.name))
+      addFrom(source->extData);
+  }
+
+  // The entities of the model space and of the blocks. What a dimension
+  // draws, and in R12 a hatch, is written as an anonymous block
+  // (prepareBlocks()).
+  const bool hatchBlocks = m_version == 1009;
+  const auto addFromEntities = [&addFrom, hatchBlocks](
+                                   const auto &self,
+                                   const RS_EntityContainer &container,
+                                   bool nested) -> void {
+    for (const RS_Entity *entity :
+         lc::LC_ContainerTraverser{container, RS2::ResolveNone}.entities()) {
+      if (entity == nullptr || entity->getFlag(RS2::FlagDeleted))
+        continue;
+      if (entity->hasDrwExtData())
+        addFrom(entity->getDrwExtData(), RS2::isTextEntity(entity->rtti()));
+      if (!nested && (RS2::isDimensionalEntity(entity->rtti()) ||
+                      (hatchBlocks && entity->rtti() == RS2::EntityHatch)))
+        self(self, *static_cast<const RS_EntityContainer *>(entity), true);
+    }
+  };
+  addFromEntities(addFromEntities, *m_graphic, false);
+  for (unsigned i = 0; i < m_graphic->countBlocks(); ++i) {
+    const RS_Block *block = m_graphic->blockAt(i);
+    if (block != nullptr && !block->isDeleted())
+      addFromEntities(addFromEntities, *block, false);
+  }
+
+  // The objects, and the entities only the metadata holds.
+  forEachReplayedRecordExtData(
+      addFrom, metadata.visualStyles(), metadata.suns(),
+      metadata.backgrounds(), metadata.renderSettings(),
+      metadata.sunStudies(), metadata.motionPaths(), metadata.curvePaths(),
+      metadata.pointPaths(), metadata.objectPtrs(),
+      metadata.partialViewingIndexes(), metadata.cameras(),
+      metadata.geoPositionMarkers(), metadata.sectionObjects(),
+      metadata.sections(), metadata.modelerGeometry(), metadata.fields(),
+      metadata.fieldLists(), metadata.dictionaries(), metadata.xrecords(),
+      metadata.groups(), metadata.mlineStyles(), metadata.layouts(),
+      metadata.mleaderStyles(), metadata.materials(), metadata.lightLists(),
+      metadata.tvDeviceProperties(), metadata.blockRepresentationData(),
+      metadata.placeholders(), metadata.vxControls(),
+      metadata.vxTableRecords(), metadata.rasterVariables(),
+      metadata.wipeoutVariables(), metadata.dbColors(),
+      metadata.dimensionAssociations(), metadata.evaluationGraphs(),
+      metadata.scales(), metadata.idBuffers(), metadata.spatialIndexes(),
+      metadata.layerIndexes(), metadata.dictionaryVars(),
+      metadata.dictionariesWithDefault(), metadata.sortEntsTables(),
+      metadata.underlayDefinitions(), metadata.imageDefinitions(),
+      metadata.imageDefinitionReactors(), metadata.pointCloudDefinitions(),
+      metadata.navisworksModelDefinitions(), metadata.pointCloudColorMaps(),
+      metadata.geoData(), metadata.spatialFilters());
+  for (const auto &settings : metadata.plotSettings())
+    addFrom(settings.extData);
+  // Records read from a DXF go out as they came in, XDATA and all.
+  for (const auto *records :
+       {&metadata.rawDxfEntities(), &metadata.rawDxfObjects()}) {
+    for (const DRW_RawDxfObject &record : *records) {
+      if (!replaysInDxfExport(record.m_version))
+        continue;
+      for (const DRW_Variant &group : record.groups) {
+        if (group.code() == 1001 && group.type() == DRW_Variant::STRING &&
+            group.content.s != nullptr)
+          addName(*group.content.s);
+      }
+    }
+  }
+  return names;
+}
+
 void RS_FilterDXFRW::writeAppId() {
   const auto &metadata = m_graphic->dwgAdvancedMetadata();
   std::set<std::string> emittedNames;
@@ -27453,6 +27586,18 @@ void RS_FilterDXFRW::writeAppId() {
   for (const auto &entry : metadata.appIdTableEntries()) {
     if (normalizeDwgTableName(entry.first) != "ACAD")
       emitAppId(entry.second);
+  }
+  // A DXF reader looks up the application of each XDATA group in this table:
+  // AutoCAD and ODA refuse the file over a name it lacks. collectDwgAppIds()
+  // does the same for a DWG.
+  if (m_dwgW == nullptr) {
+    for (std::string &name : dxfXDataApplications()) {
+      if (normalizeDwgTableName(name) == "ACAD") // the codec's own record
+        continue;
+      DRW_AppId appId;
+      appId.name = std::move(name);
+      emitAppId(std::move(appId));
+    }
   }
 }
 
