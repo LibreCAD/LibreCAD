@@ -124,6 +124,7 @@ public:
 
     void layerToggled(RS_Layer*) override;
     void layerActivated(RS_Layer *) override;
+    void activeLayerReplaced(RS_Layer*) override;
 
     /**
      * @brief setOffset

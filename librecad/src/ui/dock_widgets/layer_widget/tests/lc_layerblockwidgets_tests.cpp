@@ -29,13 +29,18 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <memory>
+#include <string>
 
 #include <QAbstractItemModel>
 #include <QCoreApplication>
+#include <QIcon>
+#include <QImage>
+#include <QPixmap>
 #include <QScrollBar>
 #include <QTableView>
 #include <QTreeView>
 
+#include "lc_actioncontext.h"
 #include "lc_actiongroupmanager.h"
 #include "lc_actiontestsupport.h"
 #include "lc_layertreewidget.h"
@@ -43,6 +48,8 @@
 #include "lc_property_container.h"
 #include "lc_propertysheetwidget.h"
 #include "qg_blockwidget.h"
+#include "qg_colorbox.h"
+#include "qg_graphicview.h"
 #include "qg_layerwidget.h"
 #include "qg_pentoolbar.h"
 #include "rs_block.h"
@@ -50,6 +57,8 @@
 #include "rs_layer.h"
 #include "rs_layerlistlistener.h"
 #include "rs_line.h"
+#include "rs_pen.h"
+#include "rs_settings.h"
 
 namespace {
 
@@ -465,4 +474,132 @@ TEST_CASE("Widgets destroyed before the drawing they show leave nothing register
     graphic.clearBlocks();
     graphic.addLayer(new RS_Layer("0"));
     addBlock(graphic, "Window");
+}
+
+// --- the layer list makes another layer active in place of a hidden or removed one, and tells its
+// listeners: the widgets that show the active layer show the new one, and the view does not move the
+// selection to it, as it does to a layer the user activates
+
+namespace {
+
+/// the colour of the "By Layer" entry of a pen tool bar: a swatch painted with the active layer's colour
+std::string byLayerColor(const QG_PenToolBar& bar) {
+    const auto* box = bar.findChild<QG_ColorBox*>();
+    REQUIRE(box != nullptr);
+    const QIcon swatch = box->itemIcon(0);
+    REQUIRE_FALSE(swatch.availableSizes().isEmpty());
+    const QImage image = swatch.pixmap(swatch.availableSizes().first()).toImage();
+    return image.pixelColor(image.width() / 2, image.height() / 2).name().toStdString();
+}
+
+/// a view listening to the layers of its drawing, as QC_ApplicationWindow makes one for each window;
+/// never shown (an Enter event would have RS_ActionDefault create the application window)
+struct ListeningView {
+    RS_Graphic& m_graphic;
+    LC_ActionContext m_context;
+    std::unique_ptr<QG_GraphicView> m_view;
+
+    explicit ListeningView(RS_Graphic& graphic)
+        : m_graphic{graphic}, m_view{std::make_unique<QG_GraphicView>(nullptr, &graphic, &m_context)} {
+        m_view->initView();
+        m_graphic.addLayerListListener(m_view.get());
+    }
+    ~ListeningView() {
+        m_view.reset();
+        m_graphic.setGraphicView(nullptr);
+    }
+};
+
+/// "Modify layer of selected entities, at layer activation" (Options > General), on while it lives
+struct MoveSelectionToActivatedLayer {
+    const bool m_before = LC_GET_ONE_BOOL("Modify", "ModifyEntitiesToActiveLayer");
+    MoveSelectionToActivatedLayer() {
+        LC_SET_ONE("Modify", "ModifyEntitiesToActiveLayer", true);
+    }
+    ~MoveSelectionToActivatedLayer() {
+        LC_SET_ONE("Modify", "ModifyEntitiesToActiveLayer", m_before);
+    }
+};
+
+}
+
+TEST_CASE("The pen tool bar shows the layer made active in place of a hidden or removed one", "[gui][layers][active]") {
+    (void)lc::test::application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    RS_Layer* zero = graphic.findLayer(QStringLiteral("0"));
+    REQUIRE(zero != nullptr);
+    zero->setPen(RS_Pen(RS_Color(0, 0, 255), RS2::Width00, RS2::SolidLine));
+    auto* walls = new RS_Layer(QStringLiteral("Walls"));
+    walls->setPen(RS_Pen(RS_Color(255, 0, 0), RS2::Width00, RS2::SolidLine));
+    graphic.addLayer(walls);
+    graphic.activateLayer(walls);
+
+    lc::test::TestGraphicView view;
+    view.setDocument(&graphic);
+    QG_PenToolBar bar(QStringLiteral("Pen"));
+    bar.setGraphicView(&view);
+    REQUIRE(byLayerColor(bar) == "#ff0000");
+
+    SECTION("hidden") {
+        graphic.toggleLayer(walls);
+    }
+    SECTION("removed") {
+        graphic.removeLayer(walls);
+    }
+    REQUIRE(graphic.getActiveLayer() == zero);
+    CHECK(byLayerColor(bar) == "#0000ff");
+    bar.setGraphicView(nullptr);
+}
+
+TEST_CASE("No selected entity moves to the layer made active in place of a hidden or removed one", "[gui][layers][active]") {
+    (void)lc::test::application();
+    MoveSelectionToActivatedLayer option;
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    RS_Layer* zero = graphic.findLayer(QStringLiteral("0"));
+    REQUIRE(zero != nullptr);
+    auto* doors = new RS_Layer(QStringLiteral("Doors"));
+    auto* walls = new RS_Layer(QStringLiteral("Walls"));
+    graphic.addLayer(doors);
+    graphic.addLayer(walls);
+    graphic.activateLayer(walls);
+    auto* door = new RS_Line(&graphic, RS_LineData(RS_Vector{0, 0}, RS_Vector{10, 0}));
+    door->setLayer(doors);
+    graphic.addEntity(door);
+    auto* wall = new RS_Line(&graphic, RS_LineData(RS_Vector{0, 5}, RS_Vector{10, 5}));
+    wall->setLayer(walls);
+    graphic.addEntity(wall);
+
+    ListeningView view(graphic);
+    graphic.select(QList<RS_Entity*>{door, wall});
+    REQUIRE(door->isSelected());
+    REQUIRE(wall->isSelected());
+
+    SECTION("a layer the user activates gets them (the option is on)") {
+        graphic.activateLayer(doors, true);
+        CHECK(door->isDeleted());
+        CHECK(wall->isDeleted());
+        int onDoors = 0;
+        for (const RS_Entity* entity : graphic) {
+            if (!entity->isDeleted() && entity->getLayer(false) == doors) {
+                ++onDoors;
+            }
+        }
+        CHECK(onDoors == 2);
+    }
+    SECTION("hiding the active layer") {
+        graphic.toggleLayer(walls);
+        REQUIRE(graphic.getActiveLayer() == zero);
+        CHECK_FALSE(door->isDeleted());
+        CHECK_FALSE(wall->isDeleted());
+        CHECK(door->getLayer(false) == doors);
+        CHECK(wall->getLayer(false) == walls);
+    }
+    SECTION("removing the active layer") {
+        graphic.removeLayer(walls);
+        REQUIRE(graphic.getActiveLayer() == zero);
+        CHECK_FALSE(door->isDeleted());
+        CHECK(door->getLayer(false) == doors);
+    }
 }

@@ -47,6 +47,15 @@ public:
     virtual void layerActivated(RS_Layer*) {layerListModified(true);}
 
     /**
+     * Called when the list made \p layer the active one by itself, because the active layer was
+     * hidden, removed or loaded hidden (the active layer is always a visible one), after the
+     * listeners were told of that change. Nobody chose \p layer: a listener that acts on a layer
+     * being chosen (QG_GraphicView moves the selected entities to it) overrides this; for the
+     * others it is layerActivated().
+     */
+    virtual void activeLayerReplaced(RS_Layer* layer) {layerActivated(layer);}
+
+    /**
      * Called when a new layer is added to the list.
      */
     virtual void layerAdded(RS_Layer*) {layerListModified(true);}

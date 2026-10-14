@@ -130,6 +130,11 @@ public:
         activateLayer(layer);
     }
 
+    /// shows the new active layer without scrolling to it: the list stays where a layer was hidden or removed (#1515)
+    void activeLayerReplaced(RS_Layer* layer) override {
+        activateLayer(layer, false);
+    }
+
     void layerAdded(RS_Layer* layer) override;
     void layerEdited(RS_Layer*) override;
     void layerRemoved(RS_Layer*) override;
