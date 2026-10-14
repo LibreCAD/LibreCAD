@@ -173,6 +173,33 @@ QStringList tabOrder(QC_ApplicationWindow& window, const QString& first, const Q
 }
 }
 
+TEST_CASE("Print does not inherit the print preview checked state", "[.gui][printing][issue3105]") {
+    DockFixture fixture;
+    REQUIRE(fixture.window.getCurrentMDIWindow() == nullptr);
+    QAction* print = fixture.window.getAction("FilePrint");
+    QAction* preview = fixture.window.getAction("FilePrintPreview");
+    REQUIRE(print != nullptr);
+    REQUIRE(preview != nullptr);
+    print->setEnabled(true);
+
+    QObject receiver;
+    int triggered = 0;
+    bool checked = true;
+    QObject::connect(print, &QAction::triggered, &receiver, [&](bool value) {
+        ++triggered;
+        checked = value;
+    });
+    for (const bool active : {false, true, false, true}) {
+        CAPTURE(active);
+        fixture.window.printPreviewChanged(active);
+        CHECK(preview->isChecked() == active);
+        CHECK_FALSE(print->isCheckable());
+        print->trigger();
+        CHECK_FALSE(checked);
+    }
+    CHECK(triggered == 4);
+}
+
 TEST_CASE("Main window fits its available screen", "[.gui][dock-window]") {
     DockFixture fixture;
     auto& window = fixture.window;
