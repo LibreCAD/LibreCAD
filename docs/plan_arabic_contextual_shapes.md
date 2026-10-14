@@ -101,8 +101,14 @@ private adapters and the primary checkout remain untouched. Concurrent merge
   notices. Third-party font/license notices are unchanged.
 
 Fresh default-OFF Release foundations pass 16/16 on macOS; default qmake
-configuration and workflow lint pass. Fresh enabled application/native/full
-suite validation is in progress. This checkpoint does not close remaining
+configuration and workflow lint pass. The enabled application builds; the
+registered CTest run passes 31/31, including all sixteen foundations, six native
+programs and both low-level format programs. The application test executable
+passes 3,488 cases with 22 skips, using the repository's registered exclusions
+(5,399,593 assertions). The separate DWG writer lane passes 417 cases / 16,514
+assertions. Parser/codec ASan+UBSan checks pass (2/2, leak
+detection disabled; external Qt/Catch libraries are not instrumented). Both new
+parser regressions fail against `d7457620e`'s parser. This checkpoint does not close remaining
 P5/P7, parser parity/control-layout, outline tolerance/precision, mutation,
 certified-engine, packaging/license or independent Arabic visual-review gates.
 
