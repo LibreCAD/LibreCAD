@@ -525,14 +525,19 @@ TEST_CASE("toPlainLine: the line is safe as a DXF value in either encoding",
         CAPTURE(text.left(40).toStdString());
         const QString plain = RS_MText::toPlainLine(text);
         CHECK_FALSE(hasControlCharacter(plain));
-        // what isSafeDxfRecordText() of libdxfrw rejects
-        CHECK_FALSE(hasControlCharacter(RS_FilterDXFRW::toDxfString(plain, true)));
-        CHECK_FALSE(hasControlCharacter(RS_FilterDXFRW::toDxfString(plain, false)));
-        // the encoder adds no paragraph code: the line has no line feed
-        CHECK(RS_FilterDXFRW::toDxfString(plain, true).contains(QStringLiteral("\\P")) ==
-              plain.contains(QStringLiteral("\\P")));
+        // The line is the value of a single-line ATTRIB and is written as
+        // one. What isSafeDxfRecordText() of libdxfrw rejects:
+        const QString inDxf = RS_FilterDXFRW::toDxfSingleLineString(plain, true);
+        CHECK_FALSE(hasControlCharacter(inDxf));
+        CHECK_FALSE(hasControlCharacter(RS_FilterDXFRW::toDxfSingleLineString(plain, false)));
+        // the encoder adds no code of an MTEXT, and the line has no line
+        // feed: either encoder writes the same
+        CHECK(inDxf == RS_FilterDXFRW::toDxfString(plain, true));
+        // A DXF is read back with the line it was written from: a "\P" or a
+        // "{\f...;}" that the line holds is not a code of a single-line value.
+        CHECK(RS_FilterDXFRW::toNativeSingleLineString(inDxf) == plain);
     }
     const QString stack = RS_MText::toPlainLine(QStringLiteral(R"(\S1^2;)"));
-    CHECK(RS_FilterDXFRW::toDxfString(stack, true) == QStringLiteral("1^ 2"));
-    CHECK(RS_FilterDXFRW::toDxfString(stack, false) == QStringLiteral("1^2"));
+    CHECK(RS_FilterDXFRW::toDxfSingleLineString(stack, true) == QStringLiteral("1^ 2"));
+    CHECK(RS_FilterDXFRW::toDxfSingleLineString(stack, false) == QStringLiteral("1^2"));
 }

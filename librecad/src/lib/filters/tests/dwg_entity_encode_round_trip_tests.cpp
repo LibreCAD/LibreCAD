@@ -3862,6 +3862,50 @@ TEST_CASE("DRW_Underlay::parseDwg resets reused clip state",
     CHECK(reused.definitionHandle == 0x743u);
 }
 
+namespace {
+
+// The PDF underlay of a drawing saved by AutoCAD as R14: object record 0xD07
+// of ACadSharp's samples/sample_AC1014.dwg, from the object type to the end
+// of the handles. Its last handle names the PDFDEFINITION 0xD06. See
+// testdata/PROVENANCE.md.
+const std::uint8_t kAutoCadR14PdfUnderlay[] = {
+    0x07, 0xC0, 0x80, 0x83, 0x41, 0xE8, 0x40, 0x00, 0x00, 0x00, 0x40, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x78, 0x08, 0x00, 0x05, 0x4E, 0x0B,
+    0x52, 0x00, 0x14, 0x2F, 0x7A, 0xB9, 0xA4, 0x98, 0x20, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x05, 0xC8, 0x14, 0xA8, 0x1B, 0x20, 0x04, 0x60, 0xA2,
+    0x21, 0x82, 0xC7, 0x42, 0x50, 0xA4, 0x1A, 0x0D,
+};
+
+} // namespace
+
+// R13 and R14 keep the handles behind the data of the same record, the
+// definition last, as the later versions do in their handle stream. Read
+// without it, the underlay cannot be written again in any format.
+TEST_CASE("DRW_Underlay reads the definition handle of AutoCAD's R14 underlay",
+          "[dwg-read][entity-encode][underlay][r14]") {
+    std::vector<std::uint8_t> record = recordBytes(kAutoCadR14PdfUnderlay);
+    dwgBuffer reader(record.data(), record.size());
+    DRW_Underlay parsed;
+    REQUIRE(DrwEntityEncodeTestAccess::parse(parsed, DRW::AC1014, &reader));
+    CHECK(reader.isGood());
+
+    CHECK(parsed.handle == 0xD07u);
+    CHECK(parsed.definitionHandle == 0xD06u);
+    CHECK(DrwEntityEncodeTestAccess::layerH(parsed).ref == 0x10u);
+    CHECK(parsed.position.x == Catch::Approx(16.28692563580262));
+    CHECK(parsed.position.y == Catch::Approx(15.0));
+    CHECK(parsed.position.z == Catch::Approx(0.0));
+    CHECK(parsed.scale.x == Catch::Approx(1.0));
+    CHECK(parsed.scale.y == Catch::Approx(1.0));
+    CHECK(parsed.scale.z == Catch::Approx(1.0));
+    CHECK(parsed.rotation == Catch::Approx(0.0));
+    CHECK(parsed.extPoint.z == Catch::Approx(1.0));
+    CHECK(parsed.flags == 3);
+    CHECK(parsed.contrast == 100);
+    CHECK(parsed.fade == 0);
+    CHECK(parsed.clipBoundary.empty());
+}
+
 // HELIX encoder round-trip (Phase 8a-1): a HELIX encodes as a SPLINE body
 // (oType 503, custom class AcDbHelix) followed by the AcDbHelix trailer. The
 // spline body must stay intact (degree/control points) and every trailer field

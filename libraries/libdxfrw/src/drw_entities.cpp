@@ -10783,9 +10783,10 @@ bool DRW_Underlay::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t 
     if (!DRW_Entity::parseDwgEntHandle(version, &handleProbe, true,
                                        handleEndBit))
         return fail();
+    // The definition follows the common entity handles in every version: R13
+    // and R14 keep both behind the data of the same record.
     std::uint32_t parsedDefinitionHandle = 0;
-    if (version > DRW::AC1014
-        && proxyEntityHasBits(handleProbe, handleEndBit, 16)) {
+    if (proxyEntityHasBits(handleProbe, handleEndBit, 16)) {
         dwgHandle defH;
         if (!readBoundedDwgHandle(handleProbe, handleEndBit, handle, true,
                                   defH))
