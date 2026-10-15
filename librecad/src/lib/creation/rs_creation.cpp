@@ -36,6 +36,7 @@
 #include "lc_undosection.h"
 #include "rs_arc.h"
 #include "rs_block.h"
+#include "rs_blocklist.h"
 #include "rs_circle.h"
 #include "rs_constructionline.h"
 #include "rs_creation.h"
@@ -933,6 +934,10 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
 
     RS_DEBUG->print("RS_Creation::createLibraryInsert");
 
+    if (!graphic) {
+        return nullptr;
+    }
+
     RS_Graphic g;
     if (!g.open(data.file, RS2::FormatUnknown)) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -943,7 +948,38 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
     // Unit conversion is handled by getPasteScale -> outer Insert scale.
     // Do NOT pre-scale the source graphic here to avoid double-scaling.
 
-    QString s = QFileInfo(data.file).completeBaseName();
+    const QFileInfo fileInfo(data.file);
+    QString sourceFile = fileInfo.canonicalFilePath();
+    if (sourceFile.isEmpty()) {
+        sourceFile = fileInfo.absoluteFilePath();
+    }
+    const QString sourceKey = QStringLiteral("LibreCAD.LibraryInsertSource");
+    QString s;
+    // Reuse only this file's wrapper; block editing needs a fresh one to avoid cycles.
+    for (RS_Block* block : *graphic->getBlockList()) {
+        if (container == graphic && !block->isUndone() && block->getUserDefVar(sourceKey) == sourceFile) {
+            s = block->getName();
+            break;
+        }
+    }
+
+    if (s.isEmpty()) {
+        auto unusedName = [&](QString name) {
+            while (g.findBlock(name) || graphic->findBlock(name)) {
+                name = g.newBlockName(graphic->newBlockName(name));
+            }
+            return name;
+        };
+        // Keep imported references separate from existing destination definitions.
+        for (RS_Block* block : *g.getBlockList()) {
+            const QString oldName = block->getName();
+            if (graphic->findBlock(oldName)) {
+                g.getBlockList()->rename(block, unusedName(oldName));
+                g.renameInserts(oldName, block->getName());
+            }
+        }
+        s = unusedName(fileInfo.completeBaseName());
+    }
 
     RS_Modification m(*container, graphicView);
     m.paste(
@@ -952,6 +988,11 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
                     data.factor, data.angle, true,
                     s),
                 &g);
+
+    if (RS_Block* block = graphic->findBlock(s)) {
+        // Session-only provenance: no file paths are added to the saved DXF.
+        block->setUserDefVar(sourceKey, sourceFile);
+    }
 
     RS_DEBUG->print("RS_Creation::createLibraryInsert: OK");
 
