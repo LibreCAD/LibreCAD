@@ -22,6 +22,7 @@
 #include <random>
 #include <type_traits>
 
+#include <boost/math/constants/constants.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp>
 
 #include "lc_curveoffset.h"
@@ -55,13 +56,41 @@ void checkSameFields(const RS_EllipseData& a, const RS_EllipseData& b) {
 using Quad = boost::multiprecision::cpp_bin_float_quad;
 using QuadJet = std::array<Quad, 6>;
 
+Quad idealDirectedSweep(const RS_EllipseData& data, const bool whole) {
+    const Quad period = 2 * boost::math::constants::pi<Quad>();
+    if (whole) {
+        return data.reversed ? -period : period;
+    }
+    Quad directed = Quad(data.angle2) - Quad(data.angle1);
+    if (data.reversed && directed > 0) {
+        directed -= period;
+    } else if (!data.reversed && directed < 0) {
+        directed += period;
+    }
+    return directed;
+}
+
 /** Independent 113-bit evaluation of exact input doubles, including axis normalization. */
 QuadJet referenceOracle(const RS_EllipseData& data, const geo::ReferenceFrame& frame, const double delta,
-                        const double t, const bool offset, const bool canonicalSeam = true) {
-    const auto domain = frame.sourceSweep();
-    const Quad sign = domain.signedSweep < 0.0 ? -1 : 1;
-    const Quad angle = Quad(domain.start) + sign *
-        Quad(canonicalSeam && domain.whole && t == frame.parameterEnd() ? 0.0 : t);
+                        const double t, const bool offset, const bool canonicalEndpoint = true,
+                        const bool unitRate = false) {
+    const bool whole = frame.sourceSweep().whole;
+    const Quad directed = idealDirectedSweep(data, whole);
+    const Quad sign = data.reversed ? -1 : 1;
+    const Quad rate = unitRate ? Quad(1) : abs(directed) / Quad(frame.parameterEnd());
+    const Quad signedRate = sign * rate;
+    const Quad start = whole ? Quad(M_PI_4) : Quad(data.angle1);
+    Quad angle = start + signedRate * Quad(t);
+    if (!unitRate) {
+        const Quad endpoint = whole ? start : Quad(data.angle2);
+        if (canonicalEndpoint && t == frame.parameterEnd()) {
+            angle = endpoint;
+        } else if (t > 0.5 * frame.parameterEnd()) {
+            // Periodically equivalent over the entire last half, not an endpoint patch.
+            // This avoids treating finite-precision sin(2*pi) residue as exact zero's oracle.
+            angle = endpoint - signedRate * (Quad(frame.parameterEnd()) - Quad(t));
+        }
+    }
     const Quad c = cos(angle);
     const Quad s = sin(angle);
     const Quad mx = Quad(data.majorP.x) / Quad(frame.scale());
@@ -71,13 +100,13 @@ QuadJet referenceOracle(const RS_EllipseData& data, const geo::ReferenceFrame& f
     const Quad h2 = s * s + r * r * c * c;
     const Quad h = sqrt(h2);
     QuadJet jet{{mx * c - my * r * s, my * c + mx * r * s,
-                 sign * (-mx * s - my * r * c), sign * (-my * s + mx * r * c), 0, 0}};
-    jet[4] = -jet[0];
-    jet[5] = -jet[1];
+                 signedRate * (-mx * s - my * r * c), signedRate * (-my * s + mx * r * c), 0, 0}};
+    jet[4] = -rate * rate * jet[0];
+    jet[5] = -rate * rate * jet[1];
     if (offset) {
         const Quad d = Quad(delta) / Quad(frame.scale());
         const Quad factor = 1 + d * r / (a * h2 * h);
-        const Quad factorDerivative = -3 * sign * d * r * (1 - r * r) * s * c / (a * h2 * h2 * h);
+        const Quad factorDerivative = -3 * signedRate * d * r * (1 - r * r) * s * c / (a * h2 * h2 * h);
         jet[0] += d * (r * c * mx - s * my) / (a * h);
         jet[1] += d * (r * c * my + s * mx) / (a * h);
         jet[4] = factor * jet[4] + factorDerivative * jet[2];
@@ -124,6 +153,20 @@ void checkSameJet(const LC_CurveJet& first, const LC_CurveJet& last) {
     CHECK(first.first.y == last.first.y);
     CHECK(first.second.x == last.second.x);
     CHECK(first.second.y == last.second.y);
+}
+
+std::array<RS_EllipseData, 18> rateSources() {
+    const double period = 2.0 * M_PI;
+    const double tiny = 2.0 * RS_TOLERANCE_ANGLE;
+    return {{basis(100.0, 0.5), basis(100.0, 0.5, 0.0, 0.0, true),
+             basis(100.0, 0.5, 0.7, 0.7 + period), basis(100.0, 0.5, 0.7, 0.7 - period, true),
+             basis(100.0, 0.5, 0.2, 6.0), basis(100.0, 0.5, 6.0, 0.2, true),
+             basis(100.0, 0.5, 6.0, 0.2), basis(100.0, 0.5, 0.2, 6.0, true),
+             basis(100.0, 0.5, 0.7, 0.7 + tiny), basis(100.0, 0.5, 0.7 + tiny, 0.7, true),
+             basis(100.0, 0.5, period - tiny, tiny), basis(100.0, 0.5, tiny, period - tiny, true),
+             basis(100.0, 0.5, tiny, period - tiny), basis(100.0, 0.5, period - tiny, tiny, true),
+             basis(100.0, 0.5, 0.1, 0.8), basis(100.0, 0.5, 0.8, 0.1, true),
+             basis(100.0, 0.5, period - tiny, 0.0), basis(100.0, 0.5, 0.0, period - tiny, true)}};
 }
 } // namespace
 
@@ -728,6 +771,271 @@ TEST_CASE("Reference factories and failed jet queries never publish usable parti
     CHECK_FALSE(jet.point.valid);
     CHECK_FALSE(jet.first.valid);
     CHECK_FALSE(jet.second.valid);
+}
+
+TEST_CASE("Reference rates enclose raw endpoint sweeps without reducing unwrapped angles",
+          "[lc-offsetcurve][geometry][reference-rate]") {
+    for (const auto& data : rateSources()) {
+        CAPTURE(data.angle1, data.angle2, data.reversed);
+        const auto domain = geo::sweep(data);
+        const auto frame = geo::ReferenceFrame::create(data, -25.0);
+        REQUIRE(domain);
+        REQUIRE(frame);
+        CHECK(frame->parameterEnd() == std::abs(domain->signedSweep));
+        CHECK(frame->sourceSweep().start == domain->start);
+        CHECK(frame->sourceSweep().signedSweep == domain->signedSweep);
+        CHECK(frame->sourceSweep().whole == domain->whole);
+        CHECK(frame->engineSignedDistance() == (data.reversed ? -25.0 : 25.0));
+        const Quad directed = idealDirectedSweep(data, domain->whole);
+        const Quad rate = abs(directed) / Quad(frame->parameterEnd());
+        checkEnclosure(frame->traversalRate(), rate);
+        REQUIRE(frame->traversalRate().isPositive());
+        const Quad start = domain->whole ? Quad(M_PI_4) : Quad(data.angle1);
+        for (int window = 0; window < 8; ++window) {
+            const double from = frame->parameterEnd() * (static_cast<double>(window) / 8.0);
+            const double to = frame->parameterEnd() * (static_cast<double>(window + 1) / 8.0);
+            LC_Interval angle;
+            REQUIRE(frame->boundUnwrappedAngle(from, to, angle));
+            for (const double t : {from, from + 0.5 * (to - from), to}) {
+                const Quad expected = start + directed * Quad(t) / Quad(frame->parameterEnd());
+                checkEnclosure(angle, expected);
+                LC_Interval pointAngle;
+                REQUIRE(frame->boundUnwrappedAngle(t, t, pointAngle));
+                checkEnclosure(pointAngle, expected);
+            }
+        }
+        LC_Interval end;
+        REQUIRE(frame->boundUnwrappedAngle(frame->parameterEnd(), frame->parameterEnd(), end));
+        checkEnclosure(end, start + directed);
+        if (domain->whole) {
+            CHECK_FALSE(end.contains(domain->start));
+        } else if (!data.reversed && data.angle2 < data.angle1) {
+            CHECK(end.lo() > data.angle2);
+        } else if (data.reversed && data.angle2 > data.angle1) {
+            CHECK(end.hi() < data.angle2);
+        } else {
+            CHECK(end.contains(data.angle2));
+        }
+    }
+}
+
+TEST_CASE("Exact sweep jets and products enclose dense independent arc and whole formulas",
+          "[lc-offsetcurve][geometry][reference-rate]") {
+    for (auto data : rateSources()) {
+        for (const double ratio : {0.02, 0.5, 1.0}) {
+            data.ratio = ratio;
+            data.majorP = RS_Vector{60.0, 80.0};
+            data.center = RS_Vector{1e200, -1e200};
+            for (const double delta : {0.0, -25.0, 20.0}) {
+                CAPTURE(data.angle1, data.angle2, data.reversed, ratio, delta);
+                const auto frame = geo::ReferenceFrame::create(data, delta);
+                REQUIRE(frame);
+                for (int window = 0; window < 8; ++window) {
+                    const double from = frame->parameterEnd() * (static_cast<double>(window) / 8.0);
+                    const double to = frame->parameterEnd() * (static_cast<double>(window + 1) / 8.0);
+                    LC_CurveJetBounds source;
+                    LC_CurveJetBounds offset;
+                    REQUIRE(frame->boundSourceJet(from, to, source));
+                    REQUIRE(frame->boundOffsetJet(from, to, offset));
+                    for (const double t : {from, from + 0.5 * (to - from), to}) {
+                        checkEnclosure(source, referenceOracle(data, *frame, delta, t, false, false));
+                        checkEnclosure(offset, referenceOracle(data, *frame, delta, t, true, false));
+                    }
+                    const double middle = from + 0.5 * (to - from);
+                    REQUIRE(frame->boundSourceJet(middle, middle, source));
+                    REQUIRE(frame->boundOffsetJet(middle, middle, offset));
+                    checkEnclosure(source, referenceOracle(data, *frame, delta, middle, false));
+                    checkEnclosure(offset, referenceOracle(data, *frame, delta, middle, true));
+                    if (delta == 0.0) {
+                        const std::array<LC_Interval, 8> a{{source.x, source.y, source.dx, source.dy,
+                            source.ddx, source.ddy, source.speedSquaredProduct, source.crossProduct}};
+                        const std::array<LC_Interval, 8> b{{offset.x, offset.y, offset.dx, offset.dy,
+                            offset.ddx, offset.ddy, offset.speedSquaredProduct, offset.crossProduct}};
+                        for (std::size_t k = 0; k < a.size(); ++k) {
+                            CHECK(a[k].lo() == b[k].lo());
+                            CHECK(a[k].hi() == b[k].hi());
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("Tiny real-period wraps distinguish every rate factor from unit-rate jets",
+          "[lc-offsetcurve][geometry][reference-rate]") {
+    for (const bool reversed : {false, true}) {
+        const double nearPeriod = 2.0 * M_PI - 2.0 * RS_TOLERANCE_ANGLE;
+        for (const double a : {1e-280, 100.0, 1e280}) {
+            const auto data = reversed ? basis(a, 0.5, 0.0, nearPeriod, true) :
+                basis(a, 0.5, nearPeriod, 0.0);
+            for (const double delta : {0.0, 0.2 * a}) {
+                CAPTURE(reversed, a, delta);
+                const auto frame = geo::ReferenceFrame::create(data, delta);
+                REQUIRE(frame);
+                REQUIRE_FALSE(frame->sourceSweep().whole);
+                REQUIRE(frame->parameterEnd() > RS_TOLERANCE_ANGLE);
+                const Quad rate = abs(idealDirectedSweep(data, false)) / Quad(frame->parameterEnd());
+                CHECK(rate - 1 > Quad("1e-9"));
+                checkEnclosure(frame->traversalRate(), rate);
+                const double t = 0.5 * frame->parameterEnd();
+                LC_CurveJetBounds bounds;
+                REQUIRE(frame->boundOffsetJet(t, t, bounds));
+                const QuadJet exact = referenceOracle(data, *frame, delta, t, true);
+                checkEnclosure(bounds, exact);
+                const QuadJet unit = referenceOracle(data, *frame, delta, t, true, false, true);
+                // Missing rate factors cannot hide inside ordinary component-rounding padding.
+                // Correct outward bounds need not exclude the unit-rate values as well.
+                CHECK(abs(exact[3] - unit[3]) > abs(unit[3]) * Quad("1e-9"));
+                CHECK(abs(exact[4] - unit[4]) > abs(unit[4]) * Quad("1e-9"));
+                const Quad unitSpeedSquared = unit[2] * unit[2] + unit[3] * unit[3];
+                const Quad unitCross = unit[2] * unit[5] - unit[3] * unit[4];
+                CHECK(abs(exact[2] * exact[2] + exact[3] * exact[3] - unitSpeedSquared) >
+                      abs(unitSpeedSquared) * Quad("1e-9"));
+                CHECK(abs(exact[2] * exact[5] - exact[3] * exact[4] - unitCross) >
+                      abs(unitCross) * Quad("1e-9"));
+                for (const double endpoint : {0.0, frame->parameterEnd()}) {
+                    REQUIRE(frame->boundOffsetJet(endpoint, endpoint, bounds));
+                    checkEnclosure(bounds, referenceOracle(data, *frame, delta, endpoint, true));
+                    checkEnclosure(bounds, referenceOracle(data, *frame, delta, endpoint, true, false));
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("Exact whole and arc endpoints agree with their continuous one-sided jet limits",
+          "[lc-offsetcurve][geometry][reference-rate]") {
+    for (auto data : rateSources()) {
+        for (const double ratio : {0.5, 1.0}) {
+            data.ratio = ratio;
+            data.majorP = RS_Vector{60.0, 80.0};
+            for (const double delta : {0.0, -99.99, 20.0}) {
+                CAPTURE(data.angle1, data.angle2, data.reversed, ratio, delta);
+                const auto frame = geo::ReferenceFrame::create(data, delta);
+                REQUIRE(frame);
+                const double end = frame->parameterEnd();
+                const double before = std::nextafter(end, 0.0);
+                const double after = std::nextafter(0.0, end);
+                for (const bool offset : {false, true}) {
+                    LC_CurveJetBounds atStart;
+                    LC_CurveJetBounds startLimit;
+                    LC_CurveJetBounds atEnd;
+                    LC_CurveJetBounds limit;
+                    REQUIRE((offset ? frame->boundOffsetJet(0.0, 0.0, atStart) :
+                                      frame->boundSourceJet(0.0, 0.0, atStart)));
+                    REQUIRE((offset ? frame->boundOffsetJet(0.0, after, startLimit) :
+                                      frame->boundSourceJet(0.0, after, startLimit)));
+                    REQUIRE((offset ? frame->boundOffsetJet(end, end, atEnd) :
+                                      frame->boundSourceJet(end, end, atEnd)));
+                    REQUIRE((offset ? frame->boundOffsetJet(before, end, limit) :
+                                      frame->boundSourceJet(before, end, limit)));
+                    const QuadJet canonical = referenceOracle(data, *frame, delta, end, offset);
+                    const QuadJet continuous = referenceOracle(data, *frame, delta, end, offset, false);
+                    const QuadJet first = referenceOracle(data, *frame, delta, 0.0, offset);
+                    checkEnclosure(atStart, first);
+                    checkEnclosure(startLimit, first);
+                    checkEnclosure(startLimit, referenceOracle(data, *frame, delta, after, offset, false));
+                    checkEnclosure(atEnd, canonical);
+                    checkEnclosure(atEnd, continuous);
+                    checkEnclosure(limit, continuous);
+                    checkEnclosure(limit, referenceOracle(data, *frame, delta, before, offset, false));
+                    for (std::size_t k = 0; k < canonical.size(); ++k) {
+                        CHECK(abs(canonical[k] - continuous[k]) < Quad("1e-29"));
+                    }
+                    if (frame->sourceSweep().whole) {
+                        for (std::size_t k = 0; k < first.size(); ++k) {
+                            CHECK(abs(first[k] - continuous[k]) < Quad("1e-29"));
+                        }
+                        LC_CurveJet startJet;
+                        LC_CurveJet endJet;
+                        REQUIRE((offset ? frame->offsetJet(0.0, startJet) : frame->sourceJet(0.0, startJet)));
+                        REQUIRE((offset ? frame->offsetJet(end, endJet) : frame->sourceJet(end, endJet)));
+                        checkSameJet(startJet, endJet);
+                    }
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("Exact reference versus unit-rate geometry has an outward Lipschitz discrepancy bound",
+          "[lc-offsetcurve][geometry][reference-rate]") {
+    for (const auto& data : rateSources()) {
+        for (const double delta : {-25.0, 0.0, 20.0}) {
+            CAPTURE(data.angle1, data.angle2, data.reversed, delta);
+            const auto frame = geo::ReferenceFrame::create(data, delta);
+            REQUIRE(frame);
+            const LC_Interval mx = LC_Interval::point(data.majorP.x) / LC_Interval::point(frame->scale());
+            const LC_Interval my = LC_Interval::point(data.majorP.y) / LC_Interval::point(frame->scale());
+            const LC_Interval axis = sqrt(sqr(mx) + sqr(my));
+            const LC_Interval d = LC_Interval::point(std::abs(delta)) / LC_Interval::point(frame->scale());
+            const LC_Interval lipschitz = axis + d / LC_Interval::point(data.ratio);
+            const LC_Interval difference = frame->traversalRate() - LC_Interval::point(1.0);
+            const double rateError = std::max(std::abs(difference.lo()), std::abs(difference.hi()));
+            // |Q'_eta| <= a + |delta|/ratio; integrate over at most T*|gamma-1|.
+            const LC_Interval discrepancy = lipschitz * LC_Interval::point(frame->parameterEnd()) *
+                LC_Interval::point(rateError);
+            REQUIRE(std::isfinite(discrepancy.hi()));
+            CHECK(discrepancy.hi() < 1e-12);
+            auto localData = data;
+            localData.center = RS_Vector{0.0, 0.0};
+            localData.majorP = RS_Vector{data.majorP.x / frame->scale(), data.majorP.y / frame->scale()};
+            for (int k = 0; k <= 32; ++k) {
+                const double t = frame->parameterEnd() * (static_cast<double>(k) / 32.0);
+                const QuadJet exact = referenceOracle(data, *frame, delta, t, true, false);
+                const QuadJet unit = referenceOracle(data, *frame, delta, t, true, false, true);
+                const Quad dx = exact[0] - unit[0];
+                const Quad dy = exact[1] - unit[1];
+                CHECK(sqrt(dx * dx + dy * dy) <= Quad(discrepancy.hi()));
+                const double angle = frame->sourceSweep().start + (data.reversed ? -t : t);
+                const RS_Vector old = geo::exactOffsetPoint(localData, angle, delta / frame->scale());
+                REQUIRE(geo::isFinite2D(old));
+                const Quad errorX = Quad(old.x) - unit[0];
+                const Quad errorY = Quad(old.y) - unit[1];
+                // Empirical libm regression only: this is NOT part of the certified bound above.
+                const Quad floatingError = sqrt(errorX * errorX + errorY * errorY);
+                CHECK(floatingError < Quad(64.0 * std::numeric_limits<double>::epsilon() * lipschitz.hi()));
+                const Quad actualX = Quad(old.x) - exact[0];
+                const Quad actualY = Quad(old.y) - exact[1];
+                CHECK(sqrt(actualX * actualX + actualY * actualY) <= Quad(discrepancy.hi()) + floatingError);
+            }
+        }
+    }
+}
+
+TEST_CASE("Invalid exact-sweep queries clear angle and jet outputs",
+          "[lc-offsetcurve][geometry][reference-rate]") {
+    const auto frame = geo::ReferenceFrame::create(basis(10.0, 0.5, 6.0, 0.2), 1.0);
+    REQUIRE(frame);
+    const double end = frame->parameterEnd();
+    for (const auto range : std::array<std::array<double, 2>, 7>{{
+             {{-1.0, 0.0}}, {{0.0, std::nextafter(end, std::numeric_limits<double>::infinity())}},
+             {{end, 0.0}}, {{0.0, std::numeric_limits<double>::infinity()}},
+             {{std::numeric_limits<double>::quiet_NaN(), 0.0}},
+             {{0.0, std::numeric_limits<double>::quiet_NaN()}},
+             {{-std::numeric_limits<double>::infinity(), 0.0}}}}) {
+        LC_Interval angle = LC_Interval::point(123.0);
+        CHECK_FALSE(frame->boundUnwrappedAngle(range[0], range[1], angle));
+        CHECK_FALSE(angle.isValid());
+        LC_CurveJetBounds bounds;
+        REQUIRE(frame->boundSourceJet(0.0, 0.0, bounds));
+        CHECK_FALSE(frame->boundSourceJet(range[0], range[1], bounds));
+        checkCleared(bounds);
+        REQUIRE(frame->boundOffsetJet(0.0, 0.0, bounds));
+        CHECK_FALSE(frame->boundOffsetJet(range[0], range[1], bounds));
+        checkCleared(bounds);
+    }
+    CHECK_FALSE(geo::ReferenceFrame::create(basis(10.0, 0.5, 0.0, 0.5 * RS_TOLERANCE_ANGLE), 0.0));
+    CHECK_FALSE(geo::ReferenceFrame::create(basis(10.0, 0.5, 0.0, 2.0 * M_PI + 1e-6), 0.0));
+    const auto collapsed = geo::ReferenceFrame::create(basis(100.0, 1.0), -100.0);
+    REQUIRE(collapsed);
+    LC_CurveJetBounds bounds;
+    REQUIRE(collapsed->boundOffsetJet(0.0, collapsed->parameterEnd(), bounds));
+    for (const LC_Interval value : {bounds.x, bounds.y, bounds.dx, bounds.dy, bounds.ddx, bounds.ddy,
+                                    bounds.speedSquaredProduct, bounds.crossProduct}) {
+        CHECK(value.containsZero());
+    }
 }
 
 TEST_CASE("Shared reference budgets consume exact allowances once and latch every refusal",

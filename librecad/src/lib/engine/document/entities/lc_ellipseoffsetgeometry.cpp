@@ -122,6 +122,11 @@ double taylorRemainder(const double radius, const int order) {
     return error.hi();
 }
 
+LC_Interval realPi() {
+    // Adjacent binary64 values bracketing real pi, not an assumed libm rounding bound.
+    return LC_Interval::hull(0x1.921fb54442d18p+1, 0x1.921fb54442d19p+1);
+}
+
 /**
  * Reduce by an enclosed real multiple of pi/2, not by a rounded period.
  * Taylor's theorem uses |sin^(n)|, |cos^(n)| <= 1 for the explicit remainder.
@@ -132,9 +137,7 @@ bool referenceTrig(const LC_Interval& angle, LC_Interval& cosine, LC_Interval& s
     if (!finiteInterval(angle) || angle.lo() < -16.0 || angle.hi() > 16.0) {
         return false;
     }
-    // These adjacent binary64 values bracket real pi.
-    const LC_Interval pi = LC_Interval::hull(0x1.921fb54442d18p+1, 0x1.921fb54442d19p+1);
-    const LC_Interval halfPi = pi * LC_Interval::point(0.5);
+    const LC_Interval halfPi = realPi() * LC_Interval::point(0.5);
     const double centre = 0.5 * angle.lo() + 0.5 * angle.hi();
     const int quadrant = static_cast<int>(std::round(centre / M_PI_2));
     const LC_Interval reduced = angle - LC_Interval::point(static_cast<double>(quadrant)) * halfPi;
@@ -428,7 +431,28 @@ std::optional<ReferenceFrame> ReferenceFrame::create(const RS_EllipseData& basis
     ReferenceFrame candidate;
     candidate.m_centre = basis.center;
     candidate.m_sweep = *domain;
+    candidate.m_endAngle = domain->whole ? domain->start : basis.angle2;
     candidate.m_signedDistance = signedDistance;
+    const LC_Interval realTurn = scaled(realPi(), 1);
+    LC_Interval extent = realTurn;
+    if (!domain->whole) {
+        // Subtract exact endpoint doubles before adding a REAL-period winding.
+        LC_Interval directed = LC_Interval::point(basis.angle2) - LC_Interval::point(basis.angle1);
+        if (!basis.reversed && basis.angle2 < basis.angle1) {
+            directed = directed + realTurn;
+        } else if (basis.reversed && basis.angle2 > basis.angle1) {
+            directed = directed - realTurn;
+        }
+        extent = basis.reversed ? -directed : directed;
+    }
+    candidate.m_rate = extent / LC_Interval::point(candidate.parameterEnd());
+    candidate.m_rateSquared = sqr(candidate.m_rate);
+    candidate.m_rateCubed = candidate.m_rateSquared * candidate.m_rate;
+    if (!finiteInterval(candidate.m_rate) || !candidate.m_rate.isPositive() ||
+        !finiteInterval(candidate.m_rateSquared) || !candidate.m_rateSquared.isPositive() ||
+        !finiteInterval(candidate.m_rateCubed) || !candidate.m_rateCubed.isPositive()) {
+        return std::nullopt;
+    }
     int exponent = 0;
     std::frexp(std::max(axes->a, std::abs(signedDistance)), &exponent);
     candidate.m_scaleExponent = exponent - 1;
@@ -460,6 +484,26 @@ const Sweep& ReferenceFrame::sourceSweep() const {
     return m_sweep;
 }
 
+const LC_Interval& ReferenceFrame::traversalRate() const {
+    return m_rate;
+}
+
+bool ReferenceFrame::boundUnwrappedAngle(const double t0, const double t1, LC_Interval& out) const {
+    out = {};
+    if (!std::isfinite(t0) || !std::isfinite(t1) || !(0.0 <= t0 && t0 <= t1 && t1 <= parameterEnd())) {
+        return false;
+    }
+    const LC_Interval start = LC_Interval::point(m_sweep.start);
+    const LC_Interval direction = LC_Interval::point(m_sweep.signedSweep < 0.0 ? -1.0 : 1.0);
+    const LC_Interval angle = t1 == 0.0 ? start :
+        start + direction * m_rate * LC_Interval::hull(t0, t1);
+    if (!finiteInterval(angle)) {
+        return false;
+    }
+    out = angle;
+    return true;
+}
+
 double ReferenceFrame::engineSignedDistance() const {
     return m_sweep.signedSweep < 0.0 ? m_signedDistance : -m_signedDistance;
 }
@@ -467,28 +511,16 @@ double ReferenceFrame::engineSignedDistance() const {
 bool ReferenceFrame::trig(const double t0, const double t1, LC_Interval& cosine, LC_Interval& sine) const {
     cosine = {};
     sine = {};
-    if (!std::isfinite(t0) || !std::isfinite(t1) || !(0.0 <= t0 && t0 <= t1 && t1 <= parameterEnd())) {
+    LC_Interval angle;
+    if (!boundUnwrappedAngle(t0, t1, angle)) {
         return false;
     }
-    const double direction = m_sweep.signedSweep < 0.0 ? -1.0 : 1.0;
-    const bool seam = m_sweep.whole && t1 == parameterEnd();
-    const LC_Interval start = LC_Interval::point(m_sweep.start);
-    const LC_Interval angle = t0 == t1 && (t0 == 0.0 || seam) ? start :
-        start + LC_Interval::point(direction) * LC_Interval::hull(t0, t1);
-    if (!referenceTrig(angle, cosine, sine)) {
-        return false;
+    if (t0 == t1 && t1 == parameterEnd()) {
+        // gamma*T is the exact directed endpoint difference plus integer REAL turns.
+        // This is periodic evaluation of the same continuous curve, not an endpoint patch.
+        angle = LC_Interval::point(m_endAngle);
     }
-    if (seam && t0 != t1) {
-        LC_Interval firstCosine;
-        LC_Interval firstSine;
-        if (!referenceTrig(start, firstCosine, firstSine)) {
-            return false;
-        }
-        // Rounded 2*pi is not an exact period: include the canonical closing value explicitly.
-        cosine = LC_Interval::hull(cosine, firstCosine);
-        sine = LC_Interval::hull(sine, firstSine);
-    }
-    return true;
+    return referenceTrig(angle, cosine, sine);
 }
 
 bool ReferenceFrame::boundSourceJet(const double t0, const double t1, LC_CurveJetBounds& out) const {
@@ -499,20 +531,21 @@ bool ReferenceFrame::boundSourceJet(const double t0, const double t1, LC_CurveJe
         return false;
     }
     const LC_Interval direction = LC_Interval::point(m_sweep.signedSweep < 0.0 ? -1.0 : 1.0);
+    const LC_Interval signedRate = direction * m_rate;
     const LC_Interval minorX = -m_majorY * m_ratio;
     const LC_Interval minorY = m_majorX * m_ratio;
     LC_CurveJetBounds candidate;
     candidate.x = m_majorX * cosine + minorX * sine;
     candidate.y = m_majorY * cosine + minorY * sine;
-    candidate.dx = direction * (-m_majorX * sine + minorX * cosine);
-    candidate.dy = direction * (-m_majorY * sine + minorY * cosine);
-    candidate.ddx = -candidate.x;
-    candidate.ddy = -candidate.y;
+    candidate.dx = signedRate * (-m_majorX * sine + minorX * cosine);
+    candidate.dy = signedRate * (-m_majorY * sine + minorY * cosine);
+    candidate.ddx = -m_rateSquared * candidate.x;
+    candidate.ddy = -m_rateSquared * candidate.y;
     const LC_Interval ratioSquared = sqr(m_ratio);
     const LC_Interval speedFactor = m_ratio.lo() == 1.0 ? LC_Interval::point(1.0) :
         ratioSquared + (LC_Interval::point(1.0) - ratioSquared) * sqr(sine);
-    candidate.speedSquaredProduct = m_axisSquared * speedFactor;
-    candidate.crossProduct = direction * m_axisSquared * m_ratio;
+    candidate.speedSquaredProduct = m_axisSquared * speedFactor * m_rateSquared;
+    candidate.crossProduct = direction * m_axisSquared * m_ratio * m_rateCubed;
     if (!finiteBounds(candidate) || !finiteInterval(candidate.speedSquaredProduct) ||
         !finiteInterval(candidate.crossProduct)) {
         return false;
@@ -537,6 +570,7 @@ bool ReferenceFrame::boundOffsetJet(const double t0, const double t1, LC_CurveJe
         return false;
     }
     const LC_Interval direction = LC_Interval::point(m_sweep.signedSweep < 0.0 ? -1.0 : 1.0);
+    const LC_Interval signedRate = direction * m_rate;
     LC_CurveJetBounds candidate;
     if (m_ratio.lo() == 1.0) {
         // Keep the shared circle radius, rather than independently bounding E + delta*N.
@@ -544,12 +578,12 @@ bool ReferenceFrame::boundOffsetJet(const double t0, const double t1, LC_CurveJe
         const LC_Interval factor = radius / m_axis;
         candidate.x = factor * source.x;
         candidate.y = factor * source.y;
-        candidate.dx = -direction * candidate.y;
-        candidate.dy = direction * candidate.x;
-        candidate.ddx = -candidate.x;
-        candidate.ddy = -candidate.y;
-        candidate.speedSquaredProduct = sqr(radius);
-        candidate.crossProduct = direction * sqr(radius);
+        candidate.dx = -signedRate * candidate.y;
+        candidate.dy = signedRate * candidate.x;
+        candidate.ddx = -m_rateSquared * candidate.x;
+        candidate.ddy = -m_rateSquared * candidate.y;
+        candidate.speedSquaredProduct = sqr(radius) * m_rateSquared;
+        candidate.crossProduct = direction * sqr(radius) * m_rateCubed;
     } else {
         const LC_Interval ratioSquared = sqr(m_ratio);
         const LC_Interval difference = LC_Interval::point(1.0) - ratioSquared;
@@ -558,6 +592,7 @@ bool ReferenceFrame::boundOffsetJet(const double t0, const double t1, LC_CurveJe
             return false;
         }
         const LC_Interval h = sqrt(h2);
+        // Physical angular speed: curvature and normal do not depend on traversal rate.
         const LC_Interval speed = m_axis * h;
         const LC_Interval curvatureDenominator = speed * h2;
         const LC_Interval derivativeDenominator = curvatureDenominator * h2;
@@ -567,7 +602,7 @@ bool ReferenceFrame::boundOffsetJet(const double t0, const double t1, LC_CurveJe
             return false;
         }
         const LC_Interval factor = LC_Interval::point(1.0) + m_distance * m_ratio / curvatureDenominator;
-        const LC_Interval factorDerivative = LC_Interval::point(-3.0) * direction * m_distance * m_ratio *
+        const LC_Interval factorDerivative = LC_Interval::point(-3.0) * signedRate * m_distance * m_ratio *
             difference * sine * cosine / derivativeDenominator;
         const LC_Interval normalX = (m_ratio * cosine * m_majorX - sine * m_majorY) / speed;
         const LC_Interval normalY = (m_ratio * cosine * m_majorY + sine * m_majorX) / speed;

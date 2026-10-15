@@ -94,13 +94,17 @@ public:
     double scale() const;
     double parameterEnd() const;
     const Sweep& sourceSweep() const;
+    /** Positive |d(physical angle)/d(stored parameter)|, enclosing the exact input sweep. */
+    const LC_Interval& traversalRate() const;
+    /** Unwrapped start + signed rate*t, including a whole closing end; cleared on refusal. */
+    bool boundUnwrappedAngle(double t0, double t1, LC_Interval& out) const;
     /** Engine distances are positive along the traversal's left normal. */
     double engineSignedDistance() const;
 
     /** Jets are midpoint estimates of certified zero-width bounds, for numerical seeds only. */
     bool sourceJet(double t, LC_CurveJet& out) const;
     bool offsetJet(double t, LC_CurveJet& out) const;
-    /** Includes zero-width queries and the canonical seam at a whole source's end. */
+    /** Continuous exact-sweep bounds, including zero-width queries and periodic endpoint limits. */
     bool boundSourceJet(double t0, double t1, LC_CurveJetBounds& out) const;
     bool boundOffsetJet(double t0, double t1, LC_CurveJetBounds& out) const;
     /** Enclosures of conversions of exact input doubles; cleared on refusal. */
@@ -113,6 +117,10 @@ private:
 
     RS_Vector m_centre;
     Sweep m_sweep;
+    double m_endAngle = 0.0;
+    LC_Interval m_rate;
+    LC_Interval m_rateSquared;
+    LC_Interval m_rateCubed;
     double m_scale = 1.0;
     int m_scaleExponent = 0;
     double m_signedDistance = 0.0;
