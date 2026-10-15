@@ -943,7 +943,8 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
     // Unit conversion is handled by getPasteScale -> outer Insert scale.
     // Do NOT pre-scale the source graphic here to avoid double-scaling.
 
-    QString s = QFileInfo(data.file).completeBaseName();
+    // The wrapper must not hide a block defined in the imported drawing.
+    QString s = g.newBlockName(QFileInfo(data.file).completeBaseName());
 
     RS_Modification m(*container, graphicView);
     m.paste(
