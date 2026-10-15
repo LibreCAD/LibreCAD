@@ -9109,3 +9109,210 @@ TEST_CASE("Blanks around a linetype name string add no second record",
 
   std::filesystem::remove(out);
 }
+
+namespace {
+
+// A file's lines with any '\r' dropped: the ASCII DXF writer opens its
+// stream in text mode, so a Windows runner writes CRLF, and a checkout may
+// do the same to a golden.
+std::vector<std::string> linesWithoutCR(const std::string &path) {
+  std::ifstream in(path);
+  std::vector<std::string> lines;
+  std::string line;
+  while (std::getline(in, line)) {
+    if (!line.empty() && line.back() == '\r')
+      line.pop_back();
+    lines.push_back(line);
+  }
+  return lines;
+}
+
+std::string joinLines(const std::vector<std::string> &lines, std::size_t first,
+                      std::size_t last) {
+  std::string text;
+  for (std::size_t i = first; i < last; ++i) {
+    text += lines[i];
+    text += '\n';
+  }
+  return text;
+}
+
+std::string textWithoutCR(const std::string &path) {
+  const std::vector<std::string> lines = linesWithoutCR(path);
+  return joinLines(lines, 0, lines.size());
+}
+
+// The LTYPE table of a DXF file, "0/TABLE/2/LTYPE" through "0/ENDTAB",
+// verbatim but for '\r'. Empty when the file has none.
+std::string ltypeTableSection(const std::string &path) {
+  const std::vector<std::string> lines = linesWithoutCR(path);
+  const auto is = [&lines](std::size_t i, const char *value) {
+    return i < lines.size() && trimDxfToken(lines[i]) == value;
+  };
+  for (std::size_t i = 0; i + 3 < lines.size(); ++i) {
+    if (!(is(i, "0") && is(i + 1, "TABLE") && is(i + 2, "2") &&
+          is(i + 3, "LTYPE")))
+      continue;
+    // Group code and value alternate, so stepping by two stays on codes.
+    for (std::size_t j = i + 4; j + 1 < lines.size(); j += 2) {
+      if (is(j, "0") && is(j + 1, "ENDTAB"))
+        return joinLines(lines, i, j + 2);
+    }
+    return joinLines(lines, i, lines.size());
+  }
+  return std::string();
+}
+
+// Where two texts first differ, for the failure message.
+std::string firstDifference(const std::string &expected,
+                            const std::string &actual) {
+  std::istringstream a(expected), b(actual);
+  std::string x, y;
+  for (int line = 1;; ++line) {
+    const bool gotX = static_cast<bool>(std::getline(a, x));
+    const bool gotY = static_cast<bool>(std::getline(b, y));
+    if (!gotX && !gotY)
+      return "no difference";
+    if (!gotX || !gotY || x != y)
+      return "line " + std::to_string(line) + ": golden '" +
+             (gotX ? x : std::string("<end>")) + "', written '" +
+             (gotY ? y : std::string("<end>")) + "'";
+  }
+}
+
+// Group 73 and the group 40 literal of the 35 writeLType() calls at the head
+// of writeLTypes() as of 86d2c9325 (rs_filterdxfrw.cpp:19100-19169), in call
+// order. 17 of the lengths are not the |dash| sum of their pattern as a
+// double, so a table that re-summed would change these records' DWG bytes.
+struct BuiltinLTypeLength {
+  const char *name;
+  int size;
+  double length;
+};
+
+const BuiltinLTypeLength kBuiltinLTypeLengths[] = {
+    {"CONTINUOUS", 0, 0.0},
+    {"ByLayer", 0, 0.0},
+    {"ByBlock", 0, 0.0},
+    {"DOT", 2, 6.35},
+    {"DOTTINY", 2, 0.9525},
+    {"DOT2", 2, 3.175},
+    {"DOTX2", 2, 12.7},
+    {"DASHED", 2, 19.05},
+    {"DASHEDTINY", 2, 2.8575},
+    {"DASHED2", 2, 9.525},
+    {"DASHEDX2", 2, 38.1},
+    {"HIDDEN", 2, 9.525},
+    {"HIDDENTINY", 2, 1.42875},
+    {"HIDDEN2", 2, 4.7625},
+    {"HIDDENX2", 2, 19.05},
+    {"DASHDOT", 4, 25.4},
+    {"DASHDOTTINY", 4, 3.81},
+    {"DASHDOT2", 4, 12.7},
+    {"DASHDOTX2", 4, 50.8},
+    {"DIVIDE", 6, 31.75},
+    {"DIVIDETINY", 6, 4.7625},
+    {"DIVIDE2", 6, 15.875},
+    {"DIVIDEX2", 6, 63.5},
+    {"BORDER", 6, 44.45},
+    {"BORDERTINY", 6, 6.6675},
+    {"BORDER2", 6, 22.225},
+    {"BORDERX2", 6, 88.9},
+    {"CENTER", 4, 50.8},
+    {"CENTERTINY", 4, 7.62},
+    {"CENTER2", 4, 28.575},
+    {"CENTERX2", 4, 101.6},
+    {"PHANTOM", 6, 63.5},
+    {"PHANTOMTINY", 6, 9.525},
+    {"PHANTOM2", 6, 31.75},
+    {"PHANTOMX2", 6, 127.0},
+};
+
+} // namespace
+
+// The goldens are the LTYPE table this export wrote on 86d2c9325, before the
+// head of writeLTypes() was rewritten: the three records libdxfrw writes
+// itself and the 32 the filter adds, handles in allocation order. R2000 and
+// R2007 write the same table and share a golden. They pin names, order,
+// groups 3, 72, 73 and 49; the DXF writer re-sums group 40 on its copy
+// (DRW_LType::update), so the DWG case below pins 40.
+TEST_CASE("A new drawing writes the built-in LTYPE table as before",
+          "[dxf][roundtrip][filter][linetype][ltype][named]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+
+  struct Target {
+    RS2::FormatType format;
+    const char *golden;
+  };
+  for (const Target &target :
+       {Target{RS2::FormatDXFRW, "ltype_table_ac1015_ac1021.dxf"},
+        Target{RS2::FormatDXFRW2000, "ltype_table_ac1015_ac1021.dxf"},
+        Target{RS2::FormatDXFRW12, "ltype_table_ac1009.dxf"}}) {
+    INFO("format " << static_cast<int>(target.format) << ", golden "
+                   << target.golden);
+    const std::string out = tmpFile("builtin_ltype_table.dxf");
+    std::filesystem::remove(out);
+    {
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                                target.format));
+    }
+    REQUIRE(countRecords(out, "LTYPE") == 35);
+
+    const std::string golden =
+        std::string(LIBRECAD_TEST_DIR) + "/dxf/" + target.golden;
+    REQUIRE(std::filesystem::exists(golden));
+    const std::string expected = textWithoutCR(golden);
+    const std::string written = ltypeTableSection(out);
+    REQUIRE_FALSE(written.empty());
+    INFO(firstDifference(expected, written));
+    CHECK(written == expected);
+    std::filesystem::remove(out);
+  }
+}
+
+#ifdef DWGSUPPORT
+// DWG carries group 40 as the double it was given (DRW_LType::encodeDwg and
+// parseDwg, no update()), and the import parks the record as read, so the
+// archived length is the literal the head passed.
+TEST_CASE("A new drawing's built-in linetype lengths survive a DWG round trip",
+          "[dwg][roundtrip][filter][linetype][ltype][named]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+
+  for (const RS2::FormatType format : {RS2::FormatDWG, RS2::FormatDWG2004}) {
+    INFO("format " << static_cast<int>(format));
+    const std::string dwg = tmpFile("builtin_ltype_lengths.dwg");
+    std::filesystem::remove(dwg);
+    {
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(dwg), format));
+    }
+    RS_Graphic fromDwg;
+    {
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileImport(fromDwg, QString::fromStdString(dwg),
+                                RS2::FormatDWG));
+    }
+
+    // The three records without dashes are libdxfrw's own; the 32 the
+    // filter adds are the ones a re-summed table would change.
+    const auto &meta = fromDwg.dwgAdvancedMetadata();
+    for (const BuiltinLTypeLength &row : kBuiltinLTypeLengths) {
+      if (row.size == 0)
+        continue;
+      INFO("LTYPE " << row.name);
+      const DRW_LType *record = meta.findLineTypeTableEntryByName(row.name);
+      REQUIRE(record != nullptr);
+      CHECK(record->size == row.size);
+      CHECK(record->path.size() == static_cast<std::size_t>(row.size));
+      // Exact, not Approx: the same double or a changed file.
+      CHECK(record->length == row.length);
+    }
+    std::filesystem::remove(dwg);
+  }
+}
+#endif // DWGSUPPORT

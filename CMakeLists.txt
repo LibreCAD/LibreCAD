@@ -231,6 +231,7 @@ set (SHARED_INCLUDES
      librecad/src/lib/engine/document/entities/support
      librecad/src/lib/engine/document/fonts
      librecad/src/lib/engine/document/layers
+     librecad/src/lib/engine/document/linetypes
      librecad/src/lib/engine/document/selection
      librecad/src/lib/engine/document/patterns
      librecad/src/lib/engine/document/textstyles
@@ -1018,6 +1019,10 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/lc_graphicvariables.cpp
      librecad/src/lib/engine/document/lc_graphicvariables.h
      librecad/src/lib/engine/document/lc_trackedlistener.h
+     librecad/src/lib/engine/document/linetypes/lc_linetype.cpp
+     librecad/src/lib/engine/document/linetypes/lc_linetype.h
+     librecad/src/lib/engine/document/linetypes/lc_linetypelist.cpp
+     librecad/src/lib/engine/document/linetypes/lc_linetypelist.h
      librecad/src/lib/engine/document/patterns/rs_pattern.cpp
      librecad/src/lib/engine/document/patterns/rs_pattern.h
      librecad/src/lib/engine/document/patterns/rs_patternlist.cpp
@@ -2654,6 +2659,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/blocks/tests/lc_blocklist_tests.cpp
         librecad/src/lib/engine/document/ucs/tests/lc_ucslist_tests.cpp
         librecad/src/lib/engine/document/ucs/tests/lc_wcs_tests.cpp
+        librecad/src/lib/engine/document/linetypes/tests/lc_linetypelist_tests.cpp
         librecad/src/lib/engine/document/views/tests/lc_view_tests.cpp
         librecad/src/lib/engine/tests/rs_pen_tests.cpp
         librecad/src/lib/actions/tests/lc_snappercatchtests.cpp
@@ -2811,7 +2817,8 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/shp_shapelib_tests.cpp
         librecad/src/lib/filters/tests/shp_import_filter_tests.cpp
     )
-    add_dependencies(librecad_tests LibreCAD_lrelease)
+    add_custom_target(librecad_test_translations DEPENDS ${QM_FILES})
+    add_dependencies(librecad_tests librecad_test_translations)
 
     # Include directories for rs_math.h and other dependencies
     target_include_directories (librecad_tests PRIVATE
