@@ -28,7 +28,7 @@ Plan **v6**, 2026-10-15. This file is the implementation source of truth. Every 
 verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION — S0 baseline validated; documentation commit/checkpoint pending. Product slices remain pending.**
+Status: **IMPLEMENTATION — S0 done at de30f1d45; 0B-1 ready for Gibbs. Product slices remain pending.**
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -87,9 +87,9 @@ A commit alone does not mean done; verification, review and the post-commit plan
 
 | Step | Title | PR | Depends on | Size (LOC, product + tests) | Status |
 |---|---|---|---|---|---|
-| S0 | Worktree, tracked plan, build baseline and evidence (documentation commit) | — | — | 0 product | validated; Release/ASan builds and baseline checks passed; commit/checkpoint pending |
+| S0 | Worktree, tracked plan, build baseline and evidence (documentation commit) | — | — | 0 product | done — de30f1d45, S0 reports/card, 2026-10-15 |
 | 0A | Trim Two must not replace an owned child | — | — | — | done on baseline by #3113 (`609ca81ae`); verify current tests at S0, then add the new-type mapping/test in 1D |
-| 0B-1 | Guard skeleton: `rowOf` table, pragmas, `static_assert`, kinds-only walk; registration; CI path filter; shadow-`rs.h` checks | B | S0 | 250 | pending |
+| 0B-1 | Guard skeleton: `rowOf` table, pragmas, `static_assert`, kinds-only walk; registration; CI path filter; shadow-`rs.h` checks | B | S0 | 250 | pending — ready for Gibbs; execution card below |
 | 0B-2 | Entity factory header; clone and INSERT checks; pin tests | B | 0B-1 | 500 | pending |
 | 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | pending |
 | 1A-1 | Closed forms, engine-layout test, validity check, tolerance helpers | C | S0 | 900 | pending |
@@ -191,9 +191,9 @@ and the evidence needed to activate them. All product work is currently pending.
 
 | Step | Initial readiness / entry check | Commit-sized sub-plan and exit evidence |
 |---|---|---|
-| S0 | Ready for preflight | Select clean implementation worktree; copy and track this plan there; record fetched base, toolchain, baseline reports, format matrix and type census. Commit the prepared roadmap; record its SHA in a plan checkpoint. |
+| S0 | Done at de30f1d45 | Clean execution worktree, tracked roadmap, toolchain/builds/baseline reports, format matrix and census recorded below; post-commit checkpoint records this SHA. |
 | 0A | Existing upstream code | Verify #3113 ancestry and current trim tests. Record evidence in S0; only the new-type mapping belongs to 1D. |
-| 0B-1 | Waiting for S0 | Add exhaustive enum rows, compile-time guard, source registration and CI paths together. Prove both inserted and appended shadow enumerators fail compilation. |
+| 0B-1 | Ready; S0 done at de30f1d45 | Add exhaustive enum rows, compile-time guard, source registration and CI paths together. Prove both inserted and appended shadow enumerators fail compilation. |
 | 0B-2 | Waiting for 0B-1 | Build valid entity fixtures; add clone and INSERT checks. Separate fixture defects from actual gaps; avoid GUI dependencies in the fast lane. |
 | 0B-3 | Waiting for 0B-2 | Run real DXF/DWG save/open and load completion; record stable known-gap identities and valid row totals. This completes the guard before adding RTTI. |
 | 1A-1.a | Conditional: current ellipse/jet APIs confirmed | Implement finite-domain validation, full-turn normalization, signed geometry and tolerance helpers. Test degeneracy, circle limit, extreme scale and reversed/wrapped arcs. |
@@ -254,10 +254,10 @@ out-of-scope features from implementation completion.
 
 ### 0.5 Current readiness and implementation handoff
 
-At the recorded execution base, only S0 is active. Release/ASan configurations, all three target builds, Release full
+S0 is complete at `de30f1d45`. Release/ASan configurations, all three target builds, Release full
 and fast-lane baselines, and focused ASan trim/ellipse checks passed, with existing skips recorded in its card.
-No product step is done. 0B-1 is the next candidate, not yet `ready`: S0's documentation commit/checkpoint must finish
-first. Gibbs starts that first product slice; the coordinator owns the plan,
+No product step is done. 0B-1 is ready after this plan checkpoint is committed; Gibbs starts that first product slice.
+The coordinator owns the plan,
 shared build directories and commits. Assign explicit file ownership before any parallel work; never run concurrent
 Git/index operations or concurrent builds that mutate the same build tree.
 
@@ -412,7 +412,7 @@ Use this compact ledger under each executed card; expand it only with meaningful
 
 | Slice | Implementation SHA | Tested tree / evidence | Review outcome | Parent / next readiness |
 |---|---|---|---|---|
-| No implementation slices committed yet | — | S0 builds/baseline validated; see S0 reports/counts | — | S0 checkpoint pending; 0B-1 waiting |
+| S0 (documentation only) | de30f1d45f1337d55265c2f72413a9c976c18c40 | Product tree b05fb541d unchanged; all S0 builds/reports passed with existing skips documented | Coordinator/Gibbs review resolved; staged/committed paths only this roadmap | S0 done; 0B-1 ready for Gibbs; product steps pending |
 
 **Git safety.** Stage files by name; inspect staged paths before every commit. Preserve unrelated staged/unstaged work
 and untracked artifacts. Do not use `git add -A`, destructive checkout/reset, `--amend` or `--no-verify`. Local commit
@@ -1133,7 +1133,8 @@ new adapter share the same metadata mistake.
 ### S0. Worktree, tracked plan, builds and baseline (documentation slice)
 
 **Execution card, 2026-10-15**
-- State: validated; documentation commit/checkpoint pending; base `b05fb541df651dd9cb55a222dee4563e6127c436` fetched from origin.
+- State: done; implementation/documentation SHA `de30f1d45f1337d55265c2f72413a9c976c18c40`; this plan-only
+  reconciliation records that SHA, never its own. Base `b05fb541df651dd9cb55a222dee4563e6127c436` fetched from origin.
 - Worktree: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961`; branch `codex/offset-curve-2961`.
 - Scope: this tracked-plan preparation and ignored build/evidence artifacts only; no product source edits.
 - Toolchain: AppleClang 21.0.0 (`clang-2100.3.34.2`), Qt 6.12.0/qmake 3.1, CMake 4.4.4, Ninja 1.13.2, installed Catch2.
@@ -1151,8 +1152,11 @@ new adapter share the same metadata mistake.
 - Plan audit: 27 status rows with known acyclic dependencies and matching headings, balanced code fences, 14 unique
   format rows (8 DXF/6 DWG), and 50 current enum values; leaf/reference/check cards reconciled. Gibbs's independent
   review findings are integrated into §7, including pending-clone ownership and phase-2 test ordering.
-- Next: commit S0 and its plan checkpoint; then promote the concrete 0B-1 card and hand its product scope to Gibbs.
-- Implementation SHA: pending; no product completion is claimed.
+- Post-commit audit: `git show --stat` contains only this roadmap; tracked product sources remain identical to the
+  tested b05fb541d tree. Gibbs's follow-up review found no remaining material contradiction in the revised property
+  transaction contract. The index was clean before staging and after the documentation commit; untracked ASan build
+  artifacts were preserved and not staged.
+- Next: after this checkpoint commit, Gibbs starts the ready 0B-1 product card. No product completion is claimed.
 
 | Baseline command (all use `QT_QPA_PLATFORM=offscreen`, `--order decl`, JUnit reporter) | Report under `build/evidence/S0/` | JUnit testcase entries | JUnit `tests` attribute | Failures/errors | Skips |
 |---|---|---|---|---|---|
@@ -1221,9 +1225,10 @@ success (`rs_filterdxfrw.cpp:30237-30238`, DXF and DWG), and empties every INSER
 
 #### 0B-1. Guard skeleton, registration, CI filter, shadow checks
 
-**Prepared execution card (waiting only for S0 checkpoint)**
+**Ready execution card (activate after this S0 checkpoint commit)**
 - Owner: Gibbs; coordinator owns this plan, shared builds and commits.
-- Base: b05fb541d plus S0 documentation commits; refresh actual HEAD at handoff.
+- Base: `de30f1d45f1337d55265c2f72413a9c976c18c40` plus this plan-only checkpoint; refresh actual HEAD at handoff.
+- Dependency: S0 done at de30f1d45, evidence above; no product implementation SHA exists for 0B-1 yet.
 - Contract: every current enumerator has an explicit drawing/exempt row; inserted/appended unknown enumerators fail
   compile; no initial known gaps are invented by this kinds-only slice.
 - Files: new `librecad/src/lib/engine/document/entities/tests/lc_entitytype_coverage_tests.cpp`, `CMakeLists.txt`,
