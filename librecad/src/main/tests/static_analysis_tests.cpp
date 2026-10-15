@@ -11,6 +11,7 @@
 #include "dwgreader.h"
 #include "lc_actiondrawrectangle3points.h"
 #include "lc_actionmodifylinejoin.h"
+#include "lc_hyperbola.h"
 #include "picfile.h"
 #include "qc_applicationwindow.h"
 #include "qg_dlghatch.h"
@@ -23,9 +24,11 @@
 #include "rs_fontlist.h"
 #include "rs_graphic.h"
 #include "rs_hatch.h"
+#include "rs_information.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_line.h"
+#include "rs_modification.h"
 #include "rs_painterqt.h"
 #include "rs_patternlist.h"
 #include "rs_selection.h"
@@ -141,6 +144,183 @@ private slots:
         QVERIFY(line->isSelected());
         selection.deselectAll();
         QVERIFY(!line->isSelected());
+    }
+
+    void hyperbolaIntersections_data()
+    {
+        QTest::addColumn<bool>("firstBranch");
+        QTest::addColumn<bool>("secondBranch");
+        QTest::addColumn<double>("rotation");
+        QTest::addColumn<double>("extent");
+        for (bool first : {false, true}) {
+            for (bool second : {false, true}) {
+                for (double rotation : {0., 0.7}) {
+                    for (double extent : {0., 0.5, 2.}) {
+                        const QByteArray name = QString("%1-%2-%3-%4")
+                            .arg(first).arg(second).arg(rotation).arg(extent).toLatin1();
+                        QTest::newRow(name.constData()) << first << second << rotation << extent;
+                    }
+                }
+            }
+        }
+    }
+
+    void hyperbolaIntersections()
+    {
+        QFETCH(bool, firstBranch);
+        QFETCH(bool, secondBranch);
+        QFETCH(double, rotation);
+        QFETCH(double, extent);
+        const RS_Vector center(12, -8);
+        const RS_Vector axis = RS_Vector(1, 0).rotate(rotation);
+        RS_Layer construction("construction");
+        construction.setConstruction(true);
+        LC_Hyperbola first(nullptr, {center, axis, 1., -extent, extent, firstBranch});
+        LC_Hyperbola second(nullptr, {center + axis * 3., axis, 1., -extent, extent, secondBranch});
+        const bool branchesMeet = !firstBranch && secondBranch;
+        for (bool swap : {false, true}) {
+            const RS_Entity* a = swap ? &second : &first;
+            const RS_Entity* b = swap ? &first : &second;
+            const auto extended = RS_Information::getIntersection(a, b, false);
+            QCOMPARE(extended.size(), branchesMeet ? 2u : 0u);
+            for (const RS_Vector& point : extended) {
+                const RS_Vector local = (point - center).rotate(-rotation);
+                QVERIFY(std::abs(local.x - 1.5) < 1e-7);
+                QVERIFY(std::abs(std::abs(local.y) - std::sqrt(1.25)) < 1e-7);
+            }
+            QCOMPARE(RS_Information::getIntersection(a, b, true).size(),
+                     branchesMeet && extent != 0.5 ? 2u : 0u);
+            first.setLayer(&construction);
+            second.setLayer(&construction);
+            QCOMPARE(RS_Information::getIntersection(a, b, true).size(), branchesMeet ? 2u : 0u);
+            first.setLayer(nullptr);
+            second.setLayer(nullptr);
+        }
+    }
+
+    void hyperbolaLineCircleIntersections()
+    {
+        RS_Line line(nullptr, {{-3, 1}, {3, 1}});
+        RS_Circle circle(nullptr, {{0, 0}, std::sqrt(3.)});
+        const RS_Entity* others[] = {&line, &circle};
+        for (bool branch : {false, true}) {
+            LC_Hyperbola hyperbola(nullptr, {{0, 0}, {1, 0}, 1., -0.5, 0.5, branch});
+            for (const RS_Entity* other : others) {
+                for (bool swap : {false, true}) {
+                    const auto points = RS_Information::getIntersection(
+                        swap ? other : &hyperbola, swap ? &hyperbola : other, false);
+                    QCOMPARE(points.size(), other == &line ? 1u : 2u);
+                    for (const RS_Vector& point : points) {
+                        QVERIFY(std::abs(point.x - (branch ? -1. : 1.) * std::sqrt(2.)) < 1e-7);
+                    }
+                    QVERIFY(RS_Information::getIntersection(&hyperbola, other, true).empty());
+                }
+            }
+        }
+        QCOMPARE(RS_Information::getIntersection(&line, &circle, true).size(), 2u);
+    }
+
+    void trimHyperbola_data()
+    {
+        QTest::addColumn<bool>("firstBranch");
+        QTest::addColumn<bool>("secondBranch");
+        QTest::addColumn<bool>("descending");
+        QTest::addColumn<bool>("both");
+        QTest::addColumn<double>("rotation");
+        QTest::addColumn<double>("extent");
+        for (bool first : {false, true}) {
+            for (bool second : {false, true}) {
+                for (bool descending : {false, true}) {
+                    for (bool both : {false, true}) {
+                        for (double rotation : {0., 0.7}) {
+                            for (double extent : {0.5, 2.}) {
+                                const QByteArray name = QString("%1-%2-%3-%4-%5-%6")
+                                    .arg(first).arg(second).arg(descending).arg(both)
+                                    .arg(rotation).arg(extent).toLatin1();
+                                QTest::newRow(name.constData())
+                                    << first << second << descending << both << rotation << extent;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    void trimHyperbola()
+    {
+        QFETCH(bool, firstBranch);
+        QFETCH(bool, secondBranch);
+        QFETCH(bool, descending);
+        QFETCH(bool, both);
+        QFETCH(double, rotation);
+        QFETCH(double, extent);
+        RS_Graphic graphic;
+        graphic.newDoc();
+        const double xSign = firstBranch ? -1. : 1.;
+        const double ySign = secondBranch ? -1. : 1.;
+        const double start = descending ? extent : -extent;
+        const double end = -start;
+        const RS_Vector center(12, -8);
+        const RS_Vector axis = RS_Vector(1, 0).rotate(rotation);
+        const RS_Vector normal = RS_Vector(0, 1).rotate(rotation);
+        auto* first = new LC_Hyperbola(&graphic, {center, axis, 1., start, end, firstBranch});
+        auto* second = new LC_Hyperbola(&graphic, {center + axis * (3. * xSign), normal,
+                                                 1., start, end, secondBranch});
+        graphic.addEntity(first);
+        graphic.addEntity(second);
+        const RS_Vector intersection = center + axis * (xSign * 11. / 6.)
+                                      + normal * (ySign * std::sqrt(85.) / 6.);
+        const RS_Vector click = first->getPoint(-ySign * extent * 0.75, firstBranch);
+        std::unique_ptr<LC_Hyperbola> preview(static_cast<LC_Hyperbola*>(first->clone()));
+        QVERIFY(preview->prepareTrim(click, RS_Information::getIntersection(first, second, false))
+                    .distanceTo(intersection) < 1e-7);
+        RS_Modification modification(graphic);
+        QVERIFY(modification.trim(click, first,
+                                  second->getPoint(0., secondBranch), second, both));
+        QCOMPARE(graphic.count(), both ? 4u : 3u);
+        auto* trimmed = static_cast<LC_Hyperbola*>(graphic.entityAt(2));
+        QVERIFY(trimmed->getStartpoint().distanceTo(preview->getStartpoint()) < 1e-7);
+        QVERIFY(trimmed->getEndpoint().distanceTo(preview->getEndpoint()) < 1e-7);
+        QCOMPARE(trimmed->isReversed(), firstBranch);
+        const bool cutStart = (ySign < 0.) != descending;
+        QVERIFY((cutStart ? trimmed->getStartpoint() : trimmed->getEndpoint())
+                    .distanceTo(intersection) < 1e-7);
+        QVERIFY((cutStart ? trimmed->getEndpoint() : trimmed->getStartpoint())
+                    .distanceTo(cutStart ? first->getEndpoint() : first->getStartpoint()) < 1e-7);
+        if (both) {
+            auto* limiter = static_cast<LC_Hyperbola*>(graphic.entityAt(3));
+            QCOMPARE(limiter->isReversed(), secondBranch);
+            const bool limitCutStart = (xSign < 0.) != descending;
+            QVERIFY((limitCutStart ? limiter->getStartpoint() : limiter->getEndpoint())
+                        .distanceTo(intersection) < 1e-7);
+        }
+        QVERIFY(first->isUndone());
+        QCOMPARE(second->isUndone(), both);
+        QVERIFY(graphic.undo());
+        QVERIFY(!first->isUndone());
+        QVERIFY(!second->isUndone());
+        QVERIFY(trimmed->isUndone());
+        QVERIFY(graphic.redo());
+        QVERIFY(first->isUndone());
+        QVERIFY(!trimmed->isUndone());
+    }
+
+    void trimDisjointHyperbolaBranches()
+    {
+        RS_Graphic graphic;
+        graphic.newDoc();
+        auto* first = new LC_Hyperbola(&graphic, {{0, 0}, {1, 0}, 1., -2., 2.});
+        auto* second = new LC_Hyperbola(&graphic, {{3, 0}, {1, 0}, 1., -2., 2.});
+        graphic.addEntity(first);
+        graphic.addEntity(second);
+        RS_Modification modification(graphic);
+        for (bool both : {false, true}) {
+            QVERIFY(!modification.trim(first->getStartpoint(), first, second->getStartpoint(), second, both));
+            QCOMPARE(graphic.count(), 2u);
+            QVERIFY(!first->isUndone());
+            QVERIFY(!second->isUndone());
+        }
     }
 
     void importBlock_data()

@@ -30,6 +30,7 @@
 #include <random>
 #include <vector>
 
+#include "lc_hyperbola.h"
 #include "lc_parabola.h"
 #include "lc_quadratic.h"
 #include "lc_rect.h"
@@ -110,6 +111,16 @@ bool isEllipse(RS_Entity const* e) {
 // whether the entity is an ellipse
 bool isParabola(RS_Entity const* e) {
     return e != nullptr && e->rtti() == RS2::EntityParabola;
+}
+
+// Extending a hyperbola does not include its opposite branch.
+bool isOnHyperbolaBranch(const RS_Entity* entity, const RS_Vector& point)
+{
+    if (entity->rtti() != RS2::EntityHyperbola)
+        return true;
+    const auto* hyperbola = static_cast<const LC_Hyperbola*>(entity);
+    const double projection = (point - hyperbola->getCenter()).dotP(hyperbola->getMajorP());
+    return hyperbola->isReversed() ? projection < 0. : projection > 0.;
 }
 
 class TangentFinder {
@@ -547,7 +558,7 @@ RS_Entity* RS_Information::getNearestEntity(const RS_Vector& coord,
  *
  * @param onEntities true: only return intersection points which are
  *                   on both entities.
- *                   false: return all intersection points.
+ *                   false: include extensions, but not the opposite hyperbola branch.
  *
  * @todo support more entities
  *
@@ -646,6 +657,8 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
     RS_VectorSolutions ret2;
     for(const RS_Vector& vp: ret){
         if (!vp.valid) continue;
+        if (!isOnHyperbolaBranch(e1, vp) || !isOnHyperbolaBranch(e2, vp))
+            continue;
         if (onEntities) {
             //ignore intersections not on entity
             if (!(
