@@ -3773,6 +3773,12 @@ if (BUILD_TESTS)
             ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
     endif()
     if (LIBRECAD_REGISTER_INTEGRATION_TESTS)
+        foreach(test_target librecad_drawing_cursor_tests librecad_command_input_tests)
+            add_test(NAME ${test_target}
+                COMMAND $<TARGET_FILE:${test_target}> --reporter compact)
+            set_tests_properties(${test_target} PROPERTIES
+                ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
+        endforeach()
         add_test(NAME librecad_painter_tests
             COMMAND $<TARGET_FILE:librecad_painter_tests> --reporter compact)
         set_tests_properties(librecad_painter_tests PROPERTIES

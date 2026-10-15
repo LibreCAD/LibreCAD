@@ -3,6 +3,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 #include <QImage>
+#include <QTemporaryDir>
 #include "lc_actiontestsupport.h"
 #include "lc_crosshair.h"
 #include "lc_graphicviewport.h"
@@ -16,6 +17,7 @@
 #include "rs_arc.h"
 #include "rs_ellipse.h"
 #include "rs_layer.h"
+#include "rs_image.h"
 
 namespace {
 QImage cursorImage(int shape, int lines, int size, int percent, int dpr, RS_Vector pos = {100, 100}) {
@@ -86,6 +88,61 @@ TEST_CASE("Freehand selection follows concave boundaries and exact curves", "[se
     LC_PolygonSelection::select(&graphic, &viewport, boundary, RS2::EntityLine, false, true);
     CHECK(enclosed->isSelected());
     CHECK_FALSE(tangent->isSelected());
+}
+
+TEST_CASE("Image lasso selection distinguishes filled crossing from full containment", "[selection][lasso][image]") {
+    lc::test::application();
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    const auto filename = directory.filePath("lasso.png");
+    QImage pixels(10, 10, QImage::Format_RGB32);
+    pixels.fill(Qt::white);
+    REQUIRE(pixels.save(filename));
+
+    for (double rotation : {0.0, M_PI / 4}) {
+        INFO("Image rotation " << rotation);
+        RS_Graphic graphic;
+        graphic.initForNewDocument();
+        LC_GraphicViewport viewport;
+        viewport.setDocument(&graphic);
+        const RS_Vector origin{20, 30};
+        const auto u = RS_Vector::polar(1, rotation);
+        const auto v = RS_Vector::polar(1, rotation + M_PI / 2);
+        auto* image = new RS_Image(&graphic,
+            RS_ImageData(0, origin, u, v, {10, 10}, filename, 50, 50, 0));
+        image->setLayer(graphic.getActiveLayer());
+        graphic.addEntity(image);
+        graphic.calculateBorders();
+        graphic.setModified(false);
+
+        auto select = [&](const QPolygonF& local, bool crossing) {
+            QPolygonF boundary;
+            for (const auto& point : local) {
+                const auto world = origin + u * point.x() + v * point.y();
+                boundary.append(QPointF(world.x, world.y));
+            }
+            image->setSelectionFlag(false);
+            LC_PolygonSelection::select(&graphic, &viewport, boundary, RS2::EntityUnknown, crossing, true);
+            CHECK_FALSE(graphic.isModified());
+            return image->isSelected();
+        };
+        const QPolygonF interior{{2, 2}, {4, 2}, {4, 4}, {2, 4}};
+        CHECK_FALSE(select(interior, false)); // Small window inside a larger image.
+        CHECK(select(interior, true));       // Crossing includes the filled interior.
+        const QPolygonF enclosing{{-1, -1}, {11, -1}, {11, 11}, {-1, 11}};
+        CHECK(select(enclosing, false));
+        CHECK(select(enclosing, true));
+        const QPolygonF strip{{-1, 4}, {11, 4}, {11, 6}, {-1, 6}};
+        CHECK_FALSE(select(strip, false));
+        CHECK(select(strip, true));          // Neither shape has a corner in the other.
+        const QPolygonF outside{{12, 12}, {14, 12}, {14, 14}, {12, 14}};
+        CHECK_FALSE(select(outside, false));
+        CHECK_FALSE(select(outside, true));
+        const QPolygonF concave{{-1, -1}, {11, -1}, {11, 11}, {6, 11},
+                                {6, 4}, {4, 4}, {4, 11}, {-1, 11}};
+        CHECK_FALSE(select(concave, false)); // All corners fit, but an edge crosses the notch.
+        CHECK(select(concave, true));
+    }
 }
 
 bool ink(const QImage& image, int x, int y) {
