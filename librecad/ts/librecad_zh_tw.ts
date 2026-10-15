@@ -235,7 +235,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>未被分割.因為它是聚合線的一部分.請先炸開聚合線.</translation>
+        <translation>無法進行分割，因為它是聚合線的一部分。請先將聚合線分解。</translation>
     </message>
 </context>
 <context>
@@ -686,7 +686,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="546"/>
         <source>Specify start angle:</source>
-        <translation>指定起始角度:</translation>
+        <translation>指定起始角度：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
@@ -702,7 +702,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="552"/>
         <source>Specify included angle:</source>
-        <translation>指定夾角:</translation>
+        <translation>指定夾角：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
@@ -2638,42 +2638,42 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="597"/>
         <source>&amp;Window Zoom</source>
-        <translation>縮放視窗(&amp;W)</translation>
+        <translation>視窗縮放(&amp;W)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="338"/>
         <source>Zoom &amp;Panning</source>
-        <translation>縮放( P)</translation>
+        <translation>縮放與平移(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
         <source>Select Entity</source>
-        <translation>選擇實體</translation>
+        <translation>選擇圖元</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="247"/>
         <source>Select Window</source>
-        <translation>選擇視窗</translation>
+        <translation>選取視窗</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="248"/>
         <source>Deselect Window</source>
-        <translation>取消選擇視窗</translation>
+        <translation>取消選取視窗</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="249"/>
         <source>(De-)Select &amp;Contour</source>
-        <translation>(去-) 選擇相關( C)</translation>
+        <translation>選擇/取消選擇輪廓(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="250"/>
         <source>Select Intersected Entities</source>
-        <translation>選擇相交的实体</translation>
+        <translation>選擇相交圖元</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="251"/>
         <source>Deselect Intersected Entities</source>
-        <translation>取消選取被分割的实体</translation>
+        <translation>取消選擇相交圖元</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
@@ -2683,12 +2683,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
         <source>&amp;Points</source>
-        <translation>點( P)</translation>
+        <translation>點(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="206"/>
         <source>&amp;2 Points</source>
-        <translation>2 點</translation>
+        <translation>2點(&amp;2)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="207"/>
@@ -2714,12 +2714,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211"/>
         <source>&amp;Parallel</source>
-        <translation>平行線(P)</translation>
+        <translation>平行線(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="212"/>
         <source>Parallel through point</source>
-        <translation>相并通點</translation>
+        <translation>通過點平行線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="192"/>
@@ -2729,22 +2729,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="213"/>
         <source>Bisector</source>
-        <translation>二相</translation>
+        <translation>角平分線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="214"/>
         <source>Tangent (P,C)</source>
-        <translation>正切 (P, C)</translation>
+        <translation>切線（P、C）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="215"/>
         <source>Tangent (C,C)</source>
-        <translation>正切 (C, C)</translation>
+        <translation>切線（C、C）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="216"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>正正弦( O)</translation>
+        <translation>切線正交線(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217"/>
@@ -2759,178 +2759,178 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="193"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>多邊形 (中心,頂點)(&amp;Y)</translation>
+        <translation>多邊形（中心點、頂點）(&amp;Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation>波列根 (Cen, Tan)</translation>
+        <translation>多邊形（中心點、邊切點）(&amp;Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="195"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>多邊形 (頂點,頂點)(&amp;N)</translation>
+        <translation>多邊形（頂點、頂點）(&amp;N)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="219"/>
         <source>Snake</source>
-        <translation>蛇</translation>
+        <translation>蛇形線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="220"/>
         <source>Snake (X)</source>
-        <translation>蛇 (X)</translation>
+        <translation>蛇形線（X）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="221"/>
         <source>Snake (Y)</source>
-        <translation>蛇 (Y)</translation>
+        <translation>蛇形線（Y）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="198"/>
         <source>Rectangle (1 Point)</source>
-        <translation>矩形(1分)</translation>
+        <translation>矩形（1點）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="199"/>
         <source>Rectangle (2 Points)</source>
-        <translation>矩形(2分)</translation>
+        <translation>矩形（2點）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="200"/>
         <source>Rectangle (3 Points)</source>
-        <translation>矩形 (3分)</translation>
+        <translation>矩形（3點）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="197"/>
         <source>Star</source>
-        <translation>有星</translation>
+        <translation>星形線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222"/>
         <source>Angle From Line</source>
-        <translation>从行角度</translation>
+        <translation>依直線夾角繪線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="223"/>
         <source>Orthogonal From Line</source>
-        <translation>从行取正弦</translation>
+        <translation>依直線正交線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="224"/>
         <source>From Point To Line</source>
-        <translation>从點到行</translation>
+        <translation>由點至線繪線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="227"/>
         <source>Slice/Divide Line</source>
-        <translation>切片/分出行</translation>
+        <translation>切割/分割直線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228"/>
         <source>Slice/Divide Circle</source>
-        <translation>切片/分出相圈</translation>
+        <translation>切割/分割圓</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="236"/>
         <source>Line of Points</source>
-        <translation>點行</translation>
+        <translation>點列直線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
         <source>Center, &amp;Point</source>
-        <translation>中心, 點(&amp;P)</translation>
+        <translation>中心點與點(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
         <source>By Arc</source>
-        <translation>按弧</translation>
+        <translation>依圓弧</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="263"/>
         <source>Center, &amp;Radius</source>
-        <translation>在中心( R)</translation>
+        <translation>中心點、半徑（&amp;R）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="264"/>
         <source>2 Points</source>
-        <translation>2 點</translation>
+        <translation>2點</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="265"/>
         <source>2 Points, Radius</source>
-        <translation>2 點，半徑</translation>
+        <translation>兩點、半徑</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="266"/>
         <source>3 Points</source>
-        <translation>3 點</translation>
+        <translation>3點</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="267"/>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="286"/>
         <source>&amp;Concentric</source>
-        <translation>中心( C)</translation>
+        <translation>同心圓（&amp;C）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="268"/>
         <source>Circle &amp;Inscribed</source>
-        <translation>已寫入( I)</translation>
+        <translation>內切圓（&amp;I）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="272"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>切向，2 點(&amp;O)</translation>
+        <translation>相切、兩點（&amp;O）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278"/>
         <source>&amp;Center, Point, Angles</source>
-        <translation>中心、 點、 角度( C)</translation>
+        <translation>中心點、點、角度（&amp;C）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="281"/>
         <source>&amp;3 Points</source>
-        <translation>3 點</translation>
+        <translation>3點（&amp;3）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="287"/>
         <source>Arc &amp;Tangential</source>
-        <translation>弧形( T)</translation>
+        <translation>相切圓弧（&amp;T）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="312"/>
         <source>&amp;Ellipse (Axis)</source>
-        <translation>椭圆( A)</translation>
+        <translation>橢圓 (軸心)（&amp;E）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="313"/>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation>椭圆 &amp; 弧 (轴)</translation>
+        <translation>橢圓弧 (軸心)（&amp;A）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="314"/>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>椭圆相關點( F)</translation>
+        <translation>橢圓 (焦點)（&amp;F）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="315"/>
         <source>Ellipse &amp;4 Point</source>
-        <translation>椭圆( 四) 點</translation>
+        <translation>四點橢圓（&amp;4）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>椭圆中心與 &amp; 3 點</translation>
+        <translation>橢圓中心與三點（&amp;3）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317"/>
         <source>Ellipse &amp;Inscribed</source>
-        <translation>椭圆已寫入( I)</translation>
+        <translation>內切橢圓（&amp;I）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="297"/>
         <source>&amp;Spline</source>
-        <translation>分行( S)</translation>
+        <translation>雲形線（&amp;S）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
@@ -2940,72 +2940,72 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="226"/>
         <source>Center Mark</source>
-        <translation>中</translation>
+        <translation>中心標記</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269"/>
         <source>Tangential 2 Entities, Radius</source>
-        <translation>切向 2 实体, 半徑</translation>
+        <translation>相切兩圖元、半徑</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="270"/>
         <source>Tangential 2 Entities, 1 Point</source>
-        <translation>切向 2 個实体, 1 分</translation>
+        <translation>相切兩圖元、1個點</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271"/>
         <source>Tangential &amp;3 Entities</source>
-        <translation>切向 &amp; 3 實體</translation>
+        <translation>相切3圖元（&amp;3）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="284"/>
         <source>&amp;2 Points, Length</source>
-        <translation>二分; 長度( 2)</translation>
+        <translation>兩點,長度(&amp;2)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="285"/>
         <source>&amp;2 Points, Height</source>
-        <translation>二分, 高度( 2)</translation>
+        <translation>兩點,高度(&amp;2)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="298"/>
         <source>&amp;Spline through points</source>
-        <translation>透過點繪製樣條線(&amp;S)</translation>
+        <translation>通過點的雲形線(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="299"/>
         <source>&amp;Append spline point</source>
-        <translation>附加分樣點( A)</translation>
+        <translation>附加雲形線點(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
         <source>&amp;Insert spline points</source>
-        <translation>插入示範點( I)</translation>
+        <translation>插入雲形線點(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="323"/>
         <source>&amp;Polyline</source>
-        <translation>彈出行( P)</translation>
+        <translation>聚合線(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
         <source>Polyline Arcs to Chords</source>
-        <translation>从多行弧到和弦</translation>
+        <translation>多段線圓弧轉成弦</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="356"/>
         <source>&amp;Arc</source>
-        <translation>弧(&amp;A)</translation>
+        <translation>圓弧(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="385"/>
         <source>Mo&amp;ve and Rotate</source>
-        <translation>移動和旋轉(&amp;V)</translation>
+        <translation>移動並旋轉(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="389"/>
         <source>Tr&amp;im Two</source>
-        <translation>修剪兩個(&amp;I)</translation>
+        <translation>兩邊修剪(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="391"/>
@@ -3015,37 +3015,37 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="433"/>
         <source>Caught Entity</source>
-        <translation>被抓取的实体</translation>
+        <translation>抓取圖元</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="540"/>
         <source>Set UCS By Ordinate Dimension</source>
-        <translation>設定 UCS 按數據尺寸</translation>
+        <translation>依座標標註設定使用者座標系(UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="572"/>
         <source>Move to Bottom</source>
-        <translation>移到下</translation>
+        <translation>移至最下層</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="573"/>
         <source>Lower After Entity</source>
-        <translation>在实体后更下</translation>
+        <translation>下移一層</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="574"/>
         <source>Raise Over Entity</source>
-        <translation>升起過实体</translation>
+        <translation>上移一層</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="575"/>
         <source>Move to Top</source>
-        <translation>移到上</translation>
+        <translation>移至最上層</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
         <source>&amp;Point Coordinates</source>
-        <translation>指點座標( P)</translation>
+        <translation>點座標(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
@@ -3080,22 +3080,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
         <source>&amp;Show all blocks</source>
-        <translation>顯示所有區塊( S)</translation>
+        <translation>顯示所有圖塊(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="636"/>
         <source>&amp;Hide all blocks</source>
-        <translation>隱藏所有區塊( H)</translation>
+        <translation>隱藏所有圖塊(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="656"/>
         <source>Keyboard Shortcuts</source>
-        <translation>鍵盤捷徑</translation>
+        <translation>快捷鍵</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="688"/>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation>匯出為 CA&amp;M/ Plain SVG...</translation>
+        <translation>匯出為 CAM/標準SVG...(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="675"/>
@@ -3106,47 +3106,47 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="929"/>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
-        <translation>Ctrl+D 相接相通</translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="707"/>
         <source>Re-dock Widgets</source>
-        <translation>重新锁定元件</translation>
+        <translation>重新停靠視窗面板</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="324"/>
         <source>&amp;Add node</source>
-        <translation>添加節點( A)</translation>
+        <translation>新增節點(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="325"/>
         <source>A&amp;ppend node</source>
-        <translation>Append 節點( P)</translation>
+        <translation>附加節點(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="326"/>
         <source>&amp;Delete node</source>
-        <translation>刪除節點( D)</translation>
+        <translation>刪除節點(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="327"/>
         <source>Delete &amp;between two nodes</source>
-        <translation>在兩個節點之間刪除( B)</translation>
+        <translation>刪除兩節點間線段(&amp;B)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="328"/>
         <source>&amp;Trim segments</source>
-        <translation>三相元件( T)</translation>
+        <translation>修剪線段(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>建立等距多行( E)</translation>
+        <translation>建立等距聚合線(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="339"/>
         <source>&amp;MText</source>
-        <translation>MText (M)</translation>
+        <translation>多行文字(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="340"/>
@@ -3156,52 +3156,52 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="341"/>
         <source>&amp;Hatch</source>
-        <translation>批次( H)</translation>
+        <translation>剖面線(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="342"/>
         <source>Insert &amp;Image</source>
-        <translation>插入圖片 (&amp;I)</translation>
+        <translation>插入圖片(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349"/>
         <source>&amp;Aligned</source>
-        <translation>相通( A)</translation>
+        <translation>對齊標註(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="350"/>
         <source>&amp;Linear</source>
-        <translation>啟動( L)</translation>
+        <translation>線性標註(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="352"/>
         <source>&amp;Vertical</source>
-        <translation>有經驗( V)</translation>
+        <translation>垂直標註(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="353"/>
         <source>&amp;Radial</source>
-        <translation>平面( R)</translation>
+        <translation>半徑標註(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="354"/>
         <source>&amp;Diametric</source>
-        <translation>分數( D)</translation>
+        <translation>直徑標註(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="355"/>
         <source>&amp;Angular</source>
-        <translation>角度( A)</translation>
+        <translation>角度標註(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
         <source>&amp;Leader</source>
-        <translation>領導( L)</translation>
+        <translation>引線(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
         <source>&amp;Attributes</source>
-        <translation>屬性( A)</translation>
+        <translation>屬性(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="379"/>
@@ -3391,52 +3391,52 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="600"/>
         <source>&amp;Main Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>主選單(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="693"/>
         <source>Left Dock Area</source>
-        <translation type="unfinished"></translation>
+        <translation>左側停靠區</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="694"/>
         <source>Right Dock Area</source>
-        <translation type="unfinished"></translation>
+        <translation>右側停靠區</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="695"/>
         <source>Top Dock Area</source>
-        <translation type="unfinished"></translation>
+        <translation>頂部停靠區</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="696"/>
         <source>Bottom Dock Area</source>
-        <translation type="unfinished"></translation>
+        <translation>底部停靠區</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="697"/>
         <source>Floating Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>浮動視窗</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="698"/>
         <source>Left Toolbar Area</source>
-        <translation type="unfinished"></translation>
+        <translation>左側工具列區域</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="699"/>
         <source>Right Toolbar Area</source>
-        <translation type="unfinished"></translation>
+        <translation>右側工具列區域</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="700"/>
         <source>Top Toolbar Area</source>
-        <translation type="unfinished"></translation>
+        <translation>頂部工具列區域</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="701"/>
         <source>Bottom Toolbar Area</source>
-        <translation type="unfinished"></translation>
+        <translation>底部工具列區域</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="751"/>
@@ -3466,7 +3466,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="783"/>
         <source>Cut Quic&amp;k</source>
-        <translation>剪切 Quic( K)</translation>
+        <translation>快速剪切(&amp;K)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="784"/>
@@ -3476,7 +3476,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="785"/>
         <source>Copy &amp;Quick</source>
-        <translation>快速复制( X)</translation>
+        <translation>快速複製(&amp;Q)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="786"/>
@@ -3486,7 +3486,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
         <source>Widget Options</source>
-        <translation>元件選項</translation>
+        <translation>小工具選項</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="657"/>
@@ -3521,12 +3521,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57"/>
         <source>Block</source>
-        <translation>區塊</translation>
+        <translation>圖塊</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57"/>
         <source>Block related operations</source>
-        <translation>區塊相關操作</translation>
+        <translation>圖塊相關操作</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="58"/>
@@ -3551,12 +3551,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
         <source>Spline</source>
-        <translation>相片</translation>
+        <translation>雲形線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
         <source>Spline drawing commands</source>
-        <translation>Spline 繪圖命令</translation>
+        <translation>雲形線繪製指令</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="61"/>
@@ -3571,42 +3571,42 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="62"/>
         <source>Ellipse</source>
-        <translation>椭圆</translation>
+        <translation>橢圓形</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="62"/>
         <source>Ellipse drawing commands</source>
-        <translation>椭圆繪圖命令</translation>
+        <translation>橢圓繪製指令</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="63"/>
         <source>File</source>
-        <translation>文件</translation>
+        <translation>檔案</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="63"/>
         <source>File Operations</source>
-        <translation>文件操作</translation>
+        <translation>檔案操作</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64"/>
         <source>Dimension</source>
-        <translation>尺寸</translation>
+        <translation>標註</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64"/>
         <source>Dimensions creation commands</source>
-        <translation>尺寸建立命令</translation>
+        <translation>尺寸標註建立指令</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="65"/>
         <source>Info</source>
-        <translation>信息</translation>
+        <translation>資訊</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="65"/>
         <source>Informational commands</source>
-        <translation>信息命令</translation>
+        <translation>資訊查詢指令</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
@@ -3621,12 +3621,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
         <source>Line</source>
-        <translation>行</translation>
+        <translation>直線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
         <source>Line drawing commands</source>
-        <translation>行畫命令</translation>
+        <translation>線段繪製指令</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="68"/>
@@ -3636,7 +3636,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="68"/>
         <source>Point drawing commands</source>
-        <translation>指點繪取命令</translation>
+        <translation>點繪製指令</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="69"/>
@@ -3646,7 +3646,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="69"/>
         <source>Polygon drawing commands</source>
-        <translation>多邊形繪圖命令</translation>
+        <translation>多邊形繪製指令</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="70"/>
@@ -3778,12 +3778,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="84"/>
         <source>UCS</source>
-        <translation>美國</translation>
+        <translation>使用者座標系(UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="84"/>
         <source>UCS operations</source>
-        <translation>UCS 操作</translation>
+        <translation>使用者座標系(UCS)操作</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="85"/>
@@ -3863,7 +3863,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="229"/>
         <source>Radiant Line</source>
-        <translation type="unfinished"></translation>
+        <translation>放射線</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="237"/>
@@ -3883,7 +3883,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="240"/>
         <source>Paste to Points</source>
-        <translation>貼入接點</translation>
+        <translation>貼上至指定點</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="253"/>
@@ -3938,7 +3938,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="296"/>
         <source>&amp;Hyperbola &amp;Foci Point</source>
-        <translation>&amp; Hyperbola 和相關點</translation>
+        <translation>雙曲線（&amp;H） 焦點（&amp;F）</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="300"/>
@@ -4178,12 +4178,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="534"/>
         <source>To WCS</source>
-        <translation>(去WCS)</translation>
+        <translation>轉換至世界座標系(WCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="539"/>
         <source>Create UCS</source>
-        <translation>建立 UCS</translation>
+        <translation>建立使用者座標系(UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="546"/>
@@ -4253,7 +4253,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="604"/>
         <source>&amp;Draft Lines</source>
-        <translation>二行( D)</translation>
+        <translation>草圖線(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="605"/>
@@ -4263,22 +4263,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="607"/>
         <source>&amp;Orthogonal Grid</source>
-        <translation>正正弦网格( O)</translation>
+        <translation>正交網格(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="608"/>
         <source>&amp;Isometric Left Grid</source>
-        <translation>二相左网格( I)</translation>
+        <translation>等角投影左側格線(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="609"/>
         <source>&amp;Isometric Top Grid</source>
-        <translation>二相上网格( I)</translation>
+        <translation>等角投影頂部格線(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
         <source>&amp;Isometric Right Grid</source>
-        <translation>偏右网格( I)</translation>
+        <translation>等角投影右側格線(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
@@ -4348,7 +4348,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="643"/>
         <source>Toggle Block &amp;Visibility</source>
-        <translation>切換區塊可視性( V)</translation>
+        <translation>切換圖塊可見性(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="644"/>
@@ -4358,7 +4358,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="397"/>
         <source>Ex&amp;plode</source>
-        <translation>拆開 (&amp;P)</translation>
+        <translation>炸開(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="654"/>
@@ -4368,7 +4368,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="650"/>
         <source>Current &amp;Drawing Preferences</source>
-        <translation>( D)</translation>
+        <translation>目前圖面設定(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="743"/>
@@ -4378,7 +4378,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="744"/>
         <source>Deselect &amp;all</source>
-        <translation>全部取消選取( A)</translation>
+        <translation>取消全部選取(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="910"/>
@@ -4388,22 +4388,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="745"/>
         <source>Invert Selection</source>
-        <translation>倒轉選擇區</translation>
+        <translation>反向選取</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="716"/>
         <source>Focus on &amp;Options Widget</source>
-        <translation>專心於可選元件( O)</translation>
+        <translation>聚焦至選項面板(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="720"/>
         <source>Zoom &amp;In</source>
-        <translation>拉近(&amp;I)</translation>
+        <translation>放大(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="721"/>
         <source>Zoom &amp;Out</source>
-        <translation>拉遠(&amp;O)</translation>
+        <translation>縮小(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="722"/>
@@ -4413,7 +4413,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="723"/>
         <source>Previous &amp;View</source>
-        <translation>前一視圖 (&amp;V)</translation>
+        <translation>前一視圖(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="724"/>
@@ -4428,7 +4428,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="679"/>
         <source>New From &amp;Template</source>
-        <translation>从樣本中新增( T)</translation>
+        <translation>從範本新建(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="680"/>
@@ -4448,7 +4448,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="674"/>
         <source>&amp;Export as image</source>
-        <translation>匯出為影像( E)</translation>
+        <translation>匯出為圖片(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="670"/>
@@ -4458,7 +4458,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="683"/>
         <source>Save A&amp;ll...</source>
-        <translation>儲存 All( L)...</translation>
+        <translation>全部儲存(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="684"/>
@@ -4488,7 +4488,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="601"/>
         <source>&amp;Fullscreen</source>
-        <translation>全屏( F)</translation>
+        <translation>全螢幕(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="602"/>
@@ -4498,57 +4498,57 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="708"/>
         <source>Custom Menu Creator</source>
-        <translation>自訂選單建立者</translation>
+        <translation>自訂選單建立器</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="709"/>
         <source>Custom Toolbar Creator</source>
-        <translation>自訂工具列建立者</translation>
+        <translation>自訂工具列建立器</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="730"/>
         <source>&amp;Save View</source>
-        <translation>儲存檢視( S)</translation>
+        <translation>儲存視圖(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="732"/>
         <source>Restore Current View</source>
-        <translation>回復目前檢視</translation>
+        <translation>還原目前視圖</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="733"/>
         <source>Restore View 1</source>
-        <translation>回復檢視 1</translation>
+        <translation>還原視圖 1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="734"/>
         <source>Restore View 2</source>
-        <translation>回復檢視 2</translation>
+        <translation>還原視圖 2</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="735"/>
         <source>Restore View 3</source>
-        <translation>恢复檢視 3</translation>
+        <translation>還原視圖 3</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="736"/>
         <source>Restore View 4</source>
-        <translation>回復檢視 4</translation>
+        <translation>還原視圖 4</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="737"/>
         <source>Restore View 5</source>
-        <translation>回復檢視 5</translation>
+        <translation>還原視圖 5</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="759"/>
         <source>Regenerate Dimensions</source>
-        <translation>重生尺寸</translation>
+        <translation>重新生成標註</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="762"/>
         <source>&amp;Dimension Styles</source>
-        <translation>分解樣式( D)</translation>
+        <translation>尺寸標註形式(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="772"/>
@@ -4568,17 +4568,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="787"/>
         <source>Paste &amp;Transform</source>
-        <translation>貼上變更( C)</translation>
+        <translation>貼上與變換(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="753"/>
         <source>&amp;Delete Selected</source>
-        <translation>刪除所選取的( D)</translation>
+        <translation>刪除選取(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="754"/>
         <source>&amp;Selection Pointer</source>
-        <translation>選取指標( S)</translation>
+        <translation>選取指標(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="927"/>
@@ -4820,7 +4820,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="46"/>
         <source>Absolute WCS: (%1)</source>
-        <translation>絕對 WCS (%1)</translation>
+        <translation>絕對世界座標系(WCS): (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="70"/>
@@ -5174,7 +5174,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="53"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation>目前，對齊動作僅支援世界座標系統，如果啟用使用者座標系統，則可能無法執行。</translation>
+        <translation>對齊動作目前僅支援世界座標系(WCS)，當使用者座標系(UCS)為作用中時可能無法執行。</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="147"/>
@@ -5318,7 +5318,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="54"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation>目前，對齊動作僅支援世界座標系統，如果啟用使用者座標系統，則可能無法執行。</translation>
+        <translation>對齊動作目前僅支援世界座標系(WUS)，當使用者座標系(UCS)為作用中時可能無法執行。</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="115"/>
@@ -5563,7 +5563,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="153"/>
         <source>Specify entity to cut</source>
-        <translation type="unfinished">指定要剪切的物件</translation>
+        <translation>指定要剪切的圖元</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="156"/>
@@ -5777,7 +5777,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="148"/>
         <source>Mirror</source>
-        <translation type="unfinished">鏡子</translation>
+        <translation>鏡射</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="149"/>
@@ -7088,7 +7088,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/dock_widgets/ucs_list/lc_actionucsbydimordinate.cpp" line="62"/>
         <source>Select ordinate dimension to set UCS</source>
-        <translation>選擇要設定 UCS 的正弦尺寸</translation>
+        <translation>選擇座標標註來設定使用者座標系(UCS)</translation>
     </message>
 </context>
 <context>
@@ -7548,28 +7548,28 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="53"/>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="70"/>
         <source>None</source>
-        <translation type="unfinished">無</translation>
+        <translation>無</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="54"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>左</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="55"/>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="72"/>
         <source>Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>中點</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="56"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>右</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="60"/>
         <source>Horizontal</source>
-        <translation type="unfinished">水平</translation>
+        <translation>水平</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="60"/>
@@ -7579,17 +7579,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="71"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>上</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="73"/>
         <source>Bottom</source>
-        <translation type="unfinished">下</translation>
+        <translation>下</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="77"/>
         <source>Vertical</source>
-        <translation type="unfinished">垂直</translation>
+        <translation>垂直</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="77"/>
@@ -7700,7 +7700,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.ui" line="96"/>
         <source>Zero base angle relative to the current user coordinate system. 0.0 is 3pm.</source>
-        <translation>相對于目前使用者座標系統的零基角 。 0.0是3: 00.</translation>
+        <translation>相對於目前使用者座標系(UCS)的零度基準角。0.0 代表 3 點鐘方向。</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.ui" line="105"/>
@@ -9383,7 +9383,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.ui" line="6"/>
         <source>About LibreCAD</source>
-        <translation>关于 LibreCAD</translation>
+        <translation>關於 LibreCAD</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.ui" line="33"/>
@@ -11530,7 +11530,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="92"/>
         <source>Middle</source>
-        <translation>中</translation>
+        <translation>中間</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="99"/>
@@ -11753,7 +11753,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="78"/>
         <source>UCS Details column</source>
-        <translation>UCS 細列</translation>
+        <translation>使用者座標系(UCS)詳細資訊欄</translation>
     </message>
     <message>
         <source>If checked, type of grid for saved view will be shown</source>
@@ -11814,7 +11814,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="118"/>
         <source>UCS Type icon column</source>
-        <translation>美國 類型圖示列</translation>
+        <translation>使用者座標系(UCS)類型圖標欄</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="65"/>
@@ -12298,7 +12298,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="108"/>
         <source>User Coordinate system (UCS)</source>
-        <translation type="unfinished"></translation>
+        <translation>使用者座標系 (UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="115"/>
@@ -12691,7 +12691,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="14"/>
         <source>UCS List Options</source>
-        <translation>UCS 列表選項</translation>
+        <translation>使用者座標系(UCS)清單選項</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="20"/>
@@ -12701,7 +12701,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="26"/>
         <source>If сhecked, the tooltip with additional information about UCS will be shown for table item.</source>
-        <translation>如果 \ hecked , 有 UCS 附加資訊的工具提示會被顯示到表格項目 .</translation>
+        <translation>若勾選，將顯示表格項目中關於使用者座標系 (UCS) 的附加工具提示。</translation>
     </message>
     <message>
         <source>Toolip with UCS details for table items</source>
@@ -12719,7 +12719,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="49"/>
         <source>UCS Details column</source>
-        <translation>UCS 細列</translation>
+        <translation>使用者座標系(UCS)詳情欄</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="59"/>
@@ -12738,22 +12738,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="29"/>
         <source>Tooltip with UCS details for table items</source>
-        <translation>包含表格項目 UCS 詳細資訊的工具提示</translation>
+        <translation>表格項目的使用者座標系(UCS)詳情工具提示</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="36"/>
         <source>If checked, the column with icon for type of UCS will be shown in the table.</source>
-        <translation>如果選取此選項，則會在表格中顯示包含 UCS 類型圖示的欄。</translation>
+        <translation>若勾選，將在表格中顯示使用者座標系 (UCS) 的類型圖示欄。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="46"/>
         <source>If checked, column with details of UCS origin and angle will be shown in the table.</source>
-        <translation>如果選取此選項，則會在表格中顯示包含 UCS 起點和角度詳細資訊的欄。</translation>
+        <translation>若勾選，將在表格中顯示使用者座標系 (UCS) 原點與角度詳情欄。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
         <source>If checked, the column with type of grid for UCS will be shown.</source>
-        <translation>如果選取此選項，則會顯示包含 UCS 格線類型的欄。</translation>
+        <translation>若勾選，將顯示使用者座標系 (UCS) 的網格類型欄。</translation>
     </message>
     <message>
         <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
@@ -12762,7 +12762,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
         <source>Ask for confirmation before UCS removal</source>
-        <translation>在 UCS 移除前要求確認</translation>
+        <translation>移除使用者座標系(UCS)前詢問確認</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="105"/>
@@ -12772,7 +12772,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="108"/>
         <source>Silently update existing UCS if the same exists</source>
-        <translation>如果同樣存在, 就悄悄地更新已存在的 UCS</translation>
+        <translation>若存在相同的使用者座標系(UCS)則靜默更新</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="118"/>
@@ -12782,7 +12782,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="131"/>
         <source>Defines how drawing&apos;s view window should be adjusted after UCS is applied.</source>
-        <translation>定義套用 UCS 後，繪圖視窗應該如何調整。</translation>
+        <translation>定義套用使用者座標系(UCS)後圖面視圖視窗的調整方式</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="135"/>
@@ -12792,12 +12792,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="140"/>
         <source>Pan, UCS Origin in Center</source>
-        <translation>Pan, 中央UCS出自</translation>
+        <translation>平移，使用者座標系(UCS)原點居中</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="145"/>
         <source>Pan, UCS Origin in Left-Bottom</source>
-        <translation>Pan, 由UCS出自相關地區</translation>
+        <translation>平移，使用者座標系(UCS)原點置於左下角</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="153"/>
@@ -12807,7 +12807,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="156"/>
         <source>Restore UCS on single click of table item</source>
-        <translation>單擊表格項目還原 UCS</translation>
+        <translation>單擊表格項目即恢復使用者座標系(UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="163"/>
@@ -12817,12 +12817,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="213"/>
         <source>Defines delay between UCS marker blinks.</source>
-        <translation>定義 UCS 指標閃爍之間的延遲時間。</translation>
+        <translation>定義使用者座標系(UCS)標記閃爍之間的延遲。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="249"/>
         <source>Defines amount of blinks of UCS marker for UCS highlighting.</source>
-        <translation>定義用於 UCS 強調的 UCS 指標閃爍次數。</translation>
+        <translation>定義高亮顯示使用者座標系時 UCS 標記的閃爍次數。</translation>
     </message>
     <message>
         <source>Defines which action should be performed on double click on the item of the table. </source>
@@ -12867,7 +12867,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="95"/>
         <source>If selected, confirmation dialog will be shown on removal of the UCS. Otherwise, UCS will be removed silently.</source>
-        <translation type="unfinished"></translation>
+        <translation>若選取，移除使用者座標系 (UCS) 時將顯示確認對話框。否則，將靜默移除使用者座標系。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="174"/>
@@ -12877,27 +12877,27 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="179"/>
         <source>Edit UCS</source>
-        <translation>編輯 UCS</translation>
+        <translation>編輯使用者座標系(UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="184"/>
         <source>Apply UCS</source>
-        <translation>套用 UCS</translation>
+        <translation>套用使用者座標系(UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="189"/>
         <source>Highlight UCS</source>
-        <translation>突顯 UCS</translation>
+        <translation>高亮顯示使用者座標系(UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="124"/>
         <source>As UCS is applied, perform</source>
-        <translation>在使用 UCS 時, 執行</translation>
+        <translation>套用使用者座標系(UCS)時執行</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="207"/>
         <source>UCS Highlight</source>
-        <translation>UCS 突顯</translation>
+        <translation>使用者座標系(UCS)高亮顯示</translation>
     </message>
     <message>
         <source>Defines delay between UCS marker blinks</source>
@@ -12935,7 +12935,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="48"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="51"/>
         <source>UCS Edit</source>
-        <translation>UCS 編輯</translation>
+        <translation>編輯使用者座標系(UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="37"/>
@@ -12973,12 +12973,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="141"/>
         <source>UCS Name:</source>
-        <translation>UCS 名稱 :</translation>
+        <translation>使用者座標系(UCS)名稱：</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="48"/>
         <source>Please specify name of UCS</source>
-        <translation>請指定 UCS 名稱</translation>
+        <translation>請指定使用者座標系(UCS)名稱</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="51"/>
@@ -14317,7 +14317,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="95"/>
         <source>Mirror</source>
-        <translation type="unfinished">鏡子</translation>
+        <translation>鏡射</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="95"/>
@@ -15470,12 +15470,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>如果勾選，文件中的 UCS 會包含在匯出的繪圖中。否則不會包含 UCS。</translation>
+        <translation>若勾選，文件中的使用者座標系(UCS)將包含於匯出的圖紙中。否則，不包含使用者座標系(UCS)。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>也匯出 UCS</translation>
+        <translation>一併匯出使用者座標系(UCS)</translation>
     </message>
 </context>
 <context>
@@ -18462,7 +18462,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.ui" line="84"/>
         <source>Rotation angle in degrees (UCS)</source>
-        <translation>旋轉角度（度，UCS）</translation>
+        <translation>旋轉角度以度為單位 (UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.ui" line="85"/>
@@ -24117,12 +24117,12 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="370"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="374"/>
         <source>WCS</source>
-        <translation>世界安全中心</translation>
+        <translation>世界座標系</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="378"/>
         <source>UCS</source>
-        <translation>美國</translation>
+        <translation>使用者座標系</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="383"/>
@@ -24148,7 +24148,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="389"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="398"/>
         <source>UCS: </source>
-        <translation>烏克蘭:</translation>
+        <translation>使用者座標系:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="398"/>
@@ -24163,12 +24163,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="400"/>
         <source>UCS Origin X: </source>
-        <translation>UCS出自 X:</translation>
+        <translation>UCS 原點 X：</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="400"/>
         <source>UCS Origin Y: </source>
-        <translation>UCS出自 Y:</translation>
+        <translation>UCS 原點 Y：</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="401"/>
@@ -25160,7 +25160,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="20"/>
         <source>Pen Palette Settings</source>
-        <translation>Pen 調色板設定</translation>
+        <translation>筆刷調色盤設定</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="187"/>
@@ -25364,7 +25364,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="20"/>
         <source>Pen Palette</source>
-        <translation>筆調色板</translation>
+        <translation>筆刷調色盤</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="49"/>
@@ -25550,16 +25550,16 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="430"/>
         <source>Pen palette</source>
-        <translation>筆調色板</translation>
+        <translation>筆刷調色盤</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="431"/>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation>畫筆檔案的位置已更改，請重新啟動應用程式以使用新檔案。
+        <translation>筆刷檔案的位置已變更，請重啟應用程式以使用新的筆刷檔案。
 
-請注意，如果您在不重新啟動的情況下透過編輯器儲存畫筆，目前調色盤中的畫筆將儲存到新檔案中，並覆蓋其現有內容。</translation>
+請注意，若您未重啟即透過編輯器儲存筆刷，目前調色盤中的筆刷將會儲存至新檔案中，從而覆蓋該檔案的原有內容。</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
@@ -29127,12 +29127,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="128"/>
         <source>Re-Base to current UCS</source>
-        <translation type="unfinished"></translation>
+        <translation>重設基準至目前使用者座標系(UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="129"/>
         <source>Rebase selected ordinate dimensions to current UCS - </source>
-        <translation type="unfinished"></translation>
+        <translation>將選取的座標標註重設基準至目前使用者座標系(UCS)-</translation>
     </message>
 </context>
 <context>
@@ -29847,7 +29847,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="37"/>
         <source>User Coordinate System (UCS)</source>
-        <translation type="unfinished"></translation>
+        <translation>使用者座標系 (UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="37"/>
@@ -29862,12 +29862,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="94"/>
         <source>Active UCS</source>
-        <translation type="unfinished"></translation>
+        <translation>作用中的使用者座標系(UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="94"/>
         <source>UCS switch to</source>
-        <translation type="unfinished"></translation>
+        <translation>切換使用者座標系(UCS)至</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="104"/>
@@ -29903,22 +29903,22 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="150"/>
         <source>Add UCS...</source>
-        <translation type="unfinished"></translation>
+        <translation>新增使用者座標系(UCS)...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="150"/>
         <source>New UCS creation</source>
-        <translation type="unfinished"></translation>
+        <translation>新建使用者座標系(UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="151"/>
         <source>Remove UCS...</source>
-        <translation type="unfinished"></translation>
+        <translation>移除使用者座標系(UCS)..</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="151"/>
         <source>Invokes removal of current UCS</source>
-        <translation type="unfinished"></translation>
+        <translation>執行刪除目前使用的使用者座標系(UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="152"/>
@@ -29933,22 +29933,22 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="176"/>
         <source>Set ucs that corresponds to selected ordinate dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>設定對應至選取座標標註的使用者座標系(UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="177"/>
         <source>Rename UCS...</source>
-        <translation type="unfinished"></translation>
+        <translation>重命名使用者座標系(UCS)...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="178"/>
         <source>Renames UCS (ones with empty names are temporary and are not saved)</source>
-        <translation type="unfinished"></translation>
+        <translation>重新命名使用者座標系(UCS)：（未命名的座標系為暫時性，不會儲存）</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="179"/>
         <source>UCS-related commands</source>
-        <translation type="unfinished"></translation>
+        <translation>使用者座標系(UCS)相關指令</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="190"/>
@@ -31097,7 +31097,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="180"/>
         <source>Create radiant line from center point</source>
-        <translation type="unfinished"></translation>
+        <translation>從中心點建立放射線</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="183"/>
@@ -38273,7 +38273,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.ui" line="91"/>
         <source>Rotation angle in degrees (UCS)</source>
-        <translation>旋轉角度（度，UCS）</translation>
+        <translation>旋轉角度以度為單位 (UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.ui" line="92"/>
@@ -38576,7 +38576,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="395"/>
         <source>UCS</source>
-        <translation>美國</translation>
+        <translation>使用者座標系</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="416"/>
@@ -38594,7 +38594,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="31"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished">在剪切后以輸入長度為總長, 而不是長度增加</translation>
+        <translation>輸入的長度將作為修剪後的總長度，而非增加的長度</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="37"/>
@@ -38627,12 +38627,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="23"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="unfinished">有相距了. 三剪切的負值, 延伸的正值 .</translation>
+        <translation>距離。負值為修剪，正值為延伸。</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="50"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished">在剪切后以輸入長度為總長, 而不是長度增加</translation>
+        <translation>輸入的長度將作為修剪後的總長度，而非增加的長度</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="53"/>
@@ -38647,7 +38647,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="97"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished">有相距了. 三剪切的負值, 延伸的正值 。 在剪接到最後總长度后, 負號被忽略了 .</translation>
+        <translation>距離。負值為修剪，正值為延伸。變更為總長度時則忽略負號。</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="110"/>
@@ -38777,7 +38777,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="333"/>
         <source>UCS: </source>
-        <translation>烏克蘭:</translation>
+        <translation>使用者座標系(UCS):</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="333"/>
@@ -38800,12 +38800,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="35"/>
         <source>Create new user coordinates system.</source>
-        <translation>建立新的使用者座標系統 .</translation>
+        <translation type="unfinished">建立新的使用者座標系(UCS)。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="52"/>
         <source>Restores selected user coordinates system.</source>
-        <translation>恢复所選取的使用者座標系統 .</translation>
+        <translation>還原選取的使用者座標系(UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="107"/>
@@ -38815,22 +38815,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="121"/>
         <source>Saves currently used coordinate system (it is usefull if UCS comes from saved view)</source>
-        <translation>儲存目前使用的坐标系統( 如果 UCS 从已儲存的檢視中來取出, 有用 )</translation>
+        <translation>儲存目前使用的座標系（若 UCS 來自已儲存的視圖則相當實用）</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="80"/>
         <source>Set UCS by ordinate dimension</source>
-        <translation>以正弦尺寸設定 UCS</translation>
+        <translation>依座標標註設定使用者座標系(UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="66"/>
         <source>Edit selected user coordinates name. No-name UCS are temporary and are not saved.</source>
-        <translation>編輯所選取的使用者座標名稱 。 沒有名稱 UCS 是暫時的而未被儲存 .</translation>
+        <translation>編輯選取的使用者座標名稱。未命名的 UCS 為暫時性且不會儲存。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="148"/>
         <source>Removes selected user coordinates system.</source>
-        <translation>移除所選取的使用者座標系統 .</translation>
+        <translation>移除選取的使用者座標系(UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="151"/>
@@ -38864,8 +38864,8 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="351"/>
         <source>Are you sure to delete ALL UCS?
  Warning: this action can NOT be undone!</source>
-        <translation>你確定要刪除所有UCS?
-警告: 此動作無法被解除 !</translation>
+        <translation>您確定要刪除所有使用者座標系(UCS)嗎？
+警告：此操作無法復原！</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="367"/>
@@ -38877,9 +38877,9 @@ p, li { white-space: pre-wrap; }
         <source>Are you sure to delete UCS
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
-        <translation>您確定要刪除 UCS
+        <translation>您確定要刪除使用者座標系(UCS)嗎
 &quot;%1&quot; ?
-警告: 此動作無法被解除 !</translation>
+警告：此動作無法復原！</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="412"/>
@@ -38890,14 +38890,14 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="413"/>
         <source>Are you sure to delete UCS %1?
 Warning: this action can NOT be undone!</source>
-        <translation>您確定要刪除 UCS%1 ?
-警告: 此動作無法被解除 !</translation>
+        <translation>您確定要刪除使用者座標系(UCS) %1 嗎？
+警告：此動作無法復原！</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="478"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="491"/>
         <source>Rename UCS</source>
-        <translation>重命名 UCS</translation>
+        <translation>重新命名使用者座標系(UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="479"/>
@@ -38907,50 +38907,50 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="492"/>
         <source>UCS with provided name already exists, select another one</source>
-        <translation>有所提供名稱的 UCS 已存在, 請另選一個</translation>
+        <translation>已存在同名的使用者座標系(UCS)，請選擇其他名稱</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="538"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="548"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="574"/>
         <source>&amp;Save UCS</source>
-        <translation>拯救 UCS( S)</translation>
+        <translation>儲存使用者座標系(UCS)(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="541"/>
         <source>&amp;Update UCS</source>
-        <translation>更新 UCS( U)</translation>
+        <translation>更新使用者座標系(UCS)(&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="542"/>
         <source>R&amp;emove Selected UCSs</source>
-        <translation>R&amp;去除所選取的 UCS</translation>
+        <translation>移除選取的使用者座標系(UCS)(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="555"/>
         <source>&amp;Apply UCS</source>
-        <translation>Apply UCS (A)</translation>
+        <translation>套用使用者座標系(UCS)(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="556"/>
         <source>&amp;Preview UCS</source>
-        <translation>檢視 UCS( P)</translation>
+        <translation>預覽使用者座標系(UCS)(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="559"/>
         <source>&amp;Rename UCS</source>
-        <translation>重命名 UCS( R)</translation>
+        <translation>重新命名使用者座標系(UCS)(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="560"/>
         <source>R&amp;emove UCS</source>
-        <translation>R&amp;去除 UCS</translation>
+        <translation>移除使用者座標系(UCS)(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="565"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="581"/>
         <source>Remove A&amp;ll UCSs</source>
-        <translation>移除 A&amp;ll UCS</translation>
+        <translation>移除所有使用者座標系(UCS)(&amp;L)</translation>
     </message>
 </context>
 <context>
@@ -39006,7 +39006,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="115"/>
         <source>Position of origin and angle of current UCS&apos;s in world coordinates.</source>
-        <translation>目前 UCS 在世界座標中的原點位置和角度。</translation>
+        <translation>目前 UCS 在世界座標系中的原點位置與角度</translation>
     </message>
 </context>
 <context>
@@ -39118,12 +39118,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="224"/>
         <source>User Coordinate Systems</source>
-        <translation>使用者座標系統</translation>
+        <translation>使用者座標系(UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="224"/>
         <source>UCSs</source>
-        <translation>特效</translation>
+        <translation>使用者座標系(UCS) (複數)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
@@ -39229,7 +39229,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="542"/>
         <source>UCS Status</source>
-        <translation>UCS 狀態</translation>
+        <translation>使用者座標系(UCS)狀態</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="543"/>
@@ -39317,12 +39317,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="103"/>
         <source>General Styling</source>
-        <translation>斯地林將軍</translation>
+        <translation>一般樣式設定</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="190"/>
         <source>Edit Palette...</source>
-        <translation type="unfinished"></translation>
+        <translation>編輯調色盤...</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="245"/>
@@ -42280,7 +42280,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="576"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>相對於目前使用者座標系統的零基準角度。影響極座標輸入、角度吸附。0.0 為 3 點。</translation>
+        <translation>相對於目前使用者座標系(UCS)的零度基準角。影響極座標輸入與角度鎖點。0.0 代表 3 點鐘方向。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="586"/>
@@ -44681,7 +44681,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3588"/>
         <source>If selected, marker for coodinate system will be shown in zero point of current user coordinates system. </source>
-        <translation>如果被選取, 在目前使用者座標系統的零點上會顯示可編碼系統的標籤 .</translation>
+        <translation>若勾選，座標系標記將顯示於目前使用者座標系(UCS)的原點。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="675"/>
@@ -44721,12 +44721,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3581"/>
         <source>Show WCS zero marker</source>
-        <translation>顯示 WCS 零標籤</translation>
+        <translation>顯示世界座標系(WCS)零點標記</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3591"/>
         <source>Show UCS zero marker</source>
-        <translation>顯示 UCS 零標籤</translation>
+        <translation>顯示使用者座標系(UCS)原點標記</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3156"/>
@@ -45575,7 +45575,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2996"/>
         <source>If set and user coordinate system is active, absolute coodinate in world coordinate system will be also shown.</source>
-        <translation>如果已設定且使用者座標系統處於啟用狀態，則也會顯示世界座標系統中的絕對座標。</translation>
+        <translation>若設定且使用者座標系(UCS)為作用中，亦會顯示世界座標系(WCS)中的絕對座標。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3002"/>
@@ -45745,7 +45745,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5221"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>相對於目前使用者座標系統的零基準角。影響極座標輸入、吸附到角度。0.0 為 3 點。</translation>
+        <translation>相對於目前使用者座標系(UCS)的零度基準角。影響極座標輸入與角度鎖點。0.0 代表 3 點鐘方向。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5260"/>
@@ -45873,7 +45873,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="20"/>
         <source>Export as CAM/plain SVG</source>
-        <translation>匯出為 CAM/ Plain SVG</translation>
+        <translation>匯出為 CAM/標準SVG</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="60"/>
@@ -48043,7 +48043,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1404"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>从調色板上取出筆, 繪圖實體不會被影響 .</translation>
+        <translation>筆刷將從調色盤中移除，已繪製的圖元將不受影響。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1406"/>
@@ -48064,7 +48064,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1426"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>筆會被取出調色板, 繪圖實體不會被影響 .</translation>
+        <translation>多個筆刷將從調色盤中移除，已繪製的圖元將不受影響。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1430"/>
@@ -49433,49 +49433,55 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="103"/>
         <source>sline</source>
         <comment>draw snake line</comment>
-        <translation>斜線</translation>
+        <translation>繪製蛇形線</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="104"/>
         <source>sli</source>
         <comment>draw snake line</comment>
-        <translation>sli (正弦)</translation>
+        <translatorcomment>繪製蛇形線</translatorcomment>
+        <translation>sli</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="105"/>
         <source>sl</source>
         <comment>draw snake line</comment>
-        <translation>sl (一)</translation>
+        <translation>sl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="110"/>
         <source>slinex</source>
         <comment>draw snake line (X)</comment>
+        <translatorcomment>繪製蛇形線 (X)</translatorcomment>
         <translation>slinex</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="111"/>
         <source>slix</source>
         <comment>draw snake line (X)</comment>
+        <translatorcomment>繪製蛇形線 (X)</translatorcomment>
         <translation>slix (正弦)</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="112"/>
         <source>rlx</source>
         <comment>draw snake line (X)</comment>
+        <translatorcomment>繪製蛇形線 (X)</translatorcomment>
         <translation>rlx</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="117"/>
         <source>sliney</source>
         <comment>draw snake line (Y)</comment>
-        <translation>有刺</translation>
+        <translatorcomment>繪製蛇形線 (Y)</translatorcomment>
+        <translation>樣條曲線</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="118"/>
         <source>sliy</source>
         <comment>draw snake line (Y)</comment>
-        <translation>滑倒</translation>
+        <translatorcomment>繪製蛇形線 (Y)</translatorcomment>
+        <translation>sliy</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="119"/>
@@ -50074,7 +50080,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="427"/>
         <source>at</source>
         <comment>arc tangent</comment>
-        <translation>在</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="432"/>
@@ -50086,7 +50092,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="433"/>
         <source>a2r</source>
         <comment>draw 2pt arc radius</comment>
-        <translation>a2r (%)</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="438"/>
@@ -50098,7 +50104,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="439"/>
         <source>a2l</source>
         <comment>draw 2pt arc length</comment>
-        <translation>a2一</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="444"/>
@@ -50110,7 +50116,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="445"/>
         <source>a2h</source>
         <comment>draw 2pt arc height</comment>
-        <translation>a2h (日)</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="450"/>
@@ -50122,19 +50128,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="451"/>
         <source>a2a</source>
         <comment>draw 2pt arc angle</comment>
-        <translation>a2a</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="458"/>
         <source>sf</source>
         <comment>draw spline</comment>
-        <translation>sf (正末)</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="465"/>
         <source>sp</source>
         <comment>spline through points</comment>
-        <translation>s</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="471"/>
@@ -50146,7 +50152,8 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="472"/>
         <source>ae</source>
         <comment>arc ellipse</comment>
-        <translation>ae:</translation>
+        <translatorcomment>橢圓弧</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="476"/>
@@ -50170,7 +50177,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="483"/>
         <source>pl4</source>
         <comment>Parabola 4 points</comment>
-        <translation>pl4</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="488"/>
@@ -50188,7 +50195,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="495"/>
         <source>fh</source>
         <comment>draw freehand line</comment>
-        <translation>(fh)</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="503"/>
@@ -50224,7 +50231,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="515"/>
         <source>ef</source>
         <comment>ellipse foci</comment>
-        <translation>(ef)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="520"/>
@@ -50236,7 +50243,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="521"/>
         <source>e4</source>
         <comment>ellipse 4 point</comment>
-        <translation>e4</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="526"/>
@@ -50248,7 +50255,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="527"/>
         <source>e3</source>
         <comment>ellipse center 3 point</comment>
-        <translation>e3</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="547"/>
@@ -50284,7 +50291,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="560"/>
         <source>p2l</source>
         <comment>draw line from point to line</comment>
-        <translation>p2l</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="566"/>
@@ -50296,7 +50303,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="567"/>
         <source>pi</source>
         <comment>pl add node</comment>
-        <translation>有</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="572"/>
@@ -50308,7 +50315,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="573"/>
         <source>pn</source>
         <comment>pl append node</comment>
-        <translation>平分</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="578"/>
@@ -50320,7 +50327,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="579"/>
         <source>pd</source>
         <comment>pl delete node</comment>
-        <translation>平分</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="584"/>
@@ -50332,7 +50339,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="585"/>
         <source>pr</source>
         <comment>pl del between nodes</comment>
-        <translation>三</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="590"/>
@@ -50344,7 +50351,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="591"/>
         <source>pt</source>
         <comment>pl trim segments</comment>
-        <translation>pt</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="596"/>
@@ -50356,7 +50363,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="597"/>
         <source>pe</source>
         <comment>pl equidistant</comment>
-        <translation>豆</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="602"/>
@@ -50368,25 +50375,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="603"/>
         <source>pj</source>
         <comment>pl join</comment>
-        <translation>pj</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="608"/>
         <source>dual</source>
         <comment>create dual geometries</comment>
-        <translation>二相</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="609"/>
         <source>du</source>
         <comment>create dual geometries</comment>
-        <translation>二分</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="622"/>
         <source>sx</source>
         <comment>deselect all entities</comment>
-        <translation>sx</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="628"/>
@@ -50398,37 +50405,38 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="629"/>
         <source>is</source>
         <comment>invert select</comment>
-        <translation>是</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="633"/>
         <source>selectquick</source>
         <comment>select quick</comment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>選取 快速</translatorcomment>
+        <translation>快速選取</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="634"/>
         <source>sq</source>
         <comment>select quick</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="638"/>
         <source>smtoggle</source>
         <comment>select mode toggle</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="639"/>
         <source>smt</source>
         <comment>select mode toggle</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="649"/>
         <source>ds</source>
         <comment>dimension - aligned</comment>
-        <translation>日</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="660"/>
@@ -50440,7 +50448,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="661"/>
         <source>do</source>
         <comment>dimension - ordinate</comment>
-        <translation>有</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="665"/>
@@ -50452,7 +50460,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="666"/>
         <source>dor</source>
         <comment>dimension - ordinate</comment>
-        <translation>有活了</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="683"/>
@@ -50464,19 +50472,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="685"/>
         <source>dr</source>
         <comment>dimension - radial</comment>
-        <translation>博士</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="691"/>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation>dd (一)</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="698"/>
         <source>da</source>
         <comment>dimension - angular</comment>
-        <translation>出事了</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="704"/>
@@ -50488,7 +50496,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="705"/>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation>二</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="710"/>
@@ -50500,7 +50508,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="711"/>
         <source>dg</source>
         <comment>dimension - regenerate</comment>
-        <translation>dg :</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="718"/>
@@ -50536,7 +50544,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="743"/>
         <source>mr</source>
         <comment>modify - move rotate</comment>
-        <translation>先生</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="748"/>
@@ -50548,7 +50556,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="749"/>
         <source>r2</source>
         <comment>modify - rotate2</comment>
-        <translation>r2</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="754"/>
@@ -50560,7 +50568,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="755"/>
         <source>md</source>
         <comment>modify -  revert direction</comment>
-        <translation>(md)</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="761"/>
@@ -50596,13 +50604,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="783"/>
         <source>mo</source>
         <comment>modify - offset</comment>
-        <translation>哦</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="784"/>
         <source>moff</source>
         <comment>modify - offset</comment>
-        <translation>出自:</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="789"/>
@@ -50662,7 +50670,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="833"/>
         <source>xt</source>
         <comment>explode text strings</comment>
-        <translation>二</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="838"/>
@@ -50686,7 +50694,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="854"/>
         <source>id</source>
         <comment>distance point to point</comment>
-        <translation>id</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="861"/>
@@ -50698,13 +50706,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="862"/>
         <source>ii</source>
         <comment>distance entity to point</comment>
-        <translation>二</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="863"/>
         <source>dep</source>
         <comment>distance entity to point</comment>
-        <translation>分解</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="868"/>
@@ -50716,7 +50724,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="869"/>
         <source>ia</source>
         <comment>measure angle</comment>
-        <translation>有</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="875"/>
@@ -50728,25 +50736,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="876"/>
         <source>aa</source>
         <comment>measure area</comment>
-        <translation>aa :</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="884"/>
         <source>mt</source>
         <comment>draw mtext</comment>
-        <translation>毫升</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="891"/>
         <source>tx</source>
         <comment>draw text</comment>
-        <translation>tx (正)</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="919"/>
         <source>so</source>
         <comment>snap - free</comment>
-        <translation>所以</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="970"/>
@@ -50776,7 +50784,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="986"/>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation>n</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="991"/>
@@ -50788,7 +50796,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="992"/>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation>哦</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="997"/>
@@ -50800,7 +50808,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="998"/>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation>日</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1003"/>
@@ -50812,7 +50820,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1004"/>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation>(rv)</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1051"/>
@@ -50824,7 +50832,8 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1052"/>
         <source>zi</source>
         <comment>zoom - in</comment>
-        <translation>二</translation>
+        <translatorcomment>放大</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1057"/>
@@ -50836,7 +50845,8 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1058"/>
         <source>zo</source>
         <comment>zoom - out</comment>
-        <translation>zo</translation>
+        <translatorcomment>縮小</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1090"/>
@@ -50874,7 +50884,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1179"/>
         <source>fixed</source>
-        <translation type="unfinished">已固定</translation>
+        <translation>鎖定</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1184"/>
@@ -50885,145 +50895,149 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1185"/>
         <source>s</source>
         <comment>snap start</comment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>鎖點 起始點</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1186"/>
         <source>m</source>
         <comment>snap middle</comment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>鎖點 中點</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1187"/>
         <source>e</source>
         <comment>snap end</comment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>鎖點 終點</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1206"/>
         <source>cl</source>
         <comment>chordlen</comment>
-        <translation>cl :</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1268"/>
         <source>r</source>
         <comment>redo redo cycle</comment>
-        <translation>r</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="719"/>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation>mv (正反)</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="790"/>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation>有活</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="791"/>
         <source>ch</source>
         <comment>modify - bevel</comment>
-        <translation>克</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="797"/>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation>有 二</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="805"/>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>切</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="806"/>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation>跳出</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="807"/>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
-        <translation>二</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="737"/>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation>小</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="756"/>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation>倒轉</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="725"/>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation>羅</translation>
+        <translatorcomment>修改 - 旋轉</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="731"/>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation>sz (正弦)</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="762"/>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
-        <translation>吨</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="769"/>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>tm2</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="768"/>
         <source>t2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>t2</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="775"/>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation>李</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="813"/>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation>二</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="845"/>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>有</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="846"/>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation>三月</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="839"/>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>(p)</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="918"/>
@@ -51137,7 +51151,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="980"/>
         <source>rz</source>
         <comment>set relative zero position</comment>
-        <translation>日</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="615"/>
@@ -51179,7 +51193,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="819"/>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>道具</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="200"/>
@@ -51293,7 +51307,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1106"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1261"/>
         <source>through</source>
-        <translation>通</translation>
+        <translation>通過</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1107"/>
@@ -51389,7 +51403,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1131"/>
         <source>round</source>
-        <translation>圓</translation>
+        <translation>圓角</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1133"/>
@@ -51788,7 +51802,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1256"/>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation>r</translation>
+        <translation>rs</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1258"/>
@@ -52391,7 +52405,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/ucs/lc_ucs.cpp" line="133"/>
         <source>WCS</source>
-        <translation>世界安全中心</translation>
+        <translation>世界座標系</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="668"/>
