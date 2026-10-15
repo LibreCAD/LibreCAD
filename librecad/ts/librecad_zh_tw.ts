@@ -30,12 +30,12 @@
     <message>
         <location filename="../src/ui/generic/comboboxoption.ui" line="26"/>
         <source>GroupBox</source>
-        <translation>分組框</translation>
+        <translation>群組框</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/comboboxoption.ui" line="41"/>
         <source>Set</source>
-        <translation>Set</translation>
+        <translation>設定</translation>
     </message>
 </context>
 <context>
@@ -98,7 +98,7 @@
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="62"/>
         <source>Layer:</source>
-        <translation>圖層：</translation>
+        <translation>圖層:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="95"/>
@@ -109,7 +109,7 @@
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="110"/>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="113"/>
         <source>Points on Spline</source>
-        <translation>樣條線上的點</translation>
+        <translation>樣條曲線上的點</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="142"/>
@@ -127,7 +127,7 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="62"/>
         <source>Layer:</source>
-        <translation>圖層：</translation>
+        <translation>圖層:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="95"/>
@@ -137,12 +137,12 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="101"/>
         <source>Closed</source>
-        <translation>閉合</translation>
+        <translation>已關閉</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="110"/>
         <source>Spline Points</source>
-        <translation>樣條點</translation>
+        <translation>雲形線點</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="120"/>
@@ -153,7 +153,7 @@
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="135"/>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="138"/>
         <source>Points on Spline</source>
-        <translation>樣條線上的點</translation>
+        <translation>雲形線上的點</translation>
     </message>
 </context>
 <context>
@@ -161,7 +161,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="267"/>
         <source>Select arc entity</source>
-        <translation>選擇圓弧實體</translation>
+        <translation>選取圓弧實體</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="268"/>
@@ -172,7 +172,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="272"/>
         <source>Specify dimension arc location</source>
-        <translation>指定尺寸圓弧位置</translation>
+        <translation>指定標註弧位置</translation>
     </message>
 </context>
 <context>
@@ -181,13 +181,13 @@
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="195"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation>radius=%1 對於所選點來說太小
-點之間的距離=%2 大於直徑=%3</translation>
+        <translation>半徑=%1 對於所選取的點而言太小
+        兩點之間的距離=%2 大於直徑=%3</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="205"/>
         <source>Select from two possible circle centers</source>
-        <translation>從兩個可能的圓心中選擇</translation>
+        <translation>從兩個可能的圓心之中選取</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="238"/>
@@ -283,7 +283,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation>指定距離 (%1)
+        <translation>指定相距 (%1)
 或 [%2]</translation>
     </message>
     <message>
@@ -296,7 +296,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="521"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>后退</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
@@ -350,7 +350,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="434"/>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation>指定方向（x 或 y）或 [%1]</translation>
+        <translation>指定方向 (x 或 y) 或 [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="434"/>
@@ -432,7 +432,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="288"/>
         <source>Specify the Axis on parabola</source>
-        <translation>指定拋物線上的軸</translation>
+        <translation>指定拋物線上的軸線</translation>
     </message>
 </context>
 <context>
@@ -485,17 +485,17 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>直線</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>圓弧</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
         <source>Circle</source>
-        <translation>圓</translation>
+        <translation>圓形</translation>
     </message>
 </context>
 <context>
@@ -519,7 +519,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="276"/>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="282"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>返回</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="281"/>
@@ -530,12 +530,12 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="334"/>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>無法撤銷：尚未定義足夠的實體。</translation>
+        <translation>無法復原：尚未定義足夠的圖元。</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="380"/>
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation>無法撤銷：沒有可重做的。</translation>
+        <translation>無法復原：沒有可重新執行的動作。</translation>
     </message>
 </context>
 <context>
@@ -543,57 +543,57 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1537"/>
         <source>&amp;Window Zoom</source>
-        <translation>縮放視窗(&amp;W)</translation>
+        <translation>視窗縮放(&amp;W)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>縮放 &amp;平移</translation>
+        <translation>縮放與平移(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
         <source>Select Entity</source>
-        <translation>選擇實體</translation>
+        <translation>選擇圖元</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="71"/>
         <source>Select Window</source>
-        <translation>選擇視窗</translation>
+        <translation>選取視窗</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="78"/>
         <source>Deselect Window</source>
-        <translation>取消選擇視窗</translation>
+        <translation>取消選取視窗</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="85"/>
         <source>(De-)Select &amp;Contour</source>
-        <translation>（取消）選擇 &amp;輪廓</translation>
+        <translation>選擇/取消選擇輪廓(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="92"/>
         <source>Select Intersected Entities</source>
-        <translation>選擇相交實體</translation>
+        <translation>選擇相交圖元</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="99"/>
         <source>Deselect Intersected Entities</source>
-        <translation>取消選擇相交實體</translation>
+        <translation>取消選擇相交圖元</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="106"/>
         <source>(De-)Select Layer</source>
-        <translation>（取消）選擇圖層</translation>
+        <translation>(取消)選取圖層</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="115"/>
         <source>&amp;Points</source>
-        <translation>&amp;點</translation>
+        <translation>點(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="125"/>
         <source>&amp;2 Points</source>
-        <translation>2 點</translation>
+        <translation>2點(&amp;2)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="132"/>
@@ -619,12 +619,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="166"/>
         <source>&amp;Parallel</source>
-        <translation>&amp;平行</translation>
+        <translation>平行線(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="173"/>
         <source>Parallel through point</source>
-        <translation>通過點的平行線</translation>
+        <translation>通過點平行線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="180"/>
@@ -639,17 +639,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="194"/>
         <source>Tangent (P,C)</source>
-        <translation>切線 (P,C)</translation>
+        <translation>切線（P、C）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="201"/>
         <source>Tangent (C,C)</source>
-        <translation>切線 (C,C)</translation>
+        <translation>切線（C、C）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="208"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>切線 &amp;正交</translation>
+        <translation>切線正交線(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="215"/>
@@ -664,22 +664,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="229"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>多邊形 (中心,頂點)(&amp;Y)</translation>
+        <translation>多邊形（中心點、頂點）(&amp;Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="236"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation>多邊&amp;形 (中心,切)</translation>
+        <translation>多邊形（中心點、邊切點）(&amp;Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="243"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>多邊形 (頂點,頂點)(&amp;N)</translation>
+        <translation>多邊形（頂點、頂點）(&amp;N)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="252"/>
         <source>Center, &amp;Point</source>
-        <translation>中心, 點(&amp;P)</translation>
+        <translation>中心點與點(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="258"/>
@@ -689,113 +689,113 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="264"/>
         <source>Snake</source>
-        <translation>蛇形</translation>
+        <translation>蛇形線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="270"/>
         <source>Snake (X)</source>
-        <translation>蛇形 (X)</translation>
+        <translation>蛇形線（X）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="276"/>
         <source>Snake (Y)</source>
-        <translation>蛇形 (Y)</translation>
+        <translation>蛇形線（Y）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="282"/>
         <source>Rectangle (1 Point)</source>
-        <translation>矩形 (1 點)</translation>
+        <translation>矩形（1點）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="288"/>
         <source>Rectangle (2 Points)</source>
-        <translation>矩形 (2 點)</translation>
+        <translation>矩形（2點）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="294"/>
         <source>Rectangle (3 Points)</source>
-        <translation>矩形 (3 點)</translation>
+        <translation>矩形（3點）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="300"/>
         <source>Star</source>
-        <translation>Star</translation>
+        <translation>星形線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
         <source>Break/Divide</source>
-        <translation>打斷/分割</translation>
+        <translation>分出/分出</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="312"/>
         <source>Line Gap</source>
-        <translation>線段間隙</translation>
+        <translation>行距</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="318"/>
         <source>Angle From Line</source>
-        <translation>從線取得角度</translation>
+        <translation>依直線夾角繪線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="324"/>
         <source>Orthogonal From Line</source>
-        <translation>從線取得正交</translation>
+        <translation>依直線正交線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="330"/>
         <source>From Point To Line</source>
-        <translation>從點到線</translation>
+        <translation>由點至線繪線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="336"/>
         <source>Slice/Divide Line</source>
-        <translation>切片/分割線</translation>
+        <translation>切割/分割直線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="342"/>
         <source>Slice/Divide Circle</source>
-        <translation>切片/分割圓</translation>
+        <translation>切割/分割圓</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="348"/>
         <source>Line of Points</source>
-        <translation>點線</translation>
+        <translation>點列直線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="354"/>
         <source>By Arc</source>
-        <translation>透過圓弧</translation>
+        <translation>依圓弧</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="361"/>
         <source>Center, &amp;Radius</source>
-        <translation>中心, &amp;半徑</translation>
+        <translation>中心點、半徑（&amp;R）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="368"/>
         <source>2 Points</source>
-        <translation>2 點</translation>
+        <translation>2點</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="375"/>
         <source>2 Points, Radius</source>
-        <translation>2 點，半徑</translation>
+        <translation>兩點、半徑</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="382"/>
         <source>3 Points</source>
-        <translation>3 點</translation>
+        <translation>3點</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="389"/>
         <location filename="../src/ui/lc_actionfactory.cpp" line="450"/>
         <source>&amp;Concentric</source>
-        <translation>&amp;同心</translation>
+        <translation>同心圓（&amp;C）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="397"/>
         <source>Circle &amp;Inscribed</source>
-        <translation>圓 &amp;內接</translation>
+        <translation>內切圓（&amp;I）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="404"/>
@@ -816,92 +816,92 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="425"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>切向，2 點(&amp;O)</translation>
+        <translation>相切、兩點（&amp;O）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="434"/>
         <source>&amp;Center, Point, Angles</source>
-        <translation>&amp;中心，點，角度</translation>
+        <translation>中心點、點、角度（&amp;C）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="442"/>
         <source>&amp;3 Points</source>
-        <translation>3 點</translation>
+        <translation>3點（&amp;3）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="458"/>
         <source>Arc &amp;Tangential</source>
-        <translation>圓弧 &amp;切線</translation>
+        <translation>相切圓弧（&amp;T）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="468"/>
         <source>&amp;Ellipse (Axis)</source>
-        <translation>&amp;橢圓 (軸)</translation>
+        <translation>橢圓 (軸心)（&amp;E）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="475"/>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation>橢圓 &amp;弧 (軸)</translation>
+        <translation>橢圓弧 (軸心)（&amp;A）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="482"/>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>橢圓 &amp;焦點</translation>
+        <translation>橢圓 (焦點)（&amp;F）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="489"/>
         <source>Ellipse &amp;4 Point</source>
-        <translation>橢圓 &amp;4 點</translation>
+        <translation>四點橢圓（&amp;4）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="496"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>橢圓中心和 &amp;3 點</translation>
+        <translation>橢圓中心與三點（&amp;3）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="503"/>
         <source>Ellipse &amp;Inscribed</source>
-        <translation>橢圓 &amp;內接</translation>
+        <translation>內切橢圓（&amp;I）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="519"/>
         <source>Para&amp;bola 4 points</source>
-        <translation>拋&amp;物線 4 點</translation>
+        <translation>Para&amp;bola 4分</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="526"/>
         <source>Parabola &amp;Focus Directrix</source>
-        <translation>拋物線 &amp;焦點準線</translation>
+        <translation>Parabola &amp; Focus 指標</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="535"/>
         <source>&amp;Spline</source>
-        <translation>&amp;樣條線</translation>
+        <translation>雲形線（&amp;S）</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="542"/>
         <source>&amp;Spline through points</source>
-        <translation>透過點繪製樣條線(&amp;S)</translation>
+        <translation>通過點的雲形線(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="551"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;多段線</translation>
+        <translation>聚合線(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="692"/>
         <source>&amp;Arc</source>
-        <translation>弧(&amp;A)</translation>
+        <translation>圓弧(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="770"/>
         <source>Mo&amp;ve and Rotate</source>
-        <translation>移動和旋轉(&amp;V)</translation>
+        <translation>移動並旋轉(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="800"/>
         <source>Tr&amp;im Two</source>
-        <translation>修剪兩個(&amp;I)</translation>
+        <translation>兩邊修剪(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="816"/>
@@ -911,32 +911,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="873"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>從實體 &amp;選取筆</translation>
+        <translation>从實體中選取筆( P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>從實體 &amp;選取筆 (已解析)</translation>
+        <translation>从實體取出 Pick Pen (已解析) (P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="890"/>
         <source>Apply Pen to Entity</source>
-        <translation>將筆套用至實體</translation>
+        <translation>套用 PEN 到实体</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="898"/>
         <source>Copy Pen</source>
-        <translation>複製筆</translation>
+        <translation>复制筆</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="906"/>
         <source>Line Join</source>
-        <translation>線段連接</translation>
+        <translation>行相接</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="913"/>
         <source>Duplicate</source>
-        <translation>複製</translation>
+        <translation>复制</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1009"/>
@@ -956,32 +956,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1030"/>
         <source>&amp;Lock all</source>
-        <translation>&amp;全部鎖定</translation>
+        <translation>全部鎖定(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1086"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;匯出選取的圖層</translation>
+        <translation>匯出選取的圖層(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1091"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>匯出 &amp;可見圖層</translation>
+        <translation>匯出可見圖層(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1098"/>
         <source>&amp;Show all blocks</source>
-        <translation>&amp;顯示所有區塊</translation>
+        <translation>顯示所有圖塊(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1105"/>
         <source>&amp;Hide all blocks</source>
-        <translation>&amp;隱藏所有區塊</translation>
+        <translation>隱藏所有圖塊(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1237"/>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation>匯出為 CA&amp;M/純 SVG…</translation>
+        <translation>匯出為 CAM/標準SVG...(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1266"/>
@@ -997,7 +997,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1389"/>
         <source>Re-dock Widgets</source>
-        <translation>重新停靠元件</translation>
+        <translation>重新停靠視窗面板</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1395"/>
@@ -1012,37 +1012,37 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1642"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>使用作用中圖層的筆更新目前筆</translation>
+        <translation>以作用中圖層的筆更新目前的筆</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="558"/>
         <source>&amp;Add node</source>
-        <translation>&amp;新增節點</translation>
+        <translation>新增節點(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="566"/>
         <source>A&amp;ppend node</source>
-        <translation>追加&amp;節點</translation>
+        <translation>附加節點(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="574"/>
         <source>&amp;Delete node</source>
-        <translation>&amp;刪除節點</translation>
+        <translation>刪除節點(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="582"/>
         <source>Delete &amp;between two nodes</source>
-        <translation>刪除&amp;兩節點之間</translation>
+        <translation>刪除兩節點間線段(&amp;B)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="590"/>
         <source>&amp;Trim segments</source>
-        <translation>&amp;修剪線段</translation>
+        <translation>修剪線段(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="598"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>建立 &amp;等距多段線</translation>
+        <translation>建立等距聚合線(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="605"/>
@@ -1052,7 +1052,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="614"/>
         <source>&amp;MText</source>
-        <translation>&amp;多行文字</translation>
+        <translation>多行文字(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="620"/>
@@ -1062,52 +1062,52 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="627"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;填充</translation>
+        <translation>剖面線(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
         <source>Insert &amp;Image</source>
-        <translation>插入圖片 (&amp;I)</translation>
+        <translation>插入圖片(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="643"/>
         <source>&amp;Aligned</source>
-        <translation>&amp;對齊</translation>
+        <translation>對齊標註(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="650"/>
         <source>&amp;Linear</source>
-        <translation>&amp;線性</translation>
+        <translation>線性標註(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="664"/>
         <source>&amp;Vertical</source>
-        <translation>&amp;垂直</translation>
+        <translation>垂直標註(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="671"/>
         <source>&amp;Radial</source>
-        <translation>&amp;徑向</translation>
+        <translation>半徑標註(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="678"/>
         <source>&amp;Diametric</source>
-        <translation>&amp;直徑</translation>
+        <translation>直徑標註(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="685"/>
         <source>&amp;Angular</source>
-        <translation>&amp;角度</translation>
+        <translation>角度標註(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
-        <translation>&amp;引線</translation>
+        <translation>引線(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
         <source>&amp;Attributes</source>
-        <translation>&amp;屬性</translation>
+        <translation>屬性(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="716"/>
@@ -1122,12 +1122,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="730"/>
         <source>&amp;Move / Copy</source>
-        <translation>&amp;移動 / 複製</translation>
+        <translation>移出/ 复制( M)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="738"/>
         <source>Re&amp;vert direction</source>
-        <translation>反&amp;轉方向</translation>
+        <translation>倒轉方向( R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="740"/>
@@ -1142,7 +1142,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="754"/>
         <source>&amp;Scale</source>
-        <translation>&amp;縮放</translation>
+        <translation>比例( S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="762"/>
@@ -1157,7 +1157,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="784"/>
         <source>&amp;Properties</source>
-        <translation>&amp;屬性</translation>
+        <translation>產品( R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="792"/>
@@ -1172,27 +1172,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="824"/>
         <source>&amp;Divide</source>
-        <translation>&amp;分割</translation>
+        <translation>分割( D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="832"/>
         <source>&amp;Stretch</source>
-        <translation>&amp;拉伸</translation>
+        <translation>硬通訊( S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="840"/>
         <source>&amp;Bevel</source>
-        <translation>&amp;倒角</translation>
+        <translation>比爾( B)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="848"/>
         <source>&amp;Fillet</source>
-        <translation>&amp;圓角</translation>
+        <translation>有分( F)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="856"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp;將文字炸開為字母</translation>
+        <translation>將文字放入字母( E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="922"/>
@@ -1202,7 +1202,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="928"/>
         <source>&amp;Distance Point to Point</source>
-        <translation>&amp;點到點距離</translation>
+        <translation>相向點( D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="935"/>
@@ -1212,7 +1212,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="942"/>
         <source>An&amp;gle between two lines</source>
-        <translation>兩線間 &amp;角度</translation>
+        <translation>二行相對( G)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="949"/>
@@ -1222,7 +1222,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="956"/>
         <source>Polygonal &amp;Area</source>
-        <translation>多邊形 &amp;面積</translation>
+        <translation>多邊形地區( A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1418"/>
@@ -1262,7 +1262,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1187"/>
         <source>Widget Options</source>
-        <translation>元件選項</translation>
+        <translation>小工具選項</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1193"/>
@@ -1272,32 +1272,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1337"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>左</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1346"/>
         <source>Right</source>
-        <translation>右側</translation>
+        <translation>有呀</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1355"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>上</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1364"/>
         <source>Bottom</source>
-        <translation>下方</translation>
+        <translation>下</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1373"/>
         <source>Floating</source>
-        <translation>浮動</translation>
+        <translation>浮起</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1382"/>
         <source>Reload Style Sheet</source>
-        <translation>重新載入樣式表</translation>
+        <translation>重新載入樣式工作表</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="983"/>
@@ -1322,7 +1322,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1044"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;移除圖層</translation>
+        <translation>移除圖層(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1051"/>
@@ -1332,22 +1332,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1058"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>切換圖層 &amp;鎖定</translation>
+        <translation>切換圖層鎖定(&amp;K)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1065"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp;切換圖層可見性</translation>
+        <translation>切換圖層可見性(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1072"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>切換圖層 &amp;列印</translation>
+        <translation>切換圖層列印(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1079"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>切換 &amp;構造圖層</translation>
+        <translation>切換建構圖層(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1112"/>
@@ -1382,7 +1382,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1154"/>
         <source>Toggle Block &amp;Visibility</source>
-        <translation>切換區塊 &amp;可見性</translation>
+        <translation>切換圖塊可見性(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1161"/>
@@ -1392,7 +1392,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="863"/>
         <source>Ex&amp;plode</source>
-        <translation>拆開 (&amp;P)</translation>
+        <translation>炸開(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1170"/>
@@ -1402,7 +1402,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1178"/>
         <source>Current &amp;Drawing Preferences</source>
-        <translation>目前 &amp;繪圖偏好設定</translation>
+        <translation>目前圖面設定(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1201"/>
@@ -1417,7 +1417,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1219"/>
         <source>Deselect &amp;all</source>
-        <translation>取消選擇 &amp;全部</translation>
+        <translation>取消全部選取(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1221"/>
@@ -1427,17 +1427,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1228"/>
         <source>Invert Selection</source>
-        <translation>反向選擇</translation>
+        <translation>反向選取</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1485"/>
         <source>Zoom &amp;In</source>
-        <translation>拉近(&amp;I)</translation>
+        <translation>放大(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1495"/>
         <source>Zoom &amp;Out</source>
-        <translation>拉遠(&amp;O)</translation>
+        <translation>縮小(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1505"/>
@@ -1447,7 +1447,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1515"/>
         <source>Previous &amp;View</source>
-        <translation>前一視圖 (&amp;V)</translation>
+        <translation>前一視圖(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1526"/>
@@ -1457,12 +1457,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1550"/>
         <source>&amp;New</source>
-        <translation>新創建 (&amp;N)</translation>
+        <translation>新建(&amp;N)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1560"/>
         <source>New From &amp;Template</source>
-        <translation>從 &amp;範本新增</translation>
+        <translation>從範本新建(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1569"/>
@@ -1482,7 +1482,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1253"/>
         <source>&amp;Export as image</source>
-        <translation>&amp;匯出為影像</translation>
+        <translation>匯出為圖片(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1259"/>
@@ -1492,7 +1492,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1599"/>
         <source>Save A&amp;ll...</source>
-        <translation>全部儲存…</translation>
+        <translation>全部儲存(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1609"/>
@@ -1522,7 +1522,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1288"/>
         <source>&amp;Fullscreen</source>
-        <translation>&amp;全螢幕</translation>
+        <translation>全螢幕(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1299"/>
@@ -1538,7 +1538,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1309"/>
         <source>&amp;Draft</source>
-        <translation>&amp;草圖模式</translation>
+        <translation>草稿( D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1318"/>
@@ -1554,7 +1554,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1326"/>
         <source>Focus on &amp;Command Line</source>
-        <translation>聚焦到 &amp;命令列</translation>
+        <translation>專注於命令行( C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
@@ -1583,7 +1583,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="171"/>
         <source>Specify entity to pick the pen</source>
-        <translation>指定實體以選取筆</translation>
+        <translation>指定取出筆的單位</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="172"/>
@@ -1594,7 +1594,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="175"/>
         <source>Specify entity to apply pen</source>
-        <translation>指定實體以套用筆</translation>
+        <translation>指定要用筆的實體</translation>
     </message>
 </context>
 <context>
@@ -1602,7 +1602,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="108"/>
         <source>Specify entity to pick the pen</source>
-        <translation>指定實體以選取筆</translation>
+        <translation>指定取出筆的單位</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="109"/>
@@ -1615,7 +1615,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionsnapmiddlemanual.cpp" line="295"/>
         <source>Specify percentage / start-point</source>
-        <translation>指定百分比 / 起點</translation>
+        <translation>指定百分比/ 起點</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionsnapmiddlemanual.cpp" line="296"/>
@@ -1631,7 +1631,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionsnapmiddlemanual.cpp" line="305"/>
         <source>Specify end point</source>
-        <translation>指定終點</translation>
+        <translation>指定端點</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionsnapmiddlemanual.cpp" line="306"/>
@@ -1644,7 +1644,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>表單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="27"/>
@@ -1666,22 +1666,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="45"/>
         <source>Radius Shift:</source>
-        <translation>半徑偏移：</translation>
+        <translation>半徑 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="65"/>
         <source>Layer:</source>
-        <translation>圖層：</translation>
+        <translation>層 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="102"/>
         <source>Replace arc</source>
-        <translation>取代圓弧</translation>
+        <translation>取代弧</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="109"/>
         <source>Pen:</source>
-        <translation>筆：</translation>
+        <translation>筆:</translation>
     </message>
 </context>
 <context>
@@ -1689,7 +1689,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="20"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>表單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="63"/>
@@ -1709,22 +1709,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="125"/>
         <source>X:</source>
-        <translation>X：</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="132"/>
         <source>Y:</source>
-        <translation>Y：</translation>
+        <translation>有:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="161"/>
         <source>Type</source>
-        <translation>Type</translation>
+        <translation>類型</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="168"/>
         <source>Angle:</source>
-        <translation>角度：</translation>
+        <translation>角度 :</translation>
     </message>
 </context>
 <context>
@@ -1739,7 +1739,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>表單</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="20"/>
@@ -1749,7 +1749,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="53"/>
         <source>Save</source>
-        <translation>Save</translation>
+        <translation>保存</translation>
     </message>
 </context>
 <context>
@@ -1757,7 +1757,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.cpp" line="112"/>
         <source>Parabola control points cannot be collinear</source>
-        <translation>拋物線控制點不能共線</translation>
+        <translation>Parabola 控制點不能是相通的</translation>
     </message>
 </context>
 <context>
@@ -1765,22 +1765,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>表單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="26"/>
         <source>Layer:</source>
-        <translation>圖層：</translation>
+        <translation>層 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="33"/>
         <source>In Place</source>
-        <translation>原位</translation>
+        <translation>就地</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="40"/>
         <source>Offset X:</source>
-        <translation>X 偏移：</translation>
+        <translation>偏移 X :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="48"/>
@@ -1802,12 +1802,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="80"/>
         <source>Offset Y:</source>
-        <translation>Y 偏移：</translation>
+        <translation>偏移 Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="103"/>
         <source>Pen:</source>
-        <translation>筆：</translation>
+        <translation>筆:</translation>
     </message>
 </context>
 <context>
@@ -1840,7 +1840,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="110"/>
         <source>Dimensions</source>
-        <translation>尺寸</translation>
+        <translation>標註</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="120"/>
@@ -1851,13 +1851,13 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="133"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>構造圖層包含用於幾何建構的無限直線實體。
-       構造圖層的內容不應出現在列印輸出中。</translation>
+        <translation>建構圖層上的物件為無限長的直線，用於幾何建構。
+       建構圖層的內容不應出現在列印輸出中。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="137"/>
         <source>Construction Layer</source>
-        <translation>構造圖層</translation>
+        <translation>建構圖層</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="179"/>
@@ -1872,7 +1872,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="62"/>
         <source>Add Secondary Layer</source>
-        <translation>新增輔助圖層</translation>
+        <translation>新增次要圖層</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="67"/>
@@ -1912,17 +1912,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="68"/>
         <source>Layer Level Name Separator</source>
-        <translation>圖層層級名稱分隔符</translation>
+        <translation>有層名稱分隔符</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="88"/>
         <source>Secondary Layer Suffixes</source>
-        <translation>輔助圖層後綴</translation>
+        <translation>二層后缀</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="94"/>
         <source>Dimensional</source>
-        <translation>尺寸</translation>
+        <translation>標註</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="114"/>
@@ -1937,7 +1937,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="157"/>
         <source>Duplicating Name</source>
-        <translation>重複名稱</translation>
+        <translation>正在分拆名稱</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="163"/>
@@ -1952,7 +1952,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="207"/>
         <source>Display and Operations</source>
-        <translation>顯示與操作</translation>
+        <translation>顯示和操作</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="213"/>
@@ -1977,7 +1977,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="273"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>主圖層重新命名時同時重新命名輔助圖層</translation>
+        <translation>重新命名主要圖層時一併重新命名次要圖層</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="281"/>
@@ -1987,7 +1987,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="384"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>高亮過濾模式中的符合項目</translation>
+        <translation>突顯篩選模式中符合的項目</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="416"/>
@@ -2002,12 +2002,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="465"/>
         <source>Threeview items separator grid</source>
-        <translation>三視圖項目分隔格線</translation>
+        <translation>三檢視項目分隔格</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="475"/>
         <source>Selected items background color</source>
-        <translation>選取項目的背景顏色</translation>
+        <translation>所選取的項目背景顏色</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="504"/>
@@ -2027,7 +2027,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="72"/>
         <source>Dimensional Layer</source>
-        <translation>尺寸圖層</translation>
+        <translation>標註圖層</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="73"/>
@@ -2050,22 +2050,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="144"/>
         <source>Filter</source>
-        <translation>過濾器</translation>
+        <translation>篩選</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="146"/>
         <source>Looking for matching layer names</source>
-        <translation>正在尋找符合的圖層名稱</translation>
+        <translation>尋找符合的圖層名稱</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="151"/>
         <source>Highlight Mode</source>
-        <translation>高亮模式</translation>
+        <translation>突顯模式</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="163"/>
         <source>Settings</source>
-        <translation>設定</translation>
+        <translation>設定值</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="185"/>
@@ -2080,7 +2080,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
         <source>Show Secondary Layers</source>
-        <translation>顯示輔助圖層</translation>
+        <translation>顯示次要圖層</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="212"/>
@@ -2100,7 +2100,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="240"/>
         <source>Collapse Secondary</source>
-        <translation>摺疊輔助</translation>
+        <translation>摺疊次要圖層</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="251"/>
@@ -2120,7 +2120,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="275"/>
         <source>Add dimensions Layer</source>
-        <translation>新增尺寸圖層</translation>
+        <translation>新增標註圖層</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="285"/>
@@ -2135,7 +2135,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="308"/>
         <source>Flat List Mode)</source>
-        <translation>平鋪清單模式）</translation>
+        <translation>平面清單模式</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="656"/>
@@ -2145,68 +2145,68 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="675"/>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp;新增子圖層</translation>
+        <translation>新增子圖層(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="676"/>
         <source>&amp;Rename</source>
-        <translation>&amp;重新命名</translation>
+        <translation>重新命名(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="677"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp;移除圖層 (子樹)</translation>
+        <translation>移除圖層 (子樹)(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>&amp;複製結構 (子樹)</translation>
+        <translation>複製結構 (子樹)(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="680"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp;複製內容 (子樹)</translation>
+        <translation>複製內容 (子樹)(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="682"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp;選擇實體 (子樹)</translation>
+        <translation>選取物件 (子樹)(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;編輯圖層 &amp;屬性</translation>
+        <translation>編輯圖層屬性(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="689"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;移除圖層</translation>
+        <translation>移除圖層(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="698"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;新增尺寸子圖層</translation>
+        <translation>新增標註子圖層(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="702"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp;新增資訊子圖層</translation>
+        <translation>新增資訊子圖層(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="706"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp;新增替代檢視子圖層</translation>
+        <translation>新增替代位置子圖層(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="712"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp;移除子圖層</translation>
+        <translation>移除子圖層(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="720"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="731"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>轉換為尺寸圖層</translation>
+        <translation>轉換為標註圖層</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="721"/>
@@ -2228,42 +2228,42 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp;選擇圖層的實體</translation>
+        <translation>選取圖層上的物件(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="746"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp;建立圖層複本</translation>
+        <translation>建立圖層副本(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp;複製圖層及內容</translation>
+        <translation>複製圖層及其內容(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="751"/>
         <source>Move Selection to Layer</source>
-        <translation>將選擇移動到圖層</translation>
+        <translation>將選取的物件移至圖層</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="752"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>將選擇複製到圖層</translation>
+        <translation>將選取的物件複製至圖層</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="759"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;新增圖層</translation>
+        <translation>新增圖層(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="761"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp;凍結其他圖層</translation>
+        <translation>凍結其他圖層(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="762"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp;解除凍結所有圖層</translation>
+        <translation>解凍所有圖層(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
@@ -2273,27 +2273,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp;解除鎖定所有圖層</translation>
+        <translation>解鎖所有圖層(&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="765"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp;鎖定所有圖層</translation>
+        <translation>鎖定所有圖層(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="766"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>啟用 &amp;列印所有圖層</translation>
+        <translation>啟用所有圖層的列印(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="767"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp;停用列印所有圖層</translation>
+        <translation>停用所有圖層的列印(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="769"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp;尋找並移除空白圖層</translation>
+        <translation>尋找並移除空圖層(&amp;F)</translation>
     </message>
 </context>
 <context>
@@ -2301,71 +2301,71 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>表單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="42"/>
         <source>Offset:</source>
-        <translation>偏移：</translation>
+        <translation>偏移 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="181"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>自由</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="55"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="110"/>
         <source>Start</source>
-        <translation>起點</translation>
+        <translation>起步</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="60"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="115"/>
         <source>Middle</source>
-        <translation>中間</translation>
+        <translation>中</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="65"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="120"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>結束</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="73"/>
         <source>Line Snap:</source>
-        <translation>線捕捉：</translation>
+        <translation>行同步 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="80"/>
         <source>Rel</source>
-        <translation>Rel</translation>
+        <translation>收起</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="144"/>
         <source>Divide</source>
-        <translation>分割</translation>
+        <translation>除法</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="167"/>
         <source>Tick Snap:</source>
-        <translation>刻度捕捉：</translation>
+        <translation>勾選抓取 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="174"/>
         <source>Length:</source>
-        <translation>長度：</translation>
+        <translation>長度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="201"/>
         <source>Angle:</source>
-        <translation>角度：</translation>
+        <translation>角度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="208"/>
         <source>Snap Distance:</source>
-        <translation>捕捉距離：</translation>
+        <translation>相距 :</translation>
     </message>
 </context>
 <context>
@@ -2373,17 +2373,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>表單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="48"/>
         <source>Angle:</source>
-        <translation>角度：</translation>
+        <translation>角度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="55"/>
         <source>Size:</source>
-        <translation>大小：</translation>
+        <translation>大小:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="62"/>
@@ -2393,7 +2393,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="105"/>
         <source>To Intersection</source>
-        <translation>到交點</translation>
+        <translation>至交點</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="110"/>
@@ -2403,32 +2403,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="139"/>
         <source>End offset:</source>
-        <translation>終點偏移：</translation>
+        <translation>尾端偏移 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="217"/>
         <source>Start</source>
-        <translation>起點</translation>
+        <translation>起步</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="222"/>
         <source>Middle</source>
-        <translation>中間</translation>
+        <translation>中</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="227"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>結束</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="241"/>
         <source>Length:</source>
-        <translation>長度：</translation>
+        <translation>長度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="270"/>
         <source>Snap:</source>
-        <translation>捕捉：</translation>
+        <translation>抓取 :</translation>
     </message>
 </context>
 <context>
@@ -2436,70 +2436,70 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="20"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>表單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="51"/>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="144"/>
         <source>Extend/Trim</source>
-        <translation>延伸/修剪</translation>
+        <translation>延伸/ 三圈</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="56"/>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="149"/>
         <source>Add segment</source>
-        <translation>新增線段</translation>
+        <translation>新增段</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="61"/>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="154"/>
         <source>No change</source>
-        <translation>不變更</translation>
+        <translation>沒有變更</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="69"/>
         <source>Create Polyline</source>
-        <translation>建立多段線</translation>
+        <translation>建立多行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="76"/>
         <source>Attributes:</source>
-        <translation>屬性：</translation>
+        <translation>屬性 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="102"/>
         <source>Active Pen</source>
-        <translation>作用中筆</translation>
+        <translation>有活性筆</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="107"/>
         <source>Line 1</source>
-        <translation>線 1</translation>
+        <translation>第 1行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="112"/>
         <source>Line 2</source>
-        <translation>線 2</translation>
+        <translation>第 二 行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="117"/>
         <source>Both lines</source>
-        <translation>兩條線</translation>
+        <translation>二行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="162"/>
         <source>Remove originals</source>
-        <translation>移除原始</translation>
+        <translation>移除正本</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="169"/>
         <source>Line 2:</source>
-        <translation>線 2：</translation>
+        <translation>第2行:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="176"/>
         <source>Line 1:</source>
-        <translation>線 1：</translation>
+        <translation>第 1行:</translation>
     </message>
 </context>
 <context>
@@ -2507,52 +2507,52 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="20"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>表單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="32"/>
         <source>Angle:</source>
-        <translation>角度：</translation>
+        <translation>角度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="73"/>
         <source>Fit Line</source>
-        <translation>適配線</translation>
+        <translation>符合行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="128"/>
         <source>None</source>
-        <translation>None</translation>
+        <translation>無</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="133"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>有</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="138"/>
         <source>Start</source>
-        <translation>起點</translation>
+        <translation>起步</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="143"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>結束</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="183"/>
         <source>Edge Points:</source>
-        <translation>邊緣點：</translation>
+        <translation>邊緣點 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="196"/>
         <source>Number of points:</source>
-        <translation>點數：</translation>
+        <translation>有分數 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="209"/>
         <source>Fixed Distance</source>
-        <translation>固定距離</translation>
+        <translation>固定相距</translation>
     </message>
 </context>
 <context>
@@ -2591,17 +2591,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>表單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="39"/>
         <source>Remove Segments</source>
-        <translation>移除線段</translation>
+        <translation>移除片段</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="46"/>
         <source>Remove Selected</source>
-        <translation>移除選取項目</translation>
+        <translation>移除所選取的</translation>
     </message>
 </context>
 <context>
@@ -2609,28 +2609,28 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>表單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="42"/>
         <source>Gap Snap:</source>
-        <translation>間隙捕捉：</translation>
+        <translation>相隔同步 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="49"/>
         <source>Snap Distance:</source>
-        <translation>捕捉距離：</translation>
+        <translation>相距 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="87"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>自由</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79"/>
         <source>Gap Size:</source>
-        <translation>間隙大小：</translation>
+        <translation>空白大小 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="92"/>
@@ -2653,7 +2653,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="129"/>
         <source>Line Snap:</source>
-        <translation>線捕捉：</translation>
+        <translation>行同步 :</translation>
     </message>
 </context>
 <context>
@@ -2661,7 +2661,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="18"/>
         <source>Pen Palette Settings</source>
-        <translation>筆調色板設定</translation>
+        <translation>筆刷調色盤設定</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="37"/>
@@ -2671,7 +2671,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="43"/>
         <source>Line Type Name</source>
-        <translation>線型名稱</translation>
+        <translation>行名</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="50"/>
@@ -2681,7 +2681,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="57"/>
         <source>Line Type Icon</source>
-        <translation>線型圖示</translation>
+        <translation>行型圖示</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="64"/>
@@ -2691,12 +2691,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="71"/>
         <source>Line Width Icon</source>
-        <translation>線寬圖示</translation>
+        <translation>相接線圖示</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="78"/>
         <source>Line Width Name</source>
-        <translation>線寬名稱</translation>
+        <translation>行宽名</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="88"/>
@@ -2706,37 +2706,37 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="132"/>
         <source>Active Pen Background:</source>
-        <translation>作用中筆背景：</translation>
+        <translation>活性筆背景 :</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="150"/>
         <source>Entire table row is bold for active pen</source>
-        <translation>作用中筆的整行表格加粗</translation>
+        <translation>有活性筆的表格行是粗体</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="157"/>
         <source>Grid Color:</source>
-        <translation>格線顏色：</translation>
+        <translation>网格顏色 :</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="164"/>
         <source>Matched Item Color:</source>
-        <translation>符合項目顏色：</translation>
+        <translation>相配項目顏色 :</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="192"/>
         <source>Case-insensitive pens filtering</source>
-        <translation>不區分大小寫的筆過濾</translation>
+        <translation>有區分大小寫的筆</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="209"/>
         <source>Controls whether tooltip will be shown for table item or not</source>
-        <translation>控制是否為表格項目顯示工具提示</translation>
+        <translation>控制是否顯示表格項目的工具提示</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
-        <translation>顯示表格項目的工具提示</translation>
+        <translation>为表格項目顯示工具提示</translation>
     </message>
     <message>
         <source>Pens file:</source>
@@ -2745,47 +2745,47 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
         <source>Show colorn name as</source>
-        <translation>顯示顏色名稱為</translation>
+        <translation>顯示顏色名稱为</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="225"/>
         <source>HEX</source>
-        <translation>HEX</translation>
+        <translation>赫克</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="232"/>
         <source>RGB</source>
-        <translation>RGB</translation>
+        <translation>RGB (RGB)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="239"/>
         <source>Natural name where possible</source>
-        <translation>盡可能使用自然名稱</translation>
+        <translation>在可能情况下自然取名</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="249"/>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation>若無法用筆選擇實體則顯示資訊訊息</translation>
+        <translation>如果沒有單位被筆選取出, 就顯示訊息</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="258"/>
         <source>On double click on table item</source>
-        <translation>雙擊表格項目時</translation>
+        <translation>在表格項目上雙擊</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="46"/>
         <source>Do nothing</source>
-        <translation>不執行任何動作</translation>
+        <translation>不做任何事情</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
         <source>Select entities by attributes pen</source>
-        <translation>依屬性筆選擇實體</translation>
+        <translation>根据屬性筆選擇實體</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="48"/>
         <source>Select entities by drawing pen</source>
-        <translation>依繪圖筆選擇實體</translation>
+        <translation>第 二 章</translation>
     </message>
 </context>
 <context>
@@ -2793,108 +2793,108 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="20"/>
         <source>Pen Palette</source>
-        <translation>筆調色板</translation>
+        <translation>筆刷調色盤</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="44"/>
         <source>Pen Name:</source>
-        <translation>筆名稱：</translation>
+        <translation>筆名 :</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="94"/>
         <source>Color:</source>
-        <translation>顏色：</translation>
+        <translation>顏色 :</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="191"/>
         <source>Filter...</source>
-        <translation>過濾…</translation>
+        <translation>过滤...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="201"/>
         <source>Highlight Mode</source>
-        <translation>高亮模式</translation>
+        <translation>突顯模式</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="224"/>
         <source>Type:</source>
-        <translation>類型：</translation>
+        <translation>型態 :</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="246"/>
         <source>Width:</source>
-        <translation>寬度：</translation>
+        <translation>寬度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="271"/>
         <source>Settings</source>
-        <translation>設定</translation>
+        <translation>設定值</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="290"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>用實體繪圖筆填入筆編輯器</translation>
+        <translation>根据实体繪取筆填充筆編輯器</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="304"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>用實體屬性填入筆編輯器</translation>
+        <translation>按實體屬性填充筆編輯器</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="318"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>依繪圖筆選擇實體</translation>
+        <translation>根据繪取筆選擇實體</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="332"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>依筆屬性選擇實體</translation>
+        <translation>根据 Pen 屬性選擇實體</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="349"/>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="352"/>
         <source>Save</source>
-        <translation>Save</translation>
+        <translation>保存</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="363"/>
         <source>Apply Pen To Selection</source>
-        <translation>將筆套用至選取項目</translation>
+        <translation>在選擇中套用筆</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="377"/>
         <source>Fill Editor Pen by Current Pen</source>
-        <translation>用目前筆填入編輯器筆</translation>
+        <translation>根据目前的筆填充編輯器筆</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="391"/>
         <source>Apply Editor Pen As Current Pen</source>
-        <translation>將編輯器筆設為目前筆</translation>
+        <translation>套用編輯器筆作目前的筆</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="394"/>
         <source>to current</source>
-        <translation>設為目前</translation>
+        <translation>到目前</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="405"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>使用作用中圖層的筆更新目前筆</translation>
+        <translation>以作用中圖層的筆更新目前的筆</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="419"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>從作用中圖層的筆填入筆編輯器</translation>
+        <translation>以作用中圖層的筆填入筆編輯器</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="422"/>
         <source>Pick from Active Layer</source>
-        <translation>從作用中圖層選取</translation>
+        <translation>從作用中圖層取得</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="433"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>將編輯器筆套用至作用中圖層筆</translation>
+        <translation>將編輯器的筆套用至作用中圖層的筆</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="436"/>
@@ -2904,7 +2904,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="447"/>
         <source>Remove Selected Pen</source>
-        <translation>移除選取的筆</translation>
+        <translation>移除所選取的筆</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="450"/>
@@ -2919,42 +2919,42 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="265"/>
         <source>&amp;Apply Pen To Selection</source>
-        <translation>&amp;將筆套用至選取項目</translation>
+        <translation>apply Pen 到選擇區去( A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="266"/>
         <source>&amp;Set As Current Pen</source>
-        <translation>&amp;設為目前筆</translation>
+        <translation>設定為目前的筆( S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="267"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp;將筆套用至作用中圖層</translation>
+        <translation>將筆套用至作用中圖層(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="268"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp;依屬性筆選擇實體</translation>
+        <translation>選擇有屬性筆的實體( S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="269"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>&amp;依繪圖筆選擇實體</translation>
+        <translation>用畫筆選擇實體( S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="272"/>
         <source>&amp;Edit Pen</source>
-        <translation>&amp;編輯筆</translation>
+        <translation>編輯筆( E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="273"/>
         <source>&amp;Remove Pen</source>
-        <translation>&amp;移除筆</translation>
+        <translation>移除筆( R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
-        <translation>&amp;移除筆</translation>
+        <translation>移除筆名( R)</translation>
     </message>
     <message>
         <source>Pen palette</source>
@@ -2980,52 +2980,52 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>表單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="26"/>
         <source>Polyline</source>
-        <translation>多段線</translation>
+        <translation>多行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="33"/>
         <source>Height:</source>
-        <translation>高度：</translation>
+        <translation>高度:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="40"/>
         <source>Edges:</source>
-        <translation>邊緣：</translation>
+        <translation>邊緣 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="63"/>
         <source>Corners:</source>
-        <translation>角：</translation>
+        <translation>角落 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="86"/>
         <source>Size inner</source>
-        <translation>內部尺寸</translation>
+        <translation>內部大小</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="93"/>
         <source>Length X:</source>
-        <translation>X 長度：</translation>
+        <translation>長度 X :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="100"/>
         <source>Radius:</source>
-        <translation>半徑：</translation>
+        <translation>半徑 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="123"/>
         <source>Snap:</source>
-        <translation>捕捉：</translation>
+        <translation>抓取 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="162"/>
         <source>Length Y:</source>
-        <translation>Y 長度：</translation>
+        <translation>Y 長度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="170"/>
@@ -3035,7 +3035,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="175"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>上</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="180"/>
@@ -3045,17 +3045,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="185"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>左</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="190"/>
         <source>Middle</source>
-        <translation>中間</translation>
+        <translation>中</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="195"/>
         <source>Right</source>
-        <translation>右</translation>
+        <translation>有呀</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="200"/>
@@ -3065,7 +3065,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="205"/>
         <source>Bottom</source>
-        <translation>下方</translation>
+        <translation>下</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="210"/>
@@ -3075,27 +3075,27 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="219"/>
         <source>Straight</source>
-        <translation>直線</translation>
+        <translation>直取</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="224"/>
         <source>Round</source>
-        <translation>圓角</translation>
+        <translation>回合</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="229"/>
         <source>Bevel</source>
-        <translation>倒角</translation>
+        <translation>有花</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="237"/>
         <source>Snap shift</source>
-        <translation>捕捉偏移</translation>
+        <translation>抓取變更</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="245"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>有</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="250"/>
@@ -3110,12 +3110,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="279"/>
         <source>Width:</source>
-        <translation>寬度：</translation>
+        <translation>寬度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="286"/>
         <source>Base Angle:</source>
-        <translation>基準角度：</translation>
+        <translation>有底角 :</translation>
     </message>
 </context>
 <context>
@@ -3123,101 +3123,101 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>表單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="26"/>
         <source>Snap shift</source>
-        <translation>捕捉偏移</translation>
+        <translation>抓取變更</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="33"/>
         <source>Radius:</source>
-        <translation>半徑：</translation>
+        <translation>半徑 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="56"/>
         <source>Edges:</source>
-        <translation>邊緣：</translation>
+        <translation>邊緣 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="63"/>
         <source>Polyline</source>
-        <translation>多段線</translation>
+        <translation>多行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
         <source>End Snap:</source>
-        <translation>終點捕捉：</translation>
+        <translation>結束抓取 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="77"/>
         <source>Corners:</source>
-        <translation>角：</translation>
+        <translation>角落 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="100"/>
         <source>Length X:</source>
-        <translation>X 長度：</translation>
+        <translation>長度 X :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="107"/>
         <source>Start Snap:</source>
-        <translation>起點捕捉：</translation>
+        <translation>開始抓取 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="131"/>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="178"/>
         <source>Corner</source>
-        <translation>角</translation>
+        <translation>角落</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="136"/>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="183"/>
         <source>Mid-Vertical</source>
-        <translation>垂直中點</translation>
+        <translation>有分辨</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="141"/>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="188"/>
         <source>Mid-Horizontal</source>
-        <translation>水平中點</translation>
+        <translation>中正弦</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="146"/>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="193"/>
         <source>Middle</source>
-        <translation>中間</translation>
+        <translation>中</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="170"/>
         <source>Base Angle:</source>
-        <translation>基準角度：</translation>
+        <translation>有底角 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="202"/>
         <source>Straight</source>
-        <translation>直線</translation>
+        <translation>直取</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="207"/>
         <source>Round</source>
-        <translation>圓角</translation>
+        <translation>回合</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="212"/>
         <source>Bevel</source>
-        <translation>倒角</translation>
+        <translation>有花</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="220"/>
         <source>Length Y:</source>
-        <translation>Y 長度：</translation>
+        <translation>Y 長度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="228"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>有</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="233"/>
@@ -3235,17 +3235,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>表單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="55"/>
         <source>Polyline</source>
-        <translation>多段線</translation>
+        <translation>多行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>有</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="68"/>
@@ -3260,62 +3260,62 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="81"/>
         <source>Edges:</source>
-        <translation>邊緣：</translation>
+        <translation>邊緣 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="88"/>
         <source>Quadrangle</source>
-        <translation>四邊形</translation>
+        <translation>四角形</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="95"/>
         <source>Fixed Base Angle:</source>
-        <translation>固定基準角度：</translation>
+        <translation>固定底角 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="130"/>
         <source>Length X:</source>
-        <translation>X 長度：</translation>
+        <translation>長度 X :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="160"/>
         <source>Straight</source>
-        <translation>直線</translation>
+        <translation>直取</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="165"/>
         <source>Round</source>
-        <translation>圓角</translation>
+        <translation>回合</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="170"/>
         <source>Bevel</source>
-        <translation>倒角</translation>
+        <translation>有花</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="178"/>
         <source>Corners:</source>
-        <translation>角：</translation>
+        <translation>角落 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="185"/>
         <source>Snap shift</source>
-        <translation>捕捉偏移</translation>
+        <translation>抓取變更</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="192"/>
         <source>Length Y:</source>
-        <translation>Y 長度：</translation>
+        <translation>Y 長度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="243"/>
         <source>Radius:</source>
-        <translation>半徑：</translation>
+        <translation>半徑 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="312"/>
         <source>Fixed Inner Angle:</source>
-        <translation>固定內角：</translation>
+        <translation>固定內角 :</translation>
     </message>
 </context>
 <context>
@@ -3323,7 +3323,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/test/lc_simpletests.cpp" line="34"/>
         <source>De&amp;bugging</source>
-        <translation>除&amp;錯</translation>
+        <translation>除錯( B)</translation>
     </message>
     <message>
         <location filename="../src/test/lc_simpletests.cpp" line="78"/>
@@ -3336,89 +3336,89 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>表單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="48"/>
         <source>None</source>
-        <translation>None</translation>
+        <translation>無</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="53"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>有</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="58"/>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="266"/>
         <source>Start</source>
-        <translation>起點</translation>
+        <translation>起步</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="63"/>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="276"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>結束</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="71"/>
         <source>Edge Tick:</source>
-        <translation>邊緣刻度：</translation>
+        <translation>邊緣勾選 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="113"/>
         <source>Rel</source>
-        <translation>Rel</translation>
+        <translation>收起</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="120"/>
         <source>Offset:</source>
-        <translation>偏移：</translation>
+        <translation>偏移 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="158"/>
         <source>Count:</source>
-        <translation>數量：</translation>
+        <translation>計數 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="189"/>
         <source>Start Circle Angle:</source>
-        <translation>起始圓角度：</translation>
+        <translation>開始圓角 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="221"/>
         <source>Tick Length:</source>
-        <translation>刻度長度：</translation>
+        <translation>勾選長度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="228"/>
         <source>Tick snap:</source>
-        <translation>刻度捕捉：</translation>
+        <translation>勾選快取 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="235"/>
         <source>Angle:</source>
-        <translation>角度：</translation>
+        <translation>角度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="242"/>
         <source>Divide</source>
-        <translation>分割</translation>
+        <translation>除法</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="271"/>
         <source>Middle</source>
-        <translation>中間</translation>
+        <translation>中</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="284"/>
         <source>Fixed </source>
-        <translation>固定 </translation>
+        <translation>已固定</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="318"/>
         <source>Distance:</source>
-        <translation>距離：</translation>
+        <translation>相距 :</translation>
     </message>
 </context>
 <context>
@@ -3426,17 +3426,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>表單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="26"/>
         <source>Radius Inner</source>
-        <translation>內半徑</translation>
+        <translation>半徑內部</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="49"/>
         <source>Polyline</source>
-        <translation>多段線</translation>
+        <translation>多行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="56"/>
@@ -3451,7 +3451,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="93"/>
         <source>Number:</source>
-        <translation>數量：</translation>
+        <translation>數字 :</translation>
     </message>
 </context>
 <context>
@@ -3469,12 +3469,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
         <source>Dock</source>
-        <translation>Dock</translation>
+        <translation>嵌入</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
         <source>Float</source>
-        <translation>浮動</translation>
+        <translation>浮起</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="601"/>
@@ -3567,12 +3567,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="147"/>
         <source>Style Sheet</source>
-        <translation>樣式表</translation>
+        <translation>樣式工作表</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="160"/>
         <source>Input the path of a Qt style sheet.</source>
-        <translation>輸入 Qt 樣式表的路徑。</translation>
+        <translation>輸入 Qt 樣式工作表的路徑 .</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="176"/>
@@ -3595,17 +3595,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="34"/>
         <source>select:</source>
-        <translation>選擇：</translation>
+        <translation>選擇:</translation>
     </message>
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="37"/>
         <source>remove left</source>
-        <translation>移除左側</translation>
+        <translation>取出左</translation>
     </message>
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="41"/>
         <source>remove right</source>
-        <translation>移除右側</translation>
+        <translation>右移</translation>
     </message>
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="59"/>
@@ -3623,18 +3623,18 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="32"/>
         <source>Line Relative Angle Options</source>
-        <translation>線相對角度選項</translation>
+        <translation>相對角度選取行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="59"/>
         <source>Spacing:</source>
-        <translation>間距：</translation>
+        <translation>相距 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="84"/>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="122"/>
         <source>Distance from original polyline</source>
-        <translation>與原始多段線的距離</translation>
+        <translation>距離原多線</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="97"/>
@@ -3987,7 +3987,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
-        <translation>儲存已取消</translation>
+        <translation>已儲存已取消</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="654"/>
@@ -4014,12 +4014,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="681"/>
         <source>&amp;Save %1</source>
-        <translation>&amp;儲存 %1</translation>
+        <translation>儲存%1( S)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="682"/>
         <source>Save %1 &amp;as...</source>
-        <translation>將 %1 另存新檔 &amp;為…</translation>
+        <translation>另存%1 (A)...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1193"/>
@@ -4103,12 +4103,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2075"/>
         <source>Save All cancelled</source>
-        <translation>全部儲存已取消</translation>
+        <translation>保存已取消</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2401"/>
         <source>Close All cancelled</source>
-        <translation>全部關閉已取消</translation>
+        <translation>關閉已取消</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2431"/>
@@ -4275,7 +4275,7 @@ Please check the permissions.</source>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2882"/>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3255"/>
         <source>Draft Mode</source>
-        <translation>草圖模式</translation>
+        <translation>二. 草案模式</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="424"/>
@@ -4304,12 +4304,12 @@ Please check the permissions.</source>
 Please check its existence and permissions.</source>
         <translation>無法開啟檔案
 %1
-請檢查其是否存在與權限。</translation>
+請檢查它的存在和權限 .</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2034"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>檔案「%1」不存在。開啟已中止</translation>
+        <translation>檔案%1 不存在 。 開啟已中止</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
@@ -4520,12 +4520,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="230"/>
         <source>Filter</source>
-        <translation>篩選</translation>
+        <translation>分頁</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="232"/>
         <source>Looking for matching block names</source>
-        <translation>正在搜尋符合的區塊名稱</translation>
+        <translation>正在尋找相匹配的區塊名稱</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="387"/>
@@ -4610,7 +4610,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="115"/>
         <source>Red</source>
-        <translation>Red</translation>
+        <translation>紅</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="119"/>
@@ -4640,7 +4640,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="124"/>
         <source>Cyan</source>
-        <translation>Cyan</translation>
+        <translation>青</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="125"/>
@@ -4650,7 +4650,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="126"/>
         <source>Blue</source>
-        <translation>Blue</translation>
+        <translation>藍</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="127"/>
@@ -4675,7 +4675,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="137"/>
         <source>Gray</source>
-        <translation>Gray</translation>
+        <translation>灰</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="138"/>
@@ -4696,7 +4696,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="165"/>
         <source>Custom Picked</source>
-        <translation>自訂選取</translation>
+        <translation>自訂已選取</translation>
     </message>
 </context>
 <context>
@@ -4752,7 +4752,7 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="94"/>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
         <source>Dock</source>
-        <translation>Dock</translation>
+        <translation>嵌入</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="210"/>
@@ -4767,7 +4767,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
         <source>Float</source>
-        <translation>浮動</translation>
+        <translation>浮起</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="345"/>
@@ -4777,7 +4777,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="345"/>
         <source>Cmd</source>
-        <translation>Cmd</translation>
+        <translation>相干</translation>
     </message>
 </context>
 <context>
@@ -4831,12 +4831,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="150"/>
         <source>⌀ (Diameter)</source>
-        <translation>⌀（直徑）</translation>
+        <translation>(公尺)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="165"/>
         <source>π (Pi)</source>
-        <translation>π (圓周率)</translation>
+        <translation>(Pi)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="155"/>
@@ -4877,47 +4877,47 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>弧</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
         <source>Layer:</source>
-        <translation>圖層：</translation>
+        <translation>圖層:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="78"/>
         <source>Geometry</source>
-        <translation>圖形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="84"/>
         <source>Radius:</source>
-        <translation>半徑：</translation>
+        <translation>半徑 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="104"/>
         <source>Center (y):</source>
-        <translation>中心 (y)：</translation>
+        <translation>中 (y) :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="124"/>
         <source>Center (x):</source>
-        <translation>中心 (x)：</translation>
+        <translation>中 (x) :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="144"/>
         <source>Start Angle:</source>
-        <translation>開始角度：</translation>
+        <translation>啟動角度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="174"/>
         <source>End Angle:</source>
-        <translation>結束角度：</translation>
+        <translation>結束角度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="216"/>
         <source>Reversed</source>
-        <translation>相反</translation>
+        <translation>已倒轉</translation>
     </message>
 </context>
 <context>
@@ -4936,13 +4936,13 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="69"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>將屬性也應用於選取的「插入」物件的所有子物件。
-這會遞迴地修改區塊本身的所有物件。</translation>
+        <translation>也將屬性套用到所選取的 INSERT 的所有子实体 。
+它相接地修改了&quot;區&quot;本身的所有單位.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="73"/>
         <source>Apply attributes Block-deep</source>
-        <translation>以區塊深度應用屬性</translation>
+        <translation>套用屬性 :</translation>
     </message>
 </context>
 <context>
@@ -4950,32 +4950,32 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="26"/>
         <source>Circle</source>
-        <translation>圓</translation>
+        <translation>圓形</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="44"/>
         <source>Layer:</source>
-        <translation>圖層：</translation>
+        <translation>圖層:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="71"/>
         <source>Geometry</source>
-        <translation>圖形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="77"/>
         <source>Radius:</source>
-        <translation>半徑：</translation>
+        <translation>半徑 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="97"/>
         <source>Center (y):</source>
-        <translation>中心(y)：</translation>
+        <translation>中 (y) :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="117"/>
         <source>Center (x):</source>
-        <translation>中心(x)：</translation>
+        <translation>中 (x) :</translation>
     </message>
 </context>
 <context>
@@ -4983,22 +4983,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="20"/>
         <source>Linear Dimension</source>
-        <translation>線性標註</translation>
+        <translation>有線尺寸</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="47"/>
         <source>Layer:</source>
-        <translation>圖層：</translation>
+        <translation>圖層:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="79"/>
         <source>Geometry</source>
-        <translation>圖形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="103"/>
         <source>Angle:</source>
-        <translation>角度：</translation>
+        <translation>角度:</translation>
     </message>
 </context>
 <context>
@@ -5006,12 +5006,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="20"/>
         <source>Dimension</source>
-        <translation>標註</translation>
+        <translation>尺寸</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="47"/>
         <source>Layer:</source>
-        <translation>圖層：</translation>
+        <translation>圖層:</translation>
     </message>
 </context>
 <context>
@@ -5024,22 +5024,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="51"/>
         <source>Layer:</source>
-        <translation>圖層：</translation>
+        <translation>圖層:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="78"/>
         <source>Geometry</source>
-        <translation>圖形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="84"/>
         <source>Center (y):</source>
-        <translation>中心(y)：</translation>
+        <translation>中 (y) :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="104"/>
         <source>Center (x):</source>
-        <translation>中心(x)：</translation>
+        <translation>中 (x) :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="156"/>
@@ -5059,17 +5059,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="226"/>
         <source>Minor:</source>
-        <translation>次要：</translation>
+        <translation>小于:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="236"/>
         <source>Major:</source>
-        <translation>主要：</translation>
+        <translation>主要:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="256"/>
         <source>Reversed</source>
-        <translation>相反</translation>
+        <translation>已倒轉</translation>
     </message>
 </context>
 <context>
@@ -5112,7 +5112,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="86"/>
         <source>Area</source>
-        <translation>Area</translation>
+        <translation>地區</translation>
     </message>
 </context>
 <context>
@@ -5120,32 +5120,32 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="26"/>
         <source>Image</source>
-        <translation>圖像</translation>
+        <translation>相片</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="44"/>
         <source>Layer:</source>
-        <translation>圖層：</translation>
+        <translation>圖層:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="80"/>
         <source>Geometry</source>
-        <translation>圖形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="253"/>
         <source>Width:</source>
-        <translation>寬度：</translation>
+        <translation>寬度:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="270"/>
         <source>Select an image file</source>
-        <translation>選擇影像檔案</translation>
+        <translation>選擇影像檔</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="93"/>
         <source>Height:</source>
-        <translation>高度：</translation>
+        <translation>高度:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="203"/>
@@ -5155,12 +5155,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="226"/>
         <source>Scale:</source>
-        <translation>比例：</translation>
+        <translation>比例:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="153"/>
         <source>Size (px):</source>
-        <translation>大小 (px):</translation>
+        <translation>大小 (px) :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="196"/>
@@ -5175,12 +5175,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="86"/>
         <source>Angle:</source>
-        <translation>角度：</translation>
+        <translation>角度:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="246"/>
         <source>DPI</source>
-        <translation>DPI</translation>
+        <translation>新闻部</translation>
     </message>
 </context>
 <context>
@@ -5228,57 +5228,57 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="44"/>
         <source>Layer:</source>
-        <translation>圖層：</translation>
+        <translation>圖層:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="71"/>
         <source>Geometry</source>
-        <translation>圖形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="129"/>
         <source>Insertion point (x):</source>
-        <translation>插入點(x)：</translation>
+        <translation>插入點 (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="139"/>
         <source>Insertion point (y):</source>
-        <translation>插入點(y)：</translation>
+        <translation>插入點 (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="159"/>
         <source>Scale X:</source>
-        <translation>縮放 X:</translation>
+        <translation>縮放 X :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="179"/>
         <source>Scale Y:</source>
-        <translation>縮放 Y:</translation>
+        <translation>大小 Y :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="189"/>
         <source>Angle:</source>
-        <translation>角度：</translation>
+        <translation>角度:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="209"/>
         <source>Rows:</source>
-        <translation>列：</translation>
+        <translation>行:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="239"/>
         <source>Columns:</source>
-        <translation>欄：</translation>
+        <translation>列 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="249"/>
         <source>Row Spacing:</source>
-        <translation>列高：</translation>
+        <translation>行間距 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="279"/>
         <source>Column Spacing:</source>
-        <translation>欄寬：</translation>
+        <translation>列間距 :</translation>
     </message>
 </context>
 <context>
@@ -5286,42 +5286,42 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="29"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="35"/>
         <source>ID: </source>
-        <translation>ID：</translation>
+        <translation>ID: </translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="54"/>
         <source>Layer:</source>
-        <translation>圖層：</translation>
+        <translation>圖層:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="87"/>
         <source>Geometry</source>
-        <translation>圖形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="93"/>
         <source>End point (x):</source>
-        <translation>終點(x)：</translation>
+        <translation>端點 (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="123"/>
         <source>End point (y):</source>
-        <translation>終點(y)：</translation>
+        <translation>端點 (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="133"/>
         <source>Start point (y):</source>
-        <translation>起點(y)：</translation>
+        <translation>起點 (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="153"/>
         <source>Start point (x):</source>
-        <translation>起點(x)：</translation>
+        <translation>起點 (x):</translation>
     </message>
 </context>
 <context>
@@ -5429,12 +5429,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="759"/>
         <source>Cut</source>
-        <translation>Cut</translation>
+        <translation>剪下</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="773"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>複製</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="787"/>
@@ -5454,7 +5454,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="113"/>
         <source>&amp;Line spacing:</source>
-        <translation>行距：</translation>
+        <translation>行距( L) :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="246"/>
@@ -5464,22 +5464,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="645"/>
         <source>Text Direction</source>
-        <translation>文字方向</translation>
+        <translation>文字取向</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="657"/>
         <source>Left to right</source>
-        <translation>由左至右</translation>
+        <translation>从左到右</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="670"/>
         <source>Right to left</source>
-        <translation>由右至左</translation>
+        <translation>从右到左</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="847"/>
         <source>Diameter (⌀)</source>
-        <translation>直徑 (⌀)</translation>
+        <translation>相 相 (X)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="852"/>
@@ -6313,7 +6313,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="82"/>
         <source>&amp;Width:</source>
-        <translation>寬度：</translation>
+        <translation>視窗( W) :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="102"/>
@@ -6323,13 +6323,13 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="138"/>
         <source>Margins</source>
-        <translation>邊距</translation>
+        <translation>邊界</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="165"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="185"/>
         <source>Bottom</source>
-        <translation>底部</translation>
+        <translation>下</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="240"/>
@@ -6339,12 +6339,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="246"/>
         <source>Horizontally:</source>
-        <translation>水平：</translation>
+        <translation>水平 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="263"/>
         <source>Vertically:</source>
-        <translation>垂直：</translation>
+        <translation>垂直 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="456"/>
@@ -6394,17 +6394,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1271"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>尺寸線的放大長度</translation>
+        <translation>在尺寸線上展開的長度</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1296"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;尺寸箭頭大小。如果標記大小不是 0，則不生效。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;尺寸箭頭大小。如果標記大小 &lt;a name=&quot;result_box&quot;/&gt;不為 0，則此設定無效。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation>固定延伸線長度</translation>
+        <translation>固定延伸行長</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
@@ -6454,22 +6454,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2592"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="1108"/>
         <source>Dwg Units</source>
-        <translation>繪圖單位</translation>
+        <translation>Dwg 單位</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2629"/>
         <source>Size relative to screen</source>
-        <translation>相對於螢幕大小</translation>
+        <translation>相對屏幕的大小</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2642"/>
         <source>Size in drawing units</source>
-        <translation>繪圖單位中的大小</translation>
+        <translation>在繪圖單位中的大小</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2669"/>
         <source>(0 =&gt; 5% relative to screen size)</source>
-        <translation>(0 =&gt; 相對於螢幕大小的 5%)</translation>
+        <translation>(相對於螢幕大小0-%-5%)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="654"/>
@@ -6481,7 +6481,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="212"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="657"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>左向</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676"/>
@@ -6493,7 +6493,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="228"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="679"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>頂向</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="698"/>
@@ -6540,7 +6540,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="552"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="557"/>
         <source>auto</source>
-        <translation>auto</translation>
+        <translation>自動</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="789"/>
@@ -6555,27 +6555,27 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="885"/>
         <source>Text style:</source>
-        <translation>文字樣式：</translation>
+        <translation>文字樣式 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="893"/>
         <source>&apos;.&apos; (Period)</source>
-        <translation>「.」(句點)</translation>
+        <translation>&apos;&quot; (平分)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="898"/>
         <source>&apos;,&apos; (Comma)</source>
-        <translation>「,」(逗點)</translation>
+        <translation>&apos;,&apos; (逗號)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="906"/>
         <source>Decimal separator:</source>
-        <translation>小數分隔符：</translation>
+        <translation>二分位分隔符:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="933"/>
         <source>Linear units:</source>
-        <translation>線性單位：</translation>
+        <translation>有線單位 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="949"/>
@@ -6587,32 +6587,32 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="959"/>
         <source>Length Factor:</source>
-        <translation>長度係數：</translation>
+        <translation>長度因數 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1086"/>
         <source>Angular units:</source>
-        <translation>角度單位：</translation>
+        <translation>角單位 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1109"/>
         <source>Linear zeros:</source>
-        <translation>線性零點：</translation>
+        <translation>有線性 0:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1146"/>
         <source>Format units</source>
-        <translation>格式單位</translation>
+        <translation>格式单元</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1153"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;文字周圍的距離間隙&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;文字周圍的距離間隙。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1226"/>
         <source>Text size &amp; position</source>
-        <translation>文字大小與位置</translation>
+        <translation>文字大小和位置</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1233"/>
@@ -6654,42 +6654,42 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1370"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>尺寸線、箭頭與刻度</translation>
+        <translation>尺寸行、 箭頭和勾</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1377"/>
         <source>Angular zeros:</source>
-        <translation>角度零點：</translation>
+        <translation>角 0:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1391"/>
         <source>Angular precision:</source>
-        <translation>角度精度：</translation>
+        <translation>角精度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1404"/>
         <source>Enlarge:</source>
-        <translation>放大：</translation>
+        <translation>放大 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1414"/>
         <source>Offset:</source>
-        <translation>偏移：</translation>
+        <translation>偏移 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1427"/>
         <source>Linear precision:</source>
-        <translation>線性精確度：</translation>
+        <translation>線性精度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1446"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;文字相對於尺寸線的對齊方式。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;文字對齊方式 &lt;a name=&quot;result_box&quot;/&gt;相對於尺寸線。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1456"/>
         <source>Aligned</source>
-        <translation>對齊</translation>
+        <translation>相通</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1502"/>
@@ -6699,7 +6699,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1534"/>
         <source>Text alignment:</source>
-        <translation>文字對齊：</translation>
+        <translation>文字對齊:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1544"/>
@@ -6729,12 +6729,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
         <source>Extension lines</source>
-        <translation>延伸線</translation>
+        <translation>延伸行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
         <source>Fixed length:</source>
-        <translation>固定長度：</translation>
+        <translation>固定长度:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1617"/>
@@ -6769,7 +6769,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="122"/>
         <source>Architectural (metric)</source>
-        <translation>建築 (公制)</translation>
+        <translation>建筑 (度)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="128"/>
@@ -6810,12 +6810,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="505"/>
         <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>對於「建築 (公制)」長度格式，單位必須設定為公尺。</translation>
+        <translation>对于長度格式 “ Architectural (meter) ” , 單位必須被設定为 Meter .</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="1106"/>
         <source>Screen %</source>
-        <translation>螢幕百分比</translation>
+        <translation>屏幕 %</translation>
     </message>
 </context>
 <context>
@@ -6918,12 +6918,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="199"/>
         <source>Anti-aliasing</source>
-        <translation>抗鋸齒</translation>
+        <translation>反</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="192"/>
         <source>Scrollbars</source>
-        <translation>捲軸</translation>
+        <translation>卷列</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="275"/>
@@ -6938,7 +6938,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="185"/>
         <source>Hide cursor when snapping</source>
-        <translation>吸附時隱藏游標</translation>
+        <translation>抓取時隱藏游標</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="799"/>
@@ -6983,27 +6983,27 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1130"/>
         <source>Startup</source>
-        <translation>啟動</translation>
+        <translation>起步</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1136"/>
         <source>Display loading screen</source>
-        <translation>顯示載入畫面</translation>
+        <translation>顯示載入螢幕</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1150"/>
         <source>Start with main window maximized</source>
-        <translation>以最大化主視窗啟動</translation>
+        <translation>从主窗口起步已最大化</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1164"/>
         <source>Enable CAD dockwidgets</source>
-        <translation>啟用 CAD 工具列</translation>
+        <translation>開啟 CAD 接頭widges</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1171"/>
         <source>Enable CAD toolbars</source>
-        <translation>啟用 CAD 停靠視窗</translation>
+        <translation>開啟 CAD 工具列</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1193"/>
@@ -7028,7 +7028,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1036"/>
         <source>Don&apos;t use native OS file open dialog</source>
-        <translation>不使用原生作業系統檔案開啟對話方塊</translation>
+        <translation>不要用本地 OS 文件開啟對話框</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1228"/>
@@ -7038,22 +7038,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1234"/>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation>按下空格鍵時執行指令</translation>
+        <translation>在按下 Space BAR 時評估指令</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1244"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>按下空格鍵時切換自由吸附模式</translation>
+        <translation>在按下 Space BAR 時切換自由快取模式</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1254"/>
         <source>CAD Preferences</source>
-        <translation>CAD 偏好設定</translation>
+        <translation>CAD 偏好</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1260"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;啟用後，啟用一個圖層會將所有選取的實體修改為該新圖層。若要變更多個實體的圖層：首先選取所需的實體；然後在圖層小工具中啟用一個圖層。這樣會將所有選取的實體修改為屬於新的圖層。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;啟用後，將某個圖層設為作用中圖層時，所有選取的物件都會改到該圖層。若要變更多個物件的圖層：先選取所需的物件，再於圖層小工具中將某個圖層設為作用中圖層。如此一來，所有選取的物件都會改為屬於新的圖層。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1263"/>
@@ -7063,22 +7063,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1143"/>
         <source>Start in tab mode</source>
-        <translation>以分頁模式啟動</translation>
+        <translation>在分頁模式下起步</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="322"/>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation>最小網格間距 (像素)：</translation>
+        <translation>最小网格相距 (p &amp; x) :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="118"/>
         <source>N&amp;umber of preview entities:</source>
-        <translation>預覽實體的數量：</translation>
+        <translation>預覽實體的 N/ umber :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
         <source>Auto-panning</source>
-        <translation>自動平移</translation>
+        <translation>自動拓宽</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="265"/>
@@ -7108,7 +7108,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="834"/>
         <source>Variable File:</source>
-        <translation>變數檔案：</translation>
+        <translation>變數檔案 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="880"/>
@@ -7123,37 +7123,37 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1043"/>
         <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
-        <translation>按住 Shift 鍵並使用滑鼠滾輪時，會反轉滾動方向。</translation>
+        <translation>在使用 Shift 金鑰的滑鼠輪時倒轉方向 .</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1046"/>
         <source>Invert horizontal scrolling direction</source>
-        <translation>反轉水平滾動方向</translation>
+        <translation>反轉水平捲動方向</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1053"/>
         <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
-        <translation>按住 Ctrl 鍵並使用滑鼠滾輪時，會反轉滾動方向。</translation>
+        <translation>在使用有 Ctrl 金鑰的滑鼠輪時倒轉方向 .</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1056"/>
         <source>Invert vertical scrolling direction</source>
-        <translation>反轉垂直滾動方向</translation>
+        <translation>倒轉垂直滚动方向</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1063"/>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation>使用滑鼠滾輪時，會反轉縮放方向。</translation>
+        <translation>在使用滑鼠輪時反轉方向 .</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1066"/>
         <source>Invert zoom direction</source>
-        <translation>反轉縮放方向</translation>
+        <translation>反向放大方向</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1089"/>
         <source>Clear Settings</source>
-        <translation>清除設定</translation>
+        <translation>清除設定值</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1101"/>
@@ -7163,7 +7163,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1104"/>
         <source>Layout</source>
-        <translation>佈局</translation>
+        <translation>布局</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1117"/>
@@ -7173,22 +7173,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1120"/>
         <source>All</source>
-        <translation>All</translation>
+        <translation>全部</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1157"/>
         <source>Open last opened files</source>
-        <translation>開啟上次開啟的檔案</translation>
+        <translation>開啟上一個已開啟的檔案</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1241"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;按下空格鍵並啟用命令視窗時，暫時切換為自由吸附模式&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>按下空格鍵且命令視窗處於啟用狀態時，暫時切換自由吸附功能。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1270"/>
         <source>Automatically zoom drawing when opening</source>
-        <translation>開啟時自動縮放繪圖</translation>
+        <translation>在開啟時自動放大繪圖</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1021"/>
@@ -7218,12 +7218,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="409"/>
         <source>Clear settings</source>
-        <translation>清除設定</translation>
+        <translation>清除設定值</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="410"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
-        <translation>這也會包含自訂選單和工具列。確定要繼續嗎？</translation>
+        <translation>包括自訂選單和工具列 。 接下去?</translation>
     </message>
 </context>
 <context>
@@ -7236,12 +7236,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="20"/>
         <source>Export as CAM/plain SVG</source>
-        <translation>匯出為 CAM/純 SVG</translation>
+        <translation>匯出為 CAM/標準SVG</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="48"/>
         <source>Default width of elements, mm</source>
-        <translation>元素預設寬度，單位：毫米</translation>
+        <translation>元素的預設寬度, mm</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="73"/>
@@ -7251,37 +7251,37 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="80"/>
         <source>Export visible construction layers</source>
-        <translation>匯出可見建構圖層</translation>
+        <translation>匯出可見的建構圖層</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Blocks</source>
-        <translation>方塊</translation>
+        <translation>區塊</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="135"/>
         <source>Images</source>
-        <translation>圖片</translation>
+        <translation>影像</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="143"/>
         <source>Raster Image export</source>
-        <translation>匯出點陣圖片</translation>
+        <translation>Raster 影像匯出</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="155"/>
         <source>Dash/Dot Lines</source>
-        <translation>虛線/點線</translation>
+        <translation>Dash/ 點行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="165"/>
         <source>Length of the pattern, mm</source>
-        <translation>圖案長度，單位：毫米</translation>
+        <translation>圖案的長度, mm</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="187"/>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation>將虛線/點線烘焙到 SVG 路徑</translation>
+        <translation>在 SVG 路徑上刻出點行/ 點行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="199"/>
@@ -7296,65 +7296,72 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="100"/>
         <source>Convert blocks to safe inline SVG content</source>
-        <translation>將區塊轉換為安全的內聯 SVG 內容</translation>
+        <translation>轉換區塊到安全的 SVG 內容</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="115"/>
         <source>Ellipses / Ellipse arcs</source>
-        <translation>橢圓/橢圓弧</translation>
+        <translation>椭圆 / 椭圆弧</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="123"/>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation>使用三次貝茲曲線近似橢圓和橢圓弧</translation>
+        <translation>有立方贝子的椭圆和椭圆弧</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="33"/>
         <source>MakerCAM as of November 2014 does not hide SVG content 
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>截至 2014 年 11 月，MakerCAM 無法隱藏已設定為不可見的 SVG 內容（「display: none」或「visibility: hidden」）。</translation>
+        <translation>2014年11月起 MakerCAM 不隱藏 SVG 內容
+有被設置的無視 (&quot;Display: no&quot;或&quot;可見性:隱藏&quot;).</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="34"/>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
 because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation>截至 2014 年 11 月，MakerCAM 無法正確處理區塊，因為它不會考慮 &lt;use&gt; 中的參考點。</translation>
+        <translation>由2014年11月起,
+因為它不考慮到&quot;用&quot;中的參考點.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="35"/>
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>截至 2015 年 3 月，MakerCAM 無法正確顯示橢圓和橢圓弧，尤其是在使用 &lt;ellipse&gt; 標籤，並在 &lt;transform&gt; 屬性中設定旋轉，或以橢圓弧段形式使用 &lt;path&gt; 時。</translation>
+        <translation>MakerCAM自2015年3月起不能正确顯示椭圆和椭圆弧,
+有旋轉相關的「 ellipse」 標籤被建立后
+使用椭圆弧片段的 &lt; transform&gt; 屬性或作 &lt; path&gt;.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="36"/>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
 but avoided in some CAM&apos;s.</source>
-        <translation>匯出的影像在 SVG 編輯器（如 Inkscape）中可能很有用，但在某些 CAM 軟體中則應避免使用。</translation>
+        <translation>匯出影像可以用到 SVG 編輯器 (Inkscape等) ,
+但是被CAM所避免了.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="37"/>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>許多 CAM 軟體（MakerCAM、EleskCAM、LaserWeb）會忽略虛線/點線樣式，但這在切割膠合板或製作紙藝時可能很有用。</translation>
+        <translation>許多 CAM 軟體（MakerCAM、EleskCAM、LaserWeb）會忽略虛線/點線樣式，這在雷射切割膠合板或製作紙藝時可能很有用。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="38"/>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
-        <translation>元素的預設寬度可能會影響某些 CAM 軟體/SVG 編輯器，但其他軟體則會忽略它。</translation>
+        <translation>元素的預設寬度可以影響 CAM / SVG 編輯器,
+但被其它人所忽略</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="39"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>與縮放相關的線條模式長度，因此需要預設的步進值以進行烘焙。</translation>
+        <translation>相關縮放的行距
+因此烘焙需要的預設步數值</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="40"/>
         <source>Whether to export points</source>
-        <translation>是否匯出點</translation>
+        <translation>是否要匯出指點</translation>
     </message>
 </context>
 <context>
@@ -7402,22 +7409,22 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="44"/>
         <source>Layer:</source>
-        <translation>圖層：</translation>
+        <translation>圖層:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="71"/>
         <source>Geometry</source>
-        <translation>圖形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="77"/>
         <source>Position (y):</source>
-        <translation>位置(y)：</translation>
+        <translation>位置 (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="97"/>
         <source>Position (x):</source>
-        <translation>位置(x)：</translation>
+        <translation>位置 (x) :</translation>
     </message>
 </context>
 <context>
@@ -7425,22 +7432,22 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="26"/>
         <source>Polyline</source>
-        <translation>折線</translation>
+        <translation>多行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="44"/>
         <source>Layer:</source>
-        <translation>圖層：</translation>
+        <translation>圖層:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="77"/>
         <source>Geometry</source>
-        <translation>圖形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="115"/>
         <source>Closed</source>
-        <translation>閉合的</translation>
+        <translation>已關閉</translation>
     </message>
 </context>
 <context>
@@ -7579,7 +7586,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="203"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;透過參考點和目標點，找出以中心為基準的縮放比例。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;以參考點和目標點，找出以中心為基準的縮放比例。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="219"/>
@@ -7617,27 +7624,27 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="26"/>
         <source>Spline</source>
-        <translation>雲形線</translation>
+        <translation>相片</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="51"/>
         <source>Layer:</source>
-        <translation>圖層：</translation>
+        <translation>圖層:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="84"/>
         <source>Geometry</source>
-        <translation>圖形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="122"/>
         <source>Degree:</source>
-        <translation>度：</translation>
+        <translation>度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="132"/>
         <source>Closed</source>
-        <translation>閉合的</translation>
+        <translation>已關閉</translation>
     </message>
 </context>
 <context>
@@ -7645,7 +7652,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="20"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation>文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="256"/>
@@ -7725,12 +7732,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="101"/>
         <source>Cut</source>
-        <translation>Cut</translation>
+        <translation>剪下</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="115"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>複製</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="129"/>
@@ -7792,7 +7799,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="774"/>
         <source>Fit</source>
-        <translation>Fit</translation>
+        <translation>適合</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="825"/>
@@ -7802,17 +7809,17 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="784"/>
         <source>A&amp;ligned</source>
-        <translation>對齊</translation>
+        <translation>相通( C)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="794"/>
         <source>&amp;Middle</source>
-        <translation>中間</translation>
+        <translation>中間( M)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="838"/>
         <source>Diameter (⌀)</source>
-        <translation>直徑 (⌀)</translation>
+        <translation>相 相 (X)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="843"/>
@@ -7827,7 +7834,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="853"/>
         <source>At (@)</source>
-        <translation>在 (@)</translation>
+        <translation>位於 (@)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="858"/>
@@ -8590,7 +8597,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="43"/>
         <source>auto</source>
-        <translation>auto</translation>
+        <translation>自動</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="203"/>
@@ -8605,7 +8612,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="219"/>
         <source>B&amp;lack</source>
-        <translation>黑色</translation>
+        <translation>Black (B)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="258"/>
@@ -8662,8 +8669,8 @@ so default step value required for baking</source>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>建構圖層包含無限長度的直線實體，用於幾何建構。
-建構圖層的內容不應顯示在列印輸出中。</translation>
+        <translation>建構圖層上的物件為無限長的直線，用於幾何建構。
+建構圖層的內容不應出現在列印輸出中。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="33"/>
@@ -8721,7 +8728,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="278"/>
         <source>Looking for matching layer names</source>
-        <translation>尋找匹配層名</translation>
+        <translation>尋找符合的圖層名稱</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="552"/>
@@ -8804,7 +8811,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_librarywidget.cpp" line="93"/>
         <source>Refresh</source>
-        <translation>重新整理</translation>
+        <translation>刷新</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_librarywidget.cpp" line="95"/>
@@ -8853,12 +8860,12 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="84"/>
         <source>Dot</source>
-        <translation>Dot</translation>
+        <translation>點</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="85"/>
         <source>Dot (tiny)</source>
-        <translation>點 (非常小)</translation>
+        <translation>點 (tiny)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="86"/>
@@ -8873,12 +8880,12 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="88"/>
         <source>Dash</source>
-        <translation>Dash</translation>
+        <translation>虛線</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="89"/>
         <source>Dash (tiny)</source>
-        <translation>虛線（小）</translation>
+        <translation>(天花板)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="90"/>
@@ -8898,7 +8905,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="93"/>
         <source>Dash Dot (tiny)</source>
-        <translation>點劃線（小）</translation>
+        <translation>Dash Dot (天平)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="94"/>
@@ -8918,7 +8925,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="97"/>
         <source>Divide (tiny)</source>
-        <translation>分割線（小）</translation>
+        <translation>相除 (正中)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="98"/>
@@ -8938,7 +8945,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="101"/>
         <source>Center (tiny)</source>
-        <translation>置中（小）</translation>
+        <translation>中 (天)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="102"/>
@@ -8958,7 +8965,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="105"/>
         <source>Border (tiny)</source>
-        <translation>邊框（小）</translation>
+        <translation>邊框 (tiny)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="106"/>
@@ -8986,7 +8993,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="108"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>左鍵</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="130"/>
@@ -8995,11 +9002,9 @@ The contents of a Construction Layer should not appear in printout.</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;關於左右滑鼠按鈕操作的提示&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;關於左右滑鼠按鈕動作的提示&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -9077,67 +9082,67 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>抓取</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
         <source>Snap to Endpoints</source>
-        <translation>貼齊端點</translation>
+        <translation>鎖點到端點</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>自動貼齊等距中間點</translation>
+        <translation>鎖點到實體等分點</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
         <source>Snap to center points</source>
-        <translation>貼齊中心點</translation>
+        <translation>鎖點到圓心</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
         <source>Snap to intersections automatically</source>
-        <translation>自動貼齊交點</translation>
+        <translation>自動鎖點到交點</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
         <source>Snap to closest point on entity</source>
-        <translation>貼齊物件最近點</translation>
+        <translation>鎖點到實體最近點</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>貼齊端點之定距點</translation>
+        <translation>鎖點到距端點指定距離的點</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
         <source>Snap to intersections manually</source>
-        <translation>手動貼齊交點</translation>
+        <translation>手動鎖點到交點</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
         <source>Snap to grid</source>
-        <translation>貼齊格點</translation>
+        <translation>鎖點到格線</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
         <source>Restrict Horizontally</source>
-        <translation>限定水平</translation>
+        <translation>水平限制</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="200"/>
         <source>Restrict Vertically</source>
-        <translation>限定垂直</translation>
+        <translation>垂直限制</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="217"/>
         <source>Move relative Zero</source>
-        <translation>移動相對原點</translation>
+        <translation>移動相對零點</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="234"/>
         <source>Lock relative Zero</source>
-        <translation>鎖定相對原點</translation>
+        <translation>鎖定相對零點</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
@@ -9222,12 +9227,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>Relative zero position is %1</source>
-        <translation>相對零點位置為：%1</translation>
+        <translation>相對的零位置是%1</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>locked</source>
-        <translation>已鎖定</translation>
+        <translation>有鎖起</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
@@ -9241,7 +9246,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>筆</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -9395,15 +9400,16 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="214"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>不允許圖層名稱為空。</translation>
+        <translation>圖層名稱不可為空白。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="278"/>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>嘗試建立名稱重複的圖層。重複的圖層名稱為 
-[%1]。請指定不同的名稱。</translation>
+        <translation>嘗試建立名稱重複的圖層。重複的圖層名稱為
+[%1]。
+請指定不同的名稱。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="86"/>
@@ -9422,19 +9428,19 @@ Please specify a different name.</source>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="311"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>圖層「%1」及其上的所有實體都將被移除。
-此動作無法撤銷。</translation>
+        <translation>圖層&quot;%1&quot;與其上的所有物件將被移除。
+此動作無法復原。</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="323"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>無法刪除圖層&quot;%1&quot;。</translation>
+        <translation>無法移除圖層&quot;%1&quot;。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="980"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="990"/>
         <source>Remove empty layers</source>
-        <translation>移除空的圖層</translation>
+        <translation>移除空圖層</translation>
     </message>
     <message>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
@@ -9447,14 +9453,14 @@ Clear filtering mask and repeat.</source>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>找不到包含實體的圖層，但它們已被過濾且不可見。
+        <translation>發現沒有物件的圖層，但它們已被篩選且不可見。
 
-清除過濾遮罩並重複操作。</translation>
+請清除篩選遮罩後重試。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>沒有找到沒有實體的圖層，沒有需要移除的內容。</translation>
+        <translation>找不到沒有物件的圖層，沒有可移除的項目。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1131"/>
@@ -9468,31 +9474,35 @@ Clear filtering mask and repeat.</source>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>對於 
-[%1]，此子圖層已存在。請指定不同的名稱。</translation>
+        <translation>此類子圖層已存在於
+[%1]。
+請指定不同的名稱。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1177"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>已存在用於 [%1] 的子圖層。</translation>
+        <translation>此類子圖層已存在於
+[%1]。
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1185"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>維度圖層只能新增到一般活動圖層。</translation>
+        <translation>只有在作用中圖層為一般圖層時，才能新增標註圖層。
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1248"/>
         <source>Move Selection</source>
-        <translation>移動選取</translation>
+        <translation>移動選擇區</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1255"/>
         <source>Duplicate Selection</source>
-        <translation>複製選取</translation>
+        <translation>复制選擇區</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1272"/>
@@ -9503,9 +9513,9 @@ If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
         <translation>是否將「依圖層」值替換為來源圖層的值？
 
-如果選擇「是」，則具有「依圖層」畫筆的實體在新圖層上的顯示方式將與在先前圖層上完全相同，並且「依圖層」值將被替換為解析後的畫筆。
+如果選擇「是」，具有「依圖層」筆的物件在新圖層上的外觀會與在原圖層上完全相同，而「依圖層」值會被替換為解析後的筆。
 
-如果選擇「否」，則「依圖層」值將保持不變，因此目標圖層的畫筆將定義這些實體的畫筆。</translation>
+如果選擇「否」，「依圖層」值保持不變，因此目標圖層的筆將決定這類物件的筆。</translation>
     </message>
     <message>
         <source>Replace &quot;By Layer&quot; value to source layers values?
@@ -9519,7 +9529,7 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="385"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>圖層「0」無法刪除。</translation>
+        <translation>無法移除圖層&quot;0&quot;。</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1810"/>
@@ -9533,13 +9543,13 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1811"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="399"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>將移除列出的圖層以及它們上的所有實體。</translation>
+        <translation>列出的圖層與其上的所有物件將被移除。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1812"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="401"/>
         <source>Warning: this action can NOT be undone!</source>
-        <translation>警告：此動作無法撤銷！</translation>
+        <translation>警告: 此動作無法被解除 !</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
@@ -9550,7 +9560,7 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="406"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>警告：圖層「0」無法移除。</translation>
+        <translation>警告：無法移除圖層&quot;0&quot;。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1813"/>
@@ -9583,12 +9593,12 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="644"/>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>列出的區塊及其所有實體都將被移除。</translation>
+        <translation>已列出的區塊及其所有實體被移除 .</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="648"/>
         <source>Blocks for removal:</source>
-        <translation>要移除的區塊：</translation>
+        <translation>需要移除的區塊 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="153"/>
@@ -9601,7 +9611,7 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="154"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>圖層列表分隔符字串為空。將無法建立圖層樹。
+        <translation>圖層清單的分隔符號字串是空的，因此無法建立圖層樹。
 請指定不同的值。</translation>
     </message>
     <message>
@@ -9615,8 +9625,8 @@ Please specify a different value.</source>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="216"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation>為 %1 顏色提供的無效值。
-請指定不同的值。</translation>
+        <translation>为%1 顏色提供無效的值 。
+請指定不同的值 .</translation>
     </message>
     <message>
         <source>Invalid path to pens file.
@@ -9629,75 +9639,77 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
         <source>Remove pen</source>
-        <translation>移除畫筆</translation>
+        <translation>移除筆</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1293"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>畫筆將從調色板中移除，繪圖實體不會受到影響。</translation>
+        <translation>筆刷將從調色盤中移除，已繪製的圖元將不受影響。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1294"/>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1313"/>
         <source>Are you sure you&apos;d like to proceed?</source>
-        <translation>您確定要繼續嗎？</translation>
+        <translation>你確定想繼續?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1295"/>
         <source>Pen for removal:</source>
-        <translation>要移除的畫筆：</translation>
+        <translation>取出筆 :</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1311"/>
         <source>Remove pens</source>
-        <translation>移除畫筆</translation>
+        <translation>取出筆</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1312"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>畫筆將從調色板中移除，繪圖實體不會受到影響。</translation>
+        <translation>多個筆刷將從調色盤中移除，已繪製的圖元將不受影響。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1314"/>
         <source>Pens for removal:</source>
-        <translation>要移除的畫筆：</translation>
+        <translation>取出筆:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1335"/>
         <source>Select Entities </source>
-        <translation>選取實體</translation>
+        <translation>選擇實體</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1336"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>目前沒有符合畫筆條件的實體位於可見圖層。</translation>
+        <translation>可見圖層上沒有符合此筆的物件。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1337"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>此類實體存在於凍結圖層中。</translation>
+        <translation>凍結的圖層上有這類物件。
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1338"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>鎖定圖層中存在這些實體。</translation>
+        <translation>鎖定的圖層上有這類物件。
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1339"/>
         <source>Please use different pen attributes.</source>
-        <translation>請使用不同的畫筆屬性。</translation>
+        <translation>請使用不同的筆屬性 .</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1348"/>
         <source>Set pen by entity</source>
-        <translation>按實體設定畫筆。</translation>
+        <translation>按實體設定筆</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>請僅選擇一個實體來設定畫筆。</translation>
+        <translation>請只選擇取取筆設定的單位 .</translation>
     </message>
     <message>
         <source>Saving Pens Data</source>
@@ -9714,25 +9726,25 @@ Please specify a different value.</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>None</translation>
+        <translation>無</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="206"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="262"/>
         <source>Inch</source>
-        <translation>Inch</translation>
+        <translation>英吋</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="208"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="264"/>
         <source>Foot</source>
-        <translation>Foot</translation>
+        <translation>英呎</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="210"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="266"/>
         <source>Mile</source>
-        <translation>Mile</translation>
+        <translation>英哩</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="212"/>
@@ -9768,13 +9780,13 @@ Please specify a different value.</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="222"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="278"/>
         <source>Mil</source>
-        <translation>Mil</translation>
+        <translation>千</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="224"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="280"/>
         <source>Yard</source>
-        <translation>Yard</translation>
+        <translation>碼</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="226"/>
@@ -9846,7 +9858,7 @@ Please specify a different value.</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="938"/>
         <source>A0</source>
         <comment>Paper format</comment>
-        <translation>A0</translation>
+        <translation>A0 :</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="939"/>
@@ -9876,67 +9888,67 @@ Please specify a different value.</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="946"/>
         <source>Letter / ANSI A</source>
         <comment>Paper format</comment>
-        <translation>信紙 / ANSI A</translation>
+        <translation>字母/ ANSI A</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="947"/>
         <source>Legal</source>
         <comment>Paper format</comment>
-        <translation>法律大小</translation>
+        <translation>二. 法律</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="948"/>
         <source>Tabloid / ANSI B</source>
         <comment>Paper format</comment>
-        <translation>小報 / ANSI B</translation>
+        <translation>分表 / ANSI B</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="952"/>
         <source>ANSI C</source>
         <comment>Paper format</comment>
-        <translation>ANSI C</translation>
+        <translation>安西 C</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="953"/>
         <source>ANSI D</source>
         <comment>Paper format</comment>
-        <translation>ANSI D</translation>
+        <translation>安西 D</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="954"/>
         <source>ANSI E</source>
         <comment>Paper format</comment>
-        <translation>ANSI E</translation>
+        <translation>安西 E</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="956"/>
         <source>Arch A</source>
         <comment>Paper format</comment>
-        <translation>建築 A</translation>
+        <translation>拱A</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="957"/>
         <source>Arch B</source>
         <comment>Paper format</comment>
-        <translation>建築 B</translation>
+        <translation>拱口 B</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="958"/>
         <source>Arch C</source>
         <comment>Paper format</comment>
-        <translation>架構 C</translation>
+        <translation>C 拱口</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="959"/>
         <source>Arch D</source>
         <comment>Paper format</comment>
-        <translation>架構 D</translation>
+        <translation>拱D</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="960"/>
         <source>Arch E</source>
         <comment>Paper format</comment>
-        <translation>架構 E</translation>
+        <translation>拱 E</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="978"/>
@@ -9984,7 +9996,7 @@ Please specify a different value.</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="996"/>
         <source>legal</source>
         <comment>Paper format</comment>
-        <translation>合法</translation>
+        <translation>法律</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="998"/>
@@ -9996,49 +10008,49 @@ Please specify a different value.</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="1005"/>
         <source>ansi c</source>
         <comment>Paper format</comment>
-        <translation>ANSI C</translation>
+        <translation>an c</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1007"/>
         <source>ansi d</source>
         <comment>Paper format</comment>
-        <translation>ANSI D</translation>
+        <translation>ansi d (日文)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1009"/>
         <source>ansi e</source>
         <comment>Paper format</comment>
-        <translation>ANSI E</translation>
+        <translation>ansi e (正)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1012"/>
         <source>arch a</source>
         <comment>Paper format</comment>
-        <translation>架構 A</translation>
+        <translation>拱起 a</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1014"/>
         <source>arch b</source>
         <comment>Paper format</comment>
-        <translation>架構 B</translation>
+        <translation>拱起 b</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1016"/>
         <source>arch c</source>
         <comment>Paper format</comment>
-        <translation>架構 C</translation>
+        <translation>拱 c</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1018"/>
         <source>arch d</source>
         <comment>Paper format</comment>
-        <translation>架構 D</translation>
+        <translation>拱 d</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1020"/>
         <source>arch e</source>
         <comment>Paper format</comment>
-        <translation>架構 E</translation>
+        <translation>拱 e</translation>
     </message>
     <message>
         <location filename="../src/main/main.cpp" line="261"/>
@@ -10064,7 +10076,7 @@ Please specify a different value.</source>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="236"/>
         <source>noname</source>
         <comment>default layer name</comment>
-        <translation>translation 1</translation>
+        <translation>有名</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="706"/>
@@ -10265,85 +10277,85 @@ Do you want to replace it?</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="105"/>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>沒有 DXF/DWG 錯誤</translation>
+        <translation>沒有 DXF/ DWG 錯誤</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="107"/>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>開啟 DXF/DWG 檔案時發生錯誤</translation>
+        <translation>開啟 DXF/ DWG 檔案出錯</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="109"/>
         <source>unsupported DXF/DWG file version</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>不支援的 DXF/DWG 檔案版本</translation>
+        <translation>不支援的 DXF/ DWG 文件版本</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="111"/>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>讀取 DXF/DWG 中繼資料時發生錯誤</translation>
+        <translation>讀取 DXF/ DWG 元資料出錯</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="113"/>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>讀取 DXF/DWG 檔案標頭時發生錯誤</translation>
+        <translation>讀取 DXF/ DWG 檔案頭目出錯</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="115"/>
         <source>error reading DXF/DWG header dara</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>讀取 DXF/DWG 標頭資料時發生錯誤</translation>
+        <translation>讀取 DXF/ DWG 頭目 dara 有錯</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="117"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>讀取 DXF/DWG 物件地圖時發生錯誤</translation>
+        <translation>讀取 DXF/ DWG 物件地圖出錯</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="119"/>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>讀取 DXF/DWG 類別時發生錯誤</translation>
+        <translation>讀取 DXF/ DWG 等級出錯</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="121"/>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>讀取 DXF/DWG 表格時發生錯誤</translation>
+        <translation>讀取 DXF/ DWG 表格出錯</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="123"/>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>讀取 DXF/DWG 區塊時發生錯誤</translation>
+        <translation>讀取 DXF/ DWG 區塊出錯</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>讀取 DXF/DWG 實體時發生錯誤</translation>
+        <translation>讀取 DXF/ DWG 實體出錯</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>讀取 DXF/DWG 物件時發生錯誤</translation>
+        <translation>讀取 DXF/ DWG 物件出錯</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="129"/>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>讀取 DXF/DWG 區段時發生錯誤</translation>
+        <translation>讀取 DXF/ DWG 區域出錯</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="131"/>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>讀取 DXF/DWG 程式碼時發生錯誤</translation>
+        <translation>讀取 DXF/ DWG 代碼出錯</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="179"/>
@@ -10368,7 +10380,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4158"/>
         <source>error reading file metadata in dwg file</source>
-        <translation>讀取 DWG 檔案中的檔案中繼資料時發生錯誤</translation>
+        <translation>在 dwg 檔案中讀取檔案中繼資料出錯誤</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4162"/>
@@ -10398,7 +10410,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4182"/>
         <source>error reading blocks in dwg file</source>
-        <translation>讀取 DWG 檔案中的區塊時發生錯誤</translation>
+        <translation>在 dwg 檔案中讀取區塊出錯</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4186"/>
@@ -10408,12 +10420,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4190"/>
         <source>error reading objects in dwg file</source>
-        <translation>讀取 DWG 檔案中的物件時發生錯誤</translation>
+        <translation>在 dwg 檔案中讀取物件出錯</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_graphic.cpp" line="350"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>磁碟上的檔案已修改。請儲存到另一個檔案，以避免資料遺失！已修改的檔案：%1</translation>
+        <translation>有磁碟上的文件已修改 。 請儲存到其他檔案以避免數據損失! 已修改檔案 :%1</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1652"/>
@@ -10423,7 +10435,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="74"/>
         <source>DWG support is not complete!</source>
-        <translation>DWG 支援尚未完整！</translation>
+        <translation>DWG 支援未完成 !</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="76"/>
@@ -10433,17 +10445,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="78"/>
         <source>If this file fails to open try an older DWG format</source>
-        <translation>如果此檔案無法開啟，請嘗試使用較舊的 DWG 格式。</translation>
+        <translation>如果此檔案無法開啟取用更舊的 DWG 格式</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="79"/>
         <source>or try to find a converter to make it a DXF file.</source>
-        <translation>或者，嘗試尋找一個轉換器，將其轉換為 DXF 檔案。</translation>
+        <translation>或試取轉換器以做成 DXF 文件.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="82"/>
         <source>Information</source>
-        <translation>資訊</translation>
+        <translation>信息</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="93"/>
@@ -10455,25 +10467,25 @@ Do you want to replace it?</source>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="94"/>
         <source>Import error:</source>
         <comment>fileImport</comment>
-        <translation>匯入錯誤：</translation>
+        <translation>匯入出錯 :</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="109"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation>無論如何，已經識別出一些實體。</translation>
+        <translation>總之 有被指名道姓的.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
-        <translation>如果您現在開啟檔案，繪圖可能不完整或無法使用。</translation>
+        <translation>如果您現在開啟了檔案, 畫作可能不完全或無法用取 .</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="112"/>
         <source>Ignore error and open the file?</source>
         <comment>dwgImport</comment>
-        <translation>忽略錯誤並開啟檔案？</translation>
+        <translation>忽略錯誤并開啟檔案?</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="115"/>
@@ -10483,7 +10495,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="87"/>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>：重複的指令：%1 已經被 %2 使用。</translation>
+        <translation>: 有重复的命令 :%1被%2 取走</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="878"/>
@@ -13014,12 +13026,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1399"/>
         <source>RS_Commands:: command not found: %1</source>
-        <translation>RS_Commands：找不到指令：%1</translation>
+        <translation>RS Commands:: 找不到命令 :%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1453"/>
         <source>Command not found: %1</source>
-        <translation>找不到指令：%1</translation>
+        <translation>找不到命令 :%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1439"/>
@@ -13046,12 +13058,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="138"/>
         <source>You must input a distance first.</source>
-        <translation>您必須先輸入距離。</translation>
+        <translation>您必須先輸入相距 .</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="216"/>
         <source>Calculator error for input: </source>
-        <translation>輸入的計算機錯誤：</translation>
+        <translation>輸入的計算器出錯:</translation>
     </message>
     <message>
         <source>cal </source>
@@ -13070,12 +13082,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
-        <translation>計算器模式：開啟</translation>
+        <translation>計算器模式: 在</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="317"/>
         <source>Calculator mode: Off</source>
-        <translation>計算器模式：關閉</translation>
+        <translation>計算器模式: 關閉</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="64"/>
@@ -13085,7 +13097,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="65"/>
         <source>Circle</source>
-        <translation>圓</translation>
+        <translation>圓形</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="66"/>
@@ -13100,7 +13112,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="68"/>
         <source>Ellipse</source>
-        <translation>橢圓</translation>
+        <translation>椭圆</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="69"/>
@@ -13126,7 +13138,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>行</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="74"/>
@@ -13147,7 +13159,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="77"/>
         <source>Polyline</source>
-        <translation>折線</translation>
+        <translation>多行</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="78"/>
@@ -13197,7 +13209,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1983"/>
         <source>Invalid objects removed:</source>
-        <translation>已移除無效物件：</translation>
+        <translation>已移除的無效物件 :</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3836"/>
@@ -13210,17 +13222,17 @@ Do you want to replace it?</source>
         <location filename="../src/ui/generic/widgetcreator.cpp" line="170"/>
         <location filename="../src/ui/generic/widgetcreator.cpp" line="224"/>
         <source>All</source>
-        <translation>All</translation>
+        <translation>全部</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/colorwizard.cpp" line="54"/>
         <source>Select objects</source>
-        <translation>選取物件</translation>
+        <translation>選擇物件</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/colorwizard.cpp" line="58"/>
         <source>Apply to selected</source>
-        <translation>套用到選取的物件</translation>
+        <translation>套用到所選取的</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/colorwizard.cpp" line="62"/>
@@ -13230,7 +13242,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/lc_actionlayersexport.cpp" line="178"/>
         <source>No %1 layers found</source>
-        <translation>找不到 %1 個圖層</translation>
+        <translation>找不到%1的圖層</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterinterface.h" line="92"/>
@@ -13241,12 +13253,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="67"/>
         <source>usage: </source>
-        <translation>用法：</translation>
+        <translation>使用:</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="67"/>
         <source> [options] &lt;dxf_files&gt;</source>
-        <translation>[options] [選項] &lt;dxf 檔案&gt;</translation>
+        <translation>[options] [選擇] &lt;dxf files&gt;</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="74"/>
@@ -13256,42 +13268,42 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="75"/>
         <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation>-- 將所有 DXF 檔案列印到具有相同名稱的 PDF 檔案。</translation>
+        <translation>-- 列印所有 dxf 檔案到同名的 pdf 檔案 .</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="77"/>
         <source> -o some.pdf *.dxf</source>
-        <translation>將所有 DXF 檔案列印到名為「some.pdf」的檔案中。</translation>
+        <translation>-多出一出.pdf *.dxf</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="78"/>
         <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>將所有 DXF 檔案列印到名為「some.pdf」的檔案中。</translation>
+        <translation>-- 列印所有 dxf 檔案到 &apos;some.pdf&apos; 檔案 .</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="85"/>
         <source>Auto fit and center drawing to page.</source>
-        <translation>自動調整並將繪圖置中於頁面。</translation>
+        <translation>自動適合并居中畫入頁面 .</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="89"/>
         <source>Auto center drawing on page.</source>
-        <translation>自動將繪圖置中於頁面。</translation>
+        <translation>自動中心畫出頁面 .</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="93"/>
         <source>Print grayscale.</source>
-        <translation>列印灰階。</translation>
+        <translation>打印出灰階 .</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="97"/>
         <source>Print monochrome (black/white).</source>
-        <translation>列印單色（黑/白）。</translation>
+        <translation>打印一色相 (黑色/ 白色) .</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="101"/>
         <source>Paper size (Width x Height) in mm.</source>
-        <translation type="unfinished">紙張大小（寬 x 高），單位：毫米。</translation>
+        <translation>紙張大小（寬 x 高），單位：毫米。</translation>
     </message>
     <message>
         <source>Paper size (Width x Height) in mm.</source>
@@ -13302,78 +13314,78 @@ Do you want to replace it?</source>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
-        <translation>輸出解析度（DPI）。</translation>
+        <translation>輸出解析度 (DPI).</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="109"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
-        <translation>輸出比例。例如：0.01（用於 1:100 比例）。</translation>
+        <translation>有出品相 例如:0.01 (1:100比例).</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="113"/>
         <source>Paper margins in mm (integer or float).</source>
-        <translation>紙張邊距，單位：毫米（整數或浮點數）。</translation>
+        <translation>以毫米(整數或浮點)表示的相距 .</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="117"/>
         <source>Print on multiple pages (Horiz. x Vert.).</source>
-        <translation>在多個頁面上列印（水平 x 垂直）。</translation>
+        <translation>在多頁上打印 (Horiz. x Vert.).</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="121"/>
         <source>Output PDF file.</source>
         <comment>file</comment>
-        <translation>輸出 PDF 檔案。</translation>
+        <translation>輸出 PDF 文件 .</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="125"/>
         <source>Target output directory.</source>
-        <translation>目標輸出目錄。</translation>
+        <translation>目標輸出目錄 .</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="128"/>
         <source>&lt;dxf_files&gt;</source>
-        <translation>&lt;dxf_files&gt;</translation>
+        <translation>&lt;dxf 文件&gt;</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="128"/>
         <source>Input DXF file(s)</source>
-        <translation>輸入 DXF 檔案。</translation>
+        <translation>輸入 DXF 文件</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="68"/>
         <source>Keycode mode</source>
-        <translation>按鍵碼模式。</translation>
+        <translation>金鑰碼模式</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="81"/>
         <source>Load command file</source>
-        <translation>載入指令檔案。</translation>
+        <translation>載入命令檔</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="85"/>
         <source>Paste multiple commands</source>
-        <translation>貼上多個指令。</translation>
+        <translation>貼上多項命令</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_filedialogservice.cpp" line="221"/>
         <source>Combine all layers</source>
-        <translation>合併所有圖層。</translation>
+        <translation>合併所有圖層</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_filedialogservice.cpp" line="252"/>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>檔案「%1」已存在。您是否要取代它？</translation>
+        <translation>檔案%1 已存在 。 你想取而代之?</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>自訂顏色%1</translation>
+        <translation>/自訂顏色%1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
         <source>Custom Picked</source>
-        <translation>自訂選取</translation>
+        <translation>自訂已選取</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
@@ -13389,12 +13401,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch：找不到圖案。請在應用程式偏好設定中設定圖案路徑。</translation>
+        <translation>Hatch: 找不到模式 。 請在應用程式偏好中設定樣式路徑</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch：載入圖案失敗：%1</translation>
+        <translation>批次:: 載入模式失敗 :%1</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="204"/>
@@ -13404,12 +13416,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="207"/>
         <source>By Block</source>
-        <translation>依區塊</translation>
+        <translation>依圖塊</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="210"/>
         <source>- Unchanged -</source>
-        <translation>未變更</translation>
+        <translation>- 有變更 --</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -13429,127 +13441,127 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="41"/>
         <source>Default</source>
-        <translation>預設</translation>
+        <translation>默认</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="43"/>
         <source>0.00mm</source>
-        <translation>0.00 公釐</translation>
+        <translation>0.00毫米</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="45"/>
         <source>0.05mm</source>
-        <translation>0.05 公釐</translation>
+        <translation>0.05毫米</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="47"/>
         <source>0.09mm</source>
-        <translation>0.09 公釐</translation>
+        <translation>0.09毫米</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="49"/>
         <source>0.13mmISO</source>
-        <translation>0.13 公釐 ISO</translation>
+        <translation>4.13毫米ISO</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="51"/>
         <source>0.15mm</source>
-        <translation>0.15 公釐</translation>
+        <translation>0.15毫米</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="53"/>
         <source>0.18mmISO</source>
-        <translation>0.18 公釐 ISO</translation>
+        <translation>4.18毫米ISO</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="55"/>
         <source>0.20mm</source>
-        <translation>0.20 公釐</translation>
+        <translation>0.20毫米</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="57"/>
         <source>0.25mmISO</source>
-        <translation>0.25mmISO</translation>
+        <translation>4.25毫米ISO</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="59"/>
         <source>0.30mm</source>
-        <translation>0.30mm</translation>
+        <translation>0.30毫米</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="61"/>
         <source>0.35mmISO</source>
-        <translation>0.35mmISO</translation>
+        <translation>0.35毫米ISO</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="63"/>
         <source>0.40mm</source>
-        <translation>0.40mm</translation>
+        <translation>0.40毫米</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="65"/>
         <source>0.50mmISO</source>
-        <translation>0.50mmISO</translation>
+        <translation>0.50毫米ISO</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="67"/>
         <source>0.53mm</source>
-        <translation>0.53mm</translation>
+        <translation>0.53毫米</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="69"/>
         <source>0.60mm</source>
-        <translation>0.60mm</translation>
+        <translation>6.60毫米</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="71"/>
         <source>0.70mmISO</source>
-        <translation>0.70mmISO</translation>
+        <translation>0.70毫米ISO</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="73"/>
         <source>0.80mm</source>
-        <translation>0.80mm</translation>
+        <translation>0.80毫米</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="75"/>
         <source>0.90mm</source>
-        <translation>0.90mm</translation>
+        <translation>0.90毫米</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="77"/>
         <source>1.00mmISO</source>
-        <translation>1.00mmISO</translation>
+        <translation>1.00毫米ISO</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="79"/>
         <source>1.06mm</source>
-        <translation>1.06mm</translation>
+        <translation>1.06毫米</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="81"/>
         <source>1.20mm</source>
-        <translation>1.20mm</translation>
+        <translation>1.20毫米</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="83"/>
         <source>1.40mmISO</source>
-        <translation>1.40mmISO</translation>
+        <translation>1.40毫米ISO</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="85"/>
         <source>1.58mm</source>
-        <translation>1.58mm</translation>
+        <translation>1.58毫米</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="87"/>
         <source>2.00mmISO</source>
-        <translation>2.00mmISO</translation>
+        <translation>2.00毫米ISO</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="89"/>
         <source>2.11mm</source>
-        <translation>2.11mm</translation>
+        <translation>2.11毫米</translation>
     </message>
 </context>
 <context>
@@ -13570,19 +13582,19 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="74"/>
         <source>Block cannot contain an insert of itself.</source>
-        <translation>區塊不能包含對自身的插入。</translation>
+        <translation>Block 無法自動插入 .</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="80"/>
         <source> has nested insert of current block in:
 </source>
-        <translation>其中包含目前區塊的巢狀插入：</translation>
+        <translation>在 :</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="82"/>
         <source>
 This block cannot be inserted.</source>
-        <translation>此區塊無法插入。</translation>
+        <translation>此區塊無法被插入 .</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="217"/>
@@ -13936,7 +13948,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="238"/>
         <source>Specify second point</source>
-        <translation>指定第二個點</translation>
+        <translation>指定第二點</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="238"/>
@@ -13999,7 +14011,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="176"/>
         <source>Specify point on circle</source>
-        <translation>指定圓上的點</translation>
+        <translation>在圓上指定點</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="176"/>
@@ -14027,7 +14039,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle2p.cpp" line="184"/>
         <source>Specify first point</source>
-        <translation>指定第一個點</translation>
+        <translation>指定第一點</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle2p.cpp" line="184"/>
@@ -14037,7 +14049,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle2p.cpp" line="188"/>
         <source>Specify second point</source>
-        <translation>指定第二個點</translation>
+        <translation>指定第二點</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle2p.cpp" line="188"/>
@@ -14055,7 +14067,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="186"/>
         <source>Specify first point</source>
-        <translation>指定第一個點</translation>
+        <translation>指定第一點</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="187"/>
@@ -14065,7 +14077,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="190"/>
         <source>Specify second point</source>
-        <translation>指定第二個點</translation>
+        <translation>指定第二點</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="191"/>
@@ -14076,7 +14088,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="194"/>
         <source>Specify third point</source>
-        <translation>指定第三個點</translation>
+        <translation>指定第三點</translation>
     </message>
 </context>
 <context>
@@ -14084,17 +14096,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="106"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>半徑=%1 無效（運算式）</translation>
+        <translation>半徑%1 不合法 (表示)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="108"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>半徑=%1 無效（負值）</translation>
+        <translation>半徑%1 無效 (負數)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="111"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>半徑=%1 無效（零）</translation>
+        <translation>半徑%1 不合法 (零)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="193"/>
@@ -14211,7 +14223,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="181"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>半徑「%1」沒有共同切圓</translation>
+        <translation>半徑%1 有相關的相關圓圈</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="326"/>
@@ -14438,12 +14450,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="207"/>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation>指定橢圓上一點或到焦點的總距離</translation>
+        <translation>在椭圆上指定一分,或到相關地點的总相距</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="221"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>總距離 %1 小於焦點間距離</translation>
+        <translation>總距離 %1 小於焦點間的距離</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="223"/>
@@ -14482,7 +14494,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="157"/>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>無法唯一確定橢圓</translation>
+        <translation>無法單一地決定椭圆</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="279"/>
@@ -14552,7 +14564,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="171"/>
         <source>Total hatch area = %1</source>
-        <translation>總填充面積 = %1</translation>
+        <translation>總孵出地區 =%1</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="179"/>
@@ -14567,7 +14579,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawimage.cpp" line="210"/>
         <location filename="../src/actions/rs_actiondrawimage.cpp" line="224"/>
         <source>Not a valid expression</source>
-        <translation>不正確的表示式</translation>
+        <translation>無效的表達式</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawimage.cpp" line="308"/>
@@ -14600,7 +14612,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="313"/>
         <source>Specify first point</source>
-        <translation>指定第一個點</translation>
+        <translation>指定第一點</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="314"/>
@@ -14631,12 +14643,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="443"/>
         <source>Cannot undo: Begin of history reached</source>
-        <translation>無法復原：已到達歷史起點</translation>
+        <translation>無法撤消:已到達歷史的開始</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="478"/>
         <source>Cannot redo: End of history reached</source>
-        <translation>無法重做：已到達歷史終點</translation>
+        <translation>無法重做: 已到達歷史結束</translation>
     </message>
 </context>
 <context>
@@ -14686,7 +14698,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="251"/>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation>扇區線數量不在範圍內： </translation>
+        <translation>未在範圍內的區段行數 :</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="288"/>
@@ -14739,7 +14751,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinehorvert.cpp" line="157"/>
         <source>Specify first point</source>
-        <translation>指定第一個點</translation>
+        <translation>指定第一點</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinehorvert.cpp" line="158"/>
@@ -14749,7 +14761,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinehorvert.cpp" line="161"/>
         <source>Specify second point</source>
-        <translation>指定第二個點</translation>
+        <translation>指定第二點</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinehorvert.cpp" line="162"/>
@@ -15003,7 +15015,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="282"/>
         <source>Select first circle/ellipse/parabola</source>
-        <translation>選擇第一個圓/橢圓/拋物線</translation>
+        <translation>選擇一圈/ ellipse/ parabola</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="283"/>
@@ -15013,7 +15025,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="286"/>
         <source>Select second circle/ellipse/parabola</source>
-        <translation>選擇第二個圓/橢圓/拋物線</translation>
+        <translation>選擇第二個圓形/橢圓形/拋物線</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="287"/>
@@ -15024,7 +15036,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="290"/>
         <source>Select the tangent line closest to cursor</source>
-        <translation>選擇最接近游標的切線</translation>
+        <translation>選擇最接近游標的正切行</translation>
     </message>
 </context>
 <context>
@@ -15069,13 +15081,13 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="340"/>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="509"/>
         <source>Enter the end point x</source>
-        <translation>輸入終點 x</translation>
+        <translation>輸入收尾點 x</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="375"/>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="520"/>
         <source>Enter number of polylines</source>
-        <translation>輸入多段線數量</translation>
+        <translation>輸入多行數</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="459"/>
@@ -15085,7 +15097,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="461"/>
         <source>Enter an equation, f(x)</source>
-        <translation>輸入方程式 f(x)</translation>
+        <translation>輸入等式, f (x)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="479"/>
@@ -15100,22 +15112,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="495"/>
         <source>The entered x is invalid.</source>
-        <translation>輸入的 x 無效。</translation>
+        <translation>已輸入的 x 不合法 .</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="541"/>
         <source>The step size entered is invalid.</source>
-        <translation>輸入的步長無效。</translation>
+        <translation>已輸入的步數大小不合法 .</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="575"/>
         <source>The value x entered is invalid.</source>
-        <translation>輸入的值 x 無效。</translation>
+        <translation>輸入的值 x 不合法 .</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="678"/>
         <source>Specify first point</source>
-        <translation>指定第一個點</translation>
+        <translation>指定第一點</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="679"/>
@@ -15204,7 +15216,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="285"/>
         <source>Specify second point</source>
-        <translation>指定第二個點</translation>
+        <translation>指定第二點</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="290"/>
@@ -15299,7 +15311,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="93"/>
         <source>Area: %1 %2^2</source>
-        <translation>面積：%1 %2²</translation>
+        <translation>區域 :%1%2^2</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="137"/>
@@ -15519,7 +15531,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="110"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>實體必須是直線、圓弧、圓、橢圓或插值樣條線。</translation>
+        <translation>實體必須是一行、弧、圓、椭圆或插入等分線.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="118"/>
@@ -15572,27 +15584,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="112"/>
         <source>Parent of second entity is nullptr</source>
-        <translation>第二個實體的父物件為空</translation>
+        <translation>第 二 個實體的父為 perptr</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="115"/>
         <source>One of the chosen entities is nullptr</source>
-        <translation>所選實體之一為空</translation>
+        <translation>有被選取的實體被作廢了</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="142"/>
         <source>Parent of first entity is nullptr</source>
-        <translation>第一個實體的父物件為空</translation>
+        <translation>第一個實體的父為 perptr</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="146"/>
         <source>First entity is nullptr</source>
-        <translation>第一個實體為空</translation>
+        <translation>第一個實體是無效的</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="158"/>
         <source>Second entity is nullptr</source>
-        <translation>第二個實體為空</translation>
+        <translation>第 二 個實體已作废</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="171"/>
@@ -15620,7 +15632,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletequick.cpp" line="92"/>
         <source>Pick entity to delete</source>
-        <translation>選取要刪除的物件</translation>
+        <translation>選擇要刪除的實體</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletequick.cpp" line="93"/>
@@ -15633,7 +15645,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyentity.cpp" line="109"/>
         <source>Click on entity to modify</source>
-        <translation>點擊實體進行修改</translation>
+        <translation>點擊實體以修改</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyentity.cpp" line="109"/>
@@ -15798,7 +15810,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="419"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>指定第一個實體或輸入半徑 &lt;%1&gt;</translation>
+        <translation>指定第一個實體或輸入半徑%1&gt;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="420"/>
@@ -15827,7 +15839,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="238"/>
         <source>Specify scale center</source>
-        <translation>指定縮放中心</translation>
+        <translation>指定比例中心</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="243"/>
@@ -16202,7 +16214,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="66"/>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="87"/>
         <source>Polyline created</source>
-        <translation>多段線已建立</translation>
+        <translation>已建立多行</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="356"/>
@@ -16273,47 +16285,47 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="144"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>以紙張座標的列印偏移 (%1, %2)</translation>
+        <translation>在 (%1,%2) 相抵以出出纸座標</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="147"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>以圖形座標的列印偏移 (%1, %2)</translation>
+        <translation>由 (%1,%2) 在圖形座標中相抵列印出</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="164"/>
         <source>Printout in Black/White</source>
-        <translation>黑白列印</translation>
+        <translation>黑白打印出</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="169"/>
         <source>Printout in color</source>
-        <translation>彩色列印</translation>
+        <translation>以顏色打印出</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="174"/>
         <source>Printout offset in graph coordinates</source>
-        <translation>圖形座標的列印偏移</translation>
+        <translation>在圖形座標中列印出</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="179"/>
         <source>Printout offset in paper coordinates</source>
-        <translation>紙張座標的列印偏移</translation>
+        <translation>在平面座標中打印出</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="184"/>
         <source>: select printout offset coordinates</source>
-        <translation>：選擇列印偏移座標</translation>
+        <translation>:取出平移座標</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="185"/>
         <source>type in offset from command line to offset printout</source>
-        <translation>從命令列輸入偏移量以偏移列印輸出</translation>
+        <translation>从命令行中相抵以輸出</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="193"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>列印偏移忽略相對零點。忽略「@」</translation>
+        <translation>打印偏移忽略相對零 。 忽略&quot;@&quot;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="278"/>
@@ -16331,7 +16343,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="75"/>
         <source>No entity selected!</source>
-        <translation>沒有選擇實體！</translation>
+        <translation>沒有被選取出实体 !</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="83"/>
@@ -16636,17 +16648,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="26"/>
         <source>Tangential Arc Options</source>
-        <translation>切線圓弧選項</translation>
+        <translation>切向弧選項</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="66"/>
         <source>Radius of the tangential arc</source>
-        <translation>切線圓弧半徑</translation>
+        <translation>相接弧的半徑</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="85"/>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>切線圓弧總圓心角</translation>
+        <translation>相接弧的總分角</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="98"/>
@@ -16666,17 +16678,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="32"/>
         <source>Bevel Options</source>
-        <translation>倒角選項</translation>
+        <translation>Bevel 選擇</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="53"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>勾選以將兩個實體都修剪到倒角</translation>
+        <translation>檢查以修剪兩個實體到貝爾</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>修剪</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16699,7 +16711,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circleoptions.ui" line="50"/>
         <source>Radius:</source>
-        <translation>半徑：</translation>
+        <translation>半徑 :</translation>
     </message>
 </context>
 <context>
@@ -16707,22 +16719,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="32"/>
         <source>Circle Tangential2 Options</source>
-        <translation>切於兩圓選項</translation>
+        <translation>圓切數2 選項</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;要繪製的切圓半徑&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;要繪製的切線圓的半徑&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="59"/>
         <source>Radius:</source>
-        <translation>半徑：</translation>
+        <translation>半徑 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="69"/>
         <source>Radius of tangential circle</source>
-        <translation>切圓半徑</translation>
+        <translation>相切相相切相圓的半徑</translation>
     </message>
 </context>
 <context>
@@ -16730,12 +16742,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="32"/>
         <source>Linear Dimension Options</source>
-        <translation>線性尺寸選項</translation>
+        <translation>線性標注選項</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="68"/>
         <source>Angle:</source>
-        <translation>角度：</translation>
+        <translation>角度:</translation>
     </message>
 </context>
 <context>
@@ -16743,12 +16755,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="32"/>
         <source>Dimension Options</source>
-        <translation>尺寸選項</translation>
+        <translation>尺寸选项</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="62"/>
         <source>Label:</source>
-        <translation>標籤：</translation>
+        <translation>標籤 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="109"/>
@@ -16784,7 +16796,7 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="142"/>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="163"/>
         <source>...</source>
-        <translation>…</translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -16812,7 +16824,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="86"/>
         <source>Scale Factor</source>
-        <translation>縮放係數</translation>
+        <translation>大小因子</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="93"/>
@@ -16822,7 +16834,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="100"/>
         <source>DPI of Image</source>
-        <translation>影像 DPI</translation>
+        <translation>影像的DPI</translation>
     </message>
 </context>
 <context>
@@ -16835,7 +16847,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="65"/>
         <source>Angle:</source>
-        <translation>角度：</translation>
+        <translation>角度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="87"/>
@@ -16845,17 +16857,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="106"/>
         <source>Factor:</source>
-        <translation>係數：</translation>
+        <translation>因素 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="128"/>
         <source>Scale Factor</source>
-        <translation>縮放係數</translation>
+        <translation>大小因子</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="163"/>
         <source>Array:</source>
-        <translation>陣列：</translation>
+        <translation>陣列 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="185"/>
@@ -16865,22 +16877,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="210"/>
         <source>Number of Rows</source>
-        <translation>列數</translation>
+        <translation>行數</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="235"/>
         <source>Spacing:</source>
-        <translation>間距：</translation>
+        <translation>相距 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="257"/>
         <source>Column Spacing</source>
-        <translation>欄間距</translation>
+        <translation>列間距</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="276"/>
         <source>Row Spacing</source>
-        <translation>列間距</translation>
+        <translation>行相距</translation>
     </message>
 </context>
 <context>
@@ -16888,7 +16900,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="32"/>
         <source>Library Insert Options</source>
-        <translation>庫插入選項</translation>
+        <translation>通訊錄插入選項</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="53"/>
@@ -16903,12 +16915,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="70"/>
         <source>Factor:</source>
-        <translation>係數：</translation>
+        <translation>因素 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="80"/>
         <source>Scale Factor</source>
-        <translation>縮放係數</translation>
+        <translation>大小因子</translation>
     </message>
 </context>
 <context>
@@ -16941,7 +16953,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
         <source>Snap Point:</source>
-        <translation>捕捉點：</translation>
+        <translation>同步點 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
@@ -16956,7 +16968,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="180"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>終點</translation>
     </message>
 </context>
 <context>
@@ -16964,7 +16976,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="32"/>
         <source>Line Bisector Options</source>
-        <translation>角平分線選項</translation>
+        <translation>二相區選項</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="56"/>
@@ -16974,17 +16986,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="66"/>
         <source>Length of bisector</source>
-        <translation>角平分線長度</translation>
+        <translation>二相分離長度</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="73"/>
         <source>Number:</source>
-        <translation>數量：</translation>
+        <translation>數字 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="83"/>
         <source>Number of bisectors to create</source>
-        <translation>要建立的角平分線數量</translation>
+        <translation>要建立分區數</translation>
     </message>
 </context>
 <context>
@@ -16992,12 +17004,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="32"/>
         <source>Line Options</source>
-        <translation>直線選項</translation>
+        <translation>行選項</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="53"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation>從繪製的直線形成閉合輪廓</translation>
+        <translation>从所畫行形成已關閉的轮廓</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="56"/>
@@ -17007,22 +17019,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="72"/>
         <source>Undo the last line drawing</source>
-        <translation>復原上一次直線繪製</translation>
+        <translation>取出倒行圖</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="75"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>復原</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="82"/>
         <source>Redo the last line drawing</source>
-        <translation>重做上一次直線繪製</translation>
+        <translation>重做最后一行畫作</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="85"/>
         <source>Redo</source>
-        <translation>Redo</translation>
+        <translation>重做</translation>
     </message>
 </context>
 <context>
@@ -17030,17 +17042,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="32"/>
         <source>Line Options</source>
-        <translation>直線選項</translation>
+        <translation>行選項</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="56"/>
         <source>Direction:</source>
-        <translation>方向：</translation>
+        <translation>方向 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="103"/>
         <source>Polyline</source>
-        <translation>多段線</translation>
+        <translation>多行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="122"/>
@@ -17060,37 +17072,37 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="195"/>
         <source>Rel</source>
-        <translation>Rel</translation>
+        <translation>收起</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="224"/>
         <source>Undo the last line drawing</source>
-        <translation>復原上一次直線繪製</translation>
+        <translation>取出倒行圖</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="227"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>復原</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="234"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation>從繪製的直線形成閉合輪廓</translation>
+        <translation>从所畫行形成已關閉的轮廓</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="237"/>
         <source>Close</source>
-        <translation>閉合</translation>
+        <translation>關閉</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="253"/>
         <source>Redo the last line drawing</source>
-        <translation>重做上一次直線繪製</translation>
+        <translation>重做最后一行畫作</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="256"/>
         <source>Redo</source>
-        <translation>Redo</translation>
+        <translation>重做</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="297"/>
@@ -17103,7 +17115,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="32"/>
         <source>Line Parallel Options</source>
-        <translation>平行線選項</translation>
+        <translation>行相平行選項</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="56"/>
@@ -17113,17 +17125,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="72"/>
         <source>Distance to original entity</source>
-        <translation>與原始實體的距離</translation>
+        <translation>距離到原始實體</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="85"/>
         <source>Number:</source>
-        <translation>數量：</translation>
+        <translation>數字 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="95"/>
         <source>Number of parallels to create</source>
-        <translation>要建立的平行線數量</translation>
+        <translation>要建立同位素的數量</translation>
     </message>
 </context>
 <context>
@@ -17131,17 +17143,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="32"/>
         <source>Line Parallel Through Options</source>
-        <translation>通過點平行線選項</translation>
+        <translation>相平行行取自可選項</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="56"/>
         <source>Number:</source>
-        <translation>數量：</translation>
+        <translation>數字 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="66"/>
         <source>Number of parallels to create</source>
-        <translation>要建立的平行線數量</translation>
+        <translation>要建立同位素的數量</translation>
     </message>
 </context>
 <context>
@@ -17154,7 +17166,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="56"/>
         <source>Number:</source>
-        <translation>數量：</translation>
+        <translation>數量:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="66"/>
@@ -17172,7 +17184,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="56"/>
         <source>Number:</source>
-        <translation>數量：</translation>
+        <translation>數字 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="66"/>
@@ -17185,7 +17197,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="32"/>
         <source>Line Relative Angle Options</source>
-        <translation>相對角度線選項</translation>
+        <translation>相對角度選取行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="56"/>
@@ -17231,7 +17243,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="32"/>
         <source>Modify Offset Options</source>
-        <translation>修改偏移選項</translation>
+        <translation>變更偏移選項</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="56"/>
@@ -17262,32 +17274,32 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="32"/>
         <source>Polyline Options</source>
-        <translation>多段線選項</translation>
+        <translation>多行選項</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="53"/>
         <source>Close</source>
-        <translation>閉合</translation>
+        <translation>關閉</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="60"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>復原</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>
         <source>Tangential</source>
-        <translation>切線</translation>
+        <translation>切入</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="90"/>
         <source>Tan Radius</source>
-        <translation>切線半徑</translation>
+        <translation>坦半徑</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="95"/>
@@ -17297,12 +17309,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="103"/>
         <source>Radius:</source>
-        <translation>半徑：</translation>
+        <translation>半徑 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="126"/>
         <source>Angle:</source>
-        <translation>角度：</translation>
+        <translation>角度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="181"/>
@@ -17325,22 +17337,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;列印尺寸 : 繪圖尺寸&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;列印大小：繪圖大小&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="87"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;列印比例已鎖定為目前值&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html{頭}}}}}{body}}}}}&gt; Print Scale被鎖定到目前的值&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="90"/>
         <source>fixed</source>
-        <translation>固定</translation>
+        <translation>已固定</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="116"/>
         <source>Apply Print Scale to line width</source>
-        <translation>將列印比例套用至線寬</translation>
+        <translation>在行寬上套用列印大小</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="145"/>
@@ -17360,7 +17372,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation>計算容納繪圖所需的頁數</translation>
+        <translation>計算要包含畫面需要的頁數</translation>
     </message>
 </context>
 <context>
@@ -17368,22 +17380,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="32"/>
         <source>Round Options</source>
-        <translation>圓角選項</translation>
+        <translation>倒圓角選項</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="53"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>勾選以將兩邊都修剪到圓角</translation>
+        <translation>勾選以修剪兩側邊緣，使其圓角。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>修剪</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
         <source>Radius:</source>
-        <translation>半徑：</translation>
+        <translation>半徑 :</translation>
     </message>
 </context>
 <context>
@@ -17391,7 +17403,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>捕捉距離選項</translation>
+        <translation>同步相距選項</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
@@ -17404,7 +17416,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>捕捉距離選項</translation>
+        <translation>同步相距選項</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
@@ -17414,7 +17426,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="63"/>
         <source>Number of equidistant division points</source>
-        <translation>等距分割點數量</translation>
+        <translation>等距除點數</translation>
     </message>
 </context>
 <context>
@@ -17422,22 +17434,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="32"/>
         <source>Spline Options</source>
-        <translation>樣條線選項</translation>
+        <translation>Spline 選項</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="56"/>
         <source>Degree:</source>
-        <translation>階數：</translation>
+        <translation>度 :</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="91"/>
         <source>Closed</source>
-        <translation>閉合</translation>
+        <translation>已關閉</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="104"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>復原</translation>
     </message>
 </context>
 <context>
@@ -17463,12 +17475,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="20"/>
         <source>Trim Amount Options</source>
-        <translation>修剪量選項</translation>
+        <translation>調整數量選項</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="23"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>距離。負值用於修剪，正值用於延伸。</translation>
+        <translation>有相距了. 三剪切的負值, 延伸的正值 .</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="56"/>
@@ -17478,12 +17490,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="78"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>距離。負值用於修剪，正值用於延伸。當修剪到最終總長度時，負號將被忽略。</translation>
+        <translation>有相距了. 三剪切的負值, 延伸的正值 。 在剪接到最後總长度后, 負號被忽略了 .</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="97"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>輸入長度將作為修剪後的總長度，而不是長度增加量</translation>
+        <translation>在剪切后以輸入長度為總長, 而不是長度增加</translation>
     </message>
 </context>
 <context>
