@@ -21,6 +21,7 @@
 #include <limits>
 #include <random>
 #include <type_traits>
+#include <utility>
 
 #include <boost/math/constants/constants.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp>
@@ -167,6 +168,91 @@ std::array<RS_EllipseData, 18> rateSources() {
              basis(100.0, 0.5, tiny, period - tiny), basis(100.0, 0.5, period - tiny, tiny, true),
              basis(100.0, 0.5, 0.1, 0.8), basis(100.0, 0.5, 0.8, 0.1, true),
              basis(100.0, 0.5, period - tiny, 0.0), basis(100.0, 0.5, 0.0, period - tiny, true)}};
+}
+
+std::array<Quad, 2> factorOracle(const RS_EllipseData& data, const geo::ReferenceFrame& frame,
+                                const double delta, const double t) {
+    const bool whole = frame.sourceSweep().whole;
+    const Quad directed = idealDirectedSweep(data, whole);
+    const Quad rate = directed / Quad(frame.parameterEnd());
+    const Quad start = whole ? Quad(M_PI_4) : Quad(data.angle1);
+    const Quad end = whole ? start : Quad(data.angle2);
+    const Quad angle = t > 0.5 * frame.parameterEnd() ?
+        end - rate * (Quad(frame.parameterEnd()) - Quad(t)) : start + rate * Quad(t);
+    const Quad s = sin(angle);
+    const Quad c = cos(angle);
+    const Quad r = data.ratio;
+    const Quad a = sqrt(Quad(data.majorP.x) * Quad(data.majorP.x) + Quad(data.majorP.y) * Quad(data.majorP.y));
+    const Quad h2 = r * r * c * c + s * s;
+    return {{1 + Quad(delta) * r / (a * h2 * sqrt(h2)),
+        -3 * rate * Quad(delta) * r * (1 - r * r) * s * c / (a * h2 * h2 * sqrt(h2))}};
+}
+
+void checkCriticalCoverage(const geo::CriticalAdapter& adapter) {
+    const auto& segments = adapter.segments();
+    REQUIRE_FALSE(segments.empty());
+    REQUIRE(adapter.regions().size() == segments.size());
+    CHECK(segments.front().t0 == 0.0);
+    CHECK(segments.back().t1 == adapter.frame().parameterEnd());
+    CHECK(adapter.branchCount() == 1);
+    CHECK(adapter.next(0) == (adapter.frame().sourceSweep().whole ? 0 : -1));
+    for (std::size_t i = 0; i < segments.size(); ++i) {
+        CAPTURE(i);
+        const auto& segment = segments[i];
+        CHECK(segment.branch == 0);
+        REQUIRE(segment.t0 < segment.t1);
+        if (i != 0) { CHECK(segments[i - 1].t1 == segment.t0); }
+        const auto proof = adapter.certifyInjective(i, LC_Interval::hull(segment.t0, segment.t1));
+        REQUIRE(proof.available);
+        CHECK(proof.segment == i);
+        CHECK(proof.parameter.lo() == segment.t0);
+        CHECK(proof.parameter.hi() == segment.t1);
+        for (const double t : {segment.t0, segment.t0 + 0.5 * (segment.t1 - segment.t0), segment.t1}) {
+            RS_Vector p;
+            RS_Vector d;
+            REQUIRE(adapter.evaluate(i, t, p, d));
+            CHECK(geo::isFinite2D(p));
+            CHECK(geo::isFinite2D(d));
+            LC_Interval x, y, dx, dy;
+            REQUIRE(adapter.bound(i, t, t, x, y, dx, dy));
+            CHECK(x.contains(p.x));
+            CHECK(y.contains(p.y));
+            CHECK(dx.contains(d.x));
+            CHECK(dy.contains(d.y));
+        }
+    }
+}
+
+void checkCriticalOccurrences(const RS_EllipseData& data, const double delta,
+                              const geo::CriticalAdapter& adapter) {
+    const Quad pi = boost::math::constants::pi<Quad>();
+    const Quad directed = idealDirectedSweep(data, adapter.frame().sourceSweep().whole);
+    const Quad start = adapter.frame().sourceSweep().whole ? Quad(M_PI_4) : Quad(data.angle1);
+    const Quad a = sqrt(Quad(data.majorP.x) * Quad(data.majorP.x) + Quad(data.majorP.y) * Quad(data.majorP.y));
+    const Quad r = data.ratio;
+    Quad beta = 0;
+    if (adapter.regime() == geo::CriticalRegime::IntermediateThresholds) {
+        const Quad h2 = pow(Quad(-delta) * r / a, Quad(2) / 3);
+        beta = asin(sqrt((h2 - r * r) / (1 - r * r)));
+    }
+    const auto& occurrences = adapter.criticalOccurrences();
+    for (std::size_t i = 0; i < occurrences.size(); ++i) {
+        const auto& occurrence = occurrences[i];
+        CAPTURE(i, occurrence.quadrant, occurrence.winding);
+        const int index = occurrence.quadrant + 4 * occurrence.winding;
+        Quad angle = Quad(index) * pi / 2;
+        if (occurrence.kind == geo::CriticalKind::SimpleCusp) {
+            angle = index % 2 == 0 ? angle + beta : angle + pi / 2 - beta;
+        }
+        const Quad parameter = occurrence.atStart ? Quad(0) : occurrence.atEnd ? Quad(adapter.frame().parameterEnd()) :
+            (angle - start) * Quad(adapter.frame().parameterEnd()) / directed;
+        checkEnclosure(occurrence.parameter, parameter);
+        CHECK(occurrence.parameter.lo() >= 0.0);
+        CHECK(occurrence.parameter.hi() <= adapter.frame().parameterEnd());
+        if (i != 0) { CHECK(occurrences[i - 1].parameter.hi() < occurrence.parameter.lo()); }
+        CHECK(occurrence.proof == (occurrence.kind == geo::CriticalKind::SimpleCusp ?
+            geo::CriticalProof::MonotonePolynomial : geo::CriticalProof::ExactAxisThreshold));
+    }
 }
 } // namespace
 
@@ -1035,6 +1121,409 @@ TEST_CASE("Invalid exact-sweep queries clear angle and jet outputs",
     for (const LC_Interval value : {bounds.x, bounds.y, bounds.dx, bounds.dy, bounds.ddx, bounds.ddy,
                                     bounds.speedSquaredProduct, bounds.crossProduct}) {
         CHECK(value.containsZero());
+    }
+}
+
+TEST_CASE("Critical factors enclose independent physical curvature and traversal derivatives",
+          "[lc-offsetcurve][geometry][reference-critical]") {
+    for (auto data : rateSources()) {
+        for (const double ratio : {0.02, 0.5, 1.0}) {
+            data.ratio = ratio;
+            data.majorP = RS_Vector{60.0, 80.0};
+            for (const double delta : {-99.99, 0.0, 20.0}) {
+                CAPTURE(data.angle1, data.angle2, data.reversed, ratio, delta);
+                const auto frame = geo::ReferenceFrame::create(data, delta);
+                REQUIRE(frame);
+                for (int k = 0; k <= 32; ++k) {
+                    const double t = frame->parameterEnd() * (static_cast<double>(k) / 32.0);
+                    LC_Interval f, ft;
+                    REQUIRE(frame->boundOffsetFactor(t, t, f, ft));
+                    const auto oracle = factorOracle(data, *frame, delta, t);
+                    checkEnclosure(f, oracle[0]);
+                    checkEnclosure(ft, oracle[1]);
+                }
+                LC_Interval f, ft;
+                REQUIRE(frame->boundOffsetFactor(0.0, frame->parameterEnd(), f, ft));
+                for (int k = 0; k <= 16; ++k) {
+                    const auto oracle = factorOracle(data, *frame, delta,
+                        frame->parameterEnd() * (static_cast<double>(k) / 16.0));
+                    checkEnclosure(f, oracle[0]);
+                    checkEnclosure(ft, oracle[1]);
+                }
+                CHECK_FALSE(frame->boundOffsetFactor(-1.0, 0.0, f, ft));
+                CHECK_FALSE(f.isValid());
+                CHECK_FALSE(ft.isValid());
+            }
+        }
+    }
+}
+
+TEST_CASE("Critical thresholds are exact for rotated axes rather than rounded radii",
+          "[lc-offsetcurve][geometry][reference-critical]") {
+    const std::array<std::pair<double, geo::CriticalRegime>, 9> distances{{
+        {1.0, geo::CriticalRegime::PositiveFactor}, {1.25, geo::CriticalRegime::MinimumStationary},
+        {2.0, geo::CriticalRegime::IntermediateThresholds}, {10.0, geo::CriticalRegime::MaximumStationary},
+        {11.0, geo::CriticalRegime::NegativeFactor},
+        {std::nextafter(1.25, 0.0), geo::CriticalRegime::PositiveFactor},
+        {std::nextafter(1.25, 2.0), geo::CriticalRegime::IntermediateThresholds},
+        {std::nextafter(10.0, 0.0), geo::CriticalRegime::IntermediateThresholds},
+        {std::nextafter(10.0, 11.0), geo::CriticalRegime::NegativeFactor}}};
+    for (const bool reversed : {false, true}) {
+        auto data = basis(5.0, 0.5, 0.0, 0.0, reversed);
+        data.majorP = RS_Vector{3.0, 4.0};
+        data.center = RS_Vector{1e12, -1e12};
+        for (const auto& entry : distances) {
+            CAPTURE(reversed, entry.first);
+            geo::WorkBudget budget;
+            auto result = geo::analyseCritical(data, -entry.first, budget);
+            REQUIRE(result.status == LC_IntersectionStatus::Ok);
+            REQUIRE(result.adapter);
+            CHECK(result.reason == geo::CriticalAnalysis::Reason::None);
+            CHECK(result.adapter->regime() == entry.second);
+            const std::size_t expected = entry.second == geo::CriticalRegime::IntermediateThresholds ? 4 :
+                entry.second == geo::CriticalRegime::MinimumStationary ||
+                entry.second == geo::CriticalRegime::MaximumStationary ? 2 : 0;
+            CHECK(result.adapter->criticalOccurrences().size() == expected);
+            checkCriticalCoverage(*result.adapter);
+            checkCriticalOccurrences(data, -entry.first, *result.adapter);
+            CHECK(result.work.cubicPieces == 0);
+        }
+    }
+    for (const double distance : {std::nextafter(36.0, 0.0), 36.0, std::nextafter(36.0, 100.0)}) {
+        CAPTURE(distance);
+        const auto data = basis(100.0, 0.6);
+        geo::WorkBudget budget;
+        auto result = geo::analyseCritical(data, -distance, budget);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        REQUIRE(result.adapter);
+        CHECK(result.adapter->regime() == (distance < 36.0 ? geo::CriticalRegime::PositiveFactor :
+            geo::CriticalRegime::IntermediateThresholds));
+        CHECK(result.adapter->criticalOccurrences().size() == (distance < 36.0 ? 0 : 4));
+        checkCriticalOccurrences(data, -distance, *result.adapter);
+    }
+    auto irrational = basis(1.0, 0.5);
+    irrational.majorP = RS_Vector{1.0, 1.0};
+    const double roundedMinimum = std::hypot(1.0, 1.0) * 0.25;
+    geo::WorkBudget budget;
+    auto result = geo::analyseCritical(irrational, -roundedMinimum, budget);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    REQUIRE(result.adapter);
+    CHECK(result.adapter->regime() != geo::CriticalRegime::MinimumStationary);
+    checkCriticalOccurrences(irrational, -roundedMinimum, *result.adapter);
+    auto circle = basis(5.0, 1.0);
+    circle.majorP = RS_Vector{3.0, 4.0};
+    geo::WorkBudget collapseBudget;
+    auto collapse = geo::analyseCritical(circle, -5.0, collapseBudget);
+    CHECK(collapse.status == LC_IntersectionStatus::AmbiguousTopology);
+    CHECK(collapse.reason == geo::CriticalAnalysis::Reason::CollapsedCircle);
+    CHECK_FALSE(collapse.adapter);
+    circle.majorP = RS_Vector{1.0, 1.0};
+    geo::WorkBudget regularBudget;
+    auto regular = geo::analyseCritical(circle, -std::hypot(1.0, 1.0), regularBudget);
+    REQUIRE(regular.status == LC_IntersectionStatus::Ok);
+    REQUIRE(regular.adapter); // a rounded irrational radius is not an exact collapse
+}
+
+TEST_CASE("Critical occurrence membership uses true axes and independently qualified free ends",
+          "[lc-offsetcurve][geometry][reference-critical]") {
+    for (const bool reversed : {false, true}) {
+        const auto data = reversed ? basis(5.0, 0.5, M_PI_2, 0.0, true) : basis(5.0, 0.5, 0.0, M_PI_2);
+        geo::WorkBudget maxBudget;
+        auto maximum = geo::analyseCritical(data, -10.0, maxBudget);
+        REQUIRE(maximum.status == LC_IntersectionStatus::Ok);
+        REQUIRE(maximum.adapter);
+        CHECK(maximum.adapter->criticalOccurrences().empty());
+        checkCriticalCoverage(*maximum.adapter);
+        geo::WorkBudget minBudget;
+        auto minimum = geo::analyseCritical(data, -1.25, minBudget);
+        REQUIRE(minimum.status == LC_IntersectionStatus::Ok);
+        REQUIRE(minimum.adapter);
+        REQUIRE(minimum.adapter->criticalOccurrences().size() == 1);
+        const auto& occurrence = minimum.adapter->criticalOccurrences().front();
+        CHECK(occurrence.kind == geo::CriticalKind::CriticalStationary);
+        CHECK(occurrence.atStart == !reversed);
+        CHECK(occurrence.atEnd == reversed);
+        CHECK(occurrence.parameter.lo() == (reversed ? minimum.adapter->frame().parameterEnd() : 0.0));
+        CHECK(occurrence.parameter.lo() == occurrence.parameter.hi());
+    }
+    const double distance = 2.0;
+    const Quad r = Quad(0.5);
+    const Quad h2 = pow(Quad(distance) * r / 5, Quad(2) / 3);
+    const double cusp = asin(sqrt((h2 - r * r) / (1 - r * r))).convert_to<double>();
+    for (const double end : {cusp - 1e-6, cusp + 1e-6}) {
+        const auto data = basis(5.0, 0.5, 0.0, end);
+        geo::WorkBudget budget;
+        auto result = geo::analyseCritical(data, -distance, budget);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        REQUIRE(result.adapter);
+        CHECK(result.adapter->criticalOccurrences().size() == (end < cusp ? 0 : 1));
+        checkCriticalOccurrences(data, -distance, *result.adapter);
+    }
+}
+
+TEST_CASE("Critical adapters cover wrapped reversed and extreme-scale sources without gaps",
+          "[lc-offsetcurve][geometry][reference-critical]") {
+    for (auto data : rateSources()) {
+        for (const double scale : {1e-200, 1.0, 1e200}) {
+            data.majorP = RS_Vector{3.0 * scale, 4.0 * scale};
+            data.ratio = 0.5;
+            for (const double distance : {0.0, 0.5 * scale, -2.0 * scale}) {
+                CAPTURE(data.angle1, data.angle2, data.reversed, scale, distance);
+                geo::WorkBudget budget;
+                auto result = geo::analyseCritical(data, distance, budget);
+                REQUIRE(result.status == LC_IntersectionStatus::Ok);
+                REQUIRE(result.adapter);
+                checkCriticalCoverage(*result.adapter);
+                checkCriticalOccurrences(data, distance, *result.adapter);
+                for (std::size_t i = 0; i < result.adapter->segments().size(); ++i) {
+                    const auto& segment = result.adapter->segments()[i];
+                    LC_CurveJetBounds bounds;
+                    REQUIRE(result.adapter->frame().boundOffsetJet(segment.t0, segment.t1, bounds));
+                    for (int k = 0; k <= 4; ++k) {
+                        const double t = k == 4 ? segment.t1 :
+                            segment.t0 + (segment.t1 - segment.t0) * (static_cast<double>(k) / 4.0);
+                        checkEnclosure(bounds, referenceOracle(data, result.adapter->frame(), distance, t, true));
+                    }
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("Critical cached join and seam hooks obey complete boxes and original segment domains",
+          "[lc-offsetcurve][geometry][reference-critical]") {
+    const auto data = basis(100.0, 0.5);
+    geo::WorkBudget budget;
+    auto result = geo::analyseCritical(data, -30.0, budget);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    REQUIRE(result.adapter);
+    const auto& adapter = *result.adapter;
+    const auto& segments = adapter.segments();
+    REQUIRE(segments.size() > 2);
+    for (std::size_t i = 1; i < segments.size(); ++i) {
+        const double join = segments[i].t0;
+        const LC_IntersectionDomain box{i - 1, i, LC_Interval::point(join), LC_Interval::point(join)};
+        const auto certificate = adapter.certifyIntersection(box);
+        CHECK(certificate.outcome == LC_AnalyticIntersectionCertificate::Outcome::Excluded);
+        CHECK(certificate.proof == LC_IntersectionProof::AnalyticExclusion);
+        CHECK(certificate.proofDomain.segmentA == box.segmentA);
+        CHECK(certificate.proofDomain.segmentB == box.segmentB);
+        CHECK(certificate.proofDomain.parameterA.lo() == join);
+        CHECK(certificate.proofDomain.parameterB.hi() == join);
+        const LC_IntersectionDomain neighborhood{i - 1, i,
+            LC_Interval::hull(std::nextafter(join, segments[i - 1].t0), join),
+            LC_Interval::hull(join, std::nextafter(join, segments[i].t1))};
+        CHECK(adapter.certifyIntersection(neighborhood).outcome ==
+              LC_AnalyticIntersectionCertificate::Outcome::Excluded);
+    }
+    const double end = adapter.frame().parameterEnd();
+    const LC_IntersectionDomain seam{0, segments.size() - 1, LC_Interval::point(0.0), LC_Interval::point(end)};
+    const auto certificate = adapter.certifyIntersection(seam);
+    REQUIRE(certificate.outcome == LC_AnalyticIntersectionCertificate::Outcome::Excluded);
+    CHECK(certificate.proofDomain.parameterA.lo() == 0.0);
+    CHECK(certificate.proofDomain.parameterB.hi() == end);
+    CHECK(adapter.certifyIntersection({0, segments.size() - 1,
+        LC_Interval::hull(0.0, std::nextafter(0.0, end)),
+        LC_Interval::hull(std::nextafter(end, 0.0), end)}).outcome ==
+        LC_AnalyticIntersectionCertificate::Outcome::Excluded);
+    const LC_IntersectionDomain unproved{0, segments.size() - 1,
+        LC_Interval::hull(segments.front().t0, segments.front().t1),
+        LC_Interval::hull(segments.back().t0, segments.back().t1)};
+    CHECK(adapter.certifyIntersection(unproved).outcome == LC_AnalyticIntersectionCertificate::Outcome::Unavailable);
+    LC_IntersectionOptions options;
+    options.strict = true;
+    options.tolerance = 1e-8;
+    geo::WorkBudget outwardBudget;
+    auto outward = geo::analyseCritical(data, 1.0, outwardBudget);
+    REQUIRE(outward.adapter);
+    const auto intersections = findIntersections(*outward.adapter, options);
+    CHECK(intersections.status == LC_IntersectionStatus::Ok);
+    CHECK(intersections.intersections.empty());
+    const auto& first = segments.front();
+    const double mid = first.t0 + 0.5 * (first.t1 - first.t0);
+    CHECK(adapter.certifyIntersection({0, 0, LC_Interval::hull(first.t0, mid),
+        LC_Interval::hull(first.t0, mid)}).outcome == LC_AnalyticIntersectionCertificate::Outcome::Unavailable);
+}
+
+TEST_CASE("Critical failures and invalid requests never publish partial adapters or geometry",
+          "[lc-offsetcurve][geometry][reference-critical]") {
+    for (const auto& entry : std::array<std::pair<RS_EllipseData, double>, 3>{{
+            {basis(5.0, 1.0), -5.0}, {basis(1.0, 1e-250, 0.0, 1.0), -0.25},
+            {basis(1e-300, 0.5), -1e300}}}) {
+        geo::WorkBudget budget;
+        auto result = geo::analyseCritical(entry.first, entry.second, budget);
+        CHECK(result.status == LC_IntersectionStatus::AmbiguousTopology);
+        CHECK_FALSE(result.adapter);
+        CHECK(result.reason != geo::CriticalAnalysis::Reason::None);
+        CHECK(result.work.vertices > 0);
+        CHECK(result.work.distancePairs > 0);
+    }
+    const auto unrepresentable = basis(1.0, 1e-80);
+    const auto frame = geo::ReferenceFrame::create(unrepresentable, -1e81);
+    REQUIRE(frame);
+    LC_CurveJetBounds failedBounds;
+    REQUIRE_FALSE(frame->boundOffsetJet(0.0, frame->parameterEnd(), failedBounds));
+    geo::WorkBudget publicationBudget;
+    auto publication = geo::analyseCritical(unrepresentable, -1e81, publicationBudget);
+    CHECK(publication.status == LC_IntersectionStatus::AmbiguousTopology);
+    CHECK(publication.reason == geo::CriticalAnalysis::Reason::UnresolvedGeometry);
+    CHECK_FALSE(publication.adapter);
+    CHECK(publication.work.vertices > 1);
+    geo::WorkBudget invalidBudget;
+    auto invalid = geo::analyseCritical(basis(5.0, 2.0), 1.0, invalidBudget);
+    CHECK(invalid.status == LC_IntersectionStatus::InvalidInput);
+    CHECK_FALSE(invalid.adapter);
+    CHECK(invalid.work.vertices == 0);
+    geo::WorkBudget budget;
+    auto valid = geo::analyseCritical(basis(5.0, 0.5, 0.0, 1.0), 0.5, budget);
+    REQUIRE(valid.adapter);
+    const auto& adapter = *valid.adapter;
+    for (const double t : {-1.0, std::numeric_limits<double>::quiet_NaN(),
+                           std::numeric_limits<double>::infinity(), adapter.frame().parameterEnd() + 1.0}) {
+        RS_Vector p{1.0, 1.0};
+        RS_Vector d{1.0, 1.0};
+        CHECK_FALSE(adapter.evaluate(0, t, p, d));
+        CHECK_FALSE(p.valid);
+        CHECK_FALSE(d.valid);
+        LC_Interval x = LC_Interval::point(1.0), y = x, dx = x, dy = x;
+        CHECK_FALSE(adapter.bound(0, t, t, x, y, dx, dy));
+        CHECK_FALSE(x.isValid()); CHECK_FALSE(y.isValid());
+        CHECK_FALSE(dx.isValid()); CHECK_FALSE(dy.isValid());
+        CHECK_FALSE(adapter.certifyInjective(0, LC_Interval::point(t)).available);
+    }
+    CHECK_FALSE(adapter.certifyInjective(adapter.segments().size(), LC_Interval::point(0.0)).available);
+}
+
+TEST_CASE("Critical work caps are exact cumulative irreversible and checked before generation",
+          "[lc-offsetcurve][geometry][reference-critical]") {
+    const auto data = basis(100.0, 0.5);
+    geo::WorkBudget baseline;
+    auto reference = geo::analyseCritical(data, -30.0, baseline);
+    REQUIRE(reference.status == LC_IntersectionStatus::Ok);
+    const auto work = reference.work;
+    REQUIRE(work.vertices > 1);
+    REQUIRE(work.distancePairs > 1);
+    REQUIRE(work.deepest > 1);
+    geo::WorkBudget exact{LC_OffsetCheckLimits{1, work.vertices, work.distancePairs, work.deepest}};
+    CHECK(exact.depthLimit() == work.deepest);
+    auto accepted = geo::analyseCritical(data, -30.0, exact);
+    REQUIRE(accepted.status == LC_IntersectionStatus::Ok);
+    CHECK(accepted.work.vertices == work.vertices);
+    CHECK(accepted.work.distancePairs == work.distancePairs);
+    CHECK(accepted.work.cubicPieces == 0);
+    for (int limit = 0; limit < 3; ++limit) {
+        LC_OffsetCheckLimits limits{1, work.vertices, work.distancePairs, work.deepest};
+        if (limit == 0) { --limits.maxVertices; }
+        if (limit == 1) { --limits.maxDistancePairs; }
+        if (limit == 2) { --limits.maxDepth; }
+        geo::WorkBudget budget{limits};
+        auto result = geo::analyseCritical(data, -30.0, budget);
+        CHECK(result.status == LC_IntersectionStatus::LimitExceeded);
+        CHECK_FALSE(result.adapter);
+        CHECK(budget.status() == geo::BudgetStatus::LimitExceeded);
+        CHECK(result.work.vertices <= limits.maxVertices);
+        CHECK(result.work.distancePairs <= limits.maxDistancePairs);
+        const auto consumed = budget.consumed();
+        auto again = geo::analyseCritical(data, -30.0, budget);
+        CHECK(again.status == LC_IntersectionStatus::LimitExceeded);
+        CHECK(again.work.vertices == consumed.vertices);
+        CHECK(again.work.distancePairs == consumed.distancePairs);
+    }
+    geo::WorkBudget spent{LC_OffsetCheckLimits{1, work.vertices + 2, work.distancePairs + 3, work.deepest}};
+    REQUIRE(spent.consumeVertices(2));
+    REQUIRE(spent.consumePairs(3));
+    auto result = geo::analyseCritical(data, -30.0, spent);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    CHECK(result.work.vertices == work.vertices + 2);
+    CHECK(result.work.distancePairs == work.distancePairs + 3);
+    spent.latchLimitExceeded();
+    CHECK(spent.status() == geo::BudgetStatus::LimitExceeded);
+    CHECK(spent.consumed().vertices == work.vertices + 2);
+    geo::WorkBudget zero{LC_OffsetCheckLimits{1, 1, 1, 0}};
+    zero.latchLimitExceeded();
+    CHECK(zero.status() == geo::BudgetStatus::InvalidInput);
+    auto refused = geo::analyseCritical(data, -30.0, zero);
+    CHECK(refused.status == LC_IntersectionStatus::InvalidInput);
+    CHECK(refused.work.vertices == 0);
+}
+
+TEST_CASE("Critical thin cusps use stable polynomial bounds and unrepresentable isolation refuses",
+          "[lc-offsetcurve][geometry][reference-critical]") {
+    for (const auto& entry : std::array<std::pair<double, double>, 2>{{{0.02, 5.3}, {0.01, 10.0}}}) {
+        for (const bool reversed : {false, true}) {
+            CAPTURE(entry.first, entry.second, reversed);
+            const auto data = basis(100.0, entry.first, 0.0, 0.0, reversed);
+            geo::WorkBudget regressionBudget;
+            auto regression = geo::analyseCritical(data, -entry.second, regressionBudget);
+            REQUIRE(regression.status == LC_IntersectionStatus::Ok);
+            REQUIRE(regression.adapter);
+            REQUIRE(regression.adapter->criticalOccurrences().size() == 4);
+            checkCriticalCoverage(*regression.adapter);
+            checkCriticalOccurrences(data, -entry.second, *regression.adapter);
+        }
+    }
+    const auto thin = basis(1.0, 1e-7);
+    geo::WorkBudget budget;
+    auto result = geo::analyseCritical(thin, -1e-8, budget);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    REQUIRE(result.adapter);
+    REQUIRE(result.adapter->criticalOccurrences().size() == 4);
+    checkCriticalCoverage(*result.adapter);
+    checkCriticalOccurrences(thin, -1e-8, *result.adapter);
+    const double ratio = 1e-155;
+    const double distance = std::nextafter(ratio * ratio, std::numeric_limits<double>::infinity());
+    REQUIRE(distance > 0.0);
+    const auto tiny = basis(1.0, ratio);
+    REQUIRE(geo::ReferenceFrame::create(tiny, -distance));
+    geo::WorkBudget tinyBudget;
+    auto unresolved = geo::analyseCritical(tiny, -distance, tinyBudget);
+    CHECK(unresolved.status == LC_IntersectionStatus::AmbiguousTopology);
+    CHECK(unresolved.reason == geo::CriticalAnalysis::Reason::UnresolvedGeometry);
+    CHECK_FALSE(unresolved.adapter);
+    CHECK(unresolved.work.vertices > 0);
+    CHECK(unresolved.work.distancePairs > 0);
+    CHECK(tinyBudget.status() == geo::BudgetStatus::Ok);
+}
+
+TEST_CASE("Critical region projection signs agree with independent cusp and tangent normals",
+          "[lc-offsetcurve][geometry][reference-critical]") {
+    for (const bool reversed : {false, true}) {
+        const auto data = basis(5.0, 0.5, 0.0, 0.0, reversed);
+        geo::WorkBudget budget;
+        auto result = geo::analyseCritical(data, -2.0, budget);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        REQUIRE(result.adapter);
+        const auto& adapter = *result.adapter;
+        const Quad pi = boost::math::constants::pi<Quad>();
+        const Quad sweep = idealDirectedSweep(data, true);
+        const Quad beta = asin(sqrt((pow(Quad(1) / 5, Quad(2) / 3) - Quad(0.25)) / Quad(0.75)));
+        for (const auto& region : adapter.regions()) {
+            const auto& segment = region.segment;
+            const double middle = segment.t0 + 0.5 * (segment.t1 - segment.t0);
+            const Quad eta = Quad(M_PI_4) + sweep * Quad(middle) / Quad(adapter.frame().parameterEnd());
+            Quad nx;
+            Quad ny;
+            if (region.proof == geo::InjectivityProof::SingleCuspProjection) {
+                const int q = floor(eta / (pi / 2)).convert_to<int>();
+                const Quad cusp = q % 2 == 0 ? Quad(q) * pi / 2 + beta : Quad(q + 1) * pi / 2 - beta;
+                const Quad h = sqrt(Quad(0.25) * cos(cusp) * cos(cusp) + sin(cusp) * sin(cusp));
+                nx = Quad(0.5) * cos(cusp) / h;
+                ny = sin(cusp) / h;
+            } else {
+                nx = -sin(eta) / 5;
+                ny = cos(eta) / Quad(2.5);
+            }
+            const auto midJet = referenceOracle(data, adapter.frame(), -2.0, middle, true);
+            const Quad expected = midJet[2] * nx + midJet[3] * ny;
+            REQUIRE(expected != 0);
+            for (int k = 0; k <= 16; ++k) {
+                const double t = k == 16 ? segment.t1 :
+                    segment.t0 + (segment.t1 - segment.t0) * (static_cast<double>(k) / 16.0);
+                const auto jet = referenceOracle(data, adapter.frame(), -2.0, t, true);
+                const Quad projected = jet[2] * nx + jet[3] * ny;
+                CHECK(projected * expected >= 0);
+            }
+        }
     }
 }
 

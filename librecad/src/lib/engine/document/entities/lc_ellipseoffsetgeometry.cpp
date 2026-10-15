@@ -15,10 +15,14 @@
 #include "lc_ellipseoffsetgeometry.h"
 
 #include <algorithm>
+#include <array>
 #include <cmath>
+#include <cstdint>
 #include <limits>
+#include <utility>
 
 #include <boost/math/tools/toms748_solve.hpp>
+#include <boost/multiprecision/cpp_int.hpp>
 
 #include "rs_math.h"
 
@@ -324,6 +328,16 @@ bool WorkBudget::checkDepth(const unsigned depth) {
     return true;
 }
 
+unsigned WorkBudget::depthLimit() const {
+    return m_limits.maxDepth;
+}
+
+void WorkBudget::latchLimitExceeded() {
+    if (m_status == BudgetStatus::Ok) {
+        m_status = BudgetStatus::LimitExceeded;
+    }
+}
+
 bool isFinite2D(const RS_Vector& point) {
     return point.valid && std::isfinite(point.x) && std::isfinite(point.y) && point.z == 0.0;
 }
@@ -575,7 +589,12 @@ bool ReferenceFrame::boundOffsetJet(const double t0, const double t1, LC_CurveJe
     if (m_ratio.lo() == 1.0) {
         // Keep the shared circle radius, rather than independently bounding E + delta*N.
         const LC_Interval radius = m_axis + m_distance;
-        const LC_Interval factor = radius / m_axis;
+        LC_Interval factor;
+        LC_Interval derivative;
+        LC_Interval speed;
+        if (!offsetFactor(cosine, sine, factor, derivative, speed)) {
+            return false;
+        }
         candidate.x = factor * source.x;
         candidate.y = factor * source.y;
         candidate.dx = -signedRate * candidate.y;
@@ -585,25 +604,12 @@ bool ReferenceFrame::boundOffsetJet(const double t0, const double t1, LC_CurveJe
         candidate.speedSquaredProduct = sqr(radius) * m_rateSquared;
         candidate.crossProduct = direction * sqr(radius) * m_rateCubed;
     } else {
-        const LC_Interval ratioSquared = sqr(m_ratio);
-        const LC_Interval difference = LC_Interval::point(1.0) - ratioSquared;
-        const LC_Interval h2 = ratioSquared + difference * sqr(sine);
-        if (!finiteInterval(h2) || !h2.isPositive()) {
+        LC_Interval factor;
+        LC_Interval factorDerivative;
+        LC_Interval speed;
+        if (!offsetFactor(cosine, sine, factor, factorDerivative, speed)) {
             return false;
         }
-        const LC_Interval h = sqrt(h2);
-        // Physical angular speed: curvature and normal do not depend on traversal rate.
-        const LC_Interval speed = m_axis * h;
-        const LC_Interval curvatureDenominator = speed * h2;
-        const LC_Interval derivativeDenominator = curvatureDenominator * h2;
-        if (!finiteInterval(speed) || !speed.isPositive() || !finiteInterval(curvatureDenominator) ||
-            !curvatureDenominator.isPositive() || !finiteInterval(derivativeDenominator) ||
-            !derivativeDenominator.isPositive()) {
-            return false;
-        }
-        const LC_Interval factor = LC_Interval::point(1.0) + m_distance * m_ratio / curvatureDenominator;
-        const LC_Interval factorDerivative = LC_Interval::point(-3.0) * signedRate * m_distance * m_ratio *
-            difference * sine * cosine / derivativeDenominator;
         const LC_Interval normalX = (m_ratio * cosine * m_majorX - sine * m_majorY) / speed;
         const LC_Interval normalY = (m_ratio * cosine * m_majorY + sine * m_majorX) / speed;
         candidate.x = source.x + m_distance * normalX;
@@ -626,6 +632,60 @@ bool ReferenceFrame::boundOffsetJet(const double t0, const double t1, LC_CurveJe
     }
     out = candidate;
     return true;
+}
+
+bool ReferenceFrame::offsetFactor(const LC_Interval& cosine, const LC_Interval& sine,
+                                  LC_Interval& factor, LC_Interval& derivative, LC_Interval& speed) const {
+    factor = derivative = speed = {};
+    if (m_signedDistance == 0.0) {
+        factor = LC_Interval::point(1.0);
+        derivative = LC_Interval::point(0.0);
+        return true;
+    }
+    if (m_ratio.lo() == 1.0) {
+        const LC_Interval value = (m_axis + m_distance) / m_axis;
+        if (!finiteInterval(value)) {
+            return false;
+        }
+        factor = value;
+        derivative = LC_Interval::point(0.0);
+        speed = m_axis;
+        return true;
+    }
+    const LC_Interval ratioSquared = sqr(m_ratio);
+    const LC_Interval difference = LC_Interval::point(1.0) - ratioSquared;
+    const LC_Interval h2 = ratioSquared + difference * sqr(sine);
+    if (!finiteInterval(h2) || !h2.isPositive()) {
+        return false;
+    }
+    // Physical angular speed, not the rate-scaled adapter speed.
+    const LC_Interval physicalSpeed = m_axis * sqrt(h2);
+    const LC_Interval denominator = physicalSpeed * h2;
+    const LC_Interval derivativeDenominator = denominator * h2;
+    if (!finiteInterval(physicalSpeed) || !physicalSpeed.isPositive() || !finiteInterval(denominator) ||
+        !denominator.isPositive() || !finiteInterval(derivativeDenominator) || !derivativeDenominator.isPositive()) {
+        return false;
+    }
+    const LC_Interval direction = LC_Interval::point(m_sweep.signedSweep < 0.0 ? -1.0 : 1.0);
+    const LC_Interval value = LC_Interval::point(1.0) + m_distance * m_ratio / denominator;
+    const LC_Interval slope = LC_Interval::point(-3.0) * direction * m_rate * m_distance * m_ratio *
+        difference * sine * cosine / derivativeDenominator;
+    if (!finiteInterval(value) || !finiteInterval(slope)) {
+        return false;
+    }
+    factor = value;
+    derivative = slope;
+    speed = physicalSpeed;
+    return true;
+}
+
+bool ReferenceFrame::boundOffsetFactor(const double t0, const double t1,
+                                      LC_Interval& factor, LC_Interval& derivative) const {
+    factor = derivative = {};
+    LC_Interval cosine;
+    LC_Interval sine;
+    LC_Interval speed;
+    return trig(t0, t1, cosine, sine) && offsetFactor(cosine, sine, factor, derivative, speed);
 }
 
 bool ReferenceFrame::sourceJet(const double t, LC_CurveJet& out) const {
@@ -676,6 +736,631 @@ bool ReferenceFrame::pointToWorld(const RS_Vector& local, LC_Interval& x, LC_Int
     x = worldX;
     y = worldY;
     return true;
+}
+
+CriticalAdapter::CriticalAdapter(const ReferenceFrame& frame, const CriticalRegime regime)
+    : m_frame{frame}, m_regime{regime} {}
+
+const ReferenceFrame& CriticalAdapter::frame() const { return m_frame; }
+CriticalRegime CriticalAdapter::regime() const { return m_regime; }
+const std::vector<CriticalOccurrence>& CriticalAdapter::criticalOccurrences() const { return m_occurrences; }
+const std::vector<CriticalRegion>& CriticalAdapter::regions() const { return m_regions; }
+const std::vector<LC_ParametricSegment>& CriticalAdapter::segments() const { return m_segments; }
+std::size_t CriticalAdapter::branchCount() const { return 1; }
+std::ptrdiff_t CriticalAdapter::next(const std::size_t branch) const {
+    return branch == 0 && m_frame.sourceSweep().whole ? 0 : -1;
+}
+
+bool CriticalAdapter::contains(const std::size_t segment, const LC_Interval& parameter) const {
+    return segment < m_segments.size() && finiteInterval(parameter) &&
+        m_segments[segment].t0 <= parameter.lo() && parameter.hi() <= m_segments[segment].t1;
+}
+
+bool CriticalAdapter::evaluate(const std::size_t segment, const double t,
+                               RS_Vector& point, RS_Vector& derivative) const {
+    point = derivative = RS_Vector{false};
+    LC_CurveJet jet;
+    if (!contains(segment, LC_Interval::point(t)) || !m_frame.offsetJet(t, jet)) {
+        return false;
+    }
+    point = jet.point;
+    derivative = jet.first;
+    return true;
+}
+
+bool CriticalAdapter::bound(const std::size_t segment, const double a, const double b,
+                            LC_Interval& x, LC_Interval& y, LC_Interval& dx, LC_Interval& dy) const {
+    x = y = dx = dy = {};
+    LC_CurveJetBounds bounds;
+    if (!(a <= b) || !contains(segment, LC_Interval::hull(a, b)) || !m_frame.boundOffsetJet(a, b, bounds)) {
+        return false;
+    }
+    x = bounds.x;
+    y = bounds.y;
+    dx = bounds.dx;
+    dy = bounds.dy;
+    return true;
+}
+
+LC_AnalyticLeafCertificate CriticalAdapter::certifyInjective(
+    const std::size_t segment, const LC_Interval& parameter) const {
+    return contains(segment, parameter) ? LC_AnalyticLeafCertificate{true, segment, parameter} :
+        LC_AnalyticLeafCertificate{};
+}
+
+LC_AnalyticIntersectionCertificate CriticalAdapter::certifyIntersection(const LC_IntersectionDomain& box) const {
+    if (!contains(box.segmentA, box.parameterA) || !contains(box.segmentB, box.parameterB)) {
+        return {};
+    }
+    std::size_t first = box.segmentA;
+    std::size_t last = box.segmentB;
+    LC_Interval a = box.parameterA;
+    LC_Interval b = box.parameterB;
+    if (first > last || (first == last && a.lo() > b.lo())) {
+        std::swap(first, last);
+        std::swap(a, b);
+    }
+    bool excluded = false;
+    if (first == last) {
+        // A positive-width overlap is a diagonal continuum, not an isolated construction join.
+        excluded = a.hi() <= b.lo();
+    } else if (last - first == 1) {
+        const auto& proof = m_joins[first];
+        excluded = proof.from <= a.lo() && b.hi() <= proof.to;
+    }
+    if (!excluded && m_seam && first == 0 && last == m_segments.size() - 1) {
+        excluded = a.hi() <= m_seam->to && m_seam->from <= b.lo();
+    }
+    if (!excluded) {
+        return {};
+    }
+    LC_AnalyticIntersectionCertificate certificate;
+    certificate.outcome = LC_AnalyticIntersectionCertificate::Outcome::Excluded;
+    certificate.proof = LC_IntersectionProof::AnalyticExclusion;
+    certificate.proofDomain = box; // Never publish the lifted or cross-segment proof interval as a solver domain.
+    return certificate;
+}
+
+namespace {
+using Rational = boost::multiprecision::cpp_rational;
+using Integer = boost::multiprecision::cpp_int;
+
+Rational exactDouble(const double value) {
+    if (value == 0.0) {
+        return Rational{0};
+    }
+    int exponent = 0;
+    const double fraction = std::frexp(value, &exponent);
+    const auto significand = static_cast<std::int64_t>(std::ldexp(fraction, 53));
+    exponent -= 53;
+    Integer numerator{significand};
+    Integer denominator{1};
+    if (exponent >= 0) { numerator <<= exponent; }
+    else { denominator <<= -exponent; }
+    return Rational{numerator} / Rational{denominator};
+}
+
+bool rationalBounds(const Rational& low, const Rational& high, LC_Interval& out) {
+    out = {};
+    if (low > high) {
+        return false;
+    }
+    double a = low.convert_to<double>();
+    double b = high.convert_to<double>();
+    if (!std::isfinite(a) || !std::isfinite(b)) {
+        return false;
+    }
+    // Conversion is only a seed. The exact inequalities, not a rounding-mode assumption, certify the result.
+    for (unsigned i = 0; i < 8 && exactDouble(a) > low; ++i) {
+        a = std::nextafter(a, -std::numeric_limits<double>::infinity());
+        if (!std::isfinite(a)) {
+            return false;
+        }
+    }
+    for (unsigned i = 0; i < 8 && exactDouble(b) < high; ++i) {
+        b = std::nextafter(b, std::numeric_limits<double>::infinity());
+        if (!std::isfinite(b)) {
+            return false;
+        }
+    }
+    if (exactDouble(a) > low || exactDouble(b) < high) {
+        return false;
+    }
+    out = LC_Interval::hull(a, b);
+    return true;
+}
+
+struct ExactAngle { Rational constant; Rational pi; };
+
+Rational dyadicRootUpper(const Rational& value, const unsigned degree) {
+    const Integer n = boost::multiprecision::numerator(value);
+    const Integer d = boost::multiprecision::denominator(value);
+    // Fixed-degree expressions in finite binary64 inputs have only a bounded number of bits.
+    const int exponent = static_cast<int>(boost::multiprecision::msb(n)) -
+        static_cast<int>(boost::multiprecision::msb(d)) + 1;
+    const int divisor = static_cast<int>(degree);
+    const int rootExponent = exponent <= 0 ? exponent / divisor : (exponent + divisor - 1) / divisor;
+    Integer magnitude{1};
+    magnitude <<= rootExponent >= 0 ? rootExponent : -rootExponent;
+    const Rational upper = rootExponent >= 0 ? Rational{magnitude} : Rational{1} / Rational{magnitude};
+    Rational power = 1;
+    for (unsigned i = 0; i < degree; ++i) { power *= upper; }
+    return power >= value ? upper : Rational{0};
+}
+
+struct CriticalKernel {
+    Rational axisSquared;
+    Rational r2;
+    Rational difference;
+    Rational distanceSquared;
+    std::array<Rational, 4> coefficient;
+
+    CriticalKernel(const RS_EllipseData& basis, const double distance) {
+        const Rational x = exactDouble(basis.majorP.x);
+        const Rational y = exactDouble(basis.majorP.y);
+        const Rational r = exactDouble(basis.ratio);
+        const Rational d = exactDouble(distance);
+        axisSquared = x * x + y * y;
+        r2 = r * r;
+        difference = 1 - r2;
+        distanceSquared = distance < 0.0 ? Rational{d * d} : Rational{0};
+        coefficient[0] = r2 * (axisSquared * r2 * r2 - distanceSquared);
+        coefficient[1] = 3 * axisSquared * r2 * r2 * difference;
+        coefficient[2] = 3 * axisSquared * r2 * difference * difference;
+        coefficient[3] = axisSquared * difference * difference * difference;
+    }
+    Rational polynomial(const Rational& z) const {
+        return ((coefficient[3] * z + coefficient[2]) * z + coefficient[1]) * z + coefficient[0];
+    }
+};
+} // namespace
+
+class CriticalBuilder {
+public:
+    CriticalBuilder(const RS_EllipseData& basis, const double distance, const ReferenceFrame& frame,
+                    WorkBudget& budget)
+        : m_basis{basis}, m_distance{distance}, m_frame{frame}, m_budget{budget}, m_kernel{basis, distance},
+          m_piLow{exactDouble(realPi().lo())}, m_piHigh{exactDouble(realPi().hi())},
+          m_duration{exactDouble(frame.parameterEnd())} {
+        m_start = {exactDouble(frame.sourceSweep().start), 0};
+        m_end = {exactDouble(frame.sourceSweep().whole ? frame.sourceSweep().start : basis.angle2), 0};
+        if (frame.sourceSweep().whole || (!basis.reversed && basis.angle2 < basis.angle1) ||
+            (basis.reversed && basis.angle2 > basis.angle1)) {
+            m_end.pi = basis.reversed ? -2 : 2;
+        }
+        m_extent = {m_end.constant - m_start.constant, m_end.pi - m_start.pi};
+    }
+
+    CriticalAnalysis run() {
+        const auto regime = classify();
+        if (!regime) {
+            return result();
+        }
+        m_adapter.reset(new CriticalAdapter{m_frame, *regime});
+        if (!axes() || !occurrences() || !regions() || !joins() || !preflight()) {
+            return result();
+        }
+        CriticalAnalysis out;
+        out.status = LC_IntersectionStatus::Ok;
+        out.work = m_budget.consumed();
+        out.adapter = std::move(m_adapter);
+        return out;
+    }
+
+private:
+    struct Axis { int index; LC_Interval parameter; bool atStart; bool atEnd; };
+    const RS_EllipseData& m_basis;
+    double m_distance;
+    ReferenceFrame m_frame;
+    WorkBudget& m_budget;
+    CriticalKernel m_kernel;
+    Rational m_piLow;
+    Rational m_piHigh;
+    Rational m_duration;
+    ExactAngle m_start;
+    ExactAngle m_end;
+    ExactAngle m_extent;
+    std::unique_ptr<CriticalAdapter> m_adapter;
+    std::vector<Axis> m_axes;
+    LC_Interval m_beta;
+    CriticalAnalysis::Reason m_reason = CriticalAnalysis::Reason::UnresolvedGeometry;
+
+    int direction() const { return m_basis.reversed ? -1 : 1; }
+    bool unresolved() {
+        m_reason = CriticalAnalysis::Reason::UnresolvedGeometry;
+        return false;
+    }
+    CriticalAnalysis result() const {
+        CriticalAnalysis out;
+        out.work = m_budget.consumed();
+        out.status = m_budget.status() == BudgetStatus::LimitExceeded ? LC_IntersectionStatus::LimitExceeded :
+            m_budget.status() == BudgetStatus::InvalidInput ? LC_IntersectionStatus::InvalidInput :
+            LC_IntersectionStatus::AmbiguousTopology;
+        out.reason = out.status == LC_IntersectionStatus::AmbiguousTopology ? m_reason : CriticalAnalysis::Reason::None;
+        return out;
+    }
+    bool generated(const std::size_t count, const unsigned depth) {
+        return m_budget.checkDepth(depth) && m_budget.consumeVertices(count);
+    }
+    bool split(const unsigned depth) {
+        if (depth >= m_budget.depthLimit()) {
+            m_budget.latchLimitExceeded();
+            return false;
+        }
+        return generated(2, depth + 1);
+    }
+    std::optional<CriticalRegime> classify() {
+        if (m_distance >= 0.0) {
+            return CriticalRegime::PositiveFactor;
+        }
+        if (m_basis.ratio == 1.0 && m_kernel.distanceSquared == m_kernel.axisSquared) {
+            m_reason = CriticalAnalysis::Reason::CollapsedCircle;
+            return {};
+        }
+        const Rational minimum = m_kernel.axisSquared * m_kernel.r2 * m_kernel.r2;
+        if (m_kernel.distanceSquared < minimum) {
+            return CriticalRegime::PositiveFactor;
+        }
+        if (m_kernel.distanceSquared == minimum) {
+            return CriticalRegime::MinimumStationary;
+        }
+        const Rational maximum = m_kernel.distanceSquared * m_kernel.r2;
+        if (maximum > m_kernel.axisSquared) {
+            return CriticalRegime::NegativeFactor;
+        }
+        return maximum == m_kernel.axisSquared ? CriticalRegime::MaximumStationary :
+            CriticalRegime::IntermediateThresholds;
+    }
+    ExactAngle angle(const double t) const {
+        const Rational fraction = exactDouble(t) / m_duration;
+        return {m_start.constant + m_extent.constant * fraction, m_start.pi + m_extent.pi * fraction};
+    }
+    bool angleBounds(const ExactAngle& a, LC_Interval& out) const {
+        const Rational low = a.constant + a.pi * (a.pi < 0 ? m_piHigh : m_piLow);
+        const Rational high = a.constant + a.pi * (a.pi < 0 ? m_piLow : m_piHigh);
+        return rationalBounds(low, high, out);
+    }
+    int compareAxis(const int index, const ExactAngle& endpoint) const {
+        const Rational coefficient = Rational{index} / 2 - endpoint.pi;
+        if (coefficient == 0) {
+            return endpoint.constant == 0 ? 0 : endpoint.constant < 0 ? 1 : -1;
+        }
+        const Rational low = coefficient * (coefficient < 0 ? m_piHigh : m_piLow) - endpoint.constant;
+        const Rational high = coefficient * (coefficient < 0 ? m_piLow : m_piHigh) - endpoint.constant;
+        // Pi is STRICTLY between these rational constants; equality to a bracket edge is not axis membership.
+        if (low >= 0) { return 1; }
+        if (high <= 0) { return -1; }
+        return 2;
+    }
+    bool mapAngle(const ExactAngle& low, const ExactAngle& high, LC_Interval& out) const {
+        std::array<Rational, 4> values;
+        std::size_t i = 0;
+        for (const ExactAngle* endpoint : {&low, &high}) {
+            for (const Rational* pi : {&m_piLow, &m_piHigh}) {
+                const Rational denominator = m_extent.constant + m_extent.pi * *pi;
+                if (denominator == 0 || (denominator < 0) != m_basis.reversed) {
+                    return false;
+                }
+                values[i++] = m_duration * (endpoint->constant - m_start.constant +
+                    (endpoint->pi - m_start.pi) * *pi) / denominator;
+            }
+        }
+        // A linear-fractional function of pi has constant derivative sign on this nonzero denominator.
+        return rationalBounds(*std::min_element(values.begin(), values.end()),
+                              *std::max_element(values.begin(), values.end()), out);
+    }
+    bool axes() {
+        for (int index = -8; index <= 12; ++index) {
+            if (!m_budget.consumePairs(1)) { return false; }
+            const int a = compareAxis(index, m_start);
+            const int b = compareAxis(index, m_end);
+            if ((a != 2 && direction() * a < 0) || (b != 2 && direction() * b > 0)) { continue; }
+            if (a == 2 || b == 2) { return unresolved(); }
+            if (!generated(1, 0)) { return false; }
+            LC_Interval parameter;
+            const ExactAngle axis{0, Rational{index} / 2};
+            if (a == 0) { parameter = LC_Interval::point(0.0); }
+            else if (b == 0) { parameter = LC_Interval::point(m_frame.parameterEnd()); }
+            else if (!mapAngle(axis, axis, parameter)) { return unresolved(); }
+            const double lo = std::max(0.0, parameter.lo());
+            const double hi = std::min(m_frame.parameterEnd(), parameter.hi());
+            if (!(lo <= hi)) { return unresolved(); }
+            m_axes.push_back({index, LC_Interval::hull(lo, hi), a == 0, b == 0});
+        }
+        std::sort(m_axes.begin(), m_axes.end(), [](const Axis& a, const Axis& b) {
+            return a.parameter.lo() < b.parameter.lo();
+        });
+        for (std::size_t i = 1; i < m_axes.size(); ++i) {
+            if (m_axes[i - 1].parameter.hi() > m_axes[i].parameter.lo()) { return unresolved(); }
+        }
+        return true;
+    }
+    bool criticalVariableBounds(const ExactAngle& first, const ExactAngle& last,
+                                LC_Interval& out, bool& complement) const {
+        LC_Interval a;
+        LC_Interval b;
+        if (!angleBounds(first, a) || !angleBounds(last, b)) { return false; }
+        const double middle = 0.25 * a.lo() + 0.25 * a.hi() + 0.25 * b.lo() + 0.25 * b.hi();
+        if (!std::isfinite(middle) || std::abs(middle) > 20.0) { return false; }
+        const int axis = static_cast<int>(std::round(middle / M_PI_2));
+        complement = axis % 2 != 0;
+        const ExactAngle reducedA{first.constant, first.pi - Rational{axis} / 2};
+        const ExactAngle reducedB{last.constant, last.pi - Rational{axis} / 2};
+        if (reducedA.constant == 0 && reducedA.pi == 0 &&
+            reducedB.constant == 0 && reducedB.pi == 0) {
+            out = LC_Interval::point(0.0);
+            return true;
+        }
+        if (!angleBounds(reducedA, a) || !angleBounds(reducedB, b)) { return false; }
+        LC_Interval cosine;
+        LC_Interval sine;
+        if (!referenceTrig(LC_Interval::hull(a, b), cosine, sine)) { return false; }
+        const LC_Interval z = sqr(sine);
+        out = LC_Interval::hull(std::max(0.0, z.lo()), std::min(1.0, z.hi()));
+        return finiteInterval(out);
+    }
+    int sign(const ExactAngle& first, const ExactAngle& last) const {
+        LC_Interval variable;
+        bool complement = false;
+        if (!criticalVariableBounds(first, last, variable, complement)) { return 2; }
+        // Near a minor axis retain 1-sin^2(reduced) EXACTLY; rounded cos^2 would lose tiny P(1).
+        const Rational low = complement ? Rational{1 - exactDouble(variable.hi())} : exactDouble(variable.lo());
+        const Rational high = complement ? Rational{1 - exactDouble(variable.lo())} : exactDouble(variable.hi());
+        if (m_kernel.polynomial(low) > 0) { return 1; }
+        if (m_kernel.polynomial(high) < 0) { return -1; }
+        return 2;
+    }
+    bool cuspAngle() {
+        if (!generated(1, 0) || !m_budget.consumePairs(1)) { return false; }
+        const auto& k = m_kernel;
+        const Rational positive = k.polynomial(Rational{1});
+        Rational zHigh = std::min(Rational{1}, Rational{-k.coefficient[0] / k.coefficient[1]});
+        const Rational squareUpper = dyadicRootUpper(-k.coefficient[0] / k.coefficient[2], 2);
+        const Rational cubeUpper = dyadicRootUpper(-k.coefficient[0] / k.coefficient[3], 3);
+        if (!(squareUpper > 0 && cubeUpper > 0)) { return unresolved(); }
+        zHigh = std::min(zHigh, std::min(squareUpper, cubeUpper));
+        const Rational zLow = -k.coefficient[0] /
+            (k.coefficient[1] + k.coefficient[2] * zHigh + k.coefficient[3] * zHigh * zHigh);
+        const Rational wLow = positive / (3 * k.axisSquared * k.difference);
+        const Rational wHigh = std::min(Rational{1}, Rational{positive /
+            (k.axisSquared * k.difference * (3 - 3 * k.difference + k.difference * k.difference))});
+        // Select the SMALL variable by the exact root location, not by competing loose upper bounds.
+        const Rational half = Rational{1} / 2;
+        const bool complement = k.polynomial(half) < 0;
+        const Rational selectedHigh = std::min(half, complement ? wHigh : zHigh);
+        LC_Interval variable;
+        if (!rationalBounds(complement ? wLow : zLow, selectedHigh, variable)) { return unresolved(); }
+        double lo = std::max(0.0, variable.lo());
+        double hi = std::min(1.0, variable.hi());
+        const auto residual = [&k, complement](const double t) -> Rational {
+            return complement ? Rational{-k.polynomial(1 - exactDouble(t))} : k.polynomial(exactDouble(t));
+        };
+        for (unsigned depth = 0;; ++depth) {
+            if (depth != 0 && !m_budget.consumePairs(1)) { return false; }
+            if (depth == 8 || lo == hi) { break; }
+            const double mid = lo + 0.5 * (hi - lo);
+            if (!(lo < mid && mid < hi)) {
+                // Adjacent doubles can already enclose the unique monotone scalar root completely.
+                if (residual(lo) <= 0 && residual(hi) >= 0) { break; }
+                return unresolved();
+            }
+            if (!split(depth)) { return false; }
+            const Rational value = residual(mid);
+            if (value == 0) { lo = hi = mid; }
+            else if (value < 0) { lo = mid; }
+            else { hi = mid; }
+        }
+        variable = LC_Interval::hull(lo, hi);
+        const LC_Interval root = sqrt(variable);
+        const LC_Interval denominator = sqrt(LC_Interval::point(1.0) - variable);
+        if (!finiteInterval(root) || !finiteInterval(denominator) || !denominator.isPositive()) { return unresolved(); }
+        // x <= asin(x) <= x/sqrt(1-x^2), proved by integrating its increasing derivative.
+        const LC_Interval upper = root / denominator;
+        if (!finiteInterval(upper)) { return unresolved(); }
+        const LC_Interval inverse = LC_Interval::hull(root.lo(), upper.hi());
+        m_beta = complement ? scaled(realPi(), -1) - inverse : inverse;
+        return finiteInterval(m_beta) && m_beta.lo() > 0.0 && m_beta.hi() < realPi().lo() * 0.5;
+    }
+    int compareCusp(const int quadrant, const ExactAngle& endpoint) const {
+        const int first = compareAxis(quadrant, endpoint);
+        const int last = compareAxis(quadrant + 1, endpoint);
+        if (first != 2 && first >= 0) { return 1; }
+        if (last != 2 && last <= 0) { return -1; }
+        if (first == 2 || last == 2) { return 2; }
+        const int value = sign(endpoint, endpoint);
+        return value == 2 ? 2 : (quadrant % 2 == 0 ? -value : value);
+    }
+    bool appendOccurrence(const LC_Interval& parameter, const CriticalKind kind, const int index,
+                          const bool atStart, const bool atEnd) {
+        if (!generated(1, 0)) { return false; }
+        const int quadrant = (index % 4 + 4) % 4;
+        m_adapter->m_occurrences.push_back({parameter, kind,
+            kind == CriticalKind::SimpleCusp ? CriticalProof::MonotonePolynomial : CriticalProof::ExactAxisThreshold,
+            quadrant, (index - quadrant) / 4, atStart, atEnd});
+        return true;
+    }
+    bool occurrences() {
+        const auto regime = m_adapter->m_regime;
+        if (regime == CriticalRegime::MinimumStationary || regime == CriticalRegime::MaximumStationary) {
+            for (const auto& axis : m_axes) {
+                const bool major = axis.index % 2 == 0;
+                if (major == (regime == CriticalRegime::MinimumStationary) &&
+                    !appendOccurrence(axis.parameter, CriticalKind::CriticalStationary, axis.index,
+                                      axis.atStart, axis.atEnd)) { return false; }
+            }
+        } else if (regime == CriticalRegime::IntermediateThresholds) {
+            if (!cuspAngle()) { return false; }
+            for (int quadrant = -8; quadrant < 12; ++quadrant) {
+                if (!m_budget.consumePairs(1)) { return false; }
+                const int a = compareCusp(quadrant, m_start);
+                const int b = compareCusp(quadrant, m_end);
+                if ((a != 2 && direction() * a < 0) || (b != 2 && direction() * b > 0)) { continue; }
+                if (a == 2 || b == 2) { return unresolved(); }
+                const bool even = quadrant % 2 == 0;
+                const ExactAngle low{exactDouble(even ? m_beta.lo() : -m_beta.hi()),
+                                     Rational{even ? quadrant : quadrant + 1} / 2};
+                const ExactAngle high{exactDouble(even ? m_beta.hi() : -m_beta.lo()), low.pi};
+                LC_Interval parameter;
+                if (!mapAngle(low, high, parameter)) { return unresolved(); }
+                const double lo = std::max(0.0, parameter.lo());
+                const double hi = std::min(m_frame.parameterEnd(), parameter.hi());
+                if (!(lo <= hi) || !appendOccurrence(LC_Interval::hull(lo, hi), CriticalKind::SimpleCusp,
+                                                    quadrant, false, false)) { return false; }
+            }
+        }
+        auto& occurrences = m_adapter->m_occurrences;
+        std::sort(occurrences.begin(), occurrences.end(), [](const auto& a, const auto& b) {
+            return a.parameter.lo() < b.parameter.lo();
+        });
+        for (std::size_t i = 1; i < occurrences.size(); ++i) {
+            if (!(occurrences[i - 1].parameter.hi() < occurrences[i].parameter.lo())) { return unresolved(); }
+        }
+        return true;
+    }
+    std::optional<InjectivityProof> prove(const double from, const double to) const {
+        const ExactAngle first = angle(m_basis.reversed ? to : from);
+        const ExactAngle last = angle(m_basis.reversed ? from : to);
+        LC_Interval a;
+        LC_Interval b;
+        if (!angleBounds(first, a) || !angleBounds(last, b)) { return {}; }
+        const LC_Interval width = LC_Interval::point(b.hi()) - LC_Interval::point(a.lo());
+        if (!finiteInterval(width) || !(width.hi() < realPi().lo())) { return {}; }
+        const auto regime = m_adapter->m_regime;
+        if (regime != CriticalRegime::IntermediateThresholds) {
+            return regime == CriticalRegime::MinimumStationary || regime == CriticalRegime::MaximumStationary ?
+                InjectivityProof::StationaryProjection : InjectivityProof::RegularProjection;
+        }
+        for (int q = -8; q < 12; ++q) {
+            const int left = compareAxis(q, first);
+            const int right = compareAxis(q + 1, last);
+            if (left != 2 && right != 2 && left <= 0 && right >= 0) {
+                // On one true quadrant F and sin(eta_c-eta) change sign together.
+                // Their product has one sign, with only an isolated zero: its integral is strictly monotone.
+                return InjectivityProof::SingleCuspProjection;
+            }
+        }
+        if (sign(first, last) != 2) { return InjectivityProof::RegularProjection; }
+        if (from < 0.0 || to > m_frame.parameterEnd()) { return {}; }
+        std::size_t roots = 0;
+        for (const auto& occurrence : m_adapter->m_occurrences) {
+            if (occurrence.parameter.hi() < from || occurrence.parameter.lo() > to) { continue; }
+            if (!(from < occurrence.parameter.lo() && occurrence.parameter.hi() < to)) { return {}; }
+            ++roots;
+        }
+        return roots == 1 ? std::optional<InjectivityProof>{InjectivityProof::SingleCuspProjection} :
+            std::optional<InjectivityProof>{};
+    }
+    bool addRegions(const double from, const double to, const bool band) {
+        if (from == to) { return true; }
+        struct Box { double from; double to; unsigned depth; };
+        if (!generated(1, 0)) { return false; }
+        std::vector<Box> pending{{from, to, 0}};
+        while (!pending.empty()) {
+            if (!m_budget.consumePairs(1)) { return false; }
+            const Box box = pending.back();
+            pending.pop_back();
+            const auto proof = prove(box.from, box.to);
+            if (proof) {
+                if (m_adapter->m_regions.size() == m_adapter->m_regions.max_size() ||
+                    m_adapter->m_segments.size() == m_adapter->m_segments.max_size()) {
+                    m_budget.latchLimitExceeded();
+                    return false;
+                }
+                const LC_ParametricSegment segment{0, box.from, box.to};
+                m_adapter->m_regions.push_back({segment, band, *proof});
+                m_adapter->m_segments.push_back(segment);
+                continue;
+            }
+            const double mid = box.from + 0.5 * (box.to - box.from);
+            if (!(box.from < mid && mid < box.to)) { return unresolved(); }
+            if (!split(box.depth)) { return false; }
+            if (pending.size() > pending.max_size() - 2) {
+                m_budget.latchLimitExceeded();
+                return false;
+            }
+            pending.push_back({mid, box.to, box.depth + 1});
+            pending.push_back({box.from, mid, box.depth + 1});
+        }
+        return true;
+    }
+    bool regions() {
+        double cursor = 0.0;
+        for (const auto& axis : m_axes) {
+            if (!addRegions(cursor, axis.parameter.lo(), false) ||
+                !addRegions(axis.parameter.lo(), axis.parameter.hi(), true)) { return false; }
+            cursor = axis.parameter.hi();
+        }
+        return addRegions(cursor, m_frame.parameterEnd(), false) && !m_adapter->m_segments.empty();
+    }
+    bool joins() {
+        const auto& segments = m_adapter->m_segments;
+        for (std::size_t i = 1; i < segments.size(); ++i) {
+            if (!generated(1, 0)) { return false; }
+            const double join = segments[i].t0;
+            double from = segments[i - 1].t0 + 0.5 * (join - segments[i - 1].t0);
+            double to = join + 0.5 * (segments[i].t1 - join);
+            if (from == join) { from = segments[i - 1].t0; }
+            if (to == join) { to = segments[i].t1; }
+            for (unsigned depth = 0;; ++depth) {
+                if (!m_budget.consumePairs(1)) { return false; }
+                if (prove(from, to)) { break; }
+                const double left = from + 0.5 * (join - from);
+                const double right = join + 0.5 * (to - join);
+                if (!(from < left && left < join && join < right && right < to)) { return unresolved(); }
+                if (!split(depth)) { return false; }
+                from = left;
+                to = right;
+            }
+            m_adapter->m_joins.push_back({from, to});
+        }
+        if (m_frame.sourceSweep().whole) {
+            if (!generated(1, 0) || !m_budget.consumePairs(1)) { return false; }
+            const double extent = m_frame.parameterEnd();
+            const double width = 0.125 * std::min(segments.front().t1, extent - segments.back().t0);
+            const double last = extent - width;
+            // last and extent are within a factor two, so this subtraction is exact (Sterbenz).
+            if (!(width > 0.0 && last < extent) || !prove(last - extent, width)) { return unresolved(); }
+            m_adapter->m_seam = CriticalAdapter::JoinProof{last, width};
+        }
+        return true;
+    }
+    bool preflight() {
+        for (const auto& segment : m_adapter->m_segments) {
+            if (!m_budget.consumePairs(1)) { return false; }
+            LC_CurveJetBounds bounds;
+            if (!m_frame.boundOffsetJet(segment.t0, segment.t1, bounds)) { return unresolved(); }
+            for (const double t : {segment.t0, segment.t0 + 0.5 * (segment.t1 - segment.t0), segment.t1}) {
+                LC_CurveJet seed;
+                if (!m_frame.boundOffsetJet(t, t, bounds) || !m_frame.offsetJet(t, seed) ||
+                    !isFinite2D(seed.point) || !isFinite2D(seed.first)) { return unresolved(); }
+            }
+        }
+        return true;
+    }
+};
+
+CriticalAnalysis analyseCritical(const RS_EllipseData& basis, const double signedDistance, WorkBudget& budget) {
+    CriticalAnalysis out;
+    const auto snapshot = [&]() {
+        out.work = budget.consumed();
+        if (budget.status() == BudgetStatus::LimitExceeded) { out.status = LC_IntersectionStatus::LimitExceeded; }
+        return std::move(out);
+    };
+    if (budget.status() != BudgetStatus::Ok) { return snapshot(); }
+    const auto domain = sweep(basis);
+    if (!isFinite2D(basis.center) || !isFinite2D(basis.majorP) ||
+        !(basis.majorP.x != 0.0 || basis.majorP.y != 0.0) || !std::isfinite(basis.ratio) ||
+        !(basis.ratio > 0.0 && basis.ratio <= 1.0) || !std::isfinite(signedDistance) || !domain ||
+        (!domain->whole && (!(basis.angle1 >= 0.0 && basis.angle1 < turn) ||
+                            !(basis.angle2 >= 0.0 && basis.angle2 < turn)))) { return snapshot(); }
+    if (!budget.checkDepth(0) || !budget.consumeVertices(1) || !budget.consumePairs(1)) { return snapshot(); }
+    const auto reference = ReferenceFrame::create(basis, signedDistance);
+    if (!reference) {
+        out.status = LC_IntersectionStatus::AmbiguousTopology;
+        out.reason = CriticalAnalysis::Reason::UnresolvedGeometry;
+        return snapshot();
+    }
+    return CriticalBuilder{basis, signedDistance, *reference, budget}.run();
 }
 
 RS_Vector ellipsePoint(const RS_EllipseData& basis, const double parameter) {

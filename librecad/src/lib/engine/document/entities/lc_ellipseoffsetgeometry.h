@@ -16,10 +16,12 @@
 #define LC_ELLIPSEOFFSETGEOMETRY_H
 
 #include <cstddef>
+#include <memory>
 #include <optional>
 #include <vector>
 
 #include "lc_curvejet.h"
+#include "lc_parametriccurveintersection.h"
 #include "rs_ellipse.h"
 
 struct LC_EllipseOffsetDefinition {
@@ -72,6 +74,8 @@ public:
     bool consumeVertices(std::size_t count);
     bool consumePairs(std::size_t count);
     bool checkDepth(unsigned depth);
+    unsigned depthLimit() const;
+    void latchLimitExceeded();
 
 private:
     bool consume(std::size_t count, std::size_t limit, std::size_t& used);
@@ -107,6 +111,8 @@ public:
     /** Continuous exact-sweep bounds, including zero-width queries and periodic endpoint limits. */
     bool boundSourceJet(double t0, double t1, LC_CurveJetBounds& out) const;
     bool boundOffsetJet(double t0, double t1, LC_CurveJetBounds& out) const;
+    /** Physical offset factor and its traversal derivative; both cleared on refusal. */
+    bool boundOffsetFactor(double t0, double t1, LC_Interval& factor, LC_Interval& derivative) const;
     /** Enclosures of conversions of exact input doubles; cleared on refusal. */
     bool pointToFrame(const RS_Vector& world, LC_Interval& x, LC_Interval& y) const;
     bool pointToWorld(const RS_Vector& local, LC_Interval& x, LC_Interval& y) const;
@@ -114,6 +120,8 @@ public:
 private:
     ReferenceFrame() = default;
     bool trig(double t0, double t1, LC_Interval& cosine, LC_Interval& sine) const;
+    bool offsetFactor(const LC_Interval& cosine, const LC_Interval& sine,
+                      LC_Interval& factor, LC_Interval& derivative, LC_Interval& speed) const;
 
     RS_Vector m_centre;
     Sweep m_sweep;
@@ -131,6 +139,70 @@ private:
     LC_Interval m_ratio;
     LC_Interval m_distance;
 };
+
+enum class CriticalRegime {
+    PositiveFactor, MinimumStationary, IntermediateThresholds, MaximumStationary, NegativeFactor
+};
+enum class CriticalKind { SimpleCusp, CriticalStationary };
+enum class CriticalProof { MonotonePolynomial, ExactAxisThreshold };
+enum class InjectivityProof { RegularProjection, SingleCuspProjection, StationaryProjection };
+
+struct CriticalOccurrence {
+    LC_Interval parameter;
+    CriticalKind kind;
+    CriticalProof proof;
+    int quadrant = 0;
+    int winding = 0;
+    bool atStart = false;
+    bool atEnd = false;
+};
+
+struct CriticalRegion {
+    LC_ParametricSegment segment;
+    bool axisBand = false;
+    InjectivityProof proof;
+};
+
+/** Prepared C1 geometry and whole-region proofs, not an exhaustive event/topology result. */
+class CriticalAdapter final : public LC_ParametricCurves {
+public:
+    const ReferenceFrame& frame() const;
+    CriticalRegime regime() const;
+    const std::vector<CriticalOccurrence>& criticalOccurrences() const;
+    const std::vector<CriticalRegion>& regions() const;
+    const std::vector<LC_ParametricSegment>& segments() const override;
+    std::size_t branchCount() const override;
+    std::ptrdiff_t next(std::size_t branch) const override;
+    bool evaluate(std::size_t segment, double t, RS_Vector& point, RS_Vector& derivative) const override;
+    bool bound(std::size_t segment, double a, double b, LC_Interval& x, LC_Interval& y,
+               LC_Interval& dx, LC_Interval& dy) const override;
+    LC_AnalyticLeafCertificate certifyInjective(std::size_t segment, const LC_Interval& parameter) const override;
+    LC_AnalyticIntersectionCertificate certifyIntersection(const LC_IntersectionDomain& box) const override;
+
+private:
+    friend class CriticalBuilder;
+    CriticalAdapter(const ReferenceFrame& frame, CriticalRegime regime);
+    bool contains(std::size_t segment, const LC_Interval& parameter) const;
+    struct JoinProof { double from; double to; };
+    ReferenceFrame m_frame;
+    CriticalRegime m_regime;
+    std::vector<LC_ParametricSegment> m_segments;
+    std::vector<CriticalRegion> m_regions;
+    std::vector<CriticalOccurrence> m_occurrences;
+    std::vector<JoinProof> m_joins;
+    std::optional<JoinProof> m_seam;
+};
+
+struct CriticalAnalysis {
+    enum class Reason { None, CollapsedCircle, UnresolvedGeometry };
+    LC_IntersectionStatus status = LC_IntersectionStatus::InvalidInput;
+    Reason reason = Reason::None;
+    std::unique_ptr<const CriticalAdapter> adapter;
+    /** Cumulative shared-budget snapshot, including failed and discarded work. */
+    CheckWork work;
+};
+
+CriticalAnalysis analyseCritical(const RS_EllipseData& basis, double signedDistance, WorkBudget& budget);
 
 bool isFinite2D(const RS_Vector& point);
 /** Validate raw fields before RS_Ellipse can canonicalize tiny angles. Unchanged on refusal. */
