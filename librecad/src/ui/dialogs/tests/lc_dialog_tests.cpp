@@ -27,12 +27,16 @@
 #include <QDateTimeEdit>
 #include <QDoubleSpinBox>
 #include <QKeyEvent>
+#include <QKeySequence>
 #include <QLineEdit>
 #include <QLocale>
 #include <QMouseEvent>
 #include <QSpinBox>
+#include <QTreeView>
 #include <QVBoxLayout>
 
+#include "lc_actiongroupmanager.h"
+#include "lc_actionsshortcutsdialog.h"
 #include "lc_actiontestsupport.h"
 #include "lc_dialog.h"
 
@@ -102,6 +106,44 @@ void key(QWidget& widget, int code, Qt::KeyboardModifiers modifiers = Qt::NoModi
         QApplication::sendEvent(&widget, &event);
     }
 }
+}
+
+TEST_CASE("Find selects the shortcut dialog's filter text", "[gui][dialog][shortcuts][3131]") {
+    (void)lc::test::application();
+    LC_ActionGroupManager actions(nullptr);
+    LC_ActionsShortcutsDialog dialog(nullptr, &actions);
+    auto* filter = dialog.findChild<QLineEdit*>("leFilter");
+    auto* tree = dialog.findChild<QTreeView*>("tvMappingsTree");
+    REQUIRE(filter != nullptr);
+    REQUIRE(tree != nullptr);
+    dialog.show();
+    dialog.activateWindow();
+    QApplication::processEvents();
+    filter->setText("old filter");
+    SECTION("focus moves from the mappings tree") { tree->setFocus(); }
+    SECTION("the filter is already focused") {
+        filter->setFocus();
+        filter->setCursorPosition(3);
+    }
+    const auto find = QKeySequence(QKeySequence::Find)[0];
+    REQUIRE(QApplication::focusWidget() != nullptr);
+    key(*QApplication::focusWidget(), find.key(), find.keyboardModifiers());
+    CHECK(filter->hasFocus());
+    CHECK(filter->selectedText() == "old filter");
+    type(*filter, "new");
+    CHECK(filter->text() == "new");
+
+    filter->clear();
+    tree->setFocus();
+    key(*tree, find.key(), find.keyboardModifiers());
+    CHECK(filter->hasFocus());
+    CHECK(filter->text().isEmpty());
+
+    filter->setText("ordinary text");
+    tree->setFocus();
+    click(*filter);
+    CHECK(filter->hasFocus());
+    CHECK_FALSE(filter->hasSelectedText());
 }
 
 TEST_CASE("Dialog spin boxes select their numeric value on a focusing click", "[gui][dialog][numeric]") {
