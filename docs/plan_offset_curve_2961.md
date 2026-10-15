@@ -28,7 +28,7 @@ Plan **v6**, 2026-10-15. This file is the implementation source of truth. Every 
 verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION — S0 and 0B-1 done; 0B-2 ready for Gibbs; independent 1A-1.a in progress.**
+Status: **IMPLEMENTATION — S0, 0B-1 and 1A-1.a done; 0B-2 prepared for final revalidation; reference/check work pending.**
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -90,9 +90,9 @@ A commit alone does not mean done; verification, review and the post-commit plan
 | S0 | Worktree, tracked plan, build baseline and evidence (documentation commit) | — | — | 0 product | done — de30f1d45, S0 reports/card, 2026-10-15 |
 | 0A | Trim Two must not replace an owned child | — | — | — | done on baseline by #3113 (`609ca81ae`); verify current tests at S0, then add the new-type mapping/test in 1D |
 | 0B-1 | Guard skeleton: `rowOf` table, pragmas, `static_assert`, kinds-only walk; registration; CI path filter; shadow-`rs.h` checks | B | S0 | 250 | done — d6de53d3c, 0B-1 evidence, 2026-10-15 |
-| 0B-2 | Entity factory header; clone and INSERT checks; pin tests | B | 0B-1 | 500 | pending — ready for Gibbs |
+| 0B-2 | Entity factory header; clone and INSERT checks; pin tests | B | 0B-1 | 500 | in progress — prepared; Release checks passed, final ASan/order-fix revalidation pending |
 | 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | pending |
-| 1A-1 | Closed forms, engine-layout test, validity check, tolerance helpers | C | S0 | 900 | in progress — .a domain/closed forms; reference/check/qualification children pending |
+| 1A-1 | Closed forms, engine-layout test, validity check, tolerance helpers | C | S0 | 900 | partial — .a done at a4690db08; budget/reference/check/qualification children pending |
 | 1A-2 | Enumerator; class core and validated adoption factory; clone, `toPlainSpline`, normalisation, stamp, transforms; `writeEntity` case; INSERT capability; 0B row; interim Edit Properties guard | C | 0B-3, 1A-1 | 900 | pending |
 | 1A-3 | Grips, `moveRef`, snaps | C | 1A-2 | 550 | pending |
 | 1B | Run limits, refusal enum, `adopt`/`create`, mutators, engine-run counter | C | 1A-3 | 900 | pending |
@@ -194,10 +194,11 @@ and the evidence needed to activate them. All product work is currently pending.
 | S0 | Done at de30f1d45 | Clean execution worktree, tracked roadmap, toolchain/builds/baseline reports, format matrix and census recorded below; post-commit checkpoint records this SHA. |
 | 0A | Existing upstream code | Verify #3113 ancestry and current trim tests. Record evidence in S0; only the new-type mapping belongs to 1D. |
 | 0B-1 | Done at d6de53d3c | Exhaustive 50/27/23 census and both negative shadow compiles passed; Release tag/lanes verified. |
-| 0B-2 | Ready; 0B-1 done at d6de53d3c | Build valid entity fixtures; add clone and INSERT checks. Separate fixture defects from actual gaps; avoid GUI dependencies in the fast lane. |
+| 0B-2 | In progress; sources prepared | All 27 fixtures/clone/sole+mixed INSERT checks pass Release; finish isolated ASan validation and commit/checkpoint. |
 | 0B-3 | Waiting for 0B-2 | Run real DXF/DWG save/open and load completion; record stable known-gap identities and valid row totals. This completes the guard before adding RTTI. |
-| 1A-1.a | In progress; S0 done, current ellipse APIs confirmed | Finite-domain/local-frame and closed-form sources/tests prepared; build registration and Release/ASan validation next. |
-| 1A-1.b-ref | Waiting for .a | Implement the bounded exact-reference/event graph in §3.5.1, without fitting or materializing splines; test visibility, components and budgets against current trim behavior. |
+| 1A-1.a | Done at a4690db08 | Normalization/local-frame/closed forms, robust source distance and tolerance helpers; 17 cases/2538 assertions pass Release/ASan, existing regressions and both fast lanes pass. |
+| 1A-1.b-budget | Ready after .a checkpoint | Bound intersection candidate allocation before pair-budget exhaustion; expose consumed work for shared validation budgets; test cap exits and existing topology/offset regressions. |
+| 1A-1.b-ref | Waiting for .b-budget | Implement the bounded exact-reference/event graph in §3.5.1, without fitting or materializing splines; test visibility, components and budgets against current trim behavior. |
 | 1A-1.b-check | Waiting for .b-ref | Implement the adaptive cache-to-reference check, complete-component coverage and topology policy in §3.5. Use shared work counters; unresolved geometry refuses adoption. |
 | 1A-1.c | Waiting for .b | Add adversarial and current-engine corpus checks, failure budgets and performance measurements. Record acceptance/refusal results; endpoints and midpoint checks alone cannot close this parent step. |
 | 1A-2 | Waiting for 0B-3 and all 1A-1 children | Add type, core class, complete consistency stamp, transforms, clone/INSERT/write dispatch and interim UI guard. Compile CMake and update qmake lists; run copy/ownership and enum coverage. |
@@ -225,7 +226,7 @@ and the evidence needed to activate them. All product work is currently pending.
 | 2D-a | Waiting for 2C | Verify source actions, persistence in both formats, undo/redo and final release evidence; commit and reconcile the final roadmap. |
 
 Predeclared leaf children are real commit slices; the parent is `partial` until every required child is done.
-`1A-1.b` is the aggregate of `.b-ref` and `.b-check`, not an extra implementation commit. Any other step
+`1A-1.b` is the aggregate of `.b-budget`, `.b-ref` and `.b-check`, not an extra implementation commit. Any other step
 may be split before editing by adding named children, dependencies and validation to its card. Keep coherent changes
 such as a new type name and its required registry entry in one buildable commit.
 
@@ -256,8 +257,8 @@ out-of-scope features from implementation completion.
 
 S0 is complete at `de30f1d45`. Release/ASan configurations, all three target builds, Release full
 and fast-lane baselines, and focused ASan trim/ellipse checks passed, with existing skips recorded in its card.
-0B-1 is committed at d6de53d3c; its evidence is below. Gibbs starts 0B-2 after this checkpoint. The coordinator owns
-independent 1A-1.a, the plan,
+0B-1 is committed at d6de53d3c and 1A-1.a at a4690db08; their evidence is below. Gibbs's 0B-2 source is prepared,
+with final revalidation next. The coordinator owns the plan,
 shared build directories and commits. Assign explicit file ownership before any parallel work; never run concurrent
 Git/index operations or concurrent builds that mutate the same build tree.
 
@@ -271,7 +272,8 @@ Before promoting a leaf card, check these concrete prerequisites:
 |---|---|---|
 | 0B-1 | Current enum is contiguous; each of 50 values has a disposition; current CMake/CI locations confirmed | 50/27/23 kinds census, both negative shadow compiles, full and fast-lane tag counts |
 | 1A-1.a | Raw sweep rules and finite/local coordinate domain are fixed | Boundary tests on both sides of each threshold and independent closed-form comparisons |
-| 1A-1.b-ref | Exact-reference graph interface and shared work accounting are specified (§3.5.1) | Open, lens, closed-arc and multi-component fixtures; no engine regeneration; every cap exit observed |
+| 1A-1.b-budget | Candidate allocation and refinement currently have different budget coverage | Pre-allocation/nonoverflowing cap tests, exposed consumed work, existing topology/offset tests and full suite |
+| 1A-1.b-ref | Budget prerequisite done; exact-reference interface specified (§3.5.1) | Open, lens, closed-arc and multi-component fixtures; no engine regeneration; every cap exit observed |
 | 1A-1.b-check | Reference analysis is qualified and does not accept ambiguous topology | Whole-span distance bounds, bidirectional coverage and malicious subset/retrace tests |
 | 1A-2 | Guard and all geometry children are done; no raw constructor bypass exists | Current-header compile, complete stamp mutation cases, transform overflow and ownership checks |
 | 1E-1.a | Typed schema grammar, malformed/unknown ownership and flag consistency are settled | Codec-independent exact-code/type tests, duplicate/malformed cases and bounded tails |
@@ -281,7 +283,7 @@ Before promoting a leaf card, check these concrete prerequisites:
 
 These are entry/exit gates, not permission requests. Resolve an algorithm/API mismatch in the owning card and revise
 its downstream contracts before coding; do not silently narrow required scope. The default order remains §0.3, with
-`.b-ref` then `.b-check` replacing its aggregate `.b`. Ready leaves may proceed independently only when predecessors,
+`.b-budget`, `.b-ref` then `.b-check` replacing its aggregate `.b`. Ready leaves may proceed independently only when predecessors,
 file ownership, validation ownership and commit ordering permit it.
 
 ---
@@ -414,6 +416,7 @@ Use this compact ledger under each executed card; expand it only with meaningful
 |---|---|---|---|---|
 | S0 (documentation only) | de30f1d45f1337d55265c2f72413a9c976c18c40 | Product tree b05fb541d unchanged; all S0 builds/reports passed with existing skips documented | Coordinator/Gibbs review resolved; staged/committed paths only this roadmap | S0 done; 0B-1 ready for Gibbs; product steps pending |
 | 0B-1 | d6de53d3cb80199b4148b0e6d3dbb28f2b392b8c | `build/evidence/0B-1/summary.md`, owned-file hashes, Release builds/tags/lanes, positive and two negative syntax controls | Coordinator reviewed all three committed paths; no unrelated geometry files staged | Guard partial (0B-1 done); 0B-2 ready; 1A-1.a independent/in progress |
+| 1A-1.a | a4690db08b7220e93bbc8642d2c2b8b2e14fcf30 | Isolated Release/ASan geometry 17/2538; existing ellipse 48-case regressions; both Release fast lanes; CMake/qmake registrations | Gibbs's numeric findings fixed with regressions; committed paths match final tested files; 0B-2 patch safely preserved outside this commit | Geometry parent partial; .b-budget ready; 0B-2 final verification next |
 
 **Git safety.** Stage files by name; inspect staged paths before every commit. Preserve unrelated staged/unstaged work
 and untracked artifacts. Do not use `git add -A`, destructive checkout/reset, `--amend` or `--no-verify`. Local commit
@@ -1399,7 +1402,7 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
 ### 1A-1. Closed forms, engine-layout test, validity check, tolerance helpers
 
 **Execution card: 1A-1.a, 2026-10-15**
-- State: in progress; S0 done at de30f1d45; checkout HEAD c02d35720 before parallel 0B-1 edits.
+- State: done at `a4690db08b7220e93bbc8642d2c2b8b2e14fcf30`; S0 done at de30f1d45.
 - Owner: coordinator. Files: new `lc_ellipseoffsetgeometry.{h,cpp}` and
   `tests/lc_offsetcurve_geometry_tests.cpp` under the entity directory; appended tolerance helpers in
   `lc_curveoffset.{h,cpp}`; `librecad/src/src.pro` registrations. CMake registration waits until Gibbs releases his
@@ -1415,8 +1418,40 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
   delta can describe a nearly full counterclockwise arc. Axis switching is done in a local-centred temporary ellipse
   before restoring world centre, avoiding endpoint-minus-large-centre loss. Do not divide tiny vectors using
   `RS_Vector::operator/`, whose tolerance shortcut returns the undivided vector.
-- Recovery: preserve disjoint uncommitted geometry files; coordinator commits only their scoped paths after 0B-1's
-  reviewed commit/checkpoint. Implementation SHA/evidence pending; parent remains pending until required children pass.
+- Review: Gibbs found far-query false zeroes from the native distance sentinel, huge-angle fmod drift, intermediate
+  curvature underflow, thin-query squared-distance ties, coordinate overflow and the limiting thin vertex. All are
+  addressed in this module with regressions: trig-consistent reduction, exponent-scaled curvature, bounded Boost
+  exterior solving/foot checks, quadrant/limiting thin handling and source/query scaling before unsafe arithmetic.
+  No existing `RS_Ellipse` parser, renderer or nearest-point implementation was changed. A Boost const-call compiler
+  error during review fixes was resolved; failed build logs remain in the evidence directory.
+- Evidence: `build/evidence/1A-1.a/geometry-{release,asan}-final-isolated.junit.xml`: 17 cases, 2538 assertions, no
+  failures/skips, both exit 0; all three targets built in Release/ASan. Existing ellipse regressions: 48 cases /
+  722731 assertions pass Release and ASan (engine paths unchanged by the later helper-only fixes). Both Release fast
+  lanes pass with the existing 3/4 optional-input skips; final lane reports are `dxf-fast-final.junit.xml` and
+  `dwg-fast-final.junit.xml`. ASan uses `detect_leaks=0`; no LeakSanitizer claim. Full qmake6 build remains a release gate.
+- Isolation/commit audit: the prepared 0B-2 test patch was preserved at `build/evidence/0B-2/pending-coverage.patch`
+  and temporarily removed through an owned patch for validation. The real coverage source matched HEAD, and only
+  these seven geometry/build paths were staged. Scoped index/worktree and whitespace checks passed before commit.
+- Next: restore and verify 0B-2; geometry continues with `.b-budget`, `.b-ref`, `.b-check`, `.c`. No validator, new
+  persistent entity, UI or file-format completion is claimed by this leaf.
+
+#### 1A-1.b-budget. Bound shared intersection work before allocation
+
+**Ready card (after the .a checkpoint)**
+- Dependency: 1A-1.a at a4690db08. Files: `lc_parametriccurveintersection.{h,cpp}` and its existing tests only.
+  Coordinate shared builds with the coordinator; no CMake/qmake registration changes are needed for existing files.
+- Finding: `Solver::candidatePairs()` builds its whole vector before `solvePair()` enforces `maxBoxPairs`; the latter
+  also increments before checking. The result exposes no consumed-work counters for the reference/check shared cap.
+- Contract/tasks: check a combined pair-work allowance before broad candidate examination/allocation and before each
+  refinement, without counter overflow; return `LimitExceeded` rather than using a partial candidate list. Expose
+  consumed candidate/refinement/leaf counts on every result so reference analysis can debit one shared budget.
+  Preserve existing zero-depth behavior and default intersection/ordering semantics; do not add a fitting path.
+- Tests: deterministic dense-overlap input with a tiny cap refuses before quadratic allocation; consumed counts never
+  exceed caps; an exact-used budget passes and one-less refuses; invalid/empty input returns zero/appropriate work;
+  existing topology and all curve-offset tests remain valid. Run Release full suite, focused ASan topology/ownership
+  checks, and ellipse regressions before committing this shared-engine change.
+- Recovery/exit: preserve other slices, review scoped diff, commit this leaf, then update the roadmap with its real
+  SHA/work evidence before promoting `.b-ref`. `.b` and 1A-1 remain partial until every required child is done.
 
 **Files.**
 - New `lib/engine/document/entities/lc_ellipseoffsetgeometry.{h,cpp}`, containing:
@@ -1447,7 +1482,7 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
 
 **Precondition:** use the S0 build and baseline; retain the #3117 arc behavior measured at S0.
 
-Execute leaf children 1A-1.a, .b-ref, .b-check and .c in order (§0.3); each has its own compile/test and commit checkpoint.
+Execute leaf children 1A-1.a, .b-budget, .b-ref, .b-check and .c in order (§0.3); each has its own compile/test and commit checkpoint.
 `.b` is their reference/check aggregate for parent progress, not another commit.
 
 **Tests** — new `lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp`, `[lc-offsetcurve][geometry]`,
@@ -2363,7 +2398,16 @@ Push, CI, PR E.
 
 ### Discovered during implementation
 
-(none yet)
+- 0B-2's initial mixed-block failures were fixture ordering, not unsupported entities: `addEntity()` prepends hatch/
+  image records. Controlled fixtures use `appendEntity()` and assert their premise; no baseline gap was invented.
+- 1A-1.a's numeric findings and fixes are recorded in its executed card and tests, not deferred as new-type gaps.
+- Reference analysis needs the pre-allocation pair cap and consumed-work contract in `.b-budget` before it can reuse
+  the intersection solver as a bounded decode/adoption validator.
+- `toleranceFor()` intentionally exposes the numeric floor even when the engine's default options reject equality
+  with that floor. In 1B, qualify large-centre transformed/read caches and explicit editing: a caller may request the
+  next representable tolerance above that floor to meet the existing strict guard, without changing engine defaults,
+  broadening saved relative-factor policy or hiding geometric error. Test one-run edits and both-format reload at
+  that boundary; genuine arithmetic/geometry refusal still preserves the old object.
 
 ### Plan review 2026-10-15
 
