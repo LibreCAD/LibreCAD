@@ -522,6 +522,48 @@ TEST_CASE("hover cache recovers after inherited highlight cleanup", "[hover][sna
     CHECK(f.m_action->m_highlight->entityAt(0)->getId() != previousId);
 }
 
+TEST_CASE("direct drag source respects the enabled snap modes", "[snap][drag][issue3127]") {
+    ActionFixture<HoverProbe> f;
+    auto* viewport = f.m_view.getViewPort();
+    viewport->justSetOffsetAndFactor(0, 0, 1.0);
+    auto* vertical = addLine(f.m_graphic, RS_Vector(200.0, 100.0), RS_Vector(200.0, 350.0));
+    addLine(f.m_graphic, RS_Vector(100.0, 250.0), RS_Vector(300.0, 250.0));
+    f.m_graphic.select(QList<RS_Entity*>{vertical});
+
+    RS_SnapMode mode;
+    mode.snapFree = true;
+    RS_Vector press(200.0, 248.0);
+    RS_Vector expected = press;
+    SECTION("intersection disabled") {}
+    SECTION("intersection disabled after being enabled") {
+        auto enabled = mode;
+        enabled.snapIntersection = true;
+        f.m_action->setSnapMode(enabled);
+    }
+    SECTION("intersection enabled") {
+        mode.snapIntersection = true;
+        expected = RS_Vector(200.0, 250.0);
+    }
+    SECTION("middle snap matches the crossing with intersection disabled") {
+        mode.snapMiddle = true;
+        expected = RS_Vector(200.0, 250.0);
+    }
+    SECTION("on-entity snap preserves the precise source") {
+        mode.snapOnEntity = true;
+        press.x += 1.0;
+        expected = RS_Vector(200.0, 248.0);
+    }
+    f.m_action->setSnapMode(mode);
+
+    const QPointF gui(viewport->toGuiX(press.x), viewport->toGuiY(press.y));
+    QMouseEvent down(QEvent::MouseButtonPress, gui, gui, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    f.m_action->mousePressEvent(&down);
+    const QPointF dragged = gui + QPointF(20.0, 0.0);
+    QMouseEvent move(QEvent::MouseMove, dragged, dragged, Qt::NoButton, Qt::LeftButton, Qt::NoModifier);
+    f.m_action->mouseMoveEvent(&move);
+    CHECK(viewport->getRelativeZero() == expected);
+}
+
 TEST_CASE("stationary block hover reuses its clone and measures geometry only once", "[hover][snap][insert]") {
     ActionFixture<HoverProbe> f;
     const auto calls = std::make_shared<GeometryCalls>();
