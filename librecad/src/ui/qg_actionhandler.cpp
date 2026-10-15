@@ -144,6 +144,12 @@ QStringList QG_ActionHandler::getAvailableCommands() const {
     return cmd;
 }
 
+bool QG_ActionHandler::isCommandEntry() const {
+    if (m_view == nullptr || m_document == nullptr || m_view->isClosing() || m_view->hasAction()) return false;
+    const auto* action = m_view->getDefaultAction();
+    return action == nullptr || action->getStatus() == RS_ActionInterface::InitialActionStatus;
+}
+
 /**
  * Launches the command represented by the given keycode if possible.
  *
@@ -266,10 +272,19 @@ void QG_ActionHandler::slotLockRelativeZero(const bool on) const {
 }
 
 void QG_ActionHandler::setDocumentAndView(RS_Document* doc, RS_GraphicView* graphicView) {
+    disconnect(m_completionActionConnection);
+    disconnect(m_completionDefaultConnection);
     m_actionContext->setDocumentAndView(doc, graphicView);
     if (m_snapManager != nullptr) {
         m_snapManager->setGraphicView(graphicView);
     }
     m_view = graphicView;
     m_document = doc;
+    if (m_view != nullptr) {
+        m_completionActionConnection = connect(m_view, &RS_GraphicView::currentActionChanged, this,
+                                              &QG_ActionHandler::commandContextChanged);
+        m_completionDefaultConnection = connect(m_view, &RS_GraphicView::defaultActionActivated, this,
+                                               &QG_ActionHandler::commandContextChanged);
+    }
+    emit commandContextChanged();
 }

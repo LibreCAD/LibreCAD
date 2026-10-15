@@ -1,6 +1,6 @@
 # Phase 2 priority: AutoCAD-style drawing input
 
-Status: requirements confirmed by the user after the Phase 1 review; implementation is the next checkpoint. These requests take priority at the start of Phase 2, before the broader property/layer work. This note does not claim these changes are already implemented.
+Status: the first input checkpoint is implemented locally; see [implementation results, validation and limits](01-results.md). These requirements were confirmed after the Phase 1 review and take priority before broader property/layer work. This document retains the requirements; the results document records what was actually verified.
 
 ## Confirmed requirements
 

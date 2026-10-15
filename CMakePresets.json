@@ -60,7 +60,7 @@
             "name": "macos-arm64-baseline",
             "configurePreset": "macos-arm64-baseline",
             "jobs": 6,
-            "targets": ["librecad", "librecad_fast_tests", "librecad_dwg_fast_tests", "librecad_dxf_fast_tests", "libdxfrw_dwg_fast_tests", "libdxfrw_dxf_fast_tests", "libdxfrw_dwg_layout_validation_tests", "librecad_dock_layout_tests"]
+            "targets": ["librecad", "librecad_fast_tests", "librecad_dwg_fast_tests", "librecad_dxf_fast_tests", "libdxfrw_dwg_fast_tests", "libdxfrw_dxf_fast_tests", "libdxfrw_dwg_layout_validation_tests", "librecad_dock_layout_tests", "librecad_drawing_cursor_tests", "librecad_command_input_tests"]
         },
         {
             "name": "dwg-fast",

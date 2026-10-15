@@ -31,6 +31,9 @@
 #include "lc_cursoroverlayinfo.h"
 #include "lc_graphicviewport.h"
 #include "lc_highlight.h"
+#include "lc_gripinputwidget.h"
+#include "lc_polygonselection.h"
+#include "lc_overlayentity.h"
 #include "lc_linemath.h"
 #include "lc_propertysheetwidget.h"
 #include "lc_quickinfowidget.h"
@@ -46,9 +49,14 @@
 #include "rs_line.h"
 #include "rs_modification.h"
 #include "rs_polyline.h"
+#include "rs_painter.h"
 #include "rs_preview.h"
 #include "rs_selection.h"
 #include "rs_settings.h"
+#include <QPointer>
+#include <QApplication>
+#include <QPolygonF>
+#include <QPainterPath>
 
 class RS_Polyline;
 
@@ -59,9 +67,57 @@ struct RS_ActionDefault::ActionData {
     RS_Entity* refMovingEntity = nullptr;
     unsigned long long hoveredEntityId = 0;
     bool hoverRefPoints = false;
+    bool cadSelectionStyle = true;
+    int gripHalfSize = 4;
+    QPolygonF lasso;
+    bool lassoCrossing = false;
+    bool lassoDirectionFixed = false;
+    bool skipGripRelease = false;
+    bool clickGripPlacement = false;
+    QPointer<LC_GripInputWidget> gripInput;
 };
 
 namespace {
+
+    class LassoFeedback final : public LC_OverlayDrawable {
+    public:
+        LassoFeedback(const QPolygonF& points, bool crossing) : m_points(points), m_crossing(crossing) {}
+        void draw(RS_Painter* painter) override {
+            QPolygonF polygon;
+            for (const auto& point : m_points) {
+                const auto ui = painter->toGui({point.x(), point.y()});
+                polygon.append({ui.x, ui.y});
+            }
+            const QColor color(m_crossing ? "#51d187" : "#4da3ff");
+            QColor fill = color;
+            fill.setAlpha(45);
+            painter->save();
+            painter->QPainter::setPen(QPen(color, 1, m_crossing ? Qt::DashLine : Qt::SolidLine));
+            painter->setBrush(fill);
+            painter->QPainter::drawPolygon(polygon, Qt::OddEvenFill);
+            painter->restore();
+        }
+    private:
+        QPolygonF m_points;
+        bool m_crossing;
+    };
+
+    class GripFeedback final : public LC_OverlayDrawable {
+    public:
+        GripFeedback(const RS_Vector& point, bool active, int halfSize)
+            : m_point(point), m_active(active), m_halfSize(halfSize) {}
+        void draw(RS_Painter* painter) override {
+            const auto pos = painter->toGui(m_point);
+            const int half = m_halfSize;
+            painter->fillRect(QRectF(pos.x - half, pos.y - half, half * 2, half * 2), RS_Color(QColor("#ffffff")));
+            painter->fillRect(QRectF(pos.x - half + 1, pos.y - half + 1, half * 2 - 2, half * 2 - 2),
+                              RS_Color(QColor(m_active ? "#ff6464" : "#9bd0ff")));
+        }
+    private:
+        RS_Vector m_point;
+        bool m_active;
+        int m_halfSize;
+    };
 
 // Glowing effects on Mouse hover
     constexpr double MINIMUM_HOVER_TOLERANCE = 3.0;
@@ -94,7 +150,15 @@ RS_ActionDefault::RS_ActionDefault(LC_ActionContext *actionContext)
 
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault");
     m_typeToSelect = m_graphicView->getTypeToSelect();
+    connect(m_graphicView, &RS_GraphicView::currentActionChanged, this, [this](RS2::ActionType type) {
+        if (type != RS2::ActionDefault && type != RS2::ActionNone && getStatus() != Neutral)
+            goToNeutralStatus();
+    });
     connect(m_graphicView, &RS_GraphicView::drawingRedrawRequested, this, [this] {
+        if (getStatus() == MovingRef && m_actionData->refMovingEntity &&
+            (m_actionData->refMovingEntity->isDeleted() || !m_actionData->refMovingEntity->isSelected()))
+            goToNeutralStatus();
+        if (getStatus() == Neutral) deletePreview();
         if (m_actionData->hoveredEntityId != 0) {
             clearHighLighting();
             m_graphicView->redraw(RS2::RedrawOverlay);
@@ -105,6 +169,7 @@ RS_ActionDefault::RS_ActionDefault(LC_ActionContext *actionContext)
 
 RS_ActionDefault::~RS_ActionDefault() {
     disconnect(m_graphicView, &RS_GraphicView::drawingRedrawRequested, this, nullptr);
+    delete m_actionData->gripInput.data();
 }
 
 void RS_ActionDefault::init(const int status){
@@ -115,6 +180,9 @@ void RS_ActionDefault::init(const int status){
     if (status == Neutral){
         deletePreview();
         deleteSnapper();
+        if (m_actionData->gripInput) m_actionData->gripInput->hide();
+        m_actionData->lasso.clear();
+        m_actionData->skipGripRelease = m_actionData->clickGripPlacement = false;
     }
     RS_PreviewActionInterface::init(status);
     m_actionData->v1 = {};
@@ -136,6 +204,22 @@ void RS_ActionDefault::checkSupportOfQuickEntityInfo(){
 }
 
 void RS_ActionDefault::keyPressEvent(QKeyEvent *e){
+    // Qt key events can arrive accepted. Escape must still cancel the idle
+    // action's grip/window preview before any inherited key handling.
+    if (e->key() == Qt::Key_Escape) {
+        deleteSnapper();
+        goToNeutralStatus();
+        e->accept();
+        return;
+    }
+    if (getStatus() == MovingRef && m_actionData->gripInput && !m_actionData->gripInput->isHidden()) {
+        if (e->key() == Qt::Key_Tab || (!e->text().isEmpty() && !e->modifiers().testFlag(Qt::ControlModifier))) {
+            m_actionData->gripInput->focusLength();
+            if (e->key() != Qt::Key_Tab && QApplication::focusWidget()) QApplication::sendEvent(QApplication::focusWidget(), e);
+            e->accept();
+            return;
+        }
+    }
     LC_OverlayBoxAction::keyPressEvent(e);
     if (e->isAccepted()) {
         return;
@@ -146,12 +230,6 @@ void RS_ActionDefault::keyPressEvent(QKeyEvent *e){
             e->accept();
             break; //avoid clearing command line at shift key
             //cleanup default action, issue#285
-        case Qt::Key_Escape:
-            //        std::cout<<"RS_ActionDefault::keyPressEvent(): Qt::Key_Escape"<<std::endl;
-            deleteSnapper();
-            goToNeutralStatus();
-            e->accept();
-            break;
         default:
             e->ignore();
             break;
@@ -272,6 +350,13 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
         case Neutral: {
             deleteSnapper();
             highlightHoveredEntities(e);
+            if (m_actionData->cadSelectionStyle && m_document->hasSelection()) {
+                double distance = 0;
+                const auto ref = m_document->getNearestSelectedRefInfo(mouse, &distance);
+                if (ref.ref.valid && toGuiDX(distance) < 8) {
+                    addOverlay(new GripFeedback(ref.ref, false, m_actionData->gripHalfSize), RS2::ActionPreviewEntity);
+                }
+            }
             if (m_infoCursorOverlayPrefs->enabled){
                 if (!isShowEntityDescriptionOnHighlight()) {
                     m_infoCursorOverlayData->setZone2("");
@@ -286,23 +371,20 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
             if (toGuiDX(m_actionData->v1.distanceTo(m_actionData->v2)) > 10){
                 // look for reference points to drag:
                 double dist = NAN;
-                bool singleEntitySelection = m_document->isSingleEntitySelected();
+                bool hasSelection = m_document->hasSelection();
                 RS_EntityContainer::RefInfo refInfo;
-                if (singleEntitySelection) {
-                    // we'll try to change ref point if there is single entity selected
+                if (hasSelection && !e->isShift) {
+                    // Edit the clicked entity's grip while retaining other selected objects.
                     refInfo = m_document->getNearestSelectedRefInfo(m_actionData->v1, &dist);
                 }
                 RS_Vector ref = refInfo.ref;
                 // dist will be initialized if ref.valid = true.
                 if (ref.valid && toGuiDX(dist) < 8){
-                    m_actionData->refMovingEntity = refInfo.entity;
-                    m_actionData->v1 = ref;
-                    moveRelativeZero(m_actionData->v1);
-                    setStatus(MovingRef);
+                    beginGripEdit(refInfo.entity, ref);
                 } else {
                     // test for an entity to drag:
                     RS_Entity *en =  catchEntity(m_actionData->v1);
-                    if (en != nullptr && en->isSelected()){
+                    if (en != nullptr && en->isSelected() && !e->isShift){
                         if (m_actionData->pressSnapPoint.valid) {
                             m_actionData->v1 = m_actionData->pressSnapPoint;
                         }
@@ -311,10 +393,35 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
                     }
                     // no entity found. start area selection:
                     else {
-                        setStatus(SetCorner2);
+                        m_actionData->lasso = QPolygonF{QPointF(m_actionData->v1.x, m_actionData->v1.y), QPointF(mouse.x, mouse.y)};
+                        m_actionData->lassoDirectionFixed = false;
+                        m_actionData->lassoCrossing = toUCS(mouse).x < toUCS(m_actionData->v1).x;
+                        setStatus(Lasso);
                     }
                 }
             }
+            break;
+        }
+        case Lasso: {
+            const RS_Vector start = m_actionData->v1;
+            const double dx = toUCS(mouse).x - toUCS(start).x;
+            if (!m_actionData->lassoDirectionFixed && std::abs(toGuiDX(dx)) > 5) {
+                m_actionData->lassoCrossing = dx < 0;
+                m_actionData->lassoDirectionFixed = true;
+            }
+            auto& points = m_actionData->lasso;
+            const auto last = points.last();
+            if (toGuiDX(mouse.distanceTo({last.x(), last.y()})) >= 3) {
+                if (points.size() >= 2048) {
+                    QPolygonF reduced;
+                    for (int i = 0; i < points.size(); i += 2) reduced.append(points[i]);
+                    points = reduced;
+                }
+                points.append({mouse.x, mouse.y});
+            }
+            auto preview = points;
+            preview.append({mouse.x, mouse.y});
+            addOverlay(new LassoFeedback(preview, m_actionData->lassoCrossing != e->isControl), RS2::OverlayEffects);
             break;
         }
         case MovingRef: {
@@ -340,7 +447,7 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
                     else {
                         basePoint = refMovingLine->getStartpoint();
                     }
-                    mouse = getSnapAngleAwarePoint(e, basePoint, mouse, true);
+                    mouse = constrainGripPoint(getSnapAngleAwarePoint(e, basePoint, mouse, true));
                     if (ctrlPressed){ // - if CTRL pressed, move endpoint with saving current angle of line
                         auto constructionLine = RS_ConstructionLine(nullptr,
                             RS_ConstructionLineData(refMovingLine->getStartpoint(),
@@ -349,7 +456,7 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
                         m_actionData->v2 = newEndpoint;
                     }
                     else{
-                        m_actionData->v2 = mouse;
+                        m_actionData->v2 = constrainGripPoint(mouse);
                         previewRefLine(m_actionData->v2, m_actionData->v1);
                     }
                     if (isInfoCursorForModificationEnabled()) {
@@ -366,7 +473,7 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
                     const RS_Vector &arcEnd = refMovingArc->getEndpoint();
                     const RS_Vector &arcStart = refMovingArc->getStartpoint();
                     if (ctrlPressed){ // for arc, we just correct angle of endpoint without changing the center and radius - if we move endpoint ref
-                        mouse = getSnapAngleAwarePoint(e, arcCenter, mouse, true);
+                        mouse = constrainGripPoint(getSnapAngleAwarePoint(e, arcCenter, mouse, true));
                         if (arcStart == m_actionData->v1){
                             clone->trimStartpoint(mouse);
                             m_actionData->v2 = clone->getStartpoint();
@@ -385,7 +492,7 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
                             addClone = false;
                         }
                         else{ // center
-                            m_actionData->v2 = getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true);
+                            m_actionData->v2 = constrainGripPoint(getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true));
                             clone->moveRef(m_actionData->v1, m_actionData->v2 - m_actionData->v1);
                             m_preview->addEntity(clone);
                             if (m_showRefEntitiesOnPreview) {
@@ -436,10 +543,10 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
                                     mouse = LC_LineMath::getNearestPointOnInfiniteLine(mouse, arcStart, arcEnd);
                                 }
                             } else {
-                                mouse = getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true);
+                                mouse = constrainGripPoint(getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true));
                             }
                         }
-                        m_actionData->v2 = mouse;
+                        m_actionData->v2 = constrainGripPoint(mouse);
                         if (!referenceMoved) {
                             clone->moveRef(m_actionData->v1, m_actionData->v2 - m_actionData->v1);
                             m_preview->addEntity(clone);
@@ -465,11 +572,11 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
                             m_actionData->v2 = LC_LineMath::getNearestPointOnInfiniteLine(mouse, m_actionData->v1, directionPoint);
                         }
                         else{
-                            m_actionData->v2 = getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true);
+                            m_actionData->v2 = constrainGripPoint(getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true));
                         }
                     }
                     else{
-                        m_actionData->v2 = getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true);
+                        m_actionData->v2 = constrainGripPoint(getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true));
                     }
                     if (m_showRefEntitiesOnPreview) {
                         previewRefLine(m_actionData->v2, m_actionData->v1);
@@ -480,7 +587,7 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
                     // fixme -sand - add morphing of circle to ellipse
                     auto *refMovingCircle = static_cast<RS_Circle *>(refMovingEntity);
                     auto *clone = static_cast<RS_Circle *>(refMovingCircle->cloneProxy());
-                    m_actionData->v2 = getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true);
+                    m_actionData->v2 = constrainGripPoint(getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true));
 
                     if (m_showRefEntitiesOnPreview) {
                         previewRefLine(m_actionData->v2, m_actionData->v1);
@@ -495,7 +602,7 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
                 }
                 case RS2::EntityEllipse:{
                     // fixme - sand - add rotation of major axis
-                    m_actionData->v2 = getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true);
+                    m_actionData->v2 = constrainGripPoint(getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true));
                     if (m_showRefEntitiesOnPreview) {
                         previewRefLine(m_actionData->v2, m_actionData->v1);
                     }
@@ -503,7 +610,7 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
                 }
                 // FIXME - add additional processing for dimensions to ensure snapping of dimension lines (same as for creation of dims)
                 default: {
-                    m_actionData->v2 = getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true);
+                    m_actionData->v2 = constrainGripPoint(getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true));
                     if (m_showRefEntitiesOnPreview) {
                         previewRefLine(m_actionData->v2, m_actionData->v1);
                     }
@@ -532,6 +639,11 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
                 previewRefSelectablePoint(m_actionData->v2);
                 previewRefPoint(m_actionData->v1);
             }
+
+            if (m_actionData->cadSelectionStyle)
+                addOverlay(new GripFeedback(m_actionData->v2, true, m_actionData->gripHalfSize), RS2::ActionPreviewEntity);
+            if (m_actionData->gripInput && !m_actionData->gripInput->isHidden())
+                m_actionData->gripInput->updatePoint(m_actionData->v2);
 
             drawPreview();
             drawHighlights();
@@ -674,7 +786,75 @@ void RS_ActionDefault::createEditedCircleDescription(const RS_Circle* clone,  [[
         .toInfoCursorZone2(true);
 }
 
+RS_Vector RS_ActionDefault::constrainGripPoint(const RS_Vector& point) const {
+    if (m_actionData->gripInput && !m_actionData->gripInput->isHidden())
+        return m_actionData->gripInput->constrain(point);
+    return point;
+}
+
+void RS_ActionDefault::beginGripEdit(RS_Entity* entity, const RS_Vector& point) {
+    m_actionData->refMovingEntity = entity;
+    m_actionData->v1 = m_actionData->v2 = point;
+    moveRelativeZero(point);
+    setStatus(MovingRef);
+    if (!m_actionData->gripInput) {
+        auto* input = new LC_GripInputWidget(m_graphicView, m_viewport);
+        m_actionData->gripInput = input;
+        connect(input, &LC_GripInputWidget::previewChanged, this, [this] {
+            if (getStatus() == MovingRef && m_actionData->gripInput->inputValid())
+                moveMouseToRefreshPreview(m_lastMouseMoveEvent.snapPoint);
+        });
+        connect(input, &LC_GripInputWidget::accepted, this, [this] {
+            if (getStatus() != MovingRef) return;
+            auto event = m_lastMouseMoveEvent;
+            event.snapPoint = event.graphPoint = constrainGripPoint(m_actionData->v2);
+            event.isControl = event.isShift = false;
+            onMouseMovingRefCompleted(&event);
+            m_graphicView->setFocus(Qt::OtherFocusReason);
+        });
+        connect(input, &LC_GripInputWidget::cancelled, this, [this] {
+            deleteSnapper();
+            goToNeutralStatus();
+            m_graphicView->setFocus(Qt::OtherFocusReason);
+        });
+    }
+    RS_Vector anchor = point;
+    bool reversed = false;
+    QString caption = tr("Distance");
+    if (entity->rtti() == RS2::EntityLine) {
+        if (point == entity->getStartpoint()) {
+            anchor = entity->getEndpoint();
+            reversed = true;
+            caption = tr("Length");
+        } else if (point == entity->getEndpoint()) {
+            anchor = entity->getStartpoint();
+            caption = tr("Length");
+        }
+    } else if (entity->rtti() == RS2::EntityCircle && point != entity->getCenter()) {
+        anchor = entity->getCenter();
+        caption = tr("Radius");
+    } else if (entity->rtti() == RS2::EntityPolyline) {
+        const auto adjacent = static_cast<RS_Polyline*>(entity)->getRefPointAdjacentDirection(true, point);
+        if (adjacent.valid && adjacent != point) {
+            anchor = adjacent;
+            reversed = point == entity->getStartpoint();
+            caption = tr("Segment length");
+        }
+    }
+    m_actionData->gripInput->begin(anchor, point, caption, reversed);
+}
+
 void RS_ActionDefault::onMouseMovingRefCompleted(const LC_MouseEvent* e) {
+    if (m_actionData->gripInput && !m_actionData->gripInput->isHidden() && !m_actionData->gripInput->inputValid()) {
+        m_actionData->gripInput->focusLength();
+        return;
+    }
+    if (!e->isControl && !e->isShift && constrainGripPoint(e->snapPoint).distanceTo(m_actionData->v1) <= RS_TOLERANCE) {
+        goToNeutralStatus();
+        deleteSnapper();
+        m_movingJustCompleted = true;
+        return;
+    }
     RS_Vector mouse = e->snapPoint;
 
     deletePreview();
@@ -696,7 +876,7 @@ void RS_ActionDefault::onMouseMovingRefCompleted(const LC_MouseEvent* e) {
             } else {
                 basePoint = refMovingLine->getStartpoint();
             }
-            mouse = getSnapAngleAwarePoint(e, basePoint, mouse);
+            mouse = constrainGripPoint(getSnapAngleAwarePoint(e, basePoint, mouse));
             if (ctrlPressed) {
                 // - if CTRL pressed, move endpoint with saving current angle of line
                 const auto constructionLine = RS_ConstructionLine(nullptr,
@@ -705,7 +885,7 @@ void RS_ActionDefault::onMouseMovingRefCompleted(const LC_MouseEvent* e) {
                 const RS_Vector newEndpoint = constructionLine.getNearestPointOnEntity(mouse, false);
                 m_actionData->v2      = newEndpoint;
             } else {
-                m_actionData->v2 = mouse;
+                m_actionData->v2 = constrainGripPoint(mouse);
             }
             break;
         }
@@ -718,7 +898,7 @@ void RS_ActionDefault::onMouseMovingRefCompleted(const LC_MouseEvent* e) {
             const RS_Vector &arcEnd    = refMovingArc->getEndpoint();
             if (ctrlPressed) {
                 // for arc, we just correct angle of enpoint without changing the center and radius - if we move endpoint ref
-                mouse = getSnapAngleAwarePoint(e, arcCenter, mouse, false);
+                mouse = constrainGripPoint(getSnapAngleAwarePoint(e, arcCenter, mouse, false));
                 if (arcStart == m_actionData->v1) {
                     arcClone->trimStartpoint(mouse);
                     m_actionData->v2 = arcClone->getStartpoint();
@@ -730,7 +910,7 @@ void RS_ActionDefault::onMouseMovingRefCompleted(const LC_MouseEvent* e) {
                     moveRefOnClone   = false;
                 } else {
                     // center
-                    m_actionData->v2 = getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true);
+                    m_actionData->v2 = constrainGripPoint(getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true));
                 }
             } else {
                 bool referenceMoved        = false;
@@ -765,11 +945,11 @@ void RS_ActionDefault::onMouseMovingRefCompleted(const LC_MouseEvent* e) {
                         }
                     }
                     else{ // free change of endpoint position
-                        mouse = getSnapAngleAwarePoint(e, m_actionData->v1, mouse, false);
+                        mouse = constrainGripPoint(getSnapAngleAwarePoint(e, m_actionData->v1, mouse, false));
                     }
                 }
                 if (!referenceMoved) {
-                    m_actionData->v2 = mouse;
+                    m_actionData->v2 = constrainGripPoint(mouse);
                     arcClone->moveRef(m_actionData->v1, m_actionData->v2 - m_actionData->v1);
                 }
                 moveRefOnClone = false;
@@ -784,16 +964,16 @@ void RS_ActionDefault::onMouseMovingRefCompleted(const LC_MouseEvent* e) {
                     m_actionData->v2 = LC_LineMath::getNearestPointOnInfiniteLine(mouse, m_actionData->v1, directionPoint);
                 }
                 else{
-                    m_actionData->v2 = getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true);
+                    m_actionData->v2 = constrainGripPoint(getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true));
                 }
             }
             else{
-                m_actionData->v2 = getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true);
+                m_actionData->v2 = constrainGripPoint(getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true));
             }
             break;
         }
         default: {
-            m_actionData->v2 = getSnapAngleAwarePoint(e, m_actionData->v1, mouse, false);
+            m_actionData->v2 = constrainGripPoint(getSnapAngleAwarePoint(e, m_actionData->v1, mouse, false));
             break;
         }
     }
@@ -867,12 +1047,27 @@ void RS_ActionDefault::onMouseRightButtonPress([[maybe_unused]]int status, const
 void RS_ActionDefault::onMouseLeftButtonPress(const int status, const LC_MouseEvent* e) {
     switch (status) {
         case Neutral: {
+            deletePreview();
             if (e->isControl){
                 m_actionData->v1 = RS_Vector{e->uiPosition};
                 setStatus(Panning);
             } else {
                 // dragging should be without modifiers to let custom menu invocation
-                if (e->originalEvent->modifiers() == Qt::NoModifier) {
+                if (e->originalEvent->modifiers() == Qt::NoModifier && m_document->hasSelection()) {
+                    double distance = 0;
+                    const auto ref = m_document->getNearestSelectedRefInfo(e->graphPoint, &distance);
+                    if (ref.ref.valid && toGuiDX(distance) < 8 && !ref.entity->isLocked()) {
+                        beginGripEdit(ref.entity, ref.ref);
+                        m_actionData->skipGripRelease = true;
+                        m_actionData->clickGripPlacement = true;
+                        auto start = *e;
+                        start.snapPoint = start.graphPoint = ref.ref;
+                        m_lastMouseMoveEvent = start;
+                        onMouseMoveEvent(MovingRef, &start);
+                        return;
+                    }
+                }
+                if (e->originalEvent->modifiers() == Qt::NoModifier || e->originalEvent->modifiers() == Qt::ShiftModifier) {
                     m_actionData->v1 = e->graphPoint;
                     m_actionData->pressSnapPoint = e->snapPoint;
                     setStatus(Dragging);
@@ -887,7 +1082,7 @@ void RS_ActionDefault::onMouseLeftButtonPress(const int status, const LC_MouseEv
             break;
         }
         case MovingRef: {
-            if (m_completeMovingByMousePressed) {
+            if (m_actionData->clickGripPlacement || m_completeMovingByMousePressed) {
                 onMouseMovingRefCompleted(e);
             }
             break;
@@ -970,9 +1165,20 @@ void RS_ActionDefault::onMouseLeftButtonRelease(const int status, const LC_Mouse
             break;
         }
         case MovingRef: {
-            if (!m_completeMovingByMousePressed) {
+            if (m_actionData->skipGripRelease) {
+                m_actionData->skipGripRelease = false;
+                break;
+            }
+            if (!m_actionData->clickGripPlacement && !m_completeMovingByMousePressed) {
                 onMouseMovingRefCompleted(e);
             }
+            break;
+        }
+        case Lasso: {
+            m_actionData->lasso.append({e->graphPoint.x, e->graphPoint.y});
+            LC_PolygonSelection::select(m_document, m_viewport, m_actionData->lasso, m_typeToSelect,
+                                        m_actionData->lassoCrossing != e->isControl, !e->isShift);
+            goToNeutralStatus();
             break;
         }
         default:
@@ -988,6 +1194,9 @@ void RS_ActionDefault::onMouseRightButtonRelease([[maybe_unused]]int status, [[m
 }
 
 void RS_ActionDefault::goToNeutralStatus(){
+    if (m_actionData->gripInput) m_actionData->gripInput->hide();
+    m_actionData->lasso.clear();
+    m_actionData->skipGripRelease = m_actionData->clickGripPlacement = false;
     deletePreview();
     clearHighLighting();
     deleteInfoCursor();
@@ -1045,6 +1254,9 @@ void RS_ActionDefault::updateActionPrompt(){
             updatePrompt(tr("Set new ref position"), "", modifiers);
             break;
         }
+        case Lasso:
+            updatePromptTRCancel(tr("Release to select inside lasso (Shift removes objects)"));
+            break;
         case Neutral: {
             updatePrompt(tr("Zoom, pan or select entity"), "", MOD_SHIFT_AND_CTRL(tr("Scroll Horizontally / Select Contour"), tr("Pan / Scroll Vertically / Select Child entities")));
             commandPrompt("");
@@ -1064,10 +1276,13 @@ void RS_ActionDefault::updateActionPrompt(){
 RS2::CursorType RS_ActionDefault::doGetMouseCursor(const int status){
     switch (status) {
         case Neutral:
-            return RS2::ArrowCursor;
+            return RS2::CadIdleCursor;
+        case Dragging:
+        case SetCorner2:
         case Moving:
         case MovingRef:
-            return RS2::SelectCursor;
+        case Lasso:
+            return RS2::CadCursor;
         case Panning:
             return RS2::ClosedHandCursor;
         default:
@@ -1101,6 +1316,14 @@ void RS_ActionDefault::resume(){
 
 void RS_ActionDefault::suspend(){
     clearHighLighting();
+    if (getStatus() == MovingRef && m_actionData->clickGripPlacement &&
+        m_actionData->gripInput && !m_actionData->gripInput->isHidden()) {
+        // Moving into the dimensional editors is part of the same edit.
+        // A new command's currentActionChanged signal cancels it explicitly.
+        RS_ActionInterface::suspend();
+        deleteInfoCursor();
+        return;
+    }
     BASE_CLASS::suspend();
 }
 
@@ -1130,6 +1353,8 @@ RS2::EntityType RS_ActionDefault::getTypeToSelect() const {
 
 void RS_ActionDefault::initFromSettings() {
     LC_OverlayBoxAction::initFromSettings();
+    m_actionData->cadSelectionStyle = LC_GET_ONE_BOOL("Appearance", "CADSelectionStyle", true);
+    m_actionData->gripHalfSize = std::clamp(LC_GET_ONE_INT("Appearance", "EntityHandleSize", 8), 2, 12) / 2;
     LC_GROUP("CADPreferences"); {
         m_completeMovingByMousePressed = LC_GET_BOOL("AdHockMovingEndsByMouseClick", true);
     }

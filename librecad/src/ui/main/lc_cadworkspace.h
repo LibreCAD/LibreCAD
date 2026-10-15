@@ -36,6 +36,7 @@ private:
     bool restoreLayout(const QString& data);
     void applyDefault();
     void updateActions();
+    void updateStatusStrip();
     QC_ApplicationWindow* m_window;
     QString m_preset{"classic-v1"};
     QString m_factoryClassic;
@@ -45,6 +46,10 @@ private:
     QToolBar* m_quickAccess;
     QToolBar* m_ribbon;
     QWidget* m_penHost;
+    QWidget* m_statusStrip;
+    int m_classicStatusMinHeight;
+    int m_classicStatusMaxHeight;
+    QMap<QWidget*, bool> m_classicStatusVisibility;
     QVBoxLayout* m_penLayout;
     QComboBox* m_layers;
     RS_LayerList* m_layerList{nullptr};

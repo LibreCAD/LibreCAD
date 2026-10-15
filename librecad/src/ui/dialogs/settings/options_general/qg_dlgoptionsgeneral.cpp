@@ -213,6 +213,9 @@ void QG_DlgOptionsGeneral::init(){
 
         bool cursor_hiding = LC_GET_BOOL("cursor_hiding");
         cursor_hiding_checkbox->setChecked(cursor_hiding);
+        cbDrawingCursor->setChecked(LC_GET_BOOL("DrawingCursorEnabled", true));
+        sbDrawingCrosshair->setValue(LC_GET_INT("DrawingCursorCrosshairPercent", 12));
+        sbDrawingPickbox->setValue(LC_GET_INT("DrawingCursorPickboxSize", 10));
 
         bool showSnapOptionsInSnapToolbar = LC_GET_BOOL("showSnapOptionsInSnapToolbar");
         cbShowSnapOptionsInSnapBar->setChecked(showSnapOptionsInSnapToolbar);
@@ -285,7 +288,8 @@ void QG_DlgOptionsGeneral::init(){
         checked = LC_GET_BOOL("ShowKeyboardShortcutsInTooltips", true);
         cbShowKeyboardShortcutsInToolTips->setChecked(checked);
 
-        int handleSize = LC_GET_INT("EntityHandleSize", 4);
+        cbCADSelectionStyle->setChecked(LC_GET_BOOL("CADSelectionStyle", true));
+        int handleSize = LC_GET_INT("EntityHandleSize", 8);
         sbHandleSize->setValue(handleSize);
 
         int relZeroRadius = LC_GET_INT("RelZeroMarkerRadius", 5);
@@ -584,7 +588,7 @@ void QG_DlgOptionsGeneral::init(){
         initComboBox(cbGridLinesColor, LC_GET_STR("gridLines", RS_Settings::COLOR_META_GRID_LINES));
         initComboBox(cbMetaGridPointsColor, LC_GET_STR("meta_grid", RS_Settings::COLOR_META_GRID_POINTS));
         initComboBox(cbMetaGridLinesColor, LC_GET_STR("meta_grid_lines", RS_Settings::COLOR_META_GRID_LINES));
-        initComboBox(cbSelectedColor, LC_GET_STR("select", RS_Settings::SELECT));
+        initComboBox(cbSelectedColor, LC_GET_STR("select", cbCADSelectionStyle->isChecked() ? "#4da3ff" : RS_Settings::SELECT));
         initComboBox(cbHighlightedColor, LC_GET_STR("highlight", RS_Settings::SELECT));
         initComboBox(cbStartHandleColor, LC_GET_STR("start_handle", RS_Settings::START_HANDLE));
         initComboBox(cbHandleColor, LC_GET_STR("handle", RS_Settings::HANDLE));
@@ -777,7 +781,7 @@ void QG_DlgOptionsGeneral::init(){
     }
     LC_GROUP_END();
     LC_GROUP("Keyboard"); {
-        cbEvaluateOnSpace->setChecked(LC_GET_BOOL("EvaluateCommandOnSpace"));
+        cbEvaluateOnSpace->setChecked(LC_GET_BOOL("EvaluateCommandOnSpace", true));
         cbToggleFreeSnapOnSpace->setChecked(LC_GET_BOOL("ToggleFreeSnapOnSpace"));
         cbEnableKeyboardZoomAdjust->setChecked(LC_GET_BOOL("AllowScrollMoveAdjustByKeys", true));
     }
@@ -846,6 +850,9 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("selection_overlay_inverted_line_type", wOverlaySelectionInvertedLineType->getLineType());
             LC_SET("indicator_lines_line_width", sbSnapLinesLineWidth->value());
             LC_SET("cursor_hiding", cursor_hiding_checkbox->isChecked());
+            LC_SET("DrawingCursorEnabled", cbDrawingCursor->isChecked());
+            LC_SET("DrawingCursorCrosshairPercent", sbDrawingCrosshair->value());
+            LC_SET("DrawingCursorPickboxSize", sbDrawingPickbox->value());
             LC_SET("showSnapOptionsInSnapToolbar", cbShowSnapOptionsInSnapBar->isChecked());
             LC_SET("UnitlessGrid", cb_unitless_grid->isChecked());
             LC_SET("Antialiasing", cb_antialiasing->isChecked());
@@ -861,6 +868,7 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("ExtendModeXAxis", cbXAxisAreas->currentIndex());
             LC_SET("ExtendModeYAxis", cbYAxisAreas->currentIndex());
             LC_SET("EntityHandleSize", sbHandleSize->value());
+            LC_SET("CADSelectionStyle", cbCADSelectionStyle->isChecked());
             LC_SET("RelZeroMarkerRadius", sbRelZeroRadius->value());
             LC_SET("ZeroShortAxisMarkSize", sbAxisSize->value());
             if (LC_SET("AllowMenusTearOff", cbAllowMenusDetaching->isChecked())){

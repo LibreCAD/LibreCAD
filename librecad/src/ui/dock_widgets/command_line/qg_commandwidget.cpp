@@ -29,6 +29,10 @@
 #include <QDockWidget>
 #include <QFileDialog>
 #include <QKeyEvent>
+#include <QHeaderView>
+#include <QScreen>
+#include <QShowEvent>
+#include <QTreeWidget>
 
 #include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
@@ -43,6 +47,34 @@ QG_CommandWidget::QG_CommandWidget(QG_ActionHandler* actionHandler, QWidget* par
       , m_actionHandler(actionHandler) {
     setObjectName(name);
     setupUi(this);
+    historySplitter->setCollapsible(0, true);
+    historySplitter->setCollapsible(1, false);
+    historySplitter->setStretchFactor(0, 1);
+    historySplitter->setStretchFactor(1, 0);
+    historySplitter->setSizes({72, commandRow->sizeHint().height()});
+    const QByteArray historyState = LC_GET_ONE_STR("Widgets", "CommandHistorySplitter", "").toLatin1();
+    if (!historyState.isEmpty()) historySplitter->restoreState(QByteArray::fromBase64(historyState));
+    setCommand({});
+    m_suggestions = new QTreeWidget(this);
+    m_suggestions->setObjectName("command_suggestions");
+    // Keyboard focus belongs to the command editor, including mouse completion.
+    m_suggestions->setWindowFlags(Qt::Tool | Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
+    m_suggestions->setAttribute(Qt::WA_ShowWithoutActivating);
+    m_suggestions->setFocusPolicy(Qt::NoFocus);
+    m_suggestions->viewport()->setFocusPolicy(Qt::NoFocus);
+    m_suggestions->setRootIsDecorated(false);
+    m_suggestions->setUniformRowHeights(true);
+    m_suggestions->setHeaderLabels({tr("Command / alias"), tr("Description")});
+    m_suggestions->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_suggestions->setSelectionMode(QAbstractItemView::SingleSelection);
+    leCommand->installEventFilter(this);
+    connect(leCommand, &QLineEdit::textEdited, this, &QG_CommandWidget::updateSuggestions);
+    connect(leCommand, &QLineEdit::textChanged, this, [this](const QString& text) {
+        if (text != m_suggestionPrefix) dismissSuggestions();
+    });
+    connect(leCommand, &QG_CommandEdit::focusOut, this, &QG_CommandWidget::dismissSuggestions);
+    connect(m_suggestions, &QTreeWidget::itemClicked, this, [this] {acceptSuggestion(false);});
+    setActionHandler(actionHandler);
     connect(leCommand, &QG_CommandEdit::command, this, &QG_CommandWidget::handleCommand);
     connect(leCommand, &QG_CommandEdit::escape, this, &QG_CommandWidget::escape);
     connect(leCommand, &QG_CommandEdit::focusOut, this, &QG_CommandWidget::setNormalMode);
@@ -88,6 +120,7 @@ QG_CommandWidget::QG_CommandWidget(QG_ActionHandler* actionHandler, QWidget* par
  *  Destroys the object and frees any allocated resources
  */
 QG_CommandWidget::~QG_CommandWidget() {
+    LC_SET_ONE("Widgets", "CommandHistorySplitter", QString::fromLatin1(historySplitter->saveState().toBase64()));
     const auto action = findChild<QAction*>("keycode_action");
     LC_SET_ONE("Widgets", "KeycodeMode", action->isChecked());
 }
@@ -97,10 +130,50 @@ QG_CommandWidget::~QG_CommandWidget() {
  *  language.
  */
 void QG_CommandWidget::languageChange() {
+    dismissSuggestions();
     retranslateUi(this);
+    m_suggestions->setHeaderLabels({tr("Command / alias"), tr("Description")});
 }
 
-bool QG_CommandWidget::eventFilter(QObject*/*obj*/, QEvent* event) {
+bool QG_CommandWidget::eventFilter(QObject* obj, QEvent* event) {
+    if (obj == m_suggestionWindow && obj != leCommand) {
+        if (event->type() == QEvent::Move || event->type() == QEvent::Resize) positionSuggestions();
+        if (event->type() == QEvent::Hide || event->type() == QEvent::WindowDeactivate) dismissSuggestions();
+        return false;
+    }
+    if (obj == leCommand) {
+        if (event->type() == QEvent::KeyPress && m_suggestions->isVisible()) {
+            const auto* key = static_cast<QKeyEvent*>(event);
+            if (key->modifiers() == Qt::NoModifier || key->modifiers() == Qt::KeypadModifier) {
+                if (!canSuggest() || !leCommand->allowsCompletion()) {
+                    dismissSuggestions();
+                    return false;
+                }
+                const int row = m_suggestions->indexOfTopLevelItem(m_suggestions->currentItem());
+                switch (key->key()) {
+                    case Qt::Key_Up:
+                    case Qt::Key_Down: {
+                        const int next = qBound(0, row + (key->key() == Qt::Key_Up ? -1 : 1), m_suggestions->topLevelItemCount() - 1);
+                        m_suggestions->setCurrentItem(m_suggestions->topLevelItem(next));
+                        m_suggestions->scrollToItem(m_suggestions->currentItem());
+                        return true;
+                    }
+                    case Qt::Key_Tab: acceptSuggestion(false); return true;
+                    case Qt::Key_Return:
+                    case Qt::Key_Enter: acceptSuggestion(true); return true;
+                    case Qt::Key_Space:
+                        if (LC_GET_ONE_BOOL("Keyboard", "EvaluateCommandOnSpace", true)) {
+                            acceptSuggestion(true);
+                            return true;
+                        }
+                        break;
+                    case Qt::Key_Escape: dismissSuggestions(); return true;
+                    default: break;
+                }
+            }
+        }
+        return false;
+    }
     if (event != nullptr && event->type() == QEvent::KeyPress) {
         const auto e = static_cast<QKeyEvent*>(event);
 
@@ -173,20 +246,25 @@ void QG_CommandWidget::focusWidget() {
 }
 
 void QG_CommandWidget::setCommand(const QString& cmd) const {
-    if (cmd.isEmpty()) {
-        lCommand->setText(tr("Enter Command:"));
+    // Mouse enter/focus can refresh an idle action's prompt while typing. Only
+    // an actual argument/action context invalidates command-name suggestions.
+    if (!canSuggest()) dismissSuggestions();
+    if (cmd.isEmpty() || canSuggest()) {
+        lCommand->setPrompt(tr("Command:"));
     }
     else {
         if (!cmd.endsWith(":")) {
-            lCommand->setText(cmd + ":");
+            lCommand->setPrompt(cmd + ":");
         }
         else {
-            lCommand->setText(cmd);
+            lCommand->setPrompt(cmd);
         }
     }
+    positionSuggestions();
 }
 
 void QG_CommandWidget::setInput(const QString& cmd) const {
+    dismissSuggestions();
     leCommand->setText(cmd);
     leCommand->setFocus();
 }
@@ -196,6 +274,7 @@ void QG_CommandWidget::appendHistory(const QString& msg) const {
 }
 
 void QG_CommandWidget::handleCommand(QString cmd) const {
+    dismissSuggestions();
     cmd = cmd.simplified();
     bool isAction = false;
     if (!cmd.isEmpty()) {
@@ -206,7 +285,7 @@ void QG_CommandWidget::handleCommand(QString cmd) const {
         isAction = m_actionHandler->command(cmd);
     }
 
-    if (!isAction && !(cmd.contains(',') || cmd.at(0) == '@')) {
+    if (!isAction && !cmd.isEmpty() && !(cmd.contains(',') || cmd.startsWith('@'))) {
         appendHistory(tr("Unknown command: %1").arg(cmd));
     }
 
@@ -225,12 +304,15 @@ void QG_CommandWidget::spacePressed() const {
 void QG_CommandWidget::tabPressed() const {
     if (m_actionHandler != nullptr) {
         QString typed = leCommand->text();
+        if (!leCommand->allowsCompletion()) return;
+        if (canSuggest()) {
+            const_cast<QG_CommandWidget*>(this)->updateSuggestions();
+            if (m_suggestions->topLevelItemCount() == 1) acceptSuggestion(false);
+            return;
+        }
 
         // check current command:
         QStringList choices = m_actionHandler->getAvailableCommands();
-        if (choices.empty()) {
-            choices = RS_COMMANDS->complete(typed);
-        }
 
         QStringList reducedChoices;
         std::copy_if(choices.cbegin(), choices.cend(), std::back_inserter(reducedChoices),
@@ -263,7 +345,10 @@ void QG_CommandWidget::escape() const {
 }
 
 void QG_CommandWidget::setActionHandler(QG_ActionHandler* ah) {
+    disconnect(m_completionConnection);
     m_actionHandler = ah;
+    if (ah != nullptr) m_completionConnection = connect(ah, &QG_ActionHandler::commandContextChanged,
+                                                        this, &QG_CommandWidget::dismissSuggestions);
 }
 
 void QG_CommandWidget::setCommandMode() const {
@@ -274,6 +359,83 @@ void QG_CommandWidget::setCommandMode() const {
 
 void QG_CommandWidget::setNormalMode() const {
     lCommand->setPalette(palette());
+}
+
+void QG_CommandWidget::resizeEvent(QResizeEvent* event) {
+    LC_GraphicViewAwareWidget::resizeEvent(event);
+    lCommand->setMaximumWidth(qMax(60, width() * 2 / 5));
+    positionSuggestions();
+}
+
+void QG_CommandWidget::showEvent(QShowEvent* event) {
+    LC_GraphicViewAwareWidget::showEvent(event);
+    if (m_suggestionWindow) m_suggestionWindow->removeEventFilter(this);
+    m_suggestionWindow = window();
+    if (m_suggestionWindow != this) m_suggestionWindow->installEventFilter(this);
+}
+
+bool QG_CommandWidget::canSuggest() const {
+    return m_actionHandler != nullptr && m_actionHandler->isCommandEntry();
+}
+
+void QG_CommandWidget::dismissSuggestions() const {
+    if (m_suggestions != nullptr) m_suggestions->hide();
+}
+
+void QG_CommandWidget::updateSuggestions() {
+    dismissSuggestions();
+    if (!canSuggest() || !leCommand->hasFocus() || !leCommand->allowsCompletion()) return;
+    m_suggestionPrefix = leCommand->text();
+    m_suggestions->clear();
+    for (const auto& candidate : RS_COMMANDS->suggestions(m_suggestionPrefix)) {
+        // Alias files can contain reserved parser syntax (variables/sequences).
+        // Completion must insert a single command-name token, not execute that syntax.
+        if (!QG_CommandEdit::isCommandToken(candidate.text)) continue;
+        const QString name = candidate.text == candidate.canonical ? candidate.text
+                           : candidate.text + "  →  " + candidate.canonical;
+        auto* item = new QTreeWidgetItem(m_suggestions, {name, candidate.description});
+        item->setData(0, Qt::UserRole, candidate.text);
+        item->setToolTip(0, candidate.alias ? tr("Alias for %1").arg(candidate.canonical) : candidate.canonical);
+        item->setToolTip(1, candidate.description);
+    }
+    if (m_suggestions->topLevelItemCount() == 0) return;
+    m_suggestions->setCurrentItem(m_suggestions->topLevelItem(0));
+    m_suggestions->resizeColumnToContents(0);
+    positionSuggestions();
+    m_suggestions->show();
+    m_suggestions->raise();
+}
+
+void QG_CommandWidget::positionSuggestions() const {
+    if (m_suggestions == nullptr || m_suggestions->topLevelItemCount() == 0) return;
+    const QPoint anchor = leCommand->mapToGlobal(QPoint(0, 0));
+    const auto* screen = QGuiApplication::screenAt(anchor);
+    if (screen == nullptr) screen = leCommand->screen();
+    const QRect available = screen->availableGeometry();
+    const int width = qMin(available.width(), qMax(420, qMin(640, leCommand->width())));
+    const int rowHeight = qMax(1, m_suggestions->sizeHintForRow(0));
+    const int preferredHeight = qMin(8, m_suggestions->topLevelItemCount()) * rowHeight
+                              + m_suggestions->header()->sizeHint().height() + 2 * m_suggestions->frameWidth();
+    const int above = anchor.y() - available.top();
+    const int below = available.bottom() - anchor.y() - leCommand->height();
+    const bool upwards = above >= preferredHeight || above >= below;
+    const int height = qMax(1, qMin(preferredHeight, upwards ? above : below));
+    const int x = qBound(available.left(), anchor.x(), available.right() - width + 1);
+    const int y = upwards ? anchor.y() - height : anchor.y() + leCommand->height();
+    m_suggestions->setGeometry(x, y, width, height);
+}
+
+void QG_CommandWidget::acceptSuggestion(bool execute) const {
+    const auto* item = m_suggestions->currentItem();
+    if (item == nullptr || !canSuggest() || !leCommand->allowsCompletion()) {
+        dismissSuggestions();
+        return;
+    }
+    const QString command = item->data(0, Qt::UserRole).toString();
+    dismissSuggestions();
+    leCommand->setText(command);
+    leCommand->setFocus();
+    if (execute) leCommand->acceptCommand(command);
 }
 
 QString QG_CommandWidget::getRootCommand(const QStringList& cmdList, const QString& typed) {

@@ -51,6 +51,10 @@ public:
     void setPointType(int type);
     void setPointSize(int size);
     void setShapesPen(const RS_Pen &p) {m_shapePen = p;}
+    void setPickboxSize(int size);
+    void setLengthPercent(int percent);
+    // Drawing cursors stay at the pointer in logical pixels; snap markers use WCS.
+    void setUiPosition(const RS_Vector& pos) {m_uiPos = pos;}
 protected:
     int m_linesShape;
     int m_indicatorShape;
@@ -59,6 +63,9 @@ protected:
     int m_pointType;
     int m_pointSize;
     RS_Vector m_wcsPos;
+    RS_Vector m_uiPos{false};
+    int m_pickboxSize{12};
+    int m_lengthPercent{100};
 
     double drawIndicator(RS_Painter *painter, const RS_Vector& uiPos) const;
 

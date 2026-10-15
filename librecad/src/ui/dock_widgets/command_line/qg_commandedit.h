@@ -39,6 +39,9 @@ public:
     ~QG_CommandEdit() override = default;
     void readCommandFile(const QString& path);
     void setKeyCodeMode(const bool val) {m_keycodeMode = val;}
+    static bool isCommandToken(const QString& input);
+    bool allowsCompletion() const {return !m_keycodeMode && !m_calculatorMode && isCommandToken(text());}
+    void acceptCommand(const QString& text) {processInput(text);}
 protected:
     bool event(QEvent* e) override;
     void keyPressEvent(QKeyEvent* e) override;

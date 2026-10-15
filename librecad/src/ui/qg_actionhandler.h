@@ -59,6 +59,7 @@ public:
     bool keycode(const QString &code) const;
     bool command(const QString &cmd) const;
     QStringList getAvailableCommands() const;
+    bool isCommandEntry() const;
     void setDocumentAndView(RS_Document* doc, RS_GraphicView* graphicView);
     void setActionContext(LC_DefaultActionContext* actionContext) {m_actionContext = actionContext;}
     void setSnapManager(LC_SnapManager* snapManager);
@@ -68,7 +69,11 @@ public slots:
     void slotSnapMiddleManual() const;
     void slotSetRelativeZero() const;
     void slotLockRelativeZero(bool on) const;
+signals:
+    void commandContextChanged();
 private:
+    QMetaObject::Connection m_completionActionConnection;
+    QMetaObject::Connection m_completionDefaultConnection;
     RS_GraphicView* m_view {nullptr};
     RS_Document* m_document {nullptr};
     LC_DefaultActionContext* m_actionContext{nullptr};

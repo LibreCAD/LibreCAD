@@ -5,6 +5,8 @@
 #include <QtWidgets>
 #include "qc_applicationwindow.h"
 #include "qg_pentoolbar.h"
+#include "qg_coordinatewidget.h"
+#include "qg_selectionwidget.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_layer.h"
@@ -16,9 +18,35 @@ const QString familiar = QStringLiteral("cad-familiar-v1");
 const QString classic = QStringLiteral("classic-v1");
 const QStringList penActions{"PenSyncFromLayer", "PenPick", "PenPickResolved", "PenApply", "PenCopy"};
 
+// Tint the existing LibreCAD glyphs with the current palette. QAction icons
+// remain untouched for Classic, menus and other toolbars.
+class CadButton final : public QToolButton {
+public:
+    explicit CadButton(QWidget* parent) : QToolButton(parent) {}
+    void refreshIcon() {
+        if (!defaultAction() || defaultAction()->icon().isNull()) return;
+        QIcon icon;
+        for (auto mode : {QIcon::Normal, QIcon::Disabled}) {
+            auto pixmap = defaultAction()->icon().pixmap(QSize(64, 64));
+            QPainter painter(&pixmap);
+            painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+            painter.fillRect(pixmap.rect(), palette().color(mode == QIcon::Disabled ? QPalette::Disabled : QPalette::Active,
+                                                          QPalette::ButtonText));
+            painter.end();
+            icon.addPixmap(pixmap, mode);
+        }
+        setIcon(icon);
+    }
+protected:
+    void changeEvent(QEvent* event) override {
+        QToolButton::changeEvent(event);
+        if (event->type() == QEvent::PaletteChange) refreshIcon();
+    }
+};
+
 QToolButton* button(QWidget* parent, QAction* action, const QString& label = {}) {
     if (!action) qFatal("CAD workspace references a missing action");
-    auto* result = new QToolButton(parent);
+    auto* result = new CadButton(parent);
     result->setDefaultAction(action);
     if (!label.isEmpty()) {
         result->setText(label);
@@ -26,6 +54,8 @@ QToolButton* button(QWidget* parent, QAction* action, const QString& label = {})
         // short label while continuing to share enabled/check/shortcut state.
         QObject::connect(action, &QAction::changed, result, [result, label] { result->setText(label); });
     }
+    result->refreshIcon();
+    QObject::connect(action, &QAction::changed, result, [result] { result->refreshIcon(); });
     result->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     result->setIconSize(QSize(20, 20));
     result->setAutoRaise(true);
@@ -40,25 +70,26 @@ public:
     explicit RibbonPage(QWidget* parent = nullptr) : QWidget(parent) {
         row = new QHBoxLayout(this);
         row->setContentsMargins(6, 3, 6, 3);
-        row->setSpacing(8);
+        row->setSpacing(3);
         row->setSizeConstraint(QLayout::SetNoConstraint);
         setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     }
-    QSize sizeHint() const override { return {960, 126}; }
-    QSize minimumSizeHint() const override { return {0, 126}; }
+    QSize sizeHint() const override { return {960, 108}; }
+    QSize minimumSizeHint() const override { return {0, 108}; }
     QHBoxLayout* row;
     QWidget* secondary{nullptr};
     QWidget* overflow{nullptr};
 protected:
     void resizeEvent(QResizeEvent* event) override {
         QWidget::resizeEvent(event);
-        if (secondary) secondary->setVisible(width() >= 960);
-        if (overflow) overflow->setVisible(width() < 960);
+        if (secondary) secondary->setVisible(width() >= 1120);
+        if (overflow) overflow->show();
     }
 };
 
 QFrame* panel(RibbonPage* page, const QString& title, QGridLayout*& contents) {
     auto* result = new QFrame(page);
+    result->setObjectName("cad_ribbon_panel");
     result->setFrameShape(QFrame::StyledPanel);
     auto* layout = new QVBoxLayout(result);
     layout->setContentsMargins(5, 2, 5, 2);
@@ -68,6 +99,7 @@ QFrame* panel(RibbonPage* page, const QString& title, QGridLayout*& contents) {
     contents->setSpacing(1);
     layout->addLayout(contents, 1);
     auto* caption = new QLabel(title, result);
+    caption->setObjectName("cad_panel_caption");
     caption->setAlignment(Qt::AlignCenter);
     layout->addWidget(caption);
     page->row->addWidget(result);
@@ -126,7 +158,14 @@ LC_CadWorkspace::LC_CadWorkspace(QC_ApplicationWindow* window)
     tabs->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     tabs->setMinimumWidth(0);
     tabs->setDocumentMode(true);
-    tabs->setFixedHeight(156);
+    tabs->setFixedHeight(140);
+    m_ribbon->setStyleSheet(
+        "QFrame#cad_ribbon_panel { border: none; border-right: 1px solid palette(mid); }"
+        "QLabel#cad_panel_caption { font-size: 11px; padding: 0px; }"
+        "QToolButton { padding: 2px 4px; border: 1px solid transparent; border-radius: 2px; }"
+        "QToolButton:hover { background: palette(midlight); border-color: palette(mid); }"
+        "QToolButton:checked { background: palette(highlight); color: palette(highlighted-text); }"
+        "QComboBox { min-height: 22px; }");
     m_ribbon->addWidget(tabs);
 
     auto* home = new RibbonPage(tabs);
@@ -138,17 +177,29 @@ LC_CadWorkspace::LC_CadWorkspace(QC_ApplicationWindow* window)
             grid->addWidget(button(group, window->getAction(ids[i]), labels[i]), i % 3, i / 3);
         return group;
     };
-    addGroup(tr("Draw"), {"DrawLine", "DrawPolyline", "DrawCircle", "DrawArc", "DrawLineRectangle"},
-             {tr("Line"), tr("Polyline"), tr("Circle"), tr("Arc"), tr("Rectangle")});
-    addGroup(tr("Modify"), {"ModifyMove", "ModifyRotate", "ModifyOffset", "ModifyTrim", "ModifyTrimAmount", "ModifyRound"},
-             {tr("Move / Copy"), tr("Rotate"), tr("Offset"), tr("Trim"), tr("Lengthen"), tr("Fillet")});
+    auto* drawing = panel(home, tr("Draw"), grid);
+    int column = 0;
+    for (const auto& id : {"DrawLine", "DrawCircle"}) {
+        auto* primary = button(drawing, window->getAction(id), id == QString("DrawLine") ? tr("Line") : tr("Circle"));
+        primary->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        primary->setIconSize({32, 32});
+        grid->addWidget(primary, 0, column++, 3, 1);
+    }
+    int drawingRow = 0;
+    for (const auto& entry : QList<QPair<QString, QString>>{{"DrawPolyline", tr("Polyline")},
+             {"DrawArc", tr("Arc")}, {"DrawLineRectangle", tr("Rectangle")}})
+        grid->addWidget(button(drawing, window->getAction(entry.first), entry.second), drawingRow++, column);
+    addGroup(tr("Modify"), {"ModifyMove", "ModifyRotate", "ModifyOffset", "ModifyTrim", "ModifyTrimAmount", "ModifyRound",
+                            "ModifyMirror", "ModifyScale", "ModifyStretch"},
+             {tr("Move / Copy"), tr("Rotate"), tr("Offset"), tr("Trim"), tr("Lengthen"), tr("Fillet"),
+              tr("Mirror"), tr("Scale"), tr("Stretch")});
     auto* layers = panel(home, tr("Layers"), grid);
     m_layers = new QComboBox(layers);
     m_layers->setObjectName("cad_current_layer");
     m_layers->setAccessibleName(tr("Current layer"));
     m_layers->setToolTip(tr("Current layer for new entities"));
-    m_layers->setMinimumWidth(130);
-    m_layers->setMaximumWidth(170);
+    m_layers->setMinimumWidth(116);
+    m_layers->setMaximumWidth(150);
     grid->addWidget(m_layers, 0, 0, 1, 2);
     grid->addWidget(button(layers, window->getAction("LayersAdd"), tr("Add")), 1, 0);
     grid->addWidget(button(layers, window->getAction("LayersEdit"), tr("Edit")), 1, 1);
@@ -184,21 +235,57 @@ LC_CadWorkspace::LC_CadWorkspace(QC_ApplicationWindow* window)
     home->secondary = addGroup(tr("Annotation"), {"DrawText", "DrawHatch", "DimAligned", "DimLinear"},
                                {tr("Text"), tr("Hatch"), tr("Aligned"), tr("Linear")});
     auto* annotation = new QToolButton(home);
-    annotation->setText(tr("Annotation"));
+    annotation->setText(tr("More tools"));
     annotation->setPopupMode(QToolButton::InstantPopup);
     auto* annotationMenu = new QMenu(annotation);
     for (const auto& id : {"DrawText", "DrawHatch", "DimAligned", "DimLinear", "DimLinearHor", "DimLinearVer"})
         annotationMenu->addAction(window->getAction(id));
+    annotationMenu->addSeparator();
+    for (const auto& id : {"BlocksInsert", "EditCut", "EditCopy", "EditPaste", "InfoDist"})
+        annotationMenu->addAction(window->getAction(id));
     annotation->setMenu(annotationMenu);
+    annotation->setObjectName("cad_more_tools");
     home->row->addWidget(annotation);
     home->overflow = annotation;
-    annotation->hide();
+    annotation->show();
     home->row->addStretch();
+
+    auto* insert = new RibbonPage(tabs);
+    tabs->addTab(insert, tr("Insert"));
+    auto* blocks = panel(insert, tr("Block"), grid);
+    int row = 0;
+    for (const auto& entry : QList<QPair<QString, QString>>{{"BlocksInsert", tr("Insert")},
+             {"BlocksCreate", tr("Create")}, {"BlocksEdit", tr("Edit")}})
+        grid->addWidget(button(blocks, window->getAction(entry.first), entry.second), row++, 0);
+    auto* clipboard = panel(insert, tr("Clipboard"), grid);
+    row = 0;
+    for (const auto& id : {"EditCut", "EditCopy", "EditPaste"})
+        grid->addWidget(button(clipboard, window->getAction(id)), row++, 0);
+    insert->row->addStretch();
+
+    auto* annotate = new RibbonPage(tabs);
+    tabs->addTab(annotate, tr("Annotate"));
+    auto* text = panel(annotate, tr("Text and Hatch"), grid);
+    int textColumn = 0;
+    for (const auto& entry : QList<QPair<QString, QString>>{{"DrawText", tr("Text")}, {"DrawHatch", tr("Hatch")}}) {
+        auto* control = button(text, window->getAction(entry.first), entry.second);
+        control->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        control->setIconSize({32, 32});
+        grid->addWidget(control, 0, textColumn++, 3, 1);
+    }
+    auto* dimensions = panel(annotate, tr("Dimensions"), grid);
+    int dimensionIndex = 0;
+    for (const auto& entry : QList<QPair<QString, QString>>{{"DimAligned", tr("Aligned")}, {"DimLinear", tr("Linear")},
+             {"DimAngular", tr("Angular")}, {"DimRadial", tr("Radius")}, {"DimDiametric", tr("Diameter")}}) {
+        grid->addWidget(button(dimensions, window->getAction(entry.first), entry.second), dimensionIndex % 3, dimensionIndex / 3);
+        ++dimensionIndex;
+    }
+    annotate->row->addStretch();
 
     auto* view = new RibbonPage(tabs);
     tabs->addTab(view, tr("View"));
     auto* palettes = panel(view, tr("Palettes"), grid);
-    int row = 0;
+    row = 0;
     for (const auto& id : {"property_sheet", "layer_dockwidget", "command_dockwidget"}) {
         auto* dock = window->findChild<QDockWidget*>(id);
         grid->addWidget(button(palettes, dock->toggleViewAction(), dock->windowTitle()), row++, 0);
@@ -226,6 +313,63 @@ LC_CadWorkspace::LC_CadWorkspace(QC_ApplicationWindow* window)
     m_quickAccess->hide();
     m_ribbon->hide();
     m_layers->setEnabled(false);
+
+    auto* status = window->statusBar();
+    m_classicStatusMinHeight = status->minimumHeight();
+    m_classicStatusMaxHeight = status->maximumHeight();
+    for (auto* widget : status->findChildren<QWidget*>(QString(), Qt::FindDirectChildrenOnly))
+        if (!qobject_cast<QSizeGrip*>(widget)) m_classicStatusVisibility.insert(widget, !widget->isHidden());
+    m_statusStrip = new QWidget(status);
+    m_statusStrip->setObjectName("cad_status_strip");
+    auto* strip = new QHBoxLayout(m_statusStrip);
+    strip->setContentsMargins(4, 0, 4, 0);
+    strip->setSpacing(3);
+    auto* model = new QLabel(tr("2D"), m_statusStrip);
+    model->setToolTip(tr("2D drawing workspace"));
+    strip->addWidget(model);
+    auto* coordinates = new QLabel(tr("0 , 0"), m_statusStrip);
+    coordinates->setObjectName("cad_coordinates");
+    coordinates->setAccessibleName(tr("Cursor coordinates in the current UCS"));
+    coordinates->setMinimumWidth(0);
+    coordinates->setMaximumWidth(240);
+    coordinates->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
+    strip->addWidget(coordinates, 1);
+    auto* count = new QLabel(tr("0 selected"), m_statusStrip);
+    count->setObjectName("cad_selection_count");
+    count->setMinimumWidth(80);
+    strip->addWidget(count);
+    if (auto* source = window->findChild<QG_CoordinateWidget*>("coordinates")) {
+        connect(source, &QG_CoordinateWidget::coordinatesChanged, coordinates, [coordinates](const QString& text) {
+            coordinates->setText(text);
+            coordinates->setToolTip(text);
+        });
+    }
+    if (auto* source = window->findChild<QG_SelectionWidget*>("selections"))
+        connect(source, &QG_SelectionWidget::countChanged, count, [count](int number) {
+            count->setText(tr("%1 selected").arg(number));
+        });
+    for (const auto& entry : QList<QPair<QString, QString>>{{"ViewGrid", tr("Grid")},
+             {"SnapGrid", tr("Snap")}, {"RestrictOrthogonal", tr("Ortho")}, {"ViewLinesDraft", tr("Draft")}}) {
+        auto* control = button(m_statusStrip, window->getAction(entry.first), entry.second);
+        control->setIconSize({16, 16});
+        strip->addWidget(control);
+    }
+    auto* snaps = new QToolButton(m_statusStrip);
+    snaps->setObjectName("cad_object_snaps");
+    snaps->setText(tr("Object snaps"));
+    snaps->setPopupMode(QToolButton::InstantPopup);
+    auto* snapMenu = new QMenu(snaps);
+    for (const auto& id : {"SnapFree", "SnapEnd", "SnapEntity", "SnapCenter", "SnapMiddle", "SnapIntersection",
+                           "SnapDistance", "SnapAngle", "ExclusiveSnapMode", "SnapVisual", "SnapVisualLock"})
+        snapMenu->addAction(window->getAction(id));
+    snaps->setMenu(snapMenu);
+    strip->addWidget(snaps);
+    m_statusStrip->setStyleSheet(
+        "QToolButton { padding: 2px 5px; border: 1px solid transparent; border-radius: 2px; }"
+        "QToolButton:hover { background: palette(midlight); border-color: palette(mid); }"
+        "QToolButton:checked { background: palette(highlight); color: palette(highlighted-text); }");
+    status->addPermanentWidget(m_statusStrip, 1);
+    m_statusStrip->hide();
 }
 
 QString LC_CadWorkspace::captureLayout() const {
@@ -279,7 +423,7 @@ void LC_CadWorkspace::prepareRestore(const QString& value) {
         pen->setOrientation(Qt::Vertical);
         pen->setMovable(false);
         pen->setMaximumWidth(190);
-        pen->setMinimumHeight(100);
+        pen->setMinimumHeight(84);
         pen->setStyleSheet("QToolBar { spacing: 0px; padding: 0px; border: none; }");
         m_penLayout->addWidget(pen);
         pen->show();
@@ -295,6 +439,7 @@ void LC_CadWorkspace::prepareRestore(const QString& value) {
     }
     if (auto* snap = m_window->findChild<QToolBar*>("snap_toolbar"))
         snap->setIconSize(m_preset == familiar ? QSize(20, 20) : m_classicSnapIconSize);
+    updateStatusStrip();
     updateActions();
 }
 
@@ -304,6 +449,7 @@ void LC_CadWorkspace::activate(const QString& value, bool reset) {
     m_layouts[m_preset] = captureLayout();
     prepareRestore(target);
     if (reset || !restoreLayout(m_layouts.value(target))) applyDefault();
+    updateStatusStrip();
     LC_SET_ONE("Startup", "CadWorkspacePreset", m_preset);
     updateActions();
     m_window->prepareWindowForShow();
@@ -347,7 +493,7 @@ void LC_CadWorkspace::applyDefault() {
         m_window->addToolBar(Qt::TopToolBarArea, options);
         options->show();
     }
-    if (auto* snap = m_window->findChild<QToolBar*>("snap_toolbar")) snap->show();
+    if (auto* snap = m_window->findChild<QToolBar*>("snap_toolbar")) snap->hide();
     m_window->slotViewStatusBar(true);
     const auto& areas = m_window->getToolbarAreaToggleActions();
     const QSignalBlocker topBlocker(areas.top);
@@ -371,6 +517,22 @@ void LC_CadWorkspace::persist() {
     LC_SET_ONE("Startup", "CadWorkspaceV1Applied", true);
 }
 
+void LC_CadWorkspace::updateStatusStrip() {
+    const bool cad = m_preset == familiar;
+    auto* status = m_window->statusBar();
+    status->setProperty("cad_status_mode", cad);
+    status->clearMessage();
+    status->setToolTip({});
+    for (auto it = m_classicStatusVisibility.begin(); it != m_classicStatusVisibility.end(); ++it)
+        it.key()->setVisible(!cad && it.value());
+    status->setMinimumHeight(cad ? 28 : m_classicStatusMinHeight);
+    status->setMaximumHeight(cad ? 36 : m_classicStatusMaxHeight);
+    m_statusStrip->setVisible(cad);
+    if (cad) {
+        if (auto* snap = m_window->findChild<QToolBar*>("snap_toolbar")) snap->hide();
+    }
+}
+
 void LC_CadWorkspace::updateActions() {
     m_familiarAction->setChecked(m_preset == familiar);
     m_classicAction->setChecked(m_preset == classic);
@@ -384,6 +546,10 @@ void LC_CadWorkspace::addMenuActions(QMenu* menu) const {
 }
 
 void LC_CadWorkspace::setGraphicView(RS_GraphicView* view) {
+    if (!view) {
+        m_statusStrip->findChild<QLabel*>("cad_coordinates")->setText(tr("0 , 0"));
+        m_statusStrip->findChild<QLabel*>("cad_selection_count")->setText(tr("0 selected"));
+    }
     auto* graphic = view ? view->getGraphic(true) : nullptr;
     auto* list = graphic ? graphic->getLayerList() : nullptr;
     if (m_layerList != list) {

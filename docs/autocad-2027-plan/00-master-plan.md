@@ -157,6 +157,8 @@ Sequential total: **21–41 engineer-weeks as a rough planning range**, not a de
 
 After reviewing Phase 1, the user confirmed three priorities for the next changes: AutoCAD-style crosshair/pickbox, command-line appearance and live command prediction. These are recorded in the [Phase 2 input specification](phase2/00-input-experience.md). The information tooltip following the cursor remains disabled by default.
 
+The first input checkpoint is now implemented locally. See [Phase 2 input results and development artifacts](phase2/01-results.md) for actual validation, package requirements and remaining limits. The subsequent [UI and selection checkpoint](phase2/02-ui-selection-results.md) adds ribbon tabs, bottom drafting controls and grip feedback, with native build/package validation and build cleanup. The [lasso and dimensional grip checkpoint](phase2/03-grip-lasso-results.md) adds freehand selection, click-to-place grips, Tab-controlled numeric editing and Space-as-Enter. Broader Phase 2 command/property/layer audits remain open.
+
 Work that can overlap: Mac baseline and asset/design work; UI and compatibility corpus; command adapters and format preflight. Layout publishing depends on proven paper-space ownership and viewport composition. Define document services before their new UI forms.
 
 ```mermaid

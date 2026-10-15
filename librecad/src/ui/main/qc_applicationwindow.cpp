@@ -1146,6 +1146,11 @@ void QC_ApplicationWindow::slotUpdateActiveLayer() const {
 void QC_ApplicationWindow::initSettings() {
     RS_DEBUG->print("QC_ApplicationWindow::initSettings()");
 
+    if (!LC_GET_ONE_BOOL("Startup", "CadSpaceEnterV1Applied", false)) {
+        LC_SET_ONE("Keyboard", "EvaluateCommandOnSpace", true);
+        LC_SET_ONE("Startup", "CadSpaceEnterV1Applied", true);
+    }
+
     const bool first_load = LC_GET_ONE_BOOL("Startup", "FirstLoad", true);
     if (!first_load) {
         m_workspacesInvoker->init();

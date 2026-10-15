@@ -63,6 +63,7 @@ void QG_SelectionWidget::languageChange(){
 }
 
 void QG_SelectionWidget::setNumber(const int n) const {
+    emit countChanged(n);
     if (m_auxDataMode)    {
         QSettings settings("QGDialogFactory", "QGSelectionWidget");
         settings.setValue("lEntities_text", n);

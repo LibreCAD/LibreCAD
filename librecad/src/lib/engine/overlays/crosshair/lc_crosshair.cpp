@@ -22,6 +22,8 @@
 
 #include "lc_crosshair.h"
 
+#include <algorithm>
+
 #include "lc_graphicviewport.h"
 #include "rs_painter.h"
 
@@ -50,7 +52,7 @@ double LC_Crosshair::drawIndicator(RS_Painter* painter, const RS_Vector& uiPos) 
               break;
           }
           case Square: {
-              constexpr double a = 6.0; // fixme - sand - candidate for option?
+              const double a = m_pickboxSize / 2.0;
               offset = a;
               const RS_Vector p1 = uiPos + RS_Vector(-a, a);
               const RS_Vector p2 = uiPos + RS_Vector(a, a);
@@ -74,7 +76,7 @@ double LC_Crosshair::drawIndicator(RS_Painter* painter, const RS_Vector& uiPos) 
 }
 
 void LC_Crosshair::draw(RS_Painter *painter) {
-    const RS_Vector uiCoord = painter->toGui(m_wcsPos);
+    const RS_Vector uiCoord = m_uiPos.valid ? m_uiPos : painter->toGui(m_wcsPos);
 
     if (m_indicatorShape != NoShape) {
         painter->setPen(m_shapePen);
@@ -152,15 +154,27 @@ void LC_Crosshair::setPointSize(const int size) {
     m_pointSize = size;
 }
 
+void LC_Crosshair::setPickboxSize(const int size) {
+    m_pickboxSize = std::clamp(size, 4, 80);
+}
+
+void LC_Crosshair::setLengthPercent(const int percent) {
+    m_lengthPercent = std::clamp(percent, 1, 100);
+}
+
 void LC_Crosshair::drawCrosshairLines(RS_Painter *painter, const RS_Vector &guiCoord, const double offset,
                                       const RS_Vector &p1, const RS_Vector &p2, const RS_Vector &p3, const RS_Vector &p4) const {
-    const RS_Vector offset1 = RS_Vector::polar(offset, guiCoord.angleTo(p1));
-    const RS_Vector offset2 = RS_Vector::polar(offset, guiCoord.angleTo(p2));
-    const RS_Vector offset3 = RS_Vector::polar(offset, guiCoord.angleTo(p3));
-    const RS_Vector offset4 = RS_Vector::polar(offset, guiCoord.angleTo(p4));
-
-    painter->drawLineUISimple(guiCoord + offset1, p1);
-    painter->drawLineUISimple(guiCoord + offset2 , p2);
-    painter->drawLineUISimple(guiCoord + offset3, p3);
-    painter->drawLineUISimple(guiCoord + offset4, p4);
+    const auto* viewport = painter->getViewPort();
+    const double radius = std::min(viewport->getWidth(), viewport->getHeight()) * m_lengthPercent / 200.0;
+    for (const auto& endpoint : {p1, p2, p3, p4}) {
+        const RS_Vector delta = endpoint - guiCoord;
+        const double distance = delta.magnitude();
+        const double length = m_lengthPercent == 100 ? distance : std::min(distance, radius);
+        // Never draw backwards into the central gap, including near canvas edges.
+        if (length <= offset || distance <= RS_TOLERANCE) {
+            continue;
+        }
+        const RS_Vector direction = delta / distance;
+        painter->drawLineUISimple(guiCoord + direction * offset, guiCoord + direction * length);
+    }
 }
