@@ -56,6 +56,14 @@ public:
     static RS_Commands* instance();
 
     QStringList complete(const QString& cmd) const;
+    struct Completion {
+        QString text;
+        QString canonical;
+        QString description;
+        RS2::ActionType action;
+        bool alias;
+    };
+    QList<Completion> suggestions(const QString& prefix) const;
     // The case-sensitive version
     RS2::ActionType commandToAction(const QString& cmd) const;
     // The case-insensitive version
@@ -102,6 +110,7 @@ private:
     // key=english command , value = translated
     std::map<QString, QString> m_cmdTranslation;
     std::map<QString, QString> m_revTranslation;
+    std::map<RS2::ActionType, std::pair<QString, QString>> m_completionInfo;
 };
 
 #endif

@@ -65,6 +65,7 @@ protected:
     LC_AnglesBaseMarkOptions m_anglesBaseOptions;
 
     int m_entityHandleHalfSize = 2;
+    bool m_cadSelectionStyle = true;
 
     bool m_drawTextsAsDraftForPanning = true;
     bool m_drawTextsAsDraftForPreview = true;

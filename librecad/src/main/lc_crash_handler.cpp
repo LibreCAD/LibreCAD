@@ -53,9 +53,6 @@
 #include <string.h>
 #include <errno.h>
 #include <atomic>
-#ifdef __APPLE__
-#include <mach-o/dyld.h>
-#endif
 #endif
 
 #include "lc_crash_handler.h"
@@ -201,6 +198,12 @@ std::atomic_flag g_inCrashHandler = ATOMIC_FLAG_INIT;
 constexpr size_t kAltStackSize = 64 * 1024;
 alignas(16) unsigned char g_altStack[kAltStackSize];
 
+#ifdef __APPLE__
+// Resolve the writable destination before installing signal handlers. Never
+// write inside a signed .app, and never call getenv/stdio from the handler.
+char g_crashLogPrefix[PATH_MAX] = "/tmp/LibreCAD";
+#endif
+
 const char* signalName(int sig)
 {
     switch (sig) {
@@ -291,7 +294,9 @@ void writeHex(int fd, unsigned long long v, int minWidth = 0)
     writeAll(fd, out, (size_t)n);
 }
 
-// Build "<exepath>.<pid>.<unixtime>.crash.log" without dynamic allocation.
+// Build "<prefix>.<pid>.<unixtime>.crash.log" without dynamic allocation.
+// On macOS the prefix lives in the per-user temporary directory, outside the
+// sealed app bundle. Linux retains its existing executable-path behavior.
 // Returns false if path can't be obtained or the buffer would overflow.
 bool buildCrashFileName(char* out, size_t outSize, pid_t pid, time_t now)
 {
@@ -310,15 +315,10 @@ bool buildCrashFileName(char* out, size_t outSize, pid_t pid, time_t now)
         }
     }
 #elif defined(__APPLE__)
-    uint32_t size = (uint32_t)outSize;
-    if (_NSGetExecutablePath(out, &size) == 0) {
-        while (base < outSize && out[base] != '\0') ++base;
-    } else {
-        const char* fallback = "LibreCAD";
-        while (fallback[base] && base < outSize - 1) {
-            out[base] = fallback[base];
-            ++base;
-        }
+    while (g_crashLogPrefix[base] != '\0') {
+        if (base + 64 >= outSize) return false;
+        out[base] = g_crashLogPrefix[base];
+        ++base;
     }
 #endif
 
@@ -360,7 +360,11 @@ void posixSignalHandler(int sig, siginfo_t* info, [[maybe_unused]] void* context
 
     if (!buildCrashFileName(crashFileName, sizeof(crashFileName),
                             getpid(), tv.tv_sec)) {
+#ifdef __APPLE__
+        const char* fb = "/tmp/LibreCAD.crash.log";
+#else
         const char* fb = "librecad.crash.log";
+#endif
         size_t i = 0;
         while (fb[i] && i < sizeof(crashFileName) - 1) {
             crashFileName[i] = fb[i];
@@ -426,6 +430,16 @@ void LC_CrashHandler::install()
 #ifdef _WIN32
     SetUnhandledExceptionFilter(windowsCrashHandler);
 #elif defined(__linux__) || defined(__APPLE__)
+#ifdef __APPLE__
+    const char* temporaryDirectory = std::getenv("TMPDIR");
+    if (temporaryDirectory != nullptr && temporaryDirectory[0] == '/') {
+        const size_t length = std::strlen(temporaryDirectory);
+        if (length + sizeof("/LibreCAD") + 64 < sizeof(g_crashLogPrefix)) {
+            std::snprintf(g_crashLogPrefix, sizeof(g_crashLogPrefix), "%s%sLibreCAD",
+                          temporaryDirectory, temporaryDirectory[length - 1] == '/' ? "" : "/");
+        }
+    }
+#endif
     // Install an alternate signal stack so a stack-overflow SIGSEGV can
     // still run the handler instead of re-faulting on the exhausted stack.
     stack_t ss{};

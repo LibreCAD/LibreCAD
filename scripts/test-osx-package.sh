@@ -116,6 +116,23 @@ WORK_DIR=$(mktemp -d "$TEMP_BASE/LibreCAD package test.XXXXXX")
 trap cleanup EXIT
 trap 'exit 130' HUP INT TERM
 
+# A fatal startup must not add crash logs to the sealed bundle. Exercise this
+# on a disposable copy, using a deliberately unavailable Qt platform plugin.
+CRASH_APP="$WORK_DIR/crash/$(basename "$APP_PATH")"
+mkdir -p "$WORK_DIR/crash" "$WORK_DIR/crash-logs"
+ditto --rsrc --extattr --acl "$APP_PATH" "$CRASH_APP"
+CRASH_EXECUTABLE=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$CRASH_APP/Contents/Info.plist")
+if (ulimit -c 0; TMPDIR="$WORK_DIR/crash-logs/" QT_QPA_PLATFORM=librecad_missing_platform \
+    "$CRASH_APP/Contents/MacOS/$CRASH_EXECUTABLE" --help) > "$WORK_DIR/crash.log" 2>&1; then
+    fail "unavailable platform plugin unexpectedly started"
+fi
+grep -q 'LibreCAD has crashed' "$WORK_DIR/crash.log" ||
+    fail "crash handler was not exercised"
+find "$WORK_DIR/crash-logs" -name '*.crash.log' -type f | grep -q . ||
+    fail "crash log was not written to the temporary directory"
+"$SCRIPT_DIR/verify-osx-package.sh" --app "$CRASH_APP" "${verify_args[@]}"
+echo "$PROGRAM_NAME: crash preserved the signed app bundle"
+
 SPACED_DIR="$WORK_DIR/App With Spaces"
 TAMPERED_APP="$SPACED_DIR/$(basename "$APP_PATH")"
 mkdir -p "$SPACED_DIR"
@@ -153,6 +170,10 @@ grep -q 'missing architecture librecad_missing_arch' \
 echo "$PROGRAM_NAME: missing architecture was rejected as expected"
 
 ESCAPE_BINARY="$TAMPERED_APP/Contents/Frameworks/QtCore.framework/Versions/A/QtCore"
+if [[ ! -f $ESCAPE_BINARY ]]; then
+    # Conda's locked Qt package uses dylibs rather than .framework bundles.
+    ESCAPE_BINARY="$TAMPERED_APP/Contents/Frameworks/libQt6Core.6.dylib"
+fi
 [[ -f $ESCAPE_BINARY ]] || fail "QtCore test binary does not exist"
 install_name_tool -change /usr/lib/libSystem.B.dylib \
     /tmp/librecad-forbidden.dylib "$ESCAPE_BINARY" >/dev/null 2>&1

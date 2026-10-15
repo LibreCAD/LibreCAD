@@ -41,6 +41,8 @@ public:
     ~QG_CoordinateWidget() override;
     void clearContent() const;
     void setGraphicView(RS_GraphicView* gv) override;
+signals:
+    void coordinatesChanged(const QString& text) const;
 public slots:
     void setCoordinates(const RS_Vector & wcsAbs, const RS_Vector & wcsDelta, bool updateFormat ); // fixme - check why updateFormat is always true
 protected slots:

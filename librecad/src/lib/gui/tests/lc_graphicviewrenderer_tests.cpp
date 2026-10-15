@@ -65,6 +65,7 @@ public:
     using LC_GraphicViewRenderer::setPenForOverlayEntity;
     using LC_GraphicViewRenderer::setupPainter;
     void beginPass() { doSetupBeforeContainerDraw(); }
+    void useLegacySelectionStyle() { m_cadSelectionStyle = false; }
 };
 
 class TestPrintRenderer final : public LC_PrintViewportRenderer {
@@ -140,11 +141,11 @@ TEST_CASE("drawing, draft, preview and print keep the same model-space dash leng
     }
 }
 
-TEST_CASE("a run of selected entities keeps advancing the selection dash phase",
+TEST_CASE("a run of legacy selected entities keeps advancing the selection dash phase",
           "[gui][pen][linetype]") {
     (void)lc::test::application();
 
-    // A selected entity is painted with RS2::DashLineTiny whatever line type it
+    // Legacy selection paints RS2::DashLineTiny whatever line type the entity
     // resolved to, so the second of two same-pen selected lines must be given the
     // running offset rather than be answered from the cache.
     LC_GraphicViewport viewport;
@@ -153,6 +154,7 @@ TEST_CASE("a run of selected entities keeps advancing the selection dash phase",
     QImage image{64, 64, QImage::Format_RGB32};
     RS_Painter painter{&image};
     TestViewRenderer renderer{&viewport, &image};
+    renderer.useLegacySelectionStyle();
     renderer.beginPass();
 
     RS_Line first{RS_Vector{0., 0.}, RS_Vector{100., 0.}};
@@ -175,7 +177,7 @@ TEST_CASE("a run of selected entities keeps advancing the selection dash phase",
     CHECK(painter.pen().dashOffset() != firstPhase);
 }
 
-TEST_CASE("selected short lines retain screen-space highlight dashes", "[gui][pen][linetype]") {
+TEST_CASE("legacy selected short lines retain screen-space highlight dashes", "[gui][pen][linetype]") {
     (void)lc::test::application();
     const bool draft = GENERATE(false, true);
     const int dpr = GENERATE(1, 2);
@@ -189,6 +191,7 @@ TEST_CASE("selected short lines retain screen-space highlight dashes", "[gui][pe
         viewport.setOffsetAndFactor(10, viewport.getHeight() - 20, zoom);
         RS_Painter painter(&image);
         TestViewRenderer renderer(&viewport, &image);
+        renderer.useLegacySelectionStyle();
         renderer.setupPainter(&painter);
         RS_Line line(RS_Vector(0.0, 0.0), RS_Vector(1.0, 0.0));
         line.setPen(testPen(RS2::SolidLine));

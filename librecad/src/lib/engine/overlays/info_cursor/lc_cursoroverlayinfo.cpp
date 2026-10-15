@@ -62,7 +62,7 @@ void LC_InfoCursorOptions::setFontSize(const int size) {
 void LC_InfoCursorOverlayPrefs::loadSettings() {
     LC_GROUP("InfoOverlayCursor");
     {
-        enabled = LC_GET_BOOL("Enabled", true);
+        enabled = LC_GET_BOOL("Enabled", false);
         if (enabled) {
             showAbsolutePosition = LC_GET_BOOL("ShowAbsolute", true);
             showAbsolutePositionWCS = LC_GET_BOOL("ShowAbsoluteWCS", false);

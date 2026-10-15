@@ -1,0 +1,56 @@
+{
+  "generator": "scripts/make-cad-baseline-fixtures.py",
+  "ezdxf": "1.4.3",
+  "license": "GPL-2.0-or-later",
+  "fixtures": [
+    {
+      "file": "model-basics-r2018.dxf",
+      "sha256": "5ae3017f6d8dfa33443e737fa2516f0801de594ec564db9731bae06a8ca94c66",
+      "model_entities": 5,
+      "layouts": [
+        {
+          "name": "Layout1",
+          "entities": 0,
+          "paper_mm": [
+            420.0,
+            297.0
+          ],
+          "viewport_scales": []
+        }
+      ],
+      "independent_audit_errors": 0,
+      "independent_audit_fixes": 0
+    },
+    {
+      "file": "two-layouts-r2018.dxf",
+      "sha256": "cc9c327213eb6bc2b400b0c554858dd4160be1b3456a394d51ebf7f1cee2a717",
+      "model_entities": 5,
+      "layouts": [
+        {
+          "name": "Sheet A3",
+          "entities": 4,
+          "paper_mm": [
+            420.0,
+            297.0
+          ],
+          "viewport_scales": [
+            1.0
+          ]
+        },
+        {
+          "name": "Sheet A4",
+          "entities": 4,
+          "paper_mm": [
+            297.0,
+            210.0
+          ],
+          "viewport_scales": [
+            0.5
+          ]
+        }
+      ],
+      "independent_audit_errors": 0,
+      "independent_audit_fixes": 0
+    }
+  ]
+}

@@ -42,6 +42,37 @@ TEST_CASE("Commands match in any letter case when only one action fits", "[comma
     CHECK(RS_COMMANDS->cmdToAction("LINEX") == RS2::ActionNone);
 }
 
+TEST_CASE("Suggestions include effective aliases with canonical identities", "[commands][suggestions]") {
+    lc::test::application();
+    const auto line = RS_COMMANDS->suggestions("LI");
+    REQUIRE_FALSE(line.isEmpty());
+    CHECK(line.first().text == "li");
+    CHECK(line.first().canonical == "line2p");
+    CHECK_FALSE(line.first().description.isEmpty());
+    for (const auto& entry : line) CHECK(RS_COMMANDS->cmdToAction(entry.text, false) == entry.action);
+    CHECK(RS_COMMANDS->suggestions("not-a-real-command").isEmpty());
+    QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    const QVariant oldDir = RS_SETTINGS->getSettings()->value("/Paths/OtherSettingsDir");
+    LC_SET_ONE("Paths", "OtherSettingsDir", dir.path());
+    for (const QString& target : {QString("line2p"), QString("circle")}) {
+        QFile file(dir.filePath("librecad.alias"));
+        REQUIRE(file.open(QIODevice::WriteOnly));
+        file.write(QString("phase2alias\t%1\nphase2invalid\tunsupported-command\n").arg(target).toUtf8());
+        file.close();
+        RS_COMMANDS->updateAlias();
+        const auto entries = RS_COMMANDS->suggestions("phase2alias");
+        REQUIRE(entries.size() == 1);
+        CHECK(entries.first().alias);
+        CHECK(entries.first().canonical == target);
+        CHECK(entries.first().action == RS_COMMANDS->cmdToAction(target, false));
+        CHECK(RS_COMMANDS->suggestions("phase2invalid").isEmpty());
+    }
+    const auto guard = RS_SETTINGS->beginGroupGuard("Paths");
+    if (oldDir.isValid()) RS_SETTINGS->write("OtherSettingsDir", oldDir);
+    else RS_SETTINGS->remove("OtherSettingsDir");
+}
+
 TEST_CASE("Aliases that differ only in case keep their own actions", "[commands][issue2407]") {
     (void)lc::test::application();
 
@@ -69,4 +100,6 @@ TEST_CASE("Aliases that differ only in case keep their own actions", "[commands]
     CHECK(RS_COMMANDS->cmdToAction("zQ") == RS2::ActionDrawCircleCenterPoint);
     CHECK(RS_COMMANDS->cmdToAction("ZQ") == RS2::ActionNone);
     CHECK(RS_COMMANDS->cmdToAction("zq") == RS2::ActionNone);
+    CHECK(RS_COMMANDS->suggestions("Zq").first().text == "Zq");
+    CHECK(RS_COMMANDS->suggestions("zQ").first().text == "zQ");
 }

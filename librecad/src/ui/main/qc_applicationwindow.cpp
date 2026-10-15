@@ -61,6 +61,7 @@
 #include "lc_action_block_library_insert.h"
 #include "lc_action_options_manager.h"
 #include "lc_actiongroupmanager.h"
+#include "lc_cadworkspace.h"
 #include "lc_actionsshortcutsdialog.h"
 #include "lc_anglesbasiswidget.h"
 #include "lc_applicationwindowinitializer.h"
@@ -176,6 +177,10 @@ QC_ApplicationWindow::QC_ApplicationWindow() {
  */
 QC_ApplicationWindow::~QC_ApplicationWindow() {
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow");
+
+    // Removing a drawing can activate its sibling. During teardown that must
+    // not start new actions against the application window being destroyed.
+    m_mdiAreaCAD->disconnect(this);
 
     // Quitting closes every drawing through doClose(), and the windows' deferred
     // deletes run as the event loop ends. Should a window be left, destroy it
@@ -366,6 +371,7 @@ void QC_ApplicationWindow::requestDockVisible(QDockWidget* dock) {
     if (dock->isFloating()) m_floatingDocksRequested = true;
     else m_requestedDockAreas[int(dockWidgetArea(dock))] = true;
     restoreCollapsedGroup(dockGroupKey(dock));
+    m_selectedTabs.insert(dockGroupKey(dock), dock->objectName());
     applyRequestedDockVisibility();
     dock->raise();
     updateDockAreaActions();
@@ -621,8 +627,12 @@ void QC_ApplicationWindow::fitDocksToWindow() {
     }
     activateLayout();
 
-    const QSize floor(qMin(480, qMax(200, width() - 100)),
-                      qMin(320, qMax(160, height() - 100)));
+    const auto* ribbon = findChild<QToolBar*>("cad_ribbon");
+    // The ribbon consumes more vertical space than Classic. On laptop-sized
+    // windows, allow a smaller canvas before automatically hiding command input.
+    const int canvasHeightBudget = ribbon && ribbon->isVisible()
+        ? qMax(160, height() - 400) : qMax(160, height() - 100);
+    const QSize floor(qMin(480, qMax(200, width() - 100)), qMin(320, canvasHeightBudget));
     const auto windowSize = [this] {
         return isMaximized() || isFullScreen() ? size() : frameGeometry().size();
     };
@@ -1004,6 +1014,7 @@ void QC_ApplicationWindow::setupWidgetsByWindow(const QC_MDIWindow* w) const {
     m_selectionWidget->setGraphicView(gv);
     m_penWizard->setGraphicView(gv);
     m_propertySheetWidget->setGraphicView(gv);
+    if (m_cadWorkspace) m_cadWorkspace->setGraphicView(gv);
 }
 
 /**
@@ -1138,10 +1149,27 @@ void QC_ApplicationWindow::slotUpdateActiveLayer() const {
 void QC_ApplicationWindow::initSettings() {
     RS_DEBUG->print("QC_ApplicationWindow::initSettings()");
 
+    if (!LC_GET_ONE_BOOL("Startup", "CadSpaceEnterV1Applied", false)) {
+        LC_SET_ONE("Keyboard", "EvaluateCommandOnSpace", true);
+        LC_SET_ONE("Startup", "CadSpaceEnterV1Applied", true);
+    }
+
     const bool first_load = LC_GET_ONE_BOOL("Startup", "FirstLoad", true);
     if (!first_load) {
         m_workspacesInvoker->init();
     }
+    // Apply the fork's defaults once, after restoring the legacy workspace.
+    // Later explicit cursor/docking choices remain persistent and reversible.
+    if (!LC_GET_ONE_BOOL("Startup", "CommandWorkspaceDefaultsApplied", false)) {
+        LC_SET_ONE("InfoOverlayCursor", "Enabled", false);
+        if (auto* command = findChild<QDockWidget*>("command_dockwidget")) {
+            command->setFloating(false);
+            addDockWidget(Qt::BottomDockWidgetArea, command);
+            requestDockVisible(command);
+            resizeDocks({command}, {110}, Qt::Vertical);
+        }
+    }
+    if (m_cadWorkspace) m_cadWorkspace->initialize();
     fireWorkspacesChanged();
     m_styleHelper->loadFromSettings();
     LC_GROUP("Appearance");
@@ -1168,6 +1196,9 @@ void QC_ApplicationWindow::initSettings() {
 void QC_ApplicationWindow::storeSettings() const {
     if (RS_Settings::saveIsAllowed) {
         m_workspacesInvoker->persist();
+        if (m_cadWorkspace) m_cadWorkspace->persist();
+        // Mark migration only after the corrected dock state has been saved.
+        LC_SET_ONE("Startup", "CommandWorkspaceDefaultsApplied", true);
         m_penPaletteWidget->persist();
         // fixme - sand - decided whether shortcuts should be also saved... This may be necessary if
         // the path for settins was changed.
@@ -1175,6 +1206,22 @@ void QC_ApplicationWindow::storeSettings() const {
 
         m_snapToolBar->saveSnapMode();
     }
+}
+
+QString QC_ApplicationWindow::cadWorkspacePreset() const {
+    return m_cadWorkspace ? m_cadWorkspace->preset() : QStringLiteral("classic-v1");
+}
+
+void QC_ApplicationWindow::restoreCadWorkspacePreset(const QString& preset) {
+    if (m_cadWorkspace) m_cadWorkspace->prepareRestore(preset);
+}
+
+void QC_ApplicationWindow::activateCadWorkspace(const QString& preset, bool reset) {
+    if (m_cadWorkspace) m_cadWorkspace->activate(preset, reset);
+}
+
+void QC_ApplicationWindow::addCadWorkspaceMenuActions(QMenu* menu) const {
+    if (m_cadWorkspace) m_cadWorkspace->addMenuActions(menu);
 }
 
 void QC_ApplicationWindow::slotKillAllActions() {

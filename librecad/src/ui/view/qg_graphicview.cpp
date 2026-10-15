@@ -34,6 +34,7 @@
 #include <QScopedValueRollback>
 #include <QSignalBlocker>
 #include <QTimer>
+#include <algorithm>
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
@@ -41,6 +42,7 @@
 #include "lc_action_modify_move_adjust.h"
 #include "lc_action_select_single.h"
 #include "lc_actioncontext.h"
+#include "lc_crosshair.h"
 #include "lc_eventhandler.h"
 #include "lc_graphicviewport.h"
 #include "lc_graphicviewrenderer.h"
@@ -387,7 +389,22 @@ int QG_GraphicView::getHeight() const {
  * Sets the mouse cursor to the given type.
  */
 void QG_GraphicView::setMouseCursor(const RS2::CursorType cursorType) {
+    if (cursorType == RS2::NoCursorChange) {
+        return;
+    }
+    m_mouseCursor = cursorType;
+    if (usesDrawingCursor() && (cursorType == RS2::CadIdleCursor || cursorType == RS2::CadCursor
+        || cursorType == RS2::CrossCursor || cursorType == RS2::SelectCursor || cursorType == RS2::DelCursor)) {
+        setCursor(Qt::BlankCursor);
+        if (getRenderer() != nullptr) {
+            redraw(RS2::RedrawOverlay);
+        }
+        return;
+    }
     switch (cursorType) {
+        case RS2::CadIdleCursor:
+            setCursor(Qt::ArrowCursor);
+            break;
         default: case RS2::ArrowCursor:
             setCursor(Qt::ArrowCursor);
             break;
@@ -458,6 +475,38 @@ void QG_GraphicView::setMouseCursor(const RS2::CursorType cursorType) {
             setCursor(*m_cursorHand);
             break;
     }
+    if (getRenderer() != nullptr) {
+        redraw(RS2::RedrawOverlay);
+    }
+}
+
+bool QG_GraphicView::usesDrawingCursor() const {
+    return m_drawingCursorEnabled && m_actionContext != nullptr && getDocument() != nullptr && !isPrintPreview();
+}
+
+void QG_GraphicView::updateDrawingCursor() {
+    auto* overlay = getViewPort()->getOverlaysDrawablesContainer(RS2::DrawingCursor);
+    overlay->clear();
+    if (!usesDrawingCursor() || !m_cursorInside || isClosing() || isCleanUp()
+        || m_cursorPosition.x() < 0 || m_cursorPosition.y() < 0
+        || m_cursorPosition.x() >= getWidth() || m_cursorPosition.y() >= getHeight()) {
+        return;
+    }
+    const bool idle = m_mouseCursor == RS2::CadIdleCursor;
+    const bool point = m_mouseCursor == RS2::CadCursor || m_mouseCursor == RS2::CrossCursor;
+    const bool selection = m_mouseCursor == RS2::SelectCursor || m_mouseCursor == RS2::DelCursor;
+    if (!idle && !point && !selection) {
+        return;
+    }
+    RS_Pen pen(m_drawingCursorColor, RS2::Width00, RS2::SolidLine);
+    pen.setScreenWidth(1.0);
+    auto* cursor = new LC_Crosshair(RS_Vector(false), idle || selection ? LC_Crosshair::Square : LC_Crosshair::NoShape,
+                                  selection ? LC_Crosshair::NoLines : LC_Crosshair::Adaptive, pen, 0, 0);
+    cursor->setUiPosition(RS_Vector(m_cursorPosition.x(), m_cursorPosition.y()));
+    cursor->setShapesPen(pen);
+    cursor->setPickboxSize(m_pickboxSize);
+    cursor->setLengthPercent(m_crosshairPercent);
+    overlay->add(cursor);
 }
 
 /**
@@ -489,6 +538,7 @@ void QG_GraphicView::dragEnterEvent(QDragEnterEvent* event) {
  * Redraws the widget.
  */
 void QG_GraphicView::redraw(const RS2::RedrawMethod method, bool immediately) {
+    updateDrawingCursor();
     if ((method & RS2::RedrawDrawing) != 0) {
         emit drawingRedrawRequested();
     }
@@ -581,6 +631,22 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e) {
     }
     else {
         const auto defaultAction = getEventHandler()->getDefaultAction();
+        if (defaultAction && e->button() == Qt::LeftButton && e->modifiers() == Qt::NoModifier) {
+            bool gripHit = false;
+            if (getDocument() && getDocument()->hasSelection()) {
+                double distance = 0;
+                const auto position = getViewPort()->toWorldFromUi(e->position().x(), e->position().y());
+                const auto ref = getDocument()->getNearestSelectedRefInfo(position, &distance);
+                gripHit = ref.ref.valid && getViewPort()->toGuiDX(distance) < 8;
+            }
+            if (gripHit || defaultAction->getStatus() != RS_ActionInterface::InitialActionStatus) {
+                // A fast second grip click is delivered by Qt as a double
+                // click. Route it through placement instead of Properties.
+                getEventHandler()->mousePressEvent(e);
+                e->accept();
+                return;
+            }
+        }
         RS_Vector clickPos;
         RS_Entity* entity = catchContextEntity(e, clickPos);
         if (entity == nullptr) {
@@ -681,8 +747,11 @@ void QG_GraphicView::mouseMoveEvent(QMouseEvent* event) {
         return;
     }
     // LC_ERR << "OWN MOUSE MOVE";
+    m_cursorPosition = event->position();
+    m_cursorInside = true;
     if (isAutoPan(event)) {
         startAutoPanTimer(event);
+        redraw(RS2::RedrawOverlay);
         event->accept();
         return;
     }
@@ -690,6 +759,7 @@ void QG_GraphicView::mouseMoveEvent(QMouseEvent* event) {
     // handle auto-panning
     event->accept();
     getEventHandler()->mouseMoveEvent(event);
+    redraw(RS2::RedrawOverlay);
 }
 
 bool QG_GraphicView::proceedEvent(QEvent* event) {
@@ -702,6 +772,10 @@ bool QG_GraphicView::proceedEvent(QEvent* event) {
 }
 
 bool QG_GraphicView::event(QEvent* event) {
+    if (event->type() == QEvent::Hide) {
+        m_cursorInside = false;
+        if (getRenderer() != nullptr) redraw(RS2::RedrawOverlay);
+    }
     if (event->type() == QEvent::NativeGesture) {
         const auto* nge = static_cast<QNativeGestureEvent*>(event);
 
@@ -849,9 +923,11 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
 }
 
 void QG_GraphicView::leaveEvent(QEvent* e) {
+    m_cursorInside = false;
     // stop auto-panning
     m_panData->panTimer.reset();
     getEventHandler()->mouseLeaveEvent();
+    redraw(RS2::RedrawOverlay);
     QWidget::leaveEvent(e);
 }
 
@@ -861,6 +937,9 @@ void QG_GraphicView::enterEvent(QEnterEvent* e) {
 void QG_GraphicView::enterEvent(QEvent* e) {
 #endif
     getEventHandler()->mouseEnterEvent();
+    m_cursorInside = true;
+    m_cursorPosition = mapFromGlobal(QCursor::pos());
+    redraw(RS2::RedrawOverlay);
     QWidget::enterEvent(e);
 }
 
@@ -1592,6 +1671,9 @@ void QG_GraphicView::loadSettings() {
     LC_GROUP("Appearance");
     {
         m_cursorHiding = LC_GET_BOOL("cursor_hiding", false);
+        m_drawingCursorEnabled = LC_GET_BOOL("DrawingCursorEnabled", true);
+        m_pickboxSize = std::clamp(LC_GET_INT("DrawingCursorPickboxSize", 10), 4, 80);
+        m_crosshairPercent = std::clamp(LC_GET_INT("DrawingCursorCrosshairPercent", 12), 1, 100);
         bool showSnapIndicatorLines = LC_GET_BOOL("indicator_lines_state", true);
         bool showSnapIndicatorShape = LC_GET_BOOL("indicator_shape_state", true);
         if (HIDE_SELECT_CURSOR) {
@@ -1604,6 +1686,9 @@ void QG_GraphicView::loadSettings() {
     }
     LC_GROUP_END();
     m_ucsMarkOptions->loadSettings();
+    const QColor background(LC_GET_ONE_STR("Colors", "background", RS_Settings::BACKGROUND));
+    m_drawingCursorColor = RS_Color(QColor(background.lightness() > 128 ? "#404040" : "#D0D0D0"));
+    setMouseCursor(m_mouseCursor);
 
     LC_GROUP("Colors");
     {

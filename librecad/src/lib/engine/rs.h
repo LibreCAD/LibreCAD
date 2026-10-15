@@ -973,7 +973,8 @@ namespace RS2 {
         SelectCursor, /**< SelectCursor - for selecting single entities */
         MagnifierCursor, /**< MagnifierCursor - a magnifying glass. */
         MovingHandCursor, /**< Moving hand - a little flat hand. */
-        NoCursorChange /**< special value to indicate that no cursor change is requested. */
+        NoCursorChange, /**< special value to indicate that no cursor change is requested. */
+        CadIdleCursor /**< Combined crosshair and pickbox for idle drafting. */
     };
 
     /**
@@ -1029,7 +1030,8 @@ namespace RS2 {
         Snapper             = 2, // Snapper
         InfoCursor          = 3, // Info Cursor
         PermanentHighlights = 4,
-        LAST                = 5
+        DrawingCursor       = 5,
+        LAST                = 6
     };
 
     //Different re-draw methods to speed up rendering of the screen

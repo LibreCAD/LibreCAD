@@ -87,7 +87,7 @@ void LC_InfoCursorSettingsManager::slotInfoCursorSetting(const bool toggle) {
 void LC_InfoCursorSettingsManager::loadFromSettings() const {
     LC_GROUP("InfoOverlayCursor");
     {
-        const bool infoCursorEnabled = LC_GET_BOOL("Enabled", true);
+        const bool infoCursorEnabled = LC_GET_BOOL("Enabled", false);
         QAction *action = m_appWin->getAction("EntityDescriptionInfo");
         if (action != nullptr) {
             action->setVisible(infoCursorEnabled);
@@ -96,6 +96,9 @@ void LC_InfoCursorSettingsManager::loadFromSettings() const {
         action = m_appWin->getAction("InfoCursorEnable");
         if (action != nullptr) {
             action->setChecked(infoCursorEnabled);
+        }
+        for (const auto& name : {"InfoCursorAbs", "InfoCursorSnap", "InfoCursorRel", "InfoCursorPrompt", "InfoCursorCatchedEntity"}) {
+            m_appWin->getAction(name)->setEnabled(infoCursorEnabled);
         }
         m_appWin->checkAction("InfoCursorAbs", LC_GET_BOOL("ShowAbsolute", true));
         m_appWin->checkAction("InfoCursorSnap",LC_GET_BOOL("ShowSnapInfo", true));

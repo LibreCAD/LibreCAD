@@ -62,7 +62,8 @@ void LC_GraphicViewRenderer::loadSettings() {
 
     LC_GROUP("Appearance");
     {
-        m_entityHandleHalfSize = LC_GET_INT("EntityHandleSize", 4) / 2;
+        m_cadSelectionStyle = LC_GET_BOOL("CADSelectionStyle", true);
+        m_entityHandleHalfSize = std::clamp(LC_GET_INT("EntityHandleSize", 8), 2, 12) / 2;
         m_ignoreDraftForHighlight = LC_GET_BOOL("IgnoreDraftForHighlight", false);
         m_scaleLineWidth = !LC_GET_BOOL("DraftLinesMode", false);
 
@@ -89,7 +90,7 @@ void LC_GraphicViewRenderer::loadSettings() {
         } else {
             setBackground(background);
         }
-        m_colorSelectedEntity = RS_Color(LC_GET_STR("select", RS_Settings::SELECT));
+        m_colorSelectedEntity = RS_Color(LC_GET_STR("select", m_cadSelectionStyle ? "#4da3ff" : RS_Settings::SELECT));
         m_colorHighlightedEntity = RS_Color(LC_GET_STR("highlight", RS_Settings::HIGHLIGHT));
         m_colorStartHandle = RS_Color(LC_GET_STR("start_handle", RS_Settings::START_HANDLE));
         m_colorHangle = RS_Color(LC_GET_STR("handle", RS_Settings::HANDLE));
@@ -298,6 +299,7 @@ void LC_GraphicViewRenderer::drawOverlay(RS_Painter* painter) {
 
     drawEntitiesInOverlay(overlaysManager, painter, RS2::OverlayGraphics::Snapper);
     drawOverlayEntitiesInOverlay(overlaysManager, painter, RS2::OverlayGraphics::Snapper);
+    drawOverlayEntitiesInOverlay(overlaysManager, painter, RS2::OverlayGraphics::DrawingCursor);
     drawEntitiesInOverlay(overlaysManager, painter, RS2::OverlayGraphics::InfoCursor);
     drawOverlayEntitiesInOverlay(overlaysManager, painter, RS2::OverlayGraphics::InfoCursor);
 
@@ -347,6 +349,16 @@ void LC_GraphicViewRenderer::drawEntityReferencePoints(RS_Painter* painter, cons
     constexpr qreal maxValue = std::numeric_limits<qreal>::max();
     auto handleUiPos = QPointF(maxValue, maxValue); // artificial, for drawing first handle
     for (size_t i = 0; i < refsCount; ++i) {
+        if (m_cadSelectionStyle) {
+            const auto pos = painter->toGui(s.get(i));
+            const QPointF ui(pos.x, pos.y);
+            if ((ui - handleUiPos).manhattanLength() < sz * 2) continue;
+            // Logical pixels keep grips usable at every zoom and on Retina.
+            painter->fillRect(QRectF(ui.x() - sz, ui.y() - sz, sz * 2, sz * 2), RS_Color(QColor("#d8eaff")));
+            painter->fillRect(QRectF(ui.x() - sz + 1, ui.y() - sz + 1, sz * 2 - 2, sz * 2 - 2), m_colorSelectedEntity);
+            handleUiPos = ui;
+            continue;
+        }
         RS_Color col = m_colorHangle;
         if (i == 0) {
             col = m_colorStartHandle;
@@ -606,8 +618,9 @@ void LC_GraphicViewRenderer::setPenForEntity(RS_Painter* painter, const RS_Entit
     else {
         // this entity is selected:
         if (selected) {
-            pen.setLineType(RS2::DashLineTiny);
+            pen.setLineType(m_cadSelectionStyle ? RS2::SolidLine : RS2::DashLineTiny);
             pen.setWidth(RS2::Width00); // fixme - move to settings?
+            pen.setScreenWidth(m_cadSelectionStyle ? 1.5 : 0.0);
             pen.setColor(m_colorSelectedEntity);
         }
         // this entity is highlighted:
@@ -696,8 +709,9 @@ void LC_GraphicViewRenderer::setPenForDraftEntity(RS_Painter* painter, const RS_
     else {
         // this entity is selected:
         if (selected) {
-            pen.setLineType(RS2::DashLineTiny);
+            pen.setLineType(m_cadSelectionStyle ? RS2::SolidLine : RS2::DashLineTiny);
             pen.setWidth(RS2::Width00);
+            pen.setScreenWidth(m_cadSelectionStyle ? 1.5 : 0.0);
             pen.setColor(m_colorSelectedEntity);
         }
         else if (highlighted) {

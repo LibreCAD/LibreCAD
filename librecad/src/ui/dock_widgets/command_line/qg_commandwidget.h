@@ -29,9 +29,11 @@
 
 #include "lc_graphicviewawarewidget.h"
 #include "ui_qg_commandwidget.h"
+#include <QPointer>
 
 class QG_ActionHandler;
 class QAction;
+class QTreeWidget;
 
 class QG_CommandWidget : public LC_GraphicViewAwareWidget, public Ui::QG_CommandWidget{
     Q_OBJECT
@@ -47,6 +49,8 @@ public:
     void setGraphicView([[maybe_unused]]RS_GraphicView* gview) override {}
 protected:
     QLayout* getTopLevelLayout() const override {return layout();}
+    void resizeEvent(QResizeEvent* event) override;
+    void showEvent(QShowEvent* event) override;
 public slots:
     virtual void focusWidget();
     void setCommand( const QString & cmd ) const;
@@ -69,6 +73,15 @@ private slots:
 private:
     QG_ActionHandler* m_actionHandler = nullptr;
     QAction* m_docking = nullptr;
+    QTreeWidget* m_suggestions = nullptr;
+    QPointer<QWidget> m_suggestionWindow;
+    QString m_suggestionPrefix;
+    QMetaObject::Connection m_completionConnection;
+    bool canSuggest() const;
+    void updateSuggestions();
+    void positionSuggestions() const;
+    void dismissSuggestions() const;
+    void acceptSuggestion(bool execute) const;
 };
 
 #endif

@@ -60,7 +60,12 @@ void LC_QTStatusbarManager::setActionHelp(const QString &left, [[maybe_unused]]c
             }
         }
 
-        m_statusBar->showMessage(message);
+        if (m_statusBar->property("cad_status_mode").toBool()) {
+            m_statusBar->setToolTip(message);
+            m_statusBar->clearMessage();
+        } else {
+            m_statusBar->showMessage(message);
+        }
     }
 }
 
