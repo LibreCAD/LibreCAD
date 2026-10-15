@@ -955,7 +955,18 @@ public:
     std::uint32_t parentHandle = 0;
     std::uint32_t shapeFileHandle = 0;
     std::uint16_t shapeIndex = 0;
-    std::string styleName; // SHAPEFILE/STYLE record name (DXF code 2)
+    std::string styleName; // DXF glyph name; DWG STYLE names are not glyph names.
+    std::string sourceDirectory;
+    std::string ownerBlockName;
+    std::string layer = "0";
+    std::string lineType = "BYLAYER";
+    int color = DRW::ColorByLayer;
+    int color24 = -1;
+    DRW_LW_Conv::lineWidth lineWeight = DRW_LW_Conv::widthByLayer;
+    DRW::Space space = DRW::ModelSpace;
+    bool visible = true;
+    double lineTypeScale = 1.0;
+    std::vector<std::shared_ptr<DRW_Variant>> extData;
     DRW_Coord insertionPoint;
     DRW_Coord extrusion;
     double scale = 1.0;
@@ -3771,9 +3782,12 @@ public:
   }
 
   void addTextStyleName(const DRW_Textstyle &data) {
-    if (data.name.empty())
+    if (data.name.empty() && ((data.flags & 1) == 0 || data.handle == 0))
       return;
-    m_textStyleTableEntries[data.name] = data;
+    // SHAPEFILE styles legitimately have no name. Keep them in the handle
+    // map; a name-keyed map would merge distinct shape files.
+    if (!data.name.empty())
+      m_textStyleTableEntries[data.name] = data;
     if (data.handle != 0) {
       m_textStyleNames[data.handle] = data.name;
       m_textStyles[data.handle] = data;
@@ -5329,13 +5343,25 @@ public:
     m_pointCloudColorMaps.push_back(std::move(record));
   }
 
-  void addShape(const DRW_Shape &shape) {
+  void addShape(const DRW_Shape &shape, const std::string &sourceDirectory = {},
+                const std::string &ownerBlockName = {}) {
     ShapeRecord record;
     record.handle = shape.handle;
     record.parentHandle = shape.parentHandle;
     record.shapeFileHandle = shape.m_shapeFileHandle;
     record.shapeIndex = shape.m_shapeIndex;
     record.styleName = shape.m_styleName;
+    record.sourceDirectory = sourceDirectory;
+    record.ownerBlockName = ownerBlockName;
+    record.layer = shape.layer;
+    record.lineType = shape.lineType;
+    record.color = shape.color;
+    record.color24 = shape.color24;
+    record.lineWeight = shape.lWeight;
+    record.space = shape.space;
+    record.visible = shape.visible;
+    record.lineTypeScale = shape.ltypeScale;
+    record.extData = shape.extData;
     record.insertionPoint = shape.m_insertionPoint;
     record.extrusion = shape.m_extrusion;
     record.scale = shape.m_scale;
@@ -7663,10 +7689,9 @@ public:
     for (const ShapeRecord &record : m_shapes) {
       if (record.shapeFileHandle == 0)
         ++counts.missingStyleHandle;
-      if (record.rawRangeStatus == MeshRawRangeStatus::Missing)
-        ++counts.missingRawRange;
-      else if (record.rawRangeStatus == MeshRawRangeStatus::Incomplete)
-        ++counts.incompleteRawRange;
+      else if (const auto style = m_textStyles.find(record.shapeFileHandle);
+               style == m_textStyles.end() || (style->second.flags & 1) == 0)
+        ++counts.unresolvedShapeStyle;
       if (record.replayState == ReplayState::ReplayInvalidated)
         ++counts.invalidated;
       else if (record.replayState == ReplayState::ReplayReplaced)
@@ -12765,16 +12790,16 @@ private:
     record.handle = shape.handle;
     record.recordName = "SHAPE";
     record.className = "AcDbShape";
-    record.nativeWriterAvailable =
-        advancedEntityNativeWriterAvailable(record.family, version);
+    // Only parsed SHAPE records can use the typed writer. An unsupported raw
+    // SHAPE carrier still has no native conversion contract.
+    record.nativeWriterAvailable = version >= DRW::AC1015 && version <= DRW::AC1032;
     record.rawReplayAvailable = false;
     record.fallbackAvailable = false;
     record.editedFallbackInvalidated =
         shape.replayState != ReplayState::ReplayAllowed;
     record.missingRequiredMetadata =
         shape.shapeFileHandle == 0 || shape.shapeIndex == 0;
-    record.missingPayloadBytes =
-        shape.rawRangeStatus == MeshRawRangeStatus::Missing;
+    record.missingPayloadBytes = false;
     record.unsupportedAdvancedContent = !record.nativeWriterAvailable;
     return record;
   }

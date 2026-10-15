@@ -3357,11 +3357,12 @@ TEST_CASE("DWG shape and OLE metadata reports writer blockers",
   CHECK(blockers.shapeCount == 2u);
   CHECK(blockers.ole2FrameCount == 2u);
   CHECK(blockers.missingStyleHandle == 1u);
+  CHECK(blockers.unresolvedShapeStyle == 1u);
   CHECK(blockers.missingOlePayload == 1u);
   CHECK(blockers.truncatedOlePayload == 1u);
   CHECK(blockers.oversizedOlePayload == 1u);
   CHECK(blockers.unsupportedOlePayloadRegeneration == 2u);
-  CHECK(blockers.missingRawRange == 2u);
+  CHECK(blockers.missingRawRange == 1u);
 
   REQUIRE(metadata.findShapeByHandle(shape.handle) != nullptr);
   CHECK(metadata.findShapesByShapeFileHandle(shape.m_shapeFileHandle).size()
@@ -3387,6 +3388,8 @@ TEST_CASE("DWG shape and OLE metadata reports writer blockers",
 
   const std::vector<LC_DwgAdvancedMetadata::AdvancedEntityWriterReadiness>
       ledger = metadata.advancedEntityWriterLedger(DRW::AC1027);
+  CHECK(ledger.front().nativeWriterAvailable);
+  CHECK_FALSE(ledger.front().missingPayloadBytes);
   CHECK(std::count_if(
             ledger.begin(), ledger.end(),
             [](const LC_DwgAdvancedMetadata::AdvancedEntityWriterReadiness& r) {

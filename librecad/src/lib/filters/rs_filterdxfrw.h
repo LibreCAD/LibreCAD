@@ -312,6 +312,7 @@ protected:
     std::map<std::uint32_t, std::uint32_t> handleRemap;
     std::set<std::uint32_t> knownHandles;
     std::map<const RS_Entity *, std::uint32_t> entityHandlesByEntity;
+    bool entityHandleMapPrepared = false;
     std::map<std::uint32_t, std::uint32_t> entityHandleRemap;
     std::set<std::uint32_t> entityHandlesEmitted;
     std::set<std::uint32_t> duplicateEntityHandles;
@@ -350,6 +351,7 @@ protected:
     checkpoint.handleRemap = m_dwgWriteHandleRemap;
     checkpoint.knownHandles = m_dwgWriteKnownHandles;
     checkpoint.entityHandlesByEntity = m_dwgWriteEntityHandleByEntity;
+    checkpoint.entityHandleMapPrepared = m_dwgWriteEntityHandleMapPrepared;
     checkpoint.entityHandleRemap = m_dwgWriteEntityHandleRemap;
     checkpoint.entityHandlesEmitted = m_dwgWriteEntityHandlesEmitted;
     checkpoint.duplicateEntityHandles = m_dwgWriteDuplicateEntityHandles;
@@ -388,6 +390,7 @@ protected:
     m_dwgWriteHandleRemap = checkpoint.handleRemap;
     m_dwgWriteKnownHandles = checkpoint.knownHandles;
     m_dwgWriteEntityHandleByEntity = checkpoint.entityHandlesByEntity;
+    m_dwgWriteEntityHandleMapPrepared = checkpoint.entityHandleMapPrepared;
     m_dwgWriteEntityHandleRemap = checkpoint.entityHandleRemap;
     m_dwgWriteEntityHandlesEmitted = checkpoint.entityHandlesEmitted;
     m_dwgWriteDuplicateEntityHandles = checkpoint.duplicateEntityHandles;
@@ -418,6 +421,7 @@ protected:
     m_dwgWriteHandleRemap.clear();
     m_dwgWriteKnownHandles.clear();
     m_dwgWriteEntityHandleByEntity.clear();
+    m_dwgWriteEntityHandleMapPrepared = false;
     m_dwgWriteGeneratedEntityHandleByEntity.clear();
     m_dwgWriteInsertChildHandlesByEntity.clear();
     m_dwgWriteEntityHandleRemap.clear();
@@ -1887,8 +1891,9 @@ protected:
 
   // Entity source identity and commit state.
   std::map<const RS_Entity *, std::uint32_t> m_dwgWriteEntityHandleByEntity;
-  // R2000 owners that hold source-backed entities take every entity handle
-  // before the entity sweep so the owner's handles stay consecutive
+  bool m_dwgWriteEntityHandleMapPrepared = false;
+  // R2000 owners that hold source-backed entities or metadata SHAPEs take
+  // every entity handle before the sweep so the owner's handles stay consecutive
   // (prepareDwgEntityHandleMap). These are the output handles of entities
   // without a source handle, whose identities are still committed as
   // generated entities on write, and the ATTRIB..SEQEND handles that follow
@@ -3122,6 +3127,16 @@ private:
   std::size_t m_dxfLeftOutRawRecords = 0;
   // What the codec left out of the last export (DXF or DWG leftOut()).
   std::map<std::string, std::size_t> m_writeLeftOut;
+  std::map<std::string, std::size_t> m_shapeLeftOut;
+  QString m_shapeExportDirectory;
+  std::map<std::uint32_t, QString> m_shapeFileResolvedPaths;
+  struct ShapeExportRecord {
+    DRW_Shape shape;
+    std::string ownerBlockName;
+  };
+  std::vector<ShapeExportRecord> m_shapesToExport;
+  void prepareShapesForExport();
+  void writeDxfShapes(const std::string &blockName);
   // Multi-line attributes whose stored annotation-scale payload or column
   // layout the last export did not write: only DWG R2018 can hold them, and
   // only for attribute text that was not edited. Counted by writeInsert(),

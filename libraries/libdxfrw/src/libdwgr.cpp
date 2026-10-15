@@ -321,8 +321,8 @@ struct dwgRW::DwgEntityWriteState {
     std::uint32_t objSize {0};
     std::uint64_t dwgDataEndBit {0};
     std::int16_t oType {0};
-    std::vector<std::pair<std::size_t, std::uint32_t>> eedAppIdRefs;
-    std::vector<std::pair<std::size_t, std::uint32_t>> eedLayerRefs;
+    std::vector<DRW_Entity::PendingHandleRef> eedAppIdRefs;
+    std::vector<DRW_Entity::PendingHandleRef> eedLayerRefs;
     std::uint16_t eedCodePage {30};
 
     bool hasInsertState {false};
@@ -421,12 +421,8 @@ dwgRW::DwgEntityWriteState dwgRW::captureEntityWriteState(
     state.objSize = entity->objSize;
     state.dwgDataEndBit = entity->dwgDataEndBit;
     state.oType = entity->oType;
-    state.eedAppIdRefs.reserve(entity->dwgEedAppIdWriteRefs.size());
-    for (const auto& ref : entity->dwgEedAppIdWriteRefs)
-        state.eedAppIdRefs.emplace_back(ref.indexInExtData, ref.handleRef);
-    state.eedLayerRefs.reserve(entity->dwgEedLayerWriteRefs.size());
-    for (const auto& ref : entity->dwgEedLayerWriteRefs)
-        state.eedLayerRefs.emplace_back(ref.indexInExtData, ref.handleRef);
+    state.eedAppIdRefs = entity->dwgEedAppIdWriteRefs;
+    state.eedLayerRefs = entity->dwgEedLayerWriteRefs;
     state.eedCodePage = entity->dwgEedCodePage;
 
     if (auto *insert = dynamic_cast<DRW_Insert *>(entity)) {
@@ -510,12 +506,8 @@ void dwgRW::restoreEntityWriteState(const DwgEntityWriteState& state) {
     entity->objSize = state.objSize;
     entity->dwgDataEndBit = state.dwgDataEndBit;
     entity->oType = state.oType;
-    entity->dwgEedAppIdWriteRefs.clear();
-    for (const auto& ref : state.eedAppIdRefs)
-        entity->dwgEedAppIdWriteRefs.push_back({ref.first, ref.second});
-    entity->dwgEedLayerWriteRefs.clear();
-    for (const auto& ref : state.eedLayerRefs)
-        entity->dwgEedLayerWriteRefs.push_back({ref.first, ref.second});
+    entity->dwgEedAppIdWriteRefs = state.eedAppIdRefs;
+    entity->dwgEedLayerWriteRefs = state.eedLayerRefs;
     entity->dwgEedCodePage = state.eedCodePage;
 
     if (state.hasInsertState) {

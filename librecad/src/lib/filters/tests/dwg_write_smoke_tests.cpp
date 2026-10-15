@@ -3026,6 +3026,28 @@ class FailingDwgLine final : public DRW_Line {
 public:
   bool reject{false};
 
+  void seedEedWriteState() {
+    dwgEedAppIdWriteRefs = {{0u, 0x123u, 0, false, true}};
+    dwgEedLayerWriteRefs = {{1u, 0x456u, 0x0102030405060708ULL, true, false}};
+    dwgEedCodePage = 1251;
+  }
+
+  void checkEedWriteState() const {
+    REQUIRE(dwgEedAppIdWriteRefs.size() == 1u);
+    CHECK(dwgEedAppIdWriteRefs.front().indexInExtData == 0u);
+    CHECK(dwgEedAppIdWriteRefs.front().handleRef == 0x123u);
+    CHECK(dwgEedAppIdWriteRefs.front().rawHandleRef == 0u);
+    CHECK_FALSE(dwgEedAppIdWriteRefs.front().useRawHandleRef);
+    CHECK(dwgEedAppIdWriteRefs.front().leftOut);
+    REQUIRE(dwgEedLayerWriteRefs.size() == 1u);
+    CHECK(dwgEedLayerWriteRefs.front().indexInExtData == 1u);
+    CHECK(dwgEedLayerWriteRefs.front().handleRef == 0x456u);
+    CHECK(dwgEedLayerWriteRefs.front().rawHandleRef == 0x0102030405060708ULL);
+    CHECK(dwgEedLayerWriteRefs.front().useRawHandleRef);
+    CHECK_FALSE(dwgEedLayerWriteRefs.front().leftOut);
+    CHECK(dwgEedCodePage == 1251);
+  }
+
 protected:
   bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs = 0,
                  dwgBufferW *strBuf = nullptr,
@@ -3053,6 +3075,7 @@ public:
     rejected.setDwgLayerHandle(0x456u);
     rejected.setDwgLinetypeHandle(0x789u);
     rejected.setDwgAcDbColorHandle(true, 0x9ABu);
+    rejected.seedEedWriteState();
     rejected.reject = true;
     CHECK_FALSE(m_writer->writeLine(&rejected));
     CHECK(rejected.handle == 0u);
@@ -3061,13 +3084,15 @@ public:
     CHECK(rejected.dwgLinetypeHandle() == 0x789u);
     CHECK(rejected.hasDwgAcDbColorHandle());
     CHECK(rejected.dwgAcDbColorHandle() == 0x9ABu);
+    rejected.checkEedWriteState();
 
     rejected.reject = false;
     REQUIRE(m_writer->writeLine(&rejected));
     REQUIRE(rejected.handle != 0u);
     REQUIRE(m_writer->endBlockContent());
 
-    DRW_Line tracked;
+    FailingDwgLine tracked;
+    tracked.seedEedWriteState();
     const std::uint64_t transaction =
         m_writer->beginDwgWriteTransaction(false, true);
     REQUIRE(transaction != 0);
@@ -3077,6 +3102,7 @@ public:
     CHECK(tracked.handle == 0u);
     CHECK(tracked.parentHandle == 0u);
     CHECK(tracked.dwgLayerHandle() == 0u);
+    tracked.checkEedWriteState();
   }
 };
 
@@ -3180,6 +3206,9 @@ public:
 
 TEST_CASE("dwgRW restores caller state on failed and tracked writes",
           "[dwg-write][transaction][caller-state]") {
+  const auto version = GENERATE(DRW::AC1015, DRW::AC1018, DRW::AC1021,
+                                DRW::AC1024, DRW::AC1027, DRW::AC1032);
+  CAPTURE(version);
   const std::string path = tempPath("dwg_caller_mutation_rollback.dwg");
   std::remove(path.c_str());
 
@@ -3187,7 +3216,7 @@ TEST_CASE("dwgRW restores caller state on failed and tracked writes",
   {
     dwgRW writer(path.c_str());
     iface.m_writer = &writer;
-    REQUIRE(writer.write(&iface, DRW::AC1027, /*bin=*/false));
+    REQUIRE(writer.write(&iface, version, /*bin=*/false));
   }
   std::remove(path.c_str());
 }
@@ -4226,10 +4255,10 @@ TEST_CASE("R18+ CLASSES writes its eight-byte unknown tail",
                   classesBegin + sentinelSize);
     REQUIRE(classesEnd != std::string::npos);
     REQUIRE(classesEnd >= classesBegin + sentinelSize + sizeof(std::uint32_t) +
-                              sizeof(std::uint16_t) +
-                              dwgSpec::kClassesUnknownTailBytes);
+                              sizeof(std::uint16_t));
 
-    const size_t tail = classesEnd - dwgSpec::kClassesUnknownTailBytes;
+    const size_t tail = classesEnd + sentinelSize;
+    REQUIRE(tail + dwgSpec::kClassesUnknownTailBytes <= bytes.size());
     for (size_t i = 0; i < dwgSpec::kClassesUnknownTailBytes; ++i)
       CHECK(bytes[tail + i] == 0);
 
@@ -32080,6 +32109,26 @@ public:
   }
 };
 
+class LinkedLineProbe final : public DRW_Line {
+public:
+  explicit LinkedLineProbe(const DRW_Line& line) : DRW_Line(line) {}
+  std::uint32_t previous() const { return prevEntLink; }
+  std::uint32_t next() const { return nextEntLink; }
+  bool explicitLinks() const { return haveNextLinks == 0; }
+};
+
+void checkExplicitLineChain(std::vector<DRW_Line> lines) {
+  std::sort(lines.begin(), lines.end(), [](const auto& a, const auto& b) {
+    return a.handle < b.handle;
+  });
+  for (std::size_t i = 0; i < lines.size(); ++i) {
+    const LinkedLineProbe line(lines[i]);
+    CHECK(line.explicitLinks());
+    CHECK(line.previous() == (i == 0 ? 0 : lines[i - 1].handle));
+    CHECK(line.next() == (i + 1 == lines.size() ? 0 : lines[i + 1].handle));
+  }
+}
+
 void readOwnerChainDwg(const std::string &path, DwgOwnerChainIface &iface) {
   dwgRW reader(path.c_str());
   REQUIRE(reader.read(&iface, /*ext=*/false));
@@ -32092,9 +32141,9 @@ const RS2::FormatType kMixedHandleFormats[] = {
     RS2::FormatDWG2018};
 } // namespace
 
-// R2000 entities carry nolinks=1, so an owner's entity chain is implied by
-// consecutive handles and the writer refuses an owner whose handles leave a
-// gap. Source-backed entities used to get their output handles before the
+// The R2000 writer retains its contiguous handle allocation contract, while
+// explicit links terminate each owner chain. Source-backed entities used to
+// get their output handles before the
 // table records were written and everything else only when encoded, so
 // opening a drawing and adding one entity made every Save As R2000 DWG fail
 // with BAD_OPEN.
@@ -32144,8 +32193,10 @@ TEST_CASE("RS_FilterDXFRW saves source-handled and new entities together",
           std::max(readIface.lines[0].handle, readIface.lines[1].handle);
       CHECK(low != DRW::NoHandle);
       CHECK(low != high);
-      if (format == RS2::FormatDWG)
+      if (format == RS2::FormatDWG) {
         CHECK(high == low + 1u);
+        checkExplicitLineChain(readIface.lines);
+      }
       std::remove(path.c_str());
     }
   }
@@ -32196,6 +32247,7 @@ TEST_CASE("RS_FilterDXFRW saves a block mixing source-handled and new "
       CHECK(std::max(readIface.lines[0].handle, readIface.lines[1].handle) ==
             std::min(readIface.lines[0].handle, readIface.lines[1].handle) +
                 1u);
+      checkExplicitLineChain(readIface.lines);
     }
     REQUIRE(readIface.inserts.size() == 1u);
     CHECK(readIface.inserts.front().name == "MIXED");

@@ -391,6 +391,7 @@ public:
         std::uint16_t codePage, dwgBufferW& output);
 
 protected: //only for read dwg
+    bool m_dwgWriteExplicitLinks{false}; // R2000 writer owns final chain endpoints.
     std::uint8_t haveNextLinks = 0; //R13..R2002 nolinks (no prev/next chain when 1) //B
     std::uint8_t hasDsData = 0; //R2013+ has_ds_data: 1 advertises inline ACIS SAB datastore //B
     std::uint8_t plotFlags = 0; //presence of plot style //BB
@@ -953,11 +954,9 @@ public:
     std::uint16_t m_shapeIndex = 0;
     DRW_Coord m_extrusion {0.0, 0.0, 1.0};
     std::uint32_t m_shapeFileHandle = 0;
-    std::string m_styleName;  /*!< name of the SHAPEFILE/STYLE record (DXF code 2);
-                                   resolved from m_shapeFileHandle on DWG read. The
-                                   DWG stores only m_shapeIndex; the per-glyph name
-                                   lives in the external .shx, so DXF round-trips the
-                                   style-record name (as libredwg/ACadSharp do). */
+    std::string m_styleName;  /*!< DXF glyph name (code 2). On DWG read this holds
+                                   the STYLE name, not the glyph name; the caller
+                                   needs the external SHX to resolve m_shapeIndex. */
     std::uint32_t m_objectSize = 0;
     std::uint32_t m_bodyBitSize = 0;
     std::vector<std::uint8_t> m_rawBytes;

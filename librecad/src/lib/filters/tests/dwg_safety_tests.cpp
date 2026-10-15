@@ -85,6 +85,17 @@ public:
         record.lastEH = last;
     }
 
+    static bool parse(DRW_Block_Record& record, dwgBuffer& body) {
+        return record.parseDwg(DRW::AC1015, &body);
+    }
+
+    static std::uint32_t firstEntity(const DRW_Block_Record& record) {
+        return record.firstEH;
+    }
+
+    static std::uint32_t lastEntity(const DRW_Block_Record& record) {
+        return record.lastEH;
+    }
 };
 
 class DwgPolylineTraceTestAccess {
@@ -274,6 +285,26 @@ public:
 
         result.phase = Phase::Complete;
         return result;
+    }
+
+    static bool usesExplicitLinks(const DRW_Entity& entity) {
+        return entity.haveNextLinks == 0;
+    }
+
+    static std::uint32_t previousEntity(const DRW_Entity& entity) {
+        return entity.prevEntLink;
+    }
+
+    static std::uint32_t nextEntity(const DRW_Entity& entity) {
+        return entity.nextEntLink;
+    }
+
+    static bool writerLinkMode(const DRW_Entity& entity) {
+        return entity.m_dwgWriteExplicitLinks;
+    }
+
+    static void setWriterLinkMode(DRW_Entity& entity, bool explicitLinks) {
+        entity.m_dwgWriteExplicitLinks = explicitLinks;
     }
 
 private:
@@ -1650,6 +1681,14 @@ public:
             && buffer != nullptr && buffer->isGood();
     }
 
+    bool parseLinks(dwgBuffer& buffer) {
+        if (!parseDwg(DRW::AC1015, &buffer)
+            || !buffer.setPosition(objSize >> 3))
+            return false;
+        buffer.setBitPos(objSize & 7u);
+        return parseDwgEntHandle(DRW::AC1015, &buffer, false);
+    }
+
     void setStaleObjectSize(std::uint32_t value) { objSize = value; }
     std::uint32_t objectSize() const { return objSize; }
     bool hasOwner() const { return ownerHandle; }
@@ -2043,6 +2082,15 @@ public:
 
     std::uint32_t lastObjectOffsetForTest() const {
         return m_objectMap.empty() ? 0 : m_objectMap.back().second;
+    }
+
+    bool readObjectFrameForTest(std::uint32_t handle, DwgObjectFrame& frame) const {
+        const auto entry = std::find_if(m_objectMap.cbegin(), m_objectMap.cend(),
+            [handle](const auto& value) { return value.first == handle; });
+        if (entry == m_objectMap.cend())
+            return false;
+        dwgBuffer source(const_cast<std::uint8_t*>(buffer().data()), buffer().size());
+        return frame.readAt(source, m_version, entry->second);
     }
 
     std::size_t classDefinitionCountForTest() const {
@@ -7783,6 +7831,90 @@ TEST_CASE("DWG process keeps a class-report callback failure best effort",
     REQUIRE(reader.read(&interface, true));
     CHECK(reader.getError() == DRW::BAD_NONE);
     CHECK(interface.attempts == 1);
+}
+
+TEST_CASE("DWG R2000 HEADER CRC covers the finalized HANDSEED",
+          "[dwg][dwg-write][safety][r2000][crc]") {
+    class Interface final : public DwgReadProbe {
+    public:
+        dwgRW* m_writer = nullptr;
+        std::size_t m_lineCount = 0;
+        std::size_t m_linesRead = 0;
+        std::uint32_t m_handseedRead = 0;
+        std::uint32_t m_maxLineHandle = 0;
+
+        void writeHeader(DRW_Header& header) override {
+            header.setHandSeed(0x30u);
+        }
+        void writeEntities() override {
+            for (std::size_t index = 0; index < m_lineCount; ++index) {
+                DRW_Line line;
+                line.basePoint = {static_cast<double>(index), 0.0, 0.0};
+                line.secPoint = {static_cast<double>(index), 1.0, 0.0};
+                REQUIRE(m_writer->writeLine(&line));
+            }
+        }
+        void addHeader(const DRW_Header* header) override {
+            m_handseedRead = header->getHandSeed();
+        }
+        void addLine(const DRW_Line& line) override {
+            ++m_linesRead;
+            m_maxLineHandle = (std::max)(m_maxLineHandle, line.handle);
+        }
+    } interface;
+    const auto lineCount = GENERATE(1u, 300u);
+    CAPTURE(lineCount);
+    const auto path = std::filesystem::temp_directory_path()
+        / ("librecad_r2000_header_crc_" + std::to_string(lineCount) + ".dwg");
+    interface.m_lineCount = lineCount;
+    {
+        dwgRW writer(path.string().c_str());
+        interface.m_writer = &writer;
+        REQUIRE(writer.write(&interface, DRW::AC1015, false));
+    }
+    const auto bytes = readFile(path);
+    REQUIRE(bytes.size() >= 25u);
+    // Independent CRC16/IBM calculation: libreDWG and ACadSharp seed each
+    // section with C0C1 and include its size word, but not its sentinels.
+    const auto crc16 = [&bytes](std::size_t start, std::size_t end) {
+        std::uint16_t crc = 0xC0C1;
+        for (std::size_t offset = start; offset < end; ++offset) {
+            crc ^= bytes[offset];
+            for (unsigned bit = 0; bit < 8; ++bit)
+                crc = static_cast<std::uint16_t>(
+                    (crc >> 1) ^ ((crc & 1) != 0 ? 0xA001 : 0));
+        }
+        return crc;
+    };
+    const auto storedCrc = [&bytes](std::size_t offset) {
+        return static_cast<std::uint16_t>(bytes[offset]
+            | (static_cast<std::uint16_t>(bytes[offset + 1]) << 8));
+    };
+    const std::uint32_t count = readLittleEndian32(bytes.data() + 21);
+    REQUIRE(count == 6u);
+    const std::size_t headerCrcOffset = 25u + 9u * count;
+    REQUIRE(headerCrcOffset + 18u <= bytes.size());
+    CHECK(storedCrc(headerCrcOffset) == crc16(0, headerCrcOffset));
+    for (std::uint8_t section : {0, 1}) {
+        const std::size_t locator = 25u + 9u * section;
+        REQUIRE(bytes[locator] == section);
+        const std::size_t start = readLittleEndian32(bytes.data() + locator + 1);
+        const std::size_t size = readLittleEndian32(bytes.data() + locator + 5);
+        REQUIRE(size >= 38u);
+        REQUIRE(start <= bytes.size());
+        REQUIRE(size <= bytes.size() - start);
+        const std::size_t payloadSize = readLittleEndian32(bytes.data() + start + 16);
+        CHECK(payloadSize + 38u == size);
+        const std::size_t crcOffset = start + size - 18u;
+        CAPTURE(section, start, size, crcOffset);
+        CHECK(storedCrc(crcOffset) == crc16(start + 16u, crcOffset));
+    }
+    dwgRW reader(path.string().c_str());
+    REQUIRE(reader.read(&interface, true));
+    CHECK(interface.m_linesRead == lineCount);
+    CHECK(interface.m_handseedRead > 0x30u);
+    CHECK(interface.m_handseedRead > interface.m_maxLineHandle);
+    std::filesystem::remove(path);
 }
 
 TEST_CASE("DWG R2000 file header bounds its section record count",
@@ -16553,6 +16685,148 @@ TEST_CASE("DWG entity admission rolls back an invalid block owner",
     CHECK(writer.endBlockContent());
 }
 
+TEST_CASE("DWG R2000 trailing compounds keep separate owner and child chains",
+          "[dwg][safety][dwg-write][writer][ownership][r2000-links]") {
+    const bool attributed = GENERATE(false, true);
+    const int owner = GENERATE(0, 1, 2); // model space, paper space, named block
+    const bool precedingLine = GENERATE(false, true);
+    CAPTURE(attributed, owner, precedingLine);
+    DRW_Header header;
+    std::ofstream stream;
+    DwgClassPhaseWriterProbe writer(&stream, &header);
+    const auto target = writer.defineBlock("LINK_TARGET", DRW_Coord{});
+    REQUIRE(target != 0u);
+    const auto blockOwner = owner == 2 ? target
+        : owner == 1 ? DRW::DwgPaperSpaceBlockRecordHandle
+                     : DRW::DwgModelSpaceBlockRecordHandle;
+    if (owner == 2)
+        REQUIRE(writer.beginBlockContent(target));
+    const auto space = owner == 1 ? DRW::PaperSpace : DRW::ModelSpace;
+    constexpr std::uint32_t parent = 0x4000;
+    if (precedingLine) {
+        DRW_Line line;
+        line.handle = parent - 1u;
+        line.space = space;
+        line.secPoint = DRW_Coord{1.0, 0.0, 0.0};
+        REQUIRE(writer.encodeEntity(&line));
+    }
+    if (attributed) {
+        DRW_Insert insert;
+        insert.handle = parent;
+        insert.space = space;
+        insert.blockRecH.ref = target;
+        insert.attribHandles.resize(2);
+        insert.attribHandles.front().ref = parent + 1u;
+        insert.attribHandles.back().ref = parent + 2u;
+        insert.seqendH.ref = parent + 3u;
+        REQUIRE(writer.encodeEntity(&insert));
+        for (std::uint32_t i = 1; i <= 2; ++i) {
+            DRW_Attrib attribute;
+            attribute.handle = parent + i;
+            attribute.parentHandle = parent;
+            attribute.space = space;
+            attribute.tag = "TAG" + std::to_string(i);
+            attribute.text = "VALUE";
+            attribute.height = 1.0;
+            REQUIRE(writer.encodeEntity(&attribute));
+        }
+    } else {
+        DRW_Polyline polyline;
+        polyline.handle = parent;
+        polyline.space = space;
+        for (std::uint32_t i = 1; i <= 2; ++i) {
+            auto vertex = std::make_shared<DRW_Vertex>(i, 0.0, 0.0, 0.0);
+            vertex->handle = parent + i;
+            vertex->parentHandle = parent;
+            vertex->space = space;
+            vertex->setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
+            polyline.appendVertex(vertex);
+        }
+        polyline.setDwgSeqEndHandle(parent + 3u);
+        REQUIRE(writer.encodeEntity(&polyline));
+        for (const auto& vertex : polyline.vertlist)
+            REQUIRE(writer.encodeEntity(vertex.get()));
+    }
+    DRW_SeqEnd sequenceEnd;
+    sequenceEnd.handle = parent + 3u;
+    sequenceEnd.parentHandle = parent;
+    sequenceEnd.space = space;
+    REQUIRE(writer.encodeEntity(&sequenceEnd));
+    if (owner == 2)
+        REQUIRE(writer.endBlockContent());
+    REQUIRE(writer.emitDeferredBlockControl());
+
+    DwgObjectFrame frame;
+    REQUIRE(writer.readObjectFrameForTest(blockOwner, frame));
+    dwgBuffer blockBody(frame.body().data(), frame.body().size());
+    DRW_Block_Record record;
+    REQUIRE(DwgBlockOwnershipTestAccess::parse(record, blockBody));
+    CHECK(DwgBlockOwnershipTestAccess::firstEntity(record)
+          == (precedingLine ? parent - 1u : parent));
+    CHECK(DwgBlockOwnershipTestAccess::lastEntity(record) == parent);
+    DRW::DwgBlockWriteResult result;
+    REQUIRE(writer.getEmittedDwgBlockWriteResult(result));
+    const auto receipt = std::find_if(result.blockRecords.cbegin(), result.blockRecords.cend(),
+        [blockOwner](const auto& value) { return value.blockRecordHandle == blockOwner; });
+    REQUIRE(receipt != result.blockRecords.cend());
+    CHECK(receipt->entityHandles.size() == (precedingLine ? 5u : 4u));
+
+    const std::uint32_t previous[] = {precedingLine ? parent - 1u : 0u, 0u, parent + 1u, 0u};
+    const std::uint32_t next[] = {0u, parent + 2u, 0u, 0u};
+    for (std::uint32_t i = 0; i < 4; ++i) {
+        CAPTURE(i);
+        REQUIRE(writer.readObjectFrameForTest(parent + i, frame));
+        dwgBuffer body(frame.body().data(), frame.body().size());
+        DwgEntityPrologueProbe entity;
+        REQUIRE(entity.parseLinks(body));
+        CHECK(DwgPolylineTraceTestAccess::usesExplicitLinks(entity));
+        CHECK(DwgPolylineTraceTestAccess::previousEntity(entity) == previous[i]);
+        CHECK(DwgPolylineTraceTestAccess::nextEntity(entity) == next[i]);
+    }
+}
+
+TEST_CASE("DWG R2000 caller link mode survives failure and transaction rollback",
+          "[dwg][safety][dwg-write][writer][transaction][r2000-links]") {
+    struct Interface final : DwgReadProbe {
+        dwgRW* writer = nullptr;
+        bool initialMode = false;
+        void writeEntities() override {
+            DwgLineWriterProbe line;
+            line.secPoint = DRW_Coord{1.0, 0.0, 0.0};
+            DwgPolylineTraceTestAccess::setWriterLinkMode(line, initialMode);
+            const auto transaction = writer->beginDwgWriteTransaction(false, true);
+            REQUIRE(transaction != 0u);
+            REQUIRE(writer->writeLine(&line));
+            CHECK(DwgPolylineTraceTestAccess::writerLinkMode(line) == initialMode);
+            REQUIRE(writer->rollbackDwgWriteTransaction(transaction));
+            CHECK(line.handle == 0u);
+            CHECK(DwgPolylineTraceTestAccess::writerLinkMode(line) == initialMode);
+            REQUIRE(writer->writeLine(&line));
+
+            DwgLineWriterProbe duplicate;
+            duplicate.handle = line.handle;
+            DwgPolylineTraceTestAccess::setWriterLinkMode(duplicate, initialMode);
+            const auto failed = writer->beginDwgWriteTransaction(true, true);
+            REQUIRE(failed != 0u);
+            CHECK_FALSE(writer->writeLine(&duplicate));
+            CHECK(DwgPolylineTraceTestAccess::writerLinkMode(duplicate) == initialMode);
+            REQUIRE(writer->rollbackDwgWriteTransaction(failed));
+            CHECK(DwgPolylineTraceTestAccess::writerLinkMode(duplicate) == initialMode);
+        }
+    } interface;
+    interface.initialMode = GENERATE(false, true);
+    CAPTURE(interface.initialMode);
+    const auto path = std::filesystem::temp_directory_path()
+        / "libdxfrw_r2000_link_mode_rollback.dwg";
+    std::filesystem::remove(path);
+    {
+        dwgRW writer(path.string().c_str());
+        interface.writer = &writer;
+        REQUIRE(writer.write(&interface, DRW::AC1015, false));
+    }
+    std::filesystem::remove(path);
+}
+
 TEST_CASE("DWG writer rejects unrepresentable owned-entity counts",
           "[dwg][safety][writer][ownership]") {
     DRW_Header header;
@@ -18557,6 +18831,43 @@ TEST_CASE("DWG table controls reject duplicate owned handles",
     CHECK_FALSE(control.parseDwg(DRW::AC1015, &buffer, /*bs=*/0));
     CHECK(control.handlesList.empty());
     CHECK_FALSE(buffer.isGood());
+}
+
+TEST_CASE("DWG R2007 controls require a bounded handle-stream boundary",
+          "[dwg][safety][control][r2007]") {
+    dwgBufferW body;
+    body.putObjType(DRW::AC1021, DRW::DwgLayerControlObjectType);
+    body.putRawLong32(0);
+    body.putHandle(makeObjectHandle(0x500u));
+    body.putBitShort(0); // EED
+    body.putBitLong(0);  // reactors
+    body.putBit(0);      // extension dictionary present
+    body.putBitLong(1);  // entry count
+    body.putBit(0);      // no strings
+    body.alignToByte();
+    const std::uint32_t dataBits = body.bitCount();
+    body.patchRawLong32AtBit(10u, dataBits);
+    body.putHandle(makeObjectHandle(0));
+    body.putHandle(makeObjectHandle(0));
+    body.putHandle(makeObjectHandle(0x620u));
+    body.alignToByte();
+
+    DwgObjectControlReaderProbe control;
+    dwgBuffer valid(body.data().data(), body.size());
+    REQUIRE(control.parseDwg(DRW::AC1021, &valid));
+    CHECK(control.handle == 0x500u);
+    REQUIRE(control.handlesList.size() == 1u);
+    CHECK(control.handlesList.front() == 0x620u);
+
+    const auto malformedSize = GENERATE(0u, UINT32_MAX);
+    CAPTURE(malformedSize);
+    body.patchRawLong32AtBit(10u, malformedSize);
+    dwgBuffer invalid(body.data().data(), body.size());
+    CHECK_FALSE(control.parseDwg(DRW::AC1021, &invalid));
+    CHECK_FALSE(invalid.isGood());
+    CHECK(control.handle == 0u);
+    CHECK(control.handlesList.empty());
+    CHECK(control.phantomHandles.empty());
 }
 
 TEST_CASE("DWG classes reject negative instance counts",

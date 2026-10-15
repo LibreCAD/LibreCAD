@@ -2732,6 +2732,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dxf_legacy_name_reference_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_reopen_dwg_export_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_shape_name_tests.cpp
+        librecad/src/lib/filters/tests/lc_dxf_appid_registration_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_xdata_appid_tests.cpp
         librecad/src/lib/filters/tests/lc_export_commit_tests.cpp
         librecad/src/lib/filters/tests/lc_attribute_export_tests.cpp
@@ -3253,6 +3254,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dxf_legacy_name_reference_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_reopen_dwg_export_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_shape_name_tests.cpp
+        librecad/src/lib/filters/tests/lc_dxf_appid_registration_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_xdata_appid_tests.cpp
         librecad/src/lib/filters/tests/mleader_dxf_context_tests.cpp
     )

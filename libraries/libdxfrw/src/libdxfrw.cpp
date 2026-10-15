@@ -5587,12 +5587,10 @@ bool dxfRW::writeShape(DRW_Shape *ent) {
     if (!preflightEntity(ent))
         return false;
     // DXF SHAPE (AcDbShape). A reader finds the shape by its name, group 2, in
-    // the shape files of the drawing. The DWG stores only a glyph index; the
-    // glyph name lives in the external .shx and is unrecoverable, so group 2
-    // carries the SHAPEFILE/STYLE record name (resolved on read), matching
-    // libredwg/ACadSharp. A shape file's record usually has no name, and a
-    // SHAPE without one names no shape (ODA drops it on reading): it is left
-    // out and counted in leftOut().
+    // the shape files of the drawing. The caller must supply that glyph name,
+    // either from DXF group 2 or from the external SHX directory. A DWG's
+    // STYLE record name does not identify the glyph. A SHAPE without a name
+    // is left out and counted in leftOut().
     // m_rotation/m_oblique are radians (DRW_Shape::parseDwg keeps them un-scaled,
     // unlike DRW_Text) -> convert to DXF degrees.
     const auto finite = [](const DRW_Coord& point) {

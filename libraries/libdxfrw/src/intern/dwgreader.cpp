@@ -13220,6 +13220,12 @@ bool DRW_ObjControl::parseDwg(DRW::Version version, dwgBuffer *buf,
     DRW_DBG(stringBit);
     DRW_DBG("\n");
   }
+  if (version == DRW::AC1021) {
+    if (objSize == 0 || !hBuff.setPosition(objSize >> 3))
+      return fail();
+    hBuff.setBitPos(static_cast<std::uint8_t>(objSize & 7u));
+    hBuf = &hBuff;
+  }
   if (!buf->isGood())
     return fail();
 
