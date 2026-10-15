@@ -129,36 +129,19 @@ bool matches(const RS_Entity* entity, const Region& region, bool crossing) {
         return !crossing;
     }
 
-    // Images have a filled rectangular area, not just a boundary. In particular,
-    // their nearest-point query returns the query itself when it lies inside the
-    // image, which is not enough to establish window containment.
+    // Images are filled rectangles, so use their perimeter instead of the
+    // nearest-point query, which can return an interior point.
     if (entity->rtti() == RS2::EntityImage) {
         const auto* image = static_cast<const RS_Image*>(entity);
         const auto corners = image->getCorners();
-        const size_t cornerCount = corners.getNumber();
-        if (cornerCount != 4) return false;
-
-        bool anyCornerInside = false;
-        bool allCornersInside = true;
-        for (size_t i = 0; i < cornerCount; ++i) {
-            const bool enclosed = inside(region, corners.get(i));
-            anyCornerInside |= enclosed;
-            allCornersInside &= enclosed;
+        if (corners.getNumber() != 4) return false;
+        for (size_t i = 0; i < 4; ++i) {
+            RS_Line edge(nullptr, corners.get(i), corners.get((i + 1) % 4));
+            const bool matched = matches(&edge, region, crossing);
+            if (crossing && matched) return true;
+            if (!crossing && !matched) return false;
         }
-
-        // Treat the image frame as four real line segments so concave lassos
-        // are handled by the same interval/intersection logic as other lines.
-        for (size_t i = 0; i < cornerCount; ++i) {
-            RS_Line edge(nullptr, corners.get(i), corners.get((i + 1) % cornerCount));
-            if (crossing) {
-                if (matches(&edge, region, true)) return true;
-            } else if (!matches(&edge, region, false)) {
-                return false;
-            }
-        }
-
-        if (!crossing) return allCornersInside;
-        if (anyCornerInside) return true;
+        if (!crossing) return true;
         for (const auto& lassoPoint : polygon)
             if (image->containsPoint(vector(lassoPoint))) return true;
         return false;
