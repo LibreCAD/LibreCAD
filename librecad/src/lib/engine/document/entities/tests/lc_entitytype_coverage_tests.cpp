@@ -20,8 +20,16 @@
  ******************************************************************************/
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators_range.hpp>
 
+#include <memory>
+#include <vector>
+
+#include "lc_filtertestsupport.h"
+#include "lc_sourcefonts.h"
+#include "lc_testentityfactory.h"
 #include "rs.h"
+#include "rs_constructionline.h"
 
 namespace {
 
@@ -168,6 +176,90 @@ constexpr bool rowsWellFormed() {
 
 static_assert(rowsWellFormed(), "Entity coverage rows have inconsistent dispositions or gap metadata");
 
+std::vector<RS2::EntityType> drawingTypes() {
+    std::vector<RS2::EntityType> types;
+    for (unsigned index = 0; index < kRowCount; ++index) {
+        const auto type = static_cast<RS2::EntityType>(index);
+        if (rowOf(type).kind == Kind::DrawingEntity)
+            types.push_back(type);
+    }
+    return types;
+}
+
+void requireDrawingFixture(const RS_Entity* entity, RS2::EntityType type, const RS_EntityContainer* owner) {
+    REQUIRE(entity != nullptr);
+    REQUIRE(entity->rtti() == type);
+    REQUIRE(entity->getParent() == owner);
+    REQUIRE(entity->hasValidBorders());
+    if (entity->isContainer())
+        REQUIRE(static_cast<const RS_EntityContainer*>(entity)->count() > 0);
+    switch (type) {
+    case RS2::EntityHyperbola:
+        REQUIRE(static_cast<const LC_Hyperbola*>(entity)->isValid());
+        break;
+    case RS2::EntityParabola:
+        REQUIRE(static_cast<const LC_Parabola*>(entity)->getData().isValid());
+        break;
+    case RS2::EntitySpline:
+        REQUIRE(static_cast<const RS_Spline*>(entity)->validate());
+        break;
+    case RS2::EntitySplinePoints:
+        REQUIRE(static_cast<const LC_SplinePoints*>(entity)->getNumberOfControlPoints() >= 3);
+        break;
+    default:
+        break;
+    }
+}
+
+bool runCheck(Check check, RS2::EntityType type, bool mixedBlock = false) {
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    if (check == CloneClass) {
+        const auto original = lc::test::makeDrawingEntity(type, graphic, &graphic);
+        requireDrawingFixture(original.get(), type, &graphic);
+        const std::unique_ptr<RS_Entity> clone{original->clone()};
+        return clone != nullptr && clone.get() != original.get() && clone->rtti() == type;
+    }
+
+    REQUIRE(check == InsertExpansion);
+    const QString blockName = QStringLiteral("LC_ENTITY_COVERAGE");
+    auto block = std::make_unique<RS_Block>(&graphic, RS_BlockData(blockName, {0, 0}, false));
+    if (mixedBlock)
+        block->appendEntity(new RS_Line(block.get(), RS_LineData({-3, 0}, {-1, 1})));
+    auto source = lc::test::makeDrawingEntity(type, graphic, block.get());
+    requireDrawingFixture(source.get(), type, block.get());
+    const RS_Entity* sourceIdentity = source.get();
+    // addEntity intentionally prepends images/hatches; this fixture tests the explicit {line, instance} order.
+    block->appendEntity(source.release());
+    REQUIRE(block->entityAt(mixedBlock ? 1 : 0) == sourceIdentity);
+    REQUIRE(graphic.addBlock(block.release()));
+
+    RS_Insert insert(&graphic, RS_InsertData(blockName, {10, 5}, {2, 2}, M_PI / 6.0, 1, 1, {0, 0}));
+    insert.update();
+    const unsigned expectedCount = mixedBlock ? 2u : 1u;
+    if (insert.count() != expectedCount)
+        return false;
+    const RS_Entity* last = insert.entityAt(expectedCount - 1u);
+    const auto expectedType = type == RS2::EntityInsert ? RS2::EntityLine : type;
+    if (last == nullptr || last == sourceIdentity || last->rtti() != expectedType || last->getParent() != &insert)
+        return false;
+    if (mixedBlock) {
+        const RS_Entity* first = insert.entityAt(0);
+        if (first == nullptr || first->rtti() != RS2::EntityLine || first->getParent() != &insert)
+            return false;
+    }
+    return true;
+}
+
+void checkOutcome(const Row& row, Check check, bool passed) {
+    if ((row.knownGaps & check) != 0) {
+        INFO(row.gapNote);
+        CHECK_FALSE(passed);
+    } else {
+        CHECK(passed);
+    }
+}
+
 } // namespace
 
 TEST_CASE("Every entity type has an explicit coverage disposition", "[entity-coverage]") {
@@ -187,4 +279,86 @@ TEST_CASE("Every entity type has an explicit coverage disposition", "[entity-cov
     CHECK(kRowCount == 50);
     CHECK(drawingRows == 27);
     CHECK(exemptRows == 23);
+}
+
+TEST_CASE("Drawing entity factories produce usable fixtures", "[entity-coverage]") {
+    const auto types = drawingTypes();
+    const auto type = GENERATE_COPY(from_range(types.begin(), types.end()));
+    CAPTURE(static_cast<unsigned>(type));
+    lc::test::ensureSettings();
+    const lc::test::SourceFonts fonts;
+    const lc::test::QuietLog quiet;
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    const auto entity = lc::test::makeDrawingEntity(type, graphic, &graphic);
+    requireDrawingFixture(entity.get(), type, &graphic);
+}
+
+TEST_CASE("Every drawing entity clone keeps its runtime class", "[entity-coverage]") {
+    const auto types = drawingTypes();
+    const auto type = GENERATE_COPY(from_range(types.begin(), types.end()));
+    CAPTURE(static_cast<unsigned>(type));
+    const Row row = rowOf(type);
+    REQUIRE((row.notRun & CloneClass) == 0);
+    lc::test::ensureSettings();
+    const lc::test::SourceFonts fonts;
+    const lc::test::QuietLog quiet;
+    checkOutcome(row, CloneClass, runCheck(CloneClass, type));
+}
+
+TEST_CASE("Every drawing entity expands as the sole block member", "[entity-coverage]") {
+    const auto types = drawingTypes();
+    const auto type = GENERATE_COPY(from_range(types.begin(), types.end()));
+    CAPTURE(static_cast<unsigned>(type));
+    const Row row = rowOf(type);
+    REQUIRE((row.notRun & InsertExpansion) == 0);
+    lc::test::ensureSettings();
+    const lc::test::SourceFonts fonts;
+    const lc::test::QuietLog quiet;
+    checkOutcome(row, InsertExpansion, runCheck(InsertExpansion, type));
+}
+
+TEST_CASE("Every drawing entity expands beside a line in a block", "[entity-coverage]") {
+    const auto types = drawingTypes();
+    const auto type = GENERATE_COPY(from_range(types.begin(), types.end()));
+    CAPTURE(static_cast<unsigned>(type));
+    const Row row = rowOf(type);
+    REQUIRE((row.notRun & InsertExpansion) == 0);
+    lc::test::ensureSettings();
+    const lc::test::SourceFonts fonts;
+    const lc::test::QuietLog quiet;
+    checkOutcome(row, InsertExpansion, runCheck(InsertExpansion, type, true));
+}
+
+TEST_CASE("Construction lines retain native INSERT expansion", "[entity-coverage]") {
+    lc::test::ensureSettings();
+    const lc::test::QuietLog quiet;
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    const QString blockName = QStringLiteral("LC_COVERAGE_CONSTRUCTION");
+    auto block = std::make_unique<RS_Block>(&graphic, RS_BlockData(blockName, {0, 0}, false));
+    block->addEntity(new RS_ConstructionLine(block.get(), RS_ConstructionLineData({0, 0}, {5, 2})));
+    REQUIRE(graphic.addBlock(block.release()));
+    RS_Insert insert(&graphic, RS_InsertData(blockName, {10, 5}, {2, 2}, M_PI / 6.0, 1, 1, {0, 0}));
+    insert.update();
+    REQUIRE(insert.count() == 1);
+    CHECK(insert.entityAt(0)->rtti() == RS2::EntityConstructionLine);
+    CHECK(insert.entityAt(0)->getParent() == &insert);
+}
+
+TEST_CASE("An unsupported container rejects the complete mixed INSERT", "[entity-coverage]") {
+    lc::test::ensureSettings();
+    const lc::test::QuietLog quiet;
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    const QString blockName = QStringLiteral("LC_COVERAGE_CONTAINER");
+    auto block = std::make_unique<RS_Block>(&graphic, RS_BlockData(blockName, {0, 0}, false));
+    block->addEntity(new RS_Line(block.get(), RS_LineData({-3, 0}, {-1, 1})));
+    auto container = std::make_unique<RS_EntityContainer>(block.get(), true);
+    container->addEntity(new RS_Line(container.get(), RS_LineData({0, 0}, {5, 2})));
+    block->addEntity(container.release());
+    REQUIRE(graphic.addBlock(block.release()));
+    RS_Insert insert(&graphic, RS_InsertData(blockName, {10, 5}, {2, 2}, M_PI / 6.0, 1, 1, {0, 0}));
+    insert.update();
+    CHECK(insert.count() == 0);
 }
