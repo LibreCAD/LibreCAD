@@ -909,7 +909,7 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, const L
         {"OrderTop", QKeySequence(Qt::Key_Home)},
         {"SelectAll", QKeySequence::SelectAll},
         // RVT April 29, 2011 - Added esc key to de-select all entities
-        {"DeselectAll", QKeySequence(tr("Ctrl+K"))},
+        {"DeselectAll", QKeySequence(Qt::CTRL | Qt::Key_K)},
         {"EditUndo", QKeySequence::Undo},
         {"EditRedo", QKeySequence::Redo},
         {"EditCut", QKeySequence::Cut},
@@ -926,10 +926,10 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, const L
         {"ReloadStyleSheet", QKeySequence("Ctrl+T")},
         {"FileClose", QKeySequence::Close},
         {"FileCloseAll", QKeySequence("Shift+" + QKeySequence(QKeySequence::Close).toString())},
-        {"ViewGrid", QKeySequence(tr("Ctrl+G", "Toggle Grid"))},
+        {"ViewGrid", QKeySequence(Qt::CTRL | Qt::Key_G)},
         // todo - it's better to replace to something different.... ctrl+d is rather for duplicate
-        {"ViewDraft", QKeySequence(tr("Ctrl+D","Toggle Draft Mode"))},
-        {"ViewStatusBar", QKeySequence(tr("Ctrl+I", "Hide Statusbar"))},
+        {"ViewDraft", QKeySequence(Qt::CTRL | Qt::Key_D)},
+        {"ViewStatusBar", QKeySequence(Qt::CTRL | Qt::Key_I)},
         {"ModifyDeleteQuick",QKeySequence::Delete  /*QList<QKeySequence>() << QKeySequence::Delete << QKeySequence(Qt::Key_Backspace)*/},
         {"FileNew", QKeySequence::New},
         {"FileOpen", QKeySequence::Open},
