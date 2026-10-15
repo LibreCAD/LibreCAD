@@ -8,6 +8,7 @@
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_ellipse.h"
+#include "rs_image.h"
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_selection.h"
@@ -126,6 +127,41 @@ bool matches(const RS_Entity* entity, const Region& region, bool crossing) {
             if (!crossing && !enclosed) return false;
         }
         return !crossing;
+    }
+
+    // Images have a filled rectangular area, not just a boundary. In particular,
+    // their nearest-point query returns the query itself when it lies inside the
+    // image, which is not enough to establish window containment.
+    if (entity->rtti() == RS2::EntityImage) {
+        const auto* image = static_cast<const RS_Image*>(entity);
+        const auto corners = image->getCorners();
+        const size_t cornerCount = corners.getNumber();
+        if (cornerCount != 4) return false;
+
+        bool anyCornerInside = false;
+        bool allCornersInside = true;
+        for (size_t i = 0; i < cornerCount; ++i) {
+            const bool enclosed = inside(region, corners.get(i));
+            anyCornerInside |= enclosed;
+            allCornersInside &= enclosed;
+        }
+
+        // Treat the image frame as four real line segments so concave lassos
+        // are handled by the same interval/intersection logic as other lines.
+        for (size_t i = 0; i < cornerCount; ++i) {
+            RS_Line edge(nullptr, corners.get(i), corners.get((i + 1) % cornerCount));
+            if (crossing) {
+                if (matches(&edge, region, true)) return true;
+            } else if (!matches(&edge, region, false)) {
+                return false;
+            }
+        }
+
+        if (!crossing) return allCornersInside;
+        if (anyCornerInside) return true;
+        for (const auto& lassoPoint : polygon)
+            if (image->containsPoint(vector(lassoPoint))) return true;
+        return false;
     }
 
     // Exact curve/edge intersections plus a point on the curve distinguish
