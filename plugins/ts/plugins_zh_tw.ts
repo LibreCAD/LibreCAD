@@ -24,7 +24,7 @@
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="34"/>
         <source>Export points to csv</source>
-        <translation>匯出指向 Csv</translation>
+        <translation>將點匯出到 CSV 檔案</translation>
     </message>
 </context>
 <context>
@@ -38,7 +38,7 @@
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align settings...</source>
-        <translation>對應設定值...</translation>
+        <translation>對齊設定...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="49"/>
@@ -48,19 +48,18 @@
     <message>
         <location filename="../align/align.cpp" line="50"/>
         <source>Specify base points first</source>
-        <translation>第一個指定基點</translation>
+        <translation>先指定基準點</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="54"/>
         <source>Align Settings</source>
-        <translation>對齊設定值</translation>
+        <translation>對齊設定</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="57"/>
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-        <translation>點擊設定/ 取消的選項,
-接受并開始相對.</translation>
+        <translation>點擊選項以設定/取消設定，然後點擊「確定」以接受並開始對齊。</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="60"/>
@@ -70,12 +69,12 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation>如果檢查了&quot;保留原始物件&quot;,
-對應會复制而不是移出所選取的物件 。
+        <translation>如果勾選「保留原始物件」，
+對齊將複製而不是移動所選物件。
 
-如果檢查了&quot;先指定基點&quot;,
-對齊會以相對相關點的相關相關相關相關
-一壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二壘 二.</translation>
+如果勾選「首先指定基點」，
+對齊將按以下順序提示對齊點：
+第一個基點，第二個基點，第一個目標，第二個目標。</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="81"/>
@@ -104,12 +103,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation>工具建立外掛程式</translation>
+        <translation>齒輪建立外掛程式</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="40"/>
         <source>Gear plugin</source>
-        <translation>Gear 外掛程式</translation>
+        <translation>齒輪外掛程式</translation>
     </message>
 </context>
 <context>
@@ -180,7 +179,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>線段</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
@@ -211,7 +210,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="118"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>弧</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119"/>
@@ -250,7 +249,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="141"/>
         <source>area</source>
-        <translation>area</translation>
+        <translation>面積</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144"/>
@@ -285,12 +284,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="179"/>
         <source>TEXT</source>
-        <translation>TEXT</translation>
+        <translation>文本</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183"/>
         <source>TEXTCONTENT</source>
-        <translation>(正弦)</translation>
+        <translation>文字內容</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="186"/>
@@ -300,7 +299,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="189"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>名</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191"/>
@@ -310,7 +309,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
-        <translation>二. 尺度</translation>
+        <translation>縮放</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="197"/>
@@ -320,12 +319,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="203"/>
         <source>Columns/Rows</source>
-        <translation>欄/牛</translation>
+        <translation>欄/列</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="207"/>
         <source>Column/Row Spacing</source>
-        <translation>列/ 牛相距</translation>
+        <translation>欄/列間距</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="214"/>
@@ -340,12 +339,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>No</source>
-        <translation>No</translation>
+        <translation>不</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>Yes</source>
-        <translation>Yes</translation>
+        <translation>是</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217"/>
@@ -365,7 +364,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>第 二 章</translation>
+        <translation>樣條曲線點</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
@@ -446,7 +445,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="42"/>
         <source>import PIC file</source>
-        <translation>匯入 PIC 文件</translation>
+        <translation>匯入 PIC 檔案</translation>
     </message>
 </context>
 <context>
@@ -633,12 +632,12 @@ first base, second base, first target, second target.</source>
         <location filename="../divide/divide.cpp" line="35"/>
         <location filename="../divide/divide.cpp" line="42"/>
         <source>Divide</source>
-        <translation>分割線</translation>
+        <translation>分割</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>選擇行、 圓或弧并按回放</translation>
+        <translation>選取一條線、圓或弧，然後按下 Enter 鍵</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
@@ -653,7 +652,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>空實體</translation>
+        <translation>空白實體</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -668,7 +667,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation>層</translation>
+        <translation>圖層</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
@@ -678,12 +677,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
         <source>Line type</source>
-        <translation>線類型</translation>
+        <translation>線條類型</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
         <source>Line thickness</source>
-        <translation>行厚度</translation>
+        <translation>線條粗細</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="467"/>
@@ -693,17 +692,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>線條</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
         <source>from point</source>
-        <translation>从點起</translation>
+        <translation>從點</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="482"/>
         <source>to point</source>
-        <translation>指向</translation>
+        <translation>到點</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="487"/>
@@ -714,17 +713,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="492"/>
         <source>Angle in XY plane</source>
-        <translation>XY平面中的角度</translation>
+        <translation>XY 平面的角度</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
         <source>Inc.</source>
-        <translation>公司.</translation>
+        <translation>增量</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>弧線</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500"/>
@@ -742,62 +741,62 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="507"/>
         <source>initial angle</source>
-        <translation>初始角度</translation>
+        <translation>起始角度</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="509"/>
         <source>final angle</source>
-        <translation>最后角度</translation>
+        <translation>終止角度</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation>(克勒克)</translation>
+        <translation>圓形</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
         <source>circumference</source>
-        <translation>周圍</translation>
+        <translation>圓周長</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
         <source>area</source>
-        <translation>area</translation>
+        <translation>面積</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>波列克</translation>
+        <translation>多邊形</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
         <source>Closed</source>
-        <translation>閉合的</translation>
+        <translation>封閉</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>No</source>
-        <translation>No</translation>
+        <translation>否</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>Yes</source>
-        <translation>Yes</translation>
+        <translation>是</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>有變數</translation>
+        <translation>頂點</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
         <source>in point</source>
-        <translation>以</translation>
+        <translation>點</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="555"/>
         <source>MUST be a line, circle or arc</source>
-        <translation>一定要是一行、一圈或一弧</translation>
+        <translation>必須是線、圓或弧</translation>
     </message>
 </context>
 <context>
@@ -805,17 +804,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="48"/>
         <source>Divide - </source>
-        <translation>除號 --</translation>
+        <translation>分割 -</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation>層</translation>
+        <translation>圖層</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>確定</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76"/>
@@ -825,32 +824,32 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="85"/>
         <source>Divide at</source>
-        <translation>除以</translation>
+        <translation>在以下位置分割</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation>Size</translation>
+        <translation>大小</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
         <source>places</source>
-        <translation>位</translation>
+        <translation>個位置</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>取出 -- -- 取出</translation>
+        <translation>刻度 - 關閉</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>中斷 -- -- 關門</translation>
+        <translation>間隔 - 關閉</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
         <source>&lt;i&gt;New&lt;/i&gt;</source>
-        <translation>&lt;i&gt; 新 &lt;/i&gt;</translation>
+        <translation>&lt;i&gt;新增&lt;/i &gt;</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="210"/>
@@ -860,27 +859,22 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation>入出
-角度, 在
-小數度
-三點零分
-去
-有時出事了.</translation>
+        <translation>輸入起始角度，以小數度的形式表示。3 點鐘為 0°，逆時針方向。</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;輸入新圖層的名稱&lt;br&gt;(如果需要?)&lt;br&gt;&lt;br&gt;以便繪製刻度線。</translation>
+        <translation>&lt;i&gt;「新增」&lt;/i&gt;&lt;br&gt;輸入新圖層的名稱（如果需要），以便繪製刻度。</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>取出</translation>
+        <translation>刻度</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
         <source>Above</source>
-        <translation>在上方</translation>
+        <translation>上方</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="259"/>
@@ -890,12 +884,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="263"/>
         <source>Outside</source>
-        <translation>外出</translation>
+        <translation>外部</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="264"/>
         <source>Inside</source>
-        <translation>在裡面</translation>
+        <translation>內部</translation>
     </message>
 </context>
 <context>
@@ -908,7 +902,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="122"/>
         <source>CSV (*.csv)</source>
-        <translation>CSV (*. csv)</translation>
+        <translation>CSV (*.csv)</translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="130"/>
@@ -921,12 +915,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="114"/>
         <source>Number of teeth</source>
-        <translation>有牙數</translation>
+        <translation>齒數</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="116"/>
         <source>Pressure angle (deg)</source>
-        <translation>壓力角度 (deg)</translation>
+        <translation>壓力角（度）</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="113"/>
@@ -936,82 +930,82 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Modulus</source>
-        <translation>模度</translation>
+        <translation>模數</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation>第 二 章</translation>
+        <translation>頂隙（相對於模數）</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation>Dedendum (相關于模組)</translation>
+        <translation>根隙（相對於模數）</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation>要畫出的區段數 (dedendum)</translation>
+        <translation>繪製根隙時的分割段數</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>要畫出的區段數 (新增)</translation>
+        <translation>繪製頂隙時的分割段數</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
         <source>Draw all teeth?</source>
-        <translation>拔出所有的牙齒?</translation>
+        <translation>繪製所有齒？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="122"/>
         <source>Draw symmetric face?</source>
-        <translation>要畫出相對相片嗎 ?</translation>
+        <translation>繪製對稱面？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation>有地層?</translation>
+        <translation>使用圖層？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
         <source>Draw addendum circle?</source>
-        <translation>要畫出相接相環嗎 ?</translation>
+        <translation>繪製附加圓？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation>要畫出投出圈子嗎?</translation>
+        <translation>繪製節圓？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw base circle?</source>
-        <translation>要畫出底圈嗎 ?</translation>
+        <translation>繪製基圓？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
         <source>Draw root circle?</source>
-        <translation>要畫出根圓嗎 ?</translation>
+        <translation>繪製根圓？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>
         <source>Draw pressure line?</source>
-        <translation>要畫出壓力線嗎?</translation>
+        <translation>繪製壓力線？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="130"/>
         <source>Draw pressure limits?</source>
-        <translation>有壓力限制嗎?</translation>
+        <translation>繪製壓力限制？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="132"/>
         <source>Calculate interference?</source>
-        <translation>計算干擾?</translation>
+        <translation>計算干涉？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="133"/>
         <source>Number of segments to draw (interference)</source>
-        <translation>要畫出的區段數 (相干)</translation>
+        <translation>要繪製的區段數（干涉）</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="135"/>
@@ -1100,7 +1094,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="65"/>
         <source>File...</source>
-        <translation>文件...</translation>
+        <translation>檔案...</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="75"/>
@@ -1125,7 +1119,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation>大小因子是空的或無效的</translation>
+        <translation>比例係數為空或無效</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="132"/>
@@ -1145,18 +1139,18 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="166"/>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation>picPunto 畫出線: 第一個點是空的 %1</translation>
+        <translation>picPunto drawLine：第一個點為空 %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="179"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation>picPunto 畫線：下一個點是空的 %1</translation>
+        <translation>picPunto drawLine：下一個點為空 %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="262"/>
         <location filename="../picfile/picfile.cpp" line="271"/>
         <source>format error in %1</source>
-        <translation>%1 格式有誤</translation>
+        <translation>%1 中的格式錯誤</translation>
     </message>
 </context>
 <context>
@@ -1165,7 +1159,7 @@ anti-clockwise.</source>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>地圖外掛程式</translation>
+        <translation>繪圖外掛程式</translation>
     </message>
 </context>
 <context>
@@ -1173,7 +1167,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>地圖等式</translation>
+        <translation>繪圖方程式</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
@@ -1182,40 +1176,40 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation>此外掛程式可以讓您設定數學方程式 。
-如果不想用參數表 就去掉&quot;方程式2&quot;
-在需要 pi (即 (3* pi) 值時可以使用 pi.
-在方程式中用 t 或 x作變數/ 參數 .</translation>
+        <translation>此外掛程式允許您繪製數學方程式。
+如果您不想使用參數形式，只需省略「方程式 2」。
+當您需要使用圓周率時，可以使用 pi（例如 (3*pi)）。
+在您的方程式中使用 t 或 x 作為變數/參數。</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>
         <source>Equation 1:</source>
-        <translation>第1款:</translation>
+        <translation>方程式 1：</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="23"/>
         <source>Equation 2:</source>
-        <translation>第2款:</translation>
+        <translation>方程式 2：</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="26"/>
         <source>start value:</source>
-        <translation>起始值:</translation>
+        <translation>起始值：</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="27"/>
         <source>end value:</source>
-        <translation>收尾值 :</translation>
+        <translation>結束值：</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="28"/>
         <source>step size:</source>
-        <translation>步數大小 :</translation>
+        <translation>步長：</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
-        <translation>Draw</translation>
+        <translation>繪製</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33"/>
@@ -1226,19 +1220,19 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation>行段</translation>
+        <translation>線段</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>折線</translation>
+        <translation>多線段</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>樣條點</translation>
+        <translation>樣條曲線點</translation>
     </message>
 </context>
 <context>
