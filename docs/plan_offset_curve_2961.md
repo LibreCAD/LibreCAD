@@ -28,7 +28,7 @@ Plan **v8**, 2026-10-15. This file is the implementation source of truth. Every 
 verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION — trusted core session verified/committed; S0 and 0B complete; geometry foundations/core/rate/critical/accounting done; critical-refinement API/cost preflight next; events/components/check/entity/file/UI phases remain incomplete.**
+Status: **IMPLEMENTATION — critical refinement/depth repair verified and committed at72eb5f953; trusted core session and foundations committed; exhaustive event integration is next, conditional on its own preflight; components/check/entity/file/UI phases remain incomplete.**
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -214,16 +214,16 @@ not validation evidence. Aggregates are never executable cards or extra implemen
 | 1A-1.b | Aggregate; budget/progress done, reference/check unfinished | Parent-only progress; no separate implementation commit or successful partial validator. |
 | 1A-1.b-budget | Done at 10c6bff46 | Checked shared work, bounded two-axis/range indices, nine budget cases Release/ASan, all offset/full/fast-lane gates pass; findings/evidence below. |
 | 1A-1.b-progress | Done at fb70681e2 | Reachable hang fixed; four watchdog-protected cases/80 assertions Release/ASan, old probe terminates, broad gates pass. |
-| 1A-1.b-ref | Aggregate; frames/core/rate/critical/accounting/pair refinement done | Pair refinementf4f87f48e joins the completed foundations; critical refinement, exhaustive events and components remain. No parent completion. |
+| 1A-1.b-ref | Aggregate; frames/core/rate/critical/accounting/both refinements done | Critical refinement72eb5f953 joins pair refinementf4f87f48e and completed foundations; exhaustive events and components remain. No parent completion. |
 | 1A-1.b-ref-frames | Done at 26d107ccf | Seven new cases, independent 113-bit enclosures, shared budget and all Release/ASan/full/fast-lane gates recorded below. |
-| 1A-1.b-ref-events | Aggregate; pair refinement done, critical preflight next | Execute `.b-ref-critical-refine → .b-ref-events-isolate`; no separate aggregate implementation commit. |
+| 1A-1.b-ref-events | Aggregate; both refinements done, isolation preflight next | Execute `.b-ref-events-isolate` after its own API/proof/cost readiness check; no separate aggregate implementation commit. |
 | 1A-1.b-ref-events-core | Done at 834a46a88 | Opt-in strict proofs/accounting; 14 registered cases, Release/ASan/probes/full/fast-lane evidence below. No ellipse graph/adoption claim. |
 | 1A-1.b-ref-rate | Done at bcd6c5a4f | Six cases/505703 assertions Release/ASan; continuous exact-sweep rate and all jet/products, independent oracle and broad/fast checks pass. |
 | 1A-1.b-ref-events-critical | Done at 943406abe | Nine cases/268244 assertions Release/ASan; immutable adapter, exact cusp/axis classification, proven regions and joint join/seam exclusions; all broad/fast gates pass. |
 | 1A-1.b-ref-events-accounting | Done at 290d2658f | Five cases/153 assertions Release/ASan; actual depth on every exit, unchanged decisions/counters; old core/broad/fast gates pass. |
 | 1A-1.b-ref-events-refine | Done at f4f87f48e | Fourteen cases/490 assertions Release/ASan; owned immutable provider, opaque handles, retained proof/history, native broad/fast gates pass. |
-| 1A-1.b-ref-critical-refine | Conditional; own API/cost preflight next | Geometry header/cpp/tests: retained canonical scalar/angle provenance, issued critical handles, convergent contraction/images and actual depth-admission timing. |
-| 1A-1.b-ref-events-isolate | Waiting for .b-ref-critical-refine | Geometry-only complete own/opposite/end-cutter enumeration, identity/order, world-space node accuracy and shared-budget integration; pair refinement already done. |
+| 1A-1.b-ref-critical-refine | Done at72eb5f953 | Native red1/11 retained; final Release/ASan21/16424, original V6/P23/deepest0, legacy/core/broad/full/fast gates pass. Retained exact critical state and bounded contraction, one-sided join repair with whole-box/cap tests. |
+| 1A-1.b-ref-events-isolate | Conditional; both refinement predecessors done | Geometry-only complete own/opposite/end-cutter enumeration, identity/order, world-space node accuracy and shared-budget integration. Literal API, construction-contact proofs and constant cost preflight still required before product activation. |
 | 1A-1.b-check | Aggregate; waiting for .b-ref | Execute `.b-check-layout → .b-check-bounds → .b-check-topology` (§0.6); no successful public validator before all acceptance checks exist. |
 | 1A-1.c | Waiting for .b | Add adversarial and current-engine corpus checks, failure budgets and performance measurements. Record acceptance/refusal results; endpoints and midpoint checks alone cannot close this parent step. |
 | 1A-2 | Waiting for 0B-3 and all 1A-1 children | Add type, core class, complete consistency stamp, transforms, clone/INSERT/write dispatch and interim UI guard. Compile CMake and update qmake lists; run copy/ownership and enum coverage. |
@@ -301,10 +301,13 @@ depth was absent from stats, and physical-node contraction is private. Accountin
 three observed depth fields and max helper, every exit covered without solver/counter changes. Owned-session
 refinement is now verified/committed atf4f87f48e: immutable provider/options, issuer-bound handles, frozen original
 provenance, cached images, persistent root history and bounded contraction; fourteen cases/490 assertions pass
-Release/ASan and all required broad/full/fast gates. Further review found a separate
-critical-occurrence gap: factory scalar/angle provenance is discarded, the initial inverse inequality cannot converge
-by scalar narrowing alone, and geometry depth can be recorded before failed admission. The named critical-refinement
-child fixes these before isolation; no event/component completion is claimed. The coordinator owns the plan,
+Release/ASan and all required broad/full/fast gates. Critical refinement is now verified/committed at72eb5f953:
+factory scalar/angle provenance and immutable raw geometry survive, opaque occurrence handles share bounded
+convergent scalar/inverse/image refinement, issuing-budget identity/history cannot reset, and depth reflects entered
+work. Native red V6/P23/deepest1 now passes with deepest0; final21 cases/16424 assertions pass Release/ASan and all
+broad/full/fast gates. Native validation also exposed and repaired a legacy one-sided join-progress refusal, with
+whole-box/cap tests and failed evidence preserved. Both refinement dependencies for isolation are now satisfied;
+its own API/proof/cost preflight remains conditional. No event/component completion is claimed. The coordinator owns the plan,
 shared build directories and commits. Assign explicit file ownership before any parallel work; never run concurrent
 Git/index operations or concurrent builds that mutate the same build tree.
 
@@ -321,7 +324,7 @@ Before promoting a leaf card, check these concrete prerequisites:
 | 1A-1.a | Raw sweep rules and finite/local coordinate domain are fixed | Boundary tests on both sides of each threshold and independent closed-form comparisons |
 | 1A-1.b-budget | Done; original candidate-allocation/refinement accounting mismatch resolved | Nine cap/index cases, exposed consumed work, all offset/ASan/full/fast-lane gates recorded at 10c6bff46 |
 | 1A-1.b-progress | Done at fb70681e2 | Underflow/non-finite/rounded-growth cases, old probe and all required broad checks passed |
-| 1A-1.b-ref | Foundations and trusted pair refinement done; critical API/cost preflight next | Qualify critical-occurrence contraction, then exhaustive events/components; one shared budget, no uncertified acceptance |
+| 1A-1.b-ref | Foundations and both trusted refinements done; isolation API/proof/cost preflight next | Qualify exhaustive event integration, then components; one shared budget, no uncertified acceptance |
 | 1A-1.b-check | Reference analysis is qualified and does not accept ambiguous topology | Whole-span distance bounds, bidirectional coverage and malicious subset/retrace tests |
 | 1A-2 | Guard and all geometry children are done; no raw constructor bypass exists | Current-header compile, complete stamp mutation cases, transform overflow and ownership checks |
 | 1E-1.a | Typed schema grammar, malformed/unknown ownership and flag consistency are settled | Codec-independent exact-code/type tests, duplicate/malformed cases and bounded tails |
@@ -347,14 +350,14 @@ Only satisfied dependencies promote a card to `ready`; future recipes are `waiti
 | 1A-1.b-progress / .b-budget | Done at fb70681e2; finite/progress checks and derived 2099-step bound preserve positive rounded growth and refuse invalid arithmetic. | Four cases/80 assertions Release/ASan, standalone before/after probe and full offset/ASan/full-suite/fast-lane gates pass. R02/R12. |
 | 0B-3 / 0B-2 | Done at 0e3c6b342; actual version/load-completion walks, measured/pinned generated-MLEADER fallback, no fixture or production changes. | Both 27-type walks and both DXF pins; full/DXF-fast/ASan coverage, full suite/lanes pass; every baseline testcase/skip retained. R06/R11/R13. |
 | 1A-1.b-ref-frames / .b-progress | Done at 26d107ccf; immutable scaled frame, source/offset jets and point/interval enclosures, checked conversions and shared latched budget. | Seven new cases / 359105 assertions Release/ASan; independent 113-bit oracle, all geometry/offset/full/fast-lane checks pass. R01/R02/R12. |
-| 1A-1.b-ref-events / .b-ref-frames | Aggregate only; core/rate/critical/accounting/pair refinement done; critical preflight/refinement and isolate remain. | Complete only after every child's commit/checkpoint; no uncertified event set or partial topology acceptance. R02/R12. |
+| 1A-1.b-ref-events / .b-ref-frames | Aggregate only; core/rate/critical/accounting/both refinements done; isolation remains. | Complete only after every child's commit/checkpoint; no uncertified event set or partial topology acceptance. R02/R12. |
 | 1A-1.b-ref-events-core / .b-ref-frames | Done at 834a46a88; strict interval/contact/injectivity proofs, bounded spatial/range work and global occurrence ordering. Defaults unchanged. | 14 registered cases /16 JUnit entries /634 assertions Release/ASan, independent probes and broad/fast gates pass; failures/resolutions below. R02/R12. |
 | 1A-1.b-ref-rate / .b-ref-events-core | Done at bcd6c5a4f; continuous ideal-angle rate, unwrapped angle/rate access and all jet/product factors; no adapter/topology yet. | Six cases/505703 assertions Release/ASan, independent 113-bit oracle, full Release/combined ASan/both fast lanes pass; failure correction and hashes below. R01/R02/R12. |
 | 1A-1.b-ref-events-critical / .b-ref-rate | Done at 943406abe; geometry header/cpp/tests: shared F/F' bounds, factory-owned adapter, exact thresholds/cusps and gap-free proven regions/joint exclusions. | Nine cases/268244 assertions Release/ASan; independent proofs/oracles, all broad/fast gates, failures/fixes/hashes below. R01/R02/R12. |
 | 1A-1.b-ref-events-accounting / .b-ref-events-critical | Done at290d2658f; three entered adaptive-depth fields and max helper, retained on every exit; decisions/counters unchanged. | Five cases/153 assertions Release/ASan, old strict/budget union32/2194 and all broad/fast gates pass; new test expectation corrected from legacy trace, no production change. R02/R12/R13. |
 | 1A-1.b-ref-events-refine / .b-ref-events-accounting | Done atf4f87f48e; intersection header/cpp/existing tests: owned immutable provider/options, opaque handles, original-proof-preserving contraction and persistent history/work/latches. | Fourteen cases/490 assertions Release/ASan; old core37/2347 and all broad/full/fast gates; source/commit digests match. R02/R12/R13. |
-| 1A-1.b-ref-critical-refine / .b-ref-events-refine | Conditional on its own literal API/cost preflight against committedf4f87f48e; geometry header/cpp/tests: factory-issued canonical polynomial/angle state, occurrence handles, convergent contraction/images and actual observed depth. | Cusp parameter/image containment, stationary identities, unchanged-adjacent scalar with angle progress, symmetry/invalid handles, six-vertex and queued-charge depth pins, exact/one-less caps. R01/R02/R12. |
-| 1A-1.b-ref-events-isolate / both refinement children | Geometry header/cpp/tests: own/opposite and certified end semicircles in a checked strict-hook composite; complete anchored enumeration, both root kinds' identity/order and proved world node accuracy; debit one budget every status. | Transverse/source-end tangent/cusp/retrace, close roots/shared occurrences/unresolved order and exact caps; complete event sets only, old engine regressions unchanged. R02/R12. |
+| 1A-1.b-ref-critical-refine / .b-ref-events-refine | Done at72eb5f953; geometry header/cpp/tests: factory-issued canonical polynomial/angle state, occurrence handles, convergent contraction/images, observed-depth repair and bounded one-sided join progress. | Native red retained; final21/16424 Release/ASan, legacy11/268911, core51/2837 and all broad/full/fast gates pass, tested/committed hashes match. R01/R02/R12/R13 sub-contract only. |
+| 1A-1.b-ref-events-isolate / both refinement children | Conditional own preflight, predecessors done: geometry header/cpp/tests own/opposite and certified end semicircles in a checked strict-hook composite; complete anchored enumeration, both root kinds' identity/order and proved world node accuracy; debit one budget every status. | Transverse/source-end tangent/cusp/retrace, close roots/shared occurrences/unresolved order and exact caps; complete event sets only, old engine regressions unchanged. R02/R12. |
 | 1A-1.b-ref-components / .b-ref-events | Classify interval visibility using conservative source/end clearance and current trim allowances; assemble directed adjacency/components; expose a complete read-only reference result. | All six §3.5.1 fixtures, rotated/reversed equivalents and closed-arc/multi-component distinctions; no materialization/engine run; report unresolved event/visibility rather than accepting it. R02. |
 | 1A-1.b-check-layout / .b-ref-components | Implement overflow-safe `isEngineLayout`, finite 2D/unit-weight/knot-group validation, cubic extraction and shared-budget input preflight. Keep these helpers internal or explicitly layout-only; do not expose an incomplete successful `checkCache`. | Short/oversized/null-equivalent arrays, malformed knots, rescaled valid knots, fit/saved-open representations, non-finite/out-of-plane controls, zero/invalid limits; no allocation before count caps. R01/R02/R12. |
 | 1A-1.b-check-bounds / .b-check-layout | Implement conservative de Casteljau leaf/chord error, offset-distance upper bounds and source-clearance lower bounds. Use parameter-aware reference matching and outward floating-point allowances. | Between-sample adversarial controls; dense independent evaluation verifies every claimed enclosure; near tangency/cusps/extreme scale; no nearest-point sample becomes proof. R02/R12. |
@@ -373,17 +376,19 @@ generic infrastructure slice with its regression tests; do not commit the unsafe
 documenting independently safe, buildable intermediate behavior before editing. Registration and tests accompany
 each product slice, not a later catch-all test phase.
 
-**Immediate implementation-resume queue:** finish API/cost preflight and activate `.b-ref-critical-refine`, then `.b-ref-events-isolate` and
-`.b-ref-components`. Budget, guard, progress and frames are complete at 10c6bff46 / 0e3c6b342 / fb70681e2 / 26d107ccf;
+**Immediate implementation-resume queue:** finish the read-only `.b-ref-events-isolate` API/proof/cost preflight against
+both committed refinement APIs, activate only after its literal declaration/algorithm/cost readiness gates pass, then
+execute isolation and `.b-ref-components`. Budget, guard, progress and frames are complete at 10c6bff46 / 0e3c6b342 / fb70681e2 / 26d107ccf;
 strict core, rate, critical preparation and observed-depth accounting are additionally complete at834a46a88 /
-bcd6c5a4f /943406abe /290d2658f; trusted pair refinement is now complete atf4f87f48e. Do not reimplement them or reapply old saved patches.
+bcd6c5a4f /943406abe /290d2658f; trusted pair refinement is complete atf4f87f48e and critical refinement at72eb5f953. Do not reimplement them or reapply old saved patches.
 Failed-run and final evidence are preserved under each slice's `build/evidence/<slice-id>/` directory. Gibbs already
 started implementation (0B-1) and authored the
 budget hierarchy; reuse him for the next product slice. Keep source frozen during final evidence collection and
 assign its actual checkpoint HEAD/files before handoff.
 
-The v8 review was plan-only. Its implementation continuation completed the core refinement card from2e75f4c7a;
-Gibbs now preflights the critical API/cost model read-only while the coordinator reconciles the core commit. Future cards
+The v8 review was plan-only. Its implementation continuation completed core refinement from2e75f4c7a and critical
+refinement from334354633, after literal API/cost probes, native red reproduction, independent reviews and all gates.
+Gibbs is performing a read-only isolation readiness review; no isolation product activation is implied by this checkpoint. Future cards
 remain waiting until their actual prerequisites and public API handoffs exist, not merely because a recipe is written.
 
 ### 0.7 Two review gates
@@ -413,8 +418,8 @@ checks, not proofs of numerical correctness or runtime feature coverage.
 Run from the authoritative worktree, after freezing and isolating the selected slice as §1.4 requires. Create its
 ignored evidence directory first. Use new attempt-specific report names instead of overwriting a failed run. The
 following commands are reproducible recipes, not evidence by themselves. The budget slice has completed its
-final runs recorded below, as have 0B-3, `.b-progress`, `.b-ref-frames`, strict core, rate, critical, accounting and pair refinement;
-do not rerun them merely to preflight `.b-ref-critical-refine`. Choose fresh report names
+final runs recorded below, as have 0B-3, `.b-progress`, `.b-ref-frames`, strict core, rate, critical, accounting and both refinements;
+do not rerun them merely to preflight `.b-ref-events-isolate`. Choose fresh report names
 if reproducing a run:
 
 ```bash
@@ -624,6 +629,7 @@ patch simply because an executed card once described it as pending:
 | 1A-1.b-ref-events-critical | 943406abe5cfff8b188947757f101791bc3da8ad | Three owned paths; nine cases/268244 assertions Release/ASan; geometry/full/combined ASan/both fast lanes pass with all baseline identities retained | Exact predicates/maps/projection/domain/accounting reviewed; static thin-complement and native adjacent-bracket refusals corrected without weakening tests/caps/tolerances; final hashes below | Core accounting ready; new named accounting/refinement prerequisites precede geometry isolation; all event/component/check/entity/file/UI parents remain partial |
 | 1A-1.b-ref-events-accounting | 290d2658fdc2d9bb55da6205ae7c3afaaade6a4a | Three core paths; five cases/153 assertions Release/ASan; legacy union32/2194, geometry/full/ASan/both lanes pass, baseline identities retained | Every update/charge/failure/guard reviewed; new test corrected ordinary refusal depth8 versus strict3 from independent traces; no production decision/counter change, failed reports retained | Trusted core session card ready with compiled declaration/privacy probe; separate critical-refinement/depth timing prerequisite added before isolation; all parents remain partial |
 | 1A-1.b-ref-events-refine | f4f87f48ed024589e31a9a9f1c543340ca1a6c49 | Three frozen/committed paths;14/490 Release/ASan, legacy37/2347, geometry324/2154626, ASan156/1863348, full4667/6995661/74 unchanged skips, both fast lanes pass | Independent proof/lifetime/history/cap review; retained malformed categories and exception-ledger cleanup fixed before native runs; no old test/cap weakened; all baseline identities retained | Core complete, all parents partial; critical API/cost preflight conditional, isolate waits that child; no new entity/file/UI completion |
+| 1A-1.b-ref-critical-refine | 72eb5f953f5c88cf6e26505d658fef5237d562b3 | Three frozen/committed geometry paths;21/16424 Release/ASan, legacy11/268911, core51/2837, geometry345/2171050, ASan177/1879772, full4688/7012085/74 identical skips, both lanes pass | Independent exact-root/inverse/image/lifetime/history/accounting/domain review; native red/failed D100 evidence retained and fixed without weakening tests/caps; tested hashes match | Critical sub-contract complete, all parents partial; isolation conditional on its own literal API/proof/cost preflight, not waiting for completed refinements |
 
 **Git safety.** Stage files by name; inspect staged paths before every commit. Preserve unrelated staged/unstaged work
 and untracked artifacts. Do not use `git add -A`, destructive checkout/reset, `--amend` or `--no-verify`. Local commit
@@ -2602,15 +2608,139 @@ QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_tests 
 
 #### 1A-1.b-ref-critical-refine. Trusted Critical Occurrences
 
-**Conditional — coref4f87f48e done; own literal API/cost preflight before activation**
+**Done —72eb5f953f5c88cf6e26505d658fef5237d562b3, 2026-10-15.** Activated at334354633548ce55697ab30c615ece42707e1e7a;
+the following activation/red/failure recipes are historical evidence, not work to repeat. Final receipt below closes only this leaf.
 - Scope/owner: Gibbs, geometry header/cpp/existing geometry tests, coordinator verification/roadmap/Git. Dependency:
   `.b-ref-events-refine` atf4f87f48e, with critical943406abe as the mathematical baseline. This serial boundary fixes issued-handle,
   allowance and depth-history conventions before the geometry variant; a two-curve session is NOT a scalar solver.
 - Exact paths: `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h`, the adjacent `.cpp`, and
-  `librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp`. Before activation, finish the
-  literal factory/handle/snapshot signatures against the committed core conventions, compile the access/lifetime
-  declaration probe, and record the new focused selector plus actual native regression command. Until then this
-  child is conditional, not an implementation-ready API merely because its mathematical recipe is specified.
+  `librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp`. Tracked tree was clean; existing
+  untracked `build-asan/` preserved. Gibbs read-only preflight qualified the declarations/cost model below. Coordinator
+  syntax-only declaration/access probe compiled exit0 with actual Ninja gnu++17 flags,14 core cases remain committed;
+  no critical implementation/runtime qualification is claimed. The friend/token scaffold proves the C++ access pattern,
+  not access to an unmodified production budget. Evidence: `build/evidence/1A-1.b-ref-critical-refine/`.
+
+**Qualified API and ownership.** All new names live in `LC_EllipseOffsetGeometry`:
+
+```cpp
+struct CriticalCanonicalBounds {
+    LC_Interval variable, inverseAngle; // u=z or1-z, alpha=asin(sqrt(u)); diagnostics only
+    bool complement = false;
+};
+struct CriticalOccurrenceSnapshot {
+    CriticalOccurrence occurrence{};
+    LC_Interval imageX, imageY; // provider/local frame, no centre addition
+    std::optional<CriticalCanonicalBounds> canonical;
+    unsigned admittedRounds = 0;
+};
+class CriticalOccurrenceHandle; // default invalid; private weak issuer/index; no public record-to-handle entry
+enum class CriticalWorkSource { CurrentBudget, LastMatchingBudget };
+struct CriticalContractionResult {
+    LC_IntersectionStatus status = LC_IntersectionStatus::InvalidInput;
+    std::optional<CriticalOccurrenceSnapshot> snapshot;
+    CheckWork entered{}, work{};
+    CriticalWorkSource workSource = CriticalWorkSource::LastMatchingBudget;
+};
+class CriticalRefinementSession {
+public:
+    // Deleted copying, noexcept moves, out-of-line destructor/PIMPL; private builder constructor.
+    std::size_t occurrenceCount() const;
+    CriticalOccurrenceHandle occurrenceHandle(std::size_t) const;
+    std::optional<CriticalOccurrenceSnapshot> snapshot(const CriticalOccurrenceHandle&) const;
+    CriticalContractionResult contract(const CriticalOccurrenceHandle&, WorkBudget&);
+    CheckWork lastMatchingWork() const;
+};
+struct CriticalRetainedAnalysis {
+    LC_IntersectionStatus status = LC_IntersectionStatus::InvalidInput;
+    CriticalAnalysis::Reason reason = CriticalAnalysis::Reason::None;
+    std::unique_ptr<const CriticalAdapter> adapter;
+    std::unique_ptr<CriticalRefinementSession> refinement;
+    CheckWork work{};
+};
+CriticalRetainedAnalysis analyseCriticalRetained(const RS_EllipseData&, double, WorkBudget&);
+```
+
+- Additive retained factory, not a second analysis followed by reconstruction: builder transfers exact provenance
+  directly to private immutable shared state at publication; the unique adapter and separate session retain it
+  independently. The session owns mutable canonical/bracket/history and cached occurrence records privately. Core's
+  composite can consume unique adapters without destroying critical-refinement lifetime. Existing `analyseCritical`
+  has no new metadata charges/allocations and preserves decisions/counts except observed-depth timing repair and the
+  separately demonstrated one-sided join-progress defect below. Formerly accepted inputs retain their old contracts;
+  the known incorrect D100 join refusal must become a proved success, not a weakened fixture or larger tolerance.
+- Snapshot parameter uses numeric `t in[0,frame.parameterEnd()]`; u/alpha are separate diagnostics. Image coordinates
+  are centre-relative, world-aligned ReferenceFrame/provider coordinates: divide raw cancellation-free Qc by exact
+  power-of-two scale, DO NOT add centre. Add checked interval overload
+  `ReferenceFrame::pointToWorld(xLocal,yLocal,xWorld,yWorld)`; outward centre addition occurs there, outputs clear on
+  refusal. Test independent local containment first, then translated/extreme-scale world containment and node rounding.
+- Stationary policy: cache exact algebraic images and qualified axis parameters at issuance, canonical=nullopt.
+  No further stationary parameter-tightening operation is invented. After handle/budget/health checks, a stationary
+  contraction request returns nonterminal AmbiguousTopology, no new snapshot, zero entered work and unchanged history.
+  Existing sticky limits still prohibit work. Geometry checks cached world accuracy before asking for contraction;
+  unresolved stationary order/accuracy honestly refuses, never claims progress or regenerates geometry.
+- Moves preserve issuer/weak budget identity and transferred state; moved-from sessions are empty. Overwriting or
+  destroying a session expires its old handles. Expired budgets prohibit further work but do not contradict already
+  cached immutable geometry. Bad handles/budgets cannot clear health/resource latches; diagnostic copies confer no trust.
+
+**Qualified cost model and ordered handoff.** Logical records, not individual allocator calls. Let N be occurrences,
+C=1 for the IntermediateThresholds canonical family (even when the source arc has N0; otherwise0), B=1 only for first budget-token issuance:
+
+| Stage | Additional vertices/items | Additional pair examinations | Admission/exit rule |
+|---|---|---|---|
+| Retained publication after successful existing analysis | 3+C+N+B | 1+N | Provenance/session/issuer, canonical, N snapshots, lazy token; charge before allocations/actual validation; failure publishes neither object and never refunds |
+| Successful cusp compound round | 1+N | 3+N | One staged canonical record; scalar, inverse, common validation; N staged occurrence mapping/image records; charge stages only when entered, publish symmetric updates atomically |
+| Unsupported stationary contraction | 0 | 0 | No numerical round is entered; return ambiguity with original cached proof and history |
+
+- Overflow-safe prechecks, then charge only each actual examination/allocation. Inverse work never debited if scalar
+  failure prevented entry. Record h+1 immediately after first examination's charge; persistent factory scalar depth is
+  not global deepest. entered.deepest is directly observed, not a difference of maxima. Numeric bounds per round:
+  one polynomial Newton step; one inverse Newton or one sign-bisection fallback; at most three fixed trig evaluations;
+  existing endpoint conversion checks at most eight ULP corrections per endpoint. No hidden adaptive inner loop.
+- FIRST Gibbs edits only the existing test file with `[reference-critical-depth]`, then freezes for coordinator
+  Release/ASan discovery/run. Pin original whole100/.5/signedDistance-30, maxVertices6/nonbinding pairs:
+  LimitExceeded/V6/P23/desired deepest0. Preserve original observed deepest1 failure before production/storage changes.
+  Do not commit a knowingly red tree. Then authorize Gibbs to implement the complete geometry slice and tests under
+  `[reference-critical-refine]`; repair timing first, preserve original V6/P23 and all existing resource decisions.
+  Retained metadata is allocated only after successful legacy analysis, so it must not move the original failed-split
+  boundary; add a retained-path equivalent plus successful-publication exact/one-less overhead guards.
+- After freeze, build all three targets Release/ASan, discover/run both focused tags and old `[reference-critical]`,
+  geometry/offset and combined ASan, full visible Release and both exact-exclusion fast lanes; compare to coref4f87f48e
+  and S0. Record actual commands/exit/count/skip/digests, separate §0.7 reviews, product commit then plan checkpoint.
+  Literal first-stage commands after evidence-directory creation and test-only frozen builds:
+
+```bash
+build/librecad_tests --list-tests "[reference-critical-depth]"
+QT_QPA_PLATFORM=offscreen build/librecad_tests "[reference-critical-depth]" --order decl --reporter junit --out build/evidence/1A-1.b-ref-critical-refine/depth-red-release.junit.xml
+QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_tests "[reference-critical-depth]" --order decl --reporter junit --out build/evidence/1A-1.b-ref-critical-refine/depth-red-asan.junit.xml
+```
+
+**Native reproduction receipt (before geometry edits).** Gibbs added only the test file,21 lines/one case/11 asserts.
+All three named targets build0 both, discoveries0/one case each, then Release/ASan red focus both exit42:
+one case/11 assertions/exactly one failure `result.work.deepest == 0` expanded `1 == 0`, errors0/skips0. Other10
+checks pass, including LimitExceeded/no adapter/V6/P23/no pieces/snapshot equality. XML independently parsed with
+`build/evidence/1A-1.b-ref-critical-refine/audit_red_report.py`, exit0; no ASan diagnostics. Failed reports retained,
+all native processes terminal. Frozen unchanged geometry cpp832c1d1242a97674ba61b968b9f06c6279a49f08492986057fc0394d8df9aeb7,
+header ec4adc0fa760b1091c4e8e1f5803f0e1d2f09a8379a66042222a9099677ebb74,
+test-only SHA-2564e3d2c72d37fe4a9c5888f9ba91f0b35691609b8543e6a9401b0ad26fa3307a1.
+This captured the bug before repair; the red intermediate tree was not committed. Gibbs subsequently implemented
+the full three geometry paths; coordinator independently reviewed, validated and committed the frozen final tree.
+
+**Native attempt1 and new join-progress finding.** Frozen full implementation builds0 both; discoveries0/19 cases;
+Release/ASan focus both exit42:19 entries/14719 assertions/errors0/skips0, exactly two failures at D100 retained
+issuance in inverse-progress/no-progress cases. Other17 cases pass, including the original depth pin. Diagnostic-only
+CAPTURE additions retain all assertions; Release diagnostic exit42 confirms legacy `analyseCritical` itself refuses
+D100 open0->2 with UnresolvedGeometry/V25/P55/deepest8, before retained publication. Failed reports stay under
+`build/evidence/1A-1.b-ref-critical-refine/`; no sanitizer finding or assertion/cap relaxation.
+
+Source and independent Gibbs review identify `joins()`'s both-sides-progress guard: one boundary reaches adjacent
+doubles around the true-axis band while the other can still tighten. Initial left bound near pi/4 overlaps the
+coarse cusp enclosure and cannot prove the whole span; moving it toward3pi/8 resolves the factor sign. For D100,
+z>0.75 over the tightened join neighborhood and exact P(0.75)=2863.76953125>0. Repair only this progress rule:
+retain any nonmoving side, require at least one STRICTLY moving side, debit the existing split/examination/depth
+costs, then rerun `prove()` over the complete narrowed interval. Never move an endpoint onto the join or accept a
+span from a midpoint sign alone. Both sides stagnant still refuse; adaptive depth/work caps still bound every round.
+Add focused forward0->2 and reversed3->0 D100 guards for each frozen-side orientation, whole cached near-join
+certificate domains and exact/one-less caps. This explicit correctness fix may turn the proven bad legacy refusal
+into success; it must not change tolerances, silently accept unresolved spans, move the V6/P23 pin or weaken old tests.
 - Finding: CriticalBuilder discards exact raw basis/distance/kernel, canonical z or1-z bracket, actual scalar depth,
   inverse-angle bracket and exact sweep mapping. Its initial x<=asin(x)<=x/sqrt(1-x²) bound does not converge just by
   narrowing x. Complete cusp-versus-crossing order and physical-node accuracy therefore need a separate trusted path.
@@ -2657,23 +2787,27 @@ QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_tests 
 - Use cancellation-free cusp images, c=1-r², z=sin²(eta_c):
   `Q_c=c*(signCos*(1-z)^(3/2)*M-signSin*z^(3/2)/r*J*M)`.
   Exact major-axis minimum-threshold stationary nodes are `+/-M*(1-r²)`; minor-axis maximum-threshold nodes are
-  `+/-J*M*(r-1/r)`. Include centre/uniform frame conversion outward and cache image bounds; the independent 256-bit
+  `+/-J*M*(r-1/r)`. Cache local/provider images after exact-scale division; only the interval world-conversion overload
+  adds centre outward. The independent 256-bit
   oracle probe passed48 rotated/quadrant/extreme-scale cases and stationary identities, not production certificates.
-- Repair geometry observation timing without changing classifications/spent vertex/pair counts. Prospective generation
+- The observation-timing repair itself preserves classifications/spent vertex/pair counts. The independently diagnosed
+  join-progress repair above intentionally corrects a formerly refused valid input, with its own counts/cap tests.
+  Prospective generation
   checks depthLimit/latch and charges items but does NOT observe depth. Region/join depth is recorded only after its
   examination charge succeeds and immediately before prove; scalar contraction depth only after requisite charges
   succeed and before residual work. Keep WorkBudget::checkDepth semantics, call it at actual entered work.
-- Static verified pin: wholea100/r.5/inward signedDistance-30 with maxVertices6/nonbinding pairs reaches root1+axes4+
+- Originally static, now native-red verified pin: wholea100/r.5/inward signedDistance-30 with maxVertices6/nonbinding pairs reaches root1+axes4+
   canonical seed1, then records depth1 before refusing two children. No depth1 contraction was examined; currently
   LimitExceeded/vertices6/pairs23/deepest1. Add native regression BEFORE repair, then require deepest0. Also pin queued
   children followed by failed examination, entered deeper work followed by invalidity/ambiguity, and canonical history
   independent of unrelated global maxima. Merely swapping charge/checkDepth order still counts unexamined children.
-  First freeze/run the red pin before changing seed/token storage. If retained-state overhead moves that boundary,
-  retain the original reproduction and calibrate the final failed-first-child allowance from an admitted depth1 run
-  minus its documented two-child cost; ensure the final test reaches the split, not an earlier metadata refusal.
+  The red pin is now captured before seed/token storage. Metadata publication follows successful existing analysis,
+  so the original V6/P23 failed-split boundary must remain unchanged. Add retained-path equivalence and separate
+  post-success publication-overhead guards; an earlier metadata refusal cannot substitute for the original split.
 - Debit examinations, child/certificate creation and publication before work/allocation; return cumulative CheckWork
   on every status, atomically stage geometry while admitted history/work remains spent. Invalid handles consume no
-  proof work. Preserve all critical-preparation correctness and resource-decision cases; only observation timing changes.
+  proof work. Preserve all critical-preparation correctness/resource cases, except the explicitly reviewed and tested
+  formerly incorrect one-sided join refusal above; observation timing alone does not change spent counts/decisions.
   The timing repair itself preserves spent counts; new retained-state allocations add explicitly charged items and
   their own exact/one-less tests, not unreported overhead.
 - Tests: independent parameter AND image containment, angle contraction with unchanged adjacent scalar endpoints,
@@ -2688,10 +2822,45 @@ QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_tests 
   Also require nonspecial M=(100,0), r=.5, inward D=30, arc0->2: an adjacent-double complete scalar bracket remains
   unchanged while the certified inverse interval strictly contracts over bounded rounds with independent parameter/
   image containment. The exact z=.5/pi/4 fixture alone cannot qualify general inverse contraction.
+  Qualify this phase separation natively rather than deliberately slowing inverse Newton to make a test pass. Also
+  use nonspecial D=100 with the same axis/ratio/arc: its complement root is near u=.5 and starts with a substantially
+  loose inverse bracket, providing a separate general inverse-progress fixture if D30 scalar/angle reach precision
+  together. Retain D30's general inverse/root/image containment coverage; record any fixture qualification correction.
+
+**Executed slice receipt.** Gibbs froze only geometry cpp/header/existing tests; coordinator independently inspected
+the full diff and separately recorded completeness and correctness outcomes in
+`build/evidence/1A-1.b-ref-critical-refine/review-notes.md`, final commands/counts in `summary.md`. Exact positive
+polynomial derivative/complement, full-U/full-angle inverse Newton, dyadic conversions, raw-axis local images, true-pi
+mapping, weak lifetime identity, atomic staging, failed history, stage admission and whole-box join domains reviewed.
+Two source findings fixed: true inverse domain(0,pi/2), not <=1; finite empty Newton exclusion terminal, unavailable
+contraction ambiguous. Native attempt1's D100 refusal repaired by the independently qualified one-sided join rule;
+failed/red reports retained, no old assertion/test/cap weakened. New allocation counts are logical metadata records,
+not one token per allocator call. Critical functions spend WorkBudget directly, unlike core query/session statistics.
+
+- Final attempt2 both three-target builds exit0,4+4 total jobs<=8; both union discoveries exit0,21 registered cases.
+  Release/ASan focus exit0:21 entries/16424 assertions/0 skips/errors/failures. Original V6/P23 pin now deepest0.
+- Legacy critical both exit0:11/268911/0, original9/268244 identities retained plus two join guards. Core/session union
+  both exit0:51/2837/0, all previous identities retained; no core source change.
+- Geometry/offset Release exit0:345/2171050/0; combined ASan exit0:177/1879772/0, both baseline+21. Full visible
+  Release exit0:4688 entries/7012085 JUnit tests/74 identical skips, baseline+21/S0+124. No lost testcase/skip identity.
+- Exact seven-exclusion fast lanes both exit0:DXF1028/39932/3,DWG1084/34952/4 unchanged skips/identities. Completed
+  XML independently parsed exit0. QT_QPA_PLATFORM=offscreen; ASAN_OPTIONS=detect_leaks=0,no LSan claim/no sanitizer
+  findings. Every native process terminal; existing CMake/qmake registrations confirmed; diff-check passes.
+- Tested and committed SHA-256:cpp77862a021f8a799c691c8d3d7312027d6792f7701b42a32e24bff77133d5eb96,
+  header213beff1546fcfd7b00f8dc8f5c6ca567f38590249cb676c9afe96edc84fceeb,
+  tests161bb30e04e039261f3c3f6c869d51350b0c43d2e76b7dbb044ced81b076046d. Product commit only those three paths:
+  cpp485+/15-,header72+/0-,tests897+/0-,total1454+/15-. No build/generated/plan path in product commit.
+- R01/R02/R12/R13 critical sub-contract verified; stationary further tightening and machine-precision stagnation remain
+  honest ambiguity. Cached accuracy must be checked before asking for refinement. Full root ordering/reference graph,
+  cache validator, persistent entity, file/UI/phase2 requirements remain incomplete. Next: read-only isolation preflight
+  against actual committed APIs, then scoped activation at its real checkpoint HEAD; no stale patch reapplication.
 
 #### 1A-1.b-ref-events-isolate. Exhaustive Event Integration
 
-**Waiting for .b-ref-critical-refine; pair API is committed atf4f87f48e; preflight both before activation**
+**Conditional own preflight; pair API committed atf4f87f48e, critical API at72eb5f953. Neither is a waiting predecessor.**
+Read actual headers and qualify literal integration result/lifetimes, strict-hook composite remapping, construction/
+seam/cusp identities, complete root-order proofs, fixed logical costs and required fixture feasibility before product
+activation. A declaration probe qualifies access/lifetime only, never numerical correctness or runtime completeness.
 - Scope remains geometry header/cpp/existing geometry tests. Build own `CriticalAdapter(delta)` and opposite
   `CriticalAdapter(-delta)` in the same verified frame using one budget. Stable branch roles: own, opposite, start
   cutter, end cutter. Open-end cutters are certified semicircles from source endpoint/normal/outward directed tangent
@@ -2721,7 +2890,12 @@ QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_tests 
 - Before inspecting EVERY query/refinement status, debit `totalBoxPairs` and `generatedItems` into the one budget;
   items already include preparation leaves, so never add `generatedLeaves` again. Propagate actual adaptive depths and
   irreversible limits. Composite/cutter descriptors, geometry-level ordering/refinement/publication need their own
-  pre-allocation/examination debits. Failure publishes empty staged events plus cumulative work, never partial topology.
+  pre-allocation/examination debits. This external debit applies to core `findCertifiedIntersections`/session calls, whose statistics have not
+  touched WorkBudget. In contrast, `analyseCriticalRetained` and `CriticalRefinementSession::contract` DIRECTLY spend
+  the same WorkBudget: their cumulative `work` and per-call `entered` are diagnostics, NEVER a second debit. Require
+  the correct work-source label for accepted critical calls; a last-matching snapshot from a rejected foreign budget
+  must not become the caller's current work ledger. Keep these two accounting models explicit in the integration.
+  Failure publishes empty staged events plus cumulative work, never partial topology.
 - Tests: whole/open/wrapped/reversed, near-critical lens, source-end tangent joins plus additional nearby crossings,
   boundary/seam roots, close distinct roots, cusp-versus-crossing and cross-partner order/identity, proved world node
   accuracy, nonisolated/unsupported refusal and exact/one-less/pre-spent caps. Required fixture disagreements must be
@@ -4003,3 +4177,13 @@ Appendix B supersedes this anchor table.
   The dependency mirror was cross-reviewed against §0.3/§0.6; this audit is not an automatic proof of every prose
   dependency or any numerical algorithm. `git diff --check` passes. No new native build/test run was needed for this
   documentation-only review, and no new runtime coverage or full-plan completion is claimed.
+
+**v8 execution reconciliation, critical slice72eb5f953.** Completeness: all touched critical APIs/build registrations/
+tests accounted for, R01-R15 and14formats retained, parents still incomplete. Correctness: separate source/math review
+and native red/failed reproductions resolved inverse-domain/exclusion and one-sided join defects, no weakened caps/
+assertions. Readiness: both refinement predecessors are done; isolation is conditional on its own literal API/proof/
+cost preflight, not ready by assertion. Commits: three frozen reviewed/tested product paths only at actual SHA above,
+committed digests independently verified; this checkpoint changes only the roadmap. Self-update: all active status/
+queue/ledger/card references reconciled, failed evidence retained, next activation must use actual checkpoint HEAD.
+Structural audit passes:27main rows,58nodes,15requirements,14formats(8DXF/6DWG),91headings,28balanced fences,acyclic;
+this audits the mirrored graph/inventory, not numerical correctness. No full reference/entity/file/UI completion claim.
