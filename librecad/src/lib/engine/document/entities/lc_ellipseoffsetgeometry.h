@@ -15,9 +15,11 @@
 #ifndef LC_ELLIPSEOFFSETGEOMETRY_H
 #define LC_ELLIPSEOFFSETGEOMETRY_H
 
+#include <cstddef>
 #include <optional>
 #include <vector>
 
+#include "lc_curvejet.h"
 #include "rs_ellipse.h"
 
 struct LC_EllipseOffsetDefinition {
@@ -28,6 +30,13 @@ struct LC_EllipseOffsetDefinition {
     double relTolerance = 0.0;
 };
 
+struct LC_OffsetCheckLimits {
+    std::size_t maxCubicPieces = 4096;
+    std::size_t maxVertices = 65536;
+    std::size_t maxDistancePairs = std::size_t{1} << 20;
+    unsigned maxDepth = 20;
+};
+
 namespace LC_EllipseOffsetGeometry {
 
 struct Sweep {
@@ -36,6 +45,83 @@ struct Sweep {
     bool whole = false;
 
     bool contains(double parameter, double angularAllowance = 0.0) const;
+};
+
+enum class BudgetStatus { Ok, InvalidInput, LimitExceeded };
+
+struct CheckWork {
+    std::size_t cubicPieces = 0;
+    std::size_t vertices = 0;
+    std::size_t distancePairs = 0;
+    unsigned deepest = 0;
+};
+
+/** One irreversible allowance shared by all stages of a reference/cache query. */
+class WorkBudget {
+public:
+    explicit WorkBudget(const LC_OffsetCheckLimits& limits = {});
+    WorkBudget(const WorkBudget&) = delete;
+    WorkBudget& operator=(const WorkBudget&) = delete;
+
+    BudgetStatus status() const;
+    const CheckWork& consumed() const;
+    std::size_t remainingPieces() const;
+    std::size_t remainingVertices() const;
+    std::size_t remainingPairs() const;
+    bool consumePieces(std::size_t count);
+    bool consumeVertices(std::size_t count);
+    bool consumePairs(std::size_t count);
+    bool checkDepth(unsigned depth);
+
+private:
+    bool consume(std::size_t count, std::size_t limit, std::size_t& used);
+
+    LC_OffsetCheckLimits m_limits;
+    CheckWork m_work;
+    BudgetStatus m_status = BudgetStatus::Ok;
+};
+
+/**
+ * Exact ellipse/outward-offset formulas in centre-relative, uniformly scaled,
+ * world-aligned coordinates. No fitted controls or topology are represented.
+ * The basis must already have normalized axes (0 < ratio <= 1) and arc angles
+ * in [0, 2*pi); canonical whole and genuine full-turn inputs are accepted.
+ */
+class ReferenceFrame {
+public:
+    static std::optional<ReferenceFrame> create(const RS_EllipseData& basis, double signedDistance);
+
+    double scale() const;
+    double parameterEnd() const;
+    const Sweep& sourceSweep() const;
+    /** Engine distances are positive along the traversal's left normal. */
+    double engineSignedDistance() const;
+
+    /** Jets are midpoint estimates of certified zero-width bounds, for numerical seeds only. */
+    bool sourceJet(double t, LC_CurveJet& out) const;
+    bool offsetJet(double t, LC_CurveJet& out) const;
+    /** Includes zero-width queries and the canonical seam at a whole source's end. */
+    bool boundSourceJet(double t0, double t1, LC_CurveJetBounds& out) const;
+    bool boundOffsetJet(double t0, double t1, LC_CurveJetBounds& out) const;
+    /** Enclosures of conversions of exact input doubles; cleared on refusal. */
+    bool pointToFrame(const RS_Vector& world, LC_Interval& x, LC_Interval& y) const;
+    bool pointToWorld(const RS_Vector& local, LC_Interval& x, LC_Interval& y) const;
+
+private:
+    ReferenceFrame() = default;
+    bool trig(double t0, double t1, LC_Interval& cosine, LC_Interval& sine) const;
+
+    RS_Vector m_centre;
+    Sweep m_sweep;
+    double m_scale = 1.0;
+    int m_scaleExponent = 0;
+    double m_signedDistance = 0.0;
+    LC_Interval m_majorX;
+    LC_Interval m_majorY;
+    LC_Interval m_axisSquared;
+    LC_Interval m_axis;
+    LC_Interval m_ratio;
+    LC_Interval m_distance;
 };
 
 bool isFinite2D(const RS_Vector& point);

@@ -16,9 +16,13 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <limits>
 #include <random>
+#include <type_traits>
+
+#include <boost/multiprecision/cpp_bin_float.hpp>
 
 #include "lc_curveoffset.h"
 #include "lc_ellipseoffsetgeometry.h"
@@ -46,6 +50,80 @@ void checkSameFields(const RS_EllipseData& a, const RS_EllipseData& b) {
     CHECK(a.angle2 == b.angle2);
     CHECK(a.reversed == b.reversed);
     CHECK(a.angleDegrees == b.angleDegrees);
+}
+
+using Quad = boost::multiprecision::cpp_bin_float_quad;
+using QuadJet = std::array<Quad, 6>;
+
+/** Independent 113-bit evaluation of exact input doubles, including axis normalization. */
+QuadJet referenceOracle(const RS_EllipseData& data, const geo::ReferenceFrame& frame, const double delta,
+                        const double t, const bool offset, const bool canonicalSeam = true) {
+    const auto domain = frame.sourceSweep();
+    const Quad sign = domain.signedSweep < 0.0 ? -1 : 1;
+    const Quad angle = Quad(domain.start) + sign *
+        Quad(canonicalSeam && domain.whole && t == frame.parameterEnd() ? 0.0 : t);
+    const Quad c = cos(angle);
+    const Quad s = sin(angle);
+    const Quad mx = Quad(data.majorP.x) / Quad(frame.scale());
+    const Quad my = Quad(data.majorP.y) / Quad(frame.scale());
+    const Quad r = data.ratio;
+    const Quad a = sqrt(mx * mx + my * my);
+    const Quad h2 = s * s + r * r * c * c;
+    const Quad h = sqrt(h2);
+    QuadJet jet{{mx * c - my * r * s, my * c + mx * r * s,
+                 sign * (-mx * s - my * r * c), sign * (-my * s + mx * r * c), 0, 0}};
+    jet[4] = -jet[0];
+    jet[5] = -jet[1];
+    if (offset) {
+        const Quad d = Quad(delta) / Quad(frame.scale());
+        const Quad factor = 1 + d * r / (a * h2 * h);
+        const Quad factorDerivative = -3 * sign * d * r * (1 - r * r) * s * c / (a * h2 * h2 * h);
+        jet[0] += d * (r * c * mx - s * my) / (a * h);
+        jet[1] += d * (r * c * my + s * mx) / (a * h);
+        jet[4] = factor * jet[4] + factorDerivative * jet[2];
+        jet[5] = factor * jet[5] + factorDerivative * jet[3];
+        jet[2] *= factor;
+        jet[3] *= factor;
+    }
+    return jet;
+}
+
+void checkEnclosure(const LC_Interval& interval, const Quad& value) {
+    REQUIRE(interval.isValid());
+    REQUIRE(std::isfinite(interval.lo()));
+    REQUIRE(std::isfinite(interval.hi()));
+    CHECK(Quad(interval.lo()) <= value);
+    CHECK(value <= Quad(interval.hi()));
+}
+
+void checkEnclosure(const LC_CurveJetBounds& bounds, const QuadJet& jet) {
+    const std::array<LC_Interval, 6> intervals{{bounds.x, bounds.y, bounds.dx, bounds.dy, bounds.ddx, bounds.ddy}};
+    for (std::size_t k = 0; k < intervals.size(); ++k) {
+        CAPTURE(k);
+        checkEnclosure(intervals[k], jet[k]);
+    }
+    checkEnclosure(bounds.speedSquaredProduct, jet[2] * jet[2] + jet[3] * jet[3]);
+    checkEnclosure(bounds.crossProduct, jet[2] * jet[5] - jet[3] * jet[4]);
+}
+
+void checkCleared(const LC_CurveJetBounds& bounds) {
+    CHECK_FALSE(bounds.x.isValid());
+    CHECK_FALSE(bounds.y.isValid());
+    CHECK_FALSE(bounds.dx.isValid());
+    CHECK_FALSE(bounds.dy.isValid());
+    CHECK_FALSE(bounds.ddx.isValid());
+    CHECK_FALSE(bounds.ddy.isValid());
+    CHECK_FALSE(bounds.speedSquaredProduct.isValid());
+    CHECK_FALSE(bounds.crossProduct.isValid());
+}
+
+void checkSameJet(const LC_CurveJet& first, const LC_CurveJet& last) {
+    CHECK(first.point.x == last.point.x);
+    CHECK(first.point.y == last.point.y);
+    CHECK(first.first.x == last.first.x);
+    CHECK(first.first.y == last.first.y);
+    CHECK(first.second.x == last.second.x);
+    CHECK(first.second.y == last.second.y);
 }
 } // namespace
 
@@ -407,4 +485,353 @@ TEST_CASE("Offset original distance scales before overflowing intermediate coord
     REQUIRE(std::isfinite(distance));
     CHECK(distance / 1e308 == Catch::Approx(1.4).epsilon(1e-12));
     CHECK(parameter == 0.0);
+}
+
+TEST_CASE("Reference frames enclose independent dense source and offset jets at every scale",
+          "[lc-offsetcurve][geometry][reference-frame]") {
+    for (const double a : {1e-280, 10.0, 1e280}) {
+        for (const double ratio : {0.02, 0.5, 1.0}) {
+            for (const bool reversed : {false, true}) {
+                for (const double distanceFactor : {-0.25, 0.2}) {
+                    CAPTURE(a, ratio, reversed, distanceFactor);
+                    auto data = basis(a, ratio, 0.0, 0.0, reversed);
+                    data.majorP = RS_Vector{0.6 * a, 0.8 * a};
+                    const double distance = distanceFactor * a;
+                    const auto frame = geo::ReferenceFrame::create(data, distance);
+                    REQUIRE(frame);
+                    REQUIRE(frame->scale() > 0.0);
+                    REQUIRE(std::isfinite(frame->scale()));
+                    for (int window = 0; window < 12; ++window) {
+                        const double from = frame->parameterEnd() * (static_cast<double>(window) / 12.0);
+                        const double to = frame->parameterEnd() * (static_cast<double>(window + 1) / 12.0);
+                        LC_CurveJetBounds source;
+                        LC_CurveJetBounds offset;
+                        REQUIRE(frame->boundSourceJet(from, to, source));
+                        REQUIRE(frame->boundOffsetJet(from, to, offset));
+                        for (int sample = 0; sample <= 8; ++sample) {
+                            const double t = sample == 0 ? from : sample == 8 ? to :
+                                from + (to - from) * (static_cast<double>(sample) / 8.0);
+                            CAPTURE(window, sample, t);
+                            checkEnclosure(source, referenceOracle(data, *frame, distance, t, false));
+                            checkEnclosure(offset, referenceOracle(data, *frame, distance, t, true));
+                        }
+                        const double middle = from + 0.5 * (to - from);
+                        REQUIRE(frame->boundSourceJet(middle, middle, source));
+                        REQUIRE(frame->boundOffsetJet(middle, middle, offset));
+                        checkEnclosure(source, referenceOracle(data, *frame, distance, middle, false));
+                        checkEnclosure(offset, referenceOracle(data, *frame, distance, middle, true));
+                    }
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("Reference frames preserve traversal signs wrapped arcs and the canonical whole seam",
+          "[lc-offsetcurve][geometry][reference-frame]") {
+    for (const bool reversed : {false, true}) {
+        for (const bool whole : {false, true}) {
+            auto data = whole ? basis(10.0, 0.5, 0.7, 0.7 + (reversed ? -2.0 : 2.0) * M_PI, reversed) :
+                reversed ? basis(10.0, 0.5, 0.2, 6.0, true) : basis(10.0, 0.5, 6.0, 0.2);
+            const auto frame = geo::ReferenceFrame::create(data, -1.0);
+            REQUIRE(frame);
+            CHECK(frame->sourceSweep().whole == whole);
+            CHECK((frame->sourceSweep().signedSweep < 0.0) == reversed);
+            CHECK(frame->engineSignedDistance() == (reversed ? -1.0 : 1.0));
+            if (whole) {
+                CHECK(frame->sourceSweep().start == M_PI_4);
+                CHECK(frame->parameterEnd() == 2.0 * M_PI);
+                LC_CurveJet first;
+                LC_CurveJet last;
+                REQUIRE(frame->sourceJet(0.0, first));
+                REQUIRE(frame->sourceJet(frame->parameterEnd(), last));
+                checkSameJet(first, last);
+                REQUIRE(frame->offsetJet(0.0, first));
+                REQUIRE(frame->offsetJet(frame->parameterEnd(), last));
+                checkSameJet(first, last);
+                LC_CurveJetBounds source;
+                LC_CurveJetBounds offset;
+                REQUIRE(frame->boundSourceJet(frame->parameterEnd() - 0.01, frame->parameterEnd(), source));
+                REQUIRE(frame->boundOffsetJet(frame->parameterEnd() - 0.01, frame->parameterEnd(), offset));
+                for (const bool canonical : {false, true}) {
+                    checkEnclosure(source, referenceOracle(data, *frame, -1.0, frame->parameterEnd(), false, canonical));
+                    checkEnclosure(offset, referenceOracle(data, *frame, -1.0, frame->parameterEnd(), true, canonical));
+                }
+            } else {
+                CHECK(frame->parameterEnd() < 0.5);
+                for (int k = 0; k <= 16; ++k) {
+                    const double t = frame->parameterEnd() * (static_cast<double>(k) / 16.0);
+                    LC_CurveJetBounds source;
+                    LC_CurveJetBounds offset;
+                    REQUIRE(frame->boundSourceJet(t, t, source));
+                    REQUIRE(frame->boundOffsetJet(t, t, offset));
+                    checkEnclosure(source, referenceOracle(data, *frame, -1.0, t, false));
+                    checkEnclosure(offset, referenceOracle(data, *frame, -1.0, t, true));
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("Reference offset bounds preserve circle cancellation near circles and cusp zeros",
+          "[lc-offsetcurve][geometry][reference-frame]") {
+    for (const double ratio : {1.0, std::nextafter(1.0, 0.0), 1e-8}) {
+        const auto data = basis(100.0, ratio);
+        const auto frame = geo::ReferenceFrame::create(data, -99.99);
+        REQUIRE(frame);
+        for (int k = 0; k <= 64; ++k) {
+            const double t = frame->parameterEnd() * (static_cast<double>(k) / 64.0);
+            LC_CurveJetBounds bounds;
+            REQUIRE(frame->boundOffsetJet(t, t, bounds));
+            checkEnclosure(bounds, referenceOracle(data, *frame, -99.99, t, true));
+        }
+        if (ratio == 1.0) {
+            LC_CurveJetBounds bounds;
+            REQUIRE(frame->boundOffsetJet(0.0, frame->parameterEnd(), bounds));
+            CHECK(std::max(std::abs(bounds.x.lo()), std::abs(bounds.x.hi())) < 0.001);
+            CHECK(std::max(std::abs(bounds.y.lo()), std::abs(bounds.y.hi())) < 0.001);
+            REQUIRE(frame->boundOffsetJet(0.0, 0.0, bounds));
+            LC_CurveJet estimate;
+            REQUIRE(frame->offsetJet(0.0, estimate));
+            // Evaluation uncertainty is governed by the original radius, not only the tiny offset result.
+            CHECK(bounds.x.width() > 64.0 * std::numeric_limits<double>::epsilon() * std::abs(estimate.point.x));
+        }
+    }
+    const auto cusp = geo::ReferenceFrame::create(basis(100.0, 0.5, 0.0, 1.0), -25.0);
+    REQUIRE(cusp);
+    LC_CurveJetBounds bounds;
+    REQUIRE(cusp->boundOffsetJet(0.0, 0.0, bounds));
+    CHECK(bounds.dx.containsZero());
+    CHECK(bounds.dy.containsZero());
+    CHECK(bounds.ddx.containsZero());
+    CHECK(bounds.ddy.containsZero());
+    LC_CurveJet jet;
+    REQUIRE(cusp->offsetJet(0.0, jet));
+    CHECK(jet.first.magnitude() < 1e-12);
+    const auto collapsed = geo::ReferenceFrame::create(basis(100.0, 1.0), -100.0);
+    REQUIRE(collapsed);
+    REQUIRE(collapsed->boundOffsetJet(0.0, collapsed->parameterEnd(), bounds));
+    for (const LC_Interval interval : {bounds.x, bounds.y, bounds.dx, bounds.dy, bounds.ddx, bounds.ddy,
+                                       bounds.speedSquaredProduct, bounds.crossProduct}) {
+        CHECK(interval.containsZero());
+    }
+    REQUIRE(collapsed->offsetJet(0.0, jet));
+    CHECK(jet.point.magnitude() < 1e-12);
+    CHECK(jet.first.magnitude() < 1e-12);
+    CHECK(jet.second.magnitude() < 1e-12);
+}
+
+TEST_CASE("Reference frame conversions enclose exact input differences and refuse unbounded outputs",
+          "[lc-offsetcurve][geometry][reference-frame]") {
+    auto data = basis(10.0, 0.5);
+    data.center = RS_Vector{1e12, -1e12};
+    data.majorP = RS_Vector{6.0, 8.0};
+    const auto frame = geo::ReferenceFrame::create(data, 1.0);
+    REQUIRE(frame);
+    LC_Interval x;
+    LC_Interval y;
+    const RS_Vector world{data.center.x + 0.125, data.center.y - 0.25};
+    REQUIRE(frame->pointToFrame(world, x, y));
+    checkEnclosure(x, (Quad(world.x) - Quad(data.center.x)) / Quad(frame->scale()));
+    checkEnclosure(y, (Quad(world.y) - Quad(data.center.y)) / Quad(frame->scale()));
+    const RS_Vector local{0.375, -0.625};
+    REQUIRE(frame->pointToWorld(local, x, y));
+    checkEnclosure(x, Quad(data.center.x) + Quad(local.x) * Quad(frame->scale()));
+    checkEnclosure(y, Quad(data.center.y) + Quad(local.y) * Quad(frame->scale()));
+
+    data = basis(6e307, 0.5);
+    data.center = RS_Vector{-1e308, 0.0};
+    const auto distant = geo::ReferenceFrame::create(data, 0.0);
+    REQUIRE(distant);
+    const RS_Vector opposite{1e308, 0.0};
+    REQUIRE_FALSE(std::isfinite(opposite.x - data.center.x));
+    REQUIRE(distant->pointToFrame(opposite, x, y));
+    checkEnclosure(x, (Quad(opposite.x) - Quad(data.center.x)) / Quad(distant->scale()));
+    CHECK(y.containsZero());
+    for (const double localX : {-8.0, -2.0}) {
+        REQUIRE_FALSE(distant->pointToWorld({localX, 0.0}, x, y));
+        CHECK_FALSE(x.isValid());
+        CHECK_FALSE(y.isValid());
+    }
+    REQUIRE_FALSE(frame->pointToFrame({std::numeric_limits<double>::infinity(), 0.0}, x, y));
+    CHECK_FALSE(x.isValid());
+    CHECK_FALSE(y.isValid());
+    REQUIRE_FALSE(frame->pointToWorld({0.0, 0.0, 1.0}, x, y));
+    CHECK_FALSE(x.isValid());
+    CHECK_FALSE(y.isValid());
+
+    const auto tinyData = basis(1e-310, 1.0);
+    const auto tiny = geo::ReferenceFrame::create(tinyData, -5e-311);
+    REQUIRE(tiny);
+    REQUIRE(std::fpclassify(tiny->scale()) == FP_SUBNORMAL);
+    LC_CurveJetBounds bounds;
+    REQUIRE(tiny->boundOffsetJet(0.0, 0.0, bounds));
+    checkEnclosure(bounds, referenceOracle(tinyData, *tiny, -5e-311, 0.0, true));
+    const double least = std::numeric_limits<double>::denorm_min();
+    REQUIRE(least * tiny->scale() == 0.0);
+    REQUIRE(tiny->pointToWorld({least, 0.0}, x, y));
+    checkEnclosure(x, Quad(least) * Quad(tiny->scale()));
+    CHECK(x.width() > 0.0); // underflow is enclosed, not silently rounded into an exact zero
+    REQUIRE(tiny->pointToFrame({least, 0.0}, x, y));
+    checkEnclosure(x, Quad(least) / Quad(tiny->scale()));
+    int scaleExponent = 0;
+    std::frexp(tiny->scale(), &scaleExponent);
+    const double normalBoundary = std::scalbn(1.0, std::numeric_limits<double>::min_exponent - scaleExponent);
+    const double justBelow = std::nextafter(normalBoundary, 0.0);
+    REQUIRE(tiny->pointToWorld({justBelow, 0.0}, x, y));
+    checkEnclosure(x, Quad(justBelow) * Quad(tiny->scale()));
+}
+
+TEST_CASE("Reference factories and failed jet queries never publish usable partial geometry",
+          "[lc-offsetcurve][geometry][reference-frame]") {
+    CHECK_FALSE(geo::ReferenceFrame::create(basis(10.0, 2.0), 1.0));
+    CHECK_FALSE(geo::ReferenceFrame::create(basis(10.0, 0.5, -0.1, 0.2), 1.0));
+    CHECK_FALSE(geo::ReferenceFrame::create(basis(10.0, 0.5, 0.7, 0.7), 1.0));
+    CHECK_FALSE(geo::ReferenceFrame::create(basis(), std::numeric_limits<double>::quiet_NaN()));
+    auto invalid = basis();
+    invalid.majorP.z = 1.0;
+    CHECK_FALSE(geo::ReferenceFrame::create(invalid, 1.0));
+    CHECK_FALSE(geo::ReferenceFrame::create(basis(1e-300), 1e300)); // source lost at this scale
+    const auto frame = geo::ReferenceFrame::create(basis(), 1.0);
+    REQUIRE(frame);
+    for (const double t : {-1.0, frame->parameterEnd() + 1.0, std::numeric_limits<double>::infinity(),
+                           std::numeric_limits<double>::quiet_NaN()}) {
+        LC_CurveJetBounds bounds;
+        REQUIRE(frame->boundSourceJet(0.0, 0.1, bounds));
+        CHECK_FALSE(frame->boundSourceJet(t, t, bounds));
+        checkCleared(bounds);
+        REQUIRE(frame->boundOffsetJet(0.0, 0.1, bounds));
+        CHECK_FALSE(frame->boundOffsetJet(t, t, bounds));
+        checkCleared(bounds);
+        LC_CurveJet jet;
+        REQUIRE(frame->sourceJet(0.0, jet));
+        CHECK_FALSE(frame->sourceJet(t, jet));
+        CHECK_FALSE(jet.point.valid);
+        CHECK_FALSE(jet.first.valid);
+        CHECK_FALSE(jet.second.valid);
+        REQUIRE(frame->offsetJet(0.0, jet));
+        CHECK_FALSE(frame->offsetJet(t, jet));
+        CHECK_FALSE(jet.point.valid);
+        CHECK_FALSE(jet.first.valid);
+        CHECK_FALSE(jet.second.valid);
+    }
+    LC_CurveJetBounds bounds;
+    CHECK_FALSE(frame->boundOffsetJet(0.2, 0.1, bounds));
+    checkCleared(bounds);
+    const auto thin = geo::ReferenceFrame::create(basis(1.0, 1e-250, 0.0, 1.0), -0.25);
+    REQUIRE(thin);
+    REQUIRE(thin->boundSourceJet(0.0, 0.0, bounds));
+    CHECK_FALSE(thin->boundOffsetJet(0.0, 0.0, bounds)); // cannot prove a positive representable denominator
+    checkCleared(bounds);
+    LC_CurveJet jet;
+    CHECK_FALSE(thin->offsetJet(0.0, jet));
+    CHECK_FALSE(jet.point.valid);
+    CHECK_FALSE(jet.first.valid);
+    CHECK_FALSE(jet.second.valid);
+}
+
+TEST_CASE("Shared reference budgets consume exact allowances once and latch every refusal",
+          "[lc-offsetcurve][geometry][reference-frame]") {
+    static_assert(!std::is_copy_constructible_v<geo::WorkBudget>);
+    static_assert(!std::is_copy_assignable_v<geo::WorkBudget>);
+    const LC_OffsetCheckLimits limits{3, 5, 7, 2};
+    for (int resource = 0; resource < 4; ++resource) {
+        CAPTURE(resource);
+        geo::WorkBudget budget{limits};
+        CHECK(budget.status() == geo::BudgetStatus::Ok);
+        REQUIRE(budget.checkDepth(0));
+        REQUIRE(budget.consumePieces(1));
+        REQUIRE(budget.consumeVertices(2));
+        REQUIRE(budget.consumePairs(3));
+        REQUIRE(budget.checkDepth(1));
+        CHECK(budget.remainingPieces() == 2);
+        CHECK(budget.remainingVertices() == 3);
+        CHECK(budget.remainingPairs() == 4);
+        REQUIRE(budget.consumePieces(2));
+        REQUIRE(budget.consumeVertices(3));
+        REQUIRE(budget.consumePairs(4));
+        REQUIRE(budget.checkDepth(2));
+        REQUIRE(budget.consumePairs(0));
+        CHECK(budget.remainingPieces() == 0);
+        CHECK(budget.remainingVertices() == 0);
+        CHECK(budget.remainingPairs() == 0);
+        const bool accepted = resource == 0 ? budget.consumePieces(1) : resource == 1 ? budget.consumeVertices(1) :
+            resource == 2 ? budget.consumePairs(1) : budget.checkDepth(3);
+        CHECK_FALSE(accepted);
+        CHECK(budget.status() == geo::BudgetStatus::LimitExceeded);
+        CHECK(budget.consumed().cubicPieces == 3);
+        CHECK(budget.consumed().vertices == 5);
+        CHECK(budget.consumed().distancePairs == 7);
+        CHECK(budget.consumed().deepest == 2);
+        CHECK_FALSE(budget.consumePieces(0));
+        CHECK_FALSE(budget.consumeVertices(0));
+        CHECK_FALSE(budget.consumePairs(0));
+        CHECK_FALSE(budget.checkDepth(0));
+    }
+    geo::WorkBudget oneLess{LC_OffsetCheckLimits{2, 4, 6, 1}};
+    REQUIRE(oneLess.consumeVertices(3));
+    CHECK_FALSE(oneLess.consumeVertices(2));
+    CHECK(oneLess.consumed().vertices == 3);
+    CHECK(oneLess.consumed().cubicPieces == 0);
+    CHECK(oneLess.consumed().distancePairs == 0);
+    CHECK(oneLess.remainingPieces() == 0);
+    CHECK(oneLess.remainingVertices() == 0);
+    CHECK(oneLess.remainingPairs() == 0);
+    CHECK_FALSE(oneLess.consumePairs(1));
+    CHECK(oneLess.consumed().distancePairs == 0);
+    for (int resource = 0; resource < 3; ++resource) {
+        geo::WorkBudget shortBudget{LC_OffsetCheckLimits{2, 4, 6, 1}};
+        const bool accepted = resource == 0 ? shortBudget.consumePieces(3) : resource == 1 ?
+            shortBudget.consumeVertices(5) : shortBudget.consumePairs(7);
+        CHECK_FALSE(accepted);
+        CHECK(shortBudget.status() == geo::BudgetStatus::LimitExceeded);
+        CHECK(shortBudget.consumed().cubicPieces == 0);
+        CHECK(shortBudget.consumed().vertices == 0);
+        CHECK(shortBudget.consumed().distancePairs == 0);
+    }
+}
+
+TEST_CASE("Shared reference budgets reject zero limits and cannot overflow counters",
+          "[lc-offsetcurve][geometry][reference-frame]") {
+    const std::array<LC_OffsetCheckLimits, 4> zeroLimits{{{0, 1, 1, 1}, {1, 0, 1, 1}, {1, 1, 0, 1}, {1, 1, 1, 0}}};
+    for (const LC_OffsetCheckLimits& limits : zeroLimits) {
+        geo::WorkBudget invalid{limits};
+        CHECK(invalid.status() == geo::BudgetStatus::InvalidInput);
+        CHECK_FALSE(invalid.consumePieces(0));
+        CHECK_FALSE(invalid.consumeVertices(0));
+        CHECK_FALSE(invalid.consumePairs(0));
+        CHECK_FALSE(invalid.checkDepth(0));
+        CHECK(invalid.consumed().cubicPieces == 0);
+        CHECK(invalid.consumed().vertices == 0);
+        CHECK(invalid.consumed().distancePairs == 0);
+        CHECK(invalid.consumed().deepest == 0);
+        CHECK(invalid.remainingPieces() == 0);
+        CHECK(invalid.remainingVertices() == 0);
+        CHECK(invalid.remainingPairs() == 0);
+    }
+    const auto maximum = std::numeric_limits<std::size_t>::max();
+    for (int resource = 0; resource < 3; ++resource) {
+        geo::WorkBudget budget{LC_OffsetCheckLimits{maximum, maximum, maximum, std::numeric_limits<unsigned>::max()}};
+        REQUIRE(budget.consumePieces(maximum - 1));
+        REQUIRE(budget.consumeVertices(maximum - 1));
+        REQUIRE(budget.consumePairs(maximum - 1));
+        REQUIRE(budget.checkDepth(std::numeric_limits<unsigned>::max()));
+        const bool accepted = resource == 0 ? budget.consumePieces(2) : resource == 1 ? budget.consumeVertices(2) :
+            budget.consumePairs(2);
+        CHECK_FALSE(accepted);
+        CHECK(budget.status() == geo::BudgetStatus::LimitExceeded);
+        CHECK(budget.consumed().cubicPieces == maximum - 1);
+        CHECK(budget.consumed().vertices == maximum - 1);
+        CHECK(budget.consumed().distancePairs == maximum - 1);
+        CHECK_FALSE(budget.consumeVertices(1));
+    }
+    geo::WorkBudget exact{LC_OffsetCheckLimits{maximum, maximum, maximum, 1}};
+    REQUIRE(exact.consumePieces(maximum));
+    REQUIRE(exact.consumeVertices(maximum));
+    REQUIRE(exact.consumePairs(maximum));
+    CHECK(exact.consumed().cubicPieces == maximum);
+    CHECK(exact.consumed().vertices == maximum);
+    CHECK(exact.consumed().distancePairs == maximum);
+    CHECK_FALSE(exact.consumePairs(1));
+    CHECK(exact.consumed().distancePairs == maximum);
 }

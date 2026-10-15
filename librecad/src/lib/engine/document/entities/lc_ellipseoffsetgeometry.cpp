@@ -76,6 +76,119 @@ RS_Vector checked(const RS_Vector& point) {
     return LC_EllipseOffsetGeometry::isFinite2D(point) ? point : RS_Vector{false};
 }
 
+bool finiteInterval(const LC_Interval& value) {
+    return value.isValid() && std::isfinite(value.lo()) && std::isfinite(value.hi());
+}
+
+bool finiteBounds(const LC_CurveJetBounds& bounds) {
+    return finiteInterval(bounds.x) && finiteInterval(bounds.y) && finiteInterval(bounds.dx) &&
+           finiteInterval(bounds.dy) && finiteInterval(bounds.ddx) && finiteInterval(bounds.ddy);
+}
+
+/** Binary rescaling is exact unless the result is subnormal; enclose that rounding too. */
+LC_Interval scaled(const LC_Interval& value, const int exponent) {
+    if (!finiteInterval(value)) {
+        return {};
+    }
+    const auto endpoint = [exponent](const double input, const double toward) {
+        const double result = std::scalbn(input, exponent);
+        // An inexact subnormal result may round up to the smallest normal double.
+        const bool exactNormal = std::isnormal(result) && std::abs(result) > std::numeric_limits<double>::min();
+        return input == 0.0 || exactNormal ? result : std::nextafter(result, toward);
+    };
+    const double lo = endpoint(value.lo(), -std::numeric_limits<double>::infinity());
+    const double hi = endpoint(value.hi(), std::numeric_limits<double>::infinity());
+    if (!std::isfinite(lo) || !std::isfinite(hi)) {
+        return {};
+    }
+    return LC_Interval::hull(lo, hi);
+}
+
+LC_Interval unitRange(const LC_Interval& value) {
+    if (!finiteInterval(value)) {
+        return {};
+    }
+    const double lo = std::max(-1.0, value.lo());
+    const double hi = std::min(1.0, value.hi());
+    return lo <= hi ? LC_Interval::hull(lo, hi) : LC_Interval{};
+}
+
+/** R^order/order!, all coefficients and products enclosed without integer factorials. */
+double taylorRemainder(const double radius, const int order) {
+    LC_Interval error = LC_Interval::point(1.0);
+    for (int k = 1; k <= order; ++k) {
+        error = error * LC_Interval::point(radius) / LC_Interval::point(static_cast<double>(k));
+    }
+    return error.hi();
+}
+
+/**
+ * Reduce by an enclosed real multiple of pi/2, not by a rounded period.
+ * Taylor's theorem uses |sin^(n)|, |cos^(n)| <= 1 for the explicit remainder.
+ */
+bool referenceTrig(const LC_Interval& angle, LC_Interval& cosine, LC_Interval& sine) {
+    cosine = {};
+    sine = {};
+    if (!finiteInterval(angle) || angle.lo() < -16.0 || angle.hi() > 16.0) {
+        return false;
+    }
+    // These adjacent binary64 values bracket real pi.
+    const LC_Interval pi = LC_Interval::hull(0x1.921fb54442d18p+1, 0x1.921fb54442d19p+1);
+    const LC_Interval halfPi = pi * LC_Interval::point(0.5);
+    const double centre = 0.5 * angle.lo() + 0.5 * angle.hi();
+    const int quadrant = static_cast<int>(std::round(centre / M_PI_2));
+    const LC_Interval reduced = angle - LC_Interval::point(static_cast<double>(quadrant)) * halfPi;
+    const double radius = std::max(std::abs(reduced.lo()), std::abs(reduced.hi()));
+    if (radius > halfPi.lo()) {
+        cosine = sine = LC_Interval::hull(-1.0, 1.0);
+        return true;
+    }
+    const LC_Interval square = sqr(reduced);
+    LC_Interval cosTerm = LC_Interval::point(1.0);
+    LC_Interval sinTerm = reduced;
+    LC_Interval c = cosTerm;
+    LC_Interval s = sinTerm;
+    for (int k = 1; k <= 10; ++k) {
+        cosTerm = -(cosTerm * square) / LC_Interval::point(static_cast<double>((2 * k - 1) * (2 * k)));
+        sinTerm = -(sinTerm * square) / LC_Interval::point(static_cast<double>((2 * k) * (2 * k + 1)));
+        c = c + cosTerm;
+        s = s + sinTerm;
+    }
+    const double cosError = taylorRemainder(radius, 22);
+    const double sinError = taylorRemainder(radius, 23);
+    c = unitRange(c + LC_Interval::hull(-cosError, cosError));
+    s = unitRange(s + LC_Interval::hull(-sinError, sinError));
+    if (!finiteInterval(c) || !finiteInterval(s)) {
+        return false;
+    }
+    switch ((quadrant % 4 + 4) % 4) {
+    case 0: cosine = c; sine = s; break;
+    case 1: cosine = -s; sine = c; break;
+    case 2: cosine = -c; sine = -s; break;
+    case 3: cosine = s; sine = -c; break;
+    }
+    return true;
+}
+
+bool jetFromBounds(const LC_CurveJetBounds& bounds, LC_CurveJet& out) {
+    out = {};
+    if (!finiteBounds(bounds)) {
+        return false;
+    }
+    const auto middle = [](const LC_Interval& value) { return 0.5 * value.lo() + 0.5 * value.hi(); };
+    LC_CurveJet candidate;
+    candidate.point = RS_Vector{middle(bounds.x), middle(bounds.y)};
+    candidate.first = RS_Vector{middle(bounds.dx), middle(bounds.dy)};
+    candidate.second = RS_Vector{middle(bounds.ddx), middle(bounds.ddy)};
+    if (!LC_EllipseOffsetGeometry::isFinite2D(candidate.point) ||
+        !LC_EllipseOffsetGeometry::isFinite2D(candidate.first) ||
+        !LC_EllipseOffsetGeometry::isFinite2D(candidate.second)) {
+        return false;
+    }
+    out = candidate;
+    return true;
+}
+
 RS_Vector farEllipseFoot(const RS_Vector& query, const double ratio, const double axisScale) {
     const double absoluteX = std::abs(query.x);
     const double weightedY = std::abs(ratio * query.y);
@@ -145,6 +258,68 @@ RS_Vector farEllipseFoot(const RS_Vector& query, const double ratio, const doubl
 } // namespace
 
 namespace LC_EllipseOffsetGeometry {
+
+WorkBudget::WorkBudget(const LC_OffsetCheckLimits& limits) : m_limits{limits} {
+    if (limits.maxCubicPieces == 0 || limits.maxVertices == 0 || limits.maxDistancePairs == 0 || limits.maxDepth == 0) {
+        m_status = BudgetStatus::InvalidInput;
+    }
+}
+
+BudgetStatus WorkBudget::status() const {
+    return m_status;
+}
+
+const CheckWork& WorkBudget::consumed() const {
+    return m_work;
+}
+
+std::size_t WorkBudget::remainingPieces() const {
+    return m_status == BudgetStatus::Ok ? m_limits.maxCubicPieces - m_work.cubicPieces : 0;
+}
+
+std::size_t WorkBudget::remainingVertices() const {
+    return m_status == BudgetStatus::Ok ? m_limits.maxVertices - m_work.vertices : 0;
+}
+
+std::size_t WorkBudget::remainingPairs() const {
+    return m_status == BudgetStatus::Ok ? m_limits.maxDistancePairs - m_work.distancePairs : 0;
+}
+
+bool WorkBudget::consume(const std::size_t count, const std::size_t limit, std::size_t& used) {
+    if (m_status != BudgetStatus::Ok) {
+        return false;
+    }
+    if (count > limit - used) {
+        m_status = BudgetStatus::LimitExceeded;
+        return false;
+    }
+    used += count;
+    return true;
+}
+
+bool WorkBudget::consumePieces(const std::size_t count) {
+    return consume(count, m_limits.maxCubicPieces, m_work.cubicPieces);
+}
+
+bool WorkBudget::consumeVertices(const std::size_t count) {
+    return consume(count, m_limits.maxVertices, m_work.vertices);
+}
+
+bool WorkBudget::consumePairs(const std::size_t count) {
+    return consume(count, m_limits.maxDistancePairs, m_work.distancePairs);
+}
+
+bool WorkBudget::checkDepth(const unsigned depth) {
+    if (m_status != BudgetStatus::Ok) {
+        return false;
+    }
+    if (depth > m_limits.maxDepth) {
+        m_status = BudgetStatus::LimitExceeded;
+        return false;
+    }
+    m_work.deepest = std::max(m_work.deepest, depth);
+    return true;
+}
 
 bool isFinite2D(const RS_Vector& point) {
     return point.valid && std::isfinite(point.x) && std::isfinite(point.y) && point.z == 0.0;
@@ -239,6 +414,232 @@ bool normaliseBasis(RS_EllipseData& basis) {
         }
     }
     basis = candidate;
+    return true;
+}
+
+std::optional<ReferenceFrame> ReferenceFrame::create(const RS_EllipseData& basis, const double signedDistance) {
+    const auto axes = frame(basis);
+    const auto domain = sweep(basis);
+    if (!axes || !domain || !std::isfinite(signedDistance) ||
+        (!domain->whole && (!(basis.angle1 >= 0.0 && basis.angle1 < turn) ||
+                            !(basis.angle2 >= 0.0 && basis.angle2 < turn)))) {
+        return std::nullopt;
+    }
+    ReferenceFrame candidate;
+    candidate.m_centre = basis.center;
+    candidate.m_sweep = *domain;
+    candidate.m_signedDistance = signedDistance;
+    int exponent = 0;
+    std::frexp(std::max(axes->a, std::abs(signedDistance)), &exponent);
+    candidate.m_scaleExponent = exponent - 1;
+    candidate.m_scale = std::scalbn(1.0, candidate.m_scaleExponent);
+    candidate.m_majorX = scaled(LC_Interval::point(basis.majorP.x), -candidate.m_scaleExponent);
+    candidate.m_majorY = scaled(LC_Interval::point(basis.majorP.y), -candidate.m_scaleExponent);
+    candidate.m_distance = scaled(LC_Interval::point(signedDistance), -candidate.m_scaleExponent);
+    candidate.m_ratio = LC_Interval::point(basis.ratio);
+    candidate.m_axisSquared = sqr(candidate.m_majorX) + sqr(candidate.m_majorY);
+    candidate.m_axis = sqrt(candidate.m_axisSquared);
+    if (!(candidate.m_scale > 0.0) || !std::isfinite(candidate.m_scale) ||
+        !finiteInterval(candidate.m_majorX) || !finiteInterval(candidate.m_majorY) ||
+        !finiteInterval(candidate.m_distance) || !finiteInterval(candidate.m_axisSquared) ||
+        !candidate.m_axisSquared.isPositive() || !finiteInterval(candidate.m_axis) || !candidate.m_axis.isPositive()) {
+        return std::nullopt;
+    }
+    return candidate;
+}
+
+double ReferenceFrame::scale() const {
+    return m_scale;
+}
+
+double ReferenceFrame::parameterEnd() const {
+    return std::abs(m_sweep.signedSweep);
+}
+
+const Sweep& ReferenceFrame::sourceSweep() const {
+    return m_sweep;
+}
+
+double ReferenceFrame::engineSignedDistance() const {
+    return m_sweep.signedSweep < 0.0 ? m_signedDistance : -m_signedDistance;
+}
+
+bool ReferenceFrame::trig(const double t0, const double t1, LC_Interval& cosine, LC_Interval& sine) const {
+    cosine = {};
+    sine = {};
+    if (!std::isfinite(t0) || !std::isfinite(t1) || !(0.0 <= t0 && t0 <= t1 && t1 <= parameterEnd())) {
+        return false;
+    }
+    const double direction = m_sweep.signedSweep < 0.0 ? -1.0 : 1.0;
+    const bool seam = m_sweep.whole && t1 == parameterEnd();
+    const LC_Interval start = LC_Interval::point(m_sweep.start);
+    const LC_Interval angle = t0 == t1 && (t0 == 0.0 || seam) ? start :
+        start + LC_Interval::point(direction) * LC_Interval::hull(t0, t1);
+    if (!referenceTrig(angle, cosine, sine)) {
+        return false;
+    }
+    if (seam && t0 != t1) {
+        LC_Interval firstCosine;
+        LC_Interval firstSine;
+        if (!referenceTrig(start, firstCosine, firstSine)) {
+            return false;
+        }
+        // Rounded 2*pi is not an exact period: include the canonical closing value explicitly.
+        cosine = LC_Interval::hull(cosine, firstCosine);
+        sine = LC_Interval::hull(sine, firstSine);
+    }
+    return true;
+}
+
+bool ReferenceFrame::boundSourceJet(const double t0, const double t1, LC_CurveJetBounds& out) const {
+    out = {};
+    LC_Interval cosine;
+    LC_Interval sine;
+    if (!trig(t0, t1, cosine, sine)) {
+        return false;
+    }
+    const LC_Interval direction = LC_Interval::point(m_sweep.signedSweep < 0.0 ? -1.0 : 1.0);
+    const LC_Interval minorX = -m_majorY * m_ratio;
+    const LC_Interval minorY = m_majorX * m_ratio;
+    LC_CurveJetBounds candidate;
+    candidate.x = m_majorX * cosine + minorX * sine;
+    candidate.y = m_majorY * cosine + minorY * sine;
+    candidate.dx = direction * (-m_majorX * sine + minorX * cosine);
+    candidate.dy = direction * (-m_majorY * sine + minorY * cosine);
+    candidate.ddx = -candidate.x;
+    candidate.ddy = -candidate.y;
+    const LC_Interval ratioSquared = sqr(m_ratio);
+    const LC_Interval speedFactor = m_ratio.lo() == 1.0 ? LC_Interval::point(1.0) :
+        ratioSquared + (LC_Interval::point(1.0) - ratioSquared) * sqr(sine);
+    candidate.speedSquaredProduct = m_axisSquared * speedFactor;
+    candidate.crossProduct = direction * m_axisSquared * m_ratio;
+    if (!finiteBounds(candidate) || !finiteInterval(candidate.speedSquaredProduct) ||
+        !finiteInterval(candidate.crossProduct)) {
+        return false;
+    }
+    out = candidate;
+    return true;
+}
+
+bool ReferenceFrame::boundOffsetJet(const double t0, const double t1, LC_CurveJetBounds& out) const {
+    out = {};
+    LC_CurveJetBounds source;
+    LC_Interval cosine;
+    LC_Interval sine;
+    if (!boundSourceJet(t0, t1, source)) {
+        return false;
+    }
+    if (m_signedDistance == 0.0) {
+        out = source;
+        return true;
+    }
+    if (!trig(t0, t1, cosine, sine)) {
+        return false;
+    }
+    const LC_Interval direction = LC_Interval::point(m_sweep.signedSweep < 0.0 ? -1.0 : 1.0);
+    LC_CurveJetBounds candidate;
+    if (m_ratio.lo() == 1.0) {
+        // Keep the shared circle radius, rather than independently bounding E + delta*N.
+        const LC_Interval radius = m_axis + m_distance;
+        const LC_Interval factor = radius / m_axis;
+        candidate.x = factor * source.x;
+        candidate.y = factor * source.y;
+        candidate.dx = -direction * candidate.y;
+        candidate.dy = direction * candidate.x;
+        candidate.ddx = -candidate.x;
+        candidate.ddy = -candidate.y;
+        candidate.speedSquaredProduct = sqr(radius);
+        candidate.crossProduct = direction * sqr(radius);
+    } else {
+        const LC_Interval ratioSquared = sqr(m_ratio);
+        const LC_Interval difference = LC_Interval::point(1.0) - ratioSquared;
+        const LC_Interval h2 = ratioSquared + difference * sqr(sine);
+        if (!finiteInterval(h2) || !h2.isPositive()) {
+            return false;
+        }
+        const LC_Interval h = sqrt(h2);
+        const LC_Interval speed = m_axis * h;
+        const LC_Interval curvatureDenominator = speed * h2;
+        const LC_Interval derivativeDenominator = curvatureDenominator * h2;
+        if (!finiteInterval(speed) || !speed.isPositive() || !finiteInterval(curvatureDenominator) ||
+            !curvatureDenominator.isPositive() || !finiteInterval(derivativeDenominator) ||
+            !derivativeDenominator.isPositive()) {
+            return false;
+        }
+        const LC_Interval factor = LC_Interval::point(1.0) + m_distance * m_ratio / curvatureDenominator;
+        const LC_Interval factorDerivative = LC_Interval::point(-3.0) * direction * m_distance * m_ratio *
+            difference * sine * cosine / derivativeDenominator;
+        const LC_Interval normalX = (m_ratio * cosine * m_majorX - sine * m_majorY) / speed;
+        const LC_Interval normalY = (m_ratio * cosine * m_majorY + sine * m_majorX) / speed;
+        candidate.x = source.x + m_distance * normalX;
+        candidate.y = source.y + m_distance * normalY;
+        candidate.dx = factor * source.dx;
+        candidate.dy = factor * source.dy;
+        candidate.ddx = factor * source.ddx + factorDerivative * source.dx;
+        candidate.ddy = factor * source.ddy + factorDerivative * source.dy;
+        const LC_Interval speedSquared = sqr(factor) * source.speedSquaredProduct;
+        const LC_Interval cross = sqr(factor) * source.crossProduct;
+        if (finiteInterval(speedSquared)) {
+            candidate.speedSquaredProduct = speedSquared;
+        }
+        if (finiteInterval(cross)) {
+            candidate.crossProduct = cross;
+        }
+    }
+    if (!finiteBounds(candidate)) {
+        return false;
+    }
+    out = candidate;
+    return true;
+}
+
+bool ReferenceFrame::sourceJet(const double t, LC_CurveJet& out) const {
+    out = {};
+    LC_CurveJetBounds bounds;
+    return boundSourceJet(t, t, bounds) && jetFromBounds(bounds, out);
+}
+
+bool ReferenceFrame::offsetJet(const double t, LC_CurveJet& out) const {
+    out = {};
+    LC_CurveJetBounds bounds;
+    return boundOffsetJet(t, t, bounds) && jetFromBounds(bounds, out);
+}
+
+bool ReferenceFrame::pointToFrame(const RS_Vector& world, LC_Interval& x, LC_Interval& y) const {
+    x = {};
+    y = {};
+    if (!isFinite2D(world)) {
+        return false;
+    }
+    const auto coordinate = [this](const double value, const double centre) {
+        const LC_Interval delta = LC_Interval::point(value) - LC_Interval::point(centre);
+        return finiteInterval(delta) ? scaled(delta, -m_scaleExponent) :
+            scaled(LC_Interval::point(value), -m_scaleExponent) -
+            scaled(LC_Interval::point(centre), -m_scaleExponent);
+    };
+    const LC_Interval localX = coordinate(world.x, m_centre.x);
+    const LC_Interval localY = coordinate(world.y, m_centre.y);
+    if (!finiteInterval(localX) || !finiteInterval(localY)) {
+        return false;
+    }
+    x = localX;
+    y = localY;
+    return true;
+}
+
+bool ReferenceFrame::pointToWorld(const RS_Vector& local, LC_Interval& x, LC_Interval& y) const {
+    x = {};
+    y = {};
+    if (!isFinite2D(local)) {
+        return false;
+    }
+    const LC_Interval worldX = LC_Interval::point(m_centre.x) + scaled(LC_Interval::point(local.x), m_scaleExponent);
+    const LC_Interval worldY = LC_Interval::point(m_centre.y) + scaled(LC_Interval::point(local.y), m_scaleExponent);
+    if (!finiteInterval(worldX) || !finiteInterval(worldY)) {
+        return false;
+    }
+    x = worldX;
+    y = worldY;
     return true;
 }
 
