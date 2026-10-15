@@ -690,6 +690,13 @@ QStringList RS_System::getDirectoryList(const QString& subDir) const{
         }
     }
 
+#ifdef LC_PLUGIN_INSTALL_DIR
+    // Configured plugin install location (LIBRECAD_PLUGIN_INSTALL_DIR)
+    if (subDirectory == QStringLiteral("plugins")) {
+        dirList.append(QStringLiteral(LC_PLUGIN_INSTALL_DIR));
+    }
+#endif
+
     QStringList ret;
 
     RS_DEBUG->print("RS_System::getDirectoryList: Paths:");
