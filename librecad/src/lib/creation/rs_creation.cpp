@@ -954,19 +954,16 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
         sourceFile = fileInfo.absoluteFilePath();
     }
     const QString sourceKey = QStringLiteral("LibreCAD.LibraryInsertSource");
-    RS_Block* wrapper = nullptr;
+    QString s;
     // Reuse only this file's wrapper; block editing needs a fresh one to avoid cycles.
     for (RS_Block* block : *graphic->getBlockList()) {
         if (container == graphic && !block->isUndone() && block->getUserDefVar(sourceKey) == sourceFile) {
-            wrapper = block;
+            s = block->getName();
             break;
         }
     }
 
-    QString s;
-    if (wrapper) {
-        s = wrapper->getName();
-    } else {
+    if (s.isEmpty()) {
         auto unusedName = [&](QString name) {
             while (g.findBlock(name) || graphic->findBlock(name)) {
                 name = g.newBlockName(graphic->newBlockName(name));
@@ -977,9 +974,8 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
         for (RS_Block* block : *g.getBlockList()) {
             const QString oldName = block->getName();
             if (graphic->findBlock(oldName)) {
-                const QString newName = unusedName(oldName);
-                g.getBlockList()->rename(block, newName);
-                g.renameInserts(oldName, newName);
+                g.getBlockList()->rename(block, unusedName(oldName));
+                g.renameInserts(oldName, block->getName());
             }
         }
         s = unusedName(fileInfo.completeBaseName());
