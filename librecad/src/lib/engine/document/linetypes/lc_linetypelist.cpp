@@ -3,6 +3,7 @@
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2026 LibreCAD.org
+ Copyright (C) 2026 Dongxu Li (github.com/dxli)
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License
@@ -140,7 +141,10 @@ LC_LineType* LC_LineTypeList::add(LC_LineType* entry) {
             setModified(true);
         }
     }
-    existing->hasImportedRecord |= entry->hasImportedRecord;
+    if (entry->hasImportedRecord && !existing->hasImportedRecord) {
+        existing->hasImportedRecord = true;
+        setModified(true);
+    }
     delete entry;
     return existing;
 }

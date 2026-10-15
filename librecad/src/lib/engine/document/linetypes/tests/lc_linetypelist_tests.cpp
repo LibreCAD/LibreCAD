@@ -3,6 +3,7 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2026 LibreCAD.org
+** Copyright (C) 2026 Dongxu Li (github.com/dxli)
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -447,4 +448,18 @@ TEST_CASE("LC_LineTypeList starts clean and add() dirties it as RS_LayerList::ad
     CHECK_FALSE(list.isModified());
     list.add(makeRecord(QStringLiteral("DASHED"), {64.0, -32.0}));
     CHECK(list.isModified());
+}
+
+TEST_CASE("LC_LineTypeList marks an imported seed as modified even when its metrics match",
+          "[linetype][list][seed]") {
+    LC_LineTypeList list;
+    const LC_LineType* seed = list.find(QStringLiteral("DASHED"));
+    REQUIRE(seed != nullptr);
+    list.add(makeRecord(seed->name, seed->pattern, seed->description));
+    CHECK(seed->hasImportedRecord);
+    CHECK(list.isModified());
+
+    list.setModified(false);
+    list.add(makeRecord(seed->name, seed->pattern, seed->description));
+    CHECK_FALSE(list.isModified());
 }
