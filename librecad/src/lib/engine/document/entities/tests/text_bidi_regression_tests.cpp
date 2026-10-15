@@ -807,6 +807,31 @@ TEST_CASE("Chinese mixed-number editing keeps logical text and native undo",
   }
 }
 
+TEST_CASE("Chinese editor cursor rectangle survives an input method query with no cursor",
+          "[text][bidi][chinese][gui]") {
+  // While setPlainText() replaces the text the widget's cursor is null, and a
+  // desktop input method (IBus) already asks for the cursor rectangle.
+  const auto input = QStringLiteral("\u4e2d\u6587123");
+  LC_TextEdit edit;
+  edit.resize(600, 160);
+  edit.setPlainText(input);
+  edit.setTextDirection(Qt::RightToLeft);
+  edit.show();
+  QApplication::processEvents();
+  CHECK(edit.cursorRect().isValid());
+  CHECK(edit.cursorRect(QTextCursor()).isNull());
+  int queries = 0;
+  QObject::connect(edit.document(), &QTextDocument::contentsChanged, &edit, [&] {
+    ++queries;
+    edit.inputMethodQuery(Qt::ImCursorRectangle);
+    edit.inputMethodQuery(Qt::ImAnchorRectangle);
+  });
+  edit.setPlainText(QStringLiteral("\u4e2d\u6587456"));
+  CHECK(queries > 0);
+  CHECK(edit.toPlainText() == QStringLiteral("\u4e2d\u6587456"));
+  CHECK(edit.cursorRect().isValid());
+}
+
 TEST_CASE("Chinese editor navigation follows visual runs without exposing controls",
           "[text][bidi][chinese][gui]") {
   const auto input = QStringLiteral("\u4e2d\u6587123");
