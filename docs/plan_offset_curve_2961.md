@@ -28,7 +28,7 @@ Plan **v6**, 2026-10-15. This file is the implementation source of truth. Every 
 verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION — S0, 0B-1 and 1A-1.a done; 0B-2 prepared for final revalidation; reference/check work pending.**
+Status: **IMPLEMENTATION — S0, 0B-1, 0B-2 and 1A-1.a done; 0B-3 ready; bounded intersection prerequisite in progress.**
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -90,8 +90,8 @@ A commit alone does not mean done; verification, review and the post-commit plan
 | S0 | Worktree, tracked plan, build baseline and evidence (documentation commit) | — | — | 0 product | done — de30f1d45, S0 reports/card, 2026-10-15 |
 | 0A | Trim Two must not replace an owned child | — | — | — | done on baseline by #3113 (`609ca81ae`); verify current tests at S0, then add the new-type mapping/test in 1D |
 | 0B-1 | Guard skeleton: `rowOf` table, pragmas, `static_assert`, kinds-only walk; registration; CI path filter; shadow-`rs.h` checks | B | S0 | 250 | done — d6de53d3c, 0B-1 evidence, 2026-10-15 |
-| 0B-2 | Entity factory header; clone and INSERT checks; pin tests | B | 0B-1 | 500 | in progress — prepared; Release checks passed, final ASan/order-fix revalidation pending |
-| 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | pending |
+| 0B-2 | Entity factory header; clone and INSERT checks; pin tests | B | 0B-1 | 500 | done — 5bfb3c8f0, 0B-2 reports/card, 2026-10-15 |
+| 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | pending — ready for coordinator |
 | 1A-1 | Closed forms, engine-layout test, validity check, tolerance helpers | C | S0 | 900 | partial — .a done at a4690db08; budget/reference/check/qualification children pending |
 | 1A-2 | Enumerator; class core and validated adoption factory; clone, `toPlainSpline`, normalisation, stamp, transforms; `writeEntity` case; INSERT capability; 0B row; interim Edit Properties guard | C | 0B-3, 1A-1 | 900 | pending |
 | 1A-3 | Grips, `moveRef`, snaps | C | 1A-2 | 550 | pending |
@@ -194,10 +194,10 @@ and the evidence needed to activate them. All product work is currently pending.
 | S0 | Done at de30f1d45 | Clean execution worktree, tracked roadmap, toolchain/builds/baseline reports, format matrix and census recorded below; post-commit checkpoint records this SHA. |
 | 0A | Existing upstream code | Verify #3113 ancestry and current trim tests. Record evidence in S0; only the new-type mapping belongs to 1D. |
 | 0B-1 | Done at d6de53d3c | Exhaustive 50/27/23 census and both negative shadow compiles passed; Release tag/lanes verified. |
-| 0B-2 | In progress; sources prepared | All 27 fixtures/clone/sole+mixed INSERT checks pass Release; finish isolated ASan validation and commit/checkpoint. |
-| 0B-3 | Waiting for 0B-2 | Run real DXF/DWG save/open and load completion; record stable known-gap identities and valid row totals. This completes the guard before adding RTTI. |
+| 0B-2 | Done at 5bfb3c8f0 | 27 valid fixtures, clone/sole+mixed INSERT and both pins; 7 cases/910 assertions pass full/DXF-fast/ASan; no gaps. |
+| 0B-3 | Ready; 0B-2 done | Run real DXF/DWG save/open and load completion; record stable known-gap identities and valid row totals. This completes the guard before adding RTTI. |
 | 1A-1.a | Done at a4690db08 | Normalization/local-frame/closed forms, robust source distance and tolerance helpers; 17 cases/2538 assertions pass Release/ASan, existing regressions and both fast lanes pass. |
-| 1A-1.b-budget | Ready after .a checkpoint | Bound intersection candidate allocation before pair-budget exhaustion; expose consumed work for shared validation budgets; test cap exits and existing topology/offset regressions. |
+| 1A-1.b-budget | In progress; Gibbs owns core/test files | Bound intersection candidate allocation before pair-budget exhaustion; expose consumed work for shared validation budgets; test cap exits and existing topology/offset regressions. |
 | 1A-1.b-ref | Waiting for .b-budget | Implement the bounded exact-reference/event graph in §3.5.1, without fitting or materializing splines; test visibility, components and budgets against current trim behavior. |
 | 1A-1.b-check | Waiting for .b-ref | Implement the adaptive cache-to-reference check, complete-component coverage and topology policy in §3.5. Use shared work counters; unresolved geometry refuses adoption. |
 | 1A-1.c | Waiting for .b | Add adversarial and current-engine corpus checks, failure budgets and performance measurements. Record acceptance/refusal results; endpoints and midpoint checks alone cannot close this parent step. |
@@ -257,8 +257,9 @@ out-of-scope features from implementation completion.
 
 S0 is complete at `de30f1d45`. Release/ASan configurations, all three target builds, Release full
 and fast-lane baselines, and focused ASan trim/ellipse checks passed, with existing skips recorded in its card.
-0B-1 is committed at d6de53d3c and 1A-1.a at a4690db08; their evidence is below. Gibbs's 0B-2 source is prepared,
-with final revalidation next. The coordinator owns the plan,
+0B-1 is committed at d6de53d3c, 0B-2 at 5bfb3c8f0, and 1A-1.a at a4690db08; their evidence is below. The
+coordinator owns the ready 0B-3 guard round trips; Gibbs owns the independent `.b-budget` core prerequisite. The
+coordinator owns the plan,
 shared build directories and commits. Assign explicit file ownership before any parallel work; never run concurrent
 Git/index operations or concurrent builds that mutate the same build tree.
 
@@ -417,6 +418,7 @@ Use this compact ledger under each executed card; expand it only with meaningful
 | S0 (documentation only) | de30f1d45f1337d55265c2f72413a9c976c18c40 | Product tree b05fb541d unchanged; all S0 builds/reports passed with existing skips documented | Coordinator/Gibbs review resolved; staged/committed paths only this roadmap | S0 done; 0B-1 ready for Gibbs; product steps pending |
 | 0B-1 | d6de53d3cb80199b4148b0e6d3dbb28f2b392b8c | `build/evidence/0B-1/summary.md`, owned-file hashes, Release builds/tags/lanes, positive and two negative syntax controls | Coordinator reviewed all three committed paths; no unrelated geometry files staged | Guard partial (0B-1 done); 0B-2 ready; 1A-1.a independent/in progress |
 | 1A-1.a | a4690db08b7220e93bbc8642d2c2b8b2e14fcf30 | Isolated Release/ASan geometry 17/2538; existing ellipse 48-case regressions; both Release fast lanes; CMake/qmake registrations | Gibbs's numeric findings fixed with regressions; committed paths match final tested files; 0B-2 patch safely preserved outside this commit | Geometry parent partial; .b-budget ready; 0B-2 final verification next |
+| 0B-2 | 5bfb3c8f08462694796489166f0146dd51fc7ca0 | `build/evidence/0B-2/*-final.junit.xml`: full/DXF-fast/ASan coverage 7/910, both Release fast lanes pass | Fixture-order failure corrected rather than masked; 27 types pass clone and both INSERT shapes; no gaps/skips in feature tag | Guard partial; 0B-3 ready; .b-budget independent/in progress |
 
 **Git safety.** Stage files by name; inspect staged paths before every commit. Preserve unrelated staged/unstaged work
 and untracked artifacts. Do not use `git add -A`, destructive checkout/reset, `--amend` or `--no-verify`. Local commit
@@ -1207,7 +1209,7 @@ Upstream #3113 (`609ca81ae`) added the ownership-aware replacement rule and Trim
 reimplement that fix. At S0, run the focused trim tests and inspect the current action implementation. Phase 1D still
 has a new type-specific responsibility: single Trim maps a clicked generated chord to its parent curve only for the
 recognized spline RTTI values. Add `EntityOffsetCurve` there, and verify Trim Two continues to refuse replacing a
-generated child without deleting it or damaging undo state. See the 1D tests and the PR D gate in §0.2.
+generated child without deleting it or damaging undo state. See the 1D tests and the PR C gate in §0.2.
 
 ### 0B. Guard test over every `RS2::EntityType`
 
@@ -1328,7 +1330,7 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
 
 #### 0B-2. Entity factory, clone and INSERT checks, pins
 
-**Ready execution card**
+**Executed card: done at 5bfb3c8f08462694796489166f0146dd51fc7ca0**
 - Owner: Gibbs; dependency 0B-1 at d6de53d3c; refresh HEAD after this checkpoint.
 - Scope: new `librecad/src/test/lc_testentityfactory.h` and the existing coverage-test source only. Coordinator owns
   CMake/qmake lists and shared builds while independently validating 1A-1.a; request the build handoff before running.
@@ -1338,8 +1340,16 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
   extend the guard walk and pins. No round-trip work yet; 0B-3 remains separate.
 - Validation: Release full/DXF-fast `[entity-coverage]` nonzero cases; both fast CI lanes; ASan coverage/ownership tags.
   Record per-type fixture/check results and verify no QApplication is created in either fast lane.
-- Review/recovery: preserve disjoint geometry work; coordinator reviews/stages only the two owned paths after tests,
-  commits the slice and records the real SHA in a separate roadmap checkpoint. Implementation SHA/evidence pending.
+- Review/evidence: the initial two mixed-block failures were intentional image/hatch prepending by `addEntity()`.
+  Fixtures now explicitly append and assert source order. Final full, DXF-fast and ASan `[entity-coverage]` runs pass
+  7 cases/910 assertions each, no skips/failures; all 27 fixtures, clones, sole/mixed INSERT shapes and both pins pass.
+  Both Release CI lanes pass (DXF JUnit tests=39507, 3 existing skips; DWG tests=34952, 4 existing skips).
+  Reports: `build/evidence/0B-2/coverage-{release,asan,dxf-fast}-final.junit.xml`, `dxf-fast-final.junit.xml`,
+  `dwg-fast-final.junit.xml`; all exit 0. Failed first-run reports remain, not hidden. ASan uses `detect_leaks=0`.
+- Commit/isolation: the restored patch was recompiled against committed a4690db08 geometry; only this header and
+  coverage-test file were staged. Gibbs's later core edits were not compiled into these already-built executables or
+  included in the commit. Scoped index/worktree and whitespace checks passed. No baseline gaps were added.
+- Next: 0B-3 format round trips; the complete guard/full-suite gate is still pending until that slice finishes.
 
 - **New header `librecad/src/test/lc_testentityfactory.h`** (header-only, `inline`; `librecad/src/test` is on the
   shared include path, `CMakeLists.txt:271`).
@@ -1372,6 +1382,21 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
   - The DXF halves of both pins come in 0B-3.
 
 #### 0B-3. Round trips, `reloadsAs`, known gaps
+
+**Ready execution card**
+- Owner: coordinator; dependency 0B-2 at 5bfb3c8f0; refresh HEAD after this checkpoint.
+- Files: coverage-test source and factory header only if a demonstrated I/O fixture correction is needed. No new
+  target registration; existing full/DXF-fast targets already contain the guard. Gibbs's core files remain disjoint.
+- Contract/tasks: actual DXF R2018 and DWG R2018 export/import for every valid drawing fixture; run
+  `RS_Graphic::onLoadingCompleted()`; assert one live top-level entity and measured reload type. Add both DXF pins.
+  Validate fixtures before declaring format gaps; check native version, export/import success and diagnostics.
+  Current callback/helpers and both format enum mappings are confirmed; use `QuietLog`, `SourceFonts` and
+  process-isolated `OutputDirectory`. Do not introduce GUI initialization into the fast lane.
+- Validation: focused full/DXF-fast and ASan coverage tags, both fast CI lanes, full visible Release suite against S0.
+  Expected new case families: DXF and DWG walks plus two DXF pins, each with nonzero actual counts. Report per-type
+  native reloads and only reproduced baseline gaps; no generic success/count result may hide a save failure.
+- Recovery/exit: preserve any core work during isolated verification; explicit-path implementation commit followed by
+  a roadmap checkpoint with actual SHA/known-gap evidence. This closes the guard, not the future new-type contract.
 
 - **DXF and DWG round trip.** For each drawing row: a fresh graphic with the one entity; `lc::test::exportDrawing` and
   `importDrawing` with `FormatDXFRW2018` and `FormatDWG2018`, inside `QuietLog`; run the application's post-load
@@ -1435,24 +1460,6 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
 - Next: restore and verify 0B-2; geometry continues with `.b-budget`, `.b-ref`, `.b-check`, `.c`. No validator, new
   persistent entity, UI or file-format completion is claimed by this leaf.
 
-#### 1A-1.b-budget. Bound shared intersection work before allocation
-
-**Ready card (after the .a checkpoint)**
-- Dependency: 1A-1.a at a4690db08. Files: `lc_parametriccurveintersection.{h,cpp}` and its existing tests only.
-  Coordinate shared builds with the coordinator; no CMake/qmake registration changes are needed for existing files.
-- Finding: `Solver::candidatePairs()` builds its whole vector before `solvePair()` enforces `maxBoxPairs`; the latter
-  also increments before checking. The result exposes no consumed-work counters for the reference/check shared cap.
-- Contract/tasks: check a combined pair-work allowance before broad candidate examination/allocation and before each
-  refinement, without counter overflow; return `LimitExceeded` rather than using a partial candidate list. Expose
-  consumed candidate/refinement/leaf counts on every result so reference analysis can debit one shared budget.
-  Preserve existing zero-depth behavior and default intersection/ordering semantics; do not add a fitting path.
-- Tests: deterministic dense-overlap input with a tiny cap refuses before quadratic allocation; consumed counts never
-  exceed caps; an exact-used budget passes and one-less refuses; invalid/empty input returns zero/appropriate work;
-  existing topology and all curve-offset tests remain valid. Run Release full suite, focused ASan topology/ownership
-  checks, and ellipse regressions before committing this shared-engine change.
-- Recovery/exit: preserve other slices, review scoped diff, commit this leaf, then update the roadmap with its real
-  SHA/work evidence before promoting `.b-ref`. `.b` and 1A-1 remain partial until every required child is done.
-
 **Files.**
 - New `lib/engine/document/entities/lc_ellipseoffsetgeometry.{h,cpp}`, containing:
   - `struct LC_EllipseOffsetDefinition` (§3.2);
@@ -1505,6 +1512,24 @@ registered in `librecad_tests` next to `lc_curveoffsetellipsetests.cpp`:
   vector counts. Use independent dense evaluations to check claimed error bounds, not the validator's own sample list.
 - **Work limits:** deterministic exits for piece/vertex/pair/depth caps and invalid zero limits; no overflowing work
   counter, unbounded recursion or successful unchecked adoption. Measure current import/edit costs without timing asserts.
+
+#### 1A-1.b-budget. Bound shared intersection work before allocation
+
+**In-progress card (Gibbs; no shared builds until coordinator handoff)**
+- Dependency: 1A-1.a at a4690db08. Files: `lc_parametriccurveintersection.{h,cpp}` and its existing tests only.
+  Coordinate shared builds with the coordinator; no CMake/qmake registration changes are needed for existing files.
+- Finding: `Solver::candidatePairs()` builds its whole vector before `solvePair()` enforces `maxBoxPairs`; the latter
+  also increments before checking. The result exposes no consumed-work counters for the reference/check shared cap.
+- Contract/tasks: check a combined pair-work allowance before broad candidate examination/allocation and before each
+  refinement, without counter overflow; return `LimitExceeded` rather than using a partial candidate list. Expose
+  consumed candidate/refinement/leaf counts on every result so reference analysis can debit one shared budget.
+  Preserve existing zero-depth behavior and default intersection/ordering semantics; do not add a fitting path.
+- Tests: deterministic dense-overlap input with a tiny cap refuses before quadratic allocation; consumed counts never
+  exceed caps; an exact-used budget passes and one-less refuses; invalid/empty input returns zero/appropriate work;
+  existing topology and all curve-offset tests remain valid. Run Release full suite, focused ASan topology/ownership
+  checks, and ellipse regressions before committing this shared-engine change.
+- Recovery/exit: preserve other slices, review scoped diff, commit this leaf, then update the roadmap with its real
+  SHA/work evidence before promoting `.b-ref`. `.b` and 1A-1 remain partial until every required child is done.
 
 ### 1A-2. Enumerator and class core
 
