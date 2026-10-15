@@ -145,6 +145,11 @@ win32 {
 DEFINES += LC_VERSION=\"$$LC_VERSION\"
 DEFINES += LC_PRERELEASE=\"$$LC_PRERELEASE\"
 
+# Pass NO_TIMESTAMP=true to qmake to omit the build date (reproducible builds).
+isEmpty(NO_TIMESTAMP): NO_TIMESTAMP = false
+!contains(NO_TIMESTAMP, ^(true|false)$): error("NO_TIMESTAMP must be true or false")
+equals(NO_TIMESTAMP, true): DEFINES += NO_TIMESTAMP
+
 # Additional libraries to load
 LIBS += -L../../generated/lib  \
     -ldxfrw \

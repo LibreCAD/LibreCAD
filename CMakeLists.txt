@@ -43,6 +43,11 @@ add_compile_definitions (LC_VERSION=2.2.2.6-alpha)
 add_compile_definitions (LC_PRERELEASE=true)
 add_compile_definitions (QT_USE_QSTRINGBUILDER)
 
+option (NO_TIMESTAMP "Omit build date from the binary (reproducible builds)" OFF)
+if (NO_TIMESTAMP)
+	add_compile_definitions(NO_TIMESTAMP)
+endif ()
+
 if (MSVC)
     #    add_compile_options(/bigobj)
     #    add_compile_options(/Zi /MT /EHsc /Oy- /Ob0)
