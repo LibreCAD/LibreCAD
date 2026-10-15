@@ -773,9 +773,14 @@ private:
         for (const double endA : {box.a0, box.a1}) {
             for (const double endB : {box.b0, box.b1}) {
                 if (m_curves.evaluate(p.segment, endA, a, da) && m_curves.evaluate(q.segment, endB, b, db) &&
+                    isFinite(a) && isFinite(da) && isFinite(b) && isFinite(db) &&
                     a.distanceTo(b) <= m_options.tolerance && atBranchEnd(p.segment, endA) &&
                     atBranchEnd(q.segment, endB)) {
-                    record(p, endA, q, endB, (a + b) * 0.5, LC_ParametricIntersection::Kind::Endpoint);
+                    const RS_Vector contact = (a + b) * 0.5;
+                    if (!isFinite(contact)) {
+                        return LC_IntersectionStatus::AmbiguousTopology;
+                    }
+                    record(p, endA, q, endB, contact, LC_ParametricIntersection::Kind::Endpoint);
                     return LC_IntersectionStatus::Ok;
                 }
             }
@@ -784,7 +789,9 @@ private:
         double u = 0.5 * (box.b0 + box.b1);
         // Gauss-Newton towards the nearest pair within the two leaves
         for (int iteration = 0; iteration < 40; ++iteration) {
-            if (!m_curves.evaluate(p.segment, t, a, da) || !m_curves.evaluate(q.segment, u, b, db)) {
+            if (!std::isfinite(t) || !std::isfinite(u) || !m_curves.evaluate(p.segment, t, a, da) ||
+                !m_curves.evaluate(q.segment, u, b, db) || !isFinite(a) || !isFinite(da) || !isFinite(b) ||
+                !isFinite(db)) {
                 return LC_IntersectionStatus::AmbiguousTopology;
             }
             const RS_Vector f = a - b;
@@ -797,19 +804,34 @@ private:
             if (!(det > 0.0) || !std::isfinite(det)) {
                 break;
             }
-            const double nextT = std::clamp(t - (h11 * g0 - h01 * g1) / det, p.a, p.b);
-            const double nextU = std::clamp(u - (h00 * g1 - h01 * g0) / det, q.a, q.b);
+            const double trialT = t - (h11 * g0 - h01 * g1) / det;
+            const double trialU = u - (h00 * g1 - h01 * g0) / det;
+            if (!std::isfinite(trialT) || !std::isfinite(trialU)) {
+                return LC_IntersectionStatus::AmbiguousTopology;
+            }
+            const double nextT = std::clamp(trialT, p.a, p.b);
+            const double nextU = std::clamp(trialU, q.a, q.b);
             if (nextT == t && nextU == u) {
                 break;
             }
             t = nextT;
             u = nextU;
         }
-        if (!m_curves.evaluate(p.segment, t, a, da) || !m_curves.evaluate(q.segment, u, b, db)) {
+        if (!std::isfinite(t) || !std::isfinite(u) || !m_curves.evaluate(p.segment, t, a, da) ||
+            !m_curves.evaluate(q.segment, u, b, db) || !isFinite(a) || !isFinite(da) || !isFinite(b) || !isFinite(db)) {
             return LC_IntersectionStatus::AmbiguousTopology;
         }
         const double tolerance = m_options.tolerance;
-        if (a.distanceTo(b) > tolerance || !(da.magnitude() > 0.0) || !(db.magnitude() > 0.0)) {
+        const double distance = a.distanceTo(b);
+        const double speedA = da.magnitude();
+        const double speedB = db.magnitude();
+        const RS_Vector contact = (a + b) * 0.5;
+        if (!std::isfinite(distance) || distance > tolerance || !(speedA > 0.0) || !std::isfinite(speedA) ||
+            !(speedB > 0.0) || !std::isfinite(speedB) || !isFinite(contact)) {
+            return LC_IntersectionStatus::AmbiguousTopology;
+        }
+        const double initialStep = 8.0 * tolerance / speedB;
+        if (!(initialStep > 0.0) || !std::isfinite(initialStep)) {
             return LC_IntersectionStatus::AmbiguousTopology;
         }
         // Which side of the first branch the second is on, on either side of
@@ -819,15 +841,28 @@ private:
         // whole segment, the side furthest from the first above rounding noise
         // decides. Staying within the noise is retracing.
         const double noise = 1024.0 * g_eps * (std::abs(a.x) + std::abs(a.y) + std::abs(b.x) + std::abs(b.y));
+        if (!std::isfinite(noise)) {
+            return LC_IntersectionStatus::AmbiguousTopology;
+        }
+        // Enough doublings to span every positive double, including subnormals.
+        constexpr int maxContactSteps = std::numeric_limits<double>::max_exponent -
+                                        std::numeric_limits<double>::min_exponent +
+                                        std::numeric_limits<double>::digits + 1;
         int sides[2] = {0, 0};
         double farthest[2] = {0.0, 0.0};
         // how far along the second branch the contact reaches, on each side
         double reach[2] = {q.a, q.b};
         for (int k = 0; k < 2; ++k) {
             const double direction = (k == 0) ? -1.0 : 1.0;
-            for (double step = 8.0 * tolerance / db.magnitude();; step *= 2.0) {
+            double step = initialStep;
+            bool finished = false;
+            for (int iteration = 0; iteration < maxContactSteps; ++iteration) {
                 const double s = u + direction * step;
+                if (!std::isfinite(s)) {
+                    return LC_IntersectionStatus::AmbiguousTopology;
+                }
                 if (s < sq.t0 || s > sq.t1) {
+                    finished = true;
                     break;
                 }
                 reach[k] = s;
@@ -840,8 +875,18 @@ private:
                 }
                 if (std::abs(side) > tolerance) {
                     sides[k] = side > 0.0 ? 1 : -1;
+                    finished = true;
                     break;
                 }
+                // A positive step may round s back to u; let it grow until representable.
+                const double nextStep = 2.0 * step;
+                if (!std::isfinite(nextStep) || !(nextStep > step)) {
+                    return LC_IntersectionStatus::AmbiguousTopology;
+                }
+                step = nextStep;
+            }
+            if (!finished) {
+                return LC_IntersectionStatus::LimitExceeded;
             }
             if (sides[k] == 0 && std::abs(farthest[k]) > noise) {
                 sides[k] = farthest[k] > 0.0 ? 1 : -1;
@@ -851,9 +896,9 @@ private:
             return LC_IntersectionStatus::AmbiguousTopology; // retraced
         }
         const bool crosses = sides[0] != 0 && sides[1] != 0 && sides[0] != sides[1];
-        record(p, t, q, u, (a + b) * 0.5,
+        record(p, t, q, u, contact,
                crosses ? LC_ParametricIntersection::Kind::Transverse : LC_ParametricIntersection::Kind::Tangent,
-               reach[0], reach[1], a.distanceTo(b));
+               reach[0], reach[1], distance);
         return LC_IntersectionStatus::Ok;
     }
 
@@ -866,25 +911,38 @@ private:
         const LC_ParametricSegment& sp = m_segments[p.segment];
         RS_Vector c;
         RS_Vector dc;
-        if (!m_curves.evaluate(segment, s, c, dc)) {
+        if (!std::isfinite(t) || !std::isfinite(s) || !m_curves.evaluate(segment, s, c, dc) || !isFinite(c) ||
+            !isFinite(dc)) {
             return false;
         }
         RS_Vector a;
         RS_Vector da;
         for (int iteration = 0; iteration < 30; ++iteration) {
-            if (!m_curves.evaluate(p.segment, t, a, da) || !(da.squared() > 0.0)) {
+            if (!m_curves.evaluate(p.segment, t, a, da) || !isFinite(a) || !isFinite(da)) {
                 return false;
             }
-            const double next = std::clamp(t + RS_Vector::dotP(c - a, da) / da.squared(), sp.t0, sp.t1);
+            const double squaredSpeed = da.squared();
+            if (!(squaredSpeed > 0.0) || !std::isfinite(squaredSpeed)) {
+                return false;
+            }
+            const double trial = t + RS_Vector::dotP(c - a, da) / squaredSpeed;
+            if (!std::isfinite(trial)) {
+                return false;
+            }
+            const double next = std::clamp(trial, sp.t0, sp.t1);
             if (next == t) {
                 break;
             }
             t = next;
         }
-        if (!m_curves.evaluate(p.segment, t, a, da) || !(da.magnitude() > 0.0)) {
+        if (!m_curves.evaluate(p.segment, t, a, da) || !isFinite(a) || !isFinite(da)) {
             return false;
         }
-        side = (da.x * (c.y - a.y) - da.y * (c.x - a.x)) / da.magnitude();
+        const double speed = da.magnitude();
+        if (!(speed > 0.0) || !std::isfinite(speed)) {
+            return false;
+        }
+        side = (da.x * (c.y - a.y) - da.y * (c.x - a.x)) / speed;
         return std::isfinite(side);
     }
 

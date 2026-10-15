@@ -136,6 +136,47 @@ private:
     bool m_looseBounds;
 };
 
+/** Two lines with exact bounds, independent of spline evaluation and normalization. */
+class AnalyticLines final : public LC_ParametricCurves {
+public:
+    AnalyticLines(const RS_Vector& first, const RS_Vector& second, const double t0 = 0.0, const double t1 = 1.0)
+        : m_directions{first, second}, m_segments{{0, t0, t1}, {1, t0, t1}}, m_middle{t0 + 0.5 * (t1 - t0)} {
+    }
+
+    const std::vector<LC_ParametricSegment>& segments() const override {
+        return m_segments;
+    }
+
+    std::size_t branchCount() const override {
+        return 2;
+    }
+
+    std::ptrdiff_t next(const std::size_t) const override {
+        return -1;
+    }
+
+    bool evaluate(const std::size_t segment, const double t, RS_Vector& point, RS_Vector& derivative) const override {
+        derivative = m_directions[segment];
+        point = {(t - m_middle) * derivative.x, (t - m_middle) * derivative.y};
+        return true;
+    }
+
+    bool bound(const std::size_t segment, const double a, const double b, LC_Interval& x, LC_Interval& y,
+               LC_Interval& dx, LC_Interval& dy) const override {
+        const RS_Vector& direction = m_directions[segment];
+        x = LC_Interval::hull((a - m_middle) * direction.x, (b - m_middle) * direction.x);
+        y = LC_Interval::hull((a - m_middle) * direction.y, (b - m_middle) * direction.y);
+        dx = LC_Interval::point(direction.x);
+        dy = LC_Interval::point(direction.y);
+        return true;
+    }
+
+private:
+    RS_Vector m_directions[2];
+    std::vector<LC_ParametricSegment> m_segments;
+    double m_middle;
+};
+
 LC_IntersectionResult intersect(std::vector<const RS_Spline*> splines, const double tolerance = 1e-9) {
     LC_IntersectionOptions options;
     options.tolerance = tolerance;
@@ -555,6 +596,101 @@ TEST_CASE("Intersection work is reported for invalid input and leaf or topology 
         CHECK(ambiguous.work.refinementBoxPairs == 1);
         CHECK(ambiguous.work.totalBoxPairs == 2);
         CHECK(ambiguous.intersections.empty());
+    }
+}
+
+TEST_CASE("Contact classification refuses an underflowed initial probe step",
+          "[lc-offsetcurve][geometry][intersection-progress][curve-offset][topology]") {
+    const double scale = 1e200;
+    const RS_Vector direction{scale, scale};
+    const AnalyticLines curves{{scale, 0.0}, direction};
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-200;
+    options.maxDepth = 0;
+    REQUIRE(std::isfinite(direction.magnitude()));
+    REQUIRE(8.0 * options.tolerance / direction.magnitude() == 0.0);
+
+    const LC_IntersectionResult result = findIntersections(curves, options);
+    REQUIRE(result.status == LC_IntersectionStatus::AmbiguousTopology);
+    CHECK(result.intersections.empty());
+    CHECK(result.work.refinementBoxPairs == 1);
+    checkWork(result, options);
+}
+
+TEST_CASE("Contact classification refuses a nonfinite speed with finite derivative components",
+          "[lc-offsetcurve][geometry][intersection-progress][curve-offset][topology]") {
+    const double scale = 1.4e308;
+    const RS_Vector direction{scale, scale};
+    const AnalyticLines curves{{scale, 0.0}, direction};
+    LC_IntersectionOptions options;
+    options.tolerance = 1.0;
+    options.maxDepth = 0;
+    REQUIRE(std::isfinite(direction.x));
+    REQUIRE(std::isfinite(direction.y));
+    REQUIRE_FALSE(std::isfinite(direction.magnitude()));
+
+    const LC_IntersectionResult result = findIntersections(curves, options);
+    REQUIRE(result.status == LC_IntersectionStatus::AmbiguousTopology);
+    CHECK(result.intersections.empty());
+    CHECK(result.work.refinementBoxPairs == 1);
+    checkWork(result, options);
+}
+
+TEST_CASE("Contact classification refuses an overflowed initial probe step",
+          "[lc-offsetcurve][geometry][intersection-progress][curve-offset][topology]") {
+    const double scale = 1e308;
+    const RS_Vector direction{0.0, scale};
+    const AnalyticLines curves{{scale, 0.0}, direction};
+    LC_IntersectionOptions options;
+    options.tolerance = 3e307;
+    options.maxDepth = 0;
+    REQUIRE(std::isfinite(direction.magnitude()));
+    REQUIRE_FALSE(std::isfinite(8.0 * options.tolerance / direction.magnitude()));
+    REQUIRE(RS_Vector(-0.5 * scale, 0.0).distanceTo({0.0, -0.5 * scale}) > options.tolerance);
+
+    const LC_IntersectionResult result = findIntersections(curves, options);
+    REQUIRE(result.status == LC_IntersectionStatus::AmbiguousTopology);
+    CHECK(result.intersections.empty());
+    CHECK(result.work.refinementBoxPairs == 1);
+    checkWork(result, options);
+}
+
+TEST_CASE("Positive contact probe steps grow through rounded parameters to a shallow crossing",
+          "[lc-offsetcurve][geometry][intersection-progress][curve-offset][topology]") {
+    const double t0 = 1e16;
+    const double t1 = t0 + 16.0;
+    const double middle = t0 + 8.0;
+    const RS_Vector direction{1.0, 1e-14};
+    const AnalyticLines curves{{1.0, 0.0}, direction, t0, t1};
+    LC_IntersectionOptions options;
+    options.maxDepth = 0;
+    for (const double tolerance : {1e-16, std::numeric_limits<double>::denorm_min()}) {
+        CAPTURE(tolerance);
+        options.tolerance = tolerance;
+        const double step = 8.0 * tolerance / direction.magnitude();
+        REQUIRE(std::isfinite(step));
+        REQUIRE(step > 0.0);
+        REQUIRE(middle + step == middle);
+        REQUIRE(middle - step == middle);
+        REQUIRE(8.0 * direction.y > tolerance);
+
+        const LC_IntersectionResult result = findIntersections(curves, options);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        REQUIRE(result.intersections.size() == 1);
+        checkWork(result, options);
+        CHECK(result.work.refinementBoxPairs == 1);
+        const LC_ParametricIntersection& contact = result.intersections.front();
+        CHECK(contact.kind == Kind::Transverse);
+        CHECK(contact.branchA == 0);
+        CHECK(contact.branchB == 1);
+        CHECK(contact.parameterA == middle);
+        CHECK(contact.parameterB == middle);
+        CHECK(contact.parameterA > t0);
+        CHECK(contact.parameterA < t1);
+        CHECK(contact.parameterB > t0);
+        CHECK(contact.parameterB < t1);
+        CHECK(contact.point.x == 0.0);
+        CHECK(contact.point.y == 0.0);
     }
 }
 
