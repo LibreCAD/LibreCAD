@@ -2619,6 +2619,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_hatchmovetests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_image_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_insert_transform_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_entitytype_coverage_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_mtext_bidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_text_bidi_tests.cpp
@@ -3244,6 +3245,7 @@ if (BUILD_TESTS)
     )
 
     set(LIBRECAD_DXF_FAST_TEST_SOURCES
+        librecad/src/lib/engine/document/entities/tests/lc_entitytype_coverage_tests.cpp
         librecad/src/lib/filters/tests/dxf_attribute_tests.cpp
         librecad/src/lib/filters/tests/dxf_object_tests.cpp
         librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
