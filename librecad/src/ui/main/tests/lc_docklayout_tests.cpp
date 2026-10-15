@@ -239,6 +239,39 @@ TEST_CASE("Draft toggling preserves the drawing title", "[.gui][draft][3018]") {
     }
 }
 
+TEST_CASE("Chinese UI translations preserve default keyboard shortcuts", "[gui][issue3135]") {
+    REQUIRE(lc::test::application() != nullptr);
+    const QVariant oldTranslations = RS_SETTINGS->getSettings()->value("/Paths/Translations");
+    LC_SET_ONE("Paths", "Translations", QStringLiteral(LIBRECAD_TEST_TRANSLATION_DIR));
+
+    const std::pair<const char*, QKeySequence> shortcuts[] = {
+        {"DeselectAll", QKeySequence(Qt::CTRL | Qt::Key_K)},
+        {"ViewGrid", QKeySequence(Qt::CTRL | Qt::Key_G)},
+        {"ViewDraft", QKeySequence(Qt::CTRL | Qt::Key_D)},
+        {"ViewStatusBar", QKeySequence(Qt::CTRL | Qt::Key_I)},
+    };
+    for (const QString& locale : {QStringLiteral("zh_CN"), QStringLiteral("zh_TW")}) {
+        RS_SYSTEM->loadTranslation(locale, "en");
+        DockFixture fixture;
+        for (const auto& [actionName, expected] : shortcuts) {
+            QAction* action = fixture.window.getAction(actionName);
+            CHECK(action != nullptr);
+            if (action != nullptr) {
+                CHECK(action->shortcut() == expected);
+            }
+        }
+    }
+
+    RS_SYSTEM->loadTranslation("en", "en");
+    const auto groupGuard = RS_SETTINGS->beginGroupGuard("Paths");
+    if (oldTranslations.isValid()) {
+        RS_SETTINGS->write("Translations", oldTranslations);
+    }
+    else {
+        RS_SETTINGS->remove("Translations");
+    }
+}
+
 TEST_CASE("Opening a drawing keeps its saved current layer", "[.gui][dock-window][saved-current-layer]") {
     DockFixture fixture;
     auto& window = fixture.window;

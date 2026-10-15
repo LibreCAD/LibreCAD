@@ -81,6 +81,11 @@ DESTDIR = $${INSTALLDIR}
 # Unquoted: main.cpp stringifies it with XSTR(), as CMakeLists.txt does.
 DEFINES += QC_APPDIR=librecad
 
+# Let RS_System find plugins installed to LIBRECAD_PLUGIN_INSTALL_DIR.
+!isEmpty(LIBRECAD_PLUGIN_INSTALL_DIR) {
+    DEFINES += "LC_PLUGIN_INSTALL_DIR=\"\\\"$$LIBRECAD_PLUGIN_INSTALL_DIR\\\"\""
+}
+
 # Make translations at the end of the process
 unix {
     LC_VERSION=$$system([ "$(which git)x" != "x" -a -d ../../.git ] && echo "$(git describe --always)" || echo "$${LC_VERSION}")
@@ -144,6 +149,11 @@ win32 {
 
 DEFINES += LC_VERSION=\"$$LC_VERSION\"
 DEFINES += LC_PRERELEASE=\"$$LC_PRERELEASE\"
+
+# Pass NO_TIMESTAMP=true to qmake to omit the build date (reproducible builds).
+isEmpty(NO_TIMESTAMP): NO_TIMESTAMP = false
+!contains(NO_TIMESTAMP, ^(true|false)$): error("NO_TIMESTAMP must be true or false")
+equals(NO_TIMESTAMP, true): DEFINES += NO_TIMESTAMP
 
 # Additional libraries to load
 LIBS += -L../../generated/lib  \

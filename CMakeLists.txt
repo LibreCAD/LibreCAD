@@ -43,6 +43,11 @@ add_compile_definitions (LC_VERSION=2.2.2.6-alpha)
 add_compile_definitions (LC_PRERELEASE=true)
 add_compile_definitions (QT_USE_QSTRINGBUILDER)
 
+option (NO_TIMESTAMP "Omit build date from the binary (reproducible builds)" OFF)
+if (NO_TIMESTAMP)
+	add_compile_definitions(NO_TIMESTAMP)
+endif ()
+
 if (MSVC)
     #    add_compile_options(/bigobj)
     #    add_compile_options(/Zi /MT /EHsc /Oy- /Ob0)
@@ -2258,6 +2263,22 @@ set_source_files_properties(
     librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp PROPERTIES
     INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/libraries/qtbidi")
 
+if(APPLE)
+    set(LIBRECAD_PLUGIN_INSTALL_DIR "bin/LibreCAD.app/Contents/PlugIns/LibreCAD"
+        CACHE STRING "Plugin destination, relative to CMAKE_INSTALL_PREFIX or absolute")
+else()
+    set(LIBRECAD_PLUGIN_INSTALL_DIR "bin/resources/plugins"
+        CACHE STRING "Plugin destination, relative to CMAKE_INSTALL_PREFIX or absolute")
+endif()
+
+# Let RS_System find plugins wherever they are installed.
+if(IS_ABSOLUTE "${LIBRECAD_PLUGIN_INSTALL_DIR}")
+    set(LC_PLUGIN_INSTALL_DIR "${LIBRECAD_PLUGIN_INSTALL_DIR}")
+else()
+    set(LC_PLUGIN_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${LIBRECAD_PLUGIN_INSTALL_DIR}")
+endif()
+file(TO_CMAKE_PATH "${LC_PLUGIN_INSTALL_DIR}" LC_PLUGIN_INSTALL_DIR)
+
 qt_add_library (librecad_lib STATIC
                 ${MUPARSER_SOURCES}
                 ${SHARED_SOURCES}
@@ -2269,6 +2290,7 @@ qt_add_library (librecad_lib STATIC
 # the target was compiled with both -D's and a -Wmacro-redefined warning.
 target_compile_definitions (librecad_lib PRIVATE
                             DWGSUPPORT
+                            LC_PLUGIN_INSTALL_DIR="${LC_PLUGIN_INSTALL_DIR}"
 )
 target_include_directories(librecad_lib PRIVATE
     ${SHARED_INCLUDES}
@@ -2795,6 +2817,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/shp_shapelib_tests.cpp
         librecad/src/lib/filters/tests/shp_import_filter_tests.cpp
     )
+    add_dependencies(librecad_tests LibreCAD_lrelease)
 
     # Include directories for rs_math.h and other dependencies
     target_include_directories (librecad_tests PRIVATE
@@ -2819,7 +2842,7 @@ if (BUILD_TESTS)
     # Enable C++17 for the test target (matching LibreCAD's standard)
     target_compile_features (librecad_tests PRIVATE cxx_std_17)
     # compiling time defines
-    target_compile_definitions(librecad_tests PRIVATE BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}" LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata")
+    target_compile_definitions(librecad_tests PRIVATE BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}" LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata" LIBRECAD_TEST_TRANSLATION_DIR="${CMAKE_CURRENT_BINARY_DIR}")
 
     add_executable(librecad_text_bidi_tests EXCLUDE_FROM_ALL
         ${LIBRECAD_TEST_SETTINGS_ISOLATION_SOURCE}
