@@ -26,7 +26,9 @@
 
 #include <algorithm>
 #include <cmath>
+#include <limits>
 #include <memory>
+#include <tuple>
 #include <vector>
 
 #include "lc_curveoffset.h"
@@ -75,7 +77,8 @@ size_t endsAt(const std::vector<std::unique_ptr<RS_Entity>>& entities, const RS_
 /** Each spline one branch, each of its knot spans one segment. */
 class SplineCurves final : public LC_ParametricCurves {
 public:
-    explicit SplineCurves(std::vector<const RS_Spline*> splines) : m_splines{std::move(splines)} {
+    explicit SplineCurves(std::vector<const RS_Spline*> splines, const bool looseBounds = false)
+        : m_splines{std::move(splines)}, m_looseBounds{looseBounds} {
         for (size_t b = 0; b < m_splines.size(); ++b) {
             const std::vector<double> breaks = m_splines[b]->getBreakParameters();
             for (size_t i = 0; i + 1 < breaks.size(); ++i) {
@@ -118,6 +121,10 @@ public:
         }
         x = bounds.x;
         y = bounds.y;
+        if (m_looseBounds) {
+            x = LC_Interval::hull(x, LC_Interval::hull(-1e6, 1e6));
+            y = LC_Interval::hull(y, LC_Interval::hull(-1e6, 1e6));
+        }
         dx = bounds.dx;
         dy = bounds.dy;
         return true;
@@ -126,12 +133,21 @@ public:
 private:
     std::vector<const RS_Spline*> m_splines;
     std::vector<LC_ParametricSegment> m_segments;
+    bool m_looseBounds;
 };
 
 LC_IntersectionResult intersect(std::vector<const RS_Spline*> splines, const double tolerance = 1e-9) {
     LC_IntersectionOptions options;
     options.tolerance = tolerance;
     return findIntersections(SplineCurves{std::move(splines)}, options);
+}
+
+void checkWork(const LC_IntersectionResult& result, const LC_IntersectionOptions& options) {
+    REQUIRE(result.work.candidateBoxPairs <= options.maxBoxPairs);
+    REQUIRE(result.work.refinementBoxPairs <= options.maxBoxPairs - result.work.candidateBoxPairs);
+    CHECK(result.work.totalBoxPairs == result.work.candidateBoxPairs + result.work.refinementBoxPairs);
+    CHECK(result.work.totalBoxPairs <= options.maxBoxPairs);
+    CHECK(result.work.generatedLeaves <= options.maxLeaves);
 }
 
 /** Crossings of polylines through dense samples of each spline: an independent count. */
@@ -175,6 +191,372 @@ size_t sampledCrossings(const std::vector<const RS_Spline*>& splines) {
 }
 
 } // namespace
+
+TEST_CASE("Dense overlapping leaves exhaust the shared budget during hierarchy traversal",
+          "[lc-offsetcurve][geometry][intersection-budget][curve-offset][topology]") {
+    const RS_Spline segment = line({0, 0}, {1, 1});
+    // More than 130000 possible pairs, but only the permitted prefix may be examined or retained.
+    const SplineCurves curves{std::vector<const RS_Spline*>(512, &segment)};
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-9;
+    for (const std::size_t cap : {0u, 1u, 7u}) {
+        CAPTURE(cap);
+        options.maxBoxPairs = cap;
+        const LC_IntersectionResult result = findIntersections(curves, options);
+        REQUIRE(result.status == LC_IntersectionStatus::LimitExceeded);
+        CHECK(result.intersections.empty());
+        checkWork(result, options);
+        CHECK(result.work.candidateBoxPairs == cap);
+        CHECK(result.work.refinementBoxPairs == 0);
+        CHECK(result.work.totalBoxPairs == cap);
+        CHECK(result.work.generatedLeaves == curves.segments().size());
+    }
+}
+
+TEST_CASE("An exact shared intersection budget succeeds and one less discards partial roots",
+          "[lc-offsetcurve][geometry][intersection-budget][curve-offset][topology]") {
+    const RS_Spline a = line({0, 0}, {2, 2});
+    const RS_Spline b = line({0, 2}, {2, 0});
+    const RS_Spline c = line({1, -1}, {1, 3});
+    const SplineCurves curves{{&a, &b, &c}};
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-9;
+    const LC_IntersectionResult baseline = findIntersections(curves, options);
+    REQUIRE(baseline.status == LC_IntersectionStatus::Ok);
+    REQUIRE(baseline.intersections.size() == 3);
+    checkWork(baseline, options);
+    CHECK(baseline.work.candidateBoxPairs >= 3);
+    REQUIRE(baseline.work.refinementBoxPairs >= 3);
+    CHECK(baseline.work.generatedLeaves == 3);
+
+    for (const std::size_t cap : {baseline.work.totalBoxPairs, std::numeric_limits<std::size_t>::max()}) {
+        CAPTURE(cap);
+        options.maxBoxPairs = cap;
+        const LC_IntersectionResult exact = findIntersections(curves, options);
+        REQUIRE(exact.status == LC_IntersectionStatus::Ok);
+        checkWork(exact, options);
+        CHECK(exact.work.candidateBoxPairs == baseline.work.candidateBoxPairs);
+        CHECK(exact.work.refinementBoxPairs == baseline.work.refinementBoxPairs);
+        CHECK(exact.work.totalBoxPairs == baseline.work.totalBoxPairs);
+        CHECK(exact.work.generatedLeaves == baseline.work.generatedLeaves);
+        REQUIRE(exact.intersections.size() == baseline.intersections.size());
+        for (std::size_t i = 0; i < exact.intersections.size(); ++i) {
+            const LC_ParametricIntersection& x = exact.intersections[i];
+            const LC_ParametricIntersection& expected = baseline.intersections[i];
+            CHECK(x.branchA == expected.branchA);
+            CHECK(x.parameterA == expected.parameterA);
+            CHECK(x.branchB == expected.branchB);
+            CHECK(x.parameterB == expected.parameterB);
+            CHECK(x.point == expected.point);
+            CHECK(x.kind == expected.kind);
+        }
+    }
+
+    options.maxBoxPairs = baseline.work.totalBoxPairs - 1;
+    const LC_IntersectionResult refused = findIntersections(curves, options);
+    REQUIRE(refused.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(refused.intersections.empty());
+    checkWork(refused, options);
+    CHECK(refused.work.candidateBoxPairs == baseline.work.candidateBoxPairs);
+    CHECK(refused.work.refinementBoxPairs == baseline.work.refinementBoxPairs - 1);
+    CHECK(refused.work.totalBoxPairs == options.maxBoxPairs);
+    CHECK(refused.work.generatedLeaves == 3);
+}
+
+TEST_CASE("Overlapping X bounds separated on Y are pruned with a linear pair budget",
+          "[lc-offsetcurve][geometry][intersection-budget][curve-offset][topology]") {
+    constexpr std::size_t count = 256;
+    std::vector<RS_Spline> splines;
+    splines.reserve(count);
+    for (std::size_t i = 0; i < count; ++i) {
+        const double y = 4.0 * static_cast<double>(i);
+        splines.push_back(line({0.0, y}, {1.0, y}));
+    }
+    std::vector<const RS_Spline*> branches;
+    for (const RS_Spline& spline : splines) {
+        branches.push_back(&spline);
+    }
+    const SplineCurves curves{branches};
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-9;
+    options.maxBoxPairs = count - 1;
+    const LC_IntersectionResult result = findIntersections(curves, options);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    checkWork(result, options);
+    CHECK(result.intersections.empty());
+    CHECK(result.work.candidateBoxPairs == count - 1);
+    CHECK(result.work.refinementBoxPairs == 0);
+    CHECK(result.work.generatedLeaves == count);
+
+    --options.maxBoxPairs;
+    const LC_IntersectionResult refused = findIntersections(curves, options);
+    REQUIRE(refused.status == LC_IntersectionStatus::LimitExceeded);
+    checkWork(refused, options);
+    CHECK(refused.work.totalBoxPairs == options.maxBoxPairs);
+    CHECK(refused.work.refinementBoxPairs == 0);
+    CHECK(refused.intersections.empty());
+}
+
+TEST_CASE("An anchored cloud does not enumerate the unanchored cloud's internal pairs",
+          "[lc-offsetcurve][geometry][intersection-budget][curve-offset][topology]") {
+    constexpr std::size_t count = 256;
+    const RS_Spline anchor = line({-1, 0}, {1, 0});
+    const RS_Spline crossing = line({0, -1}, {0, 1});
+    std::vector<const RS_Spline*> branches(count, &crossing);
+    branches.front() = &anchor;
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-9;
+    options.anchoredBranches = 1;
+    options.maxBoxPairs = 8 * count;
+    const LC_IntersectionResult result = findIntersections(SplineCurves{branches}, options);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    checkWork(result, options);
+    REQUIRE(result.intersections.size() == count - 1);
+    CHECK(result.work.generatedLeaves == count);
+    CHECK(result.work.totalBoxPairs < options.maxBoxPairs);
+    for (std::size_t i = 0; i < result.intersections.size(); ++i) {
+        const LC_ParametricIntersection& x = result.intersections[i];
+        CHECK(x.branchA == 0);
+        CHECK(x.branchB == i + 1);
+        CHECK(x.kind == Kind::Transverse);
+        CHECK(x.point.distanceTo(RS_Vector{0, 0}) < options.tolerance);
+    }
+}
+
+TEST_CASE("Hierarchy intersections match a brute-force walk over eligible branch pairs",
+          "[lc-offsetcurve][geometry][intersection-budget][curve-offset][topology]") {
+    const std::vector<RS_Spline> splines{
+        line({-3, 0}, {3, 0}), line({0, -3}, {0, 3}), line({-2, -2}, {2, 2}),
+        line({-2, 2}, {2, -2}), line({5, 5}, {6, 6}), line({-3, 1}, {3, 1})};
+    std::vector<const RS_Spline*> branches;
+    for (const RS_Spline& spline : splines) {
+        branches.push_back(&spline);
+    }
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-9;
+    for (const std::size_t anchored : {std::size_t{2}, std::numeric_limits<std::size_t>::max()}) {
+        CAPTURE(anchored);
+        options.anchoredBranches = anchored;
+        const LC_IntersectionResult result = findIntersections(SplineCurves{branches}, options);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        checkWork(result, options);
+        std::vector<LC_ParametricIntersection> expected;
+        for (std::size_t a = 0; a < branches.size(); ++a) {
+            for (std::size_t b = a + 1; b < branches.size(); ++b) {
+                if (a >= anchored && b >= anchored) {
+                    continue;
+                }
+                const LC_IntersectionResult pair = intersect({branches[a], branches[b]}, options.tolerance);
+                REQUIRE(pair.status == LC_IntersectionStatus::Ok);
+                for (LC_ParametricIntersection x : pair.intersections) {
+                    REQUIRE(x.branchA == 0);
+                    REQUIRE(x.branchB == 1);
+                    x.branchA = a;
+                    x.branchB = b;
+                    expected.push_back(x);
+                }
+            }
+        }
+        const auto key = [](const LC_ParametricIntersection& x) {
+            return std::make_tuple(x.branchA, x.parameterA, x.branchB, x.parameterB);
+        };
+        std::sort(expected.begin(), expected.end(), [&](const auto& a, const auto& b) { return key(a) < key(b); });
+        REQUIRE_FALSE(expected.empty());
+        REQUIRE(result.intersections.size() == expected.size());
+        for (std::size_t i = 0; i < expected.size(); ++i) {
+            const LC_ParametricIntersection& x = result.intersections[i];
+            CHECK(x.branchA == expected[i].branchA);
+            CHECK(x.parameterA == Approx(expected[i].parameterA).margin(1e-12));
+            CHECK(x.branchB == expected[i].branchB);
+            CHECK(x.parameterB == Approx(expected[i].parameterB).margin(1e-12));
+            CHECK(x.kind == expected[i].kind);
+            CHECK(x.point.distanceTo(expected[i].point) < options.tolerance);
+        }
+    }
+}
+
+TEST_CASE("Aggregate bridge pruning requires a complete single-branch proof",
+          "[lc-offsetcurve][geometry][intersection-budget][curve-offset][topology]") {
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-9;
+
+    SECTION("Many monotone segments with overlapping loose boxes use a linear pair budget") {
+        for (const std::size_t count : {255u, 256u, 257u}) {
+            CAPTURE(count);
+            std::vector<RS_Vector> controls;
+            std::vector<double> knots{0.0};
+            for (std::size_t i = 0; i <= count; ++i) {
+                controls.emplace_back(static_cast<double>(i), 0.0);
+                knots.push_back(static_cast<double>(i));
+            }
+            knots.push_back(static_cast<double>(count));
+            const RS_Spline chain = makeSpline(1, controls, knots);
+            REQUIRE(chain.validate());
+            const SplineCurves curves{{&chain}, true};
+            REQUIRE(curves.segments().size() == count);
+            options.maxBoxPairs = count - 1;
+            const LC_IntersectionResult result = findIntersections(curves, options);
+            REQUIRE(result.status == LC_IntersectionStatus::Ok);
+            checkWork(result, options);
+            CHECK(result.intersections.empty());
+            CHECK(result.work.candidateBoxPairs == count - 1);
+            CHECK(result.work.refinementBoxPairs == 0);
+            CHECK(result.work.generatedLeaves == count);
+
+            --options.maxBoxPairs;
+            const LC_IntersectionResult refused = findIntersections(curves, options);
+            REQUIRE(refused.status == LC_IntersectionStatus::LimitExceeded);
+            checkWork(refused, options);
+            CHECK(refused.work.totalBoxPairs == options.maxBoxPairs);
+            CHECK(refused.work.refinementBoxPairs == 0);
+            CHECK(refused.intersections.empty());
+        }
+    }
+
+    SECTION("Separate monotone branches still report their crossing") {
+        const RS_Spline a = line({-1, 0}, {1, 0});
+        const RS_Spline b = line({0, -1}, {0, 1});
+        const LC_IntersectionResult result = findIntersections(SplineCurves{{&a, &b}, true}, options);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        checkWork(result, options);
+        REQUIRE(result.intersections.size() == 1);
+        CHECK(result.intersections.front().kind == Kind::Transverse);
+        CHECK(result.intersections.front().point.distanceTo(RS_Vector{0, 0}) < options.tolerance);
+        CHECK(result.work.candidateBoxPairs == 1);
+        CHECK(result.work.refinementBoxPairs == 1);
+    }
+
+    SECTION("A nonmonotone intervening span prevents pruning a self-crossing") {
+        const RS_Spline chain = makeSpline(1, {{0, 0}, {2, 2}, {0, 2}, {2, 0}}, {0, 0, 1, 2, 3, 3});
+        const RS_Spline first = line({0, 0}, {2, 2});
+        const RS_Spline last = line({0, 2}, {2, 0});
+        const LC_IntersectionResult pair = intersect({&first, &last}, options.tolerance);
+        REQUIRE(pair.status == LC_IntersectionStatus::Ok);
+        REQUIRE(pair.intersections.size() == 1);
+        const LC_IntersectionResult result = findIntersections(SplineCurves{{&chain}, true}, options);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        checkWork(result, options);
+        REQUIRE(result.intersections.size() == 1);
+        const LC_ParametricIntersection& x = result.intersections.front();
+        CHECK(x.branchA == 0);
+        CHECK(x.branchB == 0);
+        CHECK(x.parameterA == Approx(pair.intersections.front().parameterA).margin(1e-12));
+        CHECK(x.parameterB == Approx(2.0 + pair.intersections.front().parameterB).margin(1e-12));
+        CHECK(x.kind == Kind::Transverse);
+        CHECK(x.point.distanceTo(pair.intersections.front().point) < options.tolerance);
+    }
+}
+
+TEST_CASE("Intersection broad-phase rejections consume work but absent pairs do not",
+          "[lc-offsetcurve][geometry][intersection-budget][curve-offset][topology]") {
+    const RS_Spline a = line({0, 0}, {1, 0});
+    const RS_Spline xSeparated = line({2, 0}, {3, 0});
+    const RS_Spline ySeparated = line({0, 2}, {1, 2});
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-9;
+
+    for (const RS_Spline* other : {&xSeparated, &ySeparated}) {
+        const SplineCurves curves{{&a, other}};
+        options.maxBoxPairs = 0;
+        const LC_IntersectionResult refused = findIntersections(curves, options);
+        REQUIRE(refused.status == LC_IntersectionStatus::LimitExceeded);
+        checkWork(refused, options);
+        CHECK(refused.work.totalBoxPairs == 0);
+        CHECK(refused.work.generatedLeaves == 2);
+        CHECK(refused.intersections.empty());
+
+        options.maxBoxPairs = 1;
+        const LC_IntersectionResult excluded = findIntersections(curves, options);
+        REQUIRE(excluded.status == LC_IntersectionStatus::Ok);
+        checkWork(excluded, options);
+        CHECK(excluded.work.candidateBoxPairs == 1);
+        CHECK(excluded.work.refinementBoxPairs == 0);
+        CHECK(excluded.work.totalBoxPairs == 1);
+        CHECK(excluded.work.generatedLeaves == 2);
+        CHECK(excluded.intersections.empty());
+    }
+
+    options.maxBoxPairs = 0;
+    const LC_IntersectionResult single = findIntersections(SplineCurves{{&a}}, options);
+    REQUIRE(single.status == LC_IntersectionStatus::Ok);
+    checkWork(single, options);
+    CHECK(single.work.totalBoxPairs == 0);
+    CHECK(single.work.generatedLeaves == 1);
+    CHECK(single.intersections.empty());
+
+    options.anchoredBranches = 0;
+    const LC_IntersectionResult unanchored = findIntersections(SplineCurves{{&a, &a}}, options);
+    REQUIRE(unanchored.status == LC_IntersectionStatus::Ok);
+    checkWork(unanchored, options);
+    CHECK(unanchored.work.totalBoxPairs == 0);
+    CHECK(unanchored.work.generatedLeaves == 2);
+    CHECK(unanchored.intersections.empty());
+}
+
+TEST_CASE("Intersection work is reported for invalid input and leaf or topology refusals",
+          "[lc-offsetcurve][geometry][intersection-budget][curve-offset][topology]") {
+    const RS_Spline a = line({0, 0}, {4, 0});
+    const RS_Spline overlapping = line({2, 0}, {6, 0});
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-9;
+
+    SECTION("Invalid tolerance and empty input consume no work") {
+        for (const double tolerance : {0.0, -1.0, std::numeric_limits<double>::infinity(),
+                                       std::numeric_limits<double>::quiet_NaN()}) {
+            options.tolerance = tolerance;
+            const LC_IntersectionResult invalid = findIntersections(SplineCurves{{&a}}, options);
+            REQUIRE(invalid.status == LC_IntersectionStatus::InvalidInput);
+            checkWork(invalid, options);
+            CHECK(invalid.work.totalBoxPairs == 0);
+            CHECK(invalid.work.generatedLeaves == 0);
+            CHECK(invalid.intersections.empty());
+        }
+        options.tolerance = 1e-9;
+        const LC_IntersectionResult empty = findIntersections(SplineCurves{std::vector<const RS_Spline*>{}}, options);
+        REQUIRE(empty.status == LC_IntersectionStatus::InvalidInput);
+        checkWork(empty, options);
+        CHECK(empty.work.totalBoxPairs == 0);
+        CHECK(empty.work.generatedLeaves == 0);
+        CHECK(empty.intersections.empty());
+    }
+
+    SECTION("A leaf cap reports the generated prefix without any pair work") {
+        for (const std::size_t cap : {0u, 1u}) {
+            CAPTURE(cap);
+            options.maxLeaves = cap;
+            const LC_IntersectionResult refused = findIntersections(SplineCurves{{&a, &overlapping}}, options);
+            REQUIRE(refused.status == LC_IntersectionStatus::LimitExceeded);
+            checkWork(refused, options);
+            CHECK(refused.work.generatedLeaves == cap);
+            CHECK(refused.work.totalBoxPairs == 0);
+            CHECK(refused.intersections.empty());
+        }
+    }
+
+    SECTION("An unresolvable leaf reports no generated leaves or pair work") {
+        const RS_Spline loop = makeSpline(3, {{0, 0}, {15, 10}, {-5, 10}, {10, 0}},
+                                         {0, 0, 0, 0, 1, 1, 1, 1});
+        options.maxLeafDepth = 0;
+        const LC_IntersectionResult ambiguous = findIntersections(SplineCurves{{&loop}}, options);
+        REQUIRE(ambiguous.status == LC_IntersectionStatus::AmbiguousTopology);
+        checkWork(ambiguous, options);
+        CHECK(ambiguous.work.generatedLeaves == 0);
+        CHECK(ambiguous.work.totalBoxPairs == 0);
+        CHECK(ambiguous.intersections.empty());
+    }
+
+    SECTION("An ambiguous contact reports both phases of pair work") {
+        options.maxDepth = 0;
+        const LC_IntersectionResult ambiguous = findIntersections(SplineCurves{{&a, &overlapping}}, options);
+        REQUIRE(ambiguous.status == LC_IntersectionStatus::AmbiguousTopology);
+        checkWork(ambiguous, options);
+        CHECK(ambiguous.work.generatedLeaves == 2);
+        CHECK(ambiguous.work.candidateBoxPairs == 1);
+        CHECK(ambiguous.work.refinementBoxPairs == 1);
+        CHECK(ambiguous.work.totalBoxPairs == 2);
+        CHECK(ambiguous.intersections.empty());
+    }
+}
 
 TEST_CASE("A loop crosses itself once, found as two occurrences on one branch", "[curve-offset][topology]") {
     const RS_Spline loop = makeSpline(3, {{0, 0}, {15, 10}, {-5, 10}, {10, 0}}, {0, 0, 0, 0, 1, 1, 1, 1});
@@ -309,13 +691,20 @@ TEST_CASE("A corner exclusion does not hide later crossings on its branch", "[cu
     }));
 }
 
-TEST_CASE("Unresolved corner intersections respect the depth limit", "[curve-offset][topology]") {
+TEST_CASE("Unresolved corner intersections respect the depth limit",
+          "[lc-offsetcurve][geometry][intersection-budget][curve-offset][topology]") {
     const RS_Spline lens = makeSpline(2, {{12, -2}, {1, 4}, {-10, 0}, {1, -4}, {12, 2}},
                                      {0, 0, 0, 1, 1, 2, 2, 2});
     LC_IntersectionOptions options;
     options.tolerance = 1e-9;
     options.maxDepth = 0;
-    CHECK(findIntersections(SplineCurves{{&lens}}, options).status == LC_IntersectionStatus::LimitExceeded);
+    const LC_IntersectionResult refused = findIntersections(SplineCurves{{&lens}}, options);
+    REQUIRE(refused.status == LC_IntersectionStatus::LimitExceeded);
+    checkWork(refused, options);
+    CHECK(refused.work.generatedLeaves > 0);
+    CHECK(refused.work.candidateBoxPairs > 0);
+    CHECK(refused.work.refinementBoxPairs > 0);
+    CHECK(refused.intersections.empty());
 }
 
 TEST_CASE("Curved sides of a tangent corner can separate and cross again", "[curve-offset][topology]") {

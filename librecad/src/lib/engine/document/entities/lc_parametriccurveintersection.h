@@ -97,9 +97,9 @@ struct LC_IntersectionOptions {
     /** Bisections of a segment into leaves. */
     unsigned maxLeafDepth{40};
     std::size_t maxLeaves{65536};
-    /** Box pairs examined in all. */
+    /** Shared cap on distinct broad-phase hierarchy-node pairs and refinement box-pair examinations. */
     std::size_t maxBoxPairs{1u << 20};
-    /** Only pairs with a leaf on a branch below this index are examined: the rest meet as they may. */
+    /** Only pairs with a leaf on a branch below this index are refined: the rest meet as they may. */
     std::size_t anchoredBranches{std::numeric_limits<std::size_t>::max()};
 };
 
@@ -111,10 +111,23 @@ enum class LC_IntersectionStatus {
     LimitExceeded
 };
 
+struct LC_IntersectionWorkStats {
+    /** Distinct hierarchy-node pairs examined, including rejections; self-node structural splitting is not charged. */
+    std::size_t candidateBoxPairs{0};
+    /** Refinement boxes examined, including exclusions and terminal boxes. */
+    std::size_t refinementBoxPairs{0};
+    /** Sum of both pair counts; a refused next examination is not consumed. */
+    std::size_t totalBoxPairs{0};
+    /** Leaves generated, including those retained before a refusal. */
+    std::size_t generatedLeaves{0};
+};
+
 struct LC_IntersectionResult {
     LC_IntersectionStatus status{LC_IntersectionStatus::InvalidInput};
-    /** Sorted by (branchA, parameterA, branchB, parameterB). */
+    /** Sorted by (branchA, parameterA, branchB, parameterB); empty on failure. */
     std::vector<LC_ParametricIntersection> intersections;
+    /** Consumed work on every status, bounded by maxBoxPairs and maxLeaves. */
+    LC_IntersectionWorkStats work;
 };
 
 /**

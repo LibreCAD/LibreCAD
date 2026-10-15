@@ -22,6 +22,7 @@
 #include "lc_parametriccurveintersection.h"
 
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <limits>
 #include <tuple>
@@ -166,8 +167,12 @@ public:
         if (result.status == LC_IntersectionStatus::Ok) {
             result.status = findCorners();
         }
+        std::vector<std::pair<std::size_t, std::size_t>> pairs;
         if (result.status == LC_IntersectionStatus::Ok) {
-            for (const auto& [i, j] : candidatePairs()) {
+            result.status = candidatePairs(pairs);
+        }
+        if (result.status == LC_IntersectionStatus::Ok) {
+            for (const auto& [i, j] : pairs) {
                 result.status = solvePair(m_leaves[i], m_leaves[j]);
                 if (result.status != LC_IntersectionStatus::Ok) {
                     break;
@@ -177,6 +182,8 @@ public:
         if (result.status == LC_IntersectionStatus::Ok) {
             result.intersections = deduplicated();
         }
+        result.work = m_work;
+        result.work.generatedLeaves = m_leaves.size();
         return result;
     }
 
@@ -314,35 +321,184 @@ private:
         return false;
     }
 
+    bool consumePair(std::size_t& phaseCount) {
+        if (m_work.totalBoxPairs >= m_options.maxBoxPairs) {
+            return false;
+        }
+        // Each phase count is at most the total, so both increments are representable.
+        ++m_work.totalBoxPairs;
+        ++phaseCount;
+        return true;
+    }
+
     /**
      * Pairs of leaves whose bounds come within the tolerance, other than a
-     * leaf with itself or its neighbours, from a sweep over x; in a fixed order.
+     * leaf with itself or its neighbours; a balanced box hierarchy prunes on
+     * both axes before leaf pairs are retained in a fixed order.
      */
-    std::vector<std::pair<std::size_t, std::size_t>> candidatePairs() const {
-        std::vector<std::size_t> byX(m_leaves.size());
-        for (std::size_t i = 0; i < byX.size(); ++i) {
-            byX[i] = i;
+    LC_IntersectionStatus candidatePairs(std::vector<std::pair<std::size_t, std::size_t>>& pairs) {
+        if (m_leaves.size() < 2 || m_options.anchoredBranches == 0) {
+            return LC_IntersectionStatus::Ok;
         }
-        std::sort(byX.begin(), byX.end(), [this](const std::size_t i, const std::size_t j) {
-            return std::make_pair(m_leaves[i].x.lo(), i) < std::make_pair(m_leaves[j].x.lo(), j);
-        });
-        const double reach = m_options.tolerance;
-        std::vector<std::pair<std::size_t, std::size_t>> pairs;
-        for (std::size_t k = 0; k < byX.size(); ++k) {
-            const Leaf& p = m_leaves[byX[k]];
-            for (std::size_t n = k + 1; n < byX.size(); ++n) {
-                const Leaf& q = m_leaves[byX[n]];
-                if (q.x.lo() > p.x.hi() + reach) {
-                    break;
+        struct Node {
+            LC_Interval x;
+            LC_Interval y;
+            std::size_t count;
+            std::size_t leaf;
+            std::size_t firstLeaf;
+            std::size_t lastLeaf;
+            std::size_t branch;
+            double a;
+            double b;
+            bool singleBranch;
+            bool anchored;
+            std::size_t left{0};
+            std::size_t right{0};
+        };
+        const std::size_t count = m_leaves.size();
+        std::vector<Node> nodes;
+        std::vector<std::size_t> order;
+        std::vector<std::array<double, 2>> keys;
+        std::vector<Bounds> parameterBounds;
+        if (count > nodes.max_size() || count - 1 > nodes.max_size() - count ||
+            count > order.max_size() || count > keys.max_size() || count > parameterBounds.max_size() / 2) {
+            return LC_IntersectionStatus::LimitExceeded;
+        }
+        nodes.reserve(count + (count - 1));
+        order.resize(count);
+        keys.resize(count);
+        parameterBounds.resize(2 * count);
+        const auto united = [](const Bounds& a, const Bounds& b) {
+            return Bounds{LC_Interval::hull(a.x, b.x), LC_Interval::hull(a.y, b.y),
+                          LC_Interval::hull(a.dx, b.dx), LC_Interval::hull(a.dy, b.dy)};
+        };
+        const auto centre = [](const LC_Interval& interval) {
+            // Keys only partition the tree; an unbounded box must remain conservative, not yield a NaN key.
+            return std::isfinite(interval.lo()) && std::isfinite(interval.hi())
+                       ? 0.5 * interval.lo() + 0.5 * interval.hi() : 0.0;
+        };
+        for (std::size_t i = 0; i < count; ++i) {
+            order[i] = i;
+            keys[i] = {centre(m_leaves[i].x), centre(m_leaves[i].y)};
+            parameterBounds[count + i] = Bounds{m_leaves[i].x, m_leaves[i].y, m_leaves[i].dx, m_leaves[i].dy};
+        }
+        for (std::size_t i = count - 1; i != 0; --i) {
+            parameterBounds[i] = united(parameterBounds[2 * i], parameterBounds[2 * i + 1]);
+        }
+        const auto cachedBridge = [&](const std::size_t first, const std::size_t last) {
+            // Original leaf order covers the complete intervening path, unlike spatial-tree descendants.
+            Bounds all = parameterBounds[count + first];
+            std::size_t left = count + first;
+            std::size_t right = count + last + 1;
+            while (left < right) {
+                if ((left & 1u) != 0) {
+                    all = united(all, parameterBounds[left++]);
                 }
-                const bool anchored = p.branch < m_options.anchoredBranches || q.branch < m_options.anchoredBranches;
-                if (anchored && gap(p.x, p.y, q.x, q.y) <= reach && !adjacent(p, q)) {
-                    pairs.emplace_back(std::min(byX[k], byX[n]), std::max(byX[k], byX[n]));
+                if ((right & 1u) != 0) {
+                    all = united(all, parameterBounds[--right]);
                 }
+                left /= 2;
+                right /= 2;
+            }
+            return isMonotone(all.dx, all.dy) ||
+                   std::hypot(all.x.width(), all.y.width()) <= m_options.tolerance;
+        };
+        const auto build = [&](auto&& self, const std::size_t first, const std::size_t last) -> std::size_t {
+            const Leaf& leaf = m_leaves[order[first]];
+            Node node{leaf.x, leaf.y, last - first, order[first], order[first], order[first],
+                      leaf.branch, leaf.a, leaf.b, true, false};
+            std::array<double, 2> low = keys[order[first]];
+            std::array<double, 2> high = low;
+            for (std::size_t i = first; i < last; ++i) {
+                const std::size_t index = order[i];
+                node.x = LC_Interval::hull(node.x, m_leaves[index].x);
+                node.y = LC_Interval::hull(node.y, m_leaves[index].y);
+                node.a = std::min(node.a, m_leaves[index].a);
+                node.b = std::max(node.b, m_leaves[index].b);
+                node.firstLeaf = std::min(node.firstLeaf, index);
+                node.lastLeaf = std::max(node.lastLeaf, index);
+                node.singleBranch = node.singleBranch && m_leaves[index].branch == node.branch;
+                node.anchored = node.anchored || m_leaves[index].branch < m_options.anchoredBranches;
+                for (std::size_t axis = 0; axis < 2; ++axis) {
+                    low[axis] = std::min(low[axis], keys[index][axis]);
+                    high[axis] = std::max(high[axis], keys[index][axis]);
+                }
+            }
+            const std::size_t index = nodes.size();
+            nodes.push_back(node);
+            if (node.count > 1) {
+                // Halved key extents cannot overflow, even for opposite-sign near-maximum coordinates.
+                const std::size_t axis = (0.5 * high[1] - 0.5 * low[1] >
+                                          0.5 * high[0] - 0.5 * low[0]) ? 1 : 0;
+                const std::size_t half = first + node.count / 2;
+                std::nth_element(order.begin() + first, order.begin() + half, order.begin() + last,
+                                 [&](const std::size_t a, const std::size_t b) {
+                    return std::make_pair(keys[a][axis], a) < std::make_pair(keys[b][axis], b);
+                });
+                const std::size_t left = self(self, first, half);
+                const std::size_t right = self(self, half, last);
+                nodes[index].left = left;
+                nodes[index].right = right;
+            }
+            return index;
+        };
+        const std::size_t root = build(build, 0, count);
+
+        // Balanced descent has at most twice the tree height's pending siblings, independent of pair density.
+        std::array<std::pair<std::size_t, std::size_t>, 2 * std::numeric_limits<std::size_t>::digits + 1> pending;
+        std::size_t pendingCount = 0;
+        const auto push = [&](const std::size_t a, const std::size_t b) {
+            if (pendingCount == pending.size()) {
+                return false;
+            }
+            pending[pendingCount++] = {a, b};
+            return true;
+        };
+        push(root, root);
+        while (pendingCount != 0) {
+            const auto [a, b] = pending[--pendingCount];
+            const Node& p = nodes[a];
+            const Node& q = nodes[b];
+            if (a == b) {
+                if (!p.anchored || p.count == 1) {
+                    continue;
+                }
+                // These three disjoint pair sets enumerate each unordered leaf pair exactly once.
+                if (!push(p.right, p.right) || !push(p.left, p.right) || !push(p.left, p.left)) {
+                    return LC_IntersectionStatus::LimitExceeded;
+                }
+                continue;
+            }
+            if (!consumePair(m_work.candidateBoxPairs)) {
+                return LC_IntersectionStatus::LimitExceeded;
+            }
+            if ((!p.anchored && !q.anchored) || gap(p.x, p.y, q.x, q.y) > m_options.tolerance) {
+                continue;
+            }
+            // Prove the whole intervening branch range, not just these spatial subsets.
+            if (p.singleBranch && q.singleBranch && p.branch == q.branch &&
+                (cachedBridge(std::min(p.firstLeaf, q.firstLeaf), std::max(p.lastLeaf, q.lastLeaf)) ||
+                 bridgedRange(p.branch, std::min(p.a, q.a), std::max(p.b, q.b)))) {
+                continue;
+            }
+            if (p.count == 1 && q.count == 1) {
+                const std::size_t first = std::min(p.leaf, q.leaf);
+                const std::size_t second = std::max(p.leaf, q.leaf);
+                if (!adjacent(m_leaves[first], m_leaves[second])) {
+                    pairs.emplace_back(first, second);
+                }
+            }
+            else if (q.count == 1 || (p.count > 1 && p.count >= q.count)) {
+                if (!push(p.right, b) || !push(p.left, b)) {
+                    return LC_IntersectionStatus::LimitExceeded;
+                }
+            }
+            else if (!push(a, q.right) || !push(a, q.left)) {
+                return LC_IntersectionStatus::LimitExceeded;
             }
         }
         std::sort(pairs.begin(), pairs.end());
-        return pairs;
+        return LC_IntersectionStatus::Ok;
     }
 
     /** Exclude only the joined segments' shared endpoint, within twice the tolerance. */
@@ -376,11 +532,11 @@ private:
         const bool corner = atCorner(p, q);
         std::vector<Pair> stack{{p.a, p.b, q.a, q.b, 0}};
         while (!stack.empty()) {
-            const Pair box = stack.back();
-            stack.pop_back();
-            if (++m_boxPairs > m_options.maxBoxPairs) {
+            if (!consumePair(m_work.refinementBoxPairs)) {
                 return LC_IntersectionStatus::LimitExceeded;
             }
+            const Pair box = stack.back();
+            stack.pop_back();
             Bounds bp;
             Bounds bq;
             if (!bound(p.segment, box.a0, box.a1, bp) || !bound(q.segment, box.b0, box.b1, bq)) {
@@ -452,13 +608,16 @@ private:
         if (p.branch != q.branch) {
             return false;
         }
-        const double lo = std::min(box.a0, box.b0);
-        const double hi = std::max(box.a1, box.b1);
+        return bridgedRange(p.branch, std::min(box.a0, box.b0), std::max(box.a1, box.b1));
+    }
+
+    bool bridgedRange(const std::size_t branch, const double lo, const double hi) const {
         Bounds all;
         bool any = false;
         for (std::size_t k = 0; k < m_segments.size(); ++k) {
             const LC_ParametricSegment& seg = m_segments[k];
-            if (seg.branch != p.branch || seg.t1 < lo || seg.t0 > hi) {
+            // A span touching only the range boundary has no interval to bound.
+            if (seg.branch != branch || seg.t1 <= lo || seg.t0 >= hi) {
                 continue;
             }
             Bounds b;
@@ -885,7 +1044,7 @@ private:
         double distance;
     };
     std::vector<Found> m_found;
-    std::size_t m_boxPairs{0};
+    LC_IntersectionWorkStats m_work;
 };
 
 } // namespace
