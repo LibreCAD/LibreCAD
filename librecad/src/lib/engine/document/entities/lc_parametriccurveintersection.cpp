@@ -1105,8 +1105,823 @@ private:
     LC_IntersectionWorkStats m_work;
 };
 
+/** Proof-only policy is separate so ordinary tolerance-based behavior is unchanged. */
+class StrictSolver {
+public:
+    StrictSolver(const LC_ParametricCurves& curves, const LC_IntersectionOptions& options)
+        : m_curves{curves}, m_options{options}, m_segments{curves.segments()} {
+    }
+
+    LC_IntersectionResult run() {
+        if (validate() && prepare()) {
+            std::vector<std::pair<std::size_t, std::size_t>> candidates;
+            if (candidatePairs(candidates)) {
+                for (const auto& [i, j] : candidates) {
+                    const auto& a = m_leaves[i];
+                    const auto& b = m_leaves[j];
+                    if (!solve(domain(a.segment, a.parameter, b.segment, b.parameter), i, j)) {
+                        break;
+                    }
+                }
+            }
+            if (good()) {
+                order();
+            }
+        }
+        LC_IntersectionResult result;
+        result.status = m_status;
+        result.work = m_work;
+        result.work.generatedLeaves = m_leaves.size();
+        if (good()) {
+            result.intersections = std::move(m_events);
+        }
+        return result;
+    }
+
+private:
+    enum class LeafProof { IntervalProjection, AnalyticInjectivity };
+    struct Piece {
+        std::size_t segment;
+        LC_Interval parameter;
+        Bounds bounds;
+        LeafProof proof;
+    };
+    struct Cell {
+        LC_IntersectionDomain box;
+        unsigned depth;
+    };
+    struct Inclusion {
+        enum class Kind { Undecided, Excluded, Unique };
+        Kind kind{Kind::Undecided};
+        LC_IntersectionDomain proofDomain;
+        LC_Interval a;
+        LC_Interval b;
+    };
+
+    bool good() const { return m_status == LC_IntersectionStatus::Ok; }
+    bool fail(const LC_IntersectionStatus status) {
+        m_status = status;
+        return false;
+    }
+    static bool finite(const LC_Interval& value) {
+        return value.isValid() && std::isfinite(value.lo()) && std::isfinite(value.hi());
+    }
+    static bool includes(const LC_Interval& outer, const LC_Interval& inner) {
+        return finite(outer) && finite(inner) && outer.lo() <= inner.lo() && inner.hi() <= outer.hi();
+    }
+    static bool overlaps(const LC_Interval& a, const LC_Interval& b) {
+        return a.lo() <= b.hi() && b.lo() <= a.hi();
+    }
+    static bool samePoint(const LC_Interval& a, const LC_Interval& b) {
+        return a.lo() == a.hi() && b.lo() == b.hi() && a.lo() == b.lo();
+    }
+    static double centre(const LC_Interval& value) {
+        const double width = value.hi() - value.lo();
+        const double result = std::isfinite(width) ? value.lo() + 0.5 * width :
+            0.5 * value.lo() + 0.5 * value.hi();
+        return std::clamp(result, value.lo(), value.hi());
+    }
+    static LC_IntersectionDomain domain(const std::size_t a, const LC_Interval& ta,
+                                        const std::size_t b, const LC_Interval& tb) {
+        return {a, b, ta, tb};
+    }
+    bool generate(const std::size_t count) {
+        if (count > m_options.maxGeneratedItems - m_work.generatedItems) {
+            return fail(LC_IntersectionStatus::LimitExceeded);
+        }
+        m_work.generatedItems += count;
+        return true;
+    }
+    bool consume(std::size_t& counter) {
+        if (m_work.totalBoxPairs >= m_options.maxBoxPairs) {
+            return fail(LC_IntersectionStatus::LimitExceeded);
+        }
+        ++counter;
+        ++m_work.totalBoxPairs;
+        return true;
+    }
+    bool validate() {
+        const std::size_t branches = m_curves.branchCount();
+        if (!(m_options.tolerance > 0.0) || !std::isfinite(m_options.tolerance) ||
+            m_options.maxGeneratedItems == 0 || branches == 0 || m_segments.empty()) {
+            return fail(LC_IntersectionStatus::InvalidInput);
+        }
+        // Bound branch/segment-dependent work before any preparation allocation.
+        if (branches > m_options.maxGeneratedItems || m_segments.size() > m_options.maxGeneratedItems) {
+            return fail(LC_IntersectionStatus::LimitExceeded);
+        }
+        for (std::size_t i = 0; i < m_segments.size(); ++i) {
+            const auto& segment = m_segments[i];
+            if (segment.branch >= branches || !std::isfinite(segment.t0) || !std::isfinite(segment.t1) ||
+                !(segment.t0 < segment.t1) || (i == 0 && segment.branch != 0)) {
+                return fail(LC_IntersectionStatus::InvalidInput);
+            }
+            if (i != 0) {
+                const auto& previous = m_segments[i - 1];
+                if ((segment.branch == previous.branch && segment.t0 != previous.t1) ||
+                    (segment.branch != previous.branch && segment.branch != previous.branch + 1)) {
+                    return fail(LC_IntersectionStatus::InvalidInput);
+                }
+            }
+            if (i == 0 || segment.branch != m_segments[i - 1].branch) {
+                const auto next = m_curves.next(segment.branch);
+                if (next < -1 || (next >= 0 && static_cast<std::size_t>(next) >= branches)) {
+                    return fail(LC_IntersectionStatus::InvalidInput);
+                }
+            }
+        }
+        return m_segments.back().branch == branches - 1 || fail(LC_IntersectionStatus::InvalidInput);
+    }
+    bool bound(const std::size_t segment, const LC_Interval& parameter, Bounds& out) {
+        out = {};
+        if (!m_curves.bound(segment, parameter.lo(), parameter.hi(), out.x, out.y, out.dx, out.dy) ||
+            !finite(out.x) || !finite(out.y) || !finite(out.dx) || !finite(out.dy)) {
+            return fail(LC_IntersectionStatus::InvalidInput);
+        }
+        return true;
+    }
+    static bool projection(const Bounds& bounds) {
+        const double x = centre(bounds.dx);
+        const double y = centre(bounds.dy);
+        const double scale = std::max(std::abs(x), std::abs(y));
+        if (!(scale > 0.0) || !std::isfinite(scale)) {
+            return false;
+        }
+        // The direction is an arbitrary exact floating vector; positivity is proved outward.
+        const LC_Interval derivative = LC_Interval::point(x / scale) * bounds.dx +
+                                       LC_Interval::point(y / scale) * bounds.dy;
+        return derivative.isPositive();
+    }
+    static bool disjoint(const Bounds& a, const Bounds& b) {
+        return a.x.hi() < b.x.lo() || b.x.hi() < a.x.lo() || a.y.hi() < b.y.lo() || b.y.hi() < a.y.lo();
+    }
+    bool prepare() {
+        for (std::size_t segment = 0; segment < m_segments.size(); ++segment) {
+            struct Pending { LC_Interval parameter; unsigned depth; };
+            const auto& source = m_segments[segment];
+            if (!generate(1)) {
+                return false;
+            }
+            std::vector<Pending> pending{{LC_Interval::hull(source.t0, source.t1), 0}};
+            for (const double t : {source.t0, centre(LC_Interval::hull(source.t0, source.t1)), source.t1}) {
+                Bounds point;
+                RS_Vector p;
+                RS_Vector d;
+                if (!bound(segment, LC_Interval::point(t), point)) {
+                    return false;
+                }
+                if (!m_curves.evaluate(segment, t, p, d) || !isFinite(p) || !isFinite(d) || p.z != 0.0 || d.z != 0.0) {
+                    return fail(LC_IntersectionStatus::InvalidInput);
+                }
+            }
+            while (!pending.empty()) {
+                const Pending item = pending.back();
+                pending.pop_back();
+                Bounds bounds;
+                if (!bound(segment, item.parameter, bounds)) {
+                    return false;
+                }
+                bool injective = projection(bounds);
+                LeafProof proof = LeafProof::IntervalProjection;
+                if (!injective) {
+                    const auto analytic = m_curves.certifyInjective(segment, item.parameter);
+                    if (analytic.available) {
+                        if (!consume(m_work.certificateBoxPairs)) {
+                            return false;
+                        }
+                        if (analytic.segment != segment || !includes(analytic.parameter, item.parameter) ||
+                            !includes(LC_Interval::hull(source.t0, source.t1), analytic.parameter)) {
+                            return fail(LC_IntersectionStatus::InvalidInput);
+                        }
+                        if (!generate(1)) {
+                            return false;
+                        }
+                        injective = true;
+                        proof = LeafProof::AnalyticInjectivity;
+                    }
+                }
+                if (injective) {
+                    if (m_leaves.size() >= m_options.maxLeaves) {
+                        return fail(LC_IntersectionStatus::LimitExceeded);
+                    }
+                    m_leaves.push_back({segment, item.parameter, bounds, proof});
+                    continue;
+                }
+                if (item.depth >= m_options.maxLeafDepth) {
+                    return fail(LC_IntersectionStatus::LimitExceeded);
+                }
+                const double middle = centre(item.parameter);
+                if (!(item.parameter.lo() < middle && middle < item.parameter.hi())) {
+                    return fail(LC_IntersectionStatus::AmbiguousTopology);
+                }
+                if (!generate(2)) {
+                    return false;
+                }
+                pending.push_back({LC_Interval::hull(middle, item.parameter.hi()), item.depth + 1});
+                pending.push_back({LC_Interval::hull(item.parameter.lo(), middle), item.depth + 1});
+            }
+        }
+        return true;
+    }
+
+    static Bounds united(const Bounds& a, const Bounds& b) {
+        return {LC_Interval::hull(a.x, b.x), LC_Interval::hull(a.y, b.y),
+                LC_Interval::hull(a.dx, b.dx), LC_Interval::hull(a.dy, b.dy)};
+    }
+    Bounds range(const std::size_t first, const std::size_t last) const {
+        Bounds all = m_leaves[first].bounds;
+        std::size_t left = m_leaves.size() + first;
+        std::size_t right = m_leaves.size() + last;
+        while (left < right) {
+            if ((left & 1u) != 0) {
+                all = united(all, m_parameterBounds[left++]);
+            }
+            if ((right & 1u) != 0) {
+                all = united(all, m_parameterBounds[--right]);
+            }
+            left /= 2;
+            right /= 2;
+        }
+        return all;
+    }
+    bool candidatePairs(std::vector<std::pair<std::size_t, std::size_t>>& pairs) {
+        const std::size_t count = m_leaves.size();
+        if (count < 2) {
+            return true;
+        }
+        struct Node {
+            Bounds bounds;
+            std::size_t count;
+            std::size_t first;
+            std::size_t last;
+            std::size_t branch;
+            std::size_t leaf;
+            std::size_t left{0};
+            std::size_t right{0};
+            bool single{true};
+            bool anchored{false};
+        };
+        std::vector<Node> nodes;
+        std::vector<std::size_t> order;
+        if (count > (nodes.max_size() - 1) / 2 || count > m_parameterBounds.max_size() / 2 ||
+            count > order.max_size() || count > static_cast<std::size_t>(std::numeric_limits<std::ptrdiff_t>::max())) {
+            return fail(LC_IntersectionStatus::LimitExceeded);
+        }
+        nodes.reserve(2 * count - 1);
+        order.resize(count);
+        m_parameterBounds.resize(2 * count);
+        for (std::size_t i = 0; i < count; ++i) {
+            order[i] = i;
+            m_parameterBounds[count + i] = m_leaves[i].bounds;
+        }
+        for (std::size_t i = count - 1; i != 0; --i) {
+            m_parameterBounds[i] = united(m_parameterBounds[2 * i], m_parameterBounds[2 * i + 1]);
+        }
+        const auto build = [&](auto&& self, const std::size_t first, const std::size_t last) -> std::size_t {
+            const auto& leaf = m_leaves[order[first]];
+            Node node{leaf.bounds, last - first, order[first], order[first],
+                      m_segments[leaf.segment].branch, order[first]};
+            double low[2] = {centre(leaf.bounds.x), centre(leaf.bounds.y)};
+            double high[2] = {low[0], low[1]};
+            for (std::size_t i = first; i < last; ++i) {
+                const std::size_t index = order[i];
+                const auto& piece = m_leaves[index];
+                const auto branch = m_segments[piece.segment].branch;
+                node.bounds = united(node.bounds, piece.bounds);
+                node.first = std::min(node.first, index);
+                node.last = std::max(node.last, index);
+                node.single = node.single && branch == node.branch;
+                node.anchored = node.anchored || branch < m_options.anchoredBranches;
+                const double key[] = {centre(piece.bounds.x), centre(piece.bounds.y)};
+                for (int axis = 0; axis < 2; ++axis) {
+                    low[axis] = std::min(low[axis], key[axis]);
+                    high[axis] = std::max(high[axis], key[axis]);
+                }
+            }
+            const std::size_t index = nodes.size();
+            nodes.push_back(node);
+            if (node.count > 1) {
+                const int axis = 0.5 * high[1] - 0.5 * low[1] > 0.5 * high[0] - 0.5 * low[0] ? 1 : 0;
+                const std::size_t half = first + node.count / 2;
+                std::nth_element(order.begin() + first, order.begin() + half, order.begin() + last,
+                    [&](const auto a, const auto b) {
+                        const auto& aa = m_leaves[a].bounds;
+                        const auto& bb = m_leaves[b].bounds;
+                        return std::make_pair(centre(axis == 0 ? aa.x : aa.y), a) <
+                               std::make_pair(centre(axis == 0 ? bb.x : bb.y), b);
+                    });
+                nodes[index].left = self(self, first, half);
+                nodes[index].right = self(self, half, last);
+            }
+            return index;
+        };
+        const std::size_t root = build(build, 0, count);
+        std::array<std::pair<std::size_t, std::size_t>, 2 * std::numeric_limits<std::size_t>::digits + 1> pending;
+        std::size_t used = 0;
+        const auto push = [&](const std::size_t a, const std::size_t b) {
+            if (used == pending.size()) {
+                return fail(LC_IntersectionStatus::LimitExceeded);
+            }
+            pending[used++] = {a, b};
+            return true;
+        };
+        push(root, root);
+        while (used != 0) {
+            const auto [a, b] = pending[--used];
+            const auto& p = nodes[a];
+            const auto& q = nodes[b];
+            if (a == b) {
+                if (!p.anchored || p.count == 1) {
+                    continue;
+                }
+                if (!push(p.right, p.right) || !push(p.left, p.right) || !push(p.left, p.left)) {
+                    return false;
+                }
+                continue;
+            }
+            if (!consume(m_work.candidateBoxPairs)) {
+                return false;
+            }
+            if ((!p.anchored && !q.anchored) || disjoint(p.bounds, q.bounds)) {
+                continue;
+            }
+            if (p.single && q.single && p.branch == q.branch &&
+                projection(range(std::min(p.first, q.first), std::max(p.last, q.last) + 1))) {
+                continue;
+            }
+            if (p.count == 1 && q.count == 1) {
+                pairs.emplace_back(std::min(p.leaf, q.leaf), std::max(p.leaf, q.leaf));
+            } else if (q.count == 1 || (p.count > 1 && p.count >= q.count)) {
+                if (!push(p.right, b) || !push(p.left, b)) {
+                    return false;
+                }
+            } else if (!push(a, q.right) || !push(a, q.left)) {
+                return false;
+            }
+        }
+        std::sort(pairs.begin(), pairs.end());
+        return true;
+    }
+
+    bool pathProjection(const LC_IntersectionDomain& box, const std::size_t first, const std::size_t last,
+                        bool& proved) {
+        proved = false;
+        if (m_segments[box.segmentA].branch != m_segments[box.segmentB].branch) {
+            return true;
+        }
+        Bounds start;
+        Bounds end;
+        // Include the tails and every intervening leaf, not just the two refined cells.
+        if (!bound(box.segmentA, LC_Interval::hull(box.parameterA.lo(), m_leaves[first].parameter.hi()), start) ||
+            !bound(box.segmentB, LC_Interval::hull(m_leaves[last].parameter.lo(), box.parameterB.hi()), end)) {
+            return false;
+        }
+        Bounds all = united(start, end);
+        if (first + 1 < last) {
+            all = united(all, range(first + 1, last));
+        }
+        proved = projection(all);
+        return true;
+    }
+    bool validDomain(const LC_IntersectionDomain& box) const {
+        return box.segmentA < m_segments.size() && box.segmentB < m_segments.size() &&
+            includes(LC_Interval::hull(m_segments[box.segmentA].t0, m_segments[box.segmentA].t1), box.parameterA) &&
+            includes(LC_Interval::hull(m_segments[box.segmentB].t0, m_segments[box.segmentB].t1), box.parameterB);
+    }
+    static bool covers(const LC_IntersectionDomain& outer, const LC_IntersectionDomain& inner) {
+        return outer.segmentA == inner.segmentA && outer.segmentB == inner.segmentB &&
+            includes(outer.parameterA, inner.parameterA) && includes(outer.parameterB, inner.parameterB);
+    }
+    bool analytic(const LC_IntersectionDomain& box, LC_AnalyticIntersectionCertificate& certificate) {
+        certificate = m_curves.certifyIntersection(box);
+        using Outcome = LC_AnalyticIntersectionCertificate::Outcome;
+        if (certificate.outcome == Outcome::Unavailable) {
+            return true;
+        }
+        if (!consume(m_work.certificateBoxPairs)) {
+            return false;
+        }
+        if (!validDomain(certificate.proofDomain) || !covers(certificate.proofDomain, box)) {
+            return fail(LC_IntersectionStatus::InvalidInput);
+        }
+        if (certificate.outcome == Outcome::Excluded) {
+            if (certificate.proof != LC_IntersectionProof::AnalyticExclusion) {
+                return fail(LC_IntersectionStatus::AmbiguousTopology);
+            }
+        } else if (certificate.outcome == Outcome::Unique) {
+            if (certificate.proof != LC_IntersectionProof::AnalyticEndpoint &&
+                certificate.proof != LC_IntersectionProof::AnalyticCusp &&
+                certificate.proof != LC_IntersectionProof::AnalyticTangency) {
+                return fail(LC_IntersectionStatus::AmbiguousTopology);
+            }
+            if (!includes(certificate.proofDomain.parameterA, certificate.isolationA) ||
+                !includes(certificate.proofDomain.parameterB, certificate.isolationB)) {
+                return fail(LC_IntersectionStatus::InvalidInput);
+            }
+            using Kind = LC_ParametricIntersection::Kind;
+            if (certificate.kind != Kind::Transverse && certificate.kind != Kind::Tangent && certificate.kind != Kind::Endpoint) {
+                return fail(LC_IntersectionStatus::InvalidInput);
+            }
+        } else {
+            return fail(LC_IntersectionStatus::InvalidInput);
+        }
+        return true;
+    }
+    bool krawczyk(const LC_IntersectionDomain& requested, const bool inflate, Inclusion& result) {
+        result = {};
+        result.proofDomain = requested;
+        if (inflate) {
+            const auto enlarged = [](const LC_Interval& input, const LC_ParametricSegment& segment) {
+                const double margin = 0.001 * input.hi() - 0.001 * input.lo();
+                return LC_Interval::hull(std::max(segment.t0, input.lo() - margin),
+                                         std::min(segment.t1, input.hi() + margin));
+            };
+            result.proofDomain.parameterA = enlarged(requested.parameterA, m_segments[requested.segmentA]);
+            result.proofDomain.parameterB = enlarged(requested.parameterB, m_segments[requested.segmentB]);
+        }
+        const auto& box = result.proofDomain;
+        Bounds a;
+        Bounds b;
+        Bounds pointA;
+        Bounds pointB;
+        const double t = centre(box.parameterA);
+        const double u = centre(box.parameterB);
+        if (!bound(box.segmentA, box.parameterA, a) || !bound(box.segmentB, box.parameterB, b) ||
+            !bound(box.segmentA, LC_Interval::point(t), pointA) ||
+            !bound(box.segmentB, LC_Interval::point(u), pointB)) {
+            return false;
+        }
+        RS_Vector pa;
+        RS_Vector da;
+        RS_Vector pb;
+        RS_Vector db;
+        if (!m_curves.evaluate(box.segmentA, t, pa, da) || !m_curves.evaluate(box.segmentB, u, pb, db) ||
+            !isFinite(pa) || !isFinite(pb) || !isFinite(da) || !isFinite(db) ||
+            pa.z != 0.0 || pb.z != 0.0 || da.z != 0.0 || db.z != 0.0) {
+            return fail(LC_IntersectionStatus::InvalidInput);
+        }
+        const double sa = std::max(std::abs(da.x), std::abs(da.y));
+        const double sb = std::max(std::abs(db.x), std::abs(db.y));
+        if (!(sa > 0.0) || !(sb > 0.0)) {
+            return true;
+        }
+        const double ax = da.x / sa;
+        const double ay = da.y / sa;
+        const double bx = db.x / sb;
+        const double by = db.y / sb;
+        const double det = -ax * by + bx * ay;
+        if (det == 0.0 || !std::isfinite(det)) {
+            return true;
+        }
+        const double r00 = (-by / det) / sa;
+        const double r01 = (bx / det) / sa;
+        const double r10 = (-ay / det) / sb;
+        const double r11 = (ax / det) / sb;
+        if (!std::isfinite(r00) || !std::isfinite(r01) || !std::isfinite(r10) || !std::isfinite(r11)) {
+            return true;
+        }
+        const auto pt = [](const double value) { return LC_Interval::point(value); };
+        const LC_Interval fx = pointA.x - pointB.x;
+        const LC_Interval fy = pointA.y - pointB.y;
+        const LC_Interval m00 = pt(1.0) - (pt(r00) * a.dx + pt(r01) * a.dy);
+        const LC_Interval m01 = pt(r00) * b.dx + pt(r01) * b.dy;
+        const LC_Interval m10 = -(pt(r10) * a.dx + pt(r11) * a.dy);
+        const LC_Interval m11 = pt(1.0) + pt(r10) * b.dx + pt(r11) * b.dy;
+        const LC_Interval dt = box.parameterA - pt(t);
+        const LC_Interval du = box.parameterB - pt(u);
+        const LC_Interval kt = pt(t) - (pt(r00) * fx + pt(r01) * fy) + m00 * dt + m01 * du;
+        const LC_Interval ku = pt(u) - (pt(r10) * fx + pt(r11) * fy) + m10 * dt + m11 * du;
+        if (!finite(kt) || !finite(ku)) {
+            return true;
+        }
+        result.a = intersect(kt, box.parameterA);
+        result.b = intersect(ku, box.parameterB);
+        if (!result.a.isValid() || !result.b.isValid()) {
+            result.kind = Inclusion::Kind::Excluded;
+        } else if (kt.lo() > box.parameterA.lo() && kt.hi() < box.parameterA.hi() &&
+                   ku.lo() > box.parameterB.lo() && ku.hi() < box.parameterB.hi()) {
+            // Full-dimensional strict inclusion proves uniqueness and regularity:
+            // Rump, Acta Numerica 2010, Theorem 13.3. R consists of exact finite doubles.
+            result.kind = Inclusion::Kind::Unique;
+        }
+        return true;
+    }
+    bool makeEvent(const LC_IntersectionDomain& proof, const LC_Interval& a, const LC_Interval& b,
+                   const LC_IntersectionProof category, LC_ParametricIntersection& out,
+                   const LC_ParametricIntersection::Kind kind = LC_ParametricIntersection::Kind::Transverse) {
+        if (proof.segmentA == proof.segmentB && overlaps(a, b)) {
+            return fail(LC_IntersectionStatus::AmbiguousTopology);
+        }
+        Bounds pa;
+        Bounds pb;
+        if (!bound(proof.segmentA, a, pa) || !bound(proof.segmentB, b, pb)) {
+            return false;
+        }
+        const LC_Interval x = intersect(pa.x, pb.x);
+        const LC_Interval y = intersect(pa.y, pb.y);
+        if (!finite(x) || !finite(y)) {
+            return fail(LC_IntersectionStatus::InvalidInput);
+        }
+        if (!generate(1)) {
+            return false;
+        }
+        out = {};
+        out.branchA = m_segments[proof.segmentA].branch;
+        out.branchB = m_segments[proof.segmentB].branch;
+        out.parameterA = centre(a);
+        out.parameterB = centre(b);
+        out.point = RS_Vector{centre(x), centre(y)};
+        out.proof = category;
+        out.kind = kind;
+        out.isolation = domain(proof.segmentA, a, proof.segmentB, b);
+        out.proofDomain = proof;
+        if (std::make_pair(out.branchB, out.parameterB) < std::make_pair(out.branchA, out.parameterA)) {
+            std::swap(out.branchA, out.branchB);
+            std::swap(out.parameterA, out.parameterB);
+            std::swap(out.isolation.segmentA, out.isolation.segmentB);
+            std::swap(out.isolation.parameterA, out.isolation.parameterB);
+            std::swap(out.proofDomain.segmentA, out.proofDomain.segmentB);
+            std::swap(out.proofDomain.parameterA, out.proofDomain.parameterB);
+        }
+        return true;
+    }
+    bool solve(const LC_IntersectionDomain& initial, const std::size_t first, const std::size_t last) {
+        std::vector<Cell> pending{{initial, 0}};
+        while (!pending.empty()) {
+            if (!consume(m_work.refinementBoxPairs)) {
+                return false;
+            }
+            const Cell cell = pending.back();
+            pending.pop_back();
+            Bounds a;
+            Bounds b;
+            if (!bound(cell.box.segmentA, cell.box.parameterA, a) ||
+                !bound(cell.box.segmentB, cell.box.parameterB, b)) {
+                return false;
+            }
+            if (disjoint(a, b)) {
+                continue;
+            }
+            bool injectivePath = false;
+            if (!pathProjection(cell.box, first, last, injectivePath)) {
+                return false;
+            }
+            if (injectivePath) {
+                continue;
+            }
+            LC_AnalyticIntersectionCertificate certificate;
+            if (!analytic(cell.box, certificate)) {
+                return false;
+            }
+            using Outcome = LC_AnalyticIntersectionCertificate::Outcome;
+            if (certificate.outcome == Outcome::Excluded) {
+                if (!generate(1)) {
+                    return false;
+                }
+                continue;
+            }
+            LC_ParametricIntersection event;
+            if (certificate.outcome == Outcome::Unique) {
+                if (!makeEvent(certificate.proofDomain, certificate.isolationA, certificate.isolationB,
+                               certificate.proof, event, certificate.kind)) {
+                    return false;
+                }
+                m_events.push_back(event);
+                continue;
+            }
+            Inclusion inclusion;
+            if (!krawczyk(cell.box, true, inclusion)) {
+                return false;
+            }
+            if (inclusion.kind == Inclusion::Kind::Excluded) {
+                continue;
+            }
+            if (inclusion.kind == Inclusion::Kind::Unique) {
+                if (!overlaps(inclusion.a, cell.box.parameterA) || !overlaps(inclusion.b, cell.box.parameterB)) {
+                    continue; // the sole root of the inflated proof domain is outside this original cell
+                }
+                if (!makeEvent(inclusion.proofDomain, inclusion.a, inclusion.b,
+                               LC_IntersectionProof::IntervalUniqueTransverse, event)) {
+                    return false;
+                }
+                m_events.push_back(event);
+                continue;
+            }
+            if (cell.depth >= m_options.maxDepth) {
+                return fail(LC_IntersectionStatus::LimitExceeded);
+            }
+            const bool first = std::hypot(a.x.width(), a.y.width()) >= std::hypot(b.x.width(), b.y.width());
+            const LC_Interval parameter = first ? cell.box.parameterA : cell.box.parameterB;
+            const double middle = centre(parameter);
+            if (!(parameter.lo() < middle && middle < parameter.hi())) {
+                return fail(LC_IntersectionStatus::AmbiguousTopology);
+            }
+            Cell left{cell.box, cell.depth + 1};
+            Cell right{cell.box, cell.depth + 1};
+            (first ? left.box.parameterA : left.box.parameterB) = LC_Interval::hull(parameter.lo(), middle);
+            (first ? right.box.parameterA : right.box.parameterB) = LC_Interval::hull(middle, parameter.hi());
+            pending.push_back(right);
+            pending.push_back(left);
+        }
+        return true;
+    }
+
+    bool shrink(LC_ParametricIntersection& event, bool& changed) {
+        changed = false;
+        if (!consume(m_work.certificateBoxPairs)) {
+            return false;
+        }
+        Inclusion inclusion;
+        if (!krawczyk(event.isolation, false, inclusion)) {
+            return false;
+        }
+        if (inclusion.kind == Inclusion::Kind::Excluded) {
+            return fail(LC_IntersectionStatus::InvalidInput); // contradicts the existing existence proof
+        }
+        LC_Interval a = inclusion.a;
+        LC_Interval b = inclusion.b;
+        if (!finite(a) || !finite(b)) {
+            LC_AnalyticIntersectionCertificate certificate;
+            if (!analytic(event.isolation, certificate)) {
+                return false;
+            }
+            using Outcome = LC_AnalyticIntersectionCertificate::Outcome;
+            if (certificate.outcome == Outcome::Excluded) {
+                return fail(LC_IntersectionStatus::InvalidInput);
+            }
+            if (certificate.outcome == Outcome::Unavailable) {
+                return true;
+            }
+            a = intersect(event.isolation.parameterA, certificate.isolationA);
+            b = intersect(event.isolation.parameterB, certificate.isolationB);
+            if (!finite(a) || !finite(b)) {
+                return fail(LC_IntersectionStatus::InvalidInput);
+            }
+        }
+        if (a.lo() == event.isolation.parameterA.lo() && a.hi() == event.isolation.parameterA.hi() &&
+            b.lo() == event.isolation.parameterB.lo() && b.hi() == event.isolation.parameterB.hi()) {
+            return true;
+        }
+        LC_ParametricIntersection narrowed;
+        if (!makeEvent(event.proofDomain, a, b, event.proof, narrowed, event.kind)) {
+            return false;
+        }
+        event = narrowed;
+        changed = true;
+        return true;
+    }
+
+    /** Compare every shared occurrence, not just events with the same partner branch. */
+    static bool orderedOccurrences(const LC_ParametricIntersection& a, const LC_ParametricIntersection& b) {
+        const std::pair<std::size_t, LC_Interval> aa[] = {
+            {a.branchA, a.isolation.parameterA}, {a.branchB, a.isolation.parameterB}};
+        const std::pair<std::size_t, LC_Interval> bb[] = {
+            {b.branchA, b.isolation.parameterA}, {b.branchB, b.isolation.parameterB}};
+        for (const auto& x : aa) {
+            for (const auto& y : bb) {
+                if (x.first == y.first && overlaps(x.second, y.second) && !samePoint(x.second, y.second)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    bool merge(LC_ParametricIntersection& a, const LC_ParametricIntersection& b, bool& merged) {
+        merged = false;
+        if (a.branchA != b.branchA || a.branchB != b.branchB ||
+            !overlaps(a.isolation.parameterA, b.isolation.parameterA) ||
+            !overlaps(a.isolation.parameterB, b.isolation.parameterB)) {
+            return true;
+        }
+        LC_IntersectionDomain proof;
+        LC_IntersectionProof category;
+        LC_ParametricIntersection::Kind kind;
+        if (covers(a.proofDomain, b.isolation) ||
+            (samePoint(a.isolation.parameterA, b.isolation.parameterA) &&
+             samePoint(a.isolation.parameterB, b.isolation.parameterB))) {
+            proof = a.proofDomain;
+            category = a.proof;
+            kind = a.kind;
+        } else if (covers(b.proofDomain, a.isolation)) {
+            proof = b.proofDomain;
+            category = b.proof;
+            kind = b.kind;
+        } else if (a.isolation.segmentA == b.isolation.segmentA && a.isolation.segmentB == b.isolation.segmentB) {
+            if (!consume(m_work.certificateBoxPairs)) {
+                return false;
+            }
+            const LC_IntersectionDomain common = domain(a.isolation.segmentA,
+                LC_Interval::hull(a.isolation.parameterA, b.isolation.parameterA), a.isolation.segmentB,
+                LC_Interval::hull(a.isolation.parameterB, b.isolation.parameterB));
+            LC_AnalyticIntersectionCertificate certificate;
+            if (!analytic(common, certificate)) {
+                return false;
+            }
+            using Outcome = LC_AnalyticIntersectionCertificate::Outcome;
+            if (certificate.outcome == Outcome::Excluded) {
+                return fail(LC_IntersectionStatus::InvalidInput);
+            }
+            if (certificate.outcome == Outcome::Unique) {
+                proof = certificate.proofDomain;
+                category = certificate.proof;
+                kind = certificate.kind;
+            } else {
+                Inclusion inclusion;
+                if (!krawczyk(common, true, inclusion)) {
+                    return false;
+                }
+                if (inclusion.kind == Inclusion::Kind::Excluded) {
+                    return fail(LC_IntersectionStatus::InvalidInput);
+                }
+                if (inclusion.kind != Inclusion::Kind::Unique) {
+                    return true;
+                }
+                proof = inclusion.proofDomain;
+                category = LC_IntersectionProof::IntervalUniqueTransverse;
+                kind = LC_ParametricIntersection::Kind::Transverse;
+            }
+        } else {
+            return true;
+        }
+        const LC_Interval ta = intersect(a.isolation.parameterA, b.isolation.parameterA);
+        const LC_Interval tb = intersect(a.isolation.parameterB, b.isolation.parameterB);
+        LC_ParametricIntersection combined;
+        if (!makeEvent(proof, ta, tb, category, combined, kind)) {
+            return false;
+        }
+        a = combined;
+        merged = true;
+        return true;
+    }
+
+    bool order() {
+        std::vector<bool> removed(m_events.size(), false);
+        for (std::size_t i = 0; i < m_events.size(); ++i) {
+            if (removed[i]) {
+                continue;
+            }
+            for (std::size_t j = i + 1; j < m_events.size(); ++j) {
+                if (removed[j]) {
+                    continue;
+                }
+                for (unsigned attempt = 0;; ++attempt) {
+                    if (!consume(m_work.certificateBoxPairs)) {
+                        return false;
+                    }
+                    bool merged = false;
+                    if (!merge(m_events[i], m_events[j], merged)) {
+                        return false;
+                    }
+                    if (merged) {
+                        removed[j] = true;
+                        break;
+                    }
+                    if (orderedOccurrences(m_events[i], m_events[j])) {
+                        break;
+                    }
+                    if (attempt >= m_options.maxDepth) {
+                        return fail(LC_IntersectionStatus::LimitExceeded);
+                    }
+                    bool changedA = false;
+                    bool changedB = false;
+                    if (!shrink(m_events[i], changedA) || !shrink(m_events[j], changedB)) {
+                        return false;
+                    }
+                    if (!changedA && !changedB) {
+                        return fail(LC_IntersectionStatus::AmbiguousTopology);
+                    }
+                }
+            }
+        }
+        std::size_t count = 0;
+        for (std::size_t i = 0; i < m_events.size(); ++i) {
+            if (!removed[i]) {
+                m_events[count++] = m_events[i];
+            }
+        }
+        m_events.resize(count);
+        std::sort(m_events.begin(), m_events.end(), [](const auto& a, const auto& b) {
+            return std::make_tuple(a.branchA, a.isolation.parameterA.lo(), a.branchB, a.isolation.parameterB.lo(),
+                                   a.isolation.segmentA, a.isolation.segmentB) <
+                   std::make_tuple(b.branchA, b.isolation.parameterA.lo(), b.branchB, b.isolation.parameterB.lo(),
+                                   b.isolation.segmentA, b.isolation.segmentB);
+        });
+        return true;
+    }
+
+    const LC_ParametricCurves& m_curves;
+    const LC_IntersectionOptions& m_options;
+    const std::vector<LC_ParametricSegment>& m_segments;
+    LC_IntersectionStatus m_status{LC_IntersectionStatus::Ok};
+    LC_IntersectionWorkStats m_work;
+    std::vector<Piece> m_leaves;
+    std::vector<Bounds> m_parameterBounds;
+    std::vector<LC_ParametricIntersection> m_events;
+};
+
 } // namespace
 
 LC_IntersectionResult findIntersections(const LC_ParametricCurves& curves, const LC_IntersectionOptions& options) {
-    return Solver{curves, options}.run();
+    return options.strict ? StrictSolver{curves, options}.run() : Solver{curves, options}.run();
 }

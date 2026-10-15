@@ -25,7 +25,9 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <algorithm>
+#include <array>
 #include <cmath>
+#include <functional>
 #include <limits>
 #include <memory>
 #include <tuple>
@@ -177,6 +179,117 @@ private:
     double m_middle;
 };
 
+struct PolynomialPiece {
+    LC_ParametricSegment segment;
+    std::array<double, 4> x;
+    std::array<double, 4> y;
+};
+
+PolynomialPiece polynomialLine(const std::size_t branch, const RS_Vector& origin, const RS_Vector& direction,
+                               const double from = 0.0, const double to = 1.0) {
+    return {{branch, from, to}, {origin.x, direction.x, 0.0, 0.0}, {origin.y, direction.y, 0.0, 0.0}};
+}
+
+/** Exact polynomial coefficients, independently enclosed by interval Horner arithmetic. */
+class CertifiedPolynomials final : public LC_ParametricCurves {
+public:
+    explicit CertifiedPolynomials(std::vector<PolynomialPiece> pieces, const std::size_t branches = 0)
+        : m_pieces{std::move(pieces)} {
+        for (const auto& piece : m_pieces) {
+            m_segments.push_back(piece.segment);
+        }
+        m_branches = branches != 0 ? branches : m_segments.empty() ? 0 : m_segments.back().branch + 1;
+    }
+    const std::vector<LC_ParametricSegment>& segments() const override { return m_segments; }
+    std::size_t branchCount() const override { return m_branches; }
+    std::ptrdiff_t next(const std::size_t branch) const override {
+        return successor ? successor(branch) : closed ? static_cast<std::ptrdiff_t>(branch) : -1;
+    }
+    bool evaluate(const std::size_t segment, const double t, RS_Vector& p, RS_Vector& d) const override {
+        const auto& piece = m_pieces[segment];
+        const auto value = [t](const auto& c) { return c[0] + t * (c[1] + t * (c[2] + t * c[3])); };
+        const auto derivative = [t](const auto& c) { return c[1] + t * (2.0 * c[2] + t * 3.0 * c[3]); };
+        p = RS_Vector{value(piece.x) + seedShift, value(piece.y)};
+        d = RS_Vector{derivative(piece.x), derivative(piece.y)};
+        if (invalidSeed) {
+            p.x = std::numeric_limits<double>::quiet_NaN();
+        }
+        if (outOfPlaneSeed) {
+            p.z = 1.0;
+        }
+        return true;
+    }
+    bool bound(const std::size_t segment, const double from, const double to, LC_Interval& x, LC_Interval& y,
+               LC_Interval& dx, LC_Interval& dy) const override {
+        if (missingPointBounds && from == to) {
+            return false;
+        }
+        const auto& piece = m_pieces[segment];
+        const LC_Interval t = LC_Interval::hull(from, to);
+        const auto pt = [](const double value) { return LC_Interval::point(value); };
+        const auto value = [&](const auto& c) { return pt(c[0]) + t * (pt(c[1]) + t * (pt(c[2]) + t * pt(c[3]))); };
+        const auto derivative = [&](const auto& c) {
+            return pt(c[1]) + t * (pt(2.0) * pt(c[2]) + t * pt(3.0) * pt(c[3]));
+        };
+        x = value(piece.x);
+        y = value(piece.y);
+        dx = derivative(piece.x);
+        dy = derivative(piece.y);
+        if (unbounded) {
+            x = LC_Interval::entire();
+        }
+        return true;
+    }
+    LC_AnalyticLeafCertificate certifyInjective(const std::size_t segment, const LC_Interval& parameter) const override {
+        return leafProof ? leafProof(segment, parameter) : LC_AnalyticLeafCertificate{};
+    }
+    LC_AnalyticIntersectionCertificate certifyIntersection(const LC_IntersectionDomain& box) const override {
+        return contactProof ? contactProof(box) : LC_AnalyticIntersectionCertificate{};
+    }
+
+    bool missingPointBounds{false};
+    bool unbounded{false};
+    bool invalidSeed{false};
+    bool outOfPlaneSeed{false};
+    bool closed{false};
+    double seedShift{0.0};
+    std::function<std::ptrdiff_t(std::size_t)> successor;
+    std::function<LC_AnalyticLeafCertificate(std::size_t, const LC_Interval&)> leafProof;
+    std::function<LC_AnalyticIntersectionCertificate(const LC_IntersectionDomain&)> contactProof;
+
+private:
+    std::vector<PolynomialPiece> m_pieces;
+    std::vector<LC_ParametricSegment> m_segments;
+    std::size_t m_branches{0};
+};
+
+LC_IntersectionOptions strictOptions() {
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-9;
+    options.strict = true;
+    return options;
+}
+
+void checkStrictWork(const LC_IntersectionResult& result, const LC_IntersectionOptions& options) {
+    CHECK(result.work.totalBoxPairs == result.work.candidateBoxPairs + result.work.refinementBoxPairs +
+                                      result.work.certificateBoxPairs);
+    CHECK(result.work.totalBoxPairs <= options.maxBoxPairs);
+    CHECK(result.work.generatedItems <= options.maxGeneratedItems);
+    CHECK(result.work.generatedLeaves <= options.maxLeaves);
+    if (result.status != LC_IntersectionStatus::Ok) {
+        CHECK(result.intersections.empty());
+    }
+    for (const auto& event : result.intersections) {
+        CHECK(event.proof != LC_IntersectionProof::Uncertified);
+        CHECK(event.isolation.parameterA.isValid());
+        CHECK(event.isolation.parameterB.isValid());
+        CHECK(event.proofDomain.parameterA.contains(event.isolation.parameterA.lo()));
+        CHECK(event.proofDomain.parameterA.contains(event.isolation.parameterA.hi()));
+        CHECK(event.proofDomain.parameterB.contains(event.isolation.parameterB.lo()));
+        CHECK(event.proofDomain.parameterB.contains(event.isolation.parameterB.hi()));
+    }
+}
+
 LC_IntersectionResult intersect(std::vector<const RS_Spline*> splines, const double tolerance = 1e-9) {
     LC_IntersectionOptions options;
     options.tolerance = tolerance;
@@ -232,6 +345,509 @@ size_t sampledCrossings(const std::vector<const RS_Spline*>& splines) {
 }
 
 } // namespace
+
+TEST_CASE("Strict transverse certificates use outward points rather than cancellation seeds",
+          "[lc-offsetcurve][geometry][intersection-strict][curve-offset][topology]") {
+    CertifiedPolynomials curves{{polynomialLine(0, {-0.5, 0}, {1, 0}),
+                                  polynomialLine(1, {0, -0.5}, {0, 1})}};
+    auto options = strictOptions();
+    for (const double shift : {0.0, 1e12}) {
+        CAPTURE(shift);
+        curves.seedShift = shift; // finite estimates are deliberately poor; the exact residual still has its own bounds
+        const auto result = findIntersections(curves, options);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        REQUIRE(result.intersections.size() == 1);
+        checkStrictWork(result, options);
+        const auto& root = result.intersections.front();
+        CHECK(root.proof == LC_IntersectionProof::IntervalUniqueTransverse);
+        CHECK(root.kind == Kind::Transverse);
+        CHECK(root.isolation.segmentA == 0);
+        CHECK(root.isolation.segmentB == 1);
+        CHECK(root.isolation.parameterA.contains(0.5));
+        CHECK(root.isolation.parameterB.contains(0.5));
+        CHECK(root.point.distanceTo({0, 0}) < 1e-12);
+    }
+    curves.seedShift = 0.0;
+    options.strict = false;
+    options.maxGeneratedItems = 0; // strict-only limits/hooks cannot affect ordinary callers
+    curves.contactProof = [](const auto&) {
+        LC_AnalyticIntersectionCertificate invalid;
+        invalid.outcome = LC_AnalyticIntersectionCertificate::Outcome::Unique;
+        return invalid;
+    };
+    const auto ordinary = findIntersections(curves, options);
+    REQUIRE(ordinary.status == LC_IntersectionStatus::Ok);
+    REQUIRE(ordinary.intersections.size() == 1);
+    CHECK(ordinary.intersections.front().proof == LC_IntersectionProof::Uncertified);
+    CHECK(ordinary.work.generatedItems == 0);
+    CHECK(ordinary.work.certificateBoxPairs == 0);
+    checkWork(ordinary, options);
+}
+
+TEST_CASE("Strict isolation keeps nearby distinct roots below the numerical merge tolerance",
+          "[lc-offsetcurve][geometry][intersection-strict][curve-offset][topology]") {
+    const double lo = 0.5 - 1.0 / 1024.0;
+    const double hi = 0.5 + 1.0 / 1024.0;
+    CertifiedPolynomials curves{{polynomialLine(0, {0, 0}, {1, 0}),
+        {{1, 0, 1}, {0, 1, 0, 0}, {lo * hi, -1, 1, 0}}}};
+    auto options = strictOptions();
+    options.tolerance = 0.1;
+    const auto result = findIntersections(curves, options);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    REQUIRE(result.intersections.size() == 2);
+    checkStrictWork(result, options);
+    CHECK(result.intersections[0].isolation.parameterA.contains(lo));
+    CHECK(result.intersections[1].isolation.parameterA.contains(hi));
+    CHECK(result.intersections[0].isolation.parameterA.hi() < result.intersections[1].isolation.parameterA.lo());
+    CHECK(result.intersections[0].isolation.parameterB.hi() < result.intersections[1].isolation.parameterB.lo());
+    CHECK(result.work.certificateBoxPairs > 0);
+}
+
+TEST_CASE("Strict global ordering considers shared branches with different partners",
+          "[lc-offsetcurve][geometry][intersection-strict][curve-offset][topology]") {
+    const double first = 0.5 - 1.0 / 1024.0;
+    const double second = 0.5 + 1.0 / 1024.0;
+    CertifiedPolynomials curves{{polynomialLine(0, {0, 0}, {1, 0}),
+        polynomialLine(1, {first, -0.5}, {0, 1}), polynomialLine(2, {second, -0.5}, {0, 1})}};
+    auto options = strictOptions();
+    options.tolerance = 1.0;
+    const auto ordered = findIntersections(curves, options);
+    REQUIRE(ordered.status == LC_IntersectionStatus::Ok);
+    REQUIRE(ordered.intersections.size() == 2);
+    checkStrictWork(ordered, options);
+    CHECK(ordered.intersections[0].branchB == 1);
+    CHECK(ordered.intersections[1].branchB == 2);
+    CHECK(ordered.intersections[0].isolation.parameterA.hi() < ordered.intersections[1].isolation.parameterA.lo());
+
+    CertifiedPolynomials triple{{polynomialLine(0, {-0.5, 0}, {1, 0}),
+        polynomialLine(1, {0, -0.5}, {0, 1}), polynomialLine(2, {-0.5, -0.5}, {1, 1})}};
+    const auto unresolved = findIntersections(triple, options);
+    CHECK(unresolved.status == LC_IntersectionStatus::AmbiguousTopology);
+    checkStrictWork(unresolved, options);
+    CHECK(unresolved.work.certificateBoxPairs > 0);
+    options.strict = false;
+    options.tolerance = 1e-9;
+    const auto ordinary = findIntersections(triple, options);
+    REQUIRE(ordinary.status == LC_IntersectionStatus::Ok);
+    CHECK(ordinary.intersections.size() == 3);
+}
+
+TEST_CASE("Qualified partition endpoints merge by exact occurrence not spatial proximity",
+          "[lc-offsetcurve][geometry][intersection-strict][curve-offset][topology]") {
+    CertifiedPolynomials curves{{polynomialLine(0, {0, 0}, {1, 0}, 0.0, 0.5),
+        polynomialLine(0, {0, 0}, {1, 0}, 0.5, 1.0), polynomialLine(1, {0.5, -0.5}, {0, 1})}};
+    curves.contactProof = [](const LC_IntersectionDomain& box) {
+        LC_AnalyticIntersectionCertificate certificate;
+        certificate.proofDomain = box;
+        if (box.parameterA.contains(0.5) && box.parameterB.contains(0.5)) {
+            certificate.outcome = LC_AnalyticIntersectionCertificate::Outcome::Unique;
+            certificate.proof = LC_IntersectionProof::AnalyticEndpoint;
+            certificate.isolationA = certificate.isolationB = LC_Interval::point(0.5);
+            certificate.kind = Kind::Transverse;
+        } else {
+            certificate.outcome = LC_AnalyticIntersectionCertificate::Outcome::Excluded;
+            certificate.proof = LC_IntersectionProof::AnalyticExclusion;
+        }
+        return certificate;
+    };
+    auto options = strictOptions();
+    options.maxDepth = 0;
+    const auto result = findIntersections(curves, options);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    REQUIRE(result.intersections.size() == 1);
+    checkStrictWork(result, options);
+    CHECK(result.intersections.front().isolation.parameterA.lo() == 0.5);
+    CHECK(result.intersections.front().isolation.parameterA.hi() == 0.5);
+    CHECK(result.intersections.front().kind == Kind::Transverse);
+    CHECK(result.work.generatedItems >= 6); // three initial boxes, two event records, and their derived merge
+}
+
+TEST_CASE("Strict tiny self loops cannot disappear through small-image preparation or pruning",
+          "[lc-offsetcurve][geometry][intersection-strict][curve-offset][topology]") {
+    const double scale = 1e-9;
+    CertifiedPolynomials loop{{{{0, 0, 1}, {0, 45 * scale, -105 * scale, 70 * scale},
+                                                      {0, 30 * scale, -30 * scale, 0}}}};
+    auto options = strictOptions();
+    options.tolerance = 1e-3;
+    const auto result = findIntersections(loop, options);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    REQUIRE(result.intersections.size() == 1);
+    checkStrictWork(result, options);
+    const auto& root = result.intersections.front();
+    CHECK(root.branchA == 0);
+    CHECK(root.branchB == 0);
+    CHECK(root.isolation.parameterA.contains(0.5 * (1.0 - std::sqrt(3.0 / 7.0))));
+    CHECK(root.isolation.parameterB.contains(0.5 * (1.0 + std::sqrt(3.0 / 7.0))));
+    CHECK(root.isolation.parameterA.contains(root.parameterA));
+    CHECK(root.isolation.parameterB.contains(root.parameterB));
+    CHECK(root.isolation.parameterA.hi() < root.isolation.parameterB.lo());
+    CHECK(root.proof == LC_IntersectionProof::IntervalUniqueTransverse);
+}
+
+TEST_CASE("Strict joined-end exclusions do not suppress an adjacent segment re-crossing",
+          "[lc-offsetcurve][geometry][intersection-strict][curve-offset][topology]") {
+    CertifiedPolynomials curves{{polynomialLine(0, {0, 0}, {1, 0}),
+                                  {{0, 1, 2}, {2, -1, 0, 0}, {1.5, -2.5, 1, 0}}}};
+    curves.contactProof = [](const LC_IntersectionDomain& box) {
+        LC_AnalyticIntersectionCertificate certificate;
+        // The only non-construction intersection is (t,u)=(0.5,1.5).
+        // Exclude the joined end only after this WHOLE box excludes that second root.
+        if (!box.parameterA.contains(0.5) || !box.parameterB.contains(1.5)) {
+            certificate.outcome = LC_AnalyticIntersectionCertificate::Outcome::Excluded;
+            certificate.proof = LC_IntersectionProof::AnalyticExclusion;
+            certificate.proofDomain = box;
+        }
+        return certificate;
+    };
+    auto options = strictOptions();
+    options.tolerance = 1.0;
+    const auto result = findIntersections(curves, options);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    REQUIRE(result.intersections.size() == 1);
+    checkStrictWork(result, options);
+    CHECK(result.intersections.front().isolation.parameterA.contains(0.5));
+    CHECK(result.intersections.front().isolation.parameterB.contains(1.5));
+    CHECK(result.intersections.front().proof == LC_IntersectionProof::IntervalUniqueTransverse);
+    CHECK(result.work.certificateBoxPairs > 0);
+}
+
+TEST_CASE("Strict analytic tangency and cusp certificates carry explicit classifications",
+          "[lc-offsetcurve][geometry][intersection-strict][curve-offset][topology]") {
+    for (const bool cusp : {false, true}) {
+        CertifiedPolynomials curves{cusp ? std::vector<PolynomialPiece>{
+            {{0, -1, 1}, {0, 0, 1, 0}, {0, 0, 0, 1}}, polynomialLine(1, {0, 0}, {0, 1}, -1, 1)} :
+            std::vector<PolynomialPiece>{polynomialLine(0, {0, 0}, {1, 0}),
+                                        {{1, 0, 1}, {0, 1, 0, 0}, {0.25, -1, 1, 0}}}};
+        if (cusp) {
+            // (t^2,t^3) is injective on the WHOLE interval despite its stationary interior point.
+            curves.leafProof = [](const std::size_t segment, const LC_Interval& parameter) {
+                return LC_AnalyticLeafCertificate{true, segment, parameter};
+            };
+        }
+        curves.contactProof = [cusp](const LC_IntersectionDomain& box) {
+            LC_AnalyticIntersectionCertificate certificate;
+            certificate.proofDomain = box;
+            certificate.outcome = LC_AnalyticIntersectionCertificate::Outcome::Unique;
+            certificate.proof = cusp ? LC_IntersectionProof::AnalyticCusp : LC_IntersectionProof::AnalyticTangency;
+            certificate.isolationA = certificate.isolationB = LC_Interval::point(cusp ? 0.0 : 0.5);
+            certificate.kind = Kind::Tangent;
+            return certificate;
+        };
+        auto options = strictOptions();
+        options.maxDepth = options.maxLeafDepth = 0;
+        const auto qualified = findIntersections(curves, options);
+        REQUIRE(qualified.status == LC_IntersectionStatus::Ok);
+        REQUIRE(qualified.intersections.size() == 1);
+        CHECK(qualified.intersections.front().proof ==
+              (cusp ? LC_IntersectionProof::AnalyticCusp : LC_IntersectionProof::AnalyticTangency));
+        CHECK(qualified.intersections.front().kind == Kind::Tangent);
+        checkStrictWork(qualified, options);
+        curves.contactProof = {};
+        const auto unresolved = findIntersections(curves, options);
+        CHECK(unresolved.status == LC_IntersectionStatus::LimitExceeded);
+        checkStrictWork(unresolved, options);
+    }
+    CertifiedPolynomials retrace{{polynomialLine(0, {0, 0}, {1, 0}), polynomialLine(1, {0, 0}, {1, 0})}};
+    auto options = strictOptions();
+    options.maxDepth = 0;
+    const auto unresolved = findIntersections(retrace, options);
+    CHECK(unresolved.status == LC_IntersectionStatus::LimitExceeded);
+    checkStrictWork(unresolved, options);
+}
+
+TEST_CASE("Strict certificates preserve distinct end occurrences and proven shared triple incidences",
+          "[lc-offsetcurve][geometry][intersection-strict][curve-offset][topology]") {
+    SECTION("Coincident source ends stay two occurrences against another branch") {
+        CertifiedPolynomials curves{{{{0, 0, 1}, {0, 1, -1, 0}, {0, -0.5, 1.5, -1}},
+                                      polynomialLine(1, {0, -1}, {0, 2})}};
+        curves.successor = [](const std::size_t branch) -> std::ptrdiff_t { return branch == 0 ? 0 : -1; };
+        curves.contactProof = [](const LC_IntersectionDomain& box) {
+            LC_AnalyticIntersectionCertificate certificate;
+            certificate.proofDomain = box;
+            if (box.segmentA == box.segmentB) {
+                // This simple closed polynomial has only the construction-shared seam, not another self-root.
+                certificate.outcome = LC_AnalyticIntersectionCertificate::Outcome::Excluded;
+                certificate.proof = LC_IntersectionProof::AnalyticExclusion;
+            } else if ((box.parameterA.contains(0.0) || box.parameterA.contains(1.0)) && box.parameterB.contains(0.5)) {
+                certificate.outcome = LC_AnalyticIntersectionCertificate::Outcome::Unique;
+                certificate.proof = LC_IntersectionProof::AnalyticEndpoint;
+                certificate.isolationA = LC_Interval::point(box.parameterA.contains(0.0) ? 0.0 : 1.0);
+                certificate.isolationB = LC_Interval::point(0.5);
+                certificate.kind = Kind::Endpoint;
+            } else {
+                certificate.outcome = LC_AnalyticIntersectionCertificate::Outcome::Excluded;
+                certificate.proof = LC_IntersectionProof::AnalyticExclusion;
+            }
+            return certificate;
+        };
+        auto options = strictOptions();
+        const auto result = findIntersections(curves, options);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        REQUIRE(result.intersections.size() == 2);
+        checkStrictWork(result, options);
+        CHECK(result.intersections[0].parameterA == 0.0);
+        CHECK(result.intersections[1].parameterA == 1.0);
+        CHECK(result.intersections[0].parameterB == 0.5);
+        CHECK(result.intersections[1].parameterB == 0.5);
+    }
+    SECTION("Analytically exact common occurrences keep all branch-pair incidences") {
+        CertifiedPolynomials curves{{polynomialLine(0, {-0.5, 0}, {1, 0}, 0.5, 1),
+            polynomialLine(1, {0, -0.5}, {0, 1}, 0.5, 1), polynomialLine(2, {-0.5, -0.5}, {1, 1}, 0.5, 1)}};
+        curves.contactProof = [](const LC_IntersectionDomain& box) {
+            LC_AnalyticIntersectionCertificate certificate;
+            certificate.outcome = LC_AnalyticIntersectionCertificate::Outcome::Unique;
+            certificate.proof = LC_IntersectionProof::AnalyticEndpoint;
+            certificate.proofDomain = box;
+            certificate.isolationA = certificate.isolationB = LC_Interval::point(0.5);
+            return certificate;
+        };
+        const auto options = strictOptions();
+        const auto result = findIntersections(curves, options);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        REQUIRE(result.intersections.size() == 3);
+        checkStrictWork(result, options);
+        CHECK(result.intersections[0].branchA == 0);
+        CHECK(result.intersections[0].branchB == 1);
+        CHECK(result.intersections[1].branchA == 0);
+        CHECK(result.intersections[1].branchB == 2);
+        CHECK(result.intersections[2].branchA == 1);
+        CHECK(result.intersections[2].branchB == 2);
+    }
+}
+
+TEST_CASE("Strict stationary leaves require whole-interval analytic injectivity",
+          "[lc-offsetcurve][geometry][intersection-strict][curve-offset][topology]") {
+    CertifiedPolynomials curves{{{{0, 0, 1}, {0, 0, 1, 0}, {0, 0, 0, 0}}}};
+    auto options = strictOptions();
+    options.maxLeafDepth = 0;
+    const auto unknown = findIntersections(curves, options);
+    CHECK(unknown.status == LC_IntersectionStatus::LimitExceeded);
+    checkStrictWork(unknown, options);
+    curves.leafProof = [](const std::size_t segment, const LC_Interval& parameter) {
+        return LC_AnalyticLeafCertificate{true, segment, parameter}; // t^2 is injective on [0,1]
+    };
+    options.maxGeneratedItems = 2;
+    const auto qualified = findIntersections(curves, options);
+    REQUIRE(qualified.status == LC_IntersectionStatus::Ok);
+    CHECK(qualified.intersections.empty());
+    CHECK(qualified.work.generatedItems == 2);
+    CHECK(qualified.work.generatedLeaves == 1);
+    CHECK(qualified.work.certificateBoxPairs == 1);
+    checkStrictWork(qualified, options);
+    for (int invalid = 0; invalid < 3; ++invalid) {
+        curves.leafProof = [invalid](const std::size_t segment, const LC_Interval& parameter) {
+            return LC_AnalyticLeafCertificate{true, invalid == 0 ? segment + 1 : segment,
+                invalid == 1 ? LC_Interval::point(parameter.lo()) :
+                invalid == 2 ? LC_Interval::hull(-1.0, parameter.hi()) : parameter};
+        };
+        const auto rejected = findIntersections(curves, options);
+        CHECK(rejected.status == LC_IntersectionStatus::InvalidInput);
+        checkStrictWork(rejected, options);
+    }
+}
+
+TEST_CASE("Strict malformed contacts and missing endpoint certificates never publish partial events",
+          "[lc-offsetcurve][geometry][intersection-strict][curve-offset][topology]") {
+    CertifiedPolynomials curves{{polynomialLine(0, {0, 0}, {1, 0}), polynomialLine(1, {1, 0}, {0, 1})}};
+    auto options = strictOptions();
+    options.maxDepth = 0;
+    const auto missing = findIntersections(curves, options);
+    CHECK(missing.status == LC_IntersectionStatus::LimitExceeded);
+    checkStrictWork(missing, options);
+    for (int invalid = -1; invalid < 7; ++invalid) {
+        CAPTURE(invalid);
+        curves.contactProof = [invalid](const LC_IntersectionDomain& box) {
+            LC_AnalyticIntersectionCertificate certificate;
+            certificate.outcome = LC_AnalyticIntersectionCertificate::Outcome::Unique;
+            certificate.proof = LC_IntersectionProof::AnalyticEndpoint;
+            certificate.proofDomain = box;
+            certificate.isolationA = LC_Interval::point(1.0);
+            certificate.isolationB = LC_Interval::point(0.0);
+            if (invalid == 0) { certificate.proofDomain.segmentA = 100; }
+            if (invalid == 1) { certificate.proofDomain.parameterA = LC_Interval::hull(-1.0, 1.0); }
+            if (invalid == 2) { certificate.proofDomain.parameterA = LC_Interval::point(1.0); }
+            if (invalid == 3) { certificate.isolationA = LC_Interval::point(std::numeric_limits<double>::infinity()); }
+            if (invalid == 4) { certificate.isolationB = LC_Interval::point(2.0); }
+            if (invalid == 5) { certificate.proof = LC_IntersectionProof::Uncertified; }
+            if (invalid == 6) {
+                certificate.outcome = LC_AnalyticIntersectionCertificate::Outcome::Excluded;
+                certificate.proof = LC_IntersectionProof::Uncertified;
+            }
+            return certificate;
+        };
+        const auto result = findIntersections(curves, options);
+        CHECK(result.status == (invalid == -1 ? LC_IntersectionStatus::Ok : invalid >= 5 ?
+                               LC_IntersectionStatus::AmbiguousTopology : LC_IntersectionStatus::InvalidInput));
+        checkStrictWork(result, options);
+        if (invalid == -1) {
+            REQUIRE(result.intersections.size() == 1);
+            CHECK(result.intersections.front().kind == Kind::Endpoint);
+        }
+    }
+    CertifiedPolynomials partial{{polynomialLine(0, {0, 0}, {1, 0}),
+        polynomialLine(1, {0.25, -0.5}, {0, 1}), polynomialLine(2, {0.75, -0.5}, {0, 1})}};
+    partial.contactProof = [](const LC_IntersectionDomain& box) {
+        LC_AnalyticIntersectionCertificate certificate;
+        if (box.segmentB == 2) {
+            certificate.outcome = LC_AnalyticIntersectionCertificate::Outcome::Unique;
+            certificate.proofDomain.segmentA = 100;
+        }
+        return certificate;
+    };
+    const auto rejected = findIntersections(partial, options);
+    CHECK(rejected.status == LC_IntersectionStatus::InvalidInput);
+    CHECK(rejected.work.generatedItems > 3); // a prior certified root existed internally
+    checkStrictWork(rejected, options);
+}
+
+TEST_CASE("Strict preflight rejects invalid point bounds seeds and noncontiguous branch domains",
+          "[lc-offsetcurve][geometry][intersection-strict][curve-offset][topology]") {
+    for (const bool disjoint : {false, true}) {
+        for (int invalid = 0; invalid < 4; ++invalid) {
+            std::vector<PolynomialPiece> pieces{polynomialLine(0, {0, 0}, {1, 0})};
+            if (disjoint) { pieces.push_back(polynomialLine(1, {0, 10}, {1, 0})); }
+            CertifiedPolynomials curves{pieces};
+            curves.missingPointBounds = invalid == 0;
+            curves.unbounded = invalid == 1;
+            curves.invalidSeed = invalid == 2;
+            curves.outOfPlaneSeed = invalid == 3;
+            const auto options = strictOptions();
+            const auto result = findIntersections(curves, options);
+            CHECK(result.status == LC_IntersectionStatus::InvalidInput);
+            checkStrictWork(result, options);
+        }
+    }
+    for (const double boundary : {0.4, 0.6}) {
+        CertifiedPolynomials gap{{polynomialLine(0, {0, 0}, {1, 0}, 0.0, boundary),
+                                  polynomialLine(0, {0, 0}, {1, 0}, 0.5, 1.0)}};
+        const auto options = strictOptions();
+        const auto result = findIntersections(gap, options);
+        CHECK(result.status == LC_IntersectionStatus::InvalidInput);
+        CHECK(result.work.generatedItems == 0);
+        checkStrictWork(result, options);
+    }
+    CertifiedPolynomials oversized{{polynomialLine(0, {0, 0}, {1, 0})}, std::numeric_limits<std::size_t>::max()};
+    const auto options = strictOptions();
+    const auto result = findIntersections(oversized, options);
+    CHECK(result.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(result.work.generatedItems == 0);
+    checkStrictWork(result, options);
+}
+
+TEST_CASE("Strict generated-item pair and depth allowances are checked without refunds or overflow",
+          "[lc-offsetcurve][geometry][intersection-strict][curve-offset][topology]") {
+    CertifiedPolynomials curves{{polynomialLine(0, {0, 0}, {1, 0}),
+        polynomialLine(1, {0.25, -0.5}, {0, 1}), polynomialLine(2, {0.75, -0.5}, {0, 1})}};
+    auto options = strictOptions();
+    const auto baseline = findIntersections(curves, options);
+    REQUIRE(baseline.status == LC_IntersectionStatus::Ok);
+    REQUIRE(baseline.intersections.size() == 2);
+    REQUIRE(baseline.work.certificateBoxPairs > 0);
+    for (const bool generated : {false, true}) {
+        options = strictOptions();
+        if (generated) { options.maxGeneratedItems = baseline.work.generatedItems; }
+        else { options.maxBoxPairs = baseline.work.totalBoxPairs; }
+        const auto exact = findIntersections(curves, options);
+        REQUIRE(exact.status == LC_IntersectionStatus::Ok);
+        CHECK(exact.intersections.size() == 2);
+        checkStrictWork(exact, options);
+        if (generated) { --options.maxGeneratedItems; } else { --options.maxBoxPairs; }
+        const auto shortBudget = findIntersections(curves, options);
+        CHECK(shortBudget.status == LC_IntersectionStatus::LimitExceeded);
+        checkStrictWork(shortBudget, options);
+    }
+    options = strictOptions();
+    options.maxGeneratedItems = 0;
+    const auto zeroGenerated = findIntersections(curves, options);
+    CHECK(zeroGenerated.status == LC_IntersectionStatus::InvalidInput);
+    checkStrictWork(zeroGenerated, options);
+    options = strictOptions();
+    options.maxBoxPairs = 0;
+    const auto noPairs = findIntersections(curves, options);
+    CHECK(noPairs.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(noPairs.work.totalBoxPairs == 0);
+    checkStrictWork(noPairs, options);
+    options = strictOptions();
+    options.maxLeaves = 0;
+    const auto noLeaves = findIntersections(curves, options);
+    CHECK(noLeaves.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(noLeaves.work.generatedItems == 1);
+    checkStrictWork(noLeaves, options);
+    CertifiedPolynomials stationary{{{{0, 0, 1}, {0, 0, 1, 0}, {0, 0, 0, 0}}}};
+    options = strictOptions();
+    options.maxGeneratedItems = 1;
+    const auto noChildren = findIntersections(stationary, options);
+    CHECK(noChildren.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(noChildren.work.generatedItems == 1);
+    checkStrictWork(noChildren, options);
+    options = strictOptions();
+    options.maxDepth = 0;
+    const auto provedWithoutSubdivision = findIntersections(curves, options);
+    CHECK(provedWithoutSubdivision.status == LC_IntersectionStatus::Ok);
+    checkStrictWork(provedWithoutSubdivision, options);
+    options.maxBoxPairs = options.maxGeneratedItems = options.maxLeaves = std::numeric_limits<std::size_t>::max();
+    const auto enormousAllowances = findIntersections(curves, options);
+    CHECK(enormousAllowances.status == LC_IntersectionStatus::Ok);
+    checkStrictWork(enormousAllowances, options);
+}
+
+TEST_CASE("Strict hierarchy prunes separated two-axis and unanchored clouds within linear work",
+          "[lc-offsetcurve][geometry][intersection-strict][curve-offset][topology]") {
+    constexpr std::size_t count = 512;
+    for (const bool separateY : {false, true}) {
+        std::vector<PolynomialPiece> pieces;
+        for (std::size_t i = 0; i < count; ++i) {
+            const double offset = 4.0 * static_cast<double>(i);
+            pieces.push_back(polynomialLine(i, separateY ? RS_Vector{0, offset} : RS_Vector{offset, 0}, {1, 0}));
+        }
+        auto options = strictOptions();
+        options.maxBoxPairs = 4 * count;
+        options.maxGeneratedItems = count;
+        const auto result = findIntersections(CertifiedPolynomials{pieces}, options);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        CHECK(result.intersections.empty());
+        CHECK(result.work.refinementBoxPairs == 0);
+        checkStrictWork(result, options);
+    }
+    for (const std::size_t cloudCount : {128u, 256u, 512u, 1024u}) {
+        CAPTURE(cloudCount);
+        std::vector<PolynomialPiece> pieces{polynomialLine(0, {0, 1e6}, {1, 0})};
+        for (std::size_t i = 1; i <= cloudCount; ++i) {
+            pieces.push_back(polynomialLine(i, {0, 0}, {1, 0})); // all unanchored images overlap
+        }
+        auto options = strictOptions();
+        options.maxBoxPairs = 8 * pieces.size();
+        options.maxGeneratedItems = pieces.size();
+        options.anchoredBranches = 1;
+        const auto result = findIntersections(CertifiedPolynomials{pieces}, options);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        CHECK(result.intersections.empty());
+        CHECK(result.work.refinementBoxPairs == 0);
+        CHECK(result.work.totalBoxPairs < options.maxBoxPairs);
+        checkStrictWork(result, options);
+    }
+}
+
+TEST_CASE("Strict cached full-path projection qualifies contiguous multi-segment branches",
+          "[lc-offsetcurve][geometry][intersection-strict][curve-offset][topology]") {
+    for (const std::size_t count : {255u, 256u, 257u}) {
+        std::vector<PolynomialPiece> pieces;
+        for (std::size_t i = 0; i < count; ++i) {
+            pieces.push_back(polynomialLine(0, {0, 0}, {1, 0}, static_cast<double>(i), static_cast<double>(i + 1)));
+        }
+        auto options = strictOptions();
+        options.maxBoxPairs = 2 * count;
+        options.maxGeneratedItems = count;
+        const auto result = findIntersections(CertifiedPolynomials{pieces}, options);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        CHECK(result.intersections.empty());
+        CHECK(result.work.generatedLeaves == count);
+        CHECK(result.work.generatedItems == count);
+        CHECK(result.work.refinementBoxPairs == 0);
+        CHECK(result.work.certificateBoxPairs == 0);
+        checkStrictWork(result, options);
+    }
+}
 
 TEST_CASE("Dense overlapping leaves exhaust the shared budget during hierarchy traversal",
           "[lc-offsetcurve][geometry][intersection-budget][curve-offset][topology]") {
