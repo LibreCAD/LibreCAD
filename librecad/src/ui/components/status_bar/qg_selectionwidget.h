@@ -42,6 +42,8 @@ class QG_SelectionWidget : public QWidget, public LC_GraphicViewAware, public Ui
 public:
     explicit QG_SelectionWidget(QWidget* parent = nullptr, const char* name = nullptr, Qt::WindowFlags fl = {});
     ~QG_SelectionWidget() override;
+signals:
+    void countChanged(int number) const;
 public slots:
     void setNumber(int n) const;
     void setTotalLength(double l) const;

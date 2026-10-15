@@ -30,6 +30,8 @@
 #include <QFileInfo>
 #include <QRegularExpression>
 #include <QTextStream>
+#include <algorithm>
+#include <set>
 #include<vector>
 
 #include "lc_commandItems.h"
@@ -182,6 +184,13 @@ RS_Commands* RS_Commands::instance() {
 RS_Commands::RS_Commands() {
 
     for(const auto& [fullCmdList, aliasList, action]: g_commandList){
+        if (!fullCmdList.empty()) {
+            const auto& text = fullCmdList.front().first;
+            const QString canonical = QString::fromUtf8(text.source);
+            const char* description = text.disambiguation ? text.disambiguation : fullCmdList.front().second.disambiguation;
+            m_completionInfo.emplace(action, std::make_pair(canonical,
+                description ? QString::fromUtf8(description) : QObject::tr("Run %1").arg(canonical)));
+        }
         //add full commands
         for(const auto& [fullCmdText, cmdTranslationText]: fullCmdList){
             const QString fullCmd = resolveCommandText(fullCmdText);
@@ -388,6 +397,32 @@ QStringList RS_Commands::complete(const QString& cmd) const {
     ret.sort();
 
     return ret;
+}
+
+QList<RS_Commands::Completion> RS_Commands::suggestions(const QString& prefix) const {
+    QList<Completion> result;
+    std::set<QString> seen;
+    const auto append = [&](const auto& table, bool alias) {
+        for (const auto& [text, action] : table) {
+            const auto info = m_completionInfo.find(action);
+            if (action == RS2::ActionNone || info == m_completionInfo.end()
+                || !text.startsWith(prefix, Qt::CaseInsensitive) || !seen.insert(text).second) continue;
+            result.append({text, info->second.first, info->second.second, action, alias});
+        }
+    };
+    append(m_mainCommands, false);
+    append(m_shortCommands, true);
+    std::sort(result.begin(), result.end(), [&prefix](const Completion& a, const Completion& b) {
+        const bool sameCaseA = a.text == prefix;
+        const bool sameCaseB = b.text == prefix;
+        if (sameCaseA != sameCaseB) return sameCaseA;
+        const bool exactA = a.text.compare(prefix, Qt::CaseInsensitive) == 0;
+        const bool exactB = b.text.compare(prefix, Qt::CaseInsensitive) == 0;
+        if (exactA != exactB) return exactA;
+        const int order = a.text.compare(b.text, Qt::CaseInsensitive);
+        return order == 0 ? a.text < b.text : order < 0;
+    });
+    return result;
 }
 
 /**

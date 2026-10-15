@@ -70,6 +70,7 @@ protected:
         Moving,         /**< Moving entities (drag'n'drop) */
         MovingRef,       /**< Moving a reference point of one or more selected
                                              entities */
+        Lasso,
         Panning /**< view panning triggered by Ctl- mouse dragging */
     };
 
@@ -94,6 +95,8 @@ protected:
     void createEditedArcDescription(const RS_Arc* clone, bool ctrlPressed, bool shiftPressed) const;
     void createEditedCircleDescription(const RS_Circle* clone, bool ctrlPressed, bool shiftPressed) const;
     void onMouseMovingRefCompleted(const LC_MouseEvent* e);
+    void beginGripEdit(RS_Entity* entity, const RS_Vector& point);
+    RS_Vector constrainGripPoint(const RS_Vector& point) const;
     void onMouseMovingCompleted(const LC_MouseEvent* e);
     bool isShowEntityDescriptionOnHighlight() const;
     void forceUpdateInfoCursor(const LC_MouseEvent *event) const;

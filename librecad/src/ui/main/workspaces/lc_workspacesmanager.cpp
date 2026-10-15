@@ -28,6 +28,7 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QSignalBlocker>
 #include <QMessageBox>
 
 #include "qc_applicationwindow.h"
@@ -138,6 +139,7 @@ void LC_WorkspacesManager::fillIconsAndMenuState(LC_Workspace &workspace){
 }
 
 void LC_WorkspacesManager::fillBySettings(LC_Workspace &workspace){
+    workspace.preset = LC_GET_ONE_STR("Startup", "CadWorkspacePreset", "classic-v1");
     LC_GROUP("Geometry");
     {
         const auto geometryB64 = LC_GET_STR("WindowGeometry");
@@ -183,6 +185,7 @@ void LC_WorkspacesManager::fillByState(LC_Workspace &workspace){
     const QString stateB64 = appWin.dockLayoutStateForSaving().toBase64(QByteArray::Base64Encoding);
     workspace.geometry = geometryB64;
     workspace.widgetsState = stateB64;
+    workspace.preset = appWin.cadWorkspacePreset();
     workspace.dockVisibility = appWin.requestedDockVisibility();
     workspace.hasDockVisibility = true;
     workspace.windowHeight = appWin.height();
@@ -208,6 +211,7 @@ void LC_WorkspacesManager::fillByState(LC_Workspace &workspace){
 }
 
 void LC_WorkspacesManager::applyToSettings(const LC_Workspace &workspace){
+    LC_SET_ONE("Startup", "CadWorkspacePreset", workspace.preset);
     LC_GROUP("Geometry");
     {
         LC_SET("WindowGeometry",workspace.geometry);
@@ -268,6 +272,8 @@ void LC_WorkspacesManager::restoreGeometryAndState(const LC_Workspace &workspace
 
 void LC_WorkspacesManager::restoreGeometryAndState(const LC_Workspace &workspace, QC_ApplicationWindow &appWin) const {
     appWin.setUpdatesEnabled(false);
+    // Parent the single pen toolbar before Qt restores the matching layout.
+    appWin.restoreCadWorkspacePreset(workspace.preset);
 
     const auto widgetsState = QByteArray::fromBase64(workspace.widgetsState.toUtf8(), QByteArray::Base64Encoding);
     const QHash<int, bool> areas{{int(Qt::LeftDockWidgetArea), workspace.dockAreaLeftActive},
@@ -278,6 +284,12 @@ void LC_WorkspacesManager::restoreGeometryAndState(const LC_Workspace &workspace
     appWin.restoreDockLayout(workspace.dockVisibility, workspace.hasDockVisibility, areas, widgetsState);
 
     const auto& tbAreas = appWin.getToolbarAreaToggleActions();
+    // Qt's restored state already contains each toolbar's visibility. Updating
+    // the area indicators must not show every toolbar in those areas.
+    const QSignalBlocker leftBlocker(tbAreas.left);
+    const QSignalBlocker rightBlocker(tbAreas.right);
+    const QSignalBlocker bottomBlocker(tbAreas.bottom);
+    const QSignalBlocker topBlocker(tbAreas.top);
     tbAreas.left->setChecked(workspace.tbAreaLeftActive);
     tbAreas.right->setChecked(workspace.tbAreaRightActive);
     tbAreas.bottom->setChecked(workspace.tbAreaBottomActive);
@@ -376,6 +388,7 @@ void LC_WorkspacesManager::loadWorkspaces(){
 
                                 p->geometry = wsObj["geometry"].toString();
                                 p->widgetsState = wsObj["widgetState"].toString();
+                                p->preset = wsObj["preset"].toString("classic-v1");
                                 p->windowX = wsObj["winX"].toInt();
                                 p->windowY = wsObj["winY"].toInt();
                                 p->windowWidth = wsObj["winWidth"].toInt();
@@ -458,6 +471,7 @@ void LC_WorkspacesManager::saveWorkspaces(QWidget* parent){
                 wsObj.insert("id", QJsonValue::fromVariant(p->id));
                 wsObj.insert("geometry", QJsonValue::fromVariant(p->geometry));
                 wsObj.insert("widgetState", QJsonValue::fromVariant(p->widgetsState));
+                wsObj.insert("preset", p->preset);
                 if (p->hasDockVisibility) {
                     QJsonObject dockVisibility;
                     for (auto it = p->dockVisibility.cbegin(); it != p->dockVisibility.cend(); ++it)

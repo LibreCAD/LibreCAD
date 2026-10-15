@@ -33,6 +33,7 @@
 #include <memory>
 
 #include <QAction>
+#include <QComboBox>
 #include <QCoreApplication>
 #include <QEventLoop>
 #include <QTimer>
@@ -41,10 +42,15 @@
 #include "lc_actiongroupmanager.h"
 #include "lc_actiontestsupport.h"
 #include "lc_property_container.h"
+#include "lc_properties_sheet.h"
+#include "lc_properties_sheet_panel.h"
 #include "lc_propertysheet_widget_options.h"
 #include "lc_propertysheetwidget.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
 #include "rs_graphic.h"
 #include "rs_line.h"
+#include "rs_point.h"
 
 namespace {
 
@@ -234,6 +240,92 @@ TEST_CASE("A property sheet with no drawing ignores a late request", "[gui][prop
     sheet.doProcessLateRequest(info);
     info.inputType = LC_ActionContext::InteractiveInputInfo::POINT_X;
     sheet.doProcessLateRequest(info);
+}
+
+TEST_CASE("A mixed selection defaults to all selected entities in the property sheet", "[gui][properties]") {
+    (void)lc::test::application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto* line = new RS_Line(&graphic, RS_LineData(RS_Vector{0, 0}, RS_Vector{10, 0}));
+    auto* circle = new RS_Circle(&graphic, RS_CircleData(RS_Vector{20, 0}, 5));
+    auto* arc = new RS_Arc(&graphic, RS_ArcData(RS_Vector{40, 0}, 5, 0, 1, false));
+    auto* point = new RS_Point(&graphic, RS_Vector{60, 0});
+    graphic.addEntity(line);
+    graphic.addEntity(circle);
+    graphic.addEntity(arc);
+    graphic.addEntity(point);
+
+    lc::test::TestGraphicView view;
+    view.setDocument(&graphic);
+    LC_ActionContext context;
+    context.setDocumentAndView(&graphic, &view);
+    LC_ActionGroupManager actions(nullptr);
+    LC_PropertySheetWidget sheet(nullptr, &context, &actions);
+    switchOffSectionsForTests(sheet);
+    sheet.show();
+    QCoreApplication::processEvents();
+    sheet.setGraphicView(&view);
+
+    auto* selection = sheet.findChild<QComboBox*>("cbSelection");
+    REQUIRE(selection != nullptr);
+    CHECK(selection->currentData().toInt() == RS2::EntityUnknown);
+
+    // Selection actions defer refreshes until the view returns to its default action.
+    sheet.setShouldHandleSelectionChange(false);
+    graphic.select(QList<RS_Entity*>{line, circle, arc, point}, true);
+    CHECK(selection->currentData().toInt() == RS2::EntityUnknown);
+    sheet.onViewDefaultActionActivated(true, RS2::ActionDefault, RS2::ActionDefault);
+
+    REQUIRE(selection->count() == 5);
+    CHECK(selection->currentText() == "All (4)");
+    CHECK(selection->currentData().toInt() == RS2::EntityContainer);
+
+    // A deliberate type filter stays selected after the sheet is refilled.
+    selection->setCurrentIndex(selection->findData(RS2::EntityLine));
+    sheet.refill();
+    CHECK(selection->currentData().toInt() == RS2::EntityLine);
+    sheet.setGraphicView(nullptr);
+}
+
+TEST_CASE("A deferred selection refills after leaving tool options", "[gui][properties]") {
+    (void)lc::test::application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto* line = new RS_Line(&graphic, RS_LineData(RS_Vector{0, 0}, RS_Vector{10, 0}));
+    graphic.addEntity(line);
+
+    lc::test::TestGraphicView view;
+    view.setDocument(&graphic);
+    LC_ActionContext context;
+    context.setDocumentAndView(&graphic, &view);
+    LC_ActionGroupManager actions(nullptr);
+    LC_PropertySheetWidget sheet(nullptr, &context, &actions);
+    switchOffSectionsForTests(sheet);
+    sheet.show();
+    QCoreApplication::processEvents();
+    sheet.setGraphicView(&view);
+
+    QAction drawLineAction;
+    drawLineAction.setText(QStringLiteral("Draw Line"));
+    sheet.setCurrentQAction(&drawLineAction);
+    sheet.setShouldHandleSelectionChange(false);
+    graphic.select(QList<RS_Entity*>{line}, true);
+
+    // The default-action signal must return the sheet to selection mode even when
+    // the view does not send a separate current-action icon change.
+    sheet.onViewDefaultActionActivated(true, RS2::ActionDefault, RS2::ActionDefault);
+
+    auto* panel = sheet.findChild<LC_PropertiesSheetPanel*>("propertySheet");
+    REQUIRE(panel != nullptr);
+    auto* selection = sheet.findChild<QComboBox*>("cbSelection");
+    REQUIRE(selection != nullptr);
+    CHECK(selection->currentData().toInt() == RS2::EntityLine);
+    // Geometry is initially collapsed, so inspect the populated provider rather
+    // than the sheet's visible-row lookup.
+    auto* propertyContainer = panel->propertiesSheet()->getPropertyContainer();
+    REQUIRE(propertyContainer != nullptr);
+    CHECK_FALSE(propertyContainer->findChildProperties(QStringLiteral("$_secGeometry$end")).isEmpty());
+    sheet.setGraphicView(nullptr);
 }
 
 TEST_CASE("Tool options do not outlive their view", "[gui][properties][3017]") {

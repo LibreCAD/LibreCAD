@@ -44,7 +44,6 @@
 #include "rs_debug.h"
 #include "rs_document.h"
 #include "rs_graphicview.h"
-#include "rs_selection.h"
 #include "rs_settings.h"
 #include "ui_lc_propertysheetwidget.h"
 
@@ -152,6 +151,7 @@ void LC_PropertySheetWidget::setGraphicView(RS_GraphicView* gv) {
     if (gv != m_graphicView) {
         // Tool options belong to the view being left, not the shared drawing.
         m_toolOptionsPropertiesContainerProvider = nullptr;
+        m_selectionChangePending = false;
         // an edit that was begun and not applied yet (its 30 ms timer is pending) belongs to the drawing that is being left
         forgetEditedEntities();
     }
@@ -279,6 +279,16 @@ void LC_PropertySheetWidget::stopInplaceEdit() const {
     ui->propertySheet->stopInplaceEdit();
 }
 
+void LC_PropertySheetWidget::selectionChanged() {
+    if (!m_handleSelectionChange || m_operationMode == MODE_TOOL_OPTIONS) {
+        // Selection actions can suppress per-change refills, and tool options replace
+        // the selection sheet. In either case, refresh when selection mode resumes.
+        m_selectionChangePending = true;
+        return;
+    }
+    refill();
+}
+
 void LC_PropertySheetWidget::refill() {
     // LC_ERR << "On Selection Changed!";
     stopInplaceEdit();
@@ -287,6 +297,7 @@ void LC_PropertySheetWidget::refill() {
     }
     if (m_operationMode == MODE_SELECTION) {
         if (m_handleSelectionChange) {
+            m_selectionChangePending = false;
             const int selectionIndex = ui->cbSelection->currentIndex();
             if (selectionIndex >= 0) {
                 // save current state
@@ -402,10 +413,21 @@ void LC_PropertySheetWidget::onViewDefaultActionActivated(const bool defaultActi
                                                           const RS2::ActionType prevActionRtti) {
     setShouldHandleSelectionChange(defaultActionActivated);
     if (defaultActionActivated) {
+        const bool selectionRefreshPending = m_selectionChangePending;
+        const bool wasInToolOptionsMode = m_operationMode == MODE_TOOL_OPTIONS;
+        // killAllActions() can announce the default action without sending a
+        // current-action icon change (for example when its QAction was already
+        // cleared). The default-action signal itself must leave tool-options mode.
+        if (wasInToolOptionsMode) {
+            setCurrentQAction(nullptr);
+        }
         // prevent refresh of the widget if activation is called after interactive input  - it might be that update
         // is already performed as result of setting value of property
-        const bool shouldRefill = !RS2::isInteractiveInputAction(prevActionRtti) && (prevActionRtti != RS2::ActionDefault && prevActionRtti != RS2::ActionNone);
-        if (shouldRefill) {
+        const bool shouldRefill = selectionRefreshPending ||
+                                  (!RS2::isInteractiveInputAction(prevActionRtti) &&
+                                   (prevActionRtti != RS2::ActionDefault && prevActionRtti != RS2::ActionNone));
+        const bool refreshedOnModeSwitch = wasInToolOptionsMode && selectionRefreshPending;
+        if (shouldRefill && !refreshedOnModeSwitch) {
             refill();
         }
     }
@@ -419,27 +441,41 @@ void LC_PropertySheetWidget::setupSelectionTypeCombobox(const RS2::EntityType en
     ui->cbSelection->blockSignals(true);
     ui->cbSelection->clear();
     int entityTypesCount = 0;
+    QMap<RS2::EntityType, int> selectedEntityTypesMap;
     if (m_document != nullptr) {
-        const auto selection = RS_Selection(m_document, m_viewport);
-        QMap<RS2::EntityType, int> selectedEntityTypesMap;
-        selection.countSelectedEntities(selectedEntityTypesMap);
+        // Use the document's selected entities as the source of truth. RS_Selection's
+        // countSelectedEntities() is viewport-gated, while the property provider reads
+        // the document selection directly. Keeping both paths aligned avoids showing
+        // "No Selection" when selected entities are available to the property provider.
+        QList<RS_Entity*> selectedEntities;
+        m_document->collectSelected(selectedEntities);
+        for (const auto* entity : std::as_const(selectedEntities)) {
+            ++selectedEntityTypesMap[entity->rtti()];
+        }
         LC_EntityMetaUIUtils::setupSelectionEntityTypesCombobox(ui->cbSelection, selectedEntityTypesMap);
         entityTypesCount = selectedEntityTypesMap.count();
     }
     ui->cbSelection->blockSignals(false);
 
-    int indexToSet = 0;
-
+    // Choose by item data instead of relying on the combo's ordering. In particular,
+    // a mixed selection should start on All, not whichever entry happens to be first.
+    int indexToSet = ui->cbSelection->findData(RS2::EntityContainer, Qt::UserRole);
     if (entityTypesCount == 1) {
-        indexToSet = 1;
-    }
-    else {
-        if (entityTypeTryToSet != RS2::EntityContainer) {
-            const int indexForEntityType = ui->cbSelection->findData(entityTypeTryToSet, Qt::UserRole);
-            if (indexForEntityType != -1) {
-                indexToSet = indexForEntityType;
-            }
+        // Preserve the historical single-type default when that type has a filter
+        // entry; unsupported types remain represented by the provider's All entry.
+        const int singleTypeIndex = ui->cbSelection->findData(selectedEntityTypesMap.constBegin().key(), Qt::UserRole);
+        if (singleTypeIndex != -1) {
+            indexToSet = singleTypeIndex;
         }
+    }
+    if (entityTypeTryToSet != RS2::EntityContainer) {
+        const int preservedTypeIndex = ui->cbSelection->findData(entityTypeTryToSet, Qt::UserRole);
+        if (preservedTypeIndex != -1) {
+            indexToSet = preservedTypeIndex;
+        }
+    }
+    if (indexToSet < 0) {
+        indexToSet = 0;
     }
 
     const int currentIndex = ui->cbSelection->currentIndex();
@@ -875,6 +911,7 @@ void LC_PropertySheetWidget::doAdjustForDockLocation(Qt::DockWidgetArea area) {
 }
 
 void LC_PropertySheetWidget::setCurrentQAction(const QAction* a) {
+    const bool wasInToolOptionsMode = m_operationMode == MODE_TOOL_OPTIONS;
     bool showIcon = a != nullptr /*&& LC_GET_ONE_BOOL("Appearance", "ShowActionIconInOptions", true)*/;
     if (showIcon) {
         // check for actions those icons should not be shown
@@ -898,6 +935,12 @@ void LC_PropertySheetWidget::setCurrentQAction(const QAction* a) {
         ui->headerAction->setVisible(false);
         ui->headerSelection->setVisible(true);
         m_operationMode = MODE_SELECTION;
+        // The view can announce that its action ended before it emits the action
+        // icon change that returns this sheet to selection mode. If that earlier
+        // refill updated tool options, finish the deferred selection refresh now.
+        if (wasInToolOptionsMode && m_selectionChangePending && m_handleSelectionChange) {
+            refill();
+        }
 
         /*auto graphicView = m_actionContext->getGraphicView();
         if (graphicView != nullptr) {

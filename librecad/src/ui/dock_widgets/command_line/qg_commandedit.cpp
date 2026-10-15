@@ -102,6 +102,11 @@ QG_CommandEdit::QG_CommandEdit(QWidget* parent)
     setFocusPolicy(Qt::StrongFocus);
 }
 
+bool QG_CommandEdit::isCommandToken(const QString& input) {
+    static const QRegularExpression token(QStringLiteral("^[\\p{L}_][\\p{L}\\p{N}_-]*$"));
+    return token.match(input).hasMatch();
+}
+
 /**
  * Bypass for key press events from the tab key.
  */
@@ -194,7 +199,10 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e) {
             processInput(text());
             break;
         case Qt::Key_Space:
-            if (LC_GET_ONE_BOOL("Keyboard","EvaluateCommandOnSpace", false)) {
+            if (e->modifiers() == Qt::ShiftModifier) {
+                QLineEdit::keyPressEvent(e); // explicit literal space for text/expression arguments
+            }
+            else if (LC_GET_ONE_BOOL("Keyboard","EvaluateCommandOnSpace", true)) {
                 processInput(text());
             }
             else if (!text().isEmpty()) {

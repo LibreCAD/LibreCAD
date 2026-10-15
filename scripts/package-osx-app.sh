@@ -28,6 +28,7 @@ PROGRAM_NAME=${0##*/}
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd -P)
 APP_PATH=
 QT_BIN=
+MACDEPLOYQT=
 MODE=adhoc
 IDENTITY=${MACOS_CODESIGN_IDENTITY:-${CODESIGN_IDENTITY:-}}
 ENTITLEMENTS="$SCRIPT_DIR/librecad-macos.entitlements"
@@ -166,7 +167,8 @@ done
 [[ -n $QT_BIN ]] || fail "--qt-bin is required"
 [[ -d $APP_PATH ]] || fail "application bundle does not exist: $APP_PATH"
 [[ ! -L $APP_PATH ]] || fail "application bundle must not be a symbolic link: $APP_PATH"
-[[ -x $QT_BIN/macdeployqt ]] || fail "macdeployqt not found under: $QT_BIN"
+[[ -x $QT_BIN/macdeployqt || -x $QT_BIN/macdeployqt6 ]] ||
+    fail "macdeployqt or macdeployqt6 not found under: $QT_BIN"
 [[ -x $SCRIPT_DIR/verify-osx-package.sh ]] ||
     fail "package verifier is missing or not executable"
 
@@ -186,6 +188,8 @@ esac
 
 APP_PATH=$(cd "$(dirname "$APP_PATH")" && printf '%s/%s\n' "$(pwd -P)" "$(basename "$APP_PATH")")
 QT_BIN=$(cd "$QT_BIN" && pwd -P)
+MACDEPLOYQT="$QT_BIN/macdeployqt"
+[[ -x $MACDEPLOYQT ]] || MACDEPLOYQT="$QT_BIN/macdeployqt6"
 
 if [[ -n $REPORT_PATH ]]; then
     REPORT_PARENT=$(dirname "$REPORT_PATH")
@@ -449,7 +453,7 @@ if [[ $SKIP_DEPLOY -eq 0 ]]; then
     collect_extra_executables "$EXTRA_EXECUTABLES"
     MACDEPLOY_ARGS=("$APP_PATH" -verbose=1 -always-overwrite)
     # Qt 6.11 added -no-codesign and signs ad hoc by default; older macdeployqt never signs.
-    MACDEPLOY_HELP=$("$QT_BIN/macdeployqt" -help 2>&1 || true)
+    MACDEPLOY_HELP=$("$MACDEPLOYQT" -help 2>&1 || true)
     if [[ $MACDEPLOY_HELP == *-no-codesign* ]]; then
         MACDEPLOY_ARGS+=(-no-codesign)
     fi
@@ -459,7 +463,7 @@ if [[ $SKIP_DEPLOY -eq 0 ]]; then
     done < "$EXTRA_EXECUTABLES"
 
     log "deploying Qt frameworks without signing"
-    "$QT_BIN/macdeployqt" "${MACDEPLOY_ARGS[@]}"
+    "$MACDEPLOYQT" "${MACDEPLOY_ARGS[@]}"
 else
     log "skipping Qt deployment for an existing deployed bundle"
 fi

@@ -1308,6 +1308,8 @@ set (SHARED_SOURCES
      librecad/src/lib/selection/metaentity/lc_vectorentitymatcher.h
      librecad/src/lib/selection/metaentity/lc_vectorlistentitymatcher.h
      librecad/src/lib/selection/rs_selection.cpp
+     librecad/src/lib/selection/lc_polygonselection.cpp
+     librecad/src/lib/selection/lc_polygonselection.h
      librecad/src/lib/selection/rs_selection.h
      librecad/src/main/doc_plugin_interface.cpp
      librecad/src/main/doc_plugin_interface.h
@@ -2019,6 +2021,8 @@ set (SHARED_SOURCES
      librecad/src/ui/main/persistence/lc_documentsstorage.h
      librecad/src/ui/main/qc_applicationwindow.cpp
      librecad/src/ui/main/qc_applicationwindow.h
+     librecad/src/ui/main/lc_cadworkspace.cpp
+     librecad/src/ui/main/lc_cadworkspace.h
     librecad/src/ui/main/lc_layouttabbar.cpp
     librecad/src/ui/main/lc_layouttabbar.h
      librecad/src/ui/main/qc_mdiwindow.cpp
@@ -2049,6 +2053,8 @@ set (SHARED_SOURCES
      librecad/src/ui/view/lc_printpreviewview.cpp
      librecad/src/ui/view/lc_printpreviewview.h
      librecad/src/ui/view/qg_graphicview.cpp
+     librecad/src/ui/view/lc_gripinputwidget.cpp
+     librecad/src/ui/view/lc_gripinputwidget.h
      librecad/src/ui/view/qg_graphicview.h
      librecad/src/lib/actions/options/lc_tool_options_properties_container_provider.h
      librecad/src/lib/actions/options/lc_action_options_support.cpp
@@ -3452,6 +3458,15 @@ if (BUILD_TESTS)
     add_librecad_filter_micro_test(
         librecad_draft_lines_tests
         librecad/src/ui/view/tests/qg_graphicview_draft_lines_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_drawing_cursor_tests
+        librecad/src/ui/view/tests/lc_drawingcursor_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_command_input_tests
+        librecad/src/ui/dock_widgets/command_line/tests/qg_commandwidget_tests.cpp)
+    target_include_directories(librecad_command_input_tests PRIVATE
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include")
+    target_sources(librecad_command_input_tests PRIVATE librecad/src/cmd/tests/rs_commands_tests.cpp)
     # Isolate GUI tests from the text tests' static offscreen bootstraps.
     add_librecad_filter_micro_test(
         librecad_painter_tests
@@ -3462,10 +3477,12 @@ if (BUILD_TESTS)
         librecad_dock_layout_tests
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp)
     target_sources(librecad_dock_layout_tests PRIVATE ${LIBRECAD_RES})
+    target_include_directories(librecad_dock_layout_tests PRIVATE
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include")
     set_target_properties(librecad_dock_layout_tests PROPERTIES AUTORCC ON)
     add_librecad_filter_micro_test(
-        librecad_printing_tests
-        librecad/src/lib/printing/tests/lc_printingtests.cpp)
+        librecad_property_sheet_tests
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetlifetime_tests.cpp)
     add_librecad_filter_micro_test(
         librecad_translation_fallback_tests
         librecad/src/lib/engine/tests/rs_system_translation_tests.cpp)

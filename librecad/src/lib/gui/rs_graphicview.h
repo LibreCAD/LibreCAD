@@ -112,6 +112,7 @@ public:
  * cursor to the given type.
  */
     virtual void setMouseCursor(RS2::CursorType /*c*/) = 0;
+    virtual bool usesDrawingCursor() const {return false;}
 
     RS_Document *getDocument() const;
     void switchToDefaultAction();

@@ -74,6 +74,7 @@ void QG_CoordinateWidget::setGraphicView(RS_GraphicView *gv) {
         m_viewport = nullptr;
         m_graphic = nullptr;
         m_formatter = nullptr;
+        clearContent();
     }
 }
 
@@ -94,6 +95,7 @@ void QG_CoordinateWidget::setCoordinates(const RS_Vector& wcsAbs, const RS_Vecto
 
 void QG_CoordinateWidget::clearContent() const {
     lCoord1->setText("0 , 0");
+    emit coordinatesChanged(lCoord1->text());
     lCoord2->setText("@  0 , 0");
     lCoord1b->setText("0 < 0");
     lCoord2b->setText("@  0 < 0");
@@ -121,6 +123,7 @@ void QG_CoordinateWidget::setCoordinates(double ucsX, double ucsY,
             const QString relY = m_formatter->formatLinear(ucsDeltaY);
 
             lCoord1->setText(absX + " , " + absY);
+            emit coordinatesChanged(lCoord1->text());
             lCoord2->setText("@  " + relX + " , " + relY);
 
             // polar coordinates:

@@ -1213,7 +1213,8 @@ void RS_Snapper::drawSnapper() {
     bool showSnapIndicator = showSnapIndicator = isSnapExpected(); // LibreCAD#2520
     if (!m_finished && m_impData->snapSpot.valid && showSnapIndicator) {
         if (m_snapIndicator->drawLines || m_snapIndicator->drawShape) {
-            auto* crosshair = new LC_Crosshair(m_impData->snapCoord, m_snapIndicator->shape_Type, m_snapIndicator->lines_Type,
+            const int lines = m_graphicView->usesDrawingCursor() ? LC_Crosshair::NoLines : m_snapIndicator->lines_Type;
+            auto* crosshair = new LC_Crosshair(m_impData->snapCoord, m_snapIndicator->shape_Type, lines,
                                                m_snapIndicator->lines_Pen, m_snapIndicator->pointSize, m_snapIndicator->pointType);
             crosshair->setShapesPen(m_snapIndicator->shape_Pen);
             snapperOverlay->add(crosshair);

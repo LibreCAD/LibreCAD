@@ -64,7 +64,7 @@ public:
     void saveCollapsedSections();
     void setGraphicView(RS_GraphicView* gv) override;
     void stopInplaceEdit() const;
-    void selectionChanged() override {refill();}
+    void selectionChanged() override;
     void refill() override;
     void showToolOptions(LC_ToolOptionsPropertiesContainerProvider* provider) override;
     void setShouldHandleSelectionChange(bool value);
@@ -137,6 +137,7 @@ private:
     RS_Document* m_document = nullptr;
     LC_GraphicViewport* m_viewport = nullptr;
     bool m_handleSelectionChange = true;
+    bool m_selectionChangePending = false;
     LC_ActionContext* m_actionContext{nullptr};
     std::unique_ptr<LC_EntityPropertyContainerProvider> m_entityContainerProvider;
     std::unique_ptr<LC_PropertySheetWidgetOptions> m_propertySheetOptions;

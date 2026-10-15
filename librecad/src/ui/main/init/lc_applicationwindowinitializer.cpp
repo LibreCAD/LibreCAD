@@ -27,6 +27,7 @@
 #include "lc_action_options_manager.h"
 #include "lc_actionfactory.h"
 #include "lc_actiongroupmanager.h"
+#include "lc_cadworkspace.h"
 #include "lc_appwindowdialogsinvoker.h"
 #include "lc_centralwidget.h"
 #include "lc_customstylehelper.h"
@@ -80,6 +81,7 @@ void LC_ApplicationWindowInitializer::initApplication(){
     initSnapManager();
 
     initCentralWidget();
+    m_appWin->m_cadWorkspace = new LC_CadWorkspace(m_appWin);
     initMainMenu();
     initDockAndToolbarAreasActions();
     initActionOptionsManager();

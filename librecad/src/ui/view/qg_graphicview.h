@@ -113,6 +113,7 @@ public:
     void setMouseCursor(RS2::CursorType cursorType) override;
     void updateGridStatusWidget(QString text) override;
     void loadSettings() override;
+    bool usesDrawingCursor() const override;
 
     // Methods from RS_LayerListListener Interface:
     void layerEdited(RS_Layer*) override{
@@ -245,6 +246,14 @@ private:
     bool m_invertHorizontalScroll {false};
     bool m_invertVerticalScroll {false};
     bool m_allowScrollAndMoveAdjustByKeys{false};
+    bool m_drawingCursorEnabled{true};
+    bool m_cursorInside{false};
+    RS2::CursorType m_mouseCursor{RS2::ArrowCursor};
+    QPointF m_cursorPosition;
+    int m_pickboxSize{10};
+    int m_crosshairPercent{12};
+    RS_Color m_drawingCursorColor;
+    void updateDrawingCursor();
 
     struct AutoPanData;
     std::unique_ptr<AutoPanData> m_panData;
