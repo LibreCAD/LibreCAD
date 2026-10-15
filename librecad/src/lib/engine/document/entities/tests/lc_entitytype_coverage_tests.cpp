@@ -22,7 +22,9 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/generators/catch_generators_range.hpp>
 
+#include <filesystem>
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "lc_filtertestsupport.h"
@@ -52,6 +54,12 @@ struct Row {
 
 constexpr Row drawing(RS2::EntityType type) {
     return {Kind::DrawingEntity, nullptr, type, 0, 0, nullptr};
+}
+
+constexpr Row withGap(Row row, unsigned gaps, const char* note) {
+    row.knownGaps = gaps;
+    row.gapNote = note;
+    return row;
 }
 
 constexpr Row notApplicable(const char* reason) {
@@ -103,7 +111,9 @@ constexpr Row rowOf(RS2::EntityType type) {
     case RS2::EntityHatch: return drawing(type);
     case RS2::EntityImage: return drawing(type);
     case RS2::EntityWipeout: return drawing(type);
-    case RS2::EntityMLeader: return drawing(type);
+    case RS2::EntityMLeader:
+        return withGap(drawing(type), DwgRoundTrip,
+                       "Generated MLEADER uses LEADER + MTEXT fallback without an imported source handle");
     case RS2::EntitySpline: return drawing(type);
     case RS2::EntitySplinePoints: return drawing(type);
     case RS2::EntityParabola: return drawing(type);
@@ -211,7 +221,95 @@ void requireDrawingFixture(const RS_Entity* entity, RS2::EntityType type, const 
     }
 }
 
-bool runCheck(Check check, RS2::EntityType type, bool mixedBlock = false) {
+bool hasDxf2018Header(const std::filesystem::path& path) {
+    for (const auto& record : lc::test::dxfRecords(path)) {
+        for (std::size_t i = 0; i + 1 < record.m_groups.size(); ++i) {
+            if (record.m_groups[i].m_code == 9 && record.m_groups[i].m_value == "$ACADVER")
+                return record.m_groups[i + 1].m_code == 1 && record.m_groups[i + 1].m_value == "AC1032";
+        }
+    }
+    return false;
+}
+
+struct RoundTripObservation {
+    bool exported = false;
+    bool imported = false;
+    bool usableGeometry = false;
+    std::vector<RS2::EntityType> loadedTypes;
+};
+
+bool runRoundTrip(Check check, RS2::EntityType type, RS2::EntityType reloadsAs, std::string* diagnostic,
+                  RoundTripObservation* observation) {
+    if (observation != nullptr)
+        *observation = {};
+    const bool dwg = check == DwgRoundTrip;
+    const lc::test::OutputDirectory output("lc_entity_coverage_" + std::to_string(static_cast<unsigned>(type)) +
+                                            (dwg ? "_dwg" : "_dxf"));
+    const auto path = output.file(dwg ? "entity.dwg" : "entity.dxf");
+    RS2::FormatType format = RS2::FormatDXFRW2018;
+#ifdef DWGSUPPORT
+    if (dwg)
+        format = RS2::FormatDWG2018;
+#else
+    REQUIRE_FALSE(dwg);
+#endif
+    RS_Graphic source;
+    source.initForNewDocument();
+    auto entity = lc::test::makeDrawingEntity(type, source, &source);
+    requireDrawingFixture(entity.get(), type, &source);
+    source.addEntity(entity.release());
+    const bool exported = lc::test::exportDrawing(source, path, format);
+    if (observation != nullptr)
+        observation->exported = exported;
+    if (diagnostic != nullptr)
+        *diagnostic = "export=" + std::to_string(exported);
+    INFO("exported " << exported);
+    if (!exported)
+        return false;
+    if (dwg) {
+        REQUIRE(lc::test::fileBytes(path).substr(0, 6) == "AC1032");
+    } else {
+        REQUIRE(hasDxf2018Header(path));
+    }
+    RS_Graphic reloaded;
+    const bool imported = lc::test::importDrawing(reloaded, path, format);
+    if (observation != nullptr)
+        observation->imported = imported;
+    if (diagnostic != nullptr)
+        *diagnostic += " import=" + std::to_string(imported);
+    INFO("imported " << imported);
+    if (!imported)
+        return false;
+    reloaded.onLoadingCompleted();
+    if (observation != nullptr)
+        observation->usableGeometry = true;
+    std::vector<const RS_Entity*> live;
+    for (unsigned i = 0; i < reloaded.count(); ++i) {
+        const RS_Entity* current = reloaded.entityAt(i);
+        if (current != nullptr && !current->isDeleted()) {
+            live.push_back(current);
+            if (observation != nullptr) {
+                observation->loadedTypes.push_back(current->rtti());
+                observation->usableGeometry = observation->usableGeometry && current->hasValidBorders() &&
+                    (!current->isContainer() || static_cast<const RS_EntityContainer*>(current)->count() > 0);
+            }
+            if (diagnostic != nullptr)
+                *diagnostic += " loaded_type=" + std::to_string(static_cast<unsigned>(current->rtti()));
+        }
+    }
+    INFO("live entity count " << live.size());
+    if (diagnostic != nullptr)
+        *diagnostic += " live=" + std::to_string(live.size()) + " expected_type=" + std::to_string(reloadsAs);
+    if (live.size() != 1 || live.front()->rtti() != reloadsAs || !live.front()->hasValidBorders())
+        return false;
+    return !live.front()->isContainer() || static_cast<const RS_EntityContainer*>(live.front())->count() > 0;
+}
+
+bool runCheck(Check check, RS2::EntityType type, bool mixedBlock = false,
+              RS2::EntityType reloadsAs = RS2::EntityUnknown, std::string* diagnostic = nullptr,
+              RoundTripObservation* observation = nullptr) {
+    if (check == DxfRoundTrip || check == DwgRoundTrip)
+        return runRoundTrip(check, type, reloadsAs, diagnostic, observation);
     RS_Graphic graphic;
     graphic.initForNewDocument();
     if (check == CloneClass) {
@@ -361,4 +459,69 @@ TEST_CASE("An unsupported container rejects the complete mixed INSERT", "[entity
     RS_Insert insert(&graphic, RS_InsertData(blockName, {10, 5}, {2, 2}, M_PI / 6.0, 1, 1, {0, 0}));
     insert.update();
     CHECK(insert.count() == 0);
+}
+
+TEST_CASE("Every drawing entity has a DXF 2018 round-trip disposition", "[entity-coverage][roundtrip][dxf]") {
+    const auto types = drawingTypes();
+    const auto type = GENERATE_COPY(from_range(types.begin(), types.end()));
+    CAPTURE(static_cast<unsigned>(type));
+    const Row row = rowOf(type);
+    REQUIRE((row.notRun & DxfRoundTrip) == 0);
+    lc::test::ensureSettings();
+    const lc::test::QuietLog quiet;
+    const lc::test::SourceFonts fonts;
+    std::string diagnostic;
+    const bool passed = runCheck(DxfRoundTrip, type, false, row.reloadsAs, &diagnostic);
+    INFO(diagnostic);
+    checkOutcome(row, DxfRoundTrip, passed);
+}
+
+#ifdef DWGSUPPORT
+TEST_CASE("Every drawing entity has a DWG 2018 round-trip disposition", "[entity-coverage][roundtrip][dwg]") {
+    const auto types = drawingTypes();
+    const auto type = GENERATE_COPY(from_range(types.begin(), types.end()));
+    CAPTURE(static_cast<unsigned>(type));
+    const Row row = rowOf(type);
+    REQUIRE((row.notRun & DwgRoundTrip) == 0);
+    lc::test::ensureSettings();
+    const lc::test::QuietLog quiet;
+    const lc::test::SourceFonts fonts;
+    std::string diagnostic;
+    RoundTripObservation observation;
+    const bool passed = runCheck(DwgRoundTrip, type, false, row.reloadsAs, &diagnostic, &observation);
+    INFO(diagnostic);
+    checkOutcome(row, DwgRoundTrip, passed);
+    if ((row.knownGaps & DwgRoundTrip) != 0) {
+        REQUIRE(type == RS2::EntityMLeader);
+        REQUIRE(observation.exported);
+        REQUIRE(observation.imported);
+        const std::vector<RS2::EntityType> expected{RS2::EntityDimLeader, RS2::EntityMText};
+        CHECK(observation.loadedTypes == expected);
+        CHECK(observation.usableGeometry);
+    }
+}
+#endif
+
+TEST_CASE("Construction lines and standalone containers are not DXF entity records", "[entity-coverage][roundtrip][dxf]") {
+    lc::test::ensureSettings();
+    const lc::test::QuietLog quiet;
+    const lc::test::OutputDirectory output("lc_entity_coverage_nonpersistent");
+    for (const bool construction : {false, true}) {
+        CAPTURE(construction);
+        RS_Graphic graphic;
+        graphic.initForNewDocument();
+        if (construction) {
+            graphic.addEntity(new RS_ConstructionLine(&graphic, RS_ConstructionLineData({0, 0}, {5, 2})));
+        } else {
+            auto container = std::make_unique<RS_EntityContainer>(&graphic, true);
+            container->addEntity(new RS_Line(container.get(), RS_LineData({0, 0}, {5, 2})));
+            graphic.addEntity(container.release());
+        }
+        const auto path = output.file(construction ? "construction.dxf" : "container.dxf");
+        REQUIRE(lc::test::exportDrawing(graphic, path, RS2::FormatDXFRW2018));
+        RS_Graphic reloaded;
+        REQUIRE(lc::test::importDrawing(reloaded, path, RS2::FormatDXFRW2018));
+        reloaded.onLoadingCompleted();
+        CHECK(reloaded.count() == 0);
+    }
 }
