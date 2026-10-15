@@ -885,6 +885,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/lc_curvejet.h
      librecad/src/lib/engine/document/entities/lc_curveoffset.cpp
      librecad/src/lib/engine/document/entities/lc_curveoffset.h
+     librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp
+     librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
      librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.cpp
      librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h
      librecad/src/lib/engine/document/entities/lc_offsetoutputbudget.cpp
@@ -2607,6 +2609,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_curveoffset_trim_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_curveoffset_region_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_curveoffsetellipsetests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_curveoffset_backend_experiments.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetoutputbudget_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_curveoffset_entity_tests.cpp

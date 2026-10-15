@@ -5148,6 +5148,23 @@ bool isSupportedSource(const RS_Entity& source) {
            dynamic_cast<const LC_Hyperbola*>(&source) != nullptr || dynamic_cast<const RS_Ellipse*>(&source) != nullptr;
 }
 
+double relativeOffsetTolerance(const RS_Entity& source) {
+    return dynamic_cast<const RS_Ellipse*>(&source) != nullptr ? kEllipseRelativeOffsetTolerance
+                                                             : kDefaultRelativeOffsetTolerance;
+}
+
+double toleranceFor(const RS_Entity& source, const double distanceMagnitude, const double relativeFactor) {
+    const std::unique_ptr<OffsetSource> adapter = makeSource(source);
+    SourceScale scale;
+    if (adapter == nullptr || !isPositiveFinite(distanceMagnitude) || !isPositiveFinite(relativeFactor) ||
+        !computeScale(*adapter, distanceMagnitude, scale) || adapter->breaks().size() < 2) {
+        return std::numeric_limits<double>::quiet_NaN();
+    }
+    const double requested = std::max(relativeFactor * scale.feature, scale.numericFloor);
+    return std::isfinite(requested) && requested > 0.0
+               ? requested : std::numeric_limits<double>::quiet_NaN();
+}
+
 LC_CurveOffsetOptions makeDirectOptions(const RS_Entity& source, const double distanceMagnitude,
                                         const double requestedTolerance) {
     const std::unique_ptr<OffsetSource> adapter = makeSource(source);

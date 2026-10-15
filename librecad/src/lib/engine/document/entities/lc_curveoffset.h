@@ -309,6 +309,10 @@ inline constexpr std::size_t kDefaultMaxIntersectionPairs = std::size_t{1} << 20
  *  (an unbounded hyperbola is then refused as a source). */
 bool isSupportedSource(const RS_Entity& source);
 
+double relativeOffsetTolerance(const RS_Entity& source);
+/** Geometry tolerance including the numeric floor; NaN for invalid source/distance/factor. */
+double toleranceFor(const RS_Entity& source, double distanceMagnitude, double relativeFactor);
+
 /**
  * Direct-mode options with tolerances derived from the source's scale and the
  * distance. @p requestedTolerance, if positive, replaces the default relative
