@@ -453,7 +453,7 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) const {
     if(!(code.startsWith(PREFIX_FN) ||
           code.startsWith(PREFIX_ALT) ||
           code.startsWith(PREFIX_META))) {
-        if(code.size() < 1 || code.contains(QRegularExpression("^[a-zA-Z].*")) == false ) {
+        if (!code.front().isLetter()) {
             return RS2::ActionNone;
         }
     }
