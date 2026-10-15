@@ -28,7 +28,7 @@ Plan **v8**, 2026-10-15. This file is the implementation source of truth. Every 
 verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE; PLAN REVIEW — S0 and 0B complete; geometry foundations/core/rate/critical/accounting done; trusted core session is next; critical refinement/exhaustive events/components/check/entity/file/UI phases remain incomplete.**
+Status: **IMPLEMENTATION — trusted core session verified/committed; S0 and 0B complete; geometry foundations/core/rate/critical/accounting done; critical-refinement API/cost preflight next; events/components/check/entity/file/UI phases remain incomplete.**
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -99,7 +99,7 @@ A commit alone does not mean done; verification, review and the post-commit plan
 | 0B-1 | Guard skeleton: `rowOf` table, pragmas, `static_assert`, kinds-only walk; registration; CI path filter; shadow-`rs.h` checks | B | S0 | 250 | done — d6de53d3c, 0B-1 evidence, 2026-10-15 |
 | 0B-2 | Entity factory header; clone and INSERT checks; pin tests | B | 0B-1 | 500 | done — 5bfb3c8f0, 0B-2 reports/card, 2026-10-15 |
 | 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | done — 0e3c6b342, 0B-3 reports/card; one pinned baseline generated-MLEADER DWG gap, 2026-10-15 |
-| 1A-1 | Closed forms, engine-layout test, validity check, tolerance helpers | C | S0 | 900 | partial — .a/.b-budget/.b-progress/.b-ref-frames/.b-ref-events-core/.b-ref-rate/.b-ref-events-critical/.b-ref-events-accounting done; trusted refinement/events/components/check/qualification pending |
+| 1A-1 | Closed forms, engine-layout test, validity check, tolerance helpers | C | S0 | 900 | partial — .a/.b-budget/.b-progress/.b-ref-frames/.b-ref-events-core/.b-ref-rate/.b-ref-events-critical/.b-ref-events-accounting/.b-ref-events-refine done; critical refinement/events/components/check/qualification pending |
 | 1A-2 | Enumerator; class core and validated adoption factory; clone, `toPlainSpline`, normalisation, stamp, transforms; `writeEntity` case; INSERT capability; 0B row; interim Edit Properties guard | C | 0B-3, 1A-1 | 900 | pending |
 | 1A-3 | Grips, `moveRef`, snaps | C | 1A-2 | 550 | pending |
 | 1B | Run limits, refusal enum, `adopt`/`create`, mutators, engine-run counter | C | 1A-3 | 900 | pending |
@@ -214,16 +214,16 @@ not validation evidence. Aggregates are never executable cards or extra implemen
 | 1A-1.b | Aggregate; budget/progress done, reference/check unfinished | Parent-only progress; no separate implementation commit or successful partial validator. |
 | 1A-1.b-budget | Done at 10c6bff46 | Checked shared work, bounded two-axis/range indices, nine budget cases Release/ASan, all offset/full/fast-lane gates pass; findings/evidence below. |
 | 1A-1.b-progress | Done at fb70681e2 | Reachable hang fixed; four watchdog-protected cases/80 assertions Release/ASan, old probe terminates, broad gates pass. |
-| 1A-1.b-ref | Aggregate; frames/core/rate/critical/accounting done, core session ready | Frames26d107ccf, core834a46a88, ratebcd6c5a4f, critical943406abe, accounting290d2658f; trusted two-curve/critical refinement, exhaustive events and components remain. No parent completion. |
+| 1A-1.b-ref | Aggregate; frames/core/rate/critical/accounting/pair refinement done | Pair refinementf4f87f48e joins the completed foundations; critical refinement, exhaustive events and components remain. No parent completion. |
 | 1A-1.b-ref-frames | Done at 26d107ccf | Seven new cases, independent 113-bit enclosures, shared budget and all Release/ASan/full/fast-lane gates recorded below. |
-| 1A-1.b-ref-events | Aggregate; core/rate/critical/accounting done, core session ready | Execute `.b-ref-events-refine → .b-ref-critical-refine → .b-ref-events-isolate`; no separate aggregate implementation commit. |
+| 1A-1.b-ref-events | Aggregate; pair refinement done, critical preflight next | Execute `.b-ref-critical-refine → .b-ref-events-isolate`; no separate aggregate implementation commit. |
 | 1A-1.b-ref-events-core | Done at 834a46a88 | Opt-in strict proofs/accounting; 14 registered cases, Release/ASan/probes/full/fast-lane evidence below. No ellipse graph/adoption claim. |
 | 1A-1.b-ref-rate | Done at bcd6c5a4f | Six cases/505703 assertions Release/ASan; continuous exact-sweep rate and all jet/products, independent oracle and broad/fast checks pass. |
 | 1A-1.b-ref-events-critical | Done at 943406abe | Nine cases/268244 assertions Release/ASan; immutable adapter, exact cusp/axis classification, proven regions and joint join/seam exclusions; all broad/fast gates pass. |
 | 1A-1.b-ref-events-accounting | Done at 290d2658f | Five cases/153 assertions Release/ASan; actual depth on every exit, unchanged decisions/counters; old core/broad/fast gates pass. |
-| 1A-1.b-ref-events-refine | Ready after this checkpoint | Intersection core/header/tests: owned immutable certified session, opaque handles, original-proof-preserving contraction and persistent root depth/work. |
-| 1A-1.b-ref-critical-refine | Waiting for .b-ref-events-refine | Geometry header/cpp/tests: retained canonical scalar/angle provenance, issued critical handles, convergent contraction/images and actual depth-admission timing. |
-| 1A-1.b-ref-events-isolate | Waiting for .b-ref-events-refine and .b-ref-critical-refine | Geometry-only complete own/opposite/end-cutter enumeration, identity/order, world-space node accuracy and shared-budget integration. |
+| 1A-1.b-ref-events-refine | Done at f4f87f48e | Fourteen cases/490 assertions Release/ASan; owned immutable provider, opaque handles, retained proof/history, native broad/fast gates pass. |
+| 1A-1.b-ref-critical-refine | Conditional; own API/cost preflight next | Geometry header/cpp/tests: retained canonical scalar/angle provenance, issued critical handles, convergent contraction/images and actual depth-admission timing. |
+| 1A-1.b-ref-events-isolate | Waiting for .b-ref-critical-refine | Geometry-only complete own/opposite/end-cutter enumeration, identity/order, world-space node accuracy and shared-budget integration; pair refinement already done. |
 | 1A-1.b-check | Aggregate; waiting for .b-ref | Execute `.b-check-layout → .b-check-bounds → .b-check-topology` (§0.6); no successful public validator before all acceptance checks exist. |
 | 1A-1.c | Waiting for .b | Add adversarial and current-engine corpus checks, failure budgets and performance measurements. Record acceptance/refusal results; endpoints and midpoint checks alone cannot close this parent step. |
 | 1A-2 | Waiting for 0B-3 and all 1A-1 children | Add type, core class, complete consistency stamp, transforms, clone/INSERT/write dispatch and interim UI guard. Compile CMake and update qmake lists; run copy/ownership and enum coverage. |
@@ -298,8 +298,10 @@ real-period/input-endpoint mapping, rate/angle accessors and qualified jet/produ
 is now committed at 943406abe with exact thresholds/membership, complete critical preparation and cached truthful
 injectivity/exclusion proofs. Read-only preflight found two real core prerequisites for isolation: observed adaptive
 depth was absent from stats, and physical-node contraction is private. Accounting is now committed at290d2658f:
-three observed depth fields and max helper, every exit covered without solver/counter changes. The owned-session
-declaration/access probe compiles under actual gnu++17 flags; its core card is ready. Further review found a separate
+three observed depth fields and max helper, every exit covered without solver/counter changes. Owned-session
+refinement is now verified/committed atf4f87f48e: immutable provider/options, issuer-bound handles, frozen original
+provenance, cached images, persistent root history and bounded contraction; fourteen cases/490 assertions pass
+Release/ASan and all required broad/full/fast gates. Further review found a separate
 critical-occurrence gap: factory scalar/angle provenance is discarded, the initial inverse inequality cannot converge
 by scalar narrowing alone, and geometry depth can be recorded before failed admission. The named critical-refinement
 child fixes these before isolation; no event/component completion is claimed. The coordinator owns the plan,
@@ -319,7 +321,7 @@ Before promoting a leaf card, check these concrete prerequisites:
 | 1A-1.a | Raw sweep rules and finite/local coordinate domain are fixed | Boundary tests on both sides of each threshold and independent closed-form comparisons |
 | 1A-1.b-budget | Done; original candidate-allocation/refinement accounting mismatch resolved | Nine cap/index cases, exposed consumed work, all offset/ASan/full/fast-lane gates recorded at 10c6bff46 |
 | 1A-1.b-progress | Done at fb70681e2 | Underflow/non-finite/rounded-growth cases, old probe and all required broad checks passed |
-| 1A-1.b-ref | Frames/budget/progress/core/rate/critical/accounting done; core session ready | Trusted pair and critical-occurrence contraction first, then exhaustive events/components; one shared budget, no uncertified acceptance |
+| 1A-1.b-ref | Foundations and trusted pair refinement done; critical API/cost preflight next | Qualify critical-occurrence contraction, then exhaustive events/components; one shared budget, no uncertified acceptance |
 | 1A-1.b-check | Reference analysis is qualified and does not accept ambiguous topology | Whole-span distance bounds, bidirectional coverage and malicious subset/retrace tests |
 | 1A-2 | Guard and all geometry children are done; no raw constructor bypass exists | Current-header compile, complete stamp mutation cases, transform overflow and ownership checks |
 | 1E-1.a | Typed schema grammar, malformed/unknown ownership and flag consistency are settled | Codec-independent exact-code/type tests, duplicate/malformed cases and bounded tails |
@@ -345,13 +347,13 @@ Only satisfied dependencies promote a card to `ready`; future recipes are `waiti
 | 1A-1.b-progress / .b-budget | Done at fb70681e2; finite/progress checks and derived 2099-step bound preserve positive rounded growth and refuse invalid arithmetic. | Four cases/80 assertions Release/ASan, standalone before/after probe and full offset/ASan/full-suite/fast-lane gates pass. R02/R12. |
 | 0B-3 / 0B-2 | Done at 0e3c6b342; actual version/load-completion walks, measured/pinned generated-MLEADER fallback, no fixture or production changes. | Both 27-type walks and both DXF pins; full/DXF-fast/ASan coverage, full suite/lanes pass; every baseline testcase/skip retained. R06/R11/R13. |
 | 1A-1.b-ref-frames / .b-progress | Done at 26d107ccf; immutable scaled frame, source/offset jets and point/interval enclosures, checked conversions and shared latched budget. | Seven new cases / 359105 assertions Release/ASan; independent 113-bit oracle, all geometry/offset/full/fast-lane checks pass. R01/R02/R12. |
-| 1A-1.b-ref-events / .b-ref-frames | Aggregate only; core/rate/critical/accounting done, then pair/critical refinement and isolate below. | Complete only after every child's commit/checkpoint; no uncertified event set or partial topology acceptance. R02/R12. |
+| 1A-1.b-ref-events / .b-ref-frames | Aggregate only; core/rate/critical/accounting/pair refinement done; critical preflight/refinement and isolate remain. | Complete only after every child's commit/checkpoint; no uncertified event set or partial topology acceptance. R02/R12. |
 | 1A-1.b-ref-events-core / .b-ref-frames | Done at 834a46a88; strict interval/contact/injectivity proofs, bounded spatial/range work and global occurrence ordering. Defaults unchanged. | 14 registered cases /16 JUnit entries /634 assertions Release/ASan, independent probes and broad/fast gates pass; failures/resolutions below. R02/R12. |
 | 1A-1.b-ref-rate / .b-ref-events-core | Done at bcd6c5a4f; continuous ideal-angle rate, unwrapped angle/rate access and all jet/product factors; no adapter/topology yet. | Six cases/505703 assertions Release/ASan, independent 113-bit oracle, full Release/combined ASan/both fast lanes pass; failure correction and hashes below. R01/R02/R12. |
 | 1A-1.b-ref-events-critical / .b-ref-rate | Done at 943406abe; geometry header/cpp/tests: shared F/F' bounds, factory-owned adapter, exact thresholds/cusps and gap-free proven regions/joint exclusions. | Nine cases/268244 assertions Release/ASan; independent proofs/oracles, all broad/fast gates, failures/fixes/hashes below. R01/R02/R12. |
 | 1A-1.b-ref-events-accounting / .b-ref-events-critical | Done at290d2658f; three entered adaptive-depth fields and max helper, retained on every exit; decisions/counters unchanged. | Five cases/153 assertions Release/ASan, old strict/budget union32/2194 and all broad/fast gates pass; new test expectation corrected from legacy trace, no production change. R02/R12/R13. |
-| 1A-1.b-ref-events-refine / .b-ref-events-accounting | Ready; intersection header/cpp/existing tests: solver-issued opaque session/root identity, immutable owned provider/options, original-proof-preserving contraction and cross-call absolute depth/work. | Language/privacy prototype compiled0; runtime ownership/identity/history/caps/contraction still required. No arbitrary public event flag is proof. R02/R12. |
-| 1A-1.b-ref-critical-refine / .b-ref-events-refine | Geometry header/cpp/tests: private factory-issued canonical polynomial/angle state, typed occurrence handles, convergent scalar/inverse contraction and cancellation-free images; prospective generation never invents observed depth. | Cusp parameter/image containment, stationary identities, unchanged-adjacent scalar with angle progress, symmetry/invalid handles, six-vertex and queued-charge depth pins, exact/one-less caps. R01/R02/R12. |
+| 1A-1.b-ref-events-refine / .b-ref-events-accounting | Done atf4f87f48e; intersection header/cpp/existing tests: owned immutable provider/options, opaque handles, original-proof-preserving contraction and persistent history/work/latches. | Fourteen cases/490 assertions Release/ASan; old core37/2347 and all broad/full/fast gates; source/commit digests match. R02/R12/R13. |
+| 1A-1.b-ref-critical-refine / .b-ref-events-refine | Conditional on its own literal API/cost preflight against committedf4f87f48e; geometry header/cpp/tests: factory-issued canonical polynomial/angle state, occurrence handles, convergent contraction/images and actual observed depth. | Cusp parameter/image containment, stationary identities, unchanged-adjacent scalar with angle progress, symmetry/invalid handles, six-vertex and queued-charge depth pins, exact/one-less caps. R01/R02/R12. |
 | 1A-1.b-ref-events-isolate / both refinement children | Geometry header/cpp/tests: own/opposite and certified end semicircles in a checked strict-hook composite; complete anchored enumeration, both root kinds' identity/order and proved world node accuracy; debit one budget every status. | Transverse/source-end tangent/cusp/retrace, close roots/shared occurrences/unresolved order and exact caps; complete event sets only, old engine regressions unchanged. R02/R12. |
 | 1A-1.b-ref-components / .b-ref-events | Classify interval visibility using conservative source/end clearance and current trim allowances; assemble directed adjacency/components; expose a complete read-only reference result. | All six §3.5.1 fixtures, rotated/reversed equivalents and closed-arc/multi-component distinctions; no materialization/engine run; report unresolved event/visibility rather than accepting it. R02. |
 | 1A-1.b-check-layout / .b-ref-components | Implement overflow-safe `isEngineLayout`, finite 2D/unit-weight/knot-group validation, cubic extraction and shared-budget input preflight. Keep these helpers internal or explicitly layout-only; do not expose an incomplete successful `checkCache`. | Short/oversized/null-equivalent arrays, malformed knots, rescaled valid knots, fit/saved-open representations, non-finite/out-of-plane controls, zero/invalid limits; no allocation before count caps. R01/R02/R12. |
@@ -371,17 +373,17 @@ generic infrastructure slice with its regression tests; do not commit the unsafe
 documenting independently safe, buildable intermediate behavior before editing. Registration and tests accompany
 each product slice, not a later catch-all test phase.
 
-**Immediate implementation-resume queue:** activate `.b-ref-events-refine`, then `.b-ref-critical-refine`, `.b-ref-events-isolate`, and
+**Immediate implementation-resume queue:** finish API/cost preflight and activate `.b-ref-critical-refine`, then `.b-ref-events-isolate` and
 `.b-ref-components`. Budget, guard, progress and frames are complete at 10c6bff46 / 0e3c6b342 / fb70681e2 / 26d107ccf;
 strict core, rate, critical preparation and observed-depth accounting are additionally complete at834a46a88 /
-bcd6c5a4f /943406abe /290d2658f. Do not reimplement them or reapply old saved patches.
+bcd6c5a4f /943406abe /290d2658f; trusted pair refinement is now complete atf4f87f48e. Do not reimplement them or reapply old saved patches.
 Failed-run and final evidence are preserved under each slice's `build/evidence/<slice-id>/` directory. Gibbs already
 started implementation (0B-1) and authored the
 budget hierarchy; reuse him for the next product slice. Keep source frozen during final evidence collection and
 assign its actual checkpoint HEAD/files before handoff.
 
-This request is a plan-only review. No product leaf is activated by this document change. On implementation resume,
-Gibbs starts the next ready product card; the coordinator owns verification, Git and reconciliation. Future cards
+The v8 review was plan-only. Its implementation continuation completed the core refinement card from2e75f4c7a;
+Gibbs now preflights the critical API/cost model read-only while the coordinator reconciles the core commit. Future cards
 remain waiting until their actual prerequisites and public API handoffs exist, not merely because a recipe is written.
 
 ### 0.7 Two review gates
@@ -411,8 +413,8 @@ checks, not proofs of numerical correctness or runtime feature coverage.
 Run from the authoritative worktree, after freezing and isolating the selected slice as §1.4 requires. Create its
 ignored evidence directory first. Use new attempt-specific report names instead of overwriting a failed run. The
 following commands are reproducible recipes, not evidence by themselves. The budget slice has completed its
-final runs recorded below, as have 0B-3, `.b-progress`, `.b-ref-frames`, strict core, rate, critical and accounting;
-do not rerun them merely to start `.b-ref-events-refine`. Choose fresh report names
+final runs recorded below, as have 0B-3, `.b-progress`, `.b-ref-frames`, strict core, rate, critical, accounting and pair refinement;
+do not rerun them merely to preflight `.b-ref-critical-refine`. Choose fresh report names
 if reproducing a run:
 
 ```bash
@@ -621,6 +623,7 @@ patch simply because an executed card once described it as pending:
 | 1A-1.b-ref-rate | bcd6c5a4fe8a56d30b731f5e2e310e359b8ecfe5 | Three owned paths; six cases/505703 assertions Release/ASan; full Release/combined ASan/both fast lanes pass, all baseline identities retained | Independent rate/periodicity/chain-rule review; initial finite-precision oracle residue fixed without production widening, failed reports retained; committed hashes equal frozen tested source | .b-ref-events-critical ready with exact rational threshold/budget/hook recipe; all reference/component/check/entity/file/UI parents remain partial |
 | 1A-1.b-ref-events-critical | 943406abe5cfff8b188947757f101791bc3da8ad | Three owned paths; nine cases/268244 assertions Release/ASan; geometry/full/combined ASan/both fast lanes pass with all baseline identities retained | Exact predicates/maps/projection/domain/accounting reviewed; static thin-complement and native adjacent-bracket refusals corrected without weakening tests/caps/tolerances; final hashes below | Core accounting ready; new named accounting/refinement prerequisites precede geometry isolation; all event/component/check/entity/file/UI parents remain partial |
 | 1A-1.b-ref-events-accounting | 290d2658fdc2d9bb55da6205ae7c3afaaade6a4a | Three core paths; five cases/153 assertions Release/ASan; legacy union32/2194, geometry/full/ASan/both lanes pass, baseline identities retained | Every update/charge/failure/guard reviewed; new test corrected ordinary refusal depth8 versus strict3 from independent traces; no production decision/counter change, failed reports retained | Trusted core session card ready with compiled declaration/privacy probe; separate critical-refinement/depth timing prerequisite added before isolation; all parents remain partial |
+| 1A-1.b-ref-events-refine | f4f87f48ed024589e31a9a9f1c543340ca1a6c49 | Three frozen/committed paths;14/490 Release/ASan, legacy37/2347, geometry324/2154626, ASan156/1863348, full4667/6995661/74 unchanged skips, both fast lanes pass | Independent proof/lifetime/history/cap review; retained malformed categories and exception-ledger cleanup fixed before native runs; no old test/cap weakened; all baseline identities retained | Core complete, all parents partial; critical API/cost preflight conditional, isolate waits that child; no new entity/file/UI completion |
 
 **Git safety.** Stage files by name; inspect staged paths before every commit. Preserve unrelated staged/unstaged work
 and untracked artifacts. Do not use `git add -A`, destructive checkout/reset, `--amend` or `--no-verify`. Local commit
@@ -1050,7 +1053,8 @@ independently safe helper slice, not a completed exact-reference adapter or an a
    Ordinary `LC_ParametricIntersection` values supply estimated parameters and a kind without a certification
    guarantee. The committed opt-in strict mode at834a46a88 additionally reports parameter-box enclosures and the proof
    category (interval-unique transverse root or qualified analytic endpoint/cusp/tangency). Reuse that strict path and
-   retain ordinary defaults for existing callers; trusted retained contraction is a separate unfinished slice.
+   retain ordinary defaults for existing callers. Trusted retained pair contraction is now committed atf4f87f48e;
+   critical-occurrence contraction and geometry-level event integration remain separate unfinished slices.
    Depth-terminal numerical contact classification is not a
    certificate; in strict mode an unproven event returns ambiguity. Analytic whole-lens/cusp identities may certify
    their own occurrences with bounded arithmetic, but cannot certify unrelated arc/cutter events. Root estimates may
@@ -2458,14 +2462,21 @@ QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_tests 
 
 #### 1A-1.b-ref-events-refine. Trusted Root Contraction
 
-**Ready after this checkpoint; activate at its actual HEAD before product edits**
+**Executed — done atf4f87f48ed024589e31a9a9f1c543340ca1a6c49, 2026-10-15**
+- Activation: tracked tree clean; only existing untracked `build-asan/` preserved. Accounting290d2658f and its
+  plan checkpoint2e75f4c7a are ancestors of HEAD. Gibbs owns product edits; coordinator owns verification/roadmap/Git.
+- Qualified charge units: two fixed generated items cover session/PIMPL control state and issuer lifetime metadata,
+  admitted before allocation; one extra item per newly retained root covers its history/cached-image record in addition
+  to the existing event-certificate charge. Subsequent contraction uses existing charged certificate work and staged
+  publication charge. Legacy queries consume none of the additional items. Exact/one-less tests must verify this
+  schedule; it is a bounded logical work model, not a claim that each token equals one heap allocation.
 - Owner: Gibbs for the same three intersection paths; coordinator owns roadmap, independent proof/lifetime review,
   builds/evidence/Git. Dependency: accounting290d2658f. No geometry/engine/entity/build-list edits. Confirm clean tracked
   tree/actual checkpoint HEAD, preserve `build-asan/`, reread `StrictSolver::run/shrink/merge/order` and new depth fields.
 - Exact paths: `librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h`, the adjacent `.cpp`, and
   `librecad/src/lib/engine/document/entities/tests/lc_parametriccurveintersection_tests.cpp`. Existing registrations
   cover these files; any additional product/build path requires revising the card before editing it.
-- Entry facts: strict run moves `m_events` out and holds references to curves/options/segments. Private noninflating
+- Activation facts at2e75f4c7a: strict run moves `m_events` out and holds references to curves/options/segments. Private noninflating
   shrink preserves category/proofDomain through makeEvent but loses its state on return. New observation fields cannot
   reconstruct per-root history. Gibbs/coordinator preflight and the language/privacy probe qualify the API below;
   no implementation or runtime coverage is claimed by the prototype under `build/evidence/1A-1.b-ref-events-refine/`.
@@ -2561,17 +2572,45 @@ QT_QPA_PLATFORM=offscreen build/librecad_tests "[intersection-refine]" --order d
 QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_tests "[intersection-refine]" --order decl --reporter junit --out build/evidence/1A-1.b-ref-events-refine/asan-attempt-1.junit.xml
 ```
 
+**Execution evidence and reconciliation.**
+- Gibbs authored/froze only intersection header/cpp/existing tests from2e75f4c7a; coordinator independently reviewed
+  every ownership, identity, interval/provenance, merge/history, admission, overflow, latch and publication path.
+  Existing registrations suffice. Strict proof/Krawczyk machinery is retained, not duplicated. Legacy policies,
+  decisions, callbacks/counters and old tests remain unchanged. Fourteen source-declared cases execute natively.
+- Review found retained malformed analytic categories could reset ambiguity to Ok and preserve trusted state.
+  Retained mode now returns terminal InvalidInput for malformed categories/self-diagonal credentials; legacy ambiguity
+  remains intact. Scoped per-call ledger reset and terminal invalidation on throwing providers prevent dangling
+  stack-ledger access. Tests prove bad handles/moves cannot clear proof/limit latches; no known issue remains in this leaf.
+- All three named targets build Release/ASan, attempt1 exit0, parallel4 each/combined<=8. Both discoveries exit0:14
+  registered. Focus attempts1/2 exit0 both:14 entries/490 assertions/0 skips/errors/failures/findings. Discovery handles
+  were explicitly reaped after attempt1 launched, so final attempt2 was repeated after confirmed discovery completion;
+  both reports retained, no source or assertion/cap change. Final runs serialize binaries per build directory.
+- Old strict/budget/accounting union exit0 both:37 entries/2347 assertions/0 skips (prior strict/budget32 plus existing
+  accounting5). Release geometry324/2154626/0, combined ASan156/1863348/0, both exit0, accounting baseline+14.
+  Full visible Release exit0:4667 entries/6995661 JUnit tests/74 identical skips; every accounting/S0 identity retained,
+  +14/+103. DXF1028/39932/3 and DWG1084/34952/4 unchanged, both exit0 with exact §0.8 exclusions.
+- Only completed XML parsed; all required native processes terminal. `QT_QPA_PLATFORM=offscreen`,
+  `ASAN_OPTIONS=detect_leaks=0`, no LSan claim. No sanitizer ERROR/SUMMARY/runtime-error diagnostics. ASan compact-
+  unwind size warning is not failure. Independent reviews/commands/reports: `build/evidence/1A-1.b-ref-events-refine/`.
+- Product commit changes exactly three paths,1044 additions/34 deletions. Frozen/tested/committed SHA-256:
+  cpp `5b8c75150ac6bf3ac0d34d07e1a3aec10019019358a6f9d3576aefa5ffb22555`,
+  header `9fbdab05229e8232e058dc2f8a2c19225400d04e0fe19da265b36cbf7f6d3f53`,
+  tests `6aa197be4221b1ed5556f6d56920f7938f0aaccf50df230a4402255513fb3c1f`.
+- R02/R12/R13 core sub-contract is verified, not completion of those whole-plan requirements. Next: qualify literal
+  critical-session declarations, immutable provenance/adapter ownership, fixed costs and first native red depth pin.
+  Do not reactivate pair refinement or mark event/component/check/entity/file/UI parents done. Checkpoint only this plan.
+
 #### 1A-1.b-ref-critical-refine. Trusted Critical Occurrences
 
-**Waiting for core retained-session contract; separate geometry slice before isolation**
+**Conditional — coref4f87f48e done; own literal API/cost preflight before activation**
 - Scope/owner: Gibbs, geometry header/cpp/existing geometry tests, coordinator verification/roadmap/Git. Dependency:
-  `.b-ref-events-refine`, with critical943406abe as the mathematical baseline. This serial boundary fixes issued-handle,
+  `.b-ref-events-refine` atf4f87f48e, with critical943406abe as the mathematical baseline. This serial boundary fixes issued-handle,
   allowance and depth-history conventions before the geometry variant; a two-curve session is NOT a scalar solver.
 - Exact paths: `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h`, the adjacent `.cpp`, and
   `librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp`. Before activation, finish the
   literal factory/handle/snapshot signatures against the committed core conventions, compile the access/lifetime
   declaration probe, and record the new focused selector plus actual native regression command. Until then this
-  child is waiting, not an implementation-ready API merely because its mathematical recipe is specified.
+  child is conditional, not an implementation-ready API merely because its mathematical recipe is specified.
 - Finding: CriticalBuilder discards exact raw basis/distance/kernel, canonical z or1-z bracket, actual scalar depth,
   inverse-angle bracket and exact sweep mapping. Its initial x<=asin(x)<=x/sqrt(1-x²) bound does not converge just by
   narrowing x. Complete cusp-versus-crossing order and physical-node accuracy therefore need a separate trusted path.
@@ -2652,7 +2691,7 @@ QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_tests 
 
 #### 1A-1.b-ref-events-isolate. Exhaustive Event Integration
 
-**Waiting for .b-ref-events-refine and .b-ref-critical-refine; preflight both issued APIs before activation**
+**Waiting for .b-ref-critical-refine; pair API is committed atf4f87f48e; preflight both before activation**
 - Scope remains geometry header/cpp/existing geometry tests. Build own `CriticalAdapter(delta)` and opposite
   `CriticalAdapter(-delta)` in the same verified frame using one budget. Stable branch roles: own, opposite, start
   cutter, end cutter. Open-end cutters are certified semicircles from source endpoint/normal/outward directed tangent
