@@ -28,7 +28,7 @@ Plan **v6**, 2026-10-15. This file is the implementation source of truth. Every 
 verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION — S0 done at de30f1d45; 0B-1 ready for Gibbs. Product slices remain pending.**
+Status: **IMPLEMENTATION — S0 and 0B-1 done; 0B-2 ready for Gibbs; independent 1A-1.a in progress.**
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -89,10 +89,10 @@ A commit alone does not mean done; verification, review and the post-commit plan
 |---|---|---|---|---|---|
 | S0 | Worktree, tracked plan, build baseline and evidence (documentation commit) | — | — | 0 product | done — de30f1d45, S0 reports/card, 2026-10-15 |
 | 0A | Trim Two must not replace an owned child | — | — | — | done on baseline by #3113 (`609ca81ae`); verify current tests at S0, then add the new-type mapping/test in 1D |
-| 0B-1 | Guard skeleton: `rowOf` table, pragmas, `static_assert`, kinds-only walk; registration; CI path filter; shadow-`rs.h` checks | B | S0 | 250 | pending — ready for Gibbs; execution card below |
-| 0B-2 | Entity factory header; clone and INSERT checks; pin tests | B | 0B-1 | 500 | pending |
+| 0B-1 | Guard skeleton: `rowOf` table, pragmas, `static_assert`, kinds-only walk; registration; CI path filter; shadow-`rs.h` checks | B | S0 | 250 | done — d6de53d3c, 0B-1 evidence, 2026-10-15 |
+| 0B-2 | Entity factory header; clone and INSERT checks; pin tests | B | 0B-1 | 500 | pending — ready for Gibbs |
 | 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | pending |
-| 1A-1 | Closed forms, engine-layout test, validity check, tolerance helpers | C | S0 | 900 | pending |
+| 1A-1 | Closed forms, engine-layout test, validity check, tolerance helpers | C | S0 | 900 | in progress — .a domain/closed forms; reference/check/qualification children pending |
 | 1A-2 | Enumerator; class core and validated adoption factory; clone, `toPlainSpline`, normalisation, stamp, transforms; `writeEntity` case; INSERT capability; 0B row; interim Edit Properties guard | C | 0B-3, 1A-1 | 900 | pending |
 | 1A-3 | Grips, `moveRef`, snaps | C | 1A-2 | 550 | pending |
 | 1B | Run limits, refusal enum, `adopt`/`create`, mutators, engine-run counter | C | 1A-3 | 900 | pending |
@@ -193,10 +193,10 @@ and the evidence needed to activate them. All product work is currently pending.
 |---|---|---|
 | S0 | Done at de30f1d45 | Clean execution worktree, tracked roadmap, toolchain/builds/baseline reports, format matrix and census recorded below; post-commit checkpoint records this SHA. |
 | 0A | Existing upstream code | Verify #3113 ancestry and current trim tests. Record evidence in S0; only the new-type mapping belongs to 1D. |
-| 0B-1 | Ready; S0 done at de30f1d45 | Add exhaustive enum rows, compile-time guard, source registration and CI paths together. Prove both inserted and appended shadow enumerators fail compilation. |
-| 0B-2 | Waiting for 0B-1 | Build valid entity fixtures; add clone and INSERT checks. Separate fixture defects from actual gaps; avoid GUI dependencies in the fast lane. |
+| 0B-1 | Done at d6de53d3c | Exhaustive 50/27/23 census and both negative shadow compiles passed; Release tag/lanes verified. |
+| 0B-2 | Ready; 0B-1 done at d6de53d3c | Build valid entity fixtures; add clone and INSERT checks. Separate fixture defects from actual gaps; avoid GUI dependencies in the fast lane. |
 | 0B-3 | Waiting for 0B-2 | Run real DXF/DWG save/open and load completion; record stable known-gap identities and valid row totals. This completes the guard before adding RTTI. |
-| 1A-1.a | Conditional: current ellipse/jet APIs confirmed | Implement finite-domain validation, full-turn normalization, signed geometry and tolerance helpers. Test degeneracy, circle limit, extreme scale and reversed/wrapped arcs. |
+| 1A-1.a | In progress; S0 done, current ellipse APIs confirmed | Finite-domain/local-frame and closed-form sources/tests prepared; build registration and Release/ASan validation next. |
 | 1A-1.b-ref | Waiting for .a | Implement the bounded exact-reference/event graph in §3.5.1, without fitting or materializing splines; test visibility, components and budgets against current trim behavior. |
 | 1A-1.b-check | Waiting for .b-ref | Implement the adaptive cache-to-reference check, complete-component coverage and topology policy in §3.5. Use shared work counters; unresolved geometry refuses adoption. |
 | 1A-1.c | Waiting for .b | Add adversarial and current-engine corpus checks, failure budgets and performance measurements. Record acceptance/refusal results; endpoints and midpoint checks alone cannot close this parent step. |
@@ -256,8 +256,8 @@ out-of-scope features from implementation completion.
 
 S0 is complete at `de30f1d45`. Release/ASan configurations, all three target builds, Release full
 and fast-lane baselines, and focused ASan trim/ellipse checks passed, with existing skips recorded in its card.
-No product step is done. 0B-1 is ready after this plan checkpoint is committed; Gibbs starts that first product slice.
-The coordinator owns the plan,
+0B-1 is committed at d6de53d3c; its evidence is below. Gibbs starts 0B-2 after this checkpoint. The coordinator owns
+independent 1A-1.a, the plan,
 shared build directories and commits. Assign explicit file ownership before any parallel work; never run concurrent
 Git/index operations or concurrent builds that mutate the same build tree.
 
@@ -413,6 +413,7 @@ Use this compact ledger under each executed card; expand it only with meaningful
 | Slice | Implementation SHA | Tested tree / evidence | Review outcome | Parent / next readiness |
 |---|---|---|---|---|
 | S0 (documentation only) | de30f1d45f1337d55265c2f72413a9c976c18c40 | Product tree b05fb541d unchanged; all S0 builds/reports passed with existing skips documented | Coordinator/Gibbs review resolved; staged/committed paths only this roadmap | S0 done; 0B-1 ready for Gibbs; product steps pending |
+| 0B-1 | d6de53d3cb80199b4148b0e6d3dbb28f2b392b8c | `build/evidence/0B-1/summary.md`, owned-file hashes, Release builds/tags/lanes, positive and two negative syntax controls | Coordinator reviewed all three committed paths; no unrelated geometry files staged | Guard partial (0B-1 done); 0B-2 ready; 1A-1.a independent/in progress |
 
 **Git safety.** Stage files by name; inspect staged paths before every commit. Preserve unrelated staged/unstaged work
 and untracked artifacts. Do not use `git add -A`, destructive checkout/reset, `--amend` or `--no-verify`. Local commit
@@ -1225,7 +1226,7 @@ success (`rs_filterdxfrw.cpp:30237-30238`, DXF and DWG), and empties every INSER
 
 #### 0B-1. Guard skeleton, registration, CI filter, shadow checks
 
-**Ready execution card (activate after this S0 checkpoint commit)**
+**Executed card: done at d6de53d3cb80199b4148b0e6d3dbb28f2b392b8c**
 - Owner: Gibbs; coordinator owns this plan, shared builds and commits.
 - Base: `de30f1d45f1337d55265c2f72413a9c976c18c40` plus this plan-only checkpoint; refresh actual HEAD at handoff.
 - Dependency: S0 done at de30f1d45, evidence above; no product implementation SHA exists for 0B-1 yet.
@@ -1240,7 +1241,15 @@ success (`rs_filterdxfrw.cpp:30237-30238`, DXF and DWG), and empties every INSER
   compile exit codes/diagnostics. No test uses a QApplication in the fast lane. MSVC negative guard remains CI-only.
 - Recovery: preserve edited files and evidence; after a successful product commit, reconcile its actual SHA before
   starting 0B-2. The private skeleton is reference material only, not a required input.
-- Review: current enum/CMake/CI locations confirmed by Gibbs; baseline reports above. Implementation SHA pending.
+- Review: current enum/CMake/CI locations confirmed by Gibbs; coordinator reviewed the scoped diff and confirmed the
+  tested owned-file SHA-256 hashes before committing. This enum-only test depends on the unchanged real rs.h; the
+  Release build log compiled only the two new guard objects and linked against the S0 library. Concurrent untracked
+  geometry files/tolerance-helper preparation were not part of that build or commit.
+- Evidence: `build/evidence/0B-1/summary.md` and logs. Three Release targets exit 0; `[entity-coverage]` passes one case /
+  76 assertions in full and DXF fast targets. DXF CI lane: 732 passed / 3 existing skips; DWG CI lane: 1002 passed /
+  4 existing skips, no new failures/skips. Positive syntax control exit 0; inserted shadow exit 1 with switch/count
+  errors, appended shadow exit 1 with switch error only. Real rs.h unchanged. Clang 21 checked; GCC/MSVC remain CI-only.
+- Next: 0B-2 factory and clone/INSERT checks; no full guard-completion claim until 0B-3 is done.
 
 New `librecad/src/lib/engine/document/entities/tests/lc_entitytype_coverage_tests.cpp`, after the compiled skeleton
 `prototypes/plan_review_2026-10-14/guard_skeleton.cpp`, condensed:
@@ -1316,6 +1325,19 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
 
 #### 0B-2. Entity factory, clone and INSERT checks, pins
 
+**Ready execution card**
+- Owner: Gibbs; dependency 0B-1 at d6de53d3c; refresh HEAD after this checkpoint.
+- Scope: new `librecad/src/test/lc_testentityfactory.h` and the existing coverage-test source only. Coordinator owns
+  CMake/qmake lists and shared builds while independently validating 1A-1.a; request the build handoff before running.
+- Contract: 27 valid drawing fixtures, clone RTTI preservation and both sole/mixed INSERT expansion checks; explicit
+  construction-line and generic-container pins. Observe baseline gaps rather than guessing or hiding fixture defects.
+- Tasks: construct/update headless-safe entities; add check dispatch and explanatory baseline gaps only if reproduced;
+  extend the guard walk and pins. No round-trip work yet; 0B-3 remains separate.
+- Validation: Release full/DXF-fast `[entity-coverage]` nonzero cases; both fast CI lanes; ASan coverage/ownership tags.
+  Record per-type fixture/check results and verify no QApplication is created in either fast lane.
+- Review/recovery: preserve disjoint geometry work; coordinator reviews/stages only the two owned paths after tests,
+  commits the slice and records the real SHA in a separate roadmap checkpoint. Implementation SHA/evidence pending.
+
 - **New header `librecad/src/test/lc_testentityfactory.h`** (header-only, `inline`; `librecad/src/test` is on the
   shared include path, `CMakeLists.txt:271`).
   - It may include engine and filter headers only. Not allowed: `ui/` headers (the DXF lane has no autogen include
@@ -1375,6 +1397,26 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
 ## 5. Phase 1 — the type
 
 ### 1A-1. Closed forms, engine-layout test, validity check, tolerance helpers
+
+**Execution card: 1A-1.a, 2026-10-15**
+- State: in progress; S0 done at de30f1d45; checkout HEAD c02d35720 before parallel 0B-1 edits.
+- Owner: coordinator. Files: new `lc_ellipseoffsetgeometry.{h,cpp}` and
+  `tests/lc_offsetcurve_geometry_tests.cpp` under the entity directory; appended tolerance helpers in
+  `lc_curveoffset.{h,cpp}`; `librecad/src/src.pro` registrations. CMake registration waits until Gibbs releases his
+  0B-1 build/CMake scope; no concurrent builds or changes to his coverage-test/workflow files.
+- Contract: finite representable 2D normalized basis, canonical whole vs directed arc/full-turn classification,
+  sweep membership, exact point/derivative/normal, signed offset, curvature/lens/inside helpers, and source-distance
+  query using the existing analytic ellipse nearest-point implementation. No cache fitting/adoption is added here.
+- Tasks: implement checked local-frame arithmetic and raw normalization; expose geometry operations; append engine
+  tolerance helpers without changing existing options; add boundary/random closed-form tests; register after handoff.
+- Validation: Release/ASan `[lc-offsetcurve][geometry]` with nonzero case counts, existing `[curve-offset][ellipse]`
+  regressions, tolerance equality and malformed/overflow cases. Ref/check/layout tests remain explicit later children.
+- Findings: classify tiny sweeps using their directed wrapped sweep, not just `abs(angle2-angle1)`; a small negative
+  delta can describe a nearly full counterclockwise arc. Axis switching is done in a local-centred temporary ellipse
+  before restoring world centre, avoiding endpoint-minus-large-centre loss. Do not divide tiny vectors using
+  `RS_Vector::operator/`, whose tolerance shortcut returns the undivided vector.
+- Recovery: preserve disjoint uncommitted geometry files; coordinator commits only their scoped paths after 0B-1's
+  reviewed commit/checkpoint. Implementation SHA/evidence pending; parent remains pending until required children pass.
 
 **Files.**
 - New `lib/engine/document/entities/lc_ellipseoffsetgeometry.{h,cpp}`, containing:
