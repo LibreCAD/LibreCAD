@@ -2421,6 +2421,11 @@ protected:
 private:
   void prepareBlocks();
   void prepareDxfEntityHandleMap();
+  /** The application names of the XDATA a DXF export writes: on its table
+   * records, the entities of the model space and of the blocks, and its
+   * objects. Each name comes once, case-insensitively, in the spelling and
+   * order the export first meets it. */
+  std::vector<std::string> dxfXDataApplications();
   void buildInsertAttribPlan();
   /** A text its INSERT writes as an ATTRIB. */
   bool isInsertAttribChild(const RS_Entity *entity) const {

@@ -1802,6 +1802,78 @@ TEST_CASE("DXF filter preserves MTEXT OCS frame and x-axis vector",
   std::filesystem::remove(out2);
 }
 
+TEST_CASE("DXF imports expand INSERTs after complete and partial reads",
+          "[dxf][filter][partial][insert]") {
+  ensureSettings();
+  lc::test::QuietLog quiet;
+  const auto readError = GENERATE(DRW::BAD_NONE, DRW::BAD_READ_ENTITIES, DRW::BAD_READ_BLOCKS);
+  const bool partial = readError != DRW::BAD_NONE;
+  const bool direct = GENERATE(false, true);
+  CAPTURE(readError, direct);
+  const std::string src = tmpFile("partial_inserts.dxf");
+  const std::string blocks =
+            "0\nSECTION\n2\nBLOCKS\n"
+            "0\nBLOCK\n8\n0\n2\nOUTER\n70\n0\n10\n0.0\n20\n0.0\n30\n0.0\n"
+            "0\nINSERT\n8\n0\n2\nINNER\n10\n10.0\n20\n0.0\n"
+            "0\nENDBLK\n8\n0\n"
+            "0\nBLOCK\n8\n0\n2\nINNER\n70\n0\n10\n0.0\n20\n0.0\n30\n0.0\n"
+            "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n11\n2.0\n21\n0.0\n"
+            "0\nENDBLK\n8\n0\n";
+  const std::string entities =
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nINSERT\n8\n0\n2\nOUTER\n10\n100.0\n20\n50.0\n"
+            "0\nINSERT\n8\n0\n2\nABSENT\n10\n0.0\n20\n0.0\n";
+  // Put ENTITIES first to retain model-space references when BLOCKS is truncated.
+  const std::string body = readError == DRW::BAD_READ_BLOCKS
+      ? entities + "0\nENDSEC\n" + blocks + "0\nBLOCK\n8\n0\n2\nCUT\n70\n0\n10\n0.0\n"
+      : blocks + "0\nENDSEC\n" + entities
+            + (partial ? "0\nLINE\n8\n0\n10\n0.0\n" : "0\nENDSEC\n0\nEOF\n");
+  writeText(src, "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n0\nENDSEC\n" + body);
+  const QString expectedError = readError == DRW::BAD_READ_BLOCKS
+      ? QObject::tr("error reading DXF/DWG blocks", "RS_FilterDXFRW")
+      : QObject::tr("error reading DXF/DWG entities", "RS_FilterDXFRW");
+
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  const QString path = QString::fromStdString(src);
+  if (direct) {
+    RS_FilterDXFRW filter;
+    CHECK(filter.fileImport(graphic, path, RS2::FormatDXFRW) == !partial);
+    if (partial)
+      CHECK(filter.lastError() == expectedError);
+  } else {
+    int callbacks = 0;
+    REQUIRE(RS_FileIO::instance()->fileImport(
+        graphic, path, RS2::FormatUnknown, [&](bool hasData, const QString &error) {
+          ++callbacks;
+          CHECK(hasData);
+          CHECK(error == expectedError);
+          return hasData;
+        }));
+    CHECK(callbacks == (partial ? 1 : 0));
+    graphic.onLoadingCompleted();
+  }
+
+  REQUIRE(graphic.count() == 2);
+  auto *outer = dynamic_cast<RS_Insert *>(graphic.entityAt(0));
+  REQUIRE(outer != nullptr);
+  REQUIRE(outer->count() == 1);
+  CHECK(outer->getMin().x == Catch::Approx(110.0));
+  CHECK(outer->getMin().y == Catch::Approx(50.0));
+  CHECK(outer->getMax().x == Catch::Approx(112.0));
+  CHECK(outer->getMax().y == Catch::Approx(50.0));
+  RS_Block *block = graphic.findBlock("OUTER");
+  REQUIRE(block != nullptr);
+  auto *inner = dynamic_cast<RS_Insert *>(block->entityAt(0));
+  REQUIRE(inner != nullptr);
+  CHECK(inner->count() == 1);
+  auto *absent = dynamic_cast<RS_Insert *>(graphic.entityAt(1));
+  REQUIRE(absent != nullptr);
+  CHECK(absent->getBlockForInsert() == nullptr);
+  CHECK(absent->count() == 0);
+  std::filesystem::remove(src);
+}
+
 TEST_CASE("DXF filter preserves reflected MINSERT source fields with a block definition",
           "[dxf][roundtrip][filter][extrusion][insert]") {
   ensureSettings();

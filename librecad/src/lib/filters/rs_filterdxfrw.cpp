@@ -4206,6 +4206,32 @@ int versionIdFromDwgMagic(const QString &filePath) {
   return 0;
 }
 
+// Expand NoUpdate INSERTs even after a failed read, which the caller may keep.
+void updateImportedInserts(RS_Graphic &graphic) {
+  // BLOCK_CONTROL order is not a dependency order. Resolve definition-owned
+  // INSERTs first, from their referenced blocks outward, so model-space
+  // INSERT expansion never snapshots an unresolved nested definition.
+  std::set<RS_Block *> resolvedBlocks;
+  std::set<RS_Block *> resolvingBlocks;
+  const auto updateBlockInserts = [&](auto &&self, RS_Block *block) -> void {
+    if (block == nullptr || resolvedBlocks.find(block) != resolvedBlocks.end())
+      return;
+    if (!resolvingBlocks.insert(block).second)
+      return; // RS_Insert::update() will reject the reference cycle.
+    for (RS_Entity *entity : *block) {
+      if (entity == nullptr || entity->rtti() != RS2::EntityInsert)
+        continue;
+      self(self, static_cast<RS_Insert *>(entity)->getBlockForInsert());
+    }
+    block->updateInserts();
+    resolvingBlocks.erase(block);
+    resolvedBlocks.insert(block);
+  };
+  for (unsigned i = 0; i < graphic.countBlocks(); ++i)
+    updateBlockInserts(updateBlockInserts, graphic.blockAt(i));
+  graphic.updateInserts();
+}
+
 } // namespace
 
 /**
@@ -4405,6 +4431,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
       RS_DEBUG->print(RS_Debug::D_WARNING, "Cannot open DWG file '%s'.",
                       (const char *)QFile::encodeName(file));
       m_errorCode = dwgr.getError();
+      updateImportedInserts(*m_graphic);
       return false;
     }
     m_graphic->dwgAdvancedMetadata().markVportsImported();
@@ -4458,6 +4485,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
                       (const char *)QFile::encodeName(file));
       m_errorCode = m_dxfR->getError();
       delete m_dxfR;
+      updateImportedInserts(*m_graphic);
       return false;
     } else {
       delete m_dxfR;
@@ -4474,29 +4502,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
   }
   RS_DEBUG->print("RS_FilterDXFRW::fileImport: updating inserts");
   const auto updateInsertsStart = std::chrono::steady_clock::now();
-
-  // BLOCK_CONTROL order is not a dependency order. Resolve definition-owned
-  // INSERTs first, from their referenced blocks outward, so model-space
-  // INSERT expansion never snapshots an unresolved nested definition.
-  std::set<RS_Block *> resolvedBlocks;
-  std::set<RS_Block *> resolvingBlocks;
-  const auto updateBlockInserts = [&](auto &&self, RS_Block *block) -> void {
-    if (block == nullptr || resolvedBlocks.find(block) != resolvedBlocks.end())
-      return;
-    if (!resolvingBlocks.insert(block).second)
-      return; // RS_Insert::update() will reject the reference cycle.
-    for (RS_Entity *entity : *block) {
-      if (entity == nullptr || entity->rtti() != RS2::EntityInsert)
-        continue;
-      self(self, static_cast<RS_Insert *>(entity)->getBlockForInsert());
-    }
-    block->updateInserts();
-    resolvingBlocks.erase(block);
-    resolvedBlocks.insert(block);
-  };
-  for (unsigned i = 0; i < m_graphic->countBlocks(); ++i)
-    updateBlockInserts(updateBlockInserts, m_graphic->blockAt(i));
-  m_graphic->updateInserts();
+  updateImportedInserts(*m_graphic);
   if (std::getenv("LC_IMPORT_BENCH") != nullptr) {
     const auto updateInsertsMs =
         std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -7364,6 +7370,25 @@ void RS_FilterDXFRW::addVxTableRecord(const DRW_VxTableRecord &data) {
                   static_cast<int>(data.handle));
 }
 
+namespace {
+// Keep imported XDATA, replacing only the polyline metadata we regenerate.
+std::vector<std::shared_ptr<DRW_Variant>>
+polylineXDataWithoutSidecar(const RS_Entity &entity) {
+  std::vector<std::shared_ptr<DRW_Variant>> ext;
+  bool inSidecar = false;
+  for (const auto &value : entity.getDrwExtData()) {
+    if (value && value->code() == 1001) {
+      std::string marker;
+      inSidecar = readXDataMarker(value.get(), marker) == XDataReadResult::Valid &&
+                  normalizeDwgTableName(marker) == "LIBRECAD_LWPOLYLINE";
+    }
+    if (!inSidecar)
+      ext.push_back(value);
+  }
+  return ext;
+}
+} // namespace
+
 /**
  * Implementation of the method which handles lightweight polyline entities.
  */
@@ -7404,7 +7429,7 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline &data) {
   }
   if (data.width != 0.0 || data.elevation != 0.0 || data.thickness != 0.0 ||
       !defaultExtrusion || hasVertexMetadata) {
-    std::vector<std::shared_ptr<DRW_Variant>> ext;
+    auto ext = polylineXDataWithoutSidecar(*polyline);
     ext.push_back(std::make_shared<DRW_Variant>(
         1001, std::string("LibreCAD_LWPOLYLINE")));
     ext.push_back(std::make_shared<DRW_Variant>(1040, data.width));
@@ -7977,7 +8002,7 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline &data) {
   }
   if (is2dPolyline && (data.basePoint.z != 0.0 || data.thickness != 0.0 ||
                        reflectedOcs || hasVertexMetadata)) {
-    std::vector<std::shared_ptr<DRW_Variant>> ext;
+    auto ext = polylineXDataWithoutSidecar(*polyline);
     ext.push_back(std::make_shared<DRW_Variant>(
         1001, std::string("LibreCAD_LWPOLYLINE")));
     ext.push_back(std::make_shared<DRW_Variant>(1040, 0.0));
@@ -27515,6 +27540,172 @@ void RS_FilterDXFRW::collectDwgAppIds() {
 #endif
 }
 
+namespace {
+// Calls visit() with the XDATA of each record of the lists that an export
+// replays.
+template <typename Visit, typename... Lists>
+void forEachReplayedRecordExtData(Visit &&visit, const Lists &...lists) {
+  const auto visitList = [&visit](const auto &list) {
+    for (const auto &record : list) {
+      if (record.replayState ==
+          LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+        visit(record.extData);
+    }
+  };
+  (visitList(lists), ...);
+}
+} // namespace
+
+std::vector<std::string> RS_FilterDXFRW::dxfXDataApplications() {
+  std::vector<std::string> names;
+  std::set<std::string> seen;
+  const auto addName = [&names, &seen](const std::string &name) {
+    if (!name.empty() && seen.insert(normalizeDwgTableName(name)).second)
+      names.push_back(name);
+  };
+  const auto addFrom = [&addName](const auto &extData, bool ofText = false) {
+    for (const auto &value : extData) {
+      const DRW_Variant *tag = nullptr;
+      if constexpr (std::is_pointer_v<std::decay_t<decltype(value)>>)
+        tag = value;
+      else if constexpr (std::is_same_v<std::decay_t<decltype(value)>,
+                                        DRW_Variant>)
+        tag = &value;
+      else
+        tag = value.get();
+      std::string name;
+      if (readXDataMarker(tag, name) != XDataReadResult::Valid)
+        continue;
+      // What a text keeps of its block attribute is never written with it
+      // (removeInsertAttribSidecar()).
+      if (ofText && isInsertAttribSidecarMarker(name))
+        continue;
+      addName(name);
+    }
+  };
+  const auto &metadata = m_graphic->dwgAdvancedMetadata();
+
+  // Table records keep the XDATA of the records they were read from; a
+  // dimension style also has XDATA of its own (prepareDRWDimStyleExtData()).
+  for (const auto &entry : metadata.lineTypeTableEntries())
+    addFrom(entry.second.extData);
+  const RS_LayerList *layers = m_graphic->getLayerList();
+  for (unsigned i = 0; i < layers->count(); ++i) {
+    if (const auto *source = metadata.findLayerTableEntryByName(
+            layers->at(i)->getName().toUtf8().toStdString()))
+      addFrom(source->extData);
+  }
+  for (const auto &entry : metadata.textStyleTableEntries())
+    addFrom(entry.second.extData);
+  for (const auto &entry : metadata.textStyles()) {
+    if (entry.second.name.empty() && (entry.second.flags & 1) != 0)
+      addFrom(entry.second.extData);
+  }
+  for (const auto &entry : metadata.vportTableEntries())
+    addFrom(entry.second.extData);
+  forEachReplayedRecordExtData(addFrom, metadata.views(),
+                               metadata.ucsRecords(), metadata.vports());
+  for (const auto &entry : metadata.appIdTableEntries())
+    addFrom(entry.second.extData);
+  for (const LC_DimStyle *style :
+       *m_graphic->getDimStyleList()->getStylesList()) {
+    DRW_Dimstyle written;
+    prepareDRWDimStyle(written, style);
+    addFrom(written.extData);
+    if (const auto *source =
+            metadata.findDimStyleTableEntryByName(written.name))
+      addFrom(source->extData);
+  }
+
+  // The entities of the model space and of the blocks. What a dimension
+  // draws, and in R12 a hatch, is written as an anonymous block
+  // (prepareBlocks()).
+  const bool hatchBlocks = m_version == 1009;
+  const auto addFromEntities = [&addFrom, hatchBlocks](
+                                   const auto &self,
+                                   const RS_EntityContainer &container,
+                                   bool nested) -> void {
+    for (const RS_Entity *entity :
+         lc::LC_ContainerTraverser{container, RS2::ResolveNone}.entities()) {
+      if (entity == nullptr || entity->getFlag(RS2::FlagDeleted))
+        continue;
+      if (entity->hasDrwExtData())
+        addFrom(entity->getDrwExtData(), RS2::isTextEntity(entity->rtti()));
+      if (RS2::isTextEntity(entity->rtti())) {
+        if (const auto attribute = extractInsertAttribSidecar(entity))
+          addFrom(attribute->mtext.xdata);
+      }
+      if (!nested && (RS2::isDimensionalEntity(entity->rtti()) ||
+                      (hatchBlocks && entity->rtti() == RS2::EntityHatch)))
+        self(self, *static_cast<const RS_EntityContainer *>(entity), true);
+    }
+  };
+  addFromEntities(addFromEntities, *m_graphic, false);
+  for (unsigned i = 0; i < m_graphic->countBlocks(); ++i) {
+    const RS_Block *block = m_graphic->blockAt(i);
+    if (block != nullptr && !block->isDeleted())
+      addFromEntities(addFromEntities, *block, false);
+  }
+
+  // The objects, and the entities only the metadata holds.
+  forEachReplayedRecordExtData(
+      addFrom, metadata.visualStyles(), metadata.shapes(), metadata.suns(),
+      metadata.backgrounds(), metadata.renderSettings(),
+      metadata.sunStudies(), metadata.motionPaths(), metadata.curvePaths(),
+      metadata.pointPaths(), metadata.objectPtrs(),
+      metadata.partialViewingIndexes(), metadata.cameras(),
+      metadata.geoPositionMarkers(), metadata.sectionObjects(),
+      metadata.sections(), metadata.modelerGeometry(), metadata.fields(),
+      metadata.fieldLists(), metadata.xrecords(),
+      metadata.groups(), metadata.mlineStyles(), metadata.layouts(),
+      metadata.mleaderStyles(), metadata.materials(), metadata.lightLists(),
+      metadata.tvDeviceProperties(), metadata.blockRepresentationData(),
+      metadata.placeholders(), metadata.vxControls(),
+      metadata.vxTableRecords(), metadata.rasterVariables(),
+      metadata.wipeoutVariables(), metadata.dbColors(),
+      metadata.dimensionAssociations(), metadata.evaluationGraphs(),
+      metadata.scales(), metadata.idBuffers(), metadata.spatialIndexes(),
+      metadata.layerIndexes(), metadata.dictionaryVars(),
+      metadata.sortEntsTables(),
+      metadata.underlayDefinitions(), metadata.imageDefinitions(),
+      metadata.imageDefinitionReactors(), metadata.pointCloudDefinitions(),
+      metadata.navisworksModelDefinitions(), metadata.pointCloudColorMaps(),
+      metadata.geoData(), metadata.spatialFilters());
+  const auto addFromDictionaries = [this, &addFrom](const auto &records) {
+    for (const auto &record : records) {
+      if (record.replayState ==
+              LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed &&
+          m_dxfSuppressedObjectHandles.count(record.handle) == 0)
+        addFrom(record.extData);
+    }
+  };
+  addFromDictionaries(metadata.dictionaries());
+  addFromDictionaries(metadata.dictionariesWithDefault());
+  for (const auto &record : metadata.vbaProjects())
+    addFrom(record.extData);
+  for (const auto &settings : metadata.plotSettings())
+    addFrom(settings.extData);
+  for (const auto &record : metadata.tables()) {
+    if (record.nativeTableStyle)
+      addFrom(record.nativeTableStyle->extData);
+  }
+  // Records read from a DXF go out as they came in, XDATA and all.
+  for (const auto &record : metadata.rawDxfObjects()) {
+    if (replaysInDxfExport(record.m_version) &&
+        m_dxfSuppressedObjectHandles.count(record.handle) == 0)
+      addFrom(record.groups);
+  }
+  for (const auto &record : metadata.rawDxfEntities()) {
+    if (replaysInDxfExport(record.m_version))
+      addFrom(record.groups);
+  }
+  for (const auto &section : metadata.rawDxfSections()) {
+    if (replaysInDxfExport(section.m_version))
+      addFrom(section.m_groups);
+  }
+  return names;
+}
+
 void RS_FilterDXFRW::writeAppId() {
   const auto &metadata = m_graphic->dwgAdvancedMetadata();
   std::set<std::string> emittedNames;
@@ -27580,166 +27771,10 @@ void RS_FilterDXFRW::writeAppId() {
     return;
   }
 
-  // TABLES precedes BLOCKS/ENTITIES/OBJECTS. Register every retained XDATA
-  // application now, using its imported record when present so the codec
-  // preserves flags/application data and records the source-handle remap.
+  // TABLES precedes BLOCKS/ENTITIES/OBJECTS. Reuse imported APPID records
+  // so flags, application data and source-handle remapping are preserved.
   emitRequired("ACAD"); // The codec owns this record and maps it to handle 12.
-  const auto collectExtData = [&emitRequired](const auto &extData,
-                                              bool ofText = false) {
-    for (const auto &value : extData) {
-      const DRW_Variant *tag = nullptr;
-      if constexpr (std::is_pointer_v<std::decay_t<decltype(value)>>)
-        tag = value;
-      else if constexpr (std::is_same_v<std::decay_t<decltype(value)>,
-                                        DRW_Variant>)
-        tag = &value;
-      else
-        tag = value.get();
-      std::string name;
-      if (readXDataMarker(tag, name) == XDataReadResult::Valid &&
-          !name.empty()) {
-        // Text exports strip these private attribute sidecars. The same
-        // app names on other carriers remain ordinary retained XDATA.
-        if (ofText && isInsertAttribSidecarMarker(name))
-          continue;
-        emitRequired(name);
-      }
-    }
-  };
-  const auto collectFromContainer = [&collectExtData](
-                                       const RS_EntityContainer *container) {
-    if (container == nullptr || container->getFlag(RS2::FlagDeleted))
-      return;
-    // Match the entity sweep, not the render caches inside text, INSERTs,
-    // dimensions, polylines and hatches. Nested INSERTs use block definitions.
-    for (const RS_Entity *entity :
-         lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
-      if (entity->getFlag(RS2::FlagDeleted))
-        continue;
-      const bool ofText = entity->rtti() == RS2::EntityText ||
-                          entity->rtti() == RS2::EntityMText;
-      collectExtData(entity->getDrwExtData(), ofText);
-      if (ofText) {
-        if (const auto attribute = extractInsertAttribSidecar(entity))
-          collectExtData(attribute->mtext.xdata);
-      }
-    }
-  };
-  collectFromContainer(m_graphic);
-  for (unsigned index = 0; index < m_graphic->countBlocks(); ++index)
-    collectFromContainer(m_graphic->blockAt(index));
-
-  const auto collectRecords = [this, &collectExtData](const auto &records,
-                                                      bool ofDictionary = false) {
-    for (const auto &record : records) {
-      if (record.replayState ==
-              LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed &&
-          (!ofDictionary ||
-           m_dxfSuppressedObjectHandles.count(record.handle) == 0))
-        collectExtData(record.extData);
-    }
-  };
-  collectRecords(metadata.views());
-  collectRecords(metadata.ucsRecords());
-  collectRecords(metadata.vports());
-  collectRecords(metadata.visualStyles());
-  collectRecords(metadata.shapes());
-  collectRecords(metadata.suns());
-  collectRecords(metadata.backgrounds());
-  collectRecords(metadata.renderSettings());
-  collectRecords(metadata.sunStudies());
-  collectRecords(metadata.motionPaths());
-  collectRecords(metadata.curvePaths());
-  collectRecords(metadata.pointPaths());
-  collectRecords(metadata.objectPtrs());
-  collectRecords(metadata.partialViewingIndexes());
-  collectRecords(metadata.cameras());
-  collectRecords(metadata.geoPositionMarkers());
-  collectRecords(metadata.sectionObjects());
-  collectRecords(metadata.sections());
-  collectRecords(metadata.modelerGeometry());
-  collectRecords(metadata.fields());
-  collectRecords(metadata.fieldLists());
-  collectRecords(metadata.dictionaries(), true);
-  collectRecords(metadata.xrecords());
-  collectRecords(metadata.groups());
-  collectRecords(metadata.mlineStyles());
-  collectRecords(metadata.layouts());
-  collectRecords(metadata.mleaderStyles());
-  collectRecords(metadata.materials());
-  collectRecords(metadata.lightLists());
-  collectRecords(metadata.tvDeviceProperties());
-  collectRecords(metadata.blockRepresentationData());
-  collectRecords(metadata.placeholders());
-  collectRecords(metadata.vxControls());
-  collectRecords(metadata.vxTableRecords());
-  collectRecords(metadata.rasterVariables());
-  collectRecords(metadata.wipeoutVariables());
-  collectRecords(metadata.dbColors());
-  collectRecords(metadata.dimensionAssociations());
-  collectRecords(metadata.evaluationGraphs());
-  collectRecords(metadata.scales());
-  collectRecords(metadata.idBuffers());
-  collectRecords(metadata.spatialIndexes());
-  collectRecords(metadata.layerIndexes());
-  collectRecords(metadata.dictionaryVars());
-  collectRecords(metadata.dictionariesWithDefault(), true);
-  collectRecords(metadata.sortEntsTables());
-  collectRecords(metadata.underlayDefinitions());
-  collectRecords(metadata.imageDefinitions());
-  collectRecords(metadata.imageDefinitionReactors());
-  collectRecords(metadata.pointCloudDefinitions());
-  collectRecords(metadata.navisworksModelDefinitions());
-  collectRecords(metadata.pointCloudColorMaps());
-  collectRecords(metadata.geoData());
-  collectRecords(metadata.spatialFilters());
-  for (const auto &record : metadata.vbaProjects())
-    collectExtData(record.extData);
-  for (const auto &record : metadata.plotSettings())
-    collectExtData(record.extData);
-  for (const auto &record : metadata.tables()) {
-    if (record.nativeTableStyle)
-      collectExtData(record.nativeTableStyle->extData);
-  }
-  for (const auto &entry : metadata.lineTypeTableEntries())
-    collectExtData(entry.second.extData);
-  for (const auto &entry : metadata.textStyleTableEntries())
-    collectExtData(entry.second.extData);
-  for (const auto &entry : metadata.textStyles())
-    collectExtData(entry.second.extData);
-  for (const auto &entry : metadata.vportTableEntries())
-    collectExtData(entry.second.extData);
-  for (const auto &entry : metadata.appIdTableEntries())
-    collectExtData(entry.second.extData);
-  for (unsigned index = 0; index < m_graphic->countLayers(); ++index) {
-    if (const auto *layer = metadata.findLayerTableEntryByName(
-            m_graphic->layerAt(index)->getName().toStdString()))
-      collectExtData(layer->extData);
-  }
-  for (const auto *style : *m_graphic->getDimStyleList()->getStylesList()) {
-    if (const auto *source = metadata.findDimStyleTableEntryByName(
-            style->getName().toStdString()))
-      collectExtData(source->extData);
-  }
-  for (const auto &record : metadata.rawDxfObjects()) {
-    if (replaysInDxfExport(record.m_version) &&
-        m_dxfSuppressedObjectHandles.count(record.handle) == 0)
-      collectExtData(record.groups);
-  }
-  for (const auto &record : metadata.rawDxfEntities()) {
-    if (replaysInDxfExport(record.m_version))
-      collectExtData(record.groups);
-  }
-  for (const auto &section : metadata.rawDxfSections()) {
-    if (replaysInDxfExport(section.m_version))
-      collectExtData(section.m_groups);
-  }
-
-  // These applications are generated by prepareDRWDimStyleExtData(), after
-  // this callback. Entity sidecar markers are discovered from the document.
-  for (const char *name : {"ACAD_DSTYLE_DIM_LINETYPE",
-                           "ACAD_DSTYLE_DIM_EXT1_LINETYPE",
-                           "ACAD_DSTYLE_DIM_EXT2_LINETYPE"})
+  for (const std::string &name : dxfXDataApplications())
     emitRequired(name);
 }
 

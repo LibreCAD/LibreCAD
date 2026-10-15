@@ -20,6 +20,9 @@
 #include "lc_drwnullinterface.h"
 #include "lc_filtertestsupport.h"
 #include "libdxfrw.h"
+#include "rs_dimaligned.h"
+#include "rs_hatch.h"
+#include "rs_line.h"
 #include "rs_polyline.h"
 
 namespace {
@@ -197,6 +200,47 @@ TEST_CASE("DXF registers sidecar applications generated on import", "[dxf][appid
     const auto secondSave = output.file("second-save.dxf");
     REQUIRE(lc::test::exportDrawing(reopened, secondSave, RS2::FormatDXFRW2013));
     checkRegisteredXData(secondSave);
+}
+
+TEST_CASE("DXF registers XDATA written in anonymous dimension and hatch blocks",
+          "[dxf][appid-registration][dimension][hatch]") {
+    lc::test::ensureSettings();
+    lc::test::QuietLog quiet;
+    const int scenario = GENERATE(0, 1, 2); // Dimension R12/R2013, hatch R12.
+    CAPTURE(scenario);
+    RS_Graphic drawing;
+    drawing.initForNewDocument();
+    RS_EntityContainer* container = nullptr;
+    if (scenario == 2) {
+        container = new RS_Hatch(&drawing, RS_HatchData(false, 1.0, 0.0, "ANSI31"));
+    } else {
+        RS_DimensionData data;
+        data.definitionPoint = RS_Vector(5.0, 3.0);
+        data.autoText = true;
+        container = new RS_DimAligned(&drawing, data,
+            RS_DimAlignedData(RS_Vector(0.0, 0.0), RS_Vector(10.0, 0.0)));
+    }
+    drawing.addEntity(container);
+    auto* child = new RS_Line(container,
+        RS_LineData(RS_Vector(0.0, 0.0), RS_Vector(10.0, 0.0)));
+    child->setDrwExtData({
+        std::make_shared<DRW_Variant>(1001, "APPID.ANONYMOUS_BLOCK"),
+        std::make_shared<DRW_Variant>(1000, "written child")});
+    if (scenario == 2)
+        child->setFlag(RS2::FlagHatchChild);
+    container->addEntity(child);
+
+    lc::test::OutputDirectory output("lc_dxf_appid_anonymous_block");
+    const auto exported = output.file("exported.dxf");
+    REQUIRE(lc::test::exportDrawing(drawing, exported,
+        scenario == 1 ? RS2::FormatDXFRW2013 : RS2::FormatDXFRW12));
+    CHECK(checkRegisteredXData(exported).count("APPID.ANONYMOUS_BLOCK") == 1);
+    std::size_t writtenChildren = 0;
+    for (const auto& record : lc::test::dxfRecords(exported, "LINE")) {
+        if (record.own(1001) == std::vector<std::string>{"APPID.ANONYMOUS_BLOCK"})
+            ++writtenChildren;
+    }
+    CHECK(writtenChildren == 1);
 }
 
 TEST_CASE("DXF registers private marker names only for retained XDATA", "[dxf][appid-registration]") {
