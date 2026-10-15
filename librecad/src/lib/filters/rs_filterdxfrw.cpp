@@ -4205,6 +4205,32 @@ int versionIdFromDwgMagic(const QString &filePath) {
   return 0;
 }
 
+// Expand NoUpdate INSERTs even after a failed read, which the caller may keep.
+void updateImportedInserts(RS_Graphic &graphic) {
+  // BLOCK_CONTROL order is not a dependency order. Resolve definition-owned
+  // INSERTs first, from their referenced blocks outward, so model-space
+  // INSERT expansion never snapshots an unresolved nested definition.
+  std::set<RS_Block *> resolvedBlocks;
+  std::set<RS_Block *> resolvingBlocks;
+  const auto updateBlockInserts = [&](auto &&self, RS_Block *block) -> void {
+    if (block == nullptr || resolvedBlocks.find(block) != resolvedBlocks.end())
+      return;
+    if (!resolvingBlocks.insert(block).second)
+      return; // RS_Insert::update() will reject the reference cycle.
+    for (RS_Entity *entity : *block) {
+      if (entity == nullptr || entity->rtti() != RS2::EntityInsert)
+        continue;
+      self(self, static_cast<RS_Insert *>(entity)->getBlockForInsert());
+    }
+    block->updateInserts();
+    resolvingBlocks.erase(block);
+    resolvedBlocks.insert(block);
+  };
+  for (unsigned i = 0; i < graphic.countBlocks(); ++i)
+    updateBlockInserts(updateBlockInserts, graphic.blockAt(i));
+  graphic.updateInserts();
+}
+
 } // namespace
 
 /**
@@ -4404,6 +4430,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
       RS_DEBUG->print(RS_Debug::D_WARNING, "Cannot open DWG file '%s'.",
                       (const char *)QFile::encodeName(file));
       m_errorCode = dwgr.getError();
+      updateImportedInserts(*m_graphic);
       return false;
     }
     m_graphic->dwgAdvancedMetadata().markVportsImported();
@@ -4457,6 +4484,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
                       (const char *)QFile::encodeName(file));
       m_errorCode = m_dxfR->getError();
       delete m_dxfR;
+      updateImportedInserts(*m_graphic);
       return false;
     } else {
       delete m_dxfR;
@@ -4473,29 +4501,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
   }
   RS_DEBUG->print("RS_FilterDXFRW::fileImport: updating inserts");
   const auto updateInsertsStart = std::chrono::steady_clock::now();
-
-  // BLOCK_CONTROL order is not a dependency order. Resolve definition-owned
-  // INSERTs first, from their referenced blocks outward, so model-space
-  // INSERT expansion never snapshots an unresolved nested definition.
-  std::set<RS_Block *> resolvedBlocks;
-  std::set<RS_Block *> resolvingBlocks;
-  const auto updateBlockInserts = [&](auto &&self, RS_Block *block) -> void {
-    if (block == nullptr || resolvedBlocks.find(block) != resolvedBlocks.end())
-      return;
-    if (!resolvingBlocks.insert(block).second)
-      return; // RS_Insert::update() will reject the reference cycle.
-    for (RS_Entity *entity : *block) {
-      if (entity == nullptr || entity->rtti() != RS2::EntityInsert)
-        continue;
-      self(self, static_cast<RS_Insert *>(entity)->getBlockForInsert());
-    }
-    block->updateInserts();
-    resolvingBlocks.erase(block);
-    resolvedBlocks.insert(block);
-  };
-  for (unsigned i = 0; i < m_graphic->countBlocks(); ++i)
-    updateBlockInserts(updateBlockInserts, m_graphic->blockAt(i));
-  m_graphic->updateInserts();
+  updateImportedInserts(*m_graphic);
   if (std::getenv("LC_IMPORT_BENCH") != nullptr) {
     const auto updateInsertsMs =
         std::chrono::duration_cast<std::chrono::milliseconds>(
