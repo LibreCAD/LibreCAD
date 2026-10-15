@@ -2817,7 +2817,8 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/shp_shapelib_tests.cpp
         librecad/src/lib/filters/tests/shp_import_filter_tests.cpp
     )
-    add_dependencies(librecad_tests LibreCAD_lrelease)
+    add_custom_target(librecad_test_translations DEPENDS ${QM_FILES})
+    add_dependencies(librecad_tests librecad_test_translations)
 
     # Include directories for rs_math.h and other dependencies
     target_include_directories (librecad_tests PRIVATE
