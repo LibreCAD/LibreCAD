@@ -807,6 +807,45 @@ TEST_CASE("Chinese mixed-number editing keeps logical text and native undo",
   }
 }
 
+TEST_CASE("Chinese editor cursor rectangle survives an input method query with no cursor",
+          "[text][bidi][chinese][gui][regression]") {
+  const auto input = QStringLiteral("\u4e2d\u6587123");
+  const auto checkEditor = [&](LC_TextEdit &edit) {
+    edit.resize(600, 160);
+    edit.show();
+    int queries = 0;
+    // Input methods can query the transient cursor during setPlainText().
+    const auto connection = QObject::connect(edit.document(), &QTextDocument::contentsChanged, &edit, [&] {
+      ++queries;
+      auto cursor = edit.textCursor();
+      CHECK(edit.inputMethodQuery(Qt::ImCursorRectangle).toRect() == edit.cursorRect(cursor));
+      cursor.setPosition(cursor.anchor());
+      CHECK(edit.inputMethodQuery(Qt::ImAnchorRectangle).toRect() == edit.cursorRect(cursor));
+    });
+    for (const auto direction : {Qt::LeftToRight, Qt::RightToLeft}) {
+      CAPTURE(direction);
+      edit.setPlainText(input);
+      edit.setTextDirection(direction);
+      QApplication::processEvents();
+      CHECK(edit.cursorRect().isValid());
+      CHECK(edit.cursorRect(QTextCursor()).isNull());
+      for (const auto &replacement : {QStringLiteral("\u4e2d\u6587456"), QString(), input}) {
+        CAPTURE(replacement);
+        queries = 0;
+        edit.setPlainText(replacement);
+        CHECK(queries > 0);
+        CHECK(edit.toPlainText() == replacement);
+        CHECK(edit.cursorRect().isValid());
+      }
+    }
+    QObject::disconnect(connection);
+  };
+  LC_TextEdit multiline;
+  checkEditor(multiline);
+  LC_SingleLineTextEdit singleLine;
+  checkEditor(singleLine);
+}
+
 TEST_CASE("Chinese editor navigation follows visual runs without exposing controls",
           "[text][bidi][chinese][gui]") {
   const auto input = QStringLiteral("\u4e2d\u6587123");
