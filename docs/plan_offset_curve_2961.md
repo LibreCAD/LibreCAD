@@ -28,7 +28,7 @@ Plan **v7**, 2026-10-15. This file is the implementation source of truth. Every 
 verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION — S0, 0B-1, 0B-2 and 1A-1.a done; 0B-3 and 1A-1.b-budget prepared, runtime verification pending.**
+Status: **IMPLEMENTATION — S0, 0B-1, 0B-2, 1A-1.a and 1A-1.b-budget done; 0B-3 prepared/runtime-unverified; .b-progress ready.**
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -95,7 +95,7 @@ A commit alone does not mean done; verification, review and the post-commit plan
 | 0B-1 | Guard skeleton: `rowOf` table, pragmas, `static_assert`, kinds-only walk; registration; CI path filter; shadow-`rs.h` checks | B | S0 | 250 | done — d6de53d3c, 0B-1 evidence, 2026-10-15 |
 | 0B-2 | Entity factory header; clone and INSERT checks; pin tests | B | 0B-1 | 500 | done — 5bfb3c8f0, 0B-2 reports/card, 2026-10-15 |
 | 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | in progress — code prepared; runtime/gap investigation and isolated verification pending |
-| 1A-1 | Closed forms, engine-layout test, validity check, tolerance helpers | C | S0 | 900 | partial — .a done at a4690db08; .b-budget prepared but unverified; reference/check/qualification pending |
+| 1A-1 | Closed forms, engine-layout test, validity check, tolerance helpers | C | S0 | 900 | partial — .a done at a4690db08; .b-budget done at 10c6bff46; progress/reference/check/qualification pending |
 | 1A-2 | Enumerator; class core and validated adoption factory; clone, `toPlainSpline`, normalisation, stamp, transforms; `writeEntity` case; INSERT capability; 0B row; interim Edit Properties guard | C | 0B-3, 1A-1 | 900 | pending |
 | 1A-3 | Grips, `moveRef`, snaps | C | 1A-2 | 550 | pending |
 | 1B | Run limits, refusal enum, `adopt`/`create`, mutators, engine-run counter | C | 1A-3 | 900 | pending |
@@ -204,9 +204,9 @@ not validation evidence. Aggregates are never executable cards or extra implemen
 | 0B-2 | Done at 5bfb3c8f0 | 27 valid fixtures, clone/sole+mixed INSERT and both pins; 7 cases/910 assertions pass full/DXF-fast/ASan; no gaps. |
 | 0B-3 | In progress; coordinator's prepared patch | Run real DXF/DWG save/open and load completion; investigate fixtures before recording stable known-gap identities and valid row totals. This completes the guard before adding RTTI. |
 | 1A-1.a | Done at a4690db08 | Normalization/local-frame/closed forms, robust source distance and tolerance helpers; 17 cases/2538 assertions pass Release/ASan, existing regressions and both fast lanes pass. |
-| 1A-1.b | Aggregate; budget/progress/reference/check children unfinished | Parent-only progress; no separate implementation commit or successful partial validator. |
-| 1A-1.b-budget | In progress; Gibbs's prepared patch, coordinator verifies | Bound intersection candidate allocation before pair-budget exhaustion; expose consumed work for shared validation budgets; test cap exits and existing topology/offset regressions. |
-| 1A-1.b-progress | Waiting for .b-budget | Bound contact-classification iteration and underflow/non-finite progress; source-level P1 finding, reproduction/tests required before reference use. |
+| 1A-1.b | Aggregate; budget done, progress/reference/check unfinished | Parent-only progress; no separate implementation commit or successful partial validator. |
+| 1A-1.b-budget | Done at 10c6bff46 | Checked shared work, bounded two-axis/range indices, nine budget cases Release/ASan, all offset/full/fast-lane gates pass; findings/evidence below. |
+| 1A-1.b-progress | Ready after this checkpoint | Bound contact-classification iteration and underflow/non-finite progress; reachable P1 reproduction confirmed, implementation/tests still required. |
 | 1A-1.b-ref | Aggregate; waiting for .b-progress | Execute `.b-ref-frames → .b-ref-events → .b-ref-components` (§0.6); no fitting/materialization. Parent closes only after all three commits/checkpoints. |
 | 1A-1.b-check | Aggregate; waiting for .b-ref | Execute `.b-check-layout → .b-check-bounds → .b-check-topology` (§0.6); no successful public validator before all acceptance checks exist. |
 | 1A-1.c | Waiting for .b | Add adversarial and current-engine corpus checks, failure budgets and performance measurements. Record acceptance/refusal results; endpoints and midpoint checks alone cannot close this parent step. |
@@ -269,11 +269,12 @@ out-of-scope features from implementation completion.
 
 S0 is complete at `de30f1d45`. Release/ASan configurations, all three target builds, Release full
 and fast-lane baselines, and focused ASan trim/ellipse checks passed, with existing skips recorded in its card.
-0B-1 is committed at d6de53d3c, 0B-2 at 5bfb3c8f0, and 1A-1.a at a4690db08; their evidence is below. The
-coordinator owns the prepared 0B-3 guard round trips; Gibbs prepared the independent `.b-budget` core prerequisite.
-Both patches are frozen for review. Release and ASan builds of all three targets completed with exit 0, but these
-combined-tree builds are not isolated slice evidence and no runtime pass is claimed for either prepared slice.
-The coordinator owns the plan,
+0B-1 is committed at d6de53d3c, 0B-2 at 5bfb3c8f0, 1A-1.a at a4690db08, and `.b-budget` at 10c6bff46; their
+evidence is below. Budget verification was isolated from 0B-3 and includes Release/ASan, full suite and both fast
+lanes. The coordinator owns the prepared 0B-3 guard round trips; its patch is preserved at
+`build/evidence/0B-3/pending-roundtrip.patch` and temporarily parked. Restore it exactly before verification; no
+round-trip runtime result is claimed yet. `.b-progress` is independently ready after this budget checkpoint, but
+the default queue verifies/commits the already-prepared 0B-3 first. The coordinator owns the plan,
 shared build directories and commits. Assign explicit file ownership before any parallel work; never run concurrent
 Git/index operations or concurrent builds that mutate the same build tree.
 
@@ -288,7 +289,7 @@ Before promoting a leaf card, check these concrete prerequisites:
 |---|---|---|
 | 0B-1 | Current enum is contiguous; each of 50 values has a disposition; current CMake/CI locations confirmed | 50/27/23 kinds census, both negative shadow compiles, full and fast-lane tag counts |
 | 1A-1.a | Raw sweep rules and finite/local coordinate domain are fixed | Boundary tests on both sides of each threshold and independent closed-form comparisons |
-| 1A-1.b-budget | Candidate allocation and refinement currently have different budget coverage | Pre-allocation/nonoverflowing cap tests, exposed consumed work, existing topology/offset tests and full suite |
+| 1A-1.b-budget | Done; original candidate-allocation/refinement accounting mismatch resolved | Nine cap/index cases, exposed consumed work, all offset/ASan/full/fast-lane gates recorded at 10c6bff46 |
 | 1A-1.b-progress | Contact classifier's floating-point step/doubling loop is understood | Underflow/non-finite/rounding-stagnation cases terminate, bounded iteration and unchanged ordinary contact regressions |
 | 1A-1.b-ref | Budget/progress prerequisites done; strict event/reference interface specified (§3.5.1) | Event enclosures, open/lens/closed-arc/multi-component fixtures; no regeneration; every cap exit observed |
 | 1A-1.b-check | Reference analysis is qualified and does not accept ambiguous topology | Whole-span distance bounds, bidirectional coverage and malicious subset/retrace tests |
@@ -312,7 +313,7 @@ Only satisfied dependencies promote a card to `ready`; future recipes are `waiti
 
 | Leaf / dependencies | Ordered implementation tasks and scope | Required exit evidence |
 |---|---|---|
-| 1A-1.b-budget / .a | Finish reviewing the prepared intersection core/test patch; verify shared candidate/refinement caps and counters on every status; isolate it from uncommitted 0B-3 for final verification. | Five registered `[intersection-budget]` cases; Release/ASan focused tests, all offset/topology regressions and full visible Release suite; no partial roots on refusal. R02/R12/R13. |
+| 1A-1.b-budget / .a | Done at 10c6bff46; shared checked cap, bounded spatial/range indices and conservative same-branch pruning, verified separately from 0B-3. | Nine registered `[intersection-budget]` cases, Release/ASan/full/fast-lane evidence below; no partial roots on refusal. R02/R12/R13. |
 | 1A-1.b-progress / .b-budget | In `lc_parametriccurveintersection.cpp`/tests, reproduce the `classifyContact` zero-step loop; bound its doubling iterations and reject non-finite/nonprogressing arithmetic without changing ordinary contact policy. | Subnormal tolerance/large derivative and parameter-rounding tests terminate under a process timeout; no false root/partial success; Release/ASan topology and offset regressions plus full Release suite. R02/R12. |
 | 0B-3 / 0B-2 | Run the prepared round-trip walks; diagnose per-format/per-type failures; fix invalid fixtures, not product behavior in this guard slice; record only reproduced baseline gaps. Check version and `onLoadingCompleted()`. | Both 27-type walks and both DXF pin paths actually execute; valid fixtures, payload/version checks, full/DXF-fast/ASan coverage, both fast lanes and full visible suite. R06/R11/R13. |
 | 1A-1.b-ref-frames / .b-progress | Extend `lc_ellipseoffsetgeometry.{h,cpp}` with local-frame interval bounds/jets and one shared checked budget. Specify status/result ownership and source-parameter convention. Use exact signed-offset formulas, not fitted controls. | Dense independent enclosure checks, rotations/reversals/wraps, near-circle/thin/large-centre cases and each budget boundary. Failed analysis publishes no usable reference. R01/R02/R12. |
@@ -335,11 +336,11 @@ generic infrastructure slice with its regression tests; do not commit the unsafe
 documenting independently safe, buildable intermediate behavior before editing. Registration and tests accompany
 each product slice, not a later catch-all test phase.
 
-**Immediate resume queue:** verify/commit/checkpoint `.b-budget` in isolation, then verify/commit/checkpoint 0B-3;
-activate `.b-progress`, then `.b-ref-frames` afterwards. Both prepared patches remain preserved, including failed-run
-artifacts. The
-Release/ASan build logs are under `build/evidence/1A-1.b-budget/`; they cannot certify either runtime result or an
-isolated commit. Gibbs already started implementation (0B-1); resuming does not require creating a replacement agent.
+**Immediate resume queue:** restore/verify/commit/checkpoint 0B-3, then activate `.b-progress`, then
+`.b-ref-frames`. The budget slice is complete at 10c6bff46; do not reimplement it. Its failed-run and final evidence
+are preserved under `build/evidence/1A-1.b-budget/`. Gibbs already started implementation (0B-1) and authored the
+budget hierarchy; reuse him for the next product slice. Keep source frozen during final evidence collection and
+do not mix a new `.b-progress` patch into 0B-3's final verified tree.
 
 ### 0.7 Two review gates
 
@@ -360,13 +361,14 @@ requirement. The checkpoint must reflect that reopening; it must never rewrite a
 
 Run from the authoritative worktree, after freezing and isolating the selected slice as §1.4 requires. Create its
 ignored evidence directory first. Use new attempt-specific report names instead of overwriting a failed run. The
-following commands are the next verification work, **not runs completed by this plan review**:
+following commands are reproducible recipes, not evidence by themselves. The budget slice has completed its
+final runs recorded below; do not rerun it just to start 0B-3. Choose fresh report names if reproducing a run:
 
 ```bash
 cmake --build build --target librecad_tests librecad_dxf_fast_tests librecad_dwg_fast_tests --parallel 4
 cmake --build build-asan --target librecad_tests librecad_dxf_fast_tests librecad_dwg_fast_tests --parallel 4
 
-# 1A-1.b-budget: five registered cases, including the existing depth-limit case.
+# 1A-1.b-budget: nine registered cases, including the existing depth-limit case.
 build/librecad_tests --list-tests "[intersection-budget]"
 QT_QPA_PLATFORM=offscreen build/librecad_tests "[intersection-budget]" --order decl --reporter junit --out build/evidence/1A-1.b-budget/release-attempt-1.junit.xml
 QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_tests "[intersection-budget]" --order decl --reporter junit --out build/evidence/1A-1.b-budget/asan-attempt-1.junit.xml
@@ -545,6 +547,7 @@ patch simply because an executed card once described it as pending:
 | 0B-1 | d6de53d3cb80199b4148b0e6d3dbb28f2b392b8c | `build/evidence/0B-1/summary.md`, owned-file hashes, Release builds/tags/lanes, positive and two negative syntax controls | Coordinator reviewed all three committed paths; no unrelated geometry files staged | Guard partial (0B-1 done); 0B-2 ready; 1A-1.a independent/in progress |
 | 1A-1.a | a4690db08b7220e93bbc8642d2c2b8b2e14fcf30 | Isolated Release/ASan geometry 17/2538; existing ellipse 48-case regressions; both Release fast lanes; CMake/qmake registrations | Gibbs's numeric findings fixed with regressions; committed paths match final tested files; 0B-2 patch safely preserved outside this commit | Geometry parent partial; .b-budget ready; 0B-2 final verification next |
 | 0B-2 | 5bfb3c8f08462694796489166f0146dd51fc7ca0 | `build/evidence/0B-2/*-final.junit.xml`: full/DXF-fast/ASan coverage 7/910, both Release fast lanes pass | Fixture-order failure corrected rather than masked; 27 types pass clone and both INSERT shapes; no gaps/skips in feature tag | Guard partial; 0B-3 ready; .b-budget independent/in progress |
+| 1A-1.b-budget | 10c6bff46976938492c5d1ad5b5e74001d6b2d03 | Isolated three-file tree, nine cases/1560 assertions Release/ASan, all offset/full/fast-lane gates; source hashes and failure history in card/summary | Gibbs/coordinator reviewed spatial/range coverage, branch isolation, arithmetic and boundary safety; no cap increase or geometry expectation change | Geometry partial; .b-progress ready after checkpoint; restore/verify 0B-3 next |
 
 **Git safety.** Stage files by name; inspect staged paths before every commit. Preserve unrelated staged/unstaged work
 and untracked artifacts. Do not use `git add -A`, destructive checkout/reset, `--amend` or `--no-verify`. Local commit
@@ -1711,10 +1714,10 @@ registered in `librecad_tests` next to `lc_curveoffsetellipsetests.cpp`:
 
 #### 1A-1.b-budget. Bound shared intersection work before allocation
 
-**Prepared card (Gibbs's patch frozen; coordinator owns verification/builds)**
+**Executed card — done at 10c6bff46976938492c5d1ad5b5e74001d6b2d03, 2026-10-15**
 - Dependency: 1A-1.a at a4690db08. Files: `lc_parametriccurveintersection.{h,cpp}` and its existing tests only.
   Coordinate shared builds with the coordinator; no CMake/qmake registration changes are needed for existing files.
-- Finding: `Solver::candidatePairs()` builds its whole vector before `solvePair()` enforces `maxBoxPairs`; the latter
+- Baseline finding: `Solver::candidatePairs()` built its whole vector before `solvePair()` enforced `maxBoxPairs`; the latter
   also increments before checking. The result exposes no consumed-work counters for the reference/check shared cap.
 - Contract/tasks: check a combined pair-work allowance before broad candidate examination/allocation and before each
   refinement, without counter overflow; return `LimitExceeded` rather than using a partial candidate list. Expose
@@ -1726,19 +1729,64 @@ registered in `librecad_tests` next to `lc_curveoffsetellipsetests.cpp`:
   checks, and ellipse regressions before committing this shared-engine change.
 - Recovery/exit: preserve other slices, review scoped diff, commit this leaf, then update the roadmap with its real
   SHA/work evidence before promoting `.b-progress`. `.b` and 1A-1 remain partial until every required child is done.
-- Current patch exposes `LC_IntersectionWorkStats` and checks candidate/refinement work before increment/storage;
-  five `[intersection-budget]` cases are registered. Release/ASan mixed-tree builds passed; runtime and isolated
-  verification remain required. Contact-classification progress is not fixed by these pair counters; it belongs to
+- The committed patch exposes `LC_IntersectionWorkStats` and checks hierarchy/refinement work before increment/storage;
+  nine `[intersection-budget]` cases are registered. Final isolated verification passed as recorded below.
+  Contact-classification progress is not fixed by these pair counters; it belongs to
   the next leaf, not an implicit completion claim for this patch.
+- Verification finding, 2026-10-15: the first isolated Release offset run and ASan topology/ellipse run refused valid
+  baseline geometry with status 14. Convex-L reoffset spent all 1,048,576 examinations in the X-only broad phase
+  (1,535 leaves, only one anchored branch, zero refinement); a near-critical whole ellipse spent 580,418 broad plus
+  468,158 refinement examinations. Temporary diagnostics were removed after recording these measurements.
+- Refined tasks: replace the X-only pair sweep with a bounded balanced two-axis box hierarchy, pruning aggregate
+  disjoint/unanchored ranges while charging each nontrivial node-pair examination before expansion. Keep one shared
+  cap, deterministic canonical leaf-pair ordering and no partial results; do not increase defaults or change the
+  geometry expectations. Index storage is linear in capped leaves and traversal stack is bounded. Update work-stat
+  documentation to distinguish hierarchy box visits from leaf-pair refinements. Add y-separated and anchored-cloud
+  regressions plus brute-force small-input parity, then rerun focused/adjacent/full verification. Failed reports remain
+  `offset-isolated-1.junit.xml` and `adjacent-asan-isolated-1.junit.xml`; no validated state is claimed yet.
+- Second verification: all eight budget cases passed in Release/ASan (1,471 assertions each), and the convex-L
+  baseline passed. The final near-collapsed circle (`a=b=100,d=99.99`) still exhausted the unchanged cap at 499,617
+  hierarchy visits plus 548,959 refinements (1,832 leaves, one branch). Extend the existing conservative `bridged`
+  monotonicity/small-image predicate to same-branch hierarchy ranges after charging the visit; this avoids repeating
+  individual proofs without relaxing topology. Cross-branch nodes cannot use that proof. Add a same-branch pruning
+  regression and rerun the untouched ellipse/crossing/corner tests. Preserve `regressions-isolated-2.junit.xml` and
+  diagnostic logs; neither this partial pass nor the index implementation alone closes the slice.
+- Final correction: wide recomputed curve bounds remained too loose near the collapsed circle. A conservative
+  cached-leaf union proved the required monotone ranges; the final implementation replaces the diagnostic scan with
+  a checked `2*N` parameter-order range index, queried in O(log N). The queried range includes every intervening
+  original leaf, not only spatial descendants, and is used only for one common branch. Point-only outside spans
+  are skipped by the shared range predicate; interior corner spans remain included. No tolerance, default cap or
+  original geometry expectation was changed. Tests cover 255/256/257-leaf boundaries and preserve crossings/loops.
+- Final evidence (`build/evidence/1A-1.b-budget/`, summary and `*-final.junit.xml`): all three targets built Release/
+  ASan with exit 0; focused budget nine cases, 16 JUnit entries, 1560 assertions, zero failures/skips in both.
+  Release `[curve-offset]`: 246 entries / 1,017,679 assertions; ASan topology/ellipse: 78 / 726,401; both exit 0,
+  no skips/sanitizer findings. Full visible Release: 4603 entries / JUnit tests=5,860,827, no failures/errors, the same
+  74 S0 skips and every baseline testcase entry retained (39 added). Both fast lanes pass with CI exclusions:
+  DXF 1025 entries / tests=39,507 / 3 unchanged skips; DWG 1084 / 34,952 / 4 unchanged skips. All processes exit 0.
+  ASan uses `detect_leaks=0`, no LSan claim. Exploratory runs 1-4 remain as failure evidence; run 3's overlapping
+  Release processes are not final verification. Final binaries were serialized within each build directory.
+- Commit/isolation audit: the 0B-3 test patch was saved and parked; its source matched HEAD for the final builds.
+  Only the three owned core/header/test paths were staged/committed. SHA-256: cpp `a51476cd6ef0ed0bae5ac75358d3d86d46aa1daa2bb045db24d5b16845b8c0ec`,
+  header `cbb6bad182d982f0737b9d1aa30c2cd7638ebcdd3702edec9a15ce4c7f8bfc35`,
+  tests `87c60a0e37b5839c6c21310fdc823b1c04cbf393f655b47f42b3f4cef345fb23`; unchanged through verification/commit.
+  Coordinator and Gibbs separately reviewed conservative coverage, safe indices/counters and corner/branch isolation.
+- Next: restore 0B-3 exactly and verify it; `.b-progress` now has its ready dependency and confirmed reproduction.
+  Parent `.b`/1A-1 remain partial: no reference validator, persistent offset entity, UI or file contract is complete.
 
 #### 1A-1.b-progress. Guarantee contact-classifier termination
 
-**Waiting card — activate only after the budget leaf's checkpoint**
+**Ready after the budget checkpoint — activate against its actual HEAD after 0B-3 by default**
+- Dependency: `.b-budget` at 10c6bff46976938492c5d1ad5b5e74001d6b2d03. Owner: Gibbs; coordinator owns builds/Git.
 - Scope: `lc_parametriccurveintersection.cpp` and its existing tests; header only if additional bounded diagnostics
   are necessary. No geometry fitting, source adapter, registration or unrelated engine refactor.
 - Finding: `classifyContact()` starts its unbounded doubling loop at `8*tolerance/db.magnitude()`. A zero initial
   step (underflow or infinite computed speed) stays zero forever, so pair caps cannot terminate that loop. This is a
   source-level P1 finding; reproduce the reachable conditions before choosing the narrow fix.
+- Reproduction confirmed during budget verification: two finite crossing lines with derivatives `(1e200,0)` and
+  `(1e200,1e200)`, parameter domain 0..1 and intersection at t=0.5; tolerance `1e-200`, `maxDepth=0`. The initial
+  classification step is exactly zero, and the unmodified classifier times out after three seconds (exit 124).
+  Probe/source and log are under `build/evidence/1A-1.b-progress/`; the subprocess was terminated by its timeout,
+  not left running. This evidence qualifies the future regression; no fix is included in the budget leaf.
 - Tasks: add a deterministic iteration bound and finite/progress checks; preserve ordinary shallow-contact behavior.
   A small positive step may initially round `u + direction*step` back to `u`; permit bounded step growth rather than
   misclassifying every such rounding case. A zero/non-finite step or exhausted classification allowance refuses
@@ -2681,6 +2729,9 @@ Push, CI, PR E.
 - v7's read-only source review found an independent P1 termination hazard in `classifyContact()`'s zero-step
   doubling loop. `.b-progress` now blocks reference analysis until reproduced, fixed and verified; the prepared
   pair-budget patch is not claimed to fix it.
+- Shared budget verification exposed avoidable X-only candidate work before refinement; the budget leaf now includes
+  bounded two-axis aggregate pruning. Required original geometry tests stay unchanged and default limits are not
+  raised. Its executed card records both failed runs and concrete work measurements.
 - Existing intersection `Ok`/point estimates do not certify event enclosures/order. `.b-ref-events` must add the
   strict opt-in contract before the graph can support adoption; ordinary callers retain their existing defaults.
 - Raw spline conversion drops Z and repairs/rounds geometry; R14 requires eligibility checks before that conversion.
