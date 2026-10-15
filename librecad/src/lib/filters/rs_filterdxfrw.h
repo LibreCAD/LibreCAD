@@ -3120,8 +3120,8 @@ private:
   // from another version it leaves out.
   DRW::Version m_dxfExportVersion = DRW::UNKNOWNV;
   std::size_t m_dxfLeftOutRawRecords = 0;
-  // What the codec left out of the DXF last exported (dxfRW::leftOut()).
-  std::map<std::string, std::size_t> m_dxfLeftOut;
+  // What the codec left out of the last export (DXF or DWG leftOut()).
+  std::map<std::string, std::size_t> m_writeLeftOut;
   // Multi-line attributes whose stored annotation-scale payload or column
   // layout the last export did not write: only DWG R2018 can hold them, and
   // only for attribute text that was not edited. Counted by writeInsert(),

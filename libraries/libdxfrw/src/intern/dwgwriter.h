@@ -381,6 +381,12 @@ public:
     /// without loss. This is sticky for the same reason as entity EED failures.
     virtual bool hasObjectEedWriteFailure() const { return false; }
 
+    /// What the objects written so far left out, by what it was, and how
+    /// often. A write that is rolled back takes its count with it.
+    const std::map<std::string, std::size_t>& leftOut() const {
+        return m_leftOut;
+    }
+
     /// Return whether this concrete writer has an encoder for the named
     /// DataStorage operation. Payload and reference validity remain the
     /// responsibility of the typed encoder itself.
@@ -452,6 +458,7 @@ public:
         bool frameWriteError {false};
         bool entityEedWriteFailure {false};
         bool objectEedWriteFailure {false};
+        std::map<std::string, std::size_t> leftOut;
 
         // dwgWriter15 owns these state machines, but all concrete DWG writer
         // versions use this checkpoint type for compound writes.
@@ -523,6 +530,7 @@ public:
         checkpoint.hasDwgClassConflict = m_hasDwgClassConflict;
         checkpoint.dwgClassManifestPrepared = m_dwgClassManifestPrepared;
         checkpoint.dwgClassesFrozen = m_dwgClassesFrozen;
+        checkpoint.leftOut = m_leftOut;
         checkpoint.pendingDwgObjectFrameProvenance =
             m_pendingDwgObjectFrameProvenance;
         checkpoint.currentDwgObjectFrameProvenance =
@@ -554,6 +562,7 @@ public:
         m_hasDwgClassConflict = checkpoint.hasDwgClassConflict;
         m_dwgClassManifestPrepared = checkpoint.dwgClassManifestPrepared;
         m_dwgClassesFrozen = checkpoint.dwgClassesFrozen;
+        m_leftOut = checkpoint.leftOut;
         m_pendingDwgObjectFrameProvenance =
             checkpoint.pendingDwgObjectFrameProvenance;
         m_currentDwgObjectFrameProvenance =
@@ -1504,6 +1513,11 @@ public:
     }
 
 protected:
+    void noteLeftOut(const char *what, std::size_t count) {
+        if (count != 0)
+            m_leftOut[what] += count;
+    }
+
     /// Mark handle-associated class instances at the same commit point as the
     /// object-map entry.  A missing handle is harmless for fixed-type objects;
     /// custom registrations are required to have exactly one matching frame.
@@ -1887,6 +1901,7 @@ protected:
     bool m_hasDwgClassConflict {false};
     bool m_dwgClassManifestPrepared {false};
     bool m_dwgClassesFrozen {false};
+    std::map<std::string, std::size_t> m_leftOut;
     DRW::DwgObjectFrameProvenance m_pendingDwgObjectFrameProvenance;
     DRW::DwgObjectFrameProvenance m_currentDwgObjectFrameProvenance;
 };

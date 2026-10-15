@@ -1295,13 +1295,17 @@ bool prepareDwgEedRefs(
     DRW::Version version, const ExtData& extData,
     const DRW_WritingContext& context,
     std::vector<DRW_Entity::PendingHandleRef>& appIdRefs,
-    std::vector<DRW_Entity::PendingHandleRef>& layerRefs) {
+    std::vector<DRW_Entity::PendingHandleRef>& layerRefs,
+    std::size_t& applicationsLeftOut) {
     appIdRefs.clear();
     layerRefs.clear();
+    applicationsLeftOut = 0;
     if (extData.empty())
         return true;
 
     bool haveAppId = false;
+    // The layer references of the current application start here.
+    std::size_t applicationLayerRefs = 0;
     try {
         for (std::size_t index = 0; index < extData.size(); ++index) {
             const auto& value = extData[index];
@@ -1317,12 +1321,15 @@ bool prepareDwgEedRefs(
                 if (appId == context.appidMap.end())
                     return false;
                 appIdRefs.push_back({index, appId->second});
+                applicationLayerRefs = layerRefs.size();
                 haveAppId = true;
             } else if (value->code() == 1003) {
                 if (!haveAppId || value->type() != DRW_Variant::STRING
                     || value->content.s == nullptr || value->content.s->empty()) {
                     return false;
                 }
+                if (appIdRefs.back().leftOut)
+                    continue;
                 if (value->canReplayDwgRawLayerReference(version)) {
                     layerRefs.push_back(
                         {index, 0, value->rawDwgLayerReference(), true});
@@ -1330,8 +1337,14 @@ bool prepareDwgEedRefs(
                 }
                 const auto layer = context.layerMap.find(
                     toUpperCase(*value->content.s));
-                if (layer == context.layerMap.end())
-                    return false;
+                if (layer == context.layerMap.end()) {
+                    // Omit the whole application group: removing one item
+                    // would change the application's data layout.
+                    appIdRefs.back().leftOut = true;
+                    layerRefs.resize(applicationLayerRefs);
+                    ++applicationsLeftOut;
+                    continue;
+                }
                 layerRefs.push_back({index, layer->second});
             } else if (!haveAppId) {
                 return false;
@@ -1342,6 +1355,9 @@ bool prepareDwgEedRefs(
     }
     return haveAppId;
 }
+
+const char* const kEedLayerLeftOut =
+    "application data naming a layer not in the drawing";
 
 template <typename Object>
 bool prepareDwgCommonObjectState(Object& object, DRW::Version version) {
@@ -4273,17 +4289,25 @@ bool dwgWriter15::collectPendingTableEedAppIds() {
 
 bool dwgWriter15::prepareEntityEed(DRW_Entity& entity) {
     entity.dwgEedCodePage = fileCodePageId();
-    return prepareDwgEedRefs(m_version, entity.extData, m_writingCtx,
-                              entity.dwgEedAppIdWriteRefs,
-                              entity.dwgEedLayerWriteRefs);
+    std::size_t leftOut = 0;
+    if (!prepareDwgEedRefs(m_version, entity.extData, m_writingCtx,
+                           entity.dwgEedAppIdWriteRefs,
+                           entity.dwgEedLayerWriteRefs, leftOut))
+        return false;
+    noteLeftOut(kEedLayerLeftOut, leftOut);
+    return true;
 }
 
 bool dwgWriter15::prepareTableEntryEed(
     const DRW_TableEntry& entry,
     std::vector<DRW_Entity::PendingHandleRef>& appIdRefs,
-    std::vector<DRW_Entity::PendingHandleRef>& layerRefs) const {
-    return prepareDwgEedRefs(m_version, entry.extData, m_writingCtx, appIdRefs,
-                              layerRefs);
+    std::vector<DRW_Entity::PendingHandleRef>& layerRefs) {
+    std::size_t leftOut = 0;
+    if (!prepareDwgEedRefs(m_version, entry.extData, m_writingCtx, appIdRefs,
+                           layerRefs, leftOut))
+        return false;
+    noteLeftOut(kEedLayerLeftOut, leftOut);
+    return true;
 }
 
 void dwgWriter15::prepareBlockOwnedEntity(DRW_Entity& entity) {
