@@ -444,24 +444,25 @@ size_t dwgWriter15::beginSentinelSection(const std::uint8_t (&beginSentinel)[16]
 
 void dwgWriter15::endSentinelSection(size_t sectionStart, size_t sizeOffset,
                                      const std::uint8_t (&endSentinel)[16],
-                                     size_t unknownTailBytes) {
+                                     size_t unknownTailBytes,
+                                     size_t excludedSizeBytes) {
     // Bit-packed bodies (HEADER vars, CLASSES, etc.) typically leave the
     // cursor mid-byte.  Pad to the next byte boundary so the END sentinel
     // lands aligned and the recorded payload size is in whole bytes.
     m_buf.alignToByte();
 
-    // Patch the payload size: bytes between (sizeOffset + 4) and current cursor.
+    // The R2013+ high-size word is covered by the CRC, but not by the low size.
     std::uint32_t payloadSize =
-        static_cast<std::uint32_t>(m_buf.size()) - static_cast<std::uint32_t>(sizeOffset + 4);
+        static_cast<std::uint32_t>(m_buf.size() - sizeOffset - 4 - excludedSizeBytes);
     m_buf.patchRawLong32(sizeOffset, payloadSize);
 
     // CRC covers RL-size + data only — spec §9: "covers the stepper and the
     // data"; sectionStart+16 skips the 16-byte beginning sentinel.
     std::uint16_t crc = m_buf.crc16(0xC0C1, sectionStart + 16, m_buf.size());
     m_buf.putRawShort16(crc);        // CRC BEFORE end sentinel
+    m_buf.putBytes(endSentinel, 16); // end sentinel AFTER CRC
     for (size_t i = 0; i < unknownTailBytes; ++i)
         m_buf.putRawChar8(0);
-    m_buf.putBytes(endSentinel, 16); // end sentinel AFTER CRC
 }
 
 void dwgWriter15::initHeaderControlHandles() {
@@ -583,10 +584,7 @@ bool dwgWriter15::emitControlObject(
         body.putBit(0);   // stringBit = 0: no strings in control objects (R2007+)
     }
     dwgBufferW *hdlBuf = &body;
-    const bool useControlHandleScratch =
-        (m_version > DRW::AC1014 && m_version < DRW::AC1021) ||
-        m_version > DRW::AC1021;
-    if (useControlHandleScratch) {
+    if (m_version > DRW::AC1014) {
         m_objectHandles.reset();
         hdlBuf = &m_objectHandles;
     }
@@ -628,10 +626,7 @@ bool dwgWriter15::emitControlObject(
     if (m_version > DRW::AC1018)
         body.putBit(0);
     dwgBufferW *hdlBuf = &body;
-    const bool useControlHandleScratch =
-        (m_version > DRW::AC1014 && m_version < DRW::AC1021) ||
-        m_version > DRW::AC1021;
-    if (useControlHandleScratch) {
+    if (m_version > DRW::AC1014) {
         m_objectHandles.reset();
         hdlBuf = &m_objectHandles;
     }
@@ -856,6 +851,11 @@ void dwgWriter15::rollbackCompoundWrite(
     dwgWriter::rollbackCompoundWrite(checkpoint);
     if (checkpoint.objectMapSize <= m_objectMap.size())
         m_objectMap.resize(checkpoint.objectMapSize);
+    m_entityLinkPatches.erase(
+        std::remove_if(m_entityLinkPatches.begin(), m_entityLinkPatches.end(),
+                       [&checkpoint](const EntityLinkPatch& patch) {
+                           return patch.frameStart >= checkpoint.bufferSize;
+                       }), m_entityLinkPatches.end());
     if (checkpoint.modelSpaceEntityCount <= m_modelSpaceEntityHandles.size())
         m_modelSpaceEntityHandles.resize(checkpoint.modelSpaceEntityCount);
     if (checkpoint.paperSpaceEntityCount <= m_paperSpaceEntityHandles.size())
@@ -1076,7 +1076,7 @@ bool dwgWriter15::emitDeferredBlockControl() {
         body.putBit(0);   // stringBit = 0 (R2007+)
     }
     dwgBufferW *hdlBuf = &body;
-    if (m_version > DRW::AC1021) {
+    if (m_version > DRW::AC1014) {
         m_objectHandles.reset();
         hdlBuf = &m_objectHandles;
     }
@@ -1092,6 +1092,8 @@ bool dwgWriter15::emitDeferredBlockControl() {
     finishObject();
     if (objectWriteFailed())
         return fail();
+    if (!finalizeEntityLinks())
+        return fail();
     m_blockControlEmitted = true;
     m_dwgBlockStructureComplete = true;
     return true;
@@ -1104,6 +1106,10 @@ bool dwgWriter15::emitBlockEntity(std::uint32_t handle,
     bk.layerH.ref = DRW::DwgLayer0Handle;
     bk.color = 256;  // BYLAYER
     bk.name = name;
+    bk.space = handle == reservedHandle::BLOCK_PAPER_ENTITY
+            || handle == reservedHandle::BLOCK_PAPER_END
+        ? DRW::PaperSpace : DRW::ModelSpace;
+    bk.m_dwgWriteExplicitLinks = m_version == DRW::AC1015;
     bk.setIsEnd(isEnd);
     dwgBufferW& body = beginObject(handle);
     if (m_version > DRW::AC1018) {
@@ -1212,8 +1218,16 @@ bool dwgWriter15::emitBlockRecord(std::uint32_t handle,
     hdlBuf->putHandle(makeHardPointer(0));                            // NullH
     hdlBuf->putHandle(makeHardOwner(blockHandle));                    // BLOCK entity
     if (m_version <= DRW::AC1015) {
-        const std::uint32_t first = entityHandles.empty() ? 0 : entityHandles.front();
-        const std::uint32_t last = entityHandles.empty() ? 0 : entityHandles.back();
+        const auto topLevel = [this](std::uint32_t handle) {
+            const auto patch = std::find_if(
+                m_entityLinkPatches.cbegin(), m_entityLinkPatches.cend(),
+                [handle](const EntityLinkPatch& entry) { return entry.handle == handle; });
+            return patch == m_entityLinkPatches.cend() || patch->compoundOwner == 0;
+        };
+        const auto firstIt = std::find_if(entityHandles.cbegin(), entityHandles.cend(), topLevel);
+        const auto lastIt = std::find_if(entityHandles.crbegin(), entityHandles.crend(), topLevel);
+        const std::uint32_t first = firstIt == entityHandles.cend() ? 0 : *firstIt;
+        const std::uint32_t last = lastIt == entityHandles.crend() ? 0 : *lastIt;
         hdlBuf->putHandle(makeSoftPointer(first));
         hdlBuf->putHandle(makeSoftPointer(last));
     } else {
@@ -1295,13 +1309,17 @@ bool prepareDwgEedRefs(
     DRW::Version version, const ExtData& extData,
     const DRW_WritingContext& context,
     std::vector<DRW_Entity::PendingHandleRef>& appIdRefs,
-    std::vector<DRW_Entity::PendingHandleRef>& layerRefs) {
+    std::vector<DRW_Entity::PendingHandleRef>& layerRefs,
+    std::size_t& applicationsLeftOut) {
     appIdRefs.clear();
     layerRefs.clear();
+    applicationsLeftOut = 0;
     if (extData.empty())
         return true;
 
     bool haveAppId = false;
+    // The layer references of the current application start here.
+    std::size_t applicationLayerRefs = 0;
     try {
         for (std::size_t index = 0; index < extData.size(); ++index) {
             const auto& value = extData[index];
@@ -1317,12 +1335,15 @@ bool prepareDwgEedRefs(
                 if (appId == context.appidMap.end())
                     return false;
                 appIdRefs.push_back({index, appId->second});
+                applicationLayerRefs = layerRefs.size();
                 haveAppId = true;
             } else if (value->code() == 1003) {
                 if (!haveAppId || value->type() != DRW_Variant::STRING
                     || value->content.s == nullptr || value->content.s->empty()) {
                     return false;
                 }
+                if (appIdRefs.back().leftOut)
+                    continue;
                 if (value->canReplayDwgRawLayerReference(version)) {
                     layerRefs.push_back(
                         {index, 0, value->rawDwgLayerReference(), true});
@@ -1330,8 +1351,14 @@ bool prepareDwgEedRefs(
                 }
                 const auto layer = context.layerMap.find(
                     toUpperCase(*value->content.s));
-                if (layer == context.layerMap.end())
-                    return false;
+                if (layer == context.layerMap.end()) {
+                    // Omit the whole application group: removing one item
+                    // would change the application's data layout.
+                    appIdRefs.back().leftOut = true;
+                    layerRefs.resize(applicationLayerRefs);
+                    ++applicationsLeftOut;
+                    continue;
+                }
                 layerRefs.push_back({index, layer->second});
             } else if (!haveAppId) {
                 return false;
@@ -1342,6 +1369,9 @@ bool prepareDwgEedRefs(
     }
     return haveAppId;
 }
+
+const char* const kEedLayerLeftOut =
+    "application data naming a layer not in the drawing";
 
 template <typename Object>
 bool prepareDwgCommonObjectState(Object& object, DRW::Version version) {
@@ -4078,8 +4108,13 @@ std::uint32_t dwgWriter15::addTextstyle(const DRW_Textstyle& ts) {
     if (m_dwgTableRecordsComplete)
         return 0;
     std::string upper = toUpperCase(ts.name);
-    if (upper.empty())
-        return 0;
+    if (upper.empty()) {
+        if ((ts.flags & 1) == 0)
+            return 0;
+        const std::uint32_t handle = m_handles.next();
+        m_pendingStyles.emplace_back(handle, ts);
+        return handle;
+    }
     const auto existing = m_writingCtx.styleMap.find(upper);
     if (existing != m_writingCtx.styleMap.end()) {
         if (existing->second == DRW::DwgStandardTextStyleHandle) {
@@ -4273,17 +4308,25 @@ bool dwgWriter15::collectPendingTableEedAppIds() {
 
 bool dwgWriter15::prepareEntityEed(DRW_Entity& entity) {
     entity.dwgEedCodePage = fileCodePageId();
-    return prepareDwgEedRefs(m_version, entity.extData, m_writingCtx,
-                              entity.dwgEedAppIdWriteRefs,
-                              entity.dwgEedLayerWriteRefs);
+    std::size_t leftOut = 0;
+    if (!prepareDwgEedRefs(m_version, entity.extData, m_writingCtx,
+                           entity.dwgEedAppIdWriteRefs,
+                           entity.dwgEedLayerWriteRefs, leftOut))
+        return false;
+    noteLeftOut(kEedLayerLeftOut, leftOut);
+    return true;
 }
 
 bool dwgWriter15::prepareTableEntryEed(
     const DRW_TableEntry& entry,
     std::vector<DRW_Entity::PendingHandleRef>& appIdRefs,
-    std::vector<DRW_Entity::PendingHandleRef>& layerRefs) const {
-    return prepareDwgEedRefs(m_version, entry.extData, m_writingCtx, appIdRefs,
-                              layerRefs);
+    std::vector<DRW_Entity::PendingHandleRef>& layerRefs) {
+    std::size_t leftOut = 0;
+    if (!prepareDwgEedRefs(m_version, entry.extData, m_writingCtx, appIdRefs,
+                           layerRefs, leftOut))
+        return false;
+    noteLeftOut(kEedLayerLeftOut, leftOut);
+    return true;
 }
 
 void dwgWriter15::prepareBlockOwnedEntity(DRW_Entity& entity) {
@@ -4535,6 +4578,12 @@ bool dwgWriter15::encodeEntity(DRW_Entity *ent) {
 
     dwgBufferW& body = beginObject(handle);
     bool ok = false;
+    struct RestoreLinkMode {
+        bool& flag;
+        bool previous;
+        ~RestoreLinkMode() { flag = previous; }
+    } restoreLinkMode{ent->m_dwgWriteExplicitLinks, ent->m_dwgWriteExplicitLinks};
+    ent->m_dwgWriteExplicitLinks = m_version == DRW::AC1015;
     if (m_version > DRW::AC1018) {
         m_objectStrings.reset();
         m_objectHandles.reset();
@@ -4552,15 +4601,95 @@ bool dwgWriter15::encodeEntity(DRW_Entity *ent) {
             m_entityEedWriteFailure = true;
         return fail();
     }
+    const std::uint64_t handleBaseBit = body.bitCount();
+    const std::size_t linkIndex = (ent->parentHandle != DRW::NoHandle ? 1u : 0u)
+        + ent->reactorHandles.size() + 1u;
+    std::uint64_t previousBit = 0;
+    std::uint64_t nextBit = 0;
+    if (m_version == DRW::AC1015) {
+        const auto& occurrences = m_objectHandles.handleOccurrences();
+        if (linkIndex + 1 >= occurrences.size())
+            return fail();
+        previousBit = occurrences[linkIndex].startBit;
+        nextBit = occurrences[linkIndex + 1].startBit;
+    }
     finishObject();
-
     if (objectWriteFailed())
         return fail();
+
+    if (m_version == DRW::AC1015) {
+        const std::size_t frameStart = m_objectMap.back().second;
+        const std::size_t bodyStart = m_buf.size() - m_objectBody.size() - 2u;
+        const std::uint64_t baseBit = bodyStart * 8u + handleBaseBit + 8u;
+        m_entityLinkPatches.push_back({ent->handle,
+            isCompoundEntityChild(*ent) ? ent->parentHandle : 0,
+            ent->eType == DRW::SEQEND,
+            frameStart, m_buf.size() - 2u,
+            baseBit + previousBit, baseBit + nextBit});
+    }
 
     if (!recordBlockOwnedEntity(*ent))
         return fail();
     if (!recordBlockInsertReference(*ent))
         return fail();
+    return true;
+}
+
+bool dwgWriter15::finalizeEntityLinks() {
+    if (m_version != DRW::AC1015)
+        return true;
+    std::map<std::uint32_t, const EntityLinkPatch*> patches;
+    for (const auto& patch : m_entityLinkPatches)
+        patches.emplace(patch.handle, &patch);
+    const auto patchChain = [this, &patches](std::vector<std::uint32_t> handles) {
+        for (std::size_t i = 0; i < handles.size(); ++i) {
+            const auto entry = patches.find(handles[i]);
+            if (entry == patches.cend())
+                continue; // Raw records retain their original link encoding.
+            const auto* patch = entry->second;
+            const auto write = [this](std::uint64_t bit, std::uint32_t handle) {
+                const std::uint8_t bytes[] = {
+                    static_cast<std::uint8_t>(handle >> 24),
+                    static_cast<std::uint8_t>(handle >> 16),
+                    static_cast<std::uint8_t>(handle >> 8),
+                    static_cast<std::uint8_t>(handle)};
+                return m_buf.patchRawBytesAtBit(bit, bytes, sizeof(bytes));
+            };
+            if (!write(patch->previousBit, i == 0 ? 0 : handles[i - 1])
+                || !write(patch->nextBit, i + 1 == handles.size() ? 0 : handles[i + 1]))
+                return false;
+            m_buf.patchRawShort16(patch->crcOffset,
+                m_buf.crc16(0xC0C1, patch->frameStart, patch->crcOffset));
+        }
+        return true;
+    };
+    const auto patchOwner = [&patches, &patchChain](
+            std::vector<std::uint32_t> handles) {
+        std::sort(handles.begin(), handles.end());
+        std::map<std::uint32_t, std::vector<std::uint32_t>> chains;
+        for (const auto handle : handles) {
+            const auto patch = patches.find(handle);
+            if (patch != patches.cend() && patch->second->sequenceEnd) {
+                if (!patchChain({handle}))
+                    return false;
+                continue;
+            }
+            const std::uint32_t owner = patch == patches.cend()
+                ? 0 : patch->second->compoundOwner;
+            chains[owner].push_back(handle);
+        }
+        for (const auto& chain : chains) {
+            if (!patchChain(chain.second))
+                return false;
+        }
+        return true;
+    };
+    if (!patchOwner(m_modelSpaceEntityHandles) || !patchOwner(m_paperSpaceEntityHandles))
+        return false;
+    for (const auto& block : m_userBlocks) {
+        if (!patchOwner(block.entityHandles))
+            return false;
+    }
     return true;
 }
 

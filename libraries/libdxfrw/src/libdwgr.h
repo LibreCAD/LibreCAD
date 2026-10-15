@@ -18,6 +18,7 @@
 #include <cstdint>
 #include <functional>
 #include <limits>
+#include <map>
 #include <string>
 #include <memory>
 #include <set>
@@ -250,6 +251,10 @@ public:
     /// kept for API symmetry with `dxfRW::write`.  Returns true on
     /// success, false on error; error code accessible via `getError()`.
     [[nodiscard]] bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
+    /// Requires a nonnull per-call verifier; ordinary write remains unchecked.
+    [[nodiscard]] bool writeVerified(DRW_Interface *interface_, DRW::Version ver,
+                                    bool bin, DRW_StagedFileVerifier verifier,
+                                    void* context);
 
     struct WriteSkipCounters {
         std::size_t entityWrites { 0 };
@@ -267,6 +272,9 @@ public:
         }
     };
     WriteSkipCounters getWriteSkipCounters() const { return m_writeSkipCounters; }
+    /// What the last write left out of objects it wrote, by what it was, and
+    /// how often; see dxfRW::leftOut().
+    const std::map<std::string, std::size_t> &leftOut() const { return m_leftOut; }
     /// Mark the current callback-driven write as incomplete. Ordinary
     /// per-record false returns remain recoverable skips; callers use this
     /// latch when a required phase item could not be emitted.
@@ -687,6 +695,8 @@ bool testReader();
     friend class dwgReader;
 
 private:
+    bool writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                   DRW_StagedFileVerifier verifier, void* context);
     friend class DwgCompoundWriteTestAccess;
     friend class DwgWriteFailureTestAccess;
 
@@ -812,6 +822,7 @@ private:
     std::vector<std::string> m_layerNameOrder;
     std::vector<std::string> m_ltypeNameOrder;
     WriteSkipCounters m_writeSkipCounters;
+    std::map<std::string, std::size_t> m_leftOut;
     std::size_t m_successfulEntityWrites { 0 };
     std::uint32_t m_lastSuccessfulEntityHandle { 0 };
     DRW::DwgObjectFrameReceipt m_lastDwgObjectFrame;

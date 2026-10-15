@@ -46,6 +46,7 @@
 #include <filesystem>
 #include <fstream>
 #include <functional>
+#include <iterator>
 #include <limits>
 #include <map>
 #include <memory>
@@ -1713,6 +1714,19 @@ public:
         DRW::DwgModelSpaceEndBlockEntityHandle);
   }
 };
+
+// Fails the export in the last callback of the low-level writer without
+// telling that writer, which then completes and publishes the staged file.
+// Only fileExport is left to see the failure, as it is for a write that
+// dropped typed items.
+class PublishedThenFailedDwgFilter final : public RS_FilterDXFRW {
+public:
+  bool finalizeDwgWriteStructure() override {
+    const bool finalized = RS_FilterDXFRW::finalizeDwgWriteStructure();
+    DwgWriteFailureTestAccess::latch(*this);
+    return finalized;
+  }
+};
 #endif
 
 TEST_CASE("DWG writer patches legacy object size at the encoded OT boundary",
@@ -3012,6 +3026,28 @@ class FailingDwgLine final : public DRW_Line {
 public:
   bool reject{false};
 
+  void seedEedWriteState() {
+    dwgEedAppIdWriteRefs = {{0u, 0x123u, 0, false, true}};
+    dwgEedLayerWriteRefs = {{1u, 0x456u, 0x0102030405060708ULL, true, false}};
+    dwgEedCodePage = 1251;
+  }
+
+  void checkEedWriteState() const {
+    REQUIRE(dwgEedAppIdWriteRefs.size() == 1u);
+    CHECK(dwgEedAppIdWriteRefs.front().indexInExtData == 0u);
+    CHECK(dwgEedAppIdWriteRefs.front().handleRef == 0x123u);
+    CHECK(dwgEedAppIdWriteRefs.front().rawHandleRef == 0u);
+    CHECK_FALSE(dwgEedAppIdWriteRefs.front().useRawHandleRef);
+    CHECK(dwgEedAppIdWriteRefs.front().leftOut);
+    REQUIRE(dwgEedLayerWriteRefs.size() == 1u);
+    CHECK(dwgEedLayerWriteRefs.front().indexInExtData == 1u);
+    CHECK(dwgEedLayerWriteRefs.front().handleRef == 0x456u);
+    CHECK(dwgEedLayerWriteRefs.front().rawHandleRef == 0x0102030405060708ULL);
+    CHECK(dwgEedLayerWriteRefs.front().useRawHandleRef);
+    CHECK_FALSE(dwgEedLayerWriteRefs.front().leftOut);
+    CHECK(dwgEedCodePage == 1251);
+  }
+
 protected:
   bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs = 0,
                  dwgBufferW *strBuf = nullptr,
@@ -3039,6 +3075,7 @@ public:
     rejected.setDwgLayerHandle(0x456u);
     rejected.setDwgLinetypeHandle(0x789u);
     rejected.setDwgAcDbColorHandle(true, 0x9ABu);
+    rejected.seedEedWriteState();
     rejected.reject = true;
     CHECK_FALSE(m_writer->writeLine(&rejected));
     CHECK(rejected.handle == 0u);
@@ -3047,13 +3084,15 @@ public:
     CHECK(rejected.dwgLinetypeHandle() == 0x789u);
     CHECK(rejected.hasDwgAcDbColorHandle());
     CHECK(rejected.dwgAcDbColorHandle() == 0x9ABu);
+    rejected.checkEedWriteState();
 
     rejected.reject = false;
     REQUIRE(m_writer->writeLine(&rejected));
     REQUIRE(rejected.handle != 0u);
     REQUIRE(m_writer->endBlockContent());
 
-    DRW_Line tracked;
+    FailingDwgLine tracked;
+    tracked.seedEedWriteState();
     const std::uint64_t transaction =
         m_writer->beginDwgWriteTransaction(false, true);
     REQUIRE(transaction != 0);
@@ -3063,6 +3102,7 @@ public:
     CHECK(tracked.handle == 0u);
     CHECK(tracked.parentHandle == 0u);
     CHECK(tracked.dwgLayerHandle() == 0u);
+    tracked.checkEedWriteState();
   }
 };
 
@@ -3166,6 +3206,9 @@ public:
 
 TEST_CASE("dwgRW restores caller state on failed and tracked writes",
           "[dwg-write][transaction][caller-state]") {
+  const auto version = GENERATE(DRW::AC1015, DRW::AC1018, DRW::AC1021,
+                                DRW::AC1024, DRW::AC1027, DRW::AC1032);
+  CAPTURE(version);
   const std::string path = tempPath("dwg_caller_mutation_rollback.dwg");
   std::remove(path.c_str());
 
@@ -3173,7 +3216,7 @@ TEST_CASE("dwgRW restores caller state on failed and tracked writes",
   {
     dwgRW writer(path.c_str());
     iface.m_writer = &writer;
-    REQUIRE(writer.write(&iface, DRW::AC1027, /*bin=*/false));
+    REQUIRE(writer.write(&iface, version, /*bin=*/false));
   }
   std::remove(path.c_str());
 }
@@ -3503,6 +3546,53 @@ TEST_CASE("RS_FilterDXFRW rolls back late structure publication",
 
   std::remove(failedPath.c_str());
   std::remove(successPath.c_str());
+}
+
+TEST_CASE("RS_FilterDXFRW removes the staged file of a failed export",
+          "[dwg-write][transaction][filter][safety]") {
+  ensureQtSettings();
+
+  RS_Graphic source;
+  source.initForNewDocument();
+  source.addEntity(new RS_Line(
+      &source, RS_LineData(RS_Vector(0.0, 0.0), RS_Vector(10.0, 10.0))));
+
+  // A directory of its own, so that whatever the export leaves in it is seen.
+  const std::filesystem::path directory = tempPath("failed_export_staging");
+  std::filesystem::remove_all(directory);
+  REQUIRE(std::filesystem::create_directory(directory));
+  const std::filesystem::path path = directory / "drawing.dwg";
+  const auto entryNames = [&directory] {
+    std::vector<std::string> names;
+    for (const auto &entry : std::filesystem::directory_iterator(directory))
+      names.push_back(entry.path().filename().string());
+    return names;
+  };
+
+  SECTION("to a new file") {
+    PublishedThenFailedDwgFilter filter;
+    CHECK_FALSE(filter.fileExport(source, QString::fromStdString(path.string()),
+                                  RS2::FormatDWG2013));
+    CHECK(entryNames() == std::vector<std::string>{});
+  }
+
+  SECTION("onto an existing file, which it keeps") {
+    const std::string previous = "the previous drawing";
+    {
+      std::ofstream out(path, std::ios::binary);
+      out << previous;
+    }
+    PublishedThenFailedDwgFilter filter;
+    CHECK_FALSE(filter.fileExport(source, QString::fromStdString(path.string()),
+                                  RS2::FormatDWG2013));
+    CHECK(entryNames() == std::vector<std::string>{"drawing.dwg"});
+    std::ifstream in(path, std::ios::binary);
+    const std::string kept((std::istreambuf_iterator<char>(in)),
+                           std::istreambuf_iterator<char>());
+    CHECK(kept == previous);
+  }
+
+  std::filesystem::remove_all(directory);
 }
 
 TEST_CASE("RS_FilterDXFRW clears deferred table failure state on reuse",
@@ -4165,10 +4255,10 @@ TEST_CASE("R18+ CLASSES writes its eight-byte unknown tail",
                   classesBegin + sentinelSize);
     REQUIRE(classesEnd != std::string::npos);
     REQUIRE(classesEnd >= classesBegin + sentinelSize + sizeof(std::uint32_t) +
-                              sizeof(std::uint16_t) +
-                              dwgSpec::kClassesUnknownTailBytes);
+                              sizeof(std::uint16_t));
 
-    const size_t tail = classesEnd - dwgSpec::kClassesUnknownTailBytes;
+    const size_t tail = classesEnd + sentinelSize;
+    REQUIRE(tail + dwgSpec::kClassesUnknownTailBytes <= bytes.size());
     for (size_t i = 0; i < dwgSpec::kClassesUnknownTailBytes; ++i)
       CHECK(bytes[tail + i] == 0);
 
@@ -8017,6 +8107,8 @@ public:
     mtext->interlin = 1.0;
     mtext->text = value;
     mtext->m_r2018IsNotAnnotative = true;
+    // An attribute has no place for this bit; it must not leak into the
+    // fields that follow the MTEXT.
     mtext->m_r2018ReallyLocked = true;
     mtext->m_r2018AppIdHandle = 0x14u;
     mtext->m_r2018AnnotativeData = {0x01, 0x7F, 0xFE};
@@ -8112,6 +8204,7 @@ class InsertAttributeRoundTripIface : public EmptyIface {
 public:
   dwgRW *m_writer{nullptr};
   std::uint32_t m_blockRecH{0};
+  std::function<void(DRW_Attrib &)> configureAttribute;
   std::vector<DRW_Insert> m_inserts;
   std::vector<DRW_DwgFramePublication> m_framePublications;
 
@@ -8142,6 +8235,8 @@ public:
     attrib->m_attributeType = 2;
     attrib->keepDuplicateRecords = 0xA6;
     attrib->mtext = MultilineAttributeWriteIface::makeMText("line 1\\Pline 2");
+    if (configureAttribute)
+      configureAttribute(*attrib);
     insert.attlist.push_back(std::move(attrib));
 
     REQUIRE(m_writer->writeInsert(&insert));
@@ -13252,7 +13347,7 @@ TEST_CASE("RS_FilterDXFRW distinguishes imported and generated active VPORTs",
       source.dwgAdvancedMetadata().addVport(vport);
       if (value.markImported) {
         source.dwgAdvancedMetadata().setSourceDwgVersion(DRW::AC1018);
-        source.dwgAdvancedMetadata().markVportsImportedFromDwg();
+        source.dwgAdvancedMetadata().markVportsImported();
       }
     }
 
@@ -15418,31 +15513,111 @@ TEST_CASE("RS_FilterDXFRW rejects a zero CURVEPATH entity reference",
   std::remove(path.c_str());
 }
 
-TEST_CASE("RS_FilterDXFRW rejects a SORTENTSTABLE row with a missing sort key",
+TEST_CASE("RS_FilterDXFRW omits and reports XDATA naming a missing layer",
+          "[dwg-write][filter][eed][xdata]") {
+  ensureQtSettings();
+  const auto format = GENERATE(RS2::FormatDWG, RS2::FormatDWG2004,
+                              RS2::FormatDWG2007, RS2::FormatDWG2010,
+                              RS2::FormatDWG2013, RS2::FormatDWG2018);
+  const bool lostFirst = GENERATE(false, true);
+  CAPTURE(format, lostFirst);
+  RS_Graphic source;
+  source.initForNewDocument();
+  auto *line = new RS_Line(&source, {RS_Vector{0.0, 0.0}, RS_Vector{10.0, 5.0}});
+  std::vector<std::shared_ptr<DRW_Variant>> data{
+      std::make_shared<DRW_Variant>(1001, "LC_KEPT"),
+      std::make_shared<DRW_Variant>(1003, "0", true),
+      std::make_shared<DRW_Variant>(1000, "kept"),
+      std::make_shared<DRW_Variant>(1001, "LC_LOST"),
+      std::make_shared<DRW_Variant>(1003, "NO_SUCH_LAYER", true),
+      std::make_shared<DRW_Variant>(1000, "lost")};
+  if (lostFirst)
+    std::rotate(data.begin(), data.begin() + 3, data.end());
+  line->setDrwExtData(std::move(data));
+  source.addEntity(line);
+  const std::string path = tempPath("filter_missing_xdata_layer.dwg");
+  RS_FilterDXFRW exporter;
+  REQUIRE(exporter.fileExport(source, QString::fromStdString(path), format));
+  CHECK(exporter.exportReport().contains(
+      QStringLiteral("application data naming a layer not in the drawing")));
+  const std::string dxf = tempPath("filter_missing_xdata_layer.dxf");
+  REQUIRE(exporter.fileExport(source, QString::fromStdString(dxf), RS2::FormatDXFRW));
+  CHECK(exporter.exportReport().isEmpty());
+  std::remove(dxf.c_str());
+
+  RS_Graphic imported;
+  RS_FilterDXFRW reader;
+  REQUIRE(reader.fileImport(imported, QString::fromStdString(path), RS2::FormatDWG));
+  REQUIRE(imported.count() == 1);
+  const auto &kept = imported.entityAt(0)->getDrwExtData();
+  REQUIRE(kept.size() == 3u);
+  CHECK(std::string(kept[0]->c_str()) == "LC_KEPT");
+  CHECK(std::string(kept[1]->c_str()) == "0");
+  CHECK(kept[1]->isLayerRef());
+  CHECK(std::string(kept[2]->c_str()) == "kept");
+  REQUIRE(exporter.fileExport(imported, QString::fromStdString(path), format));
+  CHECK(exporter.exportReport().isEmpty());
+  std::remove(path.c_str());
+}
+
+// A sort handle need not name an object (ODA, SORTENTSTABLE).
+TEST_CASE("RS_FilterDXFRW keeps a SORTENTSTABLE sort key that names no object",
           "[dwg-write][sortentstable][references]") {
   ensureQtSettings();
+  const auto format = GENERATE(RS2::FormatDWG, RS2::FormatDWG2004,
+                              RS2::FormatDWG2007, RS2::FormatDWG2010,
+                              RS2::FormatDWG2013, RS2::FormatDWG2018);
+  const std::uint32_t freeKey = GENERATE(0xC62u, 0xF000u);
+  CAPTURE(format, freeKey);
 
   RS_Graphic source;
   source.initForNewDocument();
-  auto *line = new RS_Line(
-      &source, RS_LineData{RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}});
-  line->setSourceHandle(0xC51u);
-  source.addEntity(line);
+  for (const auto &[handle, y] : {std::pair{0xC61u, 0.0}, std::pair{0xC63u, 1.0}}) {
+    auto *line = new RS_Line(
+        &source, RS_LineData{RS_Vector{0.0, y}, RS_Vector{10.0, y}});
+    line->setSourceHandle(handle);
+    source.addEntity(line);
+  }
 
   DRW_SortEntsTable table;
-  table.handle = 0xC52u;
+  table.handle = 0xC64u;
   table.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
   table.m_blockOwnerHandle = DRW::DwgModelSpaceBlockRecordHandle;
-  table.m_entityHandles = {line->sourceHandle()};
-  table.m_sortHandles = {0xDEADu};
+  table.m_entityHandles = {0xC61u, 0xC63u};
+  table.m_sortHandles = {0xC63u, freeKey};
   source.dwgAdvancedMetadata().addSortEntsTable(table);
 
   const std::string path = tempPath("filter_sortentstable_missing_sort.dwg");
   std::remove(path.c_str());
-  RS_FilterDXFRW filter;
-  CHECK_FALSE(filter.fileExport(source, QString::fromStdString(path),
-                                RS2::FormatDWG2013));
-  CHECK_FALSE(std::filesystem::exists(path));
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(source, QString::fromStdString(path),
+                              format));
+  }
+
+  RS_Graphic imported;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(imported, QString::fromStdString(path),
+                              RS2::FormatDWG));
+  }
+  const auto &tables = imported.dwgAdvancedMetadata().sortEntsTables();
+  const auto written =
+      std::find_if(tables.begin(), tables.end(), [](const auto &candidate) {
+        return candidate.handle == 0xC64u;
+      });
+  REQUIRE(written != tables.end());
+  REQUIRE(written->entityHandles.size() == 2u);
+  REQUIRE(written->sortHandles.size() == 2u);
+  CHECK(written->sortHandles[0] == written->entityHandles[1]);
+  CHECK(written->sortHandles[1] == freeKey);
+  CHECK(written->sortHandles[1] < written->sortHandles[0]);
+  std::set<std::uint32_t> entityHandles;
+  for (RS_Entity *entity : imported)
+    entityHandles.insert(entity->sourceHandle());
+  CHECK(entityHandles.count(freeKey) == 0u);
+  CHECK(entityHandles.count(written->entityHandles[0]) == 1u);
+  CHECK(entityHandles.count(written->entityHandles[1]) == 1u);
 
   std::remove(path.c_str());
 }
@@ -16887,7 +17062,7 @@ TEST_CASE("dwgRW round-trips AC1032 INSERT ATTRIB ownership",
   CHECK(insert.attlist.front()->keepDuplicateRecords == 0);
   REQUIRE(insert.seqendH.ref != DRW::NoHandle);
   REQUIRE(insert.attlist.front()->mtext != nullptr);
-  CHECK(insert.attlist.front()->mtext->m_r2018ReallyLocked);
+  CHECK_FALSE(insert.attlist.front()->mtext->m_r2018ReallyLocked);
   CHECK(insert.attlist.front()->mtext->m_r2018AppIdHandle == 0x14u);
   CHECK(insert.attlist.front()->mtext->styleH.ref == 0x13u);
   CHECK(insert.attlist.front()->mtext->m_r2018AnnotativeData ==
@@ -16904,7 +17079,9 @@ TEST_CASE("dwgRW round-trips AC1032 INSERT ATTRIB ownership",
   CHECK(insert.attlist.front()->mtext->hasDwgAcDbColorHandle());
   CHECK(insert.attlist.front()->mtext->dwgAcDbColorHandle() == 0x35u);
   CHECK(insert.attlist.front()->mtext->ltypeScale == Catch::Approx(1.25));
-  CHECK(insert.attlist.front()->mtext->lineType.empty());
+  // 0x3C and 0x3D are no layer and no linetype of this drawing, so the MTEXT
+  // is on the attribute's layer and takes the linetype from it.
+  CHECK(insert.attlist.front()->mtext->lineType == "BYLAYER");
   CHECK_FALSE(insert.attlist.front()->mtext->visible);
   CHECK(insert.attlist.front()->mtext->lWeight == DRW_LW_Conv::width05);
   CHECK(insert.attlist.front()->mtext->material == 0x36u);
@@ -16914,8 +17091,9 @@ TEST_CASE("dwgRW round-trips AC1032 INSERT ATTRIB ownership",
   CHECK(insert.attlist.front()->mtext->fullVisualStyleHandle == 0x39u);
   CHECK(insert.attlist.front()->mtext->faceVisualStyleHandle == 0x3Au);
   CHECK(insert.attlist.front()->mtext->edgeVisualStyleHandle == 0x3Bu);
-  CHECK(insert.attlist.front()->mtext->dwgLayerHandle() == 0x3Cu);
-  CHECK(insert.attlist.front()->mtext->dwgLinetypeHandle() == 0x3Du);
+  CHECK(insert.attlist.front()->mtext->dwgLayerHandle() ==
+        insert.attlist.front()->dwgLayerHandle());
+  CHECK(insert.attlist.front()->mtext->dwgLinetypeHandle() == 0u);
   CHECK(insert.attlist.front()->text == "line 1");
   CHECK(insert.attlist.front()->mtext->text == "line 1\\Pline 2");
 
@@ -28997,6 +29175,10 @@ TEST_CASE("RS_FilterDXFRW receives AC1032 INSERT ATTRIB content",
       tempPath("filter_insert_multiline_attrib_exported_ac1032.dwg");
   {
     InsertAttributeRoundTripIface writeIface;
+    // The payload must name an APPID record of the file to be replayed.
+    writeIface.configureAttribute = [](DRW_Attrib &attribute) {
+      attribute.mtext->m_r2018AnnotativeAppHandle = 0x14u;
+    };
     dwgRW writer(path.c_str());
     writeIface.m_writer = &writer;
     REQUIRE(writer.write(&writeIface, DRW::AC1032, /*bin=*/false));
@@ -29062,12 +29244,14 @@ TEST_CASE("RS_FilterDXFRW receives AC1032 INSERT ATTRIB content",
   const DRW_MText &exportedMText =
       *exportedRead.m_inserts.front().attlist.front()->mtext;
   CHECK(exportedMText.m_r2018IsNotAnnotative);
-  CHECK(exportedMText.m_r2018ReallyLocked);
-  CHECK(exportedMText.m_r2018AppIdHandle == 0x14u);
+  CHECK_FALSE(exportedMText.m_r2018ReallyLocked);
+  // The full R2018 body is rebuilt without a source-file registered APPID.
+  // Its separate annotative application reference below is still retained.
+  CHECK(exportedMText.m_r2018AppIdHandle == 0u);
   CHECK(exportedMText.m_r2018AnnotativeData ==
         std::vector<std::uint8_t>{0x01, 0x7F, 0xFE});
   CHECK(exportedMText.m_r2018AnnotativeUnknown == 0x72);
-  CHECK(exportedMText.m_r2018AnnotativeAppHandle == 0x24u);
+  CHECK(exportedMText.m_r2018AnnotativeAppHandle == 0x14u);
 
   RS_Graphic exportedGraphic;
   {
@@ -29092,6 +29276,63 @@ TEST_CASE("RS_FilterDXFRW receives AC1032 INSERT ATTRIB content",
 
   std::remove(path.c_str());
   std::remove(exportedPath.c_str());
+}
+
+TEST_CASE("RS_FilterDXFRW exports an AutoCAD-form multi-line attribute",
+          "[dxf-write][filter-roundtrip][attrib][ac1032]") {
+  ensureQtSettings();
+  // Written by the ODA File Converter, in the form AutoCAD uses; see
+  // lc_attrib_embedded_mtext_dwg_tests.cpp.
+  const std::string sourcePath =
+      std::string(LIBRECAD_TEST_DIR) + "/lc_multiline_attrib_ac1032.dwg";
+  REQUIRE(std::filesystem::is_regular_file(sourcePath));
+  const std::string exportedPath =
+      tempPath("filter_autocad_form_multiline_attrib_r2018.dxf");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(sourcePath),
+                              RS2::FormatDWG));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(exportedPath),
+                              RS2::FormatDXFRW2018));
+  }
+
+  InsertAttributeRoundTripIface exported;
+  {
+    dxfRW reader(exportedPath.c_str());
+    const bool readOk = reader.read(&exported, /*ext=*/false);
+    INFO("DXF read error: " << reader.getError());
+    REQUIRE(readOk);
+  }
+  std::remove(exportedPath.c_str());
+
+  REQUIRE(exported.m_inserts.size() == 1);
+  const DRW_Attrib *multiLine = nullptr;
+  const DRW_Attrib *singleLine = nullptr;
+  for (const auto &attribute : exported.m_inserts.front().attlist) {
+    REQUIRE(attribute != nullptr);
+    if (attribute->tag == "ML_TAG")
+      multiLine = attribute.get();
+    else if (attribute->tag == "SL_TAG")
+      singleLine = attribute.get();
+  }
+  // The export replays what the import stored: 70 = 104 and 73 = 293 while
+  // the embedded MTEXT was not read in AutoCAD's form.
+  REQUIRE(multiLine != nullptr);
+  CHECK(multiLine->attribFlags == 0);
+  CHECK(multiLine->m_fieldLength == 0);
+  CHECK(multiLine->lockPosition);
+  CHECK(multiLine->m_attributeType == 2);
+  REQUIRE(multiLine->mtext != nullptr);
+  CHECK(multiLine->mtext->text == "value line 1\\Pvalue line 2");
+
+  REQUIRE(singleLine != nullptr);
+  CHECK(singleLine->text == "single value");
+  CHECK(singleLine->attribFlags == 8);
 }
 
 TEST_CASE("RS_FilterDXFRW preserves nested INSERT ATTRIB MTEXT XDATA",
@@ -29180,7 +29421,9 @@ TEST_CASE("RS_FilterDXFRW preserves nested INSERT ATTRIB MTEXT XDATA",
   bool sawDouble = false;
   bool sawCoordinate = false;
   bool sawBinary = false;
-  for (const auto &value : attribute.mtext->extData) {
+  // XDATA follows the embedded object and is the ATTRIB's.
+  CHECK(attribute.mtext->extData.empty());
+  for (const auto &value : attribute.extData) {
     if (!value)
       continue;
     if (value->code() == 1001 && value->type() == DRW_Variant::STRING &&
@@ -29227,29 +29470,37 @@ TEST_CASE("RS_FilterDXFRW preserves nested INSERT ATTRIB MTEXT XDATA",
   REQUIRE(dwgReadIface.m_inserts.size() == 1);
   REQUIRE(dwgReadIface.m_inserts.front().attlist.size() == 1);
   REQUIRE(dwgReadIface.m_inserts.front().attlist.front()->mtext != nullptr);
-  const DRW_MText &dwgMText =
-      *dwgReadIface.m_inserts.front().attlist.front()->mtext;
-  CHECK(dwgMText.reactorHandles == std::vector<std::uint32_t>{0x31u, 0x32u});
-  CHECK(dwgMText.xDictHandle == 0x33u);
-  CHECK(dwgMText.hasDataStorageBinaryData());
+  const DRW_Attrib &dwgAttribute =
+      *dwgReadIface.m_inserts.front().attlist.front();
+  const DRW_MText &dwgMText = *dwgAttribute.mtext;
+  // The MTEXT of the source refers to objects by handles of the source file,
+  // which are other objects, or none, in the exported file. No such
+  // reference is written: the layer is the attribute's own, the linetype is
+  // ByLayer, and a colour of a colour book is ByLayer without its name. What
+  // is a value and no reference is kept.
+  CHECK(dwgMText.reactorHandles.empty());
+  CHECK(dwgMText.xDictHandle == 0u);
+  CHECK_FALSE(dwgMText.hasDataStorageBinaryData());
   CHECK(dwgMText.color == 256);
-  CHECK(dwgMText.colorName == "Book$Entry");
+  CHECK(dwgMText.colorName.empty());
   CHECK(dwgMText.transparency == 0x03000080);
-  CHECK(dwgMText.hasDwgAcDbColorHandle());
-  CHECK(dwgMText.dwgAcDbColorHandle() == 0x35u);
+  CHECK_FALSE(dwgMText.hasDwgAcDbColorHandle());
+  CHECK(dwgMText.dwgAcDbColorHandle() == 0u);
   CHECK(dwgMText.ltypeScale == Catch::Approx(1.25));
-  CHECK(dwgMText.lineType.empty());
+  // Neither drawing has a layer 0x3C or a linetype 0x3D: the exported MTEXT
+  // is on the attribute's layer and takes the linetype from it.
+  CHECK(dwgMText.lineType == "BYLAYER");
   CHECK_FALSE(dwgMText.visible);
   CHECK(dwgMText.lWeight == DRW_LW_Conv::width05);
-  CHECK(dwgMText.material == 0x36u);
-  CHECK(dwgMText.shadow == DRW::IgnoreShadows);
-  CHECK(dwgMText.shadowHandle == 0x37u);
-  CHECK(dwgMText.plotStyle == 0x38u);
-  CHECK(dwgMText.fullVisualStyleHandle == 0x39u);
-  CHECK(dwgMText.faceVisualStyleHandle == 0x3Au);
-  CHECK(dwgMText.edgeVisualStyleHandle == 0x3Bu);
-  CHECK(dwgMText.dwgLayerHandle() == 0x3Cu);
-  CHECK(dwgMText.dwgLinetypeHandle() == 0x3Du);
+  CHECK(dwgMText.material == DRW::MaterialByLayer);
+  CHECK(dwgMText.shadow == DRW::CastAndReceieveShadows);
+  CHECK(dwgMText.shadowHandle == 0u);
+  CHECK(dwgMText.plotStyle == DRW::DefaultPlotStyle);
+  CHECK(dwgMText.fullVisualStyleHandle == 0u);
+  CHECK(dwgMText.faceVisualStyleHandle == 0u);
+  CHECK(dwgMText.edgeVisualStyleHandle == 0u);
+  CHECK(dwgMText.dwgLayerHandle() == dwgAttribute.dwgLayerHandle());
+  CHECK(dwgMText.dwgLinetypeHandle() == 0u);
 
   std::remove(path.c_str());
   std::remove(exportedPath.c_str());
@@ -29301,9 +29552,10 @@ TEST_CASE("RS_FilterDXFRW drops malformed INSERT ATTRIB sidecars atomically",
           std::string{value->c_str()} == "LibreCAD_INSERT_ATTRIB_MTEXT";
       continue;
     }
-    if (inMTextGroup && value->code() == 1070 && seenMText1070++ == 15) {
-      // Schema 2 field 15 declares three annotative bytes. Make the
-      // sidecar structurally invalid without touching the source DWG.
+    if (inMTextGroup && value->code() == 1070 && seenMText1070++ == 14) {
+      // The fifteenth 1070 value of the MTEXT sidecar declares three
+      // annotative bytes. Make the sidecar structurally invalid without
+      // touching the source DWG.
       value = std::make_shared<DRW_Variant>(1070, 4);
       changed = true;
       break;
@@ -31857,6 +32109,26 @@ public:
   }
 };
 
+class LinkedLineProbe final : public DRW_Line {
+public:
+  explicit LinkedLineProbe(const DRW_Line& line) : DRW_Line(line) {}
+  std::uint32_t previous() const { return prevEntLink; }
+  std::uint32_t next() const { return nextEntLink; }
+  bool explicitLinks() const { return haveNextLinks == 0; }
+};
+
+void checkExplicitLineChain(std::vector<DRW_Line> lines) {
+  std::sort(lines.begin(), lines.end(), [](const auto& a, const auto& b) {
+    return a.handle < b.handle;
+  });
+  for (std::size_t i = 0; i < lines.size(); ++i) {
+    const LinkedLineProbe line(lines[i]);
+    CHECK(line.explicitLinks());
+    CHECK(line.previous() == (i == 0 ? 0 : lines[i - 1].handle));
+    CHECK(line.next() == (i + 1 == lines.size() ? 0 : lines[i + 1].handle));
+  }
+}
+
 void readOwnerChainDwg(const std::string &path, DwgOwnerChainIface &iface) {
   dwgRW reader(path.c_str());
   REQUIRE(reader.read(&iface, /*ext=*/false));
@@ -31869,9 +32141,9 @@ const RS2::FormatType kMixedHandleFormats[] = {
     RS2::FormatDWG2018};
 } // namespace
 
-// R2000 entities carry nolinks=1, so an owner's entity chain is implied by
-// consecutive handles and the writer refuses an owner whose handles leave a
-// gap. Source-backed entities used to get their output handles before the
+// The R2000 writer retains its contiguous handle allocation contract, while
+// explicit links terminate each owner chain. Source-backed entities used to
+// get their output handles before the
 // table records were written and everything else only when encoded, so
 // opening a drawing and adding one entity made every Save As R2000 DWG fail
 // with BAD_OPEN.
@@ -31921,8 +32193,10 @@ TEST_CASE("RS_FilterDXFRW saves source-handled and new entities together",
           std::max(readIface.lines[0].handle, readIface.lines[1].handle);
       CHECK(low != DRW::NoHandle);
       CHECK(low != high);
-      if (format == RS2::FormatDWG)
+      if (format == RS2::FormatDWG) {
         CHECK(high == low + 1u);
+        checkExplicitLineChain(readIface.lines);
+      }
       std::remove(path.c_str());
     }
   }
@@ -31973,6 +32247,7 @@ TEST_CASE("RS_FilterDXFRW saves a block mixing source-handled and new "
       CHECK(std::max(readIface.lines[0].handle, readIface.lines[1].handle) ==
             std::min(readIface.lines[0].handle, readIface.lines[1].handle) +
                 1u);
+      checkExplicitLineChain(readIface.lines);
     }
     REQUIRE(readIface.inserts.size() == 1u);
     CHECK(readIface.inserts.front().name == "MIXED");

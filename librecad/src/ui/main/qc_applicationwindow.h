@@ -88,6 +88,10 @@ class RS_Block;
 class RS_Pen;
 class TwoStackedLabels;
 
+namespace LC_Printing {
+    enum class PrinterType;
+}
+
 struct AreasToggleActions {
     QAction* left{nullptr};
     QAction* right{nullptr};
@@ -181,6 +185,8 @@ public slots:
     void slotFileNewFromTemplate();
     /** opens a document */
     void slotFileOpen();
+    /** explicitly recovers UTF-8 text in a mislabeled old LibreCAD DXF */
+    void slotFileOpenLegacyLibreCadUtf8();
     void slotEditActiveBlock();
     void slotFileOpenRecent(const QAction* action);
     /** saves a document */
@@ -196,7 +202,7 @@ public slots:
     /** close all files; return false == operation cancelled */
     void slotFileCloseAll();
     /** prints the current file */
-    void slotFilePrint(bool printPDF = false);
+    void slotFilePrint();
     void slotFilePrintPDF();
     /** shows print preview of the current file */
     void slotFilePrintPreview(bool on);
@@ -333,7 +339,8 @@ public:
     /**
  * opens the given file.
  */
-    void openFile(const QString& fileName, RS2::FormatType type);
+    void openFile(const QString& fileName, RS2::FormatType type,
+                  RS2::DxfTextEncoding encoding = RS2::DxfTextEncoding::Declared);
     void notifyCurrentDrawingOptionsChanged();
     void changeDrawingOptions(int tabToShowIndex);
     void closeWindow(QC_MDIWindow* win) override;
@@ -371,6 +378,7 @@ public:
 
 protected:
     friend struct LC_DockLayoutTestAccess;
+    void doPrint(LC_Printing::PrinterType printerType);
     bool closePrintPreview(QC_MDIWindow* parent);
     void openPrintPreview(QC_MDIWindow* parent);
     bool doSaveAllFiles();

@@ -85,7 +85,8 @@ bool DwgDxfOutputTransaction::createExclusiveTemporary() {
 }
 
 bool DwgDxfOutputTransaction::open() {
-    if (m_stream.is_open() || !createExclusiveTemporary())
+    if (m_committed || m_finalizing || m_stream.is_open()
+        || !createExclusiveTemporary())
         return false;
 
     // The file was created exclusively above.  Do not pass ios::trunc here:
@@ -110,22 +111,58 @@ bool DwgDxfOutputTransaction::publish() {
 #endif
 }
 
-bool DwgDxfOutputTransaction::commit() {
-    if (m_committed || !m_stream.is_open())
+bool DwgDxfOutputTransaction::finishWrite() {
+    if (m_committed || m_finalizing || !m_stream.is_open())
         return false;
+    m_finalizing = true;
     m_stream.flush();
     if (!m_stream.good()) {
         abort();
         return false;
     }
     m_stream.close();
-    if (m_stream.fail() || !publish()) {
+    if (m_stream.fail()) {
+        abort();
+        return false;
+    }
+    return true;
+}
+
+bool DwgDxfOutputTransaction::finishPublish() {
+    if (!publish()) {
         abort();
         return false;
     }
     m_committed = true;
     m_temporary.clear();
     return true;
+}
+
+bool DwgDxfOutputTransaction::commit() {
+    return finishWrite() && finishPublish();
+}
+
+bool DwgDxfOutputTransaction::commitVerified(
+    StagedFileVerifier verifier, void* context) {
+    if (m_committed || m_finalizing)
+        return false;
+    if (!verifier) {
+        abort();
+        return false;
+    }
+    if (!finishWrite())
+        return false;
+    bool verified = false;
+    try {
+        verified = verifier(m_temporary, context);
+    } catch (...) {
+        // A failed semantic/reread check must never publish a partial save.
+    }
+    if (!verified) {
+        abort();
+        return false;
+    }
+    return finishPublish();
 }
 
 void DwgDxfOutputTransaction::abort() noexcept {

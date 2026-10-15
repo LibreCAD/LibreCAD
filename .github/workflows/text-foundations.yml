@@ -1,0 +1,90 @@
+# This file is part of the LibreCAD project, a 2D CAD program.
+# Copyright (C) 2026 LibreCAD (librecad.org)
+# Copyright (C) 2026 Dongxu Li (github.com/dxli)
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the Free
+# Software Foundation; either version 2, or (at your option) any later version.
+# This program is distributed WITHOUT ANY WARRANTY; without even the implied
+# warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License along
+# with this program. If not, see <https://www.gnu.org/licenses/>.
+
+name: Text foundations
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - '.github/workflows/text-foundations.yml'
+      - 'CMakeLists.txt'
+      - 'cmake/LibreCADOpenType.cmake'
+      - 'libraries/qtbidi/**'
+      - 'libraries/libdxfrw/src/**'
+      - 'librecad/src/lib/engine/document/entities/**'
+      - 'librecad/src/lib/engine/document/fonts/**'
+      - 'librecad/src/lib/engine/document/textstyles/**'
+      - 'librecad/src/lib/filters/**'
+      - 'librecad/support/fonts/opentype/**'
+  pull_request:
+    branches: [master]
+    paths:
+      - '.github/workflows/text-foundations.yml'
+      - 'CMakeLists.txt'
+      - 'cmake/LibreCADOpenType.cmake'
+      - 'libraries/qtbidi/**'
+      - 'libraries/libdxfrw/src/**'
+      - 'librecad/src/lib/engine/document/entities/**'
+      - 'librecad/src/lib/engine/document/fonts/**'
+      - 'librecad/src/lib/engine/document/textstyles/**'
+      - 'librecad/src/lib/filters/**'
+      - 'librecad/support/fonts/opentype/**'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  Headless:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        opentype: ['ON', 'OFF']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build pkg-config libboost-dev libmuparser-dev \
+            qt6-base-dev qt6-declarative-dev qt6-svg-dev qt6-tools-dev \
+            qt6-tools-dev-tools qt6-l10n-tools libgl-dev
+          if [ '${{ matrix.opentype }}' = ON ]; then
+            sudo apt-get install -y libharfbuzz-dev libfreetype6-dev
+            pkg-config --modversion harfbuzz freetype2
+          fi
+      - name: Configure headless foundations
+        run: |
+          cmake -S . -B text-tests -G Ninja -DCMAKE_BUILD_TYPE=Release \
+            -DBUILD_TESTS=ON -DLIBDXFRW_BUILD_DOC=OFF \
+            -DLIBRECAD_ENABLE_OPENTYPE=${{ matrix.opentype }} \
+            -DLIBRECAD_REGISTER_TEXT_FOUNDATION_TESTS=ON
+      - name: Build headless foundations
+        run: cmake --build text-tests --target librecad_text_foundation_tests --parallel 2
+      - name: Run headless foundations
+        # System-engine coverage is not certified-profile/package acceptance.
+        # Verbose output preserves Catch's explicit incompatible-engine skips.
+        run: ctest --test-dir text-tests -L text-foundation --no-tests=error --verbose --output-junit text-foundations.xml
+      - name: Retain test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: text-foundations-${{ matrix.opentype }}
+          path: |
+            text-tests/text-foundations.xml
+            text-tests/Testing/Temporary/LastTest.log

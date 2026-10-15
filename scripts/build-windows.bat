@@ -40,6 +40,23 @@ if NOT exist windows\LibreCAD.exe (
     popd
     exit /b 1
 )
+rem The runtime libraries and the installer have to match the program that was
+rem built, and the machine that builds it does not say what that is: 64-bit
+rem Windows also builds programs for x86 and for ARM64. So ask the program.
+set "LC_EXE_ARCH="
+for /f "usebackq delims=" %%a in (`powershell.exe -NoProfile -ExecutionPolicy Bypass -File "scripts\exe-arch.ps1" "windows\LibreCAD.exe"`) do set "LC_EXE_ARCH=%%a"
+if not defined LC_EXE_ARCH (
+    echo [ERROR] Could not tell which architecture windows\LibreCAD.exe is built for.
+    popd
+    exit /b 1
+)
+echo [INFO] windows\LibreCAD.exe is built for %LC_EXE_ARCH%
+rem LC_ARCH says what the build is expected to be.
+if defined LC_ARCH if /I not "%LC_ARCH%"=="%LC_EXE_ARCH%" (
+    echo [ERROR] LC_ARCH is "%LC_ARCH%", but windows\LibreCAD.exe is built for %LC_EXE_ARCH%.
+    popd
+    exit /b 1
+)
 echo windeployqt: deploying from %CD%
 windeployqt6.exe --release --compiler-runtime windows\LibreCAD.exe
 rem Copy MSVC runtime DLLs (VCRUNTIME140_1.dll, MSVCP140*.dll, ...) into windows\
@@ -48,18 +65,8 @@ rem Qt 6 only copies vc_redist.<arch>.exe (when present), not the DLLs.
 rem Skip silently for non-MSVC builds where vswhere/VC143.CRT won't be available.
 where cl >nul 2>nul
 if %errorlevel% equ 0 (
-    set "LC_VC_ARCH=%LC_ARCH%"
-    if "!LC_VC_ARCH!"=="" (
-        if "%PROCESSOR_ARCHITECTURE%"=="ARM64" (
-            set "LC_VC_ARCH=ARM64"
-        ) else if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
-            set "LC_VC_ARCH=AMD64"
-        ) else (
-            set "LC_VC_ARCH=x86"
-        )
-    )
-    echo Copying MSVC runtime DLLs for !LC_VC_ARCH! into windows\
-    powershell.exe -ExecutionPolicy Bypass -File "%~dp0copy-vc-runtime.ps1" -Architecture !LC_VC_ARCH! -Destination "%CD%\windows"
+    echo Copying MSVC runtime DLLs for %LC_EXE_ARCH% into windows\
+    powershell.exe -ExecutionPolicy Bypass -File "%~dp0copy-vc-runtime.ps1" -Architecture %LC_EXE_ARCH% -Destination "%CD%\windows"
     if errorlevel 1 (
         echo [WARNING] copy-vc-runtime.ps1 failed; installer may be missing VCRUNTIME140_1.dll etc.
     )
@@ -137,24 +144,13 @@ if _%LC_NSIS_FILE%==_ (
     set LC_NSIS_FILE=nsis-msvc.nsi
 )
 pushd postprocess-windows
-rem Use LC_ARCH env var if set; otherwise fall back to PROCESSOR_ARCHITECTURE
+rem The installer is the one of the program that was built. Without a flag
+rem nsis-msvc.nsi makes the one for x86.
 set NSIS_FLAGS=/X"SetCompressor /FINAL lzma" /V4
-if not "!LC_ARCH!"=="" (
-    if /I "!LC_ARCH!"=="amd64" (
-        set NSIS_FLAGS=!NSIS_FLAGS! /DWIN64 /DAMD64
-    ) else if /I "!LC_ARCH!"=="arm64" (
-        set NSIS_FLAGS=!NSIS_FLAGS! /DWIN64 /DARM64
-    ) else (
-        echo [ERROR] Unknown LC_ARCH value: !LC_ARCH!
-        popd
-        exit /b 1
-    )
-) else (
-    if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
-        set NSIS_FLAGS=!NSIS_FLAGS! /DWIN64 /DAMD64
-    ) else if "%PROCESSOR_ARCHITECTURE%"=="ARM64" (
-        set NSIS_FLAGS=!NSIS_FLAGS! /DWIN64 /DARM64
-    )
+if /I "!LC_EXE_ARCH!"=="AMD64" (
+    set NSIS_FLAGS=!NSIS_FLAGS! /DWIN64 /DAMD64
+) else if /I "!LC_EXE_ARCH!"=="ARM64" (
+    set NSIS_FLAGS=!NSIS_FLAGS! /DWIN64 /DARM64
 )
 rem Pass the extracted SCMREVISION to NSIS
 echo "SCMREVISION=%SCMREVISION%"

@@ -1504,7 +1504,7 @@ public:
     dimdsep = '.';
     dimlwd = dimlwe = -2;
     // Phase 3A.1: R2007+/R2010+ members + handle refs.
-    dimjogang = 0.0;
+    dimjogang = M_PI / 4.0;
     dimtfill = dimtfillclr = dimarcsym = 0;
     dimtxtdirection = 0;
     dimaltmzf = dimmzf = 1.0;
@@ -1598,7 +1598,7 @@ public:
   int dimlwe;           /*!< code 372 V2000+ */
   // Phase 3A.1: R2007+ numeric/color members (dwg.spec:4766-4790).
   // dimfxl/dimfxlon already exist above — do not re-add.
-  double dimjogang{0.0}; /*!< code 50  BD  V2007+ */
+  double dimjogang{M_PI / 4.0}; /*!< code 50  BD  V2007+, radians */
   int dimtfill{0};       /*!< code 69  BS  V2007+ */
   int dimtfillclr{0};    /*!< code 70  CMC V2007+ */
   int dimarcsym{0};      /*!< code 90  BS  V2007+ */

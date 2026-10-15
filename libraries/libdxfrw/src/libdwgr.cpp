@@ -321,8 +321,8 @@ struct dwgRW::DwgEntityWriteState {
     std::uint32_t objSize {0};
     std::uint64_t dwgDataEndBit {0};
     std::int16_t oType {0};
-    std::vector<std::pair<std::size_t, std::uint32_t>> eedAppIdRefs;
-    std::vector<std::pair<std::size_t, std::uint32_t>> eedLayerRefs;
+    std::vector<DRW_Entity::PendingHandleRef> eedAppIdRefs;
+    std::vector<DRW_Entity::PendingHandleRef> eedLayerRefs;
     std::uint16_t eedCodePage {30};
 
     bool hasInsertState {false};
@@ -421,12 +421,8 @@ dwgRW::DwgEntityWriteState dwgRW::captureEntityWriteState(
     state.objSize = entity->objSize;
     state.dwgDataEndBit = entity->dwgDataEndBit;
     state.oType = entity->oType;
-    state.eedAppIdRefs.reserve(entity->dwgEedAppIdWriteRefs.size());
-    for (const auto& ref : entity->dwgEedAppIdWriteRefs)
-        state.eedAppIdRefs.emplace_back(ref.indexInExtData, ref.handleRef);
-    state.eedLayerRefs.reserve(entity->dwgEedLayerWriteRefs.size());
-    for (const auto& ref : entity->dwgEedLayerWriteRefs)
-        state.eedLayerRefs.emplace_back(ref.indexInExtData, ref.handleRef);
+    state.eedAppIdRefs = entity->dwgEedAppIdWriteRefs;
+    state.eedLayerRefs = entity->dwgEedLayerWriteRefs;
     state.eedCodePage = entity->dwgEedCodePage;
 
     if (auto *insert = dynamic_cast<DRW_Insert *>(entity)) {
@@ -510,12 +506,8 @@ void dwgRW::restoreEntityWriteState(const DwgEntityWriteState& state) {
     entity->objSize = state.objSize;
     entity->dwgDataEndBit = state.dwgDataEndBit;
     entity->oType = state.oType;
-    entity->dwgEedAppIdWriteRefs.clear();
-    for (const auto& ref : state.eedAppIdRefs)
-        entity->dwgEedAppIdWriteRefs.push_back({ref.first, ref.second});
-    entity->dwgEedLayerWriteRefs.clear();
-    for (const auto& ref : state.eedLayerRefs)
-        entity->dwgEedLayerWriteRefs.push_back({ref.first, ref.second});
+    entity->dwgEedAppIdWriteRefs = state.eedAppIdRefs;
+    entity->dwgEedLayerWriteRefs = state.eedLayerRefs;
     entity->dwgEedCodePage = state.eedCodePage;
 
     if (state.hasInsertState) {
@@ -885,6 +877,7 @@ std::unordered_map<std::string, size_t> dwgRW::getSkippedUnsupportedObjects() co
 
 void dwgRW::resetWriteSkipCounters() {
     m_writeSkipCounters = {};
+    m_leftOut.clear();
     m_requiredWriteFailure = false;
     m_successfulEntityWrites = 0;
     m_lastSuccessfulEntityHandle = 0;
@@ -1214,7 +1207,21 @@ bool dwgRW::encodeEntityForWrite(DRW_Entity *ent,
     return recordWriteResult(WriteSkipKind::Entity, true);
 }
 
-bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) try {
+bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
+    return writeImpl(interface_, ver, bin, nullptr, nullptr);
+}
+
+bool dwgRW::writeVerified(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                         DRW_StagedFileVerifier verifier, void* context) {
+    if (!verifier) {
+        error = DRW::BAD_OPEN;
+        return false;
+    }
+    return writeImpl(interface_, ver, bin, verifier, context);
+}
+
+bool dwgRW::writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                     DRW_StagedFileVerifier verifier, void* context) try {
     // The 'bin' parameter is accepted only for signature symmetry with
     // dxfRW::write — DWG is always binary on disk.
     (void)bin;
@@ -1367,9 +1374,10 @@ bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) try {
     const bool secondHeaderOk = handlesOk && writer->writeSecondHeader();
     const bool finalOk = secondHeaderOk && writer->finalize();
     ok = finalOk;
+    m_leftOut = writer->leftOut();
     writer.reset();
     if (ok && !filestr.fail())
-        ok = output.commit();
+        ok = verifier ? output.commitVerified(verifier, context) : output.commit();
     else
         output.abort();
     if (!ok)

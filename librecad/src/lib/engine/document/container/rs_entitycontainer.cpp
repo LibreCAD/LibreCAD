@@ -31,6 +31,10 @@
 #include <cmath>
 #include <iostream>
 #include <optional>
+#include <map>
+#include <limits>
+#include <stdexcept>
+#include <unordered_set>
 
 #include "lc_containertraverser.h"
 #include "lc_looputils.h"
@@ -52,6 +56,7 @@
 #include "rs_painter.h"
 #include "rs_solid.h"
 #include "rs_vector.h"
+#include "lc_selectedset.h"
 
 class RS_Dimension;
 
@@ -105,6 +110,64 @@ RS_EntityContainer::RS_EntityContainer(RS_EntityContainer* parent, const bool ow
     m_subContainer = nullptr;
     //autoUpdateBorders = true;
     m_entIdx = -1;
+}
+
+void RS_EntityContainer::OwnedReplacement::notify() {
+    auto changed=std::move(m_changed); // Consume before any reentrant callback.
+    for (auto *selection:changed) selection->fireSelectionChanged();
+}
+
+RS_EntityContainer::OwnedReplacement RS_EntityContainer::replaceOwnedEntities(
+        std::vector<std::unique_ptr<RS_Entity>> &&incoming) {
+    if (!m_autoDelete) throw std::invalid_argument("Atomic owned replacement requires an owning container");
+    if (incoming.size()>static_cast<std::size_t>(std::numeric_limits<qsizetype>::max()))
+        throw std::length_error("Atomic owned replacement exceeds native list capacity");
+    QList<RS_Entity*> prepared;
+    prepared.reserve(static_cast<qsizetype>(incoming.size()));
+    RS_Vector minimum(false), maximum(false);
+    for (const auto &entity:incoming) {
+        if (!entity||entity.get()==this||entity->getParent()!=nullptr)
+            throw std::invalid_argument("Atomic owned replacement requires fresh unparented children");
+        prepared.push_back(entity.get());
+        if (entity->hasValidBorders()) {
+            minimum=minimum.valid?RS_Vector::minimum(minimum,entity->getMin()):entity->getMin();
+            maximum=maximum.valid?RS_Vector::maximum(maximum,entity->getMax()):entity->getMax();
+        }
+    }
+    // Traverse exactly the owned retired subtree. A non-owning container is
+    // itself retired, but its borrowed children survive its destruction.
+    // Per-document sets also remove stale selection-list entries whose flags
+    // were cleared elsewhere, before their pointed-to storage is destroyed.
+    std::vector<RS_Entity*> oldNodes;
+    for (auto *entity:std::as_const(m_entities)) if (entity) oldNodes.push_back(entity);
+    // Qt's QHash insertion allocates inside noexcept on supported Qt builds.
+    // Use the standard container here so a precommit allocation failure can
+    // propagate to the caller without terminating the process.
+    std::map<LC_SelectedSet*,std::unordered_set<RS_Entity*>> candidates;
+    for (std::size_t i=0;i<oldNodes.size();++i) {
+        auto *entity=oldNodes[i];
+        if (entity->isDocument())
+            throw std::invalid_argument("Atomic owned replacement cannot retire a document/selection domain");
+        if (auto *document=entity->getDocument()) candidates[document->getSelection()].insert(entity);
+        if (auto *container=dynamic_cast<RS_EntityContainer*>(entity);container&&container->isOwner())
+            for (auto *child:*container) if (child) oldNodes.push_back(child);
+    }
+    struct SelectionChange { LC_SelectedSet *selection;LC_SelectedSet::PreparedRemoval prepared; };
+    std::vector<SelectionChange> selections;
+    selections.reserve(candidates.size());
+    OwnedReplacement notification;notification.m_changed.reserve(candidates.size());
+    for (const auto &entry:candidates)
+        selections.push_back({entry.first,entry.first->prepareRemoval(entry.second)});
+
+    // No allocation, virtual callbacks or bounds calculation below this point.
+    for (auto &entry:selections)
+        if (entry.selection->commitRemoval(std::move(entry.prepared))) notification.m_changed.push_back(entry.selection);
+    for (auto *entity:oldNodes) entity->RS_Entity::setSelectionFlag(false);
+    m_entities.swap(prepared);m_entIdx=-1;m_subContainer=nullptr;
+    for (auto &entity:incoming) { entity->setParent(this);entity.release(); }
+    m_minV=minimum;m_maxV=maximum;
+    for (auto *entity:std::as_const(prepared)) delete entity;
+    return notification;
 }
 
 /**
@@ -574,10 +637,11 @@ int RS_EntityContainer::updateDimensions(const bool autoText) {
             continue;
         }
         if (e->rtti() == RS2::EntityDimLeader) {
+            // updateDim() clears leaders; only their own update() rebuilds them.
             updatedDimsCount++;
             e->update();
         }
-        if (RS_Information::isDimension(e->rtti())) {
+        else if (RS_Information::isDimension(e->rtti())) {
             const auto dimension = static_cast<RS_Dimension*>(e);
             // update and reposition label: honor the caller's autoText request
             // (update() alone leaves the dimension's own cached autoText flag,

@@ -35,12 +35,17 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <algorithm>
+#include <utility>
+#include <vector>
+
 #include <QChar>
 #include <QLatin1StringView>
 #include <QRegularExpression>
 #include <QString>
 
 #include "rs_filterdxfrw.h"
+#include "rs_mtext.h"
 
 namespace {
 
@@ -377,4 +382,162 @@ TEST_CASE("toNativeString: malformed inputs return deterministically",
     (void)RS_FilterDXFRW::toNativeString(QStringLiteral("trailing {\\"));
     (void)RS_FilterDXFRW::toNativeString(QStringLiteral("trailing {\\f"));
     SUCCEED("all malformed inputs returned without crash or hang");
+}
+
+// ---- Single-line text (TEXT, ATTRIB, ATTDEF): no MTEXT markup ----
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Single-line strings: MTEXT markup is ordinary text",
+          "[dxf_codec][single_line]") {
+    for (const QString& text : {QStringLiteral(R"(D:\PROJECTS\PLAN.dwg)"),
+                                QStringLiteral(R"(C:\Program Files\x)"),
+                                QStringLiteral(R"(\\SERVER\~TMP\A.dwg)"),
+                                QStringLiteral(R"({\fArial|b0;Title})"),
+                                QStringLiteral(R"({\H2.5x;tall}{\C1;red})")}) {
+        CAPTURE(text.toStdString());
+        CHECK(RS_FilterDXFRW::toNativeSingleLineString(text) == text);
+        CHECK(RS_FilterDXFRW::toDxfSingleLineString(text) == text);
+        CHECK(RS_FilterDXFRW::toDxfSingleLineString(text, false) == text);
+    }
+    // The same values are markup in MTEXT content.
+    CHECK(RS_FilterDXFRW::toNativeString(QStringLiteral(R"(D:\PROJECTS\PLAN.dwg)")) ==
+          QStringLiteral("D:\nROJECTS\nLAN.dwg"));
+    CHECK(RS_FilterDXFRW::toNativeString(QStringLiteral(R"(\~TMP)")) == QStringLiteral(" TMP"));
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Single-line strings: symbols and caret codes are converted",
+          "[dxf_codec][single_line]") {
+    CHECK(RS_FilterDXFRW::toNativeSingleLineString(QStringLiteral("45%%d %%C10 %%p0.1")) ==
+          QStringLiteral("45\u00B0 \u230010 \u00B10.1"));
+    CHECK(RS_FilterDXFRW::toNativeSingleLineString(QStringLiteral("A^IB^JC^MD^ E")) ==
+          QStringLiteral("A\tB\nC\rD^E"));
+
+    CHECK(RS_FilterDXFRW::toDxfSingleLineString(QStringLiteral("45\u00B0 \u230010 \u220510 \u00B10.1")) ==
+          QStringLiteral("45%%D %%C10 %%C10 %%P0.1"));
+    CHECK(RS_FilterDXFRW::toDxfSingleLineString(QStringLiteral("x\ty^z")) == QStringLiteral("x^Iy^ z"));
+    CHECK(RS_FilterDXFRW::toDxfSingleLineString(QStringLiteral("x\ty^z"), false) == QStringLiteral("x\ty^z"));
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Single-line strings: a line feed is a control character, not \\P",
+          "[dxf_codec][single_line]") {
+    // An ASCII DXF value cannot hold a line feed, and "\P" would read back as
+    // a backslash and a P.
+    CHECK(RS_FilterDXFRW::toDxfSingleLineString(QStringLiteral("a\nb")) == QStringLiteral("a^Jb"));
+    CHECK(RS_FilterDXFRW::toDxfSingleLineString(QStringLiteral("a\nb"), false) == QStringLiteral("a\nb"));
+    CHECK(RS_FilterDXFRW::toDxfString(QStringLiteral("a\nb")) == QStringLiteral(R"(a\Pb)"));
+
+    for (const QString& text : {QStringLiteral("a\nb"), QStringLiteral("x\ty"), QStringLiteral("c\rd"),
+                                QStringLiteral("p^q"), QStringLiteral("^^\t^"),
+                                QStringLiteral(R"(D:\PROJECTS\PLAN.dwg)"),
+                                QStringLiteral("45\u00B0 \u230010 \u00B10.1")}) {
+        CAPTURE(text.toStdString());
+        CHECK(RS_FilterDXFRW::toNativeSingleLineString(RS_FilterDXFRW::toDxfSingleLineString(text)) == text);
+    }
+}
+// ---- RS_MText::toPlainLine: MTEXT content as the value of a single-line
+//      ATTRIB ----
+
+namespace {
+// MTEXT content as RS_MText holds it, and the same on one line without codes.
+const std::vector<std::pair<QString, QString>> &plainLineCases() {
+    static const std::vector<std::pair<QString, QString>> cases = {
+        {QString(), QString()},
+        {QStringLiteral("ABC\nDEF"), QStringLiteral("ABC DEF")},
+        {QStringLiteral("one\n\ntwo\n"), QStringLiteral("one two")},
+        {QStringLiteral("a\r\nb"), QStringLiteral("a b")},
+        {QStringLiteral("\n\tlead"), QStringLiteral(" lead")},
+        {QStringLiteral("    ABC\n\tDEF \u03a9"), QStringLiteral("    ABC  DEF \u03a9")},
+        {QStringLiteral(R"(\P\P)"), QString()},
+        {QStringLiteral(R"({\fArial;})"), QString()},
+        // the text of finding 11
+        {QStringLiteral(R"({\fArial;big} \H2x;tall\Pnext 50%%d \S1^2;)"),
+         QStringLiteral("big tall next 50\u00b0 1^2")},
+        // a literal backslash, typed and as toNativeString() leaves "\\P"
+        {QStringLiteral(R"(a\\Path)"), QStringLiteral(R"(a\Path)")},
+        {QStringLiteral("a\\\nath"), QStringLiteral(R"(a\Path)")},
+        // fonts: the "\f{name}" of update(), and the commands of a file
+        {QStringLiteral(R"(x\f{symbol}y\f{}z \f{open)"), QStringLiteral("xyz open")},
+        {QStringLiteral(R"({\L\fArial|b0|i0|c0|p34;under\l}{\C1;red}{\c255;rgb})"),
+         QStringLiteral("underredrgb")},
+        {QStringLiteral(R"(\Ftxt.shx|c1;x\Fgdt;j)"), QStringLiteral("xj")},
+        {QStringLiteral(R"(\W0.8x;\T1.5;\Q15;\A1;\H3;x)"), QStringLiteral("x")},
+        {QStringLiteral("\\pi-12,l12,t12;1.\tFirst\n\\pi0,l0;2.\tSecond"),
+         QStringLiteral("1. First 2. Second")},
+        // stacks: as typed, a backslash makes the next character ordinary
+        {QStringLiteral(R"(\S+0.1^-0.1; \S1/2; \S1#4; \Sa\;b/c;)"),
+         QStringLiteral("+0.1^-0.1 1/2 1#4 a;b/c")},
+        {QStringLiteral("\\Sx\ty^z;"), QStringLiteral("x y^z")},
+        {QStringLiteral("4'-0{\\H1x;\\S1#4;}\""), QStringLiteral("4'-01#4\"")},
+        // a command with arguments that is not complete stays text
+        {QStringLiteral(R"(C:\plans\a.dxf \Hello \Cat5 \A9; \Sopen)"),
+         QStringLiteral(R"(C:\plans\a.dxf \Hello \Cat5 \A9; \Sopen)")},
+        {QStringLiteral(R"(see \\Server\Share; then)"), QStringLiteral(R"(see \Server\Share; then)")},
+        {QStringLiteral(R"(total: \Sum; x)"), QStringLiteral(R"(total: \Sum; x)")},
+        {QStringLiteral(R"({\C1invidunt ut labore} \H2.5tall \W1wide)"),
+         QStringLiteral(R"(\C1invidunt ut labore \H2.5tall \W1wide)")},
+        // a command without arguments always counts
+        {QStringLiteral(R"(C:\Library\old\Kits\X1)"), QStringLiteral("C:ibraryldits1")},
+        {QStringLiteral("\\~nb\u00a0sp \\N col \\Xdim {\\O ov\\o \\K st\\k}"),
+         QStringLiteral(" nb\u00a0sp   col dim  ov  st")},
+        {QStringLiteral("ctl\x01x\ry"), QStringLiteral("ctl x y")},
+        {QStringLiteral("%%C10 %%p1 100%% %%u"), QStringLiteral("\u230010 \u00b11 100%% %%u")},
+        {QStringLiteral(R"(\U+00B0 \M+1815C tail\)"), QStringLiteral(R"(\U+00B0 \M+1815C tail)")},
+        {QStringLiteral(R"(\{lit\} {grp} ^caret ^I)"), QStringLiteral("{lit} grp ^caret ^I")},
+    };
+    return cases;
+}
+
+bool hasControlCharacter(const QString& text) {
+    return std::any_of(text.cbegin(), text.cend(), [](const QChar c) {
+        return c.unicode() < 0x20;
+    });
+}
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("toPlainLine: MTEXT content becomes one line without codes",
+          "[dxf_codec][mtext_plain]") {
+    for (const auto& [text, plain] : plainLineCases()) {
+        CAPTURE(text.toStdString());
+        CHECK(RS_MText::toPlainLine(text) == plain);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("toPlainLine: the line is safe as a DXF value in either encoding",
+          "[dxf_codec][mtext_plain]") {
+    std::vector<QString> texts;
+    for (const auto& [text, plain] : plainLineCases()) {
+        texts.push_back(text);
+    }
+    // text that looks like the start of a command, over and over
+    for (const char* piece : {"\\S", "\\S1", "\\Sa/", "\\f", "\\F", "\\p", "\\pi", "\\f{", "{", "\\H1", "\\"}) {
+        texts.push_back(QString::fromLatin1(piece).repeated(5000));
+    }
+    for (char16_t control = 0; control < 0x20; ++control) {
+        const QChar c(control);
+        texts.push_back(QStringLiteral("a") + c + QStringLiteral("b\\") + c + QStringLiteral("c\\Sx/") + c
+                        + QStringLiteral("y;\\f") + c + QStringLiteral(";"));
+    }
+    for (const QString& text : texts) {
+        CAPTURE(text.left(40).toStdString());
+        const QString plain = RS_MText::toPlainLine(text);
+        CHECK_FALSE(hasControlCharacter(plain));
+        // The line is the value of a single-line ATTRIB and is written as
+        // one. What isSafeDxfRecordText() of libdxfrw rejects:
+        const QString inDxf = RS_FilterDXFRW::toDxfSingleLineString(plain, true);
+        CHECK_FALSE(hasControlCharacter(inDxf));
+        CHECK_FALSE(hasControlCharacter(RS_FilterDXFRW::toDxfSingleLineString(plain, false)));
+        // the encoder adds no code of an MTEXT, and the line has no line
+        // feed: either encoder writes the same
+        CHECK(inDxf == RS_FilterDXFRW::toDxfString(plain, true));
+        // A DXF is read back with the line it was written from: a "\P" or a
+        // "{\f...;}" that the line holds is not a code of a single-line value.
+        CHECK(RS_FilterDXFRW::toNativeSingleLineString(inDxf) == plain);
+    }
+    const QString stack = RS_MText::toPlainLine(QStringLiteral(R"(\S1^2;)"));
+    CHECK(RS_FilterDXFRW::toDxfSingleLineString(stack, true) == QStringLiteral("1^ 2"));
+    CHECK(RS_FilterDXFRW::toDxfSingleLineString(stack, false) == QStringLiteral("1^2"));
 }

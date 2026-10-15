@@ -77,6 +77,11 @@ public:
      */
     virtual bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType type) = 0;
 
+    /** Applies only to the next imports through this filter, never to exports.
+     * Filters other than DXF ignore this per-file recovery policy.
+     */
+    void setDxfTextEncoding(RS2::DxfTextEncoding encoding) { m_dxfTextEncoding = encoding; }
+
     /**
      * The implementation of this method in a inherited format
      * class should write the entities in the current entity container
@@ -91,7 +96,8 @@ public:
      */
     /**
      * What the last export left out or simplified because the file format or
-     * version cannot hold it, one item per line; empty if nothing.
+     * version cannot hold it, or because it could not be rebuilt after an
+     * edit, one item per line; empty if nothing.
      */
     virtual QString exportReport() const {
         return {};
@@ -114,6 +120,7 @@ public:
     }
 
 protected:
+    RS2::DxfTextEncoding m_dxfTextEncoding = RS2::DxfTextEncoding::Declared;
     int m_errorCode{0}; //< error code for last import/export action
 };
 

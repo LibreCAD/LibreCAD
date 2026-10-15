@@ -60,7 +60,8 @@ RS_Text::RS_Text(RS_EntityContainer* parent, const RS_TextData& d)
     : RS_EntityContainer(parent), m_data(d) {
     m_usedTextHeight = 0.0;
     m_usedTextWidth = 0.0;
-    RS_Text::setText(m_data.text);
+    setStyle(m_data.style);
+    applyText(m_data.text, true);
 }
 
 RS_Entity* RS_Text::clone() const {
@@ -72,25 +73,70 @@ RS_Entity* RS_Text::clone() const {
  * text are updated.
  */
 void RS_Text::setText(const QString& t) {
-    m_data.text = t;
+    applyText(t, false);
+}
+
+LC_TextEntityState::Error RS_Text::applyText(const QString &t, bool constructor,
+                                            const LC_TextEntityState *preparedState) {
+    const QString input = t.isNull() ? QString{} : QString(t.constData(), t.size());
+    const bool unchanged = !preparedState && m_data.textState.initialized() && input == m_data.textState.compatibilityText();
+    auto text = input;
+    auto valign = m_data.valign;
 
     // handle some special flags embedded in the text:
-    if (m_data.text.left(4) == "\\A0;") {
-        m_data.text = m_data.text.mid(4);
-        m_data.valign = RS_TextData::VABottom;
+    if (!unchanged && text.left(4) == "\\A0;") {
+        text = text.mid(4);
+        valign = RS_TextData::VABottom;
     }
-    else if (m_data.text.left(4) == "\\A1;") {
-        m_data.text = m_data.text.mid(4);
-        m_data.valign = RS_TextData::VAMiddle;
+    else if (!unchanged && text.left(4) == "\\A1;") {
+        text = text.mid(4);
+        valign = RS_TextData::VAMiddle;
     }
-    else if (m_data.text.left(4) == "\\A2;") {
-        m_data.text = m_data.text.mid(4);
-        m_data.valign = RS_TextData::VATop;
+    else if (!unchanged && text.left(4) == "\\A2;") {
+        text = text.mid(4);
+        valign = RS_TextData::VATop;
     }
+    auto next = preparedState ? *preparedState : m_data.textState;
+    if (!preparedState) {
+        auto failure = next.acceptLegacyText(input, text, LC_TextDocument::Syntax::Plain, constructor);
+        if (failure) {
+            m_textStateError = failure;
+            return failure;
+        }
+    }
+    m_data.text = std::move(text);
+    m_data.valign = valign;
+    m_data.textState = std::move(next);
+    m_textStateError = {};
     if (m_data.updateMode == RS2::Update) {
         update();
         //calculateBorders();
     }
+    return {};
+}
+
+LC_TextEntityState::Error RS_Text::importText(const LC_TextEntityState::Import &input, const QString &compatibilityInput) {
+    if (input.convention.syntax != LC_TextDocument::Syntax::Plain)
+        return {LC_TextEntityState::ErrorCode::InvalidConvention, QStringLiteral("TEXT requires a plain source convention")};
+    auto source = input;
+    if (!source.compatibilityStyle) source.compatibilityStyle = m_data.style;
+    auto next = m_data.textState;
+    auto failure = next.initializeImport(source, compatibilityInput);
+    if (failure) return failure;
+    const auto finalText = next.compatibilityText();
+    failure = next.acceptLegacyText(compatibilityInput, finalText, LC_TextDocument::Syntax::Plain, true);
+    if (failure) return failure;
+    return applyText(compatibilityInput, false, &next);
+}
+
+LC_TextEntityState::Error RS_Text::setCanonicalText(const QString &source, const QString &compatibilityInput,
+                                                   const LC_TextEntityState::Convention &convention) {
+    if (convention.syntax != LC_TextDocument::Syntax::Plain)
+        return {LC_TextEntityState::ErrorCode::InvalidConvention, QStringLiteral("TEXT requires a plain source convention")};
+    auto next = m_data.textState;
+    const auto failure = next.editSource(source, compatibilityInput, convention);
+    if (failure) return failure;
+    return applyText(compatibilityInput, false, &next);
 }
 
 void RS_Text::setDrawingDirection(RS_TextData::DrawingDirection direction) {
@@ -283,6 +329,12 @@ void RS_Text::update() {
                 m_data.text.at(i + 1).isLowSurrogate()) {
                 scalar = QChar::surrogateToUcs4(ch, m_data.text.at(i + 1));
                 ++offset;
+            }
+            if (scalar == '\t') {
+                // A single line has no tab stops. Every release has drawn the
+                // "^I" of a DXF file as four spaces.
+                letterPos += space * 4.0;
+                continue;
             }
             const auto category = QChar::category(scalar);
             if (category == QChar::Other_Format ||

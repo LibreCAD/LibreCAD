@@ -312,6 +312,7 @@ protected:
     std::map<std::uint32_t, std::uint32_t> handleRemap;
     std::set<std::uint32_t> knownHandles;
     std::map<const RS_Entity *, std::uint32_t> entityHandlesByEntity;
+    bool entityHandleMapPrepared = false;
     std::map<std::uint32_t, std::uint32_t> entityHandleRemap;
     std::set<std::uint32_t> entityHandlesEmitted;
     std::set<std::uint32_t> duplicateEntityHandles;
@@ -322,6 +323,7 @@ protected:
     std::map<std::uint32_t, std::uint32_t> blockHandleRemap;
     std::set<std::uint32_t> duplicateBlockHandles;
     std::map<std::string, std::uint32_t> ltypeHandleByName;
+    std::map<std::string, std::uint32_t> layerHandleByName;
     std::map<std::string, std::uint32_t> textStyleHandleByName;
   };
 
@@ -349,6 +351,7 @@ protected:
     checkpoint.handleRemap = m_dwgWriteHandleRemap;
     checkpoint.knownHandles = m_dwgWriteKnownHandles;
     checkpoint.entityHandlesByEntity = m_dwgWriteEntityHandleByEntity;
+    checkpoint.entityHandleMapPrepared = m_dwgWriteEntityHandleMapPrepared;
     checkpoint.entityHandleRemap = m_dwgWriteEntityHandleRemap;
     checkpoint.entityHandlesEmitted = m_dwgWriteEntityHandlesEmitted;
     checkpoint.duplicateEntityHandles = m_dwgWriteDuplicateEntityHandles;
@@ -359,6 +362,7 @@ protected:
     checkpoint.blockHandleRemap = m_dwgWriteBlockHandleRemap;
     checkpoint.duplicateBlockHandles = m_dwgWriteDuplicateBlockHandles;
     checkpoint.ltypeHandleByName = m_dwgWriteLTypeHandleByName;
+    checkpoint.layerHandleByName = m_dwgWriteLayerHandleByName;
     checkpoint.textStyleHandleByName = m_dwgWriteTextStyleHandleByName;
     return checkpoint;
   }
@@ -386,6 +390,7 @@ protected:
     m_dwgWriteHandleRemap = checkpoint.handleRemap;
     m_dwgWriteKnownHandles = checkpoint.knownHandles;
     m_dwgWriteEntityHandleByEntity = checkpoint.entityHandlesByEntity;
+    m_dwgWriteEntityHandleMapPrepared = checkpoint.entityHandleMapPrepared;
     m_dwgWriteEntityHandleRemap = checkpoint.entityHandleRemap;
     m_dwgWriteEntityHandlesEmitted = checkpoint.entityHandlesEmitted;
     m_dwgWriteDuplicateEntityHandles = checkpoint.duplicateEntityHandles;
@@ -396,6 +401,7 @@ protected:
     m_dwgWriteBlockHandleRemap = checkpoint.blockHandleRemap;
     m_dwgWriteDuplicateBlockHandles = checkpoint.duplicateBlockHandles;
     m_dwgWriteLTypeHandleByName = checkpoint.ltypeHandleByName;
+    m_dwgWriteLayerHandleByName = checkpoint.layerHandleByName;
     m_dwgWriteTextStyleHandleByName = checkpoint.textStyleHandleByName;
   }
 
@@ -415,6 +421,7 @@ protected:
     m_dwgWriteHandleRemap.clear();
     m_dwgWriteKnownHandles.clear();
     m_dwgWriteEntityHandleByEntity.clear();
+    m_dwgWriteEntityHandleMapPrepared = false;
     m_dwgWriteGeneratedEntityHandleByEntity.clear();
     m_dwgWriteInsertChildHandlesByEntity.clear();
     m_dwgWriteEntityHandleRemap.clear();
@@ -430,6 +437,7 @@ protected:
     m_dwgWriteReferenceReceipts.clear();
     m_dwgWriteOptionalDropReceipts.clear();
     m_dwgWriteLTypeHandleByName.clear();
+    m_dwgWriteLayerHandleByName.clear();
     m_dwgWriteTextStyleHandleByName.clear();
   }
 
@@ -1883,8 +1891,9 @@ protected:
 
   // Entity source identity and commit state.
   std::map<const RS_Entity *, std::uint32_t> m_dwgWriteEntityHandleByEntity;
-  // R2000 owners that hold source-backed entities take every entity handle
-  // before the entity sweep so the owner's handles stay consecutive
+  bool m_dwgWriteEntityHandleMapPrepared = false;
+  // R2000 owners that hold source-backed entities or metadata SHAPEs take
+  // every entity handle before the sweep so the owner's handles stay consecutive
   // (prepareDwgEntityHandleMap). These are the output handles of entities
   // without a source handle, whose identities are still committed as
   // generated entities on write, and the ATTRIB..SEQEND handles that follow
@@ -1931,6 +1940,7 @@ protected:
   // Name-based table identities used when source numeric handles are not
   // portable across DWG files.
   std::map<std::string, std::uint32_t> m_dwgWriteLTypeHandleByName;
+  std::map<std::string, std::uint32_t> m_dwgWriteLayerHandleByName;
   std::map<std::string, std::uint32_t> m_dwgWriteTextStyleHandleByName;
 };
 #endif
@@ -2276,6 +2286,7 @@ public:
   void writeObjects() override;
   bool finalizeDwgWrite() override;
   bool finalizeDwgWriteStructure() override;
+  bool finalizeDxfWrite() override;
   void collectDwgAppIds() override;
   void writeAppId() override;
 
@@ -2329,6 +2340,14 @@ public:
   //!   callers that may write either pass caretCodes = (m_dwgW == nullptr).
   static QString toDxfString(const QString &str, bool caretCodes = true);
   static QString toNativeString(const QString &data);
+  //! The value of a single-line text (TEXT, ATTRIB, ATTDEF). It has no MTEXT
+  //! markup: "\P", "\~" and "{\f...;}" are ordinary characters there, as in
+  //! the path "D:\PROJECTS\PLAN.dwg". Only the %%C, %%D and %%P symbols and
+  //! the caret codes of toDxfString() are converted, so a line feed is the
+  //! control character "^J" in an ASCII DXF value and itself in a DWG string.
+  static QString toDxfSingleLineString(const QString &str,
+                                       bool caretCodes = true);
+  static QString toNativeSingleLineString(const QString &data);
 
   /** Build an LC_SplinePoints from a DRW_Spline boundary edge of a hatch
    *  loop. Degrees 1, 2, and 3 all converge to a quadratic spline-points
@@ -2402,6 +2421,21 @@ protected:
 private:
   void prepareBlocks();
   void prepareDxfEntityHandleMap();
+  /** The application names of the XDATA a DXF export writes: on its table
+   * records, the entities of the model space and of the blocks, and its
+   * objects. Each name comes once, case-insensitively, in the spelling and
+   * order the export first meets it. */
+  std::vector<std::string> dxfXDataApplications();
+  void buildInsertAttribPlan();
+  /** A text its INSERT writes as an ATTRIB. */
+  bool isInsertAttribChild(const RS_Entity *entity) const {
+    return m_insertAttribPlan.claimed.count(entity) != 0;
+  }
+  /** A text without a record of its own: an ATTRIB of its INSERT, or left out. */
+  bool hasNoOwnRecord(const RS_Entity *entity) const {
+    return isInsertAttribChild(entity) ||
+           m_insertAttribPlan.leftOut.count(entity) != 0;
+  }
   void writeEntity(RS_Entity *e);
 #ifdef DWGSUPPORT
   void prepareDwgEntityHandleMap();
@@ -3045,6 +3079,11 @@ private:
   bool stageDwgTableRecordIdentity(DwgWriteSourceKind kind,
                                    std::uint32_t sourceHandle,
                                    std::uint32_t outputHandle);
+  // The output handle of the APPID record a DWG source handle names, for a
+  // reference replayed from source data. False if this export writes no
+  // such record; a null handle resolves to itself.
+  bool resolveDwgWriteAppIdHandle(std::uint32_t sourceHandle,
+                                  std::uint32_t *outputHandle) const;
   bool commitDwgTableRecordIdentities();
   bool commitDwgTableControlIdentities();
   bool commitDwgGeneratedEntityWrite(std::uint32_t outputHandle);
@@ -3086,8 +3125,23 @@ private:
   // from another version it leaves out.
   DRW::Version m_dxfExportVersion = DRW::UNKNOWNV;
   std::size_t m_dxfLeftOutRawRecords = 0;
-  // What the codec left out of the DXF last exported (dxfRW::leftOut()).
-  std::map<std::string, std::size_t> m_dxfLeftOut;
+  // What the codec left out of the last export (DXF or DWG leftOut()).
+  std::map<std::string, std::size_t> m_writeLeftOut;
+  std::map<std::string, std::size_t> m_shapeLeftOut;
+  QString m_shapeExportDirectory;
+  std::map<std::uint32_t, QString> m_shapeFileResolvedPaths;
+  struct ShapeExportRecord {
+    DRW_Shape shape;
+    std::string ownerBlockName;
+  };
+  std::vector<ShapeExportRecord> m_shapesToExport;
+  void prepareShapesForExport();
+  void writeDxfShapes(const std::string &blockName);
+  // Multi-line attributes whose stored annotation-scale payload or column
+  // layout the last export did not write: only DWG R2018 can hold them, and
+  // only for attribute text that was not edited. Counted by writeInsert(),
+  // reported by exportReport().
+  std::size_t m_exportAttribScaleDataLeftOut = 0;
   // Normalised names of the built-in LTYPE records written by writeLType()
   // during writeLTypes(); imported raw records with these names are skipped.
   std::set<std::string> m_builtinLTypeNames;
@@ -3201,15 +3255,31 @@ private:
   QHash<RS_Entity *, QString> m_noNameBlock;
   /** Planned DXF INSERT handles grouped by their referenced block name. */
   std::map<QString, std::vector<std::uint32_t>> m_dxfBlockInsertHandles;
+  /**
+   * What becomes of the texts read as block attributes, for the export in
+   * progress. Built by buildInsertAttribPlan() before either writer starts,
+   * emptied when fileExport() returns.
+   */
+  struct InsertAttribPlan {
+    /** The sibling texts each INSERT writes as its ATTRIBs, in attribute order. */
+    std::map<const RS_Entity *, std::vector<RS_Entity *>> children;
+    /** All of those: written inside their INSERT, never as records of their own. */
+    std::set<const RS_Entity *> claimed;
+    /** Texts no INSERT claims that show nothing (hidden or empty): not written. */
+    std::set<const RS_Entity *> leftOut;
+  };
+  InsertAttribPlan m_insertAttribPlan;
   /** Numbered paper spaces written, empty, for the layouts naming them. */
   std::vector<std::string> m_dxfExtraPaperSpaces;
   /** Source handles of the objects the DXF being written holds. */
   std::set<std::uint32_t> m_dxfEmittedObjectHandles;
   QHash<QString, QString> m_fontList;
   bool m_oldMText = false;
+  // Non-owning active-export observers; local RAII owners clear before delete.
   dxfRW *m_dxfW{nullptr};
   dxfRW *m_dxfR{nullptr};
 #ifdef DWGSUPPORT
+  // Null outside the current fileExport() operation, including failed saves.
   dwgRW *m_dwgW{nullptr};
   DwgExportAdmissionPlan m_dwgExportAdmissionPlan;
   DwgFieldWritePlan m_dwgFieldWritePlan;

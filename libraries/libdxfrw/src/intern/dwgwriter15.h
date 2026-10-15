@@ -27,16 +27,6 @@
 class DRW_Entity;
 class dwgRW;
 
-/// Section record indices used in m_sectionOffsets / m_sectionSizes.
-namespace recno {
-    constexpr std::uint8_t HEADER    = 0;
-    constexpr std::uint8_t CLASSES   = 1;
-    constexpr std::uint8_t HANDLES   = 2;
-    constexpr std::uint8_t UNKNOWN   = 3;
-    constexpr std::uint8_t TEMPLATE  = 4;
-    constexpr std::uint8_t AUXHEADER = 5;
-}
-
 /// R2000 (AC1015) concrete DWG writer.  Structural mirror of
 /// [dwgReader15](dwgreader15.h).
 ///
@@ -478,7 +468,8 @@ protected:
     /// the RL size at `sizeOffset` with the actual payload size.
     void endSentinelSection(size_t sectionStart, size_t sizeOffset,
                             const std::uint8_t (&endSentinel)[16],
-                            size_t unknownTailBytes = 0);
+                            size_t unknownTailBytes = 0,
+                            size_t excludedSizeBytes = 0);
 
 protected:
     DRW_TextCodec m_textCodec;
@@ -512,6 +503,18 @@ protected:
     /// the object's MS prefix in m_buf)`.  Sorted by handle in
     /// `writeDwgHandles` before page emission for monotonic deltas.
     std::vector<std::pair<std::uint32_t, std::uint32_t>> m_objectMap;
+
+    struct EntityLinkPatch {
+        std::uint32_t handle;
+        std::uint32_t compoundOwner;
+        bool sequenceEnd;
+        std::size_t frameStart;
+        std::size_t crcOffset;
+        std::uint64_t previousBit;
+        std::uint64_t nextBit;
+    };
+    std::vector<EntityLinkPatch> m_entityLinkPatches;
+    bool finalizeEntityLinks();
 
     /// Writing context: maps normalised (upper-case) table record names
     /// to their allocated DWG handles.  Pre-seeded with standard entries;
@@ -556,11 +559,13 @@ protected:
 
     /// Resolve named APPID/LAYER EED references into the writer's final
     /// table-handle namespace before an entity serializes its common header.
+    /// The data of an application that names a layer the drawing does not
+    /// have is left out, and counted in leftOut().
     bool prepareEntityEed(DRW_Entity& entity);
     bool prepareTableEntryEed(
         const DRW_TableEntry& entry,
         std::vector<DRW_Entity::PendingHandleRef>& appIdRefs,
-        std::vector<DRW_Entity::PendingHandleRef>& layerRefs) const;
+        std::vector<DRW_Entity::PendingHandleRef>& layerRefs);
 
     bool m_entityEedWriteFailure {false};
     bool m_objectEedWriteFailure {false};

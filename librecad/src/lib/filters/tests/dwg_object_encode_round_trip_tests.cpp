@@ -13338,7 +13338,7 @@ TEST_CASE("DRW_Layout AC1021 preserves shade-plot handle order transactionally",
     const dwgHandle rawNamedUcs = rawHandles.getHandle();
     REQUIRE(rawHandles.isGood());
     CHECK(rawParent.code == 4);
-    CHECK(rawReactor.code == 0);
+    CHECK(rawReactor.code == DRW::DwgSoftPointer);
     CHECK(rawPlotView.code == 5);
     CHECK(rawShadePlot.code == 4);
     CHECK(rawPaperSpace.code == 4);
@@ -15118,7 +15118,7 @@ TEST_CASE("DRW_Dimstyle deep-copy is independent and leak/double-free clean",
 TEST_CASE("DRW_Dimstyle default-constructs R2007/R2010 members with defaults",
           "[dwg-object-encode][dimstyle][data-loss]") {
     DRW_Dimstyle d;
-    CHECK(d.dimjogang == Approx(0.0));
+    CHECK(d.dimjogang == Approx(M_PI / 4.0));
     CHECK(d.dimtfill == 0);
     CHECK(d.dimtfillclr == 0);
     CHECK(d.dimarcsym == 0);
@@ -15141,7 +15141,7 @@ TEST_CASE("DRW_Dimstyle default-constructs R2007/R2010 members with defaults",
     d.dimaltmzf = 5.0;
     d.dimtxstyH.ref = 0x99u;
     d.reset();
-    CHECK(d.dimjogang == Approx(0.0));
+    CHECK(d.dimjogang == Approx(M_PI / 4.0));
     CHECK(d.dimaltmzf == Approx(1.0));
     CHECK(d.dimtxstyH.ref == 0u);
 }

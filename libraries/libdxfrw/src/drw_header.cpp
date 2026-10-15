@@ -21,6 +21,7 @@
 #include "intern/dwgbuffer.h"
 #include "intern/dwgbufferw.h"
 #include "intern/dwgsafety.h"
+#include "intern/dwg_fixed_handles.h"
 
 DRW_Header::DRW_Header() {
     linetypeCtrl = layerCtrl = styleCtrl = dimstyleCtrl = appidCtrl = 0;
@@ -2687,12 +2688,10 @@ namespace {
         }
         return UTF8STRING(it->second->c_str());
     }
-    /// Build a hard-pointer handle (code 4) referring to `ref`.  Returns
-    /// the null handle when ref==0, which matches what parseDwg sees in
-    /// an empty document.
+    /// Build an absolute hard-pointer handle (code 5), including null refs.
     dwgHandle makeHardPtr(std::uint32_t ref) {
         dwgHandle h;
-        h.code = (ref == 0) ? 0 : 4;
+        h.code = 5;
         h.ref  = ref;
         h.size = 0;
         if (ref != 0) {
@@ -2701,11 +2700,10 @@ namespace {
         }
         return h;
     }
-    /// Build a soft-owner handle (code 3) — used for the XDic-style
-    /// owner references in the HEADER's control-handle block.
-    dwgHandle makeSoftOwner(std::uint32_t ref) {
+    /// Build a hard-owner handle (code 3) for the HEADER's root records.
+    dwgHandle makeHardOwner(std::uint32_t ref) {
         dwgHandle h;
-        h.code = (ref == 0) ? 0 : 3;
+        h.code = 3;
         h.ref  = ref;
         h.size = 0;
         if (ref != 0) {
@@ -2910,16 +2908,16 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     // Keep a fixed-width payload so the writer can patch HANDSEED after every
     // object has received a handle, without shifting later section offsets.
     m_dwgHandseedBitOffset = buf->bitCount() - encodeStartBit + 8;
-    buf->putFixedHandle(4, static_cast<std::uint8_t>(sizeof(handSeed)), handSeed);
+    buf->putFixedHandle(0, static_cast<std::uint8_t>(sizeof(handSeed)), handSeed);
     // The following 5 handles emit to the HANDLE stream.  For R2000 the
     // handle stream is inline (buf == hBbuf in our usage).
-    hBbuf->putHandle(makeHardPtr(0));  // CLAYER
-    hBbuf->putHandle(makeHardPtr(0));  // TEXTSTYLE
-    hBbuf->putHandle(makeHardPtr(0));  // CELTYPE
+    hBbuf->putHandle(makeHardPtr(DRW::DwgLayer0Handle));  // CLAYER
+    hBbuf->putHandle(makeHardPtr(DRW::DwgStandardTextStyleHandle));  // TEXTSTYLE
+    hBbuf->putHandle(makeHardPtr(DRW::DwgLtypeByLayerHandle));  // CELTYPE
     if (version > DRW::AC1018) {       // 2007+: CMATERIAL (parseDwg:1960-1963)
         hBbuf->putHandle(makeHardPtr(0));
     }
-    hBbuf->putHandle(makeHardPtr(0));  // DIMSTYLE
+    hBbuf->putHandle(makeHardPtr(DRW::DwgStandardDimstyleHandle));  // DIMSTYLE
     hBbuf->putHandle(makeHardPtr(0));  // CMLSTYLE
 
     // -------- Paper-space view block (parseDwg:1965-1989) -------------------
@@ -3048,7 +3046,7 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     }
 
     // -------- DIM handles (R2000+: 5 handles) (parseDwg:2139-2148) ----------
-    hBbuf->putHandle(makeHardPtr(0));  // DIMTXSTY
+    hBbuf->putHandle(makeHardPtr(DRW::DwgStandardTextStyleHandle));  // DIMTXSTY
     hBbuf->putHandle(makeHardPtr(0));  // DIMLDRBLK
     hBbuf->putHandle(makeHardPtr(0));  // DIMBLK
     hBbuf->putHandle(makeHardPtr(0));  // DIMBLK1
@@ -3065,21 +3063,21 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
 
     // -------- Control-handle block (parseDwg:2162-2199, 12 or 13 handles) ---------
     // vpEntHeaderCtrl is R2000 and earlier only (parseDwg skips it for AC1018+).
-    hBbuf->putHandle(makeHardPtr(blockCtrl));           // BLOCK_CONTROL  (0x01)
-    hBbuf->putHandle(makeHardPtr(layerCtrl));           // LAYER_CONTROL  (0x02)
-    hBbuf->putHandle(makeHardPtr(styleCtrl));           // STYLE_CONTROL  (0x03)
-    hBbuf->putHandle(makeHardPtr(linetypeCtrl));        // LTYPE_CONTROL  (0x05)
-    hBbuf->putHandle(makeHardPtr(viewCtrl));            // VIEW_CONTROL   (0x06)
-    hBbuf->putHandle(makeHardPtr(ucsCtrl));             // UCS_CONTROL    (0x07)
-    hBbuf->putHandle(makeHardPtr(vportCtrl));           // VPORT_CONTROL  (0x08)
-    hBbuf->putHandle(makeHardPtr(appidCtrl));           // APPID_CONTROL  (0x09)
-    hBbuf->putHandle(makeHardPtr(dimstyleCtrl));        // DIMSTYLE_CONTROL (0x0A)
+    hBbuf->putHandle(makeHardOwner(blockCtrl));           // BLOCK_CONTROL  (0x01)
+    hBbuf->putHandle(makeHardOwner(layerCtrl));           // LAYER_CONTROL  (0x02)
+    hBbuf->putHandle(makeHardOwner(styleCtrl));           // STYLE_CONTROL  (0x03)
+    hBbuf->putHandle(makeHardOwner(linetypeCtrl));        // LTYPE_CONTROL  (0x05)
+    hBbuf->putHandle(makeHardOwner(viewCtrl));            // VIEW_CONTROL   (0x06)
+    hBbuf->putHandle(makeHardOwner(ucsCtrl));             // UCS_CONTROL    (0x07)
+    hBbuf->putHandle(makeHardOwner(vportCtrl));           // VPORT_CONTROL  (0x08)
+    hBbuf->putHandle(makeHardOwner(appidCtrl));           // APPID_CONTROL  (0x09)
+    hBbuf->putHandle(makeHardOwner(dimstyleCtrl));        // DIMSTYLE_CONTROL (0x0A)
     if (version < DRW::AC1018) {                        // R2000 and earlier only
-        hBbuf->putHandle(makeHardPtr(vpEntHeaderCtrl)); // VPORT_ENTITY_HEADER_CONTROL (0x0B)
+        hBbuf->putHandle(makeHardOwner(vpEntHeaderCtrl)); // VPORT_ENTITY_HEADER_CONTROL (0x0B)
     }
-    hBbuf->putHandle(makeSoftOwner(0));                 // DICT ACAD_GROUP (Phase 3.5: 0x0D)
-    hBbuf->putHandle(makeSoftOwner(0));                 // DICT ACAD_MLINESTYLE (Phase 3.5: 0x0E)
-    hBbuf->putHandle(makeSoftOwner(0));                 // DICT NAMED OBJS (Phase 3.5: 0x0C)
+    hBbuf->putHandle(makeHardPtr(DRW::DwgAcadGroupDictionaryHandle));
+    hBbuf->putHandle(makeHardPtr(0));                    // DICT ACAD_MLINESTYLE
+    hBbuf->putHandle(makeHardOwner(DRW::DwgNamedObjectsDictionaryHandle));
 
     // -------- Post-control TSTACKALIGN/TSTACKSIZE + 3 NOD-related dict handles
     buf->putBitShort(static_cast<std::uint16_t>(intVar(*this, "TSTACKALIGN", 1)));
@@ -3088,18 +3086,18 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
         buf->putCP8Text(strVar(*this, "HYPERLINKBASE"));
         buf->putCP8Text(strVar(*this, "STYLESHEET"));
     }
-    hBbuf->putHandle(makeSoftOwner(0));  // DICT LAYOUTS    (Phase 3.5)
-    hBbuf->putHandle(makeSoftOwner(0));  // DICT PLOTSETTINGS (Phase 3.5)
-    hBbuf->putHandle(makeSoftOwner(0));  // DICT PLOTSTYLES   (Phase 3.5)
+    hBbuf->putHandle(makeHardPtr(0));  // DICT LAYOUTS
+    hBbuf->putHandle(makeHardPtr(0));  // DICT PLOTSETTINGS
+    hBbuf->putHandle(makeHardPtr(0));  // DICT PLOTSTYLES
     if (version > DRW::AC1015) {         // R2004+: 2 extra dict handles (parseDwg:2219-2223)
-        hBbuf->putHandle(makeSoftOwner(0)); // DICT MATERIALS
-        hBbuf->putHandle(makeSoftOwner(0)); // DICT COLORS
+        hBbuf->putHandle(makeHardPtr(0)); // DICT MATERIALS
+        hBbuf->putHandle(makeHardPtr(0)); // DICT COLORS
     }
     if (version > DRW::AC1018) {         // 2007+: DICT VISUALSTYLE (parseDwg:2225-2228)
-        hBbuf->putHandle(makeSoftOwner(0)); // DICT VISUALSTYLE
+        hBbuf->putHandle(makeHardPtr(0)); // DICT VISUALSTYLE
     }
     if (version > DRW::AC1024) {         // 2013+: unknown handle (parseDwg:2229-2232)
-        hBbuf->putHandle(makeSoftOwner(0));
+        hBbuf->putHandle(makeHardPtr(0));
     }
 
     // -------- Flags (BL) + INSUNITS (BS) + CEPSNTYPE (BS) -------------------

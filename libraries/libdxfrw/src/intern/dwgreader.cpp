@@ -3039,14 +3039,13 @@ bool readEedRawHandle(dwgBuffer &buffer, std::uint64_t &ref) {
   return true;
 }
 
-bool readEedRawHandleLE(dwgBuffer &buffer, std::uint64_t &ref) {
-  std::uint8_t bytes[8]{};
-  if (!buffer.getBytes(bytes, sizeof(bytes)))
-    return false;
-  ref = 0;
-  for (std::size_t index = 0; index < sizeof(bytes); ++index)
-    ref |= static_cast<std::uint64_t>(bytes[index]) << (index * 8U);
-  return true;
+std::uint64_t byteSwapped(std::uint64_t value) {
+  std::uint64_t swapped = 0;
+  for (int index = 0; index < 8; ++index) {
+    swapped = (swapped << 8) | (value & 0xFFU);
+    value >>= 8;
+  }
+  return swapped;
 }
 
 std::uint64_t eedCurrentBit(const dwgBuffer &buffer) {
@@ -3198,10 +3197,11 @@ bool readDwgEed(DRW::Version version, dwgBuffer &buffer,
           break;
         }
         case 3: {
+          // Eight bytes, most significant first, like the entity handle (code 5).
           if (itemBuffer.numRemainingBytes() < 8)
             return false;
           std::uint64_t ref = 0;
-          if (!readEedRawHandleLE(itemBuffer, ref))
+          if (!readEedRawHandle(itemBuffer, ref))
             return false;
           const std::size_t index = chunk.items.size();
           char text[24]{};
@@ -3213,8 +3213,14 @@ bool readDwgEed(DRW::Version version, dwgBuffer &buffer,
           // EED layer references are always eight bytes on disk. Keep
           // a valid wide reference even though the in-memory layer map
           // is currently keyed by 32-bit DWG handles.
-          if (ref <= std::numeric_limits<std::uint32_t>::max())
-            chunk.layerRefs.push_back({index, static_cast<std::uint32_t>(ref)});
+          // Try LibreCAD's old byte order only when the canonical value is
+          // too wide; parseAttribs() still requires an existing layer.
+          std::uint64_t layer = ref;
+          if (layer > std::numeric_limits<std::uint32_t>::max())
+            layer = byteSwapped(ref);
+          if (layer <= std::numeric_limits<std::uint32_t>::max())
+            chunk.layerRefs.push_back(
+                {index, static_cast<std::uint32_t>(layer)});
           break;
         }
         case 4: {
@@ -4776,6 +4782,9 @@ dwgReader::stagePendingAttribute(std::shared_ptr<DRW_Attrib> attribute,
         DwgSourceFrameId{attribute ? attribute->handle : DRW::NoHandle});
     return DwgMappedEntityOutcome::Rejected;
   }
+  attribute->style = findTableName(DRW::STYLE, attribute->styleH.ref);
+  if (attribute->mtext)
+    attribute->mtext->style = findTableName(DRW::STYLE, attribute->mtext->styleH.ref);
   // The INSERT it names was rejected: the ATTRIB can never be one of its
   // members. Nothing about the ATTRIB itself is in doubt beyond that, so it is
   // rejected on its own.
@@ -10395,7 +10404,6 @@ bool dwgReader::readDwgEntityWithOutput(dwgBuffer *dbuf, objHandle &obj,
             ret = false;
             break;
           }
-          a->style = findTableName(DRW::STYLE, a->styleH.ref);
           DRW_DwgFramePublication attribPublication;
           if (!materializeCurrentFramePublication(attribPublication)) {
             ret = false;
@@ -13211,6 +13219,12 @@ bool DRW_ObjControl::parseDwg(DRW::Version version, dwgBuffer *buf,
     DRW_DBG(" string bit for  v2007+: ");
     DRW_DBG(stringBit);
     DRW_DBG("\n");
+  }
+  if (version == DRW::AC1021) {
+    if (objSize == 0 || !hBuff.setPosition(objSize >> 3))
+      return fail();
+    hBuff.setBitPos(static_cast<std::uint8_t>(objSize & 7u));
+    hBuf = &hBuff;
   }
   if (!buf->isGood())
     return fail();

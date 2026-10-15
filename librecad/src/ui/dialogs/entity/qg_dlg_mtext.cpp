@@ -29,6 +29,7 @@
 #include "lc_textedit.h"
 
 #include <QFileDialog>
+#include <QShortcut>
 
 #include "lc_linemath.h"
 #include "rs_font.h"
@@ -46,6 +47,9 @@
 QG_DlgMText::QG_DlgMText(QWidget *parent, LC_GraphicViewport *viewport, RS_MText* mtext, bool forNew)
     :LC_EntityPropertiesDlg(parent, "MTextProperties", viewport){
     setupUi(this);
+    auto *focusNext = new QShortcut(QKeySequence("Ctrl+Tab"), teText);
+    focusNext->setContext(Qt::WidgetShortcut);
+    connect(focusNext, &QShortcut::activated, this, [this] { focusNextPrevChild(true); });
     m_alignmentButtons = {{bTL, bTC, bTR, bML, bMC, bMR, bBL, bBC, bBR}};
     init();
     setEntity(mtext, forNew);

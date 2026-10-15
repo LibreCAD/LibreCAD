@@ -14,6 +14,7 @@
 #define DRW_INTERFACE_H
 
 #include <cstring>
+#include <filesystem>
 
 #include "drw_datastorage.h"
 #include "drw_entities.h"
@@ -22,6 +23,15 @@
 
 class DRW_Class;
 class DRW_Attdef;
+
+/// Per-call inspection of a flushed, closed private output before publication.
+/// The path borrows the writer's owned stage only during this synchronous call.
+/// The verifier must not change the stage or reenter the writer/interface.
+/// False or an exception refuses publication; semantic completeness and actual
+/// reread provenance remain the caller's responsibility.
+/// Encoding may mutate caller DTOs: consumers must use private emission copies.
+/// Rejection does not roll back interface side effects or a live document.
+using DRW_StagedFileVerifier = bool (*)(const std::filesystem::path&, void*);
 
 /**
  * Abstract class (interface) for communicate dxfReader with the application.
@@ -620,6 +630,14 @@ public:
   /** Called after deferred BLOCK_CONTROL and BLOCK_RECORD objects have
    * been emitted. Returning false aborts the DWG transaction. */
   virtual bool finalizeDwgWriteStructure() { return true; }
+  /**
+   * Called by the DXF writer after every content callback has returned and
+   * the stream is complete, before the output is published. Returning false
+   * aborts the DXF transaction: the temporary file is removed and the
+   * destination is left as it was. Nothing can be written from here. DWG
+   * writers do not call it.
+   */
+  virtual bool finalizeDxfWrite() { return true; }
   virtual void writeAppId() = 0;
   /** Called when the writer wants the implementation to emit named VIEW
    * records. Default-empty for ABI compatibility with consumers (LibreCAD_3,

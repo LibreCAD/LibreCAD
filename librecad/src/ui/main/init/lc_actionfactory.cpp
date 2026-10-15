@@ -680,6 +680,7 @@ void LC_ActionFactory::createFileActionsUncheckable(QMap<QString, QAction *> &ma
         {"FileNew",         &QC_ApplicationWindow::slotFileNewFromDefaultTemplate, tr("&New"),        ":/icons/new.lci",               "document-new"},
         {"FileNewTemplate", &QC_ApplicationWindow::slotFileNewFromTemplate, tr("New From &Template"), ":/icons/new_from_template.lci", "document-new"},// fixme - check
         {"FileOpen",        &QC_ApplicationWindow::slotFileOpen,        tr("&Open..."),           ":/icons/open.lci",              "document-open"},
+        {"FileOpenLegacyLibreCadUtf8", &QC_ApplicationWindow::slotFileOpenLegacyLibreCadUtf8, tr("Open Legacy LibreCAD DXF (UTF-8)..."), ":/icons/open.lci"},
         {"FileSave",        &QC_ApplicationWindow::slotFileSave,        tr("&Save"),              ":/icons/save.lci",              "document-save"},
         {"FileSaveAs",      &QC_ApplicationWindow::slotFileSaveAs,      tr("Save &as..."),        ":/icons/save_as.lci",           "document-save-as"},
         {"FileSaveAll",     &QC_ApplicationWindow::slotFileSaveAll,     tr("Save A&ll..."),       ":/icons/save_all.lci"},
@@ -823,7 +824,6 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
     const bool additiveSelection = LC_GET_ONE_BOOL("Selection", "Additivity", true);
     map["SelectionModeToggle"]->setChecked(additiveSelection);
 
-    connect(m_appWin, &QC_ApplicationWindow::printPreviewChanged, map["FilePrint"], &QAction::setChecked);
     connect(m_appWin, &QC_ApplicationWindow::printPreviewChanged, map["FilePrintPreview"], &QAction::setChecked);
     connect(m_appWin, &QC_ApplicationWindow::gridChanged, map["ViewGrid"], &QAction::setChecked);
     connect(m_appWin, &QC_ApplicationWindow::draftChanged, map["ViewDraft"], &QAction::setChecked);

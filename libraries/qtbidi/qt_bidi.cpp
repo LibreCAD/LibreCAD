@@ -912,14 +912,27 @@ struct QBidiAlgorithm {
         return normalized.front();
     }
 
-    bool process()
+    bool process(std::vector<int> *shapingLevels = nullptr)
     {
         memset(analysis, 0, length * sizeof(BidiAnalysis));
 
         bool hasBidi = checkForBidi();
 
-        if (!hasBidi)
+        if (!hasBidi) {
+            if (shapingLevels) {
+                shapingLevels->assign(length, 0);
+                for (int i = 0; i < length; ++i) {
+                    // The fast path skips script analysis. Preserve X9 status
+                    // even for paragraphs containing only LTR text and BN.
+                    const auto direction = originalDirection(i);
+                    if (direction == QChar::DirBN)
+                        (*shapingLevels)[i] = -1;
+                    else if (i > 0 && text[i].isLowSurrogate() && text[i - 1].isHighSurrogate())
+                        (*shapingLevels)[i] = (*shapingLevels)[i - 1];
+                }
+            }
             return false;
+        }
 
         if (BidiDebugEnabled) {
             BIDI_DEBUG() << ">>>> start bidi, text length" << length;
@@ -941,6 +954,14 @@ struct QBidiAlgorithm {
             // through the implicit level resolving
 
             resolveImplicitLevels(runs);
+        }
+
+        if (shapingLevels) {
+            shapingLevels->reserve(length);
+            for (int i = 0; i < length; ++i) {
+                shapingLevels->push_back(analysis[i].bidiFlags & BidiAnalysis::BidiBN
+                    ? -1 : analysis[i].bidiLevel);
+            }
         }
 
         BIDI_DEBUG() << "Rule L1:";
@@ -1009,7 +1030,9 @@ struct QBidiAlgorithm {
 
 } // namespace
 
-Paragraph resolve(const QString &text, Qt::LayoutDirection direction) {
+namespace {
+Paragraph resolveParagraph(const QString &text, Qt::LayoutDirection direction,
+                           std::vector<int> *shapingLevels) {
     if (text.size() > std::numeric_limits<int>::max())
         throw std::length_error("Bidi text exceeds index range");
     Paragraph result;
@@ -1018,9 +1041,27 @@ Paragraph resolve(const QString &text, Qt::LayoutDirection direction) {
     if (text.isEmpty()) return result;
     std::vector<BidiAnalysis> analysis(text.size());
     QBidiAlgorithm algorithm(text.constData(), analysis.data(), text.size(), result.base != 0);
-    algorithm.process();
+    algorithm.process(shapingLevels);
     result.levels.reserve(analysis.size());
     for (const auto &item : analysis) result.levels.push_back(item.bidiLevel);
+    return result;
+}
+} // namespace
+
+Paragraph resolve(const QString &text, Qt::LayoutDirection direction) {
+    return resolveParagraph(text, direction, nullptr);
+}
+
+ShapingParagraph resolveForShaping(const QString &text, Qt::LayoutDirection direction) {
+    ShapingParagraph result;
+    result.display = resolveParagraph(text, direction, &result.shapingLevels);
+    result.isolateBoundaries.assign(text.size(), false);
+    for (int i = 0; i < text.size(); ++i) {
+        const auto direction = text.at(i).direction();
+        result.isolateBoundaries[i] = direction == QChar::DirLRI
+            || direction == QChar::DirRLI || direction == QChar::DirFSI
+            || direction == QChar::DirPDI;
+    }
     return result;
 }
 

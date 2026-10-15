@@ -276,7 +276,8 @@ void LC_MenuFactoryMain::createFileMenu(QMenuBar* menuBar, QList<QMenu*>& topMen
     const auto menuFile = menu(tr("&File"), "file", menuBar, {
                           "FileNew",
                           "FileNewTemplate",
-                          "FileOpen"
+                          "FileOpen",
+                          "FileOpenLegacyLibreCadUtf8"
                       });
 
     m_menusHolder->m_menuFile = menuFile;

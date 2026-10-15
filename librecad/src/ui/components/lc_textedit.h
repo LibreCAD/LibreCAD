@@ -48,6 +48,12 @@ public:
     QTextCursor cursorForPosition(const QPoint &position) const;
     QVariant inputMethodQuery(Qt::InputMethodQuery query) const override;
     Q_INVOKABLE QVariant inputMethodQuery(Qt::InputMethodQuery query, QVariant argument) const;
+    /**
+     * The keys that leave a text box in which Tab types a tab: Shift+Tab for
+     * the widget in front of it, Ctrl+Tab for the one behind it.
+     * @return -1 or +1 for those two, 0 for any other key
+     */
+    static int focusStepOf(const QKeyEvent &event);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

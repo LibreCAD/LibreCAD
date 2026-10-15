@@ -23,12 +23,32 @@
 
 #include "lc_creation_circle.h"
 
+#include <algorithm>
+#include <cmath>
+#include <limits>
+
 #include "lc_quadratic.h"
 #include "rs_debug.h"
 #include "rs_information.h"
 #include "rs_line.h"
 
 namespace {
+    /**
+     * @brief diameterTolerance by how much the distance of two points may differ from the diameter of a circle of
+     * the radius, and the points still be a diameter apart
+     *
+     * The distance is known no better than the coordinates of the points and the diameter are. RS_TOLERANCE is the
+     * distance of points taken for one. The rounding of large numbers is more than that, from 524288 on: a point
+     * given at the diameter and an angle from another, as @10<30, is found at the diameter within 1.5 epsilon of
+     * the largest of the coordinates and the diameter in the directions tried, and within 4 by the bounds of the
+     * operations. Twice that is allowed.
+     */
+    double diameterTolerance(const RS_Vector& point1, const RS_Vector& point2, const double radius) {
+        const double largest = std::max(
+            {2. * radius, std::abs(point1.x), std::abs(point1.y), std::abs(point2.x), std::abs(point2.y)});
+        return std::max(RS_TOLERANCE, 8. * std::numeric_limits<double>::epsilon() * largest);
+    }
+
     /**
      * @brief isCollinearXY whether the 2x3 matrix has degenerate columns
      * @param mat - a 2x3 linear equation to solve an Appollonius
@@ -412,13 +432,29 @@ RS_VectorSolutions LC_CreationCircle::createTan2(const std::vector<RS_AtomicEnti
     return centers;
 }
 
+bool LC_CreationCircle::canCreate2PRadius(const RS_Vector& point1, const RS_Vector& point2, const double radius) {
+    // not for points that are not valid: their distance is RS_MAXDOUBLE
+    return point2.distanceTo(point1) - 2. * radius <= diameterTolerance(point1, point2, radius);
+}
+
 bool LC_CreationCircle::create2PRadius(const RS_Vector& point1, const RS_Vector& point2, double radius, RS_Vector& altCenter, RS_CircleData& m_circleData){
-    const double chordLenght = point2.distanceTo(point1);
-    if (chordLenght <= 2. * radius) {
+    if (canCreate2PRadius(point1, point2, radius)) {
+        const double chordLenght = point2.distanceTo(point1);
         const RS_Vector chordMiddlePoint = (point1 + point2) * 0.5;
-        const double angle = point1.angleTo(point2) + (0.5 * M_PI);
         m_circleData.radius = radius;
-        const double distanceFromChordToCenter = sqrt((radius * radius) - (0.25 * point1.squaredTo(point2)));
+        if (2. * radius - chordLenght <= diameterTolerance(point1, point2, radius)) {
+            // A diameter, whether it is found longer than twice the radius or shorter: the one circle is around its
+            // middle. The two circles through a chord shorter than the diameter by d have their centers
+            // sqrt(r * d) from it, 3e-4 for r = 1000 and d = 1e-10: the rounding of a diameter is not to choose
+            // between those.
+            m_circleData.center = chordMiddlePoint;
+            return false;
+        }
+        const double angle = point1.angleTo(point2) + (0.5 * M_PI);
+        // not r^2 - (c/2)^2: the difference of the squares has lost the digits by which a chord near the diameter
+        // is shorter
+        const double halfChord = 0.5 * chordLenght;
+        const double distanceFromChordToCenter = sqrt((radius - halfChord) * (radius + halfChord));
         const RS_Vector ortoVector = RS_Vector(angle) * distanceFromChordToCenter;
         const RS_Vector& center1 = chordMiddlePoint + ortoVector;
         const RS_Vector& center2 = chordMiddlePoint - ortoVector;

@@ -35,6 +35,16 @@
 class DRW_TextCodec;
 class DRW_Entity;
 
+/// Section record indices used in m_sectionOffsets / m_sectionSizes.
+namespace recno {
+    constexpr std::uint8_t HEADER    = 0;
+    constexpr std::uint8_t CLASSES   = 1;
+    constexpr std::uint8_t HANDLES   = 2;
+    constexpr std::uint8_t UNKNOWN   = 3;
+    constexpr std::uint8_t TEMPLATE  = 4;
+    constexpr std::uint8_t AUXHEADER = 5;
+}
+
 /// DWG CLASSES section entry used by custom-class object/entity writers.
 /// DWG custom class numbers start at 500; fixed built-in object types are not
 /// represented here.
@@ -381,6 +391,12 @@ public:
     /// without loss. This is sticky for the same reason as entity EED failures.
     virtual bool hasObjectEedWriteFailure() const { return false; }
 
+    /// What the objects written so far left out, by what it was, and how
+    /// often. A write that is rolled back takes its count with it.
+    const std::map<std::string, std::size_t>& leftOut() const {
+        return m_leftOut;
+    }
+
     /// Return whether this concrete writer has an encoder for the named
     /// DataStorage operation. Payload and reference validity remain the
     /// responsibility of the typed encoder itself.
@@ -452,6 +468,7 @@ public:
         bool frameWriteError {false};
         bool entityEedWriteFailure {false};
         bool objectEedWriteFailure {false};
+        std::map<std::string, std::size_t> leftOut;
 
         // dwgWriter15 owns these state machines, but all concrete DWG writer
         // versions use this checkpoint type for compound writes.
@@ -523,6 +540,7 @@ public:
         checkpoint.hasDwgClassConflict = m_hasDwgClassConflict;
         checkpoint.dwgClassManifestPrepared = m_dwgClassManifestPrepared;
         checkpoint.dwgClassesFrozen = m_dwgClassesFrozen;
+        checkpoint.leftOut = m_leftOut;
         checkpoint.pendingDwgObjectFrameProvenance =
             m_pendingDwgObjectFrameProvenance;
         checkpoint.currentDwgObjectFrameProvenance =
@@ -554,6 +572,7 @@ public:
         m_hasDwgClassConflict = checkpoint.hasDwgClassConflict;
         m_dwgClassManifestPrepared = checkpoint.dwgClassManifestPrepared;
         m_dwgClassesFrozen = checkpoint.dwgClassesFrozen;
+        m_leftOut = checkpoint.leftOut;
         m_pendingDwgObjectFrameProvenance =
             checkpoint.pendingDwgObjectFrameProvenance;
         m_currentDwgObjectFrameProvenance =
@@ -622,6 +641,13 @@ public:
             (std::max)(m_header->getHandSeed(), highWaterHandle()), requiredSeed);
         if (seed <= maxHandle)
             return false;
+        const auto headerSection = m_sectionOffsets.find(recno::HEADER);
+        const auto headerSize = m_sectionSizes.find(recno::HEADER);
+        if (headerSection == m_sectionOffsets.end()
+            || headerSize == m_sectionSizes.end() || headerSize->second < 38u
+            || headerSection->second > m_buf.size()
+            || headerSize->second > m_buf.size() - headerSection->second)
+            return false;
         const std::uint8_t bytes[] = {
             static_cast<std::uint8_t>(seed >> 24),
             static_cast<std::uint8_t>(seed >> 16),
@@ -631,6 +657,12 @@ public:
         if (!m_buf.patchRawBytesAtBit(m_headerHandseedBitOffset, bytes,
                                       sizeof(bytes)))
             return false;
+        // HEADER is sentinel + RL size + data + CRC + sentinel in every
+        // supported version. Refresh before modern writers package the section.
+        const std::size_t crcOffset = static_cast<std::size_t>(headerSection->second)
+            + headerSize->second - 18u;
+        m_buf.patchRawShort16(crcOffset,
+            m_buf.crc16(0xC0C1, headerSection->second + 16u, crcOffset));
         m_header->setHandSeed(seed);
         return true;
     }
@@ -1504,6 +1536,11 @@ public:
     }
 
 protected:
+    void noteLeftOut(const char *what, std::size_t count) {
+        if (count != 0)
+            m_leftOut[what] += count;
+    }
+
     /// Mark handle-associated class instances at the same commit point as the
     /// object-map entry.  A missing handle is harmless for fixed-type objects;
     /// custom registrations are required to have exactly one matching frame.
@@ -1850,7 +1887,7 @@ protected:
     /// final flush copies to `m_stream` in one `write()` call.
     dwgBufferW m_buf;
 
-    /// Per-section start byte offsets, indexed by `secEnum::DWGSection`.
+    /// Per-section start byte offsets, indexed by `recno`.
     /// Populated as each section begins emitting; consumed by `finalize()`
     /// to back-patch the file-header section locator records.
     std::map<int, std::uint32_t> m_sectionOffsets;
@@ -1887,6 +1924,7 @@ protected:
     bool m_hasDwgClassConflict {false};
     bool m_dwgClassManifestPrepared {false};
     bool m_dwgClassesFrozen {false};
+    std::map<std::string, std::size_t> m_leftOut;
     DRW::DwgObjectFrameProvenance m_pendingDwgObjectFrameProvenance;
     DRW::DwgObjectFrameProvenance m_currentDwgObjectFrameProvenance;
 };

@@ -25,6 +25,8 @@
 #ifndef LC_LAYERTREEMODEL_H
 #define LC_LAYERTREEMODEL_H
 
+#include <memory>
+
 #include <QAbstractItemModel>
 #include <QIcon>
 #include <QRegularExpression>
@@ -47,7 +49,8 @@ public:
     };
     // the default icon size
     static constexpr int ICONWIDTH = 21;
-    explicit LC_LayerTreeModel(QObject *parent, LC_LayerTreeModelOptions *options);
+    explicit LC_LayerTreeModel(QObject *parent, std::unique_ptr<LC_LayerTreeModelOptions> options);
+    ~LC_LayerTreeModel() override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     int columnCount(const QModelIndex &parent) const override;
     int rowCount(const QModelIndex &parent) const override;
@@ -58,7 +61,7 @@ public:
     void proceedActiveLayerChanged(const RS_LayerList *ll) const;
     QList<RS_Layer *> collectLayers(const LC_LayerTreeItemAcceptor &acceptor) const;
     QModelIndexList getPersistentIndexList() const;
-    LC_LayerTreeItem *getRoot() const {return m_rootItem;}
+    LC_LayerTreeItem *getRoot() const {return m_rootItem.get();}
     void setFilteringRegexp(const QString &regexp, bool highlightMode);
     Qt::DropActions supportedDropActions() const override{return Qt::CopyAction | Qt::MoveAction;}
     void setCurrentlyDraggingItem(LC_LayerTreeItem *item);
@@ -77,7 +80,7 @@ public:
     QStringList getLayersListForRenamedPrimary(LC_LayerTreeItem* source, const QString &newSourceName, int newLayerType);
     QString createFullLayerName(LC_LayerTreeItem *treeItem, const QString &layerName, int layerType, bool newLayer);
     int translateColumn(int column) const;
-    LC_LayerTreeModelOptions* getOptions() const {return m_options;}
+    LC_LayerTreeModelOptions* getOptions() const {return m_options.get();}
     void reset();
     bool isRegexpApplied() const{return m_hasRegexp;}
 private:
@@ -132,11 +135,11 @@ private:
     LC_LayerTreeItem *m_currentlyDraggingItem{nullptr};
 
     // root item for layers hierarchy
-    LC_LayerTreeItem *m_rootItem = nullptr;
+    std::unique_ptr<LC_LayerTreeItem> m_rootItem;
 
     bool m_flatMode{false};
 
-    LC_LayerTreeModelOptions* m_options = nullptr;
+    std::unique_ptr<LC_LayerTreeModelOptions> m_options;
     void copyChildrenLayers(LC_LayerTreeItem *parent, int newParentLayerType, QHash<RS_Layer *, RS_Layer *> &result);
 };
 
