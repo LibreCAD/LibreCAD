@@ -263,6 +263,99 @@ private:
     std::size_t m_branches{0};
 };
 
+/** Records actual bound requests; hooks may loosen valid bounds or refuse a query. */
+class AccountingCurves final : public LC_ParametricCurves {
+public:
+    struct BoundCall {
+        std::size_t segment;
+        double from;
+        double to;
+    };
+
+    explicit AccountingCurves(std::vector<PolynomialPiece> pieces) : curves{std::move(pieces)} {}
+    const std::vector<LC_ParametricSegment>& segments() const override { return curves.segments(); }
+    std::size_t branchCount() const override { return curves.branchCount(); }
+    std::ptrdiff_t next(const std::size_t branch) const override { return curves.next(branch); }
+    bool evaluate(const std::size_t segment, const double t, RS_Vector& p, RS_Vector& d) const override {
+        return curves.evaluate(segment, t, p, d);
+    }
+    bool bound(const std::size_t segment, const double from, const double to, LC_Interval& x, LC_Interval& y,
+               LC_Interval& dx, LC_Interval& dy) const override {
+        calls.push_back({segment, from, to});
+        return curves.bound(segment, from, to, x, y, dx, dy) &&
+               (!derivativeBounds || derivativeBounds(segment, from, to, dx, dy));
+    }
+    LC_AnalyticLeafCertificate certifyInjective(const std::size_t segment, const LC_Interval& parameter) const override {
+        return curves.certifyInjective(segment, parameter);
+    }
+    LC_AnalyticIntersectionCertificate certifyIntersection(const LC_IntersectionDomain& box) const override {
+        return curves.certifyIntersection(box);
+    }
+
+    CertifiedPolynomials curves;
+    mutable std::vector<BoundCall> calls;
+    std::function<bool(std::size_t, double, double, LC_Interval&, LC_Interval&)> derivativeBounds;
+};
+
+// Recognize exact dyadic cells from the adapter's domain, not from solver depth/statistics.
+bool examinedDepth(const AccountingCurves::BoundCall& call, const LC_ParametricSegment& domain, unsigned& depth) {
+    if (!(call.from < call.to)) {
+        return false;
+    }
+    double lo = domain.t0;
+    double hi = domain.t1;
+    for (depth = 0; depth <= 32; ++depth) {
+        if (call.from == lo && call.to == hi) {
+            return true;
+        }
+        const double middle = lo + 0.5 * (hi - lo);
+        if (!(lo < middle && middle < hi)) {
+            return false;
+        }
+        if (call.to <= middle) {
+            hi = middle;
+        } else if (call.from >= middle) {
+            lo = middle;
+        } else {
+            return false;
+        }
+    }
+    return false;
+}
+
+unsigned preparationTraceDepth(const AccountingCurves& curves) {
+    unsigned deepest = 0;
+    for (const auto& call : curves.calls) {
+        unsigned depth = 0;
+        if (examinedDepth(call, curves.segments()[call.segment], depth)) {
+            deepest = std::max(deepest, depth);
+        }
+    }
+    return deepest;
+}
+
+unsigned pairTraceDepth(const AccountingCurves& curves) {
+    unsigned deepest = 0;
+    for (std::size_t i = 1; i < curves.calls.size(); ++i) {
+        const auto& a = curves.calls[i - 1];
+        const auto& b = curves.calls[i];
+        unsigned da = 0;
+        unsigned db = 0;
+        if (a.segment == 0 && b.segment == 1 && examinedDepth(a, curves.segments()[0], da) &&
+            examinedDepth(b, curves.segments()[1], db)) {
+            deepest = std::max(deepest, da + db);
+        }
+    }
+    return deepest;
+}
+
+std::size_t orderingPointCalls(const AccountingCurves& curves) {
+    // The endpoint-certificate fixture contracts at 3/8, never a preparation endpoint/midpoint.
+    return static_cast<std::size_t>(std::count_if(curves.calls.begin(), curves.calls.end(), [](const auto& call) {
+        return call.segment == 0 && call.from == 0.375 && call.to == call.from;
+    }));
+}
+
 LC_IntersectionOptions strictOptions() {
     LC_IntersectionOptions options;
     options.tolerance = 1e-9;
@@ -345,6 +438,333 @@ size_t sampledCrossings(const std::vector<const RS_Spline*>& splines) {
 }
 
 } // namespace
+
+TEST_CASE("Observed intersection depths distinguish roots from unexamined work",
+          "[lc-offsetcurve][geometry][intersection-accounting]") {
+    LC_IntersectionWorkStats work;
+    CHECK(work.deepest() == 0);
+    work.deepestPreparation = 2;
+    work.deepestPairRefinement = 4;
+    work.deepestOrderingRefinement = 3;
+    CHECK(work.deepest() == 4);
+    work.deepestOrderingRefinement = std::numeric_limits<unsigned>::max();
+    CHECK(work.deepest() == std::numeric_limits<unsigned>::max());
+
+    for (const bool strict : {false, true}) {
+        CAPTURE(strict);
+        auto options = strictOptions();
+        options.strict = strict;
+        options.maxDepth = options.maxLeafDepth = 0;
+        AnalyticLines crossing{{1.0, 0.0}, {0.0, 1.0}};
+        const auto result = findIntersections(crossing, options);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        REQUIRE(result.intersections.size() == 1);
+        CHECK(result.work.generatedLeaves == 2);
+        CHECK(result.work.refinementBoxPairs == 1);
+        CHECK(result.work.deepestPreparation == 0);
+        CHECK(result.work.deepestPairRefinement == 0);
+        CHECK(result.work.deepestOrderingRefinement == 0);
+        CHECK(result.work.deepest() == 0);
+
+        CertifiedPolynomials empty{{}};
+        const auto invalid = findIntersections(empty, options);
+        CHECK(invalid.status == LC_IntersectionStatus::InvalidInput);
+        CHECK(invalid.work.totalBoxPairs == 0);
+        CHECK(invalid.work.generatedLeaves == 0);
+        CHECK(invalid.work.deepest() == 0);
+
+        options.maxBoxPairs = 0;
+        const auto unexamined = findIntersections(crossing, options);
+        CHECK(unexamined.status == LC_IntersectionStatus::LimitExceeded);
+        CHECK(unexamined.work.totalBoxPairs == 0);
+        CHECK(unexamined.work.refinementBoxPairs == 0);
+        CHECK(unexamined.work.deepest() == 0);
+    }
+}
+
+TEST_CASE("Preparation depths follow independently traced dyadic bounds on every exit",
+          "[lc-offsetcurve][geometry][intersection-accounting]") {
+    for (const bool strict : {false, true}) {
+        CAPTURE(strict);
+        AccountingCurves curves{{polynomialLine(0, {0, 0}, {1, 0}),
+                                 polynomialLine(1, {0, 4}, {1, 0})}};
+        curves.derivativeBounds = [](const std::size_t segment, const double from, const double to,
+                                     LC_Interval& dx, LC_Interval& dy) {
+            if (to - from > (segment == 0 ? 0.125 : 0.5)) {
+                dx = dy = LC_Interval::hull(-1.0, 1.0);
+            }
+            return true;
+        };
+        auto options = strictOptions();
+        options.strict = strict;
+        options.maxLeafDepth = 3;
+        const auto exact = findIntersections(curves, options);
+        REQUIRE(exact.status == LC_IntersectionStatus::Ok);
+        CHECK(exact.work.generatedLeaves == 10);
+        CHECK(preparationTraceDepth(curves) == 3);
+        CHECK(exact.work.deepestPreparation == preparationTraceDepth(curves));
+        CHECK(exact.work.deepestPairRefinement == 0);
+        CHECK(exact.work.deepestOrderingRefinement == 0);
+        CHECK(exact.work.deepest() == 3);
+
+        curves.calls.clear();
+        options.maxLeafDepth = 2;
+        const auto shortDepth = findIntersections(curves, options);
+        CHECK(shortDepth.status == (strict ? LC_IntersectionStatus::LimitExceeded :
+                                            LC_IntersectionStatus::AmbiguousTopology));
+        CHECK(shortDepth.intersections.empty());
+        CHECK(preparationTraceDepth(curves) == 2);
+        CHECK(shortDepth.work.deepestPreparation == preparationTraceDepth(curves));
+        CHECK(shortDepth.work.generatedLeaves == 0);
+
+        curves.calls.clear();
+        options.maxLeafDepth = 8;
+        const auto loose = curves.derivativeBounds;
+        curves.derivativeBounds = [loose](const std::size_t segment, const double from, const double to,
+                                         LC_Interval& dx, LC_Interval& dy) {
+            return !(from < to && to - from <= 0.125) && loose(segment, from, to, dx, dy);
+        };
+        const auto invalid = findIntersections(curves, options);
+        CHECK(invalid.status == (strict ? LC_IntersectionStatus::InvalidInput :
+                                         LC_IntersectionStatus::AmbiguousTopology));
+        CHECK(invalid.intersections.empty());
+        // Ordinary preparation keeps subdividing a refused bound; strict preparation stops at that examination.
+        const unsigned failedDepth = strict ? 3u : options.maxLeafDepth;
+        CHECK(preparationTraceDepth(curves) == failedDepth);
+        CHECK(invalid.work.deepestPreparation == preparationTraceDepth(curves));
+        CHECK(invalid.work.deepest() == failedDepth);
+    }
+}
+
+TEST_CASE("Refused preparation children and rounded midpoint stagnation do not invent depth",
+          "[lc-offsetcurve][geometry][intersection-accounting]") {
+    AccountingCurves children{{polynomialLine(0, {0, 0}, {1, 0})}};
+    children.derivativeBounds = [](std::size_t, const double from, const double to,
+                                   LC_Interval& dx, LC_Interval& dy) {
+        if (to - from > 0.125) {
+            dx = dy = LC_Interval::hull(-1.0, 1.0);
+        }
+        return true;
+    };
+    auto options = strictOptions();
+    options.maxGeneratedItems = 5; // root and two admitted two-child splits; the next children are refused
+    const auto refused = findIntersections(children, options);
+    CHECK(refused.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(refused.work.generatedItems == 5);
+    CHECK(refused.work.generatedLeaves == 0);
+    CHECK(preparationTraceDepth(children) == 2);
+    CHECK(refused.work.deepestPreparation == preparationTraceDepth(children));
+
+    for (const bool strict : {false, true}) {
+        CAPTURE(strict);
+        AccountingCurves rounded{{polynomialLine(0, {-1e16, 0}, {1, 0}, 1e16, 1e16 + 16)}};
+        rounded.derivativeBounds = [](std::size_t, double, double, LC_Interval& dx, LC_Interval& dy) {
+            dx = dy = LC_Interval::hull(-1.0, 1.0);
+            return true;
+        };
+        options = strictOptions();
+        options.strict = strict;
+        options.maxLeafDepth = 8;
+        const auto stagnant = findIntersections(rounded, options);
+        CHECK(stagnant.status == LC_IntersectionStatus::AmbiguousTopology);
+        CHECK(stagnant.intersections.empty());
+        CHECK(preparationTraceDepth(rounded) == 3);
+        CHECK(stagnant.work.deepestPreparation == preparationTraceDepth(rounded));
+        CHECK(stagnant.work.deepest() == 3);
+    }
+}
+
+TEST_CASE("Pair depths count charged examined cells rather than pending subdivisions",
+          "[lc-offsetcurve][geometry][intersection-accounting]") {
+    AccountingCurves curves{{polynomialLine(0, {-0.375, 0}, {1, 0}),
+                             polynomialLine(1, {0, -0.625}, {0, 1})}};
+    curves.derivativeBounds = [](std::size_t, const double from, const double to,
+                                 LC_Interval& dx, LC_Interval& dy) {
+        if (from < to) {
+            dx = dy = LC_Interval::hull(-2.0, 2.0);
+        }
+        return true;
+    };
+    curves.curves.leafProof = [](const std::size_t segment, const LC_Interval& parameter) {
+        return LC_AnalyticLeafCertificate{true, segment, parameter}; // both exact nonconstant lines are injective
+    };
+    auto options = strictOptions();
+    options.maxDepth = 2;
+    const auto baseline = findIntersections(curves, options);
+    REQUIRE(baseline.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(baseline.intersections.empty());
+    CHECK(baseline.work.deepestPreparation == 0);
+    CHECK(pairTraceDepth(curves) == 2);
+    CHECK(baseline.work.deepestPairRefinement == pairTraceDepth(curves));
+    CHECK(baseline.work.deepestOrderingRefinement == 0);
+    REQUIRE(baseline.work.certificateBoxPairs == 2);
+
+    for (const unsigned admitted : {1u, 2u}) {
+        CAPTURE(admitted);
+        curves.calls.clear();
+        options.maxBoxPairs = baseline.work.candidateBoxPairs + baseline.work.certificateBoxPairs + admitted;
+        const auto shortWork = findIntersections(curves, options);
+        CHECK(shortWork.status == LC_IntersectionStatus::LimitExceeded);
+        CHECK(shortWork.intersections.empty());
+        CHECK(shortWork.work.totalBoxPairs == options.maxBoxPairs);
+        CHECK(shortWork.work.refinementBoxPairs == admitted);
+        CHECK(pairTraceDepth(curves) == admitted - 1);
+        CHECK(shortWork.work.deepestPairRefinement == pairTraceDepth(curves));
+    }
+
+    curves.calls.clear();
+    curves.derivativeBounds = [](std::size_t, const double from, const double to,
+                                 LC_Interval& dx, LC_Interval& dy) {
+        if (to - from > 0.25) {
+            dx = dy = LC_Interval::hull(-2.0, 2.0);
+        }
+        return true;
+    };
+    options = strictOptions();
+    options.maxDepth = 16;
+    const auto resolved = findIntersections(curves, options);
+    REQUIRE(resolved.status == LC_IntersectionStatus::Ok);
+    REQUIRE(resolved.intersections.size() == 1);
+    const unsigned requiredDepth = pairTraceDepth(curves);
+    REQUIRE(requiredDepth > 2);
+    CHECK(resolved.work.deepestPairRefinement == requiredDepth);
+
+    curves.calls.clear();
+    options.maxDepth = requiredDepth;
+    const auto exactDepth = findIntersections(curves, options);
+    REQUIRE(exactDepth.status == LC_IntersectionStatus::Ok);
+    CHECK(exactDepth.work.deepestPairRefinement == requiredDepth);
+    CHECK(pairTraceDepth(curves) == requiredDepth);
+
+    curves.calls.clear();
+    options.maxDepth = requiredDepth - 1;
+    const auto shortDepth = findIntersections(curves, options);
+    CHECK(shortDepth.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(shortDepth.intersections.empty());
+    CHECK(pairTraceDepth(curves) == requiredDepth - 1);
+    CHECK(shortDepth.work.deepestPairRefinement == pairTraceDepth(curves));
+
+    curves.calls.clear();
+    curves.derivativeBounds = [](std::size_t, const double from, const double to,
+                                 LC_Interval& dx, LC_Interval& dy) {
+        if (to - from == 0.5) {
+            return false;
+        }
+        if (from < to) {
+            dx = dy = LC_Interval::hull(-2.0, 2.0);
+        }
+        return true;
+    };
+    options = strictOptions();
+    const auto invalid = findIntersections(curves, options);
+    CHECK(invalid.status == LC_IntersectionStatus::InvalidInput);
+    CHECK(invalid.intersections.empty());
+    REQUIRE_FALSE(curves.calls.empty());
+    unsigned failedDepth = 0;
+    REQUIRE(examinedDepth(curves.calls.back(), curves.segments()[curves.calls.back().segment], failedDepth));
+    CHECK(failedDepth == 1);
+    CHECK(invalid.work.deepestPairRefinement == failedDepth);
+
+    AccountingCurves ordinary{{{{0, 0, 1}, {0, 1, 0, 0}, {3.0 / 64.0, -0.25, 0.25, 0}},
+                               polynomialLine(1, {0, 0}, {1, 0})}};
+    options = strictOptions();
+    options.strict = false;
+    options.maxDepth = 2;
+    const auto ordinaryResult = findIntersections(ordinary, options);
+    CHECK(ordinaryResult.work.deepestPreparation == 0);
+    CHECK(pairTraceDepth(ordinary) == 2);
+    CHECK(ordinaryResult.work.deepestPairRefinement == pairTraceDepth(ordinary));
+    CHECK(ordinaryResult.work.deepestOrderingRefinement == 0);
+}
+
+TEST_CASE("Strict ordering depths survive contraction limits invalid bounds and ambiguity",
+          "[lc-offsetcurve][geometry][intersection-accounting]") {
+    AccountingCurves curves{{polynomialLine(0, {0, 0}, {1, 0}),
+                             polynomialLine(1, {0.25, 0}, {0, 1}),
+                             polynomialLine(2, {0.5, 0}, {0, 1})}};
+    curves.curves.contactProof = [](const LC_IntersectionDomain& box) {
+        LC_AnalyticIntersectionCertificate certificate;
+        if (box.segmentA != 0 || (box.segmentB != 1 && box.segmentB != 2)) {
+            return certificate;
+        }
+        certificate.proofDomain = box;
+        const double root = box.segmentB == 1 ? 0.25 : 0.5;
+        if (!box.parameterA.contains(root) || !box.parameterB.contains(0.0)) {
+            certificate.outcome = LC_AnalyticIntersectionCertificate::Outcome::Excluded;
+            certificate.proof = LC_IntersectionProof::AnalyticExclusion;
+        } else {
+            // Exact horizontal/vertical lines have just this one contact, at the vertical branch's free start.
+            certificate.outcome = LC_AnalyticIntersectionCertificate::Outcome::Unique;
+            certificate.proof = LC_IntersectionProof::AnalyticEndpoint;
+            certificate.kind = Kind::Endpoint;
+            certificate.isolationA = LC_Interval::hull(std::max(0.125, box.parameterA.lo()),
+                                                       std::min(0.625, box.parameterA.hi()));
+            certificate.isolationB = LC_Interval::point(0.0);
+        }
+        return certificate;
+    };
+    auto options = strictOptions();
+    options.maxDepth = 1;
+    const auto baseline = findIntersections(curves, options);
+    REQUIRE(baseline.status == LC_IntersectionStatus::Ok);
+    REQUIRE(baseline.intersections.size() == 2);
+    CHECK(orderingPointCalls(curves) == 2);
+    CHECK(baseline.work.deepestPreparation == 0);
+    CHECK(baseline.work.deepestPairRefinement == 0);
+    CHECK(baseline.work.deepestOrderingRefinement == 1);
+    CHECK(baseline.work.deepest() == 1);
+
+    curves.calls.clear();
+    options.maxDepth = 0;
+    const auto shortDepth = findIntersections(curves, options);
+    CHECK(shortDepth.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(shortDepth.intersections.empty());
+    CHECK(orderingPointCalls(curves) == 0);
+    CHECK(shortDepth.work.deepestOrderingRefinement == 0);
+
+    for (const std::size_t admitted : {0u, 1u}) {
+        CAPTURE(admitted);
+        curves.calls.clear();
+        options.maxDepth = 1;
+        // The final comparison follows two contractions. Admit only the preceding comparison and N contractions.
+        options.maxBoxPairs = baseline.work.totalBoxPairs - 3 + admitted;
+        const auto shortWork = findIntersections(curves, options);
+        CHECK(shortWork.status == LC_IntersectionStatus::LimitExceeded);
+        CHECK(shortWork.intersections.empty());
+        CHECK(shortWork.work.totalBoxPairs == options.maxBoxPairs);
+        CHECK(orderingPointCalls(curves) == admitted);
+        CHECK(shortWork.work.deepestOrderingRefinement == admitted);
+    }
+
+    curves.calls.clear();
+    options = strictOptions();
+    curves.derivativeBounds = [](const std::size_t segment, const double from, const double to,
+                                 LC_Interval&, LC_Interval&) {
+        return !(segment == 0 && from == 0.375 && to == from);
+    };
+    const auto invalid = findIntersections(curves, options);
+    CHECK(invalid.status == LC_IntersectionStatus::InvalidInput);
+    CHECK(invalid.intersections.empty());
+    CHECK(orderingPointCalls(curves) == 1);
+    CHECK(invalid.work.deepestOrderingRefinement == 1);
+
+    curves.calls.clear();
+    curves.derivativeBounds = [](std::size_t, const double from, const double to,
+                                 LC_Interval& dx, LC_Interval& dy) {
+        if (from < to) {
+            dx = dy = LC_Interval::hull(-2.0, 2.0);
+        }
+        return true;
+    };
+    curves.curves.leafProof = [](const std::size_t segment, const LC_Interval& parameter) {
+        return LC_AnalyticLeafCertificate{true, segment, parameter}; // all three nonconstant lines are injective
+    };
+    const auto ambiguous = findIntersections(curves, options);
+    CHECK(ambiguous.status == LC_IntersectionStatus::AmbiguousTopology);
+    CHECK(ambiguous.intersections.empty());
+    CHECK(orderingPointCalls(curves) == 2);
+    CHECK(ambiguous.work.deepestOrderingRefinement == 1);
+}
 
 TEST_CASE("Strict transverse certificates use outward points rather than cancellation seeds",
           "[lc-offsetcurve][geometry][intersection-strict][curve-offset][topology]") {

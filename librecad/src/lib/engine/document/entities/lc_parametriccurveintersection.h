@@ -22,6 +22,7 @@
 #ifndef LC_PARAMETRICCURVEINTERSECTION_H
 #define LC_PARAMETRICCURVEINTERSECTION_H
 
+#include <algorithm>
 #include <cstddef>
 #include <limits>
 #include <vector>
@@ -190,6 +191,16 @@ struct LC_IntersectionWorkStats {
     std::size_t generatedLeaves{0};
     /** Strict preparation boxes and new certificates, including discarded ones; zero in ordinary mode. */
     std::size_t generatedItems{0};
+    /** Entered preparation depth; segment roots are zero, queued/unexamined children do not count. */
+    unsigned deepestPreparation{0};
+    /** Entered pair depth after a successful work charge; initial leaf-pair boxes are zero. */
+    unsigned deepestPairRefinement{0};
+    /** Entered strict comparison/contraction depth; excludes fixed Newton/contact iterations and BVH height. */
+    unsigned deepestOrderingRefinement{0};
+
+    unsigned deepest() const {
+        return std::max({deepestPreparation, deepestPairRefinement, deepestOrderingRefinement});
+    }
 };
 
 struct LC_IntersectionResult {

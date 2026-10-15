@@ -224,6 +224,7 @@ private:
             while (!stack.empty()) {
                 const Box box = stack.back();
                 stack.pop_back();
+                m_work.deepestPreparation = std::max(m_work.deepestPreparation, box.depth);
                 Bounds bounds;
                 const bool bounded = bound(s, box.a, box.b, bounds);
                 const bool monotone = bounded && isMonotone(bounds.dx, bounds.dy);
@@ -537,6 +538,7 @@ private:
             }
             const Pair box = stack.back();
             stack.pop_back();
+            m_work.deepestPairRefinement = std::max(m_work.deepestPairRefinement, box.depth);
             Bounds bp;
             Bounds bq;
             if (!bound(p.segment, box.a0, box.a1, bp) || !bound(q.segment, box.b0, box.b1, bq)) {
@@ -1277,6 +1279,7 @@ private:
             while (!pending.empty()) {
                 const Pending item = pending.back();
                 pending.pop_back();
+                m_work.deepestPreparation = std::max(m_work.deepestPreparation, item.depth);
                 Bounds bounds;
                 if (!bound(segment, item.parameter, bounds)) {
                     return false;
@@ -1653,6 +1656,7 @@ private:
             }
             const Cell cell = pending.back();
             pending.pop_back();
+            m_work.deepestPairRefinement = std::max(m_work.deepestPairRefinement, cell.depth);
             Bounds a;
             Bounds b;
             if (!bound(cell.box.segmentA, cell.box.parameterA, a) ||
@@ -1726,11 +1730,12 @@ private:
         return true;
     }
 
-    bool shrink(LC_ParametricIntersection& event, bool& changed) {
+    bool shrink(LC_ParametricIntersection& event, bool& changed, const unsigned depth) {
         changed = false;
         if (!consume(m_work.certificateBoxPairs)) {
             return false;
         }
+        m_work.deepestOrderingRefinement = std::max(m_work.deepestOrderingRefinement, depth);
         Inclusion inclusion;
         if (!krawczyk(event.isolation, false, inclusion)) {
             return false;
@@ -1869,6 +1874,7 @@ private:
                     if (!consume(m_work.certificateBoxPairs)) {
                         return false;
                     }
+                    m_work.deepestOrderingRefinement = std::max(m_work.deepestOrderingRefinement, attempt);
                     bool merged = false;
                     if (!merge(m_events[i], m_events[j], merged)) {
                         return false;
@@ -1885,7 +1891,8 @@ private:
                     }
                     bool changedA = false;
                     bool changedB = false;
-                    if (!shrink(m_events[i], changedA) || !shrink(m_events[j], changedB)) {
+                    if (!shrink(m_events[i], changedA, attempt + 1) ||
+                        !shrink(m_events[j], changedB, attempt + 1)) {
                         return false;
                     }
                     if (!changedA && !changedB) {
