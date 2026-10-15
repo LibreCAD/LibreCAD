@@ -559,11 +559,13 @@ protected:
 
     /// Resolve named APPID/LAYER EED references into the writer's final
     /// table-handle namespace before an entity serializes its common header.
+    /// The data of an application that names a layer the drawing does not
+    /// have is left out, and counted in leftOut().
     bool prepareEntityEed(DRW_Entity& entity);
     bool prepareTableEntryEed(
         const DRW_TableEntry& entry,
         std::vector<DRW_Entity::PendingHandleRef>& appIdRefs,
-        std::vector<DRW_Entity::PendingHandleRef>& layerRefs) const;
+        std::vector<DRW_Entity::PendingHandleRef>& layerRefs);
 
     bool m_entityEedWriteFailure {false};
     bool m_objectEedWriteFailure {false};

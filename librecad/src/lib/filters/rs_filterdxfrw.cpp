@@ -11553,7 +11553,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   this->m_graphic = &g;
   m_writeFailed = false;
   m_dxfLeftOutRawRecords = 0;
-  m_dxfLeftOut.clear();
+  m_writeLeftOut.clear();
   m_shapeLeftOut.clear();
   m_shapeExportDirectory = QFileInfo(file).absoluteDir().canonicalPath();
   m_exportAttribScaleDataLeftOut = 0;
@@ -11820,6 +11820,18 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       reserveAll(md.spatialIndexes(), "SPATIAL_INDEX");
       reserveAll(md.dictionariesWithDefault(), "DICTIONARYWDFLT");
       reserveAll(md.sortEntsTables(), "SORTENTSTABLE");
+      // Sort keys need not name objects; reserve them before allocating handles.
+      for (const auto &record : md.sortEntsTables()) {
+        if (record.replayState !=
+            LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+          continue;
+        for (const std::uint32_t sortHandle : record.sortHandles) {
+          if (sortHandle == DRW::NoHandle)
+            continue;
+          m_dwgW->reserveHandle(sortHandle);
+          highWater = std::max<std::uint32_t>(highWater, sortHandle);
+        }
+      }
       reserveAll(md.dbColors(), "DBCOLOR");
       reserveAll(md.underlayDefinitions(), "UNDERLAYDEFINITION");
       reserveAll(md.pointCloudDefinitions(), "POINTCLOUDDEF");
@@ -11937,6 +11949,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     }
     bool success = m_dwgW->write(this, dwgVer, false) && !m_writeFailed;
     m_lastDwgWriteSkipCounters = m_dwgW->getWriteSkipCounters();
+    m_writeLeftOut = m_dwgW->leftOut();
     m_lastDwgOptionalReferenceDropCount = dwgWriteOptionalReferenceDropCount();
     if (!success) {
       RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -12734,7 +12747,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   //    bool success = m_dxfW->write(this, exportVersion, false); //ascii
   const bool success =
       m_dxfW->write(this, exportVersion, binary) && !m_writeFailed; // binary
-  m_dxfLeftOut = m_dxfW->leftOut();
+  m_writeLeftOut = m_dxfW->leftOut();
   activeWriter.reset();
 
   if (!success) {
@@ -16961,7 +16974,7 @@ QString RS_FilterDXFRW::exportReport() const {
                          "this version cannot hold", "RS_FilterDXFRW")
                  .arg(m_dxfLeftOutRawRecords);
   }
-  for (const auto &[what, count] : m_dxfLeftOut)
+  for (const auto &[what, count] : m_writeLeftOut)
     lines << QStringLiteral("%1 × %2").arg(count).arg(QString::fromStdString(what));
   for (const auto &[what, count] : m_shapeLeftOut)
     lines << QStringLiteral("%1 × %2").arg(count).arg(QString::fromStdString(what));
@@ -25826,7 +25839,13 @@ void RS_FilterDXFRW::writeObjects() {
               effectiveSortStatus = DwgWriteReferenceStatus::Committed;
             }
           }
-          if (!isLiveDwgWriteReference(effectiveSortStatus) ||
+          const bool freeSortHandle =
+              effectiveSortStatus == DwgWriteReferenceStatus::Missing ||
+              effectiveSortStatus == DwgWriteReferenceStatus::Suppressed;
+          // A free sort key is an ordering value, not an object reference.
+          if (freeSortHandle)
+            sortHandle = sourceSortHandle;
+          if ((!freeSortHandle && !isLiveDwgWriteReference(effectiveSortStatus)) ||
               sortHandle == 0) {
             const DwgWriteReferenceStatus dropStatus =
                 effectiveSortStatus == DwgWriteReferenceStatus::Ambiguous
@@ -25849,10 +25868,11 @@ void RS_FilterDXFRW::writeObjects() {
                entityTargetKind, DwgWriteReferenceStatus::Committed,
                "SORTENTSTABLE entity", static_cast<std::uint32_t>(i),
                DRW::DwgSoftPointer, true});
-          pendingReferences.push_back(
-              {true, sourceSortHandle, sortHandle, sortTargetKind,
-               DwgWriteReferenceStatus::Committed, "SORTENTSTABLE sort",
-               static_cast<std::uint32_t>(i), DRW::DwgNullReference, false});
+          if (!freeSortHandle)
+            pendingReferences.push_back(
+                {true, sourceSortHandle, sortHandle, sortTargetKind,
+                 DwgWriteReferenceStatus::Committed, "SORTENTSTABLE sort",
+                 static_cast<std::uint32_t>(i), DRW::DwgNullReference, false});
         }
         if (m_writeFailed) {
           hasBlockedReplay = true;

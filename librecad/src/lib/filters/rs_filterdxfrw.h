@@ -3125,8 +3125,8 @@ private:
   // from another version it leaves out.
   DRW::Version m_dxfExportVersion = DRW::UNKNOWNV;
   std::size_t m_dxfLeftOutRawRecords = 0;
-  // What the codec left out of the DXF last exported (dxfRW::leftOut()).
-  std::map<std::string, std::size_t> m_dxfLeftOut;
+  // What the codec left out of the last export (DXF or DWG leftOut()).
+  std::map<std::string, std::size_t> m_writeLeftOut;
   std::map<std::string, std::size_t> m_shapeLeftOut;
   QString m_shapeExportDirectory;
   std::map<std::uint32_t, QString> m_shapeFileResolvedPaths;

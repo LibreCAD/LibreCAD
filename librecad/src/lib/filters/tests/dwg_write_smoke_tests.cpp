@@ -3026,6 +3026,28 @@ class FailingDwgLine final : public DRW_Line {
 public:
   bool reject{false};
 
+  void seedEedWriteState() {
+    dwgEedAppIdWriteRefs = {{0u, 0x123u, 0, false, true}};
+    dwgEedLayerWriteRefs = {{1u, 0x456u, 0x0102030405060708ULL, true, false}};
+    dwgEedCodePage = 1251;
+  }
+
+  void checkEedWriteState() const {
+    REQUIRE(dwgEedAppIdWriteRefs.size() == 1u);
+    CHECK(dwgEedAppIdWriteRefs.front().indexInExtData == 0u);
+    CHECK(dwgEedAppIdWriteRefs.front().handleRef == 0x123u);
+    CHECK(dwgEedAppIdWriteRefs.front().rawHandleRef == 0u);
+    CHECK_FALSE(dwgEedAppIdWriteRefs.front().useRawHandleRef);
+    CHECK(dwgEedAppIdWriteRefs.front().leftOut);
+    REQUIRE(dwgEedLayerWriteRefs.size() == 1u);
+    CHECK(dwgEedLayerWriteRefs.front().indexInExtData == 1u);
+    CHECK(dwgEedLayerWriteRefs.front().handleRef == 0x456u);
+    CHECK(dwgEedLayerWriteRefs.front().rawHandleRef == 0x0102030405060708ULL);
+    CHECK(dwgEedLayerWriteRefs.front().useRawHandleRef);
+    CHECK_FALSE(dwgEedLayerWriteRefs.front().leftOut);
+    CHECK(dwgEedCodePage == 1251);
+  }
+
 protected:
   bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs = 0,
                  dwgBufferW *strBuf = nullptr,
@@ -3053,6 +3075,7 @@ public:
     rejected.setDwgLayerHandle(0x456u);
     rejected.setDwgLinetypeHandle(0x789u);
     rejected.setDwgAcDbColorHandle(true, 0x9ABu);
+    rejected.seedEedWriteState();
     rejected.reject = true;
     CHECK_FALSE(m_writer->writeLine(&rejected));
     CHECK(rejected.handle == 0u);
@@ -3061,13 +3084,15 @@ public:
     CHECK(rejected.dwgLinetypeHandle() == 0x789u);
     CHECK(rejected.hasDwgAcDbColorHandle());
     CHECK(rejected.dwgAcDbColorHandle() == 0x9ABu);
+    rejected.checkEedWriteState();
 
     rejected.reject = false;
     REQUIRE(m_writer->writeLine(&rejected));
     REQUIRE(rejected.handle != 0u);
     REQUIRE(m_writer->endBlockContent());
 
-    DRW_Line tracked;
+    FailingDwgLine tracked;
+    tracked.seedEedWriteState();
     const std::uint64_t transaction =
         m_writer->beginDwgWriteTransaction(false, true);
     REQUIRE(transaction != 0);
@@ -3077,6 +3102,7 @@ public:
     CHECK(tracked.handle == 0u);
     CHECK(tracked.parentHandle == 0u);
     CHECK(tracked.dwgLayerHandle() == 0u);
+    tracked.checkEedWriteState();
   }
 };
 
@@ -3180,6 +3206,9 @@ public:
 
 TEST_CASE("dwgRW restores caller state on failed and tracked writes",
           "[dwg-write][transaction][caller-state]") {
+  const auto version = GENERATE(DRW::AC1015, DRW::AC1018, DRW::AC1021,
+                                DRW::AC1024, DRW::AC1027, DRW::AC1032);
+  CAPTURE(version);
   const std::string path = tempPath("dwg_caller_mutation_rollback.dwg");
   std::remove(path.c_str());
 
@@ -3187,7 +3216,7 @@ TEST_CASE("dwgRW restores caller state on failed and tracked writes",
   {
     dwgRW writer(path.c_str());
     iface.m_writer = &writer;
-    REQUIRE(writer.write(&iface, DRW::AC1027, /*bin=*/false));
+    REQUIRE(writer.write(&iface, version, /*bin=*/false));
   }
   std::remove(path.c_str());
 }
@@ -15484,31 +15513,111 @@ TEST_CASE("RS_FilterDXFRW rejects a zero CURVEPATH entity reference",
   std::remove(path.c_str());
 }
 
-TEST_CASE("RS_FilterDXFRW rejects a SORTENTSTABLE row with a missing sort key",
+TEST_CASE("RS_FilterDXFRW omits and reports XDATA naming a missing layer",
+          "[dwg-write][filter][eed][xdata]") {
+  ensureQtSettings();
+  const auto format = GENERATE(RS2::FormatDWG, RS2::FormatDWG2004,
+                              RS2::FormatDWG2007, RS2::FormatDWG2010,
+                              RS2::FormatDWG2013, RS2::FormatDWG2018);
+  const bool lostFirst = GENERATE(false, true);
+  CAPTURE(format, lostFirst);
+  RS_Graphic source;
+  source.initForNewDocument();
+  auto *line = new RS_Line(&source, {RS_Vector{0.0, 0.0}, RS_Vector{10.0, 5.0}});
+  std::vector<std::shared_ptr<DRW_Variant>> data{
+      std::make_shared<DRW_Variant>(1001, "LC_KEPT"),
+      std::make_shared<DRW_Variant>(1003, "0", true),
+      std::make_shared<DRW_Variant>(1000, "kept"),
+      std::make_shared<DRW_Variant>(1001, "LC_LOST"),
+      std::make_shared<DRW_Variant>(1003, "NO_SUCH_LAYER", true),
+      std::make_shared<DRW_Variant>(1000, "lost")};
+  if (lostFirst)
+    std::rotate(data.begin(), data.begin() + 3, data.end());
+  line->setDrwExtData(std::move(data));
+  source.addEntity(line);
+  const std::string path = tempPath("filter_missing_xdata_layer.dwg");
+  RS_FilterDXFRW exporter;
+  REQUIRE(exporter.fileExport(source, QString::fromStdString(path), format));
+  CHECK(exporter.exportReport().contains(
+      QStringLiteral("application data naming a layer not in the drawing")));
+  const std::string dxf = tempPath("filter_missing_xdata_layer.dxf");
+  REQUIRE(exporter.fileExport(source, QString::fromStdString(dxf), RS2::FormatDXFRW));
+  CHECK(exporter.exportReport().isEmpty());
+  std::remove(dxf.c_str());
+
+  RS_Graphic imported;
+  RS_FilterDXFRW reader;
+  REQUIRE(reader.fileImport(imported, QString::fromStdString(path), RS2::FormatDWG));
+  REQUIRE(imported.count() == 1);
+  const auto &kept = imported.entityAt(0)->getDrwExtData();
+  REQUIRE(kept.size() == 3u);
+  CHECK(std::string(kept[0]->c_str()) == "LC_KEPT");
+  CHECK(std::string(kept[1]->c_str()) == "0");
+  CHECK(kept[1]->isLayerRef());
+  CHECK(std::string(kept[2]->c_str()) == "kept");
+  REQUIRE(exporter.fileExport(imported, QString::fromStdString(path), format));
+  CHECK(exporter.exportReport().isEmpty());
+  std::remove(path.c_str());
+}
+
+// A sort handle need not name an object (ODA, SORTENTSTABLE).
+TEST_CASE("RS_FilterDXFRW keeps a SORTENTSTABLE sort key that names no object",
           "[dwg-write][sortentstable][references]") {
   ensureQtSettings();
+  const auto format = GENERATE(RS2::FormatDWG, RS2::FormatDWG2004,
+                              RS2::FormatDWG2007, RS2::FormatDWG2010,
+                              RS2::FormatDWG2013, RS2::FormatDWG2018);
+  const std::uint32_t freeKey = GENERATE(0xC62u, 0xF000u);
+  CAPTURE(format, freeKey);
 
   RS_Graphic source;
   source.initForNewDocument();
-  auto *line = new RS_Line(
-      &source, RS_LineData{RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}});
-  line->setSourceHandle(0xC51u);
-  source.addEntity(line);
+  for (const auto &[handle, y] : {std::pair{0xC61u, 0.0}, std::pair{0xC63u, 1.0}}) {
+    auto *line = new RS_Line(
+        &source, RS_LineData{RS_Vector{0.0, y}, RS_Vector{10.0, y}});
+    line->setSourceHandle(handle);
+    source.addEntity(line);
+  }
 
   DRW_SortEntsTable table;
-  table.handle = 0xC52u;
+  table.handle = 0xC64u;
   table.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
   table.m_blockOwnerHandle = DRW::DwgModelSpaceBlockRecordHandle;
-  table.m_entityHandles = {line->sourceHandle()};
-  table.m_sortHandles = {0xDEADu};
+  table.m_entityHandles = {0xC61u, 0xC63u};
+  table.m_sortHandles = {0xC63u, freeKey};
   source.dwgAdvancedMetadata().addSortEntsTable(table);
 
   const std::string path = tempPath("filter_sortentstable_missing_sort.dwg");
   std::remove(path.c_str());
-  RS_FilterDXFRW filter;
-  CHECK_FALSE(filter.fileExport(source, QString::fromStdString(path),
-                                RS2::FormatDWG2013));
-  CHECK_FALSE(std::filesystem::exists(path));
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(source, QString::fromStdString(path),
+                              format));
+  }
+
+  RS_Graphic imported;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(imported, QString::fromStdString(path),
+                              RS2::FormatDWG));
+  }
+  const auto &tables = imported.dwgAdvancedMetadata().sortEntsTables();
+  const auto written =
+      std::find_if(tables.begin(), tables.end(), [](const auto &candidate) {
+        return candidate.handle == 0xC64u;
+      });
+  REQUIRE(written != tables.end());
+  REQUIRE(written->entityHandles.size() == 2u);
+  REQUIRE(written->sortHandles.size() == 2u);
+  CHECK(written->sortHandles[0] == written->entityHandles[1]);
+  CHECK(written->sortHandles[1] == freeKey);
+  CHECK(written->sortHandles[1] < written->sortHandles[0]);
+  std::set<std::uint32_t> entityHandles;
+  for (RS_Entity *entity : imported)
+    entityHandles.insert(entity->sourceHandle());
+  CHECK(entityHandles.count(freeKey) == 0u);
+  CHECK(entityHandles.count(written->entityHandles[0]) == 1u);
+  CHECK(entityHandles.count(written->entityHandles[1]) == 1u);
 
   std::remove(path.c_str());
 }

@@ -377,6 +377,8 @@ public:
         std::uint32_t handleRef{0};
         std::uint64_t rawHandleRef{0};
         bool useRawHandleRef{false};
+        // Writing only: omit this APPID's entire data group.
+        bool leftOut{false};
     };
     std::vector<PendingHandleRef> pendingAppIdResolutions;
     std::vector<PendingHandleRef> pendingLayerRefResolutions;
