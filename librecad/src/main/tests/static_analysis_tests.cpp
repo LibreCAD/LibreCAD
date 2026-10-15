@@ -14,8 +14,8 @@
 #include "picfile.h"
 #include "qc_applicationwindow.h"
 #include "qg_dlghatch.h"
-#include "rs_circle.h"
 #include "rs_block.h"
+#include "rs_circle.h"
 #include "rs_creation.h"
 #include "rs_debug.h"
 #include "rs_fileio.h"
@@ -105,16 +105,23 @@ private slots:
     {
         QTest::addColumn<QString>("innerName");
         QTest::addColumn<bool>("reserveSuffix");
-        QTest::newRow("plain") << QString() << false;
-        QTest::newRow("nested") << QString("detail") << false;
-        QTest::newRow("filename-collision") << QString("part") << false;
-        QTest::newRow("suffix-collision") << QString("part") << true;
+        QTest::addColumn<QString>("destinationName");
+        QTest::newRow("plain") << QString() << false << QString();
+        QTest::newRow("nested") << QString("detail") << false << QString();
+        QTest::newRow("filename-collision") << QString("part") << false << QString();
+        QTest::newRow("suffix-collision") << QString("part") << true << QString();
+        QTest::newRow("destination-filename") << QString("part") << false << QString("part");
+        QTest::newRow("destination-suffix") << QString("part") << false << QString("part-0");
+        QTest::newRow("both-suffixes") << QString("part") << true << QString("part-1");
+        QTest::newRow("destination-inner") << QString("detail") << false << QString("detail");
+        QTest::newRow("destination-ancestor") << QString("detail") << false << QString("assembly");
     }
 
     void importBlock()
     {
         QFETCH(QString, innerName);
         QFETCH(bool, reserveSuffix);
+        QFETCH(QString, destinationName);
         RS_Graphic source;
         source.newDoc();
         source.setUnit(RS2::Millimeter);
@@ -128,7 +135,13 @@ private slots:
         line->setLayer(source.findLayer("0"));
         parent->addEntity(line);
         if (!innerName.isEmpty()) {
-            auto* insert = new RS_Insert(&source, RS_InsertData(innerName, {3, 4}, {1, 1}, 0, 1, 1, {0, 0}));
+            auto* assembly = new RS_Block(&source, RS_BlockData("assembly", {0, 0}, false));
+            auto* child = new RS_Insert(assembly, RS_InsertData(innerName, {0, 0}, {1, 1}, 0, 1, 1, {0, 0}));
+            child->setLayer(source.findLayer("0"));
+            assembly->addEntity(child);
+            source.addBlock(assembly);
+            child->update();
+            auto* insert = new RS_Insert(&source, RS_InsertData("assembly", {3, 4}, {1, 1}, 0, 1, 1, {0, 0}));
             insert->setLayer(source.findLayer("0"));
             source.addEntity(insert);
             insert->update();
@@ -142,6 +155,12 @@ private slots:
         RS_Graphic target;
         target.newDoc();
         target.setUnit(RS2::Millimeter);
+        RS_Block* existing = nullptr;
+        if (!destinationName.isEmpty()) {
+            existing = new RS_Block(&target, RS_BlockData(destinationName, {0, 0}, false));
+            existing->addEntity(new RS_Line(existing, RS_LineData({500, 500}, {600, 500})));
+            target.addBlock(existing);
+        }
         RS_LibraryInsertData data{path, {100, 200}, 2.0, M_PI / 2.0};
         RS_Creation creation(&target);
         creation.createLibraryInsert(data);
@@ -151,12 +170,14 @@ private slots:
         imported->update();
         QCOMPARE(imported->count(), 1u);
         RS_Entity* geometry = imported->entityAt(0);
-        if (!innerName.isEmpty()) {
-            QCOMPARE(geometry->rtti(), RS2::EntityInsert);
+        unsigned depth = 0;
+        while (geometry->rtti() == RS2::EntityInsert) {
             auto* nested = static_cast<RS_Insert*>(geometry);
             QCOMPARE(nested->count(), 1u);
             geometry = nested->entityAt(0);
+            ++depth;
         }
+        QCOMPARE(depth, innerName.isEmpty() ? 0u : 2u);
         QCOMPARE(geometry->rtti(), RS2::EntityLine);
         const RS_Vector start = innerName.isEmpty() ? RS_Vector(96, 202) : RS_Vector(88, 208);
         QVERIFY(geometry->getStartpoint().distanceTo(start) < 1e-9);
@@ -179,15 +200,133 @@ private slots:
 
         const QString savedPath = directory.filePath("imported.dxf");
         QVERIFY(target.saveAs(savedPath, RS2::FormatDXFRW, true));
+        QFile savedFile(savedPath);
+        QVERIFY(savedFile.open(QIODevice::ReadOnly));
+        QVERIFY(!savedFile.readAll().contains("LibreCAD.LibraryInsertSource"));
+        savedFile.close();
         RS_Graphic restored;
         QVERIFY(restored.open(savedPath, RS2::FormatUnknown));
         QCOMPARE(restored.count(), 2u);
+        const unsigned savedBlockCount = restored.countBlocks();
+        RS_Creation restoredCreation(&restored);
+        restoredCreation.createLibraryInsert(data);
+        QCOMPARE(restored.count(), 3u);
+        QVERIFY(restored.countBlocks() > savedBlockCount);
+        const unsigned restoredBlockCount = restored.countBlocks();
+        restoredCreation.createLibraryInsert(data);
+        QCOMPARE(restored.count(), 4u);
+        QCOMPARE(restored.countBlocks(), restoredBlockCount);
+        QCOMPARE(static_cast<RS_Insert*>(restored.entityAt(2))->getName(),
+                 static_cast<RS_Insert*>(restored.entityAt(3))->getName());
         for (RS_Entity* entity : restored) {
             QCOMPARE(entity->rtti(), RS2::EntityInsert);
             auto* insert = static_cast<RS_Insert*>(entity);
             insert->update();
             QCOMPARE(insert->count(), 1u);
+            RS_Entity* savedGeometry = insert->entityAt(0);
+            while (savedGeometry->rtti() == RS2::EntityInsert) {
+                auto* nested = static_cast<RS_Insert*>(savedGeometry);
+                QCOMPARE(nested->count(), 1u);
+                savedGeometry = nested->entityAt(0);
+            }
+            QCOMPARE(savedGeometry->rtti(), RS2::EntityLine);
+            QVERIFY(savedGeometry->getStartpoint().distanceTo(start) < 1e-9);
+            QVERIFY(savedGeometry->getEndpoint().distanceTo(start + RS_Vector(0, 20)) < 1e-9);
         }
+        if (existing) {
+            QVERIFY(existing->entityAt(0)->getStartpoint().distanceTo({500, 500}) < 1e-9);
+            QVERIFY(existing->entityAt(0)->getEndpoint().distanceTo({600, 500}) < 1e-9);
+        }
+        RS_Creation(imported->getBlockForInsert()).createLibraryInsert(data);
+        imported->update();
+        QCOMPARE(imported->count(), 2u);
+        QCOMPARE(imported->entityAt(1)->rtti(), RS2::EntityInsert);
+        auto* edited = static_cast<RS_Insert*>(imported->entityAt(1));
+        QCOMPARE(edited->count(), 1u);
+    }
+
+    void importDifferentLibraries_data()
+    {
+        QTest::addColumn<bool>("reverse");
+        QTest::addColumn<bool>("reopen");
+        QTest::addColumn<bool>("sameBasename");
+        QTest::newRow("suffix-after") << false << false << false;
+        QTest::newRow("suffix-before") << true << false << false;
+        QTest::newRow("suffix-after-reopen") << false << true << false;
+        QTest::newRow("suffix-before-reopen") << true << true << false;
+        QTest::newRow("same-basename") << false << false << true;
+        QTest::newRow("same-basename-reopen") << false << true << true;
+    }
+
+    void importDifferentLibraries()
+    {
+        QFETCH(bool, reverse);
+        QFETCH(bool, reopen);
+        QFETCH(bool, sameBasename);
+        const QString nestedPath = directory.filePath("part.dxf");
+        QVERIFY(QDir().mkpath(directory.filePath("other")));
+        const QString plainPath = directory.filePath(sameBasename ? "other/part.dxf" : "part-0.dxf");
+        RS_Graphic nested;
+        nested.newDoc();
+        nested.setUnit(RS2::Millimeter);
+        auto* block = new RS_Block(&nested, RS_BlockData("part", {0, 0}, false));
+        auto* line = new RS_Line(block, RS_LineData({1, 2}, {11, 2}));
+        line->setLayer(nested.findLayer("0"));
+        block->addEntity(line);
+        nested.addBlock(block);
+        auto* reference = new RS_Insert(&nested, RS_InsertData("part", {3, 4}, {1, 1}, 0, 1, 1, {0, 0}));
+        reference->setLayer(nested.findLayer("0"));
+        nested.addEntity(reference);
+        reference->update();
+        QVERIFY(nested.saveAs(nestedPath, RS2::FormatDXFRW, true));
+        RS_Graphic plain;
+        plain.newDoc();
+        plain.setUnit(RS2::Millimeter);
+        auto* plainLine = new RS_Line(&plain, RS_LineData({500, 500}, {600, 500}));
+        plainLine->setLayer(plain.findLayer("0"));
+        plain.addEntity(plainLine);
+        QVERIFY(plain.saveAs(plainPath, RS2::FormatDXFRW, true));
+
+        RS_Graphic target;
+        target.newDoc();
+        target.setUnit(RS2::Millimeter);
+        RS_LibraryInsertData first{reverse ? plainPath : nestedPath, {0, 0}, 1.0, 0.0};
+        RS_Creation(&target).createLibraryInsert(first);
+        if (reopen) {
+            const QString savedPath = directory.filePath("combined.dxf");
+            QVERIFY(target.saveAs(savedPath, RS2::FormatDXFRW, true));
+            QVERIFY(target.open(savedPath, RS2::FormatUnknown));
+        }
+        RS_LibraryInsertData second{reverse ? nestedPath : plainPath, {0, 0}, 1.0, 0.0};
+        RS_Creation creation(&target);
+        creation.createLibraryInsert(second);
+        QCOMPARE(target.count(), 2u);
+        for (unsigned i = 0; i < target.count(); ++i) {
+            QCOMPARE(target.entityAt(i)->rtti(), RS2::EntityInsert);
+            auto* inserted = static_cast<RS_Insert*>(target.entityAt(i));
+            inserted->update();
+            QCOMPARE(inserted->count(), 1u);
+            RS_Entity* geometry = inserted->entityAt(0);
+            const bool isNested = (i == 0) != reverse;
+            if (isNested) {
+                QCOMPARE(geometry->rtti(), RS2::EntityInsert);
+                auto* child = static_cast<RS_Insert*>(geometry);
+                QCOMPARE(child->count(), 1u);
+                geometry = child->entityAt(0);
+            }
+            QCOMPARE(geometry->rtti(), RS2::EntityLine);
+            const RS_Vector start = isNested ? RS_Vector(4, 6) : RS_Vector(500, 500);
+            QVERIFY(geometry->getStartpoint().distanceTo(start) < 1e-9);
+            QVERIFY(geometry->getEndpoint().distanceTo(start + RS_Vector(isNested ? 10 : 100, 0)) < 1e-9);
+        }
+        const unsigned blockCount = target.countBlocks();
+        creation.createLibraryInsert(second);
+        QCOMPARE(target.countBlocks(), blockCount);
+        QCOMPARE(target.count(), 3u);
+        auto* previous = static_cast<RS_Insert*>(target.entityAt(1));
+        auto* repeated = static_cast<RS_Insert*>(target.entityAt(2));
+        QCOMPARE(repeated->getName(), previous->getName());
+        QCOMPARE(repeated->count(), 1u);
     }
 
     void selectionWithTypeFilter()
