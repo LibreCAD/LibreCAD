@@ -84,6 +84,46 @@ bool isMonotone(const LC_Interval& dx, const LC_Interval& dy) {
     return hi - lo < 0.5 * M_PI;
 }
 
+/**
+ * The directions a derivative box holds, as angles from @p reference in
+ * [lo, hi]; false when the box holds zero, and so every direction.
+ */
+bool directions(const LC_Interval& dx, const LC_Interval& dy, const double reference, double& lo, double& hi) {
+    if (!dx.isValid() || !dy.isValid() || !std::isfinite(dx.width()) || !std::isfinite(dy.width()) ||
+        (dx.containsZero() && dy.containsZero())) {
+        return false;
+    }
+    const double centre = std::atan2(mid(dy), mid(dx));
+    lo = 0.0;
+    hi = 0.0;
+    for (const double x : {dx.lo(), dx.hi()}) {
+        for (const double y : {dy.lo(), dy.hi()}) {
+            const double delta = std::remainder(std::atan2(y, x) - centre, 2.0 * M_PI);
+            lo = std::min(lo, delta);
+            hi = std::max(hi, delta);
+        }
+    }
+    const double shift = std::remainder(centre - reference, 2.0 * M_PI);
+    lo += shift;
+    hi += shift;
+    return true;
+}
+
+/**
+ * Two derivative boxes whose directions together lie in an open half plane:
+ * pieces with such tangents that share an end are monotone along the middle
+ * direction together, and meet nowhere else.
+ */
+bool jointlyMonotone(const LC_Interval& dx1, const LC_Interval& dy1, const LC_Interval& dx2, const LC_Interval& dy2) {
+    const double reference = std::atan2(mid(dy1), mid(dx1));
+    double lo1 = 0.0;
+    double hi1 = 0.0;
+    double lo2 = 0.0;
+    double hi2 = 0.0;
+    return directions(dx1, dy1, reference, lo1, hi1) && directions(dx2, dy2, reference, lo2, hi2) &&
+           std::max(hi1, hi2) - std::min(lo1, lo2) < M_PI;
+}
+
 struct Leaf {
     std::size_t segment;
     std::size_t branch;
@@ -92,8 +132,11 @@ struct Leaf {
     double a;
     double b;
     bool monotone;
+    bool cornerNext;
     LC_Interval x;
     LC_Interval y;
+    LC_Interval dx;
+    LC_Interval dy;
 };
 
 struct Bounds {
@@ -119,6 +162,9 @@ public:
         result.status = buildLeaves();
         if (result.status == LC_IntersectionStatus::Ok) {
             result.status = findJoins();
+        }
+        if (result.status == LC_IntersectionStatus::Ok) {
+            result.status = findCorners();
         }
         if (result.status == LC_IntersectionStatus::Ok) {
             for (const auto& [i, j] : candidatePairs()) {
@@ -180,8 +226,8 @@ private:
                         return LC_IntersectionStatus::LimitExceeded;
                     }
                     const std::size_t branch = m_segments[s].branch;
-                    m_leaves.push_back(
-                        Leaf{s, branch, m_branchLeaves[branch]++, box.a, box.b, monotone, bounds.x, bounds.y});
+                    m_leaves.push_back(Leaf{s, branch, m_branchLeaves[branch]++, box.a, box.b, monotone, false, bounds.x,
+                                            bounds.y, bounds.dx, bounds.dy});
                     continue;
                 }
                 const double half = box.a + 0.5 * (box.b - box.a);
@@ -220,14 +266,43 @@ private:
         return LC_IntersectionStatus::Ok;
     }
 
+    /** Adjacent segments not proved jointly monotone may intersect again. */
+    LC_IntersectionStatus findCorners() {
+        for (std::size_t i = 0; i + 1 < m_leaves.size(); ++i) {
+            const Leaf& p = m_leaves[i];
+            const Leaf& q = m_leaves[i + 1];
+            if (p.branch != q.branch || p.segment == q.segment || jointlyMonotone(p.dx, p.dy, q.dx, q.dy)) {
+                continue;
+            }
+            RS_Vector point;
+            RS_Vector derivative;
+            if (!m_curves.evaluate(p.segment, p.b, point, derivative) ||
+                !isFinite(point)) {
+                return LC_IntersectionStatus::InvalidInput;
+            }
+            m_leaves[i].cornerNext = true;
+            m_corners.push_back(Corner{p.segment, q.segment, point});
+        }
+        return LC_IntersectionStatus::Ok;
+    }
+
     bool hasPredecessor(const std::size_t branch) const {
         return std::any_of(m_joins.begin(), m_joins.end(), [branch](const Join& j) { return j.to == branch; });
     }
 
-    /** Consecutive leaves of a branch, or across a join, share an end and nothing else. */
+    /** Consecutive leaves of a branch, either side of a corner (findCorners()). */
+    bool atCorner(const Leaf& p, const Leaf& q) const {
+        if (p.branch != q.branch || (p.order + 1 != q.order && q.order + 1 != p.order)) {
+            return false;
+        }
+        const Leaf& first = (p.order < q.order) ? p : q;
+        return first.cornerNext;
+    }
+
+    /** Smooth neighbours, or leaves across a cusp join, share only an end. */
     bool adjacent(const Leaf& p, const Leaf& q) const {
         if (p.branch == q.branch && (p.order + 1 == q.order || q.order + 1 == p.order)) {
-            return true;
+            return !atCorner(p, q);
         }
         for (const Join& j : m_joins) {
             const std::size_t lastOfFrom = m_branchLeaves[j.from] - 1;
@@ -270,9 +345,16 @@ private:
         return pairs;
     }
 
-    /** Both boxes lie within twice the tolerance of a join between their branches. */
+    /** Exclude only the joined segments' shared endpoint, within twice the tolerance. */
     bool insideJoin(const Leaf& p, const Bounds& bp, const Leaf& q, const Bounds& bq) const {
         const double radius = 2.0 * m_options.tolerance;
+        for (const Corner& c : m_corners) {
+            const bool between = (p.segment == c.before && q.segment == c.after) ||
+                                 (q.segment == c.before && p.segment == c.after);
+            if (between && farthest(bp.x, bp.y, c.point) <= radius && farthest(bq.x, bq.y, c.point) <= radius) {
+                return true;
+            }
+        }
         for (const Join& j : m_joins) {
             const bool between = (p.branch == j.from && q.branch == j.to) || (p.branch == j.to && q.branch == j.from);
             if (between && farthest(bp.x, bp.y, j.point) <= radius && farthest(bq.x, bq.y, j.point) <= radius) {
@@ -291,6 +373,7 @@ private:
     };
 
     LC_IntersectionStatus solvePair(const Leaf& p, const Leaf& q) {
+        const bool corner = atCorner(p, q);
         std::vector<Pair> stack{{p.a, p.b, q.a, q.b, 0}};
         while (!stack.empty()) {
             const Pair box = stack.back();
@@ -306,6 +389,22 @@ private:
             if (gap(bp.x, bp.y, bq.x, bq.y) > 0.0 || insideJoin(p, bp, q, bq) || bridged(p, q, box)) {
                 continue;
             }
+            // Pair indices follow branch order. Locally monotone sides can only share their endpoint.
+            if (corner && box.a1 == p.b && box.b0 == q.a && jointlyMonotone(bp.dx, bp.dy, bq.dx, bq.dy)) {
+                RS_Vector end;
+                RS_Vector start;
+                RS_Vector derivative;
+                if (!m_curves.evaluate(p.segment, p.b, end, derivative) ||
+                    !m_curves.evaluate(q.segment, q.a, start, derivative)) {
+                    return LC_IntersectionStatus::InvalidInput;
+                }
+                // Fitted offset joins may only be tolerance-close, not exactly shared.
+                if (end.x == start.x && end.y == start.y) {
+                    continue;
+                }
+            }
+            const double sizeP = std::hypot(bp.x.width(), bp.y.width());
+            const double sizeQ = std::hypot(bq.x.width(), bq.y.width());
             {
                 const Krawczyk k = krawczyk(p, q, box);
                 if (k == Krawczyk::NoRoot) {
@@ -320,6 +419,9 @@ private:
                 }
             }
             if (box.depth >= m_options.maxDepth) {
+                if (corner) {
+                    return LC_IntersectionStatus::LimitExceeded;
+                }
                 const LC_IntersectionStatus status = classifyContact(p, q, box);
                 if (status != LC_IntersectionStatus::Ok) {
                     return status;
@@ -327,8 +429,6 @@ private:
                 continue;
             }
             // split the side whose image is larger
-            const double sizeP = std::hypot(bp.x.width(), bp.y.width());
-            const double sizeQ = std::hypot(bq.x.width(), bq.y.width());
             if (sizeP >= sizeQ) {
                 const double h = box.a0 + 0.5 * (box.a1 - box.a0);
                 stack.push_back({box.a0, h, box.b0, box.b1, box.depth + 1});
@@ -771,6 +871,12 @@ private:
     std::vector<Leaf> m_leaves;
     std::vector<std::size_t> m_branchLeaves;
     std::vector<Join> m_joins;
+    struct Corner {
+        std::size_t before;
+        std::size_t after;
+        RS_Vector point;
+    };
+    std::vector<Corner> m_corners;
     struct Found {
         LC_ParametricIntersection x;
         std::size_t reachBranch;

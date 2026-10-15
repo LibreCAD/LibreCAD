@@ -685,3 +685,222 @@ TEST_CASE("Both vertices trimmed past the cusp distance in the same offset", "[c
         checkOffset(offsetOf(e, kLeft, d), curveOf(e), d, {true}, {{x, 0.0}, {-x, 0.0}});
     }
 }
+
+namespace {
+double degrees(const double angle) {
+    return angle * M_PI / 180.0;
+}
+
+/** x of the corners (x, 0) and (-x, 0) of an ellipse's inward offset trimmed past b^2/a, d below b. */
+double cornerX(const double a, const double b, const double d) {
+    return std::sqrt((a - b) * (a + b)) * std::sqrt(1.0 - (d / b) * (d / b));
+}
+
+/** The open chains of @p offset first, then those whose ends meet, each in its order. */
+void openFirst(Offset& offset) {
+    std::stable_partition(offset.chains.begin(), offset.chains.end(),
+                          [&offset](const Chain& chain) { return !chain.closes(offset.slack); });
+}
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("An elliptic arc's lens is not trimmed away with its wings", "[curve-offset][ellipse]") {
+    // Missing the second corner hid the entire lens for d = 48.728 to 49.484.
+    const RS_Ellipse arc = ellipse(100.0, 0.5, degrees(15.0), degrees(315.0));
+    for (const double d : {48.75, 49.1823583129, 49.45}) {
+        INFO("d = " << d);
+        const double x = cornerX(100.0, 50.0, d); // 15.5977 at 49.1823583129
+        checkOffset(offsetOf(arc, kLeft, d), curveOf(arc), d, {true}, {{x, 0.0}, {-x, 0.0}});
+    }
+    // from 60 to 285 degrees the swallowtail was left to noding: the same lens
+    const RS_Ellipse shorter = ellipse(100.0, 0.5, degrees(60.0), degrees(285.0));
+    const double d = 49.1823583129;
+    const double x = cornerX(100.0, 50.0, d);
+    checkOffset(offsetOf(shorter, kLeft, d), curveOf(shorter), d, {true}, {{x, 0.0}, {-x, 0.0}});
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("The wings past an elliptic arc's lens are trimmed", "[curve-offset][ellipse]") {
+    // The missed corner kept hidden wings, making a 3.4-long lens 48.3 long.
+    const RS_Ellipse arc = ellipse(100.0, 0.8, degrees(30.0), degrees(330.0));
+    const double d = 79.992;
+    const double x = cornerX(100.0, 80.0, d);
+    checkOffset(offsetOf(arc, kLeft, d), curveOf(arc), d, {true}, {{x, 0.0}, {-x, 0.0}});
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A trimmed fragment hidden anywhere is hidden throughout", "[curve-offset][ellipse]") {
+    // A probe near the centre kept a fragment hidden by 1.17 near its other end.
+    // Only the bottom-right offset between the endpoint circles survives.
+    const RS_Ellipse arc = ellipse(100.0, 0.02, degrees(45.0), 0.0);
+    const double d = 2.0;
+    const Offset offset = offsetOf(arc, kLeft, d);
+    checkOffset(offset, curveOf(arc), d, {false});
+    const Chain& chain = offset.chains.front();
+    CHECK(chain.start().distanceTo(arc.getStartpoint()) == Catch::Approx(d).margin(offset.slack)); // (72.548, 0.624)
+    CHECK(chain.end().distanceTo(arc.getEndpoint()) == Catch::Approx(d).margin(offset.slack)); // (99.024, 1.746)
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Trimmed elliptic arcs keep every part that is left", "[curve-offset][ellipse]") {
+    // both failed with AmbiguousTopology: the fitted pieces crossed where
+    // noding had missed a corner, as above
+    SECTION("a = 100, b = 5 from 15 to 315 degrees: the lens, and the offset by the arc's start") {
+        // from d = 3.53995 to 4.72925
+        const RS_Ellipse arc = ellipse(100.0, 0.05, degrees(15.0), degrees(315.0));
+        for (const double d : {3.6, 4.0, 4.7}) {
+            INFO("d = " << d);
+            const double x = cornerX(100.0, 5.0, d);
+            Offset offset = offsetOf(arc, kLeft, d);
+            openFirst(offset);
+            checkOffset(offset, curveOf(arc), d, {false, true}, {{x, 0.0}, {-x, 0.0}});
+            CHECK(offset.chains.front().start().distanceTo(inwardOffset(arc, degrees(15.0), d)) <= offset.slack);
+        }
+    }
+    SECTION("a = 100, b = 50 from 10 to 350 degrees: the lens") {
+        // from d = 48.7278 to 49.9994
+        const RS_Ellipse arc = ellipse(100.0, 0.5, degrees(10.0), degrees(350.0));
+        for (const double d : {48.8, 49.5, 49.99}) {
+            INFO("d = " << d);
+            const double x = cornerX(100.0, 50.0, d);
+            checkOffset(offsetOf(arc, kLeft, d), curveOf(arc), d, {true}, {{x, 0.0}, {-x, 0.0}});
+        }
+    }
+    SECTION("a = 100, b = 20 from 0 to 359 degrees: the lens, without the stub past its corner") {
+        // A sub-tolerance stub past the right corner made the chain cross its start.
+        const RS_Ellipse arc = ellipse(100.0, 0.2, 0.0, degrees(359.0));
+        const double d = 4.039896572532948;
+        const double x = cornerX(100.0, 20.0, d);
+        checkOffset(offsetOf(arc, kLeft, d), curveOf(arc), d, {true}, {{x, 0.0}, {-x, 0.0}});
+    }
+    SECTION("a = 100, b = 80 from 240 to 285 degrees at 1.1 a: the offset from the start's circle") {
+        // The corner rule must distinguish the fragment's own foot from the cap centre.
+        const RS_Ellipse arc = ellipse(100.0, 0.8, degrees(240.0), degrees(285.0));
+        const double d = 110.0;
+        const Offset offset = offsetOf(arc, kLeft, d);
+        checkOffset(offset, curveOf(arc), d, {false});
+        CHECK(offset.chains.front().start().distanceTo(arc.getStartpoint()) == Catch::Approx(d).margin(offset.slack));
+        CHECK(offset.chains.front().end().distanceTo(inwardOffset(arc, degrees(285.0), d)) <= offset.slack);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Whole ellipses just past b^2/a or just short of b keep their offset", "[curve-offset][ellipse]") {
+    // Sweep failures at their original distances: collapsed swallowtails still
+    // crossed below tolerance, causing AmbiguousTopology or LimitExceeded.
+    struct Case {
+        double ratio;
+        double rotation;
+        RS_Vector centre;
+        double d;
+    };
+    const RS_Vector origin{0.0, 0.0};
+    const RS_Vector shifted{1234.5, -987.25};
+    const RS_Vector distant{-50321.7, 70412.9};
+    const RS_Vector remote{1000000.0, -2000000.0};
+    const std::vector<Case> cases{
+        {0.6, 0.0, origin, 36.0 * 1.001},
+        {0.8, 0.0, origin, 64.064},
+        {0.15, 0.0, origin, 2.2725},
+        {0.6, 0.0, origin, 59.9994},
+        {0.5, 30.0, shifted, 25.0025},
+        {0.6, 30.0, shifted, 36.0036},
+        {0.6, 30.0, shifted, 59.9994},
+        {0.15, 30.0, shifted, 2.2725},
+        {0.8, 30.0, shifted, 64.064},
+        {0.9, 30.0, shifted, 81.00081},
+        {0.9, 30.0, shifted, 81.0081},
+        {0.95, 30.0, shifted, 90.25090250000001},
+        {0.3, 137.3, distant, 9.0 * 1.001},
+        {0.2, 137.3, distant, 4.004},
+        {0.15, 137.3, distant, 2.2725},
+        {0.6, 137.3, distant, 36.0 * 1.001},
+        {0.6, 137.3, distant, 36.0036},
+        {0.6, 137.3, distant, 59.9994},
+        {0.7, 137.3, distant, 49.0049},
+        {0.8, 137.3, distant, 64.064},
+        {0.9, 137.3, distant, 81.00081},
+        {0.9, 137.3, distant, 81.0081},
+        {0.95, 137.3, distant, 90.259025},
+        {0.95, 137.3, distant, 90.25090250000001},
+        {0.25, 73.0, remote, 6.25625},
+        {0.3, 73.0, remote, 9.0 * 1.001},
+        {0.5, 73.0, remote, 25.025},
+        {0.6, 73.0, remote, 36.0 * 1.001},
+        {0.6, 73.0, remote, 36.0036},
+        {0.6, 73.0, remote, 59.9994},
+        {0.7, 73.0, remote, 49.0049},
+        {0.7, 73.0, remote, 49.04899999999999},
+        {0.8, 73.0, remote, 64.064},
+        {0.8, 73.0, remote, 64.0064},
+        {0.9, 73.0, remote, 81.0081},
+        {0.95, 73.0, remote, 90.259025},
+    };
+    for (const Case& c : cases) {
+        INFO("b/a = " << c.ratio << ", turned " << c.rotation << " about (" << c.centre.x << ", " << c.centre.y
+                      << "), d = " << c.d);
+        const RS_Vector along{std::cos(degrees(c.rotation)), std::sin(degrees(c.rotation))};
+        const RS_Ellipse e{nullptr, RS_EllipseData{c.centre, along * 100.0, c.ratio, 0.0, 0.0, false}};
+        const double x = cornerX(100.0, 100.0 * c.ratio, c.d);
+        checkOffset(offsetOf(e, kLeft, c.d), curveOf(e), c.d, {true}, {c.centre + along * x, c.centre - along * x});
+    }
+    // Near a circle's radius, noding exhausted its budget at the piece joins.
+    const RS_Ellipse circle = ellipse(100.0, 1.0);
+    checkOffset(offsetOf(circle, kLeft, 99.99), curveOf(circle), 99.99, {true});
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A trimmed offset runs on through the corner it is cut at", "[curve-offset][ellipse]") {
+    // A cap crossing 0.026 past the corner left a hidden sliver and split the chain.
+    // Reversing the source already gave one entity.
+    const double d = 9.791476538117758;
+    const double x = cornerX(100.0, 30.0, d);
+    const RS_Ellipse arc = ellipse(100.0, 0.3, degrees(10.25), degrees(9.75));
+    checkOffset(offsetOf(arc, kLeft, d), curveOf(arc), d, {false}, {{x, 0.0}, {-x, 0.0}});
+    const RS_Ellipse reversed = ellipse(100.0, 0.3, degrees(9.75), degrees(10.25), true);
+    checkOffset(offsetOf(reversed, kRight, d), curveOf(reversed), d, {false}, {{x, 0.0}, {-x, 0.0}});
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A trimmed elliptic arc keeps a piece apart from its lens", "[curve-offset][ellipse]") {
+    // A separate piece next to the arc's start is valid, not a hidden wing.
+    const RS_Ellipse arc = ellipse(100.0, 0.2, degrees(15.0), degrees(315.0));
+    const double d = 15.0;
+    const double x = cornerX(100.0, 20.0, d);
+    Offset offset = offsetOf(arc, kLeft, d);
+    openFirst(offset);
+    checkOffset(offset, curveOf(arc), d, {false, true}, {{x, 0.0}, {-x, 0.0}});
+    const Chain& piece = offset.chains.front();
+    CHECK(piece.start().distanceTo(inwardOffset(arc, degrees(15.0), d)) <= offset.slack);
+    CHECK(piece.end().distanceTo(arc.getEndpoint()) == Catch::Approx(d).margin(offset.slack)); // (82.0199, -4.28813)
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Nothing left of an elliptic arc's inward offset stays nothing farther in", "[curve-offset][ellipse]") {
+    // A false empty result also terminates a multiple-copy series prematurely.
+    const RS_Ellipse arc = ellipse(100.0, 0.5, degrees(15.0), degrees(315.0));
+    for (int k = 0; k <= 24; ++k) {
+        const double d = 48.05 + 0.1 * k;
+        INFO("d = " << d);
+        const LC_CurveOffsetMaterializationResult made =
+            LC_CurveOffset::createEntities(arc, LC_CurveOffset::makeSideRequest(kLeft, d),
+                                           LC_CurveOffset::makeOffsetOptions(arc, d),
+                                           LC_CurveOffset::makeDirectSourceBudget());
+        CHECK(made.status == LC_CurveOffsetStatus::Ok);
+        CHECK(made.entities.empty() == (d > 50.0)); // a lens is left up to b
+    }
+    RS_Ellipse series = ellipse(100.0, 0.5, degrees(15.0), degrees(315.0));
+    RS_OffsetData data;
+    data.coord = RS_Vector{0.0, 0.0};
+    data.distance = 0.5 * 49.1823583129;
+    data.number = 2;
+    data.multipleCopies = true;
+    data.keepOriginals = true;
+    LC_DocumentModificationBatch ctx;
+    const LC_OffsetBatchOutcome outcome =
+        RS_Modification::offsetWithOutcome(data, {&series}, false, LC_OffsetBatchLimits{}, ctx);
+    REQUIRE(outcome.sources.size() == 1);
+    CHECK(outcome.sources.front().complete());
+    CHECK(ctx.entitiesToAdd.size() == 2);
+    qDeleteAll(ctx.entitiesToAdd);
+}
