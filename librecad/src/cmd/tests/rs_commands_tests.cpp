@@ -49,7 +49,7 @@ TEST_CASE("Aliases that differ only in case keep their own actions", "[commands]
     REQUIRE(dir.isValid());
     QFile aliasFile(dir.filePath("librecad.alias"));
     REQUIRE(aliasFile.open(QIODevice::WriteOnly | QIODevice::Text));
-    QTextStream(&aliasFile) << "Zq\tline2p\nzQ\tcircle\n";
+    QTextStream(&aliasFile) << QStringLiteral("Zq\tline2p\nzQ\tcircle\n\u7dda\tline2p\n");
     aliasFile.close();
 
     const QVariant oldDir = RS_SETTINGS->getSettings()->value("/Paths/OtherSettingsDir");
@@ -69,4 +69,8 @@ TEST_CASE("Aliases that differ only in case keep their own actions", "[commands]
     CHECK(RS_COMMANDS->cmdToAction("zQ") == RS2::ActionDrawCircleCenterPoint);
     CHECK(RS_COMMANDS->cmdToAction("ZQ") == RS2::ActionNone);
     CHECK(RS_COMMANDS->cmdToAction("zq") == RS2::ActionNone);
+
+    // Non-Latin aliases must work in both the command line and keycode lookup.
+    CHECK(RS_COMMANDS->cmdToAction(QStringLiteral("\u7dda")) == RS2::ActionDrawLine);
+    CHECK(RS_COMMANDS->keycodeToAction(QStringLiteral("\u7dda")) == RS2::ActionDrawLine);
 }
