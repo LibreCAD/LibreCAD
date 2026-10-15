@@ -912,8 +912,214 @@ struct CriticalKernel {
     Rational polynomial(const Rational& z) const {
         return ((coefficient[3] * z + coefficient[2]) * z + coefficient[1]) * z + coefficient[0];
     }
+    Rational derivative(const Rational& z) const {
+        return (3 * coefficient[3] * z + 2 * coefficient[2]) * z + coefficient[1];
+    }
 };
+
+struct RationalRange { Rational lo, hi; };
+
+LC_Interval intersect(const LC_Interval& a, const LC_Interval& b) {
+    if (!finiteInterval(a) || !finiteInterval(b)) { return {}; }
+    const double lo = std::max(a.lo(), b.lo());
+    const double hi = std::min(a.hi(), b.hi());
+    return lo <= hi ? LC_Interval::hull(lo, hi) : LC_Interval{};
+}
+
+RationalRange product(const RationalRange& a, const RationalRange& b) {
+    const std::array<Rational, 4> values{{a.lo * b.lo, a.lo * b.hi, a.hi * b.lo, a.hi * b.hi}};
+    return {*std::min_element(values.begin(), values.end()), *std::max_element(values.begin(), values.end())};
+}
+
+RationalRange product(const RationalRange& a, const Rational& b) {
+    return b < 0 ? RationalRange{a.hi * b, a.lo * b} : RationalRange{a.lo * b, a.hi * b};
+}
+
+bool powerThreeHalves(const RationalRange& value, RationalRange& out) {
+    LC_Interval bounds;
+    if (value.lo < 0 || !rationalBounds(value.lo, value.hi, bounds)) { return false; }
+    const LC_Interval root = sqrt(bounds);
+    if (!finiteInterval(root)) { return false; }
+    out = product(value, RationalRange{exactDouble(std::max(0.0, root.lo())), exactDouble(root.hi())});
+    return true;
+}
 } // namespace
+
+bool ReferenceFrame::pointToWorld(const LC_Interval& localX, const LC_Interval& localY,
+                                  LC_Interval& worldX, LC_Interval& worldY) const {
+    const LC_Interval x = localX;
+    const LC_Interval y = localY;
+    worldX = {};
+    worldY = {};
+    if (!finiteInterval(x) || !finiteInterval(y)) { return false; }
+    // Exact rational endpoint expressions avoid overflowing a product which centre addition cancels.
+    const Rational scale = exactDouble(m_scale);
+    LC_Interval candidateX, candidateY;
+    if (!rationalBounds(exactDouble(m_centre.x) + scale * exactDouble(x.lo()),
+                        exactDouble(m_centre.x) + scale * exactDouble(x.hi()), candidateX) ||
+        !rationalBounds(exactDouble(m_centre.y) + scale * exactDouble(y.lo()),
+                        exactDouble(m_centre.y) + scale * exactDouble(y.hi()), candidateY)) { return false; }
+    worldX = candidateX;
+    worldY = candidateY;
+    return true;
+}
+
+/** Immutable factory provenance shared independently by the adapter and its refinement session. */
+struct CriticalProvenance {
+    RS_EllipseData basis;
+    ReferenceFrame frame;
+    CriticalKernel kernel;
+    Rational piLow, piHigh, duration;
+    ExactAngle start, extent;
+    CriticalCanonicalBounds initial;
+    unsigned initialDepth = 0;
+
+    CriticalProvenance(const RS_EllipseData& raw, const ReferenceFrame& reference, const CriticalKernel& exact,
+                       const Rational& lowPi, const Rational& highPi, const Rational& time,
+                       const ExactAngle& first, const ExactAngle& span,
+                       const CriticalCanonicalBounds& seed, const unsigned depth)
+        : basis{raw}, frame{reference}, kernel{exact}, piLow{lowPi}, piHigh{highPi}, duration{time},
+          start{first}, extent{span}, initial{seed}, initialDepth{depth} {}
+
+    Rational residual(const Rational& u) const {
+        return initial.complement ? Rational{-kernel.polynomial(1 - u)} : kernel.polynomial(u);
+    }
+    bool map(const CriticalOccurrence& occurrence, const LC_Interval& alpha, LC_Interval& out) const {
+        const int q = occurrence.quadrant + 4 * occurrence.winding;
+        const bool even = q % 2 == 0;
+        // Use alpha directly: in complement mode beta=real*pi/2-alpha, not rounded pi/2-beta.
+        const int sign = (even != initial.complement) ? 1 : -1;
+        const Rational axis = Rational{even ? q : q + 1} / 2 +
+            (initial.complement ? Rational{even ? 1 : -1} / 2 : Rational{0});
+        const ExactAngle low{exactDouble(sign > 0 ? alpha.lo() : -alpha.hi()), axis};
+        const ExactAngle high{exactDouble(sign > 0 ? alpha.hi() : -alpha.lo()), axis};
+        std::array<Rational, 4> values;
+        std::size_t i = 0;
+        for (const auto* angle : {&low, &high}) {
+            for (const auto* pi : {&piLow, &piHigh}) {
+                const Rational denominator = extent.constant + extent.pi * *pi;
+                if (denominator == 0 || (denominator < 0) != basis.reversed) { return false; }
+                values[i++] = duration * (angle->constant - start.constant + (angle->pi - start.pi) * *pi) /
+                    denominator;
+            }
+        }
+        return rationalBounds(*std::min_element(values.begin(), values.end()),
+                              *std::max_element(values.begin(), values.end()), out);
+    }
+    bool image(const CriticalOccurrence& occurrence, const LC_Interval& u, LC_Interval& x, LC_Interval& y) const {
+        x = {};
+        y = {};
+        const Rational r = exactDouble(basis.ratio);
+        const Rational scale = exactDouble(frame.scale());
+        const Rational mx = exactDouble(basis.majorP.x) / scale;
+        const Rational my = exactDouble(basis.majorP.y) / scale;
+        const Rational c = kernel.difference;
+        if (occurrence.kind == CriticalKind::CriticalStationary) {
+            const bool major = occurrence.quadrant % 2 == 0;
+            const Rational factor = major ? c : Rational{r - 1 / r};
+            const int sign = occurrence.quadrant < 2 ? 1 : -1;
+            const Rational a = sign * factor * (major ? mx : Rational{-my});
+            const Rational b = sign * factor * (major ? my : mx);
+            return rationalBounds(a, a, x) && rationalBounds(b, b, y);
+        }
+        if (!finiteInterval(u) || u.lo() < 0.0 || u.hi() > 0.5) { return false; }
+        const RationalRange small{exactDouble(u.lo()), exactDouble(u.hi())};
+        const RationalRange large{1 - small.hi, 1 - small.lo};
+        RationalRange zPower, cosPower;
+        if (!powerThreeHalves(initial.complement ? large : small, zPower) ||
+            !powerThreeHalves(initial.complement ? small : large, cosPower)) { return false; }
+        const int cosSign = occurrence.quadrant == 0 || occurrence.quadrant == 3 ? 1 : -1;
+        const int sinSign = occurrence.quadrant < 2 ? 1 : -1;
+        // Keep coefficients rational until AFTER multiplication by raw axes/scale and tiny powers.
+        const auto ax = product(cosPower, Rational{c * cosSign * mx});
+        const auto bx = product(zPower, Rational{c * sinSign * my / r});
+        const auto ay = product(cosPower, Rational{c * cosSign * my});
+        const auto by = product(zPower, Rational{-c * sinSign * mx / r});
+        return rationalBounds(ax.lo + bx.lo, ax.hi + bx.hi, x) &&
+            rationalBounds(ay.lo + by.lo, ay.hi + by.hi, y);
+    }
+};
+
+struct CriticalRefinementSession::Impl {
+    enum class Step { Ok, Unavailable, Contradiction };
+    struct Record { CriticalOccurrence original; CriticalOccurrenceSnapshot current; };
+    std::shared_ptr<const CriticalProvenance> provenance;
+    std::shared_ptr<const void> issuer;
+    std::weak_ptr<const void> budgetIdentity;
+    LC_OffsetCheckLimits ceilings;
+    std::vector<Record> records;
+    CriticalCanonicalBounds canonical;
+    unsigned depth = 0;
+    CheckWork lastWork{};
+    bool terminal = false;
+    bool limited = false;
+
+    bool matches(const std::weak_ptr<const void>& identity, const std::shared_ptr<const void>& owner) const {
+        return !identity.expired() && owner && !identity.owner_before(owner) && !owner.owner_before(identity);
+    }
+    bool handle(const CriticalOccurrenceHandle& handle) const {
+        return matches(handle.m_issuer, issuer) && handle.m_index < records.size();
+    }
+    Step scalar(CriticalCanonicalBounds& next) const {
+        const auto& p = *provenance;
+        const Rational low = exactDouble(canonical.variable.lo());
+        const Rational high = exactDouble(canonical.variable.hi());
+        if (p.residual(low) > 0 || p.residual(high) < 0) { return Step::Contradiction; }
+        const Rational mid = (low + high) / 2;
+        const Rational value = p.residual(mid);
+        const Rational zLow = canonical.complement ? Rational{1 - high} : low;
+        const Rational zHigh = canonical.complement ? Rational{1 - low} : high;
+        // g(u)=-P(1-u) still has positive derivative P'(1-u); P' increases in z.
+        const Rational dLow = p.kernel.derivative(zLow);
+        const Rational dHigh = p.kernel.derivative(zHigh);
+        if (dLow <= 0 || dHigh < dLow) { return Step::Contradiction; }
+        const Rational a = mid - value / dLow;
+        const Rational b = mid - value / dHigh;
+        const Rational newLow = std::max(low, std::min(a, b));
+        const Rational newHigh = std::min(high, std::max(a, b));
+        if (newLow > newHigh) { return Step::Contradiction; }
+        LC_Interval enclosure;
+        if (!rationalBounds(newLow, newHigh, enclosure)) { return Step::Unavailable; }
+        next.variable = intersect(canonical.variable, enclosure);
+        return finiteInterval(next.variable) && p.residual(exactDouble(next.variable.lo())) <= 0 &&
+            p.residual(exactDouble(next.variable.hi())) >= 0 ? Step::Ok : Step::Contradiction;
+    }
+    Step inverse(CriticalCanonicalBounds& next) const {
+        const LC_Interval prior = canonical.inverseAngle;
+        LC_Interval c, s, cm, sm;
+        const double mid = prior.lo() + 0.5 * (prior.hi() - prior.lo());
+        if (!referenceTrig(prior, c, s) || !referenceTrig(LC_Interval::point(mid), cm, sm)) { return Step::Unavailable; }
+        const LC_Interval residual = sqr(sm) - next.variable;
+        const LC_Interval derivative = LC_Interval::point(2.0) * s * c;
+        if (!finiteInterval(residual) || !finiteInterval(derivative)) { return Step::Unavailable; }
+        next.inverseAngle = prior;
+        const LC_Interval newton = derivative.isPositive() ? LC_Interval::point(mid) - residual / derivative :
+            LC_Interval{};
+        if (finiteInterval(newton)) {
+            next.inverseAngle = intersect(prior, newton);
+            if (!finiteInterval(next.inverseAngle)) { return Step::Contradiction; }
+        } else if (residual.hi() < 0.0) {
+            next.inverseAngle = LC_Interval::hull(mid, prior.hi());
+        } else if (residual.lo() > 0.0) {
+            next.inverseAngle = LC_Interval::hull(prior.lo(), mid);
+        }
+        // Mean-value interval Newton encloses the SAME retained alpha; U is never replaced by its midpoint.
+        return finiteInterval(next.inverseAngle) ? Step::Ok : Step::Unavailable;
+    }
+    Step consistent(const CriticalCanonicalBounds& next) const {
+        LC_Interval c, s;
+        // Existence/identity come from the factory and the two mean-value contractions, NOT this overlap test.
+        if (!finiteInterval(next.variable) || !finiteInterval(next.inverseAngle)) { return Step::Unavailable; }
+        if (next.variable.lo() < 0.0 || next.variable.hi() > 0.5 || next.inverseAngle.lo() <= 0.0 ||
+            next.inverseAngle.hi() >= 0.5 * realPi().lo() || next.complement != provenance->initial.complement ||
+            provenance->residual(exactDouble(next.variable.lo())) > 0 ||
+            provenance->residual(exactDouble(next.variable.hi())) < 0) { return Step::Contradiction; }
+        if (!referenceTrig(next.inverseAngle, c, s)) { return Step::Unavailable; }
+        const LC_Interval values = sqr(s);
+        if (!finiteInterval(values)) { return Step::Unavailable; }
+        return finiteInterval(intersect(values, next.variable)) ? Step::Ok : Step::Contradiction;
+    }
+};
 
 class CriticalBuilder {
 public:
@@ -932,19 +1138,95 @@ public:
     }
 
     CriticalAnalysis run() {
-        const auto regime = classify();
-        if (!regime) {
-            return result();
-        }
-        m_adapter.reset(new CriticalAdapter{m_frame, *regime});
-        if (!axes() || !occurrences() || !regions() || !joins() || !preflight()) {
-            return result();
-        }
+        if (!prepare()) { return result(); }
         CriticalAnalysis out;
         out.status = LC_IntersectionStatus::Ok;
         out.work = m_budget.consumed();
         out.adapter = std::move(m_adapter);
         return out;
+    }
+
+    CriticalRetainedAnalysis runRetained() {
+        CriticalRetainedAnalysis out;
+        const auto finish = [&]() {
+            out.work = m_budget.consumed();
+            if (m_budget.status() == BudgetStatus::LimitExceeded) {
+                out.status = LC_IntersectionStatus::LimitExceeded;
+                out.reason = CriticalAnalysis::Reason::None;
+            }
+            return std::move(out);
+        };
+        if (!prepare()) {
+            const auto failed = result();
+            out.status = failed.status;
+            out.reason = failed.reason;
+            return finish();
+        }
+        out.status = LC_IntersectionStatus::Ok;
+        const auto& occurrences = m_adapter->criticalOccurrences();
+        const bool canonical = m_adapter->regime() == CriticalRegime::IntermediateThresholds;
+        const bool token = !m_budget.m_identity;
+        const std::size_t fixed = 3 + std::size_t(canonical) + std::size_t(token);
+        if (occurrences.size() > std::numeric_limits<std::size_t>::max() - fixed) {
+            m_budget.latchLimitExceeded();
+            return finish();
+        }
+        // These are extra retained logical records. Legacy preparation has already finished unchanged.
+        if (!m_budget.consumeVertices(fixed + occurrences.size()) || !m_budget.consumePairs(1)) {
+            return finish();
+        }
+        out.status = LC_IntersectionStatus::AmbiguousTopology;
+        out.reason = CriticalAnalysis::Reason::UnresolvedGeometry;
+        auto provenance = std::make_shared<const CriticalProvenance>(m_basis, m_frame, m_kernel,
+            m_piLow, m_piHigh, m_duration, m_start, m_extent, m_canonical, m_scalarDepth);
+        auto impl = std::make_unique<CriticalRefinementSession::Impl>();
+        impl->provenance = provenance;
+        impl->canonical = m_canonical;
+        impl->depth = m_scalarDepth;
+        impl->ceilings = m_budget.m_limits;
+        if (canonical) {
+            const auto common = impl->consistent(impl->canonical);
+            if (common != CriticalRefinementSession::Impl::Step::Ok) {
+                if (common == CriticalRefinementSession::Impl::Step::Contradiction) {
+                    out.status = LC_IntersectionStatus::InvalidInput;
+                    out.reason = CriticalAnalysis::Reason::None;
+                }
+                return finish();
+            }
+        }
+        if (occurrences.size() > impl->records.max_size()) {
+            m_budget.latchLimitExceeded();
+            return finish();
+        }
+        impl->records.reserve(occurrences.size());
+        for (const auto& occurrence : occurrences) {
+            if (!m_budget.consumePairs(1)) { return finish(); }
+            CriticalOccurrenceSnapshot snapshot;
+            snapshot.occurrence = occurrence;
+            snapshot.admittedRounds = m_scalarDepth;
+            if (canonical) {
+                snapshot.canonical = m_canonical;
+                LC_Interval parameter;
+                if (!provenance->map(occurrence, m_canonical.inverseAngle, parameter)) { return finish(); }
+                snapshot.occurrence.parameter = intersect(occurrence.parameter, parameter);
+                if (!finiteInterval(snapshot.occurrence.parameter)) { return finish(); }
+            }
+            if (!provenance->image(occurrence, m_canonical.variable, snapshot.imageX, snapshot.imageY)) {
+                return finish();
+            }
+            impl->records.push_back({occurrence, snapshot});
+        }
+        impl->issuer = std::make_shared<const unsigned char>(0);
+        if (token) { m_budget.m_identity = std::make_shared<const unsigned char>(0); }
+        impl->budgetIdentity = m_budget.m_identity;
+        impl->lastWork = m_budget.consumed();
+        // The adapter is immutable thereafter; the session owns independent mutable brackets/caches.
+        m_adapter->m_provenance = std::move(provenance);
+        out.refinement.reset(new CriticalRefinementSession{std::move(impl)});
+        out.adapter = std::move(m_adapter);
+        out.status = LC_IntersectionStatus::Ok;
+        out.reason = CriticalAnalysis::Reason::None;
+        return finish();
     }
 
 private:
@@ -963,8 +1245,16 @@ private:
     std::unique_ptr<CriticalAdapter> m_adapter;
     std::vector<Axis> m_axes;
     LC_Interval m_beta;
+    CriticalCanonicalBounds m_canonical;
+    unsigned m_scalarDepth = 0;
     CriticalAnalysis::Reason m_reason = CriticalAnalysis::Reason::UnresolvedGeometry;
 
+    bool prepare() {
+        const auto regime = classify();
+        if (!regime) { return false; }
+        m_adapter.reset(new CriticalAdapter{m_frame, *regime});
+        return axes() && occurrences() && regions() && joins() && preflight();
+    }
     int direction() const { return m_basis.reversed ? -1 : 1; }
     bool unresolved() {
         m_reason = CriticalAnalysis::Reason::UnresolvedGeometry;
@@ -980,7 +1270,11 @@ private:
         return out;
     }
     bool generated(const std::size_t count, const unsigned depth) {
-        return m_budget.checkDepth(depth) && m_budget.consumeVertices(count);
+        if (depth > m_budget.depthLimit()) {
+            m_budget.latchLimitExceeded();
+            return false;
+        }
+        return m_budget.consumeVertices(count);
     }
     bool split(const unsigned depth) {
         if (depth >= m_budget.depthLimit()) {
@@ -1144,7 +1438,8 @@ private:
                 if (residual(lo) <= 0 && residual(hi) >= 0) { break; }
                 return unresolved();
             }
-            if (!split(depth)) { return false; }
+            if (!split(depth) || !m_budget.checkDepth(depth + 1)) { return false; }
+            m_scalarDepth = depth + 1;
             const Rational value = residual(mid);
             if (value == 0) { lo = hi = mid; }
             else if (value < 0) { lo = mid; }
@@ -1158,6 +1453,7 @@ private:
         const LC_Interval upper = root / denominator;
         if (!finiteInterval(upper)) { return unresolved(); }
         const LC_Interval inverse = LC_Interval::hull(root.lo(), upper.hi());
+        m_canonical = {variable, inverse, complement};
         m_beta = complement ? scaled(realPi(), -1) - inverse : inverse;
         return finiteInterval(m_beta) && m_beta.lo() > 0.0 && m_beta.hi() < realPi().lo() * 0.5;
     }
@@ -1259,6 +1555,7 @@ private:
             if (!m_budget.consumePairs(1)) { return false; }
             const Box box = pending.back();
             pending.pop_back();
+            if (!m_budget.checkDepth(box.depth)) { return false; }
             const auto proof = prove(box.from, box.to);
             if (proof) {
                 if (m_adapter->m_regions.size() == m_adapter->m_regions.max_size() ||
@@ -1302,14 +1599,17 @@ private:
             if (from == join) { from = segments[i - 1].t0; }
             if (to == join) { to = segments[i].t1; }
             for (unsigned depth = 0;; ++depth) {
-                if (!m_budget.consumePairs(1)) { return false; }
+                if (!m_budget.consumePairs(1) || !m_budget.checkDepth(depth)) { return false; }
                 if (prove(from, to)) { break; }
                 const double left = from + 0.5 * (join - from);
                 const double right = join + 0.5 * (to - join);
-                if (!(from < left && left < join && join < right && right < to)) { return unresolved(); }
+                const bool leftMoves = from < left && left < join;
+                const bool rightMoves = join < right && right < to;
+                if (!leftMoves && !rightMoves) { return unresolved(); }
                 if (!split(depth)) { return false; }
-                from = left;
-                to = right;
+                // An adjacent-double side stays intact; the next examination proves the WHOLE narrowed span.
+                if (leftMoves) { from = left; }
+                if (rightMoves) { to = right; }
             }
             m_adapter->m_joins.push_back({from, to});
         }
@@ -1353,7 +1653,7 @@ CriticalAnalysis analyseCritical(const RS_EllipseData& basis, const double signe
         !(basis.ratio > 0.0 && basis.ratio <= 1.0) || !std::isfinite(signedDistance) || !domain ||
         (!domain->whole && (!(basis.angle1 >= 0.0 && basis.angle1 < turn) ||
                             !(basis.angle2 >= 0.0 && basis.angle2 < turn)))) { return snapshot(); }
-    if (!budget.checkDepth(0) || !budget.consumeVertices(1) || !budget.consumePairs(1)) { return snapshot(); }
+    if (!budget.consumeVertices(1) || !budget.consumePairs(1) || !budget.checkDepth(0)) { return snapshot(); }
     const auto reference = ReferenceFrame::create(basis, signedDistance);
     if (!reference) {
         out.status = LC_IntersectionStatus::AmbiguousTopology;
@@ -1361,6 +1661,176 @@ CriticalAnalysis analyseCritical(const RS_EllipseData& basis, const double signe
         return snapshot();
     }
     return CriticalBuilder{basis, signedDistance, *reference, budget}.run();
+}
+
+CriticalRetainedAnalysis analyseCriticalRetained(const RS_EllipseData& basis, const double signedDistance,
+                                               WorkBudget& budget) {
+    CriticalRetainedAnalysis out;
+    const auto finish = [&]() {
+        out.work = budget.consumed();
+        if (budget.status() == BudgetStatus::LimitExceeded) { out.status = LC_IntersectionStatus::LimitExceeded; }
+        return std::move(out);
+    };
+    if (budget.status() != BudgetStatus::Ok) { return finish(); }
+    const auto domain = sweep(basis);
+    if (!isFinite2D(basis.center) || !isFinite2D(basis.majorP) ||
+        !(basis.majorP.x != 0.0 || basis.majorP.y != 0.0) || !std::isfinite(basis.ratio) ||
+        !(basis.ratio > 0.0 && basis.ratio <= 1.0) || !std::isfinite(signedDistance) || !domain ||
+        (!domain->whole && (!(basis.angle1 >= 0.0 && basis.angle1 < turn) ||
+                            !(basis.angle2 >= 0.0 && basis.angle2 < turn)))) { return finish(); }
+    if (!budget.consumeVertices(1) || !budget.consumePairs(1) || !budget.checkDepth(0)) { return finish(); }
+    const auto reference = ReferenceFrame::create(basis, signedDistance);
+    if (!reference) {
+        out.status = LC_IntersectionStatus::AmbiguousTopology;
+        out.reason = CriticalAnalysis::Reason::UnresolvedGeometry;
+        return finish();
+    }
+    return CriticalBuilder{basis, signedDistance, *reference, budget}.runRetained();
+}
+
+CriticalRefinementSession::CriticalRefinementSession(std::unique_ptr<Impl> impl) : m_impl{std::move(impl)} {}
+CriticalRefinementSession::~CriticalRefinementSession() = default;
+CriticalRefinementSession::CriticalRefinementSession(CriticalRefinementSession&&) noexcept = default;
+CriticalRefinementSession& CriticalRefinementSession::operator=(CriticalRefinementSession&&) noexcept = default;
+
+std::size_t CriticalRefinementSession::occurrenceCount() const {
+    return m_impl && !m_impl->terminal ? m_impl->records.size() : 0;
+}
+
+CriticalOccurrenceHandle CriticalRefinementSession::occurrenceHandle(const std::size_t index) const {
+    CriticalOccurrenceHandle handle;
+    if (index < occurrenceCount()) {
+        handle.m_issuer = m_impl->issuer;
+        handle.m_index = index;
+    }
+    return handle;
+}
+
+std::optional<CriticalOccurrenceSnapshot> CriticalRefinementSession::snapshot(const CriticalOccurrenceHandle& handle) const {
+    if (!m_impl || m_impl->terminal || !m_impl->handle(handle)) { return {}; }
+    auto out = m_impl->records[handle.m_index].current;
+    // Geometry is atomically staged; admitted failed work still belongs to ALL symmetric occurrences.
+    out.admittedRounds = m_impl->depth;
+    return out;
+}
+
+CheckWork CriticalRefinementSession::lastMatchingWork() const { return m_impl ? m_impl->lastWork : CheckWork{}; }
+
+CriticalContractionResult CriticalRefinementSession::contract(const CriticalOccurrenceHandle& handle,
+                                                            WorkBudget& budget) {
+    CriticalContractionResult out;
+    if (!m_impl) { return out; }
+    auto& state = *m_impl;
+    out.work = state.lastWork;
+    if (!state.matches(state.budgetIdentity, budget.m_identity)) { return out; }
+    out.workSource = CriticalWorkSource::CurrentBudget;
+    out.work = budget.consumed();
+    if (!state.handle(handle)) { return out; }
+    const auto finish = [&]() {
+        state.lastWork = budget.consumed();
+        out.work = state.lastWork;
+        return out;
+    };
+    if (state.terminal) { return finish(); }
+    if (state.limited || budget.status() == BudgetStatus::LimitExceeded) {
+        state.limited = true;
+        out.status = LC_IntersectionStatus::LimitExceeded;
+        return finish();
+    }
+    if (budget.status() != BudgetStatus::Ok) {
+        state.terminal = true;
+        return finish();
+    }
+    if (state.records[handle.m_index].original.kind == CriticalKind::CriticalStationary) {
+        out.status = LC_IntersectionStatus::AmbiguousTopology;
+        return finish();
+    }
+    const auto limit = [&]() {
+        budget.latchLimitExceeded();
+        state.limited = true;
+        out.status = LC_IntersectionStatus::LimitExceeded;
+        return finish();
+    };
+    if (state.depth >= state.ceilings.maxDepth || state.depth >= budget.depthLimit()) { return limit(); }
+    const auto vertices = [&](const std::size_t count) {
+        if (!budget.consumeVertices(count)) { return false; }
+        out.entered.vertices += count;
+        return true;
+    };
+    const auto pair = [&]() {
+        if (!budget.consumePairs(1)) { return false; }
+        ++out.entered.distancePairs;
+        return true;
+    };
+    try {
+        if (!vertices(1) || !pair()) { return limit(); }
+        ++state.depth; // Admitted level; failed later work must never reset this history.
+        if (!budget.checkDepth(state.depth)) { return limit(); }
+        out.entered.deepest = state.depth;
+        CriticalCanonicalBounds next = state.canonical;
+        const auto scalar = state.scalar(next);
+        if (scalar != Impl::Step::Ok) {
+            state.terminal = scalar == Impl::Step::Contradiction;
+            out.status = state.terminal ? LC_IntersectionStatus::InvalidInput : LC_IntersectionStatus::AmbiguousTopology;
+            return finish();
+        }
+        if (!pair()) { return limit(); }
+        const auto inverse = state.inverse(next);
+        if (inverse != Impl::Step::Ok) {
+            state.terminal = inverse == Impl::Step::Contradiction;
+            out.status = state.terminal ? LC_IntersectionStatus::InvalidInput : LC_IntersectionStatus::AmbiguousTopology;
+            return finish();
+        }
+        if (!pair()) { return limit(); }
+        const auto common = state.consistent(next);
+        if (common != Impl::Step::Ok) {
+            state.terminal = common == Impl::Step::Contradiction;
+            out.status = state.terminal ? LC_IntersectionStatus::InvalidInput : LC_IntersectionStatus::AmbiguousTopology;
+            return finish();
+        }
+        if (next.variable.lo() == state.canonical.variable.lo() &&
+            next.variable.hi() == state.canonical.variable.hi() &&
+            next.inverseAngle.lo() == state.canonical.inverseAngle.lo() &&
+            next.inverseAngle.hi() == state.canonical.inverseAngle.hi()) {
+            out.status = LC_IntersectionStatus::AmbiguousTopology;
+            return finish();
+        }
+        // One logical staged record per occurrence, before allocating the publication vector.
+        if (!vertices(state.records.size())) { return limit(); }
+        std::vector<CriticalOccurrenceSnapshot> staged;
+        if (state.records.size() > staged.max_size()) { return limit(); }
+        staged.reserve(state.records.size());
+        for (const auto& record : state.records) {
+            if (!pair()) { return limit(); }
+            CriticalOccurrenceSnapshot candidate = record.current;
+            LC_Interval parameter, x, y;
+            if (!state.provenance->map(record.original, next.inverseAngle, parameter) ||
+                !state.provenance->image(record.original, next.variable, x, y)) {
+                out.status = LC_IntersectionStatus::AmbiguousTopology;
+                return finish();
+            }
+            candidate.occurrence.parameter = intersect(record.current.occurrence.parameter, parameter);
+            candidate.imageX = intersect(record.current.imageX, x);
+            candidate.imageY = intersect(record.current.imageY, y);
+            if (!finiteInterval(candidate.occurrence.parameter) || !finiteInterval(candidate.imageX) ||
+                !finiteInterval(candidate.imageY)) {
+                state.terminal = true;
+                return finish();
+            }
+            candidate.canonical = next;
+            candidate.admittedRounds = state.depth;
+            staged.push_back(candidate);
+        }
+        for (std::size_t i = 0; i < staged.size(); ++i) { state.records[i].current = staged[i]; }
+        state.canonical = next;
+        out.status = LC_IntersectionStatus::Ok;
+        out.snapshot = snapshot(handle);
+        return finish();
+    } catch (...) {
+        state.terminal = true;
+        state.lastWork = budget.consumed();
+        throw;
+    }
 }
 
 RS_Vector ellipsePoint(const RS_EllipseData& basis, const double parameter) {

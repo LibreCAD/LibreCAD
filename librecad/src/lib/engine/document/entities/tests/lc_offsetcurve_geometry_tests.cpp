@@ -19,9 +19,12 @@
 #include <array>
 #include <cmath>
 #include <limits>
+#include <memory>
+#include <optional>
 #include <random>
 #include <type_traits>
 #include <utility>
+#include <vector>
 
 #include <boost/math/constants/constants.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp>
@@ -253,6 +256,93 @@ void checkCriticalOccurrences(const RS_EllipseData& data, const double delta,
         CHECK(occurrence.proof == (occurrence.kind == geo::CriticalKind::SimpleCusp ?
             geo::CriticalProof::MonotonePolynomial : geo::CriticalProof::ExactAxisThreshold));
     }
+}
+
+using CriticalFloat = boost::multiprecision::number<boost::multiprecision::cpp_bin_float<256>>;
+
+void checkCriticalEnclosure(const LC_Interval& interval, const CriticalFloat& value) {
+    REQUIRE(interval.isValid());
+    REQUIRE(std::isfinite(interval.lo()));
+    REQUIRE(std::isfinite(interval.hi()));
+    CHECK(CriticalFloat(interval.lo()) <= value);
+    CHECK(value <= CriticalFloat(interval.hi()));
+}
+
+void checkNested(const LC_Interval& inner, const LC_Interval& outer) {
+    REQUIRE(inner.isValid());
+    REQUIRE(outer.isValid());
+    CHECK(outer.lo() <= inner.lo());
+    CHECK(inner.hi() <= outer.hi());
+}
+
+void checkWork(const geo::CheckWork& actual, const geo::CheckWork& expected) {
+    CHECK(actual.cubicPieces == expected.cubicPieces);
+    CHECK(actual.vertices == expected.vertices);
+    CHECK(actual.distancePairs == expected.distancePairs);
+    CHECK(actual.deepest == expected.deepest);
+}
+
+void checkCriticalSnapshot(const RS_EllipseData& data, const double distance, const geo::ReferenceFrame& frame,
+                           const geo::CriticalOccurrenceSnapshot& snapshot) {
+    const CriticalFloat pi = boost::math::constants::pi<CriticalFloat>();
+    const CriticalFloat r = data.ratio;
+    const CriticalFloat mx = data.majorP.x, my = data.majorP.y;
+    const CriticalFloat c = 1 - r * r;
+    const auto& occurrence = snapshot.occurrence;
+    const int q = occurrence.quadrant + 4 * occurrence.winding;
+    CriticalFloat angle = CriticalFloat(q) * pi / 2;
+    CriticalFloat x, y;
+    if (occurrence.kind == geo::CriticalKind::SimpleCusp) {
+        const CriticalFloat norm = sqrt(mx * mx + my * my);
+        const CriticalFloat h2 = pow(CriticalFloat(-distance) * r / norm, CriticalFloat(2) / 3);
+        const CriticalFloat z = (h2 - r * r) / c;
+        const CriticalFloat beta = asin(sqrt(z));
+        angle += q % 2 == 0 ? beta : pi / 2 - beta;
+        const CriticalFloat cosPower = (1 - z) * sqrt(1 - z);
+        const CriticalFloat sinPower = z * sqrt(z);
+        const int cosSign = occurrence.quadrant == 0 || occurrence.quadrant == 3 ? 1 : -1;
+        const int sinSign = occurrence.quadrant < 2 ? 1 : -1;
+        x = c * (cosSign * cosPower * mx + sinSign * sinPower * my / r);
+        y = c * (cosSign * cosPower * my - sinSign * sinPower * mx / r);
+        // Also qualify the cancellation-free image against the independent E + distance*N formula.
+        const CriticalFloat cosine = cosSign * sqrt(1 - z);
+        const CriticalFloat sine = sinSign * sqrt(z);
+        const CriticalFloat speed = norm * sqrt(r * r * cosine * cosine + sine * sine);
+        const CriticalFloat directX = mx * cosine - my * r * sine +
+            CriticalFloat(distance) * (r * cosine * mx - sine * my) / speed;
+        const CriticalFloat directY = my * cosine + mx * r * sine +
+            CriticalFloat(distance) * (r * cosine * my + sine * mx) / speed;
+        checkCriticalEnclosure(snapshot.imageX, directX / CriticalFloat(frame.scale()));
+        checkCriticalEnclosure(snapshot.imageY, directY / CriticalFloat(frame.scale()));
+        REQUIRE(snapshot.canonical);
+        const CriticalFloat u = snapshot.canonical->complement ? CriticalFloat(1 - z) : z;
+        checkCriticalEnclosure(snapshot.canonical->variable, u);
+        checkCriticalEnclosure(snapshot.canonical->inverseAngle, asin(sqrt(u)));
+    } else {
+        CHECK_FALSE(snapshot.canonical);
+        const bool major = occurrence.quadrant % 2 == 0;
+        const int sign = occurrence.quadrant < 2 ? 1 : -1;
+        const CriticalFloat factor = major ? c : CriticalFloat(r - 1 / r);
+        x = sign * factor * (major ? mx : CriticalFloat(-my));
+        y = sign * factor * (major ? my : mx);
+    }
+    const CriticalFloat period = 2 * pi;
+    const CriticalFloat start = frame.sourceSweep().whole ? CriticalFloat(M_PI_4) : CriticalFloat(data.angle1);
+    CriticalFloat span = frame.sourceSweep().whole ? (data.reversed ? CriticalFloat(-period) : period) :
+        CriticalFloat(data.angle2) - CriticalFloat(data.angle1);
+    if (!frame.sourceSweep().whole) {
+        if (!data.reversed && span < 0) { span += period; }
+        if (data.reversed && span > 0) { span -= period; }
+    }
+    const CriticalFloat parameter = occurrence.atStart ? CriticalFloat(0) : occurrence.atEnd ?
+        CriticalFloat(frame.parameterEnd()) : (angle - start) * CriticalFloat(frame.parameterEnd()) / span;
+    checkCriticalEnclosure(occurrence.parameter, parameter);
+    checkCriticalEnclosure(snapshot.imageX, x / CriticalFloat(frame.scale()));
+    checkCriticalEnclosure(snapshot.imageY, y / CriticalFloat(frame.scale()));
+    LC_Interval worldX, worldY;
+    REQUIRE(frame.pointToWorld(snapshot.imageX, snapshot.imageY, worldX, worldY));
+    checkCriticalEnclosure(worldX, CriticalFloat(data.center.x) + x);
+    checkCriticalEnclosure(worldY, CriticalFloat(data.center.y) + y);
 }
 } // namespace
 
@@ -1394,6 +1484,27 @@ TEST_CASE("Critical failures and invalid requests never publish partial adapters
     CHECK_FALSE(adapter.certifyInjective(adapter.segments().size(), LC_Interval::point(0.0)).available);
 }
 
+TEST_CASE("Critical depth excludes a split refused before child examination",
+          "[lc-offsetcurve][geometry][reference-critical-depth]") {
+    LC_OffsetCheckLimits limits;
+    limits.maxVertices = 6;
+    limits.maxDepth = 20;
+    geo::WorkBudget budget{limits};
+    const auto result = geo::analyseCritical(basis(100.0, 0.5), -30.0, budget);
+
+    REQUIRE(result.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK_FALSE(result.adapter);
+    CHECK(budget.status() == geo::BudgetStatus::LimitExceeded);
+    CHECK(result.work.vertices == 6);
+    CHECK(result.work.distancePairs == 23);
+    CHECK(result.work.cubicPieces == 0);
+    CHECK(result.work.deepest == 0);
+    CHECK(result.work.vertices == budget.consumed().vertices);
+    CHECK(result.work.distancePairs == budget.consumed().distancePairs);
+    CHECK(result.work.cubicPieces == budget.consumed().cubicPieces);
+    CHECK(result.work.deepest == budget.consumed().deepest);
+}
+
 TEST_CASE("Critical work caps are exact cumulative irreversible and checked before generation",
           "[lc-offsetcurve][geometry][reference-critical]") {
     const auto data = basis(100.0, 0.5);
@@ -1631,4 +1742,790 @@ TEST_CASE("Shared reference budgets reject zero limits and cannot overflow count
     CHECK(exact.consumed().distancePairs == maximum);
     CHECK_FALSE(exact.consumePairs(1));
     CHECK(exact.consumed().distancePairs == maximum);
+}
+
+TEST_CASE("Retained critical issuance adds only its explicit publication records",
+          "[lc-offsetcurve][geometry][reference-critical-refine]") {
+    static_assert(!std::is_copy_constructible_v<geo::CriticalRefinementSession>);
+    static_assert(!std::is_default_constructible_v<geo::CriticalRefinementSession>);
+    static_assert(std::is_nothrow_move_constructible_v<geo::CriticalRefinementSession>);
+    static_assert(std::is_nothrow_move_assignable_v<geo::CriticalRefinementSession>);
+    static_assert(!std::is_constructible_v<geo::CriticalOccurrenceHandle, geo::CriticalOccurrence>);
+    static_assert(!std::is_constructible_v<geo::CriticalOccurrenceHandle, geo::CriticalOccurrenceSnapshot>);
+    static_assert(!std::is_constructible_v<geo::CriticalRefinementSession, geo::CriticalOccurrenceSnapshot>);
+    static_assert(!std::is_move_constructible_v<geo::WorkBudget>);
+    for (const double distance : {-30.0, 1.0}) {
+        const auto data = basis(100.0, 0.5);
+        geo::WorkBudget legacyBudget;
+        const auto legacy = geo::analyseCritical(data, distance, legacyBudget);
+        REQUIRE(legacy.status == LC_IntersectionStatus::Ok);
+        geo::WorkBudget retainedBudget;
+        auto retained = geo::analyseCriticalRetained(data, distance, retainedBudget);
+        REQUIRE(retained.status == LC_IntersectionStatus::Ok);
+        REQUIRE(retained.adapter);
+        REQUIRE(retained.refinement);
+        const auto n = retained.refinement->occurrenceCount();
+        const std::size_t canonical = distance < 0.0 ? 1 : 0;
+        CHECK(n == legacy.adapter->criticalOccurrences().size());
+        CHECK(retained.work.vertices == legacy.work.vertices + 3 + canonical + n + 1);
+        CHECK(retained.work.distancePairs == legacy.work.distancePairs + 1 + n);
+        CHECK(retained.work.deepest == legacy.work.deepest);
+        checkWork(retained.work, retainedBudget.consumed());
+        checkWork(retained.refinement->lastMatchingWork(), retained.work);
+        checkCriticalCoverage(*retained.adapter);
+        const auto beforeSecond = retainedBudget.consumed();
+        auto second = geo::analyseCriticalRetained(data, distance, retainedBudget);
+        REQUIRE(second.status == LC_IntersectionStatus::Ok);
+        CHECK(second.work.vertices == beforeSecond.vertices + legacy.work.vertices + 3 + canonical + n);
+        CHECK(second.work.distancePairs == beforeSecond.distancePairs + legacy.work.distancePairs + 1 + n);
+        const auto beforeLegacy = retainedBudget.consumed();
+        const auto againLegacy = geo::analyseCritical(data, distance, retainedBudget);
+        REQUIRE(againLegacy.status == LC_IntersectionStatus::Ok);
+        CHECK(againLegacy.work.vertices == beforeLegacy.vertices + legacy.work.vertices);
+        CHECK(againLegacy.work.distancePairs == beforeLegacy.distancePairs + legacy.work.distancePairs);
+    }
+    const auto emptyArc = basis(100.0, 0.5, 0.01, 0.05);
+    geo::WorkBudget emptyLegacyBudget;
+    const auto emptyLegacy = geo::analyseCritical(emptyArc, -30.0, emptyLegacyBudget);
+    REQUIRE(emptyLegacy.status == LC_IntersectionStatus::Ok);
+    geo::WorkBudget budget;
+    auto noOccurrence = geo::analyseCriticalRetained(emptyArc, -30.0, budget);
+    REQUIRE(noOccurrence.status == LC_IntersectionStatus::Ok);
+    CHECK(noOccurrence.adapter->regime() == geo::CriticalRegime::IntermediateThresholds);
+    CHECK(noOccurrence.refinement->occurrenceCount() == 0);
+    CHECK(noOccurrence.work.vertices == emptyLegacy.work.vertices + 5);
+    CHECK(noOccurrence.work.distancePairs == emptyLegacy.work.distancePairs + 1);
+    CHECK_FALSE(noOccurrence.refinement->snapshot(noOccurrence.refinement->occurrenceHandle(0)));
+}
+
+TEST_CASE("Retained critical publication has exact one less and prespent cumulative caps",
+          "[lc-offsetcurve][geometry][reference-critical-refine]") {
+    const auto data = basis(100.0, 0.5);
+    geo::WorkBudget baseline;
+    auto reference = geo::analyseCriticalRetained(data, -30.0, baseline);
+    REQUIRE(reference.status == LC_IntersectionStatus::Ok);
+    const auto work = reference.work;
+    for (int cap = 0; cap < 3; ++cap) {
+        LC_OffsetCheckLimits limits{1, work.vertices, work.distancePairs, 20};
+        if (cap == 1) { --limits.maxVertices; }
+        if (cap == 2) { --limits.maxDistancePairs; }
+        geo::WorkBudget budget{limits};
+        auto result = geo::analyseCriticalRetained(data, -30.0, budget);
+        CHECK(result.status == (cap == 0 ? LC_IntersectionStatus::Ok : LC_IntersectionStatus::LimitExceeded));
+        CHECK(bool(result.adapter) == (cap == 0));
+        CHECK(bool(result.refinement) == (cap == 0));
+        CHECK(result.work.vertices <= limits.maxVertices);
+        CHECK(result.work.distancePairs <= limits.maxDistancePairs);
+        checkWork(result.work, budget.consumed());
+    }
+    geo::WorkBudget prespent{LC_OffsetCheckLimits{1, work.vertices + 2, work.distancePairs + 3, 20}};
+    REQUIRE(prespent.consumeVertices(2));
+    REQUIRE(prespent.consumePairs(3));
+    auto issued = geo::analyseCriticalRetained(data, -30.0, prespent);
+    REQUIRE(issued.status == LC_IntersectionStatus::Ok);
+    CHECK(issued.work.vertices == work.vertices + 2);
+    CHECK(issued.work.distancePairs == work.distancePairs + 3);
+}
+
+TEST_CASE("Retained critical preparation preserves the original failed split boundary",
+          "[lc-offsetcurve][geometry][reference-critical-depth]") {
+    LC_OffsetCheckLimits limits;
+    limits.maxVertices = 6;
+    geo::WorkBudget budget{limits};
+    const auto result = geo::analyseCriticalRetained(basis(100.0, 0.5), -30.0, budget);
+    CHECK(result.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK_FALSE(result.adapter);
+    CHECK_FALSE(result.refinement);
+    CHECK(result.work.vertices == 6);
+    CHECK(result.work.distancePairs == 23);
+    CHECK(result.work.deepest == 0);
+    checkWork(result.work, budget.consumed());
+
+    geo::WorkBudget examined{LC_OffsetCheckLimits{1, 8, 23, 20}};
+    const auto later = geo::analyseCritical(basis(100.0, 0.5), -30.0, examined);
+    CHECK(later.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(later.work.vertices == 8);
+    CHECK(later.work.distancePairs == 23);
+    CHECK(later.work.deepest == 1);
+}
+
+TEST_CASE("Retained critical snapshots contain independently computed parameters and local world images",
+          "[lc-offsetcurve][geometry][reference-critical-refine]") {
+    const std::array<RS_EllipseData, 5> sources{{basis(100.0, 0.5), basis(100.0, 0.5, 0.0, 0.0, true),
+        basis(100.0, 0.5, 6.0, 0.5), basis(100.0, 0.5, 0.5, 6.0, true), basis(100.0, 0.5, 0.0, 2.0)}};
+    for (auto data : sources) {
+        for (const double scale : {1e-250, 1.0, 1e250}) {
+            CAPTURE(data.angle1, data.angle2, data.reversed, scale);
+            data.majorP = RS_Vector{80.0 * scale, 60.0 * scale};
+            data.center = RS_Vector{123.0 * scale, -87.0 * scale};
+            const double distance = -30.0 * scale;
+            geo::WorkBudget budget;
+            auto result = geo::analyseCriticalRetained(data, distance, budget);
+            REQUIRE(result.status == LC_IntersectionStatus::Ok);
+            REQUIRE(result.refinement->occurrenceCount() > 0);
+            for (std::size_t i = 0; i < result.refinement->occurrenceCount(); ++i) {
+                auto previous = result.refinement->snapshot(result.refinement->occurrenceHandle(i));
+                REQUIRE(previous);
+                checkCriticalSnapshot(data, distance, result.adapter->frame(), *previous);
+            }
+            const auto handle = result.refinement->occurrenceHandle(0);
+            for (unsigned round = 0; round < 5; ++round) {
+                const auto before = result.refinement->snapshot(handle);
+                REQUIRE(before);
+                const auto refined = result.refinement->contract(handle, budget);
+                REQUIRE((refined.status == LC_IntersectionStatus::Ok ||
+                         refined.status == LC_IntersectionStatus::AmbiguousTopology));
+                if (refined.status != LC_IntersectionStatus::Ok) { break; }
+                REQUIRE(refined.snapshot);
+                checkNested(refined.snapshot->occurrence.parameter, before->occurrence.parameter);
+                checkNested(refined.snapshot->imageX, before->imageX);
+                checkNested(refined.snapshot->imageY, before->imageY);
+                for (std::size_t i = 0; i < result.refinement->occurrenceCount(); ++i) {
+                    const auto symmetric = result.refinement->snapshot(result.refinement->occurrenceHandle(i));
+                    REQUIRE(symmetric);
+                    checkCriticalSnapshot(data, distance, result.adapter->frame(), *symmetric);
+                    CHECK(symmetric->admittedRounds == refined.snapshot->admittedRounds);
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("Critical inverse refinement progresses independently of an adjacent scalar bracket",
+          "[lc-offsetcurve][geometry][reference-critical-refine]") {
+    for (const double distance : {-30.0, -100.0}) {
+        const auto data = basis(100.0, 0.5, 0.0, 2.0);
+        geo::WorkBudget legacyBudget;
+        const auto legacy = geo::analyseCritical(data, distance, legacyBudget);
+        const auto legacyStatus = static_cast<int>(legacy.status);
+        const auto legacyReason = static_cast<int>(legacy.reason);
+        CAPTURE(distance, legacyStatus, legacyReason, legacy.work.vertices,
+                legacy.work.distancePairs, legacy.work.deepest);
+        REQUIRE(legacy.status == LC_IntersectionStatus::Ok);
+        geo::WorkBudget budget;
+        auto result = geo::analyseCriticalRetained(data, distance, budget);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        REQUIRE(result.refinement->occurrenceCount() == 1);
+        CHECK(result.work.vertices == legacy.work.vertices + 6);
+        CHECK(result.work.distancePairs == legacy.work.distancePairs + 2);
+        CHECK(result.work.deepest == legacy.work.deepest);
+        const auto handle = result.refinement->occurrenceHandle(0);
+        bool independentProgress = false;
+        bool strongComplementProgress = false;
+        for (unsigned round = 0; round < 8; ++round) {
+            const auto before = result.refinement->snapshot(handle);
+            REQUIRE(before);
+            REQUIRE(before->canonical);
+            const auto refined = result.refinement->contract(handle, budget);
+            REQUIRE((refined.status == LC_IntersectionStatus::Ok ||
+                     refined.status == LC_IntersectionStatus::AmbiguousTopology));
+            const auto after = result.refinement->snapshot(handle);
+            REQUIRE(after);
+            checkCriticalSnapshot(data, distance, result.adapter->frame(), *after);
+            if (refined.status != LC_IntersectionStatus::Ok) { break; }
+            const auto& a = before->canonical->variable;
+            const auto& b = after->canonical->variable;
+            if (a.lo() == b.lo() && a.hi() == b.hi() &&
+                after->canonical->inverseAngle.width() < before->canonical->inverseAngle.width()) {
+                independentProgress = true;
+                CHECK(std::nextafter(a.lo(), std::numeric_limits<double>::infinity()) >= a.hi());
+                strongComplementProgress |= after->canonical->complement &&
+                    after->canonical->inverseAngle.width() < 0.1 * before->canonical->inverseAngle.width();
+            }
+        }
+        if (distance == -100.0) {
+            CHECK(independentProgress);
+            CHECK(strongComplementProgress);
+        }
+    }
+    auto data = basis(100.0, 0.5, 0.0, 2.0);
+    data.majorP = RS_Vector{120.0, 40.0};
+    geo::WorkBudget budget;
+    auto special = geo::analyseCriticalRetained(data, -125.0, budget);
+    REQUIRE(special.status == LC_IntersectionStatus::Ok);
+    const auto handle = special.refinement->occurrenceHandle(0);
+    const auto issuedHalf = special.refinement->snapshot(handle);
+    REQUIRE(issuedHalf);
+    REQUIRE(issuedHalf->canonical);
+    CHECK(issuedHalf->canonical->variable.hi() == 0.5);
+    CHECK(issuedHalf->canonical->inverseAngle.hi() > 1.0);
+    checkCriticalSnapshot(data, -125.0, special.adapter->frame(), *issuedHalf);
+    for (unsigned round = 0; round < 5; ++round) {
+        const auto snapshot = special.refinement->snapshot(handle);
+        REQUIRE(snapshot);
+        REQUIRE(snapshot->canonical);
+        CHECK(snapshot->canonical->variable.contains(0.5));
+        checkCriticalSnapshot(data, -125.0, special.adapter->frame(), *snapshot);
+        const auto refined = special.refinement->contract(handle, budget);
+        if (refined.status == LC_IntersectionStatus::AmbiguousTopology) { break; }
+        REQUIRE(refined.status == LC_IntersectionStatus::Ok);
+    }
+}
+
+TEST_CASE("Critical compound rounds admit only entered stages and publish symmetries atomically",
+          "[lc-offsetcurve][geometry][reference-critical-refine]") {
+    const auto data = basis(100.0, 0.5);
+    geo::WorkBudget baseline;
+    auto reference = geo::analyseCriticalRetained(data, -30.0, baseline);
+    REQUIRE(reference.status == LC_IntersectionStatus::Ok);
+    const auto initial = reference.work;
+    const auto n = reference.refinement->occurrenceCount();
+    REQUIRE(n == 4);
+    const auto first = reference.refinement->contract(reference.refinement->occurrenceHandle(0), baseline);
+    REQUIRE(first.status == LC_IntersectionStatus::Ok);
+    CHECK(first.entered.vertices == 1 + n);
+    CHECK(first.entered.distancePairs == 3 + n);
+    REQUIRE(first.snapshot);
+    CHECK(first.entered.deepest == first.snapshot->admittedRounds);
+    const auto initialDepth = first.snapshot->admittedRounds - 1;
+    for (int stop = 0; stop < 7; ++stop) {
+        LC_OffsetCheckLimits limits{1, initial.vertices + 1 + n, initial.distancePairs + 3 + n, 20};
+        if (stop == 1) { --limits.maxVertices; }
+        if (stop == 2) { --limits.maxDistancePairs; }
+        if (stop == 3) { limits.maxVertices = initial.vertices; }
+        if (stop == 4) { limits.maxDistancePairs = initial.distancePairs; }
+        if (stop == 5) { limits.maxDistancePairs = initial.distancePairs + 1; }
+        if (stop == 6) { limits.maxDistancePairs = initial.distancePairs + 2; }
+        geo::WorkBudget budget{limits};
+        auto issued = geo::analyseCriticalRetained(data, -30.0, budget);
+        REQUIRE(issued.status == LC_IntersectionStatus::Ok);
+        const auto handle = issued.refinement->occurrenceHandle(0);
+        std::vector<geo::CriticalOccurrenceSnapshot> original;
+        for (std::size_t i = 0; i < n; ++i) {
+            const auto snapshot = issued.refinement->snapshot(issued.refinement->occurrenceHandle(i));
+            REQUIRE(snapshot);
+            original.push_back(*snapshot);
+        }
+        const auto refined = issued.refinement->contract(handle, budget);
+        CHECK(refined.status == (stop == 0 ? LC_IntersectionStatus::Ok : LC_IntersectionStatus::LimitExceeded));
+        CHECK(bool(refined.snapshot) == (stop == 0));
+        CHECK(refined.workSource == geo::CriticalWorkSource::CurrentBudget);
+        CHECK(refined.entered.vertices == (stop == 3 ? 0 : stop == 1 || stop >= 4 ? 1 : 1 + n));
+        const std::size_t expectedPairs = stop == 0 ? 3 + n : stop == 1 ? 3 : stop == 2 ? 2 + n :
+            stop <= 4 ? 0 : stop == 5 ? 1 : 2;
+        CHECK(refined.entered.distancePairs == expectedPairs);
+        CHECK(refined.entered.deepest == (stop == 3 || stop == 4 ? 0 : initialDepth + 1));
+        checkWork(refined.work, budget.consumed());
+        for (std::size_t i = 0; i < n; ++i) {
+            const auto current = issued.refinement->snapshot(issued.refinement->occurrenceHandle(i));
+            REQUIRE(current);
+            CHECK(current->admittedRounds == (stop == 3 || stop == 4 ? initialDepth : initialDepth + 1));
+            if (stop == 0) {
+                checkCriticalSnapshot(data, -30.0, issued.adapter->frame(), *current);
+                checkNested(current->occurrence.parameter, original[i].occurrence.parameter);
+            } else {
+                CHECK(current->occurrence.parameter.lo() == original[i].occurrence.parameter.lo());
+                CHECK(current->occurrence.parameter.hi() == original[i].occurrence.parameter.hi());
+                CHECK(current->imageX.lo() == original[i].imageX.lo());
+                CHECK(current->imageX.hi() == original[i].imageX.hi());
+                CHECK(current->imageY.lo() == original[i].imageY.lo());
+                CHECK(current->imageY.hi() == original[i].imageY.hi());
+                CHECK(current->canonical->inverseAngle.lo() == original[i].canonical->inverseAngle.lo());
+                CHECK(current->canonical->inverseAngle.hi() == original[i].canonical->inverseAngle.hi());
+            }
+        }
+        if (stop != 0) {
+            const auto cached = budget.consumed();
+            const auto again = issued.refinement->contract(issued.refinement->occurrenceHandle(n - 1), budget);
+            CHECK(again.status == LC_IntersectionStatus::LimitExceeded);
+            checkWork(again.entered, {});
+            checkWork(budget.consumed(), cached);
+            const auto invalid = issued.refinement->contract({}, budget);
+            CHECK(invalid.status == LC_IntersectionStatus::InvalidInput);
+            checkWork(invalid.entered, {});
+            CHECK(issued.refinement->contract(handle, budget).status == LC_IntersectionStatus::LimitExceeded);
+        }
+    }
+}
+
+TEST_CASE("Critical canonical history is not a global depth maximum or reset by another occurrence",
+          "[lc-offsetcurve][geometry][reference-critical-depth][reference-critical-refine]") {
+    geo::WorkBudget budget;
+    REQUIRE(budget.checkDepth(19));
+    auto issued = geo::analyseCriticalRetained(basis(100.0, 0.5), -30.0, budget);
+    REQUIRE(issued.status == LC_IntersectionStatus::Ok);
+    const auto a = issued.refinement->occurrenceHandle(0);
+    const auto b = issued.refinement->occurrenceHandle(1);
+    const auto before = issued.refinement->snapshot(a);
+    REQUIRE(before);
+    CHECK(before->admittedRounds < 19);
+    CHECK(issued.work.deepest == 19);
+    const auto first = issued.refinement->contract(a, budget);
+    REQUIRE(first.status == LC_IntersectionStatus::Ok);
+    CHECK(first.entered.deepest == before->admittedRounds + 1);
+    CHECK(first.work.deepest == 19);
+    const auto after = issued.refinement->snapshot(b);
+    REQUIRE(after);
+    CHECK(after->admittedRounds == first.entered.deepest);
+    const auto second = issued.refinement->contract(b, budget);
+    REQUIRE(second.status == LC_IntersectionStatus::Ok);
+    CHECK(second.entered.deepest == first.entered.deepest + 1);
+    const auto shared = issued.refinement->snapshot(a);
+    REQUIRE(shared);
+    CHECK(shared->admittedRounds == second.entered.deepest);
+
+    geo::WorkBudget shortBudget{LC_OffsetCheckLimits{4096, 65536, std::size_t{1} << 20,
+        before->admittedRounds}};
+    auto shortSession = geo::analyseCriticalRetained(basis(100.0, 0.5), -30.0, shortBudget);
+    REQUIRE(shortSession.status == LC_IntersectionStatus::Ok);
+    const auto handle = shortSession.refinement->occurrenceHandle(0);
+    const auto exhausted = shortSession.refinement->contract(handle, shortBudget);
+    CHECK(exhausted.status == LC_IntersectionStatus::LimitExceeded);
+    checkWork(exhausted.entered, {});
+    const auto cached = shortSession.refinement->snapshot(handle);
+    REQUIRE(cached);
+    CHECK(cached->admittedRounds == before->admittedRounds);
+}
+
+TEST_CASE("Critical stationary occurrences cache exact images and do not invent contraction work",
+          "[lc-offsetcurve][geometry][reference-critical-refine]") {
+    for (const double distance : {-25.0, -200.0}) {
+        auto data = basis(100.0, 0.5);
+        data.majorP = RS_Vector{80.0, 60.0};
+        data.center = RS_Vector{1e6, -2e6};
+        geo::WorkBudget budget;
+        auto issued = geo::analyseCriticalRetained(data, distance, budget);
+        REQUIRE(issued.status == LC_IntersectionStatus::Ok);
+        REQUIRE(issued.refinement->occurrenceCount() == 2);
+        for (std::size_t i = 0; i < issued.refinement->occurrenceCount(); ++i) {
+            const auto handle = issued.refinement->occurrenceHandle(i);
+            const auto before = issued.refinement->snapshot(handle);
+            REQUIRE(before);
+            CHECK_FALSE(before->canonical);
+            checkCriticalSnapshot(data, distance, issued.adapter->frame(), *before);
+            const auto work = budget.consumed();
+            const auto result = issued.refinement->contract(handle, budget);
+            CHECK(result.status == LC_IntersectionStatus::AmbiguousTopology);
+            CHECK_FALSE(result.snapshot);
+            checkWork(result.entered, {});
+            checkWork(result.work, work);
+            const auto cached = issued.refinement->snapshot(handle);
+            REQUIRE(cached);
+            CHECK(cached->admittedRounds == before->admittedRounds);
+        }
+        budget.latchLimitExceeded();
+        CHECK(issued.refinement->contract(issued.refinement->occurrenceHandle(0), budget).status ==
+            LC_IntersectionStatus::LimitExceeded);
+    }
+}
+
+TEST_CASE("Critical handles and diagnostic copies cannot manufacture or alter issued geometry",
+          "[lc-offsetcurve][geometry][reference-critical-refine]") {
+    geo::WorkBudget budget;
+    auto issued = geo::analyseCriticalRetained(basis(100.0, 0.5), -30.0, budget);
+    auto other = geo::analyseCriticalRetained(basis(100.0, 0.5), -30.0, budget);
+    REQUIRE(issued.status == LC_IntersectionStatus::Ok);
+    REQUIRE(other.status == LC_IntersectionStatus::Ok);
+    const auto handle = issued.refinement->occurrenceHandle(0);
+    const auto original = issued.refinement->snapshot(handle);
+    REQUIRE(original);
+    auto copy = *original;
+    copy.occurrence.parameter = LC_Interval::point(-99.0);
+    copy.imageX = LC_Interval::point(99.0);
+    copy.canonical->variable = LC_Interval::point(0.0);
+    copy.admittedRounds = std::numeric_limits<unsigned>::max();
+    const auto current = issued.refinement->snapshot(handle);
+    REQUIRE(current);
+    CHECK(current->occurrence.parameter.lo() == original->occurrence.parameter.lo());
+    CHECK(current->imageX.lo() == original->imageX.lo());
+    CHECK(current->canonical->variable.lo() == original->canonical->variable.lo());
+    CHECK(current->admittedRounds == original->admittedRounds);
+    const auto work = budget.consumed();
+    for (const auto bad : {geo::CriticalOccurrenceHandle{}, issued.refinement->occurrenceHandle(99),
+                           other.refinement->occurrenceHandle(0)}) {
+        const auto result = issued.refinement->contract(bad, budget);
+        CHECK(result.status == LC_IntersectionStatus::InvalidInput);
+        CHECK_FALSE(result.snapshot);
+        checkWork(result.entered, {});
+        checkWork(budget.consumed(), work);
+        CHECK_FALSE(issued.refinement->snapshot(bad));
+    }
+    CHECK(issued.refinement->contract(handle, budget).status == LC_IntersectionStatus::Ok);
+}
+
+TEST_CASE("Critical refiners preserve independent adapter ownership and issuer identity through moves",
+          "[lc-offsetcurve][geometry][reference-critical-refine]") {
+    geo::WorkBudget budget;
+    auto issued = geo::analyseCriticalRetained(basis(100.0, 0.5), -30.0, budget);
+    REQUIRE(issued.status == LC_IntersectionStatus::Ok);
+    const auto handle = issued.refinement->occurrenceHandle(0);
+    std::unique_ptr<const LC_ParametricCurves> provider = std::move(issued.adapter);
+    geo::CriticalRefinementSession moved{std::move(*issued.refinement)};
+    CHECK(issued.refinement->occurrenceCount() == 0);
+    CHECK_FALSE(issued.refinement->snapshot(handle));
+    CHECK(issued.refinement->contract(handle, budget).status == LC_IntersectionStatus::InvalidInput);
+    REQUIRE(moved.snapshot(handle));
+    CHECK(moved.contract(handle, budget).status == LC_IntersectionStatus::Ok);
+    const auto& segment = provider->segments().front();
+    LC_Interval x, y, dx, dy;
+    CHECK(provider->bound(0, segment.t0, segment.t1, x, y, dx, dy));
+    provider.reset();
+    CHECK(moved.contract(handle, budget).status == LC_IntersectionStatus::Ok);
+    auto destination = geo::analyseCriticalRetained(basis(100.0, 0.5), -30.0, budget);
+    REQUIRE(destination.status == LC_IntersectionStatus::Ok);
+    const auto overwritten = destination.refinement->occurrenceHandle(0);
+    *destination.refinement = std::move(moved);
+    CHECK_FALSE(destination.refinement->snapshot(overwritten));
+    CHECK(destination.refinement->snapshot(handle));
+    CHECK(moved.occurrenceCount() == 0);
+    CHECK_FALSE(moved.snapshot(handle));
+    destination.refinement.reset();
+    CHECK_FALSE(moved.snapshot(handle));
+
+    auto adapterOnly = geo::analyseCriticalRetained(basis(100.0, 0.5), -30.0, budget);
+    REQUIRE(adapterOnly.status == LC_IntersectionStatus::Ok);
+    adapterOnly.refinement.reset();
+    checkCriticalCoverage(*adapterOnly.adapter);
+}
+
+TEST_CASE("Critical budget identity rejects fresh expired and same address replacements without resetting work",
+          "[lc-offsetcurve][geometry][reference-critical-refine]") {
+    std::optional<geo::WorkBudget> owner{std::in_place};
+    const auto* originalAddress = &*owner;
+    auto issued = geo::analyseCriticalRetained(basis(100.0, 0.5), -30.0, *owner);
+    REQUIRE(issued.status == LC_IntersectionStatus::Ok);
+    const auto handle = issued.refinement->occurrenceHandle(0);
+    const auto last = issued.refinement->lastMatchingWork();
+    geo::WorkBudget fresh;
+    REQUIRE(fresh.consumePairs(7));
+    const auto rejected = issued.refinement->contract(handle, fresh);
+    CHECK(rejected.status == LC_IntersectionStatus::InvalidInput);
+    CHECK(rejected.workSource == geo::CriticalWorkSource::LastMatchingBudget);
+    checkWork(rejected.work, last);
+    checkWork(rejected.entered, {});
+    CHECK(fresh.consumed().distancePairs == 7);
+    CHECK(issued.refinement->contract(handle, *owner).status == LC_IntersectionStatus::Ok);
+    const auto updated = issued.refinement->lastMatchingWork();
+    owner.reset();
+    REQUIRE(issued.refinement->snapshot(handle));
+    owner.emplace();
+    CHECK(&*owner == originalAddress);
+    const auto recreated = issued.refinement->contract(handle, *owner);
+    CHECK(recreated.status == LC_IntersectionStatus::InvalidInput);
+    CHECK(recreated.workSource == geo::CriticalWorkSource::LastMatchingBudget);
+    checkWork(recreated.work, updated);
+    checkWork(recreated.entered, {});
+    checkWork(owner->consumed(), {});
+    checkWork(issued.refinement->lastMatchingWork(), updated);
+}
+
+TEST_CASE("Critical interval world conversion is outward cancellation safe and clears failures",
+          "[lc-offsetcurve][geometry][reference-critical-refine]") {
+    auto data = basis(1e308, 1.0);
+    data.center = RS_Vector{-1e308, 1e308};
+    const auto frame = geo::ReferenceFrame::create(data, 0.0);
+    REQUIRE(frame);
+    const LC_Interval local = LC_Interval::point(1e308 / frame->scale());
+    LC_Interval x, y;
+    REQUIRE(frame->pointToWorld(local, -local, x, y));
+    const CriticalFloat world = CriticalFloat(-1e308) + CriticalFloat(local.lo()) * CriticalFloat(frame->scale());
+    checkCriticalEnclosure(x, world);
+    checkCriticalEnclosure(y, -world);
+    const LC_Interval twice = LC_Interval::point(2.0 * (1e308 / frame->scale()));
+    REQUIRE(frame->pointToWorld(twice, -twice, x, y));
+    checkCriticalEnclosure(x, CriticalFloat(-1e308) + CriticalFloat(twice.lo()) * CriticalFloat(frame->scale()));
+    const LC_Interval excessive = LC_Interval::point(std::numeric_limits<double>::max());
+    CHECK_FALSE(frame->pointToWorld(excessive, excessive, x, y));
+    CHECK_FALSE(x.isValid());
+    CHECK_FALSE(y.isValid());
+    x = y = LC_Interval::point(1.0);
+    CHECK_FALSE(frame->pointToWorld({}, local, x, y));
+    CHECK_FALSE(x.isValid());
+    CHECK_FALSE(y.isValid());
+    LC_Interval alias = local;
+    REQUIRE(frame->pointToWorld(alias, -local, alias, y));
+    checkCriticalEnclosure(alias, world);
+}
+
+TEST_CASE("Critical retained failures never publish a partial trusted session",
+          "[lc-offsetcurve][geometry][reference-critical-refine]") {
+    for (const auto& item : std::array<std::pair<RS_EllipseData, double>, 4>{{
+        {basis(5.0, 1.0), -5.0}, {basis(5.0, 2.0), 1.0},
+        {basis(1.0, 1e-250, 0.0, 1.0), -0.25}, {basis(1e-300, 0.5), -1e300}}}) {
+        geo::WorkBudget budget;
+        const auto failed = geo::analyseCriticalRetained(item.first, item.second, budget);
+        CHECK(failed.status != LC_IntersectionStatus::Ok);
+        CHECK_FALSE(failed.adapter);
+        CHECK_FALSE(failed.refinement);
+        checkWork(failed.work, budget.consumed());
+    }
+    geo::WorkBudget zero{LC_OffsetCheckLimits{1, 1, 1, 0}};
+    const auto invalid = geo::analyseCriticalRetained(basis(100.0, 0.5), -30.0, zero);
+    CHECK(invalid.status == LC_IntersectionStatus::InvalidInput);
+    CHECK_FALSE(invalid.adapter);
+    CHECK_FALSE(invalid.refinement);
+    checkWork(invalid.work, {});
+}
+
+TEST_CASE("Critical no progress refuses without publishing or erasing admitted history",
+          "[lc-offsetcurve][geometry][reference-critical-refine][reference-critical-depth]") {
+    geo::WorkBudget budget;
+    const auto data = basis(100.0, 0.5, 0.0, 2.0);
+    geo::WorkBudget legacyBudget;
+    const auto legacy = geo::analyseCritical(data, -100.0, legacyBudget);
+    const auto legacyStatus = static_cast<int>(legacy.status);
+    const auto legacyReason = static_cast<int>(legacy.reason);
+    CAPTURE(legacyStatus, legacyReason, legacy.work.vertices, legacy.work.distancePairs, legacy.work.deepest);
+    REQUIRE(legacy.status == LC_IntersectionStatus::Ok);
+    auto issued = geo::analyseCriticalRetained(data, -100.0, budget);
+    REQUIRE(issued.status == LC_IntersectionStatus::Ok);
+    CHECK(issued.work.vertices == legacy.work.vertices + 6);
+    CHECK(issued.work.distancePairs == legacy.work.distancePairs + 2);
+    CHECK(issued.work.deepest == legacy.work.deepest);
+    const auto handle = issued.refinement->occurrenceHandle(0);
+    bool refused = false;
+    for (unsigned round = 0; round < 10; ++round) {
+        const auto before = issued.refinement->snapshot(handle);
+        REQUIRE(before);
+        const auto work = budget.consumed();
+        const auto result = issued.refinement->contract(handle, budget);
+        if (result.status == LC_IntersectionStatus::Ok) {
+            REQUIRE(result.snapshot);
+            checkCriticalSnapshot(data, -100.0, issued.adapter->frame(), *result.snapshot);
+            continue;
+        }
+        REQUIRE(result.status == LC_IntersectionStatus::AmbiguousTopology);
+        CHECK_FALSE(result.snapshot);
+        CHECK(result.entered.vertices == 1);
+        CHECK(result.entered.distancePairs == 3);
+        CHECK(result.entered.deepest == before->admittedRounds + 1);
+        CHECK(result.work.vertices == work.vertices + 1);
+        CHECK(result.work.distancePairs == work.distancePairs + 3);
+        const auto cached = issued.refinement->snapshot(handle);
+        REQUIRE(cached);
+        CHECK(cached->admittedRounds == before->admittedRounds + 1);
+        CHECK(cached->occurrence.parameter.lo() == before->occurrence.parameter.lo());
+        CHECK(cached->occurrence.parameter.hi() == before->occurrence.parameter.hi());
+        CHECK(cached->canonical->inverseAngle.lo() == before->canonical->inverseAngle.lo());
+        CHECK(cached->canonical->inverseAngle.hi() == before->canonical->inverseAngle.hi());
+        checkCriticalSnapshot(data, -100.0, issued.adapter->frame(), *cached);
+        refused = true;
+        break;
+    }
+    CHECK(refused);
+}
+
+TEST_CASE("Critical close cusps retain distinct handles and common state without proximity merging",
+          "[lc-offsetcurve][geometry][reference-critical-refine]") {
+    for (const bool reversed : {false, true}) {
+        const auto data = basis(100.0, 0.5, 0.0, 0.0, reversed);
+        const double distance = -std::nextafter(25.0, std::numeric_limits<double>::infinity());
+        geo::WorkBudget budget;
+        auto issued = geo::analyseCriticalRetained(data, distance, budget);
+        REQUIRE(issued.status == LC_IntersectionStatus::Ok);
+        REQUIRE(issued.refinement->occurrenceCount() == 4);
+        for (unsigned round = 0; round < 3; ++round) {
+            double end = -1.0;
+            for (std::size_t i = 0; i < 4; ++i) {
+                const auto snapshot = issued.refinement->snapshot(issued.refinement->occurrenceHandle(i));
+                REQUIRE(snapshot);
+                CHECK(snapshot->occurrence.parameter.lo() > end);
+                end = snapshot->occurrence.parameter.hi();
+                checkCriticalSnapshot(data, distance, issued.adapter->frame(), *snapshot);
+            }
+            const auto refined = issued.refinement->contract(issued.refinement->occurrenceHandle(round), budget);
+            REQUIRE((refined.status == LC_IntersectionStatus::Ok ||
+                     refined.status == LC_IntersectionStatus::AmbiguousTopology));
+            CHECK(issued.refinement->occurrenceCount() == 4);
+        }
+    }
+}
+
+TEST_CASE("Retained critical analysis respects real axis membership and thin general cusp geometry",
+          "[lc-offsetcurve][geometry][reference-critical-refine]") {
+    for (const bool reversed : {false, true}) {
+        const auto axisArc = reversed ? basis(5.0, 0.5, M_PI_2, 0.0, true) : basis(5.0, 0.5, 0.0, M_PI_2);
+        geo::WorkBudget axisBudget;
+        const auto axis = geo::analyseCriticalRetained(axisArc, -10.0, axisBudget);
+        REQUIRE(axis.status == LC_IntersectionStatus::Ok);
+        CHECK(axis.adapter->regime() == geo::CriticalRegime::MaximumStationary);
+        CHECK(axis.refinement->occurrenceCount() == 0);
+        for (const auto& entry : std::array<std::pair<double, double>, 2>{{{0.02, -5.3}, {0.01, -10.0}}}) {
+            const auto data = basis(100.0, entry.first, 0.0, 0.0, reversed);
+            geo::WorkBudget budget;
+            auto issued = geo::analyseCriticalRetained(data, entry.second, budget);
+            REQUIRE(issued.status == LC_IntersectionStatus::Ok);
+            REQUIRE(issued.refinement->occurrenceCount() == 4);
+            const auto handle = issued.refinement->occurrenceHandle(0);
+            const auto refined = issued.refinement->contract(handle, budget);
+            REQUIRE(refined.status == LC_IntersectionStatus::Ok);
+            for (std::size_t i = 0; i < 4; ++i) {
+                const auto snapshot = issued.refinement->snapshot(issued.refinement->occurrenceHandle(i));
+                REQUIRE(snapshot);
+                checkCriticalSnapshot(data, entry.second, issued.adapter->frame(), *snapshot);
+            }
+        }
+    }
+}
+
+TEST_CASE("Critical resource latches survive fresh budgets moves and saturated shared counters",
+          "[lc-offsetcurve][geometry][reference-critical-refine]") {
+    const auto maximum = std::numeric_limits<std::size_t>::max();
+    geo::WorkBudget budget{LC_OffsetCheckLimits{1, maximum, maximum, 20}};
+    auto issued = geo::analyseCriticalRetained(basis(100.0, 0.5), -30.0, budget);
+    REQUIRE(issued.status == LC_IntersectionStatus::Ok);
+    const auto handle = issued.refinement->occurrenceHandle(0);
+    const auto before = issued.refinement->snapshot(handle);
+    REQUIRE(before);
+    REQUIRE(budget.consumeVertices(maximum - budget.consumed().vertices));
+    const auto result = issued.refinement->contract(handle, budget);
+    CHECK(result.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(result.work.vertices == maximum);
+    checkWork(result.entered, {});
+    const auto cached = issued.refinement->snapshot(handle);
+    REQUIRE(cached);
+    CHECK(cached->admittedRounds == before->admittedRounds);
+    geo::WorkBudget fresh;
+    const auto wrong = issued.refinement->contract(handle, fresh);
+    CHECK(wrong.status == LC_IntersectionStatus::InvalidInput);
+    CHECK(wrong.workSource == geo::CriticalWorkSource::LastMatchingBudget);
+    checkWork(wrong.work, result.work);
+    checkWork(wrong.entered, {});
+    checkWork(fresh.consumed(), {});
+    geo::CriticalRefinementSession moved{std::move(*issued.refinement)};
+    REQUIRE(moved.snapshot(handle));
+    const auto again = moved.contract(handle, budget);
+    CHECK(again.status == LC_IntersectionStatus::LimitExceeded);
+    checkWork(again.entered, {});
+    checkWork(again.work, result.work);
+    CHECK(moved.occurrenceCount() == 4);
+}
+
+TEST_CASE("Critical cumulative publication counts remain exact after failed legacy preparation",
+          "[lc-offsetcurve][geometry][reference-critical-refine]") {
+    const auto data = basis(100.0, 0.5);
+    geo::WorkBudget budget;
+    const auto failed = geo::analyseCritical(basis(5.0, 1.0), -5.0, budget);
+    REQUIRE(failed.status == LC_IntersectionStatus::AmbiguousTopology);
+    const auto spent = budget.consumed();
+    geo::WorkBudget referenceBudget;
+    const auto reference = geo::analyseCriticalRetained(data, -30.0, referenceBudget);
+    REQUIRE(reference.status == LC_IntersectionStatus::Ok);
+    const auto issued = geo::analyseCriticalRetained(data, -30.0, budget);
+    REQUIRE(issued.status == LC_IntersectionStatus::Ok);
+    CHECK(issued.work.vertices == spent.vertices + reference.work.vertices);
+    CHECK(issued.work.distancePairs == spent.distancePairs + reference.work.distancePairs);
+    CHECK(issued.work.deepest == std::max(spent.deepest, reference.work.deepest));
+}
+
+TEST_CASE("Critical joins keep an adjacent side while certifying the whole one sided contraction",
+          "[lc-offsetcurve][geometry][reference-critical][reference-critical-refine]") {
+    for (const bool reversed : {false, true}) {
+        const auto data = reversed ? basis(100.0, 0.5, 3.0, 0.0, true) : basis(100.0, 0.5, 0.0, 2.0);
+        geo::WorkBudget budget;
+        const auto legacy = geo::analyseCritical(data, -100.0, budget);
+        CAPTURE(reversed, legacy.work.vertices, legacy.work.distancePairs, legacy.work.deepest);
+        REQUIRE(legacy.status == LC_IntersectionStatus::Ok);
+        REQUIRE(legacy.adapter);
+        CHECK(legacy.adapter->criticalOccurrences().size() == (reversed ? 2 : 1));
+        checkCriticalCoverage(*legacy.adapter);
+        checkCriticalOccurrences(data, -100.0, *legacy.adapter);
+        const auto& segments = legacy.adapter->segments();
+        REQUIRE(segments.size() == 3);
+        const std::size_t i = reversed ? 2 : 1;
+        const double join = segments[i].t0;
+        double from = segments[i - 1].t0 + 0.5 * (join - segments[i - 1].t0);
+        double to = join + 0.5 * (segments[i].t1 - join);
+        if (from == join) { from = segments[i - 1].t0; }
+        if (to == join) { to = segments[i].t1; }
+        const double left = from + 0.5 * (join - from);
+        const double right = join + 0.5 * (to - join);
+        const bool leftMoves = from < left && left < join;
+        const bool rightMoves = join < right && right < to;
+        CHECK(leftMoves == !reversed);
+        CHECK(rightMoves == reversed);
+        if (reversed) {
+            CHECK(std::nextafter(from, std::numeric_limits<double>::infinity()) == join);
+        } else {
+            CHECK(std::nextafter(join, std::numeric_limits<double>::infinity()) == to);
+        }
+        const LC_IntersectionDomain original{i - 1, i, LC_Interval::hull(from, join), LC_Interval::hull(join, to)};
+        CHECK(legacy.adapter->certifyIntersection(original).outcome ==
+            LC_AnalyticIntersectionCertificate::Outcome::Unavailable);
+        const double narrowedFrom = leftMoves ? left : from;
+        const double narrowedTo = rightMoves ? right : to;
+        REQUIRE(narrowedFrom < join);
+        REQUIRE(join < narrowedTo);
+        LC_Interval factor, derivative;
+        REQUIRE(legacy.adapter->frame().boundOffsetFactor(narrowedFrom, narrowedTo, factor, derivative));
+        CHECK(factor.isPositive()); // Whole-span enclosure, not a midpoint sign or an adjacency exemption.
+        const LC_IntersectionDomain whole{i - 1, i, LC_Interval::hull(narrowedFrom, join),
+                                         LC_Interval::hull(join, narrowedTo)};
+        const auto proof = legacy.adapter->certifyIntersection(whole);
+        REQUIRE(proof.outcome == LC_AnalyticIntersectionCertificate::Outcome::Excluded);
+        CHECK(proof.proof == LC_IntersectionProof::AnalyticExclusion);
+        CHECK(proof.proofDomain.segmentA == whole.segmentA);
+        CHECK(proof.proofDomain.segmentB == whole.segmentB);
+        CHECK(proof.proofDomain.parameterA.lo() == whole.parameterA.lo());
+        CHECK(proof.proofDomain.parameterA.hi() == whole.parameterA.hi());
+        CHECK(proof.proofDomain.parameterB.lo() == whole.parameterB.lo());
+        CHECK(proof.proofDomain.parameterB.hi() == whole.parameterB.hi());
+        const LC_IntersectionDomain swapped{i, i - 1, whole.parameterB, whole.parameterA};
+        CHECK(legacy.adapter->certifyIntersection(swapped).outcome ==
+            LC_AnalyticIntersectionCertificate::Outcome::Excluded);
+        geo::WorkBudget retainedBudget;
+        const auto retained = geo::analyseCriticalRetained(data, -100.0, retainedBudget);
+        REQUIRE(retained.status == LC_IntersectionStatus::Ok);
+        REQUIRE(retained.refinement);
+        const std::size_t n = reversed ? 2 : 1;
+        CHECK(retained.refinement->occurrenceCount() == n);
+        CHECK(retained.work.vertices == legacy.work.vertices + 5 + n);
+        CHECK(retained.work.distancePairs == legacy.work.distancePairs + 1 + n);
+        CHECK(retained.work.deepest == legacy.work.deepest);
+        for (std::size_t k = 0; k < n; ++k) {
+            const auto snapshot = retained.refinement->snapshot(retained.refinement->occurrenceHandle(k));
+            REQUIRE(snapshot);
+            checkCriticalSnapshot(data, -100.0, retained.adapter->frame(), *snapshot);
+        }
+    }
+}
+
+TEST_CASE("Critical one sided join repair obeys exact and one less legacy retained work ceilings",
+          "[lc-offsetcurve][geometry][reference-critical][reference-critical-refine][reference-critical-depth]") {
+    for (const bool reversed : {false, true}) {
+        const auto data = reversed ? basis(100.0, 0.5, 3.0, 0.0, true) : basis(100.0, 0.5, 0.0, 2.0);
+        geo::WorkBudget legacyBudget;
+        const auto legacy = geo::analyseCritical(data, -100.0, legacyBudget);
+        REQUIRE(legacy.status == LC_IntersectionStatus::Ok);
+        geo::WorkBudget retainedBudget;
+        const auto retained = geo::analyseCriticalRetained(data, -100.0, retainedBudget);
+        REQUIRE(retained.status == LC_IntersectionStatus::Ok);
+        for (const bool retain : {false, true}) {
+            const auto work = retain ? retained.work : legacy.work;
+            CAPTURE(reversed, retain, work.vertices, work.distancePairs, work.deepest);
+            REQUIRE(work.deepest > 0);
+            for (int cap = 0; cap < 4; ++cap) {
+                LC_OffsetCheckLimits limits{1, work.vertices, work.distancePairs, work.deepest};
+                if (cap == 1) { --limits.maxVertices; }
+                if (cap == 2) { --limits.maxDistancePairs; }
+                if (cap == 3) { --limits.maxDepth; }
+                geo::WorkBudget budget{limits};
+                const auto expected = cap == 0 ? LC_IntersectionStatus::Ok : LC_IntersectionStatus::LimitExceeded;
+                if (retain) {
+                    const auto result = geo::analyseCriticalRetained(data, -100.0, budget);
+                    CHECK(result.status == expected);
+                    CHECK(bool(result.adapter) == (cap == 0));
+                    CHECK(bool(result.refinement) == (cap == 0));
+                    checkWork(result.work, budget.consumed());
+                } else {
+                    const auto result = geo::analyseCritical(data, -100.0, budget);
+                    CHECK(result.status == expected);
+                    CHECK(bool(result.adapter) == (cap == 0));
+                    checkWork(result.work, budget.consumed());
+                }
+                CHECK(budget.consumed().vertices <= limits.maxVertices);
+                CHECK(budget.consumed().distancePairs <= limits.maxDistancePairs);
+                CHECK(budget.consumed().deepest <= limits.maxDepth);
+                if (cap == 0) {
+                    checkWork(budget.consumed(), work);
+                } else {
+                    const auto spent = budget.consumed();
+                    const auto again = geo::analyseCritical(data, -100.0, budget);
+                    CHECK(again.status == LC_IntersectionStatus::LimitExceeded);
+                    CHECK_FALSE(again.adapter);
+                    checkWork(again.work, spent);
+                }
+            }
+        }
+    }
 }

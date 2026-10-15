@@ -78,11 +78,14 @@ public:
     void latchLimitExceeded();
 
 private:
+    friend class CriticalBuilder;
+    friend class CriticalRefinementSession;
     bool consume(std::size_t count, std::size_t limit, std::size_t& used);
 
     LC_OffsetCheckLimits m_limits;
     CheckWork m_work;
     BudgetStatus m_status = BudgetStatus::Ok;
+    std::shared_ptr<const void> m_identity;
 };
 
 /**
@@ -116,6 +119,9 @@ public:
     /** Enclosures of conversions of exact input doubles; cleared on refusal. */
     bool pointToFrame(const RS_Vector& world, LC_Interval& x, LC_Interval& y) const;
     bool pointToWorld(const RS_Vector& local, LC_Interval& x, LC_Interval& y) const;
+    /** Convert provider/local bounds; centre addition occurs only here. Cleared on refusal. */
+    bool pointToWorld(const LC_Interval& localX, const LC_Interval& localY,
+                      LC_Interval& worldX, LC_Interval& worldY) const;
 
 private:
     ReferenceFrame() = default;
@@ -163,6 +169,8 @@ struct CriticalRegion {
     InjectivityProof proof;
 };
 
+struct CriticalProvenance;
+
 /** Prepared C1 geometry and whole-region proofs, not an exhaustive event/topology result. */
 class CriticalAdapter final : public LC_ParametricCurves {
 public:
@@ -191,6 +199,7 @@ private:
     std::vector<CriticalOccurrence> m_occurrences;
     std::vector<JoinProof> m_joins;
     std::optional<JoinProof> m_seam;
+    std::shared_ptr<const CriticalProvenance> m_provenance;
 };
 
 struct CriticalAnalysis {
@@ -203,6 +212,69 @@ struct CriticalAnalysis {
 };
 
 CriticalAnalysis analyseCritical(const RS_EllipseData& basis, double signedDistance, WorkBudget& budget);
+
+struct CriticalCanonicalBounds {
+    LC_Interval variable, inverseAngle;
+    bool complement = false;
+};
+
+struct CriticalOccurrenceSnapshot {
+    CriticalOccurrence occurrence{};
+    /** Centre-relative, world-aligned provider coordinates, divided by frame.scale(). */
+    LC_Interval imageX, imageY;
+    std::optional<CriticalCanonicalBounds> canonical;
+    unsigned admittedRounds = 0;
+};
+
+class CriticalOccurrenceHandle {
+public:
+    CriticalOccurrenceHandle() = default;
+private:
+    friend class CriticalRefinementSession;
+    std::weak_ptr<const void> m_issuer;
+    std::size_t m_index = std::size_t(-1);
+};
+
+enum class CriticalWorkSource { CurrentBudget, LastMatchingBudget };
+
+struct CriticalContractionResult {
+    LC_IntersectionStatus status = LC_IntersectionStatus::InvalidInput;
+    std::optional<CriticalOccurrenceSnapshot> snapshot;
+    /** Actual per-call charges and absolute entered depth, not differences of maxima. */
+    CheckWork entered{};
+    CheckWork work{};
+    CriticalWorkSource workSource = CriticalWorkSource::LastMatchingBudget;
+};
+
+class CriticalRefinementSession {
+public:
+    ~CriticalRefinementSession();
+    CriticalRefinementSession(CriticalRefinementSession&&) noexcept;
+    CriticalRefinementSession& operator=(CriticalRefinementSession&&) noexcept;
+    CriticalRefinementSession(const CriticalRefinementSession&) = delete;
+    CriticalRefinementSession& operator=(const CriticalRefinementSession&) = delete;
+    std::size_t occurrenceCount() const;
+    CriticalOccurrenceHandle occurrenceHandle(std::size_t index) const;
+    std::optional<CriticalOccurrenceSnapshot> snapshot(const CriticalOccurrenceHandle& handle) const;
+    CriticalContractionResult contract(const CriticalOccurrenceHandle& handle, WorkBudget& budget);
+    CheckWork lastMatchingWork() const;
+private:
+    friend class CriticalBuilder;
+    struct Impl;
+    explicit CriticalRefinementSession(std::unique_ptr<Impl> impl);
+    std::unique_ptr<Impl> m_impl;
+};
+
+struct CriticalRetainedAnalysis {
+    LC_IntersectionStatus status = LC_IntersectionStatus::InvalidInput;
+    CriticalAnalysis::Reason reason = CriticalAnalysis::Reason::None;
+    std::unique_ptr<const CriticalAdapter> adapter;
+    std::unique_ptr<CriticalRefinementSession> refinement;
+    CheckWork work{};
+};
+
+CriticalRetainedAnalysis analyseCriticalRetained(const RS_EllipseData& basis, double signedDistance,
+                                               WorkBudget& budget);
 
 bool isFinite2D(const RS_Vector& point);
 /** Validate raw fields before RS_Ellipse can canonicalize tiny angles. Unchanged on refusal. */
