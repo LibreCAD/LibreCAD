@@ -142,8 +142,11 @@ bool matches(const RS_Entity* entity, const Region& region, bool crossing) {
             if (!crossing && !matched) return false;
         }
         if (!crossing) return true;
-        for (const auto& lassoPoint : polygon)
-            if (image->containsPoint(vector(lassoPoint))) return true;
+        for (const auto& lassoPoint : polygon) {
+            const auto query = vector(lassoPoint);
+            const auto nearest = image->getNearestPointOnEntity(query, true);
+            if (nearest.valid && nearest.distanceTo(query) <= RS_TOLERANCE) return true;
+        }
         return false;
     }
 
