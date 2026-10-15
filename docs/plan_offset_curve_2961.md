@@ -24,11 +24,11 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v6**, 2026-10-15. This file is the implementation source of truth. Every implementation slice ends with a
+Plan **v7**, 2026-10-15. This file is the implementation source of truth. Every implementation slice ends with a
 verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION — S0, 0B-1, 0B-2 and 1A-1.a done; 0B-3 ready; bounded intersection prerequisite in progress.**
+Status: **IMPLEMENTATION — S0, 0B-1, 0B-2 and 1A-1.a done; 0B-3 and 1A-1.b-budget prepared, runtime verification pending.**
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -44,7 +44,10 @@ fetch the intended upstream branch and repeat S0 against that exact commit: veri
 the guard compile, validate the new class declaration against current APIs, and review modification, file-format,
 UI and phase-2 call sites. v5 reviews completeness, correctness, slice readiness and the commit/reconciliation loop.
 v6 checks the executable sub-plans against b05fb541d, tightens numeric/topology and metadata contracts, and makes the
-commit/reconciliation evidence auditable. Prototype compilation and measurements remain historical evidence.
+commit/reconciliation evidence auditable. v7 reconciles the tree at `41d83689e`, adds requirement identities and
+executable leaf recipes, separates completeness review from correctness review, and corrects raw-import and test
+selection hazards. The current plan-review pass changes documentation only; prepared implementation is not done.
+Prototype compilation and measurements remain historical evidence.
 
 Appendix E lists what changed and why. This plan remains a proposal for a new persistent `LC_OffsetCurve`; the
 current engine's internal `LC_CurveOffset` is not that entity. **Line numbers and type-site counts are historical
@@ -91,8 +94,8 @@ A commit alone does not mean done; verification, review and the post-commit plan
 | 0A | Trim Two must not replace an owned child | — | — | — | done on baseline by #3113 (`609ca81ae`); verify current tests at S0, then add the new-type mapping/test in 1D |
 | 0B-1 | Guard skeleton: `rowOf` table, pragmas, `static_assert`, kinds-only walk; registration; CI path filter; shadow-`rs.h` checks | B | S0 | 250 | done — d6de53d3c, 0B-1 evidence, 2026-10-15 |
 | 0B-2 | Entity factory header; clone and INSERT checks; pin tests | B | 0B-1 | 500 | done — 5bfb3c8f0, 0B-2 reports/card, 2026-10-15 |
-| 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | pending — ready for coordinator |
-| 1A-1 | Closed forms, engine-layout test, validity check, tolerance helpers | C | S0 | 900 | partial — .a done at a4690db08; budget/reference/check/qualification children pending |
+| 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | in progress — code prepared; runtime/gap investigation and isolated verification pending |
+| 1A-1 | Closed forms, engine-layout test, validity check, tolerance helpers | C | S0 | 900 | partial — .a done at a4690db08; .b-budget prepared but unverified; reference/check/qualification pending |
 | 1A-2 | Enumerator; class core and validated adoption factory; clone, `toPlainSpline`, normalisation, stamp, transforms; `writeEntity` case; INSERT capability; 0B row; interim Edit Properties guard | C | 0B-3, 1A-1 | 900 | pending |
 | 1A-3 | Grips, `moveRef`, snaps | C | 1A-2 | 550 | pending |
 | 1B | Run limits, refusal enum, `adopt`/`create`, mutators, engine-run counter | C | 1A-3 | 900 | pending |
@@ -174,20 +177,24 @@ state: ready
 base_sha: <actual-checkout-sha>
 owner: <one-agent-and-nonoverlapping-file-scope>
 dependencies: <done-ids-and-implementation-shas>
-requirements: <rows-from-section-0.4-and-step-specific-contracts>
+requirements: <R01-R15-identities-from-section-0.4-and-step-specific-contracts>
+api_preflight: <current-symbols-and-invariants-confirmed-in-the-scoped-source>
 contract: <observable-success-and-refusal-behavior>
 files: <explicit-product-test-build-documentation-paths>
 tasks: <ordered-small-changes-with-one-reviewable-purpose>
 validation: <commands-case-counts-oracles-and-adjacent-regressions>
+selectors: <registered-test-identities-and-nonzero-counts-in-each-required-target>
 evidence: <tested-tree-command-exit-count-skips-and-report-identities>
 recovery: <how-to-preserve-and-resume-uncommitted-work>
-review: <resolved-findings-or-explicit-remaining-question>
+completeness_review: <requirements-files-build-registrations-and-negative-paths-accounted-for>
+correctness_review: <invariants-ownership-numeric-bounds-and-independent-oracles-reviewed>
 implementation_sha: pending
 next: <candidate-next-slice-and-entry-check>
 ```
 
 The detailed step sections remain the technical specification. The following sub-plans define the commit boundaries
-and the evidence needed to activate them. All product work is currently pending.
+and the evidence needed to activate them. Only the explicitly recorded committed leaves are done; prepared code is
+not validation evidence. Aggregates are never executable cards or extra implementation commits.
 
 | Step | Initial readiness / entry check | Commit-sized sub-plan and exit evidence |
 |---|---|---|
@@ -195,11 +202,13 @@ and the evidence needed to activate them. All product work is currently pending.
 | 0A | Existing upstream code | Verify #3113 ancestry and current trim tests. Record evidence in S0; only the new-type mapping belongs to 1D. |
 | 0B-1 | Done at d6de53d3c | Exhaustive 50/27/23 census and both negative shadow compiles passed; Release tag/lanes verified. |
 | 0B-2 | Done at 5bfb3c8f0 | 27 valid fixtures, clone/sole+mixed INSERT and both pins; 7 cases/910 assertions pass full/DXF-fast/ASan; no gaps. |
-| 0B-3 | Ready; 0B-2 done | Run real DXF/DWG save/open and load completion; record stable known-gap identities and valid row totals. This completes the guard before adding RTTI. |
+| 0B-3 | In progress; coordinator's prepared patch | Run real DXF/DWG save/open and load completion; investigate fixtures before recording stable known-gap identities and valid row totals. This completes the guard before adding RTTI. |
 | 1A-1.a | Done at a4690db08 | Normalization/local-frame/closed forms, robust source distance and tolerance helpers; 17 cases/2538 assertions pass Release/ASan, existing regressions and both fast lanes pass. |
-| 1A-1.b-budget | In progress; Gibbs owns core/test files | Bound intersection candidate allocation before pair-budget exhaustion; expose consumed work for shared validation budgets; test cap exits and existing topology/offset regressions. |
-| 1A-1.b-ref | Waiting for .b-budget | Implement the bounded exact-reference/event graph in §3.5.1, without fitting or materializing splines; test visibility, components and budgets against current trim behavior. |
-| 1A-1.b-check | Waiting for .b-ref | Implement the adaptive cache-to-reference check, complete-component coverage and topology policy in §3.5. Use shared work counters; unresolved geometry refuses adoption. |
+| 1A-1.b | Aggregate; budget/progress/reference/check children unfinished | Parent-only progress; no separate implementation commit or successful partial validator. |
+| 1A-1.b-budget | In progress; Gibbs's prepared patch, coordinator verifies | Bound intersection candidate allocation before pair-budget exhaustion; expose consumed work for shared validation budgets; test cap exits and existing topology/offset regressions. |
+| 1A-1.b-progress | Waiting for .b-budget | Bound contact-classification iteration and underflow/non-finite progress; source-level P1 finding, reproduction/tests required before reference use. |
+| 1A-1.b-ref | Aggregate; waiting for .b-progress | Execute `.b-ref-frames → .b-ref-events → .b-ref-components` (§0.6); no fitting/materialization. Parent closes only after all three commits/checkpoints. |
+| 1A-1.b-check | Aggregate; waiting for .b-ref | Execute `.b-check-layout → .b-check-bounds → .b-check-topology` (§0.6); no successful public validator before all acceptance checks exist. |
 | 1A-1.c | Waiting for .b | Add adversarial and current-engine corpus checks, failure budgets and performance measurements. Record acceptance/refusal results; endpoints and midpoint checks alone cannot close this parent step. |
 | 1A-2 | Waiting for 0B-3 and all 1A-1 children | Add type, core class, complete consistency stamp, transforms, clone/INSERT/write dispatch and interim UI guard. Compile CMake and update qmake lists; run copy/ownership and enum coverage. |
 | 1A-3 | Waiting for 1A-2 | Implement definition-backed grips/snaps with runtime consistency checks and separate cache closure. Test closed results from arc sources and stale cache fallback. |
@@ -208,10 +217,10 @@ and the evidence needed to activate them. All product work is currently pending.
 | 1C-2 | Waiting for 1C-1 | Implement non-nesting offset-again and bounded rebase/fallback. Required zero-sum fallback and near-critical success tests replace the optional old failure-band search. |
 | 1D | Waiting for 1A-2; run after 1C-2 by default | Resolve every current type site, including Trim's chord mapping. Commit the disposition census and parity tests; verify owned chords are never replaced or double-deleted. |
 | 1E-1.a | Waiting for 1B, 1C-1 and 1D | Implement bounded typed schema parsing/merging, major-axis vector representation and stale-schema removal. Test parser behavior before changing filter callbacks. |
-| 1E-1.b | Waiting for .a | Prepare metadata in the shared writer and R12 downgrade; inspect actual DXF XDATA and DWG EED output. Verify error propagation and APPID resolution. |
+| 1E-1.b | Waiting for .a | Preflight complete spline/metadata before every writer return; integrate both writers and R12 downgrade; inspect actual payloads and existing transactional failure propagation. |
 | 1E-1.c | Waiting for .b | Integrate common import adoption and codec regressions; verify both formats restore editable curves without regeneration. Update both 0B round-trip expectations. |
-| 1E-2 | Waiting for all 1E-1 children | Add malformed/oversized metadata, unknown-tail edit policy, transformed/demoted geometry, binary fixture and foreign-data tests in both formats. Commit reproducible fixtures and provenance. |
-| 1E-3 | Waiting for 1E-2 and 0B-3 | Execute all 14 version rows, both conversion directions and edit/save/open. Record nonzero DWG coverage, binary codec results and available independent-reader evidence. |
+| 1E-2 | Aggregate; waiting for all 1E-1 children | Execute `.safety → .fixtures → .copy` (§0.6), with malformed/raw carrier, unknown-tail, binary/provenance and copy/paste tests. |
+| 1E-3 | Aggregate; waiting for 1E-2 and 0B-3 | Execute `.matrix → .conversion` (§0.6); all 14 versions, binary DXF, both conversion directions and edited reopen; nonzero DWG coverage. |
 | 1G-1 | Waiting for 1C-1 and 1D | Commit type name and match descriptor together, then associated information/menu/selection cases. Check registry completeness and spline-tool exclusion. |
 | 1G-2.a | Waiting for 1G-1 | Add Changed/Unchanged/Refused outcomes and one-original/latest-pending-clone transactions to generic properties, with rapid-edit/ownership regression tests. Existing provider defaults remain compatible. |
 | 1G-2.b | Waiting for .a | Add offset provider, messages and busy-cursor guard; use runtime validity checks and existing UI conventions. |
@@ -226,27 +235,30 @@ and the evidence needed to activate them. All product work is currently pending.
 | 2D-a | Waiting for 2C | Verify source actions, persistence in both formats, undo/redo and final release evidence; commit and reconcile the final roadmap. |
 
 Predeclared leaf children are real commit slices; the parent is `partial` until every required child is done.
-`1A-1.b` is the aggregate of `.b-budget`, `.b-ref` and `.b-check`, not an extra implementation commit. Any other step
+`1A-1.b` is the aggregate of `.b-budget`, `.b-progress`, `.b-ref` and `.b-check`, not an extra implementation commit. The children of
+`.b-ref`, `.b-check`, 1E-2 and 1E-3 are specified in §0.6. Any other step
 may be split before editing by adding named children, dependencies and validation to its card. Keep coherent changes
 such as a new type name and its required registry entry in one buildable commit.
 
 ### 0.4 Completeness and correctness coverage
 
-| Requirement | Owning steps | Required oracle |
-|---|---|---|
-| Finite 2D domain and unambiguous whole/arc normalization | 1A-1, 1B | Tiny/zero/full-turn, circle, extreme ratio/scale and non-finite cases; no accidental whole ellipse |
-| Bounded geometry and topology validation | 1A-1, 1E-1 | Adaptive bounds, hostile control edits, closure/end/direction checks, explicit limit/ambiguity refusal |
-| Runtime consistency and safe edit state | 1A-2, 1B, 1G, 1H | Mutated mode/flags/knots/controls cannot retain active definition; refused edits do not change geometry or undo |
-| Clone, transforms, ownership and INSERT | 1A-2, 1C, 1D | Independent children, preserved attributes, reflection/scale parity, unsupported transform demotion, ASan |
-| Creation, repeated offset and fallback | 1B, 1C, 1F | Option-off parity, one-piece adoption, required multi-piece/zero-sum fallback, bounded attempts and diagnostics |
-| Complete type integration | 0B, 1D, 1G | Current census with disposition for every site; no silent save/drop/INSERT gap for the new type |
-| DXF and DWG read/write | 1E-1 through 1E-3 | Version matrix, actual codec payloads, both conversion directions and edited reopen |
-| Metadata compatibility and resource limits | 1E-1, 1E-2 | Registered app, bounded typed tails/bytes/depth, invalid/unknown schema policy, stale metadata removal |
-| UI edit and selection behavior | 1G, 1H, 1F | Dialog/sheet/drag success/refusal/cancel/no-op, mixed selection and one-step undo |
-| Source actions | 2A through 2D | Live document source, no stored dependency, normalized restore/deduplication and both-format persistence |
-| Build and regression portability | 0B, 1I, 2D | CMake and qmake6, focused/adjacent tests, GCC/MSVC fixture coverage where CI is available |
-| Responsiveness and bounded work | 1A-1, 1B, 1C-2, 1H | Deterministic work caps plus measured import/edit costs; no timing assertions or mouse-move regeneration |
-| Durable implementation progress | Every slice | Implementation commit, evidence, reviewed plan checkpoint and a re-evaluated next ready card |
+| ID | Requirement | Owning steps | Required oracle |
+|---|---|---|---|
+| R01 | Finite 2D domain and unambiguous whole/arc normalization | 1A-1, 1B | Tiny/zero/full-turn, circle, extreme ratio/scale and non-finite cases; no accidental whole ellipse |
+| R02 | Bounded geometry and topology validation | 1A-1, 1E-1 | Conservative bounds, hostile controls, complete ordered component coverage, explicit limit/ambiguity refusal |
+| R03 | Runtime consistency and safe edit state | 1A-2, 1B, 1G, 1H | Mutated mode/flags/knots/controls cannot retain active definition; refused edits preserve geometry/history |
+| R04 | Clone, transforms, ownership and INSERT | 1A-2, 1C, 1D | Independent children, attributes, reflection/scale parity, unsupported transform demotion, ASan |
+| R05 | Creation, repeated offset and fallback | 1B, 1C, 1F | Option-off parity, one-piece adoption, multi-piece/zero-sum fallback, bounded attempts and diagnostics |
+| R06 | Complete type integration | 0B, 1D, 1G | Current site census and dispositions; no silent save/drop/INSERT gap for the new type |
+| R07 | DXF and DWG read/write | 1E-1 through 1E-3 | All 14 versions, actual codec payloads, both conversion directions and edited reopen |
+| R08 | Metadata compatibility and resource limits | 1E-1, 1E-2 | APPID, typed tails/bytes/depth, invalid/unknown schema policy and stale metadata removal |
+| R09 | UI edit and selection behavior | 1G, 1H, 1F | Dialog/sheet/drag success/refusal/cancel/no-op, mixed selection and one-step undo |
+| R10 | Source actions | 2A through 2D | Live document source, no stored dependency, restore/deduplication and both-format persistence |
+| R11 | Build and regression portability | 0B, 1I, 2D | CMake/qmake6, focused/adjacent tests, GCC/MSVC coverage where CI is available |
+| R12 | Responsiveness and bounded work | 1A-1, 1B, 1C-2, 1H | Shared nonoverflowing work caps, measured costs; no motion-time regeneration/validation |
+| R13 | Durable implementation progress | Every slice | Reviewed implementation commit, tested-tree evidence, plan checkpoint and next ready card |
+| R14 | Raw file geometry is not laundered into editability | 1E-1.c, 1E-2.safety | Raw Z/normal/null/count/knot/weight/fit checks before XY projection or geometry repair |
+| R15 | Save refusal preserves the target and document | 1E-1.b, 1E-2.safety | Existing-target bytes unchanged, absent target still absent, no leaked stage or mutated document |
 
 Before phase 1 or the whole plan is marked complete, audit this matrix against the committed tree. A product stub,
 unimplemented required callback, skipped format, missing qmake entry, unresolved correctness finding or missing
@@ -258,14 +270,17 @@ out-of-scope features from implementation completion.
 S0 is complete at `de30f1d45`. Release/ASan configurations, all three target builds, Release full
 and fast-lane baselines, and focused ASan trim/ellipse checks passed, with existing skips recorded in its card.
 0B-1 is committed at d6de53d3c, 0B-2 at 5bfb3c8f0, and 1A-1.a at a4690db08; their evidence is below. The
-coordinator owns the ready 0B-3 guard round trips; Gibbs owns the independent `.b-budget` core prerequisite. The
-coordinator owns the plan,
+coordinator owns the prepared 0B-3 guard round trips; Gibbs prepared the independent `.b-budget` core prerequisite.
+Both patches are frozen for review. Release and ASan builds of all three targets completed with exit 0, but these
+combined-tree builds are not isolated slice evidence and no runtime pass is claimed for either prepared slice.
+The coordinator owns the plan,
 shared build directories and commits. Assign explicit file ownership before any parallel work; never run concurrent
 Git/index operations or concurrent builds that mutate the same build tree.
 
-The five requested review tracks are closed at the **plan** level by: §0.4 (complete coverage), §§3.3-3.10 (correctness
-contracts), §0.3 plus the leaf cards (sub-plans/readiness), §1.4 steps 2-3 (verified slice commits), and §1.4 steps 4-6
-(post-commit self-update and continuation). Product closure still requires the owning slice's evidence.
+The five requested review tracks are: completeness/traceability (§0.4), a distinct adversarial correctness review
+(§0.7 and §§3.3-3.10), executable sub-plans/readiness (§0.3/§0.6), verified slice commits (§1.4 steps 2-3), and
+post-commit self-update (§1.4 steps 4-6). Every checkpoint rechecks all five; this revision does not pre-certify future
+implementation. Product closure still requires each owning slice's evidence.
 
 Before promoting a leaf card, check these concrete prerequisites:
 
@@ -274,7 +289,8 @@ Before promoting a leaf card, check these concrete prerequisites:
 | 0B-1 | Current enum is contiguous; each of 50 values has a disposition; current CMake/CI locations confirmed | 50/27/23 kinds census, both negative shadow compiles, full and fast-lane tag counts |
 | 1A-1.a | Raw sweep rules and finite/local coordinate domain are fixed | Boundary tests on both sides of each threshold and independent closed-form comparisons |
 | 1A-1.b-budget | Candidate allocation and refinement currently have different budget coverage | Pre-allocation/nonoverflowing cap tests, exposed consumed work, existing topology/offset tests and full suite |
-| 1A-1.b-ref | Budget prerequisite done; exact-reference interface specified (§3.5.1) | Open, lens, closed-arc and multi-component fixtures; no engine regeneration; every cap exit observed |
+| 1A-1.b-progress | Contact classifier's floating-point step/doubling loop is understood | Underflow/non-finite/rounding-stagnation cases terminate, bounded iteration and unchanged ordinary contact regressions |
+| 1A-1.b-ref | Budget/progress prerequisites done; strict event/reference interface specified (§3.5.1) | Event enclosures, open/lens/closed-arc/multi-component fixtures; no regeneration; every cap exit observed |
 | 1A-1.b-check | Reference analysis is qualified and does not accept ambiguous topology | Whole-span distance bounds, bidirectional coverage and malicious subset/retrace tests |
 | 1A-2 | Guard and all geometry children are done; no raw constructor bypass exists | Current-header compile, complete stamp mutation cases, transform overflow and ownership checks |
 | 1E-1.a | Typed schema grammar, malformed/unknown ownership and flag consistency are settled | Codec-independent exact-code/type tests, duplicate/malformed cases and bounded tails |
@@ -284,8 +300,95 @@ Before promoting a leaf card, check these concrete prerequisites:
 
 These are entry/exit gates, not permission requests. Resolve an algorithm/API mismatch in the owning card and revise
 its downstream contracts before coding; do not silently narrow required scope. The default order remains §0.3, with
-`.b-budget`, `.b-ref` then `.b-check` replacing its aggregate `.b`. Ready leaves may proceed independently only when predecessors,
+`.b-budget`, `.b-progress`, `.b-ref` then `.b-check` replacing its aggregate `.b`. Ready leaves may proceed independently only when predecessors,
 file ownership, validation ownership and commit ordering permit it.
+
+### 0.6 Executable leaf recipes
+
+These recipes refine, not replace, the normative contracts. Paths below are relative to
+`librecad/src/lib/engine/document/entities/` unless a full repository-relative path is given. Before editing, expand
+the selected recipe into the §0.3 card with actual HEAD, file ownership, API observations and literal commands.
+Only satisfied dependencies promote a card to `ready`; future recipes are `waiting`, not ready by assertion.
+
+| Leaf / dependencies | Ordered implementation tasks and scope | Required exit evidence |
+|---|---|---|
+| 1A-1.b-budget / .a | Finish reviewing the prepared intersection core/test patch; verify shared candidate/refinement caps and counters on every status; isolate it from uncommitted 0B-3 for final verification. | Five registered `[intersection-budget]` cases; Release/ASan focused tests, all offset/topology regressions and full visible Release suite; no partial roots on refusal. R02/R12/R13. |
+| 1A-1.b-progress / .b-budget | In `lc_parametriccurveintersection.cpp`/tests, reproduce the `classifyContact` zero-step loop; bound its doubling iterations and reject non-finite/nonprogressing arithmetic without changing ordinary contact policy. | Subnormal tolerance/large derivative and parameter-rounding tests terminate under a process timeout; no false root/partial success; Release/ASan topology and offset regressions plus full Release suite. R02/R12. |
+| 0B-3 / 0B-2 | Run the prepared round-trip walks; diagnose per-format/per-type failures; fix invalid fixtures, not product behavior in this guard slice; record only reproduced baseline gaps. Check version and `onLoadingCompleted()`. | Both 27-type walks and both DXF pin paths actually execute; valid fixtures, payload/version checks, full/DXF-fast/ASan coverage, both fast lanes and full visible suite. R06/R11/R13. |
+| 1A-1.b-ref-frames / .b-progress | Extend `lc_ellipseoffsetgeometry.{h,cpp}` with local-frame interval bounds/jets and one shared checked budget. Specify status/result ownership and source-parameter convention. Use exact signed-offset formulas, not fitted controls. | Dense independent enclosure checks, rotations/reversals/wraps, near-circle/thin/large-centre cases and each budget boundary. Failed analysis publishes no usable reference. R01/R02/R12. |
+| 1A-1.b-ref-events / .b-ref-frames | Build cusp splits and own/opposite/end-cutter isolation through `LC_ParametricCurves`; add opt-in strict event enclosures/certification to the intersection core where required by §3.5.1, leaving defaults unchanged. Record occurrences and proven order, not just XY positions. | Transverse/tangent/end/cusp/retrace and unresolved-order cases; ambiguity/limit exits; every call debits shared budget including failures; uncertified `Ok` is not reference evidence. Existing engine regressions unchanged. R02/R12. |
+| 1A-1.b-ref-components / .b-ref-events | Classify interval visibility using conservative source/end clearance and current trim allowances; assemble directed adjacency/components; expose a complete read-only reference result. | All six §3.5.1 fixtures, rotated/reversed equivalents and closed-arc/multi-component distinctions; no materialization/engine run; report unresolved event/visibility rather than accepting it. R02. |
+| 1A-1.b-check-layout / .b-ref-components | Implement overflow-safe `isEngineLayout`, finite 2D/unit-weight/knot-group validation, cubic extraction and shared-budget input preflight. Keep these helpers internal or explicitly layout-only; do not expose an incomplete successful `checkCache`. | Short/oversized/null-equivalent arrays, malformed knots, rescaled valid knots, fit/saved-open representations, non-finite/out-of-plane controls, zero/invalid limits; no allocation before count caps. R01/R02/R12. |
+| 1A-1.b-check-bounds / .b-check-layout | Implement conservative de Casteljau leaf/chord error, offset-distance upper bounds and source-clearance lower bounds. Use parameter-aware reference matching and outward floating-point allowances. | Between-sample adversarial controls; dense independent evaluation verifies every claimed enclosure; near tangency/cusps/extreme scale; no nearest-point sample becomes proof. R02/R12. |
+| 1A-1.b-check-topology / .b-check-bounds | Combine complete reference and candidate geometry into public `checkCache`; require exactly one reference component and bidirectional ordered coverage; enforce direction/closure/trim joins. | Proper subset, missing tail, isolated component, repeat/retrace, extra loop and wrong reversal refuse; legitimate lens and closed-arc joins pass. No partial acceptance on exhausted budget. R02. |
+| 1A-1.c / all .b children | Qualify defaults and tolerance-floor policy against current engine and adversarial corpus. Record reproducible seeds, accept/refuse reasons, consumed work and cost; resolve required-success disagreements instead of weakening proof. | Existing offset/topology regressions, independent geometry oracle, every cap exit, near-critical success, file-rounding margins; no timing assertion. R01/R02/R12. |
+| 1E-2.safety / all 1E-1 children | Add schema/raw-carrier hostile cases, unknown-tail/flags edit policy, geometry demotion and late-failure save tests. Scope schema/filter fixes only to demonstrated violations. | Both formats, second save/reload, foreign data unchanged, raw 3D/repair inputs never editable; transaction checks for existing/absent target and document state. R07/R08/R14/R15. |
+| 1E-2.fixtures / .safety | Commit ASCII DXF, binary DXF and DWG fixtures with reproducible generator, version, expected definitions and provenance; no private home-directory dependency. | Both readers adopt expected entities, immutable fixture hashes/provenance recorded, fast-lane registration, full and both fast lanes. Generated same-run payloads alone do not close fixture coverage. R07/R11. |
+| 1E-2.copy / .fixtures | Test same/cross-unit paste, block/library insert, Save Block As, clone-tail alias safety and hatch-edge downgrade. | Geometry/distance scaling, owner/layer/pen preservation, correct editable-vs-plain outcome, no stale owned definition; Release/ASan ownership checks. R04/R07/R08. |
+| 1E-3.matrix / all 1E-2 children | Execute explicit 14-row table with actual version checks; second-generation reload, binary R14/R2018 codec and no-DWGSUPPORT schema compile. | Per-version cases and geometry/definition/payload oracles; all six DWG rows executed, R12 geometry-only; full suite/fast lanes; no silent valid-file demotion. R07/R11/R14. |
+| 1E-3.conversion / .matrix | Run both fan-out conversion directions, repeated alternating chain and edited/refused reopen. Run available independent readers; distinguish unavailable from passing. | Counts for every conversion leg, no duplicate schema/drift/stale definition, mutation remains usable after reload; committed external-tool results or explicit unavailability. R07/R08/R15. |
+
+Other executable leaves retain their ordered tasks and files in §§5-6. For 1A-2, the enum, dispatch, INSERT
+capability, guard row and interim action guard must land together as one buildable slice. For 1G-2.a, Changed /
+Unchanged / Refused, pending-clone ownership, timer generation and before/after history hooks form one coherent
+generic infrastructure slice with its regression tests; do not commit the unsafe queue first. Split either only by
+documenting independently safe, buildable intermediate behavior before editing. Registration and tests accompany
+each product slice, not a later catch-all test phase.
+
+**Immediate resume queue:** verify/commit/checkpoint `.b-budget` in isolation, then verify/commit/checkpoint 0B-3;
+activate `.b-progress`, then `.b-ref-frames` afterwards. Both prepared patches remain preserved, including failed-run
+artifacts. The
+Release/ASan build logs are under `build/evidence/1A-1.b-budget/`; they cannot certify either runtime result or an
+isolated commit. Gibbs already started implementation (0B-1); resuming does not require creating a replacement agent.
+
+### 0.7 Two review gates
+
+1. **Completeness review:** map the slice to R01-R15; account for every touched caller, representation, version,
+   build list, success/refusal/no-op/fallback and ownership path. Check parent/child dependencies and test registrations.
+   A placeholder or skipped required format leaves the owning requirement open, even when compilation passes.
+2. **Correctness review:** independently challenge the algorithm and diff: raw-vs-normalized input, finite
+   intermediates, conservative error direction, ambiguity, whole-component coverage, counters before allocation,
+   lifetime/history, refusal transaction and saved payload. Trace at least one success and one adversarial refusal
+   through the real caller. Compare against an independent oracle, not the function under test's own output.
+
+Record both outcomes before committing, with resolved findings and residual limits. A second agent may perform the
+correctness review; when unavailable, perform and record a separate deliberate review pass after implementation,
+not merely another green test run. A new finding gets an explicit fix/retest and can reopen a previously done
+requirement. The checkpoint must reflect that reopening; it must never rewrite a failure as a baseline exception.
+
+### 0.8 Immediate validation commands
+
+Run from the authoritative worktree, after freezing and isolating the selected slice as §1.4 requires. Create its
+ignored evidence directory first. Use new attempt-specific report names instead of overwriting a failed run. The
+following commands are the next verification work, **not runs completed by this plan review**:
+
+```bash
+cmake --build build --target librecad_tests librecad_dxf_fast_tests librecad_dwg_fast_tests --parallel 4
+cmake --build build-asan --target librecad_tests librecad_dxf_fast_tests librecad_dwg_fast_tests --parallel 4
+
+# 1A-1.b-budget: five registered cases, including the existing depth-limit case.
+build/librecad_tests --list-tests "[intersection-budget]"
+QT_QPA_PLATFORM=offscreen build/librecad_tests "[intersection-budget]" --order decl --reporter junit --out build/evidence/1A-1.b-budget/release-attempt-1.junit.xml
+QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_tests "[intersection-budget]" --order decl --reporter junit --out build/evidence/1A-1.b-budget/asan-attempt-1.junit.xml
+QT_QPA_PLATFORM=offscreen build/librecad_tests "[curve-offset]" --order decl --reporter junit --out build/evidence/1A-1.b-budget/offset-attempt-1.junit.xml
+QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_tests "[curve-offset][topology],[curve-offset][ellipse]" --order decl --reporter junit --out build/evidence/1A-1.b-budget/adjacent-asan-attempt-1.junit.xml
+QT_QPA_PLATFORM=offscreen build/librecad_tests --order decl --reporter junit --out build/evidence/1A-1.b-budget/full-attempt-1.junit.xml
+
+# 0B-3: three new registered cases; 27 rows per format walk and both pin branches.
+build/librecad_tests --list-tests "[entity-coverage][roundtrip]"
+QT_QPA_PLATFORM=offscreen build/librecad_tests "[entity-coverage]" --order decl --reporter junit --out build/evidence/0B-3/release-attempt-1.junit.xml
+QT_QPA_PLATFORM=offscreen build/librecad_dxf_fast_tests "[entity-coverage]" --order decl --reporter junit --out build/evidence/0B-3/dxf-fast-coverage-attempt-1.junit.xml
+QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_tests "[entity-coverage]" --order decl --reporter junit --out build/evidence/0B-3/asan-attempt-1.junit.xml
+QT_QPA_PLATFORM=offscreen build/librecad_dxf_fast_tests '~[.]' '~[.slow]' '~[slow]' '~[corpus]' '~[external]' '~[external-reader]' '~[fixture]' --order decl --reporter junit --out build/evidence/0B-3/dxf-ci-attempt-1.junit.xml
+QT_QPA_PLATFORM=offscreen build/librecad_dwg_fast_tests '~[.]' '~[.slow]' '~[slow]' '~[corpus]' '~[external]' '~[external-reader]' '~[fixture]' --order decl --reporter junit --out build/evidence/0B-3/dwg-ci-attempt-1.junit.xml
+QT_QPA_PLATFORM=offscreen build/librecad_tests --order decl --reporter junit --out build/evidence/0B-3/full-attempt-1.junit.xml
+```
+
+Serialize binaries within each build directory. Record the process exit before parsing the report; missing/truncated
+reports, timeouts, sanitizer diagnostics, unexpected skips or unmatched selectors fail the check. Parse XML with an
+XML parser and retain stable failure identities, not only totals. A focused test path being intentionally `notRun`
+in the baseline guard is recorded as unverified, never included in the passed count. The new type may have no such
+exception. Later cards expand this command pattern with their exact selectors/version rows and broad gates.
 
 ---
 
@@ -306,7 +409,8 @@ file ownership, validation ownership and commit ordering permit it.
 - **Targets.** Build them by name: `librecad_tests`, `librecad_dxf_fast_tests`, `librecad_dwg_fast_tests`. The `all`
   target builds no tests.
 - **Shared machine.** Other sessions run on this machine: build with `-j8` at most, and never run two test binaries
-  from the same build directory at once.
+  from the same build directory at once. Eight is the combined job cap, not eight per concurrent build. One owner
+  controls shared build directories; freeze source changes during final evidence collection.
 
 ### 1.2 Tests
 
@@ -341,6 +445,11 @@ file ownership, validation ownership and commit ordering permit it.
 - **Headless action tests** (`lc::test::ActionFixture`, `test/lc_actiontestsupport.h:102-116`) live in
   `librecad_tests` only.
 - **No timing asserts.** Test binaries run at `RS_Debug::D_DEBUGGING`.
+- **No empty test success.** Discover each selector in the exact target first (`--list-tests "<selector>"`), then
+  run it and inspect the structured report. Record registered cases separately from assertions, generators and JUnit
+  entries; Catch2's JUnit `tests` attribute is not the registered-case count. Require nonzero actual feature cases
+  and the expected per-version/per-type paths. A missing hidden GUI tag, compiled-out DWG case or unmatched selector
+  is a failed validation setup, not a green test run. Hidden GUI selection is `[.gui][lc-offsetcurve]`.
 
 ### 1.3 Code conventions
 
@@ -370,7 +479,7 @@ For every step or named child slice:
 1. **Prepare.** Reconcile actual HEAD and relevant changes with the roadmap; complete its ready card. Record explicit
    file scope, contract, commands and expected test cases before implementation. Keep unrelated user edits untouched.
 2. **Verify and review.** Implement, run focused and required adjacent checks, inspect the full scoped diff, and resolve
-   correctness findings. Record actual exit codes, case counts, skips, artifact paths and the tested tree. Mark
+   both §0.7 review gates. Record actual exit codes, case counts, skips, artifact paths and the tested tree. Mark
    `validated` only while that evidence still matches the files being committed.
 3. **Commit the implementation.** Inspect the index; stage owned product/test/build files by explicit path, and commit
    one coherent slice with the repository's sentence-title style. For a documentation-only slice, commit its scoped
@@ -378,14 +487,20 @@ For every step or named child slice:
    leaves the slice uncommitted and must be repaired without `--no-verify` or silently widening scope.
    Verify that the committed product tree matches the tested one. If hooks changed code or unrelated unstaged source
    affected the build, validate the committed slice in isolation before marking it done; preserve the other edits.
+   Prefer a clean temporary validation checkout of the candidate commit when feasible. If temporarily parking an
+   owned patch is necessary, save its forward/reverse patch and hashes first, apply only the owned changes, and
+   verify exact restoration. Never park another contributor's work or mistake a stale already-committed patch for
+   pending work. A mixed-tree build is exploratory evidence, not proof that either isolated commit passes.
    A pre-existing staged change is not implicitly authorized for this commit. Use a clean index in the dedicated
    worktree or preserve its ownership and stop the commit operation until it can be isolated; never unstage another
    contributor's files as cleanup. Record the tested source-tree identity (base SHA plus scoped diff/digest for an
    uncommitted test run), not just the SHA from which editing began.
 4. **Self-update after the commit.** With the real implementation SHA now known, reread the changed code and reconcile
-   the plan: mark the child done, update parent progress, record test/evidence identities and the date, correct invalid
-   assumptions/anchors/estimates, add any discovered follow-up slice, and recalculate downstream readiness. Fill the
-   next ready card or the precise unresolved prerequisite. Do not mark a parent done while required children remain.
+   the plan: mark the child `committed — reconciliation pending`, update parent progress, record test/evidence
+   identities and the date, correct invalid assumptions/anchors/estimates, add any discovered follow-up slice,
+   and recalculate downstream readiness. Fill the
+   next ready card or the precise unresolved prerequisite. Prepare its `done` record in the checkpoint; it becomes
+   effective only when step 5 succeeds. Do not mark a parent done while required children remain.
 5. **Commit the plan checkpoint.** Commit only the reconciled roadmap, for example
    `Record offset curve slice 1B validation and next steps`. This checkpoint records the implementation SHA, not its
    own SHA. It does not trigger another checkpoint, which avoids recursive self-referential commits. Check its diff
@@ -396,9 +511,18 @@ For every step or named child slice:
 intended paths; link it from the executed card/ledger; record commands, exit codes, case counts, baseline differences
 and review outcome; update every affected parent and coverage row; correct the current API/file anchors; record any
 newly discovered fix as a named leaf with dependencies; replace the next card's stale base SHA with actual HEAD; and
-refresh the top-level status. Review the plan-only staged diff before committing it. A plan edit made before the
+refresh the top-level status. Check that the dependency graph is acyclic and every waiting leaf names a real
+unfinished predecessor; every done parent has all required children done. Review the plan-only staged diff before
+committing it. A plan edit made before the
 implementation commit cannot stand in for this post-commit check. A checkpoint changes no product files and does not
 require a redundant full test run. Its own SHA is discoverable from Git history and is not written into itself.
+
+**Checkpoint postconditions.** Inspect `git show --name-only HEAD` to confirm the checkpoint changes only this plan;
+confirm the implementation SHA is an ancestor of HEAD and its committed file hashes match the tested slice; inspect
+`git status --short` and account for every remaining change. Keep a durable compact summary in this file (commands,
+exit/count/skip results, findings and next entry check); ignored reports supplement it, not replace it. The next card
+records the checkpoint's actual HEAD when activated, avoiding a self-referential placeholder SHA. A plan-only review
+such as v7 needs one documentation commit, not a fictitious implementation commit or recursive checkpoint.
 
 Keep validation evidence for the entire slice; do not cherry-pick the final green run while hiding failed or skipped
 required cases. Resolve the failure, record the cause/fix and rerun affected checks. If a verifier is unavailable,
@@ -411,7 +535,9 @@ is missing. If a checkpoint commit fails, preserve both the implementation commi
 the checkpoint. A subsequent correctness discovery reopens the parent and creates a new fix slice; it does not justify
 amending published history or concealing the finding.
 
-Use this compact ledger under each executed card; expand it only with meaningful evidence:
+Use this compact ledger under each executed card; expand it only with meaningful evidence. Its parent/next column
+records the handoff at that historical checkpoint; §0.5/§0.6 give the current queue, so never reapply an old recovery
+patch simply because an executed card once described it as pending:
 
 | Slice | Implementation SHA | Tested tree / evidence | Review outcome | Parent / next readiness |
 |---|---|---|---|---|
@@ -467,9 +593,11 @@ Repeat: reconcile HEAD and plan → choose a ready card → implement its sub-pl
 slice → update and commit the roadmap → promote the next ready card. Continue until all required implementation
 rows and the §0.4 coverage matrix are done. If no row is ready while work remains, resolve the dependency/design/test
 issue or record the concrete external blocker; an empty ready queue is not a completed plan. Publication rows remain
-separate. The current request updates this process in the plan; execution starts when implementation is requested.
-The existing execution has reached S0 only; updating this roadmap does not itself complete S0 or authorize a false
-product-completion entry. After an interruption, read the ledger and Git history before choosing the next leaf.
+separate. Execution has already completed the leaves listed in §0; do not restart them or the S0 baseline. A plan-only
+review updates readiness without promoting prepared code or automatically committing it. On implementation resume,
+read Git history, this ledger and the remaining diff first; finish an interrupted implementation's verification and
+checkpoint before beginning the next leaf. Completion means all required phase-0/1/2 leaves and R01-R15 are verified
+and reconciled, not that the current session or ready queue has ended.
 
 ---
 
@@ -784,6 +912,13 @@ Use a bounded adaptive check with conservative error accounting; do not claim an
    tests. Adaptive validation runs at adoption/edit/load, not painting or mouse motion. Use local coordinates and
    scale-aware error handling; extreme coordinates must not silently overflow a validity test.
 
+**Acceptance arithmetic.** A point estimate from `distanceToOriginal()` is not a lower bound, and closeness to the
+supporting whole ellipse does not prove visibility relative to a restricted arc. Source clearance uses conservative
+bounds on the actual source sweep plus its endpoints; whole-ellipse distance may seed a search only. Account for
+local/world conversion, chord and interval arithmetic errors in the stated `2*tol` / `d-2.5*tol` inequalities using
+outward bounds. An invalid or unbounded interval cannot pass by an empty comparison. Check the complete finite
+candidate before publishing it; a successful prefix or a close sample cannot rescue an undecided remainder.
+
 1A-1.c must test adversarial edits between the former sample points, reversed/missing components, NaNs, unusual knot
 scales, near cusps, closed arc-source results and each work-limit exit. Compare with independently dense geometry as
 a test oracle and record current-engine acceptance. Native files written from accepted curves must still pass after
@@ -801,7 +936,7 @@ contains a status, ordered retained components, source-parameter intervals/direc
 public geometry checker consumes this result; keep the concrete adapter private to the geometry module unless a
 small shared engine helper actually removes duplicated classification logic. No load path may refit saved geometry.
 
-Implementation order for that leaf:
+Implementation order for the `.b-ref` aggregate (`frames`, `events`, `components` leaves in §0.6):
 
 1. Read `EllipseSource::make`/`OffsetCurves`, `nodeBranches` and `trimBranches` at the execution base. Record sweep,
    side, numeric-floor and visibility-tolerance conventions in the card. `LC_Interval` lives in `lib/math/`; use its
@@ -811,23 +946,46 @@ Implementation order for that leaf:
    visibility; they are not output geometry appended to the offset. Qualify corner, tangent and overlapping events;
    unresolved events return a refusal. Do not reuse fitted cubic control points as an allegedly independent exact
    reference. A helper extraction must preserve existing engine behavior and its tests.
+   `LC_ParametricIntersection` currently supplies estimated parameters and a kind, not an isolating interval or a
+   certification guarantee. Add an opt-in strict intersection mode for the reference adapter: report parameter-box
+   enclosures and the proof category (interval-unique transverse root or qualified analytic endpoint/cusp/tangency),
+   and retain ordinary defaults for existing callers. Depth-terminal numerical contact classification is not a
+   certificate; in strict mode an unproven event returns ambiguity. Analytic whole-lens/cusp identities may certify
+   their own occurrences with bounded arithmetic, but cannot certify unrelated arc/cutter events. Root estimates may
+   seed isolation, never replace exhaustive interval exclusion of other candidate boxes. If enclosures cannot be
+   ordered or distinguished within budget, refuse rather than sort approximate parameters into a fabricated graph.
 3. Classify retained intervals with conservative distance-to-source/endpoint bounds and the engine's documented trim
    allowances. Build explicit adjacency and ordered components; account for closed-lens source-parameter jumps.
    Reconstruct the complete expected component set, not merely the portion nearest the proposed cache. If current
    engine fitting/classification and exact analysis disagree beyond the agreed tolerance, keep plain geometry and
    resolve/record that reproducible disagreement before making the fixture a required success.
+   The existing file-local `visibility()` in `lc_curveoffset.cpp` seeds its heap before checking the box allowance
+   and increments before checking. Do not copy/reuse that accounting unchanged. A shared extraction must accept the
+   checked budget, charge initial and child boxes before allocation, bound projection iterations, preserve the old
+   caller's documented behavior, and rerun its regression tests. A geometry-private bounded helper is preferable
+   when sharing would change unrelated engine behavior. `distanceToOriginal()` in the committed helper is a whole
+   ellipse query, so it cannot replace restricted-source clearance or visibility.
+   Certify visibility over each retained parameter interval, not just its midpoint. A sample may supply a witness
+   or seed, but requires interval bounds/event completeness before it can classify the whole interval; unresolved
+   threshold crossings are subdivided within the shared cap or refused.
 4. Share one checked work-accounting object across event isolation, subdivision and all distance/intersection queries.
-   `maxVertices` is the total generated reference/cache leaves, not a fresh allowance per span; pair/depth/piece caps
-   include failed/refined queries. Check before allocation or increment and use overflow-safe arithmetic. Exhaustion
-   returns `LimitExceeded` with no partially successful reference result.
+   `maxVertices` is the total generated reference/cache leaves, not a fresh allowance per span or nested query;
+   do not refund replaced/discarded validation leaves to create unlimited work. Pair/depth/piece caps include
+   failed/refined queries. Debit `LC_IntersectionResult::work.totalBoxPairs` and generated leaves on every status;
+   pass only remaining allowance into each call. The solver's leaf statistic is not its refinement-box count, so
+   count the adapter's additional subdivisions/visibility boxes explicitly rather than pretending they are included.
+   Bound fixed-iteration numerical helpers and check that adaptive steps actually progress. Check before allocation
+   or increment and use overflow-safe arithmetic. Exhaustion returns `LimitExceeded` with no partially successful
+   reference result.
 5. Qualify the following committed deterministic fixtures before declaring the adapter done: a whole outward offset,
    a whole inward untrimmed offset, a whole inward lens, an open retained arc, a closed result from an arc, and an arc
    with multiple retained components. From current `lc_curveoffsetellipsetests.cpp`, use a=100,b=5,15deg..315deg,d=4
    for multi-component coverage; a=100,b=50,10deg..350deg,d=49.5 for the closed arc; a=100,b=60,d=36.036 for the
    near-critical whole lens. Requalify rather than pinning spline counts, then add rotated/reversed/large-centre forms.
 
-`1A-1.b-check` subsequently owns conservative whole-span error bounds, source clearance, bidirectional ordered
-coverage and candidate topology. Add explicit tests for a short sub-arc taken from a valid cache, one disconnected
+`1A-1.b-check` subsequently owns the layout, bounds and topology leaves: conservative whole-span error bounds,
+source clearance, bidirectional ordered coverage and candidate topology. Add explicit tests for a short sub-arc
+taken from a valid cache, one disconnected
 component taken from a multi-component result, a repeated traversal and a reversed traversal with/without the flag.
 All must refuse for the specified reason rather than passing because their points lie near the correct locus.
 `.c` records acceptance and refusal distributions, reproducible seeds and cost/work counters. A passing sample-only
@@ -1100,7 +1258,9 @@ adoption; all other statuses preserve the visible ordinary spline.
    - factor within 0.1–10× the default;
    - distance finite and > 0;
    - ratio finite and > 0;
-   - angles finite, and whole (decided through `RS_Ellipse`, §3.3) or |angle2 − angle1| ≤ 2π;
+   - angles finite, classified through the raw `sweep`/`normaliseBasis` contract of §3.3 before construction; preserve
+     its full-turn comparison allowance and directed wrapped-arc rules, rather than adding a conflicting strict-2π
+     precheck or letting `RS_Ellipse` snap tiny noncanonical angles into whole geometry;
    - axis length > 0;
    - then `normaliseBasis`.
 
@@ -1119,6 +1279,25 @@ weights exactly 1.0 (`makeSplineFromDrw` fills 1.0 when the file has none), and 
 the public validated `LC_OffsetCurve::adopt(*spline, def, why)` factory; its private copy-from-spline constructor keeps
 what `setEntityAttributes` set. `addHelix` strips but never adopts.
 
+**Raw-carrier eligibility comes first.** Before `makeSplineFromDrw`, check the original `DRW_Spline` carrying a
+schema-1 candidate: actual/vector declared counts agree, all controls exist and have finite XY with Z exactly zero,
+the normal is finite and is world-XY or the codec's unspecified zero sentinel, degree/layout/knots are present and
+valid, unit weights are either genuinely absent or complete (never a partial list padded into validity), and no fit-only or repaired
+representation is needed. Do not trust only group-70 planar/rational flags. Keep these checks scoped to editable
+offset adoption; ordinary unmarked spline import retains existing behavior.
+`DRW_Spline::normalVec` is zero by default and the DWG parser resets it to zero; DWG control-scenario payloads do not
+carry a DXF-style normal. Accept that unspecified value only with the complete raw 2D control check, and reject an
+incompatible explicit plane. Requiring `(0,0,1)` from every DWG callback would wrongly reject every native round trip.
+
+The current converter drops control Z, rounds knots to `tolknot`, synthesizes missing knots, fills missing weights,
+and may clamp/reclassify geometry. None may manufacture eligibility. For an eligible marked carrier, construct the
+candidate from the validated raw controls/knots without shape-changing rounding/repair (implied unit weights may be
+materialized), then run the same full `adopt` check. If raw eligibility fails, strip only known owned schema and use
+the existing plain import fallback with a bounded diagnostic. This does not add 3D support or require dropping the
+visible ordinary projection. Test raw out-of-plane/invalid normal, null controls, declared-count mismatches, absent
+or collapsing knots, partial/nonunit weights and fit/repaired inputs in both codecs; a repaired visible spline must
+never acquire an editable definition that the original file geometry did not justify.
+
 The same `addSpline` path must be reached by actual DXF and DWG imports. Preserve layer, pen, visibility, block owner
 and supported foreign XDATA/EED when replacing the plain spline with the editable entity. Check a low-level callback
 capture of each saved file as well as the document entity, so a round trip cannot pass solely because both ends of the
@@ -1131,6 +1310,14 @@ new adapter share the same metadata mistake.
   `LC_SplinePoints`, as every spline edge does.
 - #3119 registers XDATA application names. Assert `LibreCad` appears exactly once under case-insensitive APPID lookup,
   matching the spelling used by the emitted group; use the existing registration mechanism.
+
+**Existing publication boundary.** DXF `dxfRW::writeImpl` already writes through `DwgDxfOutputTransaction` and calls
+`iface->finalizeDxfWrite()` before commit; `RS_FilterDXFRW::finalizeDxfWrite()` returns `!m_writeFailed`. DWG also has
+its codec transaction, finalization and filter staging. Reuse these mechanisms. Ensure every offset serialization
+failure latches the existing filter failure before finalization, including invalid control counts, failed R12
+approximation, unsafe metadata and codec rejection. A writer's early return that merely logs a discarded curve is
+not acceptable for this type. Do not add duplicate staging or promise filesystem durability beyond the existing
+transaction contract. Tests must verify target bytes/absence, stage cleanup and unchanged document/metadata state.
 
 ---
 
@@ -1234,7 +1421,7 @@ success (`rs_filterdxfrw.cpp:30237-30238`, DXF and DWG), and empties every INSER
 **Executed card: done at d6de53d3cb80199b4148b0e6d3dbb28f2b392b8c**
 - Owner: Gibbs; coordinator owns this plan, shared builds and commits.
 - Base: `de30f1d45f1337d55265c2f72413a9c976c18c40` plus this plan-only checkpoint; refresh actual HEAD at handoff.
-- Dependency: S0 done at de30f1d45, evidence above; no product implementation SHA exists for 0B-1 yet.
+- Dependency: S0 done at de30f1d45; this executed leaf's implementation SHA is d6de53d3c, recorded above.
 - Contract: every current enumerator has an explicit drawing/exempt row; inserted/appended unknown enumerators fail
   compile; no initial known gaps are invented by this kinds-only slice.
 - Files: new `librecad/src/lib/engine/document/entities/tests/lc_entitytype_coverage_tests.cpp`, `CMakeLists.txt`,
@@ -1383,7 +1570,7 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
 
 #### 0B-3. Round trips, `reloadsAs`, known gaps
 
-**Ready execution card**
+**Prepared execution card — in progress, verification pending**
 - Owner: coordinator; dependency 0B-2 at 5bfb3c8f0; refresh HEAD after this checkpoint.
 - Files: coverage-test source and factory header only if a demonstrated I/O fixture correction is needed. No new
   target registration; existing full/DXF-fast targets already contain the guard. Gibbs's core files remain disjoint.
@@ -1397,6 +1584,10 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
   native reloads and only reproduced baseline gaps; no generic success/count result may hide a save failure.
 - Recovery/exit: preserve any core work during isolated verification; explicit-path implementation commit followed by
   a roadmap checkpoint with actual SHA/known-gap evidence. This closes the guard, not the future new-type contract.
+- Current preparation: DXF/DWG walks and the two-path DXF pin test are uncommitted; all rows still expect their own
+  type and all gap masks are zero pending measurement. Three new registered cases are expected (10 coverage cases
+  total with 0B-2); each walk must actually visit all 27 drawing rows. Release/ASan target builds passed on the mixed
+  prepared tree; no runtime/gap outcome or isolated-commit verification is claimed yet.
 
 - **DXF and DWG round trip.** For each drawing row: a fresh graphic with the one entity; `lc::test::exportDrawing` and
   `importDrawing` with `FormatDXFRW2018` and `FormatDWG2018`, inside `QuietLog`; run the application's post-load
@@ -1405,6 +1596,9 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
   - `reloadsAs` is the type itself unless the row says otherwise. Record what Hyperbola, Parabola and SplinePoints
     actually reload as: `handleQuadraticConicSpline` (`rs_filterdxfrw.cpp:8001-8030`) can turn a degree-2 spline back
     into a conic.
+    If measured legitimate reload types differ by format, split the row's expectation into DXF/DWG fields with the
+    same native-type default; do not label a supported conversion as a gap or force one format's expectation onto
+    the other. The future offset-curve row must reload as itself in both formats after 1E-1.
   - Only standalone texts: a block attribute's text is written by its INSERT (`hasNoOwnRecord`, `:30129-30131`).
 - **Pins, DXF half:** a ConstructionLine and a container both leave 0 entities after a round trip.
 - **Known gaps.** `Row::knownGaps` is a bitmask of checks that fail at the base commit: the walk asserts `CHECK_FALSE`
@@ -1434,7 +1628,7 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
   0B-1 build/CMake scope; no concurrent builds or changes to his coverage-test/workflow files.
 - Contract: finite representable 2D normalized basis, canonical whole vs directed arc/full-turn classification,
   sweep membership, exact point/derivative/normal, signed offset, curvature/lens/inside helpers, and source-distance
-  query using the existing analytic ellipse nearest-point implementation. No cache fitting/adoption is added here.
+  query with bounded exterior solving and native nearest-point seeding/validation. No cache fitting/adoption is added here.
 - Tasks: implement checked local-frame arithmetic and raw normalization; expose geometry operations; append engine
   tolerance helpers without changing existing options; add boundary/random closed-form tests; register after handoff.
 - Validation: Release/ASan `[lc-offsetcurve][geometry]` with nonzero case counts, existing `[curve-offset][ellipse]`
@@ -1457,7 +1651,8 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
 - Isolation/commit audit: the prepared 0B-2 test patch was preserved at `build/evidence/0B-2/pending-coverage.patch`
   and temporarily removed through an owned patch for validation. The real coverage source matched HEAD, and only
   these seven geometry/build paths were staged. Scoped index/worktree and whitespace checks passed before commit.
-- Next: restore and verify 0B-2; geometry continues with `.b-budget`, `.b-ref`, `.b-check`, `.c`. No validator, new
+- Next at that checkpoint: restore and verify 0B-2 (now committed); current geometry continuation is `.b-budget`,
+  `.b-progress`, the `.b-ref` children, the `.b-check` children, then `.c`. No validator, new
   persistent entity, UI or file-format completion is claimed by this leaf.
 
 **Files.**
@@ -1489,8 +1684,9 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
 
 **Precondition:** use the S0 build and baseline; retain the #3117 arc behavior measured at S0.
 
-Execute leaf children 1A-1.a, .b-budget, .b-ref, .b-check and .c in order (§0.3); each has its own compile/test and commit checkpoint.
-`.b` is their reference/check aggregate for parent progress, not another commit.
+Execute 1A-1.a, .b-budget, .b-progress, the .b-ref children, the .b-check children and .c in order (§0.6); each
+executable leaf has its own compile/test and commit checkpoint. `.b`, `.b-ref` and `.b-check` are aggregates, not
+additional implementation commits. All children must finish before 1A-2 adds the persistent type.
 
 **Tests** — new `lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp`, `[lc-offsetcurve][geometry]`,
 registered in `librecad_tests` next to `lc_curveoffsetellipsetests.cpp`:
@@ -1515,7 +1711,7 @@ registered in `librecad_tests` next to `lc_curveoffsetellipsetests.cpp`:
 
 #### 1A-1.b-budget. Bound shared intersection work before allocation
 
-**In-progress card (Gibbs; no shared builds until coordinator handoff)**
+**Prepared card (Gibbs's patch frozen; coordinator owns verification/builds)**
 - Dependency: 1A-1.a at a4690db08. Files: `lc_parametriccurveintersection.{h,cpp}` and its existing tests only.
   Coordinate shared builds with the coordinator; no CMake/qmake registration changes are needed for existing files.
 - Finding: `Solver::candidatePairs()` builds its whole vector before `solvePair()` enforces `maxBoxPairs`; the latter
@@ -1529,7 +1725,30 @@ registered in `librecad_tests` next to `lc_curveoffsetellipsetests.cpp`:
   existing topology and all curve-offset tests remain valid. Run Release full suite, focused ASan topology/ownership
   checks, and ellipse regressions before committing this shared-engine change.
 - Recovery/exit: preserve other slices, review scoped diff, commit this leaf, then update the roadmap with its real
-  SHA/work evidence before promoting `.b-ref`. `.b` and 1A-1 remain partial until every required child is done.
+  SHA/work evidence before promoting `.b-progress`. `.b` and 1A-1 remain partial until every required child is done.
+- Current patch exposes `LC_IntersectionWorkStats` and checks candidate/refinement work before increment/storage;
+  five `[intersection-budget]` cases are registered. Release/ASan mixed-tree builds passed; runtime and isolated
+  verification remain required. Contact-classification progress is not fixed by these pair counters; it belongs to
+  the next leaf, not an implicit completion claim for this patch.
+
+#### 1A-1.b-progress. Guarantee contact-classifier termination
+
+**Waiting card — activate only after the budget leaf's checkpoint**
+- Scope: `lc_parametriccurveintersection.cpp` and its existing tests; header only if additional bounded diagnostics
+  are necessary. No geometry fitting, source adapter, registration or unrelated engine refactor.
+- Finding: `classifyContact()` starts its unbounded doubling loop at `8*tolerance/db.magnitude()`. A zero initial
+  step (underflow or infinite computed speed) stays zero forever, so pair caps cannot terminate that loop. This is a
+  source-level P1 finding; reproduce the reachable conditions before choosing the narrow fix.
+- Tasks: add a deterministic iteration bound and finite/progress checks; preserve ordinary shallow-contact behavior.
+  A small positive step may initially round `u + direction*step` back to `u`; permit bounded step growth rather than
+  misclassifying every such rounding case. A zero/non-finite step or exhausted classification allowance refuses
+  without publishing partial roots. Audit adjacent midpoint/step arithmetic for the same termination invariant.
+- Validation: explicit underflow, extreme derivative, parameter-rounding and boundary-contact cases, run under a
+  process timeout; timeout is a failed test run, never a hidden skip. Focused Release/ASan plus existing topology,
+  all curve-offset tests and full visible Release suite; compare stable failures with S0. Default depth semantics
+  remain unchanged. Record actual finite-loop bound and reason mapping in the checkpoint.
+- Exit: reviewed implementation commit and plan checkpoint; `.b-ref-frames` may then become ready. Pair budgets and
+  fixed numerical-loop limits are complementary; neither substitutes for certified event ordering in `.b-ref-events`.
 
 ### 1A-2. Enumerator and class core
 
@@ -1814,7 +2033,7 @@ already the prerequisite, not work in this feature.
 
 **Files.**
 - **New `lib/filters/lc_offsetcurvexdata.{h,cpp}`** (precedent `lc_parabolaspline.{h,cpp}`, `CMakeLists.txt:1127-1128`,
-  `src.pro:606`, `:1068`): the optional-result `forExport`, `parseAndStrip` and import adoption (§3.10).
+  `src.pro:606`, `:1068`): the optional-result `forExport`, `parseAndStrip`, raw-carrier preflight and import adoption (§3.10).
   - It has its own small readers, because the file-local readers of `rs_filterdxfrw.cpp` (`:332-422`) are not visible.
   - Reference implementation: `prototypes/redteam_integrity_work/rt_offsetcurve.cpp` (`makeSubList`,
     `appendForExport`, `parseAndStrip`, `adoptOnImport`).
@@ -1833,6 +2052,11 @@ already the prerequisite, not work in this feature.
   ```
   Apply the same preparation to the earlier R12 POLYLINE branch with `includeDefinition = false` before writing it;
   returning early must not leave a stale schema-1 marker on downgraded geometry.
+  The new type's complete geometry/metadata preflight runs before the existing insufficient-control early return.
+  Invalid or unwritable offset-curve geometry latches `m_writeFailed`; never inherit the ordinary spline's log-and-drop
+  behavior. R12 must establish its promised approximation bound for this type or fail, not silently use unbounded
+  display chords. Existing unmarked spline export policy need not change. Verify the current codec transaction and
+  `finalizeDxfWrite`/`finalizeDwgWrite` path with a late filter failure; no duplicate staging implementation is planned.
 - **`rs_filterdxfrw.cpp` `addSpline`** (:8034-8139). Every exit copies the record's own list through
   `setEntityAttributes` (:32993-32995): conic (:8024), degree 2 (:8050), degree above 3 (:8083), main path (:8109),
   fit points (:8121), and `addHelix` → `addSpline` (:8151). So strip a copy of the record once, at the top:
@@ -1842,22 +2066,33 @@ already the prerequisite, not work in this feature.
     std::optional<DRW_Spline> stripped;
     if (oc.changed) { stripped.emplace(*data); stripped->extData = std::move(oc.remaining); data = &*stripped; }
     ...
-    // main path (:8106-8112):
-    std::unique_ptr<RS_Spline> spline = makeSplineFromDrw(m_currentContainer, *data, data->weightlist);
+    // Capture from the raw DRW carrier before any XY projection, knot rounding or geometry repair.
+    auto rawCache = (data->eType == DRW::SPLINE && oc.status == LC_OffsetCurveXData::Status::Schema1)
+        ? LC_OffsetCurveXData::rawCacheForAdoption(*data) : std::nullopt;
+    // main path: the eligible marked candidate keeps validated raw controls/knots and unit weights.
+    std::unique_ptr<RS_Spline> spline = rawCache
+        ? makeRawMarkedSpline(m_currentContainer, *rawCache)
+        : makeSplineFromDrw(m_currentContainer, *data, data->weightlist);
     setEntityAttributes(spline.get(), data);
-    if (data->eType == DRW::SPLINE && oc.status == LC_OffsetCurveXData::Status::Schema1)
+    if (rawCache)
         if (auto curve = LC_OffsetCurveXData::adopt(*spline, oc)) spline = std::move(curve);   // copy-from-spline
     m_currentContainer->addEntity(spline.release());
   ```
 
   `DRW_Spline` is copyable; a `DRW_Helix` is sliced, which is fine because no exit reads beyond `DRW_Spline`. Confirm
   real DXF and DWG readers both invoke this callback with decoded XDATA/EED; no format-specific adoption bypass.
+  The pseudocode's `rawCacheForAdoption` returns a bounded `optional<RS_SplineData>` under R14; its failure records
+  a diagnostic and can never be rescued by `makeSplineFromDrw` repairs. `makeRawMarkedSpline` is a narrowly scoped
+  constructor/update helper, not a second general importer. Keep actual `normalVec` zero-sentinel behavior from
+  §3.10 in its eligibility tests. Capture raw eligibility before any early import branch; only the main SPLINE
+  control path may adopt. Other branches retain plain geometry and stripped known-owned metadata.
 - **Codec trace:** inspect the ordinary SPLINE encode/parse and common EED path in `drw_entities.cpp`,
   `libdxfrw.cpp`, `libdwgr.cpp` and the DWG reader/writer. Prove that the complete schema survives each codec before
   relying on document adoption. Add focused codec fixes/tests only for losses demonstrated by those checks.
 - **0B row:** `drawing(EntityOffsetCurve)`, reloading as itself in both DXF and DWG. Neither round-trip bit may be
   listed as a known gap or `notRun` for this new type.
-- Keep filter changes localized to spline serialization and parsing. APPID registration is already handled by #3119;
+- Keep filter changes localized to spline serialization and parsing, using existing save/finalization mechanisms.
+  APPID registration is already handled by #3119;
   inspect current XDATA-tail and import-finalization ownership before editing those paths.
 
 **Tests** — new `lib/filters/tests/lc_offsetcurve_file_tests.cpp`, built on `Bench`; separate cases tagged
@@ -1870,6 +2105,10 @@ already the prerequisite, not work in this feature.
   the `LibreCad` application reference is registered/resolvable in the output.
 - **Read without regeneration:** adopting a saved cache leaves `engineRuns()` unchanged. Writing also preserves the
   current cache rather than rerunning the engine and changing its geometry.
+- **Raw input preflight:** marked 3D controls, incompatible normals, null/mismatched arrays, missing/synthesized/
+  rounding-collapsed knots, partial weights and fit-only/repair cases cannot become editable. Valid rescaled knot
+  vectors and unspecified DWG normals pass without shape-changing conversion. Inspect raw codec callbacks as well
+  as the projected plain fallback; test both ASCII/binary DXF and native DWG where the field is representable.
 - **Source-independent reload:** delete the source ellipse before export; either format restores the editable curve.
 - **R12:** one POLYLINE, no owned schema-1 marker in the file, and reimported geometry within export tolerance.
 - **APPID registration:** exactly one case-insensitive `LibreCad` record matching the emitted group, while preserving
@@ -1881,6 +2120,9 @@ already the prerequisite, not work in this feature.
   - not in the DWG list: the DXF lane defines `DWGSUPPORT`.
 
 ### 1E-2. DXF/DWG metadata safety, fallback, fixtures, copy and paste
+
+Aggregate of `1E-2.safety`, `.fixtures` and `.copy` (§0.6), committed/checkpointed in that order. The following tests
+belong to those leaves, not a final uncommitted catch-all. Required safety regressions accompany any production fix.
 
 **Tests** (same file unless stated). Run each applicable metadata case through both DXF and DWG, including saving
 the imported result again. Check both entity geometry and owned/foreign metadata:
@@ -1906,6 +2148,10 @@ the imported result again. Check both entity geometry and owned/foreign metadata
 - **Failed save transaction:** force unsafe owned metadata or a propagated codec failure while saving over an existing
   DXF/DWG file; return failure, retain the previous target, and release temporary carriers. A rejected save must not
   leave a partially written drawing that appears successful.
+  Include a late `writeSpline` filter-only refusal after a valid entity was already emitted, invalid-control and R12
+  approximation refusals, an initially absent target, and a successful retry. Compare previous target bytes exactly,
+  directory entries/stage cleanup and live entity/metadata/history state. Reuse the existing transactional/finalizer
+  mechanisms; do not merely assert a false return after the codec has already published a bad replacement.
 - **Unknown trailing items** in a schema-1 sub-list: allowed codes are adopted and written back; 1004, 1003 and 1005
   are dropped. An oversized/deep/ill-typed unknown owned tail is discarded with diagnostics while the valid base
   definition survives; test 64-item and 4096-encoded-byte boundaries independently, including Unicode and unbalanced braces.
@@ -1941,6 +2187,9 @@ the imported result again. Check both entity geometry and owned/foreign metadata
   the definition and remains editable. Record actual results and unavailable capabilities in release evidence.
 
 ### 1E-3. Version matrix, conversion and edit/save/reopen acceptance
+
+Aggregate of `1E-3.matrix` and `.conversion` (§0.6). Commit/reconcile the matrix before conversion; the parent remains
+partial until both leaves and required native validation pass.
 
 **Files:** extend `lc_offsetcurve_file_tests.cpp` and its test-support helpers. Use an explicit `FormatCase` table
 containing `RS2::FormatType`, expected `DRW::Version`, extension and whether the format preserves the definition.
@@ -2259,7 +2508,8 @@ This step is last in phase 1, so the default never turns on before the UI exists
   `<worktree>/librecad/ts`; make sure none is left staged or modified.
 - **Hidden GUI pass,** `[.gui][lc-offsetcurve]`, added to `ui/main/tests/lc_docklayout_tests.cpp` (fixture
   `testWindow()` :114, `DockFixture` :136, new-drawing case :188-211). Run it as
-  `QT_QPA_PLATFORM=offscreen build/librecad_tests "[lc-offsetcurve][gui]" --order decl`.
+  `QT_QPA_PLATFORM=offscreen build/librecad_tests "[.gui][lc-offsetcurve]" --order decl`.
+  Discover this exact selector first and require nonzero matched/executed cases; `[gui]` does not select `[.gui]`.
   - No `Qt6::Test` is linked to any test target: trigger QActions with `getAction(...)->trigger()`, send `QMouseEvent`s
     to `QG_GraphicView` with `QApplication::sendEvent`, and close modal dialogs from `QTimer::singleShot` via
     `QApplication::activeModalWidget()`.
@@ -2428,6 +2678,15 @@ Push, CI, PR E.
 - 1A-1.a's numeric findings and fixes are recorded in its executed card and tests, not deferred as new-type gaps.
 - Reference analysis needs the pre-allocation pair cap and consumed-work contract in `.b-budget` before it can reuse
   the intersection solver as a bounded decode/adoption validator.
+- v7's read-only source review found an independent P1 termination hazard in `classifyContact()`'s zero-step
+  doubling loop. `.b-progress` now blocks reference analysis until reproduced, fixed and verified; the prepared
+  pair-budget patch is not claimed to fix it.
+- Existing intersection `Ok`/point estimates do not certify event enclosures/order. `.b-ref-events` must add the
+  strict opt-in contract before the graph can support adoption; ordinary callers retain their existing defaults.
+- Raw spline conversion drops Z and repairs/rounds geometry; R14 requires eligibility checks before that conversion.
+  The DWG normal is an unspecified zero sentinel, so normal validation must not reject every legitimate DWG carrier.
+- DXF publication is already transactional and consults the filter's finalization failure latch. R15 tests this
+  existing mechanism and offset-specific early returns; a second staging implementation would be unnecessary scope.
 - `toleranceFor()` intentionally exposes the numeric floor even when the engine's default options reject equality
   with that floor. In 1B, qualify large-centre transformed/read caches and explicit editing: a caller may request the
   next representable tolerance above that floor to meet the existing strict guard, without changing engine defaults,
@@ -2459,6 +2718,14 @@ still pending in the owning slices; a documentation change is not evidence that 
 | Malformed/unknown schema precedence and redundant side flags are underspecified | Explicit Invalid/diagnostics, owned-range grammar, raw unknown policy and bit-3 consistency | 1E-1.a, 1E-2 |
 | Phase-2 tests arrive after their implementation commit; Trim gates the wrong PR | Focused tests accompany 2A/2B; PR C contains 1D | 2A/2B, §0.2 |
 | Circle axis direction is nonunique | Geometry-based circle/arc deduplication without merging distinct near-circles | 2B |
+| Mixed current statuses and aggregate steps hide unfinished work | Reconcile committed/prepared states; explicit leaf recipes and dependency checks | §0.3/§0.6, every checkpoint |
+| Pair caps do not bound a zero-step contact loop | Deterministic classification progress/iteration guards and underflow regressions | 1A-1.b-progress |
+| Estimated intersections do not establish certified topology | Strict event enclosures/proof category and unresolved-order refusal | 1A-1.b-ref-events |
+| Whole-ellipse distance or unbudgeted visibility seeding can invalidate arc proofs | Restricted-source bounds and charge-before-allocation shared visibility accounting | 1A-1.b-ref-components/.b-check-bounds |
+| XY projection and importer repairs can manufacture valid-looking caches | Raw carrier preflight and shape-preserving marked import before validated adoption | 1E-1.c, 1E-2.safety |
+| A strict normal check would reject DWG's unspecified zero normal | Accept the known zero sentinel only with full raw 2D controls; reject incompatible explicit planes | 1E-1.c |
+| Raw schema sweep precheck conflicts with normalization tolerance | One pre-construction sweep contract; remove the strict-2π/constructed-whole shortcut | 1E-1.a |
+| Log-and-return export or a wrong GUI selector can produce false green evidence | Offset-specific failure latch, existing transaction tests and nonzero exact-selector checks | 1E-1.b, 1E-2.safety, 1I-a |
 
 ---
 
@@ -2695,3 +2962,27 @@ Appendix B supersedes this anchor table.
 - Moved focused phase-2 tests into their implementation slices; corrected the independently mergeable PR C trim gate.
 - Strengthened tested-tree verification and the post-commit reconciliation checklist. Product completion still requires
   a verified slice commit followed by its plan-only checkpoint; no recursive checkpoint hashes or false passing gates.
+
+#### v6 → v7 (2026-10-15)
+
+- Reviewed the current tree at `41d83689e` and preserved all four prepared product/test changes. S0, 0B-1, 0B-2
+  and 1A-1.a remain done; budget and round-trip patches remain uncommitted/runtime-unverified. Their mixed-tree
+  Release/ASan builds completed with exit 0; that is compilation evidence only. No new runtime test was run by
+  this documentation pass.
+- Added R01-R15 traceability, separate completeness/correctness review gates, executable reference/check/file leaves,
+  precise dependency promotion and an immediate validation command queue. Removed stale all-pending/S0-only status
+  and clarified historical versus active handoff instructions.
+- Gibbs independently audited geometry/readiness/persistence without edits or builds. Integrated all six findings:
+  raw-carrier eligibility, contact-loop termination, certified event intervals, restricted-source visibility accounting,
+  schema sweep precheck and the hidden GUI selector. The coordinator confirmed current source/API behavior before
+  changing the plan; these are planned fixes, not claims of completed product repairs.
+- Kept existing DXF/DWG transaction/finalization infrastructure; added strict new-type early-return/R12 refusal and
+  target/document-preservation tests. Accounted for the DWG zero-normal sentinel and raw knot/weight repair hazards.
+- Tightened isolated-tested-tree proof, staged-path ownership, nonrecursive documentation commits, post-checkpoint
+  ancestry/hash/status checks and reopening of newly discovered defects. Every implementation leaf still requires
+  its own tested commit followed by a durable plan reconciliation; local commits do not authorize publication.
+- Plan-review evidence: `git diff --check` exit 0; `node build/evidence/plan-v7/audit.mjs` exit 0: 27 main rows,
+  51 dependency nodes (including aggregates), no cycle/unlisted node, 15 requirement IDs, 14 unique format enums
+  (8 DXF/6 DWG), 82 unique headings and 16 balanced code fences. The first inventory probe exposed the missing
+  `.b` aggregate row; it was added and the audit passed. Gibbs's second independent read-only review found no
+  remaining material contract/dependency issue. No product/runtime-completion status was promoted by this audit.
