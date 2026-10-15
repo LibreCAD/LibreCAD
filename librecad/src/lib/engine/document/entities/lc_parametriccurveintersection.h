@@ -25,6 +25,8 @@
 #include <algorithm>
 #include <cstddef>
 #include <limits>
+#include <memory>
+#include <optional>
 #include <vector>
 
 #include "lc_interval.h"
@@ -151,7 +153,7 @@ public:
 struct LC_IntersectionOptions {
     /** Points this close are one node; a contact closer than this to a join is the join. */
     double tolerance{0.0};
-    /** Bisections of a leaf pair before an undecided box is classified. */
+    /** Bisections of a leaf pair; the owned certified factory also uses this as the absolute root-contraction ceiling. */
     unsigned maxDepth{48};
     /** Bisections of a segment into leaves. */
     unsigned maxLeafDepth{40};
@@ -166,7 +168,7 @@ struct LC_IntersectionOptions {
      * Overlapping endpoint bounds alone do not establish continuity.
      */
     bool strict{false};
-    /** Strict preparation boxes and certificate records ever generated; never refunded. */
+    /** Strict preparation/certificate records and owned-session metadata ever generated; never refunded. */
     std::size_t maxGeneratedItems{65536};
 };
 
@@ -189,7 +191,7 @@ struct LC_IntersectionWorkStats {
     std::size_t totalBoxPairs{0};
     /** Leaves generated, including those retained before a refusal. */
     std::size_t generatedLeaves{0};
-    /** Strict preparation boxes and new certificates, including discarded ones; zero in ordinary mode. */
+    /** Strict preparation/certificate records and owned-session metadata, including discarded ones; zero in ordinary mode. */
     std::size_t generatedItems{0};
     /** Entered preparation depth; segment roots are zero, queued/unexamined children do not count. */
     unsigned deepestPreparation{0};
@@ -197,9 +199,11 @@ struct LC_IntersectionWorkStats {
     unsigned deepestPairRefinement{0};
     /** Entered strict comparison/contraction depth; excludes fixed Newton/contact iterations and BVH height. */
     unsigned deepestOrderingRefinement{0};
+    /** Absolute admitted contraction depth of owned certified roots; zero for legacy queries. */
+    unsigned deepestRootRefinement{0};
 
     unsigned deepest() const {
-        return std::max({deepestPreparation, deepestPairRefinement, deepestOrderingRefinement});
+        return std::max({deepestPreparation, deepestPairRefinement, deepestOrderingRefinement, deepestRootRefinement});
     }
 };
 
@@ -225,5 +229,82 @@ struct LC_IntersectionResult {
  * unresolved corner pairs fail at the depth limit. Results are pair-order independent.
  */
 LC_IntersectionResult findIntersections(const LC_ParametricCurves& curves, const LC_IntersectionOptions& options);
+
+class LC_CertifiedIntersectionSession;
+
+/** Only a session can issue a valid handle. Public event/snapshot copies are not proof credentials. */
+class LC_CertifiedRootHandle {
+public:
+    LC_CertifiedRootHandle() = default;
+
+private:
+    friend class LC_CertifiedIntersectionSession;
+    std::weak_ptr<const void> m_issuer;
+    std::size_t m_index{std::numeric_limits<std::size_t>::max()};
+};
+
+struct LC_CertifiedRootSnapshot {
+    /** Original proof category/domain stay fixed; isolation and numerical seeds may contract. */
+    LC_ParametricIntersection event{};
+    LC_Interval imageX;
+    LC_Interval imageY;
+    unsigned admittedContractions{0};
+};
+
+struct LC_CertifiedContractionAllowance {
+    /** Additional work available in this call, intersected with original cumulative session ceilings. */
+    std::size_t remainingPairs{0};
+    std::size_t remainingItems{0};
+    /** Absolute root depth, not an additional number of contractions. */
+    unsigned absoluteRootDepth{0};
+};
+
+struct LC_CertifiedContractionResult {
+    LC_IntersectionStatus status{LC_IntersectionStatus::InvalidInput};
+    /** Absent on every refusal; admitted work/history remains spent. */
+    std::optional<LC_CertifiedRootSnapshot> snapshot;
+    /** Work entered in this call only; observed depths are absolute, not differences of maxima. */
+    LC_IntersectionWorkStats work;
+};
+
+struct LC_CertifiedQueryResult;
+
+/** Owns immutable geometry and its certified root state. Handles survive moves, not destruction. */
+class LC_CertifiedIntersectionSession {
+public:
+    ~LC_CertifiedIntersectionSession();
+    LC_CertifiedIntersectionSession(LC_CertifiedIntersectionSession&&) noexcept;
+    LC_CertifiedIntersectionSession& operator=(LC_CertifiedIntersectionSession&&) noexcept;
+    LC_CertifiedIntersectionSession(const LC_CertifiedIntersectionSession&) = delete;
+    LC_CertifiedIntersectionSession& operator=(const LC_CertifiedIntersectionSession&) = delete;
+
+    std::size_t rootCount() const;
+    LC_CertifiedRootHandle rootHandle(std::size_t index) const;
+    std::optional<LC_CertifiedRootSnapshot> snapshot(const LC_CertifiedRootHandle&) const;
+    LC_CertifiedContractionResult contract(const LC_CertifiedRootHandle&, const LC_CertifiedContractionAllowance&);
+    const LC_IntersectionWorkStats& cumulativeWork() const;
+
+private:
+    struct Impl;
+    explicit LC_CertifiedIntersectionSession(std::unique_ptr<Impl> impl);
+    friend LC_CertifiedQueryResult findCertifiedIntersections(
+        std::unique_ptr<const LC_ParametricCurves>, LC_IntersectionOptions);
+    std::unique_ptr<Impl> m_impl;
+};
+
+struct LC_CertifiedQueryResult {
+    LC_IntersectionStatus status{LC_IntersectionStatus::InvalidInput};
+    /** Includes two session/issuer items and one extra metadata item per initially retained root. */
+    LC_IntersectionWorkStats work;
+    std::unique_ptr<LC_CertifiedIntersectionSession> session;
+};
+
+/**
+ * Always strict. Takes sole ownership of an immutable provider (including its callback dependencies),
+ * and copies options before binding proof-core references. Original item/pair/depth ceilings remain
+ * cumulative through subsequent calls. Legacy findIntersections policies/counters are unchanged.
+ */
+LC_CertifiedQueryResult findCertifiedIntersections(
+    std::unique_ptr<const LC_ParametricCurves> curves, LC_IntersectionOptions options);
 
 #endif

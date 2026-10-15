@@ -30,7 +30,10 @@
 #include <functional>
 #include <limits>
 #include <memory>
+#include <stdexcept>
 #include <tuple>
+#include <type_traits>
+#include <utility>
 #include <vector>
 
 #include "lc_curveoffset.h"
@@ -356,6 +359,142 @@ std::size_t orderingPointCalls(const AccountingCurves& curves) {
     }));
 }
 
+struct RefineProbe {
+    std::size_t destroyed{0};
+    std::size_t bounds{0};
+    std::size_t evaluations{0};
+    bool invalidBounds{false};
+    bool throwBounds{false};
+    bool translated{false};
+    bool unavailable{false};
+    bool wrongUniqueCategory{false};
+    bool wrongExcludedCategory{false};
+};
+
+/** Owns all callback dependencies. Fault switches intentionally violate immutability to test fail-closed behavior. */
+class RefineCurves final : public LC_ParametricCurves {
+public:
+    RefineCurves(std::vector<PolynomialPiece> pieces, std::shared_ptr<RefineProbe> probe)
+        : curves{std::move(pieces)}, m_probe{std::move(probe)} {}
+    ~RefineCurves() override { ++m_probe->destroyed; }
+    const std::vector<LC_ParametricSegment>& segments() const override { return curves.segments(); }
+    std::size_t branchCount() const override { return curves.branchCount(); }
+    std::ptrdiff_t next(const std::size_t branch) const override { return curves.next(branch); }
+    bool evaluate(const std::size_t segment, const double t, RS_Vector& p, RS_Vector& d) const override {
+        ++m_probe->evaluations;
+        if (!curves.evaluate(segment, t, p, d)) { return false; }
+        if (m_probe->translated) { p.x += 100.0; }
+        return true;
+    }
+    bool bound(const std::size_t segment, const double a, const double b, LC_Interval& x, LC_Interval& y,
+               LC_Interval& dx, LC_Interval& dy) const override {
+        ++m_probe->bounds;
+        if (m_probe->throwBounds) { throw std::runtime_error("test provider failure"); }
+        if (!curves.bound(segment, a, b, x, y, dx, dy)) { return false; }
+        if (m_probe->invalidBounds) { x = LC_Interval::entire(); }
+        if (m_probe->translated) { x = x + LC_Interval::point(100.0); }
+        return true;
+    }
+    LC_AnalyticLeafCertificate certifyInjective(const std::size_t segment, const LC_Interval& parameter) const override {
+        return curves.certifyInjective(segment, parameter);
+    }
+    LC_AnalyticIntersectionCertificate certifyIntersection(const LC_IntersectionDomain& box) const override {
+        if (m_probe->unavailable) { return {}; }
+        auto result = curves.certifyIntersection(box);
+        if (m_probe->wrongUniqueCategory) {
+            result.proof = LC_IntersectionProof::Uncertified;
+        }
+        if (m_probe->wrongExcludedCategory) {
+            result.outcome = LC_AnalyticIntersectionCertificate::Outcome::Excluded;
+            result.proof = LC_IntersectionProof::AnalyticTangency;
+        }
+        return result;
+    }
+    CertifiedPolynomials curves;
+
+private:
+    std::shared_ptr<RefineProbe> m_probe;
+};
+
+std::unique_ptr<RefineCurves> endpointRefineCurves(
+    const std::vector<double>& roots = {0.25}, std::shared_ptr<RefineProbe> probe = std::make_shared<RefineProbe>()) {
+    std::vector<PolynomialPiece> pieces{polynomialLine(0, {0, 0}, {1, 0})};
+    for (std::size_t i = 0; i < roots.size(); ++i) {
+        pieces.push_back(polynomialLine(i + 1, {roots[i], 0}, {0, 1}));
+    }
+    auto curves = std::make_unique<RefineCurves>(std::move(pieces), std::move(probe));
+    curves->curves.contactProof = [roots](const LC_IntersectionDomain& box) {
+        LC_AnalyticIntersectionCertificate proof;
+        if (box.segmentA != 0 || box.segmentB == 0 || box.segmentB > roots.size()) { return proof; }
+        proof.proofDomain = box;
+        const double root = roots[box.segmentB - 1];
+        if (!box.parameterA.contains(root) || !box.parameterB.contains(0.0)) {
+            proof.outcome = LC_AnalyticIntersectionCertificate::Outcome::Excluded;
+            proof.proof = LC_IntersectionProof::AnalyticExclusion;
+        } else {
+            proof.outcome = LC_AnalyticIntersectionCertificate::Outcome::Unique;
+            proof.proof = LC_IntersectionProof::AnalyticEndpoint;
+            proof.kind = Kind::Endpoint;
+            proof.isolationA = box.parameterA;
+            proof.isolationB = LC_Interval::point(0.0);
+        }
+        return proof;
+    };
+    return curves;
+}
+
+std::unique_ptr<RefineCurves> singularRefineCurves(
+    const bool cusp, std::shared_ptr<RefineProbe> probe = std::make_shared<RefineProbe>()) {
+    PolynomialPiece other{{1, 0, 1}, cusp ? std::array<double, 4>{0.375, 0.75, -1.5, 1.0} :
+                                                         std::array<double, 4>{0, 1, 0, 0},
+                           {0.25, -1, 1, 0}};
+    auto curves = std::make_unique<RefineCurves>(
+        std::vector<PolynomialPiece>{polynomialLine(0, {0, 0}, {1, 0}), other}, std::move(probe));
+    curves->curves.leafProof = [](const std::size_t segment, const LC_Interval& parameter) {
+        // x=t or x=(t-.5)^3+.5 is strictly increasing, including the cusp's stationary point.
+        return LC_AnalyticLeafCertificate{true, segment, parameter};
+    };
+    curves->curves.contactProof = [cusp](const LC_IntersectionDomain& box) {
+        LC_AnalyticIntersectionCertificate proof;
+        if (box.segmentA != 0 || box.segmentB != 1) { return proof; }
+        proof.proofDomain = box;
+        if (!box.parameterA.contains(0.5) || !box.parameterB.contains(0.5)) {
+            proof.outcome = LC_AnalyticIntersectionCertificate::Outcome::Excluded;
+            proof.proof = LC_IntersectionProof::AnalyticExclusion;
+        } else {
+            // y=(u-.5)^2 proves the only root is t=u=.5; deliberately return a qualified enclosure, not its point.
+            const auto inner = [](const LC_Interval& interval) {
+                const double radius = 0.25 * interval.width();
+                return LC_Interval::hull(std::max(interval.lo(), 0.5 - radius),
+                                         std::min(interval.hi(), 0.5 + radius));
+            };
+            proof.outcome = LC_AnalyticIntersectionCertificate::Outcome::Unique;
+            proof.proof = cusp ? LC_IntersectionProof::AnalyticCusp : LC_IntersectionProof::AnalyticTangency;
+            proof.kind = Kind::Tangent;
+            proof.isolationA = inner(box.parameterA);
+            proof.isolationB = inner(box.parameterB);
+        }
+        return proof;
+    };
+    return curves;
+}
+
+LC_CertifiedContractionAllowance refineAllowance(const unsigned depth = 48) {
+    return {std::numeric_limits<std::size_t>::max(), std::numeric_limits<std::size_t>::max(), depth};
+}
+
+void checkSameInterval(const LC_Interval& a, const LC_Interval& b) {
+    CHECK(a.lo() == b.lo());
+    CHECK(a.hi() == b.hi());
+}
+
+void checkSameDomain(const LC_IntersectionDomain& a, const LC_IntersectionDomain& b) {
+    CHECK(a.segmentA == b.segmentA);
+    CHECK(a.segmentB == b.segmentB);
+    checkSameInterval(a.parameterA, b.parameterA);
+    checkSameInterval(a.parameterB, b.parameterB);
+}
+
 LC_IntersectionOptions strictOptions() {
     LC_IntersectionOptions options;
     options.tolerance = 1e-9;
@@ -438,6 +577,552 @@ size_t sampledCrossings(const std::vector<const RS_Spline*>& splines) {
 }
 
 } // namespace
+
+static_assert(!std::is_default_constructible_v<LC_CertifiedIntersectionSession>);
+static_assert(!std::is_copy_constructible_v<LC_CertifiedIntersectionSession>);
+static_assert(!std::is_copy_assignable_v<LC_CertifiedIntersectionSession>);
+static_assert(std::is_nothrow_move_constructible_v<LC_CertifiedIntersectionSession>);
+static_assert(std::is_nothrow_move_assignable_v<LC_CertifiedIntersectionSession>);
+static_assert(!std::is_constructible_v<LC_CertifiedRootHandle, LC_ParametricIntersection>);
+static_assert(!std::is_constructible_v<LC_CertifiedRootHandle, LC_CertifiedRootSnapshot>);
+static_assert(!std::is_constructible_v<LC_CertifiedRootHandle, std::size_t>);
+
+TEST_CASE("Certified sessions charge fixed and retained metadata without changing legacy work",
+          "[lc-offsetcurve][geometry][intersection-refine]") {
+    auto options = strictOptions();
+    const auto nullProvider = findCertifiedIntersections(nullptr, options);
+    CHECK(nullProvider.status == LC_IntersectionStatus::InvalidInput);
+    CHECK_FALSE(nullProvider.session);
+    CHECK(nullProvider.work.generatedItems == 0);
+    options.tolerance = 0;
+    const auto invalid = findCertifiedIntersections(endpointRefineCurves(), options);
+    CHECK(invalid.status == LC_IntersectionStatus::InvalidInput);
+    CHECK(invalid.work.generatedItems == 0);
+
+    options = strictOptions();
+    options.maxGeneratedItems = 3; // session + issuer + one preparation box, with no roots
+    const auto empty = findCertifiedIntersections(
+        std::make_unique<CertifiedPolynomials>(std::vector<PolynomialPiece>{polynomialLine(0, {0, 0}, {1, 0})}), options);
+    REQUIRE(empty.status == LC_IntersectionStatus::Ok);
+    REQUIRE(empty.session);
+    CHECK(empty.session->rootCount() == 0);
+    CHECK(empty.work.generatedItems == 3);
+    CHECK(empty.work.totalBoxPairs == 0);
+    CHECK_FALSE(empty.session->snapshot(empty.session->rootHandle(0)));
+
+    for (const std::size_t cap : {1u, 2u}) {
+        options.maxGeneratedItems = cap;
+        const auto shortMetadata = findCertifiedIntersections(
+            std::make_unique<CertifiedPolynomials>(std::vector<PolynomialPiece>{polynomialLine(0, {0, 0}, {1, 0})}), options);
+        CHECK(shortMetadata.status == LC_IntersectionStatus::LimitExceeded);
+        CHECK_FALSE(shortMetadata.session);
+        CHECK(shortMetadata.work.generatedItems == (cap == 1 ? 0 : 2));
+    }
+
+    options = strictOptions();
+    auto legacyProvider = endpointRefineCurves();
+    const auto legacy = findIntersections(*legacyProvider, options);
+    REQUIRE(legacy.status == LC_IntersectionStatus::Ok);
+    options.strict = false; // the owned factory must still issue only strict certificates
+    auto owned = findCertifiedIntersections(endpointRefineCurves(), options);
+    REQUIRE(owned.status == LC_IntersectionStatus::Ok);
+    REQUIRE(owned.session->rootCount() == 1);
+    CHECK(owned.work.generatedItems == legacy.work.generatedItems + 3);
+    CHECK(owned.work.candidateBoxPairs == legacy.work.candidateBoxPairs);
+    CHECK(owned.work.refinementBoxPairs == legacy.work.refinementBoxPairs);
+    CHECK(owned.work.certificateBoxPairs == legacy.work.certificateBoxPairs);
+    CHECK(legacy.work.deepestRootRefinement == 0);
+    CHECK(owned.work.deepestRootRefinement == 0);
+
+    options.maxGeneratedItems = owned.work.generatedItems;
+    const auto exact = findCertifiedIntersections(endpointRefineCurves(), options);
+    REQUIRE(exact.status == LC_IntersectionStatus::Ok);
+    --options.maxGeneratedItems;
+    const auto shortRoot = findCertifiedIntersections(endpointRefineCurves(), options);
+    CHECK(shortRoot.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK_FALSE(shortRoot.session);
+    CHECK(shortRoot.work.generatedItems == options.maxGeneratedItems);
+}
+
+TEST_CASE("Certified roots own provider options and issuer lifetime through moves",
+          "[lc-offsetcurve][geometry][intersection-refine]") {
+    auto sourceProbe = std::make_shared<RefineProbe>();
+    auto query = [&] {
+        auto localOptions = strictOptions();
+        return findCertifiedIntersections(endpointRefineCurves({0.25}, sourceProbe), localOptions);
+    }();
+    REQUIRE(query.status == LC_IntersectionStatus::Ok);
+    const auto sourceHandle = query.session->rootHandle(0);
+    const auto boundCalls = sourceProbe->bounds;
+    CHECK(query.session->snapshot(sourceHandle));
+    CHECK(query.session->rootCount() == 1);
+    CHECK(sourceProbe->bounds == boundCalls); // cached access is not another proof query
+    CHECK(sourceProbe->destroyed == 0);
+
+    LC_CertifiedIntersectionSession moved{std::move(*query.session)};
+    CHECK(query.session->rootCount() == 0);
+    CHECK_FALSE(query.session->snapshot(sourceHandle));
+    CHECK(query.session->contract(sourceHandle, refineAllowance()).status == LC_IntersectionStatus::InvalidInput);
+    CHECK(query.session->cumulativeWork().totalBoxPairs == 0);
+    REQUIRE(moved.snapshot(sourceHandle));
+
+    auto destinationProbe = std::make_shared<RefineProbe>();
+    auto destination = findCertifiedIntersections(endpointRefineCurves({0.75}, destinationProbe), strictOptions());
+    REQUIRE(destination.status == LC_IntersectionStatus::Ok);
+    const auto overwritten = destination.session->rootHandle(0);
+    CHECK_FALSE(destination.session->snapshot(sourceHandle));
+    *destination.session = std::move(moved);
+    CHECK(destinationProbe->destroyed == 1);
+    CHECK(moved.rootCount() == 0);
+    CHECK_FALSE(destination.session->snapshot(overwritten));
+    REQUIRE(destination.session->snapshot(sourceHandle));
+    const auto refined = destination.session->contract(sourceHandle, refineAllowance());
+    REQUIRE(refined.status == LC_IntersectionStatus::Ok);
+    CHECK(refined.snapshot->event.isolation.parameterA.contains(0.25));
+    destination.session.reset();
+    CHECK(sourceProbe->destroyed == 1);
+
+    auto replacement = findCertifiedIntersections(endpointRefineCurves(), strictOptions());
+    REQUIRE(replacement.status == LC_IntersectionStatus::Ok);
+    const auto expired = replacement.session->contract(sourceHandle, refineAllowance());
+    CHECK(expired.status == LC_IntersectionStatus::InvalidInput);
+    CHECK(expired.work.totalBoxPairs == 0);
+    CHECK(expired.work.generatedItems == 0);
+}
+
+TEST_CASE("Snapshot copies and invalid handles cannot alter an issued root",
+          "[lc-offsetcurve][geometry][intersection-refine]") {
+    auto query = findCertifiedIntersections(endpointRefineCurves(), strictOptions());
+    auto other = findCertifiedIntersections(endpointRefineCurves(), strictOptions());
+    REQUIRE(query.status == LC_IntersectionStatus::Ok);
+    REQUIRE(other.status == LC_IntersectionStatus::Ok);
+    const auto handle = query.session->rootHandle(0);
+    const auto original = *query.session->snapshot(handle);
+    auto edited = original;
+    edited.event.proof = LC_IntersectionProof::Uncertified;
+    edited.event.isolation.parameterA = LC_Interval::point(0.9);
+    edited.imageX = LC_Interval::entire();
+    edited.admittedContractions = std::numeric_limits<unsigned>::max();
+    CHECK(edited.event.proof != original.event.proof);
+    const auto cumulative = query.session->cumulativeWork();
+    for (const auto bad : {LC_CertifiedRootHandle{}, query.session->rootHandle(1), other.session->rootHandle(0)}) {
+        const auto refused = query.session->contract(bad, refineAllowance());
+        CHECK(refused.status == LC_IntersectionStatus::InvalidInput);
+        CHECK_FALSE(refused.snapshot);
+        CHECK(refused.work.totalBoxPairs == 0);
+        CHECK(refused.work.generatedItems == 0);
+        CHECK(refused.work.deepest() == 0);
+        CHECK(query.session->cumulativeWork().totalBoxPairs == cumulative.totalBoxPairs);
+    }
+    const auto unchanged = *query.session->snapshot(handle);
+    checkSameDomain(unchanged.event.isolation, original.event.isolation);
+    checkSameInterval(unchanged.imageX, original.imageX);
+    CHECK(unchanged.event.proof == original.event.proof);
+    CHECK(unchanged.admittedContractions == 0);
+    const auto refined = query.session->contract(handle, {1, 1, 1});
+    REQUIRE(refined.status == LC_IntersectionStatus::Ok);
+    REQUIRE(refined.snapshot);
+    CHECK(refined.snapshot->event.isolation.parameterA.contains(0.25));
+    CHECK_FALSE(refined.snapshot->event.isolation.parameterA.contains(0.9));
+}
+
+TEST_CASE("Issued roots contract inside original proof and cached images despite cancellation seeds",
+          "[lc-offsetcurve][geometry][intersection-refine]") {
+    for (const double shift : {0.0, 1e200}) {
+        CAPTURE(shift);
+        auto provider = endpointRefineCurves();
+        provider->curves.seedShift = shift;
+        auto query = findCertifiedIntersections(std::move(provider), strictOptions());
+        REQUIRE(query.status == LC_IntersectionStatus::Ok);
+        const auto handle = query.session->rootHandle(0);
+        const auto before = *query.session->snapshot(handle);
+        const auto step = query.session->contract(handle, {1, 1, 1});
+        REQUIRE(step.status == LC_IntersectionStatus::Ok);
+        const auto& after = *step.snapshot;
+        CHECK(after.event.proof == before.event.proof);
+        CHECK(after.event.kind == before.event.kind);
+        checkSameDomain(after.event.proofDomain, before.event.proofDomain);
+        CHECK(after.event.isolation.parameterA.contains(0.25));
+        CHECK(after.event.isolation.parameterB.contains(0.0));
+        CHECK(after.event.isolation.parameterA.width() < before.event.isolation.parameterA.width());
+        CHECK(after.imageX.contains(0.25));
+        CHECK(after.imageY.contains(0.0));
+        CHECK(after.imageX.lo() >= before.imageX.lo());
+        CHECK(after.imageX.hi() <= before.imageX.hi());
+        CHECK(after.imageY.lo() >= before.imageY.lo());
+        CHECK(after.imageY.hi() <= before.imageY.hi());
+        CHECK(after.imageX.contains(after.event.point.x));
+        CHECK(after.imageY.contains(after.event.point.y));
+        CHECK(step.work.certificateBoxPairs == 1);
+        CHECK(step.work.totalBoxPairs == 1);
+        CHECK(step.work.generatedItems == 1);
+        CHECK(step.work.deepestRootRefinement == 1);
+        CHECK(step.work.deepestOrderingRefinement == 0);
+        CHECK(after.admittedContractions == 1);
+    }
+}
+
+TEST_CASE("Owned ordering tracks root history rather than resetting each partner comparison",
+          "[lc-offsetcurve][geometry][intersection-refine]") {
+    auto options = strictOptions();
+    options.maxDepth = 1;
+    auto legacyProvider = endpointRefineCurves({0.25, 0.5, 0.75});
+    const auto legacy = findIntersections(*legacyProvider, options);
+    REQUIRE(legacy.status == LC_IntersectionStatus::Ok);
+    CHECK(legacy.work.deepestRootRefinement == 0);
+    const auto shallow = findCertifiedIntersections(endpointRefineCurves({0.25, 0.5, 0.75}), options);
+    CHECK(shallow.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK_FALSE(shallow.session);
+    CHECK(shallow.work.deepestRootRefinement == 1);
+    options.maxDepth = 2;
+    auto query = findCertifiedIntersections(endpointRefineCurves({0.25, 0.5, 0.75}), options);
+    REQUIRE(query.status == LC_IntersectionStatus::Ok);
+    REQUIRE(query.session->rootCount() == 3);
+    const auto first = *query.session->snapshot(query.session->rootHandle(0));
+    CHECK(first.event.isolation.parameterA.contains(0.25));
+    CHECK(first.admittedContractions == 2);
+    CHECK(query.work.deepestRootRefinement == 2);
+    const auto exhausted = query.session->contract(query.session->rootHandle(0), refineAllowance());
+    CHECK(exhausted.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(exhausted.work.totalBoxPairs == 0);
+    CHECK(exhausted.work.deepestRootRefinement == 0);
+}
+
+TEST_CASE("Close roots retain identity and per-call depth maxima are not cumulative differences",
+          "[lc-offsetcurve][geometry][intersection-refine]") {
+    auto options = strictOptions();
+    options.tolerance = 1e-2;
+    auto query = findCertifiedIntersections(endpointRefineCurves({0.25, 0.2501}), options);
+    REQUIRE(query.status == LC_IntersectionStatus::Ok);
+    REQUIRE(query.session->rootCount() == 2);
+    const auto a = query.session->rootHandle(0);
+    const auto b = query.session->rootHandle(1);
+    const auto originalA = *query.session->snapshot(a);
+    const auto originalB = *query.session->snapshot(b);
+    REQUIRE(originalA.admittedContractions == 1);
+    REQUIRE(originalB.admittedContractions == 1);
+    for (unsigned depth : {2u, 3u}) {
+        const auto step = query.session->contract(a, refineAllowance());
+        CHECK((step.status == LC_IntersectionStatus::Ok || step.status == LC_IntersectionStatus::AmbiguousTopology));
+        CHECK(step.work.deepestRootRefinement == depth);
+        CHECK(query.session->snapshot(a)->event.isolation.parameterA.contains(0.25));
+        CHECK(query.session->snapshot(b)->admittedContractions == 1);
+    }
+    const auto otherStep = query.session->contract(b, refineAllowance());
+    CHECK((otherStep.status == LC_IntersectionStatus::Ok || otherStep.status == LC_IntersectionStatus::AmbiguousTopology));
+    CHECK(otherStep.work.deepestRootRefinement == 2);
+    CHECK(otherStep.work.deepest() == 2);
+    CHECK(query.session->cumulativeWork().deepestRootRefinement == 3);
+    CHECK(query.session->snapshot(b)->event.isolation.parameterA.contains(0.2501));
+    checkSameDomain(query.session->snapshot(a)->event.proofDomain, originalA.event.proofDomain);
+    checkSameDomain(query.session->snapshot(b)->event.proofDomain, originalB.event.proofDomain);
+}
+
+TEST_CASE("Exact identity merges inherit parent history through compaction and sorting",
+          "[lc-offsetcurve][geometry][intersection-refine]") {
+    std::vector<PolynomialPiece> pieces{
+        polynomialLine(0, {0, 0}, {1, 0}, 0, 0.5), polynomialLine(0, {0, 0}, {1, 0}, 0.5, 1),
+        {{1, 0, 1}, {0.5, 0, 0, 0}, {0, 0, 1, 0}}, polynomialLine(2, {0.25, 0}, {0, 1})};
+    auto provider = std::make_unique<RefineCurves>(std::move(pieces), std::make_shared<RefineProbe>());
+    provider->curves.leafProof = [](const std::size_t segment, const LC_Interval& parameter) {
+        return LC_AnalyticLeafCertificate{true, segment, parameter}; // linear x, or strictly increasing y=t^2 on [0,1]
+    };
+    provider->curves.contactProof = [](const LC_IntersectionDomain& box) {
+        LC_AnalyticIntersectionCertificate proof;
+        if (box.segmentA > 1 || box.segmentB < 2) { return proof; }
+        proof.proofDomain = box;
+        const double root = box.segmentB == 2 ? 0.5 : 0.25;
+        if (!box.parameterA.contains(root) || !box.parameterB.contains(0.0)) {
+            proof.outcome = LC_AnalyticIntersectionCertificate::Outcome::Excluded;
+            proof.proof = LC_IntersectionProof::AnalyticExclusion;
+        } else {
+            proof.outcome = LC_AnalyticIntersectionCertificate::Outcome::Unique;
+            proof.proof = LC_IntersectionProof::AnalyticEndpoint;
+            proof.kind = Kind::Endpoint;
+            proof.isolationA = box.segmentB == 2 && box.parameterB.lo() == 0 && box.parameterB.hi() == 0 ?
+                LC_Interval::point(0.5) : box.parameterA;
+            proof.isolationB = LC_Interval::point(0.0);
+        }
+        return proof;
+    };
+    auto options = strictOptions();
+    options.maxDepth = 4;
+    auto query = findCertifiedIntersections(std::move(provider), options);
+    REQUIRE(query.status == LC_IntersectionStatus::Ok);
+    REQUIRE(query.session->rootCount() == 2);
+    const auto quarter = *query.session->snapshot(query.session->rootHandle(0));
+    const auto partition = *query.session->snapshot(query.session->rootHandle(1));
+    CHECK(quarter.event.isolation.parameterA.contains(0.25));
+    CHECK(quarter.admittedContractions == 1);
+    checkSameInterval(partition.event.isolation.parameterA, LC_Interval::point(0.5));
+    CHECK(partition.admittedContractions == 2);
+    CHECK(query.work.deepestRootRefinement == 2);
+    const auto retained = query.session->contract(query.session->rootHandle(1), refineAllowance());
+    CHECK(retained.status == LC_IntersectionStatus::AmbiguousTopology);
+    CHECK_FALSE(retained.snapshot);
+    CHECK(retained.work.deepestRootRefinement == 3);
+    CHECK(query.session->snapshot(query.session->rootHandle(1))->admittedContractions == 3);
+}
+
+TEST_CASE("Contraction admission reports exact local charges without refunding failed publication",
+          "[lc-offsetcurve][geometry][intersection-refine]") {
+    for (const unsigned mode : {0u, 1u, 2u, 3u}) {
+        CAPTURE(mode);
+        auto query = findCertifiedIntersections(endpointRefineCurves(), strictOptions());
+        REQUIRE(query.status == LC_IntersectionStatus::Ok);
+        const auto handle = query.session->rootHandle(0);
+        const auto original = *query.session->snapshot(handle);
+        const auto before = query.session->cumulativeWork();
+        auto allowance = LC_CertifiedContractionAllowance{1, 1, 1};
+        if (mode == 0) { allowance.remainingPairs = 0; }
+        if (mode == 1) { allowance.remainingItems = 0; }
+        if (mode == 2) { allowance.absoluteRootDepth = 0; }
+        const auto step = query.session->contract(handle, allowance);
+        CHECK(step.status == (mode == 3 ? LC_IntersectionStatus::Ok : LC_IntersectionStatus::LimitExceeded));
+        CHECK(step.snapshot.has_value() == (mode == 3));
+        CHECK(step.work.totalBoxPairs == ((mode == 1 || mode == 3) ? 1 : 0));
+        CHECK(step.work.generatedItems == (mode == 3 ? 1 : 0));
+        CHECK(step.work.deepestRootRefinement == ((mode == 1 || mode == 3) ? 1 : 0));
+        CHECK(query.session->cumulativeWork().totalBoxPairs == before.totalBoxPairs + step.work.totalBoxPairs);
+        CHECK(query.session->cumulativeWork().generatedItems == before.generatedItems + step.work.generatedItems);
+        REQUIRE(query.session->snapshot(handle));
+        if (mode != 3) {
+            checkSameDomain(query.session->snapshot(handle)->event.isolation, original.event.isolation);
+            checkSameInterval(query.session->snapshot(handle)->imageX, original.imageX);
+            const auto bad = query.session->contract({}, refineAllowance());
+            CHECK(bad.status == LC_IntersectionStatus::InvalidInput);
+            CHECK(bad.work.totalBoxPairs == 0);
+            LC_CertifiedIntersectionSession moved{std::move(*query.session)};
+            const auto again = moved.contract(handle, refineAllowance());
+            CHECK(again.status == LC_IntersectionStatus::LimitExceeded);
+            CHECK(again.work.totalBoxPairs == 0);
+            CHECK(again.work.generatedItems == 0);
+            CHECK(moved.snapshot(handle));
+        }
+    }
+}
+
+TEST_CASE("Original cumulative session ceilings cannot be reset by fresh call allowances",
+          "[lc-offsetcurve][geometry][intersection-refine]") {
+    auto options = strictOptions();
+    const auto measured = findCertifiedIntersections(endpointRefineCurves(), options);
+    REQUIRE(measured.status == LC_IntersectionStatus::Ok);
+    for (const std::size_t extra : {0u, 1u}) {
+        CAPTURE(extra);
+        options.maxBoxPairs = measured.work.totalBoxPairs + extra;
+        auto query = findCertifiedIntersections(endpointRefineCurves(), options);
+        REQUIRE(query.status == LC_IntersectionStatus::Ok);
+        const auto handle = query.session->rootHandle(0);
+        if (extra == 1) {
+            REQUIRE(query.session->contract(handle, refineAllowance()).status == LC_IntersectionStatus::Ok);
+        }
+        const auto refused = query.session->contract(handle, refineAllowance());
+        CHECK(refused.status == LC_IntersectionStatus::LimitExceeded);
+        CHECK(refused.work.totalBoxPairs == 0);
+        CHECK(refused.work.deepestRootRefinement == 0);
+        CHECK(query.session->cumulativeWork().totalBoxPairs == options.maxBoxPairs);
+    }
+
+    options = strictOptions();
+    const auto singularMeasured = findCertifiedIntersections(singularRefineCurves(false), options);
+    REQUIRE(singularMeasured.status == LC_IntersectionStatus::Ok);
+    options.maxGeneratedItems = singularMeasured.work.generatedItems + 1;
+    auto items = findCertifiedIntersections(singularRefineCurves(false), options);
+    REQUIRE(items.status == LC_IntersectionStatus::Ok);
+    const auto handle = items.session->rootHandle(0);
+    REQUIRE(items.session->contract(handle, refineAllowance()).status == LC_IntersectionStatus::Ok);
+    const auto before = *items.session->snapshot(handle);
+    const auto refused = items.session->contract(handle, refineAllowance());
+    CHECK(refused.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK_FALSE(refused.snapshot);
+    CHECK(refused.work.totalBoxPairs == 2);
+    CHECK(refused.work.generatedItems == 0);
+    CHECK(refused.work.deepestRootRefinement == 2);
+    CHECK(items.session->cumulativeWork().generatedItems == options.maxGeneratedItems);
+    checkSameDomain(items.session->snapshot(handle)->event.isolation, before.event.isolation);
+    CHECK(items.session->snapshot(handle)->admittedContractions == 2);
+
+    options = strictOptions();
+    options.maxDepth = 3;
+    auto depth = findCertifiedIntersections(endpointRefineCurves(), options);
+    REQUIRE(depth.status == LC_IntersectionStatus::Ok);
+    const auto depthHandle = depth.session->rootHandle(0);
+    for (unsigned h = 1; h <= 3; ++h) {
+        const auto attempt = depth.session->contract(depthHandle, refineAllowance(std::numeric_limits<unsigned>::max()));
+        CHECK((attempt.status == LC_IntersectionStatus::Ok || attempt.status == LC_IntersectionStatus::AmbiguousTopology));
+        CHECK(attempt.work.totalBoxPairs == 1);
+        CHECK(attempt.work.deepestRootRefinement == h);
+        CHECK(depth.session->snapshot(depthHandle)->admittedContractions == h);
+    }
+    const auto exhausted = depth.session->contract(depthHandle, refineAllowance(std::numeric_limits<unsigned>::max()));
+    CHECK(exhausted.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(exhausted.work.totalBoxPairs == 0);
+    CHECK(exhausted.work.deepest() == 0);
+    CHECK(depth.session->snapshot(depthHandle)->admittedContractions == 3);
+}
+
+TEST_CASE("Singular issued contacts use qualified analytic contraction or honest nonterminal refusal",
+          "[lc-offsetcurve][geometry][intersection-refine]") {
+    for (const bool cusp : {false, true}) {
+        CAPTURE(cusp);
+        auto probe = std::make_shared<RefineProbe>();
+        auto query = findCertifiedIntersections(singularRefineCurves(cusp, probe), strictOptions());
+        REQUIRE(query.status == LC_IntersectionStatus::Ok);
+        const auto handle = query.session->rootHandle(0);
+        const auto original = *query.session->snapshot(handle);
+        probe->unavailable = true;
+        const auto unknown = query.session->contract(handle, refineAllowance());
+        CHECK(unknown.status == LC_IntersectionStatus::AmbiguousTopology);
+        CHECK_FALSE(unknown.snapshot);
+        CHECK(unknown.work.totalBoxPairs == 1);
+        CHECK(unknown.work.generatedItems == 0);
+        CHECK(unknown.work.deepestRootRefinement == 1);
+        REQUIRE(query.session->snapshot(handle));
+        checkSameDomain(query.session->snapshot(handle)->event.isolation, original.event.isolation);
+        probe->unavailable = false;
+        const auto step = query.session->contract(handle, {2, 1, 2});
+        REQUIRE(step.status == LC_IntersectionStatus::Ok);
+        CHECK(step.work.totalBoxPairs == 2);
+        CHECK(step.work.generatedItems == 1);
+        CHECK(step.work.deepestRootRefinement == 2);
+        CHECK(step.snapshot->event.proof == original.event.proof);
+        checkSameDomain(step.snapshot->event.proofDomain, original.event.proofDomain);
+        CHECK(step.snapshot->event.isolation.parameterA.contains(0.5));
+        CHECK(step.snapshot->event.isolation.parameterB.contains(0.5));
+        CHECK(step.snapshot->imageX.contains(0.5));
+        CHECK(step.snapshot->imageY.contains(0.0));
+        CHECK(step.snapshot->event.isolation.parameterA.width() < original.event.isolation.parameterA.width());
+    }
+    auto shortCertificate = findCertifiedIntersections(singularRefineCurves(false), strictOptions());
+    REQUIRE(shortCertificate.status == LC_IntersectionStatus::Ok);
+    const auto shortWork = shortCertificate.session->contract(shortCertificate.session->rootHandle(0), {1, 1, 1});
+    CHECK(shortWork.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(shortWork.work.totalBoxPairs == 1);
+    CHECK(shortWork.work.deepestRootRefinement == 1);
+    CHECK(shortCertificate.session->snapshot(shortCertificate.session->rootHandle(0)));
+}
+
+TEST_CASE("Malformed analytic categories terminally invalidate retained roots but not legacy policy",
+          "[lc-offsetcurve][geometry][intersection-refine]") {
+    for (const bool excluded : {false, true}) {
+        CAPTURE(excluded);
+        auto probe = std::make_shared<RefineProbe>();
+        auto query = findCertifiedIntersections(singularRefineCurves(false, probe), strictOptions());
+        REQUIRE(query.status == LC_IntersectionStatus::Ok);
+        const auto handle = query.session->rootHandle(0);
+        probe->wrongUniqueCategory = !excluded;
+        probe->wrongExcludedCategory = excluded;
+        const auto refused = query.session->contract(handle, refineAllowance());
+        CHECK(refused.status == LC_IntersectionStatus::InvalidInput);
+        CHECK_FALSE(refused.snapshot);
+        CHECK(refused.work.totalBoxPairs == 2);
+        CHECK(refused.work.deepestRootRefinement == 1);
+        CHECK(query.session->rootCount() == 0);
+        CHECK_FALSE(query.session->snapshot(handle));
+        CHECK_FALSE(query.session->snapshot(query.session->rootHandle(0)));
+        const auto spent = query.session->cumulativeWork();
+        const auto bad = query.session->contract({}, refineAllowance());
+        CHECK(bad.status == LC_IntersectionStatus::InvalidInput);
+        CHECK(bad.work.totalBoxPairs == 0);
+        LC_CertifiedIntersectionSession moved{std::move(*query.session)};
+        const auto again = moved.contract(handle, refineAllowance());
+        CHECK(again.status == LC_IntersectionStatus::InvalidInput);
+        CHECK(again.work.totalBoxPairs == 0);
+        CHECK(moved.cumulativeWork().totalBoxPairs == spent.totalBoxPairs);
+        CHECK(moved.rootCount() == 0);
+
+        auto legacy = singularRefineCurves(false, probe);
+        const auto oldPolicy = findIntersections(*legacy, strictOptions());
+        CHECK(oldPolicy.status == LC_IntersectionStatus::AmbiguousTopology);
+    }
+}
+
+TEST_CASE("An exact singular root refuses unchanged contraction without losing its existing proof",
+          "[lc-offsetcurve][geometry][intersection-refine]") {
+    auto provider = singularRefineCurves(true);
+    provider->curves.contactProof = [](const LC_IntersectionDomain& box) {
+        LC_AnalyticIntersectionCertificate proof;
+        proof.proofDomain = box;
+        proof.outcome = LC_AnalyticIntersectionCertificate::Outcome::Unique;
+        proof.proof = LC_IntersectionProof::AnalyticCusp;
+        proof.kind = Kind::Tangent;
+        proof.isolationA = proof.isolationB = LC_Interval::point(0.5);
+        return proof; // exact y=(u-.5)^2=0 and x_A=t proves the unique parameter pair
+    };
+    auto query = findCertifiedIntersections(std::move(provider), strictOptions());
+    REQUIRE(query.status == LC_IntersectionStatus::Ok);
+    const auto handle = query.session->rootHandle(0);
+    const auto original = *query.session->snapshot(handle);
+    for (unsigned h : {1u, 2u}) {
+        const auto attempt = query.session->contract(handle, refineAllowance());
+        CHECK(attempt.status == LC_IntersectionStatus::AmbiguousTopology);
+        CHECK_FALSE(attempt.snapshot);
+        CHECK(attempt.work.totalBoxPairs == 2);
+        CHECK(attempt.work.generatedItems == 0);
+        CHECK(attempt.work.deepestRootRefinement == h);
+        REQUIRE(query.session->snapshot(handle));
+        CHECK(query.session->snapshot(handle)->admittedContractions == h);
+        checkSameDomain(query.session->snapshot(handle)->event.isolation, original.event.isolation);
+        checkSameDomain(query.session->snapshot(handle)->event.proofDomain, original.event.proofDomain);
+    }
+}
+
+TEST_CASE("Provider contradictions and exceptions cannot leave a reusable trusted session",
+          "[lc-offsetcurve][geometry][intersection-refine]") {
+    for (const unsigned fault : {0u, 1u, 2u}) {
+        CAPTURE(fault);
+        auto probe = std::make_shared<RefineProbe>();
+        auto query = findCertifiedIntersections(endpointRefineCurves({0.25}, probe), strictOptions());
+        REQUIRE(query.status == LC_IntersectionStatus::Ok);
+        const auto handle = query.session->rootHandle(0);
+        const auto before = query.session->cumulativeWork();
+        probe->invalidBounds = fault == 0;
+        probe->translated = fault == 1;
+        probe->throwBounds = fault == 2;
+        if (fault == 2) {
+            REQUIRE_THROWS_AS(query.session->contract(handle, refineAllowance()), std::runtime_error);
+        } else {
+            const auto failed = query.session->contract(handle, refineAllowance());
+            CHECK(failed.status == LC_IntersectionStatus::InvalidInput);
+            CHECK_FALSE(failed.snapshot);
+            CHECK(failed.work.totalBoxPairs == 1);
+            CHECK(failed.work.generatedItems == (fault == 1 ? 1 : 0));
+        }
+        CHECK(query.session->rootCount() == 0);
+        CHECK_FALSE(query.session->snapshot(handle));
+        CHECK(query.session->cumulativeWork().totalBoxPairs == before.totalBoxPairs + 1);
+        CHECK(query.session->cumulativeWork().deepestRootRefinement == 1);
+        const auto calls = probe->bounds;
+        probe->invalidBounds = probe->translated = probe->throwBounds = false;
+        const auto after = query.session->contract(handle, refineAllowance());
+        CHECK(after.status == LC_IntersectionStatus::InvalidInput);
+        CHECK(after.work.totalBoxPairs == 0);
+        CHECK(after.work.generatedItems == 0);
+        CHECK(probe->bounds == calls);
+    }
+}
+
+TEST_CASE("Overlapping self occurrences cannot become retained unique-root credentials",
+          "[lc-offsetcurve][geometry][intersection-refine]") {
+    const auto provider = [] {
+        auto curves = std::make_unique<CertifiedPolynomials>(std::vector<PolynomialPiece>{
+            {{0, 0, 1}, {0, 45, -105, 70}, {0, 30, -30, 0}}});
+        curves->contactProof = [](const LC_IntersectionDomain&) {
+            LC_AnalyticIntersectionCertificate proof;
+            proof.outcome = LC_AnalyticIntersectionCertificate::Outcome::Unique;
+            proof.proof = LC_IntersectionProof::AnalyticCusp;
+            proof.proofDomain = {0, 0, LC_Interval::hull(0, 1), LC_Interval::hull(0, 1)};
+            proof.isolationA = proof.isolationB = LC_Interval::point(0.5);
+            return proof; // intentionally impossible: the diagonal has nonisolated equal occurrences
+        };
+        return curves;
+    };
+    auto legacy = provider();
+    CHECK(findIntersections(*legacy, strictOptions()).status == LC_IntersectionStatus::AmbiguousTopology);
+    const auto retained = findCertifiedIntersections(provider(), strictOptions());
+    CHECK(retained.status == LC_IntersectionStatus::InvalidInput);
+    CHECK_FALSE(retained.session);
+}
 
 TEST_CASE("Observed intersection depths distinguish roots from unexamined work",
           "[lc-offsetcurve][geometry][intersection-accounting]") {

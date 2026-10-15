@@ -1110,8 +1110,10 @@ private:
 /** Proof-only policy is separate so ordinary tolerance-based behavior is unchanged. */
 class StrictSolver {
 public:
-    StrictSolver(const LC_ParametricCurves& curves, const LC_IntersectionOptions& options)
-        : m_curves{curves}, m_options{options}, m_segments{curves.segments()} {
+    StrictSolver(const LC_ParametricCurves& curves, const LC_IntersectionOptions& options,
+                 const bool retained = false, const LC_IntersectionWorkStats& initialWork = {})
+        : m_curves{curves}, m_options{options}, m_segments{curves.segments()}, m_retained{retained},
+          m_work{initialWork}, m_rootDepthLimit{options.maxDepth} {
     }
 
     LC_IntersectionResult run() {
@@ -1135,12 +1137,75 @@ public:
         result.work = m_work;
         result.work.generatedLeaves = m_leaves.size();
         if (good()) {
-            result.intersections = std::move(m_events);
+            if (m_retained) {
+                for (auto& root : m_roots) {
+                    root.issuedEvent = root.snapshot.event;
+                }
+                m_issued = true;
+            } else {
+                result.intersections = std::move(m_events);
+            }
+        }
+        if (m_retained) {
+            m_work.generatedLeaves = m_leaves.size();
+        }
+        return result;
+    }
+
+    std::size_t rootCount() const {
+        return m_status == LC_IntersectionStatus::InvalidInput ? 0 : m_roots.size();
+    }
+    std::optional<LC_CertifiedRootSnapshot> snapshot(const std::size_t index) const {
+        if (index >= rootCount()) {
+            return std::nullopt;
+        }
+        return m_roots[index].snapshot;
+    }
+    const LC_IntersectionWorkStats& work() const { return m_work; }
+
+    LC_CertifiedContractionResult contract(const std::size_t index, const LC_CertifiedContractionAllowance& allowance) {
+        LC_CertifiedContractionResult result;
+        if (m_status != LC_IntersectionStatus::Ok) {
+            result.status = m_status;
+            return result;
+        }
+        m_callWork = &result.work;
+        m_callPairLimit = std::min(allowance.remainingPairs, m_options.maxBoxPairs - m_work.totalBoxPairs);
+        m_callItemLimit = std::min(allowance.remainingItems, m_options.maxGeneratedItems - m_work.generatedItems);
+        m_rootDepthLimit = std::min(allowance.absoluteRootDepth, m_options.maxDepth);
+        struct ResetCall {
+            LC_IntersectionWorkStats*& ledger;
+            unsigned& depthLimit;
+            unsigned originalDepth;
+            ~ResetCall() { ledger = nullptr; depthLimit = originalDepth; }
+        } reset{m_callWork, m_rootDepthLimit, m_options.maxDepth};
+        try {
+            bool changed = false;
+            if (shrink(index, changed, 0, false)) {
+                result.status = changed ? LC_IntersectionStatus::Ok : LC_IntersectionStatus::AmbiguousTopology;
+                if (changed) {
+                    result.snapshot = m_roots[index].snapshot;
+                }
+            } else {
+                result.status = m_status;
+            }
+            // Ambiguity is call-local. Provider/proof invalidity and resource exhaustion remain terminal/sticky.
+            if (m_status == LC_IntersectionStatus::AmbiguousTopology) {
+                m_status = LC_IntersectionStatus::Ok;
+            }
+        } catch (...) {
+            // A provider that throws is no longer a usable certificate source; retain diagnostics, not credentials.
+            m_status = LC_IntersectionStatus::InvalidInput;
+            throw;
         }
         return result;
     }
 
 private:
+    struct Root {
+        LC_CertifiedRootSnapshot snapshot;
+        LC_ParametricIntersection issuedEvent{};
+    };
     enum class LeafProof { IntervalProjection, AnalyticInjectivity };
     struct Piece {
         std::size_t segment;
@@ -1188,18 +1253,43 @@ private:
         return {a, b, ta, tb};
     }
     bool generate(const std::size_t count) {
-        if (count > m_options.maxGeneratedItems - m_work.generatedItems) {
+        if (count > m_options.maxGeneratedItems - m_work.generatedItems ||
+            (m_callWork && count > m_callItemLimit - m_callWork->generatedItems)) {
             return fail(LC_IntersectionStatus::LimitExceeded);
         }
         m_work.generatedItems += count;
+        if (m_callWork) {
+            m_callWork->generatedItems += count;
+        }
         return true;
     }
     bool consume(std::size_t& counter) {
-        if (m_work.totalBoxPairs >= m_options.maxBoxPairs) {
+        if (m_work.totalBoxPairs >= m_options.maxBoxPairs ||
+            (m_callWork && m_callWork->totalBoxPairs >= m_callPairLimit)) {
             return fail(LC_IntersectionStatus::LimitExceeded);
         }
         ++counter;
         ++m_work.totalBoxPairs;
+        if (m_callWork) {
+            ++m_callWork->totalBoxPairs;
+            // Public contraction reuses this core's certificate examinations only.
+            ++m_callWork->certificateBoxPairs;
+        }
+        return true;
+    }
+    std::size_t eventCount() const { return m_retained ? m_roots.size() : m_events.size(); }
+    LC_ParametricIntersection& eventAt(const std::size_t index) {
+        return m_retained ? m_roots[index].snapshot.event : m_events[index];
+    }
+    bool appendEvent(const LC_ParametricIntersection& event, const LC_Interval& x, const LC_Interval& y) {
+        if (!m_retained) {
+            m_events.push_back(event);
+        } else {
+            if (m_roots.size() == m_roots.max_size() || !generate(1)) {
+                return fail(LC_IntersectionStatus::LimitExceeded);
+            }
+            m_roots.push_back({{event, x, y, 0}, {}});
+        }
         return true;
     }
     bool validate() {
@@ -1509,13 +1599,13 @@ private:
         }
         if (certificate.outcome == Outcome::Excluded) {
             if (certificate.proof != LC_IntersectionProof::AnalyticExclusion) {
-                return fail(LC_IntersectionStatus::AmbiguousTopology);
+                return fail(m_retained ? LC_IntersectionStatus::InvalidInput : LC_IntersectionStatus::AmbiguousTopology);
             }
         } else if (certificate.outcome == Outcome::Unique) {
             if (certificate.proof != LC_IntersectionProof::AnalyticEndpoint &&
                 certificate.proof != LC_IntersectionProof::AnalyticCusp &&
                 certificate.proof != LC_IntersectionProof::AnalyticTangency) {
-                return fail(LC_IntersectionStatus::AmbiguousTopology);
+                return fail(m_retained ? LC_IntersectionStatus::InvalidInput : LC_IntersectionStatus::AmbiguousTopology);
             }
             if (!includes(certificate.proofDomain.parameterA, certificate.isolationA) ||
                 !includes(certificate.proofDomain.parameterB, certificate.isolationB)) {
@@ -1611,9 +1701,10 @@ private:
     }
     bool makeEvent(const LC_IntersectionDomain& proof, const LC_Interval& a, const LC_Interval& b,
                    const LC_IntersectionProof category, LC_ParametricIntersection& out,
-                   const LC_ParametricIntersection::Kind kind = LC_ParametricIntersection::Kind::Transverse) {
+                   const LC_ParametricIntersection::Kind kind = LC_ParametricIntersection::Kind::Transverse,
+                   LC_Interval* imageX = nullptr, LC_Interval* imageY = nullptr) {
         if (proof.segmentA == proof.segmentB && overlaps(a, b)) {
-            return fail(LC_IntersectionStatus::AmbiguousTopology);
+            return fail(m_retained ? LC_IntersectionStatus::InvalidInput : LC_IntersectionStatus::AmbiguousTopology);
         }
         Bounds pa;
         Bounds pb;
@@ -1628,6 +1719,8 @@ private:
         if (!generate(1)) {
             return false;
         }
+        if (imageX) { *imageX = x; }
+        if (imageY) { *imageY = y; }
         out = {};
         out.branchA = m_segments[proof.segmentA].branch;
         out.branchB = m_segments[proof.segmentB].branch;
@@ -1685,12 +1778,15 @@ private:
                 continue;
             }
             LC_ParametricIntersection event;
+            LC_Interval imageX;
+            LC_Interval imageY;
             if (certificate.outcome == Outcome::Unique) {
                 if (!makeEvent(certificate.proofDomain, certificate.isolationA, certificate.isolationB,
-                               certificate.proof, event, certificate.kind)) {
+                               certificate.proof, event, certificate.kind,
+                               m_retained ? &imageX : nullptr, m_retained ? &imageY : nullptr) ||
+                    !appendEvent(event, imageX, imageY)) {
                     return false;
                 }
-                m_events.push_back(event);
                 continue;
             }
             Inclusion inclusion;
@@ -1705,10 +1801,12 @@ private:
                     continue; // the sole root of the inflated proof domain is outside this original cell
                 }
                 if (!makeEvent(inclusion.proofDomain, inclusion.a, inclusion.b,
-                               LC_IntersectionProof::IntervalUniqueTransverse, event)) {
+                               LC_IntersectionProof::IntervalUniqueTransverse, event,
+                               LC_ParametricIntersection::Kind::Transverse,
+                               m_retained ? &imageX : nullptr, m_retained ? &imageY : nullptr) ||
+                    !appendEvent(event, imageX, imageY)) {
                     return false;
                 }
-                m_events.push_back(event);
                 continue;
             }
             if (cell.depth >= m_options.maxDepth) {
@@ -1730,12 +1828,25 @@ private:
         return true;
     }
 
-    bool shrink(LC_ParametricIntersection& event, bool& changed, const unsigned depth) {
+    bool shrink(const std::size_t index, bool& changed, const unsigned depth, const bool ordering = true) {
         changed = false;
+        if (m_retained && m_roots[index].snapshot.admittedContractions >= m_rootDepthLimit) {
+            return fail(LC_IntersectionStatus::LimitExceeded);
+        }
         if (!consume(m_work.certificateBoxPairs)) {
             return false;
         }
-        m_work.deepestOrderingRefinement = std::max(m_work.deepestOrderingRefinement, depth);
+        if (ordering) {
+            m_work.deepestOrderingRefinement = std::max(m_work.deepestOrderingRefinement, depth);
+        }
+        if (m_retained) {
+            const unsigned admitted = ++m_roots[index].snapshot.admittedContractions;
+            m_work.deepestRootRefinement = std::max(m_work.deepestRootRefinement, admitted);
+            if (m_callWork) {
+                m_callWork->deepestRootRefinement = std::max(m_callWork->deepestRootRefinement, admitted);
+            }
+        }
+        auto& event = eventAt(index);
         Inclusion inclusion;
         if (!krawczyk(event.isolation, false, inclusion)) {
             return false;
@@ -1768,8 +1879,24 @@ private:
             return true;
         }
         LC_ParametricIntersection narrowed;
-        if (!makeEvent(event.proofDomain, a, b, event.proof, narrowed, event.kind)) {
+        LC_Interval imageX;
+        LC_Interval imageY;
+        const auto& provenance = m_retained && m_issued ? m_roots[index].issuedEvent : event;
+        if (!makeEvent(provenance.proofDomain, a, b, provenance.proof, narrowed, provenance.kind,
+                       m_retained ? &imageX : nullptr, m_retained ? &imageY : nullptr)) {
             return false;
+        }
+        if (m_retained) {
+            auto& root = m_roots[index];
+            imageX = intersect(imageX, root.snapshot.imageX);
+            imageY = intersect(imageY, root.snapshot.imageY);
+            if (!finite(imageX) || !finite(imageY) ||
+                (m_issued && !covers(root.issuedEvent.isolation, narrowed.isolation))) {
+                return fail(LC_IntersectionStatus::InvalidInput);
+            }
+            narrowed.point = RS_Vector{centre(imageX), centre(imageY)};
+            root.snapshot.imageX = imageX;
+            root.snapshot.imageY = imageY;
         }
         event = narrowed;
         changed = true;
@@ -1792,8 +1919,10 @@ private:
         return true;
     }
 
-    bool merge(LC_ParametricIntersection& a, const LC_ParametricIntersection& b, bool& merged) {
+    bool merge(const std::size_t first, const std::size_t second, bool& merged) {
         merged = false;
+        auto& a = eventAt(first);
+        const auto& b = eventAt(second);
         if (a.branchA != b.branchA || a.branchB != b.branchB ||
             !overlaps(a.isolation.parameterA, b.isolation.parameterA) ||
             !overlaps(a.isolation.parameterB, b.isolation.parameterB)) {
@@ -1852,8 +1981,24 @@ private:
         const LC_Interval ta = intersect(a.isolation.parameterA, b.isolation.parameterA);
         const LC_Interval tb = intersect(a.isolation.parameterB, b.isolation.parameterB);
         LC_ParametricIntersection combined;
-        if (!makeEvent(proof, ta, tb, category, combined, kind)) {
+        LC_Interval imageX;
+        LC_Interval imageY;
+        if (!makeEvent(proof, ta, tb, category, combined, kind,
+                       m_retained ? &imageX : nullptr, m_retained ? &imageY : nullptr)) {
             return false;
+        }
+        if (m_retained) {
+            auto& into = m_roots[first].snapshot;
+            const auto& from = m_roots[second].snapshot;
+            imageX = intersect(intersect(imageX, into.imageX), from.imageX);
+            imageY = intersect(intersect(imageY, into.imageY), from.imageY);
+            if (!finite(imageX) || !finite(imageY)) {
+                return fail(LC_IntersectionStatus::InvalidInput);
+            }
+            combined.point = RS_Vector{centre(imageX), centre(imageY)};
+            into.imageX = imageX;
+            into.imageY = imageY;
+            into.admittedContractions = std::max(into.admittedContractions, from.admittedContractions);
         }
         a = combined;
         merged = true;
@@ -1861,12 +2006,15 @@ private:
     }
 
     bool order() {
-        std::vector<bool> removed(m_events.size(), false);
-        for (std::size_t i = 0; i < m_events.size(); ++i) {
+        if (m_retained && eventCount() > std::vector<bool>{}.max_size()) {
+            return fail(LC_IntersectionStatus::LimitExceeded);
+        }
+        std::vector<bool> removed(eventCount(), false);
+        for (std::size_t i = 0; i < eventCount(); ++i) {
             if (removed[i]) {
                 continue;
             }
-            for (std::size_t j = i + 1; j < m_events.size(); ++j) {
+            for (std::size_t j = i + 1; j < eventCount(); ++j) {
                 if (removed[j]) {
                     continue;
                 }
@@ -1876,14 +2024,14 @@ private:
                     }
                     m_work.deepestOrderingRefinement = std::max(m_work.deepestOrderingRefinement, attempt);
                     bool merged = false;
-                    if (!merge(m_events[i], m_events[j], merged)) {
+                    if (!merge(i, j, merged)) {
                         return false;
                     }
                     if (merged) {
                         removed[j] = true;
                         break;
                     }
-                    if (orderedOccurrences(m_events[i], m_events[j])) {
+                    if (orderedOccurrences(eventAt(i), eventAt(j))) {
                         break;
                     }
                     if (attempt >= m_options.maxDepth) {
@@ -1891,8 +2039,7 @@ private:
                     }
                     bool changedA = false;
                     bool changedB = false;
-                    if (!shrink(m_events[i], changedA, attempt + 1) ||
-                        !shrink(m_events[j], changedB, attempt + 1)) {
+                    if (!shrink(i, changedA, attempt + 1) || !shrink(j, changedB, attempt + 1)) {
                         return false;
                     }
                     if (!changedA && !changedB) {
@@ -1902,33 +2049,130 @@ private:
             }
         }
         std::size_t count = 0;
-        for (std::size_t i = 0; i < m_events.size(); ++i) {
+        for (std::size_t i = 0; i < eventCount(); ++i) {
             if (!removed[i]) {
-                m_events[count++] = m_events[i];
+                if (m_retained) { m_roots[count++] = m_roots[i]; }
+                else { m_events[count++] = m_events[i]; }
             }
         }
-        m_events.resize(count);
-        std::sort(m_events.begin(), m_events.end(), [](const auto& a, const auto& b) {
+        const auto precedes = [](const LC_ParametricIntersection& a, const LC_ParametricIntersection& b) {
             return std::make_tuple(a.branchA, a.isolation.parameterA.lo(), a.branchB, a.isolation.parameterB.lo(),
                                    a.isolation.segmentA, a.isolation.segmentB) <
                    std::make_tuple(b.branchA, b.isolation.parameterA.lo(), b.branchB, b.isolation.parameterB.lo(),
                                    b.isolation.segmentA, b.isolation.segmentB);
-        });
+        };
+        if (m_retained) {
+            m_roots.resize(count);
+            std::sort(m_roots.begin(), m_roots.end(), [&](const Root& a, const Root& b) {
+                return precedes(a.snapshot.event, b.snapshot.event);
+            });
+        } else {
+            m_events.resize(count);
+            std::sort(m_events.begin(), m_events.end(), precedes);
+        }
         return true;
     }
 
     const LC_ParametricCurves& m_curves;
     const LC_IntersectionOptions& m_options;
     const std::vector<LC_ParametricSegment>& m_segments;
+    bool m_retained{false};
+    bool m_issued{false};
     LC_IntersectionStatus m_status{LC_IntersectionStatus::Ok};
     LC_IntersectionWorkStats m_work;
     std::vector<Piece> m_leaves;
     std::vector<Bounds> m_parameterBounds;
     std::vector<LC_ParametricIntersection> m_events;
+    std::vector<Root> m_roots;
+    LC_IntersectionWorkStats* m_callWork{nullptr};
+    std::size_t m_callPairLimit{0};
+    std::size_t m_callItemLimit{0};
+    unsigned m_rootDepthLimit{0};
 };
 
 } // namespace
 
 LC_IntersectionResult findIntersections(const LC_ParametricCurves& curves, const LC_IntersectionOptions& options) {
     return options.strict ? StrictSolver{curves, options}.run() : Solver{curves, options}.run();
+}
+
+struct LC_CertifiedIntersectionSession::Impl {
+    Impl(std::unique_ptr<const LC_ParametricCurves> provider, const LC_IntersectionOptions& settings,
+         const LC_IntersectionWorkStats& initialWork)
+        : curves{std::move(provider)}, options{settings}, issuer{std::make_shared<const unsigned char>(0)},
+          solver{*curves, options, true, initialWork} {}
+
+    bool matches(const std::weak_ptr<const void>& token, const std::size_t index) const {
+        return !token.expired() && !token.owner_before(issuer) && !issuer.owner_before(token) &&
+               index < solver.rootCount();
+    }
+
+    // These owners precede the proof core, whose references remain stable even when the public session moves.
+    std::unique_ptr<const LC_ParametricCurves> curves;
+    LC_IntersectionOptions options;
+    std::shared_ptr<const void> issuer;
+    StrictSolver solver;
+};
+
+LC_CertifiedIntersectionSession::LC_CertifiedIntersectionSession(std::unique_ptr<Impl> impl)
+    : m_impl{std::move(impl)} {}
+LC_CertifiedIntersectionSession::~LC_CertifiedIntersectionSession() = default;
+LC_CertifiedIntersectionSession::LC_CertifiedIntersectionSession(LC_CertifiedIntersectionSession&&) noexcept = default;
+LC_CertifiedIntersectionSession& LC_CertifiedIntersectionSession::operator=(LC_CertifiedIntersectionSession&&) noexcept = default;
+
+std::size_t LC_CertifiedIntersectionSession::rootCount() const {
+    return m_impl ? m_impl->solver.rootCount() : 0;
+}
+
+LC_CertifiedRootHandle LC_CertifiedIntersectionSession::rootHandle(const std::size_t index) const {
+    LC_CertifiedRootHandle handle;
+    if (index < rootCount()) {
+        handle.m_issuer = m_impl->issuer;
+        handle.m_index = index;
+    }
+    return handle;
+}
+
+std::optional<LC_CertifiedRootSnapshot> LC_CertifiedIntersectionSession::snapshot(const LC_CertifiedRootHandle& handle) const {
+    if (!m_impl || !m_impl->matches(handle.m_issuer, handle.m_index)) {
+        return std::nullopt;
+    }
+    return m_impl->solver.snapshot(handle.m_index);
+}
+
+LC_CertifiedContractionResult LC_CertifiedIntersectionSession::contract(
+    const LC_CertifiedRootHandle& handle, const LC_CertifiedContractionAllowance& allowance) {
+    if (!m_impl || !m_impl->matches(handle.m_issuer, handle.m_index)) {
+        return {};
+    }
+    return m_impl->solver.contract(handle.m_index, allowance);
+}
+
+const LC_IntersectionWorkStats& LC_CertifiedIntersectionSession::cumulativeWork() const {
+    static const LC_IntersectionWorkStats empty;
+    return m_impl ? m_impl->solver.work() : empty;
+}
+
+LC_CertifiedQueryResult findCertifiedIntersections(
+    std::unique_ptr<const LC_ParametricCurves> curves, LC_IntersectionOptions options) {
+    LC_CertifiedQueryResult result;
+    if (!curves || !(options.tolerance > 0.0) || !std::isfinite(options.tolerance) || options.maxGeneratedItems == 0) {
+        return result;
+    }
+    // Two fixed metadata tokens cover the owned session/PIMPL and issuer control block before allocation.
+    if (options.maxGeneratedItems < 2) {
+        result.status = LC_IntersectionStatus::LimitExceeded;
+        return result;
+    }
+    options.strict = true;
+    LC_IntersectionWorkStats initialWork;
+    initialWork.generatedItems = 2;
+    auto impl = std::make_unique<LC_CertifiedIntersectionSession::Impl>(std::move(curves), options, initialWork);
+    const auto queried = impl->solver.run();
+    result.status = queried.status;
+    result.work = queried.work;
+    if (queried.status == LC_IntersectionStatus::Ok) {
+        result.session.reset(new LC_CertifiedIntersectionSession{std::move(impl)});
+    }
+    return result;
 }
