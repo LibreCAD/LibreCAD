@@ -28,7 +28,7 @@ Plan **v7**, 2026-10-15. This file is the implementation source of truth. Every 
 verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION — S0, 0B-1, 0B-2, 1A-1.a and 1A-1.b-budget done; 0B-3 prepared/runtime-unverified; .b-progress ready.**
+Status: **IMPLEMENTATION — S0 and 0B complete; 1A-1.a and 1A-1.b-budget done; .b-progress ready; reference/check/entity/file/UI phases remain incomplete.**
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -94,7 +94,7 @@ A commit alone does not mean done; verification, review and the post-commit plan
 | 0A | Trim Two must not replace an owned child | — | — | — | done on baseline by #3113 (`609ca81ae`); verify current tests at S0, then add the new-type mapping/test in 1D |
 | 0B-1 | Guard skeleton: `rowOf` table, pragmas, `static_assert`, kinds-only walk; registration; CI path filter; shadow-`rs.h` checks | B | S0 | 250 | done — d6de53d3c, 0B-1 evidence, 2026-10-15 |
 | 0B-2 | Entity factory header; clone and INSERT checks; pin tests | B | 0B-1 | 500 | done — 5bfb3c8f0, 0B-2 reports/card, 2026-10-15 |
-| 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | in progress — code prepared; runtime/gap investigation and isolated verification pending |
+| 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | done — 0e3c6b342, 0B-3 reports/card; one pinned baseline generated-MLEADER DWG gap, 2026-10-15 |
 | 1A-1 | Closed forms, engine-layout test, validity check, tolerance helpers | C | S0 | 900 | partial — .a done at a4690db08; .b-budget done at 10c6bff46; progress/reference/check/qualification pending |
 | 1A-2 | Enumerator; class core and validated adoption factory; clone, `toPlainSpline`, normalisation, stamp, transforms; `writeEntity` case; INSERT capability; 0B row; interim Edit Properties guard | C | 0B-3, 1A-1 | 900 | pending |
 | 1A-3 | Grips, `moveRef`, snaps | C | 1A-2 | 550 | pending |
@@ -202,7 +202,7 @@ not validation evidence. Aggregates are never executable cards or extra implemen
 | 0A | Existing upstream code | Verify #3113 ancestry and current trim tests. Record evidence in S0; only the new-type mapping belongs to 1D. |
 | 0B-1 | Done at d6de53d3c | Exhaustive 50/27/23 census and both negative shadow compiles passed; Release tag/lanes verified. |
 | 0B-2 | Done at 5bfb3c8f0 | 27 valid fixtures, clone/sole+mixed INSERT and both pins; 7 cases/910 assertions pass full/DXF-fast/ASan; no gaps. |
-| 0B-3 | In progress; coordinator's prepared patch | Run real DXF/DWG save/open and load completion; investigate fixtures before recording stable known-gap identities and valid row totals. This completes the guard before adding RTTI. |
+| 0B-3 | Done at 0e3c6b342 | Real 27-type DXF/DWG walks and both DXF pins; 10 cases/1335 assertions full/DXF-fast/ASan, full suite/lanes pass. Generated-MLEADER DWG fallback is pinned, no notRun rows. |
 | 1A-1.a | Done at a4690db08 | Normalization/local-frame/closed forms, robust source distance and tolerance helpers; 17 cases/2538 assertions pass Release/ASan, existing regressions and both fast lanes pass. |
 | 1A-1.b | Aggregate; budget done, progress/reference/check unfinished | Parent-only progress; no separate implementation commit or successful partial validator. |
 | 1A-1.b-budget | Done at 10c6bff46 | Checked shared work, bounded two-axis/range indices, nine budget cases Release/ASan, all offset/full/fast-lane gates pass; findings/evidence below. |
@@ -271,10 +271,10 @@ S0 is complete at `de30f1d45`. Release/ASan configurations, all three target bui
 and fast-lane baselines, and focused ASan trim/ellipse checks passed, with existing skips recorded in its card.
 0B-1 is committed at d6de53d3c, 0B-2 at 5bfb3c8f0, 1A-1.a at a4690db08, and `.b-budget` at 10c6bff46; their
 evidence is below. Budget verification was isolated from 0B-3 and includes Release/ASan, full suite and both fast
-lanes. The coordinator owns the prepared 0B-3 guard round trips; its patch is preserved at
-`build/evidence/0B-3/pending-roundtrip.patch` and temporarily parked. Restore it exactly before verification; no
-round-trip runtime result is claimed yet. `.b-progress` is independently ready after this budget checkpoint, but
-the default queue verifies/commits the already-prepared 0B-3 first. The coordinator owns the plan,
+lanes. 0B-3 is now committed at 0e3c6b342 after exact restoration and complete verification. Its old
+`build/evidence/0B-3/pending-roundtrip.patch` is historical evidence, **not a patch to apply again**. All 27 DXF rows
+retain type; 26 DWG rows do, with generated MLEADER's documented LEADER+MTEXT fallback pinned explicitly.
+`.b-progress` is ready and is the next product leaf after this checkpoint. The coordinator owns the plan,
 shared build directories and commits. Assign explicit file ownership before any parallel work; never run concurrent
 Git/index operations or concurrent builds that mutate the same build tree.
 
@@ -315,7 +315,7 @@ Only satisfied dependencies promote a card to `ready`; future recipes are `waiti
 |---|---|---|
 | 1A-1.b-budget / .a | Done at 10c6bff46; shared checked cap, bounded spatial/range indices and conservative same-branch pruning, verified separately from 0B-3. | Nine registered `[intersection-budget]` cases, Release/ASan/full/fast-lane evidence below; no partial roots on refusal. R02/R12/R13. |
 | 1A-1.b-progress / .b-budget | In `lc_parametriccurveintersection.cpp`/tests, reproduce the `classifyContact` zero-step loop; bound its doubling iterations and reject non-finite/nonprogressing arithmetic without changing ordinary contact policy. | Subnormal tolerance/large derivative and parameter-rounding tests terminate under a process timeout; no false root/partial success; Release/ASan topology and offset regressions plus full Release suite. R02/R12. |
-| 0B-3 / 0B-2 | Run the prepared round-trip walks; diagnose per-format/per-type failures; fix invalid fixtures, not product behavior in this guard slice; record only reproduced baseline gaps. Check version and `onLoadingCompleted()`. | Both 27-type walks and both DXF pin paths actually execute; valid fixtures, payload/version checks, full/DXF-fast/ASan coverage, both fast lanes and full visible suite. R06/R11/R13. |
+| 0B-3 / 0B-2 | Done at 0e3c6b342; actual version/load-completion walks, measured/pinned generated-MLEADER fallback, no fixture or production changes. | Both 27-type walks and both DXF pins; full/DXF-fast/ASan coverage, full suite/lanes pass; every baseline testcase/skip retained. R06/R11/R13. |
 | 1A-1.b-ref-frames / .b-progress | Extend `lc_ellipseoffsetgeometry.{h,cpp}` with local-frame interval bounds/jets and one shared checked budget. Specify status/result ownership and source-parameter convention. Use exact signed-offset formulas, not fitted controls. | Dense independent enclosure checks, rotations/reversals/wraps, near-circle/thin/large-centre cases and each budget boundary. Failed analysis publishes no usable reference. R01/R02/R12. |
 | 1A-1.b-ref-events / .b-ref-frames | Build cusp splits and own/opposite/end-cutter isolation through `LC_ParametricCurves`; add opt-in strict event enclosures/certification to the intersection core where required by §3.5.1, leaving defaults unchanged. Record occurrences and proven order, not just XY positions. | Transverse/tangent/end/cusp/retrace and unresolved-order cases; ambiguity/limit exits; every call debits shared budget including failures; uncertified `Ok` is not reference evidence. Existing engine regressions unchanged. R02/R12. |
 | 1A-1.b-ref-components / .b-ref-events | Classify interval visibility using conservative source/end clearance and current trim allowances; assemble directed adjacency/components; expose a complete read-only reference result. | All six §3.5.1 fixtures, rotated/reversed equivalents and closed-arc/multi-component distinctions; no materialization/engine run; report unresolved event/visibility rather than accepting it. R02. |
@@ -336,11 +336,11 @@ generic infrastructure slice with its regression tests; do not commit the unsafe
 documenting independently safe, buildable intermediate behavior before editing. Registration and tests accompany
 each product slice, not a later catch-all test phase.
 
-**Immediate resume queue:** restore/verify/commit/checkpoint 0B-3, then activate `.b-progress`, then
-`.b-ref-frames`. The budget slice is complete at 10c6bff46; do not reimplement it. Its failed-run and final evidence
+**Immediate resume queue:** activate `.b-progress`, then `.b-ref-frames`. The budget and guard slices are complete
+at 10c6bff46 / 0e3c6b342; do not reimplement them or reapply their old saved patches. Their failed-run and final evidence
 are preserved under `build/evidence/1A-1.b-budget/`. Gibbs already started implementation (0B-1) and authored the
 budget hierarchy; reuse him for the next product slice. Keep source frozen during final evidence collection and
-do not mix a new `.b-progress` patch into 0B-3's final verified tree.
+assign its actual checkpoint HEAD/files before handoff.
 
 ### 0.7 Two review gates
 
@@ -362,7 +362,8 @@ requirement. The checkpoint must reflect that reopening; it must never rewrite a
 Run from the authoritative worktree, after freezing and isolating the selected slice as §1.4 requires. Create its
 ignored evidence directory first. Use new attempt-specific report names instead of overwriting a failed run. The
 following commands are reproducible recipes, not evidence by themselves. The budget slice has completed its
-final runs recorded below; do not rerun it just to start 0B-3. Choose fresh report names if reproducing a run:
+final runs recorded below, as has 0B-3; do not rerun either merely to start `.b-progress`. Choose fresh report names
+if reproducing a run:
 
 ```bash
 cmake --build build --target librecad_tests librecad_dxf_fast_tests librecad_dwg_fast_tests --parallel 4
@@ -548,6 +549,7 @@ patch simply because an executed card once described it as pending:
 | 1A-1.a | a4690db08b7220e93bbc8642d2c2b8b2e14fcf30 | Isolated Release/ASan geometry 17/2538; existing ellipse 48-case regressions; both Release fast lanes; CMake/qmake registrations | Gibbs's numeric findings fixed with regressions; committed paths match final tested files; 0B-2 patch safely preserved outside this commit | Geometry parent partial; .b-budget ready; 0B-2 final verification next |
 | 0B-2 | 5bfb3c8f08462694796489166f0146dd51fc7ca0 | `build/evidence/0B-2/*-final.junit.xml`: full/DXF-fast/ASan coverage 7/910, both Release fast lanes pass | Fixture-order failure corrected rather than masked; 27 types pass clone and both INSERT shapes; no gaps/skips in feature tag | Guard partial; 0B-3 ready; .b-budget independent/in progress |
 | 1A-1.b-budget | 10c6bff46976938492c5d1ad5b5e74001d6b2d03 | Isolated three-file tree, nine cases/1560 assertions Release/ASan, all offset/full/fast-lane gates; source hashes and failure history in card/summary | Gibbs/coordinator reviewed spatial/range coverage, branch isolation, arithmetic and boundary safety; no cap increase or geometry expectation change | Geometry partial; .b-progress ready after checkpoint; restore/verify 0B-3 next |
+| 0B-3 | 0e3c6b342a0edefe06847c33d775f756c31fe674 | One owned test file, 10/1335 full/DXF-fast/ASan coverage, full Release/CI lanes pass; 27 rows per format and two DXF pins | Generated-MLEADER DWG fallback source-confirmed/pinned; no factory/production changes, no hidden export/import/geometry failure | Guard complete with one declared baseline gap; .b-progress ready next, 1A-2 still waits for complete geometry |
 
 **Git safety.** Stage files by name; inspect staged paths before every commit. Preserve unrelated staged/unstaged work
 and untracked artifacts. Do not use `git add -A`, destructive checkout/reset, `--amend` or `--no-verify`. Local commit
@@ -957,6 +959,11 @@ Implementation order for the `.b-ref` aggregate (`frames`, `events`, `components
    their own occurrences with bounded arithmetic, but cannot certify unrelated arc/cutter events. Root estimates may
    seed isolation, never replace exhaustive interval exclusion of other candidate boxes. If enclosures cannot be
    ordered or distinguished within budget, refuse rather than sort approximate parameters into a fabricated graph.
+   Audit every default tolerance heuristic when enabling strict mode: small-image leaf acceptance/bridge pruning,
+   near-join exclusions and deduplication are not by themselves proofs that no other event exists. The new cached
+   range index may supply conservative monotonicity bounds, but its default small-image shortcut cannot certify
+   topology. Strict mode must prove absence/identity analytically or by interval enclosures, or return ambiguity;
+   do not inherit an `Ok` result merely because a loop/contact is below the display tolerance.
 3. Classify retained intervals with conservative distance-to-source/endpoint bounds and the engine's documented trim
    allowances. Build explicit adjacency and ordered components; account for closed-lens source-parameter jumps.
    Reconstruct the complete expected component set, not merely the portion nearest the proposed cache. If current
@@ -1573,8 +1580,10 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
 
 #### 0B-3. Round trips, `reloadsAs`, known gaps
 
-**Prepared execution card — in progress, verification pending**
+**Executed card — done at 0e3c6b342a0edefe06847c33d775f756c31fe674, 2026-10-15**
 - Owner: coordinator; dependency 0B-2 at 5bfb3c8f0; refresh HEAD after this checkpoint.
+- Activated at `00ed2eb77cd8e72d2705396a0ba69e0e5eb13fec`; budget commit 10c6bff46 is already verified/reconciled.
+  The saved round-trip patch was restored exactly before building; no uncommitted core changes affect this slice.
 - Files: coverage-test source and factory header only if a demonstrated I/O fixture correction is needed. No new
   target registration; existing full/DXF-fast targets already contain the guard. Gibbs's core files remain disjoint.
 - Contract/tasks: actual DXF R2018 and DWG R2018 export/import for every valid drawing fixture; run
@@ -1587,10 +1596,33 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
   native reloads and only reproduced baseline gaps; no generic success/count result may hide a save failure.
 - Recovery/exit: preserve any core work during isolated verification; explicit-path implementation commit followed by
   a roadmap checkpoint with actual SHA/known-gap evidence. This closes the guard, not the future new-type contract.
-- Current preparation: DXF/DWG walks and the two-path DXF pin test are uncommitted; all rows still expect their own
-  type and all gap masks are zero pending measurement. Three new registered cases are expected (10 coverage cases
+- Initial preparation: DXF/DWG walks and the two-path DXF pin test were uncommitted; all rows expected their own
+  type and all gap masks were zero pending measurement. Three new registered cases were expected (10 coverage cases
   total with 0B-2); each walk must actually visit all 27 drawing rows. Release/ASan target builds passed on the mixed
   prepared tree; no runtime/gap outcome or isolated-commit verification is claimed yet.
+- First actual probe: both Release and ASan execute all three cases and all 27 rows per format. DXF rows pass;
+  only generated MLEADER's DWG row fails its native-type expectation, loading two usable entities (LEADER + MTEXT).
+  Source inspection confirms the intentional generated fallback in `writeMLeader`: native output requires a nonzero
+  imported source handle. This is a baseline gap, not an invalid fixture or parser failure. Pin export/import success,
+  exact fallback types and usable geometry so the known-gap bit cannot conceal a different failure. No production
+  MLEADER writer change belongs in this guard slice. Evidence: `probe-{release,asan}-1.junit.xml`, both exit 42
+  before the measured gap is recorded; all other rows passed and no crash/hang/skips occurred.
+- Final evidence: all three targets build in Release/ASan, exit 0. `[entity-coverage]` passes 10 cases / 1335 assertions
+  with zero skips/failures in full Release, ASan and the DWG-enabled DXF-fast target. Every one of the 27 drawing rows
+  executes through each format, plus both nonpersistent DXF pins; no `notRun` bits are set. All 27 DXF / 26 DWG rows
+  retain runtime type. The sole baseline gap is generated MLEADER → LEADER+MTEXT in DWG, pinned to successful
+  export/import, exact loaded types and usable geometry. A repaired native writer must update that expected gap.
+  No source handle was fabricated to bypass the generated route and no production/factory code was changed.
+- Broad evidence (`build/evidence/0B-3/*-final.junit.xml`, summary): full visible Release 4606 entries /
+  JUnit tests=5,861,252, no failures/errors, the same 74 skips and every S0 testcase retained. DXF CI lane 1028 entries /
+  tests=39,932 / 3 unchanged skips; DWG 1084 / 34,952 / 4 unchanged skips; all exit 0. ASan reports no sanitizer finding,
+  with `detect_leaks=0` (no LSan claim). Failed initial probes remain; whitespace/scoped review passes.
+- Commit audit: only `lc_entitytype_coverage_tests.cpp` was staged/committed; its SHA-256 is
+  `2046e06f943fbe70d7ea7a60add4545fb3c97d9ecc601c73fb94e8b65b66edf7`, matching final builds/tests. Coordinator/Gibbs
+  independently reviewed gap specificity, type/version checks and headless behavior. The old saved patch is obsolete
+  for replay. This completes the pre-feature guard, not the persistent entity or its 14-version file contract.
+- Next: `.b-progress` against the actual checkpoint HEAD. `1A-2` still waits for all geometry children; it adds a new
+  gap-free row and raises the drawing count to 28. The generated-MLEADER baseline limitation belongs in PR B's text.
 
 - **DXF and DWG round trip.** For each drawing row: a fresh graphic with the one entity; `lc::test::exportDrawing` and
   `importDrawing` with `FormatDXFRW2018` and `FormatDWG2018`, inside `QuietLog`; run the application's post-load
@@ -1775,7 +1807,7 @@ registered in `librecad_tests` next to `lc_curveoffsetellipsetests.cpp`:
 
 #### 1A-1.b-progress. Guarantee contact-classifier termination
 
-**Ready after the budget checkpoint — activate against its actual HEAD after 0B-3 by default**
+**Ready — activate against this checkpoint's actual HEAD; the default queue's 0B-3 is done**
 - Dependency: `.b-budget` at 10c6bff46976938492c5d1ad5b5e74001d6b2d03. Owner: Gibbs; coordinator owns builds/Git.
 - Scope: `lc_parametriccurveintersection.cpp` and its existing tests; header only if additional bounded diagnostics
   are necessary. No geometry fitting, source adapter, registration or unrelated engine refactor.
