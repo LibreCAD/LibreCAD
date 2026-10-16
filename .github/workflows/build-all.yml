@@ -304,6 +304,10 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.ref }}
 
+      - name: Test installer version parsing
+        shell: powershell
+        run: ./scripts/tests/installer-version-tests.ps1
+
       - name: Setup MSVC developer environment (64-bit)
         uses: ilammy/msvc-dev-cmd@v1
         with:
