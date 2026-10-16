@@ -326,6 +326,71 @@ ReferenceProviderPreparation prepareReferenceProviders(const RS_EllipseData& bas
 ReferenceProviderPreparation prepareReferenceContactProviders(const RS_EllipseData& basis, double signedDistance,
                                                               WorkBudget& budget);
 
+/** Diagnostic indices only. Copies never confer authority to refine or merge roots. */
+struct ReferenceOccurrenceId { std::size_t value = std::size_t(-1); };
+struct ReferenceNodeId { std::size_t value = std::size_t(-1); };
+
+struct ReferenceOccurrence {
+    ReferenceRole role{};
+    LC_Interval parameter;
+    ReferenceNodeId node;
+};
+struct ReferenceNode {
+    RS_Vector world;
+    LC_Interval localX, localY, worldX, worldY;
+};
+struct ReferencePairEvent {
+    ReferenceOccurrenceId first, second;
+    LC_ParametricIntersection::Kind kind{};
+    LC_IntersectionProof proof{};
+};
+struct ReferenceCriticalEvent {
+    ReferenceOccurrenceId occurrence;
+    CriticalKind kind{};
+    CriticalProof proof{};
+};
+struct ReferenceFreeEnd { ReferenceOccurrenceId occurrence; bool atStart = false; };
+struct ReferenceSeam { ReferenceOccurrenceId start, end; };
+
+enum class ReferenceEventReason {
+    None, CollapsedCircle, UnresolvedGeometry, UnresolvedIdentity, UnresolvedOrder,
+    NodeAccuracy, ProofContradiction
+};
+
+/** Complete reference events and ordered occurrences, not retained/visible components. */
+class ReferenceEventAnalysis {
+public:
+    ~ReferenceEventAnalysis();
+    ReferenceEventAnalysis(const ReferenceEventAnalysis&) = delete;
+    ReferenceEventAnalysis& operator=(const ReferenceEventAnalysis&) = delete;
+    const ReferenceProviders& providers() const noexcept;
+    /** Actual normalized tolerance passed to the owned strict query; not an identity allowance. */
+    double localTolerance() const noexcept;
+    const std::vector<ReferenceOccurrence>& occurrences() const noexcept;
+    const std::vector<ReferenceOccurrenceId>& ownOccurrences() const noexcept;
+    const std::vector<ReferenceNode>& nodes() const noexcept;
+    const std::vector<ReferencePairEvent>& pairs() const noexcept;
+    const std::vector<ReferenceCriticalEvent>& criticals() const noexcept;
+    const std::vector<ReferenceFreeEnd>& freeEnds() const noexcept;
+    const std::optional<ReferenceSeam>& seam() const noexcept;
+private:
+    friend class ReferenceEventBuilder;
+    struct Impl;
+    explicit ReferenceEventAnalysis(std::unique_ptr<Impl> impl);
+    std::unique_ptr<const Impl> m_impl;
+};
+
+struct ReferenceEventResult {
+    LC_IntersectionStatus status = LC_IntersectionStatus::InvalidInput;
+    ReferenceEventReason reason = ReferenceEventReason::None;
+    std::unique_ptr<const ReferenceEventAnalysis> analysis;
+    /** Cumulative shared work, including every refused/entered stage. */
+    CheckWork work{};
+};
+
+ReferenceEventResult analyseReferenceEvents(const RS_EllipseData& basis, double signedDistance,
+                                          double worldTolerance, WorkBudget& budget);
+
 bool isFinite2D(const RS_Vector& point);
 /** Validate raw fields before RS_Ellipse can canonicalize tiny angles. Unchanged on refusal. */
 bool normaliseBasis(RS_EllipseData& basis);

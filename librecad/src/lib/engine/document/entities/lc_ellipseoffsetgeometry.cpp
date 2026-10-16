@@ -2193,6 +2193,527 @@ ReferenceProviderPreparation prepareReferenceContactProviders(const RS_EllipseDa
     return ReferenceProviderBuilder::run(basis, signedDistance, budget, true);
 }
 
+struct ReferenceEventAnalysis::Impl {
+    // providerView is valid exactly as long as core, its sole owner. No caller state is borrowed.
+    std::unique_ptr<LC_CertifiedIntersectionSession> core;
+    const ReferenceProviders* providerView = nullptr;
+    double localTolerance = 0.0;
+    std::unique_ptr<CriticalRefinementSession> ownCritical, oppositeCritical;
+    std::vector<ReferenceOccurrence> occurrences;
+    std::vector<ReferenceOccurrenceId> ownOccurrences;
+    std::vector<ReferenceNode> nodes;
+    std::vector<ReferencePairEvent> pairs;
+    std::vector<ReferenceCriticalEvent> criticals;
+    std::vector<ReferenceFreeEnd> freeEnds;
+    std::optional<ReferenceSeam> seam;
+};
+
+class ReferenceEventBuilder {
+public:
+    static ReferenceEventResult run(const RS_EllipseData& basis, const double distance,
+                                    const double tolerance, WorkBudget& budget) {
+        ReferenceEventResult out;
+        const auto finish = [&]() { out.work = budget.consumed(); return std::move(out); };
+        if (budget.status() != BudgetStatus::Ok) {
+            out.status = budget.status() == BudgetStatus::LimitExceeded ? LC_IntersectionStatus::LimitExceeded
+                                                                       : LC_IntersectionStatus::InvalidInput;
+            return finish();
+        }
+        if (!(tolerance > 0.0) || !std::isfinite(tolerance)) { return finish(); }
+        auto prepared = prepareReferenceContactProviders(basis, distance, budget);
+        if (prepared.status != LC_IntersectionStatus::Ok) {
+            out.status = prepared.status;
+            if (prepared.status != LC_IntersectionStatus::LimitExceeded) {
+                out.reason = prepared.reason == ReferencePreparationReason::CollapsedCircle
+                    ? ReferenceEventReason::CollapsedCircle : ReferenceEventReason::UnresolvedGeometry;
+            }
+            return finish();
+        }
+        if (budget.remainingPairs() == 0 || budget.remainingVertices() == 0) {
+            budget.latchLimitExceeded();
+            out.status = LC_IntersectionStatus::LimitExceeded;
+            return finish();
+        }
+        const auto* view = prepared.provider.get();
+        if (!budget.consumePairs(1)) {
+            out.status = LC_IntersectionStatus::LimitExceeded;
+            return finish();
+        }
+        const double localTolerance = (exactDouble(tolerance) / exactDouble(view->frame().scale())).convert_to<double>();
+        if (!(localTolerance > 0.0) || !std::isfinite(localTolerance)) {
+            out.status = LC_IntersectionStatus::AmbiguousTopology;
+            out.reason = ReferenceEventReason::NodeAccuracy;
+            return finish();
+        }
+        LC_IntersectionOptions options;
+        options.tolerance = localTolerance;
+        options.strict = true;
+        options.anchoredBranches = 1;
+        options.maxDepth = options.maxLeafDepth = budget.depthLimit();
+        options.maxBoxPairs = budget.remainingPairs();
+        options.maxLeaves = options.maxGeneratedItems = budget.remainingVertices();
+        auto query = findCertifiedIntersections(std::move(prepared.provider), options);
+        const bool items = budget.consumeVertices(query.work.generatedItems);
+        const bool pairs = budget.consumePairs(query.work.totalBoxPairs);
+        const bool depth = budget.checkDepth(query.work.deepest());
+        if (!items || !pairs || !depth || query.status == LC_IntersectionStatus::LimitExceeded) {
+            budget.latchLimitExceeded();
+            out.status = LC_IntersectionStatus::LimitExceeded;
+            return finish();
+        }
+        if (query.status != LC_IntersectionStatus::Ok || !query.session) {
+            out.status = query.status;
+            out.reason = query.status == LC_IntersectionStatus::InvalidInput
+                ? ReferenceEventReason::ProofContradiction : ReferenceEventReason::UnresolvedGeometry;
+            return finish();
+        }
+        if (!budget.consumeVertices(1) || !budget.consumePairs(1)) {
+            out.status = LC_IntersectionStatus::LimitExceeded;
+            return finish();
+        }
+        auto data = std::make_unique<ReferenceEventAnalysis::Impl>();
+        data->core = std::move(query.session);
+        data->providerView = view;
+        data->localTolerance = options.tolerance;
+        data->ownCritical = std::move(prepared.ownCritical);
+        data->oppositeCritical = std::move(prepared.oppositeCritical);
+        ReferenceEventBuilder builder{budget, tolerance, std::move(data)};
+        if (builder.prepare() && builder.order() && builder.accuracy() && builder.publish()) {
+            out.analysis.reset(new ReferenceEventAnalysis{std::move(builder.m_data)});
+        }
+        out.status = builder.m_status;
+        out.reason = builder.m_reason;
+        return finish();
+    }
+
+private:
+    static constexpr std::size_t none = std::size_t(-1);
+    enum class Origin { Pair, Critical, Boundary };
+    struct Witness {
+        ReferenceRole role{};
+        Origin origin{};
+        std::size_t source = none;
+        LC_Interval parameter, occurrenceParameter;
+        std::size_t node = none, parent = none, head = none, tail = none;
+        std::size_t nextOccurrence = none, nextNode = none, publicId = none;
+        unsigned rank = 0;
+        CriticalOccurrenceHandle criticalHandle;
+        CriticalOccurrence critical{};
+    };
+    struct Node {
+        LC_Interval x, y;
+        std::size_t parent = none, minimum = none, head = none, tail = none, publicId = none;
+        unsigned rank = 0;
+        ReferenceNode published;
+    };
+    struct Root {
+        LC_CertifiedRootHandle handle;
+        LC_CertifiedRootSnapshot snapshot;
+        bool blocked = false;
+    };
+    ReferenceEventBuilder(WorkBudget& budget, const double tolerance,
+                          std::unique_ptr<ReferenceEventAnalysis::Impl> data)
+        : m_budget{budget}, m_errorSquared{exactDouble(tolerance) * exactDouble(tolerance) / 256},
+          m_data{std::move(data)} {}
+
+    bool fail(const LC_IntersectionStatus status, const ReferenceEventReason reason) {
+        m_status = status;
+        m_reason = reason;
+        return false;
+    }
+    bool limit() {
+        m_budget.latchLimitExceeded();
+        return fail(LC_IntersectionStatus::LimitExceeded, ReferenceEventReason::None);
+    }
+    bool pair() { return m_budget.consumePairs(1) || limit(); }
+    bool vertices(const std::size_t n) { return m_budget.consumeVertices(n) || limit(); }
+    bool contradiction() { return fail(LC_IntersectionStatus::InvalidInput, ReferenceEventReason::ProofContradiction); }
+    bool good() const { return m_status == LC_IntersectionStatus::Ok; }
+    template<typename T> bool room(const std::vector<T>& v) { return v.size() < v.max_size() || limit(); }
+    static double middle(const LC_Interval& value) {
+        if (value.lo() == value.hi()) { return value.lo(); }
+        const double difference = value.hi() - value.lo();
+        const double result = std::isfinite(difference) ? value.lo() + difference / 2
+                                                       : value.lo() / 2 + value.hi() / 2;
+        return std::max(value.lo(), std::min(value.hi(), result));
+    }
+    const ReferenceProviders& provider() const { return *m_data->providerView; }
+    std::optional<ReferenceRole> role(const std::size_t branch) const {
+        for (const auto candidate : {ReferenceRole::Own, ReferenceRole::Opposite,
+                                     ReferenceRole::StartCutter, ReferenceRole::EndCutter}) {
+            if (provider().branchFor(candidate) == branch) { return candidate; }
+        }
+        return {};
+    }
+    std::size_t occurrence(std::size_t index) {
+        while (m_witnesses[index].parent != index) {
+            if (!pair()) { return none; }
+            index = m_witnesses[index].parent;
+        }
+        return index;
+    }
+    std::size_t node(std::size_t index) {
+        while (m_nodes[index].parent != index) {
+            if (!pair()) { return none; }
+            index = m_nodes[index].parent;
+        }
+        return index;
+    }
+    std::size_t addNode(const LC_Interval& x, const LC_Interval& y) {
+        if (!room(m_nodes) || !vertices(1)) { return none; }
+        if (!finiteInterval(x) || !finiteInterval(y)) { contradiction(); return none; }
+        const std::size_t index = m_nodes.size();
+        Node record;
+        record.x = x; record.y = y;
+        record.parent = record.minimum = index;
+        m_nodes.push_back(record);
+        return index;
+    }
+    bool addWitness(Witness witness, const std::size_t owner) {
+        if (owner == none || !room(m_witnesses) || !vertices(1) || !pair()) { return false; }
+        if (!finiteInterval(witness.parameter)) { return contradiction(); }
+        const std::size_t index = m_witnesses.size();
+        witness.parent = witness.head = witness.tail = index;
+        witness.node = owner;
+        witness.occurrenceParameter = witness.parameter;
+        m_witnesses.push_back(witness);
+        auto& n = m_nodes[owner];
+        if (n.head == none) { n.head = index; }
+        else { m_witnesses[n.tail].nextNode = index; }
+        n.tail = index;
+        return true;
+    }
+    bool prepare() {
+        const std::size_t count = m_data->core->rootCount();
+        if (!m_data->ownCritical) { return contradiction(); }
+        if (count > (m_witnesses.max_size() - 6) / 2) { return limit(); }
+        for (std::size_t i = 0; i < count; ++i) {
+            if (!room(m_roots) || !vertices(1) || !pair()) { return false; }
+            const auto handle = m_data->core->rootHandle(i);
+            const auto snapshot = m_data->core->snapshot(handle);
+            if (!snapshot) { return contradiction(); }
+            m_roots.push_back({handle, *snapshot, false});
+            const auto a = role(snapshot->event.branchA), b = role(snapshot->event.branchB);
+            if (!a || !b || (*a != ReferenceRole::Own && *b != ReferenceRole::Own)) { return contradiction(); }
+            const auto n = addNode(snapshot->imageX, snapshot->imageY);
+            Witness wa, wb;
+            wa.role = *a; wb.role = *b;
+            wa.origin = wb.origin = Origin::Pair;
+            wa.source = wb.source = i;
+            wa.parameter = snapshot->event.isolation.parameterA;
+            wb.parameter = snapshot->event.isolation.parameterB;
+            if (!addWitness(wa, n) || !addWitness(wb, n)) { return false; }
+        }
+        m_criticalStart = m_witnesses.size();
+        m_criticalCount = m_data->ownCritical->occurrenceCount();
+        if (m_criticalCount > 4) { return contradiction(); }
+        if (m_criticalCount && (!vertices(1) || !pair())) { return false; }
+        for (std::size_t i = 0; i < m_criticalCount; ++i) {
+            if (!pair()) { return false; }
+            const auto handle = m_data->ownCritical->occurrenceHandle(i);
+            const auto snapshot = m_data->ownCritical->snapshot(handle);
+            if (!snapshot) { return contradiction(); }
+            Witness w;
+            w.role = ReferenceRole::Own; w.origin = Origin::Critical; w.source = i;
+            w.criticalHandle = handle; w.critical = snapshot->occurrence;
+            w.parameter = criticalParameter(*snapshot);
+            if (!addWitness(w, addNode(snapshot->imageX, snapshot->imageY))) { return false; }
+        }
+        m_boundaryStart = m_witnesses.size();
+        for (const double t : {0.0, provider().frame().parameterEnd()}) {
+            if (!pair()) { return false; }
+            LC_CurveJetBounds bounds;
+            if (!provider().frame().boundOffsetJet(t, t, bounds)) {
+                return fail(LC_IntersectionStatus::AmbiguousTopology, ReferenceEventReason::UnresolvedGeometry);
+            }
+            Witness w;
+            w.role = ReferenceRole::Own; w.origin = Origin::Boundary;
+            w.parameter = LC_Interval::point(t);
+            if (!addWitness(w, addNode(bounds.x, bounds.y))) { return false; }
+        }
+        if (provider().frame().sourceSweep().whole &&
+            !joinNodes(m_witnesses[m_boundaryStart].node, m_witnesses[m_boundaryStart + 1].node)) { return false; }
+        if (m_witnesses.size() > m_order.max_size() || !vertices(m_witnesses.size())) { return limit(); }
+        m_order.reserve(m_witnesses.size());
+        return true;
+    }
+    LC_Interval criticalParameter(const CriticalOccurrenceSnapshot& snapshot) const {
+        if (snapshot.occurrence.atStart) { return LC_Interval::point(0); }
+        if (snapshot.occurrence.atEnd) { return LC_Interval::point(provider().frame().parameterEnd()); }
+        return snapshot.occurrence.parameter;
+    }
+    bool joinNodes(std::size_t a, std::size_t b) {
+        a = node(a); if (a == none) { return false; }
+        b = node(b); if (b == none || !pair()) { return false; }
+        if (a == b) { return true; }
+        if (!pair()) { return false; }
+        const auto x = intersect(m_nodes[a].x, m_nodes[b].x);
+        const auto y = intersect(m_nodes[a].y, m_nodes[b].y);
+        if (!finiteInterval(x) || !finiteInterval(y)) { return contradiction(); }
+        if (m_nodes[a].rank < m_nodes[b].rank) { std::swap(a, b); }
+        auto& into = m_nodes[a];
+        auto& from = m_nodes[b];
+        into.x = x; into.y = y;
+        into.minimum = std::min(into.minimum, from.minimum);
+        if (into.rank == from.rank) { ++into.rank; }
+        from.parent = a;
+        m_witnesses[into.tail].nextNode = from.head;
+        into.tail = from.tail;
+        return true;
+    }
+    bool joinOccurrences(std::size_t a, std::size_t b) {
+        if (!pair()) { return false; }
+        const auto parameter = intersect(m_witnesses[a].occurrenceParameter, m_witnesses[b].occurrenceParameter);
+        if (!finiteInterval(parameter)) { return contradiction(); }
+        if (!joinNodes(m_witnesses[a].node, m_witnesses[b].node)) { return false; }
+        if (m_witnesses[a].rank < m_witnesses[b].rank) { std::swap(a, b); }
+        auto& into = m_witnesses[a];
+        auto& from = m_witnesses[b];
+        into.occurrenceParameter = parameter;
+        if (into.rank == from.rank) { ++into.rank; }
+        from.parent = a;
+        m_witnesses[into.tail].nextOccurrence = from.head;
+        into.tail = from.tail;
+        return true;
+    }
+    bool refresh(const std::size_t index, const LC_Interval& parameter,
+                 const LC_Interval& x, const LC_Interval& y) {
+        if (!pair()) { return false; }
+        const auto o = occurrence(index); if (o == none) { return false; }
+        const auto n = node(m_witnesses[index].node); if (n == none || !pair()) { return false; }
+        const auto p = intersect(m_witnesses[o].occurrenceParameter, parameter);
+        const auto ix = intersect(m_nodes[n].x, x), iy = intersect(m_nodes[n].y, y);
+        if (!finiteInterval(p) || !finiteInterval(ix) || !finiteInterval(iy)) { return contradiction(); }
+        m_witnesses[index].parameter = parameter;
+        m_witnesses[o].occurrenceParameter = p;
+        m_nodes[n].x = ix; m_nodes[n].y = iy;
+        return true;
+    }
+    bool debit(const LC_IntersectionWorkStats& work) {
+        const bool v = m_budget.consumeVertices(work.generatedItems);
+        const bool p = m_budget.consumePairs(work.totalBoxPairs);
+        const bool d = m_budget.checkDepth(work.deepest());
+        return (v && p && d) || limit();
+    }
+    bool refineWitness(const std::size_t index) {
+        auto& w = m_witnesses[index];
+        if (w.origin == Origin::Boundary) { return false; }
+        if (w.origin == Origin::Pair) {
+            auto& root = m_roots[w.source];
+            if (root.blocked) { return false; }
+            LC_CertifiedContractionAllowance allowance;
+            allowance.remainingItems = m_budget.remainingVertices();
+            allowance.remainingPairs = m_budget.remainingPairs();
+            allowance.absoluteRootDepth = m_budget.depthLimit();
+            const auto result = m_data->core->contract(root.handle, allowance);
+            if (!debit(result.work)) { return false; }
+            if (result.status == LC_IntersectionStatus::LimitExceeded) { return limit(); }
+            if (result.status == LC_IntersectionStatus::InvalidInput) { return contradiction(); }
+            if (result.status != LC_IntersectionStatus::Ok) { root.blocked = true; return false; }
+            if (!result.snapshot) { return contradiction(); }
+            root.snapshot = *result.snapshot;
+            const auto first = 2 * w.source;
+            return refresh(first, root.snapshot.event.isolation.parameterA, root.snapshot.imageX, root.snapshot.imageY) &&
+                refresh(first + 1, root.snapshot.event.isolation.parameterB, root.snapshot.imageX, root.snapshot.imageY);
+        }
+        if (m_criticalBlocked[w.source]) { return false; }
+        const auto result = m_data->ownCritical->contract(w.criticalHandle, m_budget);
+        // This session directly charged m_budget; neither result ledger is an additional debit.
+        if (result.workSource != CriticalWorkSource::CurrentBudget) { return contradiction(); }
+        if (result.status == LC_IntersectionStatus::LimitExceeded) { return limit(); }
+        if (result.status == LC_IntersectionStatus::InvalidInput) { return contradiction(); }
+        if (result.status != LC_IntersectionStatus::Ok) { m_criticalBlocked[w.source] = true; return false; }
+        for (std::size_t i = 0; i < m_criticalCount; ++i) {
+            if (!pair()) { return false; }
+            const auto wi = m_criticalStart + i;
+            const auto snapshot = m_data->ownCritical->snapshot(m_witnesses[wi].criticalHandle);
+            if (!snapshot) { return contradiction(); }
+            if (!refresh(wi, criticalParameter(*snapshot), snapshot->imageX, snapshot->imageY)) { return false; }
+        }
+        return true;
+    }
+    bool refineOccurrence(const std::size_t index) {
+        for (auto i = m_witnesses[index].head; i != none; i = m_witnesses[i].nextOccurrence) {
+            if (!pair()) { return false; }
+            if (refineWitness(i)) { return true; }
+            if (!good()) { return false; }
+        }
+        return false;
+    }
+    bool order() {
+        // Insertion comparisons are proofs, not mutable-key sort predicates. Narrowing preserves proved order.
+        for (std::size_t i = 0; i < m_witnesses.size(); ++i) {
+            std::size_t position = 0;
+            bool merged = false;
+            while (position < m_order.size()) {
+                const auto a = occurrence(i); if (a == none) { return false; }
+                const auto b = occurrence(m_order[position].value); if (b == none || !pair()) { return false; }
+                if (a == b) { merged = true; break; }
+                const auto ar = m_witnesses[a].role, br = m_witnesses[b].role;
+                if (ar != br) {
+                    if (ar < br) { break; }
+                    ++position;
+                    continue;
+                }
+                const auto pa = m_witnesses[a].occurrenceParameter, pb = m_witnesses[b].occurrenceParameter;
+                if (pa.hi() < pb.lo()) { break; }
+                if (pb.hi() < pa.lo()) { ++position; continue; }
+                if (!pair()) { return false; } // Identity examination is separate from the order comparison.
+                if (pa.lo() == pa.hi() && pb.lo() == pb.hi() && pa.lo() == pb.lo()) {
+                    if (!joinOccurrences(a, b)) { return false; }
+                    merged = true;
+                    break;
+                }
+                if (refineOccurrence(a)) { continue; }
+                if (!good()) { return false; }
+                if (refineOccurrence(b)) { continue; }
+                if (!good()) { return false; }
+                return fail(LC_IntersectionStatus::AmbiguousTopology, ReferenceEventReason::UnresolvedIdentity);
+            }
+            if (!merged) {
+                m_order.push_back({i}); // Storage was admitted before reserve; moves are separately examined.
+                for (std::size_t j = m_order.size() - 1; j > position; --j) {
+                    if (!pair()) { return false; }
+                    m_order[j] = m_order[j - 1];
+                }
+                m_order[position] = {i};
+            }
+        }
+        return true;
+    }
+    bool refineNode(const std::size_t index) {
+        for (auto i = m_nodes[index].head; i != none; i = m_witnesses[i].nextNode) {
+            if (!pair()) { return false; }
+            if (refineWitness(i)) { return true; }
+            if (!good()) { return false; }
+        }
+        return false;
+    }
+    bool accurate(const std::size_t index) {
+        auto& record = m_nodes[index];
+        LC_Interval x, y;
+        if (!provider().frame().pointToWorld(record.x, record.y, x, y)) { return false; }
+        if (!finiteInterval(x) || !finiteInterval(y)) { return false; }
+        const RS_Vector point{middle(x), middle(y)};
+        if (!isFinite2D(point)) { return false; }
+        // Finiteness precedes exactDouble. This includes rounding of the actual published double node.
+        const auto maximumError = [](const LC_Interval& interval, const double value) -> Rational {
+            const Rational p = exactDouble(value);
+            const Rational lo = p - exactDouble(interval.lo()), hi = exactDouble(interval.hi()) - p;
+            return std::max(lo, hi);
+        };
+        const Rational ex = maximumError(x, point.x), ey = maximumError(y, point.y);
+        if (ex * ex + ey * ey > m_errorSquared) { return false; }
+        record.published = {point, record.x, record.y, x, y};
+        return true;
+    }
+    bool accuracy() {
+        for (std::size_t i = 0; i < m_nodes.size(); ++i) {
+            if (!pair()) { return false; }
+            if (m_nodes[i].parent != i) { continue; }
+            for (;;) {
+                if (!pair()) { return false; }
+                if (accurate(i)) { break; }
+                if (refineNode(i)) { continue; }
+                if (!good()) { return false; }
+                return fail(LC_IntersectionStatus::AmbiguousTopology, ReferenceEventReason::NodeAccuracy);
+            }
+        }
+        return true;
+    }
+    ReferenceOccurrenceId publicOccurrence(const std::size_t witness) {
+        const auto o = occurrence(witness);
+        return {o == none ? none : m_witnesses[o].publicId};
+    }
+    bool publish() {
+        std::size_t nodeCount = 0;
+        for (std::size_t i = 0; i < m_nodes.size(); ++i) {
+            if (!pair()) { return false; }
+            if (m_nodes[i].parent == i) { ++nodeCount; }
+        }
+        if (nodeCount > m_data->nodes.max_size() || m_order.size() > m_data->occurrences.max_size() ||
+            !vertices(nodeCount) || !vertices(m_order.size())) { return limit(); }
+        m_data->nodes.reserve(nodeCount);
+        m_data->occurrences.reserve(m_order.size());
+        // Assign stable physical IDs by the first issued node, independent of union-tree rank.
+        for (std::size_t i = 0; i < m_nodes.size(); ++i) {
+            if (!pair()) { return false; }
+            const auto n = node(i); if (n == none) { return false; }
+            if (m_nodes[n].minimum != i) { continue; }
+            m_nodes[n].publicId = m_data->nodes.size();
+            m_nodes[n].published.localX = m_nodes[n].x;
+            m_nodes[n].published.localY = m_nodes[n].y;
+            m_data->nodes.push_back(m_nodes[n].published);
+        }
+        std::size_t ownCount = 0;
+        for (std::size_t i = 0; i < m_order.size(); ++i) {
+            if (!pair()) { return false; }
+            const auto o = occurrence(m_order[i].value); if (o == none) { return false; }
+            const auto n = node(m_witnesses[o].node); if (n == none) { return false; }
+            auto& w = m_witnesses[o];
+            w.publicId = m_data->occurrences.size();
+            m_data->occurrences.push_back({w.role, w.occurrenceParameter, {m_nodes[n].publicId}});
+            if (w.role == ReferenceRole::Own) { m_order[ownCount++] = {w.publicId}; }
+        }
+        m_order.resize(ownCount);
+        m_data->ownOccurrences = std::move(m_order); // Reuse the already charged ordering slots.
+        for (std::size_t i = 0; i < m_roots.size(); ++i) {
+            if (!room(m_data->pairs) || !vertices(1) || !pair()) { return false; }
+            const auto a = publicOccurrence(2 * i), b = publicOccurrence(2 * i + 1);
+            if (!good()) { return false; }
+            m_data->pairs.push_back({a, b, m_roots[i].snapshot.event.kind, m_roots[i].snapshot.event.proof});
+        }
+        for (std::size_t i = 0; i < m_criticalCount; ++i) {
+            if (!room(m_data->criticals) || !vertices(1) || !pair()) { return false; }
+            const auto wi = m_criticalStart + i;
+            const auto id = publicOccurrence(wi); if (!good()) { return false; }
+            m_data->criticals.push_back({id, m_witnesses[wi].critical.kind, m_witnesses[wi].critical.proof});
+        }
+        if (provider().frame().sourceSweep().whole) {
+            if (!vertices(1) || !pair()) { return false; }
+            const auto a = publicOccurrence(m_boundaryStart), b = publicOccurrence(m_boundaryStart + 1);
+            if (!good()) { return false; }
+            m_data->seam = ReferenceSeam{a, b};
+        } else {
+            for (std::size_t i = 0; i < 2; ++i) {
+                if (!room(m_data->freeEnds) || !vertices(1) || !pair()) { return false; }
+                const auto id = publicOccurrence(m_boundaryStart + i); if (!good()) { return false; }
+                m_data->freeEnds.push_back({id, i == 0});
+            }
+        }
+        return true;
+    }
+
+    WorkBudget& m_budget;
+    Rational m_errorSquared;
+    std::unique_ptr<ReferenceEventAnalysis::Impl> m_data;
+    std::vector<Root> m_roots;
+    std::vector<Witness> m_witnesses;
+    std::vector<Node> m_nodes;
+    std::vector<ReferenceOccurrenceId> m_order;
+    std::size_t m_criticalStart = 0, m_criticalCount = 0, m_boundaryStart = 0;
+    std::array<bool, 4> m_criticalBlocked{};
+    LC_IntersectionStatus m_status = LC_IntersectionStatus::Ok;
+    ReferenceEventReason m_reason = ReferenceEventReason::None;
+};
+
+ReferenceEventAnalysis::ReferenceEventAnalysis(std::unique_ptr<Impl> impl) : m_impl{std::move(impl)} {}
+ReferenceEventAnalysis::~ReferenceEventAnalysis() = default;
+const ReferenceProviders& ReferenceEventAnalysis::providers() const noexcept { return *m_impl->providerView; }
+double ReferenceEventAnalysis::localTolerance() const noexcept { return m_impl->localTolerance; }
+const std::vector<ReferenceOccurrence>& ReferenceEventAnalysis::occurrences() const noexcept { return m_impl->occurrences; }
+const std::vector<ReferenceOccurrenceId>& ReferenceEventAnalysis::ownOccurrences() const noexcept { return m_impl->ownOccurrences; }
+const std::vector<ReferenceNode>& ReferenceEventAnalysis::nodes() const noexcept { return m_impl->nodes; }
+const std::vector<ReferencePairEvent>& ReferenceEventAnalysis::pairs() const noexcept { return m_impl->pairs; }
+const std::vector<ReferenceCriticalEvent>& ReferenceEventAnalysis::criticals() const noexcept { return m_impl->criticals; }
+const std::vector<ReferenceFreeEnd>& ReferenceEventAnalysis::freeEnds() const noexcept { return m_impl->freeEnds; }
+const std::optional<ReferenceSeam>& ReferenceEventAnalysis::seam() const noexcept { return m_impl->seam; }
+
+ReferenceEventResult analyseReferenceEvents(const RS_EllipseData& basis, const double signedDistance,
+                                          const double worldTolerance, WorkBudget& budget) {
+    return ReferenceEventBuilder::run(basis, signedDistance, worldTolerance, budget);
+}
+
 CriticalRefinementSession::CriticalRefinementSession(std::unique_ptr<Impl> impl) : m_impl{std::move(impl)} {}
 CriticalRefinementSession::~CriticalRefinementSession() = default;
 CriticalRefinementSession::CriticalRefinementSession(CriticalRefinementSession&&) noexcept = default;
