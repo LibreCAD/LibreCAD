@@ -37,7 +37,7 @@
 #include <QDateTime>
 #include <QString>
 
-#include "lc_actiontestsupport.h"
+#include "lc_filtertestsupport.h"
 #include "lc_linetype.h"
 #include "lc_linetypelist.h"
 #include "lc_linetypenames.h"
@@ -467,10 +467,10 @@ TEST_CASE("LC_LineTypeList marks an imported seed as modified even when its metr
     CHECK_FALSE(list.isModified());
 }
 
-// Through RS_Graphic, which owns the list by value beside its layer list.
+// Document ownership needs settings only; reuse the headless DXF lane's setup.
 TEST_CASE("A drawing holds the seeded line type list and initForNewDocument() reseeds it",
           "[linetype][list][graphic]") {
-    (void)lc::test::application();
+    (void)lc::test::ensureSettings();
     int live = 0;
     {
         RS_Graphic graphic;
@@ -518,7 +518,7 @@ TEST_CASE("A drawing holds the seeded line type list and initForNewDocument() re
 
 TEST_CASE("A drawing's line type list is part of its modified flag",
           "[linetype][list][graphic]") {
-    (void)lc::test::application();
+    (void)lc::test::ensureSettings();
     RS_Graphic graphic;
     graphic.initForNewDocument();
     REQUIRE_FALSE(graphic.isModified());
@@ -542,7 +542,7 @@ TEST_CASE("A drawing's line type list is part of its modified flag",
 
 TEST_CASE("RS_Graphic::addLineType returns the entry that holds the key",
           "[linetype][list][graphic]") {
-    (void)lc::test::application();
+    (void)lc::test::ensureSettings();
     RS_Graphic graphic;
     graphic.initForNewDocument();
     LC_LineType* vendor = graphic.addLineType(

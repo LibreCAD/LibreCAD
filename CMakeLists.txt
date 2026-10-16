@@ -3273,6 +3273,7 @@ if (BUILD_TESTS)
     )
 
     set(LIBRECAD_DXF_FAST_TEST_SOURCES
+        librecad/src/lib/engine/document/linetypes/tests/lc_linetypelist_tests.cpp
         librecad/src/lib/filters/tests/dxf_attribute_tests.cpp
         librecad/src/lib/filters/tests/dxf_object_tests.cpp
         librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
