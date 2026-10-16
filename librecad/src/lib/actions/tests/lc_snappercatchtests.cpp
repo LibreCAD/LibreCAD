@@ -105,6 +105,7 @@ public:
     }
 
     using RS_PreviewActionInterface::m_highlight;
+    using RS_PreviewActionInterface::m_lastMouseMoveEvent;
 
     void showGrips(bool enabled) { m_highlightEntitiesRefPointsOnHover = enabled; }
     void resetToNeutral() { goToNeutralStatus(); }
@@ -524,6 +525,7 @@ TEST_CASE("hover cache recovers after inherited highlight cleanup", "[hover][sna
 
 TEST_CASE("direct drag source respects the enabled snap modes", "[snap][drag][issue3127]") {
     ActionFixture<HoverProbe> f;
+    f.m_action->RS_Snapper::init();
     auto* viewport = f.m_view.getViewPort();
     viewport->justSetOffsetAndFactor(0, 0, 1.0);
     auto* vertical = addLine(f.m_graphic, RS_Vector(200.0, 100.0), RS_Vector(200.0, 350.0));
@@ -532,6 +534,7 @@ TEST_CASE("direct drag source respects the enabled snap modes", "[snap][drag][is
 
     RS_SnapMode mode;
     mode.snapFree = true;
+    mode.snapVisual = true;
     RS_Vector press(200.0, 248.0);
     RS_Vector expected = press;
     SECTION("intersection disabled") {}
@@ -556,12 +559,44 @@ TEST_CASE("direct drag source respects the enabled snap modes", "[snap][drag][is
     f.m_action->setSnapMode(mode);
 
     const QPointF gui(viewport->toGuiX(press.x), viewport->toGuiY(press.y));
+    QMouseEvent hover(QEvent::MouseMove, gui, gui, Qt::NoButton, Qt::NoButton, Qt::NoModifier);
+    f.m_action->mouseMoveEvent(&hover);
+    CHECK_FALSE(f.m_action->isVisualSnapApplicable());
+    CHECK(f.m_action->m_lastMouseMoveEvent.snapPoint == expected);
+    auto* snapOverlay = viewport->getOverlaysDrawablesContainer(RS2::Snapper);
+    REQUIRE(snapOverlay->first() != nullptr);
     QMouseEvent down(QEvent::MouseButtonPress, gui, gui, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
     f.m_action->mousePressEvent(&down);
     const QPointF dragged = gui + QPointF(20.0, 0.0);
     QMouseEvent move(QEvent::MouseMove, dragged, dragged, Qt::NoButton, Qt::LeftButton, Qt::NoModifier);
     f.m_action->mouseMoveEvent(&move);
     CHECK(viewport->getRelativeZero() == expected);
+}
+
+TEST_CASE("selection windows do not display a drag source snap", "[snap][drag][issue3127]") {
+    ActionFixture<HoverProbe> f;
+    f.m_action->RS_Snapper::init();
+    auto* viewport = f.m_view.getViewPort();
+    viewport->justSetOffsetAndFactor(0, 0, 1.0);
+    auto* line = addLine(f.m_graphic, RS_Vector(200.0, 100.0), RS_Vector(200.0, 350.0));
+    SECTION("no selection") {}
+    SECTION("existing selection") { f.m_graphic.select(QList<RS_Entity*>{line}); }
+
+    const QPointF gui(viewport->toGuiX(100.0), viewport->toGuiY(100.0));
+    QMouseEvent hover(QEvent::MouseMove, gui, gui, Qt::NoButton, Qt::NoButton, Qt::NoModifier);
+    f.m_action->mouseMoveEvent(&hover);
+    auto* snapOverlay = viewport->getOverlaysDrawablesContainer(RS2::Snapper);
+    if (!f.m_graphic.hasSelection()) {
+        CHECK(snapOverlay->first() == nullptr);
+    }
+    QMouseEvent down(QEvent::MouseButtonPress, gui, gui, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    f.m_action->mousePressEvent(&down);
+    for (const double dx : {5.0, 20.0, 40.0}) {
+        const QPointF dragged = gui + QPointF(dx, 0.0);
+        QMouseEvent move(QEvent::MouseMove, dragged, dragged, Qt::NoButton, Qt::LeftButton, Qt::NoModifier);
+        f.m_action->mouseMoveEvent(&move);
+        CHECK(snapOverlay->first() == nullptr);
+    }
 }
 
 TEST_CASE("stationary block hover reuses its clone and measures geometry only once", "[hover][snap][insert]") {

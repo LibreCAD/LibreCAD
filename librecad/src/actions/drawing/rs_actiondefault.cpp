@@ -270,7 +270,9 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
 
     switch (status) {
         case Neutral: {
-            deleteSnapper();
+            if (!isSnapExpected()) {
+                deleteSnapper();
+            }
             highlightHoveredEntities(e);
             if (m_infoCursorOverlayPrefs->enabled){
                 if (!isShowEntityDescriptionOnHighlight()) {
@@ -1075,11 +1077,13 @@ RS2::CursorType RS_ActionDefault::doGetMouseCursor(const int status){
     }
 }
 
-// Moving a whole entity or a reference/grip point both target a point via
-// the snapper, so the snap indicator should show for them (LibreCAD#2760).
-// Neutral/Dragging/SetCorner2/Panning stay excluded - that's what keeps
-// the indicator suppressed while defining a selection rectangle
-// (LibreCAD#2143), which is what isInVisualSnapStatus() was added for.
+// Direct dragging captures the source snap on press (#2689). Show that
+// point before dragging without enabling visual guides during selection.
+bool RS_ActionDefault::isSnapExpected() {
+    return (getStatus() == Neutral && m_document->hasSelection()) || BASE_CLASS::isSnapExpected();
+}
+
+// Visual guides apply to move destinations, not selection rectangles (#2143).
 bool RS_ActionDefault::isInVisualSnapStatus(int status) {
     return status == Moving || status == MovingRef;
 }
