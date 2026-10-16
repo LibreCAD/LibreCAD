@@ -24,11 +24,11 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v20**, 2026-10-16. This file is the implementation source of truth. Every implementation slice ends with a
+Plan **v21**, 2026-10-16. This file is the implementation source of truth. Every implementation slice ends with a
 verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE — event isolation is committed at `dff307668`; exact visibility and incidence-preserving component analysis is committed at `9682d5cac` after attempt-8 Release/ASan/full/format validation and independent P1 re-review. The v16 implementation reconciliation is committed at `c6e32c17f`; v17/v18/v19 plan-only checkpoints are `22317685c`, `127231e41` and `cad1c5b4d`. The degree-1/degree-3 bounded cache-layout implementation is committed at `37462efc8` and passes focused Release/ASan, adjacent Release/ASan, full Release, and DXF/DWG fast lanes in Release/ASan; the 74 full-suite skips and fast-lane skips match their recorded baselines. This v20 update reconciles the committed slice, its frozen hashes, and final independent review. The next `.b-check-bounds` leaf is not activated until this plan-only checkpoint is committed and its readiness is re-probed against the refreshed HEAD. Remaining cache geometry, topology, entity, file, UI and phase-2 work remain incomplete.**
+Status: **IMPLEMENTATION INCOMPLETE — event isolation is committed at `dff307668`; exact visibility and incidence-preserving component analysis is committed at `9682d5cac` after attempt-8 Release/ASan/full/format validation and independent P1 re-review. The v16 implementation reconciliation is committed at `c6e32c17f`; v17/v18/v19 plan-only checkpoints are `22317685c`, `127231e41` and `cad1c5b4d`. The degree-1/degree-3 bounded cache-layout implementation is committed at `37462efc8` and passes focused Release/ASan, adjacent Release/ASan, full Release, and DXF/DWG fast lanes in Release/ASan; the 74 full-suite skips and fast-lane skips match their recorded baselines. The v20 reconciliation is committed at `6f25975f6`. This v21 update replaces the underspecified `.b-check-bounds` recipe with a conservative pairwise curve/chord proof, explicit event-fringe treatment, complete witness/refusal coverage, shared-work accounting, tests, and activation gates. Independent plan completeness and plan-correctness reviews are closed with all findings incorporated; implementation remains gated on the plan-only activation checkpoint and post-commit source-digest recheck. Remaining cache topology, entity, file, UI and phase-2 work remain incomplete.**
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -107,6 +107,20 @@ and DXF/DWG fast lanes in Release and ASan with their established 3/4 skips. Ind
 actionable issue. The layout card is complete, but `.b-check-bounds` remains waiting for a fresh post-checkpoint
 completeness, plan-correctness and readiness probe. This update contains documentation only and does not claim any
 remaining geometry, topology, persistence or UI feature as implemented.
+v21 re-probes `.b-check-bounds` at committed source base `6f25975f6ad02ba7cbb15982152905ff6f948fb0`. It replaces
+unspecified “parameter-aware matching” with a pairwise set-Hausdorff certificate, local de Casteljau and exact-offset
+chord-error bounds, exact-D visible-span clearance, explicit root-fringe/node treatment, a complete pair-witness
+relation, explicit caller-owned budget/result-owned geometry lifetimes, and exact error/limit tests. Independent reviews
+identified endpoint/fringe and budget-lifetime gaps, then a topological counterexample: a cubic can have the same image
+as a line while reversing internally. The card now keeps bounds strictly geometric and expands `.b-check-topology` to
+prove derivative-sign monotonicity/injectivity, exact occurrence/edge-end incidence, and an order-preserving,
+non-reusing full-domain assignment; it also requires topology to refine coarse witnesses even when setwise distance
+passes. The fresh existing layout selector passes 16 cases/3,311 assertions in Release and ASan; code-file digests are
+unchanged from v20. The new bounds selector has not been registered and its required count remains a pre-implementation
+gate. Independent mathematical and completeness reviews are closed. Findings on clearance consistency, strict
+directional endpoint separation, degree-1/constant-span handling, empty-witness refusal, cross-stage budget checks and
+incidence identity are incorporated into the proof and test contract. The card remains conditional only until the
+plan-only activation checkpoint is committed and actual HEAD/product digests are re-read; no product code changed.
 
 Appendix E lists what changed and why. This plan remains a proposal for a new persistent `LC_OffsetCurve`; the
 current engine's internal `LC_CurveOffset` is not that entity. **Line numbers and type-site counts are historical
@@ -331,7 +345,7 @@ not validation evidence. Aggregates are never executable cards or extra implemen
 | 1A-1.b-ref-providers | Done at9c27e2980 | Owned immutable offset/cutter composite, true-pi bounds/injectivity, both-hook remapping and exact collapsed-opposite exclusion;16/299294 Release/ASan plus critical/core/broad/full/fast gates pass. No event graph. |
 | 1A-1.b-ref-contacts | Done at92ca5e445 | Additive contact factory, immutable whole-box support/radial/critical-gap proofs and diagnostic intervals;17/4383 Release/ASan plus old97/586799 and all broad/full/fast gates pass, legacy behavior retained. |
 | 1A-1.b-ref-events-isolate | Done at dff307668 | Owned combined-event result; strict anchored roots, critical/free/seam occurrences, proved role/parameter order, exact-only same-role identity, tol/16 rounded world-node proof, and cumulative shared-budget refusal. At this checkpoint, multi-pair shared-own success was not separately fixture-pinned; `.b-ref-components` later added the successful shared-occurrence proof. Tangent fixture remains a bounded no-partial refusal at the strict-query depth cap, not an identity/order success. |
-| 1A-1.b-check | Aggregate; `.b-ref` and `.b-check-layout` complete; bounds/topology pending | Execute `.b-check-bounds → .b-check-topology` (§0.6); layout commit `37462efc8` validates degree-1/degree-3 normalized spans and atomic admission. `.b-check-bounds` stays waiting for post-checkpoint readiness and a verified line/cubic proof contract. No successful public validator before all acceptance checks exist. |
+| 1A-1.b-check | Aggregate; `.b-ref` and `.b-check-layout` complete; bounds/topology pending | Execute `.b-check-bounds → .b-check-topology` (§0.6); layout commit `37462efc8` validates degree-1/degree-3 normalized spans and atomic admission. The v21 bounds contract uses symmetric setwise chord certificates, exact-visible clearance, root-fringe/node witnesses and one owned cumulative budget; independent completeness/plan-correctness reviews and existing-selector baselines are closed, with activation pending the plan-only checkpoint and post-commit source-digest check. No successful public validator before all acceptance checks exist. |
 | 1A-1.c | Waiting for .b | Add adversarial and current-engine corpus checks, failure budgets and performance measurements. Record acceptance/refusal results; endpoints and midpoint checks alone cannot close this parent step. |
 | 1A-2 | Waiting for 0B-3 and all 1A-1 children | Add type, core class, complete consistency stamp, transforms, clone/INSERT/write dispatch and interim UI guard. Compile CMake and update qmake lists; run copy/ownership and enum coverage. |
 | 1A-3 | Waiting for 1A-2 | Implement definition-backed grips/snaps with runtime consistency checks and separate cache closure. Test closed results from arc sources and stale cache fallback. |
@@ -437,6 +451,12 @@ the `.b-check` aggregate. The earlier six-query/coarse-node probe is historical 
 isolation, not for component-span or cache correctness. Successful interior-fallback execution remains
 source-qualified, not natively exercised; the negative base-refusal test and bounded NO_MATCH search are distinguished
 in the receipt.
+The degree-1/degree-3 layout leaf is complete at `37462efc8` and reconciled at `6f25975f6`. The current v21
+`.b-check-bounds` candidate is conditionally activated at source HEAD `6f25975f6ad02ba7cbb15982152905ff6f948fb0`:
+fresh Release/ASan layout baselines and independent completeness/plan-correctness reviews pass, with findings
+incorporated. The remaining gate is to commit this plan-only activation directly after the source base, verify
+ancestry/path scope/product digests, and persist `ready` before Gibbs starts. No product implementation is authorized
+before those postconditions.
 The coordinator owns the plan,
 shared build directories and commits. Assign explicit file ownership before any parallel work; never run concurrent
 Git/index operations or concurrent builds that mutate the same build tree.
@@ -553,6 +573,72 @@ checkpoint_postconditions: On checkpoint commit, verify its parent is `37462efc8
 next: The next action after this checkpoint is a re-probe of `.b-check-bounds` against actual HEAD: refine its subplan for line bounds and cubic de Casteljau bounds/distance clearances, lock independent oracles and error budgets, verify selector/file ownership, and record separate completeness, plan-correctness and readiness decisions. Only then have Gibbs start implementation. Commit that leaf and immediately self-update the roadmap before any successor.
 ```
 
+**Activation card — `1A-1.b-check-bounds` (v21; source base `6f25975f6ad02ba7cbb15982152905ff6f948fb0`).**
+
+```yaml
+slice: 1A-1.b-check-bounds
+state: prepared — no product edits authorized until review/readiness closes
+readiness: conditional
+readiness_decision: At source base 6f25975f6ad02ba7cbb15982152905ff6f948fb0, preflight completeness and plan correctness are closed by coordinator review and independent read-only review by Anscombe. Findings on clearance accounting, strict projected endpoint separation, degree-1/constant spans, empty witness relations, cross-stage budget assertions, and distinct event incidences were resolved in this card. Fresh focused Release/ASan layout baselines each pass 16 cases/3,311 assertions with zero skips/failures. Readiness remains conditional only on committing this plan-only checkpoint directly after the product base and re-reading actual HEAD plus product digests; if they match, persist the ready state before handing this exact card to Gibbs.
+base_sha: 6f25975f6ad02ba7cbb15982152905ff6f948fb0
+owner: Gibbs owns implementation edits to the three product/test paths; coordinator owns review, shared builds, evidence and Git. Anscombe is read-only for the plan/review gates. No concurrent product writer or build-directory writer.
+dependencies: 1A-1.b-ref-components at 9682d5cac65f30cfd86aa10556678ceb88b1448b; 1A-1.b-check-layout at 37462efc8; v20 reconciliation at 6f25975f6ad02ba7cbb15982152905ff6f948fb0.
+requirements: R02 (bounded geometric correctness), R05 (refusal must not adopt unchecked geometry), R12 (shared deterministic limits), R13 (reproducible validation/evidence).
+api_preflight: At base 6f25975f6, `CacheLayoutResult` provides owned degree-1/degree-3 controls and actual knot intervals; `ReferenceComponentAnalysis` owns its `ReferenceEventAnalysis`, visible `ReferenceEdge`/`ReferenceSpan` graph, `ReferenceIncidence`, and full `ReferenceFringe` boxes; `ReferenceFrame::boundOffsetJet(a,b)` returns conservative centre-relative, uniformly scaled local jets; `pointToFrame` encloses world-double inputs; `WorkBudget` is irreversible and exposes remaining vertices/pairs plus depth. `ReferenceSpan.interior` excludes root isolating intervals, visible `clearance` is exact `abs(signedDistance)` on the open span and its one-sided closure, and only edges in the visible component graph may witness geometry. The CMake `librecad_tests` target already compiles `lc_offsetcurve_geometry_tests.cpp`; the Release binary enumerates 16 `[cache-layout]` and 16 `[reference-components]` cases. No `checkCache` or persistent entity API exists yet.
+contract: Add a proof-only bounded relation for normalized cache subcurves and exact visible-reference fragments. For every candidate/reference fragment pair, either certify a pair witness or prove separation beyond the geometry threshold; an unresolved pair refuses the complete call. Every candidate parameter domain must be covered by at least one certified visible-edge/node witness. If every visible alternative for any candidate domain is proved separated, refuse as a geometric mismatch (mapped to `OffCurve` by the later public checker); never interpret an empty witness relation as vacuous success. An empty/refused reference analysis preserves its upstream failure disposition and cannot be reclassified as successful empty geometry. Return outward geometry-Hausdorff upper bound and candidate source-clearance lower bound, plus cache dyadic identity and immutable reference edge/subinterval or event-node/occurrence identity. `Ok` means the complete bounded relation and candidate-to-reference witness coverage were proved; it does not mean one reference component, reverse coverage, injectivity, ordered assignment, editability or public `checkCache` validity.
+invariants: No parameter map, nearest-foot identity, rounded-node substitution or sampled acceptance is assumed. Compare specified closed subcurve sets using symmetric chord-segment Hausdorff bounds. Use local frame units consistently: `eQ=M2*h^2/8` where `M2` is an outward local bound on `||Q''||` and `h` is the reference traversal-parameter width, never a cache knot width; candidate cubic deviation uses de Casteljau residual controls. Require `E_geom.hi <= ((2*tol)/scale).lo` and independently `(L-E_geom).lo >= ((abs(distance)-2.5*tol)/scale).hi`, with interval operations and endpoint comparisons outward. For an event-node witness, source clearance is `D_local - E_candidateNode`; the fringe-to-node enclosure radius contributes to geometry/reverse-fringe coverage, not to this candidate-to-node clearance term. Root fringes are explicit; bind each visible occurrence fringe to its exact node and inherit clearance only from closure of an incident visible edge. Never cross the whole-ellipse seam in a jet call. `WorkBudget` is caller-owned: the top-level cache-check orchestration retains the same instance across layout, reference construction, bounds and later topology; the bounds result owns the immutable reference analysis/witness IDs and reports a work snapshot, not a budget copy. Every expansion/query/output record is charged before allocation; work is never refunded. Any unresolved potentially-relevant pair, nonfinite bound or cap refusal returns no partial witness relation.
+blockers: No unresolved plan-contract or review finding. Mechanical activation remains: commit this plan-only checkpoint with direct parent 6f25975f6, verify its one-file scope and unchanged product hashes, re-read actual HEAD, then persist ready before implementation. Any changed product/API source invalidates this card and requires re-probe and review; never replace the proofs with sample matching. The cache-layout baseline is closed; re-run it if source or the test binary changes.
+files: Write only `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h`, `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp`, and `librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp`. Read-only checks: `lc_curvejet.h`, `lc_interval.h`, `rs_spline.h/.cpp`, offset reference/component implementations, `CMakeLists.txt`, and `src.pro`. CMake registration already exists; no build-list edit unless the source audit proves otherwise. Gibbs starts implementation after activation is ready.
+tasks:
+  - stage: Reconfirm entry contract and freeze tests/API
+    work: Re-read actual base, §3.5 and all relevant callers; build and enumerate existing layout/reference selectors; verify source span visibility, exact-D clearance, endpoint-root incidence/fringe ownership, local units, depth semantics, and all three file owners. Record baseline receipts and hashes. If any contract changes, revise the card first.
+    exit: All claims trace to current symbols and mathematics; baseline selectors are nonempty and green; reviewer has no unresolved blocker; no unowned caller/build path.
+  - stage: Add immutable result and one-ledger orchestration
+    work: Add a move-only proof result owning the complete `CacheLayoutResult`, `ReferenceComponentAnalysis` and all witness records, but not `WorkBudget`. The caller/top-level checker creates and retains one budget and passes that same instance through layout, component construction, bounds and the later topology stage; no stage creates/resets a replacement. Validate/inspect cache layout first (bounded rejection before expensive reference work), then build components and compare using the same caller budget; return its cumulative snapshot. Owning the layout and immutable reference graph lets topology refine even a geometry-passing coarse witness without borrowed cache/graph lifetime. Expose no public validity result. Use diagnostic indices only while the owned analysis remains alive.
+    exit: Invalid layout spends no reference work; reference refusal spends no pair work; every exit reports the same irreversible ledger; no partially published witness vector on failure.
+  - stage: Implement certified pair bounds and witness enumeration
+    work: Iterate candidate-span/reference-fragment Cartesian pairs lazily. Reference fragments are each visible edge's event-free `interior` plus each visible edge's own start/end occurrence fringe as a separate node-anchored fragment; do not generate a fragment for hidden or cutter-only geometry. On each candidate dyadic leaf, use interval-local de Casteljau controls. Degree 1 has zero chord error; degree 3 uses the two Bernstein residual-control norm upper bound. On each reference interior subinterval strictly inside one visible edge, enclose endpoints and `Q''` via `boundOffsetJet`; compute local `M2*h^2/8`, with `h` from that reference traversal interval. Bound symmetric Hausdorff between the two chord segments by both directed endpoint-to-segment bounds with outward projection/clamping; use a conservative endpoint-ball bound for degenerate chords. Sum all error intervals. For each root fringe, associate the exact occurrence, its node and incident visible edge; compute a max-separation bound between the full `ReferenceFringe` local box and `ReferenceNode` local box. Bound candidate-to-node and node-to-candidate using the candidate chord/residual, add fringe separation for fringe coverage, and use only candidate-to-node error in `D_local-E_candidateNode` clearance. Do not substitute a rounded node or assume the hidden side of the root box is visible. Keep every certified edge/node alternative for topology. For an interior fragment, prune only if the outward AABB distance lower bound exceeds the geometry-threshold upper bound; for a fringe fragment, prune only if the candidate/node lower bound minus the full fringe-to-node error exceeds that threshold. Otherwise split the larger-error/size side deterministically. If pair upper bound passes, record it; if lower bound proves separation, discard it; otherwise split until one applies. Search domains never cross a visible-edge boundary or `T -> 0` seam.
+    exit: Every candidate dyadic domain has at least one visible edge/node witness; every cross-pair was either certified, conservatively separated, or the entire call refused as unresolved/limited. Every witness independently satisfies geometry and source-clearance inequalities; ambiguous near pairs are never omitted; all IDs refer to the owned immutable graph. No topology/public-validity claim is made.
+  - stage: Add proof and refusal tests
+    work: Register `[lc-offsetcurve][geometry][cache-bounds]` cases for generated degree-1/degree-3 positives; exact straight/circle chord and analytic sagitta; independent high-precision interval containment; endpoint-and-midpoint adversarial cubic with large between-sample deviation; restricted-source clearance; reversed cache geometry; edge endpoint plus full root fringe; hidden-span/cutter-only exclusion; multiple components (proof relation only, no topology claim); near cusp; extreme centre/radius scale; affine/narrow knots; and exact, one-less, pre-spent, sticky vertex/pair/depth caps. Explicitly assert that all visible alternatives being proved separated, while only hidden/cutter geometry is nearby, refuses as geometric mismatch (`OffCurve` at the later public boundary) and publishes no partial relation (no vacuous-empty success). Exercise one `WorkBudget` instance through layout, reference analysis and bounds, checking cumulative counters, no reference work after layout refusal, no pair work after reference refusal, and no partial result after bounds exhaustion. At a shared physical crossing/cusp node and at both whole-seam incidences, assert witnesses retain each exact occurrence and incoming/outgoing edge identity without merging or branch switching. Assert no partial witnesses on every refusal and distinguish mathematical bounds from dense-sample cross-checks.
+    exit: At least 12 actually registered selector cases execute in Release and ASan with non-vacuous success and failure assertions; replace the minimum with the measured case count before validation.
+  - stage: Freeze, independently review, validate and commit product slice
+    work: Freeze exactly the three owned paths and file/scoped diff hashes; independent reviewer challenges chord Hausdorff proof, interval projection degeneracy, event endpoint/fringe clearance, relation completeness, overflow/finite handling, budget admission/lifetime and false-accept counterexamples. Run focused, adjacent, full and both fast lanes serially per build tree; retain every attempt.
+    exit: All required checks pass on the frozen tree; baseline skip identities match; reviewer has no actionable finding; product commit contains only the three owned files and exactly matches validated bytes.
+commit_boundary: One bounds-only product commit. No topology/public `checkCache`, entity, persistence, format, engine-producer or plan changes in this product commit. Immediately after it, reread the commit and self-update only this roadmap in a separate checkpoint commit before any next product edit.
+selectors: New `[lc-offsetcurve][geometry][cache-bounds]` in the existing geometry test translation unit, minimum 12 cases, measured count required in the final card. Adjacent `[cache-layout]`, `[reference-components]`, `[reference-events]`, `[intersection-budget]`, `[curve-offset][topology]`, and `[curve-offset][ellipse]` run in Release/ASan as specified below.
+cost_model: Layout spends `maxCacheSpans` and controls through `inspectCacheLayout`. Each candidate/reference or candidate/node proof comparison consumes one `distancePairs` debit before examination; each candidate/reference interval subdivision, retained witness, and pending/work record consumes `vertices` before allocation. Both dimensions are preflighted before a record needing both is created; no refunds. Search depth is the checked sum of candidate and reference subdivision depth; event-node comparison adds candidate depth only. `checkDepth` is recorded on entry. Initial Cartesian products are iterated lazily, not allocated. AABB pruning is conservative only. Exact, one-less per dimension, pre-spent and sticky retry tests must return `LimitExceeded` with no witness list; a cross-stage test passes the identical `WorkBudget` through layout, reference analysis and bounds and asserts the cumulative snapshot and stage-stop counters. Result work is the final shared budget snapshot, not summed stage snapshots.
+correctness_oracle: Independent 113-bit/Boost multiprecision evaluation of exact circle/ellipse offset and candidate Bezier values; analytic circle sagitta for chord tests; interval containment checks for bounds. Dense independent geometry sampling is a diagnostic cross-check only, never acceptance evidence. Actual engine-generated caches are compatibility positives, not the proof oracle.
+entry_evidence: Candidate code base and full SHA are `6f25975f6ad02ba7cbb15982152905ff6f948fb0`; Release enumerates 16 `[cache-layout]` and 16 `[reference-components]` cases. Fresh `[cache-layout]` Release and ASan runs each pass 16 cases/3,311 assertions, zero skips/failures; receipts are `build/evidence/1A-1.b-check-bounds/baseline-cache-layout-{release,asan}-attempt-1.junit.xml`. Product-source SHA-256 values equal v20: header `5e9b69dd05df19e554b4d39692c31a547ef19bed0da8d2099e939f8c240b5b70`, implementation `cb548c8bd48aef7bab2f79ed555e5b4f7fee5e16debd7e44556cae25d6aad307`, tests `4ff049d28c128fa76a1c8473430395a2815d80ea7ddf62fb5ae5d7399b48e340`. Test target registration confirmed at top-level `CMakeLists.txt:2612`.
+validation: |
+  mkdir -p build/evidence/1A-1.b-check-bounds
+  cmake --build build --target librecad_tests librecad_dxf_fast_tests librecad_dwg_fast_tests --parallel 4
+  cmake --build build-asan --target librecad_tests librecad_dxf_fast_tests librecad_dwg_fast_tests --parallel 4
+  build/librecad_tests --list-tests "[lc-offsetcurve][geometry][cache-bounds]"
+  QT_QPA_PLATFORM=offscreen build/librecad_tests "[lc-offsetcurve][geometry][cache-bounds]" --order decl --reporter junit --out build/evidence/1A-1.b-check-bounds/focused-release-attempt-N.junit.xml
+  QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_tests "[lc-offsetcurve][geometry][cache-bounds]" --order decl --reporter junit --out build/evidence/1A-1.b-check-bounds/focused-asan-attempt-N.junit.xml
+  QT_QPA_PLATFORM=offscreen build/librecad_tests "[lc-offsetcurve][geometry][cache-layout],[lc-offsetcurve][geometry][reference-components],[lc-offsetcurve][geometry][reference-events],[intersection-budget],[curve-offset][topology],[curve-offset][ellipse]" --order decl --reporter junit --out build/evidence/1A-1.b-check-bounds/adjacent-release-attempt-N.junit.xml
+  QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_tests "[lc-offsetcurve][geometry][cache-layout],[lc-offsetcurve][geometry][reference-components],[lc-offsetcurve][geometry][reference-events],[intersection-budget],[curve-offset][topology],[curve-offset][ellipse]" --order decl --reporter junit --out build/evidence/1A-1.b-check-bounds/adjacent-asan-attempt-N.junit.xml
+  QT_QPA_PLATFORM=offscreen build/librecad_tests --order decl --reporter junit --out build/evidence/1A-1.b-check-bounds/full-release-attempt-N.junit.xml
+  QT_QPA_PLATFORM=offscreen build/librecad_dxf_fast_tests '~[.]' '~[.slow]' '~[slow]' '~[corpus]' '~[external]' '~[external-reader]' '~[fixture]' --order decl --reporter junit --out build/evidence/1A-1.b-check-bounds/dxf-fast-release-attempt-N.junit.xml
+  QT_QPA_PLATFORM=offscreen build/librecad_dwg_fast_tests '~[.]' '~[.slow]' '~[slow]' '~[corpus]' '~[external]' '~[external-reader]' '~[fixture]' --order decl --reporter junit --out build/evidence/1A-1.b-check-bounds/dwg-fast-release-attempt-N.junit.xml
+  QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_dxf_fast_tests '~[.]' '~[.slow]' '~[slow]' '~[corpus]' '~[external]' '~[external-reader]' '~[fixture]' --order decl --reporter junit --out build/evidence/1A-1.b-check-bounds/dxf-fast-asan-attempt-N.junit.xml
+  QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_dwg_fast_tests '~[.]' '~[.slow]' '~[slow]' '~[corpus]' '~[external]' '~[external-reader]' '~[fixture]' --order decl --reporter junit --out build/evidence/1A-1.b-check-bounds/dwg-fast-asan-attempt-N.junit.xml
+  # Replace N with a fresh attempt number; serialize commands within each build directory. Parse every JUnit report,
+  # record process exits/case/assertion/skip identities, compare expected skips to the v20 baseline, run git diff --check,
+  # hash the frozen scoped diff/files, and ensure product bytes do not change after review or the final test.
+evidence: `build/evidence/1A-1.b-check-bounds/`; fresh baseline receipts before implementation, then attempt-numbered focused/adjacent/full/fast JUnit and independent oracle reports.
+recovery: Preserve failed patches, reports and worktree. Never stage/delete `build-asan/` or other unrelated files. Fix and rerun the same leaf with a new attempt number; if API/source/scope changes, reset only the plan decision to waiting and re-probe before continuing.
+completeness_review: Closed at source base `6f25975f6ad02ba7cbb15982152905ff6f948fb0` by coordinator trace and independent read-only review by Anscombe. Trace covers R02/R05/R12/R13 from normalized cache layout and exact visible components through every candidate-span/visible-edge interior/fringe/node alternative, zero-visible-witness `OffCurve` refusal, no-partial behavior, CMake registration, shared caller budget, result-owned layout/reference lifetime and topology refinement handoff. Anscombe's final pass required explicit zero-witness refusal, same-ledger cross-stage assertions and preserved crossing/cusp/seam incidence identities; all were added here and independently confirmed closed. Component count/order, injectivity, reverse coverage and public reason mapping remain owned by `.b-check-topology`/later integration, not omitted scope.
+plan_correctness_review: Closed at source base `6f25975f6ad02ba7cbb15982152905ff6f948fb0` by coordinator source/math audit and independent read-only review by Anscombe. Confirmed source contracts for exact visible-span clearance, outward local jets, event-fringe/node identities, seam bounds, and irreversible caller-owned budget; reviewed symmetric chord-segment Hausdorff, de Casteljau residual, `M2*h^2/8`, and topology's interval derivative-control signs, nonzero chord test, strict directional endpoint separation, exact incidence and non-reusing ordered assignment. Initial findings on clearance-term consistency, endpoint enclosure overlap and degree-1/constant spans were corrected; the narrow final monotonicity review confirmed the sufficient proof under the regular-edge premise. Future implementation correctness remains pending on the frozen product diff.
+correctness_review: Pending on future frozen implementation. Reviewer must inspect all accepted and refused paths, independent oracle, interval operation rounding/finite bounds, pair-search pruning, shared-budget/lifetime/no-partial behavior, and test failures; no sample-only proof.
+implementation_sha: pending
+product_commit_audit: pending
+plan_checkpoint_state: pending; the v21 plan-only activation checkpoint must directly follow `6f25975f6`, contain only this plan file, and leave all three product source hashes unchanged.
+checkpoint_postconditions: Verify the plan checkpoint's parent is `6f25975f6`, its path list is exactly `docs/plan_offset_curve_2961.md`, `git diff --check` passes, all three product hashes equal entry_evidence, and worktree status is accounted for without staging `build-asan/`. Re-read actual HEAD and product files. If unchanged, update this card to `ready` in a separate plan-only readiness receipt that records the activation checkpoint SHA and verified hashes; only then hand the exact ready card/base to Gibbs.
+next: Commit this reviewed activation checkpoint. Verify ancestry, path scope and unchanged product digests; then persist ready in a separate plan-only receipt. Gibbs starts `.b-check-bounds` only after that receipt. After its product commit, immediately reconcile evidence/status/dependencies/readiness and commit the plan-only follow-up before any next slice.
+```
+
 **Completed implementation card — `1A-1.b-ref-components`** (implementation `9682d5cac65f30cfd86aa10556678ceb88b1448b`;
 this v16 plan-only checkpoint is the separate reconciliation commit). Product dependency base is `dff307668`; initial
 edits began at `c3f091c3f6f2367dae13f631b1e72487528672d2`. Frozen final validation used HEAD
@@ -667,8 +753,8 @@ Only satisfied dependencies promote a card to `ready`; future recipes are `waiti
 | 1A-1.b-ref-events-isolate / .b-ref-contacts | Done at dff307668; geometry header/cpp/tests expose an owned immutable complete-event result, retained strict session/providers, diagnostic IDs, role/parameter ordering, exact-only same-role identity, rounded world-node enclosure and one irreversible work ledger. | 15 focused cases/5616 assertions Release+ASan; 154 geometry cases/1464224 assertions Release+ASan; full Release 3842 cases/7321304 assertions/74 unchanged skips; DXF and DWG fast lanes pass Release+ASan. Construction/free-end and stationary/free-end identities pass. Tangent stress reaches strict-query depth20 before ordering; it asserts bounded empty refusal only, not identity resolution. At this checkpoint, multi-pair shared-own success was not separately pinned; the following `.b-ref-components` slice added that proof. R02/R12. |
 | 1A-1.b-ref-components / .b-ref-events | Done at `9682d5cac65f30cfd86aa10556678ceb88b1448b`; exact-D visibility, complete event fringes, incidence-preserving components and atomic budget refusal are implemented. Keep engine rho/marginal policy out of this exact reference; qualify compatibility in `.c`/`.b-check`. | Attempt-8 focused Release/ASan, reference and engine regressions, full Release, and DXF/DWG fast lanes pass; the finite-distance conversion P1 was independently re-reviewed after its fix. Attempt 6 remains historical red and attempt 7 pre-fix green. Frozen/committed hashes and receipts are in §0.5. `.b-check-layout` is the next leaf after activation review. R02/R12/R13. |
 | 1A-1.b-check-layout / .b-ref-components | Done at `37462efc8`; bounded degree-1/degree-3 ClampedOpen layout inspection, checked formulas, exact knot-group/finite planar/unit-weight validation, actual parameter-interval span extraction, atomic shared-budget admission, and checker-only cap rename. No public geometry/topology-validity claim. | 16 registered cases/3,311 assertions pass Release/ASan; adjacent 94/754,288 both builds; full Release 3,874 cases/7,346,172 assertions/74 unchanged skips; DXF/DWG fast Release/ASan pass with 3/4 expected skips. Independent review clear; frozen hashes and reports in §0.5. `.b-check-bounds` waits for a fresh post-checkpoint readiness audit. R01/R02/R12/R13. |
-| 1A-1.b-check-bounds / .b-check-layout | Implement exact line-segment bounds for degree-1 spans and conservative de Casteljau leaf/chord error for degree-3 spans, offset-distance upper bounds and source-clearance lower bounds. Use parameter-aware reference matching and outward floating-point allowances. | Between-sample adversarial controls; exact linear-span distance oracle and dense independent cubic evaluation verify bounds; near tangency/cusps/extreme scale; no nearest-point sample becomes proof. R02/R12. |
-| 1A-1.b-check-topology / .b-check-bounds | Combine complete reference and candidate geometry into public `checkCache`; require exactly one reference component and bidirectional ordered coverage; enforce direction/closure/trim joins. | Proper subset, missing tail, isolated component, repeat/retrace, extra loop and wrong reversal refuse; legitimate lens and closed-arc joins pass. No partial acceptance on exhausted budget. R02. |
+| 1A-1.b-check-bounds / .b-check-layout | Implement proof-only bounded cache/reference subcurve comparisons: exact degree-1 chord, interval de Casteljau cubic-to-chord error, exact-offset jet interpolation error, outward chord-segment Hausdorff bound, exact-visible-span/source-clearance lower bound, and full event-node/fringe witnesses. Preserve edge/node alternatives for topology; do not infer parameter correspondence or public validity. | Analytic circle/sagitta and high-precision interval-oracle checks; generated degree-1/degree-3 positives; between-sample adversarial cubic; clearance, hidden-span/fringe, reversal, near-cusp, extreme-scale and affine-knot cases; exact/one-less/pre-spent/sticky vertex/pair/depth refusal with no partial witnesses. R02/R12/R13. |
+| 1A-1.b-check-topology / .b-check-bounds | Consume setwise witnesses only as geometric proximity. Independently prove local candidate/reference traversal is injective and monotone (or split/isolate derivative roots), match oriented endpoints to exact occurrence/edge-end incidence, then find one order-preserving, non-reusing assignment covering both complete domains. Same-node crossings/cusps/seams are not branch-switch permission. Combine only then into public `checkCache`. | Proper subset, missing tail, isolated component, repeat/retrace (including a cubic whose image equals a line but reverses), extra loop, branch switch and wrong reversal refuse; legitimate lens/trim and closed-arc joins pass. Ambiguous assignments and exhausted budgets publish no partial success. R02/R12. |
 | 1A-1.c / all .b children | Qualify defaults and tolerance-floor policy against current engine/adversarial corpus; record seeds, statuses/work/cost and resolve required-success disagreements. Retain the source-qualified interior-fallback native reachability coverage limit; investigate natural cases or prove limits without a test backdoor. | Existing offset/topology regressions, independent geometry oracle, every cap exit, near-critical success, file-rounding margins; no timing assertion or unearned fallback-coverage claim. R01/R02/R12. |
 | 1E-2.safety / all 1E-1 children | Add schema/raw-carrier hostile cases, unknown-tail/flags edit policy, geometry demotion and late-failure save tests. Scope schema/filter fixes only to demonstrated violations. | Both formats, second save/reload, foreign data unchanged, raw 3D/repair inputs never editable; transaction checks for existing/absent target and document state. R07/R08/R14/R15. |
 | 1E-2.fixtures / .safety | Commit independently authored input fixtures for every schema-capable application reader version, each covering degree-1 and degree-3 cache carriers; include input-only legacy DWG R13/R14, binary DXF R14/R2018 and R12 geometry-only input. Record reproducible provenance, producer/version and expected definitions. | Every reader version consumes a checked-in fixture not emitted by LibreCAD's writer under test; both degrees are asserted. Separately inspect writer output; immutable hashes/provenance, fast-lane registration, full and both fast lanes. Missing external fixtures leave their reader rows explicitly incomplete. Same-run writer/reader payloads alone do not close reader coverage. R07/R11/R14. |
@@ -686,10 +772,15 @@ each product slice, not a later catch-all test phase.
 **Immediate implementation-resume queue:** `.b-ref-events-isolate` is committed at `dff307668`; `.b-ref-components`
 is committed at `9682d5cac65f30cfd86aa10556678ceb88b1448b` with attempt-8 source-matched evidence. Its v16 plan-only
 reconciliation is committed at `c6e32c17f`; the v17 and v18 plan-only checkpoints are `22317685c` and `127231e41`.
-The v19 plan-only checkpoint activates `.b-check-layout` at product source base `127231e41`: producer/API checks
-closed, and the card contains degree-1/degree-3 contracts and test gates. After committing this ready card, refresh
-actual HEAD and source digests, then have Gibbs implement the single layout-only leaf. Do not repeat or amend the
-component slice. Do not restart or reapply contacts/providers/
+The v19 plan-only checkpoint activates `.b-check-layout` at product source base `127231e41`; its product commit is
+`37462efc8` and the v20 reconciliation is `6f25975f6`. The current candidate is `.b-check-bounds` at source base
+`6f25975f6ad02ba7cbb15982152905ff6f948fb0`; v21 has closed independent completeness and plan-correctness reviews and
+fresh layout baselines. Review findings on root/fringe clearance, budget lifetime, setwise-vs-traversal, strict endpoint
+separation, degree-1 spans, empty witness relations, cross-stage accounting and incidence identity are incorporated.
+Do not start implementation until this plan-only activation checkpoint is committed, its scope/ancestry/product digests
+are verified, and the card is persisted as ready. Gibbs starts the first implementation edit. Do not repeat or amend
+the component/layout slices.
+Do not restart or reapply contacts/providers/
 refinements/isolation. Budget, guard, progress and frames are complete at 10c6bff46 / 0e3c6b342 / fb70681e2 /
 26d107ccf; strict core, rate, critical preparation and observed-depth accounting are complete at 834a46a88 /
 bcd6c5a4f / 943406abe / 290d2658f; trusted pair refinement is complete at f4f87f48e and critical refinement at
@@ -1371,29 +1462,124 @@ Use a bounded adaptive check with conservative error accounting; do not claim an
    uses `[3k .. 3k+3]` because every interior cubic knot has multiplicity three.
 2. **Small distance:** `distance ≤ tol` gives `TooSmall`. The caller must distinguish invalid inputs, geometric
    refusal and a work limit; none may become successful adoption with an unchecked cache.
-3. **Construct bounded reference geometry.** Use the same source sweep convention as `EllipseSource::make`, including
-   reversed/wrapped arcs. Reuse existing `LC_Interval`, parametric intersection and spline jet/stroke primitives where
-   applicable. Form adaptive reference segments for the ellipse and signed exact offset with explicit approximation
-   error at most `tol/8`, split at relevant cusp/corner/trim events. This is pure bounded geometry analysis; it does not
-   call `createEntities`, refit or regenerate the saved cache. In 1A-1.b record the current reference adapter/helper
-   used for visible intervals; extract a small read-only helper if needed instead of duplicating the offset engine's
-   trimming rules. Unresolved visibility or event classification refuses adoption.
-4. **Check every span, not three samples.** A degree-1 span is an exact line segment and has zero curve-to-chord
-   approximation error; a degree-3 span is bounded by de Casteljau or the existing conservative jet bounds. For an
-   appropriately matched reference segment, the maximum distance of the two cache-chord endpoints to that convex
-   segment, plus candidate/reference approximation errors, bounds the whole span leaf's distance to the offset.
-   Require this bound ≤ `2·tol`; refine uncertain cubic leaves and refuse if it cannot be established.
-   Compute the minimum cache/source segment distance with conservative error subtraction and require
-   `≥ d − 2.5·tol`. Candidate nearest-point samples or golden-section searches may accelerate matching, but their
-   sampling alone cannot prove acceptance. Spatial bounds and pair caps keep the search bounded.
+3. **Construct bounded reference geometry.** Use `analyseReferenceComponents` with the same normalized source sweep,
+   signed distance and shared `WorkBudget`; its owned events/providers already supply exact visible intervals, event
+   nodes and root fringes for reversed/wrapped arcs. Compare against `ReferenceFrame::boundOffsetJet`, not a materialized
+   `createEntities` result, a fitted spline, stroke approximation or independently duplicated trim logic. Subdivide
+   each visible edge's exact reference-parameter interval adaptively and bound its chord error from its local second
+   derivative. Keep event-node/fringe pieces explicit and split at the whole-ellipse seam. This is bounded geometric
+   analysis; it never refits or regenerates the saved cache. Unresolved visibility, event classification or finite
+   interval bounds refuses adoption.
+4. **Check every span, not three samples.** Work in the `ReferenceFrame`'s centre-relative, uniformly scaled local
+   coordinates. Normalize each `CacheSpan` to a degree-1/degree-3 Bezier on `[0,1]`; recursively split its control
+   net with interval de Casteljau, never with its possibly narrow/affine knot difference. For a cubic leaf with local
+   controls `P0..P3`, its same-parameter deviation from its endpoint chord has the Bernstein difference controls
+   `0`, `P1-(2P0/3+P3/3)`, `P2-(P0/3+2P3/3)`, `0`; the maximum norm of the two middle interval vectors is a certified
+   upper bound by the convex-hull property. A line's bound is zero. For each visible `ReferenceEdge`, restrict to its
+   `ReferenceSpan.interior` (the certified event-free open interval and its limiting endpoints), split intervals
+   dyadically, and enclose exact offset endpoints and `Q''` with `ReferenceFrame::boundOffsetJet`. If `M2` encloses
+   `sup ||Q''||` and `h` encloses the reference parameter width, linear-interpolation error is at most `M2*h^2/8`.
+   The formula applies to the parameterized exact offset and needs no regular-speed assumption; non-finite or
+   unbounded enclosures are unresolved, never success.
+
+   Compare each specified candidate/reference **subcurve pair as sets**; do not assert an affine parameter map,
+   nearest-foot identity or like-numbered endpoint match. Let `S_C` and `S_Q` be their closed chord segments and let
+   `Hchord` be the maximum of both directed endpoint-to-opposite-segment bounds. Distance to a closed convex segment
+   is convex along the other segment, so endpoint maxima bound the complete chord-to-chord Hausdorff distance. Form
+   all projection, clamp, vector-norm and conversion calculations with outward intervals; if a chord length is not
+   provably positive, use a conservative endpoint-ball bound or subdivide. In local frame units set
+   `E = eC + eQ + Hchord`, where `eC` and `eQ` already include every interval-conversion/rounding enclosure. This
+   triangle bound certifies symmetric Hausdorff distance between the two curve subpieces, independent of traversal
+   parameterization or orientation. A pair is a geometry witness only if its interval upper bound proves
+   `E <= (2*tol)/frame.scale()` against the threshold's interval lower bound. For the candidate-to-visible-reference
+   direction, form `L = ReferenceSpan.clearance / frame.scale()` and the interval `clearanceLower = L-E`; pass only if
+   `clearanceLower.lo()` is at least the upper endpoint of the interval
+   `(abs(distance)-2.5*tol)/frame.scale()`. Likewise, prove the geometry threshold by comparing `E.hi()` with the
+   lower endpoint of `(2*tol)/frame.scale()`. Source proof uses the exact signed-distance magnitude, not the engine's
+   traversal-side signed value. The visible-span premise is checked from the referenced edge; never use hidden spans,
+   the full ellipse in place of the restricted source, or a sample as proof.
+
+   Root isolating intervals are not silently dropped or treated as wholly visible. The `ReferenceSpan.interior`
+   covers the certified event-free interval and its limiting endpoints. Treat each endpoint fringe separately using
+   the exact `ReferenceFringe` selected by the span's start/end occurrence and its `ReferenceNode`; never substitute
+   the rounded node or a root midpoint for the exact event. Bound the full fringe-to-node image separation from both
+   local interval boxes and include it in the fringe geometry/coverage error. A node certificate is eligible only when
+   the node has an incident visible edge: the exact event point is then in that edge's closure, whose restricted-source
+   clearance is `D`; charge candidate-to-node and fringe-to-node enclosure errors to their distinct proof terms as
+   specified below. Cutter-only,
+   hidden-point and hidden-span geometry cannot witness a retained cache. Keep each reference interval within one
+   visible edge and within `[0, frame.parameterEnd()]`; split at the whole-ellipse seam and use the two explicit seam
+   incidences, never an unwrapped `boundOffsetJet` query across `T -> 0`.
+   Preserve every certified edge/node alternative needed by topology, with diagnostic indices into the exact immutable
+   `ReferenceComponentAnalysis`; no pointers or IDs outlive that analysis. These witnesses are proof data for the next
+   topology stage, not a successful cache or public `checkCache` result. Topology must prove complete bidirectional
+   coverage and a consistent ordered assignment; it may request further pair proofs through the same bounded helper.
+   Build a bounded relation of candidate leaf/reference subspan and candidate leaf/event-node witnesses. Charge and
+   retain all certified alternatives required by topology; do not greedily keep only the first matching edge. Use
+   conservative interval AABB separation only to prune a pair when its lower distance proves it cannot satisfy the
+   threshold. Otherwise subdivide the candidate and/or reference side selected by a deterministic largest-error/size
+   rule. A pair that remains possibly relevant but unresolved at depth or representability limits refuses the whole
+   bounds result; it is not silently omitted from the relation. Witnesses contain cache span plus dyadic subspan,
+   reference edge and exact subinterval (or event occurrence/node), outward error upper bounds and source-clearance
+   lower bounds. IDs are indices into the exact immutable analysis owned by the result. No partial witness vector is
+   published on any failure. Candidate nearest-point samples or golden-section searches may order probes but may not
+   prove or prune acceptance.
+
+Source clearance is not a second nearest-point search. For an exact visible interior fragment, its restricted-source
+clearance is `D_local=abs(distance)/frame.scale()` and distance-to-source is 1-Lipschitz. Thus the same proved
+candidate/reference error gives `clearance(candidate) >= D_local-E`; require this lower bound to meet
+`(abs(distance)-2.5*tol)/frame.scale()` independently of the geometry threshold. At event nodes use the distinct
+`D_local-E_candidateNode` rule above. This uses the exact-D component predicate already implemented by
+`.b-ref-components`; any tolerance-retained or engine-marginal result must instead account for its explicit clearance
+loss and may not inherit this exact-D claim.
 5. **Check topology and coverage.** The definition must have exactly one retained nondegenerate reference component;
-   a cache matching only one component of a multi-component result is not adoptable. Require one connected cache chain
-   with the stated direction (allowing `cacheReversed`), matching **all** retained reference intervals and allowed trim
-   nodes of that component. Check coverage in both directions, not just cache-to-reference proximity. Whole-source results must close;
-   untrimmed arc results must retain the offset endpoints. Trimmed arcs may close, but must form a complete retained
-   component. Reject retracing, missing tails, extra loops and unexplained joins. Use source-parameter intervals to
-   distinguish legitimate lens-corner jumps from broken ordering. Ambiguous topology returns `Topology`, preserving
-   plain geometry on import or keeping the old editable object on a refused edit.
+   a cache matching only one component of a multi-component result is not adoptable. Treat `.b-check-bounds`'s
+   setwise Hausdorff witnesses as proximity evidence only: equal image sets do not imply equal traversal. For each
+   selected candidate/reference witness pair, prove a monotone injective local traversal in one orientation. A bounded
+   sufficient test projects both derivatives onto a common nondegenerate local chord, chosen from the candidate leaf's
+   oriented endpoint enclosures after applying the proposed whole-cache orientation. Prove the chord's squared-length
+   interval has a strictly positive lower bound. If a cubic leaf's endpoint chord is zero or not yet separated from
+   zero, subdivide it; if no child certificate is obtained before depth/representability limits, refuse rather than
+   certify a loop from a zero chord. For a degree-1 candidate, form the outward interval for its projected line
+   derivative and require a strict sign in the proposed orientation (`lo > 0` or `hi < 0`); exactly coincident line
+   controls are constant and refuse immediately as `Topology`. For a cubic candidate, the derivative is the quadratic
+   Bernstein curve with controls `3(P1-P0)`, `3(P2-P1)`, `3(P3-P2)`; compute each projected-control dot product as an
+   outward interval. For positive orientation require every lower endpoint `>= 0` and at least one lower endpoint
+   `> 0`; for negative orientation require every upper endpoint `<= 0` and at least one upper endpoint `< 0`. The
+   Bernstein basis then proves strict monotonicity on the open leaf. For the exact reference, use the interval
+   `Q'(t) dot chord` from `ReferenceFrame::boundOffsetJet`; prove a one-sided sign over the entire interval and prove strict endpoint
+   separation in that same direction: for positive orientation, `endProjection.lo > startProjection.hi`; for negative
+   orientation, `startProjection.lo > endProjection.hi`. Merely unequal or overlapping endpoint enclosures are not a
+   certificate. The exact offset is analytic on each regular edge, so a nonnegative/nonpositive projection with this
+   strict endpoint separation cannot contain a flat subinterval. If a sign or endpoint separation is unresolved, split the pair even
+   when its Hausdorff bound already passes; isolate a sign-changing/touching derivative root and prove child intervals.
+   A cusp/stationary/root interval is an explicit endpoint case, not permission to assume monotonicity. If no sign/root
+   proof is obtained within the shared budget, return `Topology`/`LimitExceeded`; never infer orientation from endpoints
+   alone. Endpoint matching must link to the exact reference occurrence, `ReferenceFringe` and edge-end incidence, not
+   merely the rounded world node. At a crossing, cusp, trim or seam, preserve incoming/outgoing edge identities and
+   follow the component's source-parameter edge order; a shared physical node alone cannot switch branches. Each local
+   witness records the candidate/reference projection signs and the chosen orientation; the complete assignment must
+   use one consistent orientation across the component. Do not independently flip individual leaves to make their
+   local tests pass; apply `cacheReversed` once to the whole candidate order.
+
+   Construct the candidate/reference witness relation completely, then choose an order-preserving, non-reusing chain
+   of oriented local witnesses. Topology may refine a witness that passed setwise geometry by subdividing its owned
+   candidate/reference domains and rerunning the same bounded pair proof plus monotonicity proof; it must not treat a
+   coarse Hausdorff pass as injectivity. Keep the original caller-owned `WorkBudget` alive across this refinement.
+   The chain must cover every candidate dyadic domain and every reference visible interior/fringe, with
+   only the documented shared endpoint overlap; no witness may be reused to conceal a repeat. A whole-ellipse seam is
+   the one explicit last-to-first transition. If multiple assignments remain and are not the same cycle modulo that
+   seam, return `Topology`. Check coverage in both directions, not just cache-to-reference proximity. Whole-source
+   results must close; untrimmed arc results must retain the offset endpoints. Trimmed arcs may close, but must form a
+   complete retained component. Reject retracing, missing tails, extra loops and unexplained joins. Use source-parameter
+   intervals and event incidence to distinguish legitimate lens-corner jumps from broken ordering. Ambiguous topology
+   returns `Topology`, preserving plain geometry on import or keeping the old editable object on a refused edit.
+
+   Required adversarial discriminator: a cubic with controls `[0, 4/3, -1/3, 1]` on a line has image `[0,1]` but its
+   projected derivative changes sign (the curve reverses internally). Its setwise Hausdorff bounds may pass on the
+   whole span or after subdivision, but topology must refuse it. Also test a genuinely monotone cubic with a stationary
+   endpoint, event endpoint identity, crossing branch-switch, whole-seam cycle and `cacheReversed` against the same
+   proof path.
 6. **Bound every path.** Check vertex/piece/pair/depth caps before expansion; non-finite intermediate bounds or exhausted
    work produce a refusal (`InvalidInput` or `LimitExceeded`), never an acceptance. Work counters support deterministic
    tests. Adaptive validation runs at adoption/edit/load, not painting or mouse motion. Use local coordinates and
@@ -1406,12 +1592,17 @@ local/world conversion, chord and interval arithmetic errors in the stated `2*to
 outward bounds. An invalid or unbounded interval cannot pass by an empty comparison. Check the complete finite
 candidate before publishing it; a successful prefix or a close sample cannot rescue an undecided remainder.
 
-An alternative conservative clearance proof may use an exactly visible complete reference: if every candidate point
-has a proved corresponding reference point of source clearance D within physical error e, distance-to-source is
-1-Lipschitz, giving candidate clearance>=D-e. Include reference approximation, coordinate conversion and node rounding
-in e. A tolerance-retained reference with only clearance D-epsilon gives D-epsilon-e instead; it must still meet
-D-2.5*tol. This does not replace complete events, topology or ordered bidirectional coverage, and a sample/whole-ellipse
-estimate cannot establish the restricted-source premise.
+For an exact visible interior reference fragment, the pairwise Hausdorff certificate supplies, for every candidate
+point, an actual point on a restricted-source-visible reference subcurve within its proved error `E`; distance-to-source
+is 1-Lipschitz, so interior clearance is at least `L-E`, where `L` is the certified restricted-source clearance in
+local frame units. At a root fringe, use the exact visible edge endpoint/node as the candidate-to-source clearance
+witness and subtract only the candidate-to-node enclosure error: `D_local-E_candidateNode`. Separately include the
+complete fringe/node enclosure separation in the fringe geometry and reverse-coverage bound. Never add that fringe
+separation a second time to candidate-to-node clearance, and never infer that a hidden side of the root interval has
+clearance `D`. A future tolerance-retained reference with only clearance
+`D-epsilon` must use `D-epsilon-E` and still meet `D-2.5*tol`. These local certificates do not replace complete events,
+topology or ordered bidirectional coverage, and a sample/whole-ellipse estimate cannot establish the restricted-source
+premise.
 
 1A-1.c must test adversarial edits between the former sample points, reversed/missing components, NaNs, unusual knot
 scales, near cusps, closed arc-source results and each work-limit exit. Compare with independently dense geometry as
@@ -5253,3 +5444,38 @@ no product/native result affected. Structural audit0:27mainrows,60nodes,15requir
   226 assertions. No product file changed. Inventory: 15 requirements, 14 application format rows plus one
   conversion row, 24 executable leaf recipes (25 rows including header), 106 headings and 34 balanced fence lines.
   The affected cache-check chain remains acyclic. Existing untracked `build-asan/` is preserved.
+
+#### v20 → v21 (2026-10-16)
+
+- **Completeness:** replaced the underspecified `.b-check-bounds` matching recipe with explicit candidate-span/reference-
+  fragment coverage, visible-edge interiors, exact occurrence fringes, event nodes, candidate-span witness completeness,
+  conservative pruning, unresolved-pair refusal and the topology consumer's refinement handoff. Kept topology,
+  persistence, file formats and UI outside this bounds slice; they remain separately owned and incomplete.
+- **Plan and implementation correctness:** specified symmetric setwise chord-Hausdorff bounds from cubic de Casteljau
+  residual controls, local exact-offset interpolation error `M2*h^2/8`, outward interval threshold comparisons, exact
+  restricted-source clearance and explicit fringe/node error accounting. Independent review exposed the traversal gap
+  in setwise proximity; `.b-check-topology` now separately requires strict local monotonicity/injectivity, exact event
+  incidence and a complete ordered non-reusing assignment. Follow-up review required consistent node-clearance terms,
+  strict interval-separated endpoint projections, and an explicit degree-1/constant-span disposition. The frozen
+  implementation correctness gate remains future work and cannot be approved by this plan review.
+- **Executable sub-plan/readiness:** added a file-scoped activation card with exact base and source hashes, owner and
+  dependency boundaries, current APIs, ordered implementation tasks, registered selector and oracle requirements,
+  deterministic work accounting, refusal cases, validation sequence, recovery policy and explicit pass artifacts.
+  Independent reviews by Anscombe closed plan correctness and completeness at the recorded product base. Their final
+  completeness pass required explicit all-visible-witnesses-separated refusal, cross-stage same-ledger tests, and
+  distinct crossing/cusp/seam incidence assertions; all are in the card. The card remains conditional only until the
+  plan-only activation checkpoint and fresh post-commit HEAD/source-digest recheck; no product edits are authorized yet.
+- **Commits after slices:** retained one frozen/tested product commit per leaf, with exact path/digest identity and no
+  bundling of topology or caller work into the bounds commit. A failed review, test or reconciliation stops the queue;
+  preserve evidence and do not start a successor slice.
+- **Self-update after each product commit:** require immediate source/diff/evidence reread and a separate plan-only
+  checkpoint updating slice status, requirements, aggregate state, dependencies, format/build/test matrices, receipts,
+  queue, readiness and next-card base. Verify checkpoint ancestry, path scope, product hashes, DAG and worktree before
+  resuming product edits. Checkpoints never recursively hash themselves.
+- **Validation:** documentation-only; no product files changed and no bounds implementation is claimed. Fresh existing
+  `[cache-layout]` Release and ASan baselines each pass 16 cases/3,311 assertions with zero skips/failures. Independent
+  plan reviews found actionable clearance/endpoint and completeness-test gaps; all were corrected, then Anscombe's final
+  read-only math and completeness passes found no remaining plan blocker. `git diff --check` passes. The documented
+  inventory/DAG audit passes with 28 main rows, 60 dependency nodes, 15 requirements, 14 format rows (8 DXF/6 DWG),
+  36 balanced fences, 104 headings and an acyclic dependency graph; its archived helper's old matrix-heading selector
+  was adapted in the invocation, not modified. Existing untracked `build-asan/` is preserved.
