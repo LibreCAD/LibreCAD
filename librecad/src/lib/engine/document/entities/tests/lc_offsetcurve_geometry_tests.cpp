@@ -3294,3 +3294,735 @@ TEST_CASE("Reference provider raw validation never repairs malformed source defi
         CHECK(data.majorP.z == before.majorP.z);
     }
 }
+
+namespace {
+struct ConstructionBox {
+    LC_IntersectionDomain box;
+    double sourceEnd, capEnd;
+};
+
+ConstructionBox constructionBox(const geo::ReferenceProviders& provider, const geo::ReferenceRole offset,
+                                const geo::ReferenceRole cutter, const double delta) {
+    const bool start = cutter == geo::ReferenceRole::StartCutter;
+    const bool outer = offset == geo::ReferenceRole::Own ? delta > 0.0 : delta < 0.0;
+    const auto indices = roleSegments(provider, offset), caps = roleSegments(provider, cutter);
+    REQUIRE_FALSE(indices.empty());
+    REQUIRE(caps.size() == 2);
+    const auto cached = provider.contactProofInterval(offset, cutter);
+    REQUIRE(cached);
+    const std::size_t index = start ? indices.front() : indices.back();
+    const auto segment = provider.segments()[index];
+    const auto cap = caps[outer ? 0 : 1];
+    const auto capSegment = provider.segments()[cap];
+    return {{index, cap,
+             LC_Interval::hull(std::max(segment.t0, cached->lo()), std::min(segment.t1, cached->hi())),
+             LC_Interval::hull(capSegment.t0, capSegment.t1)},
+             start ? 0.0 : provider.frame().parameterEnd(), outer ? 0.0 : 1.0};
+}
+
+void checkConstructionProof(const geo::ReferenceProviders& provider, const ConstructionBox& target) {
+    const auto& box = target.box;
+    for (const bool swapped : {false, true}) {
+        const LC_IntersectionDomain request{swapped ? box.segmentB : box.segmentA,
+            swapped ? box.segmentA : box.segmentB, swapped ? box.parameterB : box.parameterA,
+            swapped ? box.parameterA : box.parameterB};
+        const auto proof = provider.certifyIntersection(request);
+        REQUIRE(proof.outcome == LC_AnalyticIntersectionCertificate::Outcome::Unique);
+        CHECK(proof.proof == LC_IntersectionProof::AnalyticEndpoint);
+        CHECK(proof.kind == LC_ParametricIntersection::Kind::Endpoint);
+        CHECK(proof.proofDomain.segmentA == request.segmentA);
+        CHECK(proof.proofDomain.segmentB == request.segmentB);
+        CHECK(proof.proofDomain.parameterA.lo() == request.parameterA.lo());
+        CHECK(proof.proofDomain.parameterA.hi() == request.parameterA.hi());
+        CHECK(proof.proofDomain.parameterB.lo() == request.parameterB.lo());
+        CHECK(proof.proofDomain.parameterB.hi() == request.parameterB.hi());
+        CHECK(proof.isolationA.lo() == (swapped ? target.capEnd : target.sourceEnd));
+        CHECK(proof.isolationA.hi() == proof.isolationA.lo());
+        CHECK(proof.isolationB.lo() == (swapped ? target.sourceEnd : target.capEnd));
+        CHECK(proof.isolationB.hi() == proof.isolationB.lo());
+    }
+}
+
+CriticalFloat radialDerivativeOracle(const RS_EllipseData& data, const geo::ReferenceFrame& frame,
+                                     const bool start, const double t) {
+    const auto current = referenceOracle(data, frame, 0.0, t, false);
+    const auto endpoint = referenceOracle(data, frame, 0.0, start ? 0.0 : frame.parameterEnd(), false);
+    return CriticalFloat(current[2]) * CriticalFloat(current[2]) +
+        CriticalFloat(current[3]) * CriticalFloat(current[3]) +
+        CriticalFloat(current[4]) * (CriticalFloat(current[0]) - CriticalFloat(endpoint[0])) +
+        CriticalFloat(current[5]) * (CriticalFloat(current[1]) - CriticalFloat(endpoint[1]));
+}
+
+void checkWholeRadialProof(const geo::ReferenceProviders& provider, const geo::ReferenceRole offset,
+                           const geo::ReferenceRole cutter) {
+    const auto range = provider.contactProofInterval(offset, cutter);
+    REQUIRE(range);
+    const bool start = cutter == geo::ReferenceRole::StartCutter;
+    const double endpointT = start ? 0.0 : provider.frame().parameterEnd();
+    LC_CurveJetBounds endpoint, span;
+    REQUIRE(provider.frame().boundSourceJet(endpointT, endpointT, endpoint));
+    REQUIRE(provider.frame().boundSourceJet(range->lo(), range->hi(), span));
+    const auto hPrime = span.speedSquaredProduct + span.ddx * (span.x - endpoint.x) +
+        span.ddy * (span.y - endpoint.y);
+    REQUIRE(hPrime.isValid());
+    CHECK(hPrime.isPositive());
+}
+} // namespace
+
+TEST_CASE("Contact prepared providers certify both offset roles and ends without changing legacy hooks",
+          "[lc-offsetcurve][geometry][reference-contacts]") {
+    for (const bool reversed : {false, true}) {
+        for (const double delta : {-1.0, 1.0}) {
+            const auto data = reversed ? basis(10.0, 0.5, 2.0, 0.0, true) : basis(10.0, 0.5, 0.0, 2.0);
+            geo::WorkBudget oldBudget, newBudget;
+            const auto legacy = geo::prepareReferenceProviders(data, delta, oldBudget);
+            auto contact = geo::prepareReferenceContactProviders(data, delta, newBudget);
+            REQUIRE(legacy.status == LC_IntersectionStatus::Ok);
+            REQUIRE(contact.status == LC_IntersectionStatus::Ok);
+            checkProviderLayout(*contact.provider, false, false);
+            for (const auto offset : {geo::ReferenceRole::Own, geo::ReferenceRole::Opposite}) {
+                for (const auto cutter : {geo::ReferenceRole::StartCutter, geo::ReferenceRole::EndCutter}) {
+                    CHECK_FALSE(legacy.provider->contactProofInterval(offset, cutter));
+                    const auto box = constructionBox(*contact.provider, offset, cutter, delta);
+                    checkConstructionProof(*contact.provider, box);
+                    checkUnavailableProviderProof(legacy.provider->certifyIntersection(box.box));
+                    const bool outer = offset == geo::ReferenceRole::Own ? delta > 0.0 : delta < 0.0;
+                    const auto range = contact.provider->contactProofInterval(offset, cutter);
+                    if (outer) {
+                        CHECK(range->lo() == 0.0);
+                        CHECK(range->hi() == contact.provider->frame().parameterEnd());
+                    } else {
+                        checkWholeRadialProof(*contact.provider, offset, cutter);
+                    }
+                }
+            }
+            checkWork(contact.work, newBudget.consumed());
+        }
+    }
+}
+
+TEST_CASE("Contact certificates exclude only complete cached boxes without the known construction point",
+          "[lc-offsetcurve][geometry][reference-contacts]") {
+    geo::WorkBudget budget;
+    const auto prepared = geo::prepareReferenceContactProviders(basis(10.0, 0.5, 0.0, 2.0), -1.0, budget);
+    REQUIRE(prepared.status == LC_IntersectionStatus::Ok);
+    const auto& provider = *prepared.provider;
+    const auto work = budget.consumed();
+    for (const auto offset : {geo::ReferenceRole::Own, geo::ReferenceRole::Opposite}) {
+        for (const auto cutter : {geo::ReferenceRole::StartCutter, geo::ReferenceRole::EndCutter}) {
+            const auto target = constructionBox(provider, offset, cutter, -1.0);
+            for (const bool omitSource : {false, true}) {
+                auto request = target.box;
+                auto& interval = omitSource ? request.parameterA : request.parameterB;
+                const double middle = 0.5 * interval.lo() + 0.5 * interval.hi();
+                REQUIRE(interval.lo() < middle);
+                REQUIRE(middle < interval.hi());
+                const double endpoint = omitSource ? target.sourceEnd : target.capEnd;
+                interval = endpoint == interval.lo() ? LC_Interval::hull(middle, interval.hi()) :
+                    LC_Interval::hull(interval.lo(), middle);
+                for (const bool swapped : {false, true}) {
+                    const auto proof = provider.certifyIntersection(request);
+                    REQUIRE(proof.outcome == LC_AnalyticIntersectionCertificate::Outcome::Excluded);
+                    CHECK(proof.proof == LC_IntersectionProof::AnalyticExclusion);
+                    CHECK(proof.proofDomain.segmentA == request.segmentA);
+                    CHECK(proof.proofDomain.segmentB == request.segmentB);
+                    CHECK(proof.proofDomain.parameterA.lo() == request.parameterA.lo());
+                    CHECK(proof.proofDomain.parameterA.hi() == request.parameterA.hi());
+                    CHECK(proof.proofDomain.parameterB.lo() == request.parameterB.lo());
+                    CHECK(proof.proofDomain.parameterB.hi() == request.parameterB.hi());
+                    if (!swapped) {
+                        std::swap(request.segmentA, request.segmentB);
+                        std::swap(request.parameterA, request.parameterB);
+                    }
+                }
+            }
+        }
+    }
+    checkWork(budget.consumed(), work);
+}
+
+TEST_CASE("Contact diagnostics are unavailable for invalid absent whole and legacy roles",
+          "[lc-offsetcurve][geometry][reference-contacts]") {
+    for (const bool collapsed : {false, true}) {
+        for (const bool whole : {false, true}) {
+            const auto data = collapsed ? (whole ? basis(5.0, 1.0) : basis(5.0, 1.0, 0.0, 2.0)) :
+                whole ? basis() : basis(10.0, 0.5, 0.0, 2.0);
+            geo::WorkBudget budget;
+            const auto result = geo::prepareReferenceContactProviders(data, collapsed ? 5.0 : 1.0, budget);
+            REQUIRE(result.status == LC_IntersectionStatus::Ok);
+            checkProviderLayout(*result.provider, whole, collapsed);
+            for (const auto cutter : {geo::ReferenceRole::StartCutter, geo::ReferenceRole::EndCutter}) {
+                CHECK(bool(result.provider->contactProofInterval(geo::ReferenceRole::Own, cutter)) == !whole);
+                CHECK(bool(result.provider->contactProofInterval(geo::ReferenceRole::Opposite, cutter)) ==
+                      (!whole && !collapsed));
+            }
+            CHECK_FALSE(result.provider->contactProofInterval(geo::ReferenceRole::Own, geo::ReferenceRole::Own));
+            CHECK_FALSE(result.provider->contactProofInterval(geo::ReferenceRole::StartCutter, geo::ReferenceRole::EndCutter));
+            CHECK_FALSE(result.provider->contactProofInterval(static_cast<geo::ReferenceRole>(-1), geo::ReferenceRole::EndCutter));
+            CHECK_FALSE(result.provider->contactProofInterval(geo::ReferenceRole::Own, static_cast<geo::ReferenceRole>(-1)));
+            if (!whole) {
+                auto copied = result.provider->contactProofInterval(geo::ReferenceRole::Own, geo::ReferenceRole::StartCutter);
+                REQUIRE(copied);
+                const auto original = *copied;
+                copied = LC_Interval::hull(-100.0, 100.0);
+                CHECK(result.provider->contactProofInterval(geo::ReferenceRole::Own, geo::ReferenceRole::StartCutter)->lo() == original.lo());
+                CHECK(result.provider->contactProofInterval(geo::ReferenceRole::Own, geo::ReferenceRole::StartCutter)->hi() == original.hi());
+            }
+        }
+    }
+}
+
+TEST_CASE("Contact radial neighborhoods qualify exact threshold and ULP adjacent minimum endpoints",
+          "[lc-offsetcurve][geometry][reference-contacts]") {
+    for (const double distance : {25.0, std::nextafter(25.0, 100.0)}) {
+        for (const bool reversed : {false, true}) {
+            const auto data = reversed ? basis(100.0, 0.5, 2.0, 0.0, true) : basis(100.0, 0.5, 0.0, 2.0);
+            geo::WorkBudget budget;
+            const auto result = geo::prepareReferenceContactProviders(data, -distance, budget);
+            REQUIRE(result.status == LC_IntersectionStatus::Ok);
+            const auto& provider = *result.provider;
+            const auto cutter = reversed ? geo::ReferenceRole::EndCutter : geo::ReferenceRole::StartCutter;
+            const double endpoint = reversed ? provider.frame().parameterEnd() : 0.0;
+            LC_Interval f, df;
+            REQUIRE(provider.frame().boundOffsetFactor(endpoint, endpoint, f, df));
+            CHECK(f.contains(0.0));
+            const auto cache = provider.contactProofInterval(geo::ReferenceRole::Own, cutter);
+            REQUIRE(cache);
+            REQUIRE(cache->lo() < cache->hi());
+            checkWholeRadialProof(provider, geo::ReferenceRole::Own, cutter);
+            checkConstructionProof(provider, constructionBox(provider, geo::ReferenceRole::Own, cutter, -distance));
+            for (unsigned i = 0; i <= 16; ++i) {
+                const double t = cache->lo() + (cache->hi() - cache->lo()) * double(i) / 16.0;
+                CHECK(radialDerivativeOracle(data, provider.frame(), !reversed, t) > 0);
+            }
+            if (distance > 25.0) {
+                REQUIRE(result.ownCritical->occurrenceCount() == 1);
+                const auto root = result.ownCritical->snapshot(result.ownCritical->occurrenceHandle(0));
+                REQUIRE(root);
+                if (reversed) { CHECK(root->occurrence.parameter.hi() < cache->lo()); }
+                else { CHECK(cache->hi() < root->occurrence.parameter.lo()); }
+            } else {
+                REQUIRE(result.ownCritical->occurrenceCount() == 1);
+                const auto stationary = result.ownCritical->snapshot(result.ownCritical->occurrenceHandle(0));
+                REQUIRE(stationary);
+                CHECK(stationary->occurrence.kind == geo::CriticalKind::CriticalStationary);
+                CHECK(stationary->occurrence.parameter.lo() == endpoint);
+                CHECK(stationary->occurrence.parameter.hi() == endpoint);
+            }
+        }
+    }
+}
+
+TEST_CASE("Contact preparation refines clipped critical gaps without resetting canonical history",
+          "[lc-offsetcurve][geometry][reference-contacts]") {
+    for (const bool reversed : {false, true}) {
+        const auto data = reversed ? basis(100.0, 0.5, 2.0, 0.7, true) : basis(100.0, 0.5, 0.7, 2.0);
+        geo::WorkBudget oldBudget;
+        const auto old = geo::prepareReferenceProviders(data, -100.0, oldBudget);
+        REQUIRE(old.status == LC_IntersectionStatus::Ok);
+        REQUIRE(old.ownCritical->occurrenceCount() == 1);
+        const auto before = old.ownCritical->snapshot(old.ownCritical->occurrenceHandle(0));
+        REQUIRE(before);
+        const double end = old.provider->frame().parameterEnd();
+        if (reversed) { REQUIRE(before->occurrence.parameter.hi() == end); }
+        else { REQUIRE(before->occurrence.parameter.lo() == 0.0); }
+        geo::WorkBudget budget;
+        REQUIRE(budget.checkDepth(15)); // An unrelated maximum is not the canonical starting history.
+        const auto result = geo::prepareReferenceContactProviders(data, -100.0, budget);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        const auto after = result.ownCritical->snapshot(result.ownCritical->occurrenceHandle(0));
+        REQUIRE(after);
+        CHECK(after->admittedRounds > before->admittedRounds);
+        CHECK(after->admittedRounds < 15);
+        CHECK(result.work.deepest == 15);
+        checkNested(after->occurrence.parameter, before->occurrence.parameter);
+        const auto cutter = reversed ? geo::ReferenceRole::EndCutter : geo::ReferenceRole::StartCutter;
+        const auto cache = result.provider->contactProofInterval(geo::ReferenceRole::Own, cutter);
+        REQUIRE(cache);
+        if (reversed) { CHECK(after->occurrence.parameter.hi() < cache->lo()); }
+        else { CHECK(cache->hi() < after->occurrence.parameter.lo()); }
+        checkWholeRadialProof(*result.provider, geo::ReferenceRole::Own, cutter);
+        checkConstructionProof(*result.provider, constructionBox(*result.provider, geo::ReferenceRole::Own, cutter, -100.0));
+        checkCriticalSnapshot(data, -100.0, result.provider->frame(), *after);
+        checkWork(result.work, budget.consumed());
+    }
+}
+
+TEST_CASE("Contact hooks never extend an inner endpoint certificate across a nearby transverse recrossing",
+          "[lc-offsetcurve][geometry][reference-contacts]") {
+    const auto data = basis(10.0, 0.5, 0.0, 1.0);
+    geo::WorkBudget budget;
+    auto result = geo::prepareReferenceContactProviders(data, -3.0, budget);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    const auto* provider = result.provider.get();
+    const auto cache = provider->contactProofInterval(geo::ReferenceRole::Own, geo::ReferenceRole::StartCutter);
+    REQUIRE(cache);
+    const auto target = constructionBox(*provider, geo::ReferenceRole::Own, geo::ReferenceRole::StartCutter, -3.0);
+    checkConstructionProof(*provider, target);
+    auto broad = target.box;
+    broad.parameterA = LC_Interval::hull(provider->segments()[broad.segmentA].t0,
+                                        provider->segments()[broad.segmentA].t1);
+    checkUnavailableProviderProof(provider->certifyIntersection(broad));
+    std::swap(broad.segmentA, broad.segmentB);
+    std::swap(broad.parameterA, broad.parameterB);
+    checkUnavailableProviderProof(provider->certifyIntersection(broad));
+    // Exact-positive-factor squaring gives this monotone quartic in x=cos(theta).
+    const auto polynomial = [](const CriticalFloat& x) {
+        const CriticalFloat a = CriticalFloat("1.25") - CriticalFloat(".75") * x;
+        return CriticalFloat(25) * a * a * (1 - CriticalFloat(".75") * x * x) - CriticalFloat("2.25");
+    };
+    CriticalFloat lo(".95"), hi(".96");
+    REQUIRE(polynomial(lo) > 0);
+    REQUIRE(polynomial(hi) < 0);
+    for (unsigned i = 0; i < 180; ++i) {
+        const CriticalFloat middle = (lo + hi) / 2;
+        if (polynomial(middle) > 0) { lo = middle; }
+        else { hi = middle; }
+    }
+    const CriticalFloat x = (lo + hi) / 2, theta = acos(x), s = sqrt(1 - x * x);
+    const CriticalFloat h = sqrt(CriticalFloat(".25") * x * x + s * s);
+    const CriticalFloat qx = 10 * x - CriticalFloat("1.5") * x / h;
+    const CriticalFloat qy = 5 * s - 3 * s / h;
+    REQUIRE(qy < 0);
+    REQUIRE(qx < 10);
+    const CriticalFloat u = atan2(-qy, qx - 10) / boost::math::constants::pi<CriticalFloat>();
+    REQUIRE(u > CriticalFloat(".5"));
+    REQUIRE(u < 1);
+    CHECK(CriticalFloat(cache->hi()) < theta);
+    const auto ownBranch = provider->branchFor(geo::ReferenceRole::Own);
+    const auto capBranch = provider->branchFor(geo::ReferenceRole::StartCutter);
+    REQUIRE(ownBranch);
+    REQUIRE(capBranch);
+    const double scale = provider->frame().scale();
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-6;
+    options.maxDepth = budget.depthLimit();
+    options.maxLeafDepth = budget.depthLimit();
+    options.maxBoxPairs = budget.remainingPairs();
+    options.maxGeneratedItems = budget.remainingVertices();
+    options.maxLeaves = budget.remainingVertices();
+    options.anchoredBranches = 1;
+    const auto query = findCertifiedIntersections(std::move(result.provider), options);
+    REQUIRE(budget.consumePairs(query.work.totalBoxPairs));
+    REQUIRE(budget.consumeVertices(query.work.generatedItems));
+    REQUIRE(budget.checkDepth(query.work.deepest()));
+    REQUIRE(query.status == LC_IntersectionStatus::Ok);
+    REQUIRE(query.session);
+    std::size_t matched = 0, endpoints = 0, crossings = 0;
+    for (std::size_t i = 0; i < query.session->rootCount(); ++i) {
+        const auto root = query.session->snapshot(query.session->rootHandle(i));
+        REQUIRE(root);
+        const auto& event = root->event;
+        if (event.branchA != *ownBranch || event.branchB != *capBranch) { continue; }
+        ++matched;
+        if (event.isolation.parameterA.lo() == 0.0 && event.isolation.parameterA.hi() == 0.0) {
+            ++endpoints;
+            CHECK(event.proof == LC_IntersectionProof::AnalyticEndpoint);
+            CHECK(event.isolation.parameterB.lo() == 1.0);
+            CHECK(event.isolation.parameterB.hi() == 1.0);
+        } else {
+            ++crossings;
+            CHECK(event.proof == LC_IntersectionProof::IntervalUniqueTransverse);
+            CHECK(event.kind == LC_ParametricIntersection::Kind::Transverse);
+            checkCriticalEnclosure(event.isolation.parameterA, theta);
+            checkCriticalEnclosure(event.isolation.parameterB, u);
+            checkCriticalEnclosure(root->imageX, qx / scale);
+            checkCriticalEnclosure(root->imageY, qy / scale);
+        }
+    }
+    CHECK(matched == 2);
+    CHECK(endpoints == 1);
+    CHECK(crossings == 1);
+}
+
+TEST_CASE("Contact prepared geometry qualifies the six required source families without publishing events",
+          "[lc-offsetcurve][geometry][reference-contacts]") {
+    struct Fixture { RS_EllipseData source; double delta; };
+    const std::array<Fixture, 6> fixtures{{
+        {basis(10.0, 0.5), 3.0}, {basis(10.0, 0.5), -1.0},
+        {basis(100.0, 0.6), -36.036}, {basis(10.0, 0.5, M_PI / 3, 2 * M_PI / 3), -2.0},
+        {basis(100.0, 0.5, M_PI / 18, 35 * M_PI / 18), -49.5},
+        {basis(100.0, 0.05, M_PI / 12, 7 * M_PI / 4), -4.0}}};
+    for (std::size_t f = 0; f < fixtures.size(); ++f) {
+        for (const bool reversed : {false, true}) {
+            auto data = fixtures[f].source;
+            if (reversed) {
+                std::swap(data.angle1, data.angle2);
+                data.reversed = true;
+            }
+            // Exact ninety-degree rotation does not introduce an unrelated norm perturbation at thresholds.
+            data.majorP = {0.0, data.majorP.x};
+            data.center = {1e200, -1e200};
+            CAPTURE(f, reversed);
+            geo::WorkBudget budget;
+            const auto result = geo::prepareReferenceContactProviders(data, fixtures[f].delta, budget);
+            REQUIRE(result.status == LC_IntersectionStatus::Ok);
+            REQUIRE(result.provider);
+            if (result.provider->frame().sourceSweep().whole) {
+                CHECK_FALSE(result.provider->contactProofInterval(geo::ReferenceRole::Own, geo::ReferenceRole::StartCutter));
+                continue;
+            }
+            for (const auto offset : {geo::ReferenceRole::Own, geo::ReferenceRole::Opposite}) {
+                for (const auto cutter : {geo::ReferenceRole::StartCutter, geo::ReferenceRole::EndCutter}) {
+                    const auto target = constructionBox(*result.provider, offset, cutter, fixtures[f].delta);
+                    checkConstructionProof(*result.provider, target);
+                    const bool inner = offset == geo::ReferenceRole::Own ? fixtures[f].delta < 0.0 : fixtures[f].delta > 0.0;
+                    if (inner) {
+                        checkWholeRadialProof(*result.provider, offset, cutter);
+                        const auto interval = result.provider->contactProofInterval(offset, cutter);
+                        for (unsigned i = 0; i <= 8; ++i) {
+                            const double t = interval->lo() + (interval->hi() - interval->lo()) * double(i) / 8;
+                            CHECK(radialDerivativeOracle(data, result.provider->frame(),
+                                cutter == geo::ReferenceRole::StartCutter, t) > 0);
+                        }
+                    }
+                }
+            }
+            checkWork(result.work, budget.consumed());
+        }
+    }
+}
+
+namespace {
+unsigned radialDepth(const geo::ReferenceProviders& provider, const geo::ReferenceRole offset,
+                     const geo::ReferenceRole cutter) {
+    const auto range = provider.contactProofInterval(offset, cutter);
+    REQUIRE(range);
+    const double length = range->hi() - range->lo();
+    double expected = provider.frame().parameterEnd();
+    unsigned depth = 0;
+    while (expected != length && depth < 20) { expected *= 0.5; ++depth; }
+    REQUIRE(expected == length); // These accounting fixtures use exact dyadic T=2 and no critical gap.
+    return depth;
+}
+} // namespace
+
+TEST_CASE("Contact metadata costs match construction pairs and actual radial examinations",
+          "[lc-offsetcurve][geometry][reference-contacts]") {
+    for (const bool whole : {false, true}) {
+        for (const bool collapsed : {false, true}) {
+            const auto data = collapsed ? (whole ? basis(5.0, 1.0) : basis(5.0, 1.0, 0.0, 2.0)) :
+                whole ? basis(10.0, 0.5) : basis(10.0, 0.5, 0.0, 2.0);
+            const double delta = collapsed ? 5.0 : 1.0;
+            geo::WorkBudget oldBudget, budget;
+            const auto old = geo::prepareReferenceProviders(data, delta, oldBudget);
+            const auto contact = geo::prepareReferenceContactProviders(data, delta, budget);
+            REQUIRE(old.status == LC_IntersectionStatus::Ok);
+            REQUIRE(contact.status == LC_IntersectionStatus::Ok);
+            const std::size_t c = whole ? 0 : collapsed ? 2 : 4;
+            std::size_t j = 0;
+            unsigned deepest = old.work.deepest;
+            if (!whole && !collapsed) {
+                for (const auto cutter : {geo::ReferenceRole::StartCutter, geo::ReferenceRole::EndCutter}) {
+                    const auto depth = radialDepth(*contact.provider, geo::ReferenceRole::Opposite, cutter);
+                    j += depth + 1;
+                    deepest = std::max(deepest, depth);
+                }
+            }
+            CHECK(contact.work.vertices == old.work.vertices + 1 + c + j);
+            CHECK(contact.work.distancePairs == old.work.distancePairs + 1 + c + j);
+            CHECK(contact.work.deepest == deepest);
+            CHECK(contact.work.cubicPieces == old.work.cubicPieces);
+            checkWork(contact.work, budget.consumed());
+            for (const bool prespent : {false, true}) {
+                for (int cap = 0; cap < 3; ++cap) {
+                    LC_OffsetCheckLimits limits;
+                    limits.maxVertices = contact.work.vertices + (prespent ? 5 : 0) - (cap == 1 ? 1 : 0);
+                    limits.maxDistancePairs = contact.work.distancePairs + (prespent ? 7 : 0) - (cap == 2 ? 1 : 0);
+                    geo::WorkBudget bounded{limits};
+                    if (prespent) {
+                        REQUIRE(bounded.consumeVertices(5));
+                        REQUIRE(bounded.consumePairs(7));
+                        REQUIRE(bounded.checkDepth(15));
+                    }
+                    const auto result = geo::prepareReferenceContactProviders(data, delta, bounded);
+                    CHECK(result.status == (cap == 0 ? LC_IntersectionStatus::Ok : LC_IntersectionStatus::LimitExceeded));
+                    checkWork(result.work, bounded.consumed());
+                    if (cap == 0) {
+                        REQUIRE(result.provider);
+                        CHECK(result.work.vertices == limits.maxVertices);
+                        CHECK(result.work.distancePairs == limits.maxDistancePairs);
+                        CHECK(result.work.deepest == (prespent ? 15 : deepest));
+                    } else {
+                        checkNoProviders(result, bounded);
+                        const auto work = bounded.consumed();
+                        const auto again = geo::prepareReferenceContactProviders(data, delta, bounded);
+                        CHECK(again.status == LC_IntersectionStatus::LimitExceeded);
+                        checkNoProviders(again, bounded);
+                        checkWork(again.work, work);
+                    }
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("Contact failed item pair and depth admission retains the exact entered stage prefix",
+          "[lc-offsetcurve][geometry][reference-contacts]") {
+    const auto data = basis(10.0, 0.5, 0.0, 2.0);
+    geo::WorkBudget oldBudget, completeBudget;
+    const auto old = geo::prepareReferenceProviders(data, 1.0, oldBudget);
+    const auto complete = geo::prepareReferenceContactProviders(data, 1.0, completeBudget);
+    REQUIRE(old.status == LC_IntersectionStatus::Ok);
+    REQUIRE(complete.status == LC_IntersectionStatus::Ok);
+    struct Stage { std::optional<unsigned> depth; };
+    std::vector<Stage> stages{Stage{std::nullopt}}; // Contact control; item precedes its pair.
+    for (const auto offset : {geo::ReferenceRole::Own, geo::ReferenceRole::Opposite}) {
+        for (const auto cutter : {geo::ReferenceRole::StartCutter, geo::ReferenceRole::EndCutter}) {
+            stages.push_back({std::nullopt}); // Construction record/initial examination.
+            if (offset == geo::ReferenceRole::Own) { continue; } // Positive own, negative opposite.
+            const auto last = radialDepth(*complete.provider, offset, cutter);
+            for (unsigned depth = 0; depth <= last; ++depth) { stages.push_back({depth}); }
+        }
+    }
+    REQUIRE(complete.work.vertices == old.work.vertices + stages.size());
+    REQUIRE(complete.work.distancePairs == old.work.distancePairs + stages.size());
+    for (const bool pairs : {false, true}) {
+        unsigned observed = old.work.deepest;
+        for (std::size_t entered = 0; entered < stages.size(); ++entered) {
+            CAPTURE(pairs, entered);
+            LC_OffsetCheckLimits limits;
+            if (pairs) { limits.maxDistancePairs = old.work.distancePairs + entered; }
+            else { limits.maxVertices = old.work.vertices + entered; }
+            geo::WorkBudget budget{limits};
+            const auto failed = geo::prepareReferenceContactProviders(data, 1.0, budget);
+            CHECK(failed.status == LC_IntersectionStatus::LimitExceeded);
+            checkNoProviders(failed, budget);
+            CHECK(failed.work.vertices == old.work.vertices + entered + (pairs ? 1 : 0));
+            CHECK(failed.work.distancePairs == old.work.distancePairs + entered);
+            CHECK(failed.work.deepest == observed); // An admitted item with a failed pair is not examined.
+            if (stages[entered].depth) { observed = std::max(observed, *stages[entered].depth); }
+        }
+    }
+    REQUIRE(complete.work.deepest > old.work.deepest);
+    for (const bool oneLess : {false, true}) {
+        LC_OffsetCheckLimits limits;
+        limits.maxDepth = complete.work.deepest - (oneLess ? 1 : 0);
+        geo::WorkBudget budget{limits};
+        const auto result = geo::prepareReferenceContactProviders(data, 1.0, budget);
+        CHECK(result.status == (oneLess ? LC_IntersectionStatus::LimitExceeded : LC_IntersectionStatus::Ok));
+        CHECK(result.work.deepest <= limits.maxDepth);
+        checkWork(result.work, budget.consumed());
+        if (oneLess) { checkNoProviders(result, budget); }
+        else { checkWork(result.work, complete.work); }
+    }
+}
+
+TEST_CASE("Contact clipped gap retries spend critical work once with persistent root depth",
+          "[lc-offsetcurve][geometry][reference-contacts]") {
+    const auto data = basis(100.0, 0.5, 0.7, 2.0);
+    geo::WorkBudget oldBudget, budget;
+    const auto old = geo::prepareReferenceProviders(data, -100.0, oldBudget);
+    const auto result = geo::prepareReferenceContactProviders(data, -100.0, budget);
+    REQUIRE(old.status == LC_IntersectionStatus::Ok);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    const auto a = old.ownCritical->snapshot(old.ownCritical->occurrenceHandle(0));
+    const auto b = result.ownCritical->snapshot(result.ownCritical->occurrenceHandle(0));
+    REQUIRE(a);
+    REQUIRE(b);
+    REQUIRE(b->admittedRounds > a->admittedRounds);
+    const std::size_t rounds = b->admittedRounds - a->admittedRounds;
+    const std::size_t n = result.ownCritical->occurrenceCount();
+    REQUIRE(n == 1);
+    const std::size_t extraV = result.work.vertices - old.work.vertices;
+    const std::size_t extraP = result.work.distancePairs - old.work.distancePairs;
+    // One contact control + four pairs, J radial exams; each successful canonical round V1+N/P3+N,
+    // followed by one pair-only gap retry. No metadata/leaf count is debited a second time.
+    REQUIRE(extraV >= 5 + rounds * (1 + n));
+    const std::size_t radial = extraV - 5 - rounds * (1 + n);
+    CHECK(radial >= 2);
+    CHECK(extraP == 5 + radial + rounds * (3 + n) + rounds);
+    for (int cap = 0; cap < 3; ++cap) {
+        LC_OffsetCheckLimits limits;
+        limits.maxVertices = result.work.vertices - (cap == 1 ? 1 : 0);
+        limits.maxDistancePairs = result.work.distancePairs - (cap == 2 ? 1 : 0);
+        geo::WorkBudget bounded{limits};
+        const auto next = geo::prepareReferenceContactProviders(data, -100.0, bounded);
+        CHECK(next.status == (cap == 0 ? LC_IntersectionStatus::Ok : LC_IntersectionStatus::LimitExceeded));
+        checkWork(next.work, bounded.consumed());
+        if (cap != 0) { checkNoProviders(next, bounded); }
+    }
+}
+
+TEST_CASE("Contact refusal inside a clipped canonical round retains actual scalar inverse and map charges",
+          "[lc-offsetcurve][geometry][reference-contacts]") {
+    const auto data = basis(100.0, 0.5, 0.7, 2.0);
+    geo::WorkBudget baseBudget;
+    const auto base = geo::prepareReferenceProviders(data, -100.0, baseBudget);
+    REQUIRE(base.status == LC_IntersectionStatus::Ok);
+    REQUIRE(base.ownCritical->occurrenceCount() == 1);
+    const auto initial = base.ownCritical->snapshot(base.ownCritical->occurrenceHandle(0));
+    REQUIRE(initial);
+    REQUIRE(initial->occurrence.parameter.lo() == 0.0);
+    for (std::size_t extraPairs = 2; extraPairs <= 6; ++extraPairs) {
+        CAPTURE(extraPairs);
+        LC_OffsetCheckLimits limits;
+        limits.maxDistancePairs = base.work.distancePairs + extraPairs;
+        geo::WorkBudget budget{limits};
+        const auto result = geo::prepareReferenceContactProviders(data, -100.0, budget);
+        CHECK(result.status == LC_IntersectionStatus::LimitExceeded);
+        checkNoProviders(result, budget);
+        // Control/record V2P2, scalar V1P1, inverse P1, common P1, occurrence V1P1, gap retry P1.
+        CHECK(result.work.vertices == base.work.vertices + (extraPairs < 5 ? 3 : 4));
+        CHECK(result.work.distancePairs == base.work.distancePairs + extraPairs);
+        CHECK(result.work.deepest == std::max(base.work.deepest,
+            initial->admittedRounds + (extraPairs >= 3 ? 1u : 0u)));
+    }
+}
+
+TEST_CASE("Contact global weak factor signs allow isolated stationary zeros without scalar refinement",
+          "[lc-offsetcurve][geometry][reference-contacts]") {
+    for (const double distance : {1.0, 1.25, 10.0, 11.0}) {
+        geo::WorkBudget baseBudget, budget;
+        const auto data = basis(5.0, 0.5, 0.0, 2.0);
+        const auto old = geo::prepareReferenceProviders(data, -distance, baseBudget);
+        const auto result = geo::prepareReferenceContactProviders(data, -distance, budget);
+        REQUIRE(old.status == LC_IntersectionStatus::Ok);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        CHECK(result.work.vertices - old.work.vertices == result.work.distancePairs - old.work.distancePairs);
+        for (const auto cutter : {geo::ReferenceRole::StartCutter, geo::ReferenceRole::EndCutter}) {
+            checkWholeRadialProof(*result.provider, geo::ReferenceRole::Own, cutter);
+            checkConstructionProof(*result.provider, constructionBox(*result.provider, geo::ReferenceRole::Own, cutter, -distance));
+        }
+        for (std::size_t i = 0; i < result.ownCritical->occurrenceCount(); ++i) {
+            const auto root = result.ownCritical->snapshot(result.ownCritical->occurrenceHandle(i));
+            REQUIRE(root);
+            CHECK(root->admittedRounds == 0);
+        }
+    }
+}
+
+TEST_CASE("Contact unavailable near critical endpoint evidence cannot mint a construction certificate",
+          "[lc-offsetcurve][geometry][reference-contacts]") {
+    // A genuine raw endpoint within interval-predicate uncertainty, not a fabricated provider/certificate.
+    const double endpoint = 0.7;
+    const CriticalFloat angle = endpoint, r(".5");
+    const CriticalFloat h2 = r * r * cos(angle) * cos(angle) + sin(angle) * sin(angle);
+    const double distance = (CriticalFloat(100) * h2 * sqrt(h2) / r).convert_to<double>();
+    const auto data = basis(100.0, 0.5, 0.0, endpoint);
+    geo::WorkBudget oldBudget, budget;
+    const auto old = geo::prepareReferenceProviders(data, -distance, oldBudget);
+    const auto result = geo::prepareReferenceContactProviders(data, -distance, budget);
+    REQUIRE(old.status == LC_IntersectionStatus::AmbiguousTopology);
+    CHECK(result.status == LC_IntersectionStatus::AmbiguousTopology);
+    CHECK(result.reason == geo::ReferencePreparationReason::UnresolvedGeometry);
+    checkNoProviders(result, budget);
+    checkWork(result.work, old.work); // Unavailable base evidence is not upgraded merely by opting into contacts.
+}
+
+TEST_CASE("Contact hook refusals clear proof outputs and cannot be enlarged by diagnostic copies",
+          "[lc-offsetcurve][geometry][reference-contacts]") {
+    geo::WorkBudget budget;
+    const auto result = geo::prepareReferenceContactProviders(basis(10.0, 0.5, 0.0, 1.0), -3.0, budget);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    const auto& provider = *result.provider;
+    const auto work = budget.consumed();
+    const auto target = constructionBox(provider, geo::ReferenceRole::Own, geo::ReferenceRole::StartCutter, -3.0);
+    auto copied = *provider.contactProofInterval(geo::ReferenceRole::Own, geo::ReferenceRole::StartCutter);
+    copied = LC_Interval::hull(0.0, 1.0);
+    auto outside = target.box;
+    outside.parameterA = copied;
+    checkUnavailableProviderProof(provider.certifyIntersection(outside));
+    auto invalid = target.box;
+    invalid.segmentA = provider.segments().size();
+    checkUnavailableProviderProof(provider.certifyIntersection(invalid));
+    invalid = target.box;
+    invalid.parameterB = LC_Interval{};
+    checkUnavailableProviderProof(provider.certifyIntersection(invalid));
+    invalid = target.box;
+    invalid.parameterB = LC_Interval::hull(0.4, 1.0); // Named cap piece is [.5,1].
+    checkUnavailableProviderProof(provider.certifyIntersection(invalid));
+    const auto actual = provider.contactProofInterval(geo::ReferenceRole::Own, geo::ReferenceRole::StartCutter);
+    REQUIRE(actual);
+    CHECK(actual->hi() < copied.hi());
+    checkWork(budget.consumed(), work);
+}
+
+TEST_CASE("Contact provider and issued critical state survive independent ownership and budget lifetimes",
+          "[lc-offsetcurve][geometry][reference-contacts]") {
+    std::unique_ptr<const geo::ReferenceProviders> provider;
+    std::unique_ptr<geo::CriticalRefinementSession> critical;
+    geo::CriticalOccurrenceHandle handle;
+    std::optional<ConstructionBox> box;
+    {
+        auto data = basis(100.0, 0.5, 0.7, 2.0);
+        geo::WorkBudget budget;
+        auto result = geo::prepareReferenceContactProviders(data, -100.0, budget);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        box = constructionBox(*result.provider, geo::ReferenceRole::Own, geo::ReferenceRole::StartCutter, -100.0);
+        handle = result.ownCritical->occurrenceHandle(0);
+        critical = std::move(result.ownCritical);
+        provider = std::move(result.provider);
+        data.majorP = {0.0, 0.0};
+    }
+    REQUIRE(box);
+    checkConstructionProof(*provider, *box);
+    REQUIRE(critical->snapshot(handle));
+    const auto* borrowed = provider.get();
+    const auto proof = provider->contactProofInterval(geo::ReferenceRole::Own, geo::ReferenceRole::StartCutter);
+    REQUIRE(proof);
+    std::unique_ptr<const LC_ParametricCurves> owned = std::move(provider);
+    checkConstructionProof(*borrowed, *box);
+    owned.reset();
+    REQUIRE(critical->snapshot(handle));
+    geo::WorkBudget foreign;
+    const auto rejected = critical->contract(handle, foreign);
+    CHECK(rejected.status == LC_IntersectionStatus::InvalidInput);
+    CHECK(rejected.workSource == geo::CriticalWorkSource::LastMatchingBudget);
+    checkWork(rejected.entered, {});
+    checkWork(foreign.consumed(), {});
+    REQUIRE(critical->snapshot(handle));
+}
+
+TEST_CASE("Contact radial proofs respect true wrapped traversal rates under rotation and reversal",
+          "[lc-offsetcurve][geometry][reference-contacts]") {
+    for (const bool reversed : {false, true}) {
+        auto data = reversed ? basis(100.0, 0.5, 0.2, 5.8, true) : basis(100.0, 0.5, 5.8, 0.2);
+        data.majorP = {60.0, 80.0};
+        data.center = {-1e200, 1e200};
+        geo::WorkBudget budget;
+        const auto result = geo::prepareReferenceContactProviders(data, -1.0, budget);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        for (const auto offset : {geo::ReferenceRole::Own, geo::ReferenceRole::Opposite}) {
+            for (const auto cutter : {geo::ReferenceRole::StartCutter, geo::ReferenceRole::EndCutter}) {
+                checkConstructionProof(*result.provider, constructionBox(*result.provider, offset, cutter, -1.0));
+                if (offset != geo::ReferenceRole::Own) { continue; }
+                checkWholeRadialProof(*result.provider, offset, cutter);
+                const auto interval = result.provider->contactProofInterval(offset, cutter);
+                for (unsigned i = 0; i <= 16; ++i) {
+                    const double t = interval->lo() + (interval->hi() - interval->lo()) * double(i) / 16.0;
+                    CHECK(radialDerivativeOracle(data, result.provider->frame(),
+                        cutter == geo::ReferenceRole::StartCutter, t) > 0);
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("Contact request failures never publish partially prepared geometry or proof metadata",
+          "[lc-offsetcurve][geometry][reference-contacts]") {
+    for (const double delta : {0.0, std::numeric_limits<double>::quiet_NaN(),
+                               std::numeric_limits<double>::infinity()}) {
+        geo::WorkBudget budget;
+        const auto result = geo::prepareReferenceContactProviders(basis(), delta, budget);
+        CHECK(result.status == LC_IntersectionStatus::InvalidInput);
+        checkNoProviders(result, budget);
+        checkWork(result.work, {});
+    }
+    geo::WorkBudget collapsedBudget;
+    const auto collapsed = geo::prepareReferenceContactProviders(basis(5.0, 1.0), -5.0, collapsedBudget);
+    CHECK(collapsed.status == LC_IntersectionStatus::AmbiguousTopology);
+    CHECK(collapsed.reason == geo::ReferencePreparationReason::CollapsedCircle);
+    checkNoProviders(collapsed, collapsedBudget);
+    geo::WorkBudget invalid{LC_OffsetCheckLimits{1, 1, 1, 0}};
+    const auto bad = geo::prepareReferenceContactProviders(basis(), 1.0, invalid);
+    CHECK(bad.status == LC_IntersectionStatus::InvalidInput);
+    checkNoProviders(bad, invalid);
+    geo::WorkBudget exhausted{LC_OffsetCheckLimits{1, 1, 1, 20}};
+    REQUIRE(exhausted.consumeVertices(1));
+    const auto limited = geo::prepareReferenceContactProviders(basis(), 1.0, exhausted);
+    CHECK(limited.status == LC_IntersectionStatus::LimitExceeded);
+    checkNoProviders(limited, exhausted);
+    CHECK(limited.work.vertices == 1);
+    CHECK(limited.work.distancePairs == 0);
+}

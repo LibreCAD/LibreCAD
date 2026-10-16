@@ -189,6 +189,7 @@ public:
 
 private:
     friend class CriticalBuilder;
+    friend class ReferenceProviderBuilder;
     CriticalAdapter(const ReferenceFrame& frame, CriticalRegime regime);
     bool contains(std::size_t segment, const LC_Interval& parameter) const;
     struct JoinProof { double from; double to; };
@@ -290,6 +291,8 @@ public:
     const ReferenceFrame& frame() const noexcept;
     std::optional<std::size_t> branchFor(ReferenceRole role) const noexcept;
     OppositeDisposition oppositeDisposition() const noexcept;
+    /** Diagnostic own/offset-parameter proof range; copies do not confer proof authority. */
+    std::optional<LC_Interval> contactProofInterval(ReferenceRole offset, ReferenceRole cutter) const noexcept;
     const std::vector<LC_ParametricSegment>& segments() const override;
     std::size_t branchCount() const override;
     std::ptrdiff_t next(std::size_t branch) const override;
@@ -302,7 +305,7 @@ public:
     LC_AnalyticIntersectionCertificate certifyIntersection(const LC_IntersectionDomain& box) const override;
 
 private:
-    friend ReferenceProviderPreparation prepareReferenceProviders(const RS_EllipseData&, double, WorkBudget&);
+    friend class ReferenceProviderBuilder;
     struct Impl;
     explicit ReferenceProviders(std::unique_ptr<Impl> impl);
     std::unique_ptr<const Impl> m_impl;
@@ -319,6 +322,9 @@ struct ReferenceProviderPreparation {
 
 ReferenceProviderPreparation prepareReferenceProviders(const RS_EllipseData& basis, double signedDistance,
                                                        WorkBudget& budget);
+/** Add complete-box construction-contact proofs, not exhaustive reference events. */
+ReferenceProviderPreparation prepareReferenceContactProviders(const RS_EllipseData& basis, double signedDistance,
+                                                              WorkBudget& budget);
 
 bool isFinite2D(const RS_Vector& point);
 /** Validate raw fields before RS_Ellipse can canonicalize tiny angles. Unchanged on refusal. */

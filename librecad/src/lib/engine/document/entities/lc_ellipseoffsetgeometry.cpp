@@ -917,6 +917,44 @@ struct CriticalKernel {
     }
 };
 
+bool exactAngleBounds(const ExactAngle& angle, const Rational& piLow, const Rational& piHigh, LC_Interval& out) {
+    const Rational low = angle.constant + angle.pi * (angle.pi < 0 ? piHigh : piLow);
+    const Rational high = angle.constant + angle.pi * (angle.pi < 0 ? piLow : piHigh);
+    return rationalBounds(low, high, out);
+}
+
+/** Pure bounded predicate shared by critical membership and construction contacts. */
+int exactFactorSign(const CriticalKernel& kernel, const Rational& piLow, const Rational& piHigh,
+                    const ExactAngle& first, const ExactAngle& last) {
+    LC_Interval a, b;
+    if (!exactAngleBounds(first, piLow, piHigh, a) || !exactAngleBounds(last, piLow, piHigh, b)) { return 2; }
+    const double middle = 0.25 * a.lo() + 0.25 * a.hi() + 0.25 * b.lo() + 0.25 * b.hi();
+    if (!std::isfinite(middle) || std::abs(middle) > 20.0) { return 2; }
+    const int axis = static_cast<int>(std::round(middle / M_PI_2));
+    const bool complement = axis % 2 != 0;
+    const ExactAngle reducedA{first.constant, first.pi - Rational{axis} / 2};
+    const ExactAngle reducedB{last.constant, last.pi - Rational{axis} / 2};
+    LC_Interval variable;
+    if (reducedA.constant == 0 && reducedA.pi == 0 && reducedB.constant == 0 && reducedB.pi == 0) {
+        variable = LC_Interval::point(0.0);
+    } else {
+        if (!exactAngleBounds(reducedA, piLow, piHigh, a) || !exactAngleBounds(reducedB, piLow, piHigh, b)) {
+            return 2;
+        }
+        LC_Interval cosine, sine;
+        if (!referenceTrig(LC_Interval::hull(a, b), cosine, sine)) { return 2; }
+        const LC_Interval z = sqr(sine);
+        variable = LC_Interval::hull(std::max(0.0, z.lo()), std::min(1.0, z.hi()));
+        if (!finiteInterval(variable)) { return 2; }
+    }
+    // Preserve 1-sin^2(reduced) exactly near a minor axis, including tiny P(1).
+    const Rational low = complement ? Rational{1 - exactDouble(variable.hi())} : exactDouble(variable.lo());
+    const Rational high = complement ? Rational{1 - exactDouble(variable.lo())} : exactDouble(variable.hi());
+    if (kernel.polynomial(low) > 0) { return 1; }
+    if (kernel.polynomial(high) < 0) { return -1; }
+    return 2;
+}
+
 struct RationalRange { Rational lo, hi; };
 
 LC_Interval intersect(const LC_Interval& a, const LC_Interval& b) {
@@ -983,6 +1021,11 @@ struct CriticalProvenance {
 
     Rational residual(const Rational& u) const {
         return initial.complement ? Rational{-kernel.polynomial(1 - u)} : kernel.polynomial(u);
+    }
+    int factorSign(const double t) const {
+        const Rational fraction = exactDouble(t) / duration;
+        const ExactAngle angle{start.constant + extent.constant * fraction, start.pi + extent.pi * fraction};
+        return exactFactorSign(kernel, piLow, piHigh, angle, angle);
     }
     bool map(const CriticalOccurrence& occurrence, const LC_Interval& alpha, LC_Interval& out) const {
         const int q = occurrence.quadrant + 4 * occurrence.winding;
@@ -1310,9 +1353,7 @@ private:
         return {m_start.constant + m_extent.constant * fraction, m_start.pi + m_extent.pi * fraction};
     }
     bool angleBounds(const ExactAngle& a, LC_Interval& out) const {
-        const Rational low = a.constant + a.pi * (a.pi < 0 ? m_piHigh : m_piLow);
-        const Rational high = a.constant + a.pi * (a.pi < 0 ? m_piLow : m_piHigh);
-        return rationalBounds(low, high, out);
+        return exactAngleBounds(a, m_piLow, m_piHigh, out);
     }
     int compareAxis(const int index, const ExactAngle& endpoint) const {
         const Rational coefficient = Rational{index} / 2 - endpoint.pi;
@@ -1369,40 +1410,8 @@ private:
         }
         return true;
     }
-    bool criticalVariableBounds(const ExactAngle& first, const ExactAngle& last,
-                                LC_Interval& out, bool& complement) const {
-        LC_Interval a;
-        LC_Interval b;
-        if (!angleBounds(first, a) || !angleBounds(last, b)) { return false; }
-        const double middle = 0.25 * a.lo() + 0.25 * a.hi() + 0.25 * b.lo() + 0.25 * b.hi();
-        if (!std::isfinite(middle) || std::abs(middle) > 20.0) { return false; }
-        const int axis = static_cast<int>(std::round(middle / M_PI_2));
-        complement = axis % 2 != 0;
-        const ExactAngle reducedA{first.constant, first.pi - Rational{axis} / 2};
-        const ExactAngle reducedB{last.constant, last.pi - Rational{axis} / 2};
-        if (reducedA.constant == 0 && reducedA.pi == 0 &&
-            reducedB.constant == 0 && reducedB.pi == 0) {
-            out = LC_Interval::point(0.0);
-            return true;
-        }
-        if (!angleBounds(reducedA, a) || !angleBounds(reducedB, b)) { return false; }
-        LC_Interval cosine;
-        LC_Interval sine;
-        if (!referenceTrig(LC_Interval::hull(a, b), cosine, sine)) { return false; }
-        const LC_Interval z = sqr(sine);
-        out = LC_Interval::hull(std::max(0.0, z.lo()), std::min(1.0, z.hi()));
-        return finiteInterval(out);
-    }
     int sign(const ExactAngle& first, const ExactAngle& last) const {
-        LC_Interval variable;
-        bool complement = false;
-        if (!criticalVariableBounds(first, last, variable, complement)) { return 2; }
-        // Near a minor axis retain 1-sin^2(reduced) EXACTLY; rounded cos^2 would lose tiny P(1).
-        const Rational low = complement ? Rational{1 - exactDouble(variable.hi())} : exactDouble(variable.lo());
-        const Rational high = complement ? Rational{1 - exactDouble(variable.lo())} : exactDouble(variable.hi());
-        if (m_kernel.polynomial(low) > 0) { return 1; }
-        if (m_kernel.polynomial(high) < 0) { return -1; }
-        return 2;
+        return exactFactorSign(m_kernel, m_piLow, m_piHigh, first, last);
     }
     bool cuspAngle() {
         if (!generated(1, 0) || !m_budget.consumePairs(1)) { return false; }
@@ -1756,11 +1765,14 @@ bool containsInterval(const LC_Interval& outer, const LC_Interval& inner) {
 
 struct ReferenceProviders::Impl {
     struct Map { std::size_t part; std::size_t local; };
+    struct Contact { LC_Interval parameter; double sourceEnd = 0.0; double capEnd = 0.0; };
+    struct ContactLedger { std::array<std::array<std::optional<Contact>, 2>, 2> records; };
     std::array<std::unique_ptr<const CriticalAdapter>, 2> adapters;
     std::array<std::optional<ReferenceCutter>, 2> cutters;
     std::array<std::optional<std::size_t>, 4> branches;
     std::vector<LC_ParametricSegment> segments;
     std::vector<Map> maps;
+    std::unique_ptr<const ContactLedger> contacts;
     OppositeDisposition disposition;
     std::size_t count = 0;
 
@@ -1792,6 +1804,14 @@ std::optional<std::size_t> ReferenceProviders::branchFor(const ReferenceRole rol
     return index < m_impl->branches.size() ? m_impl->branches[index] : std::nullopt;
 }
 OppositeDisposition ReferenceProviders::oppositeDisposition() const noexcept { return m_impl->disposition; }
+std::optional<LC_Interval> ReferenceProviders::contactProofInterval(
+    const ReferenceRole offset, const ReferenceRole cutter) const noexcept {
+    const auto part = static_cast<std::size_t>(offset), cap = static_cast<std::size_t>(cutter);
+    if (!m_impl->contacts || part >= 2 || cap < 2 || cap >= 4 ||
+        !m_impl->branches[part] || !m_impl->branches[cap]) { return {}; }
+    const auto& proof = m_impl->contacts->records[part][cap - 2];
+    return proof ? std::optional<LC_Interval>{proof->parameter} : std::nullopt;
+}
 const std::vector<LC_ParametricSegment>& ReferenceProviders::segments() const { return m_impl->segments; }
 std::size_t ReferenceProviders::branchCount() const { return m_impl->count; }
 std::ptrdiff_t ReferenceProviders::next(const std::size_t branch) const {
@@ -1870,6 +1890,25 @@ LC_AnalyticIntersectionCertificate ReferenceProviders::certifyIntersection(const
         // would require both the same source point and opposite outward normals.
         return excluded();
     }
+    if (m_impl->contacts && ((a.part < 2 && b.part >= 2) || (b.part < 2 && a.part >= 2))) {
+        const bool offsetFirst = a.part < 2;
+        const auto offset = offsetFirst ? a : b, cap = offsetFirst ? b : a;
+        const auto& record = m_impl->contacts->records[offset.part][cap.part - 2];
+        const auto& offsetParameter = offsetFirst ? box.parameterA : box.parameterB;
+        const auto& capParameter = offsetFirst ? box.parameterB : box.parameterA;
+        if (!record || !containsInterval(record->parameter, offsetParameter)) { return {}; }
+        if (!offsetParameter.contains(record->sourceEnd) || !capParameter.contains(record->capEnd)) {
+            return excluded();
+        }
+        LC_AnalyticIntersectionCertificate out;
+        out.outcome = Outcome::Unique;
+        out.proof = LC_IntersectionProof::AnalyticEndpoint;
+        out.proofDomain = box;
+        out.isolationA = LC_Interval::point(offsetFirst ? record->sourceEnd : record->capEnd);
+        out.isolationB = LC_Interval::point(offsetFirst ? record->capEnd : record->sourceEnd);
+        out.kind = LC_ParametricIntersection::Kind::Endpoint;
+        return out;
+    }
     if (a.part != b.part) { return {}; } // Endpoint-cap contacts belong to event isolation.
     if (a.part >= 2) {
         // Injectivity excludes all reportable contacts, including the sole shared
@@ -1904,8 +1943,17 @@ LC_AnalyticIntersectionCertificate ReferenceProviders::certifyIntersection(const
     return certificate;
 }
 
-ReferenceProviderPreparation prepareReferenceProviders(const RS_EllipseData& basis, const double signedDistance,
-                                                       WorkBudget& budget) {
+class ReferenceProviderBuilder {
+public:
+    static ReferenceProviderPreparation run(const RS_EllipseData& basis, double signedDistance,
+                                            WorkBudget& budget, bool withContacts);
+private:
+    static LC_IntersectionStatus prepareContacts(ReferenceProviders::Impl& provider,
+        CriticalRefinementSession& own, CriticalRefinementSession* opposite, double delta, WorkBudget& budget);
+};
+
+ReferenceProviderPreparation ReferenceProviderBuilder::run(
+    const RS_EllipseData& basis, const double signedDistance, WorkBudget& budget, const bool withContacts) {
     ReferenceProviderPreparation out;
     const auto finish = [&]() {
         out.work = budget.consumed();
@@ -2003,12 +2051,146 @@ ReferenceProviderPreparation prepareReferenceProviders(const RS_EllipseData& bas
             if (next != (impl->adapters[part]->frame().sourceSweep().whole ? 0 : -1)) { return finish(); }
         }
     }
+    if (withContacts) {
+        out.status = prepareContacts(*impl, *own.refinement, opposite.refinement.get(), signedDistance, budget);
+        if (out.status != LC_IntersectionStatus::Ok) {
+            if (out.status != LC_IntersectionStatus::AmbiguousTopology) { out.reason = ReferencePreparationReason::None; }
+            return finish();
+        }
+    }
     out.provider.reset(new ReferenceProviders{std::move(impl)});
     out.ownCritical = std::move(own.refinement);
     out.oppositeCritical = std::move(opposite.refinement);
     out.status = LC_IntersectionStatus::Ok;
     out.reason = ReferencePreparationReason::None;
     return finish();
+}
+
+LC_IntersectionStatus ReferenceProviderBuilder::prepareContacts(
+    ReferenceProviders::Impl& provider, CriticalRefinementSession& own, CriticalRefinementSession* opposite,
+    const double delta, WorkBudget& budget) {
+    if (!budget.consumeVertices(1) || !budget.consumePairs(1)) { return LC_IntersectionStatus::LimitExceeded; }
+    const std::array<CriticalRefinementSession*, 2> sessions{{&own, opposite}};
+    for (std::size_t part = 0; part < 2; ++part) {
+        const auto& adapter = provider.adapters[part];
+        if (adapter && (!sessions[part] || !adapter->m_provenance ||
+            adapter->criticalOccurrences().size() > 4 ||
+            adapter->criticalOccurrences().size() != sessions[part]->occurrenceCount())) {
+            return LC_IntersectionStatus::InvalidInput;
+        }
+    }
+    auto ledger = std::make_unique<ReferenceProviders::Impl::ContactLedger>();
+    for (std::size_t part = 0; part < 2; ++part) {
+        if (!provider.adapters[part]) { continue; }
+        const auto& adapter = *provider.adapters[part];
+        const auto& source = adapter.frame();
+        const double duration = source.parameterEnd();
+        const bool outer = part == 0 ? delta > 0.0 : delta < 0.0;
+        for (std::size_t cap = 0; cap < 2; ++cap) {
+            if (!provider.cutters[cap]) { continue; }
+            if (!budget.consumeVertices(1)) { return LC_IntersectionStatus::LimitExceeded; }
+            auto& record = ledger->records[part][cap];
+            record.emplace();
+            if (!budget.consumePairs(1)) { return LC_IntersectionStatus::LimitExceeded; }
+            const bool start = cap == 0;
+            record->sourceEnd = start ? 0.0 : duration;
+            record->capEnd = outer ? 0.0 : 1.0;
+            if (outer) {
+                // Strict support equality forces the same source endpoint and its outward normal.
+                record->parameter = LC_Interval::hull(0.0, duration);
+                continue;
+            }
+            const bool intermediate = adapter.regime() == CriticalRegime::IntermediateThresholds;
+            int sign = intermediate ? adapter.m_provenance->factorSign(record->sourceEnd) :
+                adapter.regime() == CriticalRegime::PositiveFactor ||
+                adapter.regime() == CriticalRegime::MinimumStationary ? 1 : -1;
+            const std::size_t count = adapter.criticalOccurrences().size();
+            double boundary = start ? duration : 0.0;
+            if (intermediate && count != 0) {
+                // Factory inventory is complete and ordered; refinement preserves its identities/order.
+                auto& session = *sessions[part];
+                const auto handle = session.occurrenceHandle(start ? 0 : count - 1);
+                auto snapshot = session.snapshot(handle);
+                if (!snapshot) { return LC_IntersectionStatus::InvalidInput; }
+                while (true) {
+                    const auto parameter = snapshot->occurrence.parameter;
+                    if (!finiteInterval(parameter) || parameter.lo() < 0.0 || parameter.hi() > duration ||
+                        snapshot->occurrence.kind != CriticalKind::SimpleCusp) {
+                        return LC_IntersectionStatus::InvalidInput;
+                    }
+                    boundary = start ? parameter.lo() : parameter.hi();
+                    if (start ? boundary > 0.0 : boundary < duration) { break; }
+                    const auto depth = snapshot->admittedRounds;
+                    const auto contracted = session.contract(handle, budget); // Directly spent, never re-debit.
+                    if (contracted.workSource != CriticalWorkSource::CurrentBudget) {
+                        return LC_IntersectionStatus::InvalidInput;
+                    }
+                    if (contracted.status != LC_IntersectionStatus::Ok) { return contracted.status; }
+                    if (!contracted.snapshot || contracted.snapshot->admittedRounds <= depth) {
+                        return LC_IntersectionStatus::InvalidInput;
+                    }
+                    if (!budget.consumePairs(1)) { return LC_IntersectionStatus::LimitExceeded; }
+                    snapshot = session.snapshot(handle);
+                    if (!snapshot) { return LC_IntersectionStatus::InvalidInput; }
+                }
+            }
+            double from = 0.0, to = duration;
+            if (intermediate) {
+                if (start) { to = 0.5 * boundary; }
+                else { from = 0.5 * boundary + 0.5 * duration; }
+                if (!(0.0 <= from && from < to && to <= duration) ||
+                    (start ? !(to < boundary) : !(boundary < from))) {
+                    return LC_IntersectionStatus::AmbiguousTopology;
+                }
+                if (sign == 2) {
+                    // A certified point in the SAME complete zero-free gap transfers its sign by continuity.
+                    const double inside = 0.5 * from + 0.5 * to;
+                    if (!(from < inside && inside < to)) { return LC_IntersectionStatus::AmbiguousTopology; }
+                    sign = adapter.m_provenance->factorSign(inside);
+                    if (sign == 2) { return LC_IntersectionStatus::AmbiguousTopology; }
+                }
+            }
+            LC_CurveJetBounds endpoint;
+            if (!source.boundSourceJet(record->sourceEnd, record->sourceEnd, endpoint)) {
+                return LC_IntersectionStatus::AmbiguousTopology;
+            }
+            for (unsigned depth = 0;; ++depth) {
+                if (!budget.consumeVertices(1) || !budget.consumePairs(1)) { return LC_IntersectionStatus::LimitExceeded; }
+                if (!budget.checkDepth(depth)) { return LC_IntersectionStatus::LimitExceeded; }
+                LC_CurveJetBounds span;
+                if (!source.boundSourceJet(from, to, span)) { return LC_IntersectionStatus::AmbiguousTopology; }
+                const LC_Interval hPrime = span.speedSquaredProduct + span.ddx * (span.x - endpoint.x) +
+                    span.ddy * (span.y - endpoint.y);
+                if (!finiteInterval(hPrime)) { return LC_IntersectionStatus::AmbiguousTopology; }
+                if (hPrime.isPositive()) {
+                    // h(endpoint)=G(endpoint)=0. h'>0 and constant F sign (isolated stationary zeros allowed)
+                    // imply strictly one-sided G'=2*F*h, hence only the known full-circle/cap contact.
+                    record->parameter = LC_Interval::hull(from, to);
+                    break;
+                }
+                if (depth >= budget.depthLimit()) {
+                    budget.latchLimitExceeded();
+                    return LC_IntersectionStatus::LimitExceeded;
+                }
+                const double mid = 0.5 * from + 0.5 * to;
+                if (!(from < mid && mid < to)) { return LC_IntersectionStatus::AmbiguousTopology; }
+                if (start) { to = mid; }
+                else { from = mid; }
+            }
+        }
+    }
+    provider.contacts = std::move(ledger);
+    return LC_IntersectionStatus::Ok;
+}
+
+ReferenceProviderPreparation prepareReferenceProviders(const RS_EllipseData& basis, const double signedDistance,
+                                                       WorkBudget& budget) {
+    return ReferenceProviderBuilder::run(basis, signedDistance, budget, false);
+}
+
+ReferenceProviderPreparation prepareReferenceContactProviders(const RS_EllipseData& basis, const double signedDistance,
+                                                              WorkBudget& budget) {
+    return ReferenceProviderBuilder::run(basis, signedDistance, budget, true);
 }
 
 CriticalRefinementSession::CriticalRefinementSession(std::unique_ptr<Impl> impl) : m_impl{std::move(impl)} {}
