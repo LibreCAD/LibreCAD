@@ -28,7 +28,7 @@ Plan **v21**, 2026-10-16. This file is the implementation source of truth. Every
 verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE — event isolation is committed at `dff307668`; exact visibility and incidence-preserving component analysis is committed at `9682d5cac` after attempt-8 Release/ASan/full/format validation and independent P1 re-review. The v16 implementation reconciliation is committed at `c6e32c17f`; v17/v18/v19 plan-only checkpoints are `22317685c`, `127231e41` and `cad1c5b4d`. The degree-1/degree-3 bounded cache-layout implementation is committed at `37462efc8` and passes focused Release/ASan, adjacent Release/ASan, full Release, and DXF/DWG fast lanes in Release/ASan; the 74 full-suite skips and fast-lane skips match their recorded baselines. The v20 reconciliation is committed at `6f25975f6`. This v21 update replaces the underspecified `.b-check-bounds` recipe with a conservative pairwise curve/chord proof, explicit event-fringe treatment, complete witness/refusal coverage, shared-work accounting, tests, and activation gates. Independent plan completeness and plan-correctness reviews are closed with all findings incorporated; implementation remains gated on the plan-only activation checkpoint and post-commit source-digest recheck. Remaining cache topology, entity, file, UI and phase-2 work remain incomplete.**
+Status: **IMPLEMENTATION INCOMPLETE — event isolation is committed at `dff307668`; exact visibility and incidence-preserving component analysis is committed at `9682d5cac` after attempt-8 Release/ASan/full/format validation and independent P1 re-review. The v16 implementation reconciliation is committed at `c6e32c17f`; v17/v18/v19 plan-only checkpoints are `22317685c`, `127231e41` and `cad1c5b4d`. The degree-1/degree-3 bounded cache-layout implementation is committed at `37462efc8` and passes focused Release/ASan, adjacent Release/ASan, full Release, and DXF/DWG fast lanes in Release/ASan; the 74 full-suite skips and fast-lane skips match their recorded baselines. The v20 reconciliation is committed at `6f25975f6`. This v21 update replaces the underspecified `.b-check-bounds` recipe with a conservative pairwise curve/chord proof, explicit event-fringe treatment, complete witness/refusal coverage, shared-work accounting, tests, and activation gates. Independent plan completeness and plan-correctness reviews are closed; activation checkpoint `138694560926cbb8e4cb34198fae83dcb6bb4c9a` directly follows the product base, contains only this plan, and passed post-commit source-digest checks. `.b-check-bounds` is ready for Gibbs at product base `6f25975f6`; implementation remains incomplete. Remaining cache topology, entity, file, UI and phase-2 work remain incomplete.**
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -119,8 +119,7 @@ passes. The fresh existing layout selector passes 16 cases/3,311 assertions in R
 unchanged from v20. The new bounds selector has not been registered and its required count remains a pre-implementation
 gate. Independent mathematical and completeness reviews are closed. Findings on clearance consistency, strict
 directional endpoint separation, degree-1/constant-span handling, empty-witness refusal, cross-stage budget checks and
-incidence identity are incorporated into the proof and test contract. The card remains conditional only until the
-plan-only activation checkpoint is committed and actual HEAD/product digests are re-read; no product code changed.
+incidence identity are incorporated into the proof and test contract. Activation checkpoint `138694560926cbb8e4cb34198fae83dcb6bb4c9a` and its post-commit checks passed; the card is ready at unchanged product base `6f25975f6`. No product code changed.
 
 Appendix E lists what changed and why. This plan remains a proposal for a new persistent `LC_OffsetCurve`; the
 current engine's internal `LC_CurveOffset` is not that entity. **Line numbers and type-site counts are historical
@@ -345,7 +344,7 @@ not validation evidence. Aggregates are never executable cards or extra implemen
 | 1A-1.b-ref-providers | Done at9c27e2980 | Owned immutable offset/cutter composite, true-pi bounds/injectivity, both-hook remapping and exact collapsed-opposite exclusion;16/299294 Release/ASan plus critical/core/broad/full/fast gates pass. No event graph. |
 | 1A-1.b-ref-contacts | Done at92ca5e445 | Additive contact factory, immutable whole-box support/radial/critical-gap proofs and diagnostic intervals;17/4383 Release/ASan plus old97/586799 and all broad/full/fast gates pass, legacy behavior retained. |
 | 1A-1.b-ref-events-isolate | Done at dff307668 | Owned combined-event result; strict anchored roots, critical/free/seam occurrences, proved role/parameter order, exact-only same-role identity, tol/16 rounded world-node proof, and cumulative shared-budget refusal. At this checkpoint, multi-pair shared-own success was not separately fixture-pinned; `.b-ref-components` later added the successful shared-occurrence proof. Tangent fixture remains a bounded no-partial refusal at the strict-query depth cap, not an identity/order success. |
-| 1A-1.b-check | Aggregate; `.b-ref` and `.b-check-layout` complete; bounds/topology pending | Execute `.b-check-bounds → .b-check-topology` (§0.6); layout commit `37462efc8` validates degree-1/degree-3 normalized spans and atomic admission. The v21 bounds contract uses symmetric setwise chord certificates, exact-visible clearance, root-fringe/node witnesses and one owned cumulative budget; independent completeness/plan-correctness reviews and existing-selector baselines are closed, with activation pending the plan-only checkpoint and post-commit source-digest check. No successful public validator before all acceptance checks exist. |
+| 1A-1.b-check | Aggregate; `.b-ref` and `.b-check-layout` complete; bounds/topology pending | Execute `.b-check-bounds → .b-check-topology` (§0.6); layout commit `37462efc8` validates degree-1/degree-3 normalized spans and atomic admission. The v21 bounds contract uses symmetric setwise chord certificates, exact-visible clearance, root-fringe/node witnesses and one owned cumulative budget; independent reviews, existing-selector baselines and activation checkpoint `138694560` are closed, so Gibbs may implement bounds at product base `6f25975f6`. No successful public validator before topology and all acceptance checks exist. |
 | 1A-1.c | Waiting for .b | Add adversarial and current-engine corpus checks, failure budgets and performance measurements. Record acceptance/refusal results; endpoints and midpoint checks alone cannot close this parent step. |
 | 1A-2 | Waiting for 0B-3 and all 1A-1 children | Add type, core class, complete consistency stamp, transforms, clone/INSERT/write dispatch and interim UI guard. Compile CMake and update qmake lists; run copy/ownership and enum coverage. |
 | 1A-3 | Waiting for 1A-2 | Implement definition-backed grips/snaps with runtime consistency checks and separate cache closure. Test closed results from arc sources and stale cache fallback. |
@@ -451,12 +450,12 @@ the `.b-check` aggregate. The earlier six-query/coarse-node probe is historical 
 isolation, not for component-span or cache correctness. Successful interior-fallback execution remains
 source-qualified, not natively exercised; the negative base-refusal test and bounded NO_MATCH search are distinguished
 in the receipt.
-The degree-1/degree-3 layout leaf is complete at `37462efc8` and reconciled at `6f25975f6`. The current v21
-`.b-check-bounds` candidate is conditionally activated at source HEAD `6f25975f6ad02ba7cbb15982152905ff6f948fb0`:
-fresh Release/ASan layout baselines and independent completeness/plan-correctness reviews pass, with findings
-incorporated. The remaining gate is to commit this plan-only activation directly after the source base, verify
-ancestry/path scope/product digests, and persist `ready` before Gibbs starts. No product implementation is authorized
-before those postconditions.
+The degree-1/degree-3 layout leaf is complete at `37462efc8` and reconciled at `6f25975f6`. The v21
+`.b-check-bounds` card is ready at product source HEAD `6f25975f6ad02ba7cbb15982152905ff6f948fb0`: fresh Release/ASan
+layout baselines and independent completeness/plan-correctness reviews pass, with findings incorporated. Its plan-only
+activation checkpoint `138694560926cbb8e4cb34198fae83dcb6bb4c9a` directly follows that base; post-commit path, ancestry
+and product-digest checks passed. Gibbs may start only the three card-owned files. No topology/public validity or later
+entity/file/UI completion is implied.
 The coordinator owns the plan,
 shared build directories and commits. Assign explicit file ownership before any parallel work; never run concurrent
 Git/index operations or concurrent builds that mutate the same build tree.
@@ -577,17 +576,18 @@ next: The next action after this checkpoint is a re-probe of `.b-check-bounds` a
 
 ```yaml
 slice: 1A-1.b-check-bounds
-state: prepared — no product edits authorized until review/readiness closes
-readiness: conditional
-readiness_decision: At source base 6f25975f6ad02ba7cbb15982152905ff6f948fb0, preflight completeness and plan correctness are closed by coordinator review and independent read-only review by Anscombe. Findings on clearance accounting, strict projected endpoint separation, degree-1/constant spans, empty witness relations, cross-stage budget assertions, and distinct event incidences were resolved in this card. Fresh focused Release/ASan layout baselines each pass 16 cases/3,311 assertions with zero skips/failures. Readiness remains conditional only on committing this plan-only checkpoint directly after the product base and re-reading actual HEAD plus product digests; if they match, persist the ready state before handing this exact card to Gibbs.
+state: ready for implementation; product slice not started
+readiness: ready
+readiness_decision: At product source base 6f25975f6ad02ba7cbb15982152905ff6f948fb0, preflight completeness and plan correctness are closed by coordinator review and independent read-only review by Anscombe. Findings on clearance accounting, strict projected endpoint separation, degree-1/constant spans, empty witness relations, cross-stage budget assertions, and distinct event incidences were resolved in this card. Fresh focused Release/ASan layout baselines each pass 16 cases/3,311 assertions with zero skips/failures. Activation checkpoint 138694560926cbb8e4cb34198fae83dcb6bb4c9a directly follows the product base, contains only this plan, and passed ancestry/path/digest postconditions; the product hashes remain identical to entry_evidence. This receipt persists ready before Gibbs begins.
 base_sha: 6f25975f6ad02ba7cbb15982152905ff6f948fb0
+activation_checkpoint_sha: 138694560926cbb8e4cb34198fae83dcb6bb4c9a
 owner: Gibbs owns implementation edits to the three product/test paths; coordinator owns review, shared builds, evidence and Git. Anscombe is read-only for the plan/review gates. No concurrent product writer or build-directory writer.
 dependencies: 1A-1.b-ref-components at 9682d5cac65f30cfd86aa10556678ceb88b1448b; 1A-1.b-check-layout at 37462efc8; v20 reconciliation at 6f25975f6ad02ba7cbb15982152905ff6f948fb0.
 requirements: R02 (bounded geometric correctness), R05 (refusal must not adopt unchecked geometry), R12 (shared deterministic limits), R13 (reproducible validation/evidence).
 api_preflight: At base 6f25975f6, `CacheLayoutResult` provides owned degree-1/degree-3 controls and actual knot intervals; `ReferenceComponentAnalysis` owns its `ReferenceEventAnalysis`, visible `ReferenceEdge`/`ReferenceSpan` graph, `ReferenceIncidence`, and full `ReferenceFringe` boxes; `ReferenceFrame::boundOffsetJet(a,b)` returns conservative centre-relative, uniformly scaled local jets; `pointToFrame` encloses world-double inputs; `WorkBudget` is irreversible and exposes remaining vertices/pairs plus depth. `ReferenceSpan.interior` excludes root isolating intervals, visible `clearance` is exact `abs(signedDistance)` on the open span and its one-sided closure, and only edges in the visible component graph may witness geometry. The CMake `librecad_tests` target already compiles `lc_offsetcurve_geometry_tests.cpp`; the Release binary enumerates 16 `[cache-layout]` and 16 `[reference-components]` cases. No `checkCache` or persistent entity API exists yet.
 contract: Add a proof-only bounded relation for normalized cache subcurves and exact visible-reference fragments. For every candidate/reference fragment pair, either certify a pair witness or prove separation beyond the geometry threshold; an unresolved pair refuses the complete call. Every candidate parameter domain must be covered by at least one certified visible-edge/node witness. If every visible alternative for any candidate domain is proved separated, refuse as a geometric mismatch (mapped to `OffCurve` by the later public checker); never interpret an empty witness relation as vacuous success. An empty/refused reference analysis preserves its upstream failure disposition and cannot be reclassified as successful empty geometry. Return outward geometry-Hausdorff upper bound and candidate source-clearance lower bound, plus cache dyadic identity and immutable reference edge/subinterval or event-node/occurrence identity. `Ok` means the complete bounded relation and candidate-to-reference witness coverage were proved; it does not mean one reference component, reverse coverage, injectivity, ordered assignment, editability or public `checkCache` validity.
 invariants: No parameter map, nearest-foot identity, rounded-node substitution or sampled acceptance is assumed. Compare specified closed subcurve sets using symmetric chord-segment Hausdorff bounds. Use local frame units consistently: `eQ=M2*h^2/8` where `M2` is an outward local bound on `||Q''||` and `h` is the reference traversal-parameter width, never a cache knot width; candidate cubic deviation uses de Casteljau residual controls. Require `E_geom.hi <= ((2*tol)/scale).lo` and independently `(L-E_geom).lo >= ((abs(distance)-2.5*tol)/scale).hi`, with interval operations and endpoint comparisons outward. For an event-node witness, source clearance is `D_local - E_candidateNode`; the fringe-to-node enclosure radius contributes to geometry/reverse-fringe coverage, not to this candidate-to-node clearance term. Root fringes are explicit; bind each visible occurrence fringe to its exact node and inherit clearance only from closure of an incident visible edge. Never cross the whole-ellipse seam in a jet call. `WorkBudget` is caller-owned: the top-level cache-check orchestration retains the same instance across layout, reference construction, bounds and later topology; the bounds result owns the immutable reference analysis/witness IDs and reports a work snapshot, not a budget copy. Every expansion/query/output record is charged before allocation; work is never refunded. Any unresolved potentially-relevant pair, nonfinite bound or cap refusal returns no partial witness relation.
-blockers: No unresolved plan-contract or review finding. Mechanical activation remains: commit this plan-only checkpoint with direct parent 6f25975f6, verify its one-file scope and unchanged product hashes, re-read actual HEAD, then persist ready before implementation. Any changed product/API source invalidates this card and requires re-probe and review; never replace the proofs with sample matching. The cache-layout baseline is closed; re-run it if source or the test binary changes.
+blockers: None on product base 6f25975f6. Any changed product/API source invalidates this card and requires re-probe and review; never replace the proofs with sample matching. The cache-layout baseline is closed; re-run it if source or the test binary changes.
 files: Write only `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h`, `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp`, and `librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp`. Read-only checks: `lc_curvejet.h`, `lc_interval.h`, `rs_spline.h/.cpp`, offset reference/component implementations, `CMakeLists.txt`, and `src.pro`. CMake registration already exists; no build-list edit unless the source audit proves otherwise. Gibbs starts implementation after activation is ready.
 tasks:
   - stage: Reconfirm entry contract and freeze tests/API
@@ -634,9 +634,9 @@ plan_correctness_review: Closed at source base `6f25975f6ad02ba7cbb15982152905ff
 correctness_review: Pending on future frozen implementation. Reviewer must inspect all accepted and refused paths, independent oracle, interval operation rounding/finite bounds, pair-search pruning, shared-budget/lifetime/no-partial behavior, and test failures; no sample-only proof.
 implementation_sha: pending
 product_commit_audit: pending
-plan_checkpoint_state: pending; the v21 plan-only activation checkpoint must directly follow `6f25975f6`, contain only this plan file, and leave all three product source hashes unchanged.
-checkpoint_postconditions: Verify the plan checkpoint's parent is `6f25975f6`, its path list is exactly `docs/plan_offset_curve_2961.md`, `git diff --check` passes, all three product hashes equal entry_evidence, and worktree status is accounted for without staging `build-asan/`. Re-read actual HEAD and product files. If unchanged, update this card to `ready` in a separate plan-only readiness receipt that records the activation checkpoint SHA and verified hashes; only then hand the exact ready card/base to Gibbs.
-next: Commit this reviewed activation checkpoint. Verify ancestry, path scope and unchanged product digests; then persist ready in a separate plan-only receipt. Gibbs starts `.b-check-bounds` only after that receipt. After its product commit, immediately reconcile evidence/status/dependencies/readiness and commit the plan-only follow-up before any next slice.
+plan_checkpoint_state: Activation checkpoint `138694560926cbb8e4cb34198fae83dcb6bb4c9a` directly follows `6f25975f6`, owns only this plan file, and has verified postconditions; this separate readiness receipt does not store its own SHA recursively.
+checkpoint_postconditions: Before this receipt, verified activation checkpoint parent `6f25975f6`, exact one-file scope, clean diff check, unchanged product hashes matching entry_evidence, and accounted worktree status (`build-asan/` preserved). After this receipt is committed, verify it directly follows the activation checkpoint, contains only this roadmap update, and does not alter product hashes. Then Gibbs may begin on the exact three-file scope at product base `6f25975f6`.
+next: Gibbs starts `.b-check-bounds` after this ready receipt passes its path/parent/product-hash checks. After the product commit, immediately reconcile evidence/status/dependencies/readiness and commit the plan-only follow-up before any next slice.
 ```
 
 **Completed implementation card — `1A-1.b-ref-components`** (implementation `9682d5cac65f30cfd86aa10556678ceb88b1448b`;
@@ -777,9 +777,10 @@ The v19 plan-only checkpoint activates `.b-check-layout` at product source base 
 `6f25975f6ad02ba7cbb15982152905ff6f948fb0`; v21 has closed independent completeness and plan-correctness reviews and
 fresh layout baselines. Review findings on root/fringe clearance, budget lifetime, setwise-vs-traversal, strict endpoint
 separation, degree-1 spans, empty witness relations, cross-stage accounting and incidence identity are incorporated.
-Do not start implementation until this plan-only activation checkpoint is committed, its scope/ancestry/product digests
-are verified, and the card is persisted as ready. Gibbs starts the first implementation edit. Do not repeat or amend
-the component/layout slices.
+The plan-only activation checkpoint `138694560926cbb8e4cb34198fae83dcb6bb4c9a` is committed and its path, ancestry and
+product-digest checks pass; this separate plan-only receipt persists the ready state. Gibbs starts the first
+implementation edit only after this receipt's parent/path/product-hash checks. Do not repeat or amend the
+component/layout slices.
 Do not restart or reapply contacts/providers/
 refinements/isolation. Budget, guard, progress and frames are complete at 10c6bff46 / 0e3c6b342 / fb70681e2 /
 26d107ccf; strict core, rate, critical preparation and observed-depth accounting are complete at 834a46a88 /
@@ -5463,8 +5464,7 @@ no product/native result affected. Structural audit0:27mainrows,60nodes,15requir
   deterministic work accounting, refusal cases, validation sequence, recovery policy and explicit pass artifacts.
   Independent reviews by Anscombe closed plan correctness and completeness at the recorded product base. Their final
   completeness pass required explicit all-visible-witnesses-separated refusal, cross-stage same-ledger tests, and
-  distinct crossing/cusp/seam incidence assertions; all are in the card. The card remains conditional only until the
-  plan-only activation checkpoint and fresh post-commit HEAD/source-digest recheck; no product edits are authorized yet.
+  distinct crossing/cusp/seam incidence assertions; all are in the card. Activation checkpoint `138694560926cbb8e4cb34198fae83dcb6bb4c9a` and the separate ready receipt complete the pre-implementation gates; the ready receipt stores no recursive self-hash.
 - **Commits after slices:** retained one frozen/tested product commit per leaf, with exact path/digest identity and no
   bundling of topology or caller work into the bounds commit. A failed review, test or reconciliation stops the queue;
   preserve evidence and do not start a successor slice.
@@ -5478,4 +5478,6 @@ no product/native result affected. Structural audit0:27mainrows,60nodes,15requir
   read-only math and completeness passes found no remaining plan blocker. `git diff --check` passes. The documented
   inventory/DAG audit passes with 28 main rows, 60 dependency nodes, 15 requirements, 14 format rows (8 DXF/6 DWG),
   36 balanced fences, 104 headings and an acyclic dependency graph; its archived helper's old matrix-heading selector
-  was adapted in the invocation, not modified. Existing untracked `build-asan/` is preserved.
+  was adapted in the invocation, not modified. Activation checkpoint `138694560926cbb8e4cb34198fae83dcb6bb4c9a`
+  directly follows `6f25975f6` and passes path/ancestry/product-digest checks; a separate ready receipt follows it.
+  Existing untracked `build-asan/` is preserved.
