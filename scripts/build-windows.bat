@@ -84,6 +84,8 @@ echo "SCMREVISION=%SCMREVISION%"
 :: Input string (e.g., 2.2.1.3-*, 2.2.2-alpha)
 set "input=%SCMREVISION%"
 if "!input!"=="" set "input=2.2.1-rc*"
+rem Strip the optional v prefix from annotated release tags.
+if /I "!input:~0,1!"=="v" set "input=!input:~1!"
 
 :: 1. Scan for the first character that is NOT 0-9 or .
 set "CLEAN_VERSION="

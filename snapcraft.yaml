@@ -1,5 +1,5 @@
 name: librecad
-version: '2.2.1.2'
+adopt-info: librecad
 grade: stable
 base: core22
 confinement: strict
@@ -46,13 +46,17 @@ plugs:
 parts:
   librecad:
     plugin: qmake
-    source: https://github.com/LibreCAD/LibreCAD.git
-    source-type: git
-    source-tag: v2.2.1.2
+    source: .
+    override-pull: |
+      craftctl default
+      version=$(git -C "$CRAFT_PROJECT_DIR" describe --always 2>/dev/null) ||
+        version=$(sed -n 's/^LC_VERSION="\([^"]*\)"/\1/p' "$CRAFT_PROJECT_DIR/librecad/src/src.pro")
+      craftctl set version="$(printf '%s' "${version#v}" | tr '_' '-')"
     qmake-parameters: ["QMAKE_CFLAGS+=-march=x86-64", "QMAKE_CXXFLAGS+=-march=x86-64"]
     build-environment: [{QT_SELECT: qt5}]
     build-packages:
       - build-essential
+      - git
       - qtbase5-dev
       - qttools5-dev
       - librsvg2-bin

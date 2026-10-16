@@ -304,6 +304,10 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.ref }}
 
+      - name: Test installer version parsing
+        shell: powershell
+        run: ./scripts/tests/installer-version-tests.ps1
+
       - name: Setup MSVC developer environment (64-bit)
         uses: ilammy/msvc-dev-cmd@v1
         with:
@@ -406,6 +410,7 @@ jobs:
 
       - name: Determine release kind
         id: relkind
+        shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -418,10 +423,14 @@ jobs:
           fi
           # If the script already created the release with notes, leave those
           # alone; only auto-generate when CI is the one creating the release.
-          if gh release view "$tag" >/dev/null 2>&1; then
+          release=$(gh api --paginate "repos/$GITHUB_REPOSITORY/releases?per_page=100" |
+            jq -s --arg tag "$tag" '[.[][] | select(.tag_name == $tag)][0]')
+          if [[ "$release" != null ]]; then
             echo "generate_notes=false" >> "$GITHUB_OUTPUT"
+            echo "draft=$(jq -r '.draft' <<< "$release")" >> "$GITHUB_OUTPUT"
           else
             echo "generate_notes=true" >> "$GITHUB_OUTPUT"
+            echo "draft=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Publish release assets
@@ -429,6 +438,7 @@ jobs:
         with:
           tag_name: ${{ steps.relkind.outputs.tag }}
           name: LibreCAD ${{ steps.relkind.outputs.tag }}
+          draft: ${{ steps.relkind.outputs.draft }}
           prerelease: ${{ steps.relkind.outputs.prerelease }}
           generate_release_notes: ${{ steps.relkind.outputs.generate_notes }}
           fail_on_unmatched_files: true
