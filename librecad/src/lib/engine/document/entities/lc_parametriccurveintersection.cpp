@@ -1904,15 +1904,41 @@ private:
     }
 
     /** Compare every shared occurrence, not just events with the same partner branch. */
-    static bool orderedOccurrences(const LC_ParametricIntersection& a, const LC_ParametricIntersection& b) {
+    bool orderedOccurrences(const LC_ParametricIntersection& a, const LC_ParametricIntersection& b) {
         const std::pair<std::size_t, LC_Interval> aa[] = {
             {a.branchA, a.isolation.parameterA}, {a.branchB, a.isolation.parameterB}};
         const std::pair<std::size_t, LC_Interval> bb[] = {
             {b.branchA, b.isolation.parameterA}, {b.branchB, b.isolation.parameterB}};
-        for (const auto& x : aa) {
-            for (const auto& y : bb) {
+        for (std::size_t i = 0; i < 2; ++i) {
+            const auto& x = aa[i];
+            for (std::size_t j = 0; j < 2; ++j) {
+                const auto& y = bb[j];
                 if (x.first == y.first && overlaps(x.second, y.second) && !samePoint(x.second, y.second)) {
-                    return false;
+                    if (!m_options.analyticOccurrenceIdentity) { return false; }
+                    if (!consume(m_work.certificateBoxPairs) || !generate(1)) { return false; }
+                    const auto certificate = m_curves.certifyOccurrenceIdentity(a, i == 0, b, j == 0);
+                    if (!certificate.available) { return false; }
+                    const auto validDomain = [&](const LC_IntersectionDomain& domain,
+                                                 const LC_ParametricIntersection& event) {
+                        if (domain.segmentA != event.isolation.segmentA ||
+                            domain.segmentB != event.isolation.segmentB ||
+                            domain.segmentA >= m_segments.size() || domain.segmentB >= m_segments.size() ||
+                            !finite(domain.parameterA) || !finite(domain.parameterB)) { return false; }
+                        const auto& sa = m_segments[domain.segmentA];
+                        const auto& sb = m_segments[domain.segmentB];
+                        return sa.t0 <= domain.parameterA.lo() && domain.parameterA.hi() <= sa.t1 &&
+                            sb.t0 <= domain.parameterB.lo() && domain.parameterB.hi() <= sb.t1 &&
+                            covers(domain, event.isolation);
+                    };
+                    const auto& ca = i == 0 ? certificate.firstDomain.parameterA : certificate.firstDomain.parameterB;
+                    const auto& cb = j == 0 ? certificate.secondDomain.parameterA : certificate.secondDomain.parameterB;
+                    if (!validDomain(certificate.firstDomain, a) || !validDomain(certificate.secondDomain, b) ||
+                        !finite(certificate.parameter) || certificate.parameter.lo() < ca.lo() ||
+                        certificate.parameter.hi() > ca.hi() || certificate.parameter.lo() < cb.lo() ||
+                        certificate.parameter.hi() > cb.hi() || !overlaps(certificate.parameter, x.second) ||
+                        !overlaps(certificate.parameter, y.second)) {
+                        return fail(m_retained ? LC_IntersectionStatus::InvalidInput : LC_IntersectionStatus::AmbiguousTopology);
+                    }
                 }
             }
         }
@@ -2034,6 +2060,7 @@ private:
                     if (orderedOccurrences(eventAt(i), eventAt(j))) {
                         break;
                     }
+                    if (!good()) { return false; }
                     if (attempt >= m_options.maxDepth) {
                         return fail(LC_IntersectionStatus::LimitExceeded);
                     }

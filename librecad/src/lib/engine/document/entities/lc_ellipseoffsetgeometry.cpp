@@ -1773,6 +1773,8 @@ struct ReferenceProviders::Impl {
     std::vector<LC_ParametricSegment> segments;
     std::vector<Map> maps;
     std::unique_ptr<const ContactLedger> contacts;
+    // Only component preparation enables this exact major-radius contact family.
+    std::shared_ptr<const CriticalProvenance> axisContacts;
     OppositeDisposition disposition;
     std::size_t count = 0;
 
@@ -1793,6 +1795,153 @@ struct ReferenceProviders::Impl {
         if (segment >= size || !finiteInterval(parameter)) { return false; }
         const auto piece = localSegment(part, segment);
         return piece.t0 <= parameter.lo() && parameter.hi() <= piece.t1;
+    }
+    bool axisParameter(const int q, LC_Interval& parameter) const {
+        if (!axisContacts) { return false; }
+        const auto& p = *axisContacts;
+        const Rational low = p.extent.constant + p.extent.pi * p.piLow;
+        const Rational high = p.extent.constant + p.extent.pi * p.piHigh;
+        if (p.basis.reversed ? !(low < 0 && high < 0) : !(low > 0 && high > 0)) { return false; }
+        std::array<Rational, 2> values;
+        std::size_t index = 0;
+        for (const auto* pi : {&p.piLow, &p.piHigh}) {
+            const Rational denominator = p.extent.constant + p.extent.pi * *pi;
+            if (denominator == 0) { return false; }
+            values[index++] = p.duration * (-p.start.constant + (Rational{q} / 2 - p.start.pi) * *pi) /
+                denominator;
+        }
+        return rationalBounds(std::min(values[0], values[1]), std::max(values[0], values[1]), parameter);
+    }
+    enum class AxisMembership { Unavailable, Absent, Present };
+    struct AxisDomain {
+        AxisMembership membership = AxisMembership::Unavailable;
+        int index = 99;
+        int cosSign = 0;
+        LC_Interval parameter;
+    };
+    AxisDomain axisDomain(const LC_Interval& interval) const {
+        if (!axisContacts) { return {}; }
+        const auto& p = *axisContacts;
+        const auto angle = [&](const double t) {
+            const Rational fraction = exactDouble(t) / p.duration;
+            return ExactAngle{p.start.constant + p.extent.constant * fraction,
+                              p.start.pi + p.extent.pi * fraction};
+        };
+        LC_Interval first, last, c, s;
+        if (!exactAngleBounds(angle(interval.lo()), p.piLow, p.piHigh, first) ||
+            !exactAngleBounds(angle(interval.hi()), p.piLow, p.piHigh, last) ||
+            !referenceTrig(LC_Interval::hull(std::min(first.lo(), last.lo()), std::max(first.hi(), last.hi())), c, s) ||
+            !(c.lo() > 0 || c.hi() < 0)) { return {}; }
+        AxisDomain out;
+        out.cosSign = c.lo() > 0 ? 1 : -1;
+        const auto sign = [&p](const ExactAngle& value) {
+            const Rational low = value.constant + value.pi * (value.pi < 0 ? p.piHigh : p.piLow);
+            const Rational high = value.constant + value.pi * (value.pi < 0 ? p.piLow : p.piHigh);
+            if (value.constant == 0 && value.pi == 0) { return 0; }
+            // A nonzero rational affine expression in irrational pi cannot equal zero.
+            // This also resolves a dyadic boundary exactly equal to an enclosure endpoint.
+            return low >= 0 ? 1 : high <= 0 ? -1 : 2;
+        };
+        bool uncertain = false;
+        for (int q = -8; q <= 12; q += 2) {
+            if ((q % 4 == 0 ? 1 : -1) != out.cosSign) { continue; }
+            const auto lo = angle(p.basis.reversed ? interval.hi() : interval.lo());
+            const auto hi = angle(p.basis.reversed ? interval.lo() : interval.hi());
+            const int a = sign({lo.constant, lo.pi - Rational{q} / 2});
+            const int b = sign({hi.constant, hi.pi - Rational{q} / 2});
+            if (a == 1 || b == -1) { continue; }
+            if (a == 2 || b == 2) { uncertain = true; continue; }
+            LC_Interval candidate;
+            if (!axisParameter(q, candidate)) { return {}; }
+            out.parameter = intersect(interval, candidate);
+            if (!finiteInterval(out.parameter)) { return {}; }
+            out.index = q;
+            out.membership = AxisMembership::Present;
+            return out;
+        }
+        out.membership = uncertain ? AxisMembership::Unavailable : AxisMembership::Absent;
+        return out;
+    }
+    int axisIn(const LC_Interval& interval, LC_Interval& parameter) const {
+        const auto axis = axisDomain(interval);
+        if (axis.membership != AxisMembership::Present) { return 99; }
+        parameter = axis.parameter;
+        return axis.index;
+    }
+    LC_AnalyticIntersectionCertificate axisContact(const LC_IntersectionDomain& box) const {
+        if (!axisContacts) { return {}; }
+        const auto a = maps[box.segmentA], b = maps[box.segmentB];
+        const auto excluded = [&]() {
+            return LC_AnalyticIntersectionCertificate{LC_AnalyticIntersectionCertificate::Outcome::Excluded,
+                LC_IntersectionProof::AnalyticExclusion, box, {}, {}, LC_ParametricIntersection::Kind::Tangent};
+        };
+        if (a.part == 0 && b.part == 0) {
+            const auto aa = axisDomain(box.parameterA), bb = axisDomain(box.parameterB);
+            if (aa.cosSign == 0 || aa.cosSign == bb.cosSign || bb.cosSign == 0) { return {}; }
+            // D=a: opposite strict major projections can agree only at the two major axes.
+            // Absence is proved on the WHOLE box, even when numerical image boxes touch zero.
+            if (aa.membership == AxisMembership::Absent || bb.membership == AxisMembership::Absent) {
+                return excluded();
+            }
+            if (aa.membership != AxisMembership::Present || bb.membership != AxisMembership::Present) { return {}; }
+            return {LC_AnalyticIntersectionCertificate::Outcome::Unique,
+                LC_IntersectionProof::AnalyticTangency, box, aa.parameter, bb.parameter,
+                LC_ParametricIntersection::Kind::Tangent};
+        }
+        const bool offsetFirst = a.part == 0 && b.part >= 2;
+        if (!offsetFirst && !(b.part == 0 && a.part >= 2)) { return {}; }
+        const auto cap = offsetFirst ? b.part : a.part;
+        const auto& p = *axisContacts;
+        const bool start = cap == 2;
+        if ((start ? p.basis.angle1 : p.basis.angle2) != 0.0) { return {}; }
+        const auto& interval = offsetFirst ? box.parameterA : box.parameterB;
+        const auto& capInterval = offsetFirst ? box.parameterB : box.parameterA;
+        const auto axis = axisDomain(interval);
+        if (axis.cosSign != -1) { return {}; }
+        // Enclose the unique opposite axis as well as the query before the radial proof.
+        // It need not lie in the query: that case needs a certified exclusion, not endless bisection.
+        LC_Interval anchor;
+        int q = axis.index;
+        if (q == 99) {
+            for (int candidate = -6; candidate <= 10; candidate += 4) {
+                LC_Interval value;
+                if (axisParameter(candidate, value) && value.hi() >= 0 && value.lo() <= p.frame.parameterEnd()) {
+                    const auto range = LC_Interval::hull(std::min(interval.lo(), value.lo()),
+                                                         std::max(interval.hi(), value.hi()));
+                    LC_Interval angleLo, angleHi;
+                    const auto at = [&](const double t) {
+                        const Rational fraction = exactDouble(t) / p.duration;
+                        return ExactAngle{p.start.constant + p.extent.constant * fraction,
+                                          p.start.pi + p.extent.pi * fraction};
+                    };
+                    if (!exactAngleBounds(at(range.lo()), p.piLow, p.piHigh, angleLo) ||
+                        !exactAngleBounds(at(range.hi()), p.piLow, p.piHigh, angleHi) ||
+                        std::max(angleLo.hi(), angleHi.hi()) - std::min(angleLo.lo(), angleHi.lo()) >= realPi().lo()) {
+                        continue;
+                    }
+                    anchor = value; q = candidate; break;
+                }
+            }
+        } else { anchor = axis.parameter; }
+        if (q == 99 || !finiteInterval(anchor)) { return {}; }
+        const auto proofRange = LC_Interval::hull(std::min(interval.lo(), anchor.lo()),
+                                                  std::max(interval.hi(), anchor.hi()));
+        LC_CurveJetBounds source, endpoint;
+        LC_Interval factor, derivative;
+        const double end = start ? 0.0 : p.frame.parameterEnd();
+        if (!p.frame.boundSourceJet(proofRange.lo(), proofRange.hi(), source) ||
+            !p.frame.boundSourceJet(end, end, endpoint) ||
+            !p.frame.boundOffsetFactor(proofRange.lo(), proofRange.hi(), factor, derivative)) { return {}; }
+        const auto radialDerivative = source.speedSquaredProduct + source.ddx * (source.x - endpoint.x) +
+            source.ddy * (source.y - endpoint.y);
+        if (!finiteInterval(radialDerivative) || radialDerivative.hi() >= 0 || factor.hi() >= 0) { return {}; }
+        // The strict radial derivative proves a unique opposite-major-axis contact over this box.
+        if (!capInterval.contains(1.0) || axis.membership == AxisMembership::Absent) { return excluded(); }
+        if (axis.membership != AxisMembership::Present) { return {}; }
+        return {LC_AnalyticIntersectionCertificate::Outcome::Unique, LC_IntersectionProof::AnalyticTangency,
+            box, offsetFirst ? axis.parameter : LC_Interval::point(1),
+            offsetFirst ? LC_Interval::point(1) : axis.parameter,
+            LC_ParametricIntersection::Kind::Tangent};
     }
 };
 
@@ -1890,6 +2039,10 @@ LC_AnalyticIntersectionCertificate ReferenceProviders::certifyIntersection(const
         // would require both the same source point and opposite outward normals.
         return excluded();
     }
+    if (m_impl->axisContacts) {
+        const auto certificate = m_impl->axisContact(box);
+        if (certificate.outcome != Outcome::Unavailable) { return certificate; }
+    }
     if (m_impl->contacts && ((a.part < 2 && b.part >= 2) || (b.part < 2 && a.part >= 2))) {
         const bool offsetFirst = a.part < 2;
         const auto offset = offsetFirst ? a : b, cap = offsetFirst ? b : a;
@@ -1943,17 +2096,49 @@ LC_AnalyticIntersectionCertificate ReferenceProviders::certifyIntersection(const
     return certificate;
 }
 
+LC_AnalyticOccurrenceIdentityCertificate ReferenceProviders::certifyOccurrenceIdentity(
+    const LC_ParametricIntersection& first, const bool firstA,
+    const LC_ParametricIntersection& second, const bool secondA) const {
+    if (!m_impl->axisContacts) { return {}; }
+    const auto branch = m_impl->branches[0];
+    if (!branch || (firstA ? first.branchA : first.branchB) != *branch ||
+        (secondA ? second.branchA : second.branchB) != *branch) { return {}; }
+    const auto validEvent = [this](const LC_ParametricIntersection& event) {
+        return event.proofDomain.segmentA < m_impl->segments.size() &&
+            event.proofDomain.segmentB < m_impl->segments.size() &&
+            m_impl->segments[event.proofDomain.segmentA].branch == event.branchA &&
+            m_impl->segments[event.proofDomain.segmentB].branch == event.branchB &&
+            event.isolation.segmentA == event.proofDomain.segmentA &&
+            event.isolation.segmentB == event.proofDomain.segmentB;
+    };
+    if (!validEvent(first) || !validEvent(second)) { return {}; }
+    // Re-establish the named isolated roots from this provider's exact provenance.
+    // A matching q labels a real ANGLE/parameter occurrence, not the common centre image.
+    const auto a = certifyIntersection(first.proofDomain), b = certifyIntersection(second.proofDomain);
+    if (a.outcome != LC_AnalyticIntersectionCertificate::Outcome::Unique ||
+        b.outcome != LC_AnalyticIntersectionCertificate::Outcome::Unique ||
+        a.proof != first.proof || b.proof != second.proof) { return {}; }
+    const auto aa = m_impl->axisDomain(firstA ? a.isolationA : a.isolationB);
+    const auto bb = m_impl->axisDomain(secondA ? b.isolationA : b.isolationB);
+    if (aa.membership != Impl::AxisMembership::Present || bb.membership != Impl::AxisMembership::Present ||
+        aa.index != bb.index) { return {}; }
+    const auto common = intersect(aa.parameter, bb.parameter);
+    if (!finiteInterval(common)) { return {}; }
+    return {true, first.proofDomain, second.proofDomain, common};
+}
+
 class ReferenceProviderBuilder {
 public:
     static ReferenceProviderPreparation run(const RS_EllipseData& basis, double signedDistance,
-                                            WorkBudget& budget, bool withContacts);
+                                            WorkBudget& budget, bool withContacts, bool componentContacts = false);
 private:
     static LC_IntersectionStatus prepareContacts(ReferenceProviders::Impl& provider,
         CriticalRefinementSession& own, CriticalRefinementSession* opposite, double delta, WorkBudget& budget);
 };
 
 ReferenceProviderPreparation ReferenceProviderBuilder::run(
-    const RS_EllipseData& basis, const double signedDistance, WorkBudget& budget, const bool withContacts) {
+    const RS_EllipseData& basis, const double signedDistance, WorkBudget& budget, const bool withContacts,
+    const bool componentContacts) {
     ReferenceProviderPreparation out;
     const auto finish = [&]() {
         out.work = budget.consumed();
@@ -1996,6 +2181,12 @@ ReferenceProviderPreparation ReferenceProviderBuilder::run(
     const auto disposition = collapseCandidate ? OppositeDisposition::ExcludedCollapsedCircle :
         OppositeDisposition::Present;
     auto impl = std::make_unique<ReferenceProviders::Impl>(std::move(own.adapter), std::move(opposite.adapter), disposition);
+    if (componentContacts) {
+        if (!budget.consumePairs(1)) { return finish(); }
+        if (signedDistance < 0 && basis.ratio < 1 && mx * mx + my * my == d * d) {
+            impl->axisContacts = impl->adapters[0]->m_provenance;
+        }
+    }
     const std::size_t capCount = impl->adapters[0]->frame().sourceSweep().whole ? 0 : 2;
     std::size_t size = impl->adapters[0]->segments().size();
     const std::size_t oppositeSize = impl->adapters[1] ? impl->adapters[1]->segments().size() : 0;
@@ -2208,10 +2399,34 @@ struct ReferenceEventAnalysis::Impl {
     std::optional<ReferenceSeam> seam;
 };
 
+struct ReferenceComponentAnalysis::Impl {
+    std::unique_ptr<const ReferenceEventAnalysis> events;
+    std::vector<ReferenceFringe> fringes;
+    std::vector<ReferenceSpan> spans;
+    std::vector<ReferenceEdge> edges;
+    std::vector<ReferenceIncidence> incidence;
+    std::vector<ReferenceComponent> components;
+};
+
 class ReferenceEventBuilder {
 public:
+    static ReferenceComponentResult components(const RS_EllipseData& basis, const double distance,
+                                                const double tolerance, WorkBudget& budget) {
+        ReferenceComponentResult out;
+        const auto events = run(basis, distance, tolerance, budget, &out);
+        out.status = events.status;
+        out.eventReason = events.reason;
+        out.work = budget.consumed();
+        if (!out.analysis && out.reason == ReferenceComponentReason::None &&
+            out.status != LC_IntersectionStatus::LimitExceeded) {
+            out.reason = events.reason == ReferenceEventReason::ProofContradiction
+                ? ReferenceComponentReason::ProofContradiction : ReferenceComponentReason::EventRefusal;
+        }
+        return out;
+    }
     static ReferenceEventResult run(const RS_EllipseData& basis, const double distance,
-                                    const double tolerance, WorkBudget& budget) {
+                                    const double tolerance, WorkBudget& budget,
+                                    ReferenceComponentResult* components = nullptr) {
         ReferenceEventResult out;
         const auto finish = [&]() { out.work = budget.consumed(); return std::move(out); };
         if (budget.status() != BudgetStatus::Ok) {
@@ -2219,8 +2434,26 @@ public:
                                                                        : LC_IntersectionStatus::InvalidInput;
             return finish();
         }
-        if (!(tolerance > 0.0) || !std::isfinite(tolerance)) { return finish(); }
-        auto prepared = prepareReferenceContactProviders(basis, distance, budget);
+        if (!(tolerance > 0.0) || !std::isfinite(tolerance) || !std::isfinite(distance) || distance == 0.0) {
+            return finish();
+        }
+        const auto sourceSweep = sweep(basis);
+        if (components && distance < 0.0 && basis.ratio > 0.0 && basis.ratio < 1.0 &&
+            frame(basis) && sourceSweep && sourceSweep->whole) {
+            if (!budget.consumeVertices(1) || !budget.consumePairs(1)) {
+                out.status = LC_IntersectionStatus::LimitExceeded;
+                return finish();
+            }
+            const Rational x = exactDouble(basis.majorP.x), y = exactDouble(basis.majorP.y);
+            const Rational ratio = exactDouble(basis.ratio), d = exactDouble(distance);
+            if (d * d == (x * x + y * y) * ratio * ratio) {
+                out.status = LC_IntersectionStatus::AmbiguousTopology;
+                components->reason = ReferenceComponentReason::UnresolvedVisibility;
+                return finish();
+            }
+        }
+        auto prepared = components ? ReferenceProviderBuilder::run(basis, distance, budget, true, true) :
+            prepareReferenceContactProviders(basis, distance, budget);
         if (prepared.status != LC_IntersectionStatus::Ok) {
             out.status = prepared.status;
             if (prepared.status != LC_IntersectionStatus::LimitExceeded) {
@@ -2252,6 +2485,7 @@ public:
         options.maxDepth = options.maxLeafDepth = budget.depthLimit();
         options.maxBoxPairs = budget.remainingPairs();
         options.maxLeaves = options.maxGeneratedItems = budget.remainingVertices();
+        options.analyticOccurrenceIdentity = components && bool(view->m_impl->axisContacts);
         auto query = findCertifiedIntersections(std::move(prepared.provider), options);
         const bool items = budget.consumeVertices(query.work.generatedItems);
         const bool pairs = budget.consumePairs(query.work.totalBoxPairs);
@@ -2278,9 +2512,16 @@ public:
         data->ownCritical = std::move(prepared.ownCritical);
         data->oppositeCritical = std::move(prepared.oppositeCritical);
         ReferenceEventBuilder builder{budget, tolerance, std::move(data)};
-        if (builder.prepare() && builder.order() && builder.accuracy() && builder.publish()) {
-            out.analysis.reset(new ReferenceEventAnalysis{std::move(builder.m_data)});
+        if (builder.prepare() && builder.order() && builder.accuracy() &&
+            (!components || builder.fringes()) && builder.publish()) {
+            if (!components) {
+                out.analysis.reset(new ReferenceEventAnalysis{std::move(builder.m_data)});
+            } else if (builder.assemble(basis, distance)) {
+                builder.m_components->events.reset(new ReferenceEventAnalysis{std::move(builder.m_data)});
+                components->analysis.reset(new ReferenceComponentAnalysis{std::move(builder.m_components)});
+            }
         }
+        if (components) { components->reason = builder.m_componentReason; }
         out.status = builder.m_status;
         out.reason = builder.m_reason;
         return finish();
@@ -2299,6 +2540,7 @@ private:
         unsigned rank = 0;
         CriticalOccurrenceHandle criticalHandle;
         CriticalOccurrence critical{};
+        int axis = 99;
     };
     struct Node {
         LC_Interval x, y;
@@ -2402,6 +2644,21 @@ private:
             wa.source = wb.source = i;
             wa.parameter = snapshot->event.isolation.parameterA;
             wb.parameter = snapshot->event.isolation.parameterB;
+            if (provider().m_impl->axisContacts) {
+                if (!pair()) { return false; }
+                // Reissue the qualified provider proof on the original domain, never infer identity
+                // merely from overlapping public isolations or a copied analytic proof flag.
+                const auto certificate = provider().certifyIntersection(snapshot->event.proofDomain);
+                if (certificate.outcome == LC_AnalyticIntersectionCertificate::Outcome::Unique) {
+                    LC_Interval unused;
+                    if (wa.role == ReferenceRole::Own) {
+                        wa.axis = provider().m_impl->axisIn(certificate.isolationA, unused);
+                    }
+                    if (wb.role == ReferenceRole::Own) {
+                        wb.axis = provider().m_impl->axisIn(certificate.isolationB, unused);
+                    }
+                }
+            }
             if (!addWitness(wa, n) || !addWitness(wb, n)) { return false; }
         }
         m_criticalStart = m_witnesses.size();
@@ -2429,6 +2686,10 @@ private:
             Witness w;
             w.role = ReferenceRole::Own; w.origin = Origin::Boundary;
             w.parameter = LC_Interval::point(t);
+            if (provider().m_impl->axisContacts) {
+                LC_Interval unused;
+                w.axis = provider().m_impl->axisIn(w.parameter, unused);
+            }
             if (!addWitness(w, addNode(bounds.x, bounds.y))) { return false; }
         }
         if (provider().frame().sourceSweep().whole &&
@@ -2470,6 +2731,7 @@ private:
         auto& into = m_witnesses[a];
         auto& from = m_witnesses[b];
         into.occurrenceParameter = parameter;
+        if (into.axis == 99) { into.axis = from.axis; }
         if (into.rank == from.rank) { ++into.rank; }
         from.parent = a;
         m_witnesses[into.tail].nextOccurrence = from.head;
@@ -2559,7 +2821,9 @@ private:
                 if (pa.hi() < pb.lo()) { break; }
                 if (pb.hi() < pa.lo()) { ++position; continue; }
                 if (!pair()) { return false; } // Identity examination is separate from the order comparison.
-                if (pa.lo() == pa.hi() && pb.lo() == pb.hi() && pa.lo() == pb.lo()) {
+                if ((pa.lo() == pa.hi() && pb.lo() == pb.hi() && pa.lo() == pb.lo()) ||
+                    (ar == ReferenceRole::Own && m_witnesses[a].axis != 99 &&
+                     m_witnesses[a].axis == m_witnesses[b].axis)) {
                     if (!joinOccurrences(a, b)) { return false; }
                     merged = true;
                     break;
@@ -2618,6 +2882,372 @@ private:
                 if (!good()) { return false; }
                 return fail(LC_IntersectionStatus::AmbiguousTopology, ReferenceEventReason::NodeAccuracy);
             }
+        }
+        return true;
+    }
+    bool componentFailure(const ReferenceComponentReason reason) {
+        m_componentReason = reason;
+        return fail(LC_IntersectionStatus::AmbiguousTopology, ReferenceEventReason::None);
+    }
+    bool errorBound(const LC_Interval& x, const LC_Interval& y, const RS_Vector& point) const {
+        if (!finiteInterval(x) || !finiteInterval(y) || !isFinite2D(point)) { return false; }
+        const Rational px = exactDouble(point.x), py = exactDouble(point.y);
+        const Rational dx = std::max(Rational{px - exactDouble(x.lo())}, Rational{exactDouble(x.hi()) - px});
+        const Rational dy = std::max(Rational{py - exactDouble(y.lo())}, Rational{exactDouble(y.hi()) - py});
+        return dx * dx + dy * dy <= m_errorSquared;
+    }
+    bool fringeBounds(const std::size_t witness, LC_CurveJetBounds& bounds) {
+        if (!pair()) { return false; }
+        const auto o = occurrence(witness); if (o == none) { return false; }
+        const auto p = m_witnesses[o].occurrenceParameter;
+        return provider().frame().boundOffsetJet(p.lo(), p.hi(), bounds) ||
+            componentFailure(ReferenceComponentReason::UnresolvedFringe);
+    }
+    bool fringes() {
+        if (!vertices(1) || !pair()) { return false; }
+        m_components = std::make_unique<ReferenceComponentAnalysis::Impl>();
+        // A root-image intersection is not a bound on a curve's full root enclosure.
+        // Bound the UNION of all incident own fringes, then choose one rounded node for that union.
+        for (std::size_t n = 0; n < m_nodes.size(); ++n) {
+            if (!pair()) { return false; }
+            if (m_nodes[n].parent != n) { continue; }
+            for (;;) {
+                LC_Interval x, y;
+                for (auto i = m_nodes[n].head; i != none; i = m_witnesses[i].nextNode) {
+                    if (!pair()) { return false; }
+                    if (m_witnesses[i].role != ReferenceRole::Own) { continue; }
+                    LC_CurveJetBounds b;
+                    if (!fringeBounds(i, b) || !pair()) { return false; }
+                    x = x.isValid() ? LC_Interval::hull(std::min(x.lo(), b.x.lo()), std::max(x.hi(), b.x.hi())) : b.x;
+                    y = y.isValid() ? LC_Interval::hull(std::min(y.lo(), b.y.lo()), std::max(y.hi(), b.y.hi())) : b.y;
+                }
+                if (!pair()) { return false; }
+                LC_Interval wx, wy;
+                if (finiteInterval(x) && finiteInterval(y) && provider().frame().pointToWorld(x, y, wx, wy) &&
+                    errorBound(wx, wy, RS_Vector{middle(wx), middle(wy)})) {
+                    auto& target = m_nodes[n];
+                    target.x = intersect(target.x, x); target.y = intersect(target.y, y);
+                    if (!finiteInterval(target.x) || !finiteInterval(target.y)) { return contradiction(); }
+                    target.published = {RS_Vector{middle(wx), middle(wy)}, target.x, target.y, wx, wy};
+                    break;
+                }
+                if (refineNode(n)) { continue; }
+                return good() ? componentFailure(ReferenceComponentReason::UnresolvedFringe) : false;
+            }
+            for (auto i = m_nodes[n].head; i != none; i = m_witnesses[i].nextNode) {
+                if (!pair()) { return false; }
+                if (m_witnesses[i].role != ReferenceRole::Own || m_witnesses[i].parent != i) { continue; }
+                if (!room(m_components->fringes) || !vertices(1)) { return false; }
+                LC_CurveJetBounds b;
+                if (!fringeBounds(i, b)) { return false; }
+                ReferenceFringe fringe;
+                fringe.occurrence = {i}; // Private witness index until the publication map is established.
+                fringe.parameter = m_witnesses[i].occurrenceParameter;
+                fringe.localX = b.x; fringe.localY = b.y;
+                if (!provider().frame().pointToWorld(b.x, b.y, fringe.worldX, fringe.worldY)) {
+                    return componentFailure(ReferenceComponentReason::UnresolvedFringe);
+                }
+                m_components->fringes.push_back(fringe);
+            }
+        }
+        return true;
+    }
+    struct VisibilityBasis {
+        CriticalKernel kernel;
+        Rational piLow, piHigh, duration;
+        ExactAngle start, extent;
+        bool reversed, whole;
+        VisibilityBasis(const RS_EllipseData& basis, const double distance, const ReferenceFrame& frame)
+            : kernel{basis, distance}, piLow{exactDouble(realPi().lo())}, piHigh{exactDouble(realPi().hi())},
+              duration{exactDouble(frame.parameterEnd())}, start{exactDouble(frame.sourceSweep().start), 0},
+              reversed{basis.reversed}, whole{frame.sourceSweep().whole} {
+            extent = whole ? ExactAngle{0, reversed ? -2 : 2} :
+                ExactAngle{exactDouble(basis.angle2) - start.constant, 0};
+            if (!whole && reversed && extent.constant > 0) { extent.pi = -2; }
+            if (!whole && !reversed && extent.constant < 0) { extent.pi = 2; }
+        }
+        ExactAngle angle(const Rational& t) const {
+            return {start.constant + extent.constant * t / duration, start.pi + extent.pi * t / duration};
+        }
+        bool hSquared(const ExactAngle& angle, RationalRange& out) const {
+            LC_Interval a, c, s;
+            if (!exactAngleBounds(angle, piLow, piHigh, a) || !referenceTrig(a, c, s)) { return false; }
+            const auto squared = sqr(s);
+            if (!finiteInterval(squared)) { return false; }
+            out = {kernel.r2 + kernel.difference * exactDouble(std::max(0.0, squared.lo())),
+                   kernel.r2 + kernel.difference * exactDouble(std::min(1.0, squared.hi()))};
+            return true;
+        }
+        int compare(const ExactAngle& a, const ExactAngle& b) const {
+            const Rational constant = a.constant - b.constant, p = a.pi - b.pi;
+            const Rational low = constant + p * (p < 0 ? piHigh : piLow);
+            const Rational high = constant + p * (p < 0 ? piLow : piHigh);
+            return low > 0 ? 1 : high < 0 ? -1 : low == 0 && high == 0 ? 0 : 2;
+        }
+    };
+    int visibilitySign(const VisibilityBasis& basis, const Rational& t) {
+        if (!pair()) { return 2; }
+        const auto theta = basis.angle(t);
+        RationalRange h;
+        if (!basis.hSquared(theta, h)) { return 2; }
+        RationalRange minimum{basis.kernel.r2, basis.kernel.r2};
+        if (!basis.whole) {
+            const auto last = basis.angle(basis.duration);
+            const auto first = basis.reversed ? last : basis.start;
+            const auto end = basis.reversed ? basis.start : last;
+            const ExactAngle lo{(theta.constant + first.constant) / 2, (theta.pi + first.pi) / 2};
+            const ExactAngle hi{(theta.constant + end.constant) / 2, (theta.pi + end.pi) / 2};
+            RationalRange left, right;
+            if (!basis.hSquared(lo, left) || !basis.hSquared(hi, right)) { return 2; }
+            bool contained = false, uncertain = false;
+            // Input phases and a single directed turn place every possible mirror in this fixed range.
+            for (int k = -4; k <= 6; ++k) {
+                if (!pair()) { return 2; }
+                const ExactAngle mirror{0, k};
+                const int a = basis.compare(lo, mirror), b = basis.compare(hi, mirror);
+                if ((a == -1 || a == 0) && (b == 1 || b == 0)) { contained = true; break; }
+                if (a == 2 || b == 2) { uncertain = true; }
+            }
+            if (!contained) {
+                minimum = {uncertain ? basis.kernel.r2 : std::min(left.lo, right.lo),
+                           std::min(left.hi, right.hi)};
+            }
+        }
+        const Rational low = basis.kernel.axisSquared * minimum.lo * minimum.lo * h.lo -
+            basis.kernel.distanceSquared * basis.kernel.r2;
+        const Rational high = basis.kernel.axisSquared * minimum.hi * minimum.hi * h.hi -
+            basis.kernel.distanceSquared * basis.kernel.r2;
+        return low > 0 ? 1 : high < 0 ? -1 : low == 0 && high == 0 ? 0 : 2;
+    }
+    bool classify(const VisibilityBasis& basis, const LC_Interval& interval, ReferenceVisibility& visibility) {
+        struct Box { double a, b; unsigned depth; };
+        if (!vertices(1)) { return false; }
+        std::vector<Box> pending{{interval.lo(), interval.hi(), 0}};
+        while (!pending.empty()) {
+            if (!pair()) { return false; }
+            const Box box = std::move(pending.back()); pending.pop_back();
+            if (!m_budget.checkDepth(box.depth)) { return limit(); }
+            const auto sign = visibilitySign(basis, Rational{(exactDouble(box.a) + exactDouble(box.b)) / 2});
+            if (!good()) { return false; }
+            if (sign == 0) { return componentFailure(ReferenceComponentReason::UnresolvedVisibility); }
+            if (sign != 2) {
+                // Complete strict events exclude a change of nearest-foot visibility inside this gap:
+                // another interior foot gives an own/opposite root, an endpoint a cap root, and a
+                // loss at the generating foot F=0 is in the complete critical inventory.
+                visibility = sign < 0 ? ReferenceVisibility::Hidden : ReferenceVisibility::Visible;
+                return true;
+            }
+            if (box.depth >= m_budget.depthLimit()) { return limit(); }
+            const double mid = middle(LC_Interval::hull(box.a, box.b));
+            if (!(box.a < mid && mid < box.b)) {
+                return componentFailure(ReferenceComponentReason::UnresolvedVisibility);
+            }
+            if (pending.size() > pending.max_size() - 2 || !vertices(2)) { return limit(); }
+            pending.push_back({mid, box.b, box.depth + 1});
+            pending.push_back({box.a, mid, box.depth + 1});
+        }
+        return componentFailure(ReferenceComponentReason::UnresolvedVisibility);
+    }
+    bool assemble(const RS_EllipseData& basis, const double distance) {
+        for (auto& fringe : m_components->fringes) {
+            if (!pair()) { return false; }
+            const auto witness = fringe.occurrence.value;
+            fringe.occurrence = publicOccurrence(witness);
+            if (!good()) { return false; }
+            fringe.parameter = m_data->occurrences[fringe.occurrence.value].parameter;
+        }
+        if (!vertices(1) || !pair()) { return false; }
+        const VisibilityBasis exact{basis, distance, provider().frame()};
+        if (distance < 0.0 && exact.whole && exact.kernel.r2 < 1 &&
+            exact.kernel.distanceSquared == exact.kernel.axisSquared * exact.kernel.r2) {
+            return componentFailure(ReferenceComponentReason::UnresolvedVisibility);
+        }
+        const auto& own = m_data->ownOccurrences;
+        for (std::size_t i = 1; i < own.size(); ++i) {
+            if (!room(m_components->spans) || !vertices(1) || !pair()) { return false; }
+            const auto a = own[i - 1], b = own[i];
+            const auto& from = m_data->occurrences[a.value];
+            const auto& to = m_data->occurrences[b.value];
+            if (!(from.parameter.hi() < to.parameter.lo())) { return contradiction(); }
+            ReferenceSpan span;
+            span.start = a; span.end = b;
+            span.interior = LC_Interval::hull(from.parameter.hi(), to.parameter.lo());
+            span.proof = distance > 0 ? ReferenceVisibilityProof::ConvexSupport :
+                ReferenceVisibilityProof::CompleteEventClearance;
+            span.visibility = ReferenceVisibility::Visible;
+            if (distance < 0 && !classify(exact, span.interior, span.visibility)) { return false; }
+            span.clearance = span.visibility == ReferenceVisibility::Visible ? LC_Interval::point(std::abs(distance)) :
+                LC_Interval::hull(0.0, std::abs(distance));
+            const auto index = m_components->spans.size();
+            m_components->spans.push_back(span);
+            if (span.visibility == ReferenceVisibility::Visible) {
+                if (!room(m_components->edges) || !vertices(1) || !pair()) { return false; }
+                m_components->edges.push_back({index, from.node, to.node});
+            }
+        }
+        return graph(exact, distance);
+    }
+    bool hiddenEventPoint(const VisibilityBasis& basis, const double distance, const std::size_t index) {
+        const auto& n = m_nodes[index];
+        const Rational d = exactDouble(std::abs(distance)) / exactDouble(provider().frame().scale());
+        const auto sourceWitness = [&](const LC_Interval& parameter) {
+            if (!pair()) { return false; }
+            if (!finiteInterval(parameter) || parameter.lo() < 0 || parameter.hi() > provider().frame().parameterEnd()) {
+                return false;
+            }
+            LC_CurveJetBounds source;
+            if (!provider().frame().boundSourceJet(parameter.lo(), parameter.hi(), source) ||
+                !finiteInterval(source.x) || !finiteInterval(source.y)) { return false; }
+            const auto separation = [](const LC_Interval& a, const LC_Interval& b) -> Rational {
+                const Rational first = abs(Rational{exactDouble(a.lo()) - exactDouble(b.hi())});
+                const Rational last = abs(Rational{exactDouble(a.hi()) - exactDouble(b.lo())});
+                return std::max(first, last);
+            };
+            const Rational x = separation(n.x, source.x), y = separation(n.y, source.y);
+            // One actual admitted source point suffices. Bounding every point in its enclosure
+            // against the whole event enclosure also covers a root not representable as a double.
+            return x * x + y * y < d * d;
+        };
+        for (auto i = n.head; i != none; i = m_witnesses[i].nextNode) {
+            if (!pair()) { return false; }
+            if (m_witnesses[i].role != ReferenceRole::Own) { continue; }
+            const auto o = occurrence(i); if (o == none) { return false; }
+            const auto& interval = m_witnesses[o].occurrenceParameter;
+            const auto theta = basis.angle((exactDouble(interval.lo()) + exactDouble(interval.hi())) / 2);
+            // Mirror-foot candidates are only witness selection, never an identity/nearest-foot
+            // assumption. Their entire mapped enclosure must belong to the restricted source.
+            for (int k = -4; k <= 6; ++k) {
+                if (!pair()) { return false; }
+                std::array<Rational, 2> values;
+                std::size_t j = 0;
+                const Rational low = basis.extent.constant + basis.extent.pi * basis.piLow;
+                const Rational high = basis.extent.constant + basis.extent.pi * basis.piHigh;
+                bool valid = basis.reversed ? low < 0 && high < 0 : low > 0 && high > 0;
+                if (!valid) { continue; }
+                for (const auto* pi : {&basis.piLow, &basis.piHigh}) {
+                    const Rational denominator = basis.extent.constant + basis.extent.pi * *pi;
+                    if (denominator == 0) { valid = false; break; }
+                    values[j++] = basis.duration * (-theta.constant - basis.start.constant +
+                        (2 * k - theta.pi - basis.start.pi) * *pi) / denominator;
+                }
+                LC_Interval parameter;
+                if (valid && rationalBounds(std::min(values[0], values[1]), std::max(values[0], values[1]), parameter) &&
+                    sourceWitness(parameter)) { return true; }
+                if (!good()) { return false; }
+            }
+        }
+        // A fixed finite set also covers hidden centre contacts whose mirror foot is the
+        // generating point. Failure to find a witness is not a claim that the event is retained.
+        for (unsigned i = 0; i <= 8; ++i) {
+            if (!pair()) { return false; }
+            LC_Interval parameter;
+            const Rational t = basis.duration * i / 8;
+            if (rationalBounds(t, t, parameter) && sourceWitness(parameter)) { return true; }
+            if (!good()) { return false; }
+        }
+        return componentFailure(ReferenceComponentReason::UnresolvedEventPoint);
+    }
+    bool graph(const VisibilityBasis& basis, const double distance) {
+        const auto count = m_data->nodes.size();
+        struct Parent {
+            std::size_t parent, component = none, privateNode = none;
+            unsigned rank = 0;
+            bool own = false;
+        };
+        std::vector<Parent> parents;
+        if (count > parents.max_size() || count > m_components->incidence.max_size() ||
+            !vertices(count) || !vertices(count)) { return limit(); }
+        parents.reserve(count); m_components->incidence.reserve(count);
+        for (std::size_t i = 0; i < count; ++i) {
+            if (!pair()) { return false; }
+            parents.push_back({i});
+            ReferenceIncidence incidence; incidence.node = {i};
+            m_components->incidence.push_back(std::move(incidence));
+        }
+        for (std::size_t i = 0; i < m_nodes.size(); ++i) {
+            if (!pair()) { return false; }
+            if (m_nodes[i].parent != i) { continue; }
+            auto& target = parents[m_nodes[i].publicId];
+            target.privateNode = i;
+            for (auto w = m_nodes[i].head; w != none; w = m_witnesses[w].nextNode) {
+                if (!pair()) { return false; }
+                target.own = target.own || m_witnesses[w].role == ReferenceRole::Own;
+            }
+        }
+        const auto find = [&](std::size_t i) {
+            while (parents[i].parent != i) {
+                if (!pair()) { return none; }
+                i = parents[i].parent;
+            }
+            return i;
+        };
+        for (std::size_t e = 0; e < m_components->edges.size(); ++e) {
+            if (!pair()) { return false; }
+            const auto& edge = m_components->edges[e];
+            auto a = find(edge.start.value); if (a == none) { return false; }
+            auto b = find(edge.end.value); if (b == none) { return false; }
+            if (a != b) {
+                if (parents[a].rank < parents[b].rank) { std::swap(a, b); }
+                if (parents[a].rank == parents[b].rank) { ++parents[a].rank; }
+                parents[b].parent = a;
+            }
+            auto& outgoing = m_components->incidence[edge.start.value].outgoing;
+            auto& incoming = m_components->incidence[edge.end.value].incoming;
+            if (!room(outgoing) || !vertices(1) || !room(incoming) || !vertices(1)) { return false; }
+            outgoing.push_back(e); incoming.push_back(e);
+        }
+        for (const auto& f : m_data->freeEnds) {
+            if (!pair()) { return false; }
+            auto& n = m_components->incidence[m_data->occurrences[f.occurrence.value].node.value];
+            (f.atStart ? n.sourceStart : n.sourceEnd) = true;
+        }
+        for (const auto& c : m_data->criticals) {
+            if (!pair()) { return false; }
+            auto& n = m_components->incidence[m_data->occurrences[c.occurrence.value].node.value];
+            (c.kind == CriticalKind::SimpleCusp ? n.cusp : n.stationary) = true;
+        }
+        for (const auto& p : m_data->pairs) {
+            if (!pair()) { return false; }
+            auto& n = m_components->incidence[m_data->occurrences[p.first.value].node.value];
+            if (p.kind == LC_ParametricIntersection::Kind::Transverse) { n.crossing = true; }
+            else if (p.kind == LC_ParametricIntersection::Kind::Tangent) { n.tangency = true; }
+            else { n.construction = true; }
+        }
+        if (m_data->seam) {
+            if (!pair()) { return false; }
+            m_components->incidence[m_data->occurrences[m_data->seam->start.value].node.value].seam = true;
+        }
+        for (std::size_t e = 0; e < m_components->edges.size(); ++e) {
+            if (!pair()) { return false; }
+            const auto root = find(m_components->edges[e].start.value); if (root == none) { return false; }
+            auto& index = parents[root].component;
+            if (index == none) {
+                if (!room(m_components->components) || !vertices(1)) { return false; }
+                index = m_components->components.size();
+                ReferenceComponent component; component.endpointFree = true;
+                m_components->components.push_back(std::move(component));
+            }
+            auto& list = m_components->components[index].edges;
+            if (!room(list) || !vertices(1)) { return false; }
+            list.push_back(e);
+        }
+        for (auto& n : m_components->incidence) {
+            if (!pair()) { return false; }
+            if (n.incoming.empty() && n.outgoing.empty()) {
+                // Other roles are cutters only; they do not belong to the retained own graph.
+                if (!parents[n.node.value].own) { continue; }
+                const auto privateNode = parents[n.node.value].privateNode;
+                if (privateNode == none) { return contradiction(); }
+                if (!hiddenEventPoint(basis, distance, privateNode)) { return false; }
+                n.hiddenPoint = true;
+                continue;
+            }
+            const auto root = find(n.node.value); if (root == none) { return false; }
+            auto& c = m_components->components[parents[root].component];
+            const bool end = n.incoming.empty() || n.outgoing.empty();
+            c.endpointFree = c.endpointFree && !end;
+            c.branching = c.branching || n.incoming.size() > 1 || n.outgoing.size() > 1;
+            n.trimBoundary = end && !n.sourceStart && !n.sourceEnd;
         }
         return true;
     }
@@ -2687,6 +3317,7 @@ private:
     WorkBudget& m_budget;
     Rational m_errorSquared;
     std::unique_ptr<ReferenceEventAnalysis::Impl> m_data;
+    std::unique_ptr<ReferenceComponentAnalysis::Impl> m_components;
     std::vector<Root> m_roots;
     std::vector<Witness> m_witnesses;
     std::vector<Node> m_nodes;
@@ -2695,6 +3326,7 @@ private:
     std::array<bool, 4> m_criticalBlocked{};
     LC_IntersectionStatus m_status = LC_IntersectionStatus::Ok;
     ReferenceEventReason m_reason = ReferenceEventReason::None;
+    ReferenceComponentReason m_componentReason = ReferenceComponentReason::None;
 };
 
 ReferenceEventAnalysis::ReferenceEventAnalysis(std::unique_ptr<Impl> impl) : m_impl{std::move(impl)} {}
@@ -2712,6 +3344,19 @@ const std::optional<ReferenceSeam>& ReferenceEventAnalysis::seam() const noexcep
 ReferenceEventResult analyseReferenceEvents(const RS_EllipseData& basis, const double signedDistance,
                                           const double worldTolerance, WorkBudget& budget) {
     return ReferenceEventBuilder::run(basis, signedDistance, worldTolerance, budget);
+}
+
+ReferenceComponentAnalysis::ReferenceComponentAnalysis(std::unique_ptr<Impl> impl) : m_impl{std::move(impl)} {}
+ReferenceComponentAnalysis::~ReferenceComponentAnalysis() = default;
+const ReferenceEventAnalysis& ReferenceComponentAnalysis::events() const noexcept { return *m_impl->events; }
+const std::vector<ReferenceFringe>& ReferenceComponentAnalysis::fringes() const noexcept { return m_impl->fringes; }
+const std::vector<ReferenceSpan>& ReferenceComponentAnalysis::spans() const noexcept { return m_impl->spans; }
+const std::vector<ReferenceEdge>& ReferenceComponentAnalysis::edges() const noexcept { return m_impl->edges; }
+const std::vector<ReferenceIncidence>& ReferenceComponentAnalysis::incidence() const noexcept { return m_impl->incidence; }
+const std::vector<ReferenceComponent>& ReferenceComponentAnalysis::components() const noexcept { return m_impl->components; }
+ReferenceComponentResult analyseReferenceComponents(const RS_EllipseData& basis, const double signedDistance,
+                                                  const double worldTolerance, WorkBudget& budget) {
+    return ReferenceEventBuilder::components(basis, signedDistance, worldTolerance, budget);
 }
 
 CriticalRefinementSession::CriticalRefinementSession(std::unique_ptr<Impl> impl) : m_impl{std::move(impl)} {}

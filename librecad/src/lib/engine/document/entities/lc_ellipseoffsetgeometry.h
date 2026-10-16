@@ -301,6 +301,8 @@ public:
                LC_Interval& dx, LC_Interval& dy) const override;
     /** Full local-coordinate jet bounds, including zero-width queries; cleared on refusal. */
     bool boundJet(std::size_t segment, double a, double b, LC_CurveJetBounds& out) const;
+    LC_AnalyticOccurrenceIdentityCertificate certifyOccurrenceIdentity(
+        const LC_ParametricIntersection&, bool, const LC_ParametricIntersection&, bool) const override;
     LC_AnalyticLeafCertificate certifyInjective(std::size_t segment, const LC_Interval& parameter) const override;
     LC_AnalyticIntersectionCertificate certifyIntersection(const LC_IntersectionDomain& box) const override;
 
@@ -308,6 +310,7 @@ private:
     friend class ReferenceProviderBuilder;
     struct Impl;
     explicit ReferenceProviders(std::unique_ptr<Impl> impl);
+    friend class ReferenceEventBuilder;
     std::unique_ptr<const Impl> m_impl;
 };
 
@@ -390,6 +393,73 @@ struct ReferenceEventResult {
 
 ReferenceEventResult analyseReferenceEvents(const RS_EllipseData& basis, double signedDistance,
                                           double worldTolerance, WorkBudget& budget);
+
+enum class ReferenceVisibility { Visible, Hidden };
+enum class ReferenceVisibilityProof { ConvexSupport, CompleteEventClearance };
+struct ReferenceFringe {
+    /** Full root enclosure. Incident spans select its two symbolic one-sided portions, not two copies of it. */
+    ReferenceOccurrenceId occurrence;
+    LC_Interval parameter, localX, localY, worldX, worldY;
+};
+struct ReferenceSpan {
+    /** Actual issued roots delimit the span; interior plus their one-sided fringes covers it without gaps. */
+    ReferenceOccurrenceId start, end;
+    LC_Interval interior;
+    ReferenceVisibility visibility{};
+    ReferenceVisibilityProof proof{};
+    /** Whole symbolic open-span clearance; equality at its event endpoints is permitted. */
+    LC_Interval clearance;
+};
+struct ReferenceEdge {
+    std::size_t span = std::size_t(-1);
+    ReferenceNodeId start, end;
+};
+struct ReferenceIncidence {
+    ReferenceNodeId node;
+    std::vector<std::size_t> incoming, outgoing;
+    bool sourceStart = false, sourceEnd = false, seam = false;
+    bool cusp = false, stationary = false, crossing = false;
+    bool tangency = false, construction = false;
+    /** One-sided retained boundary that is not a free source end. */
+    bool trimBoundary = false;
+    /** A zero-edge event was proved strictly closer than D to an admitted source point. */
+    bool hiddenPoint = false;
+};
+struct ReferenceComponent {
+    /** All edges, in source-parameter order; no crossing-successor pairing is implied. */
+    std::vector<std::size_t> edges;
+    bool endpointFree = false;
+    bool branching = false;
+};
+enum class ReferenceComponentReason {
+    None, EventRefusal, UnresolvedVisibility, UnresolvedFringe, UnresolvedEventPoint, ProofContradiction
+};
+class ReferenceComponentAnalysis {
+public:
+    ~ReferenceComponentAnalysis();
+    ReferenceComponentAnalysis(const ReferenceComponentAnalysis&) = delete;
+    ReferenceComponentAnalysis& operator=(const ReferenceComponentAnalysis&) = delete;
+    const ReferenceEventAnalysis& events() const noexcept;
+    const std::vector<ReferenceFringe>& fringes() const noexcept;
+    const std::vector<ReferenceSpan>& spans() const noexcept;
+    const std::vector<ReferenceEdge>& edges() const noexcept;
+    const std::vector<ReferenceIncidence>& incidence() const noexcept;
+    const std::vector<ReferenceComponent>& components() const noexcept;
+private:
+    friend class ReferenceEventBuilder;
+    struct Impl;
+    explicit ReferenceComponentAnalysis(std::unique_ptr<Impl> impl);
+    std::unique_ptr<const Impl> m_impl;
+};
+struct ReferenceComponentResult {
+    LC_IntersectionStatus status = LC_IntersectionStatus::InvalidInput;
+    ReferenceComponentReason reason = ReferenceComponentReason::None;
+    ReferenceEventReason eventReason = ReferenceEventReason::None;
+    std::unique_ptr<const ReferenceComponentAnalysis> analysis;
+    CheckWork work{};
+};
+ReferenceComponentResult analyseReferenceComponents(const RS_EllipseData& basis, double signedDistance,
+                                                  double worldTolerance, WorkBudget& budget);
 
 bool isFinite2D(const RS_Vector& point);
 /** Validate raw fields before RS_Ellipse can canonicalize tiny angles. Unchanged on refusal. */

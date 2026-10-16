@@ -4443,3 +4443,659 @@ TEST_CASE("Reference event invalid collapsed and sticky limit requests publish n
     CHECK_FALSE(preparationLimited.analysis);
     checkWork(preparationLimited.work, preparationBudget.consumed());
 }
+
+namespace {
+bool componentVisibilityOracle(const RS_EllipseData& source, const double distance,
+                               const geo::ReferenceFrame& frame, const double t) {
+    if (distance > 0) { return true; }
+    const CriticalFloat pi = boost::math::constants::pi<CriticalFloat>();
+    const CriticalFloat period = 2 * pi;
+    const bool whole = frame.sourceSweep().whole;
+    const CriticalFloat start = whole ? CriticalFloat(M_PI_4) : CriticalFloat(source.angle1);
+    CriticalFloat extent = whole ? (source.reversed ? -period : period) :
+        CriticalFloat(source.angle2) - CriticalFloat(source.angle1);
+    if (!whole && source.reversed && extent > 0) { extent -= period; }
+    if (!whole && !source.reversed && extent < 0) { extent += period; }
+    const CriticalFloat theta = start + extent * CriticalFloat(t) / CriticalFloat(frame.parameterEnd());
+    const CriticalFloat finish = start + extent;
+    const CriticalFloat a = std::min(start, finish), b = std::max(start, finish);
+    const CriticalFloat scale = frame.scale();
+    const CriticalFloat mx = CriticalFloat(source.majorP.x) / scale, my = CriticalFloat(source.majorP.y) / scale;
+    const CriticalFloat r = source.ratio, d = CriticalFloat(-distance) / scale;
+    const CriticalFloat c = cos(theta), s = sin(theta), norm = sqrt(mx * mx + my * my);
+    const CriticalFloat h = sqrt(r * r * c * c + s * s);
+    const CriticalFloat qx = mx * c - my * r * s - d * (r * mx * c - my * s) / (norm * h);
+    const CriticalFloat qy = my * c + mx * r * s - d * (r * my * c + mx * s) / (norm * h);
+    const auto nearer = [&](const CriticalFloat& phi) {
+        const CriticalFloat dx = qx - (mx * cos(phi) - my * r * sin(phi));
+        const CriticalFloat dy = qy - (my * cos(phi) + mx * r * sin(phi));
+        return dx * dx + dy * dy < d * d - CriticalFloat("1e-100") * (1 + d * d);
+    };
+    // Independent vector distances, not the product predicate used in production.
+    if (nearer(a) || nearer(b)) { return false; }
+    for (int k = -4; k <= 6; ++k) {
+        const CriticalFloat mirror = 2 * k * pi - theta;
+        if (a <= mirror && mirror <= b && nearer(mirror)) { return false; }
+    }
+    for (unsigned i = 1; i < 64; ++i) {
+        if (nearer(a + (b - a) * i / 64)) { return false; }
+    }
+    return true;
+}
+
+void checkComponentAnalysis(const geo::ReferenceComponentAnalysis& analysis, const RS_EllipseData& source,
+                            const double distance, const double tolerance) {
+    const auto& events = analysis.events();
+    checkEventRecords(events, tolerance);
+    const auto& own = events.ownOccurrences();
+    const auto& occurrences = events.occurrences();
+    REQUIRE(analysis.spans().size() + 1 == own.size());
+    REQUIRE(analysis.fringes().size() == own.size());
+    std::vector<unsigned> fringes(occurrences.size()), retained(analysis.spans().size());
+    const EventRational maximum = EventRational(tolerance) * EventRational(tolerance) / 256;
+    for (const auto& fringe : analysis.fringes()) {
+        REQUIRE(fringe.occurrence.value < occurrences.size());
+        const auto& o = occurrences[fringe.occurrence.value];
+        CHECK(o.role == geo::ReferenceRole::Own);
+        ++fringes[fringe.occurrence.value];
+        CHECK(fringe.parameter.lo() == o.parameter.lo());
+        CHECK(fringe.parameter.hi() == o.parameter.hi());
+        const auto& node = events.nodes()[o.node.value];
+        const auto error = [](const LC_Interval& v, const double point) -> EventRational {
+            REQUIRE(v.isValid()); REQUIRE(std::isfinite(v.lo())); REQUIRE(std::isfinite(v.hi()));
+            const EventRational p(point);
+            const EventRational a = p - EventRational(v.lo()), b = EventRational(v.hi()) - p;
+            return std::max(EventRational{abs(a)}, EventRational{abs(b)});
+        };
+        const EventRational x = error(fringe.worldX, node.world.x), y = error(fringe.worldY, node.world.y);
+        CHECK(x * x + y * y <= maximum);
+        for (unsigned i = 0; i <= 8; ++i) {
+            const double t = fringe.parameter.lo() + (fringe.parameter.hi() - fringe.parameter.lo()) * double(i) / 8;
+            const auto oracle = referenceOracle(source, events.providers().frame(), distance, t, true);
+            checkEnclosure(fringe.localX, oracle[0]); checkEnclosure(fringe.localY, oracle[1]);
+        }
+    }
+    for (const auto id : own) { CHECK(fringes[id.value] == 1); }
+    for (std::size_t i = 0; i < analysis.spans().size(); ++i) {
+        const auto& span = analysis.spans()[i];
+        CHECK(span.start.value == own[i].value); CHECK(span.end.value == own[i + 1].value);
+        CHECK(span.interior.lo() == occurrences[span.start.value].parameter.hi());
+        CHECK(span.interior.hi() == occurrences[span.end.value].parameter.lo());
+        REQUIRE(span.interior.lo() < span.interior.hi());
+        for (const double part : {0.125, 0.5, 0.875}) {
+            const double t = span.interior.lo() + part * (span.interior.hi() - span.interior.lo());
+            CAPTURE(i, part, t);
+            CHECK((span.visibility == geo::ReferenceVisibility::Visible) ==
+                componentVisibilityOracle(source, distance, events.providers().frame(), t));
+        }
+        CHECK(span.clearance.isValid());
+        CHECK(span.clearance.hi() == std::abs(distance));
+        CHECK(span.clearance.lo() == (span.visibility == geo::ReferenceVisibility::Visible ? std::abs(distance) : 0.0));
+    }
+    std::vector<unsigned> incoming(analysis.edges().size()), outgoing(analysis.edges().size());
+    for (std::size_t e = 0; e < analysis.edges().size(); ++e) {
+        const auto& edge = analysis.edges()[e];
+        REQUIRE(edge.span < analysis.spans().size());
+        const auto& span = analysis.spans()[edge.span];
+        CHECK(span.visibility == geo::ReferenceVisibility::Visible);
+        CHECK(edge.start.value == occurrences[span.start.value].node.value);
+        CHECK(edge.end.value == occurrences[span.end.value].node.value);
+        ++retained[edge.span];
+    }
+    for (std::size_t s = 0; s < retained.size(); ++s) {
+        CHECK(retained[s] == (analysis.spans()[s].visibility == geo::ReferenceVisibility::Visible ? 1u : 0u));
+    }
+    REQUIRE(analysis.incidence().size() == events.nodes().size());
+    std::vector<std::size_t> expectedIncoming(events.nodes().size()), expectedOutgoing(events.nodes().size());
+    std::vector<bool> sourceStart(events.nodes().size()), sourceEnd(events.nodes().size());
+    std::vector<bool> cusp(events.nodes().size()), stationary(events.nodes().size());
+    std::vector<bool> crossing(events.nodes().size()), tangency(events.nodes().size()), construction(events.nodes().size());
+    std::vector<bool> seam(events.nodes().size());
+    for (const auto& freeEnd : events.freeEnds()) {
+        const auto node = occurrences[freeEnd.occurrence.value].node.value;
+        (freeEnd.atStart ? sourceStart[node] : sourceEnd[node]) = true;
+    }
+    for (const auto& critical : events.criticals()) {
+        const auto node = occurrences[critical.occurrence.value].node.value;
+        (critical.kind == geo::CriticalKind::SimpleCusp ? cusp[node] : stationary[node]) = true;
+    }
+    for (const auto& pair : events.pairs()) {
+        const auto node = occurrences[pair.first.value].node.value;
+        if (pair.kind == LC_ParametricIntersection::Kind::Transverse) { crossing[node] = true; }
+        else if (pair.kind == LC_ParametricIntersection::Kind::Tangent) { tangency[node] = true; }
+        else { construction[node] = true; }
+    }
+    if (events.seam()) { seam[occurrences[events.seam()->start.value].node.value] = true; }
+    for (const auto& edge : analysis.edges()) {
+        ++expectedOutgoing[edge.start.value]; ++expectedIncoming[edge.end.value];
+    }
+    for (std::size_t n = 0; n < analysis.incidence().size(); ++n) {
+        const auto& row = analysis.incidence()[n];
+        CHECK(row.node.value == n);
+        for (const auto e : row.incoming) {
+            REQUIRE(e < incoming.size()); ++incoming[e]; CHECK(analysis.edges()[e].end.value == n);
+        }
+        for (const auto e : row.outgoing) {
+            REQUIRE(e < outgoing.size()); ++outgoing[e]; CHECK(analysis.edges()[e].start.value == n);
+        }
+        CHECK(row.sourceStart == sourceStart[n]); CHECK(row.sourceEnd == sourceEnd[n]);
+        CHECK(row.cusp == cusp[n]); CHECK(row.stationary == stationary[n]);
+        CHECK(row.crossing == crossing[n]); CHECK(row.tangency == tangency[n]);
+        CHECK(row.construction == construction[n]); CHECK(row.seam == seam[n]);
+        const bool hasRetainedEdge = expectedIncoming[n] || expectedOutgoing[n];
+        const bool hasOwn = std::any_of(own.begin(), own.end(), [&](const auto id) {
+            return occurrences[id.value].node.value == n;
+        });
+        CHECK(row.hiddenPoint == (hasOwn && !hasRetainedEdge));
+        if (hasOwn && !hasRetainedEdge) {
+            for (const auto id : own) {
+                const auto& o = occurrences[id.value];
+                if (o.node.value != n) { continue; }
+                const double t = o.parameter.lo() + (o.parameter.hi() - o.parameter.lo()) / 2;
+                CHECK_FALSE(componentVisibilityOracle(source, distance, events.providers().frame(), t));
+            }
+        }
+        const bool expectedTrim = hasRetainedEdge && (!expectedIncoming[n] || !expectedOutgoing[n]) &&
+            !sourceStart[n] && !sourceEnd[n];
+        CHECK(row.trimBoundary == expectedTrim);
+    }
+    std::vector<unsigned> membership(analysis.edges().size());
+    std::vector<std::size_t> nodeComponent(events.nodes().size(), std::size_t(-1));
+    std::size_t componentIndex = 0;
+    for (const auto& component : analysis.components()) {
+        REQUIRE_FALSE(component.edges.empty());
+        std::size_t previous = std::size_t(-1);
+        std::vector<bool> used(events.nodes().size());
+        for (const auto e : component.edges) {
+            REQUIRE(e < membership.size()); ++membership[e];
+            if (previous != std::size_t(-1)) { CHECK(previous < e); }
+            previous = e;
+            used[analysis.edges()[e].start.value] = used[analysis.edges()[e].end.value] = true;
+        }
+        bool endpointFree = true, branching = false;
+        std::vector<bool> reachable(events.nodes().size());
+        reachable[analysis.edges()[component.edges[0]].start.value] = true;
+        bool changed = true;
+        while (changed) {
+            changed = false;
+            for (const auto e : component.edges) {
+                const auto& edge = analysis.edges()[e];
+                if (reachable[edge.start.value] != reachable[edge.end.value]) {
+                    reachable[edge.start.value] = reachable[edge.end.value] = true;
+                    changed = true;
+                }
+            }
+        }
+        for (std::size_t n = 0; n < used.size(); ++n) {
+            if (!used[n]) { continue; }
+            CHECK(reachable[n]);
+            REQUIRE(nodeComponent[n] == std::size_t(-1));
+            nodeComponent[n] = componentIndex;
+            const auto& row = analysis.incidence()[n];
+            endpointFree = endpointFree && !row.incoming.empty() && !row.outgoing.empty();
+            branching = branching || row.incoming.size() > 1 || row.outgoing.size() > 1;
+        }
+        CHECK(component.endpointFree == endpointFree); CHECK(component.branching == branching);
+        ++componentIndex;
+    }
+    for (std::size_t e = 0; e < membership.size(); ++e) {
+        CHECK(membership[e] == 1); CHECK(incoming[e] == 1); CHECK(outgoing[e] == 1);
+    }
+}
+} // namespace
+
+TEST_CASE("Reference components expose an immutable exact graph rather than a fabricated crossing walk",
+          "[lc-offsetcurve][geometry][reference-components]") {
+    STATIC_REQUIRE_FALSE(std::is_default_constructible_v<geo::ReferenceComponentAnalysis>);
+    STATIC_REQUIRE_FALSE(std::is_copy_constructible_v<geo::ReferenceComponentAnalysis>);
+    geo::ReferenceComponentResult result;
+    CHECK(result.status == LC_IntersectionStatus::InvalidInput);
+    CHECK_FALSE(result.analysis);
+    CHECK(geo::ReferenceEdge{}.span == std::size_t(-1));
+}
+
+TEST_CASE("Reference components retain the six exact mathematical fixture outcomes and every fringe",
+          "[lc-offsetcurve][geometry][reference-components]") {
+    const auto fixtures = eventFixtures();
+    bool sourceStart = false, sourceEnd = false, cusp = false, stationary = false;
+    bool crossing = false, tangency = false, construction = false, trimBoundary = false;
+    std::size_t hiddenOwnNodes = 0;
+    for (std::size_t i = 0; i < fixtures.size(); ++i) {
+        CAPTURE(i);
+        geo::WorkBudget budget;
+        const auto result = geo::analyseReferenceComponents(fixtures[i].source, fixtures[i].distance, 1e-5, budget);
+        CAPTURE(result.status, result.reason, result.eventReason, result.work.vertices,
+                result.work.distancePairs, result.work.deepest);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        REQUIRE(result.analysis);
+        const auto& a = *result.analysis;
+        REQUIRE(a.components().size() == (i == 5 ? 2 : 1));
+        std::size_t open = 0;
+        for (const auto& c : a.components()) { open += !c.endpointFree; CHECK_FALSE(c.branching); }
+        CHECK(open == (i == 3 || i == 5 ? 1 : 0));
+        CHECK(a.events().pairs().size() == fixtures[i].pairs);
+        checkComponentAnalysis(a, fixtures[i].source, fixtures[i].distance, 1e-5);
+        checkWork(result.work, budget.consumed());
+        for (const auto& row : a.incidence()) {
+            sourceStart = sourceStart || row.sourceStart; sourceEnd = sourceEnd || row.sourceEnd;
+            cusp = cusp || row.cusp;
+            stationary = stationary || row.stationary;
+            crossing = crossing || row.crossing; tangency = tangency || row.tangency;
+            construction = construction || row.construction; trimBoundary = trimBoundary || row.trimBoundary;
+            hiddenOwnNodes += row.hiddenPoint;
+        }
+    }
+    CHECK(sourceStart); CHECK(sourceEnd); CHECK(cusp);
+    CHECK(crossing); CHECK(construction); CHECK(trimBoundary);
+    // None of these six distances is an exact curvature threshold or a tangent contact.
+    CHECK_FALSE(stationary); CHECK_FALSE(tangency);
+    CHECK(hiddenOwnNodes > 0);
+}
+
+TEST_CASE("Reference exact graphs preserve rotated reversed and representably translated nontrivial families",
+          "[lc-offsetcurve][geometry][reference-components]") {
+    const auto fixtures = eventFixtures();
+    for (std::size_t i = 2; i < fixtures.size(); ++i) {
+        for (const bool reversed : {false, true}) {
+            auto data = fixtures[i].source;
+            data.majorP = {0.0, data.majorP.x}; data.center = {4096.0, -8192.0};
+            if (reversed) { std::swap(data.angle1, data.angle2); data.reversed = true; }
+            CAPTURE(i, reversed);
+            geo::WorkBudget budget;
+            const auto result = geo::analyseReferenceComponents(data, fixtures[i].distance, 1e-5, budget);
+            CAPTURE(result.status, result.reason, result.eventReason);
+            REQUIRE(result.status == LC_IntersectionStatus::Ok); REQUIRE(result.analysis);
+            CHECK(result.analysis->components().size() == (i == 5 ? 2 : 1));
+            checkComponentAnalysis(*result.analysis, data, fixtures[i].distance, 1e-5);
+            checkWork(result.work, budget.consumed());
+        }
+    }
+}
+
+TEST_CASE("Reference whole seam is an explicit two occurrence incidence on one physical node",
+          "[lc-offsetcurve][geometry][reference-components]") {
+    geo::WorkBudget budget;
+    const auto result = geo::analyseReferenceComponents(basis(), 3.0, 1e-6, budget);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok); REQUIRE(result.analysis);
+    const auto& a = *result.analysis;
+    REQUIRE(a.events().seam());
+    CHECK(a.events().seam()->start.value != a.events().seam()->end.value);
+    REQUIRE(a.edges().size() == 1);
+    CHECK(a.edges()[0].start.value == a.edges()[0].end.value);
+    const auto& n = a.incidence()[a.edges()[0].start.value];
+    CHECK(n.seam); CHECK(n.incoming.size() == 1); CHECK(n.outgoing.size() == 1);
+    CHECK_FALSE(n.trimBoundary);
+    checkComponentAnalysis(a, basis(), 3.0, 1e-6);
+}
+
+TEST_CASE("Reference restricted source visibility does not use the supporting whole ellipse",
+          "[lc-offsetcurve][geometry][reference-components]") {
+    const auto data = basis(100.0, 0.05, M_PI / 12, 7 * M_PI / 4);
+    geo::WorkBudget budget;
+    const auto result = geo::analyseReferenceComponents(data, -4.0, 1e-5, budget);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok); REQUIRE(result.analysis);
+    REQUIRE(result.analysis->components().size() == 2);
+    bool restrictedOnly = false;
+    const double r = data.ratio;
+    for (const auto& span : result.analysis->spans()) {
+        if (span.visibility != geo::ReferenceVisibility::Visible) { continue; }
+        const double t = span.interior.lo() + (span.interior.hi() - span.interior.lo()) / 2;
+        const Quad theta = Quad(data.angle1) + idealDirectedSweep(data, false) * Quad(t) /
+            Quad(result.analysis->events().providers().frame().parameterEnd());
+        const Quad h = sqrt(Quad(r * r) * cos(theta) * cos(theta) + sin(theta) * sin(theta));
+        if (Quad(4) > Quad(100) * Quad(r) * h) { restrictedOnly = true; }
+    }
+    CHECK(restrictedOnly);
+    checkComponentAnalysis(*result.analysis, data, -4.0, 1e-5);
+}
+
+TEST_CASE("Reference component analysis refuses an isolated whole-source equality point",
+          "[lc-offsetcurve][geometry][reference-components]") {
+    const auto data = basis(10.0, 0.5);
+    geo::WorkBudget budget;
+    const auto result = geo::analyseReferenceComponents(data, -5.0, 1e-5, budget);
+    CAPTURE(result.status, result.reason, result.eventReason, result.work.deepest);
+    CHECK(result.status == LC_IntersectionStatus::AmbiguousTopology);
+    CHECK(result.reason == geo::ReferenceComponentReason::UnresolvedVisibility);
+    CHECK_FALSE(result.analysis);
+    checkWork(result.work, budget.consumed());
+}
+
+TEST_CASE("Reference exact threshold stationary incidence survives without epsilon visibility",
+          "[lc-offsetcurve][geometry][reference-components]") {
+    for (const double d : {std::nextafter(25.0, 0.0), 25.0}) {
+        geo::WorkBudget budget;
+        const auto result = geo::analyseReferenceComponents(basis(100.0, 0.5, 0.0, 1.0), -d, 1e-5, budget);
+        CAPTURE(d, result.status, result.reason, result.eventReason);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok); REQUIRE(result.analysis);
+        CHECK(result.analysis->components().size() == 1);
+        if (d == 25.0) {
+            REQUIRE_FALSE(result.analysis->events().criticals().empty());
+            const auto id = result.analysis->events().criticals()[0].occurrence;
+            const auto node = result.analysis->events().occurrences()[id.value].node;
+            CHECK(result.analysis->incidence()[node.value].stationary);
+            CHECK(result.analysis->incidence()[node.value].sourceStart);
+        }
+        checkComponentAnalysis(*result.analysis, basis(100.0, 0.5, 0.0, 1.0), -d, 1e-5);
+        checkWork(result.work, budget.consumed());
+    }
+
+    geo::WorkBudget budget;
+    const double justBeyond = std::nextafter(25.0, 30.0);
+    const auto refused = geo::analyseReferenceComponents(basis(100.0, 0.5, 0.0, 1.0), -justBeyond, 1e-5, budget);
+    CAPTURE(justBeyond, refused.status, refused.reason, refused.eventReason, refused.work.deepest);
+    CHECK(refused.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK_FALSE(refused.analysis);
+    CHECK(refused.work.deepest == budget.depthLimit());
+    checkWork(refused.work, budget.consumed());
+}
+
+TEST_CASE("Reference component shared own occurrence retains every centre tangency pair",
+          "[lc-offsetcurve][geometry][reference-components]") {
+    const auto data = basis(10.0, 0.5, 0.0, 4.0);
+    geo::WorkBudget budget;
+    const auto result = geo::analyseReferenceComponents(data, -10.0, 1e-5, budget);
+    CAPTURE(result.status, result.reason, result.eventReason, result.work.deepest);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok); REQUIRE(result.analysis);
+    std::vector<unsigned> pairCount(result.analysis->events().occurrences().size());
+    for (const auto& pair : result.analysis->events().pairs()) {
+        ++pairCount[pair.first.value]; ++pairCount[pair.second.value];
+    }
+    bool shared = false;
+    for (const auto id : result.analysis->events().ownOccurrences()) { shared = shared || pairCount[id.value] > 1; }
+    CHECK(shared);
+    const auto& events = result.analysis->events();
+    const auto start = std::find_if(events.freeEnds().begin(), events.freeEnds().end(), [](const auto& end) {
+        return end.atStart;
+    });
+    REQUIRE(start != events.freeEnds().end());
+    const auto centre = events.occurrences()[start->occurrence.value].node;
+    std::size_t centrePairs = 0, tangencies = 0, centreOwn = 0;
+    for (const auto& pair : events.pairs()) {
+        if (events.occurrences()[pair.first.value].node.value != centre.value) { continue; }
+        ++centrePairs; tangencies += pair.kind == LC_ParametricIntersection::Kind::Tangent;
+        CHECK(events.occurrences()[pair.second.value].node.value == centre.value);
+    }
+    for (const auto id : events.ownOccurrences()) {
+        const auto& occurrence = events.occurrences()[id.value];
+        if (occurrence.node.value != centre.value) { continue; }
+        ++centreOwn;
+        if (id.value != start->occurrence.value) {
+            checkEnclosure(occurrence.parameter, boost::math::constants::pi<Quad>());
+            CHECK(occurrence.parameter.lo() > 3.0); // Not the same parameter as the centre at t=0.
+        }
+    }
+    CHECK(centrePairs == 3); CHECK(tangencies == 2); CHECK(centreOwn == 2);
+    CHECK(result.analysis->incidence()[centre.value].hiddenPoint);
+    checkComponentAnalysis(*result.analysis, data, -10.0, 1e-5);
+}
+
+TEST_CASE("Reference whole major radius contact preserves the seam apart from its centre pair",
+          "[lc-offsetcurve][geometry][reference-components]") {
+    const auto data = basis(10.0, 0.5);
+    geo::WorkBudget budget;
+    const auto result = geo::analyseReferenceComponents(data, -10.0, 1e-5, budget);
+    CAPTURE(result.status, result.reason, result.eventReason, result.work.deepest);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok); REQUIRE(result.analysis);
+    const auto& events = result.analysis->events();
+    REQUIRE(events.seam()); REQUIRE(events.pairs().size() == 1);
+    const auto& pair = events.pairs()[0];
+    REQUIRE(pair.kind == LC_ParametricIntersection::Kind::Tangent);
+    const auto& a = events.occurrences()[pair.first.value];
+    const auto& b = events.occurrences()[pair.second.value];
+    CHECK(pair.first.value != pair.second.value); CHECK(a.node.value == b.node.value);
+    CHECK(a.parameter.hi() < b.parameter.lo());
+    CHECK(events.occurrences()[events.seam()->start.value].node.value != a.node.value);
+    CHECK(result.analysis->incidence()[a.node.value].hiddenPoint);
+    checkComponentAnalysis(*result.analysis, data, -10.0, 1e-5);
+}
+
+TEST_CASE("Reference component caps are shared exact and irreversible across every stage",
+          "[lc-offsetcurve][geometry][reference-components]") {
+    const auto data = basis(100.0, 0.6);
+    geo::WorkBudget baseline;
+    const auto complete = geo::analyseReferenceComponents(data, -36.036, 1e-5, baseline);
+    REQUIRE(complete.status == LC_IntersectionStatus::Ok); REQUIRE(complete.analysis);
+    const auto used = complete.work;
+    REQUIRE(used.vertices > 0); REQUIRE(used.distancePairs > 0); REQUIRE(used.deepest > 1);
+    for (unsigned dimension = 0; dimension < 3; ++dimension) {
+        for (const bool less : {false, true}) {
+            LC_OffsetCheckLimits limits;
+            if (dimension == 0) { limits.maxVertices = used.vertices - (less ? 1 : 0); }
+            if (dimension == 1) { limits.maxDistancePairs = used.distancePairs - (less ? 1 : 0); }
+            if (dimension == 2) { limits.maxDepth = used.deepest - (less ? 1 : 0); }
+            geo::WorkBudget budget{limits};
+            const auto result = geo::analyseReferenceComponents(data, -36.036, 1e-5, budget);
+            CAPTURE(dimension, less, result.status, result.reason, result.eventReason);
+            CHECK(result.status == (less ? LC_IntersectionStatus::LimitExceeded : LC_IntersectionStatus::Ok));
+            CHECK(bool(result.analysis) == !less);
+            checkWork(result.work, budget.consumed());
+            CHECK(result.work.vertices <= limits.maxVertices); CHECK(result.work.distancePairs <= limits.maxDistancePairs);
+            if (less) {
+                const auto spent = budget.consumed();
+                const auto again = geo::analyseReferenceComponents(data, -36.036, 1e-5, budget);
+                CHECK(again.status == LC_IntersectionStatus::LimitExceeded); CHECK_FALSE(again.analysis);
+                checkWork(again.work, spent);
+            }
+        }
+    }
+}
+
+TEST_CASE("Reference components count pre spent work once and preserve owned geometry lifetime",
+          "[lc-offsetcurve][geometry][reference-components]") {
+    geo::WorkBudget baseline;
+    const auto complete = geo::analyseReferenceComponents(basis(), 3.0, 1e-6, baseline);
+    REQUIRE(complete.status == LC_IntersectionStatus::Ok);
+    for (const bool enough : {false, true}) {
+        LC_OffsetCheckLimits limits;
+        limits.maxVertices = complete.work.vertices + (enough ? 1 : 0);
+        limits.maxDistancePairs = complete.work.distancePairs + 1;
+        geo::WorkBudget budget{limits};
+        REQUIRE(budget.consumeVertices(1)); REQUIRE(budget.consumePairs(1));
+        const auto result = geo::analyseReferenceComponents(basis(), 3.0, 1e-6, budget);
+        CHECK(result.status == (enough ? LC_IntersectionStatus::Ok : LC_IntersectionStatus::LimitExceeded));
+        CHECK(bool(result.analysis) == enough); checkWork(result.work, budget.consumed());
+    }
+    geo::ReferenceComponentResult retained;
+    {
+        auto data = basis(); geo::WorkBudget budget;
+        retained = geo::analyseReferenceComponents(data, 3.0, 1e-6, budget);
+        REQUIRE(retained.status == LC_IntersectionStatus::Ok);
+        data.majorP = {0.0, 0.0};
+    }
+    REQUIRE(retained.analysis);
+    auto diagnostic = retained.analysis->spans(); diagnostic[0].start.value = std::size_t(-1);
+    CHECK(retained.analysis->spans()[0].start.value != std::size_t(-1));
+    checkComponentAnalysis(*retained.analysis, basis(), 3.0, 1e-6);
+}
+
+TEST_CASE("Reference component invalid collapsed and unrepresentable requests expose no partial graph",
+          "[lc-offsetcurve][geometry][reference-components]") {
+    for (const double tolerance : {0.0, -1.0, std::numeric_limits<double>::quiet_NaN()}) {
+        geo::WorkBudget budget;
+        const auto result = geo::analyseReferenceComponents(basis(), 3.0, tolerance, budget);
+        CHECK(result.status == LC_IntersectionStatus::InvalidInput); CHECK_FALSE(result.analysis);
+        checkWork(result.work, {});
+    }
+    for (const double distance : {0.0, -0.0, std::numeric_limits<double>::infinity(),
+                                  -std::numeric_limits<double>::infinity(),
+                                  std::numeric_limits<double>::quiet_NaN()}) {
+        geo::WorkBudget componentBudget;
+        const auto components = geo::analyseReferenceComponents(basis(10, 0.5), distance, 1e-6, componentBudget);
+        CHECK(components.status == LC_IntersectionStatus::InvalidInput); CHECK_FALSE(components.analysis);
+        checkWork(components.work, {});
+
+        geo::WorkBudget eventBudget;
+        const auto events = geo::analyseReferenceEvents(basis(10, 0.5), distance, 1e-6, eventBudget);
+        CHECK(events.status == LC_IntersectionStatus::InvalidInput); CHECK_FALSE(events.analysis);
+        checkWork(events.work, {});
+    }
+    geo::WorkBudget collapsedBudget;
+    const auto collapsed = geo::analyseReferenceComponents(basis(5, 1), -5, 1e-6, collapsedBudget);
+    CHECK(collapsed.status == LC_IntersectionStatus::AmbiguousTopology); CHECK_FALSE(collapsed.analysis);
+    CHECK(collapsed.eventReason == geo::ReferenceEventReason::CollapsedCircle);
+    auto huge = basis(); huge.center = {1e200, -1e200};
+    geo::WorkBudget budget;
+    const auto refused = geo::analyseReferenceComponents(huge, 3.0, 1e-6, budget);
+    CHECK(refused.status == LC_IntersectionStatus::AmbiguousTopology); CHECK_FALSE(refused.analysis);
+    checkWork(refused.work, budget.consumed());
+}
+
+namespace {
+// The two nonrepresentable roots share an exact algebraic parameter on branch zero.
+// No spatial epsilon, floating seed equality, or overlap alone proves that identity.
+class SharedAlgebraicOccurrence final : public LC_ParametricCurves {
+public:
+    enum class Evidence { Valid, Unavailable, WrongSegment, EmptyDomain, WrongParameter };
+    explicit SharedAlgebraicOccurrence(Evidence evidence, std::shared_ptr<unsigned> calls)
+        : m_evidence{evidence}, m_calls{std::move(calls)} {}
+    const std::vector<LC_ParametricSegment>& segments() const override { return m_segments; }
+    std::size_t branchCount() const override { return 3; }
+    std::ptrdiff_t next(std::size_t) const override { return -1; }
+    bool evaluate(std::size_t segment, double t, RS_Vector& point, RS_Vector& derivative) const override {
+        if (segment >= m_segments.size() || !std::isfinite(t) ||
+            t < m_segments[segment].t0 || t > m_segments[segment].t1) { return false; }
+        const double root = std::sqrt(2.0);
+        point = segment == 0 ? RS_Vector{t, 0} : RS_Vector{root + (segment == 2 ? t : 0), t};
+        derivative = segment == 0 ? RS_Vector{1, 0} : RS_Vector{segment == 2 ? 1.0 : 0.0, 1};
+        return true;
+    }
+    bool bound(std::size_t segment, double a, double b, LC_Interval& x, LC_Interval& y,
+               LC_Interval& dx, LC_Interval& dy) const override {
+        x = y = dx = dy = {};
+        if (segment >= m_segments.size() || !std::isfinite(a) || !std::isfinite(b) || a > b ||
+            a < m_segments[segment].t0 || b > m_segments[segment].t1) { return false; }
+        const auto t = LC_Interval::hull(a, b), root = sqrt(LC_Interval::point(2));
+        x = segment == 0 ? t : segment == 1 ? root : root + t;
+        y = segment == 0 ? LC_Interval::point(0) : t;
+        dx = LC_Interval::point(segment == 1 ? 0 : 1);
+        dy = LC_Interval::point(segment == 0 ? 0 : 1);
+        return true;
+    }
+    LC_AnalyticOccurrenceIdentityCertificate certifyOccurrenceIdentity(
+        const LC_ParametricIntersection& a, bool firstA,
+        const LC_ParametricIntersection& b, bool secondA) const override {
+        ++*m_calls;
+        if (m_evidence == Evidence::Unavailable || !firstA || !secondA || a.branchA != 0 || b.branchA != 0 ||
+            a.branchB == b.branchB || a.branchB > 2 || b.branchB > 2) { return {}; }
+        LC_AnalyticOccurrenceIdentityCertificate out{true, a.proofDomain, b.proofDomain,
+                                                     sqrt(LC_Interval::point(2))};
+        if (m_evidence == Evidence::WrongSegment) { out.firstDomain.segmentA = 3; }
+        if (m_evidence == Evidence::EmptyDomain) { out.secondDomain.parameterA = {}; }
+        if (m_evidence == Evidence::WrongParameter) { out.parameter = LC_Interval::point(0); }
+        return out;
+    }
+private:
+    Evidence m_evidence;
+    std::shared_ptr<unsigned> m_calls;
+    const std::vector<LC_ParametricSegment> m_segments{{0, 0, 2}, {1, -1, 1}, {2, -1, 1}};
+};
+}
+
+TEST_CASE("Reference shared occurrence proof orders two roots without deleting either pair",
+          "[lc-offsetcurve][geometry][reference-components][intersection-identity]") {
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-6; options.anchoredBranches = 1; options.maxDepth = 20;
+    options.analyticOccurrenceIdentity = true;
+    auto calls = std::make_shared<unsigned>(0);
+    const auto result = findCertifiedIntersections(std::make_unique<SharedAlgebraicOccurrence>(
+        SharedAlgebraicOccurrence::Evidence::Valid, calls), options);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok); REQUIRE(result.session);
+    REQUIRE(result.session->rootCount() == 2); REQUIRE(*calls > 0);
+    const Quad root = sqrt(Quad(2));
+    std::array<bool, 3> seen{};
+    for (std::size_t i = 0; i < 2; ++i) {
+        const auto snapshot = result.session->snapshot(result.session->rootHandle(i));
+        REQUIRE(snapshot);
+        CHECK(snapshot->event.branchA == 0); REQUIRE(snapshot->event.branchB > 0);
+        REQUIRE(snapshot->event.branchB < seen.size()); seen[snapshot->event.branchB] = true;
+        checkEnclosure(snapshot->event.isolation.parameterA, root);
+        CHECK(snapshot->event.isolation.parameterB.contains(0));
+    }
+    CHECK(seen[1]); CHECK(seen[2]);
+    auto legacyOptions = options; legacyOptions.strict = true;
+    const SharedAlgebraicOccurrence legacyProvider{SharedAlgebraicOccurrence::Evidence::Valid,
+                                                    std::make_shared<unsigned>(0)};
+    const auto legacy = findIntersections(legacyProvider, legacyOptions);
+    CHECK(legacy.status == LC_IntersectionStatus::Ok); CHECK(legacy.intersections.size() == 2);
+    for (const bool itemCap : {false, true}) {
+        for (const bool less : {false, true}) {
+            auto limited = options;
+            if (itemCap) { limited.maxGeneratedItems = result.work.generatedItems - unsigned(less); }
+            else { limited.maxBoxPairs = result.work.totalBoxPairs - unsigned(less); }
+            const auto replay = findCertifiedIntersections(std::make_unique<SharedAlgebraicOccurrence>(
+                SharedAlgebraicOccurrence::Evidence::Valid, std::make_shared<unsigned>(0)), limited);
+            CHECK(replay.status == (less ? LC_IntersectionStatus::LimitExceeded : LC_IntersectionStatus::Ok));
+            CHECK(bool(replay.session) == !less);
+            CHECK(replay.work.generatedItems <= limited.maxGeneratedItems);
+            CHECK(replay.work.totalBoxPairs <= limited.maxBoxPairs);
+        }
+    }
+}
+
+TEST_CASE("Reference shared occurrence evidence is opt in and malformed domains fail closed",
+          "[lc-offsetcurve][geometry][reference-components][intersection-identity]") {
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-6; options.anchoredBranches = 1; options.maxDepth = 4;
+    std::optional<LC_IntersectionWorkStats> legacyWork;
+    for (const auto evidence : {SharedAlgebraicOccurrence::Evidence::Valid,
+                                SharedAlgebraicOccurrence::Evidence::Unavailable}) {
+        auto calls = std::make_shared<unsigned>(0);
+        const auto legacy = findCertifiedIntersections(std::make_unique<SharedAlgebraicOccurrence>(evidence, calls), options);
+        CHECK(legacy.status != LC_IntersectionStatus::Ok); CHECK_FALSE(legacy.session); CHECK(*calls == 0);
+        if (legacyWork) {
+            CHECK(legacy.work.totalBoxPairs == legacyWork->totalBoxPairs);
+            CHECK(legacy.work.generatedItems == legacyWork->generatedItems);
+            CHECK(legacy.work.deepest() == legacyWork->deepest());
+        } else { legacyWork = legacy.work; }
+    }
+    options.analyticOccurrenceIdentity = true;
+    const auto unavailable = findCertifiedIntersections(std::make_unique<SharedAlgebraicOccurrence>(
+        SharedAlgebraicOccurrence::Evidence::Unavailable, std::make_shared<unsigned>(0)), options);
+    CHECK(unavailable.status != LC_IntersectionStatus::Ok); CHECK_FALSE(unavailable.session);
+    for (const auto evidence : {SharedAlgebraicOccurrence::Evidence::WrongSegment,
+                                SharedAlgebraicOccurrence::Evidence::EmptyDomain,
+                                SharedAlgebraicOccurrence::Evidence::WrongParameter}) {
+        auto calls = std::make_shared<unsigned>(0);
+        const auto invalid = findCertifiedIntersections(std::make_unique<SharedAlgebraicOccurrence>(evidence, calls), options);
+        CAPTURE(evidence, invalid.status);
+        CHECK(invalid.status == LC_IntersectionStatus::InvalidInput); CHECK_FALSE(invalid.session);
+        CHECK(*calls > 0); CHECK(invalid.work.certificateBoxPairs > 0);
+    }
+}
+
+TEST_CASE("Reference zero edge own nodes require strict hidden point evidence",
+          "[lc-offsetcurve][geometry][reference-components]") {
+    // F<0 makes every open span hidden, but a span decision does NOT dispose of
+    // its endpoint. At this scale the true endpoint clearance deficit is below
+    // the certified image arithmetic: the point must remain unresolved, not disappear.
+    const auto data = basis(1.0, 1.0, 0.0, 2e-8);
+    geo::WorkBudget budget;
+    const auto result = geo::analyseReferenceComponents(data, -2.0, 1e-6, budget);
+    CAPTURE(result.status, result.reason, result.eventReason, result.work.deepest);
+    CHECK(result.status == LC_IntersectionStatus::AmbiguousTopology);
+    CHECK(result.reason == geo::ReferenceComponentReason::UnresolvedEventPoint);
+    CHECK_FALSE(result.analysis); checkWork(result.work, budget.consumed());
+}
+
+TEST_CASE("Reference true axis mapping covers admitted near minimum wrapped sweeps",
+          "[lc-offsetcurve][geometry][reference-components]") {
+    for (const bool reversed : {false, true}) {
+        auto data = basis(10.0, 0.5, 2 * M_PI - 2e-8, 0.0);
+        if (reversed) { std::swap(data.angle1, data.angle2); data.reversed = true; }
+        const auto admitted = geo::sweep(data);
+        REQUIRE(admitted); CHECK_FALSE(admitted->whole);
+        CHECK(std::abs(admitted->signedSweep) > RS_TOLERANCE_ANGLE);
+        geo::WorkBudget budget;
+        const auto result = geo::analyseReferenceComponents(data, -10.0, 1e-5, budget);
+        CAPTURE(reversed, result.status, result.reason, result.eventReason);
+        // This is a valid near-minimum sweep, not an ambiguous pi bracket. The
+        // denominator-sign guard is the safety proof; successful geometry is
+        // independently checked here without requiring numerical acceptance.
+        if (result.status == LC_IntersectionStatus::Ok) {
+            REQUIRE(result.analysis);
+            checkComponentAnalysis(*result.analysis, data, -10.0, 1e-5);
+        } else { CHECK_FALSE(result.analysis); }
+        checkWork(result.work, budget.consumed());
+    }
+}

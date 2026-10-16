@@ -98,6 +98,14 @@ struct LC_AnalyticLeafCertificate {
     LC_Interval parameter;
 };
 
+/** Identity of selected parameter occurrences of TWO ALREADY certified roots, not point proximity. */
+struct LC_AnalyticOccurrenceIdentityCertificate {
+    bool available{false};
+    LC_IntersectionDomain firstDomain, secondDomain;
+    /** Encloses the common parameter in both domains; every selected root occurrence is that parameter. */
+    LC_Interval parameter;
+};
+
 /**
  * The curves an intersection query reads: branches made of smooth segments,
  * each with its point and derivative, and conservative bounds of both over any
@@ -148,6 +156,16 @@ public:
     virtual LC_AnalyticIntersectionCertificate certifyIntersection(const LC_IntersectionDomain&) const {
         return {};
     }
+    /**
+     * Optional proof that the selected sides of two issued isolated roots are the SAME parameter
+     * occurrence on their common branch. Identity of spatial images or overlapping isolations is
+     * insufficient. The proof must cover both entire returned domains and identify their issued roots.
+     * Public copies passed to this callback do not themselves become session credentials.
+     */
+    virtual LC_AnalyticOccurrenceIdentityCertificate certifyOccurrenceIdentity(
+        const LC_ParametricIntersection&, bool, const LC_ParametricIntersection&, bool) const {
+        return {};
+    }
 };
 
 struct LC_IntersectionOptions {
@@ -170,6 +188,8 @@ struct LC_IntersectionOptions {
     bool strict{false};
     /** Strict preparation/certificate records and owned-session metadata ever generated; never refunded. */
     std::size_t maxGeneratedItems{65536};
+    /** Explicit opt-in; false preserves existing strict/ordinary decisions and work counters. */
+    bool analyticOccurrenceIdentity{false};
 };
 
 enum class LC_IntersectionStatus {
