@@ -4994,32 +4994,32 @@
            <widget class="QComboBox" name="cbAutoSaveFileNamePrefix">
             <item>
              <property name="text">
-              <string>#</string>
+              <string notr="true">#</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>~</string>
+              <string notr="true">~</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>_</string>
+              <string notr="true">_</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>__</string>
+              <string notr="true">__</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>lcauto_</string>
+              <string notr="true">lcauto_</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>autosaved_</string>
+              <string notr="true">autosaved_</string>
              </property>
             </item>
            </widget>
@@ -5068,42 +5068,42 @@
            <widget class="QComboBox" name="cbBackupFileSuffix">
             <item>
              <property name="text">
-              <string>~</string>
+              <string notr="true">~</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>$$</string>
+              <string notr="true">$$</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>_</string>
+              <string notr="true">_</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>_backup</string>
+              <string notr="true">_backup</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>_bak</string>
+              <string notr="true">_bak</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>.bak</string>
+              <string notr="true">.bak</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>.backup</string>
+              <string notr="true">.backup</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>.lcb</string>
+              <string notr="true">.lcb</string>
              </property>
             </item>
            </widget>

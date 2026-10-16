@@ -36,11 +36,13 @@
 
 #include <QApplication>
 #include <QCheckBox>
+#include <QComboBox>
 #include <QDateTime>
 #include <QFile>
 #include <QFileInfo>
 #include <QGridLayout>
 #include <QTemporaryDir>
+#include <QTranslator>
 
 #include "jwwdoc.h"
 #include "lc_actiontestsupport.h"
@@ -1104,6 +1106,30 @@ TEST_CASE("Backup visibility preference defaults to hidden and reflects stored s
     const auto* visibleCheckbox = reopened.findChild<QCheckBox*>("cbHideBackupFiles");
     REQUIRE(visibleCheckbox != nullptr);
     CHECK_FALSE(visibleCheckbox->isChecked());
+}
+
+TEST_CASE("Backup filename affixes stay literal in translated preferences", "[documentsstorage][autosave][translation][3150]") {
+    (void)lc::test::application();
+    TestStorage storage;
+    const QStringList prefixes{"#", "~", "_", "__", "lcauto_", "autosaved_"};
+    const QStringList suffixes{"~", "$$", "_", "_backup", "_bak", ".bak", ".backup", ".lcb"};
+    for (const auto* locale : {"zh_cn", "zh_tw"}) {
+        INFO(locale);
+        QTranslator translator;
+        REQUIRE(translator.load("librecad_" + QString::fromLatin1(locale) + ".qm",
+                                QStringLiteral(LIBRECAD_TEST_TRANSLATION_DIR)));
+        REQUIRE(QApplication::installTranslator(&translator));
+        QG_DlgOptionsGeneral preferences;
+        for (const auto* combo : {preferences.cbAutoSaveFileNamePrefix, preferences.cbBackupFileSuffix}) {
+            const auto& expected = combo == preferences.cbAutoSaveFileNamePrefix ? prefixes : suffixes;
+            REQUIRE(combo->count() == expected.size());
+            for (int i = 0; i < combo->count(); ++i) {
+                CHECK(combo->itemText(i) == expected.at(i));
+            }
+        }
+        CHECK(preferences.cbAutoSaveFileNamePrefix->currentText() == "#");
+        CHECK(preferences.cbBackupFileSuffix->currentText() == "~");
+    }
 }
 
 TEST_CASE("Autosave writes DXF to a file named *.dxf", "[documentsstorage][autosave]") {
