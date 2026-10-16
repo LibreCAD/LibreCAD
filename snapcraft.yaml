@@ -51,7 +51,7 @@ parts:
       craftctl default
       version=$(git -C "$CRAFT_PROJECT_DIR" describe --always 2>/dev/null) ||
         version=$(sed -n 's/^LC_VERSION="\([^"]*\)"/\1/p' "$CRAFT_PROJECT_DIR/librecad/src/src.pro")
-      craftctl set version="${version#v}"
+      craftctl set version="$(printf '%s' "${version#v}" | tr '_' '-')"
     qmake-parameters: ["QMAKE_CFLAGS+=-march=x86-64", "QMAKE_CXXFLAGS+=-march=x86-64"]
     build-environment: [{QT_SELECT: qt5}]
     build-packages:
