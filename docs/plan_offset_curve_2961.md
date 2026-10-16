@@ -24,11 +24,11 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v16**, 2026-10-16. This file is the implementation source of truth. Every implementation slice ends with a
+Plan **v17**, 2026-10-16. This file is the implementation source of truth. Every implementation slice ends with a
 verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION — event isolation is committed at `dff307668`; exact visibility and incidence-preserving component analysis is committed at `9682d5cac` after attempt-8 Release/ASan/full/format validation and independent P1 re-review. This v16 plan-only reconciliation records the implementation SHA and receipts; `.b-check-layout` remains waiting until this checkpoint is committed and its activation base is re-read. Cache validation, remaining geometry, entity, file, UI and phase-2 work remain incomplete.**
+Status: **IMPLEMENTATION INCOMPLETE — event isolation is committed at `dff307668`; exact visibility and incidence-preserving component analysis is committed at `9682d5cac` after attempt-8 Release/ASan/full/format validation and independent P1 re-review. The v16 implementation reconciliation is committed at `c6e32c17f`. This v17 plan-only review corrects stale scope claims and strengthens the five execution gates; it does not change product code or activate a product slice. `.b-check-layout` is the next candidate and remains waiting for its explicit producer-shape/API readiness probe at the post-v17 checkpoint HEAD. Cache validation, remaining geometry, entity, file, UI and phase-2 work remain incomplete.**
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -79,9 +79,12 @@ separated; every application format row has distinct reader and writer expectati
 cannot be replaced by same-run self-round trips; and the two cross-format conversion directions remain separate
 acceptance obligations.
 v16 reconciles the component-graph implementation commit `9682d5cac65f30cfd86aa10556678ceb88b1448b` against its
-attempt-8 frozen source and JUnit receipts, updates aggregate/leaf status and records `.b-check-layout` as waiting for
-this committed checkpoint. No code changed after validation; the next leaf is not activated before a fresh HEAD and
-source check.
+attempt-8 frozen source and JUnit receipts; that plan-only checkpoint is committed at `c6e32c17f`. v17 rechecks the
+current code and roadmap contracts. It found duplicated stale ownership of `isEngineLayout`/layout tests in the
+already completed `.a` section and `.b-check-layout`, and found that `LC_CurveOffset` has a degree-1/line output
+  branch whose reachability and R05 disposition for the ellipse-offset domain had not been resolved. v17 moves future
+  cache-check work to the `.b-check` children, makes producer shape a bounded entry probe, and strengthens the evidence needed
+for each completeness, correctness, readiness, commit and post-commit update gate. Product code is unchanged.
 
 Appendix E lists what changed and why. This plan remains a proposal for a new persistent `LC_OffsetCurve`; the
 current engine's internal `LC_CurveOffset` is not that entity. **Line numbers and type-site counts are historical
@@ -129,7 +132,7 @@ A commit alone does not mean done; verification, review and the post-commit plan
 | 0B-1 | Guard skeleton: `rowOf` table, pragmas, `static_assert`, kinds-only walk; registration; CI path filter; shadow-`rs.h` checks | B | S0 | 250 | done — d6de53d3c, 0B-1 evidence, 2026-10-15 |
 | 0B-2 | Entity factory header; clone and INSERT checks; pin tests | B | 0B-1 | 500 | done — 5bfb3c8f0, 0B-2 reports/card, 2026-10-15 |
 | 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | done — 0e3c6b342, 0B-3 reports/card; one pinned baseline generated-MLEADER DWG gap, 2026-10-15 |
-| 1A-1 | Closed forms, engine-layout test, validity check, tolerance helpers | C | S0 | 900 | partial — .a/.b-budget/.b-progress/.b-ref-frames/.b-ref-events-core/.b-ref-rate/.b-ref-events-critical/.b-ref-events-accounting/.b-ref-events-refine/.b-ref-critical-refine/.b-ref-providers/.b-ref-contacts/.b-ref-events-isolate/.b-ref-components done; .b-check/.c pending |
+| 1A-1 | Closed forms, normalization, tolerance helpers and cache validation | C | S0 | 900 | partial — .a/.b-budget/.b-progress/.b-ref-frames/.b-ref-events-core/.b-ref-rate/.b-ref-events-critical/.b-ref-events-accounting/.b-ref-events-refine/.b-ref-critical-refine/.b-ref-providers/.b-ref-contacts/.b-ref-events-isolate/.b-ref-components done; .b-check/.c pending |
 | 1A-1.b-ref-components | Exact visibility and incidence-preserving components | C | .b-ref-events-isolate | 900 | done — `9682d5cac65f30cfd86aa10556678ceb88b1448b`, attempt-8 evidence, 2026-10-16 |
 | 1A-2 | Enumerator; class core and validated adoption factory; clone, `toPlainSpline`, normalisation, stamp, transforms; `writeEntity` case; INSERT capability; 0B row; interim Edit Properties guard | C | 0B-3, 1A-1 | 900 | pending |
 | 1A-3 | Grips, `moveRef`, snaps | C | 1A-2 | 550 | pending |
@@ -207,24 +210,34 @@ Recheck it after every commit, rebase or overlapping change.
 
 **Readiness decision order (mandatory for every new leaf):**
 
-1. Freeze the candidate base and inspect the current source, callers, tests, build registrations, format guards and
-   relevant specifications. Treat search counts and prior cards as navigation aids, not proof.
-2. Complete the pre-implementation completeness review: map each applicable requirement to implementation sites,
-   caller paths, representations/formats, build targets, success and negative tests, and durable evidence. Name
-   excluded scope and justify that it belongs to another leaf; do not leave silent gaps.
-3. Complete the pre-implementation plan-correctness review: verify that APIs, invariants, supported-version claims,
-   dependencies, fallback/refusal rules, test oracles and acceptance thresholds are true and mutually consistent for
-   this checkout. Resolve contradictions in the plan before coding.
-4. Define an ordered sub-plan whose tasks are individually reviewable but whose leaf has one coherent acceptance
-   contract and one buildable commit. For each investigation, record the question, bounded probe, possible outcomes,
-   decision rule and what happens if it remains unresolved. A probe without a stopping rule is not a ready task.
-5. Record `ready` only if all prerequisites and gates close. Otherwise record `conditional` with its exact closure test,
-   or `waiting` with the real predecessor. Do not start product edits while plan correctness is unresolved; if an
-   investigation changes the contract, return to steps 2-5 and revise affected downstream cards before continuing.
+1. Freeze the candidate base and inspect current declarations, definitions, callers, tests, build registrations,
+   format/version guards and relevant specifications. Record the exact source revision and file paths. Search results,
+   old cards, prototypes and green builds are discovery evidence, not proof of the contract.
+2. Close **completeness** before coding: trace every applicable R01-R15 row through the complete behavior path, from
+   public entry point and producer/input representation through consumers, persistence/conversion variants, build
+   targets and registered positive, boundary, refusal, no-op and fallback tests. Name each exclusion and its owning
+   leaf. Show that every promised result is actually asserted by a reachable test; a selector count or coverage
+   percentage alone is not a trace.
+3. Close **plan correctness** before coding: check each proposed API, invariant, source/spec/version claim, numeric
+   threshold, resource debit, dependency edge, fallback and test oracle against current code and authoritative
+   evidence. Check that adjacent sections and all format rows agree, and that a DAG audit finds no missing node, stale
+   predecessor, cycle or aggregate mistaken for an executable leaf. Correct the roadmap first when facts conflict.
+4. Define the executable sub-plan: explicit file ownership; an ordered, bounded task list; one observable success and
+   refusal contract; resource, lifetime, transaction and compatibility invariants; literal build/test commands;
+   selectors with a nonzero post-registration case count; independent oracles; failure/recovery policy; evidence
+   paths; and one buildable commit boundary. Any unresolved investigation must state its bounded probe, outcomes,
+   decision rule, stop condition and how each outcome changes scope. No required design decision may be deferred into
+   implementation.
+5. Record `ready` only when steps 1-4 close and all real predecessors plus their plan checkpoints are committed at
+   the actual base. Otherwise record `conditional` with the exact closure test or `waiting` with the exact predecessor.
+   Recompute readiness after every commit, rebase, API/toolchain change or overlapping edit. If a probe changes the
+   contract, return to steps 2-5 and revise affected descendants before product edits continue.
 
-After implementation, repeat completeness against the actual diff and run the correctness review on a frozen source
-identity. A preflight review cannot approve code that did not yet exist, and a final review cannot repair an
-incomplete plan by silently redefining acceptance.
+After implementation, repeat completeness against the actual diff, recheck plan correctness wherever observed behavior
+or evidence touched an assumption, and run implementation correctness review on one frozen source identity. A
+preflight review cannot approve code that did not yet exist, and a final review cannot repair an incomplete plan by
+silently redefining acceptance. Each review record must say `pass`, `fail`, or `not applicable` with justification;
+"reviewed", a green build, and an unexplained assertion total are not gate results.
 
 Readiness is a gate over the current tree, not a label attached to a plan row. A leaf with edited product files is
 `in progress`, even when the previous plan checkpoint called it `ready`; a failed required test makes it not
@@ -263,6 +276,9 @@ completeness_review: <preflight trace and exclusions; then final diff-to-require
 plan_correctness_review: <preflight current API/spec/source validation and contract/dependency consistency; final recheck after implementation evidence; findings and resolution>
 correctness_review: <independent reviewer/tree identity; implementation proof/invariant/adversarial challenge; independent oracle; findings and retests>
 implementation_sha: pending
+product_commit_audit: <exact committed path list, tested-tree/digest match, hook result, actual implementation SHA>
+plan_checkpoint_state: pending|committed — postconditions verified
+checkpoint_postconditions: <plan-only path scope; product SHA ancestor; digest match; diff-check; status accounted; next card remains gated>
 next: <candidate-next-slice-and-entry-check>
 ```
 
@@ -278,7 +294,7 @@ not validation evidence. Aggregates are never executable cards or extra implemen
 | 0B-2 | Done at 5bfb3c8f0 | 27 valid fixtures, clone/sole+mixed INSERT and both pins; 7 cases/910 assertions pass full/DXF-fast/ASan; no gaps. |
 | 0B-3 | Done at 0e3c6b342 | Real 27-type DXF/DWG walks and both DXF pins; 10 cases/1335 assertions full/DXF-fast/ASan, full suite/lanes pass. Generated-MLEADER DWG fallback is pinned, no notRun rows. |
 | 1A-1.a | Done at a4690db08 | Normalization/local-frame/closed forms, robust source distance and tolerance helpers; 17 cases/2538 assertions pass Release/ASan, existing regressions and both fast lanes pass. |
-| 1A-1.b | Aggregate; budget/progress done, reference/check unfinished | Parent-only progress; no separate implementation commit or successful partial validator. |
+| 1A-1.b | Aggregate; budget/progress/reference done, cache check pending | Parent-only progress; no separate implementation commit or successful partial validator. |
 | 1A-1.b-budget | Done at 10c6bff46 | Checked shared work, bounded two-axis/range indices, nine budget cases Release/ASan, all offset/full/fast-lane gates pass; findings/evidence below. |
 | 1A-1.b-progress | Done at fb70681e2 | Reachable hang fixed; four watchdog-protected cases/80 assertions Release/ASan, old probe terminates, broad gates pass. |
 | 1A-1.b-ref | Aggregate; foundations/refinements/providers/contacts/isolation done | Complete — `.b-ref-components` committed at `9682d5cac65f30cfd86aa10556678ceb88b1448b` with attempt-8 evidence. Cache checking and parent `.b` remain incomplete. |
@@ -292,8 +308,8 @@ not validation evidence. Aggregates are never executable cards or extra implemen
 | 1A-1.b-ref-critical-refine | Done at72eb5f953 | Native red1/11 retained; final Release/ASan21/16424, original V6/P23/deepest0, legacy/core/broad/full/fast gates pass. Retained exact critical state and bounded contraction, one-sided join repair with whole-box/cap tests. |
 | 1A-1.b-ref-providers | Done at9c27e2980 | Owned immutable offset/cutter composite, true-pi bounds/injectivity, both-hook remapping and exact collapsed-opposite exclusion;16/299294 Release/ASan plus critical/core/broad/full/fast gates pass. No event graph. |
 | 1A-1.b-ref-contacts | Done at92ca5e445 | Additive contact factory, immutable whole-box support/radial/critical-gap proofs and diagnostic intervals;17/4383 Release/ASan plus old97/586799 and all broad/full/fast gates pass, legacy behavior retained. |
-| 1A-1.b-ref-events-isolate | Done at dff307668 | Owned combined-event result; strict anchored roots, critical/free/seam occurrences, proved role/parameter order, exact-only same-role identity, tol/16 rounded world-node proof, and cumulative shared-budget refusal. Focused 15/5616 Release+ASan; geometry/full/format gates below. Multi-pair shared-own success is not separately fixture-pinned; tangent fixture reaches the strict-query depth cap before order and is recorded only as bounded no-partial refusal. |
-| 1A-1.b-check | Aggregate; waiting for .b-ref | Execute `.b-check-layout → .b-check-bounds → .b-check-topology` (§0.6); no successful public validator before all acceptance checks exist. |
+| 1A-1.b-ref-events-isolate | Done at dff307668 | Owned combined-event result; strict anchored roots, critical/free/seam occurrences, proved role/parameter order, exact-only same-role identity, tol/16 rounded world-node proof, and cumulative shared-budget refusal. At this checkpoint, multi-pair shared-own success was not separately fixture-pinned; `.b-ref-components` later added the successful shared-occurrence proof. Tangent fixture remains a bounded no-partial refusal at the strict-query depth cap, not an identity/order success. |
+| 1A-1.b-check | Aggregate; `.b-ref` complete, cache-check children pending | Execute `.b-check-layout → .b-check-bounds → .b-check-topology` (§0.6); `.b-check-layout` is waiting for its producer-shape/API readiness probe. No successful public validator before all acceptance checks exist. |
 | 1A-1.c | Waiting for .b | Add adversarial and current-engine corpus checks, failure budgets and performance measurements. Record acceptance/refusal results; endpoints and midpoint checks alone cannot close this parent step. |
 | 1A-2 | Waiting for 0B-3 and all 1A-1 children | Add type, core class, complete consistency stamp, transforms, clone/INSERT/write dispatch and interim UI guard. Compile CMake and update qmake lists; run copy/ownership and enum coverage. |
 | 1A-3 | Waiting for 1A-2 | Implement definition-backed grips/snaps with runtime consistency checks and separate cache closure. Test closed results from arc sources and stale cache fallback. |
@@ -393,8 +409,9 @@ and all broad/full/fast gates pass, with no old assertion/cap change. Complete e
 committed at `dff307668`; the final 15/5616 focused, geometry 154/1,464,224, full Release 3,842/7,321,304 with 74
 unchanged skips, and DXF/DWG fast-lane Release+ASan receipts are recorded below. Independent rereview corrected the
 tangent stress test's claim: it proves bounded empty refusal at depth 20, not successful ordering or identity. A
-successful multi-pair shared-own-occurrence fixture remains required in the component slice; no component or cache
-validation is claimed yet. The earlier six-query/coarse-node probe is historical and is superseded only for event
+successful multi-pair shared-own-occurrence proof and component-incidence tests are now present in the committed
+`.b-ref-components` slice at `9682d5cac`; this does not complete cache layout, distance bounds, topology validation or
+the `.b-check` aggregate. The earlier six-query/coarse-node probe is historical and is superseded only for event
 isolation, not for component-span or cache correctness. Successful interior-fallback execution remains
 source-qualified, not natively exercised; the negative base-refusal test and bounded NO_MATCH search are distinguished
 in the receipt.
@@ -410,21 +427,23 @@ Product closure still requires each owning slice's evidence.
 
 Apply these tracks as a strict per-slice cycle:
 
-| Gate | Required work before advancing | Failure effect |
+| Gate | Required work and auditable pass record | Failure effect |
 |---|---|---|
-| 1. Completeness + plan correctness | Audit requirement-to-code/caller/representation/format/build/test/evidence coverage, including success, refusal, no-op and fallback. Separately verify the plan contract: current-tree/API assumptions, version/spec facts, dependency graph, parent/child accounting, fallback behavior and acceptance criteria must be mutually consistent and supported by checked sources. Search for unowned behavior, unreachable tests, unsupported versions, hidden format asymmetry and stale claims. | Add/repair an owning leaf and tests, or correct the plan contract before coding. The parent remains partial; no leaf is ready while its scope or acceptance rules are internally inconsistent or based on stale assumptions. |
-| 2. Implementation correctness | Independently challenge preconditions, proof/invariant arguments, numeric direction/rounding, resource accounting, identity/lifetime, refusal atomicity and actual read/write behavior. Use an oracle independent of the implementation and inspect at least one real success and one adversarial failure. Review the frozen diff, not only test output; distinguish exact guarantees from sampled evidence and bounded refusal. | Record each finding with severity, counterexample and retest; fix it or keep the slice not ready. A required-contract violation cannot be waived as residual risk. |
-| 3. Sub-plan readiness | Activate only one leaf whose predecessors and plan checkpoints are present at actual HEAD, whose files have one owner, and whose contract, ordered tasks, prerequisite decisions, evidence paths, exact commands/selectors, expected case counts, recovery path and commit boundary are concrete. Any remaining investigation must have a bounded question and observable exit result; implementation must not depend on an unspecified mid-slice design choice. | Keep readiness `conditional`/`waiting`; resolve the earliest unmet prerequisite without broadening or narrowing scope silently. No ready label may survive a changed base, code owner, toolchain or API assumption. |
-| 4. Commit after each slice | Freeze source/test/build-registration identities; run required gates serially per build tree; close completeness, plan-correctness and implementation-correctness reviews; inspect the complete diff and index; commit exactly one coherent executable leaf. Keep independently shippable leaves separate, and never bundle the next leaf or plan reconciliation with product changes. | No implementation commit from a red, mixed, stale-digest or incompletely reviewed tree. Preserve the patch and failed reports and continue the same slice. |
-| 5. Self-update after commit | Immediately reread the real implementation commit, compare its diff with the contract, record exact SHA/evidence/review, update child/parent/requirements/dependencies/risks and activate the next card only from actual HEAD. Commit the reconciled plan alone as a second, nonrecursive checkpoint. | Do not start the next leaf until the durable plan checkpoint passes its postconditions and the active status/queue contain no stale readiness or claims. |
+| 1. Completeness and plan correctness | Keep two distinct sub-results. **Completeness:** a trace for every applicable R01-R15 row from caller/input through representation, consumer, persistence/version/conversion path, build target, registered positive/boundary/refusal/no-op/fallback cases, and durable evidence; explicitly identify excluded behavior and its owning leaf. **Plan correctness:** verify each promised contract/API/spec/version/threshold/cost/fallback/test oracle against the current source and authoritative evidence; reconcile all cross-references, matrix rows, parent/child scope and an acyclic dependency graph. The record names inspected revisions/files, uncovered paths, exclusions and closure evidence. | Repair coverage or amend the plan contract before implementation. Any unowned requirement, unsupported claim, contradictory acceptance rule, unreachable required test or stale dependency keeps the parent partial and the leaf not ready. |
+| 2. Implementation correctness | On the frozen diff, challenge positive and negative paths independently: preconditions; full-domain proof or conservative bounds; finite/overflow arithmetic and rounding direction; shared resource admission/accounting; aliasing/lifetime/transaction behavior; identity/order/closure; refusal atomicity; and actual serialized bytes plus reload semantics where applicable. Compare a success and adversarial failure with an oracle not derived from the implementation. State which claims are proofs, independent checks, samples or bounded refusals. Record reviewer, tree identity, findings, counterexamples and fix/retest links. | A required behavior defect, unexamined failure branch, invalid oracle, or unresolved finding blocks validation and commit. Do not downgrade a required success to a bounded refusal to make the gate pass. |
+| 3. Sub-plan and readiness | One executable leaf only. Its card names actual base/checkpoint SHAs, predecessors, one owner per path, exact files, source/API facts, behavior and refusal contract, invariants, ordered tasks, probes with stopping rules, build targets, literal commands, registered selectors, a minimum nonzero case count, independent oracle, evidence path, recovery action and single commit boundary. Confirm all uncertainty that could change scope is resolved before `ready`; post-registration tests must be enumerated and the observed count replaces the minimum before validation. | Use `waiting` for a real predecessor and `conditional` for a named closure test; never infer readiness from old plans, LOC, prototypes, compilation or a successful subset. Any base/API/toolchain/scope change invalidates the affected decision. |
+| 4. Commit after each slice | Freeze the validated source identity (base SHA plus owned diff and file digests), serially run required checks per build tree, close Gate 1 and Gate 2 records, inspect the entire diff and cleanly scoped index, and commit exactly the named leaf's product/tests/necessary registrations. Verify the commit contains only owned paths and byte-matches the tested tree; preserve unrelated user edits and all failed attempts. | No product commit from red, stale, mixed, unreviewed or scope-widened evidence. Preserve the patch/reports and continue the same leaf; never commit a passing subset or bundle an aggregate/downstream leaf. |
+| 5. Self-update after commit | Immediately reread the actual product commit and diff. Reconcile the card, evidence, review outcomes, status/parent rows, R01-R15, format matrix, dependency graph, risk/follow-up rows, immediate queue and version/history. Recompute readiness from actual predecessor implementation and checkpoint SHAs. Run plan consistency/whitespace checks, then commit only the reconciled plan as a separate nonrecursive checkpoint; verify scope, ancestry, digests and worktree status. | Stop product work if reconciliation is incomplete or its commit fails. No `done` status or next leaf activation until the checkpoint is durable and its postconditions pass. |
 
 This is a repeatable loop, not one final plan audit: newly discovered behavior can reopen a completed requirement and
-must create/revise an owning leaf. Gate 1 checks that the plan is complete and that its stated requirements/contracts
-are correct for the current repository and supported formats; Gate 2 checks that the code actually satisfies that
-correct contract. Neither a passing coverage table nor a plausible proof substitutes for the other. The implementation
-commit and reconciliation checkpoint are separate commits; the checkpoint records the implementation SHA, never its
-own SHA. A documentation-only review may make one plan commit, but it must not fabricate a product commit or mark
-unfinished implementation done.
+must create/revise an owning leaf. Completeness asks whether every promised behavior has an owner and a testable path;
+plan correctness asks whether those promises and tests are true for this checkout; implementation correctness asks
+whether the committed code actually meets the correct contract. These are three separate recorded judgments even
+though the first two share Gate 1. A review may be performed by a separate agent; if unavailable, the implementation
+author performs a distinct read-only pass and labels it self-review rather than independent review. Neither a passing
+coverage table nor a plausible proof substitutes for another gate. The product commit and reconciliation checkpoint
+are separate commits; the checkpoint records the product SHA, never its own SHA. A documentation-only plan review may
+make one plan-only commit, but it must not fabricate a product commit or mark unfinished implementation done.
 
 Before promoting a leaf card, check these concrete prerequisites:
 
@@ -434,13 +453,65 @@ Before promoting a leaf card, check these concrete prerequisites:
 | 1A-1.a | Raw sweep rules and finite/local coordinate domain are fixed | Boundary tests on both sides of each threshold and independent closed-form comparisons |
 | 1A-1.b-budget | Done; original candidate-allocation/refinement accounting mismatch resolved | Nine cap/index cases, exposed consumed work, all offset/ASan/full/fast-lane gates recorded at 10c6bff46 |
 | 1A-1.b-progress | Done at fb70681e2 | Underflow/non-finite/rounded-growth cases, old probe and all required broad checks passed |
-| 1A-1.b-ref | Foundations/refinements/providers/contacts/event isolation done | `.b-ref-components` committed at `9682d5cac65f30cfd86aa10556678ceb88b1448b`; attempt-8 receipts are source matched. This plan checkpoint completes the aggregate handoff; `.b-check-layout` remains waiting for a fresh activation check. Attempt 6 is historical red and attempt 7 is pre-fix green. |
-| 1A-1.b-check | Reference analysis is qualified and does not accept ambiguous topology | Whole-span distance bounds, bidirectional coverage and malicious subset/retrace tests |
+| 1A-1.b-ref | Foundations/refinements/providers/contacts/event isolation/components done | `.b-ref-components` committed at `9682d5cac65f30cfd86aa10556678ceb88b1448b`; attempt-8 receipts are source matched. The v16 plan checkpoint is committed at `c6e32c17f`. The aggregate is complete; `.b-check` is separate and incomplete. Attempt 6 is historical red and attempt 7 pre-fix green. |
+| 1A-1.b-check-layout | Read-only source/API preflight against actual post-v17 HEAD; resolve degree-1/line producer reachability and disposition against R05's one-piece adoption requirement, raw cache representation and budget admission | Bounded producer-output probe across admitted ellipse domains; explicit editable-vs-plain outcome for every result kind; exact spline-data/knot contract; no stale `.a` ownership; positive/refusal cases and a nonzero selector target |
+| 1A-1.b-check | Layout producer contract is proven; reference analysis is complete and ambiguous topology refuses | Whole-span distance bounds, bidirectional coverage, malformed/layout cases, malicious subset/retrace tests and atomic limit refusal |
 | 1A-2 | Guard and all geometry children are done; no raw constructor bypass exists | Current-header compile, complete stamp mutation cases, transform overflow and ownership checks |
 | 1E-1.a | Typed schema grammar, malformed/unknown ownership and flag consistency are settled | Codec-independent exact-code/type tests, duplicate/malformed cases and bounded tails |
 | 1E-1.b/.c | Writer placement and common DXF/DWG adoption callbacks confirmed | Real codec payloads, save failure propagation, no regeneration and attribute preservation |
 | 1G-2.a | Existing provider/delegate and document Undo/Redo contracts are understood before generic edits | Old-provider defaults, rapid pending edits, before/after history hooks, refusal/no-op tests and ASan; full regression suite for shared history changes |
 | 2A/2B | Live-document ownership, normalized equality and undo rules are fixed | Generated-child refusal, circle/arc equality, local-scale tolerance and one-step undo |
+
+**Next candidate card — `1A-1.b-check-layout` (waiting; no product edits are authorized by this plan review).**
+
+```yaml
+slice: 1A-1.b-check-layout
+state: pending
+readiness: waiting
+candidate_code_base_sha: c6e32c17f2d36dff6f1bef4c9bc90f23caf19c87
+activation_base_sha: refresh after the v17 plan-only checkpoint is committed; require no intervening product change
+owner: Gibbs owns the scoped implementation after activation; coordinator owns the plan, builds, independent review, evidence and Git
+dependencies: 1A-1.b-ref-components at 9682d5cac65f30cfd86aa10556678ceb88b1448b; v16 plan checkpoint at c6e32c17f2d36dff6f1bef4c9bc90f23caf19c87
+requirements: R01, R02, R12, R13
+source_facts_at_candidate_base: LC_OffsetCheckLimits/WorkBudget are in lc_ellipseoffsetgeometry.h; RS_SplineData carries type, degree, controls, knots, weights, fit points and saved-open fields; the LC_CurveOffset result builder makes degree-3 ClampedOpen data with repeated triple interior knots and unit weights on its cubic branch, but its allStraight branch can return RS_Line or a degree-1 spline. Reachability for admitted ellipse inputs is unproven.
+contract: Layout-only classification and bounded admission of a complete cubic cache representation. This is not geometric validation and must not expose a successful checkCache result. The line/degree-1 result disposition is unresolved until reconciled with R05: it must not be silently downgraded to plain if one-piece adoption is required.
+invariants: No refit/regeneration; no projection of nonzero Z; no padding/repair of missing controls, knots or weights; shared-budget debits happen once; no partial span output on refusal; layout does not infer closure/topology from flags alone.
+blockers: Resolve producer-output disposition and raw RS_SplineData eligibility; after the v17 plan commit, confirm exact HEAD and reread source/API facts. No product edits until both close.
+files: Product/tests only lc_ellipseoffsetgeometry.h, lc_ellipseoffsetgeometry.cpp and tests/lc_offsetcurve_geometry_tests.cpp. Read-only preflight: lc_curveoffset.cpp, rs_spline.h/.cpp, CMakeLists.txt and librecad/src/src.pro. If evidence requires a producer change or additional product path, revise/split this card before coding.
+entry_probe:
+  - Inspect the persistent-curve creation call path and enumerate result RTTI/degree from actual ellipse-offset engine calls over admitted source/distance boundaries, whole and arc sweeps, both sides, near-cusp/trim cases and near-linear cases.
+  - Decision rule: if source reasoning proves non-cubic results unreachable for every admitted ellipse input, keep degree-3 ClampedOpen as the only cache form. If reachable, reconcile with R05: an explicitly permitted plain fallback must be reported/tested as such; if one-piece adoption requires editability, revise the cache representation (or producer contract) and split/replan before readiness. A finite sample cannot prove branch unreachability. If neither proof nor contract disposition closes, remain waiting.
+  - Confirm the raw-to-normalized import boundary: absent raw weights may be materialized only after raw-carrier eligibility in 1E-1.c; the normalized cache reaching this layout gate has one complete weight per control.
+  - Record inspected revision/files, probe inputs/results, result types/degrees, limits and decision. If producer/caller behavior changed since c6e32c17f, update this plan and affected descendants before editing.
+api_preflight: RS_Spline::validate() checks size, positive weights, knot monotonicity and clamping, but does not establish finite planar unit-weight cubic-cache layout. m_closedFlag/m_periodicFlag may coexist with ClampedOpen data and are allowed through layout; topology later validates endpoint/closure semantics.
+subplan:
+  - stage: Close entry probe and freeze contract
+    work: Resolve producer shape/disposition, persistent-curve caller, R05 one-piece adoption semantics, normalization boundary, flags and exact supported knot/data forms against the current source.
+    exit: Every reachable producer result has a disposition justified by the requirement: editable cache, explicitly permitted plain fallback, or a revised representation slice. No unresolved decision changes scope.
+  - stage: Implement bounded layout inspection
+    work: After minimum-size and modulo checks, derive n; check arithmetic for 3n+1 controls and 3n+5 knots before use; cap n by maxCubicPieces and controls by maxVertices before any helper-created dynamic allocation; debit n pieces and 3n+1 inspected controls once in the shared WorkBudget. Factor count arithmetic into a nonallocating helper so size_t-boundary tests require no giant vectors. Require degree 3, ClampedOpen, empty fitPoints, default/empty saved-open payload, finite XY with Z exactly zero, complete finite weights exactly 1, finite knots with four equal endpoint values and triple internal groups, and strictly increasing group representatives. Do not use an absolute tolerance that merges narrow valid knot intervals. Permit finite positive affine knot reparameterization; span extraction uses actual knots, never assumed integer parameters. Do not reject m_closedFlag/m_periodicFlag at this layer.
+    exit: Return only layout status and span count; every scan/extraction is bounded and no incomplete geometric-validity API is published.
+  - stage: Add focused cases
+    work: Exercise actual cubic producer output and malformed RS_SplineData: multi-span and affine-rescaled knot domains; synthetic size_t-boundary count arithmetic without allocating huge vectors; short/mismatched arrays; wrong degree/type; malformed groups; fit/saved-open payload; nonfinite/Z control; missing/partial/nonunit weights; file closure flags; exact/one-less/pre-spent/sticky budget. Assert refusal leaves no span result.
+    exit: At least 8 registered [lc-offsetcurve][geometry][cache-layout] cases execute; each documented disposition has a non-vacuous assertion and the observed case count is recorded.
+  - stage: Freeze and verify
+    work: Freeze the three owned paths and digests; run focused Release/ASan, adjacent reference/intersection/engine regressions, full Release and both fast suites in Release/ASan serially per build directory; close separate completeness, plan-correctness and implementation-correctness reviews.
+    exit: Required reports pass with expected baseline skips only; tested hashes match the single product commit and all findings are closed.
+commit_boundary: Exactly one layout-only product commit. No distance bounds, topology/public checkCache, producer edits or plan reconciliation are bundled.
+validation:
+  - cmake --build build --target librecad_tests --parallel 4
+  - cmake --build build-asan --target librecad_tests --parallel 4
+  - build/librecad_tests --list-tests "[lc-offsetcurve][geometry][cache-layout]" (at least 8 cases after registration)
+  - QT_QPA_PLATFORM=offscreen build/librecad_tests "[lc-offsetcurve][geometry][cache-layout]" --order decl --reporter junit --out build/evidence/1A-1.b-check-layout/release-attempt-N.junit.xml
+  - QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_tests "[lc-offsetcurve][geometry][cache-layout]" --order decl --reporter junit --out build/evidence/1A-1.b-check-layout/asan-attempt-N.junit.xml
+  - Run [reference-components],[reference-events],[intersection-budget],[curve-offset][topology],[curve-offset][ellipse] in Release and ASan; then the full Release suite and DXF/DWG fast suites in Release/ASan using §0.8 exclusions. Keep attempts separate and serialize each build directory.
+completeness_review: pending; trace R01/R02/R12/R13, producer dispositions, all input fields/statuses, build/test membership, success/refusal cases and each excluded bounds/topology behavior to its owning child.
+plan_correctness_review: pending; verify producer output, degree-1/line reachability and R05 disposition, raw-to-normalized import boundary, knot grouping/reparameterization, data flags and budget debits against current declarations/callers.
+correctness_review: pending; after implementation, independently challenge count overflow, allocation/admission order, finite/Z/weight/group checks, span extraction, parameter-domain invariance and refusal atomicity.
+product_commit_audit: pending
+plan_checkpoint_state: pending
+next: Keep waiting until the producer/API probe closes at the post-v17 checkpoint HEAD; then activate or revise this card.
+```
 
 **Completed implementation card — `1A-1.b-ref-components`** (implementation `9682d5cac65f30cfd86aa10556678ceb88b1448b`;
 this v16 plan-only checkpoint is the separate reconciliation commit). Product dependency base is `dff307668`; initial
@@ -553,9 +624,9 @@ Only satisfied dependencies promote a card to `ready`; future recipes are `waiti
 | 1A-1.b-ref-critical-refine / .b-ref-events-refine | Done at72eb5f953; geometry header/cpp/tests: factory-issued canonical polynomial/angle state, occurrence handles, convergent contraction/images, observed-depth repair and bounded one-sided join progress. | Native red retained; final21/16424 Release/ASan, legacy11/268911, core51/2837 and all broad/full/fast gates pass, tested/committed hashes match. R01/R02/R12/R13 sub-contract only. |
 | 1A-1.b-ref-providers / both refinement children | Done at9c27e2980, geometry header/cpp/tests: owned immutable offset/cutter geometry, both-hook maps, support exclusion and exact collapsed-opposite omission; logical costs/debits qualified. |16/299294 Release/ASan, critical30/284668,core51/2837, broad/full/fast gates pass; no old body/assertion/cap changed, committed digests equal tested source. R01/R02/R12/R13 provider sub-contract only. |
 | 1A-1.b-ref-contacts / .b-ref-providers | Done at92ca5e445; immutable complete-box construction contact proofs, exact F/critical-free-gap qualification, bounded radial neighborhoods, unchanged legacy factory. |17/4383 both builds,old97/586799,broad/full/fast gates pass; all digests/identities retained. Native successful interior fallback not claimed. R01/R02/R12/R13 contact sub-contract only. |
-| 1A-1.b-ref-events-isolate / .b-ref-contacts | Done at dff307668; geometry header/cpp/tests expose an owned immutable complete-event result, retained strict session/providers, diagnostic IDs, role/parameter ordering, exact-only same-role identity, rounded world-node enclosure and one irreversible work ledger. | 15 focused cases/5616 assertions Release+ASan; 154 geometry cases/1464224 assertions Release+ASan; full Release 3842 cases/7321304 assertions/74 unchanged skips; DXF and DWG fast lanes pass Release+ASan. Construction/free-end and stationary/free-end identities pass. Tangent stress reaches strict-query depth20 before ordering; it asserts bounded empty refusal only, not identity resolution. Multi-pair shared-own fixture remains an explicit coverage limitation. R02/R12. |
+| 1A-1.b-ref-events-isolate / .b-ref-contacts | Done at dff307668; geometry header/cpp/tests expose an owned immutable complete-event result, retained strict session/providers, diagnostic IDs, role/parameter ordering, exact-only same-role identity, rounded world-node enclosure and one irreversible work ledger. | 15 focused cases/5616 assertions Release+ASan; 154 geometry cases/1464224 assertions Release+ASan; full Release 3842 cases/7321304 assertions/74 unchanged skips; DXF and DWG fast lanes pass Release+ASan. Construction/free-end and stationary/free-end identities pass. Tangent stress reaches strict-query depth20 before ordering; it asserts bounded empty refusal only, not identity resolution. At this checkpoint, multi-pair shared-own success was not separately pinned; the following `.b-ref-components` slice added that proof. R02/R12. |
 | 1A-1.b-ref-components / .b-ref-events | Done at `9682d5cac65f30cfd86aa10556678ceb88b1448b`; exact-D visibility, complete event fringes, incidence-preserving components and atomic budget refusal are implemented. Keep engine rho/marginal policy out of this exact reference; qualify compatibility in `.c`/`.b-check`. | Attempt-8 focused Release/ASan, reference and engine regressions, full Release, and DXF/DWG fast lanes pass; the finite-distance conversion P1 was independently re-reviewed after its fix. Attempt 6 remains historical red and attempt 7 pre-fix green. Frozen/committed hashes and receipts are in §0.5. `.b-check-layout` is the next leaf after activation review. R02/R12/R13. |
-| 1A-1.b-check-layout / .b-ref-components | Implement overflow-safe `isEngineLayout`, finite 2D/unit-weight/knot-group validation, cubic extraction and shared-budget input preflight. Keep these helpers internal or explicitly layout-only; do not expose an incomplete successful `checkCache`. | Short/oversized/null-equivalent arrays, malformed knots, rescaled valid knots, fit/saved-open representations, non-finite/out-of-plane controls, zero/invalid limits; no allocation before count caps. R01/R02/R12. |
+| 1A-1.b-check-layout / .b-ref-components | Entry probe: qualify the actual ellipse-offset producer's output RTTI/degree over its admitted input domain, including its degree-1/line branch; settle whether non-cubic output is a valid plain fallback or requires broader cache representation before marking ready. Then implement overflow-safe cubic-cache layout preflight, finite planar/unit-weight validation, span extraction and shared-budget admission. Keep helpers explicitly layout-only; do not expose an incomplete successful `checkCache`. | Engine-produced ordinary cubic cache and affine-rescaled knot domains pass; wrong-degree/type, fit or saved-open payloads, malformed groups/counts, nonfinite/Z controls, nonunit weights and zero/invalid limits refuse. Verify closed/periodic file flags alone do not fail layout; topology later checks their endpoint meaning. Prove count arithmetic and resource caps before any derived allocation; capture all producer output kinds and record the disposition for each. R01/R02/R12. |
 | 1A-1.b-check-bounds / .b-check-layout | Implement conservative de Casteljau leaf/chord error, offset-distance upper bounds and source-clearance lower bounds. Use parameter-aware reference matching and outward floating-point allowances. | Between-sample adversarial controls; dense independent evaluation verifies every claimed enclosure; near tangency/cusps/extreme scale; no nearest-point sample becomes proof. R02/R12. |
 | 1A-1.b-check-topology / .b-check-bounds | Combine complete reference and candidate geometry into public `checkCache`; require exactly one reference component and bidirectional ordered coverage; enforce direction/closure/trim joins. | Proper subset, missing tail, isolated component, repeat/retrace, extra loop and wrong reversal refuse; legitimate lens and closed-arc joins pass. No partial acceptance on exhausted budget. R02. |
 | 1A-1.c / all .b children | Qualify defaults and tolerance-floor policy against current engine/adversarial corpus; record seeds, statuses/work/cost and resolve required-success disagreements. Retain the source-qualified interior-fallback native reachability coverage limit; investigate natural cases or prove limits without a test backdoor. | Existing offset/topology regressions, independent geometry oracle, every cap exit, near-critical success, file-rounding margins; no timing assertion or unearned fallback-coverage claim. R01/R02/R12. |
@@ -573,10 +644,10 @@ documenting independently safe, buildable intermediate behavior before editing. 
 each product slice, not a later catch-all test phase.
 
 **Immediate implementation-resume queue:** `.b-ref-events-isolate` is committed at `dff307668`; `.b-ref-components`
-is committed at `9682d5cac65f30cfd86aa10556678ceb88b1448b` with attempt-8 source-matched evidence. This v16
-plan-only checkpoint reconciles its implementation SHA, reviews, parent rows and validation receipts. After committing
-this checkpoint, re-read actual HEAD and activate `.b-check-layout` only after confirming that its source/API entry
-contract still matches; do not repeat or amend the component slice. Do not restart or reapply contacts/providers/
+is committed at `9682d5cac65f30cfd86aa10556678ceb88b1448b` with attempt-8 source-matched evidence. Its v16 plan-only
+reconciliation is committed at `c6e32c17f`. The v17 plan review records `.b-check-layout` as a waiting candidate;
+after the v17 plan-only checkpoint, re-read actual HEAD and close its bounded producer-shape/API readiness probe
+before implementation. Do not repeat or amend the component slice. Do not restart or reapply contacts/providers/
 refinements/isolation. Budget, guard, progress and frames are complete at 10c6bff46 / 0e3c6b342 / fb70681e2 /
 26d107ccf; strict core, rate, critical preparation and observed-depth accounting are complete at 834a46a88 /
 bcd6c5a4f / 943406abe / 290d2658f; trusted pair refinement is complete at f4f87f48e and critical refinement at
@@ -588,9 +659,9 @@ refinement from334354633, after literal API/cost probes, native red reproduction
 Gibbs's read-only isolation readiness review identified the additive provider prerequisite, now implemented and
 natively verified/committed at9c27e2980. Its whole/restricted visibility-algebra review also qualified a bounded future
 components proof option (§3.5.1), not a product implementation. Construction-contact child is now implemented and
-natively verified/committed at92ca5e445. Six required strict-query families pass a separate feasibility probe; mixed
-critical/pair/free/seam identities/order and rounded world-node accuracy still need their own product qualification. Future cards
-remain waiting until their actual prerequisites and public API handoffs exist, not merely because a recipe is written.
+natively verified/committed at92ca5e445. Historical notes below retain the evidence and limitations at each earlier
+checkpoint; they are not the current queue. The current cache-validation children remain waiting until their exact
+predecessors, producer contract and public API handoffs are verified, not merely because a recipe is written.
 
 ### 0.7 Three review gates
 
@@ -1244,9 +1315,16 @@ Use a bounded adaptive check with conservative error accounting; do not claim an
 
 1. **Validate domain and layout before work/allocation.** Require finite 2D controls/knots/weights and normalized
    source fields, valid positive limits, degree 3, ClampedOpen representation, `n ≥ 1` spans, `3n+1` controls and
-   `3n+5` knots. Weights are empty or exactly one per control, all 1. Knots have four equal initial values, `n-1`
-   internal groups of three, and four equal final values, increasing between groups. Reject invalid count arithmetic,
-   unexpected fit representation and non-finite/degenerate geometry. Span k uses `[3k .. 3k+3]`.
+   `3n+5` knots. The normalized cache has exactly one finite unit weight per control; an absent raw file weight list
+   is materialized only after the separate raw-carrier checks in 1E-1.c, never by this validator. Knots have four
+   equal initial values, `n-1` internal groups of three, and four equal final values, with strictly increasing finite
+   group representatives. Require repeated group values to be identical after decoding; do not use an absolute
+   tolerance that can merge narrow valid spans. A finite positive affine knot reparameterization is valid, and all
+   later span evaluation must use its actual knot interval rather than assume integer parameters. Reject invalid count
+   arithmetic, fit points, nondefault saved-open payloads, non-finite or nonzero-Z controls and non-finite/degenerate
+   geometry. `m_closedFlag`/`m_periodicFlag` may be carried with ClampedOpen data and are not rejected by layout alone;
+   the topology stage validates their endpoint/closure meaning. Span k uses controls `[3k .. 3k+3]` because every
+   interior cubic knot has multiplicity three.
 2. **Small distance:** `distance ≤ tol` gives `TooSmall`. The caller must distinguish invalid inputs, geometric
    refusal and a work limit; none may become successful adoption with an unchecked cache.
 3. **Construct bounded reference geometry.** Use the same source sweep convention as `EllipseSource::make`, including
@@ -1750,8 +1828,8 @@ override that list's validated meaning or cause a second definition to be emitte
 cannot be rescued by silently selecting a later valid one.
 
 **Adoption** happens only on `addSpline`'s main path, and only for `data->eType == DRW::SPLINE`. The loaded spline must
-be degree 3, ClampedOpen (its closed and periodic flags may be set; ODA sets them), in the engine layout, with all
-weights exactly 1.0 (`makeSplineFromDrw` fills 1.0 when the file has none), and it must pass §3.5. Use
+be degree 3, ClampedOpen (its closed and periodic flags may be set; ODA sets them), in the cubic cache layout of §3.5,
+with all weights exactly 1.0 (`makeSplineFromDrw` fills 1.0 when the file has none), and it must pass §3.5. Use
 the public validated `LC_OffsetCurve::adopt(*spline, def, why)` factory; its private copy-from-spline constructor keeps
 what `setEntityAttributes` set. `addHelix` strips but never adopts.
 
@@ -2119,7 +2197,7 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
 
 ## 5. Phase 1 — the type
 
-### 1A-1. Closed forms, engine-layout test, validity check, tolerance helpers
+### 1A-1. Closed forms, normalization and tolerance helpers
 
 **Execution card: 1A-1.a, 2026-10-15**
 - State: done at `a4690db08b7220e93bbc8642d2c2b8b2e14fcf30`; S0 done at de30f1d45.
@@ -2157,31 +2235,34 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
   persistent entity, UI or file-format completion is claimed by this leaf.
 
 **Files.**
-- New `lib/engine/document/entities/lc_ellipseoffsetgeometry.{h,cpp}`, containing:
+- New `lib/engine/document/entities/lc_ellipseoffsetgeometry.{h,cpp}`, containing the completed `.a` scope:
   - `struct LC_EllipseOffsetDefinition` (§3.2);
   - free geometry operations in namespace `LC_EllipseOffsetGeometry`; this module owns `normaliseBasis` from .a,
     so its tests do not depend on the not-yet-created `LC_OffsetCurve` class. The later class static forwards to it;
   - point, derivative and outward normal at η;
   - `exactOffsetPoint(basis, η, s)` (signed s; towards the centre is negative);
   - the sweep interval of §3.5;
-  - distances from a point to the original and to O(η) (§3.5 step 4);
-  - `minRadiusOfCurvature(basis)` over the sweep;
-  - the lens corners (Appendix A; guard a = b and clamp sin²η to [0, 1]);
-  - `isEngineLayout`; Bezier evaluation of span k; distance from a point to the cache's Bezier geometry;
-  - the inside test of the whole ellipse;
-  - `offsetPolyline(basis, d, toward, samples)` (for 1H);
-  - `checkCache` (§3.5).
-  - the check limits/result and bounded reference/visibility adapter needed by §3.5, reusing current interval and
-    jet primitives; document any small read-only engine helper extraction before implementation.
-- `lc_curveoffset.{h,cpp}`: two appended public helpers, no behaviour change:
+  - distances from a point to the original and exact offset, minimum radius of curvature, lens corners and whole-ellipse inside test.
+- Future cache-validation work in the same module is assigned only to `.b-check` children, not to completed `.a`:
+  - `.b-check-layout`: checked cubic-cache layout predicate, finite 2D/unit-weight preflight and Bezier-span extraction;
+  - `.b-check-bounds`: conservative cache-to-reference/source distance bounds;
+  - `.b-check-topology`: public `checkCache` result and complete topology/coverage decision;
+  - 1H: `offsetPolyline(basis, d, toward, samples)` for preview only, not a validity/adoption oracle.
+- Build lists for the geometry module were added in `.a`; later helper work uses the existing registered files unless
+  source review proves a new file is needed.
+
+The original v1 file list also named `isEngineLayout`, cache-Bezier distance and `checkCache` under `.a`; those items
+were not delivered by the committed `.a` slice and are not complete. This v17 revision assigns them to `.b-check`
+and removes the duplicate ownership. Do not interpret the historical `.a` implementation card as evidence for them.
+
+- `lc_curveoffset.{h,cpp}` contains the completed `.a` tolerance helpers:
   - `double relativeOffsetTolerance(const RS_Entity& source)`: 1e-4 for ellipses (`kEllipseRelativeOffsetTolerance`),
     1e-6 otherwise;
   - `double toleranceFor(const RS_Entity& source, double distanceMagnitude, double relativeFactor)`: the formula of
     `lc_curveoffset.cpp:4962-4965` with the file-local `computeScale` (`:601-622`).
 
-  Do not name it `requestedTolerance`: a parameter of that name in `makeDirectOptions` / `makeOffsetOptions` would hide
-  an unqualified call.
-- Build lists for the two new files (§1.3).
+Do not name the helper parameter `requestedTolerance`: a parameter of that name in `makeDirectOptions` /
+`makeOffsetOptions` would hide an unqualified call.
 
 **Precondition:** use the S0 build and baseline; retain the #3117 arc behavior measured at S0.
 
@@ -2194,21 +2275,15 @@ registered in `librecad_tests` next to `lc_curveoffsetellipsetests.cpp`:
 - **Closed forms against brute-force dense sampling** on random ellipses, including ratio 1: distances, b²/a, lens
   corners, minimum radius of curvature.
 - **`toleranceFor`:** `makeOffsetOptions(e, d).tolerance.requestedGeometry == toleranceFor(e, d, relativeOffsetTolerance(e))`.
-- **Layout:** `isEngineLayout` accepts the engine's output and a rescaled knot vector; it rejects other knot vectors,
-  non-unit weights and degree 2.
 - **Domain and normalization:** canonical whole, genuine ±2π sweeps, zero/tiny noncanonical sweeps, multiple turns,
   wrapped/reversed arcs, circles, extreme valid scales/ratios, non-finite values and precision loss. Include a case
   whose small arc angles would be snapped away if raw validation happened after ellipse construction.
-- **Current engine output:** exercise ratios 0.05–0.95, distances 1.01·tol … 3a, whole/arcs and both sides. Record the
-  supported accepted geometries and explicit topology/limit refusals; one output entity alone does not prove eligibility.
-  Include closed results from arc sources and boundaries near cusp/trim events.
-- **`checkCache` rejects:** a result moved by 5·tol; one control point moved by 0.5% and by 2% of a; `d ≤ tol`; a
-  wrong-side result.
-- **Adversarial acceptance:** controls edited so old endpoints/midpoints agree but quarter-span geometry deviates;
-  missing arc tails, reversed/retraced pieces, false closure, extra loops, non-finite knots/weights and malformed
-  vector counts. Use independent dense evaluations to check claimed error bounds, not the validator's own sample list.
-- **Work limits:** deterministic exits for piece/vertex/pair/depth caps and invalid zero limits; no overflowing work
-  counter, unbounded recursion or successful unchecked adoption. Measure current import/edit costs without timing asserts.
+- Checker/layout, cache-corruption, adversarial-acceptance and checker-work tests belong to `.b-check-layout`,
+  `.b-check-bounds`, `.b-check-topology` and `.c`; they were listed in the original `.a` design but were not part of
+  the committed `.a` implementation. Do not count them as `.a` evidence.
+- Current engine output across ratios 0.05–0.95, distances 1.01·tol … 3a, whole/arcs and both sides is qualified in
+  `.c`; include closed results from arc sources and boundaries near cusp/trim events. One output entity alone does
+  not prove eligibility.
 
 #### 1A-1.b-budget. Bound shared intersection work before allocation
 
@@ -5009,3 +5084,39 @@ no product/native result affected. Structural audit0:27mainrows,60nodes,15requir
   (8 DXF/6 DWG), 24 executable leaf recipes (25 table rows including the header), 103 Markdown headings and 32
   balanced fence lines. No plan/DAG checker is available in-repo; dependency edges did not change and the mirrored
   graph remains acyclic.
+
+#### v16 → v17 (2026-10-16)
+
+- **Completeness:** reconciled the completed `.a` implementation with its plan section. `isEngineLayout`, cache
+  Bezier extraction and `checkCache` were still listed as `.a` deliverables despite not existing in the committed
+  slice, and duplicated the later `.b-check` scope. `.a` now names only implemented geometry/normalization/tolerance
+  work; layout, bounds and topology are assigned to their executable `.b-check` children. Updated the current
+  `.b-ref` aggregate to complete and `.b-check` to pending rather than waiting on a completed predecessor.
+- **Plan correctness:** checked current `RS_SplineData`, `RS_Spline::validate`, `LC_OffsetCheckLimits`/`WorkBudget`,
+  and `LC_CurveOffset` output construction at the v16 checkpoint. The producer's cubic path uses ClampedOpen degree 3,
+  grouped knots and complete unit weights, while its all-straight path can emit a line or degree-1 spline; the latter's
+  reachability for admitted ellipse inputs was not proven. The plan now treats it as a bounded entry probe whose
+  disposition must be checked against R05, not as an assumed cubic success or automatically permitted plain fallback.
+  The normalized checker requires complete unit weights; only the
+  separate raw-file eligibility path may materialize absent weights. Knot reparameterization, exact repeated groups
+  and closure-flag responsibilities are stated consistently between layout and topology.
+- **Sub-plan/readiness:** added a waiting `.b-check-layout` candidate card with exact predecessor/code-base facts,
+  source/API scope, probe outcomes and stopping rules, ordered tasks, no-allocation/counter contract, positive and
+  negative cases, minimum registered selector count, Release/ASan and adjacent/full/fast validation, recovery and one
+  product commit boundary. It is deliberately not marked ready; activation requires the v17 plan checkpoint and a
+  fresh actual-HEAD/source check. No product edits are authorized by this plan-only update.
+- **Commits after slices:** tightened the five-gate table with explicit pass artifacts, tested-tree/digest identity,
+  clean path-scoped index requirements and a hard stop on failed review/validation. Added explicit product-commit and
+  plan-checkpoint postcondition fields to the activation-card template; the existing one-leaf/one-product-commit rule
+  and separate immediate plan-only checkpoint remain unchanged.
+- **Self-update after commit:** made completeness, plan correctness and implementation correctness distinct records;
+  requires actual commit/diff reread, synchronized status/requirements/matrix/DAG/evidence/queue, recalculated readiness,
+  plan-only checkpoint and ancestry/path/digest/worktree verification. Updated the top status, immediate queue and
+  current card without rewriting historical attempt evidence.
+- **Validation:** documentation-only. Product files and implementation evidence are unchanged; no product builds or
+  tests were run. `git diff --check` passes. Inventory: 28 main status rows (29 table rows including the header), 15
+  requirements, 14 application format rows (8 DXF/6 DWG) plus one conversion row, 24 executable recipe rows (25
+  table rows including the header), 104 headings and 34 balanced fence lines. No dependency edges changed; the
+  affected chain `.b-ref-components → .b-check-layout → .b-check-bounds → .b-check-topology` was checked and is
+  acyclic. No in-repository plan/DAG checker exists, so the full graph audit remains a mandatory activation/checkpoint
+  gate. The existing untracked `build-asan/` directory is preserved and not part of the plan diff.
