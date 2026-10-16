@@ -24,11 +24,11 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v11**, 2026-10-16. This file is the implementation source of truth. Every implementation slice ends with a
+Plan **v12**, 2026-10-16. This file is the implementation source of truth. Every implementation slice ends with a
 verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION — event isolation is committed at `dff307668`; component analysis is in progress but uncommitted and not validated. Release attempt 6 still has a false aggregate stationary expectation and the required shared-own-occurrence success case reaches the depth limit. No downstream leaf is ready. Cache validation, remaining geometry, entity, file, UI and phase-2 work remain incomplete.**
+Status: **IMPLEMENTATION — event isolation is committed at `dff307668`; component analysis is in progress but uncommitted and not validated. Release attempt 6 still has a false aggregate stationary expectation and the required shared-own-occurrence success case reaches the depth limit. The edge-only graph also needs an explicit audit/disposition for event nodes with zero retained edges. No downstream leaf is ready. Cache validation, remaining geometry, entity, file, UI and phase-2 work remain incomplete.**
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -60,6 +60,8 @@ worktree at `c3f091c3f`: the three component-analysis product/test paths have un
 Release attempt 6 is red. It records the blocker and removes the stale "ready" handoff; no product status is
 promoted. Future activation cards become active only after predecessor checkpoints are committed, the card is
 revalidated against actual HEAD, and the owner receives that exact SHA.
+v12 adds an explicit audit for isolated retained event points, which the current edge-only graph representation must
+not silently drop; an unsupported singleton requires no-partial refusal or a modeled point component.
 
 Appendix E lists what changed and why. This plan remains a proposal for a new persistent `LC_OffsetCurve`; the
 current engine's internal `LC_CurveOffset` is not that entity. **Line numbers and type-site counts are historical
@@ -383,7 +385,7 @@ Before promoting a leaf card, check these concrete prerequisites:
 | 1A-1.a | Raw sweep rules and finite/local coordinate domain are fixed | Boundary tests on both sides of each threshold and independent closed-form comparisons |
 | 1A-1.b-budget | Done; original candidate-allocation/refinement accounting mismatch resolved | Nine cap/index cases, exposed consumed work, all offset/ASan/full/fast-lane gates recorded at 10c6bff46 |
 | 1A-1.b-progress | Done at fb70681e2 | Underflow/non-finite/rounded-growth cases, old probe and all required broad checks passed |
-| 1A-1.b-ref | Foundations/refinements/providers/contacts/event isolation done | `.b-ref-components` must prove exact-D visibility, complete fringes, graph connectivity, compatibility boundary, one shared budget and no-partial refusal. Attempt 6 shows the shared-own success case still fails at depth 20; keep the leaf in progress and do not promote `.b-check` |
+| 1A-1.b-ref | Foundations/refinements/providers/contacts/event isolation done | `.b-ref-components` must prove exact-D visibility, complete fringes, graph connectivity, compatibility boundary, one shared budget and no-partial refusal, and classify every event node with zero retained edges. Attempt 6 shows the shared-own success case still fails at depth 20; keep the leaf in progress and do not promote `.b-check` |
 | 1A-1.b-check | Reference analysis is qualified and does not accept ambiguous topology | Whole-span distance bounds, bidirectional coverage and malicious subset/retrace tests |
 | 1A-2 | Guard and all geometry children are done; no raw constructor bypass exists | Current-header compile, complete stamp mutation cases, transform overflow and ownership checks |
 | 1E-1.a | Typed schema grammar, malformed/unknown ownership and flag consistency are settled | Codec-independent exact-code/type tests, duplicate/malformed cases and bounded tails |
@@ -425,8 +427,8 @@ subplan:
     work: Continue the builder while issuer-bound handles are live (or retain equivalent owner-bound handles); contract each complete root enclosure; cover each event-free open core and both symbolic one-sided fringes without gaps/overlap; classify exact-D visibility with conservative whole-interval proofs.
     exit: Whole-source isolated equality refuses with no partial graph; exact and adjacent thresholds behave as specified; restricted arcs do not use the supporting whole ellipse; near-foot narrow visibility either proves correctly or refuses conservatively.
   - stage: Assemble exact graph
-    work: Create one edge per retained event-free span and preserve every endpoint incidence. Map physical nodes only with certified identity/world enclosure; preserve crossing/cusp/tangency/construction/free-end roles and two seam occurrences on one physical seam node; derive weakly connected components without guessed successor pairing.
-    exit: Six fixture outcomes plus rotated/reversed/translated, crossing, cusp, tangency, seam, free-end and branch cases match independently enumerated expected incidences and component membership.
+    work: Create one edge per retained event-free span and preserve every endpoint incidence. Map physical nodes only with certified identity/world enclosure; preserve crossing/cusp/tangency/construction/free-end roles and two seam occurrences on one physical seam node; derive weakly connected components without guessed successor pairing. Inspect every event node with zero retained incident edges: prove hidden/non-retained, publish a modeled singleton point component, or refuse the entire graph with no partial analysis.
+    exit: Six fixture outcomes plus rotated/reversed/translated, crossing, cusp, tangency, seam, free-end and branch cases match independently enumerated expected incidences and component membership. Every zero-edge event node has an explicit disposition; no retained isolated equality point is silently omitted, including restricted-source and endpoint-cap cases.
   - stage: Prove bounded refusal atomicity
     work: Charge records before allocation and comparisons before examination against the same irreversible WorkBudget; propagate actual depth and final cumulative work; keep result staging private until all checks succeed.
     exit: Exact/one-less per dimension, pre-spent and sticky-retry caps refuse with no analysis; successful work equals the budget's final snapshot and does not double-count event work.
@@ -456,13 +458,13 @@ cost_model: Charge occurrence/fringe/span/node/edge/adjacency records before all
 correctness_oracle: Independent high-precision restricted-source distance checks and interval containment checks; engine fixtures establish compatibility only, never certify the exact predicate. A sample can select a sign only after complete event proof establishes constancy over the whole span.
 frozen_identity: Record actual activation HEAD plus base SHA, explicit scoped diff and SHA-256 of the three owned paths; rerun required checks if any digest changes before commit.
 completeness_review: Trace R02/R12/R13, all event roles, both endpoints/seam, six expected fixtures, multiplicity, build target membership, graph-to-checker contract and every refusal/no-partial path; no production build-list change unless the scoped diff requires it. Audit the current actual selector cases (10 listed), distinguish JUnit assertions from case count, and map each flag assertion to a fixture that can exhibit it.
-correctness_review: Independently inspect exact-D and restricted-sweep predicates, complete root-fringe coverage, physical node identity, crossing/cusp/tangency incidence, seam closure, total budget charging and engine-margin separation; review a successful multi-pair component and an adversarial refusal against an independent oracle. Required shared-own success unresolved means correctness gate fails.
+correctness_review: Independently inspect exact-D and restricted-sweep predicates, complete root-fringe coverage, physical node identity, crossing/cusp/tangency incidence, seam closure, total budget charging, zero-edge node disposition and engine-margin separation; review a successful multi-pair component and adversarial/isolated equality refusals against an independent oracle. Required shared-own success or isolated-node coverage unresolved means correctness gate fails.
 evidence: `build/evidence/1A-1.b-ref-components/release-attempt-1..6.junit.xml` are preserved; attempt 6 (2026-10-16) lists 10 cases and reports 3 failures across 2 cases: the six-fixture aggregate expects absent stationary incidence, and the required shared-own success reaches the depth-20 limit (`status=3`). The isolated whole-source equality and dedicated exact-threshold tests pass in that report. These are failing/current-tree receipts, not completion evidence; append new attempt files without overwriting them.
 implementation_sha: pending
-blockers: Correct the aggregate stationary assertion; certify successful multi-pair shared-own incidence; complete frozen-tree ASan/broad/full/format validation and final independent reviews.
+blockers: Correct the aggregate stationary assertion; certify successful multi-pair shared-own incidence; prove every zero-edge event node is non-retained or explicitly handle/refuse singleton retained points; complete frozen-tree ASan/broad/full/format validation and final independent reviews.
 commit: One coherent product/test commit, then one plan-only checkpoint with actual implementation SHA and refreshed parent/requirements/next card. Never combine the next geometry leaf into this product commit.
 recovery: Preserve build-asan/ and unrelated changes. If product commit exists without checkpoint, finish reconciliation before more product work; do not reapply event isolation.
-readiness: not validation-ready until the false aggregate expectation is corrected, the required shared-own success is certified, the complete report set passes on a frozen tree, and both reviews close without unresolved required findings.
+readiness: not validation-ready until the false aggregate expectation is corrected, the required shared-own success is certified, all zero-edge event nodes have an explicit correct disposition, the complete report set passes on a frozen tree, and both reviews close without unresolved required findings.
 next: 1A-1.b-check-layout, only after this implementation is committed and its plan checkpoint verifies the commit/evidence; otherwise continue this leaf only.
 ```
 
@@ -494,7 +496,7 @@ Only satisfied dependencies promote a card to `ready`; future recipes are `waiti
 | 1A-1.b-ref-providers / both refinement children | Done at9c27e2980, geometry header/cpp/tests: owned immutable offset/cutter geometry, both-hook maps, support exclusion and exact collapsed-opposite omission; logical costs/debits qualified. |16/299294 Release/ASan, critical30/284668,core51/2837, broad/full/fast gates pass; no old body/assertion/cap changed, committed digests equal tested source. R01/R02/R12/R13 provider sub-contract only. |
 | 1A-1.b-ref-contacts / .b-ref-providers | Done at92ca5e445; immutable complete-box construction contact proofs, exact F/critical-free-gap qualification, bounded radial neighborhoods, unchanged legacy factory. |17/4383 both builds,old97/586799,broad/full/fast gates pass; all digests/identities retained. Native successful interior fallback not claimed. R01/R02/R12/R13 contact sub-contract only. |
 | 1A-1.b-ref-events-isolate / .b-ref-contacts | Done at dff307668; geometry header/cpp/tests expose an owned immutable complete-event result, retained strict session/providers, diagnostic IDs, role/parameter ordering, exact-only same-role identity, rounded world-node enclosure and one irreversible work ledger. | 15 focused cases/5616 assertions Release+ASan; 154 geometry cases/1464224 assertions Release+ASan; full Release 3842 cases/7321304 assertions/74 unchanged skips; DXF and DWG fast lanes pass Release+ASan. Construction/free-end and stationary/free-end identities pass. Tangent stress reaches strict-query depth20 before ordering; it asserts bounded empty refusal only, not identity resolution. Multi-pair shared-own fixture remains an explicit coverage limitation. R02/R12. |
-| 1A-1.b-ref-components / .b-ref-events | In progress from `c3f091c3f`; preserve and repair the existing uncommitted implementation per §0.5, then extend the private event-builder transaction through complete boundary-fringe refinement, exact-D whole-span visibility and incidence-preserving component graph publication. Keep engine rho/marginal policy out of the exact reference; qualify compatibility in `.c`/`.b-check`. | Current Release attempt 6 has 10 selector cases and two failing cases: remove the aggregate stationary expectation (stationary is separately covered), and make the required shared-own fixture return a certified successful graph rather than depth-limit refusal. Then pass six fixture topologies, crossing/cusp/seam/free-end incidence, rotated/reversed/translated cases, exact/adjacent-threshold and narrow-foot cases, shared-budget exact/one-less/pre-spent refusals, and no-partial outcomes. Require Release, ASan, geometry/engine regressions, full Release, both fast lanes, independent completeness/correctness reviews, and matching frozen/committed digests. R02/R12/R13. |
+| 1A-1.b-ref-components / .b-ref-events | In progress from `c3f091c3f`; preserve and repair the existing uncommitted implementation per §0.5, then extend the private event-builder transaction through complete boundary-fringe refinement, exact-D whole-span visibility and incidence-preserving component graph publication. Keep engine rho/marginal policy out of the exact reference; qualify compatibility in `.c`/`.b-check`. | Current Release attempt 6 has 10 selector cases and two failing cases: remove the aggregate stationary expectation (stationary is separately covered), and make the required shared-own fixture return a certified successful graph rather than depth-limit refusal. Also audit every zero-retained-edge event node for hidden/non-retained proof, explicit singleton representation, or no-partial refusal. Then pass six fixture topologies, crossing/cusp/seam/free-end incidence, rotated/reversed/translated cases, exact/adjacent-threshold and narrow-foot cases, shared-budget exact/one-less/pre-spent refusals, and no-partial outcomes. Require Release, ASan, geometry/engine regressions, full Release, both fast lanes, independent completeness/correctness reviews, and matching frozen/committed digests. R02/R12/R13. |
 | 1A-1.b-check-layout / .b-ref-components | Implement overflow-safe `isEngineLayout`, finite 2D/unit-weight/knot-group validation, cubic extraction and shared-budget input preflight. Keep these helpers internal or explicitly layout-only; do not expose an incomplete successful `checkCache`. | Short/oversized/null-equivalent arrays, malformed knots, rescaled valid knots, fit/saved-open representations, non-finite/out-of-plane controls, zero/invalid limits; no allocation before count caps. R01/R02/R12. |
 | 1A-1.b-check-bounds / .b-check-layout | Implement conservative de Casteljau leaf/chord error, offset-distance upper bounds and source-clearance lower bounds. Use parameter-aware reference matching and outward floating-point allowances. | Between-sample adversarial controls; dense independent evaluation verifies every claimed enclosure; near tangency/cusps/extreme scale; no nearest-point sample becomes proof. R02/R12. |
 | 1A-1.b-check-topology / .b-check-bounds | Combine complete reference and candidate geometry into public `checkCache`; require exactly one reference component and bidirectional ordered coverage; enforce direction/closure/trim joins. | Proper subset, missing tail, isolated component, repeat/retrace, extra loop and wrong reversal refuse; legitimate lens and closed-arc joins pass. No partial acceptance on exhausted budget. R02. |
@@ -560,6 +562,12 @@ bytes/records and reload semantics, not only writer success. A residual risk tha
 contract blocks readiness or completion. An independent reviewer must read changed behavior and negative paths, not
 only the implementation summary. Documentation status, test-registration counts and graph consistency are necessary
 checks, not proofs of numerical correctness or runtime feature coverage.
+
+For topology graphs built only from retained spans, separately audit every event node with zero retained incidence.
+Prove it is non-retained, publish an explicit singleton component if the public contract supports that representation,
+or refuse the complete analysis with a named ambiguity reason. Never let an edge-only connected-components pass
+silently discard a geometrically retained isolated point. Include source-end/cap tangency, pair tangency and exact
+equality cases in this audit, including restricted-source arcs not covered by a whole-source special case.
 
 ### 0.8 Immediate validation commands
 
@@ -4783,3 +4791,19 @@ no product/native result affected. Structural audit0:27mainrows,60nodes,15requir
   (28 main rows, 60 dependency nodes, 15 requirements, 14 format rows [8 DXF/6 DWG], 95 headings, 32 balanced fences,
   acyclic). This audits the mirrored graph/inventory, not every prose dependency or numerical claim. No product code,
   runtime verification, or `.b-ref-components` completion is claimed.
+
+#### v11 → v12 (2026-10-16)
+
+- Correctness review of the live component builder found that graph assembly derives components only from retained
+  span edges and skips nodes with no incoming/outgoing edge. The existing whole-source isolated-equality refusal is
+  narrow; it does not establish that all restricted-source, endpoint-cap or pair-tangency event points are non-retained.
+- Added an explicit zero-edge event-node audit to the general correctness gate and the component graph stage. Each
+  such node must be proven non-retained, represented as a singleton if the API supports it, or cause a no-partial
+  ambiguity refusal; edge-only assembly may not silently omit it.
+- Readiness remains in progress; this is a correctness obligation to investigate, not a claim that a concrete second
+  isolated-point counterexample or implementation defect has already been measured. Existing uncommitted code and
+  failed Release attempt 6 remain preserved; no product files were changed by this plan refinement.
+- Validation: documentation-only change; `git diff --check` and the structural inventory/dependency audit pass
+  (28 main rows, 60 dependency nodes, 15 requirements, 14 format rows [8 DXF/6 DWG], 96 headings, 32 balanced fences,
+  acyclic). This does not validate every prose dependency or numerical claim. No product build/test result or
+  component completion is claimed.
