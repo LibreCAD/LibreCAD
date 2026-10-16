@@ -78,6 +78,7 @@ protected:
     void updateQuickInfoWidget(RS_Entity *pEntity);
     void goToNeutralStatus();
     RS2::CursorType doGetMouseCursor(int status) override;
+    bool isSnapExpected() override;
     bool isInVisualSnapStatus(int status) override;
     bool clearHighlightsOnMouseMove() const override;
 
