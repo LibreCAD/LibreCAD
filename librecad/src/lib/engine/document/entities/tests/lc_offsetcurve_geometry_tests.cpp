@@ -5444,3 +5444,1072 @@ TEST_CASE("Cache layout accepts the actual degree one closed rectangle materiali
     geo::WorkBudget budget;
     checkCacheSpans(data, geo::inspectCacheLayout(data, budget), breaks);
 }
+
+namespace {
+// Test-only directed dyadic arithmetic. Every rounding decision is an exact
+// integer/rational comparison, independent of LC_Interval, libm and the fenv.
+using OracleInteger = boost::multiprecision::cpp_int;
+const EventRational& oracleGrid() {
+    static const EventRational grid{OracleInteger{1} << 192};
+    return grid;
+}
+OracleInteger oracleFloor(const EventRational& value) {
+    const OracleInteger n = numerator(value), d = denominator(value);
+    OracleInteger result = n / d;
+    if (n < 0 && n % d != 0) { --result; }
+    return result;
+}
+struct OutwardOracle {
+    EventRational lo, hi;
+    OutwardOracle(const EventRational& lower, const EventRational& upper)
+        : lo{EventRational{oracleFloor(lower * oracleGrid())} / oracleGrid()},
+          hi{-EventRational{oracleFloor(-upper * oracleGrid())} / oracleGrid()} {}
+    explicit OutwardOracle(const EventRational& point) : OutwardOracle{point, point} {}
+};
+OutwardOracle operator+(const OutwardOracle& a, const OutwardOracle& b) { return {a.lo + b.lo, a.hi + b.hi}; }
+OutwardOracle operator-(const OutwardOracle& a) { return {-a.hi, -a.lo}; }
+OutwardOracle operator-(const OutwardOracle& a, const OutwardOracle& b) { return a + (-b); }
+OutwardOracle operator*(const OutwardOracle& a, const OutwardOracle& b) {
+    const std::array<EventRational, 4> products{{a.lo * b.lo, a.lo * b.hi, a.hi * b.lo, a.hi * b.hi}};
+    return {*std::min_element(products.begin(), products.end()), *std::max_element(products.begin(), products.end())};
+}
+OutwardOracle operator/(const OutwardOracle& a, const OutwardOracle& b) {
+    REQUIRE(b.lo > 0);
+    return a * OutwardOracle{EventRational{1} / b.hi, EventRational{1} / b.lo};
+}
+OutwardOracle oracleSqrt(const OutwardOracle& a) {
+    REQUIRE(a.lo >= 0);
+    const EventRational scale = oracleGrid() * oracleGrid();
+    const OracleInteger low = oracleFloor(a.lo * scale), high = -oracleFloor(-a.hi * scale);
+    const OracleInteger lower = boost::multiprecision::sqrt(low);
+    OracleInteger upper = boost::multiprecision::sqrt(high);
+    if (upper * upper < high) { ++upper; }
+    REQUIRE(lower * lower <= low); REQUIRE((lower + 1) * (lower + 1) > low);
+    REQUIRE(upper * upper >= high);
+    return {EventRational{lower} / oracleGrid(), EventRational{upper} / oracleGrid()};
+}
+const OutwardOracle& oraclePi() {
+    static const OutwardOracle pi = [] {
+        const auto atanBounds = [](const EventRational& x) -> std::array<EventRational, 2> {
+            EventRational sum = 0, term = x;
+            for (unsigned k = 0; k < 32; ++k) {
+                EventRational signedTerm = term;
+                if (k % 2) { signedTerm = -signedTerm; }
+                sum += signedTerm / (2 * k + 1); term *= x * x;
+            }
+            return {sum, EventRational{sum + term / 65}};
+        };
+        // Exact alternating remainders and Machin's identity enclose REAL pi.
+        const auto a = atanBounds(EventRational{1} / 5), b = atanBounds(EventRational{1} / 239);
+        return OutwardOracle{16 * a[0] - 4 * b[1], 16 * a[1] - 4 * b[0]};
+    }();
+    return pi;
+}
+std::array<OutwardOracle, 2> oracleTrig(const OutwardOracle& angle) {
+    const double estimate = EventRational{(angle.lo + angle.hi) / 2}.convert_to<double>();
+    REQUIRE(std::isfinite(estimate));
+    // This estimate only chooses an integer reduction. Its validity is checked
+    // by the outward reduced interval, not assumed from rounded pi or libm.
+    const int axis = int(std::lround(estimate / M_PI_2));
+    const OutwardOracle x = angle - oraclePi() * OutwardOracle{EventRational{axis} / 2};
+    REQUIRE(x.lo >= -1); REQUIRE(x.hi <= 1);
+    std::array<EventRational, 34> inverseFactorial;
+    inverseFactorial[0] = 1;
+    for (unsigned n = 1; n <= 33; ++n) { inverseFactorial[n] = inverseFactorial[n - 1] / n; }
+    const OutwardOracle square = x * x;
+    OutwardOracle sine{-inverseFactorial[31]}, cosine{inverseFactorial[32]};
+    for (int k = 14; k >= 0; --k) {
+        const EventRational c = k % 2 ? -inverseFactorial[2 * k + 1] : inverseFactorial[2 * k + 1];
+        sine = OutwardOracle{c} + square * sine;
+    }
+    for (int k = 15; k >= 0; --k) {
+        const EventRational c = k % 2 ? -inverseFactorial[2 * k] : inverseFactorial[2 * k];
+        cosine = OutwardOracle{c} + square * cosine;
+    }
+    // Degree-32 Taylor/Lagrange remainders: all trig derivatives have modulus
+    // <=1 and |x|<=1, so BOTH errors are <=1/33! on the entire interval.
+    const OutwardOracle remainder{-inverseFactorial[33], inverseFactorial[33]};
+    sine = x * sine + remainder; cosine = cosine + remainder;
+    switch ((axis % 4 + 4) % 4) {
+    case 0: return {cosine, sine};
+    case 1: return {-sine, cosine};
+    case 2: return {-cosine, -sine};
+    case 3: return {sine, -cosine};
+    }
+    FAIL("Invalid oracle quadrant");
+    return {cosine, sine};
+}
+std::array<OutwardOracle, 2> oracleEllipseOffset(const RS_EllipseData& source, const double distance,
+                                              const double scale, const double duration, const OutwardOracle& t) {
+    const EventRational rawExtent = EventRational(source.angle2) - EventRational(source.angle1);
+    OutwardOracle extent{rawExtent};
+    const OutwardOracle two{EventRational{2}};
+    if (!source.reversed && rawExtent < 0) { extent = extent + two * oraclePi(); }
+    if (source.reversed && rawExtent > 0) { extent = extent - two * oraclePi(); }
+    const auto trig = oracleTrig(OutwardOracle{EventRational(source.angle1)} + extent * t / OutwardOracle{EventRational(duration)});
+    const auto& c = trig[0]; const auto& s = trig[1];
+    // Normalize the exact raw doubles BEFORE fixed-grid rounding, preserving
+    // subnormal/huge axes; no world-valued intermediate is rounded to zero.
+    const OutwardOracle mx{EventRational(source.majorP.x) / EventRational(scale)};
+    const OutwardOracle my{EventRational(source.majorP.y) / EventRational(scale)};
+    const OutwardOracle r{EventRational(source.ratio)}, d{EventRational(distance) / EventRational(scale)};
+    const auto norm = oracleSqrt(mx * mx + my * my);
+    const auto h = oracleSqrt(r * r * c * c + s * s);
+    const auto normalScale = d / (norm * h);
+    return {mx * c - r * my * s + normalScale * (r * mx * c - my * s),
+            my * c + r * mx * s + normalScale * (r * my * c + mx * s)};
+}
+
+std::array<Quad, 2> cachePointOracle(const geo::CacheSpan& span, const RS_EllipseData& source,
+                                   const geo::ReferenceFrame& frame, const Quad& t) {
+    std::array<std::array<Quad, 2>, 4> points;
+    for (std::size_t i = 0; i <= span.degree; ++i) {
+        points[i] = {(Quad(span.controls[i].x) - Quad(source.center.x)) / Quad(frame.scale()),
+                     (Quad(span.controls[i].y) - Quad(source.center.y)) / Quad(frame.scale())};
+    }
+    for (std::size_t level = span.degree; level > 0; --level) {
+        for (std::size_t i = 0; i < level; ++i) {
+            for (unsigned k = 0; k < 2; ++k) { points[i][k] = (1 - t) * points[i][k] + t * points[i + 1][k]; }
+        }
+    }
+    return points[0];
+}
+void checkChordCleared(const geo::CurveChordBounds& bounds) {
+    for (const auto& interval : {bounds.startX, bounds.startY, bounds.endX, bounds.endY,
+                                 bounds.x, bounds.y, bounds.deviation}) { CHECK_FALSE(interval.isValid()); }
+}
+RS_SplineData arcCache(const RS_EllipseData& source, const double distance, const std::size_t degree) {
+    const auto frame = geo::ReferenceFrame::create(source, distance);
+    REQUIRE(frame);
+    LC_CurveJet a, b;
+    REQUIRE(frame->offsetJet(0, a)); REQUIRE(frame->offsetJet(frame->parameterEnd(), b));
+    const auto world = [&](const RS_Vector& point) {
+        return RS_Vector{source.center.x + frame->scale() * point.x, source.center.y + frame->scale() * point.y};
+    };
+    auto data = cacheLayoutFixture(degree, {0, 1});
+    data.controlPoints.front() = world(a.point); data.controlPoints.back() = world(b.point);
+    if (degree == 3) {
+        const double h = frame->parameterEnd() / 3;
+        data.controlPoints[1] = world({a.point.x + h * a.first.x, a.point.y + h * a.first.y});
+        data.controlPoints[2] = world({b.point.x - h * b.first.x, b.point.y - h * b.first.y});
+    }
+    return data;
+}
+void checkBoundsRelation(const geo::CacheBoundsResult& result, const double distance, const double tolerance) {
+    REQUIRE(result.status == geo::CacheBoundsStatus::Ok); REQUIRE(result.analysis);
+    const auto& a = *result.analysis;
+    REQUIRE_FALSE(a.witnesses().empty());
+    const auto& r = a.reference(); const auto& events = r.events();
+    const auto scale = LC_Interval::point(events.providers().frame().scale());
+    const auto threshold = LC_Interval::point(2) * LC_Interval::point(tolerance) / scale;
+    const auto floor = (LC_Interval::point(std::abs(distance)) - LC_Interval::point(2.5) * LC_Interval::point(tolerance)) / scale;
+    for (const auto& w : a.witnesses()) {
+        REQUIRE(w.cache.span < a.layout().spanCount()); REQUIRE(w.edge < r.edges().size());
+        CHECK(w.cache.parameter.lo() >= 0); CHECK(w.cache.parameter.hi() <= 1);
+        CHECK(w.cache.parameter.lo() < w.cache.parameter.hi());
+        CHECK(w.geometryError.isValid()); CHECK(w.geometryError.hi() <= threshold.lo());
+        CHECK(w.clearanceLowerBound.lo() >= floor.hi());
+        const auto& edge = r.edges()[w.edge]; const auto& span = r.spans()[edge.span];
+        CHECK(span.visibility == geo::ReferenceVisibility::Visible);
+        if (w.kind == geo::CacheWitnessKind::Interior) {
+            CHECK(w.occurrence.value == std::size_t(-1)); CHECK(w.node.value == std::size_t(-1));
+            CHECK(w.referenceParameter.lo() >= span.interior.lo()); CHECK(w.referenceParameter.hi() <= span.interior.hi());
+            CHECK_FALSE(w.candidateNodeError.isValid());
+            const auto expected = LC_Interval::point(std::abs(distance)) / scale - w.geometryError;
+            CHECK(w.clearanceLowerBound.lo() == expected.lo()); CHECK(w.clearanceLowerBound.hi() == expected.hi());
+        } else {
+            const bool start = w.kind == geo::CacheWitnessKind::StartFringe;
+            CHECK(w.occurrence.value == (start ? span.start.value : span.end.value));
+            CHECK(w.node.value == (start ? edge.start.value : edge.end.value));
+            CHECK(w.candidateNodeError.isValid()); CHECK(w.geometryError.hi() >= w.candidateNodeError.hi());
+            const auto expected = LC_Interval::point(std::abs(distance)) / scale - w.candidateNodeError;
+            CHECK(w.clearanceLowerBound.lo() == expected.lo()); CHECK(w.clearanceLowerBound.hi() == expected.hi());
+        }
+    }
+    for (std::size_t span = 0; span < a.layout().spanCount(); ++span) {
+        double covered = 0;
+        while (covered < 1) {
+            double next = covered;
+            for (const auto& w : a.witnesses()) {
+                if (w.cache.span == span && w.cache.parameter.lo() <= covered) { next = std::max(next, w.cache.parameter.hi()); }
+            }
+            REQUIRE(next > covered); covered = next;
+        }
+    }
+    CHECK(result.work.cacheSpans == result.layoutWork.cacheSpans);
+    CHECK(result.work.vertices > result.referenceWork.vertices);
+    CHECK(result.work.distancePairs > result.referenceWork.distancePairs);
+}
+}
+
+TEST_CASE("Cache chord primitives enclose restricted linear endpoints and points with zero residual",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    auto source = basis(); source.center = {100, -200};
+    const auto frame = geo::ReferenceFrame::create(source, 3); REQUIRE(frame);
+    geo::CacheSpan span; span.degree = 1; span.controls[0] = {97, -204}; span.controls[1] = {114, -185};
+    for (const auto& range : {LC_Interval::hull(0, 1), LC_Interval::hull(.125, .875), LC_Interval::point(.5),
+                              LC_Interval::hull(.5, std::nextafter(.5, 1.0))}) {
+        geo::CurveChordBounds out; REQUIRE(geo::boundCacheChord(span, *frame, range.lo(), range.hi(), out));
+        const auto a = cachePointOracle(span, source, *frame, Quad(range.lo()));
+        const auto b = cachePointOracle(span, source, *frame, Quad(range.hi()));
+        checkEnclosure(out.startX, a[0]); checkEnclosure(out.startY, a[1]);
+        checkEnclosure(out.endX, b[0]); checkEnclosure(out.endY, b[1]);
+        CHECK(out.deviation.lo() == 0); CHECK(out.deviation.hi() == 0);
+        for (unsigned i = 0; i <= 16; ++i) {
+            const Quad t = Quad(range.lo()) + (Quad(range.hi()) - Quad(range.lo())) * i / 16;
+            const auto p = cachePointOracle(span, source, *frame, t);
+            checkEnclosure(out.x, p[0]); checkEnclosure(out.y, p[1]);
+        }
+    }
+}
+
+TEST_CASE("Cache cubic chord residual bounds independent de Casteljau curves including narrow and point ranges",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    const auto source = basis(); const auto frame = geo::ReferenceFrame::create(source, 3); REQUIRE(frame);
+    geo::CacheSpan span; span.degree = 3; span.controls = {{{0, 0}, {3, 8}, {7, -5}, {10, 2}}};
+    for (const auto& range : {LC_Interval::hull(0, 1), LC_Interval::hull(.125, .875), LC_Interval::point(.5),
+                              LC_Interval::hull(.5, std::nextafter(.5, 1.0)), LC_Interval::hull(0, 1e-100)}) {
+        geo::CurveChordBounds out; REQUIRE(geo::boundCacheChord(span, *frame, range.lo(), range.hi(), out));
+        const auto a = cachePointOracle(span, source, *frame, Quad(range.lo()));
+        const auto b = cachePointOracle(span, source, *frame, Quad(range.hi()));
+        checkEnclosure(out.startX, a[0]); checkEnclosure(out.startY, a[1]);
+        checkEnclosure(out.endX, b[0]); checkEnclosure(out.endY, b[1]);
+        std::array<std::array<EventRational, 2>, 4> controls, restricted;
+        for (unsigned j = 0; j <= 3; ++j) {
+            controls[j] = {{(EventRational(span.controls[j].x) - EventRational(source.center.x)) / EventRational(frame->scale()),
+                            (EventRational(span.controls[j].y) - EventRational(source.center.y)) / EventRational(frame->scale())}};
+        }
+        // Independent blossom restriction: Q_j = B(a,...,a,b,...,b), with j
+        // copies of b. This does not use the production split-at-b then a/b.
+        for (unsigned j = 0; j <= 3; ++j) {
+            auto points = controls;
+            for (unsigned stage = 0; stage < 3; ++stage) {
+                const EventRational parameter(stage < 3 - j ? range.lo() : range.hi());
+                for (unsigned k = 0; k < 3 - stage; ++k) {
+                    for (unsigned coordinate = 0; coordinate < 2; ++coordinate) {
+                        points[k][coordinate] = (1 - parameter) * points[k][coordinate] + parameter * points[k + 1][coordinate];
+                    }
+                }
+            }
+            restricted[j] = points[0];
+        }
+        REQUIRE(std::isfinite(out.deviation.hi())); REQUIRE(out.deviation.hi() >= 0);
+        const EventRational squaredError = EventRational(out.deviation.hi()) * EventRational(out.deviation.hi());
+        for (unsigned j = 0; j <= 3; ++j) {
+            CHECK(EventRational(out.x.lo()) <= restricted[j][0]); CHECK(restricted[j][0] <= EventRational(out.x.hi()));
+            CHECK(EventRational(out.y.lo()) <= restricted[j][1]); CHECK(restricted[j][1] <= EventRational(out.y.hi()));
+            std::array<EventRational, 2> residual;
+            for (unsigned coordinate = 0; coordinate < 2; ++coordinate) {
+                const EventRational chordControl = ((3 - j) * restricted[0][coordinate] + j * restricted[3][coordinate]) / 3;
+                residual[coordinate] = restricted[j][coordinate] - chordControl;
+            }
+            // Bernstein convexity encloses every curve point and every
+            // curve-minus-chord value, not just the samples below.
+            CHECK(residual[0] * residual[0] + residual[1] * residual[1] <= squaredError);
+        }
+        for (unsigned i = 0; i <= 32; ++i) {
+            const Quad u = Quad(i) / 32, t = Quad(range.lo()) + (Quad(range.hi()) - Quad(range.lo())) * u;
+            const auto p = cachePointOracle(span, source, *frame, t);
+            checkEnclosure(out.x, p[0]); checkEnclosure(out.y, p[1]);
+            const Quad x = p[0] - ((1 - u) * a[0] + u * b[0]);
+            const Quad y = p[1] - ((1 - u) * a[1] + u * b[1]);
+            CHECK(sqrt(x * x + y * y) <= Quad(out.deviation.hi()));
+        }
+    }
+}
+
+TEST_CASE("Chord primitive invalid queries clear every field and never project bad controls",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    const auto frame = geo::ReferenceFrame::create(basis(), 3); REQUIRE(frame);
+    geo::CacheSpan span; span.degree = 1; span.controls[0] = {0, 0}; span.controls[1] = {1, 1};
+    for (const auto& range : {LC_Interval::hull(-1, 0), LC_Interval::hull(1, 2),
+                              LC_Interval::point(std::numeric_limits<double>::infinity())}) {
+        geo::CurveChordBounds out; REQUIRE(geo::boundCacheChord(span, *frame, 0, 1, out));
+        CHECK_FALSE(geo::boundCacheChord(span, *frame, range.lo(), range.hi(), out)); checkChordCleared(out);
+    }
+    geo::CurveChordBounds out; REQUIRE(geo::boundCacheChord(span, *frame, 0, 1, out));
+    CHECK_FALSE(geo::boundCacheChord(span, *frame, .75, .25, out)); checkChordCleared(out);
+    span.controls[1].z = 1e-200;
+    CHECK_FALSE(geo::boundCacheChord(span, *frame, 0, 1, out)); checkChordCleared(out);
+    span.degree = 2; CHECK_FALSE(geo::boundCacheChord(span, *frame, 0, 1, out)); checkChordCleared(out);
+    REQUIRE(geo::boundReferenceChord(*frame, 0, .1, out));
+    CHECK_FALSE(geo::boundReferenceChord(*frame, .1, 0, out)); checkChordCleared(out);
+    CHECK_FALSE(geo::boundReferenceChord(*frame, 0, frame->parameterEnd() + 1, out)); checkChordCleared(out);
+}
+
+TEST_CASE("Reference circle chord error encloses analytic sagitta and full interpolation error near the seam",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    const auto source = basis(1, 1); const auto frame = geo::ReferenceFrame::create(source, 1); REQUIRE(frame);
+    const double end = frame->parameterEnd();
+    std::array<bool, 4> cardinalSeen{};
+    for (const auto& range : {LC_Interval::hull(0, .25), LC_Interval::hull(1e-10, 2e-10),
+                              LC_Interval::hull(end - .01, end), LC_Interval::point(end),
+                              LC_Interval::hull(0, 1.5), LC_Interval::hull(.5, 4.5), LC_Interval::hull(0, end)}) {
+        geo::CurveChordBounds out; REQUIRE(geo::boundReferenceChord(*frame, range.lo(), range.hi(), out));
+        const auto a = referenceOracle(source, *frame, 1, range.lo(), true);
+        const auto b = referenceOracle(source, *frame, 1, range.hi(), true);
+        checkEnclosure(out.startX, a[0]); checkEnclosure(out.startY, a[1]);
+        checkEnclosure(out.endX, b[0]); checkEnclosure(out.endY, b[1]);
+        const Quad angle = idealDirectedSweep(source, true) * (Quad(range.hi()) - Quad(range.lo())) / Quad(end);
+        const Quad sagitta = Quad(2) / Quad(frame->scale()) * 2 * pow(sin(angle / 4), 2);
+        CHECK(sagitta <= Quad(out.deviation.hi()));
+        const Quad pi = boost::math::constants::pi<Quad>(), radius = Quad(2) / Quad(frame->scale());
+        const Quad firstAngle = Quad(M_PI_4) + 2 * pi * Quad(range.lo()) / Quad(end);
+        const Quad lastAngle = Quad(M_PI_4) + 2 * pi * Quad(range.hi()) / Quad(end);
+        std::array<Quad, 2> minimum{{std::min(a[0], b[0]), std::min(a[1], b[1])}};
+        std::array<Quad, 2> maximum{{std::max(a[0], b[0]), std::max(a[1], b[1])}};
+        const std::array<std::array<Quad, 2>, 4> cardinals{{{{radius, 0}}, {{0, radius}}, {{-radius, 0}}, {{0, -radius}}}};
+        // Coordinate extrema over the WHOLE circular interval occur only at
+        // endpoints or cardinal angles. Use symbolic cardinal coordinates, not libm zeros.
+        for (int k = 0; k <= 8; ++k) {
+            const Quad axis = Quad(k) * pi / 2;
+            if (axis < firstAngle || lastAngle < axis) { continue; }
+            const unsigned cardinal = unsigned(k) % 4;
+            cardinalSeen[cardinal] = true;
+            for (unsigned coordinate = 0; coordinate < 2; ++coordinate) {
+                minimum[coordinate] = std::min(minimum[coordinate], cardinals[cardinal][coordinate]);
+                maximum[coordinate] = std::max(maximum[coordinate], cardinals[cardinal][coordinate]);
+            }
+        }
+        checkEnclosure(out.x, minimum[0]); checkEnclosure(out.x, maximum[0]);
+        checkEnclosure(out.y, minimum[1]); checkEnclosure(out.y, maximum[1]);
+        for (unsigned i = 0; i <= 32; ++i) {
+            const double t = range.lo() + (range.hi() - range.lo()) * i / 32;
+            const auto p = referenceOracle(source, *frame, 1, t, true);
+            checkEnclosure(out.x, p[0]); checkEnclosure(out.y, p[1]);
+            const Quad u = range.lo() == range.hi() ? Quad(0) : (Quad(t) - Quad(range.lo())) / (Quad(range.hi()) - Quad(range.lo()));
+            const Quad x = p[0] - ((1 - u) * a[0] + u * b[0]);
+            const Quad y = p[1] - ((1 - u) * a[1] + u * b[1]);
+            CHECK(sqrt(x * x + y * y) <= Quad(out.deviation.hi()));
+        }
+    }
+    for (const bool seen : cardinalSeen) { CHECK(seen); }
+}
+
+TEST_CASE("Reference ellipse chord bounds retain reversed wrapped near cusp and extreme scale geometry",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    for (const double radius : {1e-280, 100.0, 1e280}) {
+        for (const bool reversed : {false, true}) {
+            auto source = basis(radius, .5, 6.0, .2, reversed);
+            if (reversed) { std::swap(source.angle1, source.angle2); }
+            const double distance = -.251 * radius;
+            const auto frame = geo::ReferenceFrame::create(source, distance); REQUIRE(frame);
+            for (const auto& range : {std::array<double, 2>{{.125 * frame->parameterEnd(), .875 * frame->parameterEnd()}},
+                                       std::array<double, 2>{{0, frame->parameterEnd()}}}) {
+            const double a = range[0], b = range[1];
+            geo::CurveChordBounds out; REQUIRE(geo::boundReferenceChord(*frame, a, b, out));
+            const auto startBounds = oracleEllipseOffset(source, distance, frame->scale(), frame->parameterEnd(), OutwardOracle{EventRational(a)});
+            const auto endBounds = oracleEllipseOffset(source, distance, frame->scale(), frame->parameterEnd(), OutwardOracle{EventRational(b)});
+            CHECK(EventRational(out.startX.lo()) <= startBounds[0].lo); CHECK(startBounds[0].hi <= EventRational(out.startX.hi()));
+            CHECK(EventRational(out.startY.lo()) <= startBounds[1].lo); CHECK(startBounds[1].hi <= EventRational(out.startY.hi()));
+            CHECK(EventRational(out.endX.lo()) <= endBounds[0].lo); CHECK(endBounds[0].hi <= EventRational(out.endX.hi()));
+            CHECK(EventRational(out.endY.lo()) <= endBounds[1].lo); CHECK(endBounds[1].hi <= EventRational(out.endY.hi()));
+            REQUIRE(std::isfinite(out.deviation.hi())); REQUIRE(out.deviation.hi() >= 0);
+            const EventRational errorSquared = EventRational(out.deviation.hi()) * EventRational(out.deviation.hi());
+            EventRational covered = a;
+            for (unsigned cell = 0; cell < 128; ++cell) {
+                const EventRational lo = EventRational(a) + (EventRational(b) - EventRational(a)) * cell / 128;
+                const EventRational hi = EventRational(a) + (EventRational(b) - EventRational(a)) * (cell + 1) / 128;
+                REQUIRE(lo == covered); REQUIRE(lo < hi); covered = hi;
+                const auto point = oracleEllipseOffset(source, distance, frame->scale(), frame->parameterEnd(), OutwardOracle{lo, hi});
+                CHECK(EventRational(out.x.lo()) <= point[0].lo); CHECK(point[0].hi <= EventRational(out.x.hi()));
+                CHECK(EventRational(out.y.lo()) <= point[1].lo); CHECK(point[1].hi <= EventRational(out.y.hi()));
+                const OutwardOracle u{EventRational{cell} / 128, EventRational{cell + 1} / 128}, one{EventRational{1}};
+                std::array<EventRational, 2> error;
+                for (unsigned coordinate = 0; coordinate < 2; ++coordinate) {
+                    const auto residual = point[coordinate] - ((one - u) * startBounds[coordinate] + u * endBounds[coordinate]);
+                    error[coordinate] = std::max(EventRational{abs(residual.lo)}, EventRational{abs(residual.hi)});
+                }
+                // The independent outward boxes enclose ALL Q(t)-L(t) values
+                // on this cell; the adjacent rational cells cover [a,b] exactly.
+                CHECK(error[0] * error[0] + error[1] * error[1] <= errorSquared);
+            }
+            CHECK(covered == EventRational(b));
+            const auto first = referenceOracle(source, *frame, distance, a, true);
+            const auto last = referenceOracle(source, *frame, distance, b, true);
+            for (unsigned i = 0; i <= 32; ++i) {
+                const double t = a + (b - a) * i / 32;
+                const auto p = referenceOracle(source, *frame, distance, t, true);
+                checkEnclosure(out.x, p[0]); checkEnclosure(out.y, p[1]);
+                const Quad u = (Quad(t) - Quad(a)) / (Quad(b) - Quad(a));
+                const Quad x = p[0] - ((1 - u) * first[0] + u * last[0]);
+                const Quad y = p[1] - ((1 - u) * first[1] + u * last[1]);
+                CHECK(sqrt(x * x + y * y) <= Quad(out.deviation.hi()));
+            }
+            }
+        }
+    }
+}
+
+TEST_CASE("Cache bounds certify normalized linear and cubic arc caches with both exact endpoint incidences",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    const auto source = basis(1, 1, .25, .2501);
+    for (const std::size_t degree : {1u, 3u}) {
+        const auto data = arcCache(source, 1, degree); geo::WorkBudget budget;
+        const auto result = geo::analyseCacheBounds(data, source, 1, .01, budget);
+        CAPTURE(degree, result.status, result.referenceStatus, result.referenceReason);
+        checkBoundsRelation(result, 1, .01); checkWork(result.work, budget.consumed());
+        bool start = false, end = false, interior = false;
+        for (const auto& w : result.analysis->witnesses()) {
+            start = start || w.kind == geo::CacheWitnessKind::StartFringe;
+            end = end || w.kind == geo::CacheWitnessKind::EndFringe;
+            interior = interior || w.kind == geo::CacheWitnessKind::Interior;
+        }
+        CHECK(start); CHECK(end); CHECK(interior);
+    }
+}
+
+TEST_CASE("Cache bounds are setwise only and preserve affine knots reversal and folded control nets for topology",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    const auto source = basis(1, 1, .25, .2501);
+    auto data = arcCache(source, 1, 3);
+    for (const bool reverse : {false, true}) {
+        auto cache = data;
+        cache.knotslist = {-7, -7, -7, -7, std::nextafter(-7.0, 0.0), std::nextafter(-7.0, 0.0),
+                           std::nextafter(-7.0, 0.0), std::nextafter(-7.0, 0.0)};
+        if (reverse) { std::reverse(cache.controlPoints.begin(), cache.controlPoints.end()); }
+        geo::WorkBudget budget; const auto result = geo::analyseCacheBounds(cache, source, 1, .01, budget);
+        checkBoundsRelation(result, 1, .01);
+        CHECK(result.analysis->layout().spans[0].parameter.lo() == -7);
+    }
+    const auto a = data.controlPoints[0], b = data.controlPoints[3];
+    data.controlPoints[1] = {a.x + 3 * (b.x - a.x), a.y + 3 * (b.y - a.y)};
+    data.controlPoints[2] = {a.x - 2 * (b.x - a.x), a.y - 2 * (b.y - a.y)};
+    geo::WorkBudget budget; const auto folded = geo::analyseCacheBounds(data, source, 1, .01, budget);
+    checkBoundsRelation(folded, 1, .01);
+    const auto& controls = folded.analysis->layout().spans[0].controls;
+    const double dx = b.x - a.x, dy = b.y - a.y;
+    CHECK((controls[1].x - controls[0].x) * dx + (controls[1].y - controls[0].y) * dy > 0);
+    CHECK((controls[2].x - controls[1].x) * dx + (controls[2].y - controls[1].y) * dy < 0);
+}
+
+TEST_CASE("Cache fringe bounds charge full fringe geometry separately from exact node source clearance",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    const auto source = basis(1, 1, .25, .2501); auto data = arcCache(source, 1, 1);
+    data.controlPoints[1] = data.controlPoints[0]; // Degenerate chord: endpoint-ball proof, not injectivity.
+    geo::WorkBudget budget; const auto result = geo::analyseCacheBounds(data, source, 1, .01, budget);
+    checkBoundsRelation(result, 1, .01);
+    bool nonzeroFringe = false;
+    for (const auto& w : result.analysis->witnesses()) {
+        if (w.kind != geo::CacheWitnessKind::Interior) {
+            nonzeroFringe = nonzeroFringe || w.geometryError.hi() > w.candidateNodeError.hi();
+            CHECK(w.clearanceLowerBound.lo() > .97 / result.analysis->reference().events().providers().frame().scale());
+        }
+    }
+    CHECK(nonzeroFringe);
+}
+
+TEST_CASE("Cache bounds preserve the two whole seam incidences without a jet query across the seam",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    auto cache = cacheLayoutFixture(1, {0, 1, 2, 3, 4});
+    cache.controlPoints = {{2, 0}, {0, 2}, {-2, 0}, {0, -2}, {2, 0}};
+    geo::WorkBudget budget; const auto result = geo::analyseCacheBounds(cache, basis(1, 1), 1, 2.5, budget);
+    CAPTURE(result.status, result.work.deepest); checkBoundsRelation(result, 1, 2.5);
+    const auto& events = result.analysis->reference().events(); REQUIRE(events.seam());
+    const auto& reference = result.analysis->reference();
+    const auto node = events.occurrences()[events.seam()->start.value].node;
+    REQUIRE(events.occurrences()[events.seam()->end.value].node.value == node.value);
+    REQUIRE(events.seam()->start.value != events.seam()->end.value);
+    const auto& incidence = reference.incidence()[node.value];
+    REQUIRE(incidence.seam); REQUIRE_FALSE(incidence.incoming.empty()); REQUIRE_FALSE(incidence.outgoing.empty());
+    bool start = false, end = false;
+    for (const auto& w : result.analysis->witnesses()) {
+        if (w.occurrence.value == events.seam()->start.value) {
+            CHECK(w.kind == geo::CacheWitnessKind::StartFringe); CHECK(w.node.value == node.value);
+            CHECK(std::find(incidence.outgoing.begin(), incidence.outgoing.end(), w.edge) != incidence.outgoing.end());
+            CHECK(reference.spans()[reference.edges()[w.edge].span].start.value == events.seam()->start.value);
+            start = true;
+        }
+        if (w.occurrence.value == events.seam()->end.value) {
+            CHECK(w.kind == geo::CacheWitnessKind::EndFringe); CHECK(w.node.value == node.value);
+            CHECK(std::find(incidence.incoming.begin(), incidence.incoming.end(), w.edge) != incidence.incoming.end());
+            CHECK(reference.spans()[reference.edges()[w.edge].span].end.value == events.seam()->end.value);
+            end = true;
+        }
+        CHECK(w.referenceParameter.lo() >= 0); CHECK(w.referenceParameter.hi() <= events.providers().frame().parameterEnd());
+    }
+    for (const auto edge : incidence.outgoing) {
+        CHECK(std::any_of(result.analysis->witnesses().begin(), result.analysis->witnesses().end(), [&](const auto& w) {
+            return w.edge == edge && w.kind == geo::CacheWitnessKind::StartFringe &&
+                w.occurrence.value == events.seam()->start.value && w.node.value == node.value;
+        }));
+    }
+    for (const auto edge : incidence.incoming) {
+        CHECK(std::any_of(result.analysis->witnesses().begin(), result.analysis->witnesses().end(), [&](const auto& w) {
+            return w.edge == edge && w.kind == geo::CacheWitnessKind::EndFringe &&
+                w.occurrence.value == events.seam()->end.value && w.node.value == node.value;
+        }));
+    }
+    CHECK(start); CHECK(end);
+}
+
+TEST_CASE("Cache bounds reject an endpoint midpoint impostor with a large between sample cubic excursion",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    const auto source = basis(1, 1, .25, .2501); auto data = arcCache(source, 1, 3);
+    const auto a = data.controlPoints[0], b = data.controlPoints[3];
+    data.controlPoints[1] = {(2 * a.x + b.x) / 3, (2 * a.y + b.y) / 3 + 10};
+    data.controlPoints[2] = {(a.x + 2 * b.x) / 3, (a.y + 2 * b.y) / 3 - 10};
+    geo::WorkBudget budget; const auto result = geo::analyseCacheBounds(data, source, 1, .01, budget);
+    CHECK(result.status != geo::CacheBoundsStatus::Ok); CHECK_FALSE(result.analysis);
+    checkWork(result.work, budget.consumed());
+}
+
+TEST_CASE("Cache bounds distinguish separated one sided and exact threshold pairs with atomic refusal",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    const auto source = basis(1, 1, 0, 1e-4);
+    for (const double x : {2.125, 2.25, 2.375}) {
+        auto data = cacheLayoutFixture(1, {0, 1}); data.controlPoints = {{x, 0}, {x, 0}};
+        geo::WorkBudget budget{LC_OffsetCheckLimits{4096, 65536, 1u << 20, 1}};
+        const auto result = geo::analyseCacheBounds(data, source, 1, .125, budget);
+        CAPTURE(x, result.status, result.referenceStatus);
+        REQUIRE(result.referenceStatus == LC_IntersectionStatus::Ok);
+        if (x < 2.25) { checkBoundsRelation(result, 1, .125); }
+        else {
+            CHECK(result.status == (x == 2.25 ? geo::CacheBoundsStatus::LimitExceeded : geo::CacheBoundsStatus::OffCurve));
+            CHECK_FALSE(result.analysis);
+        }
+        checkWork(result.work, budget.consumed());
+    }
+}
+
+TEST_CASE("Cache bounds cannot use a hidden point or cutter when no visible reference witness exists",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    auto cache = cacheLayoutFixture(1, {0, 1}); cache.controlPoints = {{0, 0}, {0, 0}};
+    geo::WorkBudget budget; const auto result = geo::analyseCacheBounds(cache, basis(10, .5), -10, 1e-5, budget);
+    REQUIRE(result.referenceStatus == LC_IntersectionStatus::Ok);
+    CHECK(result.status == geo::CacheBoundsStatus::OffCurve); CHECK_FALSE(result.analysis);
+    checkWork(result.work, result.referenceWork); checkWork(result.work, budget.consumed());
+    cache.controlPoints = {{1e5, 1e5}, {1e5 + 1, 1e5 - 1}};
+    geo::WorkBudget far; const auto separated = geo::analyseCacheBounds(cache, basis(1, 1, 0, .01), 1, .01, far);
+    REQUIRE(separated.referenceStatus == LC_IntersectionStatus::Ok);
+    CHECK(separated.status == geo::CacheBoundsStatus::OffCurve); CHECK_FALSE(separated.analysis);
+    CHECK(separated.work.distancePairs > separated.referenceWork.distancePairs);
+}
+
+TEST_CASE("Cache bounds share one ledger across layout reference and bounds and stop at each failed stage",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    const auto source = basis(1, 1, .25, .2501); auto data = arcCache(source, 1, 3);
+    geo::WorkBudget budget; REQUIRE(budget.consumeVertices(2)); REQUIRE(budget.consumePairs(3));
+    const auto result = geo::analyseCacheBounds(data, source, 1, .01, budget);
+    checkBoundsRelation(result, 1, .01); checkWork(result.work, budget.consumed());
+    checkWork(result.layoutWork, {1, 6, 3, 0});
+    geo::WorkBudget replay; REQUIRE(replay.consumePieces(1)); REQUIRE(replay.consumeVertices(6)); REQUIRE(replay.consumePairs(3));
+    const auto reference = geo::analyseReferenceComponents(source, 1, .01, replay);
+    REQUIRE(reference.status == LC_IntersectionStatus::Ok); checkWork(result.referenceWork, replay.consumed());
+    data.weights.clear(); geo::WorkBudget badLayout;
+    const auto bad = geo::analyseCacheBounds(data, source, 1, .01, badLayout);
+    CHECK(bad.status == geo::CacheBoundsStatus::InvalidLayout); CHECK_FALSE(bad.analysis); checkWork(bad.work, {});
+    data = cacheLayoutFixture(1, {0, 1}); geo::WorkBudget badReference;
+    const auto refused = geo::analyseCacheBounds(data, basis(10, .5), -5, 1e-5, badReference);
+    CHECK(refused.status == geo::CacheBoundsStatus::ReferenceRefusal); CHECK_FALSE(refused.analysis);
+    CHECK(refused.referenceStatus == LC_IntersectionStatus::AmbiguousTopology);
+    checkWork(refused.work, refused.referenceWork);
+}
+
+TEST_CASE("Cache bounds reject hidden geometry even when the restricted source has visible alternatives",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    const auto source = basis(100, .05, M_PI / 12, 7 * M_PI / 4);
+    const double distance = -4, tolerance = 1e-5;
+    geo::WorkBudget referenceBudget;
+    const auto prepared = geo::analyseReferenceComponents(source, distance, tolerance, referenceBudget);
+    REQUIRE(prepared.status == LC_IntersectionStatus::Ok); REQUIRE(prepared.analysis);
+    REQUIRE_FALSE(prepared.analysis->edges().empty());
+    REQUIRE(prepared.analysis->components().size() == 2);
+    const auto hidden = std::find_if(prepared.analysis->spans().begin(), prepared.analysis->spans().end(), [](const auto& span) {
+        return span.visibility == geo::ReferenceVisibility::Hidden && span.interior.lo() < span.interior.hi();
+    });
+    REQUIRE(hidden != prepared.analysis->spans().end());
+    const double t = hidden->interior.lo() + .5 * (hidden->interior.hi() - hidden->interior.lo());
+    const auto& frame = prepared.analysis->events().providers().frame();
+    LC_CurveJet jet; REQUIRE(frame.offsetJet(t, jet));
+    LC_Interval wx, wy; REQUIRE(frame.pointToWorld(jet.point, wx, wy));
+    const RS_Vector point{wx.lo() + .5 * (wx.hi() - wx.lo()), wy.lo() + .5 * (wy.hi() - wy.lo())};
+    const auto oracle = referenceOracle(source, frame, distance, t, true);
+    const Quad dx = Quad(point.x) - Quad(source.center.x) - Quad(frame.scale()) * oracle[0];
+    const Quad dy = Quad(point.y) - Quad(source.center.y) - Quad(frame.scale()) * oracle[1];
+    CHECK(sqrt(dx * dx + dy * dy) < Quad(tolerance));
+    CHECK_FALSE(componentVisibilityOracle(source, distance, frame, t));
+    auto cache = cacheLayoutFixture(1, {0, 1}); cache.controlPoints = {point, point};
+    geo::WorkBudget budget;
+    const auto result = geo::analyseCacheBounds(cache, source, distance, tolerance, budget);
+    CAPTURE(t, point.x, point.y, result.status, result.referenceStatus, result.referenceReason);
+    REQUIRE(result.referenceStatus == LC_IntersectionStatus::Ok);
+    CHECK(result.status == geo::CacheBoundsStatus::OffCurve); CHECK_FALSE(result.analysis);
+    CHECK(result.work.distancePairs > result.referenceWork.distancePairs);
+    checkWork(result.work, budget.consumed());
+}
+
+TEST_CASE("Cache bounds clearance uses admitted quarter arc geometry rather than the supporting circle",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    const auto source = basis(1, 1, 0, M_PI_2);
+    auto cache = cacheLayoutFixture(1, {0, 1}); cache.controlPoints = {{-.25, -.5}, {-.125, -.5}};
+    geo::WorkBudget budget;
+    const auto result = geo::analyseCacheBounds(cache, source, 1, 2, budget);
+    CAPTURE(result.status, result.referenceStatus, result.referenceReason);
+    checkBoundsRelation(result, 1, 2);
+    const auto& frame = result.analysis->reference().events().providers().frame();
+    std::size_t interiorSamples = 0;
+    for (const auto& witness : result.analysis->witnesses()) {
+        if (witness.kind != geo::CacheWitnessKind::Interior) { continue; }
+        for (unsigned i = 0; i <= 8; ++i) {
+            const Quad u = Quad(witness.cache.parameter.lo()) +
+                (Quad(witness.cache.parameter.hi()) - Quad(witness.cache.parameter.lo())) * i / 8;
+            const Quad x = Quad(-.25) + u * Quad(.125), y(-.5);
+            // x,y are negative and x>y. Over this admitted arc, the nearest
+            // source endpoint is (1,0); the radial whole-circle foot is not admitted.
+            const Quad restricted = sqrt(pow(x - 1, 2) + y * y);
+            const Quad whole = abs(sqrt(x * x + y * y) - 1);
+            CHECK(restricted > 1); CHECK(whole < 1);
+            CHECK(Quad(witness.clearanceLowerBound.lo()) * Quad(frame.scale()) <= restricted);
+            for (unsigned j = 0; j <= 32; ++j) {
+                const Quad theta = Quad(source.angle1) + (Quad(source.angle2) - Quad(source.angle1)) * j / 32;
+                const Quad sampled = sqrt(pow(x - cos(theta), 2) + pow(y - sin(theta), 2));
+                CHECK(sampled >= restricted);
+            }
+            ++interiorSamples;
+        }
+    }
+    CHECK(interiorSamples > 0);
+    checkWork(result.work, budget.consumed());
+}
+
+TEST_CASE("Cache bounds discard staged witnesses on later unrepresentable candidate geometry",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    const auto source = basis(1e-280, 1, .25, .2501);
+    const double distance = 1e-280, tolerance = 1e-282;
+    const auto prefix = arcCache(source, distance, 1);
+    geo::WorkBudget prefixBudget;
+    const auto accepted = geo::analyseCacheBounds(prefix, source, distance, tolerance, prefixBudget);
+    checkBoundsRelation(accepted, distance, tolerance);
+    REQUIRE_FALSE(accepted.analysis->witnesses().empty());
+    auto cache = cacheLayoutFixture(1, {0, 1, 2});
+    cache.controlPoints = {prefix.controlPoints[0], prefix.controlPoints[1], {1e308, 1e308}};
+    geo::WorkBudget budget;
+    const auto result = geo::analyseCacheBounds(cache, source, distance, tolerance, budget);
+    CAPTURE(result.status, result.referenceStatus);
+    REQUIRE(result.layoutStatus == geo::CacheLayoutStatus::Ok);
+    REQUIRE(result.referenceStatus == LC_IntersectionStatus::Ok);
+    CHECK(result.status == geo::CacheBoundsStatus::Ambiguous); CHECK_FALSE(result.analysis);
+    // The prefix enters the same comparisons and stages all its witnesses; the
+    // next pending pair is charged before its world-to-local conversion refuses.
+    CHECK(result.work.vertices - result.referenceWork.vertices ==
+        accepted.work.vertices - accepted.referenceWork.vertices + 1);
+    CHECK(result.work.distancePairs > result.referenceWork.distancePairs);
+    CHECK(budget.status() == geo::BudgetStatus::Ok);
+    checkWork(result.work, budget.consumed());
+}
+
+TEST_CASE("Cache bounds exact and one less vertex pair and depth allowances never publish partial witnesses",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    const auto source = basis(1, 1, 0, 1e-4);
+    const double tolerance = .125;
+    const Quad angle(source.angle2), threshold = Quad(2) * Quad(tolerance);
+    // Strictly inside the far-end threshold, but closer than the initial chord-error bound.
+    const double x = (2 * cos(angle) + sqrt(threshold * threshold - 4 * pow(sin(angle), 2)) - Quad("1e-11")).convert_to<double>();
+    auto cache = cacheLayoutFixture(1, {0, 1}); cache.controlPoints = {{x, 0}, {x, 0}};
+    const Quad dx = Quad(x) - 2 * cos(angle), dy = 2 * sin(angle);
+    REQUIRE(sqrt(dx * dx + dy * dy) < threshold);
+    geo::WorkBudget baseline; const auto complete = geo::analyseCacheBounds(cache, source, 1, tolerance, baseline);
+    REQUIRE(complete.status == geo::CacheBoundsStatus::Ok); REQUIRE(complete.analysis);
+    CAPTURE(complete.work.deepest, complete.referenceWork.deepest);
+    REQUIRE(complete.work.deepest > complete.referenceWork.deepest);
+    for (unsigned dimension = 0; dimension < 3; ++dimension) {
+        for (const bool less : {false, true}) {
+            LC_OffsetCheckLimits limits{complete.work.cacheSpans, complete.work.vertices, complete.work.distancePairs, complete.work.deepest};
+            if (dimension == 0) { limits.maxVertices -= unsigned(less); }
+            if (dimension == 1) { limits.maxDistancePairs -= unsigned(less); }
+            if (dimension == 2) { limits.maxDepth -= unsigned(less); }
+            geo::WorkBudget budget{limits}; const auto result = geo::analyseCacheBounds(cache, source, 1, tolerance, budget);
+            CAPTURE(dimension, less, result.status);
+            REQUIRE(result.referenceStatus == LC_IntersectionStatus::Ok);
+            CHECK(result.status == (less ? geo::CacheBoundsStatus::LimitExceeded : geo::CacheBoundsStatus::Ok));
+            CHECK(bool(result.analysis) == !less); checkWork(result.work, budget.consumed());
+            if (less) {
+                CHECK(result.work.distancePairs > result.referenceWork.distancePairs);
+                const auto spent = budget.consumed(); const auto again = geo::analyseCacheBounds(cache, source, 1, tolerance, budget);
+                CHECK(again.status == geo::CacheBoundsStatus::LimitExceeded); CHECK_FALSE(again.analysis); checkWork(again.work, spent);
+            }
+        }
+    }
+    LC_OffsetCheckLimits limits{complete.work.cacheSpans, complete.work.vertices, complete.work.distancePairs, complete.work.deepest};
+    geo::WorkBudget spent{limits}; REQUIRE(spent.consumeVertices(1));
+    const auto refused = geo::analyseCacheBounds(cache, source, 1, tolerance, spent);
+    CHECK(refused.status == geo::CacheBoundsStatus::LimitExceeded); CHECK_FALSE(refused.analysis);
+}
+
+TEST_CASE("Cache bounds preserve every distinct visible edge occurrence incidence at shared crossing nodes",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    const auto source = basis(100, .5, M_PI / 18, 35 * M_PI / 18);
+    auto cache = cacheLayoutFixture(1, {0, 1}); cache.controlPoints = {{0, 0}, {0, 0}};
+    // A deliberately coarse setwise relation, not a cache-topology or traversal certificate.
+    geo::WorkBudget budget;
+    const auto result = geo::analyseCacheBounds(cache, source, -49.5, 500, budget);
+    CAPTURE(result.status, result.referenceStatus, result.referenceReason, result.eventReason);
+    checkBoundsRelation(result, -49.5, 500);
+    const auto& reference = result.analysis->reference(); const auto& events = reference.events();
+    std::size_t sharedCrossings = 0, distinctIncidences = 0;
+    for (const auto& row : reference.incidence()) {
+        if (!row.crossing || row.incoming.size() + row.outgoing.size() < 2) { continue; }
+        std::vector<std::size_t> ownOccurrences;
+        const auto checkIncidence = [&](const std::size_t edgeIndex, const bool start) {
+            const auto& edge = reference.edges()[edgeIndex]; const auto& span = reference.spans()[edge.span];
+            const auto occurrence = start ? span.start : span.end;
+            REQUIRE(events.occurrences()[occurrence.value].node.value == row.node.value);
+            const auto kind = start ? geo::CacheWitnessKind::StartFringe : geo::CacheWitnessKind::EndFringe;
+            CHECK(std::any_of(result.analysis->witnesses().begin(), result.analysis->witnesses().end(), [&](const auto& witness) {
+                return witness.edge == edgeIndex && witness.kind == kind &&
+                    witness.occurrence.value == occurrence.value && witness.node.value == row.node.value;
+            }));
+            if (std::find(ownOccurrences.begin(), ownOccurrences.end(), occurrence.value) == ownOccurrences.end()) {
+                ownOccurrences.push_back(occurrence.value);
+            }
+            ++distinctIncidences;
+        };
+        for (const auto edge : row.incoming) { checkIncidence(edge, false); }
+        for (const auto edge : row.outgoing) { checkIncidence(edge, true); }
+        REQUIRE(ownOccurrences.size() >= 2);
+        ++sharedCrossings;
+    }
+    CHECK(sharedCrossings > 0); CHECK(distinctIncidences >= 2);
+    checkWork(result.work, budget.consumed());
+}
+
+TEST_CASE("Cache bounds retain proof only witnesses across both restricted source components",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    const auto source = basis(100, .05, M_PI / 12, 7 * M_PI / 4);
+    auto cache = cacheLayoutFixture(1, {0, 1}); cache.controlPoints = {{0, 0}, {0, 0}};
+    geo::WorkBudget budget;
+    const auto result = geo::analyseCacheBounds(cache, source, -4, 500, budget);
+    CAPTURE(result.status, result.referenceStatus, result.referenceReason, result.eventReason);
+    checkBoundsRelation(result, -4, 500);
+    const auto& reference = result.analysis->reference();
+    REQUIRE(reference.components().size() == 2);
+    for (const auto& component : reference.components()) {
+        REQUIRE_FALSE(component.edges.empty());
+        for (const auto edge : component.edges) {
+            CHECK(std::any_of(result.analysis->witnesses().begin(), result.analysis->witnesses().end(), [&](const auto& witness) {
+                return witness.edge == edge && witness.kind == geo::CacheWitnessKind::Interior;
+            }));
+        }
+    }
+    // One degenerate candidate can have a complete coarse relation to two components;
+    // bounds deliberately neither chooses a component nor certifies a cache chain.
+    CHECK(result.analysis->layout().spanCount() == 1);
+    checkWork(result.work, budget.consumed());
+}
+
+TEST_CASE("Cache bounds preserve stationary endpoint incidences and exclude hidden simple cusp incidences",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    auto cache = cacheLayoutFixture(1, {0, 1}); cache.controlPoints = {{0, 0}, {0, 0}};
+    const auto source = basis(100, .5, M_PI / 18, 35 * M_PI / 18);
+    geo::WorkBudget budget;
+    const auto result = geo::analyseCacheBounds(cache, source, -49.5, 500, budget);
+    checkBoundsRelation(result, -49.5, 500);
+    const auto& reference = result.analysis->reference(); const auto& events = reference.events();
+    std::size_t hiddenCusps = 0;
+    for (const auto& critical : events.criticals()) {
+        if (critical.kind != geo::CriticalKind::SimpleCusp) { continue; }
+        const auto node = events.occurrences()[critical.occurrence.value].node;
+        const auto& row = reference.incidence()[node.value];
+        REQUIRE(row.cusp); REQUIRE(row.hiddenPoint);
+        CHECK(row.incoming.empty()); CHECK(row.outgoing.empty());
+        for (const auto& witness : result.analysis->witnesses()) {
+            CHECK(witness.occurrence.value != critical.occurrence.value); CHECK(witness.node.value != node.value);
+        }
+        ++hiddenCusps;
+    }
+    CHECK(hiddenCusps == 4);
+    for (const bool reversed : {false, true}) {
+        const auto stationarySource = reversed ? basis(100, .5, 1, 0, true) : basis(100, .5, 0, 1);
+        geo::WorkBudget stationaryBudget;
+        const auto retained = geo::analyseCacheBounds(cache, stationarySource, -25, 500, stationaryBudget);
+        CAPTURE(reversed, retained.status, retained.referenceStatus, retained.referenceReason, retained.eventReason);
+        checkBoundsRelation(retained, -25, 500);
+        const auto& graph = retained.analysis->reference(); const auto& records = graph.events();
+        std::size_t stationaryIncidences = 0;
+        for (const auto& critical : records.criticals()) {
+            if (critical.kind != geo::CriticalKind::CriticalStationary) { continue; }
+            const auto node = records.occurrences()[critical.occurrence.value].node;
+            const auto& row = graph.incidence()[node.value];
+            CHECK(row.stationary); CHECK_FALSE(row.hiddenPoint);
+            CHECK(std::any_of(records.freeEnds().begin(), records.freeEnds().end(), [&](const auto& end) {
+                return end.occurrence.value == critical.occurrence.value && end.atStart == !reversed;
+            }));
+            const auto kind = reversed ? geo::CacheWitnessKind::EndFringe : geo::CacheWitnessKind::StartFringe;
+            const auto& incident = reversed ? row.incoming : row.outgoing;
+            REQUIRE_FALSE(incident.empty());
+            for (const auto edge : incident) {
+                CHECK(std::any_of(retained.analysis->witnesses().begin(), retained.analysis->witnesses().end(), [&](const auto& w) {
+                    return w.edge == edge && w.kind == kind && w.occurrence.value == critical.occurrence.value && w.node.value == node.value;
+                }));
+                ++stationaryIncidences;
+            }
+        }
+        CHECK(stationaryIncidences > 0);
+        checkWork(retained.work, stationaryBudget.consumed());
+    }
+}
+
+TEST_CASE("Cache bounds respect pre spent pair allowances and pre latched depth refusal on sticky retries",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    const auto source = basis(1, 1, .25, .2501); const auto cache = arcCache(source, 1, 3);
+    geo::WorkBudget baseline;
+    const auto complete = geo::analyseCacheBounds(cache, source, 1, .01, baseline);
+    checkBoundsRelation(complete, 1, .01);
+    for (const bool enough : {false, true}) {
+        LC_OffsetCheckLimits limits;
+        limits.maxDistancePairs = complete.work.distancePairs + unsigned(enough);
+        geo::WorkBudget budget{limits}; REQUIRE(budget.consumePairs(1));
+        const auto result = geo::analyseCacheBounds(cache, source, 1, .01, budget);
+        CAPTURE(enough, result.status, result.referenceStatus);
+        REQUIRE(result.referenceStatus == LC_IntersectionStatus::Ok);
+        CHECK(result.status == (enough ? geo::CacheBoundsStatus::Ok : geo::CacheBoundsStatus::LimitExceeded));
+        CHECK(bool(result.analysis) == enough); checkWork(result.work, budget.consumed());
+        if (!enough) {
+            REQUIRE(result.work.distancePairs > result.referenceWork.distancePairs);
+            const auto before = budget.consumed();
+            const auto retry = geo::analyseCacheBounds(cache, source, 1, .01, budget);
+            CHECK(retry.status == geo::CacheBoundsStatus::LimitExceeded); CHECK_FALSE(retry.analysis);
+            checkWork(retry.work, before); checkWork(budget.consumed(), before);
+        } else { CHECK(result.work.distancePairs == complete.work.distancePairs + 1); }
+    }
+    // Depth is an observed maximum, not a pool of consumable depth units.
+    geo::WorkBudget depth;
+    REQUIRE(depth.checkDepth(depth.depthLimit()));
+    CHECK_FALSE(depth.checkDepth(depth.depthLimit() + 1));
+    const auto before = depth.consumed();
+    for (unsigned retry = 0; retry < 2; ++retry) {
+        const auto result = geo::analyseCacheBounds(cache, source, 1, .01, depth);
+        CHECK(result.status == geo::CacheBoundsStatus::LimitExceeded); CHECK_FALSE(result.analysis);
+        checkWork(result.work, before); checkWork(depth.consumed(), before);
+    }
+}
+
+TEST_CASE("Cache bounds accept actual materialized degree one spline controls without refitting",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    RS_Spline source{nullptr, RS_SplineData(1, false)};
+    for (const RS_Vector p : {RS_Vector{0, 0}, RS_Vector{10, 0}, RS_Vector{10, 4}, RS_Vector{0, 4}}) {
+        source.addControlPoint(p);
+    }
+    source.setClosed(true);
+    auto options = LC_CurveOffset::makeDirectOptions(source, 1); options.mode = LC_CurveOffsetMode::Trimmed;
+    const auto made = LC_CurveOffset::createEntities(source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 1),
+        options, LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(made.status == LC_CurveOffsetStatus::Ok); REQUIRE(made.entities.size() == 1);
+    const auto* spline = dynamic_cast<const RS_Spline*>(made.entities[0].get()); REQUIRE(spline);
+    REQUIRE(spline->getData().degree == 1);
+    auto target = basis(5, 1); target.center = {5, 2};
+    geo::WorkBudget budget;
+    const auto result = geo::analyseCacheBounds(spline->getData(), target, 1, 10, budget);
+    // Producer compatibility only: this coarse ellipse relation is not a claim
+    // that the rectangle is an ellipse cache, nor a public adoption decision.
+    checkBoundsRelation(result, 1, 10);
+    REQUIRE(result.analysis->layout().spanCount() + 1 == spline->getData().controlPoints.size());
+    for (std::size_t i = 0; i < result.analysis->layout().spanCount(); ++i) {
+        CHECK(result.analysis->layout().spans[i].degree == 1);
+        for (unsigned end = 0; end < 2; ++end) {
+            const auto& actual = result.analysis->layout().spans[i].controls[end];
+            const auto& expected = spline->getData().controlPoints[i + end];
+            CHECK(actual.x == expected.x); CHECK(actual.y == expected.y);
+        }
+    }
+}
+
+TEST_CASE("Cache bounds accept the actual cubic ellipse materializer output as compatibility evidence",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    const auto data = basis(1, 1); const RS_Ellipse source{nullptr, data};
+    const auto made = LC_CurveOffset::createEntities(source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, 1),
+        LC_CurveOffset::makeDirectOptions(source, 1), LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(made.status == LC_CurveOffsetStatus::Ok); REQUIRE(made.entities.size() == 1);
+    const auto* spline = dynamic_cast<const RS_Spline*>(made.entities[0].get()); REQUIRE(spline);
+    REQUIRE(spline->getData().degree == 3);
+    geo::WorkBudget budget;
+    const auto result = geo::analyseCacheBounds(spline->getData(), data, 1, 2.5, budget);
+    CAPTURE(result.status, result.referenceStatus, result.work.vertices, result.work.distancePairs);
+    checkBoundsRelation(result, 1, 2.5);
+    REQUIRE(result.analysis->layout().spanCount() > 1);
+    for (std::size_t i = 0; i < result.analysis->layout().spanCount(); ++i) {
+        CHECK(result.analysis->layout().spans[i].degree == 3);
+        for (unsigned control = 0; control <= 3; ++control) {
+            const auto& actual = result.analysis->layout().spans[i].controls[control];
+            const auto& expected = spline->getData().controlPoints[3 * i + control];
+            CHECK(actual.x == expected.x); CHECK(actual.y == expected.y);
+        }
+    }
+}
+
+TEST_CASE("Cache bounds keep local scale conversions explicit and own their inputs after caller lifetime ends",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    STATIC_REQUIRE_FALSE(std::is_copy_constructible_v<geo::CacheBoundsAnalysis>);
+    STATIC_REQUIRE_FALSE(std::is_default_constructible_v<geo::CacheBoundsAnalysis>);
+    STATIC_REQUIRE(std::is_move_constructible_v<geo::CacheBoundsResult>);
+    for (const double radius : {1e-280, 1.0, 1e280}) {
+        const auto source = basis(radius, 1, .25, .2501);
+        const auto cache = arcCache(source, radius, 3); geo::WorkBudget budget;
+        const auto result = geo::analyseCacheBounds(cache, source, radius, radius * .01, budget);
+        CAPTURE(radius, result.status, result.referenceStatus);
+        checkBoundsRelation(result, radius, radius * .01);
+    }
+    geo::CacheBoundsResult retained;
+    { auto source = basis(1, 1, .25, .2501); auto cache = arcCache(source, 1, 1); geo::WorkBudget budget;
+      retained = geo::analyseCacheBounds(cache, source, 1, .01, budget); cache.controlPoints.clear(); source.majorP = {0, 0}; }
+    checkBoundsRelation(retained, 1, .01);
+    for (const double value : {0.0, -1.0, std::numeric_limits<double>::infinity(), std::numeric_limits<double>::quiet_NaN()}) {
+        geo::WorkBudget budget; const auto invalid = geo::analyseCacheBounds(cacheLayoutFixture(1, {0, 1}), basis(), 1, value, budget);
+        CHECK(invalid.status == geo::CacheBoundsStatus::InvalidInput); CHECK_FALSE(invalid.analysis); checkWork(invalid.work, {});
+    }
+}
+
+TEST_CASE("Cache bounds qualify adjacent binary64 cusp endpoints and exact trim boundary witness identities",
+          "[lc-offsetcurve][geometry][cache-bounds][cache-bounds-boundary]") {
+    // Binary64 radian endpoints and Mx,My,r,D are rational. For a simple cusp,
+    // (Mx^2+My^2)*(r^2+(1-r^2)*z)^3-D^2*r^2=0, so z=sin^2(theta)
+    // is algebraic (0<r<1 makes this a nonconstant polynomial). If a nonzero
+    // binary64 theta satisfied it, exp(2*i*theta) would solve the algebraic
+    // quadratic w^2-2*(1-2*z)*w+1=0, contradicting Hermite-Lindemann.
+    // theta=0 is an axis/stationary case, not SimpleCusp; adding real periods,
+    // rotating the major vector or reversing traversal does not change z.
+    // See Theorem 1.2, doi:10.1017/S000497272200140X. No finite probe proves
+    // that theorem: the exact rational construction below qualifies its boundary.
+    const auto atanBounds = [](const EventRational& x) -> std::array<EventRational, 2> {
+        EventRational sum = 0, term = x;
+        for (unsigned k = 0; k < 32; ++k) {
+            EventRational signedTerm = term;
+            if (k % 2) { signedTerm = -signedTerm; }
+            sum += signedTerm / (2 * k + 1);
+            term *= x * x;
+        }
+        // The even alternating partial sum is below atan(x); the first
+        // omitted positive term bounds the remainder, with exact arithmetic.
+        return {sum, EventRational{sum + term / 65}};
+    };
+    const EventRational x = EventRational{1} / 5, y = EventRational{1} / 239;
+    const auto a = atanBounds(x), b = atanBounds(y);
+    const EventRational thetaLow = 4 * a[0] - b[1], thetaHigh = 4 * a[1] - b[0];
+    const EventRational tan2 = 2 * x / (1 - x * x), tan4 = 2 * tan2 / (1 - tan2 * tan2);
+    REQUIRE((tan4 - y) / (1 + tan4 * y) == 1);
+    REQUIRE(thetaLow > 0); REQUIRE(thetaHigh < 1);
+    // Machin's identity in the principal quadrant: 4*atan(1/5)-atan(1/239)=pi/4.
+    const double low = M_PI_4, high = std::nextafter(low, std::numeric_limits<double>::infinity());
+    REQUIRE(EventRational(low) < thetaLow); REQUIRE(thetaHigh < EventRational(high));
+    REQUIRE(std::nextafter(high, -std::numeric_limits<double>::infinity()) == low);
+    const EventRational axisSquared = EventRational{120} * 120 + EventRational{40} * 40;
+    const EventRational r = EventRational{1} / 2, d = 125;
+    const auto polynomial = [&](const EventRational& z) -> EventRational {
+        const EventRational h2 = r * r + (1 - r * r) * z;
+        return axisSquared * h2 * h2 * h2 - d * d * r * r;
+    };
+    REQUIRE(polynomial(EventRational{1} / 2) == 0);
+    REQUIRE(polynomial(0) < 0); REQUIRE(polynomial(1) > 0);
+    // P is strictly increasing on [0,1], and sin^2 is strictly increasing in
+    // this quadrant. Thus the adjacent doubles strictly exclude/include the root.
+    // Wider controls also exercise successful classification on both sides.
+    const std::array<double, 4> endpoints{{low, high, low - .125, high + .125}};
+    auto cache = cacheLayoutFixture(1, {0, 1}); cache.controlPoints = {{0, 0}, {0, 0}};
+    for (std::size_t i = 0; i < endpoints.size(); ++i) {
+        for (const bool reversed : {false, true}) {
+            auto source = reversed ? basis(1, .5, endpoints[i], 0, true) : basis(1, .5, 0, endpoints[i]);
+            source.majorP = {120, 40};
+            geo::WorkBudget criticalBudget;
+            const auto critical = geo::analyseCritical(source, -125, criticalBudget);
+            CAPTURE(i, reversed, endpoints[i], critical.status, critical.reason);
+            if (i >= 2) { REQUIRE(critical.status == LC_IntersectionStatus::Ok); }
+            if (critical.status == LC_IntersectionStatus::Ok) {
+                REQUIRE(critical.adapter);
+                REQUIRE(critical.adapter->criticalOccurrences().size() == (i % 2 ? 1u : 0u));
+                for (const auto& occurrence : critical.adapter->criticalOccurrences()) {
+                    CHECK(occurrence.kind == geo::CriticalKind::SimpleCusp);
+                    CHECK_FALSE(occurrence.atStart); CHECK_FALSE(occurrence.atEnd);
+                    CHECK_FALSE((occurrence.parameter.lo() == 0 && occurrence.parameter.hi() == 0));
+                    const double end = critical.adapter->frame().parameterEnd();
+                    CHECK_FALSE((occurrence.parameter.lo() == end && occurrence.parameter.hi() == end));
+                    const EventRational expectedLow = reversed ? EventRational{EventRational(endpoints[i]) - thetaHigh} : thetaLow;
+                    const EventRational expectedHigh = reversed ? EventRational{EventRational(endpoints[i]) - thetaLow} : thetaHigh;
+                    CHECK(EventRational(occurrence.parameter.lo()) <= expectedLow);
+                    CHECK(expectedHigh <= EventRational(occurrence.parameter.hi()));
+                }
+            } else {
+                CHECK((critical.status == LC_IntersectionStatus::AmbiguousTopology || critical.status == LC_IntersectionStatus::LimitExceeded));
+                CHECK_FALSE(critical.adapter);
+            }
+            checkWork(critical.work, criticalBudget.consumed());
+            if (i >= 2) { continue; }
+            geo::WorkBudget budget;
+            const auto result = geo::analyseCacheBounds(cache, source, -125, 500, budget);
+            CAPTURE(result.status, result.referenceStatus, result.referenceReason, result.eventReason);
+            if (critical.status != LC_IntersectionStatus::Ok) {
+                CHECK(result.status == (critical.status == LC_IntersectionStatus::LimitExceeded ?
+                    geo::CacheBoundsStatus::LimitExceeded : geo::CacheBoundsStatus::ReferenceRefusal));
+                CHECK_FALSE(result.analysis);
+            } else if (result.status == geo::CacheBoundsStatus::Ok) {
+                REQUIRE(result.analysis);
+                const auto& graph = result.analysis->reference(); const auto& events = graph.events();
+                REQUIRE(events.criticals().size() == critical.adapter->criticalOccurrences().size());
+                if (i == 0) { REQUIRE(events.criticals().empty()); }
+                else {
+                    REQUIRE(i == 1); REQUIRE(events.criticals().size() == 1);
+                    const auto& cusp = events.criticals().front();
+                    REQUIRE(cusp.kind == geo::CriticalKind::SimpleCusp);
+                    CHECK(cusp.proof == critical.adapter->criticalOccurrences().front().proof);
+                    REQUIRE(cusp.occurrence.value < events.occurrences().size());
+                    const auto& occurrence = events.occurrences()[cusp.occurrence.value];
+                    CHECK(occurrence.role == geo::ReferenceRole::Own);
+                    const EventRational expectedLow = reversed ? EventRational{EventRational(endpoints[i]) - thetaHigh} : thetaLow;
+                    const EventRational expectedHigh = reversed ? EventRational{EventRational(endpoints[i]) - thetaLow} : thetaHigh;
+                    double bracketLow = expectedLow.convert_to<double>(), bracketHigh = expectedHigh.convert_to<double>();
+                    if (EventRational(bracketLow) > expectedLow) { bracketLow = std::nextafter(bracketLow, -std::numeric_limits<double>::infinity()); }
+                    if (EventRational(bracketHigh) < expectedHigh) { bracketHigh = std::nextafter(bracketHigh, std::numeric_limits<double>::infinity()); }
+                    REQUIRE(EventRational(bracketLow) <= expectedLow); REQUIRE(expectedHigh <= EventRational(bracketHigh));
+                    CHECK(occurrence.parameter.lo() >= bracketLow); CHECK(occurrence.parameter.hi() <= bracketHigh);
+                    CHECK(EventRational(occurrence.parameter.lo()) <= expectedLow);
+                    CHECK(expectedHigh <= EventRational(occurrence.parameter.hi()));
+                    REQUIRE(occurrence.node.value < graph.incidence().size());
+                    const auto& row = graph.incidence()[occurrence.node.value];
+                    CHECK(row.cusp); CHECK(row.hiddenPoint); CHECK(row.incoming.empty()); CHECK(row.outgoing.empty());
+                    for (const auto& witness : result.analysis->witnesses()) {
+                        CHECK(witness.occurrence.value != cusp.occurrence.value); CHECK(witness.node.value != occurrence.node.value);
+                    }
+                    for (const auto& end : events.freeEnds()) {
+                        CHECK(cusp.occurrence.value != end.occurrence.value);
+                    }
+                }
+            } else {
+                CHECK((result.status == geo::CacheBoundsStatus::ReferenceRefusal || result.status == geo::CacheBoundsStatus::OffCurve ||
+                    result.status == geo::CacheBoundsStatus::Ambiguous || result.status == geo::CacheBoundsStatus::LimitExceeded));
+                CHECK_FALSE(result.analysis);
+            }
+            checkWork(result.work, budget.consumed());
+        }
+    }
+
+    const auto source = basis(100, .05, M_PI / 12, 7 * M_PI / 4);
+    geo::WorkBudget budget;
+    const auto result = geo::analyseCacheBounds(cache, source, -4, 500, budget);
+    checkBoundsRelation(result, -4, 500);
+    const auto& reference = result.analysis->reference(); const auto& events = reference.events();
+    std::size_t trimNodes = 0, trimIncidences = 0;
+    for (const auto& row : reference.incidence()) {
+        if (!row.trimBoundary) { continue; }
+        ++trimNodes;
+        CHECK_FALSE(row.sourceStart); CHECK_FALSE(row.sourceEnd);
+        REQUIRE(row.incoming.empty() != row.outgoing.empty());
+        const auto checkIncidence = [&](const std::size_t edgeIndex, const bool start) {
+            const auto& edge = reference.edges()[edgeIndex]; const auto& span = reference.spans()[edge.span];
+            const auto occurrence = start ? span.start : span.end;
+            const auto kind = start ? geo::CacheWitnessKind::StartFringe : geo::CacheWitnessKind::EndFringe;
+            CHECK((start ? edge.start.value : edge.end.value) == row.node.value);
+            CHECK(events.occurrences()[occurrence.value].role == geo::ReferenceRole::Own);
+            CHECK(events.occurrences()[occurrence.value].node.value == row.node.value);
+            const auto& parameter = events.occurrences()[occurrence.value].parameter;
+            CHECK(std::any_of(result.analysis->witnesses().begin(), result.analysis->witnesses().end(), [&](const auto& w) {
+                return w.edge == edgeIndex && w.kind == kind && w.occurrence.value == occurrence.value && w.node.value == row.node.value &&
+                    w.referenceParameter.lo() == parameter.lo() && w.referenceParameter.hi() == parameter.hi();
+            }));
+            ++trimIncidences;
+        };
+        for (const auto edge : row.incoming) { checkIncidence(edge, false); }
+        for (const auto edge : row.outgoing) { checkIncidence(edge, true); }
+    }
+    CHECK(trimNodes > 0); CHECK(trimIncidences >= trimNodes);
+    checkWork(result.work, budget.consumed());
+}

@@ -181,6 +181,18 @@ private:
     LC_Interval m_distance;
 };
 
+/** Outward local subcurve/chord data only; no visibility or traversal certificate. */
+struct CurveChordBounds {
+    LC_Interval startX, startY, endX, endY;
+    LC_Interval x, y;
+    LC_Interval deviation;
+};
+
+/** Fixed-cost proof primitives; callers admit their comparison work before calling. */
+bool boundCacheChord(const CacheSpan& span, const ReferenceFrame& frame, double a, double b,
+                     CurveChordBounds& out);
+bool boundReferenceChord(const ReferenceFrame& frame, double a, double b, CurveChordBounds& out);
+
 enum class CriticalRegime {
     PositiveFactor, MinimumStationary, IntermediateThresholds, MaximumStationary, NegativeFactor
 };
@@ -495,6 +507,56 @@ struct ReferenceComponentResult {
 };
 ReferenceComponentResult analyseReferenceComponents(const RS_EllipseData& basis, double signedDistance,
                                                   double worldTolerance, WorkBudget& budget);
+
+enum class CacheWitnessKind { Interior, StartFringe, EndFringe };
+struct CacheDyadicDomain {
+    std::size_t span = std::size_t(-1), index = 0;
+    unsigned depth = 0;
+    /** Normalized Bezier parameter, independent of the original affine knot domain. */
+    LC_Interval parameter;
+};
+struct CacheBoundsWitness {
+    CacheDyadicDomain cache;
+    CacheWitnessKind kind = CacheWitnessKind::Interior;
+    std::size_t edge = std::size_t(-1);
+    ReferenceOccurrenceId occurrence;
+    ReferenceNodeId node;
+    LC_Interval referenceParameter;
+    unsigned referenceDepth = 0;
+    /** Local symmetric setwise error bound; never a parameter/order/identity certificate. */
+    LC_Interval geometryError;
+    /** For fringe witnesses only, before adding full fringe-to-node coverage error. */
+    LC_Interval candidateNodeError;
+    /** Interval evaluation of D_local minus the candidate-to-reference/node error. */
+    LC_Interval clearanceLowerBound;
+};
+class CacheBoundsAnalysis {
+public:
+    ~CacheBoundsAnalysis();
+    CacheBoundsAnalysis(const CacheBoundsAnalysis&) = delete;
+    CacheBoundsAnalysis& operator=(const CacheBoundsAnalysis&) = delete;
+    const CacheLayoutResult& layout() const noexcept;
+    const ReferenceComponentAnalysis& reference() const noexcept;
+    const std::vector<CacheBoundsWitness>& witnesses() const noexcept;
+private:
+    friend class CacheBoundsBuilder;
+    struct Impl;
+    explicit CacheBoundsAnalysis(std::unique_ptr<Impl> impl);
+    std::unique_ptr<const Impl> m_impl;
+};
+enum class CacheBoundsStatus { Ok, InvalidInput, InvalidLayout, ReferenceRefusal, OffCurve, Ambiguous, LimitExceeded };
+struct CacheBoundsResult {
+    CacheBoundsStatus status = CacheBoundsStatus::InvalidInput;
+    CacheLayoutStatus layoutStatus = CacheLayoutStatus::InvalidInput;
+    LC_IntersectionStatus referenceStatus = LC_IntersectionStatus::InvalidInput;
+    ReferenceComponentReason referenceReason = ReferenceComponentReason::None;
+    ReferenceEventReason eventReason = ReferenceEventReason::None;
+    CheckWork layoutWork{}, referenceWork{}, work{};
+    std::unique_ptr<const CacheBoundsAnalysis> analysis;
+};
+/** Complete bounded proximity relation only; no topology, reverse coverage or public cache-validity claim. */
+CacheBoundsResult analyseCacheBounds(const RS_SplineData& cache, const RS_EllipseData& basis,
+                                    double signedDistance, double worldTolerance, WorkBudget& budget);
 
 bool isFinite2D(const RS_Vector& point);
 /** Validate raw fields before RS_Ellipse can canonicalize tiny angles. Unchanged on refusal. */
