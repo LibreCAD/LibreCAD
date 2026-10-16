@@ -24,11 +24,11 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v36**, 2026-10-16 (per-slice activation identity, retry-safe evidence and exact execution receipts). This file is the implementation source of truth.
+Plan **v37**, 2026-10-16 (five-control lifecycle, standalone plan amendments and stale-state reconciliation). This file is the implementation source of truth.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE — `.b-check-bounds` is implemented at `ce1ed51924d20a708e8bec059f7f9dd46235a232`; its direct parent is the v24 endpoint-contract checkpoint `a0ce67a3b8746770ce49fb1ff76616c9da3d23fe`. The v25 plan-only reconciliation is verified at `4ca63677c27043004aae45e0fe54d42db48664a5`, and the v26 topology activation checkpoint is `fd4697059572af28c08ecbb532e687af1603ee1c`. The local-topology implementation is committed as `ef3ba756b52796c02b8490caedcaa48b8db69605`, a three-path direct child of v26; its v29 plan-only reconciliation is the verified direct child `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. v31 separated product and reconciliation commits; v32 added graph/cut and inherited-depth obligations; v33 corrected node-vs-occurrence identity and weak-component/producer-branch semantics. v34 corrected phase coordinates and the two-child debit schedule, and split the checker into three product slices. Gibbs's v34 review found the paired-retained-continuation, receipt parsing, missing A/B recipe and cusp reachability defects; v35 corrected those contracts. Its committed checkpoint is `662b9a816baefc00a91f160468fa1b4db894e14a`. Gibbs's exact-v35 review confirmed those semantic corrections and the 46-case count, but found C's stale activation path, coupled retry/activation numbering, focused-skip acceptance, and stale current-state wording. v36 corrects those workflow contracts and exact test receipts; it remains a plan-only review target, not an activation. Product implementation is unchanged; `.b-check-topology-chain` remains WAITING for permanent independent fixture/terminal ledgers and fresh Gate-1/Gate-3 decisions. The v27 DXF/DWG clarification remains a hard phase-1 read/write gate; new-entity application file support is still incomplete. Entity integration, persistence, UI and phase-2 work remain incomplete.**
+Status: **IMPLEMENTATION INCOMPLETE — `.b-check-bounds` is implemented at `ce1ed51924d20a708e8bec059f7f9dd46235a232`; its direct parent is the v24 endpoint-contract checkpoint `a0ce67a3b8746770ce49fb1ff76616c9da3d23fe`. The v25 plan-only reconciliation is verified at `4ca63677c27043004aae45e0fe54d42db48664a5`, and the v26 topology activation checkpoint is `fd4697059572af28c08ecbb532e687af1603ee1c`. The local-topology implementation is committed as `ef3ba756b52796c02b8490caedcaa48b8db69605`, a three-path direct child of v26; its v29 plan-only reconciliation is the verified direct child `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. v31 separated product and reconciliation commits; v32 added graph/cut and inherited-depth obligations; v33 corrected node-vs-occurrence identity and weak-component/producer-branch semantics. v34 corrected phase coordinates and the two-child debit schedule, and split the checker into three product slices. Gibbs's v34 review found the paired-retained-continuation, receipt parsing, missing A/B recipe and cusp reachability defects; v35 corrected those contracts. Its committed checkpoint is `662b9a816baefc00a91f160468fa1b4db894e14a`. Gibbs's exact-v35 review confirmed those semantic corrections and the 46-case count, but found C's stale activation path, coupled retry/activation numbering, focused-skip acceptance, and stale current-state wording. v36 corrected those workflow contracts and exact test receipts and is committed at `a4606c9feb63044163dcca7822dc0226de381433`. v37 formalizes non-activating plan amendments, byte-bound final Gate-1 review receipts, and post-commit audits of affected descendants/live status. This plan-only checkpoint does not activate implementation. Product implementation is unchanged; `.b-check-topology-chain` remains WAITING for permanent independent fixture/terminal ledgers and fresh Gate-1/Gate-3 decisions. The v27 DXF/DWG clarification remains a hard phase-1 read/write gate; new-entity application file support is still incomplete. Entity integration, persistence, UI and phase-2 work remain incomplete.**
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -418,7 +418,7 @@ not validation evidence. Aggregates are never executable cards or extra implemen
 | 1A-1.a | Done at a4690db08 | Normalization/local-frame/closed forms, robust source distance and tolerance helpers; 17 cases/2538 assertions pass Release/ASan, existing regressions and both fast lanes pass. |
 | 1A-1.b | Aggregate; budget/progress/reference/layout/bounds and local topology done; global topology pending | Parent-only progress; layout, bounds and local certificates do not establish a complete cache-validity result. `.b-check-topology-local` is committed at `ef3ba756b52796c02b8490caedcaa48b8db69605` with its verified immediate plan checkpoint `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. The ordered-chain child is the remaining geometry-level topology work; 1A-2 consumes its typed result. No separate aggregate implementation commit. |
 | 1A-1.b-check-topology-local | Done — implementation `ef3ba756b52796c02b8490caedcaa48b8db69605` plus verified immediate v29 plan-only reconciliation `9c06e9c77b313b62cc20e9ec39c22952fee501f2` | Add bounded local candidate/reference monotonicity certificates, preserve exact edge/occurrence/node identity, and refine only through the shared geometric pair-proof helper. Expose local proof status only; no full-cache validity result. Three geometry files, 20 focused cases, independent rational derivative oracle, all required gates and two scoped commits. |
-| 1A-1.b-check-topology-chain | Waiting at the v36 review target: paired-retained continuation and cusp reachability are specified; independent fixture/terminal ledgers and fresh gates remain open | Publish occurrence-specific source/trim terminals only after complete continuation analysis; reject hidden cusps and truncated paired lenses; select one unique candidate-compatible complete producer path from a weak graph; prove exact transitions, bidirectional coverage, phase cuts and closure; implement geometry-level `checkCache`. Entity adoption remains 1A-2. |
+| 1A-1.b-check-topology-chain | Waiting at the v37 review target: paired-retained continuation and cusp reachability are specified; independent fixture/terminal ledgers and fresh gates remain open | Publish occurrence-specific source/trim terminals only after complete continuation analysis; reject hidden cusps and truncated paired lenses; select one unique candidate-compatible complete producer path from a weak graph; prove exact transitions, bidirectional coverage, phase cuts and closure; implement geometry-level `checkCache`. Entity adoption remains 1A-2. |
 | 1A-1.b-budget | Done at 10c6bff46 | Checked shared work, bounded two-axis/range indices, nine budget cases Release/ASan, all offset/full/fast-lane gates pass; findings/evidence below. |
 | 1A-1.b-progress | Done at fb70681e2 | Reachable hang fixed; four watchdog-protected cases/80 assertions Release/ASan, old probe terminates, broad gates pass. |
 | 1A-1.b-ref | Aggregate; foundations/refinements/providers/contacts/isolation done | Complete — `.b-ref-components` committed at `9682d5cac65f30cfd86aa10556678ceb88b1448b` with attempt-8 evidence. Bounds/topology checking and parent `.b` remain incomplete. |
@@ -565,11 +565,11 @@ Apply these tracks as a strict per-slice cycle:
 
 | Gate | Required work and auditable pass record | Failure effect |
 |---|---|---|
-| 1. Completeness and plan-contract correctness | Record two separate reviewer dispositions (`PASS`, `FAIL` or `PENDING`) against an exact source identity. Completeness is bidirectional: every applicable R01-R15/new obligation maps request → caller/producer → representation → consumer/persistence/version/conversion → owner leaf → reachable positive/boundary/refusal/no-op/fallback test → independent oracle → target → durable receipt; walk back from every changed path/test to a requirement or named diagnostic-only exclusion. Rescan shared dispatch/type sites when scope changes. Plan correctness separately checks API ownership/lifetime, authoritative source/spec/version facts, arithmetic/proof implications, quantifiers and boundary strictness, resource debit/admission order, error mapping, fallback/refusal/atomicity, oracle independence, format matrix, cross-references and an acyclic dependency graph. Record discrepancies, resolutions and exclusions with their owning leaf. A table, case count or green build without reachable assertions and evidence is not a pass. | Repair trace or contract before implementation. Any unowned obligation, unsupported assumption, contradictory acceptance, invalid oracle, unreachable test, wrong API layer or stale dependency fails Gate 1. `PENDING` never means a provisional pass. |
+| 1. Completeness and plan-contract correctness | Record two separate reviewer dispositions (`PASS`, `FAIL` or `PENDING`) against an exact source identity. Completeness is bidirectional: every applicable R01-R15/new obligation maps request → caller/producer → representation → consumer/persistence/version/conversion → owner leaf → reachable positive/boundary/refusal/no-op/fallback test → independent oracle → target → durable receipt; walk back from every changed path/test to a requirement or named diagnostic-only exclusion. Rescan shared dispatch/type sites when scope changes. Plan correctness separately checks API ownership/lifetime, authoritative source/spec/version facts, arithmetic/proof implications, quantifiers and boundary strictness, resource debit/admission order, error mapping, fallback/refusal/atomicity, oracle independence, format matrix, cross-references and an acyclic dependency graph. Record discrepancies, resolutions and exclusions with their owning leaf. A table, case count or green build without reachable assertions and evidence is not a pass. After implementation, final Gate-1 reclosure produces separate `gate1-completeness.txt` and `gate1-plan-correctness.txt` receipts in that attempt's review directory; both bind the same slice, activation ID, attempt, reviewed base SHA, binary diff SHA-256 and file-manifest SHA-256. Validation snapshots both receipts and the Gate-2 receipt before builds, verifies each has exactly one status/identity field and status `PASS`, then requires the original receipt hashes to remain unchanged before validation PASS; the product-commit recipe checks those frozen hashes again. | Repair trace or contract before implementation. Any unowned obligation, unsupported assumption, contradictory acceptance, invalid oracle, unreachable test, wrong API layer or stale dependency fails Gate 1. `PENDING` never means a provisional pass. |
 | 2. Implementation correctness | On one immutable frozen diff, a reviewer distinct from the implementer challenges every success and refusal branch. Geometry/proof review explicitly attacks soundness, search-domain completeness, endpoint/event identity, outward rounding, finite/overflow behavior, threshold strictness, pre-allocation budget admission, asymptotic work, ownership/lifetime and atomic failure; persistence review also inspects encoded bytes with an independent reader and reload. Require a reachable valid positive, a required boundary and adversarial negatives that can expose plausible false acceptance; prove tests would reject unconditional refusal. Record invariant-by-invariant results, independent oracle/method, counterexample attempts, reviewer role, source/tree/file digests, findings and exact fix/retest receipts. Distinguish proof, independent computation, fixture oracle, sample-only diagnostic and conservative refusal. If no independent reviewer is available, label a separate read-only author review as self-review. Any source edit invalidates affected review and receipts. | Any soundness/completeness defect, missing required positive, unexamined refusal, self-referential oracle, unbounded search, stale source, changed digest or unresolved finding fails Gate 2. Do not weaken required success, widen tolerance or raise caps merely to make tests pass. |
 | 3. Sub-plan and readiness | One executable leaf only. Its card names actual source and plan-checkpoint SHAs, verified committed predecessors, one writer/exact owned paths, confirmed symbols and API layer, success/refusal contract and invariants, ordered tasks with a measurable exit **per task**, bounded probes with result→decision/stop rules, literal target/commands, selector identity and baseline/post-registration nonzero counts, independent oracle, evidence paths, recovery, resource/runtime envelope and one commit boundary. Before `READY`, resolve choices that could change API/files, semantics, search completeness, error mapping, oracle, testability or scope. A conditional probe is allowed only when every outcome has an explicit next action and cannot silently broaden scope. Date readiness against actual HEAD; invalidate it after any base/source/API/toolchain/owner/scope change. | Any uncommitted predecessor means `WAITING`; `CONDITIONAL` must name one bounded probe, all outcomes and required plan edits. Unresolved semantics/oracle/testability/caps/scope, red checks or incomplete Gate 1 invalidate readiness. Estimates, prototypes, compilation and passing subsets are not readiness evidence. |
 | 4. Commit after each slice | Freeze one tested identity (base SHA, scoped diff, file digests, configuration/toolchain, commands/selectors and durable reports); serialize shared builds; rerun final Gate 1 on the actual diff and Gate 2 on those exact bytes; inspect index/status and preserve unrelated work. Validation is a separate fail-closed command sequence (`set -euo pipefail`) that finishes report parsing, baseline-skip comparison and hash/whitespace checks before any staging. Then stage explicit owned paths and verify names/digests/whitespace. Make exactly one implementation commit for one executable leaf; do not mix roadmap checkpoint, successor work, evidence artifacts or unrelated changes. After hooks, verify actual parent, subject, path set, SHA and committed bytes against the freeze; hook-modified bytes require affected review and validation again. | Red/stale/mixed evidence, digest drift, unowned staging, product+plan in one commit, partial-success commit or hook drift blocks closure. Repair the same leaf or formally amend/split the plan before partial implementation; never commit an unreviewed passing subset. |
-| 5. Self-update after commit | Immediately after every product commit and **before any next product edit**, reread its actual commit/diff/reports/worktree. Reconcile SHA/digests, all gate outcomes and findings; leaf/parent/requirements/formats/builds; DAG; risks/follow-ups; evidence ledger; queue; and next-card API/predecessors/readiness against committed source. Update plan version/history/status and mark the successor `WAITING` until its own fresh Gates 1/3 close. Run structure/link/DAG, whitespace/path/digest/ancestry checks, then commit only this roadmap as a separate direct child of the product commit. Verify one-file scope, product digest equality, direct parent, product ancestry and all remaining worktree state. Record the product SHA, never the checkpoint's self SHA. | Stop product work if any reconciliation/postcondition is missing. Do not mark the leaf `done`, activate a successor or reuse stale readiness before the separate checkpoint is committed and verified. |
+| 5. Self-update after commit | Immediately after every product commit and **before any next product edit**, reread the actual committed diff/blobs, test reports, commit metadata and worktree. Reconcile implementation SHA/digests, all gate outcomes/findings, leaf and aggregate status, requirement/format/build ownership, dependency DAG, risks/follow-ups, evidence ledger, queue and each affected descendant's readiness against committed source. Audit every live-state summary, active card and `next` field for stale version/SHA/status language; retain superseded claims only in clearly dated history. Recompute readiness transitively for affected descendants; the next leaf is `WAITING` until its own fresh Gates 1/3 close. Before staging the roadmap, record its candidate blob/diff SHA-256 and check outcomes; after the commit require the committed roadmap blob to equal that candidate hash. Run structure/link/DAG, whitespace/path/digest/ancestry checks, then commit only this roadmap as a separate direct child of the product commit. Verify one-file scope, product digest equality, direct parent, product ancestry and all remaining worktree state. Record the product SHA, never the checkpoint's self SHA. | Stop product work if any reconciliation/postcondition is missing. Do not mark the leaf `done`, activate a successor or reuse stale readiness before the separate checkpoint is committed and verified. |
 
 **Leaf state transitions (mandatory).** Readiness and implementation state are separate fields. `pending`/`waiting` may become
 `ready` only after Gate 1 and Gate 3 pass at the actual base and every predecessor's required implementation commit
@@ -602,6 +602,32 @@ coverage table nor a plausible proof substitutes for another gate. The product c
 are separate commits; the checkpoint records the product SHA, never its own SHA. A documentation-only plan review may
 make one plan-only commit, but it must not fabricate a product commit or mark unfinished implementation done.
 
+**Standalone plan-amendment lifecycle (not an implementation activation).** A plan-only refinement may be needed to
+resolve a Gate-1 finding, update source facts, or repair an executable recipe. It follows this bounded path:
+
+1. Freeze and record the actual source HEAD, current plan commit, worktree/index state, and exact amendment scope.
+2. Update the normative contract, active card, status/history, and affected dependency/readiness rows together. Preserve
+   old findings and receipts as dated history; do not rewrite historical outcomes or label old evidence as fresh.
+3. Re-run the plan checks relevant to the changed contract: requirement/cross-reference and DAG consistency,
+   Markdown/fence structure, parse every machine-readable YAML block, validate required fields in human-readable card
+   records (which use `text` fences), embedded shell/Python recipe validation, path/receipt/commit-parent arithmetic,
+   and `git diff --check`. Before staging, record the parent SHA, candidate roadmap blob SHA-256, binary diff SHA-256,
+   and each check outcome in a unique ignored `build/evidence/plan-amendments/<ID>/` receipt. Product-source changes
+   are outside this amendment path.
+4. Stage only this roadmap and make one plan-only commit directly after the frozen plan/source base. Verify its actual
+   parent and one-file path set; hash `git show HEAD:docs/plan_offset_curve_2961.md` and require byte equality with the
+   candidate blob SHA-256; verify the committed diff/whitespace checks and preservation/accounting of unrelated
+   worktree state. Hook-modified or otherwise different bytes fail the checkpoint and require review/validation again.
+   Do not store the new commit's own SHA in that commit.
+5. Treat the committed amendment as a new review target, **not** as a readiness or activation receipt. Repeat affected
+   Gate-1 completeness and plan-contract correctness reviews against its exact HEAD; recompute Gate-3 readiness only
+   after those pass and every predecessor/checkpoint is verified. A separate activation checkpoint is still required
+   before product edits. Any amendment finding starts a new bounded revision/review cycle.
+
+The plan-only lifecycle does not create a synthetic product slice or product-commit pass. If a product commit has just
+occurred, use Gate 5's mandatory direct-child reconciliation rather than treating this standalone path as an alternative
+that can be delayed or skipped.
+
 Before promoting a leaf card, check these concrete prerequisites:
 
 | Card | Fact that must be established before editing | Evidence required before exit |
@@ -621,7 +647,7 @@ Before promoting a leaf card, check these concrete prerequisites:
 
 **Completed implementation card — `1A-1.b-check-layout` (product commit `37462efc8`; immediately reconciled by this v20 plan-only checkpoint).**
 
-```yaml
+```text
 slice: 1A-1.b-check-layout
 state: done — product implementation committed at 37462efc8; this v20 checkpoint immediately reconciles it
 readiness: ready before edits; all required implementation/validation gates passed
@@ -690,7 +716,7 @@ next: The next action after this checkpoint is a re-probe of `.b-check-bounds` a
 
 **Completed implementation card — `1A-1.b-check-bounds` (v25 post-commit reconciliation; implementation `ce1ed51924d20a708e8bec059f7f9dd46235a232`).**
 
-```yaml
+```text
 state: done — implementation `ce1ed51924d20a708e8bec059f7f9dd46235a232`; this v25 roadmap-only reconciliation is the required separate post-commit checkpoint
 readiness: ready at implementation base; all implementation gates are now closed
 readiness_decision: The leaf was activated only after the v24 endpoint-contract checkpoint `a0ce67a3b8746770ce49fb1ff76616c9da3d23fe`. Final completeness traced R02/R05/R12/R13 through layout, visible-reference alternatives, crossing/cusp/trim/seam incidence, complete-interval and endpoint oracles, shared-budget accounting, no-partial refusal and topology handoff. Plan correctness closed the v22 cusp/trim semantics, v23 exact-rational noncircular interval oracle and v24 four-endpoint mapping. Independent implementation review on the frozen three-file tree found no actionable issue. Focused and adjacent Release/ASan, full Release, and DXF/DWG fast Release/ASan pass; baseline skip identities match. No public topology/cache-validity claim is made by this bounds leaf.
@@ -760,7 +786,7 @@ next: v26 closes Gate 1 and records ready status for `.b-check-topology-local` a
 
 **Active implementation card — `1A-1.b-check-topology-local` (v29 immediate post-commit reconciliation).**
 
-```yaml
+```text
 slice: 1A-1.b-check-topology-local
 state: done — product implementation `ef3ba756b52796c02b8490caedcaa48b8db69605` plus verified immediate v29 plan-only reconciliation `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; post-commit checkpoint audit passed
 readiness: ready at activation, consumed by the first product edit; this receipt does not authorize the next leaf
@@ -837,16 +863,16 @@ product_commit_audit: PASS — commit `ef3ba756b52796c02b8490caedcaa48b8db69605`
 plan_checkpoint_state: PASS — v29 checkpoint `9c06e9c77b313b62cc20e9ec39c22952fee501f2` is the direct child of product commit `ef3ba756b52796c02b8490caedcaa48b8db69605`; this v31 plan-only amendment does not store its own commit SHA.
 checkpoint_postconditions: PASS at the v29 checkpoint: `git show --name-only HEAD` contains only `docs/plan_offset_curve_2961.md`; `HEAD^` is the product SHA; product header/implementation/test SHA-256 values match the frozen card; `git diff --check HEAD^ HEAD` passes; status preserves untracked `build-asan/`. The next card stays waiting; the checkpoint does not activate it.
 recovery: Preserve all patches, exploratory red output, JUnit attempts and ignored build outputs; do not reset/delete/stage unrelated files. If any post-freeze product edit is needed, return the leaf to `in progress`, invalidate review and affected receipts, and rerun the required matrix with new attempt numbers. The v29 reconciliation is verified; no successor code is authorized until its own Gate 1/3 activation checkpoint is committed.
-next: `.b-check-topology-chain` stays WAITING at the v36 review target for the permanent independent transition/cut ledger, terminal-producer map and fresh Gate-1/Gate-3 decisions. Gibbs's v34/v35 findings are recorded as closed-in-plan but do not close the v36 gates. The final C slice owns a geometry-level typed full-topology result; persistent entity adoption remains in 1A-2.
+next: `.b-check-topology-chain` stays WAITING at the v37 review target for the permanent independent transition/cut ledger, terminal-producer map and fresh Gate-1/Gate-3 decisions. Gibbs's v34/v35 findings are recorded as closed-in-plan but do not close the v37 gates. This plan-only checkpoint is not activation. The final C slice owns a geometry-level typed full-topology result; persistent entity adoption remains in 1A-2.
 ```
 
 **Waiting implementation card — `1A-1.b-check-topology-chain` (must be activated by a later checkpoint).**
 
-```yaml
+```text
 slice: 1A-1.b-check-topology-chain
-state: waiting — v29 product/checkpoint and producer probe are verified; v32 checkpoint `6c916c6b6f46de921a3c8f8a3428b2cbfd170b56`, v33 checkpoint `435e1573acd204aade5293b865aa0da419a480db`, v34 checkpoint `673ba5937f47f2ad132bd217741d54e64f2eb5f3`, and v35 checkpoint `662b9a816baefc00a91f160468fa1b4db894e14a` are committed; v36 is the current plan-only review target and not a product activation receipt
-readiness: WAITING — v35 semantic fixes passed Gibbs's exact-HEAD review, including the paired-retained continuation rule, hidden-cusp classification and 46-case count. The same review found operational recipe defects now corrected in v36: C's stale activation path, coupled retry/activation numbering, focused skip acceptance and stale current-state wording. Permanent independent transition/cut and terminal ledgers plus fresh v36 Gate-1/Gate-3 review remain absent. No product edit is authorized.
-readiness_decision: WAITING — an endpoint is not terminal merely because its same-occurrence interval is hidden: every exact paired occurrence and retained incident edge must be checked for compatible continuation. Interior `SimpleCusp` is hidden and is a refusal discriminator, not a positive terminal. Activation requires literal PASS receipts bound to the same plan, slice and product-base SHAs. Product retry IDs are now separate from immutable activation IDs, and each A/B validation requires exact named tests with zero focused/adjacent skips. Remaining: independent fixture/oracle evidence and fresh completeness/plan-correctness/readiness reviews at v36 HEAD.
+state: waiting — v29 product/checkpoint and producer probe are verified; v32 checkpoint `6c916c6b6f46de921a3c8f8a3428b2cbfd170b56`, v33 checkpoint `435e1573acd204aade5293b865aa0da419a480db`, v34 checkpoint `673ba5937f47f2ad132bd217741d54e64f2eb5f3`, v35 checkpoint `662b9a816baefc00a91f160468fa1b4db894e14a`, and v36 checkpoint `a4606c9feb63044163dcca7822dc0226de381433` are committed; v37 is the current plan-only review target and not a product activation receipt
+readiness: WAITING — v35 semantic fixes passed Gibbs's exact-HEAD review, including the paired-retained continuation rule, hidden-cusp classification and 46-case count. The v36 workflow corrections address C's stale activation path, coupled retry/activation numbering, focused skip acceptance and stale current-state wording. v37 clarifies that plan-only revisions are not activations and requires a live-state audit after each commit. Permanent independent transition/cut and terminal-producer ledgers plus fresh v37 Gate-1/Gate-3 review remain absent. No product edit is authorized.
+readiness_decision: WAITING — an endpoint is not terminal merely because its same-occurrence interval is hidden: every exact paired occurrence and retained incident edge must be checked for compatible continuation. Interior `SimpleCusp` is hidden and is a refusal discriminator, not a positive terminal. Activation requires literal PASS receipts bound to the same plan, slice and product-base SHAs. Product retry IDs are now separate from immutable activation IDs, and each A/B validation requires exact named tests with zero focused/adjacent skips. Remaining: independent fixture/oracle evidence and fresh completeness/plan-correctness/readiness reviews at v37 HEAD.
 completeness_gate: PENDING
 plan_correctness_gate: PENDING
 implementation_correctness_gate: PENDING
@@ -854,7 +880,7 @@ readiness_gate: WAITING
 implementation_commit_gate: PENDING
 self_update_gate: PENDING
 base_sha: `9c06e9c77b313b62cc20e9ec39c22952fee501f2` (product-source base; refresh at activation)
-plan_checkpoint_parent_sha: `662b9a816baefc00a91f160468fa1b4db894e14a` (committed v35 checkpoint; this v36 plan checkpoint must be its direct child)
+plan_checkpoint_parent_sha: `a4606c9feb63044163dcca7822dc0226de381433` (committed v36 checkpoint; v37 is a separate plan-only direct child)
 activation_base_sha: pending — each slice records it externally at `build/evidence/1A-1.b-check-topology-chain/<SLICE>/activation-<ACTIVATION_ID>/activated-base.sha`; it is never self-stored in the checkpoint that creates it
 owner: Gibbs owns only the three geometry/test paths below after activation; coordinator owns read-only review, validation, evidence and Git; one writer/build per shared tree
 dependencies: `.b-check-topology-local` implementation commit and its immediate plan-only checkpoint
@@ -879,7 +905,7 @@ failure_mapping: Populate exactly the declared `LC_OffsetCheckResult::Reason`: i
 required_case_38: The current engine fixture `basis(100,.05,pi/12,7*pi/4), D=-4` has two weak reference components and `materializeBranches()` returns an open and a closed entity. Convert each materialized spline to normalized cache layout and require each candidate independently to select its unique complete source path and succeed with `tol < 4`; neither may require coverage of the other component. Record exact branch endpoint occurrences and independent analytic geometry bounds. This positive is mandatory.
 endpoint_policy: The checker API remains geometry-only and receives no `LC_OffsetBranchEnd`. Add occurrence-specific `ReferenceTerminal` publication to `ReferenceComponentAnalysis`; each record binds an own-role event occurrence, exact node, exact visible edge and its start/end side, terminal kind (`SourceStart`, `SourceEnd`, `Trim`), and pair-event index for a trim. Source terminals originate only from `ReferenceFreeEnd`. A source or trim occurrence is terminal only after enumerating every same-occurrence continuation, exact paired-occurrence transition in both orientations, and retained-seam transition with incident visible edge and one-sided direction; any compatible retained continuation means it is not a terminal. In particular, a paired occurrence whose local source interval is hidden is still nonterminal when its exact pair has a retained compatible edge. Do not infer a terminal from local hiddenness, node degree, or coordinate equality. `SimpleCusp` is not a terminal kind: the v22 source proof shows every successful interior ellipse cusp is a zero-degree hidden node, while endpoint-coincident cusp roots are not visible incidences. Producer `Cusp` therefore has no admissible terminal for the current ellipse domain; if materialization can emit one, readiness blocks until its source proof and API contract are revised. `Kink` is likewise source-proved unreachable for a smooth ellipse. Materialize the ellipse branches and independently map every endpoint to exactly one source/trim terminal or a proved closed-cycle endpoint. Candidate open-end acceptance requires matching fringe occurrence/node, edge side and one-sided derivative direction, plus proof that no authorized paired-retained continuation exists. If the graph cannot publish this identity, revise API/scope before readiness. Add the exact G2 truncated-lens negative: `E0` alone as an open candidate must refuse because `O1` and `O2` continue through pairs `(O1,O6)` and `(O2,O5)` into retained `E1`, despite local hidden intervals.
 required_case_39_to_46: (39) source-start terminal positive; (40) source-end positive; (41) exact pair-trim positive only when no compatible paired retained continuation exists; (42) the hidden `SimpleCusp` has no visible terminal and an endpoint candidate there refuses; (43) matching-coordinate through-event endpoint refuses; (44) wrong paired occurrence/event orientation refuses; (45) arbitrary nonterminal edge point refuses; (46) G2 upper-lens-only `E0` candidate refuses as an incomplete path because both paired endpoints continue into retained `E1`. Replace any other source-proved-unreachable slot before readiness with a separately named reachable discriminator and document the proof; do not lower the floor.
-blockers: (1) Replace G0-G3 discovery observations with a permanent fixture-authored ledger: expected visible parameter intervals, event/terminal identity keys, candidate branch source intervals, directed transition sequence, each start-cut frontier and one-lap return. The full-precision probe remains diagnostic only. (2) Qualify the two-component/two-branch positive, terminal cases 39-46 and full paired-retained continuation query against materialized outputs; record the G2 truncated-lens negative and cusp-hidden disposition. (3) Validate the positive phase-cut fixture using the explicit outward `theta -> t` formula above, both traversal directions, two one-sided cut proofs and lifted return frontier. (4) Freeze debit semantics: candidate split = two `cacheSpans` plus two vertices, reference split = two vertices, no third parent-pop debit; add atomic multi-counter admission tests, preserve inherited `referenceDepth`, and account every loop/allocation. (5) Obtain separate Gate-1 completeness and plan-correctness dispositions and Gate-3 readiness against the exact v36 review target. Missing persistent entity, DXF/DWG integration, serialization and UI remain later owners, not blockers for this geometry-only leaf.
+blockers: (1) Replace G0-G3 discovery observations with a permanent fixture-authored ledger: expected visible parameter intervals, event/terminal identity keys, candidate branch source intervals, directed transition sequence, each start-cut frontier and one-lap return. The full-precision probe remains diagnostic only. (2) Qualify the two-component/two-branch positive, terminal cases 39-46 and full paired-retained continuation query against materialized outputs; record the G2 truncated-lens negative and cusp-hidden disposition. (3) Validate the positive phase-cut fixture using the explicit outward `theta -> t` formula above, both traversal directions, two one-sided cut proofs and lifted return frontier. (4) Freeze debit semantics: candidate split = two `cacheSpans` plus two vertices, reference split = two vertices, no third parent-pop debit; add atomic multi-counter admission tests, preserve inherited `referenceDepth`, and account every loop/allocation. (5) Obtain separate Gate-1 completeness and plan-correctness dispositions and Gate-3 readiness against the exact v37 review target. Missing persistent entity, DXF/DWG integration, serialization and UI remain later owners, not blockers for this geometry-only leaf.
 completeness_review: PENDING — preflight must trace R02/R05/R12/R13 bidirectionally through producer, typed geometry API, 1A-2 adoption caller, both application read/write lanes, conversion, exact registered tests, independent oracle, target and evidence; reconcile every matrix row and every changed file. Final review must repeat against the frozen implementation diff.
 plan_correctness_review: PENDING — independent reviewer must verify current symbols/owners, API/status/ownership contracts, source-seam and event-transition facts, phase/cut equivalence rule, closure truth table, conservative interval proof/refinement, shared-work debits, resource caps, test-oracle independence, scope and DAG. Resolve findings in this plan before readiness; recheck when runtime evidence changes assumptions.
 correctness_review: PENDING until implementation exists — an independent reviewer challenges each accepted/refused path on frozen hashes, including exact transition authorization, full bidirectional coverage, hidden/retained seam, arbitrary phase, same-cycle cut equivalence versus distinct event cycles, budget exhaustion, atomic result and independent oracle. A preflight review cannot pass this field.
@@ -921,7 +947,7 @@ task_plan:
     work: Author preflight ledgers for visible intervals, stable event/terminal keys, expected transitions, seam disposition, candidate-domain order, every cut/return frontier and independent geometry bounds. Derive them from high-precision/analytic offset equations and materializer provenance, not from checker output. Map each R ID, public reason, boundary/refusal and debit to its separately named Catch2 test, required assertion and owner. Save `independent-transition-cut-ledger.txt` and `terminal-producer-map.txt`; after activation embed the same frozen expected values in the registered test source.
     exit: Every discriminator has an independent expected result/provenance; stable identity is role + certified parameter enclosure + event kind, not runtime numeric IDs alone. Test map requires 46 distinct Catch2 identities (or pre-readiness replacement of a source-proved unreachable terminal slot) and one named test per public reason/budget boundary. No expected path/transition/result is sourced from `checkCache`; no product test edit occurs during preflight.
   - stage: Close readiness gates and activate
-    work: Obtain distinct independent Gate-1 completeness, Gate-1 plan-correctness and Gate-3 readiness dispositions against the exact committed v36 review target. Save the reviewed-plan SHA, product-base SHA and three PASS receipts under `build/evidence/1A-1.b-check-topology-chain/<SLICE>/readiness-<GATE_ID>/`. Review source/requirement trace, paired-retained terminal classification, hidden-cusp disposition, phase arithmetic, debit table, independent ledger, slice-specific selectors/commands, scope, ownership, recipes and recovery rules. If a finding changes the plan, commit a new review-target checkpoint and repeat affected reviews at that exact HEAD. After all pass, record the reviewed-plan SHA in a separate one-file activation checkpoint directly after the reviewed target. Use separate readiness-review and activation IDs for this checkpoint; later product review/validation attempts must not allocate or overwrite a new activation ID. Only then run the per-slice activation receipt recipe and permit Slice A.
+    work: Obtain distinct independent Gate-1 completeness, Gate-1 plan-correctness and Gate-3 readiness dispositions against the exact committed v37 review target. Save the reviewed-plan SHA, product-base SHA and three PASS receipts under `build/evidence/1A-1.b-check-topology-chain/<SLICE>/readiness-<GATE_ID>/`. Review source/requirement trace, paired-retained terminal classification, hidden-cusp disposition, phase arithmetic, debit table, independent ledger, slice-specific selectors/commands, scope, ownership, recipes and recovery rules. If a finding changes the plan, commit a new review-target checkpoint and repeat affected reviews at that exact HEAD. After all pass, record the reviewed-plan SHA in a separate one-file activation checkpoint directly after the reviewed target. Use separate readiness-review and activation IDs for this checkpoint; later product review/validation attempts must not allocate or overwrite a new activation ID. Only then run the per-slice activation receipt recipe and permit Slice A.
     exit: All three receipts bind one reviewed-plan SHA; the activation checkpoint is a direct child of that SHA, contains only this roadmap, records the receipt identities, and passes source-blob/index/status checks. `activated-base.sha` equals the activation checkpoint HEAD; the three product blobs equal `base_sha`; the index is empty and product-source/test files remain untouched. Slice A's product commit must be a direct child of `activated-base.sha`. Otherwise remain WAITING.
   - stage: Slice A — correct shared budget and proof-depth accounting
     work: Under its own fresh Gate-1/Gate-3 activation at the current plan checkpoint, fix atomic multi-counter admission for candidate splits, the bounds-builder two-child debit, local-topology candidate split debits and preservation of inherited `referenceDepth`. Keep the public checker absent. Add exactly these four named Catch2 cases under `[lc-offsetcurve][geometry][cache-budget-accounting]`: `cache split atomically charges two children`, `one-less split budget refuses without partial debit`, `reference depth survives subdivision and enforces combined depth`, and `shared work budget preserves sticky refusal`. Freeze and review only the three owned files; run the focused bounds/local-topology and adjacent selectors in Release and ASan plus required full/fast/qmake6 checks. Commit exactly this independently correct accounting slice, then immediately create and verify its one-file plan checkpoint before any next product edit. Product attempts share the immutable slice activation but use a new `ATTEMPT` and review receipt after every source edit/retry.
@@ -942,8 +968,8 @@ task_plan:
     work: Coalesce only proof-equivalent adjacent subdivisions, preserving child proofs and candidate-cut pairing. After one complete cycle returns to its start, coalesce matching terminal/initial fragments of the same edge across the candidate cut only when their exact reference intervals touch with no hidden/event gap. Memoize states by exact candidate/reference frontiers and directed edge/occurrence/event signature; count distinct complete path classes with multiplicity saturated at two only after equivalence. Require one selected path covering every candidate domain and every selected reference-edge interior once, with exact endpoint/incidence certificates and valid closure flags; do not require unselected branches/components to be consumed.
     exit: Alternate subdivisions and interior cut frontiers of the same fully proved directed cycle produce one semantic result; distinct event/branch sequences return `Topology`, while unresolved cut correspondence returns `Ambiguous`; repeated/missing coverage and extra loops refuse deterministically. Each candidate-start seed must independently return to its own reference frontier after one lap before equivalent-cycle coalescing. A one-lap search has a finite proof of termination under charged state/transition/signature/depth caps.
   - stage: Complete the case matrix and implementation review
-    work: Run every registered discriminator and boundary case. After the last product edit, choose a fresh `ATTEMPT`, freeze the base, exact three-path binary diff and per-file SHA-256 values using `review_freeze_commands` below, then request independent adversarial implementation review of those immutable bytes using the separate analytic/high-precision oracle. Fix findings only within the three owned paths; every edit invalidates the review receipt and requires a new attempt, freeze/review and affected tests. Preserve failed evidence and review receipts.
-    exit: All 46 named chain cases (including distinct terminal-policy tests) and every reason/budget row have nonzero execution/assertions; no false positive, unconditional refusal or partial result survives. Final completeness, plan-correctness and independent implementation-correctness reviews PASS on the same attempt-specific base/diff/file hashes later rechecked by validation.
+    work: Run every registered discriminator and boundary case. After the last product edit, choose a fresh `ATTEMPT`, freeze the base, exact three-path binary diff and per-file SHA-256 values using `review_freeze_commands` below, then request separate final Gate-1 completeness and plan-correctness reviews plus independent adversarial Gate-2 implementation review of those immutable bytes using the independent analytic/high-precision oracle. The freeze recipe emits `final-gate1-review-input.txt` and `gate2-review-input.txt`; reviewers create `gate1-completeness.txt`, `gate1-plan-correctness.txt` and `gate2-implementation.txt`, each bound to the same slice, activation, attempt, base, diff and file manifest. Fix findings only within the three owned paths; every edit invalidates all affected reviews and requires a new attempt, freeze/review and affected tests. Preserve failed evidence and review receipts.
+    exit: All 46 named chain cases (including distinct terminal-policy tests) and every reason/budget row have nonzero execution/assertions; no false positive, unconditional refusal or partial result survives. All three final review receipts say PASS and bind the exact same attempt-specific base/diff/file hashes later rechecked by validation; missing or mismatched Gate-1 receipts make validation fail before it may emit PASS.
   - stage: Freeze and validate the implementation slice
     work: Recompute and compare the reviewed base, exact three-path binary diff and per-file hashes before any build; fail if the index, source, scope or review identity changed. Run the complete Release/ASan, adjacent, full, fast-lane and qmake6 matrix against those bytes. Parse every report, compare baseline skip identities, and recheck the same digests and clean index. Do not stage or commit in this stage.
     exit: Every command exits zero; focused/adjacent selectors are nonempty, at least 46 chain cases are discovered and executed in Release and ASan, assertions are nonzero, no required case is skipped, broad-lane skip identities match baseline, qmake6 passes, frozen/reviewed/validated hashes match and the exact three-path diff passes whitespace checks. Parse all reports before commit eligibility.
@@ -1009,7 +1035,7 @@ activation_commands: |
   shasum -a 256 librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp > "$E/activation-files.sha256"
   git status --short > "$E/activation-status.txt"
 foundation_review_freeze_commands: |
-  # Freeze only A/B after their implementation edits and before independent Gate-2 review.
+  # Freeze only A/B after implementation edits and before final Gate-1 and Gate-2 reviews.
   set -euo pipefail
   WT=/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961
   : "${SLICE:?Set SLICE to A-budget-depth or B-occurrence-terminals}"
@@ -1037,6 +1063,7 @@ foundation_review_freeze_commands: |
   printf 'slice=%s\nactivation_id=%s\nattempt=%s\nreviewed_base_sha=%s\nreviewed_diff_sha256=%s\nreviewed_files_manifest_sha256=%s\n' \
     "$SLICE" "$ACTIVATION_ID" "$ATTEMPT" "$(cat "$R/reviewed-base.sha")" "$(cat "$R/reviewed-diff.sha256")" \
     "$(shasum -a 256 "$R/reviewed-files.sha256" | awk '{print $1}')" > "$R/gate2-review-input.txt"
+  cp "$R/gate2-review-input.txt" "$R/final-gate1-review-input.txt"
   git diff --check -- "${paths[@]}"
 foundation_validation_commands: |
   # Used only by Slices A/B; C uses the attempt-bound full checker recipe below.
@@ -1067,18 +1094,39 @@ foundation_validation_commands: |
   test "$(git diff --name-only | LC_ALL=C sort)" = "$EXPECTED_PATHS"
   test ! -e "$E"
   mkdir -p "$E"
+  for gate in gate1-completeness gate1-plan-correctness gate2-implementation; do
+    cp "$R/$gate.txt" "$E/$gate.txt"
+    shasum -a 256 "$E/$gate.txt" | awk '{print $1}' > "$E/$gate.sha256"
+  done
   shasum -a 256 "${paths[@]}" > "$E/frozen-files.sha256"
   git diff --binary -- "${paths[@]}" | shasum -a 256 | awk '{print $1}' > "$E/frozen-diff.sha256"
-  test -s "$R/gate2-implementation.txt"
-  test "$(grep -E '^status=' "$R/gate2-implementation.txt")" = status=PASS
-  grep -Fx "slice=$SLICE" "$R/gate2-implementation.txt"
-  grep -Fx "reviewed_base_sha=$(cat "$A/activated-base.sha")" "$R/gate2-implementation.txt"
-  grep -Fx "reviewed_diff_sha256=$(cat "$R/reviewed-diff.sha256")" "$R/gate2-implementation.txt"
-  grep -Fx "reviewed_files_manifest_sha256=$(shasum -a 256 "$R/reviewed-files.sha256" | awk '{print $1}')" "$R/gate2-implementation.txt"
-  grep -Fx "activation_id=$ACTIVATION_ID" "$R/gate2-implementation.txt"
-  grep -Fx "attempt=$ATTEMPT" "$R/gate2-implementation.txt"
+  test -s "$E/gate2-implementation.txt"
+  for field in status slice activation_id attempt reviewed_base_sha reviewed_diff_sha256 reviewed_files_manifest_sha256; do
+    test "$(grep -c "^$field=" "$E/gate2-implementation.txt")" -eq 1
+  done
+  test "$(grep -E '^status=' "$E/gate2-implementation.txt")" = status=PASS
+  grep -Fx "slice=$SLICE" "$E/gate2-implementation.txt"
+  grep -Fx "reviewed_base_sha=$(cat "$A/activated-base.sha")" "$E/gate2-implementation.txt"
+  grep -Fx "reviewed_diff_sha256=$(cat "$R/reviewed-diff.sha256")" "$E/gate2-implementation.txt"
+  grep -Fx "reviewed_files_manifest_sha256=$(shasum -a 256 "$R/reviewed-files.sha256" | awk '{print $1}')" "$E/gate2-implementation.txt"
+  grep -Fx "activation_id=$ACTIVATION_ID" "$E/gate2-implementation.txt"
+  grep -Fx "attempt=$ATTEMPT" "$E/gate2-implementation.txt"
   cmp "$E/frozen-files.sha256" "$R/reviewed-files.sha256"
   cmp "$E/frozen-diff.sha256" "$R/reviewed-diff.sha256"
+  for gate in gate1-completeness gate1-plan-correctness; do
+    receipt="$E/$gate.txt"
+    test -s "$receipt"
+    for field in status slice activation_id attempt reviewed_base_sha reviewed_diff_sha256 reviewed_files_manifest_sha256; do
+      test "$(grep -c "^$field=" "$receipt")" -eq 1
+    done
+    grep -Fx "status=PASS" "$receipt"
+    grep -Fx "slice=$SLICE" "$receipt"
+    grep -Fx "activation_id=$ACTIVATION_ID" "$receipt"
+    grep -Fx "attempt=$ATTEMPT" "$receipt"
+    grep -Fx "reviewed_base_sha=$(cat "$A/activated-base.sha")" "$receipt"
+    grep -Fx "reviewed_diff_sha256=$(cat "$R/reviewed-diff.sha256")" "$receipt"
+    grep -Fx "reviewed_files_manifest_sha256=$(shasum -a 256 "$R/reviewed-files.sha256" | awk '{print $1}')" "$receipt"
+  done
   test ! -e "$QMAKE_BUILD"
   run() {
     label=$1; output=$2; shift 2
@@ -1181,8 +1229,13 @@ foundation_validation_commands: |
   cmp "$E/frozen-diff.sha256" "$E/validated-diff.sha256"
   test "$(git diff --name-only | LC_ALL=C sort)" = "$EXPECTED_PATHS"
   git diff --check -- librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp
-  printf 'status=PASS\nslice=%s\nactivation_id=%s\nattempt=%s\nactivated_base_sha=%s\nreviewed_diff_sha256=%s\nvalidated_diff_sha256=%s\n' \
-    "$SLICE" "$ACTIVATION_ID" "$ATTEMPT" "$(cat "$A/activated-base.sha")" "$(cat "$R/reviewed-diff.sha256")" "$(cat "$E/validated-diff.sha256")" > "$E/validation-receipt.txt"
+  for gate in gate1-completeness gate1-plan-correctness gate2-implementation; do
+    test "$(shasum -a 256 "$R/$gate.txt" | awk '{print $1}')" = "$(cat "$E/$gate.sha256")"
+  done
+  printf 'status=PASS\nslice=%s\nactivation_id=%s\nattempt=%s\nactivated_base_sha=%s\nreviewed_diff_sha256=%s\nvalidated_diff_sha256=%s\ngate1_completeness_sha256=%s\ngate1_plan_correctness_sha256=%s\ngate2_implementation_sha256=%s\n' \
+    "$SLICE" "$ACTIVATION_ID" "$ATTEMPT" "$(cat "$A/activated-base.sha")" "$(cat "$R/reviewed-diff.sha256")" \
+    "$(cat "$E/validated-diff.sha256")" "$(cat "$E/gate1-completeness.sha256")" \
+    "$(cat "$E/gate1-plan-correctness.sha256")" "$(cat "$E/gate2-implementation.sha256")" > "$E/validation-receipt.txt"
 foundation_product_commit_commands: |
   # Used only for Slices A/B after review and foundation_validation_commands pass.
   set -euo pipefail
@@ -1196,6 +1249,7 @@ foundation_product_commit_commands: |
     *) exit 2 ;;
   esac
   ROOT="$WT/build/evidence/1A-1.b-check-topology-chain/$SLICE"
+  R="$ROOT/review-$ATTEMPT"
   A="$ROOT/activation-$ACTIVATION_ID"
   E="$ROOT/validation-$ATTEMPT"
   cd "$WT"
@@ -1206,6 +1260,9 @@ foundation_product_commit_commands: |
   grep -Fx "activated_base_sha=$(cat "$A/activated-base.sha")" "$E/validation-receipt.txt"
   grep -Fx "reviewed_diff_sha256=$(cat "$E/validated-diff.sha256")" "$E/validation-receipt.txt"
   grep -Fx "validated_diff_sha256=$(cat "$E/validated-diff.sha256")" "$E/validation-receipt.txt"
+  grep -Fx "gate1_completeness_sha256=$(shasum -a 256 "$R/gate1-completeness.txt" | awk '{print $1}')" "$E/validation-receipt.txt"
+  grep -Fx "gate1_plan_correctness_sha256=$(shasum -a 256 "$R/gate1-plan-correctness.txt" | awk '{print $1}')" "$E/validation-receipt.txt"
+  grep -Fx "gate2_implementation_sha256=$(shasum -a 256 "$R/gate2-implementation.txt" | awk '{print $1}')" "$E/validation-receipt.txt"
   paths=(librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
          librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp
          librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp)
@@ -1298,6 +1355,7 @@ review_freeze_commands: |
   printf 'slice=%s\nactivation_id=%s\nattempt=%s\nreviewed_base_sha=%s\nreviewed_diff_sha256=%s\n' \
     "$SLICE" "$ACTIVATION_ID" "$ATTEMPT" "$(cat "$R/reviewed-base.sha")" "$(cat "$R/reviewed-diff.sha256")" > "$R/gate2-review-input.txt"
   printf 'reviewed_files_manifest_sha256=%s\n' "$(shasum -a 256 "$R/reviewed-files.sha256" | awk '{print $1}')" >> "$R/gate2-review-input.txt"
+  cp "$R/gate2-review-input.txt" "$R/final-gate1-review-input.txt"
   git diff --check -- librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp
 validation: |
   set -euo pipefail
@@ -1313,6 +1371,10 @@ validation: |
   test -d "$R" && test -d "$A"
   test ! -e "$E"
   mkdir -p "$E"
+  for gate in gate1-completeness gate1-plan-correctness gate2-implementation; do
+    cp "$R/$gate.txt" "$E/$gate.txt"
+    shasum -a 256 "$E/$gate.txt" | awk '{print $1}' > "$E/$gate.sha256"
+  done
   cd "$WT"
   test -f "$A/activated-base.sha"
   test "$(git rev-parse HEAD)" = "$(cat "$A/activated-base.sha")"
@@ -1341,15 +1403,32 @@ validation: |
   test -f "$R/reviewed-diff.sha256"
   test -f "$R/reviewed-files.sha256"
   test "$(cat "$R/reviewed-base.sha")" = "$(cat "$A/activated-base.sha")"
-  grep -Fx "slice=$SLICE" "$R/gate2-implementation.txt"
-  grep -Fx "activation_id=$ACTIVATION_ID" "$R/gate2-implementation.txt"
-  grep -Fx "attempt=$ATTEMPT" "$R/gate2-implementation.txt"
-  grep -Fx "reviewed_base_sha=$(cat "$A/activated-base.sha")" "$R/gate2-implementation.txt"
-  test "$(grep -E '^status=' "$R/gate2-implementation.txt")" = status=PASS
+  for field in status slice activation_id attempt reviewed_base_sha reviewed_diff_sha256 reviewed_files_manifest_sha256; do
+    test "$(grep -c "^$field=" "$E/gate2-implementation.txt")" -eq 1
+  done
+  grep -Fx "slice=$SLICE" "$E/gate2-implementation.txt"
+  grep -Fx "activation_id=$ACTIVATION_ID" "$E/gate2-implementation.txt"
+  grep -Fx "attempt=$ATTEMPT" "$E/gate2-implementation.txt"
+  grep -Fx "reviewed_base_sha=$(cat "$A/activated-base.sha")" "$E/gate2-implementation.txt"
+  test "$(grep -E '^status=' "$E/gate2-implementation.txt")" = status=PASS
   cmp "$R/reviewed-diff.sha256" "$E/frozen-diff.sha256"
   cmp "$R/reviewed-files.sha256" "$E/frozen-files.sha256"
-  grep -Fx "reviewed_diff_sha256=$(cat "$R/reviewed-diff.sha256")" "$R/gate2-implementation.txt"
-  grep -Fx "reviewed_files_manifest_sha256=$(shasum -a 256 "$R/reviewed-files.sha256" | awk '{print $1}')" "$R/gate2-implementation.txt"
+  for gate in gate1-completeness gate1-plan-correctness; do
+    receipt="$E/$gate.txt"
+    test -s "$receipt"
+    for field in status slice activation_id attempt reviewed_base_sha reviewed_diff_sha256 reviewed_files_manifest_sha256; do
+      test "$(grep -c "^$field=" "$receipt")" -eq 1
+    done
+    grep -Fx "status=PASS" "$receipt"
+    grep -Fx "slice=$SLICE" "$receipt"
+    grep -Fx "activation_id=$ACTIVATION_ID" "$receipt"
+    grep -Fx "attempt=$ATTEMPT" "$receipt"
+    grep -Fx "reviewed_base_sha=$(cat "$A/activated-base.sha")" "$receipt"
+    grep -Fx "reviewed_diff_sha256=$(cat "$R/reviewed-diff.sha256")" "$receipt"
+    grep -Fx "reviewed_files_manifest_sha256=$(shasum -a 256 "$R/reviewed-files.sha256" | awk '{print $1}')" "$receipt"
+  done
+  grep -Fx "reviewed_diff_sha256=$(cat "$R/reviewed-diff.sha256")" "$E/gate2-implementation.txt"
+  grep -Fx "reviewed_files_manifest_sha256=$(shasum -a 256 "$R/reviewed-files.sha256" | awk '{print $1}')" "$E/gate2-implementation.txt"
   run() {
     label=$1
     output=$2
@@ -1442,8 +1521,13 @@ validation: |
   test "$(git diff --binary -- librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp | shasum -a 256 | awk '{print $1}')" = "$(cat "$R/reviewed-diff.sha256")"
   cmp "$R/reviewed-files.sha256" "$E/validated-files.sha256"
   git diff --check -- librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp
-  printf 'status=PASS\nslice=%s\nactivation_id=%s\nattempt=%s\nactivated_base_sha=%s\nreviewed_diff_sha256=%s\nvalidated_diff_sha256=%s\n' \
-    "$SLICE" "$ACTIVATION_ID" "$ATTEMPT" "$(cat "$A/activated-base.sha")" "$(cat "$R/reviewed-diff.sha256")" "$(cat "$E/frozen-diff.sha256")" > "$E/validation-receipt.txt"
+  for gate in gate1-completeness gate1-plan-correctness gate2-implementation; do
+    test "$(shasum -a 256 "$R/$gate.txt" | awk '{print $1}')" = "$(cat "$E/$gate.sha256")"
+  done
+  printf 'status=PASS\nslice=%s\nactivation_id=%s\nattempt=%s\nactivated_base_sha=%s\nreviewed_diff_sha256=%s\nvalidated_diff_sha256=%s\ngate1_completeness_sha256=%s\ngate1_plan_correctness_sha256=%s\ngate2_implementation_sha256=%s\n' \
+    "$SLICE" "$ACTIVATION_ID" "$ATTEMPT" "$(cat "$A/activated-base.sha")" "$(cat "$R/reviewed-diff.sha256")" \
+    "$(cat "$E/frozen-diff.sha256")" "$(cat "$E/gate1-completeness.sha256")" \
+    "$(cat "$E/gate1-plan-correctness.sha256")" "$(cat "$E/gate2-implementation.sha256")" > "$E/validation-receipt.txt"
 product_commit_commands: |
   # Run only after every review/readiness/validation gate passes; validation above never stages or commits.
   set -euo pipefail
@@ -1453,6 +1537,7 @@ product_commit_commands: |
   : "${ACTIVATION_ID:?Use the immutable activation ID for Slice C}"
   : "${ATTEMPT:?Use the validated product-review attempt}"
   A="$ROOT/activation-$ACTIVATION_ID"
+  R="$ROOT/review-$ATTEMPT"
   E="$ROOT/validation-$ATTEMPT"
   cd "$WT"
   paths=(librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
@@ -1468,6 +1553,9 @@ product_commit_commands: |
   grep -Fx "activated_base_sha=$(cat "$A/activated-base.sha")" "$E/validation-receipt.txt"
   grep -Fx "reviewed_diff_sha256=$(cat "$E/frozen-diff.sha256")" "$E/validation-receipt.txt"
   grep -Fx "validated_diff_sha256=$(cat "$E/frozen-diff.sha256")" "$E/validation-receipt.txt"
+  grep -Fx "gate1_completeness_sha256=$(shasum -a 256 "$R/gate1-completeness.txt" | awk '{print $1}')" "$E/validation-receipt.txt"
+  grep -Fx "gate1_plan_correctness_sha256=$(shasum -a 256 "$R/gate1-plan-correctness.txt" | awk '{print $1}')" "$E/validation-receipt.txt"
+  grep -Fx "gate2_implementation_sha256=$(shasum -a 256 "$R/gate2-implementation.txt" | awk '{print $1}')" "$E/validation-receipt.txt"
   test "$(git diff --name-only | LC_ALL=C sort)" = "$EXPECTED_PATHS"
   cmp "$E/frozen-files.sha256" "$E/validated-files.sha256"
   test "$(git diff --binary -- "${paths[@]}" | shasum -a 256 | awk '{print $1}')" = "$(cat "$E/frozen-diff.sha256")"
@@ -1536,7 +1624,7 @@ edits began at `c3f091c3f6f2367dae13f631b1e72487528672d2`. Frozen final validati
 validated source; no product edit followed validation. `.b-check-layout` remains waiting for a fresh activation check
 after this checkpoint commit.
 
-```yaml
+```text
 slice: 1A-1.b-ref-components
 state: done — implementation `9682d5cac65f30cfd86aa10556678ceb88b1448b`, attempt-8 evidence, 2026-10-16
 readiness: ready — all implementation gates passed before the product commit
@@ -1645,7 +1733,7 @@ Only satisfied dependencies promote a card to `ready`; future recipes are `waiti
 | 1A-1.b-check-layout / .b-ref-components | Done at `37462efc8`; bounded degree-1/degree-3 ClampedOpen layout inspection, checked formulas, exact knot-group/finite planar/unit-weight validation, actual parameter-interval span extraction, atomic shared-budget admission, and checker-only cap rename. No public geometry/topology-validity claim. | 16 registered cases/3,311 assertions pass Release/ASan; adjacent 94/754,288 both builds; full Release 3,874 cases/7,346,172 assertions/74 unchanged skips; DXF/DWG fast Release/ASan pass with 3/4 expected skips. Independent review clear; frozen hashes and reports in §0.5. Bounds is also complete at `ce1ed5192`; the local-topology successor is gated by v26 reconciliation, and global chain remains a later child. R01/R02/R12/R13. |
 | 1A-1.b-check-bounds / .b-check-layout | Done at `ce1ed5192`: proof-only bounded cache/reference subcurve comparisons using exact degree-1 chords, interval de Casteljau cubic error, exact-offset jet interpolation, outward chord Hausdorff bounds, restricted-source clearance and complete event-node/fringe witnesses. Preserve all edge/node alternatives; no parameter correspondence, injectivity or public-validity claim. | 25 focused test cases/46,104 assertions Release/ASan; adjacent selector lists 110 test functions and its JUnit receipts record 145 invocations/757,599 assertions; full Release 4,793/7,392,350 with 74 baseline-identical skips; DXF/DWG fast Release/ASan with baseline-identical 3/4 skips. The independent rational interval oracle encloses complete noncircular Q ranges, chord residuals and all four returned endpoint fields. Exact/one-less/pre-spent/sticky caps refuse without partial witnesses. R02/R12/R13. |
 | 1A-1.b-check-topology-local / .b-check-bounds | Done — implementation `ef3ba756b52796c02b8490caedcaa48b8db69605` plus verified v29 plan-only checkpoint `9c06e9c77b313b62cc20e9ec39c22952fee501f2` | Shared geometry/clearance pair proof, strict local injectivity, exact endpoint pairing, genuine root-fringe incidence certificates, whole-cache reversal and one retained budget. Same-image folded cubic, constant span and malformed/cap cases refuse atomically. This leaf exposes no global/public cache validity; exact gates and receipts are in its active card. R02/R05/R12/R13. |
-| 1A-1.b-check-topology-chain / .b-check-topology-local | Waiting at v36 for permanent independent fixture/oracle ledger and fresh Gate-1/Gate-3 decisions; v33 max-digits report remains discovery-only | Publish exact occurrence terminals; prove one unique candidate-compatible producer path, exact ordered non-reusing traversal, selected-path coverage, both-sided phase cuts, one-lap return, multi-component and branch alternatives, transition identity and reason mapping. Complete geometry `checkCache`; entity adoption remains 1A-2. Proper subset, missing tail, extra loop, branch switch, wrong reversal, distinct cycle, nonterminal endpoint, ambiguity and cap exhaustion refuse atomically. R02/R05/R12/R13. |
+| 1A-1.b-check-topology-chain / .b-check-topology-local | Waiting at v37 for permanent independent fixture/oracle ledger and fresh Gate-1/Gate-3 decisions; v33 max-digits report remains discovery-only | Publish exact occurrence terminals; prove one unique candidate-compatible producer path, exact ordered non-reusing traversal, selected-path coverage, both-sided phase cuts, one-lap return, multi-component and branch alternatives, transition identity and reason mapping. Complete geometry `checkCache`; entity adoption remains 1A-2. Proper subset, missing tail, extra loop, branch switch, wrong reversal, distinct cycle, nonterminal endpoint, ambiguity and cap exhaustion refuse atomically. R02/R05/R12/R13. |
 | 1A-1.c / all .b children | Qualify defaults and tolerance-floor policy against current engine/adversarial corpus; record seeds, statuses/work/cost and resolve required-success disagreements. Retain the source-qualified interior-fallback native reachability coverage limit; investigate natural cases or prove limits without a test backdoor. | Existing offset/topology regressions, independent geometry oracle, every cap exit, near-critical success, file-rounding margins; no timing assertion or unearned fallback-coverage claim. R01/R02/R12. |
 | 1E-2.safety / all 1E-1 children | Add schema/raw-carrier hostile cases, unknown-tail/flags edit policy, geometry demotion and late-failure save tests. Scope schema/filter fixes only to demonstrated violations. | Both formats, second save/reload, foreign data unchanged, raw 3D/repair inputs never editable; transaction checks for existing/absent target and document state. R07/R08/R14/R15. |
 | 1E-2.fixtures / .safety | Commit independently authored input fixtures for every schema-capable application reader version, each covering degree-1 and degree-3 cache carriers; include input-only legacy DWG R13/R14, binary DXF R14/R2018 and R12 geometry-only input. Record reproducible provenance, producer/version and expected definitions. | Every reader version consumes a checked-in fixture not emitted by LibreCAD's writer under test; both degrees are asserted. Separately inspect writer output; immutable hashes/provenance, fast-lane registration, full and both fast lanes. Missing external fixtures leave their reader rows explicitly incomplete. Same-run writer/reader payloads alone do not close reader coverage. R07/R11/R14. |
@@ -6844,3 +6932,46 @@ recipes, and Gate 3 **NOT READY** until the independent fixture/terminal ledgers
   structure, all embedded Bash recipes, nested Python validators, shell quoting, receipt/path consistency and direct
   parent/path expectations are checked before checkpoint commit. No C++ build/test success is claimed. Preserve
   pre-existing untracked `build-asan/`; v36 itself remains a review target and is not an activation receipt.
+
+#### v36 → v37 (2026-10-16; plan-amendment lifecycle and live-state reconciliation)
+
+The v36 plan already defined the five requested controls, but its amendment process and final Gate-1 validation handoff
+were less explicit than the product-slice process implied. The first v37 review also found a stale live reference, no
+candidate-plan digest comparison, and validation recipes that did not require final Gate-1 receipts. A structural audit
+then found five prose-heavy historical/current card records mislabeled as YAML; these are now explicitly fenced as text,
+while the machine-readable YAML template remains YAML. v37 retains the five-gate architecture and tightens only these
+governance handoffs; it changes no
+geometry contract, test floor, product ownership, format requirement, or implementation status.
+
+- **1. Completeness and plan-contract correctness:** Gate 1 remains two separate dispositions. The plan-only amendment
+  path now requires updating normative contract, active card, current status/history and affected DAG/readiness rows as
+  one coherent revision, while preserving prior outcomes as dated history. The active topology row/card now bind to
+  v37 and identify v36 `a4606c9feb63044163dcca7822dc0226de381433` as the committed parent. Final Gate-1 reclosure now
+  has two exact receipt files, each bound to the same attempt/base/diff/file manifest; A/B/C validators snapshot both
+  plus the Gate-2 receipt, require one PASS status and one of each identity field, and recheck source receipt hashes
+  before producing a passing validation receipt and again before product commit.
+- **2. Implementation correctness:** Gate 2 remains distinct from plan correctness and cannot be closed by this
+  documentation-only change. It still requires a reviewer of the exact frozen implementation, independent oracle,
+  positive/refusal coverage, and digest-bound tests after implementation. Its review receipt remains separate from
+  the two final Gate-1 receipts.
+- **3. Sub-plan and readiness:** Added a bounded standalone plan-amendment lifecycle and stated that a plan-only
+  checkpoint never activates product work. The topology card remains `WAITING`: the independent transition/cut and
+  terminal-producer ledgers, then fresh exact-v37 Gate-1 and Gate-3 dispositions, are still required before a separate
+  activation checkpoint and Slice A. Corrected the live card's last `v36 HEAD` readiness reference.
+- **4. Commit after each slice:** Preserved the one product-only commit per executable slice and immediate separate
+  plan-only direct-child checkpoint. A standalone amendment uses a one-roadmap-file commit and must verify parent,
+  path set, committed blob against a pre-stage candidate SHA-256, and unrelated-worktree preservation; it cannot count
+  as a product-slice commit. Product checkpoint recipes hash the candidate plan blob before staging and compare it
+  with the committed blob after hooks.
+- **5. Self-update after committing:** Gate 5 now reconciles all affected descendants and explicitly scans live-state
+  summaries/cards/`next` fields for stale versions, SHAs, and readiness claims. Superseded claims remain only in dated
+  history. Readiness is recomputed transitively after affected source or contract changes; no stale `ready` state can
+  propagate through the DAG. Product plan-checkpoint commands already hash the candidate plan and verify the committed
+  blob; this is now also an explicit Gate-5 invariant.
+- **Validation:** `git diff --check` passes; 40 Markdown fence markers form 20 balanced code blocks; the one machine-
+  readable YAML block parses, all five fenced Bash examples pass `bash -n`, and both embedded Python report validators
+  compile. The five historical/current key-value card records use text fences and retain their required fields. Gibbs's
+  final read-only review after this correction found no actionable issue; the exact-HEAD review required after the
+  plan-only commit remains open. The byte-bound plan-only commit postconditions are pending execution below;
+  readiness for topology implementation remains WAITING. No C++ build/test is required or claimed. Product files and
+  ignored evidence are unchanged; preserve untracked `build-asan/`.
