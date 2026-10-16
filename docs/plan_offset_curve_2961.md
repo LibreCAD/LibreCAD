@@ -24,11 +24,11 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v17**, 2026-10-16. This file is the implementation source of truth. Every implementation slice ends with a
+Plan **v18**, 2026-10-16. This file is the implementation source of truth. Every implementation slice ends with a
 verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE — event isolation is committed at `dff307668`; exact visibility and incidence-preserving component analysis is committed at `9682d5cac` after attempt-8 Release/ASan/full/format validation and independent P1 re-review. The v16 implementation reconciliation is committed at `c6e32c17f`. This v17 plan-only review corrects stale scope claims and strengthens the five execution gates; it does not change product code or activate a product slice. `.b-check-layout` is the next candidate and remains waiting for its explicit producer-shape/API readiness probe at the post-v17 checkpoint HEAD. Cache validation, remaining geometry, entity, file, UI and phase-2 work remain incomplete.**
+Status: **IMPLEMENTATION INCOMPLETE — event isolation is committed at `dff307668`; exact visibility and incidence-preserving component analysis is committed at `9682d5cac` after attempt-8 Release/ASan/full/format validation and independent P1 re-review. The v16 implementation reconciliation is committed at `c6e32c17f`; the v17 plan-only checkpoint is committed at `22317685c`. This v18 review resolves the producer-shape contradiction by preserving straight results as exact degree-1 cache splines and makes degree-1/degree-3 scope consistent through validation and persistence. No product code is changed. `.b-check-layout` is revised for both cache degrees; activation still requires a post-v18 checkpoint re-read and source/API probe. Cache validation, remaining geometry, entity, file, UI and phase-2 work remain incomplete.**
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -85,6 +85,15 @@ already completed `.a` section and `.b-check-layout`, and found that `LC_CurveOf
   branch whose reachability and R05 disposition for the ellipse-offset domain had not been resolved. v17 moves future
   cache-check work to the `.b-check` children, makes producer shape a bounded entry probe, and strengthens the evidence needed
 for each completeness, correctness, readiness, commit and post-commit update gate. Product code is unchanged.
+v18 closes the resulting contract question against actual producer source: the all-straight output branch is intentional
+and emits `RS_Line` for one open span or a degree-1 `ClampedOpen RS_Spline` otherwise, so no reachability proof or
+plain-fallback exception is needed. Since R05/D16 require editable adoption for a valid one-piece result, the persistent
+curve boundary will normalize an `RS_Line` exactly to a degree-1 spline cache; the shared cache layout/checker supports
+degree 1 and degree 3 only. The plan now carries degree-specific controls, knots, span extraction, bounds, schema-import
+eligibility, writer/readback assertions and the R12 geometry-only case through their owning leaves. The checker's legacy
+`maxCubicPieces` name is renamed to `maxCacheSpans` in its own API only; the separate curve-offset producer budget keeps
+its cubic-approximation terminology. The existing five gate records remain distinct and the next leaf stays gated on
+post-checkpoint source/API verification. No product code is changed.
 
 Appendix E lists what changed and why. This plan remains a proposal for a new persistent `LC_OffsetCurve`; the
 current engine's internal `LC_CurveOffset` is not that entity. **Line numbers and type-site counts are historical
@@ -309,7 +318,7 @@ not validation evidence. Aggregates are never executable cards or extra implemen
 | 1A-1.b-ref-providers | Done at9c27e2980 | Owned immutable offset/cutter composite, true-pi bounds/injectivity, both-hook remapping and exact collapsed-opposite exclusion;16/299294 Release/ASan plus critical/core/broad/full/fast gates pass. No event graph. |
 | 1A-1.b-ref-contacts | Done at92ca5e445 | Additive contact factory, immutable whole-box support/radial/critical-gap proofs and diagnostic intervals;17/4383 Release/ASan plus old97/586799 and all broad/full/fast gates pass, legacy behavior retained. |
 | 1A-1.b-ref-events-isolate | Done at dff307668 | Owned combined-event result; strict anchored roots, critical/free/seam occurrences, proved role/parameter order, exact-only same-role identity, tol/16 rounded world-node proof, and cumulative shared-budget refusal. At this checkpoint, multi-pair shared-own success was not separately fixture-pinned; `.b-ref-components` later added the successful shared-occurrence proof. Tangent fixture remains a bounded no-partial refusal at the strict-query depth cap, not an identity/order success. |
-| 1A-1.b-check | Aggregate; `.b-ref` complete, cache-check children pending | Execute `.b-check-layout → .b-check-bounds → .b-check-topology` (§0.6); `.b-check-layout` is waiting for its producer-shape/API readiness probe. No successful public validator before all acceptance checks exist. |
+| 1A-1.b-check | Aggregate; `.b-ref` complete, cache-check children pending | Execute `.b-check-layout → .b-check-bounds → .b-check-topology` (§0.6); layout now covers exact line normalization and degree-1/degree-3 data, but remains waiting for the post-checkpoint source/API activation probe. No successful public validator before all acceptance checks exist. |
 | 1A-1.c | Waiting for .b | Add adversarial and current-engine corpus checks, failure budgets and performance measurements. Record acceptance/refusal results; endpoints and midpoint checks alone cannot close this parent step. |
 | 1A-2 | Waiting for 0B-3 and all 1A-1 children | Add type, core class, complete consistency stamp, transforms, clone/INSERT/write dispatch and interim UI guard. Compile CMake and update qmake lists; run copy/ownership and enum coverage. |
 | 1A-3 | Waiting for 1A-2 | Implement definition-backed grips/snaps with runtime consistency checks and separate cache closure. Test closed results from arc sources and stale cache fallback. |
@@ -321,7 +330,7 @@ not validation evidence. Aggregates are never executable cards or extra implemen
 | 1E-1.b | Waiting for .a | Preflight complete spline/metadata before every writer return; integrate both writers and R12 downgrade; inspect actual payloads and existing transactional failure propagation. |
 | 1E-1.c | Waiting for .b | Integrate common import adoption and codec regressions; verify both formats restore editable curves without regeneration. Update both 0B round-trip expectations. |
 | 1E-2 | Aggregate; waiting for all 1E-1 children | Execute `.safety → .fixtures → .copy` (§0.6), with malformed/raw carrier, unknown-tail, binary/provenance and copy/paste tests. |
-| 1E-3 | Aggregate; waiting for 1E-2 and 0B-3 | Execute `.matrix → .conversion` (§0.6); all 14 versions, binary DXF, both conversion directions and edited reopen; nonzero DWG coverage. |
+| 1E-3 | Aggregate; waiting for 1E-2 and 0B-3 | Execute `.matrix → .conversion` (§0.6); all 14 application rows, legacy DWG R13/R14 input-only, independent degree-1/degree-3 reader fixtures, binary DXF, both conversion directions and edited reopen; nonzero DWG coverage. |
 | 1G-1 | Waiting for 1C-1 and 1D | Commit type name and match descriptor together, then associated information/menu/selection cases. Check registry completeness and spline-tool exclusion. |
 | 1G-2.a | Waiting for 1G-1 | Add Changed/Unchanged/Refused outcomes and one-original/latest-pending-clone transactions to generic properties, with rapid-edit/ownership regression tests. Existing provider defaults remain compatible. |
 | 1G-2.b | Waiting for .a | Add offset provider, messages and busy-cursor guard; use runtime validity checks and existing UI conventions. |
@@ -454,7 +463,7 @@ Before promoting a leaf card, check these concrete prerequisites:
 | 1A-1.b-budget | Done; original candidate-allocation/refinement accounting mismatch resolved | Nine cap/index cases, exposed consumed work, all offset/ASan/full/fast-lane gates recorded at 10c6bff46 |
 | 1A-1.b-progress | Done at fb70681e2 | Underflow/non-finite/rounded-growth cases, old probe and all required broad checks passed |
 | 1A-1.b-ref | Foundations/refinements/providers/contacts/event isolation/components done | `.b-ref-components` committed at `9682d5cac65f30cfd86aa10556678ceb88b1448b`; attempt-8 receipts are source matched. The v16 plan checkpoint is committed at `c6e32c17f`. The aggregate is complete; `.b-check` is separate and incomplete. Attempt 6 is historical red and attempt 7 pre-fix green. |
-| 1A-1.b-check-layout | Read-only source/API preflight against actual post-v17 HEAD; resolve degree-1/line producer reachability and disposition against R05's one-piece adoption requirement, raw cache representation and budget admission | Bounded producer-output probe across admitted ellipse domains; explicit editable-vs-plain outcome for every result kind; exact spline-data/knot contract; no stale `.a` ownership; positive/refusal cases and a nonzero selector target |
+| 1A-1.b-check-layout | Read-only source/API preflight against actual post-v18 HEAD; verify the planned exact line-to-degree-1 normalization boundary, degree-1/degree-3 raw cache eligibility and generic span budget semantics | Bounded producer-shape confirmation from source/callers; explicit editable disposition for `RS_Line`, degree-1 and degree-3 spline results; degree-specific spline-data/knot contract; no stale `.a` ownership; positive/refusal cases and a nonzero selector target |
 | 1A-1.b-check | Layout producer contract is proven; reference analysis is complete and ambiguous topology refuses | Whole-span distance bounds, bidirectional coverage, malformed/layout cases, malicious subset/retrace tests and atomic limit refusal |
 | 1A-2 | Guard and all geometry children are done; no raw constructor bypass exists | Current-header compile, complete stamp mutation cases, transform overflow and ownership checks |
 | 1E-1.a | Typed schema grammar, malformed/unknown ownership and flag consistency are settled | Codec-independent exact-code/type tests, duplicate/malformed cases and bounded tails |
@@ -468,32 +477,32 @@ Before promoting a leaf card, check these concrete prerequisites:
 slice: 1A-1.b-check-layout
 state: pending
 readiness: waiting
-candidate_code_base_sha: c6e32c17f2d36dff6f1bef4c9bc90f23caf19c87
-activation_base_sha: refresh after the v17 plan-only checkpoint is committed; require no intervening product change
+candidate_code_base_sha: 22317685c6a0fdba3b341cc138115750e6b0a5b6
+activation_base_sha: refresh after the v18 plan-only checkpoint is committed; require no intervening product change
 owner: Gibbs owns the scoped implementation after activation; coordinator owns the plan, builds, independent review, evidence and Git
-dependencies: 1A-1.b-ref-components at 9682d5cac65f30cfd86aa10556678ceb88b1448b; v16 plan checkpoint at c6e32c17f2d36dff6f1bef4c9bc90f23caf19c87
+dependencies: 1A-1.b-ref-components at 9682d5cac65f30cfd86aa10556678ceb88b1448b; v17 plan checkpoint at 22317685c6a0fdba3b341cc138115750e6b0a5b6
 requirements: R01, R02, R12, R13
-source_facts_at_candidate_base: LC_OffsetCheckLimits/WorkBudget are in lc_ellipseoffsetgeometry.h; RS_SplineData carries type, degree, controls, knots, weights, fit points and saved-open fields; the LC_CurveOffset result builder makes degree-3 ClampedOpen data with repeated triple interior knots and unit weights on its cubic branch, but its allStraight branch can return RS_Line or a degree-1 spline. Reachability for admitted ellipse inputs is unproven.
-contract: Layout-only classification and bounded admission of a complete cubic cache representation. This is not geometric validation and must not expose a successful checkCache result. The line/degree-1 result disposition is unresolved until reconciled with R05: it must not be silently downgraded to plain if one-piece adoption is required.
+source_facts_at_candidate_base: `LC_CurveOffset::chainEntity` emits an `RS_Line` for one open straight chain; other all-straight chains become degree-1 `ClampedOpen RS_Spline` with endpoint knot multiplicity 2 and internal multiplicity 1; non-straight chains become degree-3 with multiplicity 4 at ends and 3 internally; both spline paths use complete unit weights. `RS_Spline::setDegree()` supports degrees 1-3; `RS_SplineData::degree` itself is an unconstrained size, and `RS_Spline::validate()` checks generic size, positive weights, monotone knots and clamping but does not enforce finite planar unit-weight cache data, exact knot groups or the cache's accepted-degree set. `LC_OffsetCheckLimits::maxCubicPieces` and `WorkBudget` count cache pieces in this geometry checker; the unrelated engine output budget also uses that identifier for generated cubic approximation pieces.
+contract: Layout-only classification and bounded admission of a normalized degree-1 or degree-3 ClampedOpen cache representation. Degree-1 and degree-3 are the only accepted cache degrees. An `RS_Line` result is converted exactly to a degree-1 spline at the persistent-curve engine-result normalization boundary owned by 1B; this checker consumes normalized `RS_SplineData` and does not perform entity conversion. This is not geometric validation and must not expose a successful `checkCache` result.
 invariants: No refit/regeneration; no projection of nonzero Z; no padding/repair of missing controls, knots or weights; shared-budget debits happen once; no partial span output on refusal; layout does not infer closure/topology from flags alone.
-blockers: Resolve producer-output disposition and raw RS_SplineData eligibility; after the v17 plan commit, confirm exact HEAD and reread source/API facts. No product edits until both close.
+blockers: After the v18 plan commit, confirm exact HEAD and reread source/API facts; confirm the persistent entity/adoption class is still future 1B work, and that its planned line normalizer runs before this cache checker; run the bounded producer-shape confirmation. No product edits until these checks and the cache-degree contract close.
 files: Product/tests only lc_ellipseoffsetgeometry.h, lc_ellipseoffsetgeometry.cpp and tests/lc_offsetcurve_geometry_tests.cpp. Read-only preflight: lc_curveoffset.cpp, rs_spline.h/.cpp, CMakeLists.txt and librecad/src/src.pro. If evidence requires a producer change or additional product path, revise/split this card before coding.
 entry_probe:
-  - Inspect the persistent-curve creation call path and enumerate result RTTI/degree from actual ellipse-offset engine calls over admitted source/distance boundaries, whole and arc sweeps, both sides, near-cusp/trim cases and near-linear cases.
-  - Decision rule: if source reasoning proves non-cubic results unreachable for every admitted ellipse input, keep degree-3 ClampedOpen as the only cache form. If reachable, reconcile with R05: an explicitly permitted plain fallback must be reported/tested as such; if one-piece adoption requires editability, revise the cache representation (or producer contract) and split/replan before readiness. A finite sample cannot prove branch unreachability. If neither proof nor contract disposition closes, remain waiting.
-  - Confirm the raw-to-normalized import boundary: absent raw weights may be materialized only after raw-carrier eligibility in 1E-1.c; the normalized cache reaching this layout gate has one complete weight per control.
-  - Record inspected revision/files, probe inputs/results, result types/degrees, limits and decision. If producer/caller behavior changed since c6e32c17f, update this plan and affected descendants before editing.
-api_preflight: RS_Spline::validate() checks size, positive weights, knot monotonicity and clamping, but does not establish finite planar unit-weight cubic-cache layout. m_closedFlag/m_periodicFlag may coexist with ClampedOpen data and are allowed through layout; topology later validates endpoint/closure semantics.
+  - Inspect `chainEntity`, `createEntities`, current entity/adoption declarations and SPLINE import call sites at the exact activation SHA. Confirm there is not already a persistent offset-curve implementation/call site that changes this scope; line conversion remains an explicitly owned 1B task and must precede this checker when implemented. Use producer tests only to confirm the source-derived shapes, not to prove that a supported branch is unreachable.
+  - Decision rule: every emitted shape has an editable path: line -> exact degree-1 ClampedOpen data `[P0,P1]`, knots `[0,0,1,1]`, weights `[1,1]`; degree-1 spline -> validated degree-1 layout; degree-3 spline -> validated cubic layout. Unsupported/malformed layouts refuse adoption; do not downgrade a valid supported degree to plain. If a producer shape outside these forms is found, revise the persistent-cache representation and dependent cards before readiness.
+  - Confirm raw-to-normalized import: absent raw weights may be materialized only after raw-carrier eligibility in 1E-1.c; normalized cache data has exactly one complete weight per control. Degree-specific raw control/knot counts are validated before XY projection or repair.
+  - Record inspected revision/files, producer result shapes, normalization location, limits and any mismatch. If producer/caller behavior changed since `22317685c6a0fdba3b341cc138115750e6b0a5b6`, update this plan and affected descendants before editing.
+api_preflight: `RS_Spline::setDegree()` constrains normal engine-created degrees to 1-3; `RS_SplineData` is a raw struct and `RS_Spline::validate()` does not independently enforce the proposed degree set, finite planar/unit-weight cache layout or exact knot groups. This cache accepts degree 1 or 3 only. `m_closedFlag`/`m_periodicFlag` may coexist with ClampedOpen data and are allowed through layout; topology later validates endpoint/closure semantics.
 subplan:
   - stage: Close entry probe and freeze contract
-    work: Resolve producer shape/disposition, persistent-curve caller, R05 one-piece adoption semantics, normalization boundary, flags and exact supported knot/data forms against the current source.
-    exit: Every reachable producer result has a disposition justified by the requirement: editable cache, explicitly permitted plain fallback, or a revised representation slice. No unresolved decision changes scope.
+    work: Verify producer shape, current absence/presence of a persistent-curve caller, planned R05 one-piece adoption semantics, 1B line-normalization boundary, flags and exact degree-specific knot/data forms against current source plus the roadmap contract.
+    exit: Every producer shape has a lossless editable representation or an identified contract conflict that is resolved by revising dependent plan sections before readiness; no valid line or supported spline degree silently falls back to plain geometry.
   - stage: Implement bounded layout inspection
-    work: After minimum-size and modulo checks, derive n; check arithmetic for 3n+1 controls and 3n+5 knots before use; cap n by maxCubicPieces and controls by maxVertices before any helper-created dynamic allocation; debit n pieces and 3n+1 inspected controls once in the shared WorkBudget. Factor count arithmetic into a nonallocating helper so size_t-boundary tests require no giant vectors. Require degree 3, ClampedOpen, empty fitPoints, default/empty saved-open payload, finite XY with Z exactly zero, complete finite weights exactly 1, finite knots with four equal endpoint values and triple internal groups, and strictly increasing group representatives. Do not use an absolute tolerance that merges narrow valid knot intervals. Permit finite positive affine knot reparameterization; span extraction uses actual knots, never assumed integer parameters. Do not reject m_closedFlag/m_periodicFlag at this layer.
+    work: Rename only the checker limit/work counter from `maxCubicPieces`/`cubicPieces` to `maxCacheSpans`/`cacheSpans`; leave the distinct curve-offset producer budget names untouched. After minimum-size checks derive `n` without underflow: degree 1 uses `controlCount-1`; degree 3 first requires `(controlCount-1)%3==0`, then uses `(controlCount-1)/3`. Checked helpers verify exact degree-specific knot counts before any derived allocation: degree 1 has `n+1` controls and `n+3` knots, two equal endpoint knots and single internal knots; degree 3 has `3n+1` controls and `3n+5` knots, four equal endpoint knots and triple internal knots. Cap spans by `maxCacheSpans` and controls by `maxVertices` before scanning/materializing. Preflight both remaining budget dimensions before debiting either; if either is insufficient, latch `LimitExceeded` with neither debit applied. Once admitted, debit `n` spans and all inspected controls once; subsequent failures retain those spent debits. Factor each count formula into a nonallocating helper for size_t-boundary tests. Require ClampedOpen, empty fitPoints, default/empty saved-open payload, finite XY with Z exactly zero, complete finite weights exactly 1, finite knots with exact repeated groups and strictly increasing representatives. Do not use an absolute tolerance that merges narrow valid intervals. Permit finite positive affine knot reparameterization; degree-1 span `k` uses controls `[k,k+1]`, cubic span `k` uses `[3k..3k+3]`; return each actual knot interval. Do not reject `m_closedFlag`/`m_periodicFlag` at this layer.
     exit: Return only layout status and span count; every scan/extraction is bounded and no incomplete geometric-validity API is published.
   - stage: Add focused cases
-    work: Exercise actual cubic producer output and malformed RS_SplineData: multi-span and affine-rescaled knot domains; synthetic size_t-boundary count arithmetic without allocating huge vectors; short/mismatched arrays; wrong degree/type; malformed groups; fit/saved-open payload; nonfinite/Z control; missing/partial/nonunit weights; file closure flags; exact/one-less/pre-spent/sticky budget. Assert refusal leaves no span result.
-    exit: At least 8 registered [lc-offsetcurve][geometry][cache-layout] cases execute; each documented disposition has a non-vacuous assertion and the observed case count is recorded.
+    work: Exercise normalized line data, one- and multi-span degree-1 data, actual degree-3 producer data, and malformed `RS_SplineData`: both knot domains and affine rescaling; synthetic size_t-boundary arithmetic for both degree formulas without giant allocations; short/mismatched arrays; wrong degree/type; malformed endpoint/internal groups; fit/saved-open payload; nonfinite/Z control; missing/partial/nonunit weights; file closure flags; exact/one-less/pre-spent/sticky span and vertex budgets. Assert refusal publishes no extracted span; failed combined preflight consumes neither dimension, while failures after admission preserve all spent debits.
+    exit: At least 10 registered `[lc-offsetcurve][geometry][cache-layout]` cases execute; degree-1 and degree-3 positive/refusal layouts and each documented disposition have non-vacuous assertions; observed case count is recorded.
   - stage: Freeze and verify
     work: Freeze the three owned paths and digests; run focused Release/ASan, adjacent reference/intersection/engine regressions, full Release and both fast suites in Release/ASan serially per build directory; close separate completeness, plan-correctness and implementation-correctness reviews.
     exit: Required reports pass with expected baseline skips only; tested hashes match the single product commit and all findings are closed.
@@ -501,16 +510,16 @@ commit_boundary: Exactly one layout-only product commit. No distance bounds, top
 validation:
   - cmake --build build --target librecad_tests --parallel 4
   - cmake --build build-asan --target librecad_tests --parallel 4
-  - build/librecad_tests --list-tests "[lc-offsetcurve][geometry][cache-layout]" (at least 8 cases after registration)
+  - build/librecad_tests --list-tests "[lc-offsetcurve][geometry][cache-layout]" (at least 10 cases after registration)
   - QT_QPA_PLATFORM=offscreen build/librecad_tests "[lc-offsetcurve][geometry][cache-layout]" --order decl --reporter junit --out build/evidence/1A-1.b-check-layout/release-attempt-N.junit.xml
   - QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_tests "[lc-offsetcurve][geometry][cache-layout]" --order decl --reporter junit --out build/evidence/1A-1.b-check-layout/asan-attempt-N.junit.xml
   - Run [reference-components],[reference-events],[intersection-budget],[curve-offset][topology],[curve-offset][ellipse] in Release and ASan; then the full Release suite and DXF/DWG fast suites in Release/ASan using §0.8 exclusions. Keep attempts separate and serialize each build directory.
-completeness_review: pending; trace R01/R02/R12/R13, producer dispositions, all input fields/statuses, build/test membership, success/refusal cases and each excluded bounds/topology behavior to its owning child.
-plan_correctness_review: pending; verify producer output, degree-1/line reachability and R05 disposition, raw-to-normalized import boundary, knot grouping/reparameterization, data flags and budget debits against current declarations/callers.
-correctness_review: pending; after implementation, independently challenge count overflow, allocation/admission order, finite/Z/weight/group checks, span extraction, parameter-domain invariance and refusal atomicity.
+completeness_review: pending; trace R01/R02/R12/R13 through line normalization, degree-1/degree-3 layouts, both span extractors, bounded-check descendants, raw import, all 14 reader/writer rows, R12 downgrade, build membership, and registered positive/boundary/refusal cases.
+plan_correctness_review: pending; at the refreshed activation SHA verify producer/entity normalization and adoption callers; both count/knot formulas; raw-to-normalized import boundary; only-checker cap rename; flags; affine knot domains; and shared-budget debit semantics.
+correctness_review: pending; after implementation, independently challenge both degree formulas for overflow, allocation/admission order, finite/Z/weight/group checks, degree-specific spans/parameter intervals, atomic span admission, and exact line-to-spline normalization.
 product_commit_audit: pending
 plan_checkpoint_state: pending
-next: Keep waiting until the producer/API probe closes at the post-v17 checkpoint HEAD; then activate or revise this card.
+next: Keep waiting until the v18 plan-only checkpoint is committed; re-read actual HEAD, close the producer/API and line-normalization caller probes, then activate or revise this card.
 ```
 
 **Completed implementation card — `1A-1.b-ref-components`** (implementation `9682d5cac65f30cfd86aa10556678ceb88b1448b`;
@@ -626,15 +635,15 @@ Only satisfied dependencies promote a card to `ready`; future recipes are `waiti
 | 1A-1.b-ref-contacts / .b-ref-providers | Done at92ca5e445; immutable complete-box construction contact proofs, exact F/critical-free-gap qualification, bounded radial neighborhoods, unchanged legacy factory. |17/4383 both builds,old97/586799,broad/full/fast gates pass; all digests/identities retained. Native successful interior fallback not claimed. R01/R02/R12/R13 contact sub-contract only. |
 | 1A-1.b-ref-events-isolate / .b-ref-contacts | Done at dff307668; geometry header/cpp/tests expose an owned immutable complete-event result, retained strict session/providers, diagnostic IDs, role/parameter ordering, exact-only same-role identity, rounded world-node enclosure and one irreversible work ledger. | 15 focused cases/5616 assertions Release+ASan; 154 geometry cases/1464224 assertions Release+ASan; full Release 3842 cases/7321304 assertions/74 unchanged skips; DXF and DWG fast lanes pass Release+ASan. Construction/free-end and stationary/free-end identities pass. Tangent stress reaches strict-query depth20 before ordering; it asserts bounded empty refusal only, not identity resolution. At this checkpoint, multi-pair shared-own success was not separately pinned; the following `.b-ref-components` slice added that proof. R02/R12. |
 | 1A-1.b-ref-components / .b-ref-events | Done at `9682d5cac65f30cfd86aa10556678ceb88b1448b`; exact-D visibility, complete event fringes, incidence-preserving components and atomic budget refusal are implemented. Keep engine rho/marginal policy out of this exact reference; qualify compatibility in `.c`/`.b-check`. | Attempt-8 focused Release/ASan, reference and engine regressions, full Release, and DXF/DWG fast lanes pass; the finite-distance conversion P1 was independently re-reviewed after its fix. Attempt 6 remains historical red and attempt 7 pre-fix green. Frozen/committed hashes and receipts are in §0.5. `.b-check-layout` is the next leaf after activation review. R02/R12/R13. |
-| 1A-1.b-check-layout / .b-ref-components | Entry probe: qualify the actual ellipse-offset producer's output RTTI/degree over its admitted input domain, including its degree-1/line branch; settle whether non-cubic output is a valid plain fallback or requires broader cache representation before marking ready. Then implement overflow-safe cubic-cache layout preflight, finite planar/unit-weight validation, span extraction and shared-budget admission. Keep helpers explicitly layout-only; do not expose an incomplete successful `checkCache`. | Engine-produced ordinary cubic cache and affine-rescaled knot domains pass; wrong-degree/type, fit or saved-open payloads, malformed groups/counts, nonfinite/Z controls, nonunit weights and zero/invalid limits refuse. Verify closed/periodic file flags alone do not fail layout; topology later checks their endpoint meaning. Prove count arithmetic and resource caps before any derived allocation; capture all producer output kinds and record the disposition for each. R01/R02/R12. |
-| 1A-1.b-check-bounds / .b-check-layout | Implement conservative de Casteljau leaf/chord error, offset-distance upper bounds and source-clearance lower bounds. Use parameter-aware reference matching and outward floating-point allowances. | Between-sample adversarial controls; dense independent evaluation verifies every claimed enclosure; near tangency/cusps/extreme scale; no nearest-point sample becomes proof. R02/R12. |
+| 1A-1.b-check-layout / .b-ref-components | Confirm `RS_Line` -> degree-1 normalization at the persistent-curve boundary; implement overflow-safe degree-1/degree-3 cache layout, finite planar/unit-weight validation, degree-specific span extraction and shared span-budget admission. Rename only the checker's legacy cubic-specific cap/counter. Keep helpers explicitly layout-only; do not expose an incomplete successful `checkCache`. | Engine-produced degree-1 and degree-3 layouts plus affine-rescaled knots pass; wrong degree/type, fit/saved-open payloads, malformed groups/counts, nonfinite/Z controls, nonunit weights and zero/invalid limits refuse. Verify closure flags alone do not fail layout; topology later checks endpoint meaning. Prove both degree count formulas and resource caps before any derived allocation. R01/R02/R12. |
+| 1A-1.b-check-bounds / .b-check-layout | Implement exact line-segment bounds for degree-1 spans and conservative de Casteljau leaf/chord error for degree-3 spans, offset-distance upper bounds and source-clearance lower bounds. Use parameter-aware reference matching and outward floating-point allowances. | Between-sample adversarial controls; exact linear-span distance oracle and dense independent cubic evaluation verify bounds; near tangency/cusps/extreme scale; no nearest-point sample becomes proof. R02/R12. |
 | 1A-1.b-check-topology / .b-check-bounds | Combine complete reference and candidate geometry into public `checkCache`; require exactly one reference component and bidirectional ordered coverage; enforce direction/closure/trim joins. | Proper subset, missing tail, isolated component, repeat/retrace, extra loop and wrong reversal refuse; legitimate lens and closed-arc joins pass. No partial acceptance on exhausted budget. R02. |
 | 1A-1.c / all .b children | Qualify defaults and tolerance-floor policy against current engine/adversarial corpus; record seeds, statuses/work/cost and resolve required-success disagreements. Retain the source-qualified interior-fallback native reachability coverage limit; investigate natural cases or prove limits without a test backdoor. | Existing offset/topology regressions, independent geometry oracle, every cap exit, near-critical success, file-rounding margins; no timing assertion or unearned fallback-coverage claim. R01/R02/R12. |
 | 1E-2.safety / all 1E-1 children | Add schema/raw-carrier hostile cases, unknown-tail/flags edit policy, geometry demotion and late-failure save tests. Scope schema/filter fixes only to demonstrated violations. | Both formats, second save/reload, foreign data unchanged, raw 3D/repair inputs never editable; transaction checks for existing/absent target and document state. R07/R08/R14/R15. |
-| 1E-2.fixtures / .safety | Commit ASCII DXF, binary DXF and DWG input fixtures with reproducible provenance, producer/version and expected definitions; include reader fixtures not emitted by the LibreCAD writer under test. | Independently sourced input fixtures exercise both readers; separately inspect writer output; immutable hashes/provenance, fast-lane registration, full and both fast lanes. Same-run writer/reader payloads alone do not close reader coverage. R07/R11. |
+| 1E-2.fixtures / .safety | Commit independently authored input fixtures for every schema-capable application reader version, each covering degree-1 and degree-3 cache carriers; include input-only legacy DWG R13/R14, binary DXF R14/R2018 and R12 geometry-only input. Record reproducible provenance, producer/version and expected definitions. | Every reader version consumes a checked-in fixture not emitted by LibreCAD's writer under test; both degrees are asserted. Separately inspect writer output; immutable hashes/provenance, fast-lane registration, full and both fast lanes. Missing external fixtures leave their reader rows explicitly incomplete. Same-run writer/reader payloads alone do not close reader coverage. R07/R11/R14. |
 | 1E-2.copy / .fixtures | Test same/cross-unit paste, block/library insert, Save Block As, clone-tail alias safety and hatch-edge downgrade. | Geometry/distance scaling, owner/layer/pen preservation, correct editable-vs-plain outcome, no stale owned definition; Release/ASan ownership checks. R04/R07/R08. |
-| 1E-3.matrix / all 1E-2 children | Execute explicit 14-row reader and writer matrix with actual version checks; second-generation reload, binary R14/R2018 codec and no-DWGSUPPORT schema compile. | Separate per-version read/write receipts and geometry/definition/payload oracles; all six DWG rows executed, R12 geometry-only; full suite/fast lanes; no silent valid-file demotion. R07/R11/R14. |
-| 1E-3.conversion / .matrix | Run both fan-out conversion directions, repeated alternating chain and edited/refused reopen. Run available independent readers; distinguish unavailable from passing. | Counts for every conversion leg, no duplicate schema/drift/stale definition, mutation remains usable after reload; committed external-tool results or explicit unavailability. R07/R08/R15. |
+| 1E-3.matrix / all 1E-2 children | Execute explicit 14-row reader and writer matrix with exact-version fixtures; include editable degree-1 and degree-3 carriers, plus separate input-only legacy DWG R13/R14 receipts; second-generation reload, binary R14/R2018 codec and no-DWGSUPPORT schema compile. | Separate per-version read/write receipts and degree/control/knot/weight/definition/payload oracles; all six DWG writer rows executed, legacy readers separately pass, R12 degree-1/degree-3 geometry downgrades to POLYLINE without schema; full suite/fast lanes; no silent valid-file demotion. R07/R11/R14. |
+| 1E-3.conversion / .matrix | Run both fan-out conversion directions for degree-1 and degree-3 caches, repeated alternating chains and edited/refused reopen. Run available independent readers; distinguish unavailable from passing. | Counts for every conversion leg and degree, no duplicate schema/drift/stale definition, mutation remains usable after reload; committed external-tool results or explicit unavailability. R07/R08/R15. |
 
 Other executable leaves retain their ordered tasks and files in §§5-6. For 1A-2, the enum, dispatch, INSERT
 capability, guard row and interim action guard must land together as one buildable slice. For 1G-2.a, Changed /
@@ -645,9 +654,10 @@ each product slice, not a later catch-all test phase.
 
 **Immediate implementation-resume queue:** `.b-ref-events-isolate` is committed at `dff307668`; `.b-ref-components`
 is committed at `9682d5cac65f30cfd86aa10556678ceb88b1448b` with attempt-8 source-matched evidence. Its v16 plan-only
-reconciliation is committed at `c6e32c17f`. The v17 plan review records `.b-check-layout` as a waiting candidate;
-after the v17 plan-only checkpoint, re-read actual HEAD and close its bounded producer-shape/API readiness probe
-before implementation. Do not repeat or amend the component slice. Do not restart or reapply contacts/providers/
+reconciliation is committed at `c6e32c17f`; the v17 plan-only checkpoint is `22317685c6a0fdba3b341cc138115750e6b0a5b6`.
+The v18 plan review updates `.b-check-layout` for exact line normalization and degree-1/degree-3 cache layouts;
+after the v18 plan-only checkpoint, re-read actual HEAD and close the bounded producer/API/readiness probes before
+implementation. Do not repeat or amend the component slice. Do not restart or reapply contacts/providers/
 refinements/isolation. Budget, guard, progress and frames are complete at 10c6bff46 / 0e3c6b342 / fb70681e2 /
 26d107ccf; strict core, rate, critical preparation and observed-depth accounting are complete at 834a46a88 /
 bcd6c5a4f / 943406abe / 290d2658f; trusted pair refinement is complete at f4f87f48e and critical refinement at
@@ -1054,7 +1064,7 @@ for a local implementation gate. Required behavior cannot be reclassified as out
 | D13 | Limits of an explicit edit | One curve: `LC_OffsetRunLimits{}` (the Offset tool's own). Several curves at once (property sheet, 2A): `LC_OffsetRunLimits::preview()`. |
 | D14 | Draw > Spline > Explode on the type | Admitted, as for a spline. |
 | D15 | Merge target | `master`; implementation work uses the dedicated feature branch from S0. |
-| D16 | Sources in this release | A top-level `RS_Ellipse`, whole or arc, with a one-piece result passing bounded geometry/topology validation. Other successful tool output stays plain and is reported. |
+| D16 | Sources in this release | A top-level `RS_Ellipse`, whole or arc, with one entity result passing bounded geometry/topology validation. A supported `RS_Line` is normalized exactly to a degree-1 spline cache; supported degree-1/degree-3 SPLINE results remain editable. Multi-entity results and unsupported/malformed representations stay plain and are reported. |
 | D17 | DXF and DWG read/write | Required by the user. Both formats preserve the editable definition using an ordinary SPLINE plus registered `LibreCad` XDATA/EED, with the version contract in §3.10 and acceptance tests in 1E-3. |
 | D18 | Unknown owned extensions after edits | Preserve schema-1 unknown tail/flags for no-edit round trips and clones; clear them on successful meaningful geometry changes, preserve them on refusal/no-op. Foreign groups remain raw. |
 | N1 | Enumerator | `EntityOffsetCurve` right after `EntityParabola` (`rs.h:198`), value 34. It renumbers only 34–49 (overlays, previews, refs, snaps, DimArrowBlock), none persisted; Quick Selection persists ≤ 33. |
@@ -1099,7 +1109,7 @@ struct LC_OffsetRunLimits {
 
 // lib/engine/document/entities/lc_offsetcurve.h
 enum class LC_OffsetCurveRefusal { None, InvalidInput, Undefined, Inconsistent, TooSmall, NothingLeft, SeveralPieces,
-                                   NotOneCubic, CheckFailed, Engine };
+                                   NotCacheRepresentable, CheckFailed, Engine };
 struct LC_OffsetEditResult {
     LC_OffsetCurveRefusal refusal = LC_OffsetCurveRefusal::None;
     LC_CurveOffsetStatus engineStatus = LC_CurveOffsetStatus::Ok;
@@ -1291,7 +1301,7 @@ came out with a sweep of 1e-8 or less. The engine then refuses the source (`lc_c
 
 ```cpp
 struct LC_OffsetCheckLimits {
-    std::size_t maxCubicPieces = 4096;
+    std::size_t maxCacheSpans = 4096;
     std::size_t maxVertices = 65536;
     std::size_t maxDistancePairs = std::size_t{1} << 20;
     unsigned maxDepth = 20;
@@ -1314,17 +1324,19 @@ The old endpoints/midpoints validator is insufficient: a cubic may agree at thos
 Use a bounded adaptive check with conservative error accounting; do not claim an exact algebraic identity.
 
 1. **Validate domain and layout before work/allocation.** Require finite 2D controls/knots/weights and normalized
-   source fields, valid positive limits, degree 3, ClampedOpen representation, `n ≥ 1` spans, `3n+1` controls and
-   `3n+5` knots. The normalized cache has exactly one finite unit weight per control; an absent raw file weight list
-   is materialized only after the separate raw-carrier checks in 1E-1.c, never by this validator. Knots have four
-   equal initial values, `n-1` internal groups of three, and four equal final values, with strictly increasing finite
-   group representatives. Require repeated group values to be identical after decoding; do not use an absolute
-   tolerance that can merge narrow valid spans. A finite positive affine knot reparameterization is valid, and all
-   later span evaluation must use its actual knot interval rather than assume integer parameters. Reject invalid count
-   arithmetic, fit points, nondefault saved-open payloads, non-finite or nonzero-Z controls and non-finite/degenerate
-   geometry. `m_closedFlag`/`m_periodicFlag` may be carried with ClampedOpen data and are not rejected by layout alone;
-   the topology stage validates their endpoint/closure meaning. Span k uses controls `[3k .. 3k+3]` because every
-   interior cubic knot has multiplicity three.
+   source fields, valid positive limits, degree 1 or 3, ClampedOpen representation, and `n ≥ 1` spans. For degree 1,
+   require `n+1` controls and `n+3` knots; for degree 3, require `3n+1` controls and `3n+5` knots. The normalized
+   cache has exactly one finite unit weight per control; an absent raw file weight list is materialized only after the
+   separate raw-carrier checks in 1E-1.c, never by this validator. Degree-1 knots have two equal initial values,
+   `n-1` single internal groups and two equal final values. Cubic knots have four equal initial values, `n-1`
+   internal groups of three, and four equal final values. In both layouts require exact repeated values after
+   decoding and strictly increasing finite group representatives; do not use an absolute tolerance that merges
+   narrow valid spans. A finite positive affine knot reparameterization is valid, and all later span evaluation must
+   use its actual knot interval rather than assume integer parameters. Reject invalid count arithmetic, fit points,
+   nondefault saved-open payloads, non-finite or nonzero-Z controls and non-finite/degenerate geometry.
+   `m_closedFlag`/`m_periodicFlag` may be carried with ClampedOpen data and are not rejected by layout alone; the
+   topology stage validates their endpoint/closure meaning. Degree-1 span `k` uses controls `[k,k+1]`; cubic span `k`
+   uses `[3k .. 3k+3]` because every interior cubic knot has multiplicity three.
 2. **Small distance:** `distance ≤ tol` gives `TooSmall`. The caller must distinguish invalid inputs, geometric
    refusal and a work limit; none may become successful adoption with an unchecked cache.
 3. **Construct bounded reference geometry.** Use the same source sweep convention as `EllipseSource::make`, including
@@ -1334,10 +1346,11 @@ Use a bounded adaptive check with conservative error accounting; do not claim an
    call `createEntities`, refit or regenerate the saved cache. In 1A-1.b record the current reference adapter/helper
    used for visible intervals; extract a small read-only helper if needed instead of duplicating the offset engine's
    trimming rules. Unresolved visibility or event classification refuses adoption.
-4. **Check the whole cubic, not three samples.** Subdivide with de Casteljau or the existing conservative jet bounds.
-   Bound each leaf's curve-to-chord error. For an appropriately matched reference segment, the maximum distance of
-   the two cache-chord endpoints to that convex segment, plus both approximation errors, bounds the whole cache leaf's
-   distance to the offset. Require this bound ≤ `2·tol`; refine uncertain leaves and refuse if it cannot be established.
+4. **Check every span, not three samples.** A degree-1 span is an exact line segment and has zero curve-to-chord
+   approximation error; a degree-3 span is bounded by de Casteljau or the existing conservative jet bounds. For an
+   appropriately matched reference segment, the maximum distance of the two cache-chord endpoints to that convex
+   segment, plus candidate/reference approximation errors, bounds the whole span leaf's distance to the offset.
+   Require this bound ≤ `2·tol`; refine uncertain cubic leaves and refuse if it cannot be established.
    Compute the minimum cache/source segment distance with conservative error subtraction and require
    `≥ d − 2.5·tol`. Candidate nearest-point samples or golden-section searches may accelerate matching, but their
    sampling alone cannot prove acceptance. Spatial bounds and pair caps keep the search bounded.
@@ -1612,7 +1625,7 @@ prototype or a statement that an API will be chosen later does not make `.b-ref`
   | status ≠ Ok | `Engine` (with `engineStatus`) |
   | Ok with 0 entities (the engine's own `shrinksAway`, `lc_curveoffset.cpp:5141-5145`, `:5215-5221`) | `NothingLeft` |
   | more than one entity | `SeveralPieces` |
-  | not one degree-3 ClampedOpen `RS_Spline` | `NotOneCubic` |
+  | one result cannot be normalized losslessly to degree-1/degree-3 ClampedOpen cache data | `NotCacheRepresentable` |
   | §3.5 fails | `CheckFailed`, with its `checkReason` preserved |
 
   Input guards do not duplicate the engine's geometric "nothing left" decision. Keep that decision in the engine.
@@ -1620,13 +1633,23 @@ prototype or a statement that an API will be chosen later does not make `.b-ref`
   `m_def = next;` then `if (next.cacheReversed) RS_Spline::revertDirection(); else update();` (both rebuild the
   chords); then update validated closure, rebuild grips and set `m_stamp = cacheFingerprint(getData())`. The arc-length table is keyed by the
   fingerprint and refreshes itself (`rs_spline.cpp:878-889`).
-- **`adopt(engineResult, def)`:** normalise `def.basis`; require one degree-3 ClampedOpen `RS_Spline` in the engine
-  layout; run §3.5 with `tol` from `def.relTolerance`; construct through the private validated-tag copy-from-spline
-  constructor. 1C wraps engine results that already ran under the batch's budget this way, and 1E
+- **`adopt(engineResult, def)`:** normalise `def.basis`; require exactly one result. Convert an `RS_Line` to exact
+  degree-1 ClampedOpen cache data (`[start,end]`, knots `[0,0,1,1]`, unit weights); copy a supported degree-1 or
+  degree-3 ClampedOpen `RS_Spline` without refitting. Reject other entity/data shapes with
+  `NotCacheRepresentable`. Run §3.5 with `tol` from `def.relTolerance`; construct through the private validated-tag
+  copy-from-spline constructor. Preserve common entity attributes (parent/owner, layer, pen, visibility and supported
+  metadata) from `engineResult`, including the line path; geometry normalization must not reset drawing attributes.
+  1C wraps engine results that already ran under the batch's budget this way, and 1E
   adopts loaded splines this way. **Neither ever calls `create()`.**
   The definition passed to the validator includes `cacheReversed`. A loaded cache is already in its saved direction;
   the copy-from-spline adoption constructor must not reverse it again. `adoptCache` applies reversal only to fresh
   engine output produced in the source's original direction.
+- **R05 one-piece regression:** test the exact `RS_Line` normalizer directly and through an engine result whenever a
+  checked-in/admitted ellipse case produces that entity. Assert editable `EntityOffsetCurve` construction, exact
+  endpoint/interior line geometry, degree-1 controls/knots/unit weights, parent/layer/pen/visibility preservation and
+  no second engine run during adoption. If the current producer corpus does not yield an `RS_Line`, the direct
+  normalizer test remains mandatory; empirical unreachability cannot delete the supported producer branch. Multi-span
+  degree-1 and cubic producer results receive separate adoption cases.
 - **`create(source, d, toward, limits)`:**
   1. Build `def{normalised source data, d, toward, false, relativeOffsetTolerance(source)}`.
   2. `runEngine` produces and validates one staged cache, then construct through the private validated-tag path.
@@ -1689,23 +1712,26 @@ The mandatory format lanes are:
 
 The mandatory application-level version matrix at the reviewed baseline gives reader and writer expectations
 separately. Each cell must have a test receipt; a combined save/open result cannot substitute for either direction.
+For editable schema-1 round trips, exercise both supported cache degrees (1 and 3) in each required reader/writer
+lane; a cubic-only fixture does not close the degree-1 line-normalization contract. R12 remains geometry-only and must
+preserve degree-1/degree-3 cache geometry within the declared approximation tolerance without restoring editability.
 
 | Format | File version | `RS2::FormatType` | Reader expectation | Writer expectation |
 |---|---|---|---|---|
 | DXF R12 | AC1009 | `FormatDXFRW12` | POLYLINE imports as ordinary geometry; no editable definition is inferred | POLYLINE geometry within export tolerance; no editable offset definition |
-| DXF R14 | AC1014 | `FormatDXFRW14` | SPLINE + schema XDATA restores editable curve | SPLINE + schema XDATA |
-| DXF R2000 | AC1015 | `FormatDXFRW2000` | SPLINE + schema XDATA restores editable curve | SPLINE + schema XDATA |
-| DXF R2004 | AC1018 | `FormatDXFRW2004` | SPLINE + schema XDATA restores editable curve | SPLINE + schema XDATA |
-| DXF R2007 | AC1021 | `FormatDXFRW` | SPLINE + schema XDATA restores editable curve | SPLINE + schema XDATA |
-| DXF R2010 | AC1024 | `FormatDXFRW2010` | SPLINE + schema XDATA restores editable curve | SPLINE + schema XDATA |
-| DXF R2013 | AC1027 | `FormatDXFRW2013` | SPLINE + schema XDATA restores editable curve | SPLINE + schema XDATA |
-| DXF R2018 | AC1032 | `FormatDXFRW2018` | SPLINE + schema XDATA restores editable curve | SPLINE + schema XDATA |
-| DWG R2000 | AC1015 | `FormatDWG` | SPLINE + schema EED restores editable curve | SPLINE + schema EED |
-| DWG R2004 | AC1018 | `FormatDWG2004` | SPLINE + schema EED restores editable curve | SPLINE + schema EED |
-| DWG R2007 | AC1021 | `FormatDWG2007` | SPLINE + schema EED restores editable curve | SPLINE + schema EED |
-| DWG R2010 | AC1024 | `FormatDWG2010` | SPLINE + schema EED restores editable curve | SPLINE + schema EED |
-| DWG R2013 | AC1027 | `FormatDWG2013` | SPLINE + schema EED restores editable curve | SPLINE + schema EED |
-| DWG R2018 | AC1032 | `FormatDWG2018` | SPLINE + schema EED restores editable curve | SPLINE + schema EED |
+| DXF R14 | AC1014 | `FormatDXFRW14` | Independently authored degree-1/degree-3 SPLINE + schema XDATA fixtures restore editable curves | SPLINE + schema XDATA for both degrees |
+| DXF R2000 | AC1015 | `FormatDXFRW2000` | Independently authored degree-1/degree-3 SPLINE + schema XDATA fixtures restore editable curves | SPLINE + schema XDATA for both degrees |
+| DXF R2004 | AC1018 | `FormatDXFRW2004` | Independently authored degree-1/degree-3 SPLINE + schema XDATA fixtures restore editable curves | SPLINE + schema XDATA for both degrees |
+| DXF R2007 | AC1021 | `FormatDXFRW` | Independently authored degree-1/degree-3 SPLINE + schema XDATA fixtures restore editable curves | SPLINE + schema XDATA for both degrees |
+| DXF R2010 | AC1024 | `FormatDXFRW2010` | Independently authored degree-1/degree-3 SPLINE + schema XDATA fixtures restore editable curves | SPLINE + schema XDATA for both degrees |
+| DXF R2013 | AC1027 | `FormatDXFRW2013` | Independently authored degree-1/degree-3 SPLINE + schema XDATA fixtures restore editable curves | SPLINE + schema XDATA for both degrees |
+| DXF R2018 | AC1032 | `FormatDXFRW2018` | Independently authored degree-1/degree-3 SPLINE + schema XDATA fixtures restore editable curves | SPLINE + schema XDATA for both degrees |
+| DWG R2000 | AC1015 | `FormatDWG` | Independently authored degree-1/degree-3 SPLINE + schema EED fixtures restore editable curves | SPLINE + schema EED for both degrees |
+| DWG R2004 | AC1018 | `FormatDWG2004` | Independently authored degree-1/degree-3 SPLINE + schema EED fixtures restore editable curves | SPLINE + schema EED for both degrees |
+| DWG R2007 | AC1021 | `FormatDWG2007` | Independently authored degree-1/degree-3 SPLINE + schema EED fixtures restore editable curves | SPLINE + schema EED for both degrees |
+| DWG R2010 | AC1024 | `FormatDWG2010` | Independently authored degree-1/degree-3 SPLINE + schema EED fixtures restore editable curves | SPLINE + schema EED for both degrees |
+| DWG R2013 | AC1027 | `FormatDWG2013` | Independently authored degree-1/degree-3 SPLINE + schema EED fixtures restore editable curves | SPLINE + schema EED for both degrees |
+| DWG R2018 | AC1032 | `FormatDWG2018` | Independently authored degree-1/degree-3 SPLINE + schema EED fixtures restore editable curves | SPLINE + schema EED for both degrees |
 
 At S0, reconcile this explicit table with `RS2::FormatType` and `RS_FilterDXFRW::fileExport`; never infer versions from
 enum ranges. Guard DWG-only format references with `DWGSUPPORT`; the shared schema module uses ordinary DRW variants
@@ -1828,15 +1854,16 @@ override that list's validated meaning or cause a second definition to be emitte
 cannot be rescued by silently selecting a later valid one.
 
 **Adoption** happens only on `addSpline`'s main path, and only for `data->eType == DRW::SPLINE`. The loaded spline must
-be degree 3, ClampedOpen (its closed and periodic flags may be set; ODA sets them), in the cubic cache layout of §3.5,
-with all weights exactly 1.0 (`makeSplineFromDrw` fills 1.0 when the file has none), and it must pass §3.5. Use
+be degree 1 or 3, ClampedOpen (its closed and periodic flags may be set; ODA sets them), in the matching cache layout
+of §3.5, with all weights exactly 1.0 (`makeSplineFromDrw` fills 1.0 when the file has none), and it must pass §3.5. Use
 the public validated `LC_OffsetCurve::adopt(*spline, def, why)` factory; its private copy-from-spline constructor keeps
 what `setEntityAttributes` set. `addHelix` strips but never adopts.
 
 **Raw-carrier eligibility comes first.** Before `makeSplineFromDrw`, check the original `DRW_Spline` carrying a
 schema-1 candidate: actual/vector declared counts agree, all controls exist and have finite XY with Z exactly zero,
-the normal is finite and is world-XY or the codec's unspecified zero sentinel, degree/layout/knots are present and
-valid, unit weights are either genuinely absent or complete (never a partial list padded into validity), and no fit-only or repaired
+the normal is finite and is world-XY or the codec's unspecified zero sentinel, degree-1 or degree-3 layout/knots are
+present and valid under their respective control/knot count and multiplicity rules, unit weights are either genuinely
+absent or complete (never a partial list padded into validity), and no fit-only or repaired
 representation is needed. Do not trust only group-70 planar/rational flags. Keep these checks scoped to editable
 offset adoption; ordinary unmarked spline import retains existing behavior.
 `DRW_Spline::normalVec` is zero by default and the DWG parser resets it to zero; DWG control-scenario payloads do not
@@ -1859,7 +1886,8 @@ new adapter share the same metadata mistake.
 
 **Other outputs.**
 - R12 writes and reloads as a POLYLINE without any owned schema-1 sub-list; preserve supported foreign XDATA through
-  the existing codec. Verify geometry against the exported spline within the R12 approximation tolerance.
+  the existing codec. Verify degree-1 and degree-3 geometry against the exported spline within the R12 approximation
+  tolerance.
 - Hatch boundary edges carry no XDATA: an offset-curve edge is written as a SPLINE edge and reloads as
   `LC_SplinePoints`, as every spline edge does.
 - #3119 registers XDATA application names. Assert `LibreCad` appears exactly once under case-insensitive APPID lookup,
@@ -2244,7 +2272,8 @@ static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
   - the sweep interval of §3.5;
   - distances from a point to the original and exact offset, minimum radius of curvature, lens corners and whole-ellipse inside test.
 - Future cache-validation work in the same module is assigned only to `.b-check` children, not to completed `.a`:
-  - `.b-check-layout`: checked cubic-cache layout predicate, finite 2D/unit-weight preflight and Bezier-span extraction;
+  - `.b-check-layout`: checked degree-1/degree-3 cache-layout predicate, finite 2D/unit-weight preflight and
+    degree-specific span extraction;
   - `.b-check-bounds`: conservative cache-to-reference/source distance bounds;
   - `.b-check-topology`: public `checkCache` result and complete topology/coverage decision;
   - 1H: `offsetPolyline(basis, d, toward, samples)` for preview only, not a validity/adoption oracle.
@@ -3942,7 +3971,8 @@ already the prerequisite, not work in this feature.
   block definition without invoking the writer in the same test. Verify geometry/definition and zero regeneration;
   1E-2 records fixture provenance and 1E-3 extends reader coverage to every application version.
 - **Read/write payload inspection:** capture `DRW_Spline` from each actual output file through a low-level interface;
-  verify degree, control points, knots, unit weights, closed/periodic semantics and the typed metadata fields. Verify
+  verify degree 1 and degree 3 separately, degree-appropriate control/knot counts and multiplicities, unit weights,
+  closed/periodic semantics and the typed metadata fields. Verify
   the `LibreCad` application reference is registered/resolvable in the output.
 - **Read without regeneration:** adopting a saved cache leaves `engineRuns()` unchanged. Writing also preserves the
   current cache rather than rerunning the engine and changing its geometry.
@@ -4009,17 +4039,20 @@ the imported result again. Check both entity geometry and owned/foreign metadata
 
   No crash or hang; plain spline or raw XDATA, as §3.10 says.
 - **A hatch** bounded by an offset curve saves and reloads (the edge as SPLINE).
-- **Checked-in fixtures** (cross-compiler and reader check): `lib/filters/tests/testdata/dxf/offset_curves_r2018.dxf`
-  and `testdata/dwg/offset_curves_r2018.dwg`, with a README, reproducible generator and provenance. They hold whole
-  and arc curves, both sides, a = 10 and 100, and one inside a block. Maintain two distinct fixture roles: (1) input
-  fixtures produced by a tool or source independent of LibreCAD's writer under test, for DXF and DWG reader coverage;
-  (2) LibreCAD-generated output for cross-compiler/write-payload inspection. Do not label a self-generated file as
-  independent reader evidence. A fast-lane test asserts that each input curve is adopted with its stored definition.
-  Include an independently sourced binary DXF input fixture with the same schema/cache and import it as editable;
-  separately generate binary DXF output through the existing low-level codec and inspect its decoded payload. Record
-  producer/tool version, file version, origin, hash and expected definition independently of the parser under test.
-  If an independent producer is unavailable for a required lane, record the exact gap and keep R07 incomplete rather
-  than substituting a same-run round trip.
+- **Checked-in fixtures** (cross-compiler and reader check): a version-indexed `offset_curves_<version>.<ext>` set
+  under `lib/filters/tests/testdata/`, with a README, reproducible independent generator and provenance. For every
+  schema-capable application reader row in §3.10, include degree-1 and degree-3 carriers (in one or paired files) with
+  whole/arc coverage, both sides, representative scales and a block-owned case; include input-only DWG R13/R14
+  fixtures and an R12 geometry-only input.
+  Maintain two distinct fixture roles: (1) inputs authored by a tool/source independent of LibreCAD's writer under
+  test, for exact-version DXF/DWG reader coverage; (2) LibreCAD-generated output for cross-compiler/write-payload
+  inspection. Do not label a self-generated file as independent reader evidence. A fast-lane test asserts every input
+  cache degree and stored definition. Include independently sourced binary DXF input fixtures at R14 and R2018 with
+  both cache degrees and import them as editable; separately generate binary DXF output through the existing low-level
+  codec and inspect its decoded payload. Record producer/tool version, exact file version, origin, hash, cache degree
+  and expected definition independently of the parser under test. If an independent producer is unavailable for a
+  required reader row/degree, record the exact gap and keep that row incomplete rather than substituting a same-run
+  round trip.
 - **Copy and paste** (`librecad_tests`):
   - paste into the same drawing;
   - paste into a drawing with other units (distance × f);
@@ -4043,12 +4076,18 @@ R2000 and `FormatDXFRW` for R2007.
 
 **Required checks:**
 
+- For each schema-capable reader row, load that exact version's checked-in independently authored fixture with both
+  degree-1 and degree-3 carriers. The R12 row loads an independent POLYLINE geometry-only fixture. LibreCAD writer
+  output may exercise codec integration or second-generation persistence, but never substitutes for the independent
+  fixture in the reader receipt. Separately test the legacy DWG R13/R14 input-only fixtures at both degrees; they do
+  not add writer rows to the 14-row application matrix.
 - For every schema-capable row of §3.10, run writer and reader assertions as distinct cases, then run write → read →
-  write → read with whole and arc originals, both offset
-  sides, translated/rotated bases, reversed cache direction, and an entity inside a block. Verify the requested file
+  write → read with degree-1 and degree-3 caches, whole and arc originals, both offset sides, translated/rotated bases,
+  reversed cache direction, and an entity inside a block. Verify the requested file
   version via DXF `$ACADVER` or the DWG file signature; a file saved under the wrong version is a failure.
 - Keep a version-indexed receipt table showing writer payload inspection, reader adoption/definition recovery,
-  second-generation reload and expected downgrade for each of the 14 application rows. Every cell has a nonzero
+  second-generation reload and expected downgrade for each of the 14 application rows; add two reader-only receipt
+  rows for legacy DWG R13/R14. Every cell has a nonzero
   selected-test count; a combined round-trip count or a target name does not prove that a direction ran.
 - At each generation, assert `EntityOffsetCurve`, the normalized definition (including signed-side semantics and
   saved tolerance), a consistent cache passing §3.5, target-representable layer/pen/visibility, owner context and
@@ -4056,9 +4095,9 @@ R2000 and `FormatDXFRW` for R2007.
   by all matrix versions; newer-only attributes follow the codec's documented downgrade rules. Use scale-aware
   numeric comparisons; DXF's 16-digit text rounding and DWG encoding must satisfy the
   geometric tolerance. Do not compare remapped handles or text-rounded control points bit for bit.
-- Cover both conversion directions without requiring a full Cartesian version product: DXF R2018 → each supported
-  DWG version → DXF R2018, and DWG R2018 → each schema-capable DXF version → DWG R2018. Add a repeated alternating
-  DXF/DWG chain to catch duplicate schema blocks and accumulated definition drift.
+- Cover both cache degrees in both conversion directions without requiring a full Cartesian geometry product:
+  DXF R2018 → each supported DWG version → DXF R2018, and DWG R2018 → each schema-capable DXF version → DWG R2018.
+  Add a repeated alternating DXF/DWG chain to catch duplicate schema blocks and accumulated definition drift.
 - Open a saved curve, change its distance/side/basis through supported mutators, save to the other format, and reopen.
   The newly edited definition and geometry must be present, with no stale original sub-list. Verify successful edits
   still work after reload and that refused edits leave the saved curve unchanged.
@@ -5120,3 +5159,37 @@ no product/native result affected. Structural audit0:27mainrows,60nodes,15requir
   affected chain `.b-ref-components → .b-check-layout → .b-check-bounds → .b-check-topology` was checked and is
   acyclic. No in-repository plan/DAG checker exists, so the full graph audit remains a mandatory activation/checkpoint
   gate. The existing untracked `build-asan/` directory is preserved and not part of the plan diff.
+
+#### v17 → v18 (2026-10-16)
+
+- **Completeness:** traced the producer's intentional straight-output forms through R05/D16, cache checking, schema
+  import eligibility, DXF/DWG version lanes, cross-format conversion and R12 geometry-only export. Both degree-1 and
+  degree-3 normalized cache layouts now have explicit owners and assertions; valid line output is no longer an
+  untracked fallback/drop case.
+- **Plan correctness:** inspected the current `chainEntity` implementation, `RS_SplineData`, `RS_Spline::validate`,
+  checker budget call sites, persistent adoption contract and SPLINE codec paths. Chose exact `RS_Line` -> degree-1
+  ClampedOpen normalization at the 1B engine-result boundary; checker accepts degree 1 or 3, with checked respective
+  control/knot formulas and extraction; line spans use exact segment bounds and cubics retain conservative bounds.
+  The cache check budget is renamed to `maxCacheSpans` without renaming the separate producer-output budget. Raw
+  file eligibility and the 14 reader/writer lanes now require degree-1/degree-3 coverage; R12 explicitly stays
+  geometry-only. No finite-probe claim is used to erase a producer branch.
+- **Sub-plan/readiness:** rewrote `.b-check-layout` as a degree-1/degree-3 layout slice with exact line normalization
+  assigned to 1B, checked-arithmetic cases for both formulas, a 10-case minimum selector count, exact-linear and
+  cubic oracles, expanded failure review prompts and a post-v18 activation gate. It remains `waiting` until this
+  plan checkpoint is committed and actual HEAD/callers are refreshed; no code was changed.
+- **Correctness:** distinguished exact linear-span bounds from adaptive cubic bounds, retained affine knot-domain
+  support and exact repeated knot groups, and kept topology/closure semantics out of layout validation. Degree-1
+  adoption must not be silently downgraded to plain geometry, while malformed/unsupported layouts still refuse.
+- **Commits and self-update:** the five gates remain separately auditable: requirement completeness, plan-contract
+  correctness, implementation correctness, executable readiness, and verified product-commit plus immediate
+  plan-only self-reconciliation. Updated the active card, current queue and version history; historical validation
+  receipts were left untouched. The required slice cycle still freezes source/digests, commits exactly one tested
+  leaf, then separately commits the plan with the product SHA and checkpoint postconditions.
+- **Validation:** documentation-only; `git diff --check` passes. Inventory: 15 requirements, 14 application format
+  rows (8 DXF/6 DWG) plus one conversion row, 24 executable leaf recipes (25 table rows including the header), 105
+  headings and 34 balanced fence lines. The 13 schema-capable application reader versions require independent
+  degree-1/degree-3 fixtures; R12 and legacy DWG R13/R14 have separate read-only contracts; binary DXF R14/R2018
+  remains a distinct codec lane. The affected chain `.b-ref-components → .b-check-layout → .b-check-bounds →
+  .b-check-topology` is acyclic; 1B line normalization has no dependency edge back into the layout prerequisite. No
+  in-repository plan/DAG checker exists, so the full graph audit remains a readiness/checkpoint requirement. No
+  product build or test is claimed. Existing untracked `build-asan/` is preserved.
