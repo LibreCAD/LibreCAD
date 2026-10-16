@@ -15,6 +15,7 @@
 #ifndef LC_ELLIPSEOFFSETGEOMETRY_H
 #define LC_ELLIPSEOFFSETGEOMETRY_H
 
+#include <array>
 #include <cstddef>
 #include <memory>
 #include <optional>
@@ -23,6 +24,8 @@
 #include "lc_curvejet.h"
 #include "lc_parametriccurveintersection.h"
 #include "rs_ellipse.h"
+
+struct RS_SplineData;
 
 struct LC_EllipseOffsetDefinition {
     RS_EllipseData basis;
@@ -33,7 +36,7 @@ struct LC_EllipseOffsetDefinition {
 };
 
 struct LC_OffsetCheckLimits {
-    std::size_t maxCubicPieces = 4096;
+    std::size_t maxCacheSpans = 4096;
     std::size_t maxVertices = 65536;
     std::size_t maxDistancePairs = std::size_t{1} << 20;
     unsigned maxDepth = 20;
@@ -52,7 +55,7 @@ struct Sweep {
 enum class BudgetStatus { Ok, InvalidInput, LimitExceeded };
 
 struct CheckWork {
-    std::size_t cubicPieces = 0;
+    std::size_t cacheSpans = 0;
     std::size_t vertices = 0;
     std::size_t distancePairs = 0;
     unsigned deepest = 0;
@@ -87,6 +90,38 @@ private:
     BudgetStatus m_status = BudgetStatus::Ok;
     std::shared_ptr<const void> m_identity;
 };
+
+struct CacheLayoutCounts {
+    std::size_t spans = 0;
+    std::size_t controls = 0;
+    std::size_t knots = 0;
+};
+
+/** Nonallocating checked formulas for normalized degree-1/degree-3 cache layouts. */
+std::optional<CacheLayoutCounts> cacheLayoutCounts(std::size_t degree, std::size_t spans) noexcept;
+std::optional<CacheLayoutCounts> cacheLayoutCountsFromControls(std::size_t degree,
+                                                            std::size_t controls) noexcept;
+
+enum class CacheLayoutStatus { Ok, InvalidInput, InvalidLayout, LimitExceeded };
+
+struct CacheSpan {
+    std::size_t degree = 0;
+    /** First degree+1 entries are the exact line/Bezier controls, without refitting. */
+    std::array<RS_Vector, 4> controls;
+    LC_Interval parameter;
+};
+
+/** Layout only: Ok does not certify geometry, distance, closure or topology. */
+struct CacheLayoutResult {
+    CacheLayoutStatus status = CacheLayoutStatus::InvalidInput;
+    /** Copied span data; no borrowed source and no partial spans on refusal. */
+    std::vector<CacheSpan> spans;
+    CheckWork work{};
+    std::size_t spanCount() const noexcept { return spans.size(); }
+};
+
+/** Inspect already normalized spline data; raw-file repair and RS_Line conversion are not performed. */
+CacheLayoutResult inspectCacheLayout(const RS_SplineData& cache, WorkBudget& budget);
 
 /**
  * Exact ellipse/outward-offset formulas in centre-relative, uniformly scaled,

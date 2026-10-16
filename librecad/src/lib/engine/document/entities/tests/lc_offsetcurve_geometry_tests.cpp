@@ -33,6 +33,7 @@
 #include "lc_curveoffset.h"
 #include "lc_ellipseoffsetgeometry.h"
 #include "rs_line.h"
+#include "rs_spline.h"
 
 namespace geo = LC_EllipseOffsetGeometry;
 
@@ -277,7 +278,7 @@ void checkNested(const LC_Interval& inner, const LC_Interval& outer) {
 }
 
 void checkWork(const geo::CheckWork& actual, const geo::CheckWork& expected) {
-    CHECK(actual.cubicPieces == expected.cubicPieces);
+    CHECK(actual.cacheSpans == expected.cacheSpans);
     CHECK(actual.vertices == expected.vertices);
     CHECK(actual.distancePairs == expected.distancePairs);
     CHECK(actual.deepest == expected.deepest);
@@ -1277,7 +1278,7 @@ TEST_CASE("Critical thresholds are exact for rotated axes rather than rounded ra
             CHECK(result.adapter->criticalOccurrences().size() == expected);
             checkCriticalCoverage(*result.adapter);
             checkCriticalOccurrences(data, -entry.first, *result.adapter);
-            CHECK(result.work.cubicPieces == 0);
+            CHECK(result.work.cacheSpans == 0);
         }
     }
     for (const double distance : {std::nextafter(36.0, 0.0), 36.0, std::nextafter(36.0, 100.0)}) {
@@ -1498,11 +1499,11 @@ TEST_CASE("Critical depth excludes a split refused before child examination",
     CHECK(budget.status() == geo::BudgetStatus::LimitExceeded);
     CHECK(result.work.vertices == 6);
     CHECK(result.work.distancePairs == 23);
-    CHECK(result.work.cubicPieces == 0);
+    CHECK(result.work.cacheSpans == 0);
     CHECK(result.work.deepest == 0);
     CHECK(result.work.vertices == budget.consumed().vertices);
     CHECK(result.work.distancePairs == budget.consumed().distancePairs);
-    CHECK(result.work.cubicPieces == budget.consumed().cubicPieces);
+    CHECK(result.work.cacheSpans == budget.consumed().cacheSpans);
     CHECK(result.work.deepest == budget.consumed().deepest);
 }
 
@@ -1522,7 +1523,7 @@ TEST_CASE("Critical work caps are exact cumulative irreversible and checked befo
     REQUIRE(accepted.status == LC_IntersectionStatus::Ok);
     CHECK(accepted.work.vertices == work.vertices);
     CHECK(accepted.work.distancePairs == work.distancePairs);
-    CHECK(accepted.work.cubicPieces == 0);
+    CHECK(accepted.work.cacheSpans == 0);
     for (int limit = 0; limit < 3; ++limit) {
         LC_OffsetCheckLimits limits{1, work.vertices, work.distancePairs, work.deepest};
         if (limit == 0) { --limits.maxVertices; }
@@ -1668,7 +1669,7 @@ TEST_CASE("Shared reference budgets consume exact allowances once and latch ever
             resource == 2 ? budget.consumePairs(1) : budget.checkDepth(3);
         CHECK_FALSE(accepted);
         CHECK(budget.status() == geo::BudgetStatus::LimitExceeded);
-        CHECK(budget.consumed().cubicPieces == 3);
+        CHECK(budget.consumed().cacheSpans == 3);
         CHECK(budget.consumed().vertices == 5);
         CHECK(budget.consumed().distancePairs == 7);
         CHECK(budget.consumed().deepest == 2);
@@ -1681,7 +1682,7 @@ TEST_CASE("Shared reference budgets consume exact allowances once and latch ever
     REQUIRE(oneLess.consumeVertices(3));
     CHECK_FALSE(oneLess.consumeVertices(2));
     CHECK(oneLess.consumed().vertices == 3);
-    CHECK(oneLess.consumed().cubicPieces == 0);
+    CHECK(oneLess.consumed().cacheSpans == 0);
     CHECK(oneLess.consumed().distancePairs == 0);
     CHECK(oneLess.remainingPieces() == 0);
     CHECK(oneLess.remainingVertices() == 0);
@@ -1694,7 +1695,7 @@ TEST_CASE("Shared reference budgets consume exact allowances once and latch ever
             shortBudget.consumeVertices(5) : shortBudget.consumePairs(7);
         CHECK_FALSE(accepted);
         CHECK(shortBudget.status() == geo::BudgetStatus::LimitExceeded);
-        CHECK(shortBudget.consumed().cubicPieces == 0);
+        CHECK(shortBudget.consumed().cacheSpans == 0);
         CHECK(shortBudget.consumed().vertices == 0);
         CHECK(shortBudget.consumed().distancePairs == 0);
     }
@@ -1710,7 +1711,7 @@ TEST_CASE("Shared reference budgets reject zero limits and cannot overflow count
         CHECK_FALSE(invalid.consumeVertices(0));
         CHECK_FALSE(invalid.consumePairs(0));
         CHECK_FALSE(invalid.checkDepth(0));
-        CHECK(invalid.consumed().cubicPieces == 0);
+        CHECK(invalid.consumed().cacheSpans == 0);
         CHECK(invalid.consumed().vertices == 0);
         CHECK(invalid.consumed().distancePairs == 0);
         CHECK(invalid.consumed().deepest == 0);
@@ -1729,7 +1730,7 @@ TEST_CASE("Shared reference budgets reject zero limits and cannot overflow count
             budget.consumePairs(2);
         CHECK_FALSE(accepted);
         CHECK(budget.status() == geo::BudgetStatus::LimitExceeded);
-        CHECK(budget.consumed().cubicPieces == maximum - 1);
+        CHECK(budget.consumed().cacheSpans == maximum - 1);
         CHECK(budget.consumed().vertices == maximum - 1);
         CHECK(budget.consumed().distancePairs == maximum - 1);
         CHECK_FALSE(budget.consumeVertices(1));
@@ -1738,7 +1739,7 @@ TEST_CASE("Shared reference budgets reject zero limits and cannot overflow count
     REQUIRE(exact.consumePieces(maximum));
     REQUIRE(exact.consumeVertices(maximum));
     REQUIRE(exact.consumePairs(maximum));
-    CHECK(exact.consumed().cubicPieces == maximum);
+    CHECK(exact.consumed().cacheSpans == maximum);
     CHECK(exact.consumed().vertices == maximum);
     CHECK(exact.consumed().distancePairs == maximum);
     CHECK_FALSE(exact.consumePairs(1));
@@ -3045,13 +3046,13 @@ TEST_CASE("Reference provider metadata obeys exact one less and pre spent shared
             CHECK(baseline.work.vertices == before.vertices + 3 + c + s);
             CHECK(baseline.work.distancePairs == before.distancePairs + 1 + 4 * c + s);
             CHECK(baseline.work.deepest == before.deepest);
-            CHECK(baseline.work.cubicPieces == before.cubicPieces);
+            CHECK(baseline.work.cacheSpans == before.cacheSpans);
             for (const bool prespent : {false, true}) {
                 const std::size_t spentV = prespent ? 5 : 0, spentP = prespent ? 7 : 0;
                 for (int cap = 0; cap < 3; ++cap) {
                     CAPTURE(whole, collapsed, prespent, cap, s);
                     LC_OffsetCheckLimits limits;
-                    limits.maxCubicPieces = 2;
+                    limits.maxCacheSpans = 2;
                     limits.maxVertices = baseline.work.vertices + spentV - (cap == 1 ? 1 : 0);
                     limits.maxDistancePairs = baseline.work.distancePairs + spentP - (cap == 2 ? 1 : 0);
                     geo::WorkBudget budget{limits};
@@ -3071,7 +3072,7 @@ TEST_CASE("Reference provider metadata obeys exact one less and pre spent shared
                         REQUIRE(result.provider);
                         CHECK(result.work.vertices == baseline.work.vertices + spentV);
                         CHECK(result.work.distancePairs == baseline.work.distancePairs + spentP);
-                        CHECK(result.work.cubicPieces == std::size_t(prespent));
+                        CHECK(result.work.cacheSpans == std::size_t(prespent));
                     } else {
                         checkNoProviders(result, budget);
                         const auto saved = budget.consumed();
@@ -3110,7 +3111,7 @@ TEST_CASE("Reference provider failed entered stages retain only actual admitted 
         CHECK(result.work.vertices == before.vertices + admittedV);
         CHECK(result.work.distancePairs == before.distancePairs + allowed);
         CHECK(result.work.deepest == before.deepest);
-        CHECK(result.work.cubicPieces == before.cubicPieces);
+        CHECK(result.work.cacheSpans == before.cacheSpans);
     }
     for (const std::size_t allowed : {std::size_t{2}, std::size_t{3}, std::size_t{4}, std::size_t{4} + s}) {
         LC_OffsetCheckLimits limits;
@@ -3723,7 +3724,7 @@ TEST_CASE("Contact metadata costs match construction pairs and actual radial exa
             CHECK(contact.work.vertices == old.work.vertices + 1 + c + j);
             CHECK(contact.work.distancePairs == old.work.distancePairs + 1 + c + j);
             CHECK(contact.work.deepest == deepest);
-            CHECK(contact.work.cubicPieces == old.work.cubicPieces);
+            CHECK(contact.work.cacheSpans == old.work.cacheSpans);
             checkWork(contact.work, budget.consumed());
             for (const bool prespent : {false, true}) {
                 for (int cap = 0; cap < 3; ++cap) {
@@ -5098,4 +5099,348 @@ TEST_CASE("Reference true axis mapping covers admitted near minimum wrapped swee
         } else { CHECK_FALSE(result.analysis); }
         checkWork(result.work, budget.consumed());
     }
+}
+
+namespace {
+RS_SplineData cacheLayoutFixture(const std::size_t degree, const std::vector<double>& breaks) {
+    RS_SplineData data;
+    data.degree = degree;
+    const std::size_t spans = breaks.size() - 1;
+    for (std::size_t i = 0; i <= degree * spans; ++i) {
+        data.controlPoints.emplace_back(double(i), double(i * i));
+        data.weights.push_back(1.0);
+    }
+    for (std::size_t i = 0; i < breaks.size(); ++i) {
+        data.knotslist.insert(data.knotslist.end(), i == 0 || i == spans ? degree + 1 : degree, breaks[i]);
+    }
+    return data;
+}
+
+void checkCacheSpans(const RS_SplineData& data, const geo::CacheLayoutResult& layout,
+                     const std::vector<double>& breaks) {
+    REQUIRE(layout.status == geo::CacheLayoutStatus::Ok);
+    REQUIRE(layout.spanCount() == breaks.size() - 1);
+    for (std::size_t k = 0; k < layout.spanCount(); ++k) {
+        const auto& span = layout.spans[k];
+        CHECK(span.degree == data.degree);
+        CHECK(span.parameter.lo() == breaks[k]); CHECK(span.parameter.hi() == breaks[k + 1]);
+        for (std::size_t i = 0; i <= data.degree; ++i) {
+            const auto& actual = span.controls[i];
+            const auto& expected = data.controlPoints[data.degree * k + i];
+            CHECK(actual.valid == expected.valid);
+            CHECK(actual.x == expected.x); CHECK(actual.y == expected.y); CHECK(actual.z == expected.z);
+        }
+    }
+    checkWork(layout.work, {breaks.size() - 1, data.controlPoints.size(), 0, 0});
+}
+
+void checkLayoutRefusal(const RS_SplineData& data, const geo::CheckWork& spent = {}) {
+    geo::WorkBudget budget;
+    const auto layout = geo::inspectCacheLayout(data, budget);
+    CHECK(layout.status == geo::CacheLayoutStatus::InvalidLayout);
+    CHECK(layout.spanCount() == 0); CHECK(layout.spans.empty());
+    CHECK(budget.status() == geo::BudgetStatus::Ok);
+    checkWork(layout.work, spent); checkWork(layout.work, budget.consumed());
+}
+}
+
+TEST_CASE("Cache layout checked formulas reject overflow without allocating arrays",
+          "[lc-offsetcurve][geometry][cache-layout]") {
+    const auto maximum = std::numeric_limits<std::size_t>::max();
+    for (const std::size_t degree : {1u, 3u}) {
+        for (const std::size_t n : {1u, 2u, 17u}) {
+            const auto count = geo::cacheLayoutCounts(degree, n);
+            REQUIRE(count); CHECK(count->spans == n);
+            CHECK(count->controls == degree * n + 1); CHECK(count->knots == degree * n + degree + 2);
+            const auto derived = geo::cacheLayoutCountsFromControls(degree, count->controls);
+            REQUIRE(derived); CHECK(derived->spans == n); CHECK(derived->knots == count->knots);
+        }
+        const auto last = (maximum - degree - 2) / degree;
+        const auto limit = geo::cacheLayoutCounts(degree, last);
+        REQUIRE(limit);
+        const auto recovered = geo::cacheLayoutCountsFromControls(degree, limit->controls);
+        REQUIRE(recovered); CHECK(recovered->spans == last);
+        CHECK_FALSE(geo::cacheLayoutCountsFromControls(degree, limit->controls + degree));
+        using Big = boost::multiprecision::cpp_int;
+        CHECK(Big(limit->controls) == Big(degree) * last + 1);
+        CHECK(Big(limit->knots) == Big(degree) * last + degree + 2);
+        CHECK(Big(degree) * (Big(last) + 1) + degree + 2 > Big(maximum));
+        CHECK_FALSE(geo::cacheLayoutCounts(degree, last + 1));
+        CHECK_FALSE(geo::cacheLayoutCounts(degree, maximum));
+        CHECK_FALSE(geo::cacheLayoutCounts(degree, 0));
+        CHECK_FALSE(geo::cacheLayoutCountsFromControls(degree, 0));
+        CHECK_FALSE(geo::cacheLayoutCountsFromControls(degree, 1));
+        CHECK_FALSE(geo::cacheLayoutCountsFromControls(degree, maximum));
+    }
+    for (const std::size_t degree : {std::size_t(0), std::size_t(2), std::size_t(4), maximum}) {
+        CHECK_FALSE(geo::cacheLayoutCounts(degree, 1));
+        CHECK_FALSE(geo::cacheLayoutCountsFromControls(degree, 4));
+    }
+    CHECK_FALSE(geo::cacheLayoutCountsFromControls(3, 3));
+    CHECK_FALSE(geo::cacheLayoutCountsFromControls(3, 5));
+}
+
+TEST_CASE("Cache layout admits normalized line data without an entity conversion or geometry claim",
+          "[lc-offsetcurve][geometry][cache-layout]") {
+    geo::CacheLayoutResult uninspected;
+    CHECK(uninspected.status == geo::CacheLayoutStatus::InvalidInput); CHECK(uninspected.spans.empty());
+    auto data = cacheLayoutFixture(1, {0, 1});
+    data.controlPoints = {{-2, 3}, {7, -5}};
+    geo::WorkBudget budget;
+    const auto layout = geo::inspectCacheLayout(data, budget);
+    checkCacheSpans(data, layout, {0, 1});
+    CHECK(layout.spans[0].degree == 1);
+}
+
+TEST_CASE("Cache layout extracts each linear and cubic span with its own shared endpoint",
+          "[lc-offsetcurve][geometry][cache-layout]") {
+    for (const std::size_t degree : {1u, 3u}) {
+        for (const auto& breaks : {std::vector<double>{0, 1}, std::vector<double>{0, 1, 2, 3}}) {
+            const auto data = cacheLayoutFixture(degree, breaks);
+            geo::WorkBudget budget;
+            const auto layout = geo::inspectCacheLayout(data, budget);
+            checkCacheSpans(data, layout, breaks);
+            for (std::size_t i = 1; i < layout.spanCount(); ++i) {
+                CHECK(layout.spans[i - 1].controls[degree].x == layout.spans[i].controls[0].x);
+                CHECK(layout.spans[i - 1].controls[degree].y == layout.spans[i].controls[0].y);
+            }
+        }
+    }
+}
+
+TEST_CASE("Cache layout retains affine narrow subnormal and extreme finite knot domains exactly",
+          "[lc-offsetcurve][geometry][cache-layout]") {
+    const double tiny = std::numeric_limits<double>::denorm_min();
+    const double maximum = std::numeric_limits<double>::max();
+    const double a = 1.0, b = std::nextafter(a, 2.0), c = std::nextafter(b, 2.0);
+    for (const std::size_t degree : {1u, 3u}) {
+        for (const auto& breaks : {std::vector<double>{-7, -4, -1, 2}, std::vector<double>{a, b, c},
+                                   std::vector<double>{0, tiny, 2 * tiny}, std::vector<double>{-maximum, maximum}}) {
+            const auto data = cacheLayoutFixture(degree, breaks);
+            geo::WorkBudget budget;
+            checkCacheSpans(data, geo::inspectCacheLayout(data, budget), breaks);
+        }
+    }
+}
+
+TEST_CASE("Cache layout rejects unsupported degree representation and nondefault payload before admission",
+          "[lc-offsetcurve][geometry][cache-layout]") {
+    const auto valid = cacheLayoutFixture(3, {0, 1, 2});
+    for (const std::size_t degree : {std::size_t(0), std::size_t(2), std::size_t(4),
+                                    std::numeric_limits<std::size_t>::max()}) {
+        auto bad = valid; bad.degree = degree; checkLayoutRefusal(bad);
+    }
+    for (const auto type : {RS_SplineData::SplineType::Standard, RS_SplineData::SplineType::WrappedClosed,
+                            static_cast<RS_SplineData::SplineType>(99)}) {
+        auto bad = valid; bad.type = type; checkLayoutRefusal(bad);
+        bad = valid; bad.savedOpenType = type; checkLayoutRefusal(bad);
+    }
+    auto fit = valid; fit.fitPoints = {{0, 0}}; checkLayoutRefusal(fit);
+    auto saved = valid; saved.savedOpenKnots = {0, 1}; checkLayoutRefusal(saved);
+}
+
+TEST_CASE("Cache layout checks short and inconsistent arrays before scanning or debiting",
+          "[lc-offsetcurve][geometry][cache-layout]") {
+    for (const std::size_t degree : {1u, 3u}) {
+        const auto valid = cacheLayoutFixture(degree, {0, 1, 2});
+        for (const std::size_t count : {std::size_t(0), std::size_t(1)}) {
+            auto bad = valid; bad.controlPoints.resize(count); checkLayoutRefusal(bad);
+        }
+        auto bad = valid; bad.controlPoints.pop_back(); checkLayoutRefusal(bad);
+        bad = valid; bad.knotslist.pop_back(); checkLayoutRefusal(bad);
+        bad = valid; bad.knotslist.push_back(2); checkLayoutRefusal(bad);
+        bad = valid; bad.weights.clear(); checkLayoutRefusal(bad);
+        bad = valid; bad.weights.pop_back(); checkLayoutRefusal(bad);
+        bad = valid; bad.weights.push_back(1); checkLayoutRefusal(bad);
+    }
+}
+
+TEST_CASE("Cache layout rejects unequal knot groups and unordered representatives without epsilon repair",
+          "[lc-offsetcurve][geometry][cache-layout]") {
+    for (const std::size_t degree : {1u, 3u}) {
+        const auto valid = cacheLayoutFixture(degree, {0, 1, 2});
+        const geo::CheckWork spent{2, valid.controlPoints.size(), 0, 0};
+        auto bad = valid; bad.knotslist[0] = std::nextafter(0.0, -1.0); checkLayoutRefusal(bad, spent);
+        bad = valid; bad.knotslist.back() = std::nextafter(2.0, 3.0); checkLayoutRefusal(bad, spent);
+        bad = valid;
+        for (std::size_t i = degree + 1; i < 2 * degree + 1; ++i) { bad.knotslist[i] = 0; }
+        checkLayoutRefusal(bad, spent);
+        bad = valid;
+        for (std::size_t i = degree + 1; i < 2 * degree + 1; ++i) { bad.knotslist[i] = -1; }
+        checkLayoutRefusal(bad, spent);
+        if (degree == 3) {
+            bad = valid; bad.knotslist[5] = std::nextafter(1.0, 2.0); checkLayoutRefusal(bad, spent);
+        }
+    }
+}
+
+TEST_CASE("Cache layout rejects nonfinite knots after irreversible admission without exposing spans",
+          "[lc-offsetcurve][geometry][cache-layout]") {
+    for (const std::size_t degree : {1u, 3u}) {
+        const auto valid = cacheLayoutFixture(degree, {0, 1, 2});
+        for (const double value : {std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity(),
+                                   std::numeric_limits<double>::quiet_NaN()}) {
+            for (std::size_t i = 0; i < valid.knotslist.size(); ++i) {
+                auto bad = valid; bad.knotslist[i] = value;
+                checkLayoutRefusal(bad, {2, valid.controlPoints.size(), 0, 0});
+            }
+        }
+    }
+}
+
+TEST_CASE("Cache layout requires valid finite planar controls and does not project nonzero Z",
+          "[lc-offsetcurve][geometry][cache-layout]") {
+    for (const std::size_t degree : {1u, 3u}) {
+        const auto valid = cacheLayoutFixture(degree, {0, 1, 2});
+        for (const RS_Vector point : {RS_Vector{false}, RS_Vector{0, 0, std::numeric_limits<double>::denorm_min()},
+                                      RS_Vector{std::numeric_limits<double>::infinity(), 0},
+                                      RS_Vector{0, std::numeric_limits<double>::quiet_NaN()}}) {
+            auto bad = valid; bad.controlPoints.back() = point;
+            checkLayoutRefusal(bad, {2, valid.controlPoints.size(), 0, 0});
+        }
+        auto negativeZero = valid; negativeZero.controlPoints[0].z = -0.0;
+        geo::WorkBudget budget;
+        checkCacheSpans(negativeZero, geo::inspectCacheLayout(negativeZero, budget), {0, 1, 2});
+    }
+}
+
+TEST_CASE("Cache layout requires complete exactly unit finite weights without rational normalization",
+          "[lc-offsetcurve][geometry][cache-layout]") {
+    for (const std::size_t degree : {1u, 3u}) {
+        const auto valid = cacheLayoutFixture(degree, {0, 1, 2});
+        for (const double weight : {0.0, -1.0, 2.0, std::nextafter(1.0, 0.0), std::nextafter(1.0, 2.0),
+                                    std::numeric_limits<double>::infinity(), std::numeric_limits<double>::quiet_NaN()}) {
+            auto bad = valid; bad.weights.back() = weight;
+            checkLayoutRefusal(bad, {2, valid.controlPoints.size(), 0, 0});
+        }
+    }
+}
+
+TEST_CASE("Cache layout leaves closure and periodicity decisions to later topology stages",
+          "[lc-offsetcurve][geometry][cache-layout]") {
+    for (const std::size_t degree : {1u, 3u}) {
+        for (const bool closed : {false, true}) {
+            for (const bool periodic : {false, true}) {
+                auto data = cacheLayoutFixture(degree, {0, 1, 2});
+                data.m_closedFlag = closed; data.m_periodicFlag = periodic;
+                geo::WorkBudget budget;
+                checkCacheSpans(data, geo::inspectCacheLayout(data, budget), {0, 1, 2});
+                CHECK(data.m_closedFlag == closed); CHECK(data.m_periodicFlag == periodic);
+            }
+        }
+    }
+}
+
+TEST_CASE("Cache layout admits exact span and vertex budgets and refuses one less atomically",
+          "[lc-offsetcurve][geometry][cache-layout]") {
+    for (const std::size_t degree : {1u, 3u}) {
+        const auto data = cacheLayoutFixture(degree, {0, 1, 2, 3});
+        for (unsigned shortDimension = 0; shortDimension < 3; ++shortDimension) {
+            LC_OffsetCheckLimits limits{3, data.controlPoints.size(), 1, 1};
+            if (shortDimension == 1) { --limits.maxCacheSpans; }
+            if (shortDimension == 2) { --limits.maxVertices; }
+            geo::WorkBudget budget{limits};
+            const auto result = geo::inspectCacheLayout(data, budget);
+            if (shortDimension == 0) { checkCacheSpans(data, result, {0, 1, 2, 3}); }
+            else {
+                CHECK(result.status == geo::CacheLayoutStatus::LimitExceeded); CHECK(result.spans.empty());
+                checkWork(result.work, {});
+                CHECK(budget.status() == geo::BudgetStatus::LimitExceeded);
+                const auto again = geo::inspectCacheLayout(data, budget);
+                CHECK(again.status == geo::CacheLayoutStatus::LimitExceeded); CHECK(again.spans.empty());
+                checkWork(again.work, {});
+            }
+        }
+    }
+}
+
+TEST_CASE("Cache layout pre spent and invalid budgets cannot partially debit either dimension",
+          "[lc-offsetcurve][geometry][cache-layout]") {
+    const auto data = cacheLayoutFixture(3, {0, 1, 2});
+    for (unsigned resource = 0; resource < 2; ++resource) {
+        LC_OffsetCheckLimits limits{3, data.controlPoints.size() + 1, 9, 3};
+        geo::WorkBudget budget{limits};
+        REQUIRE(budget.consumePieces(resource == 0 ? 2 : 1));
+        REQUIRE(budget.consumeVertices(resource == 1 ? 2 : 1));
+        REQUIRE(budget.consumePairs(3)); REQUIRE(budget.checkDepth(2));
+        const auto before = budget.consumed();
+        const auto result = geo::inspectCacheLayout(data, budget);
+        CHECK(result.status == geo::CacheLayoutStatus::LimitExceeded); CHECK(result.spans.empty());
+        checkWork(result.work, before); checkWork(budget.consumed(), before);
+    }
+    geo::WorkBudget exact{LC_OffsetCheckLimits{3, data.controlPoints.size() + 1, 9, 3}};
+    REQUIRE(exact.consumePieces(1)); REQUIRE(exact.consumeVertices(1));
+    REQUIRE(exact.consumePairs(3)); REQUIRE(exact.checkDepth(2));
+    const auto admitted = geo::inspectCacheLayout(data, exact);
+    REQUIRE(admitted.status == geo::CacheLayoutStatus::Ok); CHECK(admitted.spanCount() == 2);
+    checkWork(admitted.work, {3, data.controlPoints.size() + 1, 3, 2});
+    for (const LC_OffsetCheckLimits& limits : std::array<LC_OffsetCheckLimits, 4>{{{0, 1, 1, 1}, {1, 0, 1, 1},
+                                                                                {1, 1, 0, 1}, {1, 1, 1, 0}}}) {
+        geo::WorkBudget budget{limits};
+        const auto result = geo::inspectCacheLayout(data, budget);
+        CHECK(result.status == geo::CacheLayoutStatus::InvalidInput); CHECK(result.spans.empty());
+        checkWork(result.work, {});
+    }
+}
+
+TEST_CASE("Cache layout failures after admission spend once and successful output owns its copied spans",
+          "[lc-offsetcurve][geometry][cache-layout]") {
+    auto data = cacheLayoutFixture(3, {0, 1, 2});
+    geo::WorkBudget budget{LC_OffsetCheckLimits{4, 2 * data.controlPoints.size(), 1, 1}};
+    auto malformed = data; malformed.knotslist.back() = 3;
+    const auto bad = geo::inspectCacheLayout(malformed, budget);
+    CHECK(bad.status == geo::CacheLayoutStatus::InvalidLayout); CHECK(bad.spans.empty());
+    checkWork(bad.work, {2, data.controlPoints.size(), 0, 0});
+    const auto valid = geo::inspectCacheLayout(data, budget);
+    REQUIRE(valid.status == geo::CacheLayoutStatus::Ok); REQUIRE(valid.spanCount() == 2);
+    checkWork(valid.work, {4, 2 * data.controlPoints.size(), 0, 0});
+    const auto exhausted = geo::inspectCacheLayout(data, budget);
+    CHECK(exhausted.status == geo::CacheLayoutStatus::LimitExceeded); CHECK(exhausted.spans.empty());
+    checkWork(exhausted.work, valid.work);
+    const RS_Vector first = valid.spans[0].controls[0];
+    data.controlPoints.clear(); data.knotslist.clear(); data.weights.clear();
+    CHECK(valid.spans[0].controls[0].x == first.x); CHECK(valid.spans[0].controls[0].y == first.y);
+    CHECK(valid.spans[0].parameter.lo() == 0); CHECK(valid.spans[1].parameter.hi() == 2);
+}
+
+TEST_CASE("Cache layout accepts the actual cubic materializer output without resampling or refitting",
+          "[lc-offsetcurve][geometry][cache-layout]") {
+    auto sourceData = cacheLayoutFixture(3, {0, 1});
+    sourceData.controlPoints = {{0, 0}, {4, 6}, {8, -6}, {12, 0}};
+    const RS_Spline source{nullptr, sourceData};
+    const auto made = LC_CurveOffset::createEntities(source,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.75),
+        LC_CurveOffset::makeDirectOptions(source, 0.75), LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(made.status == LC_CurveOffsetStatus::Ok); REQUIRE(made.entities.size() == 1);
+    const auto* spline = dynamic_cast<const RS_Spline*>(made.entities[0].get());
+    REQUIRE(spline); REQUIRE(spline->getData().degree == 3);
+    const auto& data = spline->getData();
+    const std::size_t n = (data.controlPoints.size() - 1) / 3;
+    REQUIRE(n > 1);
+    std::vector<double> breaks;
+    for (std::size_t i = 0; i <= n; ++i) { breaks.push_back(double(i)); }
+    geo::WorkBudget budget;
+    checkCacheSpans(data, geo::inspectCacheLayout(data, budget), breaks);
+}
+
+TEST_CASE("Cache layout accepts the actual degree one closed rectangle materializer output",
+          "[lc-offsetcurve][geometry][cache-layout]") {
+    RS_Spline source{nullptr, RS_SplineData(1, false)};
+    for (const RS_Vector p : {RS_Vector{0, 0}, RS_Vector{10, 0}, RS_Vector{10, 4}, RS_Vector{0, 4}}) {
+        source.addControlPoint(p);
+    }
+    source.setClosed(true);
+    auto options = LC_CurveOffset::makeDirectOptions(source, 1.0); options.mode = LC_CurveOffsetMode::Trimmed;
+    const auto made = LC_CurveOffset::createEntities(source,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 1.0), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(made.status == LC_CurveOffsetStatus::Ok); REQUIRE(made.entities.size() == 1);
+    const auto* spline = dynamic_cast<const RS_Spline*>(made.entities[0].get());
+    REQUIRE(spline); REQUIRE(spline->getData().degree == 1);
+    const auto& data = spline->getData();
+    REQUIRE(data.controlPoints.size() > 2);
+    std::vector<double> breaks;
+    for (std::size_t i = 0; i < data.controlPoints.size(); ++i) { breaks.push_back(double(i)); }
+    geo::WorkBudget budget;
+    checkCacheSpans(data, geo::inspectCacheLayout(data, budget), breaks);
 }

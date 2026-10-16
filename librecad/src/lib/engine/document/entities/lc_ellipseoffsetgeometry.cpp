@@ -25,6 +25,7 @@
 #include <boost/multiprecision/cpp_int.hpp>
 
 #include "rs_math.h"
+#include "rs_spline.h"
 
 namespace {
 constexpr double turn = 2.0 * M_PI;
@@ -267,7 +268,7 @@ RS_Vector farEllipseFoot(const RS_Vector& query, const double ratio, const doubl
 namespace LC_EllipseOffsetGeometry {
 
 WorkBudget::WorkBudget(const LC_OffsetCheckLimits& limits) : m_limits{limits} {
-    if (limits.maxCubicPieces == 0 || limits.maxVertices == 0 || limits.maxDistancePairs == 0 || limits.maxDepth == 0) {
+    if (limits.maxCacheSpans == 0 || limits.maxVertices == 0 || limits.maxDistancePairs == 0 || limits.maxDepth == 0) {
         m_status = BudgetStatus::InvalidInput;
     }
 }
@@ -281,7 +282,7 @@ const CheckWork& WorkBudget::consumed() const {
 }
 
 std::size_t WorkBudget::remainingPieces() const {
-    return m_status == BudgetStatus::Ok ? m_limits.maxCubicPieces - m_work.cubicPieces : 0;
+    return m_status == BudgetStatus::Ok ? m_limits.maxCacheSpans - m_work.cacheSpans : 0;
 }
 
 std::size_t WorkBudget::remainingVertices() const {
@@ -305,7 +306,7 @@ bool WorkBudget::consume(const std::size_t count, const std::size_t limit, std::
 }
 
 bool WorkBudget::consumePieces(const std::size_t count) {
-    return consume(count, m_limits.maxCubicPieces, m_work.cubicPieces);
+    return consume(count, m_limits.maxCacheSpans, m_work.cacheSpans);
 }
 
 bool WorkBudget::consumeVertices(const std::size_t count) {
@@ -336,6 +337,72 @@ void WorkBudget::latchLimitExceeded() {
     if (m_status == BudgetStatus::Ok) {
         m_status = BudgetStatus::LimitExceeded;
     }
+}
+
+std::optional<CacheLayoutCounts> cacheLayoutCounts(const std::size_t degree, const std::size_t spans) noexcept {
+    if ((degree != 1 && degree != 3) || spans == 0 ||
+        spans > (std::numeric_limits<std::size_t>::max() - degree - 2) / degree) { return {}; }
+    return CacheLayoutCounts{spans, degree * spans + 1, degree * spans + degree + 2};
+}
+
+std::optional<CacheLayoutCounts> cacheLayoutCountsFromControls(const std::size_t degree,
+                                                            const std::size_t controls) noexcept {
+    if ((degree != 1 && degree != 3) || controls < degree + 1 || (controls - 1) % degree != 0) { return {}; }
+    return cacheLayoutCounts(degree, (controls - 1) / degree);
+}
+
+CacheLayoutResult inspectCacheLayout(const RS_SplineData& cache, WorkBudget& budget) {
+    CacheLayoutResult result;
+    const auto finish = [&]() { result.work = budget.consumed(); return std::move(result); };
+    if (budget.status() != BudgetStatus::Ok) {
+        if (budget.status() == BudgetStatus::LimitExceeded) { result.status = CacheLayoutStatus::LimitExceeded; }
+        return finish();
+    }
+    result.status = CacheLayoutStatus::InvalidLayout;
+    const auto counts = cacheLayoutCountsFromControls(cache.degree, cache.controlPoints.size());
+    if (!counts || cache.type != RS_SplineData::SplineType::ClampedOpen || !cache.fitPoints.empty() ||
+        cache.savedOpenType != RS_SplineData::SplineType::ClampedOpen || !cache.savedOpenKnots.empty() ||
+        cache.knotslist.size() != counts->knots || cache.weights.size() != counts->controls) { return finish(); }
+    // Both counters are admitted before either is spent. Count/array checks above inspect no elements.
+    if (counts->spans > budget.remainingPieces() || counts->controls > budget.remainingVertices() ||
+        counts->spans > result.spans.max_size()) {
+        budget.latchLimitExceeded(); result.status = CacheLayoutStatus::LimitExceeded;
+        return finish();
+    }
+    if (!budget.consumePieces(counts->spans) || !budget.consumeVertices(counts->controls)) {
+        result.status = CacheLayoutStatus::LimitExceeded;
+        return finish();
+    }
+    for (std::size_t i = 0; i < counts->controls; ++i) {
+        if (!isFinite2D(cache.controlPoints[i]) || !std::isfinite(cache.weights[i]) || cache.weights[i] != 1.0) {
+            return finish();
+        }
+    }
+    std::size_t knot = 0;
+    double previous = 0.0;
+    for (std::size_t group = 0; group <= counts->spans; ++group) {
+        const double value = cache.knotslist[knot];
+        if (!std::isfinite(value) || (group != 0 && !(previous < value))) { return finish(); }
+        const std::size_t multiplicity = group == 0 || group == counts->spans ? cache.degree + 1 : cache.degree;
+        for (std::size_t i = 0; i < multiplicity; ++i) {
+            if (cache.knotslist[knot++] != value) { return finish(); }
+        }
+        previous = value;
+    }
+    // All groups are valid before any output allocation; each span keeps its actual affine domain.
+    result.spans.reserve(counts->spans);
+    for (std::size_t k = 0; k < counts->spans; ++k) {
+        CacheSpan span;
+        span.degree = cache.degree;
+        for (std::size_t i = 0; i <= cache.degree; ++i) {
+            span.controls[i] = cache.controlPoints[cache.degree * k + i];
+        }
+        const std::size_t end = cache.degree * (k + 1);
+        span.parameter = LC_Interval::hull(cache.knotslist[end], cache.knotslist[end + 1]);
+        result.spans.push_back(std::move(span));
+    }
+    result.status = CacheLayoutStatus::Ok;
+    return finish();
 }
 
 bool isFinite2D(const RS_Vector& point) {
