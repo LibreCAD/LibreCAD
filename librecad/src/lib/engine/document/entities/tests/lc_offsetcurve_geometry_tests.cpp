@@ -2529,3 +2529,768 @@ TEST_CASE("Critical one sided join repair obeys exact and one less legacy retain
         }
     }
 }
+
+namespace {
+using CutterJet = std::array<CriticalFloat, 6>;
+
+CutterJet cutterOracle(const RS_EllipseData& data, const double scale, const double delta,
+                       const bool start, const double u) {
+    const CriticalFloat angle = start ? data.angle1 : data.angle2;
+    const CriticalFloat mx = CriticalFloat(data.majorP.x) / scale;
+    const CriticalFloat my = CriticalFloat(data.majorP.y) / scale;
+    const CriticalFloat r = data.ratio;
+    const CriticalFloat c = cos(angle), s = sin(angle);
+    const CriticalFloat ex = mx * c - r * my * s;
+    const CriticalFloat ey = my * c + r * mx * s;
+    const CriticalFloat vx = -mx * s - r * my * c;
+    const CriticalFloat vy = -my * s + r * mx * c;
+    const CriticalFloat speed = sqrt(vx * vx + vy * vy);
+    const CriticalFloat nx = vy / speed, ny = -vx / speed;
+    const CriticalFloat direction = data.reversed ? -1 : 1;
+    const CriticalFloat outward = start ? -direction : direction;
+    const CriticalFloat tx = outward * vx / speed, ty = outward * vy / speed;
+    const CriticalFloat d = CriticalFloat(std::abs(delta)) / scale;
+    const CriticalFloat pi = boost::math::constants::pi<CriticalFloat>();
+    CriticalFloat ca, sa;
+    if (u == 0.0) { ca = 1; sa = 0; }
+    else if (u == 0.5) { ca = 0; sa = 1; }
+    else if (u == 1.0) { ca = -1; sa = 0; }
+    else if (u > 0.5) {
+        const CriticalFloat remaining = pi * (CriticalFloat(1) - CriticalFloat(u));
+        ca = -cos(remaining);
+        sa = sin(remaining);
+    } else {
+        ca = cos(pi * CriticalFloat(u));
+        sa = sin(pi * CriticalFloat(u));
+    }
+    const CriticalFloat rx = nx * ca + tx * sa, ry = ny * ca + ty * sa;
+    return {{ex + d * rx, ey + d * ry,
+             d * pi * (-nx * sa + tx * ca), d * pi * (-ny * sa + ty * ca),
+             -d * pi * pi * rx, -d * pi * pi * ry}};
+}
+
+void checkCutterEnclosure(const LC_CurveJetBounds& bound, const CutterJet& oracle) {
+    const std::array<LC_Interval, 6> intervals{{bound.x, bound.y, bound.dx, bound.dy, bound.ddx, bound.ddy}};
+    for (std::size_t i = 0; i < intervals.size(); ++i) {
+        CAPTURE(i);
+        checkCriticalEnclosure(intervals[i], oracle[i]);
+    }
+    checkCriticalEnclosure(bound.speedSquaredProduct, oracle[2] * oracle[2] + oracle[3] * oracle[3]);
+    checkCriticalEnclosure(bound.crossProduct, oracle[2] * oracle[5] - oracle[3] * oracle[4]);
+}
+
+std::vector<std::size_t> roleSegments(const geo::ReferenceProviders& provider, const geo::ReferenceRole role) {
+    std::vector<std::size_t> out;
+    const auto branch = provider.branchFor(role);
+    if (!branch) { return out; }
+    for (std::size_t i = 0; i < provider.segments().size(); ++i) {
+        if (provider.segments()[i].branch == *branch) { out.push_back(i); }
+    }
+    return out;
+}
+
+void checkNoProviders(const geo::ReferenceProviderPreparation& result, const geo::WorkBudget& budget) {
+    CHECK_FALSE(result.provider);
+    CHECK_FALSE(result.ownCritical);
+    CHECK_FALSE(result.oppositeCritical);
+    checkWork(result.work, budget.consumed());
+}
+
+void checkUnavailableProviderProof(const LC_AnalyticIntersectionCertificate& certificate) {
+    CHECK(certificate.outcome == LC_AnalyticIntersectionCertificate::Outcome::Unavailable);
+    CHECK(certificate.proof == LC_IntersectionProof::Uncertified);
+    CHECK_FALSE(certificate.proofDomain.parameterA.isValid());
+    CHECK_FALSE(certificate.proofDomain.parameterB.isValid());
+    CHECK_FALSE(certificate.isolationA.isValid());
+    CHECK_FALSE(certificate.isolationB.isValid());
+}
+
+void checkProviderLayout(const geo::ReferenceProviders& provider, const bool whole, const bool omitted) {
+    REQUIRE(provider.branchFor(geo::ReferenceRole::Own));
+    CHECK(*provider.branchFor(geo::ReferenceRole::Own) == 0);
+    CHECK(bool(provider.branchFor(geo::ReferenceRole::Opposite)) == !omitted);
+    CHECK(provider.oppositeDisposition() == (omitted ? geo::OppositeDisposition::ExcludedCollapsedCircle :
+        geo::OppositeDisposition::Present));
+    const std::size_t offsetCount = omitted ? 1 : 2;
+    CHECK(provider.branchCount() == offsetCount + (whole ? 0 : 2));
+    for (std::size_t branch = 0; branch < provider.branchCount(); ++branch) {
+        std::size_t count = 0;
+        double previous = 0.0;
+        for (const auto& segment : provider.segments()) {
+            if (segment.branch != branch) { continue; }
+            CHECK(segment.t0 == previous);
+            CHECK(segment.t0 < segment.t1);
+            previous = segment.t1;
+            ++count;
+        }
+        REQUIRE(count > 0);
+        CHECK(previous == (branch < offsetCount ? provider.frame().parameterEnd() : 1.0));
+        CHECK(provider.next(branch) == (whole ? static_cast<std::ptrdiff_t>(branch) : -1));
+    }
+    CHECK(provider.next(provider.branchCount()) == -1);
+    CHECK(provider.next(std::numeric_limits<std::size_t>::max()) == -1);
+    for (const auto role : {geo::ReferenceRole::StartCutter, geo::ReferenceRole::EndCutter}) {
+        CHECK(bool(provider.branchFor(role)) == !whole);
+        if (!whole) {
+            const auto indices = roleSegments(provider, role);
+            REQUIRE(indices.size() == 2);
+            CHECK(provider.segments()[indices[0]].t0 == 0.0);
+            CHECK(provider.segments()[indices[0]].t1 == 0.5);
+            CHECK(provider.segments()[indices[1]].t0 == 0.5);
+            CHECK(provider.segments()[indices[1]].t1 == 1.0);
+        }
+    }
+    if (!whole) {
+        CHECK(*provider.branchFor(geo::ReferenceRole::StartCutter) == offsetCount);
+        CHECK(*provider.branchFor(geo::ReferenceRole::EndCutter) == offsetCount + 1);
+    }
+    CHECK_FALSE(provider.branchFor(static_cast<geo::ReferenceRole>(999)));
+}
+} // namespace
+
+TEST_CASE("Reference providers own contiguous role layouts without exposing construction credentials",
+          "[lc-offsetcurve][geometry][reference-providers]") {
+    static_assert(!std::is_default_constructible_v<geo::ReferenceProviders>);
+    static_assert(!std::is_copy_constructible_v<geo::ReferenceProviders>);
+    static_assert(!std::is_move_constructible_v<geo::ReferenceProviders>);
+    static_assert(!std::is_constructible_v<geo::ReferenceProviders, geo::CriticalOccurrenceSnapshot>);
+    static_assert(std::is_convertible_v<std::unique_ptr<const geo::ReferenceProviders>,
+                                        std::unique_ptr<const LC_ParametricCurves>>);
+    for (const bool reversed : {false, true}) {
+        for (const bool whole : {false, true}) {
+            for (const double delta : {-1.0, 1.0}) {
+                const auto data = whole ? basis(10.0, 0.5, 0.0, 0.0, reversed) :
+                    reversed ? basis(10.0, 0.5, 2.0, 0.2, true) : basis(10.0, 0.5, 0.2, 2.0);
+                CAPTURE(reversed, whole, delta);
+                geo::WorkBudget budget;
+                const auto result = geo::prepareReferenceProviders(data, delta, budget);
+                REQUIRE(result.status == LC_IntersectionStatus::Ok);
+                REQUIRE(result.provider);
+                REQUIRE(result.ownCritical);
+                REQUIRE(result.oppositeCritical);
+                CHECK(result.reason == geo::ReferencePreparationReason::None);
+                checkProviderLayout(*result.provider, whole, false);
+                checkWork(result.work, budget.consumed());
+            }
+        }
+    }
+}
+
+TEST_CASE("Reference cutter jets enclose independent exact geometry over points and partial ranges",
+          "[lc-offsetcurve][geometry][reference-providers]") {
+    for (const double magnitude : {1e-280, 10.0, 1e280}) {
+        for (const bool reversed : {false, true}) {
+            for (const bool wrapped : {false, true}) {
+                auto data = wrapped ? (reversed ? basis(magnitude, 0.5, 0.2, 5.8, true) :
+                                                    basis(magnitude, 0.5, 5.8, 0.2)) :
+                    reversed ? basis(magnitude, 0.5, 2.0, 0.2, true) : basis(magnitude, 0.5, 0.2, 2.0);
+                data.majorP = {0.6 * magnitude, 0.8 * magnitude};
+                data.center = {1e300, -1e300};
+                const double delta = 0.1 * magnitude;
+                CAPTURE(magnitude, reversed, wrapped);
+                geo::WorkBudget budget;
+                const auto prepared = geo::prepareReferenceProviders(data, delta, budget);
+                REQUIRE(prepared.status == LC_IntersectionStatus::Ok);
+                const auto& provider = *prepared.provider;
+                for (const bool start : {false, true}) {
+                    const auto role = start ? geo::ReferenceRole::StartCutter : geo::ReferenceRole::EndCutter;
+                    const auto indices = roleSegments(provider, role);
+                    REQUIRE(indices.size() == 2);
+                    for (const std::size_t index : indices) {
+                        const auto segment = provider.segments()[index];
+                        for (unsigned i = 0; i <= 32; ++i) {
+                            const double u = segment.t0 + (segment.t1 - segment.t0) * (double(i) / 32.0);
+                            LC_CurveJetBounds point;
+                            REQUIRE(provider.boundJet(index, u, u, point));
+                            checkCutterEnclosure(point, cutterOracle(data, provider.frame().scale(), delta, start, u));
+                            RS_Vector seed, derivative;
+                            REQUIRE(provider.evaluate(index, u, seed, derivative));
+                            REQUIRE(geo::isFinite2D(seed));
+                            REQUIRE(geo::isFinite2D(derivative));
+                            CHECK(point.x.contains(seed.x));
+                            CHECK(point.y.contains(seed.y));
+                            CHECK(point.dx.contains(derivative.x));
+                            CHECK(point.dy.contains(derivative.y));
+                            if (i == 32) { continue; }
+                            const double end = segment.t0 + (segment.t1 - segment.t0) * (double(i + 1) / 32.0);
+                            LC_CurveJetBounds range;
+                            REQUIRE(provider.boundJet(index, u, end, range));
+                            for (const double t : {u, 0.5 * u + 0.5 * end, end}) {
+                                checkCutterEnclosure(range, cutterOracle(data, provider.frame().scale(), delta, start, t));
+                            }
+                        }
+                        LC_CurveJetBounds wholePiece;
+                        REQUIRE(provider.boundJet(index, segment.t0, segment.t1, wholePiece));
+                        for (unsigned i = 0; i <= 16; ++i) {
+                            const double u = segment.t0 + (segment.t1 - segment.t0) * (double(i) / 16.0);
+                            checkCutterEnclosure(wholePiece, cutterOracle(data, provider.frame().scale(), delta, start, u));
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("Reference cutter true pi endpoints and half join have continuous two sided jet limits",
+          "[lc-offsetcurve][geometry][reference-providers]") {
+    for (const bool reversed : {false, true}) {
+        const auto data = reversed ? basis(10.0, 0.5, 2.0, 0.0, true) : basis(10.0, 0.5, 0.0, 2.0);
+        geo::WorkBudget budget;
+        const auto result = geo::prepareReferenceProviders(data, -1.0, budget);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        const auto& provider = *result.provider;
+        for (const bool start : {false, true}) {
+            const auto indices = roleSegments(provider, start ? geo::ReferenceRole::StartCutter :
+                                                               geo::ReferenceRole::EndCutter);
+            REQUIRE(indices.size() == 2);
+            for (const double u : {0.0, 0.5, 1.0}) {
+                const std::size_t index = indices[u <= 0.5 ? 0 : 1];
+                LC_CurveJetBounds point, neighborhood;
+                REQUIRE(provider.boundJet(index, u, u, point));
+                const double lo = u == 0.0 ? u : std::nextafter(u, 0.0);
+                const double hi = u == 0.5 ? u : u == 1.0 ? u : std::nextafter(u, 1.0);
+                REQUIRE(provider.boundJet(index, lo, hi, neighborhood));
+                const auto oracle = cutterOracle(data, provider.frame().scale(), -1.0, start, u);
+                checkCutterEnclosure(point, oracle);
+                checkCutterEnclosure(neighborhood, oracle);
+            }
+            LC_CurveJetBounds left, right;
+            REQUIRE(provider.boundJet(indices[0], std::nextafter(0.5, 0.0), 0.5, left));
+            REQUIRE(provider.boundJet(indices[1], 0.5, std::nextafter(0.5, 1.0), right));
+            const auto join = cutterOracle(data, provider.frame().scale(), -1.0, start, 0.5);
+            checkCutterEnclosure(left, join);
+            checkCutterEnclosure(right, join);
+            const double endpointT = start ? 0.0 : provider.frame().parameterEnd();
+            for (const double u : {0.0, 1.0}) {
+                const double physical = u == 0.0 ? 1.0 : -1.0;
+                const auto endpoint = referenceOracle(data, provider.frame(), physical, endpointT, true);
+                const auto cap = cutterOracle(data, provider.frame().scale(), -1.0, start, u);
+                CHECK(abs(cap[0] - CriticalFloat(endpoint[0])) < CriticalFloat("1e-30"));
+                CHECK(abs(cap[1] - CriticalFloat(endpoint[1])) < CriticalFloat("1e-30"));
+            }
+        }
+    }
+}
+
+TEST_CASE("Reference provider strict hooks remap both directions without leaking local segment indices",
+          "[lc-offsetcurve][geometry][reference-providers]") {
+    using Outcome = LC_AnalyticIntersectionCertificate::Outcome;
+    const auto data = basis(100.0, 0.5, 0.0, 2.0);
+    geo::WorkBudget budget;
+    const auto prepared = geo::prepareReferenceProviders(data, 30.0, budget);
+    REQUIRE(prepared.status == LC_IntersectionStatus::Ok);
+    const auto& provider = *prepared.provider;
+    for (const bool own : {false, true}) {
+        geo::WorkBudget separate;
+        const auto child = geo::analyseCritical(data, own ? 30.0 : -30.0, separate);
+        REQUIRE(child.status == LC_IntersectionStatus::Ok);
+        const auto indices = roleSegments(provider, own ? geo::ReferenceRole::Own : geo::ReferenceRole::Opposite);
+        REQUIRE(indices.size() == child.adapter->segments().size());
+        std::size_t certified = 0;
+        for (std::size_t i = 0; i < indices.size(); ++i) {
+            const auto piece = child.adapter->segments()[i];
+            const LC_Interval interval = LC_Interval::hull(piece.t0, piece.t1);
+            const auto localLeaf = child.adapter->certifyInjective(i, interval);
+            const auto globalLeaf = provider.certifyInjective(indices[i], interval);
+            REQUIRE(localLeaf.available);
+            REQUIRE(globalLeaf.available);
+            CHECK(globalLeaf.segment == indices[i]);
+            CHECK(globalLeaf.parameter.lo() == localLeaf.parameter.lo());
+            CHECK(globalLeaf.parameter.hi() == localLeaf.parameter.hi());
+            LC_CurveJetBounds bounds;
+            const double middle = 0.5 * piece.t0 + 0.5 * piece.t1;
+            REQUIRE(provider.boundJet(indices[i], middle, middle, bounds));
+            checkEnclosure(bounds, referenceOracle(data, provider.frame(), own ? 30.0 : -30.0, middle, true));
+            if (i + 1 == indices.size()) { continue; }
+            const double end = piece.t1;
+            LC_IntersectionDomain local{i, i + 1,
+                LC_Interval::hull(std::nextafter(end, piece.t0), end),
+                LC_Interval::hull(end, std::nextafter(end, child.adapter->segments()[i + 1].t1))};
+            for (const bool swap : {false, true}) {
+                if (swap) {
+                    std::swap(local.segmentA, local.segmentB);
+                    std::swap(local.parameterA, local.parameterB);
+                }
+                const auto expected = child.adapter->certifyIntersection(local);
+                const LC_IntersectionDomain global{indices[local.segmentA], indices[local.segmentB],
+                    local.parameterA, local.parameterB};
+                const auto actual = provider.certifyIntersection(global);
+                CHECK(actual.outcome == expected.outcome);
+                if (expected.outcome == Outcome::Unavailable) { continue; }
+                ++certified;
+                CHECK(actual.proof == expected.proof);
+                CHECK(actual.proofDomain.segmentA == global.segmentA);
+                CHECK(actual.proofDomain.segmentB == global.segmentB);
+                CHECK(actual.proofDomain.parameterA.lo() == expected.proofDomain.parameterA.lo());
+                CHECK(actual.proofDomain.parameterA.hi() == expected.proofDomain.parameterA.hi());
+                CHECK(actual.proofDomain.parameterB.lo() == expected.proofDomain.parameterB.lo());
+                CHECK(actual.proofDomain.parameterB.hi() == expected.proofDomain.parameterB.hi());
+            }
+        }
+        CHECK(certified > 0);
+    }
+    for (const auto role : {geo::ReferenceRole::StartCutter, geo::ReferenceRole::EndCutter}) {
+        const auto indices = roleSegments(provider, role);
+        REQUIRE(indices.size() == 2);
+        const auto first = provider.certifyInjective(indices[0], LC_Interval::hull(0.0, 0.5));
+        const auto second = provider.certifyInjective(indices[1], LC_Interval::hull(0.5, 1.0));
+        CHECK(first.available);
+        CHECK(second.available);
+        for (const bool swap : {false, true}) {
+            const LC_IntersectionDomain joint{indices[swap ? 1 : 0], indices[swap ? 0 : 1],
+                LC_Interval::hull(swap ? 0.5 : 0.0, swap ? 1.0 : 0.5),
+                LC_Interval::hull(swap ? 0.0 : 0.5, swap ? 0.5 : 1.0)};
+            const auto proof = provider.certifyIntersection(joint);
+            REQUIRE(proof.outcome == Outcome::Excluded);
+            CHECK(proof.proof == LC_IntersectionProof::AnalyticExclusion);
+            CHECK(proof.proofDomain.segmentA == joint.segmentA);
+            CHECK(proof.proofDomain.segmentB == joint.segmentB);
+        }
+        const LC_IntersectionDomain diagonal{indices[0], indices[0], LC_Interval::hull(0.1, 0.3),
+                                             LC_Interval::hull(0.2, 0.4)};
+        CHECK(provider.certifyIntersection(diagonal).outcome == Outcome::Unavailable);
+    }
+}
+
+TEST_CASE("Reference support exclusions cover only factory qualified opposite roles",
+          "[lc-offsetcurve][geometry][reference-providers]") {
+    using Outcome = LC_AnalyticIntersectionCertificate::Outcome;
+    for (const bool reversed : {false, true}) {
+        for (const double delta : {-1.0, 1.0}) {
+            const auto data = reversed ? basis(10.0, 0.5, 0.2, 5.8, true) : basis(10.0, 0.5, 5.8, 0.2);
+            geo::WorkBudget budget;
+            const auto result = geo::prepareReferenceProviders(data, delta, budget);
+            REQUIRE(result.status == LC_IntersectionStatus::Ok);
+            const auto& provider = *result.provider;
+            const auto own = roleSegments(provider, geo::ReferenceRole::Own);
+            const auto opposite = roleSegments(provider, geo::ReferenceRole::Opposite);
+            for (const auto i : own) {
+                for (const auto j : opposite) {
+                    for (const bool swap : {false, true}) {
+                        const auto a = swap ? j : i, b = swap ? i : j;
+                        const auto sa = provider.segments()[a], sb = provider.segments()[b];
+                        const LC_IntersectionDomain domain{a, b, LC_Interval::hull(sa.t0, sa.t1),
+                                                               LC_Interval::hull(sb.t0, sb.t1)};
+                        const auto certificate = provider.certifyIntersection(domain);
+                        REQUIRE(certificate.outcome == Outcome::Excluded);
+                        CHECK(certificate.proof == LC_IntersectionProof::AnalyticExclusion);
+                        CHECK(certificate.proofDomain.segmentA == a);
+                        CHECK(certificate.proofDomain.segmentB == b);
+                        CHECK(certificate.proofDomain.parameterA.lo() == sa.t0);
+                        CHECK(certificate.proofDomain.parameterA.hi() == sa.t1);
+                        CHECK(certificate.proofDomain.parameterB.lo() == sb.t0);
+                        CHECK(certificate.proofDomain.parameterB.hi() == sb.t1);
+                    }
+                }
+            }
+            const auto cap = roleSegments(provider, geo::ReferenceRole::StartCutter);
+            REQUIRE_FALSE(cap.empty());
+            for (const auto offset : {own.front(), opposite.front()}) {
+                const auto piece = provider.segments()[offset];
+                const LC_IntersectionDomain box{offset, cap[0], LC_Interval::hull(piece.t0, piece.t1),
+                                                LC_Interval::hull(0.0, 0.5)};
+                CHECK(provider.certifyIntersection(box).outcome == Outcome::Unavailable);
+            }
+            const auto otherCap = roleSegments(provider, geo::ReferenceRole::EndCutter);
+            CHECK(provider.certifyIntersection({cap[0], otherCap[0], LC_Interval::hull(0.0, 0.5),
+                LC_Interval::hull(0.0, 0.5)}).outcome == Outcome::Unavailable);
+        }
+    }
+}
+
+TEST_CASE("Reference providers clear every output on invalid indices and parameter domains",
+          "[lc-offsetcurve][geometry][reference-providers]") {
+    const auto data = basis(10.0, 0.5, 0.0, 2.0);
+    geo::WorkBudget budget;
+    const auto result = geo::prepareReferenceProviders(data, 1.0, budget);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    const auto& provider = *result.provider;
+    const auto saved = budget.consumed();
+    const auto cap = roleSegments(provider, geo::ReferenceRole::StartCutter);
+    const double nan = std::numeric_limits<double>::quiet_NaN();
+    const double inf = std::numeric_limits<double>::infinity();
+    struct Request { std::size_t index; double a, b; };
+    const std::array<Request, 8> invalid{{
+        {provider.segments().size(), 0.0, 0.0}, {std::size_t(-1), 0.0, 0.0},
+        {cap[0], nan, 0.1}, {cap[0], 0.0, inf}, {cap[0], -0.1, 0.1},
+        {cap[0], 0.4, 0.6}, {cap[1], 0.4, 0.6}, {cap[0], 0.3, 0.1}}};
+    for (const auto request : invalid) {
+        CAPTURE(request.index, request.a, request.b);
+        LC_CurveJetBounds bounds;
+        REQUIRE(provider.boundJet(cap[0], 0.2, 0.3, bounds));
+        CHECK_FALSE(provider.boundJet(request.index, request.a, request.b, bounds));
+        checkCleared(bounds);
+        LC_Interval x = LC_Interval::point(1.0), y = x, dx = x, dy = x;
+        CHECK_FALSE(provider.bound(request.index, request.a, request.b, x, y, dx, dy));
+        CHECK_FALSE(x.isValid());
+        CHECK_FALSE(y.isValid());
+        CHECK_FALSE(dx.isValid());
+        CHECK_FALSE(dy.isValid());
+    }
+    for (const auto request : {Request{provider.segments().size(), 0.0, 0.0}, Request{cap[0], nan, nan},
+                               Request{cap[0], -0.1, -0.1}, Request{cap[0], 0.6, 0.6}}) {
+        RS_Vector point{1.0, 2.0}, derivative{3.0, 4.0};
+        CHECK_FALSE(provider.evaluate(request.index, request.a, point, derivative));
+        CHECK_FALSE(point.valid);
+        CHECK_FALSE(derivative.valid);
+    }
+    for (const auto interval : {LC_Interval{}, LC_Interval::hull(-0.1, 0.1), LC_Interval::hull(0.4, 0.6),
+                                LC_Interval::hull(0.0, inf)}) {
+        const auto leaf = provider.certifyInjective(cap[0], interval);
+        CHECK_FALSE(leaf.available);
+        CHECK_FALSE(leaf.parameter.isValid());
+        checkUnavailableProviderProof(provider.certifyIntersection({cap[0], cap[1], interval,
+                                                                   LC_Interval::hull(0.5, 0.6)}));
+    }
+    CHECK_FALSE(provider.certifyInjective(std::size_t(-1), LC_Interval::point(0.0)).available);
+    checkUnavailableProviderProof(provider.certifyIntersection({std::size_t(-1), cap[0], LC_Interval::point(0.0),
+                                                                LC_Interval::point(0.0)}));
+    checkWork(budget.consumed(), saved); // Prepared hooks/queries never spend a second hidden budget.
+}
+
+TEST_CASE("Reference providers omit only the exact trusted collapsed opposite circle",
+          "[lc-offsetcurve][geometry][reference-providers]") {
+    for (const bool reversed : {false, true}) {
+        for (const bool whole : {false, true}) {
+            auto data = whole ? basis(5.0, 1.0, 0.0, 0.0, reversed) :
+                reversed ? basis(5.0, 1.0, 2.0, 0.2, true) : basis(5.0, 1.0, 0.2, 2.0);
+            data.majorP = {3.0, 4.0};
+            geo::WorkBudget budget;
+            const auto result = geo::prepareReferenceProviders(data, 5.0, budget);
+            REQUIRE(result.status == LC_IntersectionStatus::Ok);
+            REQUIRE(result.provider);
+            REQUIRE(result.ownCritical);
+            CHECK_FALSE(result.oppositeCritical);
+            checkProviderLayout(*result.provider, whole, true);
+            geo::WorkBudget collapseBudget;
+            const auto ownCollapse = geo::prepareReferenceProviders(data, -5.0, collapseBudget);
+            CHECK(ownCollapse.status == LC_IntersectionStatus::AmbiguousTopology);
+            CHECK(ownCollapse.reason == geo::ReferencePreparationReason::CollapsedCircle);
+            checkNoProviders(ownCollapse, collapseBudget);
+        }
+    }
+    for (const double delta : {std::nextafter(5.0, 0.0), std::nextafter(5.0, 10.0)}) {
+        auto data = basis(5.0, 1.0);
+        data.majorP = {3.0, 4.0};
+        geo::WorkBudget budget;
+        const auto result = geo::prepareReferenceProviders(data, delta, budget);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        REQUIRE(result.oppositeCritical);
+        checkProviderLayout(*result.provider, true, false);
+    }
+    geo::WorkBudget nonunitBudget;
+    const auto nonunit = geo::prepareReferenceProviders(basis(5.0, 0.5), 5.0, nonunitBudget);
+    REQUIRE(nonunit.status == LC_IntersectionStatus::Ok);
+    REQUIRE(nonunit.oppositeCritical);
+    CHECK(nonunit.provider->oppositeDisposition() == geo::OppositeDisposition::Present);
+    CHECK(nonunit.provider->branchFor(geo::ReferenceRole::Opposite));
+}
+
+TEST_CASE("Reference provider failures never masquerade as qualified collapsed omission",
+          "[lc-offsetcurve][geometry][reference-providers]") {
+    auto data = basis(5.0, 1.0);
+    data.majorP = {3.0, 4.0};
+    geo::WorkBudget measure;
+    const auto own = geo::analyseCriticalRetained(data, 5.0, measure);
+    REQUIRE(own.status == LC_IntersectionStatus::Ok);
+    LC_OffsetCheckLimits limits;
+    limits.maxVertices = own.work.vertices;
+    limits.maxDistancePairs = own.work.distancePairs;
+    geo::WorkBudget exhausted{limits};
+    const auto failed = geo::prepareReferenceProviders(data, 5.0, exhausted);
+    CHECK(failed.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(failed.reason == geo::ReferencePreparationReason::None);
+    checkNoProviders(failed, exhausted);
+    checkWork(failed.work, own.work);
+    geo::WorkBudget invalidBudget;
+    for (const double delta : {0.0, -0.0, std::numeric_limits<double>::infinity(),
+                               std::numeric_limits<double>::quiet_NaN()}) {
+        const auto invalid = geo::prepareReferenceProviders(data, delta, invalidBudget);
+        CHECK(invalid.status == LC_IntersectionStatus::InvalidInput);
+        checkNoProviders(invalid, invalidBudget);
+        checkWork(invalid.work, {});
+    }
+    auto invalid = data;
+    invalid.ratio = 2.0;
+    const auto invalidBasis = geo::prepareReferenceProviders(invalid, 5.0, invalidBudget);
+    CHECK(invalidBasis.status == LC_IntersectionStatus::InvalidInput);
+    checkNoProviders(invalidBasis, invalidBudget);
+    CHECK(invalidBasis.reason == geo::ReferencePreparationReason::None);
+    geo::WorkBudget invalidLimits{LC_OffsetCheckLimits{1, 1, 1, 0}};
+    const auto invalidAllowance = geo::prepareReferenceProviders(data, 5.0, invalidLimits);
+    CHECK(invalidAllowance.status == LC_IntersectionStatus::InvalidInput);
+    checkNoProviders(invalidAllowance, invalidLimits);
+}
+
+TEST_CASE("Reference provider metadata obeys exact one less and pre spent shared ceilings",
+          "[lc-offsetcurve][geometry][reference-providers]") {
+    for (const bool whole : {false, true}) {
+        for (const bool collapsed : {false, true}) {
+            const auto data = collapsed ? (whole ? basis(5.0, 1.0) : basis(5.0, 1.0, 0.0, 2.0)) :
+                whole ? basis(10.0, 0.5) : basis(10.0, 0.5, 0.0, 2.0);
+            const double distance = collapsed ? 5.0 : 1.0;
+            geo::WorkBudget analyses;
+            const auto own = geo::analyseCriticalRetained(data, distance, analyses);
+            REQUIRE(own.status == LC_IntersectionStatus::Ok);
+            const auto opposite = geo::analyseCriticalRetained(data, -distance, analyses);
+            REQUIRE(opposite.status == (collapsed ? LC_IntersectionStatus::AmbiguousTopology : LC_IntersectionStatus::Ok));
+            const auto before = analyses.consumed();
+            geo::WorkBudget measured;
+            const auto baseline = geo::prepareReferenceProviders(data, distance, measured);
+            REQUIRE(baseline.status == LC_IntersectionStatus::Ok);
+            const std::size_t c = whole ? 0 : 2;
+            const std::size_t s = baseline.provider->segments().size();
+            CHECK(baseline.work.vertices == before.vertices + 3 + c + s);
+            CHECK(baseline.work.distancePairs == before.distancePairs + 1 + 4 * c + s);
+            CHECK(baseline.work.deepest == before.deepest);
+            CHECK(baseline.work.cubicPieces == before.cubicPieces);
+            for (const bool prespent : {false, true}) {
+                const std::size_t spentV = prespent ? 5 : 0, spentP = prespent ? 7 : 0;
+                for (int cap = 0; cap < 3; ++cap) {
+                    CAPTURE(whole, collapsed, prespent, cap, s);
+                    LC_OffsetCheckLimits limits;
+                    limits.maxCubicPieces = 2;
+                    limits.maxVertices = baseline.work.vertices + spentV - (cap == 1 ? 1 : 0);
+                    limits.maxDistancePairs = baseline.work.distancePairs + spentP - (cap == 2 ? 1 : 0);
+                    geo::WorkBudget budget{limits};
+                    if (prespent) {
+                        REQUIRE(budget.consumePieces(1));
+                        REQUIRE(budget.consumeVertices(spentV));
+                        REQUIRE(budget.consumePairs(spentP));
+                        REQUIRE(budget.checkDepth(15));
+                    }
+                    const auto result = geo::prepareReferenceProviders(data, distance, budget);
+                    CHECK(result.status == (cap == 0 ? LC_IntersectionStatus::Ok : LC_IntersectionStatus::LimitExceeded));
+                    CHECK(result.work.vertices <= limits.maxVertices);
+                    CHECK(result.work.distancePairs <= limits.maxDistancePairs);
+                    CHECK(result.work.deepest == (prespent ? 15 : before.deepest));
+                    checkWork(result.work, budget.consumed());
+                    if (cap == 0) {
+                        REQUIRE(result.provider);
+                        CHECK(result.work.vertices == baseline.work.vertices + spentV);
+                        CHECK(result.work.distancePairs == baseline.work.distancePairs + spentP);
+                        CHECK(result.work.cubicPieces == std::size_t(prespent));
+                    } else {
+                        checkNoProviders(result, budget);
+                        const auto saved = budget.consumed();
+                        const auto again = geo::prepareReferenceProviders(data, distance, budget);
+                        CHECK(again.status == LC_IntersectionStatus::LimitExceeded);
+                        checkNoProviders(again, budget);
+                        checkWork(again.work, saved);
+                    }
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("Reference provider failed entered stages retain only actual admitted pair work",
+          "[lc-offsetcurve][geometry][reference-providers]") {
+    const auto data = basis(10.0, 0.5, 0.0, 2.0);
+    geo::WorkBudget measure;
+    REQUIRE(geo::analyseCriticalRetained(data, 1.0, measure).status == LC_IntersectionStatus::Ok);
+    REQUIRE(geo::analyseCriticalRetained(data, -1.0, measure).status == LC_IntersectionStatus::Ok);
+    const auto before = measure.consumed();
+    geo::WorkBudget completeBudget;
+    const auto complete = geo::prepareReferenceProviders(data, 1.0, completeBudget);
+    REQUIRE(complete.status == LC_IntersectionStatus::Ok);
+    const auto s = complete.provider->segments().size();
+    // P1 common proof; two groups of normalization + three fixed cap checks; then S map validations.
+    for (std::size_t allowed = 0; allowed < 9 + s; ++allowed) {
+        CAPTURE(allowed, s);
+        LC_OffsetCheckLimits limits;
+        limits.maxDistancePairs = before.distancePairs + allowed;
+        geo::WorkBudget budget{limits};
+        const auto result = geo::prepareReferenceProviders(data, 1.0, budget);
+        CHECK(result.status == LC_IntersectionStatus::LimitExceeded);
+        checkNoProviders(result, budget);
+        const std::size_t admittedV = allowed == 0 ? 3 : allowed <= 4 ? 4 : allowed <= 8 ? 5 : 5 + s;
+        CHECK(result.work.vertices == before.vertices + admittedV);
+        CHECK(result.work.distancePairs == before.distancePairs + allowed);
+        CHECK(result.work.deepest == before.deepest);
+        CHECK(result.work.cubicPieces == before.cubicPieces);
+    }
+    for (const std::size_t allowed : {std::size_t{2}, std::size_t{3}, std::size_t{4}, std::size_t{4} + s}) {
+        LC_OffsetCheckLimits limits;
+        limits.maxVertices = before.vertices + allowed;
+        geo::WorkBudget budget{limits};
+        const auto result = geo::prepareReferenceProviders(data, 1.0, budget);
+        CHECK(result.status == LC_IntersectionStatus::LimitExceeded);
+        checkNoProviders(result, budget);
+        const std::size_t admittedV = allowed == 2 ? 0 : allowed == 3 ? 3 : allowed == 4 ? 4 : 5;
+        const std::size_t admittedP = allowed == 2 ? 0 : allowed == 3 ? 1 : allowed == 4 ? 5 : 9;
+        CHECK(result.work.vertices == before.vertices + admittedV);
+        CHECK(result.work.distancePairs == before.distancePairs + admittedP);
+        CHECK(result.work.deepest == before.deepest);
+    }
+}
+
+TEST_CASE("Reference collapsed omission verification is admitted after trusted critical analysis",
+          "[lc-offsetcurve][geometry][reference-providers]") {
+    auto data = basis(5.0, 1.0);
+    data.majorP = {3.0, 4.0};
+    geo::WorkBudget base;
+    REQUIRE(geo::analyseCriticalRetained(data, 5.0, base).status == LC_IntersectionStatus::Ok);
+    const auto collapsed = geo::analyseCriticalRetained(data, -5.0, base);
+    REQUIRE(collapsed.status == LC_IntersectionStatus::AmbiguousTopology);
+    REQUIRE(collapsed.reason == geo::CriticalAnalysis::Reason::CollapsedCircle);
+    LC_OffsetCheckLimits limits;
+    limits.maxDistancePairs = base.consumed().distancePairs;
+    geo::WorkBudget budget{limits};
+    const auto result = geo::prepareReferenceProviders(data, 5.0, budget);
+    CHECK(result.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(result.reason == geo::ReferencePreparationReason::None);
+    checkNoProviders(result, budget);
+    CHECK(result.work.vertices == base.consumed().vertices + 3);
+    CHECK(result.work.distancePairs == base.consumed().distancePairs);
+}
+
+TEST_CASE("Reference provider ownership can enter core while critical refiners remain independently alive",
+          "[lc-offsetcurve][geometry][reference-providers]") {
+    const auto data = basis(100.0, 0.5);
+    geo::WorkBudget budget;
+    auto prepared = geo::prepareReferenceProviders(data, 30.0, budget);
+    REQUIRE(prepared.status == LC_IntersectionStatus::Ok);
+    REQUIRE(prepared.ownCritical);
+    REQUIRE(prepared.oppositeCritical);
+    REQUIRE(prepared.oppositeCritical->occurrenceCount() == 4);
+    const auto handle = prepared.oppositeCritical->occurrenceHandle(0);
+    const auto original = prepared.oppositeCritical->snapshot(handle);
+    REQUIRE(original);
+    const auto frame = prepared.provider->frame();
+    const auto* view = prepared.provider.get();
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-8;
+    options.maxDepth = budget.depthLimit();
+    options.maxLeafDepth = budget.depthLimit();
+    options.maxBoxPairs = budget.remainingPairs();
+    options.maxGeneratedItems = budget.remainingVertices();
+    options.maxLeaves = budget.remainingVertices();
+    options.anchoredBranches = 1;
+    auto core = findCertifiedIntersections(std::move(prepared.provider), options);
+    REQUIRE(budget.consumePairs(core.work.totalBoxPairs));
+    REQUIRE(budget.consumeVertices(core.work.generatedItems));
+    REQUIRE(budget.checkDepth(core.work.deepest()));
+    REQUIRE(core.status == LC_IntersectionStatus::Ok);
+    REQUIRE(core.session);
+    CHECK(core.session->rootCount() == 0);
+    LC_CurveJetBounds bounds;
+    REQUIRE(view->boundJet(0, view->segments()[0].t0, view->segments()[0].t0, bounds));
+    checkCriticalSnapshot(data, -30.0, frame, *original);
+    core.session.reset(); // No borrowed composite/adapters survive in the critical session.
+    const auto result = prepared.oppositeCritical->contract(handle, budget);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    REQUIRE(result.snapshot);
+    CHECK(result.workSource == geo::CriticalWorkSource::CurrentBudget);
+    checkCriticalSnapshot(data, -30.0, frame, *result.snapshot);
+    CHECK(prepared.ownCritical->occurrenceCount() == 0);
+    checkWork(result.work, budget.consumed());
+}
+
+TEST_CASE("Reference providers do not borrow input fields or require their issuing budget to stay alive",
+          "[lc-offsetcurve][geometry][reference-providers]") {
+    std::unique_ptr<const geo::ReferenceProviders> provider;
+    std::unique_ptr<geo::CriticalRefinementSession> retained;
+    geo::CriticalOccurrenceHandle handle;
+    {
+        auto data = basis(100.0, 0.5, 0.0, 2.0);
+        geo::WorkBudget budget;
+        auto result = geo::prepareReferenceProviders(data, 30.0, budget);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        REQUIRE(result.oppositeCritical->occurrenceCount() == 1);
+        handle = result.oppositeCritical->occurrenceHandle(0);
+        provider = std::move(result.provider);
+        retained = std::move(result.oppositeCritical);
+        data.majorP = {0.0, 0.0};
+        data.ratio = -1.0;
+        data.angle1 = std::numeric_limits<double>::quiet_NaN();
+    }
+    const auto cap = roleSegments(*provider, geo::ReferenceRole::EndCutter);
+    LC_CurveJetBounds bounds;
+    REQUIRE(provider->boundJet(cap[1], 0.75, 0.75, bounds));
+    checkCutterEnclosure(bounds, cutterOracle(basis(100.0, 0.5, 0.0, 2.0), provider->frame().scale(), 30.0, false, 0.75));
+    const auto snapshot = retained->snapshot(handle);
+    REQUIRE(snapshot);
+    geo::WorkBudget foreign;
+    const auto rejected = retained->contract(handle, foreign);
+    CHECK(rejected.status == LC_IntersectionStatus::InvalidInput);
+    CHECK(rejected.workSource == geo::CriticalWorkSource::LastMatchingBudget);
+    checkWork(rejected.entered, {});
+    checkWork(foreign.consumed(), {});
+    REQUIRE(retained->snapshot(handle));
+    CHECK(retained->snapshot(handle)->occurrence.parameter.lo() == snapshot->occurrence.parameter.lo());
+    CHECK(retained->snapshot(handle)->occurrence.parameter.hi() == snapshot->occurrence.parameter.hi());
+}
+
+TEST_CASE("Reference provider refusal preserves valid thin frame diagnostics without publishing geometry",
+          "[lc-offsetcurve][geometry][reference-providers]") {
+    const auto data = basis(1.0, 1e-300);
+    REQUIRE(geo::ReferenceFrame::create(data, 1.0));
+    geo::WorkBudget budget;
+    const auto result = geo::prepareReferenceProviders(data, 1.0, budget);
+    CHECK(result.status == LC_IntersectionStatus::AmbiguousTopology);
+    CHECK(result.reason == geo::ReferencePreparationReason::UnresolvedGeometry);
+    checkNoProviders(result, budget);
+    CHECK(result.work.vertices > 0);
+    CHECK(result.work.distancePairs > 0);
+}
+
+TEST_CASE("Reference provider preparation carries actual critical depth and refuses one less without owners",
+          "[lc-offsetcurve][geometry][reference-providers]") {
+    for (const bool reversed : {false, true}) {
+        const auto data = reversed ? basis(100.0, 0.5, 3.0, 0.0, true) : basis(100.0, 0.5, 0.0, 2.0);
+        geo::WorkBudget baselineBudget;
+        const auto baseline = geo::prepareReferenceProviders(data, 100.0, baselineBudget);
+        REQUIRE(baseline.status == LC_IntersectionStatus::Ok);
+        REQUIRE(baseline.work.deepest > 0);
+        for (const bool oneLess : {false, true}) {
+            LC_OffsetCheckLimits limits;
+            limits.maxVertices = baseline.work.vertices;
+            limits.maxDistancePairs = baseline.work.distancePairs;
+            limits.maxDepth = baseline.work.deepest - (oneLess ? 1 : 0);
+            geo::WorkBudget budget{limits};
+            const auto result = geo::prepareReferenceProviders(data, 100.0, budget);
+            CHECK(result.status == (oneLess ? LC_IntersectionStatus::LimitExceeded : LC_IntersectionStatus::Ok));
+            CHECK(result.work.deepest <= limits.maxDepth);
+            checkWork(result.work, budget.consumed());
+            if (oneLess) {
+                checkNoProviders(result, budget);
+                CHECK(result.reason == geo::ReferencePreparationReason::None);
+            } else {
+                REQUIRE(result.provider);
+                checkWork(result.work, baseline.work);
+            }
+        }
+    }
+}
+
+TEST_CASE("Reference provider raw validation never repairs malformed source definitions",
+          "[lc-offsetcurve][geometry][reference-providers]") {
+    const auto original = basis(10.0, 0.5, 0.0, 2.0);
+    for (int field = 0; field < 8; ++field) {
+        auto data = original;
+        switch (field) {
+        case 0: data.majorP = {0.0, 0.0}; break;
+        case 1: data.majorP.z = 1.0; break;
+        case 2: data.center.z = 1.0; break;
+        case 3: data.majorP.x = std::numeric_limits<double>::infinity(); break;
+        case 4: data.ratio = 0.0; break;
+        case 5: data.ratio = 1.5; break;
+        case 6: data.angle1 = std::numeric_limits<double>::quiet_NaN(); break;
+        case 7: data.angle2 = 7.0; break;
+        }
+        CAPTURE(field);
+        const auto before = data;
+        geo::WorkBudget budget;
+        const auto result = geo::prepareReferenceProviders(data, 1.0, budget);
+        CHECK(result.status == LC_IntersectionStatus::InvalidInput);
+        CHECK(result.reason == geo::ReferencePreparationReason::None);
+        checkNoProviders(result, budget);
+        checkWork(result.work, {});
+        if (field != 6) { checkSameFields(data, before); }
+        else { CHECK(std::isnan(data.angle1)); }
+        CHECK(data.center.z == before.center.z);
+        CHECK(data.majorP.z == before.majorP.z);
+    }
+}

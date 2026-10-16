@@ -1688,6 +1688,329 @@ CriticalRetainedAnalysis analyseCriticalRetained(const RS_EllipseData& basis, co
     return CriticalBuilder{basis, signedDistance, *reference, budget}.runRetained();
 }
 
+namespace {
+struct ReferenceCutter {
+    LC_Interval x, y, nx, ny, tx, ty, distance;
+    double orientation = 1.0;
+
+    bool prepare(const ReferenceFrame& source, const double delta, const bool start) {
+        const double t = start ? 0.0 : source.parameterEnd();
+        LC_CurveJetBounds endpoint;
+        if (!source.boundSourceJet(t, t, endpoint) || !finiteInterval(endpoint.speedSquaredProduct) ||
+            !endpoint.speedSquaredProduct.isPositive()) { return false; }
+        const LC_Interval speed = sqrt(endpoint.speedSquaredProduct);
+        if (!finiteInterval(speed) || !speed.isPositive()) { return false; }
+        const LC_Interval directedX = endpoint.dx / speed;
+        const LC_Interval directedY = endpoint.dy / speed;
+        const double direction = source.sourceSweep().signedSweep < 0.0 ? -1.0 : 1.0;
+        const LC_Interval sign = LC_Interval::point(direction);
+        const LC_Interval outward = LC_Interval::point(start ? -1.0 : 1.0);
+        x = endpoint.x;
+        y = endpoint.y;
+        nx = sign * directedY;
+        ny = -sign * directedX;
+        tx = outward * directedX;
+        ty = outward * directedY;
+        distance = scaled(LC_Interval::point(std::abs(delta)), -std::ilogb(source.scale()));
+        orientation = start ? -direction : direction;
+        return finiteInterval(x) && finiteInterval(y) && finiteInterval(nx) && finiteInterval(ny) &&
+            finiteInterval(tx) && finiteInterval(ty) && finiteInterval(distance) && distance.isPositive();
+    }
+
+    bool bound(const double a, const double b, LC_CurveJetBounds& out) const {
+        out = {};
+        if (!std::isfinite(a) || !std::isfinite(b) || !(0.0 <= a && a <= b && b <= 1.0)) {
+            return false;
+        }
+        LC_Interval c, s;
+        const LC_Interval zero = LC_Interval::point(0.0);
+        const LC_Interval one = LC_Interval::point(1.0);
+        if (a == b && a == 0.0) { c = one; s = zero; }
+        else if (a == b && a == 0.5) { c = zero; s = one; }
+        else if (a == b && a == 1.0) { c = -one; s = zero; }
+        else if (!referenceTrig(realPi() * LC_Interval::hull(a, b), c, s)) { return false; }
+        const LC_Interval radialX = nx * c + tx * s;
+        const LC_Interval radialY = ny * c + ty * s;
+        const LC_Interval pi = realPi();
+        const LC_Interval piSquared = sqr(pi);
+        LC_CurveJetBounds candidate;
+        candidate.x = x + distance * radialX;
+        candidate.y = y + distance * radialY;
+        candidate.dx = distance * pi * (-nx * s + tx * c);
+        candidate.dy = distance * pi * (-ny * s + ty * c);
+        candidate.ddx = -distance * piSquared * radialX;
+        candidate.ddy = -distance * piSquared * radialY;
+        candidate.speedSquaredProduct = sqr(distance) * piSquared;
+        candidate.crossProduct = LC_Interval::point(orientation) * candidate.speedSquaredProduct * pi;
+        if (!finiteBounds(candidate) || !finiteInterval(candidate.speedSquaredProduct) ||
+            !finiteInterval(candidate.crossProduct)) { return false; }
+        out = candidate;
+        return true;
+    }
+};
+
+bool containsInterval(const LC_Interval& outer, const LC_Interval& inner) {
+    return finiteInterval(outer) && finiteInterval(inner) && outer.lo() <= inner.lo() && inner.hi() <= outer.hi();
+}
+} // namespace
+
+struct ReferenceProviders::Impl {
+    struct Map { std::size_t part; std::size_t local; };
+    std::array<std::unique_ptr<const CriticalAdapter>, 2> adapters;
+    std::array<std::optional<ReferenceCutter>, 2> cutters;
+    std::array<std::optional<std::size_t>, 4> branches;
+    std::vector<LC_ParametricSegment> segments;
+    std::vector<Map> maps;
+    OppositeDisposition disposition;
+    std::size_t count = 0;
+
+    Impl(std::unique_ptr<const CriticalAdapter> own, std::unique_ptr<const CriticalAdapter> opposite,
+         const OppositeDisposition value)
+        : adapters{{std::move(own), std::move(opposite)}}, disposition{value} {}
+
+    LC_ParametricSegment localSegment(const std::size_t part, const std::size_t local) const {
+        return part < 2 ? adapters[part]->segments()[local] :
+            LC_ParametricSegment{0, local == 0 ? 0.0 : 0.5, local == 0 ? 0.5 : 1.0};
+    }
+    bool contains(const std::size_t segment, const LC_Interval& parameter) const {
+        return segment < segments.size() && finiteInterval(parameter) &&
+            segments[segment].t0 <= parameter.lo() && parameter.hi() <= segments[segment].t1;
+    }
+    bool localContains(const std::size_t part, const std::size_t segment, const LC_Interval& parameter) const {
+        const std::size_t size = part < 2 ? adapters[part]->segments().size() : 2;
+        if (segment >= size || !finiteInterval(parameter)) { return false; }
+        const auto piece = localSegment(part, segment);
+        return piece.t0 <= parameter.lo() && parameter.hi() <= piece.t1;
+    }
+};
+
+ReferenceProviders::ReferenceProviders(std::unique_ptr<Impl> impl) : m_impl{std::move(impl)} {}
+ReferenceProviders::~ReferenceProviders() = default;
+const ReferenceFrame& ReferenceProviders::frame() const noexcept { return m_impl->adapters[0]->frame(); }
+std::optional<std::size_t> ReferenceProviders::branchFor(const ReferenceRole role) const noexcept {
+    const auto index = static_cast<std::size_t>(role);
+    return index < m_impl->branches.size() ? m_impl->branches[index] : std::nullopt;
+}
+OppositeDisposition ReferenceProviders::oppositeDisposition() const noexcept { return m_impl->disposition; }
+const std::vector<LC_ParametricSegment>& ReferenceProviders::segments() const { return m_impl->segments; }
+std::size_t ReferenceProviders::branchCount() const { return m_impl->count; }
+std::ptrdiff_t ReferenceProviders::next(const std::size_t branch) const {
+    for (std::size_t part = 0; part < 2; ++part) {
+        if (m_impl->branches[part] && *m_impl->branches[part] == branch) {
+            return m_impl->adapters[part]->next(0) == 0 ? static_cast<std::ptrdiff_t>(branch) : -1;
+        }
+    }
+    return -1;
+}
+
+bool ReferenceProviders::boundJet(const std::size_t segment, const double a, const double b,
+                                 LC_CurveJetBounds& out) const {
+    out = {};
+    if (!std::isfinite(a) || !std::isfinite(b) || !(a <= b) ||
+        !m_impl->contains(segment, LC_Interval::hull(a, b))) { return false; }
+    const auto map = m_impl->maps[segment];
+    return map.part < 2 ? m_impl->adapters[map.part]->frame().boundOffsetJet(a, b, out) :
+        m_impl->cutters[map.part - 2]->bound(a, b, out);
+}
+
+bool ReferenceProviders::evaluate(const std::size_t segment, const double t,
+                                  RS_Vector& point, RS_Vector& derivative) const {
+    point = derivative = RS_Vector{false};
+    LC_CurveJetBounds bounds;
+    LC_CurveJet seed;
+    if (!boundJet(segment, t, t, bounds) || !jetFromBounds(bounds, seed)) { return false; }
+    point = seed.point;
+    derivative = seed.first;
+    return true;
+}
+
+bool ReferenceProviders::bound(const std::size_t segment, const double a, const double b,
+                               LC_Interval& x, LC_Interval& y, LC_Interval& dx, LC_Interval& dy) const {
+    x = y = dx = dy = {};
+    LC_CurveJetBounds bounds;
+    if (!boundJet(segment, a, b, bounds)) { return false; }
+    x = bounds.x;
+    y = bounds.y;
+    dx = bounds.dx;
+    dy = bounds.dy;
+    return true;
+}
+
+LC_AnalyticLeafCertificate ReferenceProviders::certifyInjective(
+    const std::size_t segment, const LC_Interval& parameter) const {
+    if (!m_impl->contains(segment, parameter)) { return {}; }
+    const auto map = m_impl->maps[segment];
+    if (map.part >= 2) {
+        // N.dot(Q-E) = D*cos(real_pi*u) is strictly decreasing on the whole cap.
+        return {true, segment, parameter};
+    }
+    auto certificate = m_impl->adapters[map.part]->certifyInjective(map.local, parameter);
+    if (!certificate.available || certificate.segment != map.local ||
+        !m_impl->localContains(map.part, certificate.segment, certificate.parameter) ||
+        !containsInterval(certificate.parameter, parameter)) { return {}; }
+    certificate.segment = segment;
+    return certificate;
+}
+
+LC_AnalyticIntersectionCertificate ReferenceProviders::certifyIntersection(const LC_IntersectionDomain& box) const {
+    using Outcome = LC_AnalyticIntersectionCertificate::Outcome;
+    if (!m_impl->contains(box.segmentA, box.parameterA) ||
+        !m_impl->contains(box.segmentB, box.parameterB)) { return {}; }
+    const auto a = m_impl->maps[box.segmentA];
+    const auto b = m_impl->maps[box.segmentB];
+    const auto excluded = [&]() {
+        LC_AnalyticIntersectionCertificate out;
+        out.outcome = Outcome::Excluded;
+        out.proof = LC_IntersectionProof::AnalyticExclusion;
+        out.proofDomain = box;
+        return out;
+    };
+    if (a.part < 2 && b.part < 2 && a.part != b.part) {
+        // Same exact strictly convex source and equal/opposite D: support equality
+        // would require both the same source point and opposite outward normals.
+        return excluded();
+    }
+    if (a.part != b.part) { return {}; } // Endpoint-cap contacts belong to event isolation.
+    if (a.part >= 2) {
+        // Injectivity excludes all reportable contacts, including the sole shared
+        // construction endpoint of adjacent pieces, but not a diagonal continuum.
+        return box.parameterA.hi() <= box.parameterB.lo() || box.parameterB.hi() <= box.parameterA.lo() ?
+            excluded() : LC_AnalyticIntersectionCertificate{};
+    }
+    const LC_IntersectionDomain local{a.local, b.local, box.parameterA, box.parameterB};
+    auto certificate = m_impl->adapters[a.part]->certifyIntersection(local);
+    if (certificate.outcome == Outcome::Unavailable) { return {}; }
+    const auto& proof = certificate.proofDomain;
+    if (proof.segmentA != a.local || proof.segmentB != b.local ||
+        !m_impl->localContains(a.part, proof.segmentA, proof.parameterA) ||
+        !m_impl->localContains(a.part, proof.segmentB, proof.parameterB) ||
+        !containsInterval(proof.parameterA, box.parameterA) || !containsInterval(proof.parameterB, box.parameterB)) {
+        return {};
+    }
+    if (certificate.outcome == Outcome::Excluded) {
+        if (certificate.proof != LC_IntersectionProof::AnalyticExclusion) { return {}; }
+    } else if (certificate.outcome == Outcome::Unique) {
+        if ((certificate.proof != LC_IntersectionProof::AnalyticEndpoint &&
+             certificate.proof != LC_IntersectionProof::AnalyticCusp &&
+             certificate.proof != LC_IntersectionProof::AnalyticTangency) ||
+            !containsInterval(proof.parameterA, certificate.isolationA) ||
+            !containsInterval(proof.parameterB, certificate.isolationB) ||
+            (certificate.kind != LC_ParametricIntersection::Kind::Endpoint &&
+             certificate.kind != LC_ParametricIntersection::Kind::Transverse &&
+             certificate.kind != LC_ParametricIntersection::Kind::Tangent)) { return {}; }
+    } else { return {}; }
+    certificate.proofDomain.segmentA = box.segmentA;
+    certificate.proofDomain.segmentB = box.segmentB;
+    return certificate;
+}
+
+ReferenceProviderPreparation prepareReferenceProviders(const RS_EllipseData& basis, const double signedDistance,
+                                                       WorkBudget& budget) {
+    ReferenceProviderPreparation out;
+    const auto finish = [&]() {
+        out.work = budget.consumed();
+        if (budget.status() == BudgetStatus::LimitExceeded) {
+            out.status = LC_IntersectionStatus::LimitExceeded;
+            out.reason = ReferencePreparationReason::None;
+        }
+        return std::move(out);
+    };
+    if (budget.status() != BudgetStatus::Ok || !std::isfinite(signedDistance) || signedDistance == 0.0) {
+        return finish();
+    }
+    const auto propagate = [&](const CriticalRetainedAnalysis& failed) {
+        out.status = failed.status;
+        out.reason = failed.reason == CriticalAnalysis::Reason::CollapsedCircle ?
+            ReferencePreparationReason::CollapsedCircle :
+            failed.reason == CriticalAnalysis::Reason::UnresolvedGeometry ?
+                ReferencePreparationReason::UnresolvedGeometry : ReferencePreparationReason::None;
+    };
+    auto own = analyseCriticalRetained(basis, signedDistance, budget);
+    if (own.status != LC_IntersectionStatus::Ok) { propagate(own); return finish(); }
+    auto opposite = analyseCriticalRetained(basis, -signedDistance, budget);
+    const bool collapseCandidate = signedDistance > 0.0 && budget.status() == BudgetStatus::Ok &&
+        opposite.status == LC_IntersectionStatus::AmbiguousTopology &&
+        opposite.reason == CriticalAnalysis::Reason::CollapsedCircle && !opposite.adapter && !opposite.refinement;
+    if (opposite.status != LC_IntersectionStatus::Ok && !collapseCandidate) {
+        propagate(opposite);
+        return finish();
+    }
+    if (!budget.consumeVertices(3) || !budget.consumePairs(1)) { return finish(); }
+    const Rational mx = exactDouble(basis.majorP.x);
+    const Rational my = exactDouble(basis.majorP.y);
+    const Rational d = exactDouble(signedDistance);
+    if (!own.adapter || !own.refinement || (!collapseCandidate && (!opposite.adapter || !opposite.refinement)) ||
+        (collapseCandidate && !(basis.ratio == 1.0 && mx * mx + my * my == d * d)) ||
+        (!collapseCandidate && own.adapter->frame().scale() != opposite.adapter->frame().scale())) {
+        out.status = LC_IntersectionStatus::InvalidInput;
+        return finish();
+    }
+    const auto disposition = collapseCandidate ? OppositeDisposition::ExcludedCollapsedCircle :
+        OppositeDisposition::Present;
+    auto impl = std::make_unique<ReferenceProviders::Impl>(std::move(own.adapter), std::move(opposite.adapter), disposition);
+    const std::size_t capCount = impl->adapters[0]->frame().sourceSweep().whole ? 0 : 2;
+    std::size_t size = impl->adapters[0]->segments().size();
+    const std::size_t oppositeSize = impl->adapters[1] ? impl->adapters[1]->segments().size() : 0;
+    if (oppositeSize > std::numeric_limits<std::size_t>::max() - size ||
+        capCount * 2 > std::numeric_limits<std::size_t>::max() - size - oppositeSize) {
+        budget.latchLimitExceeded();
+        return finish();
+    }
+    size += oppositeSize + capCount * 2;
+    if (size > impl->segments.max_size() || size > impl->maps.max_size()) {
+        budget.latchLimitExceeded();
+        return finish();
+    }
+    out.status = LC_IntersectionStatus::AmbiguousTopology;
+    out.reason = ReferencePreparationReason::UnresolvedGeometry;
+    for (std::size_t cap = 0; cap < capCount; ++cap) {
+        if (!budget.consumeVertices(1) || !budget.consumePairs(1)) { return finish(); }
+        impl->cutters[cap].emplace();
+        if (!impl->cutters[cap]->prepare(impl->adapters[0]->frame(), signedDistance, cap == 0)) { return finish(); }
+        for (const double t : {0.0, 0.5, 1.0}) {
+            if (!budget.consumePairs(1)) { return finish(); }
+            LC_CurveJetBounds bounds;
+            LC_CurveJet seed;
+            if (!impl->cutters[cap]->bound(t, t, bounds) || !jetFromBounds(bounds, seed)) { return finish(); }
+        }
+    }
+    if (!budget.consumeVertices(size)) { return finish(); }
+    impl->segments.reserve(size);
+    impl->maps.reserve(size);
+    for (std::size_t part = 0; part < 4; ++part) {
+        const bool present = part < 2 ? bool(impl->adapters[part]) : bool(impl->cutters[part - 2]);
+        if (!present) { continue; }
+        const std::size_t branch = impl->count++;
+        impl->branches[part] = branch;
+        const std::size_t count = part < 2 ? impl->adapters[part]->segments().size() : 2;
+        double previous = 0.0;
+        if (count == 0) { return finish(); }
+        for (std::size_t local = 0; local < count; ++local) {
+            if (!budget.consumePairs(1)) { return finish(); }
+            auto segment = impl->localSegment(part, local);
+            if (segment.branch != 0 || !std::isfinite(segment.t0) || !std::isfinite(segment.t1) ||
+                segment.t0 != previous || !(segment.t0 < segment.t1) ||
+                (part < 2 && impl->adapters[part]->branchCount() != 1)) { return finish(); }
+            previous = segment.t1;
+            segment.branch = branch;
+            impl->segments.push_back(segment);
+            impl->maps.push_back({part, local});
+        }
+        const double expectedEnd = part < 2 ? impl->adapters[part]->frame().parameterEnd() : 1.0;
+        if (previous != expectedEnd) { return finish(); }
+        if (part < 2) {
+            const auto next = impl->adapters[part]->next(0);
+            if (next != (impl->adapters[part]->frame().sourceSweep().whole ? 0 : -1)) { return finish(); }
+        }
+    }
+    out.provider.reset(new ReferenceProviders{std::move(impl)});
+    out.ownCritical = std::move(own.refinement);
+    out.oppositeCritical = std::move(opposite.refinement);
+    out.status = LC_IntersectionStatus::Ok;
+    out.reason = ReferencePreparationReason::None;
+    return finish();
+}
+
 CriticalRefinementSession::CriticalRefinementSession(std::unique_ptr<Impl> impl) : m_impl{std::move(impl)} {}
 CriticalRefinementSession::~CriticalRefinementSession() = default;
 CriticalRefinementSession::CriticalRefinementSession(CriticalRefinementSession&&) noexcept = default;

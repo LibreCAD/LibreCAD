@@ -276,6 +276,50 @@ struct CriticalRetainedAnalysis {
 CriticalRetainedAnalysis analyseCriticalRetained(const RS_EllipseData& basis, double signedDistance,
                                                WorkBudget& budget);
 
+enum class ReferenceRole { Own, Opposite, StartCutter, EndCutter };
+enum class OppositeDisposition { Present, ExcludedCollapsedCircle };
+enum class ReferencePreparationReason { None, CollapsedCircle, UnresolvedGeometry };
+struct ReferenceProviderPreparation;
+
+/** Owned reference geometry only: successful preparation does not certify a complete event set. */
+class ReferenceProviders final : public LC_ParametricCurves {
+public:
+    ~ReferenceProviders() override;
+    ReferenceProviders(const ReferenceProviders&) = delete;
+    ReferenceProviders& operator=(const ReferenceProviders&) = delete;
+    const ReferenceFrame& frame() const noexcept;
+    std::optional<std::size_t> branchFor(ReferenceRole role) const noexcept;
+    OppositeDisposition oppositeDisposition() const noexcept;
+    const std::vector<LC_ParametricSegment>& segments() const override;
+    std::size_t branchCount() const override;
+    std::ptrdiff_t next(std::size_t branch) const override;
+    bool evaluate(std::size_t segment, double t, RS_Vector& point, RS_Vector& derivative) const override;
+    bool bound(std::size_t segment, double a, double b, LC_Interval& x, LC_Interval& y,
+               LC_Interval& dx, LC_Interval& dy) const override;
+    /** Full local-coordinate jet bounds, including zero-width queries; cleared on refusal. */
+    bool boundJet(std::size_t segment, double a, double b, LC_CurveJetBounds& out) const;
+    LC_AnalyticLeafCertificate certifyInjective(std::size_t segment, const LC_Interval& parameter) const override;
+    LC_AnalyticIntersectionCertificate certifyIntersection(const LC_IntersectionDomain& box) const override;
+
+private:
+    friend ReferenceProviderPreparation prepareReferenceProviders(const RS_EllipseData&, double, WorkBudget&);
+    struct Impl;
+    explicit ReferenceProviders(std::unique_ptr<Impl> impl);
+    std::unique_ptr<const Impl> m_impl;
+};
+
+struct ReferenceProviderPreparation {
+    LC_IntersectionStatus status = LC_IntersectionStatus::InvalidInput;
+    ReferencePreparationReason reason = ReferencePreparationReason::None;
+    std::unique_ptr<const ReferenceProviders> provider;
+    std::unique_ptr<CriticalRefinementSession> ownCritical, oppositeCritical;
+    /** Cumulative directly spent budget, never an additional debit. */
+    CheckWork work{};
+};
+
+ReferenceProviderPreparation prepareReferenceProviders(const RS_EllipseData& basis, double signedDistance,
+                                                       WorkBudget& budget);
+
 bool isFinite2D(const RS_Vector& point);
 /** Validate raw fields before RS_Ellipse can canonicalize tiny angles. Unchanged on refusal. */
 bool normaliseBasis(RS_EllipseData& basis);
