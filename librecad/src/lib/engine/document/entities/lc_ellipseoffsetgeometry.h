@@ -515,6 +515,8 @@ struct CacheDyadicDomain {
     /** Normalized Bezier parameter, independent of the original affine knot domain. */
     LC_Interval parameter;
 };
+/** Reflect an exact dyadic cell within its Bezier span; malformed domains are refused atomically. */
+bool reflectCacheDyadicDomain(const CacheDyadicDomain& input, CacheDyadicDomain& output);
 struct CacheBoundsWitness {
     CacheDyadicDomain cache;
     CacheWitnessKind kind = CacheWitnessKind::Interior;
@@ -540,6 +542,7 @@ public:
     const std::vector<CacheBoundsWitness>& witnesses() const noexcept;
 private:
     friend class CacheBoundsBuilder;
+    friend class CacheLocalTopologyBuilder;
     struct Impl;
     explicit CacheBoundsAnalysis(std::unique_ptr<Impl> impl);
     std::unique_ptr<const Impl> m_impl;
@@ -557,6 +560,59 @@ struct CacheBoundsResult {
 /** Complete bounded proximity relation only; no topology, reverse coverage or public cache-validity claim. */
 CacheBoundsResult analyseCacheBounds(const RS_SplineData& cache, const RS_EllipseData& basis,
                                     double signedDistance, double worldTolerance, WorkBudget& budget);
+
+enum class CacheLocalTopologyStatus {
+    Ok, InvalidInput, BoundsRefusal, Topology, Ambiguous, LimitExceeded
+};
+struct CacheLocalTopologyWitness {
+    /** Original layout span plus its position after the one whole-cache orientation normalization. */
+    CacheDyadicDomain cache;
+    std::size_t normalizedSpan = std::size_t(-1);
+    CacheWitnessKind kind = CacheWitnessKind::Interior;
+    std::size_t edge = std::size_t(-1);
+    ReferenceOccurrenceId occurrence;
+    ReferenceNodeId node;
+    LC_Interval referenceParameter;
+    LC_Interval startEndpointError, endEndpointError;
+    LC_Interval candidateDerivativeProjection, referenceDerivativeProjection;
+    LC_Interval clearanceLowerBound;
+    /** For fringe records, which endpoint of this normalized candidate cell is node-bound. */
+    bool candidateAtStart = false;
+};
+struct CacheLocalTopologyResult;
+class CacheLocalTopologyAnalysis {
+public:
+    ~CacheLocalTopologyAnalysis();
+    CacheLocalTopologyAnalysis(const CacheLocalTopologyAnalysis&) = delete;
+    CacheLocalTopologyAnalysis& operator=(const CacheLocalTopologyAnalysis&) = delete;
+    const CacheBoundsResult& bounds() const noexcept;
+    const std::vector<CacheLocalTopologyWitness>& witnesses() const noexcept;
+private:
+    friend class CacheLocalTopologyBuilder;
+    friend CacheLocalTopologyResult analyseCacheTopologyLocally(const RS_SplineData&,
+        const LC_EllipseOffsetDefinition&, double, WorkBudget&);
+    struct Impl;
+    explicit CacheLocalTopologyAnalysis(std::unique_ptr<Impl> impl);
+    std::unique_ptr<const Impl> m_impl;
+};
+struct CacheLocalTopologyResult {
+    CacheLocalTopologyResult() = default;
+    CacheLocalTopologyResult(const CacheLocalTopologyResult&) = delete;
+    CacheLocalTopologyResult& operator=(const CacheLocalTopologyResult&) = delete;
+    CacheLocalTopologyResult(CacheLocalTopologyResult&&) noexcept = default;
+    CacheLocalTopologyResult& operator=(CacheLocalTopologyResult&&) noexcept = default;
+    CacheLocalTopologyStatus status = CacheLocalTopologyStatus::InvalidInput;
+    CacheBoundsStatus boundsStatus = CacheBoundsStatus::InvalidInput;
+    LC_IntersectionStatus referenceStatus = LC_IntersectionStatus::InvalidInput;
+    ReferenceComponentReason referenceReason = ReferenceComponentReason::None;
+    ReferenceEventReason eventReason = ReferenceEventReason::None;
+    CheckWork work{};
+    std::unique_ptr<const CacheLocalTopologyAnalysis> analysis;
+};
+/** Local forward/injective alternatives only; no global coverage or cache-validity claim. */
+CacheLocalTopologyResult analyseCacheTopologyLocally(const RS_SplineData& cache,
+                                                    const LC_EllipseOffsetDefinition& definition,
+                                                    double worldTolerance, WorkBudget& budget);
 
 bool isFinite2D(const RS_Vector& point);
 /** Validate raw fields before RS_Ellipse can canonicalize tiny angles. Unchanged on refusal. */
