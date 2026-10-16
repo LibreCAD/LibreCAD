@@ -28,7 +28,7 @@ Plan **v8**, 2026-10-15. This file is the implementation source of truth. Every 
 verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION — certified provider preparation verified/committed at9c27e2980, both trusted refinements and foundations committed; complete event integration is next, conditional on its own contact/order/fixture preflight; components/check/entity/file/UI phases remain incomplete.**
+Status: **IMPLEMENTATION — construction contacts verified/committed at92ca5e445, providers/refinements/foundations committed; complete event integration is next, conditional on its own API/order/accuracy qualification; components/check/entity/file/UI phases remain incomplete.**
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -99,7 +99,7 @@ A commit alone does not mean done; verification, review and the post-commit plan
 | 0B-1 | Guard skeleton: `rowOf` table, pragmas, `static_assert`, kinds-only walk; registration; CI path filter; shadow-`rs.h` checks | B | S0 | 250 | done — d6de53d3c, 0B-1 evidence, 2026-10-15 |
 | 0B-2 | Entity factory header; clone and INSERT checks; pin tests | B | 0B-1 | 500 | done — 5bfb3c8f0, 0B-2 reports/card, 2026-10-15 |
 | 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | done — 0e3c6b342, 0B-3 reports/card; one pinned baseline generated-MLEADER DWG gap, 2026-10-15 |
-| 1A-1 | Closed forms, engine-layout test, validity check, tolerance helpers | C | S0 | 900 | partial — .a/.b-budget/.b-progress/.b-ref-frames/.b-ref-events-core/.b-ref-rate/.b-ref-events-critical/.b-ref-events-accounting/.b-ref-events-refine/.b-ref-critical-refine/.b-ref-providers done; complete events/components/check/qualification pending |
+| 1A-1 | Closed forms, engine-layout test, validity check, tolerance helpers | C | S0 | 900 | partial — .a/.b-budget/.b-progress/.b-ref-frames/.b-ref-events-core/.b-ref-rate/.b-ref-events-critical/.b-ref-events-accounting/.b-ref-events-refine/.b-ref-critical-refine/.b-ref-providers/.b-ref-contacts done; complete events/components/check/qualification pending |
 | 1A-2 | Enumerator; class core and validated adoption factory; clone, `toPlainSpline`, normalisation, stamp, transforms; `writeEntity` case; INSERT capability; 0B row; interim Edit Properties guard | C | 0B-3, 1A-1 | 900 | pending |
 | 1A-3 | Grips, `moveRef`, snaps | C | 1A-2 | 550 | pending |
 | 1B | Run limits, refusal enum, `adopt`/`create`, mutators, engine-run counter | C | 1A-3 | 900 | pending |
@@ -214,9 +214,9 @@ not validation evidence. Aggregates are never executable cards or extra implemen
 | 1A-1.b | Aggregate; budget/progress done, reference/check unfinished | Parent-only progress; no separate implementation commit or successful partial validator. |
 | 1A-1.b-budget | Done at 10c6bff46 | Checked shared work, bounded two-axis/range indices, nine budget cases Release/ASan, all offset/full/fast-lane gates pass; findings/evidence below. |
 | 1A-1.b-progress | Done at fb70681e2 | Reachable hang fixed; four watchdog-protected cases/80 assertions Release/ASan, old probe terminates, broad gates pass. |
-| 1A-1.b-ref | Aggregate; foundations/both refinements/provider preparation done | Providers9c27e2980 join critical refinement72eb5f953 and pair refinementf4f87f48e; exhaustive events and components remain. No parent completion. |
+| 1A-1.b-ref | Aggregate; foundations/refinements/providers/contacts done | Contacts92ca5e445 join providers9c27e2980, critical refinement72eb5f953 and pair refinementf4f87f48e; exhaustive events and components remain. No parent completion. |
 | 1A-1.b-ref-frames | Done at 26d107ccf | Seven new cases, independent 113-bit enclosures, shared budget and all Release/ASan/full/fast-lane gates recorded below. |
-| 1A-1.b-ref-events | Aggregate; both refinements/providers done, isolation preflight next | Execute `.b-ref-events-isolate` after its own contact/order/fixture readiness; no separate aggregate implementation commit or incomplete event-success API. |
+| 1A-1.b-ref-events | Aggregate; refinements/providers/contacts done, isolate next | Execute `.b-ref-events-isolate` after its own API/order/accuracy/cost qualification; no separate aggregate implementation commit or incomplete event-success API. |
 | 1A-1.b-ref-events-core | Done at 834a46a88 | Opt-in strict proofs/accounting; 14 registered cases, Release/ASan/probes/full/fast-lane evidence below. No ellipse graph/adoption claim. |
 | 1A-1.b-ref-rate | Done at bcd6c5a4f | Six cases/505703 assertions Release/ASan; continuous exact-sweep rate and all jet/products, independent oracle and broad/fast checks pass. |
 | 1A-1.b-ref-events-critical | Done at 943406abe | Nine cases/268244 assertions Release/ASan; immutable adapter, exact cusp/axis classification, proven regions and joint join/seam exclusions; all broad/fast gates pass. |
@@ -224,7 +224,8 @@ not validation evidence. Aggregates are never executable cards or extra implemen
 | 1A-1.b-ref-events-refine | Done at f4f87f48e | Fourteen cases/490 assertions Release/ASan; owned immutable provider, opaque handles, retained proof/history, native broad/fast gates pass. |
 | 1A-1.b-ref-critical-refine | Done at72eb5f953 | Native red1/11 retained; final Release/ASan21/16424, original V6/P23/deepest0, legacy/core/broad/full/fast gates pass. Retained exact critical state and bounded contraction, one-sided join repair with whole-box/cap tests. |
 | 1A-1.b-ref-providers | Done at9c27e2980 | Owned immutable offset/cutter composite, true-pi bounds/injectivity, both-hook remapping and exact collapsed-opposite exclusion;16/299294 Release/ASan plus critical/core/broad/full/fast gates pass. No event graph. |
-| 1A-1.b-ref-events-isolate | Conditional own contact/order/fixture preflight; provider predecessor done | Geometry-only complete own/opposite/end-cutter enumeration, identity/order, world-space node accuracy and shared-budget integration. Construction-contact/order proofs and complete fixture feasibility required before activation. |
+| 1A-1.b-ref-contacts | Done at92ca5e445 | Additive contact factory, immutable whole-box support/radial/critical-gap proofs and diagnostic intervals;17/4383 Release/ASan plus old97/586799 and all broad/full/fast gates pass, legacy behavior retained. |
+| 1A-1.b-ref-events-isolate | Conditional own API/order/accuracy/cost preflight; contact predecessor done | All six native strict-query families succeed, but combined critical/free/seam identities/order and tol/16 rounded world-node accuracy still require implementation/qualification. No complete event-set claim. |
 | 1A-1.b-check | Aggregate; waiting for .b-ref | Execute `.b-check-layout → .b-check-bounds → .b-check-topology` (§0.6); no successful public validator before all acceptance checks exist. |
 | 1A-1.c | Waiting for .b | Add adversarial and current-engine corpus checks, failure budgets and performance measurements. Record acceptance/refusal results; endpoints and midpoint checks alone cannot close this parent step. |
 | 1A-2 | Waiting for 0B-3 and all 1A-1 children | Add type, core class, complete consistency stamp, transforms, clone/INSERT/write dispatch and interim UI guard. Compile CMake and update qmake lists; run copy/ownership and enum coverage. |
@@ -312,7 +313,13 @@ its own API/proof/cost preflight exposed the coherent owned-provider prerequisit
 immutable own/opposite/cutter geometry, full true-pi jets, both strict-hook maps and support exclusions, exact qualified
 collapsed-opposite absence with contiguous typed roles. Sixteen cases/299294 assertions pass Release/ASan, old critical/
 core and all broad/full/fast gates pass; tested digests match the three-path commit. Complete isolation still needs its
-own contact/order/fixture readiness; no event/component completion is claimed. The coordinator owns the plan,
+own order/accuracy readiness. Construction contacts now verified/committed at92ca5e445: immutable whole-box endpoint
+proofs over both roles/ends, near-threshold exact F/critical-gap handling, actual radial chain depth and direct critical
+work/history. Native17/4383 Release/ASan plus old97/586799 and all broad/full/fast gates pass, no old assertion/cap
+change. A separate future probe obtains six successful strict queries but coarse node images; no combined event/
+accuracy/component completion is claimed. Successful interior-fallback execution remains source-qualified, not
+natively exercised; the negative base-refusal test and bounded NO_MATCH search are distinguished in the receipt.
+The coordinator owns the plan,
 shared build directories and commits. Assign explicit file ownership before any parallel work; never run concurrent
 Git/index operations or concurrent builds that mutate the same build tree.
 
@@ -329,7 +336,7 @@ Before promoting a leaf card, check these concrete prerequisites:
 | 1A-1.a | Raw sweep rules and finite/local coordinate domain are fixed | Boundary tests on both sides of each threshold and independent closed-form comparisons |
 | 1A-1.b-budget | Done; original candidate-allocation/refinement accounting mismatch resolved | Nine cap/index cases, exposed consumed work, all offset/ASan/full/fast-lane gates recorded at 10c6bff46 |
 | 1A-1.b-progress | Done at fb70681e2 | Underflow/non-finite/rounded-growth cases, old probe and all required broad checks passed |
-| 1A-1.b-ref | Foundations/both refinements/provider preparation done | Qualify exhaustive event integration, then components; one shared budget, no uncertified acceptance |
+| 1A-1.b-ref | Foundations/refinements/providers/contacts done | Qualify exhaustive combined events/order/world-node accuracy, then components; one shared budget, no uncertified acceptance |
 | 1A-1.b-check | Reference analysis is qualified and does not accept ambiguous topology | Whole-span distance bounds, bidirectional coverage and malicious subset/retrace tests |
 | 1A-2 | Guard and all geometry children are done; no raw constructor bypass exists | Current-header compile, complete stamp mutation cases, transform overflow and ownership checks |
 | 1E-1.a | Typed schema grammar, malformed/unknown ownership and flag consistency are settled | Codec-independent exact-code/type tests, duplicate/malformed cases and bounded tails |
@@ -355,7 +362,7 @@ Only satisfied dependencies promote a card to `ready`; future recipes are `waiti
 | 1A-1.b-progress / .b-budget | Done at fb70681e2; finite/progress checks and derived 2099-step bound preserve positive rounded growth and refuse invalid arithmetic. | Four cases/80 assertions Release/ASan, standalone before/after probe and full offset/ASan/full-suite/fast-lane gates pass. R02/R12. |
 | 0B-3 / 0B-2 | Done at 0e3c6b342; actual version/load-completion walks, measured/pinned generated-MLEADER fallback, no fixture or production changes. | Both 27-type walks and both DXF pins; full/DXF-fast/ASan coverage, full suite/lanes pass; every baseline testcase/skip retained. R06/R11/R13. |
 | 1A-1.b-ref-frames / .b-progress | Done at 26d107ccf; immutable scaled frame, source/offset jets and point/interval enclosures, checked conversions and shared latched budget. | Seven new cases / 359105 assertions Release/ASan; independent 113-bit oracle, all geometry/offset/full/fast-lane checks pass. R01/R02/R12. |
-| 1A-1.b-ref-events / .b-ref-frames | Aggregate only; core/rate/critical/accounting/both refinements/providers done; isolation remains. | Complete only after every child's commit/checkpoint; no uncertified event set or partial topology acceptance. R02/R12. |
+| 1A-1.b-ref-events / .b-ref-frames | Aggregate only; core/rate/critical/accounting/refinements/providers/contacts done; isolation remains. | Complete only after every child's commit/checkpoint; no uncertified event set or partial topology acceptance. R02/R12. |
 | 1A-1.b-ref-events-core / .b-ref-frames | Done at 834a46a88; strict interval/contact/injectivity proofs, bounded spatial/range work and global occurrence ordering. Defaults unchanged. | 14 registered cases /16 JUnit entries /634 assertions Release/ASan, independent probes and broad/fast gates pass; failures/resolutions below. R02/R12. |
 | 1A-1.b-ref-rate / .b-ref-events-core | Done at bcd6c5a4f; continuous ideal-angle rate, unwrapped angle/rate access and all jet/product factors; no adapter/topology yet. | Six cases/505703 assertions Release/ASan, independent 113-bit oracle, full Release/combined ASan/both fast lanes pass; failure correction and hashes below. R01/R02/R12. |
 | 1A-1.b-ref-events-critical / .b-ref-rate | Done at 943406abe; geometry header/cpp/tests: shared F/F' bounds, factory-owned adapter, exact thresholds/cusps and gap-free proven regions/joint exclusions. | Nine cases/268244 assertions Release/ASan; independent proofs/oracles, all broad/fast gates, failures/fixes/hashes below. R01/R02/R12. |
@@ -363,12 +370,13 @@ Only satisfied dependencies promote a card to `ready`; future recipes are `waiti
 | 1A-1.b-ref-events-refine / .b-ref-events-accounting | Done atf4f87f48e; intersection header/cpp/existing tests: owned immutable provider/options, opaque handles, original-proof-preserving contraction and persistent history/work/latches. | Fourteen cases/490 assertions Release/ASan; old core37/2347 and all broad/full/fast gates; source/commit digests match. R02/R12/R13. |
 | 1A-1.b-ref-critical-refine / .b-ref-events-refine | Done at72eb5f953; geometry header/cpp/tests: factory-issued canonical polynomial/angle state, occurrence handles, convergent contraction/images, observed-depth repair and bounded one-sided join progress. | Native red retained; final21/16424 Release/ASan, legacy11/268911, core51/2837 and all broad/full/fast gates pass, tested/committed hashes match. R01/R02/R12/R13 sub-contract only. |
 | 1A-1.b-ref-providers / both refinement children | Done at9c27e2980, geometry header/cpp/tests: owned immutable offset/cutter geometry, both-hook maps, support exclusion and exact collapsed-opposite omission; logical costs/debits qualified. |16/299294 Release/ASan, critical30/284668,core51/2837, broad/full/fast gates pass; no old body/assertion/cap changed, committed digests equal tested source. R01/R02/R12/R13 provider sub-contract only. |
-| 1A-1.b-ref-events-isolate / .b-ref-providers | Provider predecessor done; conditional own contact/order/fixture preflight. Geometry header/cpp/tests: complete anchored enumeration, construction/seam/cusp contacts, both root kinds' identity/order and proved world node accuracy; debit one budget every status. | Transverse/source-end tangent/cusp/retrace, close roots/shared occurrences/unresolved order and exact caps; complete event sets only, old engine regressions unchanged. R02/R12. |
+| 1A-1.b-ref-contacts / .b-ref-providers | Done at92ca5e445; immutable complete-box construction contact proofs, exact F/critical-free-gap qualification, bounded radial neighborhoods, unchanged legacy factory. |17/4383 both builds,old97/586799,broad/full/fast gates pass; all digests/identities retained. Native successful interior fallback not claimed. R01/R02/R12/R13 contact sub-contract only. |
+| 1A-1.b-ref-events-isolate / .b-ref-contacts | Contact predecessor done; conditional own API/order/accuracy/cost preflight. Geometry header/cpp/tests: complete anchored enumeration, both root kinds' identity/order and proved world node accuracy; debit one budget every status. | Transverse/source-end tangent/cusp/retrace, close roots/shared occurrences/unresolved order and exact caps; complete event sets only, old engine regressions unchanged. R02/R12. |
 | 1A-1.b-ref-components / .b-ref-events | Classify interval visibility using conservative source/end clearance and current trim allowances; assemble directed adjacency/components; expose a complete read-only reference result. | All six §3.5.1 fixtures, rotated/reversed equivalents and closed-arc/multi-component distinctions; no materialization/engine run; report unresolved event/visibility rather than accepting it. R02. |
 | 1A-1.b-check-layout / .b-ref-components | Implement overflow-safe `isEngineLayout`, finite 2D/unit-weight/knot-group validation, cubic extraction and shared-budget input preflight. Keep these helpers internal or explicitly layout-only; do not expose an incomplete successful `checkCache`. | Short/oversized/null-equivalent arrays, malformed knots, rescaled valid knots, fit/saved-open representations, non-finite/out-of-plane controls, zero/invalid limits; no allocation before count caps. R01/R02/R12. |
 | 1A-1.b-check-bounds / .b-check-layout | Implement conservative de Casteljau leaf/chord error, offset-distance upper bounds and source-clearance lower bounds. Use parameter-aware reference matching and outward floating-point allowances. | Between-sample adversarial controls; dense independent evaluation verifies every claimed enclosure; near tangency/cusps/extreme scale; no nearest-point sample becomes proof. R02/R12. |
 | 1A-1.b-check-topology / .b-check-bounds | Combine complete reference and candidate geometry into public `checkCache`; require exactly one reference component and bidirectional ordered coverage; enforce direction/closure/trim joins. | Proper subset, missing tail, isolated component, repeat/retrace, extra loop and wrong reversal refuse; legitimate lens and closed-arc joins pass. No partial acceptance on exhausted budget. R02. |
-| 1A-1.c / all .b children | Qualify defaults and tolerance-floor policy against current engine and adversarial corpus. Record reproducible seeds, accept/refuse reasons, consumed work and cost; resolve required-success disagreements instead of weakening proof. | Existing offset/topology regressions, independent geometry oracle, every cap exit, near-critical success, file-rounding margins; no timing assertion. R01/R02/R12. |
+| 1A-1.c / all .b children | Qualify defaults and tolerance-floor policy against current engine/adversarial corpus; record seeds, statuses/work/cost and resolve required-success disagreements. Retain the source-qualified interior-fallback native reachability coverage limit; investigate natural cases or prove limits without a test backdoor. | Existing offset/topology regressions, independent geometry oracle, every cap exit, near-critical success, file-rounding margins; no timing assertion or unearned fallback-coverage claim. R01/R02/R12. |
 | 1E-2.safety / all 1E-1 children | Add schema/raw-carrier hostile cases, unknown-tail/flags edit policy, geometry demotion and late-failure save tests. Scope schema/filter fixes only to demonstrated violations. | Both formats, second save/reload, foreign data unchanged, raw 3D/repair inputs never editable; transaction checks for existing/absent target and document state. R07/R08/R14/R15. |
 | 1E-2.fixtures / .safety | Commit ASCII DXF, binary DXF and DWG fixtures with reproducible generator, version, expected definitions and provenance; no private home-directory dependency. | Both readers adopt expected entities, immutable fixture hashes/provenance recorded, fast-lane registration, full and both fast lanes. Generated same-run payloads alone do not close fixture coverage. R07/R11. |
 | 1E-2.copy / .fixtures | Test same/cross-unit paste, block/library insert, Save Block As, clone-tail alias safety and hatch-edge downgrade. | Geometry/distance scaling, owner/layer/pen preservation, correct editable-vs-plain outcome, no stale owned definition; Release/ASan ownership checks. R04/R07/R08. |
@@ -382,9 +390,10 @@ generic infrastructure slice with its regression tests; do not commit the unsafe
 documenting independently safe, buildable intermediate behavior before editing. Registration and tests accompany
 each product slice, not a later catch-all test phase.
 
-**Immediate implementation-resume queue:** complete read-only `.b-ref-events-isolate` contact/order/fixture/API/cost
-preflight against providers9c27e2980, then activate at actual checkpoint HEAD only when those readiness gates pass.
-Execute complete isolation, then `.b-ref-components`. Provider preparation is done, do not restart/reapply it. Budget, guard, progress and frames are complete at 10c6bff46 / 0e3c6b342 / fb70681e2 / 26d107ccf;
+**Immediate implementation-resume queue:** finish read-only `.b-ref-events-isolate` literal API/cost/identity/order/
+world-node-accuracy qualification against contacts92ca5e445 and the six native strict queries. Activate at actual
+checkpoint HEAD only after those gates pass; then complete isolation and components. Contacts/providers/refinements
+are done, do not restart/reapply them. Budget, guard, progress and frames are complete at 10c6bff46 / 0e3c6b342 / fb70681e2 / 26d107ccf;
 strict core, rate, critical preparation and observed-depth accounting are additionally complete at834a46a88 /
 bcd6c5a4f /943406abe /290d2658f; trusted pair refinement is complete atf4f87f48e and critical refinement at72eb5f953. Do not reimplement them or reapply old saved patches.
 Failed-run and final evidence are preserved under each slice's `build/evidence/<slice-id>/` directory. Gibbs already
@@ -396,8 +405,9 @@ The v8 review was plan-only. Its implementation continuation completed core refi
 refinement from334354633, after literal API/cost probes, native red reproduction, independent reviews and all gates.
 Gibbs's read-only isolation readiness review identified the additive provider prerequisite, now implemented and
 natively verified/committed at9c27e2980. Its whole/restricted visibility-algebra review also qualified a bounded future
-components proof option (§3.5.1), not a product implementation. Full isolation's own readiness review remains read-only;
-no contact/event integration is activated by this checkpoint. Future cards
+components proof option (§3.5.1), not a product implementation. Construction-contact child is now implemented and
+natively verified/committed at92ca5e445. Six required strict-query families pass a separate feasibility probe; mixed
+critical/pair/free/seam identities/order and rounded world-node accuracy still need their own product qualification. Future cards
 remain waiting until their actual prerequisites and public API handoffs exist, not merely because a recipe is written.
 
 ### 0.7 Two review gates
@@ -427,7 +437,7 @@ checks, not proofs of numerical correctness or runtime feature coverage.
 Run from the authoritative worktree, after freezing and isolating the selected slice as §1.4 requires. Create its
 ignored evidence directory first. Use new attempt-specific report names instead of overwriting a failed run. The
 following commands are reproducible recipes, not evidence by themselves. The budget slice has completed its
-final runs recorded below, as have 0B-3, `.b-progress`, `.b-ref-frames`, strict core, rate, critical, accounting, both refinements and providers;
+final runs recorded below, as have 0B-3, `.b-progress`, `.b-ref-frames`, strict core, rate, critical, accounting, refinements, providers and contacts;
 do not rerun them merely to preflight `.b-ref-events-isolate`. Choose fresh report names
 if reproducing a run:
 
@@ -640,6 +650,7 @@ patch simply because an executed card once described it as pending:
 | 1A-1.b-ref-events-refine | f4f87f48ed024589e31a9a9f1c543340ca1a6c49 | Three frozen/committed paths;14/490 Release/ASan, legacy37/2347, geometry324/2154626, ASan156/1863348, full4667/6995661/74 unchanged skips, both fast lanes pass | Independent proof/lifetime/history/cap review; retained malformed categories and exception-ledger cleanup fixed before native runs; no old test/cap weakened; all baseline identities retained | Core complete, all parents partial; critical API/cost preflight conditional, isolate waits that child; no new entity/file/UI completion |
 | 1A-1.b-ref-critical-refine | 72eb5f953f5c88cf6e26505d658fef5237d562b3 | Three frozen/committed geometry paths;21/16424 Release/ASan, legacy11/268911, core51/2837, geometry345/2171050, ASan177/1879772, full4688/7012085/74 identical skips, both lanes pass | Independent exact-root/inverse/image/lifetime/history/accounting/domain review; native red/failed D100 evidence retained and fixed without weakening tests/caps; tested hashes match | Critical sub-contract complete, all parents partial; isolation conditional on its own literal API/proof/cost preflight, not waiting for completed refinements |
 | 1A-1.b-ref-providers | 9c27e29807b59c70eb7799087eaf4aa0202b0618 | Three frozen/committed geometry paths;16/299294 Release/ASan,critical30/284668,core51/2837,geometry361/2470344,ASan193/2179066,full4704/7311379/74 identical skips,both lanes pass | Separate completeness/correctness review of exact source/cutter/proof maps/ownership/charges; no old body/assertion/cap change, no native failed attempt, all digests/identities retained | Provider sub-contract complete, all parents partial; isolation conditional own contact/order/fixture/API/cost preflight, no longer waiting for provider/refinement predecessors |
+| 1A-1.b-ref-contacts | 92ca5e44508ad42b1873ca8b324e77399028af8b | Three tested/committed paths;17/4383 Release/ASan,old97/586799,geometry378/2474727,ASan210/2183449,full4721/7315762/74same skips,both fast lanes pass | Separate whole-domain/sign/inventory/history/charge review; genuine extra transverse contact retained, no old assertion/cap change, all digests retained; native fallback-success coverage limit explicit | Contact sub-contract done, all parents partial; isolation conditional own literal API/order/accuracy/cost gate, six strict-query families observed complete but not combined events/node accuracy |
 
 **Git safety.** Stage files by name; inspect staged paths before every commit. Preserve unrelated staged/unstaged work
 and untracked artifacts. Do not use `git add -A`, destructive checkout/reset, `--amend` or `--no-verify`. Local commit
@@ -1060,7 +1071,7 @@ public geometry checker consumes this result; keep the concrete adapter private 
 small shared engine helper actually removes duplicated classification logic. No load path may refit saved geometry.
 
 Implementation order for the `.b-ref` aggregate: frames, strict core, continuous-rate correction, critical preparation,
-core depth accounting, trusted two-curve refinement, trusted critical-occurrence refinement, owned certified provider preparation, exhaustive isolation,
+core depth accounting, trusted two-curve refinement, trusted critical-occurrence refinement, owned certified provider preparation, construction contacts, exhaustive isolation,
 then components (§0.6).
 The event split was qualified against the committed frame and solver at 26d107ccf; strict core certificates are an
 independently safe helper slice, not a completed exact-reference adapter or an adoption success:
@@ -3016,14 +3027,132 @@ identity/lifetime and all pre-work charges. Removed unused offsets storage; no o
   accuracy, components/cache/entity/formats/UI/phase2 remain required. Next isolation contact/order/API/cost preflight
   is read-only, conditional on its own evidence, not waiting for completed providers. No stale patch reapplication.
 
+#### 1A-1.b-ref-contacts. Construction Contact Proofs
+
+**Done —92ca5e44508ad42b1873ca8b324e77399028af8b, 2026-10-15.** Activated at0296a8790fb6136e7e8e6e4eca1d9a78a0241175;
+the following activation/implementation recipe is historical, not work to repeat. Gibbs independently reviewed the actual source,
+mathematics, literal API and costs. Coordinator declaration/ownership probe syntax-only0 uses current Ninja flags;
+the diagnostic getter is a future declaration scaffold, not access to an unmodified header. Existing owned-provider
+privacy/conversion pattern already compiled/natively verified. Actual-header/getter/private-builder compilation and
+all runtime gates were subsequently verified below. Coordinator native neighborhood feasibility probe compile/link/run0 against
+the tested library, all six required input families prepare0,16open endpoint neighborhoods have h'>0 within depth8.
+The first link omitted lc_release_label.cpp.o and failed; retained real tested object fixed linkage, failed logs kept.
+The early attempted run127 was not a geometry result. Probe chooses inherited critical depth as a diagnostic upper
+bound; production h' chain starts0 by the contract below. No contact/exhaustive-event implementation is claimed yet.
+
+- Scope/owner: Gibbs, same existing geometry header/cpp/tests only; coordinator roadmap/evidence/build/test/Git.
+  Add `prepareReferenceContactProviders(const RS_EllipseData&,double,WorkBudget&) -> ReferenceProviderPreparation`.
+  Add `std::optional<LC_Interval> ReferenceProviders::contactProofInterval(ReferenceRole offset,ReferenceRole cutter)
+  const noexcept`, diagnostic only: null for legacy factory, invalid/absent roles or whole source. A returned copy
+  cannot mint proof state or enter a public adoption constructor. Both offset roles and both ends are covered.
+- Share the internal provider builder with a contact-preparation flag, publishing the const-owned PIMPL only after
+  all requested contacts succeed. Existing prepareReferenceProviders keeps its costs/hooks/decisions; do not mutate a
+  sealed provider, borrow callback dependencies or introduce a public prepared-result-to-provider credential.
+  Successful contact preparation remains owned geometry/proofs, NOT a complete event/reference result.
+- Outer offset contact with a cap is globally unique: support equality in
+  `N(t).(E_end+D*w)<=h(t)+D`, |w|=1, forces E(t)=E_end and w=N_end. Cache the entire offset parameter domain;
+  the known source parameter is0/T and capu0. Inner offset uses the corresponding source endpoint/capu1 and a
+  bounded complete-neighborhood proof: `G=|Q-E_end|²-D²`, `G'=2*F*h`, `h=E'_t.(E-E_end)`, h(endpoint)=0,
+  `h'=|E'_t|²+E''_t.(E-E_end)>0` over the WHOLE stored neighborhood. Constant F sign, including isolated stationary
+  zeros, makes G strictly one-sided monotone there. Cap injectivity and exact construction identity then prove the
+  only contact; midpoint values, point equality or next/adjacency alone never suffice.
+- F proof: nonintermediate regimes supply qualified global sign (stationary zeros isolated, not a collapsed circle).
+  For Intermediate first establish a critical-free gap using the COMPLETE factory-issued critical inventory. Seed a
+  strictly positive-width neighborhood inside the nearest certified critical gap, not by20 blind halvings from a
+  quadrant. If a coarse root enclosure clips0/T, refine its issued handle with the SAME budget before choosing the
+  gap; preserve all symmetric updates and absolute canonical history. Never clip a root away, trust a copied public
+  occurrence as a credential, or infer absence from a prefix/sample. Initial inner contact exam tries the pure exact
+  polynomial endpoint predicate; if unavailable, allow ONE certified interior-point predicate in the same complete
+  gap. Continuity transfers that certified sign, not a sampled estimate. Refuse if both unavailable. Successful base
+  preparation does not universally imply an available endpoint predicate: quadrant membership can be excluded using
+  the OTHER endpoint before the uncertain one is examined. Reuse/extract private exact logic/provenance, preserving
+  old classifications/counts; no floating boundOffsetFactor-strict requirement. Point/interval diagnostic arithmetic
+  seeds cannot certify F. Critical contraction directly spends WorkBudget; never externally re-debit entered/work.
+- New h' subdivision chains start at0 after their own candidate examination charge, not global deepest or restarted
+  canonical history. Each retry strictly shrinks toward its source endpoint; no positive-width representable gap or
+  no progress gives ambiguity, exhausted original/shared limits gives LimitExceeded, contradiction InvalidInput.
+  Observe depth only after admitted examination, not reservation/queued child. Canonical and radial histories are
+  distinct; canonical contractions still keep their actual absolute admitted levels and original issuing budget.
+- Hook contract: only if the ENTIRE requested offset interval lies inside its cached proof interval may a contact
+  hook decide. If both exact singleton parameters are included, return Unique/AnalyticEndpoint/Endpoint with original
+  requested global proofDomain and exact isolation. If either singleton is omitted, Excluded/AnalyticExclusion over
+  the WHOLE original request. Outside the cached inner neighborhood return Unavailable, even if near the known root;
+  additional nearby/off-cache intersections remain for exhaustive strict enumeration. Swap mappings correctly for
+  either argument order. Prepared hooks stay allocation-free/fixed-cost, no budget mutations or new proof searches.
+
+**Qualified charges.** C counts construction PAIRS across both present offset roles: normal open4, collapsed-opposite
+open2, whole0. J is the number of generated/examined inner radial candidates on success; R extra complete-gap retries
+after the initial contact exam. Only returned-base analysis/critical contraction work is already directly spent.
+
+| Entered stage | Extra vertices/items | Extra pairs | Rule |
+|---|---|---|---|
+| Contact-preparation control record | 1 | 1 | Before extra metadata allocation/eligibility, including whole C0 |
+| Each construction-pair record | 1 | 1 | Before record/exam; outer support proof or inner initial gap, at most two fixed exact predicates and one endpoint source-jet bound |
+| Each additional gap retry | 0 | 1 | Before complete inventory reinspection; may include the single interior predicate once a usable gap exists; bounded by root refinement/work, no sampling loop |
+| Each radial neighborhood candidate | 1 | 1 | Before generation/examination; fixed source h' bound, actual chain depth after pair admission |
+
+Success adds V=1+C+J,P=1+C+R+J, plus directly spent critical contractions. On refusal separately retain actually
+admitted common items/pairs, contact records C_v versus entered C_p, generated radial G versus examined X (X<=G),
+and entered retries; do NOT assume item admission implies pair admission. No refunds, overflow-safe before storage.
+The bounded critical inventory has at most4 source occurrences; fixed exact predicates/jet bounds are not adaptive
+inner loops. Source-proof retries/critical contractions are explicit stages, not hidden inside callbacks.
+
+**Implementation and gates.** First share factory builder/pure exact predicates without changing legacy behavior,
+then cache outer and inner contact proofs, global hook/getter validation and nonhidden `[reference-contacts]` tests.
+Pin own/opposite/end mappings, legacy-null accessors, invalid/out-of-cache boxes, full-box exclusions, stationary
+endpoints, unavailable exact endpoint predicate handling, clipped root-gap refinement, reversed/wrapped/rotated cases,
+exact/one-less/pre-spent item/pair/depth and every failed-admission ledger. Mandatory native near-threshold pin:
+a100,r.5,arc0->2,D=nextafter(25,+inf) has Fpoint[-1.7763568394002509e-15,1.665334536937735e-15] yet a certified
+critical-gap neighborhood radius2.8097899007262679e-9 has h'>0; reverse pins end orientation. Never reject just because
+floating F straddles0. Preserve a10,r.5,delta-3,arc0->1: its additional start-cap crossing MUST remain outside endpoint
+exclusion and be found by the strict query, not blanket-filtered. Qualify all six input families, not a complete
+event-set claim. Freeze three files, CMake three-target Release/ASan builds/discovery, new tag plus old provider/
+critical/core union, geometry/broadASan/fullRelease/exact-fast lanes, independent reviews/digests, product commit then
+plan checkpoint. Full isolate still owns all crossings, mixed-root identity/order, six fixtures and world-node accuracy.
+
+**Executed slice receipt.** Gibbs froze geometry cpp/header/existing tests only; coordinator independently read the
+full diff and separately recorded completeness/correctness reviews in `build/evidence/1A-1.b-ref-contacts/review-notes.md`,
+commands/counts/digests in `summary.md`. Pure exact-sign extraction preserves prior arithmetic/charges; source/cap
+existence, full-domain uniqueness, exact singleton isolation, global swaps, complete inventory/gap/continuity, weak
+stationary signs, direct critical history and actual radial admission independently reviewed. Ledger staged locally
+then sealed as unique_ptr<const ContactLedger>; no callback mutation/adaptive work, no old assertion/cap changed.
+
+- Both three-target builds attempt1 exit0,4+4jobs<=8; both discoveries0,17registered; focus both0:17/4383/0skips/errors/
+  failures. Native strict query preserves the known endpoint AND the independently qualified additional transverse
+  start-cap crossing (source/cap parameter and image containment). No product failed native attempt.
+- Old provider/critical/core union both0:97entries/586799assertions/0skips, separately audited against disjoint16/30/51
+  baseline reports, all identities retained. Geometry/offset Release0:378/2474727/0,combinedASan0:210/2183449/0.
+- Full visible Release0:4721entries/7315762JUnit tests/74identical skips,baseline+17/S0+157; both exact-seven-exclusion
+  fast lanes0:DXF1028/39932/3,DWG1084/34952/4unchanged skips/identities. Completed XML independently parsed0.
+  QT_QPA_PLATFORM=offscreen; ASan tests detect_leaks=0,no LSan claim/no sanitizer findings. All needed processes terminal.
+  Existing CMake/qmake registrations confirmed, no full qmake rebuild claim; diff-check0.
+- Tested/committed SHA-256:cpp b0e47dc36629eeda2c6eb00c476c5efc33f6d2e86ea90fb490170322843a4851,
+  header65f0520272a287020d1d7d7557708a349eb178990398e197a605c73ca7aa2aac,
+  tests47f66b5de96a41dfe0821074982214fd5bc00f12616037913ad8efd2bc7ce958. Exactly three product paths:
+  cpp220+/38-,header7+/1-,tests732+/0-,total959+/39-,committed digests verified.
+- Coverage limit: unavailable-factor native test proves BASE refusal preservation, not successful post-base interior
+  fallback. Bounded frozen-private-predicate search compile/link/run0,121506evaluations/54groups/129neighbor grids,
+  NO_MATCH/qualifiedArcs0. Not proof of unreachability/coverage; no public backdoor or fallback deletion. Independent
+  exact-predicate/continuity source qualification remains valid; carry natural-case/unreachability investigation into
+  broader1A-1.c without advertising a native fallback-success test. No required-success disagreement/code bug found.
+- R01/R02/R12/R13 contact sub-contract verified only; full combined events/order/node accuracy, reference components,
+  cache checker/entity/formats/UI/phase2 still mandatory. Separate future strict-query probe compile/link/run0 gets
+  six successes (roots0/0/2/2/6/5) but physical node-image widths up to28.479; not a combined geometry event/accuracy
+  result. Next: literal isolate API/cost/identity/order/rounded world-node-accuracy qualification at actual checkpoint.
+
 #### 1A-1.b-ref-events-isolate. Exhaustive Event Integration
 
-**Conditional own contact/order/fixture/API/cost preflight; providers committed at9c27e2980, pair API atf4f87f48e,
-critical API at72eb5f953. No completed predecessor remains waiting.**
+**Conditional own API/cost/identity/order/rounded world-node-accuracy preflight. Contacts committed at92ca5e445,
+providers at9c27e2980,pair API atf4f87f48e,critical API at72eb5f953; no completed predecessor remains waiting.**
 Read actual headers and qualify literal integration result/lifetimes, strict-hook composite remapping, construction/
 seam/cusp identities, complete root-order proofs, fixed logical costs and required fixture feasibility before product
 activation. A declaration probe qualifies access/lifetime only, never numerical correctness or runtime completeness.
-- Scope remains geometry header/cpp/existing geometry tests. Consume the verified `prepareReferenceProviders` result
+Current native feasibility: standalone `build/evidence/1A-1.b-ref-events-isolate/isolation-query-probe.cpp` links the
+frozen contact library, compile/link/run0; all six strict anchored queries returnOk with correctly debited work.
+Roots outward0,inward0,near-critical lens2,open2,closed6,multi-component5. Lensitems183/pairs959/depth16,
+closed171/935/11,multi163/628/9. Initial physical image widths reach .497lens,4.497closed,28.479multi, so queryOk
+does NOT satisfy chosen-node<=tol/16 or combined critical/free/seam identity/order. Keep those implementation gates.
+- Scope remains geometry header/cpp/existing geometry tests. Consume the verified `prepareReferenceContactProviders` result
   with own/opposite/cutters in the same frame and one budget. Use role accessors, not hardcoded2/3 cutter indices;
   qualified collapsed opposite is absent with explicit disposition, never an empty/fake branch. Open-end cutters are certified semicircles from source endpoint/normal/outward directed tangent
   and a true-pi sweep, not rounded `atan2` phases; cutters classify visibility and are never retained components.
@@ -4050,6 +4179,9 @@ correction is never evidence that its product fix has been implemented or verifi
 | A borrowed/default composite drops strict proofs or leaks local segment domains | Immutable owned providers, validated both-hook remapping and cleared refusal outputs; critical sessions retain independent provenance | 1A-1.b-ref-providers |
 | Rounded circle collapse or fixed cutter indices hide valid geometry | Charged exact trusted-collapse eligibility, explicit immutable absence disposition, contiguous role accessors; adjacent-distance/resource negatives | 1A-1.b-ref-providers |
 | Exact visibility is confused with tolerated engine trimming or sampled clearance | Whole-interval restricted-source proof, explicit trim epsilon, complete events/coverage, all errors in Lipschitz bound; preserve 2*tol/D-2.5*tol | 1A-1.b-ref-components/.b-check-bounds |
+| Endpoint equality/partial neighborhoods hide a nearby real cap crossing | Complete cached offset-box radial/support proof, original global domains, exact isolation; outside-cache Unavailable plus independent transverse recrossing regression | 1A-1.b-ref-contacts |
+| Floating F straddles zero at valid near-threshold endpoints | Exact polynomial/global regime and complete issued critical gap; same-budget refinement, true history and whole h' proof | 1A-1.b-ref-contacts |
+| QueryOk or a base-refusal test is overclaimed as node accuracy/fallback coverage | Explicit evidence classes:6/6strictqueries but coarse images; source-qualified fallback, native base negative and bounded NO_MATCH are distinct | 1A-1.b-ref-events-isolate, 1A-1.c |
 
 ---
 
@@ -4365,3 +4497,18 @@ statuses/queue/ledger/card and risks refreshed; failed scaffold log retained; ne
 HEAD. Independent whole/restricted visibility identity review plus standalone113-bit72675-check oracle adds a bounded
 future proof option, NOT a product implementation or substitute for complete topology/trim allowances. Structural
 audit passes27mainrows,59nodes,15requirements,14formats,92headings,30balancedfences,acyclic; diff-check0.
+
+**v8 execution reconciliation, contact slice92ca5e445.** Completeness: both-role/end proof APIs, old factory
+compatibility, build/test paths, failures/ownership/cost/history accounted for; R01-R15/14formats and all later phases
+retained. Correctness: independent exact-predicate/inventory/continuity/radial/support/full-domain review, const ledger
+seal and native extra-transverse-root regression pass. Focus17/4383both,old97/586799both,geometry378/2474727,
+ASan210/2183449,full4721/7315762/74same skips,bothfast0; tested/committed digests equal. Successful interior fallback
+is NOT natively covered: negative base-refusal test and bounded121506-evaluation NO_MATCH search remain distinct,
+source proof qualified and broader1A-1.c carries the reachability investigation. Readiness: contacts done, isolation
+conditional own literal API/cost/identity/order/world-node-accuracy gate. Six strict-query families now observedOk,
+but initial world images coarse to28.479, not complete combined geometry events/accuracy. Commit: exactly three
+tested product paths at actual SHA, this checkpoint only roadmap; no recursive own hash. Self-update: status/main
+aggregate/queue/ledger/card/risks reconciled, no stale implementation restart; use actual checkpoint HEAD next.
+An initial reconciliation patch failed context validation and changed no file; corrected targeted patches applied,
+no product/native result affected. Structural audit0:27mainrows,60nodes,15requirements,14formats,93headings,
+30balancedfences,acyclic; diff-check0. No reference/cache/entity/file/UI/phase2 or whole-goal completion claim.
