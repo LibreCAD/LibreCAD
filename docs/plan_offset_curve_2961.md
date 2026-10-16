@@ -24,13 +24,13 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v73**, 2026-10-16 (close callback-debit ownership and operationalize the five-stage, six-decision lifecycle, readiness sub-plan, per-slice commit and post-commit reconciliation). This file is the implementation source of truth.
+Plan **v74**, 2026-10-16 (correct retained-session exception observability and make the five-gate implementation loop path-complete). This file is the implementation source of truth.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE.** Geometry bounds and local-topology children are committed; ordered-chain topology, later entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. v73 is a non-activating plan-only correction based on committed v72 `43591c3f008bf427ea9f96e6b169efb74f60e060`; product source remains at `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Historical implementation evidence and earlier checkpoint narratives do not authorize a successor slice.
+Status: **IMPLEMENTATION INCOMPLETE.** Geometry bounds and local-topology children are committed; ordered-chain topology, later entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. v74 is a non-activating plan-only correction based on committed v73 `c7a38e559d0dbdc9ef623def63a6a71e854f83a5`; product source remains at `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Historical implementation evidence and earlier checkpoint narratives do not authorize a successor slice.
 Historical v68 amendment: clarifies file-support acceptance and retains the v67 product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, with all four recorded product source/test hashes unchanged. The exact-membership `preflight-v67/` packet is PARTIAL provenance (latest packet-manifest SHA-256 `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`), not a formal gate receipt. The G4 hidden-cusp clearance proof and C50 correction remain normative: the cusp-only candidate is separated from all visible spans and must refuse as `OffCurve` before terminal/topology matching; B07 separately tests absence of a cusp `ReferenceTerminal`, and C36 retains fully witnessed `Topology` coverage. The five controls remain mandatory per slice: separate completeness and plan-correctness gates; frozen-tree implementation correctness; an executable, independently reviewed sub-plan/readiness decision; one validated product commit followed by its plan-only reconciliation; and a post-commit live-state audit/self-update before any successor. Slice A remains WAITING; G1 completeness, G1 plan correctness, Gate-3 readiness and activation are not passed. A/B/C baseline discovery remains zero and strict-core remains 61 matching normalized identities in Release/ASan; no registered tests ran. No product/test edit, build, JUnit execution, formal Gate PASS, readiness PASS or activation occurred. DXF read, DXF write, DWG read and DWG write are separate open application obligations; both conversion directions and the separate R14/R2018 binary-DXF codec obligation also remain open. Geometry-only checker evidence satisfies none.
-v73 supersedes every earlier live-state and next-action statement. The five lifecycle stages and six gate decisions (G1a/G1b/G2/G3/G4/G5) are independently recorded and fail-closed; §0.5 is the sole current handoff. `preflight-v72/` is an unmanifested PARTIAL draft with a confirmed callback-debit contradiction; it is provenance only, not a gate receipt.
+v74 supersedes every earlier live-state and next-action statement. The five lifecycle stages and six gate decisions (G1a/G1b/G2/G3/G4/G5) are independently recorded and fail-closed; §0.5 is the sole current handoff. `preflight-v72/` and `preflight-v73/` are PARTIAL provenance, not gate receipts. The independent v73 audit found that the plan incorrectly claimed no retained work snapshot exists after a thrown certificate callback; the public session exposes cumulative work after the exception is caught by its caller.
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -964,11 +964,12 @@ capacity checked before mutation. Each accepted prepared leaf consumes one gener
   checkpoint. Until then, Slice A remains WAITING and all product/test edits, product builds and registered test runs
   remain unauthorized.
 
-**Canonical live state — v73.**
+**Canonical live state — v74.**
 
-- v72 is committed as `43591c3f008bf427ea9f96e6b169efb74f60e060`, a direct child of v71
-  `5263dd5f10330673f1d776ccf908444249860daa`. The unchanged product-source base is
-  `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. The five audited files remain byte-identical to that base: ellipse
+- v73 is committed as `c7a38e559d0dbdc9ef623def63a6a71e854f83a5`, a direct child of v72
+  `43591c3f008bf427ea9f96e6b169efb74f60e060`. The unchanged product-source base is
+  `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. The five previously audited source/test files remain byte-identical
+  to that base: ellipse
   geometry header `0887c44a8c042505e1a4b8299d9ed133dadc0cc4a522a7183215225629769eba`, ellipse geometry implementation
   `1ce0bd467d9512044cc2f039cbfd6fa8dfd2073b963eba5acd014a47c7e94069`, intersection header
   `1ddb4389e780be8d4ac901cabbdbd0b22399a109930953901e493d8cc3a25b41`, intersection implementation
@@ -1019,18 +1020,70 @@ capacity checked before mutation. Each accepted prepared leaf consumes one gener
   only when available; `orderedOccurrences()` admits before `certifyOccurrenceIdentity()`. The v73 normative contract
   in §0.4 requires one pre-callback certificate unit per invocation, retains distinct parent-cell work, and forbids
   duplicate caller/helper charges. Reconcile every call site, especially `merge()`, and recompute snapshots before G1b.
+- **Independent audit correction — retained work after callback throw:** the v73 claim that a throwing callback has
+  no inspectable work snapshot is false for a retained session. `contract()` catches, latches `InvalidInput`, then
+  rethrows; public `cumulativeWork()` remains readable and returns the solver ledger. Preserve that distinction:
+  `contract()` has no returned result after throw, but cumulative retained work is observable. Extend the existing A08
+  planned test identity (do not increase the A=13 floor) with a retained-query subcase in
+  `lc_parametriccurveintersection_tests.cpp`: build the valid session first, then enable a test-provider switch that
+  makes one evaluated derivative zero and makes `certifyIntersection()` throw. This drives `shrink()` through its
+  analytic fallback after the parent contraction admission. Assert the exception, exactly one callback, exact
+  cumulative delta `certificateBoxPairs == +2` and `totalBoxPairs == +2` (one parent contraction plus one callback
+  admission), `deepestRootRefinement == +1`, terminal invalidation and stale-handle rejection; retry must do no work
+  and call no provider callback. Keep the existing throwing-bounds case separate. G1b must verify this route from
+  source before activation; after activation, exact nonzero assertions in Release/ASan are required. If source review
+  cannot establish deterministic analytic-fallback entry with this existing API, readiness remains WAITING and the
+  test fixture contract must be revised before activation, not during implementation.
+- **Slice A scope correction:** A owns five paths: `lc_ellipseoffsetgeometry.h`, `lc_ellipseoffsetgeometry.cpp`,
+  `lc_parametriccurveintersection.cpp`, `lc_offsetcurve_geometry_tests.cpp`, and
+  `lc_parametriccurveintersection_tests.cpp`; `lc_parametriccurveintersection.h` stays read-only. Confirm both test
+  translation units remain in `librecad_tests` (`CMakeLists.txt:2608` and `:2612`); qmake6 is an app-build gate only.
+  Refresh all A path manifests, freeze/hash recipes, report validators, reviewer scopes and explicit staging commands.
+  The four-path v73 activation recipe is stale and must not be executed.
+- **1. Completeness and plan correctness:** G1a adds the bidirectional path from retained callback dispatch through
+  pre-admission, throw, cumulative observation and terminal invalidation to A08, and maps both test files and every
+  assertion back to A01-A13. Planned identity count remains exactly 13; A08 gains a named subcase, not A14. Before
+  implementation, planned contracts and target-registration evidence suffice; after implementation, final G1a proves
+  exact identity execution, non-vacuous assertions and coverage of the throw branch on the frozen tree. G1b checks the
+  public cumulative API, catch/latch/rethrow order, parent/callback counter units, expected two-unit delta, fixture
+  dispatch, retry behavior, independent oracle, path ownership and DAG. Any contradicted premise reopens G1a/G1b/G3.
+- **2. Implementation correctness:** G2 remains PENDING. Its frozen-tree adversarial checklist explicitly tests that
+  the callback debit precedes invocation even when it throws, the already-spent parent unit remains visible, the
+  session becomes unusable, retry invokes nothing, valid callback results are still accepted, and one-less limits
+  refuse before callbacks. Source review and the old throwBounds test cannot substitute for runtime evidence.
+- **3. Sub-plan and readiness:** Slice A remains WAITING until the complete source/debit/capacity/runtime census,
+  independent fixture/phase/frontier proof, exact A/B/C crosswalk, packet audit and same-identity G1a/G1b/G3 receipts
+  pass. The first activation authorizes only clean Release/ASan builds and `--list-tests`; no product/test edit or
+  JUnit is allowed until binary registration reconciles with source. A separate one-leaf activation then authorizes
+  the five-path A implementation. Post-registration validation requires A=13 exact nonzero case identities and
+  assertions plus the 61 strict-core identities in Release and ASan. Any changed source, path, selector, oracle,
+  counter contract or toolchain invalidates affected receipts and readiness.
+- **4. Commit after slices:** after final G1a, frozen-tree G2 and required tests/builds pass, stage and commit exactly
+  A's five owned paths as one product/test-only leaf. Verify staged names/hashes, no unowned index entries,
+  `git diff --cached --check`, parent, hooks and committed bytes against the tested freeze. Immediately create a
+  separate plan-only direct child recording actual commit SHA, A08 result, exact case/assertion sets, evidence and
+  findings. No B/C work or build/test begins before its semantic read-back passes. Repair or explicitly split an
+  incomplete leaf; never mark it done because a commit exists.
+- **5. Self-update after committing:** reconcile actual Git objects, reports and worktree into the leaf/aggregate
+  statuses, all affected requirements and format/build/test rows, owned path sets, findings, evidence hashes, risks,
+  DAG and every descendant's readiness. Sweep all live `current`/`active`/`next`/`ready`/`waiting` and version/packet
+  references; mark prior state historical. Verify the roadmap checkpoint is the product commit's direct child, changes
+  only this file, matches its reviewed candidate blob, stores no self/future SHA, and leaves product blobs unchanged.
+  Reread the committed roadmap and compare its claims to Git, reports and evidence; any discrepancy stops successor
+  work, invalidates affected receipts and requires a corrective plan-only child plus a new audit. Start each next leaf
+  with fresh completeness, plan-correctness and readiness decisions against reconciled HEAD.
 - **Current disposition/next:** no formal G1a/G1b/G2/G3 PASS, activation, product/test edit, product build or
   registered JUnit execution is claimed. Existing A/B/C=0 and strict-core=61 discovery is baseline-only; the Release
-  stale-object name and ASan allocator-statistics guard require fresh build/list reconciliation. After committing v73,
-  create a fresh exact-membership `preflight-v73/` containing only `input-manifest.txt`,
-  `debit-admission-table.txt`, `independent-transition-cut-ledger.txt`, `phase-cut-intervals.txt`,
-  `selector-test-map.txt`, `source-requirement-map.txt`, `terminal-producer-map.txt` and
-  `packet-manifest.sha256`. The manifest hashes the seven payloads, excludes itself, and is checked against the exact
-  directory entry set (regular files only; no symlinks or nested paths). Bind every payload to the committed v73 plan
-  blob and unchanged product base; reuse earlier materials only as hash-bound PARTIAL provenance.
+  stale-object name and ASan allocator-statistics guard require fresh build/list reconciliation. The v72/v73 packets
+  remain PARTIAL provenance. After the v74 plan-only commit, create fresh exact-membership `preflight-v74/` with only
+  `input-manifest.txt`, `debit-admission-table.txt`, `independent-transition-cut-ledger.txt`, `phase-cut-intervals.txt`,
+  `selector-test-map.txt`, `source-requirement-map.txt`, `terminal-producer-map.txt` and `packet-manifest.sha256`.
+  Hash the seven payloads (not the manifest), verify exact regular-file membership/no symlink/no nested path, bind all
+  entries to committed v74 plan blob and unchanged product base, and include the current
+  `lc_parametriccurveintersection_tests.cpp` hash. Reused earlier material stays hash-bound PARTIAL provenance.
   Preserve untracked `build-asan/`. Slice A remains WAITING; no product work is authorized.
 
-The completion narratives below are retained as historical evidence, not as live queue instructions. The v73 state
+The completion narratives below are retained as historical evidence, not as live queue instructions. The v74 state
 above is the sole current handoff. After every commit, reconcile active pointers and reread the committed plan against
 the codebase/evidence before resuming implementation.
 
@@ -9021,3 +9074,42 @@ current SHA-256 values are in the canonical handoff in §0.5. No product or test
   data. Validate the single-file plan diff, fence balance, active pointers and DAG before commit; after commit verify
   exact parent/path/blob and unchanged product hashes. Create `preflight-v73/` only after the v73 commit. Slice A
   remains WAITING.
+
+#### v73 → v74 (2026-10-16; correct thrown-callback observability and close the executable A08 scope)
+
+This non-activating plan correction is a direct child candidate of committed v73
+`c7a38e559d0dbdc9ef623def63a6a71e854f83a5`; product source remains at
+`9c06e9c77b313b62cc20e9ec39c22952fee501f2`. No product or test source is changed by v74.
+
+- **1. Completeness and plan correctness:** an independent read-only source audit contradicts v73's statement that a
+  thrown callback leaves no public work snapshot. The retained session's `contract()` catches and latches
+  `InvalidInput`, then rethrows, while `cumulativeWork()` remains readable. G1a now traces R12/R13 through the
+  callback admission, throw, cumulative ledger and invalidated credential to A08. It adds the already-registered
+  `lc_parametriccurveintersection_tests.cpp` as A-owned test scope, while keeping A01-A13 exactly 13 identities.
+  A08's one exact planned identity now includes available/unavailable/throw outcomes and expected work deltas. G1b
+  verifies the source-derived fallback fixture, callback count, two-unit cumulative delta, session invalidation and
+  retry behavior before activation. This corrects the plan premise; it does not claim the implementation already
+  performs the required pre-callback debit.
+- **2. Implementation correctness:** G2 remains PENDING. The later frozen-tree review must execute the thrown
+  `certifyIntersection()` subcase and verify parent and callback admissions are both visible, exception propagation
+  is unchanged, the retained session becomes terminal, and retry invokes no provider work. The older `throwBounds`
+  test and source-only counter reasoning are adjacent evidence, not substitutes.
+- **3. Sub-plan/readiness:** A remains WAITING. Its five exact writable paths, two existing CMake source registrations,
+  A08 fixture contract, exact Release/ASan identity/assertion floor, activation-only build/list phase, full packet
+  membership, G1a/G1b/G3 receipt identity and failure/recovery rules are now repeated in the canonical live handoff.
+  The v73 four-path A recipe is historical and cannot activate work. A fresh exact-membership `preflight-v74/` is
+  created only after this plan commit and remains PARTIAL until every independent proof, census, crosswalk and gate is
+  actually closed.
+- **4. Commit after each slice:** A's eventual product commit is restricted to its five owned paths after final
+  completeness reclosure, implementation-correctness review and the required validation matrix on identical frozen
+  bytes. Verify index/path/hash/parent/hook postconditions; make the separate direct-child roadmap reconciliation
+  immediately; do no successor build/edit/test before its semantic audit. No plan correction can stand in for this
+  implementation commit.
+- **5. Self-update after committing:** after every implementation commit, reconcile the actual code, tests, reports,
+  counters, requirement rows, evidence hashes, findings, dependencies and downstream readiness into a one-file direct
+  child; reread the committed blob and sweep all live pointers against `HEAD`. This v74 plan itself must be committed
+  only as a plan-only child of v73, read back by committed blob, then used to bind a fresh v74 packet. Never embed its
+  own SHA or describe a partial receipt as PASS.
+- **Disposition:** v72/v73 packets remain PARTIAL provenance; no G1a/G1b/G2/G3 PASS, activation, product edit, build or
+  registered JUnit is claimed. Slice A stays WAITING. Preserve ignored evidence and `build-asan/`; the next authorized
+  work is v74 plan/packet integrity verification and read-only preflight, not implementation.
