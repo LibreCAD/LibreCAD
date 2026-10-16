@@ -1408,6 +1408,13 @@ void QC_ApplicationWindow::initSettings()
     {
         QScopedValueRollback<bool> applying(dockLayoutApplying, true);
         restored = restoreState(settings.value("StateOfWidgets").toByteArray());
+        if (!restored) {
+            // Set an initial width, not a persistent size constraint.
+            for (QDockWidget* dock : findChildren<QDockWidget*>()) {
+                if (!dock->isFloating() && dockWidgetArea(dock) == Qt::RightDockWidgetArea)
+                    resizeDocks({dock}, {390}, Qt::Horizontal);
+            }
+        }
     }
     const bool hasRequested = settings.contains("RequestedDockVisibility");
     const QVariantMap requested = settings.value("RequestedDockVisibility").toMap();
