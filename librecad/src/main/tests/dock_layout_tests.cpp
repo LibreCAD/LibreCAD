@@ -304,6 +304,38 @@ private slots:
         QCOMPARE(window->requestedDockVisibility, window->factoryDockVisibility);
     }
 
+    void initialRightDockWidth_data()
+    {
+        QTest::addColumn<QString>("state");
+        QTest::newRow("missing") << QString();
+        QTest::newRow("invalid") << QString("invalid");
+        QTest::newRow("saved") << QString("saved");
+    }
+
+    void initialRightDockWidth()
+    {
+        QFETCH(QString, state);
+        window->hide();
+        window->resize(1280, 900);
+        auto* command = window->findChild<QDockWidget*>("command_dockwidget");
+        QVERIFY(command);
+        window->requestDockVisible(command);
+        window->resizeDocks({command}, {600}, Qt::Horizontal);
+        window->layout()->activate();
+        const int savedWidth = command->width();
+        QVERIFY(savedWidth > 390);
+        QSettings settings;
+        if (state == "saved") settings.setValue("Geometry/StateOfWidgets", window->saveState());
+        else if (state.isEmpty()) settings.remove("Geometry/StateOfWidgets");
+        else settings.setValue("Geometry/StateOfWidgets", state.toLatin1());
+        window->initSettings();
+        window->layout()->activate();
+        QCOMPARE(command->width(), state == "saved" ? savedWidth : 390);
+        window->resizeDocks({command}, {600}, Qt::Horizontal);
+        window->layout()->activate();
+        QCOMPARE(command->width(), savedWidth);
+    }
+
     void firstRunMaximizeFitsScreen()
     {
         QSettings().setValue("Startup/FirstLoad", true);
