@@ -1,0 +1,34 @@
+# Copyright (C) 2026 LibreCAD.org
+# Copyright (C) 2026 Dongxu Li
+
+name: Packaging tests
+on:
+  pull_request:
+    branches: [2.2.1]
+    paths:
+      - '.github/workflows/build-all.yml'
+      - '.github/workflows/packaging-tests.yml'
+      - 'scripts/build-windows.bat'
+      - 'scripts/release_github.sh'
+      - 'scripts/tests/**'
+      - 'snapcraft.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  Metadata:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@main
+      - name: Test Snap versions and release draft handling
+        run: ruby scripts/tests/packaging-tests.rb
+
+  WindowsVersion:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@main
+      - name: Test installer version parsing
+        shell: powershell
+        run: ./scripts/tests/installer-version-tests.ps1

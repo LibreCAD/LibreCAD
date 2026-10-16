@@ -410,6 +410,7 @@ jobs:
 
       - name: Determine release kind
         id: relkind
+        shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
