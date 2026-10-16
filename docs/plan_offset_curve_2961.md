@@ -611,6 +611,45 @@ rejects the not-yet-admitted operation, latches `LimitExceeded`, and publishes n
 preflight is not closed until source citations, logical-unit rationale, checked arithmetic, cumulative snapshots, and
 one-less/overflow expectations agree across the plan, test map, implementation card and validation receipt.
 
+**Strict-core comparator accounting (normative for Slice A).** The `distancePairs`/`maxBoxPairs` ceiling also
+accounts for pairwise algorithm comparisons that construct or order proof candidates; it is not limited to geometric
+distance evaluations. Add an `orderingComparisons` work-stat category and include it exactly once in
+`totalBoxPairs = candidateBoxPairs + refinementBoxPairs + certificateBoxPairs + orderingComparisons` and the geometry
+`WorkBudget` debit. Update the `maxBoxPairs` API comment to describe this shared ceiling. Preserve the existing
+meanings of `candidateBoxPairs`, `refinementBoxPairs`, and
+`certificateBoxPairs`; do not mislabel sort/selection comparisons as geometric candidates. This applies only to
+`StrictSolver`/`strict=true`; the ordinary non-strict `Solver` implementation is explicitly out of scope unless a
+changed caller or shared helper brings it into the slice. Replace the strict core's
+`nth_element` tree construction with one deterministic balanced tree: scan the bounded leaf inventory once to choose
+its widest center axis (x wins ties), in-place heap-sort the leaf-index order by `(center on chosen axis, center on
+other axis, leaf index)`, split sorted ranges by midpoint, and compute internal bounds/branch/anchoring metadata from
+their children. Candidate-pair and final root/event ordering use the same in-place heapsort primitive with complete
+canonical keys; equal complete keys are semantically interchangeable. Every comparator-loop comparison admits one
+shared pair-work unit immediately before comparison; no potentially failing debit is placed inside a standard-library
+comparator. This makes hierarchy construction O(n log n) comparisons and O(n) node/metadata work; each final sort is
+O(k log k), and the shared cap interrupts at most `maxBoxPairs` pairwise comparisons across all strict-core stages.
+Heapsort uses no dynamic scratch and at most `3*comparisons + 3*n` element moves, including extraction swaps, for
+input count n; source review must verify this conservative bound against the implementation. Every early refusal leaves
+only an internal partial permutation; `run()` publishes an empty result on failure. Admit order-removal scratch by
+event record before allocation; its initialization/compaction visits are bounded one-per-admitted event. The fixed
+21-entry provider inventory sorts remain their existing one-precharged-unit operations and are not charged again by
+comparator count. Tests cover empty/one/two-entry sorts, exact allowance, one-less allowance, exhaustion in each
+algorithm, canonical tie-breaking, identical Release/ASan work snapshots and no partial public results. State and
+verify checked index arithmetic, node count `2*n-1`, worst-case recursion/stack bounds and no-allocation claims.
+
+**Strict-core queue bound (Slice A).** For each sequential `solve()` call, let `D=maxDepth`, `P` be remaining
+`maxBoxPairs` before its seed, and `I` be remaining `maxGeneratedItems` after seed admission. The depth-first LIFO
+pending queue holds at most `1 + min(D, P, floor(I/2))` cells: each split increases live size by one, consumes one
+refinement-pair unit, consumes two child-record units, and at most `D` splits can lie on the active path. Admit one
+generated-item unit before storing the seed and two before storing either child; checked-compute and capacity-check the
+queue bound, reserve it, and ensure the two child appends cannot partially occur. This per-call bound supersedes the
+looser `1+maxBoxPairs` estimate in older evidence. Candidate solves are sequential, so their pending queues do not
+coexist. Include admitted queue capacity and all simultaneously live leaf, hierarchy, parameter-bound, candidate,
+event/root, session and provider storage in the memory envelope; distinguish logical records from allocator capacity.
+The preparation queue has the analogous per-segment bound `1 + min(maxLeafDepth, floor(I/2))` after admitting its
+seed, where I is the remaining generated-item allowance; its root and child records must also be admitted and its
+capacity checked before mutation. Each accepted prepared leaf consumes one generated-item unit before append.
+
 ### 0.5 Current readiness and implementation handoff
 
 **Historical live-state snapshot — v57.** The committed v57 plan and its partial preflight are preserved as historical evidence; their then-current pointers do not authorize work from the current v65 checkpoint.
@@ -692,7 +731,7 @@ one-less/overflow expectations agree across the plan, test map, implementation c
 - Preserve the v67 packet as hash-valid PARTIAL evidence only (`preflight-v67/`, manifest `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`). After the v68 plan checkpoint, create a fresh exact-membership packet bound to the committed v68 plan blob and unchanged product base, then re-evaluate the format requirement trace. Slice A remains WAITING; no Gate-1, Gate-3, activation or implementation readiness is implied by this clarification.
 - The five-gate lifecycle and commit protocol remain binding: close completeness separately from plan correctness; review one frozen tested implementation tree; activate only a ready executable sub-plan; make one product-only commit after each validated slice and immediately reconcile the plan in a separate direct-child commit; then audit and reread actual live state before any successor. This v68 amendment itself changes documentation only; no product code, build or registered test was changed/run.
 
-**Canonical live state — v69.**
+**Historical live state — v69 (superseded by v70).**
 
 - v69 is a non-activating plan-only child of committed v68 `a480dc9b8b2cff2599545fa0234ff6f79e9d028d`. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; no product/test path or recorded source hash changed. Preserve `preflight-v68/` as an unmanifested draft and v67 as PARTIAL provenance only.
 - The five gates are independently evidenced and fail-closed. G1a completeness and G1b plan correctness are preconditions to G3; a separate activation checkpoint is required before any product/test edit or product build. Final completeness and frozen-tree G2 review precede the product-only commit. Each product commit is followed immediately by a plan-only direct child; G5 reads back both commits and reconciles all live pointers/status before any successor.
@@ -704,7 +743,16 @@ one-less/overflow expectations agree across the plan, test map, implementation c
 
 **Current implementation handoff:** after committing v69, create an exact-membership `preflight-v69/` bound to the committed v69 plan blob and unchanged product base. Rebind any reused v68 draft material by content hash, label each unresolved/partial item, finish the independent source/producer/fixture/phase/cut/debit/capacity/runtime/exception/test-contract evidence, refresh the Slice-A card, and reconcile each crosswalk row against current code and tests. Obtain distinct G1a, G1b and G3 PASS decisions on identical plan/product identities, then commit a separate activation checkpoint. Until activation passes, do not edit product/test files, build product targets or execute registered JUnit tests. After activation, implement one leaf at a time; after each validated product-only commit, immediately make and verify its plan-only direct child before any successor edit.
 
-The completion narratives below are retained as historical evidence, not as live queue instructions. The v69 state above governs current execution. After every commit, reconcile active pointers and reread the committed plan against the codebase/evidence before resuming implementation.
+**Canonical live state — v70.**
+
+- v70 is a non-activating plan-only correction, direct child of committed v69; product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. It changes no product/test bytes and authorizes no implementation. The previous v69 evidence packet was edited during this audit and is no longer checksum-valid; preserve it as provenance only.
+- The strict-core source audit corrected its DFS stack bound to `1 + min(maxDepth, remainingPairBudget, floor(remainingGeneratedItems/2))` after charging the seed. The queue uses one seed record and two records per split; this contract and its capacity proof are now normative. Each accepted leaf also consumes one generated-item unit before append; `generatedLeaves` remains a diagnostic subset of `generatedItems`, not a second geometry-budget debit. Guard `m_leaves.max_size()` before admission/storage.
+- The audit also found that `nth_element` and candidate-pair/event/root sorting have no explicit portable comparison-work ceiling, while order-removal scratch storage and compaction loops lack per-event admission. Slice A replaces the strict-core `nth_element` tree with a widest-global-axis, deterministic midpoint hierarchy; one budgeted in-place heapsort orders leaf indices, candidate pairs and final root/event records. Each comparator call consumes one `orderingComparisons` work unit from the same shared pair ceiling, reported separately from the existing geometric pair categories. Bounds and metadata are built bottom-up in O(n); checked node capacity is at most `2*n-1`. Admit each removal-scratch event record before allocation; its initialization/compaction visits are then bounded by that admitted event inventory. A12 owns seed/child generated-item admissions, accepted-leaf admissions and the corrected queue bound. A13 owns exact/one-less comparison-work snapshots, each sorter exhaustion, output/scratch max_size guards and no-partial-publication assertions; keep A=13 identities. The two existing fixed 21-entry adapter sorts retain their single pre-admitted unit.
+- Slice A remains WAITING. G1a completeness, G1b plan correctness, G3 readiness, activation, implementation review and product commit are pending. No product/test edit, product build, or registered JUnit execution is claimed. Preserve untracked `build-asan/` and all ignored evidence.
+- Keep exactly thirteen A test identities. A12 is `strict-core seed and split admissions precede queue mutation` and asserts one seed token, two child tokens, the checked DFS capacity formula, exact/one-less limits and no partial child insertion. A13 is `strict-core comparison work and output scratch are bounded` and asserts the `orderingComparisons` snapshots at exact/one-less caps, each heapsort's refusal path, all relevant vector max-size guards by source review, order-scratch admission and empty public output on failure. These extend the prior A12/A13 contracts without adding selectors or weakening the post-activation execution floor.
+- After this plan-only commit, create a fresh exact-membership `preflight-v70/` bound to its committed blob and unchanged product-source commit. Rebind the current packet only as PARTIAL provenance; complete the independent source/producer/fixture/phase/cut/debit/capacity/runtime/exception/test-contract evidence and refresh the Slice-A card. Obtain distinct G1a, G1b and G3 PASS receipts on the same identities, then make a separate activation checkpoint before any product/test edit, product build, or registered-test execution. After each validated product-only slice commit, immediately make a verified plan-only direct child and reread live state before a successor.
+
+The completion narratives below are retained as historical evidence, not as live queue instructions. The v70 state above governs current execution. After every commit, reconcile active pointers and reread the committed plan against the codebase/evidence before resuming implementation.
 
 S0 is complete at `de30f1d45`. Release/ASan configurations, all three target builds, Release full
 and fast-lane baselines, and focused ASan trim/ellipse checks passed, with existing skips recorded in its card.
