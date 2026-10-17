@@ -24,12 +24,11 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v160 A budget/oracle consistency correction**, 2026-10-17; plan-only and non-activating. Its predecessor is v159 commit `f41a5e9e412e8d0887b6532dcd88cdc4bd0a0e16`, whose independent G5 failed with one P1; preserve `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v159/g5-auditor-report.txt` unchanged (SHA-256 `c7a7650f4d0db542bb6bdda87680c952ad920979236f691c6af5b9c96982099f`). v158 `c8873f9c0af1b364df2ca38dd81a27a0326ad9b3` remains historical with G5 PASS. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; protected `build-asan/` is not inspected by instruction. This v160 revision is plan-only. Until its exact commit is observed, §67 governs the v159-G5-FAIL state and permits only this corrective plan-only child and affected audit; after commit, §68 becomes authoritative immediately, including while G5 is pending. Only §68's exact G5-PASS row permits a fresh v160 packet and recipe set. This file remains the implementation source of truth.
+Plan **v161 v160-G5 live-state correction**, 2026-10-17; plan-only and non-activating. Its parent is v160 commit `8f9a4701aaa05f90484ca48912de7ebab49a5db1`, whose independent G5 failed; preserve `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v160/g5-auditor-report.txt` unchanged (SHA-256 `d27433ebbdea3bc19321dd9bebc5565c57d4466cb81271a0ca9eb4092eb2c90b`). v159 `f41a5e9e412e8d0887b6532dcd88cdc4bd0a0e16` remains historical with G5 FAIL, report SHA-256 `c7a7650f4d0db542bb6bdda87680c952ad920979236f691c6af5b9c96982099f`; v158 remains historical with G5 PASS. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; protected `build-asan/` is not inspected by instruction. This v161 revision changes only live-state pointers and does not alter v160 technical content. Until v161 is committed, §68's observed v160-G5-FAIL state permits only this corrective plan-only child and affected audit; after commit, §69 becomes authoritative immediately, including while G5 is pending. Only §69's exact G5-PASS row permits fresh v161 packet/recipe construction. This file remains the implementation source of truth.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY.** v159 is committed with an exact-identity independent G5 FAIL; preserve its report and hash. No v159 packet or recipes were created. v158's fresh preflight remains eight PARTIAL payloads without `input-manifest.txt` or packet manifest; preserve it unchanged. v160 is the current corrective plan-only candidate, resolving the A14 world-point error, accepted-leaf token model and resulting A13 cap snapshots, plus the 20-occurrence sort bound. Same-identity G1a/G1b/G3, a separate activation checkpoint with G5 PASS, and an authorized reconciled baseline remain prerequisites before any product edit/build/registered test. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; no A-budget-depth implementation exists. Preserve prior evidence and never inspect protected `build-asan/`. Ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete; the four application file lanes, both conversions, edited reopen and binary-DXF codec support remain separate downstream obligations.
-Until v160 is committed, §67's observed v159-G5-FAIL row is the live handoff; this corrective plan-only child is the sole permitted action. After the exact v160 commit is observed, §68 is authoritative immediately, including while G5 is pending; its PASS alone unlocks fresh v160 packet/recipe creation.
+Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY.** v160 is committed as `8f9a4701aaa05f90484ca48912de7ebab49a5db1` with exact-identity independent G5 FAIL; preserve its report at `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v160/g5-auditor-report.txt` (SHA-256 `d27433ebbdea3bc19321dd9bebc5565c57d4466cb81271a0ca9eb4092eb2c90b`). Its finding is stale current-state wording in the header and §0; no v160 packet or recipes were created. v161 is the pointer-only corrective checkpoint; its sole next action is selected from §69 using observed HEAD and the matching report: commit the correction if HEAD is v160, audit only if v161 G5 is absent, make a plan-only child if G5 fails, or create fresh v161 packet/recipes if G5 passes. The v158 preflight remains eight PARTIAL payloads without `input-manifest.txt` or packet manifest; preserve it unchanged. No product implementation, build, test discovery, registered-test execution, G1a/G1b/G3, activation or reconciled baseline exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; preserve prior evidence and never inspect protected `build-asan/`. Slice A remains WAITING; ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete, as do the four application file lanes, both conversions, edited reopen and binary-DXF codec support.
 
 Historical v68 amendment: clarifies file-support acceptance and retains the v67 product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, with all four recorded product source/test hashes unchanged. The exact-membership `preflight-v67/` packet is PARTIAL provenance (latest packet-manifest SHA-256 `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`), not a formal gate receipt. The G4 hidden-cusp clearance proof and C50 correction remain normative: the cusp-only candidate is separated from all visible spans and must refuse as `OffCurve` before terminal/topology matching; B07 separately tests absence of a cusp `ReferenceTerminal`, and C36 retains fully witnessed `Topology` coverage. The five controls remain mandatory per slice: separate completeness and plan-correctness gates; frozen-tree implementation correctness; an executable, independently reviewed sub-plan/readiness decision; one validated product commit followed by its plan-only reconciliation; and a post-commit live-state audit/self-update before any successor. Slice A remains WAITING; G1 completeness, G1 plan correctness, Gate-3 readiness and activation are not passed. A/B/C baseline discovery remains zero and strict-core remains 61 matching normalized identities in Release/ASan; no registered tests ran. No product/test edit, build, JUnit execution, formal Gate PASS, readiness PASS or activation occurred. DXF read, DXF write, DWG read and DWG write are separate open application obligations; both conversion directions and the separate R14/R2018 binary-DXF codec obligation also remain open. Geometry-only checker evidence satisfies none.
 Historical v81 reconciled the six-path A scope, A14 selector, split-debit oracle, activation-bound test identities and post-edit validator. Its packet and review findings are preserved as immutable provenance; its live pointers are superseded below. The five control families and six gate decisions (G1a/G1b/G2/G3/G4/G5) remain independently recorded and fail-closed. §0.5 retains detailed leaf specifications and historical handoffs; §29 is the sole authority for the current gate state and immediate next action. Preserve the v81 and v80 packets/reviews, the v77 PARTIAL packet and invalid v79 draft. The four independent application obligations—DXF read, DXF write, DWG read and DWG write—plus both conversions and binary-DXF codec work remain later 1E gates.
@@ -274,9 +273,9 @@ Execution states: `pending`, `in progress`, `validated`, `committed — reconcil
 `done — <implementation sha>, <evidence id>, <date>`, `needs revision`, `needs decision`, `blocked`, and
 `deferred — user publication action`. Readiness is separate (§0.3): `ready`, `conditional`, or `waiting`.
 A commit alone does not mean done; verification, review and the post-commit plan checkpoint are required.
-The latest checkpoint section whose exact commit matches its state table controls the live transition, including while its G5 is pending; a pending row allows only that exact audit. v159 is the observed parent with G5 FAIL (report SHA-256 `c7a7650f4d0db542bb6bdda87680c952ad920979236f691c6af5b9c96982099f`); v160 is this corrective plan-only candidate. When HEAD matches v160, §68 supersedes §67 immediately and controls status/next action. Section 56 supplies bounded Git-object/protected-path procedures only; older state/next-action claims are historical. v158 G5 is PASS (report SHA-256 `97df1e8e887e375655b7dd66ba7e7319ea19327f68b3e93e817f77ae4692dd00`); v157 G5 is PASS and v156 G5 remains FAIL. The v158 preflight is incomplete provenance, v159 has no packet/recipes, and no formal G1a/G1b/G3, activation, baseline or A-budget-depth implementation exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. A next action changes only when a matching receipt proves its prerequisite; a failed or missing receipt blocks successors. Sections 39-67 preserve technical contracts and historical handoffs, but no superseded state sentence authorizes work. Do not inspect protected `build-asan/`; report `not inspected by instruction`. Sections 0.3-0.8 and §30 remain technical/leaf references; §56 is normative only for its bounded audit procedure, and §68 controls live status once its commit is observed.
+The latest checkpoint section whose exact commit matches its state table controls the live transition, including while its G5 is pending; a pending row allows only that exact audit. v160 is the observed parent with G5 FAIL (report SHA-256 `d27433ebbdea3bc19321dd9bebc5565c57d4466cb81271a0ca9eb4092eb2c90b`); v161 is the pointer-only correction, whose candidate/committed state is determined by HEAD and §69. When HEAD matches v161, §69 supersedes §68 immediately and controls status/next action. Section 56 supplies bounded Git-object/protected-path procedures only; older state/next-action claims are historical. v159 G5 is FAIL (report SHA-256 `c7a7650f4d0db542bb6bdda87680c952ad920979236f691c6af5b9c96982099f`); v158 G5 is PASS (report SHA-256 `97df1e8e887e375655b7dd66ba7e7319ea19327f68b3e93e817f77ae4692dd00`), v157 G5 is PASS and v156 G5 remains FAIL. The v158 preflight is incomplete provenance, v159/v160 have no packet/recipes, and no formal G1a/G1b/G3, activation, baseline or A-budget-depth implementation exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. A next action changes only when a matching receipt proves its prerequisite; a failed or missing receipt blocks successors. Sections 39-68 preserve technical contracts and historical handoffs, but no superseded state sentence authorizes work. Do not inspect protected `build-asan/`; report `not inspected by instruction`. Sections 0.3-0.8 and §30 remain technical/leaf references; §56 is normative only for its bounded audit procedure, and §69 controls live status once its commit is observed.
 
-Until v160 is committed, §67's observed v159-G5-FAIL row is the live handoff. This corrective plan-only child is the sole action being taken. When HEAD observes the exact v160 checkpoint, §68 becomes the live handoff immediately; its pending-G5 row permits only independent audit.
+Select the sole live action from §69's observed-state table: before v161 commit, commit only the pointer correction; at v161 with G5 absent, audit only; on G5 FAIL, make a corrective plan-only child only; on G5 PASS, create fresh v161 packet/recipes only. No row authorizes product work before the later same-identity reviews, activation G5 and reconciled baseline.
 
 | Step | Title | PR | Depends on | Size (LOC, product + tests) | Status |
 |---|---|---|---|---|---|
@@ -17741,3 +17740,63 @@ The provider's unique tangency proof
     This v160 plan-only correction authorizes no product edit, build, registered-test discovery/execution, activation,
     baseline, packet or recipe creation before its own exact G5 PASS. That PASS authorizes only fresh v160 packet/recipe
     construction.
+
+69. **v161 committed-state pointer correction (plan-only; non-activating).** This direct child corrects only live-state
+    wording after the v160 G5 audit. It supersedes §68 as the sole live transition authority once the exact v161
+    commit is observed. Before that commit, §68's observed v160-G5-FAIL row permits only this corrective plan-only
+    child and affected audit. After v161 commit, its pending-G5 row permits only independent exact-identity G5. No
+    technical contract, test identity, product path or acceptance criterion changes here. Preserve all prior plan and
+    audit artifacts unchanged; `build-asan/` is not inspected by instruction.
+
+    **Observed v160 audit.** v160 commit
+    `8f9a4701aaa05f90484ca48912de7ebab49a5db1` is a direct child of v159
+    `f41a5e9e412e8d0887b6532dcd88cdc4bd0a0e16`, with the plan blob
+    `32d8fd3a16a756fc4f6a46c7e41389a2550f5a9b`. Independent G5 failed because the header and §0 continued to call
+    v160 a current candidate after it was committed, while §68 recorded G5 pending. Preserve the auditor-authored
+    report `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v160/g5-auditor-report.txt`, SHA-256
+    `d27433ebbdea3bc19321dd9bebc5565c57d4466cb81271a0ca9eb4092eb2c90b`, unchanged. No v160 packet or recipes
+    exist. The only permitted correction is to align the top header, status and §0 live handoff with observed HEAD and
+    the failed report; §68's canonical pre-commit snapshot and technical record stay unchanged as historical evidence.
+
+    **Canonical v161 pre-commit snapshot.** Do not embed a future commit SHA or G5 result.
+
+    ```text
+    plan_revision: v161
+    expected_parent: 8f9a4701aaa05f90484ca48912de7ebab49a5db1
+    plan_commit: candidate; resolve only from observed HEAD
+    plan_change_scope: live header/status/§0 pointer correction only
+    product_source_base: 9c06e9c77b313b62cc20e9ec39c22952fee501f2
+    active_leaf: A-budget-depth
+    execution_state: WAITING
+    v158_G5: PASS; report SHA-256 97df1e8e887e375655b7dd66ba7e7319ea19327f68b3e93e817f77ae4692dd00
+    v159_G5: FAIL; report SHA-256 c7a7650f4d0db542bb6bdda87680c952ad920979236f691c6af5b9c96982099f
+    v160_G5: FAIL; report SHA-256 d27433ebbdea3bc19321dd9bebc5565c57d4466cb81271a0ca9eb4092eb2c90b
+    v160_packet: ABSENT
+    v160_recipes: ABSENT
+    v161_G5: NOT_ISSUED_UNTIL_COMMIT
+    v161_packet: ABSENT
+    v161_recipes: ABSENT
+    G1a_completeness: WAITING
+    G1b_plan_correctness: WAITING
+    G2_implementation_correctness: NOT_APPLICABLE_BEFORE_EDIT
+    G3_leaf_readiness: WAITING
+    activation_checkpoint: NONE
+    activation_G5: NONE
+    reconciled_baseline: NONE
+    protected_build_asan: NOT_INSPECTED_BY_INSTRUCTION
+    next: verify and commit the live-pointer-only correction; after observed v161 commit, obtain exact-identity G5 only
+    ```
+
+    | Observed state | Sole permitted next action | Blocked until it passes |
+    |---|---|---|
+    | HEAD is v160; v161 is this candidate | Verify direct parent, pointer-only scope, whitespace, candidate blob and unchanged six A blobs; commit only this roadmap. | Packet/recipes, formal reviews, activation, baseline and product work. |
+    | HEAD is v161; exact v161 G5 report absent | Obtain independent G5 for the exact commit/parent/path/blob and preserve the auditor-authored report under `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v161/`. | Packet/recipes, G1a/G1b/G3, activation, baseline and product work. |
+    | v161 G5 FAIL | Preserve report/hash; create a corrective plan-only direct child and repeat affected audits. | Every packet, review, activation, baseline and product action. |
+    | v161 G5 PASS | Create fresh exact-membership `preflight-v161/` and `recipes-v161/` from current source, v160 technical contracts and v161 live state; preserve v158 PARTIAL drafts unchanged. Keep packet PARTIAL until closure. | Formal G1a/G1b/G3, activation, baseline and product work. |
+    | Packet/recipes incomplete, stale or mismatched | Continue bounded source-derived closure or amend the plan for an evidenced defect; regenerate affected artifacts/reviews. | Readiness, activation, baseline and product work. |
+    | Packet COMPLETE, recipes audited, same-identity G1a/G1b/G3 PASS | Create a separate activation checkpoint, pass its independent G5, then run and reconcile the authorized baseline. | Product edits/builds/registered tests until baseline reconciliation. |
+    | Activation G5 PASS and baseline reconciled; A READY | Agent Gibbs starts the reviewed six-path A slice; follow the v160 five-control procedure and reconcile/G5 immediately after its product commit. | Every successor until A's reconciliation G5 PASS. |
+
+    v161 authorizes no packet/recipe creation before its own exact G5 PASS and no implementation action. The v160 G5
+    FAIL is a state-transition failure; it does not erase v160's technical plan corrections. `build-asan/` remains not
+    inspected by instruction.
