@@ -24,11 +24,11 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v153 completeness, correctness, readiness and commit-loop refinement**, 2026-10-17; plan-only and non-activating. Section 61 defines the v153 state transition and becomes the sole live handoff when its matching commit is observed. Version-specific handoffs in §§39-60 are history; §56's bounded audit procedure remains normative as referenced by §§0 and 61. v152 `0813d5214e169fe33d6f66f07e7947c8b7d7d8cf` passed independent G5 (report SHA-256 `82c1787b1faf2eca1878317af5afe8ab05f1fecd46c8266db0afc8c1053b692d`). Its `preflight-v152/` packet now exists as PARTIAL provenance: eight payloads are present, `packet-manifest.sha256` is absent, and the packet must remain unchanged. v151 `11653789f0b73d5bcafb68a0d2abf8b4421bab47` failed independent G5 on two stale-authority findings (report SHA-256 `ca8c94e8ca2479b2d81cd49e03b2f42a6562846562759fa263af5914e3c340ba`); preserve its report unchanged. v149 failed independent G5 on stale-current-pointer finding G5-149-1 (report SHA-256 `9dccfed162153ab10359a3b796f849ad624e3dd721f58f0d7fbe2e3c006cb415`). v150 was superseded before G5; no v150 G5 was requested or claimed. `preflight-v148/` remains one-file PARTIAL provenance and must remain unchanged. No v153 packet, formal G1a/G1b/G3, activation, reconciled baseline or A-budget-depth implementation exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, and all six A-owned paths remain unchanged. Protected untracked `build-asan/` must not be listed, traversed, read, hashed or otherwise inspected; report only `not inspected by instruction`. Product edits/builds/tests remain unauthorized until the v153 plan checkpoint passes G5, its new exact-membership packet is complete, independent G1a/G1b/G3 pass on identical inputs, a separate activation checkpoint passes G5, and the activated baseline is reconciled. This file is the implementation source of truth.
+Plan **v154 completeness, correctness, readiness and commit-loop refinement**, 2026-10-17; plan-only and non-activating. Section 62 defines the v154 state transition and becomes the sole live handoff when its matching commit is observed. Version-specific handoffs in §§39-61 are history; §56's bounded audit procedure remains normative as referenced by §§0 and 62. v153 `885a34703374b4cd6b466bcd6ff13eb5441da76b` passed independent G5 (report SHA-256 `7067267af91cc66511b7cc590f3a62a4c392f1c740e4658330bc8a883546b142`). Its `preflight-v153/` packet is preserved PARTIAL provenance with eight payloads and a valid manifest (manifest SHA-256 `a97d09bb5068e77b8fc329fc25114283a666d97c89c989c684ba6a85458dcd4b`); it lacks the toolchain identities required by the live activation/build recipes and must not be repaired or used as a gate input. v152 `0813d5214e169fe33d6f66f07e7947c8b7d7d8cf` passed G5; v151 and v149 failed G5; v150 was superseded before G5; `preflight-v148/` remains one-file PARTIAL provenance. Preserve those reports and packets unchanged. No formal G1a/G1b/G3, activation, reconciled baseline or A-budget-depth implementation exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, and all six A-owned paths remain unchanged. Protected untracked `build-asan/` must not be listed, traversed, read, hashed or otherwise inspected; report only `not inspected by instruction`. Product edits/builds/tests remain unauthorized until the v154 plan checkpoint passes G5, its fresh exact-membership packet is complete, independent G1a/G1b/G3 pass on identical inputs, a separate activation checkpoint passes G5, and the activated baseline is reconciled. This file is the implementation source of truth.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY.** v152 passed G5, but its preflight packet remains PARTIAL provenance and is superseded as gate input by any v153 plan commit. v151 failed G5 on stale A-budget/depth and authority pointers; preserve its report. v149 also failed G5, and v150 was superseded before G5. `preflight-v148/` remains PARTIAL provenance. Section 61 defines the v153 state transition; no v153 packet, formal G1a/G1b/G3, activation, reconciled baseline or A-budget-depth implementation exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Product edits, builds and registered tests remain unauthorized until the current plan checkpoint passes G5, a new exact-membership packet is complete, same-identity G1a/G1b/G3 pass, a separate activation checkpoint passes G5, and the activated baseline is reconciled. Preserve prior evidence and never inspect protected untracked `build-asan/`. Ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete; the four application file lanes, both conversions, edited reopen and binary-DXF codec support remain separate downstream obligations.
+Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY.** v153 passed G5, but its exact eight-payload packet is PARTIAL provenance and is superseded as gate input by a v154 plan identity. v152 passed G5; v151 and v149 failed G5; v150 was superseded before G5. `preflight-v148/` remains PARTIAL provenance. Section 62 defines the v154 state transition; no v154 packet, formal G1a/G1b/G3, activation, reconciled baseline or A-budget-depth implementation exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Product edits, builds and registered tests remain unauthorized until the current plan checkpoint passes G5, a new exact-membership packet is complete, same-identity G1a/G1b/G3 pass, a separate activation checkpoint passes G5, and the activated baseline is reconciled. Preserve prior evidence and never inspect protected untracked `build-asan/`. Ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete; the four application file lanes, both conversions, edited reopen and binary-DXF codec support remain separate downstream obligations.
 Historical v68 amendment: clarifies file-support acceptance and retains the v67 product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, with all four recorded product source/test hashes unchanged. The exact-membership `preflight-v67/` packet is PARTIAL provenance (latest packet-manifest SHA-256 `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`), not a formal gate receipt. The G4 hidden-cusp clearance proof and C50 correction remain normative: the cusp-only candidate is separated from all visible spans and must refuse as `OffCurve` before terminal/topology matching; B07 separately tests absence of a cusp `ReferenceTerminal`, and C36 retains fully witnessed `Topology` coverage. The five controls remain mandatory per slice: separate completeness and plan-correctness gates; frozen-tree implementation correctness; an executable, independently reviewed sub-plan/readiness decision; one validated product commit followed by its plan-only reconciliation; and a post-commit live-state audit/self-update before any successor. Slice A remains WAITING; G1 completeness, G1 plan correctness, Gate-3 readiness and activation are not passed. A/B/C baseline discovery remains zero and strict-core remains 61 matching normalized identities in Release/ASan; no registered tests ran. No product/test edit, build, JUnit execution, formal Gate PASS, readiness PASS or activation occurred. DXF read, DXF write, DWG read and DWG write are separate open application obligations; both conversion directions and the separate R14/R2018 binary-DXF codec obligation also remain open. Geometry-only checker evidence satisfies none.
 Historical v81 reconciled the six-path A scope, A14 selector, split-debit oracle, activation-bound test identities and post-edit validator. Its packet and review findings are preserved as immutable provenance; its live pointers are superseded below. The five control families and six gate decisions (G1a/G1b/G2/G3/G4/G5) remain independently recorded and fail-closed. §0.5 retains detailed leaf specifications and historical handoffs; §29 is the sole authority for the current gate state and immediate next action. Preserve the v81 and v80 packets/reviews, the v77 PARTIAL packet and invalid v79 draft. The four independent application obligations—DXF read, DXF write, DWG read and DWG write—plus both conversions and binary-DXF codec work remain later 1E gates.
 Historical v82 corrected stale handoff pointers and bound the one-shot/retained exception-transfer and source-bound baseline requirements, but did not pass G1a/G1b. Its copied v81 packet remains preserved as `preflight-v82-stale-copy-from-v81/`, not a v82 evidence packet. v82 retained the hard 1E file-support contract described below.
@@ -272,7 +272,7 @@ Execution states: `pending`, `in progress`, `validated`, `committed — reconcil
 `done — <implementation sha>, <evidence id>, <date>`, `needs revision`, `needs decision`, `blocked`, and
 `deferred — user publication action`. Readiness is separate (§0.3): `ready`, `conditional`, or `waiting`.
 A commit alone does not mean done; verification, review and the post-commit plan checkpoint are required.
-Section 61 is the sole live state handoff when the observed HEAD matches its row. Section 56 supplies bounded Git-object/protected-path procedures only; its older state and next-action claims are historical. v152 G5 passed, but its eight-payload preflight remains PARTIAL and is preserved unchanged; any v153 commit invalidates it as a gate input. v151 and v149 failed G5; preserve both reports. v150 was superseded before G5. v148 G5 passed, but its one-file preflight remains PARTIAL provenance. The v153 state table is evaluated against actual HEAD and durable receipts, and an external G5 report—not candidate-time prose—determines checkpoint outcome. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; no v153 packet, formal G1a/G1b/G3, activation, baseline or A-budget-depth implementation has occurred. The next action changes only when a matching receipt proves its prerequisite; a failed or missing receipt blocks successors. §§39-60 preserve technical contracts and historical handoffs, but no superseded state sentence authorizes work. Do not inspect protected `build-asan/`; report `not inspected by instruction`. Sections 0.3-0.8 and §30 remain the technical/leaf-plan reference; §56 is normative only for its bounded audit procedure, and §61 controls live status.
+Section 62 is the sole live state handoff when the observed HEAD matches its row. Section 56 supplies bounded Git-object/protected-path procedures only; its older state and next-action claims are historical. v153 G5 passed, but `preflight-v153/` is PARTIAL provenance and remains unchanged; it cannot satisfy v154 gates. v152 G5 passed; v151 and v149 failed G5; v150 was superseded before G5. v148 G5 passed, but its one-file preflight remains PARTIAL provenance. The v154 state table is evaluated against actual HEAD and durable receipts, and an external G5 report—not candidate-time prose—determines checkpoint outcome. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; no v154 packet, formal G1a/G1b/G3, activation, baseline or A-budget-depth implementation has occurred. The next action changes only when a matching receipt proves its prerequisite; a failed or missing receipt blocks successors. §§39-61 preserve technical contracts and historical handoffs, but no superseded state sentence authorizes work. Do not inspect protected `build-asan/`; report `not inspected by instruction`. Sections 0.3-0.8 and §30 remain the technical/leaf-plan reference; §56 is normative only for its bounded audit procedure, and §62 controls live status.
 
 | Step | Title | PR | Depends on | Size (LOC, product + tests) | Status |
 |---|---|---|---|---|---|
@@ -283,7 +283,7 @@ Section 61 is the sole live state handoff when the observed HEAD matches its row
 | 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | done — 0e3c6b342, 0B-3 reports/card; one pinned baseline generated-MLEADER DWG gap, 2026-10-15 |
 | 1A-1 | Closed forms, normalization, tolerance helpers and cache validation | C | S0 | 900 | partial — .a/.b-budget/.b-progress/.b-ref-frames/.b-ref-events-core/.b-ref-rate/.b-ref-events-critical/.b-ref-events-accounting/.b-ref-events-refine/.b-ref-critical-refine/.b-ref-providers/.b-ref-contacts/.b-ref-events-isolate/.b-ref-components/.b-check-layout/.b-check-bounds/.b-check-topology-local done; A-budget-depth, B-occurrence-terminals, C-global-topology-checker pending |
 | 1A-1.b-ref-components | Exact visibility and incidence-preserving components | C | .b-ref-events-isolate | 900 | done — `9682d5cac65f30cfd86aa10556678ceb88b1448b`, attempt-8 evidence, 2026-10-16 |
-| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900 | waiting — v152 passed G5, but its preflight remains PARTIAL; §61 controls current authorization, and no v153 packet, formal G1a/G1b/G3, activation, baseline or product work exists |
+| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900 | waiting — v153 passed G5, but its preflight is PARTIAL and lacks current toolchain identity; §62 controls authorization, and no v154 packet, formal G1a/G1b/G3, activation, baseline or product work exists |
 | B-occurrence-terminals | Immutable occurrence-specific terminal publication | C | A-budget-depth product and plan checkpoint | 500 | waiting — no implementation before A reconciliation |
 | C-global-topology-checker | Complete directed path, coverage, cut and cycle validation | C | A-budget-depth and B-occurrence-terminals product/checkpoints | 1200 | waiting — no implementation before A and B reconciliation |
 | 1A-2 | Enumerator; persistent entity core and factory for already validated results; clone, `toPlainSpline`, normalisation, stamp, transforms; `writeEntity` case; INSERT capability; 0B row; interim Edit Properties guard | C | 0B-3, 1A-1 | 900 | pending |
@@ -1337,7 +1337,7 @@ v95_preflight_order: (1) Verify this plan-only commit is a direct child of v94 w
   inherited_review_discovery: v93 G1a/G1b/G3 remain immutable FAIL. The v94 packet's identity/checksum readback is superseded by its observed source-map mismatch and must not be represented as PASS. Circle radii 8 and 2, zero pair/critical count, the +3/-3 PositiveFactor rationale and the binary64 `M_PI_4` seam remain source/math facts to re-derive in v95. Neither +14 nor +23 is a runtime snapshot or proof of atomic refusal; A11 oracle/snapshots and A14 API behavior remain open.
 source_audit_findings: At product base 9c06e9c77b313b62cc20e9ec39c22952fee501f2, planned A fixes remain absent. `CacheBoundsBuilder::compare` admits three vertices for two child cache cells, misses conditional cache-span debit and lacks paired pending capacity preflight; reference-domain splits require only two child records. `CacheLocalTopologyBuilder::subdivide` omits conditional two-span debit and pending capacity preflight. `CriticalBuilder::addRegions` debits before queue-capacity validation and appends paired `m_regions`/`m_segments` without reserving both; `joins` appends without output-capacity preflight. Additional reverse-inventory rows remain open: fixed 21-entry `m_axes` generation/sort; `appendOccurrence` bounded by stationary-axis or intermediate-quadrant loops; `addWitness`/`m_witnesses`, linked node updates and `m_order`; `fringeIndex.assign`; interior/start/end `m_fragments`; `ReferenceEventBuilder` root/child queues and every graph/publication vector; and strict-core seed/split/leaf/event/order scratch. Each row records source bound, admission owner, checked size/max_size, reserve-before-debit/mutation, no-throw or staged publication, failure state and exact test/source-only disposition. Map and classify all six `lc_curveoffset.cpp` `findIntersections` callers (source locations 3246, 3283, 4232, 4740, 4889, 5490) as affected call-path coverage or explicit non-A exclusions; core tests alone do not prove caller coverage.
   caller_3283_correction: the previous v94 reverse map attached the region bow-tie selector to this call site, but that case reaches the region caller at 4740, not 3283. The exact existing selector is `lc_parametriccurveintersection_tests.cpp` / `A noded offset of a crossing source keeps every crossing`; with `nodeIntersections=true`, its `buildDirectBranches` path reaches 3283 and checks `sourceIntersections == 1`. Record this corrected path in the fresh v95 packet; do not edit the integrity-invalid v94 packet.
-  readiness_blockers: v88-v94 recipes and earlier cards are historical and not executable by inheritance. The six active recipes are reissued for v95 and must be independently audited end-to-end against the committed v95 plan and fresh packet: shell/heredoc syntax; exact directory membership before manifest use; all 32 root-level keys; registration/tool identities; role-distinct receipts; activation state/version transition; exact product→plan-checkpoint→reviewed-plan chain; full testcase and skip-set comparisons; artifact coverage; and Git path/blob effects. G1a/G1b/G3 remain pending until fresh receipts bind one v95 plan/product/packet identity. Checksums or syntax alone are not gate decisions.
+  readiness_blockers: v88-v153 recipes and earlier cards are historical and not executable by inheritance. The six live recipes below are reissued by §62 for v154 and must be independently audited end-to-end against its committed plan and fresh packet: shell/heredoc syntax; exact directory membership and schema hash before manifest use; all 97 keys; registration/tool identities; role-distinct receipts; activation state/version transition; exact product→plan-checkpoint→reviewed-plan chain; full testcase and skip-set comparisons; artifact coverage; and Git path/blob effects. G1a/G1b/G3 remain pending until fresh receipts bind one v154 plan/product/packet identity. Checksums or syntax alone are not gate decisions.
 product_base: 9c06e9c77b313b62cc20e9ec39c22952fee501f2
 predecessor: local topology product commit ef3ba756b52796c02b8490caedcaa48b8db69605 and direct-child roadmap checkpoint 9c06e9c77b313b62cc20e9ec39c22952fee501f2
 owner: Agent Gibbs is the first implementation writer after activation; coordinator/reviewer owns preflight, independent review, validation and Git, and does not co-edit the slice. If Gibbs is unavailable, stop for user-authorized reassignment.
@@ -1398,7 +1398,7 @@ tests:
        mapping and fixture reachability. If a configured cap cannot isolate a destination, record the bounded
        public-API probe and decision; do not add a test-only allocator/capacity hook.
     6. Close the full source-to-assertion ledger and independently derived expected snapshots plus planned
-       exact/one-less contracts in `preflight-v95/`; only then request
+       exact/one-less contracts in the plan-version-bound preflight packet; only then request
        separate same-identity G1a, G1b and G3 decisions. Any missing exact snapshot, destination, public refusal
        assertion or exception disposition leaves A WAITING.
   A01-A13 are planned names under `[lc-offsetcurve][geometry][cache-budget-accounting]`; actual test registration remains absent until activation. A01/A02 directly exercise atomic candidate-cache split admission from precharged `{cacheSpans=1, vertices=1}` to `{3,3}`: exact caps admit, and each counter independently one-short refuses without mutating either counter. They also bind proof-interval split delta `{cacheSpans=0, vertices=2}`. Stable subassertion IDs separately map candidate-cache splits, `cuspAngle`, `addRegions`, and `joins`, including each parent examination, split/depth debit, unchanged cache-span count, exact-cap result and one-less refusal before child/output mutation. For `addRegions`, prove two pending slots are checked/reserved before proof-split debit and pushes; the paired output vectors reuse the proved Box's already admitted logical token, so reserve both destinations before append and assert no additional vertex debit or one-sided publication. For `joins`, preflight the output slot before its existing logical-record admission. Map each concrete destination and each `reserve`/append source site in the packet; source-review allocator-failure behavior rather than adding allocator hooks. Verify parent pop has no vertex debit. Helper-only coverage is insufficient.
@@ -1412,8 +1412,8 @@ G2/G4/G5: G2 requires independent adversarial review by a reviewer distinct from
 G4_commit_protocol: Freeze exact owned paths and tested blob hashes; require final G1a reclosure, independent G2 PASS, all targeted/build/full/format lanes, exact identities/assertions and zero unexplained failures/skips. Verify the activation checkpoint remains the actual parent, the index is empty before explicit staging, and the staged path set contains exactly the six A paths. Compare staged and tested hashes, run cached whitespace checks, inspect hook effects, commit exactly one product/test-only A leaf, then verify its actual parent, path set, committed blobs and clean owned index. No plan, evidence, unrelated path, partial stage, or B/C work enters this commit. A failed postcondition means the leaf is not done and no successor starts.
 G5_reconciliation_protocol: Immediately after the product commit and before any build/test/edit for a successor, inspect actual Git objects and filesystem state. Reconcile the product commit SHA/parent/path/blob hashes, test and build reports, source/toolchain/binary identities, all A requirement rows, statuses, unresolved findings, risks, exclusions, evidence hashes, aggregate progress, DAG edges, descendant readiness, active/next/version/packet pointers and implementation owner. Prepare exactly one roadmap-only commit as the direct child of the product commit; it records the product SHA and evidence but never its own/future SHA. Verify candidate blob equals committed plan blob, exact one-file path set, direct ancestry, unchanged product blobs, clean index/worktree scope, packet/receipt identities and stale-pointer sweep. Then reread the committed plan and independently compare every live claim to Git and evidence; write `g5-readback-receipt.txt` with the fixed schema above and immutable hashes of the receipt's inputs. If any mismatch exists, block successor work, invalidate affected reviews/readiness, and make a corrective plan-only child before fresh gates. Restart completeness, plan correctness and readiness for the next slice only from the reconciled HEAD.
 recovery: keep failed attempts and ignored build-asan/evidence; no reset/cleanup; any source or scope change invalidates affected reviews and requires a new attempt.
-command_order: No v88-v93 recipe is executable by inheritance. The six recipes below are reissued for v95: `activation_commands`, `foundation_activation_baseline_commands`, `foundation_review_freeze_commands`, `foundation_validation_commands`, `foundation_product_commit_commands`, and `foundation_plan_checkpoint_commands`. Before G3, independently audit them against the committed v95 plan/packet, exact path ownership, the exact 32-key manifest schema, registration/tool identities, role-distinct receipts, activation state/version transition, report testcase and skip identities, direct predecessor/checkpoint chain, and failure postconditions. Run `PHASE=freeze` before tests; run `PHASE=post-test` only after validation has produced its test receipt; then obtain final G1a, final plan-contract reconciliation and G2. G2 is never a precondition to executing tests. The product-commit recipe accepts only all required post-test PASS receipts. After same-identity preflight G1a/G1b/G3 PASS and a separate activation checkpoint, use only these recipes. Never reuse an attempt or build directory; preserve failed attempts and select a fresh positive number.
-command_inputs: Use `SLICE=A-budget-depth`, immutable `ACTIVATION_ID`, successful `BASELINE_ATTEMPT`, fresh per-diff `ATTEMPT`, `PACKET_DIR=build/evidence/1A-1.b-check-topology-chain/preflight-v95`, and exact tool paths/versions from that packet's root-level `input-manifest.txt`. Every recipe consuming the packet validates recorded `shasum_path` and version; recipes invoking Python additionally validate recorded `python3_path` and version. Environment overrides must equal the manifest values.
+command_order: No v88-v153 recipe is executable by inheritance. The six live recipes are `activation_commands`, `foundation_activation_baseline_commands`, `foundation_review_freeze_commands`, `foundation_validation_commands`, `foundation_product_commit_commands`, and `foundation_plan_checkpoint_commands` as reconciled by §62. Before G3, independently audit them against the committed v154 plan/packet, exact path ownership, the hash-pinned 98-key schema, all nine payload names, registration/tool identities, role-distinct receipts, activation state/version transition, report testcase and skip identities, direct predecessor/checkpoint chain, and failure postconditions. Run `PHASE=freeze` before tests; run `PHASE=post-test` only after validation has produced its test receipt; then obtain final G1a, final plan-contract reconciliation and G2. G2 is never a precondition to executing tests. The product-commit recipe accepts only all required post-test PASS receipts. After same-identity preflight G1a/G1b/G3 PASS and a separate activation checkpoint, use only these recipes. Never reuse an attempt or build directory; preserve failed attempts and select a fresh positive number.
+command_inputs: Use `SLICE=A-budget-depth`, immutable `ACTIVATION_ID`, successful `BASELINE_ATTEMPT`, fresh per-diff `ATTEMPT`, and `PACKET_DIR=build/evidence/1A-1.b-check-topology-chain/preflight-v<reviewed_plan_version>` read from the immutable activation identity. Use exact tool paths/versions from that packet's root-level `input-manifest.txt`; every consumer validates the v154 schema, exact packet membership and manifest digest before consuming evidence. Every recipe consuming the packet validates recorded `shasum_path` and version; recipes invoking Python additionally validate recorded `python3_path` and version. Environment overrides must equal the manifest values.
 ```
 
 **Historical v95 Recipe Contract (not executable under v96)**
@@ -1427,7 +1427,8 @@ command_inputs: Use `SLICE=A-budget-depth`, immutable `ACTIVATION_ID`, successfu
   G2 against that tested tree; finally bind their hashes and test outputs in the commit preconditions. No review input
   may require G2 before the test run it is meant to review.
 - Put post-edit Release/ASan/qmake6 outputs under a fresh `validation-<ATTEMPT>/` root. Do not build into or
-  reconfigure shared `build/` or the preserved `build-asan/`. Enforce all 32 fixed root-level keys, verify registration-file
+  reconfigure shared `build/` or the preserved `build-asan/`. Enforce the v154 versioned 98-key root-level schema through
+  `input-manifest-schema.txt`, verify its plan-pinned SHA-256 and the registration-file
   hashes and exact Python/shasum executable path/version identities before any build or report input is consumed.
   Compare full JUnit testcase-name sets and skip-name sets against the exact-source activation baseline for every
   broad lane; selector discovery counts alone do not detect suite drift.
@@ -1449,12 +1450,15 @@ WT=/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961
 [[ "$BASELINE_ATTEMPT" =~ ^[1-9][0-9]*$ ]]
 ROOT="$WT/build/evidence/1A-1.b-check-topology-chain/A-budget-depth"
 A="$ROOT/activation-$ACTIVATION_ID"
-P="$WT/build/evidence/1A-1.b-check-topology-chain/preflight-v95"
 E="$A/activation-baseline-$BASELINE_ATTEMPT"
 cd "$WT"
 test -d "$A"
 test "$(git rev-parse HEAD)" = "$(cat "$A/activated-base.sha")"
 test ! -e "$E"
+test -s "$A/activation-identity.txt"
+REVIEWED_PLAN_VERSION=$(awk -F= '$1 == "reviewed_plan_version" {print $2}' "$A/activation-identity.txt")
+[[ "$REVIEWED_PLAN_VERSION" =~ ^[1-9][0-9]*$ ]]
+P="$WT/build/evidence/1A-1.b-check-topology-chain/preflight-v$REVIEWED_PLAN_VERSION"
 paths=(librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
        librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp
        librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h
@@ -1466,9 +1470,10 @@ git diff --quiet
 test -s "$A/activation-identity.txt"
 grep -Fx "slice=A-budget-depth" "$A/activation-identity.txt"
 grep -Fx "activation_id=$ACTIVATION_ID" "$A/activation-identity.txt"
+grep -Fx "reviewed_plan_version=$REVIEWED_PLAN_VERSION" "$A/activation-identity.txt"
 test -s "$P/packet-manifest.sha256"
 test -s "$P/input-manifest.txt"
-expected_entries=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt packet-manifest.sha256 | sort)
+expected_entries=$(printf '%s\n' input-manifest.txt input-manifest-schema.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt independent-output-oracle-ledger.txt packet-manifest.sha256 | sort)
 actual_entries=$(find "$P" -mindepth 1 -maxdepth 1 -exec basename {} \; | LC_ALL=C sort)
 test "$actual_entries" = "$expected_entries"
 for entry in "$P"/*; do test -f "$entry" && test ! -L "$entry"; done
@@ -1477,11 +1482,14 @@ manifest_value() {
   awk -F= -v key="$1" '$1 == key {print substr($0, index($0, "=") + 1)}' "$P/input-manifest.txt"
 }
 validate_manifest_schema() {
-  expected_keys=$(printf '%s\n' cxx_compiler compiler_version qt6_cmake_dir qt6_version cmake_path cmake_version ninja_path ninja_version qmake6_path qmake6_prefix make_path make_version cmake_prefix_path cmake_generator cmake_build_type_release cmake_build_type_asan build_tests cmake_cxx_flags_release asan_cxx_flags asan_exe_linker_flags python3_path python3_version shasum_path shasum_version cmake_lists_sha256 src_pro_sha256 predecessor_plan_checkpoint_commit plan_commit plan_sha256 product_source_commit predecessor_product_commit checkout_head | LC_ALL=C sort)
-  actual_keys=$(awk 'index($0, "=") < 2 {exit 1} {print substr($0, 1, index($0, "=") - 1)}' "$P/input-manifest.txt" | LC_ALL=C sort)
+  schema_sha256=e61e76e3c3a72e1ae31deda083bcf2cece414e5ebf0bc777d15beaac13b00f14
+  test "$(manifest_value manifest_schema_version)" = v154-1
+  test "$(manifest_value input_manifest_schema_sha256)" = "$schema_sha256"
+  test "$(shasum -a 256 "$P/input-manifest-schema.txt" | awk '{print $1}')" = "$schema_sha256"
+  expected_keys=$(sed -n '1,$p' "$P/input-manifest-schema.txt")
+  actual_keys=$(awk 'index($0, "=") < 2 {exit 1} {key=substr($0, 1, index($0, "=") - 1); value=substr($0, index($0, "=") + 1); if (value == "" && key != "cmake_cxx_flags_release") exit 1; print key}' "$P/input-manifest.txt" | LC_ALL=C sort)
   test "$actual_keys" = "$expected_keys"
 }
-validate_manifest_schema
 PYTHON3_PATH=$(manifest_value python3_path)
 PYTHON3_VERSION=$(manifest_value python3_version)
 SHASUM_PATH=$(manifest_value shasum_path)
@@ -1492,8 +1500,11 @@ test "$("$PYTHON3_PATH" --version)" = "$PYTHON3_VERSION"
 test "$("$SHASUM_PATH" --version | head -n 1)" = "$SHASUM_VERSION"
 python3() { "$PYTHON3_PATH" "$@"; }
 shasum() { "$SHASUM_PATH" "$@"; }
-expected_manifest_payloads=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt | sort)
-manifest_payloads=$(awk 'NF {print $2}' "$P/packet-manifest.sha256" | sort)
+validate_manifest_schema
+expected_manifest_payloads=$(printf '%s\n' input-manifest.txt input-manifest-schema.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt independent-output-oracle-ledger.txt | sort)
+test "$(awk 'END {print NR}' "$P/packet-manifest.sha256")" -eq 9
+test "$(awk 'NF {count++} END {print count+0}' "$P/packet-manifest.sha256")" -eq 9
+manifest_payloads=$(awk 'NF {print $2}' "$P/packet-manifest.sha256")
 test "$manifest_payloads" = "$expected_manifest_payloads"
 python3 - "$P" "$expected_manifest_payloads" <<'PY'
 import stat
@@ -1530,6 +1541,7 @@ ASAN_CXX_FLAGS=$(manifest_value asan_cxx_flags)
 ASAN_LINKER_FLAGS=$(manifest_value asan_exe_linker_flags)
 grep -Fx "cmake_lists_sha256=$(shasum -a 256 CMakeLists.txt | awk '{print $1}')" "$P/input-manifest.txt"
 grep -Fx "src_pro_sha256=$(shasum -a 256 librecad/src/src.pro | awk '{print $1}')" "$P/input-manifest.txt"
+grep -Fx "librecad_pro_sha256=$(shasum -a 256 librecad.pro | awk '{print $1}')" "$P/input-manifest.txt"
 for tool in "$CXX_COMPILER" "$CMAKE_PATH" "$NINJA_PATH" "$QMAKE6_PATH" "$MAKE_PATH"; do
   [[ "$tool" = /* ]] && test -x "$tool"
 done
@@ -1561,8 +1573,8 @@ for field in reviewed_plan_sha product_base_sha predecessor_product_sha predeces
   test "$(grep -Ec "^$field=" "$A/activation-identity.txt")" -eq 1
 done
 test "$(git rev-parse HEAD^)" = "$REVIEWED_PLAN_SHA"
-grep -Fx "plan_commit=$REVIEWED_PLAN_SHA" "$P/input-manifest.txt"
-grep -Fx "plan_sha256=$(git show "$REVIEWED_PLAN_SHA:docs/plan_offset_curve_2961.md" | shasum -a 256 | awk '{print $1}')" "$P/input-manifest.txt"
+grep -Fx "reviewed_plan_commit=$REVIEWED_PLAN_SHA" "$P/input-manifest.txt"
+grep -Fx "reviewed_plan_sha256=$(git show "$REVIEWED_PLAN_SHA:docs/plan_offset_curve_2961.md" | shasum -a 256 | awk '{print $1}')" "$P/input-manifest.txt"
 grep -Fx "product_source_commit=$(awk -F= '$1 == "product_base_sha" {print $2}' "$A/activation-identity.txt")" "$P/input-manifest.txt"
 grep -Fx "predecessor_product_commit=$PREDECESSOR_PRODUCT_SHA" "$P/input-manifest.txt"
 grep -Fx "checkout_head=$REVIEWED_PLAN_SHA" "$P/input-manifest.txt"
@@ -2394,17 +2406,20 @@ activation_commands: |
   test ! -e "$E"
   test -s "$P/packet-manifest.sha256"
   test -s "$P/input-manifest.txt"
-  expected_entries=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt independent-output-oracle-ledger.txt packet-manifest.sha256 | sort)
+  expected_entries=$(printf '%s\n' input-manifest.txt input-manifest-schema.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt independent-output-oracle-ledger.txt packet-manifest.sha256 | sort)
   actual_entries=$(find "$P" -mindepth 1 -maxdepth 1 -exec basename {} \; | LC_ALL=C sort)
   test "$actual_entries" = "$expected_entries"
   for entry in "$P"/*; do test -f "$entry" && test ! -L "$entry"; done
   manifest_value() { test "$(grep -Ec "^$1=" "$P/input-manifest.txt")" -eq 1; awk -F= -v key="$1" '$1 == key {print substr($0, index($0, "=") + 1)}' "$P/input-manifest.txt"; }
   validate_manifest_schema() {
-    expected_keys=$(printf '%s\n' cxx_compiler compiler_version qt6_cmake_dir qt6_version cmake_path cmake_version ninja_path ninja_version qmake6_path qmake6_prefix make_path make_version cmake_prefix_path cmake_generator cmake_build_type_release cmake_build_type_asan build_tests cmake_cxx_flags_release asan_cxx_flags asan_exe_linker_flags python3_path python3_version shasum_path shasum_version cmake_lists_sha256 src_pro_sha256 predecessor_plan_checkpoint_commit plan_commit plan_sha256 product_source_commit predecessor_product_commit checkout_head | LC_ALL=C sort)
-    actual_keys=$(awk 'index($0, "=") < 2 {exit 1} {print substr($0, 1, index($0, "=") - 1)}' "$P/input-manifest.txt" | LC_ALL=C sort)
+    schema_sha256=e61e76e3c3a72e1ae31deda083bcf2cece414e5ebf0bc777d15beaac13b00f14
+    test "$(manifest_value manifest_schema_version)" = v154-1
+    test "$(manifest_value input_manifest_schema_sha256)" = "$schema_sha256"
+    test "$(shasum -a 256 "$P/input-manifest-schema.txt" | awk '{print $1}')" = "$schema_sha256"
+    expected_keys=$(sed -n '1,$p' "$P/input-manifest-schema.txt")
+    actual_keys=$(awk 'index($0, "=") < 2 {exit 1} {key=substr($0, 1, index($0, "=") - 1); value=substr($0, index($0, "=") + 1); if (value == "" && key != "cmake_cxx_flags_release") exit 1; print key}' "$P/input-manifest.txt" | LC_ALL=C sort)
     test "$actual_keys" = "$expected_keys"
   }
-  validate_manifest_schema
   PYTHON3_PATH=$(manifest_value python3_path)
   PYTHON3_VERSION=$(manifest_value python3_version)
   SHASUM_PATH=$(manifest_value shasum_path)
@@ -2415,10 +2430,14 @@ activation_commands: |
   test "$("$SHASUM_PATH" --version | head -n 1)" = "$SHASUM_VERSION"
   python3() { "$PYTHON3_PATH" "$@"; }
   shasum() { "$SHASUM_PATH" "$@"; }
+  validate_manifest_schema
   grep -Fx "cmake_lists_sha256=$(shasum -a 256 CMakeLists.txt | awk '{print $1}')" "$P/input-manifest.txt"
   grep -Fx "src_pro_sha256=$(shasum -a 256 librecad/src/src.pro | awk '{print $1}')" "$P/input-manifest.txt"
-  expected_manifest_payloads=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt independent-output-oracle-ledger.txt | sort)
-  manifest_payloads=$(awk 'NF {print $2}' "$P/packet-manifest.sha256" | sort)
+  grep -Fx "librecad_pro_sha256=$(shasum -a 256 librecad.pro | awk '{print $1}')" "$P/input-manifest.txt"
+  expected_manifest_payloads=$(printf '%s\n' input-manifest.txt input-manifest-schema.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt independent-output-oracle-ledger.txt | sort)
+  test "$(awk 'END {print NR}' "$P/packet-manifest.sha256")" -eq 9
+  test "$(awk 'NF {count++} END {print count+0}' "$P/packet-manifest.sha256")" -eq 9
+  manifest_payloads=$(awk 'NF {print $2}' "$P/packet-manifest.sha256")
   test "$manifest_payloads" = "$expected_manifest_payloads"
   python3 - "$P" "$expected_manifest_payloads" <<'PY'
   import stat
@@ -2456,11 +2475,11 @@ activation_commands: |
   test "$(git rev-parse "$EXPECTED_PRODUCT_BASE_SHA^")" = "$PREDECESSOR_PRODUCT_SHA"
   test "$(git rev-parse "$REVIEWED_PLAN_SHA^")" = "$PREDECESSOR_CHECKPOINT_SHA"
   git merge-base --is-ancestor "$EXPECTED_PRODUCT_BASE_SHA" "$PREDECESSOR_CHECKPOINT_SHA"
-  for key in plan_commit plan_sha256 product_source_commit predecessor_product_commit checkout_head; do
+  for key in reviewed_plan_commit reviewed_plan_sha256 product_source_commit predecessor_product_commit checkout_head; do
     test "$(grep -Ec "^$key=" "$P/input-manifest.txt")" -eq 1
   done
-  grep -Fx "plan_commit=$REVIEWED_PLAN_SHA" "$P/input-manifest.txt"
-  grep -Fx "plan_sha256=$(git show "$REVIEWED_PLAN_SHA:docs/plan_offset_curve_2961.md" | shasum -a 256 | awk '{print $1}')" "$P/input-manifest.txt"
+  grep -Fx "reviewed_plan_commit=$REVIEWED_PLAN_SHA" "$P/input-manifest.txt"
+  grep -Fx "reviewed_plan_sha256=$(git show "$REVIEWED_PLAN_SHA:docs/plan_offset_curve_2961.md" | shasum -a 256 | awk '{print $1}')" "$P/input-manifest.txt"
   grep -Fx "product_source_commit=$EXPECTED_PRODUCT_BASE_SHA" "$P/input-manifest.txt"
   grep -Fx "predecessor_product_commit=$PREDECESSOR_PRODUCT_SHA" "$P/input-manifest.txt"
   grep -Fx "checkout_head=$REVIEWED_PLAN_SHA" "$P/input-manifest.txt"
@@ -2555,10 +2574,15 @@ foundation_review_freeze_commands: |
   REVIEWED_PLAN_VERSION=$(awk -F= '$1 == "reviewed_plan_version" {print $2}' "$A/activation-identity.txt")
   [[ "$REVIEWED_PLAN_VERSION" =~ ^[1-9][0-9]*$ ]]
   test "$P" = "$WT/build/evidence/1A-1.b-check-topology-chain/preflight-v$REVIEWED_PLAN_VERSION"
-  expected_entries=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt independent-output-oracle-ledger.txt packet-manifest.sha256 | sort)
+  expected_entries=$(printf '%s\n' input-manifest.txt input-manifest-schema.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt independent-output-oracle-ledger.txt packet-manifest.sha256 | sort)
   actual_entries=$(find "$P" -mindepth 1 -maxdepth 1 -exec basename {} \; | LC_ALL=C sort)
   test "$actual_entries" = "$expected_entries"
   for entry in "$P"/*; do test -f "$entry" && test ! -L "$entry"; done
+  expected_manifest_payloads=$(printf '%s\n' input-manifest.txt input-manifest-schema.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt independent-output-oracle-ledger.txt | sort)
+  test "$(awk 'END {print NR}' "$P/packet-manifest.sha256")" -eq 9
+  test "$(awk 'NF {count++} END {print count+0}' "$P/packet-manifest.sha256")" -eq 9
+  manifest_payloads=$(awk 'NF {print $2}' "$P/packet-manifest.sha256")
+  test "$manifest_payloads" = "$expected_manifest_payloads"
   test "$(grep -Ec '^shasum_path=' "$P/input-manifest.txt")" -eq 1
   test "$(grep -Ec '^shasum_version=' "$P/input-manifest.txt")" -eq 1
   SHASUM_PATH=$(awk -F= '$1 == "shasum_path" {print $2}' "$P/input-manifest.txt")
@@ -2662,17 +2686,20 @@ foundation_validation_commands: |
   test -s "$P/packet-manifest.sha256"
   test -s "$P/input-manifest.txt"
   test "$(git rev-parse HEAD)" = "$(cat "$A/activated-base.sha")"
-  expected_entries=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt independent-output-oracle-ledger.txt packet-manifest.sha256 | sort)
+  expected_entries=$(printf '%s\n' input-manifest.txt input-manifest-schema.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt independent-output-oracle-ledger.txt packet-manifest.sha256 | sort)
   actual_entries=$(find "$P" -mindepth 1 -maxdepth 1 -exec basename {} \; | LC_ALL=C sort)
   test "$actual_entries" = "$expected_entries"
   for entry in "$P"/*; do test -f "$entry" && test ! -L "$entry"; done
   manifest_value() { test "$(grep -Ec "^$1=" "$P/input-manifest.txt")" -eq 1; awk -F= -v key="$1" '$1 == key {print substr($0, index($0, "=") + 1)}' "$P/input-manifest.txt"; }
   validate_manifest_schema() {
-    expected_keys=$(printf '%s\n' cxx_compiler compiler_version qt6_cmake_dir qt6_version cmake_path cmake_version ninja_path ninja_version qmake6_path qmake6_prefix make_path make_version cmake_prefix_path cmake_generator cmake_build_type_release cmake_build_type_asan build_tests cmake_cxx_flags_release asan_cxx_flags asan_exe_linker_flags python3_path python3_version shasum_path shasum_version cmake_lists_sha256 src_pro_sha256 predecessor_plan_checkpoint_commit plan_commit plan_sha256 product_source_commit predecessor_product_commit checkout_head | LC_ALL=C sort)
-    actual_keys=$(awk 'index($0, "=") < 2 {exit 1} {print substr($0, 1, index($0, "=") - 1)}' "$P/input-manifest.txt" | LC_ALL=C sort)
+    schema_sha256=e61e76e3c3a72e1ae31deda083bcf2cece414e5ebf0bc777d15beaac13b00f14
+    test "$(manifest_value manifest_schema_version)" = v154-1
+    test "$(manifest_value input_manifest_schema_sha256)" = "$schema_sha256"
+    test "$(shasum -a 256 "$P/input-manifest-schema.txt" | awk '{print $1}')" = "$schema_sha256"
+    expected_keys=$(sed -n '1,$p' "$P/input-manifest-schema.txt")
+    actual_keys=$(awk 'index($0, "=") < 2 {exit 1} {key=substr($0, 1, index($0, "=") - 1); value=substr($0, index($0, "=") + 1); if (value == "" && key != "cmake_cxx_flags_release") exit 1; print key}' "$P/input-manifest.txt" | LC_ALL=C sort)
     test "$actual_keys" = "$expected_keys"
   }
-  validate_manifest_schema
   PYTHON3_PATH=$(manifest_value python3_path)
   PYTHON3_VERSION=$(manifest_value python3_version)
   SHASUM_PATH=$(manifest_value shasum_path)
@@ -2683,8 +2710,14 @@ foundation_validation_commands: |
   test "$("$SHASUM_PATH" --version | head -n 1)" = "$SHASUM_VERSION"
   python3() { "$PYTHON3_PATH" "$@"; }
   shasum() { "$SHASUM_PATH" "$@"; }
-  expected_manifest_payloads=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt independent-output-oracle-ledger.txt | sort)
-  manifest_payloads=$(awk 'NF {print $2}' "$P/packet-manifest.sha256" | sort)
+  validate_manifest_schema
+  grep -Fx "cmake_lists_sha256=$(shasum -a 256 CMakeLists.txt | awk '{print $1}')" "$P/input-manifest.txt"
+  grep -Fx "src_pro_sha256=$(shasum -a 256 librecad/src/src.pro | awk '{print $1}')" "$P/input-manifest.txt"
+  grep -Fx "librecad_pro_sha256=$(shasum -a 256 librecad.pro | awk '{print $1}')" "$P/input-manifest.txt"
+  expected_manifest_payloads=$(printf '%s\n' input-manifest.txt input-manifest-schema.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt independent-output-oracle-ledger.txt | sort)
+  test "$(awk 'END {print NR}' "$P/packet-manifest.sha256")" -eq 9
+  test "$(awk 'NF {count++} END {print count+0}' "$P/packet-manifest.sha256")" -eq 9
+  manifest_payloads=$(awk 'NF {print $2}' "$P/packet-manifest.sha256")
   test "$manifest_payloads" = "$expected_manifest_payloads"
   python3 - "$P" "$expected_manifest_payloads" <<'PY'
   import stat
@@ -2742,8 +2775,8 @@ foundation_validation_commands: |
   for field in reviewed_plan_sha product_base_sha packet_manifest_sha256 predecessor_product_sha predecessor_plan_checkpoint_sha; do
     test "$(grep -Ec "^$field=" "$A/activation-identity.txt")" -eq 1
   done
-  grep -Fx "plan_commit=$REVIEWED_PLAN_SHA" "$P/input-manifest.txt"
-  grep -Fx "plan_sha256=$(git show "$REVIEWED_PLAN_SHA:docs/plan_offset_curve_2961.md" | shasum -a 256 | awk '{print $1}')" "$P/input-manifest.txt"
+  grep -Fx "reviewed_plan_commit=$REVIEWED_PLAN_SHA" "$P/input-manifest.txt"
+  grep -Fx "reviewed_plan_sha256=$(git show "$REVIEWED_PLAN_SHA:docs/plan_offset_curve_2961.md" | shasum -a 256 | awk '{print $1}')" "$P/input-manifest.txt"
   grep -Fx "product_source_commit=$PRODUCT_BASE_SHA" "$P/input-manifest.txt"
   grep -Fx "predecessor_product_commit=$PREDECESSOR_PRODUCT_SHA" "$P/input-manifest.txt"
   grep -Fx "checkout_head=$REVIEWED_PLAN_SHA" "$P/input-manifest.txt"
@@ -3010,7 +3043,7 @@ foundation_product_commit_commands: |
   [[ "$REVIEWED_PLAN_VERSION" =~ ^[1-9][0-9]*$ ]]
   P="$PACKET_DIR"
   test "$P" = "$WT/build/evidence/1A-1.b-check-topology-chain/preflight-v$REVIEWED_PLAN_VERSION"
-  expected_entries=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt independent-output-oracle-ledger.txt packet-manifest.sha256 | sort)
+  expected_entries=$(printf '%s\n' input-manifest.txt input-manifest-schema.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt independent-output-oracle-ledger.txt packet-manifest.sha256 | sort)
   actual_entries=$(find "$P" -mindepth 1 -maxdepth 1 -exec basename {} \; | LC_ALL=C sort)
   test "$actual_entries" = "$expected_entries"
   for entry in "$P"/*; do test -f "$entry" && test ! -L "$entry"; done
@@ -3021,6 +3054,14 @@ foundation_product_commit_commands: |
   [[ "$SHASUM_PATH" = /* ]] && test -x "$SHASUM_PATH"
   test "$("$SHASUM_PATH" --version | head -n 1)" = "$SHASUM_VERSION"
   shasum() { "$SHASUM_PATH" "$@"; }
+  expected_manifest_payloads=$(printf '%s\n' input-manifest.txt input-manifest-schema.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt independent-output-oracle-ledger.txt | sort)
+  test "$(awk 'END {print NR}' "$P/packet-manifest.sha256")" -eq 9
+  test "$(awk 'NF {count++} END {print count+0}' "$P/packet-manifest.sha256")" -eq 9
+  manifest_payloads=$(awk 'NF {print $2}' "$P/packet-manifest.sha256")
+  test "$manifest_payloads" = "$expected_manifest_payloads"
+  test "$(shasum -a 256 "$P/input-manifest-schema.txt" | awk '{print $1}')" = e61e76e3c3a72e1ae31deda083bcf2cece414e5ebf0bc777d15beaac13b00f14
+  grep -Fx 'manifest_schema_version=v154-1' "$P/input-manifest.txt"
+  grep -Fx 'input_manifest_schema_sha256=e61e76e3c3a72e1ae31deda083bcf2cece414e5ebf0bc777d15beaac13b00f14' "$P/input-manifest.txt"
   (cd "$P" && shasum -a 256 -c packet-manifest.sha256)
   grep -Fx "packet_manifest_sha256=$(shasum -a 256 "$P/packet-manifest.sha256" | awk '{print $1}')" "$A/activation-identity.txt"
   cd "$WT"
@@ -3133,9 +3174,14 @@ foundation_plan_checkpoint_commands: |
   [[ "$REVIEWED_PLAN_VERSION" =~ ^[1-9][0-9]*$ ]]
   P="$PACKET_DIR"
   test "$P" = "$WT/build/evidence/1A-1.b-check-topology-chain/preflight-v$REVIEWED_PLAN_VERSION"
-  expected_entries=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt independent-output-oracle-ledger.txt packet-manifest.sha256 | sort)
+  expected_entries=$(printf '%s\n' input-manifest.txt input-manifest-schema.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt independent-output-oracle-ledger.txt packet-manifest.sha256 | sort)
   actual_entries=$(find "$P" -mindepth 1 -maxdepth 1 -exec basename {} \; | LC_ALL=C sort)
   test "$actual_entries" = "$expected_entries"
+  expected_manifest_payloads=$(printf '%s\n' input-manifest.txt input-manifest-schema.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt independent-output-oracle-ledger.txt | sort)
+  test "$(awk 'END {print NR}' "$P/packet-manifest.sha256")" -eq 9
+  test "$(awk 'NF {count++} END {print count+0}' "$P/packet-manifest.sha256")" -eq 9
+  manifest_payloads=$(awk 'NF {print $2}' "$P/packet-manifest.sha256")
+  test "$manifest_payloads" = "$expected_manifest_payloads"
   for entry in "$P"/*; do test -f "$entry" && test ! -L "$entry"; done
   test "$(grep -Ec '^shasum_path=' "$P/input-manifest.txt")" -eq 1
   test "$(grep -Ec '^shasum_version=' "$P/input-manifest.txt")" -eq 1
@@ -3144,6 +3190,9 @@ foundation_plan_checkpoint_commands: |
   [[ "$SHASUM_PATH" = /* ]] && test -x "$SHASUM_PATH"
   test "$("$SHASUM_PATH" --version | head -n 1)" = "$SHASUM_VERSION"
   shasum() { "$SHASUM_PATH" "$@"; }
+  test "$(shasum -a 256 "$P/input-manifest-schema.txt" | awk '{print $1}')" = e61e76e3c3a72e1ae31deda083bcf2cece414e5ebf0bc777d15beaac13b00f14
+  grep -Fx 'manifest_schema_version=v154-1' "$P/input-manifest.txt"
+  grep -Fx 'input_manifest_schema_sha256=e61e76e3c3a72e1ae31deda083bcf2cece414e5ebf0bc777d15beaac13b00f14' "$P/input-manifest.txt"
   (cd "$P" && shasum -a 256 -c packet-manifest.sha256)
   grep -Fx "packet_manifest_sha256=$(shasum -a 256 "$P/packet-manifest.sha256" | awk '{print $1}')" "$A/activation-identity.txt"
   cd "$WT"
@@ -16523,3 +16572,262 @@ v107 plan-correctness review.
 
     Section 61 is the sole live handoff once v153's matching commit is observed. Until then, the last committed
     authority is evaluated by actual HEAD; candidate prose never advances a gate.
+
+62. **v154 completeness, correctness, readiness, slice commits and immediate plan self-update (plan-only;
+    non-activating).** This direct child corrects the live packet/recipe contract and turns the five control families
+    into an executable per-slice loop. It does not change geometry acceptance, product ownership, format/version
+    coverage or the six-path Slice-A boundary. Sections 39-61 are historical state/handoff records; §56 remains the
+    bounded Git-object and protected-path procedure; §§0.3-0.8 and §30 remain technical scope and recipe references
+    only where they agree with this section. Section 62 is the sole live handoff after its exact plan commit is
+    observed.
+
+    **Observed starting state.** v153 commit `885a34703374b4cd6b466bcd6ff13eb5441da76b` is the direct parent
+    candidate and passed independent G5; its report is
+    `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v153/g5-auditor-report.txt` (SHA-256
+    `7067267af91cc66511b7cc590f3a62a4c392f1c740e4658330bc8a883546b142`). Its preserved
+    `preflight-v153/` has eight payloads plus a valid `packet-manifest.sha256` (manifest SHA-256
+    `a97d09bb5068e77b8fc329fc25114283a666d97c89c989c684ba6a85458dcd4b`); the checksum audit passed, but the packet
+    is PARTIAL and its manifest does not contain the toolchain identities consumed by the active recipes. Preserve it
+    unchanged as provenance. v153's actual manifest has 68 keys; the old active recipe expected a different fixed
+    32-key set and its baseline hard-coded `preflight-v95/`, while other recipes required the oracle payload. Those
+    recipes could not consume the current packet consistently. This revision fixes the contract rather than
+    relabeling or modifying v153 evidence. Product source remains
+    `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; all six A-owned blobs remain unchanged. No formal G1a/G1b/G3,
+    activation, baseline, product edit/build/test or A implementation exists. The protected `build-asan/` path is
+    not inspected by instruction.
+
+    **Five controls, six separate decisions.** A reviewer records one durable, role-bound disposition per applicable
+    decision; `PASS`, `FAIL`, `WAITING` and justified `NOT_APPLICABLE` are the only values. No aggregate status can
+    substitute for the fields below.
+
+    1. **Completeness (G1a; before and after implementation).** Start from the user's requested behavior, R01-R15,
+       supported format/version matrix, upstream contract, current source/API/caller/representation inventory and
+       planned/changed paths. Trace every requirement forward through observable behavior, producer/input, consumer,
+       persistence/conversion lane, exact owner, build/test target, named case and assertion, independent oracle and
+       durable evidence. Reverse-trace every discovered source site, test/build change and eventual diff back to an
+       applicable requirement or a justified exclusion with owner. Cover positive, boundary, limit, malformed,
+       refusal, fallback, no-op, invalidation, round-trip and edited second-generation reopen behavior. R07 includes
+       distinct ASCII-DXF read, ASCII-DXF write, DWG read and DWG write cases for every applicable version; both
+       conversion directions; and R14/R2018 binary-DXF codec read/write. A geometry-only test, codec-only case or
+       same-writer round-trip is not application-file coverage. Before code, planned identities/assertions may be
+       used; after code, prove exact registration, reachability, non-vacuity and execution on the frozen tree, with
+       no unexplained skips. G1a PASS means the bidirectional graph has no open edge, unowned behavior or silent
+       exclusion; percentages and symbol searches are not closure.
+    2. **Correctness (G1b before code; G2 after code).** G1b is an independent plan-truth review, not a second
+       completeness checklist. Re-derive each material API/source/spec/version claim, proof premise, quantifier,
+       numeric/tolerance direction, capacity arithmetic, debit/admission order, failure atomicity, callback and
+       exception transfer, lifetime/ownership rule, fallback, dependency edge, test feasibility and oracle
+       independence against exact source/spec/tool identities. For each claim cite the evidence and a falsifying
+       observation. Numeric work snapshots must have a hand derivation and an independently controlled expected
+       result, not a copied implementation counter. G2 is a distinct adversarial review of one frozen tested tree;
+       challenge success and refusal, exact/one-less boundaries, overflow, hostile inputs, ownership, no-work retry,
+       no partial publication, exceptions and all required format lanes against the approved contract. Every finding
+       is closed by targeted retest or remains blocking. G1b cannot certify future code; G2 cannot repair omitted or
+       incorrect requirements. If observations change behavior or scope, stop and reopen affected G1b/G3 before
+       more implementation.
+    3. **Executable sub-plan/readiness (G3 per leaf).** The card is written before that leaf's first product/test
+       edit or product build and binds the exact committed plan, product base and predecessor checkpoints; exclusive
+       owned paths; requirement→task→exit→assertion mapping; ordered bounded tasks; concrete API/data/resource,
+       lifetime, transaction, compatibility and refusal contracts; independent fixture/oracle; exact test names,
+       assertion IDs, target registration and baseline/post-registration floors; literal build/test commands and
+       observed tool versions; evidence paths; one buildable commit boundary; and stop/recovery action for every
+       failure. Every unknown that could change acceptance, scope, API or oracle makes the leaf WAITING. A probe is
+       allowed only with bounded input, exact command/source, possible outcomes, decision rule, stop condition and
+       plan change for each outcome. Split an aggregate into coherent implementation leaves before activation if it
+       cannot be validated and committed independently; stage exits never authorize partial completion. G1a, G1b
+       and G3 must PASS on the same committed plan/product/packet identity, with pairwise-distinct reviewers;
+       readiness expires when any bound input changes. A leaf is READY only if all actual predecessors and their
+       reconciliation checkpoints are committed and every owned row is closed.
+    4. **Commit after each validated slice (G4).** Freeze the exact leaf diff and tested file/tool/binary identities.
+       Require post-edit G1a reclosure, independent G2 PASS, all literal required validation, exact nonzero case and
+       assertion evidence, and no unexplained failures/skips before staging. Check expected parent and clean index,
+       stage only the leaf's predeclared product/test/build paths, verify exact staged names and tested/staged blob
+       equality, cached whitespace, hook effects and committed path/blob/parent identities. Create one product-only
+       commit for that entire validated leaf. Never mix plan/evidence/generated/unrelated files, a successor leaf or
+       an incomplete fragment into it. A validation or postcondition failure means no completion claim and no next
+       leaf; preserve the failed attempt and correct only under the authorized plan/recovery procedure.
+    5. **Self-update immediately after each product commit (G5).** Once a product commit lands, stop all successor
+       edits, builds, registered tests and readiness work. Reconcile actual Git objects and sealed evidence into one
+       plan-only direct child: product SHA/parent/path/blob manifest; test/build/review receipts and exact inputs;
+       requirement/test/format/version statuses; findings, retests, risks, exclusions and remaining obligations;
+       DAG/dependency state; every affected descendant's readiness; active plan/packet/activation pointers; and
+       exactly one next action. Record no self/future SHA. Verify one-file scope, direct parent, committed plan reread,
+       unchanged product blobs and clean stale-pointer sweep. An independent G5 auditor then checks every live claim
+       against committed Git objects and evidence and writes an exact-identity receipt. Only G5 PASS permits
+       recomputing descendant readiness and selecting a successor. On G5 FAIL, preserve the report, invalidate
+       dependent receipts, create a corrective plan-only child and repeat; do not continue by narration, and do not
+       hide a failed checkpoint. A plan-only self-update is mandatory after every product slice even when the next
+       action is blocked or a user decision is pending.
+
+    **Per-leaf receipt schema.** Every card/receipt has separate fields for `completeness_gate` (G1a),
+    `plan_correctness_gate` (G1b), `implementation_correctness_gate` (G2), `readiness_gate` (G3),
+    `implementation_commit_gate` (G4) and `self_update_gate` (G5). Record reviewer/implementer roles, status,
+    exact plan/product/predecessor/test identities, evidence hashes, finding IDs and closure; the packet-manifest
+    digest transitively binds the exact schema, source, toolchain and oracle payloads.
+    PASS is never inferred from a file's existence, checksum, build, checklist or another gate. A product slice is
+    `done` only after G4 and its immediate plan-only child plus independent G5 PASS and semantic readback all agree.
+
+    **Canonical v154 preflight packet.** After the v154 plan checkpoint passes independent G5, create a fresh
+    `build/evidence/1A-1.b-check-topology-chain/preflight-v154/`; never edit, promote, copy or relabel v153 or an
+    earlier packet. It contains exactly these nine regular root-level payloads and `packet-manifest.sha256` (ten
+    files total, no links, directories or extras): `input-manifest.txt`, `input-manifest-schema.txt`,
+    `source-requirement-map.txt`, `terminal-producer-map.txt`, `independent-transition-cut-ledger.txt`,
+    `phase-cut-intervals.txt`, `debit-admission-table.txt`, `selector-test-map.txt`, and
+    `independent-output-oracle-ledger.txt`. The checksum file has exactly nine records naming those basenames once
+    each, sorted, hashes all nine payloads, and excludes itself and formal review receipts. Compare exact directory
+    membership and regular-file type before reading any payload; compare the exact manifest filename set before
+    consuming any result; then verify every checksum.
+
+    `input-manifest-schema.txt` is exactly the following 98 unique keys in this order, one UTF-8/ASCII key plus LF per
+    line. Its SHA-256 is pinned to
+    `e61e76e3c3a72e1ae31deda083bcf2cece414e5ebf0bc777d15beaac13b00f14`; `input-manifest.txt` carries
+    `manifest_schema_version=v154-1` and `input_manifest_schema_sha256` with that exact digest. The input manifest
+    contains each key exactly once, no unknown/missing/duplicate/malformed keys, and no blank value except the
+    intentionally empty `cmake_cxx_flags_release`. Commands compare parsed keys to this pinned sorted schema and
+    independently verify the schema payload hash before using tools or reports.
+
+    ```text
+    activation_G5_status
+    activation_checkpoint
+    asan_cxx_flags
+    asan_exe_linker_flags
+    build_tests
+    checkout_head
+    cmake_build_type_asan
+    cmake_build_type_release
+    cmake_cxx_flags_release
+    cmake_generator
+    cmake_lists_sha256
+    cmake_path
+    cmake_prefix_path
+    cmake_version
+    compiler_version
+    creation_boundary
+    cxx_compiler
+    fixture_manifest_status
+    formal_G1a_status
+    formal_G1b_status
+    formal_G3_status
+    input_manifest_schema_sha256
+    librecad_pro_sha256
+    make_path
+    make_version
+    manifest_hashes
+    manifest_schema_version
+    ninja_path
+    ninja_version
+    owned_blob_01
+    owned_blob_02
+    owned_blob_03
+    owned_blob_04
+    owned_blob_05
+    owned_blob_06
+    owned_path_01
+    owned_path_02
+    owned_path_03
+    owned_path_04
+    owned_path_05
+    owned_path_06
+    owned_path_count
+    packet_id
+    packet_status
+    packet_type
+    payload_01
+    payload_02
+    payload_03
+    payload_04
+    payload_05
+    payload_06
+    payload_07
+    payload_08
+    payload_09
+    payload_membership
+    plan_checkpoint_g5_report
+    plan_checkpoint_g5_report_sha256
+    plan_checkpoint_g5_status
+    pre-edit_baseline_status
+    predecessor_plan_checkpoint_commit
+    predecessor_product_commit
+    prior_partial_packet
+    prior_payload_sha256_debit_map
+    prior_payload_sha256_input
+    prior_payload_sha256_oracle_map
+    prior_payload_sha256_phase_map
+    prior_payload_sha256_selector_map
+    prior_payload_sha256_source_map
+    prior_payload_sha256_terminal_map
+    prior_payload_sha256_transition_map
+    product_edits_builds_tests
+    product_source_commit
+    protected_build_asan
+    python3_path
+    python3_version
+    qmake6_path
+    qmake6_prefix
+    qmake_application_project
+    qmake_application_project_blob
+    qmake_test_registration
+    qt6_cmake_dir
+    qt6_version
+    registered_builds_tests_or_discovery
+    reviewed_plan_blob
+    reviewed_plan_commit
+    reviewed_plan_parent
+    reviewed_plan_sha256
+    reviewed_plan_version
+    scope
+    shasum_path
+    shasum_version
+    source_spec_fixture_probe_build_hashes
+    src_pro_sha256
+    test_registration_blob
+    test_registration_location
+    test_registration_path
+    test_registration_sha256
+    toolchain_manifest_status
+    ```
+
+    The packet snapshot is `PARTIAL` while any required census/oracle/identity row is open. Close and freeze it as
+    `packet_status=COMPLETE` before formal reviews; no review may start against a mutable packet. Snapshot statuses
+    in `input-manifest.txt` describe preflight-time state and remain immutable after sealing; subsequent PASS/FAIL
+    decisions belong only in separate receipts, so no review invalidates its own packet. Record exact tool executable
+    paths/versions and remeasure them read-only at packet creation: current observed candidates are CMake 4.4.4,
+    qmake6/Qt 6.12.0, Ninja 1.13.2, GNU Make 3.81, Apple clang 21.0.0 (arm64), Python 3.15.0 and shasum 6.02;
+    do not run configure/build/test/discovery before authorized activation. Bind the three registration files
+    (`CMakeLists.txt`, `librecad/src/src.pro`, `librecad.pro`), all six owned path/blob pairs, plan/G5/predecessor
+    identities and all eight preserved v153 payload hashes. Complete and hash source/spec/fixture/probe inputs
+    before G1; explicitly mark executable/build output hashes as pending the activation-authorized baseline rather
+    than inventing them or blocking source-only preflight on forbidden work. The exact v153 toolchain absence is not
+    inferred away.
+
+    **Active recipe corrections.** The six recipes named in §30 are the only live execution recipes. The baseline
+    recipe derives `preflight-v<reviewed_plan_version>` from the activation identity; no live command names v95.
+    Baseline, activation, freeze, validation, product-commit and plan-checkpoint recipes all verify the same nine
+    payload names, exact ten-entry directory, recorded shasum executable/version and packet digest before using
+    evidence. Baseline/activation/validation additionally verify the sorted 98-key schema, its pinned SHA, exact
+    tool versions and raw registration-file SHA-256 values. Recipes compare `reviewed_plan_commit` and
+    `reviewed_plan_sha256` rather than obsolete `plan_commit`/`plan_sha256` aliases. All must bind the same reviewed
+    plan, product base, predecessor chain, six path blobs, packet-manifest digest, G1a/G1b/G3 receipt hashes and
+    activation identity. The independent audit must inspect the full six command bodies, control-flow order and
+    failure postconditions before G3; a matching snippet or checksum is not sufficient.
+
+    **v154 authorization table.** Select one row using observed HEAD and durable receipts only. This plan-only
+    correction authorizes no packet assembly, formal review, activation, baseline, product edit/build/test, or
+    operation under protected `build-asan/`.
+
+    | Observed state | Sole permitted next action | Forbidden until it passes |
+    |---|---|---|
+    | v153 committed; G5 PASS; `preflight-v153/` PARTIAL and preserved | Complete this v154 plan-only correction; preserve every prior packet/report. | Any v153 gate, activation, baseline, product/build/test work. |
+    | v154 candidate; HEAD is v153 | Verify direct parent, only roadmap path, whitespace, staged-path state and unchanged six product/test blobs; commit only the plan. | Packet assembly, formal reviews, activation, baseline, product/build/test work. |
+    | v154 committed; G5 absent | Obtain independent exact-identity G5 and preserve its auditor-authored report. | Any v154 packet, formal gate, activation, baseline or product/build/test work. |
+    | v154 G5 FAIL | Preserve report/hash; fix in the next unused direct-child plan revision and repeat affected audit. | Packet/gates based on failed v154; activation, baseline, product/build/test work. |
+    | v154 G5 PASS; packet absent | Assemble fresh exact `preflight-v154/` with nine payloads, pinned schema and toolchain; keep PARTIAL during closure. | Formal gates, activation, baseline, product/build/test work. |
+    | Packet PARTIAL, mutable or any closure row open | Continue bounded source/oracle/identity closure only; freeze as COMPLETE only after all required rows pass. A contract change requires a new plan and packet identity. | Formal PASS, activation, baseline, product/build/test work. |
+    | Packet COMPLETE; G1a/G1b/G3 absent or non-PASS | Obtain distinct same-identity reviews or return findings to plan/packet correction. | Activation, baseline, product/build/test work. |
+    | Same-identity G1a/G1b/G3 PASS | Create separate activation plan checkpoint, obtain its G5 PASS, then run and reconcile the authorized fresh baseline. | Product edits and registered tests until baseline reconciliation passes. |
+    | Activation and baseline reconciled; A READY | Implement only reviewed six-path A; freeze, validate, final G1a, independent G2; make one product-only commit and immediately its plan-only reconciliation. | B/C/entity/file/UI/phase-2 successors until G5 passes. |
+    | Product commit exists; plan reconciliation/G5 pending or failed | Finish/correct only immediate plan-only child and independent audit using actual state. | Every successor edit/build/test/readiness or activation. |
+    | Product and plan commits reconciled; G5 PASS | Recompute affected descendant readiness from the current source and select exactly one next action. | Any leaf without fresh current G1a/G1b/G3/activation/baseline prerequisites. |
+
+    Until v154's matching commit is observed, candidate prose advances no gate. After it is committed, this section
+    alone determines the next action; historical status sentences cannot authorize work.
