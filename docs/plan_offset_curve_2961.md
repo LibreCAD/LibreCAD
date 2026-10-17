@@ -24,15 +24,15 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v98**, 2026-10-16 (resolve the A14 one-shot work-handoff contradiction and preserve v97 as partial provenance). This file is the implementation source of truth.
+Plan **v99**, 2026-10-17 (make the current handoff authoritative over stale versioned preflight fields and archived recipes). This file is the implementation source of truth.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE.** Geometry bounds and local-topology children are committed; ordered-chain topology, later entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. v98 is a non-activating plan-only correction based on committed v97 `272ee0f3161a795254ecf9d7f19ceb72ebd7d921`; product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. The bound v93 G1a/G1b/G3 reviews are immutable FAIL; v94 is integrity-invalid PARTIAL provenance. v95 staging is unsealed and has the wrong 3283 selector mapping; v96 is unsealed and has a blank-value/schema contradiction; v97 has an unsealed draft packet and an A14 contract contradiction identified by independent review. Do not use v94-v97 staging for gates. Slice A remains WAITING; no product edit/build/test is authorized. Preserve all prior packets/reviews with their actual dispositions. The v81 checksum-valid packet and v84/v85 material remain historical PARTIAL provenance, not gate receipts. Feature persistence is an end-to-end requirement: LibreCAD's normal ASCII-DXF and native-DWG open paths must read and adopt the editable definition, and its normal DXF/DWG save paths must write it. All four directions are independently tested at every applicable version; both conversions, edited reopen, and the separate binary-DXF codec lane remain required. No product edit, build or registered test was performed. Historical implementation evidence and earlier checkpoint narratives do not authorize a successor slice.
+Status: **IMPLEMENTATION INCOMPLETE.** Geometry bounds and local-topology children are committed; ordered-chain topology, later entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. v99 is a non-activating plan-only correction based on committed v98 `8f55180b4b370565c3664dc29f6c3aadaab21a11`; product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. The bound v93 G1a/G1b/G3 reviews are immutable FAIL; v94 is integrity-invalid PARTIAL provenance. v95 staging is unsealed with the wrong 3283 mapping; v96 has the blank-value/schema contradiction; v97 is an unsealed draft; v98 fixed A14 wording but retained stale v88/v95-versioned checklist fields. No v98 packet or recipe artifacts were created. Do not use v94-v97 staging for gates. Slice A remains WAITING; no product edit/build/test is authorized. Preserve all prior packets/reviews with their actual dispositions. The v81 checksum-valid packet and v84/v85 material remain historical PARTIAL provenance, not gate receipts. Feature persistence is an end-to-end requirement: LibreCAD's normal ASCII-DXF and native-DWG open paths must read and adopt the editable definition, and its normal DXF/DWG save paths must write it. All four directions are independently tested at every applicable version; both conversions, edited reopen, and the separate binary-DXF codec lane remain required. No product edit, build or registered test was performed. Historical implementation evidence and earlier checkpoint narratives do not authorize a successor slice.
 Historical v68 amendment: clarifies file-support acceptance and retains the v67 product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, with all four recorded product source/test hashes unchanged. The exact-membership `preflight-v67/` packet is PARTIAL provenance (latest packet-manifest SHA-256 `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`), not a formal gate receipt. The G4 hidden-cusp clearance proof and C50 correction remain normative: the cusp-only candidate is separated from all visible spans and must refuse as `OffCurve` before terminal/topology matching; B07 separately tests absence of a cusp `ReferenceTerminal`, and C36 retains fully witnessed `Topology` coverage. The five controls remain mandatory per slice: separate completeness and plan-correctness gates; frozen-tree implementation correctness; an executable, independently reviewed sub-plan/readiness decision; one validated product commit followed by its plan-only reconciliation; and a post-commit live-state audit/self-update before any successor. Slice A remains WAITING; G1 completeness, G1 plan correctness, Gate-3 readiness and activation are not passed. A/B/C baseline discovery remains zero and strict-core remains 61 matching normalized identities in Release/ASan; no registered tests ran. No product/test edit, build, JUnit execution, formal Gate PASS, readiness PASS or activation occurred. DXF read, DXF write, DWG read and DWG write are separate open application obligations; both conversion directions and the separate R14/R2018 binary-DXF codec obligation also remain open. Geometry-only checker evidence satisfies none.
 Historical v81 reconciled the six-path A scope, A14 selector, split-debit oracle, activation-bound test identities and post-edit validator. Its packet and review findings are preserved as immutable provenance; its live pointers are superseded below. The five control families and six gate decisions (G1a/G1b/G2/G3/G4/G5) remain independently recorded and fail-closed; §0.5 remains the sole live-handoff section, while only its latest explicitly marked card is current. Preserve the v81 and v80 packets/reviews, the v77 PARTIAL packet and invalid v79 draft. The four independent application obligations—DXF read, DXF write, DWG read and DWG write—plus both conversions and binary-DXF codec work remain later 1E gates.
 Historical v82 corrected stale handoff pointers and bound the one-shot/retained exception-transfer and source-bound baseline requirements, but did not pass G1a/G1b. Its copied v81 packet remains preserved as `preflight-v82-stale-copy-from-v81/`, not a v82 evidence packet. v82 retained the hard 1E file-support contract described below.
-v83 is historical plan state; the v91 handoff was its successor and is itself superseded by the v98 handoff in §0.5. Its full 1E contract remains normative: ASCII DXF application read/write, native DWG read/write, every applicable version row, both conversions, edited reopen, and separate R14/R2018 binary-DXF codec read/write; geometry/checker tests do not satisfy any file lane. No exact-membership v83 packet was sealed. The v83 source audit at `build/evidence/1A-1.b-check-topology-chain/source-audit-v83/source-audit.txt` (SHA-256 `6679b8ba1c5281bc5f4d7a90fe00de6ffb09e05e82a318b06f5d80ff1445`) is PARTIAL coordinator evidence, not a formal gate receipt. It confirms the three proof-split callers and atomic work-adoption gap, and adds then-current observations that `addRegions` checked pending capacity after split debit, paired output vectors were not jointly reserved, and `joins` lacked explicit output-capacity preflight. Preserve v81-v90 packets/reviews unchanged as historical evidence; do not treat unsealed or PARTIAL audits as gate decisions.
+v83 is historical plan state; the v91 handoff was its successor and is itself superseded by the v99 handoff in §0.5. Its full 1E contract remains normative: ASCII DXF application read/write, native DWG read/write, every applicable version row, both conversions, edited reopen, and separate R14/R2018 binary-DXF codec read/write; geometry/checker tests do not satisfy any file lane. No exact-membership v83 packet was sealed. The v83 source audit at `build/evidence/1A-1.b-check-topology-chain/source-audit-v83/source-audit.txt` (SHA-256 `6679b8ba1c5281bc5f4d7a90fe00de6ffb09e05e82a318b06f5d80ff1445`) is PARTIAL coordinator evidence, not a formal gate receipt. It confirms the three proof-split callers and atomic work-adoption gap, and adds then-current observations that `addRegions` checked pending capacity after split debit, paired output vectors were not jointly reserved, and `joins` lacked explicit output-capacity preflight. Preserve v81-v90 packets/reviews unchanged as historical evidence; do not treat unsealed or PARTIAL audits as gate decisions.
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -274,7 +274,7 @@ A commit alone does not mean done; verification, review and the post-commit plan
 | 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | done — 0e3c6b342, 0B-3 reports/card; one pinned baseline generated-MLEADER DWG gap, 2026-10-15 |
 | 1A-1 | Closed forms, normalization, tolerance helpers and cache validation | C | S0 | 900 | partial — .a/.b-budget/.b-progress/.b-ref-frames/.b-ref-events-core/.b-ref-rate/.b-ref-events-critical/.b-ref-events-accounting/.b-ref-events-refine/.b-ref-critical-refine/.b-ref-providers/.b-ref-contacts/.b-ref-events-isolate/.b-ref-components/.b-check-layout/.b-check-bounds/.b-check-topology-local done; A-budget-depth, B-occurrence-terminals, C-global-topology-checker pending |
 | 1A-1.b-ref-components | Exact visibility and incidence-preserving components | C | .b-ref-events-isolate | 900 | done — `9682d5cac65f30cfd86aa10556678ceb88b1448b`, attempt-8 evidence, 2026-10-16 |
-| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900 | waiting — v93 G1a/G1b/G3 are immutable FAIL; v94 is integrity-invalid; v95 has the wrong 3283 mapping; v96 has a blank-value conflict; v97 packet is unsealed and A14/recipe contracts remain contradictory; v98 re-review, fresh packet/recipes, source/oracle closure and gates remain pending |
+| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900 | waiting — v93 G1a/G1b/G3 are immutable FAIL; v94 is integrity-invalid; v95 has the wrong 3283 mapping; v96 has a blank-value conflict; v97 is unsealed PARTIAL; v98 fixed A14 wording but left stale versioned readiness fields; v99 must establish one authoritative current packet/recipe identity before fresh closure and gates |
 | B-occurrence-terminals | Immutable occurrence-specific terminal publication | C | A-budget-depth product and plan checkpoint | 500 | waiting — no implementation before A reconciliation |
 | C-global-topology-checker | Complete directed path, coverage, cut and cycle validation | C | A-budget-depth and B-occurrence-terminals product/checkpoints | 1200 | waiting — no implementation before A and B reconciliation |
 | 1A-2 | Enumerator; persistent entity core and factory for already validated results; clone, `toPlainSpline`, normalisation, stamp, transforms; `writeEntity` case; INSERT capability; 0B row; interim Edit Properties guard | C | 0B-3, 1A-1 | 900 | pending |
@@ -1628,9 +1628,11 @@ malformed or unknown keys, then verify fixed packet membership/checksums, tool p
 registration hashes before consuming selector or test evidence. Any mismatch stops the attempt. Commands embedded in
 archived cards are historical and must not be run.
 
-The completion narratives and v95 command recipes below are retained as historical evidence, not as live queue
-instructions. The latest handoff at the end of §0.5 is the sole current Slice-A pointer and remains WAITING; v97 is
-the expected plan parent for v98, while v93 supplies immutable FAIL/PARTIAL gate provenance, not implementation authorization.
+The completion narratives and all versioned preflight/checklist/command recipes below are retained as historical
+records, not live queue instructions. The latest handoff at the end of §0.5 is the sole current Slice-A pointer and
+remains WAITING; v98 is the expected plan parent for v99. Earlier versioned `current`, `active`, `next` and
+`preflight` fields do not authorize work. v93 supplies immutable FAIL/PARTIAL gate provenance, not implementation
+authorization.
 After every commit, reconcile active pointers and reread the committed plan against the codebase/evidence before
 resuming work.
 
@@ -3550,22 +3552,43 @@ but has a blank `cmake_cxx_flags_release` value, while v97's copied rows are pro
 contradicted its one-shot acceptance route. Do not patch, promote or use these packets as gate input. Preserve all
 prior reviews and evidence with their actual dispositions.
 
-**Current Slice-A Handoff — v98 (sole live pointer; WAITING, non-activating)**
+**Historical Slice-A Handoff — v98 (superseded by v99; WAITING, non-activating)**
 
 ```text
-plan_revision: v98; expected_parent: 272ee0f3161a795254ecf9d7f19ceb72ebd7d921
+plan_revision: v98; committed: 8f55180b4b370565c3664dc29f6c3aadaab21a11
 product_source_base: 9c06e9c77b313b62cc20e9ec39c22952fee501f2
 predecessor_product: ef3ba756b52796c02b8490caedcaa48b8db69605
 predecessor_plan_checkpoint: 272ee0f3161a795254ecf9d7f19ceb72ebd7d921
 slice: A-budget-depth
 state: WAITING; plan-only correction; no implementation authorization
 activation: none
-next: commit this one-file plan checkpoint and complete G5 identity/path/blob/semantic readback; then assemble fresh preflight-v98 and reissue/audit all six recipes before any G1a/G1b/G3 decision
+disposition: G5 PASS; no v98 packet or recipe artifacts were created; superseded before preflight
 ```
 
-**Current v98 packet and readiness contract.**
-After this v98 plan-only commit passes G5, create a new exact-membership
-`build/evidence/1A-1.b-check-topology-chain/preflight-v98/` packet containing exactly seven payloads
+**Current Slice-A Handoff — v99 (sole live pointer; WAITING, non-activating)**
+
+```text
+plan_revision: v99; expected_parent: 8f55180b4b370565c3664dc29f6c3aadaab21a11
+product_source_base: 9c06e9c77b313b62cc20e9ec39c22952fee501f2
+predecessor_product: ef3ba756b52796c02b8490caedcaa48b8db69605
+predecessor_plan_checkpoint: 8f55180b4b370565c3664dc29f6c3aadaab21a11
+slice: A-budget-depth
+state: WAITING; plan-only correction; no implementation authorization
+activation: none
+next: commit this one-file plan checkpoint and complete G5 identity/path/blob/semantic readback; then assemble fresh preflight-v99 and reissue/audit all six recipes before any G1a/G1b/G3 decision
+```
+
+**v99 authority rule.** The versioned live-state snapshots, preflight fields and recipe blocks earlier in §0.5 are
+archival records unless explicitly repeated under this v99 handoff. In particular, v88/v95/v97/v98 packet paths,
+recipe bindings, `next` fields and readiness labels are not executable or current. Only this card and the following
+v99 packet/readiness contract authorize planning actions; Slice A remains WAITING and non-activating.
+
+**Current v99 packet and readiness contract.**
+Preserve `preflight-v95/`, `preflight-v96/` and the unsealed `preflight-v97/` draft as PARTIAL provenance; do not
+mutate or consume them as gate input. No `preflight-v98/` or `recipes-v98/` artifacts were created. Rebuild from
+source for v99 rather than copying any prior payload as closed evidence.
+After this v99 plan-only commit passes G5, create a new exact-membership
+`build/evidence/1A-1.b-check-topology-chain/preflight-v99/` packet containing exactly seven payloads
 (`input-manifest.txt`, `source-requirement-map.txt`, `terminal-producer-map.txt`,
 `independent-transition-cut-ledger.txt`, `phase-cut-intervals.txt`, `debit-admission-table.txt`,
 `selector-test-map.txt`) plus `packet-manifest.sha256`. Re-derive every row from current source, tests and build
@@ -3579,9 +3602,9 @@ without weakening validation or changing the key set.
 
 Freeze all seven payloads before computing the manifest; check exactly eight regular top-level files, no symlinks,
 nested paths or extras, verify all payload hashes, then record the manifest-file hash in a separate readback. Bind
-the packet to the committed v98 plan blob, unchanged product base, exact predecessor/checkpoint ancestry, six A
+the packet to the committed v99 plan blob, unchanged product base, exact predecessor/checkpoint ancestry, six A
 owned paths, tool identities/versions, current CMake/qmake6 test registrations and exact selector identities.
-Reissue all six named recipes under v98 and apply the sentinel rule identically in packet parsing, environment
+Reissue all six named recipes under v99 and apply the sentinel rule identically in packet parsing, environment
 comparison, receipt generation and validation. Independently audit extracted shell syntax with a no-side-effect
 harness; audit each recipe's inputs, allowed path effects, output/report schema, exit behavior, full testcase and
 skip-set comparisons, and Git ancestry. No recipe may repair or rewrite a sealed packet.
@@ -3594,9 +3617,9 @@ selectors. Any relevant source, plan, tool, registration, packet, test identity 
 dependent decisions. Preserve failed attempts as PARTIAL and begin a new packet identity; never mutate a handed-off
 packet. Until then Slice A remains WAITING and no product edit, build or registered test is authorized.
 
-The v98 A14 contract is intentionally stronger than v97's retained-only exception observation: implement a real
-production `workOnExit` output and verify both one-shot and retained exception routes. Do not weaken this contract
-back to source-only evidence for one-shot calls, and do not introduce a test-only hook.
+The A14 contract inherited from v98 is normative: implement a real production `workOnExit` output and verify both
+one-shot and retained exception routes. Do not weaken it back to source-only evidence for one-shot calls, and do not
+introduce a test-only hook.
 
 ### 0.6 Executable leaf recipes
 
@@ -10896,3 +10919,44 @@ is inferred from that review.
   verify exactly this plan file changes and the six product/test blobs remain identical, then commit this checkpoint
   and perform semantic G5 readback. No product edit/build/registered test is authorized before the separate
   activation checkpoint. Preserve `build-asan/` and all prior evidence unchanged.
+
+#### v98 → v99 (2026-10-17; make one handoff authoritative across the accumulated §0.5 snapshots)
+
+This non-activating plan-only correction is based on committed v98
+`8f55180b4b370565c3664dc29f6c3aadaab21a11`; product source remains
+`9c06e9c77b313b62cc20e9ec39c22952fee501f2`. During a read-only readiness audit, the live v98 handoff was coherent,
+but older §0.5 checklist fields still named `preflight-v88` and v95-bound recipes without explicitly declaring those
+fields archival. The implementer could therefore select a stale packet identity despite the v98 card's “sole live
+pointer” label. Agent Gibbs was instructed to pause; it created no `preflight-v98/` or `recipes-v98/` artifacts, made
+no product/test edits and ran no builds or registered tests. The v98 G5 receipt remains valid for its own plan-only
+commit and is preserved as historical evidence.
+
+- **1. Completeness:** explicitly establish one authority for all versioned readiness fields: only the final current
+  handoff and its immediately following packet contract authorize next actions. Earlier version-stamped `current`,
+  `active`, `next`, selector-map, preflight and recipe text remains historical even if it is not individually
+  relabeled. Keep the full R01-R15, six-caller, source/destination, A01-A14, format/version/conversion/build/test
+  matrices and explicit owner/defer crosswalk as fresh v99 evidence requirements; no archived row is promoted.
+- **2. Correctness:** preserve the v98 A14 resolution exactly: production `workOnExit`, pre-validation zeroing,
+  no-throw live snapshot publication on success/exception, atomic once-only geometry adoption, original rethrow,
+  retained cumulative-delta transfer, invalidation and retry assertions. The v99 audit must reconcile every contract
+  against the pinned source and public APIs; the stale-field correction grants no G1b or implementation finding
+  resolution beyond the explicit A14 wording fix.
+- **3. Sub-plan and readiness:** v99 is the only current WAITING handoff, based on v98. No v98 preflight exists.
+  After v99 commit and G5, build a fresh exact-membership `preflight-v99/`, rederive all evidence rows, and reissue
+  and independently audit all six recipes against that identity. Only same-identity G1a/G1b/G3 PASS, followed by a
+  separate activation checkpoint and G5, permits activation-bound builds, tests or product edits. Any packet/source/
+  tool/selector/ownership change expires affected decisions.
+- **4. Commit after slices:** retain the one complete product/test-only commit per validated executable leaf,
+  followed immediately by its plan-only direct child. Internal stages do not commit; hooks, exact ancestry/path set
+  and tested/staged/committed hashes must agree. This v99 plan-only commit is not a product slice and does not
+  activate one.
+- **5. Self-update after committing:** G5 verifies v98 ancestry, exact one-file scope, reviewed/committed blob
+  equality, no self/future SHA, unchanged six product/test blobs, sole v99 pointer and preserved evidence. Reconcile
+  statuses, findings, risks, evidence dispositions, DAG and descendant readiness from actual Git/evidence state,
+  write a separate semantic receipt, and only then permit `preflight-v99/` assembly. Any mismatch blocks successors
+  and requires a plan-only correction plus affected re-reviews.
+- **Validation/disposition:** preflight-v95/v96 and the v97 draft remain unchanged PARTIAL provenance; no v98
+  packet/recipes exist. This correction makes no formal G1a/G1b/G2/G3, readiness or activation claim. Validate
+  Markdown/whitespace and all live pointers, exact plan-only commit scope and unchanged six product/test blobs;
+  commit this direct child of v98 and perform G5 readback before any fresh packet work. Preserve `build-asan/` and all
+  prior evidence.
