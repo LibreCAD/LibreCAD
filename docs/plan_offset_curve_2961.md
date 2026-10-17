@@ -24,7 +24,7 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v127 correction candidate**, 2026-10-17. v126 `795acdf2aac2edfe1fdc4c04a4d72eb26950e6a8` is the committed plan-only child of v125, but its G5 audit failed with one P1 provenance misstatement: §34(a) says v123 failed, although v123 passed and v122 was the earlier failure. Preserve the report `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v126/g5-auditor-report.txt` (SHA-256 `24f161df359c2f3daf407f999f24de49ec506d0f190e8d5c321e1d9d66860e69`) and coordinator receipt `coordinator-identity-receipt.txt` (SHA-256 `602aca6c941342b47adec980fd6a204ad8736460c7e06611ee447446a08d5227`) unchanged. The checkpoint history is v122 G5 FAIL, v123 G5 PASS, v124 G5 FAIL, v125 G5 PASS, and v126 G5 FAIL. The v125 readiness draft is incomplete: eight payloads exist without `packet-manifest.sha256`, `recipe-helpers-v125/` contains only `identity_guard.py`, and `recipes-v125/` is absent; no v126 readiness artifact was created. Preserve earlier packets and failures unchanged. Section 35 supersedes §§33–34 as the sole live handoff. Until v127 is committed and independently passes G5, it authorizes only its own plan commit and readback; no readiness, activation, baseline, product edit/build/test, or implementation commit is authorized. Git HEAD and identity-bound receipts, not draft-status prose, are authoritative. This file is the implementation source of truth.
+Plan **v128 correction candidate**, 2026-10-17. v127 `26b62762c965b0e0b58d75bb7d8666695c832dfe` is a committed plan-only child of v126, but its G5 audit failed with one P2 evidence-integrity finding: the preserved v126 auditor report cites a 32-character v124 coordinator-summary digest. The actual SHA-256 is `e6c40bf3d7975746ce1856007cf290cc3471d1eb0a2435744ee6ce43200f524b`, independently recorded by the v125 receipt. Preserve the v127 report `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v127/g5-auditor-report.txt` (SHA-256 `795132f48149b930ec1e7e794329d79789b537dc38c08e69ce4cc97cc064d686`) and coordinator receipt `coordinator-identity-receipt.txt` (SHA-256 `cf41515050346bbc415c8962d1bf9de35e4f9fc8c24129c852f44c5b38a2cbe1`) unchanged. The status chain is v122 G5 FAIL, v123 G5 PASS, v124 G5 FAIL, v125 G5 PASS, v126 G5 FAIL, and v127 G5 FAIL. The v125 readiness draft remains incomplete; no v126 or v127 readiness artifact was created. Preserve all reports and packets unchanged. Section 36 supersedes §§33–35 as the sole live handoff. Until v128 is committed and independently passes G5, it authorizes only its plan commit and readback; no readiness, activation, baseline, product edit/build/test, or implementation commit is authorized. Git HEAD and identity-bound receipts, not draft-status prose, are authoritative. This file is the implementation source of truth.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
@@ -272,7 +272,7 @@ Execution states: `pending`, `in progress`, `validated`, `committed — reconcil
 `done — <implementation sha>, <evidence id>, <date>`, `needs revision`, `needs decision`, `blocked`, and
 `deferred — user publication action`. Readiness is separate (§0.3): `ready`, `conditional`, or `waiting`.
 A commit alone does not mean done; verification, review and the post-commit plan checkpoint are required.
-Section 35 is the sole live handoff and defines the state-dependent next action for the v127 correction, its G5 decision, fresh readiness, activation and implementation. The next action changes only when matching Git/evidence proves its prerequisite complete; a failed or missing receipt blocks successors. Sections 29-34 are historical and their former live instructions are superseded. Do not infer gate status from this paragraph; consult receipts bound to current HEAD. Sections 0.3-0.8 and §30 remain the technical/leaf-plan reference, and §34's five-control refinement remains normative except where §35 records its failed-checkpoint correction.
+Section 36 is the sole live handoff and defines the state-dependent next action for the v128 correction, its G5 decision, fresh readiness, activation and implementation. The next action changes only when matching Git/evidence proves its prerequisite complete; a failed or missing receipt blocks successors. Sections 29-35 are historical and their former live instructions are superseded. Do not infer gate status from this paragraph; consult receipts bound to current HEAD. Sections 0.3-0.8 and §30 remain the technical/leaf-plan reference; §34's five-control refinement remains normative, with §36 correcting evidence provenance and current transition state.
 
 | Step | Title | PR | Depends on | Size (LOC, product + tests) | Status |
 |---|---|---|---|---|---|
@@ -283,7 +283,7 @@ Section 35 is the sole live handoff and defines the state-dependent next action 
 | 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | done — 0e3c6b342, 0B-3 reports/card; one pinned baseline generated-MLEADER DWG gap, 2026-10-15 |
 | 1A-1 | Closed forms, normalization, tolerance helpers and cache validation | C | S0 | 900 | partial — .a/.b-budget/.b-progress/.b-ref-frames/.b-ref-events-core/.b-ref-rate/.b-ref-events-critical/.b-ref-events-accounting/.b-ref-events-refine/.b-ref-critical-refine/.b-ref-providers/.b-ref-contacts/.b-ref-events-isolate/.b-ref-components/.b-check-layout/.b-check-bounds/.b-check-topology-local done; A-budget-depth, B-occurrence-terminals, C-global-topology-checker pending |
 | 1A-1.b-ref-components | Exact visibility and incidence-preserving components | C | .b-ref-events-isolate | 900 | done — `9682d5cac65f30cfd86aa10556678ceb88b1448b`, attempt-8 evidence, 2026-10-16 |
-| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900 | waiting — A remains incomplete; current checkpoint and next-action authority is the state-dependent handoff in §35; no baseline or product work before same-identity G1a/G1b/G3 and a separate activation G5 |
+| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900 | waiting — A remains incomplete; current checkpoint and next-action authority is the state-dependent handoff in §36; no baseline or product work before same-identity G1a/G1b/G3 and a separate activation G5 |
 | B-occurrence-terminals | Immutable occurrence-specific terminal publication | C | A-budget-depth product and plan checkpoint | 500 | waiting — no implementation before A reconciliation |
 | C-global-topology-checker | Complete directed path, coverage, cut and cycle validation | C | A-budget-depth and B-occurrence-terminals product/checkpoints | 1200 | waiting — no implementation before A and B reconciliation |
 | 1A-2 | Enumerator; persistent entity core and factory for already validated results; clone, `toPlainSpline`, normalisation, stamp, transforms; `writeEntity` case; INSERT capability; 0B row; interim Edit Properties guard | C | 0B-3, 1A-1 | 900 | pending |
@@ -13735,11 +13735,11 @@ v107 plan-correctness review.
     This paragraph and its state table are historical draft-time observations. Use §35 and actual Git/identity-bound
     artifacts to evaluate the current state and next action.
 
-35. **v127 correction after v126 G5 FAIL (plan-only; non-activating).** This is the sole live handoff and the one-file
-    direct-child correction to committed v126 `795acdf2aac2edfe1fdc4c04a4d72eb26950e6a8`. It corrects the checkpoint
-    history and live pointers only; it does not change product scope or the five-control protocol in §34. All §34
-    tables and its v127 activation instructions are historical. The next activation number is **v128**. No readiness,
-    baseline or product work is authorized until the transitions here pass.
+35. **v127 correction after v126 G5 FAIL (historical; v127 G5 FAIL).** This section records the committed v127
+    candidate and is superseded by §36 as the live handoff. Its G5 audit found one P2 evidence-integrity error in the
+    preserved v126 auditor report: a truncated v124 coordinator-summary digest. Preserve the checkpoint and report;
+    do not treat §35's state table as current. Its planned activation checkpoint v128 is superseded by v129. Product
+    scope and the five-control protocol in §34 remain unchanged.
 
     **Immutable v126 failure.** Independent auditor Feynman, tool-returned ID
     `01a14926-71b4-7bc2-b2a9-31bf34af55da`, returned G5 `FAIL` with one P1: §34(a) described v123 as a failed
@@ -13806,6 +13806,84 @@ v107 plan-correctness review.
     | v128 G5 PASS; baseline reconciled | Mark Slice A READY and execute its reviewed card only. | Any unapproved path or behavior. |
     | Product slice committed; plan-only reconciliation/G5 incomplete | Immediately reconcile plan state and obtain independent G5. | Builds/tests and all successor work. |
 
-    At this v127 draft, v126 is committed with G5 `FAIL`; v127 is uncommitted; no v127 packet/reviews, v128
-    activation, baseline reconciliation or product implementation is authorized or claimed. Re-evaluate the table
-    after each transition from actual Git and immutable evidence.
+    At this v127 draft, v126 was committed with G5 `FAIL`; v127 was uncommitted; no v127 packet/reviews, v128
+    activation, baseline reconciliation or product implementation was authorized or claimed. This is historical state;
+    evaluate §36 from actual Git and immutable evidence.
+
+36. **v128 correction after v127 G5 FAIL (plan-only; non-activating).** This is the sole live handoff and the one-file
+    direct-child correction to v127 `26b62762c965b0e0b58d75bb7d8666695c832dfe`. It records the second audit failure
+    accurately and replaces every prior live pointer. It changes no product scope or implementation contract. The
+    next activation checkpoint is **v129**. Until v128 is committed and independently passes G5, only its plan-only
+    commit/readback is authorized; no readiness packet, review, activation, baseline, product edit/build/test, or
+    implementation commit is authorized.
+
+    **Immutable v127 G5 failure.** Independent auditor Locke, tool-returned ID
+    `01a1492b-368a-7090-b908-b62e0cbf6e52`, returned G5 `FAIL` with one P2 evidence-integrity finding. The preserved
+    v126 auditor report incorrectly gives the v124 coordinator summary SHA-256 as the 32-character value
+    `e6c40bf3d7975744ee6ce43200f524b`. The actual file
+    `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v124/g5-audit-report.txt` hashes to the full 64-character
+    value `e6c40bf3d7975746ce1856007cf290cc3471d1eb0a2435744ee6ce43200f524b`, which is also recorded in the v125 G5
+    receipt. The auditor report and coordinator receipt are preserved unchanged at `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v127/`:
+    `g5-auditor-report.txt` SHA-256 `795132f48149b930ec1e7e794329d79789b537dc38c08e69ce4cc97cc064d686`; `coordinator-identity-receipt.txt`
+    SHA-256 `cf41515050346bbc415c8962d1bf9de35e4f9fc8c24129c852f44c5b38a2cbe1`. Locke's ID is distinct from the author
+    and all 15 known prior reviewer IDs; v118 remains `NOT_RECORDED`/non-comparable. The v127 audit otherwise verified
+    commit ancestry and one-path scope, plan bytes, §§35 live status as then drafted, checkpoint history, six product/test
+    pins, and absence of v127 readiness/v128 activation artifacts. Those passes do not override the P2 provenance
+    finding. Do not alter the v126 report or receipt to fix the digest; this section states the verified correct value.
+
+    **Authoritative checkpoint history:** v122 G5 `FAIL`; v123 G5 `PASS`; v124 G5 `FAIL`; v125 G5 `PASS`; v126 G5
+    `FAIL`; v127 G5 `FAIL`. Keep the v124 coordinator-summary digest at the full 64-character value above wherever
+    cited. The v125 packet remains incomplete (eight payloads without a manifest, one helper source only, no recipe
+    directory); no v126 or v127 readiness packet was created. Preserve all historical failure/pass reports and receipts
+    byte-for-byte. No product change, build, or registered test is authorized.
+
+    **Ordered v128 recovery and implementation path.**
+
+    a. Commit this one-file correction as a direct child of v127 `26b62762c965b0e0b58d75bb7d8666695c832dfe`. After it
+       exists, do not repeat the commit: obtain a fresh independent G5 readback. Pass the exact tool-returned auditor ID
+       before review and require that same ID in the auditor report and coordinator receipt. Verify direct ancestry,
+       exact changed path/blob and candidate bytes; preserve and validate v127 report/receipt hashes and all earlier
+       evidence; verify the exact checkpoint status chain and full v124 summary digest; ensure §36 is the only live
+       handoff, no v128 readiness/activation artifacts exist, and six product/test pins and `build-asan/` remain
+       untouched. Compare auditor ID against author task `019e5eed-470b-7712-bd6c-23436c53cf00` and all known prior
+       reviewers including Locke; retain v118 as non-comparable. Any finding fails G5 and blocks all successors.
+    b. Only after v128 G5 `PASS`, create new exact-membership `preflight-v128/`, `recipe-helpers-v128/` and
+       `recipes-v128/` bound to committed v128. Use §26's eight packet payloads plus manifest, both helper source and
+       unit tests, and six named recipes plus recipe audit/sorted manifest. Do not copy, complete or relabel the v125
+       partial packet or create v126/v127 readiness artifacts. Re-census current source/API/test registration/toolchain,
+       A01-A14, R01-R15, strict-core identities, geometry/topology/resource proofs, independent oracles, format/version
+       obligations, exact commands/assertion floors, recovery and commit-boundary contracts.
+    c. Obtain distinct G1a completeness, G1b plan-correctness and G3 executable-readiness `PASS` reports on one exact
+       v128 plan/product/preflight/helper/recipe identity. Apply §34's bidirectional traceability, independent
+       derivation/falsifier, executable slice-card and nonzero registration/assertion requirements. Any OPEN, finding,
+       stale premise, mixed identity or unbounded probe requires preserving the attempt and rebuilding affected plan/
+       evidence/reviews before activation.
+    d. Only after all three PASS, commit separate plan-only activation checkpoint **v129**, bind its exact G1a/G1b/G3
+       receipts, and obtain independent activation G5 `PASS`. Then run only the authorized clean baseline and
+       source-to-binary registration reconciliation. Slice A stays `WAITING` until its exact selectors, nonzero case/
+       assertion floors, required Release/ASan identities and CMake/qmake6 targets are verified.
+    e. Then implement the approved atomic six-path Slice A and follow §34's post-edit completeness/G2, validation,
+       G4 product/test commit, immediate separate plan-only child and post-commit G5. Continue the same independently
+       reviewed, buildable-slice cycle through topology, entity integration, every ASCII-DXF/DWG read/write version,
+       both conversions, edited reopen, binary-DXF codec, UI and phase 2. No downstream row closes without its own
+       reachable tests, independent oracle and evidence; the full objective remains active until every required row is
+       implemented or explicitly deferred by the user.
+
+    **Conditional current-state table (Git and receipts are authoritative):**
+
+    | Observed state | Sole next action | Forbidden until it passes |
+    |---|---|---|
+    | v128 candidate uncommitted | Commit the one-file direct child of v127. | Readiness/review artifacts; product edit/build/test. |
+    | v128 committed; G5 absent | Obtain independent G5 readback and identity receipt. | Preflight, G1a/G1b/G3, activation, product work. |
+    | v128 G5 `FAIL` | Preserve failure; make a new plan-only correction and rerun G5. | Readiness or product work. |
+    | v128 G5 `PASS`; packet incomplete/absent | Create and seal fresh v128 packet/helper/recipe artifacts. | G1 decisions, activation, product work. |
+    | Packet complete; same-identity G1a/G1b/G3 not all PASS | Complete distinct reviews; repair and regenerate affected artifacts on findings. | Activation/product work. |
+    | G1a/G1b/G3 PASS; v129 absent | Commit separate v129 activation checkpoint bound to exact receipts. | Baseline and product work. |
+    | v129 committed; activation G5 absent/FAIL | Obtain activation G5; on FAIL preserve and correct/rebind. | Baseline and product work. |
+    | v129 G5 PASS; baseline unreconciled | Run only authorized baseline/registration checks. | Slice A implementation. |
+    | v129 G5 PASS; baseline reconciled | Mark Slice A READY and execute only its card. | Unapproved paths/behavior. |
+    | Product slice committed; reconciliation/G5 incomplete | Immediately reconcile the plan and obtain independent G5. | Builds/tests and successor work. |
+
+    At this v128 candidate draft, v127 is committed with G5 `FAIL`; v128 is uncommitted; no v128 packet/reviews, v129
+    activation, baseline reconciliation or product implementation is authorized or claimed. Evaluate the table only
+    from current Git state and immutable receipts after each transition.
