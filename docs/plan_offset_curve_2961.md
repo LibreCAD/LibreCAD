@@ -24,11 +24,11 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v116 draft**, 2026-10-17 (reconcile the actual v115 readiness artifacts and make the five implementation controls directly executable). The committed authority remains v115 until this draft is committed and independently audited. This file is the implementation source of truth.
+Plan **v117 correction candidate**, 2026-10-17 (correct v116's failed checkpoint readback and reconcile committed versus draft-time status). v115 remains the latest G5-passing plan checkpoint; v116 is committed but its independent G5 failed with one status finding. v117 remains non-activating until its independent G5 passes. This file is the implementation source of truth.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY.** Geometry bounds and local-topology children are committed; ordered-chain topology, later entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. Historical gate chronology through v115 is retained below. v115 `3c816405e31e6c6530c33377e15aee87969a32f7` is the committed plan-only direct child of v114 and its independent G5 passed; the authoritative receipt is `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v115/g5-readback-receipt.txt`. The v115 readiness packet is PARTIAL and now integrity-invalid because `source-requirement-map.txt` differs from its recorded digest; preserve it unchanged. Nine v115 identity-helper tests passed in the current work session, but no sealed v115 recipe audit binds that run; v115 recipes, formal G1a/G1b/G3, readiness and activation are absent/incomplete. This v116 worktree draft has no checkpoint commit or G5 and authorizes no product edit, product build or registered test. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; preserve historical evidence and `build-asan/` unchanged. End-to-end ASCII-DXF/DWG read/write, both conversions, edited reopen and binary-DXF codec support remain required downstream obligations.
+Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY.** Geometry bounds and local-topology children are committed; ordered-chain topology, later entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. v115 `3c816405e31e6c6530c33377e15aee87969a32f7` is the latest G5-passing plan checkpoint; its authoritative receipt is `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v115/g5-readback-receipt.txt`. v116 `bba79e7af724a54744f08b95b43cb66a0ad1e050` is its plan-only child, but G5 failed with one P2 stale-status finding; the report and FAIL receipt are recorded under `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v116/`. The v115 readiness packet is PARTIAL and integrity-invalid because `source-requirement-map.txt` differs from its recorded digest; preserve it unchanged. Nine v115 identity-helper tests passed in the current work session, but no sealed v115 recipe audit binds that run; recipes and formal G1a/G1b/G3/readiness/activation remain absent. v117 is non-activating until its independent G5 passes; product edit, product build and registered test remain unauthorized. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; preserve prior evidence and `build-asan/` unchanged. End-to-end ASCII-DXF/DWG read/write, both conversions, edited reopen and binary-DXF codec support remain required downstream obligations.
 Historical v68 amendment: clarifies file-support acceptance and retains the v67 product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, with all four recorded product source/test hashes unchanged. The exact-membership `preflight-v67/` packet is PARTIAL provenance (latest packet-manifest SHA-256 `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`), not a formal gate receipt. The G4 hidden-cusp clearance proof and C50 correction remain normative: the cusp-only candidate is separated from all visible spans and must refuse as `OffCurve` before terminal/topology matching; B07 separately tests absence of a cusp `ReferenceTerminal`, and C36 retains fully witnessed `Topology` coverage. The five controls remain mandatory per slice: separate completeness and plan-correctness gates; frozen-tree implementation correctness; an executable, independently reviewed sub-plan/readiness decision; one validated product commit followed by its plan-only reconciliation; and a post-commit live-state audit/self-update before any successor. Slice A remains WAITING; G1 completeness, G1 plan correctness, Gate-3 readiness and activation are not passed. A/B/C baseline discovery remains zero and strict-core remains 61 matching normalized identities in Release/ASan; no registered tests ran. No product/test edit, build, JUnit execution, formal Gate PASS, readiness PASS or activation occurred. DXF read, DXF write, DWG read and DWG write are separate open application obligations; both conversion directions and the separate R14/R2018 binary-DXF codec obligation also remain open. Geometry-only checker evidence satisfies none.
 Historical v81 reconciled the six-path A scope, A14 selector, split-debit oracle, activation-bound test identities and post-edit validator. Its packet and review findings are preserved as immutable provenance; its live pointers are superseded below. The five control families and six gate decisions (G1a/G1b/G2/G3/G4/G5) remain independently recorded and fail-closed; §0.5 remains the sole live-handoff section, while only its latest explicitly marked card is current. Preserve the v81 and v80 packets/reviews, the v77 PARTIAL packet and invalid v79 draft. The four independent application obligations—DXF read, DXF write, DWG read and DWG write—plus both conversions and binary-DXF codec work remain later 1E gates.
 Historical v82 corrected stale handoff pointers and bound the one-shot/retained exception-transfer and source-bound baseline requirements, but did not pass G1a/G1b. Its copied v81 packet remains preserved as `preflight-v82-stale-copy-from-v81/`, not a v82 evidence packet. v82 retained the hard 1E file-support contract described below.
@@ -12422,11 +12422,12 @@ v107 plan-correctness review.
     after v116 G5 PASS and baseline reconciliation. No successor leaf begins until A's product commit, direct-child
     plan checkpoint and independent G5 self-update all close.
 
-24. **Current roadmap correction — v116 draft (non-activating; supersedes v115's next-step pointer).** This section is
-    the sole proposed live handoff until v116 is committed and passes its own independent plan-checkpoint G5. It does
-    not rewrite v115's historical checkpoint or authorize implementation. The expected v116 parent is the actual
-    v115 commit `3c816405e31e6c6530c33377e15aee87969a32f7`; the only tracked path this documentation correction may
-    change is `docs/plan_offset_curve_2961.md`. Product base remains
+24. **Historical roadmap correction — v116 (G5 FAIL; superseded by the v117 draft).** v116 is the plan-only direct
+    child of v115 `3c816405e31e6c6530c33377e15aee87969a32f7`; it changed only
+    `docs/plan_offset_curve_2961.md`. Its independent G5 returned FAIL with one P2 status finding. The exact audit
+    and finding are recorded under `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v116/`; §25 corrects
+    it. The detailed five-control/readiness contract below remains the plan basis, but none of its draft-time status
+    or proposed version pointers supersede §25. Product base remains
     `9c06e9c77b313b62cc20e9ec39c22952fee501f2`.
 
     **As-found state, not a readiness claim:** v115 G5 is PASS according to
@@ -12585,4 +12586,93 @@ v107 plan-correctness review.
     **v116 status at draft time:** plan-checkpoint G5 `NOT_RUN`; fresh preflight `NOT_CREATED`; recipes and readiness
     receipts `NOT_CREATED`; G1a/G1b/G3 `NOT_REQUESTED`; activation `NOT_CREATED`; Slice A `WAITING`; product edits,
     product builds and registered C++ tests `NOT_AUTHORIZED`. The v115 packet/helper artifacts remain provenance and
-    are not promoted. This correction changes no implementation scope and does not claim any gate PASS.
+    are not promoted. This was an as-of-draft status, not the status after v116 was committed. This correction changed
+    no implementation scope and did not claim any gate PASS.
+
+25. **Current roadmap correction — v117 draft (non-activating; sole proposed live handoff).** The expected parent is
+    v116 `bba79e7af724a54744f08b95b43cb66a0ad1e050`; this correction changes only
+    `docs/plan_offset_curve_2961.md`. Its purpose is to close v116's failed G5 finding, not to pass a gate by wording
+    alone. v115 remains the latest passing checkpoint; v116 remains a committed but failed checkpoint and is immutable.
+
+    **v116 G5 failure evidence:** independent auditor Lorentz
+    (`01a148ce-b33f-7493-841a-74f4cc12268f`) returned `FAIL`, one P2 finding, zero other findings. Finding
+    `v116-status-checkpoint-mismatch` identified the unqualified line-31 claim that v116 “has no checkpoint commit”
+    after v116 had been committed. The required correction was a plan-only child distinguishing draft-time from
+    current committed state, followed by a new independent readback. Receipt SHA-256 is
+    `83efeb2de8e506e836ee64dd1b0b772d202203a327ebdfb27eb2a23e2d990e43`; semantic-readback SHA-256 is
+    `2c0620ac54976de81812932f5ce1b4e299363ef62805f84bb2c05d4f7a4e4cec`; the six-file product/test manifest SHA-256
+    is `494fe3837e91125976ecd6068467a2822cd45676b6345c1a5d899ca4ee944d25`. The audit verified v116 ancestry and
+    one-path scope; local readback verified all six owned source/test blobs still match the pinned product base and
+    live files. No `preflight-v116/`, `recipes-v116/`, readiness receipt or v117 activation existed at audit time.
+    `build-asan/` remains untracked and preserved. G5 FAIL is not a plan-correctness review or product finding; it
+    blocks every downstream v116 readiness/activation action. Do not alter the v116 commit or its three evidence
+    files.
+
+    **v117 checkpoint contract:** commit this correction as the exact one-path direct child of v116. The next
+    authorized action after that commit is an independent G5 readback, using an auditor distinct from the v117 author
+    and the v116 auditor. Create only the three plan-checkpoint artifacts under `plan-checkpoint-v117/`; record
+    actual parent/path/blob, the v116 FAIL
+    receipt and report hashes, unchanged six product/test blobs, current pointers and absence of successors. If the
+    audit fails, preserve its report, correct in another plan-only child and repeat; do not create readiness artifacts.
+
+    The two source-only audits currently available are `PARTIAL_SOURCE_ONLY`, not G1b/G3 evidence: Pauli
+    (`01a148a9-8555-75e2-b32c-a949c0b0ff0e`) audited A07/A08; Lorentz
+    (`01a148ce-b33f-7493-841a-74f4cc12268f`) audited A11-A13. Their source observations must be recensus-verified
+    and captured in the sealed v117 packet. In addition to §24's closure list, preserve these concrete contracts:
+
+    - **A07 reductions and scans:** `product()` at `lc_ellipseoffsetgeometry.cpp:1205`, `map()` at `:1285-1286`, and
+      `mapAngle()` at `:1620-1621` each reduce four values with three min and three max comparisons. A nonstationary
+      image can call `product()` twice (12 comparisons); canonical retained records can map plus image under one
+      occurrence pair (18 ordering comparisons); each `mapAngle()` invocation remains under its already admitted
+      axes or eligible-cusp parent pair, without an extra pair. Independently trace invocation reachability and
+      expected comparator order. The source audit found uncharged fixed scans for axes adjacency (max 20), stationary
+      axis selection (21), occurrence adjacency (20), proof quadrants (20), proof fallback occurrences (21), region
+      axis delimiters (21), and `joins()` adjacent-segment setup (S-1); `preflight()` already admits one pair per
+      segment and that parent covers at most seven jet operations. Test exact/one-less admission before every newly
+      charged item, prove no double charge against enclosing iteration pairs, and keep `maxLeaves` and capacity
+      guards separate from work debits.
+
+    - **A08 callback admission and oracle fixtures:** `certifyInjective()` is dispatched only after projection fails;
+      `certifyIntersection()` is dispatched for an eligible solve cell after its refinement-cell pair. Both currently
+      call the provider before charging and skip charges for unavailable results. Move the one callback admission
+      before every dispatch, including unavailable and throw outcomes. A direct injection fixture uses one branch
+      `[0,1]`, `x=t,y=0`, and conservative whole-segment bounds `dx=[0,2], dy=[0,0]`: cap 0 must refuse before callback;
+      exact cap 1 invokes once; unavailable with depth 0 terminates after admission; the throw case proves admitted
+      work survives. An intersection fixture uses `P0(t)=(t,0)`, `P1(t)=(t,1)`, overlapping conservative bounds and
+      positive x derivatives: independently freeze the two prepared leaves, one candidate pair and one refinement
+      pair; certificate cap 3 invokes once while cap 2 refuses with candidate=1, refinement=1, certificate=0; set
+      depth 0 for the unavailable termination lane. Identity fixture uses two adjacent segments on one branch plus
+      one crossing segment on another, overlapping non-point intervals around the shared join, and exact-point
+      intervals on the other branch; prove exactly one of four side combinations qualifies. Preflight both pair and
+      generated-item capacity atomically; test unavailable/throw after both charges and one-less in either dimension
+      with neither counter changed and zero callback entry. Recompute provider-side mutually exclusive maxima
+      (axisDomain, axisContact and fallback) independently; nested helper work is covered by its owning callback and
+      is not charged again. Event preparation and boundary-seed parent pairs remain distinct.
+
+    - **A14 exception visibility:** the current public `findCertifiedIntersections()` has no `workOnExit` parameter;
+      the planned production API adds a non-owning no-throw sink, zeroes it before validation, publishes the admitted
+      initial session charge before later allocation, reports final work on success and live work on exception before
+      rethrowing the original exception. A14 must assert both the one-shot sink route and retained
+      `cumulativeWork()` route, including callback throw, exact admitted delta, invalidated credential/root and
+      zero-work/no-callback retry. A08 owns available/unavailable pre-callback snapshots; A14 owns throw observability.
+      Keep this distinction explicit in the case map and debit ledger; do not create a test-only seam or claim that
+      A14 reaches either geometry-owned outer WorkBudget catch without proving it through the public API.
+
+    Only after v117 G5 PASS, apply the readiness contract and A01-A14 closure work packages in §24 under fresh v117
+    identities. Create exact-membership `preflight-v117/`, `recipe-helpers-v117/`, `recipes-v117/` and independent
+    same-identity G1a/G1b/G3 receipts. Preserve v115's invalid packet and v116's G5 FAIL evidence unchanged; do not
+    copy/relabel them. Revalidate the source-only findings and all test registration facts, record the exact nine
+    helper tests and recipe audit under the new identity, and do not run product builds or registered C++ tests before
+    activation. Any finding that changes a source fact, test target, oracle, budget, failure policy, owner or slice
+    boundary returns the plan to G1a/G1b and resets affected readiness.
+
+    If and only if v117 G1a completeness, G1b plan correctness and G3 readiness all PASS on identical identities,
+    create separate plan-only activation checkpoint v118 and obtain its independent G5 before running the authorized
+    baseline discovery. Start Slice A only after v118 G5 and source-to-binary reconciliation. Preserve the six-path
+    atomic Slice-A commit boundary, frozen-tree G2, exact tested/staged/committed blobs, immediate plan-only direct
+    child and G5 self-update. Subsequent implementation slices repeat those gates and commit/self-update cycles; no
+    incomplete slice or draft plan pointer authorizes product work.
+
+    **v117 status at draft time:** v116 G5 `FAIL` (immutable); v117 plan-checkpoint G5 `NOT_RUN`; fresh preflight,
+    recipes and readiness receipts `NOT_CREATED`; G1a/G1b/G3 `NOT_REQUESTED`; v118 activation `NOT_CREATED`; Slice A
+    `WAITING`; product edits, product builds and registered C++ tests `NOT_AUTHORIZED`.
