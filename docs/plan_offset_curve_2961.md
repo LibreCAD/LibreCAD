@@ -24,11 +24,11 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–3
 
-Plan **v189 prepacket registration, fixture and source-contract correction**, 2026-10-17; plan-only and non-activating. This direct child addresses the exact v188 prepacket readiness findings after exact v188 G5 PASS, without changing offset/Trim scope. v188 is commit `dcc4288162a8eba7bdfd6719ed3b849f26c0a606`, parent `d643879148fdb90d932e6a1f17085c535e78b79a`, tree `f46beda8c4fd3f5b0fb67968b30c83c43a3305fb`, plan blob `7013a68783d0714bdce0ccd778e5c0f8fd7fb2c0`, raw SHA-256 `50de9de2bfe7a72885c40f18158bfe0678e194f25ef665fee04586729dcdddea`. Preserve its exact G5 PASS at `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v188/g5-auditor-report.txt`, SHA-256 `ba2a5a346756afca39504cbc39ba83f31cc54744e8c2d6974eab4993684cb669`; preserve the prepacket findings at `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v188/prepacket-readiness-audit.txt`, SHA-256 `dcc2565daecdec2d27a6dc81dc4f63ee0e2679ba169b6a1c60b0d122693adac1`; and preserve the coordinator scope-deviation record at `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v188/coordinator-scope-deviation.txt`, SHA-256 `705f206d332755ad376c6d715b74bc569e5bade26df7cd69090b6541fa7f211b`. Findings: qmake registration omitted the intermediate project; A13/A14 card text conflicts with later normative fixtures/caps; planned accounting is not separated from current source behavior; exact source/fixture/probe rows for A05-A13 and strict-core selectors need closure; and the coordinator accidentally listed protected `build-asan/` entry names via `git status --untracked-files=all` without opening any listed file. v188 G5 PASS remains immutable, and no v188 bundle roots were created. This plan revision is v189; §97 exclusively determines its live checkpoint state/next action without a self-referential candidate/commit label. No v189 roots or implementation are authorized until exact gates pass. Trim remains Phase 3 and unimplemented. Preserve product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; do not access `build-asan/` again.
+Plan **v190 deviation-disposition and prepacket correction**, 2026-10-17; plan-only and non-activating. This direct child responds to the exact v189 G5 FAIL and independently binds the v188 coordinator-deviation impact disposition, while preserving the offset/Trim feature scope. v189 is commit `ddc9973ac2b6656f591b7ca4e3cae03b70090ac1`, parent `dcc4288162a8eba7bdfd6719ed3b849f26c0a606`, tree `7ff485d7a95b7506e6776a27b396cd9f3ddc56cd`, plan blob `7d11062f4de77ab2978635179f53daf4d4393a84`, raw SHA-256 `6e0c0590b05431686c66f8066a8751e531a32cac8632b1dba4bb074db4a99913`. Preserve its exact G5 FAIL at `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v189/g5-auditor-report.txt`, SHA-256 `f05aff10b67ca3c10bde547b3ebae721773fe4b4a440f0642f529b9d8454d9f4`. Preserve v188's exact G5 PASS (`ba2a5a346756afca39504cbc39ba83f31cc54744e8c2d6974eab4993684cb669`), prepacket audit (`dcc2565daecdec2d27a6dc81dc4f63ee0e2679ba169b6a1c60b0d122693adac1`), and coordinator-deviation receipt (`705f206d332755ad376c6d715b74bc569e5bade26df7cd69090b6541fa7f211b`). The independent deviation-impact disposition is `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v188/deviation-impact-disposition.txt`, SHA-256 `a946fa18df80fb3d0443e7dca5437026db1e75aeea61a04b2ad1982e42b240d5`. The exact surfaced names and any name-level consequence remain unknown; do not infer them. The report finds no recorded file-content read, file/artifact-byte mutation, or existing artifact identity invalidation, and confirms that no v188 input/preflight/recipe roots existed. This plan revision is v190; §98 exclusively determines its live checkpoint state/next action without a self-referential candidate/commit label. No v190 roots or implementation are authorized until exact gates pass. Trim remains Phase 3 and unimplemented. Preserve product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; do not access `build-asan/` again.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY; Trim support NOT IMPLEMENTED.** v188 is committed at `dcc4288162a8eba7bdfd6719ed3b849f26c0a606` with exact G5 PASS, report SHA-256 `ba2a5a346756afca39504cbc39ba83f31cc54744e8c2d6974eab4993684cb669`. The prepacket audit sets `PLAN_UPDATE_REQUIRED=true`, hash `dcc2565daecdec2d27a6dc81dc4f63ee0e2679ba169b6a1c60b0d122693adac1`. Preserve the coordinator deviation receipt, hash `705f206d332755ad376c6d715b74bc569e5bade26df7cd69090b6541fa7f211b`: protected `build-asan/` entry names were accidentally enumerated, no file contents were read, and no further access is allowed. v189 is the current plan revision; §97 is the sole live transition authority and determines its exact state/next action without a self-referential label. No v188 or v189 bundle roots exist; fresh v189 roots require exact v189 G5 PASS and `PLAN_UPDATE_REQUIRED=false`. Preserve v187 FAIL and all earlier checkpoints/reports; v184 empty roots remain quarantined. Preserve v175 FAIL, v176 PASS/PARTIAL packet, v177-v182 commits and their G5 outcomes unchanged. The v176 packet manifest SHA-256 is `548e19102122b53ff6df846181f728ec77ef719e593ed70c3527d31b3c6a88e1`; its six recipes, formal G1a/G1b/G3, activation and reconciled baseline are absent. Do not promote or reuse it. Older `inputs-v168` and v158 partial preflight remain historical. No A-budget-depth implementation or authorized discovery/build/test exists. Earlier geometry sub-slices and receipts remain historical. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; do not access `build-asan/` again. Slice A remains WAITING; ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. Phase 3 Trim remains separately gated and unimplemented. The four application file lanes, both conversions, edited reopen and binary-DXF codec support remain open.
+Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY; Trim support NOT IMPLEMENTED.** v189 is committed at `ddc9973ac2b6656f591b7ca4e3cae03b70090ac1` with exact G5 FAIL, report SHA-256 `f05aff10b67ca3c10bde547b3ebae721773fe4b4a440f0642f529b9d8454d9f4`. Its finding requires explicit deviation-impact disposition. The independent disposition is recorded at the v188 checkpoint with SHA-256 `a946fa18df80fb3d0443e7dca5437026db1e75aeea61a04b2ad1982e42b240d5`; it records name-level exposure of unknown extent, no recorded content read or artifact-byte mutation, and no demonstrated existing artifact identity invalidation. It does not close the five v188 prepacket findings, so `PLAN_UPDATE_REQUIRED=true`. v190 is the current plan revision; §98 is the sole live transition authority and determines its exact state/next action without a self-referential label. No v188, v189 or v190 bundle roots exist; preserve the deviation and disposition receipts, do not re-enumerate `build-asan/`, and do not infer the names surfaced. Preserve v188 PASS, v189 FAIL and all earlier checkpoints/reports; v184 empty roots remain quarantined. Preserve v175 FAIL, v176 PASS/PARTIAL packet, v177-v182 commits and their G5 outcomes unchanged. The v176 packet manifest SHA-256 is `548e19102122b53ff6df846181f728ec77ef719e593ed70c3527d31b3c6a88e1`; its six recipes, formal G1a/G1b/G3, activation and reconciled baseline are absent. Do not promote or reuse it. Older `inputs-v168` and v158 partial preflight remain historical. No A-budget-depth implementation or authorized discovery/build/test exists. Earlier geometry sub-slices and receipts remain historical. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; do not access `build-asan/` again. Slice A remains WAITING; ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. Phase 3 Trim remains separately gated and unimplemented. The four application file lanes, both conversions, edited reopen and binary-DXF codec support remain open.
 
 Historical v68 amendment: clarifies file-support acceptance and retains the v67 product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, with all four recorded product source/test hashes unchanged. The exact-membership `preflight-v67/` packet is PARTIAL provenance (latest packet-manifest SHA-256 `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`), not a formal gate receipt. The G4 hidden-cusp clearance proof and C50 correction remain normative: the cusp-only candidate is separated from all visible spans and must refuse as `OffCurve` before terminal/topology matching; B07 separately tests absence of a cusp `ReferenceTerminal`, and C36 retains fully witnessed `Topology` coverage. The five controls remain mandatory per slice: separate completeness and plan-correctness gates; frozen-tree implementation correctness; an executable, independently reviewed sub-plan/readiness decision; one validated product commit followed by its plan-only reconciliation; and a post-commit live-state audit/self-update before any successor. Slice A remains WAITING; G1 completeness, G1 plan correctness, Gate-3 readiness and activation are not passed. A/B/C baseline discovery remains zero and strict-core remains 61 matching normalized identities in Release/ASan; no registered tests ran. No product/test edit, build, JUnit execution, formal Gate PASS, readiness PASS or activation occurred. DXF read, DXF write, DWG read and DWG write are separate open application obligations; both conversion directions and the separate R14/R2018 binary-DXF codec obligation also remain open. Geometry-only checker evidence satisfies none.
 Historical v81 reconciled the six-path A scope, A14 selector, split-debit oracle, activation-bound test identities and post-edit validator. Its packet and review findings are preserved as immutable provenance; its live pointers are superseded below. The five control families and six gate decisions (G1a/G1b/G2/G3/G4/G5) remain independently recorded and fail-closed. §0.5 retains detailed leaf specifications and historical handoffs; §29 is the sole authority for the current gate state and immediate next action. Preserve the v81 and v80 packets/reviews, the v77 PARTIAL packet and invalid v79 draft. The four independent application obligations—DXF read, DXF write, DWG read and DWG write—plus both conversions and binary-DXF codec work remain later 1E gates.
@@ -21098,23 +21098,41 @@ The provider's unique tangency proof
     | A05-A13 exact fixtures incomplete | Freeze the fixture inputs and the independent expected trace below before packet completion. A test name, an anchor test, or a proposed cap is not a frozen oracle. Any item marked `OPEN` must be independently calculated and reviewed in the packet's fixture/probe ledger before the artifact state can be COMPLETE. |
     | Source/input rows incomplete | Include the actual API, caller, all four registration files and every translation unit that contributes to the strict-core selector identity set. Each row has an exact source path, product-base blob and raw SHA in the source manifest and is cited by eligible packet-map rows under §94. Do not add unused or generic placeholder rows. |
 
-    **Required source and registration input inventory.** The source-input manifest contains distinct rows (globally
-    unique IDs) for the six Slice-A owned files in the `files` field of §0.5; API dependencies
-    `librecad/src/lib/engine/document/entities/lc_curvejet.h`,
-    `librecad/src/lib/math/lc_interval.h`,
-    `librecad/src/lib/engine/document/entities/rs_ellipse.h`,
-    `librecad/src/lib/engine/document/entities/rs_spline.h`,
-    `librecad/src/lib/math/rs_math.h`, and `librecad/src/lib/engine/rs_vector.h`; caller files
-    `librecad/src/lib/engine/document/entities/lc_curveoffset.h` and `.cpp`; and the single current strict-core test
-    translation unit `librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp`, which
-    supplies the five strict-core tag families. The two Slice-A test translation units are already included in the
-    six owned files; do not duplicate them under new IDs. The registration input rows are exactly
-    `CMakeLists.txt`, `librecad.pro`, `librecad/librecad.pro`, and `librecad/src/src.pro`. Resolve every blob and
-    raw-byte SHA from the pinned product commit during fresh input-manifest construction; this plan intentionally
-    does not guess or freeze hashes for source bytes that have not yet been captured into a current packet.
-    Registration-manifest bytes and order are exactly as defined above and in the v189 manifest contract. The test
-    registration path remains `CMakeLists.txt`; the four-file registration digest is not a claim of qmake test
-    registration.
+    **Required source and registration input inventory.** The source-input manifest must reproduce these exact
+    product-base rows, with `kind=FILE`, `anchor=WHOLE_FILE`, and the pinned product commit
+    `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. The two Slice-A test translation units are among the six owned
+    rows; do not duplicate them under additional IDs. These rows define the current-source identity, not a build,
+    discovery or execution result.
+
+    ```text
+    input_id	locator	git_blob	sha256
+    SRC-A-API-01	librecad/src/lib/engine/document/entities/lc_curvejet.h	d41f677bb29fedf6b50c415abaaba83cd19795a3	d9a243276f2793352f82e3aca5ea0693a64f48d5421fe59a96a2981735226719
+    SRC-A-API-02	librecad/src/lib/math/lc_interval.h	b12f70483fb297d05b2c5db4461fe428a361140c	d03c9e49cbc346f83e1a2e3adf81bbbd498972fd1488df06df06e90a01ead02e
+    SRC-A-API-03	librecad/src/lib/engine/document/entities/rs_ellipse.h	6c8ed6c5bfc5d1599138fe00b7ba11b55efe31d1	88a318ed131d7e5783bb7bced42751da80a1d459e066157be25748242a0b81d4
+    SRC-A-API-04	librecad/src/lib/engine/document/entities/rs_spline.h	a72a9289576e26f102750d3c6fdd031212eb941d	28fc1f6f535b5565728f1c9b93d43b5b8e031190c4c12a122ee34ce4786d8c2f
+    SRC-A-API-05	librecad/src/lib/math/rs_math.h	963f57e07d4839e485fbc6527b0994db85f07944	a0783c474da4bbb8fb374f34211f009073e95bd39114092a5cfdf8afff8e61d8
+    SRC-A-API-06	librecad/src/lib/engine/rs_vector.h	c47676ecd39f79ce92644ed8e9d85ca2e4ff9f7c	1f5020c83738a606c0fcb64a03f5d89fedf58710b40c39a83ef7dc70854bdfc9
+    SRC-A-CALLER-01	librecad/src/lib/engine/document/entities/lc_curveoffset.cpp	1ebd1f065ebb207a872daeff8fbfd11841499193	15718dc423f7d4f87b97ae71a8697a5a4a20f2d07cc1122535694447be073ac3
+    SRC-A-CALLER-02	librecad/src/lib/engine/document/entities/lc_curveoffset.h	2d0d81ef7026569b9dd5e78239e912669a2113f0	8df0f75bb85f54208163ee4c9d053c2887883a98d1e8b40c9feae7c6ef2f63ee
+    SRC-A-OWNED-01	librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h	8d96760468b4cfc6bf604d6080d6804a2ff5b369	0887c44a8c042505e1a4b8299d9ed133dadc0cc4a522a7183215225629769eba
+    SRC-A-OWNED-02	librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp	94643cbe6ea9c919cbf6f54623821c5f058a7c7c	1ce0bd467d9512044cc2f039cbfd6fa8dfd2073b963eba5acd014a47c7e94069
+    SRC-A-OWNED-03	librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h	6e3dac17b0c1feb6d9f882460c4dce811507f477	1ddb4389e780be8d4ac901cabbdbd0b22399a109930953901e493d8cc3a25b41
+    SRC-A-OWNED-04	librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.cpp	f8c5ba1f0fe6c110af1b31384234803cc4da936e	cf2b3e177c5e234992df606900860107b43dfc49580d367b438440a06e38bd79
+    SRC-A-OWNED-05	librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp	873d341b6b297dac63919d17dfb3364e3b8734f4	021e753b1216a99d0f0588e26ab4d96034840bc4f6546d066f37beb1a7ab4a6e
+    SRC-A-OWNED-06	librecad/src/lib/engine/document/entities/tests/lc_parametriccurveintersection_tests.cpp	fe625f8eae46eeae918f131fd5830863bde533bc	6aa197be4221b1ed5556f6d56920f7938f0aaccf50df230a4402255513fb3c1f
+    SRC-A-REG-01	CMakeLists.txt	010c5cb62a89451a4b1cb2a1fb5ace1bf10d8433	c6d3ef746d4ce084b16b99e41b5c2e286bdefbe7e2c243d3bf01cae3714b41c8
+    SRC-A-REG-02	librecad.pro	9a33975476dc1c0aadb6efa8bcf067a56997a985	36e7b7d93cb7a99e1a86e6257584b929925e7e80790c69eaf8b0c06cef95fffe
+    SRC-A-REG-03	librecad/librecad.pro	dd31906ae9feeb11e62fb0d11b9a4a7b2da7e93a	4c9a97251bff408827f40d02d6ac0523b8bd57b10855defa640424afd99e5648
+    SRC-A-REG-04	librecad/src/src.pro	16cae0be13a46c6bc68686f94f51615f9ab87444	dff2a4216b528043330c4cc26ba7eda990fb8386b528ebf6c1bbb0766772cbf2
+    ```
+
+    The strict-core selector's five tag families statically map to `SRC-A-OWNED-05`; A08 and A12–A14 also map
+    to `SRC-A-OWNED-06`. This static mapping does not claim the exact 61-name activation-bound selector set. CMake
+    registers both production files and test translation units; the registration manifest binds the complete qmake
+    root-to-leaf chain. The four registration rows above use the same blob/SHA values, but the registration digest
+    itself is computed from only the fixed four path/blob lines and their required order. The six API rows are cited
+    only by map records that use those contracts; omit an unused row rather than allowing an uncited input. The test
+    registration path remains `CMakeLists.txt`; the qmake digest is not a claim of qmake test registration.
 
     **Fixture/probe rows required before packet completion.** Source and input IDs are bound only after exact v189
     G5 PASS. The fresh fixture manifest must include these deterministic descriptions and bind each to the source
@@ -21122,10 +21140,10 @@ The provider's unique tangency proof
 
     | Probe | Fixed fixture and expected contract | Closure state |
     |---|---|---|
-    | A05 | `basis(10, 0.5, 0, 0, true)`, distance `+1`, reversed whole-ellipse traversal beginning at `π/4`; four included axis records have directed keys `7T/8, 5T/8, 3T/8, T/8`. A deterministic insertion-sort trace has exactly 6 comparisons; prove exact-cap admission at 6 and one-less refusal at 5 independently from the 21-axis scan count. | Fixture fixed; independently reproducible probe bytes and event-by-event ledger required. |
-    | A06 | `basis(5, 0.5, 0, 0, true)`, `majorP=(3,4)`, distance `-2`; freeze the stationary polynomial `(-39 + 225z + 675z^2 + 675z^3)/64`, its independently isolated root interval(s), four reversed directed cusp keys and the six-comparison sort trace. Exact outward interval endpoints and comparison operands must be calculated from the pinned algorithm/specification, not inferred from display values. | Root interval/operand ledger OPEN. |
-    | A07 | `basis(5, 0.5, 0, π, false)`, `majorP=(5,0)`, distance `+1`; `mapAngle` maps the sole axis `π/2` to `T/2`. Freeze four rational endpoint-times-π values, six comparisons for each four-value reduction, and the complete source-derived invocation multiplicity; the combined target is 120 comparisons only if the independently enumerated call sites reproduce it. | Invocation/oracle ledger OPEN. |
-    | A08 | One open segment `x=t^3,y=0` on `[-1,1]`, branch 0, `next=-1`. Available direct injectivity callback with pair cap 1, generated-item cap 3, depth 0 succeeds with generated 3, one callback and one pair. With callback unavailable and depth cap 0, it refuses `LimitExceeded` with generated 1, one callback and no leaf. Assert exact/one-less and pre-callback debit using independent counters. | Fixture and target snapshots fixed; independent callback-trace probe required. |
+    | A05 | Candidate fixture: `basis(10, 0.5, 0, 0, true)`, distance `+1`, reversed whole-ellipse traversal beginning at `π/4`; candidate four included axis keys are `7T/8, 5T/8, 3T/8, T/8`. A four-record insertion sort costs 6 comparisons; the production axis inventory is bounded at 21 entries (210 worst-case comparisons). Freeze the exact generation order, operands, sorted output, cap admission at 6 and one-less refusal at 5; keep the 21-axis scan debit separate. | Candidate inputs agree with independent review; exact event/operand trace and probe bytes OPEN. |
+    | A06 | Candidate fixture: `basis(5, 0.5, 0, 0, true)`, `majorP=(3,4)`, distance `-2`; stationary polynomial `(-39 + 225z + 675z^2 + 675z^3)/64`, with a candidate four-occurrence reversed sort trace. The production occurrence inventory is bounded at 20 entries (190 worst-case comparisons). Freeze independently outward-isolated root intervals, generation order, exact keys and operands, sorted output, and exact/one-less cap snapshots; do not infer root endpoints or tie behavior from rounded displays. | Candidate inputs agree; root/operand/prefix ledger OPEN. |
+    | A07 | Candidate fixture: `basis(5, 0.5, 0, π, false)`, `majorP=(5,0)`, distance `+1`; `mapAngle` maps sole axis `π/2` to `T/2`. Each four-value min/max reduction costs 6 comparisons. Freeze exact rational endpoint-times-π operands, comparator order and enclosing source call sites separately for every invocation. The earlier aggregate target of 120 is unverified and must not be used unless the invocation census independently derives it. | Invocation/oracle ledger OPEN. |
+    | A08 | One branch and one segment `[0,1]`, `P(t)=(t,0)`, conservative `dx=[0,2], dy=[0,0]`, exercising `StrictSolver::prepare()`'s direct `certifyInjective` path; the fixture is proposed, not an existing test. In the target, pair cap 1 admits exactly one pre-callback pair debit for both available and unavailable outcomes; pair cap 0 refuses before callback. Available plus generated-item cap 3 targets root + certificate + accepted-leaf tokens (generated 3, pair 1); cap 2 is the corresponding one-less refusal. Unavailable plus pair cap 1 and depth cap 0 targets one callback, generated 1, pair 1 and no leaf before `LimitExceeded`. Current-source snapshots differ: available gives generated 2/pair 1 because the leaf is not charged; unavailable gives generated 1/pair 0 because the callback is uncharged. The new A08 test identity is `provider analytic scans are covered by query debit` in `lc_parametriccurveintersection_tests.cpp`; assert callback, accessor and work counters independently. | Fixture and owner confirmed; exact branch/refusal trace and independent probe bytes still required. |
     | A09 | Pin the existing local-topology anchor at `lc_offsetcurve_geometry_tests.cpp:7143`: `basis(1,1,0.25,0.2501)`, `arcCache(source,1,3)`, controls `{start,start+chord*7/6,start+chord*23/24,end}`, `localTopologyDefinition(source)`, tolerance `0.01`; one cache span and three reference-edge fragments. Freeze independent witness-prefix ordering and exact/one-less snapshots; the anchor's existing assertions alone are not the new budget oracle. | Witness-prefix/counter oracle OPEN. |
     | A11 | Classify `basis(1,1,0.25,0.2501)` at distance `+1`, tolerance `0.01`; separately run retained records on `basis(100,0.5,0,0,false)`, distance `-30`, four cusps. Enumerate every destination vector in deterministic mutation order, its preflight/admission and every paired record. The retained fixed allowance 5 plus four occurrence vertices and one pair is only one component; provide full per-destination exact snapshots and each one-less refusal. | Destination-by-destination prefix ledger OPEN. |
     | A12 | Prep split: `P(t)=(t^3+t/4,0)` on `[-1,1]`, unavailable injectivity proof, whole Bernstein hull includes zero, child hulls are `[1/4,13/4]`; target generated 5, visits 1, `next` 1, evaluations 3, bounds 6, one unavailable callback. Solve/certificate split: `A(t)=(t,0)`, `B(u)=(u,(u-1/2)^2)`, both on `[0,1]`, two branches; target generated 8 and pair candidate/refinement/certificate each 1. Freeze the split-specific event trace, queue pre-state, checked-capacity decision and one-less no-mutation point. | Prep fixture fixed; solve-split trace/prefix oracle OPEN. |
@@ -21185,3 +21203,89 @@ The provider's unique tangency proof
     The user's trim request is retained in §6.1 but does not change this fail-closed order. No product edit, build,
     test discovery or execution is authorized by this section. Preserve every historical checkpoint and receipt;
     `build-asan/` remains not inspected by instruction.
+
+98. **v190 receipt-bound deviation disposition and v189 G5-failure correction (plan-only; non-activating).** This
+    direct child corrects the sole finding in the exact v189 G5 FAIL and closes neither the five open v188
+    prepacket findings nor any implementation gate. v189 is commit `ddc9973ac2b6656f591b7ca4e3cae03b70090ac1`,
+    parent `dcc4288162a8eba7bdfd6719ed3b849f26c0a606`, tree `7ff485d7a95b7506e6776a27b396cd9f3ddc56cd`, plan blob
+    `7d11062f4de77ab2978635179f53daf4d4393a84`, raw SHA-256
+    `6e0c0590b05431686c66f8066a8751e531a32cac8632b1dba4bb074db4a99913`. Preserve its exact FAIL report at
+    `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v189/g5-auditor-report.txt`, SHA-256
+    `f05aff10b67ca3c10bde547b3ebae721773fe4b4a440f0642f529b9d8454d9f4`. Preserve the v188 coordinator-deviation
+    receipt and prepacket audit at their exact hashes in §§97 and this header. The independent disposition is
+    `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v188/deviation-impact-disposition.txt`, SHA-256
+    `a946fa18df80fb3d0443e7dca5437026db1e75aeea61a04b2ad1982e42b240d5`; its input hashes match the v188
+    coordinator-deviation receipt and prepacket audit. Keep that report immutable.
+
+    **Deviation-impact state and disposition.** The recorded action was a read-only `git status --short
+    --untracked-files=all | head -n 15` whose output included protected-directory entry names. The records prove a
+    process deviation and name-level metadata exposure, but do not contain the exact names; do not infer,
+    reconstruct, search for or repeat them. The disposition proves no recorded content read, file/artifact-byte
+    mutation, build/test/discovery/product action, or existing artifact-identity invalidation; no v188 input,
+    preflight or recipe roots existed. It cannot establish whether a name corresponded to gate metadata or any
+    broader name-level consequence. Therefore the impact state is exactly:
+
+    ```text
+    PROTECTED_PATH_NAME_ENUMERATION=RECORDED
+    FILE_CONTENT_READ=NO_RECORDED
+    ARTIFACT_IDENTITY_INVALIDATION=NONE_DEMONSTRATED
+    NAME_LEVEL_IMPACT=UNKNOWN
+    DEVIATION_RECEIPT_HASH=705f206d332755ad376c6d715b74bc569e5bade26df7cd69090b6541fa7f211b
+    DEVIATION_IMPACT_DISPOSITION_SHA256=a946fa18df80fb3d0443e7dca5437026db1e75aeea61a04b2ad1982e42b240d5
+    DEVIATION_IMPACT_STATUS=RECORDED_PENDING_EXACT_V190_G5
+    ```
+
+    Only an independent exact-v190 G5 PASS that verifies this exact receipt may advance the disposition status to
+    `VERIFIED`. A missing, mismatched, contradictory or non-independent disposition keeps the state `UNRESOLVED`,
+    keeps `PLAN_UPDATE_REQUIRED=true`, and blocks all roots and downstream work. Even a verified deviation
+    disposition closes only this deviation trigger; the five source/fixture/registration findings and all open
+    fixture/probe oracles must separately pass a fresh bounded prepacket audit before the overall flag can clear.
+    No artifact identity is invalidated by the known record, but this is not a zero-exposure claim. Historical
+    manifests and receipts are immutable and must not be rewritten. If a future current manifest is created after all
+    gates, its existing `protected_build_asan` field must use the exact value
+    `DEVIATION_NAME_ONLY_CONTENTS_UNREAD_NO_FURTHER_ACCESS_DISPOSITION_a946fa18df80fb3d0443e7dca5437026db1e75aeea61a04b2ad1982e42b240d5`,
+    never `NOT_INSPECTED_BY_INSTRUCTION`; the disposition receipt must also be an exact-hash `EXTERNAL_FILE` row in
+    that version's `spec-inputs.txt`, cited by eligible map records. This adds no manifest key and does not make
+    such a bundle currently authorized.
+
+    **Disjoint v190 correction-candidate states.** Relative to `HEAD=v189` and its exact G5 FAIL, inspect only the
+    tracked Git state of the roadmap and known six owned product paths; never enumerate or inspect `build-asan/`:
+
+    - `CORRECTION_CANDIDATE_ABSENT`: index equals HEAD, worktree equals index, and no other tracked path is changed.
+    - `CORRECTION_CANDIDATE_VALID`: exactly one direct-child, roadmap-only correction records the exact v189 G5
+      finding and report hash, binds the verified-v188 impact-disposition report and its exact input hashes, defines
+      the disjoint disposition states above, preserves all unresolved prepacket triggers as blocking, and has one
+      unambiguous candidate layer (index differs from HEAD while worktree equals index, or index equals HEAD while
+      only worktree differs); all six owned product paths equal the pinned product base.
+    - `CORRECTION_CANDIDATE_CONFLICT`: every other state, including distinct staged/worktree blobs, missing or
+      mismatched receipts, an incomplete disposition, a non-roadmap path change, or a changed owned product blob.
+
+    These states are mutually exclusive and exhaustive. Commit only a VALID candidate after verifying the exact
+    v189 commit/tree/blob/raw SHA and FAIL report hash, both v188 receipt hashes and the independent disposition
+    hash/input binding, correction closure, one-layer bytes, only-roadmap path set, six pinned-base product blobs,
+    and `git diff --check`. Do not stage or resolve a split candidate automatically.
+
+    **Exclusive v190 transition authority.** This section supersedes the live status and v189 correction routing in
+    §97. The §94 artifact grammar and §88 checkpoint/readiness/activation/baseline/execution/per-slice gates remain
+    unchanged. No v190 input, packet or recipe roots may be created before exact v190 G5 PASS and a new bounded
+    prepacket audit with no open finding or fixture/probe oracle. The independent disposition does not authorize
+    clearing `PLAN_UPDATE_REQUIRED` by itself.
+
+    | First applicable exact state | Sole next action | Blocked |
+    |---|---|---|
+    | HEAD is v189 with exact G5 FAIL; `CORRECTION_CANDIDATE_ABSENT` | Preserve the exact report and all v188 receipts; prepare only the direct-child v190 correction defined above. | Commit, roots/artifacts, reviews, activation, baseline, build/test and product work. |
+    | HEAD is v189 with exact G5 FAIL; `CORRECTION_CANDIDATE_VALID` | Verify all report/input hashes, correction closure, one-layer state, only-roadmap scope, six pinned-base blobs and `git diff --check`; commit only v190. | v190 G5 and every later stage. |
+    | HEAD is v189 with exact G5 FAIL; `CORRECTION_CANDIDATE_CONFLICT` | Preserve all candidate bytes and receipts; stop under §92's report-bound conflict route. | Every later action. |
+    | HEAD is committed v190; exact v190 G5 absent, pending or mismatched | Obtain independent G5 for the exact v190 commit/tree/plan blob/raw SHA; it must verify the deviation-disposition state and receipt binding. | v190 roots/artifacts and every later stage. |
+    | Exact v190 G5 FAIL; no report-bound correction candidate | Preserve the exact report/hash; prepare one direct-child correction for every finding and concurrent trigger. | Roots/artifacts, reviews, activation, baseline, build/test and product work. |
+    | Exact v190 G5 FAIL; exactly one valid report-bound roadmap-only correction | Verify parent/report closure, one-layer state, only-roadmap scope, six pinned-base blobs and `git diff --check`; commit only that correction, then obtain exact child G5. | Roots/artifacts and implementation until child G5 PASS. |
+    | Exact v190 G5 FAIL; conflicting or ambiguous candidate | Preserve all evidence and stop under §92. | Every later action. |
+    | Exact v190 G5 PASS verifies the deviation disposition; any prepacket finding, fixture/probe oracle, or other update trigger remains open | Record the deviation disposition `VERIFIED`; retain `PLAN_UPDATE_REQUIRED=true`; create only a direct-child plan correction for every remaining trigger. | All v190 roots/artifacts, readiness reviews, activation, baseline, build/test and product work. |
+    | Exact v190 G5 PASS; deviation disposition verified; fresh bounded prepacket audit clean; no plan candidate; `PLAN_UPDATE_REQUIRED=false`; `ARTIFACTS_ABSENT` | Create fresh `inputs-v190/`, `preflight-v190/` and `recipes-v190/` under §§93/94, bound to exact v190 G5 and v189 predecessor/G5 FAIL; close and audit before formal reviews. | Formal G1a/G1b/G3, activation, baseline, build/test and product work. |
+    | Exact v190 G5 PASS; `ARTIFACTS_CLOSURE` or `ARTIFACTS_INVALID` | Apply §94's exact closure or quarantine/plan-update route, preserving every attempt and disposition receipt. | Reviews, activation, baseline and product work until artifacts are current and COMPLETE. |
+    | Exact v190 G5 PASS; `ARTIFACTS_COMPLETE`; no update trigger | Apply §88/§94's first-unsatisfied readiness transition, rebound to v190 and immediate predecessor v189/G5 FAIL. | Activation, baseline, build/test and product work until every predecessor gate passes. |
+    | Any unknown, conflicting or multiply matched state | Preserve all evidence and stop for plan-only correction; never infer status or create roots. | Every later stage. |
+
+    The Trim feature remains exactly the bounded 3A kernel, 3B Trim/Trim Two atomic action, and 3C persistence/release
+    validation in §6.1. The current source/fixture corrections do not advance any Trim prerequisite or authorize
+    product code, builds, test discovery or execution. `build-asan/` remains inaccessible by instruction.
