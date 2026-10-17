@@ -10,7 +10,7 @@ DISABLE_POSTSCRIPT = false
 DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
-LC_VERSION="2.2.1.5"
+LC_VERSION="2.2.1.6"
 VERSION=$${LC_VERSION}
 
 # Store intermedia stuff somewhere else
