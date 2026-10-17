@@ -24,15 +24,15 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v89**, 2026-10-16 (reconcile preflight packet state and close graph-publication crosswalk gaps). This file is the implementation source of truth.
+Plan **v90**, 2026-10-16 (deepen completeness/correctness, make Slice-A closure executable, and reconcile the v89 post-commit state). This file is the implementation source of truth.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE.** Geometry bounds and local-topology children are committed; ordered-chain topology, later entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. v89 is a non-activating plan-only correction based on committed v88 `90f97587b10e91b62a98ee8cc7b833b0ce43f280`; product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. The v88 exact-membership packet at `build/evidence/1A-1.b-check-topology-chain/preflight-v88/` is checksum-valid PARTIAL local evidence, not a formal gate receipt or a committed artifact; its manifest SHA-256 is `d9b8af4e3f11e7430d0e1f79d800bd763d0e7f8feab60f27445f68318477fb8b`. Its A14 correction establishes fixture reachability only. A01-A14 independent oracles/snapshots, allocation-publication mapping, source/debit/capacity/runtime closure and same-identity G1a/G1b/G3 remain open. The earlier v87 packet and reviews remain immutable PARTIAL provenance. The checksum-valid v81 packet (manifest SHA-256 `16145f6fa7fb02e6febf7dd05d5b1db71376b0ac0d5b86fcdd30aa4c601c55e4`) remains PARTIAL provenance; both v81 G1a/G1b receipts are immutable FAIL decisions. The copied `preflight-v82-stale-copy-from-v81/` is explicitly not a v82 packet because its payloads remain bound to v81; preserve it unchanged as stale-copy provenance. The v84 packet/reviews and incomplete v85 packet are immutable PARTIAL provenance. Slice A remains WAITING. Feature persistence is an end-to-end requirement: LibreCAD's normal ASCII-DXF and native-DWG open paths must read and adopt the editable definition, and its normal DXF/DWG save paths must write it. All four directions are independently tested at every applicable version; both conversions, edited reopen, and the separate binary-DXF codec lane remain required. No product edit, build or registered test was performed. Historical implementation evidence and earlier checkpoint narratives do not authorize a successor slice.
+Status: **IMPLEMENTATION INCOMPLETE.** Geometry bounds and local-topology children are committed; ordered-chain topology, later entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. v90 is a non-activating plan-only correction based on committed v89 `3b6fa4017ab6cdbc31b90b0c8851bfb3f237d5c0`; product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. The v89 exact-membership packet at `build/evidence/1A-1.b-check-topology-chain/preflight-v89/` is checksum-valid PARTIAL local evidence, not a formal gate receipt or committed artifact; its manifest SHA-256 is `9ae08e475caa3c5bd96268481bbd17219aa8b366ce99e64500c4fee0ecf63fbf`. Its post-commit readback passes only plan/packet bindings. A01-A14 independent oracles/snapshots, complete allocation-publication mapping, source/debit/capacity/runtime closure and same-identity G1a/G1b/G3 remain open. Preserve v89 and older packets/reviews as labeled PARTIAL provenance. The checksum-valid v81 packet (manifest SHA-256 `16145f6fa7fb02e6febf7dd05d5b1db71376b0ac0d5b86fcdd30aa4c601c55e4`) remains PARTIAL provenance; both v81 G1a/G1b receipts are immutable FAIL decisions. The copied `preflight-v82-stale-copy-from-v81/` is explicitly not a v82 packet because its payloads remain bound to v81; preserve it unchanged as stale-copy provenance. The v84 packet/reviews and incomplete v85 packet are immutable PARTIAL provenance. Slice A remains WAITING. Feature persistence is an end-to-end requirement: LibreCAD's normal ASCII-DXF and native-DWG open paths must read and adopt the editable definition, and its normal DXF/DWG save paths must write it. All four directions are independently tested at every applicable version; both conversions, edited reopen, and the separate binary-DXF codec lane remain required. No product edit, build or registered test was performed. Historical implementation evidence and earlier checkpoint narratives do not authorize a successor slice.
 Historical v68 amendment: clarifies file-support acceptance and retains the v67 product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, with all four recorded product source/test hashes unchanged. The exact-membership `preflight-v67/` packet is PARTIAL provenance (latest packet-manifest SHA-256 `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`), not a formal gate receipt. The G4 hidden-cusp clearance proof and C50 correction remain normative: the cusp-only candidate is separated from all visible spans and must refuse as `OffCurve` before terminal/topology matching; B07 separately tests absence of a cusp `ReferenceTerminal`, and C36 retains fully witnessed `Topology` coverage. The five controls remain mandatory per slice: separate completeness and plan-correctness gates; frozen-tree implementation correctness; an executable, independently reviewed sub-plan/readiness decision; one validated product commit followed by its plan-only reconciliation; and a post-commit live-state audit/self-update before any successor. Slice A remains WAITING; G1 completeness, G1 plan correctness, Gate-3 readiness and activation are not passed. A/B/C baseline discovery remains zero and strict-core remains 61 matching normalized identities in Release/ASan; no registered tests ran. No product/test edit, build, JUnit execution, formal Gate PASS, readiness PASS or activation occurred. DXF read, DXF write, DWG read and DWG write are separate open application obligations; both conversion directions and the separate R14/R2018 binary-DXF codec obligation also remain open. Geometry-only checker evidence satisfies none.
 Historical v81 reconciled the six-path A scope, A14 selector, split-debit oracle, activation-bound test identities and post-edit validator. Its packet and review findings are preserved as immutable provenance; its live pointers are superseded below. The five control families and six gate decisions (G1a/G1b/G2/G3/G4/G5) remain independently recorded and fail-closed; §0.5 is the sole current handoff. Preserve the v81 and v80 packets/reviews, the v77 PARTIAL packet and invalid v79 draft. The four independent application obligations—DXF read, DXF write, DWG read and DWG write—plus both conversions and binary-DXF codec work remain later 1E gates.
 Historical v82 corrected stale handoff pointers and bound the one-shot/retained exception-transfer and source-bound baseline requirements, but did not pass G1a/G1b. Its copied v81 packet remains preserved as `preflight-v82-stale-copy-from-v81/`, not a v82 evidence packet. v82 retained the hard 1E file-support contract described below.
-v83 is historical plan state, superseded by the active v89 handoff below. Its full 1E contract remains normative: ASCII DXF application read/write, native DWG read/write, every applicable version row, both conversions, edited reopen, and separate R14/R2018 binary-DXF codec read/write; geometry/checker tests do not satisfy any file lane. No exact-membership v83 packet was sealed. The v83 source audit at `build/evidence/1A-1.b-check-topology-chain/source-audit-v83/source-audit.txt` (SHA-256 `6679b8ba1c5281bc5f4d7a90a410fe00de6ffb09e05e82a318b06f5d80ff1445`) is PARTIAL coordinator evidence, not a formal gate receipt. It confirms the three proof-split callers and atomic work-adoption gap, and adds current observations that `addRegions` checks pending capacity after split debit, paired output vectors are not jointly reserved, and `joins` lacks explicit output-capacity preflight. Preserve v81-v88 packets/reviews unchanged as historical evidence; do not treat unsealed or PARTIAL audits as gate decisions.
+v83 is historical plan state, superseded by the active v90 handoff below. Its full 1E contract remains normative: ASCII DXF application read/write, native DWG read/write, every applicable version row, both conversions, edited reopen, and separate R14/R2018 binary-DXF codec read/write; geometry/checker tests do not satisfy any file lane. No exact-membership v83 packet was sealed. The v83 source audit at `build/evidence/1A-1.b-check-topology-chain/source-audit-v83/source-audit.txt` (SHA-256 `6679b8ba1c5281bc5f4d7a90fe00de6ffb09e05e82a318b06f5d80ff1445`) is PARTIAL coordinator evidence, not a formal gate receipt. It confirms the three proof-split callers and atomic work-adoption gap, and adds current observations that `addRegions` checks pending capacity after split debit, paired output vectors are not jointly reserved, and `joins` lacks explicit output-capacity preflight. Preserve v81-v89 packets/reviews unchanged as historical evidence; do not treat unsealed or PARTIAL audits as gate decisions.
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -1158,43 +1158,38 @@ capacity checked before mutation. Each accepted prepared leaf consumes one gener
   Reread the committed roadmap and compare its claims to Git, reports and evidence; any discrepancy stops successor
   work, invalidates affected receipts and requires a corrective plan-only child plus a new audit. Start each next leaf
   with fresh completeness, plan-correctness and readiness decisions against reconciled HEAD.
-**Current disposition/next:** v89 is a non-activating plan-only child of committed v88
-  `90f97587b10e91b62a98ee8cc7b833b0ce43f280`; do not embed v89's future/self SHA. Preserve the exact-membership v81
-  packet and its G1a/G1b FAIL receipts and partial findings unchanged; neither is an activation receipt. The active v81 six-path
-  scope is historical; v89 retains the verified six paths and adds no product path. The v82-v87 plan-only commits and
-  coordinator/independent review artifacts are not formal passing gate reviews. The v87 packet
-  `preflight-v87/` is checksum-valid PARTIAL evidence (manifest SHA-256
-  `663d8512e4be9dbb117726638fe01e4c5ad29cd35262b351ce3eeb92e3840d83`), with no formal G1a/G1b/G3 PASS or activation.
-  No product/test edit, product build or registered JUnit execution is claimed. Before A readiness, close A's R02/R12/R13
-  source/debit/capacity/runtime census, exact A01-A14 independent oracles/snapshots, the one-shot and retained A14
-  exception paths, a concrete allocation-publication-to-assertion crosswalk, candidate-cache split admission and all
-  three `CriticalBuilder::split` caller assertions, and a fresh-build, six-binary identity-bound baseline. A excludes
-  all R05 producer behavior: creation/options, one-piece producer-to-document adoption,
-  repeated-offset mutation and fallback remain owned by 1B/1C/1F. 1A-2's generic factory is context only. B/C
-  terminal, phase/cut/cycle proofs and C01-C54 oracle crosswalk are not A entry conditions absent a demonstrated A
-  dependency. The four independent later application gates—ASCII DXF read, ASCII DXF write, native DWG read and
-  native DWG write—plus all applicable version rows, both conversions, edited reopen and the separate R14/R2018
-  binary-DXF codec read/write obligation remain hard phase-1 requirements; no geometry evidence satisfies them.
-  v88's exact-membership `preflight-v88/` exists as checksum-valid PARTIAL local evidence (manifest SHA-256
-  `d9b8af4e3f11e7430d0e1f79d800bd763d0e7f8feab60f27445f68318477fb8b`); it is under ignored `build/`, is not
-  committed, and has no passing gate receipts. Preserve it unchanged. After the v89 plan-only commit, create a fresh
-  exact-membership `preflight-v89/`; preserve v81-v88 and older evidence. Evidence under ignored `build/evidence/`
-  is local and must never be described as committed; each packet must still have exact membership, input identity,
-  payload checksums and a manifest, and its local preservation requirement must be stated. Do not force-add ignored
-  build output or alter `.gitignore` as part of this roadmap correction.
-  Bind every receipt to the committed plan blob and unchanged product-source base, and retain pre-existing `build-asan/`
-  untouched. Only after same-identity A G1a/G1b/G3 PASS may a separate A-only activation checkpoint be committed; then
-  configure and build in fresh activation-specific directories, discover exact selectors and capture full/DXF/DWG skip
-  baselines on that unedited base before permitting implementation. Agent Gibbs remains the planned implementation
-  writer; if unavailable after activation, wait for authorized reassignment. The archived v67-v85 commands remain
-  non-executable history; only the named v89 A recipes are normative. B/C activation is not accepted by the A recipe.
+**Current disposition/next:** v90 is a non-activating plan-only correction based on committed v89
+  `3b6fa4017ab6cdbc31b90b0c8851bfb3f237d5c0`; product source remains
+  `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. The exact-membership v89 packet at
+  `preflight-v89/` is checksum-valid PARTIAL local evidence (manifest SHA-256
+  `9ae08e475caa3c5bd96268481bbd17219aa8b366ce99e64500c4fee0ecf63fbf`). Its post-commit readback passes only plan
+  and packet bindings; it is not G1a, G1b, G3, activation, or implementation approval. Preserve v81's G1a/G1b FAIL
+  receipts and v81-v89 packet/review artifacts unchanged as PARTIAL provenance; none authorizes implementation.
+  A remains WAITING with no product/test edit, product build, registered JUnit execution, or activation. Before A
+  readiness, close the complete R02/R12/R13 source/debit/capacity/runtime census; A01-A14 independent oracles and
+  exact/one-less snapshots; both A14 exception routes; the destination-to-assertion crosswalk, including every A11
+  graph/publication vector; candidate-cache split admission and all three `CriticalBuilder::split` caller assertions;
+  and a fresh, six-binary identity-bound baseline after activation. R05 producer behavior (creation/options, adoption,
+  repeated-offset mutation and fallback) remains owned by 1B/1C/1F; 1A-2's generic factory is context only. B/C proofs
+  are not A entry conditions absent a demonstrated A dependency. The four independent later application gates—ASCII
+  DXF read/write and native DWG read/write—plus applicable versions, both conversions, edited reopen and separate
+  R14/R2018 binary-DXF codec read/write remain hard phase-1 requirements.
+  After this v90 plan-only commit, create `preflight-v90/` with the exact packet membership, bind it to the committed
+  v90 plan blob and unchanged product base, and preserve v89 and older packets unchanged. Evidence under ignored
+  `build/evidence/` is local, never committed; do not force-add it or alter `.gitignore`. Retain the pre-existing
+  `build-asan/` untouched. Obtain same-identity G1a/G1b/G3 PASS before a separate A-only activation checkpoint;
+  only then run fresh activation-specific Release/ASan configuration, build, selector discovery and baseline lanes.
+  Agent Gibbs remains the planned first implementation writer after activation; if unavailable, stop for authorized
+  reassignment. Only the named v90 A recipes are normative; B/C activation is not accepted by the A recipe.
 
-**Active Slice-A Card (v89)**
+**Active Slice-A Card (v90)**
 
 ```text
 slice: A-budget-depth
-state: WAITING; v81 packet is checksum-valid PARTIAL provenance; both v81 G1a and G1b receipts are FAIL; v84 packet is exact-membership PARTIAL evidence with no passing gates; v82-v87 are historical plan-only checkpoints; v88 packet is checksum-valid PARTIAL local evidence but not committed and has no formal gate receipts; fresh v89 packet and same-identity reviews pending; implementation not activated
-plan_parent: 90f97587b10e91b62a98ee8cc7b833b0ce43f280 (v88; v89 is a plan-only child)
+state: WAITING; v89 packet is checksum-valid PARTIAL local evidence (manifest 9ae08e475caa3c5bd96268481bbd17219aa8b366ce99e64500c4fee0ecf63fbf); its readback covers plan/packet bindings only; G1a/G1b/G3 and activation are pending; implementation not activated
+plan_base: 3b6fa4017ab6cdbc31b90b0c8851bfb3f237d5c0 (committed v89; v90 is a plan-only child)
+v90_live_override: This is the authoritative lifecycle for the card; the later v89_preflight_contract/order text is historical and superseded. After the v90 plan commit, create a fresh exact-membership packet at `build/evidence/1A-1.b-check-topology-chain/preflight-v90/`, with seven payloads plus `packet-manifest.sha256`, bound to the committed v90 plan blob, product base below, predecessor below and all six owned paths. Preserve v89 and older packets unchanged. The v89 packet is PARTIAL; its readback verifies only plan/packet bindings. Complete the source-to-requirement/test/oracle/debit/capacity/runtime map, all A11 destination subassertions and exact snapshots, both A14 routes and stage-exit evidence before independent same-identity G1a/G1b/G3. Activation remains separate; no product edit/build or registered test before it.
+v90_preflight_order: (1) Commit this one-file plan correction as child of v89. (2) Assemble and hash the new v90 packet after commit; preserve v89. (3) Close every A-owned source and publication row, independent oracle, exact/one-less snapshot, capacity/exception disposition and exact assertion mapping. (4) Obtain independent G1a and G1b PASS on identical plan/product/packet identities. (5) Obtain G3 PASS bound to those receipts. (6) Commit a separate A activation checkpoint. (7) Only then run fresh Release/ASan baseline configure/build/listing and compare exact selectors, all six source/test binaries, cache/toolchain fingerprints, reports and skip sets. A mismatch returns to planning; it never authorizes implementation.
 product_base: 9c06e9c77b313b62cc20e9ec39c22952fee501f2
 predecessor: local topology product commit ef3ba756b52796c02b8490caedcaa48b8db69605 and direct-child roadmap checkpoint 9c06e9c77b313b62cc20e9ec39c22952fee501f2
 owner: Agent Gibbs is the first implementation writer after activation; coordinator/reviewer owns preflight, independent review, validation and Git, and does not co-edit the slice. If Gibbs is unavailable, stop for user-authorized reassignment.
@@ -1218,7 +1213,39 @@ stage_exit_matrix:
   S5_integrated_closure: output=final exact A01-A14 identity/assertion ledger, source-to-assertion allocation map, frozen source review, test/build receipts and review closure; focused cases=all A01-A14, strict-core=61 and required adjacent/full/DXF/DWG lanes; evidence=build/evidence/1A-1.b-check-topology-chain/A-budget-depth/implementation-<ATTEMPT>/stage-05; PASS=post-edit completeness reclosure, independent G2, exact Release/ASan identities and all required validation pass on the frozen tree; STOP=any open finding, drift, unexplained skip, missing assertion, or non-identical tested/committed bytes.
   Commit rule: these five stage records support debugging and readiness, not partial completion. Only the complete validated A leaf receives one product/test-only commit, immediately followed by its plan-only direct-child reconciliation; no intermediate-stage commit and no B/C work may be mixed in.
 tests:
-  A01-A13 are exact names carried forward from the current case contract into the fresh v89 map under `[lc-offsetcurve][geometry][cache-budget-accounting]`; actual test registration remains absent until activation. A01/A02 directly exercise atomic candidate-cache split admission from precharged `{cacheSpans=1, vertices=1}` to `{3,3}`: exact caps admit, and each counter independently one-short refuses without mutating either counter. They also bind proof-interval split delta `{cacheSpans=0, vertices=2}`. Stable subassertion IDs must separately map candidate-cache splits, `cuspAngle`, `addRegions`, and `joins`, including each parent examination, split/depth debit, unchanged cache-span count, exact-cap result and one-less refusal before child/output mutation. For `addRegions`, prove two pending slots are checked/reserved before proof-split debit and pushes; the paired output vectors reuse the proved Box's already admitted logical token, so reserve both destinations before append and assert no additional vertex debit or one-sided publication. For `joins`, preflight the output slot before its existing logical-record admission. Map each concrete destination and each `reserve`/append source site in the packet; source-review allocator-failure behavior rather than adding allocator hooks. Verify parent pop has no vertex debit. Helper-only coverage is insufficient.
+  A11_stepwise_readiness:
+    1. Freeze the six A-owned source/test blobs and map every destination to one source expression, logical token,
+       capacity expression, append type, public result path and failure outcome. Include the `m_order` transfer to
+       `ownOccurrences`: prove the prior ordering-slot admission covers it, the moved logical range is bounded, and
+       the move is non-throwing or staged; this transfer adds no new vertex debit.
+    2. Select existing public `analyseReferenceComponents` fixtures and independently derive expected
+       node/occurrence/edge relations; do not use implementation output as the oracle.
+    3. For each destination, derive complete prefix work plus target delta, expected output sizes/relations and
+       exact/one-less configured logical budget; include checked sums/products and already-spent prefix work.
+    4. Bind all rows to exact planned identity `TEST_CASE("reference graph and publication admissions are atomic",
+       "[lc-offsetcurve][geometry][cache-budget-accounting]")` and stable subassertions:
+       `A11.PARENT_INCIDENCE.EXACT`, `A11.PARENT_INCIDENCE.ONE_LESS_NO_HALF_PAIR`;
+       `A11.ADJACENCY.BIDIRECTIONAL`, `A11.ADJACENCY.EXACT`, `A11.ADJACENCY.ONE_LESS_NO_HALF_EDGE`;
+       `A11.PUBLIC_IDS.EXACT`, `A11.PUBLIC_IDS.ONE_LESS_NO_PARTIAL_MAP`;
+       `A11.COMPONENT.FRINGES.EXACT`, `A11.COMPONENT.FRINGES.ONE_LESS_NO_PUBLIC_RESULT`;
+       `A11.COMPONENT.SPANS.EXACT`, `A11.COMPONENT.SPANS.ONE_LESS_NO_PUBLIC_RESULT`;
+       `A11.COMPONENT.EDGES.EXACT`, `A11.COMPONENT.EDGES.ONE_LESS_NO_PUBLIC_RESULT`;
+       `A11.COMPONENT.RECORDS.EXACT`, `A11.COMPONENT.RECORDS.ONE_LESS_NO_PUBLIC_RESULT`;
+       `A11.COMPONENT.PER_COMPONENT_EDGES.EXACT`, `A11.COMPONENT.PER_COMPONENT_EDGES.ONE_LESS_NO_PUBLIC_RESULT`;
+       `A11.EVENT.PAIRS.EXACT`, `A11.EVENT.PAIRS.ONE_LESS_NO_PUBLIC_RESULT`;
+       `A11.EVENT.CRITICALS.EXACT`, `A11.EVENT.CRITICALS.ONE_LESS_NO_PUBLIC_RESULT`;
+       `A11.EVENT.SEAM.EXACT`, `A11.EVENT.SEAM.ONE_LESS_NO_PUBLIC_RESULT`;
+       `A11.EVENT.FREE_ENDS.EXACT`, `A11.EVENT.FREE_ENDS.ONE_LESS_NO_PUBLIC_RESULT`;
+       `A11.EVENT.OWN_OCCURRENCES.EXACT_TRANSFER` (no extra vertex debit).
+       The five existing A11 ownership rows remain the parent mapping; every subassertion records its row/source
+       and evidence path.
+    5. Independently review arithmetic, logical-token meaning, reservation order, no-throw/staging proof, exception
+       mapping and fixture reachability. If a configured cap cannot isolate a destination, record the bounded
+       public-API probe and decision; do not add a test-only allocator/capacity hook.
+    6. Close the full source-to-assertion ledger and per-row snapshots in `preflight-v90/`; only then request
+       separate same-identity G1a, G1b and G3 decisions. Any missing exact snapshot, destination, public refusal
+       assertion or exception disposition leaves A WAITING.
+  A01-A13 are exact names carried forward from the current case contract into the fresh v90 map under `[lc-offsetcurve][geometry][cache-budget-accounting]`; actual test registration remains absent until activation. A01/A02 directly exercise atomic candidate-cache split admission from precharged `{cacheSpans=1, vertices=1}` to `{3,3}`: exact caps admit, and each counter independently one-short refuses without mutating either counter. They also bind proof-interval split delta `{cacheSpans=0, vertices=2}`. Stable subassertion IDs must separately map candidate-cache splits, `cuspAngle`, `addRegions`, and `joins`, including each parent examination, split/depth debit, unchanged cache-span count, exact-cap result and one-less refusal before child/output mutation. For `addRegions`, prove two pending slots are checked/reserved before proof-split debit and pushes; the paired output vectors reuse the proved Box's already admitted logical token, so reserve both destinations before append and assert no additional vertex debit or one-sided publication. For `joins`, preflight the output slot before its existing logical-record admission. Map each concrete destination and each `reserve`/append source site in the packet; source-review allocator-failure behavior rather than adding allocator hooks. Verify parent pop has no vertex debit. Helper-only coverage is insufficient.
   A14 is `retained certificate callback throw preserves admitted work` under `[lc-offsetcurve][geometry][intersection-refine]` and remains one identity with two explicit subroutes. The fresh selector/source/debit maps must include (a) the public one-shot `findCertifiedIntersections` route with `workOnExit`, including its exact initial snapshot, source-derived throw point, callback count, expected final admitted-work snapshot, and original-exception assertion, and (b) the retained `cumulativeWork()` route using `singularRefineCurves(false, probe)` after a valid session exists. Its second branch is the tangent parabola `x=t, y=(t-0.5)^2`, intersecting the horizontal first branch at `t=u=0.5`; both derivatives are `(1,0)`, so the Krawczyk determinant is exactly zero and `shrink()` reaches the analytic-certificate fallback. Toggle only a deterministic `certifyIntersection` throw after session construction; no zero-derivative override is required. Assert the exact +2 parent/callback delta, `deepestRootRefinement +1`, terminal invalidation, stale-handle rejection and zero-work/no-callback retry. Derive both route snapshots independently before readiness; if either route cannot be reached through public APIs without an unsafe test seam, keep A WAITING and revise the contract rather than silently omitting it. Do not claim A14 directly triggers either outer geometry-owned `WorkBudget` catch; A04 tests atomic adoption semantics and frozen-source review verifies both outer catch/adopt/invalidate/rethrow sites. Keep the existing adjacent throwBounds regression separate; do not merge A14 into A08.
   A11 additionally owns `A11.REFERENCE_GRAPH_ADJACENCY_PAIR`, `A11.REFERENCE_GRAPH_PARENT_INCIDENCE_PAIR`, `A11.REFERENCE_PUBLIC_NODES_OCCURRENCES_PAIR`, `A11.REFERENCE_COMPONENT_SINGLE_DESTINATIONS`, and `A11.REFERENCE_EVENT_SINGLE_DESTINATIONS`. Bind these to `ReferenceEventBuilder::graph()` outgoing/incoming edge adjacency, paired `parents`/`incidence` initialization, `publish()` nodes/occurrences and pair/critical/free-end/seam outputs, plus component fringes/spans/edges/components/per-component edge lists. For each logical paired operation, checked-compute every destination's capacity, reserve all destinations, then perform one checked atomic vertex admission before either append; prove append is no-throw or stage. Single-container outputs require checked capacity and admission before insertion, with no public partial analysis on refusal. Derive exact before/delta/after work and output snapshots on independently controlled fixtures; if any path is not safely reachable, keep A WAITING and provide a source-only proof only for non-injectable allocation/max_size behavior, not as a substitute for observable admission semantics.
   Allocation-publication crosswalk: every destination that can publish work/results must have one stable source-map row, one named assertion or an explicitly justified source-only proof, and an exception/refusal outcome: candidate-cache child spans; `addRegions` pending children; paired `m_regions`/`m_segments`; `joins` output; bounds/local pending queues; root/retained/staged records; the five `ReferenceEventBuilder` A11 rows above; strict-core prepare/solve seeds, two-child queue, accepted leaves, candidate pairs, retained/non-retained events and both-mode ordering scratch. Each row records checked `size + delta`/`max_size` (including checked multiplication/summation), all destinations reserved before debit/mutation, element move/copy no-throw proof or staged publication, expected logical state and work counters if reservation/admission refuses, and exact test assertion ID. No generic wildcard row and no allocator-failure injection requirement.
@@ -1229,8 +1256,8 @@ G2/G4/G5: G2 requires independent adversarial review by a reviewer distinct from
 G4_commit_protocol: Freeze exact owned paths and tested blob hashes; require final G1a reclosure, independent G2 PASS, all targeted/build/full/format lanes, exact identities/assertions and zero unexplained failures/skips. Verify the activation checkpoint remains the actual parent, the index is empty before explicit staging, and the staged path set contains exactly the six A paths. Compare staged and tested hashes, run cached whitespace checks, inspect hook effects, commit exactly one product/test-only A leaf, then verify its actual parent, path set, committed blobs and clean owned index. No plan, evidence, unrelated path, partial stage, or B/C work enters this commit. A failed postcondition means the leaf is not done and no successor starts.
 G5_reconciliation_protocol: Immediately after the product commit and before any build/test/edit for a successor, inspect actual Git objects and filesystem state. Reconcile the product commit SHA/parent/path/blob hashes, test and build reports, source/toolchain/binary identities, all A requirement rows, statuses, unresolved findings, risks, exclusions, evidence hashes, aggregate progress, DAG edges, descendant readiness, active/next/version/packet pointers and implementation owner. Prepare exactly one roadmap-only commit as the direct child of the product commit; it records the product SHA and evidence but never its own/future SHA. Verify candidate blob equals committed plan blob, exact one-file path set, direct ancestry, unchanged product blobs, clean index/worktree scope, packet/receipt identities and stale-pointer sweep. Then reread the committed plan and independently compare every live claim to Git and evidence; write a separate semantic PASS/FAIL receipt. If any mismatch exists, block successor work, invalidate affected reviews/readiness, and make a corrective plan-only child before fresh gates. Restart completeness, plan correctness and readiness for the next slice only from the reconciled HEAD.
 recovery: keep failed attempts and ignored build-asan/evidence; no reset/cleanup; any source or scope change invalidates affected reviews and requires a new attempt.
-command_order: After formal PASS receipts, use the v89 A-only `activation_commands` block to create the separate activation checkpoint; run the v89 `foundation_activation_baseline_commands` recipe before edits. After implementation, use `foundation_review_freeze_commands`, then `foundation_validation_commands`; only after independent G2 and validation PASS use `foundation_product_commit_commands`, immediately followed by `foundation_plan_checkpoint_commands`. These named v89 A blocks are the only executable recipes for this card; archived commands remain non-executable history.
-command_inputs: Use `SLICE=A-budget-depth`, the immutable `ACTIVATION_ID`, the successful `BASELINE_ATTEMPT`, a fresh per-diff `ATTEMPT`, reviewed `CXX_COMPILER` and `QT6_CMAKE_DIR`, and `PACKET_DIR=build/evidence/1A-1.b-check-topology-chain/preflight-v89`. Never reuse an attempt or build directory; preserve failed attempts and select a new positive attempt number.
+command_order: After same-identity G1a/G1b/G3 PASS, use the v90 A-only `activation_commands` block to create the separate activation checkpoint; run the v90 `foundation_activation_baseline_commands` recipe before edits. After implementation, use `foundation_review_freeze_commands`, then `foundation_validation_commands`; only after independent G2 and validation PASS use `foundation_product_commit_commands`, immediately followed by `foundation_plan_checkpoint_commands`. These v90 A blocks are the only executable recipes for this card; earlier command variants are non-executable history.
+command_inputs: Use `SLICE=A-budget-depth`, the immutable `ACTIVATION_ID`, the successful `BASELINE_ATTEMPT`, a fresh per-diff `ATTEMPT`, reviewed `CXX_COMPILER` and `QT6_CMAKE_DIR`, and `PACKET_DIR=build/evidence/1A-1.b-check-topology-chain/preflight-v90`. Never reuse an attempt or build directory; preserve failed attempts and select a new positive attempt number.
 ```
 
 **`foundation_activation_baseline_commands` (Slice A only; run after activation, before edits)**
@@ -1246,7 +1273,7 @@ WT=/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961
 [[ "$BASELINE_ATTEMPT" =~ ^[1-9][0-9]*$ ]]
 ROOT="$WT/build/evidence/1A-1.b-check-topology-chain/A-budget-depth"
 A="$ROOT/activation-$ACTIVATION_ID"
-P="$WT/build/evidence/1A-1.b-check-topology-chain/preflight-v89"
+P="$WT/build/evidence/1A-1.b-check-topology-chain/preflight-v90"
 E="$A/activation-baseline-$BASELINE_ATTEMPT"
 cd "$WT"
 test -d "$A"
@@ -1432,7 +1459,7 @@ cp "$A/activation-files.sha256" "$E/activation-files.sha256"
 (cd "$E" && shasum -a 256 *.list.txt *.names selector-counts.txt skip-*.junit.xml skip-*.run.log skip-baseline-summary.txt configure-release.log configure-asan.log build-release.log build-asan.log exit-codes.txt activated-base.sha activation-identity.txt activation-files.sha256 product-source-files.sha256 test-binaries.sha256 cmake-caches.sha256 toolchain.txt toolchain.sha256 baseline-identity.txt > baseline-manifest.sha256)
 ```
 
-The recipe above is normative. The v89 `input-manifest.txt` records exactly one value for each required build key:
+The recipe above is normative. The v90 `input-manifest.txt` records exactly one value for each required build key:
 `cxx_compiler`, `compiler_version`, `qt6_cmake_dir`, `qt6_version`, `cmake_path`, `cmake_version`, `ninja_path`,
 `ninja_version`, `qmake6_path`, `cmake_generator=Ninja`, `cmake_build_type_release=Release`,
 `cmake_build_type_asan=Debug`, `asan_cxx_flags=-fsanitize=address -fno-omit-frame-pointer`, and
@@ -1440,7 +1467,7 @@ The recipe above is normative. The v89 `input-manifest.txt` records exactly one 
 configuration; a mismatch stops the attempt rather than silently changing the reviewed build identity. Commands
 embedded in the archived v67 card below are historical and must not be run.
 
-The completion narratives below are retained as historical evidence, not as live queue instructions. The v89 state
+The completion narratives below are retained as historical evidence, not as live queue instructions. The v90 state
 above is the sole current handoff. After every commit, reconcile active pointers and reread the committed plan against
 the codebase/evidence before resuming implementation.
 
@@ -10039,3 +10066,39 @@ Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. No product or
 - **Validation and disposition:** run `git diff --check`, source-line and ownership review for the new A11 rows,
   active-pointer sweeps, exact path/ancestry checks and product-blob comparisons before commit. Slice A remains
   WAITING; v88's PARTIAL packet and this plan correction do not authorize implementation.
+
+#### v89 → v90 (2026-10-16; deepen the five controls and reconcile the committed v89 packet)
+
+This is a non-activating plan-only correction based on committed v89
+`3b6fa4017ab6cdbc31b90b0c8851bfb3f237d5c0`. Product source remains
+`9c06e9c77b313b62cc20e9ec39c22952fee501f2`; the existing `build-asan/` remains untouched.
+
+- **1. Completeness:** make the A11 publication inventory bidirectional and executable. Bind each paired or single
+  destination to a source expression, logical token, capacity expression, public result, refusal/exception outcome,
+  exact stable subassertion and evidence path. Keep every R01-R15 and four-direction DXF/DWG/version/conversion
+  obligation assigned, including named exclusions from A.
+- **2. Correctness:** distinguish atomic logical pairs from independent records. For a paired operation, checked
+  capacity/reservation of every destination precedes one combined admission and either append; a refused pair changes
+  neither logical side nor its debit. Earlier independent work remains charged on later refusal. Derive full prefix and
+  target deltas from source, use independent expected graph relations, and assert no partial public result. Allocation
+  failure behavior and no-throw element properties require source/type review where public injection is unavailable;
+  do not infer their behavior from successful logical-cap tests.
+- **3. Sub-plan and readiness:** add the six-step A11 closure recipe and exact planned A11 test identity with stable
+  subassertions for parent/incidence, adjacency, public IDs, every component destination and every event destination.
+  The v89 packet and its post-commit readback verify only identity/membership/checksum bindings; the packet remains
+  PARTIAL, and exact per-destination snapshots, full source/debit/runtime closure, independent G1a/G1b and G3 remain
+  open. A remains WAITING; the v90 packet must be assembled only after the v90 plan commit.
+- **4. Commit after slices:** this correction contains roadmap content only. Future A implementation remains one
+  complete validated six-path product/test commit after final G1a, independent G2 and all required validation; its
+  immediate plan-only direct child records the actual outcome. The five A stages are stop/checkpoint records, not
+  intermediate implementation commits. No successor work begins before semantic read-back.
+- **5. Self-update after committing:** reconcile v89 from actual Git and packet data: v89 is HEAD, its direct parent
+  is v88, only the roadmap changed, all six product blobs remain at the pinned product base, and the v89 packet has
+  seven payloads plus its manifest with verified hashes. The packet's readback disposition is PASS for these bindings
+  only, not a formal gate. This v90 plan-only commit must be a direct child of v89 with no self/future SHA; afterward,
+  create a fresh exact-membership v90 packet and verify the committed plan blob, product base, packet hashes and live
+  pointers before requesting reviews.
+- **Validation and disposition:** run whitespace, structure/fence, active-pointer, exact path/ancestry, product-blob
+  and packet-manifest checks. No product/test edit, build, registered test, readiness PASS or activation is claimed.
+  Preserve the v89 PARTIAL packet and `build-asan/`. At precommit, the next action is the v90 plan-only commit; after
+  that commit, create and close the fresh `preflight-v90/` packet before requesting same-identity reviews.
