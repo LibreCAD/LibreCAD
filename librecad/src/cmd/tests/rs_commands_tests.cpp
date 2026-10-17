@@ -74,3 +74,12 @@ TEST_CASE("Aliases that differ only in case keep their own actions", "[commands]
     CHECK(RS_COMMANDS->cmdToAction(QStringLiteral("\u7dda")) == RS2::ActionDrawLine);
     CHECK(RS_COMMANDS->keycodeToAction(QStringLiteral("\u7dda")) == RS2::ActionDrawLine);
 }
+
+TEST_CASE("Line gap commands start Line Gap, not Break/Divide", "[commands]") {
+    (void)lc::test::application();
+
+    CHECK(RS_COMMANDS->cmdToAction("gapline") == RS2::ActionModifyLineGap);
+    CHECK(RS_COMMANDS->keycodeToAction("gl") == RS2::ActionModifyLineGap);
+    CHECK(RS_COMMANDS->cmdToAction("breakdivide") == RS2::ActionModifyBreakDivide);
+    CHECK(RS_COMMANDS->keycodeToAction("bd") == RS2::ActionModifyBreakDivide);
+}
