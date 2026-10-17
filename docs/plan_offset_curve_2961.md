@@ -24,12 +24,12 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v158 completeness, correctness, readiness, slice commits and self-updating handoff**, 2026-10-17; plan-only and non-activating. Its predecessor plan checkpoint is v157 `8c0c0e6e86011b889edee57ad9d25c0c93c43baa`; independent G5 PASS report: `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v157/g5-auditor-report.txt`, SHA-256 `ba82a548aa29d62ede1c482b74bc040b1dbf321023bc8539144dd58462833101`. v156 `8a375f4d8dd3c999da8ac6187877073ac18c4f86` remains a committed G5-FAIL historical checkpoint; preserve its report unchanged at `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v156/g5-auditor-report.txt` (SHA-256 `843e682dde9a6e00bb933bc13d8333618597977b587a8fa1322b4c3ee9e1f994`). v157 packet and recipe set were never created; no formal G1a/G1b/G3, activation, reconciled baseline or A-budget-depth implementation exists at this amendment's preparation. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; protected `build-asan/` is not inspected by instruction. This v158 revision is plan-only. Until its exact commit is observed, §65 remains authoritative and permits only this plan update; after commit, §66 becomes authoritative immediately, including while G5 is pending, and permits only the exact-identity G5 audit. Only §66's G5-PASS row permits creation of a fresh v158 packet and recipe set. This file remains the implementation source of truth.
+Plan **v159 A13/A14 oracle and readiness correction**, 2026-10-17; plan-only and non-activating. Its predecessor plan checkpoint is v158 `c8873f9c0af1b364df2ca38dd81a27a0326ad9b3`; independent G5 PASS report: `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v158/g5-auditor-report.txt`, SHA-256 `97df1e8e887e375655b7dd66ba7e7319ea19327f68b3e93e817f77ae4692dd00`. v157 `8c0c0e6e86011b889edee57ad9d25c0c93c43baa` and v156 `8a375f4d8dd3c999da8ac6187877073ac18c4f86` remain historical; preserve their reports unchanged. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; protected `build-asan/` is not inspected by instruction. This v159 revision is plan-only. Until its exact commit is observed, §66 remains authoritative and permits only this evidence-backed plan correction; after commit, §67 becomes authoritative immediately, including while G5 is pending. Only §67's exact G5-PASS row permits a fresh v159 packet and recipe set. This file remains the implementation source of truth.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY.** v157 is committed and its exact-identity independent G5 is PASS; its fresh packet/recipes have not been created. v158 is the current plan-only candidate, addressing completeness, separate plan/implementation correctness, executable per-leaf readiness, validated slice commits, and post-commit plan self-update. Same-identity G1a/G1b/G3, a separate activation checkpoint with G5 PASS, and an authorized reconciled baseline remain prerequisites before any product edit/build/registered test. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; no A-budget-depth implementation exists. Preserve prior evidence and never inspect protected `build-asan/`. Ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete; the four application file lanes, both conversions, edited reopen and binary-DXF codec support remain separate downstream obligations.
-Until v158 is committed, §65's observed v157-G5-PASS row remains the live handoff; this requested plan-only refinement is the sole permitted deviation. After the exact v158 commit is observed, §66 is authoritative immediately, including while G5 is pending; its PASS alone unlocks fresh v158 packet/recipe creation.
+Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY.** v158 is committed and its exact-identity independent G5 is PASS. Its fresh `preflight-v158/` contains eight PARTIAL source payloads but no `input-manifest.txt`, packet manifest, or recipes; preserve it unchanged as incomplete provenance. v159 is the current plan-only correction, pinning A13 fixture coefficients, callback/work traces and cap-preflight precedence, plus exact A14 exception-work expectations. Same-identity G1a/G1b/G3, a separate activation checkpoint with G5 PASS, and an authorized reconciled baseline remain prerequisites before any product edit/build/registered test. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; no A-budget-depth implementation exists. Preserve prior evidence and never inspect protected `build-asan/`. Ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete; the four application file lanes, both conversions, edited reopen and binary-DXF codec support remain separate downstream obligations.
+Until v159 is committed, §66's observed v158-G5-PASS row remains the live handoff; this evidence-backed plan-only correction is the sole permitted deviation. After the exact v159 commit is observed, §67 is authoritative immediately, including while G5 is pending; its PASS alone unlocks fresh v159 packet/recipe creation.
 
 Historical v68 amendment: clarifies file-support acceptance and retains the v67 product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, with all four recorded product source/test hashes unchanged. The exact-membership `preflight-v67/` packet is PARTIAL provenance (latest packet-manifest SHA-256 `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`), not a formal gate receipt. The G4 hidden-cusp clearance proof and C50 correction remain normative: the cusp-only candidate is separated from all visible spans and must refuse as `OffCurve` before terminal/topology matching; B07 separately tests absence of a cusp `ReferenceTerminal`, and C36 retains fully witnessed `Topology` coverage. The five controls remain mandatory per slice: separate completeness and plan-correctness gates; frozen-tree implementation correctness; an executable, independently reviewed sub-plan/readiness decision; one validated product commit followed by its plan-only reconciliation; and a post-commit live-state audit/self-update before any successor. Slice A remains WAITING; G1 completeness, G1 plan correctness, Gate-3 readiness and activation are not passed. A/B/C baseline discovery remains zero and strict-core remains 61 matching normalized identities in Release/ASan; no registered tests ran. No product/test edit, build, JUnit execution, formal Gate PASS, readiness PASS or activation occurred. DXF read, DXF write, DWG read and DWG write are separate open application obligations; both conversion directions and the separate R14/R2018 binary-DXF codec obligation also remain open. Geometry-only checker evidence satisfies none.
 Historical v81 reconciled the six-path A scope, A14 selector, split-debit oracle, activation-bound test identities and post-edit validator. Its packet and review findings are preserved as immutable provenance; its live pointers are superseded below. The five control families and six gate decisions (G1a/G1b/G2/G3/G4/G5) remain independently recorded and fail-closed. §0.5 retains detailed leaf specifications and historical handoffs; §29 is the sole authority for the current gate state and immediate next action. Preserve the v81 and v80 packets/reviews, the v77 PARTIAL packet and invalid v79 draft. The four independent application obligations—DXF read, DXF write, DWG read and DWG write—plus both conversions and binary-DXF codec work remain later 1E gates.
@@ -274,9 +274,9 @@ Execution states: `pending`, `in progress`, `validated`, `committed — reconcil
 `done — <implementation sha>, <evidence id>, <date>`, `needs revision`, `needs decision`, `blocked`, and
 `deferred — user publication action`. Readiness is separate (§0.3): `ready`, `conditional`, or `waiting`.
 A commit alone does not mean done; verification, review and the post-commit plan checkpoint are required.
-The latest checkpoint section whose exact commit matches its state table controls the live transition, including while its G5 is pending; a pending row allows only that exact audit. v157 is the observed parent with G5 PASS (report SHA-256 `ba82a548aa29d62ede1c482b74bc040b1dbf321023bc8539144dd58462833101`); v158 is this plan-only amendment. When HEAD matches v158, §66 supersedes §65 immediately and controls status/next action. Section 56 supplies bounded Git-object/protected-path procedures only; older state/next-action claims are historical. v156 G5 remains FAIL with report SHA-256 `843e682dde9a6e00bb933bc13d8333618597977b587a8fa1322b4c3ee9e1f994`; v155 G5 is PASS. No v157/v158 packet, formal G1a/G1b/G3, activation, baseline or A-budget-depth implementation exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. A next action changes only when a matching receipt proves its prerequisite; a failed or missing receipt blocks successors. Sections 39-65 preserve technical contracts and historical handoffs, but no superseded state sentence authorizes work. Do not inspect protected `build-asan/`; report `not inspected by instruction`. Sections 0.3-0.8 and §30 remain technical/leaf references; §56 is normative only for its bounded audit procedure, and §66 controls live status once its commit is observed.
+The latest checkpoint section whose exact commit matches its state table controls the live transition, including while its G5 is pending; a pending row allows only that exact audit. v158 is the observed parent with G5 PASS (report SHA-256 `97df1e8e887e375655b7dd66ba7e7319ea19327f68b3e93e817f77ae4692dd00`); v159 is this plan-only correction. When HEAD matches v159, §67 supersedes §66 immediately and controls status/next action. Section 56 supplies bounded Git-object/protected-path procedures only; older state/next-action claims are historical. v156 G5 remains FAIL with report SHA-256 `843e682dde9a6e00bb933bc13d8333618597977b587a8fa1322b4c3ee9e1f994`; v157 G5 is PASS. The v158 preflight is incomplete provenance; no formal G1a/G1b/G3, activation, baseline or A-budget-depth implementation exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. A next action changes only when a matching receipt proves its prerequisite; a failed or missing receipt blocks successors. Sections 39-66 preserve technical contracts and historical handoffs, but no superseded state sentence authorizes work. Do not inspect protected `build-asan/`; report `not inspected by instruction`. Sections 0.3-0.8 and §30 remain technical/leaf references; §56 is normative only for its bounded audit procedure, and §67 controls live status once its commit is observed.
 
-Until v158 is committed, §65's v157-G5-PASS row is the committed live handoff. This explicitly requested plan-only amendment is the sole action being taken. When HEAD observes the exact v158 checkpoint, §66 becomes the live handoff immediately; its pending-G5 row permits only independent audit.
+Until v159 is committed, §66's observed v158-G5-PASS row remains the live handoff. This evidence-backed plan-only correction is the sole action being taken. When HEAD observes the exact v159 checkpoint, §67 becomes the live handoff immediately; its pending-G5 row permits only independent audit.
 
 | Step | Title | PR | Depends on | Size (LOC, product + tests) | Status |
 |---|---|---|---|---|---|
@@ -779,20 +779,30 @@ vector. Preserve the size check before per-segment visits, `next()` and geometri
 before retained private setup or zero total allocation. The provider-owned vector itself remains outside the resource
 cap and no hard allocator/RSS ceiling is claimed.
 
-The A13 fixture uses a valid one-branch provider with two contiguous straight segments and no extra generated-item
-records after the mandatory seeds. For ordinary strict `findIntersections()`, cap 2 is the exact boundary and cap 1
-is one-less; the exact case completes with two segment visits and the independently expected `next()`/geometry trace,
-while the one-less case returns `LimitExceeded` before visits or callbacks with `generatedItems==0`. For retained
-`findCertifiedIntersections()`, cap 4 is the exact boundary (two fixed items plus two segment seeds) and cap 3 is
-one-less; the exact case yields the expected session, while one-less returns `LimitExceeded` with `generatedItems==2`,
-no visits, no `next()`/geometry callbacks and no published session. In both one-less cases, `segments()` and
-`branchCount()` are each observed exactly once because the borrowed view and metadata count precede the cardinality
-guard. Add a separate cap-1 retained case proving the outer `maxGeneratedItems<2` refusal occurs before either
-accessor or private allocation. Add a separate cap-0 retained case asserting `InvalidInput`, also before either
-accessor or private allocation. Reset fixture counters before each query; assert empty public output/session on every
-refusal. Source review, not allocator/RSS measurement, verifies the borrowed member and owner lifetime. Metadata-
-accessor exceptions currently propagate; preserve that behavior and do not label it a documented API policy unless
-the interface explicitly says so.
+The A13 fixture is exactly one open branch (`branchCount()==1`, `next(0)==-1`) with two contiguous segments:
+`{branch=0,t0=0,t1=1,x={0,1,0,0},y={0,0,0,0}}` and
+`{branch=0,t0=1,t1=2,x={0,1,0,0},y={0,0,0,0}}`, using the test provider's cubic-coefficient convention
+`x(t)=c0+t(c1+t(c2+t*c3))` and likewise for y. Thus both pieces represent the exact line `P(t)=(t,0)` on
+their declared intervals. Branch count is validation metadata and consumes no generated-item token; only each
+preparation segment root consumes one. Independently derive two validated segment visits, one `next(0)` call, six
+point evaluations, eight bounds (three point bounds plus one interval bound per segment), two accepted leaves, and
+one same-branch candidate-pair examination culled by the positive projection proof. The expected query has no event,
+root, refinement pair or certificate callback; `candidateBoxPairs==1` and `totalBoxPairs==1`.
+
+For ordinary strict `findIntersections()`, cap 2 is exact: `generatedItems==2`, the counts above complete, and the
+public intersection list is empty with `Ok`. Cap 1 is one-less: `LimitExceeded`, `generatedItems==0`, no segment
+visit, `next()` or geometry callback, and empty output. For retained `findCertifiedIntersections()`, cap 4 is exact
+(two fixed session/issuer items plus two segment-root items): the same successful provider trace and work counts
+produce an `Ok` session with zero retained roots. Cap 3 is one-less: `LimitExceeded`, `generatedItems==2`, no
+per-segment visit, `next()` or geometry callback, and no published session. In both cap-1/3 cardinality refusals,
+`segments()` and `branchCount()` are each observed once, in that order. This establishes the intended precedence:
+after null/options/initial-cap guards and metadata access, compare segment-root capacity with remaining generated-item
+capacity before scanning per-segment metadata or invoking `next()`; malformed segment details may therefore be
+masked by insufficient capacity. Keep a separate sufficient-cap malformed-segment case if asserting `InvalidInput`
+validation precedence. Retained cap 1 must hit the outer `<2` guard before accessors/private setup; cap 0 must remain
+distinct `InvalidInput`, also before accessors/private setup. Reset fixture counters per subcase; assert exact work,
+callback trace, status and empty result/session on every refusal. Source review, not allocator/RSS measurement, verifies
+the borrowed member and owner lifetime. Metadata-accessor exceptions propagate unchanged.
 
 **Callback-debit ownership (normative; resolves the v72 packet contradiction).** Every virtual provider callback
 dispatched by the strict solver to `certifyInjective`, `certifyIntersection` or `certifyOccurrenceIdentity` consumes
@@ -834,6 +844,34 @@ throws from `segments()`/`branchCount()` with no geometric callback or result/se
 propagation, retained invalidation and no-work retry. Frozen-source review must inspect initialization/publication ordering
 and both geometry-owned transfer sites; no `contract()` result is fabricated on throw. Preserve the distinctions
 between candidate examinations, refinement boxes, certificate/identity work and sorter comparisons.
+
+**A14 frozen fixture and expected snapshots.** Use a one-branch, one-segment open line `P(t)=(t,0)`, `t in [0,1]`,
+with `next(0)=-1`, for the one-shot exception cases. The retained contraction case uses the independent tangent
+fixture `A(t)=(t,0)`, `B(u)=(u,(u-1/2)^2)`, both parameters in `[0,1]`, two open branches, and one analytically
+certified unique tangent at `(t,u)=(1/2,1/2)` with isolation `[1/4,3/4]^2`; each derivative there is the nonzero
+vector `(1,0)`. Its singular Jacobian makes Krawczyk inconclusive and reaches the analytic fallback without a
+zero-derivative override. Record provider counters separately from work-budget counters.
+
+For the one-shot query, `workOnExit` is zero-initialized before the first virtual metadata access and receives all
+admitted work exactly once before either return or rethrow. If `segments()` throws, expect generatedItems=2 (fixed
+session/issuer setup), one `segments()` call, and no branchCount/visit/next/geometry callback. If `branchCount()`
+throws, expect generatedItems=2, one `segments()` and one `branchCount()` call, and no visits/next/geometry callback.
+If the one-segment `next(0)` callback throws, expect generatedItems=2, validationSegmentVisits=1,
+validationNextCalls=1, and no bound/evaluate/certificate callback. If the first `bound()` in preparation throws,
+expect generatedItems=3 (two fixed items plus that segment's root), validationSegmentVisits=1,
+validationNextCalls=1, exactly one bound attempt and zero evaluate/certificate calls. All four routes preserve the
+original exception, publish no result/session, and expose exact zero pair/comparison/depth work except any explicitly
+listed admission; each is a separate subcase within A14, not an additional Catch2 identity.
+
+For the tangent retained query before fault injection, independently sum two fixed items, two segment roots, one
+event and one retained-root record: generatedItems=6, leaves=2, candidateBoxPairs=1, refinementBoxPairs=1,
+certificateBoxPairs=1, totalBoxPairs=3, and one root. First obtain and verify the valid session, then enable a throw
+on exactly the second `certifyIntersection()` invocation during `contract()`. The contraction admits one parent pair
+and one callback pair before callback entry; the callback throws. The retained cumulative delta is exactly
+certificateBoxPairs=2 and totalBoxPairs=2, so totals become candidate=1, refinement=1, certificate=3, total=5;
+generatedItems remains 6 and deepestRootRefinement becomes 1. Preserve the original exception; no contraction result
+or snapshot is returned; the credential/root becomes unusable; `cumulativeWork()` remains readable and unchanged by
+a later no-work retry. The one-shot `workOnExit` pointer is not reused to report this later session-contract work.
 
 Account provider `bound`/`evaluate` invocations by a named already-admitted parent and record the maximum callback
 multiplicity for every branch: one preparation root token owns its three point-bound and three point-evaluation
@@ -17473,3 +17511,119 @@ v107 plan-correctness review.
 
     No product edit, build, registered-test discovery/execution, activation or baseline is authorized by this v158
     plan-only amendment. Its G5-PASS row authorizes only fresh packet/recipe construction.
+
+67. **v159 A13/A14 oracle and readiness correction (plan-only; non-activating).** This direct-child correction
+    resolves the independently found gaps in A13's fixture identity/work oracle and A14's exception snapshots. It
+    does not change product scope or the six-path A boundary. Once the exact v159 commit is observed, this section
+    supersedes §66 as the live transition authority, including while v159 G5 is pending. Before that commit, §66's
+    v158-G5-PASS row is the live authority and permits only this plan correction. A pending or failed v159 G5 does
+    not authorize packet creation, review, activation or product work. Preserve all prior plans and evidence; never
+    inspect protected `build-asan/`.
+
+    **Observed parent and preflight.** The parent is v158 commit
+    `c8873f9c0af1b364df2ca38dd81a27a0326ad9b3`, a plan-only direct child of v157
+    `8c0c0e6e86011b889edee57ad9d25c0c93c43baa`; its independent G5 report is PASS at
+    `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v158/g5-auditor-report.txt` with SHA-256
+    `97df1e8e887e375655b7dd66ba7e7319ea19327f68b3e93e817f77ae4692dd00`. Product source remains
+    `9c06e9c77b313b62cc20e9ec39c22952fee501f2` and the six owned A blobs are unchanged. The fresh v158 preflight
+    directory contains eight of the nine named payload drafts; it has no `input-manifest.txt`, packet manifest or
+    recipes and is not exact-membership sealed. Preserve it byte-for-byte as PARTIAL provenance; do not relabel,
+    finish, or use it as a v159 packet or gate receipt. No formal G1a/G1b/G3, activation checkpoint, reconciled
+    baseline, product edit/build or registered-test discovery/execution is evidenced.
+
+    **A13 independent fixture and precedence.** The normative exact provider is one open branch with
+    `branchCount()==1`, `next(0)==-1`, and two contiguous polynomial segments with the coefficient convention
+    `P(t)=c0+t(c1+t(c2+t*c3))`: segment 0 is `{branch=0,t0=0,t1=1,x={0,1,0,0},y={0,0,0,0}}`; segment 1 is
+    `{branch=0,t0=1,t1=2,x={0,1,0,0},y={0,0,0,0}}`. Both exactly represent `P(t)=(t,0)`. `branchCount()` is
+    validation metadata and is not a generated-item token. The independently expected complete trace is two segment
+    visits, one `next(0)` call, six point evaluations, eight bounds, two prepared leaves, one same-branch candidate
+    pair culled by positive projection, candidateBoxPairs=1 and totalBoxPairs=1, with no refinement pair, analytic
+    certificate, event or retained root. Ordinary strict cap 2 succeeds with generatedItems=2 and empty intersections;
+    cap 1 returns `LimitExceeded` with generatedItems=0 before visits/next/geometry. Retained cap 4 succeeds with
+    generatedItems=4 (two fixed session/issuer tokens plus two segment-root tokens), the same provider trace, and an
+    `Ok` session with zero roots. Retained cap 3 returns `LimitExceeded` with generatedItems=2, no per-segment
+    visits/next/geometry and no session. `segments()` and then `branchCount()` are each called exactly once for these
+    cap-at-least-initial checks. Cap 1 retained is refused before either accessor/setup; cap 0 remains distinct
+    `InvalidInput`, also before either accessor/setup.
+
+    The intended precedence is fixed: after null/options/initial-cap guards, read the borrowed segment view and
+    branch metadata once; compare segment-root capacity with remaining generated-item capacity using checked
+    subtraction before per-segment validation or `next()` callbacks. Therefore insufficient capacity may mask
+    malformed segment metadata. A separate sufficient-cap malformed-input discriminator must assert `InvalidInput`;
+    no test may conflate that case with cap refusal. This resolves the previous open branch-versus-segment token
+    question: segment preparation roots consume tokens; branch count and the uncharged `solve()` seed do not.
+
+    **A14 independent throw snapshots.** Retain one test identity with distinct subcases and reset provider counters
+    for each. For one-shot query exceptions, use a one-branch, one-segment open line `P(t)=(t,0)`, `t in [0,1]`,
+    `next(0)=-1`; `workOnExit` starts at zero before any provider callback and is published once on throw. A
+    `segments()` throw leaves generatedItems=2 (fixed session/issuer setup), calls `segments()` once and invokes no
+    later accessor, visit, next or geometry callback. A `branchCount()` throw leaves generatedItems=2, calls
+    `segments()` and `branchCount()` once each, and invokes no visit/next/geometry callback. A `next(0)` throw leaves
+    generatedItems=2, validationSegmentVisits=1, validationNextCalls=1, and no bound/evaluate/certificate call. The
+    first preparation `bound()` throw leaves generatedItems=3 (two fixed session/issuer items plus the admitted
+    segment root), validationSegmentVisits=1, validationNextCalls=1, one bound attempt, no evaluate/certificate
+    call, and no pair, ordering or depth work. All four preserve the original exception and publish no session/result.
+
+    For the retained contraction throw, use the independent tangent equations `A(t)=(t,0)` and
+    `B(u)=(u,(u-1/2)^2)` on `[0,1]`, with two open branches. Their only common point is `(1/2,1/2)` and both
+    derivatives are `(1,0)`; the singular Jacobian makes Krawczyk inconclusive. The provider's unique tangency proof
+    uses isolation `[1/4,3/4]^2`. Before fault injection, independently sum two fixed items, two segment roots, one
+    event and one retained-root record: generatedItems=6, leaves=2, candidateBoxPairs=1, refinementBoxPairs=1,
+    certificateBoxPairs=1, totalBoxPairs=3 and one root. After obtaining a valid session, throw from exactly the
+    analytic fallback's second `certifyIntersection()` call during `contract()`. The parent contraction and
+    dispatched callback each admit one pair before work; after the throw cumulative totals are generatedItems=6,
+    candidate=1, refinement=1, certificate=3, totalBoxPairs=5, deepestRootRefinement=1. No contraction result or
+    new snapshot is returned; the retained root credential is unusable; `cumulativeWork()` remains readable and a
+    retry spends no work or invokes no callback. The one-shot `workOnExit` pointer reports the earlier query only
+    and is not reused for later retained `contract()` work.
+
+    **Preflight and next action.** v159 remains plan-only and non-activating. After v159 commit, obtain independent
+    G5 for its exact commit/parent/path/blob and preserve the auditor-authored report. Only a matching G5 PASS permits
+    creation of fresh `preflight-v159/` and `recipes-v159/`; rederive every payload from current source and the v159
+    plan, do not copy the v158 draft, and keep the packet PARTIAL until all source/oracle/identity/registration rows
+    close. Then obtain distinct same-identity G1a completeness, G1b plan correctness and G3 executable-readiness
+    PASS receipts. Create a separate activation checkpoint with independent G5 PASS, then run and reconcile the
+    authorized baseline. Only when A is READY after that baseline may Agent Gibbs be the first implementation writer.
+    Continue the validated product-only commit, immediate direct-child plan reconciliation and independent G5 loop
+    after every slice; no successor begins before reconciliation passes.
+
+    **Canonical v159 pre-commit snapshot.** Do not insert the future commit or G5 outcome.
+
+    ```text
+    plan_revision: v159
+    expected_parent: c8873f9c0af1b364df2ca38dd81a27a0326ad9b3
+    plan_commit: candidate; resolve only from observed HEAD
+    product_source_base: 9c06e9c77b313b62cc20e9ec39c22952fee501f2
+    active_leaf: A-budget-depth
+    execution_state: WAITING
+    v158_G5: PASS; report SHA-256 97df1e8e887e375655b7dd66ba7e7319ea19327f68b3e93e817f77ae4692dd00
+    v158_packet: PARTIAL; eight payload drafts, no input-manifest or packet manifest
+    v158_recipes: ABSENT
+    v159_G5: NOT_ISSUED_UNTIL_COMMIT
+    v159_packet: ABSENT
+    v159_recipes: ABSENT
+    G1a_completeness: WAITING
+    G1b_plan_correctness: WAITING
+    G2_implementation_correctness: NOT_APPLICABLE_BEFORE_EDIT
+    G3_leaf_readiness: WAITING
+    G4_product_commit: NOT_APPLICABLE_BEFORE_VALIDATION
+    activation_checkpoint: NONE
+    activation_G5: NONE
+    reconciled_baseline: NONE
+    protected_build_asan: NOT_INSPECTED_BY_INSTRUCTION
+    next: verify and commit this plan-only candidate; after observed v159 commit, obtain exact-identity G5 only
+    ```
+
+    | Observed state | Sole permitted next action | Blocked until it passes |
+    |---|---|---|
+    | HEAD is v158; v159 is this candidate | Verify direct parent, sole roadmap path, whitespace and unchanged six A blobs; commit only the plan. | v159 packet/recipes, formal reviews, activation, baseline and product work. |
+    | HEAD is v159; exact v159 G5 report absent | Obtain independent G5 for exact commit/parent/path/blob; preserve report under `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v159/`. | Packet/recipes, G1a/G1b/G3, activation, baseline and product work. |
+    | v159 G5 FAIL | Preserve report/hash; make a corrective plan-only direct child and repeat affected audits. | Every packet, review, activation, baseline and product action. |
+    | v159 G5 PASS; v159 packet/recipes absent | Create fresh exact-membership v159 packet/recipes from current source; keep PARTIAL until every row closes. | Formal G1a/G1b/G3, activation, baseline and product work. |
+    | Packet/recipes incomplete, stale or mismatched | Continue bounded read-only closure or revise the plan for an evidenced defect; regenerate affected artifacts/reviews. | Readiness, activation, baseline and product work. |
+    | Packet COMPLETE and recipes audited; same-identity G1a/G1b/G3 absent/failed/mismatched | Obtain distinct same-identity reviews or repair affected plan/evidence and repeat gates. | Activation, baseline and product work. |
+    | Same-identity G1a/G1b/G3 PASS | Create a separate activation checkpoint, pass its independent G5, then run and reconcile the authorized baseline. | Product edits/builds/registered tests until baseline reconciliation. |
+    | Activation G5 PASS and baseline reconciled; A READY | Gibbs starts the reviewed six-path A implementation; follow frozen-tree validation, G2, G4 and immediate plan/G5 reconciliation. | Every successor until A's product commit and reconciliation G5 PASS. |
+
+    No product edit, build, registered-test discovery/execution, activation or baseline is authorized by this v159
+    plan-only correction. Its exact G5-PASS row authorizes only fresh packet/recipe construction.
