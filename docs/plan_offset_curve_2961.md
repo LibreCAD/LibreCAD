@@ -24,11 +24,11 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v172 phase-bound readiness and baseline recovery correction**, 2026-10-17; plan-only and non-activating. v171 is committed at `78762cf92e3d36877dcf339786ebd67a4aec499b` (parent `19f570580a33a9279a232dcb04108fb71a80c876`, plan blob `597cae7325a0fb84f75380fd84569dac3415d790`, plan SHA-256 `641173bd1621a67e3e77120a46c99818a34e0855c871230e62187a48547c9bd2`) and its exact-identity independent G5 FAIL report is preserved unchanged at `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v171/g5-auditor-report.txt` (SHA-256 `7f2a439743cca0e44f7fa9532987849ec5894af5880a37f179a7f2c6dd9182a1`). v172 separates pre-activation review repair from activation audit, requires fresh same-identity readiness before Agent Gibbs starts, and distinguishes an unrun baseline from failed/mismatched baseline evidence. The packet/recipe intermediate states and five controls remain; product scope and technical criteria do not change. Section 80 is the sole live transition authority for v172 once committed; resolve commit/G5/next action only from observed HEAD and exact receipts. The four PARTIAL `inputs-v168` files remain immutable historical provenance; v168-v172 packet and recipe roots are absent. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; protected `build-asan/` is not inspected by instruction. This file remains the implementation source of truth.
+Plan **v173 reviewer-identity disjointness correction**, 2026-10-17; plan-only and non-activating. v172 is committed at `561f29a71301c46f7ed8f0e53eb0bc350b74a0f8` (parent `78762cf92e3d36877dcf339786ebd67a4aec499b`, tree `1071856645abf72369e690f06209b6b36310db55`, plan blob `53252687538bb9d3a3da07df8e345e5376e0621f`, plan SHA-256 `6d1c12808413857c8ae7f42429d1ec13d4dad0053fd1b77a1d46511b0304f471`) and its exact-identity independent G5 FAIL report is preserved unchanged at `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v172/g5-auditor-report.txt` (SHA-256 `5980ea846b7616312868579e2e9d5d7cf5da37f21302b5128467024a814e30d7`). Finding: the v172 pending-review row failed to exclude mismatched reviewer identities, overlapping the repair row. v173 makes review-pending eligible only when every present receipt is current, identity-matched PASS and finding-free, while mismatches route exclusively to repair. The five controls and implementation scope remain unchanged. Section 81 is the sole live transition authority for v173 once committed; resolve commit/G5/next action only from observed HEAD and exact receipts. The four PARTIAL `inputs-v168` files remain immutable historical provenance; v168-v173 packet and recipe roots are absent. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; protected `build-asan/` is not inspected by instruction. This file remains the implementation source of truth.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY.** v172 is the current plan revision; its commit/audit state and sole permitted next action are determined from observed HEAD and §80, not from this summary. Preserve the v171 G5 FAIL report and all earlier audit reports unchanged. The four PARTIAL `inputs-v168` manifests are historical and plan-bound; do not promote, relabel, or reuse them. No v168-v172 preflight packet or recipe bundle exists. Preserve the v158 preflight as eight PARTIAL payloads without `input-manifest.txt` or packet manifest. No product implementation, build, test discovery, registered-test execution, formal G1a/G1b/G3, activation or reconciled baseline exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; preserve prior evidence and never inspect protected `build-asan/`. Slice A remains WAITING; ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete, as do the four application file lanes, both conversions, edited reopen and binary-DXF codec support.
+Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY.** v173 is the current plan revision; its commit/audit state and sole permitted next action are determined from observed HEAD and §81, not from this summary. Preserve the v172 and all earlier G5 reports unchanged. The four PARTIAL `inputs-v168` manifests are historical and plan-bound; do not promote, relabel, or reuse them. No v168-v173 preflight packet or recipe bundle exists. Preserve the v158 preflight as eight PARTIAL payloads without `input-manifest.txt` or packet manifest. No product implementation, build, test discovery, registered-test execution, formal G1a/G1b/G3, activation or reconciled baseline exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; preserve prior evidence and never inspect protected `build-asan/`. Slice A remains WAITING; ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete, as do the four application file lanes, both conversions, edited reopen and binary-DXF codec support.
 
 Historical v68 amendment: clarifies file-support acceptance and retains the v67 product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, with all four recorded product source/test hashes unchanged. The exact-membership `preflight-v67/` packet is PARTIAL provenance (latest packet-manifest SHA-256 `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`), not a formal gate receipt. The G4 hidden-cusp clearance proof and C50 correction remain normative: the cusp-only candidate is separated from all visible spans and must refuse as `OffCurve` before terminal/topology matching; B07 separately tests absence of a cusp `ReferenceTerminal`, and C36 retains fully witnessed `Topology` coverage. The five controls remain mandatory per slice: separate completeness and plan-correctness gates; frozen-tree implementation correctness; an executable, independently reviewed sub-plan/readiness decision; one validated product commit followed by its plan-only reconciliation; and a post-commit live-state audit/self-update before any successor. Slice A remains WAITING; G1 completeness, G1 plan correctness, Gate-3 readiness and activation are not passed. A/B/C baseline discovery remains zero and strict-core remains 61 matching normalized identities in Release/ASan; no registered tests ran. No product/test edit, build, JUnit execution, formal Gate PASS, readiness PASS or activation occurred. DXF read, DXF write, DWG read and DWG write are separate open application obligations; both conversion directions and the separate R14/R2018 binary-DXF codec obligation also remain open. Geometry-only checker evidence satisfies none.
 Historical v81 reconciled the six-path A scope, A14 selector, split-debit oracle, activation-bound test identities and post-edit validator. Its packet and review findings are preserved as immutable provenance; its live pointers are superseded below. The five control families and six gate decisions (G1a/G1b/G2/G3/G4/G5) remain independently recorded and fail-closed. §0.5 retains detailed leaf specifications and historical handoffs; §29 is the sole authority for the current gate state and immediate next action. Preserve the v81 and v80 packets/reviews, the v77 PARTIAL packet and invalid v79 draft. The four independent application obligations—DXF read, DXF write, DWG read and DWG write—plus both conversions and binary-DXF codec work remain later 1E gates.
@@ -273,9 +273,9 @@ Execution states: `pending`, `in progress`, `validated`, `committed — reconcil
 `done — <implementation sha>, <evidence id>, <date>`, `needs revision`, `needs decision`, `blocked`, and
 `deferred — user publication action`. Readiness is separate (§0.3): `ready`, `conditional`, or `waiting`.
 A commit alone does not mean done; verification, review and the post-commit plan checkpoint are required.
-The latest checkpoint section matching the observed plan identity controls the live transition, including while its G5 is pending; a pending row permits only the action named for that exact state. v160-v171 checkpoints and their PASS/FAIL receipts are recorded in §§69-79; v171 is historical with exact G5 FAIL (report SHA-256 `7f2a439743cca0e44f7fa9532987849ec5894af5880a37f179a7f2c6dd9182a1`), and v172 is the current plan revision. Section 80 alone determines the permitted v172 action from observed HEAD and its exact matching G5 receipt; §§76-79 are immutable history. Section 56 supplies bounded Git-object/protected-path procedures only; older state/next-action claims are historical. The v158 preflight remains incomplete provenance; v168's four input manifests are PARTIAL historical provenance; no v168-v172 packet or recipes, formal G1a/G1b/G3, activation, reconciled baseline or A-budget-depth implementation exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. A next action changes only when a matching receipt proves its prerequisite; a failed or missing receipt blocks successors. Sections 39-79 preserve technical contracts and historical handoffs, but no superseded state sentence authorizes work. Do not inspect protected `build-asan/`; report `not inspected by instruction`. Sections 0.3-0.8 and §30 remain technical/leaf references; §56 is normative only for its bounded audit procedure, and §80 alone controls the live action for the v172 checkpoint.
+The latest checkpoint section matching the observed plan identity controls the live transition, including while its G5 is pending; a pending row permits only the action named for that exact state. v160-v172 checkpoints and their PASS/FAIL receipts are recorded in §§69-80; v171 is historical with exact G5 FAIL (report SHA-256 `7f2a439743cca0e44f7a9532987849ec5894af5880a37f179a7f2c6dd9182a1`), v172 is historical with exact G5 FAIL (report SHA-256 `5980ea846b7616312868579e2e9d5d7cf5da37f21302b5128467024a814e30d7`), and v173 is the current plan revision. Section 81 alone determines the permitted v173 action from observed HEAD and its exact matching G5 receipt; §§76-80 remain immutable history. Section 56 supplies bounded Git-object/protected-path procedures only; older state/next-action claims are historical. The v158 preflight remains incomplete provenance; v168's four input manifests are PARTIAL historical provenance; no v168-v173 packet or recipes, formal G1a/G1b/G3, activation, reconciled baseline or A-budget-depth implementation exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. A next action changes only when a matching receipt proves its prerequisite; a failed or missing receipt blocks successors. Sections 39-80 preserve technical contracts and historical handoffs, but no superseded state sentence authorizes work. Do not inspect protected `build-asan/`; report `not inspected by instruction`. Sections 0.3-0.8 and §30 remain technical/leaf references; §56 is normative only for its bounded audit procedure, and §81 alone controls the live action for the v173 checkpoint.
 
-Select exactly one §80 row from observed HEAD, artifact presence/completeness, and the exact matching G5/review receipts. The matching row alone authorizes its stated action; if zero or multiple rows match, stop for a plan-only clarification. No status sentence independently authorizes packet, review, activation, baseline, build/test or product work.
+Select exactly one §81 row from observed HEAD, artifact presence/completeness, and the exact matching G5/review receipts. The matching row alone authorizes its stated action; if zero or multiple rows match, stop for a plan-only clarification. No status sentence independently authorizes packet, review, activation, baseline, build/test or product work.
 
 | Step | Title | PR | Depends on | Size (LOC, product + tests) | Status |
 |---|---|---|---|---|---|
@@ -18926,3 +18926,86 @@ The provider's unique tangency proof
     sequence, with rejected G4 attempts on a bounded recovery path. If zero or
     multiple rows match, preserve evidence and stop for plan correction; do not infer precedence. `build-asan/` remains
     not inspected by instruction.
+
+81. **v173 reviewer-identity disjointness correction (plan-only; non-activating).** This direct child records the
+    exact v172 G5 failure and repairs its single review-state overlap. Until v173 is committed and its exact G5 passes,
+    no v173 packet/recipe, formal review, activation, baseline, build/test, or product action is permitted. No product
+    scope, technical acceptance, or implementation owner changes.
+
+    **Preserved v172 identity and finding.** v172 is commit `561f29a71301c46f7ed8f0e53eb0bc350b74a0f8`, parent
+    `78762cf92e3d36877dcf339786ebd67a4aec499b`, tree `1071856645abf72369e690f06209b6b36310db55`, sole changed path
+    `docs/plan_offset_curve_2961.md`, blob `53252687538bb9d3a3da07df8e345e5376e0621f`, and plan SHA-256
+    `6d1c12808413857c8ae7f42429d1ec13d4dad0053fd1b77a1d46511b0304f471`. Its independent G5 report is preserved
+    unchanged at `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v172/g5-auditor-report.txt` (SHA-256
+    `5980ea846b7616312868579e2e9d5d7cf5da37f21302b5128467024a814e30d7`): FAIL because a mismatched reviewer receipt
+    could match both the pending-review and repair rows. The exact v172 identity, prior v170/v171 reports, v168
+    partial-manifest hashes and six A-owned product blobs passed the audit. Preserve all reports and those six blobs.
+
+    **Canonical v173 snapshot.** Resolve plan commit and all receipt identities from observed Git/evidence only:
+
+    ```text
+    plan_revision: v173
+    expected_parent: 561f29a71301c46f7ed8f0e53eb0bc350b74a0f8
+    parent_plan_blob: 53252687538bb9d3a3da07df8e345e5376e0621f
+    plan_commit: resolve only from observed HEAD
+    plan_change_scope: make preactivation review-pending and review-repair conditions mutually exclusive
+    product_source_base: 9c06e9c77b313b62cc20e9ec39c22952fee501f2
+    active_leaf: A-budget-depth
+    execution_state: WAITING
+    v172_G5: FAIL; report SHA-256 5980ea846b7616312868579e2e9d5d7cf5da37f21302b5128467024a814e30d7
+    v168_partial_inputs: preserve unchanged; hashes in §77
+    v168_v169_v170_v171_v172_packets: ABSENT
+    v168_v169_v170_v171_v172_recipes: ABSENT
+    v173_G5: NOT_ISSUED_UNTIL_COMMIT
+    v173_packet: ABSENT
+    v173_recipes: ABSENT
+    G1a_pre: WAITING
+    G1b_pre: WAITING
+    G3_readiness: WAITING
+    A_authorization_status: WAITING
+    activation_checkpoint: NONE
+    activation_G5: NONE
+    baseline_status: NOT_RUN
+    A_execution_state: WAITING (implementation not started)
+    A_implementation_started: false
+    A_product_commit: NONE
+    G1a_final: NOT_APPLICABLE_BEFORE_EDIT
+    G2: NOT_APPLICABLE_BEFORE_EDIT
+    G4: NOT_APPLICABLE_BEFORE_VALIDATION
+    G5_post_commit: NONE
+    protected_build_asan: NOT_INSPECTED_BY_INSTRUCTION
+    precommit_action_if_HEAD_is_v172: verify and commit this plan-only correction
+    committed_action_if_v173_G5_absent: obtain exact-identity independent G5 only
+    ```
+
+    **Disjoint review predicates.** The three preactivation roles are G1a-pre, G1b-pre and G3, bound to identical
+    plan/product/predecessor/packet/recipe identities. Maintain an immutable receipt history and a separate active
+    receipt index with at most one active receipt per role. When a replacement is submitted, record its
+    `supersedes` link and mark the previous receipt SUPERSEDED without editing/deleting its report; only the
+    replacement participates in state selection. If more than one receipt is active for a role or no replacement
+    relation can be proven, classify that role as conflict/repair. Let `active` be the current indexed receipts and
+    `missing` be required roles with no active receipt. A receipt is `current PASS` only if its role, plan commit and
+    blob, product/predecessor inputs, packet/recipe manifests and reviewer identity all match exactly, its verdict is
+    PASS, and it has no open finding. Here, `v173 artifacts` means only the packet and recipe roots; the plan and G5
+    report are not packet/recipe artifacts.
+
+    | Observed state | Sole next action | Blocked |
+    |---|---|---|
+    | HEAD is v173; v173 G5 is pending/missing/mismatched, regardless of artifact presence | Obtain independent exact-identity v173 G5 only. | All artifacts, formal reviews, activation, baseline and product work. |
+    | HEAD is v173; v173 G5 is exact-identity FAIL | Preserve report/hash; create only a corrective plan-only direct child with a new snapshot and disjoint state predicates, then obtain fresh G5. | All artifacts, formal reviews, activation, baseline and product/build/test work. |
+    | HEAD is v173; v173 G5 PASS; `preflight-v173/` and `recipes-v173/` are both absent | Create a fresh packet and six-recipe bundle from current source; packet remains PARTIAL and recipes unusable until closure/audit passes. Never reuse v168 or v172 evidence. | Formal reviews, activation, baseline and product work. |
+    | HEAD is v173; v173 G5 PASS; at least one of `preflight-v173/` or `recipes-v173/` exists and packet is absent/partial/stale/ambiguous or recipes are incomplete/unaudited | Close packet and recipe identities first; if a schema/plan contract changes, create a plan-only checkpoint/G5 and regenerate dependent evidence. | Formal reviews, activation, baseline and product work. |
+    | HEAD is v173; v173 G5 PASS; v173 packet COMPLETE and recipes audited; activation checkpoint absent; every receipt in `active` is current PASS, no role has duplicate/conflicting active receipts, and `missing` is nonempty | Obtain only the missing role-correct reviews on the exact shared identity. | Activation, baseline and product/build/test work. |
+    | HEAD is v173; v173 G5 PASS; v173 packet COMPLETE and recipes audited; activation checkpoint absent; any receipt in `active` is missing required identity data, mismatched, stale, not PASS, has an open finding, or conflicts/duplicates another active receipt for its role | Preserve the receipt/finding; repair the affected claim or input and repeat affected reviews. Register each replacement as active with a `supersedes` link, retaining the replaced report as immutable SUPERSEDED history. If the plan or acceptance changes, create a direct-child plan checkpoint and obtain its exact G5 before regenerating dependent evidence. | Activation, baseline and product/build/test work. |
+    | HEAD is v173; v173 G5 PASS; v173 packet COMPLETE and recipes audited; activation checkpoint absent; `missing` is empty; exactly one active current PASS receipt exists for each required role; no finding/conflict is open | Create the activation checkpoint bound to the exact receipts and obtain independent activation G5. | Baseline and product/build/test work until activation G5 PASS. |
+    | Activation checkpoint exists and current v173 G5 PASS; activation-G5/baseline/implementation/G4/reconciliation/successor-selection state is reached under v173 identity | Apply §80's phase mechanics with every plan/artifact/review/activation/baseline/tree identity rebound to v173; §81's three disjoint review predicates replace §80's preactivation-review rows. No v172 evidence may be promoted or reused. | Any action not authorized by the one exact current phase and its receipts. |
+    | HEAD is v172 with its exact G5 FAIL preserved and v173 is the uncommitted direct child | Verify the exact parent, one changed plan path, v172 audit report/hash, v170/v171 reports, v168 partial-input hashes and unchanged six product blobs; commit only this roadmap. | Every v173 artifact/review/activation/baseline/product/build/test action. |
+
+    **Disjointness proof.** Pending requires current v173 G5, a COMPLETE v173 packet, audited v173 recipes, activation
+    checkpoint absent, `active` to contain only current PASS receipts, `missing` to be nonempty, and no duplicate or
+    conflicting active role receipts. Repair requires a non-current active receipt or duplicate/conflict; replacement
+    receipts supersede old records without erasing history. Activation requires no missing roles, exactly one active
+    current PASS receipt per required role, and no conflicts. These predicates are mutually exclusive and exhaustive for activation-absent
+    review state; if a receipt cannot be classified from its exact identity, treat it as repair, never as pending. §80
+    remains historical for v172, and its post-review phase procedures are incorporated only through the explicit
+    v173 identity rebinding row above. `build-asan/` remains not inspected by instruction.
