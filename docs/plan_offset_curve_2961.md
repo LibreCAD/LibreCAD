@@ -24,6 +24,20 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–3
 
+**Current revision v199 (plan-only; non-activating).** The exact predecessor is v198 commit
+`d7ca230579ecc7b93faa5ad8ba984fcb1af86539`, parent `bff72a31b9d87206a4bdcd2ad1a3a9f44c6a38be`, tree
+`1cf4df1dd5c9be14da94738019bbfd93e6b90122`, roadmap blob `d31e60006a8ad41288a6cad33c7c961ab2c23db2`, raw
+SHA-256 `c3d098cb02cbd259fc0843d9057053bb7b7309a5497e3fb728a960e1aa91b90d`. Its exact G5 PASS report is
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v198/g5-auditor-report.txt` (SHA-256
+`b9248c01f8dc7ac731fd3d10d3a1235f822dabce5b705f7c3e2eea12d4faec8d`); its bounded audit is
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v198/prepacket-readiness-audit.txt` (SHA-256
+`5802409a6260c9f82577002c89739fe9cc53e6ce0a6f733ec61ba4967ab1f477`) and says `PLAN_UPDATE_REQUIRED=true`.
+The current plan-only correction, candidate status, and sole transition authority are determined by §107 and its
+exact Git/report predicates. The immediately following v198 header/status paragraphs are retained predecessor
+history; their former §106 pointer and then-current wording do not describe v199 state. Other historical references
+to §29 or an earlier section as “current” or “sole” authority are likewise at-time records superseded by §107. No v198 input, preflight or
+recipe roots exist. Product base remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; do not access `build-asan/`.
+
 Plan **v198 disjoint-transition and audit-handoff correction**, 2026-10-17; plan-only and non-activating. This direct-child revision follows failed v197 commit `bff72a31b9d87206a4bdcd2ad1a3a9f44c6a38be`, parent `dcacffb3072cbd74927fb7cccd35758db604c009`, tree `0d21cd1f2b6ca57fd4ea74fd03683514c7d0b7c1`, plan blob `acde94d2ed1f4afd8d238ca4c4465ca0c4dfe73d`, raw SHA-256 `0cdff2f315ec428aa730632cd4926a46a2b37eea688c94e1d211952bf327cba5`, and exact v197 G5 FAIL `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v197/g5-auditor-report.txt`, SHA-256 `008f933471a0044892a719e13b77ac6b94dbb88ac70919a589996e0bdec3868c`. Preserve v196 G5 FAIL SHA-256 `fed8555b9412764b5e216a303996f532cf034062e2059eed855294a67976e6db`, v195 G5 FAIL SHA-256 `8270a5f8146c5a9522dcf65fe34da760bf5a6d9997f05442a2a16357a71eaebf`, v194 G5 PASS SHA-256 `3d7c8dd7cc8239ac49a1b66a1475a9378109713ce476ee31a49fdd58d9b48686`, v194 prepacket audit SHA-256 `2e0a75b7ad6b566027d3a5458d8a9ae0f97ea337fc35efd349f400488c85d65c`, and v194 source-oracle cross-check SHA-256 `ed3d523f7acf83d1ce134e7fed2a746dc7bf982ff2ce5d8a748569936007c51e`; also preserve the v193 G5/audit/A10 cross-check and v192 name-only protected-path deviation receipts in §102. `PLAN_UPDATE_REQUIRED=true`: v197 G5 failed on overlapping/missing transition rows and A07 retained multiplicity/A08-A09/A11-A14 design gaps remain. Section §106 is the sole live transition authority; candidate/commit/G5 state is determined only from exact HEAD and receipts under that section, never from a mutable status sentence. No v194, v195, v196, v197 or v198 input, preflight or recipe roots exist. Trim remains Phase 3 and unimplemented. Preserve product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; never access `build-asan/`.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
@@ -292,7 +306,7 @@ reconciled baseline or A-budget-depth implementation. Product source remains
 independently authorize work; §56 remains normative only for its bounded Git-object/protected-path procedure. Do not
 inspect protected `build-asan/`; report `not inspected by instruction`.
 
-Select exactly one row from the latest versioned transition-authority section (currently §106) using observed HEAD,
+Select exactly one row from the latest versioned transition-authority section (currently §107) using observed HEAD,
 artifact state and receipts. §93 specifies the input-bundle contract; it is not a transition table. If zero or multiple
 rows match, stop for plan-only correction. No prose status independently authorizes packet, review, activation,
 baseline, build/test or product work.
@@ -21892,3 +21906,196 @@ The provider's unique tangency proof
      v198 changes no feature contract, source owner, product path, test identity or readiness gate. No product files
      were edited and no build/test/discovery was run. Phase 3 Trim remains exactly §6.1 and unimplemented; never
      inspect `build-asan/`.
+
+107. **v199 source-oracle and implementation-readiness correction (plan-only; non-activating).** This direct child
+     binds the exact v198 commit, tree, roadmap blob/raw SHA, G5 PASS and bounded-audit receipt in the v199 header.
+     Preserve those receipts unchanged. The audit's `PLAN_UPDATE_REQUIRED=true` is the reason for this plan-only
+     revision. This section supersedes v198's §106 transition pointer and corrects the live A07-A14 oracle ledger;
+     earlier source-only calculations remain historical unless explicitly corrected here. This pass is static design
+     work only: no product edits, builds, tests, discovery, packet roots, formal reviews, activation or baseline.
+
+     **A07 retained-multiplicity oracle correction.** For the reversed whole ellipse
+     `basis(5,0.5,0,0,true)`, `majorP=(3,4)`, start `s=pi/4`, `D=2*pi`, distance `-2`, the stationary kernel is
+     `(-39+225z+675z^2+675z^3)/64`; `P(1/2)>0`, so the complement is false. The four cusp occurrences are generated
+     `q=-3,-2,-1,0` and sorted `0,-1,-2,-3`. Let `pL=0x1.921fb54442d18p+1`, `pH=0x1.921fb54442d19p+1`,
+     `aL/aH` be the exact binary64 endpoints of `m_beta`, and `uL/uH` the exact canonical-variable endpoints.
+     These symbolic endpoints are not permission to infer rounded runtime values. The target ordering ledger is:
+     four axis `mapAngle` reductions (24 predicates); four cusp `mapAngle` reductions (24); four retained `map`
+     reductions (24); eight product-range reductions (48); and the two four-record stable insertion sorts (12),
+     totaling 132. For axis reductions use `[v(pL),v(pH),v(pL),v(pH)]`, `v(p)=D/2*(s/p-q/2)`. For cusp and
+     retained mapping, enumerate each `q`'s exact `F+`, `F-`, `G+`, or `G-` operands in the explicit order already
+     frozen by the independent A07 source review; assert three min and three max comparisons per reduction. Each
+     product reduction uses `[Alo*Rlo,Alo*Rhi,Ahi*Rlo,Ahi*Rhi]`, small `A=[uL,uH]` and large
+     `A=[1-uH,1-uL]`; its middle max predicate is unresolved until the exact outward square-root endpoints are
+     independently fixed. The four scalar-product coefficient tuples, in `q=-3,-2,-1,0` order, are
+     `(-9/16,3/2,-3/4,-9/8)`, `(-9/16,-3/2,-3/4,9/8)`, `(9/16,-3/2,3/4,9/8)`,
+     `(9/16,3/2,3/4,-9/8)`.
+
+     Exact symbolic schedule (all entries are ordered operands, not approximated decimal values): define
+     `F±(a,p)=D/2*(1+(s±a)/p)` and `G±(a,p)=D*(s±a)/(2p)`. Cusp `mapAngle`, generated q order:
+     `-3: [F+(aH,pL),F+(aH,pH),F+(aL,pL),F+(aL,pH)]`; `-2:
+     [F-(aL,pL),F-(aL,pH),F-(aH,pL),F-(aH,pH)]`; `-1:
+     [G+(aH,pL),G+(aH,pH),G+(aL,pL),G+(aL,pH)]`; `0:
+     [G-(aL,pL),G-(aL,pH),G-(aH,pL),G-(aH,pH)]`. Retained `map` uses those same four q-indexed arrays in sorted
+     order `0,-1,-2,-3`. Each cusp/retained array is descending: min predicate outcomes `T,T,T`, max `F,F,F`.
+     Axis arrays by q `-3,-2,-1,0` repeat `[v(pL),v(pH),v(pL),v(pH)]`; min outcomes are respectively
+     `T,F,F`, max outcomes `F,F,F`. Both four-key insertion sorts produce `0,-1,-2,-3` from the generated order,
+     with six true insertion predicates each. For each product-range reduction, min outcomes are `F,F,F`, max are
+     `T,unknown,T`; the middle outcome depends on exact square-root endpoints and remains OPEN. The four
+     scalar-product overloads are not min/max reductions and incur no ordering predicates beyond their parent
+     accounting. This schedule supersedes any prior prose that left the operand order implicit.
+
+     With the stated unsplit preparation continuation, source current prefix is `P=78,V=44,D=8`; target prefix is
+     `P=85,V=44,O=60,D=8` after four added axis-adjacency and three added occurrence-adjacency pair admissions.
+     Fresh retained setup adds 9 vertices and one pair, then four retained roots each admit one pair, giving target
+     `V=53,P=90`. Starting with `O=60`, the final occurrence reaches `O=131` before predicate 132; ordering cap
+     131 must refuse at `{V=53,P=90,O=131,D=8}` with no adapter/session publication. These are conditional static
+     target traces, not measured full-query results. **A07 remains OPEN** until the exact square-root endpoints and
+     product middle predicate, reachable full continuation, source operands, and exact/one-less no-publication
+     oracle are independently pinned. This corrects the older candidate `Pprep/Vprep` description; retain the
+     conditional label and do not describe it as runtime evidence.
+
+     **A08 callback route map.** Keep all subassertions under the existing A08 Catch2 identity; do not create more
+     than the planned 14 identities. The direct preparation fixture is one open branch, one segment `[0,1]`,
+     `P(t)=(t,0)`, conservative `dx=[0,2],dy=[0,0]`. A valid shared `WorkBudget::maxDepth>=1` is required;
+     `LC_IntersectionOptions.maxLeafDepth=0` is the depth-zero discriminator. Freeze these route IDs:
+
+     | Subassertion | Required exact/one-less oracle | State |
+     |---|---|---|
+     | A08.1 available `certifyInjective` | Freeze certificate `{available=true,segment=0,parameter=[0,1]}`. Pair cap 1; generated cap 3 succeeds with root+certificate+leaf (`G=3`, pair=1, one leaf). Generated cap 2 refuses before leaf append (`G=2`, pair=1, zero leaves, no result). | Static direct-path oracle closed; runtime remains post-activation. |
+     | A08.2 unavailable/depth-zero `certifyInjective` | Pair cap 1 debits before callback, callback=1, `G=1`, pair=1, depth refusal and no leaf. Pair cap 0 refuses before callback (`G=1`, pair=0, callback=0). | Static direct-path oracle closed; runtime remains post-activation. |
+     | A08.3 identity callback | Reach a two-root/shared-occurrence fixture; assert both pair and generated admissions atomically, exact/one-less counters, callback dispatch count, and its two nested intersection-certificate plus identity-query scans. | OPEN: reachable fixture and independent nested-work oracle. |
+     | A08.4 `ReferenceEventBuilder::prepare()` certificate | Reach `axisContacts`; freeze exact callback/pair order, certificate unavailable/available outcomes, and pair exact/one-less refusal. | OPEN: fixture and full prefix. |
+     | A08.5 geometry caller adoption | Keep outer geometry pair admission separate from strict callback work; assert atomic returned-work adoption on success and one-less no-partial adoption. | A04 owns generic atomicity; A08 caller trace OPEN. |
+     | A08.6 throwing callback | Preserve original exception, debit before entry, exact parent+callback snapshot and no result; include unavailable and throwing as distinct outcomes. | OPEN: exact reachable route/counters. |
+     | A08.7 nested provider multiplicity | Bound caller multiplicity and mutually exclusive branches; record each nested provider scan under its one already-admitted parent, never double-charge it. | OPEN: complete source call graph and maximum. |
+
+     **A09 layout and topology oracle correction.** The pinned one-span cubic anchor
+     `basis(1,1,.25,.2501)`, distance `+1`, tolerance `.01` has layout `cacheSpans=1,vertices=4,pairs=0` from a
+     fresh budget. Freeze the resulting control points or an independent construction derivation; the current test
+     derives limits from implementation-returned work and is not an independent oracle. The five listed accepted
+     interior dyadic intervals require four candidate-cache splits. Under §0.4 each split adds two cache spans and
+     two vertices, so the target layout-derived cache-span total is **9**, not 1. Conditional on the reviewed route
+     of one visible reference edge, two fringes, three fragments and the listed witness trace, the post-layout
+     current suffix is `+30V/+160P` including successful return; target is `+30V/+171P`, with local depth 4. These
+     totals remain conditional. Subassertions A09.1 freeze input/control literals and layout; A09.2 freeze reference
+     nodes/edges/occurrences and ordered interior/fringe witnesses; A09.3 freeze all eight child-span admissions and
+     exact work; A09.4 gives one-less at each split/coverage/output destination with no public analysis. **A09 remains
+     OPEN** until independent witness identity/order, reference-query prefix, proof dispositions, and exact/one-less
+     publication states are source-derived. Preserve source order `Interior, StartFringe, EndFringe` and candidate
+     intervals `[0,1/2]`, `[1/2,3/4]`, `[3/4,13/16]`, `[13/16,7/8]`, `[7/8,1]`; do not substitute existing geometry assertions.
+
+     **A11 pair-total erratum and destination subplan.** For the conditional no-root/no-critical two-boundary whole-
+     circle graph, define `B` immediately before the `ReferenceEventAnalysis::Impl` shell admission, after the inner
+     query has returned and its work has been transferred. The conditional cumulative source snapshots from B are
+     shell `(1V,1P)`, prepare `(7,7)`, order `(7,8)`, accuracy `(7,11)`, fringes `(10,25)`, publish `(14,34)`, and
+     assemble+graph **`(23,47)`**. The previous `(23,48)` is an arithmetic error: final deltas are assemble `(4V,9P)`
+     and graph `(9V,13P)`. Do not use this conditional suffix as an absolute cap. The destination target must give
+     separately checked `size+delta` and `max_size` before debit/mutation for: private nodes+witnesses/order (6V),
+     fringes (2V), published node+occurrences (3V), seam (1V), span+edge (2V), graph parents+incidence (2V), each
+     outgoing+incoming adjacency pair (2V), and new component+edge-list (2V). Each batch needs its exact-cap and
+     one-less snapshot, including unchanged paired vectors and empty public analysis. **A11 remains OPEN** until an
+     exact fixture and numeric B, all node/edge/witness identities, and every graph-destination prefix are sealed;
+     source currently performs separate debits/reserves/appends in several paired sites.
+
+     **A12 split queue oracles.** For preparation use `P(t)=(t^3+t/4,0)` on `[-1,1]`, with unavailable
+     injectivity proof, root derivative Bernstein hull containing zero and both child hulls `[1/4,13/4]`. Freeze:
+     exact target success cap gives `G=5`, two accepted leaves, one callback, visits=1, next=1, evaluations=3,
+     bounds=6, certificate pair=1 and same-branch candidate pair=1; generated cap 4 refuses the second leaf after
+     its bound at `G=4`, one leaf, pair certificate=1/candidate=0; generated cap 2 refuses atomic child admission
+     after the root at `G=1`, no leaf/queued children, certificate pair=1; pair cap 1 allows preparation but refuses
+     the subsequent candidate examination with `G=5`, two leaves, certificate=1/candidate=0. Push right then left
+     so LIFO visitation is left then right. A12.1-.4 map to these four outcomes.
+
+     The solve-split fixture is separate: `A(t)=(t,0)`, `B(u)=(u,(u-1/2)^2)`, both `[0,1]`, two branches. Its
+     provider must make query-time `certifyIntersection()` unavailable and the parent Krawczyk test inconclusive;
+     otherwise the analytic tangent is emitted without splitting. At the target pre-split prefix assert generated=6
+     and candidate/refinement/certificate pairs `1/1/3`; admit two child records atomically to generated=8 and
+     enqueue right then left. Pair cap 3 refuses the next refinement before pop, preserving both queued children
+     and the exact parent counters. Generated cap 7 refuses the two-child admission after the parent was popped,
+     leaving generated=6 and an empty queue. A12.5-.7 map the provider mode, queue prefix, pair-limit refusal and
+     generated-limit refusal. These are design expectations, not runtime observations. **A12 remains OPEN** until
+     the selected parent, queue contents, callback transcript, capacity-check ordering and public result state are
+     independently derived.
+
+     **A13 strict-core correction and deterministic ordering algorithm.** The v196 statement `keys=2` referred to
+     the legacy non-strict `Solver::candidatePairs()` implementation and is not the strict A13 path. For the strict
+     two-leaf fixture, requested logical scratch is `nodes=3`, `order=2`, member `m_parameterBounds=4`, empty
+     candidate-pair output; the fixed pending stack is `2*numeric_limits<size_t>::digits+1` entries (129 on 64-bit),
+     not a dynamic vector. Check requested sizes, checked arithmetic and `max_size`; assert capacity is at least the
+     request, never exact allocator capacity. Do not count `keys` in strict memory bounds.
+
+     Specify the shared in-place max-heapsort exactly: build the heap by `for (root=n/2; root>0; --root)` and
+     sift from `root-1`; for each sift, choose the larger child by one complete-key predicate when a right child
+     exists, then compare root with that child and swap only when root is less; extract by swapping root with
+     `end-1`, decrementing end and sifting root. Each complete tuple predicate debits one ordering unit immediately
+     before comparison. All keys include a deterministic final index/identity so equal geometry keys are total and
+     portable. The two-segment line has leaf centers `(0.5,0)` and `(1.5,0)`: four extrema predicates compare the
+     second center with the first, one x-vs-y axis-span predicate chooses x (x wins ties), and one heap predicate
+     orders `[0,1]`, totaling six hierarchy-ordering admissions; cap 6 succeeds and cap 5 refuses before predicate
+     six with no public result. Reconcile this exact census with the conservative `5V` bound term; do not double
+     charge scalar members inside one tuple comparison. Apply the same heap routine and debit semantics to pair,
+     final-event and retained-root orderings. **A13 remains OPEN** until source-level algorithm and all strict-path
+     input validation, target callback/cap snapshots, malformed literal, ties and no-publication states are mapped.
+
+     Freeze assertion IDs: A13.1 ordinary full query (`G=4`, visits=2, next=1, evaluations=6, bounds=8, roots=2,
+     leaves=2, one same-branch candidate pair culled, no event/refinement/certificate); A13.2 ordinary generated
+     cap 3 one-less (`G=3`, one leaf, no public result); A13.3 retained full query (`G=6`) and retained cap 5
+     refusal (`G=5`, one leaf); A13.4 ordinary root cap 1 and retained mandatory-root cap 3 (retained fixed G=2,
+     refuse before visits/next/geometry); A13.5 malformed second interval literal `[2,1]` with enough budget
+     (`InvalidInput`, visits=2, next=1, no geometry callbacks, no roots; retained keeps only its two fixed tokens);
+     A13.6 hierarchy ordering operands and exact/one-less cap; A13.7 scratch sizes/max-size/overflow and fixed-stack
+     bound; A13.8 tie-heavy complete-key permutation equivalence. The existing one-shot `segments()` accessor,
+     `branchCount()` and `next(0)` counts are independently asserted. `maxLeafDepth=0` remains valid; do not confuse
+     it with invalid shared work-budget depth.
+
+     **A14 exception-transfer correction.** Keep the planned A14 test identity and distinct assertion IDs. One-shot
+     constructor/accessor and query throws expect: `segments()` throw -> generated=2; `branchCount()` throw ->
+     generated=2; `next(0)` throw -> generated=2, visits=1,next=1; first preparation bound throw -> generated=3,
+     visits=1,next=1,bounds=1. Each preserves the original exception and publishes no result/session. An explicit
+     no-throw `workOnExit` sink must receive the live parent+callback ledger on every unwind; outer geometry adopts
+     it atomically exactly once, with A04 owning cross-counter atomicity.
+
+     For retained A14 use its own valid tangent session, distinct from A12's forced-split provider. Before arming
+     the throw, record the cumulative `certifyIntersection()` count including query-time calls; throw on the next
+     dispatch during one `contract()` (which calls shrink once and can dispatch analytic at most once). Do not say
+     “second callback in contract.” Target pre-throw and post-throw retained snapshot is `G=8`, candidate/refinement/
+     certificate pairs `1/1/3`, total pairs=5, depth=1; throw changes no admitted work, returns no result/new snapshot,
+     invalidates the session credential, leaves cumulative work readable, and retry consumes zero work. **A14
+     remains OPEN** until both work-transfer source paths, the exact cumulative callback ordinal, original exception,
+     no-publication and terminal retry are tied to the one test identity. Actual test execution remains post-activation.
+
+     **Subplan readiness and slice/commit loop.** These corrections do not move the gate. A07 retained, A08's
+     identity/prepare/adoption/throw/nested routes, A09, A11, A12 solve, A13, and A14 remain OPEN as marked above;
+     no new A01-A14 Catch2 identity, product path, dependency or cap is introduced. Slice A remains WAITING until
+     every open source oracle, assertion map, six-path ownership, build/test registration path, source/debit/capacity
+     census and independent expected fixture is closed in one fresh versioned packet; exact-identity G1a, G1b and G3
+     must PASS, followed by separate activation and reconciled baseline. Trim 3A stays behind 1A-2, 1D, 1E-3 and
+     2D-a; 3B follows 3A, and 3C follows 3B. Implement and validate only one coherent authorized slice per product
+     commit. After each product commit, immediately create a direct-child plan-only reconciliation recording its
+     exact commit/tree, slice tests, review findings, evidence and remaining plan rows; obtain exact G5 before
+     authorizing another slice. If any slice or roadmap row remains incomplete, refine the next direct child and
+     repeat; never declare completion from a commit alone.
+
+     **Disjoint v199 transition table.** Candidate layer is exactly one of `ABSENT`, `VALID`, or `INVALID`: absent
+     means exact v198 HEAD and no plan/index/worktree delta; valid means one direct-child v199 roadmap-only layer
+     binds v198 and its exact PASS/audit receipts, preserves all product blobs, and passes `git diff --check`; invalid
+     means any candidate exists but violates at least one predicate. Never enumerate untracked files or access
+     `build-asan/`.
+
+     | Exact observed tuple | Sole next action | Blocked |
+     |---|---|---|
+     | Exact v198 HEAD, G5 PASS, audit says update required, candidate `ABSENT` | Prepare one direct-child plan-only v199 correction incorporating the source-oracle fixes above. | Roots, formal reviews, activation, baseline, build/test/discovery and product edits. |
+     | Exact v198 HEAD and candidate `VALID` | Verify v198 report/audit hashes, direct parent, plan-only path scope, unchanged product blobs and `git diff --check`; commit v199. | Roots and all implementation activity. |
+     | Exact v198 HEAD and candidate `INVALID` | Preserve bytes; reconcile under §88, without committing or layering another candidate. | All later work. |
+     | Committed v199 exact identity; G5 receipt absent | Obtain independent G5 on the exact v199 commit/tree/blob/raw SHA. | Audit, roots, formal reviews, activation, baseline and product work. |
+     | Exact v199 G5 FAIL | Preserve report; make one direct-child plan-only correction that closes every exact finding. | Audit, roots and implementation. |
+     | Exact v199 G5 PASS; bounded audit absent/pending | Run only the fresh bounded prepacket audit against v199 and predecessor receipts. | Roots, formal reviews, activation, baseline and product work. |
+     | Exact v199 G5 PASS; audit says update required or any oracle remains open | Preserve audit; prepare the next direct-child plan-only correction naming all open oracles and invalidated descendants. | Same-identity roots, formal reviews, activation, baseline, build/test and product work. |
+     | Exact v199 G5 PASS; audit clean, `PLAN_UPDATE_REQUIRED=false`, required roots absent | Create versioned input/packet/recipe roots under §§93-94, then perform their separate audits and formal gates. | Activation, baseline and product work until all applicable gates pass. |
+     | Any other HEAD/report/audit/candidate tuple | Preserve evidence and reconcile under §88; do not guess. | Every downstream action. |
+
+     Expected post-G5 audit disposition is `PLAN_UPDATE_REQUIRED=true` because the explicitly open design rows above
+     have not been closed; the clean-audit row is retained only to make the state machine exhaustive. No v199 roots
+     are allowed in this state. No product files were edited and no build/test/discovery was run for v199. Phase 3
+     Trim remains exactly §6.1 and unimplemented; never inspect `build-asan/`.
