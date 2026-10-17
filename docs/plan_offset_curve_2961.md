@@ -24,15 +24,15 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v99**, 2026-10-17 (make the current handoff authoritative over stale versioned preflight fields and archived recipes). This file is the implementation source of truth.
+Plan **v100**, 2026-10-17 (make manifest, recipe, and gate receipt identities executable and auditable). This file is the implementation source of truth.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE.** Geometry bounds and local-topology children are committed; ordered-chain topology, later entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. v99 is a non-activating plan-only correction based on committed v98 `8f55180b4b370565c3664dc29f6c3aadaab21a11`; product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. The bound v93 G1a/G1b/G3 reviews are immutable FAIL; v94 is integrity-invalid PARTIAL provenance. v95 staging is unsealed with the wrong 3283 mapping; v96 has the blank-value/schema contradiction; v97 is an unsealed draft; v98 fixed A14 wording but retained stale v88/v95-versioned checklist fields. No v98 packet or recipe artifacts were created. Do not use v94-v97 staging for gates. Slice A remains WAITING; no product edit/build/test is authorized. Preserve all prior packets/reviews with their actual dispositions. The v81 checksum-valid packet and v84/v85 material remain historical PARTIAL provenance, not gate receipts. Feature persistence is an end-to-end requirement: LibreCAD's normal ASCII-DXF and native-DWG open paths must read and adopt the editable definition, and its normal DXF/DWG save paths must write it. All four directions are independently tested at every applicable version; both conversions, edited reopen, and the separate binary-DXF codec lane remain required. No product edit, build or registered test was performed. Historical implementation evidence and earlier checkpoint narratives do not authorize a successor slice.
+Status: **IMPLEMENTATION INCOMPLETE.** Geometry bounds and local-topology children are committed; ordered-chain topology, later entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. v100 is a non-activating plan-only correction based on committed v99 `7cc9b5beff8f53f4ed1cf3e7e1b4e48c161bf471`; product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. The bound v93 G1a/G1b/G3 reviews are immutable FAIL; v94 is integrity-invalid PARTIAL provenance. v95 staging is unsealed with the wrong 3283 mapping; v96 has the blank-value/schema contradiction; v97 is an unsealed draft; v98 fixed A14 wording; v99 clarified pointer authority but left the manifest key list and recipe audit binding underspecified. Six mechanically extracted v99 recipes exist under `recipes-v99/` as unaudited PARTIAL scratch; no v99 packet exists. Do not use v94-v97 packets or v99 recipe scratch for gates or execution. Slice A remains WAITING; no product edit/build/test is authorized. Preserve all prior packets/reviews with their actual dispositions. The v81 checksum-valid packet and v84/v85 material remain historical PARTIAL provenance, not gate receipts. Feature persistence is an end-to-end requirement: LibreCAD's normal ASCII-DXF and native-DWG open paths must read and adopt the editable definition, and its normal DXF/DWG save paths must write it. All four directions are independently tested at every applicable version; both conversions, edited reopen, and the separate binary-DXF codec lane remain required. No product edit, build or registered test was performed. Historical implementation evidence and earlier checkpoint narratives do not authorize a successor slice.
 Historical v68 amendment: clarifies file-support acceptance and retains the v67 product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, with all four recorded product source/test hashes unchanged. The exact-membership `preflight-v67/` packet is PARTIAL provenance (latest packet-manifest SHA-256 `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`), not a formal gate receipt. The G4 hidden-cusp clearance proof and C50 correction remain normative: the cusp-only candidate is separated from all visible spans and must refuse as `OffCurve` before terminal/topology matching; B07 separately tests absence of a cusp `ReferenceTerminal`, and C36 retains fully witnessed `Topology` coverage. The five controls remain mandatory per slice: separate completeness and plan-correctness gates; frozen-tree implementation correctness; an executable, independently reviewed sub-plan/readiness decision; one validated product commit followed by its plan-only reconciliation; and a post-commit live-state audit/self-update before any successor. Slice A remains WAITING; G1 completeness, G1 plan correctness, Gate-3 readiness and activation are not passed. A/B/C baseline discovery remains zero and strict-core remains 61 matching normalized identities in Release/ASan; no registered tests ran. No product/test edit, build, JUnit execution, formal Gate PASS, readiness PASS or activation occurred. DXF read, DXF write, DWG read and DWG write are separate open application obligations; both conversion directions and the separate R14/R2018 binary-DXF codec obligation also remain open. Geometry-only checker evidence satisfies none.
 Historical v81 reconciled the six-path A scope, A14 selector, split-debit oracle, activation-bound test identities and post-edit validator. Its packet and review findings are preserved as immutable provenance; its live pointers are superseded below. The five control families and six gate decisions (G1a/G1b/G2/G3/G4/G5) remain independently recorded and fail-closed; §0.5 remains the sole live-handoff section, while only its latest explicitly marked card is current. Preserve the v81 and v80 packets/reviews, the v77 PARTIAL packet and invalid v79 draft. The four independent application obligations—DXF read, DXF write, DWG read and DWG write—plus both conversions and binary-DXF codec work remain later 1E gates.
 Historical v82 corrected stale handoff pointers and bound the one-shot/retained exception-transfer and source-bound baseline requirements, but did not pass G1a/G1b. Its copied v81 packet remains preserved as `preflight-v82-stale-copy-from-v81/`, not a v82 evidence packet. v82 retained the hard 1E file-support contract described below.
-v83 is historical plan state; the v91 handoff was its successor and is itself superseded by the v99 handoff in §0.5. Its full 1E contract remains normative: ASCII DXF application read/write, native DWG read/write, every applicable version row, both conversions, edited reopen, and separate R14/R2018 binary-DXF codec read/write; geometry/checker tests do not satisfy any file lane. No exact-membership v83 packet was sealed. The v83 source audit at `build/evidence/1A-1.b-check-topology-chain/source-audit-v83/source-audit.txt` (SHA-256 `6679b8ba1c5281bc5f4d7a90fe00de6ffb09e05e82a318b06f5d80ff1445`) is PARTIAL coordinator evidence, not a formal gate receipt. It confirms the three proof-split callers and atomic work-adoption gap, and adds then-current observations that `addRegions` checked pending capacity after split debit, paired output vectors were not jointly reserved, and `joins` lacked explicit output-capacity preflight. Preserve v81-v90 packets/reviews unchanged as historical evidence; do not treat unsealed or PARTIAL audits as gate decisions.
+v83 is historical plan state; the v91 handoff was its successor and is itself superseded by the v100 handoff in §0.5. Its full 1E contract remains normative: ASCII DXF application read/write, native DWG read/write, every applicable version row, both conversions, edited reopen, and separate R14/R2018 binary-DXF codec read/write; geometry/checker tests do not satisfy any file lane. No exact-membership v83 packet was sealed. The v83 source audit at `build/evidence/1A-1.b-check-topology-chain/source-audit-v83/source-audit.txt` (SHA-256 `6679b8ba1c5281bc5f4d7a90fe00de6ffb09e05e82a318b06f5d80ff1445`) is PARTIAL coordinator evidence, not a formal gate receipt. It confirms the three proof-split callers and atomic work-adoption gap, and adds then-current observations that `addRegions` checked pending capacity after split debit, paired output vectors were not jointly reserved, and `joins` lacked explicit output-capacity preflight. Preserve v81-v90 packets/reviews unchanged as historical evidence; do not treat unsealed or PARTIAL audits as gate decisions.
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -274,7 +274,7 @@ A commit alone does not mean done; verification, review and the post-commit plan
 | 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | done — 0e3c6b342, 0B-3 reports/card; one pinned baseline generated-MLEADER DWG gap, 2026-10-15 |
 | 1A-1 | Closed forms, normalization, tolerance helpers and cache validation | C | S0 | 900 | partial — .a/.b-budget/.b-progress/.b-ref-frames/.b-ref-events-core/.b-ref-rate/.b-ref-events-critical/.b-ref-events-accounting/.b-ref-events-refine/.b-ref-critical-refine/.b-ref-providers/.b-ref-contacts/.b-ref-events-isolate/.b-ref-components/.b-check-layout/.b-check-bounds/.b-check-topology-local done; A-budget-depth, B-occurrence-terminals, C-global-topology-checker pending |
 | 1A-1.b-ref-components | Exact visibility and incidence-preserving components | C | .b-ref-events-isolate | 900 | done — `9682d5cac65f30cfd86aa10556678ceb88b1448b`, attempt-8 evidence, 2026-10-16 |
-| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900 | waiting — v93 G1a/G1b/G3 are immutable FAIL; v94 is integrity-invalid; v95 has the wrong 3283 mapping; v96 has a blank-value conflict; v97 is unsealed PARTIAL; v98 fixed A14 wording but left stale versioned readiness fields; v99 must establish one authoritative current packet/recipe identity before fresh closure and gates |
+| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900 | waiting — v93 G1a/G1b/G3 are immutable FAIL; v94 is integrity-invalid; v95 has the wrong 3283 mapping; v96 has a blank-value conflict; v97 is unsealed PARTIAL; v98 fixed A14 wording; v99 clarified pointer authority but lacks an executable manifest/recipe binding; v100 must close schema and evidence locations before fresh gates |
 | B-occurrence-terminals | Immutable occurrence-specific terminal publication | C | A-budget-depth product and plan checkpoint | 500 | waiting — no implementation before A reconciliation |
 | C-global-topology-checker | Complete directed path, coverage, cut and cycle validation | C | A-budget-depth and B-occurrence-terminals product/checkpoints | 1200 | waiting — no implementation before A and B reconciliation |
 | 1A-2 | Enumerator; persistent entity core and factory for already validated results; clone, `toPlainSpline`, normalisation, stamp, transforms; `writeEntity` case; INSERT capability; 0B row; interim Edit Properties guard | C | 0B-3, 1A-1 | 900 | pending |
@@ -1630,7 +1630,7 @@ archived cards are historical and must not be run.
 
 The completion narratives and all versioned preflight/checklist/command recipes below are retained as historical
 records, not live queue instructions. The latest handoff at the end of §0.5 is the sole current Slice-A pointer and
-remains WAITING; v98 is the expected plan parent for v99. Earlier versioned `current`, `active`, `next` and
+remains WAITING; v99 is the expected plan parent for v100. Earlier versioned `current`, `active`, `next` and
 `preflight` fields do not authorize work. v93 supplies immutable FAIL/PARTIAL gate provenance, not implementation
 authorization.
 After every commit, reconcile active pointers and reread the committed plan against the codebase/evidence before
@@ -3565,55 +3565,243 @@ activation: none
 disposition: G5 PASS; no v98 packet or recipe artifacts were created; superseded before preflight
 ```
 
-**Current Slice-A Handoff — v99 (sole live pointer; WAITING, non-activating)**
+**Historical Slice-A Handoff — v99 (superseded by v100; WAITING, non-activating)**
 
 ```text
-plan_revision: v99; expected_parent: 8f55180b4b370565c3664dc29f6c3aadaab21a11
+plan_revision: v99; committed: 7cc9b5beff8f53f4ed1cf3e7e1b4e48c161bf471
 product_source_base: 9c06e9c77b313b62cc20e9ec39c22952fee501f2
 predecessor_product: ef3ba756b52796c02b8490caedcaa48b8db69605
 predecessor_plan_checkpoint: 8f55180b4b370565c3664dc29f6c3aadaab21a11
 slice: A-budget-depth
 state: WAITING; plan-only correction; no implementation authorization
 activation: none
-next: commit this one-file plan checkpoint and complete G5 identity/path/blob/semantic readback; then assemble fresh preflight-v99 and reissue/audit all six recipes before any G1a/G1b/G3 decision
+disposition: G5 PASS; no preflight-v99 packet; six unsealed, unaudited recipe extracts retained as PARTIAL scratch
 ```
 
-**v99 authority rule.** The versioned live-state snapshots, preflight fields and recipe blocks earlier in §0.5 are
-archival records unless explicitly repeated under this v99 handoff. In particular, v88/v95/v97/v98 packet paths,
-recipe bindings, `next` fields and readiness labels are not executable or current. Only this card and the following
-v99 packet/readiness contract authorize planning actions; Slice A remains WAITING and non-activating.
+**Historical v99 scratch disposition.** `recipes-v99/` contains six mechanical recipe extracts whose inputs were
+not re-derived from source; they have no recipe manifest or independent audit, and none is executable authority.
+Preserve all six files unchanged as PARTIAL provenance. `preflight-v99/` was never created. Do not patch, promote,
+or execute the v99 recipe extracts.
 
-**Current v99 packet and readiness contract.**
-Preserve `preflight-v95/`, `preflight-v96/` and the unsealed `preflight-v97/` draft as PARTIAL provenance; do not
-mutate or consume them as gate input. No `preflight-v98/` or `recipes-v98/` artifacts were created. Rebuild from
-source for v99 rather than copying any prior payload as closed evidence.
-After this v99 plan-only commit passes G5, create a new exact-membership
-`build/evidence/1A-1.b-check-topology-chain/preflight-v99/` packet containing exactly seven payloads
+**Current Slice-A Handoff — v100 (sole live pointer; WAITING, non-activating)**
+
+```text
+plan_revision: v100; expected_parent: 7cc9b5beff8f53f4ed1cf3e7e1b4e48c161bf471
+product_source_base: 9c06e9c77b313b62cc20e9ec39c22952fee501f2
+predecessor_product: ef3ba756b52796c02b8490caedcaa48b8db69605
+predecessor_plan_checkpoint: 7cc9b5beff8f53f4ed1cf3e7e1b4e48c161bf471
+slice: A-budget-depth
+state: WAITING; plan-only correction; no implementation authorization
+activation: none
+next: commit this one-file plan checkpoint and record G5 at plan-checkpoint-v100/g5-readback-receipt.txt; then assemble fresh preflight-v100 and recipes-v100, independently audit their identities and contents, and obtain same-identity G1a/G1b/G3
+```
+
+**v100 authority rule.** All earlier versioned snapshots, recipe blocks, packet paths and next/status fields are
+archival unless repeated by this current handoff. Only the v100 handoff and the following v100 contract authorize
+planning actions. Slice A remains WAITING and non-activating.
+
+**Current v100 packet and readiness contract.** Preserve `preflight-v95/`, `preflight-v96/` and the unsealed
+`preflight-v97/` draft as PARTIAL provenance; preserve `recipes-v99/` byte-for-byte as unsealed, unaudited PARTIAL
+scratch. No v98 or v99 packet exists. Re-derive all v100 rows from source; historical material may be cited only as
+hashed PARTIAL input, never as closed evidence. After this v100 plan-only commit passes G5, create a new
+exact-membership `build/evidence/1A-1.b-check-topology-chain/preflight-v100/` packet containing exactly seven payloads
 (`input-manifest.txt`, `source-requirement-map.txt`, `terminal-producer-map.txt`,
 `independent-transition-cut-ledger.txt`, `phase-cut-intervals.txt`, `debit-admission-table.txt`,
 `selector-test-map.txt`) plus `packet-manifest.sha256`. Re-derive every row from current source, tests and build
-registrations; historical text may appear only with an explicit PARTIAL provenance label. Keep the exact 32 allowed
-root-level keys and reject duplicate, missing, unknown, malformed or blank values. Because
-`cmake_cxx_flags_release` may legitimately be empty, encode exactly that empty value as the nonblank sentinel
-`__EMPTY__`; only this key may use this sentinel. Every recipe parser must map that sentinel back to the empty
-string for tool/environment comparison, while rejecting a raw blank value or `__EMPTY__` in any other field.
-Nonempty values remain literal and must match the observed environment. This resolves the v96 schema contradiction
-without weakening validation or changing the key set.
+registrations; historical text may appear only with an explicit PARTIAL provenance label. The manifest must contain
+exactly these 32 root-level keys, once each, with no unknown, malformed or blank values:
+`cxx_compiler`, `compiler_version`, `qt6_cmake_dir`, `qt6_version`, `cmake_path`, `cmake_version`, `ninja_path`,
+`ninja_version`, `qmake6_path`, `qmake6_prefix`, `make_path`, `make_version`, `cmake_prefix_path`,
+`cmake_generator`, `cmake_build_type_release`, `cmake_build_type_asan`, `build_tests`, `cmake_cxx_flags_release`,
+`asan_cxx_flags`, `asan_exe_linker_flags`, `python3_path`, `python3_version`, `shasum_path`, `shasum_version`,
+`cmake_lists_sha256`, `src_pro_sha256`, `predecessor_plan_checkpoint_commit`, `plan_commit`, `plan_sha256`,
+`product_source_commit`, `predecessor_product_commit`, and `checkout_head`. Encode the legitimately empty
+`cmake_cxx_flags_release` value as `__EMPTY__`; this is the only key allowed to use the sentinel. Parsers normalize
+that sentinel to empty for comparisons and reject raw blank values or `__EMPTY__` on every other key. Nonempty
+values remain literal and must match the observed environment. `input-manifest.txt` uses UTF-8/ASCII-compatible
+`key=value` records, exactly one record per key, sorted lexicographically by key; split at the first `=` so flags or
+paths containing `=` remain intact. Reject CR characters, surrounding whitespace, duplicate keys, unknown keys,
+missing keys, empty values, and malformed hash/commit encodings. SHA-256 fields are exactly 64 lowercase hex digits;
+Git commit fields use the repository's full object-ID width and lowercase hex. The three pinned source-file hashes
+are SHA-256 of exact checked-in file bytes: `cmake_lists_sha256` is repository-root `CMakeLists.txt`, and
+`src_pro_sha256` is `librecad/src/src.pro`. These are distinct from the six Slice-A owned files, whose hashes are
+recorded in a mandatory block below in `source-requirement-map.txt`. `checkout_head` must equal `plan_commit`;
+`predecessor_plan_checkpoint_commit` must equal the handoff's `expected_parent`; `plan_commit` must be that direct
+child and its only changed path must be `docs/plan_offset_curve_2961.md`. `plan_sha256` is SHA-256 of that committed
+path's raw bytes and must equal the reviewed candidate hash. `product_source_commit` must equal the unchanged
+`product_base_sha` used by every receipt; `predecessor_product_commit` must equal the actual parent of that pinned
+product-source checkpoint. Re-run the parser against both a valid sentinel fixture and negative fixtures for blank,
+duplicate, unknown, truncated-hash, uppercase-hash, malformed-commit, missing-delimiter, and empty-key records. A
+valid-value fixture containing `=` after the first delimiter must remain accepted and unchanged.
 
-Freeze all seven payloads before computing the manifest; check exactly eight regular top-level files, no symlinks,
-nested paths or extras, verify all payload hashes, then record the manifest-file hash in a separate readback. Bind
-the packet to the committed v99 plan blob, unchanged product base, exact predecessor/checkpoint ancestry, six A
-owned paths, tool identities/versions, current CMake/qmake6 test registrations and exact selector identities.
-Reissue all six named recipes under v99 and apply the sentinel rule identically in packet parsing, environment
-comparison, receipt generation and validation. Independently audit extracted shell syntax with a no-side-effect
-harness; audit each recipe's inputs, allowed path effects, output/report schema, exit behavior, full testcase and
-skip-set comparisons, and Git ancestry. No recipe may repair or rewrite a sealed packet.
+Freeze the seven packet payloads before manifest generation. Require exactly eight regular top-level files with no
+symlinks, nested paths or extras; the manifest has one sorted `<sha256> <basename>` line for each payload. Verify
+every payload checksum and record the manifest-file hash, exact top-level listing, plan/product identities and
+verification command/result in
+`build/evidence/1A-1.b-check-topology-chain/A-budget-depth/preflight-v100-assembly-readback.txt`. Bind the packet to
+the committed v100 plan blob, unchanged product base, exact ancestry, six A owned paths, tool identities/versions,
+CMake/qmake6 registration hashes and exact selector identities. The assembly readback records the literal verifier
+command, exit status, manifest-file SHA-256, sorted directory listing, payload hashes, Git identities, and clean
+product-path comparison; a checksum-only pass does not establish semantic completeness.
 
-Readiness order is strict: (1) complete source/oracle/ownership/accounting closure and the exact packet; (2) distinct
-G1a completeness and G1b plan-correctness PASS receipts on one identity; (3) G3 independent readiness PASS binding
-those receipts and all six audited recipes; (4) a separate A-only activation checkpoint, followed by its own path,
-ancestry, blob and G5 readback; (5) only then run the activation-bound Release/ASan baseline and exact registered
-selectors. Any relevant source, plan, tool, registration, packet, test identity or ownership change invalidates
+`source-requirement-map.txt` has a mandatory `A-owned-files-v1` block with exactly six sorted tab-separated data rows
+`<repo-relative-path>\t<sha256-of-file-bytes>` between literal `A-owned-files-v1` and `end-A-owned-files-v1`
+marker lines and no aliases or basenames. The rows are exactly
+`librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp`,
+`librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h`,
+`librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.cpp`,
+`librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h`,
+`librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp`, and
+`librecad/src/lib/engine/document/entities/tests/lc_parametriccurveintersection_tests.cpp`. Each digest is SHA-256
+of exact file bytes at `product_source_commit`; compare all six to the plan-checkpoint
+`product-test-blobs.sha256` and live checkout before each readiness decision and activation. The source map also
+records that root `CMakeLists.txt` registers both test translation units in `librecad_tests` and
+`librecad/src/src.pro` is the app/qmake6 build input, not a registered-test provider; use their exact manifest hashes.
+Record exact registration line ranges and configured build/test commands in `selector-test-map.txt`, then verify
+they resolve against those hashed files.
+
+Create `build/evidence/1A-1.b-check-topology-chain/recipes-v100/` separately from the eight-file packet. It must
+contain exactly these six executable recipe files plus `recipes-manifest.sha256` and `recipe-audit.txt`:
+`activation_commands.sh`, `foundation_activation_baseline_commands.sh`,
+`foundation_review_freeze_commands.sh`, `foundation_validation_commands.sh`,
+`foundation_product_commit_commands.sh`, and `foundation_plan_checkpoint_commands.sh`. The recipe manifest hashes
+exactly the six scripts. The independent audit records each script hash, parser-only syntax result, read/write path
+allowlist, inputs, exit behavior, output/report schema, full testcase and skip-set comparison, and direct ancestry
+checks. Each script must be a regular non-symlink file with mode `100755`, a reviewed interpreter line, and no
+unlisted generated helper. The recipe manifest has one sorted `<sha256> <basename>` line per script and no other
+entries; reject duplicate names, paths, hashes, malformed lines, or mode drift. The audit records the exact
+`bash -n` (or interpreter-equivalent parser-only) command and version, and statically traces every command that can
+write, delete, stage, commit, configure, build, test, or emit reports to the declared path/gate allowlist. No recipe is
+executed during syntax/audit review; commands capable of building/testing run only after their
+specified gate/activation state. Before consuming any packet, receipt, build report or selector result, every recipe
+must run a side-effect-free, phase-specific identity guard and record its observations. The audit defines one
+profile per invocation:
+
+- **Pre-activation:** require `HEAD == input-manifest.plan_commit == checkout_head`, verify the committed plan raw
+  hash and v99 expected parent, packet/payload/recipe hashes, all six owned files against the base digests, and the
+  recorded toolchain/registration inputs.
+- **Plan-checkpoint G5 before packet creation:** this coordinator readback does not consume a packet or recipe.
+  Require the actual committed plan at HEAD, exact direct-parent and one-roadmap-path scope, reviewed/committed plan
+  byte equality, all six unchanged base files, and absent v100 packet/recipe directories; write only the separately
+  specified G5 receipt, owned-hash list and semantic readback.
+- **Activated baseline:** require a PASS activation G5 and `HEAD == activation_checkpoint_commit`, verify it is the
+  direct child/versioned activation of the reviewed plan, and prove the six owned files still equal the base hashes.
+  Recompute the activated roadmap's raw SHA-256 and require it to equal the activation receipt's
+  `activation_plan_file_sha256`. The manifest's `checkout_head` intentionally remains the reviewed v100 plan commit;
+  it is not compared to the later activation HEAD.
+- **Frozen-tree validation/G2/product commit:** do not compare edited owned files to their pre-edit hashes. Require
+  the activation identity plus the immutable freeze receipt's exact worktree path set and six current file hashes;
+  validation, review and staging must all use that same frozen tree. Verify committed/staged/tested hashes against
+  the freeze and preserve the unchanged build-registration/tool inputs.
+- **Post-product plan reconciliation:** require the actual product commit at HEAD, its exact allowed path set, direct
+  parent and committed blobs to match the frozen-tree and validation receipts; verify the plan-only checkpoint
+  candidate is a direct child and contains only the roadmap path. Do not require the new product HEAD or edited
+  source hashes to equal the original preflight base.
+
+All profiles also verify the frozen recipe hashes and exact relevant packet/gate/report identities, plus repository-
+root `CMakeLists.txt`, `librecad/src/src.pro`, and the recorded executable paths/versions used by that step,
+including Python and `shasum`. The audit closes the transitive command graph: every repository-resident helper,
+configuration script, selector runner, report parser or generated command file invoked directly or indirectly gets
+an exact path and SHA-256 entry in `recipe-audit.txt`, and the runtime guard rechecks it. For external tools, record
+canonical executable path and version and, when the executable/package has a stable local digest, that digest too;
+unavailable digest coverage is explicit and cannot waive required path/version checks. A mismatch fails before side
+effects. The audit specifies each guard command, phase inputs, outputs, exit codes and path allowlist; syntax-only
+review does not prove runtime identity enforcement.
+After audit, freeze scripts and audit record; later edits require a new recipe identity. G3 binds both the
+recipe-manifest SHA-256 and recipe-audit SHA-256.
+
+Store formal receipts outside both fixed-membership directories at
+`build/evidence/1A-1.b-check-topology-chain/A-budget-depth/readiness-v100/`, containing exactly the three regular
+non-symlink top-level files `G1A-COMPLETENESS.txt`, `G1B-PLAN-CORRECTNESS.txt`, and `G3-READINESS.txt`, with no
+nested paths or extras. Each has exactly one each of
+`status=PASS`, `gate_id`, `slice`, `reviewed_plan_sha`, `product_base_sha`, `packet_manifest_sha256`, and
+`reviewer_id`, `reviewer_role`, and `review_method`; these are the exact nine allowed fields for G1a/G1b. G3 has
+exactly those nine plus exactly one each of `gate1_completeness_sha256`, `gate1_plan_correctness_sha256`,
+`recipe_manifest_sha256`, and `recipe_audit_sha256`, for thirteen fields total. Use one `key=value` record per
+field, reject duplicates, unknown/missing keys, blanks, extra records, CRs and surrounding whitespace; split records
+at the first `=`. Enforce full lowercase commit IDs and 64-digit lowercase SHA-256 values. Gate IDs are exactly
+`G1A_COMPLETENESS`, `G1B_PLAN_CORRECTNESS`, and `G3_READINESS`; `slice` is exactly `A-budget-depth`, and
+all receipts must bind the same full `reviewed_plan_sha`, `product_base_sha`, and `packet_manifest_sha256`.
+`reviewer_id` is a stable individual reviewer identity, not a role label; the three identities must be pairwise
+distinct and distinct from the plan/packet/recipe author, coordinator, and implementation writer. The role values
+are respectively `independent_completeness_reviewer`, `independent_plan_correctness_reviewer`, and
+`independent_readiness_reviewer`; `review_method` names the concrete independent source/contract review performed.
+The two G3 gate receipt hashes are SHA-256 of the exact G1a/G1b receipt bytes; its recipe hashes match the exact
+manifest and audit bytes. Duplicate/missing/role-swapped fields, same reviewers, or any identity mismatch fail
+closed. Further require exact cross-object equalities, not just mutual agreement: every `reviewed_plan_sha` equals
+`input-manifest.txt:plan_sha256`; every `packet_manifest_sha256` equals SHA-256 of the raw
+`preflight-v100/packet-manifest.sha256` bytes; every `product_base_sha` equals both
+`input-manifest.txt:product_source_commit` and the v100 handoff's `product_source_base`; and the packet's
+`predecessor_product_commit` equals the handoff's `predecessor_product`. The packet's
+`predecessor_plan_checkpoint_commit` equals `expected_parent`, `plan_commit` equals `checkout_head` and the committed
+plan identity reviewed by all receipts, and `plan_sha256` is recomputed from that committed file. G3's recipe hashes
+equal the frozen v100 recipe files. Any one-field or cross-file mismatch fails closed. The separate activation
+checkpoint follows only after all three PASS receipts; it also needs
+its own G5 readback at
+`build/evidence/1A-1.b-check-topology-chain/A-budget-depth/activation-v100/g5-readback-receipt.txt` before
+activation-bound builds, tests or product edits. The plan-only checkpoint receipt is separately stored at
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v100/g5-readback-receipt.txt`; its sibling
+`product-test-blobs.sha256` records all six owned paths against the unchanged product base, one sorted
+`<sha256-of-file-bytes>  <repo-relative-path>` row per exact path. This is a pre-product checkpoint receipt and does
+not use the generic post-product G5 schema in §0.4. Its exact `key=value` fields are `status=PASS`,
+`gate_id=G5_PLAN_CHECKPOINT`, `plan_revision=v100`, `parent_commit`, `checkpoint_commit`,
+`changed_path=docs/plan_offset_curve_2961.md`, `plan_file_sha256`, `product_base_commit`,
+`owned_hash_manifest_sha256`, `semantic_readback_sha256`, `semantic_readback=PASS`,
+`preflight_v100_absent=true`, and `recipes_v100_absent=true` (thirteen records, in the listed order, no extras or
+duplicates). `semantic_readback_sha256` binds the separate
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v100/semantic-readback.txt`, which reconciles current and
+historical pointers, plan/product state, all gate/evidence dispositions, the six unchanged hashes, absent v100
+packet/recipes, and preserved v99 scratch. Verify `parent_commit` equals both the v100 handoff's expected parent and
+`predecessor_plan_checkpoint_commit`; `checkpoint_commit` is its direct child and equals the actual
+`git rev-parse HEAD` read back after commit; `plan_file_sha256` matches the reviewed and committed raw plan bytes;
+`product_base_commit` equals the v100 handoff's `product_source_base`; and the committed changed-path set is exactly
+the one path above. Also verify
+the six rows against the unchanged product-source commit and live tree, all v99 recipe hashes against their recorded
+values, and the absence of v100 packet/recipe directories before writing the receipt. Keep this receipt and sibling
+hash list outside all fixed-membership packet directories.
+
+The activation receipt is a different pre-product schema; it must not be synthesized from the generic G5 receipt.
+The separate activation plan-only checkpoint is the direct child of the reviewed v100 plan and increments the plan
+revision exactly once, from `v100` to `v101`, changing the live card from `WAITING` / `activation: none` to
+`ACTIVATED` / `activation: A-budget-depth`. Its exact receipt fields are `status=PASS`,
+`gate_id=G5_ACTIVATION_CHECKPOINT`, `prior_plan_revision`, `activation_plan_revision`, `prior_plan_commit`,
+`activation_checkpoint_commit`, `parent_commit`, `changed_path=docs/plan_offset_curve_2961.md`,
+`activation_plan_file_sha256`, `from_state=WAITING`,
+`to_state=ACTIVATED`, `slice=A-budget-depth`, `g1a_receipt_sha256`, `g1b_receipt_sha256`, `g3_receipt_sha256`,
+`packet_manifest_sha256`, `recipe_manifest_sha256`, `recipe_audit_sha256`, `product_base_commit`,
+`owned_hash_manifest_sha256`, `semantic_readback_sha256`, and
+`activation_scope=pre-edit-release-asan-baseline-only` (twenty-two records, in the listed order, no extras or
+duplicates). `owned_hash_manifest_sha256` binds the same
+`plan-checkpoint-v100/product-test-blobs.sha256`; `semantic_readback_sha256` binds a separate
+`build/evidence/1A-1.b-check-topology-chain/A-budget-depth/activation-v100/semantic-readback.txt` recording the
+receipt/packet/recipe identities, exact Git transition, active pointer, unchanged six hashes and bounded
+activation scope and raw SHA-256 of the committed v101 roadmap. Verify that this value equals
+`activation_plan_file_sha256` and `sha256sum` of `docs/plan_offset_curve_2961.md` at
+`activation_checkpoint_commit`. Verify that the
+activation-plan commit is the direct child of `prior_plan_commit`, its one changed path is the roadmap, its version
+is exactly `v101`, with `prior_plan_revision == v100`; `parent_commit == prior_plan_commit`, and
+`activation_checkpoint_commit` equals the actual `git rev-parse HEAD` read back after commit; its state transition
+is exactly as stated. `prior_plan_commit` equals the committed plan named by `input-manifest.txt:plan_commit`, while
+the three gate receipt hashes, packet manifest hash, recipe manifest hash and recipe audit hash equal their exact
+v100 artifacts. `product_base_commit` equals `input-manifest.txt:product_source_commit`, the handoff's
+`product_source_base`, and every formal receipt's `product_base_sha`. Revalidate all receipt and packet/recipe
+identities plus all six unchanged owned-file hashes.
+The activation G5 closes before any build/test; it authorizes only the named A baseline. Product edits remain
+prohibited until the baseline is reconciled against the exact registered selectors and zero/predecessor counts.
+
+Keep failed review decisions outside the exact three-file PASS directory at
+`build/evidence/1A-1.b-check-topology-chain/A-budget-depth/readiness-v100-attempts/<attempt-id>/`, one immutable
+`<gate-id>.txt` per attempted decision. Each records the attempted plan/product/packet/recipe identities, status,
+reviewer identity, findings and required correction. Failed/conditional attempts are PARTIAL, never overwritten or
+counted as receipts. If any reviewed input changes, abandon that identity, create the next plan/packet identity and
+re-review; do not promote failed artifacts into `readiness-v100/`.
+
+Readiness order is strict: (1) complete source/oracle/ownership/accounting closure and the exact packet; (2) audit
+and freeze all six recipes; (3) distinct G1a completeness and G1b plan-correctness PASS receipts on one identity;
+(4) G3 independent readiness PASS binding those receipts, recipe manifest and audit; (5) a separate A-only
+activation checkpoint, followed by its own path, ancestry, blob and G5 readback; (6) only then run the
+activation-bound Release/ASan baseline and exact registered selectors. Any relevant source, plan, tool, registration,
+packet, test identity or ownership change invalidates
 dependent decisions. Preserve failed attempts as PARTIAL and begin a new packet identity; never mutate a handed-off
 packet. Until then Slice A remains WAITING and no product edit, build or registered test is authorized.
 
@@ -10960,3 +11148,71 @@ commit and is preserved as historical evidence.
   Markdown/whitespace and all live pointers, exact plan-only commit scope and unchanged six product/test blobs;
   commit this direct child of v98 and perform G5 readback before any fresh packet work. Preserve `build-asan/` and all
   prior evidence.
+
+#### v99 → v100 (2026-10-17; bind the manifest schema, recipe set and formal receipts)
+
+This non-activating plan-only correction is based on committed v99
+`7cc9b5beff8f53f4ed1cf3e7e1b4e48c161bf471`; product source remains
+`9c06e9c77b313b62cc20e9ec39c22952fee501f2`. The v99 card required an exact 32-key manifest but did not enumerate
+the keys, and named six recipes without fixing their artifact location, membership, hashes or receipt bindings.
+Agent Gibbs mechanically extracted six scripts into `build/evidence/1A-1.b-check-topology-chain/recipes-v99/`; they
+are unsealed, unaudited PARTIAL scratch, not executable authority. No `preflight-v99/` packet was created. Preserve
+the six scripts byte-for-byte and do not consume them for gates or execution. Their observed hashes are:
+
+```text
+cabefe47b2b13eb0c0e3b073b6b30e797982f09c32700c68a2b098374980ed3f  activation_commands.sh
+32ff6e9ce484cc7e802df13a5e2e07effe3fabe2d6cc505a4f2e5b43faf2d1d6  foundation_activation_baseline_commands.sh
+5e91486001f051c9de9a0bd01c57b0467b3c2aa1a9c58c4863cc73cface7e42e  foundation_plan_checkpoint_commands.sh
+31317acfc6306a4bef841d942be865c470ceb4d792a717067a68d2266cc45828  foundation_product_commit_commands.sh
+b0bcff371993add224c736604623c0c83472b9163be0808c88fd0c6fdb117883  foundation_review_freeze_commands.sh
+cd7365393e27f6f5cf4a68544db28cdd60b06d77f7d31b1ff7f377b8a40348fd  foundation_validation_commands.sh
+```
+
+- **1. Completeness:** the v100 contract now enumerates all 32 manifest keys, the sole allowed empty-value
+  sentinel, exact packet membership and canonical line format, file/hash encodings, all six recipe filenames and
+  executable modes, recipe-manifest membership and audit contents, exact formal-receipt schemas, and separate
+  packet/recipe/readiness/G5 evidence locations. It pins registration-source paths, gives all six owned-file paths
+  and a six-row digest format, defines distinct pre-packet and activation G5 schemas, requires the
+  WAITING-to-ACTIVATED versioned transition, and fixes immutable storage for failed attempts. Every G1a/G1b/G3 input
+  and binding is explicit; no archive is treated as current evidence.
+- **2. Correctness:** bind recipe bytes by sorted SHA-256 manifest; independently inspect parser-only syntax and
+  source-checked path effects, commands, output schemas, skip/test comparisons and ancestry. Reject malformed,
+  duplicate, blank, unknown or identity-inconsistent packet/receipt records. G3 binds the exact recipe manifest and
+  audit hashes plus the actual distinct G1a/G1b receipt hashes. Reviewer identity, role and review method are
+  separate fields, with three independent reviewers distinct from every author/coordinator/implementer. Check
+  exact Git equalities: plan commit equals checkout HEAD, expected parent equals the packet predecessor, the plan
+  commit is its direct child with only the roadmap path changed, the raw plan hash matches the reviewed hash, and
+  product ancestry plus six file digests match. Bind all receipt identities directly to the input manifest and raw
+  packet-manifest bytes, not merely to one another. At execution, recipes use phase-aware guards: base identity
+  before editing, activation commit at baseline, immutable frozen-tree hashes for validation/commit, and actual
+  product-commit ancestry/blobs for plan reconciliation. The activation G5 also hashes the committed activated
+  roadmap bytes and baseline rechecks that digest. This prevents stale-base comparisons from rejecting valid later
+  stages without weakening byte identity. No recipe runs during its syntax/audit review, and no build, registered
+  test or product edit occurs before activation. The A14 production `workOnExit` and retained-session contracts
+  remain unchanged from v98.
+- **3. Sub-plan and readiness:** v100 is the sole current WAITING handoff and expects committed v99 as parent. After
+  this checkpoint and G5, (a) rederive the source/oracle/ownership/accounting closure and assemble the exact packet;
+  (b) create and independently static-audit/freeze `recipes-v100/`; (c) obtain same-identity G1a/G1b PASS; (d) obtain
+  G3 binding both gate receipts and frozen recipes; and (e) create a separate A-only activation checkpoint/G5.
+  Include positive and negative parser fixtures for packet and receipt schemas; syntax-only checks are not a recipe
+  audit. Preserve failed decisions under immutable attempt IDs outside the final exact PASS directory. The
+  activation checkpoint must be the direct child of the reviewed plan, advance its version once, and validate the
+  WAITING-to-ACTIVATED transition while binding the same gate/packet/recipe identity. Only after that distinct G5
+  may activation-bound baseline builds/tests begin; product edits wait for baseline reconciliation. Preserve
+  `recipes-v99/` unchanged as PARTIAL scratch.
+- **4. Commit after slices:** this is a plan-only child; it authorizes no product commit. Each later executable leaf
+  still receives exactly one product/test-only commit after required validation and frozen-tree G2, followed
+  immediately by a plan-only direct child; internal stages do not commit, and no successor work may interleave.
+- **5. Self-update after committing:** the v100 G5 receipt verifies v99 ancestry, exact single-file scope, committed
+  plan blob equality, no self/future SHA, unchanged six product/test blobs and the sole current v100 pointer. It
+  records the preserved v99 recipe hashes and packet disposition, confirms no v100 packet/recipes pre-existed, and
+  issues a separate semantic readback. Reconcile findings, statuses, evidence hashes, gate identities, decision
+  validity and descendant readiness from Git/evidence state before v100 packet assembly. Repeat this live-state
+  readback after every product commit and following plan-only reconciliation; a previously clean handoff never
+  authorizes a successor after a commit by itself. Plan-only and activation readbacks use dedicated pre-product
+  schemas, not product-commit G5's schema; each records direct-child, changed-path, raw-plan-hash and six-file digest
+  predicates.
+- **Validation/disposition:** this correction changes only the roadmap. It does not pass G1a/G1b/G2/G3, readiness or
+  activation. Run Markdown/whitespace and pointer checks; verify six product/test blobs unchanged and exact plan-only
+  ancestry/path scope; commit as the direct child of v99 and produce the separate G5 receipt. Preserve all older
+  packets, `recipes-v99/` and `build-asan/` unchanged.
