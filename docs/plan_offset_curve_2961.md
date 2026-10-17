@@ -24,11 +24,11 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–3
 
-Plan **v177 candidate: live-state, completeness/correctness, readiness, slice-commit and self-update refinement**, 2026-10-17; plan-only and non-activating. This candidate is a direct child of v176 at `fccfc07364519022ff8f805e4b4070f1fa35cd11` (parent `4c08404dca523cef11df68bbf0de798f5057710a`, tree `6936b4e3de7d1231eead645249a4e1106b56f0a9`, parent plan blob `64330b4e95a87f5c7263f3c77ef56811128ab4cb`, parent plan SHA-256 `74170fbaa4984adfc54f1a28c429669a5b7372f0087943a24de57ecf80f30cfa`). v176's exact-identity independent G5 PASS report is `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v176/g5-auditor-report.txt` (SHA-256 `6b18808cc7079b36fa6fe4780666c4230303bcd5b8e4c522e3cffa5015e16040`). Its fresh `preflight-v176/` packet is PARTIAL (manifest SHA-256 `548e19102122b53ff6df846181f728ec77ef719e593ed70c3527d31b3c6a88e1`); `recipes-v176/` is absent. Preserve both v176 receipts and artifacts unchanged; do not promote the partial packet or rebind it to v177. Until this plan-only candidate is committed and its exact independent G5 passes, §84 remains the committed live authority and authorizes only the corrective plan checkpoint/G5 sequence. After that exact PASS, §85 is the sole live authority. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; protected `build-asan/` is not inspected by instruction. This file remains the implementation source of truth.
+Plan **v178 candidate: close the post-commit G5 transition gap**, 2026-10-17; plan-only and non-activating. This candidate is a direct child of v177 at `b5ae0a1ca1b66db98c595d400bf591b36ed37137` (parent `fccfc07364519022ff8f805e4b4070f1fa35cd11`, tree `610486f0e550f2261b87ab1d476c2ae5b8249ec2`, parent plan blob `c7f3addee27fd333d80d8440c21bf9d8b92892cd`, parent plan SHA-256 `233b38d0411cd3e211f59cb8c151c1996143ae7bf4d3bc719e6c49421f12b927`). v177's exact G5 report, `preflight-v177/` and `recipes-v177/` are absent. The v177 post-commit state exposed a transition hole: §0 routed to §84, which contains no row for HEAD=v177, while §85 withheld authority until G5 PASS even though its table contains the G5-pending action. v178 changes only the authority handoff: §85 permits its exact v177-G5 row after v177 commit; §86 permits the v178 precommit correction, the exact v178 G5-pending action after commit, and its successors only after exact G5 PASS. Preserve v177 commit and artifacts unchanged. v176 G5 PASS remains `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v176/g5-auditor-report.txt` (SHA-256 `6b18808cc7079b36fa6fe4780666c4230303bcd5b8e4c522e3cffa5015e16040`); its `preflight-v176/` packet remains PARTIAL (manifest SHA-256 `548e19102122b53ff6df846181f728ec77ef719e593ed70c3527d31b3c6a88e1`) and `recipes-v176/` remains absent. Preserve them unchanged and do not promote or rebind them. Until v178 is committed, §85 permits only this corrective plan child; after commit, §86's exact G5-pending row is the sole allowed action; after exact v178 G5 PASS, §86 is the sole live authority. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; protected `build-asan/` is not inspected by instruction. This file remains the implementation source of truth.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY; Trim support NOT IMPLEMENTED.** The v177 candidate is documentation-only, non-activating and uncommitted until its plan-only checkpoint is verified. v176 remains the live committed authority until v177 is committed and its exact independent G5 PASS is observed; thereafter §85 controls. Preserve the exact v175 FAIL and v176 PASS unchanged. The fresh v176 preflight packet is PARTIAL with manifest SHA-256 `548e19102122b53ff6df846181f728ec77ef719e593ed70c3527d31b3c6a88e1`; its six recipes, formal G1a/G1b/G3, activation and reconciled baseline are absent. Preserve v176 artifacts; v177 must start from fresh identities and artifacts after its G5 PASS. The older `inputs-v168` manifests and v158 partial preflight remain historical; do not promote, relabel or reuse them. No A-budget-depth implementation or authorized discovery/build/test exists. Earlier completed geometry sub-slices and receipts remain historical valid work. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; never inspect protected `build-asan/`. Slice A remains WAITING; ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. Phase 3 Trim remains a separately gated future capability, not implemented or authorized. The four application file lanes, both conversions, edited reopen and binary-DXF codec support remain open.
+Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY; Trim support NOT IMPLEMENTED.** v177 is committed at `b5ae0a1ca1b66db98c595d400bf591b36ed37137`; its exact G5 is NOT_ISSUED and its packet/recipes are absent. This v178 correction is plan-only and uncommitted. Preserve v177 unchanged. Until v178 is committed, §85 authorizes only this plan correction; after commit §86 authorizes only exact v178 G5; only after its PASS may a fresh v178 packet/recipe be created. Preserve the exact v175 FAIL, v176 PASS and v176 PARTIAL packet unchanged. The v176 packet manifest SHA-256 is `548e19102122b53ff6df846181f728ec77ef719e593ed70c3527d31b3c6a88e1`; its six recipes, formal G1a/G1b/G3, activation and reconciled baseline are absent. Do not promote or reuse it. The older `inputs-v168` manifests and v158 partial preflight remain historical. No A-budget-depth implementation or authorized discovery/build/test exists. Earlier completed geometry sub-slices and receipts remain historical valid work. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; never inspect protected `build-asan/`. Slice A remains WAITING; ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. Phase 3 Trim remains a separately gated future capability, not implemented or authorized. The four application file lanes, both conversions, edited reopen and binary-DXF codec support remain open.
 
 Historical v68 amendment: clarifies file-support acceptance and retains the v67 product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, with all four recorded product source/test hashes unchanged. The exact-membership `preflight-v67/` packet is PARTIAL provenance (latest packet-manifest SHA-256 `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`), not a formal gate receipt. The G4 hidden-cusp clearance proof and C50 correction remain normative: the cusp-only candidate is separated from all visible spans and must refuse as `OffCurve` before terminal/topology matching; B07 separately tests absence of a cusp `ReferenceTerminal`, and C36 retains fully witnessed `Topology` coverage. The five controls remain mandatory per slice: separate completeness and plan-correctness gates; frozen-tree implementation correctness; an executable, independently reviewed sub-plan/readiness decision; one validated product commit followed by its plan-only reconciliation; and a post-commit live-state audit/self-update before any successor. Slice A remains WAITING; G1 completeness, G1 plan correctness, Gate-3 readiness and activation are not passed. A/B/C baseline discovery remains zero and strict-core remains 61 matching normalized identities in Release/ASan; no registered tests ran. No product/test edit, build, JUnit execution, formal Gate PASS, readiness PASS or activation occurred. DXF read, DXF write, DWG read and DWG write are separate open application obligations; both conversion directions and the separate R14/R2018 binary-DXF codec obligation also remain open. Geometry-only checker evidence satisfies none.
 Historical v81 reconciled the six-path A scope, A14 selector, split-debit oracle, activation-bound test identities and post-edit validator. Its packet and review findings are preserved as immutable provenance; its live pointers are superseded below. The five control families and six gate decisions (G1a/G1b/G2/G3/G4/G5) remain independently recorded and fail-closed. §0.5 retains detailed leaf specifications and historical handoffs; §29 is the sole authority for the current gate state and immediate next action. Preserve the v81 and v80 packets/reviews, the v77 PARTIAL packet and invalid v79 draft. The four independent application obligations—DXF read, DXF write, DWG read and DWG write—plus both conversions and binary-DXF codec work remain later 1E gates.
@@ -274,25 +274,28 @@ Execution states: `pending`, `in progress`, `validated`, `committed — reconcil
 `deferred — user publication action`. Readiness is separate (§0.3): `ready`, `conditional`, or `waiting`.
 A commit alone does not mean done; verification, review and the post-commit plan checkpoint are required.
 These are dashboard labels only. The active Slice-A state machine uses the disjoint, machine-checkable
-`A_execution_state`, `G3_readiness_status` and `A_authorization_status` domains: §84 until the v177 candidate's exact
-G5 PASS, then §85. Never translate one domain into another or infer permission from a dashboard label. The latest
+`A_execution_state`, `G3_readiness_status` and `A_authorization_status` domains: §85's authority boundary made its
+v177 G5-pending row unreachable and left no current matching transition; §86 corrects that handoff. Use §86's exact
+precommit row while HEAD is v177, its G5-only row once v178 is committed, and its full transition table only after
+exact v178 G5 PASS. Never translate one domain into another or infer permission from a dashboard label. The latest
 checkpoint section matching observed HEAD and exact receipts controls the live action. v160-v173 and their receipts
 are history in §§69-81; v174 is committed at `7104f0d6f907b44a34a7ac8862a3a6887033f15d` with G5 PASS SHA-256
 `589e41134fa67182d4c4ac628b60d3b100783858b0d633a6727cb9e6b60fe395`; v175 is committed at
 `4c08404dca523cef11df68bbf0de798f5057710a` with G5 FAIL SHA-256
 `8570f4bbed5c676adfa041fc8d7fc03c9b066c49c3d5d9a988d74e8a15d467ae`; v176 is committed at
 `fccfc07364519022ff8f805e4b4070f1fa35cd11` with G5 PASS SHA-256
-`6b18808cc7079b36fa6fe4780666c4230303bcd5b8e4c522e3cffa5015e16040`. Its fresh `preflight-v176/` packet is
+`6b18808cc7079b36fa6fe4780666c4230303bcd5b8e4c522e3cffa5015e16040`. v176's fresh `preflight-v176/` packet is
 PARTIAL, manifest SHA-256 `548e19102122b53ff6df846181f728ec77ef719e593ed70c3527d31b3c6a88e1`; `recipes-v176/` is absent.
-Preserve those immutable artifacts. Do not use old `inputs-v168` or the v158 partial packet as current evidence.
-There is no current v177 packet/recipe, formal G1a/G1b/G3, activation, reconciled baseline, or A-budget-depth
+v177 is committed at `b5ae0a1ca1b66db98c595d400bf591b36ed37137`, but its exact G5, packet and recipes are absent.
+Preserve all these immutable artifacts. Do not use old `inputs-v168` or the v158 partial packet as current evidence.
+There is no current v178 packet/recipe, formal G1a/G1b/G3, activation, reconciled baseline, or A-budget-depth
 implementation. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. No next action is authorized
 by prose alone; missing, stale, mismatched or failing evidence blocks successors. Sections 39-84 preserve technical
 contracts and historical handoffs and do not independently authorize work. Section 56 is normative only for its
 bounded Git-object/protected-path procedure. Do not inspect protected `build-asan/`; report `not inspected by
 instruction`.
 
-Select exactly one row from §84 while v177 is uncommitted or lacks exact G5 PASS, and from §85 only after that PASS. Resolve it from observed HEAD, artifact membership/completeness and exact matching receipts. If zero or multiple rows match, stop for a plan-only correction. No status sentence independently authorizes packet, review, activation, baseline, build/test or product work.
+Select exactly one row from §86 for the v178 candidate precommit state while HEAD is v177, for the exact G5-only state after v178 is committed, and for subsequent transitions only after v178 G5 PASS. Resolve it from observed HEAD, artifact membership/completeness and exact matching receipts. If zero or multiple rows match, stop for a plan-only correction. No status sentence independently authorizes packet, review, activation, baseline, build/test or product work.
 
 | Step | Title | PR | Depends on | Size (LOC, product + tests) | Status |
 |---|---|---|---|---|---|
@@ -20123,3 +20126,55 @@ The provider's unique tangency proof
     inspection); do not inspect `build-asan/`. Commit the roadmap alone. After commit, exact independent G5 is the only
     permitted action until PASS; after PASS, §85 controls and requires fresh v177 evidence. The current implementation
     remains incomplete and no Trim product code is claimed.
+
+86. **v178 post-commit G5 authority correction (plan-only; non-activating).** This direct child corrects one
+    transition defect in v177 without changing technical acceptance or implementation scope. v177 is committed at
+    `b5ae0a1ca1b66db98c595d400bf591b36ed37137`, parent `fccfc07364519022ff8f805e4b4070f1fa35cd11`, tree
+    `610486f0e550f2261b87ab1d476c2ae5b8249ec2`, plan blob `c7f3addee27fd333d80d8440c21bf9d8b92892cd`, raw
+    roadmap SHA-256 `233b38d0411cd3e211f59cb8c151c1996143ae7bf4d3bc719e6c49421f12b927`. No exact v177 G5 report,
+    packet or recipe exists. The exact v176 predecessor G5 PASS remains SHA-256
+    `6b18808cc7079b36fa6fe4780666c4230303bcd5b8e4c522e3cffa5015e16040`; preserve it and the v176 PARTIAL packet
+    unchanged.
+
+    **Correction.** v177's §0 said §85 became authoritative only after its exact G5 PASS, although the §85 table
+    included the post-commit/G5-pending action. Thus the committed v177 state `HEAD=v177, G5 absent` had no usable
+    transition: §84 had no v177 row, and §85 withheld authority before PASS. Here, §85 remains the technical and
+    execution contract, but this §86 table explicitly grants exactly one precommit and one post-commit pending-G5
+    transition. §86 becomes the full live state authority only after its own exact G5 PASS.
+
+    **Inherited contract.** Keep v177's five control tracks, bidirectional requirement ledger, current-source
+    correctness census, A01-A14 and six-path Slice-A boundary, 61 strict-core identities, Gibbs-only A start, six
+    recipe names, unchanged 101-key v174-1 schema, format/version obligations, commit/reconciliation rules, and
+    complete §6.1 Trim 3A/3B/3C technical contract. These are inherited technical requirements, not proof of readiness.
+    Rebind all current plan, packet, recipe, review, activation, baseline and successor identities to v178. Use
+    `preflight-v178/`, `recipes-v178/` and predecessor v177; predecessor G5 status is `NOT_ISSUED`. Never reuse the
+    PARTIAL v176 packet or invent a v177 PASS. Do not change product acceptance, product paths, source base, schemas,
+    A01-A14 selector contracts or Trim semantics in this correction. No product edit/build/test/discovery or baseline
+    is authorized.
+
+    **Exclusive handoff table.** The rows are conjunctive; choose exactly one from observed HEAD and exact receipts.
+
+    | Observed state | Sole next action | Blocked |
+    |---|---|---|
+    | HEAD is v177; v178 is its direct-child candidate; roadmap is the only changed/staged path; six A blobs match the pinned base | Verify parent, path/blob, diff-check and preserved v176/v177 identities; commit only the roadmap. | Packet/recipe/review creation, activation, baseline, build/test/discovery and product work. |
+    | HEAD is committed v178; exact v178 G5 absent, pending or identity-mismatched | Obtain and persist independent G5 for exact v178 commit/tree/roadmap blob/raw SHA only. | Every packet/recipe/review/activation/baseline/build/test/product action. |
+    | Exact v178 G5 FAIL | Preserve the report/hash; create only a corrective plan-only direct child and obtain its exact G5. | Artifact creation/promotion and all implementation. |
+    | Exact v178 G5 PASS; no `preflight-v178/` or `recipes-v178/` | Create both fresh under §83's exact grammar and v177's inherited contract, rebound to v178; mark packet PARTIAL and recipes unaudited. | G1a/G1b/G3, activation, baseline, build/test and product work. |
+    | Packet/recipes incomplete, stale, mismatched or unaudited | Close only those exact artifacts; any plan/source/spec/fixture/oracle/selector/registration/toolchain identity change returns to a plan-only child/G5 and fresh dependent artifacts. | Reviews, activation, baseline and implementation. |
+    | v178 packet COMPLETE and recipes independently audited | Start a fresh role-distinct readiness identity/index; obtain current G1a and G1b, then G3 bound to the same exact index chain. | Activation, baseline and implementation before all three PASS. |
+    | Exact current G1a/G1b/G3 PASS; activation checkpoint absent | Create the immutable activation checkpoint. | Baseline, discovery, build/test and product edits. |
+    | Activation checkpoint exact; activation G5 absent/pending | Obtain only its exact independent G5. | Baseline, discovery, build/test and product edits. |
+    | Activation G5 exact PASS/current; baseline not reconciled | Run only the audited baseline recipe and reconcile its receipt. | Implementation and unsanctioned tests/builds. |
+    | Baseline PASS/current; all A predecessors and readiness current; Gibbs available; A NOT_STARTED | Gibbs alone starts the exact reviewed Slice A. | Any other writer, second start or successor. |
+    | Validated slice commit exists without plan checkpoint/G5 PASS | Perform the immediate plan-only direct-child reconciliation; obtain its exact G5 before any successor. | Successor edit/build/test/readiness work. |
+    | Exact slice commit, reconciliation and G5 PASS agree | Read back Git/evidence and recompute the next leaf with fresh completeness, correctness and readiness. | Any stale or unready successor, including Phase 3. |
+    | Phases 1 and 2 complete/reconciled and Trim remains requested | Run §85's detailed 3A kernel card, then independently gated 3B action and 3C persistence/release cards, all rebound to v178. | Any Trim product work before its own G1a/G1b/G3, activation and baseline PASS. |
+
+    For v178 precommit, this §86 row is the sole plan action; after v178 commit but before its G5 PASS, the G5-only
+    row is the sole action. After exact v178 G5 PASS, §86 is the live authority and every later state/recovery row
+    from §85 applies with all current identities rebound to v178. §85 continues to supply the inherited technical,
+    completeness/correctness, readiness and per-slice execution contracts; no state without exactly one applicable
+    row may advance. On every post-commit self-update, first verify parent, tree, path set, raw hashes and
+    review/baseline receipts; then record exact slice outcome, findings, tests, toolchain, descendant invalidations
+    and one next action. Commit only the plan reconciliation and block successors until its exact G5 PASS. Preserve
+    both prior commits and reports; do not amend/rewrite them. `build-asan/` remains not inspected by instruction.
