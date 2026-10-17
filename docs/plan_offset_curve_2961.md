@@ -24,11 +24,11 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v93**, 2026-10-16 (make activation inputs and receipt cardinality fail closed after recipe audit). This file is the implementation source of truth.
+Plan **v94**, 2026-10-16 (correct the v93 completeness/readiness failures and harden activation validation). This file is the implementation source of truth.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE.** Geometry bounds and local-topology children are committed; ordered-chain topology, later entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. v93 is a non-activating plan-only correction based on committed v92 `cab012b6ffb6b3a21990934d0b0bbfc1b812c581`; product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Preserve the v91 packet and the v92 packet as PARTIAL provenance; neither is a formal gate receipt or activation record. v92 repaired the command order and bound toolchain identities, but a fresh audit found two input-contract defects: its toolchain keys are nested below a heading although recipes require unique column-zero `key=value` records, and activation did not enforce exactly one occurrence of each receipt identity field. v93 specifies the root-level manifest schema and closes the receipt-cardinality recipe defect; it does not close the reverse source/caller inventory, independent oracles, exact runtime snapshots, allocation-publication map, source/debit/capacity/runtime envelope or same-identity G1a/G1b/G3. Slice A remains WAITING. Preserve v91/v92 and older packets/reviews unchanged once sealed, with their actual PARTIAL/PENDING dispositions. The checksum-valid v81 packet (manifest SHA-256 `16145f6fa7fb02e6febf7dd05d5b1db71376b0ac0d5b86fcdd30aa4c601c55e4`) remains PARTIAL provenance; both v81 G1a/G1b receipts are immutable FAIL decisions. The copied `preflight-v82-stale-copy-from-v81/` is explicitly not a v82 packet because its payloads remain bound to v81; preserve it unchanged as stale-copy provenance. The v84 packet/reviews and incomplete v85 packet remain historical PARTIAL provenance. Feature persistence is an end-to-end requirement: LibreCAD's normal ASCII-DXF and native-DWG open paths must read and adopt the editable definition, and its normal DXF/DWG save paths must write it. All four directions are independently tested at every applicable version; both conversions, edited reopen, and the separate binary-DXF codec lane remain required. No product edit, build or registered test was performed. Historical implementation evidence and earlier checkpoint narratives do not authorize a successor slice.
+Status: **IMPLEMENTATION INCOMPLETE.** Geometry bounds and local-topology children are committed; ordered-chain topology, later entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. v94 is a non-activating plan-only correction based on v93 commit `657925033e9e8ba352bb3e5515a29c935817c89d`; product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. The bound v93 reviews returned G1a=FAIL, G1b=FAIL and G3=FAIL. Their findings are recorded in the current Slice-A card; v93 and its packet remain PARTIAL provenance, not a gate receipt or activation. v94 corrects the strict-core selector parser and activation recipe defects, and makes the remaining bidirectional requirement/site crosswalk, A11 output oracle, A14 API contract, and source/debit/capacity/runtime closure explicit prerequisites to fresh same-identity reviews. Slice A remains WAITING; no product edit/build/test is authorized. Preserve v91-v93 packets/reviews unchanged with their actual dispositions. The checksum-valid v81 packet (manifest SHA-256 `16145f6fa7fb02e6febf7dd05d5b1db71376b0ac0d5b86fcdd30aa4c601c55e4`) remains PARTIAL provenance; both v81 G1a/G1b receipts are immutable FAIL decisions. The copied `preflight-v82-stale-copy-from-v81/` is explicitly not a v82 packet because its payloads remain bound to v81; preserve it unchanged as stale-copy provenance. The v84 packet/reviews and incomplete v85 packet remain historical PARTIAL provenance. Feature persistence is an end-to-end requirement: LibreCAD's normal ASCII-DXF and native-DWG open paths must read and adopt the editable definition, and its normal DXF/DWG save paths must write it. All four directions are independently tested at every applicable version; both conversions, edited reopen, and the separate binary-DXF codec lane remain required. No product edit, build or registered test was performed. Historical implementation evidence and earlier checkpoint narratives do not authorize a successor slice.
 Historical v68 amendment: clarifies file-support acceptance and retains the v67 product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, with all four recorded product source/test hashes unchanged. The exact-membership `preflight-v67/` packet is PARTIAL provenance (latest packet-manifest SHA-256 `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`), not a formal gate receipt. The G4 hidden-cusp clearance proof and C50 correction remain normative: the cusp-only candidate is separated from all visible spans and must refuse as `OffCurve` before terminal/topology matching; B07 separately tests absence of a cusp `ReferenceTerminal`, and C36 retains fully witnessed `Topology` coverage. The five controls remain mandatory per slice: separate completeness and plan-correctness gates; frozen-tree implementation correctness; an executable, independently reviewed sub-plan/readiness decision; one validated product commit followed by its plan-only reconciliation; and a post-commit live-state audit/self-update before any successor. Slice A remains WAITING; G1 completeness, G1 plan correctness, Gate-3 readiness and activation are not passed. A/B/C baseline discovery remains zero and strict-core remains 61 matching normalized identities in Release/ASan; no registered tests ran. No product/test edit, build, JUnit execution, formal Gate PASS, readiness PASS or activation occurred. DXF read, DXF write, DWG read and DWG write are separate open application obligations; both conversion directions and the separate R14/R2018 binary-DXF codec obligation also remain open. Geometry-only checker evidence satisfies none.
 Historical v81 reconciled the six-path A scope, A14 selector, split-debit oracle, activation-bound test identities and post-edit validator. Its packet and review findings are preserved as immutable provenance; its live pointers are superseded below. The five control families and six gate decisions (G1a/G1b/G2/G3/G4/G5) remain independently recorded and fail-closed; §0.5 is the sole current handoff. Preserve the v81 and v80 packets/reviews, the v77 PARTIAL packet and invalid v79 draft. The four independent application obligations—DXF read, DXF write, DWG read and DWG write—plus both conversions and binary-DXF codec work remain later 1E gates.
 Historical v82 corrected stale handoff pointers and bound the one-shot/retained exception-transfer and source-bound baseline requirements, but did not pass G1a/G1b. Its copied v81 packet remains preserved as `preflight-v82-stale-copy-from-v81/`, not a v82 evidence packet. v82 retained the hard 1E file-support contract described below.
@@ -274,7 +274,7 @@ A commit alone does not mean done; verification, review and the post-commit plan
 | 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | done — 0e3c6b342, 0B-3 reports/card; one pinned baseline generated-MLEADER DWG gap, 2026-10-15 |
 | 1A-1 | Closed forms, normalization, tolerance helpers and cache validation | C | S0 | 900 | partial — .a/.b-budget/.b-progress/.b-ref-frames/.b-ref-events-core/.b-ref-rate/.b-ref-events-critical/.b-ref-events-accounting/.b-ref-events-refine/.b-ref-critical-refine/.b-ref-providers/.b-ref-contacts/.b-ref-events-isolate/.b-ref-components/.b-check-layout/.b-check-bounds/.b-check-topology-local done; A-budget-depth, B-occurrence-terminals, C-global-topology-checker pending |
 | 1A-1.b-ref-components | Exact visibility and incidence-preserving components | C | .b-ref-events-isolate | 900 | done — `9682d5cac65f30cfd86aa10556678ceb88b1448b`, attempt-8 evidence, 2026-10-16 |
-| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900 | waiting — v92 packet is PARTIAL (nested build keys); v93 requires root-level manifest keys and exact receipt cardinality; source/caller/publication closure, independent A11/A14 snapshots, same-identity G1a/G1b/G3 and activation remain pending |
+| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900 | waiting — v93 G1a/G1b/G3 reviews are FAIL; v94 repairs recipe defects but requirement/site/test crosswalk, six caller dispositions, independent A11/A14 snapshots, resource closure, fresh same-identity gates and activation remain pending |
 | B-occurrence-terminals | Immutable occurrence-specific terminal publication | C | A-budget-depth product and plan checkpoint | 500 | waiting — no implementation before A reconciliation |
 | C-global-topology-checker | Complete directed path, coverage, cut and cycle validation | C | A-budget-depth and B-occurrence-terminals product/checkpoints | 1200 | waiting — no implementation before A and B reconciliation |
 | 1A-2 | Enumerator; persistent entity core and factory for already validated results; clone, `toPlainSpline`, normalisation, stamp, transforms; `writeEntity` case; INSERT capability; 0B row; interim Edit Properties guard | C | 0B-3, 1A-1 | 900 | pending |
@@ -1167,18 +1167,20 @@ capacity checked before mutation. Each accepted prepared leaf consumes one gener
   Reread the committed roadmap and compare its claims to Git, reports and evidence; any discrepancy stops successor
   work, invalidates affected receipts and requires a corrective plan-only child plus a new audit. Start each next leaf
   with fresh completeness, plan-correctness and readiness decisions against reconciled HEAD.
-**Current disposition/next (v93, non-activating):** this narrow plan correction is intended as a direct child of
-committed v92 `cab012b6ffb6b3a21990934d0b0bbfc1b812c581`; product source remains
-`9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Preserve the exact-membership v91 packet and the freshly assembled
-v92 packet unchanged as PARTIAL provenance; the v92 packet-manifest SHA-256 is
-`4c513c0262bee67eb9fbebab38786b97739027a67601a21152f3b23a5f5f888d`. Neither packet or its checksum read-back is
-G1a, G1b, G3, activation, runtime evidence or implementation approval. The Bernoulli and Chandrasekhar audits are
-discovery only, not formal gate receipts. Preserve all v81-v92 packets/reviews as labeled provenance; none authorizes
-implementation.
+**Current disposition/next (v94, non-activating):** v94 is a plan-only correction directly after committed v93
+`657925033e9e8ba352bb3e5515a29c935817c89d`; product source remains
+`9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Preserve exact-membership v91-v93 packets unchanged as provenance;
+v93 has separate G1a, G1b and G3 FAIL findings and is not a gate receipt or activation. Earlier reviews and packet
+checksum read-backs are discovery/identity evidence only. Preserve all v81-v93 packets/reviews with their actual
+dispositions; none authorizes implementation.
 
 Slice A remains WAITING with no product/test edit, product build, registered JUnit execution or activation. Before
-readiness, close the reverse source inventory and map each required source/caller/representation to a requirement,
-owner, exact test/oracle and exclusion. The v91 audits specifically leave these source rows open: fixed-range
+readiness, close the complete bidirectional requirement and reverse-site maps: map each requirement through every
+source/caller/representation to an owner, exact test/oracle, and durable evidence, then map every affected source,
+test, format/version lane and build registration back to a requirement or explicit exclusion. G1a cannot pass on an
+owner-only R01-R15 summary. For the application persistence scope, its R07 trace must include the four independent
+ASCII-DXF/DWG read/write lanes, every applicable version, both conversions, edited reopen, and the separate R14/R2018
+binary-DXF codec lane; geometry-only tests do not satisfy these rows. The v91 audits specifically leave these source rows open: fixed-range
 `m_axes` publication and its bounded ordering sort; `appendOccurrence`/`m_occurrences`; `addWitness`/`m_witnesses`,
 linked node updates and `m_order`; `fringeIndex.assign`; interior/start/end `m_fragments`; all
 `ReferenceEventBuilder` root/child/graph/publication queues; paired regions/segments, pending children and joins;
@@ -1199,37 +1201,41 @@ demonstrated A dependency. The four independent later application gates—ASCII-
 read/write—plus applicable versions, both conversions, edited reopen and separate R14/R2018 binary-DXF codec
 read/write remain hard phase-1 requirements.
 
-After committing this v93 plan-only checkpoint, first complete its G5 identity/path/blob read-back; only then create
-fresh exact-membership `preflight-v93/`, bound to the committed v93 plan blob, unchanged product base, predecessor,
-six owned paths, build-registration sources and exact toolchain manifest. Preserve v91 and v92 packets unchanged.
-Carry forward the corrected +3 derivation and label +14/+23 PARTIAL until independently re-derived; add the
-reverse-source and caller rows above. Evidence under ignored `build/evidence/` stays local and is never committed;
-retain the existing `build-asan/` untouched. Obtain same-identity G1a/G1b/G3 PASS before a separate A-only
-activation checkpoint; only then run fresh activation-specific Release/ASan configuration, build, selector discovery
-and baseline lanes. Agent Gibbs remains the first implementation writer after activation; if unavailable, stop for
-authorized reassignment. No v91/v92 command, packet or readiness label authorizes v93 work; only the re-audited v93
-card and recipes can do so.
+After committing v94, first complete its G5 identity/path/blob read-back; only then create fresh exact-membership
+`preflight-v94/`, bound to the committed v94 blob, unchanged product base, exact predecessor/checkpoint chain, six
+owned paths, build registration hashes and exact toolchain manifest. Preserve v91-v93 unchanged. Rebuild the
+requirement/site/test crosswalk, independently derive the output and work oracles, and close every A11 destination
+and both A14 routes; carry +14/+23 as unobserved until independently confirmed. Evidence under ignored
+`build/evidence/` remains local; retain the existing `build-asan/` untouched. Obtain fresh, distinct same-identity
+G1a/G1b/G3 PASS before a separate A-only activation checkpoint whose state/version transition is validated. Only
+then run fresh activation-specific Release/ASan configuration, build, selector discovery and baseline lanes. Agent
+Gibbs remains the first implementation writer after activation; if unavailable, stop for authorized reassignment.
+No v91-v93 command, packet or readiness label authorizes v94 work; only the re-audited v94 card and recipes can do so.
 
-**Current Slice-A Card (v93; WAITING, non-activating)**
+**Current Slice-A Card (v94; WAITING, non-activating)**
 
 ```text
 slice: A-budget-depth
-state: WAITING; v92 packet is PARTIAL local evidence only; v93 packet, formal G1a/G1b/G3, activation and implementation remain pending
-plan_base: cab012b6ffb6b3a21990934d0b0bbfc1b812c581 (committed v92)
-v93_live_override: This is the sole current lifecycle. Preserve v91, v92 and older evidence unchanged as PARTIAL provenance. After this plan-only commit and its G5 read-back, create `build/evidence/1A-1.b-check-topology-chain/preflight-v93/` with exactly seven payloads (`input-manifest.txt`, `source-requirement-map.txt`, `terminal-producer-map.txt`, `independent-transition-cut-ledger.txt`, `phase-cut-intervals.txt`, `debit-admission-table.txt`, `selector-test-map.txt`) plus `packet-manifest.sha256`. Bind it to the exact committed v93 plan blob, unchanged product base, predecessor, six owned paths, build-registration sources, reverse source inventory and verified toolchain values. Preserve the corrected +3 derivation and label +14/+23 as unobserved source-derived expectations until exact runtime snapshots exist. No product build, registered test or product/test edit is permitted before a separate activation checkpoint.
-v93_packet_manifest: Generate `packet-manifest.sha256` from inside the packet directory and record basenames only. Exact-membership validation rejects repository-prefixed/nested paths, extras, symlinks and non-regular files; the manifest excludes itself and hashes exactly the seven payload files. `input-manifest.txt` must contain every required toolchain/build key exactly once at column zero (no leading spaces), because recipes consume anchored `^key=` records; descriptive nested sections may repeat values only under explicitly different labels, never under the required key names.
-v93_packet_manifest_command: After freezing all seven payloads, run `(cd "$P" && shasum -a 256 input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt > packet-manifest.sha256)`; then exact-check the eight regular top-level files and run `(cd "$P" && shasum -a 256 -c packet-manifest.sha256)`.
-v93_preflight_order: (1) Verify this one-file plan correction is a direct child of v92, exact path set, candidate/committed roadmap blob identity, no self/future SHA and unchanged six product blobs; record a separate G5 semantic read-back. (2) Only after G5 passes, assemble and exact-check fresh `preflight-v93/`, preserving v91/v92 unchanged. (3) Close the bidirectional R01-R15/source/caller/representation/build/test crosswalk; every A-owned debit/capacity/runtime row; independent oracle derivations; exact/one-less snapshots; A11 destination membership/cardinality; both A14 exception routes; all six `findIntersections` callers; and toolchain/build-target identity. (4) Obtain distinct same-identity G1a and G1b PASS receipts. (5) Obtain G3 PASS binding both receipt hashes and the fully audited commands, including exact-one checks for all required receipt fields. (6) Commit a separate plan-only activation checkpoint as the direct child of the reviewed v93 plan. (7) Only after activation, execute the fresh Release/ASan baseline and compare selectors, source/test binaries, caches/toolchain, reports and skip sets. Any mismatch invalidates dependent receipts and returns to planning; it never authorizes edits.
-review_discovery: Kuhn's scoped circle review and the later Bernoulli/Chandrasekhar audits are thread-only discovery, not formal G1a/G1b/G3 receipts. The circle has radii 8 and 2, no pair intersections or critical occurrences, and source-derived +14/+23 arithmetic under no-refinement assumptions. Correct rationale: +3 is PositiveFactor via the nonnegative-distance branch; -3 is PositiveFactor via 9 < 25. The canonical whole-circle seam is binary64 `M_PI_4` promoted to `Quad`, not exact mathematical pi/4. The +14/+23 values are not runtime snapshots and do not prove exact/one-less atomic refusal. Chandrasekhar found no dependency cycle but left A11's independent membership/cardinality oracle and A14's current callback-debit order open. Preserve these caveats in v93.
+state: WAITING; v93 G1a/G1b/G3 reviews are FAIL; v93 packet is PARTIAL provenance; no activation or implementation is authorized
+plan_base: 657925033e9e8ba352bb3e5515a29c935817c89d (committed v93)
+slice_a_activation_state: WAITING
+slice_a_activation_from_plan_version: none
+slice_a_activation_id: none
+v94_live_override: This is the sole current lifecycle. Preserve v91-v93 plans, packets and reviews unchanged. After this v94 plan-only commit and its G5 read-back, assemble `build/evidence/1A-1.b-check-topology-chain/preflight-v94/` with exactly seven payloads (`input-manifest.txt`, `source-requirement-map.txt`, `terminal-producer-map.txt`, `independent-transition-cut-ledger.txt`, `phase-cut-intervals.txt`, `debit-admission-table.txt`, `selector-test-map.txt`) plus `packet-manifest.sha256`. Bind it to the exact v94 plan blob, unchanged product base, exact predecessor/checkpoint chain, six owned paths, CMake/qmake registration hashes, root-level tool identities, complete source/reverse-site inventory, per-requirement test trace, independent oracles and all unresolved dispositions. Do not copy forward v93 claims as closed; carry them as PARTIAL unless re-derived. +14/+23 remain unobserved expectations until exact runtime snapshots exist. No product build, registered test or product/test edit is permitted before a separate passing activation checkpoint.
+v94_review_findings: The bound v93 reviews are FAIL, not PASS: (a) G1a lacks a closed bidirectional R01-R15/site-to-owner/test/oracle map; the six `findIntersections` callers are only exclusion candidates; A11 does not bind every inventoried storage destination to an independent oracle and exact/one-less assertion; A11 +14/+23 remain conditional and unobserved; and A14's planned `workOnExit` signature was not clearly distinguished from the current API. (b) G1b does not independently close every source/API/accounting claim. (c) G3's strict-core regex matches zero rows, registration hashes and Python/shasum identities are recorded but unenforced, the tool-key count is inconsistent, the activation child does not prove a WAITING→ACTIVATED version/state transition, G1 receipts need role and distinctness checks, broad JUnit comparison misses testcase-set drift, and predecessor checking accepts ancestry where the packet requires a specific checkpoint chain. All three gates must be freshly reviewed against v94 and a new exact packet; v93 receipts remain immutable FAIL discovery.
+v94_packet_manifest: Generate `packet-manifest.sha256` from inside the packet directory using the manifest-recorded `shasum_path`; record basenames only. Exact-membership validation rejects repository-prefixed/nested paths, extras, symlinks and non-regular files; the manifest excludes itself and hashes exactly seven payload files. The root-level `input-manifest.txt` has exactly 32 fixed, unique `key=value` lines: the 27 build/toolchain/registration/checkpoint keys (`cxx_compiler`, `compiler_version`, `qt6_cmake_dir`, `qt6_version`, `cmake_path`, `cmake_version`, `ninja_path`, `ninja_version`, `qmake6_path`, `qmake6_prefix`, `make_path`, `make_version`, `cmake_prefix_path`, `cmake_generator`, `cmake_build_type_release`, `cmake_build_type_asan`, `build_tests`, `cmake_cxx_flags_release`, `asan_cxx_flags`, `asan_exe_linker_flags`, `python3_path`, `python3_version`, `shasum_path`, `shasum_version`, `cmake_lists_sha256`, `src_pro_sha256`, `predecessor_plan_checkpoint_commit`) plus the five chain keys (`plan_commit`, `plan_sha256`, `product_source_commit`, `predecessor_product_commit`, `checkout_head`). Validators reject blank/malformed lines, duplicate keys and unknown keys; evidence observations belong in the seven payloads, not as ad hoc manifest extensions. Recipes must invoke and version-check the exact recorded Python/shasum executables, recompute the two registration hashes, and validate the exact product→plan-checkpoint→reviewed-plan chain before consuming selector or baseline evidence.
+v94_packet_manifest_command: After freezing all seven payloads, run `(cd "$P" && "$SHASUM_PATH" -a 256 input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt > packet-manifest.sha256)`; exact-check the eight regular top-level files and run `(cd "$P" && "$SHASUM_PATH" -a 256 -c packet-manifest.sha256)`.
+v94_preflight_order: (1) Verify this one-file plan correction is a direct child of v93, exact path set, candidate/committed roadmap blob identity, no self/future SHA and unchanged six product blobs; record a separate G5 semantic read-back. (2) Only after G5 passes, create fresh `preflight-v94/`; preserve v91-v93 packets unchanged and label v93 G1a/G1b/G3 FAIL results as immutable discovery. (3) Rebuild the R01-R15 two-way crosswalk from current source: each requirement to all caller/producer/representation/consumer/persistence/version/conversion/build/test/oracle/evidence owners, and each discovered affected site back to a requirement or explicit diagnostic-only exclusion. Close each of the six intersection callers with a source-backed decision and its owning integration selector. (4) Close every A01-A14 contract, including each A11 destination and paired publication, independently derived whole-output oracle and exact/one-less expected snapshots; disambiguate the planned A14 API from the current declaration and specify exact no-throw output semantics. (5) Reconcile source/debit/capacity/runtime and exception traces; no generic allocation proof or conditional count is a closure. (6) Obtain distinct, role-bound G1a and G1b PASS receipts on identical v94 plan/product/packet identities; then obtain G3 PASS binding both hashes. (7) Create a separate plan-only activation checkpoint whose child explicitly transitions the A card from WAITING to ACTIVATED and increments the plan version exactly once; validate this transition, not just parent/path identity. (8) Only after activation, run the fresh Release/ASan baseline and compare exact selector identities, source/test binaries, registration hashes, toolchain, all JUnit testcase-name sets and skip sets. Bind each chain edge exactly: `product_source_commit^ == predecessor_product_commit`, `predecessor_plan_checkpoint_commit == plan_commit^`, and `product_source_commit` is an ancestor of that predecessor plan checkpoint; also verify the six owned product/test blobs are unchanged across each plan-only checkpoint. Any mismatch invalidates dependent receipts and returns to planning; it never authorizes edits.
+  review_discovery: The v93 bound G1a/G1b/G3 reviews are FAIL receipts. The circle has radii 8 and 2, no pair intersections or critical occurrences, and source-derived +14/+23 arithmetic under no-refinement assumptions. Correct rationale: +3 is PositiveFactor via the nonnegative-distance branch; -3 is PositiveFactor via 9 < 25. The canonical whole-circle seam is binary64 `M_PI_4` promoted to `Quad`, not exact mathematical pi/4. The +14/+23 values are not runtime snapshots and do not prove exact/one-less atomic refusal. The independent A11 output oracle and A14 API contract remain open until source-derived and checked in the fresh v94 packet.
 source_audit_findings: At product base 9c06e9c77b313b62cc20e9ec39c22952fee501f2, planned A fixes remain absent. `CacheBoundsBuilder::compare` admits three vertices for two child cache cells, misses conditional cache-span debit and lacks paired pending capacity preflight; reference-domain splits require only two child records. `CacheLocalTopologyBuilder::subdivide` omits conditional two-span debit and pending capacity preflight. `CriticalBuilder::addRegions` debits before queue-capacity validation and appends paired `m_regions`/`m_segments` without reserving both; `joins` appends without output-capacity preflight. Additional reverse-inventory rows remain open: fixed 21-entry `m_axes` generation/sort; `appendOccurrence` bounded by stationary-axis or intermediate-quadrant loops; `addWitness`/`m_witnesses`, linked node updates and `m_order`; `fringeIndex.assign`; interior/start/end `m_fragments`; `ReferenceEventBuilder` root/child queues and every graph/publication vector; and strict-core seed/split/leaf/event/order scratch. Each row records source bound, admission owner, checked size/max_size, reserve-before-debit/mutation, no-throw or staged publication, failure state and exact test/source-only disposition. Map and classify all six `lc_curveoffset.cpp` `findIntersections` callers (source locations 3246, 3283, 4232, 4740, 4889, 5490) as affected call-path coverage or explicit non-A exclusions; core tests alone do not prove caller coverage.
-readiness_blockers: v88 recipes and earlier cards are historical and not executable by inheritance. The v93 roadmap specifies manifest-bound tool paths, post-test sealing, exact six-path/index state, an A-only lifecycle, final plan-contract review after testing and exact-one receipt identity checks. G3 remains PENDING until a reviewer audits all six recipes end-to-end against the exact committed v93 plan and packet schema, including shell/heredoc syntax, exact directory membership before any manifest value is consumed, receipt uniqueness and cross-binding, failure postconditions, test artifact coverage, and actual Git ancestry/path/blob effects. Any remaining contradiction is a plan defect requiring a plan-only correction and renewed review; checksums or shell syntax alone are not readiness evidence.
+  readiness_blockers: v88-v93 recipes and earlier cards are historical and not executable by inheritance. The v94 recipes must be audited end-to-end against the committed v94 plan and fresh packet, including shell/heredoc syntax; fixed exact directory membership before manifest consumption; all 32 fixed root-level keys; registration/tool path and version checks; receipt role/hash/reviewer distinctness; activation state/version transition; exact product→plan-checkpoint→reviewed-plan chain; full testcase and skip-set comparison; artifact coverage; and Git path/blob effects. G1a/G1b/G3 remain FAIL or pending until new reviews bind the same v94 plan/product/packet identity. Checksums or syntax checks alone are not gate decisions.
 product_base: 9c06e9c77b313b62cc20e9ec39c22952fee501f2
 predecessor: local topology product commit ef3ba756b52796c02b8490caedcaa48b8db69605 and direct-child roadmap checkpoint 9c06e9c77b313b62cc20e9ec39c22952fee501f2
 owner: Agent Gibbs is the first implementation writer after activation; coordinator/reviewer owns preflight, independent review, validation and Git, and does not co-edit the slice. If Gibbs is unavailable, stop for user-authorized reassignment.
 files: librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h; librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp; librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h; librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.cpp; librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp; librecad/src/lib/engine/document/entities/tests/lc_parametriccurveintersection_tests.cpp
 excluded from Slice A: public global checker, B terminal publication, C transition/coverage search, R05 producer-to-document adoption, DXF/DWG (owned by 1E-1 through 1E-3), UI and phase 2
 contract: update `LC_IntersectionWorkStats` with `orderingComparisons`, `validationSegmentVisits` and `validationNextCalls`; define `totalBoxPairs` as the four-term formula and correct the `maxBoxPairs` comment. Implement §0.4's shared atomic budget/debit, depth, fixed-scan, callback, strict-core capacity/sort and exception-handoff rules. Candidate-cache splits debit two spans plus two vertices atomically; `CriticalBuilder::split` proof refinements debit two vertices and no spans. For every publication destination, checked-compute `size + delta`, reserve before debit/mutation, and require no-throw post-debit insertion or use a reviewed staged strategy. Explicitly include `ReferenceEventBuilder::graph()`'s paired `outgoing`/`incoming` adjacency entries (one atomic two-vertex admission and both reservations before either append), its paired `parents`/`incidence` initialization, `publish()`'s paired `nodes`/`occurrences` reservations and combined admission, and the single-container `fringes`, `spans`, `edges`, component records/edge lists, `pairs`, `criticals`, `freeEnds` and seam publication. `CriticalBuilder::addRegions` still pre-reserves two pending slots before proof-split debit and reserves both paired output vectors before one-vertex admission; `joins` reserves the join output slot before its admission. Preserve sticky refusal, no partial public result and cumulative retained-session accounting. Every destination must map to an assertion or explicit source-only proof; a generic “all reserves checked” claim is not closure.
-G1a completeness: use the fixed R01-R15 set plus a fresh reverse inventory of current APIs, callers, persistent representations, version dispatch, targets, and test paths. Trace both requirement-to-owner/assertion and discovered-site-to-requirement; each row records applicability, positive/boundary/refusal/fallback/read-write scenario, exact test/subassertion, selector, independent oracle, target, evidence path and explicit owner or exclusion. For A, map every publication/admission site to a named assertion or a justified source-only proof; a generic claim such as “all reserves checked” is not closure. Pre-code review validates planned identities and target registration; post-code reclosure requires exact discovered/registered/executed identities, reachable non-vacuous assertions and no unexplained skips. DXF/DWG four application directions, every applicable version, both conversions, edited reopen, and R14/R2018 binary-DXF codec lanes remain hard 1E obligations, separately owned and never inferred from geometry tests.
+  G1a completeness: use the fixed R01-R15 set plus a fresh reverse inventory of current APIs, callers, persistent representations, version dispatch, targets, and test paths. Trace both requirement-to-owner/assertion and discovered-site-to-requirement; each row records applicability, positive/boundary/refusal/fallback/read-write scenario, exact planned identity/subassertion, selector, independent oracle, registered target/source, evidence path and explicit owner or exclusion. No owner-only summary passes: A's 14 identities and strict-core regression set must map to exact source sites; each of the six `findIntersections` callers must have a source-backed A exclusion/impact decision and its owning integration selector/test in the appropriate leaf. R07's full-roadmap trace must list exact test identities and independent fixtures for ASCII-DXF application read and write and native-DWG read and write at every applicable version, plus both conversion directions, edited reopen and the separate R14/R2018 binary-DXF codec lane; the matrix's version rows alone are insufficient. For A, map every publication/admission site to a named assertion or a justified source-only proof; a generic claim such as “all reserves checked” is not closure. Pre-code review validates planned identities and target registration; post-code reclosure requires exact discovered/registered/executed identities, reachable non-vacuous assertions and no unexplained skips. No geometry-only or same-writer round trip satisfies file support.
 G1b plan correctness: independently re-derive source/API/version claims against the exact product base; verify counter units and formula, numeric boundaries, checked arithmetic, admission-before-work/callback/allocation/mutation, all capacity and lifetime bounds, no-throw publication or staged atomicity, refusal/error/exception semantics, oracle independence, and acyclic dependency/ownership. For every numeric expectation, bind a derivation to a source-level operation trace and independently computed snapshot. A disputed/unknown assumption remains an explicit question and blocks PASS; historical results, checksum validity, and reviewer consensus do not replace proof.
 G2 implementation correctness: after edits, a reviewer distinct from the implementation writer inspects the exact frozen six-path diff and tests. Challenge required positives and unconditional-refusal regressions; exact/one-less/overflow and sticky budgets; all three proof-split callers and cache-span split sites; callback multiplicity/order including unavailable and throwing callbacks; work adoption once-only and invalidation; reserve-before-debit and no-partial publication; ownership/lifetime; deterministic comparison counts; and exact API-visible outputs. Recompute independent expected results rather than copying implementation counters. Every finding is closed by a targeted retest or remains blocking; any byte/toolchain/base change invalidates affected receipts.
 G3: one executable A leaf, with immutable plan/product/predecessor identities, exclusive six-path ownership, existing target registration, ordered stage-exit matrix, exact test names and assertion IDs, independent oracles/snapshots, fresh Release/ASan build and test baseline, resource/runtime envelope, failure recovery and single product-only commit boundary. Stage exits are internal stop points and do not authorize a partial “done” status or extra commit. Any unresolved A-owned row means WAITING. B/C/1E obligations have named owners/dependencies but are not A closure requirements absent a concrete dependency.
@@ -1251,8 +1257,15 @@ tests:
        capacity expression, append type, public result path and failure outcome. Include the `m_order` transfer to
        `ownOccurrences`: prove the prior ordering-slot admission covers it, the moved logical range is bounded, and
        the move is non-throwing or staged; this transfer adds no new vertex debit.
-    2. Select existing public `analyseReferenceComponents` fixtures and independently derive expected
-       node/occurrence/edge relations; do not use implementation output as the oracle.
+    2. Use the existing public whole-circle fixture `basis(5.0, 1.0), distance=3.0` only after independently
+       deriving its complete expected output. The source-derived candidate is two `Own` boundary occurrences at the
+       canonical binary64 `M_PI_4` seam, occurrence IDs `[0,1]`, both mapped to node ID `0`, one seam `(0,1)`, no
+       pairs/criticals/free ends, one full visible span, one loop edge, and one component containing edge `0`; the
+       offset radii are 8 and 2 and are concentric/disjoint. Independently derive every public node coordinate,
+       occurrence field, incidence direction, fringe, span, edge flag, component flag, work prefix, and destination
+       cardinality from fixture construction and source/spec equations. This list is a candidate oracle, not accepted
+       evidence until an independent reviewer verifies every field. If the full expected graph cannot be established
+       independently, choose additional public fixtures rather than deriving expected values from builder output.
     3. For each destination, derive complete prefix work plus target delta, expected output sizes/relations and
        exact/one-less configured logical budget; include checked sums/products and already-spent prefix work.
     4. Bind all rows to exact planned identity `TEST_CASE("reference graph and publication admissions are atomic",
@@ -1275,39 +1288,40 @@ tests:
     5. Independently review arithmetic, logical-token meaning, reservation order, no-throw/staging proof, exception
        mapping and fixture reachability. If a configured cap cannot isolate a destination, record the bounded
        public-API probe and decision; do not add a test-only allocator/capacity hook.
-    6. Close the full source-to-assertion ledger and source-derived expected snapshots plus planned exact/one-less
-       contracts in `preflight-v93/`; only then request
+    6. Close the full source-to-assertion ledger and independently derived expected snapshots plus planned
+       exact/one-less contracts in `preflight-v94/`; only then request
        separate same-identity G1a, G1b and G3 decisions. Any missing exact snapshot, destination, public refusal
        assertion or exception disposition leaves A WAITING.
-  A01-A13 are exact names carried forward from the current case contract into the fresh v93 map under `[lc-offsetcurve][geometry][cache-budget-accounting]`; actual test registration remains absent until activation. A01/A02 directly exercise atomic candidate-cache split admission from precharged `{cacheSpans=1, vertices=1}` to `{3,3}`: exact caps admit, and each counter independently one-short refuses without mutating either counter. They also bind proof-interval split delta `{cacheSpans=0, vertices=2}`. Stable subassertion IDs must separately map candidate-cache splits, `cuspAngle`, `addRegions`, and `joins`, including each parent examination, split/depth debit, unchanged cache-span count, exact-cap result and one-less refusal before child/output mutation. For `addRegions`, prove two pending slots are checked/reserved before proof-split debit and pushes; the paired output vectors reuse the proved Box's already admitted logical token, so reserve both destinations before append and assert no additional vertex debit or one-sided publication. For `joins`, preflight the output slot before its existing logical-record admission. Map each concrete destination and each `reserve`/append source site in the packet; source-review allocator-failure behavior rather than adding allocator hooks. Verify parent pop has no vertex debit. Helper-only coverage is insufficient.
-  A14 is `retained certificate callback throw preserves admitted work` under `[lc-offsetcurve][geometry][intersection-refine]` and remains one identity with two explicit subroutes. The fresh selector/source/debit maps must include (a) the public one-shot `findCertifiedIntersections` route with `workOnExit`, including its exact initial snapshot, source-derived throw point, callback count, expected final admitted-work snapshot, and original-exception assertion, and (b) the retained `cumulativeWork()` route using `singularRefineCurves(false, probe)` after a valid session exists. Its second branch is the tangent parabola `x=t, y=(t-0.5)^2`, intersecting the horizontal first branch at `t=u=0.5`; both derivatives are `(1,0)`, so the Krawczyk determinant is exactly zero and `shrink()` reaches the analytic-certificate fallback. Toggle only a deterministic `certifyIntersection` throw after session construction; no zero-derivative override is required. Assert the exact +2 parent/callback delta, `deepestRootRefinement +1`, terminal invalidation, stale-handle rejection and zero-work/no-callback retry. Derive both route snapshots independently before readiness; if either route cannot be reached through public APIs without an unsafe test seam, keep A WAITING and revise the contract rather than silently omitting it. Do not claim A14 directly triggers either outer geometry-owned `WorkBudget` catch; A04 tests atomic adoption semantics and frozen-source review verifies both outer catch/adopt/invalidate/rethrow sites. Keep the existing adjacent throwBounds regression separate; do not merge A14 into A08.
+  A01-A13 are planned names under `[lc-offsetcurve][geometry][cache-budget-accounting]`; actual test registration remains absent until activation. A01/A02 directly exercise atomic candidate-cache split admission from precharged `{cacheSpans=1, vertices=1}` to `{3,3}`: exact caps admit, and each counter independently one-short refuses without mutating either counter. They also bind proof-interval split delta `{cacheSpans=0, vertices=2}`. Stable subassertion IDs separately map candidate-cache splits, `cuspAngle`, `addRegions`, and `joins`, including each parent examination, split/depth debit, unchanged cache-span count, exact-cap result and one-less refusal before child/output mutation. For `addRegions`, prove two pending slots are checked/reserved before proof-split debit and pushes; the paired output vectors reuse the proved Box's already admitted logical token, so reserve both destinations before append and assert no additional vertex debit or one-sided publication. For `joins`, preflight the output slot before its existing logical-record admission. Map each concrete destination and each `reserve`/append source site in the packet; source-review allocator-failure behavior rather than adding allocator hooks. Verify parent pop has no vertex debit. Helper-only coverage is insufficient.
+  A14 is `retained certificate callback throw preserves admitted work` under `[lc-offsetcurve][geometry][intersection-refine]` and remains one identity with two explicit subroutes. The baseline public declaration is currently `findCertifiedIntersections(std::unique_ptr<const LC_ParametricCurves>, LC_IntersectionOptions)` and has no exception-work output. The exact planned declaration adds a third optional, non-owning output parameter: `findCertifiedIntersections(std::unique_ptr<const LC_ParametricCurves> curves, LC_IntersectionOptions options, LC_IntersectionWorkStats* workOnExit = nullptr)`. This is an implementation target, not a claim about current API. If non-null, initialize `*workOnExit` to zero before validation; publish each admitted snapshot without allocation, publish final stats on normal return, and preserve the last live admitted stats on every exception before rethrowing the original exception. Document pointer lifetime/non-aliasing and trivial no-throw assignment. The selector/source/debit maps must include (a) this public one-shot route with exact initial snapshot, source-derived throw point, callback count, expected final snapshot, and original-exception assertion, and (b) the retained `cumulativeWork()` route using `singularRefineCurves(false, probe)` after a valid session exists. Its second branch is the tangent parabola `x=t, y=(t-0.5)^2`, intersecting the horizontal first branch at `t=u=0.5`; both derivatives are `(1,0)`, so the Krawczyk determinant is zero and `shrink()` reaches the analytic-certificate fallback. Toggle only a deterministic `certifyIntersection` throw after session construction; no zero-derivative override is required. Assert the independently derived parent/callback delta, `deepestRootRefinement +1`, terminal invalidation, stale-handle rejection and zero-work/no-callback retry. Derive both route snapshots before readiness; if either route cannot be reached through public APIs without an unsafe test seam, keep A WAITING and revise the contract rather than omitting it. Do not claim A14 triggers either outer geometry-owned `WorkBudget` catch; A04 tests atomic adoption semantics and frozen-source review verifies both outer catch/adopt/invalidate/rethrow sites. Keep the existing adjacent throwBounds regression separate; do not merge A14 into A08.
   A11 additionally owns `A11.REFERENCE_GRAPH_ADJACENCY_PAIR`, `A11.REFERENCE_GRAPH_PARENT_INCIDENCE_PAIR`, `A11.REFERENCE_PUBLIC_NODES_OCCURRENCES_PAIR`, `A11.REFERENCE_COMPONENT_SINGLE_DESTINATIONS`, and `A11.REFERENCE_EVENT_SINGLE_DESTINATIONS`. Bind these to `ReferenceEventBuilder::graph()` outgoing/incoming edge adjacency, paired `parents`/`incidence` initialization, `publish()` nodes/occurrences and pair/critical/free-end/seam outputs, plus component fringes/spans/edges/components/per-component edge lists. For each logical paired operation, checked-compute every destination's capacity, reserve all destinations, then perform one checked atomic vertex admission before either append; prove append is no-throw or stage. Single-container outputs require checked capacity and admission before insertion, with no public partial analysis on refusal. Derive exact before/delta/after work and output snapshots on independently controlled fixtures; if any path is not safely reachable, keep A WAITING and provide a source-only proof only for non-injectable allocation/max_size behavior, not as a substitute for observable admission semantics.
   Allocation-publication crosswalk: every destination that can publish work/results must have one stable source-map row, one named assertion or an explicitly justified source-only proof, and an exception/refusal outcome: candidate-cache child spans; `addRegions` pending children; paired `m_regions`/`m_segments`; `joins` output; bounds/local pending queues; root/retained/staged records; the five `ReferenceEventBuilder` A11 rows above; strict-core prepare/solve seeds, two-child queue, accepted leaves, candidate pairs, retained/non-retained events and both-mode ordering scratch. Each row records checked `size + delta`/`max_size` (including checked multiplication/summation), all destinations reserved before debit/mutation, element move/copy no-throw proof or staged publication, expected logical state and work counters if reservation/admission refuses, and exact test assertion ID. No generic wildcard row and no allocator-failure injection requirement.
 split_admission_oracle: Use two explicitly distinct production helpers/contracts. Candidate-cache split admission atomically adds exactly `{cacheSpans=2, vertices=2}`; exact caps admit, independently one-less span or vertex caps return `LimitExceeded`, and the counters remain unchanged in either refusal. `CriticalBuilder::split(depth)` is proof-only and adds exactly `{cacheSpans=0, vertices=2}` while checking child depth. Bind cusp-angle scalar-root refinement, `addRegions` proof-box subdivision, and `joins` proof-interval narrowing to separate named assertions and exact frozen-source locations. Each caller must demonstrate its own parent `distancePairs` debit, split debit, depth behavior, and absence of `cacheSpans` changes; `addRegions` must capacity-check two pending slots before debit and pushes. The actual CacheBounds/CacheLocal/global-checker child-span call sites get separate source rows and tests. Do not use one helper-level case or an invented `consumeCandidateSplit()` method as evidence for the distinct CriticalBuilder contract.
 exceptional_work_transfer: Add an optional caller-owned `LC_IntersectionWorkStats* workOnExit` output to `findCertifiedIntersections` (or a semantically identical no-throw sink). Initialize it to zero before validation; once the fixed two-item session/issuer charge is admitted, publish that snapshot before allocation; on normal return publish final solver stats; on every exception, copy the live solver stats if constructed, otherwise retain the admitted initial snapshot, then `throw;` unchanged. Add one `WorkBudget::adoptIntersectionWork`-style atomic operation taking additive generated-item/pair deltas and absolute depth observations: checked-preflight all additions, both remaining capacities and depth before mutating any counter; on failure latch `LimitExceeded` with no partial adoption; on success update all counters/depth together. The outer one-shot query catch adopts captured work exactly once, invalidates the shared WorkBudget, and rethrows. For retained `contract`, snapshot cumulative work before calling it; on throw compute checked monotone deltas for additive counters and use after-snapshot absolute max depths; adopt atomically, invalidate, and rethrow unchanged. Route ordinary returned query/contract work through the same adoption API. Invalidation changes only `Ok` to sticky `InvalidInput`, never masks `LimitExceeded`, and preserves already admitted counters. A14 exercises public one-shot output and retained-session paths without a geometry-only test seam; both catch/adoption sites are frozen-source review obligations.
 post-edit validation: Release and ASan discover/run A01-A13 exactly once under cache-budget-accounting and run the complete intersection-refine selector; compare the latter's discovery and JUnit names to the activation-bound pre-edit set plus exactly A14 (15 identities, no missing/duplicate/unexpected/skipped case). Execute all 61 activation-bound strict-core identities with no skips/failures/errors. Build librecad_tests, librecad_dxf_fast_tests and librecad_dwg_fast_tests in both modes; run adjacent geometry selectors, full Release suite and DXF/DWG fast Release/ASan, comparing skip identities with the exact-source activation baseline (not an unbound historical attempt-9 report); run qmake6 app generation/build. JUnit validates exact testcase identities, skips, failures and errors; a separate Catch2 console-reporter run supplies real aggregate assertion totals, and the frozen source review maps a reachable assertion to each named case. Never interpret JUnit `tests` as an assertion count. Preserve all logs/JUnit and source/diff digests under A-budget-depth/validation-<ATTEMPT>/.
-G2/G4/G5: G2 requires independent adversarial review by a reviewer distinct from the implementation author on the frozen six-path diff and exact tests; self-review is supplementary only, never PASS. Then make one product/test-only commit over those six paths, immediately followed by one plan-only direct-child reconciliation; the plan version increments exactly once, records the actual product commit/evidence and revised statuses/risks/dependencies/next leaf, and contains no self/future SHA. G5 rereads Git objects, reports, staged/committed path and blob hashes, status, active/version/packet pointers, and every descendant's readiness against the codebase before B begins. The checkpoint command leaves `post-commit-self-update-audit.txt` at `PENDING_SEMANTIC_READBACK`; the coordinator must write a separate PASS read-back receipt only after comparing those facts with the committed roadmap. No successor edit/build/test is allowed while that receipt is pending or if any mismatch exists.
+G2/G4/G5: G2 requires independent adversarial review by a reviewer distinct from the implementation author on the frozen six-path diff and exact tests; self-review is supplementary only, never PASS. Then make one product/test-only commit over those six paths, immediately followed by one plan-only direct-child reconciliation; the plan version increments exactly once, records the actual product commit/evidence and revised statuses/risks/dependencies/next leaf, and contains no self/future SHA. G5 rereads Git objects, reports, staged/committed path and blob hashes, status, active/version/packet pointers, and every descendant's readiness against the codebase before B begins. The checkpoint command leaves `validation-<ATTEMPT>/post-commit-self-update-audit.txt` at `PENDING_SEMANTIC_READBACK`; an auditor distinct from the implementation writer records `validation-<ATTEMPT>/g5-readback-receipt.txt` with exactly one each of `status`, `slice`, `product_commit_sha`, `plan_checkpoint_sha`, `plan_blob_sha256`, `product_file_manifest_sha256`, `test_receipt_sha256`, `evidence_manifest_sha256`, `audit_inputs_manifest_sha256`, `next_slice_state`, and `auditor_id`. PASS requires all fields to match committed Git objects and sealed evidence, the next slice to remain WAITING pending fresh gates, and the stale-pointer sweep to be clean. No successor edit/build/test is allowed while that receipt is pending or if any mismatch exists.
 G4_commit_protocol: Freeze exact owned paths and tested blob hashes; require final G1a reclosure, independent G2 PASS, all targeted/build/full/format lanes, exact identities/assertions and zero unexplained failures/skips. Verify the activation checkpoint remains the actual parent, the index is empty before explicit staging, and the staged path set contains exactly the six A paths. Compare staged and tested hashes, run cached whitespace checks, inspect hook effects, commit exactly one product/test-only A leaf, then verify its actual parent, path set, committed blobs and clean owned index. No plan, evidence, unrelated path, partial stage, or B/C work enters this commit. A failed postcondition means the leaf is not done and no successor starts.
-G5_reconciliation_protocol: Immediately after the product commit and before any build/test/edit for a successor, inspect actual Git objects and filesystem state. Reconcile the product commit SHA/parent/path/blob hashes, test and build reports, source/toolchain/binary identities, all A requirement rows, statuses, unresolved findings, risks, exclusions, evidence hashes, aggregate progress, DAG edges, descendant readiness, active/next/version/packet pointers and implementation owner. Prepare exactly one roadmap-only commit as the direct child of the product commit; it records the product SHA and evidence but never its own/future SHA. Verify candidate blob equals committed plan blob, exact one-file path set, direct ancestry, unchanged product blobs, clean index/worktree scope, packet/receipt identities and stale-pointer sweep. Then reread the committed plan and independently compare every live claim to Git and evidence; write a separate semantic PASS/FAIL receipt. If any mismatch exists, block successor work, invalidate affected reviews/readiness, and make a corrective plan-only child before fresh gates. Restart completeness, plan correctness and readiness for the next slice only from the reconciled HEAD.
+G5_reconciliation_protocol: Immediately after the product commit and before any build/test/edit for a successor, inspect actual Git objects and filesystem state. Reconcile the product commit SHA/parent/path/blob hashes, test and build reports, source/toolchain/binary identities, all A requirement rows, statuses, unresolved findings, risks, exclusions, evidence hashes, aggregate progress, DAG edges, descendant readiness, active/next/version/packet pointers and implementation owner. Prepare exactly one roadmap-only commit as the direct child of the product commit; it records the product SHA and evidence but never its own/future SHA. Verify candidate blob equals committed plan blob, exact one-file path set, direct ancestry, unchanged product blobs, clean index/worktree scope, packet/receipt identities and stale-pointer sweep. Then reread the committed plan and independently compare every live claim to Git and evidence; write `g5-readback-receipt.txt` with the fixed schema above and immutable hashes of the receipt's inputs. If any mismatch exists, block successor work, invalidate affected reviews/readiness, and make a corrective plan-only child before fresh gates. Restart completeness, plan correctness and readiness for the next slice only from the reconciled HEAD.
 recovery: keep failed attempts and ignored build-asan/evidence; no reset/cleanup; any source or scope change invalidates affected reviews and requires a new attempt.
-command_order: No v88/v92 recipe is executable by inheritance. The six recipes below are reissued for v93: `activation_commands`, `foundation_activation_baseline_commands`, `foundation_review_freeze_commands`, `foundation_validation_commands`, `foundation_product_commit_commands`, and `foundation_plan_checkpoint_commands`. Before G3, independently audit them against the committed v93 plan/packet, exact path ownership, unique receipt fields, state transitions and failure postconditions. Run `PHASE=freeze` before tests; run `PHASE=post-test` only after validation has produced its test receipt; then obtain final G1a, final plan-contract reconciliation and G2. G2 is never a precondition to executing tests. The product-commit recipe accepts only all required post-test PASS receipts. After same-identity preflight G1a/G1b/G3 PASS and a separate activation checkpoint, use only these recipes. Never reuse an attempt or build directory; preserve failed attempts and select a fresh positive number.
-command_inputs: Use `SLICE=A-budget-depth`, immutable `ACTIVATION_ID`, successful `BASELINE_ATTEMPT`, fresh per-diff `ATTEMPT`, `PACKET_DIR=build/evidence/1A-1.b-check-topology-chain/preflight-v93`, and tool paths/versions read from that packet's `input-manifest.txt`. Environment overrides must equal the manifest values; never substitute a path silently.
+command_order: No v88-v93 recipe is executable by inheritance. The six recipes below are reissued for v94: `activation_commands`, `foundation_activation_baseline_commands`, `foundation_review_freeze_commands`, `foundation_validation_commands`, `foundation_product_commit_commands`, and `foundation_plan_checkpoint_commands`. Before G3, independently audit them against the committed v94 plan/packet, exact path ownership, the exact 32-key manifest schema, registration/tool identities, role-distinct receipts, activation state/version transition, report testcase and skip identities, direct predecessor/checkpoint chain, and failure postconditions. Run `PHASE=freeze` before tests; run `PHASE=post-test` only after validation has produced its test receipt; then obtain final G1a, final plan-contract reconciliation and G2. G2 is never a precondition to executing tests. The product-commit recipe accepts only all required post-test PASS receipts. After same-identity preflight G1a/G1b/G3 PASS and a separate activation checkpoint, use only these recipes. Never reuse an attempt or build directory; preserve failed attempts and select a fresh positive number.
+command_inputs: Use `SLICE=A-budget-depth`, immutable `ACTIVATION_ID`, successful `BASELINE_ATTEMPT`, fresh per-diff `ATTEMPT`, `PACKET_DIR=build/evidence/1A-1.b-check-topology-chain/preflight-v94`, and exact tool paths/versions from that packet's root-level `input-manifest.txt`. Every recipe consuming the packet validates recorded `shasum_path` and version; recipes invoking Python additionally validate recorded `python3_path` and version. Environment overrides must equal the manifest values.
 ```
 
-**v93 Command Audit (G3 Blockers)**
+**v94 Recipe Contract (G3 Entry Conditions)**
 
-- Bind all six recipes and every receipt to the committed v93 plan blob, exact packet manifest, product base,
-  predecessor and six owned paths. Derive identities from those files; do not retain archived v88/v91 constants or
-  assume a predecessor merely because it is an ancestor. Verify the activation checkpoint is the direct child of the
-  reviewed v93 plan commit and that the product base and all six owned-file blobs still match.
+- Bind all six recipes and every receipt to the committed v94 plan blob, exact packet manifest, product base,
+  predecessor/checkpoint chain and six owned paths. Derive identities from those files; do not retain archived
+  constants or assume a predecessor merely because it is an ancestor. Verify the activation checkpoint is the direct
+  child of the reviewed v94 plan commit and that the product base and all six owned-file blobs still match.
 - Split post-edit validation into ordered stages: freeze the six-path diff; build, discover and run tests; validate
   reports, exact identities and assertion totals; obtain final G1a, final plan-contract reconciliation and independent
   G2 against that tested tree; finally bind their hashes and test outputs in the commit preconditions. No review input
   may require G2 before the test run it is meant to review.
 - Put post-edit Release/ASan/qmake6 outputs under a fresh `validation-<ATTEMPT>/` root. Do not build into or
-  reconfigure shared `build/` or the preserved `build-asan/`. Read tool paths, versions, prefix paths, generator,
-  build-test setting and sanitizer flags from the reviewed packet manifest; every command must invoke those exact
-  paths, with no hard-coded Homebrew or PATH-only substitute.
+  reconfigure shared `build/` or the preserved `build-asan/`. Enforce all 32 fixed root-level keys, verify registration-file
+  hashes and exact Python/shasum executable path/version identities before any build or report input is consumed.
+  Compare full JUnit testcase-name sets and skip-name sets against the exact-source activation baseline for every
+  broad lane; selector discovery counts alone do not detect suite drift.
 - The product commit recipe must verify the sealed test receipt plus final G1a/G1b-reconciliation/G2 receipts, empty
   index, exact six-path staged set, tested/staged/committed blob equality, actual activation parent and hook effects.
   The plan-checkpoint recipe must
@@ -1326,7 +1340,7 @@ WT=/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961
 [[ "$BASELINE_ATTEMPT" =~ ^[1-9][0-9]*$ ]]
 ROOT="$WT/build/evidence/1A-1.b-check-topology-chain/A-budget-depth"
 A="$ROOT/activation-$ACTIVATION_ID"
-P="$WT/build/evidence/1A-1.b-check-topology-chain/preflight-v93"
+P="$WT/build/evidence/1A-1.b-check-topology-chain/preflight-v94"
 E="$A/activation-baseline-$BASELINE_ATTEMPT"
 cd "$WT"
 test -d "$A"
@@ -1345,6 +1359,30 @@ grep -Fx "slice=A-budget-depth" "$A/activation-identity.txt"
 grep -Fx "activation_id=$ACTIVATION_ID" "$A/activation-identity.txt"
 test -s "$P/packet-manifest.sha256"
 test -s "$P/input-manifest.txt"
+expected_entries=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt packet-manifest.sha256 | sort)
+actual_entries=$(find "$P" -mindepth 1 -maxdepth 1 -exec basename {} \; | LC_ALL=C sort)
+test "$actual_entries" = "$expected_entries"
+for entry in "$P"/*; do test -f "$entry" && test ! -L "$entry"; done
+manifest_value() {
+  test "$(grep -Ec "^$1=" "$P/input-manifest.txt")" -eq 1
+  awk -F= -v key="$1" '$1 == key {print substr($0, index($0, "=") + 1)}' "$P/input-manifest.txt"
+}
+validate_manifest_schema() {
+  expected_keys=$(printf '%s\n' cxx_compiler compiler_version qt6_cmake_dir qt6_version cmake_path cmake_version ninja_path ninja_version qmake6_path qmake6_prefix make_path make_version cmake_prefix_path cmake_generator cmake_build_type_release cmake_build_type_asan build_tests cmake_cxx_flags_release asan_cxx_flags asan_exe_linker_flags python3_path python3_version shasum_path shasum_version cmake_lists_sha256 src_pro_sha256 predecessor_plan_checkpoint_commit plan_commit plan_sha256 product_source_commit predecessor_product_commit checkout_head | LC_ALL=C sort)
+  actual_keys=$(awk 'index($0, "=") < 2 {exit 1} {print substr($0, 1, index($0, "=") - 1)}' "$P/input-manifest.txt" | LC_ALL=C sort)
+  test "$actual_keys" = "$expected_keys"
+}
+validate_manifest_schema
+PYTHON3_PATH=$(manifest_value python3_path)
+PYTHON3_VERSION=$(manifest_value python3_version)
+SHASUM_PATH=$(manifest_value shasum_path)
+SHASUM_VERSION=$(manifest_value shasum_version)
+[[ "$PYTHON3_PATH" = /* && "$SHASUM_PATH" = /* ]]
+test -x "$PYTHON3_PATH" && test -x "$SHASUM_PATH"
+test "$("$PYTHON3_PATH" --version)" = "$PYTHON3_VERSION"
+test "$("$SHASUM_PATH" --version | head -n 1)" = "$SHASUM_VERSION"
+python3() { "$PYTHON3_PATH" "$@"; }
+shasum() { "$SHASUM_PATH" "$@"; }
 expected_manifest_payloads=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt | sort)
 manifest_payloads=$(awk 'NF {print $2}' "$P/packet-manifest.sha256" | sort)
 test "$manifest_payloads" = "$expected_manifest_payloads"
@@ -1363,9 +1401,6 @@ if any(not stat.S_ISREG(entry.lstat().st_mode) for entry in entries):
     raise SystemExit("packet contains a non-regular or nested entry")
 PY
 (cd "$P" && shasum -a 256 -c packet-manifest.sha256)
-for key in cxx_compiler compiler_version qt6_cmake_dir qt6_version cmake_path cmake_version ninja_path ninja_version qmake6_path qmake6_prefix make_path make_version cmake_prefix_path cmake_generator cmake_build_type_release cmake_build_type_asan build_tests cmake_cxx_flags_release asan_cxx_flags asan_exe_linker_flags; do
-  test "$(grep -Ec "^$key=" "$P/input-manifest.txt")" -eq 1
-done
 manifest_value() {
   test "$(grep -Ec "^$1=" "$P/input-manifest.txt")" -eq 1
   awk -F= -v key="$1" '$1 == key {print substr($0, index($0, "=") + 1)}' "$P/input-manifest.txt"
@@ -1384,6 +1419,8 @@ BUILD_TYPE_ASAN=$(manifest_value cmake_build_type_asan)
 CXX_FLAGS_RELEASE=$(manifest_value cmake_cxx_flags_release)
 ASAN_CXX_FLAGS=$(manifest_value asan_cxx_flags)
 ASAN_LINKER_FLAGS=$(manifest_value asan_exe_linker_flags)
+grep -Fx "cmake_lists_sha256=$(shasum -a 256 CMakeLists.txt | awk '{print $1}')" "$P/input-manifest.txt"
+grep -Fx "src_pro_sha256=$(shasum -a 256 librecad/src/src.pro | awk '{print $1}')" "$P/input-manifest.txt"
 for tool in "$CXX_COMPILER" "$CMAKE_PATH" "$NINJA_PATH" "$QMAKE6_PATH" "$MAKE_PATH"; do
   [[ "$tool" = /* ]] && test -x "$tool"
 done
@@ -1410,6 +1447,10 @@ PACKET_SHA=$(shasum -a 256 "$P/packet-manifest.sha256" | awk '{print $1}')
 grep -Fx "packet_manifest_sha256=$PACKET_SHA" "$A/activation-identity.txt"
 REVIEWED_PLAN_SHA=$(awk -F= '$1 == "reviewed_plan_sha" {print $2}' "$A/activation-identity.txt")
 PREDECESSOR_PRODUCT_SHA=$(awk -F= '$1 == "predecessor_product_sha" {print $2}' "$A/activation-identity.txt")
+PREDECESSOR_CHECKPOINT_SHA=$(manifest_value predecessor_plan_checkpoint_commit)
+for field in reviewed_plan_sha product_base_sha predecessor_product_sha predecessor_plan_checkpoint_sha packet_manifest_sha256; do
+  test "$(grep -Ec "^$field=" "$A/activation-identity.txt")" -eq 1
+done
 test "$(git rev-parse HEAD^)" = "$REVIEWED_PLAN_SHA"
 grep -Fx "plan_commit=$REVIEWED_PLAN_SHA" "$P/input-manifest.txt"
 grep -Fx "plan_sha256=$(git show "$REVIEWED_PLAN_SHA:docs/plan_offset_curve_2961.md" | shasum -a 256 | awk '{print $1}')" "$P/input-manifest.txt"
@@ -1419,6 +1460,10 @@ grep -Fx "checkout_head=$REVIEWED_PLAN_SHA" "$P/input-manifest.txt"
 grep -Fx "activation_checkpoint_sha=$(cat "$A/activated-base.sha")" "$A/activation-identity.txt"
 PRODUCT_BASE_SHA=$(awk -F= '$1 == "product_base_sha" {print $2}' "$A/activation-identity.txt")
 [[ "$PRODUCT_BASE_SHA" =~ ^([0-9a-f]{40}|[0-9a-f]{64})$ ]]
+grep -Fx "predecessor_plan_checkpoint_sha=$PREDECESSOR_CHECKPOINT_SHA" "$A/activation-identity.txt"
+test "$(git rev-parse "$REVIEWED_PLAN_SHA^")" = "$PREDECESSOR_CHECKPOINT_SHA"
+test "$(git rev-parse "$PRODUCT_BASE_SHA^")" = "$PREDECESSOR_PRODUCT_SHA"
+git merge-base --is-ancestor "$PRODUCT_BASE_SHA" "$PREDECESSOR_CHECKPOINT_SHA"
 git merge-base --is-ancestor "$PRODUCT_BASE_SHA" HEAD
 mkdir -p "$E"
 test ! -e "$E/build-release"
@@ -1523,6 +1568,10 @@ for lane in ("full-release", "dxf-fast-release", "dxf-fast-asan", "dwg-fast-rele
     skipped = sorted(case.get("name", "") for case in cases if case.find("skipped") is not None)
     if not cases or failures or errors or any(not name for name in skipped) or len(skipped) != len(set(skipped)):
         raise AssertionError(f"invalid skip baseline report {report}: cases={len(cases)} failures={failures} errors={errors}")
+    testcase_names = [case.get("name", "") for case in cases]
+    if any(not name for name in testcase_names) or len(testcase_names) != len(set(testcase_names)):
+        raise AssertionError(f"invalid testcase identity set in {report}")
+    (evidence / f"testcases-{lane}.names").write_text("".join(f"{name}\n" for name in sorted(testcase_names)))
     (evidence / f"skip-{lane}.names").write_text("".join(f"{name}\n" for name in skipped))
     skip_summary.append(f"{lane}: cases={len(cases)} skipped={len(skipped)} failures={failures} errors={errors}")
 (evidence / "skip-baseline-summary.txt").write_text("\n".join(skip_summary) + "\n")
@@ -1537,22 +1586,21 @@ shasum -a 256 "$E/build-release/librecad_tests" "$E/build-release/librecad_dxf_f
 shasum -a 256 "$E/build-release/CMakeCache.txt" "$E/build-release/build.ninja" "$E/build-asan/CMakeCache.txt" "$E/build-asan/build.ninja" > "$E/cmake-caches.sha256"
 { "$CMAKE_PATH" --version; "$NINJA_PATH" --version; "$CXX_COMPILER" --version; "$QMAKE6_PATH" -query QT_VERSION; "$QMAKE6_PATH" -query QT_INSTALL_PREFIX; "$MAKE_PATH" --version; printf 'CXX_COMPILER=%s\nQT6_CMAKE_DIR=%s\nCMAKE_PREFIX_PATH=%s\n' "$CXX_COMPILER" "$QT6_CMAKE_DIR" "$CMAKE_PREFIX_PATH"; } > "$E/toolchain.txt"
 shasum -a 256 "$CXX_COMPILER" "$CMAKE_PATH" "$NINJA_PATH" "$QMAKE6_PATH" "$MAKE_PATH" "$E/toolchain.txt" > "$E/toolchain.sha256"
-printf 'slice=A-budget-depth\nactivation_id=%s\nattempt=%s\nproduct_base_sha=%s\npacket_manifest_sha256=%s\nactivated_base_sha=%s\n' \
-  "$ACTIVATION_ID" "$BASELINE_ATTEMPT" "$PRODUCT_BASE_SHA" "$PACKET_SHA" "$(cat "$E/activated-base.sha")" > "$E/baseline-identity.txt"
+printf 'slice=A-budget-depth\nactivation_id=%s\nattempt=%s\nreviewed_plan_sha=%s\nproduct_base_sha=%s\npredecessor_product_sha=%s\npredecessor_plan_checkpoint_sha=%s\npacket_manifest_sha256=%s\nactivated_base_sha=%s\n' \
+  "$ACTIVATION_ID" "$BASELINE_ATTEMPT" "$REVIEWED_PLAN_SHA" "$PRODUCT_BASE_SHA" "$PREDECESSOR_PRODUCT_SHA" "$PREDECESSOR_CHECKPOINT_SHA" "$PACKET_SHA" "$(cat "$E/activated-base.sha")" > "$E/baseline-identity.txt"
 cp "$A/activation-identity.txt" "$E/activation-identity.txt"
 cp "$A/activation-files.sha256" "$E/activation-files.sha256"
 (cd "$E" && shasum -a 256 *.list.txt *.names selector-counts.txt skip-*.junit.xml skip-*.run.log skip-baseline-summary.txt configure-release.log configure-asan.log build-release.log build-asan.log exit-codes.txt activated-base.sha activation-identity.txt activation-files.sha256 product-source-files.sha256 test-binaries.sha256 cmake-caches.sha256 toolchain.txt toolchain.sha256 baseline-identity.txt > baseline-manifest.sha256)
 ```
 
-The v93 `input-manifest.txt` must have exactly one value for every required build key: compiler/CMake/Ninja/qmake6/make
-paths and versions; Qt CMake directory, Qt version and qmake prefix; CMake prefix path, generator, Release/ASan build
-types, `build_tests=ON`, empty Release C++ flags, and the exact ASan compile/link flags. The baseline and validation
-recipes verify manifest membership/checksums before consuming these values, then invoke the exact manifest paths.
-Any missing/duplicate key or tool/version mismatch stops the attempt rather than silently changing the reviewed
-build identity. Commands embedded in archived cards are historical and must not be run.
+The v94 `input-manifest.txt` must contain exactly 32 uniquely matched root-level keys: 27 fixed build/toolchain/
+registration/checkpoint keys plus five exact plan-chain keys. Packet-reading recipes reject missing, duplicate,
+malformed or unknown keys, then verify fixed packet membership/checksums, tool path/version identities and current
+registration hashes before consuming selector or test evidence. Any mismatch stops the attempt. Commands embedded in
+archived cards are historical and must not be run.
 
-The completion narratives below are retained as historical evidence, not as live queue instructions. The v93 block
-above is the sole current Slice-A handoff and remains WAITING; v92 is its committed plan base and PARTIAL packet
+The completion narratives below are retained as historical evidence, not as live queue instructions. The v94 block
+above is the sole current Slice-A handoff and remains WAITING; v93 is its committed plan base and FAIL/PARTIAL gate
 provenance, not an implementation authorization. After every commit, reconcile active pointers and reread the committed plan against
 the codebase/evidence before resuming implementation.
 
@@ -1960,8 +2008,8 @@ next: `.b-check-topology-chain` stays WAITING under v67. v38 rate bounds and v39
 **Archived v67 implementation-card draft — `1A-1.b-check-topology-chain` (refresh before activation).**
 
 The v67 card narrative, legacy selectors/pointers, source hashes and receipt narratives are historical only; do not
-use them as current evidence or as a gate receipt. The six command bodies named below are reissued for the v93 live
-card; their prior v88/v92 values are not inherited, and the active v93 card is their only authorization. All other
+use them as current evidence or as a gate receipt. The six command bodies named below are reissued for the v94 live
+card; their prior v88/v92/v93 values are not inherited, and the active v94 card is their only authorization. All other
 embedded legacy commands and outputs remain non-executable provenance; any earlier receipt binds only its original
 plan/product/packet identities.
 
@@ -2203,7 +2251,7 @@ pre_activation_checklist:
   receipt_packet_audit: PENDING — verify every preflight/review receipt binds the exact committed plan SHA, product-source SHA, scope/file manifest, method/source, status, finding resolutions and hashes of its required inputs; reject missing, duplicate, stale, self-referential or contradictory fields. This is a read-only evidence check and cannot promote an arithmetic script, runtime diagnostic or test listing into an independent oracle/test pass.
   preflight_receipt_contract: PENDING — create fresh exact-membership `preflight-v88/` only after the v88 plan commit, bound to that committed plan blob and unchanged product-source commit; preserve v81/v82 and all older artifacts as immutable provenance. Reuse earlier discovery/proof artifacts only as labeled PARTIAL inputs; rehash them and state limitations. The manifest hashes exactly `input-manifest.txt` and the six evidence maps, excluding itself and formal receipts. Before review/activation, compare actual top-level entries against those seven payloads plus `packet-manifest.sha256`; reject extras, missing entries, symlinks, non-regular files and nested directories; verify all hashes and identities. `input-manifest.txt` records exact plan/product SHAs and hashes for source/spec/build/fixture/probe inputs, A-owned producer/callsite census, all three proof-split callers and actual cache-span split sites, both geometry-owned exception-transfer sites, atomic-adoption API, A14 fixture/source/target, v81 findings, v82 source audit, v83 source-audit-v83 artifact and the activation-baseline recipe. Record pre-activation discovery separately from post-activation discovery/execution; no registered JUnit/build is allowed before activation. Bind the five existing `.b-check-bounds` attempt-9 report hashes as PARTIAL provenance only; do not use them for skip comparison unless their product-source/build identity is independently evidenced. The activation baseline records five newly executed JUnit reports and normalized skip names with exact plan/product/source/binary fingerprints, and post-edit validation compares only to those files. Each evidence map records method, provenance, limitations and PASS/PARTIAL/PENDING. Complete only A-relevant R02/R12/R13, six-path, A01-A14 and resource portions for Gate 1/3; C's phase/cut/frontier proof and B/C full oracle crosswalks remain visibly PARTIAL/PENDING until their own gates. The selector map binds A01-A14 (including separate A08/A14 selectors), B01-B08 and C01-C54 to requirements, API/source, fixture/oracle, assertion contract, target, owner and report location; A must close its own rows and explicitly defer B/C rows. The activation baseline saves exact Release/ASan sets for cache-budget, intersection-refine and strict-core, plus same-tree full Release and DXF/DWG fast Release/ASan skip sets. A Gate receipts bind the packet digest and same plan/product SHAs; Gate 3 additionally binds both actual Gate-1 receipt hashes. Hash equality proves identity, not a PASS.
   selector_cardinality_audit: Before sealing `preflight-v88/`, parse all planned ID rows and require exactly 14 unique A IDs (`A01-A14`), 8 B IDs (`B01-B08`), 54 C IDs (`C01-C54`), and 61 uniquely named strict-core regression IDs. A/B/C total exactly 76 identities; strict-core is a separate regression set and is not included in that total. Reject the inherited erroneous aggregate statement “all 21 A/B/C identities”; no identity may be invented, omitted, aliased, duplicated or counted from a SECTION. Confirm A01-A13 map only to cache-budget-accounting and A14 only to intersection-refine. Historical packet counts remain historical and are not rewritten.
-  gate_receipt_identity: Require exactly one each of `status=PASS`, `gate_id`, `slice`, `reviewed_plan_sha`, `product_base_sha`, and `packet_manifest_sha256` in all three gate receipts. Gate 3 must additionally carry exactly one `gate1_completeness_sha256` and `gate1_plan_correctness_sha256`, matching the actual Gate-1 file hashes. Duplicate, missing or stale identity fields fail activation.
+  gate_receipt_identity: Require exactly one each of `status=PASS`, `gate_id`, `slice`, `reviewed_plan_sha`, `product_base_sha`, `packet_manifest_sha256`, and `reviewer_id` in all three receipts. Gate IDs are exactly `G1A_COMPLETENESS`, `G1B_PLAN_CORRECTNESS`, and `G3_READINESS`; reviewer IDs are nonempty and pairwise distinct; G1a/G1b receipt byte hashes must differ. Gate 3 additionally carries exactly one `gate1_completeness_sha256` and `gate1_plan_correctness_sha256`, matching the actual distinct Gate-1 file hashes. Duplicate, missing, role-swapped, same-reviewer, same-hash or stale identity fields fail activation.
   activation: BLOCKED — create a separate plan-only activation checkpoint for Slice A only after formal receipts pass; activation must not alter any product/test byte. Slice B and C later require their own fresh reviews and activation checkpoints after their predecessor reconciliation commits.
 historical_v84_preflight_execution_order (NON-EXECUTABLE; see active v88 contract): A-only order for the next handoff: (1) commit this v84 plan-only correction as a direct child of v83, preserving all product blobs; (2) create/hash exact-membership `preflight-v84/` and bind every reused input to the committed v84 plan and unchanged product source; (3) close the A-only R02/R12/R13 path/caller/test/oracle map, exact A01-A14 independent snapshots, source/debit/capacity/runtime census, candidate-cache split and all three proof-split callers, capacity-before-debit and reserve-before-mutation proof for queues/paired outputs, and atomic exception-safe work transfer; (4) verify the six owned paths, test target registrations, predecessors and baseline provenance; bind the five attempt-9 report hashes as historical-only, and require a fresh baseline run if those reports lack exact source identity; (5) obtain distinct exact-identity G1a, G1b and A Gate-3 PASS receipts on the same plan/product/packet identities; (6) commit a separate A activation checkpoint; (7) run the v84 activation-baseline recipe: build Release/ASan targets, capture selector identities, and run full Release plus DXF/DWG fast Release/ASan tests on the unedited activated source, binding reports and normalized skip sets to its exact source/binary hashes; (8) reconcile all baseline identities, then authorize A edits. Each step has a durable artifact and PASS/PARTIAL/PENDING exit; no later step hides an earlier gap. B/C terminal, phase/cut/frontier and C01-C54 oracles remain their own readiness work unless a concrete A dependency is demonstrated. No registered JUnit/build or product/test edit occurs before activation. After implementation, exact activation-baseline identities gate validation.
 next: After the v88 plan-only commit, create and verify exact-membership `preflight-v88/` bound to the committed plan blob and unchanged product-source base; preserve v81-v87 and older packets as immutable provenance. Close A's source/debit/capacity/runtime census, exact row-wise A01-A14 oracles/snapshots, both source-derived A14 routes, allocation-publication crosswalk, six-path/build/predecessor identities, and source-derived stage exits. Obtain independent G1a, G1b and Gate-3 PASS receipts on identical plan/product/packet identities. Then commit an A-only activation checkpoint; configure/build/test in fresh activation-specific Release/ASan directories and capture selector plus full/fast JUnit baselines on the unchanged activated tree. Stop on any ancestry, source, binary, selector, report or skip-set mismatch before editing. Agent Gibbs starts implementation only after activation and baseline reconciliation; if unavailable, stop for user-authorized reassignment. Implement the five internal A stages in order, each with its own durable PASS/STOP record; the full A leaf gets one product/test-only commit only after final closure. Immediately follow with a plan-only direct-child reconciliation and semantic Git/evidence/status/pointer read-back. No successor edit/build/test starts before that audit. On mismatch, preserve evidence, invalidate affected receipts and add a corrective plan-only child before fresh review. The four DXF/DWG application directions, all applicable versions, both conversions, edited reopen, binary-DXF codec, UI and phase 2 remain later explicit obligations; checker-only geometry never satisfies them.
@@ -2212,9 +2260,9 @@ activation_commands: |
   set -euo pipefail
   WT=/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961
   : "${SLICE:?Set SLICE=A-budget-depth}"
-  : "${GATE_ID:?Set GATE_ID to the readiness-review evidence ID}"
+  : "${READINESS_ID:?Set READINESS_ID to the readiness evidence-directory ID}"
   : "${ACTIVATION_ID:?Set ACTIVATION_ID to a fresh immutable positive integer}"
-  [[ "$GATE_ID" =~ ^[1-9][0-9]*$ && "$ACTIVATION_ID" =~ ^[1-9][0-9]*$ ]]
+  [[ "$READINESS_ID" =~ ^[1-9][0-9]*$ && "$ACTIVATION_ID" =~ ^[1-9][0-9]*$ ]]
   test "$SLICE" = A-budget-depth
   paths=(librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
          librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp
@@ -2223,13 +2271,37 @@ activation_commands: |
          librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp
          librecad/src/lib/engine/document/entities/tests/lc_parametriccurveintersection_tests.cpp)
   ROOT="$WT/build/evidence/1A-1.b-check-topology-chain/$SLICE"
-  R="$ROOT/readiness-$GATE_ID"
+  R="$ROOT/readiness-$READINESS_ID"
   E="$ROOT/activation-$ACTIVATION_ID"
-  P="$WT/build/evidence/1A-1.b-check-topology-chain/preflight-v93"
+  P="$WT/build/evidence/1A-1.b-check-topology-chain/preflight-v94"
   cd "$WT"
   test -d "$R"
   test ! -e "$E"
   test -s "$P/packet-manifest.sha256"
+  test -s "$P/input-manifest.txt"
+  expected_entries=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt packet-manifest.sha256 | sort)
+  actual_entries=$(find "$P" -mindepth 1 -maxdepth 1 -exec basename {} \; | LC_ALL=C sort)
+  test "$actual_entries" = "$expected_entries"
+  for entry in "$P"/*; do test -f "$entry" && test ! -L "$entry"; done
+  manifest_value() { test "$(grep -Ec "^$1=" "$P/input-manifest.txt")" -eq 1; awk -F= -v key="$1" '$1 == key {print substr($0, index($0, "=") + 1)}' "$P/input-manifest.txt"; }
+  validate_manifest_schema() {
+    expected_keys=$(printf '%s\n' cxx_compiler compiler_version qt6_cmake_dir qt6_version cmake_path cmake_version ninja_path ninja_version qmake6_path qmake6_prefix make_path make_version cmake_prefix_path cmake_generator cmake_build_type_release cmake_build_type_asan build_tests cmake_cxx_flags_release asan_cxx_flags asan_exe_linker_flags python3_path python3_version shasum_path shasum_version cmake_lists_sha256 src_pro_sha256 predecessor_plan_checkpoint_commit plan_commit plan_sha256 product_source_commit predecessor_product_commit checkout_head | LC_ALL=C sort)
+    actual_keys=$(awk 'index($0, "=") < 2 {exit 1} {print substr($0, 1, index($0, "=") - 1)}' "$P/input-manifest.txt" | LC_ALL=C sort)
+    test "$actual_keys" = "$expected_keys"
+  }
+  validate_manifest_schema
+  PYTHON3_PATH=$(manifest_value python3_path)
+  PYTHON3_VERSION=$(manifest_value python3_version)
+  SHASUM_PATH=$(manifest_value shasum_path)
+  SHASUM_VERSION=$(manifest_value shasum_version)
+  [[ "$PYTHON3_PATH" = /* && "$SHASUM_PATH" = /* ]]
+  test -x "$PYTHON3_PATH" && test -x "$SHASUM_PATH"
+  test "$("$PYTHON3_PATH" --version)" = "$PYTHON3_VERSION"
+  test "$("$SHASUM_PATH" --version | head -n 1)" = "$SHASUM_VERSION"
+  python3() { "$PYTHON3_PATH" "$@"; }
+  shasum() { "$SHASUM_PATH" "$@"; }
+  grep -Fx "cmake_lists_sha256=$(shasum -a 256 CMakeLists.txt | awk '{print $1}')" "$P/input-manifest.txt"
+  grep -Fx "src_pro_sha256=$(shasum -a 256 librecad/src/src.pro | awk '{print $1}')" "$P/input-manifest.txt"
   expected_manifest_payloads=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt | sort)
   manifest_payloads=$(awk 'NF {print $2}' "$P/packet-manifest.sha256" | sort)
   test "$manifest_payloads" = "$expected_manifest_payloads"
@@ -2259,10 +2331,12 @@ activation_commands: |
   test "$(git rev-parse --verify "$REVIEWED_PLAN_SHA^{commit}")" = "$REVIEWED_PLAN_SHA"
   test "$(git rev-parse --verify "$EXPECTED_PRODUCT_BASE_SHA^{commit}")" = "$EXPECTED_PRODUCT_BASE_SHA"
   PREDECESSOR_PRODUCT_SHA=$(awk -F= '$1 == "predecessor_product_commit" {print $2}' "$P/input-manifest.txt")
+  PREDECESSOR_CHECKPOINT_SHA=$(manifest_value predecessor_plan_checkpoint_commit)
   test "$(grep -Ec '^predecessor_product_commit=' "$P/input-manifest.txt")" -eq 1
   test "$(git rev-parse --verify "$PREDECESSOR_PRODUCT_SHA^{commit}")" = "$PREDECESSOR_PRODUCT_SHA"
-  git merge-base --is-ancestor "$PREDECESSOR_PRODUCT_SHA" "$EXPECTED_PRODUCT_BASE_SHA"
-  git merge-base --is-ancestor "$EXPECTED_PRODUCT_BASE_SHA" "$REVIEWED_PLAN_SHA"
+  test "$(git rev-parse "$EXPECTED_PRODUCT_BASE_SHA^")" = "$PREDECESSOR_PRODUCT_SHA"
+  test "$(git rev-parse "$REVIEWED_PLAN_SHA^")" = "$PREDECESSOR_CHECKPOINT_SHA"
+  git merge-base --is-ancestor "$EXPECTED_PRODUCT_BASE_SHA" "$PREDECESSOR_CHECKPOINT_SHA"
   for key in plan_commit plan_sha256 product_source_commit predecessor_product_commit checkout_head; do
     test "$(grep -Ec "^$key=" "$P/input-manifest.txt")" -eq 1
   done
@@ -2279,11 +2353,26 @@ activation_commands: |
     done
     test "$(grep -E '^status=' "$R/$receipt")" = status=PASS
     test "$(grep -E '^reviewed_plan_sha=' "$R/$receipt")" = "reviewed_plan_sha=$REVIEWED_PLAN_SHA"
-    test "$(grep -E '^gate_id=' "$R/$receipt")" = "gate_id=$GATE_ID"
     test "$(grep -E '^slice=' "$R/$receipt")" = "slice=$SLICE"
     test "$(grep -E '^product_base_sha=' "$R/$receipt")" = "product_base_sha=$EXPECTED_PRODUCT_BASE_SHA"
     test "$(grep -E '^packet_manifest_sha256=' "$R/$receipt")" = "packet_manifest_sha256=$PACKET_SHA"
   done
+  for field in gate_id reviewer_id; do
+    test "$(grep -Ec "^$field=" "$R/gate1-completeness.txt")" -eq 1
+    test "$(grep -Ec "^$field=" "$R/gate1-plan-correctness.txt")" -eq 1
+    test "$(grep -Ec "^$field=" "$R/gate3-readiness.txt")" -eq 1
+  done
+  grep -Fx 'gate_id=G1A_COMPLETENESS' "$R/gate1-completeness.txt"
+  grep -Fx 'gate_id=G1B_PLAN_CORRECTNESS' "$R/gate1-plan-correctness.txt"
+  grep -Fx 'gate_id=G3_READINESS' "$R/gate3-readiness.txt"
+  G1A_REVIEWER=$(awk -F= '$1 == "reviewer_id" {print $2}' "$R/gate1-completeness.txt")
+  G1B_REVIEWER=$(awk -F= '$1 == "reviewer_id" {print $2}' "$R/gate1-plan-correctness.txt")
+  G3_REVIEWER=$(awk -F= '$1 == "reviewer_id" {print $2}' "$R/gate3-readiness.txt")
+  test -n "$G1A_REVIEWER" && test -n "$G1B_REVIEWER" && test -n "$G3_REVIEWER"
+  test "$G1A_REVIEWER" != "$G1B_REVIEWER"
+  test "$G1A_REVIEWER" != "$G3_REVIEWER"
+  test "$G1B_REVIEWER" != "$G3_REVIEWER"
+  test "$G1_COMPLETE_SHA" != "$G1_CORRECT_SHA"
   for field in gate1_completeness_sha256 gate1_plan_correctness_sha256; do
     test "$(grep -Ec "^$field=" "$R/gate3-readiness.txt")" -eq 1
   done
@@ -2301,13 +2390,28 @@ activation_commands: |
   ACTIVATED_BASE=$(git rev-parse HEAD)
   ACTIVATION_PARENT=$(git rev-parse HEAD^)
   test "$ACTIVATION_PARENT" = "$REVIEWED_PLAN_SHA"
+  REVIEWED_PLAN_VERSION=$(git show "$REVIEWED_PLAN_SHA:docs/plan_offset_curve_2961.md" | sed -n 's/^Plan \*\*v\([0-9][0-9]*\).*/\1/p' | head -n 1)
+  ACTIVATED_PLAN_VERSION=$(git show HEAD:docs/plan_offset_curve_2961.md | sed -n 's/^Plan \*\*v\([0-9][0-9]*\).*/\1/p' | head -n 1)
+  test "$(git show "$REVIEWED_PLAN_SHA:docs/plan_offset_curve_2961.md" | grep -Ec '^Plan \*\*v[0-9]+')" -eq 1
+  test "$(git show HEAD:docs/plan_offset_curve_2961.md | grep -Ec '^Plan \*\*v[0-9]+')" -eq 1
+  test -n "$REVIEWED_PLAN_VERSION" && test "$ACTIVATED_PLAN_VERSION" -eq "$((REVIEWED_PLAN_VERSION + 1))"
+  test "$(git show "$REVIEWED_PLAN_SHA:docs/plan_offset_curve_2961.md" | grep -Ec '^slice_a_activation_state: WAITING$')" -eq 1
+  test "$(git show "$REVIEWED_PLAN_SHA:docs/plan_offset_curve_2961.md" | grep -Ec '^slice_a_activation_from_plan_version: none$')" -eq 1
+  test "$(git show "$REVIEWED_PLAN_SHA:docs/plan_offset_curve_2961.md" | grep -Ec '^slice_a_activation_id: none$')" -eq 1
+  test "$(git show HEAD:docs/plan_offset_curve_2961.md | grep -Ec '^slice_a_activation_state: ACTIVATED$')" -eq 1
+  test "$(git show HEAD:docs/plan_offset_curve_2961.md | grep -Ec '^slice_a_activation_from_plan_version: [0-9]+$')" -eq 1
+  test "$(git show HEAD:docs/plan_offset_curve_2961.md | grep -Ec '^slice_a_activation_id: [1-9][0-9]*$')" -eq 1
+  git show "$REVIEWED_PLAN_SHA:docs/plan_offset_curve_2961.md" | grep -Fx 'slice_a_activation_state: WAITING'
+  git show HEAD:docs/plan_offset_curve_2961.md | grep -Fx 'slice_a_activation_state: ACTIVATED'
+  git show HEAD:docs/plan_offset_curve_2961.md | grep -Fx "slice_a_activation_from_plan_version: $REVIEWED_PLAN_VERSION"
+  git show HEAD:docs/plan_offset_curve_2961.md | grep -Fx "slice_a_activation_id: $ACTIVATION_ID"
   ACTIVATION_FILES_SHA=$(shasum -a 256 "${paths[@]}")
   ACTIVATION_STATUS=$(git status --short)
   mkdir -p "$E"
   printf '%s\n' "$ACTIVATION_PARENT" > "$E/activation-parent.sha"
-  printf 'slice=%s\ngate_id=%s\nactivation_id=%s\nreviewed_plan_sha=%s\nproduct_base_sha=%s\npredecessor_product_sha=%s\npacket_manifest_sha256=%s\ngate1_completeness_sha256=%s\ngate1_plan_correctness_sha256=%s\ngate3_readiness_sha256=%s\n' \
-    "$SLICE" "$GATE_ID" "$ACTIVATION_ID" "$REVIEWED_PLAN_SHA" "$EXPECTED_PRODUCT_BASE_SHA" "$PREDECESSOR_PRODUCT_SHA" \
-    "$PACKET_SHA" "$G1_COMPLETE_SHA" "$G1_CORRECT_SHA" "$GATE3_SHA" > "$E/activation-identity.txt"
+  printf 'slice=%s\nreadiness_id=%s\nactivation_id=%s\nreviewed_plan_sha=%s\nproduct_base_sha=%s\npredecessor_product_sha=%s\npredecessor_plan_checkpoint_sha=%s\npacket_manifest_sha256=%s\ngate1_completeness_sha256=%s\ngate1_plan_correctness_sha256=%s\ngate3_readiness_sha256=%s\nreviewed_plan_version=%s\nactivated_plan_version=%s\nactivation_state=ACTIVATED\n' \
+    "$SLICE" "$READINESS_ID" "$ACTIVATION_ID" "$REVIEWED_PLAN_SHA" "$EXPECTED_PRODUCT_BASE_SHA" "$PREDECESSOR_PRODUCT_SHA" "$PREDECESSOR_CHECKPOINT_SHA" \
+    "$PACKET_SHA" "$G1_COMPLETE_SHA" "$G1_CORRECT_SHA" "$GATE3_SHA" "$REVIEWED_PLAN_VERSION" "$ACTIVATED_PLAN_VERSION" > "$E/activation-identity.txt"
   printf 'activation_checkpoint_sha=%s\nactivation_parent_sha=%s\n' "$ACTIVATED_BASE" "$ACTIVATION_PARENT" >> "$E/activation-identity.txt"
   printf '%s\n' "$ACTIVATION_FILES_SHA" > "$E/activation-files.sha256"
   printf '%s\n' "$ACTIVATION_STATUS" > "$E/activation-status.txt"
@@ -2320,11 +2424,26 @@ foundation_review_freeze_commands: |
   : "${PHASE:?Set PHASE=freeze or post-test}"
   : "${ACTIVATION_ID:?Use the immutable activation ID for this slice}"
   : "${ATTEMPT:?Set ATTEMPT to a fresh positive integer}"
+  [[ "$ACTIVATION_ID" =~ ^[1-9][0-9]*$ ]]
   [[ "$ATTEMPT" =~ ^[1-9][0-9]*$ ]]
   test "$SLICE" = A-budget-depth
   ROOT="$WT/build/evidence/1A-1.b-check-topology-chain/$SLICE"
   R="$ROOT/review-$ATTEMPT"
   A="$ROOT/activation-$ACTIVATION_ID"
+  P="$WT/build/evidence/1A-1.b-check-topology-chain/preflight-v94"
+  expected_entries=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt packet-manifest.sha256 | sort)
+  actual_entries=$(find "$P" -mindepth 1 -maxdepth 1 -exec basename {} \; | LC_ALL=C sort)
+  test "$actual_entries" = "$expected_entries"
+  for entry in "$P"/*; do test -f "$entry" && test ! -L "$entry"; done
+  test "$(grep -Ec '^shasum_path=' "$P/input-manifest.txt")" -eq 1
+  test "$(grep -Ec '^shasum_version=' "$P/input-manifest.txt")" -eq 1
+  SHASUM_PATH=$(awk -F= '$1 == "shasum_path" {print $2}' "$P/input-manifest.txt")
+  SHASUM_VERSION=$(awk -F= '$1 == "shasum_version" {print $2}' "$P/input-manifest.txt")
+  [[ "$SHASUM_PATH" = /* ]] && test -x "$SHASUM_PATH"
+  test "$("$SHASUM_PATH" --version | head -n 1)" = "$SHASUM_VERSION"
+  shasum() { "$SHASUM_PATH" "$@"; }
+  (cd "$P" && shasum -a 256 -c packet-manifest.sha256)
+  grep -Fx "packet_manifest_sha256=$(shasum -a 256 "$P/packet-manifest.sha256" | awk '{print $1}')" "$A/activation-identity.txt"
   cd "$WT"
   paths=(librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
          librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp
@@ -2403,7 +2522,7 @@ foundation_validation_commands: |
   R="$ROOT/review-$ATTEMPT"
   A="$ROOT/activation-$ACTIVATION_ID"
   P="$PACKET_DIR"
-  EXPECTED_PACKET="$WT/build/evidence/1A-1.b-check-topology-chain/preflight-v93"
+  EXPECTED_PACKET="$WT/build/evidence/1A-1.b-check-topology-chain/preflight-v94"
   test "$P" = "$EXPECTED_PACKET"
   : "${BASELINE_ATTEMPT:?Set the successful activation-baseline attempt number}"
   [[ "$BASELINE_ATTEMPT" =~ ^[1-9][0-9]*$ ]]
@@ -2416,6 +2535,27 @@ foundation_validation_commands: |
   test -s "$P/packet-manifest.sha256"
   test -s "$P/input-manifest.txt"
   test "$(git rev-parse HEAD)" = "$(cat "$A/activated-base.sha")"
+  expected_entries=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt packet-manifest.sha256 | sort)
+  actual_entries=$(find "$P" -mindepth 1 -maxdepth 1 -exec basename {} \; | LC_ALL=C sort)
+  test "$actual_entries" = "$expected_entries"
+  for entry in "$P"/*; do test -f "$entry" && test ! -L "$entry"; done
+  manifest_value() { test "$(grep -Ec "^$1=" "$P/input-manifest.txt")" -eq 1; awk -F= -v key="$1" '$1 == key {print substr($0, index($0, "=") + 1)}' "$P/input-manifest.txt"; }
+  validate_manifest_schema() {
+    expected_keys=$(printf '%s\n' cxx_compiler compiler_version qt6_cmake_dir qt6_version cmake_path cmake_version ninja_path ninja_version qmake6_path qmake6_prefix make_path make_version cmake_prefix_path cmake_generator cmake_build_type_release cmake_build_type_asan build_tests cmake_cxx_flags_release asan_cxx_flags asan_exe_linker_flags python3_path python3_version shasum_path shasum_version cmake_lists_sha256 src_pro_sha256 predecessor_plan_checkpoint_commit plan_commit plan_sha256 product_source_commit predecessor_product_commit checkout_head | LC_ALL=C sort)
+    actual_keys=$(awk 'index($0, "=") < 2 {exit 1} {print substr($0, 1, index($0, "=") - 1)}' "$P/input-manifest.txt" | LC_ALL=C sort)
+    test "$actual_keys" = "$expected_keys"
+  }
+  validate_manifest_schema
+  PYTHON3_PATH=$(manifest_value python3_path)
+  PYTHON3_VERSION=$(manifest_value python3_version)
+  SHASUM_PATH=$(manifest_value shasum_path)
+  SHASUM_VERSION=$(manifest_value shasum_version)
+  [[ "$PYTHON3_PATH" = /* && "$SHASUM_PATH" = /* ]]
+  test -x "$PYTHON3_PATH" && test -x "$SHASUM_PATH"
+  test "$("$PYTHON3_PATH" --version)" = "$PYTHON3_VERSION"
+  test "$("$SHASUM_PATH" --version | head -n 1)" = "$SHASUM_VERSION"
+  python3() { "$PYTHON3_PATH" "$@"; }
+  shasum() { "$SHASUM_PATH" "$@"; }
   expected_manifest_payloads=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt | sort)
   manifest_payloads=$(awk 'NF {print $2}' "$P/packet-manifest.sha256" | sort)
   test "$manifest_payloads" = "$expected_manifest_payloads"
@@ -2435,10 +2575,6 @@ foundation_validation_commands: |
   PY
   (cd "$P" && shasum -a 256 -c packet-manifest.sha256)
   PACKET_SHA=$(shasum -a 256 "$P/packet-manifest.sha256" | awk '{print $1}')
-  manifest_value() { test "$(grep -Ec "^$1=" "$P/input-manifest.txt")" -eq 1; awk -F= -v key="$1" '$1 == key {print substr($0, index($0, "=") + 1)}' "$P/input-manifest.txt"; }
-  for key in cxx_compiler compiler_version qt6_cmake_dir qt6_version cmake_path cmake_version ninja_path ninja_version qmake6_path qmake6_prefix make_path make_version cmake_prefix_path cmake_generator cmake_build_type_release cmake_build_type_asan build_tests cmake_cxx_flags_release asan_cxx_flags asan_exe_linker_flags; do
-    test "$(grep -Ec "^$key=" "$P/input-manifest.txt")" -eq 1
-  done
   CXX_COMPILER=$(manifest_value cxx_compiler)
   QT6_CMAKE_DIR=$(manifest_value qt6_cmake_dir)
   CMAKE_PATH=$(manifest_value cmake_path)
@@ -2453,6 +2589,8 @@ foundation_validation_commands: |
   CXX_FLAGS_RELEASE=$(manifest_value cmake_cxx_flags_release)
   ASAN_CXX_FLAGS=$(manifest_value asan_cxx_flags)
   ASAN_LINKER_FLAGS=$(manifest_value asan_exe_linker_flags)
+  grep -Fx "cmake_lists_sha256=$(shasum -a 256 CMakeLists.txt | awk '{print $1}')" "$P/input-manifest.txt"
+  grep -Fx "src_pro_sha256=$(shasum -a 256 librecad/src/src.pro | awk '{print $1}')" "$P/input-manifest.txt"
   for tool in "$CXX_COMPILER" "$CMAKE_PATH" "$NINJA_PATH" "$QMAKE6_PATH" "$MAKE_PATH"; do
     [[ "$tool" = /* ]] && test -x "$tool"
   done
@@ -2473,7 +2611,8 @@ foundation_validation_commands: |
   grep -Fx "packet_manifest_sha256=$PACKET_SHA" "$A/activation-identity.txt"
   REVIEWED_PLAN_SHA=$(awk -F= '$1 == "reviewed_plan_sha" {print $2}' "$A/activation-identity.txt")
   PREDECESSOR_PRODUCT_SHA=$(awk -F= '$1 == "predecessor_product_sha" {print $2}' "$A/activation-identity.txt")
-  for field in reviewed_plan_sha product_base_sha packet_manifest_sha256 predecessor_product_sha; do
+  PREDECESSOR_CHECKPOINT_SHA=$(manifest_value predecessor_plan_checkpoint_commit)
+  for field in reviewed_plan_sha product_base_sha packet_manifest_sha256 predecessor_product_sha predecessor_plan_checkpoint_sha; do
     test "$(grep -Ec "^$field=" "$A/activation-identity.txt")" -eq 1
   done
   grep -Fx "plan_commit=$REVIEWED_PLAN_SHA" "$P/input-manifest.txt"
@@ -2482,12 +2621,19 @@ foundation_validation_commands: |
   grep -Fx "predecessor_product_commit=$PREDECESSOR_PRODUCT_SHA" "$P/input-manifest.txt"
   grep -Fx "checkout_head=$REVIEWED_PLAN_SHA" "$P/input-manifest.txt"
   test "$(git rev-parse HEAD^)" = "$REVIEWED_PLAN_SHA"
+  grep -Fx "predecessor_plan_checkpoint_sha=$PREDECESSOR_CHECKPOINT_SHA" "$A/activation-identity.txt"
+  test "$(git rev-parse "$PRODUCT_BASE_SHA^")" = "$PREDECESSOR_PRODUCT_SHA"
+  test "$(git rev-parse "$REVIEWED_PLAN_SHA^")" = "$PREDECESSOR_CHECKPOINT_SHA"
+  git merge-base --is-ancestor "$PRODUCT_BASE_SHA" "$PREDECESSOR_CHECKPOINT_SHA"
   git merge-base --is-ancestor "$PRODUCT_BASE_SHA" HEAD
   test -d "$BASELINE"
   grep -Fx "slice=A-budget-depth" "$BASELINE/baseline-identity.txt"
   grep -Fx "activation_id=$ACTIVATION_ID" "$BASELINE/baseline-identity.txt"
   grep -Fx "attempt=$BASELINE_ATTEMPT" "$BASELINE/baseline-identity.txt"
+  grep -Fx "reviewed_plan_sha=$REVIEWED_PLAN_SHA" "$BASELINE/baseline-identity.txt"
   grep -Fx "product_base_sha=$PRODUCT_BASE_SHA" "$BASELINE/baseline-identity.txt"
+  grep -Fx "predecessor_product_sha=$PREDECESSOR_PRODUCT_SHA" "$BASELINE/baseline-identity.txt"
+  grep -Fx "predecessor_plan_checkpoint_sha=$PREDECESSOR_CHECKPOINT_SHA" "$BASELINE/baseline-identity.txt"
   grep -Fx "packet_manifest_sha256=$PACKET_SHA" "$BASELINE/baseline-identity.txt"
   grep -Fx "activated_base_sha=$(cat "$A/activated-base.sha")" "$BASELINE/baseline-identity.txt"
   (cd "$BASELINE" && shasum -a 256 -c baseline-manifest.sha256)
@@ -2606,9 +2752,11 @@ foundation_validation_commands: |
   assert len(a_rows) == 14 and {case_id for case_id, _ in a_rows} == {f"{i:02d}" for i in range(1, 15)}, (selector_map, a_rows)
   a_names = {case_id: name for case_id, name in a_rows}
   assert len({name for _, name in a_rows}) == 14, (selector_map, a_rows)
-  strict_rows = re.findall(r"^\s*STRICT-CORE-\d{2}\s+`([^`]+)`\s*\|", selector_map.read_text(), re.MULTILINE)
-  strict_map_names = set(strict_rows)
+  strict_rows = re.findall(r"^\s*STRICT-CORE-(\d{2})\s*\|\s*`([^`]+)`\s*\|", selector_map.read_text(), re.MULTILINE)
+  strict_ids = [case_id for case_id, _ in strict_rows]
+  strict_map_names = {name for _, name in strict_rows}
   assert len(strict_rows) == len(strict_map_names) == 61, (selector_map, len(strict_rows), len(strict_map_names))
+  assert set(strict_ids) == {f"{index:02d}" for index in range(1, 62)} and len(strict_ids) == len(set(strict_ids)), (selector_map, strict_ids)
   assert a_names["14"] == "retained certificate callback throw preserves admitted work"
 
   def report(path):
@@ -2682,10 +2830,15 @@ foundation_validation_commands: |
       assert not strict_skips, (mode, strict_skips)
   checks = ["full-release", "dxf-fast-release", "dxf-fast-asan", "dwg-fast-release", "dwg-fast-asan"]
   for name in checks:
-      cases, skips = report(evidence / f"{name}.junit.xml")
+      current_report = evidence / f"{name}.junit.xml"
+      cases, skips = report(current_report)
       old_report = activation_baseline / f"skip-{name}.junit.xml"
       old = report(old_report)[1]
       assert len(old) == len(skips) and skips == old, (name, skips, old_report, old)
+      baseline_names = set((activation_baseline / f"testcases-{name}.names").read_text().splitlines())
+      current_names = set(test_names(current_report))
+      assert baseline_names and len(baseline_names) == len((activation_baseline / f"testcases-{name}.names").read_text().splitlines()), (name, baseline_names)
+      assert current_names == baseline_names, (name, sorted(baseline_names - current_names), sorted(current_names - baseline_names))
       print(f"{name}: {cases} cases, {len(skips)} baseline skips")
   PY
   shasum -a 256 "${paths[@]}" > "$E/validated-files.sha256"
@@ -2715,6 +2868,7 @@ foundation_product_commit_commands: |
   : "${ACTIVATION_ID:?Use the immutable activation ID for this slice}"
   : "${ATTEMPT:?Use the validated positive attempt number}"
   : "${BASELINE_ATTEMPT:?Use the activation-baseline attempt recorded in the test receipt}"
+  [[ "$ACTIVATION_ID" =~ ^[1-9][0-9]*$ ]]
   [[ "$ATTEMPT" =~ ^[1-9][0-9]*$ ]]
   [[ "$BASELINE_ATTEMPT" =~ ^[1-9][0-9]*$ ]]
   test "$SLICE" = A-budget-depth
@@ -2723,6 +2877,20 @@ foundation_product_commit_commands: |
   R="$ROOT/review-$ATTEMPT"
   A="$ROOT/activation-$ACTIVATION_ID"
   E="$ROOT/validation-$ATTEMPT"
+  P="$WT/build/evidence/1A-1.b-check-topology-chain/preflight-v94"
+  expected_entries=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt packet-manifest.sha256 | sort)
+  actual_entries=$(find "$P" -mindepth 1 -maxdepth 1 -exec basename {} \; | LC_ALL=C sort)
+  test "$actual_entries" = "$expected_entries"
+  for entry in "$P"/*; do test -f "$entry" && test ! -L "$entry"; done
+  test "$(grep -Ec '^shasum_path=' "$P/input-manifest.txt")" -eq 1
+  test "$(grep -Ec '^shasum_version=' "$P/input-manifest.txt")" -eq 1
+  SHASUM_PATH=$(awk -F= '$1 == "shasum_path" {print $2}' "$P/input-manifest.txt")
+  SHASUM_VERSION=$(awk -F= '$1 == "shasum_version" {print $2}' "$P/input-manifest.txt")
+  [[ "$SHASUM_PATH" = /* ]] && test -x "$SHASUM_PATH"
+  test "$("$SHASUM_PATH" --version | head -n 1)" = "$SHASUM_VERSION"
+  shasum() { "$SHASUM_PATH" "$@"; }
+  (cd "$P" && shasum -a 256 -c packet-manifest.sha256)
+  grep -Fx "packet_manifest_sha256=$(shasum -a 256 "$P/packet-manifest.sha256" | awk '{print $1}')" "$A/activation-identity.txt"
   cd "$WT"
   test -s "$E/test-run-receipt.txt"
   for field in status slice activation_id attempt reviewed_plan_sha activated_base_sha product_base_sha packet_manifest_sha256 baseline_attempt reviewed_diff_sha256 validated_diff_sha256 reviewed_files_manifest_sha256 validated_files_manifest_sha256 test_artifacts_manifest_sha256 test_binaries_manifest_sha256 cmake_caches_manifest_sha256 toolchain_manifest_sha256; do
@@ -2820,10 +2988,27 @@ foundation_plan_checkpoint_commands: |
   set -euo pipefail
   WT=/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961
   : "${SLICE:?Set SLICE=A-budget-depth}"
+  : "${ACTIVATION_ID:?Use the immutable activation ID for this slice}"
   test "$SLICE" = A-budget-depth
   : "${ATTEMPT:?Use the product-commit attempt number}"
+  [[ "$ACTIVATION_ID" =~ ^[1-9][0-9]*$ && "$ATTEMPT" =~ ^[1-9][0-9]*$ ]]
   ROOT="$WT/build/evidence/1A-1.b-check-topology-chain/$SLICE"
   E="$ROOT/validation-$ATTEMPT"
+  P="$WT/build/evidence/1A-1.b-check-topology-chain/preflight-v94"
+  A="$ROOT/activation-$ACTIVATION_ID"
+  expected_entries=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt packet-manifest.sha256 | sort)
+  actual_entries=$(find "$P" -mindepth 1 -maxdepth 1 -exec basename {} \; | LC_ALL=C sort)
+  test "$actual_entries" = "$expected_entries"
+  for entry in "$P"/*; do test -f "$entry" && test ! -L "$entry"; done
+  test "$(grep -Ec '^shasum_path=' "$P/input-manifest.txt")" -eq 1
+  test "$(grep -Ec '^shasum_version=' "$P/input-manifest.txt")" -eq 1
+  SHASUM_PATH=$(awk -F= '$1 == "shasum_path" {print $2}' "$P/input-manifest.txt")
+  SHASUM_VERSION=$(awk -F= '$1 == "shasum_version" {print $2}' "$P/input-manifest.txt")
+  [[ "$SHASUM_PATH" = /* ]] && test -x "$SHASUM_PATH"
+  test "$("$SHASUM_PATH" --version | head -n 1)" = "$SHASUM_VERSION"
+  shasum() { "$SHASUM_PATH" "$@"; }
+  (cd "$P" && shasum -a 256 -c packet-manifest.sha256)
+  grep -Fx "packet_manifest_sha256=$(shasum -a 256 "$P/packet-manifest.sha256" | awk '{print $1}')" "$A/activation-identity.txt"
   cd "$WT"
   test "$(git rev-parse HEAD)" = "$(cat "$E/product-commit.sha")"
   rg -F "$(cat "$E/product-commit.sha")" docs/plan_offset_curve_2961.md > /dev/null
@@ -2832,6 +3017,8 @@ foundation_plan_checkpoint_commands: |
   git diff --check -- docs/plan_offset_curve_2961.md
   PARENT_PLAN_VERSION=$(git show HEAD:docs/plan_offset_curve_2961.md | sed -n 's/^Plan \*\*v\([0-9][0-9]*\).*/\1/p' | head -n 1)
   CANDIDATE_PLAN_VERSION=$(sed -n 's/^Plan \*\*v\([0-9][0-9]*\).*/\1/p' docs/plan_offset_curve_2961.md | head -n 1)
+  test "$(git show HEAD:docs/plan_offset_curve_2961.md | grep -Ec '^Plan \*\*v[0-9]+')" -eq 1
+  test "$(grep -Ec '^Plan \*\*v[0-9]+' docs/plan_offset_curve_2961.md)" -eq 1
   test -n "$PARENT_PLAN_VERSION" && test "$CANDIDATE_PLAN_VERSION" -eq "$((PARENT_PLAN_VERSION + 1))"
   shasum -a 256 docs/plan_offset_curve_2961.md > "$E/plan-checkpoint-file.sha256"
   git add -- docs/plan_offset_curve_2961.md
