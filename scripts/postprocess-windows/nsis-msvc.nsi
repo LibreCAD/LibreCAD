@@ -137,8 +137,9 @@ Section "Main Section" SecMain
   ; Set registry view based on architecture
   SetRegView ${REG_VIEW}
   SetOutPath "$INSTDIR"
-  ; Copy all files from windeployqt output
-  File /r /x "*.pdb" /x "translations" "..\..\windows\*.*"
+  ; Require the application, not just files copied from build intermediates.
+  File "..\..\windows\LibreCAD.exe"
+  File /r /x "LibreCAD.exe" /x "*.pdb" /x "*.lib" /x "translations" "..\..\windows\*.*"
   
   ; Ensure application icon is installed (required for shortcuts and Add/Remove Programs)
   File "${MUI_ICON}"
