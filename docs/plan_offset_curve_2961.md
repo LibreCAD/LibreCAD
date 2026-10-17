@@ -24,11 +24,11 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–3
 
-Plan **v179 candidate: disjoint gate recovery and Trim endpoint oracle correction**, 2026-10-17; plan-only and non-activating. This candidate is a direct child of v178 at `08fc48d1856ca642881fdc0aa8198328b7cf2689` (parent `b5ae0a1ca1b66db98c595d400bf591b36ed37137`, tree `8494b8ea0e112dc520b04c86b2ddb6e956efc38c`, parent plan blob `19f079544227742f73e2f7bed995b158029e8c8d`, parent plan SHA-256 `6b35ae9b9591d2cd018dd1afa0e4959cd01d142a4a7ad0a2b0df5ade8ae14cdb`). v178's exact independent G5 report is FAIL at `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v178/g5-auditor-report.txt` (SHA-256 `5db76928f0c48110e607c99e1c1a8b5fbf09df8f66776bdd3d55de1025a46ce6`); preserve it unchanged. No v178 packet or recipes exist. The exact findings are: (F1) after G5 PASS, packet/review and baseline predicates overlap; (F2) open-cache trim's preserved source endpoints were incorrectly required to equal cutter roots. v179 corrects only those findings. Until the candidate is committed, §86 authorizes only this plan-only child; after commit, §87's exact G5-pending row is the sole action; after exact v179 G5 PASS, §87 controls. Preserve v176's PASS and PARTIAL packet plus v177/v178 commits unchanged; do not promote or reuse their artifacts. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; protected `build-asan/` is not inspected by instruction. This file remains the implementation source of truth.
+Plan **v180 candidate: recurrent checkpoint-chain and immutable artifact-retry correction**, 2026-10-17; plan-only and non-activating. This candidate is a direct child of v179 at `23d3bf1ada8ef892f6e47e3354e6b08cf1332958` (parent `08fc48d1856ca642881fdc0aa8198328b7cf2689`, tree `a3fffd72a3ca94dc1c7581ab12650c9648a22f4d`, parent plan blob `5039941b9ad6930a927c4c70b73e51528eafd8d6`, parent plan SHA-256 `a9dc715b094f52bd80cc34709264b8c21939c679620a551b21f2ce151b811286`). v179's exact independent G5 report is FAIL at `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v179/g5-auditor-report.txt` (SHA-256 `e42d169343521bcccf39170da7aa630e6d54f9b609567098381555f6e287e8a0`); preserve it unchanged. v179's exact findings: (F1) checkpoint veto blocks the authorized product-commit/reconciliation descendants; (F2) invalid immutable artifacts have no fresh-attempt route when inputs are otherwise unchanged. v178/v179 packet and recipe roots are absent; no v179 implementation artifacts were created. v180 corrects only those findings and preserves v179's successful transition ordering and Trim endpoint oracle. Until v180 is committed, §87 authorizes only this plan-only child; after commit §88 authorizes exact v180 G5 only; after exact PASS §88 controls. Preserve all earlier commits and reports; never promote or reuse failed/partial artifacts. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; protected `build-asan/` is not inspected by instruction. This file remains the implementation source of truth.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY; Trim support NOT IMPLEMENTED.** v178 is committed at `08fc48d1856ca642881fdc0aa8198328b7cf2689`; its exact independent G5 is FAIL, report SHA-256 `5db76928f0c48110e607c99e1c1a8b5fbf09df8f66776bdd3d55de1025a46ce6`. Its findings are preserved; no v178 packet/recipes were created. This v179 correction is plan-only and uncommitted. Preserve v178 unchanged. Until v179 is committed, §86 authorizes only this corrective plan child; after commit §87 authorizes only exact v179 G5; only after PASS may fresh v179 artifacts be created. Preserve v175 FAIL, v176 PASS/PARTIAL packet, v177 and v178 commits unchanged. The v176 packet manifest SHA-256 is `548e19102122b53ff6df846181f728ec77ef719e593ed70c3527d31b3c6a88e1`; its six recipes, formal G1a/G1b/G3, activation and reconciled baseline are absent. Do not promote or reuse it. Older `inputs-v168` and v158 partial preflight remain historical. No A-budget-depth implementation or authorized discovery/build/test exists. Earlier completed geometry sub-slices and receipts remain historical. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; never inspect protected `build-asan/`. Slice A remains WAITING; ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. Phase 3 Trim remains separately gated and unimplemented. The four application file lanes, both conversions, edited reopen and binary-DXF codec support remain open.
+Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY; Trim support NOT IMPLEMENTED.** v179 is committed at `23d3bf1ada8ef892f6e47e3354e6b08cf1332958`; its exact independent G5 is FAIL, report SHA-256 `e42d169343521bcccf39170da7aa630e6d54f9b609567098381555f6e287e8a0`. Preserve its report and findings; no v179 packet/recipes were created. This v180 correction is plan-only and uncommitted. Preserve v179 unchanged. Until v180 is committed, §87 authorizes only this corrective plan child; after commit §88 authorizes only exact v180 G5; only after PASS may fresh v180 artifacts be created. Preserve v175 FAIL, v176 PASS/PARTIAL packet, v177/v178 commits and v179 FAIL unchanged. The v176 packet manifest SHA-256 is `548e19102122b53ff6df846181f728ec77ef719e593ed70c3527d31b3c6a88e1`; its six recipes, formal G1a/G1b/G3, activation and reconciled baseline are absent. Do not promote or reuse it. Older `inputs-v168` and v158 partial preflight remain historical. No A-budget-depth implementation or authorized discovery/build/test exists. Earlier completed geometry sub-slices and receipts remain historical. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; never inspect protected `build-asan/`. Slice A remains WAITING; ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. Phase 3 Trim remains separately gated and unimplemented. The four application file lanes, both conversions, edited reopen and binary-DXF codec support remain open.
 
 Historical v68 amendment: clarifies file-support acceptance and retains the v67 product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, with all four recorded product source/test hashes unchanged. The exact-membership `preflight-v67/` packet is PARTIAL provenance (latest packet-manifest SHA-256 `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`), not a formal gate receipt. The G4 hidden-cusp clearance proof and C50 correction remain normative: the cusp-only candidate is separated from all visible spans and must refuse as `OffCurve` before terminal/topology matching; B07 separately tests absence of a cusp `ReferenceTerminal`, and C36 retains fully witnessed `Topology` coverage. The five controls remain mandatory per slice: separate completeness and plan-correctness gates; frozen-tree implementation correctness; an executable, independently reviewed sub-plan/readiness decision; one validated product commit followed by its plan-only reconciliation; and a post-commit live-state audit/self-update before any successor. Slice A remains WAITING; G1 completeness, G1 plan correctness, Gate-3 readiness and activation are not passed. A/B/C baseline discovery remains zero and strict-core remains 61 matching normalized identities in Release/ASan; no registered tests ran. No product/test edit, build, JUnit execution, formal Gate PASS, readiness PASS or activation occurred. DXF read, DXF write, DWG read and DWG write are separate open application obligations; both conversion directions and the separate R14/R2018 binary-DXF codec obligation also remain open. Geometry-only checker evidence satisfies none.
 Historical v81 reconciled the six-path A scope, A14 selector, split-debit oracle, activation-bound test identities and post-edit validator. Its packet and review findings are preserved as immutable provenance; its live pointers are superseded below. The five control families and six gate decisions (G1a/G1b/G2/G3/G4/G5) remain independently recorded and fail-closed. §0.5 retains detailed leaf specifications and historical handoffs; §29 is the sole authority for the current gate state and immediate next action. Preserve the v81 and v80 packets/reviews, the v77 PARTIAL packet and invalid v79 draft. The four independent application obligations—DXF read, DXF write, DWG read and DWG write—plus both conversions and binary-DXF codec work remain later 1E gates.
@@ -274,24 +274,24 @@ Execution states: `pending`, `in progress`, `validated`, `committed — reconcil
 `deferred — user publication action`. Readiness is separate (§0.3): `ready`, `conditional`, or `waiting`.
 A commit alone does not mean done; verification, review and the post-commit plan checkpoint are required.
 These are dashboard labels only. The active Slice-A state machine uses the disjoint, machine-checkable
-`A_execution_state`, `G3_readiness_status` and `A_authorization_status` domains. v178 is committed at
-`08fc48d1856ca642881fdc0aa8198328b7cf2689` with independent G5 FAIL; preserve
-`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v178/g5-auditor-report.txt` unchanged (SHA-256
-`5db76928f0c48110e607c99e1c1a8b5fbf09df8f66776bdd3d55de1025a46ce6`). §86 is historical for that failed identity.
-Use §87's candidate precommit row while HEAD is v178, its exact G5-only row after v179 is committed, and its full
-transition state machine only after exact v179 G5 PASS. Never infer permission from dashboard labels. Older
-checkpoints v160-v177 are preserved in §§69-85. v176 remains G5 PASS SHA-256
+`A_execution_state`, `G3_readiness_status` and `A_authorization_status` domains. v179 is committed at
+`23d3bf1ada8ef892f6e47e3354e6b08cf1332958` with independent G5 FAIL; preserve
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v179/g5-auditor-report.txt` unchanged (SHA-256
+`e42d169343521bcccf39170da7aa630e6d54f9b609567098381555f6e287e8a0`). §87 is historical for that failed identity.
+Use §88's candidate precommit row while HEAD is v179, its exact G5-only row after v180 is committed, and its full
+transition state machine only after exact v180 G5 PASS. Never infer permission from dashboard labels. Older
+checkpoints v160-v178 are preserved in §§69-87. v176 remains G5 PASS SHA-256
 `6b18808cc7079b36fa6fe4780666c4230303bcd5b8e4c522e3cffa5015e16040`; its `preflight-v176/` packet is PARTIAL,
 manifest SHA-256 `548e19102122b53ff6df846181f728ec77ef719e593ed70c3527d31b3c6a88e1`, and `recipes-v176/` is absent.
-v177 has no G5/packet/recipes; v178 has its preserved FAIL report but no packet/recipes. Preserve all historical
-artifacts; do not use
-`inputs-v168` or v158 partial evidence as current. There is no v179 packet/recipe, formal G1a/G1b/G3, activation,
+v177 has no G5/packet/recipes; v178 has its preserved FAIL report but no packet/recipes; v179 has its preserved FAIL
+report but no packet/recipes. Preserve all historical artifacts; do not use
+`inputs-v168` or v158 partial evidence as current. There is no v179/v180 packet/recipe, formal G1a/G1b/G3, activation,
 reconciled baseline or A-budget-depth implementation. Product source remains
 `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Sections 39-86 preserve technical/history details but do not
 independently authorize work; §56 remains normative only for its bounded Git-object/protected-path procedure. Do not
 inspect protected `build-asan/`; report `not inspected by instruction`.
 
-Select exactly one §87 row from observed HEAD, artifact state and receipts. If zero or multiple rows match, stop for
+Select exactly one §88 row from observed HEAD, artifact state and receipts. If zero or multiple rows match, stop for
 plan-only correction. No prose status independently authorizes packet, review, activation, baseline, build/test or
 product work.
 
@@ -20336,3 +20336,138 @@ The provider's unique tangency proof
     only once, and makes baseline `PASS` disjoint from every failure/recovery state. On exact v179 G5 PASS, §87 is
     the sole live authority; §85 remains the technical card, but its old v177 transition table cannot independently
     authorize an action. `build-asan/` remains not inspected by instruction.
+
+88. **v180 recurrent checkpoint-chain and immutable artifact-retry correction (plan-only; non-activating).** This
+    direct child resolves both findings in the exact v179 G5 FAIL without changing product scope, test acceptance,
+    ownership or Trim semantics. v179 is commit `23d3bf1ada8ef892f6e47e3354e6b08cf1332958`, parent
+    `08fc48d1856ca642881fdc0aa8198328b7cf2689`, tree `a3fffd72a3ca94dc1c7581ab12650c9648a22f4d`, plan blob
+    `5039941b9ad6930a927c4c70b73e51528eafd8d6`, raw SHA-256
+    `a9dc715b094f52bd80cc34709264b8c21939c679620a551b21f2ce151b811286`. Preserve its exact independent G5 FAIL
+    at `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v179/g5-auditor-report.txt`, SHA-256
+    `e42d169343521bcccf39170da7aa630e6d54f9b609567098381555f6e287e8a0`. Its findings are: (F1) the v179
+    `CHECKPOINT_CONFLICT` predicate rejects later authorized product/reconciliation commits; (F2) invalid immutable
+    packet/recipe artifacts cannot be retried under unchanged source/contract inputs without an identity collision.
+    The v179 report confirms F2's Trim endpoint correction and the prior artifact/review/baseline precedence are
+    otherwise sound. No v178/v179 packet or recipe is present; preserve the v179 report as immutable evidence. This
+    v180 update is plan-only; no product edit, test, build, discovery, packet, recipe, review, activation or baseline
+    is authorized.
+
+    **F1 correction: track legal descendants, not a fixed HEAD.** The v179 exact-commit-only veto is superseded. The
+    active transition follows the first-parent chain and immutable receipts, with these terms:
+
+    - `current_plan_checkpoint` is the newest roadmap-only commit in the authorized first-parent chain. It is
+      implementation-authorizing only when its own exact independent G5 is PASS, a live readback verifies commit/
+      parent/tree/path/blob/raw hashes against that receipt, and all earlier artifact/readiness/activation/baseline
+      stages are current PASS. This readback is a classification prerequisite, not a separate commit. A newer
+      roadmap-only child with G5 absent, pending or FAIL suspends its parent's authority; parent PASS never
+      authorizes work against the newer plan.
+    - A plan-only successor has exactly one of three recorded purposes: `G5_CORRECTION` (direct child of a failed
+      plan checkpoint addressing its exact findings), `CONTRACT_OR_INPUT_UPDATE` (direct child of the current
+      G5-PASS checkpoint, required by a changed plan/source/spec/fixture/toolchain/registration or by invalid-artifact
+      retry), or `POST_SLICE_RECONCILIATION` (direct child of the single validated product commit, recording that
+      exact commit and its immutable validation evidence). Each changes only the roadmap, records its exact parent,
+      plan blob/raw SHA and one next action, and requires its own exact G5 before any dependent work. No unclassified
+      plan-only commit is a legal transition.
+    - A product commit is a legal descendant only when its direct parent is the current G5-PASS plan checkpoint,
+      the exact active readiness/activation/baseline and leaf card authorize that one leaf, execution is VALIDATED,
+      its G4 proof binds the exact tested tree, and the commit changes exactly the card's product/test allowlist. It
+      contains no plan/evidence/unrelated path, and its parent/tree/path/blob identities reconcile exactly. The
+      observed `VALIDATED` plan snapshot plus this exact G4-backed product commit is the normal
+      `COMMITTED — reconciliation pending` interval, not an execution conflict; no successor action occurs before
+      its immediate plan reconciliation.
+    - An authorized implementation worktree is also a legal transient while HEAD remains the current G5-PASS plan
+      checkpoint, current readiness/activation/baseline and the leaf card authorize work, the owner is Gibbs for Slice
+      A, the exact tree is frozen, and every changed path is within that card's allowlist. `IN_PROGRESS`,
+      `BLOCKED_AFTER_START` and `VALIDATED` are handled by §87's execution rows; they do not themselves cause a
+      checkpoint conflict. Any changed path outside the allowlist, changed frozen identity or product commit not
+      matching the G4 receipt is an execution conflict.
+    - A post-slice plan reconciliation is a direct child of that product commit, changes only the roadmap, records
+      the actual product commit/tree/path/blob and all test/review outcomes, updates descendant invalidations and
+      exactly one next action, and becomes the next `current_plan_checkpoint` only after its own exact G5 PASS.
+      After that PASS, the same rules recur for the next leaf. This is the intended lifecycle, not a checkpoint
+      conflict.
+    - Failed-G5 correction, changed-input correction and artifact-attempt rollover each create a new plan-only
+      direct child as specified above. Its G5-pending/fail/pass state is determined only by its exact immutable
+      receipt. A G5 report is external evidence and does not itself change Git HEAD.
+
+    `CHECKPOINT_CONFLICT` now means only that the observed HEAD/worktree/first-parent/evidence state matches none of
+    the legal stages below. Evaluate these stages in order and select the first; this makes the veto disjoint from a
+    valid product commit or reconciliation. The initial v180 candidate is the exact special case `HEAD=v179`, v180
+    direct-child candidate, roadmap as the only tracked/staged change, and six A product/test blobs equal to the
+    pinned product base. The protected untracked `build-asan/` path is excluded from path-set predicates and must not
+    be enumerated or inspected. For later `G5_CORRECTION` and `CONTRACT_OR_INPUT_UPDATE` candidates, compare against
+    the recorded failed or current G5-PASS parent and verify the purpose above. For a
+    `POST_SLICE_RECONCILIATION` candidate, HEAD must be the exact authorized product commit and only the roadmap may
+    be changed. For a committed plan, product or reconciliation state,
+    compare exact commit, parent, tree, path set, blob hashes and matching receipts; never infer legitimacy from a
+    commit message or dashboard field. `EXECUTION_CONFLICT` is evaluated only after checkpoint-chain validity and
+    continues to mean contradictory implementation-start, execution-state, frozen-tree, product-commit or validation
+    records. The exact G4-backed product-commit interval above is explicitly not a contradiction. If either veto
+    applies, preserve all evidence and block every later stage.
+
+    **F2 correction: one immutable artifact attempt per plan identity.** Packet and recipe attempts are versioned by
+    their exact reviewed plan identity: `preflight-v<VERSION>/` with `packet_id=preflight-v<VERSION>`, and
+    `recipes-v<VERSION>/`. This preserves the v174-1 101-key schema and §83 byte grammar. A fresh plan-only child
+    gets fresh roots and a fresh attempt identity; the old attempt is never relabeled or reused. Classify artifacts
+    for the current plan version as exactly one of:
+
+    - `ARTIFACTS_ABSENT`: neither current-version root nor any current-version-attributed misplaced artifact exists.
+    - `ARTIFACTS_CLOSURE`: at least one required item is absent or an audited closure task remains, every existing
+      item is valid for the exact current plan/input identity, and no stale, duplicate, extra, unsafe or malformed
+      entry exists. Add only absent immutable items and close the existing attempt.
+    - `ARTIFACTS_INVALID`: any existing current-version item/path is malformed, hash/identity-mismatched, stale,
+      unsafe, duplicate, extra or otherwise fails its prescribed audit. Preserve every byte at its original path and
+      record the attempt as QUARANTINED in the plan/evidence; do not edit, rename, delete or reuse it. This state
+      necessarily sets `PLAN_UPDATE_REQUIRED`, whose sole action is to prepare a `CONTRACT_OR_INPUT_UPDATE` plan-only
+      child recording the failed attempt and allocating the next versioned roots. This rollover is required even if
+      source and contract inputs are unchanged; commit it and obtain exact G5 before creating new roots. The new
+      attempt binds the same source inputs and new plan/predecessor identities. Failed roots remain historical and
+      are not current-version artifacts.
+    - `ARTIFACTS_COMPLETE`: exact current-version roots/membership, packet manifests/payloads, six audited recipes,
+      hashes/modes/syntax/path/side-effect checks and all closure records pass, with no stale or extra entry.
+
+    These states are disjoint by precedence `INVALID > CLOSURE > COMPLETE`, with ABSENT only when no attributed
+    artifact exists. If an artifact contract itself must change, the rollover child records that contract correction
+    and its G5; only after PASS can dependent artifacts be regenerated. The reviewer/readiness identity then binds
+    the exact new plan, packet and recipe hashes. No receipt or artifact is edited in place, and no same-input
+    retry occurs under a prior version's root.
+
+    **Exclusive v180 transition authority.** This section supersedes only §87's fixed v178/v179 HEAD/G5 rows, its
+    `CHECKPOINT_CONFLICT` definition, its `ARTIFACTS_INCOMPLETE` recovery row, and its fixed v179 artifact/checkpoint
+    names. §87's gate-state definitions and readiness, activation, receipt-derived baseline, execution and Trim rows
+    remain normative, rebound to the current plan version and identities. After checkpoint-chain and exact-G5
+    classification, evaluate `PLAN_UPDATE_REQUIRED` before the ordinary artifact/readiness/activation/baseline/
+    execution pipeline. It is true when an independently recorded finding or changed input requires changing the
+    reviewed plan, acceptance or any identity bound by downstream artifacts. Same-identity repair/review does not
+    set it. `ARTIFACTS_INVALID` always sets it. Every non-PASS/stale finding disposition must name its immutable
+    receipt/finding hash and explicitly classify the remedy as `SAME_IDENTITY_REPAIR` or `PLAN_UPDATE_REQUIRED`,
+    listing changed identities when applicable; missing/contradictory disposition is unknown and fails closed. If
+    true, no same-identity artifact/review/activation/baseline repair row may run. On any row with an exact G5
+    absent/pending/mismatched state, G5 is the sole action. A FAIL is never PASS.
+
+    | Observed exact state (first applicable row) | Sole next action | Blocked |
+    |---|---|---|
+    | `CHECKPOINT_CONFLICT` or `EXECUTION_CONFLICT` after applying the ordered definitions above | Preserve HEAD, worktree and all receipts; reconcile only from exact parent/tree/path/blob/evidence identities. If no single valid lineage is provable, stop for a plan-only correction; never discard or rewrite a commit/evidence record. | Every artifact, review, activation, baseline and product action. |
+    | HEAD is a newly committed plan-only child (`G5_CORRECTION`, `CONTRACT_OR_INPUT_UPDATE` or `POST_SLICE_RECONCILIATION`); its exact G5 is absent, pending or mismatched | Obtain and persist independent G5 for that exact plan commit/tree/blob/raw SHA only. | All artifacts, reviews, activation, baseline, build/test and product work. |
+    | Exact current plan G5 FAIL; no uncommitted `G5_CORRECTION` candidate exists | Preserve report/hash; prepare only a direct-child candidate that closes the exact findings. | Artifacts and implementation. |
+    | HEAD is the exact current G5-failed checkpoint; an uncommitted direct-child `G5_CORRECTION` candidate changes only the roadmap and maps every finding to a correction | Verify exact parent, tree/blob/raw hash, plan-only path set and correction-to-finding closure; for the v179-to-v180 correction also verify the v179 report hash and six pinned-base blobs. Run `git diff --check` and commit only that plan. Then use the committed-plan G5-only row. | Artifacts, reviews, activation, baseline, build/test and product work. |
+    | Current plan G5 PASS; `PLAN_UPDATE_REQUIRED`; no uncommitted update candidate exists | Preserve the triggering finding/input/artifacts; if invalid artifacts caused it, record their attempt as QUARANTINED at the original path. Prepare only a direct-child `CONTRACT_OR_INPUT_UPDATE` candidate naming the reason, new version/root names and invalidated descendants. | Same-identity retries, reviews, activation, baseline and product work. |
+    | Current G5-PASS checkpoint requires a source/contract update or invalid-artifact rollover; an uncommitted direct-child `CONTRACT_OR_INPUT_UPDATE` candidate changes only the roadmap | Verify parent, exact reason/receipts, quarantine and new version/root identity, dependency invalidations and `git diff --check`; commit only that plan. Then use the committed-plan G5-only row. | New artifact creation until exact child G5 PASS. |
+    | HEAD is the clean current plan checkpoint with exact G5 PASS, no plan candidate, `PLAN_UPDATE_REQUIRED=false`, `ARTIFACTS_ABSENT` | Create fresh current-version packet/recipe roots under §83; bind the plan and G5 PASS plus exact immediate predecessor commit/status/report, and close/audit before reviews. | Formal readiness reviews, activation, baseline, build/test and product work. |
+    | HEAD is the clean current plan checkpoint with exact G5 PASS, no plan candidate, `PLAN_UPDATE_REQUIRED=false`, `ARTIFACTS_CLOSURE` | Add only missing immutable items and finish the bounded audit for this attempt. | Readiness, activation, baseline and product work. |
+    | `PLAN_UPDATE_REQUIRED=false`; `ARTIFACTS_COMPLETE`; readiness state is ABSENT/CONFLICT/REPAIR/MISSING (not PASS) | Apply exactly the corresponding §87 readiness row with all identities rebound to this plan/packet/recipe version. | Activation, baseline and product work until readiness PASS. |
+    | `PLAN_UPDATE_REQUIRED=false`; `ARTIFACTS_COMPLETE`; readiness PASS; activation state is not PASS | Apply exactly the corresponding §87 activation row, including its stale/failure precedence. | Baseline and product work until activation PASS. |
+    | `PLAN_UPDATE_REQUIRED=false`; `ARTIFACTS_COMPLETE`; readiness PASS; activation PASS; baseline state is not PASS | Apply exactly the corresponding §87 baseline row, including conflict/stale/failure precedence and one-process retry policy. | Product work until baseline PASS. |
+    | `PLAN_UPDATE_REQUIRED=false`; `ARTIFACTS_COMPLETE`, readiness/activation/baseline PASS; A execution is NOT_STARTED, IN_PROGRESS, BLOCKED_BEFORE_START or BLOCKED_AFTER_START; no product commit exists | Apply exactly the corresponding §87 execution row on the exact owner/card/tree; the frozen worktree is permitted and must remain within its allowlist. | Any other writer, second start, commit before validation, or successor. |
+    | `PLAN_UPDATE_REQUIRED=false`; same current gates; A execution VALIDATED but required evidence is absent or checks/verdicts fail; no product commit exists | Apply §87's VALIDATED-revocation row; return to IN_PROGRESS or BLOCKED_AFTER_START and repair/revalidate affected work only. | Product commit and successor. |
+    | `PLAN_UPDATE_REQUIRED=false`; same current gates; A execution VALIDATED with exact tests/reviews/evidence PASS on the frozen tree; no plan candidate or product commit exists | Commit exactly one validated product-only slice as the direct child of the current plan checkpoint; verify path set, parent and blobs, then enter the normal reconciliation-pending interval. | Any other product edit, build/test, successor or second commit. |
+    | Exact authorized product commit exists as direct child of the current G5-PASS plan; direct-child `POST_SLICE_RECONCILIATION` is absent | Re-read the actual commit and immutable G4/G2/test/review receipts; immediately create and commit only its plan-only direct-child reconciliation. | Every successor edit/build/test/readiness action. |
+    | Any state not matched by exactly one ordered checkpoint row and one applicable first-unsatisfied gate row | Preserve all evidence and stop for a plan-only correction; do not guess, retry, or authorize product work. | Every later stage. |
+
+    For any legal plan-only child, verify its direct parent, sole roadmap path, exact raw hash, correct purpose, and
+    absence of uncommitted/staged product/evidence changes before commit. For any product commit, verify the current
+    plan G5 PASS, card allowlist, tested tree, test/review receipts and exact direct parent. For every slice, the
+    immediate next commit is its plan-only reconciliation; its exact G5 is required before any successor. These
+    recurrent invariants satisfy the user-requested commit/self-update loop without making a valid descendant appear
+    stale. The v179 endpoint oracle correction and v178 overlap closure remain preserved; no product work is
+    authorized by this plan-only correction. `build-asan/` remains not inspected by instruction.
