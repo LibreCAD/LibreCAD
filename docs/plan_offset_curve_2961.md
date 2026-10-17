@@ -24,6 +24,17 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–3
 
+**Current revision v203 (plan-only; non-activating).** Its exact predecessor is v202 commit
+`ab287ba44cf1ba762d6f47bc59e94a4debc61ee0`, parent `71d0120060a428df84d56ece0f57e5b2eaf242f1`, tree
+`5149baf0a695c91e5323f672fcac7538c5dcc7bb`, roadmap blob `5fd9ffee22226574e928fa7145d904c4b8dafac5`, raw
+SHA-256 `244d0b19922a20f8f180045ed5422c610621a5c4ea3576d97210809b6c18b86e`. Its exact G5 FAIL report is
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v202/g5-auditor-report.txt` (SHA-256
+`92037090cbbe547ff194da4b42a538b8a271e231fadada35ab8290fd45ef69c5`). G5 confirms the v201 routing and §93
+classifier fixes, and finds the combined invalid-artifact/G5-failure purpose plus the undefined update-trigger
+boolean. Section §111 is the sole live transition authority; the following v202 status and §110 pointer are
+predecessor history. No v202 input, preflight or recipe roots exist. Product base remains
+`9c06e9c77b313b62cc20e9ec39c22952fee501f2`; do not access `build-asan/`.
+
 **Current revision v202 (plan-only; non-activating).** Its exact predecessor is v201 commit
 `71d0120060a428df84d56ece0f57e5b2eaf242f1`, parent `42538dcc56a07db52bde783285708c9f6dce7916`, tree
 `689734f100d767b9c5e91246e03fdd8f1c37437f`, roadmap blob `fb06f6e611399055820ff8324376ef080bb49dd4`, raw
@@ -337,7 +348,7 @@ reconciled baseline or A-budget-depth implementation. Product source remains
 independently authorize work; §56 remains normative only for its bounded Git-object/protected-path procedure. Do not
 inspect protected `build-asan/`; report `not inspected by instruction`.
 
-Select exactly one row from the latest versioned transition-authority section (currently §110) using observed HEAD,
+Select exactly one row from the latest versioned transition-authority section (currently §111) using observed HEAD,
 artifact state and receipts. §93 specifies the input-bundle contract; it is not a transition table. If zero or multiple
 rows match, stop for plan-only correction. No prose status independently authorizes packet, review, activation,
 baseline, build/test or product work.
@@ -22318,3 +22329,66 @@ The provider's unique tangency proof
 
      No product files were edited and no build/test/discovery was run for v202. Phase 3 Trim remains exactly §6.1
      and unimplemented; never inspect `build-asan/`.
+
+111. **v203 correction-purpose and update-trigger definition (plan-only; non-activating).** This direct child binds
+     the exact v202 commit and G5 FAIL report in the v203 header. Preserve the report unchanged. It closes F-01/F-02
+     only; A07-A14 remain open. It is the sole live transition authority: adopt §110's state axes, canonical §93
+     classifier and all unmodified §110 rows, replacing the invalid-artifact/G5-FAIL rows and defining the trigger
+     boolean used by its CLEAN-audit rows. No product edits, roots, formal reviews, activation, baseline, build/test
+     or discovery are authorized.
+
+     **One-purpose precedence for G5 FAIL plus invalid artifacts.** §93 makes `ARTIFACTS_INVALID` set
+     `PLAN_UPDATE_REQUIRED` and requires an immutable-artifact rollover; §88 makes an exact G5 FAIL require its
+     findings to be corrected. For the single combined tuple (exact current-plan G5 `FAIL` and canonical
+     `ARTIFACTS_INVALID`), use one direct-child purpose: `CONTRACT_OR_INPUT_UPDATE`, subtype
+     `G5_FAIL_ARTIFACT_ROLLOVER`. This subtype is a narrow explicit exception to §88's usual requirement that a
+     contract-update child descend from a G5-PASS checkpoint. It is a direct child of the exact G5-failed plan and
+     must bind both the exact G5 FAIL report and every invalid-artifact identity/hash/quarantine record; close all
+     G5 findings, record the immutable attempt at its original paths as QUARANTINED, name fresh versioned roots
+     and all invalidated descendants, then obtain exact G5 on the child before creating those roots. This single
+     purpose satisfies §88's correction requirement and §93's rollover requirement; it is not a dual-purpose
+     candidate, does not permit same-identity repair, and does not create a separate G5_CORRECTION child first.
+     For exact G5 FAIL with `ARTIFACTS_ABSENT`, use only ordinary `G5_CORRECTION`. For exact G5 PASS with an
+     invalid artifact or other plan-affecting trigger, use ordinary `CONTRACT_OR_INPUT_UPDATE`. All other §88
+     purpose and parent rules are unchanged.
+
+     **Defined update-trigger ledger.** `PLAN_UPDATE_TRIGGERS` is the complete immutable set of exact active
+     receipt/finding/input-change identities that require changing the reviewed plan, acceptance, fixture, source,
+     toolchain, registration or any descendant identity. Every entry has a source/evidence hash, category,
+     disposition, affected descendants and closure condition; no trigger may be omitted or double-counted. Define
+     `NON_ARTIFACT_PLAN_UPDATE_REQUIRED=true` iff that complete ledger contains at least one active plan-affecting
+     trigger other than `ARTIFACTS_INVALID` itself. It includes exact G5 FAIL findings, exact audit
+     `UPDATE_REQUIRED`, and independent source/spec/toolchain/fixture/registration/review findings. It is `false`
+     only when the ledger is complete and contains no active non-artifact trigger; missing or contradictory ledger
+     coverage is `UNKNOWN`, never false. Define the aggregate exactly as
+     `PLAN_UPDATE_REQUIRED = NON_ARTIFACT_PLAN_UPDATE_REQUIRED OR (artifact state == ARTIFACTS_INVALID)`.
+     Therefore artifact-only, non-artifact-only and concurrent triggers all block same-identity progression; the
+     correction candidate records every trigger and selects one purpose by the precedence above. `PLAN_UPDATE_REQUIRED=false`
+     is allowed only with exact G5 PASS, audit CLEAN, `ARTIFACTS_ABSENT/CLOSURE/COMPLETE`, and a complete ledger
+     with no active trigger. `CHECKPOINT_CONFLICT` or unknown ledger coverage has no Boolean value and routes to
+     reconciliation.
+
+     **Replacement rows and exact v202 next action.** In §110, replace the exact G5-FAIL/`ARTIFACTS_INVALID`
+     absent-candidate row with: preserve/quarantine the artifact attempt, then prepare a direct-child
+     `CONTRACT_OR_INPUT_UPDATE` candidate of subtype `G5_FAIL_ARTIFACT_ROLLOVER`, binding both exact failure
+     receipts and fresh-root/invalidation records. Replace its valid-candidate row with: verify that exact subtype,
+     direct parent, G5 findings, artifact quarantine, root names, descendant invalidations, unchanged product blobs
+     and plan-only path scope; then commit only the roadmap and obtain child G5. No separate `G5_CORRECTION`
+     purpose may be used for this combined case. For exact G5 FAIL plus `ARTIFACTS_ABSENT`, the §110
+     `G5_CORRECTION` rows stand. For exact G5 PASS plus audit `UPDATE_REQUIRED` or `ARTIFACTS_INVALID`, the §110
+     `CONTRACT_OR_INPUT_UPDATE` rows stand and must include every concurrent ledger trigger.
+
+     For CLEAN-audit rows in §110, substitute the defined ledger states explicitly: `NON_ARTIFACT_PLAN_UPDATE_REQUIRED=true`
+     with candidate `ABSENT` prepares `CONTRACT_OR_INPUT_UPDATE`; a `VALID` direct child of that purpose may commit
+     only if its exact trigger ledger is complete and its quarantine/invalidation record covers all current roots.
+     When the flag is `false`, candidate must be `ABSENT` and artifact state alone selects the §110 action:
+     `ARTIFACTS_ABSENT` creates roots, `ARTIFACTS_CLOSURE` continues bounded closure, and `ARTIFACTS_COMPLETE`
+     advances to the first unsatisfied readiness gate. `ARTIFACTS_INVALID` always takes the rollover row regardless
+     of the flag. Any `UNKNOWN` flag, incomplete trigger ledger, candidate/receipt mismatch, or unlisted combination
+     is `CHECKPOINT_CONFLICT`; never use the catch-all as permission.
+
+     The exact v202 committed state is G5 FAIL with no current-version artifacts; therefore its unique next action
+     is ordinary `G5_CORRECTION` v203 (the present plan-only candidate). A later exact G5 FAIL plus invalid roots
+     must instead use the single subtype above. No v203 roots may be created before exact v203 G5 PASS and an exact
+     clean bounded prepacket audit. No product files were edited and no build/test/discovery was run for v203.
+     Phase 3 Trim remains exactly §6.1 and unimplemented; never inspect `build-asan/`.
