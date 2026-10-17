@@ -3,13 +3,13 @@ on:
   push:
     branches:
       - master
-  # The macOS packaging scripts only run here, so check them before they
-  # reach master. Only BuildMacOS runs for a pull request.
+  # Check macOS and Windows ARM64 packaging before changes reach master.
   pull_request:
     paths:
       - '.github/workflows/build-all.yml'
       - 'scripts/*osx*'
       - 'scripts/*macos*'
+      - 'scripts/postprocess-windows/nsis-msvc.nsi'
 
 # A newer push supersedes a build that is still running.
 concurrency:
@@ -373,7 +373,6 @@ jobs:
           retention-days: 2
 
   BuildWindowsARM64:
-    if: github.event_name == 'push'
     runs-on: windows-11-vs2026-arm
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
@@ -463,6 +462,7 @@ jobs:
         run: |
           cd "${{ github.workspace }}"
           powershell.exe -ExecutionPolicy Bypass -File scripts\generate-custom-nsh.ps1 -Architecture ARM64 -OutputPath "scripts\postprocess-windows\custom.nsh"
+          if errorlevel 1 exit /b 1
 
           cd generated
           windeployqt6.exe --release --compiler-runtime Release\LibreCAD.exe
@@ -470,6 +470,8 @@ jobs:
           cd ..
           xcopy /E /Y /I generated\Release windows
           if errorlevel 1 exit /b 1
+          if not exist windows\Qt6Core.dll exit /b 1
+          if not exist windows\platforms\qwindows.dll exit /b 1
           for /r generated %%f in (librecad_*.qm) do copy "%%f" librecad\ts\
           for /r generated %%f in (plugins_*.qm) do copy "%%f" plugins\ts\
           powershell.exe -ExecutionPolicy Bypass -File scripts\copy-vc-runtime.ps1 -Architecture ARM64 -Destination windows
