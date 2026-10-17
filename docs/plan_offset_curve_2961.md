@@ -24,11 +24,11 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v155 completeness, correctness, readiness, slice-commit and post-commit self-update refinement**, 2026-10-17; plan-only and non-activating. Section 63 is the sole live handoff once this plan candidate is committed; it defines the next state transition. Sections 39-62 are historical handoffs; §56's bounded Git-object/protected-path procedure remains normative only as referenced by §§0 and 63. v154 `98b54e53a4e955f962cda64f5f5d2f11dae09de4` is committed but its independent G5 review was stopped before a report was written, so record G5 as NOT_ISSUED, not PASS or FAIL. No v154 packet, formal G1a/G1b/G3, activation, reconciled baseline or A-budget-depth implementation exists. v153 `885a34703374b4cd6b466bcd6ff13eb5441da76b` passed independent G5 (report SHA-256 `7067267af91cc66511b7cc590f3a62a4c392f1c740e4658330bc8a883546b142`), but its `preflight-v153/` packet remains PARTIAL provenance (manifest SHA-256 `a97d09bb5068e77b8fc329fc25114283a666d97c89c989c684ba6a85458dcd4b`) and lacks required toolchain identities; preserve it unchanged and do not use it as a gate input. v152 passed G5; v151 and v149 failed; v150 was superseded before G5; `preflight-v148/` remains one-file PARTIAL provenance. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, and all six A-owned paths remain unchanged. Protected untracked `build-asan/` must not be listed, traversed, read, hashed or otherwise inspected; report only `not inspected by instruction`. Product edits/builds/tests remain unauthorized until the v155 checkpoint passes independent G5, a fresh v155 packet is complete, same-identity G1a/G1b/G3 pass, a separate activation checkpoint passes G5, and the authorized baseline is reconciled. This file remains the implementation source of truth.
+Plan **v156 completeness, correctness, executable readiness, slice commits and post-commit self-update refinement**, 2026-10-17; plan-only and non-activating. Section 64 is the sole live handoff once this plan checkpoint is committed. v155 `5f4f7d2c1dbcdd951026a1e4fabe1f78dc24db45` is committed and passed independent G5; the auditor report is `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v155/g5-auditor-report.txt` (SHA-256 `37289cd3a0bb5b89ce887f0db68261eed4b1d3a0f08b5963cc841e4c115d4a5a`). That report verifies v155's sole plan path, unchanged six A product/test blobs, and absent v155 packet and recipes. v154 `98b54e53a4e955f962cda64f5f5d2f11dae09de4` remains G5 NOT_ISSUED, not PASS or FAIL. v153's packet remains PARTIAL provenance and must not be promoted or copied. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; the six A-owned paths are unchanged at the v155 checkpoint. Protected `build-asan/` is not inspected by instruction. No v155 packet/recipes, formal G1a/G1b/G3, activation, reconciled baseline or A-budget-depth implementation exists. This v156 refinement must itself be committed and independently audited before creating a fresh v156 packet/recipe set; then only the ordered gates in §64 can authorize later work. This file remains the implementation source of truth.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY.** v154 is a committed plan checkpoint without an issued G5 report; its packet and recipes were not created and its recipe text is historical only. v153 passed G5, but its exact packet is PARTIAL provenance and cannot satisfy current gates. Sections 39-62 are historical; Section 63 defines the v155 transition. No v155 packet, formal G1a/G1b/G3, activation, reconciled baseline or A-budget-depth implementation exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Product edits, builds and registered tests remain unauthorized until v155 passes G5, a fresh exact-membership packet is complete, same-identity G1a/G1b/G3 pass, a separate activation checkpoint passes G5, and the authorized baseline is reconciled. Preserve prior evidence and never inspect protected untracked `build-asan/`. Ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete; the four application file lanes, both conversions, edited reopen and binary-DXF codec support remain separate downstream obligations.
+Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY.** v155 committed and passed G5; its packet and recipes are absent. v156 is the current plan-only candidate, and §64 is the sole live state handoff once the candidate is committed and independently audited. The v155 report authorizes no product work. Create a fresh v156 packet and recipe set only after v156 G5 PASS; then obtain same-identity G1a/G1b/G3, a separate activation checkpoint with G5 PASS, and an authorized reconciled baseline before any product edit/build/registered test. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; no A-budget-depth implementation exists. Preserve prior evidence and never inspect protected `build-asan/`. Ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete; the four application file lanes, both conversions, edited reopen and binary-DXF codec support remain separate downstream obligations.
 Historical v68 amendment: clarifies file-support acceptance and retains the v67 product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, with all four recorded product source/test hashes unchanged. The exact-membership `preflight-v67/` packet is PARTIAL provenance (latest packet-manifest SHA-256 `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`), not a formal gate receipt. The G4 hidden-cusp clearance proof and C50 correction remain normative: the cusp-only candidate is separated from all visible spans and must refuse as `OffCurve` before terminal/topology matching; B07 separately tests absence of a cusp `ReferenceTerminal`, and C36 retains fully witnessed `Topology` coverage. The five controls remain mandatory per slice: separate completeness and plan-correctness gates; frozen-tree implementation correctness; an executable, independently reviewed sub-plan/readiness decision; one validated product commit followed by its plan-only reconciliation; and a post-commit live-state audit/self-update before any successor. Slice A remains WAITING; G1 completeness, G1 plan correctness, Gate-3 readiness and activation are not passed. A/B/C baseline discovery remains zero and strict-core remains 61 matching normalized identities in Release/ASan; no registered tests ran. No product/test edit, build, JUnit execution, formal Gate PASS, readiness PASS or activation occurred. DXF read, DXF write, DWG read and DWG write are separate open application obligations; both conversion directions and the separate R14/R2018 binary-DXF codec obligation also remain open. Geometry-only checker evidence satisfies none.
 Historical v81 reconciled the six-path A scope, A14 selector, split-debit oracle, activation-bound test identities and post-edit validator. Its packet and review findings are preserved as immutable provenance; its live pointers are superseded below. The five control families and six gate decisions (G1a/G1b/G2/G3/G4/G5) remain independently recorded and fail-closed. §0.5 retains detailed leaf specifications and historical handoffs; §29 is the sole authority for the current gate state and immediate next action. Preserve the v81 and v80 packets/reviews, the v77 PARTIAL packet and invalid v79 draft. The four independent application obligations—DXF read, DXF write, DWG read and DWG write—plus both conversions and binary-DXF codec work remain later 1E gates.
 Historical v82 corrected stale handoff pointers and bound the one-shot/retained exception-transfer and source-bound baseline requirements, but did not pass G1a/G1b. Its copied v81 packet remains preserved as `preflight-v82-stale-copy-from-v81/`, not a v82 evidence packet. v82 retained the hard 1E file-support contract described below.
@@ -272,7 +272,7 @@ Execution states: `pending`, `in progress`, `validated`, `committed — reconcil
 `done — <implementation sha>, <evidence id>, <date>`, `needs revision`, `needs decision`, `blocked`, and
 `deferred — user publication action`. Readiness is separate (§0.3): `ready`, `conditional`, or `waiting`.
 A commit alone does not mean done; verification, review and the post-commit plan checkpoint are required.
-Section 63 is the sole live state handoff when observed HEAD matches its row. Section 56 supplies bounded Git-object/protected-path procedures only; its older state and next-action claims are historical. v154 is committed but its G5 was NOT_ISSUED; v153 G5 passed but its packet remains PARTIAL provenance and cannot satisfy v155 gates. v152 G5 passed; v151 and v149 failed; v150 was superseded before G5; v148's one-file preflight remains PARTIAL provenance. The v155 state table is evaluated against actual HEAD and durable receipts; external auditor reports, not candidate-time prose, determine checkpoint outcomes. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; no v155 packet, formal G1a/G1b/G3, activation, baseline or A-budget-depth implementation has occurred. The next action changes only when a matching receipt proves its prerequisite; a failed or missing receipt blocks successors. Sections 39-62 preserve technical contracts and historical handoffs, but no superseded state sentence authorizes work. Do not inspect protected `build-asan/`; report `not inspected by instruction`. Sections 0.3-0.8 and §30 remain technical/leaf references; §56 is normative only for its bounded audit procedure, and §63 controls live status.
+Section 64 is the sole live state handoff when observed HEAD matches its row. Section 56 supplies bounded Git-object/protected-path procedures only; its older state and next-action claims are historical. v155 is committed with independent G5 PASS; its packet/recipes are absent. v156 is a plan-only candidate; its status does not advance until commit and independent G5. The v156 state table is evaluated against actual HEAD and durable receipts; external auditor reports, not candidate-time prose, determine checkpoint outcomes. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; no current packet, formal G1a/G1b/G3, activation, baseline or A-budget-depth implementation exists. The next action changes only when a matching receipt proves its prerequisite; a failed or missing receipt blocks successors. Sections 39-63 preserve technical contracts and historical handoffs, but no superseded state sentence authorizes work. Do not inspect protected `build-asan/`; report `not inspected by instruction`. Sections 0.3-0.8 and §30 remain technical/leaf references; §56 is normative only for its bounded audit procedure, and §64 controls live status.
 
 | Step | Title | PR | Depends on | Size (LOC, product + tests) | Status |
 |---|---|---|---|---|---|
@@ -283,7 +283,7 @@ Section 63 is the sole live state handoff when observed HEAD matches its row. Se
 | 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | done — 0e3c6b342, 0B-3 reports/card; one pinned baseline generated-MLEADER DWG gap, 2026-10-15 |
 | 1A-1 | Closed forms, normalization, tolerance helpers and cache validation | C | S0 | 900 | partial — .a/.b-budget/.b-progress/.b-ref-frames/.b-ref-events-core/.b-ref-rate/.b-ref-events-critical/.b-ref-events-accounting/.b-ref-events-refine/.b-ref-critical-refine/.b-ref-providers/.b-ref-contacts/.b-ref-events-isolate/.b-ref-components/.b-check-layout/.b-check-bounds/.b-check-topology-local done; A-budget-depth, B-occurrence-terminals, C-global-topology-checker pending |
 | 1A-1.b-ref-components | Exact visibility and incidence-preserving components | C | .b-ref-events-isolate | 900 | done — `9682d5cac65f30cfd86aa10556678ceb88b1448b`, attempt-8 evidence, 2026-10-16 |
-| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900 | waiting — v154 G5 was NOT_ISSUED; v153 packet is PARTIAL provenance; §63 controls authorization, and no v155 packet, formal G1a/G1b/G3, activation, baseline or product work exists |
+| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900 | waiting — v155 G5 PASS; v156 plan checkpoint/G5 and fresh packet, G1a/G1b/G3, activation and baseline remain outstanding; §64 controls authorization |
 | B-occurrence-terminals | Immutable occurrence-specific terminal publication | C | A-budget-depth product and plan checkpoint | 500 | waiting — no implementation before A reconciliation |
 | C-global-topology-checker | Complete directed path, coverage, cut and cycle validation | C | A-budget-depth and B-occurrence-terminals product/checkpoints | 1200 | waiting — no implementation before A and B reconciliation |
 | 1A-2 | Enumerator; persistent entity core and factory for already validated results; clone, `toPlainSpline`, normalisation, stamp, transforms; `writeEntity` case; INSERT capability; 0B row; interim Edit Properties guard | C | 0B-3, 1A-1 | 900 | pending |
@@ -585,7 +585,7 @@ not validation evidence. Aggregates are never executable cards or extra implemen
 | 1A-1.a | Done at a4690db08 | Normalization/local-frame/closed forms, robust source distance and tolerance helpers; 17 cases/2538 assertions pass Release/ASan, existing regressions and both fast lanes pass. |
 | 1A-1.b | Aggregate; budget/progress/reference/layout/bounds and local topology done; budget-depth and global topology pending | Parent-only progress; layout, bounds and local certificates do not establish a complete cache-validity result. `.b-check-topology-local` is committed at `ef3ba756b52796c02b8490caedcaa48b8db69605` with its verified immediate plan checkpoint `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. A-budget-depth is the first remaining executable child; the ordered-chain children follow its reconciled checkpoint. 1A-2 consumes the eventual typed result. No separate aggregate implementation commit. |
 | 1A-1.b-check-topology-local | Done — implementation `ef3ba756b52796c02b8490caedcaa48b8db69605` plus verified immediate v29 plan-only reconciliation `9c06e9c77b313b62cc20e9ec39c22952fee501f2` | Add bounded local candidate/reference monotonicity certificates, preserve exact edge/occurrence/node identity, and refine only through the shared geometric pair-proof helper. Expose local proof status only; no full-cache validity result. Three geometry files, 20 focused cases, independent rational derivative oracle, all required gates and two scoped commits. |
-| A-budget-depth | WAITING — v154 G5 was NOT_ISSUED; v153 preflight is PARTIAL provenance; §63 controls current authorization. No v155 packet, formal G1a/G1b/G3, activation or baseline exists. | Depends on completed layout, bounds and local topology children plus product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; owns shared work/depth/capacity behavior only. R02/R12/R13 apply. All R05 producer behavior, including one-piece adoption into the document, repeated-offset and fallback, belongs to 1B/1C/1F. 1A-2 supplies only the reusable entity API for an already checker-validated result; it is context, not an R05 owner or A completion dependency. |
+| A-budget-depth | WAITING — v155 G5 PASS; v156 plan checkpoint/G5 and fresh packet, G1a/G1b/G3, activation and baseline remain outstanding; §64 controls authorization. | Depends on completed layout, bounds and local topology children plus product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; owns shared work/depth/capacity behavior only. R02/R12/R13 apply. All R05 producer behavior, including one-piece adoption into the document, repeated-offset and fallback, belongs to 1B/1C/1F. 1A-2 supplies only the reusable entity API for an already checker-validated result; it is context, not an R05 owner or A completion dependency. |
 | B-occurrence-terminals | WAITING — blocked on A's product commit and direct-child plan reconciliation | Publishes only producer-backed occurrence-specific terminals after full continuation analysis; no global validity result. |
 | C-global-topology-checker | WAITING — blocked on A and B commits/checkpoints | Proves candidate-compatible complete directed paths, selected-path coverage, transitions, cuts, cycles and refusal reasons; entity adoption remains 1A-2. |
 | 1A-1.b-check-topology-chain | Aggregate parent — no separate implementation commit | Its executable leaves are A-budget-depth, B-occurrence-terminals and C-global-topology-checker in that dependency order. The aggregate remains incomplete until all three leaves are independently committed and reconciled. |
@@ -942,10 +942,10 @@ initial-seed feasibility, depth/item limits, separate certificate-pair limits, a
 future-root preservation, and atomic refusal before callbacks or partial publication. Queue capacity is reserved memory, not a pre-debit of
 unused slots.
 
-### 0.5 Historical readiness handoffs and implementation sub-plans (current handoff: §63)
+### 0.5 Historical readiness handoffs and implementation sub-plans (current handoff: §64)
 
 All version-stamped readiness snapshots, `current`/`next` labels, packet instructions and command recipes in §0.5 are
-historical unless §63 explicitly reissues them. At v123 draft time, §31 authorized only its plan-only commit and G5;
+historical unless §64 explicitly reissues them. At v123 draft time, §31 authorized only its plan-only commit and G5;
 that sentence is preserved as history, not current authority. Use §0.5 for technical leaf details, not as separate
 authorization to start work.
 
@@ -1412,7 +1412,7 @@ G2/G4/G5: G2 requires independent adversarial review by a reviewer distinct from
 G4_commit_protocol: Freeze exact owned paths and tested blob hashes; require final G1a reclosure, independent G2 PASS, all targeted/build/full/format lanes, exact identities/assertions and zero unexplained failures/skips. Verify the activation checkpoint remains the actual parent, the index is empty before explicit staging, and the staged path set contains exactly the six A paths. Compare staged and tested hashes, run cached whitespace checks, inspect hook effects, commit exactly one product/test-only A leaf, then verify its actual parent, path set, committed blobs and clean owned index. No plan, evidence, unrelated path, partial stage, or B/C work enters this commit. A failed postcondition means the leaf is not done and no successor starts.
 G5_reconciliation_protocol: Immediately after the product commit and before any build/test/edit for a successor, inspect actual Git objects and filesystem state. Reconcile the product commit SHA/parent/path/blob hashes, test and build reports, source/toolchain/binary identities, all A requirement rows, statuses, unresolved findings, risks, exclusions, evidence hashes, aggregate progress, DAG edges, descendant readiness, active/next/version/packet pointers and implementation owner. Prepare exactly one roadmap-only commit as the direct child of the product commit; it records the product SHA and evidence but never its own/future SHA. Verify candidate blob equals committed plan blob, exact one-file path set, direct ancestry, unchanged product blobs, clean index/worktree scope, packet/receipt identities and stale-pointer sweep. Then reread the committed plan and independently compare every live claim to Git and evidence; write `g5-readback-receipt.txt` with the fixed schema above and immutable hashes of the receipt's inputs. If any mismatch exists, block successor work, invalidate affected reviews/readiness, and make a corrective plan-only child before fresh gates. Restart completeness, plan correctness and readiness for the next slice only from the reconciled HEAD.
 recovery: keep failed attempts and ignored build-asan/evidence; no reset/cleanup; any source or scope change invalidates affected reviews and requires a new attempt.
-command_order: No v88-v154 recipe is executable by inheritance. The six v154 recipes are historical templates; after the v155 checkpoint G5 passes, rebuild `activation_commands`, `foundation_activation_baseline_commands`, `foundation_review_freeze_commands`, `foundation_validation_commands`, `foundation_product_commit_commands`, and `foundation_plan_checkpoint_commands` from source and reissue them under §63. Before G3, independently audit the full commands against the committed v155 plan/packet, exact path ownership, the hash-pinned schema, all payload names, registration/tool identities, role-distinct receipts, activation state/version transition, report testcase and skip identities, direct predecessor/checkpoint chain, and failure postconditions. Run `PHASE=freeze` before tests; run `PHASE=post-test` only after validation has produced its test receipt; then obtain final G1a, final plan-contract reconciliation and G2. G2 is never a precondition to executing tests. The product-commit recipe accepts only all required post-test PASS receipts. After same-identity preflight G1a/G1b/G3 PASS and a separate activation checkpoint, use only the freshly audited recipes. Never reuse an attempt or build directory; preserve failed attempts and select a fresh positive number.
+command_order: No v88-v155 recipe is executable by inheritance. The six v154 recipes are historical templates; after the v156 checkpoint G5 passes, rebuild `activation_commands`, `foundation_activation_baseline_commands`, `foundation_review_freeze_commands`, `foundation_validation_commands`, `foundation_product_commit_commands`, and `foundation_plan_checkpoint_commands` from source and reissue them under §64. Before G3, independently audit the full commands against the committed v156 plan/packet, exact path ownership, the hash-pinned schema, all payload names, registration/tool identities, role-distinct receipts, activation state/version transition, report testcase and skip identities, direct predecessor/checkpoint chain, and failure postconditions. Run `PHASE=freeze` before tests; run `PHASE=post-test` only after validation has produced its test receipt; then obtain final G1a, final plan-contract reconciliation and G2. G2 is never a precondition to executing tests. The product-commit recipe accepts only all required post-test PASS receipts. After same-identity preflight G1a/G1b/G3 PASS and a separate activation checkpoint, use only the freshly audited recipes. Never reuse an attempt or build directory; preserve failed attempts and select a fresh positive number.
 command_inputs: Use `SLICE=A-budget-depth`, immutable `ACTIVATION_ID`, successful `BASELINE_ATTEMPT`, fresh per-diff `ATTEMPT`, and `PACKET_DIR=build/evidence/1A-1.b-check-topology-chain/preflight-v<reviewed_plan_version>` read from the immutable activation identity. Use exact tool paths/versions from that packet's root-level `input-manifest.txt`; every consumer validates the exact schema version, packet membership and manifest digest reissued for the reviewed plan before consuming evidence. Every recipe consuming the packet validates recorded `shasum_path` and version; recipes invoking Python additionally validate recorded `python3_path` and version. Environment overrides must equal the manifest values.
 ```
 
@@ -2292,7 +2292,7 @@ implementation_slices:
     commit: Fresh Gate 1/3 after Slice B's reconciled checkpoint; one frozen product/test-only commit over exactly C's owned paths, then an immediate one-file plan checkpoint.
 slice_rule: Each slice is its own executable leaf with its own source/plan SHAs, one writer, frozen ownership, acceptance/refusal contract, exact selectors, independent evidence, Gate 1/2/3 outcomes, commit and immediate reconciliation. A passing slice never activates its successor. After each product commit, no product edit is allowed until its direct-child plan checkpoint has been verified and the next slice's fresh Gate 1/3 and activation checkpoint pass.
   commit_chain:
-  A: exact committed reviewed-plan target selected by the sole live handoff (§63) -> A-specific G1a-completeness/G1b-plan-correctness/G3-readiness receipts -> one-file A activation checkpoint -> A product/test commit (six exact paths) as its direct child -> A one-file reconciliation checkpoint as the product commit's direct child -> post-checkpoint live-state audit.
+  A: exact committed reviewed-plan target selected by the sole live handoff (§64) -> A-specific G1a-completeness/G1b-plan-correctness/G3-readiness receipts -> one-file A activation checkpoint -> A product/test commit (six exact paths) as its direct child -> A one-file reconciliation checkpoint as the product commit's direct child -> post-checkpoint live-state audit.
   B: A reconciliation checkpoint -> fresh B-specific G1a-completeness/G1b-plan-correctness/G3-readiness receipts -> one-file B activation checkpoint -> B product commit as its direct child -> B one-file reconciliation checkpoint as the product commit's direct child -> post-checkpoint live-state audit.
   C: B reconciliation checkpoint -> fresh C-specific G1a-completeness/G1b-plan-correctness/G3-readiness receipts -> one-file C activation checkpoint -> C product commit as its direct child -> C one-file reconciliation checkpoint as the product commit's direct child -> post-checkpoint live-state audit.
   failure_rule: Any failed review, test, diff/hash/parent/path audit or checkpoint postcondition stops at that state; preserve all work and evidence, repair only the owning slice/checkpoint, and never jump to a successor or bundle commits.
@@ -2313,7 +2313,7 @@ task_plan:
     work: Author preflight ledgers for visible intervals, stable event/terminal keys, expected transitions, seam disposition, candidate-domain order, every cut/return frontier and independent geometry bounds. Derive them from high-precision/analytic offset equations and materializer source provenance, not from graph dumps or checker output. The ledger must label each datum as one of: independent mathematical expectation; certified source/editor input; measured producer input; or diagnostic graph coordinate. Only the first two categories may justify the expected checker result. Map each R ID, public reason, boundary/refusal and debit to its separately named Catch2 test specification, required assertion/oracle, owner and post-activation slice. In `selector-test-map.txt`, freeze 61 exact strict-core regression names as `STRICT-CORE-01` through `STRICT-CORE-61`, separate from A01-A14 and C01-C54. A01-A13 use the cache-budget selector; A14 is the exact retained-callback-throw identity under intersection-refine and must be represented separately in the map. Save `source-requirement-map.txt`, `independent-transition-cut-ledger.txt`, `terminal-producer-map.txt`, `phase-cut-intervals.txt`, `debit-admission-table.txt` and the selector map; after activation implement the same frozen expected values in registered tests.
     exit: Every discriminator has an independent expected result/provenance; stable identity is role + independently certified parameter enclosure + event kind, not runtime numeric IDs alone. Test specifications require 54 distinct Catch2 identities, including one named test per public reason and eight separate end-to-end terminal cases; any producer-unreachable identity is replaced before readiness without lowering the floor. No expected path/transition/result is sourced from `checkCache`; measured producer data is only candidate input and is checked against independent source geometry. No product/test edit or registered-test run occurs during preflight; test implementation and execution are owned by the activated slice named in the map.
   - stage: Close readiness gates and activate
-    work: At the exact committed reviewed-plan target named by the sole live handoff (§63), obtain distinct G1a completeness, G1b plan-correctness and G3 readiness dispositions for Slice A against that exact plan and unchanged product-source base. Save the reviewed-plan SHA, product-base SHA, packet/recipe manifest hashes and three receipts under `build/evidence/1A-1.b-check-topology-chain/A-budget-depth/readiness-<GATE_ID>/`. Review the bidirectional R02/R12/R13-to-A trace and explicit R05 exclusion; clarify that 1A-2 only provides generic adoption of an already validated cache, while R05 creation/one-piece producer-to-document adoption/repeated-offset/fallback remains 1B/1C/1F. Independently verify A's split-unit distinction, atomic query-work adoption, capacity/depth/callback/exception/arithmetic contracts, exact/one-less snapshots, A14 public throw route and independent work oracle, all fourteen A identities/assertion contracts, CMake registration and qmake6 application-build ownership, six-path manifest, strict-core 61-case regression recipe, recovery, packet integrity and implementation recipe. Check every remaining B/C/consumer/DXF/DWG/UI/phase-2 obligation has a named owner and predecessor, but do not require B terminal or C phase/cut/frontier proofs or C01-C54 oracle closure for A without a demonstrated A dependency. Pre-activation reviews validate planned identities/contracts and existing target registration; they do not require A01-A14 to exist in a binary. After activation, require exact A01-A13 discovery under cache-budget and the intersection-refine identity set to equal its activation-bound pre-edit set plus exactly A14, with nonzero per-case assertions before commit. Any finding that changes the plan requires a new reviewed-plan checkpoint and affected reviews against that exact HEAD. After all pass, create the separate one-file activation checkpoint directly after the reviewed target. Use separate readiness-review and activation IDs; later attempts never replace activation identity. Only then permit Slice A.
+    work: At the exact committed reviewed-plan target named by the sole live handoff (§64), obtain distinct G1a completeness, G1b plan-correctness and G3 readiness dispositions for Slice A against that exact plan and unchanged product-source base. Save the reviewed-plan SHA, product-base SHA, packet/recipe manifest hashes and three receipts under `build/evidence/1A-1.b-check-topology-chain/A-budget-depth/readiness-<GATE_ID>/`. Review the bidirectional R02/R12/R13-to-A trace and explicit R05 exclusion; clarify that 1A-2 only provides generic adoption of an already validated cache, while R05 creation/one-piece producer-to-document adoption/repeated-offset/fallback remains 1B/1C/1F. Independently verify A's split-unit distinction, atomic query-work adoption, capacity/depth/callback/exception/arithmetic contracts, exact/one-less snapshots, A14 public throw route and independent work oracle, all fourteen A identities/assertion contracts, CMake registration and qmake6 application-build ownership, six-path manifest, strict-core 61-case regression recipe, recovery, packet integrity and implementation recipe. Check every remaining B/C/consumer/DXF/DWG/UI/phase-2 obligation has a named owner and predecessor, but do not require B terminal or C phase/cut/frontier proofs or C01-C54 oracle closure for A without a demonstrated A dependency. Pre-activation reviews validate planned identities/contracts and existing target registration; they do not require A01-A14 to exist in a binary. After activation, require exact A01-A13 discovery under cache-budget and the intersection-refine identity set to equal its activation-bound pre-edit set plus exactly A14, with nonzero per-case assertions before commit. Any finding that changes the plan requires a new reviewed-plan checkpoint and affected reviews against that exact HEAD. After all pass, create the separate one-file activation checkpoint directly after the reviewed target. Use separate readiness-review and activation IDs; later attempts never replace activation identity. Only then permit Slice A.
     exit: All three receipts bind one reviewed-plan SHA and product-source base; the activation checkpoint is a direct child of that SHA, contains only this roadmap, records the receipt identities, and passes source-blob/index/status checks. `activated-base.sha` equals the activation checkpoint HEAD; all six owned product/test blobs equal `base_sha`; the index is empty and product-source/test files remain untouched. Slice A's product/test commit must be a direct child of `activated-base.sha`. Otherwise remain WAITING.
   activation_authorization_exit: BLOCKED until the activation checkpoint has its independent exact-identity G5 PASS, then a fresh authorized baseline build/discovery/test receipt is reconciled against the checkpoint's source/toolchain/registration identities and expected testcase/skip sets. Check all six A-owned blobs remain unchanged and the index contains no product edits. Checkpoint creation or G5 alone never authorizes Slice-A editing; change A to READY only after both activation G5 and baseline reconciliation PASS.
   activation_order_note: The preceding stage's shorthand "Only then permit Slice A" means only after both independent activation G5 and baseline-reconciliation exits above; checkpoint creation by itself is never authorization.
@@ -4614,7 +4614,7 @@ plan-only G5 checkpoint is not a completed slice.
 ### 0.6 Executable leaf recipes
 
 The command bodies and version-bound packet checks in this section are v154 historical templates, not executable
-recipes. After v155 G5 PASS, §63 requires fresh source-derived recipes bound to the complete v155 packet. These
+recipes. After v156 G5 PASS, §64 requires fresh source-derived recipes bound to the complete v156 packet. These
 technical leaf recipes refine, not replace, the normative contracts. Paths below are relative to
 `librecad/src/lib/engine/document/entities/` unless a full repository-relative path is given. Before editing, expand
 the selected recipe into the §0.3 card with actual HEAD, file ownership, API observations and literal commands.
@@ -17089,3 +17089,186 @@ v107 plan-correctness review.
     selects the next action. The v154 packet/recipe specification and command bodies are historical templates and
     must not be executed; v155 G5 must pass before fresh packet/recipe creation. No product edits, builds, registered
     tests, activation or baseline are authorized by this plan-only refinement.
+
+64. **v156 completeness, correctness, executable sub-plans, slice commits and self-updating handoff (plan-only;
+    non-activating).** This section supersedes §63 as the sole live handoff after the v156 plan commit is observed.
+    Sections 39-63 are historical state/authorization snapshots; retain their technical contracts and evidence, but
+    their old candidate, current, next, packet, readiness and G5 statements do not authorize work. Section 56 remains
+    normative only for its bounded Git-object and protected-path checks. Sections 0.3-0.8 and the detailed leaf cards
+    remain technical requirements where consistent with this section. No product behavior or accepted scope changes
+    in v156.
+
+    **Verified starting facts.** v155 plan commit is
+    `5f4f7d2c1dbcdd951026a1e4fabe1f78dc24db45`, direct child of
+    `98b54e53a4e955f962cda64f5f5d2f11dae09de4`. Its independent G5 report has disposition PASS at
+    `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v155/g5-auditor-report.txt`, SHA-256
+    `37289cd3a0bb5b89ce887f0db68261eed4b1d3a0f08b5963cc841e4c115d4a5a`. The auditor verified the exact plan-only
+    path/blob, unchanged six A-owned product/test blobs and absent v155 packet/recipes. v154 G5 remains NOT_ISSUED;
+    v153 packet remains PARTIAL provenance. Product source base is
+    `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; the six A-owned files match that base. The v155 G5 PASS permits
+    only the next plan transition, not packet reuse, activation, baseline, product edits, builds or registered tests.
+    Protected `build-asan/` is not inspected by instruction.
+
+    **Canonical v156 record.** Keep one live record here, and update the document header and §0 summary/table to point
+    to this section. The following is the candidate state; resolve the commit identity only from observed Git state and
+    never predict this plan's own SHA or its G5 result.
+
+    ```text
+    plan_revision: v156
+    expected_parent: 5f4f7d2c1dbcdd951026a1e4fabe1f78dc24db45
+    plan_commit: candidate; resolve from observed HEAD after plan-only commit
+    product_source_base: 9c06e9c77b313b62cc20e9ec39c22952fee501f2
+    active_leaf: A-budget-depth
+    execution_state: WAITING
+    G1a_completeness: PENDING
+    G1b_plan_correctness: PENDING
+    G2_implementation_correctness: NOT_APPLICABLE_BEFORE_EDIT
+    G3_leaf_readiness: WAITING
+    G4_product_commit: NOT_APPLICABLE_BEFORE_VALIDATION
+    G5_plan_checkpoint: NOT_ISSUED_UNTIL_COMMIT
+    v155_G5: PASS; report SHA-256 37289cd3a0bb5b89ce887f0db68261eed4b1d3a0f08b5963cc841e4c115d4a5a
+    v156_packet: ABSENT
+    v156_recipes: ABSENT
+    activation_checkpoint: NONE
+    activation_G5: NONE
+    reconciled_baseline: NONE
+    protected_build_asan: NOT_INSPECTED_BY_INSTRUCTION
+    next: verify and commit this one-file plan-only candidate; then obtain independent exact-identity G5
+    ```
+
+    Do not rewrite the v156 checkpoint after its commit merely to stamp its own identity or G5 outcome. The independent
+    auditor's external report is authoritative for that checkpoint; a later substantive plan-only reconciliation may
+    record it. No candidate prose, prior agent message or file existence advances a gate.
+
+    **1. Completeness and correctness of scope (G1a).** Build a bidirectional trace from each stable requirement
+    R01-R15 and accepted issue/spec obligation to the responsible source/API boundary, producer and consumer, persisted
+    representation, caller/type/dispatch site, supported version/format/conversion lane, leaf owner, exact test and
+    assertion, independent oracle, registration/build target and durable evidence. Reverse-walk every owned or
+    changed source, test, fixture and build-registration path to a requirement or an explicit exclusion with a named
+    owner and later closure leaf. Include valid, exact-boundary, one-less, malformed, refusal, no-op, fallback,
+    ownership/copy, undo/redo and edited-reopen behavior when applicable. Mark each test as planned, registered,
+    discovered, executed and asserted; these states are not interchangeable. Re-census callers, type switches,
+    factories, clone/transform/INSERT behavior, serialization and UI integration at the current source base.
+
+    Keep the downstream file obligations separate and explicit: ASCII-DXF application read and write, native-DWG
+    application read and write, every applicable version row, DXF-to-DWG and DWG-to-DXF conversion, edited
+    second-generation reopen, and separate R14/R2018 binary-DXF codec read/write. Geometry, same-writer round trips,
+    codec helpers and callback reachability do not discharge application-level rows. Preserve explicit R12 geometry-
+    only and legacy DWG reader-only exceptions. The requirement map also covers build-system/release, entity, UI and
+    phase-2 obligations. Every row needs one accountable leaf and a non-vacuous assertion/oracle; every excluded row
+    needs a reason and closure point. Counts, search hits and green aggregate suites cannot close a missing trace edge.
+
+    **2. Plan and implementation correctness (G1b and G2; independent decisions).** Before code, G1b independently
+    derives the proposed contracts from the exact source/API/spec/version base. Check mathematical premises and
+    quantifiers, orientation and strict-boundary direction, numeric units/tolerances, overflow and resource limits,
+    admission/debit/allocation ordering, callback/exception transfer, ownership/lifetime, publication/failure
+    atomicity, retry/invalidation, error mapping, fallback/refusal, serializer/reader behavior, oracle independence,
+    test feasibility and the acyclic dependency graph. Cite exact evidence for every material claim and state what
+    observation would falsify it; unresolved premises are findings, not assumptions. Correctness review is not a
+    duplicate completeness checklist, and a complete map cannot prove a claim true.
+
+    After implementation, G2 reviews one frozen, tested tree against the accepted G1b contract. Independently
+    challenge positive and refusal behavior, exact and one-less limits, overflow/hostile inputs, all proof obligations,
+    no-work retry, no partial publication, exception behavior, ownership, format read/write and read-back where
+    applicable. Expected values must come from an independent derivation or fixture, never the implementation's own
+    counters or output. Bind findings, fixes and retests to exact file/test/tool hashes. Any behavior/contract
+    disagreement reopens G1b/G3 before more edits. G2 cannot repair omitted requirements or silently change scope.
+    G1a, G1b and G3 reviewers are distinct from one another and the author; G2 is distinct from the implementation
+    author. All reviews bind the same immutable plan, product base, packet, recipe set and predecessor chain.
+
+    **3. Step-by-step sub-plan and readiness (G3; one leaf at a time).** Before any product/test edit, product build
+    or registered test, create a standalone leaf card for exactly one executable slice. Bind it to the committed plan,
+    current product base, prior product commit and its audited plan-only reconciliation. The card contains exclusive
+    owned paths and implementer; requirements and exclusions; source/API facts; ordered tasks with a measurable exit
+    artifact each; acceptance/refusal/compatibility contract; exact fixtures, test names and assertion IDs; status of
+    target registration and baseline; independent expected-value oracle; literal commands and observed tool versions;
+    resource/runtime limits; evidence destinations; stop/recovery action for every failure; and the single product
+    commit boundary. For Slice A, Agent Gibbs is the first implementation writer after activation; if Gibbs is
+    unavailable, stop for explicit user-authorized reassignment. Record discovery/execution/assertion floors at the
+    later authorized stage; do not require future tests to exist in a pre-activation binary or mistake a zero
+    pre-registration count for failure. Any unresolved
+    choice that can affect API, behavior, scope, safety, oracle or commit ownership keeps the leaf WAITING.
+
+    G1a/G1b/G3 PASS must bind the same immutable plan/product/predecessor and sealed packet/recipe identities and
+    earns `READY_FOR_ACTIVATION` only. A separate plan-only activation checkpoint must then pass independent G5;
+    only after that may the exact authorized baseline and registered-test discovery run. Reconcile actual compiler,
+    build, registration, selector, skip and test identities against the card before changing execution state to
+    READY. Readiness expires on a change to source, plan, specification, toolchain, registration, selector, budget,
+    fixture/oracle, predecessor or owned paths. Do not transfer one leaf's readiness to its sibling or successor.
+    A-budget-depth remains the first candidate and its existing six source/test paths remain one atomic slice unless
+    a new, independently reviewed plan proves a smaller independently correct, testable and buildable boundary before
+    activation; internal tasks are checkpoints, never partial completion claims.
+
+    **4. Commit only after a complete validated slice (G4).** For each READY leaf, implement only its predeclared
+    paths. Freeze the exact tree and file/tool/binary identities; run the card's focused, adjacent, full, Release/ASan
+    and qmake6 validations as applicable; reconcile discovered/executed/asserted test identities and every skip;
+    close findings; repeat final completeness and plan-contract reviews on the actual diff; and pass independent G2
+    on those exact tested bytes. Before staging, verify the expected parent and residual index/worktree state. Stage
+    only the leaf's product/test/build-registration paths; compare staged names/blobs to the frozen manifest; inspect
+    whitespace and hook effects; commit exactly once for the entire coherent slice; then verify actual parent, path
+    set and committed blobs equal tested/staged blobs. Do not include the plan, evidence, generated output, another
+    slice or unrelated user changes. A failed test, open finding, unexplained skip, path/hash mismatch or hook
+    mutation means no G4 PASS and no successor. Preserve the failed attempt and resume only under its recovery card.
+
+    Immediately after each product commit, perform no successor edit, build or registered test. Make a separate
+    plan-only direct-child commit that reconciles the product commit from actual Git objects and sealed reports. Thus
+    each completed slice has exactly one implementation commit plus its immediate roadmap-only reconciliation; a
+    product commit without the latter remains `committed - reconciliation pending`, not done.
+
+    **5. Self-update after every commit (G5; exact semantic readback).** The plan author updates the canonical live
+    record from observed commits, tracked paths/blobs and immutable validation/review receipts. Reconcile the header,
+    §0 summary and row, requirement/format/version/build/test matrices, active leaf and all affected descendants,
+    predecessor/dependency graph, each gate/reviewer/finding/retest, test skips, risks/exclusions, evidence paths and
+    hashes, next action and readiness invalidations. Search the complete document for live status words and identities
+    (`current`, `active`, `next`, `ready`, `waiting`, `partial`, `done`, plan/product commit, packet, recipe and
+    activation); old snapshots must be explicitly historical and consistent with their as-of state. Keep one live
+    pointer and one permitted next action. Do not re-narrate unaffected history or change technical acceptance merely
+    to make a status look complete.
+
+    Before the plan-only reconciliation commit, verify sole roadmap path, direct parent, no self/future identity,
+    unchanged product blobs and whitespace. After commit, reread the committed plan and verify its blob, parent,
+    path set and every live status against evidence. A distinct auditor writes a durable external G5 report bound to
+    the exact plan commit/blob and relevant product commit; a checksum or commit is not a G5 result. If any mismatch
+    exists, preserve the report, stop successor work, make a corrective plan-only direct child and repeat affected
+    review. The plan cannot contain its own commit SHA or audit outcome; record these in the auditor receipt and a
+    later plan reconciliation. Only G5 PASS permits recomputing descendant readiness or selecting a successor.
+
+    **v156 packet and recipe roll-forward.** After v156 plan-only commit and independent G5 PASS, construct new
+    `build/evidence/1A-1.b-check-topology-chain/preflight-v156/` and `recipes-v156/` from current source. Do not copy,
+    relabel or edit any historical packet, recipe or report. Preserve §63's exact-membership and fail-closed controls
+    as technical rules: the preflight has exactly the same nine root-level payload names plus its checksum manifest;
+    source, toolchain, owned blobs, requirement/test/oracle maps and registrations are independently remeasured; the
+    exact 98-key schema from §62 is reverified byte-for-byte and may be reused only if it represents every current
+    required field, with `manifest_schema_version=v156-1`. Recompute all nine payloads and the manifest. Keep PARTIAL
+    until all source/oracle/identity rows close, then seal COMPLETE and verify exact membership/checksums before
+    reviews. The six named recipe scripts, recipe manifest and independent audit are regenerated for v156, syntax-
+    checked and cross-reviewed; execute a recipe only at its authorized state transition. Any unrepresentable current
+    requirement or schema/control-flow defect blocks sealing and requires a corrected plan before proceeding. No
+    configure/build/test or registered-test discovery occurs before activation.
+
+    G1a/G1b/G3 then bind the same v156 plan/product/predecessor, COMPLETE packet manifest, recipe manifest/audit and
+    six script hashes; G3 also binds both G1 receipts. After those PASS, make a distinct activation checkpoint and
+    pass G5, then execute/reconcile the authorized baseline. Only then may A become execution READY. The v155 G5
+    receipt is predecessor evidence only; it does not satisfy the v156 checkpoint or later activation G5.
+
+    **v156 state table.** This table is the sole current transition map; select a row only from observed HEAD and
+    durable receipts. No row permits inspecting `build-asan/`.
+
+    | Observed state | Sole permitted next action | Blocked until it passes |
+    |---|---|---|
+    | HEAD is v155 `5f4f7d2c1dbcdd951026a1e4fabe1f78dc24db45`; v156 is candidate | Verify direct parent, sole tracked plan path, whitespace, candidate contents and unchanged six A blobs; commit only the plan. | v156 packet/recipes, formal reviews, activation, baseline, product edits/builds/tests. |
+    | v156 committed; exact G5 report absent | Obtain independent G5 for exact commit/parent/path/blob and preserve report at `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v156/g5-auditor-report.txt`. | Packet/recipes, G1a/G1b/G3, activation, baseline, product work. |
+    | v156 G5 FAIL | Preserve report; make a corrective plan-only direct child and repeat affected G5. | Packet/recipes and every downstream gate or product action. |
+    | v156 G5 PASS; packet/recipes absent | Build fresh v156 packet and recipes under the roll-forward contract; keep packet PARTIAL until all rows close. | Formal PASS, activation, baseline, product work. |
+    | Packet/recipe incomplete, stale or identity-mismatched | Continue bounded source/oracle closure or correct the plan, then regenerate affected artifacts and reviews. | G1a/G1b/G3 PASS, activation, baseline, product work. |
+    | COMPLETE packet and audited recipes; G1a/G1b/G3 missing, failed or mismatched | Obtain distinct same-identity reviews or repair affected plan/evidence and repeat gates. | Activation, baseline, product work. |
+    | Same-identity G1a/G1b/G3 PASS | Create separate activation checkpoint, pass independent G5, then run and reconcile the authorized baseline. | Product edits and registered tests until baseline reconciliation. |
+    | Activation G5 PASS and baseline reconciled; A READY | Implement only the approved six-path A slice; freeze, validate, close final G1a/G1b, pass G2 and perform G4. | Any successor until A's plan-only reconciliation and G5 PASS. |
+    | Product commit exists; immediate plan reconciliation/G5 pending or failed | Complete/correct only the plan-only direct child and obtain independent audit using actual state. | All successor product edits/builds/tests/readiness promotion. |
+    | Product and plan commits reconciled; G5 PASS | Recompute affected readiness from current source and select exactly one next leaf. | Any leaf without fresh same-identity reviews, activation and baseline. |
+
+    Do not create another process-only plan revision for stylistic cleanup. After v156 G5 PASS, proceed to its packet
+    and recipe closure; revise again only for an evidenced contradiction, newly discovered requirement, changed source
+    contract or reviewer finding. This keeps the roadmap self-correcting without turning planning into an endless
+    substitute for implementation. No product edits, builds, registered tests, activation or baseline are authorized
+    by this v156 plan-only refinement.
