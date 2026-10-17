@@ -24,11 +24,11 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–3
 
-Plan **v191 A-budget source and fixture-oracle closure**, 2026-10-17; plan-only and non-activating. This direct child follows the exact v190 G5 PASS and bounded prepacket audit, which leaves source/fixture/probe rows open. v190 is commit `29df1d9f3bb2c3ce00cf9ce211e770f055f166ee`, parent `ddc9973ac2b6656f591b7ca4e3cae03b70090ac1`, tree `d9aa42f06b7a85933158ce44625e597140c11d07`, plan blob `9cc1b0f95cc512a414e687ecdca2e47d2e2b88b5`, raw SHA-256 `4412e0b52ff62ec7a7fc23d6ff6f1ba1cc9de0c8370514aaa5abd1094ed9ae70`. Preserve its exact G5 PASS at `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v190/g5-auditor-report.txt`, SHA-256 `a8edbaf46e6e893192170e034a0e0096fe76d6ae9b72ff4dd7c3cfd7cb32189f`, and prepacket audit at `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v190/prepacket-readiness-audit.txt`, SHA-256 `c6bb348032020ce520bf3169163b1c4fc548b2d5183432950e48c2c78de6dd6b`. The v188 deviation disposition is VERIFIED by exact v190 G5, with name-level impact unknown and no demonstrated artifact identity invalidation. This plan revision is v191; §99 exclusively determines its live checkpoint state/next action without a self-referential candidate/commit label. `PLAN_UPDATE_REQUIRED=true`; no v190 or v191 bundle roots or implementation are authorized. Trim remains Phase 3 and unimplemented. Preserve product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; do not access `build-asan/` again.
+Plan **v192 post-G5 source/oracle audit correction**, 2026-10-17; plan-only and non-activating. This direct child records the exact v191 G5 PASS and fresh audit, which confirms source identities but leaves fixture/source-behavior oracles open. v191 is commit `c47fced5d51ba89c0341ca8d86325d687e491832`, parent `29df1d9f3bb2c3ce00cf9ce211e770f055f166ee`, tree `df4296093678ba41d6f92528e67d07e86b8911ae`, plan blob `1442910aeccf11a0436e4a6bc7cb1d6cab7f8f7c`, raw SHA-256 `fbd0bbc438ccbc2d6e78464c3956f952cb0ef55e164548594690f0564d62da05`. Preserve exact v191 G5 PASS `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v191/g5-auditor-report.txt`, SHA-256 `93904987024772fb6ceb799f1f2ec914231e07ab291e953db2a7d4b1ac269ae8`, and audit `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v191/prepacket-readiness-audit.txt`, SHA-256 `54aff5aeb719e4cd119d699e1c1b05a6f89a86c78402f3d835ff8e7fa50aedc3`. `PLAN_UPDATE_REQUIRED=true`; no v191 input, preflight or recipe roots exist. This plan revision is v192; §100 exclusively determines the live state and next action. Trim remains Phase 3 and unimplemented. Preserve product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; do not access `build-asan/`.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY; Trim support NOT IMPLEMENTED.** v190 is committed with exact G5 PASS, report SHA-256 `a8edbaf46e6e893192170e034a0e0096fe76d6ae9b72ff4dd7c3cfd7cb32189f`. The fresh prepacket audit sets `PLAN_UPDATE_REQUIRED=true`, SHA-256 `c6bb348032020ce520bf3169163b1c4fc548b2d5183432950e48c2c78de6dd6b`; the v188 deviation-impact disposition is VERIFIED by that exact G5. A05-A13 fixture/probe rows remain open, and independent source review adds the A14 exception-work handoff for packet closure. v191 is the current plan revision; §99 is the sole live transition authority and determines its exact state/next action without a self-referential label. No v190 or v191 bundle roots exist; preserve v188-v190 reports and audits, do not re-enumerate `build-asan/`, and do not infer names previously surfaced. Preserve all prior checkpoints/reports; v184 empty roots remain quarantined. The v176 packet's six recipes, formal G1a/G1b/G3, activation and reconciled baseline remain absent; do not promote historical partial artifacts. No A-budget-depth implementation or authorized discovery/build/test exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; do not access `build-asan/`. Slice A remains WAITING; ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. Phase 3 Trim remains separately gated and unimplemented. The four application file lanes, both conversions, edited reopen and binary-DXF codec support remain open.
+Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY; Trim support NOT IMPLEMENTED.** v191 is committed with exact G5 PASS, report SHA-256 `93904987024772fb6ceb799f1f2ec914231e07ab291e953db2a7d4b1ac269ae8`. Its fresh prepacket audit sets `PLAN_UPDATE_REQUIRED=true`, SHA-256 `54aff5aeb719e4cd119d699e1c1b05a6f89a86c78402f3d835ff8e7fa50aedc3`: all 18 pinned source-row identities match and the six owned product paths remain unchanged, but A05-A09 and A11-A14 fixture/source-behavior oracles remain open; A10's exact fixture is recorded but independent source/API confirmation remains open. v192 is the current plan revision; §100 is the sole live transition authority. No v191 input, preflight or recipe roots exist. Preserve v188-v191 reports and audits, do not re-enumerate `build-asan/`, and do not infer names previously surfaced. Preserve all prior checkpoints/reports; v184 empty roots remain quarantined. The v176 packet's six recipes, formal G1a/G1b/G3, activation and reconciled baseline remain absent; do not promote historical partial artifacts. No A-budget-depth implementation or authorized discovery/build/test exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; do not access `build-asan/`. Slice A remains WAITING; ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. Phase 3 Trim remains separately gated and unimplemented. The four application file lanes, both conversions, edited reopen and binary-DXF codec support remain open.
 
 Historical v68 amendment: clarifies file-support acceptance and retains the v67 product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, with all four recorded product source/test hashes unchanged. The exact-membership `preflight-v67/` packet is PARTIAL provenance (latest packet-manifest SHA-256 `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`), not a formal gate receipt. The G4 hidden-cusp clearance proof and C50 correction remain normative: the cusp-only candidate is separated from all visible spans and must refuse as `OffCurve` before terminal/topology matching; B07 separately tests absence of a cusp `ReferenceTerminal`, and C36 retains fully witnessed `Topology` coverage. The five controls remain mandatory per slice: separate completeness and plan-correctness gates; frozen-tree implementation correctness; an executable, independently reviewed sub-plan/readiness decision; one validated product commit followed by its plan-only reconciliation; and a post-commit live-state audit/self-update before any successor. Slice A remains WAITING; G1 completeness, G1 plan correctness, Gate-3 readiness and activation are not passed. A/B/C baseline discovery remains zero and strict-core remains 61 matching normalized identities in Release/ASan; no registered tests ran. No product/test edit, build, JUnit execution, formal Gate PASS, readiness PASS or activation occurred. DXF read, DXF write, DWG read and DWG write are separate open application obligations; both conversion directions and the separate R14/R2018 binary-DXF codec obligation also remain open. Geometry-only checker evidence satisfies none.
 Historical v81 reconciled the six-path A scope, A14 selector, split-debit oracle, activation-bound test identities and post-edit validator. Its packet and review findings are preserved as immutable provenance; its live pointers are superseded below. The five control families and six gate decisions (G1a/G1b/G2/G3/G4/G5) remain independently recorded and fail-closed. §0.5 retains detailed leaf specifications and historical handoffs; §29 is the sole authority for the current gate state and immediate next action. Preserve the v81 and v80 packets/reviews, the v77 PARTIAL packet and invalid v79 draft. The four independent application obligations—DXF read, DXF write, DWG read and DWG write—plus both conversions and binary-DXF codec work remain later 1E gates.
@@ -21398,3 +21398,55 @@ The provider's unique tangency proof
     The user's Trim request remains mapped to Phase 3 in §6.1. It does not waive A-budget readiness or the ordered
     1A/1B/1C/1D/1E/2A-2D dependencies. No product edit, build, test discovery or execution is authorized by v191.
     `build-asan/` remains inaccessible by instruction.
+
+100. **v192 exact post-G5 audit correction (plan-only; non-activating).** This direct child records the first fresh
+     audit after v191 G5 PASS. v191 is commit `c47fced5d51ba89c0341ca8d86325d687e491832`, parent
+     `29df1d9f3bb2c3ce00cf9ce211e770f055f166ee`, tree `df4296093678ba41d6f92528e67d07e86b8911ae`, plan blob
+     `1442910aeccf11a0436e4a6bc7cb1d6cab7f8f7c`, raw SHA-256
+     `fbd0bbc438ccbc2d6e78464c3956f952cb0ef55e164548594690f0564d62da05`. Bind exact G5 PASS receipt
+     `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v191/g5-auditor-report.txt`, SHA-256
+     `93904987024772fb6ceb799f1f2ec914231e07ab291e953db2a7d4b1ac269ae8`, and bounded prepacket audit
+     `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v191/prepacket-readiness-audit.txt`, SHA-256
+     `54aff5aeb719e4cd119d699e1c1b05a6f89a86c78402f3d835ff8e7fa50aedc3`. Preserve both receipts unchanged.
+
+     **Audit disposition.** The 18 SRC-A rows match their pinned Git blobs and raw SHA-256 values at product base
+     `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; the six owned product paths match that base; exact roots
+     `inputs-v191/`, `preflight-v191/` and `recipes-v191/` are absent. The predecessor v190 G5, v190 audit and v188
+     deviation-disposition receipt hashes match their recorded values. This is identity/scope validation only. The
+     G5 reviewer explicitly did not revalidate source behavior or fixture oracles, and the fresh audit did not close
+     those obligations. Keep `PLAN_UPDATE_REQUIRED=true`: A05-A09 and A11-A14 remain OPEN; A10's exact public latch
+     fixture is specified, but its pinned-API/source confirmation remains open. Do not represent candidate values or
+     conditional source traces as independent expected results. Do not create any v191 packet, preflight or recipe
+     root, readiness artifact, activation, baseline, build/test run, or product edit.
+
+     **Required closure work before a packet.** The next plan/input refinement must bind a separate source observation,
+     target contract and independent expected oracle for every A05-A14 selector. Explicitly close all of: A05 exact
+     interval-key bits, reduction operands and tie-reachable probe; A06 independently outward-isolated root/key and
+     post-sort full-query prefix; A07 portable min/max comparator schedule and retained full prefix; A08 every callback
+     charging/admission path; A09 complete reference/layout prefix and witness/output identities; A10 public API and
+     state transition source cross-check; A11 outer-query and destination-by-destination prefixes plus target atomic
+     reserve/admission behavior; A12 exact prep/solve queue states, callback ordering and no-mutation refusal points;
+     A13 full ordinary/retained validation, hierarchy-order and scratch oracle; and A14 exception-path work transfer,
+     single adoption, retained credential invalidation and retry snapshots. Each exact/one-less refusal and all public
+     output/session snapshots must be asserted independently. If any item cannot be proven without implementation or
+     test execution, keep it OPEN and identify the exact predecessor gate that authorizes the needed action; do not
+     weaken the acceptance contract to make the packet appear complete.
+
+     **Disjoint v192 candidate states.** Relative to committed v191 G5 PASS plus the exact audit above:
+
+     - `PLAN_CANDIDATE_ABSENT`: index and tracked worktree equal v191, with no plan candidate.
+     - `PLAN_CANDIDATE_VALID`: one direct-child roadmap-only v192 records every v191 audit trigger, binds both exact
+       receipt hashes, preserves `PLAN_UPDATE_REQUIRED=true`, leaves all six product paths at the pinned base, and
+       has one unambiguous staged-or-worktree candidate layer.
+     - `PLAN_CANDIDATE_CONFLICT`: every other state, including changed product paths, stale receipt binding, split
+       staged/worktree content, or a candidate that claims any open oracle is closed without independent evidence.
+
+     Commit only a VALID roadmap candidate after verifying the parent, receipts, six pinned-base blobs, one-layer
+     state, only-roadmap path set and `git diff --check`. Then obtain exact-identity v192 G5 and perform another
+     bounded prepacket audit. No `inputs-v192/`, `preflight-v192/` or `recipes-v192/` roots may be created unless
+     exact v192 G5 PASS and a fresh audit establish `PLAN_UPDATE_REQUIRED=false` with all artifact states absent or
+     validly complete. Any remaining source/oracle finding requires another plan-only direct child; conflicting or
+     ambiguous states preserve evidence and stop under §88/§92. This section supersedes §99 for the live v192 state.
+
+     The Trim contract remains exactly §6.1 and stays unimplemented. No product edit, build, test discovery or test
+     execution is authorized by this correction. `build-asan/` remains inaccessible by instruction.
