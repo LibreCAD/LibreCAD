@@ -24,6 +24,16 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–3
 
+**Current revision v200 (plan-only; non-activating).** Its exact predecessor is v199 commit
+`f3cddb4893e08f9b0a4533b36c39672a4e21214c`, parent `d7ca230579ecc7b93faa5ad8ba984fcb1af86539`, tree
+`e924fad642e2defc4b7f41009d2a1d97a01b34a4`, roadmap blob `52cb584cba6dbb80d26eeb9b3501e5679201c860`, raw
+SHA-256 `d454d7bff640c9475ca986f65577e7b5b3358a85a09fa22eaaf581b88a4394f2`. Its exact G5 FAIL report is
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v199/g5-auditor-report.txt` (SHA-256
+`ba23de998627a1d1445fad280d68f8910a8c7af49a83ae0d4dd0ffbd5167659c`). The report identifies two plan defects;
+§108 is the sole live transition authority and closes them without authorizing implementation. The following v199
+header/status paragraphs are predecessor history and their §107 pointer is superseded. No v199 input, preflight or
+recipe roots exist. Product base remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; do not access `build-asan/`.
+
 **Current revision v199 (plan-only; non-activating).** The exact predecessor is v198 commit
 `d7ca230579ecc7b93faa5ad8ba984fcb1af86539`, parent `bff72a31b9d87206a4bdcd2ad1a3a9f44c6a38be`, tree
 `1cf4df1dd5c9be14da94738019bbfd93e6b90122`, roadmap blob `d31e60006a8ad41288a6cad33c7c961ab2c23db2`, raw
@@ -306,7 +316,7 @@ reconciled baseline or A-budget-depth implementation. Product source remains
 independently authorize work; §56 remains normative only for its bounded Git-object/protected-path procedure. Do not
 inspect protected `build-asan/`; report `not inspected by instruction`.
 
-Select exactly one row from the latest versioned transition-authority section (currently §107) using observed HEAD,
+Select exactly one row from the latest versioned transition-authority section (currently §108) using observed HEAD,
 artifact state and receipts. §93 specifies the input-bundle contract; it is not a transition table. If zero or multiple
 rows match, stop for plan-only correction. No prose status independently authorizes packet, review, activation,
 baseline, build/test or product work.
@@ -22099,3 +22109,58 @@ The provider's unique tangency proof
      have not been closed; the clean-audit row is retained only to make the state machine exhaustive. No v199 roots
      are allowed in this state. No product files were edited and no build/test/discovery was run for v199. Phase 3
      Trim remains exactly §6.1 and unimplemented; never inspect `build-asan/`.
+
+108. **v200 G5 arithmetic and shared-cap correction (plan-only; non-activating).** This direct child binds the exact
+     v199 commit and G5 FAIL report in the v200 header. Preserve that report unchanged. It closes G5-001 and G5-002
+     only; A07-A14's remaining oracle gaps and `PLAN_UPDATE_REQUIRED=true` remain. No product edits, builds, tests,
+     discovery, roots, formal reviews, activation or baseline are authorized.
+
+     **G5-001: A11 stage labels and arithmetic.** Use the one B-relative cumulative series as the invariant:
+     shell `(1V,1P)`, prepare `(7,7)`, order `(7,8)`, accuracy `(7,11)`, fringes `(10,25)`, publish `(14,34)`,
+     assemble-plus-nested-graph `(23,47)`. Its disjoint stage deltas are shell `(+1V,+1P)`, prepare `(+6,+6)`,
+     order `(0,+1)`, accuracy `(0,+3)`, fringes `(+3,+14)`, publish `(+4,+9)`, and the combined
+     `assemble()+graph()` suffix `(+9V,+13P)`. Therefore `(4V,9P)` belongs to the transition from the fringes
+     snapshot to the publish snapshot; it is **not** an `assemble()` delta. The aggregate from publish to final is
+     exactly `(+9V,+13P)`. The prior separate claims `assemble=(4,9)` and `graph=(9,13)` are withdrawn because they
+     double-count publish and contradict the combined total. `assemble()` invokes `graph()`; do not report separate
+     per-function deltas unless a later exact source-operation trace separates work within the call. Keep `B`
+     immediately before the `ReferenceEventAnalysis::Impl` shell admission, after the strict query returns and its
+     work is transferred. These snapshots are still conditional, not fixture evidence or absolute caps. A11 remains
+     OPEN until the exact whole-circle fixture, outer B prefix, identities, and destination-by-destination exact and
+     one-less ledger are independently closed against the pinned source. In particular, preserve atomic joint
+     admission/reservation requirements for paired vectors; this arithmetic correction does not imply those writes
+     are currently atomic.
+
+     **G5-002: A12 shared total-pair cap.** The forced-split solve fixture's target prefix before the first split is
+     generated `G=6`, with `candidateBoxPairs=1`, `refinementBoxPairs=1`, `certificateBoxPairs=1`, hence
+     `totalBoxPairs=3`. The split atomically admits two child records (`G=8`) and pushes right then left. There is no
+     intervening pair debit before the next refinement attempt in this target trace. Therefore aggregate
+     `maxBoxPairs=3` admits the stated prefix and then refuses the **fourth** pair attempt before popping either
+     queued child; the queue remains the exact two-child snapshot and public output remains empty. Do not describe
+     a refinement-only budget: the plan preserves one shared `totalBoxPairs` counter, and `maxBoxPairs` is checked
+     against that total. The separate `maxGeneratedItems=7` one-less case refuses the two-child admission after the
+     parent has been popped, leaving `G=6` and an empty queue. This A12 oracle is distinct from retained A14, whose
+     valid-session snapshot intentionally has pair categories `1/1/3`, total 5. A12 remains OPEN until the forced
+     unavailable-analytic/inconclusive-Krawczyk provider transcript, selected parent, all intervening pair calls,
+     queue contents, cap checks and empty-output states are independently traced; if a source trace adds an
+     intervening pair, recompute the aggregate cap rather than relabeling the counter.
+
+     **Disjoint v200 transition table.** Use exact HEAD, candidate layer, receipt identity and audit state. Candidate
+     layer is exactly `ABSENT`, `VALID`, or `INVALID`; never enumerate untracked files or access `build-asan/`.
+
+     | Exact observed tuple | Sole next action | Blocked |
+     |---|---|---|
+     | Exact v199 HEAD with its G5 FAIL report; candidate `ABSENT` | Prepare one direct-child, roadmap-only v200 correction for G5-001 and G5-002. | Audit, roots, formal reviews, activation, baseline, build/test/discovery and product edits. |
+     | Exact v199 HEAD and candidate `VALID` | Verify exact v199 report, parent/tree/blob/raw-SHA bindings, one-file scope, unchanged product blobs and `git diff --check`; commit v200. | Audit, roots and implementation. |
+     | Exact v199 HEAD and candidate `INVALID` | Preserve bytes and reconcile under §88; do not commit or layer another candidate. | All downstream work. |
+     | Committed exact v200; G5 absent | Obtain independent G5 for exact v200 commit/tree/blob/raw SHA. | Audit, roots, formal reviews, activation, baseline and product work. |
+     | Exact v200 G5 FAIL | Preserve report; make one direct-child plan-only correction closing every exact finding. | Audit, roots and implementation. |
+     | Exact v200 G5 PASS; bounded audit absent/pending | Run only the fresh bounded prepacket audit against exact v200 and its predecessor receipts. | Roots, formal reviews, activation, baseline and product work. |
+     | Exact v200 G5 PASS; audit reports an open oracle or `PLAN_UPDATE_REQUIRED=true` | Preserve audit; make the next direct-child plan-only correction naming all open rows and invalidated descendants. | Same-identity roots, formal reviews, activation, baseline, build/test and product work. |
+     | Exact v200 G5 PASS; clean audit says `PLAN_UPDATE_REQUIRED=false`, required roots absent | Create versioned roots under §§93-94 and follow their separate audits/formal gates. | Activation, baseline and product work until all applicable gates pass. |
+     | Any unmatched HEAD/receipt/audit/candidate tuple | Preserve evidence and reconcile under §88; do not guess. | Every later action. |
+
+     Expected audit outcome remains `PLAN_UPDATE_REQUIRED=true`: the design oracles enumerated in §107 are not
+     closed by arithmetic corrections. No v200 roots may be created in that state. No product files were edited and
+     no build/test/discovery was run for v200. Phase 3 Trim remains exactly §6.1 and unimplemented; never inspect
+     `build-asan/`.
