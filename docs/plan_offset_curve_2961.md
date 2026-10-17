@@ -24,6 +24,17 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–3
 
+**Current revision v202 (plan-only; non-activating).** Its exact predecessor is v201 commit
+`71d0120060a428df84d56ece0f57e5b2eaf242f1`, parent `42538dcc56a07db52bde783285708c9f6dce7916`, tree
+`689734f100d767b9c5e91246e03fdd8f1c37437f`, roadmap blob `fb06f6e611399055820ff8324376ef080bb49dd4`, raw
+SHA-256 `8270655290cd721131db62b4cc6ec4b3b4270b6e52ea67dab827ac0e43b87798`. Its exact G5 FAIL report is
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v201/g5-auditor-report.txt` (SHA-256
+`c82931003f57b1f25f85f1a7c7d581c2a899ecaba7a392996862bf5a559830b5`). That report confirms the v200 candidate
+partition fix but finds missing post-commit routing for v201 and mismatch with §93's artifact classifier. Section
+§110 is the live transition authority; the following v201 header/status and §109 pointer are predecessor history.
+No v201 input, preflight or recipe roots exist. Product base remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`;
+do not access `build-asan/`.
+
 **Current revision v201 (plan-only; non-activating).** Its exact predecessor is v200 commit
 `42538dcc56a07db52bde783285708c9f6dce7916`, parent `f3cddb4893e08f9b0a4533b36c39672a4e21214c`, tree
 `58160773d4a7bb4cb5a917b35805561e8e4fa629`, roadmap blob `2d82b1bb01993d8ed11b8ec66e367f5a0cf39f64`, raw
@@ -326,7 +337,7 @@ reconciled baseline or A-budget-depth implementation. Product source remains
 independently authorize work; §56 remains normative only for its bounded Git-object/protected-path procedure. Do not
 inspect protected `build-asan/`; report `not inspected by instruction`.
 
-Select exactly one row from the latest versioned transition-authority section (currently §109) using observed HEAD,
+Select exactly one row from the latest versioned transition-authority section (currently §110) using observed HEAD,
 artifact state and receipts. §93 specifies the input-bundle contract; it is not a transition table. If zero or multiple
 rows match, stop for plan-only correction. No prose status independently authorizes packet, review, activation,
 baseline, build/test or product work.
@@ -22237,4 +22248,73 @@ The provider's unique tangency proof
      `1/1/1,total=3`; `1/1/3,total=5` belongs only to the separate retained A14 snapshot.
 
      No product files were edited and no build/test/discovery was run for v201. Phase 3 Trim remains exactly §6.1
+     and unimplemented; never inspect `build-asan/`.
+
+110. **v202 canonical artifact and recurrent post-commit route correction (plan-only; non-activating).** This direct
+     child binds the exact v201 commit and G5 FAIL report in the v202 header. Preserve that report unchanged. It
+     closes F-01/F-02 only; A07-A14 remain open and `PLAN_UPDATE_REQUIRED=true`. It replaces §109's transition
+     table and artifact vocabulary with a deterministic route for exact v201 and every later current plan checkpoint,
+     using §88's legal-descendant lifecycle and §93's canonical classifier. No product edits, artifact roots, formal
+     reviews, activation, baseline, build/test or discovery are authorized.
+
+     **Canonical state axes and precedence.** First prove the legal first-parent/checkpoint chain under §88; any
+     unknown parent, unbound receipt, or unclassifiable path attribution is `CHECKPOINT_CONFLICT` and stops. At an
+     exact committed current plan `P`, candidate layer is exactly `ABSENT`, `VALID`, or `INVALID`, using §109's
+     predicates relative to `P`; a `VALID` successor must name exactly one §88 purpose (`G5_CORRECTION`,
+     `CONTRACT_OR_INPUT_UPDATE`, or `POST_SLICE_RECONCILIATION`) and exact parent/receipts. G5 is exactly
+     `ABSENT`, `PENDING`, `PASS`, `FAIL`, or `INVALID`, bound to the full `P` commit/tree/roadmap blob/raw SHA.
+     The prepacket audit is exactly `ABSENT`, `PENDING`, `CLEAN`, `UPDATE_REQUIRED`, or `INVALID`, and a valid
+     audit binds exact `P` plus its exact G5 PASS. Artifact state uses §93's canonical five outcomes without
+     renaming or collapsing them: `ARTIFACTS_INVALID`, `ARTIFACTS_COMPLETE`, `ARTIFACTS_CLOSURE`,
+     `ARTIFACTS_ABSENT`, or `CHECKPOINT_CONFLICT`; classify with §93's `INVALID > CLOSURE > COMPLETE > ABSENT`
+     precedence. Quarantined prior-version roots are historical and excluded from the current version classifier.
+
+     Enforce the lifecycle order: current-version input/packet/recipe roots may be created only after exact `P` G5
+     PASS and exact prepacket audit `CLEAN` with `PLAN_UPDATE_REQUIRED=false`. Any current-version-attributed item
+     found before those prerequisites is `ARTIFACTS_INVALID` under §93 (preserve/quarantine; never delete, rename or
+     repair in place). A successor candidate that changes plan/input/fixture identity must bind the predecessor's
+     exact receipts, record the required quarantine/invalidation, and name fresh roots; it never makes predecessor
+     roots current again. A G5/audit action requires candidate `ABSENT`, so a staged successor cannot be ignored.
+
+     **Exact v201 post-commit and recurrent current-plan transitions.** `P` denotes the newest legal committed
+     roadmap checkpoint in the first-parent chain; for the immediate post-commit case, `P` is exactly v201. Its
+     current known state is exact G5 FAIL, prepacket audit ABSENT, and `ARTIFACTS_ABSENT`; therefore the sole next
+     action is the v202 G5-correction path below. The same rows recur after any later direct-child plan commit.
+
+     | Exact state (all listed identities must match) | Sole next action | Blocked |
+     |---|---|---|
+     | Checkpoint chain or artifact attribution is `CHECKPOINT_CONFLICT` | Preserve commits/receipts/artifacts and reconcile only through §88; do not infer or promote a state. | Every review, artifact, gate, baseline and product action. |
+     | HEAD is exact committed `P`; candidate `INVALID`; any G5/audit/artifact state | Preserve bytes and reconcile under §88. | G5/audit, roots, readiness, activation, baseline and product work. |
+     | HEAD is exact committed `P`; candidate `ABSENT`; G5 `ABSENT`; audit `ABSENT` | Request independent G5 for exact `P` commit/tree/roadmap blob/raw SHA. Keep all current-version artifacts untouched and classify them under §93 after the receipt arrives. | Audit, roots, formal reviews, activation, baseline and product work. |
+     | HEAD is exact committed `P`; candidate `ABSENT`; G5 `PENDING`; audit `ABSENT` | Wait for the exact `P` G5 result; make no tracked edit or artifact transition. | Audit, roots and all downstream work. |
+     | HEAD is exact committed `P`; candidate `ABSENT`; G5 `INVALID`; audit `ABSENT`; any canonical artifact state except `CHECKPOINT_CONFLICT` | Preserve the mismatched receipt and reconcile exact identity under §88. | Audit, roots and all downstream work. |
+     | HEAD is exact committed `P`; candidate `ABSENT`; exact G5 `FAIL`; audit `ABSENT`; artifacts `ARTIFACTS_ABSENT` | Prepare one direct-child `G5_CORRECTION` candidate binding the exact report and closing every finding. For v201, this is v202. | Audit, roots, reviews, activation, baseline and product work. |
+     | HEAD is exact committed `P`; candidate `ABSENT`; exact G5 `FAIL`; audit `ABSENT`; artifacts `ARTIFACTS_INVALID` | Preserve/quarantine every failing artifact at its original path; prepare a direct-child `G5_CORRECTION` candidate that closes the exact G5 findings and records the artifact trigger/quarantine. | Same-identity retry, new roots, reviews, activation, baseline and product work. |
+     | HEAD is exact committed `P`; candidate `VALID` with purpose `G5_CORRECTION`; exact G5 `FAIL`; audit `ABSENT`; artifacts `ARTIFACTS_ABSENT` or `ARTIFACTS_INVALID` with candidate-bound quarantine record | Verify exact parent/report/hash, all findings closed, quarantine/invalidation and fresh-root names, unchanged product blobs and roadmap-only diff; commit the child, then obtain its exact G5. | New roots, audit, formal gates, activation, baseline and product work until child G5 PASS. |
+     | HEAD is exact committed `P`; candidate `ABSENT`; exact G5 `PASS`; audit `ABSENT`; artifacts `ARTIFACTS_ABSENT` | Run only the fresh bounded prepacket audit bound to exact `P` and its PASS report. | Roots, formal reviews, activation, baseline and product work. |
+     | HEAD is exact committed `P`; candidate `ABSENT`; exact G5 `PASS`; audit `ABSENT`; artifacts `ARTIFACTS_INVALID` | Preserve/quarantine the invalid attempt; set `PLAN_UPDATE_REQUIRED`; prepare a direct-child `CONTRACT_OR_INPUT_UPDATE` candidate bound to the exact failed artifact identities. | Same-identity audit/review, roots, activation, baseline and product work. |
+     | HEAD is exact committed `P`; candidate `ABSENT`; exact G5 `PASS`; audit `PENDING`; any canonical artifact state except `CHECKPOINT_CONFLICT` | Wait for that exact audit; preserve/quarantine any already classified invalid bytes and make no same-identity artifact change while it is pending. | Roots, correction commit, formal reviews, activation, baseline and product work. |
+     | HEAD is exact committed `P`; candidate `ABSENT`; exact G5 `PASS`; audit `INVALID` | Preserve receipt and reconcile under §88; no artifact/readiness action. | Roots, reviews, activation, baseline and product work. |
+     | HEAD is exact committed `P`; candidate `ABSENT`; exact G5 `PASS`; audit `UPDATE_REQUIRED`; artifacts `ARTIFACTS_ABSENT` or `ARTIFACTS_INVALID` | Preserve/quarantine any invalid attempt; prepare a direct-child `CONTRACT_OR_INPUT_UPDATE` candidate naming every audit/artifact finding and invalidated descendant. | Same-identity roots/reviews, activation, baseline and product work. |
+     | HEAD is exact committed `P`; candidate `VALID` with purpose `CONTRACT_OR_INPUT_UPDATE`; exact G5 `PASS`; exact audit `UPDATE_REQUIRED`; artifacts `ARTIFACTS_ABSENT` or `ARTIFACTS_INVALID` with candidate-bound quarantine record | Verify the audit/finding bindings, quarantine/invalidation and fresh-root names; commit the roadmap-only child, then obtain exact child G5. | New roots, readiness, activation, baseline and product work until child G5 PASS. |
+     | HEAD is exact committed `P`; candidate `VALID` with purpose `CONTRACT_OR_INPUT_UPDATE`; exact G5 `PASS`; audit `ABSENT`; artifacts `ARTIFACTS_INVALID` with candidate-bound quarantine record | Verify the failed-artifact receipt, quarantine and invalidation; commit the roadmap-only child, then obtain exact child G5. | Same-identity audit/review, new roots, readiness, activation, baseline and product work until child G5 PASS. |
+     | HEAD is exact committed `P`; candidate `VALID` with purpose `CONTRACT_OR_INPUT_UPDATE`; exact G5 `PASS`; audit `PENDING`; any artifact state except `CHECKPOINT_CONFLICT` | Wait for the exact audit without changing tracked state; then reclassify the candidate against its finding set. | Candidate commit, roots and later gates. |
+     | HEAD is exact committed `P`; candidate `ABSENT`; exact G5 `PASS`; audit `CLEAN`; `NON_ARTIFACT_PLAN_UPDATE_REQUIRED=true`; artifacts `ARTIFACTS_ABSENT`, `ARTIFACTS_CLOSURE`, or `ARTIFACTS_COMPLETE` | Preserve/quarantine any current-version attempt; prepare a direct-child `CONTRACT_OR_INPUT_UPDATE` candidate bound to every non-artifact trigger and invalidated descendant. | Same-identity repair/review, new roots, activation, baseline and product work. |
+     | HEAD is exact committed `P`; candidate `VALID` with purpose `CONTRACT_OR_INPUT_UPDATE`; exact G5 `PASS`; audit `CLEAN`; `NON_ARTIFACT_PLAN_UPDATE_REQUIRED=true`; artifacts `ARTIFACTS_ABSENT` or `ARTIFACTS_CLOSURE/COMPLETE` with candidate-bound quarantine record | Verify the exact trigger and invalidation; commit the roadmap-only child, then obtain exact child G5. | Same-identity repair/review, new roots, readiness, activation, baseline and product work until child G5 PASS. |
+     | HEAD is exact committed `P`; candidate `ABSENT`; exact G5 `PASS`; audit `CLEAN`, `PLAN_UPDATE_REQUIRED=false`; artifacts `ARTIFACTS_ABSENT` | Create the exact current-version roots under §§93-94 and bind the current plan/G5/predecessor chain; then run the separate input, packet and recipe audits. | Formal G1a/G1b/G3, activation, baseline, build/test and product work. |
+     | HEAD is exact committed `P`; candidate `ABSENT`; exact G5 `PASS`; audit `CLEAN`, no update trigger; artifacts `ARTIFACTS_CLOSURE` | Continue only §93/§94 closure: add absent immutable items and finish bounded audits for this exact attempt. | Readiness reviews, activation, baseline and product work. |
+     | HEAD is exact committed `P`; candidate `ABSENT`; exact G5 `PASS`; audit `CLEAN`, no update trigger; artifacts `ARTIFACTS_COMPLETE` | Apply §88/§94's first-unsatisfied exact readiness row; do not recreate roots. | Activation, baseline and product work until each required gate passes. |
+     | HEAD is exact committed `P`; candidate `ABSENT`; exact G5 `PASS`; audit `CLEAN`; artifacts `ARTIFACTS_INVALID` | Preserve/quarantine the exact attempt; set `PLAN_UPDATE_REQUIRED`; prepare a direct-child `CONTRACT_OR_INPUT_UPDATE` candidate under §88/§93. | Same-identity repair/review, activation, baseline and product work. |
+     | HEAD is exact committed `P`; candidate `VALID` with purpose `CONTRACT_OR_INPUT_UPDATE`; exact G5 `PASS`; audit `CLEAN`; artifacts `ARTIFACTS_INVALID` with candidate-bound quarantine record | Verify the invalid-artifact finding and quarantine; commit the roadmap-only child, then obtain exact child G5. | Same-identity repair/review, new roots, readiness, activation, baseline and product work until child G5 PASS. |
+     | Any other candidate/receipt/artifact combination, including `ARTIFACTS_CLOSURE/COMPLETE` before G5 PASS and audit CLEAN | Preserve all evidence and reconcile under §88/§93; no row may be inferred by precedence not stated above. | Every downstream action. |
+
+     Candidate `VALID` with exact G5 PASS plus `CLEAN` audit is not a correction authorization by itself; it matches
+     no commit row unless a later exact finding has made the candidate a valid contract-update child. Every correction
+     row is a direct child with a single purpose and bound receipt set. Product and post-slice-reconciliation rows
+     remain governed by §88 after readiness/activation/baseline/execution pass; this section does not replace those
+     controls. The classifier above now covers all canonical §93 states, and every state before or after G5/audit has
+     either one exact action or the explicit fail-closed reconciliation route. The expected v201 artifact state is
+     `ARTIFACTS_ABSENT`; no v202 roots may be created before its exact G5 PASS and a clean bounded prepacket audit.
+
+     No product files were edited and no build/test/discovery was run for v202. Phase 3 Trim remains exactly §6.1
      and unimplemented; never inspect `build-asan/`.
