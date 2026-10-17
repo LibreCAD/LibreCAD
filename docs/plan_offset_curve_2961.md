@@ -24,11 +24,11 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v149 readiness and gate-contract correction**, 2026-10-17; plan-only and non-activating. Section 57 is the sole live handoff; §§39-56 are preserved history. v148 `0cd4334a29a01cd0aa24da7071c3518067b7fe6d` passed independent G5 (report SHA-256 `ef542ebc64e2efc7c4feb708605780433c17e4f85b637d844dc86f9590146d89`). A fresh `preflight-v148/` was then started but contains only its partial input manifest; preserve it unchanged as provenance, not as a review packet. That manifest also says “four A14 public exception routes,” conflicting with the normative two-route design, and does not yet seal exact A01-A14 Catch2 identities/assertions. No formal G1a/G1b/G3, activation, baseline or A-budget-depth implementation exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, and all six A-owned paths remain unchanged. Protected untracked `build-asan/` must not be listed, traversed, read, hashed or otherwise inspected; report only `not inspected by instruction`. Product edits/builds/tests remain unauthorized until a fresh v149 packet is complete, independent G1a/G1b/G3 pass on identical inputs, a separate activation checkpoint passes G5, and the activated baseline is reconciled. This file is the implementation source of truth.
+Plan **v150 live-pointer correction after v149 G5 FAIL**, 2026-10-17; plan-only and non-activating. Section 58 is the sole live handoff; §§39-57 are preserved history. v149 `6c3bba6ec1f966a3613f0ecd0f2c2b9bc31f00e4` was a plan-only direct child of v148, but its independent G5 failed on stale-current-pointer finding G5-149-1 (report SHA-256 `9dccfed162153ab10359a3b796f849ad624e3dd721f58f0d7fbe2e3c006cb415`). Preserve that report unchanged. The v149 plan's substantive gate, scope and route-count review passed; its last paragraph incorrectly still directed committing v149 after v149 was already HEAD. No v149 packet was created. The `preflight-v148/` packet remains one-file PARTIAL provenance and must remain unchanged. No formal G1a/G1b/G3, activation, baseline or A-budget-depth implementation exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, and all six A-owned paths remain unchanged. Protected untracked `build-asan/` must not be listed, traversed, read, hashed or otherwise inspected; report only `not inspected by instruction`. Product edits/builds/tests remain unauthorized until the v150 plan checkpoint passes G5, a fresh v150 packet is complete, independent G1a/G1b/G3 pass on identical inputs, a separate activation checkpoint passes G5, and the activated baseline is reconciled. This file is the implementation source of truth.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY.** v148 passed plan-checkpoint G5, but its fresh preflight is PARTIAL and not eligible for formal review; keep it unchanged. Section 57 is the live state transition and the normative sequence for the five controls. No formal G1a/G1b/G3, activation, baseline or A-budget-depth implementation exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Product edits, builds and registered tests remain unauthorized until the v149 plan checkpoint passes G5, a fresh v149 packet is complete, same-identity G1a/G1b/G3 pass, a separate activation checkpoint passes G5, and the activated baseline is reconciled. Preserve prior evidence and never inspect protected untracked `build-asan/`. Ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete; the four application file lanes, both conversions, edited reopen and binary-DXF codec support remain separate downstream obligations.
+Status: **IMPLEMENTATION INCOMPLETE; Slice A NOT READY.** v149 failed G5 on a stale live next-action pointer; preserve its report. v148's preflight is PARTIAL provenance and no v149 packet exists. Section 58 is the sole live state transition. No formal G1a/G1b/G3, activation, baseline or A-budget-depth implementation exists. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Product edits, builds and registered tests remain unauthorized until the v150 plan checkpoint passes G5, a fresh v150 packet is complete, same-identity G1a/G1b/G3 pass, a separate activation checkpoint passes G5, and the activated baseline is reconciled. Preserve prior evidence and never inspect protected untracked `build-asan/`. Ordered-chain topology, entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete; the four application file lanes, both conversions, edited reopen and binary-DXF codec support remain separate downstream obligations.
 Historical v68 amendment: clarifies file-support acceptance and retains the v67 product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, with all four recorded product source/test hashes unchanged. The exact-membership `preflight-v67/` packet is PARTIAL provenance (latest packet-manifest SHA-256 `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`), not a formal gate receipt. The G4 hidden-cusp clearance proof and C50 correction remain normative: the cusp-only candidate is separated from all visible spans and must refuse as `OffCurve` before terminal/topology matching; B07 separately tests absence of a cusp `ReferenceTerminal`, and C36 retains fully witnessed `Topology` coverage. The five controls remain mandatory per slice: separate completeness and plan-correctness gates; frozen-tree implementation correctness; an executable, independently reviewed sub-plan/readiness decision; one validated product commit followed by its plan-only reconciliation; and a post-commit live-state audit/self-update before any successor. Slice A remains WAITING; G1 completeness, G1 plan correctness, Gate-3 readiness and activation are not passed. A/B/C baseline discovery remains zero and strict-core remains 61 matching normalized identities in Release/ASan; no registered tests ran. No product/test edit, build, JUnit execution, formal Gate PASS, readiness PASS or activation occurred. DXF read, DXF write, DWG read and DWG write are separate open application obligations; both conversion directions and the separate R14/R2018 binary-DXF codec obligation also remain open. Geometry-only checker evidence satisfies none.
 Historical v81 reconciled the six-path A scope, A14 selector, split-debit oracle, activation-bound test identities and post-edit validator. Its packet and review findings are preserved as immutable provenance; its live pointers are superseded below. The five control families and six gate decisions (G1a/G1b/G2/G3/G4/G5) remain independently recorded and fail-closed. §0.5 retains detailed leaf specifications and historical handoffs; §29 is the sole authority for the current gate state and immediate next action. Preserve the v81 and v80 packets/reviews, the v77 PARTIAL packet and invalid v79 draft. The four independent application obligations—DXF read, DXF write, DWG read and DWG write—plus both conversions and binary-DXF codec work remain later 1E gates.
 Historical v82 corrected stale handoff pointers and bound the one-shot/retained exception-transfer and source-bound baseline requirements, but did not pass G1a/G1b. Its copied v81 packet remains preserved as `preflight-v82-stale-copy-from-v81/`, not a v82 evidence packet. v82 retained the hard 1E file-support contract described below.
@@ -16189,8 +16189,9 @@ v107 plan-correctness review.
 
     **G3 one-leaf readiness card.** Before work on any leaf, freeze one card with: actual parent HEAD and source/API
     fingerprints; exclusive path ownership; requirement/test/assertion crosswalk; dependency DAG; exact commands and
-    executable paths/versions; clean, isolated build and evidence roots; expected selector/discovery/JUnit/assertion
-    identities; pre-edit baseline and skip comparison; estimated resource/time envelope; independent oracles; recovery
+    executable paths/versions; fresh isolated build and evidence roots outside every protected path; expected
+    selector/discovery/JUnit/assertion identities; pre-edit baseline and skip comparison; estimated resource/time
+    envelope; independent oracles; recovery
     and stop conditions; and exactly one commit boundary. The card must say which commands are source inspection only,
     which configure/build, and which execute registered tests. A blank, guessed, inherited or “to be decided” field
     keeps the card WAITING. For Slice A, the six listed product/test paths form one atomic leaf: A01-A14 are ordered
@@ -16263,7 +16264,48 @@ v107 plan-correctness review.
     | Baseline reconciled; Slice A G3 remains READY | Implement only the approved six-path slice; validate, pass post-edit completeness/G2, and execute G4/G5. | B/C, entity, file, UI or phase-2 successors. |
     | Product commit exists; plan reconciliation/G5 pending | Commit the plan-only direct child and obtain semantic readback. | Any successor edit/build/test/activation/readiness claim. |
 
-    **Current decision.** v149 is plan-only, non-activating and not yet committed/reviewed. Slice A remains WAITING.
-    The immediate action is to complete and commit this single-roadmap correction, then obtain its independent G5.
-    Only v149 G5 PASS authorizes a fresh v149 preflight packet; it does not authorize implementation. The v148 packet
-    remains PARTIAL provenance, and the protected build directory remains not inspected by instruction.
+    **v149 candidate decision (historical; superseded by §58).** At authoring time v149 was uncommitted and its
+    immediate action was commit followed by G5. The committed v149 plan later failed G5-149-1 because this paragraph
+    was not reconciled after commit. It is retained here only to explain the finding; it is not a live instruction.
+
+58. **v150 correction after stale v149 handoff (live; plan-only; non-activating).** This direct-child correction
+    preserves v149 and its failed audit report as immutable history. It changes only current-state authority and does
+    not alter the five controls, product scope or Slice-A acceptance criteria.
+
+    **Observed checkpoint and finding.** v149 commit `6c3bba6ec1f966a3613f0ecd0f2c2b9bc31f00e4` is a plan-only
+    direct child of v148 `0cd4334a29a01cd0aa24da7071c3518067b7fe6d`; its plan blob is
+    `cda95faea88c381bfa5178784ea8ce838e2a4e5e` and file SHA-256 is
+    `cfd2d4276178e19bf60798eaa530dbdf78a36bed41635b258647fc043b568160`. The independent G5 report
+    `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v149/g5-auditor-report.txt` has SHA-256
+    `9dccfed162153ab10359a3b796f849ad624e3dd721f58f0d7fbe2e3c006cb415` and returns FAIL, finding G5-149-1 only.
+    The auditor verified HEAD, parent, one-path scope, plan blob/hash, all six product/test blobs against the product
+    base, v148 G5 report hash, and the exact v148 manifest's PARTIAL state. It found the final §57 paragraph still
+    called v149 uncommitted and directed committing it, while §57's state table correctly required G5. The correction
+    is to mark that paragraph historical (done here) and designate §58 as the only current authority. The report
+    records no other semantic finding or process breach. No v149 packet, formal gate, activation, baseline, product
+    G1a/G1b/G3, activation, baseline or product edit/build/test exists. Preserve `preflight-v148/` unchanged; do not
+    create `preflight-v149/`.
+
+    **Current v150 state and permitted action.** This plan-only candidate is based on v149 and is not yet committed or
+    audited. Slice A remains WAITING; all six product/test blobs remain at product base
+    `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Verify this candidate using only §56's bounded tracked-object checks,
+    commit only `docs/plan_offset_curve_2961.md` as the direct child of v149, then obtain independent G5 against that
+    exact commit. The G5 report must confirm the sole changed path, direct ancestry, committed plan blob/file hash,
+    unchanged six product blobs, preserved v148/v149 report hashes, current pointers and the no-inspection rule.
+    `build-asan/` remains not inspected by instruction. Do not run builds, tests, discovery, activation or product work.
+
+    **State-driven handoff.**
+
+    | Observed state | Sole permitted next action | Forbidden until it passes |
+    |---|---|---|
+    | v149 committed; G5 FAIL G5-149-1 | Preserve the exact report/hash; prepare this v150 plan-only correction. | Any v149 packet/formal review, activation, baseline or product work. |
+    | v150 plan candidate; HEAD is v149 | Verify direct parent, sole tracked plan path, whitespace and unchanged six product blobs with §56 bounded checks; commit only the plan. | Packet assembly, formal reviews, activation, baseline or product work. |
+    | v150 committed; G5 absent | Obtain independent exact-identity G5 and preserve its auditor-authored report. | Fresh packet, G1a/G1b/G3, activation, baseline or product work. |
+    | v150 G5 FAIL | Preserve report/hash; make the next direct-child plan-only correction and repeat G5. | Any packet or gate based on failed v150; activation, baseline or product work. |
+    | v150 G5 PASS; packet absent | Preserve v148 PARTIAL and v149 failed-checkpoint evidence; build a fresh exact-membership `preflight-v150/` from current source. | G1a/G1b/G3, activation, baseline or product work. |
+    | Fresh v150 packet PARTIAL/incomplete | Complete only its source-led rows; keep PARTIAL until hash and semantic closure. | Formal reviews, activation, baseline or product work. |
+    | Fresh packet complete; G1a/G1b/G3 not all PASS on identical inputs | Obtain each distinct decision or correct under a new plan/packet identity. | Activation, baseline or product work. |
+    | Same-identity G1a/G1b/G3 PASS | Create the separate activation checkpoint, pass its G5, then run/reconcile the authorized baseline. | Product edits/tests until baseline reconciliation passes. |
+
+    No v150 G5 PASS exists yet. This correction is not authorization for packet assembly or implementation. Section 58
+    remains the sole live handoff until a later observed-state plan checkpoint supersedes it.
