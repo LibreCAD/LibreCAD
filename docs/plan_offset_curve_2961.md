@@ -24,7 +24,7 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v134 G5-failure correction**, 2026-10-17; non-activating. Current chain: v132 `e17122f2e1fcbd38072bd68d213e44e871321b60` has G5 PASS; v133 `10864812cfaf9d4a7bba3e3f5af065c0ce9fccf0` is an immutable one-file plan checkpoint with G5 FAIL on one P1 header/handoff contradiction. Preserve its report (SHA-256 `cbf88df12a6b302eaa52257629895657c25d7a9b8d886353f1bf0c36d1c7ed99`) and coordinator receipt (SHA-256 `5186c88ef772537607a78ea4793664c82d0e112ead79f4f5679577899329e164`) unchanged. Section 42 is the sole live handoff; §§39-41 are historical. v132's packet remains partial/stale, v133 has no review packet, and there are no current G1a/G1b/G3, activation, baseline or product implementation results. v134 is the next unique plan-only correction and is not an activation. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Preserve prior evidence and the untracked `build-asan/` entry without inspection. Product edits/builds/tests remain unauthorized until v134 G5 passes, a fresh exact-identity v134 packet and G1a/G1b/G3 pass, a distinct next-version activation checkpoint passes its own G5, and the activated baseline is reconciled. This file is the implementation source of truth.
+Plan **v135 G5-failure correction**, 2026-10-17; non-activating. Current chain: v132 `e17122f2e1fcbd38072bd68d213e44e871321b60` has G5 PASS; v133 `10864812cfaf9d4a7bba3e3f5af065c0ce9fccf0` failed on a P1 header contradiction; v134 `f01e4e2eb408688ad5b9beabde2e09314433e7f4` failed on a P1 stale detailed A-readiness row. Preserve both failed reports and coordinator receipts unchanged. v135 is the next unique plan-only correction and is not an activation. Section 43 is the sole live handoff; §§39-42 are historical. v132's packet remains partial/stale; v133/v134 have no fresh implementation-review packet, and there are no current G1a/G1b/G3, activation, baseline or product implementation results. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Preserve prior evidence and the untracked `build-asan/` entry without inspection. Product edits/builds/tests remain unauthorized until v135 G5 passes, a fresh exact-identity v135 packet and G1a/G1b/G3 pass, a distinct next-version activation checkpoint passes its own G5, and the activated baseline is reconciled. This file is the implementation source of truth.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
@@ -272,7 +272,7 @@ Execution states: `pending`, `in progress`, `validated`, `committed — reconcil
 `done — <implementation sha>, <evidence id>, <date>`, `needs revision`, `needs decision`, `blocked`, and
 `deferred — user publication action`. Readiness is separate (§0.3): `ready`, `conditional`, or `waiting`.
 A commit alone does not mean done; verification, review and the post-commit plan checkpoint are required.
-Section 42 is the sole live handoff and supersedes the stale current-state pointers in §§39-41. v132 G5 passed; v133 G5 failed with one P1 because the top header still prescribed the superseded v132 packet/review and v133 activation flow. Its exact report and coordinator receipt are preserved under `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v133/`. v132's packet is partial and stale; no v133 packet/reviews, v134 correction G5, activation, baseline or product implementation exists. The next action changes only when matching Git/evidence proves its prerequisite complete; a failed or missing receipt blocks successors. Sections 29-41 are historical and their former live handoffs are superseded. Do not infer gate status from this paragraph; consult receipts bound to current HEAD. Sections 0.3-0.8 and §30 remain the technical/leaf-plan reference; §§39-42 are the normative operational refinement where older wording conflicts.
+Section 43 is the sole live handoff and supersedes the stale current-state pointers in §§39-42. v132 G5 passed; v133 G5 failed on the header pointer; v134 G5 failed because the detailed A-budget-depth row still made v81-v83 current. Both failure reports and identity receipts are preserved under their checkpoint directories. v132's packet is partial and stale; no v135 packet/reviews, v135 correction G5, activation, baseline or product implementation exists. The next action changes only when matching Git/evidence proves its prerequisite complete; a failed or missing receipt blocks successors. Sections 29-42 are historical and their former live handoffs are superseded. Do not infer gate status from this paragraph; consult receipts bound to current HEAD. Sections 0.3-0.8 and §30 remain the technical/leaf-plan reference; §§39-43 are the normative operational refinement where older wording conflicts.
 
 | Step | Title | PR | Depends on | Size (LOC, product + tests) | Status |
 |---|---|---|---|---|---|
@@ -283,7 +283,7 @@ Section 42 is the sole live handoff and supersedes the stale current-state point
 | 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | done — 0e3c6b342, 0B-3 reports/card; one pinned baseline generated-MLEADER DWG gap, 2026-10-15 |
 | 1A-1 | Closed forms, normalization, tolerance helpers and cache validation | C | S0 | 900 | partial — .a/.b-budget/.b-progress/.b-ref-frames/.b-ref-events-core/.b-ref-rate/.b-ref-events-critical/.b-ref-events-accounting/.b-ref-events-refine/.b-ref-critical-refine/.b-ref-providers/.b-ref-contacts/.b-ref-events-isolate/.b-ref-components/.b-check-layout/.b-check-bounds/.b-check-topology-local done; A-budget-depth, B-occurrence-terminals, C-global-topology-checker pending |
 | 1A-1.b-ref-components | Exact visibility and incidence-preserving components | C | .b-ref-events-isolate | 900 | done — `9682d5cac65f30cfd86aa10556678ceb88b1448b`, attempt-8 evidence, 2026-10-16 |
-| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900 | waiting — A remains incomplete; current checkpoint and next-action authority is the state-dependent handoff in §42; no baseline or product work before same-identity G1a/G1b/G3 and a separate activation G5 |
+| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900 | waiting — A remains incomplete; v134 G5 FAIL is preserved and v135 is the current non-activating plan correction (§43); no packet/reviews, baseline or product work until the current checkpoint and fresh gates pass |
 | B-occurrence-terminals | Immutable occurrence-specific terminal publication | C | A-budget-depth product and plan checkpoint | 500 | waiting — no implementation before A reconciliation |
 | C-global-topology-checker | Complete directed path, coverage, cut and cycle validation | C | A-budget-depth and B-occurrence-terminals product/checkpoints | 1200 | waiting — no implementation before A and B reconciliation |
 | 1A-2 | Enumerator; persistent entity core and factory for already validated results; clone, `toPlainSpline`, normalisation, stamp, transforms; `writeEntity` case; INSERT capability; 0B row; interim Edit Properties guard | C | 0B-3, 1A-1 | 900 | pending |
@@ -585,7 +585,7 @@ not validation evidence. Aggregates are never executable cards or extra implemen
 | 1A-1.a | Done at a4690db08 | Normalization/local-frame/closed forms, robust source distance and tolerance helpers; 17 cases/2538 assertions pass Release/ASan, existing regressions and both fast lanes pass. |
 | 1A-1.b | Aggregate; budget/progress/reference/layout/bounds and local topology done; budget-depth and global topology pending | Parent-only progress; layout, bounds and local certificates do not establish a complete cache-validity result. `.b-check-topology-local` is committed at `ef3ba756b52796c02b8490caedcaa48b8db69605` with its verified immediate plan checkpoint `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. A-budget-depth is the first remaining executable child; the ordered-chain children follow its reconciled checkpoint. 1A-2 consumes the eventual typed result. No separate aggregate implementation commit. |
 | 1A-1.b-check-topology-local | Done — implementation `ef3ba756b52796c02b8490caedcaa48b8db69605` plus verified immediate v29 plan-only reconciliation `9c06e9c77b313b62cc20e9ec39c22952fee501f2` | Add bounded local candidate/reference monotonicity certificates, preserve exact edge/occurrence/node identity, and refine only through the shared geometric pair-proof helper. Expose local proof status only; no full-cache validity result. Three geometry files, 20 focused cases, independent rational derivative oracle, all required gates and two scoped commits. |
-| A-budget-depth | WAITING — v81 G1a/G1b failed; v82 split oracle is superseded as semantically incorrect; v83 source audit and fresh packet/reviews pending; no activation | Depends on completed layout, bounds and local topology children plus product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; owns shared work/depth/capacity behavior only. R02/R12/R13 apply. All R05 producer behavior, including one-piece adoption into the document, repeated-offset and fallback, belongs to 1B/1C/1F. 1A-2 supplies only the reusable entity API for an already checker-validated result; it is context, not an R05 owner or A completion dependency. |
+| A-budget-depth | WAITING — current checkpoint is v135, a non-activating correction after v134 G5 FAIL; see §43. The v81-v83 packet/review history is historical only. No fresh v135 packet, G1a/G1b/G3, activation or baseline exists. | Depends on completed layout, bounds and local topology children plus product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; owns shared work/depth/capacity behavior only. R02/R12/R13 apply. All R05 producer behavior, including one-piece adoption into the document, repeated-offset and fallback, belongs to 1B/1C/1F. 1A-2 supplies only the reusable entity API for an already checker-validated result; it is context, not an R05 owner or A completion dependency. |
 | B-occurrence-terminals | WAITING — blocked on A's product commit and direct-child plan reconciliation | Publishes only producer-backed occurrence-specific terminals after full continuation analysis; no global validity result. |
 | C-global-topology-checker | WAITING — blocked on A and B commits/checkpoints | Proves candidate-compatible complete directed paths, selected-path coverage, transitions, cuts, cycles and refusal reasons; entity adoption remains 1A-2. |
 | 1A-1.b-check-topology-chain | Aggregate parent — no separate implementation commit | Its executable leaves are A-budget-depth, B-occurrence-terminals and C-global-topology-checker in that dependency order. The aggregate remains incomplete until all three leaves are independently committed and reconciled. |
@@ -14625,3 +14625,60 @@ v107 plan-correctness review.
     G5 PASS does not transfer to v133/v134; its partial packet is stale. No v134 G5, fresh packet, G1a/G1b/G3,
     activation, baseline or product implementation is claimed. Re-evaluate all facts from actual Git objects and
     immutable receipts after committing this correction. The #2961 implementation objective remains incomplete.
+
+43. **v135 detailed-readiness pointer correction after v134 G5 FAIL (plan-only; non-activating).** This is the
+    next-unused-version, one-file plan-only correction, a direct child of failed v134
+    `f01e4e2eb408688ad5b9beabde2e09314433e7f4`. It supersedes §42 as the sole live handoff, repairs the stale
+    A-budget-depth row in the detailed implementation table, and aligns the header and both current A status rows.
+    It does not change product scope or authorize implementation. Preserve §§39-42 and every failed audit as
+    immutable history.
+
+    **Preserved v134 G5 failure.** The independent report is
+    `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v134/g5-auditor-report.txt` (SHA-256
+    `64bdd33a7ced5fe78b7ed3c6e76701e721c5b0b30f6a16c12fa4fab835a2b649`); the coordinator identity receipt is
+    `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v134/coordinator-identity-receipt.txt` (SHA-256
+    `f3edaeb26af77a91d5852f340193f99a243e0a826d008fbf70477b88a0f370fe`). Reviewer Russell's exact parent-visible
+    ID is `01a14948-806f-79d3-a62b-3073caded206`. The report verified v134 commit
+    `f01e4e2eb408688ad5b9beabde2e09314433e7f4`, parent `10864812cfaf9d4a7bba3e3f5af065c0ce9fccf0`, sole changed
+    path `docs/plan_offset_curve_2961.md`, committed blob `1e87f97d35c7439521d70e78dd79774de2371490`, and plan
+    SHA-256 `f9c6391e183ee35c1b461b49305ebb2b170aa2c25c3e3cf6444b950c431f9dcd`. Its sole P1 finding is that the
+    detailed A-budget-depth table still described v81-v83 reviews as current even though §42 had advanced to v134.
+    The previous v81-v83 facts remain historical evidence; they no longer describe current readiness. Preserve the
+    failure artifacts byte-for-byte.
+
+    **Current evidence and readiness.** v132 G5 PASS, v133 G5 FAIL and v134 G5 FAIL are bound to their separate
+    checkpoint identities; no receipt transfers across versions. `preflight-v132/` remains a seven-of-eight-payload
+    partial packet without its independent-output-oracle ledger or manifest. Do not use or amend it for v135. There
+    is no fresh v133, v134 or v135 preflight/helper/recipe package, no current G1a/G1b/G3 decision, no activation and
+    no baseline. The v133 and v134 failure reports/receipts are preserved in their respective checkpoint folders.
+    No product build/test has been run and `build-asan/` remains uninspected.
+
+    **Corrective rule and next actions.** v134 is consumed by G5 FAIL; v135 is the next unique, non-activating plan
+    correction. The header, §0 handoff, top-level A-budget-depth status row and detailed implementation-table row must
+    all point to §43/v135 and state that v134 failed. Any v81-v83 readiness or packet language elsewhere remains
+    explicitly historical and cannot be read as current. Before committing, search all current summaries/cards for
+    stale active versions; verify the v133/v134 report and receipt hashes, direct-child ancestry, one-path staged set,
+    and `git diff --check`. Commit only this roadmap as a direct child of v134, then obtain independent G5 on exact
+    commit/parent/path/blob/SHA. If v135 fails, preserve the report and correct using the next unused version; do not
+    reuse v135. If it passes, create a fresh exact-membership v135 packet/helper/recipe set and close all content-level
+    oracle rows before G1a/G1b/G3. Only after same-identity G1a/G1b/G3 all PASS may the next unused version be a
+    separate activation checkpoint, with its own G5 and baseline. Any intervening plan correction consumes its own
+    version and moves activation forward.
+
+    | Observed state | Sole next action | Forbidden until it passes |
+    |---|---|---|
+    | v134 committed; G5 FAIL preserved; this v135 correction uncommitted | Check the current summary and detailed A row against §43; commit only this one-file correction as a direct child. | Reusing v132 partial evidence; packet/reviews, activation, baseline or product work. |
+    | v135 committed; G5 absent | Obtain independent G5 bound to exact v135 commit, parent, path, blob and SHA. | Fresh packet/reviews, activation, baseline or product work. |
+    | v135 G5 FAIL | Preserve the report; use the next unused version for a direct-child correction and obtain fresh G5. | Reusing failed version/evidence; activation, baseline or product work. |
+    | v135 G5 PASS; fresh v135 package incomplete | Build and content-validate the exact v135 packet/helper/recipe set from current source/toolchain. | G1a/G1b/G3, activation, baseline or product work. |
+    | Fresh package complete; same-identity G1a/G1b/G3 not all PASS | Obtain separate reviews; correct any plan issue in a new version and restart invalidated gates. | Activation, baseline or product work. |
+    | Same-identity G1a/G1b/G3 PASS; activation absent | Commit the separate activation at the next unused version (v136 only if no correction intervenes), then obtain its G5. | Baseline and product work. |
+    | Activation G5 PASS; baseline unreconciled | Run only the authorized pre-edit baseline/registration checks. | Slice A product/test edits and registered C++ test execution. |
+    | Baseline reconciled and A still READY | Implement only the approved atomic six-path Slice A; satisfy A01-A14 positive discovery, execution and assertion floors before G2/G4. | Unreviewed scope or successor slices. |
+    | Any product slice committed; direct-child reconciliation/G5 incomplete | Immediately reconcile actual Git/evidence and obtain G5. | Any successor build/test/edit/activation. |
+
+    At §43 authoring, v134 is an immutable G5 FAIL and v135 is the sole proposed plan-only correction. The two current
+    A-budget-depth status rows now identify §43; the v81-v83 packet/review records remain historical. The v132 PASS
+    does not transfer to later identities. No v135 G5, fresh packet, G1a/G1b/G3, activation, baseline or product
+    implementation is claimed. Re-evaluate all state from Git objects and immutable receipts after committing this
+    correction. The #2961 implementation objective remains incomplete.
