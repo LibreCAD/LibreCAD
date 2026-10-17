@@ -24,6 +24,16 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–3
 
+**Current revision v201 (plan-only; non-activating).** Its exact predecessor is v200 commit
+`42538dcc56a07db52bde783285708c9f6dce7916`, parent `f3cddb4893e08f9b0a4533b36c39672a4e21214c`, tree
+`58160773d4a7bb4cb5a917b35805561e8e4fa629`, roadmap blob `2d82b1bb01993d8ed11b8ec66e367f5a0cf39f64`, raw
+SHA-256 `00536e84976a4119148494f3401586297e96c9ac06c8f5e1ebc99ab0cf996561`. Its exact G5 FAIL report is
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v200/g5-auditor-report.txt` (SHA-256
+`26846f4c5c9184866d272874c2c152cbf46e434caec51f9ee3459d79b2bde985`). G5 verified the A11 arithmetic and A12
+shared-cap corrections; its sole finding is the post-commit transition table. Section §109 is the live authority.
+The following v200 header/status and §108 pointer are predecessor history, superseded here. No v200 input, preflight
+or recipe roots exist. Product base remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; do not access `build-asan/`.
+
 **Current revision v200 (plan-only; non-activating).** Its exact predecessor is v199 commit
 `f3cddb4893e08f9b0a4533b36c39672a4e21214c`, parent `d7ca230579ecc7b93faa5ad8ba984fcb1af86539`, tree
 `e924fad642e2defc4b7f41009d2a1d97a01b34a4`, roadmap blob `52cb584cba6dbb80d26eeb9b3501e5679201c860`, raw
@@ -316,7 +326,7 @@ reconciled baseline or A-budget-depth implementation. Product source remains
 independently authorize work; §56 remains normative only for its bounded Git-object/protected-path procedure. Do not
 inspect protected `build-asan/`; report `not inspected by instruction`.
 
-Select exactly one row from the latest versioned transition-authority section (currently §108) using observed HEAD,
+Select exactly one row from the latest versioned transition-authority section (currently §109) using observed HEAD,
 artifact state and receipts. §93 specifies the input-bundle contract; it is not a transition table. If zero or multiple
 rows match, stop for plan-only correction. No prose status independently authorizes packet, review, activation,
 baseline, build/test or product work.
@@ -22164,3 +22174,67 @@ The provider's unique tangency proof
      closed by arithmetic corrections. No v200 roots may be created in that state. No product files were edited and
      no build/test/discovery was run for v200. Phase 3 Trim remains exactly §6.1 and unimplemented; never inspect
      `build-asan/`.
+
+109. **v201 exhaustive transition-state correction (plan-only; non-activating).** This direct child binds the exact
+     v200 commit and G5 FAIL report in the v201 header. Preserve that report unchanged. It replaces §108's
+     incomplete transition table and closes its single G5 finding; it does not close A07-A14 design oracles or change
+     `PLAN_UPDATE_REQUIRED=true`. No product edits, roots, formal reviews, activation, baseline, build/test or
+     discovery are authorized.
+
+     **State axes.** Classify using `(HEAD, candidate-layer, G5-receipt, audit-receipt, artifact-state)`; select a
+     row only when every predicate matches. Relative to the exact HEAD, candidate layer is exactly one of:
+     `ABSENT` (no staged or tracked worktree delta), `VALID` (one direct-child, roadmap-only candidate binds the
+     exact HEAD identity and all receipts required by its row, preserves pinned product blobs, and passes
+     `git diff --check`), or `INVALID` (any nonempty candidate failing one or more predicates). Never enumerate
+     untracked files or access `build-asan/`. G5 receipt is `ABSENT`, `PENDING`, exact-identity `PASS`,
+     exact-identity `FAIL`, or `INVALID` (stale/mismatched identity). Audit receipt is `ABSENT`, `PENDING`, exact-
+     identity `UPDATE_REQUIRED`, exact-identity `CLEAN`, or `INVALID`; a valid audit must bind the exact committed
+     plan and exact G5 PASS. Artifact state is `ABSENT` or `PRESENT_INVALID/PARTIAL`; only absent roots can be newly
+     created. A G5 or audit action requires no successor candidate in the tracked index/worktree, matching the
+     reviewer's empty bounded-diff precondition.
+
+     **v200 pre-commit candidate rows (HEAD must be exact v199).** A valid row also requires the exact v199 G5 FAIL,
+     audit `ABSENT`, and artifact state `ABSENT`; every other receipt/artifact combination falls to reconciliation.
+
+     | Exact observed tuple | Sole next action | Blocked |
+     |---|---|---|
+     | HEAD exact v199; exact v199 G5 `FAIL`; audit `ABSENT`; artifacts `ABSENT`; v200 candidate `ABSENT` | Prepare one direct-child roadmap-only v200 correction for G5-001. | Audit, roots, formal reviews, activation, baseline, build/test/discovery and product edits. |
+     | HEAD exact v199; exact v199 G5 `FAIL`; audit `ABSENT`; artifacts `ABSENT`; v200 candidate `VALID` | Verify parent, report hash, path scope, product blobs and diff check; commit v200. | Audit, roots and implementation. |
+     | HEAD exact v199; v200 candidate `INVALID` | Preserve bytes; reconcile under §88 without committing or layering another candidate. | All later work. |
+     | Any other exact-v199 tuple | Preserve evidence and reconcile under §88. | Every downstream action. |
+
+     **Committed v200 receipt/action rows.** At exact v200 HEAD, candidate layer denotes a possible v201 successor.
+     The rows are disjoint by candidate state first, then receipt state. Any unlisted combination is reconciliation,
+     never permission by first-match precedence.
+
+     | Exact observed tuple | Sole next action | Blocked |
+     |---|---|---|
+     | HEAD exact v200; candidate `INVALID`; any receipt/artifact state | Preserve bytes and reconcile under §88. | G5/audit actions, roots, reviews, activation, baseline and product work. |
+     | HEAD exact v200; candidate `VALID`; exact v200 G5 `FAIL`; audit `ABSENT`; artifacts `ABSENT` | Verify v201 closes every exact finding and path/receipt predicate; commit v201. | Audit, roots and implementation. |
+     | HEAD exact v200; candidate `VALID`; exact v200 G5 `PASS`; exact v200 audit `UPDATE_REQUIRED`; artifacts `ABSENT` | Verify v201 closes every audit blocker and path/receipt predicate; commit v201. | Roots and implementation. |
+     | HEAD exact v200; candidate `VALID`; any other G5/audit/artifact tuple | Preserve candidate and reconcile under §88; do not G5-review, audit, commit or create roots. | All downstream work. |
+     | HEAD exact v200; candidate `ABSENT`; G5 `ABSENT`; audit `ABSENT`; artifacts `ABSENT` | Request independent G5 for exact v200 commit/tree/blob/raw SHA. | Audit, roots, formal reviews, activation, baseline and product work. |
+     | HEAD exact v200; candidate `ABSENT`; G5 `PENDING`; audit `ABSENT`; artifacts `ABSENT` | Wait for exact v200 G5; take no other transition. | Audit, roots and product work. |
+     | HEAD exact v200; candidate `ABSENT`; G5 `INVALID`; audit `ABSENT`; artifacts `ABSENT` | Preserve receipt; reconcile its exact identity under §88. | Audit, roots and product work. |
+     | HEAD exact v200; candidate `ABSENT`; exact v200 G5 `FAIL`; audit `ABSENT`; artifacts `ABSENT` | Prepare one direct-child v201 plan correction closing all exact G5 findings. | Audit, roots and implementation. |
+     | HEAD exact v200; candidate `ABSENT`; exact v200 G5 `PASS`; audit `ABSENT`; artifacts `ABSENT` | Run the fresh bounded prepacket audit for exact v200 and its predecessor receipts only. | Roots, formal reviews, activation, baseline and product work. |
+     | HEAD exact v200; candidate `ABSENT`; exact v200 G5 `PASS`; audit `PENDING`; artifacts `ABSENT` | Wait for that exact bounded audit; take no other transition. | Roots and product work. |
+     | HEAD exact v200; candidate `ABSENT`; exact v200 G5 `PASS`; audit `INVALID`; artifacts `ABSENT` | Preserve receipt; reconcile its identity/content under §88. | Roots, reviews and product work. |
+     | HEAD exact v200; candidate `ABSENT`; exact v200 G5 `PASS`; exact audit `UPDATE_REQUIRED`; artifacts `ABSENT` | Prepare one direct-child v201 plan correction naming every open oracle and invalidated descendant. | Same-identity roots, formal reviews, activation, baseline and product work. |
+     | HEAD exact v200; candidate `ABSENT`; exact v200 G5 `PASS`; exact audit `CLEAN`; artifacts `ABSENT` | Create fresh versioned roots under §§93-94, then perform their separate audits and formal gates. | Activation, baseline and product work until all applicable gates pass. |
+     | HEAD exact v200; candidate `ABSENT`; exact v200 G5 `PASS`; exact audit `CLEAN`; artifacts `PRESENT_INVALID/PARTIAL` | Preserve all bytes and reconcile under §88; do not promote partial roots. | Formal reviews, activation, baseline and product work. |
+     | Any tuple not matching exactly one row | Preserve evidence and reconcile under §88; do not infer priority or a next step. | Every downstream action. |
+
+     Exact receipts bind the full committed plan identity, not just a version label. Audit states other than
+     `ABSENT/PENDING` are valid only after exact G5 PASS; any such receipt beside G5 ABSENT/PENDING/FAIL is an
+     unmatched tuple and must reconcile. Artifact state must be `ABSENT` for every non-root action; partial or
+     present roots cannot be silently ignored. Thus a valid v201 candidate is commit-ready only after exact v200
+     G5 FAIL or exact v200 G5 PASS plus an exact `UPDATE_REQUIRED` audit; a clean tree with no candidate is required
+     for G5/audit/root actions.
+
+     The expected v200 audit remains `UPDATE_REQUIRED` because §107's A07-A14 oracles remain open; therefore no
+     v200 roots may be created. The v199 A12 `1/1/3,total=5` forced-split count is superseded by §108's A12
+     `1/1/1,total=3`; `1/1/3,total=5` belongs only to the separate retained A14 snapshot.
+
+     No product files were edited and no build/test/discovery was run for v201. Phase 3 Trim remains exactly §6.1
+     and unimplemented; never inspect `build-asan/`.
