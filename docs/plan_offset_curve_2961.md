@@ -24,13 +24,13 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–2
 
-Plan **v80**, 2026-10-16 (make the five-control sequence non-bypassable, require independent implementation review, and repair the live packet handoff). This file is the implementation source of truth.
+Plan **v81**, 2026-10-16 (reconcile Slice-A scope, six-path recipes, A14 execution and activation-bound test baselines). This file is the implementation source of truth.
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE.** Geometry bounds and local-topology children are committed; ordered-chain topology, later entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. v80 is a non-activating plan-only correction based on committed v79 `e9bd540924eacce1711d97141b3a8ea9ce671cd7`; product source remains at `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. It closes operator-flow shortcuts, enforces independent G2 review, and repairs stale packet pointers. The v77 packet (`preflight-v77/`, manifest SHA-256 `c1c963ec14245bd253bc8fdfeb209873c20a438ab3b3b0081fdbadf46eaafb92`) remains immutable PARTIAL provenance. The assembled v79 packet draft exists but its copied manifest fails all seven payload checksums; preserve it as integrity-invalid PARTIAL provenance and do not use it for review or activation. No formal G1a/G1b/G3 PASS or activation exists. A-owned source/debit/capacity/runtime closure and exact independent A01-A14 snapshots/oracles remain incomplete. No product edit, build or registered test was performed. Historical implementation evidence and earlier checkpoint narratives do not authorize a successor slice.
+Status: **IMPLEMENTATION INCOMPLETE.** Geometry bounds and local-topology children are committed; ordered-chain topology, later entity integration, DXF/DWG persistence, UI and phase 2 remain incomplete. v81 is a non-activating plan-only correction based on v80 `c708490cd3372376a9b2126773c783d7cd07e4e9`; product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Independent v80 reviews found the active Slice-A scripts omitted two owned paths, the executable validator did not run A14, fresh activation-bound test identities were not consumed, and A completeness mixed downstream R05/C obligations into A. The checksum-valid v80 packet (manifest SHA-256 `8963131a53e569951f4d1a6d508f076f6726857aa0319c70b5c733ef2b69b591`) remains immutable PARTIAL provenance, not a gate receipt. Preserve the v77 PARTIAL packet and the checksum-invalid v79 draft unchanged. G1a/G1b/G3 remain pending on the corrected v81 plan and fresh v81 packet; no activation exists. A-owned source/debit/capacity/runtime closure and exact independent A01-A14 snapshots/oracles remain incomplete. No product edit, build or registered test was performed. Historical implementation evidence and earlier checkpoint narratives do not authorize a successor slice.
 Historical v68 amendment: clarifies file-support acceptance and retains the v67 product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, with all four recorded product source/test hashes unchanged. The exact-membership `preflight-v67/` packet is PARTIAL provenance (latest packet-manifest SHA-256 `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`), not a formal gate receipt. The G4 hidden-cusp clearance proof and C50 correction remain normative: the cusp-only candidate is separated from all visible spans and must refuse as `OffCurve` before terminal/topology matching; B07 separately tests absence of a cusp `ReferenceTerminal`, and C36 retains fully witnessed `Topology` coverage. The five controls remain mandatory per slice: separate completeness and plan-correctness gates; frozen-tree implementation correctness; an executable, independently reviewed sub-plan/readiness decision; one validated product commit followed by its plan-only reconciliation; and a post-commit live-state audit/self-update before any successor. Slice A remains WAITING; G1 completeness, G1 plan correctness, Gate-3 readiness and activation are not passed. A/B/C baseline discovery remains zero and strict-core remains 61 matching normalized identities in Release/ASan; no registered tests ran. No product/test edit, build, JUnit execution, formal Gate PASS, readiness PASS or activation occurred. DXF read, DXF write, DWG read and DWG write are separate open application obligations; both conversion directions and the separate R14/R2018 binary-DXF codec obligation also remain open. Geometry-only checker evidence satisfies none.
-v80 supersedes every earlier live-state and next-action statement. The five control families and six gate decisions (G1a/G1b/G2/G3/G4/G5) remain independently recorded and fail-closed; §0.5 is the sole current handoff. The v77 plan and `preflight-v77/` packet are immutable PARTIAL inputs, not gate receipts. V79 resolved the R05 ownership split, but its assembled packet draft fails every payload checksum and cannot support review. V80 also closes a checklist shortcut around G1a/G1b/G3/activation, removes the conflicting self-review allowance for G2, and repairs the activation script's stale packet path. After the v80 plan commit, create a fresh exact-membership `preflight-v80/`; preserve the v79 draft unchanged as invalid provenance. The archived v67 implementation card and its embedded commands remain history only.
+v81 supersedes every earlier live-state and next-action statement. The five control families and six gate decisions (G1a/G1b/G2/G3/G4/G5) remain independently recorded and fail-closed; §0.5 is the sole current handoff. Preserve v80 and its checksum-valid but PARTIAL `preflight-v80/` as immutable provenance, along with the v77 PARTIAL packet and invalid v79 draft. V81 reconciles the A six-path scope, the separate A14 selector, the atomic split-debit oracle, fresh activation-bound baseline capture, and exact post-edit identity validation. The v81 active card and its commands are normative; the archived v67 card is historical only. Create a fresh exact-membership `preflight-v81/` only after the v81 plan commit. The four independent application obligations—DXF read, DXF write, DWG read and DWG write—plus both conversions and binary-DXF codec work remain later 1E gates.
 Authoritative execution plan: `/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961/docs/plan_offset_curve_2961.md`.
 Execution branch: `codex/offset-curve-2961`. The research checkout retains the v5 seed only; it is not a second live plan.
 
@@ -270,7 +270,7 @@ A commit alone does not mean done; verification, review and the post-commit plan
 | 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | done — 0e3c6b342, 0B-3 reports/card; one pinned baseline generated-MLEADER DWG gap, 2026-10-15 |
 | 1A-1 | Closed forms, normalization, tolerance helpers and cache validation | C | S0 | 900 | partial — .a/.b-budget/.b-progress/.b-ref-frames/.b-ref-events-core/.b-ref-rate/.b-ref-events-critical/.b-ref-events-accounting/.b-ref-events-refine/.b-ref-critical-refine/.b-ref-providers/.b-ref-contacts/.b-ref-events-isolate/.b-ref-components/.b-check-layout/.b-check-bounds/.b-check-topology-local done; A-budget-depth, B-occurrence-terminals, C-global-topology-checker pending |
 | 1A-1.b-ref-components | Exact visibility and incidence-preserving components | C | .b-ref-events-isolate | 900 | done — `9682d5cac65f30cfd86aa10556678ceb88b1448b`, attempt-8 evidence, 2026-10-16 |
-| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900 | waiting — v76/v77 packets are historical PARTIAL; v78 had no packet; v79 draft fails all seven payload checksums; v80 packet and gates pending; no activation; first executable child |
+| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900 | waiting — v80 packet is valid PARTIAL provenance; v81 plan correction binds six paths, A14 validation and A-only scope; fresh v81 packet/gates pending; no activation; first executable child |
 | B-occurrence-terminals | Immutable occurrence-specific terminal publication | C | A-budget-depth product and plan checkpoint | 500 | waiting — no implementation before A reconciliation |
 | C-global-topology-checker | Complete directed path, coverage, cut and cycle validation | C | A-budget-depth and B-occurrence-terminals product/checkpoints | 1200 | waiting — no implementation before A and B reconciliation |
 | 1A-2 | Enumerator; persistent entity core and factory for already validated results; clone, `toPlainSpline`, normalisation, stamp, transforms; `writeEntity` case; INSERT capability; 0B row; interim Edit Properties guard | C | 0B-3, 1A-1 | 900 | pending |
@@ -563,7 +563,7 @@ not validation evidence. Aggregates are never executable cards or extra implemen
 | 1A-1.a | Done at a4690db08 | Normalization/local-frame/closed forms, robust source distance and tolerance helpers; 17 cases/2538 assertions pass Release/ASan, existing regressions and both fast lanes pass. |
 | 1A-1.b | Aggregate; budget/progress/reference/layout/bounds and local topology done; budget-depth and global topology pending | Parent-only progress; layout, bounds and local certificates do not establish a complete cache-validity result. `.b-check-topology-local` is committed at `ef3ba756b52796c02b8490caedcaa48b8db69605` with its verified immediate plan checkpoint `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. A-budget-depth is the first remaining executable child; the ordered-chain children follow its reconciled checkpoint. 1A-2 consumes the eventual typed result. No separate aggregate implementation commit. |
 | 1A-1.b-check-topology-local | Done — implementation `ef3ba756b52796c02b8490caedcaa48b8db69605` plus verified immediate v29 plan-only reconciliation `9c06e9c77b313b62cc20e9ec39c22952fee501f2` | Add bounded local candidate/reference monotonicity certificates, preserve exact edge/occurrence/node identity, and refine only through the shared geometric pair-proof helper. Expose local proof status only; no full-cache validity result. Three geometry files, 20 focused cases, independent rational derivative oracle, all required gates and two scoped commits. |
-| A-budget-depth | WAITING — v76/v77 packets are historical PARTIAL provenance; v78 had no packet; v79 draft fails all seven payload checksums; v80 packet and gates are pending; no activation exists | Depends on completed layout, bounds and local topology children plus product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; owns shared work/depth/capacity behavior only. R02/R12/R13 apply. All R05 producer behavior, including one-piece adoption into the document, repeated-offset and fallback, belongs to 1B/1C/1F. 1A-2 supplies only the reusable entity API for an already checker-validated result; it is a prerequisite capability, not an R05 owner or an A dependency. |
+| A-budget-depth | WAITING — v80 packet is checksum-valid PARTIAL provenance; v81 correction addresses six-path ownership, A14 validation, fresh baseline consumption and A-only closure; v81 packet and formal gates pending; no activation | Depends on completed layout, bounds and local topology children plus product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; owns shared work/depth/capacity behavior only. R02/R12/R13 apply. All R05 producer behavior, including one-piece adoption into the document, repeated-offset and fallback, belongs to 1B/1C/1F. 1A-2 supplies only the reusable entity API for an already checker-validated result; it is context, not an R05 owner or A completion dependency. |
 | B-occurrence-terminals | WAITING — blocked on A's product commit and direct-child plan reconciliation | Publishes only producer-backed occurrence-specific terminals after full continuation analysis; no global validity result. |
 | C-global-topology-checker | WAITING — blocked on A and B commits/checkpoints | Proves candidate-compatible complete directed paths, selected-path coverage, transitions, cuts, cycles and refusal reasons; entity adoption remains 1A-2. |
 | 1A-1.b-check-topology-chain | Aggregate parent — no separate implementation commit | Its executable leaves are A-budget-depth, B-occurrence-terminals and C-global-topology-checker in that dependency order. The aggregate remains incomplete until all three leaves are independently committed and reconciled. |
@@ -1124,51 +1124,197 @@ capacity checked before mutation. Each accepted prepared leaf consumes one gener
   Reread the committed roadmap and compare its claims to Git, reports and evidence; any discrepancy stops successor
   work, invalidates affected receipts and requires a corrective plan-only child plus a new audit. Start each next leaf
   with fresh completeness, plan-correctness and readiness decisions against reconciled HEAD.
-- **Current disposition/next:** v80 is a non-activating plan-only correction based on committed v79
-  `e9bd540924eacce1711d97141b3a8ea9ce671cd7`; do not embed v80's future/self SHA. The v77 packet remains immutable
-  PARTIAL historical evidence and has no formal gate receipt. V79 made the R05 ownership split explicit, but its
-  assembled packet draft fails all seven payload checksums; preserve it unchanged as integrity-invalid provenance.
-  V80 repairs the activation packet pointer and makes the gate sequence explicit in the operator checklist. No formal
-  G1a/G1b/G2/G3 PASS, activation, product/test edit, product build or registered JUnit execution is claimed. Before A
-  readiness, finish only A's source/debit/capacity/runtime census and numerical snapshots; its A01-A14 crosswalk; the
-  six-path manifest (including the public stats header and A14 test TU); independent accounting oracles; and exact
-  target/build/predecessor reconciliation. The A requirement trace covers R02/R12/R13; all R05 behavior, including
-  one-piece producer-to-document adoption, creation/options, repeated-offset mutation and fallback, is not applicable
-  to this leaf and remains owned by 1B/1C/1F. 1A-2 provides only the reusable entity representation/factory for already
-  checker-validated geometry; it is a type/API prerequisite, not an R05 owner or A dependency. C's fixture/phase/cut/cycle
-  proof and C01-C54 oracle crosswalk stay open for C, not as A entry conditions. Preserve v76/v77 packets as immutable
-  PARTIAL provenance and the failed v79 draft as-is; v78 had no packet. After committing this v80 plan-only correction,
-  recreate and verify exact-membership `preflight-v80/` from revalidated source evidence; do not promote v79 payloads
-  without independently rechecking each input. Bind it to the committed v80 plan blob and unchanged product-source
-  base, and retain `build-asan/`. After A-specific G1a/G1b/G3 pass, create a separate A activation checkpoint; only
-  then build/list and reconcile Release/ASan registration and save the pre-edit intersection-refine identity set.
-  Permit A edits only after that baseline reconciliation. The archived v67 card and embedded v67/v73 commands remain
-  non-executable history.
+- **Current disposition/next:** v81 is a non-activating plan-only child of committed v80
+  `c708490cd3372376a9b2126773c783d7cd07e4e9`; do not embed v81's future/self SHA. The v80 packet is checksum-valid
+  PARTIAL provenance, while independent v80 G1a/G1b reviews returned PARTIAL and identified the corrections recorded
+  here. Preserve v80/v77 PARTIAL packets and the invalid v79 draft unchanged. No formal G1a/G1b/G3 PASS, activation,
+  product/test edit, product build or registered JUnit execution is claimed. Before A readiness, finish only A's
+  R02/R12/R13 source/debit/capacity/runtime census, exact A01-A14 contracts and snapshots, independent accounting
+  oracles, six-path/target/predecessor reconciliation, and its fresh activation-bound baseline recipe. A excludes all
+  R05 producer behavior: creation/options, one-piece producer-to-document adoption, repeated-offset mutation and
+  fallback remain owned by 1B/1C/1F. 1A-2's generic factory is context only. B/C terminal, phase/cut/cycle proofs and
+  C01-C54 oracle crosswalk are not A entry conditions absent a demonstrated A dependency. Preserve the four distinct
+  later application gates—DXF read/write and DWG read/write—plus both conversions and binary-DXF codec work; no
+  geometry evidence satisfies them. After the v81 plan-only commit, create fresh exact-membership `preflight-v81/`
+  from revalidated inputs; preserve and do not rewrite the v80 packet. Bind v81 evidence to the committed plan blob and
+  unchanged product-source base, and retain `build-asan/`. Only after same-identity A G1a/G1b/G3 PASS may a separate
+  activation checkpoint be committed; run the activation-bound Release/ASan build-and-discovery step next and permit
+  edits only after exact baseline identities reconcile. Agent Gibbs remains the planned implementation writer; if that
+  agent is unavailable after activation, wait for authorized reassignment rather than silently substituting an owner.
+  The archived v67 prose and legacy v67/v73 commands remain non-executable history; only the named v81 recipes in the active card are normative.
 
-**Active Slice-A Card (v80)**
+**Active Slice-A Card (v81)**
 
 ```text
 slice: A-budget-depth
-state: WAITING; v79 packet integrity-invalid, v80 packet and formal reviews pending; implementation not activated
-plan_parent: e9bd540924eacce1711d97141b3a8ea9ce671cd7 (v79; v80 is a plan-only child)
+state: WAITING; v80 packet is checksum-valid PARTIAL provenance; v80 independent reviews were PARTIAL; fresh v81 packet and formal reviews pending; implementation not activated
+plan_parent: c708490cd3372376a9b2126773c783d7cd07e4e9 (v80; v81 is a plan-only child)
 product_base: 9c06e9c77b313b62cc20e9ec39c22952fee501f2
 predecessor: local topology product commit ef3ba756b52796c02b8490caedcaa48b8db69605 and direct-child roadmap checkpoint 9c06e9c77b313b62cc20e9ec39c22952fee501f2
-owner: Agent Gibbs is the first implementation writer after activation; coordinator/reviewer owns preflight, independent review, validation and Git, and does not co-edit the slice
+owner: Agent Gibbs is the first implementation writer after activation; coordinator/reviewer owns preflight, independent review, validation and Git, and does not co-edit the slice. If Gibbs is unavailable, stop for user-authorized reassignment.
 files: librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h; librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp; librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h; librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.cpp; librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp; librecad/src/lib/engine/document/entities/tests/lc_parametriccurveintersection_tests.cpp
 excluded: public global checker, B terminal publication, C transition/coverage search, R05 producer-to-document adoption, DXF/DWG, UI and phase 2
 contract: update `LC_IntersectionWorkStats` with `orderingComparisons`, `validationSegmentVisits` and `validationNextCalls`; define `totalBoxPairs` as the four-term formula and correct the `maxBoxPairs` comment. Implement §0.4's shared atomic budget/debit, depth, fixed-scan, callback, strict-core capacity/sort and exception-handoff rules; preserve sticky refusal, no partial publication and cumulative retained-session accounting.
-G1a: bidirectional R02/R12/R13-to-six-path/A01-A14 map; record that 1A-2's generic entity factory accepts only already checker-validated geometry; exclude all R05 behavior from A, including one-piece producer-to-document adoption, and bind it to 1B/1C/1F; every A assertion has an independent accounting/fixture oracle, selector, owner and evidence row
+G1a: bidirectional R02/R12/R13-to-six-path/A01-A14 map; record 1A-2's generic entity factory only as context for already checker-validated geometry; explicitly exclude R05 producer behavior and name 1B/1C/1F owners without requiring those leaves to be complete; every A assertion has an independent accounting/fixture oracle, selector, owner and evidence row. Do not make full C01-C54, B, 1E file-format or conversion crosswalk closure an A prerequisite.
 G1b: independently verify current APIs/call sites, debit units/order, checked arithmetic, queue/scratch bounds, callback multiplicity, A14 fallback/throw route and exact expected snapshots; do not review future B/C correctness as an A prerequisite
-G3: one executable A leaf; exact plan/product/predecessor identities, six paths, ordered task exits, exact selectors, Release/ASan baseline floors, work/runtime envelope, recovery, and product-only commit boundary; any unresolved A row means WAITING
-baseline after activation but before edits: fresh Release/ASan target builds; source scan finds 0 cache-budget cases and 14 existing intersection-refine cases, while historical strict-core discovery is 61. Capture fresh binary identity sets for all three; expect intersection-refine=14 and strict-core=61, but if current source/binaries disagree, stop and reconcile rather than editing. Save normalized pre-edit intersection-refine and strict-core names in immutable activation evidence.
+G3: one executable A leaf; exact plan/product/predecessor identities, six paths, ordered task exits, exact selectors, Release/ASan baseline floors, work/runtime envelope, recovery and product-only commit boundary; any unresolved A-owned row means WAITING. Downstream B/C/1E obligations must have explicit owners and dependencies but are not A closure requirements.
+baseline after activation but before edits: run `foundation_activation_baseline_commands` below for Release and ASan; selector discovery must be cache-budget=0, intersection-refine=14 and strict-core=61. Save normalized binary-discovered identity sets, product-source hashes, build-cache hashes and executable hashes in immutable activation evidence. Require Release/ASan set equality and exact counts; stop and reconcile any mismatch before edits. This action builds only the named CMake test target and invokes only `--list-tests`; it runs no JUnit cases. Existing same-product-base full/DXF/DWG skip reports remain immutable provenance; do not claim they were recaptured by this action.
 implementation order: (1) atomic budget admission/invalidation and depth propagation; (2) geometry split/fixed-scan/dispatch/coverage/capacity debits; (3) strict-core callback pre-debits, joint identity admission, queue/scratch capacities and deterministic comparison accounting; (4) geometry-owned exception handoffs; (5) A01-A14 tests and exact cumulative snapshots. Each step must preserve already-spent work and publish no partial result on refusal.
-tests: A01-A13 are the exact names in the v80 selector map under [lc-offsetcurve][geometry][cache-budget-accounting]. A14 is `retained certificate callback throw preserves admitted work` under [lc-offsetcurve][geometry][intersection-refine]; it proves the +2 parent/callback ledger delta through `cumulativeWork()` after throw, +1 root depth, exception identity, invalidation and no-work retry. Do not merge A14 into A08 or count the existing throwBounds case as A14.
-post-edit validation: Release and ASan discover/run A01-A13 exactly once; discover/run intersection-refine and require the pre-edit names plus exactly A14 (no missing, duplicate, unexpected, skipped or zero-assertion case); execute the 61 strict-core union cases with no skips/failures/errors. Build librecad_tests, librecad_dxf_fast_tests and librecad_dwg_fast_tests in both modes; run adjacent geometry selectors, full Release suite and DXF/DWG fast Release/ASan with baseline skip comparison; run qmake6 app generation/build. Preserve all logs/JUnit and source/diff digests under A-budget-depth/validation-<ATTEMPT>/.
-G2/G4/G5: G2 requires independent adversarial review by a reviewer distinct from the implementation author on the frozen six-path diff and exact tests; self-review is supplementary only, never PASS. Then make one product/test-only commit over those six paths, immediately followed by one plan-only direct-child reconciliation; G5 rereads Git objects, reports, path/hash lists, worktree and all descendant readiness before B begins.
+tests: A01-A13 are the exact names in the v81 selector map under [lc-offsetcurve][geometry][cache-budget-accounting]. A01/A02 directly exercise the production atomic candidate-split admission API with exact and one-less `cacheSpans` and `vertices` budgets; source review maps both candidate-split call sites and confirms parent-pop adds no vertex. The existing bounds/local-topology path tests remain integration coverage. A14 is `retained certificate callback throw preserves admitted work` under [lc-offsetcurve][geometry][intersection-refine]; it proves the +2 parent/callback ledger delta through `cumulativeWork()` after throw, +1 root depth, exception identity, invalidation and no-work retry. Do not merge A14 into A08 or count the existing throwBounds case as A14.
+split_admission_oracle: Name the production operation `WorkBudget::consumeCandidateSplit()`. From precharged `{cacheSpans=1, vertices=1}`, exact remaining caps admit atomically to `{3,3}`; independently make each dimension one short while the other is sufficient, require `LimitExceeded`, and assert both split counters remain `{1,1}`. Source-map both candidate split call sites after all checked arithmetic/container-capacity checks; reference-only split adds two vertices and no cache spans; parent pop adds no vertex. This helper test is not a substitute for both integration call-site checks.
+post-edit validation: Release and ASan discover/run A01-A13 exactly once under cache-budget-accounting and run the complete intersection-refine selector; compare the latter's discovery and JUnit names to the activation-bound pre-edit set plus exactly A14 (15 identities, no missing/duplicate/unexpected/skipped case). Execute all 61 activation-bound strict-core identities with no skips/failures/errors. Build librecad_tests, librecad_dxf_fast_tests and librecad_dwg_fast_tests in both modes; run adjacent geometry selectors, full Release suite and DXF/DWG fast Release/ASan with the existing same-product-base skip baseline; run qmake6 app generation/build. JUnit records exact testcase names and suite assertion totals; the frozen source review maps a reachable assertion to every named case so zero-assertion/vacuous cases cannot pass by aggregate count alone. Preserve all logs/JUnit and source/diff digests under A-budget-depth/validation-<ATTEMPT>/.
+G2/G4/G5: G2 requires independent adversarial review by a reviewer distinct from the implementation author on the frozen six-path diff and exact tests; self-review is supplementary only, never PASS. Then make one product/test-only commit over those six paths, immediately followed by one plan-only direct-child reconciliation; the plan version increments exactly once, records the actual product commit/evidence and revised statuses/risks/dependencies/next leaf, and contains no self/future SHA. G5 rereads Git objects, reports, staged/committed path and blob hashes, status, active/version/packet pointers, and every descendant's readiness against the codebase before B begins. The checkpoint command leaves `post-commit-self-update-audit.txt` at `PENDING_SEMANTIC_READBACK`; the coordinator must write a separate PASS read-back receipt only after comparing those facts with the committed roadmap. No successor edit/build/test is allowed while that receipt is pending or if any mismatch exists.
 recovery: keep failed attempts and ignored build-asan/evidence; no reset/cleanup; any source or scope change invalidates affected reviews and requires a new attempt.
+command_order: After formal PASS receipts, use the v81 `activation_commands` block to create the separate activation checkpoint; run the adjacent `foundation_activation_baseline_commands` recipe before edits. After implementation, use `foundation_review_freeze_commands`, then `foundation_validation_commands`; only after independent G2 and validation PASS use `foundation_product_commit_commands`, immediately followed by `foundation_plan_checkpoint_commands`. These named v81 blocks are the executable recipes for this card; all other archived v67/v73 commands and receipts remain non-executable history.
+command_inputs: Use `SLICE=A-budget-depth`, the immutable `ACTIVATION_ID`, the successful `BASELINE_ATTEMPT`, a fresh per-diff `ATTEMPT`, and `PACKET_DIR=build/evidence/1A-1.b-check-topology-chain/preflight-v81`. Never reuse an attempt directory; preserve failed attempts and select a new positive attempt number.
 ```
 
-The completion narratives below are retained as historical evidence, not as live queue instructions. The v80 state
+**`foundation_activation_baseline_commands` (Slice A only; run after activation, before edits)**
+
+```bash
+set -euo pipefail
+WT=/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961
+: "${ACTIVATION_ID:?Set the committed Slice-A activation ID}"
+: "${BASELINE_ATTEMPT:?Set a fresh positive activation-baseline attempt}"
+[[ "$ACTIVATION_ID" =~ ^[1-9][0-9]*$ ]]
+[[ "$BASELINE_ATTEMPT" =~ ^[1-9][0-9]*$ ]]
+ROOT="$WT/build/evidence/1A-1.b-check-topology-chain/A-budget-depth"
+A="$ROOT/activation-$ACTIVATION_ID"
+P="$WT/build/evidence/1A-1.b-check-topology-chain/preflight-v81"
+E="$A/activation-baseline-$BASELINE_ATTEMPT"
+cd "$WT"
+test -d "$A"
+test "$(git rev-parse HEAD)" = "$(cat "$A/activated-base.sha")"
+test ! -e "$E"
+paths=(librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
+       librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp
+       librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h
+       librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.cpp
+       librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp
+       librecad/src/lib/engine/document/entities/tests/lc_parametriccurveintersection_tests.cpp)
+test -z "$(git diff --cached --name-only -- "${paths[@]}")"
+test -z "$(git diff --name-only -- "${paths[@]}")"
+test -s "$A/activation-identity.txt"
+grep -Fx "slice=A-budget-depth" "$A/activation-identity.txt"
+grep -Fx "activation_id=$ACTIVATION_ID" "$A/activation-identity.txt"
+test -s "$P/packet-manifest.sha256"
+expected_manifest_payloads=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt | sort)
+manifest_payloads=$(awk 'NF {print $2}' "$P/packet-manifest.sha256" | sort)
+test "$manifest_payloads" = "$expected_manifest_payloads"
+python3 - "$P" "$expected_manifest_payloads" <<'PY'
+import stat
+import sys
+from pathlib import Path
+
+packet = Path(sys.argv[1])
+expected = set(sys.argv[2].splitlines()) | {"packet-manifest.sha256"}
+entries = list(packet.iterdir())
+actual = {entry.name for entry in entries}
+if actual != expected:
+    raise SystemExit(f"packet entry mismatch: missing={sorted(expected - actual)}, extra={sorted(actual - expected)}")
+if any(not stat.S_ISREG(entry.lstat().st_mode) for entry in entries):
+    raise SystemExit("packet contains a non-regular or nested entry")
+PY
+(cd "$P" && shasum -a 256 -c packet-manifest.sha256)
+PACKET_SHA=$(shasum -a 256 "$P/packet-manifest.sha256" | awk '{print $1}')
+grep -Fx "packet_manifest_sha256=$PACKET_SHA" "$A/activation-identity.txt"
+PRODUCT_BASE_SHA=$(awk -F= '$1 == "product_base_sha" {print $2}' "$A/activation-identity.txt")
+[[ "$PRODUCT_BASE_SHA" =~ ^([0-9a-f]{40}|[0-9a-f]{64})$ ]]
+mkdir -p "$E"
+run() {
+  label=$1; output=$2; shift 2
+  if "$@" > "$output" 2>&1; then rc=0; else rc=$?; fi
+  printf '%s %s\n' "$label" "$rc" >> "$E/exit-codes.txt"
+  test "$rc" -eq 0
+}
+run build-release "$E/build-release.log" cmake --build build --target librecad_tests --parallel 4
+run build-asan "$E/build-asan.log" cmake --build build-asan --target librecad_tests --parallel 4
+CACHE='[lc-offsetcurve][geometry][cache-budget-accounting]'
+INTERSECTION='[lc-offsetcurve][geometry][intersection-refine]'
+STRICT_CORE='[lc-offsetcurve][geometry][reference-critical],[lc-offsetcurve][geometry][reference-critical-depth],[lc-offsetcurve][geometry][reference-critical-refine],[lc-offsetcurve][geometry][reference-events],[lc-offsetcurve][geometry][reference-components]'
+for mode in release asan; do
+  if [ "$mode" = release ]; then bin=build/librecad_tests; else bin=build-asan/librecad_tests; fi
+  run "list-cache-budget-$mode" "$E/cache-budget-$mode.list.txt" "$bin" --list-tests "$CACHE"
+  run "list-intersection-refine-$mode" "$E/intersection-refine-$mode.list.txt" "$bin" --list-tests "$INTERSECTION"
+  run "list-strict-core-$mode" "$E/strict-core-$mode.list.txt" "$bin" --list-tests "$STRICT_CORE"
+done
+python3 - "$E" <<'PY'
+import re
+import sys
+from pathlib import Path
+
+evidence = Path(sys.argv[1])
+
+def listed_names(path):
+    text = path.read_text()
+    count_match = re.search(r"(\d+)\s+(?:matching\s+)?test cases?\b", text)
+    if count_match is None:
+        if re.search(r"no test cases matched", text, re.IGNORECASE):
+            expected = 0
+        else:
+            raise AssertionError(f"unrecognized Catch2 listing summary: {path}")
+    else:
+        expected = int(count_match.group(1))
+    if expected == 0:
+        names = []
+    else:
+        if "Matching test cases:" not in text:
+            raise AssertionError(f"missing Catch2 listing header: {path}")
+        names, wrapped = [], []
+        for line in text.splitlines()[text.splitlines().index("Matching test cases:") + 1:]:
+            if re.search(r"\d+\s+(?:matching\s+)?test cases?\b", line):
+                break
+            if not line.strip():
+                continue
+            indent = len(line) - len(line.lstrip(" "))
+            body = line.strip()
+            if indent >= 6 and body.startswith("["):
+                if not wrapped:
+                    raise AssertionError(f"orphan tag line in {path}: {line!r}")
+                names.append(" ".join(wrapped))
+                wrapped = []
+            elif 2 <= indent < 6:
+                wrapped.append(body)
+            else:
+                raise AssertionError(f"unrecognized Catch2 listing line in {path}: {line!r}")
+        if wrapped:
+            raise AssertionError(f"unterminated wrapped test name in {path}: {wrapped!r}")
+    if len(names) != expected or len(names) != len(set(names)):
+        raise AssertionError(f"listing count/uniqueness mismatch in {path}: {len(names)} names, expected {expected}")
+    return sorted(names)
+
+expected_counts = {"cache-budget": 0, "intersection-refine": 14, "strict-core": 61}
+summary = []
+for selector, expected_count in expected_counts.items():
+    mode_sets = {}
+    for mode in ("release", "asan"):
+        raw = evidence / f"{selector}-{mode}.list.txt"
+        names = listed_names(raw)
+        if len(names) != expected_count:
+            raise AssertionError(f"{raw}: found {len(names)}, expected {expected_count}")
+        normalized = evidence / f"{selector}-{mode}.names"
+        normalized.write_text("".join(f"{name}\n" for name in names))
+        mode_sets[mode] = names
+    if mode_sets["release"] != mode_sets["asan"]:
+        raise AssertionError(f"Release/ASan identity mismatch for {selector}")
+    summary.append(f"{selector}={expected_count}")
+(evidence / "selector-counts.txt").write_text("\n".join(summary) + "\n")
+PY
+git rev-parse HEAD > "$E/activated-base.sha"
+test -z "$(git diff --cached --name-only -- "${paths[@]}")"
+test -z "$(git diff --name-only -- "${paths[@]}")"
+shasum -a 256 "${paths[@]}" > "$E/product-source-files.sha256"
+cmp "$A/activation-files.sha256" "$E/product-source-files.sha256"
+shasum -a 256 build/librecad_tests build-asan/librecad_tests > "$E/test-binaries.sha256"
+shasum -a 256 build/CMakeCache.txt build-asan/CMakeCache.txt > "$E/cmake-caches.sha256"
+printf 'slice=A-budget-depth\nactivation_id=%s\nattempt=%s\nproduct_base_sha=%s\npacket_manifest_sha256=%s\nactivated_base_sha=%s\n' \
+  "$ACTIVATION_ID" "$BASELINE_ATTEMPT" "$PRODUCT_BASE_SHA" "$PACKET_SHA" "$(cat "$E/activated-base.sha")" > "$E/baseline-identity.txt"
+(cd "$E" && shasum -a 256 *.list.txt *.names selector-counts.txt build-release.log build-asan.log exit-codes.txt activated-base.sha product-source-files.sha256 test-binaries.sha256 cmake-caches.sha256 baseline-identity.txt > baseline-manifest.sha256)
+```
+
+The recipe above is normative. Commands embedded in the archived v67 card below are historical and must not be run.
+
+The completion narratives below are retained as historical evidence, not as live queue instructions. The v81 state
 above is the sole current handoff. After every commit, reconcile active pointers and reread the committed plan against
 the codebase/evidence before resuming implementation.
 
@@ -1575,10 +1721,12 @@ next: `.b-check-topology-chain` stays WAITING under v67. v38 rate bounds and v39
 
 **Archived v67 implementation-card draft — `1A-1.b-check-topology-chain` (refresh before activation).**
 
-This entire card, including embedded commands, test selectors, preflight paths, source hashes and receipt narratives,
-is preserved only as historical design material. Do not execute it or use its output as a v73 gate receipt. The
-canonical v73 handoff in §0.5 is authoritative; `preflight-v72/` remains partial provenance, and the fresh
-`preflight-v73/` packet is created only after the v73 plan checkpoint. Refreshing this card is a pre-activation task.
+The v67 card narrative, legacy selectors/pointers, source hashes and receipt narratives are historical only; do not
+use them as current evidence or as a gate receipt. The current v81 §0.5 card is authoritative. It explicitly adopts
+only the named v81 command recipes (`activation_commands`, `foundation_activation_baseline_commands`,
+`foundation_review_freeze_commands`, `foundation_validation_commands`, `foundation_product_commit_commands`, and
+`foundation_plan_checkpoint_commands`) as executable runbooks. All other embedded legacy commands and outputs remain
+non-executable provenance; v81 receipts must bind the exact committed v81 plan/product/packet identities.
 
 ```text
 slice: 1A-1.b-check-topology-chain
@@ -1654,7 +1802,7 @@ required_case_C39_to_C46: (C39) `cache topology admits exact cumulative resource
 endpoint_policy: The checker API remains geometry-only and receives no `LC_OffsetBranchEnd`. Add occurrence-specific `ReferenceTerminal` publication to `ReferenceComponentAnalysis`; each record binds an own-role event occurrence, exact node, exact visible edge and its start/end side, terminal kind (`SourceStart`, `SourceEnd`, `Trim`), and pair-event index for a trim. Source terminals originate only from `ReferenceFreeEnd`. A source or trim occurrence is terminal only after enumerating every same-occurrence continuation, exact paired-occurrence transition in both orientations, and retained-seam transition with incident visible edge and one-sided direction; any compatible retained continuation means it is not a terminal. In particular, a paired occurrence whose local source interval is hidden is still nonterminal when its exact pair has a retained compatible edge. Do not infer a terminal from local hiddenness, node degree, or coordinate equality. `SimpleCusp` is not a terminal kind: the v22 source proof shows every successful interior ellipse cusp is a zero-degree hidden node, while endpoint-coincident cusp roots are not visible incidences. Producer `Cusp` therefore has no admissible terminal for the current ellipse domain; if materialization can emit one, readiness blocks until its source proof and API contract are revised. `Kink` is likewise source-proved unreachable for a smooth ellipse. Materialize the ellipse branches and independently map every endpoint to exactly one source/trim terminal or a proved closed-cycle endpoint. Candidate open-end acceptance requires matching fringe occurrence/node, edge side and one-sided derivative direction, plus proof that no authorized paired-retained continuation exists. If the graph cannot publish this identity, revise API/scope before readiness. Add the exact G2 truncated-lens negative: `E0` alone as an open candidate must refuse because `O1` and `O2` continue through pairs `(O1,O6)` and `(O2,O5)` into retained `E1`, despite local hidden intervals.
 slice_B_terminal_scenarios_from_legacy_rows_39_to_46: (39/B01) source-start terminal positive; (40/B02) source-end positive; (41/B03) exact pair-trim positive only when no compatible paired retained continuation exists; (42/B07) the hidden `SimpleCusp` has no visible terminal and an endpoint candidate there refuses; (43/B05) matching-coordinate through-event endpoint refuses; (44/B06) wrong paired occurrence/event orientation refuses; (45/B08) arbitrary nonterminal edge point refuses; (46/B04) G2 upper-lens-only `E0` candidate refuses as an incomplete path because both paired endpoints continue into retained `E1`. These Slice-B analysis tests are not C39-C46; public-checker versions are separately named C47-C54. Replace any source-proved-unreachable B slot before readiness with a separately named reachable discriminator and source proof; do not lower either floor.
 blockers: (1) Finish fixture-authored G0-G4 source, terminal, transition and phase ledgers using independent analytic/high-precision expected results; runtime IDs and measured producer ranges are locators only. (2) Qualify C46's two-materialized-branch positive, C47-C54 terminal outcomes, C16/C54 G2 truncated-lens refusal and C50 hidden-cusp disposition under the exact contract in this card. Keep all 54 C identities mapped row by row to requirements, source, independent oracles, exact assertions and evidence owners. (3) Close the three-layer phase proof and four-row orientation matrix; do not treat angle containment as endpoint/path proof. For C11 and C23-C26, test both `cacheReversed` values as subcases without changing the 54-identity floor; each fixed-basis pair must normalize to the same directed traversal, while opposite basis orientations represent opposite traversal directions of the same geometry. Record both cut sides, direction, clearance, stable event identity and actual one-lap return to each runtime frontier. (4) Close the call-site/allocation/work/capacity census, including atomic split, inherited depth, fixed scans/sorts, callback multiplicity, bounds dispatch/coverage, geometry and strict-core capacity-before-debit, exception handoffs, logical records, fixed maxima, runtime envelope and exact/one-less snapshots. Slice A owns the implementation after activation; preflight is read-only. Unjustified cost or unresolved behavior keeps readiness WAITING. (5) At the v67 review target, obtain distinct `G1-COMPLETE`, `G1-PLAN-CORRECT` and Gate-3 readiness receipts bound to the same exact plan/product pair. Persistent entity, DXF/DWG, serialization and UI remain later owners.
-case_identity_contract: The canonical Slice-C floor is 54 distinct executable identities partitioned exactly as specified here: C01-C28 core path/cut; C29-C37 nine public-Reason cases; C38-C46 nine attribution/resource/producer cases; C47-C54 eight end-to-end terminal cases. Slice A is 14 identities A01-A14: A01-A13 are registered under `[cache-budget-accounting]`, while A14 is the separately named retained-callback-throw case under `[intersection-refine]` in `lc_parametriccurveintersection_tests.cpp`. Slice B is eight B01-B08. The 46 numbered coverage scenarios in `tests` are a readable scenario outline, not Catch2 test IDs; row 29 expands to C29-C37, accounting/producer rows map to C38-C46, and terminal endpoint analysis is covered by Slice B while public `checkCache` terminal outcomes are C47-C54. The fresh `preflight-v80/selector-test-map.txt` must record exact planned names/selectors, requirement/source/oracle/assertion contracts, existing target registration and evidence owner; actual TEST_CASE registration is verified after the owning activation. Pre-activation discovery=0 for A/B/C is expected and not a readiness failure. Earlier packet drafts remain provenance only and do not substitute for independently evidenced row closure. C11 and C23-C26 retain their names/counts but each executes both `cacheReversed` values where applicable, with each subcase asserting both cut sides, direction, clearance, stable event/frontier identity and exact one-lap return; C24/C25 cover sweep sign crossed with both cache orders. After test registration, exact nonzero discovery and JUnit identity/assertion sets are mandatory before commit. No SECTION-only counting, aliases, skipped cases or aggregate test may satisfy multiple identities.
+case_identity_contract: The canonical Slice-C floor is 54 distinct executable identities partitioned exactly as specified here: C01-C28 core path/cut; C29-C37 nine public-Reason cases; C38-C46 nine attribution/resource/producer cases; C47-C54 eight end-to-end terminal cases. Slice A is 14 identities A01-A14: A01-A13 are registered under `[cache-budget-accounting]`, while A14 is the separately named retained-callback-throw case under `[intersection-refine]` in `lc_parametriccurveintersection_tests.cpp`. Slice B is eight B01-B08. The 46 numbered coverage scenarios in `tests` are a readable scenario outline, not Catch2 test IDs; row 29 expands to C29-C37, accounting/producer rows map to C38-C46, and terminal endpoint analysis is covered by Slice B while public `checkCache` terminal outcomes are C47-C54. The fresh `preflight-v81/selector-test-map.txt` must record exact planned names/selectors, requirement/source/oracle/assertion contracts, existing target registration and evidence owner; actual TEST_CASE registration is verified after the owning activation. Pre-activation discovery=0 for A/B/C is expected and not a readiness failure. Earlier packet drafts remain provenance only and do not substitute for independently evidenced row closure. C11 and C23-C26 retain their names/counts but each executes both `cacheReversed` values where applicable, with each subcase asserting both cut sides, direction, clearance, stable event/frontier identity and exact one-lap return; C24/C25 cover sweep sign crossed with both cache orders. After test registration, exact nonzero discovery and JUnit identity/assertion sets are mandatory before commit. No SECTION-only counting, aliases, skipped cases or aggregate test may satisfy multiple identities.
 required_case_names_C01_to_C28: |
   C01 `cache topology accepts degree one complete path`
   C02 `cache topology accepts generated cubic complete path`
@@ -1701,7 +1849,7 @@ resource_census:
   newly_reviewed_capacity_sites: Independently reviewed v55 findings are in A's six-path ownership, including the public statistics header and both test translation units: `ReferenceEventBuilder::classify()` root capacity before `vertices(1)` (`lc_ellipseoffsetgeometry.cpp:3258-3265`); `CriticalBuilder::runRetained()` `records.max_size()` before vertex/pair debit and reserve (`:1449-1480`); staged critical snapshot `staged.max_size()` and size arithmetic before vertex debit (`:4575-4579`); strict-core `prepare()` root/split pending capacity before `generate(1/2)` (`lc_parametriccurveintersection.cpp:1350-1360`); strict-core `solve()` root admission and split `generate(2)`/two-slot capacity before push (`:1744-1826`); leaf container capacity in addition to `maxLeaves` (`:1392-1401`); candidate-pair append (`:1540-1548`); non-retained event append (`:1284-1293`); and `vector<bool>` order scratch capacity in both retained and non-retained modes (`:2034-2039`). Source-review every branch. Configured generation/leaf/pair/event limits receive exact/one-less tests where exposed; actual vector `max_size()` exhaustion is infeasible and must be verified by guard-order/source review only, without allocator hooks. Preserve prior work already spent before an output-cap refusal; do not debit a failed allocation dimension.
   open_source_ranges: Static source ranges reviewed in this pass: cpp:1454-1496 and 1556-1874 (critical adapter/refinement), 2043-2180 (provider analytic callback), 2366-2744 (provider/contact/event creation), 2800-3565 (event/component assembly), 3715-3890 (bounds), 3928-4387 (local topology), and 4468-4605 (public refinement wrapper). Remaining census work is to reconcile helper-level bounded arithmetic/callers across cpp:1-1420, exact allocation/exception/failure paths and every loop against the owning top-level admission, plus future checker C. Keep this PARTIAL until source rows and all maps agree.
   completion_rule: Mark this census PASS only when every source row has a counter or explicit bounded exclusion, pre-admission/checked-arithmetic rule, failure/partial-publication disposition, exact snapshot assertion or explicit source-review-only classification, owner slice and independent evidence. Include fixed scans, both 21-entry sorts, provider query ownership, bounds dispatch/coverage, every reviewed root/split/output/scratch capacity site, fixed-kernel maxima, all logical-record conventions, exception handoff invalidation and runtime/memory limits. Source reading alone does not qualify runtime counters; registered test execution is post-activation and Slice-A-only for A-owned cases.
-completeness_review: PENDING — preflight must trace R02/R05/R12/R13 bidirectionally through producer, typed geometry API, 1A-2 validated-result factory plus the R05 producer-to-document adoption path owned by 1B/1C/1F, both application read/write lanes, conversion, exact registered tests, independent oracle, target and evidence; reconcile every matrix row and every changed file. The resource trace must include both sort sites, zipped provider segment/map record convention and all reviewed capacity sites. The selector map must contain a complete C01-C54 row-by-row crosswalk: requirement ID(s), current API/source symbol and path, fixture identity, independently derived oracle/provenance, exact expected result and assertions (including work/terminal/path identity where applicable), owning slice, report path, and explicit status. Every row must be bidirectionally traceable; no aggregate C range or copied checker output qualifies. Final review must repeat against the frozen implementation diff.
+completeness_review: PENDING — for this A leaf, trace only applicable R02/R12/R13 obligations bidirectionally through the six owned paths, current callers/data representations, exact A01-A14 identities/assertions, independent oracles, CMake test target and evidence. Record R05 explicitly as excluded from A with its downstream 1B/1C/1F owners; 1A-2 factory and producer-to-document adoption are context, not A completion requirements. Name B/C terminal and topology dependencies and the later 1E DXF-read, DXF-write, DWG-read, DWG-write, conversion and binary-DXF obligations without requiring those downstream traces/oracles to close before A. The A resource trace includes both sort sites, zipped provider segment/map record convention, all reviewed capacity sites, exact snapshots and the activation-bound baseline. Do not make the full C01-C54 crosswalk an A gate; it remains owned by C and visibly PARTIAL until C readiness. Final completeness repeats the A bidirectional trace against the frozen six-path implementation diff.
 plan_correctness_review: PENDING — independent reviewer must verify current symbols/owners, API/status/ownership contracts, source-seam and event-transition facts, phase/cut equivalence rule, closure truth table, conservative interval proof/refinement, full logical-work taxonomy and source census (including sort comparisons, fixed reductions and capacity-before-debit order), shared-work debit semantics, resource caps, test-oracle independence, scope and DAG. Verify configured caps are tested at exact/one-less and actual max_size/overflow branches are explicitly source-review-only; no counter may change before a multi-dimensional preflight succeeds. Resolve findings in this plan before readiness; recheck when runtime evidence changes assumptions.
 correctness_review: PENDING until implementation exists — an independent reviewer challenges each accepted/refused path on frozen hashes, including exact transition authorization, full bidirectional coverage, hidden/retained seam, arbitrary phase, same-cycle cut equivalence versus distinct event cycles, budget exhaustion, atomic result and independent oracle. A preflight review cannot pass this field.
 files: Slice A owns exactly six paths: `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h`, `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp`, `librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h`, `librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.cpp`, `librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp`, and `librecad/src/lib/engine/document/entities/tests/lc_parametriccurveintersection_tests.cpp`. The public intersection header is needed for the three new work-stat fields and corrected total/max comments. Slices B and C each own only the geometry header, geometry implementation and geometry test file. Both implementation sources are already registered in CMake and qmake; both test translation units are already registered in the CMake test target (confirm current source entries before readiness). qmake6 is an application-build gate, not a test-registration claim. Readiness must recapture those facts and exact per-slice manifests. No consumer integration is authorized by this leaf; any additional source/build path expands the plan before activation.
@@ -1713,10 +1861,10 @@ implementation_slices:
     scope: Shared budget admission, candidate/reference split debits, inherited reference-depth preservation, both bounded sorts, critical-adapter fixed scans plus join setup and per-segment preflight, provider callback runtime ownership, bounds span/fragment dispatch and bounds/local coverage-step admissions, strict intersection-core capacity guards, invalidation of the shared budget at both geometry-owned query-work handoffs (initial query and retained-root contract), retained-session credential invalidation after provider exceptions, plus fixed-kernel runtime ownership; no public global-topology checker.
     selector: `[lc-offsetcurve][geometry][cache-budget-accounting]` contains exactly A01-A13; the union with exact A14 `retained certificate callback throw preserves admitted work` under `[lc-offsetcurve][geometry][intersection-refine]` is the Slice-A floor of 14 distinct identities, each with nonzero assertions.
     A08_contract: Retain the identity `provider analytic scans are covered by query debit`, but define it narrowly: assert one pre-callback `certificateBoxPairs` admission per strict-solver-dispatched `certifyIntersection`/`certifyInjective`/identity callback, including unavailable outcomes, and no duplicate debit. Provider-internal calls are covered by their outer callback envelope; specifically assert/bound the two internal `ReferenceProviders::certifyIntersection` helper calls made inside `certifyOccurrenceIdentity` without charging them as separate solver callbacks. Capacity-preflight the occurrence-identity callback's pair and generated-item limits atomically, then debit both before callback entry; if either fails, neither increment occurs and no callback runs. Once invoked, neither debit is refunded on unavailable/throw; any already-spent `order()` pair-attempt unit remains charged. Separately assert that nested `axisDomain`/`axisContact` candidate loops are bounded inside the owning callback envelope and do not debit independently. Outside-core geometry-layer certificate work retains its separately named pre-admitted pair; it is not a strict-solver callback admission. Reconcile the aggregate `certificateBoxPairs` snapshot from observable callback-call counts plus named order/contraction parent admissions; distinguish the separate `solve()` refinement-cell and geometry-layer fixed-scan units.
-    tests: Exact Catch2 names for A01-A10: `cache split atomically charges two children`, `one-less split budget refuses without partial debit`, `reference depth survives subdivision and enforces combined depth`, `shared work budget preserves sticky refusal`, `axis inventory sort consumes one admitted work unit`, `critical occurrence sort consumes one admitted work unit`, `critical fixed scans charge before iteration`, `provider analytic scans are covered by query debit`, `bounds dispatch and coverage advancement charge before work`, and `WorkBudget invalidation is sticky and preserves state`. The critical-scan case also covers pre-admission before adjacent-segment join setup, its data-derived inventory maximum, and one per-segment preflight unit owning at most seven bounded jet operations (one interval bound plus three seeds each with bound and offset). A08 asserts exact/one-less admissions for available and unavailable direct callbacks, atomic two-counter refusal, and bounded provider-internal multiplicity; separately verify outside-core geometry-layer pair admission and do not call it a strict-solver callback. A10 directly asserts the public `WorkBudget::invalidate()` state transition, preserved counters/LimitExceeded status, and inability to reuse the budget; it does not claim to trigger either geometry-owned exception handoff. A11-A13 are specified below. The already-registered retained-session exception regression remains a separate existing behavior check; A14 is the new explicit throw/debit/cumulative-ledger contract. Source-review both geometry-owned catch/invalidate/rethrow sites: initial `findCertifiedIntersections()` at `lc_ellipseoffsetgeometry.cpp:2725`, and retained core `contract()` at `lc_ellipseoffsetgeometry.cpp:3006`, each lacking a safe provider fault-injection seam. Do not add a test-only allocator or callback-budget hook. `max_size` and checked-arithmetic refusal branches are verified by independent source review plus ordinary small-cap boundary tests; do not claim an unreachable allocator-capacity test. For each sort/scan/dispatch, assert its declared pre-work `distancePairs` admission, exact/one-less boundary, source maximum and empty-scan behavior; comparator callbacks remain budget-pure. Bounds/local coverage counts each span/advance plus each witness examination. Assert exact cumulative snapshots, sticky refusal and no published analysis after any refused admission.
+    tests: Exact Catch2 names for A01-A10: `cache split atomically charges two children`, `one-less split budget refuses without partial debit`, `reference depth survives subdivision and enforces combined depth`, `shared work budget preserves sticky refusal`, `axis inventory sort consumes one admitted work unit`, `critical occurrence sort consumes one admitted work unit`, `critical fixed scans charge before iteration`, `provider analytic scans are covered by query debit`, `bounds dispatch and coverage advancement charge before work`, and `WorkBudget invalidation is sticky and preserves state`. A01/A02 exercise the new production `WorkBudget::consumeCandidateSplit()` operation from a known precharged snapshot: exact remaining capacity admits precisely `cacheSpans += 2` and `vertices += 2`; independently one-less in either dimension latches `LimitExceeded` with neither split dimension changed. Frozen-source review must verify both `CacheBoundsBuilder::compare()` and `CacheLocalTopologyBuilder::subdivide()` call this operation only for candidate splits after all pending-vector/overflow checks, while reference-only splits charge exactly two vertices and the already charged parent pop adds none. Existing end-to-end bounds/local-topology tests remain integration evidence; do not claim the helper test alone proves call-site wiring. A03-A09 retain their exact contracts below. The critical-scan case covers pre-admission before adjacent-segment join setup, its data-derived inventory maximum, and one per-segment preflight unit owning at most seven bounded jet operations (one interval bound plus three seeds each with bound and offset). A08 asserts exact/one-less admissions for available and unavailable direct callbacks, atomic two-counter refusal, and bounded provider-internal multiplicity; separately verify outside-core geometry-layer pair admission and do not call it a strict-solver callback. A10 directly asserts the public `WorkBudget::invalidate()` state transition, preserved counters/LimitExceeded status, and inability to reuse the budget; it does not claim to trigger either geometry-owned exception handoff. A11-A13 are specified below. The already-registered retained-session exception regression remains a separate existing behavior check; A14 is the new explicit throw/debit/cumulative-ledger contract. Source-review both geometry-owned catch/invalidate/rethrow sites: initial `findCertifiedIntersections()` at `lc_ellipseoffsetgeometry.cpp:2725`, and retained core `contract()` at `lc_ellipseoffsetgeometry.cpp:3006`, each lacking a safe provider fault-injection seam. Do not add a test-only allocator or callback-budget hook. `max_size` and checked-arithmetic refusal branches are verified by independent source review plus ordinary small-cap boundary tests; do not claim an unreachable allocator-capacity test. For each sort/scan/dispatch, assert its declared pre-work `distancePairs` admission, exact/one-less boundary, source maximum and empty-scan behavior; comparator callbacks remain budget-pure. Bounds/local coverage counts each span/advance plus each witness examination. Assert exact cumulative snapshots, sticky refusal and no published analysis after any refused admission.
     additional_tests: The ten names in tests above map in order to A01-A10 and remain unchanged. A11 `geometry root and retained-record capacity checks precede debit` covers the `classify()` initial pending root, `runRetained()` vector capacity before debit/reserve, and staged snapshot capacity/overflow before debit; use configured small-cap exact/one-less outcomes for observable budget admission and source-review the actual `max_size()` guard ordering. A12 `strict-core seed and split admissions precede queue mutation` covers `prepare()` and `solve()` seed/two-child admissions, accepted-leaf admission, candidate-pair materialization and event/root persistent records before storage; assert checked queue capacity, exact/one-less generated-item limits, max_size-before-admission ordering, no partial insertion, and independently recompute strict-query work snapshots. A13 `strict-core comparison work and output scratch are bounded` asserts the exact `totalBoxPairs` formula including `orderingComparisons` but excluding input-linear validation counters; exercises a valid one-branch oversized provider through synchronous and retained query entry points, asserts exact `LimitExceeded`, metadata-accessor/validation/geometric callback counts, empty public output/no retained session, and distinguishes initial `generatedItems` 0 versus 2; source-review the existing borrowed member and owner lifetime. Its oversized-input case asserts zero callback entry; A08 owns available/unavailable callback-debit snapshots. A14 `retained certificate callback throw preserves admitted work` creates a valid retained session before enabling provider faults, forces one evaluated derivative to zero so `shrink()` reaches analytic fallback, then throws from exactly one `certifyIntersection()` callback. Assert unchanged exception propagation; cumulative `certificateBoxPairs` and `totalBoxPairs` each increase by exactly two (parent contraction plus callback admission); `deepestRootRefinement` increases by one; the retained credential/root is invalidated; retry performs no work and invokes no callback. The existing throw-bounds case stays separate. This identity is independently named and lives in the intersection test translation unit; it does not claim to trigger either geometry-owned WorkBudget exception handoff. Test all heapsort exact/one-less/exhaustion cases, canonical ties, one order-scratch token per event, scratch sizing (`2*n-1`, `n`, `2*n`), and empty public output on refusal. Exercise configured limits exactly/one-less; source-review impossible container max_size failures and allocator-specific capacity only, without test hooks or a hard RSS claim.
     evidence_path: Under `build/evidence/1A-1.b-check-topology-chain/A-budget-depth/`, readiness receipts use `readiness-<GATE_ID>/`, the committed base receipt uses immutable `activation-<ACTIVATION_ID>/`, and each changed diff uses new `review-<ATTEMPT>/` plus `validation-<ATTEMPT>/`. IDs are positive integers in separate namespaces; retries preserve the activation and never overwrite attempt evidence.
-    validation_commands: `cmake --build build --target librecad_tests librecad_dxf_fast_tests librecad_dwg_fast_tests --parallel 4`; same against `build-asan`; discover and run `[lc-offsetcurve][geometry][cache-budget-accounting]` in both modes and require exactly A01-A13; discover and run `[lc-offsetcurve][geometry][intersection-refine]` in both modes and require its normalized identity set to equal the freshly captured pre-change set plus exactly A14, preserving every prior case and adding no unexpected case; also run A14 once with nonzero assertions; discover and run the strict-core union selector `[lc-offsetcurve][geometry][reference-critical],[lc-offsetcurve][geometry][reference-critical-depth],[lc-offsetcurve][geometry][reference-critical-refine],[lc-offsetcurve][geometry][reference-events],[lc-offsetcurve][geometry][reference-components]` in Release and ASan; run the adjacent Release/ASan selectors `[lc-offsetcurve][geometry][cache-topology-local],[lc-offsetcurve][geometry][cache-bounds],[lc-offsetcurve][geometry][cache-layout],[lc-offsetcurve][geometry][reference-components],[lc-offsetcurve][geometry][reference-events]`; full `librecad_tests` Release; DXF/DWG fast targets Release and ASan with baseline skip comparison; `/opt/homebrew/bin/qmake6 -r CONFIG+=sdk_no_version_check "$WT/librecad.pro"` and `make -j4` in `/private/tmp/lc-offset-curve-2961-A-budget-depth-qmake6-attempt-N`. On the unchanged product base, the strict-core union discovers 61 cases in each mode; after Slice A it must still execute all 61 baseline cases, have nonzero assertions and zero skips/failures/errors in both JUnit reports. The exact A union is A01-A14: A01-A13 execute once under the cache-budget selector and A14 once under intersection-refine, with nonzero assertions and no skips in Release and ASan. The existing bounds-throw regression is distinct and must still pass. No chain-selector floor applies.
+    validation_commands: `cmake --build build --target librecad_tests librecad_dxf_fast_tests librecad_dwg_fast_tests --parallel 4`; same against `build-asan`; discover and run `[lc-offsetcurve][geometry][cache-budget-accounting]` in both modes and require exactly A01-A13; discover and run `[lc-offsetcurve][geometry][intersection-refine]` in both modes and require its normalized JUnit identity set to equal the corresponding activation-bound pre-edit identity file plus exactly A14, preserving every prior case and adding no unexpected case; require 15 cases, nonzero assertions, no skips/failures/errors, and execute A14 once in each mode. Discover and run the strict-core union selector `[lc-offsetcurve][geometry][reference-critical],[lc-offsetcurve][geometry][reference-critical-depth],[lc-offsetcurve][geometry][reference-critical-refine],[lc-offsetcurve][geometry][reference-events],[lc-offsetcurve][geometry][reference-components]` in Release and ASan and compare JUnit names to the corresponding activation-bound 61-name set; run the adjacent Release/ASan selectors `[lc-offsetcurve][geometry][cache-topology-local],[lc-offsetcurve][geometry][cache-bounds],[lc-offsetcurve][geometry][cache-layout],[lc-offsetcurve][geometry][reference-components],[lc-offsetcurve][geometry][reference-events]`; full `librecad_tests` Release; DXF/DWG fast targets Release and ASan compared to the immutable same-product-base `.b-check-bounds` skip reports; `/opt/homebrew/bin/qmake6 -r CONFIG+=sdk_no_version_check "$WT/librecad.pro"` and `make -j4` in a new, attempt-specific `/private/tmp/lc-offset-curve-2961-A-budget-depth-qmake6-attempt-N`. The activation-bound strict-core union has 61 cases in each mode; after Slice A it must still execute all 61, with nonzero assertions and zero skips/failures/errors. A01-A13 execute once under cache-budget-accounting; A14 executes once under intersection-refine, with nonzero assertions and no skips in Release and ASan. The existing bounds-throw regression remains distinct and must pass. No chain-selector floor applies.
     commit: One product/test-only commit over exactly the six owned paths, then an immediate one-file plan checkpoint. Its validation may not claim the 54-case chain floor.
   - id: B-occurrence-terminals
     scope: Immutable occurrence-specific terminal publication and producer-provenance mapping only; no public global-topology result.
@@ -1793,10 +1941,10 @@ task_plan:
 tests: >-
   The canonical Slice-C floor is exactly 54 distinct Catch2 TEST_CASE identities, discovered and executed in Release and ASan. The identity partition is C01-C28 core topology/path/cut scenarios, C29-C37 the nine public Reason cases, C38-C46 nine attribution/resource/producer cases, and C47-C54 eight end-to-end terminal outcomes. The older 46 numbered coverage rows are a cross-slice scenario outline, not a test count: rows 1-28 describe C01-C28; row 29 expands to C29-C37; rows 30-38 describe C38-C46; rows 39-46 are exercised as Slice-B terminal-publication cases B01-B08, while Slice C independently exercises the same terminal outcomes through public `checkCache` cases C47-C54. Thus the C selector remains 54, not 62, and B tests never count toward it. The pre-change chain selector is zero. Maintain for each identity a fixture ledger with requirement IDs, independent expected result, stable event key, directed transition/cut signature, exact work/span attribution, oracle provenance and evidence path. Register every listed name as a separate TEST_CASE; SECTIONs, aliases, skips, aggregate counts or unrelated tests do not satisfy a slot. C01-C28 cover: degree-1 and generated-cubic positives; monotone cubic with stationary endpoint; both cacheReversed directions; disconnected-component join refusal; missing and repeated reference tails; extra loop/retrace; crossing switch; exact event-fringe join and wrong event identity; source continuation with/without hidden interval; retained seam cycle; hidden-seam inward lens `E(100,50,0,0), D=-49`; closed trim; endpoint mismatch; all four closure-metadata combinations; existing-knot phase rotation; both dyadic `u=1/4` sweep orientations with outward conversion; canonicalization of nearby cut frontiers after independent one-lap proofs; distinct directed cycles; and unresolved-cut refusal. C29-C37 assert `None`, `InvalidInput`, `Layout`, `TooSmall`, `ReferenceUnresolved`, `OffCurve`, `Ambiguous`, `Topology`, and `LimitExceeded`, one named identity each. C38-C46 assert stable original-span attribution; exact cumulative caps; isolated one-less `cacheSpans`, `vertices`, `distancePairs`, and combined-depth refusal; cross-stage shared-ledger/sticky behavior; deterministic 64-span admission with exact counters; and G4's independently normalized two-component/two-materialized-branch fixture. C47-C54 assert the public checker accepts exact source-start, source-end and pair-trim terminals and rejects hidden-cusp, through-event, wrong-pair orientation, arbitrary interior endpoint and G2 `E0`-only incomplete path. The independent oracle must derive visible intervals, event/occurrence keys, terminal classification, candidate ordering, transitions, cut sides, one-lap returns and seam disposition from fixture construction plus analytic/high-precision equations, never from `checkCache`; runtime IDs are audited against that oracle. Every transition class has positive and refusal coverage, and no successful case covers a proper subset.
 required_case_names_C29_to_C54: C29 `cache topology directly asserts None reason`; C30 `cache topology directly asserts InvalidInput reason`; C31 `cache topology directly asserts Layout reason`; C32 `cache topology directly asserts TooSmall reason`; C33 `cache topology directly asserts ReferenceUnresolved reason`; C34 `cache topology directly asserts OffCurve reason`; C35 `cache topology directly asserts Ambiguous reason`; C36 `cache topology directly asserts Topology reason`; C37 `cache topology directly asserts LimitExceeded reason`; C38 `cache topology attributes original spans deterministically`; C39 `cache topology admits exact cumulative resource caps`; C40 `cache topology one-less cache span cap refuses atomically`; C41 `cache topology one-less vertex cap refuses atomically`; C42 `cache topology one-less distance pair cap refuses atomically`; C43 `cache topology one-less combined depth cap refuses atomically`; C44 `cache topology preserves shared pre-spent work and sticky refusal`; C45 `cache topology admits deterministic 64 span cycle`; C46 `cache topology selects separate paths from two component producer`; C47 `cache topology accepts source start terminal`; C48 `cache topology accepts source end terminal`; C49 `cache topology accepts pair trim without retained continuation`; C50 `cache topology rejects hidden cusp endpoint`; C51 `cache topology rejects through event endpoint`; C52 `cache topology rejects wrong paired terminal orientation`; C53 `cache topology rejects arbitrary interior endpoint`; C54 `cache topology rejects G2 upper lens E0 only path`. The current selector map must bind each exact name to selector, fixture, oracle, requirement, expected result, evidence owner and assertion contract; C01-C28 are enumerated above and are not dependent on an ignored historical map. Any identity/name change requires a reviewed corrective plan amendment and matching map change before readiness.
-  selectors: Baseline discovery at product-source HEAD `9c06e9c77b313b62cc20e9ec39c22952fee501f2` has A/B/C=0 and strict-core=61 names in Release/ASan. Reused earlier `--list-tests` captures are hash-bound PARTIAL discovery only; v80 readiness requires fresh source/target registration reconciliation. Planned identities are A=14 (A01-A13 under cache-budget-accounting, A14 under intersection-refine), B=8, C=54. Before activation, only baseline `--list-tests` discovery of already registered selectors is allowed; no registered JUnit execution. After each slice activation, require exact discovery and JUnit testcase-name equality with its map: every planned case executes once with nonzero assertions and zero skips/failures/errors. A additionally executes all 61 strict-core regressions in both modes. C is exactly C01-C54; B is exactly B01-B08. No SECTION-only or skipped row counts. Explain every changed pre-existing selector count. Full and fast-lane skip identities remain baseline full=74, DXF=3, DWG=4 until freshly measured.
-cost_model: Keep defaults `maxCacheSpans=4096`, `maxVertices=65536`, `maxDistancePairs=1<<20`, `maxDepth=20` unless source/API evidence justifies a compatibility correction before readiness. One irreversible ledger is shared across layout/reference/bounds/local topology/chain. `inspectCacheLayout` charges each normalized initial span once. Every candidate split atomically admits exactly two children (`cacheSpans += 2`, `vertices += 2`) before either cell is constructed; this applies to `CacheBoundsBuilder::compare`, `CacheLocalTopologyBuilder::subdivide`, virtual-cut refinement and chain search. A reference-only split charges `vertices += 2` only. The already charged parent is popped, not recreated; the current bounds `vertices(3)` is an unexplained over-debit and must become two, with any additional retained split record charged at its own allocation. Preflight all dimensions and checked arithmetic before mutating counters; failed admission latches `LimitExceeded` with no partial debit. Each stored terminal, witness, graph state/arc, coverage/cut/frontier item and memo/signature symbol charges `vertices` before allocation. `distancePairs` charges every declared geometric/event/topology examination, start seed, transition/incidence, rejected loop item and dedup/memo/signature comparison before examination; each of the two source-bounded inventory sorts consumes one unit before sorting, and fixed four-value reductions are included in their enclosing charged proof operation. `maxDepth` at proof-cell entry is checked `cache.depth + referenceDepth`: candidate refinement/virtual-cut isolation increments only the original-span dyadic depth; reference subdivision increments only inherited `referenceDepth`, which is preserved in every local witness without double counting. Record maximum entered depth and refuse before an over-cap child. No hidden vector scan, unbounded loop, Cartesian witness product or free canonicalization. Every dynamic logical record and data-dependent examination is charged; each fixed-cost exclusion names its source bound and runtime-envelope maximum. Extend limits/API if the census cannot bound it. Exact-cap success and isolated one-less tests cover every counter/admission class using measured fixtures; counters are positive, the first three exceed one and depth is at least two on the chain fixture. Existing lower-level cases own pre-spent/sticky latch; public checker gets no test-only injection. Cross-stage proof confirms no ledger reset. Every exhaustion returns `LimitExceeded`, final cumulative work and no partial result. Record exact 64-span stress counters; never assert timing/global maximum.
+  selectors: Historical discovery at product-source HEAD `9c06e9c77b313b62cc20e9ec39c22952fee501f2` has A/B/C=0 and strict-core=61 names in Release/ASan; these hash-bound captures are PARTIAL provenance only. V81 readiness requires fresh source/target registration reconciliation. Planned identities are A=14 (A01-A13 under cache-budget-accounting, A14 under intersection-refine), B=8, C=54: exactly 76 distinct slice identities, with 61 strict-core regressions tracked separately. Before activation, only read-only discovery of existing selectors is allowed; no build or registered JUnit execution. After activation, capture source-bound Release/ASan baseline discovery before edits. After each slice implementation, require exact discovery and JUnit testcase-name equality with its map: every planned case executes once, the suite has nonzero assertion totals, and there are zero skips/failures/errors. The frozen source review must bind at least one reachable assertion to every test identity; aggregate JUnit counts alone cannot prove each case non-vacuous. A additionally executes the 61 activation-bound strict-core regressions in both modes. No SECTION-only or skipped row counts. Explain every changed pre-existing selector count. Full and fast-lane skip identities remain baseline full=74, DXF=3, DWG=4 from immutable same-product-base evidence until freshly measured.
+  cost_model: Keep defaults `maxCacheSpans=4096`, `maxVertices=65536`, `maxDistancePairs=1<<20`, `maxDepth=20` unless source/API evidence justifies a compatibility correction before readiness. One irreversible ledger is shared across layout/reference/bounds/local topology/chain. `inspectCacheLayout` charges each normalized initial span once. A candidate split uses one production `WorkBudget::consumeCandidateSplit()` admission: preflight two remaining `cacheSpans` and two remaining vertices without mutation, then debit both dimensions together. Both `CacheBoundsBuilder::compare` and `CacheLocalTopologyBuilder::subdivide` call it only for candidate splits after pending-capacity and index-overflow checks; a reference-only split charges exactly two vertices. The already charged parent is popped, not recreated; the current bounds `vertices(3)` is an unexplained over-debit and must become a two-child admission, with any additional retained split record charged at its own allocation. A01/A02 test the public production admission from a one-span/one-vertex precharged snapshot: exact final totals are three spans and three vertices; isolated one-less spans and vertices each refuse atomically with the original one/one snapshot retained. Source review verifies integration at both call sites and that parent pop has no vertex debit; existing bounds/local-topology tests remain end-to-end integration evidence. Preflight all dimensions and checked arithmetic before mutating counters; failed admission latches `LimitExceeded` with no partial debit. Each stored terminal, witness, graph state/arc, coverage/cut/frontier item and memo/signature symbol charges `vertices` before allocation. `distancePairs` charges every declared geometric/event/topology examination, start seed, transition/incidence, rejected loop item and dedup/memo/signature comparison before examination; each of the two source-bounded inventory sorts consumes one unit before sorting, and fixed four-value reductions are included in their enclosing charged proof operation. `maxDepth` at proof-cell entry is checked `cache.depth + referenceDepth`: candidate refinement/virtual-cut isolation increments only the original-span dyadic depth; reference subdivision increments only inherited `referenceDepth`, which is preserved in every local witness without double counting. Record maximum entered depth and refuse before an over-cap child. No hidden vector scan, unbounded loop, Cartesian witness product or free canonicalization. Every dynamic logical record and data-dependent examination is charged; each fixed-cost exclusion names its source bound and runtime-envelope maximum. Extend limits/API if the census cannot bound it. Exact-cap success and isolated one-less tests cover every counter/admission class. Existing lower-level cases own pre-spent/sticky latch; public checker gets no test-only injection. Cross-stage proof confirms no ledger reset. Every exhaustion returns `LimitExceeded`, final cumulative work and no partial result. Record exact 64-span stress counters; never assert timing/global maximum.
 bounded_work_envelope: The source-level R12 table and `resource_census.provider_query_envelope` are normative alongside `cost_model`. Admit one pair before each `CriticalAdapter` fixed scan: at most 20 adjacent axes, 21 stationary axis selections, 20 adjacent occurrences, 20 `prove` quadrants, 21 fallback occurrences, or 21 region delimiters. Charge one pair before each data-dependent adjacent-segment `joins()` setup; its count is at most the admitted segment inventory minus one, and every subsequent proof/refinement attempt retains its own admission. Each `preflight()` segment consumes one pair before interval bounds and owns at most seven bounded jet operations (one interval bound plus three seeds × bound-and-offset). Each sort independently consumes one pair before invocation with a conservative 21-entry maximum. The provider's primitive scans are `axisDomain` <=11 candidate slots and the `axisContact` fallback <=5 candidates, but caller multiplicity is the runtime unit: one already-admitted core identity callback can invoke two intersection certificates (up to 22 axis slots each) and two identity queries (up to 11 each), totaling at most 66 nested axis-slot checks; outside core, event preparation owns a pre-admitted pair with up to 44 nested checks and each boundary seed owns a pre-admitted pair with up to 11. Prove exact call-site counts, mutually exclusive branches and whether the <=5 fallback is additional or subsumed at each site; the callback never debits independently and the envelope never charges the enclosing operation twice. The current bounding figures are provisional until that call-graph proof is frozen. Charge each bounds `(layout span, fragment)` dispatch and each bounds/local coverage span and advancement before work; each witness loop item remains a separate pair. Fixed arithmetic parent units explicitly include ten reference-trig terms and 22/23 Taylor remainder steps; at most eight outward `nextafter` corrections per rational endpoint; at most four Bézier controls in de Casteljau/derivative loops; two frame axes; root degree at most three; and every additional fixed loop found by the census. Derive maximum span/fragment dispatches from a checked product of admitted layout spans and fragments, and coverage steps from successful monotone witness advances over a finite witness set. Report peak logical live records by container/record type, simultaneous pending/output coexistence, configured count caps and `sizeof`-based payload estimate; distinguish this deterministic payload estimate from allocator overhead/capacity slack, which the logical counters do not measure. Add exact/one-less snapshots for each unit, including empty loops and no-progress/empty-witness exits. No benchmark timing threshold is asserted; record deterministic counter snapshots and source-derived maximum work/memory.
-  evidence: v72-v77 packets and the unmanifested v74 copy are PARTIAL/stale provenance, not gate receipts. After the v80 plan-only checkpoint is committed, create `build/evidence/1A-1.b-check-topology-chain/preflight-v80/` with exactly `input-manifest.txt`, `debit-admission-table.txt`, `independent-transition-cut-ledger.txt`, `phase-cut-intervals.txt`, `selector-test-map.txt`, `source-requirement-map.txt`, `terminal-producer-map.txt`, and `packet-manifest.sha256`. Bind each input to the committed v80 plan blob and unchanged product source; reuse earlier inputs only as rehashed, explicitly labeled PARTIAL provenance. Close A-owned source/debit/capacity/runtime, A01-A14, numerical-snapshot, accounting-oracle and registration rows; keep B/C phase/frontier and full C crosswalk rows PARTIAL/PENDING until their own readiness. The selector map records exact C01-C54/A01-A14/B01-B08 identities and planned ownership, but a later slice's incomplete oracle does not block A absent a specific A dependency. The manifest hashes the seven payloads, excluding itself and formal gate receipts. Each A Gate-1/Gate-3 receipt binds that packet digest and the same plan/product identities; Gate 3 also binds both actual Gate-1 receipt hashes. Before review/activation, compare the packet directory's complete top-level entry set with the seven payload names plus the manifest; reject any extra, missing, symlink, non-regular or nested entry, then verify all hashes and identities and recheck Gate-3's referenced Gate-1 files. Preserve every attempt and failed report; after implementation parse exact JUnit case/assertion/failure/error/skip identities and compare full/DXF/DWG skips with freshly captured baselines. This packet is A readiness evidence, not an implementation/build/test claim or a substitute for later B/C packets and gates.
+  evidence: v72-v80 packets and the unmanifested v74 copy are PARTIAL/stale provenance, not gate receipts; preserve them unchanged. After the v81 plan-only checkpoint is committed, create `build/evidence/1A-1.b-check-topology-chain/preflight-v81/` with exactly `input-manifest.txt`, `debit-admission-table.txt`, `independent-transition-cut-ledger.txt`, `phase-cut-intervals.txt`, `selector-test-map.txt`, `source-requirement-map.txt`, `terminal-producer-map.txt`, and `packet-manifest.sha256`. Bind each input to the committed v81 plan blob and unchanged product source; reuse earlier inputs only as rehashed, explicitly labeled PARTIAL provenance. Close only A-owned R02/R12/R13 source/debit/capacity/runtime, A01-A14, numerical-snapshot, accounting-oracle and registration rows; keep R05 downstream ownership named, and keep B/C phase/frontier and full C crosswalk rows PARTIAL/PENDING until their own readiness. The selector map records exact C01-C54/A01-A14/B01-B08 identities and ownership, but B/C's incomplete oracle does not block A absent a demonstrated dependency. The manifest hashes the seven payloads, excluding itself and formal gate receipts. Each A Gate-1/Gate-3 receipt binds that packet digest and the same plan/product identities; Gate 3 also binds both actual Gate-1 receipt hashes. Before review/activation, compare the packet directory's complete top-level entry set with the seven payload names plus the manifest; reject any extra, missing, symlink, non-regular or nested entry, then verify all hashes and identities and recheck Gate-3's referenced Gate-1 files. Preserve every attempt and failed report. Activation-bound `--list-tests` identities drive exact A14/strict-core JUnit comparison; full/DXF/DWG skipped identities are compared to the immutable same-product-base `.b-check-bounds` reports, not misrepresented as a fresh pre-edit execution. This packet is A readiness evidence, not an implementation/build/test claim or a substitute for later B/C packets and gates.
 frozen_identity: PENDING — at readiness record actual committed base/checkpoint SHA; after edits freeze each slice's exact path manifest, binary diff and per-file SHA-256 values plus build/toolchain identity and reports (A six paths, B/C three); rerun all affected reviews if any byte changes.
 implementation_sha: pending
 product_commit_audit: PENDING — A must commit exactly its six owned product/test paths; B/C exactly their three. Explicit staging, staged whitespace/hash comparison, hooks, actual parent and committed digests must match the frozen validated tree.
@@ -1807,18 +1955,19 @@ pre_activation_checklist:
   source_and_scope: PENDING — recapture actual source HEAD, product hashes, callers, loops/allocations, selectors, CMake/qmake ownership and the A R02/R12/R13 trace; assign R05 producer creation, one-piece producer-to-document adoption, repeated-offset mutation and fallback to 1B/1C/1F and distinguish 1A-2's generic already-validated-cache factory, then map every changed path/test back to its requirement and every requirement to an owned test/oracle.
   independent_fixture_oracle: PARTIAL, C-owned — finalize G0-G4 ledgers with analytic/high-precision visible intervals, stable event keys, producer input provenance, terminal classification, directed transitions, and negative counterparts; graph IDs and checker output are never oracle authority. A readiness closes only any fixture/oracle rows directly used by A01-A14; the remaining C ledger stays open for C readiness.
   fixture_tolerance_reconciliation: PARTIAL, C-owned — the earlier terminal-producer map records G4's successful positive using default producer fit tolerance (`requestedTolerance=0`), while separately recording explicit producer fit tolerance `1e-5` as `LimitExceeded` with no partial branches/entities. The reference event-analysis tolerance `1e-5` is a different parameter and remains paired with `D=-4`; retain the `Left(4)` producer request and its engine-signed `+4` only as candidate provenance. Rebind this distinction in the later C packet; it is not an A gate absent a demonstrated A dependency. Do not mix these rows or turn measured producer output into the analytic oracle.
-  selector_identity_reconciliation: PENDING — pre-activation baseline discovery is zero for A/B/C; the current Release/ASan strict-core union has exactly 61 matching names in both modes and its normalized sets match, subject to fresh source/build reconciliation. Record those as discovery-only evidence. Bind A01-A14 and strict-core=61 in the v80 A case map before A Gate 1; B01-B08 and C01-C54 remain assigned to their later slice maps/gates. Do not run registered JUnit tests before the owning slice's activation checkpoint. After activation and implementation, each slice's Release/ASan discovery and JUnit testcase-name sets must match its exact planned identities, each case executes once with nonzero assertions and no skips/failures/errors; A also executes all 61 strict-core regressions in both modes. Discovery (`--list-tests`) and execution evidence are distinct.
+  selector_identity_reconciliation: PENDING — pre-activation baseline discovery is zero for A/B/C; historical strict-core discovery has 61 matching normalized names, subject to fresh activation-bound source/build reconciliation. Bind A01-A14 and strict-core=61 in the v81 selector map; bind B01-B08 and C01-C54 to their later slice maps. The map must contain exactly A=14, B=8, C=54 (76 total, strict-core excluded), reject duplicate/missing IDs and names, and keep A14 separate from A01-A13. Do not run registered JUnit before activation. After activation, capture exact Release/ASan list identities for cache-budget=0, intersection-refine=14 and strict-core=61, with source and binary fingerprints; after implementation, require the cache-budget set to equal A01-A13, intersection-refine to equal its captured set plus exactly A14, and strict-core to equal its captured set. JUnit case names must equal the corresponding discovery sets with no duplicate, skipped, failed or errored identity. Static frozen-source review maps a reachable assertion contract to every identity; the JUnit suite assertion total must be nonzero. Discovery (`--list-tests`) and execution evidence are distinct.
   phase_and_cycle_proof: PARTIAL, C-owned — v60-bound artifacts provide angular containment, local candidate algebra and a synthetic symbolic circle cycle only. Finish three distinct receipts before C readiness: (1) both sweep signs through the exact outward `ReferenceFrame`/`boundUnwrappedAngle` API, with one-sided angular containment; (2) all four `(basis.reversed, cacheReversed)` candidate mappings, with independently bounded endpoint geometry, one-sided derivative direction and clearance; compare the two `cacheReversed` rows within fixed basis orientation as the same normalized directed traversal, and treat opposite basis orientations as opposite directed traversals of the same geometry; (3) each applicable knot/dyadic/non-event/event cut with both geometric sides and return after one lap to the actual selected path's own runtime frontier identity and certified interval. For non-dyadic/event cuts, “exact” means exact provenance key plus its outward certified enclosure, not rounded scalar equality. `cacheReversed` is N/A to the angle-map receipt and mandatory in candidate/path receipts. C11 and C23-C26 exercise both `cacheReversed` values as subcases. Record source-independent derivations and exact frontier/event keys; distinguish symmetry-transferred bounds, symbolic-model identities and display decimals from independently computed outward intervals and actual runtime graph identities. No single receipt may stand in for another. This proof is a hard gate for C, not for A absent a demonstrated dependency.
   resource_and_api_contract: PARTIAL — besides fixed-scan/debit and runtime ownership, close every source-mapped admission/capacity site: geometry axes/occurrences, region pending/split before split debit, joins, bounds/local initial pending, `classify()` root, retained-record and staged-snapshot capacity-before-debit; strict-core prepare/solve seeds and two-child queues, leaves, candidate pairs, retained/non-retained events and both-mode order scratch. Trace every reserve/resize/push/emplace in both owned implementation sources, preserve correct guards, and verify actual max_size/overflow branches by source review without test hooks. Test exposed configured limits at exact/one-less and record counter snapshots and no-partial-publication outcomes. Confirm zipped `segments`/`maps` and paired `m_regions`/`m_segments` logical-record conventions; prove provider callback multiplicity and outside-core ownership; derive P23→P25/+2 and one-less P24 independently; specify sticky invalidation at both exception handoffs; retain strict-core 61-case Release/ASan discovery as preflight baseline and require JUnit only after A activation; complete memory/runtime envelope and atomic multi-counter, inherited-depth, status and named-assertion contracts. No product/test edits or registered JUnit execution in preflight.
   resource_exception_handoff_review: PARTIAL — earlier source review confirms no catch or WorkBudget invalidation API at either geometry-owned transfer boundary (`findCertifiedIntersections` at 2725-2728; retained `core->contract` at 3006-3007). Slice A must add sticky invalidation and catch/invalidate/rethrow, then frozen-source review must verify both. The existing `Provider contradictions and exceptions cannot leave a reusable trusted session` test remains adjacent lower-level coverage; A14 is a separate exact case observing cumulative callback admission after throw, invalidated root and no-work retry. Neither geometry-owned call has a safe injected provider seam.
   slice_test_map: PENDING — bind every positive/refusal/limit/reason test to R IDs, exact Catch2 identity, independent oracle, expected work/result, owner and A/B/C slice. The A map must close every A01-A14 row, with A08/A14 contracts distinct, plus the strict-core 61-name regression set. Planned B01-B08 and C01-C54 identities and owners remain in the roadmap; their full fixture/oracle/assertion crosswalks close at B/C readiness and are not A entry gates. Record baseline discovery separately from execution. Registered discovery/JUnit execution is allowed only after the owning activation checkpoint; exact identity-set validators must reject missing, duplicate, unexpected, skipped or zero-assertion cases.
   formal_preimplementation_gates: PENDING — after all A-owned completeness, plan-correctness and readiness rows pass, obtain separate `G1-COMPLETE`, `G1-PLAN-CORRECT` and A Gate-3 readiness PASS receipts bound to the same committed plan SHA, product-source SHA and packet digest. G1 completeness must still inventory all later requirements, exact planned identities, owners and dependency edges; C's detailed proof/fixture closure is deferred to C readiness. Any affected plan/source change restarts the corresponding reviews.
   receipt_packet_audit: PENDING — verify every preflight/review receipt binds the exact committed plan SHA, product-source SHA, scope/file manifest, method/source, status, finding resolutions and hashes of its required inputs; reject missing, duplicate, stale, self-referential or contradictory fields. This is a read-only evidence check and cannot promote an arithmetic script, runtime diagnostic or test listing into an independent oracle/test pass.
-  preflight_receipt_contract: PENDING — create fresh exact-membership `preflight-v80/` only after the v80 plan commit, bound to that committed plan blob and unchanged product-source commit; preserve v72-v77 and older artifacts as history/provenance. Reuse earlier discovery/proof artifacts only as labeled PARTIAL inputs; rehash them and state limitations. The manifest hashes exactly `input-manifest.txt` and the six evidence maps, excluding itself and formal receipts. Before review/activation, compare actual top-level entries against those seven payloads plus `packet-manifest.sha256`; reject extras, missing entries, symlinks, non-regular files and nested directories; verify all hashes and identities. `input-manifest.txt` records exact plan/product SHAs and hashes for source/spec/build/fixture/probe inputs, A-owned producer/callsite census, both geometry-owned exception-transfer sites, A14 fixture/source/target, and reused Release/ASan discovery with provenance. Record baseline counts separately from planned post-registration floors; no registered JUnit is required before activation. Each evidence map records method, provenance, limitations and PASS/PARTIAL/PENDING. Complete the A-relevant portions for Gate 1/3; C's phase/cut/frontier proof and B/C selector oracles remain visibly PARTIAL/PENDING until their own gates. The selector map binds A01-A14 (including separate A08/A14 selectors), B01-B08 and C01-C54 to requirements, API/source, fixture/oracle, assertion contract, target, owner and report location; actual registration/reachability/assertions are checked after activation. The embedded post-activation validator enforces exact A identity sets and the strict-core 61-case regression, and later slice validators enforce their exact sets. A Gate receipts bind the packet digest and same plan/product SHAs; Gate 3 additionally binds both actual Gate-1 receipt hashes. Hash equality proves identity, not a PASS.
+  preflight_receipt_contract: PENDING — create fresh exact-membership `preflight-v81/` only after the v81 plan commit, bound to that committed plan blob and unchanged product-source commit; preserve v72-v80 and older artifacts as history/provenance. Reuse earlier discovery/proof artifacts only as labeled PARTIAL inputs; rehash them and state limitations. The manifest hashes exactly `input-manifest.txt` and the six evidence maps, excluding itself and formal receipts. Before review/activation, compare actual top-level entries against those seven payloads plus `packet-manifest.sha256`; reject extras, missing entries, symlinks, non-regular files and nested directories; verify all hashes and identities. `input-manifest.txt` records exact plan/product SHAs and hashes for source/spec/build/fixture/probe inputs, A-owned producer/callsite census, both geometry-owned exception-transfer sites, A14 fixture/source/target, v80 review findings and the activation-baseline recipe. Record pre-activation discovery separately from post-registration floors; no registered JUnit is required before activation. Each evidence map records method, provenance, limitations and PASS/PARTIAL/PENDING. Complete only A-relevant R02/R12/R13, six-path, A01-A14 and resource portions for Gate 1/3; C's phase/cut/frontier proof and B/C full oracle crosswalks remain visibly PARTIAL/PENDING until their own gates. The selector map binds A01-A14 (including separate A08/A14 selectors), B01-B08 and C01-C54 to requirements, API/source, fixture/oracle, assertion contract, target, owner and report location; A must close its own rows and explicitly defer B/C rows. The activation-baseline recipe saves exact normalized Release/ASan sets for cache-budget, intersection-refine and strict-core before product edits. The embedded post-activation validator reads those activation-bound identities, executes A14 in both JUnit runs and enforces exact A and strict-core sets; later slice validators enforce their own exact sets. A Gate receipts bind the packet digest and same plan/product SHAs; Gate 3 additionally binds both actual Gate-1 receipt hashes. Hash equality proves identity, not a PASS.
+  selector_cardinality_audit: Before sealing `preflight-v81/`, parse all planned ID rows and require exactly 14 unique A IDs (`A01-A14`), 8 B IDs (`B01-B08`), 54 C IDs (`C01-C54`), and 61 uniquely named strict-core regression IDs. A/B/C total exactly 76 identities; strict-core is a separate regression set and is not included in that total. Reject the inherited erroneous aggregate statement “all 21 A/B/C identities”; no identity may be invented, omitted, aliased, duplicated or counted from a SECTION. Confirm A01-A13 map only to cache-budget-accounting and A14 only to intersection-refine. Historical packet counts remain historical and are not rewritten.
   gate_receipt_identity: Require exactly one each of `status=PASS`, `gate_id`, `slice`, `reviewed_plan_sha`, `product_base_sha`, and `packet_manifest_sha256` in all three gate receipts. Gate 3 must additionally carry exactly one `gate1_completeness_sha256` and `gate1_plan_correctness_sha256`, matching the actual Gate-1 file hashes. Duplicate, missing or stale identity fields fail activation.
   activation: BLOCKED — create a separate plan-only activation checkpoint for Slice A only after formal receipts pass; activation must not alter any product/test byte. Slice B and C later require their own fresh reviews and activation checkpoints after their predecessor reconciliation commits.
-preflight_execution_order: A-only order for the next handoff: (1) commit v80 and bind the source tree, public header, six owned paths, predecessor chain, build targets and exact selectors; (2) create/hash the exact-membership v80 packet; (3) finish the bidirectional A R02/R12/R13 requirement/source/caller/test/oracle map, assign R05 producer creation, one-piece producer-to-document adoption, repeated-offset mutation and fallback to 1B/1C/1F, distinguish 1A-2 generic entity creation from R05 producer-to-document adoption, and close A-owned debit/capacity/runtime census; (4) calculate exact/one-less numerical snapshots and independently validate A01-A14 including the A14 throw route; (5) audit path ownership, baseline discovery, CMake/qmake6 commands, recovery and packet consistency; (6) obtain distinct exact-identity G1a, G1b and A Gate-3 PASS receipts; (7) commit a separate A activation checkpoint; (8) perform only clean Release/ASan target builds and `--list-tests`, reconcile baseline identities, then authorize A edits. Each step has a durable artifact and PASS/PARTIAL/PENDING exit; no later step hides an earlier gap. B terminal evidence and C phase/cut/frontier/C01-C54 proofs remain assigned to B/C and are completed before those slices' readiness, not as A entry criteria absent a documented dependency. Do not run registered JUnit or edit product/test files before A activation; after activation, execute the registered tests as part of A validation before its product commit.
-next: After the v80 plan-only commit, create and verify exact-membership `preflight-v80/` bound to the committed plan blob and unchanged product-source base. Preserve v72-v77 packets as immutable PARTIAL provenance; do not promote their drafts or receipts. Complete A's source/debit/capacity/runtime census, numerical snapshots, independent A01-A14 oracles and assertion map, six-path/build/predecessor reconciliation, exact Release/ASan baseline discovery and packet audit. Obtain independent G1a completeness, G1b plan-correctness and Gate-3 readiness PASS receipts on the same plan/product/packet identities. Then commit an A-only activation checkpoint; build/list Release and ASan targets, save exact pre-edit selector sets, and stop to reconcile any source/binary mismatch before editing. Agent Gibbs starts implementation only after activation and baseline reconciliation. Implement one slice at a time; for each slice, require fresh scope/readiness, exact frozen paths, required tests/build matrix and independent frozen-tree review, then a product/test-only commit. Immediately follow with one plan-only direct-child reconciliation and semantic read-back of Git objects, evidence, status and all next/packet pointers. No successor edit/build/test starts before that audit. On a mismatch, preserve commits/evidence, invalidate affected receipts and add a corrective plan-only child before fresh review. B/C phase/frontier proofs and C01-C54 closure remain mandatory at their own readiness gates. DXF read, DXF write, DWG read and DWG write, conversion directions, binary-DXF codec, UI behavior and phase 2 remain named later application obligations; checker-only geometry never satisfies them.
+preflight_execution_order: A-only order for the next handoff: (1) commit this v81 plan-only correction as a direct child of v80, preserving all product blobs; (2) create/hash exact-membership `preflight-v81/` and rebind every reused input to the committed v81 plan and unchanged product source; (3) close the bidirectional A-only R02/R12/R13 path/caller/test/oracle map, name R05 owners in 1B/1C/1F without requiring their completion, and close A's debit/capacity/runtime census; (4) test-contract the atomic candidate split API with exact/one-less two-counter snapshots and source-map both builder call sites; independently validate A01-A14, including the source-derived throw route; (5) reconcile all six paths, current CMake/qmake6 registrations, predecessor commits and the activation-baseline recipe; (6) obtain distinct exact-identity G1a, G1b and A Gate-3 PASS receipts on the same plan/product/packet identities; (7) commit a separate A activation checkpoint; (8) run only the activation-baseline builds and `--list-tests`, reconcile normalized Release/ASan sets, then authorize A edits. Each step has a durable artifact and PASS/PARTIAL/PENDING exit; no later step hides an earlier gap. B/C terminal, phase/cut/frontier and C01-C54 oracles remain their own readiness work unless a concrete A dependency is demonstrated. Do not run registered JUnit or edit product/test files before activation; after activation the saved identity sets gate all A validation.
+next: After this v81 plan-only commit, create and verify exact-membership `preflight-v81/` bound to the committed plan blob and unchanged product-source base; preserve v80 and older packets as immutable PARTIAL provenance. Complete A's source/debit/capacity/runtime census, exact A01-A14 snapshots/oracles, six-path/build/predecessor reconciliation and fresh same-source Release/ASan identity discovery. Obtain independent G1a, G1b and Gate-3 PASS receipts on the same plan/product/packet identities. Then commit an A-only activation checkpoint and run the literal activation-baseline recipe; stop to reconcile any source/binary/list mismatch before editing. Agent Gibbs starts implementation only after activation and baseline reconciliation; if unavailable, stop for user-authorized reassignment. Implement one slice at a time; require fresh scope/readiness, exact frozen paths, tests/build matrix and independent frozen-tree review, then one product/test-only commit. Immediately follow with a plan-only direct-child reconciliation and semantic Git/evidence/status/pointer read-back. No successor edit/build/test starts before that audit. On mismatch, preserve evidence, invalidate affected receipts and add a corrective plan-only child before fresh review. B/C work and the four DXF/DWG application directions, both conversions, binary-DXF codec, UI and phase 2 remain later explicit obligations; checker-only geometry never satisfies them.
 activation_commands: |
   # Run only after Gates 1 and 3 pass and the separate activation plan checkpoint is committed.
   set -euo pipefail
@@ -1831,8 +1980,10 @@ activation_commands: |
   case "$SLICE" in
     A-budget-depth) paths=(librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
                            librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp
+                           librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h
                            librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.cpp
-                           librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp) ;;
+                           librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp
+                           librecad/src/lib/engine/document/entities/tests/lc_parametriccurveintersection_tests.cpp) ;;
     *) paths=(librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
               librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp
               librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp) ;;
@@ -1840,7 +1991,7 @@ activation_commands: |
   ROOT="$WT/build/evidence/1A-1.b-check-topology-chain/$SLICE"
   R="$ROOT/readiness-$GATE_ID"
   E="$ROOT/activation-$ACTIVATION_ID"
-  P="$WT/build/evidence/1A-1.b-check-topology-chain/preflight-v80"
+  P="$WT/build/evidence/1A-1.b-check-topology-chain/preflight-v81"
   cd "$WT"
   test -d "$R"
   test ! -e "$E"
@@ -1935,8 +2086,10 @@ foundation_review_freeze_commands: |
   case "$SLICE" in
     A-budget-depth) paths=(librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
                            librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp
+                           librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h
                            librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.cpp
-                           librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp) ;;
+                           librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp
+                           librecad/src/lib/engine/document/entities/tests/lc_parametriccurveintersection_tests.cpp) ;;
     B-occurrence-terminals) paths=(librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
                                    librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp
                                    librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp) ;;
@@ -1952,32 +2105,78 @@ foundation_review_freeze_commands: |
   cp "$R/gate2-review-input.txt" "$R/final-gate1-review-input.txt"
   git diff --check -- "${paths[@]}"
 foundation_validation_commands: |
-  # Used only by Slices A/B; C uses the attempt-bound full checker recipe below.
+  # Used by A/B with the exact-membership packet bound in activation-identity.txt; C uses its own recipe below.
   set -euo pipefail
   WT=/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961
   : "${SLICE:?Set SLICE to A-budget-depth or B-occurrence-terminals}"
   : "${ACTIVATION_ID:?Use the immutable activation ID for this slice}"
   : "${ATTEMPT:?Set ATTEMPT to a fresh positive integer}"
+  : "${PACKET_DIR:?Set PACKET_DIR to the immutable activation-bound packet directory}"
   [[ "$ATTEMPT" =~ ^[1-9][0-9]*$ ]]
   case "$SLICE" in
-    A-budget-depth) SELECTOR='[lc-offsetcurve][geometry][cache-budget-accounting]'; MIN_CASES=13 ;;
+    A-budget-depth) SELECTOR='[lc-offsetcurve][geometry][cache-budget-accounting]'; INTERSECTION_SELECTOR='[lc-offsetcurve][geometry][intersection-refine]'; MIN_CASES=13 ;;
     B-occurrence-terminals) SELECTOR='[lc-offsetcurve][geometry][reference-terminals]'; MIN_CASES=8 ;;
     *) exit 2 ;;
   esac
   ROOT="$WT/build/evidence/1A-1.b-check-topology-chain/$SLICE"
   R="$ROOT/review-$ATTEMPT"
   A="$ROOT/activation-$ACTIVATION_ID"
+  P="$PACKET_DIR"
+  if [ "$SLICE" = A-budget-depth ]; then
+    : "${BASELINE_ATTEMPT:?Set the successful activation-baseline attempt number}"
+    [[ "$BASELINE_ATTEMPT" =~ ^[1-9][0-9]*$ ]]
+    BASELINE="$A/activation-baseline-$BASELINE_ATTEMPT"
+  else
+    BASELINE=''
+  fi
   E="$ROOT/validation-$ATTEMPT"
   QMAKE_BUILD="/private/tmp/lc-offset-curve-2961-${SLICE}-attempt-${ATTEMPT}-qmake6"
   cd "$WT"
   test -d "$R" && test -d "$A"
+  test -s "$P/selector-test-map.txt"
+  test -s "$P/packet-manifest.sha256"
   test "$(git rev-parse HEAD)" = "$(cat "$A/activated-base.sha")"
+  expected_manifest_payloads=$(printf '%s\n' input-manifest.txt source-requirement-map.txt terminal-producer-map.txt independent-transition-cut-ledger.txt phase-cut-intervals.txt debit-admission-table.txt selector-test-map.txt | sort)
+  manifest_payloads=$(awk 'NF {print $2}' "$P/packet-manifest.sha256" | sort)
+  test "$manifest_payloads" = "$expected_manifest_payloads"
+  python3 - "$P" "$expected_manifest_payloads" <<'PY'
+  import stat
+  import sys
+  from pathlib import Path
+
+  packet = Path(sys.argv[1])
+  expected = set(sys.argv[2].splitlines()) | {"packet-manifest.sha256"}
+  entries = list(packet.iterdir())
+  actual = {entry.name for entry in entries}
+  if actual != expected:
+      raise SystemExit(f"packet entry mismatch: missing={sorted(expected - actual)}, extra={sorted(actual - expected)}")
+  if any(not stat.S_ISREG(entry.lstat().st_mode) for entry in entries):
+      raise SystemExit("packet contains a non-regular or nested entry")
+  PY
+  (cd "$P" && shasum -a 256 -c packet-manifest.sha256)
+  PACKET_SHA=$(shasum -a 256 "$P/packet-manifest.sha256" | awk '{print $1}')
+  PRODUCT_BASE_SHA=$(awk -F= '$1 == "product_base_sha" {print $2}' "$A/activation-identity.txt")
+  grep -Fx "packet_manifest_sha256=$PACKET_SHA" "$A/activation-identity.txt"
+  if [ "$SLICE" = A-budget-depth ]; then
+    test -d "$BASELINE"
+    grep -Fx "slice=A-budget-depth" "$BASELINE/baseline-identity.txt"
+    grep -Fx "activation_id=$ACTIVATION_ID" "$BASELINE/baseline-identity.txt"
+    grep -Fx "attempt=$BASELINE_ATTEMPT" "$BASELINE/baseline-identity.txt"
+    grep -Fx "product_base_sha=$PRODUCT_BASE_SHA" "$BASELINE/baseline-identity.txt"
+    grep -Fx "packet_manifest_sha256=$PACKET_SHA" "$BASELINE/baseline-identity.txt"
+    grep -Fx "packet_manifest_sha256=$PACKET_SHA" "$A/activation-identity.txt"
+    grep -Fx "activated_base_sha=$(cat "$A/activated-base.sha")" "$BASELINE/baseline-identity.txt"
+    (cd "$BASELINE" && shasum -a 256 -c baseline-manifest.sha256)
+    cmp "$A/activation-files.sha256" "$BASELINE/product-source-files.sha256"
+  fi
   test -z "$(git diff --cached --name-only)"
   case "$SLICE" in
     A-budget-depth) paths=(librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
                            librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp
+                           librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h
                            librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.cpp
-                           librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp) ;;
+                           librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp
+                           librecad/src/lib/engine/document/entities/tests/lc_parametriccurveintersection_tests.cpp) ;;
     B-occurrence-terminals) paths=(librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
                                    librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp
                                    librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp) ;;
@@ -2034,6 +2233,10 @@ foundation_validation_commands: |
   run focused-asan "$E/focused-asan.log" env QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_tests "$SELECTOR" --order decl --reporter junit --out "$E/focused-asan.junit.xml"
   if [ "$SLICE" = A-budget-depth ]; then
     STRICT_CORE='[lc-offsetcurve][geometry][reference-critical],[lc-offsetcurve][geometry][reference-critical-depth],[lc-offsetcurve][geometry][reference-critical-refine],[lc-offsetcurve][geometry][reference-events],[lc-offsetcurve][geometry][reference-components]'
+    run discovery-intersection-refine-release "$E/discovery-intersection-refine-release.txt" build/librecad_tests --list-tests "$INTERSECTION_SELECTOR"
+    run discovery-intersection-refine-asan "$E/discovery-intersection-refine-asan.txt" build-asan/librecad_tests --list-tests "$INTERSECTION_SELECTOR"
+    run intersection-refine-release "$E/intersection-refine-release.log" env QT_QPA_PLATFORM=offscreen build/librecad_tests "$INTERSECTION_SELECTOR" --order decl --reporter junit --out "$E/intersection-refine-release.junit.xml"
+    run intersection-refine-asan "$E/intersection-refine-asan.log" env QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0 build-asan/librecad_tests "$INTERSECTION_SELECTOR" --order decl --reporter junit --out "$E/intersection-refine-asan.junit.xml"
     run discovery-strict-core-release "$E/discovery-strict-core-release.txt" build/librecad_tests --list-tests "$STRICT_CORE"
     run discovery-strict-core-asan "$E/discovery-strict-core-asan.txt" build-asan/librecad_tests --list-tests "$STRICT_CORE"
     run strict-core-release "$E/strict-core-release.log" env QT_QPA_PLATFORM=offscreen build/librecad_tests "$STRICT_CORE" --order decl --reporter junit --out "$E/strict-core-release.junit.xml"
@@ -2053,7 +2256,7 @@ foundation_validation_commands: |
   run qmake6-generation "$E/qmake6-generation.log" /opt/homebrew/bin/qmake6 -r CONFIG+=sdk_no_version_check "$WT/librecad.pro"
   run qmake6-build "$E/qmake6-build.log" make -j4
   cd "$WT"
-  run report-validation "$E/report-summary.txt" python3 - "$E" "$MIN_CASES" "$SLICE" <<'PY'
+  run report-validation "$E/report-summary.txt" python3 - "$E" "$MIN_CASES" "$SLICE" "$BASELINE" "$P/selector-test-map.txt" <<'PY'
   import re
   import sys
   import xml.etree.ElementTree as ET
@@ -2062,24 +2265,10 @@ foundation_validation_commands: |
   evidence = Path(sys.argv[1])
   minimum = int(sys.argv[2])
   slice_name = sys.argv[3]
+  activation_baseline = Path(sys.argv[4]) if sys.argv[4] else None
   baseline = Path("build/evidence/1A-1.b-check-bounds")
-  selector_map = Path("build/evidence/1A-1.b-check-topology-chain/preflight-v73/selector-test-map.txt")
-  required = {
-      "A-budget-depth": {
-          "cache split atomically charges two children",
-          "one-less split budget refuses without partial debit",
-          "reference depth survives subdivision and enforces combined depth",
-          "shared work budget preserves sticky refusal",
-          "axis inventory sort consumes one admitted work unit",
-          "critical occurrence sort consumes one admitted work unit",
-          "critical fixed scans charge before iteration",
-          "provider analytic scans are covered by query debit",
-          "bounds dispatch and coverage advancement charge before work",
-          "WorkBudget invalidation is sticky and preserves state",
-          "geometry root and retained-record capacity checks precede debit",
-          "strict-core seed and split admissions precede queue mutation",
-          "strict-core comparison work and output scratch are bounded",
-      },
+  selector_map = Path(sys.argv[5])
+  required_b = {
       "B-occurrence-terminals": {
           "source start maps to exact terminal",
           "source end maps to exact terminal",
@@ -2092,13 +2281,54 @@ foundation_validation_commands: |
       },
   }
 
-  def listed(path):
-      matches = re.findall(r"(\d+) matching test cases", path.read_text())
-      assert matches, f"missing Catch2 discovery count: {path}"
-      return int(matches[-1])
+  def listed_names(path):
+      text = path.read_text()
+      matches = re.findall(r"(\d+)\s+(?:matching\s+)?test cases?\b", text)
+      if matches:
+          expected = int(matches[-1])
+      elif re.search(r"no test cases matched", text, re.IGNORECASE):
+          expected = 0
+      else:
+          raise AssertionError(f"missing or unrecognized Catch2 discovery summary: {path}")
+      if expected == 0:
+          names = []
+      else:
+          lines = text.splitlines()
+          try:
+              start = lines.index("Matching test cases:") + 1
+          except ValueError as error:
+              raise AssertionError(f"missing Catch2 listing header: {path}") from error
+          names, wrapped = [], []
+          for line in lines[start:]:
+              if re.search(r"\d+\s+(?:matching\s+)?test cases?\b", line):
+                  break
+              if not line.strip():
+                  continue
+              indent = len(line) - len(line.lstrip(" "))
+              body = line.strip()
+              if indent >= 6 and body.startswith("["):
+                  assert wrapped, f"orphan tag line in {path}: {line!r}"
+                  names.append(" ".join(wrapped))
+                  wrapped = []
+              elif 2 <= indent < 6:
+                  wrapped.append(body)
+              else:
+                  raise AssertionError(f"unrecognized Catch2 listing line in {path}: {line!r}")
+          assert not wrapped, f"unterminated wrapped test name in {path}: {wrapped!r}"
+      assert len(names) == expected and len(names) == len(set(names)), (path, len(names), expected)
+      return names
 
-  for mode in ("release", "asan"):
-      assert listed(evidence / f"discovery-focused-{mode}.txt") == minimum
+  a_names = {}
+  strict_map_names = set()
+  if slice_name == "A-budget-depth":
+      a_rows = re.findall(r"^\s*A(\d{2})\s+`([^`]+)`\s*\|", selector_map.read_text(), re.MULTILINE)
+      assert len(a_rows) == 14 and {case_id for case_id, _ in a_rows} == {f"{i:02d}" for i in range(1, 15)}, (selector_map, a_rows)
+      a_names = {case_id: name for case_id, name in a_rows}
+      assert len({name for _, name in a_rows}) == 14, (selector_map, a_rows)
+      strict_rows = re.findall(r"^\s*STRICT-CORE-\d{2}\s+`([^`]+)`\s*\|", selector_map.read_text(), re.MULTILINE)
+      strict_map_names = set(strict_rows)
+      assert len(strict_rows) == len(strict_map_names) == 61, (selector_map, len(strict_rows), len(strict_map_names))
+      assert a_names["14"] == "retained certificate callback throw preserves admitted work"
 
   def report(path):
       root = ET.parse(path).getroot()
@@ -2113,29 +2343,52 @@ foundation_validation_commands: |
 
   def test_names(path):
       root = ET.parse(path).getroot()
-      return {case.get("name", "") for case in root.iter("testcase")}
+      names = [case.get("name", "") for case in root.iter("testcase")]
+      assert all(names) and len(names) == len(set(names)), (path, names)
+      return names
 
-  strict_core_names = set()
   if slice_name == "A-budget-depth":
-      strict_core_names = set(re.findall(
-          r"^STRICT-CORE-\d{2}\s+`([^`]+)`\s+\|",
-          selector_map.read_text(), re.MULTILINE))
-      assert len(strict_core_names) == 61, (selector_map, len(strict_core_names), 61)
+      assert activation_baseline is not None
+      baseline_cache = {mode: set((activation_baseline / f"cache-budget-{mode}.names").read_text().splitlines()) - {""} for mode in ("release", "asan")}
+      baseline_intersection = {mode: set((activation_baseline / f"intersection-refine-{mode}.names").read_text().splitlines()) - {""} for mode in ("release", "asan")}
+      baseline_strict = {mode: set((activation_baseline / f"strict-core-{mode}.names").read_text().splitlines()) - {""} for mode in ("release", "asan")}
+      assert baseline_cache["release"] == baseline_cache["asan"] == set()
+      assert len(baseline_intersection["release"]) == len(baseline_intersection["asan"]) == 14
+      assert baseline_intersection["release"] == baseline_intersection["asan"]
+      assert len(baseline_strict["release"]) == len(baseline_strict["asan"]) == 61
+      assert baseline_strict["release"] == baseline_strict["asan"] == strict_map_names
+      expected_cache_names = {name for case_id, name in a_names.items() if case_id != "14"}
+      expected_intersection_names = baseline_intersection["release"] | {a_names["14"]}
+      assert a_names["14"] not in baseline_intersection["release"] and len(expected_intersection_names) == 15
+  else:
+      expected_cache_names = required_b[slice_name]
 
   for mode in ("release", "asan"):
+      focused_discovery = listed_names(evidence / f"discovery-focused-{mode}.txt")
+      assert len(focused_discovery) == minimum
       cases, assertions, skips = report(evidence / f"focused-{mode}.junit.xml")
       assert cases == minimum and assertions > 0
       assert not skips, (evidence / f"focused-{mode}.junit.xml", skips)
-      observed = test_names(evidence / f"focused-{mode}.junit.xml")
-      assert observed == required[slice_name], (slice_name, mode, sorted(required[slice_name] - observed), sorted(observed - required[slice_name]))
+      observed_list = test_names(evidence / f"focused-{mode}.junit.xml")
+      observed = set(observed_list)
+      assert observed == expected_cache_names, (slice_name, mode, sorted(expected_cache_names - observed), sorted(observed - expected_cache_names))
+      assert set(focused_discovery) == expected_cache_names, (slice_name, mode, focused_discovery)
       adjacent_cases, adjacent_assertions, adjacent_skips = report(evidence / f"adjacent-{mode}.junit.xml")
       assert adjacent_cases > 0 and adjacent_assertions > 0 and not adjacent_skips, (mode, adjacent_skips)
       if slice_name == "A-budget-depth":
-          discovery = evidence / f"discovery-strict-core-{mode}.txt"
+          intersection_discovery = listed_names(evidence / f"discovery-intersection-refine-{mode}.txt")
+          intersection_report = evidence / f"intersection-refine-{mode}.junit.xml"
+          intersection_cases, intersection_assertions, intersection_skips = report(intersection_report)
+          assert len(intersection_discovery) == intersection_cases == 15
+          assert set(intersection_discovery) == expected_intersection_names
+          assert set(test_names(intersection_report)) == expected_intersection_names
+          assert intersection_assertions > 0 and not intersection_skips, (mode, intersection_skips)
+
+          strict_discovery = listed_names(evidence / f"discovery-strict-core-{mode}.txt")
           strict_report = evidence / f"strict-core-{mode}.junit.xml"
           strict_cases, strict_assertions, strict_skips = report(strict_report)
-          assert listed(discovery) == 61, (discovery, listed(discovery), 61)
-          assert strict_cases == 61 and test_names(strict_report) == strict_core_names
+          assert len(strict_discovery) == strict_cases == 61
+          assert set(strict_discovery) == set(test_names(strict_report)) == baseline_strict[mode]
           assert strict_assertions > 0 and not strict_skips, (mode, strict_skips)
   checks = [("full-release", 74, "full-release"), ("dxf-fast-release", 3, "dxf-fast-release"),
             ("dxf-fast-asan", 3, "dxf-fast-asan"), ("dwg-fast-release", 4, "dwg-fast-release"),
@@ -2189,8 +2442,10 @@ foundation_product_commit_commands: |
   case "$SLICE" in
     A-budget-depth) paths=(librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
                            librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp
+                           librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h
                            librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.cpp
-                           librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp) ;;
+                           librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp
+                           librecad/src/lib/engine/document/entities/tests/lc_parametriccurveintersection_tests.cpp) ;;
     B-occurrence-terminals) paths=(librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
                                    librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp
                                    librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp) ;;
@@ -2231,6 +2486,9 @@ foundation_plan_checkpoint_commands: |
   test -z "$(git diff --cached --name-only)"
   test "$(git diff --name-only)" = docs/plan_offset_curve_2961.md
   git diff --check -- docs/plan_offset_curve_2961.md
+  PARENT_PLAN_VERSION=$(git show HEAD:docs/plan_offset_curve_2961.md | sed -n 's/^Plan \*\*v\([0-9][0-9]*\).*/\1/p' | head -n 1)
+  CANDIDATE_PLAN_VERSION=$(sed -n 's/^Plan \*\*v\([0-9][0-9]*\).*/\1/p' docs/plan_offset_curve_2961.md | head -n 1)
+  test -n "$PARENT_PLAN_VERSION" && test "$CANDIDATE_PLAN_VERSION" -eq "$((PARENT_PLAN_VERSION + 1))"
   shasum -a 256 docs/plan_offset_curve_2961.md > "$E/plan-checkpoint-file.sha256"
   git add -- docs/plan_offset_curve_2961.md
   test "$(git diff --cached --name-only)" = docs/plan_offset_curve_2961.md
@@ -2240,11 +2498,16 @@ foundation_plan_checkpoint_commands: |
   test "$(git show --pretty=format: --name-only HEAD | sed '/^$/d')" = docs/plan_offset_curve_2961.md
   git show "HEAD:docs/plan_offset_curve_2961.md" | shasum -a 256 | awk '{print $1}' > "$E/plan-checkpoint-committed.sha256"
   test "$(cat "$E/plan-checkpoint-committed.sha256")" = "$(awk '{print $1}' "$E/plan-checkpoint-file.sha256")"
+  CHECKPOINT_SHA=$(git rev-parse HEAD)
+  if git show "HEAD:docs/plan_offset_curve_2961.md" | rg -F "$CHECKPOINT_SHA"; then exit 1; fi
+  test "$(git show "HEAD:docs/plan_offset_curve_2961.md" | sed -n 's/^Plan \*\*v\([0-9][0-9]*\).*/\1/p' | head -n 1)" -eq "$CANDIDATE_PLAN_VERSION"
   case "$SLICE" in
     A-budget-depth) paths=(librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
                            librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp
+                           librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h
                            librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.cpp
-                           librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp) ;;
+                           librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp
+                           librecad/src/lib/engine/document/entities/tests/lc_parametriccurveintersection_tests.cpp) ;;
     B-occurrence-terminals) paths=(librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
                                    librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp
                                    librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp) ;;
@@ -2256,6 +2519,17 @@ foundation_plan_checkpoint_commands: |
   test -z "$(git diff --cached --name-only)"
   git diff --check HEAD^ HEAD
   git status --short > "$E/post-checkpoint-status.txt"
+  {
+    printf 'status=PENDING_SEMANTIC_READBACK\nplan_checkpoint_sha=%s\nplan_parent_sha=%s\nproduct_commit_sha=%s\nplan_version=%s\n' \
+      "$CHECKPOINT_SHA" "$(git rev-parse HEAD^)" "$(cat "$E/product-commit.sha")" "$CANDIDATE_PLAN_VERSION"
+    printf 'plan_committed_blob_sha256=%s\nproduct_file_manifest_sha256=%s\n' \
+      "$(cat "$E/plan-checkpoint-committed.sha256")" "$(shasum -a 256 "$E/checkpoint-product-files.sha256" | awk '{print $1}')"
+    git status --short
+  } > "$E/post-commit-self-update-audit.txt"
+  test "$(git rev-parse HEAD^)" = "$(cat "$E/product-commit.sha")"
+  test "$(git show --pretty=format: --name-only HEAD | sed '/^$/d')" = docs/plan_offset_curve_2961.md
+  test -z "$(git diff --name-only -- docs/plan_offset_curve_2961.md ${paths[@]})"
+  test -z "$(git diff --cached --name-only)"
 review_freeze_commands: |
   # Slice C only: use a fresh ATTEMPT for each changed product diff, never for the immutable activation ID.
   set -euo pipefail
@@ -9280,3 +9554,36 @@ This is a non-activating plan-only correction based on committed v79
   revalidate every reused input. No product build, registered test, formal gate PASS or activation occurred. Slice A
   remains WAITING. The v80 commit must be a plan-only direct child of v79, with no self/future SHA; after committing,
   verify its path scope, parent, candidate/committed blob equality, unchanged product blobs and live pointers.
+
+#### v80 → v81 (2026-10-16; reconcile Slice-A completeness, executable correctness, and commit handoff)
+
+This is a plan-only candidate based on committed v80 `c708490cd3372376a9b2126773c783d7cd07e4e9`; product source
+remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. The v80 packet and older evidence remain immutable provenance.
+
+- **1. Completeness and plan correctness:** reconciled A to its six actual implementation/test files, separated
+  A14's retained-callback-throw case from A01-A13, made the split-debit exact/one-less two-counter oracle explicit,
+  and removed downstream R05/B/C closure from A's entry conditions while preserving their named owners. A still
+  requires its own complete R02/R12/R13 source, debit, capacity, runtime, registration and evidence crosswalk.
+- **2. Implementation correctness:** kept G2 independent and post-edit, bound it to the frozen six-file diff and
+  exact Release/ASan identities, required exact testcase names and non-vacuous per-case source assertions, and made
+  the validator execute A14 separately while comparing strict-core and baseline identities. No implementation
+  correctness result is claimed because this update changes no product code.
+- **3. Sub-plan and readiness:** bound the baseline to the committed activation, packet digest, source-file hashes,
+  build caches and test binaries. The activation-bound baseline runs only CMake Release/ASan builds and test-list
+  discovery; post-edit validation consumes those names, runs the precise selectors, performs the build/test matrix
+  and qmake6 check, and now rechecks exact packet membership as well as payload checksums. G1a/G1b/G3 and activation
+  remain PENDING; Slice A remains WAITING.
+- **4. Commit after each slice:** the executable A recipe owns all six paths in activation, review freeze,
+  validation, product commit and checkpoint manifests. It permits one product/test-only commit after final reviews
+  and validation, verifies its parent/path/blob set against the freeze, and prohibits successor work before
+  reconciliation.
+- **5. Self-update after committing:** the direct-child one-file roadmap checkpoint increments the version once,
+  records the actual product SHA and validation evidence, updates live statuses/risks/dependencies/next pointers,
+  and excludes its own future SHA. The follow-up G5 read-back verifies the actual Git objects, parent/path scope,
+  candidate/committed plan blob, unchanged product blobs, reports, worktree and affected descendant readiness; the
+  recorded audit stays `PENDING_SEMANTIC_READBACK` until a separate PASS receipt closes it. No successor starts
+  before that receipt.
+- **Validation and disposition:** all six authoritative v81 shell recipes pass `bash -n`. This candidate is not yet
+  committed; the next action remains a one-file v81 plan commit, then a fresh exact-membership v81 packet and
+  independent same-identity G1a/G1b/G3 review. No product edit/build or registered test was performed. Preserve
+  `build-asan/`, the checksum-valid PARTIAL v80 packet, the PARTIAL v77 packet and invalid v79 draft unchanged.
