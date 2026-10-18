@@ -24,24 +24,21 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–3
 
-**Current revision v205 (plan-only recovery; non-activating).** Its candidate/commit/review state is determined only
-by the exact Git and receipt predicates in §113. The durable predecessor is
-v203 commit `8fa18c5de5fd194ff20cba9926f8cf0ebd8d9ac5`, parent `ab287ba44cf1ba762d6f47bc59e94a4debc61ee0`, tree
-`516ae932f6bdf014d7c029cf905d306908c9209b`, roadmap blob `266c717a177fe98afb93f652d67f372d7f1a8239`, raw
-SHA-256 `e13a8416abe1fdb5505a1060ceeed8e5b0579bd26d97f3e0da13c39875c0b277`. Its exact G5 PASS report is
-`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v203/g5-auditor-report.txt` (SHA-256
-`afc123a2f79a8d19ed77bf77d5f373c2d9951e4455579e63e6afdcd050ba15bd`); its bounded prepacket audit is
-`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v203/prepacket-readiness-audit.txt` (SHA-256
-`aa1c3b98889ac0904a889fd3b435c47b48f6ad1b112921baa1d718c2f5f1837c`) and returns
-`PLAN_UPDATE_REQUIRED=true` for open A07-A14 source/design oracles. The uncommitted v204 attempt is invalid and
-quarantined under §113; it is not a checkpoint and is not promoted by this revision. The frozen source draft and
-the isolated recovery checkout have separate identities in §113. Predecessor receipt paths above resolve against
-the frozen source checkout; v205 review/G5 receipts resolve against the recovery checkout. Section §113 is the sole
-live transition authority, adopting §§88/93/110/111's generic current-checkpoint rules and §112's technical A07-A14
-contracts. Older version-specific transition rows are historical. Canonical inputs/preflight/recipe roots for
-v203-v205 are absent by exact path probes in both checkouts; broader attribution is not inferred from those probes.
-Product base remains
-`9c06e9c77b313b62cc20e9ec39c22952fee501f2`; do not access `build-asan/`.
+**Current revision v206 (plan-only decomposition; non-activating).** Exact candidate/commit/gate state is determined
+by §114. Its direct predecessor is v205 commit `ddfe84c77fc5a8ab355c46f8f78a36229471960a`, parent
+`8fa18c5de5fd194ff20cba9926f8cf0ebd8d9ac5`, tree `1edf030acad9c26d90ff1c44578021fe3e37c6df`, roadmap blob
+`4256aa5e024a5528d68b1bed0d232e3a4819e2b0`, raw SHA-256
+`aaa0809fbd84b3a11d678101b271f45b0495f01f0ef36ccfebcf92f59d681878`. Exact independent G5 PASS is
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v205/g5-auditor-report.txt`, SHA-256
+`ac06982e8b56859a42ebdc44937b14f573deb84077d7c7f5329d21c32cf52460`. The authoritative corrected bounded audit is
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v205/prepacket-readiness-audit-corrected-1.txt`, SHA-256
+`85f8362e14a8f4155b5dd749b958f97e63e771b86429ade283fe7016c68f5c7a`; it returns `PLAN_UPDATE_REQUIRED=true` and
+`ARTIFACTS_ABSENT`. Its first audit and mistaken axis-fixture report are preserved with the explicit canonical-start
+erratum; use only the corrected audit. Section §114 supersedes version-specific transitions and the monolithic-A
+readiness rule, preserving every parent requirement and all future feature scope. §113 remains the preservation
+contract for the frozen original source and its exact snapshots. All current receipt paths resolve against the
+isolated recovery checkout unless explicitly rooted at the original source. Product base remains
+`9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Do not inspect `build-asan/`.
 
 **Current revision v202 (plan-only; non-activating).** Its exact predecessor is v201 commit
 `71d0120060a428df84d56ece0f57e5b2eaf242f1`, parent `42538dcc56a07db52bde783285708c9f6dce7916`, tree
@@ -92,12 +89,12 @@ Plan **v198 disjoint-transition and audit-handoff correction**, 2026-10-17; plan
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE; v204 attempt INVALID; v205 state determined by §113; Slice A NOT READY.** The
-v203 G5 PASS and `PLAN_UPDATE_REQUIRED=true` audit are the exact receipts in the current draft header. The v204
-working attempt mixed this roadmap with eight product/test paths and is quarantined by §113; no product commit or
-formal implementation validation exists for those edits. Canonical inputs/preflight/recipe roots for v203-v205
-are absent by exact probes; readiness, activation, baseline and broader artifact attribution require their own exact
-receipt audit and are not inferred here. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Slice A, ordered-chain
+Status: **IMPLEMENTATION INCOMPLETE; v204 preserved; parent A decomposed and WAITING; selected A-core NOT ACTIVATED.** The
+v205 G5 PASS and corrected `PLAN_UPDATE_REQUIRED=true` audit are the exact receipts in the current header. The
+original mixed trim work and v204/v205 source snapshots remain preserved under §113; no product commit or formal
+implementation validation exists for those edits. The bounded v205 audit establishes ARTIFACTS_ABSENT in the
+isolated checkout. A-core's new per-leaf evidence/gates under §114 are pending; no activation is inferred from this
+plan change. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Parent A, ordered-chain
 topology, entity integration, DXF/DWG persistence, UI, phase 2 and the separately gated Phase 3 Trim remain
 incomplete. The four application file lanes, both conversions, edited reopen and binary-DXF codec support remain
 open. Historical receipt and protected-path statements below are retained as historical evidence only; do not
@@ -367,7 +364,7 @@ reconciled baseline or A-budget-depth implementation. Product source remains
 independently authorize work; §56 remains normative only for its bounded Git-object/protected-path procedure. Do not
 inspect protected `build-asan/`; report `not inspected by instruction`.
 
-Select exactly one row from the latest versioned transition-authority section (currently §113) using observed HEAD,
+Select exactly one row from the latest versioned transition-authority section (currently §114) using observed HEAD,
 artifact state and receipts. §93 specifies the input-bundle contract; it is not a transition table. If zero or multiple
 rows match, stop for plan-only correction. No prose status independently authorizes packet, review, activation,
 baseline, build/test or product work.
@@ -381,7 +378,11 @@ baseline, build/test or product work.
 | 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | done — 0e3c6b342, 0B-3 reports/card; one pinned baseline generated-MLEADER DWG gap, 2026-10-15 |
 | 1A-1 | Closed forms, normalization, tolerance helpers and cache validation | C | S0 | 900 | partial — .a/.b-budget/.b-progress/.b-ref-frames/.b-ref-events-core/.b-ref-rate/.b-ref-events-critical/.b-ref-events-accounting/.b-ref-events-refine/.b-ref-critical-refine/.b-ref-providers/.b-ref-contacts/.b-ref-events-isolate/.b-ref-components/.b-check-layout/.b-check-bounds/.b-check-topology-local done; A-budget-depth, B-occurrence-terminals, C-global-topology-checker pending |
 | 1A-1.b-ref-components | Exact visibility and incidence-preserving components | C | .b-ref-events-isolate | 900 | done — `9682d5cac65f30cfd86aa10556678ceb88b1448b`, attempt-8 evidence, 2026-10-16 |
-| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900 | waiting — fresh packet/recipes, same-identity G1a/G1b/G3, activation and baseline remain outstanding; the latest committed state table controls authorization |
+| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900+ | waiting — parent of A-core, A-strict, A-reference and A-cache under §114; no parent acceptance waived |
+| A-core | Atomic shared budget API and sticky state | C | A-budget-depth predecessors | 200 | selected; plan/card review pending; no activation |
+| A-strict | Strict-query dispatch, records, ordering, depth and exception ledger | C | A-core reconciliation/G5 | 500 | waiting; own complete card required |
+| A-reference | Critical/provider accounting, query adoption and paired graph publication | C | A-strict reconciliation/G5 | 500 | waiting; A08 production/A11 oracles remain required |
+| A-cache | Bounds/local split, coverage and inherited-depth accounting | C | A-reference reconciliation/G5 | 300 | waiting; A09 oracles remain required |
 | B-occurrence-terminals | Immutable occurrence-specific terminal publication | C | A-budget-depth product and plan checkpoint | 500 | waiting — no implementation before A reconciliation |
 | C-global-topology-checker | Complete directed path, coverage, cut and cycle validation | C | A-budget-depth and B-occurrence-terminals product/checkpoints | 1200 | waiting — no implementation before A and B reconciliation |
 | 1A-2 | Enumerator; persistent entity core and factory for already validated results; clone, `toPlainSpline`, normalisation, stamp, transforms; `writeEntity` case; INSERT capability; 0B row; interim Edit Properties guard | C | 0B-3, 1A-1 | 900 | pending |
@@ -22913,3 +22914,264 @@ The provider's unique tangency proof
      stack a candidate only by permitting the named isolated v205 plan-only recovery after the invalid attempt is
      frozen and hash-bound; it does not permit a second recovery candidate. The original mixed worktree remains
      quarantined and untouched. `build-asan/` remains uninspected by instruction.
+
+114. **v206 bounded implementation leaves and source-oracle corrections (plan-only; non-activating).** This direct
+     child of exact v205 has purpose `CONTRACT_OR_INPUT_UPDATE`. It binds the exact G5 and corrected bounded audit
+     in the header. It replaces the single indivisible A activation with four dependency-ordered, individually
+     buildable leaves; parent A retains all acceptance and cannot be called done until every leaf and its immediate
+     reconciliation/G5 pass. B/C and all later feature dependencies still require the whole parent. No product
+     change, build/test execution or activation is authorized by this plan revision itself.
+
+     **Authoritative evidence corrections.** All paths here are under recovery
+     `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v205/`. Preserve the first audit SHA-256
+     `e35fdd556c77b43fdb070bbb37a03805d459f0c5104d02e889ea578ae1b0df87` and erroneous
+     `a08-axis-fixture-proof.txt` SHA-256 `9a0c3d253a5d17d40a236892ebbe37a667ce56c9849a8605a7b5ce6bc1b5def2`.
+     They are superseded by corrected audit `85f8362e...` in the header and explicit
+     `a08-axis-fixture-erratum.txt` SHA-256 `0816191dad7f6526fb0e4c0318610ce8d7eb6610fb1f64dbaa1ddcae1a0d7774`.
+     The seed's actual whole-ellipse frame starts at `M_PI_4` (`sweep():581-592`), so the zero-start singleton
+     argument is withdrawn. A08 production identity reachability remains unproved; no success or impossibility is
+     assumed. The original seed may be retained only with its real canonical frame and a completed transcript.
+
+     The audit's other source findings remain active and are assigned to leaves below:
+
+     | Finding/evidence SHA-256 | Correction and required owner |
+     |---|---|
+     | A08 source audit `66c1b11505ae46c8aa9f3835a098d59d59624d296c45f4f03d63d3303edcc9e2` | A-strict owns direct callback pre-admission, strict work/depth/order and exception sinks. A-reference owns actual component-mode API/reachability, nested proof transcript, preparation reissue and atomic geometry adoption. Generic helper tests never substitute for these callers. |
+     | A09 audit `1a274bcb324d0ea13862fa23b1ebab25c47d93581990fadf6508a9e268270a6d` | The four conditional refinements are local `subdivide():4327`, current 2V, target 2V+2S; they do not prove bounds `compare():3844`, current 3V. Track the latter separately in A01/A02. A-cache must seal total published occurrence count N, source/target prefixes separately, all witnesses and public-wrapper ownership. Conditional suffixes are current `(28+N)V,160P`, target `(28+N)V,171P,8S`, not unconditional limits or geometry proof. |
+     | A11 audit `dd8a3531a6eb2028bc09fbe084da95f015b9926af76a74b7c92c4ba28f2e2bc1` | Correct §§107/112's conditional source completion to 23V/48P. 23V/47P is the final incidence-scan refusal state. A-reference must derive an absolute B and separate target ledger, and freeze all checked/reserved/atomic destination batches and no-throw/staged commits. No geometry proof or prefix may be inferred from returned used counters. |
+
+     These corrections supersede only the contrary numerical/source-site claims; all positive, refusal,
+     compatibility, independent-oracle, capacity, exception and publication requirements remain. A07/A12/A13/A14
+     target values stay proposed design data until their own leaf's independent correctness/readiness review and
+     frozen-tree validation. The original protected-path and source-discovery deviations remain historical evidence.
+
+     Preserve v206 `precommit-review-1.txt`, raw SHA-256
+     `d9edc53b6aa68f04dfbc61426fee383e6bf7ab4638e8c8713e231ae0d67f3f0b`, reviewing draft blob
+     `d589aea7cc0ad362a6b8d33c5b52176498c529d9`. Its three findings are resolved by the selected-leaf update/packet/
+     activation predicates, dual assertion-bearing reporters and fresh attempt/phase build roots below. The same
+     correction keeps A03 intact in A-cache (15 cases total) and distinguishes committed baseline inputs from the
+     authorized tested worktree. A new independent exact-draft verdict is required before commit; preserve the
+     earlier report unchanged and never infer PASS from this closure claim alone.
+     Preserve re-review `precommit-review-2.txt`, raw SHA-256
+     `a46501dcae3554e16062dcf75e3f38d17d37672d2dc55d4456beb4f671e9cd26`, reviewing draft
+     `57b299cdaafe83f54d7ee5748707b1da65c5f953`. Its remaining baseline-shadowing finding is corrected by the
+     product/reconciliation precedence and explicit execution-state guards below; obtain a new exact review.
+
+     **Parent-A coverage and dependency DAG.** This is a change to implementation boundaries, not feature scope.
+
+     | Leaf | Complete writable/behavior scope | Acceptance ownership | Prerequisite |
+     |---|---|---|---|
+     | A-core | Shared WorkBudget atomic admission, independent ordering allowance, monotone depth/status and public invalidation/latch | Complete A04/A10 direct-budget contracts; no claim of geometry caller wiring | v206 exact plan/G5, this leaf's G1a/G1b/G3, activation and baseline |
+     | A-strict | Strict solver input/records/callback/order/depth accounting, queue capacity and one-shot/retained exception ledgers | A08-strict, A12, A13, A14; strict-depth checks remain in these cases | A-core product + reconciliation/G5 |
+     | A-reference | Critical scan/order, provider preparation, production certificate routes, geometry work adoption and transactional graph/publication destinations | A05, A06, A07, A08-provider, A11 | A-strict product + reconciliation/G5 |
+     | A-cache | Candidate/proof split distinction, inherited-depth propagation, bounds/local dispatch/coverage/output admission | A01, A02, complete A03, A09 | A-reference product + reconciliation/G5 |
+
+     A03 remains wholly owned by A-cache under its formal inherited-reference-depth contract. A08 remains a parent
+     requirement ID with two explicit case identities; the final parent crosswalk therefore has 15 logical cases
+     instead of the old 14-case registration rule. This explicitly
+     supersedes the old one-translation-unit and 14-name floor only where the split requires it. Every previous
+     A08 subassertion must map exactly once to a child and every A03 assertion remains intact in A-cache, with shared end-to-end checks explicitly mapped rather
+     than dropped. Exact Catch2 names and selectors are frozen per child before its G3; A-core's two names are
+     fixed below. All other children are WAITING until their own full card, source census and independent geometry/
+     work oracles close. A-core success cannot close A08/A09/A11 or authorize B/C. Parent A becomes done only after
+     the 15-case reverse crosswalk, all previously required capacity/caller proofs, whole-A regression and all four
+     child reconciliation receipts pass. R01-R15, phases 1-3, every DXF/DWG direction/version/conversion and the
+     separately gated trim work remain intact.
+
+     **A-core executable card.** One owner holds exactly these writable paths:
+     `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h`,
+     `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp`, and
+     `librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp`.
+     No registration, parametric-core, consumer, metadata or trim file belongs to this leaf. CMakeLists.txt already
+     lists the test TU at :2612; the implementation files are already application sources. Read-only planning may
+     inspect those named test/registration sources and the qmake6 source lists; this is not binary test discovery or
+     execution. Record hashes, including CMakeLists.txt raw `c6d3ef746d4ce084b16b99e41b5c2e286bdefbe7e2c243d3bf01cae3714b41c8`
+     and test TU raw `021e753b1216a99d0f0588e26ab4d96034840bc4f6546d066f37beb1a7ab4a6e` at the current product base.
+
+     Ordered implementation tasks and exits, after activation/baseline:
+
+     1. Append `maxOrderingComparisons` with default `size_t{1}<<20` AFTER maxDepth in LC_OffsetCheckLimits, and
+        append `orderingComparisons=0` AFTER deepest in CheckWork. Preserve existing four-field aggregate meaning.
+        Add public `remainingOrderingComparisons()` and `consumeOrderingComparisons(size_t)` with independent
+        allowance; zero configured ordering allowance is InvalidInput, like other zero constructor limits.
+     2. Add `bool admit(const CheckWork& request) noexcept`. Count fields are additive deltas; deepest is an
+        absolute observed depth. Preflight status, each delta against `limit-used` and depth against maxDepth
+        before mutating any work field. On success, add all four counters and take max depth together. Any capacity/
+        arithmetic/depth refusal preserves the entire prior snapshot and latches LimitExceeded. No allocation,
+        refund, external callback or partial update occurs. Existing scalar consumes/checkDepth forward through
+        this operation with a single-field request; preserve their existing outcomes and budget identity owner.
+     3. Add public `invalidate() noexcept`: Ok becomes InvalidInput, prior InvalidInput/LimitExceeded stays as is,
+        every counter/depth is preserved, later admissions (including zero-work) fail without mutation. Keep
+        latchLimitExceeded's existing precedence; neither invalidation method resets work or recreates identity.
+     4. Add exactly A04 `shared work budget preserves sticky refusal` and A10
+        `work budget limit latch preserves counters`, both tagged
+        `[lc-offsetcurve][geometry][cache-budget-accounting][budget-core]`. A04 covers composite counts/depth,
+        ordering independence, overflow, invalidation and source compatibility. A10 retains §97's exact public
+        latch table, extended only to check the new ordering field is preserved. No geometry/callback wiring is
+        claimed by these direct public-API cases.
+
+     The generic A04 request operation is the atomic primitive previously described as an adoptIntersectionWork-
+     style API. Conversion of strict-query/contract statistics into that request and its exactly-once caller use
+     remain A08-provider obligations; they are not closed by A04. No strict-query statistic field or callback
+     implementation is added by A-core. Future scalar/compound admission tests must compare every work field,
+     including ordering and deepest, so an earlier successful counter debit cannot hide a later failure.
+
+     Independent A04 oracle is literal integer/state algebra, never a returned geometry work total. Use limits
+     S=3,V=4,P=5,O=6,D=3. Admit seed `(S,V,P,O,D)=(1,1,1,1,1)`, then request `(2,3,4,5,3)`; exact result is
+     `(3,4,5,6,3)`. On separate fresh budgets, reduce each one of S,V,P,O,D limits by one and repeat: the second
+     admission refuses, status is LimitExceeded and seed remains exactly `(1,1,1,1,1)` in every field. Repeating a
+     zero request after refusal also fails without mutation. Independently exercise size_t-max limits, seed
+     max-1 and delta2 for each count dimension (no allocation involved); no wrap or other-field change is allowed.
+     Depth is max, not sum: admitted depth2 followed by depth1 stays2; depth3 becomes3; depth4 refuses with depth3
+     and all counters unchanged. Check independent ordering exhaustion does not consume pair allowance and vice
+     versa. Test legacy four-field aggregates still initialize old fields correctly with nonzero default ordering
+     limit/zero used ordering. Invalid constructor zero limits and invalidate/latch precedence retain zero or the
+     literal pre-spent snapshot as applicable. A10's valid fixture is §97's limits S3,V4,P5,D3, pre-spent S2,V3,P4,D2
+     with O0; latch preserves `(2,3,4,0,2)` and refuses later scalar/depth/ordering/compound work. Invalid maxDepth0
+     preserves InvalidInput, including after the latch. All these cases are non-vacuous public API tests.
+
+     **Per-leaf evidence and gates.** The old whole-A 101-key packet and its fixed 14-case recipes are historical
+     inputs, not an appropriate activation packet for A-core. For the four newly split leaves, supersede only their
+     artifact encoding with one compact, immutable per-attempt leaf packet under
+     `build/evidence/1A-1.b-check-topology-chain/leaves/<plan-version>/<leaf>/attempt-<n>/`. Before reviews create
+     `card.json` and `inputs.sha256`: exact committed plan/G5/product/predecessor identities; source/test/registration/
+     toolchain inputs; owned paths; full parent/child requirement and case map; literal tasks/oracles/commands;
+     expected success/refusal states; resource/time envelope; evidence destinations and stop/commit rules. Bind
+     their exact hashes in every review. No guessed future commit hash belongs inside itself. Preserve attempts
+     rather than overwrite them. The first A-core attempt may be created only after exact v206 G5 PASS.
+
+     Baseline source/test hashes identify immutable COMMITTED pre-edit Git objects, not working files required to
+     stay unchanged after activation. Authorized edits inside the leaf's writable set are legal transients under
+     §88; final G1a/G2 and validation bind the new frozen tested tree separately. A product edit within the reviewed
+     card does not by itself stale its own baseline manifest. Outside-scope edits, changed input contracts/APIs,
+     source/toolchain identity drift beyond the approved writes, or altered acceptance reopen dependent gates.
+
+     Independently record G1a completeness, G1b correctness and G3 readiness as three decisions against that same
+     packet; each needs its own reasoning/finding closure. All must PASS on a COMPLETE packet before a separate `activation.json` receipt
+     records the selected leaf, owner, packet/review hashes, allowed baseline and writable scope. This external
+     immutable receipt is the separate activation checkpoint; it does not require a recursive plan-only Git commit.
+     Readiness for future children is not implied. After activation, baseline runs before source edits. G2 remains an
+     independent review of the final frozen tested tree; G4 stages exactly the three product/test paths and commits
+     one validated leaf; its immediate next Git commit is a roadmap-only reconciliation. Independent G5 of that
+     actual reconciliation must PASS before the next leaf's packet/review/implementation. All six gate decisions
+     remain separate; compact encoding removes no completeness, correctness, evidence or review obligation.
+
+     Classify the selected packet in order: `INVALID` for a wrong identity/hash, malformed file, unexpected or
+     premature packet input, conflicting attempt or failed packet audit; otherwise `ABSENT` when neither card nor
+     manifest nor any attributed input exists; otherwise `COMPLETE` when both files and every required card/input/
+     oracle/command field/hash have a bound PASS in `packet-audit.json`; otherwise `CLOSURE` when at least one
+     valid current input exists and a counterpart or packet verification remains unfinished. Gate reviews are
+     separate states and never make a COMPLETE packet simultaneously CLOSURE. Preserve invalid attempts; changed
+     contract/input needs a plan/G5 and a newly bound packet before work.
+     Gate receipts and explicitly named baseline/validation attempt subdirectories are append-only evidence,
+     not extra packet inputs. Failed implementation validation may be repaired/retried within the same activated
+     card only when acceptance/API/ownership/inputs remain valid; use a fresh numbered validation attempt and keep
+     all earlier logs. Any card change returns to affected G1a/G1b/G3 and activation, never silent reuse of PASS.
+
+     **Selected-leaf state contract (replaces whole-A blockers for this leaf only).** Parent A still has
+     `PARENT_UPDATE_REQUIRED=true` for the assigned A-reference/A-cache design rows; this status prohibits parent
+     completion and B/C activation. The selected leaf has an independent `LEAF_UPDATE_REQUIRED` value: UNKNOWN
+     until a complete bound audit covers its inputs, APIs, oracles, ownership and predecessor requirements; true
+     for an active finding affecting that leaf; false only after that audit is complete with none. A finding owned
+     exclusively by a later child is retained in the parent ledger and does not automatically set A-core's value.
+     Any actual shared/API dependency on such a finding keeps A-core true/UNKNOWN. Whole-plan flags and the old
+     fixed packet/activation-commit requirements cannot independently veto or authorize the selected-leaf route.
+
+     Activation is valid only when exact current plan G5 PASS, packet COMPLETE, LEAF_UPDATE_REQUIRED=false, all
+     child predecessors reconciled, G1a/G1b/G3 PASS against the same plan/card/manifest/toolchain hashes, and the
+     current tracked tree equals the declared pre-edit baseline. Independently validate the external activation
+     receipt's owner/allowlist/hashes, authorized baseline commands and empty pre-start diff, and record PASS in
+     a separately named `activation-audit.json` before any baseline command or edit. This explicitly replaces the
+     inherited requirement for a new Git plan commit/G5 solely to activate. A pending review/audit requires its
+     actual live handle; absence means obtain it, and terminal failure is never a wait. FAIL/INVALID/stale receipts
+     are preserved and cannot be relabeled. Missing/hash-mismatched activation permits only reconciliation/new
+     bound validation; no source edit/build/test. A data-entry-only correction may use a fresh numbered receipt/
+     packet attempt under the same plan if no contract/API/ownership/baseline input changes; all dependent reviews
+     and activation reset. A material contract/input finding requires a plan-only amendment/G5 first.
+
+     Use the first applicable state: identity/ownership or unauthorized-commit conflict -> preserve/reconcile;
+     exact authorized product commit exists -> only its immediate roadmap-only reconciliation/G5 under §88, with
+     no further product edit/build/test/validation; a newly committed reconciliation awaiting G5 -> only its exact
+     G5 row. These product/reconciliation stages precede every leaf-readiness, baseline and execution branch below.
+     For the remaining branches require NO product commit and HEAD at the current plan checkpoint: plan candidate
+     present -> its plan-only review/commit row; plan G5 absent/pending/INVALID/FAIL -> its inherited exact-G5 row;
+     selected leaf audit absent/pending/UNKNOWN/true -> obtain/wait/resolve or amend that leaf only; packet
+     INVALID/ABSENT/CLOSURE -> preserve-and-rebind/create/finish as specified above; packet COMPLETE but any
+     G1a/G1b/G3 absent/pending/FAIL/INVALID/stale -> obtain/wait/repair exact findings and refresh affected gates;
+     all PASS but activation absent/pending/FAIL/INVALID/stale -> create/validate or reconcile that activation;
+     execution BLOCKED_BEFORE_START -> only resolution of its recorded blocker, never an implicit start;
+     activation PASS but baseline not PASS -> only the bound baseline/identity reconciliation; baseline PASS and
+     execution in {NOT_STARTED, IN_PROGRESS, explicitly repairable BLOCKED_AFTER_START} -> authorized implementation/
+     validation within the same card/allowlist, excluding VALIDATED and every committed state; execution VALIDATED
+     with stale/missing/failed required frozen evidence -> revoke VALIDATED under §88 before any repair; execution
+     VALIDATED with exact final G1a/G2/required checks PASS on the frozen tree -> G4 product-only commit only.
+     Unknown states never count as PASS. These predicates supersede only incompatible monolithic-A update,
+     packet and activation guards in §§83/88/93/110-113; other lineage/immutability, combined G5-failure/artifact-
+     rollover and per-product commit/reconciliation protections remain.
+
+     **Literal A-core validation lanes.** Use fresh paths; never inspect the existing protected build-asan tree.
+     Source root is the isolated checkout above. Capture actual toolchain/Qt6/Catch2 versions in the hashed card and
+     stop for a card correction if a listed command cannot address the actual target/API. BUILD_TESTS is the actual
+     CMake option; the binary's default single-config output is `<build-dir>/librecad_tests`.
+
+     Build roots follow the approved template
+     `/private/tmp/lc2961-v206-A-core-a<NN>-<phase>-<lane>`, with phase `baseline` or `validation` and lane `release`,
+     `asan` or `qmake6`. Freeze each literal expansion in the attempt record; require paths absent before creation.
+     Every retry gets a fresh NN/phase root and separate immutable logs, so a failed validation does not silently
+     reuse the baseline or a prior cache. Expanding this approved template changes no acceptance/API and does not
+     require a new plan. `<release-dir>`, `<asan-dir>` and `<qmake-dir>` below mean those exact frozen paths.
+
+     ```text
+     cmake -S <source-root> -B <release-dir> -G Ninja -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Release
+     cmake --build <release-dir> --target librecad_tests -j 4
+     QT_QPA_PLATFORM=offscreen <release-dir>/librecad_tests "[budget-core]" --list-tests
+     QT_QPA_PLATFORM=offscreen <release-dir>/librecad_tests "[budget-core]" --success --warn NoAssertions --warn UnmatchedTestSpec --reporter "junit::out=<attempt>/release-core.xml" --reporter "xml::out=<attempt>/release-core-assertions.xml"
+     QT_QPA_PLATFORM=offscreen <release-dir>/librecad_tests "[lc-offsetcurve][geometry]~[.]~[.slow]~[slow]~[corpus]~[external]" --reporter junit --out <attempt>/release-adjacent.xml
+     cmake -S <source-root> -B <asan-dir> -G Ninja -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_CXX_FLAGS=-fsanitize=address -fno-omit-frame-pointer" -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address -DCMAKE_SHARED_LINKER_FLAGS=-fsanitize=address
+     cmake --build <asan-dir> --target librecad_tests -j 4
+     QT_QPA_PLATFORM=offscreen <asan-dir>/librecad_tests "[budget-core]" --success --warn NoAssertions --warn UnmatchedTestSpec --reporter "junit::out=<attempt>/asan-core.xml" --reporter "xml::out=<attempt>/asan-core-assertions.xml"
+     QT_QPA_PLATFORM=offscreen <asan-dir>/librecad_tests "[lc-offsetcurve][geometry]~[.]~[.slow]~[slow]~[corpus]~[external]" --reporter junit --out <attempt>/asan-adjacent.xml
+     qmake6 <source-root>/librecad.pro CONFIG+=release
+     make -j 4
+     ```
+
+     Run qmake6/make from the attempt's separately created fresh `<qmake-dir>` shadow directory. No
+     qmake5 lane is added. Before edits, build and reconcile the existing adjacent lane plus the absence of the two
+     planned core identities; zero new-case baseline is valid. After edits, require exactly both core names and
+     nonzero assertions in Release and ASan, no skip/failure/missing case in either selected lane, application
+     qmake6 compile success, clean diff/format checks and independent G2. Emit both reporters in the same invocation,
+     as supported by Catch2's reporter contract; `--success` preserves passing assertion records. Use no Catch2
+     sections/generators in these two direct cases that would split their JUnit identities. The frozen parser must
+     find exactly both required TestCase names in Catch XML, require each OverallResult success, no skips/failures/
+     exceptions, and at least one successful assertion Expression under EACH case; a positive global assertion
+     total alone is insufficient. Reconcile both case names and pass/skip/failure state against JUnit too. Confirm
+     the baseline binary's Catch2 version/reporter availability and verify the installed XML shape on the frozen
+     validation output; a format mismatch stops validation
+     for an explicit parser/card correction, never a silent aggregate fallback. Catch2's NoAssertions and
+     UnmatchedTestSpec warnings are additional guards. Baseline core absence uses list-only; do not run the absent
+     selector with unmatched-test warnings. Baseline adjacent identities/counts are captured from the actual binary after
+     activation, then must not disappear post-edit. No machine-specific assertion total or allocator capacity is
+     invented. Limit builds to four jobs; these integer-only core tests have no timing assertion. Capture and
+     diagnose every compiler/test failure; unrelated process-level crashes are not acceptance evidence and must
+     not be silently skipped. Whole-application release checks remain later R11/1I obligations.
+
+     Baseline recipes select only configure/build, core list-only absence, the existing adjacent lane and the
+     qmake6 build; the two assertion-bearing core executions belong to the post-edit validation phase. Reporter
+     flags are supported by the official [multiple-reporter contract](https://catch2-temp.readthedocs.io/en/latest/reporters.html#using-multiple-reporters)
+     and [successful-result option](https://catch2-temp.readthedocs.io/en/latest/command-line.html#showing-results-for-successful-tests).
+     The official [XML reporter source](https://github.com/catchorg/Catch2/blob/devel/src/catch2/reporters/catch_reporter_xml.cpp)
+     defines TestCase/OverallResult, successful Expression records and run/case summaries; the installed version's
+     emitted XML must still match the frozen parser contract above.
+
+     **Current transition and next action.** Generic exact-identity, pending/FAIL/INVALID, immutable-evidence and
+     combined artifact-rollover precedence in §§88/93/110/111 remain. Before this revision is committed, the sole
+     action is finish/independently review this one roadmap-only direct-child correction of v205, then verify parent,
+     path set, source preservation and diff-check and commit it alone. Once committed, exact v206 G5 is the sole
+     next action. After PASS, audit this selected A-core card/compact packet contract for complete readiness inputs;
+     open A-reference/A-cache geometry rows are explicit downstream prerequisites and do not falsely mark A-core
+     ready or parent A complete. If this card itself is incomplete, correct the plan before packet/G1/G3; otherwise
+     create only the A-core packet and obtain its separate reviews/activation/baseline. No other child, parent-A
+     artifact or product task may start. A relevant identity/finding change invalidates dependent gates and requires
+     a bound amendment; every product commit is followed immediately by its exact plan reconciliation/G5. All
+     publication-only user actions remain deferred as previously requested. The original source worktree and all
+     receipts remain preserved.
