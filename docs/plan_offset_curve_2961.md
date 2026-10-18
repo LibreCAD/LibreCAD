@@ -24,15 +24,35 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–3
 
-**Plan revision v223 candidate (plan-only; non-activating).** This proposed direct child of committed v218 corrects
-the stale live status and records the interrupted v218 packet preparation. It does not change product scope or
-waive the environment-isolation, exact-membership, sealing, review, readiness, activation, baseline, or implementation
-gates. The v218 attempt directory is preserved empty and is not reusable; this candidate authorizes no packet, root,
-build, test, discovery, or source work. Candidate identity and permitted transitions must be derived from Git and
-exact receipts, never from this header. Section §131 is the sole proposed A-core transition authority if this draft
-passes exact-byte review, is committed as a one-path plan-only change, and receives exact-bound G5 PASS.
+**Plan revision v227 candidate (plan-only; non-activating).** This proposed direct child of committed v223 reconciles
+the v226 exact-review failure and the still-blocked A-core route. v224-v226 remain uncommitted historical drafts;
+§§132-134 preserve their exact review failures. The v226 raw SHA
+`df92f1846309eeeafb15a0593b423e51f0d1d22e43467b60a1dec26b7d74455e` received FAIL report SHA
+`99613e97f6150516767aebca23ec90e13ff75c5b2af18c3eb453042345d6f4e6`; §135 is the proposed current recovery route.
+It changes no product scope and waives none of the environment-isolation, exact-membership, sealing, review,
+readiness, activation, baseline, or implementation gates. The v223 inline PASS is not authorizing: its
+reviewer-authored follow-up found incomplete declared-input binding and UNKNOWN request disposition. This candidate
+authorizes only exact plan review and a one-path plan checkpoint; it authorizes no packet, root, build, test,
+discovery, readiness, activation, baseline, or source work. Derive candidate identity and permissions from Git and
+exact receipts, never this header. Section §135 is the proposed sole A-core transition authority after this draft
+receives exact-byte PASS, is committed alone, and receives a complete exact-bound G5 report with a verified request
+disposition.
 
-The exact predecessor is v218 commit `d5d71f30bd118a7616d00979c9ba975f518d5284`, parent
+The exact predecessor is v223 commit `6c65f1f52a8f229c3852b997be1e392d8312a7de`, parent
+`d5d71f30bd118a7616d00979c9ba975f518d5284`, tree `ff1326cfe169c91505761f30d7180024ae048222`, plan blob
+`b1922ce5124c37bb3ef616d73b9dc557fba41700`, raw SHA-256
+`577f3a37d7f95ef67cec70f11bb275bd7c3bfa3405a835aceed42ddc35ba4732`. Its exact precommit PASS is
+`/private/tmp/lc2961-plan-checkpoint-v223-precommit-review-01.txt`, SHA-256
+`dade408f6a5381a5c8e97b256956ab9a0a9090e0490a1d53cd19a0ece3191a4c`. The reviewer-authored G5 follow-up is
+`/private/tmp/lc2961-v223-g5-auditor-authored-report.txt`, SHA-256
+`4452161a8f101d26ed4bac3390571250dfff593fc42a1312970b3c9f22fec2ca`; it is NO PASS because full input binding
+and exact-request disposition were not established. The v224 precommit FAIL report is
+`/private/tmp/lc2961-plan-checkpoint-v224-precommit-review-01.txt`, SHA-256
+`1a65a492ebf66832e7c014e021eec6fb6fe9580a9d5cf8ce385f00d2e99da732`, bound to v224 raw SHA
+`da0344b0bcdb0355db563fdc4bb523d7cdeb9335faeb6eda5b2dc5e95123317f`; it is not approval for v225. The prior
+inline PASS and coordinator transcription are not authorizing.
+
+Historical v218 checkpoint: commit `d5d71f30bd118a7616d00979c9ba975f518d5284`, parent
 `75a1288dc706d42b300f6a37132a15e49b00c4dd`, tree `cb214a4f783b03ab23fe282d0954f1ae998b6220`, plan blob
 `ea9db7a10385b4ba02db627371d28b7e44f72291`, raw SHA-256
 `3dcf98e03671782175aae6eb5f7fe0913b8e09b93619eb014dff32f8c72d491a`. Its exact precommit PASS reports are
@@ -42,9 +62,13 @@ The exact predecessor is v218 commit `d5d71f30bd118a7616d00979c9ba975f518d5284`,
 `461560892255930da8cd03f35d8e1c7d4ff61a7107974caa061446b5e173f57c`. Its exact G5 PASS is
 `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v218/g5-auditor-report-01.txt`, SHA-256
 `196df2b41af9e887188397a519c5a15665d8edb499f06aaf79bd45e3b18a0eb0`. Those approvals authorized only v218
-packet preparation; they do not authorize a v223 packet or any roots, execution, or product edits.
+packet preparation; they do not authorize a v225 packet or any roots, execution, or product edits.
 
-The v218 attempt directory `build/evidence/1A-1.b-check-topology-chain/leaves/v218/A-core/attempt-01/` exists but
+The v223 packet directory `build/evidence/1A-1.b-check-topology-chain/leaves/v223/A-core/attempt-01/` and all six
+v223 roots were absent on a read-only `ls -ld` check on 2026-10-18. Treat this as coordinator filesystem
+observation, not a no-follow activation receipt. The reviewer found the v223 local G5 evidence directory absent.
+Gibbs stopped before packet creation and reported no build, test, discovery, or source work; no execution receipt
+exists. The v218 attempt directory `build/evidence/1A-1.b-check-topology-chain/leaves/v218/A-core/attempt-01/` exists but
 was empty when packet preparation was paused: no files, hashes, seal, or audit exist. A fresh no-follow check on
 2026-10-18 found all six v218 roots absent. This is a coordinator state observation, not a packet, readiness, or
 activation receipt. Gibbs reported no build, test, discovery, source edit, or product-path change in this attempt;
@@ -55,7 +79,7 @@ topology, entity integration, persistence, UI, Phase 2, and separately gated Pha
 Older revision/status/handoff blocks are historical unless a later live section explicitly carries their requirements
 forward. Never inspect `build-asan/`.
 
-Earlier checkpoint v213 (its approvals did not authorize v218-v223) was commit `75a1288dc706d42b300f6a37132a15e49b00c4dd`, parent
+Earlier checkpoint v213 (its approvals did not authorize v218-v224) was commit `75a1288dc706d42b300f6a37132a15e49b00c4dd`, parent
 `e43aabd97026556c9b146da86a327a88cd8841b8`, tree `aacfab9ab654de2a0a5632ec43ebf6ae2366081d`, plan blob
 `8b21b074117f79d430af8fbc2d0c8dd5246e67c8`, raw SHA-256
 `3d9779e535fb39e89acd0a43301123e1cc64909487cbfc910b84612fef822231`. Its exact precommit review PASS is
@@ -191,12 +215,13 @@ Plan **v198 disjoint-transition and audit-handoff correction**, 2026-10-17; plan
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Historical status snapshot for v218 (superseded by §131): implementation remained incomplete; v218 was a committed
+Historical status snapshot for v218 (superseded by §135): implementation remained incomplete; v218 was a committed
 plan-only checkpoint with exact precommit and G5 PASS; its authority extended only to fresh packet preparation. The
 v214-v217 precommit findings and their corrections are recorded in §§123-126. The v218 attempt-01 directory was
 created but remained empty when work was paused; no packet audit, fresh G1a/G1b/G3, activation, baseline, discovery,
-test run, or source edit occurred. The current v223 state is stated at the start of this document and governed by
-§131, not by this historical snapshot. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; the
+test run, or source edit occurred. The current v223 G5 blocker and proposed v227 correction are stated at the start
+of this document and governed by §135, not by this historical snapshot. Product source remains
+`9c06e9c77b313b62cc20e9ec39c22952fee501f2`; the
 mixed Trim work and v204/v205 source snapshots remain preserved under §113. Parent A, ordered-chain topology,
 entity integration, DXF/DWG persistence, UI, Phase 2 and separately gated Phase 3 Trim remain incomplete. The four
 application file lanes, both conversions, edited reopen and binary-DXF codec support remain open. Never inspect
@@ -466,11 +491,14 @@ reconciled baseline or A-budget-depth implementation. Product source remains
 independently authorize work; §56 remains normative only for its bounded Git-object/protected-path procedure. Do not
 inspect protected `build-asan/`; report `not inspected by instruction`.
 
-Select exactly one row from the latest versioned transition-authority section (currently §117) using observed HEAD,
-artifact state and receipts. §93 specifies the input-bundle contract; it is not a transition table. If zero or multiple
-rows match, stop for plan-only correction and update this pointer in that plan-only revision. §117 is the sole live
-transition authority for v209; no prose status independently authorizes packet, review, activation, baseline,
-build/test or product work.
+The current committed plan is v223; v224-v226 are uncommitted plan-only candidates whose exact reviews failed, and
+v227 is the current candidate. For v223, §131 is historical: its post-commit G5 route ended without an authorizing
+PASS. Sections §132-134 preserve failed v224-v226 attempts; §135 is the proposed transition authority only after
+v227 receives exact-byte review, a one-path direct-child commit, and a complete exact-bound G5 disposition. Until
+that chain is verified, no packet, root, readiness, activation, baseline, build/test, discovery, or product work is
+authorized. Classify evidence once into exactly one state in §135 using the observed HEAD, verified request channel
+and exact receipts. If the evidence cannot be assigned exactly one state, stop and revise the plan only. No prose
+status grants access.
 
 | Step | Title | PR | Depends on | Size (LOC, product + tests) | Status |
 |---|---|---|---|---|---|
@@ -481,8 +509,8 @@ build/test or product work.
 | 0B-3 | DXF 2018 and DWG 2018 round trips, `reloadsAs`, `knownGaps`/`notRun` | B | 0B-2 | 200 | done — 0e3c6b342, 0B-3 reports/card; one pinned baseline generated-MLEADER DWG gap, 2026-10-15 |
 | 1A-1 | Closed forms, normalization, tolerance helpers and cache validation | C | S0 | 900 | partial — .a/.b-budget/.b-progress/.b-ref-frames/.b-ref-events-core/.b-ref-rate/.b-ref-events-critical/.b-ref-events-accounting/.b-ref-events-refine/.b-ref-critical-refine/.b-ref-providers/.b-ref-contacts/.b-ref-events-isolate/.b-ref-components/.b-check-layout/.b-check-bounds/.b-check-topology-local done; A-budget-depth, B-occurrence-terminals, C-global-topology-checker pending |
 | 1A-1.b-ref-components | Exact visibility and incidence-preserving components | C | .b-ref-events-isolate | 900 | done — `9682d5cac65f30cfd86aa10556678ceb88b1448b`, attempt-8 evidence, 2026-10-16 |
-| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900+ | waiting — parent of A-core, A-strict, A-reference and A-cache under §114; no parent acceptance waived |
-| A-core | Atomic shared budget API and sticky state | C | A-budget-depth predecessors | 200 | blocked — v218 G5 passed but its attempt-01 directory is empty and cannot be reused; all six v218 roots were absent at the latest read-only check. Gibbs reported no build/test/discovery/source work occurred (no formal execution receipt). The v223 plan update supersedes that packet route; proceed only after exact v223 review, plan-only commit and G5 PASS, then fresh packet audit + G1a/G1b/G3 + activation/audit + baseline identity. No source edits; parent A-budget-depth remains waiting; §131 is the proposed route. |
+| A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900+ | waiting — parent acceptance aggregate over A-core, A-strict, A-reference and A-cache under §114; not independently executable; no parent acceptance waived |
+| A-core | Atomic shared budget API and sticky state | C | A-budget-depth predecessors | 200 | blocked — committed v223 has no authorizing G5 PASS: the reviewer-authored follow-up (SHA-256 `4452161a8f101d26ed4bac3390571250dfff593fc42a1312970b3c9f22fec2ca`) found incomplete durable input binding and pending-request state UNKNOWN. The v223 packet directory and six roots were absent in a read-only check; no execution/source work is reported. v224-v226 exact reviews failed (v226 report SHA-256 `99613e97f6150516767aebca23ec90e13ff75c5b2af18c3eb453042345d6f4e6`). v227 remains plan-only. After its exact review/commit/G5, require a fresh v227 packet, packet audit, G1a/G1b/G3, external activation/audit and baseline. No source edits. A-strict/A-reference/A-cache, B/C and all consumers remain waiting on named predecessors; §135 is proposed authority. |
 | A-strict | Strict-query dispatch, records, ordering, depth and exception ledger | C | A-core reconciliation/G5 | 500 | waiting; own complete card required |
 | A-reference | Critical/provider accounting, query adoption and paired graph publication | C | A-strict reconciliation/G5 | 500 | waiting; A08 production/A11 oracles remain required |
 | A-cache | Bounds/local split, coverage and inherited-depth accounting | C | A-reference reconciliation/G5 | 300 | waiting; A09 oracles remain required |
@@ -870,9 +898,13 @@ not validation evidence. Aggregates are never executable cards or extra implemen
 | 0B-2 | Done at 5bfb3c8f0 | 27 valid fixtures, clone/sole+mixed INSERT and both pins; 7 cases/910 assertions pass full/DXF-fast/ASan; no gaps. |
 | 0B-3 | Done at 0e3c6b342 | Real 27-type DXF/DWG walks and both DXF pins; 10 cases/1335 assertions full/DXF-fast/ASan, full suite/lanes pass. Generated-MLEADER DWG fallback is pinned, no notRun rows. |
 | 1A-1.a | Done at a4690db08 | Normalization/local-frame/closed forms, robust source distance and tolerance helpers; 17 cases/2538 assertions pass Release/ASan, existing regressions and both fast lanes pass. |
-| 1A-1.b | Aggregate; budget/progress/reference/layout/bounds and local topology done; budget-depth and global topology pending | Parent-only progress; layout, bounds and local certificates do not establish a complete cache-validity result. `.b-check-topology-local` is committed at `ef3ba756b52796c02b8490caedcaa48b8db69605` with its verified immediate plan checkpoint `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. A-budget-depth is the first remaining executable child; the ordered-chain children follow its reconciled checkpoint. 1A-2 consumes the eventual typed result. No separate aggregate implementation commit. |
+| 1A-1.b | Aggregate; budget/progress/reference/layout/bounds and local topology done; budget-depth and global topology pending | Parent-only progress; layout, bounds and local certificates do not establish a complete cache-validity result. `.b-check-topology-local` is committed at `ef3ba756b52796c02b8490caedcaa48b8db69605` with its verified immediate plan checkpoint `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. A-budget-depth is the top-level implementation aggregate; within it, A-core is first under §114 and blocked by §135's plan/G5 gate. A-strict, A-reference and A-cache follow in order; B/C follow only after the whole parent is reconciled. 1A-2 consumes the eventual typed result. No separate aggregate implementation commit. |
 | 1A-1.b-check-topology-local | Done — implementation `ef3ba756b52796c02b8490caedcaa48b8db69605` plus verified immediate v29 plan-only reconciliation `9c06e9c77b313b62cc20e9ec39c22952fee501f2` | Add bounded local candidate/reference monotonicity certificates, preserve exact edge/occurrence/node identity, and refine only through the shared geometric pair-proof helper. Expose local proof status only; no full-cache validity result. Three geometry files, 20 focused cases, independent rational derivative oracle, all required gates and two scoped commits. |
-| A-budget-depth | WAITING — fresh source-bound packet/recipes, same-identity G1a/G1b/G3, activation and reconciled baseline are required before work; the latest committed state table controls authorization. | Depends on completed layout, bounds and local topology children plus product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; owns shared work/depth/capacity behavior only. R02/R12/R13 apply. All R05 producer behavior, including one-piece adoption into the document, repeated-offset and fallback, belongs to 1B/1C/1F. 1A-2 supplies only the reusable entity API for an already checker-validated result; it is context, not an R05 owner or A completion dependency. |
+| A-budget-depth | WAITING aggregate — its first leaf is A-core; do not treat the parent recipe as permission to implement all A behavior at once. Parent acceptance still requires A-core, A-strict, A-reference and A-cache plus the 15-case reverse crosswalk and whole-A gates. | Depends on completed layout, bounds and local topology children plus product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; owns shared work/depth/capacity acceptance. R02/R12/R13 apply. All R05 producer behavior, including one-piece adoption into the document, repeated-offset and fallback, belongs to 1B/1C/1F. 1A-2 supplies only the reusable entity API for an already checker-validated result; it is context, not an R05 owner or A completion dependency. |
+| A-core | BLOCKED — exact current plan/G5 chain in §135, then a fresh leaf packet, packet audit, same-identity G1a/G1b/G3, external activation/audit, and fully reconciled baseline before source edits. | First leaf under §114. Owns only atomic `WorkBudget` API, independent ordering allowance, monotone depth/status, latch/invalidation and A04/A10 direct-budget cases. Edit only the three §114 paths after baseline PASS; no geometry-caller wiring or A08/A09/A11 claim. |
+| A-strict | WAITING — starts only after A-core product commit and immediate plan/G5 reconciliation; it needs its own complete card, G1a/G1b/G3, activation and baseline. | Owns strict solver inputs/records/callback/order/depth, queue capacity and exception ledgers; A08-strict, A12-A14. No parallel implementation with A-core. |
+| A-reference | WAITING — starts only after A-strict product commit and immediate plan/G5 reconciliation; it needs its own complete card and gates. | Owns critical scan/order, provider preparation, production certificate routes, geometry work adoption and transactional graph/publication; A05-A08-provider/A11. No parallel implementation with earlier A leaves. |
+| A-cache | WAITING — starts only after A-reference product commit and immediate plan/G5 reconciliation; it needs its own complete card and gates. | Owns candidate/proof split, inherited-depth, bounds/local dispatch/coverage/output admission; A01-A03/A09. Parent-A acceptance remains open until the reverse crosswalk and whole-A gates pass. |
 | B-occurrence-terminals | WAITING — blocked on A's product commit and direct-child plan reconciliation | Publishes only producer-backed occurrence-specific terminals after full continuation analysis; no global validity result. |
 | C-global-topology-checker | WAITING — blocked on A and B commits/checkpoints | Proves candidate-compatible complete directed paths, selected-path coverage, transitions, cuts, cycles and refusal reasons; entity adoption remains 1A-2. |
 | 1A-1.b-check-topology-chain | Aggregate parent — no separate implementation commit | Its executable leaves are A-budget-depth, B-occurrence-terminals and C-global-topology-checker in that dependency order. The aggregate remains incomplete until all three leaves are independently committed and reconciled. |
@@ -2590,20 +2622,21 @@ resource_census:
   bounds_coverage_dispatch: Admit one pair before each `(layout span, fragment)` dispatch in `compareAll` (cpp:3862-3865). In both bounds and local `covered()` admit one pair before each span and each coverage advancement; keep each witness comparison separately charged. Include empty-witness and no-progress refusal paths in exact/one-less tests.
   paired_region_record: Each critical proof `Box` is admitted before pending insertion; on proof success it transitions to one terminal region logical record represented in parallel by `m_regions` and `m_segments` (cpp:1799-1824). Charge one vertex for the logical record, not two for the representation; prove this convention and temporary pending/output memory coexistence in Gate 1/runtime evidence.
   record_convention: Provider `segments` and `maps` are parallel vectors charged as `size` logical paired records. Gate 1 must explicitly accept that one `vertices` unit denotes one zipped segment/map record and show both vectors reserve/push in lockstep, or revise the accounting before readiness; never imply the counter measures bytes or each physical vector allocation.
-  newly_reviewed_capacity_sites: Independently reviewed v55 findings are in A's six-path ownership, including the public statistics header and both test translation units: `ReferenceEventBuilder::classify()` root capacity before `vertices(1)` (`lc_ellipseoffsetgeometry.cpp:3258-3265`); `CriticalBuilder::runRetained()` `records.max_size()` before vertex/pair debit and reserve (`:1449-1480`); staged critical snapshot `staged.max_size()` and size arithmetic before vertex debit (`:4575-4579`); strict-core `prepare()` root/split pending capacity before `generate(1/2)` (`lc_parametriccurveintersection.cpp:1350-1360`); strict-core `solve()` root admission and split `generate(2)`/two-slot capacity before push (`:1744-1826`); leaf container capacity in addition to `maxLeaves` (`:1392-1401`); candidate-pair append (`:1540-1548`); non-retained event append (`:1284-1293`); and `vector<bool>` order scratch capacity in both retained and non-retained modes (`:2034-2039`). Source-review every branch. Configured generation/leaf/pair/event limits receive exact/one-less tests where exposed; actual vector `max_size()` exhaustion is infeasible and must be verified by guard-order/source review only, without allocator hooks. Preserve prior work already spent before an output-cap refusal; do not debit a failed allocation dimension.
+  newly_reviewed_capacity_sites: Independently reviewed v55 findings are in the A parent path union and are partitioned by §114 leaf ownership, not a six-path single commit: `ReferenceEventBuilder::classify()` root capacity before `vertices(1)` (`lc_ellipseoffsetgeometry.cpp:3258-3265`); `CriticalBuilder::runRetained()` `records.max_size()` before vertex/pair debit and reserve (`:1449-1480`); staged critical snapshot `staged.max_size()` and size arithmetic before vertex debit (`:4575-4579`); strict-core `prepare()` root/split pending capacity before `generate(1/2)` (`lc_parametriccurveintersection.cpp:1350-1360`); strict-core `solve()` root admission and split `generate(2)`/two-slot capacity before push (`:1744-1826`); leaf container capacity in addition to `maxLeaves` (`:1392-1401`); candidate-pair append (`:1540-1548`); non-retained event append (`:1284-1293`); and `vector<bool>` order scratch capacity in both retained and non-retained modes (`:2034-2039`). Source-review every branch in its assigned leaf. Configured generation/leaf/pair/event limits receive exact/one-less tests where exposed; actual vector `max_size()` exhaustion is infeasible and must be verified by guard-order/source review only, without allocator hooks. Preserve prior work already spent before an output-cap refusal; do not debit a failed allocation dimension.
   open_source_ranges: Static source ranges reviewed in this pass: cpp:1454-1496 and 1556-1874 (critical adapter/refinement), 2043-2180 (provider analytic callback), 2366-2744 (provider/contact/event creation), 2800-3565 (event/component assembly), 3715-3890 (bounds), 3928-4387 (local topology), and 4468-4605 (public refinement wrapper). Remaining census work is to reconcile helper-level bounded arithmetic/callers across cpp:1-1420, exact allocation/exception/failure paths and every loop against the owning top-level admission, plus future checker C. Keep this PARTIAL until source rows and all maps agree.
   completion_rule: Mark this census PASS only when every source row has a counter or explicit bounded exclusion, pre-admission/checked-arithmetic rule, failure/partial-publication disposition, exact snapshot assertion or explicit source-review-only classification, owner slice and independent evidence. Include fixed scans, both 21-entry sorts, provider query ownership, bounds dispatch/coverage, every reviewed root/split/output/scratch capacity site, fixed-kernel maxima, all logical-record conventions, exception handoff invalidation and runtime/memory limits. Source reading alone does not qualify runtime counters; registered test execution is post-activation and Slice-A-only for A-owned cases.
-completeness_review: PENDING — for this A leaf, trace only applicable R02/R12/R13 obligations bidirectionally through the six owned paths, current callers/data representations, exact A01-A14 identities/assertions, independent oracles, CMake test target and evidence. Record R05 explicitly as excluded from A with its downstream 1B/1C/1F owners; 1A-2 factory and producer-to-document adoption are context, not A completion requirements. Name B/C terminal and topology dependencies and the later 1E DXF-read, DXF-write, DWG-read, DWG-write, conversion and binary-DXF obligations without requiring those downstream traces/oracles to close before A. The A resource trace includes both sort sites, zipped provider segment/map record convention, all reviewed capacity sites, exact snapshots and the activation-bound baseline. Do not make the full C01-C54 crosswalk an A gate; it remains owned by C and visibly PARTIAL until C readiness. Final completeness repeats the A bidirectional trace against the frozen six-path implementation diff.
+completeness_review: PENDING — this is the A-budget-depth parent acceptance map, not a leaf ownership card. Trace R02/R12/R13 across the six-path parent union and partition each obligation, current caller/data representation, exact A01-A14 identity/assertion, independent oracle and evidence to the owning §114 leaf. The selected A-core card traces only its three owned paths and A04/A10; later leaf readiness closes its own assigned tests and paths. Record R05 as excluded from A and owned by 1B/1C/1F; 1A-2 generic adoption is context only. Name downstream B/C and 1E format obligations without making them A-core gates. Do not make C01-C54 a parent-A gate; it remains C-owned. Parent closure repeats the full crosswalk against all four frozen leaf diffs and receipts.
 plan_correctness_review: PENDING — independent reviewer must verify current symbols/owners, API/status/ownership contracts, source-seam and event-transition facts, phase/cut equivalence rule, closure truth table, conservative interval proof/refinement, full logical-work taxonomy and source census (including sort comparisons, fixed reductions and capacity-before-debit order), shared-work debit semantics, resource caps, test-oracle independence, scope and DAG. Verify configured caps are tested at exact/one-less and actual max_size/overflow branches are explicitly source-review-only; no counter may change before a multi-dimensional preflight succeeds. Resolve findings in this plan before readiness; recheck when runtime evidence changes assumptions.
 correctness_review: PENDING until implementation exists — an independent reviewer challenges each accepted/refused path on frozen hashes, including exact transition authorization, full bidirectional coverage, hidden/retained seam, arbitrary phase, same-cycle cut equivalence versus distinct event cycles, budget exhaustion, atomic result and independent oracle. A preflight review cannot pass this field.
-files: Slice A owns exactly six paths: `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h`, `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp`, `librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h`, `librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.cpp`, `librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp`, and `librecad/src/lib/engine/document/entities/tests/lc_parametriccurveintersection_tests.cpp`. The public intersection header is needed for the three new work-stat fields and corrected total/max comments. Slices B and C each own only the geometry header, geometry implementation and geometry test file. Both implementation sources are already registered in CMake and qmake; both test translation units are already registered in the CMake test target (confirm current source entries before readiness). qmake6 is an application-build gate, not a test-registration claim. Readiness must recapture those facts and exact per-slice manifests. No consumer integration is authorized by this leaf; any additional source/build path expands the plan before activation.
+files: Parent-A acceptance spans six paths: `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h`, `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp`, `librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h`, `librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.cpp`, `librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp`, and `librecad/src/lib/engine/document/entities/tests/lc_parametriccurveintersection_tests.cpp`. These are a parent union, not one leaf's writable set or one product commit. §114 assigns A-core exactly the geometry header/implementation/test paths; later A leaves own their declared subsets. The public intersection header is used only by the leaf that owns its work-stat changes. Both implementation sources are already registered in CMake and qmake; both test TUs are registered in the CMake test target (confirm before each leaf readiness). qmake6 is an application-build gate, not a test-registration claim. No consumer integration is authorized by this parent.
 implementation_slices:
   - id: A-budget-depth
     depends_on: `.b-check-layout`, `.b-check-bounds`, `.b-check-topology-local`; product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`
-    parent: `1A-1.b-check-topology-chain` aggregate; first executable child
-    requirements: R02, R12, R13; R05 producer creation, one-piece producer-to-document adoption, repeated-offset mutation and fallback is not applicable to this leaf and is owned by 1B/1C/1F; 1A-2 generic adoption accepts only already checker-validated caches and does not satisfy R05
-    scope: Shared budget admission, distinct candidate-cache/proof-interval split debits, inherited reference-depth preservation, two fixed critical-geometry ordering operations, three four-value rational reduction groups (six comparisons each), and four strict-core ordering sites; critical-adapter fixed scans plus join setup and per-segment preflight; provider callback runtime ownership; bounds span/fragment dispatch and bounds/local coverage-step admissions; strict intersection-core capacity guards; atomic work adoption and invalidation at both geometry-owned query-work handoffs (initial query and retained-root contract); retained-session credential invalidation after provider exceptions; plus fixed-kernel runtime ownership. No public global-topology checker. Three ordering operations in the legacy non-strict solver are inventoried and explicitly excluded from the new strict ordering budget; preserve their compatibility semantics and do not describe them as strict-core sites or covered by `maxOrderingComparisons`.
-    selector: `[lc-offsetcurve][geometry][cache-budget-accounting]` contains exactly A01-A13; the union with exact A14 `retained certificate callback throw preserves admitted work` under `[lc-offsetcurve][geometry][intersection-refine]` is the Slice-A floor of 14 distinct identities, each with nonzero assertions.
+    parent: `1A-1.b-check-topology-chain` aggregate; parent-acceptance map over the four §114 leaves; not an executable leaf
+    requirements: Parent acceptance covers R02, R12, R13; R05 producer creation, one-piece producer-to-document adoption, repeated-offset mutation and fallback are outside parent A and owned by 1B/1C/1F; 1A-2 generic adoption accepts only already checker-validated caches and does not satisfy R05
+    scope: Parent-A acceptance union distributed in the order A-core -> A-strict -> A-reference -> A-cache under §114. It includes shared budget admission, distinct candidate-cache/proof-interval split debits, inherited reference-depth preservation, critical-geometry ordering and rational reductions, strict-core ordering/capacity, critical-adapter scans, provider callback ownership, bounds/local dispatch and coverage, both geometry-owned query-work handoffs, sticky invalidation and fixed-kernel runtime ownership. No single leaf owns or commits the whole scope; each leaf uses only its §114 writable set and case assignment. No public global-topology checker. Three legacy non-strict ordering operations remain inventoried but excluded from the strict ordering budget.
+    selector: Parent-A closure contains A01-A14 and 61 strict-core regressions across the four ordered leaves. A-core's leaf floor is only its two §114 identities A04/A10; no parent-wide test count is an A-core activation prerequisite.
+    validation_scope: The aggregate `validation_commands` below describes parent-A closure after A-core, A-strict, A-reference and A-cache have each committed and reconciled; it is not the A-core validation floor. A-core uses its three-path/A04/A10 leaf card and the explicit baseline contract in §114/§135.
     A08_contract: Retain the identity `provider analytic scans are covered by query debit`, but define it narrowly: assert one pre-callback `certificateBoxPairs` admission per strict-solver-dispatched `certifyIntersection`/`certifyInjective`/identity callback, including unavailable outcomes, and no duplicate debit. Provider-internal calls are covered by their outer callback envelope; specifically assert/bound the two internal `ReferenceProviders::certifyIntersection` helper calls made inside `certifyOccurrenceIdentity` without charging them as separate solver callbacks. Capacity-preflight the occurrence-identity callback's pair and generated-item limits atomically, then debit both before callback entry; if either fails, neither increment occurs and no callback runs. Once invoked, neither debit is refunded on unavailable/throw; any already-spent `order()` pair-attempt unit remains charged. Separately assert that nested `axisDomain`/`axisContact` candidate loops are bounded inside the owning callback envelope and do not debit independently. Outside-core geometry-layer certificate work retains its separately named pre-admitted pair; it is not a strict-solver callback admission. Reconcile the aggregate `certificateBoxPairs` snapshot from observable callback-call counts plus named order/contraction parent admissions; distinguish the separate `solve()` refinement-cell and geometry-layer fixed-scan units.
     A04_atomic_adoption_contract: Add a new planned `shared work budget preserves sticky refusal` identity; no `TEST_CASE` with this name exists at product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. It exercises the production multi-counter adoption API used to transfer solver work. From a nonzero pre-spent snapshot, exact remaining generated-item/pair/depth limits adopt the complete delta and absolute depth together; independently make each additive dimension one short and make depth one over-limit, requiring sticky `LimitExceeded` and an unchanged prior counters/depth snapshot in each refusal. Overflow follows the same no-partial-mutation path. This new test covers ledger semantics; A14 covers exceptional source snapshots, and frozen-source review covers the two outer geometry handoffs.
     tests: Planned Catch2 names for A01-A10: `cache split atomically charges two children`, `one-less split budget refuses without partial debit`, `reference depth survives subdivision and enforces combined depth`, `shared work budget preserves sticky refusal`, `axis inventory ordering comparisons are separately budgeted`, `critical occurrence ordering comparisons are separately budgeted`, `critical fixed scans charge before iteration`, `provider analytic scans are covered by query debit`, `bounds dispatch and coverage advancement charge before work`, and `work budget limit latch preserves counters`. A04, A05 and A06 are new identities absent from the current test source; all planned cases must be reconciled by exact identity and assertion, not assumed present. A01/A02 exercise the planned production atomic candidate-split admission from a known precharged snapshot: exact remaining capacity admits precisely `cacheSpans += 2` and `vertices += 2`; independently one-less in either dimension latches `LimitExceeded` with neither split dimension changed. Frozen-source review must verify both `CacheBoundsBuilder::compare()` and `CacheLocalTopologyBuilder::subdivide()` call this operation only for candidate splits after checked capacity preparation, while reference-only splits charge exactly two vertices and the already charged parent pop adds none. Current behavior and capacity ordering are governed by §51, not this target contract. Existing end-to-end bounds/local-topology tests remain integration evidence; do not claim the helper test alone proves call-site wiring. A03-A09 retain their exact contracts below only where §51 does not supersede them. A08 asserts exact/one-less admissions for available and unavailable direct callbacks, atomic multi-counter refusal, and bounded provider-internal multiplicity; separately verify outside-core geometry-layer pair admission and do not call it a strict-solver callback. A10 directly asserts the real public `WorkBudget::latchLimitExceeded()` transition, preserved counters/depth, sticky `LimitExceeded` status, and rejection of later admissions without mutation; it does not claim to trigger either geometry-owned exception handoff. A11-A13 are specified below. The already-registered retained-session exception regression remains a separate existing behavior check; A14 owns retained credential invalidation, observable work transfer, original exception propagation and no-work retry. Source-review both geometry-owned work-transfer boundaries in the current source; do not assume a catch/invalidate/rethrow implementation exists or add a test-only allocator/callback hook. `max_size` and checked-arithmetic refusal branches are verified by independent source review plus ordinary small-cap boundary tests; do not claim an unreachable allocator-capacity test. For each in-scope sort/scan/dispatch, assert its declared pre-work admission, exact/one-less boundary, source maximum and empty-scan behavior; legacy-sort exclusions are explicit and carry no new cap claim. Comparator callbacks remain budget-pure. Bounds/local coverage separately accounts for dispatch, span entry, successful advancement and each witness examination as specified in §51. Assert exact cumulative snapshots, sticky refusal and no published analysis after any refused admission.
@@ -2612,7 +2645,7 @@ implementation_slices:
     A13_A14_normative_supersession: Retire any contrary full-query caps or derivative-zero forcing elsewhere in this A card as stale seed text, not a separate case. The only A13 two-segment line fixture and target snapshots are the canonical fixture immediately before `Callback-debit ownership` in §0.5: ordinary cap 4 success/cap 3 one-less after the full validation/preparation trace and second-leaf refusal; retained cap 6 success/cap 5 one-less after the same full provider trace and second-leaf refusal; ordinary cap 1 and retained cap 3 are separate mandatory-root preflight cases. The sufficient-cap malformed-input discriminator uses two segments with the second interval invalid and distinguishes `InvalidInput` from root-cap refusal. A14 uses the §68/§82 distinct-branch tangent `A(t)=(t,0)`, `B(u)=(u,(u-1/2)^2)`, parameter pair `(1/2,1/2)`, shared world point `(1/2,0)`, and parallel nonzero derivatives `(1,0)`; the singular Jacobian makes Krawczyk inconclusive and reaches the source-supported analytic fallback. Never force either derivative to zero. Keep current-source observations separate from all planned target assertions.
     evidence_path: Under `build/evidence/1A-1.b-check-topology-chain/A-budget-depth/`, readiness receipts use `readiness-<GATE_ID>/`, the committed base receipt uses immutable `activation-<ACTIVATION_ID>/`, and each changed diff uses new `review-<ATTEMPT>/` plus `validation-<ATTEMPT>/`. IDs are positive integers in separate namespaces; retries preserve the activation and never overwrite attempt evidence.
     validation_commands: Build `librecad_tests`, `librecad_dxf_fast_tests` and `librecad_dwg_fast_tests` in CMake Release and ASan. Discover/run `[lc-offsetcurve][geometry][cache-budget-accounting]` and require exactly A01-A13; run `[lc-offsetcurve][geometry][intersection-refine]` and require the activation-bound pre-edit identity set plus exactly A14 (15 identities), with each planned test executed once and non-vacuous. Run the strict-core union selector `[lc-offsetcurve][geometry][reference-critical],[lc-offsetcurve][geometry][reference-critical-depth],[lc-offsetcurve][geometry][reference-critical-refine],[lc-offsetcurve][geometry][reference-events],[lc-offsetcurve][geometry][reference-components]` in both modes and compare names to the activation-bound 61-name set; run adjacent geometry selectors, full Release `librecad_tests`, and DXF/DWG fast Release/ASan. Compare skips only to the exact-source activation-baseline reports captured immediately before edits; attempt-9 `.b-check-bounds` reports remain PARTIAL provenance unless their source/build identity is proven. Require zero new skips/failures/errors and exact testcase-name equality; use Catch2 console output for assertion totals, never JUnit testcase totals. Run `/opt/homebrew/bin/qmake6 -r CONFIG+=sdk_no_version_check "$WT/librecad.pro"` and `make -j4` in a fresh attempt-specific `/private/tmp/lc-offset-curve-2961-A-budget-depth-qmake6-attempt-N`. Preserve all reports and compare source, binary and build identities to the frozen activation. No chain-selector floor applies.
-    commit: One product/test-only commit over exactly the six owned paths, then an immediate one-file plan checkpoint. Its validation may not claim the 54-case chain floor.
+    commit: No aggregate A-budget-depth product commit. A-core, A-strict, A-reference and A-cache each make one product/test-only commit over only that leaf's §114-owned paths, followed immediately by a separate one-file plan reconciliation/G5 before the next leaf. The aggregate closes only after all four leaf checkpoints, reverse crosswalk and whole-A gates pass; no leaf claims the 54-case chain floor.
   - id: B-occurrence-terminals
     scope: Immutable occurrence-specific terminal publication and producer-provenance mapping only; no public global-topology result.
     selector: `[lc-offsetcurve][geometry][reference-terminals]`; exactly eight planned registered cases, each with nonzero assertions and one exact TEST_CASE name.
@@ -2627,15 +2660,15 @@ implementation_slices:
     evidence_path: Under `build/evidence/1A-1.b-check-topology-chain/C-global-topology-checker/`, use the same `readiness-<GATE_ID>/`, immutable `activation-<ACTIVATION_ID>/`, and per-diff `review-<ATTEMPT>/` plus `validation-<ATTEMPT>/` layout as A/B. Preserve all failed/reviewed attempts.
     validation: Use the attempt-bound validation recipe below: exactly the 54 C01-C54 chain Catch2 identities, each executed once in Release and ASan with no selector skips; all adjacent selectors, full Release and fast DXF/DWG Release/ASan, qmake6 generation/build, parsed assertions/failures/skips, and exact frozen/reviewed/validated digests.
     commit: Fresh Gate 1/3 after Slice B's reconciled checkpoint; one frozen product/test-only commit over exactly C's owned paths, then an immediate one-file plan checkpoint.
-slice_rule: Each slice is its own executable leaf with its own source/plan SHAs, one writer, frozen ownership, acceptance/refusal contract, exact selectors, independent evidence, Gate 1/2/3 outcomes, commit and immediate reconciliation. A passing slice never activates its successor. After each product commit, no product edit is allowed until its direct-child plan checkpoint has been verified and the next slice's fresh Gate 1/3 and activation checkpoint pass.
+slice_rule: Each executable leaf is its own unit with source/plan SHAs, one writer, frozen §114 ownership, acceptance/refusal contract, exact selectors, independent evidence, Gate 1/2/3 outcomes, product commit and immediate plan reconciliation. A passing leaf never activates its successor. After each product commit, no product edit is allowed until its direct-child plan checkpoint is verified and the next leaf's fresh Gate 1/3 plus external activation receipt/audit pass; activation is not a Git plan checkpoint.
   commit_chain:
-  A: exact committed reviewed-plan target selected by the latest live state-table section -> A-specific G1a-completeness/G1b-plan-correctness/G3-readiness receipts -> one-file A activation checkpoint -> A product/test commit (six exact paths) as its direct child -> A one-file reconciliation checkpoint as the product commit's direct child -> post-checkpoint live-state audit.
-  B: A reconciliation checkpoint -> fresh B-specific G1a-completeness/G1b-plan-correctness/G3-readiness receipts -> one-file B activation checkpoint -> B product commit as its direct child -> B one-file reconciliation checkpoint as the product commit's direct child -> post-checkpoint live-state audit.
-  C: B reconciliation checkpoint -> fresh C-specific G1a-completeness/G1b-plan-correctness/G3-readiness receipts -> one-file C activation checkpoint -> C product commit as its direct child -> C one-file reconciliation checkpoint as the product commit's direct child -> post-checkpoint live-state audit.
+  A: v227 exact plan review -> one-file direct-child plan commit -> closed exact G5 per §135 -> for A-core, A-strict, A-reference, then A-cache in §114 order: fresh leaf packet and audit -> same-packet G1a/G1b/G3 -> external activation receipt/audit -> immediate root verifier and authorized baseline -> one product/test commit limited to that leaf's paths -> immediate one-file reconciliation/G5 -> live-state audit. No separate plan activation commit/G5; no six-path aggregate product commit.
+  B: complete A aggregate and its plan/G5 reconciliation -> fresh B-specific G1a/G1b/G3 -> external B activation receipt/audit and baseline -> B product commit over its declared paths -> immediate one-file reconciliation/G5 -> live-state audit.
+  C: B reconciliation checkpoint -> fresh C-specific G1a/G1b/G3 -> external C activation receipt/audit and baseline -> C product commit over its declared paths -> immediate one-file reconciliation/G5 -> live-state audit.
   failure_rule: Any failed review, test, diff/hash/parent/path audit or checkpoint postcondition stops at that state; preserve all work and evidence, repair only the owning slice/checkpoint, and never jump to a successor or bundle commits.
 task_plan:
   - stage: Inventory source facts and scope
-    work: Verify predecessor/checkpoint ancestry, actual HEAD, the per-slice path manifests (six for A, three for B/C), declarations/callers, test target registration and requirement ownership. For A, close the R02/R12/R13 trace; assign R05 producer creation, one-piece producer-to-document adoption, repeated-offset mutation and fallback to 1B/1C/1F; and state that 1A-2's generic factory consumes only an already checker-validated cache and does not satisfy R05. Confirm weak-component, node-ID and one-entity-per-branch semantics for B/C. Record selector counts, producer call paths, result owners, downstream 1A-2/1E ownership and format/version exclusions. Explicitly trace strict query capacity checks, every vector append/reserve boundary, public retained-session exception policy and provider callback call graph through `lc_parametriccurveintersection.cpp`; classify allocation exception behavior without adding injection hooks. Defer A Gate-1/3 only until A-owned API/debit/capacity/snapshot/oracle rows close; B/C producer and phase proofs are not A prerequisites.
+    work: Verify predecessor/checkpoint ancestry, actual HEAD, and each executable leaf's §114-owned path manifest; the six A paths are a parent acceptance union, not one writable leaf. Reconcile declarations/callers, test registration and requirement ownership. For A, close the R02/R12/R13 parent trace and partition it; assign R05 producer creation, one-piece producer-to-document adoption, repeated-offset mutation and fallback to 1B/1C/1F; state that 1A-2's generic factory consumes only an already checker-validated cache and does not satisfy R05. Confirm weak-component, node-ID and one-entity-per-branch semantics for B/C. Record selector counts, producer call paths, result owners, downstream 1A-2/1E ownership and format/version exclusions. Explicitly trace strict query capacity checks, every vector append/reserve boundary, public retained-session exception policy and provider callback call graph through `lc_parametriccurveintersection.cpp`; classify allocation exception behavior without injection hooks. Defer each leaf's Gate-1/3 until its owned API/debit/capacity/snapshot/oracle rows close; B/C producer and phase proofs are not A-core prerequisites.
     exit: Source inventory is complete; this is not a Gate-1 or readiness decision. Do not activate or edit product source/tests until the owning leaf's requirements, resource and independent-oracle rows close and formal gates are refreshed at the same committed plan HEAD. B/C producer/phase stages remain required for their own readiness only.
   - stage: Close producer, phase and seam probes
     work: Reconstruct whole-source and trimmed closed producer outputs from `chainEntity`, including longest-piece midpoint rotation, reversed candidate order, second phase rotation, knot cut, cubic-interior cut and event cut. Include the now-reachable G4 producer call exactly: reference-analysis fixture `basis(100,.05,pi/12,7*pi/4), D=-4`; materializer call `Left(4)` whose engine-reported distance is `+4`; capture and independently explain the opposite sign conventions. Build independent ledgers for G0-G4: high-precision root/visible interval enclosures, stable event keys (role + root enclosure + event kind, never runtime IDs alone), terminal records, candidate provenance, directed transitions, cut frontiers, both one-sided proofs and one-lap returns. For G4, independently derive the expected open E0 path and closed E1→pair(N3)→E2→pair(N2) path; the measured producer sub-piece boundaries in `entry_probe` are input provenance only. Derive expectations from analytic/high-precision offset equations and producer source provenance; do not snapshot the graph or path selected by `checkCache` as its own oracle. For the phase positive use `E(1,1,0,0), D=+1, tol=0.02` and quarter-turn nets `P0=(2,0), P1=(2,9/8), P2=(9/8,2), P3=(0,2)`. Split the first net at `u=1/4`, rotate the remaining pieces, and map physical `theta=atan2(403,945)` to the reference parameter using the explicit outward lift/rate formula and enclosures in `entry_probe`; `theta` is not the parameter. Independently verify `v=u(1-u)`, `r²/4-1=v²(57-50v)/256 <= 89/8192`, radial error `<0.011<tol`, and positive polar derivative. On the first quadrant, verify `x=2-21u²/8+5u³/8`, `y=27u/8-3u²/4-5u³/8`, `x'=u(15u-42)/8<0` for `0<u<=1`, `y'=3(1-u)(5u+9)/8>=0`, and `xy'-yx'>0` including endpoints. Add both source sweep signs and the hidden-seam lens `E(100,50,0,0), D=-49`; test candidate reversal independently.
@@ -2649,22 +2682,22 @@ task_plan:
   - stage: Freeze independent fixture oracle and test map
     work: Author preflight ledgers for visible intervals, stable event/terminal keys, expected transitions, seam disposition, candidate-domain order, every cut/return frontier and independent geometry bounds. Derive them from high-precision/analytic offset equations and materializer source provenance, not from graph dumps or checker output. The ledger must label each datum as one of: independent mathematical expectation; certified source/editor input; measured producer input; or diagnostic graph coordinate. Only the first two categories may justify the expected checker result. Map each R ID, public reason, boundary/refusal and debit to its separately named Catch2 test specification, required assertion/oracle, owner and post-activation slice. In `selector-test-map.txt`, freeze 61 exact strict-core regression names as `STRICT-CORE-01` through `STRICT-CORE-61`, separate from A01-A14 and C01-C54. A01-A13 use the cache-budget selector; A14 is the exact retained-callback-throw identity under intersection-refine and must be represented separately in the map. Save `source-requirement-map.txt`, `independent-transition-cut-ledger.txt`, `terminal-producer-map.txt`, `phase-cut-intervals.txt`, `debit-admission-table.txt` and the selector map; after activation implement the same frozen expected values in registered tests.
     exit: Every discriminator has an independent expected result/provenance; stable identity is role + independently certified parameter enclosure + event kind, not runtime numeric IDs alone. Test specifications require 54 distinct Catch2 identities, including one named test per public reason and eight separate end-to-end terminal cases; any producer-unreachable identity is replaced before readiness without lowering the floor. No expected path/transition/result is sourced from `checkCache`; measured producer data is only candidate input and is checked against independent source geometry. No product/test edit or registered-test run occurs during preflight; test implementation and execution are owned by the activated slice named in the map.
-  - stage: Close readiness gates and activate
-    work: At the exact committed reviewed-plan target named by the latest live handoff, obtain distinct G1a completeness, G1b plan-correctness and G3 readiness dispositions for Slice A against that exact plan and unchanged product-source base. Save the reviewed-plan SHA, product-base SHA, packet/recipe manifest hashes and three receipts under `build/evidence/1A-1.b-check-topology-chain/A-budget-depth/readiness-<GATE_ID>/`. Review the bidirectional R02/R12/R13-to-A trace and explicit R05 exclusion; clarify that 1A-2 only provides generic adoption of an already validated cache, while R05 creation/one-piece producer-to-document adoption/repeated-offset/fallback remains 1B/1C/1F. Independently verify A's split-unit distinction, atomic query-work adoption, capacity/depth/callback/exception/arithmetic contracts, exact/one-less snapshots, A14 public throw route and independent work oracle, all fourteen A identities/assertion contracts, CMake registration and qmake6 application-build ownership, six-path manifest, strict-core 61-case regression recipe, recovery, packet integrity and implementation recipe. Check every remaining B/C/consumer/DXF/DWG/UI/phase-2 obligation has a named owner and predecessor, but do not require B terminal or C phase/cut/frontier proofs or C01-C54 oracle closure for A without a demonstrated A dependency. Pre-activation reviews validate planned identities/contracts and existing target registration; they do not require A01-A14 to exist in a binary. After activation, require exact A01-A13 discovery under cache-budget and the intersection-refine identity set to equal its activation-bound pre-edit set plus exactly A14, with nonzero per-case assertions before commit. Any finding that changes the plan requires a new reviewed-plan checkpoint and affected reviews against that exact HEAD. After all pass, create the separate one-file activation checkpoint directly after the reviewed target. Use separate readiness-review and activation IDs; later attempts never replace activation identity. Only then permit Slice A.
-    exit: All three receipts bind one reviewed-plan SHA and product-source base; the activation checkpoint is a direct child of that SHA, contains only this roadmap, records the receipt identities, and passes source-blob/index/status checks. `activated-base.sha` equals the activation checkpoint HEAD; all six owned product/test blobs equal `base_sha`; the index is empty and product-source/test files remain untouched. Slice A's product/test commit must be a direct child of `activated-base.sha`. Otherwise remain WAITING.
-  activation_authorization_exit: BLOCKED until the activation checkpoint has its independent exact-identity G5 PASS, then a fresh authorized baseline build/discovery/test receipt is reconciled against the checkpoint's source/toolchain/registration identities and expected testcase/skip sets. Check all six A-owned blobs remain unchanged and the index contains no product edits. Checkpoint creation or G5 alone never authorizes Slice-A editing; change A to READY only after both activation G5 and baseline reconciliation PASS.
-  activation_order_note: The preceding stage's shorthand "Only then permit Slice A" means only after both independent activation G5 and baseline-reconciliation exits above; checkpoint creation by itself is never authorization.
-  - stage: Slice A sub-stage — capacity-before-admission closure
-    work: This is part of Slice A's six-path implementation and single product/test commit, not a new slice. Before or alongside the work-budget changes, add checked `size < max_size` / `requested <= max_size - size` and checked-arithmetic guards before both admission and storage at every mapped site. In geometry code, cover `CriticalBuilder` axis and occurrence appends (`lc_ellipseoffsetgeometry.cpp:1623-1640,1714-1721`); `addRegions` initial pending insertion and especially child-capacity checks before `split(depth)` charges children (`1794-1799,1818-1824`); `m_joins` append before its debit/storage (`1837-1859`); and initial pending-cell insertion for bounds comparison and local interior processing (`3799-3803,4054-4058`). In strict intersection code, cover root-pending capacity before `generate(1)`/construction, two-child pending capacity and overflow before `generate(2)`/either push, leaf append, solve-queue child pushes, candidate-pair append, non-retained `m_events` append, and the `vector<bool>` ordering scratch max-size check in both retained and non-retained modes (`lc_parametriccurveintersection.cpp:1295-1417,1440-1511,1512-1556,1702-1829,2034-2099`). Preserve already-correct capacity guards and document explicitly bounded, guarded exclusions. Capacity refusal must occur before debit when no operation has begun; real work already examined remains charged, and `bad_alloc`/`length_error` propagate without publishing partial success or refunding work.
-    exit: A source-to-capacity ledger maps every reserve/resize/push/emplace in both owned implementation files to its precheck, preceding logical debit, maximum-size arithmetic, failure behavior and owner. Review each guard in source order; addRegions checks room for two cells before split debit. Also cover classify's initial root, retained critical records, staged snapshots, strict-core prepare/solve seeds and splits, leaf/pair/event appends and order scratch. Add reachable configured-cap tests and no-partial-publication assertions; impossible max_size/overflow branches are source-review-only with no test-only allocator hook. Close all capacity rows in the same six-path A diff/commit as budget/depth fixes.
-  - stage: Slice A — correct shared budget and proof-depth accounting
-    work: Implement the normative A-budget-depth recipe in implementation_slices.A-budget-depth and the capacity-before-admission substage above. Preserve atomic two-child/inherited-depth rules, separate ordering/scan/query admissions, bounds dispatch/coverage debits, callback ownership, both exception handoffs and strict-core retained-session semantics. Close every mapped geometry/core capacity site before debit/storage; configured limits get exact/one-less tests, while actual max_size/overflow branches receive independent source-order review only. Add exactly A01-A13 under the cache-budget-accounting selector and A14 under intersection-refine; migrate pair snapshots only from the fresh source-derived ledger (the old P23→P25/P24 rule is retired; P24 success/P23 one-less is provisional), while preserving independently verified V/depth prefixes. A05/A06 assert fixed-sort comparison traces; A07 asserts all three reduction groups; A13 asserts strict-core ordering; all assert exact counters and one-less refusal. Require sticky invalidation and no partial publication. A14 must assert cumulative parent-plus-callback work after provider throw, original exception propagation, invalidated root and no-work retry. Do not add allocator/provider hooks or the global checker. Freeze/review the six owned files, run the required Release/ASan, strict-core, adjacent, full/fast and qmake6 matrix, and parse exact identities and baseline skips. Commit the validated product/test slice alone, immediately reconcile/commit this plan as its one-file direct child, then reread committed plan and Git state before any successor edit.
-    exit: Every changed debit has an exact expected work snapshot and one-less boundary; failed combined admission mutates no counter; no proof cell loses or double-counts `referenceDepth`; all geometry/strict-core capacity checks precede the relevant debit/allocation; catches at both geometry-owned transfer boundaries invalidate the shared budget before rethrowing unchanged; A14 proves a thrown retained callback leaves no usable root and no-work retry; all fourteen A identities and 61 strict-core Release/ASan cases pass their parsed identity/assertion/skip requirements on frozen hashes; one product/test commit has only the six owned paths and its direct-child plan reconciliation passes. No topology checker or positive global-validity claim is published by this slice.
+  - stage: Close readiness gates and activate one A leaf
+    work: For the selected leaf only, obtain distinct G1a completeness, G1b plan-correctness and G3 readiness decisions against its exact committed plan, product base, predecessor and complete leaf packet. Store them under that leaf's attempt directory. For A-core, assess only the §114 three-path scope, A04/A10 contracts, current symbols, input/oracle identities, and its declared CMake/qmake6 facts; keep A-strict/A-reference/A-cache requirements in the parent map and their own later readiness packets. Parent-wide A01-A14/61-case regression, R05 exclusion and B/C/consumer ownership remain traceable in the parent ledger but are not silently imposed as A-core test floors. After the three same-identity PASS decisions, first record a preliminary no-follow absence check for all six exact roots, then create the §114 external `activation.json` receipt and obtain independent `activation-audit.json` PASS. Exact current-plan G5 PASS is required by the selected leaf's packet/activation contract; do not create another Git plan commit or request an additional G5 solely to activate. Immediately after activation-audit PASS, the very next command must be the card-listed no-follow verifier for all six exact full paths. Bind the literal verifier command/hash, tool identity, per-path output/result and receipt hash to that leaf's packet/card and activation-audit identity. Any present or uninspectable path blocks activation; never delete, rename or reuse it. If the check passes, the very next command must activate/create roots through the frozen ledger, with no command or manual action intervening. Record the created-root state before baseline. After activation and root checks, run only authorized baseline/discovery commands; A-core requires its exact two case identities and declared adjacent/strict-core baselines, while parent-wide floors apply only at parent closure. Any scope, source, toolchain, oracle or plan finding reopens the affected gate and leaf; do not transfer sibling readiness.
+    exit: G1a/G1b/G3, activation receipt/audit, root receipt and baseline all bind one exact leaf/plan/product/toolchain identity. The activation is an immutable external receipt, not a plan Git commit. The pre-edit tree and that leaf's owned blobs match its card; no product path changes before baseline PASS. Each leaf product commit contains only its §114 paths and is followed immediately by its direct-child plan reconciliation/G5 before the next leaf. Otherwise remain WAITING.
+  activation_authorization_exit: BLOCKED until current-plan G5 PASS, complete leaf packet, G1a/G1b/G3 PASS, preliminary root check, validated external activation receipt, independent activation-audit PASS, immediately adjacent exact no-follow root check/receipt, root-state receipt, and reconciled baseline/discovery/skip results all match. No separate activation-commit G5 is required; the exact current-plan G5 cannot substitute for any other gate.
+  activation_order_note: Current-plan G5 PASS -> packet audit -> G1a/G1b/G3 PASS -> preliminary root check -> external activation receipt -> activation-audit PASS -> immediate next-command no-follow verifier/receipt -> immediately following root-creation command -> root-state receipt -> baseline/discovery -> source edit. No command, plan commit or manual action may intervene between activation-audit PASS, verifier, and root creation.
+  - stage: Parent A sub-stage — capacity-before-admission closure
+    work: This is parent-A acceptance work distributed across the four §114 leaves, not one six-path implementation/commit. Each leaf closes only the capacity/debit sites and tests assigned to its contract; use the mapped geometry/core locations above and the exact owner manifest in the leaf card. Preserve checked arithmetic, capacity-before-debit, no-partial-publication, and `bad_alloc`/`length_error` semantics. A leaf may not edit another leaf's paths or absorb its work to simplify a commit.
+    exit: The parent source-to-capacity ledger maps every reserve/resize/push/emplace in both implementation files to a precheck, debit, maximum-size arithmetic, failure behavior and §114 leaf owner. Each owning leaf adds reachable configured-cap/no-partial-publication tests and source-reviews unreachable max_size/overflow branches without allocator hooks. The parent closes only after all assigned rows and all four leaf commits/reconciliations pass.
+  - stage: Parent A — correct shared budget and proof-depth accounting
+    work: Implement the normative A-budget-depth contract across A-core, A-strict, A-reference and A-cache in §114 order. Preserve atomic two-child/inherited-depth rules, distinct ordering/scan/query admissions, bounds dispatch/coverage debits, callback ownership, both exception handoffs and strict-core retained-session semantics. Assign A01-A14 and 61 strict-core identities to their §114 owners; do not make the entire parent suite an A-core readiness floor. Re-derive snapshots from the frozen source ledger. Require exact counters, one-less refusals, sticky invalidation and no partial publication. A14 covers the retained callback exception behavior in its owning leaf. Do not add allocator/provider hooks or the global checker. Each leaf freezes and reviews only its paths, runs its own authorized Release/ASan/adjacent/full/fast/qmake6 matrix, commits one validated product/test slice, and immediately reconciles the plan/G5 before the next leaf.
+    exit: The complete parent trace, all assigned A cases and 61 strict-core regressions pass their correct leaf-specific validation identities; every leaf has its own product-only commit and immediate plan/G5 checkpoint; the 15-case reverse crosswalk and whole-A gates pass only at parent closure. No topology checker or positive global-validity claim is published by this parent.
   - stage: Slice B — publish occurrence-specific reference terminals
-    work: Re-read source/API at Slice A's reconciled HEAD and obtain fresh completeness, plan-correctness and readiness decisions before editing. Add immutable terminal records tied to exact occurrence, node, incident edge/side, kind and event provenance. Implement only producer-backed source-start/source-end and exact retained-trim terminals after exhausting all paired-retained continuation alternatives; explicitly exclude through-events, hidden cusps and arbitrary interior points. Use the independently frozen terminal-producer map, add exactly these eight named Catch2 cases under `[lc-offsetcurve][geometry][reference-terminals]`: `source start maps to exact terminal`, `source end maps to exact terminal`, `pair trim terminates without paired continuation`, `paired retained continuation blocks trim terminal`, `through event is not a terminal`, `wrong paired occurrence orientation is not a terminal`, `hidden simple cusp is not a terminal`, and `arbitrary interior point is not a terminal`. Freeze/review, run the exact Release/ASan and broad commands in `foundation_validation_commands`, then make one product-only commit followed immediately by a separate one-file plan checkpoint. Product attempts share the immutable slice activation but use a new `ATTEMPT` and review receipt after every source edit/retry.
+    work: Re-read source/API at Slice A's reconciled HEAD and obtain fresh completeness, plan-correctness and readiness decisions before editing. Add immutable terminal records tied to exact occurrence, node, incident edge/side, kind and event provenance. Implement only producer-backed source-start/source-end and exact retained-trim terminals after exhausting all paired-retained continuation alternatives; explicitly exclude through-events, hidden cusps and arbitrary interior points. Use the independently frozen terminal-producer map, add exactly these eight named Catch2 cases under `[lc-offsetcurve][geometry][reference-terminals]`: `source start maps to exact terminal`, `source end maps to exact terminal`, `pair trim terminates without paired continuation`, `paired retained continuation blocks trim terminal`, `through event is not a terminal`, `wrong paired occurrence orientation is not a terminal`, `hidden simple cusp is not a terminal`, and `arbitrary interior point is not a terminal`. Freeze/review, run the exact Release/ASan and broad commands in `foundation_validation_commands`, then make one product-only commit followed immediately by a separate one-file plan checkpoint. Each attempt uses a new `ATTEMPT` and review receipt after every source edit/retry; activation is an external receipt/audit bound to the leaf, not a Git checkpoint.
     exit: Each materialized endpoint maps to exactly one correct terminal or a documented producer-proved unreachable class; through-event and wrong-occurrence cases produce no terminal; no node-degree/coordinate inference exists. Tests validate the graph-to-producer map independently of `checkCache`; the scoped commit and direct-child reconciliation pass. No full topology result is exposed yet.
   - stage: Slice C — compose and prove the complete checker
-    work: After fresh Gate 1/3 review and an activation checkpoint at Slice B's reconciled HEAD, implement `checkCache` input validation and one shared `WorkBudget`; call `analyseCacheTopologyLocally` exactly once because it already calls `analyseCacheBounds`, admits layout and returns the owned bounds/reference/local witness relation. Feed that result into chain search without rerunning bounds/layout or resetting/redebiting work. Compose final cumulative work reporting and exact reason mapping. Keep the path/result private until all checks pass; preserve diagnostic span attribution and upstream refusal classes without inventing public claims.
+    work: After B's reconciled HEAD, obtain fresh C completeness/plan-correctness/readiness and external activation receipt/audit bound to that exact packet and source identity. Implement `checkCache` input validation and one shared `WorkBudget`; call `analyseCacheTopologyLocally` exactly once because it already calls `analyseCacheBounds`, admits layout and returns the owned bounds/reference/local witness relation. Feed that result into chain search without rerunning bounds/layout or resetting/redebiting work. Compose final cumulative work reporting and exact reason mapping. Keep the path/result private until all checks pass; preserve diagnostic span attribution and upstream refusal classes without inventing public claims.
     exit: A direct API test for each declared reason verifies exact status, final work snapshot and empty/no-partial success payload on refusal; valid cases reach the chain stage; invalid inputs are refused before expensive allocation.
   - stage: Construct bounded transition and coverage graph
     work: Consume charged occurrence-specific `ReferenceTerminal` records from source free ends and pair trims after checking all exact paired-retained continuations; no cusp terminal is published. Build charged local states from every certified witness alternative. Add edges only for touching normalized candidate domains and either touching increasing intervals on one reference edge, exact source continuation, an authorized oriented `ReferencePairEvent`/node-incidence join, or a retained `ReferenceSeam` pair. Select one complete candidate-compatible producer path inside a weak component; track all candidate domains and the selected path's reference intervals, not unrelated components or alternative edges. An open endpoint must match exactly one terminal's occurrence, node, incident edge/side and one-sided direction; tests distinguish a retained trim from a through-event and from the paired-retained G2 lens continuation. Fringe witnesses certify endpoints only. Never reuse a witness or use coordinate-only joins.
@@ -2682,23 +2715,23 @@ task_plan:
     work: Recompute and compare the reviewed base, exact C-slice three-path binary diff and per-file hashes before any build; fail if the index, source, scope or review identity changed. Run the complete Release/ASan, adjacent, full, fast-lane and qmake6 matrix against those bytes. Parse every report, compare baseline skip identities, and recheck the same digests and clean index. Do not stage or commit in this stage.
     exit: Every command exits zero; focused and adjacent selector identities are exact (C is exactly 54, not a floor), every C case executes once in Release and ASan with nonzero assertions and no skips; broad-lane skip identities match baseline; qmake6 passes; frozen/reviewed/validated hashes match; and the exact three-path diff passes whitespace checks. Parse all reports before commit eligibility.
   - stage: Commit the validated product slice
-    work: This is the Slice C product boundary only. After Slice C's fresh Gate 1/2/3 dispositions, frozen-tree review and every validation receipt pass, verify its activation checkpoint is still HEAD and the index is empty. Stage C's three owned paths explicitly; compare staged path set, cached diff digest, file hashes and whitespace checks to frozen/validated values; create exactly one product/test-only commit. A failed review/test is fixed and re-frozen within Slice C; never mix the roadmap/evidence into product. Slices A and B have their own independent product/test commits and immediate plan-only reconciliations as specified above.
+    work: This is the Slice C product boundary only. After Slice C's fresh Gate 1/2/3 dispositions, frozen-tree review and every validation receipt pass, verify its external activation receipt/audit still binds the exact plan/source/packet identity and that the index is empty. Stage C's three owned paths explicitly; compare staged path set, cached diff digest, file hashes and whitespace checks to frozen/validated values; create exactly one product/test-only commit. A failed review/test is fixed and re-frozen within Slice C; never mix the roadmap/evidence into product. A and B use their own leaf/product commits and immediate plan-only reconciliations.
     exit: The commit has the activated checkpoint as its direct parent and exactly the three owned paths; hooks pass; committed file hashes equal validated hashes; no plan, report, unrelated or unowned file is included. Any mismatch stops and leaves the slice unvalidated.
-  - stage: Reconcile and commit the plan checkpoint
-    work: This is mandatory immediately after each of Slices A, B and C, before any following product edit. Reread the actual product commit and committed blobs (not working files), reconcile active/completed slice, exact parent/path set, requirement and aggregate/DAG states, evidence/commands/digests, risks, blockers, queue and next-slice readiness. Update the plan version/history without recursively claiming the new checkpoint SHA. Validate the roadmap, stage only this file and create a separate one-file plan-only commit directly after that slice's product commit.
-    exit: Each plan checkpoint records its actual product SHA and verified per-file hashes; is the direct child and contains only this roadmap; and passes ancestry/path/blob/status checks. The next slice stays WAITING until fresh Gates 1/3 bind the reconciled checkpoint and a new activation checkpoint is recorded. If any postcondition fails, stop product work and repair/recommit the plan checkpoint first.
+  - stage: Reconcile and commit each leaf checkpoint
+    work: This is mandatory immediately after A-core, A-strict, A-reference, A-cache, B and C product commits, before any following product edit. Reread committed blobs, reconcile exact leaf parent/path set, requirement and aggregate/DAG states, evidence/commands/digests, risks, blockers and next-leaf readiness. Update plan history without recursively claiming its future SHA. Validate the roadmap, stage only this file and create a separate one-file direct-child reconciliation commit.
+    exit: Each checkpoint records its actual product SHA and verified per-file hashes, contains only this roadmap, and passes ancestry/path/blob/status checks. The next leaf remains WAITING until this reconciliation and its required fresh gates are verified. A aggregate is not complete until all four A leaf checkpoints and parent closure rows pass; if any postcondition fails, stop product work and repair the plan checkpoint first.
 tests: >-
   The canonical Slice-C floor is exactly 54 distinct Catch2 TEST_CASE identities, discovered and executed in Release and ASan. The identity partition is C01-C28 core topology/path/cut scenarios, C29-C37 the nine public Reason cases, C38-C46 nine attribution/resource/producer cases, and C47-C54 eight end-to-end terminal outcomes. The older 46 numbered coverage rows are a cross-slice scenario outline, not a test count: rows 1-28 describe C01-C28; row 29 expands to C29-C37; rows 30-38 describe C38-C46; rows 39-46 are exercised as Slice-B terminal-publication cases B01-B08, while Slice C independently exercises the same terminal outcomes through public `checkCache` cases C47-C54. Thus the C selector remains 54, not 62, and B tests never count toward it. The pre-change chain selector is zero. Maintain for each identity a fixture ledger with requirement IDs, independent expected result, stable event key, directed transition/cut signature, exact work/span attribution, oracle provenance and evidence path. Register every listed name as a separate TEST_CASE; SECTIONs, aliases, skips, aggregate counts or unrelated tests do not satisfy a slot. C01-C28 cover: degree-1 and generated-cubic positives; monotone cubic with stationary endpoint; both cacheReversed directions; disconnected-component join refusal; missing and repeated reference tails; extra loop/retrace; crossing switch; exact event-fringe join and wrong event identity; source continuation with/without hidden interval; retained seam cycle; hidden-seam inward lens `E(100,50,0,0), D=-49`; closed trim; endpoint mismatch; all four closure-metadata combinations; existing-knot phase rotation; both dyadic `u=1/4` sweep orientations with outward conversion; canonicalization of nearby cut frontiers after independent one-lap proofs; distinct directed cycles; and unresolved-cut refusal. C29-C37 assert `None`, `InvalidInput`, `Layout`, `TooSmall`, `ReferenceUnresolved`, `OffCurve`, `Ambiguous`, `Topology`, and `LimitExceeded`, one named identity each. C38-C46 assert stable original-span attribution; exact cumulative caps; isolated one-less `cacheSpans`, `vertices`, `distancePairs`, and combined-depth refusal; cross-stage shared-ledger/sticky behavior; deterministic 64-span admission with exact counters; and G4's independently normalized two-component/two-materialized-branch fixture. C47-C54 assert the public checker accepts exact source-start, source-end and pair-trim terminals and rejects hidden-cusp, through-event, wrong-pair orientation, arbitrary interior endpoint and G2 `E0`-only incomplete path. The independent oracle must derive visible intervals, event/occurrence keys, terminal classification, candidate ordering, transitions, cut sides, one-lap returns and seam disposition from fixture construction plus analytic/high-precision equations, never from `checkCache`; runtime IDs are audited against that oracle. Every transition class has positive and refusal coverage, and no successful case covers a proper subset.
 required_case_names_C29_to_C54: C29 `cache topology directly asserts None reason`; C30 `cache topology directly asserts InvalidInput reason`; C31 `cache topology directly asserts Layout reason`; C32 `cache topology directly asserts TooSmall reason`; C33 `cache topology directly asserts ReferenceUnresolved reason`; C34 `cache topology directly asserts OffCurve reason`; C35 `cache topology directly asserts Ambiguous reason`; C36 `cache topology directly asserts Topology reason`; C37 `cache topology directly asserts LimitExceeded reason`; C38 `cache topology attributes original spans deterministically`; C39 `cache topology admits exact cumulative resource caps`; C40 `cache topology one-less cache span cap refuses atomically`; C41 `cache topology one-less vertex cap refuses atomically`; C42 `cache topology one-less distance pair cap refuses atomically`; C43 `cache topology one-less combined depth cap refuses atomically`; C44 `cache topology preserves shared pre-spent work and sticky refusal`; C45 `cache topology admits deterministic 64 span cycle`; C46 `cache topology selects separate paths from two component producer`; C47 `cache topology accepts source start terminal`; C48 `cache topology accepts source end terminal`; C49 `cache topology accepts pair trim without retained continuation`; C50 `cache topology rejects hidden cusp endpoint`; C51 `cache topology rejects through event endpoint`; C52 `cache topology rejects wrong paired terminal orientation`; C53 `cache topology rejects arbitrary interior endpoint`; C54 `cache topology rejects G2 upper lens E0 only path`. The current selector map must bind each exact name to selector, fixture, oracle, requirement, expected result, evidence owner and assertion contract; C01-C28 are enumerated above and are not dependent on an ignored historical map. Any identity/name change requires a reviewed corrective plan amendment and matching map change before readiness.
-  selectors: Historical product-base discovery has A/B/C=0 and strict-core=61 names in Release/ASan; retain those hash-bound captures as PARTIAL provenance, not a current baseline. The live selector map and packet bind dynamically to the reviewed-plan identity authorized by §61; fixed historical version literals are never executable targets. Planned identities remain A=14 (A01-A13 under cache-budget-accounting, A14 under intersection-refine), B=8, C=54: exactly 76 distinct slice identities, with 61 strict-core regressions tracked separately. Before the current activation checkpoint passes G5, only read-only source/API and existing-selector inspection is allowed; do not configure/build or execute registered JUnit. After activation and before edits, use fresh attempt-specific Release/ASan directories and capture source/binary-bound selector baselines plus same-tree full/DXF/DWG skip reports. After implementation, require exact discovery/JUnit identity equality, one execution and a reachable non-vacuous assertion per planned case, with no unexplained skips/failures/errors. Slice A executes all 61 activation-bound strict-core regressions in both modes. No SECTION-only or skipped row counts; explain changed pre-existing identities and invalidate baselines after any source/toolchain change.
+  selectors: Historical product-base discovery has A/B/C=0 and strict-core=61 names in Release/ASan; retain those captures as PARTIAL provenance, never as a current baseline. The parent map remains A=14 (A01-A13 cache-budget-accounting; A14 intersection-refine), B=8, C=54, plus 61 separately tracked strict-core regressions. Each leaf packet binds only its assigned names; A-core is A04/A10, with strict-core names used as the declared baseline rather than an A-core test floor. Before committed-plan G5 and the external activation audit pass, only the read-only activity authorized by §135 is allowed; no build or registered JUnit. After activation and before edits, capture fresh attempt-specific Release/ASan/qmake6 source/binary-bound selector baselines and same-tree full/DXF/DWG skip reports. After implementation, require exact identity equality, one execution and non-vacuous assertions, with no unexplained skips/failures/errors. At parent A closure, reconcile all 14 A identities and the required strict-core regression set across the four leaves. No SECTION-only or skipped row counts; any source/toolchain change invalidates affected baselines.
   split_unit_correction: Normative v83 distinction: `consumeCandidateSplit()` is exclusively for candidate-cache child spans and admits `{cacheSpans:+2, vertices:+2}`; `CriticalBuilder::split()` is a proof-interval operation and admits `{cacheSpans:+0, vertices:+2}` at three callers. The old v82 same-name oracle and two-caller coverage are superseded. Gate 1/plan-correctness must verify source symbols and all three call sites before activation.
   cost_model: Keep defaults `maxCacheSpans=4096`, `maxVertices=65536`, `maxDistancePairs=1<<20`, `maxDepth=20` unless source/API evidence justifies a compatibility correction before readiness. One irreversible ledger is shared across layout/reference/bounds/local topology/chain. `inspectCacheLayout` charges each normalized initial span once. A candidate split uses one production `WorkBudget::consumeCandidateSplit()` admission: preflight two remaining `cacheSpans` and two remaining vertices without mutation, then debit both dimensions together. Both `CacheBoundsBuilder::compare` and `CacheLocalTopologyBuilder::subdivide` call it only for candidate splits after pending-capacity and index-overflow checks; a reference-only split charges exactly two vertices. The already charged parent is popped, not recreated; the current bounds `vertices(3)` is an unexplained over-debit and must become a two-child admission, with any additional retained split record charged at its own allocation. A01/A02 test the public production admission from a one-span/one-vertex precharged snapshot: exact final totals are three spans and three vertices; isolated one-less spans and vertices each refuse atomically with the original one/one snapshot retained. Source review verifies integration at both call sites and that parent pop has no vertex debit; existing bounds/local-topology tests remain end-to-end integration evidence. Preflight all dimensions and checked arithmetic before mutating counters; failed admission latches `LimitExceeded` with no partial debit. Each stored terminal, witness, graph state/arc, coverage/cut/frontier item and memo/signature symbol charges `vertices` before allocation. `distancePairs` charges every declared geometric/event/topology examination, start seed, transition/incidence, rejected loop item and dedup/memo/signature comparison before examination. Fixed-sort comparisons and four-value rational reductions use the separate `maxOrderingComparisons` counter: admit each predicate immediately before evaluation, charge no extra pair for a sort, and charge each reduction's six comparisons after its unique enclosing pair admission. The three legacy non-strict solver ordering groups are explicit exclusions from this strict/fixed-scope limit. `maxDepth` at proof-cell entry is checked `cache.depth + referenceDepth`: candidate refinement/virtual-cut isolation increments only the original-span dyadic depth; reference subdivision increments only inherited `referenceDepth`, which is preserved in every local witness without double counting. Record maximum entered depth and refuse before an over-cap child. No hidden vector scan, unbounded loop, Cartesian witness product or free canonicalization. Every dynamic logical record and data-dependent examination is charged; each fixed-cost exclusion names its source bound and runtime-envelope maximum. Extend limits/API if the census cannot bound it. Exact-cap success and isolated one-less tests cover every counter/admission class. Existing lower-level cases own pre-spent/sticky latch; public checker gets no test-only injection. Cross-stage proof confirms no ledger reset. Every exhaustion returns `LimitExceeded`, final cumulative work and no partial result. Record exact 64-span stress counters; never assert timing/global maximum.
   ordering_budget_candidates: WITHDRAWN by §51. The earlier `LC_IntersectionOptions::maxOrderingComparisons=1u<<26` and shared `LC_OffsetCheckLimits`/`WorkBudget::maxOrderingComparisons=1u<<27` are not usable cap candidates because the A07 dynamic invocation multiplicity and reduction-parent proof are incomplete. Recompute the source-derived bounds and compatibility corpus from current algorithms before proposing any value; readiness cannot pass while a caller can exceed its proven bound or silently clamps to an unsupported value.
   bounded_work_envelope: The source-level R12 table and `resource_census.provider_query_envelope` are normative alongside `cost_model`. Admit one pair before each `CriticalAdapter` fixed scan: at most 20 adjacent axes, 21 stationary axis selections, 19 adjacent critical occurrences (the inventory is at most 20), 20 `prove` quadrants, 21 fallback occurrences, or 21 region delimiters. Charge one pair before each data-dependent adjacent-segment `joins()` setup; its count is at most the admitted segment inventory minus one, and every subsequent proof/refinement attempt retains its own admission. Each `preflight()` segment consumes one pair before interval bounds and owns at most seven bounded jet operations (one interval bound plus three seeds × bound-and-offset). The axis fixed sort has at most 21 entries and 210 key comparisons; the critical-occurrence sort has at most 20 entries and 190 key comparisons. Use stable in-place insertion sort with at most 250 axis-record moves and 228 occurrence-record moves; debit each actual comparator call from `maxOrderingComparisons`, never one `distancePairs` unit for either sort. Each four-value min/max reduction costs six individually admitted ordering comparisons and must be reached only under its unique enclosing pair admission. The provider's primitive scans are `axisDomain` <=11 candidate slots and the `axisContact` fallback <=5 candidates, but caller multiplicity is the runtime unit: one already-admitted core identity callback can invoke two intersection certificates (up to 22 axis slots each) and two identity queries (up to 11 each), totaling at most 66 nested axis-slot checks; outside core, event preparation owns a pre-admitted pair with up to 44 nested checks and each boundary seed owns a pre-admitted pair with up to 11. Prove exact call-site counts, mutually exclusive branches and whether the <=5 fallback is additional or subsumed at each site; the callback never debits independently and the envelope never charges the enclosing operation twice. The current bounding figures are provisional until that call-graph proof is frozen. Charge each bounds `(layout span, fragment)` dispatch and each bounds/local coverage span and advancement before work; each witness loop item remains a separate pair. Fixed arithmetic parent units explicitly include ten reference-trig terms and 22/23 Taylor remainder steps; at most eight outward `nextafter` corrections per rational endpoint; at most four Bézier controls in de Casteljau/derivative loops; two frame axes; root degree at most three; and every additional fixed loop found by the census. Derive maximum span/fragment dispatches from a checked product of admitted layout spans and fragments, and coverage steps from successful monotone witness advances over a finite witness set. Report peak logical live records by container/record type, simultaneous pending/output coexistence, configured count caps and `sizeof`-based payload estimate; distinguish this deterministic payload estimate from allocator overhead/capacity slack, which the logical counters do not measure. Add exact/one-less snapshots for each unit, including empty loops and no-progress/empty-witness exits. No benchmark timing threshold is asserted; record deterministic counter snapshots and source-derived maximum work/memory.
-  evidence: v81-v152 packet/review material and the v149-v152 checkpoint records are identity-bound historical evidence; preserve existing artifacts unchanged and do not transfer receipts to a new plan identity. The v139 unmanifested draft, v144 checksum-stale packet, failed v145/v147/v149/v151 checkpoints, PARTIAL/checksum-stale v146 packet, one-file PARTIAL v148 preflight, and eight-payload PARTIAL v152 preflight are provenance only; do not copy or repair them in place. Preserve all auditor reports and packet bytes with their recorded hashes. v150 was superseded before G5 and has no packet; v151 failed G5 and has no packet; v152 passed G5 but its packet is PARTIAL. Only after §61's v153 plan checkpoint receives independent G5 PASS may a fresh `preflight-v153/` be assembled. It contains exactly eight payloads—`input-manifest.txt`, `source-requirement-map.txt`, `terminal-producer-map.txt`, `independent-transition-cut-ledger.txt`, `phase-cut-intervals.txt`, `selector-test-map.txt`, `independent-output-oracle-ledger.txt`, and `debit-admission-table.txt`—plus `packet-manifest.sha256`. Bind all inputs to the committed reviewed plan blob and unchanged product source; older evidence may be reused only as rehashed, explicitly PARTIAL provenance. For each A01-A14 row, record exact source operation trace, fixture provenance, independent oracle derivation, precharged/final snapshots, per-operation deltas, exact-cap/one-less refusal, callback count, no-partial state, assertion ID and evidence path. A13 must separately model retained cap 0 (`InvalidInput`) and cap 1 (`LimitExceeded`), each before setup/accessors with zero work/callbacks; cap 0 is not an alias for the one-less budget refusal. A14 has exactly two planned exception-observation routes: one-shot `workOnExit`, and retained `cumulativeWork()` with invalidation/retry assertions. Map each allocation/publication destination to source, test or justified source-only proof, checked arithmetic/`max_size`, reserve-before-debit, no-throw/staged publication and refusal/exception outcome. Keep candidate-cache splits distinct from proof-only splits and identify all three `CriticalBuilder::split` callers. Close only A-owned R02/R12/R13 rows; R05 and B/C phase/frontier work stay assigned to their owners. Manifest exactly the eight payloads, excluding itself and formal receipts; reject extra/missing/symlink/non-regular/nested entries. `input-manifest.txt` binds plan/product/predecessor, source/spec/fixture/probe/build hashes, six owned paths, test registration, A source/capacity/debit rows, exception-transfer sites and toolchain. G1a/G1b/G3 bind identical plan/product/packet identities; G3 also binds both G1 receipt hashes. After activation only, use fresh Release/ASan baseline directories and fingerprint caches, toolchains, executables and reports; never inspect or use protected `build-asan/`. B/C remain explicit deferrals absent a concrete A dependency.
-frozen_identity: PENDING — at readiness record actual committed base/checkpoint SHA; after edits freeze each slice's exact path manifest, binary diff and per-file SHA-256 values plus build/toolchain identity and reports (A six paths, B/C three); rerun all affected reviews if any byte changes.
+  evidence: v81-v152, v218-v226 and all review material are immutable, identity-bound historical evidence; preserve reports and packet bytes and never transfer approvals to v227. v223 G5 is NO PASS; v224-v226 exact reviews are FAIL. There is no current v227 packet or root. A v227 packet may be created only after §135's exact plan-review/commit and closed-boundary G5 PASS. Its exact membership and leaf-specific inputs come from the fresh §114 A-core card and bind plan/product/predecessor/source/spec/fixture/toolchain identities, the three A-core paths, A04/A10 assertions, relevant capacity/debit rows and independent oracle. Reuse older material only as rehashed historical/partial provenance; checksums establish identity, not semantic PASS. A-core G1a/G1b/G3 bind one packet and exact committed plan/product identities; G3 binds both Gate-1 receipt hashes. After activation only, capture fresh attempt-specific Release/ASan/qmake6 baselines, executable/toolchain/cache hashes, selector identities and skip reports; never inspect `build-asan/`. B/C oracle and implementation rows remain with their owners.
+frozen_identity: PENDING — at each leaf readiness record the actual committed base/checkpoint SHA; after edits freeze that leaf's §114-owned path manifest, binary diff and per-file SHA-256 values plus build/toolchain identity and reports. The six A paths are a parent acceptance union, not one leaf diff; B/C retain their separately declared scopes. Rerun all affected reviews if any byte changes.
 implementation_sha: pending
-product_commit_audit: PENDING — A must commit exactly its six owned product/test paths; B/C exactly their three. Explicit staging, staged whitespace/hash comparison, hooks, actual parent and committed digests must match the frozen validated tree.
+product_commit_audit: PENDING — each executable A leaf commits exactly its §114-owned product/test paths; no single six-path parent-A commit is permitted. B/C use their separately declared scopes. Explicit staging, staged whitespace/hash comparison, hooks, actual parent and committed digests must match the frozen validated tree.
 plan_checkpoint_state: pending — immediate separate one-file direct child after product commit
 checkpoint_postconditions: PENDING — product SHA is parent of plan checkpoint; only this roadmap changed; product digests unchanged; whitespace/structure/DAG and worktree checks pass; successor remains WAITING until its own fresh Gates 1/3 close.
 recovery: Preserve all failed tests, reports and user changes; never reset or stage unowned paths. Any code/API/toolchain/base/scope edit invalidates affected reviews/readiness and receipts. If the proof cannot handle a required valid phase, stop before partial commit and amend/split the plan; preserve the implementation work and evidence.
@@ -2710,17 +2743,17 @@ pre_activation_checklist:
   phase_and_cycle_proof: PARTIAL, C-owned — v60-bound artifacts provide angular containment, local candidate algebra and a synthetic symbolic circle cycle only. Finish three distinct receipts before C readiness: (1) both sweep signs through the exact outward `ReferenceFrame`/`boundUnwrappedAngle` API, with one-sided angular containment; (2) all four `(basis.reversed, cacheReversed)` candidate mappings, with independently bounded endpoint geometry, one-sided derivative direction and clearance; compare the two `cacheReversed` rows within fixed basis orientation as the same normalized directed traversal, and treat opposite basis orientations as opposite directed traversals of the same geometry; (3) each applicable knot/dyadic/non-event/event cut with both geometric sides and return after one lap to the actual selected path's own runtime frontier identity and certified interval. For non-dyadic/event cuts, “exact” means exact provenance key plus its outward certified enclosure, not rounded scalar equality. `cacheReversed` is N/A to the angle-map receipt and mandatory in candidate/path receipts. C11 and C23-C26 exercise both `cacheReversed` values as subcases. Record source-independent derivations and exact frontier/event keys; distinguish symmetry-transferred bounds, symbolic-model identities and display decimals from independently computed outward intervals and actual runtime graph identities. No single receipt may stand in for another. This proof is a hard gate for C, not for A absent a demonstrated dependency.
   resource_and_api_contract: PARTIAL — besides fixed-scan/debit and runtime ownership, close every source-mapped admission/capacity site: geometry axes/occurrences, all three `CriticalBuilder::split` callers (`cuspAngle`, `addRegions`, `joins`), region pending capacity before split debit, bounds/local initial pending, `classify()` root, retained-record and staged-snapshot capacity-before-debit; strict-core prepare/solve seeds and two-child queues, leaves, candidate pairs, retained/non-retained events and both-mode order scratch. Trace every reserve/resize/push/emplace in both owned implementation sources, preserve correct guards, and verify actual max_size/overflow branches by source review without test hooks. For every paired/multiple append, checked-compute all `size+delta` values and max_size bounds, reserve every destination before debit/mutation, and verify post-debit element writes cannot throw or publish partially; specifically cover `addRegions` pending children, paired region/segment output and `joins` output. Test exposed configured limits at exact/one-less and record counter snapshots and no-partial-publication outcomes. Confirm zipped `segments`/`maps` and paired `m_regions`/`m_segments` logical-record conventions; enumerate provider callback multiplicity and each reduction invocation's enclosing admitted work without assuming a unique pair parent or fixed aggregate; inventory outside-core ownership; retire the P23→P25/+2 migration and derive its replacement pair boundary from source (P24/P23 is only a candidate); source-map candidate-cache split call sites separately from proof-interval split callers and assert each unit contract before storage. Add atomic adoption of query-work counters/depth; provide exception-safe one-shot query work output and retained cumulative-work delta; verify each is adopted once before sticky invalidation/rethrow. Retain strict-core 61-case Release/ASan discovery as activation baseline; complete memory/runtime envelope and atomic multi-counter, inherited-depth, status and named-assertion contracts. No product/test edits, registered JUnit or builds before activation.
   resource_exception_handoff_review: PARTIAL — current `findCertifiedIntersections` has no work-on-throw output; geometry transfers `query.work` only after normal return. A's approved target is to add a source-compatible optional `LC_IntersectionWorkStats* workOnExit = nullptr` parameter. Zero it before validation; once the two fixed metadata tokens are admitted, publish that initial snapshot before allocation; on normal return publish final solver work; on any later exception, publish live solver work if the solver exists (otherwise retain the last admitted snapshot) and `throw;` unchanged. The geometry caller adopts that snapshot exactly once through a no-throw scope guard on success or exception. For retained `core->contract`, capture `cumulativeWork()` before the call; on exception derive and atomically adopt the checked cumulative delta once, invalidate the retained solver/session credential before rethrow, and ensure read-only work remains observable while retry performs no callback/work. G1b must verify every call site, initialization/publication ordering, exception boundaries and default-argument source compatibility before G3 freezes the API. A14 uses the actual `certifyIntersection` callback on a source-supported shrink fallback; the current `bound()`-throw test is adjacent coverage only. Test both public observation paths without a test-only seam; no `WorkBudget::invalidate()` is introduced.
-  slice_test_map: PENDING — bind every positive/refusal/limit/reason test to R IDs, exact Catch2 identity, independent oracle, expected work/result, owner and A/B/C slice. The A map must close every A01-A14 row, with A08/A14 contracts distinct, plus the strict-core 61-name regression set. Planned B01-B08 and C01-C54 identities and owners remain in the roadmap; their full fixture/oracle/assertion crosswalks close at B/C readiness and are not A entry gates. Record baseline discovery separately from execution. Registered discovery/JUnit execution is allowed only after the owning activation checkpoint; exact identity-set validators must reject missing, duplicate, unexpected, skipped or zero-assertion cases.
-  formal_preimplementation_gates: PENDING — after all A-owned completeness, plan-correctness and readiness rows pass, obtain separate G1a-completeness, G1b-plan-correctness and G3-readiness PASS receipts bound to the same committed plan SHA, product-source SHA and packet digest. G1a must still inventory all later requirements, exact planned identities, owners and dependency edges; C's detailed proof/fixture closure is deferred to C readiness. Any affected plan/source change restarts the corresponding reviews.
+  slice_test_map: PENDING — bind every positive/refusal/limit/reason test to R IDs, exact Catch2 identity, independent oracle, expected work/result, owner and leaf. A01-A14 and the strict-core 61-name set remain parent-A obligations partitioned across four leaves; A-core's activation packet binds only A04/A10 and its baseline contract. B01-B08/C01-C54 stay with their owners and are not A-core entry gates. Record discovery separately from execution. Registered discovery/JUnit is allowed only after the owning leaf's external activation receipt/audit; exact identity validators reject missing, duplicate, unexpected, skipped or zero-assertion cases.
+  formal_preimplementation_gates: PENDING — for each selected leaf, obtain separate G1a-completeness, G1b-plan-correctness and G3-readiness PASS receipts bound to the same committed plan SHA, product-source SHA and exact leaf-packet digest. A-core reviews only its §114 three-path/A04/A10 scope while G1a retains parent/downstream traceability; C's proof/fixture closure is deferred to C readiness and is not an A-core gate. Any affected plan/source/packet change restarts the corresponding reviews. A parent aggregate has no independent activation.
   receipt_packet_audit: PENDING — verify every preflight/review receipt binds the exact committed plan SHA, product-source SHA, scope/file manifest, method/source, status, finding resolutions and hashes of its required inputs; reject missing, duplicate, stale, self-referential or contradictory fields. This is a read-only evidence check and cannot promote an arithmetic script, runtime diagnostic or test listing into an independent oracle/test pass.
-  preflight_receipt_contract: PENDING — §61 v153 plan-only checkpoint and independent G5 must pass before creating fresh `preflight-v153/`. Preserve the v148 G5 PASS and its one-file PARTIAL packet, v149/v151 G5 FAIL reports, v150 superseded checkpoint, v152 G5 PASS report and eight-payload PARTIAL packet, and all earlier artifacts unchanged as provenance; do not repair, copy or rebind any earlier packet. Require exactly the eight payloads named in `evidence` plus `packet-manifest.sha256`; the manifest hashes all eight payloads and excludes itself/formal receipts. Verify exact top-level membership, regular files only, hashes and identities; reject extras, omissions, symlinks, nested directories or blank/malformed manifest records. The v153 input manifest binds plan/product/predecessor and source/spec/build/fixture/probe inputs, A-owned caller/capacity/debit census, all proof-split and candidate-cache sites, callback/exception-transfer sites, atomic-adoption API, exactly two A14 exception-observation routes, exact A01-A14 Catch2 identities/assertions, owned six paths, test registration and toolchain. Record pre-activation source inspection separately from post-activation binary discovery/execution; no build/JUnit before activation. Earlier reports and packets are provenance only and cannot supply skip baselines without matching source/build identity. The activation baseline records fresh JUnit reports and normalized skips with plan/product/source/binary fingerprints; post-edit validation compares only against that baseline. Evidence maps state method, provenance, limitations and PASS/PARTIAL/PENDING. Close A-owned R02/R12/R13, six-path, A01-A14 and resource rows for G1a/G1b/G3; B/C oracle rows remain with their owners. All three reviews bind identical plan/product/packet identities, and G3 binds actual G1a/G1b receipt hashes. Checksums prove identity, not semantic completeness or PASS.
-  selector_cardinality_audit: Before sealing `preflight-v<reviewed-plan-version>/`, parse all planned ID rows and require exactly 14 unique A IDs (`A01-A14`), 8 B IDs (`B01-B08`), 54 C IDs (`C01-C54`), and 61 uniquely named strict-core regression IDs. A/B/C total exactly 76 identities; strict-core is separate. Reject invented, omitted, aliased, duplicated or SECTION-counted identities. Confirm A01-A13 map only to cache-budget-accounting and A14 only to intersection-refine. Historical packet counts remain historical and are not rewritten.
+  preflight_receipt_contract: PENDING — this structured field supersedes the obsolete v153/preflight-v153 route; current authority is §114 plus §135. Do not assemble a v227 packet until the exact v227 plan-only commit has a closed-boundary, exact-input G5 PASS. Use a fresh A-core attempt directory with exactly the payloads enumerated by its reviewed card; reject extras, omissions, symlinks, non-regular files, nested entries, stale hashes or identity mismatches. The manifest binds current plan/product/predecessor/source/spec/fixture/tool/build identities, A-core's three owned paths and A04/A10 maps, with all formal receipts outside the payload manifest as specified by the card. Preserve v81-v152 and v218-v226 reports/artifacts unchanged as historical evidence; do not copy or rebind them. G1a/G1b/G3 are separate, same-packet decisions; G3 binds both Gate-1 report hashes. No builds or registered JUnit before the activation gate. Fresh baseline and skip reports are source/binary/toolchain-bound; never inspect `build-asan/`. Checksums prove identity only, not semantic completeness or PASS.
+  selector_cardinality_audit: The parent roadmap maps exactly 14 unique A IDs (`A01-A14`) across A-core/A-strict/A-reference/A-cache, 8 B IDs, 54 C IDs and 61 strict-core regression IDs; A/B/C total 76, strict-core is separate. Reject invented, omitted, aliased, duplicated or SECTION-counted names at parent reconciliation. Each leaf packet includes only its owner's exact selector subset; A-core binds A04/A10 and its declared strict-core baseline, not all A/B/C tests. Preserve historical packet counts without rewriting them.
   gate_receipt_identity: Require exactly one each of `status=PASS`, `gate_id`, `slice`, `reviewed_plan_sha`, `product_base_sha`, `packet_manifest_sha256`, and `reviewer_id` in all three receipts. Gate IDs are exactly `G1A_COMPLETENESS`, `G1B_PLAN_CORRECTNESS`, and `G3_READINESS`; reviewer IDs are nonempty and pairwise distinct; G1a/G1b receipt byte hashes must differ. Gate 3 additionally carries exactly one `gate1_completeness_sha256` and `gate1_plan_correctness_sha256`, matching the actual distinct Gate-1 file hashes. Duplicate, missing, role-swapped, same-reviewer, same-hash or stale identity fields fail activation.
-  activation: BLOCKED — after formal receipts pass, create a separate plan-only activation checkpoint without changing product/test bytes; then require its independent G5 PASS and a reconciled activation-bound baseline before allowing any Slice-A product edit. Slice B and C later require their own fresh reviews and activation checkpoints after predecessor reconciliation.
-  historical_v84_preflight_execution_order (NON-EXECUTABLE historical record): Preserve this v84 sequence as provenance only. The current execution order and sole next action are in §61.
-next: Follow §61 and select exactly one state-table row from actual Git/evidence state. Preserve the v149/v151 G5 FAIL reports, v152 G5 PASS report and v152 PARTIAL packet unchanged. v152 is the recorded parent checkpoint for the v153 candidate; use observed HEAD, not this sentence, to choose the row. If HEAD is v152, finish only the v153 plan-only correction, verify its direct ancestry, one-path scope, whitespace and unchanged six A product/test blobs, and commit only the roadmap. If v153 is committed with G5 pending, obtain only independent exact-identity G5. Only v153 G5 PASS authorizes a fresh exact-membership `preflight-v153/`, which remains PARTIAL until all eight payloads and semantic rows close. Then obtain distinct same-identity G1a completeness, G1b plan correctness and one-leaf G3 readiness before a separate activation checkpoint/G5 and reconciled baseline. A remains one six-path implementation slice, including A01-A14 and strict-core Release/ASan validation; close post-edit G1a and frozen-tree G2 before the single product/test-only commit. Immediately create the plan-only direct-child reconciliation and pass independent G5 before any successor edit/build/test. Preserve failed/stale evidence; any changed premise invalidates dependent receipts. ASCII-DXF and native-DWG read/write, both conversions, edited reopen, binary-DXF codec, UI and phase 2 remain separate obligations. Geometry-only checker evidence never satisfies file support.
-activation_commands: |
-  # Run only after Gates 1 and 3 pass and the separate activation plan checkpoint is committed.
+  activation: BLOCKED — current-plan v227 G5 PASS, a fresh A-core packet, packet audit, same-packet G1a/G1b/G3 PASS, external activation receipt and independent activation-audit PASS are required before the immediate six-root no-follow check/root creation and baseline in §135. Do not create an extra Git plan checkpoint or request an extra G5 solely to activate. Later A leaves require their own readiness and activation evidence after predecessor reconciliation; the parent A aggregate is not executable.
+  historical_v84_preflight_execution_order (NON-EXECUTABLE historical record): Preserve this v84 sequence as provenance only. The current blocked-work order and sole next action are in §135; leaf ownership is in §114.
+next: Use §135 as the sole current transition table. The worktree is at uncommitted v227 candidate bytes; first close exact-byte review and its request/report receipts, then (only on successful PASS) make the one-file direct-child plan commit. After commit, resolve exact G5 through §135's immutable-manifest/submission/report/closure contract. Until closed exact G5 PASS, do not create a packet, roots, builds, tests, discovery or source edits. After G5, follow §114/§135's fresh A-core packet -> packet audit/G1a/G1b/G3 -> packet-present/root-absent activation receipt/audit -> adjacent no-follow verifier -> root creation/state -> baseline/discovery sequence. A-core is three owned paths/A04/A10 only; A-strict, A-reference, A-cache, parent A, B/C and downstream consumers remain WAITING. Preserve v149-v152 and v218-v226 evidence as immutable historical material; do not transfer their approvals. File-format, UI, Phase 2 and separately gated Phase 3 Trim obligations remain separate; geometry-only checker evidence never satisfies file support.
+historical_activation_commands (NON-EXECUTABLE; superseded by §135): |
+  # Historical v153/A-budget-depth activation script. Never run; current blocked route is §135.
   set -euo pipefail
   WT=/Users/dli/dev/LibreCAD/.claude/worktrees/lc-offset-curve-2961
   : "${SLICE:?Set SLICE=A-budget-depth}"
@@ -17644,9 +17677,11 @@ v107 plan-correctness review.
     build, registration, selector, skip and test identities against the card before changing execution state to
     READY. Readiness expires on a change to source, plan, specification, toolchain, registration, selector, budget,
     fixture/oracle, predecessor or owned paths. Do not transfer one leaf's readiness to its sibling or successor.
-    A-budget-depth remains the first candidate and its existing six source/test paths remain one atomic slice unless
-    a new, independently reviewed plan proves a smaller independently correct, testable and buildable boundary before
-    activation; internal tasks are checkpoints, never partial completion claims.
+    A-budget-depth is the parent acceptance aggregate, not a six-path writable leaf. The independently reviewed
+    §114 decomposition controls: A-core is the first atomic leaf with its exact three owned paths, followed by
+    A-strict, A-reference and A-cache. Each leaf needs its own card, readiness, activation, baseline, validation,
+    product commit and plan/G5 reconciliation. Tasks inside a leaf are checkpoints, never partial completion claims;
+    no earlier six-path parent card authorizes bypassing the §114 order.
 
     **4. Commit only after a complete validated slice (G4).** For each READY leaf, implement only its predeclared
     paths. Freeze the exact tree and file/tool/binary identities; run the card's focused, adjacent, full, Release/ASan
@@ -18077,17 +18112,19 @@ The provider's unique tangency proof
     |---|---|---|
     | 1. Completeness (G1a) | Build a bidirectional matrix for every requirement: requirement and acceptance claim; current source symbol/caller and representation; owning leaf and exact paths; each applicable format, direction, version and build target; success/refusal/no-op/fallback behavior; exact test identity/assertion and independent oracle; evidence path/status; explicit exclusion and downstream owner. Include the four application lanes, version rows, conversions, edited reopen, binary-DXF codec, resource/refusal contracts and all current Rxx obligations. After implementation, reverse-map every changed path and behavior to a requirement and every promised test to its registration, reachability and non-vacuous assertions. | PASS only if every in-scope row has an owner, disposition and reachable proof; no direction/version, caller, refusal path, test, assertion, or exclusion is implicit. A gap returns to plan refinement and invalidates dependent reviews. |
     | 2. Correctness (G1b before work; G2 after work) | G1b independently re-derives source/API/spec/version facts and the design. Attempt counterexamples for geometry/math, topology, accounting unit ownership and multiplicity, exact/one-less/overflow boundaries, admission-before-work, checked capacity arithmetic, allocation and memory bounds, exceptions, atomic publication, lifetime, compatibility and fallback. Freeze independent expected traces/snapshots and verify test feasibility before coding. After implementation, G2 reviews the exact frozen source and tests against that accepted contract, including positive, boundary, refusal, hostile-input and exception cases. | G1b PASS requires all premises verified, counterexamples resolved, oracle independent and assertions executable. G2 PASS requires exact frozen-tree conformance, no unresolved finding, unexplained skip, identity mismatch or post-freeze edit. Any source/plan/behavior disagreement returns to G1b/G3; no silent expectation change. |
-    | 3. Executable sub-plan and readiness (G3) | Maintain one standalone sub-plan card per leaf. Each card names immutable plan/product/predecessor inputs; objective/non-goals; exclusive files and writer; requirement IDs; prerequisite receipts; source/API facts; ordered bounded tasks; exact commands, environment/tool versions and resource limits; test IDs and registration state; independent oracle and expected output; acceptance/refusal criteria; evidence destinations; stop, recovery and invalidation rules; and exactly one product-commit boundary. Steps must be executable without unresolved design choices; changed source or a failed proof sends the card back to planning. | `READY_FOR_ACTIVATION` only after same-identity G1a/G1b/G3 PASS and reconciled predecessors. Then create a separate plan-only activation checkpoint, pass its independent G5, and reconcile the authorized baseline before product edits, builds or registered-test discovery/execution. Any missing predecessor, stale input, ambiguous step, incomplete recovery or unresolved finding means WAITING. |
-    | 4. Commit after each validated slice (G4) | Freeze the exact leaf tree and manifest. Run only its authorized focused, adjacent and applicable full Release/ASan/qmake6 checks; reconcile discovered/executed/asserted/skipped identities; complete post-edit G1a/G1b and independent G2; seal evidence; compare frozen, staged and committed paths/blobs and actual parent. Commit one coherent product slice using product paths only. A stays exactly its existing six owned files as one atomic slice. | No product commit after any failed check, changed frozen tree, unrelated path or mismatch. One slice means one product-only commit; never combine leaves or include the plan/evidence in it. Immediately create a separate plan-only direct child reconciliation; no successor edit/build/test/readiness promotion may occur in between. |
+    | 3. Executable sub-plan and readiness (G3) | Maintain one standalone sub-plan card per leaf. Each card names immutable plan/product/predecessor inputs; objective/non-goals; exclusive files and writer; requirement IDs; prerequisite receipts; source/API facts; ordered bounded tasks; exact commands, environment/tool versions and resource limits; test IDs and registration state; independent oracle and expected output; acceptance/refusal criteria; evidence destinations; stop, recovery and invalidation rules; and exactly one product-commit boundary. Steps must be executable without unresolved design choices; changed source or a failed proof sends the card back to planning. | `READY_FOR_ACTIVATION` only after same-identity G1a/G1b/G3 PASS and reconciled predecessors. Create the immutable external activation receipt and obtain its independent activation-audit PASS, then reconcile the authorized baseline before product edits, builds or registered-test discovery/execution. For A-core and its sequential siblings, §114/§135 explicitly replaces any inherited extra plan-only activation commit/G5; the current plan G5 remains required before the leaf packet. Any missing predecessor, stale input, ambiguous step, incomplete recovery or unresolved finding means WAITING. |
+    | 4. Commit after each validated slice (G4) | Freeze the exact leaf tree and manifest. Run only its authorized focused, adjacent and applicable full Release/ASan/qmake6 checks; reconcile discovered/executed/asserted/skipped identities; complete post-edit G1a/G1b and independent G2; seal evidence; compare frozen, staged and committed paths/blobs and actual parent. Commit one coherent product leaf using product paths only. A's six files are a parent-A acceptance union, not one atomic leaf: A-core, A-strict, A-reference and A-cache each commit only their disjoint §114 allowlist in order. | No product commit after any failed check, changed frozen tree, unrelated path or mismatch. One leaf means one product-only commit; never combine leaves or include the plan/evidence in it. Immediately create a separate plan-only direct-child reconciliation/G5; no successor edit/build/test/readiness promotion may occur in between. |
     | 5. Self-update after committing (plan reconciliation + G5) | Re-read actual Git objects and receipts after every product commit. Update the live version/status and active leaf; implementation and requirement matrices; format/version/test rows; all gate, reviewer, finding and retest results; predecessor DAG; risks and known gaps; evidence hashes; affected descendant readiness; and exactly one next action. Verify committed diff/path/blob/parent and search for stale live status or source claims. Commit this reconciliation as a plan-only direct child of the product commit, with no self/future SHA or unobserved audit outcome. Then obtain independent G5 on the exact plan commit/parent/path/blob. | The reconciliation must semantically match committed bytes and evidence. G5 PASS is required before recomputing affected readiness or selecting the next leaf. G5 FAIL is preserved unchanged and permits only a corrective plan-only direct child plus affected re-audits. Never edit the audited plan in place to claim its own G5 result; the auditor receipt is authoritative. |
 
-    **One-leaf operating sequence.** For each A/B/C or downstream leaf: (1) select one current plan card and reconcile its
+    **One-leaf operating sequence.** For each executable leaf: (1) select one current plan card and reconcile its
     inputs; (2) close packet/recipe completeness; (3) receive distinct same-identity G1a, G1b and G3 PASS; (4) create
-    and independently audit the activation checkpoint; (5) run and reconcile only the authorized baseline; (6) mark
+    and independently audit the external activation receipt (no extra activation commit/G5 solely for activation
+    under §114/§135); (5) run and reconcile only the authorized baseline; (6) mark
     that one leaf ready; (7) implement and freeze only its owned paths; (8) validate, reverse-check completeness,
     obtain G2, and commit the product slice; (9) immediately commit the plan-only reconciliation; (10) obtain exact
     independent G5; and (11) only after PASS recompute readiness and choose one successor. Any changed premise
-    invalidates dependent receipts. A and its six paths remain first; Agent Gibbs is the first implementation writer
+    invalidates dependent receipts. A-core starts first, followed by A-strict, A-reference and A-cache; the six
+    paths remain a parent acceptance union. Agent Gibbs is the first implementation writer
     after activation, and if unavailable no writer substitution occurs without the user's explicit reassignment.
 
     **Canonical v160 pre-commit snapshot.** Resolve candidate/commit state only from observed HEAD. Do not put a future
@@ -24568,3 +24605,678 @@ The provider's unique tangency proof
      incomplete. Each implementation slice still requires its own G1a/G1b/G3 activation, frozen-tree correctness
      review, validation, one product-only commit, and immediate committed-plan/G5 reconciliation under §0.3 and §1.4.
      Never inspect `build-asan/`.
+
+132. **Historical v224 blocked-work candidate and exact precommit FAIL (uncommitted; non-activating; superseded by §135).**
+     The v224 candidate was a direct child draft of committed v223. Its exact raw SHA-256 was
+     `da0344b0bcdb0355db563fdc4bb523d7cdeb9335faeb6eda5b2dc5e95123317f`; independent exact-byte review returned
+     FAIL in `/private/tmp/lc2961-plan-checkpoint-v224-precommit-review-01.txt`, SHA-256
+     `1a65a492ebf66832e7c014e021eec6fb6fe9580a9d5cf8ce385f00d2e99da732`. The reviewer verified parent
+     `6c65f1f52a8f229c3852b997be1e392d8312a7de`, one-path scope, clean index and `git diff --check`. No v224 commit,
+     packet, roots, readiness, activation, baseline, build/test/discovery or source edit exists. Preserve the draft
+     and report as historical. Findings requiring correction in the v225 direct-child candidate are:
+
+     - **P1, incomplete zero-pending proof.** A zero count over only registered requests did not prove all authorized
+       exact-tuple requests were captured. Define a closed, auditable request authority or remain UNKNOWN.
+     - **P1, overlapping decision tables.** Stale/unbound artifacts could match “no evidence”; incomplete requests
+       and reports could coexist with PASS/negative rows. Make all predicates disjoint and define composite outcomes.
+     - **P1, live scope/activation contradictions.** The structured A-budget-depth card still described six owned
+       paths and one commit, and the G3 stage still required a plan-only activation commit/G5; reconcile these with
+       §114's A-core/A-strict/A-reference/A-cache leaves and external activation receipt/audit.
+     - **P2, receipt chronology.** Distinguish request-manifest creation, tool submission, terminal wait, authored
+       report, and closure receipt; a cancelled/failed tool request cannot pair with a PASS-looking report.
+     - **P1, root-check binding.** Bind the literal no-follow verifier, exact six paths, tool identity, output/result
+       and receipt hash to the v225 packet/card and activation-audit identity; enforce immediate command adjacency.
+
+     The remaining v224 text in this section records its intended route only as failed historical material. It does
+     not authorize any work. Section §133 records failed v225; §135 is the current proposed A-core transition route.
+
+     **Exact v223 blocker record.** The predecessor is commit
+     `6c65f1f52a8f229c3852b997be1e392d8312a7de`, parent `d5d71f30bd118a7616d00979c9ba975f518d5284`, tree
+     `ff1326cfe169c91505761f30d7180024ae048222`, plan blob `b1922ce5124c37bb3ef616d73b9dc557fba41700`, raw
+     SHA-256 `577f3a37d7f95ef67cec70f11bb275bd7c3bfa3405a835aceed42ddc35ba4732`. Preserve its exact precommit PASS
+     `/private/tmp/lc2961-plan-checkpoint-v223-precommit-review-01.txt` (SHA-256
+     `dade408f6a5381a5c8e97b256956ab9a0a9090e0490a1d53cd19a0ece3191a4c`) and reviewer-authored G5 follow-up
+     `/private/tmp/lc2961-v223-g5-auditor-authored-report.txt` (SHA-256
+     `4452161a8f101d26ed4bac3390571250dfff593fc42a1312970b3c9f22fec2ca`) unchanged. The follow-up verifies the
+     commit/tree/blob/raw-SHA tuple and one-path scope, but explicitly withholds authorization because the earlier
+     inline PASS did not durably bind every declared input and the pending-request disposition is UNKNOWN. The
+     local `build/evidence/.../plan-checkpoint-v223/` directory was absent; the visible Codex task listing was not
+     a request queue and no dedicated G5 queue was exposed. Do not transcribe the inline PASS as a receipt, infer
+     “no pending request” from an absent directory, or misstate this evidence limitation as a plan-content defect.
+
+     A read-only `ls -ld` observation on 2026-10-18 found the v223 packet path
+     `build/evidence/1A-1.b-check-topology-chain/leaves/v223/A-core/attempt-01/` and all six
+     `/private/tmp/lc2961-v223-A-core-a01-<phase>-<lane>` paths absent (`phase`: `baseline` or `validation`; `lane`:
+     `release`, `asan`, or `qmake6`). This was not a formal no-follow root receipt. Gibbs stopped before creating
+     anything; the worktree remained clean and there was no packet, root, build, test, discovery, or source edit.
+     This observation is historical only. Never create or reuse v223 attempt paths or roots.
+
+     **Review/request evidence contract.** Before requesting v224 G5, create an immutable request manifest outside
+     the unavailable evidence directory at
+     `/private/tmp/lc2961-plan-checkpoint-v224-g5-request-manifest.json`. It binds the exact v224 commit/tree/plan
+     blob/raw SHA, every declared reviewer/product/source/tool/evidence input, the designated reviewer task/thread
+     ID, and the single-request/no-parallel-submission policy. Its hash never changes. After the request tool returns
+     its generated submission ID, create an immutable submission receipt at
+     `/private/tmp/lc2961-plan-checkpoint-v224-g5-request-submission.json`, binding that exact ID, manifest hash,
+     request time, and submitted task/thread. After the request returns, write a separate immutable closure receipt at
+     `/private/tmp/lc2961-plan-checkpoint-v224-g5-request-closure.json`; bind the manifest hash, exact request ID,
+     terminal wait/tool result, reviewer-report hash, all other known exact-bound request IDs/statuses, and the
+     resulting registered-pending count. Under this route the coordinator submits exactly one G5 request for the
+     v224 tuple; no parallel request is issued. If another exact-bound v224 request is known to exist, it must be
+     registered and all registered exact-bound requests must terminate. A request whose identity or status cannot
+     be established is UNKNOWN, never implicitly absent.
+
+     The reviewer must save its own report at
+     `/private/tmp/lc2961-plan-checkpoint-v224-g5-auditor-report.txt`. The report must include the exact Git and
+     raw-byte tuple, exact one-path scope, complete declared-input inventory and match results, the request-ledger
+     SHA-256 values of the request manifest and submission receipt, each request known to the reviewer and its
+     observed status, findings, and PASS/FAIL/INVALID/UNKNOWN.
+     The closure receipt supplies the coordinator-side terminal tool status and count of remaining registered
+     exact-bound pending requests; the reviewer report must acknowledge this split evidence contract. It must state
+     the boundary of the request inventory;
+     the task listing, coordinator transcription, or an empty local directory is not proof of queue closure. The
+     coordinator rehashes the report and ledger and records those hashes without editing reviewer-authored bytes.
+     If any declared input is missing, a request is unregistered or pending, a status is not retrievable, or the
+     report or scope binding is malformed, the disposition is UNKNOWN and no packet may be prepared. A late report
+     for v223 becomes stale once v224 is committed and cannot authorize v224.
+
+     **Disjoint v224 plan-review and post-commit routing.** Derive the draft raw SHA and all Git/input identities
+     after the edit. Apply each table top-to-bottom; predicates are disjoint and the first matching row controls:
+
+     | Verified predicate | Only permitted next action | Prohibited |
+     |---|---|---|
+     | An exact-current v224 precommit request is pending or its terminal/queue status is UNKNOWN | Wait for or recover the exact request disposition; if bytes change, its result is stale and the new raw SHA needs review. | Commit, packet/root creation, readiness, activation, baseline, build/test/discovery, or source work. |
+     | No exact-current precommit request is pending; an exact-bound current review is FAIL/INVALID/unknown, has no retrievable result, or cannot prove exact one-path scope/input bindings | Preserve it; correct the plan only if a plan finding exists, otherwise request a replacement exact review for unchanged bytes. Any edit requires a fresh review. | Commit, packet/root creation, or execution. |
+     | No exact-current precommit request is pending; no exact-bound negative/missing-result decision exists; a fully bound PASS covers the current raw SHA and every declared input and proves the only changed path is this plan | Commit only this plan as a direct child of v223. | Multi-path commit or packet/root creation before v224 G5 PASS. |
+     | No exact-current decision exists and only stale, incomplete, unbound, or unknown-state review items exist | Preserve and classify each item; request exact-current review of unchanged bytes and wait. | Treating non-authoritative evidence as a decision or editing bytes only to replace it. |
+     | No request or report exists for the exact v224 draft | Submit one exact-current review and register its request identity before waiting. | Commit or execution. |
+
+     After commit, verify the v224 ancestry, parent, tree, plan blob/raw bytes, one-path commit, product-base
+     subtrees, exact precommit report and request-ledger inputs. Then apply:
+
+     | Verified predicate | Only permitted next action | Prohibited |
+     |---|---|---|
+     | One or more registered fully exact-bound v224 G5 requests are pending | Wait for every registered exact-bound request; preserve the ledger. | Plan edits, packet/root creation, readiness, activation, baseline or source work. |
+     | No exact-bound request is pending; an exact-bound report is FAIL/INVALID or finds a plan defect | Preserve the report; prepare a numbered plan-only direct child of the latest verified plan commit that closes the finding, then obtain a new exact review/G5. | Same-commit override or execution. |
+     | No exact-bound request is pending; report/input/queue binding is incomplete, status is UNKNOWN, or a terminal result is unretrievable | Preserve the evidence; complete the bounded request-ledger/report disposition and request a replacement G5 against the unchanged v224 tuple. If plan bytes must change, create a new plan-only child and re-review. | Calling the state PASS, packet/root creation, readiness, activation, baseline or product work. |
+     | Every registered exact-bound request is terminal; the closure receipt binds the exact report/ledger and records zero registered pending requests; no exact-bound negative exists; the reviewer-authored report binds v224 and all declared inputs, proves exact plan-only scope, and returns PASS | Prepare only the fresh v224 A-core packet described below. | Reuse of v213-v223 packets, files, decisions or roots; any source edit. |
+     | No exact-bound report/request exists and no non-authoritative artifact needs classification | Submit one exact-bound G5 request with the complete request-ledger snapshot, then wait. | Packet/root creation, readiness, activation, baseline or product work. |
+
+     Stale v223 requests/reports are preserved but do not count as v224 authority. If the v224 ledger cannot prove
+     that every request initiated under this route is accounted for, the state remains UNKNOWN; stop without packet
+     preparation. The coordinator must not manufacture a PASS by copying or summarizing an inline response.
+
+     **Fresh v224 A-core route and dependency exits.** Only the final v224 G5 PASS row above permits preparation of
+     `build/evidence/1A-1.b-check-topology-chain/leaves/v224/A-core/attempt-01/`. Before creation, independently
+     verify that packet path and all six exact roots are absent:
+     `/private/tmp/lc2961-v224-A-core-a01-baseline-release`,
+     `/private/tmp/lc2961-v224-A-core-a01-baseline-asan`,
+     `/private/tmp/lc2961-v224-A-core-a01-baseline-qmake6`,
+     `/private/tmp/lc2961-v224-A-core-a01-validation-release`,
+     `/private/tmp/lc2961-v224-A-core-a01-validation-asan`, and
+     `/private/tmp/lc2961-v224-A-core-a01-validation-qmake6`. Use a fresh exact-member packet, current source and
+     toolchain identities, sealed command ledger, static syntax checks, packet audit, and same-packet G1a/G1b/G3.
+     Only their exact PASS decisions permit the separate activation receipt/audit; only activation-audit PASS plus
+     the immediately following exact no-follow absence check permits root creation. Run the corrected baseline with
+     per-invocation executable rehash, report parsing and fail-fast receipts. Gibbs may edit only the three §114
+     A-core paths after complete baseline identity, discovery, skip and report reconciliation PASS. These are
+     separate gates; plan review, commit, G5, packet audit, G1a/G1b/G3, or activation alone never authorizes source.
+
+     | Blocked item | Current state and dependency | Exit condition |
+     |---|---|---|
+     | A-core | BLOCKED at plan/G5 evidence gate; no source work has begun. | Complete exact v224 review/commit/G5, fresh packet/readiness/activation/baseline gates, then one A-core product commit and immediate plan/G5 reconciliation. |
+     | A-strict | WAITING; no parallel work with A-core. | A-core product commit and reconciliation/G5, then its own complete card and gates. |
+     | A-reference | WAITING; depends on A-strict. | A-strict product commit and reconciliation/G5, then its own complete card and gates. |
+     | A-cache | WAITING; depends on A-reference. | A-reference product commit and reconciliation/G5, then its own complete card and gates. |
+     | A-budget-depth / parent A | INCOMPLETE aggregate; no parent acceptance implied by a leaf. | All four A leaves, 15-case reverse crosswalk, whole-A regression, and parent reconciliation pass. |
+     | B-occurrence-terminals | WAITING; blocked on full A aggregate product/checkpoint. | A aggregate acceptance and direct-child plan/G5 reconciliation, followed by its own card, readiness, implementation and checkpoint. |
+     | C-global-topology-checker | WAITING; blocked on A and B. | A aggregate and B product/checkpoint pass, then C's own proof/oracle/readiness/implementation gates. |
+     | 1A-2 and later entity, DXF/DWG, UI, Phase 2 and Phase 3 Trim work | INCOMPLETE/WAITING per their roadmap rows; they do not inherit A-core approval. | Their named predecessor commits/checkpoints and their own slice-specific completeness, correctness, readiness, validation and post-commit reconciliation; Phase 3 Trim remains separately gated. |
+
+     A-budget-depth remains the top-level implementation aggregate under `.b-check-topology-chain`; its first
+     executable leaf is A-core, followed by §114's A-strict -> A-reference -> A-cache sequence. B and C are separate
+     later children. Do not
+     move shared-budget geometry/caller obligations into A-core to make the blocked leaf appear complete. Preserve
+     every v223 observation as historical, and never inspect `build-asan/`.
+
+133. **Historical v225 blocked-gate candidate and exact precommit FAIL (uncommitted; non-activating; superseded by §135).**
+     The v225 candidate was a direct-child draft of committed v223 with raw SHA-256
+     `a041cc0833672c8817e0399051d3ab9d9e334ed2271ab47b4238113c71ef12a5`. Independent exact-byte review returned
+     FAIL in `/private/tmp/lc2961-plan-checkpoint-v225-precommit-review-01.txt`, SHA-256
+     `378bdcf7df3246dc29e0f91a69f4bbe15b49aadb7b74fcb026b1f3c32733cb26`. The reviewer verified one-path scope,
+     clean index and `git diff --check`. It found remaining live G3/G4 conflicts, an impossible packet-path absence
+     condition, and incomplete report/request binding. No v225 commit, packet, roots, readiness, activation,
+     baseline, build/test/discovery or source edit exists. Preserve this route as historical only; §135 supersedes
+     its status transitions and packet/activation instructions.
+
+     The v225 candidate was a direct-child draft of committed v223
+     `6c65f1f52a8f229c3852b997be1e392d8312a7de`; its review input is the exact raw SHA-256 computed after the final
+     plan edit. The v224 candidate (`da0344b0bcdb0355db563fdc4bb523d7cdeb9335faeb6eda5b2dc5e95123317f`) was not
+     committed and its exact precommit review failed with report SHA-256
+     `1a65a492ebf66832e7c014e021eec6fb6fe9580a9d5cf8ce385f00d2e99da732`. The findings are preserved in §132;
+     no v224 approval, request or artifact transfers to v225. Nothing in this section now authorizes work.
+
+     **Blocked-state diagnosis and dependency order.** The v223 G5 reviewer-authored report
+     `/private/tmp/lc2961-v223-g5-auditor-authored-report.txt` (SHA-256
+     `4452161a8f101d26ed4bac3390571250dfff593fc42a1312970b3c9f22fec2ca`) verified the Git/plan tuple and withheld
+     authorization because the declared-input binding was incomplete and exact-request disposition was UNKNOWN.
+     The local G5 evidence directory was absent, and a task listing is not a G5 queue. The packet/root absence
+     observations are historical, not formal no-follow receipts. Therefore the first live action is plan-only
+     review of exact v225 bytes; the next action after exact precommit PASS is a one-file plan commit; only then may
+     an exact v225 G5 review be submitted. Only a fully bound G5 PASS with closed request disposition permits a
+     fresh packet. The dependency sequence is:
+     `v225 exact review -> v225 plan-only commit -> closed exact G5 -> fresh packet audit -> same-packet G1a/G1b/G3
+     -> activation receipt -> independent activation audit -> immediate six-path no-follow check -> root creation
+     -> root-state receipt -> baseline/discovery reconciliation -> A-core source work`.
+     Failure or UNKNOWN at any gate stops the sequence at that gate. No packet, root, build, test, test discovery,
+     source inspection beyond already authorized read-only inspection, or source edit is permitted while the plan
+     review/G5 blocker remains unresolved.
+
+     **Authoritative request boundary and immutable receipts.** The previous “zero registered pending” count was
+     insufficient because it did not prove that the registered set was complete. For v225 G5, define a closed
+     submission boundary before submitting: one coordinator-created request to one designated independent G5
+     reviewer identity/thread, one submission ID returned by the request tool, and no parallel or alternate G5
+     submissions by the coordinator for the exact v225 tuple. Record the designated identity and this exclusive
+     submission policy in a pre-submission immutable manifest. The coordinator must use the designated request
+     mechanism's actual request ID and terminal status; a task-list snapshot, local directory state, coordinator
+     paraphrase, or zero count over a partial ledger is never queue evidence. If the mechanism cannot return a
+     stable request ID and a retrievable terminal status for that one submission, or if an alternate exact-v225
+     request is known or cannot be ruled out within the declared boundary, mark disposition UNKNOWN and stop.
+     Do not claim to have inspected a global or external queue that the tools do not expose. Requests outside the
+     declared authoritative channel are non-authoritative only when the boundary itself is verified; otherwise
+     their possible existence leaves disposition UNKNOWN.
+
+     Before submission, write `/private/tmp/lc2961-plan-checkpoint-v225-g5-request-manifest.json` and record its
+     SHA-256. It binds v223 parent identity; the exact v225 candidate raw SHA; the expected one-path scope; every
+     declared reviewer, product-base, source-base, tool and evidence input with identity and digest; designated
+     reviewer identity; request mechanism; exclusive-submission boundary; and the exact PASS/FAIL/INVALID/UNKNOWN
+     criteria. After the tool returns, write
+     `/private/tmp/lc2961-plan-checkpoint-v225-g5-request-submission.json` with the generated request ID, manifest
+     digest, submitted reviewer identity and timestamp. Wait on that exact request until a terminal tool status is
+     returned; do not treat timeout, interruption, agent/task completion without a report, or missing status as
+     terminal PASS. The reviewer independently writes
+     `/private/tmp/lc2961-plan-checkpoint-v225-g5-auditor-report.txt`, binding the complete manifest inventory,
+     exact Git/raw-byte tuple, scope, findings, and decision. The coordinator must not author or edit the report.
+     After terminal status and report retrieval, write
+     `/private/tmp/lc2961-plan-checkpoint-v225-g5-request-closure.json`, binding the manifest and submission
+     digests, exact request ID, wait/tool terminal result, reviewer-authored report digest, boundary statement,
+     known exact-tuple request IDs/statuses, and zero outstanding requests within the verified exclusive channel.
+     Rehash every file and preserve the receipts. Missing, mismatched, malformed, unretrievable or nonterminal
+     evidence yields UNKNOWN; zero pending is meaningful only when the closed boundary and exact request are both
+     verified. A reviewer FAIL/INVALID is terminal for these bytes and routes to a new numbered plan-only child;
+     UNKNOWN is recovered on the same commit only if no plan defect exists, otherwise amend in a new child.
+
+     **Disjoint precommit review routing.** Classify every review item for v225 as exact-current, stale, or
+     non-authoritative. “Pending” below means an exact-current request with a verified request ID and a
+     nonterminal status; “unknown inventory” includes an unenumerable boundary, missing ID/status, or an
+     unretrievable completed response. Apply rows in order; the states are mutually exclusive:
+
+     | Verified v225 state | Only permitted next action | Prohibited |
+     |---|---|---|
+     | At least one exact-current review is pending | Wait on every exact-current request. If plan bytes change, all old responses are stale and a new raw-SHA review is required. | Commit, packet/card creation, roots, readiness, activation, baseline, build/test/discovery or source work. |
+     | No exact-current review is pending, but request inventory/status, report retrieval, declared-input binding or one-path scope is UNKNOWN/incomplete | Recover the exact missing evidence or close the review route as superseded and submit one replacement for unchanged bytes. Do not infer absence or PASS. | Commit or any packet/execution work. |
+     | No pending/unknown exact-current item; at least one fully bound exact-current report is FAIL or INVALID | Preserve all reports; make the next numbered plan-only direct child of v223 that closes the finding, then review its new raw SHA. | Same-SHA override, commit, packet or execution. |
+     | No pending/unknown item and no exact-current negative; fully bound PASS exists but any declared input or exact one-path scope is not proven | Preserve the report; request correction or replacement review for unchanged bytes. If plan bytes change, review the new SHA. | Commit or execution. |
+     | No pending/unknown/negative item; a reviewer-authored PASS binds exact v225 raw SHA and every declared input, proves exact one-path scope, and `git diff --check` passes | Verify v223 ancestry/parent, clean index and one-path staged/working diff; commit only `docs/plan_offset_curve_2961.md` as a direct child of v223. | Product/evidence paths in the commit or packet/root creation before exact committed-v225 G5 PASS. |
+     | No exact-current request/report exists and no unresolved artifact requires classification | Freeze the complete manifest and submit exactly one independent review of the verified current raw SHA. | Commit or execution. |
+
+     Stale reports and requests are retained and labeled non-authoritative; they cannot satisfy a PASS, defeat an
+     exact-current negative, or be counted as current pending work. A possibly current item whose identity cannot be
+     established is UNKNOWN, not stale. A changed plan SHA invalidates every draft review and requires a new
+     manifest, submission ID and review. Before commit, independently verify exact plan raw SHA, diff path set,
+     index path set, parent, and reviewer-report hashes. Do not stage unrelated user changes.
+
+     **Disjoint post-commit G5 routing.** After the plan-only commit, record and verify commit, parent, tree, plan
+     blob/raw-byte SHA, one-path commit, and all declared manifest identities. Create the manifest before the single
+     exact G5 submission as above. “Closed” means the exclusive request boundary is verified, the one returned
+     request ID is terminal, its reviewer-authored report is retrievable and digest-bound, and the closure receipt
+     has no unresolved exact-tuple request within that boundary. Apply these rows in order:
+
+     | Verified committed-v225 state | Only permitted next action | Prohibited |
+     |---|---|---|
+     | Exact-tuple G5 request is pending | Wait on that request; preserve all receipts. | Plan edits, packet/card, roots, readiness, activation, baseline, builds/tests or source work. |
+     | No request is pending, but boundary, terminal status, report, declared inputs or closure receipt is UNKNOWN/incomplete | Recover/retrieve the missing exact evidence or issue a documented replacement against the unchanged commit; keep UNKNOWN until closure is verified. | Packet/root creation or declaring zero-pending PASS from a partial list. |
+     | Closed exact-tuple G5 report is FAIL or INVALID, or identifies a plan defect | Preserve report and receipts; make a new numbered plan-only direct child closing the finding and restart precommit review. | Same-commit override or packet/execution work. |
+     | Closed exact-tuple G5 report is PASS but any declared input, product-base identity, one-path commit or exact request boundary is mismatched/unproven | Preserve evidence and recover the binding; if commit content is at fault, prepare a new plan-only child. | Packet/root creation or treating a textual PASS as authority. |
+     | Closed exact-tuple G5 report is PASS; every manifest input and Git/raw-byte identity matches; scope is one plan path; closure receipt verifies terminal completion and no outstanding exact-tuple request in the boundary | Prepare only the fresh v225 A-core packet and continue through its independently gated readiness/activation sequence. | Reuse of any v218-v224 packet/root/approval; any source edit before the baseline/discovery gates. |
+     | No exact-tuple request/report exists and no unresolved artifact needs classification | Freeze the complete v225 manifest and submit one G5 request; wait for its terminal result. | Packet/root creation or execution. |
+
+     A report and a closure receipt are both required: a report alone cannot prove terminal tool status or queue
+     closure; a closure receipt alone cannot establish reviewer findings or input correctness. No pending count may
+     be evaluated until the manifest's boundary is verified. If the designated request mechanism lacks the stated
+     capabilities, record that limitation and leave A-core BLOCKED; do not invent a substitute queue or downgrade
+     the proof requirement.
+
+     **Fresh v225 packet and root activation contract.** Only the final committed-v225 G5 PASS row permits a new
+     packet at `build/evidence/1A-1.b-check-topology-chain/leaves/v225/A-core/attempt-01/`. Never reuse v218-v224
+     packet identities or roots. The six exact roots are:
+     `/private/tmp/lc2961-v225-A-core-a01-baseline-release`,
+     `/private/tmp/lc2961-v225-A-core-a01-baseline-asan`,
+     `/private/tmp/lc2961-v225-A-core-a01-baseline-qmake6`,
+     `/private/tmp/lc2961-v225-A-core-a01-validation-release`,
+     `/private/tmp/lc2961-v225-A-core-a01-validation-asan`, and
+     `/private/tmp/lc2961-v225-A-core-a01-validation-qmake6`.
+
+     The packet/card must freeze the literal preliminary absence-check command and a later, dedicated no-follow
+     verifier command (no shell interpolation or unresolved placeholders), verifier executable/script path and
+     SHA-256, interpreter/runtime identity, tool/version identity, exact six full paths, stdout/stderr log paths,
+     exit-code/result schema, and receipt-generation command/hash. The exact verifier invocation and its output
+     schema must be reviewed by G1a/G1b/G3 and packet audit before activation. Check packet path plus all six roots
+     as absent before creating the packet or activation receipt; present, symlinked, inaccessible or uninspectable
+     means BLOCKED, and no path may be deleted, renamed or reused. Complete fresh packet audit and same-packet
+     G1a/G1b/G3 PASS first; then create the external activation receipt and obtain independent activation-audit
+     PASS, each bound to the exact packet/card, current plan G5, product/tool/source identity and frozen command
+     ledger.
+
+     Immediately after observing activation-audit PASS, the very next command must be the frozen dedicated
+     no-follow verifier, with no intervening command, tool call, manual action, shell wrapper or status probe. It
+     must inspect each exact full path without following symlinks, verify every ancestor from `/private/tmp` to
+     each target is the expected non-symlink directory, record absent/present/error per path, emit stdout/stderr and
+     exit status, and produce a receipt binding the literal command, verifier/runtime hashes, six path results,
+     packet/card IDs, activation-receipt digest and activation-audit digest. The verifier invocation itself emits
+     the receipt digest; do not run a separate hash command between the verifier and root creation. The frozen root
+     command must independently rehash/read that receipt and refuse unless it matches the packet/card bindings.
+     PASS requires all six exact paths absent and all bindings/results valid. Any present, symlinked, race-affected,
+     inaccessible or uninspectable path fails closed and forbids activation.
+
+     If and only if that verifier passes, the very next command must be the packet-frozen root-creation command
+     through the sealed ledger. No command or manual action may intervene. The command rechecks expected parent
+     directories without following symlinks and creates each named root exclusively (an existing path fails
+     closed); it creates exactly the six roots and writes a root-state receipt with per-path identity, verifier
+     receipt digest and creation result before any baseline command. If adjacency is broken, output is incomplete,
+     a path races into existence, exclusive creation is partial, or the root-state receipt cannot establish exact
+     state, stop and preserve every artifact/root. Never delete or reuse a root; a fresh attempt needs a reviewed
+     plan amendment.
+
+     After root-state receipt, run only the authorized baseline/discovery commands, with per-invocation executable
+     rehash, report parsing, fail-fast behavior, and exact A-core selector/skip reconciliation from §114. Source
+     editing requires all six lane/phase results and required discovery, skip, identity and report gates to pass.
+     A-core remains limited to its three §114-owned paths and A04/A10; A-strict -> A-reference -> A-cache stay
+     sequential, and parent A remains incomplete until its aggregate crosswalk and regression gates pass. A-core's
+     product commit is followed immediately by a plan-only direct-child reconciliation and fresh plan/G5 gates;
+     only then may A-strict begin. B, C, 1A-2, entity/DXF/DWG, UI, Phase 2 and separately gated Phase 3 Trim remain
+     blocked on their own predecessor checkpoints and readiness.
+
+     | Blocked item | State after this amendment | Exact exit |
+     |---|---|---|
+     | v225 plan checkpoint | BLOCKED on exact-byte precommit review; no plan commit exists. | Exact reviewer PASS for current raw SHA and one-path scope, then one-file direct-child commit. |
+     | A-core plan/G5 gate | BLOCKED; v223 G5 remains NO PASS and v224 review is FAIL. | Committed-v225 G5 with complete input binding, verified exclusive request closure and exact PASS. |
+     | A-core packet/readiness/activation | NOT STARTED; no v225 packet or roots may exist. | Fresh packet audit, G1a/G1b/G3 PASS, activation receipt/audit PASS, adjacent verifier PASS, then root-state receipt. |
+     | A-core implementation | NOT STARTED; no source edits are authorized. | Baseline/discovery/skip/report reconciliation PASS, then only its three owned paths and one product commit. |
+     | A-strict, A-reference, A-cache, parent A, B, C and downstream consumers | WAITING/BLOCKED by their declared dependency graph; none inherits A-core readiness. | Complete predecessor product plus plan/G5 reconciliation, then each item's own exact packet/readiness/implementation/validation gates. |
+
+     This v225 route failed precommit review and is non-authorizing. Preserve its report and candidate bytes; use only
+     §135 for the current transition. Never inspect `build-asan/`.
+
+134. **Historical v226 blocked-work candidate and exact precommit FAIL (uncommitted; non-activating; superseded by §135).**
+     This was a plan-only direct-child draft of committed v223. Its raw SHA
+     `df92f1846309eeeafb15a0593b423e51f0d1d22e43467b60a1dec26b7d74455e` received exact-byte precommit FAIL
+     `/private/tmp/lc2961-plan-checkpoint-v226-precommit-review-01.txt`, SHA-256
+     `99613e97f6150516767aebca23ec90e13ff75c5b2af18c3eb453042345d6f4e6`. The reviewer verified base v223,
+     one-path scope and `git diff --check`; the remaining P1 was overlapping precommit/postcommit routing
+     predicates. No v226 commit, packet, roots, readiness, activation, baseline, build/test/discovery or source edit
+     exists. Preserve this candidate and report as history. Section §135 is the only current proposed route.
+     The v226 text below is retained to explain prior decisions and is non-operative. Its raw SHA was computed after
+     the final edit and must
+     be carried unchanged by the exact-byte review receipts below. v225 remains uncommitted and failed review with
+     candidate SHA `a041cc0833672c8817e0399051d3ab9d9e334ed2271ab47b4238113c71ef12a5` and report SHA
+     `378bdcf7df3246dc29e0f91a69f4bbe15b49aadb7b74fcb026b1f3c32733cb26`; preserve both. The v225 auditor found
+     that generic G3/G4 rows still contradicted §114, packet absence was required at an impossible point, and
+     terminal/report request bindings were incomplete. The v226 review found a route-table overlap; this section is
+     historical and does not authorize any packet/root/build/test/discovery/readiness/activation/baseline/source
+     action. All v225/v226 tables and packet/activation directions in §§133-134 are historical only.
+
+     **Normative generic-gate reconciliation.** The updated G3/G4 controls and operating sequence in the live
+     controls block bind as follows: for the topology-chain A work, §114 owns the leaf scope/ownership DAG and §135
+     owns the current blocked-plan/G5 transition. A-core, A-strict, A-reference and A-cache are four sequential
+     executable leaves; the six source/test paths are only the parent-A acceptance union. Each leaf has a distinct
+     packet, same-identity G1a/G1b/G3, external immutable `activation.json`, independent `activation-audit.json`,
+     authorized baseline, one product/test-only commit limited to its §114 allowlist, then an immediate one-file
+     plan reconciliation and exact G5 before the next leaf. No single six-path A commit exists. No additional
+     plan-only activation commit or G5 solely for activation is required; the current reviewed-plan G5 is required
+     before the leaf packet, and the external activation audit remains mandatory before the root check/baseline.
+     This narrow topology-chain rule supersedes any inherited generic G3/G4 statement requiring a separate
+     activation checkpoint commit/G5 or treating all six A paths as one atomic leaf. It does not waive G1a/G1b/G3,
+     activation audit, G2/G4, post-product reconciliation/G5, test gates, or any non-A workflow's explicit contract.
+
+     **Current blocker and order.** v223 commit `6c65f1f52a8f229c3852b997be1e392d8312a7de` still has no
+     authorizing G5 PASS: its reviewer-authored report is NO PASS due to incomplete declared-input binding and
+     UNKNOWN request disposition. v224 exact review and v225 exact review are both FAIL and neither was committed.
+     The active worktree contains only this v226 plan candidate. The only permitted next action is an exact-byte
+     precommit review of v226. If and only if that exact review closes PASS for the current raw SHA and one-path
+     scope, commit only `docs/plan_offset_curve_2961.md` as a direct child of v223. Then obtain exact committed-v226
+     G5 PASS with the closed request evidence below. Only after that may A-core packet creation begin. The full
+     sequence is:
+     `v226 exact review/closure PASS -> one-file v226 commit -> committed-v226 G5/closure PASS -> fresh A-core
+     packet/audit -> same-packet G1a/G1b/G3 -> external activation receipt/audit -> immediate six-root no-follow
+     verifier -> immediately following exclusive root creation/state receipt -> baseline/discovery reconciliation
+     -> A-core implementation -> product commit -> immediate plan-only reconciliation/G5`.
+     Any pending, failed, invalid, incomplete, mismatched or UNKNOWN gate stops at that gate. No packet, root,
+     build, test, test discovery, readiness, activation, baseline or source edit is authorized now.
+
+     **Request identity, success and closure contract.** Apply this contract independently to both the v226
+     precommit review and committed-v226 G5; use separate manifests and receipt names for the two gates. Before
+     either submission, freeze an immutable manifest binding the exact v226 bytes or committed Git tuple,
+     one-path scope, every declared input identity/digest, designated independent reviewer, allowed request
+     mechanism, report destination, exact decision criteria, and an exclusive submission boundary. The coordinator
+     is the sole submitter for that gate/tuple and issues exactly one request through the designated channel; no
+     parallel or alternate same-identity requests are initiated. The channel must return a stable request ID and
+     an independently retrievable status. If it cannot enforce or verify the declared boundary, if an alternate
+     same-identity request is known or cannot be ruled out within that boundary, or if a request/status cannot be
+     recovered, disposition is UNKNOWN. Do not claim global/external queue visibility; task listings and local
+     directories are not queues.
+
+     Immediately after submission, freeze a submission receipt containing the exact returned request ID, manifest
+     SHA-256, reviewer identity and timestamp. Wait on that exact ID. Only an explicit successful-completion status
+     from the request mechanism is success; timeout, still-running, interruption, cancellation, shutdown, tool
+     error, or failed execution is not a completed review and can never satisfy PASS. The independent reviewer
+     authors the report and must include that exact request ID and the submission-receipt SHA-256, in addition to
+     the exact candidate raw SHA or committed tuple, complete declared-input inventory/results, scope, findings and
+     PASS/FAIL/INVALID/UNKNOWN. The coordinator must not author or edit report bytes. After successful terminal
+     completion and report retrieval, create a closure receipt binding manifest/submission hashes, exact request ID,
+     successful terminal result, reviewer-report hash, request-boundary statement and all request IDs/statuses in
+     that exclusive channel. The closure receipt may state zero outstanding only when the boundary is verified and
+     the one submitted request is successfully complete with the report linked to that same ID and submission
+     digest. Any failed/cancelled terminal, absent or mismatched report, incomplete inputs, malformed receipt or
+     unknown boundary is UNKNOWN (or an explicit reviewer FAIL/INVALID when a complete report says so), never PASS.
+     Preserve precommit files immutably as `/private/tmp/lc2961-plan-checkpoint-v226-precommit-manifest.json`,
+     `/private/tmp/lc2961-plan-checkpoint-v226-precommit-submission.json`,
+     `/private/tmp/lc2961-plan-checkpoint-v226-precommit-auditor-report.txt`, and
+     `/private/tmp/lc2961-plan-checkpoint-v226-precommit-closure.json`. For committed-plan G5, use
+     `/private/tmp/lc2961-plan-checkpoint-v226-g5-manifest.json`,
+     `/private/tmp/lc2961-plan-checkpoint-v226-g5-submission.json`,
+     `/private/tmp/lc2961-plan-checkpoint-v226-g5-auditor-report.txt`, and
+     `/private/tmp/lc2961-plan-checkpoint-v226-g5-closure.json`. Compute and record each SHA-256 after writing.
+
+     **Disjoint v226 precommit routing.** Evaluate the first matching state; terminal rows require no pending exact
+     request and a verified closed request boundary:
+
+     | Verified state | Only permitted next action | Prohibited |
+     |---|---|---|
+     | Exact-current precommit request is pending | Wait on that exact ID; if bytes change, classify its eventual result stale and review the new SHA. | Commit, packet, roots, readiness, activation, baseline, build/test/discovery or source work. |
+     | No exact-current request is pending, but boundary/status/report/input/scope evidence is missing, mismatched or UNKNOWN | Recover the exact receipt/report or supersede that request and submit one replacement for unchanged bytes; remain blocked. | Commit or execution. |
+     | Closed exact-current review report is FAIL/INVALID | Preserve it; prepare the next numbered plan-only direct child of v223 that resolves the finding and restart review on new bytes. | Same-SHA override, commit or packet/execution. |
+     | Closed report says PASS but does not bind every input/raw SHA/one-path scope, or `git diff --check`/scope fails | Recover/correct the review for unchanged bytes, or amend in a new child if the plan itself is defective. | Commit or execution. |
+     | Closed successful report says PASS, exact raw SHA and every input match, one-path scope/index/parent are verified, and `git diff --check` passes | Commit only this plan as a direct child of v223; verify the committed blob equals reviewed bytes. | Product/evidence files in the commit; packet/root creation before committed-v226 G5 PASS. |
+     | No exact-current request/report exists and no unclassified artifact exists | Freeze the exact manifest and submit one independent review for the verified current SHA. | Commit or execution. |
+
+     **Disjoint committed-v226 G5 routing.** Verify commit, parent, tree, plan blob/raw SHA, one-path commit and all
+     declared manifest inputs before interpreting results. A terminal result is actionable only under the verified
+     boundary and linked report/closure contract above:
+
+     | Verified state | Only permitted next action | Prohibited |
+     |---|---|---|
+     | Exact-tuple G5 request is pending | Wait on the exact request ID; preserve all receipts. | Plan edit, packet, roots, readiness, activation, baseline, build/test/discovery or source work. |
+     | No exact-tuple request is pending, but request boundary, successful terminal status, report link, closure or any input is missing/mismatched/UNKNOWN | Recover the same exact commit evidence or submit one documented replacement for unchanged commit; remain UNKNOWN until closed. | Packet/root creation or text-only PASS. |
+     | Closed exact-tuple G5 report is FAIL/INVALID | Preserve report/receipts; prepare a new numbered plan-only child that resolves the finding and restart precommit review. | Same-commit override or packet/execution. |
+     | Closed report says PASS but tuple, declared inputs, one-path commit or boundary is not exact | Recover the binding; if committed content is wrong, make a new plan-only child and re-review. | Packet/root creation. |
+     | Closed successful report says PASS, report/submission/manifest IDs and hashes agree, all Git/input identities match, and no exact-tuple request remains in the verified channel | Prepare only the fresh v226 A-core packet described below. | Reusing v218-v225 packets, roots or approvals; any source edit before baseline/discovery PASS. |
+     | No exact-tuple request/report exists and no unclassified artifact exists | Freeze the exact v226 manifest and submit one G5 request; wait for its successful terminal result and linked report. | Packet/root creation or execution. |
+
+     **Corrected v226 packet/root path states.** The packet is
+     `build/evidence/1A-1.b-check-topology-chain/leaves/v226/A-core/attempt-01/`. The six fresh roots are:
+     `/private/tmp/lc2961-v226-A-core-a01-baseline-release`,
+     `/private/tmp/lc2961-v226-A-core-a01-baseline-asan`,
+     `/private/tmp/lc2961-v226-A-core-a01-baseline-qmake6`,
+     `/private/tmp/lc2961-v226-A-core-a01-validation-release`,
+     `/private/tmp/lc2961-v226-A-core-a01-validation-asan`, and
+     `/private/tmp/lc2961-v226-A-core-a01-validation-qmake6`.
+
+     Check packet-path absence only before creating the fresh packet. At that same pre-creation check, all six roots
+     must also be absent by no-follow inspection; a present/symlinked/inaccessible/uninspectable root blocks this
+     attempt, and no root may be deleted, renamed or reused. Seal the exact-member packet and pass its audit plus
+     same-identity A-core G1a/G1b/G3. Before writing `activation.json`, require the packet path to exist and match
+     the sealed manifest/card identity, and recheck that all six roots remain absent. The activation receipt names
+     that existing packet and binds its manifest digest, current committed-v226 G5, source/product/tool identity,
+     writable three-path A-core allowlist and frozen baseline commands. Obtain independent `activation-audit.json`
+     PASS over that exact receipt. Thus packet existence is required at activation; only roots remain absent.
+
+     The packet/card freezes the literal dedicated no-follow verifier command, verifier executable/script and
+     runtime paths/hashes, exact six roots, stdout/stderr destinations, exit/result schema, receipt format and
+     root-creation command/hash. G1a/G1b/G3 and packet audit verify this command before activation. Immediately
+     after observing activation-audit PASS, the very next command is the frozen verifier, with no tool call, shell
+     wrapper, manual action or status probe. It inspects each root without following symlinks, validates expected
+     non-symlink ancestors from `/private/tmp`, records one absent/present/error result per exact path and emits its
+     receipt digest. The receipt binds the literal command, tool/runtime hashes, six results, packet/card IDs,
+     packet manifest, activation-receipt digest and activation-audit digest. No separate hash command may intervene.
+     If and only if it passes, the very next command is the sealed root-creation command. That command rechecks the
+     expected parent chain without following symlinks, verifies the receipt and its digest, and creates each root
+     exclusively; any existing path fails closed. It writes a root-state receipt binding all six path results and
+     the verifier digest before any baseline command. Any broken adjacency, present/uninspectable/raced path,
+     partial exclusive creation or malformed receipt stops the attempt. Preserve all roots/evidence; never clean up
+     by deletion or reuse.
+
+     After the root-state receipt, run only the authorized Release/ASan/qmake6 baseline and A-core discovery, with
+     per-invocation executable rehash, report parsing, fail-fast behavior and exact §114 selector/skip
+     reconciliation. Source edits remain forbidden until every required baseline, identity, discovery and report
+     gate passes. Then Gibbs may implement only the three A-core paths and A04/A10. A-core's product/test-only
+     commit is followed immediately by a one-file direct-child plan reconciliation and exact G5; A-strict remains
+     WAITING until that reconciliation/G5 PASS. Continue A-reference then A-cache; close parent A only after all
+     four leaf commits/reconciliations, the 15-case reverse crosswalk and whole-A regressions. B, C, file-format,
+     document/UI, Phase 2 and separately gated Phase 3 Trim remain behind their own predecessor/readiness gates.
+
+     | Blocked item | Current state | Exit condition |
+     |---|---|---|
+     | v226 plan | BLOCKED on exact-byte precommit review; no commit. | Linked reviewer-authored PASS for exact raw SHA, successful request status and exact one-path scope; then one-file child commit. |
+     | A-core plan/G5 | BLOCKED; v223 NO PASS, v224 and v225 exact reviews FAIL. | Committed-v226 G5 linked to exact request/submission/report, all declared inputs, verified exclusive boundary and successful terminal status. |
+     | A-core packet/readiness/activation | NOT STARTED; no v226 packet/roots. | Packet creation only after G5 PASS; then packet audit/G1a/G1b/G3, packet-present/root-absent activation receipt/audit, immediate verifier and root-state receipt. |
+     | A-core implementation | NOT STARTED; no source edits. | Full baseline/discovery/skip/report PASS, then only three owned paths, A04/A10 and one product commit plus immediate plan/G5 reconciliation. |
+     | A-strict/A-reference/A-cache/parent A/B/C/downstream | WAITING/BLOCKED by dependency graph; no inherited readiness. | Complete each predecessor commit and reconciliation/G5, then each leaf's own card, reviews, activation, validation and checkpoint. |
+
+     This v226 amendment is plan-only. Until its exact-byte precommit review closes PASS, do not commit it or perform
+     packet, root, build, test, discovery, readiness, activation, baseline or source work. Preserve all failed
+     reports and historical artifacts unchanged; never inspect `build-asan/`.
+
+135. **Current v227 blocked-item recovery plan (candidate; plan-only; non-activating).**
+     This section is the sole proposed authority for the blocked A-core plan/G5 transition. The candidate is a
+     one-path documentation-only direct child of committed v223
+     `6c65f1f52a8f229c3852b997be1e392d8312a7de` (parent
+     `d5d71f30bd118a7616d00979c9ba975f518d5284`, tree
+     `ff1326cfe169c91505761f30d7180024ae048222`). Capture the final raw SHA after the last edit in the immutable
+     review manifest; do not embed a self-referential current-file digest in this section. The v226 exact review
+     verified its own candidate/base/scope and `git diff --check`, but returned FAIL solely for overlapping route
+     predicates: no-request states also matched incomplete-evidence rows, while closed PASS mismatches matched two
+     postcommit rows. Its exact candidate/report identities and scope are preserved in §134. At initial v227 draft
+     finalization, no v227 request or receipt had been submitted and the designated channel had not been queried.
+     That is a historical observation only; every later transition must re-query and classify the live channel and
+     receipts, never infer request state from this sentence.
+
+     **Authority and stop boundary.** This is a planning correction only. It authorizes preparation and exact-byte
+     review of the v227 plan candidate, and conditionally a one-file plan checkpoint only through the gates below.
+     It authorizes no product/source edit, packet, root, test discovery, build, test execution, readiness promotion,
+     activation, baseline or implementation. A-core still owns only the three paths and A04/A10 under §114;
+     A-strict, A-reference, A-cache, parent A, B/C, file-format, document/UI, Phase 2 and separately gated Phase 3
+     Trim remain blocked by their predecessor and readiness gates. Never inspect `build-asan/`. A failed, stale,
+     duplicate, incomplete or unbound receipt never grants permission. Preserve every prior candidate/report as
+     immutable history; never infer queue closure from task listings, local directories, silence or a PASS-looking
+     report.
+
+     **Single-valued evidence classifier.** Apply the same classifier independently to (a) v227 precommit review
+     and (b) committed-plan G5, using different manifests, request IDs, reports and closure receipts. Before
+     classification, freeze the target tuple and query only the designated request mechanism whose exclusive
+     boundary can be independently verified. The precommit tuple is exact plan raw SHA-256, intended parent v223,
+     one-path changed-file set, index/worktree scope, declared-input inventory and current `git diff --check`
+     result. The G5 tuple is actual commit ID, parent, tree, plan blob/raw SHA-256, exact one-path commit set and the
+     complete declared-input inventory. For either tuple, inventory every matching request ID and its manifest,
+     submission, status, report and closure artifacts, including unclassified artifacts. Do not assert global
+     queue visibility; if the named mechanism cannot prove its own exclusive boundary, classification is UNKNOWN.
+
+     Assign exactly one state using this total decision procedure; all route tables below match only the resulting
+     enum, never overlapping free-form predicates:
+
+     1. If the exclusive boundary is not verified, the request/artifact inventory is incomplete, multiple or
+        alternate same-tuple requests exist, or any conflicting/unclassified artifact exists, assign
+        `INCOMPLETE_UNKNOWN`.
+     2. Otherwise, if the inventory contains zero matching requests and zero matching manifest/submission/status/
+        report/closure or unclassified artifacts, assign `ABSENT`.
+     3. Otherwise, if exactly one hash-valid immutable manifest matches the exact tuple, the boundary is verified,
+        and there are zero matching requests, submissions, status receipts, reports, closures or unclassified
+        artifacts, assign `READY_TO_SUBMIT`.
+     4. Otherwise, if it contains exactly one matching request with an explicit pending status, a correctly linked
+        submission receipt and no terminal/report/closure artifacts, assign `PENDING`.
+     5. Otherwise, if exactly one matching request has an independently retrievable explicit failed/cancelled
+        terminal status captured in a hash-valid status receipt linked to its immutable submission receipt, the
+        boundary is verified, and there is no reviewer report or contradictory closure claiming success, assign
+        `CLOSED_NON_SUCCESS`. This proves only
+        that the attempt did not succeed; it is never PASS.
+     6. Otherwise, assign a successful closed state only when exactly one request has an explicit successful
+        terminal status and the immutable manifest, submission receipt, hash-valid status receipt, reviewer-authored
+        report and closure receipt are all present and linked to that exact request ID and submission-receipt digest.
+        If the report's target tuple or required-input inventory is missing/mismatched, classify a reported PASS as
+        `CLOSED_PASS_MISMATCH`; classify a reported FAIL/INVALID with a mismatched tuple as `INCOMPLETE_UNKNOWN`.
+        With exact target/input identity, a reviewer decision of FAIL or INVALID is `CLOSED_FAIL_INVALID`; PASS is
+        `CLOSED_PASS_EXACT` only if all gate-specific local scope/identity checks also pass, otherwise it is
+        `CLOSED_PASS_MISMATCH`.
+     7. Any remaining state, including unknown terminal status, missing submission/status receipt, missing
+        successful report/closure, report/request mislink, or an artifact without a fully closed lifecycle, is
+        `INCOMPLETE_UNKNOWN`.
+
+     These enum values are mutually exclusive by construction: `ABSENT` requires a verified empty inventory;
+     `READY_TO_SUBMIT` requires exactly one valid manifest and no request/terminal artifacts; `PENDING` requires
+     one active request and no terminal artifacts; `CLOSED_NON_SUCCESS` requires one verified non-success terminal
+     status and linked status receipt; successful closed states require one successful terminal request and a
+     complete linked receipt chain; all residuals map to `INCOMPLETE_UNKNOWN`. A closed PASS with an omitted or
+     wrong tuple/input/scope field is specifically `CLOSED_PASS_MISMATCH`, not incomplete and not exact.
+     The review manifest and independent reviewer must apply this same decision procedure and record the single
+     resulting enum plus the inventory that justifies it. If evidence cannot be assigned exactly one enum, stop;
+     do not choose whichever route appears most convenient.
+
+     **Classifier validation before submission.** Independently check the truth table against at least these exact
+     inventory fixtures: (a) verified empty channel/no artifacts -> `ABSENT`; (b) one valid manifest and nothing
+     submitted -> `READY_TO_SUBMIT`; (c) one linked active request/no terminal artifacts -> `PENDING`; (d) one
+     request with linked explicit cancelled/failed status and no report -> `CLOSED_NON_SUCCESS`; (e) one fully
+     linked successful report with exact tuple and FAIL/INVALID -> `CLOSED_FAIL_INVALID`; (f) same closed chain,
+     PASS but one omitted or wrong tuple/input/scope/local check -> `CLOSED_PASS_MISMATCH`; (g) same chain, exact
+     PASS and all local checks -> `CLOSED_PASS_EXACT`; and (h) each missing/duplicate/mislinked/unknown-boundary
+     or conflicting artifact case -> `INCOMPLETE_UNKNOWN`. Verify each fixture receives exactly one enum and
+     exactly one route in each gate table; explicitly assert no fixture matches two rows. In particular test the
+     no-request/no-artifact state separately from the valid-manifest/no-request state, and the closed PASS mismatch
+     separately from incomplete lifecycle evidence. Any overlap, uncovered fixture or ambiguous recovery action
+     is a plan defect and blocks submission.
+
+     **Immutable review and G5 evidence contract.** Before each submission, write a manifest containing the gate
+     ID, target tuple, every declared input's stable identity/path/role/SHA-256, exact one-path scope, designated
+     independent reviewer, allowed request mechanism and boundary, report destination, decision criteria and
+     expected receipt schema. When state is `ABSENT`, freeze one manifest and re-run the classifier. The sole
+     coordinator submits one request only after the classifier returns `READY_TO_SUBMIT`;
+     capture its stable request ID, manifest hash, reviewer and timestamp in an immutable submission receipt.
+     Retrieve status by that ID only and preserve a hash-valid terminal-status receipt linked to the submission.
+     Only an explicit successful terminal completion can close a report; timeout,
+     still-running, cancellation, interruption, tool failure, shutdown or failed execution is not success. The
+     reviewer authors the report without coordinator edits and records the exact request ID, submission-receipt
+     digest, manifest digest, exact target tuple, complete declared-input results, scope, findings and exactly one
+     decision. A separate closure receipt links all hashes, the successful terminal result and the verified request
+     boundary/inventory. The closure must not claim zero outstanding unless the boundary proves it. Missing or
+     contradictory bindings route to the classifier above, never to prose PASS.
+
+     Freeze v227 precommit evidence as
+     `/private/tmp/lc2961-plan-checkpoint-v227-precommit-manifest.json`,
+     `/private/tmp/lc2961-plan-checkpoint-v227-precommit-submission.json`,
+     `/private/tmp/lc2961-plan-checkpoint-v227-precommit-status.json`,
+     `/private/tmp/lc2961-plan-checkpoint-v227-precommit-auditor-report.txt`, and
+     `/private/tmp/lc2961-plan-checkpoint-v227-precommit-closure.json`. If a plan-only v227 commit is authorized,
+     freeze G5 evidence as `/private/tmp/lc2961-plan-checkpoint-v227-g5-manifest.json`,
+     `/private/tmp/lc2961-plan-checkpoint-v227-g5-submission.json`,
+     `/private/tmp/lc2961-plan-checkpoint-v227-g5-status.json`,
+     `/private/tmp/lc2961-plan-checkpoint-v227-g5-auditor-report.txt`, and
+     `/private/tmp/lc2961-plan-checkpoint-v227-g5-closure.json`. Compute each file hash after writing and record
+     it in the next receipt; never rewrite an artifact to change its status. A corrected plan is a new numbered
+     candidate with a new SHA and new manifest/request, not a replacement report over the old bytes.
+
+     **Disjoint v227 precommit routes.** First classify the evidence, then select exactly the single row for that
+     enum. The rows are mutually exclusive because each has one distinct classifier state:
+
+     | Classifier state | Only permitted next action | Prohibited |
+     |---|---|---|
+     | `PENDING` | Wait on the exact request ID and preserve receipts. If candidate bytes change, the old review becomes stale and cannot authorize the new SHA. | Commit; another request; packet/root/readiness/activation/baseline/build/test/discovery/source work. |
+     | `ABSENT` | Freeze exactly one v227 manifest for the observed raw SHA and one-path scope, then re-run the classifier. | Submission, commit or execution. |
+     | `READY_TO_SUBMIT` | Submit exactly one independent review using the frozen manifest; record its returned request ID and submission receipt. | Second/alternate request, commit or execution. |
+     | `INCOMPLETE_UNKNOWN` | Preserve all artifacts; read-only reconcile the exact request channel and recover missing evidence. If the boundary cannot be proven, remain blocked and request human resolution. | New request, commit, packet/root or execution. |
+     | `CLOSED_NON_SUCCESS` | Preserve the terminal-status receipt; prepare v228 as a fresh plan-only candidate (direct child of v223 if still current) that records the failed attempt, then review its new SHA. | Treating the attempt as PASS; same-tuple resubmission; commit or execution. |
+     | `CLOSED_FAIL_INVALID` | Preserve the exact report; prepare v228 as a plan-only child of the then-current committed plan, resolve every finding, and restart precommit review on its new SHA. | Same-SHA override, commit or execution. |
+     | `CLOSED_PASS_MISMATCH` | Do not commit. Correct the plan or its declared binding in a new numbered plan-only candidate (v228 if no later candidate exists), then repeat exact review. | Reusing the mismatched PASS, same-tuple replacement request, commit or execution. |
+     | `CLOSED_PASS_EXACT` | Verify raw SHA, parent, index, one-path scope and `git diff --check`; commit only `docs/plan_offset_curve_2961.md` as a direct child of v223 and verify the committed blob equals reviewed bytes. | Product/evidence paths in that commit; packet/root creation before exact committed-plan G5 PASS. |
+
+     No replacement request is permitted for the same target tuple. This deliberately makes a closed but unbound
+     PASS recoverable only by a new plan candidate and fresh review, avoiding duplicate/alternate request ambiguity.
+     A `CLOSED_PASS_EXACT` transition is allowed only if all v223 base identities and candidate path/scope are
+     independently re-read from Git immediately before commit; otherwise reclassify as `INCOMPLETE_UNKNOWN`.
+
+     **Disjoint committed-v227 G5 routes.** Run this classifier against the actual plan-only commit and exact
+     committed tuple, not against branch labels or the old candidate SHA:
+
+     | Classifier state | Only permitted next action | Prohibited |
+     |---|---|---|
+     | `PENDING` | Wait on the exact G5 request ID; preserve all receipts. | Plan edit, second request, packet/root/readiness/activation/baseline/build/test/discovery/source work. |
+     | `ABSENT` | Freeze exactly one G5 manifest for the exact committed tuple and declared inputs, then re-run the classifier. | Submission, packet/root creation or execution. |
+     | `READY_TO_SUBMIT` | Submit exactly one G5 request using the frozen manifest; record its returned request ID and submission receipt. | Second/alternate G5 request, packet/root creation or execution. |
+     | `INCOMPLETE_UNKNOWN` | Read-only reconcile the exact request and evidence chain; remain blocked until the same tuple has one verifiable state. | New G5 request, packet/root creation or execution. |
+     | `CLOSED_NON_SUCCESS` | Preserve the terminal-status receipt; make a new plan-only child of the actual current plan commit that records the failed attempt, then repeat precommit review and G5 for the new commit tuple. | Treating the attempt as PASS; same-tuple resubmission; packet/root creation or execution. |
+     | `CLOSED_FAIL_INVALID` | Preserve the report; prepare a new numbered plan-only child of the actual committed plan resolving every finding, then repeat precommit and committed-plan G5 gates. | Same-commit override, packet/root creation or execution. |
+     | `CLOSED_PASS_MISMATCH` | No packet. If the commit or report tuple/input/scope is wrong or omitted, make a new numbered plan-only child of the actual current plan commit that records the corrected binding and rerun both gates. | Treating the PASS as exact, another request for the same tuple, packet/root or execution. |
+     | `CLOSED_PASS_EXACT` | Permit only creation of the fresh v227 A-core packet below, after re-reading the committed tuple and confirming all hashes/inputs/one-path scope. | Reusing v218-v226 packets, roots or approvals; source edit before activation and baseline/discovery PASS. |
+
+     A plan commit with a path, parent, blob or tree mismatch is never repaired by relabeling it; the mismatch row
+     requires a new plan-only child. A G5 report whose successful request cannot be linked to its submission and
+     manifest is `INCOMPLETE_UNKNOWN`, not a closed mismatch. A task listing, local empty directory, or elapsed
+     time cannot establish `ABSENT` or close a request.
+
+     The fixed v227 packet/root names below are valid only when the exact G5 tuple is the exact v227 plan commit.
+     Any recovery that creates v228 or later suspends these names and all v227 packet permission. Before reviewing
+     a later candidate, add a new numbered current section with that candidate's fresh packet/root names and
+     re-run classifier validation; never transfer v227 paths, receipts or approvals to a later tuple.
+
+     **Fresh packet and root route after exact G5 only.** The only fresh attempt reserved for this candidate is
+     `build/evidence/1A-1.b-check-topology-chain/leaves/v227/A-core/attempt-01/`. The six root paths are:
+     `/private/tmp/lc2961-v227-A-core-a01-baseline-release`,
+     `/private/tmp/lc2961-v227-A-core-a01-baseline-asan`,
+     `/private/tmp/lc2961-v227-A-core-a01-baseline-qmake6`,
+     `/private/tmp/lc2961-v227-A-core-a01-validation-release`,
+     `/private/tmp/lc2961-v227-A-core-a01-validation-asan`, and
+     `/private/tmp/lc2961-v227-A-core-a01-validation-qmake6`.
+
+     Do not inspect or create the packet or roots before exact committed-v227 G5 PASS. At the authorized packet
+     creation step, verify packet-path absence and all six roots absent by a dedicated no-follow inspection; any
+     present, symlinked, inaccessible or uninspectable path stops the attempt without deletion, rename or reuse.
+     Create and seal the exact-member packet, then pass its audit and same-packet A-core G1a/G1b/G3. The card binds
+     current plan/product/predecessor/source/spec/fixture/toolchain identities, the three A-core paths, A04/A10,
+     exact test and oracle contracts, and all formal receipt identities. Before activation, packet path must exist
+     and match its sealed manifest; recheck all six roots absent. The immutable external `activation.json` binds
+     that packet, its manifest digest, committed-plan G5, source/product/tool identities, the three-path A-core
+     allowlist and frozen baseline commands. Require an independent `activation-audit.json` PASS. Packet absence
+     is a pre-creation check only; at activation the sealed packet exists and only the roots remain absent.
+
+     Before activation, the packet/card and its G1a/G1b/G3/audit freeze the literal no-follow verifier command,
+     verifier/runtime paths and hashes, exact six roots, stdout/stderr destinations, result schema, receipt format
+     and exclusive root-creation command/hash. Immediately after observing activation-audit PASS, the very next
+     command is that verifier with no intervening tool call, shell wrapper, manual action or status probe. It
+     validates every parent component without following symlinks, records absent/present/error for each exact root,
+     and emits a receipt binding command/runtime hashes, six results, packet/card/manifest, activation receipt and
+     audit digests. If and only if it passes, the very next command is the sealed root-creation command; it
+     revalidates the receipt and parent chain and creates each root exclusively, failing closed on any existing
+     path. It writes a root-state receipt before any build or baseline. Broken command adjacency, a raced or
+     uninspectable path, partial creation or malformed receipt stops the attempt. Preserve all evidence and roots;
+     never delete or reuse them.
+
+     After root-state receipt only, run the authorized Release/ASan/qmake6 baseline and A-core discovery with
+     per-invocation executable rehash, exact §114 selectors, full skip reconciliation, fail-fast output parsing,
+     and source/binary/toolchain/cache identity equality. Source edits remain forbidden until every baseline,
+     selector, skip and report gate passes. Then Gibbs may implement only A-core's three §114-owned paths and A04/
+     A10. Validate the frozen leaf, make one product/test-only commit over those paths, and immediately create the
+     one-file plan reconciliation/G5 before A-strict begins. Continue A-strict, A-reference, then A-cache only
+     after each predecessor checkpoint; parent A closes only after all four leaf checkpoints, the reverse
+     crosswalk and whole-A regressions. No aggregate six-path commit is allowed.
+
+     | Blocked item | Current state | Exit condition |
+     |---|---|---|
+     | v227 plan precommit | BLOCKED until the exact-byte request chain is `CLOSED_PASS_EXACT`; current request state must be read from the designated channel and its receipts, not inferred from this table. | Verify the exclusive request boundary; classify `ABSENT`, freeze one manifest, reclassify `READY_TO_SUBMIT`, submit once, then require `CLOSED_PASS_EXACT` for the final raw SHA and one-path scope. |
+     | v223 G5 / v227 plan checkpoint | BLOCKED; v223 reviewer follow-up is NO PASS, and v224-v226 reviews are FAIL. | Commit v227 only after exact precommit PASS; classify the committed tuple, freeze a manifest only from `ABSENT`, submit only from `READY_TO_SUBMIT`, then require exact `CLOSED_PASS_EXACT` G5 with all declared inputs. |
+     | A-core packet/readiness/activation | NOT STARTED; no v227 packet or roots are authorized or inspected. | Exact G5 PASS, fresh packet/audit, same-packet G1a/G1b/G3, external activation and audit, then immediate verifier/root-state receipt. |
+     | A-core implementation | NOT STARTED; no source edits. | Baseline/discovery/skip/report PASS, then exactly three owned paths, A04/A10 and one product commit plus immediate plan/G5 reconciliation. |
+     | A-strict/A-reference/A-cache/parent A/B/C/downstream | WAITING/BLOCKED by dependency graph; no inherited readiness. | Complete each predecessor commit and plan/G5 reconciliation, then each leaf's own card, reviews, activation, validation and checkpoint. |
+
+     This v227 amendment remains a plan-only candidate until the classifier and exact review route close. Preserve
+     all v223-v226 reports and artifacts unchanged. If the request boundary cannot be independently proven, if the
+     final evidence maps to `INCOMPLETE_UNKNOWN`, or if an independent reviewer finds any unresolved predicate
+     overlap or contradiction, stop at planning; no commit or execution is authorized. Never inspect
+     `build-asan/`.
