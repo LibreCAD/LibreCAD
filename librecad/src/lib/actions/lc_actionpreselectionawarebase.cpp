@@ -45,7 +45,7 @@ LC_ActionPreSelectionAwareBase::~LC_ActionPreSelectionAwareBase() {
 }
 
 void LC_ActionPreSelectionAwareBase::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
-    if (isForceSelectContextEntity()) {
+    if (isForceSelectContextEntity() && !contextEntity->isSelected()) {
         select(contextEntity);
         redrawDrawing();
     }
