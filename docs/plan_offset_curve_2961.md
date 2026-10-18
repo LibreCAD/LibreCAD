@@ -24,14 +24,41 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–3
 
-**Plan revision v213 candidate (plan-only; non-activating).** This direct-child draft of committed v212 addresses
-the A-core packet-preparation blocker discovered after v212's exact G5 PASS: Catch2 outputs were scheduled for
-interpretation after later runner commands, so a failing invocation could be followed by more work before its
-result was parsed. It also refreshes the live status and supersedes §120's now-consumed attempt-01 route. It does
-not waive any gate, change product scope, or authorize roots, builds, tests, discovery, or source edits. Candidate
-identity and all permitted transitions must be derived from Git and exact receipts, never from this draft header;
-§121 is the sole proposed A-core transition authority if this candidate is reviewed, committed, and receives an
-exact-bound G5 PASS.
+**Plan revision v218 candidate (plan-only; non-activating).** This direct-child draft of committed v213 incorporates
+the v217 exact-byte precommit FAIL and adds the missing version-bound G5-to-packet transition. It preserves the v217
+root-absence freshness gate, v216/v215 disjoint transition corrections, environment isolation, packet-seal checks,
+and v213 packet blockers: inherited ambient process variables, an undeclared `__pycache__` artifact, and missing
+packet audit/seal files. The v213 attempt-01 packet remains unsealed under §122. This revision does not waive any
+gate, change product scope, or authorize packet/root creation, builds, tests, discovery, or source edits. Candidate
+identity and permitted transitions must be derived from Git and exact receipts, never from this draft header; §126
+is the sole proposed A-core transition authority if this candidate is reviewed, committed, and receives exact-bound
+G5 PASS.
+
+The exact predecessor is committed v213 `75a1288dc706d42b300f6a37132a15e49b00c4dd`, parent
+`e43aabd97026556c9b146da86a327a88cd8841b8`, tree `aacfab9ab654de2a0a5632ec43ebf6ae2366081d`, plan blob
+`8b21b074117f79d430af8fbc2d0c8dd5246e67c8`, raw SHA-256
+`3d9779e535fb39e89acd0a43301123e1cc64909487cbfc910b84612fef822231`. Its exact precommit review PASS is
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v213/precommit-review-01.txt`, SHA-256
+`4cac3b6c3410208f15ed3d1888d2151dc091dd3590d8d174b24f2067737d5c33`; its exact G5 PASS is
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v213/g5-auditor-report-01.txt`, SHA-256
+`9c73a7b9a166073b0ba4a24608147e9932d4328172583fd7c8df56e3b4c131d6`. These approvals authorized v213 packet
+preparation only; §122 records why that attempt cannot advance. The v214 draft at raw SHA-256
+`2369cf557b234fc344e25052efb0b18ecc3631382a5c01242d054b126a78cf18` received exact precommit FAIL in
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v214/precommit-review-01.txt`, SHA-256
+`0ba75e90751521603cff4f6d317979cd1b496f4403e3ad1f251db0dae65da952`; the v214 candidate was not committed.
+Its exact plan bytes are preserved at `/private/tmp/lc2961-plan-candidate-v214.md` with the reviewed SHA above. The
+v215 draft at raw SHA-256 `d9c63f2e3cc55ab7f8940915fdf0453fbe0895c99008ed79af5bc94c6172480c` received exact
+precommit FAIL in `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v215/precommit-review-01.txt`,
+SHA-256 `eaf350815b5ffe58fedb944f74b748fd02cf41677dfa9846cf4d7ca6ac95dfcc`; it was not committed. Its exact plan
+bytes are preserved at `/private/tmp/lc2961-plan-candidate-v215.md` with the reviewed SHA above. The v216 draft at
+raw SHA-256 `757e5aaa9c7564873dc4a8e20c81833c230b2ba82138ac81db8800d463b7f9e1` received exact precommit FAIL in
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v216/precommit-review-01.txt`, SHA-256
+`af06006494f9cdb19af33ac4f97a8b48f8de30c103d74e90b343ab79d967a277`; it was not committed. Its exact plan bytes
+are preserved at `/private/tmp/lc2961-plan-candidate-v216.md` with the reviewed SHA above. The v217 draft at raw
+SHA-256 `1f0dc7fecfa12c3e46a79004536af7d88206a3eb05191a76999178ad24c442b5` received exact precommit FAIL in
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v217/precommit-review-01.txt`, SHA-256
+`f4bcc01e630c4471f40b9a999606d9de4fce225a07b614222821f064fc9baa49`; it was not committed. Its exact plan bytes
+are preserved at `/private/tmp/lc2961-plan-candidate-v217.md` with the reviewed SHA above.
 
 The exact predecessor is v212 commit `e43aabd97026556c9b146da86a327a88cd8841b8`, parent v211
 `704dd0b1fb0ac23d35fbd6f017d9e9b40e27acd9`, tree `249acfa1352c93628d28e7092edc0059bd22c0c3`, plan blob
@@ -143,19 +170,24 @@ Plan **v198 disjoint-transition and audit-handoff correction**, 2026-10-17; plan
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE; v213 is a plan-only candidate; A-core baseline BLOCKED; no source edits.**
-Committed v212 passed G5 and authorized preparation of one fresh A-core packet, but its attempt-01 packet was not
-sealed: preparation exposed delayed report parsing that could allow later Catch2 commands after an earlier test
-failure. The exact current files are preserved and classified in §121. All six v212 attempt-01 baseline and
-validation roots are absent. No packet audit, fresh G1a/G1b/G3, activation, baseline, test discovery, test run, or
-source edit occurred for v212 attempt-01. Its files and the v212 G5 PASS cannot authorize execution under a changed
-plan identity. §118's corrected Catch2 package/link identity method remains required; the new immediate-parser
-wrapper contract and fresh v213 gate chain are specified only in §121. The original mixed trim work and v204/v205
-source snapshots remain preserved under §113; no product commit or formal implementation validation exists for
-those edits. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Parent A, ordered-chain topology,
-entity integration, DXF/DWG persistence, UI, Phase 2 and separately gated Phase 3 Trim remain incomplete. The four
-application file lanes, both conversions, edited reopen and binary-DXF codec support remain open. Never inspect
-`build-asan/`.
+Status: **IMPLEMENTATION INCOMPLETE; v218 is a plan-only candidate; A-core baseline BLOCKED; no source edits.**
+Committed v213 passed its exact precommit and G5 gates and authorized packet preparation only. Its attempt-01 packet
+is unsealed as recorded in §122. The v214 plan candidate received an exact-byte precommit FAIL, was not committed,
+and did not authorize a packet or any execution; §123 records its findings. The v215 precommit review then failed
+on two remaining overlapping predicates; §124 records that correction. The v216 precommit review closed those
+and found one stale-root-proof gap; §125 records the recheck. The v217 review closed that gap but found the current
+post-G5 route did not authorize a fresh packet; §126 adds the version-bound transition. No
+packet audit, fresh G1a/G1b/G3, activation, baseline, test discovery, test run, or source edit occurred. Preserve
+the v213 packet and v213/v214/v215/v216/v217 approvals as historical evidence only; none authorizes execution under v218. §118's
+Catch2 package/link identity method and §121's immediate per-invocation parser/fail-fast contract remain required.
+The v218 route adds explicit process-environment isolation, bytecode-free verifier checks, exact packet membership,
+fully bound reviewer/G5 predicates, disjoint transition classes, activation receipts gated on all prerequisite
+PASS results. The original
+mixed Trim work and v204/v205 source snapshots remain preserved under §113; no product commit or formal
+implementation validation exists for those edits. Product source remains
+`9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Parent A, ordered-chain topology, entity integration, DXF/DWG
+persistence, UI, Phase 2 and separately gated Phase 3 Trim remain incomplete. The four application file lanes,
+both conversions, edited reopen and binary-DXF codec support remain open. Never inspect `build-asan/`.
 
 Historical v68 amendment: clarifies file-support acceptance and retains the v67 product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, with all four recorded product source/test hashes unchanged. The exact-membership `preflight-v67/` packet is PARTIAL provenance (latest packet-manifest SHA-256 `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`), not a formal gate receipt. The G4 hidden-cusp clearance proof and C50 correction remain normative: the cusp-only candidate is separated from all visible spans and must refuse as `OffCurve` before terminal/topology matching; B07 separately tests absence of a cusp `ReferenceTerminal`, and C36 retains fully witnessed `Topology` coverage. The five controls remain mandatory per slice: separate completeness and plan-correctness gates; frozen-tree implementation correctness; an executable, independently reviewed sub-plan/readiness decision; one validated product commit followed by its plan-only reconciliation; and a post-commit live-state audit/self-update before any successor. Slice A remains WAITING; G1 completeness, G1 plan correctness, Gate-3 readiness and activation are not passed. A/B/C baseline discovery remains zero and strict-core remains 61 matching normalized identities in Release/ASan; no registered tests ran. No product/test edit, build, JUnit execution, formal Gate PASS, readiness PASS or activation occurred. DXF read, DXF write, DWG read and DWG write are separate open application obligations; both conversion directions and the separate R14/R2018 binary-DXF codec obligation also remain open. Geometry-only checker evidence satisfies none.
 Historical v81 reconciled the six-path A scope, A14 selector, split-debit oracle, activation-bound test identities and post-edit validator. Its packet and review findings are preserved as immutable provenance; its live pointers are superseded below. The five control families and six gate decisions (G1a/G1b/G2/G3/G4/G5) remain independently recorded and fail-closed. §0.5 retains detailed leaf specifications and historical handoffs; §29 is the sole authority for the current gate state and immediate next action. Preserve the v81 and v80 packets/reviews, the v77 PARTIAL packet and invalid v79 draft. The four independent application obligations—DXF read, DXF write, DWG read and DWG write—plus both conversions and binary-DXF codec work remain later 1E gates.
@@ -437,7 +469,7 @@ build/test or product work.
 | 1A-1 | Closed forms, normalization, tolerance helpers and cache validation | C | S0 | 900 | partial — .a/.b-budget/.b-progress/.b-ref-frames/.b-ref-events-core/.b-ref-rate/.b-ref-events-critical/.b-ref-events-accounting/.b-ref-events-refine/.b-ref-critical-refine/.b-ref-providers/.b-ref-contacts/.b-ref-events-isolate/.b-ref-components/.b-check-layout/.b-check-bounds/.b-check-topology-local done; A-budget-depth, B-occurrence-terminals, C-global-topology-checker pending |
 | 1A-1.b-ref-components | Exact visibility and incidence-preserving components | C | .b-ref-events-isolate | 900 | done — `9682d5cac65f30cfd86aa10556678ceb88b1448b`, attempt-8 evidence, 2026-10-16 |
 | A-budget-depth | Shared budget, proof-depth, callback and capacity accounting | C | .b-check-layout, .b-check-bounds, .b-check-topology-local | 900+ | waiting — parent of A-core, A-strict, A-reference and A-cache under §114; no parent acceptance waived |
-| A-core | Atomic shared budget API and sticky state | C | A-budget-depth predecessors | 200 | blocked — v212 attempt-01 prep exposed deferred report parsing; no packet sealed, roots, activation, or source edits; §121 is the candidate recovery route |
+| A-core | Atomic shared budget API and sticky state | C | A-budget-depth predecessors | 200 | blocked — v213 attempt-01 is unsealed; v214-v217 plan reviews failed before commit; environment, exact packet authorization/sealing and activation freshness remain unresolved; no roots or source edits; §126 is the candidate recovery route |
 | A-strict | Strict-query dispatch, records, ordering, depth and exception ledger | C | A-core reconciliation/G5 | 500 | waiting; own complete card required |
 | A-reference | Critical/provider accounting, query adoption and paired graph publication | C | A-strict reconciliation/G5 | 500 | waiting; A08 production/A11 oracles remain required |
 | A-cache | Bounds/local split, coverage and inherited-depth accounting | C | A-reference reconciliation/G5 | 300 | waiting; A09 oracles remain required |
@@ -23766,9 +23798,10 @@ The provider's unique tangency proof
      each test-binary invocation. Only a complete baseline identity PASS authorizes edits to the exact three
      A-core source/test paths. No plan-only commit or G5 PASS alone authorizes product edits.
 
-121. **v213 A-core report-ordering blocker and fail-fast recovery (plan-only; non-activating).** This section is
-     the sole proposed A-core transition authority for the v213 candidate described at the top of this file. It
-     supersedes §120's consumed v212 attempt-01 route. It closes the concrete packet-preparation blocker without
+121. **v213 A-core report-ordering blocker and fail-fast recovery (plan-only; non-activating; superseded by §122).**
+     This section was the A-core transition authority for the v213 candidate. Its G5 PASS authorized packet prep;
+     the outcome is now frozen under §122, which supersedes this section's consumed attempt-01 route. It superseded
+     §120's v212 attempt-01 route and closed the concrete packet-preparation blocker without
      weakening §118's Catch2 package/link identity contract, the six-root isolation rule, the independent review
      gates, or the requirement that a complete passing baseline precede source edits.
 
@@ -23912,6 +23945,380 @@ The provider's unique tangency proof
      parent-A acceptance, A-strict/A-reference/A-cache, B/C topology, entity integration, DXF/DWG persistence,
      UI, Phase 2 and separately gated Phase 3 Trim retain their existing dependencies and remain blocked/waiting
      until their own predecessor reconciliation/G5 and readiness gates pass.
+
+122. **v214 A-core environment isolation and packet-seal recovery (plan-only; non-activating; precommit FAIL; superseded by §123).**
+     This section was the proposed A-core transition authority for v214. Its exact-byte review failed before commit;
+     §123 records and corrects those findings, superseding all v214 transition and activation routing below. The
+     v214 packet-preparation requirements remain the basis for the fresh candidate and retain §118's
+     package/link/executable identity checks, §121's immediate per-invocation report parsing and fail-fast
+     behavior, all independent review gates, and the rule that a complete passing baseline precedes product edits.
+
+     **Exact predecessor and authority actually consumed.** The direct predecessor is v213 commit
+     `75a1288dc706d42b300f6a37132a15e49b00c4dd`, parent `e43aabd97026556c9b146da86a327a88cd8841b8`, tree
+     `aacfab9ab654de2a0a5632ec43ebf6ae2366081d`, plan blob `8b21b074117f79d430af8fbc2d0c8dd5246e67c8`, and
+     raw SHA-256 `3d9779e535fb39e89acd0a43301123e1cc64909487cbfc910b84612fef822231`. Its precommit review PASS
+     is `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v213/precommit-review-01.txt`, SHA-256
+     `4cac3b6c3410208f15ed3d1888d2151dc091dd3590d8d174b24f2067737d5c33`; its exact G5 PASS is
+     `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v213/g5-auditor-report-01.txt`, SHA-256
+     `9c73a7b9a166073b0ba4a24608147e9932d4328172583fd7c8df56e3b4c131d6`. That G5 PASS authorized only
+     packet preparation in `leaves/v213/A-core/attempt-01/`. It did not authorize audit, G1a/G1b/G3, activation,
+     roots, builds, tests, discovery or implementation. Because this candidate changes the plan identity, the
+     v213 packet is historical only and cannot receive current approvals or be reused as a decision packet.
+
+     **Frozen v213 packet state.** Preserve
+     `build/evidence/1A-1.b-check-topology-chain/leaves/v213/A-core/attempt-01/` unchanged. The observed regular
+     files and hashes are:
+
+     | File | SHA-256 | Disposition |
+     |---|---|---|
+     | `card.json` | `11e7134cda77fa8bebbf26fdb63eef65b71c37add96be491e10d5332004269a1` | Unreviewed card; identity, environment and command contracts are not accepted. |
+     | `conditional-inputs.json` | `ebe979cb08b222f2c1e3764d411cf577790fefb7c03494be8635725d0ca34212` | Unsealed packet input declaration. |
+     | `inputs.sha256` | `935859b186622ea59407bbca775481465288373e3e5436c8b69e8e99c6a251d9` | Partial input manifest; not a packet seal. |
+     | `run_catch2_checked.py` | `c9d1f66c220e6e733dd7d58295bd3ddf22b9859ac2c59f3890ec5879a73fd535` | Unreviewed wrapper; ambient environment inheritance is unresolved. |
+     | `verifier-syntax.json` | `b5de03995978ffef6e860eb9296edc8f04d0fdcce06b4da6f71faae8e43d020c` | Static syntax receipt only; not independent verification. |
+     | `verify_catch2_link_identity.py` | `40a0b9507a779ffaa90f966c88c29a056aae0befeab5e88ebd8d31d3b9297f9a` | Unreviewed identity verifier. |
+     | `verify_packet.py` | `37dc79a843ada16abb77177f9b94a43e309bc9f1ebdb816cfa6727b01c4d5465` | Unreviewed packet verifier. |
+     | `verify_reports.py` | `3973a3b9b8da99421cdd940a2c2532257786ce9e3ad800d09c7188c2d615f4cc` | Unreviewed per-invocation report parser. |
+     | `__pycache__/verify_packet.cpython-315.pyc` | `d151466e8f68d19322b850a4962ca678ed291193b51e66e49b5882b02afb2257` | Unexpected generated file; violates declared exact membership. |
+
+     `packet-audit-inputs.json` and `packet-prep.sha256` do not exist, so this packet is unsealed and not ready for
+     independent audit. The static card check observed 42 ordered commands: 23 utility, 6 configure, 6 build and
+     7 Catch2 invocations. The recorded per-command maxima total 3,645 minutes (60h45): 23 utilities at 15 minutes
+     (345m), four CMake configure commands at 120 minutes (480m), four CMake build commands at 360 minutes
+     (1,440m), two qmake6 configure plus two qmake6 build commands at 240 minutes each (960m), and seven Catch2
+     commands at 60 minutes (420m). This is 135 minutes below the 63-hour planned ceiling and 675 minutes below the
+     72-hour hard cap.
+     These are coordinator-checked observations from an unreviewed card, not a command-budget approval. §121's
+     earlier 49-command/30-utility/62.5-hour figures were preliminary; neither set authorizes execution. The six
+     v213 roots are absent:
+     `/private/tmp/lc2961-v213-A-core-a01-baseline-release`,
+     `/private/tmp/lc2961-v213-A-core-a01-baseline-asan`,
+     `/private/tmp/lc2961-v213-A-core-a01-baseline-qmake6`,
+     `/private/tmp/lc2961-v213-A-core-a01-validation-release`,
+     `/private/tmp/lc2961-v213-A-core-a01-validation-asan`, and
+     `/private/tmp/lc2961-v213-A-core-a01-validation-qmake6`. No build, test, discovery or source edit ran; the
+     tracked product tree is unchanged.
+
+     **Blocker A — process environment is not bound.** `run_catch2_checked.py` copies the caller's full
+     `os.environ` and overlays `QT_QPA_PLATFORM=offscreen`, while the card records only that overlay. Therefore
+     `PATH`, locale, home/configuration, sanitizer settings, Qt plugin settings, loader variables and other ambient
+     inputs can affect the invocation without appearing in its identity receipt. A matching executable hash alone
+     does not make the test process reproducible. Do not accept an “approved environment” string as a substitute
+     for a concrete environment contract.
+
+     **Required environment contract for the fresh packet.** The new card must bind a sorted, duplicate-free map of
+     exact environment key/value pairs for every configure, build, utility, parser and Catch2 process. The wrapper
+     process itself (including its interpreter) and every descendant receive their own card-bound environment;
+     construct it only from that map. Never copy `os.environ`, inherit shell state, or silently inject defaults.
+     Variables absent from the map must be absent in that process. Parse JSON with duplicate-key rejection before
+     validating and canonicalizing the map; ordinary last-key-wins parsing is insufficient. Include only values
+     shown necessary by read-only toolchain/source inspection, including any PATH, Qt, sanitizer, locale, HOME/TMPDIR
+     or loader settings that are actually needed; bind literal values and their intended consumer. Reject unknown
+     or unbound overrides. Do not put credentials or machine-specific secrets in the card. Before packet audit,
+     statically verify environment construction and use a bounded local stub/harness to prove that an ambient
+     sentinel and unlisted variables do not reach the child while every listed value does. The harness must not
+     invoke a build-root executable. Any required variable that cannot be justified and bound is a G3 blocker;
+     amend the plan before sealing rather than inheriting it.
+
+     **Blocker B — verifier validation mutates packet membership.** The v213 static syntax step created
+     `__pycache__/verify_packet.cpython-315.pyc`, which is not one of the declared packet files. For the fresh
+     attempt, syntax-check with an in-memory parser/`compile` path (or another verified no-output method), not
+     `py_compile` or imports that emit bytecode. The packet verifier must compare the complete recursive entry
+     inventory with the declared member list and fail on extra files/directories, symlinks, special files, or
+     missing entries. Run the inventory check after every static validation and before sealing. Keep temporary
+     harness files and logs outside the packet directory unless explicitly declared and hashed.
+
+     **Fresh v214 precommit transition.** Apply the rows top-to-bottom; only the first matching row permits action.
+     A fully exact-bound review names the v214 raw SHA and every declared reviewer/source/evidence input.
+
+     | Predicate | Only permitted next action | Prohibited |
+     |---|---|---|
+     | One or more exact-current review requests are pending | Wait for all; if plan bytes change, obtain review for the new raw SHA. | Commit, packet/root creation, readiness, activation, baseline or source work. |
+     | No exact-current request is pending and any fully exact-bound review is FAIL/INVALID/unknown | Preserve it; prepare a new plan-only direct child of the latest verified commit that closes the finding, then review the new bytes. | Same-SHA override or execution. |
+     | No exact-current request is pending; no fully exact-bound negative exists; exact PASS exists; the one-path diff is exact | Commit only `docs/plan_offset_curve_2961.md` as a direct child of v213. | Multi-path commit or packet/root creation before exact v214 G5 PASS. |
+     | Exact PASS exists but the staged/worktree scope is not one path | Preserve unrelated changes; narrow the commit to the reviewed plan path and reverify scope. If plan bytes change, obtain review for the new raw SHA. | Multi-path commit or execution. |
+     | No exact-current request/decision exists and stale or incompletely bound requests/reports exist | Preserve and mark them non-authoritative; request independent review of unchanged exact bytes. | Treating stale/unbound material as a decision or editing a correctly identified plan solely to replace it. |
+     | No exact-current request, fully bound decision, stale request/report or unbound request/report exists | Request independent exact-byte review. | Commit or execution. |
+
+     **Fresh v214 post-commit transition.** Verify v214 ancestry, tree, plan blob/raw bytes, one-path scope,
+     product-base blobs and precommit report identity before routing. A fully exact-bound G5 binds that commit/tree/
+     blob/raw-SHA tuple and every declared input. Apply the first matching row:
+
+     | Predicate | Only permitted next action | Prohibited |
+     |---|---|---|
+     | One or more exact-bound v214 G5 requests are pending | Wait for all. | Plan edits, packet/root, readiness, activation, baseline or source work. |
+     | No exact-bound request is pending and any fully exact-bound G5 is FAIL/INVALID/unknown | Preserve it; make a plan-only direct child of committed v214 that closes the finding, then obtain fresh review/G5. | Same-commit override or execution. |
+     | No exact-bound request/decision exists and stale-bound requests are pending | Mark them non-authoritative; request exact-current G5 and wait. | Treating stale results as authority or creating a packet. |
+     | No exact-bound request/decision or stale request is pending; a completed G5 report has missing/mismatched bindings | Preserve it as non-authoritative; refresh declared inputs and request G5 for unchanged v214. | Editing a correctly identified plan solely to replace an unbound report or creating a packet. |
+     | No exact-bound request/decision, stale request or completed report exists | Request independent G5 for exact v214 commit/tree/blob/raw SHA and all declared inputs. | Packet/root creation, readiness, activation, baseline or source work. |
+     | Exact-bound G5 PASS exists; all identities match; no exact-bound request or terminal negative exists | Prepare only the wholly fresh v214 attempt-01 packet. | Reusing v213 files/hashes/decisions or creating roots. |
+
+     **Fresh packet acceptance and execution gates.** Re-derive all source, registration, test, compiler, tool,
+     package and product-base identities from current committed state. Bind the exact v214 commit/tree/blob/raw SHA,
+     v214 precommit/G5 receipts, all declared inputs, the three authorized A-core paths, requirement-to-oracle
+     crosswalk, command ledger, environment map and every packet member. Rebuild the packet; do not copy its
+     manifests, hashes, reviews, syntax receipt or card from v213. `packet-audit-inputs.json` must declare the exact
+     member set and hashes, excluding its own self-hash; `inputs.sha256` must match its declared external inputs
+     exactly. `packet-prep.sha256` must hash every other packet file, including `packet-audit-inputs.json`, and
+     exclude only itself to avoid a circular digest. The independent audit report outside the packet directory
+     must record the packet-prep file's digest and verify the complete directory inventory. Seal only after code,
+     environment harness, syntax checks, member inventory and arithmetic are frozen. Any byte change invalidates
+     the affected seals/reviews.
+
+     Independently recount literal command entries and all nested wrapper/parser work. Reconcile command count,
+     command classes, test invocation IDs/order, root paths and all maxima; the observed v213 numbers above are
+     comparison data only. Stay at or below 63 hours of planned maxima and 72 hours hard cap, retaining at least
+     nine hours between the planned ceiling and hard cap. If environment isolation, parsers or required checks push
+     the literal total above either ceiling, stop for another plan-only amendment and fresh review/G5; do not trim
+     required validation or silently increase limits.
+
+     Use only six new roots `/private/tmp/lc2961-v214-A-core-a01-<phase>-<lane>` (`phase` is `baseline` or
+     `validation`; `lane` is `release`, `asan` or `qmake6`); verify all six full paths are absent before activation.
+     After fresh packet audit, obtain exact-identity G1a completeness, G1b correctness and G3 readiness; then make
+     and independently audit a separate activation receipt. Recheck source/toolchain/card/environment/verifier
+     identities immediately before activation and recheck the expected root state at each ordered command. Only
+     after activation PASS may the six roots be created and only the frozen ordered commands run; wrappers must
+     hash the current test executable immediately before spawn, pass only the card environment, parse each
+     invocation's own result before returning, write a receipt atomically and stop on first error. Any packet-audit,
+     G1a, G1b or G3 FAIL/INVALID/stale/unknown result or unresolved choice keeps roots and source work blocked;
+     repair the relevant packet/plan identity and refresh every affected review before continuing. A complete
+     passing baseline identity, discovery and report reconciliation is still required before Gibbs starts edits to
+     exactly the three paths listed in §121. No plan/G5/packet PASS by itself authorizes product implementation.
+     A-core and every dependent topology, entity, DXF/DWG, UI, Phase 2 and Phase 3 Trim item remain blocked/waiting
+     until their own gates pass.
+
+123. **v215 exact-binding and activation-gate correction (plan-only; non-activating; precommit FAIL; superseded by §124).**
+     This section was the proposed A-core transition authority for v215 and responded to the v214 exact-byte
+     precommit FAIL. Its own exact-byte review failed on two remaining transition-predicate overlaps; §124 records
+     those findings and supersedes this section's transition logic. The v214 environment-isolation, packet-
+     membership, hash-sealing, immediate-parser and budget requirements from §122 remain in force.
+
+     **Immutable v214 review record.** No v214 plan commit or G5 decision exists. The reviewed candidate raw SHA
+     was `2369cf557b234fc344e25052efb0b18ecc3631382a5c01242d054b126a78cf18`; its exact precommit FAIL is
+     `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v214/precommit-review-01.txt`, SHA-256
+     `0ba75e90751521603cff4f6d317979cd1b496f4403e3ad1f251db0dae65da952`. Its exact bytes are also preserved at
+     `/private/tmp/lc2961-plan-candidate-v214.md`. The reviewer verified §122's nine regular packet-file hashes,
+     ambient-environment finding, missing packet audit/seal files, unexpected bytecode file, 42-command ledger,
+     3,645-minute arithmetic and six absent v213 roots. The review failed only on transition-table and activation
+     prerequisites; preserve its report and snapshot unchanged. It grants no commit, packet, root, readiness,
+     activation, baseline, build, test, discovery or source-edit authority.
+
+     **Correction 1 — precommit PASS means fully exact-bound PASS.** A review decision is fully exact-current only
+     when it binds the candidate's exact raw SHA and all declared reviewer, product/source-base, tool, packet and
+     evidence inputs. Apply the precommit rows below top-to-bottom; only the first matching row permits action:
+
+     | Predicate | Only permitted next action | Prohibited |
+     |---|---|---|
+     | One or more exact-current v215 review requests are pending | Wait for all; any edit requires review of the new raw SHA. | Commit, packet/root creation, readiness, activation, baseline or source work. |
+     | No exact-current request is pending and any fully exact-bound review is FAIL/INVALID/unknown | Preserve it; make a new plan-only direct child of the latest verified commit closing the finding, then review the new bytes. | Same-SHA override or execution. |
+     | No exact-current request is pending; no fully exact-bound negative exists; a fully exact-bound PASS covers the current raw SHA and every declared input; one-path scope is exact | Commit only `docs/plan_offset_curve_2961.md` as a direct child of v213. | Multi-path commit or packet/root creation before exact v215 G5 PASS. |
+     | The exact-bound PASS exists but staged/worktree scope is not one path | Preserve unrelated changes; narrow the commit to the reviewed plan path and reverify. If plan bytes change, obtain review for the new raw SHA. | Multi-path commit or execution. |
+     | No exact-current request/decision exists and stale or incompletely bound requests/reports exist | Preserve and mark them non-authoritative; request independent review of unchanged exact bytes. | Treating stale/unbound material as a decision or editing correctly identified bytes solely to replace it. |
+     | No exact-current request, fully bound decision, stale request/report or unbound request/report exists | Request independent review of exact current bytes. | Commit or execution. |
+
+     **Correction 2 — every G5 request has a disposition.** After verifying v215 ancestry, tree, plan blob/raw
+     bytes, one-path scope, product-base blobs and precommit identity, a fully exact-bound G5 request/report must
+     bind the same commit/tree/blob/raw-SHA tuple and every declared input. Apply these post-commit rows
+     top-to-bottom; only the first matching row permits action:
+
+     | Predicate | Only permitted next action | Prohibited |
+     |---|---|---|
+     | One or more fully exact-bound v215 G5 requests are pending | Wait for all exact-bound requests. | Plan edits, packet/root creation, readiness, activation, baseline or source work. |
+     | No exact-bound request is pending and any fully exact-bound v215 G5 is FAIL/INVALID/unknown | Preserve it; prepare a plan-only direct child of committed v215 closing the finding, then obtain fresh review/G5. | Same-commit override or execution. |
+     | A fully exact-bound PASS exists, all identities match, no exact-bound request is pending, and no fully exact-bound terminal negative exists | Prepare only a wholly fresh `leaves/v215/A-core/attempt-01/` packet. | Reusing v213/v214 files or decisions; creating roots. |
+     | No exact-bound PASS/negative/request exists, and a pending request names the current v215 commit tuple but has missing or mismatched declared-input bindings | Preserve it as non-authoritative; request a replacement fully bound to the complete declared input set. Ignore any later unbound result as a decision. | Treating the incomplete request as pending exact authority, issuing a packet audit, or creating roots. |
+     | No exact-bound PASS/negative/request exists and one or more stale-bound G5 requests are pending | Mark them non-authoritative; request exact-current G5 and wait for fully bound results. | Treating stale results as authority or creating a packet. |
+     | No exact-bound PASS/negative/request or stale-bound pending request exists, and a completed report has missing/mismatched bindings | Preserve it as non-authoritative; refresh declared inputs and request G5 for unchanged v215. | Editing a correctly identified plan solely to replace an unbound report or creating a packet. |
+     | No G5 request or report exists for v215 | Request independent G5 for exact v215 commit/tree/blob/raw SHA and all declared inputs. | Packet/root creation, readiness, activation, baseline or source work. |
+
+     A completed unbound report is non-authoritative even if it says PASS; a request with an incomplete binding is
+     not an exact-current pending request. A fully bound terminal negative always blocks the packet row. Stale or
+     incomplete requests/reports cannot override a fully bound exact-current PASS, but no packet is permitted while
+     a fully exact-bound request remains pending.
+
+     **Correction 3 — activation has four explicit prerequisites.** After the fresh packet is sealed and independently
+     audited, the packet audit, G1a completeness, G1b correctness and G3 readiness decisions must each be PASS and
+     bind the same exact v215 packet/card/tool/source identity. There must be no pending review for that identity,
+     FAIL/INVALID/unknown decision for that identity, or unresolved design choice; stale historical reports are
+     preserved but are not decisions for this packet. If any prerequisite is missing, non-PASS, mismatched or
+     pending, do not create an activation receipt, request an activation audit, attempt activation, create roots or
+     edit source. Correct the relevant plan/packet and refresh every affected decision first.
+
+     Only after all four prerequisite PASS results are verified may the separate activation receipt be created,
+     binding those exact reports, packet hashes, current source/toolchain state and the six-root absence proof. An
+     independent activation audit must then return exact-bound PASS. A pending, failed, invalid, stale, unknown or
+     mismatched activation audit leaves activation and root creation prohibited. Only its PASS authorizes activation;
+     recheck all six full paths are absent immediately before activation, then create roots solely through the frozen
+     command ledger. Use only `/private/tmp/lc2961-v215-A-core-a01-<phase>-<lane>` with `phase` `baseline` or
+     `validation` and `lane` `release`, `asan` or `qmake6`. Recheck expected root state and immutable source/tool/
+     packet identities at each command. The established immediate executable rehash, per-invocation report parsing,
+     atomic receipts, fail-fast behavior, 63-hour planned ceiling and 72-hour hard cap remain mandatory. A complete
+     passing baseline identity, discovery and report reconciliation is still required before Gibbs edits only the
+     three paths named in §121. No review, G5, packet, or readiness PASS alone authorizes activation or implementation.
+
+124. **v216 disjoint review/G5 routing correction (plan-only; non-activating; precommit FAIL; superseded by §125).**
+     This section was the proposed A-core transition authority for v216 and responded to the exact-byte v215
+     precommit FAIL. Its exact-byte review closed the predicate-overlap findings but found the root-absence proof
+     could become stale before activation; §125 records that finding and supersedes this section's activation
+     sequence. The disjoint review/G5 routing rules and packet requirements in this section remain normative.
+
+     **Immutable v215 review record.** No v215 plan commit or G5 decision exists. Candidate raw SHA-256 was
+     `d9c63f2e3cc55ab7f8940915fdf0453fbe0895c99008ed79af5bc94c6172480c`; exact precommit FAIL is
+     `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v215/precommit-review-01.txt`, SHA-256
+     `eaf350815b5ffe58fedb944f74b748fd02cf41677dfa9846cf4d7ca6ac95dfcc`. The exact bytes are preserved at
+     `/private/tmp/lc2961-plan-candidate-v215.md`. The report confirmed that the v214 review's PASS-binding,
+     incomplete G5 request and activation-gate findings were addressed. Its remaining findings were (1) the
+     precommit scope-repair row did not repeat all fully-bound PASS/no-pending/no-negative predicates and (2) the
+     incomplete-current-tuple G5 row overlapped stale-request and unbound-report rows. Preserve the report and
+     snapshot unchanged; they authorize no commit, packet, root, readiness, activation, baseline or source work.
+
+     **Disjoint precommit state table.** A fully exact-current review PASS binds the current raw plan SHA and every
+     declared reviewer, product/source-base, tool and evidence input. Evaluate rows top-to-bottom; each row includes
+     all predicates needed for its outcome:
+
+     | Predicate | Only permitted next action | Prohibited |
+     |---|---|---|
+     | At least one exact-current v216 review request is pending | Wait for all exact-current requests; edits require review of the new raw SHA. | Commit, packet/root creation, readiness, activation, baseline or source work. |
+     | No exact-current request is pending and at least one fully exact-bound v216 review is FAIL/INVALID/unknown | Preserve it; create a new plan-only direct child of the latest verified commit closing the finding, then review the new bytes. | Same-SHA override or execution. |
+     | No exact-current request is pending; no fully exact-bound negative exists; a fully exact-bound PASS covers the current raw SHA and every declared input; one-path scope is exact | Commit only `docs/plan_offset_curve_2961.md` as a direct child of v213. | Multi-path commit or packet/root creation before exact v216 G5 PASS. |
+     | No exact-current request is pending; no fully exact-bound negative exists; the same fully exact-bound PASS covers the current raw SHA and every declared input; staged/worktree scope is not one path | Preserve unrelated changes; narrow the commit to the reviewed plan path and reverify scope without changing plan bytes. If bytes change, obtain review for the new raw SHA. | Multi-path commit or execution. |
+     | No exact-current request or fully exact-bound decision exists, and one or more stale/incompletely bound review requests or reports exist | Preserve and mark all such items non-authoritative; request independent review of unchanged current bytes. | Treating them as decisions or editing correctly identified bytes solely to replace them. |
+     | No review request or report exists for v216 | Request independent exact-byte review. | Commit or execution. |
+
+     **Disjoint post-commit G5 state table.** Before routing, verify v216 ancestry, tree, plan blob/raw bytes,
+     one-path scope, product-base blobs and precommit report identity. A fully exact-bound G5 request/report binds
+     that same commit/tree/blob/raw-SHA tuple and every declared input. Evaluate rows top-to-bottom; the state
+     classes below are mutually exclusive:
+
+     | Predicate | Only permitted next action | Prohibited |
+     |---|---|---|
+     | At least one fully exact-bound v216 G5 request is pending | Wait for all exact-bound requests. | Plan edits, packet/root creation, readiness, activation, baseline or source work. |
+     | No exact-bound request is pending and at least one fully exact-bound v216 G5 decision is FAIL/INVALID/unknown | Preserve it; create a plan-only direct child of committed v216 closing the finding, then obtain fresh review/G5. | Same-commit override or execution. |
+     | No exact-bound request is pending; no fully exact-bound negative exists; a fully exact-bound PASS matches every declared input and the v216 commit/tree/blob/raw-SHA tuple | Prepare only a wholly fresh `leaves/v216/A-core/attempt-01/` packet. | Reusing v213/v214/v215 files or decisions; creating roots. |
+     | No exact-bound request, PASS or negative decision exists, and one or more non-authoritative G5 items exist | Preserve and classify every item: pending requests for the current tuple with missing/mismatched input bindings, stale-bound pending requests, and completed stale/unbound/mismatched reports. Request a replacement G5 fully bound to the complete current input set. | Treating any such item as authority, issuing packet audit, or creating roots. |
+     | No v216 G5 request or report exists | Request independent G5 for the exact v216 commit/tree/blob/raw SHA and all declared inputs. | Packet/root creation, readiness, activation, baseline or source work. |
+
+     The composite non-authoritative row is deliberately used when incomplete current-tuple requests coexist with
+     stale requests or unbound reports; it preserves and routes all of them together rather than selecting
+     competing dispositions. A completed unbound PASS is not a decision. A fully exact-bound PASS may advance only
+     after all exact-bound requests have resolved and no fully bound terminal negative exists; stale or incomplete
+     items cannot override it. No result without complete bindings can satisfy the packet predicate.
+
+     **Activation chain remains fail-closed.** The packet must be sealed and the packet audit, G1a completeness,
+     G1b correctness and G3 readiness must each PASS for the same exact packet/card/tool/source identity before an
+     activation receipt may be created. No pending review for that identity, FAIL/INVALID/unknown decision for
+     that identity, or unresolved design choice may remain. Otherwise do not create the receipt, request an
+     activation audit, activate, create roots or edit source. After those four PASS results, create the separate
+     activation receipt and bind those reports, packet seals, current source/toolchain state and proof that all six
+     `/private/tmp/lc2961-v216-A-core-a01-<phase>-<lane>` roots are absent (`phase`: `baseline` or `validation`;
+     `lane`: `release`, `asan` or `qmake6`). Obtain an independent exact-bound activation-audit PASS before
+     activation or root creation. Any pending, failed, invalid, stale, unknown or mismatched activation audit keeps
+     both prohibited. After activation-audit PASS, create roots only through the frozen ledger, rechecking expected
+     root and immutable identity state at each command. Section §122's 63-hour planned ceiling, 72-hour hard cap,
+     clean environment, immediate executable hash, per-invocation parser, durable atomic receipt and fail-fast
+     requirements remain mandatory. A complete passing baseline identity/discovery/report reconciliation is still
+     required before Gibbs edits exactly the three paths in §121; no plan/review/G5/packet/readiness PASS alone
+     authorizes implementation.
+
+125. **v217 activation root-freshness correction (plan-only; non-activating; precommit FAIL; superseded by §126).**
+     This section was the proposed A-core transition authority for v217 and responded to the exact-byte v216
+     precommit FAIL. Its review closed the stale-root-proof finding but found that it did not authorize creation of
+     a fresh v217 packet after G5; §126 records and closes that finding. The root-freshness and activation sequence
+     defined here remain required with v218 paths and identities rebound under §126.
+
+     **Immutable v216 review record.** No v216 plan commit or G5 decision exists. Its reviewed raw SHA-256 was
+     `757e5aaa9c7564873dc4a8e20c81833c230b2ba82138ac81db8800d463b7f9e1`; exact precommit FAIL is
+     `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v216/precommit-review-01.txt`, SHA-256
+     `af06006494f9cdb19af33ac4f97a8b48f8de30c103d74e90b343ab79d967a277`. Its exact bytes are preserved at
+     `/private/tmp/lc2961-plan-candidate-v216.md`. The review confirmed the v215 predicate findings were closed
+     and the activation receipt/audit prerequisites were correctly gated; it found only that §124 did not repeat
+     the six-path absence check immediately before activation. Preserve the report and snapshot; they authorize no
+     commit, packet, root, readiness, activation, baseline, build, test, discovery or source work.
+
+     **Required fresh root-state gate.** Keep §124's order: packet audit, G1a, G1b and G3 exact-identity PASS;
+     then activation receipt; then independent exact-bound activation-audit PASS. Immediately after observing that
+     activation-audit PASS, run a dedicated, card-listed root-state verifier as the very next command before any
+     activation or root creation. It must inspect all six exact full paths with a no-follow/lexists check so a
+     directory, file, symlink (including broken symlink), or other entry counts as present. The paths are
+     `/private/tmp/lc2961-v217-A-core-a01-baseline-release`,
+     `/private/tmp/lc2961-v217-A-core-a01-baseline-asan`,
+     `/private/tmp/lc2961-v217-A-core-a01-baseline-qmake6`,
+     `/private/tmp/lc2961-v217-A-core-a01-validation-release`,
+     `/private/tmp/lc2961-v217-A-core-a01-validation-asan`, and
+     `/private/tmp/lc2961-v217-A-core-a01-validation-qmake6`. Bind its literal paths, command, tool identity,
+     output and PASS receipt to the exact activation audit, card and packet; include the command and its maximum in
+     the frozen ledger/budget. There may be no intervening command or manual action between this absence PASS and
+     activation. If any path is present, uninspectable, or changes identity, stop: do not activate, delete, reuse,
+     or silently rename roots. Preserve evidence and prepare a new plan-only candidate with fresh root names and
+     review/G5 bindings.
+
+     Only the exact activation-audit PASS plus this immediate six-path absence PASS authorizes activation. After
+     activation, create roots solely through the frozen ledger. Before each creation command, verify its target is
+     still absent and all other roots have the expected state; before later commands, verify the selected root is
+     the one created by this attempt and the other five remain absent until their planned creation. Card-list every
+     subsequent root-state check as a bounded utility with unique logs/receipt and include its maximum in the budget.
+     Any unexpected path state stops the sequence without cleanup or reuse. The immutable source/toolchain/packet identities,
+     clean process environments, immediate executable rehash, per-invocation parser, atomic receipts, fail-fast
+     behavior, baseline identity/report reconciliation, 63-hour planned ceiling and 72-hour hard cap remain
+     required. No root, build, test, discovery or source edit is authorized until the exact current v217 review,
+     commit/G5, packet audit, G1a/G1b/G3, activation receipt and activation audit gates have passed in order.
+
+126. **v218 G5-to-packet authorization and identity rebinding (plan-only; non-activating).** This direct-child
+     candidate of committed v213 responds to the v217 exact-byte precommit FAIL. It preserves §122's environment,
+     exact-membership, hash-sealing, immediate-parser and budget contract; §124's disjoint review/G5 state classes;
+     and §125's immediate post-audit six-root freshness check. It rebinds every still-live route to v218 and adds the
+     missing explicit authorization to prepare a fresh packet only after v218 receives fully exact-bound G5 PASS.
+     This section is the sole proposed A-core transition authority for v218 if it passes exact-byte review, is
+     committed as one path, and receives exact-bound G5 PASS.
+
+     **Immutable v217 review record.** No v217 plan commit or G5 decision exists. Its candidate raw SHA-256 was
+     `1f0dc7fecfa12c3e46a79004536af7d88206a3eb05191a76999178ad24c442b5`; exact precommit FAIL is
+     `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v217/precommit-review-01.txt`, SHA-256
+     `f4bcc01e630c4471f40b9a999606d9de4fce225a07b614222821f064fc9baa49`. Its exact bytes are preserved at
+     `/private/tmp/lc2961-plan-candidate-v217.md`. The review confirmed §125's immediate six-path absence check
+     closes the v216 freshness finding, then found that no post-G5 row authorized a fresh v217 packet. Preserve its
+     report and snapshot; they authorize no commit, packet, root, readiness, activation, baseline, build, test,
+     discovery or source work.
+
+     **Exact v218 post-commit G5 routing.** Verify v218 ancestry, tree, plan blob/raw bytes, one-path scope,
+     product-base blobs and fully exact-bound precommit PASS before G5 routing. Every exact-bound request/report
+     must bind the same v218 commit/tree/blob/raw-SHA tuple and all declared inputs. Apply the first matching row;
+     the cases are disjoint:
+
+     | Predicate | Only permitted next action | Prohibited |
+     |---|---|---|
+     | At least one fully exact-bound v218 G5 request is pending | Wait for all exact-bound requests. | Plan edits, packet/root creation, readiness, activation, baseline or source work. |
+     | No exact-bound request is pending and at least one fully exact-bound v218 G5 is FAIL/INVALID/unknown | Preserve it; prepare a plan-only direct child of committed v218 closing the finding, then obtain fresh review/G5. | Same-commit override or execution. |
+     | No exact-bound request is pending; no fully exact-bound terminal negative exists; a fully exact-bound PASS matches the v218 tuple and every declared input | Prepare only a wholly fresh packet at `build/evidence/1A-1.b-check-topology-chain/leaves/v218/A-core/attempt-01/`. | Reusing v213-v217 packet files/decisions or creating roots. |
+     | No exact-bound request, PASS or negative decision exists, and one or more non-authoritative G5 requests/reports exist | Preserve and classify all items, including incomplete current-tuple requests, stale-bound pending requests and completed stale/unbound/mismatched reports; request a replacement fully bound to the complete v218 input set. | Treating any such item as authority, creating a packet, or creating roots. |
+     | No v218 G5 request or report exists | Request independent G5 for the exact v218 commit/tree/blob/raw SHA and all declared inputs. | Packet/root creation, readiness, activation, baseline or source work. |
+
+     Only the fully exact-bound PASS row authorizes fresh packet preparation. Create the complete v218 packet from
+     current committed source/tool/package identities at that exact directory; bind v218 review/G5 receipts, exact
+     source paths, requirement-to-oracle mapping, explicit clean environment, all verifiers/wrappers, command ledger,
+     root-state verifier and every declared input. No v213-v217 card, manifest, wrapper, syntax receipt, hash, or
+     approval is reusable. Apply §122's non-circular seal rules and exact recursive member inventory. The packet
+     audit, G1a, G1b and G3 must all independently PASS the same v218 packet identity before an activation receipt
+     may be created; §123/§124/§125's activation gates are carried forward only with current v218 identities.
+
+     **v218 root and activation identity.** Replace every v216/v217 root reference in inherited activation text
+     with exactly these six fresh paths:
+     `/private/tmp/lc2961-v218-A-core-a01-baseline-release`,
+     `/private/tmp/lc2961-v218-A-core-a01-baseline-asan`,
+     `/private/tmp/lc2961-v218-A-core-a01-baseline-qmake6`,
+     `/private/tmp/lc2961-v218-A-core-a01-validation-release`,
+     `/private/tmp/lc2961-v218-A-core-a01-validation-asan`, and
+     `/private/tmp/lc2961-v218-A-core-a01-validation-qmake6`. All six must be absent before activation receipt
+     creation and proved absent again by the card-listed, no-follow verifier immediately after exact activation-
+     audit PASS and as the very next command before activation. Bind its output to the exact v218 packet/card and
+     activation audit. Presence, inability to inspect, identity drift, or any intervening action blocks activation;
+     do not delete or reuse a path. After activation-audit and fresh absence PASS, create roots only through the
+     frozen v218 ledger, with every subsequent root-state check card-listed, logged and budgeted as §125 requires.
+     Roots remain forbidden before activation-audit PASS. Preserve §122's command/time ceilings, no-build-root
+     inspection rule, immediate executable rehash, immediate per-invocation parser, atomic receipts and fail-fast
+     contract. A complete passing baseline identity, discovery and report reconciliation is still required before
+     Gibbs edits exactly the three paths named in §121. No v218 review/G5/packet/audit/readiness PASS alone
+     authorizes activation or implementation.
 
 119. **v211 committed-plan G5 recovery and disjoint routing (plan-only; non-activating).** This direct child of
      committed v210 closes the two exact G5 findings in §118's successor audit. It does not alter §118's corrected
