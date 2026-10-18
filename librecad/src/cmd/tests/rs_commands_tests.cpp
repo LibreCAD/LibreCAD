@@ -22,6 +22,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <QFile>
+#include <QScopeGuard>
 #include <QTemporaryDir>
 #include <QSettings>
 #include <QTextStream>
@@ -79,7 +80,55 @@ TEST_CASE("Line gap commands start Line Gap, not Break/Divide", "[commands]") {
     (void)lc::test::application();
 
     CHECK(RS_COMMANDS->cmdToAction("gapline") == RS2::ActionModifyLineGap);
+    CHECK(RS_COMMANDS->cmdToAction("gl") == RS2::ActionModifyLineGap);
     CHECK(RS_COMMANDS->keycodeToAction("gl") == RS2::ActionModifyLineGap);
     CHECK(RS_COMMANDS->cmdToAction("breakdivide") == RS2::ActionModifyBreakDivide);
+    CHECK(RS_COMMANDS->cmdToAction("bd") == RS2::ActionModifyBreakDivide);
+    CHECK(RS_COMMANDS->keycodeToAction("bd") == RS2::ActionModifyBreakDivide);
+}
+
+TEST_CASE("Line gap aliases survive saving and respect user overrides", "[commands]") {
+    (void)lc::test::application();
+
+    QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    QFile aliasFile(dir.filePath("librecad.alias"));
+    const auto loadAlias = [&aliasFile](const QByteArray& contents) {
+        if (!aliasFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) return false;
+        const bool written = aliasFile.write(contents) == contents.size();
+        aliasFile.close();
+        if (!written) return false;
+        RS_COMMANDS->updateAlias();
+        return true;
+    };
+    const QString oldCommand = RS_COMMANDS->getCommandForAction(RS_COMMANDS->cmdToAction("gl", false));
+    REQUIRE(!oldCommand.isEmpty());
+    const QVariant oldDir = RS_SETTINGS->getSettings()->value("/Paths/OtherSettingsDir");
+    LC_SET_ONE("Paths", "OtherSettingsDir", dir.path());
+    const auto restore = qScopeGuard([&] {
+        loadAlias("gl\t" + oldCommand.toUtf8() + '\n');
+        const auto groupGuard = RS_SETTINGS->beginGroupGuard("Paths");
+        if (oldDir.isValid()) RS_SETTINGS->write("OtherSettingsDir", oldDir);
+        else RS_SETTINGS->remove("OtherSettingsDir");
+    });
+
+    RS_COMMANDS->updateAlias();
+    REQUIRE(aliasFile.open(QIODevice::ReadOnly));
+    CHECK(aliasFile.readAll().contains("gl\tgapline\n"));
+    aliasFile.close();
+    RS_COMMANDS->updateAlias();
+    CHECK(RS_COMMANDS->cmdToAction("gl") == RS2::ActionModifyLineGap);
+    CHECK(RS_COMMANDS->keycodeToAction("gl") == RS2::ActionModifyLineGap);
+
+    // Existing generated aliases cannot be distinguished from user overrides.
+    REQUIRE(loadAlias("gl\tbreakdivide\n"));
+    CHECK(RS_COMMANDS->cmdToAction("gapline") == RS2::ActionModifyLineGap);
+    CHECK(RS_COMMANDS->cmdToAction("gl") == RS2::ActionModifyBreakDivide);
+    CHECK(RS_COMMANDS->keycodeToAction("gl") == RS2::ActionModifyBreakDivide);
+
+    REQUIRE(loadAlias("gl\tgapline\n"));
+    CHECK(RS_COMMANDS->cmdToAction("gl") == RS2::ActionModifyLineGap);
+    CHECK(RS_COMMANDS->keycodeToAction("gl") == RS2::ActionModifyLineGap);
+    CHECK(RS_COMMANDS->cmdToAction("bd") == RS2::ActionModifyBreakDivide);
     CHECK(RS_COMMANDS->keycodeToAction("bd") == RS2::ActionModifyBreakDivide);
 }
