@@ -4,6 +4,7 @@
 
 #include <memory>
 
+#include <QScopeGuard>
 #include <QtTest>
 #include <QtWidgets>
 
@@ -17,6 +18,7 @@
 #include "qg_dlghatch.h"
 #include "rs_block.h"
 #include "rs_circle.h"
+#include "rs_commands.h"
 #include "rs_creation.h"
 #include "rs_debug.h"
 #include "rs_fileio.h"
@@ -144,6 +146,41 @@ private slots:
         QVERIFY(line->isSelected());
         selection.deselectAll();
         QVERIFY(!line->isSelected());
+    }
+
+    void lineGapCommands()
+    {
+        QCOMPARE(RS_COMMANDS->cmdToAction("gapline", false), RS2::ActionModifyLineGap);
+        QCOMPARE(RS_COMMANDS->cmdToAction("gl", false), RS2::ActionModifyLineGap);
+        QCOMPARE(RS_COMMANDS->keycodeToAction("gl"), RS2::ActionModifyLineGap);
+        QCOMPARE(RS_COMMANDS->cmdToAction("breakdivide", false), RS2::ActionModifyBreakDivide);
+        QCOMPARE(RS_COMMANDS->cmdToAction("bd", false), RS2::ActionModifyBreakDivide);
+        QCOMPARE(RS_COMMANDS->keycodeToAction("bd"), RS2::ActionModifyBreakDivide);
+    }
+
+    void lineGapSavedAlias()
+    {
+        QFile aliases(RS_SYSTEM->getAppDataDir() + "/librecad.alias");
+        QVERIFY(aliases.open(QIODevice::ReadOnly));
+        const QByteArray original = aliases.readAll();
+        aliases.close();
+        const auto writeAlias = [&aliases](const QByteArray& contents) {
+            if (!aliases.open(QIODevice::WriteOnly | QIODevice::Truncate)) return false;
+            const bool written = aliases.write(contents) == contents.size();
+            aliases.close();
+            RS_COMMANDS->updateAlias();
+            return written;
+        };
+        const auto restore = qScopeGuard([&] { writeAlias(original); });
+
+        // Saved aliases remain authoritative, including defaults from older builds.
+        QVERIFY(writeAlias("gl\tbreakdivide\n"));
+        QCOMPARE(RS_COMMANDS->cmdToAction("gapline", false), RS2::ActionModifyLineGap);
+        QCOMPARE(RS_COMMANDS->cmdToAction("gl", false), RS2::ActionModifyBreakDivide);
+        QCOMPARE(RS_COMMANDS->keycodeToAction("gl"), RS2::ActionModifyBreakDivide);
+
+        QVERIFY(writeAlias("gl\tgapline\n"));
+        lineGapCommands();
     }
 
     void hyperbolaIntersections_data()
