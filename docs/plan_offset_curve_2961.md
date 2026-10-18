@@ -24,17 +24,25 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–3
 
-**Current revision v207 candidate (plan-only; non-activating).** This uncommitted direct-child correction addresses
-the blocked A-core readiness packet. Its predecessor is committed v206 `7afcf90f8b04dafac7358309859bfbdd4eebc451`,
-parent `ddfe84c77fc5a8ab355c46f8f78a36229471960a`, tree `796fee7f0beaa13be3dbd851c77ff41be97edd9b`, plan blob
-`4e89052892b8aefd9e533c7e413b1a1a77bb09e7`, raw SHA-256
-`2e41b0092fa9e4181f57fa93f6ff2668c54edf72c56841ba553ec17938152a47`. Exact v206 G5 PASS is
-`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v206/g5-auditor-report.txt`, SHA-256
-`3d9448234ae01544bbd0397f65c7d29cc862c470713a92526a2b2f68eccad7b2`. The v207 commit and G5 do not exist yet.
-Until a reviewed v207 plan-only commit receives its exact G5 PASS, §114 remains the last committed authority; after
-that, §115 is the sole current A-core transition authority. The v206 packet/reviews remain immutable, failed
-readiness evidence and are not carried forward as v207 approvals. Product base remains
-`9c06e9c77b313b62cc20e9ec39c22952fee501f2`; do not inspect `build-asan/`.
+**Current revision v208 candidate (plan-only; non-activating).** This uncommitted direct child corrects the
+v207 A-core oracle/member blockers. Its last committed predecessor is v207 `1c16d67f1b0f699777e5c95959b3612bb2f0b9a2`,
+parent v206 `7afcf90f8b04dafac7358309859bfbdd4eebc451`, tree `4c50e6e6f9e33f7c9593be7630624482c41f226e`, plan
+blob `e1f3b8a5218a69a3d23b9dd4b397e1dcbf450d5c`, raw SHA-256
+`842b6cb4fbcaa12f21e3dd804cc91743bb97dab76ec27ea71f2532dde08f0146`. Exact v207 G5 PASS is
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v207/g5-auditor-report.txt`, SHA-256
+`4706589f1217129efd8f511b423a5bf4a5ba14b8607383afba0dd2166a9184c1`. The v207 attempt-01 packet has G1a PASS,
+G1b FAIL and G3 PASS; §116 binds all six immutable artifact/report hashes. v207's local packet audit does not
+override G1b FAIL. Until this v208 draft is independently reviewed, committed plan-only and receives exact v208 G5
+PASS, v207/§115 remains the last committed authority and the only permitted action is this plan-checkpoint cycle.
+After v208 G5 PASS, §116 is the sole live A-core transition authority and requires a fresh v208 attempt-02; no
+v207 readiness receipt carries forward. All older revision/status/handoff blocks below are historical snapshots,
+even where their original text says “current” or “next”; they do not supersede this header or §116. Product base
+remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; do not inspect `build-asan/`.
+
+**Historical revision v207 (plan-only; committed; non-activating).** It corrected the v206 readiness blockers and
+passed G5, but its fresh A-core attempt-01 packet received G1a PASS, G1b FAIL and G3 PASS. Preserve its commit,
+packet and reports as bound history; its G1b member-name and A10 transition findings are corrected only by the
+uncommitted v208 candidate above, and the v207 G1a/G3 passes are not v208 approvals.
 
 **Historical revision v206 (plan-only decomposition; non-activating).** Its direct predecessor is v205 commit
 `ddfe84c77fc5a8ab355c46f8f78a36229471960a`, parent `8fa18c5de5fd194ff20cba9926f8cf0ebd8d9ac5`, tree
@@ -100,14 +108,16 @@ Every implementation slice ends with a verified commit followed by a committed r
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
 Status: **IMPLEMENTATION INCOMPLETE; v204 preserved; parent A decomposed and WAITING; selected A-core NOT ACTIVATED.**
-The committed v206 attempt-01 packet audit said COMPLETE, but exact-current G1a, G1b and G3 reviews found missing
-readiness inputs/oracles; those review failures supersede the packet's local completeness claim and block activation.
-The v207 draft below resolves those blockers at the plan-contract level only. No product/test edits, builds, tests,
-activation or baseline have occurred. After v207 commit and exact G5 PASS, create a fresh v207 packet; do not patch
-or reuse the v206 attempt. The v205 G5 PASS and corrected `PLAN_UPDATE_REQUIRED=true` audit remain the exact
-historical receipts described above. The original mixed trim work and v204/v205 source snapshots remain preserved
-under §113; no product commit or formal implementation validation exists for those edits. The bounded v205 audit
-establishes ARTIFACTS_ABSENT in the isolated checkout. Product source remains
+The committed v206 attempt-01 packet audit said COMPLETE, but exact-current v207 G1a/G1b/G3 reviews found missing
+readiness inputs/oracles; the G1b FAIL supersedes the local packet-completeness claim and blocks activation. The
+committed v207 plan resolved the previous blockers, then its attempt-01 card received a fresh G1b failure for
+incorrect `CheckWork` member aliases and an underspecified A10 transition oracle. The uncommitted v208 §116 draft
+corrects those findings and routes to a new attempt only after v208 plan commit/G5. No product/test edits, builds,
+tests, activation or baseline have occurred for these attempts. Do not patch/reuse the v206 or v207 packet. The v205
+G5 PASS and corrected `PLAN_UPDATE_REQUIRED=true` audit remain the exact historical receipts described above. The
+original mixed trim work and v204/v205 source snapshots remain preserved under §113; no product commit or formal
+implementation validation exists for those edits. The bounded v205 audit establishes ARTIFACTS_ABSENT in the
+isolated checkout. Product source remains
 `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Parent A, ordered-chain
 topology, entity integration, DXF/DWG persistence, UI, phase 2 and the separately gated Phase 3 Trim remain
 incomplete. The four application file lanes, both conversions, edited reopen and binary-DXF codec support remain
@@ -23329,3 +23339,128 @@ The provider's unique tangency proof
      if the new packet/review fails, preserve it and follow this same fail-closed rule. A-core remains NOT ACTIVATED;
      A-strict, A-reference, A-cache, parent A, B/C, application persistence, conversions and Trim remain WAITING or
      OPEN under their existing dependencies. No status sentence in this amendment converts a pending gate to PASS.
+
+116. **v208 A-core oracle/member correction (plan-only; non-activating).** This direct child of §115 corrects the
+     v207 G1b findings about the actual `CheckWork` API member names and the underspecified A10 post-latch
+     transitions. It changes no product scope, A-core ownership, public API intent, parent-A DAG, or downstream
+     geometry requirement. Once committed with exact v208 G5 PASS, §116 supersedes §115's former live v207
+     transition paragraph and is the sole A-core next-action authority. It authorizes no source edit, build, test,
+     binary discovery, activation, or baseline before the new packet, reviews and activation audit pass.
+
+     **Immutable v207 disposition.** Preserve the v207 attempt-01 card, manifest, packet audit and all three
+     independent reports unchanged at
+     `build/evidence/1A-1.b-check-topology-chain/leaves/v207/A-core/attempt-01/`:
+
+     | Artifact | SHA-256 | Decision/use |
+     |---|---|---|
+     | Card | `65ae49fd9e187e52916d53e420680e5fc1324100a14c4317cdc59a39fe24a7f7` | Historical; do not edit or reuse as current. |
+     | `inputs.sha256` | `108098788363b4f9411f6be0c07e4e0ee947b2a5a4cecd5584c3f188ada78bb8` | Historical input identity only. |
+     | Packet audit | `5c2169b6a5c503f50ceb74387630654e6443f39813069eb93849829f45dbe974` | Local COMPLETE is superseded for activation by G1b FAIL. |
+     | G1a report | `8ccd59d0add89dce6e2762d3aec6d1f564ca0d1c25827a3e117fd5236c7e0e4f` | PASS for v207 only; historical, not carried forward. |
+     | G1b report | `3853ec9d12f33374c58a7321af47aea80dc4f22e057e0439b22469d3f568b0ca` | FAIL; blocks activation. |
+     | G3 report | `01c82248ff995ec0d7babc23a84f5fbcf4989a2f7b5584628884ee456421ba16` | PASS for v207 only; historical, not carried forward. |
+
+     Preserve the two failed independent v208 draft reviews as well: `plan-checkpoint-v208/precommit-review-1-fail.txt`
+     has SHA-256 `46922a3e5a1b1fd4ad38fe2e507bfef1aff30a284b5801fd4c82836b5a346301` and reviewed draft raw SHA
+     `facd561fe71c0a652246afcf1e4fc5d565554a24f3ccf5db676591d43ad8ae19`; it found the zero-admission
+     admissibility wording fixed below. `plan-checkpoint-v208/precommit-review-2.txt` has SHA-256
+     `856d1d5a078fd26455dfad190548a0ee24e99c39d2ec664a80d4245ea834af56` and reviewed the same draft SHA; it
+     found the stale v207 live routing corrected in this header and the status summary above. Preserve both reports
+     unchanged; neither is a PASS or a substitute for a fresh review of this exact corrected draft.
+
+     The v207 failure has two independent corrections: (1) the card calls nonexistent `CheckWork` fields `splits`
+     and `pairs`, and does not map the logical S/V/P/O/D tuple to the source/API fields; (2) A10 describes refused
+     operations without literal requests, per-transition statuses, or proof that each request would otherwise be
+     admissible. The G1b report also requires the `maxDepth=0` invalid-constructor case to preserve and compare the
+     complete five-field zero snapshot after each latch, invalidation and refused operation. The v207 card/audit
+     and G1a/G3 PASS reports remain historical artifacts; no one may relabel them as v208 decisions.
+
+     **Normative field mapping.** For the v208 A-core card, code, tests and review reports, bind logical tuple
+     `(S,V,P,O,D)` explicitly as:
+
+     | Logical coordinate | Actual public member / limit member |
+     |---|---|
+     | S | `CheckWork::cacheSpans` / `LC_OffsetCheckLimits::maxCacheSpans` |
+     | V | `CheckWork::vertices` / `LC_OffsetCheckLimits::maxVertices` |
+     | P | `CheckWork::distancePairs` / `LC_OffsetCheckLimits::maxDistancePairs` |
+     | O | `CheckWork::orderingComparisons` / `LC_OffsetCheckLimits::maxOrderingComparisons` |
+     | D | `CheckWork::deepest` / `LC_OffsetCheckLimits::maxDepth` |
+
+     After adding O, the `CheckWork` declaration and aggregate member order remain
+     `cacheSpans, vertices, distancePairs, deepest, orderingComparisons`, so aggregate order is `(S,V,P,D,O)`;
+     logical test/oracle order remains `(S,V,P,O,D)`. Preserve the existing four-field aggregate mapping by
+     appending `orderingComparisons` after `deepest`. Every new five-dimensional request and expected snapshot must
+     assign by the actual member names above or use a named helper that documents both orders. `splits`, `pairs`,
+     `cacheSplits` and other aliases are not `CheckWork` members and must not appear as if they were code fields.
+     This mapping also governs configured-limit names, tuple prose, table headings and report-parser expectations.
+
+     **Literal A10 sticky-state oracle.** Keep the exact Catch2 identity/tag and §97 direct-public-API scope. Set
+     the valid limits by name to `maxCacheSpans=3`, `maxVertices=4`, `maxDistancePairs=5`,
+     `maxOrderingComparisons=6`, `maxDepth=3`. On one fresh valid budget, successfully admit/spend
+     `consumePieces(2)`, `consumeVertices(3)`, `consumePairs(4)`, and `checkDepth(2)`; ordering usage remains zero.
+     Before latching, status is `Ok` and the exact `CheckWork` snapshot is
+     `(cacheSpans,vertices,distancePairs,orderingComparisons,deepest)=(2,3,4,0,2)`.
+
+     Capture all five actual members immediately before and after every transition below. Every request listed as
+     otherwise admissible fits all count and depth limits from the unchanged pre-latch snapshot; after the first
+     latch its only reason for refusal is the sticky `LimitExceeded` status. Each failed operation leaves status
+     `LimitExceeded` and all five actual `CheckWork` members exactly `(2,3,4,0,2)`:
+
+     | Operation | Literal request | Admissible if status were `Ok` | Expected result/status/snapshot |
+     |---|---|---|---|
+     | First `latchLimitExceeded()` | none | not applicable | `LimitExceeded`; `(2,3,4,0,2)` unchanged. |
+     | Repeated `latchLimitExceeded()` | none | not applicable | `LimitExceeded`; `(2,3,4,0,2)` unchanged. |
+     | `consumePieces(1)` | S `+1` | yes: `2+1 <= 3` | false; `LimitExceeded`; `(2,3,4,0,2)`. |
+     | `consumeVertices(1)` | V `+1` | yes: `3+1 <= 4` | false; `LimitExceeded`; `(2,3,4,0,2)`. |
+     | `consumePairs(1)` | P `+1` | yes: `4+1 <= 5` | false; `LimitExceeded`; `(2,3,4,0,2)`. |
+     | `consumeOrderingComparisons(1)` | O `+1` | yes: `0+1 <= 6` | false; `LimitExceeded`; `(2,3,4,0,2)`. |
+     | `checkDepth(3)` | absolute D `=3` | yes: `max(2,3) <= 3` | false; `LimitExceeded`; `(2,3,4,0,2)`. |
+     | `admit(nonzero)` | named S=V=P=O=`1`, D=`3` | yes: each count fits and D is within 3 | false; `LimitExceeded`; `(2,3,4,0,2)`. |
+     | `invalidate()` after latch | none | not applicable | remains `LimitExceeded`; `(2,3,4,0,2)` unchanged. |
+     | zero `admit({})` after invalidation | all deltas zero, D=0 | yes: all deltas fit and `max(2,0)=2 <= 3` | false solely because status is `LimitExceeded`; `(2,3,4,0,2)`. |
+
+     For the compound row, assign `request.cacheSpans=1`, `request.vertices=1`,
+     `request.distancePairs=1`, `request.orderingComparisons=1`, and `request.deepest=3` by member name. This
+     independently proves a nonzero post-latch compound refusal without relying on aggregate order or a request
+     that would fail capacity/depth even in `Ok` state. The zero request after invalidation is also admissible from
+     the unchanged valid-state snapshot, and must be refused only because the sticky status is `LimitExceeded`.
+     Compare status and the full named snapshot after each row, not just the final state.
+
+     **Literal invalid-constructor A10 oracle.** In a separate fresh budget configure all count limits positive
+     (`maxCacheSpans=3`, `maxVertices=4`, `maxDistancePairs=5`, `maxOrderingComparisons=6`) and set
+     `maxDepth=0`. Construction yields `InvalidInput` with exact zero snapshot
+     `(cacheSpans,vertices,distancePairs,orderingComparisons,deepest)=(0,0,0,0,0)`. Verify after each operation that
+     status remains `InvalidInput` and all five named members remain zero:
+     `latchLimitExceeded()`, `invalidate()`, `consumePieces(1)`, `consumeVertices(1)`, `consumePairs(1)`,
+     `consumeOrderingComparisons(1)`, `checkDepth(0)`, and a named nonzero `admit()` request with all four count
+     deltas 1 and absolute deepest 0. Each scalar/compound request is otherwise within its positive configured
+     count capacity; `checkDepth(0)` is not over the configured numeric depth. These refusals therefore verify that
+     neither latching nor invalidation overwrites the constructor's `InvalidInput`, and that every later operation
+     preserves its full zero ledger.
+
+     **A04 exact-member correction.** Retain every §114-115 A04 oracle and logical tuple in `(S,V,P,O,D)` order,
+     using the actual field mapping above. In particular, its post-invalidation nonzero request and the one-less,
+     overflow, depth, ordering-independence and zero-work cases compare exactly
+     `cacheSpans`, `vertices`, `distancePairs`, `orderingComparisons` and `deepest`. Replace §115's phrase
+     `(splits, vertices, pairs, orderingComparisons, deepest)` with those five actual members. The shared test helper
+     must compare those exact members; no prose, helper signature, expected aggregate or card field may imply that
+     `splits` or `pairs` are `CheckWork` members.
+
+     **Fresh v208 packet and gate recovery.** The failed v207 attempt is immutable. Only after this plan correction
+     is committed and exact v208 G5 PASS, create a new packet at
+     `build/evidence/1A-1.b-check-topology-chain/leaves/v208/A-core/attempt-02/`. Do not edit, copy forward as a
+     decision, or overwrite v207 card/manifest/audit/reports. Rebuild the v208 card and manifest from the current
+     committed source/toolchain, using the explicit field/limit mapping and literal A10 table above; bind the
+     full parent/child crosswalk and the qmake shadow-directory commands, then recalculate every identity/hash and
+     packet-audit finding. Use only fresh roots
+     `/private/tmp/lc2961-v208-A-core-a02-<phase>-<lane>` with the existing phase/lane set; verify all six full
+     paths absent. Preserve the existing 63-hour planned-command envelope, 9-hour margin and 72-hour hard cap.
+
+     Obtain new G1a, G1b and G3 decisions, each against the same exact v208 commit, card, manifest, packet-audit,
+     toolchain identities and resource envelope. All three must independently close the v207 G1b findings above;
+     v207 G1a/G3 PASS results cannot substitute. Any FAIL/INVALID/stale/unknown report blocks activation and
+     baseline. After three v208 PASS decisions, create and independently audit a fresh activation receipt, then
+     recheck `custom.pro`, exact tools/packages, roots, source tree and empty authorized diff. Only activation-audit
+     PASS may authorize the baseline; baseline identity PASS is still required before the exact three A-core paths
+     may be edited. Product G2/G4/commit/reconciliation/G5 and all downstream WAITING states remain as specified
+     by §§88, 114 and 115.
