@@ -24,21 +24,31 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–3
 
-**Current revision v206 (plan-only decomposition; non-activating).** Exact candidate/commit/gate state is determined
-by §114. Its direct predecessor is v205 commit `ddfe84c77fc5a8ab355c46f8f78a36229471960a`, parent
-`8fa18c5de5fd194ff20cba9926f8cf0ebd8d9ac5`, tree `1edf030acad9c26d90ff1c44578021fe3e37c6df`, roadmap blob
-`4256aa5e024a5528d68b1bed0d232e3a4819e2b0`, raw SHA-256
-`aaa0809fbd84b3a11d678101b271f45b0495f01f0ef36ccfebcf92f59d681878`. Exact independent G5 PASS is
-`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v205/g5-auditor-report.txt`, SHA-256
-`ac06982e8b56859a42ebdc44937b14f573deb84077d7c7f5329d21c32cf52460`. The authoritative corrected bounded audit is
+**Current revision v207 candidate (plan-only; non-activating).** This uncommitted direct-child correction addresses
+the blocked A-core readiness packet. Its predecessor is committed v206 `7afcf90f8b04dafac7358309859bfbdd4eebc451`,
+parent `ddfe84c77fc5a8ab355c46f8f78a36229471960a`, tree `796fee7f0beaa13be3dbd851c77ff41be97edd9b`, plan blob
+`4e89052892b8aefd9e533c7e413b1a1a77bb09e7`, raw SHA-256
+`2e41b0092fa9e4181f57fa93f6ff2668c54edf72c56841ba553ec17938152a47`. Exact v206 G5 PASS is
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v206/g5-auditor-report.txt`, SHA-256
+`3d9448234ae01544bbd0397f65c7d29cc862c470713a92526a2b2f68eccad7b2`. The v207 commit and G5 do not exist yet.
+Until a reviewed v207 plan-only commit receives its exact G5 PASS, §114 remains the last committed authority; after
+that, §115 is the sole current A-core transition authority. The v206 packet/reviews remain immutable, failed
+readiness evidence and are not carried forward as v207 approvals. Product base remains
+`9c06e9c77b313b62cc20e9ec39c22952fee501f2`; do not inspect `build-asan/`.
+
+**Historical revision v206 (plan-only decomposition; non-activating).** Its direct predecessor is v205 commit
+`ddfe84c77fc5a8ab355c46f8f78a36229471960a`, parent `8fa18c5de5fd194ff20cba9926f8cf0ebd8d9ac5`, tree
+`1edf030acad9c26d90ff1c44578021fe3e37c6df`, roadmap blob `4256aa5e024a5528d68b1bed0d232e3a4819e2b0`, raw
+SHA-256 `aaa0809fbd84b3a11d678101b271f45b0495f01f0ef36ccfebcf92f59d681878`. Its exact G5 PASS is recorded above.
+The authoritative corrected bounded audit is
 `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v205/prepacket-readiness-audit-corrected-1.txt`, SHA-256
-`85f8362e14a8f4155b5dd749b958f97e63e771b86429ade283fe7016c68f5c7a`; it returns `PLAN_UPDATE_REQUIRED=true` and
-`ARTIFACTS_ABSENT`. Its first audit and mistaken axis-fixture report are preserved with the explicit canonical-start
-erratum; use only the corrected audit. Section §114 supersedes version-specific transitions and the monolithic-A
-readiness rule, preserving every parent requirement and all future feature scope. §113 remains the preservation
-contract for the frozen original source and its exact snapshots. All current receipt paths resolve against the
-isolated recovery checkout unless explicitly rooted at the original source. Product base remains
-`9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Do not inspect `build-asan/`.
+`85f8362e14a8f4155b5dd749b958f97e63e771b86429ade283fe7016c68f5c7a`; it returns `PLAN_UPDATE_REQUIRED=true`
+and `ARTIFACTS_ABSENT`. Its first audit and mistaken axis-fixture report are preserved with the explicit
+canonical-start erratum; use only the corrected audit. Section §114 decomposed parent A and preserved all parent
+requirements and future feature scope. §113 remains the preservation contract for the frozen original source and its
+exact snapshots. All current receipt paths resolve against the isolated recovery checkout unless explicitly rooted
+at the original source. Product base remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Do not inspect
+`build-asan/`.
 
 **Current revision v202 (plan-only; non-activating).** Its exact predecessor is v201 commit
 `71d0120060a428df84d56ece0f57e5b2eaf242f1`, parent `42538dcc56a07db52bde783285708c9f6dce7916`, tree
@@ -89,12 +99,16 @@ Plan **v198 disjoint-transition and audit-handoff correction**, 2026-10-17; plan
 Every implementation slice ends with a verified commit followed by a committed reconciliation of this plan (§1.4).
 Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb541df651dd9cb55a222dee4563e6127c436**
 ("Keep default shortcuts independent of translations (#3140)").
-Status: **IMPLEMENTATION INCOMPLETE; v204 preserved; parent A decomposed and WAITING; selected A-core NOT ACTIVATED.** The
-v205 G5 PASS and corrected `PLAN_UPDATE_REQUIRED=true` audit are the exact receipts in the current header. The
-original mixed trim work and v204/v205 source snapshots remain preserved under §113; no product commit or formal
-implementation validation exists for those edits. The bounded v205 audit establishes ARTIFACTS_ABSENT in the
-isolated checkout. A-core's new per-leaf evidence/gates under §114 are pending; no activation is inferred from this
-plan change. Product source remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Parent A, ordered-chain
+Status: **IMPLEMENTATION INCOMPLETE; v204 preserved; parent A decomposed and WAITING; selected A-core NOT ACTIVATED.**
+The committed v206 attempt-01 packet audit said COMPLETE, but exact-current G1a, G1b and G3 reviews found missing
+readiness inputs/oracles; those review failures supersede the packet's local completeness claim and block activation.
+The v207 draft below resolves those blockers at the plan-contract level only. No product/test edits, builds, tests,
+activation or baseline have occurred. After v207 commit and exact G5 PASS, create a fresh v207 packet; do not patch
+or reuse the v206 attempt. The v205 G5 PASS and corrected `PLAN_UPDATE_REQUIRED=true` audit remain the exact
+historical receipts described above. The original mixed trim work and v204/v205 source snapshots remain preserved
+under §113; no product commit or formal implementation validation exists for those edits. The bounded v205 audit
+establishes ARTIFACTS_ABSENT in the isolated checkout. Product source remains
+`9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Parent A, ordered-chain
 topology, entity integration, DXF/DWG persistence, UI, phase 2 and the separately gated Phase 3 Trim remain
 incomplete. The four application file lanes, both conversions, edited reopen and binary-DXF codec support remain
 open. Historical receipt and protected-path statements below are retained as historical evidence only; do not
@@ -23175,3 +23189,143 @@ The provider's unique tangency proof
      a bound amendment; every product commit is followed immediately by its exact plan reconciliation/G5. All
      publication-only user actions remain deferred as previously requested. The original source worktree and all
      receipts remain preserved.
+
+115. **v207 A-core readiness recovery (plan-only; non-activating).** This direct-child amendment is limited to the
+     blockers found while preparing the v206 A-core card. It does not change parent-A geometry scope, the four-leaf
+     DAG, the three-file A-core allowlist, the A04/A10 public contracts, or any later DXF/DWG/Trim obligation. It
+     authorizes no source edit, build, test, baseline, activation, or product commit.
+
+     For A-core only, §115 supersedes conflicting v206 packet/toolchain/command/time-envelope and A04/A10 oracle
+     details in §114. Section §114 continues to govern all unchanged geometry requirements, leaf ownership,
+     validation behavior, gate separation, commit/reconciliation rules, and downstream dependencies.
+
+     **Exact blocked state and preserved evidence.** The input packet is v206 attempt-01 at
+     `build/evidence/1A-1.b-check-topology-chain/leaves/v206/A-core/attempt-01/`. Its card SHA-256 is
+     `9b78d4ae5abc07c12ab094c8ec8f7757e3299b291c51660e48c59caf1d5674b3`, `inputs.sha256` SHA-256 is
+     `920e994d7cb264d614b26accd94eacc591466dcdc64fb6e63c3699958ed70bde`, and packet-audit SHA-256 is
+     `b3266348bd20131e3d1fedf35b331c21f1a92c1c28177be52fe01d46ace7f890`. Preserve these along with all prior
+     reports. The old packet-audit's `COMPLETE` and `leaf_update_required=false` are historical results, not an
+     override of later independent failures:
+
+     | Gate evidence | Exact SHA-256 | Blocking finding |
+     |---|---|---|
+     | `g1a-review-3-fail-current-transcript.txt` | `d38d808475f92e53ab71783b2e20aeed12d567a6eff57fc64b69145044803b9a` | The PATH-resolved `git-clang-format` helper is absent from the bound input/toolchain identities. |
+     | `g1b-review-5-fail-current-oracles.txt` | `32fb69610f0e9bade7c4252c580717daa070df5442fdd6c06059f74ddb863385` | A04 tests only zero-work rejection after invalidation; existing `checkWork()` omits `orderingComparisons`. |
+     | `g3-review-4-fail-readiness.txt` | `2fc0529d17c62b6581ce13a18ef52ff72e7b6f7f1835617f20b2310e1341284e` | Build maxima exceed attempt total; `custom.pro` state is not bound; Catch2 package/binary identity is under-specified; formatter helper is not pinned; format result lacks durable PASS/FAIL output. |
+
+     The v206 attempt remains immutable and stale for new decisions. Never edit its card, manifest, packet-audit,
+     preflight, or review files in place. A failure discovered in v207 reviews follows the same rule: preserve its
+     exact report, repair the plan if contract/input semantics change, then use a new packet attempt and repeat every
+     dependent gate. Do not downgrade a failed review because a local packet audit passed earlier.
+
+     The first independent review of this v207 draft is preserved as
+     `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v207/precommit-review-1-fail.txt`, SHA-256
+     `1b6f70f1d961a8ed66946a71e097824bdf46a405b6cc255c14ff50e327a2a3c6`. It reviewed the earlier draft raw
+     SHA-256 `727b6ef66dd94e017e81744134ea981aca9ed66f030e32164954e9e3636c1682` and failed on two specific
+     omissions: formatter exit status was not part of PASS, and the Catch2 run count was overstated by one. This
+     paragraph and the corrected rules below do not relabel that report; a fresh exact-draft review is required.
+
+     **A04/A10 oracle completion.** Keep the exact public case names and tags from §114 and retain all its count,
+     overflow, depth, independent-ordering, legacy-aggregate, latch-precedence and full-snapshot requirements. Add
+     both of these explicit checks to A04:
+
+     1. With limits S=3, V=4, P=5, O=6, D=3, first successfully admit a seed with S=V=P=O=1 and deepest=1.
+        Call `invalidate()`, snapshot all five fields, then submit a nonzero request with S=V=P=O=1 and
+        deepest=2. This request is within every remaining count/depth limit if status were `Ok`. `admit()` must
+        return false, status must remain `InvalidInput`, and the complete pre-call snapshot `(splits, vertices,
+        pairs, orderingComparisons, deepest)` must remain exactly unchanged in all five fields. Set the request's
+        fields by name or use a helper that states `(S,V,P,O,D)` explicitly; do not rely on aggregate member order.
+        Keep the existing zero-work post-invalidation refusal as a separate assertion and verify its snapshot too.
+     2. Update the existing test-TU `checkWork()` helper to compare all five fields, including
+        `orderingComparisons`, or replace it with one shared explicit five-field snapshot assertion and use that
+        assertion for every refusal/latch/invalidation check in A04 and A10. A four-field comparison is not enough
+        even where the expected ordering count is zero.
+
+     A10 continues to prove the exact §97 latch table and preserves its pre-spent ordering count. For every denied
+     compound admission, capture all five fields before the call and compare all five after it. Keep aggregate
+     initialization source-compatible as specified in §114; tests that need the new fifth aggregate member must
+     make the `(S,V,P,O,D)` versus struct-member order explicit rather than accidentally changing the four legacy
+     values.
+
+     **Fresh v207 packet; no receipt carry-forward.** Only after this plan is committed and exact v207 G5 PASS,
+     create `build/evidence/1A-1.b-check-topology-chain/leaves/v207/A-core/attempt-01/`. Recompute and bind all
+     current Git/source/toolchain identities; the attempt must not copy plan v206 identities or a prior PASS. Its
+     card must bind the exact requirements, A04/A10 oracles above, owned three-file allowlist, baseline and
+     validation commands, complete input hashes, resource envelope, expected success/refusal states, and stop/
+     commit rules. Generate a new packet-audit only after every field/hash is checked. If the new audit or any
+     independent gate finds another material missing contract/input, do not create activation: return through a
+     plan-only correction/G5 and a new attempt number.
+
+     For v207 attempt-01, replace §114's v206 temporary-root prefix with the fresh namespace
+     `/private/tmp/lc2961-v207-A-core-a01-<phase>-<lane>`, where `<phase>` is `baseline` or `validation` and `<lane>`
+     is `release`, `asan`, or `qmake6`. Freeze the six full paths in the card and verify every path is absent before
+     creation. Baseline and validation roots must remain distinct. Never reuse a v206 root, the repository's
+     protected `build-asan/`, or an unexplained existing cache. A later numbered v207 attempt increments `a01` and
+     receives its own six roots/logs; changing only this version/attempt prefix does not change acceptance or API.
+
+     The packet must make conditional build inputs explicit rather than infer them from the primary project files:
+
+     | Input | Required binding and checks |
+     |---|---|
+     | `custom.pro` | Record exact source-root path and `present`/`absent` in `card.json.conditional_inputs` and a hashed packet state receipt. If present, bind its raw content SHA-256 in `inputs.sha256`; if absent, bind the state receipt. Recheck the same state/hash at activation, before baseline qmake, and before validation qmake. A changed state/hash invalidates the packet and all dependent reviews. |
+     | Catch2 CMake package | Pin `Catch2_DIR=/opt/homebrew/Cellar/catch2/3.16.1/lib/cmake/Catch2` in every CMake configure command. Bind `Catch2Config.cmake`, `Catch2ConfigVersion.cmake`, `Catch2Targets.cmake`, `Catch2Targets-release.cmake`, `libCatch2.a`, and `libCatch2Main.a` by path and SHA-256 in preflight/toolchain and `inputs.sha256`. A missing or changed package file/library stops before CMake configure. |
+     | Catch2 executables | After each successful Release/ASan test-binary build in baseline and validation, run that exact binary with `--version`, persist stdout/stderr, and assert that it reports exactly the bound installed Catch2 3.16.1 identity (accept only the documented version-line spelling, not a loose major-version match). A mismatch blocks the lane and requires packet/toolchain correction; it is not a test failure to waive. |
+     | Formatter | Bind `/opt/homebrew/bin/git-clang-format` itself (resolved path and SHA-256), `/opt/homebrew/bin/clang-format` (path/version/hash), style-file path/hash, and the explicit controlled `PATH=/opt/homebrew/bin:/usr/bin:/bin`. Invoke the absolute helper directly with `-q --diff --binary /opt/homebrew/bin/clang-format --style=file:<repo>/code_style/.clang-format HEAD -- <three owned paths>`; do not use the `git clang-format` wrapper or resolve the helper dynamically through ambient PATH. The pinned helper's `-q` suppresses its informational `no modified files to format`/`clang-format did not modify any files` messages, so a clean result is an empty log; an actual formatting diff makes `--diff` return nonzero and is a FAIL. |
+
+     For the absent `custom.pro` case, the state receipt must be included in the manifest so absence itself is
+     reproducible; an absent source file is not represented by an invented content hash. For a present case, bind
+     both the state receipt and file content. qmake6 must run from the separately created shadow directory and read
+     the bound root project chain; do not create, rewrite, or copy `custom.pro` as part of preflight.
+
+     **Durable command outcomes.** Every configure, build, version, test, format, diff, parser, and directory-creation
+     command writes a uniquely named stdout/stderr or combined log under its attempt/phase directory. The formatter
+     check has a diff-output log, a status file, and a detail log for a failed exit. PASS is valid only when the
+     quiet absolute helper command exits zero **and** the diff-output log is empty. Capture its exit status before testing
+     log emptiness; on every other outcome, including a nonzero exit with an empty log, write `FAIL`, persist the
+     exit code in the detail log, and return nonzero. Do not use an unlogged `test ! -s` or `set -e` flow that can
+     bypass the FAIL write. The fresh packet's `verify_reports.py` must parse the bound version logs and assert their expected
+     version in addition to parsing both assertion-bearing Catch2 XML formats and JUnit as already required by §114;
+     bind its hash and syntax-check it before baseline. Do not reuse the v206 parser without this version assertion.
+     Missing logs,
+     missing status, malformed reports, or an unrecognized Catch2 output shape fail closed.
+
+     **Coherent time envelope.** Freeze this bound before reviews. The following maxima cover all baseline and
+     validation command execution in one numbered attempt, including fresh baseline/validation build roots and the
+     seven Catch2 invocations specified below; they do not include human review wait time. Stop at the first
+     per-command ceiling or at the attempt total. A timeout is a recorded failure, not permission to keep running.
+
+     | Command class | Maximum count | Per-command ceiling | Class ceiling |
+     |---|---:|---:|---:|
+     | CMake configure (Release/ASan, baseline/validation) | 4 | 120 min | 8 h |
+     | CMake `librecad_tests` build (Release/ASan, baseline/validation) | 4 | 360 min | 24 h |
+     | qmake6 configure and `make -j 4` (baseline/validation) | 4 | 240 min | 16 h |
+     | Catch2 list/adjacent/core invocations | 7 | 60 min | 7 h |
+     | Version checks, baseline identity grep, report parsing, format/diff checks, directory setup and evidence verification | exact commands listed in the frozen card; no unlisted commands | 60 min each, 8 h aggregate | 8 h |
+     | **Maximum planned command time** |  |  | **63 h** |
+
+     The single attempt hard wall-clock budget is **72 hours**, leaving an explicit 9-hour scheduling/diagnostic
+     margin over the 63-hour sum of class ceilings. No individual command may exceed its class ceiling. Any retry
+     that needs new commands or roots is a newly numbered execution attempt with its own fresh roots/logs and an
+     explicitly rechecked budget; no command is silently restarted and no old elapsed time or output is erased.
+     The card must declare exactly this 72-hour hard limit and the same class ceilings; if command counts change,
+     recalculate every class total before G1a/G1b/G3 rather than retaining these numbers by habit. A larger total
+     is not permitted under this amendment.
+
+     **Gate order and stale-state rules.** After v207 G5 PASS, independently audit the complete new packet, then
+     obtain current G1a completeness, G1b plan/oracle correctness, and G3 executable readiness against exactly the
+     same v207 commit, card hash, manifest hash, packet-audit hash, toolchain/input hashes and time budget. Each
+     report must explicitly close every prior finding or state why it is inapplicable. A report for v206, an
+     earlier card, or different hashes is historical only. Any one FAIL/INVALID/stale/unknown result blocks
+     activation. After all three PASS, create and independently audit the separate activation receipt; it must
+     repeat the `custom.pro` check, verify all exact executable/package identities, confirm the tracked pre-edit
+     tree and empty authorized diff, and bind the exact baseline commands. Only after activation-audit PASS may the
+     baseline commands run; only after baseline identity PASS may the three allowed source/test files be edited.
+     G2/G4/product commit/reconciliation sequencing remains as in §114 and §88.
+
+     **Current transition.** Until this candidate is independently reviewed and committed as the single-path
+     roadmap change, no packet/root/review beyond the preserved v206 attempt may be created. After commit, exact
+     v207 G5 is the only next action. On G5 PASS, create only the fresh v207 A-core attempt and close its audit and
+     three reviews in order. If G5 fails, preserve the report and make only a direct-child plan-only correction;
+     if the new packet/review fails, preserve it and follow this same fail-closed rule. A-core remains NOT ACTIVATED;
+     A-strict, A-reference, A-cache, parent A, B/C, application persistence, conversions and Trim remain WAITING or
+     OPEN under their existing dependencies. No status sentence in this amendment converts a pending gate to PASS.
