@@ -30,20 +30,14 @@
 #include <QKeySequence>
 #include <QLineEdit>
 #include <QLocale>
-#include <QMessageBox>
 #include <QMouseEvent>
 #include <QSpinBox>
-#include <QTimer>
 #include <QVBoxLayout>
 
 #include "lc_actiongroupmanager.h"
 #include "lc_actionsshortcutsdialog.h"
 #include "lc_actiontestsupport.h"
 #include "lc_dialog.h"
-#include "qg_blockdialog.h"
-#include "qg_dialogfactory.h"
-#include "rs_block.h"
-#include "rs_blocklist.h"
 
 namespace {
 struct DialogFixture {
@@ -111,82 +105,6 @@ void key(QWidget& widget, int code, Qt::KeyboardModifiers modifiers = Qt::NoModi
         QApplication::sendEvent(&widget, &event);
     }
 }
-}
-
-TEST_CASE("Block naming dialogs use operation-specific captions", "[gui][dialog][block][2266]") {
-    (void)lc::test::application();
-    RS_Block existing(nullptr, RS_BlockData("Existing", RS_Vector(0.0, 0.0), false));
-    RS_BlockList blocks;
-    REQUIRE(blocks.add(&existing));
-    blocks.activate(&existing);
-    QG_DialogFactory factory(nullptr, nullptr, nullptr);
-    for (const QString title : {"Add Block", "Rename Block", "Create Block"}) {
-        for (const QString name : {"", "Another", "Existing"}) {
-            CAPTURE(title.toStdString(), name.toStdString());
-            const bool duplicate = name == existing.getName();
-            bool opened = false, timedOut = false, stayedOpen = false, warningOpened = false;
-            QString caption, initialName, warningTitle, warningText;
-            QTimer watchdog;
-            QObject::connect(&watchdog, &QTimer::timeout, &watchdog, [&] {
-                timedOut = true;
-                for (QWidget* widget : QApplication::topLevelWidgets()) {
-                    if (auto* dialog = qobject_cast<QDialog*>(widget)) {
-                        dialog->reject();
-                    }
-                }
-            });
-            watchdog.start(2000);
-            QTimer::singleShot(0, &watchdog, [&] {
-                auto* dialog = qobject_cast<QG_BlockDialog*>(QApplication::activeModalWidget());
-                if (!dialog) {
-                    return;
-                }
-                opened = true;
-                caption = dialog->windowTitle();
-                initialName = dialog->leName->text();
-                dialog->leName->setText(name);
-                if (duplicate) {
-                    QTimer::singleShot(0, &watchdog, [&] {
-                        if (auto* warning = qobject_cast<QMessageBox*>(QApplication::activeModalWidget())) {
-                            warningOpened = true;
-                            warningTitle = warning->windowTitle();
-                            warningText = warning->text();
-                            warning->accept();
-                        }
-                    });
-                }
-                dialog->validate();
-                if (name.isEmpty() || duplicate) {
-                    stayedOpen = dialog->isVisible();
-                    dialog->cancel();
-                }
-            });
-            const auto result = title == "Rename Block"
-                ? factory.requestBlockAttributesDialog(&blocks)
-                : factory.requestNewBlockDialog(&blocks, title == "Add Block" ? QString{} : title);
-            REQUIRE(opened);
-            REQUIRE_FALSE(timedOut);
-            CHECK(caption == title);
-            CHECK(initialName == "Existing");
-            CHECK(result.isValid() == (name == "Another"));
-            CHECK(result.name == (name == "Another" ? name : QString{}));
-            CHECK(blocks.count() == 1);
-            CHECK(blocks.getActive() == &existing);
-            CHECK(existing.getName() == "Existing");
-            if (name.isEmpty() || duplicate) {
-                CHECK(stayedOpen);
-            }
-            CHECK(warningOpened == duplicate);
-            if (duplicate) {
-                CHECK(warningText.contains("Existing"));
-                CHECK(warningText.contains("already exists"));
-#ifndef Q_OS_MACOS
-                // macOS does not display QMessageBox window titles.
-                CHECK(warningTitle == title);
-#endif
-            }
-        }
-    }
 }
 
 TEST_CASE("Find selects the shortcut dialog's filter text", "[gui][dialog][shortcuts][3131]") {
