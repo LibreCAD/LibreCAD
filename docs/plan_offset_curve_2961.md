@@ -24,25 +24,34 @@ USA.
 
 # Offset Curve (`LC_OffsetCurve`) Implementation Plan — #2961, phases 0–3
 
-**Current revision v208 candidate (plan-only; non-activating).** This uncommitted direct child corrects the
-v207 A-core oracle/member blockers. Its last committed predecessor is v207 `1c16d67f1b0f699777e5c95959b3612bb2f0b9a2`,
-parent v206 `7afcf90f8b04dafac7358309859bfbdd4eebc451`, tree `4c50e6e6f9e33f7c9593be7630624482c41f226e`, plan
-blob `e1f3b8a5218a69a3d23b9dd4b397e1dcbf450d5c`, raw SHA-256
-`842b6cb4fbcaa12f21e3dd804cc91743bb97dab76ec27ea71f2532dde08f0146`. Exact v207 G5 PASS is
-`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v207/g5-auditor-report.txt`, SHA-256
-`4706589f1217129efd8f511b423a5bf4a5ba14b8607383afba0dd2166a9184c1`. The v207 attempt-01 packet has G1a PASS,
-G1b FAIL and G3 PASS; §116 binds all six immutable artifact/report hashes. v207's local packet audit does not
-override G1b FAIL. Until this v208 draft is independently reviewed, committed plan-only and receives exact v208 G5
-PASS, v207/§115 remains the last committed authority and the only permitted action is this plan-checkpoint cycle.
-After v208 G5 PASS, §116 is the sole live A-core transition authority and requires a fresh v208 attempt-02; no
-v207 readiness receipt carries forward. All older revision/status/handoff blocks below are historical snapshots,
-even where their original text says “current” or “next”; they do not supersede this header or §116. Product base
-remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; do not inspect `build-asan/`.
+**Current plan revision v209 (plan-only; non-activating).** This direct-child correction addresses the single
+stale live-state assertion found by v208 G5; it changes no A04/A10 API, oracle, ownership or feature scope. Its
+committed predecessor is v208 `eb9c55d2ef8c35abdef3a054da58efb17220df70`, parent v207
+`1c16d67f1b0f699777e5c95959b3612bb2f0b9a2`, tree `5ed061ba489730edb9e3cefa0bd9d6dae9da551f`, plan blob
+`2e6fffa71695dce9ac81efc7b9408bb51dd65fc6`, raw SHA-256
+`4aa2a3de71e6a6484bf5fa7dadf8fa1fb8130c32a12d7cbbf4237cd91299d600`. Exact v208 G5 FAIL is recorded at
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v208/g5-auditor-report.txt`, SHA-256
+`861c06cc2997d99d4967f6ae59fe9ee066862a610c45f6e7c09e7f99d1bb64d2`; it verified §116 but found the committed
+v208 header still said “uncommitted.” The exact v208 precommit review PASS is
+`build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v208/precommit-review-3.txt`, SHA-256
+`bc69c32a0fe9e67f0eca446e1ae404fc717a155ed199cce4bee1572cc1abccfe`. v208's packet route is halted by its G5
+FAIL. Section §117 is the sole live A-core transition authority: no A-core packet, roots or current-version
+readiness reviews may be created until exact v209 G5 PASS and all bound identities match; after that it requires
+fresh v209 attempt-02.
+Determine v209 candidate/commit/G5 state only from exact Git objects and sealed reports, never from this header.
+The v208 attempt-02 packet and roots were never created; do not create or rebind them. All older revision/status/
+handoff blocks below are historical snapshots even where their original text says “current” or “next”; they do not
+supersede this header or §117.
+Product base remains `9c06e9c77b313b62cc20e9ec39c22952fee501f2`; do not inspect `build-asan/`.
+
+**Historical revision v208 (plan-only; committed; non-activating).** It corrected v207's member-name and A10-oracle
+blockers, but exact G5 failed on the stale “uncommitted” header. Preserve its commit, G5 FAIL, precommit review PASS
+and v207 receipt chain unchanged. Section §117 supersedes §116's unexecuted v208 packet route.
 
 **Historical revision v207 (plan-only; committed; non-activating).** It corrected the v206 readiness blockers and
 passed G5, but its fresh A-core attempt-01 packet received G1a PASS, G1b FAIL and G3 PASS. Preserve its commit,
-packet and reports as bound history; its G1b member-name and A10 transition findings are corrected only by the
-uncommitted v208 candidate above, and the v207 G1a/G3 passes are not v208 approvals.
+packet and reports as bound history; its G1b member-name and A10 transition findings are corrected by committed
+v208, and the v207 G1a/G3 passes are not approvals for later packet attempts.
 
 **Historical revision v206 (plan-only decomposition; non-activating).** Its direct predecessor is v205 commit
 `ddfe84c77fc5a8ab355c46f8f78a36229471960a`, parent `8fa18c5de5fd194ff20cba9926f8cf0ebd8d9ac5`, tree
@@ -110,18 +119,21 @@ Design baseline reviewed: `41678d976` (#3121). Fetched execution base: **b05fb54
 Status: **IMPLEMENTATION INCOMPLETE; v204 preserved; parent A decomposed and WAITING; selected A-core NOT ACTIVATED.**
 The committed v206 attempt-01 packet audit said COMPLETE, but exact-current v207 G1a/G1b/G3 reviews found missing
 readiness inputs/oracles; the G1b FAIL supersedes the local packet-completeness claim and blocks activation. The
-committed v207 plan resolved the previous blockers, then its attempt-01 card received a fresh G1b failure for
-incorrect `CheckWork` member aliases and an underspecified A10 transition oracle. The uncommitted v208 §116 draft
-corrects those findings and routes to a new attempt only after v208 plan commit/G5. No product/test edits, builds,
-tests, activation or baseline have occurred for these attempts. Do not patch/reuse the v206 or v207 packet. The v205
-G5 PASS and corrected `PLAN_UPDATE_REQUIRED=true` audit remain the exact historical receipts described above. The
+committed v207 plan corrected those findings, but its attempt-01 card received G1a PASS, G1b FAIL for incorrect
+`CheckWork` member aliases/underspecified A10 transitions, and G3 PASS. Committed v208 §116 corrected those oracle
+blockers, but exact G5 failed because v208's live header still called itself uncommitted. The v209 §117 correction
+updates that routing only. No product/test edits, builds, tests, activation, baseline, v208
+attempt-02 packet or v208 roots have occurred. Do not patch/reuse the v206/v207 packet or create the halted v208
+attempt. The v205 G5 PASS and corrected `PLAN_UPDATE_REQUIRED=true` audit remain the exact historical receipts described above. The
 original mixed trim work and v204/v205 source snapshots remain preserved under §113; no product commit or formal
 implementation validation exists for those edits. The bounded v205 audit establishes ARTIFACTS_ABSENT in the
 isolated checkout. Product source remains
 `9c06e9c77b313b62cc20e9ec39c22952fee501f2`. Parent A, ordered-chain
 topology, entity integration, DXF/DWG persistence, UI, phase 2 and the separately gated Phase 3 Trim remain
-incomplete. The four application file lanes, both conversions, edited reopen and binary-DXF codec support remain
-open. Historical receipt and protected-path statements below are retained as historical evidence only; do not
+incomplete. The v209 §117 receipt-driven transition table is the sole current gate route: no A-core packet, roots
+or current-version readiness reviews may be created until exact v209 G5 PASS and matching bound identities. The
+four application file lanes, both conversions, edited reopen and binary-DXF codec support remain open. Historical receipt and protected-path
+statements below are retained as historical evidence only; do not
 inspect `build-asan/`.
 
 Historical v68 amendment: clarifies file-support acceptance and retains the v67 product base `9c06e9c77b313b62cc20e9ec39c22952fee501f2`, with all four recorded product source/test hashes unchanged. The exact-membership `preflight-v67/` packet is PARTIAL provenance (latest packet-manifest SHA-256 `fc918c15d11b9e1a4c8419ec23f6ce8a44824bd22adc69735927a9d1c79fc97d`), not a formal gate receipt. The G4 hidden-cusp clearance proof and C50 correction remain normative: the cusp-only candidate is separated from all visible spans and must refuse as `OffCurve` before terminal/topology matching; B07 separately tests absence of a cusp `ReferenceTerminal`, and C36 retains fully witnessed `Topology` coverage. The five controls remain mandatory per slice: separate completeness and plan-correctness gates; frozen-tree implementation correctness; an executable, independently reviewed sub-plan/readiness decision; one validated product commit followed by its plan-only reconciliation; and a post-commit live-state audit/self-update before any successor. Slice A remains WAITING; G1 completeness, G1 plan correctness, Gate-3 readiness and activation are not passed. A/B/C baseline discovery remains zero and strict-core remains 61 matching normalized identities in Release/ASan; no registered tests ran. No product/test edit, build, JUnit execution, formal Gate PASS, readiness PASS or activation occurred. DXF read, DXF write, DWG read and DWG write are separate open application obligations; both conversion directions and the separate R14/R2018 binary-DXF codec obligation also remain open. Geometry-only checker evidence satisfies none.
@@ -388,10 +400,11 @@ reconciled baseline or A-budget-depth implementation. Product source remains
 independently authorize work; §56 remains normative only for its bounded Git-object/protected-path procedure. Do not
 inspect protected `build-asan/`; report `not inspected by instruction`.
 
-Select exactly one row from the latest versioned transition-authority section (currently §114) using observed HEAD,
+Select exactly one row from the latest versioned transition-authority section (currently §117) using observed HEAD,
 artifact state and receipts. §93 specifies the input-bundle contract; it is not a transition table. If zero or multiple
-rows match, stop for plan-only correction. No prose status independently authorizes packet, review, activation,
-baseline, build/test or product work.
+rows match, stop for plan-only correction and update this pointer in that plan-only revision. §117 is the sole live
+transition authority for v209; no prose status independently authorizes packet, review, activation, baseline,
+build/test or product work.
 
 | Step | Title | PR | Depends on | Size (LOC, product + tests) | Status |
 |---|---|---|---|---|---|
@@ -23464,3 +23477,82 @@ The provider's unique tangency proof
      PASS may authorize the baseline; baseline identity PASS is still required before the exact three A-core paths
      may be edited. Product G2/G4/commit/reconciliation/G5 and all downstream WAITING states remain as specified
      by §§88, 114 and 115.
+
+117. **v209 A-core committed-state routing correction (plan-only; non-activating).** This direct child of §116
+     closes the single v208 G5 finding. It changes no corrected A04/A10 member map, oracle, three-file ownership,
+     parent-A dependency DAG, toolchain/time envelope, or downstream geometry/file-format/Trim scope.
+
+     **Exact blocked transition and immutable evidence.** v208 is committed at
+     `eb9c55d2ef8c35abdef3a054da58efb17220df70`, with exact-draft precommit review PASS
+     `bc69c32a0fe9e67f0eca446e1ae404fc717a155ed199cce4bee1572cc1abccfe` and G5 FAIL
+     `861c06cc2997d99d4967f6ae59fe9ee066862a610c45f6e7c09e7f99d1bb64d2`. The sole G5 finding is that the live
+     header calls committed v208 an “uncommitted direct child.” Preserve the v208 plan commit and reports unchanged.
+     G5 verified the corrected member names, A04/A10 arithmetic, v207 receipt hashes, frozen product source blobs
+     and clean tracked tree. No v208 attempt-02 card, packet audit, roots, activation, baseline, build, test,
+     discovery or product edit was created or run. §116's proposed v208 attempt-02 route is therefore historical
+     and was never activated; this section supersedes that route.
+
+     **Live v209 routing.** Determine candidate/commit/G5 state from exact Git objects and sealed reports, never
+     from this prose. The v209 correction records v208 as committed and G5-FAIL and prevents the stale-state
+     wording from recurring after v209 is committed. Until v209 has an independent exact-draft review, a
+     verified single-path direct-child plan commit, and exact v209 G5 PASS with matching identities, do not create
+     any A-core packet, roots or current-version review receipts. The v208 G5 FAIL is not waived by this pointer
+     correction; a new
+     exact-identity G5 must verify the v209 commit, direct parent/tree/plan blob, one-file scope, unchanged
+     product-base blobs, corrected live status and preserved v207/v208 evidence.
+
+     Store immutable v209 plan-checkpoint reviews under
+     `build/evidence/1A-1.b-check-topology-chain/plan-checkpoint-v209/`. Name exact-draft review reports
+     `precommit-review-NN.txt` and committed-plan G5 reports `g5-auditor-report-NN.txt`, starting at `01` and
+     incrementing for every distinct request; never overwrite a report. Each report records the exact raw SHA or
+     commit/tree/blob tuple, all declared input identities, reviewer, decision and findings. A v210 correction
+     preserves these v209 reports and binds their hashes in its own section. These are plan-gate receipts only;
+     they do not authorize A-core packet or root creation.
+
+     **State-transition guard (authoritative; evaluate in order from receipts).**
+
+     | Verified state | Only permitted next action | Still prohibited |
+     |---|---|---|
+     | v209 not committed; an exact-current review is FAIL, INVALID or unknown | Preserve its report/hash and prepare the next numbered candidate (v210) as a one-path direct child of v208 that records/closes the finding; obtain a new review for the exact v210 raw SHA. Same-SHA requests/results cannot override this blocker. | Packet/card/manifest creation, roots, G1a/G1b/G3, activation, baseline, build/test/discovery and product edits. |
+     | v209 not committed; an exact-current-SHA review is pending and no exact-current FAIL/INVALID/unknown report exists | Wait for all exact-current review requests to resolve; do not edit or commit the candidate while one is pending. | Packet/card/manifest creation, roots, G1a/G1b/G3, activation, baseline, build/test/discovery and product edits. |
+     | v209 not committed; a stale-SHA review is pending, but no exact-current review is pending or completed | Mark the stale request non-authoritative and never use its eventual result; submit a fresh review for the verified current raw SHA, then wait without editing the candidate. | Treating the stale request as a decision; packet/card/manifest creation, roots, G1a/G1b/G3, activation, baseline, build/test/discovery and product edits. |
+     | v209 not committed; no review is pending and no exact-current report exists (absent or stale) | Complete plan-only checks, verify the exact raw SHA and obtain a fresh independent review of those exact bytes. A changed raw SHA is a new review input. | Packet/card/manifest creation, roots, G1a/G1b/G3, activation, baseline, build/test/discovery and product edits. |
+     | v209 not committed; exact-raw-SHA review PASS matches current bytes; no exact-current pending request or negative report; one-path scope passes | Commit only the reviewed roadmap as a one-path direct child of v208; then enter the committed-plan G5 state. | Packet/card/manifest creation, roots, G1a/G1b/G3, activation, baseline, build/test/discovery and product edits. |
+     | v209 not committed; review PASS matches current bytes but staged/worktree scope is not exactly the roadmap; no exact-current pending request or negative report | Preserve unrelated changes, do not stage or commit them, and re-establish the one-path scope before committing; if the candidate itself must change, assign a new raw SHA and obtain a fresh review. | Any multi-path commit, packet/card/manifest creation, roots, G1a/G1b/G3, activation, baseline, build/test/discovery and product edits. |
+     | v209 commit ancestry/tree/plan-blob/path/product-base identity check fails or is unverifiable (regardless of G5 state) | Preserve the exact commit and discrepancy; create no packet. Prepare the next numbered plan-only correction (v210) as a direct child of the actual v209 commit, bind the mismatch, and obtain fresh exact-draft review/G5. | Packet/card/manifest creation, roots, G1a/G1b/G3, activation, baseline, build/test/discovery and product edits. |
+     | Verified v209 commit identity; a fully exact-bound G5 report is FAIL, INVALID or unknown | Preserve the report/hash and prepare v210 as a plan-only direct child of committed v209 that records/closes the blocker. No same-commit request/result can override it. | Any packet, root, readiness review, activation, baseline, build/test/discovery or product edit. |
+     | Verified v209 commit identity; an exact-bound G5 request is pending and no fully exact-bound FAIL/INVALID/unknown report exists | Wait for all exact-bound G5 requests to resolve; do not create any packet or edit the plan while one is pending. | Packet/card/manifest creation, roots, G1a/G1b/G3, activation, baseline, build/test/discovery and product edits. |
+     | Verified v209 commit identity; a stale-bound G5 request is pending, but no exact-bound request or decision exists | Mark the stale request non-authoritative and never use its eventual result; submit a fresh G5 for the exact current commit/tree/plan-blob/raw-SHA tuple and all declared inputs, then wait. | Treating the stale request as a decision; any packet, root, readiness review, activation, baseline, build/test/discovery or product edit. |
+     | Verified v209 commit identity; no exact-bound or stale-bound G5 request is pending, no exact-bound decision exists, and no completed non-authoritative G5 report exists | Submit an independent G5 bound to the exact current commit/tree/plan-blob/raw-SHA plus every declared review/source/tool/evidence identity. | Any packet, root, readiness review, activation, baseline, build/test/discovery or product edit. |
+     | Verified v209 commit identity; a completed G5 report has any missing, mismatched or unverifiable commit/tree/plan-blob/raw-SHA or declared review/source/tool/evidence binding, regardless of its textual result; no request is pending and no exact-bound decision exists | Preserve and mark that report non-authoritative; re-establish current input identities and obtain a fresh G5 for the unchanged v209 commit. Do not edit the plan merely to replace an unbound audit. | Any packet, root, readiness review, activation, baseline, build/test/discovery or product edit. |
+     | A fully exact-bound v209 G5 report is PASS and every bound identity matches, with no exact-bound request pending and no fully exact-bound FAIL/INVALID/unknown report for this commit | Create only the fresh v209 A-core attempt-02 packet specified below. | Reusing v207/v208 packets or approvals, product edits before fresh packet audit/reviews/activation/baseline. |
+
+     The state table is receipt-driven and remains true after a commit; it deliberately makes no self-referential
+     claim that the live v209 plan is “uncommitted,” “committed” or G5-passed.
+     A precommit review is authoritative only when bound to the exact current raw plan SHA. A G5 report is fully
+     exact-bound only when its commit/tree/plan-blob/raw-SHA tuple and every declared review/source/tool/evidence
+     identity are present, independently verified, and current. Any missing, mismatched or unverifiable binding
+     makes the report non-authoritative regardless of its textual result; preserve it and obtain a fresh exact G5
+     unless a fully exact-bound decision already exists. A fully exact-bound PASS with every identity matching is
+     sufficient despite non-authoritative stale reports and stale-bound pending requests, but all exact-current
+     requests must resolve before commit or packet creation. Any fully exact-bound FAIL/INVALID/unknown is terminal
+     for that plan/commit; only a new numbered plan-only child can move past it. Duplicate requests/results cannot
+     override a fully bound terminal decision.
+
+     Only after exact v209 G5 PASS with all bound identities matching, create a fresh card, manifest and packet
+     audit at `build/evidence/1A-1.b-check-topology-chain/leaves/v209/A-core/attempt-02/`. Bind the v209 commit/raw/blob
+     hashes, exact v208 predecessor and G5 FAIL, v208 precommit PASS as historical inputs, current product and
+     toolchain/conditional-input identities, §116's five-field A04/A10 mapping and literal transition table, the
+     complete 15-case parent-A crosswalk, explicit qmake6 shadow directories, exact command/time envelope, and
+     expected outcomes. The v207 G1b FAIL is addressed only by §116's corrected contract. No earlier G1a/G3,
+     packet-audit or precommit review changes status into a current v209 gate receipt.
+
+     Use only six fresh roots `/private/tmp/lc2961-v209-A-core-a02-<phase>-<lane>` for the existing baseline and
+     validation phases and Release/ASan/qmake6 lanes; verify every full path is absent before creating any root.
+     Keep the 63-hour planned-command ceiling, 9-hour margin and 72-hour hard cap, and recheck all packet hashes.
+     Then obtain independent packet audit and same-identity G1a/G1b/G3. Any FAIL/INVALID/stale/unknown result
+     blocks activation. Three PASS decisions are followed by a separate activation receipt and independent
+     activation audit, exact `custom.pro`/tool/root/source-state rechecks, and only then the baseline. Only a
+     passing baseline identity permits edits to the exact three A-core paths. Product implementation, tests,
+     G2/G4, commit, immediate plan reconciliation/G5, and all downstream WAITING obligations remain governed by
+     §§88 and 114-116; no execution or implementation authorization is implied by this plan-only correction.
