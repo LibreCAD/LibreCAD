@@ -52,6 +52,25 @@ struct MoveFixture : lc::test::ActionFixture<MoveAction> {
 
 } // namespace
 
+TEST_CASE("Move/Copy preserves selection when started from an entity context menu", "[modify][move][3083]") {
+    for (const bool selected : {false, true}) {
+        CAPTURE(selected);
+        lc::test::ActionFixture<MoveAction> f;
+        auto* source = new RS_Line(&f.m_graphic, RS_LineData(RS_Vector{2., 3.}, RS_Vector{5., 7.}));
+        f.m_graphic.addEntity(source);
+        if (selected) f.m_graphic.select(QList<RS_Entity*>{source});
+        f.m_context.saveContextMenuActionContext(source, source->getStartpoint(), false);
+        f.m_action->init(0);
+
+        CHECK(source->isSelected());
+        CHECK(f.m_graphic.hasSelection());
+        CHECK_FALSE(f.m_action->isFinished());
+        f.m_action->click(source->getStartpoint());
+        CHECK(f.m_action->getStatus() == MoveAction::SetTargetPoint);
+        CHECK(source->isSelected());
+    }
+}
+
 TEST_CASE("Move/Copy keeps Ctrl-copy active for repeated target clicks", "[modify][move][3080]") {
     MoveFixture f;
     MoveAction& action = *f.m_action;
