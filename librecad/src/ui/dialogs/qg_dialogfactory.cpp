@@ -324,7 +324,7 @@ RS_Layer* QG_DialogFactory::requestEditLayerDialog(RS_LayerList* layerList) {
  * @return a pointer to the newly created block that
  * should be added.
  */
-RS_BlockData QG_DialogFactory::requestNewBlockDialog(RS_BlockList* blockList) {
+RS_BlockData QG_DialogFactory::requestNewBlockDialog(RS_BlockList* blockList, const QString& title) {
     //RS_Block* block = nullptr;
     auto ret = RS_BlockData("", RS_Vector(false), false);
 
@@ -337,6 +337,7 @@ RS_BlockData QG_DialogFactory::requestNewBlockDialog(RS_BlockList* blockList) {
     //block = new RS_Block(container, "noname", RS_Vector(0.0,0.0));
 
     QG_BlockDialog dlg(parent);
+    dlg.setWindowTitle(title.isEmpty() ? QG_BlockDialog::tr("Add Block") : title);
     dlg.setBlockList(blockList);
     if (dlg.exec() != 0) {
         ret = dlg.getBlockData();
@@ -372,6 +373,7 @@ RS_BlockData QG_DialogFactory::requestBlockAttributesDialog(RS_BlockList* blockL
 
     //    QG_BlockDialog dlg(parent, "Rename Block");
     QG_BlockDialog dlg(parent);
+    dlg.setWindowTitle(QG_BlockDialog::tr("Rename Block"));
     dlg.setBlockList(blockList);
     if (dlg.exec() != 0) {
         //dlg.updateBlock();
