@@ -548,6 +548,14 @@ if ($qtCoreVersion.FileMajorPart -lt 6) {
 }
 $qtVersion = "$($qtCoreVersion.FileMajorPart).$($qtCoreVersion.FileMinorPart).$($qtCoreVersion.FileBuildPart)"
 $qtSourceUrl = "https://download.qt.io/archive/qt/$($qtCoreVersion.FileMajorPart).$($qtCoreVersion.FileMinorPart)/$qtVersion/"
+# licenses\qt-third-party.txt carries the notices of the third-party code in
+# one Qt release; a different Qt needs it regenerated.
+$qtNotices = Join-Path $licenseDirectory 'qt-third-party.txt'
+$qtNoticesHeader = Get-Content -LiteralPath $qtNotices -TotalCount 1
+if ($qtNoticesHeader -notmatch "\(Qt $([regex]::Escape($qtVersion))\)$") {
+    $message = "licenses/qt-third-party.txt is not for Qt $qtVersion ('$qtNoticesHeader'); run scripts/msix/update-qt-third-party.py --tag v$qtVersion"
+    if ($env:GITHUB_ACTIONS) { Write-Host "::warning::$message" } else { Write-Warning $message }
+}
 # Boost is compiled into LibreCAD.exe (header-only) but is not in the
 # repository, so the offer names the release this build used.
 $cmakeCache = Join-Path $buildDirectory 'CMakeCache.txt'
@@ -716,7 +724,7 @@ try {
         'unpack', '/o', '/p', $packagePath, '/d', $validationDirectory
     )
 
-    foreach ($requiredPath in @('AppxManifest.xml', 'LibreCAD.exe', 'resources.pri', 'Assets\Square150x150Logo.png', 'iconengines\lc_svgiconengine.dll', 'resources\fonts\standard.lff', 'licenses\gpl-2.0.txt', 'licenses\gpl-3.0.txt', 'licenses\OFL-noto-cjk.txt', 'licenses\LICENSE', 'licenses\SOURCE.txt')) {
+    foreach ($requiredPath in @('AppxManifest.xml', 'LibreCAD.exe', 'resources.pri', 'Assets\Square150x150Logo.png', 'iconengines\lc_svgiconengine.dll', 'resources\fonts\standard.lff', 'licenses\gpl-2.0.txt', 'licenses\gpl-3.0.txt', 'licenses\qt-third-party.txt', 'licenses\OFL-noto-cjk.txt', 'licenses\LICENSE', 'licenses\SOURCE.txt')) {
         if (-not (Test-Path -LiteralPath (Join-Path $validationDirectory $requiredPath) -PathType Leaf)) {
             throw "MSIX validation output is missing $requiredPath"
         }

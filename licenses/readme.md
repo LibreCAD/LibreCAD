@@ -140,7 +140,9 @@ The format of the Font data in this distribution was originally created by:
 The Windows, macOS and AppImage packages of LibreCAD include the Qt
 libraries. Qt offers them under the LGPLv3, the GPLv2 and the GPLv3;
 LibreCAD, which is licensed under the GPLv2 only, uses them under the
-GPLv2 (`gpl-2.0.txt`). Qt's source code, and the licenses of the
+GPLv2 (`gpl-2.0.txt`). The Qt libraries contain third-party code under
+its own licenses; `qt-third-party.txt` lists each component with its
+copyright and license text. Qt's source code, and the licenses of the
 third-party code in Qt, can also be found at:
 
 - <https://www.qt.io/download-open-source>

@@ -68,7 +68,12 @@ listed below.
   index by scale into files Windows never reads.
 - `LICENSE` and the files of `licenses/` go under `licenses\`: the GPLv2 of
   LibreCAD and of the Qt libraries it ships, the GPLv3 of WenQuanYi Micro
-  Hei, and the licences of the other bundled fonts. `licenses\SOURCE.txt`
+  Hei, the licences of the other bundled fonts, and `qt-third-party.txt`
+  with the copyright and licence text of each third-party component inside
+  the Qt DLLs and plugins. That file is for one Qt release: when
+  `build-all.yml` installs another, `build-msix.ps1` warns, and
+  `scripts/msix/update-qt-third-party.py --tag v<version>` regenerates it
+  from Qt's own attribution data. `licenses\SOURCE.txt`
   names the commit the package was built from, the Qt version it contains
   and the Boost version compiled into `LibreCAD.exe`, links to the source of
   all three, and carries the project's written offer of that source for
