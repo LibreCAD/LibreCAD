@@ -22,111 +22,325 @@
  ********************************************************************************
 -->
 
-# Microsoft Store MSIX CI
+# Microsoft Store MSIX
 
-`build-all.yml` packages an MSIX in each of its existing Windows jobs -- right
-after the payload is staged for the NSIS installer, so no extra compile is
-needed -- and its `PackageWindowsMsix` job combines the two into one
-`.msixbundle` plus a `.msixupload` archive. `msix-store-submit.yml` submits that
-bundle.
+`build-all.yml` packages an MSIX in each of its Windows jobs, right after the
+payload is staged for the NSIS installer, so no extra compile is needed. On
+pushes to `master` its `PackageWindowsMsix` job combines the x64 and ARM64
+packages into one `.msixbundle` and a `.msixupload` archive, the
+`winMsixBundle` artifact. `msix-store-submit.yml` submits that archive to the
+Store once the product is live.
 
-These artifacts are intentionally unsigned. **An unsigned MSIX cannot be
-installed**, so they are Store-submission and validation artifacts only, never
-direct-download installers, and they are deliberately not attached to the
-`continuous` release. Microsoft re-signs an MSIX after Store certification, so
-the Store path needs no paid certificate and no private key in GitHub Actions.
-Publishing a signed bundle for direct download is a separate decision that
-requires its own certificate and a different package identity.
-## One-time Store setup
+These artifacts are unsigned. **An unsigned MSIX cannot be installed**, so they
+are for Store submission and validation only, never direct-download
+installers, and they are not attached to the `continuous` release. Microsoft
+signs a package after it passes Store certification, so the Store route needs
+no certificate and no private key in GitHub Actions.
 
-1. Create or use the LibreCAD Microsoft Partner Center developer account and
-   reserve separate `LibreCAD` and `LibreCAD-beta` products. The two products
-   must have different package identity names so Windows can install them
-   side by side.
-2. Create the `microsoft-store` GitHub Actions environment. Require approval
-   and restrict deployments to release branches or tags; this is the release gate
-   for the Store submission job.
-3. Add these non-secret **repository variables**, using the values assigned by
-   Partner Center. They must be repository-scoped because the x64 and ARM64
-   package-build jobs need the real identity before the protected publish job
-   starts:
+Only the **LibreCAD-beta** channel is wired up: every package is built with
+the package name `LibreCAD-beta` and the beta identity. Nothing builds a
+`LibreCAD` (stable) package yet, and no workflow reads the stable variables
+listed below.
 
-   All identity values come from **Product management > Product identity** of the
-   matching Partner Center product. They are case, space, and punctuation
-   sensitive; copy them verbatim.
+## What the package contains
 
-   | Variable | Manifest slot | Value |
-   | --- | --- | --- |
-   | `MICROSOFT_STORE_IDENTITY_NAME` | `Package/Identity/@Name` | Reserved LibreCAD package identity name, such as `12345LibreCAD.LibreCAD` |
-   | `MICROSOFT_STORE_BETA_IDENTITY_NAME` | `Package/Identity/@Name` | Reserved LibreCAD-beta package identity name |
-   | `MICROSOFT_STORE_PUBLISHER` | `Package/Identity/@Publisher` | Publisher subject, normally `CN=<GUID>`, not a readable name |
-   | `MICROSOFT_STORE_PUBLISHER_DISPLAY_NAME` | `Package/Properties/PublisherDisplayName` | Publisher display name shown in Windows |
-   | `MICROSOFT_STORE_PRODUCT_ID` | `msstore --appId` | LibreCAD **Store ID**: 12 alphanumeric characters, such as `9NBLGGH4NNS1` |
-   | `MICROSOFT_STORE_BETA_PRODUCT_ID` | `msstore --appId` | LibreCAD-beta Store ID |
+`scripts/build-msix.ps1` packages the staged folder with these changes:
 
-   `msstore --appId` takes the 12-character Store ID, not the Partner Center
-   product GUID. The publish job rejects any other format.
+- `LibreCAD.exe` must be a Windows GUI program (PE subsystem 2); the script
+  refuses a console build (`-DLIBRECAD_WINDOWS_CONSOLE=ON`), which would open
+  a console window beside LibreCAD on every start.
+- It is the only program in the package: test and developer programs, linker
+  files (`.lib`, `.exp`, `.ilk`), debug symbols, the app-local Universal CRT,
+  the software OpenGL renderer and the Direct3D shader compilers
+  (`d3dcompiler_47.dll`, `dxcompiler.dll`, `dxil.dll`) are left out.
+  LibreCAD paints with QPainter and loads none of them.
+- Fonts, hatch patterns, the block library, plugins and translations go under
+  `resources\`, where LibreCAD looks for them. The translations are packaged
+  as files even though the program embeds them, because the language list in
+  the options only shows the `.qm` files it finds on disk.
+- `LICENSE` and the files of `licenses/` go under `licenses\`: the GPLv2 of
+  LibreCAD and of the Qt libraries it ships, the GPLv3 of WenQuanYi Micro
+  Hei, and the licences of the other bundled fonts. `licenses\SOURCE.txt`
+  names the commit the package was built from, the Qt version it contains
+  and the Boost version compiled into `LibreCAD.exe`, links to the source of
+  all three, and carries the project's written offer of that source for
+  three years, as GPLv2 section 3(b) asks: a link alone would not do for a
+  Store distribution, neither for LibreCAD nor for the Qt libraries the
+  package ships under the GPLv2, nor for Boost, which is not in the
+  repository. Requests for the source arrive on the issue tracker; answer
+  them with LibreCAD's commit and the Boost and Qt releases named in the
+  file.
+- The input folder must hold the Visual C++ runtime DLLs, which
+  `scripts/copy-vc-runtime.ps1` stages; windeployqt only brings
+  `vc_redist.<arch>.exe`, which is left out.
+- The script prints the size of the package it made.
+- The tiles and icons are scaled from `scripts/msix/librecad-logo.png`, a
+  1080 x 1080 rendering of `CI/librecad.svg` without its white background
+  square. `scripts/msix/librecad-tile-300.png` is the same rendering at the
+  size of the Store's app tile icon.
 
-   The reserved app name also matters: `Package/Properties/DisplayName` is set
-   from the selected package name, so **both `LibreCAD` and `LibreCAD-beta` must
-   be reserved app names** in Partner Center, each on its own product.
+## One-time setup
 
-4. Register a Microsoft Entra ID (Azure AD) application for Microsoft Store
-   Developer CLI access and add these secrets to the protected `microsoft-store`
-   environment:
+### Partner Center product
+
+Use the LibreCAD Microsoft Partner Center developer account. The
+`LibreCAD-beta` product is reserved; a stable `LibreCAD` product would be a
+separate product with its own identity, so that Windows can install both side
+by side.
+
+The identity values come from **Product management > Product identity** of the
+product. They are case, space and punctuation sensitive; copy them verbatim:
+
+| Manifest slot | Partner Center field |
+| --- | --- |
+| `Package/Identity/@Name` | Package/Identity/Name |
+| `Package/Identity/@Publisher` | Package/Identity/Publisher (`CN=<GUID>`) |
+| `Package/Properties/PublisherDisplayName` | Package/Properties/PublisherDisplayName |
+| `Package/Properties/DisplayName` | A name reserved for the product, exactly |
+
+`build-msix.ps1` sets `DisplayName` to the package name, so the product must
+have **`LibreCAD-beta`** among its reserved names, spelled exactly so. Check
+the list under **Product management > Product identity** (or **Manage app
+names**) before the first upload; a package whose `DisplayName` is not a
+reserved name is rejected at upload.
+
+### Repository variables
+
+These are non-secret **repository variables**. They must be repository-scoped,
+not environment-scoped, because the x64 and ARM64 build jobs need the real
+identity before any protected job starts. LibreCAD/LibreCAD has the four beta
+values set; a fork that wants a submittable package needs its own.
+
+| Variable | Used by | Value |
+| --- | --- | --- |
+| `MICROSOFT_STORE_BETA_IDENTITY_NAME` | `build-all.yml` | Package/Identity/Name of LibreCAD-beta |
+| `MICROSOFT_STORE_PUBLISHER` | `build-all.yml` | Package/Identity/Publisher, `CN=<GUID>` |
+| `MICROSOFT_STORE_PUBLISHER_DISPLAY_NAME` | `build-all.yml` | Package/Properties/PublisherDisplayName |
+| `MICROSOFT_STORE_BETA_PRODUCT_ID` | `msix-store-submit.yml` | Store ID of LibreCAD-beta: 12 letters and digits, such as `9NBLGGH4NNS1` |
+| `MICROSOFT_STORE_IDENTITY_NAME` | nothing yet | Package/Identity/Name of a future stable product |
+| `MICROSOFT_STORE_PRODUCT_ID` | nothing yet | Store ID of a future stable product |
+
+`msstore --appId` takes the 12-character Store ID, not the Partner Center
+product GUID; the submit job refuses any other format.
+
+Without the identity variables a build uses the placeholder identity
+`LibreCAD.Beta.Development` and publisher `CN=LibreCAD Development`, so CI
+still exercises the packaging, and the submit job refuses such a bundle.
+
+### The `microsoft-store` environment
+
+`msix-store-submit.yml` runs in the `microsoft-store` environment, which is
+the release gate. In **Settings > Environments > microsoft-store**:
+
+1. Under **Deployment protection rules**, turn on **Required reviewers** and
+   add the maintainers who may publish.
+2. Under **Deployment branches and tags**, choose **Selected branches and
+   tags** and allow `master` only. A manual dispatch runs on the branch
+   picked in the dialog, so this keeps other branches from submitting.
+3. Add these **environment secrets** (Microsoft Entra ID application for the
+   Microsoft Store Developer CLI):
 
    | Secret | Value |
    | --- | --- |
    | `AZURE_AD_TENANT_ID` | Entra tenant ID, from Identity > Overview |
    | `AZURE_AD_APPLICATION_CLIENT_ID` | Application (client) ID of the app registration |
-   | `AZURE_AD_APPLICATION_SECRET` | Client secret value; these expire, so plan rotation |
-   | `SELLER_ID` | Partner Center publisher/seller ID, from Account settings > Identifiers |
+   | `AZURE_AD_APPLICATION_SECRET` | Client secret value; it expires, so plan its rotation |
+   | `SELLER_ID` | Partner Center seller ID, from Account settings > Identifiers |
 
-5. The credentials only work once the account side is wired up as well:
+The credentials only work once the account side is wired up as well:
 
-   - The Entra tenant must be associated with the Partner Center account.
-   - The app registration must be added under **Account settings > User
-     management > Microsoft Entra applications** and assigned the **Manager**
-     role.
-   - The product must already have one live Store submission before CLI-driven
-     updates work.
-   - Store app updates through GitHub Actions are currently supported for free
-     products only.
+- The Entra tenant must be associated with the Partner Center account.
+- The app registration must be added under **Account settings > User
+  management > Microsoft Entra applications** with the **Manager** role.
+- The product must already have one live Store submission: `msstore` updates
+  published products only.
+- Store updates through the CLI are supported for free products only.
 
-Each package identity name and publisher must be fixed before its first Store
-submission. `LibreCAD` and `LibreCAD-beta` deliberately use different Partner
-Center identities and product IDs. Their package family names are therefore
-different, allowing Windows to install, update, and uninstall the two channels
-independently. Both packages may use the same publisher.
+None of this is needed for the first submission, which is made by hand.
+
+## First submission
+
+The first submission of a product is always made by hand in Partner Center.
+Certification takes up to three business days, and the review of the
+`runFullTrust` capability can add to that.
+
+Before you start:
+
+- This work must be on `master`: the privacy policy URL below points at
+  `PRIVACY.md` there, and the package must come from a `master` run.
+- A reserved app name lapses three months after it was reserved unless a
+  submission uses it. Check the reservation date of `LibreCAD-beta` in
+  Partner Center and submit before then, or reserve the name again.
+
+### 1. Get the package
+
+1. Open the latest **Continuous build** run of `master` in the Actions tab
+   whose **PackageWindowsMsix** job succeeded. The run must have started
+   after the repository variables were set; otherwise its package carries
+   the placeholder identity and Partner Center refuses it.
+2. Download the `winMsixBundle` artifact (kept for 30 days) and unzip it. It
+   holds `LibreCAD-beta-<version>-windows.msixupload`, the file to upload, and
+   the `.msixbundle` inside it.
+
+Every run numbers its package `<major>.<minor>.<run number>.0`, and the Store
+requires every submission to carry a higher version than the last, so
+always submit the newest run.
+
+### 2. Start the submission
+
+In Partner Center open **Apps and games > LibreCAD-beta**. The product must be
+an **MSIX or PWA app** (an EXE or MSI product asks for a download URL instead
+of a package), and a reserved name lapses after three months without a
+submission. Choose **Start your submission** and fill in the pages below in
+any order; **Submit to the Store** becomes available once each one is
+complete.
+
+### 3. Pricing and availability
+
+- **Markets**: all markets (the default).
+- **Audience**: **Private audience**, with a group of testers' Microsoft
+  accounts, to try the Store install before anyone else sees it; **Public
+  audience** to list it. Once a submission has gone out public, the product
+  can never be made private again.
+- **Discoverability**: make it available and discoverable.
+- **Pricing**: **Free**, no free trial. The Store CLI only updates free
+  products.
+
+### 4. Properties
+
+- **Category**: **Multimedia design**, subcategory **Illustration + graphic
+  design**, with **Productivity** as the secondary category.
+- **Privacy policy**: answer **Yes** to "Does this product access, collect,
+  or transmit personal information?" and give
+  `https://github.com/LibreCAD/LibreCAD/blob/master/PRIVACY.md`. Store policy
+  10.5.1 counts every Win32 desktop product as having access to personal
+  information, so it always needs a privacy policy; this one says that
+  LibreCAD collects nothing and names the anonymous update check.
+- **Website**: `https://librecad.org`
+- **Support contact info**: `https://github.com/LibreCAD/LibreCAD/issues`
+- **System requirements**: keyboard and mouse recommended; under additional
+  requirements, Windows 10 version 1809 or later.
+- **Product declarations**: keep the two that are on by default (installing
+  to alternate drives, OneDrive backups) and leave the rest clear.
+
+### 5. Age ratings
+
+The IARC questionnaire asks first what kind of product it is (an app, not a
+game) and then questions that depend on that answer. Answer them as they are:
+LibreCAD has no communication between users, shares no location, sells
+nothing and is not a web browser; it only opens its fixed help pages in the
+default browser. Choose **Save and generate**.
+
+### 6. Packages
+
+Upload the `.msixupload`; Partner Center checks each package as it arrives and
+lists the x64 and ARM64 packages. The identity and publisher must match the
+**Product identity** page exactly. A `DisplayName` that is not reserved fails
+with "The name found in the package is not one of your reserved app names".
+A warning that `runFullTrust` needs approval is expected: the justification
+under **Submission options** answers it. Under **Device family availability**
+keep **Windows 10/11 Desktop** only.
+
+### 7. Store listing (English (United States))
+
+The package declares `en-us` only, so one English (United States) listing is
+enough. The description may not contain URLs or HTML.
+
+- **Description**:
+
+  > LibreCAD is a free, open-source 2D CAD program for technical drawings,
+  > plans, mechanical parts and diagrams. It opens and saves DXF and DWG
+  > drawings and exports PDF, SVG and images.
+  >
+  > - Lines, arcs, circles, ellipses, splines, polylines, hatches and text
+  > - Dimensions, leaders, blocks and a block library
+  > - Layers, snapping and a command line for keyboard input
+  > - Move, rotate, scale, mirror, trim, extend, offset, fillet, chamfer and
+  >   more
+  > - Printing and plotting with page layouts and scale
+  > - Plugins and customizable toolbars, menus and shortcuts
+  > - Translated into many languages by volunteers
+  >
+  > LibreCAD is free software under the GNU General Public License version 2;
+  > its source code is on GitHub.
+  >
+  > This is the beta channel, built from the development branch: it gets new
+  > features and fixes first, and may also have new bugs.
+
+- **What's new in this version**: leave it blank for the first submission.
+- **Product features** (up to 20, 200 characters each): the bullet points of
+  the description, one per line.
+- **Screenshots**: PNG, at least 1366 x 768, up to 10; four are recommended.
+  Take them on Windows from the build being submitted, for example a drawing
+  with the layer and block docks, a dimensioned part and the print preview.
+- **Store logos**: upload `scripts/msix/librecad-tile-300.png` as the **1:1
+  App tile icon (300 x 300)**. The Store shows it on its pages instead of the
+  package's own logo. Box art and poster art are for games and Xbox only.
+- **Short description**: "Free, open-source 2D CAD for DXF and DWG drawings."
+- **Keywords** (up to 7): CAD, 2D CAD, DXF, DWG, drafting, technical drawing,
+  floor plan.
+- **Copyright and trademark info**: `Copyright (C) LibreCAD contributors`.
+- **Additional license terms**: the URL
+  `https://github.com/LibreCAD/LibreCAD/blob/master/LICENSE`, which the Store
+  shows as a link. Left blank, Microsoft's Standard Application License Terms
+  would apply, and they forbid the copying and changing that the GPL allows.
+- **Developed by**: `LibreCAD contributors`.
+
+Keep other companies' product names out of the listing and the keywords
+(policy 10.1.3); describe the file formats as DXF and DWG.
+
+### 8. Submission options
+
+- **Publishing hold options**: publish as soon as it passes certification,
+  or hold it to pick the moment.
+- **Notes for certification** (testers only, customers never see them):
+
+  > LibreCAD is a free, open-source (GPLv2) 2D CAD desktop program built
+  > with Qt. It needs no account and no sign-in, and depends on no driver or
+  > service. On first start it asks for the language and units; then draw
+  > a line (Tools > Line > 2 Points) or open a .dxf or .dwg file. At start it
+  > may make one anonymous HTTPS request to api.github.com to check for a
+  > newer release (Options > Application Preferences > Startup). Source
+  > code: https://github.com/LibreCAD/LibreCAD
+
+- **Restricted capabilities**, why the app needs `runFullTrust` and how it
+  uses it:
+
+  > LibreCAD is an existing Win32 desktop program (C++ and Qt) packaged as
+  > MSIX. runFullTrust lets it run as a desktop program: it opens and saves
+  > drawings the user picks anywhere on disk, loads its own plugin DLLs and
+  > prints. It installs no services or drivers and never asks for
+  > elevation.
+
+### 9. Submit
+
+Choose **Submit to the Store**. Certification scans the package, runs the
+App Certification Kit's tests, and testers install and start the app and
+compare it with the listing. Once the product is live, later versions go
+through the **Submit MSIX to Microsoft Store** workflow below.
 
 ## CI behavior
 
-- Pushes and pull requests that touch the Windows package surface build and
-  validate both architecture packages and the bundle.
-- `build-all.yml` runs on pushes to `master` and uses the `LibreCAD-beta`
-  package name.
-- A normal run uses distinct harmless development identities when Store
-  variables are not configured: `LibreCAD.Development` and
-  `LibreCAD.Beta.Development`. That keeps side-by-side behavior covered by CI
-  but does not create a submit-ready Store package. The publish job refuses such
-  a package rather than uploading one the Store would reject for a mismatched
-  identity.
-- To submit, manually dispatch **Submit MSIX to Microsoft Store** with the run
-  ID of the "Continuous build" run whose bundle you want to ship. The protected
-  `microsoft-store` environment must approve the job. Submission is manual by
-  design: `msstore` can only update a product that is **already published and
-  live**, so the very first submission has to be made by hand in Partner Center.
-- The submit job uses `microsoft/microsoft-store-apppublisher` and `msstore` to
-  upload the `.msixupload` archive and create the Partner Center submission.
-  Microsoft handles signing after the package passes certification.
+- On pushes to `master`, both Windows jobs package an MSIX and
+  `PackageWindowsMsix` bundles them. A packaging failure there does not stop
+  the installers from being published: the MSIX steps continue on error,
+  nothing is uploaded, and `PackageWindowsMsix` fails instead.
+- Pull requests that touch `build-all.yml`, the MSIX scripts or the manifest
+  build and package the ARM64 job only, and a packaging failure fails the
+  job. Bundling runs on pushes only.
+- To submit an update, manually dispatch **Submit MSIX to Microsoft Store**
+  on `master` with the run ID of the **Continuous build** run whose bundle
+  should ship. A reviewer of the `microsoft-store` environment must approve
+  the job. It refuses a bundle built with the placeholder identity, then
+  uploads the `.msixupload` with `msstore publish`.
 
 ## Package version
 
-The generated MSIX version is `major.minor.GitHub-run-number.0`.
+The package version is `major.minor.<GitHub run number>.0`.
 
 The Microsoft Store reserves the fourth component and rejects any package whose
-revision is not built as 0, so the monotonically increasing build counter goes in
-the third component instead. The Store also requires every new submission to
+revision is not 0, so the monotonically increasing build counter goes in the
+third component instead. The Store also requires every new submission to
 carry a strictly higher version than the previous one, and the run number is the
 only always-increasing value available to the workflow; the tag patch level is
 not, because several submissions can be cut from the same tag. Both the workflow
@@ -141,49 +355,66 @@ rejected at upload fails during packaging instead.
   exercises the manifest, identity and entry point. Developer Mode is already
   enabled on every GitHub-hosted Windows image. This does not validate the
   signature, the block map, or the real container.
+- It runs the packaged `LibreCAD.exe` once, converting
+  `resources\library\misc\screw.dxf` to PNG with stderr redirected to a
+  file, and fails unless that exits with 0, writes the PNG and leaves Qt's
+  messages in the file. This catches a missing Qt DLL and a broken
+  GUI-subsystem build before certification does; the runner has the Visual
+  C++ runtime installed, so a missing runtime DLL is caught by
+  `build-msix.ps1` instead.
 - It runs the Windows App Certification Kit against the bundle when
   `appcert.exe` is present. WACK does not require a signed package -- its only
   signature test is optional and inspects payload PEs. The kit is not
   contractually part of the runner image, so the step skips when it is missing
   and never fails the build.
 
-Both `build-msix.ps1` and `build-msix-bundle.ps1` additionally round-trip every
-artifact through `MakeAppx unpack` / `unbundle` and re-assert the manifest,
-because MakeAppx's own semantic validation is incomplete and packages it
-produces are not guaranteed to be installable.
+`build-msix.ps1` also unpacks every package it makes and checks the
+manifest and the required files again, because MakeAppx's own semantic
+validation is incomplete and the packages it produces are not guaranteed to be
+installable; a package that fails is deleted. `build-msix-bundle.ps1`
+unbundles the bundle and checks that it holds both architecture packages.
 
-## Registry and legacy-installer behavior
+## Registry, settings and the NSIS installer
 
 MSIX file associations are declared in `AppxManifest.xml`; the package does not
-write LibreCAD keys directly into the machine registry. Windows owns those
-registrations and removes package-private registry state when the package is
-uninstalled. Each manifest lists only its matching NSIS ProgIDs as migration
-sources: `LibreCAD.DXF/DWG` for stable and `LibreCAD-beta.DXF/DWG` for beta.
-This prevents one channel from inheriting the other channel's associations.
-Migration does not grant the MSIX permission to delete machine-wide NSIS keys.
+write LibreCAD keys into the machine registry. The manifest lists the ProgIDs
+the NSIS installer registers, `LibreCAD.DXF` and `LibreCAD.DWG`, as migration
+sources, so an existing installation's associations move to the package.
+Migration does not let the MSIX delete the machine-wide NSIS keys.
 
-This follows Microsoft's documented
+Settings are another matter. A packaged app's writes to `HKCU\Software` and
+new files under `AppData` go to a private per-package store that Windows
+deletes when the package is uninstalled; reads still see the real registry.
+The Store build therefore starts with the settings of an existing NSIS
+installation. Its registry changes and the files it creates under `AppData`
+stay inside the package, and uninstalling it removes them. A settings folder
+set outside `AppData` (**Options > Application Preferences > Paths**) is not
+virtualized at all. Since Windows 10 version 1903,
+though, a file that already exists under `AppData` is changed in place: when
+LibreCAD rewrites a file an earlier installation left in its settings folder
+(`workspaces.lcws` and `penpalette.lcpp` on every exit, `shortcuts.lcsc` when
+shortcuts are edited), the change reaches the real file, is shared with that
+installation, and survives uninstalling the package.
+
+See Microsoft's
 [packaged-desktop registry model](https://learn.microsoft.com/windows/msix/desktop/desktop-to-uwp-behind-the-scenes)
 and its
 [unpackaged-to-Store transition guidance](https://learn.microsoft.com/windows/apps/distribute-through-store/how-to-transition-users-from-your-web-unpackaged-app-to-store-packaged-app).
 
-The Store package intentionally does not use `windows.customInstall`. That
-extension requires restricted Microsoft approval and is intended for narrowly
-approved package types. A normal Store MSIX therefore cannot run an elevated
-registry-cleanup executable during installation. Legacy NSIS registrations are
-cleaned by the NSIS installers. Installing one architecture replaces obsolete
-architecture registrations for the same package name because those builds share
-an install directory. A separately named stable or beta sibling is preserved
-while its recorded uninstaller exists; abandoned sibling registrations are
-removed. Per-user LibreCAD preferences under `HKCU` are intentionally retained;
-they are user data rather than installer ownership records.
-Microsoft documents `windows.customInstall` as a
-[restricted facility intended for specially approved packages](https://learn.microsoft.com/uwp/schemas/appxpackage/uapmanifestschema/element-desktop6-custominstall).
+The Store package does not use `windows.customInstall`, a
+[restricted extension for specially approved packages](https://learn.microsoft.com/uwp/schemas/appxpackage/uapmanifestschema/element-desktop6-custominstall),
+so it cannot run an elevated registry clean-up while installing. Legacy NSIS
+registrations are cleaned by the NSIS installers.
 
 ## Local package creation
 
-On a Windows machine with the Windows SDK, build and deploy LibreCAD first, then
-run `scripts/build-msix.ps1`. The package must be signed with a locally trusted
-development certificate before it can be installed outside the Store. Do not add
-a production certificate to this repository or GitHub Actions secrets for the
-Store workflow.
+On a Windows machine with the Windows SDK, build LibreCAD (not with
+`LIBRECAD_WINDOWS_CONSOLE`), deploy it with `windeployqt --release
+--no-opengl-sw --no-system-d3d-compiler --no-system-dxc-compiler
+--include-plugins qoffscreen`, copy the Visual C++ runtime next to
+`LibreCAD.exe` with `scripts\copy-vc-runtime.ps1 -Architecture AMD64
+-Destination <folder>` (`ARM64` on Arm), then run `scripts/build-msix.ps1`
+on that folder from a Git checkout, so that it can name the commit in
+`licenses\SOURCE.txt`. The package must be signed with a locally trusted
+development certificate before it can be installed outside the Store. Do not
+add a production certificate to this repository or to GitHub Actions secrets.
