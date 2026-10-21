@@ -2393,6 +2393,18 @@ if(APPLE)
     )
 endif()
 
+# On Windows, LibreCAD is a GUI program, as in the 2.2.1 releases. A console
+# program opens a console window behind the main window, and closing that window
+# ends LibreCAD without asking to save. The converters (librecad dxf2pdf ...)
+# attach to the console they are started from. LIBRECAD_WINDOWS_CONSOLE=ON keeps
+# the console window, which shows the debug output.
+if(WIN32)
+    option(LIBRECAD_WINDOWS_CONSOLE "Build the Windows program with a console window for debug output" OFF)
+    if(NOT LIBRECAD_WINDOWS_CONSOLE)
+        set_target_properties(librecad PROPERTIES WIN32_EXECUTABLE ON)
+    endif()
+endif()
+
 target_include_directories (librecad PRIVATE
                             ${SHARED_INCLUDES}
 )
