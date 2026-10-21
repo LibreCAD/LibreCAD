@@ -592,9 +592,8 @@ jobs:
   PackageWindowsMsix:
     if: github.event_name == 'push'
     needs: [BuildWindows64, BuildWindowsARM64]
-    # Package on x64: there is no arm64 build of makepri.exe, and importing a
-    # certificate into TrustedPublisher fails on windows-11-arm
-    # (actions/runner-images#14728).  MakeAppx packages any architecture.
+    # x64, because the smoke test registers and runs the x64 package.
+    # MakeAppx bundles any architecture.
     runs-on: windows-2022
     steps:
       - name: Checkout code
@@ -696,12 +695,28 @@ jobs:
             Write-Host "::warning::App Certification Kit exited with $LASTEXITCODE"
           }
           if (Test-Path -LiteralPath $report) {
+            # The overall result is an attribute of the root; each test's
+            # result is the text of its RESULT element.
             [xml]$xml = Get-Content -LiteralPath $report -Raw
-            $failed = @($xml.SelectNodes('//*[@OVERALL_RESULT="FAIL"]'))
-            Write-Host "App Certification Kit reported $($failed.Count) failing test(s)."
+            $failed = @($xml.SelectNodes('//TEST[normalize-space(RESULT)="FAIL"]'))
+            foreach ($test in $failed) {
+              Write-Host "::warning::App Certification Kit test failed: $($test.NAME) (optional: $($test.OPTIONAL))"
+            }
+            Write-Host "App Certification Kit: overall $($xml.REPORT.OVERALL_RESULT), $($failed.Count) failing test(s)."
+            New-Item -ItemType Directory -Force -Path wack | Out-Null
+            Copy-Item -LiteralPath $report -Destination wack\wack-report.xml
           }
         shell: pwsh
         continue-on-error: true
+
+      - name: Upload App Certification Kit report
+        if: always()
+        uses: actions/upload-artifact@main
+        with:
+          name: winMsixWackReport
+          path: wack/wack-report.xml
+          if-no-files-found: ignore
+          retention-days: 30
 
       - name: Upload MSIX bundle
         uses: actions/upload-artifact@main
