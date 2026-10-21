@@ -10,6 +10,8 @@ on:
       - 'scripts/*osx*'
       - 'scripts/*macos*'
       - 'scripts/postprocess-windows/nsis-msvc.nsi'
+      - 'scripts/build-msix*.ps1'
+      - 'scripts/msix/**'
 
 # A newer push supersedes a build that is still running.
 concurrency:
@@ -365,6 +367,11 @@ jobs:
         shell: bash
 
       - name: Package MSIX
+        id: package-msix
+        # A failed Store package must not hold back the installers on master;
+        # nothing is uploaded, so PackageWindowsMsix fails for want of the
+        # artifact instead.
+        continue-on-error: ${{ github.event_name == 'push' }}
         run: |
           # The Store reserves the revision component, so it stays 0; the run
           # number keeps the build component increasing across pushes.
@@ -397,6 +404,8 @@ jobs:
         shell: pwsh
 
       - name: Upload MSIX artifact
+        if: steps.package-msix.outcome == 'success'
+        continue-on-error: ${{ github.event_name == 'push' }}
         uses: actions/upload-artifact@main
         with:
           name: win64Msix
@@ -526,6 +535,11 @@ jobs:
         shell: bash
 
       - name: Package MSIX
+        id: package-msix
+        # A failed Store package must not hold back the installers on master;
+        # nothing is uploaded, so PackageWindowsMsix fails for want of the
+        # artifact instead.
+        continue-on-error: ${{ github.event_name == 'push' }}
         run: |
           # The Store reserves the revision component, so it stays 0; the run
           # number keeps the build component increasing across pushes.
@@ -558,6 +572,8 @@ jobs:
         shell: pwsh
 
       - name: Upload MSIX artifact
+        if: steps.package-msix.outcome == 'success'
+        continue-on-error: ${{ github.event_name == 'push' }}
         uses: actions/upload-artifact@main
         with:
           name: winARM64Msix
@@ -752,6 +768,9 @@ jobs:
 
       - name: Fetch artifacts
         uses: actions/download-artifact@main
+        with:
+          # The installers only; the MSIX packages are not published here.
+          pattern: '*Assets*'
 
       # Publishing never deletes before it uploads: the tag is moved, the
       # release is updated in place, and only then are the assets of older

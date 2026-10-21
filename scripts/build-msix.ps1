@@ -598,22 +598,32 @@ Remove-Item -LiteralPath $priConfigPath -Force
 
 $makeAppx = Find-SdkTool -Name 'makeappx.exe'
 $packagePath = Join-Path $outputDirectory "$PackageName-$PackageVersion-windows-$Architecture.msix"
-Invoke-MakeAppx -MakeAppx $makeAppx -Operation 'pack' -Arguments @(
-    'pack', '/o', '/d', $layoutDirectory, '/p', $packagePath
-)
-Invoke-MakeAppx -MakeAppx $makeAppx -Operation 'unpack validation' -Arguments @(
-    'unpack', '/o', '/p', $packagePath, '/d', $validationDirectory
-)
+# A package that fails a check below is deleted, so that neither a later CI
+# step nor a person can take it for a good one.
+try {
+    Invoke-MakeAppx -MakeAppx $makeAppx -Operation 'pack' -Arguments @(
+        'pack', '/o', '/d', $layoutDirectory, '/p', $packagePath
+    )
+    Invoke-MakeAppx -MakeAppx $makeAppx -Operation 'unpack validation' -Arguments @(
+        'unpack', '/o', '/p', $packagePath, '/d', $validationDirectory
+    )
 
-foreach ($requiredPath in @('AppxManifest.xml', 'LibreCAD.exe', 'resources.pri', 'Assets\Square150x150Logo.png', 'resources\fonts\standard.lff', 'licenses\gpl-2.0.txt', 'licenses\LICENSE')) {
-    if (-not (Test-Path -LiteralPath (Join-Path $validationDirectory $requiredPath) -PathType Leaf)) {
-        throw "MSIX validation output is missing $requiredPath"
+    foreach ($requiredPath in @('AppxManifest.xml', 'LibreCAD.exe', 'resources.pri', 'Assets\Square150x150Logo.png', 'resources\fonts\standard.lff', 'licenses\gpl-2.0.txt', 'licenses\LICENSE')) {
+        if (-not (Test-Path -LiteralPath (Join-Path $validationDirectory $requiredPath) -PathType Leaf)) {
+            throw "MSIX validation output is missing $requiredPath"
+        }
     }
+    Test-PackagedManifest `
+        -ManifestPath (Join-Path $validationDirectory 'AppxManifest.xml') `
+        -ExpectedPackageName $PackageName `
+        -ExpectedIdentityName $IdentityName
 }
-Test-PackagedManifest `
-    -ManifestPath (Join-Path $validationDirectory 'AppxManifest.xml') `
-    -ExpectedPackageName $PackageName `
-    -ExpectedIdentityName $IdentityName
+catch {
+    if (Test-Path -LiteralPath $packagePath) {
+        Remove-Item -LiteralPath $packagePath -Force
+    }
+    throw
+}
 
 $hash = (Get-FileHash -LiteralPath $packagePath -Algorithm SHA256).Hash.ToLowerInvariant()
 $hashPath = "$packagePath.sha256"
