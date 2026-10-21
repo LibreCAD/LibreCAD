@@ -59,9 +59,13 @@ listed below.
   build folder: it builds outside the staged Release folder, so the staged
   folder (and the NSIS installer) lacks it.
 - Fonts, hatch patterns, the block library, plugins and translations go under
-  `resources\`, where LibreCAD looks for them. The translations are packaged
-  as files even though the program embeds them, because the language list in
-  the options only shows the `.qm` files it finds on disk.
+  `resources\`, where LibreCAD looks for them. The translations, LibreCAD's
+  and its plugins', are packaged as files even though the program embeds
+  them, because the language list in the options only shows the `.qm` files
+  it finds on disk.
+- `resources.pri` indexes every logo variant: the script removes the
+  packaging section MakePri's default config has, which would split the
+  index by scale into files Windows never reads.
 - `LICENSE` and the files of `licenses/` go under `licenses\`: the GPLv2 of
   LibreCAD and of the Qt libraries it ships, the GPLv3 of WenQuanYi Micro
   Hei, and the licences of the other bundled fonts. `licenses\SOURCE.txt`
@@ -134,7 +138,9 @@ still exercises the packaging, and the submit job refuses such a bundle.
 ### The `microsoft-store` environment
 
 `msix-store-submit.yml` runs in the `microsoft-store` environment, which is
-the release gate. In **Settings > Environments > microsoft-store**:
+the release gate. In **Settings > Environments > microsoft-store**, set up
+the gate before adding any secret: with secrets and no gate, anyone with
+write access could publish from any branch.
 
 1. Under **Deployment protection rules**, turn on **Required reviewers** and
    add the maintainers who may publish.
@@ -186,9 +192,12 @@ Before you start:
    holds `LibreCAD-beta-<version>-windows.msixupload`, the file to upload, and
    the `.msixbundle` inside it.
 
-Every run numbers its package `<major>.<minor>.<run number>.0`, and the Store
-requires every submission to carry a higher version than the last, so
-always submit the newest run.
+Every run numbers its package `<major>.<minor>.<run number>.0`. The Store
+gives each device the highest version available to it, so a bundle reaches
+existing users only when its version is higher than the one they have:
+always submit the newest run. To roll back new installs after a bad
+release, submit the previous good run's bundle instead; users who already
+have the bad version keep it until a higher one ships.
 
 ### 2. Start the submission
 
@@ -345,9 +354,10 @@ The package version is `major.minor.<GitHub run number>.0`.
 
 The Microsoft Store reserves the fourth component and rejects any package whose
 revision is not 0, so the monotonically increasing build counter goes in the
-third component instead. The Store also requires every new submission to
-carry a strictly higher version than the previous one, and the run number is the
-only always-increasing value available to the workflow; the tag patch level is
+third component instead. The Store always serves the highest version a device
+can use, so an update reaches existing users only when its version is higher,
+and the run number is the only always-increasing value available to the
+workflow; the tag patch level is
 not, because several submissions can be cut from the same tag. Both the workflow
 and `build-msix.ps1` enforce the revision rule, so a package that would be
 rejected at upload fails during packaging instead.
@@ -371,7 +381,9 @@ rejected at upload fails during packaging instead.
   `appcert.exe` is present. WACK does not require a signed package -- its only
   signature test is optional and inspects payload PEs. The kit is not
   contractually part of the runner image, so the step skips when it is missing
-  and never fails the build.
+  and never fails the build; instead it prints the overall result, warns for
+  each failed test, and uploads the report as the `winMsixWackReport`
+  artifact. Read that report for the run you submit.
 
 `build-msix.ps1` also unpacks every package it makes and checks the
 manifest and the required files again, because MakeAppx's own semantic
