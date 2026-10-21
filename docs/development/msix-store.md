@@ -215,7 +215,8 @@ complete.
   `https://github.com/LibreCAD/LibreCAD/blob/master/PRIVACY.md`. Store policy
   10.5.1 counts every Win32 desktop product as having access to personal
   information, so it always needs a privacy policy; this one says that
-  LibreCAD collects nothing and names the anonymous update check.
+  LibreCAD collects nothing and names the anonymous update check, which the
+  Store build does not make.
 - **Website**: `https://librecad.org`
 - **Support contact info**: `https://github.com/LibreCAD/LibreCAD/issues`
 - **System requirements**: keyboard and mouse recommended; under additional
@@ -298,9 +299,9 @@ Keep other companies' product names out of the listing and the keywords
   > LibreCAD is a free, open-source (GPLv2) 2D CAD desktop program built
   > with Qt. It needs no account and no sign-in, and depends on no driver or
   > service. On first start it asks for the language and units; then draw
-  > a line (Tools > Line > 2 Points) or open a .dxf or .dwg file. At start it
-  > may make one anonymous HTTPS request to api.github.com to check for a
-  > newer release (Options > Application Preferences > Startup). Source
+  > a line (Tools > Line > 2 Points) or open a .dxf or .dwg file. The
+  > Store build makes no network request of its own: the Store updates it,
+  > and Help > About > Check for New Version opens its Store page. Source
   > code: https://github.com/LibreCAD/LibreCAD
 
 - **Restricted capabilities**, why the app needs `runFullTrust` and how it

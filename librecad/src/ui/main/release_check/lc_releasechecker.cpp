@@ -24,12 +24,22 @@
 #include "lc_releasechecker.h"
 
 #include <QJsonArray>
+#include <QUrl>
 #include <qjsondocument.h>
 
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_settings.h"
+
+#ifdef Q_OS_WIN
+#include <vector>
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#include <appmodel.h>
+#endif
 
 namespace {
 // A failed update check must never interrupt the user with a modal dialog.
@@ -93,6 +103,30 @@ bool LC_TagInfo::isBefore(const LC_TagInfo& other) const {
 LC_ReleaseChecker::LC_ReleaseChecker(const QString& ownTagName, const bool ownPreRelease) :
     m_emitSignalIfNoNewVersion{false}, m_ownReleaseInfo(getOwnReleaseInfo(ownTagName, ownPreRelease)) {
     connect(&m_webCtrl, &QNetworkAccessManager::finished, this, &LC_ReleaseChecker::infoReceived);
+}
+
+bool LC_ReleaseChecker::runsFromStorePackage() {
+#ifdef Q_OS_WIN
+    UINT32 length = 0;
+    return GetCurrentPackageFullName(&length, nullptr) != APPMODEL_ERROR_NO_PACKAGE;
+#else
+    return false;
+#endif
+}
+
+QUrl LC_ReleaseChecker::storePage() {
+#ifdef Q_OS_WIN
+    UINT32 length = 0;
+    if (GetCurrentPackageFamilyName(&length, nullptr) == ERROR_INSUFFICIENT_BUFFER) {
+        std::vector<wchar_t> familyName(length);
+        if (GetCurrentPackageFamilyName(&length, familyName.data()) == ERROR_SUCCESS) {
+            return QUrl(QStringLiteral("ms-windows-store://pdp/?PFN=") + QString::fromWCharArray(familyName.data()));
+        }
+    }
+    return QUrl(QStringLiteral("ms-windows-store://downloadsandupdates"));
+#else
+    return {};
+#endif
 }
 
 LC_ReleaseInfo LC_ReleaseChecker::getOwnReleaseInfo(const QString& tagName, const bool preRelease) const {

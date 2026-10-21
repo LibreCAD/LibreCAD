@@ -46,17 +46,18 @@ receives a copy of any of this.
 
 - **Checking for new versions.** By default LibreCAD asks GitHub for the list
   of LibreCAD releases when it starts, so that it can tell you about a newer
-  version; it also asks when you click **Check for New Version** in the
-  About dialog (**Help > About**; on macOS, in the **LibreCAD** menu).
-  The request is an anonymous HTTPS request to
-  `api.github.com`. It contains nothing from your drawings and no account
-  details. Like any web request it shows GitHub your IP address, and Qt, the
-  library LibreCAD is built with, adds your system's locale, a language and
-  region such as `de-CH`, to it.
-  GitHub handles it under the
+  version; it also asks when you click **Check for New Version** in the About
+  dialog (**Help > About**; on macOS, in the **LibreCAD** menu). The request
+  is an anonymous HTTPS request to `api.github.com`. It contains nothing from
+  your drawings and no account details. Like any web request it shows GitHub
+  your IP address, and Qt, the library LibreCAD is built with, adds your
+  system's locale, a language and region such as `de-CH`, to it. GitHub
+  handles it under the
   [GitHub Privacy Statement](https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement).
   To turn the check off, clear **Options > Application Preferences > Startup >
-  Check for new versions on startup**.
+  Check for new versions on startup**. The Microsoft Store version never makes
+  this request: the Store updates it, and **Check for New Version** opens its
+  page in the Store.
 - **Links you open.** The Help menu opens web pages, such as the user manual,
   the wiki, the forum, the chat, the issue tracker and the donation page, in
   your web browser. Those sites have their own privacy policies.
