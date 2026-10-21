@@ -637,6 +637,8 @@ jobs:
         shell: pwsh
 
       - name: Smoke test the package
+        # A Qt error dialog would otherwise hold the runner until the job limit.
+        timeout-minutes: 15
         run: |
           # Registering an unpacked layout exercises the manifest, identity and
           # entry point without a certificate.  Developer Mode is already on for
@@ -651,6 +653,27 @@ jobs:
           $installed = Get-AppxPackage | Where-Object { $_.Name -like 'LibreCAD*' }
           if (-not $installed) { throw 'The package did not register.' }
           Write-Host "Registered $($installed.PackageFullName)"
+
+          # Run the packaged program once, as a converter.  It is a GUI
+          # program, so wait for it explicitly.  This also checks that the
+          # package holds every DLL it needs.  Without a console window Qt
+          # logs to the debugger, so it is told to log to the redirected
+          # stderr instead.
+          $sample = Get-Item -LiteralPath (Join-Path $staged 'resources\library\misc\screw.dxf')
+          $png = Join-Path $env:RUNNER_TEMP 'msix-smoke.png'
+          $errors = Join-Path $env:RUNNER_TEMP 'msix-smoke-stderr.txt'
+          $env:QT_FORCE_STDERR_LOGGING = '1'
+          $converter = Start-Process -FilePath (Join-Path $staged 'LibreCAD.exe') `
+            -ArgumentList @('dxf2png', '-o', "`"$png`"", "`"$($sample.FullName)`"") `
+            -NoNewWindow -Wait -PassThru -RedirectStandardError $errors
+          if (Test-Path $errors) { Get-Content $errors }
+          if ($converter.ExitCode -ne 0) { throw "LibreCAD.exe dxf2png exited with $($converter.ExitCode)." }
+          if (-not (Test-Path $png)) { throw "LibreCAD.exe dxf2png wrote no PNG for $($sample.Name)." }
+          if (-not ((Test-Path -LiteralPath $errors) -and (Select-String -LiteralPath $errors -SimpleMatch 'Done' -Quiet))) {
+            throw "LibreCAD.exe dxf2png wrote nothing to the redirected stderr; Qt's messages went elsewhere."
+          }
+          Write-Host "Converted $($sample.Name) to PNG"
+
           Remove-AppxPackage -Package $installed.PackageFullName
         # Windows PowerShell, not pwsh: the Appx module is built on WinRT and
         # fails to load in PowerShell 7 with 0x80131539.
