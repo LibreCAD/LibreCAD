@@ -36,8 +36,11 @@ namespace {
 constexpr double kNegativeIdentityScale = -LC_InsertTransform::IdentityScale;
 constexpr double kTwo = 2.0;
 
+// Whether a component that is zero in exact arithmetic is zero to the tolerance the
+// decomposition uses (LC_InsertTransform::ShearTolerance); a bare epsilon rejected the
+// rounding of the angle round trip (atan2, cos, sin) at about 6% of angles.
 bool isNumericallyZero(double value, double scale) {
-    return std::abs(value) <= std::numeric_limits<double>::epsilon()
+    return std::abs(value) <= LC_InsertTransform::ShearTolerance
                                   * std::max(LC_InsertTransform::IdentityScale, scale);
 }
 
@@ -287,8 +290,9 @@ LC_InsertTransform::decompose(LC_InsertTransformParts& result) const {
     const double col0 = std::hypot(a, b);
     const double col1 = std::hypot(c, d);
     const double dot = a * c + b * d;
-    const double tolerance = std::numeric_limits<double>::epsilon()
-                             * (std::abs(a * c) + std::abs(b * d));
+    // relative to the columns' lengths, not to the two products (which are about zero for a
+    // quarter turn, and that left no tolerance at all): see ShearTolerance
+    const double tolerance = LC_InsertTransform::ShearTolerance * col0 * col1;
     if (!std::isfinite(col0) || !std::isfinite(col1) || !std::isfinite(dot))
         return LC_InsertTransformDecompositionStatus::NonFinite;
     if (col0 == LC_InsertTransform::Zero || col1 == LC_InsertTransform::Zero)
@@ -319,13 +323,36 @@ lcApplyInsertSourceEdit(const RS_InsertData& source, const LC_InsertTransform& e
     if (sourceStatus != LC_InsertTransformStatus::Ok)
         return sourceEditStatus(sourceStatus);
 
+    const double ocsXAxis = source.extrusion.z < LC_InsertTransform::Zero
+                            ? kNegativeIdentityScale
+                            : LC_InsertTransform::IdentityScale;
+
+    // An edit whose linear part is the identity (a translation; the paste's identity scale
+    // and rotation) only moves the insertion point. Rebuilding the angle, the scale
+    // factors and the spacing from the matrix would round each of them to a new value at
+    // every edit, and a few dozen edits of a rotated block later the source could no longer
+    // be edited at all, or its nested blocks would no longer expand.
+    if (edit.a == LC_InsertTransform::IdentityScale && edit.b == LC_InsertTransform::Zero
+        && edit.c == LC_InsertTransform::Zero && edit.d == LC_InsertTransform::IdentityScale) {
+        if (!edit.isFinite())
+            return LC_InsertSourceEditStatus::NonFinite;
+        result = source;
+        // as every other edit does, put an angle stored outside a full turn (a DXF file keeps
+        // what it was written with) back into it, and leave one inside it as it is
+        if (!(source.angle >= LC_InsertTransform::Zero && source.angle < lcInsertTransformFullTurnRadians()))
+            result.angle = RS_Math::correctAngle(source.angle);
+        result.insertionPoint.x = source.insertionPoint.x + ocsXAxis * edit.tx;
+        result.insertionPoint.y = source.insertionPoint.y + edit.ty;
+        return result.insertionPoint.valid && std::isfinite(result.insertionPoint.x)
+                       && std::isfinite(result.insertionPoint.y)
+                   ? LC_InsertSourceEditStatus::Ok
+                   : LC_InsertSourceEditStatus::NonFinite;
+    }
+
     LC_InsertTransform transformed;
     if (!LC_InsertTransform::compose(edit, sourceFrame, transformed))
         return LC_InsertSourceEditStatus::NonFinite;
 
-    const double ocsXAxis = source.extrusion.z < LC_InsertTransform::Zero
-                            ? kNegativeIdentityScale
-                            : LC_InsertTransform::IdentityScale;
     const double normalizedA = ocsXAxis * transformed.a;
     const double normalizedB = transformed.b;
     const double normalizedC = ocsXAxis * transformed.c;

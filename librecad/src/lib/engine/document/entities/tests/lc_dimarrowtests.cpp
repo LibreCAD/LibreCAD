@@ -26,7 +26,9 @@
 #include <cmath>
 #include <memory>
 
+#include "lc_arrow_headclosed.h"
 #include "lc_arrow_headopen.h"
+#include "rs_solid.h"
 
 namespace {
     // A copy is built from the position and the angle, so it matches the arrow only while its transforms
@@ -66,5 +68,43 @@ TEST_CASE("LC_DimArrow transforms keep the arrow consistent", "[dimension][arrow
         CHECK(arrow.getPosition().distanceTo(RS_Vector(-5., 15.)) < 1e-9);
         CHECK(arrow.getAngle() == Catch::Approx(M_PI / 2. - 0.3));
         requireMatchesCopy(arrow);
+    }
+}
+
+TEST_CASE("LC_ArrowHeadClosed exports the same shape it draws",
+          "[dimension][arrow]") {
+    const RS_Vector position(10., 5.);
+    const double dirAngle = 0.2;
+    const double size = 2.;
+    const double ownAngle = M_PI / 12.;
+
+    SECTION("filled: one SOLID at the triangle's own vertices") {
+        LC_ArrowHeadClosed arrow(nullptr, position, dirAngle, size, ownAngle,
+                                 /*filled=*/true);
+        auto primitives = arrow.exportPrimitives();
+        REQUIRE(primitives.size() == 1);
+        const auto *solid = dynamic_cast<RS_Solid *>(primitives.front().get());
+        REQUIRE(solid != nullptr);
+        // getCorner(2)/(3) alias when a SOLID has only three distinct points.
+        CHECK(solid->getCorner(0).distanceTo(solid->getCorner(1)) > 1e-6);
+        CHECK(solid->getCorner(1).distanceTo(solid->getCorner(2)) > 1e-6);
+        CHECK(solid->getMin().distanceTo(arrow.getMin()) < 1e-9);
+        CHECK(solid->getMax().distanceTo(arrow.getMax()) < 1e-9);
+    }
+
+    SECTION("unfilled: nothing -- it is a named block (\"Closed\"), not the "
+            "blockless default") {
+        // Unlike the filled arrow (DIMBLK "", AutoCAD's own default, which
+        // never has a block on either side), the unfilled outline is a named
+        // arrow type that AutoCAD always stores as an INSERT of its own
+        // block. LC_ArrowHeadClosed(filled=false) is only what
+        // LC_DimArrowRegistry falls back to while that block is momentarily
+        // missing from the drawing; the write side should not hand-draw it
+        // and instead let the model-level fix (ensuring the block exists
+        // before the dimension regenerates) turn it into an RS_Insert like
+        // every other named kind.
+        LC_ArrowHeadClosed arrow(nullptr, position, dirAngle, size, ownAngle,
+                                 /*filled=*/false);
+        CHECK(arrow.exportPrimitives().empty());
     }
 }

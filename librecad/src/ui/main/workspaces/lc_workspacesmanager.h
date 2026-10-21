@@ -24,6 +24,7 @@
 #define LC_WORKSPACESMANAGER_H
 
 #include <QObject>
+#include <QMap>
 
 class QC_ApplicationWindow;
 
@@ -42,6 +43,7 @@ public:
     bool isWorkspacesFileExists();
     bool hasWorkspaces() const;
 protected:
+    friend struct LC_DockLayoutTestAccess;
     struct LC_Workspace {
         int id{0};
         QString name;
@@ -51,6 +53,8 @@ protected:
         int windowX{0};
         int windowY{0};
         QString widgetsState;
+        QMap<QString, bool> dockVisibility;
+        bool hasDockVisibility{false};
 
         bool dockAreaLeftActive = false;
         bool dockAreaRightActive = false;

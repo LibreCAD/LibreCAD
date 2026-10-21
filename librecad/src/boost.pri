@@ -133,9 +133,10 @@ unix {
 }
 
 win32 {
-	!equals($$(BOOST_DIR), ""):exists( "$$(BOOST_DIR)" ) {
+	BOOST_DIR_ENV = $$(BOOST_DIR)
+	!isEmpty( BOOST_DIR_ENV ):exists( "$$BOOST_DIR_ENV" ) {
 		# BOOST_DIR environment variable is set, use it:
-		BOOST_DIR = "$$(BOOST_DIR)"
+		BOOST_DIR = "$$BOOST_DIR_ENV"
 	} else:isEmpty( BOOST_DIR ) {
 		# BOOST_DIR QMake variable is not set at all (in custom.pro), use a hardcoded default:
 		BOOST_DIR = "/boost/boost_1_53_0"

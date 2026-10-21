@@ -21,10 +21,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONBLOCKSSAVE_H
 #define RS_ACTIONBLOCKSSAVE_H
 
+#include <memory>
+
 #include "rs_actioninterface.h"
 
 class RS_Block;
-class RS_Insert;
 
 /**
  * This action class can handle user events to save the active block to a file.
@@ -37,9 +38,12 @@ class RS_ActionBlocksSave : public RS_ActionInterface {
     void init(int status) override;
     void trigger() override;
 
-private:
-    void addBlock(const RS_Insert* in, RS_Graphic* g);
-    RS_Graphic* createGraphicForBlock(const RS_Block* activeBlock);
+    /**
+     * The drawing that is saved as the file for @p activeBlock: copies of the
+     * block's entities, and the blocks they insert. The block itself is left
+     * as it was, so the drawing can be deleted right after saving.
+     */
+    static std::unique_ptr<RS_Graphic> createGraphicForBlock(const RS_Block* activeBlock);
 };
 
 #endif

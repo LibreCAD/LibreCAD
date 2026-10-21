@@ -103,7 +103,12 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokud je zaškrtnuto **&apos;Zachovat původní objekty&apos;**,
+zarovnání vytvoří kopii namísto přesunutí vybraných objektů.
+
+Pokud je zaškrtnuto **&apos;Nejprve zadejte základní body&apos;**,
+zarovnání vyzve k zadání bodů v pořadí:
+první základní bod, druhý základní bod, první cílový bod, druhý cílový bod.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="89"/>

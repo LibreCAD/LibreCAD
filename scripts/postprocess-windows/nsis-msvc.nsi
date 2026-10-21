@@ -34,11 +34,11 @@ SetCompressor /SOLID lzma
 ;--------------------------------
 ; Architecture suffix, install directory, and registry view
 ; /DAMD64 or /DARM64 passed by build-windows.bat; default is x86
-!if defined(AMD64)
+!ifdef AMD64
     !define ARCH_SUFFIX "x64"
     !define INSTALL_DIR "$PROGRAMFILES64\LibreCAD"
     !define REG_VIEW 64
-!elseif defined(ARM64)
+!else ifdef ARM64
     !define ARCH_SUFFIX "arm64"
     !define INSTALL_DIR "$PROGRAMFILES64\LibreCAD"
     !define REG_VIEW 64
@@ -110,9 +110,9 @@ VIAddVersionKey "LegalCopyright" "LibreCAD Team"
     !define Qt_Version "5.15.2"
 !endif
 !ifndef Arch_Suffix
-    !if defined(AMD64)
+    !ifdef AMD64
         !define Arch_Suffix "_64"
-    !elseif defined(ARM64)
+    !else ifdef ARM64
         !define Arch_Suffix "_arm64"
     !else
         !define Arch_Suffix ""
@@ -137,8 +137,9 @@ Section "Main Section" SecMain
   ; Set registry view based on architecture
   SetRegView ${REG_VIEW}
   SetOutPath "$INSTDIR"
-  ; Copy all files from windeployqt output
-  File /r /x "*.pdb" /x "translations" "..\..\windows\*.*"
+  ; Require the application, not just files copied from build intermediates.
+  File "..\..\windows\LibreCAD.exe"
+  File /r /x "LibreCAD.exe" /x "*.pdb" /x "*.lib" /x "translations" "..\..\windows\*.*"
   
   ; Ensure application icon is installed (required for shortcuts and Add/Remove Programs)
   File "${MUI_ICON}"

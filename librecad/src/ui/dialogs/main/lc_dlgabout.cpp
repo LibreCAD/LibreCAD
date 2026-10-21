@@ -77,7 +77,9 @@ LC_DlgAbout::LC_DlgAbout(QWidget *parent)
 #elif defined(Q_CC_MSVC)
         tr("Compiler: Microsoft Visual C++") + "<br/>" +
 #endif
+#ifndef NO_TIMESTAMP
         tr("Compiled on: %1").arg(__DATE__) + "<br/>" +
+#endif
         tr("Qt Version: %1").arg(qVersion()) + "<br/>" +
         tr("Boost Version: %1.%2.%3").arg(BOOST_VERSION / 100000).arg(BOOST_VERSION / 100 % 1000).arg(BOOST_VERSION % 100)
         );

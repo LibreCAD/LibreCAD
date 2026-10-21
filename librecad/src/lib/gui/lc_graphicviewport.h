@@ -56,8 +56,12 @@ public:
 
     void setSize(const int width, const int height)
     {
+        if (m_width == width && m_height == height)
+            return;
         m_width = width;
         m_height = height;
+        if (width > 0 && height > 0)
+            invalidateGrid();
     }
     RS_Vector getFactor() const {return m_factor;}
 
@@ -67,6 +71,7 @@ public:
     RS2::IsoGridViewType getIsoViewType() const;
     void justSetOffsetAndFactor(int ox, int oy, double f);
     void setOffsetAndFactor(int ox, int oy, double f);
+    static int toOffset(double v);
     int getOffsetX() const {return m_offsetX;}
     int getOffsetY() const {return m_offsetY;}
     void setOffsetX(int ox);

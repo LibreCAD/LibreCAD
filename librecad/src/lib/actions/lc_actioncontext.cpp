@@ -36,6 +36,13 @@ RS_GraphicView * LC_ActionContext::getGraphicView(){
 }
 
 void LC_ActionContext::setDocumentAndView(RS_Document *document, RS_GraphicView *view){
+    if (document != m_document) {
+        // a context-menu entity no action took belongs to the previous
+        // document, which is freed when its window closes
+        m_contextMenuActionEntity = nullptr;
+        m_contextMenuClickPosition = RS_Vector(false);
+        m_unselectContextMenuActionEntity = false;
+    }
     m_graphicView     = view;
     m_document = document;
 }

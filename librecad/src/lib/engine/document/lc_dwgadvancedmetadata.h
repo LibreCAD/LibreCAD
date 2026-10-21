@@ -298,6 +298,11 @@ public:
   struct DwgFieldListSourceAuthorization {
     DwgFieldListSourceAuthorizationStatus status =
         DwgFieldListSourceAuthorizationStatus::NotDwgSource;
+    //! Ordinals of the members that name no object frame of the file the
+    //! list was read from. Only the export-tolerant authorization fills it
+    //! (authorizeDwgFieldListSourceForExport); the strict one refuses such a
+    //! member as MissingFieldEndpoint.
+    std::vector<std::uint32_t> framelessMembers;
 
     bool isDwgSource() const noexcept {
       return status != DwgFieldListSourceAuthorizationStatus::NotDwgSource;
@@ -950,7 +955,18 @@ public:
     std::uint32_t parentHandle = 0;
     std::uint32_t shapeFileHandle = 0;
     std::uint16_t shapeIndex = 0;
-    std::string styleName; // SHAPEFILE/STYLE record name (DXF code 2)
+    std::string styleName; // DXF glyph name; DWG STYLE names are not glyph names.
+    std::string sourceDirectory;
+    std::string ownerBlockName;
+    std::string layer = "0";
+    std::string lineType = "BYLAYER";
+    int color = DRW::ColorByLayer;
+    int color24 = -1;
+    DRW_LW_Conv::lineWidth lineWeight = DRW_LW_Conv::widthByLayer;
+    DRW::Space space = DRW::ModelSpace;
+    bool visible = true;
+    double lineTypeScale = 1.0;
+    std::vector<std::shared_ptr<DRW_Variant>> extData;
     DRW_Coord insertionPoint;
     DRW_Coord extrusion;
     double scale = 1.0;
@@ -1106,7 +1122,7 @@ public:
     std::vector<std::shared_ptr<DRW_Variant>> extData;
     std::vector<std::uint32_t> reactorHandles;
     std::uint32_t xDictHandle = 0;
-    bool importedFromDwg = false;
+    bool imported = false;
     ReplayState replayState = ReplayState::ReplayAllowed;
   };
 
@@ -3438,6 +3454,7 @@ public:
     m_layerTableEntries.clear();
     m_dimStyleTableEntries.clear();
     m_appIdTableEntries.clear();
+    m_spaceBlockRecords.clear();
     m_rawDxfObjects.clear();
     m_rawDxfEntities.clear();
     m_rawDxfSections.clear();
@@ -3765,9 +3782,12 @@ public:
   }
 
   void addTextStyleName(const DRW_Textstyle &data) {
-    if (data.name.empty())
+    if (data.name.empty() && ((data.flags & 1) == 0 || data.handle == 0))
       return;
-    m_textStyleTableEntries[data.name] = data;
+    // SHAPEFILE styles legitimately have no name. Keep them in the handle
+    // map; a name-keyed map would merge distinct shape files.
+    if (!data.name.empty())
+      m_textStyleTableEntries[data.name] = data;
     if (data.handle != 0) {
       m_textStyleNames[data.handle] = data.name;
       m_textStyles[data.handle] = data;
@@ -3787,6 +3807,17 @@ public:
   void addAppIdTableEntry(const DRW_AppId &data) {
     if (!data.name.empty())
       m_appIdTableEntries[data.name] = data;
+  }
+
+  // The model and paper space block records (*Model_Space, *Paper_Space,
+  // *Paper_Space0, ...), by source handle. LibreCAD keeps no block for them,
+  // but layouts and other objects name them.
+  void addSpaceBlockRecord(std::uint32_t handle, const std::string &name) {
+    if (handle != 0 && !name.empty())
+      m_spaceBlockRecords[handle] = name;
+  }
+  const std::map<std::uint32_t, std::string> &spaceBlockRecords() const {
+    return m_spaceBlockRecords;
   }
 
   void addView(const DRW_View &view) {
@@ -5312,13 +5343,25 @@ public:
     m_pointCloudColorMaps.push_back(std::move(record));
   }
 
-  void addShape(const DRW_Shape &shape) {
+  void addShape(const DRW_Shape &shape, const std::string &sourceDirectory = {},
+                const std::string &ownerBlockName = {}) {
     ShapeRecord record;
     record.handle = shape.handle;
     record.parentHandle = shape.parentHandle;
     record.shapeFileHandle = shape.m_shapeFileHandle;
     record.shapeIndex = shape.m_shapeIndex;
     record.styleName = shape.m_styleName;
+    record.sourceDirectory = sourceDirectory;
+    record.ownerBlockName = ownerBlockName;
+    record.layer = shape.layer;
+    record.lineType = shape.lineType;
+    record.color = shape.color;
+    record.color24 = shape.color24;
+    record.lineWeight = shape.lWeight;
+    record.space = shape.space;
+    record.visible = shape.visible;
+    record.lineTypeScale = shape.ltypeScale;
+    record.extData = shape.extData;
     record.insertionPoint = shape.m_insertionPoint;
     record.extrusion = shape.m_extrusion;
     record.scale = shape.m_scale;
@@ -6176,10 +6219,16 @@ public:
   const std::vector<RawObjectRecord> &rawObjects() const {
     return m_rawObjects;
   }
+  // "Object" here means a DWG OBJECT, not an ENTITY: callers use this to
+  // decide whether a reference target that could not be written natively
+  // still names a real source record whose ownership edge must not be
+  // silently severed. An entity's handle is never a valid OBJECT reference
+  // target in the first place, so it does not qualify even when a raw
+  // record for it exists.
   bool hasRawObjectForHandle(std::uint32_t handle) const {
     return std::any_of(m_rawObjects.cbegin(), m_rawObjects.cend(),
                        [handle](const RawObjectRecord &record) {
-                         return record.handle == handle;
+                         return record.handle == handle && !record.isEntity;
                        });
   }
   const std::vector<DRW_DwgFramePublication> &dwgFramePublications() const {
@@ -6240,8 +6289,30 @@ public:
                          return publication.m_handle == handle;
                        });
   }
+  //! Strict receipt proof: every non-null member must have a source FIELD
+  //! frame, exactly as read.
   DwgFieldListSourceAuthorization
   authorizeDwgFieldListSource(const FieldListRecord &record) const {
+    return authorizeDwgFieldListSourceImpl(record, false);
+  }
+
+  //! The proof the exporter needs. Identical to the strict one except for a
+  //! member whose handle names no object frame of the source file at all: no
+  //! FIELD frame published for it and no frame of any kind in the coverage
+  //! report. Such a member points at nothing, so it neither proves nor
+  //! disproves anything about the list; the exporter may drop it (it is
+  //! reported in framelessMembers). Everything else still refuses: a member
+  //! that has a frame but not a valid FIELD one, an ambiguous frame, a
+  //! receipt that does not match the record, incomplete coverage.
+  DwgFieldListSourceAuthorization
+  authorizeDwgFieldListSourceForExport(const FieldListRecord &record) const {
+    return authorizeDwgFieldListSourceImpl(record, true);
+  }
+
+private:
+  DwgFieldListSourceAuthorization
+  authorizeDwgFieldListSourceImpl(const FieldListRecord &record,
+                                  bool tolerateFramelessMembers) const {
     const auto publicationMatches =
         [&record](const DRW_DwgFramePublication &value) {
           return value.m_handle == record.handle;
@@ -6337,6 +6408,7 @@ public:
         membership.m_entries.size() != record.fieldHandles.size()) {
       return {DwgFieldListSourceAuthorizationStatus::MismatchedMembership};
     }
+    std::vector<std::uint32_t> framelessMembers;
     for (std::size_t ordinal = 0; ordinal < membership.m_entries.size();
          ++ordinal) {
       const DRW_DwgFieldListMembership::Entry &entry =
@@ -6355,6 +6427,21 @@ public:
           fields.push_back(&candidate);
       }
       if (fields.empty()) {
+        // No FIELD frame was published for the member. It names no object
+        // frame of the file when the coverage report -- which lists every
+        // frame of the file, published or not -- has no entry for it either.
+        // A frame that exists but was never published is a real problem (a
+        // FIELD that could not be read), not a dangling pointer: refused.
+        const bool namesAFrame = std::any_of(
+            m_dwgFrameCoverageReport.m_entries.cbegin(),
+            m_dwgFrameCoverageReport.m_entries.cend(),
+            [&entry](const DRW_DwgFrameCoverageEntry &coverage) {
+              return coverage.m_handle == entry.m_fieldHandle;
+            });
+        if (tolerateFramelessMembers && !namesAFrame) {
+          framelessMembers.push_back(static_cast<std::uint32_t>(ordinal));
+          continue;
+        }
         return {DwgFieldListSourceAuthorizationStatus::MissingFieldEndpoint};
       }
       if (fields.size() != 1u) {
@@ -6369,10 +6456,12 @@ public:
     if (!m_dwgFramePublicationCoverageComplete) {
       return {DwgFieldListSourceAuthorizationStatus::FrameCoverageIncomplete};
     }
-    return {DwgFieldListSourceAuthorizationStatus::Authorized};
+    DwgFieldListSourceAuthorization authorization;
+    authorization.status = DwgFieldListSourceAuthorizationStatus::Authorized;
+    authorization.framelessMembers = std::move(framelessMembers);
+    return authorization;
   }
 
-private:
   static bool sameDwgFieldVariant(const DRW_Variant &left,
                                   const DRW_Variant &right) {
     if (left.code() != right.code() || left.type() != right.type() ||
@@ -7030,22 +7119,12 @@ public:
   // gate raw-replay (both emit + CLASSES registration) on source==target.
   void setSourceDwgVersion(DRW::Version v) { m_sourceDwgVersion = v; }
   DRW::Version sourceDwgVersion() const { return m_sourceDwgVersion; }
-  // Mark records delivered by the DWG reader. Records added later through
-  // the generic metadata API must not inherit imported-carrier identity.
-  void markVportsImportedFromDwg() {
+  // Mark records delivered by a file reader, DWG or DXF. Records added later
+  // through the generic metadata API must not inherit imported-carrier
+  // identity.
+  void markVportsImported() {
     for (VportRecord &record : m_vports)
-      record.importedFromDwg = true;
-  }
-  bool isImportedVportSource(std::uint32_t handle,
-                             const std::string &name) const {
-    if (handle == 0)
-      return false;
-    return std::any_of(m_vports.cbegin(), m_vports.cend(),
-                       [handle, &name](const VportRecord &record) {
-                         return record.importedFromDwg &&
-                                record.handle == handle &&
-                                tableNameEquals(record.name, name);
-                       });
+      record.imported = true;
   }
   const std::vector<ViewRecord> &views() const { return m_views; }
   const std::vector<UcsRecord> &ucsRecords() const { return m_ucsRecords; }
@@ -7610,10 +7689,9 @@ public:
     for (const ShapeRecord &record : m_shapes) {
       if (record.shapeFileHandle == 0)
         ++counts.missingStyleHandle;
-      if (record.rawRangeStatus == MeshRawRangeStatus::Missing)
-        ++counts.missingRawRange;
-      else if (record.rawRangeStatus == MeshRawRangeStatus::Incomplete)
-        ++counts.incompleteRawRange;
+      else if (const auto style = m_textStyles.find(record.shapeFileHandle);
+               style == m_textStyles.end() || (style->second.flags & 1) == 0)
+        ++counts.unresolvedShapeStyle;
       if (record.replayState == ReplayState::ReplayInvalidated)
         ++counts.invalidated;
       else if (record.replayState == ReplayState::ReplayReplaced)
@@ -12712,16 +12790,16 @@ private:
     record.handle = shape.handle;
     record.recordName = "SHAPE";
     record.className = "AcDbShape";
-    record.nativeWriterAvailable =
-        advancedEntityNativeWriterAvailable(record.family, version);
+    // Only parsed SHAPE records can use the typed writer. An unsupported raw
+    // SHAPE carrier still has no native conversion contract.
+    record.nativeWriterAvailable = version >= DRW::AC1015 && version <= DRW::AC1032;
     record.rawReplayAvailable = false;
     record.fallbackAvailable = false;
     record.editedFallbackInvalidated =
         shape.replayState != ReplayState::ReplayAllowed;
     record.missingRequiredMetadata =
         shape.shapeFileHandle == 0 || shape.shapeIndex == 0;
-    record.missingPayloadBytes =
-        shape.rawRangeStatus == MeshRawRangeStatus::Missing;
+    record.missingPayloadBytes = false;
     record.unsupportedAdvancedContent = !record.nativeWriterAvailable;
     return record;
   }
@@ -13263,6 +13341,7 @@ private:
   std::map<std::string, DRW_LType> m_lineTypeTableEntries;
   std::map<std::string, DRW_Textstyle> m_textStyleTableEntries;
   std::map<std::string, DRW_Layer> m_layerTableEntries;
+  std::map<std::uint32_t, std::string> m_spaceBlockRecords;
   std::map<std::string, DRW_Dimstyle> m_dimStyleTableEntries;
   std::map<std::string, DRW_AppId> m_appIdTableEntries;
   std::vector<DRW_RawDxfObject> m_rawDxfObjects;

@@ -55,6 +55,9 @@ public:
 private:
     RS2::FormatType getType(const QString& filter) const;
     RS2::FormatType m_type;
+    QString fDxfrw2018;
+    QString fDxfrw2013;
+    QString fDxfrw2010;
     QString fDxfrw2007;
     QString fDxfrw2004;
     QString fDxfrw2000;

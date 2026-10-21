@@ -164,11 +164,12 @@ InsertTransformCapability transformCapability(const RS_Entity& entity) {
     return InsertTransformCapability::Unsupported;
 }
 
+// The scale factors of a composed transform are rebuilt from a matrix, so an exact uniform
+// scale comes out a few ulps apart at some angles (3 to 5% of them): a bare epsilon made an
+// arc or circle there an ellipse. See LC_InsertTransform::UniformScaleTolerance.
 bool isUniformScale(const LC_InsertTransformParts& parts) {
-    const double tolerance = std::numeric_limits<double>::epsilon()
-                             * std::max({LC_InsertTransform::IdentityScale,
-                                         std::abs(parts.scaleX),
-                                         std::abs(parts.scaleY)});
+    const double tolerance = LC_InsertTransform::UniformScaleTolerance
+                             * std::max(std::abs(parts.scaleX), std::abs(parts.scaleY));
     return std::abs(std::abs(parts.scaleX) - std::abs(parts.scaleY)) <= tolerance;
 }
 
@@ -258,7 +259,7 @@ RS_Pen updatePen(RS_Pen pen, const RS_Pen& blockPen) {
 
     // line type from block (free floating):
     if (pen.getLineType() == RS2::LineByBlock) {
-        pen.setLineType(blockPen.getLineType());
+        pen.setLineTypeFromPen(blockPen);
     }
 
     return pen;
@@ -351,10 +352,7 @@ RS_Insert::RS_Insert(RS_EntityContainer* parent,
 }
 
 RS_Entity* RS_Insert::clone() const{
-	auto i = new RS_Insert(*this);
-	i->setOwner(isOwner());
-	i->detach();
-	return i;
+	return new RS_Insert(*this);
 }
 
 /**

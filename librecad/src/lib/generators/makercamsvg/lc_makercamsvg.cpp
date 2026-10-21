@@ -23,6 +23,8 @@
 
 #include "lc_makercamsvg.h"
 
+#include <algorithm>
+
 #include "lc_splinepoints.h"
 #include "lc_xmlwriterinterface.h"
 #include "rs_arc.h"
@@ -537,7 +539,85 @@ void LC_MakerCamSVG::writeEllipse(RS_Ellipse* ellipse) const {
 //       (if created using the control point method vs. the pass through point
 //       method). However after saving degree 2 splines and reopening the file,
 //       these splines are hold in the "artificial" LC_SplinePoints object.
+namespace {
+/**
+ * True if @p data is a chain of Bezier pieces whose nets are its control
+ * points, shared ends included: an open, non-rational spline of degree 2 or 3
+ * with clamped ends whose interior knots all have multiplicity equal to its
+ * degree. The control points of such a spline need no conversion.
+ */
+bool isBezierChain(const RS_SplineData& data) {
+    const size_t degree = data.degree;
+    const std::vector<double>& knots = data.knotslist;
+    const std::vector<RS_Vector>& points = data.controlPoints;
+    if (degree < 2 || degree > 3 || points.size() < degree + 1 || (points.size() - 1) % degree != 0 ||
+        knots.size() != points.size() + degree + 1) {
+        return false;
+    }
+    if (!data.weights.empty() &&
+        (data.weights.size() != points.size() ||
+         std::any_of(data.weights.begin(), data.weights.end(), [&](double w) { return w != data.weights.front(); }))) {
+        return false;
+    }
+    for (size_t i = 0; i <= degree; ++i) {
+        if (knots[i] != knots.front() || knots[knots.size() - 1 - i] != knots.back()) {
+            return false;
+        }
+    }
+    const size_t end = knots.size() - degree - 1;
+    for (size_t i = degree + 1; i < end;) {
+        size_t j = i;
+        while (j < end && knots[j] == knots[i]) {
+            ++j;
+        }
+        if (j - i != degree || !(knots[i] > knots[i - 1])) {
+            return false;
+        }
+        i = j;
+    }
+    return true;
+}
+} // namespace
+
 void LC_MakerCamSVG::writeSpline(const RS_Spline* spline) {
+    if (spline->getDegree() == 1) {
+        // the polyline through its control points
+        const std::vector<RS_Vector> points = spline->getControlPoints();
+        if (points.size() < 2) {
+            return;
+        }
+        std::string path = svgPathMoveTo(convertToSvg(points.front()));
+        for (size_t i = 1; i < points.size(); ++i) {
+            path += svgPathLineTo(convertToSvg(points[i]));
+        }
+        if (spline->isClosed()) {
+            path += svgPathClose();
+        }
+        m_xmlWriter->addElement("path", NAMESPACE_URI_SVG);
+        m_xmlWriter->addAttribute("d", path);
+        m_xmlWriter->closeElement();
+        return;
+    }
+    if (!spline->isClosed() && isBezierChain(spline->getData())) {
+        RS_DEBUG->print("RS_MakerCamSVG::writeSpline: Writing a Bezier chain as 'path' from its control points");
+        const std::vector<RS_Vector>& points = spline->getData().controlPoints;
+        std::string path = svgPathMoveTo(convertToSvg(points.front()));
+        if (spline->getDegree() == 3) {
+            for (size_t i = 1; i + 2 < points.size(); i += 3) {
+                path += svgPathCurveTo(convertToSvg(points[i + 2]), convertToSvg(points[i]),
+                                       convertToSvg(points[i + 1]));
+            }
+        }
+        else {
+            for (size_t i = 1; i + 1 < points.size(); i += 2) {
+                path += svgPathQuadraticCurveTo(convertToSvg(points[i + 1]), convertToSvg(points[i]));
+            }
+        }
+        m_xmlWriter->addElement("path", NAMESPACE_URI_SVG);
+        m_xmlWriter->addAttribute("d", path);
+        m_xmlWriter->closeElement();
+        return;
+    }
     if (spline->getDegree() == 2) {
         RS_DEBUG->print("RS_MakerCamSVG::writeSpline: Writing piecewise quadratic spline as 'path' with quadratic bézier segments");
 

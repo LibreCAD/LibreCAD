@@ -40,7 +40,7 @@ public:
     LC_UCS();
     explicit LC_UCS(const QString& name);
     virtual ~LC_UCS();
-    LC_UCS* clone() const;
+    virtual LC_UCS* clone() const;
     void setOrigin(const RS_Vector& o);
     RS_Vector getOrigin() const {return m_ucsOrigin;}
     void setElevation(double d);
@@ -77,6 +77,8 @@ public:
         LEFT,
         RIGHT
     };
+protected:
+    LC_UCS* copyInto(LC_UCS* target) const;
 private:
     bool m_temporary = false;
     QString m_name = "";
@@ -93,9 +95,10 @@ private:
 class LC_WCS: public LC_UCS{
 public:
     LC_WCS();
+    LC_UCS* clone() const override;
     bool isUCS() const override {return false;}
 
-    static LC_UCS instance;
+    static LC_WCS instance;
 };
 
 #endif

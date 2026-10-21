@@ -22,6 +22,8 @@
 
 #include "lc_printviewportrenderer.h"
 
+#include <QPaintEngine>
+
 #include "lc_graphicviewport.h"
 #include "rs_document.h"
 #include "rs_entitycontainer.h"
@@ -103,12 +105,8 @@ void LC_PrintViewportRenderer::setPenForPrintingEntity(RS_Painter *painter, RS_E
         if (width >0) {
             double wf = 1.0; // Width factor.
 
-            if (m_paperScale > RS_TOLERANCE) {
-                if (m_scaleLineWidth) {
-                    wf = m_defaultWidthFactor;
-                } else {
-                    wf = 1.0 / m_paperScale;
-                }
+            if (m_paperScale > RS_TOLERANCE && !m_scaleLineWidth) {
+                wf = 1.0 / m_paperScale;
             }
             double screenWidth = painter->toGuiDX(width * m_unitFactor100 * wf);
 
@@ -118,7 +116,9 @@ void LC_PrintViewportRenderer::setPenForPrintingEntity(RS_Painter *painter, RS_E
             }*/
             // fixme - not sure about this check. However, without it, lines will stay transparent and then disappear on zooming out.
             //  Probably some other threshold value (instead 1) should be used?
-            if (screenWidth < 1){
+            // A painter that could not begin on its device has no paint engine.
+            const QPaintEngine* engine = painter->paintEngine();
+            if (screenWidth < 1 && (engine == nullptr || engine->type() != QPaintEngine::SVG)) {
                 screenWidth = 0.0;
             }
             pen.setScreenWidth(screenWidth);

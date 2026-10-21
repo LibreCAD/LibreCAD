@@ -92,6 +92,14 @@ namespace RS2 {
     };
 
     /**
+     * Flags about an entity's state in its document, which a copy of the
+     * entity does not have. A copy keeps every other flag. Classify any new
+     * flag here.
+     */
+    constexpr unsigned FlagsTransient = FlagDeleted | FlagSelected | FlagSelected1 | FlagSelected2 |
+                                        FlagHighlighted | FlagProcessed | FlagInVisualSnap;
+
+    /**
      * Variable types used by RS_VariableDict and RS_Variable.
      */
     enum VariableType {
@@ -132,6 +140,18 @@ namespace RS2 {
            stable for settings and plugins. */
         , FormatDWG2007 /**< DWG format (R2007, AC1021). */
 #endif
+        /* Also at the end, for the same reason. */
+        , FormatDXFRW2010 /**< DXF format. v2010. */
+        , FormatDXFRW2013 /**< DXF format. v2013. */
+    };
+
+    /** Input-only, per-file policy for old LibreCAD DXFs mislabeled ANSI_1252.
+     * The same bytes can be valid in both encodings: never select legacy mode
+     * by guessing, and never use it as an export encoding.
+     */
+    enum class DxfTextEncoding {
+        Declared,
+        LegacyLibreCadUtf8
     };
 
     /*

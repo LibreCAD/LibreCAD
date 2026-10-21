@@ -90,6 +90,15 @@ RS2::FormatType QG_FileDialog::getType(const QString& filter) const {
     if (filter == fCxf) {
         return RS2::FormatCXF;
     }
+    if (filter == fDxfrw2018) {
+        return RS2::FormatDXFRW2018;
+    }
+    if (filter == fDxfrw2013) {
+        return RS2::FormatDXFRW2013;
+    }
+    if (filter == fDxfrw2010) {
+        return RS2::FormatDXFRW2010;
+    }
     if (filter == fDxfrw2007 || filter == fDxfrw) {
         return RS2::FormatDXFRW;
     }
@@ -136,6 +145,9 @@ QG_FileDialog::QG_FileDialog(QWidget* parent, Qt::WindowFlags f, FileType type)
     setOption(QFileDialog::HideNameFilterDetails, false);
     m_type = RS2::FormatDXFRW;
 
+    fDxfrw2018 = tr("Drawing Exchange DXF 2018 %1").arg("(*.dxf)");
+    fDxfrw2013 = tr("Drawing Exchange DXF 2013 %1").arg("(*.dxf)");
+    fDxfrw2010 = tr("Drawing Exchange DXF 2010 %1").arg("(*.dxf)");
     fDxfrw2007 = tr("Drawing Exchange DXF 2007 %1").arg("(*.dxf)");
     fDxfrw2004 = tr("Drawing Exchange DXF 2004 %1").arg("(*.dxf)");
     fDxfrw2000 = tr("Drawing Exchange DXF 2000 %1").arg("(*.dxf)");
@@ -238,9 +250,9 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type, const QString& current
     QStringList filters;
 
 #ifdef JWW_WRITE_SUPPORT
-    filters << fDxfrw2007 << fDxfrw2004 << fDxfrw2000 << fDxfrw14 << fDxfrw12 << fJww << fLff << fCxf;
+    filters << fDxfrw2018 << fDxfrw2013 << fDxfrw2010 << fDxfrw2007 << fDxfrw2004 << fDxfrw2000 << fDxfrw14 << fDxfrw12 << fJww << fLff << fCxf;
 #else
-    filters << fDxfrw2007 << fDxfrw2004 << fDxfrw2000 << fDxfrw14 << fDxfrw12 << fLff << fCxf;
+    filters << fDxfrw2018 << fDxfrw2013 << fDxfrw2010 << fDxfrw2007 << fDxfrw2004 << fDxfrw2000 << fDxfrw14 << fDxfrw12 << fLff << fCxf;
 #endif
 #ifdef DWGSUPPORT
     filters << fDwg;

@@ -52,6 +52,8 @@ RS2::FormatType parseDxfVersion(const QString& ver) {
     if (v == "2000") return RS2::FormatDXFRW2000;
     if (v == "2004") return RS2::FormatDXFRW2004;
     if (v == "2007") return RS2::FormatDXFRW;
+    if (v == "2010") return RS2::FormatDXFRW2010;
+    if (v == "2013") return RS2::FormatDXFRW2013;
     if (v == "2018") return RS2::FormatDXFRW2018;
     return RS2::FormatUnknown;
 }
@@ -225,7 +227,7 @@ int runConversion(int argc, char** argv,
     parser.addOption(outDirOpt);
 
     QCommandLineOption versionOpt(QStringList() << "V" << "dxf-version",
-        QObject::tr("DXF output version: r12, r14, r2000, r2004, r2007 (default), r2018."), "version");
+        QObject::tr("DXF output version: r12, r14, r2000, r2004, r2007 (default), r2010, r2013, r2018."), "version");
     if (allowVersionOption)
         parser.addOption(versionOpt);
 

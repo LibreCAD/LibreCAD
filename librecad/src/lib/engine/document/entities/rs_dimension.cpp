@@ -33,7 +33,6 @@
 #include "lc_linemath.h"
 #include "muParser.h"
 #include "rs_arc.h"
-#include "rs_filterdxfrw.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_line.h"
@@ -173,7 +172,18 @@ RS_Dimension::RS_Dimension(RS_EntityContainer* parent, const RS_DimensionData& d
 }
 
 RS_Dimension::RS_Dimension(const RS_Dimension& entity)
-    : RS_EntityContainer(entity, false), m_dimGenericData(std::move(entity.getGenericData())) {
+    : RS_EntityContainer(entity), m_dimGenericData(entity.getGenericData()), m_dimMeasurement(entity.m_dimMeasurement) {
+    // Arrow clones rebuild their shape; retain each component's drawing properties.
+    for (unsigned i = 0; i < count(); ++i) {
+        RS_Entity* copy = entityAt(i);
+        const RS_Entity* source = entity.entityAt(i);
+        if (copy == nullptr || copy == source) {
+            continue;
+        }
+        copy->setPen(source->getPen(false));
+        copy->setLayer(source->getLayer(false));
+        copy->setFlags(source->getFlags() & ~RS2::FlagsTransient);
+    }
 }
 
 RS_Vector RS_Dimension::doGetNearestRef(const RS_Vector& coord, double* dist) const {
@@ -294,13 +304,19 @@ RS_Pen RS_Dimension::getPenForText() const {
 }
 
 RS_Pen RS_Dimension::getPenExtensionLine(const bool first) const {
-    const RS2::LineType lineType = first ? getExtensionLineTypeFirst() : getExtensionLineTypeSecond();
-    RS_Pen result(getExtensionLineColor(), getExtensionLineWidth(), /*RS2::LineByBlock*/ lineType);
+    const QString name = first ? m_dimStyleTransient->extensionLine()->lineTypeFirstRaw()
+                               : m_dimStyleTransient->extensionLine()->lineTypeSecondRaw();
+    RS_Pen result(getExtensionLineColor(), getExtensionLineWidth(), /*RS2::LineByBlock*/ RS2::LineByBlock);
+    // Carries a custom name (setLineTypeName derives the same enum
+    // lineTypeFirst()/lineTypeSecond() would give; the style's own raw
+    // string and enum are always kept in sync) so it survives a save.
+    result.setLineTypeName(name);
     return result;
 }
 
 RS_Pen RS_Dimension::getPenDimensionLine() const {
-    RS_Pen result(getDimensionLineColor(), getDimensionLineWidth(), /*RS2::LineByBlock*/ getDimensionLineType());
+    RS_Pen result(getDimensionLineColor(), getDimensionLineWidth(), /*RS2::LineByBlock*/ RS2::LineByBlock);
+    result.setLineTypeName(m_dimStyleTransient->dimensionLine()->lineTypeName());
     return result;
 }
 
@@ -354,7 +370,7 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1, const 
     RS_Pen dimensionLinePen = getPenDimensionLine();
 
     // Create dimension line:
-    auto dimensionLine{new RS_Line{this, p1, p2}};
+    auto dimensionLine = std::make_unique<RS_Line>(this, p1, p2);
     RS_Line* dimensionLineInside1{nullptr};
     RS_Line* dimensionLineInside2{nullptr};
     RS_Line* dimensionLineOutside1{nullptr};
@@ -394,7 +410,7 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1, const 
     c.addRectangle(textCorner1, textCorner2);
 
     // treat line as infinitely long in both directions
-    RS_VectorSolutions sol1 = getIntersectionsLineContainer(dimensionLine, &c, true);
+    RS_VectorSolutions sol1 = getIntersectionsLineContainer(dimensionLine.get(), &c, true);
     textIntersectionLength = sol1.get(0).distanceTo(sol1.get(1));
 
     // determine if we should use outside arrows
@@ -515,9 +531,9 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1, const 
     h = (text->getUsedTextHeight() / 2) + dimgap;
     RS_Vector s1 = text->getInsertionPoint() - RS_Vector{w, h};
     RS_Vector s2 = text->getInsertionPoint() + RS_Vector{w, h};
-    c = RS_EntityContainer();
+    c.clear();
     c.addRectangle(s1, s2);
-    sol1 = getIntersectionsLineContainer(dimensionLine, &c);
+    sol1 = getIntersectionsLineContainer(dimensionLine.get(), &c);
     if (sol1.size() > 1) {
         // the text bounding box intersects dimensionLine on two sides
         splitDimensionLine = true;
@@ -592,7 +608,7 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1, const 
         }
     }
     else {
-        addDimComponentEntity(dimensionLine, dimensionLinePen);
+        addDimComponentEntity(dimensionLine.release(), dimensionLinePen);
     }
 }
 
@@ -1030,7 +1046,7 @@ RS_Color RS_Dimension::getDimensionLineColor() const {
     // fixme - sand - temporary debug code
     return m_dimStyleTransient->dimensionLine()->color();
 
-    // return RS_FilterDXFRW::numberToColor(getGraphicVariableInt("$DIMCLRD", 0));
+    // return LC_ColorNumbers::numberToColor(getGraphicVariableInt("$DIMCLRD", 0));
 }
 
 /**
@@ -1039,7 +1055,7 @@ RS_Color RS_Dimension::getDimensionLineColor() const {
 RS_Color RS_Dimension::getExtensionLineColor() const {
     // fixme - sand - temporary debug code
     return m_dimStyleTransient->extensionLine()->color();
-    // return RS_FilterDXFRW::numberToColor(getGraphicVariableInt("$DIMCLRE", 0));
+    // return LC_ColorNumbers::numberToColor(getGraphicVariableInt("$DIMCLRE", 0));
 }
 
 /**
@@ -1047,7 +1063,7 @@ RS_Color RS_Dimension::getExtensionLineColor() const {
  */
 RS_Color RS_Dimension::getTextColor() const {
     return m_dimStyleTransient->text()->color();
-    // return RS_FilterDXFRW::numberToColor(getGraphicVariableInt("$DIMCLRT", 0));
+    // return LC_ColorNumbers::numberToColor(getGraphicVariableInt("$DIMCLRT", 0));
 }
 
 /**

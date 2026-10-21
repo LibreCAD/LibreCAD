@@ -81,6 +81,7 @@ public:
     using RS_PreviewActionInterface::deletePreviewAndHighlights;
     using RS_PreviewActionInterface::drawPreviewAndHighlights;
     using RS_PreviewActionInterface::m_preview;
+    using RS_PreviewActionInterface::m_showRefEntitiesOnPreview;
 };
 
 struct RoundFixture : lc::test::ActionFixture<RoundProbe> {
@@ -125,6 +126,25 @@ TEST_CASE("fillet hover preview releases the entities round() hands back",
     // mouse moves.
     INFO("lines still alive after 50 further hover moves");
     CHECK(CountingLine::s_live == afterFirstHover);
+}
+
+TEST_CASE("fillet hover previews the resulting arc without reference overlays",
+          "[modify][round][fillet]") {
+    RoundFixture f;
+    auto* first = f.addLine({0.0, 0.0}, {100.0, 0.0});
+    f.addLine({100.0, 0.0}, {100.0, 100.0});
+
+    f.m_action->setRadius(10.0);
+    f.m_action->setTrim(true);
+    f.m_action->m_entity1 = first;
+    f.m_action->m_showRefEntitiesOnPreview = false;
+    f.m_action->setStatus(RoundProbe::SetEntity2);
+
+    f.hover(100.0, 50.0);
+
+    const auto& previewEntities = f.m_action->m_preview->getEntityList();
+    REQUIRE(previewEntities.size() == 1);
+    CHECK(previewEntities.front()->rtti() == RS2::EntityArc);
 }
 
 TEST_CASE("a mouse move on a view without a relative point widget does not crash",

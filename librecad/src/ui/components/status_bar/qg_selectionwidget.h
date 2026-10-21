@@ -49,6 +49,8 @@ public slots:
     void removeAuxData();
     void setGraphicView(RS_GraphicView* gview) override;
     void selectionChanged() override;
+    /// the selection is being destroyed with its drawing: forget the drawing
+    void selectedSetDestroyed() override;
 protected slots:
     void languageChange();
 private:

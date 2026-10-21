@@ -30,6 +30,7 @@
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_cursoroverlayinfo.h"
 #include "lc_graphicviewport.h"
+#include "lc_highlight.h"
 #include "lc_linemath.h"
 #include "lc_propertysheetwidget.h"
 #include "lc_quickinfowidget.h"
@@ -56,6 +57,8 @@ struct RS_ActionDefault::ActionData {
     RS_Vector v2;
     RS_Vector pressSnapPoint;
     RS_Entity* refMovingEntity = nullptr;
+    unsigned long long hoveredEntityId = 0;
+    bool hoverRefPoints = false;
 };
 
 namespace {
@@ -91,10 +94,18 @@ RS_ActionDefault::RS_ActionDefault(LC_ActionContext *actionContext)
 
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault");
     m_typeToSelect = m_graphicView->getTypeToSelect();
+    connect(m_graphicView, &RS_GraphicView::drawingRedrawRequested, this, [this] {
+        if (m_actionData->hoveredEntityId != 0) {
+            clearHighLighting();
+            m_graphicView->redraw(RS2::RedrawOverlay);
+        }
+    });
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault: OK");
 }
 
-RS_ActionDefault::~RS_ActionDefault() = default;
+RS_ActionDefault::~RS_ActionDefault() {
+    disconnect(m_graphicView, &RS_GraphicView::drawingRedrawRequested, this, nullptr);
+}
 
 void RS_ActionDefault::init(const int status){
     RS_DEBUG->print("RS_ActionDefault::init");
@@ -132,8 +143,6 @@ void RS_ActionDefault::keyPressEvent(QKeyEvent *e){
     //        std::cout<<"RS_ActionDefault::keyPressEvent(): begin"<<std::endl;
     switch (e->key()) {
         case Qt::Key_Shift:
-            m_snapRestriction = m_snapMode.restriction;
-            setSnapRestriction(RS2::RestrictOrthogonal);
             e->accept();
             break; //avoid clearing command line at shift key
             //cleanup default action, issue#285
@@ -151,7 +160,6 @@ void RS_ActionDefault::keyPressEvent(QKeyEvent *e){
 
 void RS_ActionDefault::keyReleaseEvent(QKeyEvent *e){
     if (e->key() == Qt::Key_Shift){
-        setSnapRestriction(m_snapRestriction);
         e->accept();
     }
 }
@@ -171,17 +179,21 @@ void RS_ActionDefault::highlightHoveredEntities(const LC_MouseEvent *event){
     const bool showEntityDescriptions = isShowEntityDescriptionOnHighlight();
 
     if (!showHighlightEntity && !showEntityDescriptions) {
+        clearHighLighting();
         return;
     }
 
     const RS2::ResolveLevel level = controlPressed ? RS2::ResolveAll : RS2::ResolveNone;
-    auto entity = catchEntityByEvent(event, level);
+    double hitDistance = 0.0;
+    auto entity = catchEntity(event->graphPoint, level, &hitDistance);
 
     if (entity == nullptr) {
+        clearHighLighting();
         m_infoCursorOverlayData->setZone2("");
         return;
     }
     if (!entity->isVisible()){
+        clearHighLighting();
         return;
     }
 
@@ -194,6 +206,7 @@ void RS_ActionDefault::highlightHoveredEntities(const LC_MouseEvent *event){
     }
 
     if (entity->isLocked() && !shouldShowQuickInfoWidget){
+        clearHighLighting();
         return;
     }
 
@@ -219,6 +232,8 @@ void RS_ActionDefault::highlightHoveredEntities(const LC_MouseEvent *event){
         if (nearestDistanceToPointOnEntity <= hoverToleranceAdjusted) {
             isPointOnEntity = true;
         }
+    } else if (entityType == RS2::EntityInsert) {
+        isPointOnEntity = hitDistance <= hoverToleranceAdjusted;
     } else {
         isPointOnEntity = entity->isPointOnEntity(currentMousePosition, hoverToleranceAdjusted);
     }
@@ -229,6 +244,8 @@ void RS_ActionDefault::highlightHoveredEntities(const LC_MouseEvent *event){
         if (shouldShowQuickInfoWidget){
             updateQuickInfoWidget(entity);
         }
+    } else {
+        clearHighLighting();
     }
 }
 
@@ -247,11 +264,15 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
     updateCoordinateWidgetByRelZero(mouse);
 
     // clear any existing hovering
-    clearHighLighting();
+    if (status != Neutral) {
+        clearHighLighting();
+    }
 
     switch (status) {
         case Neutral: {
-            deleteSnapper();
+            if (!isSnapExpected()) {
+                deleteSnapper();
+            }
             highlightHoveredEntities(e);
             if (m_infoCursorOverlayPrefs->enabled){
                 if (!isShowEntityDescriptionOnHighlight()) {
@@ -970,7 +991,7 @@ void RS_ActionDefault::onMouseRightButtonRelease([[maybe_unused]]int status, [[m
 
 void RS_ActionDefault::goToNeutralStatus(){
     deletePreview();
-    deleteHighlights();
+    clearHighLighting();
     deleteInfoCursor();
     drawPreview();
     drawHighlights();
@@ -1056,16 +1077,23 @@ RS2::CursorType RS_ActionDefault::doGetMouseCursor(const int status){
     }
 }
 
-// Moving a whole entity or a reference/grip point both target a point via
-// the snapper, so the snap indicator should show for them (LibreCAD#2760).
-// Neutral/Dragging/SetCorner2/Panning stay excluded - that's what keeps
-// the indicator suppressed while defining a selection rectangle
-// (LibreCAD#2143), which is what isInVisualSnapStatus() was added for.
+// Direct dragging captures the source snap on press (#2689). Show that
+// point before dragging without enabling visual guides during selection.
+bool RS_ActionDefault::isSnapExpected() {
+    return (getStatus() == Neutral && m_document->hasSelection()) || BASE_CLASS::isSnapExpected();
+}
+
+// Visual guides apply to move destinations, not selection rectangles (#2143).
 bool RS_ActionDefault::isInVisualSnapStatus(int status) {
     return status == Moving || status == MovingRef;
 }
 
+bool RS_ActionDefault::clearHighlightsOnMouseMove() const {
+    return getStatus() != Neutral;
+}
+
 void RS_ActionDefault::clearHighLighting(){
+    m_actionData->hoveredEntityId = 0;
     deleteHighlights();
 }
 
@@ -1080,11 +1108,24 @@ void RS_ActionDefault::suspend(){
     BASE_CLASS::suspend();
 }
 
-void RS_ActionDefault::highlightEntity(const RS_Entity *entity) const {
+void RS_ActionDefault::highlightEntity(const RS_Entity *entity) {
     if (!allowMouseOverGlowing(entity)) {
+        clearHighLighting();
         return;
     }
-    highlightHover(entity);
+    // Drawing redraws and action transitions invalidate the retained world-coordinate clone.
+    if (m_actionData->hoveredEntityId != entity->getId() || m_highlight->isEmpty()
+        || m_actionData->hoverRefPoints != m_highlightEntitiesRefPointsOnHover) {
+        deleteHighlights();
+        highlightHover(entity);
+        m_actionData->hoveredEntityId = entity->getId();
+        m_actionData->hoverRefPoints = m_highlightEntitiesRefPointsOnHover;
+    } else {
+        // Overlay painting clears the clone's own selection flag after drawing its grips.
+        auto* clone = m_highlight->entityAt(0);
+        clone->RS_Entity::setSelectionFlag(m_highlightEntitiesRefPointsOnHover
+                                          && (!clone->isContainer() || !clone->isLocked()));
+    }
 }
 
 RS2::EntityType RS_ActionDefault::getTypeToSelect() const {

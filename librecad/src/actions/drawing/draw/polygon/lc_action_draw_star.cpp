@@ -585,9 +585,6 @@ RS_Polyline* LC_ActionDrawStar::createShapePolyline(RS_Vector& snap, QList<RS_En
     // now all preparations completed, and we'll create shape
     auto* polyline = new RS_Polyline(m_document);
 
-    // the very first vertex from which shape creation begins.
-    RS_Vector startingVertex;
-
     // create all necessary segments one by one. Here we'll draw 2 edges - from outer point to inner and from inner point to next outer point of rays
     for (int i = 0; i < m_raysNumber; ++i) {
         double baseInnerAngle = innerAngle + i * segmentAngle;
@@ -598,11 +595,6 @@ RS_Polyline* LC_ActionDrawStar::createShapePolyline(RS_Vector& snap, QList<RS_En
         RS_Vector inner1 = m_centerPoint.relative(innerDistance, baseInnerAngle + innerAngleCorrection1);
         RS_Vector inner2 = m_centerPoint.relative(innerDistance2, baseInnerAngle + innerAngleCorrection2);
         RS_Vector outer2 = m_centerPoint.relative(outerDistance, baseOuterAngle + segmentAngle - outerAngleCorrection);
-
-        if (i == 0) {
-            // store starting vertex for later use
-            startingVertex = outer1;
-        }
 
         polyline->addVertex(outer1);
         polyline->addVertex(inner1);
@@ -625,8 +617,11 @@ RS_Polyline* LC_ActionDrawStar::createShapePolyline(RS_Vector& snap, QList<RS_En
         }
     }
 
-    // complete polyline and close it to starting vertex
-    polyline->addVertex(startingVertex);
+    // close the polyline: its flag, and the segment back to the starting vertex
+    // with the pending bulge, the outer rounding's when there is one. A last
+    // vertex on the start would leave it open, and its offset open at the start.
+    polyline->setClosed(true);
+    polyline->endPolyline();
 
     return polyline;
 }

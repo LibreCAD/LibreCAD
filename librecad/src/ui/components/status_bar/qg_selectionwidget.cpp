@@ -168,6 +168,18 @@ void QG_SelectionWidget::setGraphicView(RS_GraphicView* gview) {
     }
 }
 
+/**
+ * The selection is being destroyed with its drawing, which was not detached from this widget first
+ * (the selection has already dropped this listener): forget the drawing and show nothing selected.
+ * Not selectionChanged(): it reads the drawing.
+ */
+void QG_SelectionWidget::selectedSetDestroyed() {
+    m_document = nullptr;
+    removeAuxData();
+    setNumber(0);
+    setTotalLength(0);
+}
+
 void QG_SelectionWidget::selectionChanged() {
     int number = 0;
     double length = 0.0;

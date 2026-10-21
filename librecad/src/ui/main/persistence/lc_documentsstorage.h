@@ -25,6 +25,7 @@
 
 #include <QObject>
 
+#include "lc_filedialogservice.h"
 #include "rs.h"
 
 class RS_Graphic;
@@ -41,19 +42,26 @@ public:
     bool autoSaveDocument(RS_Document *document,RS_GraphicView * graphicView, QString& autosaveFileName);
     bool saveDocumentAs(const RS_Document *document,RS_GraphicView * graphicView, bool &cancelled);
     bool exportGraphics(RS_Graphic *graphic,const QString &fileName, RS2::FormatType formatType);
-    bool loadDocument(const RS_Document *document, const QString &fileName, RS2::FormatType type) const;
+    bool loadDocument(const RS_Document *document, const QString &fileName, RS2::FormatType type,
+                      RS2::DxfTextEncoding encoding = RS2::DxfTextEncoding::Declared) const;
     bool loadDocument(const RS_Document *document, const QString &fileName) const;
     bool loadDocumentFromTemplate(const RS_Document *document, const RS_GraphicView *graphicView, const QString &fileName, RS2::FormatType type) const;
+    QString createAutoSaveFileName(const QFileInfo &fileInfo) const;
 protected:
-    bool doSaveGraphicAs(RS_Graphic* graphic, RS_GraphicView *graphicView, bool &cancelled, const QString& currentFileName = "");
+    bool doSaveGraphicAs(RS_Graphic* graphic, RS_GraphicView *graphicView, bool &cancelled, const QString& currentFileName = "",
+                         RS2::FormatType preferredType = RS2::FormatUnknown);
+    /** Asks for the name and format to save a drawing as; see LC_FileDialogService::getFileDetails(). */
+    virtual LC_FileDialogService::FileDialogResult askSaveFileDetails(const QString& currentFileName,
+                                                                      RS2::FormatType preferredType);
     bool autoSaveGraphic(RS_Graphic *graphic, QString& fileName);
     bool loadGraphicFromTemplate(RS_Graphic *graphic, const QString &templateFileName, RS2::FormatType type) const;
-    bool loadGraphic(RS_Graphic *graphic, const QString &filename, RS2::FormatType type) const;
+    bool loadGraphic(RS_Graphic *graphic, const QString &filename, RS2::FormatType type,
+                     RS2::DxfTextEncoding encoding = RS2::DxfTextEncoding::Declared) const;
     bool doSave(RS_Graphic *graphic, bool sameFile);
     bool saveGraphicAs(RS_Graphic *graphic, const QString &filename, RS2::FormatType type, bool forceSave);
-    bool backupDrawingFile(const QString &drawingFileName);
-    bool backupDrawingFile(const QString &drawingFileName, const QString &backupSuffix);
-    QString createAutoSaveFileName(const QFileInfo &fileInfo) const;
+    bool backupDrawingFile(const QString &drawingFileName, const RS_Graphic* graphic = nullptr);
+    bool backupDrawingFile(const QString &drawingFileName, const QString &backupSuffix,
+                           const RS_Graphic* graphic = nullptr);
     QString createAutoSaveFileName(const QFileInfo &fileInfo, const QString &filePrefix) const;
     QString createAutoSaveFileName(const QString &path, const QString &filePrefix, const QString &fileName) const;
 };

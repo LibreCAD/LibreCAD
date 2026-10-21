@@ -62,5 +62,6 @@ protected:
     void updateActionPromptForSelected(int status) override;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
     void onSelectionCompleted(bool singleEntity, bool fromInit) override;
+    bool isSnapExpected() override { return getStatus() == SetReferencePoint; }
 };
 #endif

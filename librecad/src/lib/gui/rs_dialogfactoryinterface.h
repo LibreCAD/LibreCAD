@@ -153,7 +153,8 @@ public:
      *         to the newly created block or NULL if the user
      *         cancels the dialog.
      */
-    virtual RS_BlockData requestNewBlockDialog([[maybe_unused]] RS_BlockList* blockList) {
+    virtual RS_BlockData requestNewBlockDialog([[maybe_unused]] RS_BlockList* blockList,
+                                              [[maybe_unused]] const QString& title = {}) {
         return RS_BlockData();
     }
 

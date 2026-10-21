@@ -57,10 +57,9 @@ class RS_Entity : public RS_Undoable, public LC_Drawable {
 public:
     explicit RS_Entity(RS_EntityContainer* parent = nullptr);
     // RS_Entity(RS_EntityContainer *parent, bool setPenToActive = false);
+    /** A copy has the original's value and a new id, and none of its RS2::FlagsTransient. */
     RS_Entity(const RS_Entity& other);
     RS_Entity& operator =(const RS_Entity& other);
-    RS_Entity(RS_Entity&& other) noexcept;
-    RS_Entity& operator =(RS_Entity&& other) noexcept;
     ~RS_Entity() override;
 
     virtual RS_Entity* clone() const = 0;
@@ -130,8 +129,8 @@ public:
     RS_Insert* getInsert() const;
     RS_Entity* getBlockOrInsert() const;
     RS_Document* getDocument() const;
-    void setLayer(const QString& name);
-    void setLayer(RS_Layer* l);
+    virtual void setLayer(const QString& name);
+    virtual void setLayer(RS_Layer* l);
     void setLayerToActive();
     void setPenAndLayerToActive();
     RS_Layer* getLayer(bool resolve = true) const;
@@ -539,6 +538,33 @@ public:
     /// Source DXF/DWG entity handle (group code 5) from import. 0 if unset.
     quint32 sourceHandle() const;
     void setSourceHandle(quint32 h);
+
+    /**
+     * What this entity is across the clones that replace it when it is edited. A clone has the lineage of
+     * the entity it was made from. An undo section gives a new one to a block reference, or to an entity
+     * that belongs to one, that it adds without it taking the place of one it deleted
+     * (LC_UndoSection::undoableAdd()); other entities keep theirs. Lives in memory only.
+     */
+    unsigned long long lineage() const;
+    void setLineage(unsigned long long lineage);
+    /** A lineage no entity has. */
+    static unsigned long long newLineage();
+    /**
+     * The lineage of the entity this one belongs to, 0 for none: the block reference of a block
+     * attribute's text. Entities copied together keep belonging together (LC_UndoSection::undoableAdd()).
+     */
+    unsigned long long ownerLineage() const;
+    void setOwnerLineage(unsigned long long lineage);
+
+    /** What clearDwgProvenance() clears, as bits. */
+    enum DwgProvenance : unsigned {
+        /** The source handle, extension dictionary and reactors: one live entity at most holds them. */
+        Identity = 1u << 0,
+        /** Material, plot style, shadow and visual style handles: objects of the drawing read from. */
+        TableRefs = 1u << 1
+    };
+    /** Clears the given DwgProvenance bits here and in the owned children. */
+    virtual void clearDwgProvenance(unsigned what);
 
     friend std::ostream& operator<<(std::ostream& os, RS_Entity& e);
     /** Recalculates the borders of this entity. */

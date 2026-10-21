@@ -31,6 +31,8 @@
 
 #include <QList>
 
+#include "lc_trackedlistener.h"
+
 class QString;
 class RS_Block;
 class RS_BlockListListener;
@@ -45,7 +47,9 @@ class RS_BlockListListener;
 class RS_BlockList {
 public:
     explicit RS_BlockList(bool owner = false);
-    virtual ~RS_BlockList() = default;
+    virtual ~RS_BlockList();
+    RS_BlockList(const RS_BlockList&) = delete;
+    RS_BlockList& operator=(const RS_BlockList&) = delete;
 
     void clear();
     /**
@@ -87,6 +91,8 @@ public:
 
     void addListener(RS_BlockListListener* listener);
     void removeListener(RS_BlockListListener* listener);
+    /// how many listeners are registered (a widget that is destroyed while attached must have unregistered)
+    int listenerCount() const {return static_cast<int>(m_blockListListeners.size());}
 
     bool isOwner() const {
         return m_owner;
@@ -108,7 +114,9 @@ public:
     bool isModified() const;
 
     /**
-     * Monotonically increases whenever name-to-block resolution can change.
+     * Changes whenever name-to-block resolution can change. Values are unique
+     * across all block lists, so a (list, generation) pair cached by an
+     * RS_Insert never matches a later list that reuses a freed list's address.
      */
     [[nodiscard]] std::size_t generation() const noexcept {
         return m_generation;
@@ -122,7 +130,7 @@ private:
     //! Blocks in the graphic
     QList<RS_Block*> m_blocks;
     //! List of registered BlockListListeners
-    QList<RS_BlockListListener*> m_blockListListeners;
+    LC_ListenerList<RS_BlockListListener, RS_BlockList> m_blockListListeners{this};
     //! Currently active block
     RS_Block* m_activeBlock = nullptr;
     /** Flag set if the block list was modified and not yet saved. */

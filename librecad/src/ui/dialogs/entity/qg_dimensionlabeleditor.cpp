@@ -147,7 +147,11 @@ QString QG_DimensionLabelEditor::getLabel() const {
     }
 
     if (!leTol1->text().isEmpty() || !leTol2->text().isEmpty()) {
-        l += "\\S" + leTol1->text() + "^ " + leTol2->text() + ";";
+        // A bare '^' (not "^ "): toDxfString() now caret-encodes '^' to
+        // "^ " on write, and doubling that space read back as " -0.2"
+        // instead of "-0.2". This editor's own reader above already
+        // accepts a bare '^' as the separator, as does RS_MText's.
+        l += "\\S" + leTol1->text() + "^" + leTol2->text() + ";";
     }
     return l;
 }

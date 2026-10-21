@@ -62,6 +62,7 @@ LC_ActionsShortcutsDialog::LC_ActionsShortcutsDialog(QWidget* parent, LC_ActionG
     // Ctrl+F → filter box (Issue #2333)
     const auto* findShortcut = new QShortcut(QKeySequence::Find, this);
     connect(findShortcut, &QShortcut::activated, ui->leFilter, qOverload<>(&QWidget::setFocus));
+    connect(findShortcut, &QShortcut::activated, ui->leFilter, &QLineEdit::selectAll);
 
     ui->leFilter->setFocus();
     ui->gbShortcut->setVisible(false);

@@ -32,7 +32,7 @@
 
 
 LC_ActionDrawDual::LC_ActionDrawDual(LC_ActionContext* context)
-    : LC_ActionPreSelectionAwareBase("Draw Dual", context){
+    : LC_ActionPreSelectionAwareBase("Draw Dual", context, RS2::ActionDrawDual){
 }
 
 void LC_ActionDrawDual::init(int status) {
@@ -40,8 +40,23 @@ void LC_ActionDrawDual::init(int status) {
     LC_ActionPreSelectionAwareBase::init(status);
 }
 
+void LC_ActionDrawDual::onSelectionCompleted([[maybe_unused]] bool singleEntity, const bool fromInit) {
+    // The dual still needs its center: completing the selection only moves on to
+    // picking it. The base class would trigger here, before a center exists.
+    setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
+    updateActionPrompt();
+    updateMouseCursor();
+}
+
+bool LC_ActionDrawDual::isAllowTriggerOnEmptySelection() {
+    return false;
+}
+
 void LC_ActionDrawDual::onCoordinateEvent([[maybe_unused]] int status, [[maybe_unused]] bool isZero,
                                            [[maybe_unused]] const RS_Vector& coord) {
+    if (!m_selectionComplete) {
+        return;
+    }
     if (getStatus() == ChooseCenter) {
         m_center = coord;
         trigger();
@@ -59,7 +74,7 @@ void LC_ActionDrawDual::updateActionPromptForSelection() {
     updatePromptTRCancel(tr("Select to create dual (Enter to complete)"), MOD_SHIFT_LC(tr("Select contour")));
 }
 
-void LC_ActionDrawDual::updateActionPromptForSelected(int status) {
+void LC_ActionDrawDual::updateActionPromptForSelected(int) {
     updatePrompt(tr("Select Center"));
 }
 
@@ -79,7 +94,7 @@ void LC_ActionDrawDual::doTriggerCompletion([[maybe_unused]] bool success) {
     finish();
 }
 
-void LC_ActionDrawDual::onMouseLeftButtonReleaseSelected(int status, const LC_MouseEvent* event) {
+void LC_ActionDrawDual::onMouseLeftButtonReleaseSelected(int, const LC_MouseEvent* event) {
     const RS_Vector snap = event->snapPoint;
     if (getStatus() == ChooseCenter) {
         m_center = snap;
@@ -87,7 +102,7 @@ void LC_ActionDrawDual::onMouseLeftButtonReleaseSelected(int status, const LC_Mo
     }
 }
 
-void LC_ActionDrawDual::onMouseRightButtonReleaseSelected(int status, const LC_MouseEvent* event) {
+void LC_ActionDrawDual::onMouseRightButtonReleaseSelected(int, const LC_MouseEvent*) {
     finish();
 }
 
@@ -105,12 +120,11 @@ bool LC_ActionDrawDual::createDualForSelected(LC_DocumentModificationBatch& ctx)
 
         if (dualCopy != nullptr) {
             if (dualCopy->isContainer()) {
-                auto* dualContainer = static_cast<RS_EntityContainer*>(dualCopy);
-                for (RS_Entity* dual: *dualContainer) {
-                    ctx += dual;
+                const std::unique_ptr<RS_EntityContainer> dualContainer{static_cast<RS_EntityContainer*>(dualCopy)};
+                for (auto& dual : dualContainer->takeEntities()) {
+                    ctx += dual.release();
                     count++;
                 }
-                delete dualCopy;
             } else {
                 ctx += dualCopy;
                 count++;

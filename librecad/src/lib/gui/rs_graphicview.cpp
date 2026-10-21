@@ -95,6 +95,7 @@ void RS_GraphicView::cleanUp() {
  * which are visualized by this widget.
  */
 void RS_GraphicView::setDocument(RS_Document *c) {
+    emit drawingRedrawRequested();
     m_document = c;
     m_viewport->setDocument(c);
 }
@@ -444,7 +445,11 @@ void RS_GraphicView::showRelativeInputWidget(const RS_Vector& wcsPos, const RS_V
 }
 
 void RS_GraphicView::hideRelativeInputWidget() const {
-    m_relativePointWidgetHolder->hide();
+    // Only QG_GraphicView creates the holder, and actions reach these on views
+    // that have none, as isRelativeInputWidgetVisible() already assumes.
+    if (m_relativePointWidgetHolder != nullptr) {
+        m_relativePointWidgetHolder->hide();
+    }
 }
 
 void RS_GraphicView::restoreRelativeInputWidget() const {

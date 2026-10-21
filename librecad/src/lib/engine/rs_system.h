@@ -31,6 +31,7 @@
 #define RS_SYSTEM RS_System::instance()
 #include <QList>
 #include <QSharedPointer>
+#include <QStringList>
 
 class RS_Locale;
 class QTranslator;
@@ -155,6 +156,8 @@ public:
     static QString getEncoding(const QString& str);
 
     void loadTranslation(const QString& lang, const QString& langCmd);
+    // Return fallback locales before the selected regional locale.
+    static QStringList translationLocaleFallbacks(const QString& lang);
     QString translateCommand(const char* source, const char* disambiguation = nullptr,
                              const char* context = "QObject") const;
 
@@ -177,7 +180,8 @@ protected:
     bool m_initialized{false};
     bool m_externalAppDir{false};
     QList<QSharedPointer<RS_Locale>> m_allKnownLocales;
-    QTranslator* m_commandTranslator{nullptr};
+    QList<QTranslator*> m_translationTranslators;
+    QList<QTranslator*> m_commandTranslators;
 };
 
 #endif

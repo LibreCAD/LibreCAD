@@ -24,6 +24,8 @@
 #ifndef LC_PROPERTYSHEETWIDGET_H
 #define LC_PROPERTYSHEETWIDGET_H
 
+#include <QPointer>
+
 #include "lc_actioncontext.h"
 #include "lc_entitypropertyvaluedelegate.h"
 #include "lc_graphicviewawarewidget.h"
@@ -76,8 +78,16 @@ public:
     void ucsListModified([[maybe_unused]]bool changed) override {refill();}
     void layerListModified(bool) override {refill();}
     void viewsListModified([[maybe_unused]]bool changed) override {refill();}
+    /// The sheet keeps the document, and is listed on four sources of it (its selection, UCS list, layer list
+    /// and view list, the last three unless the document is a block): whichever of them is destroyed first,
+    /// with the drawing, tells it to forget the document (the others are destroyed in the same destructor).
+    void ucsListDestroyed() override {onDocumentDestroyed();}
+    void layerListDestroyed() override {onDocumentDestroyed();}
+    void viewsListDestroyed() override {onDocumentDestroyed();}
+    void selectedSetDestroyed() override {onDocumentDestroyed();}
     LC_PropertySheetWidgetOptions* getOptions() const {return m_propertySheetOptions.get();}
 public slots :
+    void onViewDestroyed();
     void onUcsChanged(LC_UCS* ucs);
     void onViewDefaultActionActivated(bool defaultActionActivated, RS2::ActionType actionRtti, RS2::ActionType prevActionRtti);
     void onRelativeZeroChanged(const RS_Vector&);
@@ -119,7 +129,11 @@ protected:
 private:
     Ui::LC_PropertySheetWidget* ui;
     void initPropertySheet();
-    RS_GraphicView* m_graphicView = nullptr; // fixme - sand - review dependency
+    void onDocumentDestroyed();
+    void clearSheet();
+    void forgetEditedEntities();
+    void unregisterFromDocument();
+    QPointer<RS_GraphicView> m_graphicView; // fixme - sand - review dependency
     RS_Document* m_document = nullptr;
     LC_GraphicViewport* m_viewport = nullptr;
     bool m_handleSelectionChange = true;

@@ -54,6 +54,34 @@ LC_ActionDrawLineSnake::LC_ActionDrawLineSnake(LC_ActionContext* actionContext, 
 
 LC_ActionDrawLineSnake::~LC_ActionDrawLineSnake() = default;
 
+bool LC_ActionDrawLineSnake::doProcessCommand(const int status, const QString& command) {
+    const bool handled = LC_AbstractActionDrawLine::doProcessCommand(status, command);
+    if (handled) {
+        updateHistoryState();
+    }
+    return handled;
+}
+
+void LC_ActionDrawLineSnake::setSetAngleDirectionState() {
+    LC_AbstractActionDrawLine::setSetAngleDirectionState();
+    updateHistoryState();
+}
+
+void LC_ActionDrawLineSnake::setSetPointDirectionState() {
+    LC_AbstractActionDrawLine::setSetPointDirectionState();
+    updateHistoryState();
+}
+
+void LC_ActionDrawLineSnake::setSetXDirectionState() {
+    LC_AbstractActionDrawLine::setSetXDirectionState();
+    updateHistoryState();
+}
+
+void LC_ActionDrawLineSnake::setSetYDirectionState() {
+    LC_AbstractActionDrawLine::setSetYDirectionState();
+    updateHistoryState();
+}
+
 void LC_ActionDrawLineSnake::doSaveOptions() {
     save("Angle", m_angleDegrees);
     save("AngleRelative", m_angleIsRelative);
@@ -109,6 +137,7 @@ void LC_ActionDrawLineSnake::doSetStartPoint(const RS_Vector& start) {
         m_direction = m_primaryDirection;
         setStatus(SetDistance);
     }
+    updateHistoryState();
     addSnappedPointToVisualSnap(start);
     moveRelativeZero(start);
     updateActionPrompt();
@@ -347,6 +376,7 @@ void LC_ActionDrawLineSnake::completeLineSegment(const bool close) {
             setStatus(SetDirection);
             break;
     }
+    updateHistoryState();
     updateOptions();
     updateActionPrompt();
 }
@@ -359,7 +389,6 @@ bool LC_ActionDrawLineSnake::doProceedCommand([[maybe_unused]] int status, const
     }
     else if (checkCommand("undo", command)) {
         undo();
-        updateActionPrompt();
     }
     else if (checkCommand("polyline", command) || checkCommand("pl", command)) {
         // Issue #2608: polyline() may switch to another action and destroy *this*;
@@ -370,7 +399,6 @@ bool LC_ActionDrawLineSnake::doProceedCommand([[maybe_unused]] int status, const
     }
     else if (checkCommand("redo", command)) {
         redo();
-        updateActionPrompt();
     }
     else if (checkCommand("anglerel", command)) {
         // line to angle related to previous segment
@@ -387,10 +415,12 @@ bool LC_ActionDrawLineSnake::doProceedCommand([[maybe_unused]] int status, const
 }
 
 bool LC_ActionDrawLineSnake::doProcessCommandValue(const int status, const QString& c) {
+    // Leave coordinate input to the event handler, not the scalar evaluator.
+    if (c.contains(',') || c.contains('<')) {
+        return false;
+    }
     bool result = true;
     switch (status) {
-        case SetDirection:
-            break;
         case SetDistance: {
             // processing entered distance value
             bool ok = false;
@@ -422,6 +452,7 @@ bool LC_ActionDrawLineSnake::doProcessCommandValue(const int status, const QStri
                         break;
                     }
                     default:
+                        result = false;
                         break;
                 }
             }
@@ -437,6 +468,7 @@ bool LC_ActionDrawLineSnake::doProcessCommandValue(const int status, const QStri
             break;
         }
         default:
+            result = false;
             break;
     }
     return result;
@@ -574,6 +606,7 @@ void LC_ActionDrawLineSnake::updateActionPrompt() {
 void LC_ActionDrawLineSnake::next() {
     addHistory(HA_Next, m_actionData->data.startpoint, m_actionData->data.endpoint, m_actionData->startOffset);
     setStatus(SetDirection);
+    updateHistoryState();
 }
 
 // in-action undo
@@ -590,7 +623,6 @@ void LC_ActionDrawLineSnake::undo() {
 
         switch (h.histAct) {
             case HA_SetStartpoint:
-                setStatus(SetDirection);
                 break;
 
             case HA_Polyline:
@@ -604,18 +636,25 @@ void LC_ActionDrawLineSnake::undo() {
                 m_document->undo(); // fixme - sand  - merge - rework undo!
                 redrawDrawing();
                 m_actionData->data.startpoint = h.prevPt;
-                setStatus(SetDirection);
                 break;
 
             case HA_Next:
                 m_actionData->data.startpoint = h.prevPt;
-                setStatus(SetDirection);
                 break;
         }
 
-        // get index for close from new current history
-        h = m_actionData->history.at(m_actionData->index());
-        m_actionData->startOffset = h.startOffset;
+        if (m_actionData->historyIndex >= 0) {
+            const History& previous = m_actionData->history.at(m_actionData->index());
+            m_direction = previous.directionAfter;
+            setStatus(previous.statusAfter);
+            m_actionData->startOffset = previous.startOffset;
+        }
+        else {
+            m_direction = h.directionBefore;
+            setStatus(h.statusBefore);
+            m_actionData->startOffset = 0;
+        }
+        updateOptions();
     }
     else {
         commandMessage(tr("Cannot undo: Begin of history reached"));
@@ -638,7 +677,6 @@ void LC_ActionDrawLineSnake::redo() {
         }
         switch (h.histAct) {
             case HA_SetStartpoint:
-                setStatus(SetDirection);
                 break;
 
             case HA_Polyline:
@@ -648,19 +686,19 @@ void LC_ActionDrawLineSnake::redo() {
                 // here (it destroys *this* while redo() is still on the stack).
                 m_document->redo(); // fixme - sand - merge - rework undo
                 redrawDrawing();
-                setStatus(SetDirection);
                 break;
 
             case HA_Close:
                 m_document->redo(); // fixme - sand - merge - rework undo
                 redrawDrawing();
-                setStatus(SetDirection);
                 break;
 
             case HA_Next:
-                setStatus(SetDirection);
                 break;
         }
+        m_direction = h.directionAfter;
+        setStatus(h.statusAfter);
+        updateOptions();
     }
     else {
         commandMessage(tr("Cannot redo: End of history reached"));
@@ -680,8 +718,16 @@ void LC_ActionDrawLineSnake::addHistory(const LC_ActionDrawLineSnake::HistoryAct
     else {
         m_actionData->history.erase(m_actionData->history.begin() + offset, m_actionData->history.end());
     }
-    m_actionData->history.push_back(History(a, p, c, s));
+    m_actionData->history.push_back(History(a, p, c, s, m_direction, getStatus()));
     m_actionData->historyIndex = static_cast<int>(m_actionData->history.size() - 1);
+}
+
+void LC_ActionDrawLineSnake::updateHistoryState() const {
+    if (m_actionData->historyIndex >= 0) {
+        History& history = m_actionData->history.at(m_actionData->index());
+        history.directionAfter = m_direction;
+        history.statusAfter = getStatus();
+    }
 }
 
 // closing sequence of lines

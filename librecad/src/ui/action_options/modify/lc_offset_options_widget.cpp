@@ -96,7 +96,7 @@ void LC_OffsetOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
 void LC_OffsetOptionsWidget::onDistEditingFinished() {
     const auto val = ui->leDist->text();
     double distance;
-    if (toDouble(val, distance, 1.0, false)) {
+    if (toDouble(val, distance, 1.0, true)) { // its size: the side comes from the point
         m_action->setDistance(distance);
     }
 }

@@ -26,6 +26,8 @@ LC_View::LC_View() = default;
 
 LC_View::LC_View(const QString &name):m_name(name) {}
 
+LC_View::~LC_View() = default;
+
 LC_View* LC_View::clone() const {
     auto* clone = new LC_View(m_name);
     clone->m_cameraPlottable = m_cameraPlottable;
@@ -40,7 +42,9 @@ LC_View* LC_View::clone() const {
     clone->m_size = m_size;
     clone->m_targetPoint = m_targetPoint;
     clone->m_viewDirection = m_viewDirection;
-    clone->m_ucs = m_ucs;
+    if (m_ucs != nullptr) {
+        clone->m_ucs.reset(m_ucs->clone());
+    }
     return clone;
 }
 
@@ -141,11 +145,13 @@ double LC_View::getTwistAngle() const{
 }
 
 void LC_View::setUCS(LC_UCS *pUcs) {
-  m_ucs = pUcs;
+    if (pUcs != m_ucs.get()) {
+        m_ucs.reset(pUcs);
+    }
 }
 
 LC_UCS *LC_View::getUCS() const{
-    return m_ucs;
+    return m_ucs.get();
 }
 
 bool LC_View::isValidName([[maybe_unused]]QString &nameCandidate) {

@@ -311,6 +311,17 @@ QG_LayerWidget::QG_LayerWidget(LC_ActionGroupManager* actionGroupManager, const 
 }
 
 /**
+ * The layer list is being destroyed with its drawing, which was not detached from this widget first:
+ * the list has already dropped this listener, so forget it and the drawing, and clear the model.
+ */
+void QG_LayerWidget::layerListDestroyed() {
+    m_layerList = nullptr;
+    m_graphic = nullptr;
+    m_lastLayer = nullptr;
+    updateWidget();
+}
+
+/**
  * Sets the layerlist this layer widget should show.
  *
  * @param layerList
@@ -380,11 +391,13 @@ void QG_LayerWidget::updateWidget() {
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::update: nullptr layerView");
         return;
     }
+    // Rebuild the model first: it lists layers by pointer, and the rows it has now may name layers
+    // that are gone (a view sizing rows asks the model about them), as happened when a file was
+    // loaded into the drawing the widget was attached to (#2969).
     const int yPos = m_layerView->verticalScrollBar()->value();
+    m_layerModel->setLayerList(m_layerList); // allow a null layerList; this clears the widget
     m_layerView->resizeRowsToContents();
     m_layerView->verticalScrollBar()->setValue(yPos);
-
-    m_layerModel->setLayerList(m_layerList); // allow a null layerList; this clears the widget
 
     if (m_layerList == nullptr) {
         RS_DEBUG->print(RS_Debug::D_NOTICE, "QG_LayerWidget::update: nullptr layerList");
@@ -553,6 +566,9 @@ void QG_LayerWidget::slotSelectionChanged(
  * Called when reg-expresion matchLayerName->text changed
  */
 void QG_LayerWidget::slotUpdateLayerList() {
+    if (m_layerList == nullptr) {
+        return; // no drawing: nothing to filter
+    }
     const QRegularExpression rx = QRegularExpression::fromWildcard(m_matchLayerName->text());
 
     for (unsigned i = 0; i < m_layerList->count(); i++) {

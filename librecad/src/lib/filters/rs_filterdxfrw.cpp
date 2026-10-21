@@ -34,6 +34,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
+#include <functional>
 #include <iomanip>
 #include <iostream>
 #include <limits>
@@ -45,6 +46,7 @@
 #include <sstream>
 #include <stack>
 #include <type_traits>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -54,6 +56,8 @@
 #include <QFileInfo>
 #include <QLocale>
 #include <QRegularExpression>
+#include <QScopeGuard>
+#include <QSet>
 #include <QTemporaryFile>
 #if QT_VERSION >= QT_VERSION_CHECK(6, 4, 0)
 #include <QByteArrayView>
@@ -68,9 +72,11 @@
 #include "dxf_format.h"
 #include "intern/dwgbufferw.h"
 #include "intern/dwgsafety.h"
+#include "lc_colornumbers.h"
 #include "lc_containertraverser.h"
 #include "lc_defaults.h"
 #include "lc_dimarc.h"
+#include "lc_dimarrowblock.h"
 #include "lc_dimarrowregistry.h"
 #include "lc_dimordinate.h"
 #include "lc_dimstyle.h"
@@ -78,10 +84,14 @@
 #include "lc_extentitydata.h"
 #include "lc_hyperbola.h"
 #include "lc_hyperbolaspline.h"
+#include "lc_linetype.h"
+#include "lc_linetypenames.h"
 #include "lc_mleader.h"
 #include "lc_parabola.h"
 #include "lc_parabolaspline.h"
+#include "lc_splinehelper.h"
 #include "lc_splinepoints.h"
+#include "lc_shxshapenames.h"
 #include "lc_tolerance.h"
 #include "lc_wipeout.h"
 #include "rs_arc.h"
@@ -122,6 +132,137 @@
 #endif // DWGSUPPORT
 
 namespace {
+constexpr std::int32_t kLegacyRtlLayout = 1;
+constexpr std::int32_t kLogicalRtlLayout = 2;
+
+bool isLibreCadApp(const std::shared_ptr<DRW_Variant> &tag) {
+  return tag && tag->code() == 1001 && tag->type() == DRW_Variant::STRING &&
+         tag->content.s && *tag->content.s == "LibreCad";
+}
+
+std::int32_t mtextRtlLayout(const DRW_Entity &entity) {
+  std::int32_t layout = 0;
+  bool inLibreCad = false;
+  for (const auto &tag : entity.extData) {
+    if (tag && tag->code() == 1001)
+      inLibreCad = isLibreCadApp(tag);
+    if (inLibreCad && tag && tag->code() == 1071 &&
+        tag->type() == DRW_Variant::INTEGER &&
+        (tag->content.i == kLegacyRtlLayout || tag->content.i == kLogicalRtlLayout))
+      layout = std::max(layout, tag->content.i);
+  }
+  return layout;
+}
+
+void setMTextRtlMarker(DRW_Text &text, std::int32_t layout) {
+  decltype(text.extData) filtered;
+  bool inLibreCad = false;
+  for (const auto &tag : text.extData) {
+    if (tag && tag->code() == 1001)
+      inLibreCad = isLibreCadApp(tag);
+    if (inLibreCad && tag && tag->code() == 1071 &&
+        tag->type() == DRW_Variant::INTEGER &&
+        (tag->content.i == kLegacyRtlLayout || tag->content.i == kLogicalRtlLayout))
+      continue;
+    filtered.push_back(tag);
+  }
+  for (size_t i = 0; i < filtered.size();) {
+    if (isLibreCadApp(filtered[i]) &&
+        (i + 1 == filtered.size() ||
+         (filtered[i + 1] && filtered[i + 1]->code() == 1001))) {
+      filtered.erase(filtered.begin() + i);
+    } else {
+      ++i;
+    }
+  }
+  if (layout != 0) {
+    auto app = std::find_if(filtered.begin(), filtered.end(), isLibreCadApp);
+    if (app == filtered.end()) {
+      filtered.push_back(std::make_shared<DRW_Variant>(1001, std::string("LibreCad")));
+      app = std::prev(filtered.end());
+    }
+    auto end = std::find_if(std::next(app), filtered.end(), [](const auto &tag) {
+      return tag && tag->code() == 1001;
+    });
+    filtered.insert(end, std::make_shared<DRW_Variant>(1071, layout));
+  }
+  text.extData = std::move(filtered);
+}
+
+// MTEXT group 73, in DWG the BS after the text: 1 = at least, 2 = exact.
+// A file may hold another value (0 in the embedded MTEXT of older LibreCAD
+// DWG output); it reads as the default and is not written back.
+RS_MTextData::MTextLineSpacingStyle mtextLineSpacingStyle(const DRW_MText &mtext) {
+  return mtext.linespacingStyle == 2 ? RS_MTextData::Exact : RS_MTextData::AtLeast;
+}
+
+std::uint16_t mtextLineSpacingCode(RS_MTextData::MTextLineSpacingStyle style) {
+  return style == RS_MTextData::Exact ? 2 : 1;
+}
+
+// The private right-to-left marker a model text needs, 0 for none. Marker 1
+// preserves old drawings; marker 2 stores logical Unicode RTL.
+std::int32_t rtlLayoutOf(const RS_MTextData &data) {
+  if (data.drawingDirection != RS_MTextData::RightToLeft)
+    return 0;
+  return data.legacyRtlLayout ? kLegacyRtlLayout : kLogicalRtlLayout;
+}
+
+// Attachment, drawing direction and line spacing of a model text as MTEXT
+// stores them (groups 71, 72, 73, 44).
+// DXF MTEXT group 72: 1=LeftToRight, 3=TopToBottom, 5=ByStyle. RightToLeft
+// has no DXF encoding: it is written as LeftToRight so that other readers see
+// a well-defined direction, and setMTextRtlMarker() carries the preference.
+void setMTextLayout(DRW_MText &mtext, const RS_MTextData &data) {
+  mtext.textgen =
+      static_cast<int>(data.valign) * 3 + static_cast<int>(data.halign) + 1;
+  switch (data.drawingDirection) {
+  case RS_MTextData::TopToBottom:
+    mtext.alignH = static_cast<DRW_Text::HAlign>(3);
+    break;
+  case RS_MTextData::ByStyle:
+    mtext.alignH = static_cast<DRW_Text::HAlign>(5);
+    break;
+  case RS_MTextData::LeftToRight:
+  case RS_MTextData::RightToLeft:
+  default:
+    mtext.alignH = static_cast<DRW_Text::HAlign>(1);
+    break;
+  }
+  // Always the model's style: 1 and 2 read back as themselves, and no other
+  // source value may reach the file.
+  mtext.linespacingStyle = mtextLineSpacingCode(data.lineSpacingStyle);
+  mtext.interlin = data.lineSpacingFactor;
+}
+
+// RS_MText::setText() takes a leading \A0; \A1; \A2; out of the text and
+// makes it the vertical alignment.
+bool hasMTextAlignmentPrefix(const QString &text) {
+  return text.startsWith(QLatin1StringView("\\A0;")) ||
+         text.startsWith(QLatin1StringView("\\A1;")) ||
+         text.startsWith(QLatin1StringView("\\A2;"));
+}
+
+// The x axis direction of an MTEXT (group 11, WCS) for a text drawn at
+// `angle`. The stored direction is kept while it says that angle: it is what
+// the file had and may point out of the drawing plane. A record read with a
+// rotation angle alone has none, all three zero; DXF keeps the angle in
+// group 50 and such a record stays as it was, DWG has no other place for it.
+DRW_Coord mtextXAxis(double angle, const DRW_Coord &stored, bool angleEdited,
+                     bool required) {
+  const DRW_Coord fromAngle(std::cos(angle), std::sin(angle), 0.0);
+  if (stored.x == 0.0 && stored.y == 0.0 && stored.z == 0.0)
+    return required || angleEdited ? fromAngle : stored;
+  // The angle a reader takes from the axis, as DRW_MText::updateAngle()
+  // does. An axis along Z alone, of a text that runs up a vertical face, is
+  // an axis like any other: it reads as the angle of its two zeros, and the
+  // direction of that angle is no replacement for it.
+  const double read = std::atan2(stored.y, stored.x);
+  const bool sameAngle = std::fabs(std::cos(read) - fromAngle.x) < 1.0e-9 &&
+                         std::fabs(std::sin(read) - fromAngle.y) < 1.0e-9;
+  return sameAngle ? stored : fromAngle;
+}
+
 
 constexpr int kImportedSplineFallbackSamples = 96;
 
@@ -141,6 +282,16 @@ std::string normalizeDwgTableName(const std::string &name) {
   return normalized;
 }
 
+// The handle the DWG being written has for the table record of a name, 0 if
+// it has none: a DWG names a layer or a text style by the handle of its
+// record, and the codec writes the handle of "0" or STANDARD for none.
+std::uint32_t dwgWriteHandleByName(
+    const std::map<std::string, std::uint32_t> &handles,
+    const std::string &name) {
+  const auto found = handles.find(normalizeDwgTableName(name));
+  return found == handles.end() ? 0 : found->second;
+}
+
 std::string normalizeDwgDataStorageHandleKey(std::string value) {
   value.erase(
       std::remove_if(value.begin(), value.end(),
@@ -158,6 +309,27 @@ std::string normalizeDwgDataStorageHandleKey(std::string value) {
   value.erase(0, firstNonZero);
   return value;
 }
+
+// Callback members observe only the writer owned by their current export.
+// Clear the observer before destruction on success, failure or exception.
+template <typename Writer> class ExportWriterScope final {
+public:
+  ExportWriterScope(Writer *&observer, std::unique_ptr<Writer> owner) noexcept
+      : m_observer(observer), m_owner(std::move(owner)) {
+    m_observer = m_owner.get();
+  }
+  ~ExportWriterScope() { reset(); }
+  ExportWriterScope(const ExportWriterScope &) = delete;
+  ExportWriterScope &operator=(const ExportWriterScope &) = delete;
+  void reset() noexcept {
+    m_observer = nullptr;
+    m_owner.reset();
+  }
+
+private:
+  Writer *&m_observer;
+  std::unique_ptr<Writer> m_owner;
+};
 
 enum class XDataReadResult {
   Absent,
@@ -340,6 +512,15 @@ DRW_Variant *checkedDimStyleVariable(const DRW_Dimstyle &style,
   if (value->type() == DRW_Variant::DOUBLE)
     return std::isfinite(value->d_val()) ? value : nullptr;
   return value;
+}
+
+// The name of the imported LTYPE record with this handle, or empty.
+QString lineTypeNameForHandle(const RS_Graphic *graphic,
+                              std::uint32_t handle) {
+  if (graphic == nullptr || handle == 0)
+    return {};
+  return QString::fromStdString(
+      graphic->dwgAdvancedMetadata().lineTypeNameForHandle(handle));
 }
 
 std::string dwgDataStorageNumericHandleKey(std::uint64_t handle) {
@@ -563,7 +744,7 @@ bool parseDwgUnderlaySidecar(const RS_Entity *entity,
   if (!sawApplication || stringOrdinal != 2 || !parsed.gotPosition ||
       scalarCount != expectedScalars || displayValueCount != 3 ||
       parsed.value.definitionHandle == 0 ||
-      parsed.noClip && parsed.hasOriginalClip ||
+      (parsed.noClip && parsed.hasOriginalClip) ||
       !std::isfinite(parsed.value.rotation) ||
       std::abs(parsed.value.scale.x) <= RS_TOLERANCE ||
       std::abs(parsed.value.scale.y) <= RS_TOLERANCE)
@@ -862,6 +1043,48 @@ bool differsFromUnitWeight(double weight) {
   return std::fabs(weight - 1.0) > 1e-12;
 }
 
+// R12 has no SPLINE entity: an RS_Spline goes out as a POLYLINE within this
+// fraction of the diagonal of its control points' box, with at most
+// kMaxR12SplineVertices vertices. Unrelated to the drawn segments, to
+// $SPLINESEGS and to the offset engine's modeling tolerance. Over 637 splines
+// of the DXF/DWG test corpora the median needs 63 vertices, the largest 542.
+constexpr double kR12SplineRelativeTolerance = 1e-4;
+constexpr size_t kMaxR12SplineVertices = 32767;
+
+/**
+ * The vertices of the POLYLINE an R12 file stores for @p s, which is written
+ * closed when @p closed; false if none fits.
+ */
+bool r12SplineVertices(const RS_Spline &s, bool closed,
+                       std::vector<RS_Vector> &vertices) {
+  vertices.clear();
+  RS_Vector low{false};
+  RS_Vector high{false};
+  double coordinate = 0.0;
+  for (const RS_Vector &v : s.getUnwrappedControlPoints()) {
+    if (!std::isfinite(v.x) || !std::isfinite(v.y)) {
+      return false;
+    }
+    low = RS_Vector::minimum(low, v);
+    high = RS_Vector::maximum(high, v);
+    coordinate = std::max({coordinate, std::abs(v.x), std::abs(v.y)});
+  }
+  const double size = low.valid ? low.distanceTo(high) : 0.0;
+  const double floor = 64.0 * std::numeric_limits<double>::epsilon() *
+                       std::max(coordinate, std::numeric_limits<double>::min());
+  const double tolerance = std::max(kR12SplineRelativeTolerance * size, floor);
+  if (!std::isfinite(tolerance) ||
+      !s.tryStroke(tolerance, kMaxR12SplineVertices, vertices)) {
+    return false;
+  }
+  // a closed POLYLINE repeats no vertex
+  if (closed && vertices.size() > 2 &&
+      vertices.back().distanceTo(vertices.front()) <= tolerance) {
+    vertices.pop_back();
+  }
+  return true;
+}
+
 bool hasRationalSplineWeights(const DRW_Spline *data) {
   if (data == nullptr)
     return false;
@@ -908,6 +1131,144 @@ bool buildSplineDataFromDrw(const DRW_Spline *source, RS_SplineData &target) {
   }
 
   return true;
+}
+
+// Whether the curve a B-spline's control points, weights and knots draw over
+// [knots[degree], knots[count]] ends where it starts.
+bool splineCurveCloses(const RS_SplineData &data) {
+  const size_t degree = data.degree;
+  const size_t count = data.controlPoints.size();
+  if (degree < 1 || count < degree + 1 || data.weights.size() != count ||
+      data.knotslist.size() != count + degree + 1)
+    return false;
+  double scale = 1.0;
+  for (const RS_Vector &p : data.controlPoints)
+    scale = std::max({scale, std::abs(p.x), std::abs(p.y)});
+  const RS_Vector start = RS_Spline::evaluateNURBS(data, data.knotslist[degree]);
+  const RS_Vector end = RS_Spline::evaluateNURBS(data, data.knotslist[count]);
+  return start.valid && end.valid && start.distanceTo(end) <= 1e-9 * scale;
+}
+
+// Whether the knot spacing repeats with the period of the count - degree
+// distinct control points of a spline whose first degree control points are
+// repeated at the end, which makes its curve a periodic one.
+bool hasPeriodicKnots(const RS_SplineData &data, double tolerance) {
+  const std::vector<double> &knots = data.knotslist;
+  const size_t period = data.controlPoints.size() - data.degree;
+  for (size_t i = 0; i + period + 1 < knots.size(); ++i) {
+    const double spacing = knots[i + 1] - knots[i];
+    const double repeated = knots[i + period + 1] - knots[i + period];
+    if (std::abs(spacing - repeated) > tolerance)
+      return false;
+  }
+  return true;
+}
+
+// The RS_Spline of a SPLINE entity, or of a spline edge of a hatch boundary:
+// its control points with weights (weights[i] belongs to controllist[i]) and
+// knots, control points + degree + 1 of them, or none for a clamped uniform
+// knot vector.
+//
+// Whatever its closed (DXF group 70 bit 0) and periodic (bit 1) flags say, the
+// spline is the curve that data draws over [knots[degree], knots[count]], and
+// AutoCAD writes closed and periodic splines with a clamped knot vector and the
+// last control point on the first. So the data is kept exactly, in the spline
+// type that draws it:
+//  - a closed or periodic spline with its first degree control points repeated
+//    at the end and a periodic knot vector: WrappedClosed, which is that data;
+//  - clamped knots: ClampedOpen, with the file's flags kept for the export while
+//    the ends meet;
+//  - other unclamped knots: Standard;
+//  - anything else, such as knots clamped at one end only: clamped by knot
+//    insertion, which keeps the curve.
+// The exception is a closed or periodic spline whose curve does not close:
+// one LibreCAD wrote closed without the repeated control points. Up to 2.2.0
+// it wrote such a spline with clamped knots (uniform ones for a spline drawn
+// in LibreCAD), which it ignored when drawing a closed spline: it drew the
+// uniform periodic spline of the control points, so that is what the spline
+// is read as. Since 75c48f9ac (not in 2.2.1, which writes the control points
+// wrapped) it writes the first knots of the periodic knot vector, which are
+// kept. Either way the spline is wrapped, as before.
+//
+// Closing every flagged spline with setClosed() instead wrapped the clamped
+// control points of AutoCAD's closed splines into a periodic spline: another
+// curve, and mostly one validate() rejects, so that update() drew nothing.
+std::unique_ptr<RS_Spline> makeSplineFromDrw(RS_EntityContainer *parent,
+                                             const DRW_Spline &source,
+                                             const std::vector<double> &weights) {
+  using SplineType = RS_SplineData::SplineType;
+  const bool closedFlag = (source.flags & 0x1) != 0;
+  const bool periodicFlag = (source.flags & 0x2) != 0;
+
+  RS_SplineData data(source.degree, false);
+  const double knotTolerance = (source.tolknot > 0.0) ? source.tolknot : 1e-7;
+  for (const double k : source.knotslist)
+    data.knotslist.push_back(RS_Math::round(k, knotTolerance));
+  for (size_t i = 0; i < source.controllist.size(); ++i) {
+    if (const auto &control = source.controllist[i]) {
+      data.controlPoints.emplace_back(control->x, control->y);
+      data.weights.push_back(i < weights.size() ? weights[i] : 1.0);
+    }
+  }
+  const size_t count = data.controlPoints.size();
+  if (data.knotslist.empty() && count > data.degree)
+    data.knotslist = LC_SplineHelper::knot(count, data.degree + 1);
+  // whether the file's curve closes, from its knots before rounding: rounding
+  // moves the ends of a periodic curve apart
+  RS_SplineData unrounded = data;
+  if (!source.knotslist.empty())
+    unrounded.knotslist = source.knotslist;
+  const bool closes = splineCurveCloses(unrounded);
+
+  auto spline =
+      std::make_unique<RS_Spline>(parent, RS_SplineData(source.degree, false));
+  RS_SplineData &kept = spline->getData();
+  kept = data;
+  const bool wrapped = spline->hasWrappedControlPoints();
+  const auto keepAs = [&](SplineType type) {
+    kept = data;
+    kept.type = type;
+    return spline->validate();
+  };
+  const auto finish = [&]() {
+    if (!spline->isClosed() && closes) {
+      kept.m_closedFlag = closedFlag;
+      kept.m_periodicFlag = periodicFlag;
+    }
+    spline->calculateBorders();
+    spline->update();
+    return std::move(spline);
+  };
+
+  if ((closedFlag || periodicFlag) && closes && wrapped &&
+      count > 2 * data.degree && hasPeriodicKnots(data, 2 * knotTolerance) &&
+      keepAs(SplineType::WrappedClosed))
+    return finish();
+  if ((closedFlag || periodicFlag) && !closes) {
+    // a spline LibreCAD wrote closed; clamped knots give way to uniform ones
+    kept = data;
+    kept.type = SplineType::Standard;
+    if (count > data.degree &&
+        data.knotslist[data.degree] - data.knotslist.front() <= knotTolerance)
+      kept.knotslist =
+          LC_SplineHelper::generateOpenUniformKnotVector(count, data.degree + 1);
+    spline->setClosed(true);
+    if (spline->isClosed() && spline->validate())
+      return finish();
+  }
+  if (keepAs(SplineType::ClampedOpen))
+    return finish();
+  if (keepAs(SplineType::Standard))
+    return finish();
+  kept = data;
+  if (!LC_SplineHelper::clampPreservingShape(kept) || !spline->validate()) {
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+                    "makeSplineFromDrw: no spline type accepts the data "
+                    "(degree %zu, %zu control points, %zu knots)",
+                    data.degree, count, data.knotslist.size());
+    kept = data;
+  }
+  return finish();
 }
 
 constexpr double kTableFallbackDimension = 1.0;
@@ -1274,9 +1635,14 @@ bool isMLeaderStyleRawObject(
 
 bool isTableStyleRawObject(
     const LC_DwgAdvancedMetadata::RawObjectRecord &record) {
-  return record.objectType == DRW_TableStyle::kDwgClassNum ||
-         record.recordName == "TABLESTYLE" ||
-         record.className == "AcDbTableStyle";
+  // Unlike a fixed system object type (e.g. ACDBPLACEHOLDER's 80), a custom
+  // class number such as DRW_TableStyle::kDwgClassNum (509) is assigned
+  // per-file by that file's own CLASSES section (dwgreader.cpp) -- it is not
+  // a stable cross-file identifier, and this codebase's own writer reuses it
+  // as a bare default for unrelated raw objects (dwg_write_smoke_tests.cpp's
+  // makeRawReplayObject()). Match on name/class only, matching every other
+  // dynamic-class classifier in this file (isMLeaderStyleRawObject, etc.).
+  return record.recordName == "TABLESTYLE" || record.className == "AcDbTableStyle";
 }
 
 bool isOpaqueTableRawObject(
@@ -2893,7 +3259,10 @@ bool canWriteDwgFieldListRecord(
     const LC_DwgAdvancedMetadata::FieldListRecord &record,
     const DRW_FieldList &fieldList,
     DRW::Version version) {
-  const auto sourceAuthorization = metadata.authorizeDwgFieldListSource(record);
+  // The export-tolerant proof: a member that names no object frame of the
+  // source file does not refuse the list (the plan drops it).
+  const auto sourceAuthorization =
+      metadata.authorizeDwgFieldListSourceForExport(record);
   return !hasDxfTableAppDataUnsupportedByDwg(fieldList) &&
          fieldList.isDwgPayloadValid(version) &&
          (sourceAuthorization.status ==
@@ -3678,11 +4047,6 @@ approximateDrwSpline(RS_EntityContainer *parent, const DRW_Spline *data) {
 
   return std::make_unique<LC_SplinePoints>(parent, std::move(sampled));
 }
-// convert DRW_Coord to RS_Vector
-RS_Vector coordToVector(const std::shared_ptr<DRW_Coord> &c) {
-  return c ? RS_Vector(c->x, c->y) : RS_Vector(false);
-}
-
 } // namespace
 
 /**
@@ -3843,6 +4207,32 @@ int versionIdFromDwgMagic(const QString &filePath) {
   return 0;
 }
 
+// Expand NoUpdate INSERTs even after a failed read, which the caller may keep.
+void updateImportedInserts(RS_Graphic &graphic) {
+  // BLOCK_CONTROL order is not a dependency order. Resolve definition-owned
+  // INSERTs first, from their referenced blocks outward, so model-space
+  // INSERT expansion never snapshots an unresolved nested definition.
+  std::set<RS_Block *> resolvedBlocks;
+  std::set<RS_Block *> resolvingBlocks;
+  const auto updateBlockInserts = [&](auto &&self, RS_Block *block) -> void {
+    if (block == nullptr || resolvedBlocks.find(block) != resolvedBlocks.end())
+      return;
+    if (!resolvingBlocks.insert(block).second)
+      return; // RS_Insert::update() will reject the reference cycle.
+    for (RS_Entity *entity : *block) {
+      if (entity == nullptr || entity->rtti() != RS2::EntityInsert)
+        continue;
+      self(self, static_cast<RS_Insert *>(entity)->getBlockForInsert());
+    }
+    block->updateInserts();
+    resolvingBlocks.erase(block);
+    resolvedBlocks.insert(block);
+  };
+  for (unsigned i = 0; i < graphic.countBlocks(); ++i)
+    updateBlockInserts(updateBlockInserts, graphic.blockAt(i));
+  graphic.updateInserts();
+}
+
 } // namespace
 
 /**
@@ -3908,6 +4298,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
   m_mlineStyleCache.clear();
   m_underlayDefMap.clear();
   m_xrefBlockNames.clear();
+  m_pendingDimStyleArrowRefs.clear();
 
 #ifdef DWGSUPPORT
   if (type == RS2::FormatDWG || type == RS2::FormatDWG2004 ||
@@ -3938,6 +4329,8 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
     // Persist the source version on the document so the export filter can
     // gate raw-replay (emit + CLASSES registration) on source==target.
     m_graphic->dwgAdvancedMetadata().setSourceDwgVersion(m_dwgVersion);
+    // Save writes the drawing back in the version it was read in, if it can
+    m_graphic->setFormatType(formatForDwgVersion(m_dwgVersion));
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file: OK");
     RS_DIALOGFACTORY->commandMessage(
         QObject::tr("Opened DWG file version %1.")
@@ -3952,6 +4345,24 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
               .arg(parseFailures)
               .arg(parseFailures == 1 ? QObject::tr("entity")
                                       : QObject::tr("entities")));
+    }
+    // A drawing that keeps the entries or the leftovers of erased block
+    // records is readable, but it is not a clean one: say so, rather than
+    // leaving the user to wonder why the entity count above is not zero.
+    const size_t danglingBlockRecords = dwgr.getDanglingBlockRecords();
+    if (danglingBlockRecords > 0) {
+      RS_DIALOGFACTORY->commandMessage(
+          QObject::tr("DWG load: the block table lists %n block record(s) "
+                      "that the file does not contain (erased). They were "
+                      "skipped.",
+                      "", static_cast<int>(danglingBlockRecords)));
+    }
+    const size_t orphanedEntities = dwgr.getOrphanedEntities();
+    if (orphanedEntities > 0) {
+      RS_DIALOGFACTORY->commandMessage(
+          QObject::tr("DWG load: %n entity(ies) belonged to block records "
+                      "that no longer exist (erased) and were skipped.",
+                      "", static_cast<int>(orphanedEntities)));
     }
     // Vendor-extension custom classes (AutoCAD Mechanical AmgStdPart aka
     // STDPART2D, AcmBomRow, etc.) whose proprietary geometry libdxfrw
@@ -4021,13 +4432,22 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
       RS_DEBUG->print(RS_Debug::D_WARNING, "Cannot open DWG file '%s'.",
                       (const char *)QFile::encodeName(file));
       m_errorCode = dwgr.getError();
+      updateImportedInserts(*m_graphic);
       return false;
     }
-    m_graphic->dwgAdvancedMetadata().markVportsImportedFromDwg();
+    m_graphic->dwgAdvancedMetadata().markVportsImported();
   } else {
 #endif
 
+    // A caller may explicitly accept a partial import via RS_FileIO's error
+    // callback. Protect the original before parsing, not only on full success.
+    if (m_dxfTextEncoding == RS2::DxfTextEncoding::LegacyLibreCadUtf8)
+      m_graphic->setDxfRecoverySourceFile(QFileInfo(file).absoluteFilePath());
     m_dxfR = new dxfRW(QFile::encodeName(file));
+    m_dxfR->setDxfTextEncoding(
+        m_dxfTextEncoding == RS2::DxfTextEncoding::LegacyLibreCadUtf8
+            ? DRW::DxfTextEncoding::LegacyLibreCadUtf8
+            : DRW::DxfTextEncoding::Declared);
 
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file");
     if (RS_Debug::D_DEBUGGING == RS_DEBUG->getLevel()) {
@@ -4049,7 +4469,15 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file: OK");
     if (success) {
       std::cout << "DXF file version: "
-                << printDwgVersion(m_dxfR->getVersion()).toStdString() << "\n";
+                << printDwgVersion(m_dxfR->getSourceVersion()).toStdString() << "\n";
+      // Save writes the drawing back in the version it was read in, if it can
+      m_graphic->setFormatType(formatForDxfVersion(m_dxfR->getSourceVersion()));
+      // The whole file, so every TABLES entry including BLOCK_RECORD, has now
+      // been read while m_dxfR (and its reading context) is still alive.
+      resolvePendingDimStyleArrowBlocks();
+      // The VPORT records are the file's own, as those of a DWG are. The DWG
+      // writer refuses an "*Active" record that no reader delivered.
+      m_graphic->dwgAdvancedMetadata().markVportsImported();
     }
     // graphic->setAutoUpdateBorders(true);
 
@@ -4058,6 +4486,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
                       (const char *)QFile::encodeName(file));
       m_errorCode = m_dxfR->getError();
       delete m_dxfR;
+      updateImportedInserts(*m_graphic);
       return false;
     } else {
       delete m_dxfR;
@@ -4074,29 +4503,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
   }
   RS_DEBUG->print("RS_FilterDXFRW::fileImport: updating inserts");
   const auto updateInsertsStart = std::chrono::steady_clock::now();
-
-  // BLOCK_CONTROL order is not a dependency order. Resolve definition-owned
-  // INSERTs first, from their referenced blocks outward, so model-space
-  // INSERT expansion never snapshots an unresolved nested definition.
-  std::set<RS_Block *> resolvedBlocks;
-  std::set<RS_Block *> resolvingBlocks;
-  const auto updateBlockInserts = [&](auto &&self, RS_Block *block) -> void {
-    if (block == nullptr || resolvedBlocks.find(block) != resolvedBlocks.end())
-      return;
-    if (!resolvingBlocks.insert(block).second)
-      return; // RS_Insert::update() will reject the reference cycle.
-    for (RS_Entity *entity : *block) {
-      if (entity == nullptr || entity->rtti() != RS2::EntityInsert)
-        continue;
-      self(self, static_cast<RS_Insert *>(entity)->getBlockForInsert());
-    }
-    block->updateInserts();
-    resolvingBlocks.erase(block);
-    resolvedBlocks.insert(block);
-  };
-  for (unsigned i = 0; i < m_graphic->countBlocks(); ++i)
-    updateBlockInserts(updateBlockInserts, m_graphic->blockAt(i));
-  m_graphic->updateInserts();
+  updateImportedInserts(*m_graphic);
   if (std::getenv("LC_IMPORT_BENCH") != nullptr) {
     const auto updateInsertsMs =
         std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -4253,8 +4660,14 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
 }
 
 void RS_FilterDXFRW::addLType(const DRW_LType &data) {
-  if (m_graphic != nullptr)
-    m_graphic->dwgAdvancedMetadata().addLineTypeName(data);
+  if (m_graphic == nullptr || data.name.empty())
+    return;
+  m_graphic->dwgAdvancedMetadata().addLineTypeName(data);
+  auto *entry = new LC_LineType(QString::fromUtf8(data.name.c_str()));
+  entry->description = QString::fromUtf8(data.desc.c_str());
+  entry->pattern = data.path;
+  entry->hasImportedRecord = true;
+  m_graphic->addLineType(entry);
 }
 
 void RS_FilterDXFRW::addTextStyle(const DRW_Textstyle &data) {
@@ -4501,6 +4914,9 @@ void RS_FilterDXFRW::addBlock(const DRW_Block &data) {
     } else {
       m_blockHash.insert(data.parentHandle, m_dummyContainer);
     }
+    // Layouts name these block records; a save must find them by name.
+    m_graphic->dwgAdvancedMetadata().addSpaceBlockRecord(
+        static_cast<std::uint32_t>(data.parentHandle), data.name);
   }
 }
 
@@ -4623,8 +5039,32 @@ bool RS_FilterDXFRW::embedXref(RS_Block *block, const QString &xrefPath,
     }
   }
 
-  // Per-entity clone helper: clone @p src, redirect layer pointer to the
-  // host's namespaced layer, and (if it's an INSERT) rewrite its block
+  // Points @p entity and its children at the host's namespaced copies of
+  // the XREF's layers. This reads the raw layer pointer: once an entity is
+  // parented into the host, getLayer() only answers layers of the host's
+  // own list, so it would report none for the XREF's layers and leave them
+  // in place. No pointer to an XREF layer may survive: they are freed with
+  // `ext` when this function returns.
+  std::function<void(RS_Entity *)> redirectLayers = [&](RS_Entity *entity) {
+    RS_Layer *extLyr = entity->getLayer(false);
+    if (extLyr != nullptr) {
+      RS_Layer *hostLyr = nullptr;
+      if (hostLayers && extLayers && extLayers->contains(extLyr)) {
+        hostLyr = hostLayers->find(blockName + "|" + extLyr->getName());
+      }
+      entity->setLayer(hostLyr);
+    }
+    if (entity->isContainer() &&
+        static_cast<RS_EntityContainer *>(entity)->isOwner()) {
+      for (RS_Entity *child : *static_cast<RS_EntityContainer *>(entity)) {
+        if (child != nullptr)
+          redirectLayers(child);
+      }
+    }
+  };
+
+  // Per-entity clone helper: clone @p src, redirect its layer pointers to
+  // the host's namespaced layers, and (if it's an INSERT) rewrite its block
   // name reference to the namespaced form. Returns the cloned entity
   // owned by no parent yet; caller adds it to the target container.
   auto cloneAndRedirect = [&](const RS_Entity *src,
@@ -4635,12 +5075,7 @@ bool RS_FilterDXFRW::embedXref(RS_Block *block, const QString &xrefPath,
     if (!cloned)
       return nullptr;
     cloned->setParent(target);
-    if (hostLayers && cloned->getLayer()) {
-      const QString lyrNs = blockName + "|" + cloned->getLayer()->getName();
-      if (auto *hostLyr = hostLayers->find(lyrNs)) {
-        cloned->setLayer(hostLyr);
-      }
-    }
+    redirectLayers(cloned);
     if (cloned->rtti() == RS2::EntityInsert) {
       auto *ins = static_cast<RS_Insert *>(cloned);
       const QString ref = ins->getName();
@@ -4775,14 +5210,16 @@ constexpr const char *kTraceMarker = "LibreCAD_TRACE";
 constexpr const char *kSolidMarker = "LibreCAD_SOLID";
 constexpr const char *k3dFaceMarker = "LibreCAD_3DFACE";
 // RS_Insert expands its block into derived children and therefore cannot own
-// imported ATTRIB entities directly. Keep the rendered child tagged with its
-// INSERT identity so the writer can rebuild the native child sequence.
+// imported ATTRIB entities directly. The rendered sibling text names its
+// INSERT by lineage (RS_Entity::ownerLineage()) and is tagged with what a
+// text does not model, so the writer can rebuild the native child sequence.
 constexpr const char *kInsertAttribMarker = "LibreCAD_INSERT_ATTRIB";
 constexpr const char *kInsertAttribMTextMarker = "LibreCAD_INSERT_ATTRIB_MTEXT";
 constexpr const char *kInsertAttribMTextXDataMarker =
     "LibreCAD_INSERT_ATTRIB_MTEXT_XDATA";
 constexpr const char *kInsertAttribMTextCommonMarker =
     "LibreCAD_INSERT_ATTRIB_MTEXT_COMMON";
+constexpr int kInsertAttribMTextSchema = 3;
 constexpr int kInsertAttribMTextXDataSchema = 1;
 constexpr int kInsertAttribMTextCommonSchema = 2;
 constexpr int kMaxInsertAttribMTextXDataValues = 4096;
@@ -5122,28 +5559,34 @@ void appendTypeSidecar(RS_Entity *entity, const char *marker,
                        std::vector<std::shared_ptr<DRW_Variant>> payload);
 
 struct InsertAttribSidecar {
-  unsigned long long ownerId = 0;
   int ordinal = -1;
   int flags = 0;
   int fieldLength = 0;
   int attVersion = 0;
   int attributeType = 1;
   bool lockPosition = false;
+  int textgen = 0; // ATTRIB group 71, generation flags
+  int alignH = 0;  // ATTRIB group 72 as read
+  int alignV = 0;  // ATTRIB group 74 as read
+  bool recordVisible = true; // common group 60 of the ATTRIB as read
   std::string tag;
-  std::string value;
-  bool hasValue = false;
+  std::string value; // ATTRIB group 1 as read, in the file's own spelling
   struct MText {
-    int schemaVersion = 0;
     std::string text;
-    bool hasText = false;
     int textgen = 1;
     int alignH = 1;
-    int alignV = 1;
     int linespacingStyle = 1;
     double interlin = 1.0;
+    double originalHeight = 0.0;
+    double originalWidth = 0.0;
+    double originalAngle = 0.0;
+    double originalSpacing = 1.0;
+    DRW_Coord originalPosition;
+    std::string originalStyle;
     int backgroundFlags = 0;
     double backgroundScale = 0.0;
     int backgroundColor = 0;
+    int backgroundTrueColor = -1; // group 421; -1: none
     int backgroundTransparency = 0;
     bool r2018IsNotAnnotative = false;
     int r2018Version = 0;
@@ -5194,19 +5637,13 @@ struct InsertAttribSidecar {
     DRW_Coord basePoint;
     DRW_Coord secPoint;
     DRW_Coord extPoint{0.0, 0.0, 1.0};
-    bool hasBasePoint = false;
-    bool hasSecPoint = false;
-    bool hasExtPoint = false;
   } mtext;
   bool hasMText = false;
-  DRW_Coord basePoint;
-  DRW_Coord secPoint;
+  DRW_Coord basePoint; // ATTRIB group 10, OCS
+  DRW_Coord secPoint;  // ATTRIB group 11, OCS
   DRW_Coord extPoint{0.0, 0.0, 1.0};
   double thickness = 0.0;
-  bool hasBasePoint = false;
-  bool hasSecPoint = false;
-  bool hasExtPoint = false;
-  bool hasThickness = false;
+  double widthFactor = 1.0; // ATTRIB group 41
 };
 } // namespace
 
@@ -5307,13 +5744,8 @@ void appendTypeSidecar(RS_Entity *entity, const char *marker,
 }
 
 void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
-                               unsigned long long ownerId, int ordinal) {
-  const std::uint64_t id = static_cast<std::uint64_t>(ownerId);
+                               int ordinal) {
   std::vector<std::shared_ptr<DRW_Variant>> payload;
-  payload.push_back(std::make_shared<DRW_Variant>(
-      1071, static_cast<std::int32_t>(id & 0xFFFFFFFFu)));
-  payload.push_back(
-      std::make_shared<DRW_Variant>(1071, static_cast<std::int32_t>(id >> 32)));
   payload.push_back(std::make_shared<DRW_Variant>(1070, std::int32_t{ordinal}));
   payload.push_back(
       std::make_shared<DRW_Variant>(1070, std::int32_t{attrib.attribFlags}));
@@ -5325,6 +5757,17 @@ void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
       1070, std::int32_t{attrib.m_attributeType}));
   payload.push_back(std::make_shared<DRW_Variant>(
       1070, std::int32_t{attrib.lockPosition ? 1 : 0}));
+  // The TEXT part of the record that the text entity does not model.
+  payload.push_back(std::make_shared<DRW_Variant>(
+      1070, static_cast<std::int32_t>(attrib.textgen)));
+  payload.push_back(std::make_shared<DRW_Variant>(
+      1070, static_cast<std::int32_t>(attrib.alignH)));
+  payload.push_back(std::make_shared<DRW_Variant>(
+      1070, static_cast<std::int32_t>(attrib.alignV)));
+  // The record's own visibility: the text is hidden for the attribute's
+  // invisible flag as well, and the two are not one in a file.
+  payload.push_back(std::make_shared<DRW_Variant>(
+      1070, std::int32_t{attrib.visible ? 1 : 0}));
   payload.push_back(
       std::make_shared<DRW_Variant>(1000, std::string{attrib.tag}));
   payload.push_back(
@@ -5333,6 +5776,11 @@ void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
   payload.push_back(std::make_shared<DRW_Variant>(1011, attrib.secPoint));
   payload.push_back(std::make_shared<DRW_Variant>(1012, attrib.extPoint));
   payload.push_back(std::make_shared<DRW_Variant>(1040, attrib.thickness));
+  // A value that is no number would make the reader drop the attribute.
+  payload.push_back(std::make_shared<DRW_Variant>(
+      1040, std::isfinite(attrib.widthscale) && attrib.widthscale > 0.0
+                ? attrib.widthscale
+                : 1.0));
   appendTypeSidecar(entity, kInsertAttribMarker, std::move(payload));
 
   if (!attrib.mtext)
@@ -5346,8 +5794,9 @@ void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
     return;
   }
   std::vector<std::shared_ptr<DRW_Variant>> mtextPayload;
-  // Schema 2 adds the embedded-MTEXT annotative payload and lock bit.
-  mtextPayload.push_back(std::make_shared<DRW_Variant>(1070, 2));
+  // The group also retains modeled geometry for detecting edits at export.
+  mtextPayload.push_back(
+      std::make_shared<DRW_Variant>(1070, kInsertAttribMTextSchema));
   const std::size_t maxChunkBytes = 240;
   const std::size_t chunkCount =
       mtext.text.empty()
@@ -5359,8 +5808,6 @@ void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
       1070, static_cast<std::int32_t>(mtext.textgen)));
   mtextPayload.push_back(std::make_shared<DRW_Variant>(
       1070, static_cast<std::int32_t>(mtext.alignH)));
-  mtextPayload.push_back(std::make_shared<DRW_Variant>(
-      1070, static_cast<std::int32_t>(mtext.alignV)));
   mtextPayload.push_back(std::make_shared<DRW_Variant>(
       1070, static_cast<std::int32_t>(mtext.linespacingStyle)));
   mtextPayload.push_back(std::make_shared<DRW_Variant>(
@@ -5400,6 +5847,12 @@ void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
       1071, static_cast<std::int32_t>(mtext.styleH.ref)));
   mtextPayload.push_back(std::make_shared<DRW_Variant>(
       1071, static_cast<std::int32_t>(mtext.m_r2018AnnotativeAppHandle)));
+  // The true colour of the background, only where there is one: the reader
+  // of this group takes no negative number.
+  if (mtext.m_backgroundTrueColor >= 0) {
+    mtextPayload.push_back(std::make_shared<DRW_Variant>(
+        1071, static_cast<std::int32_t>(mtext.m_backgroundTrueColor)));
+  }
   mtextPayload.push_back(std::make_shared<DRW_Variant>(1040, mtext.interlin));
   mtextPayload.push_back(
       std::make_shared<DRW_Variant>(1040, mtext.m_backgroundScale));
@@ -5415,6 +5868,12 @@ void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
       std::make_shared<DRW_Variant>(1040, mtext.m_r2018ColumnWidth));
   mtextPayload.push_back(
       std::make_shared<DRW_Variant>(1040, mtext.m_r2018ColumnGutter));
+  const auto modeled = static_cast<const RS_MText *>(entity)->getData();
+  mtextPayload.push_back(std::make_shared<DRW_Variant>(1040, modeled.height));
+  mtextPayload.push_back(std::make_shared<DRW_Variant>(1040, modeled.width));
+  mtextPayload.push_back(std::make_shared<DRW_Variant>(1040, modeled.angle));
+  mtextPayload.push_back(
+      std::make_shared<DRW_Variant>(1040, modeled.lineSpacingFactor));
   for (double height : mtext.m_r2018ColumnHeights)
     mtextPayload.push_back(std::make_shared<DRW_Variant>(1040, height));
   for (std::uint8_t byte : mtext.m_r2018AnnotativeData)
@@ -5427,6 +5886,10 @@ void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
       std::make_shared<DRW_Variant>(1010, mtext.m_r2018XAxisDir));
   mtextPayload.push_back(
       std::make_shared<DRW_Variant>(1011, mtext.m_r2018InsertionPoint));
+  mtextPayload.push_back(std::make_shared<DRW_Variant>(
+      1010, DRW_Coord(modeled.insertionPoint.x, modeled.insertionPoint.y, 0.0)));
+  mtextPayload.push_back(std::make_shared<DRW_Variant>(
+      1000, modeled.style.toUtf8().toStdString()));
   for (std::size_t offset = 0; offset < mtext.text.size();) {
     std::size_t length = std::min(maxChunkBytes, mtext.text.size() - offset);
     while (length > 0 && offset + length < mtext.text.size() &&
@@ -5756,7 +6219,7 @@ bool decodeInsertAttribMTextCommon(
   int hasDataStorage = 0;
   int reactorCount = 0;
   if (!nextInteger(index, 1070, schema) ||
-      (schema != 1 && schema != kInsertAttribMTextCommonSchema) ||
+      schema != kInsertAttribMTextCommonSchema ||
       !nextInteger(index, 1070, hasDataStorage) ||
       (hasDataStorage != 0 && hasDataStorage != 1) ||
       !nextInteger(index, 1070, reactorCount) || reactorCount < 0 ||
@@ -5775,8 +6238,6 @@ bool decodeInsertAttribMTextCommon(
   }
   if (!nextHandle(index, decoded.xDictHandle))
     return false;
-  if (schema == 1)
-    return index == encoded.size();
 
   int hasAcDbColor = 0;
   int visible = 0;
@@ -5828,19 +6289,20 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
   bool inGroup = false;
   bool inMTextGroup = false;
   bool inMTextCommonGroup = false;
-  int seenOwnerParts = 0;
   int seenValues = 0;
   int seenStrings = 0;
+  int seenPoints = 0;
+  int seenDoubles = 0;
+  int mtextSchema = 0;
   int seenMText1070 = 0;
   int seenMText1071 = 0;
   int seenMText1040 = 0;
   int seenMText1010 = 0;
+  int seenMTextStrings = 0;
   std::vector<std::shared_ptr<DRW_Variant>> encodedMTextXData;
   int expectedColumnHeights = -1;
   int expectedAnnotativeBytes = -1;
   int seenAnnotativeBytes = 0;
-  std::uint32_t ownerLow = 0;
-  std::uint32_t ownerHigh = 0;
   bool foundMarker = false;
   bool foundMTextMarker = false;
   bool foundMTextXDataMarker = false;
@@ -5889,10 +6351,11 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
         const int number = static_cast<int>(integerValue);
         switch (seenMText1070++) {
         case 0:
-          sidecar.mtext.schemaVersion = number;
+          mtextSchema = number;
           break;
         case 1:
-          sidecar.mtext.hasText = number > 0;
+          // The number of text chunks: the chunks are the strings after the
+          // first one.
           break;
         case 2:
           sidecar.mtext.textgen = number;
@@ -5901,49 +6364,46 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
           sidecar.mtext.alignH = number;
           break;
         case 4:
-          sidecar.mtext.alignV = number;
-          break;
-        case 5:
           sidecar.mtext.linespacingStyle = number;
           break;
-        case 6:
+        case 5:
           sidecar.mtext.backgroundFlags = number;
           break;
-        case 7:
+        case 6:
           sidecar.mtext.r2018IsNotAnnotative = number != 0;
           break;
-        case 8:
+        case 7:
           sidecar.mtext.r2018Version = number;
           break;
-        case 9:
+        case 8:
           sidecar.mtext.r2018DefaultFlag = number != 0;
           break;
-        case 10:
+        case 9:
           sidecar.mtext.r2018Attachment = number;
           break;
-        case 11:
+        case 10:
           sidecar.mtext.r2018ColumnType = number;
           break;
-        case 12:
+        case 11:
           sidecar.mtext.r2018ColumnAutoHeight = number != 0;
           break;
-        case 13:
+        case 12:
           sidecar.mtext.r2018ColumnFlowReversed = number != 0;
           break;
-        case 14:
+        case 13:
           expectedColumnHeights = number;
           if (number >= 0 && number <= 10000) {
             sidecar.mtext.r2018ColumnHeights.reserve(
                 static_cast<std::size_t>(number));
           }
           break;
-        case 15:
+        case 14:
           expectedAnnotativeBytes = number;
           break;
-        case 16:
+        case 15:
           sidecar.mtext.annotativeUnknown = number;
           break;
-        case 17:
+        case 16:
           sidecar.mtext.reallyLocked = number != 0;
           break;
         default:
@@ -5985,6 +6445,9 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
         case 5:
           sidecar.mtext.annotativeAppHandle = number;
           break;
+        case 6:
+          sidecar.mtext.backgroundTrueColor = static_cast<int>(number);
+          break;
         default:
           break;
         }
@@ -6019,6 +6482,18 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
         case 7:
           sidecar.mtext.r2018ColumnGutter = number;
           break;
+        case 8:
+          sidecar.mtext.originalHeight = number;
+          break;
+        case 9:
+          sidecar.mtext.originalWidth = number;
+          break;
+        case 10:
+          sidecar.mtext.originalAngle = number;
+          break;
+        case 11:
+          sidecar.mtext.originalSpacing = number;
+          break;
         default:
           sidecar.mtext.r2018ColumnHeights.push_back(number);
           break;
@@ -6033,21 +6508,21 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
         switch (seenMText1010++) {
         case 0:
           sidecar.mtext.basePoint = point;
-          sidecar.mtext.hasBasePoint = true;
           break;
         case 1:
           sidecar.mtext.secPoint = point;
-          sidecar.mtext.hasSecPoint = true;
           break;
         case 2:
           sidecar.mtext.extPoint = point;
-          sidecar.mtext.hasExtPoint = true;
           break;
         case 3:
           sidecar.mtext.r2018XAxisDir = point;
           break;
         case 4:
           sidecar.mtext.r2018InsertionPoint = point;
+          break;
+        case 5:
+          sidecar.mtext.originalPosition = point;
           break;
         default:
           break;
@@ -6058,29 +6533,16 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
             XDataReadResult::Valid) {
           return std::nullopt;
         }
-        sidecar.mtext.text += text;
+        if (seenMTextStrings++ == 0)
+          sidecar.mtext.originalStyle = text;
+        else
+          sidecar.mtext.text += text;
       }
-      sidecar.hasMText =
-          sidecar.mtext.schemaVersion == 1 || sidecar.mtext.schemaVersion == 2;
       continue;
     }
     if (!inGroup)
       continue;
-    if (value->code() == 1071) {
-      std::int64_t integerValue = 0;
-      if (readXDataInteger(value.get(), 1071, integerValue) !=
-              XDataReadResult::Valid ||
-          integerValue < 0 ||
-          static_cast<std::uint64_t>(integerValue) >
-              std::numeric_limits<std::uint32_t>::max()) {
-        return std::nullopt;
-      }
-      const auto part = static_cast<std::uint32_t>(integerValue);
-      if (seenOwnerParts++ == 0)
-        ownerLow = part;
-      else if (seenOwnerParts == 2)
-        ownerHigh = part;
-    } else if (value->code() == 1070) {
+    if (value->code() == 1070) {
       std::int64_t integerValue = 0;
       if (readXDataInteger(value.get(), 1070, integerValue, false) !=
               XDataReadResult::Valid ||
@@ -6107,6 +6569,18 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
       case 5:
         sidecar.lockPosition = number != 0;
         break;
+      case 6:
+        sidecar.textgen = number;
+        break;
+      case 7:
+        sidecar.alignH = number;
+        break;
+      case 8:
+        sidecar.alignV = number;
+        break;
+      case 9:
+        sidecar.recordVisible = number != 0;
+        break;
       default:
         break;
       }
@@ -6117,10 +6591,8 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
       }
       if (seenStrings++ == 0)
         sidecar.tag = text;
-      else if (seenStrings == 2) {
+      else if (seenStrings == 2)
         sidecar.value = text;
-        sidecar.hasValue = true;
-      }
     } else if (value->code() >= 1010 && value->code() <= 1012) {
       DRW_Coord point;
       if (readXDataCoord(value.get(), value->code(), point) !=
@@ -6129,39 +6601,36 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
       }
       if (value->code() == 1010) {
         sidecar.basePoint = point;
-        sidecar.hasBasePoint = true;
+        seenPoints |= 1;
       } else if (value->code() == 1011) {
         sidecar.secPoint = point;
-        sidecar.hasSecPoint = true;
+        seenPoints |= 2;
       } else {
         sidecar.extPoint = point;
-        sidecar.hasExtPoint = true;
+        seenPoints |= 4;
       }
     } else if (value->code() == 1040) {
-      double thickness = 0.0;
-      if (readXDataDouble(value.get(), 1040, thickness) !=
+      double number = 0.0;
+      if (readXDataDouble(value.get(), 1040, number) !=
           XDataReadResult::Valid) {
         return std::nullopt;
       }
-      sidecar.thickness = thickness;
-      sidecar.hasThickness = true;
+      if (seenDoubles++ == 0)
+        sidecar.thickness = number;
+      else if (seenDoubles == 2)
+        sidecar.widthFactor = number;
     }
   }
 
-  sidecar.ownerId =
-      (static_cast<unsigned long long>(ownerHigh) << 32) | ownerLow;
-  if (sidecar.hasMText) {
-    sidecar.hasMText =
-        expectedColumnHeights >= 0 &&
-        static_cast<int>(sidecar.mtext.r2018ColumnHeights.size()) ==
-            expectedColumnHeights;
-    if (sidecar.mtext.schemaVersion >= 2) {
-      sidecar.hasMText =
-          sidecar.hasMText && expectedAnnotativeBytes >= 0 &&
-          static_cast<int>(sidecar.mtext.annotativeData.size()) ==
-              expectedAnnotativeBytes;
-    }
-  }
+  sidecar.hasMText =
+      foundMTextMarker && mtextSchema == kInsertAttribMTextSchema &&
+      expectedColumnHeights >= 0 &&
+      static_cast<int>(sidecar.mtext.r2018ColumnHeights.size()) ==
+          expectedColumnHeights &&
+      expectedAnnotativeBytes >= 0 &&
+      static_cast<int>(sidecar.mtext.annotativeData.size()) ==
+          expectedAnnotativeBytes &&
+      seenMText1040 >= 12 && seenMText1010 >= 6 && seenMTextStrings > 0;
   if (foundMTextMarker && !sidecar.hasMText)
     return std::nullopt;
   if (foundMTextXDataMarker &&
@@ -6170,11 +6639,21 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
   if (foundMTextCommonMarker &&
       !decodeInsertAttribMTextCommon(encodedMTextCommon, sidecar.mtext))
     return std::nullopt;
-  if (!foundMarker || seenOwnerParts != 2 || sidecar.ownerId == 0 ||
-      sidecar.ordinal < 0) {
+  // Every value of the main group is always written: one that is missing
+  // makes the sidecar unusable.
+  if (!foundMarker || sidecar.ordinal < 0 || seenValues < 10 ||
+      seenStrings < 2 || seenPoints != 7 || seenDoubles < 2) {
     return std::nullopt;
   }
   return sidecar;
+}
+
+// The names under which a text keeps what it was read with as a block
+// attribute.
+bool isInsertAttribSidecarMarker(const std::string &marker) {
+  return marker == kInsertAttribMarker || marker == kInsertAttribMTextMarker ||
+         marker == kInsertAttribMTextXDataMarker ||
+         marker == kInsertAttribMTextCommonMarker;
 }
 
 void removeInsertAttribSidecar(DRW_Entity &entity) {
@@ -6183,11 +6662,7 @@ void removeInsertAttribSidecar(DRW_Entity &entity) {
   for (const auto &value : entity.extData) {
     if (value && value->code() == 1001 &&
         value->type() == DRW_Variant::STRING && value->content.s != nullptr) {
-      const std::string marker = value->c_str();
-      inGroup = marker == kInsertAttribMarker ||
-                marker == kInsertAttribMTextMarker ||
-                marker == kInsertAttribMTextXDataMarker ||
-                marker == kInsertAttribMTextCommonMarker;
+      inGroup = isInsertAttribSidecarMarker(value->c_str());
       if (inGroup)
         continue;
     }
@@ -6197,18 +6672,220 @@ void removeInsertAttribSidecar(DRW_Entity &entity) {
   entity.extData = std::move(filtered);
 }
 
-bool isGeneratedInsertAttrib(const RS_Entity *entity) {
-  if (entity == nullptr || !entity->hasDrwExtData())
-    return false;
-  for (const auto &value : entity->getDrwExtData()) {
-    if (!value || value->code() != 1001 ||
-        value->type() != DRW_Variant::STRING || value->content.s == nullptr)
-      continue;
-    const std::string marker = value->c_str();
-    if (marker == kInsertAttribMarker || marker == kInsertAttribMTextMarker)
-      return true;
+// A line of an ASCII DXF file cannot hold these; a string read from a DWG can.
+bool fitsDxfLine(const std::string &value) {
+  return value.find('\r') == std::string::npos &&
+         value.find('\n') == std::string::npos &&
+         value.find('\0') == std::string::npos;
+}
+
+// From the alignment point of a single-line text to its baseline left point,
+// before rotation, when nothing of the text is drawn: the vertical offsets
+// RS_Text::update() uses for a capital letter, and no width.
+RS_Vector emptyTextFirstPointOffset(RS_TextData::VAlign valign,
+                                    RS_TextData::HAlign halign, double height) {
+  if (halign == RS_TextData::HAAligned || halign == RS_TextData::HAFit)
+    return RS_Vector(0.0, 0.0);
+  if (halign == RS_TextData::HAMiddle)
+    return RS_Vector(0.0, -height / 2.0);
+  switch (valign) {
+  case RS_TextData::VATop:
+    return RS_Vector(0.0, -height);
+  case RS_TextData::VAMiddle:
+    return RS_Vector(0.0, -height / 2.0);
+  case RS_TextData::VABottom:
+    return RS_Vector(0.0, height / 3.0);
+  case RS_TextData::VABaseline:
+  default:
+    return RS_Vector(0.0, 0.0);
   }
-  return false;
+}
+
+// Points and justification of a single-line ATTRIB: group 10 the baseline
+// left point, group 11 the point the text is aligned to. RS_Text keeps the
+// aligned point as its insertion point and, once laid out, the baseline left
+// point as its second point; an aligned or fitted text has its two ends there.
+// A text without a glyph has no borders, and its second point is not usable.
+void setSingleLineAttribPlacement(DRW_Attrib &attrib, const RS_Text &text) {
+  const RS_TextData::HAlign halign = text.getHAlign();
+  const RS_TextData::VAlign valign = text.getVAlign();
+  attrib.alignH = static_cast<DRW_Text::HAlign>(static_cast<int>(halign));
+  attrib.alignV = static_cast<DRW_Text::VAlign>(static_cast<int>(valign));
+  const RS_Vector insertion = text.getInsertionPoint();
+  RS_Vector first = insertion;
+  RS_Vector alignment = insertion;
+  if (halign == RS_TextData::HAAligned || halign == RS_TextData::HAFit) {
+    alignment = text.getSecondPoint();
+  } else if (halign != RS_TextData::HALeft ||
+             valign != RS_TextData::VABaseline) {
+    const RS_Vector second = text.getSecondPoint();
+    if (text.count() > 0 && second.valid && std::isfinite(second.x) &&
+        std::isfinite(second.y)) {
+      first = second;
+    } else {
+      RS_Vector offset =
+          emptyTextFirstPointOffset(valign, halign, text.getHeight());
+      offset.rotate(text.getAngle());
+      first = insertion + offset;
+    }
+  }
+  attrib.basePoint.x = first.x;
+  attrib.basePoint.y = first.y;
+  attrib.secPoint.x = alignment.x;
+  attrib.secPoint.y = alignment.y;
+}
+
+// Axes of the object coordinate system of an extrusion direction: the
+// arbitrary axis algorithm, with the limits of DRW_Entity::calculateAxis().
+struct OcsAxes {
+  DRW_Coord x{1.0, 0.0, 0.0};
+  DRW_Coord y{0.0, 1.0, 0.0};
+  DRW_Coord z{0.0, 0.0, 1.0};
+  bool world = true;
+};
+
+OcsAxes ocsAxes(DRW_Coord normal) {
+  OcsAxes axes;
+  if (!std::isfinite(normal.x) || !std::isfinite(normal.y) ||
+      !std::isfinite(normal.z))
+    return axes;
+  normal.unitize();
+  if (normal.x == 0.0 && normal.y == 0.0 && normal.z >= 0.0)
+    return axes; // +Z, or no direction at all
+  axes.world = false;
+  axes.z = normal;
+  if (std::fabs(normal.x) < 0.015625 && std::fabs(normal.y) < 0.015625)
+    axes.x = DRW_Coord(normal.z, 0.0, -normal.x);
+  else
+    axes.x = DRW_Coord(-normal.y, normal.x, 0.0);
+  axes.x.unitize();
+  axes.y = DRW_Coord(normal.y * axes.x.z - normal.z * axes.x.y,
+                     normal.z * axes.x.x - normal.x * axes.x.z,
+                     normal.x * axes.x.y - normal.y * axes.x.x);
+  axes.y.unitize();
+  return axes;
+}
+
+// A WCS point in that system; the inverse of DRW_Entity::extrudePoint().
+DRW_Coord wcsToOcs(const OcsAxes &axes, const DRW_Coord &point) {
+  if (axes.world)
+    return point;
+  return DRW_Coord(
+      point.x * axes.x.x + point.y * axes.x.y + point.z * axes.x.z,
+      point.x * axes.y.x + point.y * axes.y.y + point.z * axes.y.z,
+      point.x * axes.z.x + point.y * axes.z.y + point.z * axes.z.z);
+}
+
+bool sameXY(const DRW_Coord &a, const DRW_Coord &b) {
+  const double tolerance =
+      1.0e-9 * std::max({1.0, std::fabs(a.x), std::fabs(a.y)});
+  return std::fabs(a.x - b.x) <= tolerance && std::fabs(a.y - b.y) <= tolerance;
+}
+
+// From the alignment point of a single-line text to its baseline left point,
+// before rotation, as RS_Text::update() lays the text out, the one place
+// that knows it. An empty value, one of spaces only or a missing font leaves
+// RS_Text without a glyph and without usable borders.
+RS_Vector singleLineFirstPointOffset(const QString &text, const QString &style,
+                                     double height, double widthFactor,
+                                     RS_TextData::VAlign valign,
+                                     RS_TextData::HAlign halign) {
+  const RS_Vector origin(0.0, 0.0);
+  const RS_TextData d(origin, origin, height, widthFactor, valign, halign,
+                      RS_TextData::None, text, style, 0.0, RS2::Update);
+  const RS_Text probe(nullptr, d);
+  const RS_Vector first = probe.getSecondPoint();
+  if (probe.count() == 0 || !first.valid || !std::isfinite(first.x) ||
+      !std::isfinite(first.y))
+    return emptyTextFirstPointOffset(valign, halign, height);
+  return first;
+}
+
+// The TEXT part of a multi-line ATTRIB, kept in step with the MTEXT shown in
+// its place as AutoCAD does: justification from the attachment point, group
+// 11 the MTEXT insertion point, group 10 the baseline left point. The MTEXT
+// is in WCS, the ATTRIB in its OCS. attrib.text, extPoint and widthscale
+// must be final. shownValue is attrib.text as a reader shows it: a text of
+// one line, in which "\P", "\~" and a font in braces are characters with a
+// width.
+void setMultilineAttribPlacement(DRW_Attrib &attrib, const DRW_MText &mtext,
+                                 const RS_MTextData &data,
+                                 const InsertAttribSidecar &sidecar,
+                                 bool firstPointEdited,
+                                 const QString &shownValue) {
+  const auto halign =
+      static_cast<RS_TextData::HAlign>(static_cast<int>(data.halign));
+  const auto valign =
+      static_cast<RS_TextData::VAlign>(3 - static_cast<int>(data.valign));
+  attrib.alignH = static_cast<DRW_Text::HAlign>(static_cast<int>(halign));
+  attrib.alignV = static_cast<DRW_Text::VAlign>(static_cast<int>(valign));
+  attrib.angle = mtext.angle;
+  const OcsAxes axes = ocsAxes(attrib.extPoint);
+  attrib.secPoint = wcsToOcs(axes, mtext.basePoint);
+  // The first point that was read belongs to the justification, the
+  // alignment point and the value it was read with.
+  if (!firstPointEdited &&
+      sidecar.alignH == static_cast<int>(attrib.alignH) &&
+      sidecar.alignV == static_cast<int>(attrib.alignV) &&
+      sameXY(sidecar.secPoint, attrib.secPoint) &&
+      attrib.text == sidecar.value) {
+    attrib.basePoint = sidecar.basePoint;
+    return;
+  }
+  attrib.basePoint = attrib.secPoint;
+  // Group 11 and the justification place the text. In another plane than
+  // the world's the rotation is not converted, so no offset is derived
+  // from it either.
+  if (!axes.world)
+    return;
+  RS_Vector offset =
+      singleLineFirstPointOffset(shownValue, data.style, data.height,
+                                 attrib.widthscale, valign, halign);
+  offset.rotate(data.angle);
+  attrib.basePoint.x += offset.x;
+  attrib.basePoint.y += offset.y;
+}
+
+// Group 71 of a single-line text: 2 backward, 4 upside down. RS_Text holds
+// one of them at most and is read as neither from a record that has both;
+// such a record keeps both while the text is still neither.
+int textGenerationFlags(RS_TextData::TextGeneration generation, int stored) {
+  if (generation == RS_TextData::Backward)
+    return 2;
+  if (generation == RS_TextData::UpsideDown)
+    return 4;
+  return (stored & 6) == 6 ? 6 : 0;
+}
+
+// The MTEXT embedded in an attribute names no linetype record of its own in
+// a file LibreCAD writes: only the three keywords survive.
+std::string embeddedMTextLineType(const std::string &sourceName) {
+  const std::string name = normalizeDwgTableName(sourceName);
+  if (name == "BYBLOCK" || name == "CONTINUOUS")
+    return name;
+  return "BYLAYER";
+}
+
+// A DWG R2018 MTEXT that is not annotative repeats its placement in a second
+// block (ODA 20.4.46, "redundant fields"); AutoCAD writes version 4 and the
+// default flag there. The model holds one placement, so the block is written
+// from the fields it repeats. keepsScaleData: the attribute was read from a
+// DWG whose embedded MTEXT was annotative, and its scale payload is written
+// again; only then is a clear "not annotative" bit kept. A clear bit with no
+// payload after it is no form that AutoCAD writes.
+void completeEmbeddedMTextForDwg(DRW_MText &mtext, bool keepsScaleData) {
+  if (!keepsScaleData)
+    mtext.m_r2018IsNotAnnotative = true;
+  if (!mtext.m_r2018IsNotAnnotative)
+    return;
+  if (mtext.m_r2018Version == 0) {
+    mtext.m_r2018Version = 4;
+    mtext.m_r2018DefaultFlag = true;
+  }
+  mtext.m_r2018Attachment = mtext.textgen;
+  mtext.m_r2018XAxisDir = mtext.secPoint;
+  mtext.m_r2018InsertionPoint = mtext.basePoint;
+  mtext.m_r2018RectWidth = mtext.widthscale;
 }
 } // namespace
 
@@ -6700,6 +7377,25 @@ void RS_FilterDXFRW::addVxTableRecord(const DRW_VxTableRecord &data) {
                   static_cast<int>(data.handle));
 }
 
+namespace {
+// Keep imported XDATA, replacing only the polyline metadata we regenerate.
+std::vector<std::shared_ptr<DRW_Variant>>
+polylineXDataWithoutSidecar(const RS_Entity &entity) {
+  std::vector<std::shared_ptr<DRW_Variant>> ext;
+  bool inSidecar = false;
+  for (const auto &value : entity.getDrwExtData()) {
+    if (value && value->code() == 1001) {
+      std::string marker;
+      inSidecar = readXDataMarker(value.get(), marker) == XDataReadResult::Valid &&
+                  normalizeDwgTableName(marker) == "LIBRECAD_LWPOLYLINE";
+    }
+    if (!inSidecar)
+      ext.push_back(value);
+  }
+  return ext;
+}
+} // namespace
+
 /**
  * Implementation of the method which handles lightweight polyline entities.
  */
@@ -6740,7 +7436,7 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline &data) {
   }
   if (data.width != 0.0 || data.elevation != 0.0 || data.thickness != 0.0 ||
       !defaultExtrusion || hasVertexMetadata) {
-    std::vector<std::shared_ptr<DRW_Variant>> ext;
+    auto ext = polylineXDataWithoutSidecar(*polyline);
     ext.push_back(std::make_shared<DRW_Variant>(
         1001, std::string("LibreCAD_LWPOLYLINE")));
     ext.push_back(std::make_shared<DRW_Variant>(1040, data.width));
@@ -6907,8 +7603,12 @@ void RS_FilterDXFRW::linkUnderlay(const DRW_UnderlayDefinition *d) {
 }
 
 void RS_FilterDXFRW::addShape(const DRW_Shape &data) {
-  if (m_graphic != nullptr)
-    m_graphic->dwgAdvancedMetadata().addShape(data);
+  if (m_graphic != nullptr) {
+    const auto *block = dynamic_cast<const RS_Block *>(m_currentContainer);
+    m_graphic->dwgAdvancedMetadata().addShape(
+        data, QFileInfo(m_file).absolutePath().toStdString(),
+        block != nullptr ? block->getName().toStdString() : std::string{});
+  }
   RS_DEBUG->print("RS_FilterDXFRW::addShape: index %d style %d",
                   static_cast<int>(data.m_shapeIndex),
                   static_cast<int>(data.m_shapeFileHandle));
@@ -7309,7 +8009,7 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline &data) {
   }
   if (is2dPolyline && (data.basePoint.z != 0.0 || data.thickness != 0.0 ||
                        reflectedOcs || hasVertexMetadata)) {
-    std::vector<std::shared_ptr<DRW_Variant>> ext;
+    auto ext = polylineXDataWithoutSidecar(*polyline);
     ext.push_back(std::make_shared<DRW_Variant>(
         1001, std::string("LibreCAD_LWPOLYLINE")));
     ext.push_back(std::make_shared<DRW_Variant>(1040, 0.0));
@@ -7433,23 +8133,6 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
     return;
   }
 
-  const bool isClosed = (data->flags & 0x1) == 0x1;
-
-  RS_SplineData d(data->degree, isClosed);
-  if (!data->knotslist.empty()) {
-    const double tolknot = (data->tolknot > 0.0) ? data->tolknot : 1e-7;
-    for (const double k : data->knotslist) {
-      d.knotslist.push_back(RS_Math::round(k, tolknot));
-    }
-  }
-
-  d.type = isClosed ? RS_SplineData::SplineType::Standard
-                    : RS_SplineData::SplineType::ClampedOpen;
-
-  const auto spline = new RS_Spline(m_currentContainer, d);
-  setEntityAttributes(spline, data);
-  m_currentContainer->addEntity(spline);
-
   // Control points and weights. Non-rational B-splines have no weight array
   // (weight=1.0 implied); only warn for rational splines (flag bit 2).
   size_t numCtrl = data->controllist.size();
@@ -7461,17 +8144,25 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
                     numCtrl, data->weightlist.size());
   }
 
-  for (size_t i = 0; i < numCtrl; ++i) {
-    const auto &vert = data->controllist[i];
-    const double weight =
-        (i < data->weightlist.size()) ? data->weightlist[i] : 1.0;
-    if (vert) {
-      spline->addControlPointRaw({vert->x, vert->y}, weight);
-    }
+  if (numCtrl != 0) {
+    std::unique_ptr<RS_Spline> spline =
+        makeSplineFromDrw(m_currentContainer, *data, data->weightlist);
+    setEntityAttributes(spline.get(), data);
+    m_currentContainer->addEntity(spline.release());
+    return;
   }
 
   // Fit points fallback
-  if (numCtrl == 0 && data->degree != 2) {
+  const bool isClosed = (data->flags & 0x1) == 0x1;
+  RS_SplineData d(data->degree, false);
+  d.type = isClosed ? RS_SplineData::SplineType::Standard
+                    : RS_SplineData::SplineType::ClampedOpen;
+
+  const auto spline = new RS_Spline(m_currentContainer, d);
+  setEntityAttributes(spline, data);
+  m_currentContainer->addEntity(spline);
+
+  if (data->degree != 2) {
     std::vector<RS_Vector> fitPoints;
     std::transform(data->fitlist.begin(), data->fitlist.end(),
                    std::back_inserter(fitPoints),
@@ -7532,18 +8223,25 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert &data) {
   for (const auto &att : data.attlist) {
     if (!att)
       continue;
+    const bool attributeVisible =
+        att->visible && (att->attribFlags & 0x1) == 0;
 
     // Multi-line ATTRIB (R2018+, ODA spec §20.4.4 Attribute type 2/4):
-    // libdxfrw saw the `100 / Embedded Object` DXF subclass marker on the
+    // libdxfrw saw the `101 / Embedded Object` DXF marker on the
     // ATTRIB and populated att->mtext from the embedded MTEXT body.
     // Render it as RS_MText so the multi-line content + formatting codes
     // survive; the plain `text` field is the single-line fallback.
     if (att->mtext) {
-      auto *mt = mtextEntityFromDRW(*att->mtext);
+      DRW_Attrib attribute(*att);
+      // Embedded DWG MTEXT has no EED frame; its private RTL marker is on ATTRIB.
+      if (!mtextRtlLayout(*attribute.mtext))
+        setMTextRtlMarker(*attribute.mtext, mtextRtlLayout(attribute));
+      auto *mt = mtextEntityFromDRW(*attribute.mtext);
       mt->setParent(m_currentContainer);
       setEntityAttributes(mt, att.get());
-      mt->setVisible((att->attribFlags & 0x1) == 0);
-      appendInsertAttribSidecar(mt, *att, entity->getId(), ordinal++);
+      mt->setVisible(attributeVisible && att->mtext->visible);
+      appendInsertAttribSidecar(mt, attribute, ordinal++);
+      mt->setOwnerLineage(entity->lineage());
       mt->update();
       m_currentContainer->addEntity(mt);
       continue;
@@ -7571,16 +8269,17 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert &data) {
 
     QString sty = QString::fromUtf8(att->style.c_str());
     prepareTextStyleName(sty);
-    QString text = toNativeString(QString::fromUtf8(att->text.c_str()));
+    QString text =
+        toNativeSingleLineString(QString::fromUtf8(att->text.c_str()));
 
     RS_TextData td(refPoint, secPoint, att->height, att->widthscale, valign,
                    halign, dir, text, sty, att->angle * M_PI / 180,
                    RS2::NoUpdate);
     auto textEntity = std::make_unique<RS_Text>(m_currentContainer, td);
     setEntityAttributes(textEntity.get(), att.get());
-    textEntity->setVisible((att->attribFlags & 0x1) == 0);
-    appendInsertAttribSidecar(textEntity.get(), *att, entity->getId(),
-                              ordinal++);
+    textEntity->setVisible(attributeVisible);
+    appendInsertAttribSidecar(textEntity.get(), *att, ordinal++);
+    textEntity->setOwnerLineage(entity->lineage());
     textEntity->update();
     m_currentContainer->addEntity(textEntity.release());
   }
@@ -7760,7 +8459,7 @@ void RS_FilterDXFRW::prepareTextStyleName(QString &sty) const {
  * Builds an RS_MText entity from a DRW_MText payload, applying the same
  * alignment/drawing-direction/line-spacing/legacy-correction logic that
  * addMText() uses.  Shared between addMText() (standalone MTEXT entities) and
- * addInsert() (block attributes whose `100 / Embedded Object` DXF subclass
+ * addInsert() (block attributes whose `101 / Embedded Object` DXF marker
  * produced an att->mtext payload).  Returns a freshly-constructed entity not
  * yet attached to any container; the caller is responsible for
  * setEntityAttributes() and appending.
@@ -7795,11 +8494,7 @@ RS_MText *RS_FilterDXFRW::mtextEntityFromDRW(const DRW_MText &data) {
     dir = RS_MTextData::ByStyle;
   }
 
-  if (data.alignV == 1) {
-    lss = RS_MTextData::AtLeast;
-  } else {
-    lss = RS_MTextData::Exact;
-  }
+  lss = mtextLineSpacingStyle(data);
   QString mtext = toNativeString(QString::fromUtf8(data.text.c_str()));
   QString sty = QString::fromUtf8(data.style.c_str());
   prepareTextStyleName(sty);
@@ -7834,33 +8529,13 @@ RS_MText *RS_FilterDXFRW::mtextEntityFromDRW(const DRW_MText &data) {
   // else→ByStyle), matching the DXF MTEXT group 72 spec. There is no DXF
   // value for RightToLeft; that flag round-trips via XDATA below — when
   // an MTEXT carries a "LibreCad" + 1071 marker, restore the RTL setting.
-  bool wantRTL = false;
-  for (size_t k = 0; k + 1 < data.extData.size(); ++k) {
-    const auto &appTag = data.extData[k];
-    if (!appTag || appTag->code() != 1001 ||
-        appTag->type() != DRW_Variant::STRING || appTag->content.s == nullptr ||
-        *appTag->content.s != "LibreCad")
-      continue;
-    // Walk subsequent entries until the next 1001 (next app block).
-    for (size_t j = k + 1; j < data.extData.size(); ++j) {
-      const auto &v = data.extData[j];
-      if (!v)
-        continue;
-      if (v->code() == 1001)
-        break;
-      if (v->code() == 1071 && v->type() == DRW_Variant::INTEGER &&
-          v->content.i != 0) {
-        wantRTL = true;
-      }
-    }
-    if (wantRTL)
-      break;
-  }
-  if (wantRTL)
+  const auto rtlLayout = mtextRtlLayout(data);
+  if (rtlLayout != 0)
     dir = RS_MTextData::RightToLeft;
 
   RS_MTextData d(ip, data.height, data.widthscale, valign, halign, dir, lss,
                  interlin, mtext, sty, angle, RS2::NoUpdate);
+  d.legacyRtlLayout = rtlLayout == kLegacyRtlLayout;
   return new RS_MText(nullptr, d);
 }
 
@@ -7919,7 +8594,8 @@ void RS_FilterDXFRW::addText(const DRW_Text &data) {
     dir = RS_TextData::None;
   }
 
-  const QString text = toNativeString(QString::fromUtf8(data.text.c_str()));
+  const QString text =
+      toNativeSingleLineString(QString::fromUtf8(data.text.c_str()));
 
   prepareTextStyleName(sty);
 
@@ -8485,7 +9161,7 @@ void RS_FilterDXFRW::addDimStyleOverrideToExtendedData(
     // $DIMTFILLCLR
     int colorRgb;
     int colorNumber =
-        colorToNumber(text->explicitBackgroundFillColor(), &colorRgb);
+        LC_ColorNumbers::colorToNumber(text->explicitBackgroundFillColor(), &colorRgb);
     group->add(70, colorNumber);
   }
   if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTOL)) {
@@ -8558,19 +9234,19 @@ void RS_FilterDXFRW::addDimStyleOverrideToExtendedData(
   if (dimensionLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMCLRD)) {
     // $DIMCLRD
     int colorRgb;
-    int colorNumber = colorToNumber(dimensionLine->color(), &colorRgb);
+    int colorNumber = LC_ColorNumbers::colorToNumber(dimensionLine->color(), &colorRgb);
     group->add(176, colorNumber);
   }
   if (extensionLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMCLRE)) {
     // $DIMCLRE
     int colorRgb;
-    int color = colorToNumber(extensionLine->color(), &colorRgb);
+    int color = LC_ColorNumbers::colorToNumber(extensionLine->color(), &colorRgb);
     group->add(177, color);
   }
   if (text->checkModifyState(LC_DimStyle::Text::$DIMCLRT)) {
     // $DIMCLRT
     int colorRgb;
-    int colorNumber = colorToNumber(text->color(), &colorRgb);
+    int colorNumber = LC_ColorNumbers::colorToNumber(text->color(), &colorRgb);
     group->add(178, colorNumber);
   }
   if (angularFormat->checkModifyState(LC_DimStyle::AngularFormat::$DIMADEC)) {
@@ -8804,6 +9480,12 @@ RS_FilterDXFRW::parseDimStyleOverride(
   auto arc = result->arc();
 
   result->setModifyCheckMode(LC_DimStyle::ModificationAware::ALL);
+  // DSTYLE names a linetype by the hex handle of its LTYPE record.
+  const auto lineTypeNameForHex = [this](const QString &hex) {
+    bool ok = false;
+    const std::uint32_t handle = hex.toUInt(&ok, 16);
+    return ok ? lineTypeNameForHandle(m_graphic, handle) : QString{};
+  };
   bool directionSeen = false;
   int directionValue = 0;
   const auto count = dimStyleVariables->size();
@@ -8896,7 +9578,7 @@ RS_FilterDXFRW::parseDimStyleOverride(
       break;
     case 70: {
       //"$DIMTFILLCLR"
-      RS_Color fillClr = numberToColor(var->getInt());
+      RS_Color fillClr = LC_ColorNumbers::numberToColor(var->getInt());
       text->setExplicitBackgroundFillColor(fillClr);
       break;
     }
@@ -8949,19 +9631,19 @@ RS_FilterDXFRW::parseDimStyleOverride(
       break;
     case 176: {
       //"$DIMCLRD"
-      RS_Color color = numberToColor(var->getInt());
+      RS_Color color = LC_ColorNumbers::numberToColor(var->getInt());
       dimensionLine->setColor(color);
       break;
     }
     case 177: {
       //"$DIMCLRE"
-      RS_Color color = numberToColor(var->getInt());
+      RS_Color color = LC_ColorNumbers::numberToColor(var->getInt());
       extensionLine->setColor(color);
       break;
     }
     case 178: {
       //"$DIMCLRT"
-      RS_Color color = numberToColor(var->getInt());
+      RS_Color color = LC_ColorNumbers::numberToColor(var->getInt());
       text->setColor(color);
       break;
     }
@@ -9127,39 +9809,24 @@ RS_FilterDXFRW::parseDimStyleOverride(
     //      break;
     case 345: {
       // "$DIMLTYPE"
-      auto refHandleStr = var->getString();
-      bool ok;
-      int refHandle = refHandleStr.toInt(&ok, 16);
-      auto lineTypeName =
-          m_dxfR->getReadingContext()->resolveLineTypeName(refHandle);
-      if (!lineTypeName.empty()) {
-        QString name = QString::fromStdString(lineTypeName);
+      const QString name = lineTypeNameForHex(var->getString());
+      if (!name.isEmpty()) {
         dimensionLine->setLineType(name);
       }
       break;
     }
     case 347: {
       // "$DIMLTEX1"
-      auto refHandleStr = var->getString();
-      bool ok;
-      int refHandle = refHandleStr.toInt(&ok, 16);
-      auto lineTypeName =
-          m_dxfR->getReadingContext()->resolveLineTypeName(refHandle);
-      if (!lineTypeName.empty()) {
-        QString name = QString::fromStdString(lineTypeName);
+      const QString name = lineTypeNameForHex(var->getString());
+      if (!name.isEmpty()) {
         extensionLine->setLineTypeFirst(name);
       }
       break;
     }
     case 348: {
-      //"$DIMLTEX2"
-      auto refHandleStr = var->getString();
-      bool ok;
-      int refHandle = refHandleStr.toInt(&ok, 16);
-      auto lineTypeName =
-          m_dxfR->getReadingContext()->resolveLineTypeName(refHandle);
-      if (!lineTypeName.empty()) {
-        QString name = QString::fromStdString(lineTypeName);
+      // "$DIMLTEX2"
+      const QString name = lineTypeNameForHex(var->getString());
+      if (!name.isEmpty()) {
         extensionLine->setLineTypeSecond(name);
       }
       break;
@@ -9469,39 +10136,42 @@ RS_FilterDXFRW::buildHatchSplineEdge(RS_EntityContainer *hatchLoop,
           sd.splinePoints.push_back(RS_Vector{cp->x, cp->y});
       }
     } else {
-      RS_SplineData td(s->degree, closed);
-      td.type = closed ? RS_SplineData::SplineType::Standard
-                       : RS_SplineData::SplineType::ClampedOpen;
-      const double tolknot = (s->tolknot > 0.0) ? s->tolknot : 1e-7;
-      for (double k : s->knotslist) {
-        td.knotslist.push_back(RS_Math::round(k, tolknot));
-      }
-
-      auto tmp = std::make_unique<RS_Spline>(nullptr, td);
       const bool isRational = (s->flags & 0x4) != 0;
+      std::vector<double> weights;
       for (size_t i = 0; i < s->controllist.size(); ++i) {
         const auto &cp = s->controllist[i];
-        if (!cp)
-          continue;
         // DXF stores rational weights in weightlist; DWG hatch-
         // boundary stream stores them on controllist[i]->z. Check
         // both. See plan §C.3.
         double w = 1.0;
-        if (isRational) {
+        if (isRational && cp) {
           if (i < s->weightlist.size())
             w = s->weightlist[i];
           else
             w = cp->z;
         }
-        tmp->addControlPointRaw({cp->x, cp->y}, w);
+        weights.push_back(w);
       }
-      if (closed)
-        tmp->setClosed(true);
-      tmp->update();
+      const std::unique_ptr<RS_Spline> tmp =
+          makeSplineFromDrw(nullptr, *s, weights);
 
       sd.useControlPoints = false;
-      sd.splinePoints.reserve(kHatchSplineSamples);
-      tmp->fillStrokePoints(kHatchSplineSamples - 1, sd.splinePoints);
+      if (s->controllist.size() >= size_t(s->degree) + 1) {
+        // sampled even when no spline type accepts the data, such as a knot
+        // vector longer than needed: the evaluation stays within its arrays
+        sd.splinePoints.reserve(kHatchSplineSamples);
+        tmp->fillStrokePoints(kHatchSplineSamples - 1, sd.splinePoints);
+      } else {
+        // with fewer than degree + 1 control points the evaluation would read
+        // outside its arrays: the edge passes through its control points
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "buildHatchSplineEdge: too few control points for "
+                        "the degree; passing through the control points");
+        for (const auto &cp : s->controllist) {
+          if (cp)
+            sd.splinePoints.push_back(RS_Vector{cp->x, cp->y});
+        }
+      }
     }
   }
 
@@ -9518,20 +10188,19 @@ RS_FilterDXFRW::buildHatchSplineEdge(RS_EntityContainer *hatchLoop,
   // flip the closed flag so LoopExtractor treats it as a single closed
   // loop instead of an open edge whose start==end. Closed LC_SplinePoints
   // expects a periodic point list without an explicit closing repeat —
-  // drop the duplicate tail when present.
-  if (!sd.closed) {
-    if (!sd.splinePoints.empty() &&
-        sd.splinePoints.front().distanceTo(sd.splinePoints.back()) <= 1e-8) {
-      sd.closed = true;
-      if (sd.splinePoints.size() > 2)
-        sd.splinePoints.pop_back();
-    } else if (!sd.controlPoints.empty() &&
-               sd.controlPoints.front().distanceTo(sd.controlPoints.back()) <=
-                   1e-8) {
-      sd.closed = true;
-      if (sd.controlPoints.size() > 2)
-        sd.controlPoints.pop_back();
-    }
+  // drop the duplicate tail when present, also from the points sampled from
+  // a flagged closed spline, whose curve AutoCAD ends where it starts.
+  if (!sd.splinePoints.empty() &&
+      sd.splinePoints.front().distanceTo(sd.splinePoints.back()) <= 1e-8) {
+    sd.closed = true;
+    if (sd.splinePoints.size() > 2)
+      sd.splinePoints.pop_back();
+  } else if (!sd.closed && !sd.controlPoints.empty() &&
+             sd.controlPoints.front().distanceTo(sd.controlPoints.back()) <=
+                 1e-8) {
+    sd.closed = true;
+    if (sd.controlPoints.size() > 2)
+      sd.controlPoints.pop_back();
   }
 
   return new LC_SplinePoints(hatchLoop, std::move(sd));
@@ -9623,7 +10292,6 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
     hatchLoop->setLayer(nullptr);
     hatch->addEntity(hatchLoop);
 
-    RS_Entity *e = nullptr;
     if ((loop->type & 2) == 2) { // polyline, convert to lines & arcs
       if (loop->objlist.empty())
         continue;
@@ -10867,12 +11535,42 @@ void RS_FilterDXFRW::addHeader(const DRW_Header *data) {
  */
 bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                                 const RS2::FormatType type) {
+  // Also protect callers using the filter directly rather than RS_FileIO.
+  if (g.isDxfRecoverySourceFile(file)) {
+    m_errorCode = DRW::BAD_OPEN;
+    RS_DIALOGFACTORY->commandMessage(QObject::tr(
+        "The original legacy DXF is protected. Save the recovered drawing to a different file."));
+    return false;
+  }
   RS_DEBUG->print("RS_FilterDXFDW::fileExport: exporting file '%s'...",
                   (const char *)QFile::encodeName(file));
   RS_DEBUG->print("RS_FilterDXFDW::fileExport: file type '%d'", type);
 
+  // A callback may not replace the active writer or the outer operation's
+  // graphic/failure state. In particular, do not clear its observer here.
+  if (m_dxfW != nullptr
+#ifdef DWGSUPPORT
+      || m_dwgW != nullptr
+#endif
+  ) {
+    LC_ERR << "Cannot start a reentrant export on an active DXF/DWG filter";
+    return false;
+  }
+
   this->m_graphic = &g;
   m_writeFailed = false;
+  m_dxfLeftOutRawRecords = 0;
+  m_writeLeftOut.clear();
+  m_shapeLeftOut.clear();
+  m_shapeExportDirectory = QFileInfo(file).absoluteDir().canonicalPath();
+  m_exportAttribScaleDataLeftOut = 0;
+  // What becomes of each block attribute's text is the same for every
+  // callback of this export, the DWG handle pre-pass included.
+  buildInsertAttribPlan();
+  struct InsertAttribPlanGuard {
+    InsertAttribPlan &plan;
+    ~InsertAttribPlanGuard() { plan = {}; }
+  } insertAttribPlanGuard{m_insertAttribPlan};
 
   // check if we can write to that directory:
 #ifndef Q_OS_WIN
@@ -10956,7 +11654,17 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                       "RS_FilterDXFRW: cannot release staged DWG path");
       return false;
     }
-    m_dwgW = new dwgRW(QFile::encodeName(stagedOutputPath).constData());
+    // Having given the name up, the QTemporaryFile no longer removes it. An
+    // export that fails after the low-level writer published the staged file
+    // has to remove it here, or it stays beside the caller's destination. A
+    // committed export has moved it away and leaves nothing to remove.
+    const auto removeStagedOutput =
+        qScopeGuard([&stagedOutputPath] { QFile::remove(stagedOutputPath); });
+    ExportWriterScope<dwgRW> activeWriter(
+        m_dwgW, std::make_unique<dwgRW>(QFile::encodeName(stagedOutputPath).constData()));
+    prepareShapesForExport();
+    if (m_writeFailed)
+      return false;
     clearDwgWriteIdentity();
     m_dwgExportAdmissionPlan = {};
     m_dwgFieldWritePlan = {};
@@ -10968,15 +11676,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
             DRW::DwgNamedObjectsDictionaryHandle) ||
         !registerDwgWriteFixedStructuralIdentity(
             DRW::DwgAcadGroupDictionaryHandle)) {
-      delete m_dwgW;
-      m_dwgW = nullptr;
       return false;
     }
     if (!prepareDwgDataStorageReplayPlan(dwgVer)) {
       RS_DEBUG->print(RS_Debug::D_WARNING,
                       "RS_FilterDXFRW: invalid DWG DataStorage replay plan");
-      delete m_dwgW;
-      m_dwgW = nullptr;
       return false;
     }
     bool duplicateDwgMetadataHandle = false;
@@ -11082,6 +11786,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       reserveAll(md.ucsRecords(), "UCS", false);
       reserveAll(md.vports(), "VPORT", false);
       reserveAll(md.tables(), "TABLE", false);
+      reserveAll(md.shapes(), "SHAPE", false, DwgWriteSourceKind::Entity);
       reserveAll(md.placeholders(), "PLACEHOLDER");
       reserveAll(md.dictionaries(), "DICTIONARY");
       reserveAll(md.xrecords(), "XRECORD");
@@ -11122,6 +11827,18 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       reserveAll(md.spatialIndexes(), "SPATIAL_INDEX");
       reserveAll(md.dictionariesWithDefault(), "DICTIONARYWDFLT");
       reserveAll(md.sortEntsTables(), "SORTENTSTABLE");
+      // Sort keys need not name objects; reserve them before allocating handles.
+      for (const auto &record : md.sortEntsTables()) {
+        if (record.replayState !=
+            LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+          continue;
+        for (const std::uint32_t sortHandle : record.sortHandles) {
+          if (sortHandle == DRW::NoHandle)
+            continue;
+          m_dwgW->reserveHandle(sortHandle);
+          highWater = std::max<std::uint32_t>(highWater, sortHandle);
+        }
+      }
       reserveAll(md.dbColors(), "DBCOLOR");
       reserveAll(md.underlayDefinitions(), "UNDERLAYDEFINITION");
       reserveAll(md.pointCloudDefinitions(), "POINTCLOUDDEF");
@@ -11209,6 +11926,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       remapIfColliding(md.navisworksModels());
       remapIfColliding(md.pointCloudColorMaps());
       remapIfColliding(md.cameras());
+      remapIfColliding(md.shapes());
       remapIfColliding(md.geoPositionMarkers());
       remapIfColliding(md.sectionObjects());
       remapIfColliding(md.tvDeviceProperties());
@@ -11234,12 +11952,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       RS_DEBUG->print(RS_Debug::D_WARNING,
                       "RS_FilterDXFRW: refusing DWG export with duplicate "
                       "typed metadata identities");
-      delete m_dwgW;
-      m_dwgW = nullptr;
       return false;
     }
     bool success = m_dwgW->write(this, dwgVer, false) && !m_writeFailed;
     m_lastDwgWriteSkipCounters = m_dwgW->getWriteSkipCounters();
+    m_writeLeftOut = m_dwgW->leftOut();
     m_lastDwgOptionalReferenceDropCount = dwgWriteOptionalReferenceDropCount();
     if (!success) {
       RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -11267,8 +11984,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                       skips.classRegistrations, skips.blockDefinitions,
                       skips.rawObjectWrites + skips.rawSectionWrites);
     }
-    delete m_dwgW;
-    m_dwgW = nullptr;
+    activeWriter.reset();
     if (!success)
       return false;
 
@@ -11278,6 +11994,10 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     const auto commitStagedOutput = [&]() {
       if (!QFileInfo::exists(file))
         return QFile::rename(stagedOutputPath, file);
+      // Only a file is moved aside. A directory of that name would go to the
+      // backup name as well, and stay there: the backup is removed as a file.
+      if (!QFileInfo(file).isFile())
+        return false;
 
       QTemporaryFile backup(outputInfo.absolutePath() + "/." +
                             outputInfo.fileName() + ".librecad-backup-XXXXXX");
@@ -11285,8 +12005,12 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       if (!backup.open())
         return false;
       const QString backupPath = backup.fileName();
-      backup.close();
-      if (!QFile::remove(backupPath) || !QFile::rename(file, backupPath)) {
+      // Release the reserved name through the object, as for the staged path
+      // above: QTemporaryFile::close() keeps the native handle, and Windows
+      // deletes no file that is open without FILE_SHARE_DELETE. A static
+      // QFile::remove() of this path failed there, so no DWG could be saved
+      // over an existing file.
+      if (!backup.remove() || !QFile::rename(file, backupPath)) {
         QFile::remove(backupPath);
         return false;
       }
@@ -11294,7 +12018,13 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         QFile::remove(backupPath);
         return true;
       }
-      (void)QFile::rename(backupPath, file);
+      if (!QFile::rename(backupPath, file)) {
+        // Never remove the backup here: it is the only copy of the old file.
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_FilterDXFRW: cannot restore '%s', its previous "
+                        "content is kept as '%s'",
+                        qPrintable(file), qPrintable(backupPath));
+      }
       return false;
     };
     if (!commitStagedOutput()) {
@@ -11327,18 +12057,33 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     exportVersion = DRW::AC1021;
     m_version = 1021;
     m_exactColor = true;
+  } else if (type == RS2::FormatDXFRW2010) {
+    exportVersion = DRW::AC1024;
+    m_version = 1024;
+    m_exactColor = true;
+  } else if (type == RS2::FormatDXFRW2013) {
+    exportVersion = DRW::AC1027;
+    m_version = 1027;
+    m_exactColor = true;
   } else {
     exportVersion = DRW::AC1032;
     m_version = 1032;
     m_exactColor = true;
   }
+  m_dxfExportVersion = exportVersion;
   /**
    * fixme - sand - files - RESTORE!!! Under win, encodeName() prevents using
    * unicode file names!!! Due to that, blocks/files may be saved incorrectly if
    * name is localized
    */
-  m_dxfW = new dxfRW(QFile::encodeName(file));
+  ExportWriterScope<dxfRW> activeWriter(
+      m_dxfW, std::make_unique<dxfRW>(QFile::encodeName(file).constData()));
+  prepareShapesForExport();
+  if (m_writeFailed)
+    return false;
   m_dxfBlockInsertHandles.clear();
+  m_dxfExtraPaperSpaces.clear();
+  m_dxfEmittedObjectHandles.clear();
   // fixme - sand - save to binary format enabling/disabling!!
   const bool binary = false;
 
@@ -11402,8 +12147,17 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         ++classes[it->second].instanceCount;
       }
     };
+    // A raw record is replayed only into the version it was read from; one
+    // read from another is left out of this file, with every reference to it.
     std::set<std::uint32_t> rawObjectHandles;
+    std::set<std::uint32_t> leftOutRawHandles;
     for (const DRW_RawDxfObject &o : metadata.rawDxfObjects()) {
+      if (!replaysInDxfExport(o.m_version)) {
+        ++m_dxfLeftOutRawRecords;
+        if (o.handle != 0)
+          leftOutRawHandles.insert(o.handle);
+        continue;
+      }
       if (o.handle != 0) {
         m_dxfW->reserveHandle(o.handle);
         rawObjectHandles.insert(o.handle);
@@ -11411,9 +12165,34 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       registerClassFor(o.name);
     }
     for (const DRW_RawDxfObject &e : metadata.rawDxfEntities()) {
+      if (!replaysInDxfExport(e.m_version)) {
+        ++m_dxfLeftOutRawRecords;
+        if (e.handle != 0)
+          leftOutRawHandles.insert(e.handle);
+        continue;
+      }
       if (e.handle != 0)
         m_dxfW->reserveHandle(e.handle);
       registerClassFor(e.name); // custom ENTITIES need a CLASS too
+    }
+    // These polylines are written as native underlays by writeEntities().
+    for (RS_Entity *entity :
+         lc::LC_ContainerTraverser{g, RS2::ResolveNone}.entities()) {
+      DwgUnderlaySidecar sidecar;
+      if (!entity->getFlag(RS2::FlagDeleted) &&
+          parseDwgUnderlaySidecar(entity, sidecar)) {
+        const auto kind = sidecar.value.kind;
+        registerClassFor(kind == DRW_Underlay::DGN ? "DGNUNDERLAY"
+                         : kind == DRW_Underlay::DWF ? "DWFUNDERLAY"
+                                                    : "PDFUNDERLAY");
+      }
+    }
+    std::vector<DRW_RawDxfSection> rawSections;
+    for (const DRW_RawDxfSection &section : metadata.rawDxfSections()) {
+      if (replaysInDxfExport(section.m_version))
+        rawSections.push_back(section);
+      else
+        ++m_dxfLeftOutRawRecords;
     }
 
     std::set<std::uint32_t> plotSettingsHandles;
@@ -11436,8 +12215,6 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                 "case-insensitive CLASS metadata"
               : "RS_FilterDXFRW: refusing DXF export with duplicate "
                 "typed PLOTSETTINGS handles");
-      delete m_dxfW;
-      m_dxfW = nullptr;
       return false;
     }
 
@@ -11456,7 +12233,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       handle = static_cast<std::uint32_t>(value);
       return true;
     };
-    for (const DRW_RawDxfSection &section : metadata.rawDxfSections()) {
+    for (const DRW_RawDxfSection &section : rawSections) {
       for (const DRW_Variant &group : section.m_groups) {
         std::uint32_t handle = 0;
         if (rawSectionHandle(group, handle) && handle != 0)
@@ -11470,17 +12247,31 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     // will be typed-emitted (ReplayAllowed, nonzero handle, NOT already in the
     // raw net → not double-counted), reserve its verbatim code-5 handle so a
     // minted handle can't collide, and register the same CLASS the raw-net
-    // objects use (else AutoCAD/ezdxf drop the instance). The dedup predicate
-    // here MUST match writeObjects' emitTyped.
+    // objects use (else AutoCAD/ezdxf drop the instance). Dedup matches
+    // writeObjects' emitTyped; minVersion matches the codec writer's gate.
+    // A typed record written in place of a raw one left out keeps its handle,
+    // and references to it stay: it is not left out.
+    const auto standsInForLeftOut = [&](std::uint32_t handle) {
+      if (leftOutRawHandles.erase(handle) != 0 && m_dxfLeftOutRawRecords > 0)
+        --m_dxfLeftOutRawRecords;
+    };
+    // Handles of the typed objects writeObjects emits, for the
+    // structural-collision remap; typed entities are written elsewhere.
+    std::vector<std::uint32_t> typedHandles;
     auto reserveTyped = [&](std::uint32_t handle,
                             LC_DwgAdvancedMetadata::ReplayState state,
-                            const char *recordName) {
-      if (handle == 0 ||
+                            const char *recordName,
+                            DRW::Version minVersion = DRW::UNKNOWNV,
+                            bool isObject = true) {
+      if (exportVersion < minVersion || handle == 0 ||
           state != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
           rawObjectHandles.count(handle) != 0)
         return;
       m_dxfW->reserveHandle(handle);
+      if (isObject)
+        typedHandles.push_back(handle);
       registerClassFor(recordName);
+      standsInForLeftOut(handle);
     };
     for (const auto &record : metadata.suns())
       reserveTyped(record.handle, record.replayState, "SUN");
@@ -11491,7 +12282,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     for (const auto &record : metadata.rasterVariables())
       reserveTyped(record.handle, record.replayState, "RASTERVARIABLES");
     for (const auto &record : metadata.mleaderStyles())
-      reserveTyped(record.handle, record.replayState, "MLEADERSTYLE");
+      reserveTyped(record.handle, record.replayState, "MLEADERSTYLE",
+                   DRW::AC1021);
     for (const auto &record : metadata.geoData())
       reserveTyped(record.handle, record.replayState, "GEODATA");
     for (const auto &record : metadata.spatialFilters())
@@ -11499,11 +12291,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     for (const auto &record : metadata.sortEntsTables())
       reserveTyped(record.handle, record.replayState, "SORTENTSTABLE");
     for (const auto &record : metadata.fields())
-      reserveTyped(record.handle, record.replayState, "FIELD");
+      reserveTyped(record.handle, record.replayState, "FIELD", DRW::AC1015);
     for (const auto &record : metadata.partialViewingIndexes())
       reserveTyped(record.handle, record.replayState, "PARTIALVIEWINGINDEX");
     for (const auto &record : metadata.fieldLists())
-      reserveTyped(record.handle, record.replayState, "FIELDLIST");
+      reserveTyped(record.handle, record.replayState, "FIELDLIST", DRW::AC1015);
     // SLICE 2: WIPEOUTVARIABLES is a CUSTOM class -> reserve + register CLASS.
     for (const auto &record : metadata.wipeoutVariables())
       reserveTyped(record.handle, record.replayState, "WIPEOUTVARIABLES");
@@ -11514,7 +12306,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       reserveTyped(record.handle, record.replayState, "NAVISWORKSMODELDEF");
     if (exportVersion >= DRW::AC1015) {
       for (const auto &record : metadata.navisworksModels())
-        reserveTyped(record.handle, record.replayState, "NAVISWORKSMODEL");
+        reserveTyped(record.handle, record.replayState, "NAVISWORKSMODEL",
+                     DRW::UNKNOWNV, false);
     }
     for (const auto &record : metadata.pointCloudColorMaps())
       reserveTyped(record.handle, record.replayState, "POINTCLOUDCOLORMAP");
@@ -11540,8 +12333,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       reserveTyped(record.handle, record.replayState, "DBCOLOR");
     for (const auto &record : metadata.dimensionAssociations())
       reserveTyped(record.handle, record.replayState, "DIMASSOC");
-    for (const auto &record : metadata.evaluationGraphs())
-      reserveTyped(record.handle, record.replayState, "EVALUATION_GRAPH");
+    for (const auto &record : metadata.evaluationGraphs()) {
+      if (exportVersion >= DRW::AC1021 &&
+          canWriteNativeEvaluationGraph(evaluationGraphFromMetadata(record)))
+        reserveTyped(record.handle, record.replayState, "EVALUATION_GRAPH");
+    }
     for (const auto &record : metadata.sections())
       reserveTyped(record.handle, record.replayState,
                    sectionRecordName(record.kind));
@@ -11553,29 +12349,45 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     }
     // SLICE 1: fixed built-ins -> reserve handles but register NO CLASS.
     auto reserveFixedTyped = [&](std::uint32_t handle,
-                                 LC_DwgAdvancedMetadata::ReplayState state) {
+                                 LC_DwgAdvancedMetadata::ReplayState state,
+                                 bool isObject = true) {
       if (handle == 0 ||
           state != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
           rawObjectHandles.count(handle) != 0)
         return;
       m_dxfW->reserveHandle(handle);
+      if (isObject)
+        typedHandles.push_back(handle);
+      standsInForLeftOut(handle);
     };
     for (const auto &record : metadata.mlineStyles())
       reserveFixedTyped(record.handle, record.replayState);
     for (const auto &record : metadata.layouts())
       reserveFixedTyped(record.handle, record.replayState);
     for (const auto &record : metadata.geoPositionMarkers())
-      reserveFixedTyped(record.handle, record.replayState);
+      reserveFixedTyped(record.handle, record.replayState, false);
     for (const auto &record : metadata.sectionObjects())
-      reserveFixedTyped(record.handle, record.replayState);
+      reserveFixedTyped(record.handle, record.replayState, false);
 
-    if (exportVersion <= DRW::AC1009 && !classes.empty()) {
-      RS_DEBUG->print(
-          RS_Debug::D_WARNING,
-          "RS_FilterDXFRW: cannot preserve DXF CLASS records in R12 output");
-      delete m_dxfW;
-      m_dxfW = nullptr;
-      return false;
+    // R12 has no CLASSES section, and none of the objects a CLASS describes.
+    if (exportVersion <= DRW::AC1009)
+      classes.clear();
+    // A source CLASS no written record uses gives way to a used one of the
+    // same class name under another record name, e.g. a typed object written
+    // in place of a raw one left out: two CLASS records may not share a name.
+    {
+      std::set<std::string> usedClassNames;
+      for (const DRW_Class &cls : classes) {
+        if (cls.instanceCount > 0)
+          usedClassNames.insert(normalizeDwgTableName(cls.className));
+      }
+      classes.erase(std::remove_if(classes.begin(), classes.end(),
+                                   [&usedClassNames](const DRW_Class &cls) {
+                                     return cls.instanceCount == 0 &&
+                                            usedClassNames.count(normalizeDwgTableName(
+                                                cls.className)) != 0;
+                                   }),
+                    classes.end());
     }
     if (!classes.empty())
       m_dxfW->setDxfClasses(classes);
@@ -11623,14 +12435,43 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     static const std::set<std::uint32_t> kFixedStructural = {
         0x1,  0x2,  0x3,  0x5,  0x6,  0x7,  0x8,  0x9,  0xA,  0x10,
         0x12, 0x14, 0x15, 0x16, 0x1C, 0x1D, 0x1E, 0x1F, 0x20, 0x21};
+
+    // A GROUP keeps its source handle, like the typed objects reserved above:
+    // its members' reactors are written with the entities, before OBJECTS,
+    // and must still name it. The reactors drop a GROUP that is not written or
+    // whose handle is structural (the codec gives it a fresh one); a GROUP
+    // whose handle another object holds gets a fresh one too, and references
+    // to the handle stay with that object. Reserved before the remap below
+    // allocates any handle.
+    m_dxfDroppedReferenceHandles.clear();
+    std::vector<bool> groupKeepsHandle;
+    groupKeepsHandle.reserve(metadata.groups().size());
+    std::set<std::uint32_t> keptGroupHandles;
+    for (const auto &record : metadata.groups()) {
+      const std::uint32_t h = record.handle;
+      const bool written = record.replayState ==
+                           LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed;
+      const bool structural =
+          kFixedStructural.count(h) != 0 || h == 0xCu || h == 0xDu;
+      const bool keep = written && h != 0 && !structural &&
+                        !m_dxfW->isReservedHandle(h) &&
+                        m_dxfW->reserveHandle(h);
+      groupKeepsHandle.push_back(keep);
+      if (keep)
+        keptGroupHandles.insert(h);
+      else if (h != 0 && (!written || structural))
+        m_dxfDroppedReferenceHandles.insert(h);
+    }
+    m_dxfDroppedReferenceHandles.insert(leftOutRawHandles.cbegin(),
+                                        leftOutRawHandles.cend());
+    for (const std::uint32_t h : keptGroupHandles)
+      m_dxfDroppedReferenceHandles.erase(h);
     for (const DRW_PlotSettings &settings : metadata.plotSettings()) {
       if (settings.handle != 0 &&
           kFixedStructural.count(settings.handle) != 0) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_FilterDXFRW: refusing DXF export with PLOTSETTINGS "
                         "handle colliding with a structural record");
-        delete m_dxfW;
-        m_dxfW = nullptr;
         return false;
       }
     }
@@ -11653,11 +12494,24 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       }
       handleRemap.emplace(h, replacement);
     };
-    for (const DRW_RawDxfObject &o : metadata.rawDxfObjects())
-      remapIfColliding(o.handle);
-    for (const DRW_RawDxfObject &e : metadata.rawDxfEntities())
-      remapIfColliding(e.handle);
-    for (const DRW_RawDxfSection &section : metadata.rawDxfSections()) {
+    for (const DRW_RawDxfObject &o : metadata.rawDxfObjects()) {
+      if (replaysInDxfExport(o.m_version))
+        remapIfColliding(o.handle);
+    }
+    for (const DRW_RawDxfObject &e : metadata.rawDxfEntities()) {
+      if (replaysInDxfExport(e.m_version))
+        remapIfColliding(e.handle);
+    }
+    // Typed objects keep their source handle too, so the same collisions
+    // happen there (a DWG's LAYOUT or MATERIAL at 1E or 1F): writeObjects
+    // writes them, and references to them, under the replacement.
+    for (const std::uint32_t h : typedHandles)
+      remapIfColliding(h);
+    // The codec writes the root dictionary at C; references to the source's
+    // own root, such as its children's owners and reactors, follow it there.
+    if (sourceRootHandle != 0 && sourceRootHandle != 0xCu)
+      handleRemap.emplace(sourceRootHandle, 0xCu);
+    for (const DRW_RawDxfSection &section : rawSections) {
       for (const DRW_Variant &group : section.m_groups) {
         std::uint32_t handle = 0;
         if (rawSectionHandle(group, handle))
@@ -11668,12 +12522,10 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       RS_DEBUG->print(
           RS_Debug::D_WARNING,
           "RS_FilterDXFRW: DXF handle space exhausted while remapping");
-      delete m_dxfW;
-      m_dxfW = nullptr;
       return false;
     }
-    if (!metadata.rawDxfSections().empty())
-      m_dxfW->setRawDxfSections(metadata.rawDxfSections());
+    if (!rawSections.empty())
+      m_dxfW->setRawDxfSections(rawSections);
     // setHandleRemap is pushed AFTER the named-dict block below so any remap
     // a colliding named-dict handle adds is included in the codec's table.
 
@@ -11685,8 +12537,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         m_dxfSuppressedObjectHandles.insert(o.handle);
         continue;
       }
-      if (o.handle == acadGroupHandle)
-        continue; // already suppressed
+      if (o.handle == acadGroupHandle || !replaysInDxfExport(o.m_version))
+        continue; // already suppressed, or left out
       if (o.parentHandle != sourceRootHandle)
         continue; // only direct root children get a root entry
       auto it = rootEntryName.find(o.handle);
@@ -11721,13 +12573,14 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     // dangling-entry fixes and corrupt cross-refs.
     //
     // The set of objects we emit on this path (their code-5 handles):
-    // the ReplayAllowed, non-raw-net data-only records (matches writeObjects'
-    // emitTyped), plus the raw-net objects (re-emitted verbatim above).
+    // the version-supported, ReplayAllowed, non-raw-net data-only records,
+    // plus the raw-net objects (re-emitted verbatim above).
     std::set<std::uint32_t> emittedObjectHandles = rawObjectHandles;
     std::set<std::uint32_t> neededParents; // 330 owners we must materialize
     auto noteDataOnly = [&](std::uint32_t handle, std::uint32_t parent,
-                            LC_DwgAdvancedMetadata::ReplayState state) {
-      if (handle == 0 ||
+                            LC_DwgAdvancedMetadata::ReplayState state,
+                            DRW::Version minVersion = DRW::UNKNOWNV) {
+      if (exportVersion < minVersion || handle == 0 ||
           state != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
           rawObjectHandles.count(handle) != 0)
         return; // not emitted on this path
@@ -11744,7 +12597,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     for (const auto &r : metadata.rasterVariables())
       noteDataOnly(r.handle, r.parentHandle, r.replayState);
     for (const auto &r : metadata.mleaderStyles())
-      noteDataOnly(r.handle, r.parentHandle, r.replayState);
+      noteDataOnly(r.handle, r.parentHandle, r.replayState, DRW::AC1021);
     for (const auto &r : metadata.geoData())
       noteDataOnly(r.handle, r.parentHandle, r.replayState);
     for (const auto &r : metadata.spatialFilters())
@@ -11752,9 +12605,9 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     for (const auto &r : metadata.sortEntsTables())
       noteDataOnly(r.handle, r.parentHandle, r.replayState);
     for (const auto &r : metadata.fields())
-      noteDataOnly(r.handle, r.parentHandle, r.replayState);
+      noteDataOnly(r.handle, r.parentHandle, r.replayState, DRW::AC1015);
     for (const auto &r : metadata.fieldLists())
-      noteDataOnly(r.handle, r.parentHandle, r.replayState);
+      noteDataOnly(r.handle, r.parentHandle, r.replayState, DRW::AC1015);
     for (const auto &r : metadata.mlineStyles())
       noteDataOnly(r.handle, r.parentHandle, r.replayState);
     for (const auto &r : metadata.layouts())
@@ -11775,6 +12628,9 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
               static_cast<std::uint32_t>(settings.parentHandle));
       }
     }
+    m_dxfEmittedObjectHandles = emittedObjectHandles;
+    for (const std::uint32_t h : m_dxfSuppressedObjectHandles)
+      m_dxfEmittedObjectHandles.erase(h);
 
     std::vector<DRW_Dictionary> namedDicts;
     std::set<std::uint32_t> emittedDictHandles;
@@ -11841,6 +12697,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     }
     if (!namedDicts.empty())
       m_dxfW->setNamedDictObjects(namedDicts);
+    for (const std::uint32_t h : m_dxfEmittedNamedDictHandles)
+      m_dxfDroppedReferenceHandles.erase(h);
 
     // (4) F3: typed GROUP emit (both directions). GROUP is read into typed
     // metadata only (processGroup -> addGroup; never routed to the DXF raw
@@ -11866,11 +12724,14 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     std::vector<DRW_Group> groupsToWrite;
     groupsToWrite.reserve(metadata.groups().size());
     int unnamedSeq = 0;
-    for (const auto &record : metadata.groups()) {
+    for (std::size_t i = 0; i < metadata.groups().size(); ++i) {
+      const auto &record = metadata.groups()[i];
       if (record.replayState !=
           LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
         continue;
       DRW_Group group = groupFromMetadata(record);
+      if (!groupKeepsHandle[i])
+        group.handle = 0; // the codec mints one
       auto nameIt = groupHandleToName.find(record.handle);
       if (nameIt != groupHandleToName.end() && !nameIt->second.empty())
         group.name = nameIt->second;
@@ -11880,6 +12741,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     }
     if (!groupsToWrite.empty())
       m_dxfW->setGroups(groupsToWrite);
+    m_dxfW->setReferenceResolver(
+        [this](std::uint32_t source) { return dxfReference(source); });
 
     if (!handleRemap.empty())
       m_dxfW->setHandleRemap(handleRemap);
@@ -11891,7 +12754,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   //    bool success = m_dxfW->write(this, exportVersion, false); //ascii
   const bool success =
       m_dxfW->write(this, exportVersion, binary) && !m_writeFailed; // binary
-  delete m_dxfW;
+  m_writeLeftOut = m_dxfW->leftOut();
+  activeWriter.reset();
 
   if (!success) {
     RS_DEBUG->print("RS_FilterDXFDW::fileExport: can't write file");
@@ -11954,6 +12818,7 @@ void RS_FilterDXFRW::prepareBlocks() {
       case RS2::EntityDimAngular:
       case RS2::EntityDimRadial:
       case RS2::EntityDimDiametric:
+      case RS2::EntityDimArc:
       case RS2::EntityDimLeader: {
         const QString prefix = "*D" + QString::number(++dimNum);
         m_noNameBlock[e] = prefix;
@@ -11976,6 +12841,86 @@ void RS_FilterDXFRW::prepareBlocks() {
 }
 
 /**
+ * Decides, for the export in progress, what becomes of each text read as a
+ * block attribute. A text names its INSERT by lineage (RS_Entity::lineage()):
+ * the pair survives the clones that replace either on an edit, and a copy of
+ * both is a pair of its own. One pass per container; deleted entities take no
+ * part.
+ */
+void RS_FilterDXFRW::buildInsertAttribPlan() {
+  m_insertAttribPlan = {};
+  if (m_graphic == nullptr)
+    return;
+  const auto showsNothing = [](const RS_Entity *text) {
+    if (!text->getFlag(RS2::FlagVisible))
+      return true;
+    return text->rtti() == RS2::EntityText
+               ? static_cast<const RS_Text *>(text)->getText().isEmpty()
+               : static_cast<const RS_MText *>(text)->getText().isEmpty();
+  };
+  const auto scan = [this, &showsNothing](RS_EntityContainer *container) {
+    if (container == nullptr)
+      return;
+    std::vector<RS_Entity *> texts;
+    for (RS_Entity *entity : *container) {
+      if (entity != nullptr && !entity->getFlag(RS2::FlagDeleted) &&
+          entity->ownerLineage() != 0 &&
+          (entity->rtti() == RS2::EntityText ||
+           entity->rtti() == RS2::EntityMText)) {
+        texts.push_back(entity);
+      }
+    }
+    // Most containers hold no text of an attribute, whatever the number of
+    // their INSERTs: those are looked up only for a text that names one.
+    if (texts.empty())
+      return;
+    std::map<unsigned long long, const RS_Entity *> inserts;
+    for (const RS_Entity *entity : *container) {
+      if (entity != nullptr && !entity->getFlag(RS2::FlagDeleted) &&
+          entity->rtti() == RS2::EntityInsert) {
+        // The first keeps a lineage two INSERTs share (clones put into a
+        // container without an undo section).
+        inserts.emplace(entity->lineage(), entity);
+      }
+    }
+    std::map<const RS_Entity *, std::vector<std::pair<int, RS_Entity *>>> found;
+    for (RS_Entity *text : texts) {
+      const auto owner = inserts.find(text->ownerLineage());
+      if (owner != inserts.end()) {
+        if (const auto sidecar = extractInsertAttribSidecar(text)) {
+          found[owner->second].emplace_back(sidecar->ordinal, text);
+          continue;
+        }
+      }
+      // No INSERT writes this text. One that shows is written as a text of its
+      // own (writeText(), writeMText()); a hidden or empty one was data of its
+      // INSERT only and no selection can reach it.
+      if (showsNothing(text))
+        m_insertAttribPlan.leftOut.insert(text);
+    }
+    for (auto &[insert, attributes] : found) {
+      // Container order decides between texts of one ordinal.
+      std::stable_sort(attributes.begin(), attributes.end(),
+                       [](const auto &lhs, const auto &rhs) {
+                         return lhs.first < rhs.first;
+                       });
+      auto &children = m_insertAttribPlan.children[insert];
+      children.reserve(attributes.size());
+      for (const auto &attribute : attributes) {
+        children.push_back(attribute.second);
+        m_insertAttribPlan.claimed.insert(attribute.second);
+      }
+    }
+  };
+  scan(m_graphic);
+  for (unsigned i = 0; i < m_graphic->countBlocks(); ++i) {
+    RS_Block *block = m_graphic->blockAt(i);
+    if (block != nullptr && !block->isDeleted())
+      scan(block);
+  }
+}
+
+/**
  * Writes block records (just the name, not the entities in it).
  */
 void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
@@ -11984,6 +12929,7 @@ void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
 
   m_dxfBlockInsertHandles.clear();
   std::map<std::uint32_t, std::size_t> sourceHandleCounts;
+  std::set<std::uint32_t> attribChildHandles;
   std::set<std::uint32_t> rawEntityHandles;
   std::set<std::uint32_t> rawObjectHandles;
   auto scanEntities = [&](RS_EntityContainer *container) {
@@ -11992,12 +12938,17 @@ void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
     for (RS_Entity *entity :
          lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
       if (entity == nullptr || entity->getFlag(RS2::FlagDeleted) ||
-          isGeneratedInsertAttrib(entity)) {
+          m_insertAttribPlan.leftOut.count(entity) != 0) {
         continue;
       }
       const std::uint32_t sourceHandle = entity->sourceHandle();
-      if (sourceHandle != 0)
-        ++sourceHandleCounts[sourceHandle];
+      if (sourceHandle == 0)
+        continue;
+      ++sourceHandleCounts[sourceHandle];
+      // An ATTRIB is counted, so that a handle it shares names no entity, but
+      // it takes its handle when its INSERT is written.
+      if (isInsertAttribChild(entity))
+        attribChildHandles.insert(sourceHandle);
     }
   };
 
@@ -12045,18 +12996,20 @@ void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
     }
   };
   for (const DRW_RawDxfObject &raw : metadata.rawDxfEntities())
-    noteRawSelfHandle(raw, false);
+    noteRawSelfHandle(raw, !replaysInDxfExport(raw.m_version));
   for (const DRW_RawDxfObject &raw : metadata.rawDxfObjects())
-    noteRawSelfHandle(raw, m_dxfSuppressedObjectHandles.count(raw.handle) != 0);
+    noteRawSelfHandle(raw, m_dxfSuppressedObjectHandles.count(raw.handle) != 0 ||
+                               !replaysInDxfExport(raw.m_version));
 
   for (const DRW_RawDxfObject &raw : metadata.rawDxfEntities()) {
-    if (raw.handle != 0) {
+    if (raw.handle != 0 && replaysInDxfExport(raw.m_version)) {
       ++sourceHandleCounts[raw.handle];
       rawEntityHandles.insert(raw.handle);
     }
   }
   for (const DRW_RawDxfObject &raw : metadata.rawDxfObjects()) {
-    if (raw.handle == 0 || m_dxfSuppressedObjectHandles.count(raw.handle) != 0)
+    if (raw.handle == 0 || m_dxfSuppressedObjectHandles.count(raw.handle) != 0 ||
+        !replaysInDxfExport(raw.m_version))
       continue;
     ++sourceHandleCounts[raw.handle];
     rawObjectHandles.insert(raw.handle);
@@ -12077,6 +13030,8 @@ void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
       continue;
     }
     if (count != 1)
+      continue;
+    if (attribChildHandles.count(sourceHandle) != 0)
       continue;
     if (rawEntityHandles.count(sourceHandle) != 0 ||
         rawObjectHandles.count(sourceHandle) != 0) {
@@ -12158,6 +13113,63 @@ void RS_FilterDXFRW::writeBlockRecords() {
           blk->getName().toUtf8().data(), blk->getInsertionUnits(),
           blk->getPreviewData(), insertRefsFor(blk->getName())));
     }
+  }
+
+  // A layout's paper space other than the first (*Paper_Space0, ...) has no
+  // LibreCAD block, but the layout needs its block record: write it, empty.
+  m_dxfExtraPaperSpaces = dxfExtraPaperSpaceNames();
+  for (const std::string &name : m_dxfExtraPaperSpaces)
+    noteDxfWrite(m_dxfW->writeBlockRecord(name, 0, {}, {}));
+}
+
+std::vector<std::string> RS_FilterDXFRW::dxfExtraPaperSpaceNames() const {
+  std::vector<std::string> names;
+  if (m_version < 1015) // LAYOUT objects are R2000 and later
+    return names;
+  const auto &metadata = m_graphic->dwgAdvancedMetadata();
+  const auto &spaces = metadata.spaceBlockRecords();
+  std::set<std::string> seen;
+  for (const auto &layout : metadata.layouts()) {
+    if (layout.replayState !=
+        LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+      continue;
+    const auto space = spaces.find(layout.paperSpaceBlockRecordHandle);
+    if (space == spaces.end())
+      continue;
+    const QString name = QString::fromUtf8(space->second.c_str());
+    static const QRegularExpression numbered(
+        QStringLiteral("^\\*paper_space\\d+$"),
+        QRegularExpression::CaseInsensitiveOption);
+    if (numbered.match(name).hasMatch() &&
+        seen.insert(name.toLower().toStdString()).second)
+      names.push_back(space->second);
+  }
+  return names;
+}
+
+void RS_FilterDXFRW::installDxfBlockRecordRemap() {
+  // Block records are written under new handles; a reference to one follows
+  // it by name. The model and paper space records have fixed handles.
+  const auto written = [this](const std::string &name) {
+    return m_dxfW->getBlockRecordHandleToWrite(name);
+  };
+  for (const auto &[source, name] :
+       m_graphic->dwgAdvancedMetadata().spaceBlockRecords()) {
+    const QString lower = QString::fromUtf8(name.c_str()).toLower();
+    const std::uint32_t target = lower == QLatin1String("*model_space") ? 0x1Fu
+                                 : lower == QLatin1String("*paper_space")
+                                     ? 0x1Eu
+                                     : written(name);
+    if (target != DRW::NoHandle)
+      m_dxfW->addDxfWriteHandleRemap(source, target);
+  }
+  for (unsigned i = 0; i < m_graphic->countBlocks(); i++) {
+    const RS_Block *blk = m_graphic->blockAt(i);
+    if (blk->isDeleted() || blk->sourceHandle() == 0)
+      continue;
+    const std::uint32_t target = written(blk->getName().toUtf8().toStdString());
+    if (target != DRW::NoHandle)
+      m_dxfW->addDxfWriteHandleRemap(blk->sourceHandle(), target);
   }
 }
 
@@ -12251,7 +13263,8 @@ void RS_FilterDXFRW::writeBlocks() {
       }
       for (RS_Entity *entity :
            lc::LC_ContainerTraverser{*blk, RS2::ResolveNone}.entities()) {
-        if (!entity->getFlag(RS2::FlagDeleted) && consumed.count(entity) == 0) {
+        if (!entity->getFlag(RS2::FlagDeleted) && consumed.count(entity) == 0 &&
+            !writeDimArcSymbolAsArc(entity)) {
           writeEntity(entity);
         }
       }
@@ -12274,7 +13287,8 @@ void RS_FilterDXFRW::writeBlocks() {
   }
 #endif
 
-  RS_Block *blk;
+  if (m_version > 1009)
+    installDxfBlockRecordRemap();
 
   // write unnamed blocks
   QHash<RS_Entity *, QString>::const_iterator it = m_noNameBlock.constBegin();
@@ -12289,7 +13303,7 @@ void RS_FilterDXFRW::writeBlocks() {
     const auto ct = static_cast<RS_EntityContainer *>(it.key());
     for (RS_Entity *e :
          lc::LC_ContainerTraverser{*ct, RS2::ResolveNone}.entities()) {
-      if (e->isAlive()) {
+      if (e->isAlive() && !writeDimArcSymbolAsArc(e)) {
         writeEntity(e);
       }
     }
@@ -12315,7 +13329,14 @@ void RS_FilterDXFRW::writeBlocks() {
           writeEntity(e);
         }
       }
+      writeDxfShapes(blk->getName().toUtf8().toStdString());
     }
+  }
+
+  for (const std::string &name : m_dxfExtraPaperSpaces) {
+    DRW_Block block;
+    block.name = name;
+    noteDxfWrite(m_dxfW->writeBlock(&block));
   }
 }
 
@@ -12837,7 +13858,7 @@ bool RS_FilterDXFRW::prepareDwgDataStorageReplayPlan(DRW::Version version) {
                carrier.capabilityMaxVersion == capability.maxVersion;
       };
   const auto carrierCapabilityAvailable =
-      [this, version,
+      [version,
        &writerCapabilityMatches](const DwgDataStorageCarrier &carrier) {
         if (carrier.capability ==
                 DwgDataStorageCarrier::WriterCapability::None ||
@@ -12912,7 +13933,7 @@ bool RS_FilterDXFRW::prepareDwgDataStorageReplayPlan(DRW::Version version) {
     return false;
 
   const auto findMatchingRawSection =
-      [&, invalidIndex](const std::string &name, DRW::Version rawVersion) {
+      [&](const std::string &name, DRW::Version rawVersion) {
         std::size_t match = invalidIndex;
         for (std::size_t index = 0; index < metadata.rawDwgSections().size();
              ++index) {
@@ -14512,6 +15533,38 @@ bool RS_FilterDXFRW::stageDwgTableRecordIdentity(DwgWriteSourceKind kind,
   return true;
 }
 
+bool RS_FilterDXFRW::resolveDwgWriteAppIdHandle(
+    std::uint32_t sourceHandle, std::uint32_t *outputHandle) const {
+  if (outputHandle != nullptr)
+    *outputHandle = 0;
+  if (sourceHandle == DRW::NoHandle)
+    return true;
+  if (m_dwgW == nullptr || m_graphic == nullptr)
+    return false;
+  // Only an APPID record qualifies: the ledger keeps layers, styles and the
+  // other table records under the same kind.
+  for (const auto &entry :
+       m_graphic->dwgAdvancedMetadata().appIdTableEntries()) {
+    if (entry.second.handle != sourceHandle)
+      continue;
+    std::uint32_t resolved = 0;
+    if (normalizeDwgTableName(entry.first) == "ACAD") {
+      // writeAppId() leaves this record, and its handle, to the codec.
+      resolved = DRW::DwgAcadAppIdHandle;
+    } else {
+      const DwgWriteIdentityLookup state = lookupDwgWriteIdentity(
+          DwgWriteSourceKind::TableRecord, sourceHandle, &resolved);
+      if (state != DwgWriteIdentityLookup::Selected &&
+          state != DwgWriteIdentityLookup::Committed)
+        return false;
+    }
+    if (outputHandle != nullptr)
+      *outputHandle = resolved;
+    return resolved != 0;
+  }
+  return false;
+}
+
 bool RS_FilterDXFRW::commitDwgTableRecordIdentities() {
   if (m_dwgW == nullptr)
     return true;
@@ -14682,54 +15735,174 @@ bool RS_FilterDXFRW::commitDwgGeneratedEntityWrite(std::uint32_t outputHandle) {
 }
 
 void RS_FilterDXFRW::prepareDwgEntityHandleMap() {
-  if (m_dwgW == nullptr || !m_dwgWriteEntityHandleByEntity.empty())
+  if (m_dwgW == nullptr || m_graphic == nullptr ||
+      m_dwgWriteEntityHandleMapPrepared)
     return;
+  m_dwgWriteEntityHandleMapPrepared = true;
+  m_dwgWriteGeneratedEntityHandleByEntity.clear();
+  m_dwgWriteInsertChildHandlesByEntity.clear();
 
-  auto reserveContainerEntities = [this](RS_EntityContainer *container) {
-    if (container == nullptr)
-      return;
-    for (RS_Entity *entity :
-         lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
-      if (entity == nullptr || entity->getFlag(RS2::FlagDeleted))
-        continue;
-      // INSERT attributes are encoded inside the parent INSERT frame;
-      // they do not own independent output handles.
-      if (isGeneratedInsertAttrib(entity))
-        continue;
+  // R2000 entities are written with nolinks=1: an owner's entity chain is
+  // implied by consecutive handles, so the writer refuses an owner whose
+  // entity handles leave a gap (dwgWriter15::emitDeferredBlockControl).
+  // Source-backed entities get their handles here, before the table and
+  // control objects are written; everything else would get its handle only
+  // when it is encoded, after those objects. In an R2000 owner that holds a
+  // source-backed entity or an eligible metadata SHAPE, take every frame's
+  // handle here, including generated entities and ATTRIB..SEQEND children.
+  // SHAPEs follow the RS_Entity frames in each owner's allocation range;
+  // their identities are selected only by the native metadata writer.
+  const bool contiguousOwnerChains = m_dwgW->getVersion() <= DRW::AC1015;
+  std::map<std::uint32_t, std::vector<const DRW_Shape *>> shapesByOwner;
+  std::map<std::string, std::vector<const DRW_Shape *>> shapesByBlockName;
+  std::set<std::uint32_t> shapeHandles;
+  if (contiguousOwnerChains) {
+    for (const auto &prepared : m_shapesToExport) {
+      const DRW_Shape &shape = prepared.shape;
+      if (shape.handle == 0 || !shapeHandles.insert(shape.handle).second) {
+        m_writeFailed = true;
+        return;
+      }
+      if (!prepared.ownerBlockName.empty()) {
+        shapesByBlockName[normalizeDwgTableName(prepared.ownerBlockName)]
+            .push_back(&shape);
+      } else {
+        shapesByOwner[shape.parentHandle].push_back(&shape);
+      }
+    }
+  }
+
+  auto reserveContainerEntities = [&](RS_EntityContainer *container,
+                                       std::uint32_t ownerHandle,
+                                       const std::string &blockName) {
+    std::vector<const DRW_Shape *> ownerShapes;
+    if (const auto found = shapesByOwner.find(ownerHandle);
+        ownerHandle != 0 && found != shapesByOwner.end()) {
+      ownerShapes = std::move(found->second);
+      shapesByOwner.erase(found);
+    }
+    if (const auto found = shapesByBlockName.find(blockName);
+        !blockName.empty() && found != shapesByBlockName.end()) {
+      ownerShapes.insert(ownerShapes.end(), found->second.begin(),
+                         found->second.end());
+      shapesByBlockName.erase(found);
+    }
+    // An INSERT's attribute texts are encoded inside its frame, and a text
+    // the plan leaves out is not written: neither owns an output handle.
+    const auto hasOwnFrame = [this](const RS_Entity *entity) {
+      return entity != nullptr && !entity->getFlag(RS2::FlagDeleted) &&
+             !hasNoOwnRecord(entity);
+    };
+    const std::vector<RS_Entity *> entities =
+        container == nullptr
+            ? std::vector<RS_Entity *>{}
+            : lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities();
+    const bool reserveAll =
+        contiguousOwnerChains &&
+        (!ownerShapes.empty() ||
+         std::any_of(entities.cbegin(), entities.cend(),
+                     [&hasOwnFrame](const RS_Entity *entity) {
+                       return hasOwnFrame(entity) && entity->sourceHandle() != 0;
+                     }));
+
+    const auto reserve = [&](RS_Entity *entity) {
       const std::uint32_t sourceHandle = entity->sourceHandle();
-      if (sourceHandle == 0)
-        continue;
-      noteDwgWriteSourceKind(
-          sourceHandle,
-          RS_FilterDXFRW_DwgWriteIdentityRegistry::DwgWriteSourceKind::Entity);
+      if (shapeHandles.count(sourceHandle) != 0) {
+        m_writeFailed = true;
+        return;
+      }
+      if (sourceHandle != 0)
+        noteDwgWriteSourceKind(sourceHandle,
+                               RS_FilterDXFRW_DwgWriteIdentityRegistry::
+                                   DwgWriteSourceKind::Entity);
 
       const std::uint32_t emittedHandle = m_dwgW->allocNextHandle();
       if (emittedHandle == 0) {
         m_writeFailed = true;
-        continue;
+        return;
       }
-      if (!selectDwgWriteIdentity(RS_FilterDXFRW_DwgWriteIdentityRegistry::
-                                      DwgWriteSourceKind::Entity,
-                                  sourceHandle, emittedHandle)) {
+      if (sourceHandle == 0) {
+        // No identity is selected here: the entity is still committed as a
+        // generated entity when it is written. Only its handle is taken.
+        m_dwgWriteGeneratedEntityHandleByEntity.emplace(entity, emittedHandle);
+      } else {
+        if (!selectDwgWriteIdentity(RS_FilterDXFRW_DwgWriteIdentityRegistry::
+                                        DwgWriteSourceKind::Entity,
+                                    sourceHandle, emittedHandle)) {
+          m_writeFailed = true;
+          return;
+        }
+        m_dwgWriteEntityHandleByEntity.emplace(entity, emittedHandle);
+        const bool inserted =
+            m_dwgWriteEntityHandleRemap.emplace(sourceHandle, emittedHandle)
+                .second;
+        if (!inserted) {
+          m_dwgWriteDuplicateEntityHandles.insert(sourceHandle);
+        }
+      }
+
+      if (!reserveAll || entity->rtti() != RS2::EntityInsert)
+        return;
+      const auto planned = m_insertAttribPlan.children.find(entity);
+      if (planned == m_insertAttribPlan.children.end() || planned->second.empty())
+        return;
+      // One handle per ATTRIB, then the SEQEND.
+      std::vector<std::uint32_t> childHandles;
+      childHandles.reserve(planned->second.size() + 1);
+      for (std::size_t index = 0; index <= planned->second.size(); ++index) {
+        const std::uint32_t childHandle = m_dwgW->allocNextHandle();
+        if (childHandle == 0) {
+          m_writeFailed = true;
+          break;
+        }
+        childHandles.push_back(childHandle);
+      }
+      m_dwgWriteInsertChildHandlesByEntity.emplace(entity,
+                                                   std::move(childHandles));
+    };
+
+    for (RS_Entity *entity : entities) {
+      if (hasOwnFrame(entity) && entity->sourceHandle() != 0)
+        reserve(entity);
+      if (m_writeFailed)
+        return;
+    }
+    if (!reserveAll)
+      return;
+    for (RS_Entity *entity : entities) {
+      if (hasOwnFrame(entity) && entity->sourceHandle() == 0)
+        reserve(entity);
+      if (m_writeFailed)
+        return;
+    }
+    for (const DRW_Shape *shape : ownerShapes) {
+      const std::uint32_t emittedHandle = m_dwgW->allocNextHandle();
+      if (emittedHandle == 0) {
         m_writeFailed = true;
-        continue;
+        return;
       }
-      m_dwgWriteEntityHandleByEntity.emplace(entity, emittedHandle);
-      const bool inserted =
-          m_dwgWriteEntityHandleRemap.emplace(sourceHandle, emittedHandle)
-              .second;
-      if (!inserted) {
-        m_dwgWriteDuplicateEntityHandles.insert(sourceHandle);
-      }
+      noteDwgWriteSourceKind(shape->handle, DwgWriteSourceKind::Entity);
+      m_dwgWriteHandleRemap[shape->handle] = emittedHandle;
     }
   };
 
-  reserveContainerEntities(m_graphic);
+  reserveContainerEntities(m_graphic, DRW::DwgModelSpaceBlockRecordHandle, {});
+  if (m_writeFailed)
+    return;
+  reserveContainerEntities(nullptr, DRW::DwgPaperSpaceBlockRecordHandle, {});
+  if (m_writeFailed)
+    return;
   for (unsigned i = 0; i < m_graphic->countBlocks(); ++i) {
     RS_Block *block = m_graphic->blockAt(i);
     if (block != nullptr && !block->isDeleted())
-      reserveContainerEntities(block);
+      reserveContainerEntities(
+          block, block->sourceHandle(),
+          normalizeDwgTableName(block->getName().toUtf8().toStdString()));
+    if (m_writeFailed)
+      return;
   }
+  if (!shapesByOwner.empty() || !shapesByBlockName.empty())
+    m_writeFailed = true;
 }
 
 bool RS_FilterDXFRW::prepareDwgExportAdmissionPlan() {
@@ -15183,22 +16356,79 @@ bool RS_FilterDXFRW::prepareDwgFieldWritePlan() {
       candidate.metadataIndex = index;
       candidate.sourceHandle = record.handle;
       candidate.replayState = record.replayState;
-      candidate.sourceAuthorization =
-          metadata.authorizeDwgFieldListSource(record).status;
+      {
+        const auto authorization =
+            metadata.authorizeDwgFieldListSourceForExport(record);
+        candidate.sourceAuthorization = authorization.status;
+        candidate.framelessMembers = authorization.framelessMembers;
+      }
       candidate.payload = fieldListFromMetadata(record);
       if (!canWriteDwgFieldListRecord(metadata, record, candidate.payload,
                                       plan.version)) {
         plan.valid = false;
         break;
       }
+      // Each member is a soft pointer to a FIELD. A member that resolves to
+      // an emitted FIELD candidate is written as such. A member that names
+      // nothing at all is dropped with a warning, exactly as every other
+      // dangling soft pointer of this writer is (dictionary entries, XRECORD
+      // handle values, evaluation-graph expressions, view references): the
+      // emitted list never carries a pointer that cannot be resolved, and a
+      // pointer to an object that is not there cannot be honoured anyway. A
+      // member that names something that does exist -- a FIELD record this
+      // export cannot write, another kind of object, an ambiguous or
+      // suppressed identity -- is different: leaving it out would silently
+      // lose part of the document, and pointing it at a non-FIELD would
+      // write a misleading list, so the export is refused as before.
+      //
+      // A list read from a DWG adds a second condition. The receipts record
+      // what the source file held, so a member of such a list is dropped only
+      // if the receipt proves that it names no object frame of that file (no
+      // FIELD frame published for it, no frame of any kind in the coverage
+      // report; see authorizeDwgFieldListSourceForExport). The registry alone
+      // does not decide it there: a member whose frame the file does have,
+      // but that the export cannot resolve, is a real problem to refuse, not
+      // a dangling pointer to forget.
+      const bool sourceBacked =
+          candidate.sourceAuthorization !=
+          LC_DwgAdvancedMetadata::DwgFieldListSourceAuthorizationStatus::
+              NotDwgSource;
+      const auto isDanglingMember = [this, &candidate,
+                                     sourceBacked](std::uint32_t handle,
+                                                   std::size_t ordinal) {
+        if (resolveDwgWriteObjectHandle(handle) !=
+                DwgWriteReferenceStatus::Missing ||
+            hasDwgWriteSourceKind(handle)) {
+          return false;
+        }
+        return !sourceBacked ||
+               std::find(candidate.framelessMembers.cbegin(),
+                         candidate.framelessMembers.cend(),
+                         static_cast<std::uint32_t>(ordinal)) !=
+                   candidate.framelessMembers.cend();
+      };
+      candidate.memberDropped.assign(candidate.payload.m_fieldHandles.size(),
+                                     false);
       candidate.fieldCandidateIndexes.reserve(candidate.payload.m_fieldHandles.size());
-      for (std::uint32_t fieldHandle : candidate.payload.m_fieldHandles) {
+      for (std::size_t ordinal = 0;
+           ordinal < candidate.payload.m_fieldHandles.size(); ++ordinal) {
+        const std::uint32_t fieldHandle =
+            candidate.payload.m_fieldHandles[ordinal];
         if (fieldHandle == DRW::NoHandle)
           continue;
         const auto field = plan.fieldCandidateIndexes.find(fieldHandle);
         if (field == plan.fieldCandidateIndexes.cend()) {
-          plan.valid = false;
-          break;
+          if (!isDanglingMember(fieldHandle, ordinal)) {
+            plan.valid = false;
+            break;
+          }
+          RS_DEBUG->print(
+              RS_Debug::D_WARNING,
+              "RS_FilterDXFRW: dropping dangling DWG FIELDLIST field target "
+              "0x%X",
+              fieldHandle);
+          candidate.memberDropped[ordinal] = true;
+          continue;
         }
         candidate.fieldCandidateIndexes.push_back(field->second);
       }
@@ -15276,9 +16506,14 @@ bool RS_FilterDXFRW::validateDwgFieldWritePlan(
             candidate.sourceHandle ||
         metadata.fieldLists()[candidate.metadataIndex].replayState !=
             candidate.replayState ||
-        metadata.authorizeDwgFieldListSource(
+        metadata
+                .authorizeDwgFieldListSourceForExport(
                     metadata.fieldLists()[candidate.metadataIndex])
                 .status != candidate.sourceAuthorization ||
+        metadata
+                .authorizeDwgFieldListSourceForExport(
+                    metadata.fieldLists()[candidate.metadataIndex])
+                .framelessMembers != candidate.framelessMembers ||
         !LC_DwgAdvancedMetadata::matchesDwgFieldListRecord(
             metadata.fieldLists()[candidate.metadataIndex], candidate.payload)) {
       return false;
@@ -15289,9 +16524,15 @@ bool RS_FilterDXFRW::validateDwgFieldWritePlan(
         indexIt->second != candidateIndex) {
       return false;
     }
+    if (candidate.memberDropped.size() !=
+        candidate.payload.m_fieldHandles.size()) {
+      return false;
+    }
     std::size_t referenceIndex = 0;
-    for (std::uint32_t fieldHandle : candidate.payload.m_fieldHandles) {
-      if (fieldHandle == DRW::NoHandle)
+    for (std::size_t ordinal = 0;
+         ordinal < candidate.payload.m_fieldHandles.size(); ++ordinal) {
+      const std::uint32_t fieldHandle = candidate.payload.m_fieldHandles[ordinal];
+      if (fieldHandle == DRW::NoHandle || candidate.isMemberDropped(ordinal))
         continue;
       if (referenceIndex >= candidate.fieldCandidateIndexes.size() ||
           candidate.fieldCandidateIndexes[referenceIndex] >=
@@ -15485,7 +16726,7 @@ bool RS_FilterDXFRW::validateDwgFieldWriteReceipts() const {
     for (std::size_t ordinal = 0;
          ordinal < candidate.payload.m_fieldHandles.size(); ++ordinal) {
       const std::uint32_t sourceHandle = candidate.payload.m_fieldHandles[ordinal];
-      if (sourceHandle == DRW::NoHandle)
+      if (sourceHandle == DRW::NoHandle || candidate.isMemberDropped(ordinal))
         continue;
       if (referenceIndex >= candidate.fieldCandidateIndexes.size())
         return false;
@@ -15712,6 +16953,74 @@ RS_FilterDXFRW::dwgOpaqueTableFailureKindName(DwgOpaqueTableFailureKind kind) {
     return "table-record-receipt";
   }
   return "unknown";
+}
+
+RS2::FormatType RS_FilterDXFRW::formatForDwgVersion(const DRW::Version version) {
+  switch (version) {
+  case DRW::AC1015:
+    return RS2::FormatDWG;
+  case DRW::AC1018:
+    return RS2::FormatDWG2004;
+  case DRW::AC1021:
+    return RS2::FormatDWG2007;
+  case DRW::AC1024:
+    return RS2::FormatDWG2010;
+  case DRW::AC1027:
+    return RS2::FormatDWG2013;
+  case DRW::AC1032:
+    return RS2::FormatDWG2018;
+  default: // R14 and older
+    return RS2::FormatUnknown;
+  }
+}
+
+QString RS_FilterDXFRW::exportReport() const {
+  QStringList lines;
+  if (m_dxfLeftOutRawRecords > 0) {
+    lines << QObject::tr("%1 object(s) read from another DXF version, which "
+                         "this version cannot hold", "RS_FilterDXFRW")
+                 .arg(m_dxfLeftOutRawRecords);
+  }
+  for (const auto &[what, count] : m_writeLeftOut)
+    lines << QStringLiteral("%1 × %2").arg(count).arg(QString::fromStdString(what));
+  for (const auto &[what, count] : m_shapeLeftOut)
+    lines << QStringLiteral("%1 × %2").arg(count).arg(QString::fromStdString(what));
+  if (m_exportAttribScaleDataLeftOut > 0) {
+    lines << QObject::tr(
+                 "annotation scale or column data of %1 multi-line attribute(s)",
+                 "RS_FilterDXFRW")
+                 .arg(m_exportAttribScaleDataLeftOut);
+  }
+#ifdef DWGSUPPORT
+  if (m_lastDwgWriteSkipCounters.total() > 0) {
+    lines << QObject::tr("%1 object(s) DWG cannot hold", "RS_FilterDXFRW")
+                 .arg(m_lastDwgWriteSkipCounters.total());
+  }
+#endif
+  return lines.join(QLatin1Char('\n'));
+}
+
+RS2::FormatType RS_FilterDXFRW::formatForDxfVersion(const DRW::Version version) {
+  switch (version) {
+  case DRW::AC1012:
+  case DRW::AC1014:
+    return RS2::FormatDXFRW14;
+  case DRW::AC1015:
+    return RS2::FormatDXFRW2000;
+  case DRW::AC1018:
+    return RS2::FormatDXFRW2004;
+  case DRW::AC1021:
+  case DRW::UNKNOWNV:
+    return RS2::FormatDXFRW;
+  case DRW::AC1024:
+    return RS2::FormatDXFRW2010;
+  case DRW::AC1027:
+    return RS2::FormatDXFRW2013;
+  case DRW::AC1032:
+    return RS2::FormatDXFRW2018;
+  default: // R12 and older
+    return RS2::FormatDXFRW12;
+  }
 }
 
 QString RS_FilterDXFRW::dwgExportAdmissionReport() const {
@@ -16530,7 +17839,7 @@ bool RS_FilterDXFRW::prepareDwgEntityWritePlans() {
     for (RS_Entity *entity :
          lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
       if (entity == nullptr || entity->getFlag(RS2::FlagDeleted) ||
-          isGeneratedInsertAttrib(entity) || entity->sourceHandle() == 0) {
+          hasNoOwnRecord(entity) || entity->sourceHandle() == 0) {
         continue;
       }
 
@@ -18321,16 +19630,124 @@ void RS_FilterDXFRW::writeDwgClasses() {
 #endif
 }
 
+namespace {
+// DXF cannot hold these in a name.
+bool isWritableLineTypeName(const QString &name) {
+  return !name.contains(QLatin1Char('\r')) &&
+         !name.contains(QLatin1Char('\n')) && !name.contains(QChar(u'\0'));
+}
+
+// A pen whose name means its own built-in, or cannot be written, uses the
+// built-in's name.
+QString lineTypeNameToWrite(const RS_Pen &pen) {
+  if (pen.getLineTypeFoldId() != 0) {
+    QString name = pen.getLineTypeName();
+    if (isWritableLineTypeName(name))
+      return name;
+  }
+  return LC_LineTypeNames::lineTypeToName(pen.getLineType());
+}
+
+// Every linetype name a writer emits as a string, first seen first, each once.
+// It walks what the writers walk: the top level of model space and of each
+// block, the children of pattern hatches, dimension overrides, layers, dim
+// styles, header variables and MLINESTYLE elements. Names given by handle are
+// left out: a handle only resolves through a record the file already has.
+std::vector<QString> referencedLineTypeNames(RS_Graphic &graphic) {
+  std::vector<QString> names;
+  QSet<QString> seenNames;
+  std::unordered_set<std::uint16_t> seenIds;
+  const auto addName = [&](const QString &name) {
+    if (name.trimmed().isEmpty() || !isWritableLineTypeName(name) ||
+        seenNames.contains(name))
+      return;
+    seenNames.insert(name);
+    names.push_back(name);
+  };
+  const auto addPen = [&](const RS_Pen &pen) {
+    if (pen.getLineTypeFoldId() != 0 &&
+        seenIds.insert(pen.getLineTypeId()).second)
+      addName(pen.getLineTypeName());
+  };
+  const auto addDimStyle = [&](const LC_DimStyle &style) {
+    addName(style.dimensionLine()->lineTypeName());
+    addName(style.extensionLine()->lineTypeFirstRaw());
+    addName(style.extensionLine()->lineTypeSecondRaw());
+  };
+  const auto addEntities = [&](const RS_EntityContainer &container) {
+    for (RS_Entity *e :
+         lc::LC_ContainerTraverser{container, RS2::ResolveNone}.entities()) {
+      if (e->getFlag(RS2::FlagDeleted))
+        continue;
+      addPen(e->getPen(false));
+      switch (e->rtti()) {
+      case RS2::EntityDimLinear:
+      case RS2::EntityDimOrdinate:
+      case RS2::EntityDimAligned:
+      case RS2::EntityDimAngular:
+      case RS2::EntityDimRadial:
+      case RS2::EntityDimDiametric:
+      case RS2::EntityDimArc:
+        if (const LC_DimStyle *style =
+                static_cast<RS_Dimension *>(e)->getDimStyleOverride())
+          addDimStyle(*style);
+        break;
+      case RS2::EntityHatch:
+        // R12 writes the pattern children with their own pens.
+        if (!static_cast<RS_Hatch *>(e)->isSolid()) {
+          for (RS_Entity *child :
+               lc::LC_ContainerTraverser{*static_cast<RS_Hatch *>(e),
+                                         RS2::ResolveNone}
+                   .entities())
+            addPen(child->getPen(false));
+        }
+        break;
+      default:
+        break;
+      }
+    }
+  };
+
+  addEntities(graphic);
+  for (unsigned i = 0; i < graphic.countBlocks(); i++) {
+    const RS_Block *block = graphic.blockAt(i);
+    if (!block->isDeleted())
+      addEntities(*block);
+  }
+  const RS_LayerList *layers = graphic.getLayerList();
+  for (unsigned i = 0; i < layers->count(); i++)
+    addPen(layers->at(i)->getPen());
+  for (const LC_DimStyle *style : *graphic.getDimStyleList()->getStylesList())
+    addDimStyle(*style);
+  for (const char *key : {"$CELTYPE", "$DIMLTYPE", "$DIMLTEX1", "$DIMLTEX2"})
+    addName(graphic.getVariableString(QLatin1String(key), QString()));
+  for (const auto &style : graphic.dwgAdvancedMetadata().mlineStyles()) {
+    for (const auto &element : style.elements)
+      addName(QString::fromStdString(element.linetype));
+  }
+  return names;
+}
+} // namespace
+
 void RS_FilterDXFRW::writeLType(const UTF8STRING &lTypeName,
                                 const UTF8STRING &ltDescription, int ltSize,
                                 double ltLength,
                                 const std::vector<double> &ltPath) {
+  m_builtinLTypePaths[normalizeDwgTableName(lTypeName)] = ltPath;
   DRW_LType ltype;
   ltype.updateValues(lTypeName, ltDescription, ltSize, ltLength, ltPath);
   if (const auto *source =
           m_graphic->dwgAdvancedMetadata().findLineTypeTableEntryByName(
               lTypeName)) {
-    ltype = *source;
+    if (source->path.empty() && source->segments.empty() && !ltPath.empty()) {
+      // A record that only names a built-in keeps its identity, not an empty
+      // pattern: copy the table entry part and leave the dashes to the literal.
+      static_cast<DRW_TableEntry &>(ltype) = *source;
+      if (!source->desc.empty())
+        ltype.desc = source->desc;
+    } else {
+      ltype = *source;
+    }
   }
   m_builtinLTypeNames.insert(normalizeDwgTableName(lTypeName));
   (void)writeLTypeRecord(ltype);
@@ -18362,76 +19779,12 @@ bool RS_FilterDXFRW::writeLTypeRecord(DRW_LType &ltype) {
 
 void RS_FilterDXFRW::writeLTypes() {
   m_builtinLTypeNames.clear();
-  writeLType("CONTINUOUS", "Solid line", 0, 0, {});
-  writeLType("ByLayer", "", 0, 0, {});
-  writeLType("ByBlock", "", 0, 0, {});
-  writeLType("DOT", "Dot . . . . . . . . . . . . . . . . . . . . . .", 2, 6.35,
-             {0.0, -6.35});
-  writeLType("DOTTINY", "Dot (.15x) .....................................", 2,
-             0.9525, {0.0, -0.9525});
-  writeLType("DOT2", "Dot (.5x) .....................................", 2,
-             3.175, {0.0, -3.175});
-  writeLType("DOTX2", "Dot (2x) .  .  .  .  .  .  .  .  .  .  .  .  .", 2, 12.7,
-             {0.0, -12.7});
-  writeLType("DASHED", "Dashed _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _", 2, 19.05,
-             {12.7, -6.35});
-  writeLType("DASHEDTINY", "Dashed (.15x) _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _", 2,
-             2.8575, {1.905, -0.9525});
-  writeLType("DASHED2", "Dashed (.5x) _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _", 2,
-             9.525, {6.35, -3.175});
-  writeLType("DASHEDX2", "Dashed (2x) ____  ____  ____  ____  ____  ___", 2,
-             38.1, {25.4, -12.7});
-  // acad.lin: HIDDEN A,.25,-.125 / HIDDEN2 A,.125,-.0625 / HIDDENX2 A,.5,-.25
-  writeLType("HIDDEN", "Hidden __ __ __ __ __ __ __ __ __ __ __ __ __ __", 2,
-             9.525, {6.35, -3.175});
-  writeLType("HIDDENTINY", "Hidden (.15x) _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _", 2,
-             1.42875, {0.9525, -0.47625});
-  writeLType("HIDDEN2", "Hidden (.5x) _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _", 2,
-             4.7625, {3.175, -1.5875});
-  writeLType("HIDDENX2", "Hidden (2x) ____ ____ ____ ____ ____ ____ ____", 2,
-             19.05, {12.7, -6.35});
-  writeLType("DASHDOT", "Dash dot __ . __ . __ . __ . __ . __ . __ . __", 4,
-             25.4, {12.7, -6.35, 0.0, -6.35});
-  writeLType("DASHDOTTINY", "Dash dot (.15x) _._._._._._._._._._._._._._._.", 4,
-             3.81, {1.905, -0.9525, 0.0, -0.9525});
-  writeLType("DASHDOT2", "Dash dot (.5x) _._._._._._._._._._._._._._._.", 4,
-             12.7, {6.35, -3.175, 0.0, -3.175});
-  writeLType("DASHDOTX2", "Dash dot (2x) ____  .  ____  .  ____  .  ___", 4,
-             50.8, {25.4, -12.7, 0.0, -12.7});
-  writeLType("DIVIDE", "Divide ____ . . ____ . . ____ . . ____ . . ____", 6,
-             31.75, {12.7, -6.35, 0.0, -6.35, 0.0, -6.35});
-  writeLType("DIVIDETINY", "Divide (.15x) __..__..__..__..__..__..__..__.._", 6,
-             4.7625, {1.905, -0.9525, 0.0, -0.9525, 0.0, -0.9525});
-  writeLType("DIVIDE2", "Divide (.5x) __..__..__..__..__..__..__..__.._", 6,
-             15.875, {6.35, -3.175, 0.0, -3.175, 0.0, -3.175});
-  writeLType("DIVIDEX2", "Divide (2x) ________  .  .  ________  .  .  _", 6,
-             63.5, {25.4, -12.7, 0.0, -12.7, 0.0, -12.7});
-  writeLType("BORDER", "Border __ __ . __ __ . __ __ . __ __ . __ __ .", 6,
-             44.45, {12.7, -6.35, 12.7, -6.35, 0.0, -6.35});
-  writeLType("BORDERTINY", "Border (.15x) __.__.__.__.__.__.__.__.__.__.__.", 6,
-             6.6675, {1.905, -0.9525, 1.905, -0.9525, 0.0, -0.9525});
-  writeLType("BORDER2", "Border (.5x) __.__.__.__.__.__.__.__.__.__.__.", 6,
-             22.225, {6.35, -3.175, 6.35, -3.175, 0.0, -3.175});
-  writeLType("BORDERX2", "Border (2x) ____  ____  .  ____  ____  .  ___", 6,
-             88.9, {25.4, -12.7, 25.4, -12.7, 0.0, -12.7});
-  writeLType("CENTER", "Center ____ _ ____ _ ____ _ ____ _ ____ _ ____", 4,
-             50.8, {31.75, -6.35, 6.35, -6.35});
-  writeLType("CENTERTINY", "Center (.15x) ___ _ ___ _ ___ _ ___ _ ___ _ ___", 4,
-             7.62, {4.7625, -0.9525, 0.9525, -0.9525});
-  writeLType("CENTER2", "Center (.5x) ___ _ ___ _ ___ _ ___ _ ___ _ ___", 4,
-             28.575, {19.05, -3.175, 3.175, -3.175});
-  writeLType("CENTERX2", "Center (2x) ________  __  ________  __  _____", 4,
-             101.6, {63.5, -12.7, 12.7, -12.7});
-  // acad.lin: PHANTOM A,1.25,-.25,.25,-.25,.25,-.25; PHANTOM2 and PHANTOMX2
-  // are its .5x and 2x.
-  writeLType("PHANTOM", "Phantom ______  __  __  ______  __  __  ______", 6,
-             63.5, {31.75, -6.35, 6.35, -6.35, 6.35, -6.35});
-  writeLType("PHANTOMTINY", "Phantom (.15x) ___ _ _ ___ _ _ ___ _ _ ___ _ _", 6,
-             9.525, {4.7625, -0.9525, 0.9525, -0.9525, 0.9525, -0.9525});
-  writeLType("PHANTOM2", "Phantom (.5x) ___ _ _ ___ _ _ ___ _ _ ___ _ _", 6,
-             31.75, {15.875, -3.175, 3.175, -3.175, 3.175, -3.175});
-  writeLType("PHANTOMX2", "Phantom (2x) ____________    ____    ____   _", 6,
-             127.0, {63.5, -12.7, 12.7, -12.7, 12.7, -12.7});
+  m_builtinLTypePaths.clear();
+  for (const auto &row : LC_LineTypeNames::builtinMetrics()) {
+    writeLType(LC_LineTypeNames::lineTypeToName(row.type).toStdString(),
+               row.description, static_cast<int>(row.pattern.size()),
+               row.length, row.pattern);
+  }
   // Imported LTYPE records that are not part of the built-in table above are
   // re-emitted as they came in; writeLType() records the built-in names so a
   // new built-in type cannot end up written twice.
@@ -18442,6 +19795,39 @@ void RS_FilterDXFRW::writeLTypes() {
       continue;
     DRW_LType ltype = entry.second;
     (void)writeLTypeRecord(ltype);
+  }
+  // A name that only a pen, a layer or a style gives still needs a record.
+  // It gets the dashes of the built-in it is drawn as, which are none for a
+  // name LibreCAD does not know. These records only add to the ones above.
+  // Blanks around a string do not make another name: pens have none, so
+  // names without them go first, and a padded one adds a record only for a
+  // name that has none yet.
+  std::vector<QString> names = referencedLineTypeNames(*m_graphic);
+  std::stable_partition(names.begin(), names.end(), [](const QString &name) {
+    return name.trimmed() == name;
+  });
+  for (const QString &name : names) {
+    const std::string utf8 = name.toStdString();
+    const std::string trimmed =
+        normalizeDwgTableName(name.trimmed().toStdString());
+    if (emittedNames.count(trimmed) != 0 ||
+        !emittedNames.insert(normalizeDwgTableName(utf8)).second)
+      continue;
+    emittedNames.insert(trimmed);
+    const std::string family = normalizeDwgTableName(
+        LC_LineTypeNames::lineTypeToName(
+            LC_LineTypeNames::nameToLineType(name))
+            .toStdString());
+    const auto literal = m_builtinLTypePaths.find(family);
+    const std::vector<double> path = literal != m_builtinLTypePaths.end()
+                                         ? literal->second
+                                         : std::vector<double>{};
+    double length = 0.0;
+    for (const double dash : path)
+      length += std::fabs(dash);
+    DRW_LType marker;
+    marker.updateValues(utf8, "", static_cast<int>(path.size()), length, path);
+    (void)writeLTypeRecord(marker);
   }
 }
 
@@ -18454,10 +19840,10 @@ void RS_FilterDXFRW::writeLayers() {
     RS_Layer *l = ll->at(i);
     RS_Pen pen = l->getPen();
     lay.name = l->getName().toUtf8().data();
-    lay.color = colorToNumber(pen.getColor(), &exact_rgb);
+    lay.color = LC_ColorNumbers::colorToNumber(pen.getColor(), &exact_rgb);
     lay.color24 = exact_rgb;
     lay.lWeight = widthToNumber(pen.getWidth());
-    lay.lineType = lineTypeToName(pen.getLineType()).toStdString();
+    lay.lineType = lineTypeNameToWrite(pen).toStdString();
     lay.flags = l->isFrozen() ? 0x01 : 0x00;
     if (l->isLocked()) {
       lay.flags |= 0x04;
@@ -18505,7 +19891,23 @@ void RS_FilterDXFRW::writeLayers() {
           !stageDwgTableRecordIdentity(DwgWriteSourceKind::TableRecord,
                                        sourceHandle, lay.handle))
         m_writeFailed = true;
+      else
+        m_dwgWriteLayerHandleByName[normalizeDwgTableName(lay.name)] =
+            lay.handle;
     } else {
+      // The plot style (390) is named only if its placeholder is written.
+      lay.handlePlotS.clear();
+      if (const auto *sourceLayer =
+              m_graphic->dwgAdvancedMetadata().findLayerTableEntryByName(
+                  lay.name)) {
+        std::uint32_t plotStyle = sourceLayer->plotStyleHandle.ref;
+        if (plotStyle == 0 && !sourceLayer->handlePlotS.empty())
+          plotStyle = static_cast<std::uint32_t>(
+              std::strtoul(sourceLayer->handlePlotS.c_str(), nullptr, 16));
+        if (plotStyle != 0 && m_dxfEmittedObjectHandles.count(plotStyle) != 0)
+          lay.handlePlotS =
+              m_dxfW->toHexStrHandle(m_dxfW->remapHandle(plotStyle));
+      }
       noteDxfWrite(m_dxfW->writeLayer(&lay));
     }
   }
@@ -18904,6 +20306,12 @@ void RS_FilterDXFRW::writeTextstyles() {
     ts = entry.second;
     (void)writeTextStyleRecord(ts);
   }
+  for (const auto &[handle, source] : metadata.textStyles()) {
+    if (source.name.empty() && (source.flags & 1) != 0) {
+      ts = source;
+      (void)writeTextStyleRecord(ts);
+    }
+  }
   QHash<QString, QString>::const_iterator it = styles.constBegin();
   while (it != styles.constEnd()) {
     if (!emittedNames.insert(normalizeDwgTableName(it.key().toStdString()))
@@ -18920,6 +20328,10 @@ void RS_FilterDXFRW::writeTextstyles() {
 }
 
 bool RS_FilterDXFRW::writeTextStyleRecord(DRW_Textstyle &textStyle) {
+  if (const auto path = m_shapeFileResolvedPaths.find(textStyle.handle);
+      path != m_shapeFileResolvedPaths.end()) {
+    textStyle.font = path->second.toStdString();
+  }
   if (m_dwgW != nullptr) {
     if (hasDxfTableAppDataUnsupportedByDwg(textStyle)) {
       RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -18933,8 +20345,9 @@ bool RS_FilterDXFRW::writeTextStyleRecord(DRW_Textstyle &textStyle) {
         stageDwgTableRecordIdentity(RS_FilterDXFRW_DwgWriteIdentityRegistry::
                                         DwgWriteSourceKind::TableRecord,
                                     sourceHandle, textStyle.handle)) {
-      m_dwgWriteTextStyleHandleByName[normalizeDwgTableName(textStyle.name)] =
-          textStyle.handle;
+      if (!textStyle.name.empty())
+        m_dwgWriteTextStyleHandleByName[normalizeDwgTableName(textStyle.name)] =
+            textStyle.handle;
       return true;
     }
     m_writeFailed = true;
@@ -19030,12 +20443,7 @@ void RS_FilterDXFRW::writeVports() {
     if (m_dwgW->getVersion() >= DRW::AC1015 && hasViewportEntityReferences) {
       prepareDwgEntityHandleMap();
     }
-    const std::uint32_t activeSourceHandle = vp.handle;
-    const bool importedActiveSource =
-        activeSourceHandle != 0 &&
-        activeSourceHandle != DRW_Vport::kDwgActiveHandle &&
-        metadata.isImportedVportSource(activeSourceHandle, vp.name);
-    const std::uint32_t sourceHandle = activeSourceHandle;
+    const std::uint32_t sourceHandle = vp.handle;
     if (!m_dwgW->addVport(&vp)) {
       m_writeFailed = true;
       return;
@@ -19123,12 +20531,11 @@ void RS_FilterDXFRW::writeVports() {
           normalizedName.begin(), normalizedName.end(), normalizedName.begin(),
           [](unsigned char c) { return static_cast<char>(std::toupper(c)); });
       if (normalizedName == "*ACTIVE") {
-        // The writer always emits the canonical active record. An
-        // imported copy with its fixed source identity is therefore
-        // already represented; any other active-name record is an
-        // ambiguous second table identity.
-        if (record.handle == DRW_Vport::kDwgActiveHandle ||
-            (importedActiveSource && record.handle == activeSourceHandle))
+        // The writer always emits the canonical active record. It stands
+        // for every active record a reader delivered: a drawing with tiled
+        // viewports has one for each of them. An active-name record from
+        // anywhere else is an ambiguous second table identity.
+        if (record.handle == DRW_Vport::kDwgActiveHandle || record.imported)
           continue;
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_FilterDXFRW: duplicate generated DWG VPORT "
@@ -19283,7 +20690,7 @@ void RS_FilterDXFRW::writeVports() {
       return outputHandle;
     };
     auto remapViewportHeaderReference =
-        [this, &remapHandle, &viewportHeaderHandles,
+        [&remapHandle, &viewportHeaderHandles,
          &dropReason](std::uint32_t sourceHandle, const char *referenceKind,
                       std::vector<PendingOptionalDrop> &drops) {
           if (sourceHandle == DRW::NoHandle)
@@ -19524,7 +20931,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleExtLine(DRW_Dimstyle &d,
   if (extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMCLRE)) {
     auto lineColor = extLine->color();
     int colRGB;
-    int colNum = colorToNumber(lineColor, &colRGB);
+    int colNum = LC_ColorNumbers::colorToNumber(lineColor, &colRGB);
     d.add("$DIMCLRE", 177, colNum);
   }
   if (extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMSE1)) {
@@ -19573,7 +20980,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleDimLine(DRW_Dimstyle &d,
   if (dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMCLRD)) {
     auto lineColor = dimLine->color();
     int colRGB;
-    int colNum = colorToNumber(lineColor, &colRGB);
+    int colNum = LC_ColorNumbers::colorToNumber(lineColor, &colRGB);
     d.add("$DIMCLRD", 176, colNum);
   }
   if (dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMSD1)) {
@@ -19601,7 +21008,17 @@ RS_FilterDXFRW::findLineTypeHandleToWrite(const QString &name) const {
   if (m_dxfW == nullptr) {
     return DRW::NoHandle;
   }
-  std::string lineName = name.toUpper().toStdString();
+  // lineTypesMap is keyed by a byte-wise fold of the UTF-8 name, which a Qt
+  // case mapping does not reproduce for a name holding lower-case non-ASCII.
+  std::string lineName = normalizeDwgTableName(name.toStdString());
+  // ByLayer and Continuous are written at fixed handles, outside the map.
+  // ByBlock gets no reference: a missing one already means ByBlock.
+  if (m_dxfW->getVersion() > DRW::AC1009) {
+    if (lineName == "BYLAYER")
+      return 0x15;
+    if (lineName == "CONTINUOUS")
+      return 0x16;
+  }
   for (auto p : m_dxfW->getWritingContext()->lineTypesMap) {
     if (p.first.compare(lineName) == 0) {
       return p.second;
@@ -19646,7 +21063,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleText(DRW_Dimstyle &d,
   if (text->checkModifyState(LC_DimStyle::Text::$DIMCLRT)) {
     auto lineColor = text->color();
     int colRGB;
-    int colNum = colorToNumber(lineColor, &colRGB);
+    int colNum = LC_ColorNumbers::colorToNumber(lineColor, &colRGB);
     d.add("$DIMCLRT", 178, colNum);
   }
   if (text->checkModifyState(LC_DimStyle::Text::$DIMTAD)) {
@@ -19661,7 +21078,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleText(DRW_Dimstyle &d,
   if (text->checkModifyState(LC_DimStyle::Text::$DIMTFILLCLR)) {
     auto lineColor = text->explicitBackgroundFillColor();
     int colRGB;
-    int colNum = colorToNumber(lineColor, &colRGB);
+    int colNum = LC_ColorNumbers::colorToNumber(lineColor, &colRGB);
     d.add("$DIMTFILLCLR", 70, colNum);
   }
   if (dimStyleTargetVersion() >= DRW::AC1024 &&
@@ -19819,6 +21236,47 @@ void RS_FilterDXFRW::prepareDRWDimStyleExtData(DRW_Dimstyle &d,
     } catch (...) {
       m_writeFailed = true;
     }
+  }
+  // R2000/R2004 keep a style's own DIMLTYPE/DIMLTEX1/DIMLTEX2 in this XDATA
+  // instead of the native groups 345-347 that prepareDRWDimStyleDimLine/
+  // ExtLine write for > AC1018. writeDimstyles() replays a source table
+  // entry's own raw extData verbatim right after this returns, byte for
+  // byte, whenever this style came from one; only add these three ourselves
+  // when there is no such source, so a style with a name a file already
+  // carried never ends up with the pair written twice.
+  if (m_dxfW != nullptr && m_dxfW->getVersion() > DRW::AC1014 &&
+      m_dxfW->getVersion() <= DRW::AC1018 &&
+      m_graphic->dwgAdvancedMetadata().findDimStyleTableEntryByName(
+          d.name) == nullptr) {
+    auto dimLine = ds->dimensionLine();
+    auto extLine = ds->extensionLine();
+    const auto addLineTypeXData = [&](const char *appName, int typeCode,
+                                      const QString &name, bool modified) {
+      if (!modified)
+        return;
+      const std::uint32_t handle = findLineTypeHandleToWrite(name);
+      if (handle == DRW::NoHandle)
+        return;
+      try {
+        if (!d.addExtData(std::make_unique<DRW_Variant>(1001, appName)) ||
+            !d.addExtData(std::make_unique<DRW_Variant>(1070, typeCode)) ||
+            !d.addExtData(std::make_unique<DRW_Variant>(
+                1005, toHexStr(handle).toStdString()))) {
+          m_writeFailed = true;
+        }
+      } catch (...) {
+        m_writeFailed = true;
+      }
+    };
+    addLineTypeXData(
+        "ACAD_DSTYLE_DIM_LINETYPE", 380, dimLine->lineTypeName(),
+        dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMLTYPE));
+    addLineTypeXData(
+        "ACAD_DSTYLE_DIM_EXT1_LINETYPE", 381, extLine->lineTypeFirstRaw(),
+        extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMLTEX1));
+    addLineTypeXData(
+        "ACAD_DSTYLE_DIM_EXT2_LINETYPE", 382, extLine->lineTypeSecondRaw(),
+        extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMLTEX2));
   }
   // todo - add support of ACAD_DIMSTYLE_DIMBREAK
   // todo - add support of ACAD_DIMSTYLE_DIMJAG
@@ -20178,20 +21636,6 @@ void RS_FilterDXFRW::writeObjects() {
           handles = std::move(remapped);
           return true;
         };
-    const auto sanitizeOptionalCommonList =
-        [&sanitizeOptionalCommonHandle](std::vector<std::uint32_t> &handles,
-                                        const char *kind) {
-          std::vector<std::uint32_t> kept;
-          kept.reserve(handles.size());
-          for (std::size_t ordinal = 0; ordinal < handles.size(); ++ordinal) {
-            std::uint32_t handle = handles[ordinal];
-            sanitizeOptionalCommonHandle(handle, kind,
-                                         static_cast<std::uint32_t>(ordinal));
-            if (handle != 0)
-              kept.push_back(handle);
-          }
-          handles = std::move(kept);
-        };
     auto remapEntityHandle = [this](std::uint32_t sourceHandle,
                                     const char *referenceKind) {
       std::uint32_t outputHandle = 0;
@@ -20476,7 +21920,7 @@ void RS_FilterDXFRW::writeObjects() {
                                        DRW::DwgSoftPointer);
         };
     auto remapTableHandle =
-        [this, &referenceContext, &recordOptionalDrop,
+        [&referenceContext, &recordOptionalDrop,
          &recordRetainedReference](
             std::uint32_t sourceHandle, const std::string &sourceName,
             const std::map<std::string, std::uint32_t> &outputHandles,
@@ -21134,7 +22578,6 @@ void RS_FilterDXFRW::writeObjects() {
     int nativeDbColorObjects = 0;
     int nativeDimensionAssociationObjects = 0;
     int nativeEvaluationGraphObjects = 0;
-    int nativeBlockRepresentationObjects = 0;
     int nativeRasterVariablesObjects = 0;
     int nativeWipeoutVariablesObjects = 0;
     int nativeGeoDataObjects = 0;
@@ -22877,13 +24320,11 @@ void RS_FilterDXFRW::writeObjects() {
           ++blockedWriterRejected;
           continue;
         }
-        if (writeDwgObject(RS_FilterDXFRW_DwgWriteIdentityRegistry::
-                               DwgWriteSourceKind::Object,
-                           record.handle, [&data, this] {
-                             return m_dwgW->writeBlockRepresentationData(&data);
-                           })) {
-          ++nativeBlockRepresentationObjects;
-        } else {
+        if (!writeDwgObject(RS_FilterDXFRW_DwgWriteIdentityRegistry::
+                                DwgWriteSourceKind::Object,
+                            record.handle, [&data, this] {
+                              return m_dwgW->writeBlockRepresentationData(&data);
+                            })) {
           hasBlockedReplay = true;
           ++blockedWriterRejected;
         }
@@ -24340,7 +25781,13 @@ void RS_FilterDXFRW::writeObjects() {
               effectiveSortStatus = DwgWriteReferenceStatus::Committed;
             }
           }
-          if (!isLiveDwgWriteReference(effectiveSortStatus) ||
+          const bool freeSortHandle =
+              effectiveSortStatus == DwgWriteReferenceStatus::Missing ||
+              effectiveSortStatus == DwgWriteReferenceStatus::Suppressed;
+          // A free sort key is an ordering value, not an object reference.
+          if (freeSortHandle)
+            sortHandle = sourceSortHandle;
+          if ((!freeSortHandle && !isLiveDwgWriteReference(effectiveSortStatus)) ||
               sortHandle == 0) {
             const DwgWriteReferenceStatus dropStatus =
                 effectiveSortStatus == DwgWriteReferenceStatus::Ambiguous
@@ -24363,10 +25810,11 @@ void RS_FilterDXFRW::writeObjects() {
                entityTargetKind, DwgWriteReferenceStatus::Committed,
                "SORTENTSTABLE entity", static_cast<std::uint32_t>(i),
                DRW::DwgSoftPointer, true});
-          pendingReferences.push_back(
-              {true, sourceSortHandle, sortHandle, sortTargetKind,
-               DwgWriteReferenceStatus::Committed, "SORTENTSTABLE sort",
-               static_cast<std::uint32_t>(i), DRW::DwgNullReference, false});
+          if (!freeSortHandle)
+            pendingReferences.push_back(
+                {true, sourceSortHandle, sortHandle, sortTargetKind,
+                 DwgWriteReferenceStatus::Committed, "SORTENTSTABLE sort",
+                 static_cast<std::uint32_t>(i), DRW::DwgNullReference, false});
         }
         if (m_writeFailed) {
           hasBlockedReplay = true;
@@ -24468,6 +25916,9 @@ void RS_FilterDXFRW::writeObjects() {
             fieldHandles.push_back(DRW::NoHandle);
             continue;
           }
+          // Pruned when the plan was frozen: the member names no object.
+          if (candidate.isMemberDropped(ordinal))
+            continue;
           if (fieldReferenceIndex >= candidate.fieldCandidateIndexes.size()) {
             fieldsValid = false;
             break;
@@ -25280,7 +26731,13 @@ void RS_FilterDXFRW::writeObjects() {
           static_cast<int>(advancedEntityBlockers.odaPartial),
           static_cast<int>(advancedEntityBlockers.odaAbsent));
     }
-    const size_t nativeSemanticRecords = static_cast<size_t>(
+    const size_t nativeShapeRecords = static_cast<size_t>(std::count_if(
+        m_shapesToExport.begin(), m_shapesToExport.end(), [this](const auto &record) {
+          return lookupDwgWriteIdentity(DwgWriteSourceKind::Entity,
+                                         record.shape.handle) ==
+                 DwgWriteIdentityLookup::Committed;
+        }));
+    const size_t nativeSemanticRecords = nativeShapeRecords + static_cast<size_t>(
         nativeSunObjects + nativeVisualStyleObjects +
         nativeTvDevicePropertiesObjects + nativePlaceholderObjects +
         nativeMLeaderStyleObjects + nativeDictionaryObjects +
@@ -25358,8 +26815,9 @@ void RS_FilterDXFRW::writeObjects() {
   if (m_graphic != nullptr) {
     for (const DRW_RawDxfObject &rawObject :
          m_graphic->dwgAdvancedMetadata().rawDxfObjects()) {
-      if (rawObject.handle != 0 &&
-          m_dxfSuppressedObjectHandles.count(rawObject.handle) != 0)
+      if ((rawObject.handle != 0 &&
+           m_dxfSuppressedObjectHandles.count(rawObject.handle) != 0) ||
+          !replaysInDxfExport(rawObject.m_version))
         continue;
       DRW_RawDxfObject object = rawObject;
       noteDxfWrite(m_dxfW->writeRawDxfObject(&object));
@@ -25379,7 +26837,7 @@ void RS_FilterDXFRW::writeObjects() {
     const auto &metadata = m_graphic->dwgAdvancedMetadata();
     std::set<std::uint32_t> rawHandles;
     for (const DRW_RawDxfObject &o : metadata.rawDxfObjects())
-      if (o.handle != 0)
+      if (o.handle != 0 && replaysInDxfExport(o.m_version))
         rawHandles.insert(o.handle);
     auto emitTyped = [&](std::uint32_t handle,
                          LC_DwgAdvancedMetadata::ReplayState state) {
@@ -25396,13 +26854,14 @@ void RS_FilterDXFRW::writeObjects() {
     auto resolveOwner = [&](std::uint32_t parent) -> int {
       if (parent == 0 || m_dxfEmittedNamedDictHandles.count(parent) != 0 ||
           rawHandles.count(parent) != 0)
-        return static_cast<int>(parent);
+        return static_cast<int>(m_dxfW->remapHandle(parent));
       return 0; // dangling -> owner C
     };
     for (const auto &record : metadata.suns()) {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_Sun sun = sunFromMetadata(record);
+      sun.handle = m_dxfW->remapHandle(sun.handle);
       sun.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeSun(&sun));
     }
@@ -25410,6 +26869,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_Scale scale = scaleFromMetadata(record);
+      scale.handle = m_dxfW->remapHandle(scale.handle);
       scale.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeScale(&scale));
     }
@@ -25417,6 +26877,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_DictionaryVar dv = dictionaryVarFromMetadata(record);
+      dv.handle = m_dxfW->remapHandle(dv.handle);
       dv.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeDictionaryVar(&dv));
     }
@@ -25424,6 +26885,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_RasterVariables rv = rasterVariablesFromMetadata(record);
+      rv.handle = m_dxfW->remapHandle(rv.handle);
       rv.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeRasterVariables(&rv));
     }
@@ -25434,6 +26896,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_MLeaderStyle style = mleaderStyleFromMetadata(record);
+      style.handle = m_dxfW->remapHandle(style.handle);
       style.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeMLeaderStyle(&style));
     }
@@ -25444,6 +26907,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_MLineStyle style = mlineStyleFromMetadata(record);
+      style.handle = m_dxfW->remapHandle(style.handle);
       style.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeMLineStyle(&style));
     }
@@ -25454,6 +26918,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_Layout layout = layoutFromMetadata(record);
+      layout.handle = m_dxfW->remapHandle(layout.handle);
       layout.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeLayout(&layout));
     }
@@ -25463,6 +26928,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_GeoData gd = geoDataFromMetadata(record);
+      gd.handle = m_dxfW->remapHandle(gd.handle);
       gd.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeGeoData(&gd));
     }
@@ -25473,6 +26939,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_SpatialFilter sf = spatialFilterFromMetadata(record);
+      sf.handle = m_dxfW->remapHandle(sf.handle);
       sf.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeSpatialFilter(&sf));
     }
@@ -25482,7 +26949,10 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_SortEntsTable se = sortEntsTableFromMetadata(record);
+      se.handle = m_dxfW->remapHandle(se.handle);
       se.parentHandle = resolveOwner(record.parentHandle);
+      // The block record whose entities it orders, under its written handle.
+      se.m_blockOwnerHandle = m_dxfW->remapHandle(se.m_blockOwnerHandle);
       noteDxfWrite(m_dxfW->writeSortEntsTable(&se));
     }
     // FIELD/FIELDLIST are custom objects. Emit FIELD first so FIELDLIST 330
@@ -25491,6 +26961,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_Field field = fieldFromMetadata(record);
+      field.handle = m_dxfW->remapHandle(field.handle);
       field.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeField(&field));
     }
@@ -25498,6 +26969,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_FieldList fieldList = fieldListFromMetadata(record);
+      fieldList.handle = m_dxfW->remapHandle(fieldList.handle);
       fieldList.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeFieldList(&fieldList));
     }
@@ -25507,6 +26979,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_WipeoutVariables wv = wipeoutVariablesFromMetadata(record);
+      wv.handle = m_dxfW->remapHandle(wv.handle);
       wv.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeWipeoutVariables(&wv));
     }
@@ -25514,6 +26987,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_PointCloudDef definition = pointCloudDefinitionFromMetadata(record);
+      definition.handle = m_dxfW->remapHandle(definition.handle);
       definition.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writePointCloudDef(&definition));
     }
@@ -25522,6 +26996,7 @@ void RS_FilterDXFRW::writeObjects() {
         continue;
       DRW_NavisworksModelDef definition =
           navisworksModelDefinitionFromMetadata(record);
+      definition.handle = m_dxfW->remapHandle(definition.handle);
       definition.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeNavisworksModelDef(&definition));
     }
@@ -25529,6 +27004,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_PointCloudColorMap colorMap = pointCloudColorMapFromMetadata(record);
+      colorMap.handle = m_dxfW->remapHandle(colorMap.handle);
       colorMap.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writePointCloudColorMap(&colorMap));
     }
@@ -25536,6 +27012,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_Background background = backgroundFromMetadata(record);
+      background.handle = m_dxfW->remapHandle(background.handle);
       background.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeBackground(&background,
                                            backgroundRecordName(record.kind)));
@@ -25544,6 +27021,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_Material material = materialFromMetadata(record);
+      material.handle = m_dxfW->remapHandle(material.handle);
       material.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeMaterial(&material));
     }
@@ -25551,6 +27029,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_RenderSettings settings = renderSettingsFromMetadata(record);
+      settings.handle = m_dxfW->remapHandle(settings.handle);
       settings.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeRenderSettings(
           &settings, renderSettingsRecordName(record.kind)));
@@ -25559,6 +27038,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_SunStudy study = sunStudyFromMetadata(record);
+      study.handle = m_dxfW->remapHandle(study.handle);
       study.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeSunStudy(&study));
     }
@@ -25566,6 +27046,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_MotionPath path = motionPathFromMetadata(record);
+      path.handle = m_dxfW->remapHandle(path.handle);
       path.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeMotionPath(&path));
     }
@@ -25573,6 +27054,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_CurvePath path = curvePathFromMetadata(record);
+      path.handle = m_dxfW->remapHandle(path.handle);
       path.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeCurvePath(&path));
     }
@@ -25580,6 +27062,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_PointPath path = pointPathFromMetadata(record);
+      path.handle = m_dxfW->remapHandle(path.handle);
       path.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writePointPath(&path));
     }
@@ -25587,6 +27070,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_ObjectPtr object = objectPtrFromMetadata(record);
+      object.handle = m_dxfW->remapHandle(object.handle);
       object.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeObjectPtr(&object));
     }
@@ -25594,6 +27078,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_PartialViewingIndex index = partialViewingIndexFromMetadata(record);
+      index.handle = m_dxfW->remapHandle(index.handle);
       index.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writePartialViewingIndex(&index));
     }
@@ -25601,12 +27086,14 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_DbColor color = dbColorFromMetadata(record);
+      color.handle = m_dxfW->remapHandle(color.handle);
       color.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeDbColor(&color));
     }
     for (const auto &record : metadata.dimensionAssociations()) {
       DRW_DimensionAssociation association =
           dimensionAssociationFromMetadata(record);
+      association.handle = m_dxfW->remapHandle(association.handle);
       if (!canWriteNativeDimensionAssociation(association) ||
           !emitTyped(record.handle, record.replayState))
         continue;
@@ -25615,6 +27102,7 @@ void RS_FilterDXFRW::writeObjects() {
     }
     for (const auto &record : metadata.evaluationGraphs()) {
       DRW_EvaluationGraph graph = evaluationGraphFromMetadata(record);
+      graph.handle = m_dxfW->remapHandle(graph.handle);
       if (!canWriteNativeEvaluationGraph(graph) ||
           !emitTyped(record.handle, record.replayState))
         continue;
@@ -25625,6 +27113,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_Section section = sectionFromMetadata(record);
+      section.handle = m_dxfW->remapHandle(section.handle);
       section.parentHandle = resolveOwner(record.parentHandle);
       if (section.m_kind == DRW_Section::Manager) {
         for (auto &handle : section.m_sectionHandles) {
@@ -25651,7 +27140,8 @@ void RS_FilterDXFRW::collectDwgAppIds() {
     return;
 
   std::set<std::string> emittedNames;
-  const auto collectExtData = [this, &emittedNames](const auto &extData) {
+  const auto collectExtData = [this, &emittedNames](const auto &extData,
+                                                    bool ofText = false) {
     for (const auto &value : extData) {
       if (value == nullptr || value->code() != 1001 ||
           value->type() != DRW_Variant::STRING || value->content.s == nullptr ||
@@ -25659,6 +27149,11 @@ void RS_FilterDXFRW::collectDwgAppIds() {
         continue;
       }
       const std::string name = *value->content.s;
+      // What a text keeps of its block attribute is never written with it
+      // (removeInsertAttribSidecar()): no data of the file is under these
+      // names, and a drawing opened from the file would hand them on.
+      if (ofText && isInsertAttribSidecarMarker(name))
+        continue;
       if (!emittedNames.insert(normalizeDwgTableName(name)).second)
         continue;
       DRW_AppId appId;
@@ -25672,7 +27167,9 @@ void RS_FilterDXFRW::collectDwgAppIds() {
         !entity->hasDrwExtData()) {
       return;
     }
-    collectExtData(entity->getDrwExtData());
+    collectExtData(entity->getDrwExtData(),
+                   entity->rtti() == RS2::EntityText ||
+                       entity->rtti() == RS2::EntityMText);
   };
   const auto collectFromContainer = [&collectFromEntity](
                                         const RS_EntityContainer *container) {
@@ -26005,6 +27502,172 @@ void RS_FilterDXFRW::collectDwgAppIds() {
 #endif
 }
 
+namespace {
+// Calls visit() with the XDATA of each record of the lists that an export
+// replays.
+template <typename Visit, typename... Lists>
+void forEachReplayedRecordExtData(Visit &&visit, const Lists &...lists) {
+  const auto visitList = [&visit](const auto &list) {
+    for (const auto &record : list) {
+      if (record.replayState ==
+          LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+        visit(record.extData);
+    }
+  };
+  (visitList(lists), ...);
+}
+} // namespace
+
+std::vector<std::string> RS_FilterDXFRW::dxfXDataApplications() {
+  std::vector<std::string> names;
+  std::set<std::string> seen;
+  const auto addName = [&names, &seen](const std::string &name) {
+    if (!name.empty() && seen.insert(normalizeDwgTableName(name)).second)
+      names.push_back(name);
+  };
+  const auto addFrom = [&addName](const auto &extData, bool ofText = false) {
+    for (const auto &value : extData) {
+      const DRW_Variant *tag = nullptr;
+      if constexpr (std::is_pointer_v<std::decay_t<decltype(value)>>)
+        tag = value;
+      else if constexpr (std::is_same_v<std::decay_t<decltype(value)>,
+                                        DRW_Variant>)
+        tag = &value;
+      else
+        tag = value.get();
+      std::string name;
+      if (readXDataMarker(tag, name) != XDataReadResult::Valid)
+        continue;
+      // What a text keeps of its block attribute is never written with it
+      // (removeInsertAttribSidecar()).
+      if (ofText && isInsertAttribSidecarMarker(name))
+        continue;
+      addName(name);
+    }
+  };
+  const auto &metadata = m_graphic->dwgAdvancedMetadata();
+
+  // Table records keep the XDATA of the records they were read from; a
+  // dimension style also has XDATA of its own (prepareDRWDimStyleExtData()).
+  for (const auto &entry : metadata.lineTypeTableEntries())
+    addFrom(entry.second.extData);
+  const RS_LayerList *layers = m_graphic->getLayerList();
+  for (unsigned i = 0; i < layers->count(); ++i) {
+    if (const auto *source = metadata.findLayerTableEntryByName(
+            layers->at(i)->getName().toUtf8().toStdString()))
+      addFrom(source->extData);
+  }
+  for (const auto &entry : metadata.textStyleTableEntries())
+    addFrom(entry.second.extData);
+  for (const auto &entry : metadata.textStyles()) {
+    if (entry.second.name.empty() && (entry.second.flags & 1) != 0)
+      addFrom(entry.second.extData);
+  }
+  for (const auto &entry : metadata.vportTableEntries())
+    addFrom(entry.second.extData);
+  forEachReplayedRecordExtData(addFrom, metadata.views(),
+                               metadata.ucsRecords(), metadata.vports());
+  for (const auto &entry : metadata.appIdTableEntries())
+    addFrom(entry.second.extData);
+  for (const LC_DimStyle *style :
+       *m_graphic->getDimStyleList()->getStylesList()) {
+    DRW_Dimstyle written;
+    prepareDRWDimStyle(written, style);
+    addFrom(written.extData);
+    if (const auto *source =
+            metadata.findDimStyleTableEntryByName(written.name))
+      addFrom(source->extData);
+  }
+
+  // The entities of the model space and of the blocks. What a dimension
+  // draws, and in R12 a hatch, is written as an anonymous block
+  // (prepareBlocks()).
+  const bool hatchBlocks = m_version == 1009;
+  const auto addFromEntities = [&addFrom, hatchBlocks](
+                                   const auto &self,
+                                   const RS_EntityContainer &container,
+                                   bool nested) -> void {
+    for (const RS_Entity *entity :
+         lc::LC_ContainerTraverser{container, RS2::ResolveNone}.entities()) {
+      if (entity == nullptr || entity->getFlag(RS2::FlagDeleted))
+        continue;
+      if (entity->hasDrwExtData())
+        addFrom(entity->getDrwExtData(), RS2::isTextEntity(entity->rtti()));
+      if (RS2::isTextEntity(entity->rtti())) {
+        if (const auto attribute = extractInsertAttribSidecar(entity))
+          addFrom(attribute->mtext.xdata);
+      }
+      if (!nested && (RS2::isDimensionalEntity(entity->rtti()) ||
+                      (hatchBlocks && entity->rtti() == RS2::EntityHatch)))
+        self(self, *static_cast<const RS_EntityContainer *>(entity), true);
+    }
+  };
+  addFromEntities(addFromEntities, *m_graphic, false);
+  for (unsigned i = 0; i < m_graphic->countBlocks(); ++i) {
+    const RS_Block *block = m_graphic->blockAt(i);
+    if (block != nullptr && !block->isDeleted())
+      addFromEntities(addFromEntities, *block, false);
+  }
+
+  // The objects, and the entities only the metadata holds.
+  forEachReplayedRecordExtData(
+      addFrom, metadata.visualStyles(), metadata.shapes(), metadata.suns(),
+      metadata.backgrounds(), metadata.renderSettings(),
+      metadata.sunStudies(), metadata.motionPaths(), metadata.curvePaths(),
+      metadata.pointPaths(), metadata.objectPtrs(),
+      metadata.partialViewingIndexes(), metadata.cameras(),
+      metadata.geoPositionMarkers(), metadata.sectionObjects(),
+      metadata.sections(), metadata.modelerGeometry(), metadata.fields(),
+      metadata.fieldLists(), metadata.xrecords(),
+      metadata.groups(), metadata.mlineStyles(), metadata.layouts(),
+      metadata.mleaderStyles(), metadata.materials(), metadata.lightLists(),
+      metadata.tvDeviceProperties(), metadata.blockRepresentationData(),
+      metadata.placeholders(), metadata.vxControls(),
+      metadata.vxTableRecords(), metadata.rasterVariables(),
+      metadata.wipeoutVariables(), metadata.dbColors(),
+      metadata.dimensionAssociations(), metadata.evaluationGraphs(),
+      metadata.scales(), metadata.idBuffers(), metadata.spatialIndexes(),
+      metadata.layerIndexes(), metadata.dictionaryVars(),
+      metadata.sortEntsTables(),
+      metadata.underlayDefinitions(), metadata.imageDefinitions(),
+      metadata.imageDefinitionReactors(), metadata.pointCloudDefinitions(),
+      metadata.navisworksModelDefinitions(), metadata.pointCloudColorMaps(),
+      metadata.geoData(), metadata.spatialFilters());
+  const auto addFromDictionaries = [this, &addFrom](const auto &records) {
+    for (const auto &record : records) {
+      if (record.replayState ==
+              LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed &&
+          m_dxfSuppressedObjectHandles.count(record.handle) == 0)
+        addFrom(record.extData);
+    }
+  };
+  addFromDictionaries(metadata.dictionaries());
+  addFromDictionaries(metadata.dictionariesWithDefault());
+  for (const auto &record : metadata.vbaProjects())
+    addFrom(record.extData);
+  for (const auto &settings : metadata.plotSettings())
+    addFrom(settings.extData);
+  for (const auto &record : metadata.tables()) {
+    if (record.nativeTableStyle)
+      addFrom(record.nativeTableStyle->extData);
+  }
+  // Records read from a DXF go out as they came in, XDATA and all.
+  for (const auto &record : metadata.rawDxfObjects()) {
+    if (replaysInDxfExport(record.m_version) &&
+        m_dxfSuppressedObjectHandles.count(record.handle) == 0)
+      addFrom(record.groups);
+  }
+  for (const auto &record : metadata.rawDxfEntities()) {
+    if (replaysInDxfExport(record.m_version))
+      addFrom(record.groups);
+  }
+  for (const auto &section : metadata.rawDxfSections()) {
+    if (replaysInDxfExport(section.m_version))
+      addFrom(section.m_groups);
+  }
+  return names;
+}
+
 void RS_FilterDXFRW::writeAppId() {
   const auto &metadata = m_graphic->dwgAdvancedMetadata();
   std::set<std::string> emittedNames;
@@ -26029,7 +27692,7 @@ void RS_FilterDXFRW::writeAppId() {
       noteDxfWrite(m_dxfW->writeAppId(&appId));
     }
   };
-  const auto emitRequired = [&metadata, &emitAppId](const char *name) {
+  const auto emitRequired = [&metadata, &emitAppId](const std::string &name) {
     if (const auto *source = metadata.findAppIdTableEntryByName(name)) {
       emitAppId(*source);
       return;
@@ -26057,6 +27720,30 @@ void RS_FilterDXFRW::writeAppId() {
     if (normalizeDwgTableName(entry.first) != "ACAD")
       emitAppId(entry.second);
   }
+
+  if (m_dxfW == nullptr) {
+    for (const auto &record : metadata.shapes()) {
+      for (const auto &tag : record.extData) {
+        std::string name;
+        if (readXDataMarker(tag.get(), name) == XDataReadResult::Valid &&
+            !name.empty() && normalizeDwgTableName(name) != "ACAD")
+          emitRequired(name);
+      }
+    }
+    return;
+  }
+
+  // TABLES precedes BLOCKS/ENTITIES/OBJECTS. Reuse imported APPID records
+  // so flags, application data and source-handle remapping are preserved.
+  emitRequired("ACAD"); // The codec owns this record and maps it to handle 12.
+  for (const std::string &name : dxfXDataApplications())
+    emitRequired(name);
+}
+
+bool RS_FilterDXFRW::finalizeDxfWrite() {
+  // A failure latched in any DXF write callback reaches dxfRW here, before
+  // it replaces the destination.
+  return !m_writeFailed;
 }
 
 bool RS_FilterDXFRW::finalizeDwgWrite() {
@@ -26361,6 +28048,211 @@ bool RS_FilterDXFRW::finalizeDwgWriteStructure() {
   return !m_writeFailed;
 }
 
+void RS_FilterDXFRW::prepareShapesForExport() {
+  m_shapesToExport.clear();
+  m_shapeFileResolvedPaths.clear();
+  if (m_graphic != nullptr) {
+    const auto &metadata = m_graphic->dwgAdvancedMetadata();
+    std::map<QString, std::optional<LC_ShxShapeNames::Names>> shapeFiles;
+    const auto namesFor = [&](const DRW_Textstyle &style,
+                              const std::string &sourceDirectory)
+        -> const LC_ShxShapeNames::Names * {
+      QString font = QString::fromStdString(style.font);
+      font.replace(QLatin1Char('\\'), QLatin1Char('/'));
+      if (font.isEmpty())
+        return nullptr;
+      if (QFileInfo(font).suffix().isEmpty())
+        font += QStringLiteral(".shx");
+      QStringList candidates;
+      if (QFileInfo(font).isAbsolute()) {
+        candidates << font;
+      } else {
+        if (!sourceDirectory.empty())
+          candidates << QDir(QString::fromStdString(sourceDirectory)).filePath(font);
+        if (!m_graphic->getFilename().isEmpty())
+          candidates << QFileInfo(m_graphic->getFilename()).dir().filePath(font);
+        candidates << QDir(m_shapeExportDirectory).filePath(font);
+      }
+      // Drawings commonly retain an absolute path from another machine.
+      // Search its basename alongside the drawing and destination too.
+      const QString basename = QFileInfo(font).fileName();
+      if (!sourceDirectory.empty())
+        candidates << QDir(QString::fromStdString(sourceDirectory)).filePath(basename);
+      if (!m_graphic->getFilename().isEmpty())
+        candidates << QFileInfo(m_graphic->getFilename()).dir().filePath(basename);
+      candidates << QDir(m_shapeExportDirectory).filePath(basename);
+      for (const QString &path : candidates) {
+        if (!QFileInfo(path).isFile())
+          continue;
+        auto [it, inserted] = shapeFiles.emplace(path, std::nullopt);
+        if (inserted)
+          it->second = LC_ShxShapeNames::read(path);
+        if (it->second)
+          m_shapeFileResolvedPaths[style.handle] = QFileInfo(path).canonicalFilePath();
+        return it->second ? &*it->second : nullptr;
+      }
+      return nullptr;
+    };
+    for (const auto &rec : metadata.shapes()) {
+      if (rec.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed) {
+        ++m_shapeLeftOut["SHAPE with invalidated metadata"];
+        continue;
+      }
+      DRW_Shape shape;
+      shape.handle = rec.handle;
+      shape.parentHandle = rec.parentHandle;
+      shape.layer = rec.layer;
+      shape.lineType = rec.lineType;
+      shape.color = rec.color;
+      shape.color24 = rec.color24;
+      shape.lWeight = rec.lineWeight;
+      shape.space = rec.space;
+      shape.visible = rec.visible;
+      shape.ltypeScale = rec.lineTypeScale;
+      shape.extData = rec.extData;
+      shape.m_shapeIndex = rec.shapeIndex;
+      shape.m_insertionPoint = rec.insertionPoint;
+      shape.m_extrusion = rec.extrusion;
+      shape.m_scale = rec.scale;
+      shape.m_rotation = rec.rotation;
+      shape.m_oblique = rec.oblique;
+      shape.m_widthFactor = rec.widthFactor;
+      shape.m_thickness = rec.thickness;
+      const auto finite = [](const DRW_Coord &p) {
+        return std::isfinite(p.x) && std::isfinite(p.y) && std::isfinite(p.z);
+      };
+      if (!finite(shape.m_insertionPoint) || !finite(shape.m_extrusion) ||
+          !std::isfinite(shape.m_scale) || !std::isfinite(shape.m_rotation) ||
+          !std::isfinite(shape.m_widthFactor) || !std::isfinite(shape.m_oblique) ||
+          !std::isfinite(shape.m_thickness)) {
+        m_writeFailed = true;
+        continue;
+      }
+      std::string ownerBlockName = rec.ownerBlockName;
+      bool blockFound = ownerBlockName.empty();
+      const auto space = metadata.spaceBlockRecords().find(shape.parentHandle);
+      if (space != metadata.spaceBlockRecords().end()) {
+        const std::string name = normalizeDwgTableName(space->second);
+        if (name == "*MODEL_SPACE")
+          shape.parentHandle = DRW::DwgModelSpaceBlockRecordHandle;
+        else if (name == "*PAPER_SPACE")
+          shape.parentHandle = DRW::DwgPaperSpaceBlockRecordHandle;
+      }
+      // A source space handle may normalize to an unrelated block's source
+      // handle. Match ordinary blocks only while still in source identity.
+      for (unsigned i = 0; space == metadata.spaceBlockRecords().end() &&
+                           i < m_graphic->countBlocks(); ++i) {
+        const RS_Block *block = m_graphic->blockAt(i);
+        if (block == nullptr || block->isDeleted())
+          continue;
+        if ((!ownerBlockName.empty() && block->getName().toStdString() == ownerBlockName) ||
+            (shape.parentHandle != 0 && block->sourceHandle() == shape.parentHandle)) {
+          ownerBlockName = block->getName().toStdString();
+          shape.parentHandle = block->sourceHandle();
+          blockFound = true;
+          break;
+        }
+      }
+      if (!blockFound) {
+        ++m_shapeLeftOut["SHAPE with an unresolved block owner"];
+        continue;
+      }
+      if (ownerBlockName.empty()) {
+        if (shape.parentHandle == 0)
+          shape.parentHandle = shape.space == DRW::PaperSpace
+                                   ? DRW::DwgPaperSpaceBlockRecordHandle
+                                   : DRW::DwgModelSpaceBlockRecordHandle;
+        else if (shape.parentHandle == 0x1F)
+          shape.parentHandle = DRW::DwgModelSpaceBlockRecordHandle;
+        else if (shape.parentHandle == 0x1E)
+          shape.parentHandle = DRW::DwgPaperSpaceBlockRecordHandle;
+        if (shape.parentHandle != DRW::DwgModelSpaceBlockRecordHandle &&
+            shape.parentHandle != DRW::DwgPaperSpaceBlockRecordHandle) {
+          ++m_shapeLeftOut["SHAPE with an unresolved block owner"];
+          continue;
+        }
+        shape.space = shape.parentHandle == DRW::DwgPaperSpaceBlockRecordHandle
+                          ? DRW::PaperSpace : DRW::ModelSpace;
+      }
+      const DRW_Textstyle *style = nullptr;
+      if (const auto it = metadata.textStyles().find(rec.shapeFileHandle);
+          it != metadata.textStyles().end() && (it->second.flags & 1) != 0)
+        style = &it->second;
+      // A DXF has no numeric index or STYLE reference. Resolve its glyph
+      // against the available shape-file directories, rejecting ambiguity.
+      // This also locates its SHX for DXF Save As into another directory.
+      if (rec.shapeFileHandle == 0 && !rec.styleName.empty()) {
+        bool ambiguous = false;
+        for (const auto &[handle, candidate] : metadata.textStyles()) {
+          if ((candidate.flags & 1) == 0)
+            continue;
+          const auto *names = namesFor(candidate, rec.sourceDirectory);
+          if (names == nullptr)
+            continue;
+          for (const auto &[index, name] : *names) {
+            if (index == 0 || name.empty() ||
+                normalizeDwgTableName(name) != normalizeDwgTableName(rec.styleName))
+              continue;
+            if (style != nullptr)
+              ambiguous = true;
+            style = &candidate;
+            shape.m_shapeIndex = index;
+          }
+        }
+        if (ambiguous)
+          style = nullptr;
+      }
+      const auto *names = style != nullptr
+                              ? namesFor(*style, rec.sourceDirectory) : nullptr;
+      if (m_dxfW != nullptr) {
+        if (rec.shapeFileHandle == 0) {
+          shape.m_styleName = rec.styleName; // Already a DXF glyph name.
+        } else if (names != nullptr) {
+          if (const auto it = names->find(rec.shapeIndex); it != names->end())
+            shape.m_styleName = it->second;
+        }
+        if (shape.m_styleName.empty())
+          ++m_shapeLeftOut["SHAPE without a name"];
+        else
+          m_shapesToExport.push_back({std::move(shape), ownerBlockName});
+        continue;
+      }
+#ifdef DWGSUPPORT
+      if (m_dwgW == nullptr)
+        continue;
+      if (style == nullptr || shape.m_shapeIndex == 0) {
+        ++m_shapeLeftOut["SHAPE without a resolved shape-file STYLE or index"];
+        continue;
+      }
+      if (rec.handle == 0) {
+        ++m_shapeLeftOut["SHAPE without an entity handle"];
+        continue;
+      }
+      if (!ownerBlockName.empty() && shape.parentHandle == 0) {
+        ++m_shapeLeftOut["SHAPE without a block owner handle"];
+        continue;
+      }
+      shape.m_shapeFileHandle = style->handle;
+      m_shapesToExport.push_back({std::move(shape), ownerBlockName});
+#endif
+    }
+  }
+}
+
+void RS_FilterDXFRW::writeDxfShapes(const std::string &blockName) {
+  for (const auto &prepared : m_shapesToExport) {
+    if (prepared.ownerBlockName != blockName)
+      continue;
+    DRW_Shape shape = prepared.shape;
+    // The codec supplies the current BLOCK owner, or model/paper space in
+    // ENTITIES. Never carry a source BLOCK_RECORD handle into the new DXF.
+    if (blockName.empty() && shape.parentHandle == DRW::DwgPaperSpaceBlockRecordHandle)
+      shape.space = DRW::PaperSpace;
+    shape.parentHandle = DRW::NoHandle;
+    noteDxfWrite(m_dxfW->writeShape(&shape));
+  }
+}
+
 void RS_FilterDXFRW::writeEntities() {
 #ifdef DWGSUPPORT
   if (m_dwgW != nullptr && !validateDwgExportAdmissionPlan(
@@ -26585,6 +28477,8 @@ void RS_FilterDXFRW::writeEntities() {
   std::set<std::uint32_t> rawSectionObjectHandles;
   if (m_dwgW == nullptr && m_graphic != nullptr) {
     for (const auto &raw : m_graphic->dwgAdvancedMetadata().rawDxfEntities()) {
+      if (!replaysInDxfExport(raw.m_version))
+        continue;
       if (raw.name == "GEOPOSITIONMARKER" || raw.name == "POSITIONMARKER")
         rawGeoPositionMarkerHandles.insert(raw.handle);
       if (raw.name == "SECTIONOBJECT" || raw.name == "SECTION_OBJECT")
@@ -26658,6 +28552,8 @@ void RS_FilterDXFRW::writeEntities() {
   if (!m_dwgW && m_graphic != nullptr) {
     for (const DRW_RawDxfObject &rawEntity :
          m_graphic->dwgAdvancedMetadata().rawDxfEntities()) {
+      if (!replaysInDxfExport(rawEntity.m_version))
+        continue; // left out, counted in fileExport
       DRW_RawDxfObject entity = rawEntity;
       noteDxfWrite(m_dxfW->writeRawDxfObject(&entity));
     }
@@ -26699,27 +28595,6 @@ void RS_FilterDXFRW::writeEntities() {
         noteDxfWrite(m_dxfW->writeLight(&light));
       }
     }
-    // SHAPE entities read from a DWG live only on the metadata shelf (no
-    // RS_Shape model) -> re-emit as typed AcDbShape so DWG->DXF preserves them.
-    // Group 2 is the resolved SHAPEFILE/STYLE record name (the glyph index is
-    // not round- trippable without the .shx; this matches libredwg/ACadSharp
-    // output).
-    for (const auto &rec : m_graphic->dwgAdvancedMetadata().shapes()) {
-      DRW_Shape shape;
-      shape.handle = rec.handle;
-      shape.parentHandle = rec.parentHandle;
-      shape.m_shapeFileHandle = rec.shapeFileHandle;
-      shape.m_shapeIndex = rec.shapeIndex;
-      shape.m_styleName = rec.styleName;
-      shape.m_insertionPoint = rec.insertionPoint;
-      shape.m_extrusion = rec.extrusion;
-      shape.m_scale = rec.scale;
-      shape.m_rotation = rec.rotation;
-      shape.m_oblique = rec.oblique;
-      shape.m_widthFactor = rec.widthFactor;
-      shape.m_thickness = rec.thickness;
-      noteDxfWrite(m_dxfW->writeShape(&shape));
-    }
     // OLE2FRAME entities read from a DWG live only on the metadata shelf ->
     // re-emit as typed AcDbOle2Frame. pt1/pt2 (frame rectangle) were decoded
     // from the OLE payload header on read; the opaque payload is replayed
@@ -26753,6 +28628,36 @@ void RS_FilterDXFRW::writeEntities() {
       noteDxfWrite(m_dxfW->writeOleFrame(&ole));
     }
   }
+
+  if (m_dxfW != nullptr)
+    writeDxfShapes({});
+#ifdef DWGSUPPORT
+  if (m_dwgW != nullptr) {
+    for (const auto &prepared : m_shapesToExport) {
+      DRW_Shape shape = prepared.shape;
+      const std::uint32_t sourceHandle = shape.handle;
+      const std::uint32_t styleSource = shape.m_shapeFileHandle;
+      std::uint32_t styleOutput = 0;
+      const auto styleState = lookupDwgWriteIdentity(
+          DwgWriteSourceKind::TableRecord, styleSource, &styleOutput);
+      if ((styleState != DwgWriteIdentityLookup::Selected &&
+           styleState != DwgWriteIdentityLookup::Committed) || styleOutput == 0) {
+        m_writeFailed = true;
+        continue;
+      }
+      shape.m_shapeFileHandle = styleOutput;
+      (void)writeDwgMetadataEntityWithCompletion(
+          sourceHandle, shape.parentHandle, "SHAPE", shape,
+          [&shape, this] { return m_dwgW->writeShape(&shape); },
+          [&shape, sourceHandle, styleSource, this] {
+            return recordDwgWriteReferenceReceipt(
+                {DwgWriteSourceKind::Entity, sourceHandle, shape.handle,
+                 "SHAPE STYLE", 0, DwgWriteSourceKind::TableRecord,
+                 styleSource, shape.m_shapeFileHandle, true, 5});
+          });
+    }
+  }
+#endif
 
   // CAMERA has no LibreCAD geometry counterpart. Keep the typed view-table
   // reference on the metadata shelf and emit it through the native writer.
@@ -26798,7 +28703,10 @@ void RS_FilterDXFRW::writeEntities() {
                   5};
               return recordDwgWriteReferenceReceipt(receipt);
             });
-      } else if (m_dxfW != nullptr && m_dxfW->getVersion() >= DRW::AC1015) {
+      } else if (m_dxfW != nullptr) {
+        // dxfRW::writeCamera() leaves CAMERA out below AC1015 and counts
+        // it, the same as every other version-gated writer; it does not
+        // need this filter's own gate ahead of it.
         camera.handle = record.handle;
         camera.parentHandle =
             record.parentHandle == DRW::DwgModelSpaceBlockRecordHandle
@@ -26807,8 +28715,6 @@ void RS_FilterDXFRW::writeEntities() {
         camera.m_viewHandle = m_dxfW->remapHandle(record.viewHandle);
         camera.extData = record.extData;
         noteDxfWrite(m_dxfW->writeCamera(&camera));
-      } else if (m_dxfW != nullptr) {
-        m_writeFailed = true;
       }
     }
   }
@@ -26859,10 +28765,8 @@ void RS_FilterDXFRW::writeEntities() {
               return m_dwgW->writeGeoPositionMarker(&marker);
             });
       } else if (m_dxfW != nullptr) {
-        if (m_dxfW->getVersion() < DRW::AC1027) {
-          m_writeFailed = true;
-          continue;
-        }
+        // dxfRW::writeGeoPositionMarker() leaves the record out below
+        // AC1027 and counts it; no need to fail the save ahead of it.
         marker.handle = record.handle;
         const bool paperSpace =
             record.parentHandle == DRW::DwgPaperSpaceBlockRecordHandle ||
@@ -26914,10 +28818,8 @@ void RS_FilterDXFRW::writeEntities() {
                   optionalDrops, m_dwgW->getVersion(), "DWG ENTITIES");
             });
       } else if (m_dxfW != nullptr) {
-        if (m_dxfW->getVersion() < DRW::AC1021) {
-          m_writeFailed = true;
-          continue;
-        }
+        // dxfRW::writeSectionObject() leaves the record out below AC1021
+        // and counts it; no need to fail the save ahead of it.
         section.handle = record.handle;
         section.m_sectionSettingsHandle =
             m_dxfW->remapHandle(record.sectionSettingsHandle);
@@ -27183,7 +29085,16 @@ collectLinearPolylineVertices(const RS_Entity *entity, bool expectedClosed) {
   return vertices;
 }
 
-std::optional<MeshSidecarEntry> extractMeshSidecar(RS_Entity *e) {
+// duplicateMarker, when non-null, is set only when this entity's extData
+// carries a SECOND "LibreCAD_POLYLINE_MESH" marker group -- two groups both
+// claiming to be the one mesh sidecar for this entity, with no way to tell
+// which is authoritative. That is different from an otherwise-valid group
+// followed by an unrelated/unrecognized field (extractMeshSidecar still
+// returns nullopt for both): the latter is a legitimate edit that should
+// just fall back to writing an ordinary polyline, while the former must not
+// be silently resolved by picking one of the two candidates.
+std::optional<MeshSidecarEntry>
+extractMeshSidecar(RS_Entity *e, bool *duplicateMarker = nullptr) {
   if (!e || !e->hasDrwExtData())
     return std::nullopt;
 
@@ -27211,8 +29122,11 @@ std::optional<MeshSidecarEntry> extractMeshSidecar(RS_Entity *e) {
       }
       inGroup = marker == "LibreCAD_POLYLINE_MESH";
       if (inGroup) {
-        if (meta.markerCount != 0)
+        if (meta.markerCount != 0) {
+          if (duplicateMarker != nullptr)
+            *duplicateMarker = true;
           return std::nullopt;
+        }
         ++meta.markerCount;
       }
       continue;
@@ -27280,7 +29194,10 @@ std::optional<MeshSidecarEntry> extractMeshSidecar(RS_Entity *e) {
   return meta;
 }
 
-std::optional<PolyfaceSidecarEntry> extractPolyfaceSidecar(RS_Entity *e) {
+// See extractMeshSidecar's duplicateMarker comment -- same "two groups, no
+// way to pick one" distinction, for the LibreCAD_POLYLINE_PFACE marker.
+std::optional<PolyfaceSidecarEntry>
+extractPolyfaceSidecar(RS_Entity *e, bool *duplicateMarker = nullptr) {
   if (!e || !e->hasDrwExtData())
     return std::nullopt;
 
@@ -27307,8 +29224,11 @@ std::optional<PolyfaceSidecarEntry> extractPolyfaceSidecar(RS_Entity *e) {
       }
       inGroup = marker == "LibreCAD_POLYLINE_PFACE";
       if (inGroup) {
-        if (meta.markerCount != 0)
+        if (meta.markerCount != 0) {
+          if (duplicateMarker != nullptr)
+            *duplicateMarker = true;
           return std::nullopt;
+        }
         ++meta.markerCount;
       }
       continue;
@@ -27831,11 +29751,29 @@ void RS_FilterDXFRW::reconstructPolylineSidecars(
         entity->rtti() != RS2::EntityPolyline) {
       continue;
     }
-    if (auto meshMeta = extractMeshSidecar(entity))
+    bool duplicateMeshMarker = false;
+    if (auto meshMeta = extractMeshSidecar(entity, &duplicateMeshMarker)) {
       meshGroups[meshMeta->meshId].push_back(std::move(*meshMeta));
-    else if (auto polyfaceMeta = extractPolyfaceSidecar(entity))
+      continue;
+    }
+    if (duplicateMeshMarker) {
+      // Two groups both claim to be this entity's one mesh sidecar, with no
+      // way to tell which is authoritative -- refuse rather than silently
+      // re-emitting the entity as an ordinary polyline and picking one.
+      m_writeFailed = true;
+      return;
+    }
+    bool duplicatePolyfaceMarker = false;
+    if (auto polyfaceMeta =
+            extractPolyfaceSidecar(entity, &duplicatePolyfaceMarker)) {
       polyfaceGroups[polyfaceMeta->polyfaceId].push_back(
           std::move(*polyfaceMeta));
+      continue;
+    }
+    if (duplicatePolyfaceMarker) {
+      m_writeFailed = true;
+      return;
+    }
   }
 
   const auto writeDwgPolylineSidecar =
@@ -28099,7 +30037,12 @@ void RS_FilterDXFRW::reconstructMLines(RS_EntityContainer *container,
         }
       }
     } else if (m_dxfW) {
-      emitted = noteDxfWrite(m_dxfW->writeMLine(&ml));
+      // dxfRW::writeMLine() returns true for "left out" (MLINE has no R12
+      // record) the same as for "written": that would mark the member
+      // polylines consumed below and drop them, instead of falling back to
+      // writing them as plain entities. Take that fallback here instead.
+      emitted =
+          m_dxfW->getVersion() > DRW::AC1009 && noteDxfWrite(m_dxfW->writeMLine(&ml));
     }
 
     if (!emitted) {
@@ -28513,11 +30456,16 @@ void RS_FilterDXFRW::reconstructTypedConversions(
       line.extPoint = meta->coords[2];
       line.thickness = meta->thickness;
       emitNative(&line);
+      // dxfRW::write3DLine() returns true for "left out" (no 3DLINE record
+      // below R2000) the same as for "written": that would consume the
+      // source RS_Line below and drop it, instead of falling back to
+      // writing it as a plain LINE. Take that fallback here instead.
       const bool emitted =
           m_dwgW
               ? writeDwgTyped(
                     [&line, this] { return m_dwgW->write3DLine(&line); })
-              : m_dxfW != nullptr && noteDxfWrite(m_dxfW->write3DLine(&line));
+              : m_dxfW != nullptr && m_dxfW->getVersion() >= DRW::AC1015 &&
+                    noteDxfWrite(m_dxfW->write3DLine(&line));
       if (emitted)
         consumed.insert(e);
     } else if (meta->marker == kLineExtrusionMarker) {
@@ -28676,7 +30624,9 @@ bool RS_FilterDXFRW::reconstructSingleFrameSidecars(
 }
 
 void RS_FilterDXFRW::writeEntity(RS_Entity *e) {
-  if (e == nullptr || isGeneratedInsertAttrib(e))
+  // A block attribute's text is written by its INSERT (writeInsert()), or not
+  // at all (buildInsertAttribPlan()).
+  if (e == nullptr || hasNoOwnRecord(e))
     return;
   DwgEntityProductionResult production = DwgEntityProductionResult::SingleFrame;
 #ifdef DWGSUPPORT
@@ -28723,6 +30673,27 @@ void RS_FilterDXFRW::writeEntity(RS_Entity *e) {
   case RS2::EntityParabola:
     writeParabola(static_cast<LC_Parabola *>(e));
     break;
+  case RS2::EntityDimArrowBlock: {
+    // An arrowhead is not itself a persistent, saved entity kind (comment on
+    // LC_DimArrowPoly::doGetNearestPointOnEntity) -- write whatever real
+    // primitives exportPrimitives() gives for it (only the blockless default
+    // arrow has any; every other kind resolves to a real RS_Insert well
+    // before writeEntity ever sees an EntityDimArrowBlock, so long as its
+    // block exists) with its own pen, on the dimension's own layer, in place
+    // of it. The primitives have no parent to inherit a layer through
+    // (getLayer() would return nullptr), so resolve the arrow's own layer
+    // here instead -- the same layer its sibling LINE/MTEXT/INSERT children
+    // already write, and the one AutoCAD's own SOLID would be on.
+    auto *arrow = static_cast<LC_DimArrow *>(e);
+    const RS_Pen pen = arrow->getPen(false);
+    RS_Layer *layer = arrow->getLayer();
+    for (auto &primitive : arrow->exportPrimitives()) {
+      primitive->setPen(pen);
+      primitive->setLayer(layer);
+      writeEntity(primitive.get());
+    }
+    break;
+  }
     //    case RS2::EntityVertex:
     //        break;
   case RS2::EntityInsert:
@@ -29020,6 +30991,32 @@ void RS_FilterDXFRW::writeCircle(const RS_Circle *c) {
   noteDxfWrite(m_dxfW->writeCircle(&circle));
 }
 
+// An arc-length dimension's "∩" symbol (LC_DimArc::updateEntity(),
+// lc_dimarc.cpp) is drawn as a one-character MText -- a Unicode glyph a
+// reader may have no font for, and never a linetype-carrying entity at all.
+// AutoCAD writes it as a real ARC; no two real sample files agreed on its
+// exact size (0.817 vs 0.933 times text height, the only two available), so
+// this does not attempt to match that construction. It builds the arc from
+// the same height, position and angle LC_DimArc already chose for the
+// glyph, as a semicircle the width of the glyph's own height, open toward
+// the text -- LibreCAD's own placement, expressed as geometry instead of a
+// character. Returns false, having written nothing, for any other entity.
+bool RS_FilterDXFRW::writeDimArcSymbolAsArc(RS_Entity *e) {
+  if (e == nullptr || e->rtti() != RS2::EntityMText)
+    return false;
+  const auto *symbol = static_cast<const RS_MText *>(e);
+  if (symbol->getText() != QStringLiteral("∩"))
+    return false;
+  const double radius = symbol->getHeight() / 2.0;
+  const double angle = symbol->getAngle();
+  RS_Arc arc(nullptr, RS_ArcData(symbol->getInsertionPoint(), radius, angle,
+                                 angle + M_PI, false));
+  arc.setPen(symbol->getPen(false));
+  arc.setLayer(nullptr);
+  writeArc(&arc);
+  return true;
+}
+
 /**
  * Writes the given arc entity to the file.
  */
@@ -29144,6 +31141,7 @@ void RS_FilterDXFRW::writePolyline(const RS_Polyline *p) {
   }
 
   RS_Entity *nextEntity = nullptr;
+  RS_AtomicEntity *lastSegment = nullptr;
   for (RS_Entity *e = p->firstEntity(RS2::ResolveNone); e != nullptr;
        e = nextEntity) {
     nextEntity = p->nextEntity(RS2::ResolveNone);
@@ -29152,6 +31150,7 @@ void RS_FilterDXFRW::writePolyline(const RS_Polyline *p) {
       continue;
     }
     RS_AtomicEntity *ae = static_cast<RS_AtomicEntity *>(e);
+    lastSegment = ae;
 
     // Write vertex:
     double bulge = 0.0;
@@ -29186,6 +31185,17 @@ void RS_FilterDXFRW::writePolyline(const RS_Polyline *p) {
       pol.vertlist.back()->extData.push_back(
           std::make_shared<DRW_Variant>(1040, yRadius));
     }
+  }
+  // Each vertex above is a segment's FROM point (its bulge, when set,
+  // describes that segment). A closed polyline's last segment returns to the
+  // first vertex, so nothing further is needed; an open one's last segment
+  // ends at a point that starts no segment of its own and, left out of this
+  // loop entirely, was silently dropped -- degenerating a single-segment
+  // open polyline (e.g. one DXF LINE read back as a 2-point polyline) to one
+  // point.
+  if (!p->isClosed() && lastSegment != nullptr) {
+    pol.addVertex(DRW_Vertex(lastSegment->getEndpoint().x,
+                             lastSegment->getEndpoint().y, 0.0, 0.0));
   }
   getEntityAttributes(&pol, p);
   if (auto lwMeta = extractLWPolylineMeta(const_cast<RS_Polyline *>(p))) {
@@ -29226,19 +31236,42 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     return;
   }
 
-  // version 12 do not support Spline write as polyline
+  // R12 has no SPLINE: a polyline within its export tolerance, or the
+  // segments the spline is drawn with
   if (m_version == 1009) {
-    DRW_Polyline pol;
-    for (RS_Entity *e :
-         lc::LC_ContainerTraverser{*s, RS2::ResolveNone}.entities()) {
-      pol.addVertex(
-          DRW_Vertex(e->getStartpoint().x, e->getStartpoint().y, 0.0, 0.0));
+    // a spline read closed but kept with open ends is closed too, while its
+    // ends meet: the polyline is closed and repeats no vertex
+    const RS_SplineData &splineData = s->getData();
+    const bool closed = s->isClosed() ||
+                        ((splineData.m_closedFlag || splineData.m_periodicFlag) &&
+                         splineCurveCloses(splineData));
+    std::vector<RS_Vector> vertices;
+    if (!r12SplineVertices(*s, closed, vertices)) {
+      // A curve the evaluator cannot bound, as a spline whose knots do not
+      // match its control points is. The file keeps what the screen shows
+      // rather than failing over one entity; a spline that draws nothing
+      // writes nothing, as it did before R12 export had a tolerance.
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW::writeSpline: no R12 polyline within "
+                      "tolerance and vertex limit; writing the drawn segments");
+      vertices.clear();
+      for (const RS_Entity *e : lc::LC_ContainerTraverser{*s, RS2::ResolveNone}.entities()) {
+        vertices.push_back(e->getStartpoint());
+      }
+      if (vertices.empty()) {
+        return;
+      }
+      if (!closed) {
+        vertices.push_back(
+            lc::LC_ContainerTraverser{*s, RS2::ResolveNone}.entities().back()->getEndpoint());
+      }
     }
-    if (s->isClosed()) {
+    DRW_Polyline pol;
+    for (const RS_Vector &v : vertices) {
+      pol.addVertex(DRW_Vertex(v.x, v.y, 0.0, 0.0));
+    }
+    if (closed) {
       pol.flags = 1;
-    } else {
-      pol.addVertex(
-          DRW_Vertex(s->getEndpoint().x, s->getEndpoint().y, 0.0, 0.0));
     }
     getEntityAttributes(&pol, s);
     noteDxfWrite(m_dxfW->writePolyline(&pol));
@@ -29249,7 +31282,16 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
 
   // dxf spline group code=70
   // bit coded: 1: closed; 2: periodic; 4: rational; 8: planar; 16:linear
+  // A spline read closed or periodic but kept with open ends, as AutoCAD
+  // writes those with a clamped knot vector, gets its flags back while its
+  // ends still meet.
   sp.flags = (s->isClosed()) ? 0b1011 : 0b1000;
+  const RS_SplineData &splineData = s->getData();
+  if (!s->isClosed() && (splineData.m_closedFlag || splineData.m_periodicFlag) &&
+      splineCurveCloses(splineData)) {
+    sp.flags |= (splineData.m_closedFlag ? 0x1 : 0) |
+                (splineData.m_periodicFlag ? 0x2 : 0);
+  }
 
   // write spline control points:
   for (const RS_Vector &v : s->getUnwrappedControlPoints()) {
@@ -29520,47 +31562,96 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
 
   // RS_Insert cannot retain ATTRIB children internally: update() rebuilds
   // its expanded block cache. Reconstruct the native sequence from the
-  // hidden/rendered sibling text records tagged during import, then let the
+  // sibling texts buildInsertAttribPlan() gave this INSERT, then let the
   // libdxfrw writer allocate and link the child handles.
-  if (i->getParent() != nullptr) {
+  std::vector<const RS_Entity *> attributeTexts;
+  {
     std::vector<std::pair<InsertAttribSidecar, RS_Entity *>> attributes;
-    for (RS_Entity *candidate : *i->getParent()) {
-      if (candidate == nullptr || candidate == i)
-        continue;
-      const auto sidecar = extractInsertAttribSidecar(candidate);
-      if (!sidecar || sidecar->ownerId != i->getId())
-        continue;
-      if (candidate->rtti() != RS2::EntityText &&
-          candidate->rtti() != RS2::EntityMText)
-        continue;
-      attributes.emplace_back(*sidecar, candidate);
+    const auto planned = m_insertAttribPlan.children.find(i);
+    if (planned != m_insertAttribPlan.children.end()) {
+      attributes.reserve(planned->second.size());
+      for (RS_Entity *candidate : planned->second) {
+        // buildInsertAttribPlan() admitted only texts whose sidecar parses.
+        if (auto sidecar = extractInsertAttribSidecar(candidate))
+          attributes.emplace_back(std::move(*sidecar), candidate);
+      }
     }
-    std::sort(attributes.begin(), attributes.end(),
-              [](const auto &lhs, const auto &rhs) {
-                if (lhs.first.ordinal != rhs.first.ordinal)
-                  return lhs.first.ordinal < rhs.first.ordinal;
-                return lhs.second->getId() < rhs.second->getId();
-              });
+#ifdef DWGSUPPORT
+    // An ATTRIB with a reference of its own (a reactor, an extension
+    // dictionary) needs its handle before it is written: getEntityAttributes()
+    // selects an identity for it. In an R2000 owner chain that has to be the
+    // handle of its place after the INSERT. prepareDwgEntityHandleMap() took
+    // those handles for a container with source-backed entities; for any
+    // other they are taken here, in the order the writer would take them.
+    if (m_dwgW != nullptr && !attributes.empty()) {
+      auto reserved = m_dwgWriteInsertChildHandlesByEntity.find(i);
+      if (reserved == m_dwgWriteInsertChildHandlesByEntity.end() &&
+          m_dwgW->getVersion() <= DRW::AC1015) {
+        if (in.handle == 0)
+          in.handle = m_dwgW->allocNextHandle();
+        // One handle per ATTRIB, then the SEQEND.
+        std::vector<std::uint32_t> childHandles;
+        childHandles.reserve(attributes.size() + 1);
+        for (std::size_t index = 0; index <= attributes.size(); ++index)
+          childHandles.push_back(m_dwgW->allocNextHandle());
+        if (in.handle == 0 ||
+            std::find(childHandles.cbegin(), childHandles.cend(), 0u) !=
+                childHandles.cend()) {
+          m_writeFailed = true;
+          return;
+        }
+        reserved = m_dwgWriteInsertChildHandlesByEntity
+                       .emplace(i, std::move(childHandles))
+                       .first;
+      }
+      if (reserved != m_dwgWriteInsertChildHandlesByEntity.end() &&
+          reserved->second.size() == attributes.size() + 1) {
+        for (std::size_t index = 0; index < attributes.size(); ++index) {
+          m_dwgWriteGeneratedEntityHandleByEntity.emplace(
+              attributes[index].second, reserved->second[index]);
+        }
+      }
+    }
+#endif
 
+    // Only an AC1032 file holds the MTEXT of a multi-line attribute, and
+    // only its DWG form has fields for an annotation-scale payload or a
+    // column layout.
+    const bool embedsMText =
+        (m_dwgW != nullptr ? m_dwgW->getVersion() : m_dxfExportVersion) >=
+        DRW::AC1032;
+    const bool writesAttribScaleState = embedsMText && m_dwgW != nullptr;
+
+    attributeTexts.reserve(attributes.size());
     for (const auto &[sidecar, candidate] : attributes) {
+      attributeTexts.push_back(candidate);
       DRW_Attrib attrib;
       getEntityAttributes(&attrib, candidate);
       attrib.tag = sidecar.tag;
       attrib.attribFlags = static_cast<std::uint8_t>(sidecar.flags);
+      // A text is hidden when the record of its ATTRIB is invisible, when
+      // the attribute has the invisible flag, or when its MTEXT is invisible
+      // (addInsert()). While the text is as the import left it, the record
+      // gets its own visibility back: the flag alone must not make an
+      // invisible entity of it. Only a DWG of AC1032 has the visibility of
+      // the MTEXT; elsewhere the record keeps the text hidden in its stead.
+      // A visibility changed in the drawing since is written as it is.
+      const bool mtextHidden = sidecar.hasMText && !sidecar.mtext.visible;
+      const bool mtextKeepsItsOwn = embedsMText && m_dwgW != nullptr;
+      const bool shownAsRead = sidecar.recordVisible &&
+                               (sidecar.flags & 0x1) == 0 && !mtextHidden;
+      if (attrib.visible == shownAsRead) {
+        attrib.visible =
+            sidecar.recordVisible && (!mtextHidden || mtextKeepsItsOwn);
+      }
       attrib.m_fieldLength = sidecar.fieldLength;
       attrib.attVersion = static_cast<std::uint8_t>(sidecar.attVersion);
       attrib.m_attributeType = static_cast<std::uint8_t>(sidecar.attributeType);
       attrib.lockPosition = sidecar.lockPosition;
-      if (sidecar.hasValue)
-        attrib.text = sidecar.value;
-      if (sidecar.hasBasePoint)
-        attrib.basePoint = sidecar.basePoint;
-      if (sidecar.hasSecPoint)
-        attrib.secPoint = sidecar.secPoint;
-      if (sidecar.hasExtPoint)
-        attrib.extPoint = sidecar.extPoint;
-      if (sidecar.hasThickness)
-        attrib.thickness = sidecar.thickness;
+      attrib.basePoint = sidecar.basePoint;
+      attrib.secPoint = sidecar.secPoint;
+      attrib.extPoint = sidecar.extPoint;
+      attrib.thickness = sidecar.thickness;
 
       if (candidate->rtti() == RS2::EntityMText) {
         const auto *source = static_cast<const RS_MText *>(candidate);
@@ -29568,139 +31659,279 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         auto mtext = std::make_unique<DRW_MText>();
         mtext->basePoint =
             DRW_Coord(data.insertionPoint.x, data.insertionPoint.y,
-                      sidecar.hasBasePoint ? sidecar.basePoint.z : 0.0);
-        mtext->secPoint = mtext->basePoint;
-        mtext->extPoint =
-            sidecar.hasExtPoint ? sidecar.extPoint : DRW_Coord{0.0, 0.0, 1.0};
+                      sidecar.basePoint.z);
+        mtext->extPoint = sidecar.extPoint;
         mtext->height = data.height;
         mtext->widthscale = data.width;
-        mtext->text = data.text.toUtf8().toStdString();
+        mtext->text = toDxfString(data.text, m_dwgW == nullptr).toUtf8().toStdString();
         mtext->style = data.style.toUtf8().toStdString();
         mtext->angle = data.angle * 180.0 / M_PI;
-        mtext->textgen = static_cast<int>(data.valign) * 3 +
-                         static_cast<int>(data.halign) + 1;
-        mtext->alignH = static_cast<DRW_Text::HAlign>(
-            data.drawingDirection == RS_MTextData::TopToBottom ? 3 : 1);
-        mtext->alignV = static_cast<DRW_Text::VAlign>(
-            data.lineSpacingStyle == RS_MTextData::Exact ? 2 : 1);
-        mtext->interlin = data.lineSpacingFactor;
-        mtext->linespacingStyle =
-            data.lineSpacingStyle == RS_MTextData::Exact ? 2 : 1;
+        setMTextLayout(*mtext, data);
+        DRW_Coord storedXAxis;
+        bool textEdited = false;
+        bool angleEdited = false;
+        // Whether anything changed that the first point of the ATTRIB
+        // itself depends on; without stored MTEXT fields nothing says no.
+        bool firstPointEdited = true;
+        // Whether the annotation-scale payload of the source is written.
+        bool scaleDataWritten = false;
         if (sidecar.hasMText) {
           const auto &saved = sidecar.mtext;
-          if (saved.hasText)
+          DRW_MText original;
+          original.text = saved.text;
+          original.textgen = saved.textgen;
+          original.alignH = static_cast<DRW_Text::HAlign>(saved.alignH);
+          original.linespacingStyle = static_cast<std::uint16_t>(saved.linespacingStyle);
+          original.extData = saved.xdata;
+          original.height = saved.originalHeight;
+          original.widthscale = saved.originalWidth;
+          const std::unique_ptr<RS_MText> imported(mtextEntityFromDRW(original));
+          auto before = imported->getData();
+          // Position, line spacing, angle and style as imported depend on the
+          // filter that read the file (a file of an old LibreCAD, the text
+          // style of its header, the code page) and on a round trip through
+          // degrees: what the text remembers of them stands in.
+          before.insertionPoint = RS_Vector(saved.originalPosition.x, saved.originalPosition.y);
+          before.lineSpacingFactor = saved.originalSpacing;
+          before.angle = saved.originalAngle;
+          before.style = QString::fromUtf8(saved.originalStyle.c_str());
+          textEdited = data.text != before.text;
+          const bool valignEdited = data.valign != before.valign;
+          const bool attachmentEdited =
+              data.halign != before.halign || valignEdited;
+          const bool directionEdited = data.drawingDirection != before.drawingDirection ||
+                                       data.legacyRtlLayout != before.legacyRtlLayout;
+          const bool spacingEdited = data.lineSpacingStyle != before.lineSpacingStyle ||
+                                     data.lineSpacingFactor != before.lineSpacingFactor;
+          const bool positionEdited = data.insertionPoint != before.insertionPoint;
+          angleEdited = data.angle != before.angle;
+          const bool widthEdited = data.width != before.width;
+          const bool styleEdited = data.style != before.style;
+          const bool heightEdited = data.height != before.height;
+          const bool layoutEdited = textEdited || attachmentEdited ||
+                                    directionEdited || spacingEdited || positionEdited ||
+                                    angleEdited || widthEdited || styleEdited ||
+                                    heightEdited;
+          firstPointEdited = textEdited || attachmentEdited || positionEdited ||
+                             angleEdited || heightEdited || styleEdited;
+          // The annotation-scale payload and the column layout are opaque
+          // here. They go out only next to the untouched text they were
+          // read with, and the payload only if the APPID it names is
+          // written too; exportReport() says when either stays behind.
+          // A copy has no source handle, and may come from another drawing,
+          // where the handle of the APPID names something else.
+          std::uint32_t annotativeAppHandle = 0;
+          bool keepScaleState = writesAttribScaleState && !layoutEdited &&
+                                candidate->sourceHandle() != 0;
+          if (keepScaleState && !saved.annotativeData.empty() &&
+              !resolveDwgWriteAppIdHandle(saved.annotativeAppHandle,
+                                          &annotativeAppHandle)) {
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                            "RS_FilterDXFRW: ATTRIB annotation scale data "
+                            "names APPID 0x%X, which is not written",
+                            saved.annotativeAppHandle);
+            keepScaleState = false;
+          }
+          if (!keepScaleState && (!saved.annotativeData.empty() ||
+                                  saved.r2018ColumnType != 0))
+            ++m_exportAttribScaleDataLeftOut;
+          scaleDataWritten = keepScaleState && !saved.annotativeData.empty();
+          // RS_MText::setText() takes a leading \A0; \A1; \A2; out of the
+          // text and makes it the vertical alignment. A stored text with such
+          // a prefix goes out only next to the vertical alignment it was read
+          // with; any other stored text keeps its inline codes when only the
+          // attachment changes. A text read from a DWG may hold what a line
+          // of a DXF cannot: there the text of the drawing goes in its place.
+          const bool replayText =
+              !textEdited &&
+              (m_dwgW != nullptr || fitsDxfLine(saved.text)) &&
+              !(valignEdited &&
+                hasMTextAlignmentPrefix(
+                    toNativeString(QString::fromUtf8(saved.text.c_str()))));
+          if (replayText)
             mtext->text = saved.text;
-          mtext->textgen = saved.textgen;
-          mtext->alignH = static_cast<DRW_Text::HAlign>(saved.alignH);
-          mtext->alignV = static_cast<DRW_Text::VAlign>(saved.alignV);
-          mtext->linespacingStyle =
-              static_cast<std::uint16_t>(saved.linespacingStyle);
-          mtext->interlin = saved.interlin;
+          if (replayText && !attachmentEdited)
+            mtext->textgen = saved.textgen;
+          if (!directionEdited)
+            mtext->alignH = static_cast<DRW_Text::HAlign>(saved.alignH);
+          if (!spacingEdited)
+            mtext->interlin = saved.interlin;
+          // What the source record held besides its layout is replayed as
+          // far as it is a value. A handle is not, nor a flag that says one
+          // follows: it named an object of the source file, and in the file
+          // being written that number is another object or none. The R2018
+          // repeats of the placement are written last, from what they
+          // repeat (completeEmbeddedMTextForDwg()).
           mtext->m_backgroundFlags = saved.backgroundFlags;
           mtext->m_backgroundScale = saved.backgroundScale;
           mtext->m_backgroundColor = saved.backgroundColor;
+          mtext->m_backgroundTrueColor = saved.backgroundTrueColor;
           mtext->m_backgroundTransparency = saved.backgroundTransparency;
           mtext->m_r2018IsNotAnnotative = saved.r2018IsNotAnnotative;
           mtext->m_r2018Version =
               static_cast<std::uint16_t>(saved.r2018Version);
           mtext->m_r2018DefaultFlag = saved.r2018DefaultFlag;
-          mtext->m_r2018AppIdHandle = saved.r2018AppIdHandle;
-          mtext->m_r2018Attachment = saved.r2018Attachment;
-          mtext->m_r2018XAxisDir = saved.r2018XAxisDir;
-          mtext->m_r2018InsertionPoint = saved.r2018InsertionPoint;
-          mtext->m_r2018RectWidth = saved.r2018RectWidth;
           mtext->m_r2018RectHeight = saved.r2018RectHeight;
           mtext->m_r2018ExtentsHeight = saved.r2018ExtentsHeight;
           mtext->m_r2018ExtentsWidth = saved.r2018ExtentsWidth;
-          mtext->m_r2018ColumnType =
-              static_cast<std::uint16_t>(saved.r2018ColumnType);
-          mtext->m_r2018ColumnCount = saved.r2018ColumnCount;
-          mtext->m_r2018ColumnWidth = saved.r2018ColumnWidth;
-          mtext->m_r2018ColumnGutter = saved.r2018ColumnGutter;
-          mtext->m_r2018ColumnAutoHeight = saved.r2018ColumnAutoHeight;
-          mtext->m_r2018ColumnFlowReversed = saved.r2018ColumnFlowReversed;
-          mtext->m_r2018ColumnHeights = saved.r2018ColumnHeights;
-          mtext->m_r2018AnnotativeData = saved.annotativeData;
-          mtext->m_r2018AnnotativeUnknown =
-              static_cast<std::uint16_t>(saved.annotativeUnknown);
-          mtext->m_r2018AnnotativeAppHandle = saved.annotativeAppHandle;
+          if (keepScaleState) {
+            mtext->m_r2018ColumnType =
+                static_cast<std::uint16_t>(saved.r2018ColumnType);
+            mtext->m_r2018ColumnCount = saved.r2018ColumnCount;
+            mtext->m_r2018ColumnWidth = saved.r2018ColumnWidth;
+            mtext->m_r2018ColumnGutter = saved.r2018ColumnGutter;
+            mtext->m_r2018ColumnAutoHeight = saved.r2018ColumnAutoHeight;
+            mtext->m_r2018ColumnFlowReversed = saved.r2018ColumnFlowReversed;
+            mtext->m_r2018ColumnHeights = saved.r2018ColumnHeights;
+            mtext->m_r2018AnnotativeData = saved.annotativeData;
+            mtext->m_r2018AnnotativeUnknown =
+                static_cast<std::uint16_t>(saved.annotativeUnknown);
+            mtext->m_r2018AnnotativeAppHandle = annotativeAppHandle;
+          }
           mtext->m_r2018ReallyLocked = saved.reallyLocked;
-          mtext->setHasDataStorageBinaryData(saved.hasDataStorageBinaryData);
-          mtext->reactorHandles = saved.reactorHandles;
-          mtext->xDictHandle = saved.xDictHandle;
-          mtext->color = saved.color;
-          mtext->color24 = saved.color24;
-          mtext->colorName = saved.colorName;
+          // A colour-book reference names an AcDbColor object of the source
+          // file, and its index field holds no colour: without the reference
+          // the MTEXT is ByLayer.
+          if (!saved.hasAcDbColorHandle) {
+            mtext->color = saved.color;
+            mtext->color24 = saved.color24;
+          }
           mtext->transparency = saved.transparency;
-          mtext->setDwgAcDbColorHandle(saved.hasAcDbColorHandle,
-                                       saved.acDbColorHandle);
           mtext->ltypeScale = saved.ltypeScale;
-          mtext->lineType = saved.lineType;
+          mtext->lineType = embeddedMTextLineType(saved.lineType);
           mtext->visible = saved.visible;
           mtext->lWeight =
               static_cast<DRW_LW_Conv::lineWidth>(saved.lineWeight);
-          mtext->material = saved.material;
-          mtext->shadow = static_cast<DRW::ShadowMode>(saved.shadow);
-          mtext->shadowHandle = saved.shadowHandle;
-          mtext->plotStyle = static_cast<int>(saved.plotStyle);
-          mtext->fullVisualStyleHandle = saved.fullVisualStyleHandle;
-          mtext->faceVisualStyleHandle = saved.faceVisualStyleHandle;
-          mtext->edgeVisualStyleHandle = saved.edgeVisualStyleHandle;
-          mtext->setDwgLayerHandle(saved.layerHandle);
-          mtext->setDwgLinetypeHandle(saved.linetypeHandle);
-          DRW_MText cleanMText;
-          cleanMText.extData = std::move(saved.xdata);
-          removeInsertAttribSidecar(cleanMText);
-          mtext->extData = std::move(cleanMText.extData);
-          mtext->styleH.ref = saved.styleHandle;
-          if (saved.hasBasePoint)
-            mtext->basePoint = saved.basePoint;
-          if (saved.hasSecPoint)
-            mtext->secPoint = saved.secPoint;
-          if (saved.hasExtPoint)
-            mtext->extPoint = saved.extPoint;
+          mtext->basePoint = saved.basePoint;
+          if (positionEdited) {
+            mtext->basePoint.x = data.insertionPoint.x;
+            mtext->basePoint.y = data.insertionPoint.y;
+          }
+          mtext->extPoint = saved.extPoint;
+          storedXAxis = saved.secPoint;
+          if (layoutEdited) {
+            mtext->m_r2018ExtentsWidth = source->getUsedTextWidth();
+            mtext->m_r2018ExtentsHeight = source->getUsedTextHeight();
+          }
         }
-        if (!sidecar.hasValue)
-          attrib.text = mtext->text;
-        attrib.mtext = std::move(mtext);
+        mtext->secPoint =
+            mtextXAxis(data.angle, storedXAxis, angleEdited, m_dwgW != nullptr);
+        // One marker in one record: the XDATA of an ATTRIB record is the
+        // ATTRIB's in DXF, and the embedded MTEXT of a DWG has none.
+        setMTextRtlMarker(attrib, rtlLayoutOf(data));
+        // The value of the ATTRIB itself. Next to its MTEXT it is the value
+        // the file came with, which AutoCAD leaves empty; once the text has
+        // changed, a value that was there follows it. Without the MTEXT it is
+        // all a reader gets: the text on one line, without codes.
+        const QString plain = RS_MText::toPlainLine(data.text);
+        const bool keepStored =
+            embedsMText ? !textEdited || sidecar.value.empty()
+                        : !textEdited && plain.isEmpty();
+        // A value read from a DWG may hold what a line of a DXF cannot. The
+        // stored value is in the spelling of its file and goes out as it is;
+        // the line is a single-line value like that of any ATTRIB, in which
+        // a backslash of the text is a backslash and no code. Either is laid
+        // out below as the text of one line it stands for.
+        QString shownValue = plain;
+        if (keepStored && (m_dwgW != nullptr || fitsDxfLine(sidecar.value))) {
+          attrib.text = sidecar.value;
+          shownValue = toNativeSingleLineString(
+              QString::fromUtf8(sidecar.value.c_str()));
+        } else {
+          attrib.text = toDxfSingleLineString(plain, m_dwgW == nullptr)
+                            .toUtf8()
+                            .toStdString();
+        }
+        attrib.height = data.height;
+        attrib.style = mtext->style;
+        // The MTEXT has neither: they are the ATTRIB's own, as read. Of group
+        // 71 only the two flags there are, backward and upside down.
+        attrib.widthscale = sidecar.widthFactor;
+        attrib.textgen = sidecar.textgen & 6;
+        // attrib.text is final here: the first point is laid out from the
+        // text it stands for.
+        setMultilineAttribPlacement(attrib, *mtext, data, sidecar,
+                                    firstPointEdited, shownValue);
+        if (m_dwgW != nullptr) {
+          // The MTEXT refers to the text style and the layer of its
+          // attribute by the handles they have in the file being written.
+          mtext->styleH.ref = dwgWriteHandleByName(
+              m_dwgWriteTextStyleHandleByName, mtext->style);
+          if (const std::uint32_t layer = dwgWriteHandleByName(
+                  m_dwgWriteLayerHandleByName, attrib.layer))
+            mtext->setDwgLayerHandle(layer);
+        }
+        if (!embedsMText) {
+          attrib.attVersion = 0;
+          attrib.m_attributeType = 1;
+        } else {
+          // DRW_Attrib::encodeDwg() embeds the MTEXT in a multi-line ATTRIB
+          // only; type 0 or 1 would be written as a single line without it.
+          if (attrib.m_attributeType <= 1)
+            attrib.m_attributeType = 2;
+          if (m_dwgW != nullptr) {
+            // AutoCAD writes class version 0 for a multi-line attribute too.
+            attrib.attVersion = 0;
+            completeEmbeddedMTextForDwg(
+                *mtext,
+                scaleDataWritten && !sidecar.mtext.r2018IsNotAnnotative);
+          }
+          attrib.mtext = std::move(mtext);
+        }
       } else {
         const auto *source = static_cast<const RS_Text *>(candidate);
-        attrib.basePoint.x = source->getInsertionPoint().x;
-        attrib.basePoint.y = source->getInsertionPoint().y;
-        attrib.secPoint.x = source->getSecondPoint().x;
-        attrib.secPoint.y = source->getSecondPoint().y;
+        setSingleLineAttribPlacement(attrib, *source);
         attrib.height = source->getHeight();
         attrib.widthscale = source->getWidthRel();
-        attrib.text = source->getText().toUtf8().toStdString();
+        attrib.text =
+            toDxfSingleLineString(source->getText(), m_dwgW == nullptr)
+                .toUtf8()
+                .toStdString();
         attrib.style = source->getStyle().toUtf8().toStdString();
         attrib.angle = source->getAngle() * 180.0 / M_PI;
-        attrib.alignH = static_cast<DRW_Text::HAlign>(
-            static_cast<int>(source->getHAlign()));
-        attrib.alignV = static_cast<DRW_Text::VAlign>(
-            static_cast<int>(source->getVAlign()));
-        switch (source->getTextGeneration()) {
-        case RS_TextData::Backward:
-          attrib.textgen = 2;
-          break;
-        case RS_TextData::UpsideDown:
-          attrib.textgen = 4;
-          break;
-        case RS_TextData::None:
-        default:
-          attrib.textgen = 0;
-          break;
-        }
+        attrib.textgen =
+            textGenerationFlags(source->getTextGeneration(), sidecar.textgen);
+      }
+      // Of one line or of several: in a DWG the ATTRIB names its text style
+      // by the handle of the style's record.
+      if (m_dwgW != nullptr) {
+        attrib.styleH.ref = dwgWriteHandleByName(
+            m_dwgWriteTextStyleHandleByName, attrib.style);
       }
       removeInsertAttribSidecar(attrib);
       in.attlist.push_back(std::make_shared<DRW_Attrib>(std::move(attrib)));
     }
   }
   if (m_dwgW) {
+#ifdef DWGSUPPORT
+    // Keep the ATTRIB..SEQEND handles taken in prepareDwgEntityHandleMap()
+    // next to this INSERT's own handle in an R2000 owner chain. The ATTRIBs
+    // have them already (see above).
+    const auto childIt = m_dwgWriteInsertChildHandlesByEntity.find(i);
+    if (childIt != m_dwgWriteInsertChildHandlesByEntity.end() &&
+        childIt->second.size() == in.attlist.size() + 1) {
+      for (std::size_t index = 0; index < in.attlist.size(); ++index)
+        in.attlist[index]->handle = childIt->second[index];
+      in.seqendH.ref = childIt->second.back();
+    }
+#endif
     if (!m_dwgW->writeInsert(&in)) {
       m_writeFailed = true;
       return;
     }
 #ifdef DWGSUPPORT
+    // The ATTRIBs are written inside the frame of the INSERT, and no
+    // writeEntity() commits them: the identities selected for those with
+    // references of their own are final here. They are no entities of a
+    // block record, so their source handles are not noted as emitted.
+    for (const RS_Entity *text : attributeTexts) {
+      const auto selected = m_dwgWriteEntityHandleByEntity.find(text);
+      if (selected != m_dwgWriteEntityHandleByEntity.end() &&
+          !commitDwgWriteIdentity(DwgWriteSourceKind::Entity,
+                                  selected->second)) {
+        m_writeFailed = true;
+      }
+    }
     const DwgWriteReferenceReceipt receipt{DwgWriteSourceKind::Entity,
                                            i->sourceHandle(),
                                            in.handle,
@@ -29735,13 +31966,30 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
 
   getEntityAttributes(text, t);
   if (m_version != 1009) {
+    // The x axis the record was read with; zero: it had none.
+    DRW_Coord storedXAxis;
     if (const auto ocs = extractMTextOcsSidecar(t)) {
       text->basePoint.z = ocs->elevation;
       text->extPoint = ocs->extrusion;
-      static_cast<DRW_MText *>(text)->secPoint = ocs->xAxis;
+      storedXAxis = ocs->xAxis;
       removeMTextOcsSidecar(*text);
+    } else if (t->ownerLineage() != 0) {
+      // A block attribute no INSERT claims is written on its own, in the
+      // plane of the MTEXT it was read with.
+      if (const auto attribute = extractInsertAttribSidecar(t);
+          attribute && attribute->hasMText) {
+        text->basePoint.z = attribute->mtext.basePoint.z;
+        text->extPoint = attribute->mtext.extPoint;
+        storedXAxis = attribute->mtext.secPoint;
+      }
     }
+    // A text turned in the drawing since no longer has that direction, and
+    // a reader takes group 11 for the direction where a record has it.
+    txt2.secPoint =
+        mtextXAxis(t->getAngle(), storedXAxis, false, m_dwgW != nullptr);
   }
+  // The private groups of a block attribute's text never leave the program.
+  removeInsertAttribSidecar(*text);
   text->basePoint.x = t->getInsertionPoint().x;
   text->basePoint.y = t->getInsertionPoint().y;
   text->height = t->getHeight();
@@ -29781,7 +32029,7 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
     }
     for (int i = 0; i < txtList.size(); ++i) {
       if (!txtList.at(i).isEmpty()) {
-        text->text = toDxfString(txtList.at(i)).toUtf8().data();
+        text->text = toDxfString(txtList.at(i), m_dwgW == nullptr).toUtf8().data();
         RS_Vector inc = RS_Vector::polar(dist * i, t->getAngle() + M_PI_2);
         if (setSec) {
           text->secPoint.x += inc.x;
@@ -29794,55 +32042,36 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
       }
     }
   } else {
-    if (t->getHAlign() == RS_MTextData::HALeft) {
-      text->textgen = 1;
-    } else if (t->getHAlign() == RS_MTextData::HACenter) {
-      text->textgen = 2;
-    } else if (t->getHAlign() == RS_MTextData::HARight) {
-      text->textgen = 3;
-    }
-    if (t->getVAlign() == RS_MTextData::VAMiddle) {
-      text->textgen += 3;
-    } else if (t->getVAlign() == RS_MTextData::VABottom) {
-      text->textgen += 6;
-    }
-    // DXF MTEXT group 72: 1=LeftToRight, 3=TopToBottom, 5=ByStyle.
-    // RightToLeft has no DXF encoding — fall through to LeftToRight so
-    // other readers see a well-defined direction. The RTL preference is
-    // round-tripped via XDATA (app id "LibreCad", code 1071) below; on
-    // re-import we restore the flag if the marker is present, otherwise
-    // the entity reads as LTR.
-    switch (t->getDrawingDirection()) {
-    case RS_MTextData::TopToBottom:
-      text->alignH = static_cast<DRW_Text::HAlign>(3);
-      break;
-    case RS_MTextData::ByStyle:
-      text->alignH = static_cast<DRW_Text::HAlign>(5);
-      break;
-    case RS_MTextData::LeftToRight:
-    case RS_MTextData::RightToLeft:
-    default:
-      text->alignH = static_cast<DRW_Text::HAlign>(1);
-      break;
-    }
-    if (t->getDrawingDirection() == RS_MTextData::RightToLeft) {
-      text->extData.push_back(
-          std::make_shared<DRW_Variant>(1001, std::string("LibreCad")));
-      text->extData.push_back(
-          std::make_shared<DRW_Variant>(1071, std::int32_t{1}));
-    }
-    if (t->getLineSpacingStyle() == RS_MTextData::AtLeast) {
-      text->alignV = static_cast<DRW_Text::VAlign>(1);
-    } else {
-      text->alignV = static_cast<DRW_Text::VAlign>(2);
-    }
+    const RS_MTextData data = t->getData();
+    setMTextLayout(txt2, data);
+    // The RTL preference is round-tripped via XDATA (app id "LibreCad", code
+    // 1071); on re-import we restore the flag if the marker is present,
+    // otherwise the entity reads as LTR.
+    setMTextRtlMarker(*text, rtlLayoutOf(data));
 
-    text->text = toDxfString(t->getText()).toUtf8().data();
+    text->text = toDxfString(t->getText(), m_dwgW == nullptr).toUtf8().data();
     //        text->widthscale =t->getWidth();
     text->widthscale = t->getUsedTextWidth(); // getSize().x;
-    txt2.interlin = t->getLineSpacingFactor();
+    if (t->hasParagraphCommands()) {
+      // The indentations of a paragraph command are not laid out here, but a
+      // program that reads this file needs the room for them. A box of width
+      // 0 does not wrap and stays so; any other is not made narrower.
+      const double given = t->getWidth();
+      if (given == 0.0) {
+        text->widthscale = 0.0;
+      } else if (std::isfinite(given) && given > text->widthscale) {
+        text->widthscale = given;
+      }
+    }
+    if (!std::isfinite(text->widthscale) || text->widthscale < 0.0) {
+      m_writeFailed = true;
+      LC_ERR << "Cannot export MTEXT with invalid output width";
+      return;
+    }
 
     if (m_dwgW) {
+      text->styleH.ref = dwgWriteHandleByName(m_dwgWriteTextStyleHandleByName,
+                                              text->style);
       if (!m_dwgW->writeMText(static_cast<DRW_MText *>(text)))
         m_writeFailed = true;
       return;
@@ -29865,6 +32094,19 @@ void RS_FilterDXFRW::writeText(RS_Text *t) {
     text.thickness = ocs->thickness;
     removeTextOcsSidecar(text);
   }
+  if (t->ownerLineage() != 0) {
+    // A block attribute no INSERT claims is written on its own, in the plane
+    // of the ATTRIB it was read as.
+    if (const auto attribute = extractInsertAttribSidecar(t)) {
+      text.basePoint.z = attribute->basePoint.z;
+      text.secPoint.z = attribute->secPoint.z;
+      text.extPoint = attribute->extPoint;
+      text.thickness = attribute->thickness;
+    }
+  }
+  // The groups that carried it are private to this program, whatever put them
+  // on the text.
+  removeInsertAttribSidecar(text);
   text.basePoint.x = t->getInsertionPoint().x;
   text.basePoint.y = t->getInsertionPoint().y;
   text.height = t->getHeight();
@@ -29893,8 +32135,11 @@ void RS_FilterDXFRW::writeText(RS_Text *t) {
       }*/
 
   if (!t->getText().isEmpty()) {
-    text.text = toDxfString(t->getText()).toUtf8().data();
+    text.text =
+        toDxfSingleLineString(t->getText(), m_dwgW == nullptr).toUtf8().data();
     if (m_dwgW) {
+      text.styleH.ref = dwgWriteHandleByName(m_dwgWriteTextStyleHandleByName,
+                                             text.style);
       if (!m_dwgW->writeText(&text))
         m_writeFailed = true;
       return;
@@ -30076,7 +32321,7 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension *d) {
   dim->setStyle(d->getStyle().toUtf8().data());
   dim->setAlign(attachmentPoint);
   dim->setTextLineStyle(d->getLineSpacingStyle());
-  dim->setText(toDxfString(d->getLabel(false)).toUtf8().data());
+  dim->setText(toDxfString(d->getLabel(false), m_dwgW == nullptr).toUtf8().data());
   dim->setTextLineFactor(d->getLineSpacingFactor());
   dim->setHDir(d->getHDir());
   dim->setFlipArrow1(d->isFlipArrow1());
@@ -30135,7 +32380,7 @@ void RS_FilterDXFRW::writeTolerance(LC_Tolerance *t) {
   tol.xAxisDirectionVector =
       DRW_Coord(data.directionVector.x, data.directionVector.y, 0.0);
   tol.extPoint = DRW_Coord(0.0, 0.0, 1.0);
-  tol.text = toDxfString(data.textCode).toUtf8().constData();
+  tol.text = toDxfString(data.textCode, m_dwgW == nullptr).toUtf8().constData();
   const QString style =
       data.dimStyleName.isEmpty() ? m_dimStyle : data.dimStyleName;
   tol.dimStyleName = style.toUtf8().constData();
@@ -30584,8 +32829,13 @@ void RS_FilterDXFRW::writeImage(const RS_Image *i) {
 
   DRW_ImageDef *imgDef =
       m_dxfW->writeImage(&image, fileName);
-  if (imgDef == nullptr)
-    m_writeFailed = true;
+  if (imgDef == nullptr) {
+    // dxfRW::writeImage() also returns nullptr, with no error, to leave
+    // IMAGE out at R12 and older (counted in leftOut()); only any other
+    // nullptr is an actual write failure.
+    if (m_dxfW->getVersion() > DRW::AC1009)
+      m_writeFailed = true;
+  }
   if (imgDef) {
     if (definitionRecord != nullptr) {
       imgDef->imgVersion = definitionRecord->classVersion;
@@ -30745,7 +32995,7 @@ RS_FilterDXFRW::writeMLeader(LC_MLeader *m) {
   e.context.landingGap = d.landingDistance;
   e.context.hasTextContents = d.hasTextContents;
   e.context.hasContentsBlock = d.hasBlockContents;
-  e.context.textLabel = toDxfString(d.textLabel).toUtf8().data();
+  e.context.textLabel = toDxfString(d.textLabel, m_dwgW == nullptr).toUtf8().data();
   e.context.textNormal = DRW_Coord(0.0, 0.0, 1.0);
   const RS_Vector textLocation =
       d.textLocation.valid ? d.textLocation : d.contentBasePoint;
@@ -31079,7 +33329,7 @@ RS_FilterDXFRW::writeMLeader(LC_MLeader *m) {
       text.angle = d.textRotation * 180.0 / M_PI;
       text.style = d.textStyleName.isEmpty() ? "Standard"
                                              : d.textStyleName.toStdString();
-      text.text = toDxfString(d.textLabel).toUtf8().data();
+      text.text = toDxfString(d.textLabel, m_dwgW == nullptr).toUtf8().data();
       text.widthscale = d.boundaryWidth;
       text.interlin = 1.0;
       if (wroteGeometry)
@@ -31189,7 +33439,7 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity *entity,
     col = RS_Color(attrib->color24 >> 16, attrib->color24 >> 8 & 0xFF,
                    attrib->color24 & 0xFF);
   } else {
-    col = numberToColor(attrib->color);
+    col = LC_ColorNumbers::numberToColor(attrib->color);
   }
   if (!attrib->colorName.empty()) {
     col.setColorName(QString::fromUtf8(attrib->colorName.c_str()));
@@ -31197,7 +33447,7 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity *entity,
   pen.setColor(col);
 
   // Linetype:
-  pen.setLineType(nameToLineType(QString::fromUtf8(attrib->lineType.c_str())));
+  pen.setLineTypeName(QString::fromUtf8(attrib->lineType.c_str()));
 
   // Width:
   pen.setWidth(numberToWidth(attrib->lWeight));
@@ -31272,6 +33522,14 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity *ent,
   if (m_dwgW != nullptr) {
     ent->handle = 0;
     auto entityIt = m_dwgWriteEntityHandleByEntity.find(entity);
+    // An entity without a source handle may have had its output handle
+    // taken early to keep an R2000 owner chain contiguous.
+    const auto generatedIt =
+        m_dwgWriteGeneratedEntityHandleByEntity.find(entity);
+    const std::uint32_t generatedHandle =
+        generatedIt != m_dwgWriteGeneratedEntityHandleByEntity.end()
+            ? generatedIt->second
+            : 0;
     const bool hasCommonReferences =
         entity->materialHandle() != 0 || entity->plotStyleHandle() != 0 ||
         entity->shadowHandle() != 0 || entity->fullVisualStyleHandle() != 0 ||
@@ -31281,7 +33539,8 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity *ent,
     if (entityIt == m_dwgWriteEntityHandleByEntity.end() &&
         hasCommonReferences) {
       const std::uint32_t sourceHandle = entity->sourceHandle();
-      const std::uint32_t emittedHandle = m_dwgW->allocNextHandle();
+      const std::uint32_t emittedHandle =
+          generatedHandle != 0 ? generatedHandle : m_dwgW->allocNextHandle();
       if (emittedHandle == 0 ||
           !selectDwgWriteIdentity(DwgWriteSourceKind::Entity, sourceHandle,
                                   emittedHandle)) {
@@ -31300,6 +33559,8 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity *ent,
     }
     if (entityIt != m_dwgWriteEntityHandleByEntity.end()) {
       ent->handle = entityIt->second;
+    } else {
+      ent->handle = generatedHandle;
     }
   } else
 #endif
@@ -31360,17 +33621,18 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity *ent,
 
   // Color:
   int exact_rgb;
-  int color = colorToNumber(pen.getColor(), &exact_rgb);
+  int color = LC_ColorNumbers::colorToNumber(pen.getColor(), &exact_rgb);
   // printf("Color is: %s -> %d\n", pen.getColor().name().toLatin1().data(),
   // color);
 
   // Linetype:
-  QString lineType = lineTypeToName(pen.getLineType());
+  QString lineType = lineTypeNameToWrite(pen);
 
   // Width:
   DRW_LW_Conv::lineWidth width = widthToNumber(pen.getWidth());
 
-  ent->layer = toDxfString(layerName).toUtf8().data();
+  // Verbatim, as the LAYER record and the import (setEntityAttributes) have it
+  ent->layer = layerName.toUtf8().data();
   ent->color = color;
   ent->color24 = exact_rgb;
   if (pen.getColor().hasColorName()) {
@@ -31387,11 +33649,11 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity *ent,
     ent->transparency = (0x03 << 24) | (alphaByte & 0xFF);
   }
 
-  // Visibility (DXF code 60 / DWG invisible bit). The writer honors
-  // ent->visible (writeEntity emits 60 when invisible; encodeDwgCommon sets
-  // the DWG bit), but this boundary never populated it, so an invisible
-  // entity round-tripped as visible. (write-review P3 #11)
-  ent->visible = entity->isVisible();
+  // Store entity visibility independently of its layer's frozen state.
+  // Effective visibility is also false when the layer is frozen, but that
+  // must remain a layer property rather than becoming DXF code 60 / the DWG
+  // invisible bit on the entity.
+  ent->visible = entity->getFlag(RS2::FlagVisible);
 
   // Passive metadata sidecars — emit only when overridden. DWG references
   // must be remapped after the writer reserves its final handle graph;
@@ -31482,6 +33744,33 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity *ent,
   }
 }
 
+bool RS_FilterDXFRW::replaysInDxfExport(const DRW::Version source) const {
+  return source == DRW::UNKNOWNV || source == m_dxfExportVersion;
+}
+
+/**
+ * @return The handle an entity or table record names @p source by in the DXF
+ * being written: the handle the object is written under, or 0 if it is not
+ * written. Outside a DXF write, @p source itself.
+ */
+std::uint32_t RS_FilterDXFRW::dxfReference(std::uint32_t source) const {
+  if (m_dxfW == nullptr || source == 0)
+    return source;
+  // Entities are written under fresh handles, all taken before the first
+  // entity is written; a handle several entities share names none of them.
+  const DRW_WritingContext *context = m_dxfW->getWritingContext();
+  if (context->ambiguousSourceHandles.count(source) != 0)
+    return 0;
+  const auto entity = context->sourceHandleToMintedMap.find(source);
+  if (entity != context->sourceHandleToMintedMap.end())
+    return entity->second;
+  const bool codecWritesIt = source == 0xCu || source == 0xDu;
+  if (m_dxfDroppedReferenceHandles.count(source) != 0 ||
+      (m_dxfSuppressedObjectHandles.count(source) != 0 && !codecWritesIt))
+    return 0;
+  return m_dxfW->remapHandle(source);
+}
+
 /**
  * @return Pen with the same attributes as 'attrib'.
  */
@@ -31491,98 +33780,19 @@ RS_Pen RS_FilterDXFRW::attributesToPen(const DRW_Layer *att) const {
     col = RS_Color(att->color24 >> 16, att->color24 >> 8 & 0xFF,
                    att->color24 & 0xFF);
   } else {
-    col = numberToColor(att->color);
+    col = LC_ColorNumbers::numberToColor(att->color);
   }
   if (!att->colorName.empty()) {
     col.setColorName(QString::fromUtf8(att->colorName.c_str()));
   }
 
+  // Blanks alone stay solid here: a layer cannot be ByLayer.
+  const QString lineType = QString::fromUtf8(att->lineType.c_str());
   RS_Pen pen(col, numberToWidth(att->lWeight),
-             nameToLineType(QString::fromUtf8(att->lineType.c_str())));
+             LC_LineTypeNames::nameToLineType(lineType));
+  if (!lineType.trimmed().isEmpty())
+    pen.setLineTypeName(lineType);
   return pen;
-}
-
-/**
- * Converts a color index (num) into a RS_Color object.
- * Please refer to the dxflib documentation for details.
- *
- * @param num Color number.
- */
-RS_Color RS_FilterDXFRW::numberToColor(int num) {
-  if (num == 0) {
-    return RS_Color(RS2::FlagByBlock);
-  } else if (num == 256) {
-    return RS_Color(RS2::FlagByLayer);
-  } else if (num <= 255 && num >= 0) {
-    return RS_Color(DRW::dxfColors[num][0], DRW::dxfColors[num][1],
-                    DRW::dxfColors[num][2]);
-  } else {
-    RS_DEBUG->print(RS_Debug::D_WARNING,
-                    "RS_FilterDXF::numberToColor: Invalid color number given.");
-    return RS_Color(RS2::FlagByLayer);
-  }
-
-  return RS_Color();
-}
-
-/**
- * Converts a color into a color number in the DXF palette.
- * The color that fits best is chosen.
- */
-int RS_FilterDXFRW::colorToNumber(const RS_Color &col, int *rgb) {
-  // printf("Searching color for %s\n", col.name().toLatin1().data());
-  *rgb = -1;
-  // Special color BYBLOCK:
-  if (col.getFlag(RS2::FlagByBlock)) {
-    return 0;
-  }
-  // Special color BYLAYER
-  else if (col.getFlag(RS2::FlagByLayer)) {
-    return 256;
-  }
-  // Special color black is not in the table but white represents both
-  // black and white
-  else {
-    int red = col.red();
-    int green = col.green();
-    int blue = col.blue();
-    if (red == 0 && green == 0 && blue == 0) {
-      return 7;
-    }
-    // All other colors
-    else {
-      int num = 0;
-      int diff =
-          255 * 3; // smallest difference to a color in the table found so far
-
-      // Run through the whole table and compare
-      for (int i = 1; i <= 255; i++) {
-        int d = abs(red - DRW::dxfColors[i][0]) +
-                abs(green - DRW::dxfColors[i][1]) +
-                abs(blue - DRW::dxfColors[i][2]);
-
-        if (d < diff) {
-          /*
-              printf("color %f,%f,%f is closer\n",
-                     dxfColors[i][0],
-                     dxfColors[i][1],
-                     dxfColors[i][2]);
-              */
-          diff = d;
-          num = i;
-          if (d == 0) {
-            break;
-          }
-        }
-      }
-      // printf("  Found: %d, diff: %d\n", num, diff);
-      if (diff != 0) {
-        *rgb = 0;
-        *rgb = red << 16 | green << 8 | blue;
-      }
-      return num;
-    }
-  }
 }
 
 void RS_FilterDXFRW::add3dFace(const DRW_3Dface &data) {
@@ -31689,237 +33899,6 @@ void RS_FilterDXFRW::addPlotSettings(const DRW_PlotSettings *data) {
   ps->setCurrentStyleName(QString::fromStdString(data->currentStyleSheet));
 }
 
-/**
- * Converts a line type name (e.g. "CONTINUOUS") into a RS2::LineType
- * object.
- */
-RS2::LineType RS_FilterDXFRW::nameToLineType(const QString &name) {
-
-  QString uName = name.toUpper();
-
-  // Standard linetypes for QCad II / AutoCAD
-  if (uName.isEmpty() || uName == "BYLAYER") {
-    return RS2::LineByLayer;
-  }
-  if (uName == "BYBLOCK") {
-    return RS2::LineByBlock;
-  }
-  if (uName == "CONTINUOUS" || uName == "ACAD_ISO01W100") {
-    return RS2::SolidLine;
-  }
-  if (uName == "ACAD_ISO07W100" || uName == "DOT") {
-    return RS2::DotLine;
-  }
-  if (uName == "DOTTINY") {
-    return RS2::DotLineTiny;
-  }
-  if (uName == "DOT2") {
-    return RS2::DotLine2;
-  }
-  if (uName == "DOTX2") {
-    return RS2::DotLineX2;
-  }
-  if (uName == "ACAD_ISO02W100" || uName == "ACAD_ISO03W100" ||
-      uName == "DASHED") {
-    return RS2::DashLine;
-  }
-  if (uName == "DASHEDTINY") {
-    return RS2::DashLineTiny;
-  }
-  if (uName == "DASHED2") {
-    return RS2::DashLine2;
-  }
-  if (uName == "DASHEDX2") {
-    return RS2::DashLineX2;
-  }
-  if (uName == "HIDDEN") {
-    return RS2::HiddenLine;
-  }
-  if (uName == "HIDDENTINY") {
-    return RS2::HiddenLineTiny;
-  }
-  if (uName == "HIDDEN2") {
-    return RS2::HiddenLine2;
-  }
-  if (uName == "HIDDENX2") {
-    return RS2::HiddenLineX2;
-  }
-  if (uName == "ACAD_ISO10W100" || uName == "DASHDOT") {
-    return RS2::DashDotLine;
-  }
-  if (uName == "DASHDOTTINY") {
-    return RS2::DashDotLineTiny;
-  }
-  if (uName == "DASHDOT2") {
-    return RS2::DashDotLine2;
-  }
-  if (uName == "ACAD_ISO04W100" || uName == "DASHDOTX2") {
-    return RS2::DashDotLineX2;
-  }
-  if (uName == "ACAD_ISO12W100" || uName == "DIVIDE") {
-    return RS2::DivideLine;
-  }
-  if (uName == "DIVIDETINY") {
-    return RS2::DivideLineTiny;
-  }
-  if (uName == "DIVIDE2") {
-    return RS2::DivideLine2;
-  }
-  if (uName == "ACAD_ISO05W100" || uName == "DIVIDEX2") {
-    return RS2::DivideLineX2;
-  }
-  if (uName == "CENTER") {
-    return RS2::CenterLine;
-  }
-  if (uName == "CENTERTINY") {
-    return RS2::CenterLineTiny;
-  }
-  if (uName == "CENTER2") {
-    return RS2::CenterLine2;
-  }
-  if (uName == "CENTERX2") {
-    return RS2::CenterLineX2;
-  }
-  // ISO 128-20 type 09 "long-dashed double-short-dashed" (24,-3,6,-3,6,-3)
-  // is PHANTOM's shape at PHANTOM's scale, like the ISO04/ISO05 aliases.
-  if (uName == "ACAD_ISO09W100" || uName == "PHANTOM") {
-    return RS2::PhantomLine;
-  }
-  if (uName == "PHANTOMTINY") {
-    return RS2::PhantomLineTiny;
-  }
-  if (uName == "PHANTOM2") {
-    return RS2::PhantomLine2;
-  }
-  if (uName == "PHANTOMX2") {
-    return RS2::PhantomLineX2;
-  }
-  if (uName == "BORDER") {
-    return RS2::BorderLine;
-  }
-  if (uName == "BORDERTINY") {
-    return RS2::BorderLineTiny;
-  }
-  if (uName == "BORDER2") {
-    return RS2::BorderLine2;
-  }
-  if (uName == "BORDERX2") {
-    return RS2::BorderLineX2;
-  }
-
-  return RS2::SolidLine;
-}
-
-/**
- * Converts a RS_LineType into a name for a line type.
- */
-QString RS_FilterDXFRW::lineTypeToName(RS2::LineType lineType) {
-  // Standard linetypes for QCad II / AutoCAD
-  switch (lineType) {
-  case RS2::SolidLine:
-    return "CONTINUOUS";
-  case RS2::DotLine:
-    return "DOT";
-  case RS2::DotLineTiny:
-    return "DOTTINY";
-  case RS2::DotLine2:
-    return "DOT2";
-  case RS2::DotLineX2:
-    return "DOTX2";
-  case RS2::DashLine:
-    return "DASHED";
-  case RS2::DashLineTiny:
-    return "DASHEDTINY";
-  case RS2::DashLine2:
-    return "DASHED2";
-  case RS2::DashLineX2:
-    return "DASHEDX2";
-  case RS2::HiddenLine:
-    return "HIDDEN";
-  case RS2::HiddenLineTiny:
-    return "HIDDENTINY";
-  case RS2::HiddenLine2:
-    return "HIDDEN2";
-  case RS2::HiddenLineX2:
-    return "HIDDENX2";
-  case RS2::DashDotLine:
-    return "DASHDOT";
-  case RS2::DashDotLineTiny:
-    return "DASHDOTTINY";
-  case RS2::DashDotLine2:
-    return "DASHDOT2";
-  case RS2::DashDotLineX2:
-    return "DASHDOTX2";
-  case RS2::DivideLine:
-    return "DIVIDE";
-  case RS2::DivideLineTiny:
-    return "DIVIDETINY";
-  case RS2::DivideLine2:
-    return "DIVIDE2";
-  case RS2::DivideLineX2:
-    return "DIVIDEX2";
-  case RS2::CenterLine:
-    return "CENTER";
-  case RS2::CenterLineTiny:
-    return "CENTERTINY";
-  case RS2::CenterLine2:
-    return "CENTER2";
-  case RS2::CenterLineX2:
-    return "CENTERX2";
-  case RS2::PhantomLine:
-    return "PHANTOM";
-  case RS2::PhantomLineTiny:
-    return "PHANTOMTINY";
-  case RS2::PhantomLine2:
-    return "PHANTOM2";
-  case RS2::PhantomLineX2:
-    return "PHANTOMX2";
-  case RS2::BorderLine:
-    return "BORDER";
-  case RS2::BorderLineTiny:
-    return "BORDERTINY";
-  case RS2::BorderLine2:
-    return "BORDER2";
-  case RS2::BorderLineX2:
-    return "BORDERX2";
-  case RS2::LineByLayer:
-    return "ByLayer";
-  case RS2::LineByBlock:
-    return "ByBlock";
-  default:
-    break;
-  }
-  return "CONTINUOUS";
-}
-
-/**
- * Converts a RS_LineType into a name for a line type.
- */
-/*QString RS_FilterDXFRW::lineTypeToDescription(RS2::LineType lineType) {
-
-    // Standard linetypes for QCad II / AutoCAD
-    switch (lineType) {
-    case RS2::SolidLine:
-        return "Solid line";
-    case RS2::DotLine:
-        return "ISO Dashed __ __ __ __ __ __ __ __ __ __ _";
-    case RS2::DashLine:
-        return "ISO Dashed with Distance __    __    __    _";
-    case RS2::DashDotLine:
-        return "ISO Long Dashed Dotted ____ . ____ . __";
-    case RS2::DashDotDotLine:
-        return "ISO Long Dashed Double Dotted ____ .. __";
-    case RS2::LineByLayer:
-        return "";
-    case RS2::LineByBlock:
-        return "";
-    default:
-        break;
-    }
-
-    return "CONTINUOUS";
-}*/
-
 namespace {
 // The DXF/DWG line-weight encoding and LibreCAD's RS2::LineWidth are a
 // one-to-one mapping. numberToWidth() and widthToNumber() are the two
@@ -32005,6 +33984,7 @@ DRW_LW_Conv::lineWidth RS_FilterDXFRW::widthToNumber(RS2::LineWidth width) {
   return DRW_LW_Conv::widthDefault;
 }
 
+namespace {
 /**
  * Converts a native unicode string into a DXF encoded string.
  *
@@ -32012,15 +33992,33 @@ DRW_LW_Conv::lineWidth RS_FilterDXFRW::widthToNumber(RS2::LineWidth width) {
  * - %%%c for a diameter sign
  * - %%%d for a degree sign
  * - %%%p for a plus/minus sign
+ *
+ * @param paragraphBreaks A line feed is the MTEXT paragraph break "\P".
+ *   Single-line text has no such code: its line feed is a control character
+ *   like any other.
  */
-QString RS_FilterDXFRW::toDxfString(const QString &str) {
+QString dxfEncodedString(const QString &str, const bool caretCodes,
+                         const bool paragraphBreaks) {
   QString res;
   res.reserve(str.length() + 16);
 
   for (const QChar &qchar : str) {
     switch (qchar.unicode()) {
     case 0x0A:
-      res.append(uR"(\P)");
+      if (paragraphBreaks) {
+        res.append(uR"(\P)");
+      } else if (caretCodes) {
+        res.append(u"^J");
+      } else {
+        res.append(qchar);
+      }
+      break;
+    case 0x5E: // '^' starts a caret code (toNativeString); "^ " is a literal one
+      if (caretCodes) {
+        res.append(u"^ ");
+      } else {
+        res.append(qchar);
+      }
       break;
     case 0x2205:
     case 0x2300:
@@ -32033,11 +34031,67 @@ QString RS_FilterDXFRW::toDxfString(const QString &str) {
       res.append(u"%%P");
       break;
     default:
-      res.append(qchar);
+      if (caretCodes && qchar.unicode() < 0x20) { // control character: caret code, ^I for TAB
+        res.append(QChar(0x5E));
+        res.append(QChar(static_cast<ushort>(qchar.unicode() + 0x40)));
+      } else {
+        res.append(qchar);
+      }
       break;
     }
   }
   return res;
+}
+
+/**
+ * Decodes the caret codes of a DXF text value. AutoCAD caret convention:
+ * ^X → chr((X-64) mod 126); ^Space → '^' literal. Mirrors ezdxf
+ * tools/text.py:501, so ^J is LF, ^M is CR and ^I is TAB.
+ */
+QString decodeCaretCodes(const QString &text) {
+  QString decoded;
+  decoded.reserve(text.size());
+  for (int k = 0; k < text.size(); ++k) {
+    const QChar ch = text.at(k);
+    if (ch.unicode() == 0x5E /* '^' */ && k + 1 < text.size()) {
+      const QChar nx = text.at(k + 1);
+      if (nx.unicode() == 0x20) {
+        decoded.append(QChar(0x5E)); // ^space → literal ^
+      } else {
+        const int code = (static_cast<int>(nx.unicode()) - 64) % 126;
+        decoded.append(
+            QChar(static_cast<ushort>(code < 0 ? code + 126 : code)));
+      }
+      ++k; // consume the X
+    } else {
+      decoded.append(ch);
+    }
+  }
+  return decoded;
+}
+
+/**
+ * Replaces the diameter / degree / plus-minus codes — a case-insensitive
+ * match of %%c / %%C etc. — by their signs.
+ * (RLZ: Empty_set is 0x2205, diameter is 0x2300 — needs to be in all fonts.)
+ */
+void decodeTextSymbols(QString &text) {
+  text.replace(QLatin1StringView("%%c"), QStringLiteral("⌀"),
+               Qt::CaseInsensitive);
+  text.replace(QLatin1StringView("%%d"), QStringLiteral("°"),
+               Qt::CaseInsensitive);
+  text.replace(QLatin1StringView("%%p"), QStringLiteral("±"),
+               Qt::CaseInsensitive);
+}
+} // namespace
+
+QString RS_FilterDXFRW::toDxfString(const QString &str, const bool caretCodes) {
+  return dxfEncodedString(str, caretCodes, true);
+}
+
+QString RS_FilterDXFRW::toDxfSingleLineString(const QString &str,
+                                              const bool caretCodes) {
+  return dxfEncodedString(str, caretCodes, false);
 }
 
 /**
@@ -32081,43 +34135,23 @@ QString RS_FilterDXFRW::toNativeString(const QString &data) {
   }
   res.append(data.mid(j));
 
-  // AutoCAD caret convention: ^X → chr((X-64) mod 126); ^Space → '^'
-  // literal. Mirrors ezdxf tools/text.py:501. Run BEFORE the \P/\~ pass
-  // so ^J (LF), ^M (CR), ^I (TAB) decode first; also subsumes the prior
-  // hard-coded "^I → 4 spaces" rule with the general formula (^I → TAB).
-  QString caretDecoded;
-  caretDecoded.reserve(res.size());
-  for (int k = 0; k < res.size(); ++k) {
-    const QChar ch = res.at(k);
-    if (ch.unicode() == 0x5E /* '^' */ && k + 1 < res.size()) {
-      const QChar nx = res.at(k + 1);
-      if (nx.unicode() == 0x20) {
-        caretDecoded.append(QChar(0x5E)); // ^space → literal ^
-      } else {
-        const int code = (static_cast<int>(nx.unicode()) - 64) % 126;
-        caretDecoded.append(
-            QChar(static_cast<ushort>(code < 0 ? code + 126 : code)));
-      }
-      ++k; // consume the X
-    } else {
-      caretDecoded.append(ch);
-    }
-  }
-  res = std::move(caretDecoded);
+  // Run BEFORE the \P/\~ pass so ^J (LF), ^M (CR), ^I (TAB) decode first;
+  // also subsumes the prior hard-coded "^I → 4 spaces" rule with the general
+  // formula (^I → TAB).
+  res = decodeCaretCodes(res);
 
   // Replace literal escape sequences. Each replace() mutates in place;
   // the prior `res = res.replace(...)` was an unnecessary self-assignment.
   res.replace(QLatin1StringView("\\P"), QLatin1StringView("\n")); // line feed
   res.replace(QLatin1StringView("\\~"), QLatin1StringView(" "));  // space
-  // diameter / degree / plus-minus — case-insensitive match of %%c / %%C etc.
-  // (RLZ: Empty_set is 0x2205, diameter is 0x2300 — needs to be in all fonts.)
-  res.replace(QLatin1StringView("%%c"), QStringLiteral("⌀"),
-              Qt::CaseInsensitive);
-  res.replace(QLatin1StringView("%%d"), QStringLiteral("°"),
-              Qt::CaseInsensitive);
-  res.replace(QLatin1StringView("%%p"), QStringLiteral("±"),
-              Qt::CaseInsensitive);
+  decodeTextSymbols(res);
 
+  return res;
+}
+
+QString RS_FilterDXFRW::toNativeSingleLineString(const QString &data) {
+  QString res = decodeCaretCodes(data);
+  decodeTextSymbols(res);
   return res;
 }
 
@@ -32494,19 +34528,36 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
 
   auto arrowStyle = result->arrowhead();
 
-  DRW_Variant *var = checkedDimStyleVariable(s, "$DIMBLK");
-  if (var != nullptr) {
-    arrowStyle->setSameBlockName(strVal(var));
-  }
-  var = checkedDimStyleVariable(s, "$DIMBLK1");
-  if (var != nullptr) {
-    arrowStyle->setArrowHeadBlockNameFirst(strVal(var));
-  }
-  var = checkedDimStyleVariable(s, "$DIMBLK2");
-  if (var != nullptr) {
-    arrowStyle->setArrowHeadBlockNameSecond(strVal(var));
-  }
-  var = checkedDimStyleVariable(s, "$DIMASZ");
+  // A block name may come from the legacy plain-name group (5/6/7, always
+  // present pre-V2000) or from a V2000+ handle to the BLOCK_RECORD (342-344).
+  // Some writers emit both (the handle is a mirror); others (DIMLDRBLK's 341
+  // always, and some V2000+ writers for 342-344 too) emit only the handle.
+  // Resolving a handle needs the BLOCK_RECORD table, which the DIMSTYLE table
+  // can precede in the file, so it is deferred: apply the immediate name (if
+  // any) now, and queue the handle to be resolved once the whole file, and
+  // so every table, has been read (see resolvePendingDimStyleArrowBlocks()).
+  const auto arrowBlockName = [this](const DRW_Dimstyle &style, const char *key,
+                                     const dwgHandle &handle,
+                                     std::function<void(const QString &)> apply) {
+    const DRW_Variant *v = checkedDimStyleVariable(style, key);
+    if (v != nullptr) {
+      apply(strVal(v));
+    }
+    if (handle.ref != 0) {
+      m_pendingDimStyleArrowRefs.push_back({handle.ref, std::move(apply)});
+    }
+  };
+
+  arrowBlockName(s, "$DIMBLK", s.dimblkH, [arrowStyle](const QString &n) {
+    arrowStyle->setSameBlockName(n);
+  });
+  arrowBlockName(s, "$DIMBLK1", s.dimblk1H, [arrowStyle](const QString &n) {
+    arrowStyle->setArrowHeadBlockNameFirst(n);
+  });
+  arrowBlockName(s, "$DIMBLK2", s.dimblk2H, [arrowStyle](const QString &n) {
+    arrowStyle->setArrowHeadBlockNameSecond(n);
+  });
+  DRW_Variant *var = checkedDimStyleVariable(s, "$DIMASZ");
   if (var != nullptr) {
     arrowStyle->setSize(var->d_val());
   }
@@ -32533,6 +34584,16 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
     scaleStyle->setLinearFactor(var->d_val());
   }
 
+  // A variable holds the linetype name; the record holds its LTYPE handle.
+  // No reference means ByBlock, also in a style for one dimension type.
+  const auto lineTypeName = [&](const char *key, const dwgHandle &handle) {
+    const DRW_Variant *v = checkedDimStyleVariable(s, key);
+    const QString name = v != nullptr
+                             ? strVal(v)
+                             : lineTypeNameForHandle(m_graphic, handle.ref);
+    return name.isEmpty() ? QStringLiteral("ByBlock") : name;
+  };
+
   auto extLineStyle = result->extensionLine();
 
   var = checkedDimStyleVariable(s, "$DIMEXO");
@@ -32557,7 +34618,7 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
   }
   var = checkedDimStyleVariable(s, "$DIMCLRE");
   if (var != nullptr) {
-    extLineStyle->setColor(numberToColor(var->i_val()));
+    extLineStyle->setColor(LC_ColorNumbers::numberToColor(var->i_val()));
   }
   var = checkedDimStyleVariable(s, "$DIMSE1");
   if (var != nullptr) {
@@ -32567,20 +34628,8 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
   if (var != nullptr) {
     extLineStyle->setSuppressSecondRaw(var->i_val());
   }
-  var = checkedDimStyleVariable(s, "$DIMLTEX1");
-  if (var != nullptr) {
-    auto dimltex1 = strVal(var);
-    if (!dimltex1.isEmpty()) {
-      extLineStyle->setLineTypeFirst(dimltex1);
-    }
-  }
-  var = checkedDimStyleVariable(s, "$DIMLTEX2");
-  if (var != nullptr) {
-    auto dimltex2 = strVal(var);
-    if (!dimltex2.isEmpty()) {
-      extLineStyle->setLineTypeSecond(dimltex2);
-    }
-  }
+  extLineStyle->setLineTypeFirst(lineTypeName("$DIMLTEX1", s.dimltex1H));
+  extLineStyle->setLineTypeSecond(lineTypeName("$DIMLTEX2", s.dimltex2H));
 
   auto dimLineStyle = result->dimensionLine();
   var = checkedDimStyleVariable(s, "$DIMLWD");
@@ -32601,7 +34650,7 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
   }
   var = checkedDimStyleVariable(s, "$DIMCLRD");
   if (var != nullptr) {
-    dimLineStyle->setColor(numberToColor(var->i_val()));
+    dimLineStyle->setColor(LC_ColorNumbers::numberToColor(var->i_val()));
   }
   var = checkedDimStyleVariable(s, "$DIMSD1");
   if (var != nullptr) {
@@ -32615,13 +34664,7 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
   if (var != nullptr) {
     dimLineStyle->setDrawPolicyForOutsideTextRaw(var->i_val());
   }
-  var = checkedDimStyleVariable(s, "$DIMLTYPE");
-  if (var != nullptr) {
-    auto dimltype = strVal(var);
-    if (!dimltype.isEmpty()) {
-      dimLineStyle->setLineType(dimltype);
-    }
-  }
+  dimLineStyle->setLineType(lineTypeName("$DIMLTYPE", s.dimltypeH));
 
   auto textStyle = result->text();
   var = checkedDimStyleVariable(s, "$DIMTXT");
@@ -32648,7 +34691,7 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
   }
   var = checkedDimStyleVariable(s, "$DIMCLRT");
   if (var != nullptr) {
-    textStyle->setColor(numberToColor(var->i_val()));
+    textStyle->setColor(LC_ColorNumbers::numberToColor(var->i_val()));
   }
   var = checkedDimStyleVariable(s, "$DIMTAD");
   if (var != nullptr) {
@@ -32664,7 +34707,7 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
   }
   var = checkedDimStyleVariable(s, "$DIMTFILLCLR");
   if (var != nullptr) {
-    textStyle->setExplicitBackgroundFillColor(numberToColor(var->i_val()));
+    textStyle->setExplicitBackgroundFillColor(LC_ColorNumbers::numberToColor(var->i_val()));
   }
   var = checkedDimStyleVariable(s, "$DIMTXTDIRECTION");
   if (var != nullptr) {
@@ -32819,10 +34862,9 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
   }
 
   auto leaderStyle = result->leader();
-  var = checkedDimStyleVariable(s, "$DIMLDRBLK");
-  if (var != nullptr) {
-    leaderStyle->setArrowBlockName(strVal(var));
-  }
+  arrowBlockName(s, "$DIMLDRBLK", s.dimldrblkH, [leaderStyle](const QString &n) {
+    leaderStyle->setArrowBlockName(n);
+  });
 
   auto arc = result->arc();
   var = checkedDimStyleVariable(s, "$DIMARCSYM");
@@ -32862,6 +34904,20 @@ bool RS_FilterDXFRW::resolveBlockNameByHandle(std::uint32_t blockHandle,
   return true;
 }
 
+// createDimStyle() queues one entry per DIMSTYLE arrow-block handle it can't
+// resolve immediately (BLOCK_RECORD, read after DIMSTYLE within TABLES, isn't
+// available yet). Called once the whole file has been read, while m_dxfR (and
+// so its reading context) is still alive.
+void RS_FilterDXFRW::resolvePendingDimStyleArrowBlocks() {
+  for (const auto &pending : m_pendingDimStyleArrowRefs) {
+    QString blockName;
+    if (resolveBlockNameByHandle(pending.handle, blockName)) {
+      pending.apply(blockName);
+    }
+  }
+  m_pendingDimStyleArrowRefs.clear();
+}
+
 void RS_FilterDXFRW::parseDimStyleExtData(const DRW_Dimstyle &s,
                                           LC_DimStyle *result) {
   std::vector<DRW_Variant> tagData;
@@ -32889,7 +34945,11 @@ void RS_FilterDXFRW::parseDimStyleExtData(const DRW_Dimstyle &s,
         continue;
       }
       applicationName = QString::fromStdString(value);
-      expectType = false; // for later "not", as actually we do expect it
+      // Each section is "1001 appname" then one or more (1070 field-code,
+      // value) pairs -- a 392/0 DIMTALN payload, say, or this PR's own
+      // 380/<handle>. A fresh 1001 starts by expecting the first pair's
+      // field code.
+      expectType = true;
       continue;
     }
     case 1002: {
@@ -32908,6 +34968,7 @@ void RS_FilterDXFRW::parseDimStyleExtData(const DRW_Dimstyle &s,
       if (expectType) {
         // code of var
         currentValType = val;
+        expectType = false;
       } else {
         // it fields
         auto intVar = DRW_Variant(currentValType, val);
@@ -32925,6 +34986,18 @@ void RS_FilterDXFRW::parseDimStyleExtData(const DRW_Dimstyle &s,
         continue;
       auto doubleVar = DRW_Variant(currentValType, value);
       tagData.push_back(doubleVar);
+      expectType = true;
+      break;
+    }
+    case 1005: {
+      // A handle-typed value: ACAD_DSTYLE_DIM_LINETYPE and its _EXT1_/_EXT2_
+      // siblings pair their 1070 type code with a 1005 handle here, not
+      // another 1070/1040 value.
+      std::string handle;
+      if (readXDataString(v, 1005, handle) != XDataReadResult::Valid)
+        continue;
+      auto handleVar = DRW_Variant(currentValType, handle);
+      tagData.push_back(handleVar);
       expectType = true;
       break;
     }
@@ -32947,6 +35020,15 @@ void RS_FilterDXFRW::applyParsedDimStyleExtData(
   }
   const DRW_Variant *var = &vector.at(0);
   int code = var->code();
+  // ACAD_DSTYLE_DIM_LINETYPE and its _EXT1_/_EXT2_ siblings hold the hex
+  // handle of an LTYPE record, the same reference group 345-347 hold on
+  // R2007+ (parseDimStyleGroups, "$DIMLTYPE").
+  const auto dimStyleXDataLineTypeName = [this](const DRW_Variant *v) {
+    bool ok = false;
+    const std::uint32_t handle =
+        QString::fromStdString(v->c_str()).toUInt(&ok, 16);
+    return ok ? lineTypeNameForHandle(m_graphic, handle) : QString{};
+  };
 
   if (appName == "ACAD_DSTYLE_DIMJAG") {
     if (code == 388) {
@@ -32967,6 +35049,29 @@ void RS_FilterDXFRW::applyParsedDimStyleExtData(
     if (code == 391) {
       // double val = var->d_val();
       // fixme - decide where to store it. This is "Dimension Break" in acad.
+    }
+  } else if (appName == "ACAD_DSTYLE_DIM_LINETYPE") {
+    // code 380, handle: R2000/R2004 keep a style's own DIMLTYPE here instead
+    // of in the group 345 that #2928 reads on R2007+ (dimStyleGroup's own
+    // struct has no field for it at those versions).
+    if (code == 380 && var->type() == DRW_Variant::STRING) {
+      const QString name = dimStyleXDataLineTypeName(var);
+      if (!name.isEmpty())
+        dimStyle->dimensionLine()->setLineType(name);
+    }
+  } else if (appName == "ACAD_DSTYLE_DIM_EXT1_LINETYPE") {
+    // code 381, handle: the R2000/R2004 form of group 346.
+    if (code == 381 && var->type() == DRW_Variant::STRING) {
+      const QString name = dimStyleXDataLineTypeName(var);
+      if (!name.isEmpty())
+        dimStyle->extensionLine()->setLineTypeFirst(name);
+    }
+  } else if (appName == "ACAD_DSTYLE_DIM_EXT2_LINETYPE") {
+    // code 382, handle: the R2000/R2004 form of group 347.
+    if (code == 382 && var->type() == DRW_Variant::STRING) {
+      const QString name = dimStyleXDataLineTypeName(var);
+      if (!name.isEmpty())
+        dimStyle->extensionLine()->setLineTypeSecond(name);
     }
   }
 }

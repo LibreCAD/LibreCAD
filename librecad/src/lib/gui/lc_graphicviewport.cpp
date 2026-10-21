@@ -22,6 +22,7 @@
 #include "lc_graphicviewport.h"
 
 #include <algorithm>
+#include <climits>
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
@@ -46,72 +47,6 @@
 #include "rs_units.h"
 
 namespace {
-
-// Percentile of sorted samples in [0,1].
-double leafPercentile(std::vector<double> v, double p) {
-    if (v.empty())
-        return 0.0;
-    std::sort(v.begin(), v.end());
-    const size_t i = std::min(
-        v.size() - 1,
-        static_cast<size_t>(p * static_cast<double>(v.size() - 1)));
-    return v[i];
-}
-
-// Tight view envelope from visible leaves (p02/p98 of leaf edge coords).
-// Returns false when the sample is too small to trust.
-bool denseLeafEnvelope(RS_EntityContainer &container, RS_Vector &outMin,
-                       RS_Vector &outMax) {
-    std::vector<double> minXs;
-    std::vector<double> maxXs;
-    std::vector<double> minYs;
-    std::vector<double> maxYs;
-    minXs.reserve(4096);
-    maxXs.reserve(4096);
-    minYs.reserve(4096);
-    maxYs.reserve(4096);
-
-    for (RS_Entity *e :
-         lc::LC_ContainerTraverser{container, RS2::ResolveAll}.entities()) {
-        if (e == nullptr || e->isContainer() || !e->isVisible())
-            continue;
-        e->calculateBorders();
-        const RS_Vector mn = e->getMin();
-        const RS_Vector mx = e->getMax();
-        if (!mn.valid || !mx.valid)
-            continue;
-        if (!std::isfinite(mn.x) || !std::isfinite(mn.y) || !std::isfinite(mx.x)
-            || !std::isfinite(mx.y))
-            continue;
-        if (std::abs(mn.x) > 1.0e9 || std::abs(mn.y) > 1.0e9
-            || std::abs(mx.x) > 1.0e9 || std::abs(mx.y) > 1.0e9)
-            continue;
-        // Skip degenerate origin pins.
-        if (std::abs(mn.x) < 1.0e-9 && std::abs(mx.x) < 1.0e-9
-            && std::abs(mn.y) < 1.0e-9 && std::abs(mx.y) < 1.0e-9)
-            continue;
-        minXs.push_back(mn.x);
-        maxXs.push_back(mx.x);
-        minYs.push_back(mn.y);
-        maxYs.push_back(mx.y);
-    }
-    if (minXs.size() < 50)
-        return false;
-
-    outMin = RS_Vector(leafPercentile(minXs, 0.02), leafPercentile(minYs, 0.02));
-    outMax = RS_Vector(leafPercentile(maxXs, 0.98), leafPercentile(maxYs, 0.98));
-    if (outMax.x <= outMin.x || outMax.y <= outMin.y)
-        return false;
-
-    // Small pad so dense-edge symbols are not flush with the window border.
-    const double padX = 0.02 * (outMax.x - outMin.x);
-    const double padY = 0.02 * (outMax.y - outMin.y);
-    outMin.x -= padX;
-    outMin.y -= padY;
-    outMax.x += padX;
-    outMax.y += padY;
-    return true;
-}
 
 } // namespace
 
@@ -243,6 +178,16 @@ void LC_GraphicViewport::setFactorY(const double f) {
     }
 }
 
+/**
+ * @return @p v as an offset. Out of the range of int a conversion is undefined,
+ * so the value is first brought within half that range, which leaves room for
+ * the sums made with offsets. Not a number gives the lower end.
+ */
+int LC_GraphicViewport::toOffset(const double v) {
+    const double limit = INT_MAX / 2;
+    return static_cast<int>(v > -limit ? std::min(v, limit) : -limit);
+}
+
 void LC_GraphicViewport::setOffset(const int ox, const int oy) {
     m_offsetX = ox;
     m_offsetY = oy;
@@ -266,7 +211,7 @@ void LC_GraphicViewport::setOffsetY(const int oy) {
  */
 void LC_GraphicViewport::zoomInY(const double f) {
     m_factor.y *= f;
-    m_offsetY = static_cast<int>((m_offsetY - getHeight() / 2) * f) + getHeight() / 2;
+    m_offsetY = toOffset((m_offsetY - getHeight() / 2) * f) + getHeight() / 2;
     fireViewportChanged();
 }
 
@@ -290,14 +235,14 @@ void LC_GraphicViewport::zoomOutX(const double f) {
         return;
     }
     m_factor.x /= f;
-    m_offsetX = static_cast<int>(m_offsetX / f);
+    m_offsetX = toOffset(m_offsetX / f);
     fireViewportChanged();
 }
 
 void LC_GraphicViewport::centerOffsetXandY(const RS_Vector& containerMin, const RS_Vector& containerSize) {
     if ((m_document != nullptr) && !m_zoomFrozen) {
-        m_offsetX = static_cast<int>((getWidth() - m_borderLeft - m_borderRight - containerSize.x * m_factor.x) / 2.0 - containerMin.x * m_factor.x) + m_borderLeft;
-        m_offsetY = static_cast<int>((getHeight() - m_borderTop - m_borderBottom - containerSize.y * m_factor.y) / 2.0 - containerMin.y * m_factor.y) + m_borderBottom;
+        m_offsetX = toOffset((getWidth() - m_borderLeft - m_borderRight - containerSize.x * m_factor.x) / 2.0 - containerMin.x * m_factor.x) + m_borderLeft;
+        m_offsetY = toOffset((getHeight() - m_borderTop - m_borderBottom - containerSize.y * m_factor.y) / 2.0 - containerMin.y * m_factor.y) + m_borderBottom;
         fireViewportChanged();
     }
 }
@@ -307,7 +252,7 @@ void LC_GraphicViewport::centerOffsetXandY(const RS_Vector& containerMin, const 
  */
 void LC_GraphicViewport::centerOffsetX(const RS_Vector& containerMin, const RS_Vector& containerSize) {
     if ((m_document != nullptr) && !m_zoomFrozen) {
-        m_offsetX = static_cast<int>((getWidth() - m_borderLeft - m_borderRight - containerSize.x * m_factor.x) / 2.0 - containerMin.x * m_factor.x) + m_borderLeft;
+        m_offsetX = toOffset((getWidth() - m_borderLeft - m_borderRight - containerSize.x * m_factor.x) / 2.0 - containerMin.x * m_factor.x) + m_borderLeft;
        fireViewportChanged();
     }
 }
@@ -317,7 +262,7 @@ void LC_GraphicViewport::centerOffsetX(const RS_Vector& containerMin, const RS_V
  */
 void LC_GraphicViewport::centerOffsetY(const RS_Vector& containerMin, const RS_Vector& containerSize) {
     if ((m_document != nullptr) && !m_zoomFrozen) {
-        m_offsetY = static_cast<int>((getHeight() - m_borderTop - m_borderBottom - containerSize.y * m_factor.y) / 2.0 - containerMin.y * m_factor.y) + m_borderBottom;
+        m_offsetY = toOffset((getHeight() - m_borderTop - m_borderBottom - containerSize.y * m_factor.y) / 2.0 - containerMin.y * m_factor.y) + m_borderBottom;
         fireViewportChanged();
     }
 }
@@ -327,7 +272,7 @@ void LC_GraphicViewport::centerOffsetY(const RS_Vector& containerMin, const RS_V
  */
 void LC_GraphicViewport::centerX(const double x) {
     if (!m_zoomFrozen) {
-        m_offsetX = static_cast<int>(m_factor.x * x - static_cast<double>(getWidth() - m_borderLeft - m_borderRight) / 2.0);
+        m_offsetX = toOffset(m_factor.x * x - static_cast<double>(getWidth() - m_borderLeft - m_borderRight) / 2.0);
         fireViewportChanged();
     }
 }
@@ -337,7 +282,7 @@ void LC_GraphicViewport::centerX(const double x) {
  */
 void LC_GraphicViewport::centerY(const double y) {
     if (!m_zoomFrozen) {
-        m_offsetY = static_cast<int>(y * m_factor.y - static_cast<double>(getHeight() - m_borderTop - m_borderBottom) / 2.0);
+        m_offsetY = toOffset(y * m_factor.y - static_cast<double>(getHeight() - m_borderTop - m_borderBottom) / 2.0);
         fireViewportChanged();
     }
 }
@@ -424,17 +369,12 @@ void LC_GraphicViewport::zoomWindow(RS_Vector v1, RS_Vector v2, const bool keepA
     zoomX = std::abs(zoomX);
     zoomY = std::abs(zoomY);
 
-// Borders in pixel after zoom
-    const int pixLeft = static_cast<int>(v1.x * zoomX);
-    const int pixTop = static_cast<int>(v2.y * zoomY);
-    const int pixRight = static_cast<int>(v2.x * zoomX);
-    const int pixBottom = static_cast<int>(v1.y * zoomY);
-    if (pixLeft == INT_MIN || pixLeft == INT_MAX ||
-        pixRight == INT_MIN || pixRight == INT_MAX ||
-        pixTop == INT_MIN || pixTop == INT_MAX ||
-        pixBottom == INT_MIN || pixBottom == INT_MAX) {
-        RS_DIALOGFACTORY->commandMessage("Requested zooming factor out of range. Zooming not changed");
-        return;
+// Borders in pixel after zoom: as far as an offset may go, see toOffset()
+    for (const double pix : {v1.x * zoomX, v2.y * zoomY, v2.x * zoomX, v1.y * zoomY}) {
+        if (!(std::abs(pix) < INT_MAX / 2)) {
+            RS_DIALOGFACTORY->commandMessage("Requested zooming factor out of range. Zooming not changed");
+            return;
+        }
     }
     saveView();
 
@@ -474,7 +414,7 @@ void LC_GraphicViewport::zoomIn(const double f, const RS_Vector &center) {
  */
 void LC_GraphicViewport::zoomInX(const double f) {
     m_factor.x *= f;
-    m_offsetX = static_cast<int>((m_offsetX - getWidth() / 2) * f) + getWidth() / 2;
+    m_offsetX = toOffset((m_offsetX - getWidth() / 2) * f) + getWidth() / 2;
     fireViewportChanged();
 }
 
@@ -531,7 +471,7 @@ void LC_GraphicViewport::zoomOutY(const double f) {
         return;
     }
     m_factor.y /= f;
-    m_offsetY = static_cast<int>(m_offsetY / f);
+    m_offsetY = toOffset(m_offsetY / f);
     fireViewportChanged();
 }
 
@@ -617,7 +557,7 @@ void LC_GraphicViewport::zoomAutoY(const bool axis) {
             if (!m_zoomFrozen) {
                 m_factor.y = std::abs(fy);
             }
-            m_offsetY = static_cast<int>((getHeight() - m_borderTop - m_borderBottom - visibleHeight * m_factor.y) / 2.0 - (minY * m_factor.y)) + m_borderBottom;
+            m_offsetY = toOffset((getHeight() - m_borderTop - m_borderBottom - visibleHeight * m_factor.y) / 2.0 - (minY * m_factor.y)) + m_borderBottom;
             fireViewportChanged();
 
         }
@@ -690,7 +630,10 @@ void LC_GraphicViewport::doZoomAuto(const RS_Vector& min, const RS_Vector& max, 
         RS_Vector ucsMin;
         RS_Vector ucsMax;
 
-        ucsBoundingBox(min, max, ucsMin, ucsMax);
+        // Issue #2131: the old two-corner ucsBoundingBox() can be narrower than the WCS
+        // box's true UCS extent under a rotated UCS; ucsBoundsOfWcsBox() transforms all
+        // four corners, matching what the scrollbars already frame (adjustOffsetControls()).
+        ucsBoundsOfWcsBox(min, max, ucsMin, ucsMax);
 
         const RS_Vector ucsSize = ucsMax - ucsMin;
 
@@ -899,8 +842,8 @@ void LC_GraphicViewport::setUCS(const RS_Vector &origin, const double angle, con
             break;
         }
         case UCSApplyingPolicy::PanOriginCenter: {
-            const int offX = static_cast<int>(ucsOrigin.x * m_factor.x + (getWidth() - m_borderLeft - m_borderRight) * 0.5);
-            const int offY = static_cast<int>(ucsOrigin.y * m_factor.y + (getHeight() - m_borderTop - m_borderBottom) * 0.5);
+            const int offX = toOffset(ucsOrigin.x * m_factor.x + (getWidth() - m_borderLeft - m_borderRight) * 0.5);
+            const int offY = toOffset(ucsOrigin.y * m_factor.y + (getHeight() - m_borderTop - m_borderBottom) * 0.5);
             setOffset(offX, offY);
             break;
         }
@@ -1156,9 +1099,9 @@ void LC_GraphicViewport::doUpdateViewByGraphicView(LC_View *view) const {
 
     view->setTargetPoint({0, 0, 0});
 
+    // the view takes ownership of the UCS set here and frees the one it held
     LC_UCS* viewUCS = getCurrentUCS();
     if (viewUCS != nullptr) {
-        view->setUCS(viewUCS);
         if (m_graphic != nullptr) {
             LC_UCSList *ucsList = m_graphic->getUCSList();
 
@@ -1168,6 +1111,7 @@ void LC_GraphicViewport::doUpdateViewByGraphicView(LC_View *view) const {
                 viewUCS->setName(ucsName);
             }
         }
+        view->setUCS(viewUCS);
     }
     else{
         // this is WCS
@@ -1341,12 +1285,12 @@ void LC_GraphicViewport::zoomPageEx() {
 
     const RS_Vector &paperInsertionBase = graphic->getPaperInsertionBase();
 
-    m_offsetX = static_cast<int>((getWidth() - m_borderLeft - m_borderRight - printAreaSizeInViewCoordinates.x * m_factor.x) / 2.0 + (
+    m_offsetX = toOffset((getWidth() - m_borderLeft - m_borderRight - printAreaSizeInViewCoordinates.x * m_factor.x) / 2.0 + (
         paperInsertionBase.x * m_factor.x / paperScale)) + m_borderLeft;
 
     fy = m_factor.y;
 
-    m_offsetY = static_cast<int>((getHeight() - m_borderTop - m_borderBottom - printAreaSizeInViewCoordinates.y * fy) / 2.0 +
+    m_offsetY = toOffset((getHeight() - m_borderTop - m_borderBottom - printAreaSizeInViewCoordinates.y * fy) / 2.0 +
         paperInsertionBase.y * fy / paperScale) + m_borderBottom;
 
     LC_LOG<<"LC_GraphicViewport::"<<__func__<<"(): end normally";

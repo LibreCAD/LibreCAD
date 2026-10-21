@@ -122,6 +122,14 @@ RS_Graphic* RS_Clipboard::getGraphic() const {
     return m_graphic.get();
 }
 
+unsigned long long RS_Clipboard::getSourceId() const {
+    return m_sourceId;
+}
+
+void RS_Clipboard::setSourceId(const unsigned long long id) {
+    m_sourceId = id;
+}
+
 /**
  * Dumps the clipboard contents to stdout.
  */

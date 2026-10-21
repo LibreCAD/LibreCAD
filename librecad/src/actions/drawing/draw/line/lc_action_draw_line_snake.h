@@ -35,6 +35,11 @@ public:
     void next();
     void undo();
     void redo();
+    bool doProcessCommand(int status, const QString& command) override;
+    void setSetAngleDirectionState();
+    void setSetPointDirectionState();
+    void setSetXDirectionState();
+    void setSetYDirectionState();
     /// Converts the drawn lines to a polyline. Returns true if it switched to
     /// another action (which destroys *this*); the caller must not touch this/
     /// members afterwards when it returns true (Issue #2608).
@@ -75,29 +80,47 @@ private:
         explicit History(const HistoryAction a,
                          const RS_Vector& p,
                          const RS_Vector& c,
-                         const int s) :
+                         const int s,
+                         const int direction,
+                         const int status) :
             prevPt( p),
             currPt( c),
             histAct( a),
-            startOffset( s) {}
+            startOffset( s),
+            directionBefore(direction),
+            statusBefore(status),
+            directionAfter(direction),
+            statusAfter(status) {}
 
         explicit History(const History& h) :
             prevPt( h.prevPt),
             currPt( h.currPt),
             histAct( h.histAct),
-            startOffset( h.startOffset) {}
+            startOffset( h.startOffset),
+            directionBefore(h.directionBefore),
+            statusBefore(h.statusBefore),
+            directionAfter(h.directionAfter),
+            statusAfter(h.statusAfter) {}
 
         History& operator=(const History& rho) {
             histAct     = rho.histAct;
             prevPt      = rho.prevPt;
             currPt      = rho.currPt;
             startOffset = rho.startOffset;
+            directionBefore = rho.directionBefore;
+            statusBefore = rho.statusBefore;
+            directionAfter = rho.directionAfter;
+            statusAfter = rho.statusAfter;
             return *this;
         }
         RS_Vector       prevPt;     // previous coordinate
         RS_Vector       currPt;     // current coordinate
         HistoryAction    histAct;    // action to undo/redo
         int             startOffset;// offset to start point for close method
+        int             directionBefore;
+        int             statusBefore;
+        int             directionAfter;
+        int             statusAfter;
     };
 
     struct ActionData
@@ -123,6 +146,7 @@ private:
     std::unique_ptr<ActionData> m_actionData;
     void resetPoints();
     void addHistory(HistoryAction a, const RS_Vector& p, const RS_Vector& c, int s) const;
+    void updateHistoryState() const;
     void completeLineSegment(bool close);
     void calculateAngleSegment(double distance) const;
     RS_Vector calculateAngleEndpoint(const RS_Vector &snap) const;

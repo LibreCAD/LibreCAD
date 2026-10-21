@@ -34,15 +34,18 @@
 #include <QByteArray>
 #include <QFile>
 #include <QFileInfo>
+#include <QHash>
 #include <QObject>
 #include <QString>
 #include <QStringConverter>
 
 #include "shapefil.h"
 
+#include "intern/drw_textcodec.h"
+#include "lc_colornumbers.h"
+#include "lc_linetypenames.h"
 #include "rs_color.h"
 #include "rs_debug.h"
-#include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
 #include "rs_mtext.h"
@@ -182,34 +185,78 @@ ResolvedFields resolveFields(DBFHandle dbf, LC_ShpImportOptions& opt) {
 }
 
 // ---------------------------------------------------------------------------
-// DBF codepage → QStringDecoder.
+// DBF codepage → QString.
 // ---------------------------------------------------------------------------
 
-// Decode a DBF string field with the DBF's declared codepage.  Falls back to
-// UTF-8 → Latin-1 on invalid sequences (the same pragmatic heuristic
-// rs_filterjww.cpp uses for JWW's mixed CP932/Shift_JIS content).
+// The Windows code page a DBF declares, or 0.  shapelib gives the content of
+// the .cpg file, a number or a name, or else "LDID/<n>" from the language
+// driver byte of the DBF header, which ESRI's table maps to a code page.  A
+// name is compared as Qt compares codec names: without case, '-' and '_'.
+int windowsCodePage(const QString& codepage) {
+    QString name = codepage.toUpper().remove(QLatin1Char('-'))
+                       .remove(QLatin1Char('_'));
+    if (name.startsWith(QLatin1String("LDID/"))) {
+        switch (name.mid(5).toInt()) {
+        case 3: case 87: case 88: case 89: return 1252;
+        case 19: case 123: return 932;
+        case 77: case 122: return 936;
+        case 78: case 121: return 949;
+        case 79: case 120: return 950;
+        case 80: case 124: return 874;
+        case 200: return 1250;
+        case 201: return 1251;
+        case 202: return 1254;
+        case 203: return 1253;
+        case 204: return 1257;
+        default: return 0; // a DOS code page, or none
+        }
+    }
+    // A name of the code page, or of a part of it.
+    static const struct { const char* name; int codePage; } named[] = {
+        {"ISO88591", 1252}, {"LATIN1", 1252}, {"SHIFTJIS", 932}, {"SJIS", 932},
+        {"GBK", 936}, {"GB2312", 936}, {"EUCKR", 949}, {"BIG5", 950}};
+    for (const auto& known : named) {
+        if (name == QLatin1String(known.name)) return known.codePage;
+    }
+    if (name.startsWith(QLatin1String("WINDOWS"))) name.remove(0, 7);
+    else if (name.startsWith(QLatin1String("CP"))) name.remove(0, 2);
+    return name.toInt();
+}
+
+// Decodes text of a Windows code page with libdxfrw's tables, which need
+// neither ICU nor a Qt codec; no value if it has no table for the code page.
+// Its codec also reads the DXF codes \U+XXXX and \M+nXXXX, and drops a byte
+// the code page leaves undefined.  So a two-byte code page (932 to 950) goes
+// in runs that end at a backslash, which is never the first byte of a
+// character, and a single-byte one byte by byte: a dropped byte stays as
+// ISO-8859-1 has it.
+std::optional<QString> decodeCodePage(const QByteArray& bytes, int codePage) {
+    const std::string name = "ANSI_" + std::to_string(codePage);
+    DRW_TextCodec codec;
+    codec.setCodePage(name, false);
+    if (codec.getCodePage() != name) return std::nullopt; // no table for it
+    const bool twoByte = codePage >= 932 && codePage <= 950;
+    std::string utf8;
+    for (qsizetype start = 0, end = 0; start < bytes.size(); start = end) {
+        end = twoByte ? bytes.indexOf('\\', start) + 1 : start + 1;
+        if (end == 0) end = bytes.size();
+        const std::string part = codec.toUtf8(
+            {bytes.constData() + start, static_cast<std::size_t>(end - start)});
+        utf8 += part.empty() ? QString(QLatin1Char(bytes[start])).toStdString()
+                             : part;
+    }
+    return QString::fromStdString(utf8);
+}
+
+// Decode a DBF string field.  Text in a Windows code page the DBF declares is
+// read with that code page's table; any other is tried as UTF-8 and, with an
+// invalid sequence in it, read as Latin-1.
 QString decodeDbfString(const char* raw, const QString& codepage) {
     if (raw == nullptr || *raw == '\0') return {};
     const QByteArray bytes(raw);
 
-    // Best-effort mapping from DBF codepage marker to a Qt codec name.
-    // shapelib returns strings like "UTF-8", "LDID/87" (Latin-1 / ISO-8859-1),
-    // "LDID/13" (CP850), etc.  We only try to hit the common ones; anything
-    // unrecognised falls through to UTF-8 with Latin-1 fallback.
-    auto encodingFromDbf = [](const QString& cp) -> std::optional<QStringConverter::Encoding> {
-        const QString u = cp.toUpper();
-        if (u == "UTF-8" || u == "UTF8" || u == "LDID/8B") // LDID 0x8B = UTF-8 (unofficial)
-            return QStringConverter::Utf8;
-        if (u == "LDID/87" || u == "LDID/57" || u == "ISO-8859-1" || u == "LATIN1"
-            || u == "CP1252" || u == "WINDOWS-1252")
-            return QStringConverter::Latin1;
-        return std::nullopt;
-    };
-
-    if (auto enc = encodingFromDbf(codepage)) {
-        QStringDecoder decoder{*enc};
-        QString result = decoder(bytes);
-        if (!decoder.hasError()) return result;
+    if (const int codePage = windowsCodePage(codepage)) {
+        if (const auto text = decodeCodePage(bytes, codePage)) return *text;
     }
     // UTF-8 first, then Latin-1.
     {
@@ -225,10 +272,10 @@ QString decodeDbfString(const char* raw, const QString& codepage) {
 // Field-value → RS_Pen fragments.
 // ---------------------------------------------------------------------------
 
-// Numeric COLOR field: 0-255 → ACI palette (reuse RS_FilterDXFRW::numberToColor),
+// Numeric COLOR field: 0-255 → ACI palette (reuse LC_ColorNumbers::numberToColor),
 // larger → 24-bit RGB (0xRRGGBB).
 RS_Color colorFromNumber(int v) {
-    if (v >= 0 && v <= 255) return RS_FilterDXFRW::numberToColor(v);
+    if (v >= 0 && v <= 255) return LC_ColorNumbers::numberToColor(v);
     return RS_Color((v >> 16) & 0xFF, (v >> 8) & 0xFF, v & 0xFF);
 }
 
@@ -252,12 +299,36 @@ RS2::LineWidth widthFromNumber(double v) {
     return best;
 }
 
+// Reject C0 controls and reserved symbol-name punctuation, but keep C1
+// characters preserved by the DBF decoder's Latin-1 fallback.
+bool notInSymbolName(const QChar c) {
+    static const QString illegal = QStringLiteral("<>/\\\":;?*|,=`");
+    return c.unicode() < 0x20 || illegal.contains(c);
+}
+
+// Bound session-wide RS_Pen name interning to 256 identities per import.
+// Reuse the first spelling for ASCII-case and NFC-equivalent names.
+constexpr int kMaxLineTypeNames = 256;
+
+bool keepLineTypeName(QString& name, QHash<QString, QString>& kept) {
+    const QString fold = LC_LineTypeNames::foldName(name);
+    const auto known = kept.constFind(fold);
+    if (known != kept.constEnd()) {
+        name = known.value();
+        return true;
+    }
+    if (kept.size() >= kMaxLineTypeNames) return false;
+    kept.insert(fold, name);
+    return true;
+}
+
 // Build an RS_Pen from resolved fields for one DBF record.  If no styling
 // fields are present, returns std::nullopt so callers can leave the entity
-// at ByLayer defaults.
+// at ByLayer defaults.  @p lineTypeNames holds the names the import has kept.
 std::optional<RS_Pen> penFromRecord(DBFHandle dbf, int record,
                                     const ResolvedFields& rf,
-                                    const QString& codepage) {
+                                    const QString& codepage,
+                                    QHash<QString, QString>& lineTypeNames) {
     if (!dbf || record < 0) return std::nullopt;
     bool any = false;
     RS_Pen pen{RS_Color(RS2::FlagByLayer), RS2::WidthByLayer, RS2::LineByLayer};
@@ -268,10 +339,16 @@ std::optional<RS_Pen> penFromRecord(DBFHandle dbf, int record,
         any = true;
     }
     if (rf.ltype >= 0 && !DBFIsAttributeNULL(dbf, record, rf.ltype)) {
-        const QString name = decodeDbfString(
-            DBFReadStringAttribute(dbf, record, rf.ltype), codepage);
+        // Trim DBF padding before replacing reserved characters.
+        QString name = decodeDbfString(
+            DBFReadStringAttribute(dbf, record, rf.ltype), codepage).trimmed();
+        std::replace_if(name.begin(), name.end(), notInSymbolName,
+                        QLatin1Char('_'));
         if (!name.isEmpty()) {
-            pen.setLineType(RS_FilterDXFRW::nameToLineType(name));
+            if (keepLineTypeName(name, lineTypeNames))
+                pen.setLineTypeName(name);
+            else
+                pen.setLineType(LC_LineTypeNames::nameToLineType(name));
             any = true;
         }
     }
@@ -284,8 +361,12 @@ std::optional<RS_Pen> penFromRecord(DBFHandle dbf, int record,
     return pen;
 }
 
-// Ensure a layer with the given name exists on @p g; return it.
-RS_Layer* ensureLayer(RS_Graphic& g, const QString& name) {
+// Ensure a layer with the given name exists on @p g; return it.  A character
+// DXF cannot hold in a symbol name becomes '_': AutoCAD refuses a layer with
+// one, and the DXF writer fails on a line break.
+RS_Layer* ensureLayer(RS_Graphic& g, QString name) {
+    std::replace_if(name.begin(), name.end(), notInSymbolName,
+                    QLatin1Char('_'));
     if (RS_Layer* existing = g.findLayer(name)) return existing;
     auto* layer = new RS_Layer(name);
     // Default pen — ByBlock via RS_Layer's default constructor.
@@ -440,6 +521,7 @@ bool RS_FilterSHP::fileImport(RS_Graphic& g, const QString& file,
 
     LC_ShpImportOptions opts;
     const ResolvedFields rf = resolveFields(dbf.get(), opts);
+    QHash<QString, QString> lineTypeNames;
 
     RS_Layer* defaultLayer = ensureLayer(g, "0");
     int emitted = 0, skipped = 0;
@@ -461,7 +543,7 @@ bool RS_FilterSHP::fileImport(RS_Graphic& g, const QString& file,
         }
 
         const std::optional<RS_Pen> pen =
-            penFromRecord(dbf.get(), i, rf, codepage);
+            penFromRecord(dbf.get(), i, rf, codepage, lineTypeNames);
 
         switch (rec->nSHPType) {
         case SHPT_POINT:

@@ -25,7 +25,10 @@
 **********************************************************************/
 
 #include "rs_mtext.h"
+#include "lc_textbidi.h"
 
+#include <algorithm>
+#include <cmath>
 #include <iostream>
 
 #include "rs_debug.h"
@@ -37,275 +40,303 @@
 #include "rs_painter.h"
 #include "rs_pen.h"
 
-// Implementation of the Unicode Bidirectional Algorithm (UAX #9), simplified
-// for paragraphs without explicit embedding/override controls or isolates —
-// which covers all DXF/DWG MText input. Per-character bidi class comes from
-// QChar::direction() (Qt's Unicode tables), so we still rely on Qt's data
-// even though we don't go through QTextLayout (which depends on the font
-// database and would silently degrade for scripts that lack a fallback font
-// on the host system).
+namespace {
+// Every line is laid out at this height and scaled to the height of the text
+// afterwards.
+constexpr double g_layoutHeight = 9.0;
+// Tab stops of a paragraph that sets none: four text heights apart.
+constexpr double g_defaultTabInterval = 4.0 * g_layoutHeight;
+// A tab in a right-to-left line advances by this many word spaces. Every
+// release has drawn the "^I" of a DXF file as four spaces.
+constexpr double g_rightToLeftTabSpaces = 4.0;
+// A paragraph command that is longer than this is taken for text.
+constexpr qsizetype g_maxParagraphCommandLength = 256;
+// A font command or a stack that is longer than this is taken for text.
+constexpr qsizetype g_maxInlineCommandLength = 256;
+
+/**
+ * Skips a decimal number such as "-3", "1.5" or ".5" at @p pos.
+ */
+bool skipNumber(const QString& text, qsizetype& pos, const qsizetype end) {
+    qsizetype p = pos;
+    if (p < end && (text.at(p) == QChar('-') || text.at(p) == QChar('+'))) {
+        ++p;
+    }
+    int digits = 0;
+    const auto skipDigits = [&] {
+        while (p < end && text.at(p) >= QChar('0') && text.at(p) <= QChar('9')) {
+            ++p;
+            ++digits;
+        }
+    };
+    skipDigits();
+    if (p < end && text.at(p) == QChar('.')) {
+        ++p;
+        skipDigits();
+    }
+    if (digits == 0) {
+        return false;
+    }
+    pos = p;
+    return true;
+}
+
+/**
+ * Skips the value of a paragraph property: a number, or "*" for the initial
+ * value.
+ */
+bool skipPropertyValue(const QString& text, qsizetype& pos, const qsizetype end) {
+    if (pos < end && text.at(pos) == QChar('*')) {
+        ++pos;
+        return true;
+    }
+    return skipNumber(text, pos, end);
+}
+
+/**
+ * Finds the end of an MTEXT paragraph command: "\p", properties, ";". An
+ * example is "\pi-12,l12,t12;", which AutoCAD writes for a numbered list.
+ *
+ * Such a command is not drawn. It is not applied either. Its values are
+ * lengths: drawing units in the files AutoCAD writes, multiples of the text
+ * height by other accounts, and they would have to follow the entity when it is
+ * scaled. Until that is settled a line is laid out as if the command were not
+ * there.
+ *
+ * LibreCAD users type backslashes as ordinary text, so only a command that
+ * follows the grammar from its "p" to its ";" is accepted. Anything else, such
+ * as the "\p" in "C:\plans\a.dxf", stays text.
+ *
+ * @param text the content of the MText
+ * @param start the index of the "p"
+ * @return the index of the closing ";", or -1 if this is not a paragraph
+ * command
+ */
+qsizetype paragraphCommandEnd(const QString& text, const qsizetype start) {
+    // The ";" is looked for nearby only: text with many "\p" and no ";" must
+    // not be searched to its end each time.
+    const qsizetype closing = QStringView(text).mid(start + 1, g_maxParagraphCommandLength).indexOf(QChar(';'));
+    if (closing < 0) {
+        return -1;
+    }
+    const qsizetype end = start + 1 + closing;
+    // "x" alone and "t" without stops say nothing: they are more likely text.
+    bool hasProperty = false;
+    qsizetype pos = start + 1;
+    while (pos < end) {
+        const char16_t key = text.at(pos++).unicode();
+        switch (key) {
+            case ',': // between two properties
+            case 'x': // announces an alignment or tab stops
+                break;
+
+            case 'i': // first line, on top of the left indentation
+            case 'l': // left indentation
+            case 'r': // right indentation
+            case 'b': // space before the paragraph
+            case 'a': // space after the paragraph
+                if (!skipPropertyValue(text, pos, end)) {
+                    return -1;
+                }
+                hasProperty = true;
+                break;
+
+            case 'q': // alignment: left, center, right, justified, distributed
+                if (pos >= end || !QStringLiteral("lcrjd*").contains(text.at(pos))) {
+                    return -1;
+                }
+                ++pos;
+                hasProperty = true;
+                break;
+
+            case 's': // line spacing: multiple, exact, at least
+                if (pos < end && QStringLiteral("mea").contains(text.at(pos))) {
+                    ++pos;
+                }
+                if (!skipPropertyValue(text, pos, end)) {
+                    return -1;
+                }
+                hasProperty = true;
+                break;
+
+            case 't': // tab stops: the rest of the command
+                while (pos < end) {
+                    const char16_t kind = text.at(pos).unicode();
+                    if (kind == ',') {
+                        ++pos;
+                        continue;
+                    }
+                    if (kind == 'z' || kind == '*') {
+                        // no stops
+                        ++pos;
+                    }
+                    else {
+                        if (kind == 'c' || kind == 'r' || kind == 'd') {
+                            // a centered, right or decimal stop
+                            ++pos;
+                        }
+                        if (!skipNumber(text, pos, end)) {
+                            return -1;
+                        }
+                    }
+                    hasProperty = true;
+                }
+                break;
+
+            default:
+                return -1;
+        }
+    }
+    return hasProperty ? end : -1;
+}
+
+/**
+ * Finds the ";" that closes the arguments of a font command, such as the one
+ * of "\fArial|b0|i0|c0|p34;". The arguments are on one line and hold neither
+ * a command nor a brace.
+ *
+ * @param text the content of the MText
+ * @param start the index of the first character after the "f" or "F"
+ * @return the index of the closing ";", or -1 if this is not a font command
+ */
+qsizetype fontCommandEnd(const QString& text, const qsizetype start) {
+    const qsizetype limit = std::min(text.size(), start + g_maxInlineCommandLength);
+    for (qsizetype pos = start; pos < limit; ++pos) {
+        switch (text.at(pos).unicode()) {
+            case ';':
+                return pos;
+            case '\\':
+            case '{':
+            case '}':
+            case 0x0A:
+            case 0x0D:
+                return -1;
+            default:
+                break;
+        }
+    }
+    return -1;
+}
+
+/**
+ * Finds the end of an MTEXT command that takes one value: a height "\H2.5x;",
+ * a width "\W0.8x;", a tracking "\T1.2;", an oblique angle "\Q15;", a colour
+ * "\C1;" or "\c255;", an alignment "\A1;".
+ *
+ * As with a paragraph command, only one that follows the grammar from its
+ * letter to its ";" is accepted: the "\H" of "C:\Home" stays text.
+ *
+ * @param text the content of the MText
+ * @param start the index of the letter
+ * @return the index of the closing ";", or -1 if this is not such a command
+ */
+qsizetype valueCommandEnd(const QString& text, const qsizetype start) {
+    const qsizetype end = text.size();
+    qsizetype pos = start + 1;
+    switch (text.at(start).unicode()) {
+        case 'H': // height
+        case 'W': // width factor
+        case 'T': // tracking
+            if (!skipNumber(text, pos, end)) {
+                return -1;
+            }
+            // "x": a multiple of the current value
+            if (pos < end && text.at(pos) == QChar('x')) {
+                ++pos;
+            }
+            break;
+
+        case 'Q': // oblique angle
+            if (!skipNumber(text, pos, end)) {
+                return -1;
+            }
+            break;
+
+        case 'C': // colour by index
+        case 'c': { // colour by value
+            const qsizetype digits = pos;
+            while (pos < end && text.at(pos) >= QChar('0') && text.at(pos) <= QChar('9')) {
+                ++pos;
+            }
+            if (pos == digits) {
+                return -1;
+            }
+            break;
+        }
+
+        case 'A': // alignment in the line: bottom, middle, top
+            if (pos >= end || text.at(pos) < QChar('0') || text.at(pos) > QChar('2')) {
+                return -1;
+            }
+            ++pos;
+            break;
+
+        default:
+            return -1;
+    }
+    return pos < end && text.at(pos) == QChar(';') ? pos : -1;
+}
+
+/**
+ * Reads the stack of a "\S" command, such as "1^2;", "1/2;" or "1#2;", as the
+ * text it was typed as: both parts with their separator between them. A
+ * backslash makes the next character an ordinary one.
+ *
+ * A stack has a separator; without one, as in "\Share;", this is text.
+ *
+ * @param text the content of the MText
+ * @param start the index of the first character after the "S"
+ * @param typed receives the stack as plain text
+ * @return the index of the closing ";", or -1 if this is not a stack
+ */
+qsizetype stackCommandEnd(const QString& text, const qsizetype start, QString& typed) {
+    const qsizetype limit = std::min(text.size(), start + g_maxInlineCommandLength);
+    QString stack;
+    bool separated = false;
+    for (qsizetype pos = start; pos < limit; ++pos) {
+        char16_t c = text.at(pos).unicode();
+        if (c == '\\' && pos + 1 < limit) {
+            c = text.at(++pos).unicode();
+        }
+        else if (c == ';') {
+            if (!separated) {
+                return -1;
+            }
+            typed = stack;
+            return pos;
+        }
+        else if (c == '^' || c == '/' || c == '#') {
+            separated = true;
+        }
+        if (c == 0x0A || c == 0x0D) {
+            return -1;
+        }
+        stack.append(c < 0x20 ? QChar(' ') : QChar(c));
+    }
+    return -1;
+}
+
+/**
+ * @return the stop that a tab at @p distance from the start of the line
+ * advances to. Text that ends on a stop goes to the next one.
+ */
+double nextTabStop(const double distance) {
+    // Text that ends on a stop within rounding is on that stop.
+    const double position = distance + 1e-9 * g_defaultTabInterval;
+    const double stop = (std::floor(position / g_defaultTabInterval) + 1.0) * g_defaultTabInterval;
+    // Beyond the precision of a double two stops cannot be told apart.
+    return stop > distance ? stop : distance + g_defaultTabInterval;
+}
+}
+
 std::vector<int>
 RS_MText::computeBidiVisualOrder(const QString &text,
                                  Qt::LayoutDirection baseDirection) {
-  std::vector<int> result;
-  const int n = text.size();
-  if (n == 0) {
-    return result;
-  }
-
-  const int baseLevel = (baseDirection == Qt::RightToLeft) ? 1 : 0;
-
-  // ---------- Step 1: assign embedding levels per character ----------
-  // Levels: 0 = LTR, 1 = RTL, 2 = numeric (LTR within RTL context).
-  // Strong directionality directly determines levels for L / R / AL.
-  // Numeric types (EN, AN) get the +2 bump (LTR digits inside RTL get
-  // visually rendered LTR but "after" the surrounding RTL context).
-  // Neutrals/weaks are filled in below from surrounding strong context.
-  constexpr int LVL_UNKNOWN = -1;
-  std::vector<int> level(n, LVL_UNKNOWN);
-  for (int i = 0; i < n; ++i) {
-    switch (text.at(i).direction()) {
-    case QChar::DirL:
-      level[i] = 0;
-      break;
-    case QChar::DirR:
-    case QChar::DirAL:
-      level[i] = 1;
-      break;
-    case QChar::DirEN:
-    case QChar::DirAN:
-      // Digits are LTR by themselves but get bumped one level above
-      // base if base is LTR (level 2), or above the next-level RTL
-      // context (also level 2). Per UAX#9, EN/AN consistently get
-      // even levels >= base+2 in mixed paragraphs.
-      level[i] = (baseLevel == 1) ? 2 : 2;
-      break;
-    default:
-      // Neutrals (whitespace, punctuation, paragraph/segment separators,
-      // boundary-neutrals, NSM, BN, etc.) — resolved in pass 2.
-      level[i] = LVL_UNKNOWN;
-      break;
-    }
-  }
-
-  // ---------- Step 1.5: UAX#9 N0 — bracket-pair handling ----------------
-  // Identify Unicode bidi paired brackets (BD16). When both brackets in a
-  // pair end up in the same direction context, N0 keeps them as a unit
-  // so they don't drift apart under N1/N2 fallback. Pair table is the
-  // Unicode 15.x BidiBrackets.txt set (~65 pairs); canonical equivalents
-  // (e.g. U+2329 ↔ U+27E8) are handled by direct enumeration rather than
-  // a runtime canonical-decomposition pass.
-  {
-    // Sorted by `open`. Binary search keeps the per-character lookup
-    // O(log n); n is small enough that linear would also be fine but
-    // the tabular form documents the data clearly.
-    struct BracketPairCP {
-      ushort open;
-      ushort close;
-    };
-    constexpr BracketPairCP kBracketPairs[] = {
-        {0x0028, 0x0029}, {0x005B, 0x005D}, {0x007B, 0x007D}, {0x0F3A, 0x0F3B},
-        {0x0F3C, 0x0F3D}, {0x169B, 0x169C}, {0x2045, 0x2046}, {0x207D, 0x207E},
-        {0x208D, 0x208E}, {0x2308, 0x2309}, {0x230A, 0x230B}, {0x2329, 0x232A},
-        {0x2768, 0x2769}, {0x276A, 0x276B}, {0x276C, 0x276D}, {0x276E, 0x276F},
-        {0x2770, 0x2771}, {0x2772, 0x2773}, {0x2774, 0x2775}, {0x27C5, 0x27C6},
-        {0x27E6, 0x27E7}, {0x27E8, 0x27E9}, {0x27EA, 0x27EB}, {0x27EC, 0x27ED},
-        {0x27EE, 0x27EF}, {0x2983, 0x2984}, {0x2985, 0x2986}, {0x2987, 0x2988},
-        {0x2989, 0x298A}, {0x298B, 0x298C}, {0x298D, 0x298E}, {0x298F, 0x2990},
-        {0x2991, 0x2992}, {0x2993, 0x2994}, {0x2995, 0x2996}, {0x2997, 0x2998},
-        {0x29D8, 0x29D9}, {0x29DA, 0x29DB}, {0x29FC, 0x29FD}, {0x2E22, 0x2E23},
-        {0x2E24, 0x2E25}, {0x2E26, 0x2E27}, {0x2E28, 0x2E29}, {0x2E55, 0x2E56},
-        {0x2E57, 0x2E58}, {0x2E59, 0x2E5A}, {0x2E5B, 0x2E5C}, {0x3008, 0x3009},
-        {0x300A, 0x300B}, {0x300C, 0x300D}, {0x300E, 0x300F}, {0x3010, 0x3011},
-        {0x3014, 0x3015}, {0x3016, 0x3017}, {0x3018, 0x3019}, {0x301A, 0x301B},
-        {0xFE59, 0xFE5A}, {0xFE5B, 0xFE5C}, {0xFE5D, 0xFE5E}, {0xFF08, 0xFF09},
-        {0xFF3B, 0xFF3D}, {0xFF5B, 0xFF5D}, {0xFF5F, 0xFF60}, {0xFF62, 0xFF63},
-    };
-    constexpr int kBracketPairsCount =
-        sizeof(kBracketPairs) / sizeof(kBracketPairs[0]);
-
-    auto matchingClose = [&](QChar c) -> ushort {
-      const ushort u = c.unicode();
-      // Binary search by open codepoint.
-      int lo = 0, hi = kBracketPairsCount;
-      while (lo < hi) {
-        const int mid = (lo + hi) / 2;
-        if (kBracketPairs[mid].open == u)
-          return kBracketPairs[mid].close;
-        if (kBracketPairs[mid].open < u)
-          lo = mid + 1;
-        else
-          hi = mid;
-      }
-      return 0;
-    };
-    auto isClose = [&](QChar c) -> bool {
-      const ushort u = c.unicode();
-      for (int k = 0; k < kBracketPairsCount; ++k) {
-        if (kBracketPairs[k].close == u)
-          return true;
-      }
-      return false;
-    };
-    // BD16 stack: (matching-close codepoint, opening position).
-    std::vector<std::pair<ushort, int>> stack;
-    struct BracketPair {
-      int open;
-      int close;
-    };
-    std::vector<BracketPair> pairs;
-    for (int k = 0; k < n; ++k) {
-      const QChar c = text.at(k);
-      const ushort u = c.unicode();
-      const ushort closer = matchingClose(c);
-      if (closer != 0) {
-        if (stack.size() < 63) { // UAX#9 BD16 limit
-          stack.emplace_back(closer, k);
-        }
-      } else if (isClose(c)) {
-        for (int s = static_cast<int>(stack.size()) - 1; s >= 0; --s) {
-          if (stack[s].first == u) {
-            pairs.push_back({stack[s].second, k});
-            stack.resize(s); // pop everything above too
-            break;
-          }
-        }
-      }
-    }
-    const int embeddingLevel = baseLevel;
-    for (const auto &p : pairs) {
-      // Find first strong type (L vs R/AL) inside the pair.
-      int strongInside = LVL_UNKNOWN; // 0 (L) or 1 (R)
-      bool matchedEmbedding = false;
-      for (int k = p.open + 1; k < p.close && !matchedEmbedding; ++k) {
-        const QChar::Direction d = text.at(k).direction();
-        int s = 0;
-        if (d == QChar::DirL)
-          s = 0;
-        else if (d == QChar::DirR || d == QChar::DirAL)
-          s = 1;
-        else
-          continue;
-        if (strongInside == LVL_UNKNOWN)
-          strongInside = s;
-        if (s == embeddingLevel)
-          matchedEmbedding = true;
-      }
-      int bracketLevel = 0;
-      if (matchedEmbedding) {
-        bracketLevel = embeddingLevel;
-      } else if (strongInside != LVL_UNKNOWN) {
-        // Strong-but-opposite inside; check preceding strong context.
-        int context = embeddingLevel;
-        for (int k = p.open - 1; k >= 0; --k) {
-          const QChar::Direction d = text.at(k).direction();
-          if (d == QChar::DirL) {
-            context = 0;
-            break;
-          }
-          if (d == QChar::DirR || d == QChar::DirAL) {
-            context = 1;
-            break;
-          }
-        }
-        bracketLevel =
-            (context == strongInside) ? strongInside : embeddingLevel;
-      } else {
-        continue; // no strong inside — leave as ON for N1/N2.
-      }
-      level[p.open] = bracketLevel;
-      level[p.close] = bracketLevel;
-    }
-  }
-
-  // ---------- Step 2: resolve neutrals via surrounding strong context ----
-  // A run of unresolved characters takes the level of the strong character
-  // before it if that matches the strong character after it; otherwise it
-  // takes the paragraph base level. This collapses UAX#9 rules N1/N2
-  // into one pass, sufficient for our MText inputs.
-  int i = 0;
-  while (i < n) {
-    if (level[i] != LVL_UNKNOWN) {
-      ++i;
-      continue;
-    }
-    int runStart = i;
-    while (i < n && level[i] == LVL_UNKNOWN)
-      ++i;
-    const int runEnd = i; // exclusive
-
-    int prevLevel = baseLevel;
-    for (int k = runStart - 1; k >= 0; --k) {
-      if (level[k] != LVL_UNKNOWN && level[k] < 2) {
-        prevLevel = level[k];
-        break;
-      }
-    }
-    int nextLevel = baseLevel;
-    for (int k = runEnd; k < n; ++k) {
-      if (level[k] != LVL_UNKNOWN && level[k] < 2) {
-        nextLevel = level[k];
-        break;
-      }
-    }
-    const int neutralLevel = (prevLevel == nextLevel) ? prevLevel : baseLevel;
-    for (int k = runStart; k < runEnd; ++k) {
-      level[k] = neutralLevel;
-    }
-  }
-
-  // ---------- Step 3: apply L2 — reverse maximal runs of equal level ----
-  // Build the visual order by iterating from the highest level down.
-  result.reserve(n);
-  for (int k = 0; k < n; ++k)
-    result.push_back(k);
-
-  // Find max level present.
-  int maxLevel = 0;
-  for (int k = 0; k < n; ++k) {
-    if (level[k] > maxLevel)
-      maxLevel = level[k];
-  }
-  // Per UAX#9 L2: reverse runs of level >= L for L from maxLevel down to
-  // 1 (the lowest odd level) inclusive — regardless of base direction.
-  // For LTR base this leaves L runs untouched and flips RTL/numeric runs;
-  // for RTL base it additionally reverses the entire paragraph at L=1, so
-  // strong-LTR runs end up in the right place within an RTL frame.
-  for (int L = maxLevel; L >= 1; --L) {
-    int j = 0;
-    while (j < n) {
-      if (level[result[j]] >= L) {
-        int runStart = j;
-        while (j < n && level[result[j]] >= L)
-          ++j;
-        std::reverse(result.begin() + runStart, result.begin() + j);
-      } else {
-        ++j;
-      }
-    }
-  }
-  return result;
+    return lc::textbidi::visualOrder(text, baseDirection);
 }
 
 RS_MText::LC_TextLine* RS_MText::LC_TextLine::clone() const {
-    auto* ec = new LC_TextLine(getParent(), isOwner());
-    if (isOwner()) {
-        for (const RS_Entity* entity : *this) {
-            if (entity != nullptr) {
-                ec->push_back(entity->clone());
-            }
-        }
-    }
-    else {
-        ec->clear();
-        std::copy(cbegin(), cend(), std::back_inserter(*ec));
-    }
-    ec->detach();
-    ec->setTextSize(m_textSize);
-    ec->setLeftBottomCorner(m_leftBottomCorner);
-    ec->setBaselineStart(m_baselineStart);
-    ec->setBaselineEnd(m_baselineEnd);
-    return ec;
+    return new LC_TextLine(*this);
 }
 
 const RS_Vector& RS_MText::LC_TextLine::getTextSize() const {
@@ -367,14 +398,12 @@ std::ostream& operator<<(std::ostream& os, const RS_MTextData& td) {
  */
 RS_MText::RS_MText(RS_EntityContainer* parent, const RS_MTextData& d)
     : RS_EntityContainer(parent), m_data(d) {
-    RS_MText::setText(m_data.text);
+    setStyle(m_data.style);
+    applyText(m_data.text, true);
 }
 
 RS_Entity* RS_MText::clone() const {
-    auto* t = new RS_MText(*this);
-    t->setOwner(isOwner());
-    t->detach();
-    return t;
+    return new RS_MText(*this);
 }
 
 // fixme - test concept for using UI proxies for heavy entities on modification operation (rotate, scale etc).
@@ -390,13 +419,14 @@ RS_Entity* RS_MText::cloneProxy() const {
     proxy->setOwner(true);
     for (RS_Entity* entity : std::as_const(*this)) {
         const auto line = dynamic_cast<LC_TextLine*>(entity);
-        if (line != nullptr && line->count() > 0) {
+        if (line != nullptr && line->hasValidBorders()) {
             const RS_Vector& start = line->getBaselineStart();
             const RS_Vector& end = line->getBaselineEnd();
             const auto l = new RS_Line(proxy, start, end);
             proxy->addEntity(l);
         }
     }
+    proxy->forcedCalculateBorders();
     return proxy;
 }
 
@@ -405,25 +435,70 @@ RS_Entity* RS_MText::cloneProxy() const {
  * text are updated.
  */
 void RS_MText::setText(QString t) {
-    m_data.text = std::move(t);
+    applyText(t, false);
+}
+
+LC_TextEntityState::Error RS_MText::applyText(const QString &input, bool constructor,
+                                             const LC_TextEntityState *preparedState) {
+    const QString original = input.isNull() ? QString{} : QString(input.constData(), input.size());
+    const bool unchanged = !preparedState && m_data.textState.initialized() && original == m_data.textState.compatibilityText();
+    auto text = original;
+    auto valign = m_data.valign;
 
     // handle some special flags embedded in the text:
-    if (m_data.text.left(4) == R"(\A0;)") {
-        m_data.text = m_data.text.mid(4);
-        m_data.valign = RS_MTextData::VABottom;
+    if (!unchanged && text.left(4) == R"(\A0;)") {
+        text = text.mid(4);
+        valign = RS_MTextData::VABottom;
     }
-    else if (m_data.text.left(4) == R"(\A1;)") {
-        m_data.text = m_data.text.mid(4);
-        m_data.valign = RS_MTextData::VAMiddle;
+    else if (!unchanged && text.left(4) == R"(\A1;)") {
+        text = text.mid(4);
+        valign = RS_MTextData::VAMiddle;
     }
-    else if (m_data.text.left(4) == R"(\A2;)") {
-        m_data.text = m_data.text.mid(4);
-        m_data.valign = RS_MTextData::VATop;
+    else if (!unchanged && text.left(4) == R"(\A2;)") {
+        text = text.mid(4);
+        valign = RS_MTextData::VATop;
     }
+    auto next = preparedState ? *preparedState : m_data.textState;
+    if (!preparedState) {
+        auto failure = next.acceptLegacyText(original, text, LC_TextDocument::Syntax::MText, constructor);
+        if (failure) {
+            m_textStateError = failure;
+            return failure;
+        }
+    }
+    m_data.text = std::move(text);
+    m_data.valign = valign;
+    m_data.textState = std::move(next);
+    m_textStateError = {};
 
     if (m_data.updateMode == RS2::Update) {
         update();
     }
+    return {};
+}
+
+LC_TextEntityState::Error RS_MText::importText(const LC_TextEntityState::Import &input, const QString &compatibilityInput) {
+    if (input.convention.syntax != LC_TextDocument::Syntax::MText)
+        return {LC_TextEntityState::ErrorCode::InvalidConvention, QStringLiteral("MTEXT requires an MTEXT source convention")};
+    auto source = input;
+    if (!source.compatibilityStyle) source.compatibilityStyle = m_data.style;
+    auto next = m_data.textState;
+    auto failure = next.initializeImport(source, compatibilityInput);
+    if (failure) return failure;
+    const auto finalText = next.compatibilityText();
+    failure = next.acceptLegacyText(compatibilityInput, finalText, LC_TextDocument::Syntax::MText, true);
+    if (failure) return failure;
+    return applyText(compatibilityInput, false, &next);
+}
+
+LC_TextEntityState::Error RS_MText::setCanonicalText(const QString &source, const QString &compatibilityInput,
+                                                    const LC_TextEntityState::Convention &convention) {
+    if (convention.syntax != LC_TextDocument::Syntax::MText)
+        return {LC_TextEntityState::ErrorCode::InvalidConvention, QStringLiteral("MTEXT requires an MTEXT source convention")};
+    auto next = m_data.textState;
+    const auto failure = next.editSource(source, compatibilityInput, convention);
+    if (failure) return failure;
+    return applyText(compatibilityInput, false, &next);
 }
 
 void RS_MText::setDrawingDirection(RS_MTextData::MTextDrawingDirection direction) {
@@ -431,6 +506,7 @@ void RS_MText::setDrawingDirection(RS_MTextData::MTextDrawingDirection direction
         return;
     }
     m_data.drawingDirection = direction;
+    m_data.legacyRtlLayout = false;
     if (m_data.updateMode == RS2::Update) { // fixme - why update is only on some setters?
         update();
     }
@@ -527,6 +603,164 @@ int RS_MText::getNumberOfLines() const {
 }
 
 /**
+ * The content of an MText on one line, without its codes.
+ *
+ * @p text is MTEXT content the way RS_FilterDXFRW::toNativeString() leaves it:
+ * line breaks, tabs and the special characters are the characters themselves,
+ * every other code is still spelled out. What is typed in LibreCAD is taken
+ * the same way, with "\P", "\~" and "%%d" still as codes.
+ */
+QString RS_MText::toPlainLine(const QString& text) {
+    QString plain;
+    plain.reserve(text.size());
+    // A run of line breaks is one space, and only between two pieces of text.
+    bool lineBreak = false;
+    const auto append = [&plain, &lineBreak](const QChar c) {
+        if (lineBreak && !plain.isEmpty()) {
+            plain.append(QChar(' '));
+        }
+        lineBreak = false;
+        plain.append(c);
+    };
+
+    const qsizetype size = text.size();
+    for (qsizetype i = 0; i < size; ++i) {
+        const char16_t c = text.at(i).unicode();
+        if (c == 0x0A || c == 0x0D) {
+            lineBreak = true;
+            continue;
+        }
+        if (c < 0x20) {
+            // a tab, or a control character that a line has no place for
+            append(QChar(' '));
+            continue;
+        }
+        if (c == '{' || c == '}') {
+            // the scope of the commands inside
+            continue;
+        }
+        if (c == '%' && i + 2 < size && text.at(i + 1) == QChar('%')) {
+            // the codes RS_FilterDXFRW::toNativeString() decodes, typed here
+            char16_t special = 0;
+            switch (text.at(i + 2).toLower().unicode()) {
+                case 'c':
+                    special = 0x2300;
+                    break;
+                case 'd':
+                    special = 0x00B0;
+                    break;
+                case 'p':
+                    special = 0x00B1;
+                    break;
+                default:
+                    break;
+            }
+            if (special != 0) {
+                append(QChar(special));
+                i += 2;
+                continue;
+            }
+        }
+        if (c != '\\') {
+            append(QChar(c));
+            continue;
+        }
+        if (i + 1 >= size) {
+            // a backslash that ends the text is not drawn either
+            break;
+        }
+
+        qsizetype commandEnd = -1;
+        const char16_t command = text.at(i + 1).unicode();
+        switch (command) {
+            case '\\':
+            case '{':
+            case '}':
+                append(QChar(command));
+                commandEnd = i + 1;
+                break;
+
+            case 0x0A:
+                // "\\P" in a file is a backslash and a "P"; toNativeString()
+                // took the "\P" in it for a line break
+                append(QChar('\\'));
+                append(QChar('P'));
+                commandEnd = i + 1;
+                break;
+
+            case 'P': // new paragraph
+            case 'N': // new column
+                lineBreak = true;
+                commandEnd = i + 1;
+                break;
+
+            case '~': // a space that does not break
+                append(QChar(' '));
+                commandEnd = i + 1;
+                break;
+
+            case 'L': // underline
+            case 'l':
+            case 'O': // overline
+            case 'o':
+            case 'K': // strike through
+            case 'k':
+            case 'X': // wrap at the dimension line
+                commandEnd = i + 1;
+                break;
+
+            case 'S': {
+                QString typed;
+                commandEnd = stackCommandEnd(text, i + 2, typed);
+                if (commandEnd >= 0) {
+                    for (const QChar part : typed) {
+                        append(part);
+                    }
+                }
+                break;
+            }
+
+            case 'f':
+                if (i + 2 < size && text.at(i + 2) == QChar('{')) {
+                    // "\f{name}": the font change of update()
+                    const qsizetype closing =
+                        QStringView(text).mid(i + 3, g_maxInlineCommandLength).indexOf(QChar('}'));
+                    commandEnd = closing < 0 ? i + 2 : i + 3 + closing;
+                    break;
+                }
+                [[fallthrough]];
+            case 'F':
+                commandEnd = fontCommandEnd(text, i + 2);
+                break;
+
+            case 'H':
+            case 'W':
+            case 'T':
+            case 'Q':
+            case 'C':
+            case 'c':
+            case 'A':
+                commandEnd = valueCommandEnd(text, i + 1);
+                break;
+
+            case 'p':
+                commandEnd = paragraphCommandEnd(text, i + 1);
+                break;
+
+            default:
+                break;
+        }
+        if (commandEnd < 0) {
+            // not a command: the backslash is text, and so is what follows it
+            append(QChar('\\'));
+            continue;
+        }
+        i = commandEnd;
+    }
+    return plain;
+}
+
+/**
  * Updates the Inserts (letters) of this text. Called when the
  * text or it's m_data, position, alignment, .. changes.
  * This method also updates the usedTextWidth / usedTextHeight property.
@@ -541,15 +775,13 @@ void RS_MText::update() {
 
     m_usedTextWidth = 0.0;
     m_usedTextHeight = 0.0;
+    m_hasParagraphCommands = false;
 
     RS_Font* font{RS_FONTLIST->requestFont(m_data.style)};
     if (nullptr == font) {
         return;
     }
 
-    // letterSpace and space are always treated as positive advances here; the
-  // bidi pass already produced visual L→R order, so the cursor unconditionally
-  // moves rightward during emission.RS_Vector letterPos{0.0, -9.0};
     RS_Vector letterPos{0.0, -9.0};
     const RS_Vector letterSpace{font->getLetterSpacing(), 0.0};
     const double spaceWidth = font->getWordSpacing();
@@ -572,8 +804,8 @@ void RS_MText::update() {
   std::vector<LC_BidiSegment> segments;
 
   auto closeLine = [&]() {
-    flushBidiLine(*oneLine, segments, letterSpace, letterPos);
-    updateAddLine(oneLine, lineCounter++);
+    const double leadingAdvance = flushBidiLine(*oneLine, segments, letterSpace, letterPos);
+    updateAddLine(oneLine, lineCounter++, leadingAdvance);
     oneLine = new LC_TextLine(this);
     letterPos = RS_Vector(0.0, -9.0);
   };
@@ -607,6 +839,12 @@ void RS_MText::update() {
           {LC_BidiSegment::Space, QChar(' '), nullptr, spaceWidth, {}, {}});
                 break;
 
+            case 0x09:
+                // Tab: advances to the next tab stop, see flushBidiLine()
+                segments.push_back(
+          {LC_BidiSegment::Tab, QChar('\t'), nullptr, g_rightToLeftTabSpaces * spaceWidth, {}, {}});
+                break;
+
             case 0x5C: {
                 bool handled{false};
                 // code (e.g. \S, \P, ..)
@@ -627,13 +865,27 @@ void RS_MText::update() {
                         handled = true;
                         break;
 
+                    case 'p': {
+                        // paragraph properties such as "\pi-12,l12,t12;": not drawn
+                        const qsizetype commandEnd = paragraphCommandEnd(m_data.text, i);
+                        if (commandEnd < 0) {
+                            // not a command: drawn like any other text
+                            --i;
+                            break;
+                        }
+                        i = commandEnd;
+                        m_hasParagraphCommands = true;
+                        handled = true;
+                        break;
+                    } // inner case 'p'
+
                     case 'f':
                     case 'F': {
                         // font change
                         //  \f{symbol} changes font to symbol
                         //  \f{} sets font to standard
                         ++i;
-                        if ('{' != m_data.text.at(i).unicode()) {
+                        if (i >= m_data.text.size() || '{' != m_data.text.at(i).unicode()) {
                             --i;
                             continue;
                         }
@@ -710,12 +962,12 @@ void RS_MText::update() {
     } // for (i) loop
 
   // Flush any trailing segments belonging to the last line.
-  flushBidiLine(*oneLine, segments, letterSpace, letterPos);
+  const double leadingAdvance = flushBidiLine(*oneLine, segments, letterSpace, letterPos);
 
   m_usedTextHeight -=
           m_data.height * m_data.lineSpacingFactor * 5.0 / 3.0 - m_data.height;
 
-    updateAddLine(oneLine, lineCounter);
+    updateAddLine(oneLine, lineCounter, leadingAdvance);
 
     alignVertically();
     RS_DEBUG->print("RS_MText::update: OK");
@@ -723,17 +975,20 @@ void RS_MText::update() {
 
 /**
  * Reorder @p segments via the Unicode Bidirectional Algorithm and emit each
- * one (letter / space / super-sub stack) into @p oneLine in visual L→R order.
- * Cursor advances are computed from @c .lff metrics, not from QTextLayout's
- * Qt-font metrics — QTextLayout is used only for the logical→visual
- * permutation. Clears @p segments on return.
+ * one (letter / space / tab / super-sub stack) into @p oneLine in visual L→R
+ * order. Cursor advances use LFF metrics; bidi only determines visual order.
+ * Clears @p segments on return.
+ *
+ * @return for a line that flows from the left, the advance of the spaces and
+ * tabs in front of its first ink. Zero for a right-to-left line, whose blanks
+ * on the left are the trailing ones, and for a line without ink.
  */
-void RS_MText::flushBidiLine(LC_TextLine &oneLine,
-                             std::vector<LC_BidiSegment> &segments,
-                             const RS_Vector &letterSpace,
-                             RS_Vector &letterPosition) {
+double RS_MText::flushBidiLine(LC_TextLine &oneLine,
+                               std::vector<LC_BidiSegment> &segments,
+                               const RS_Vector &letterSpace,
+                               RS_Vector &letterPosition) {
   if (segments.empty()) {
-    return;
+    return 0.0;
   }
 
   // Build a plain-text string for the bidi pass. Stacks become U+FFFC (Object
@@ -749,80 +1004,217 @@ void RS_MText::flushBidiLine(LC_TextLine &oneLine,
     case LC_BidiSegment::Space:
       plainText.append(QChar(' '));
       break;
+    case LC_BidiSegment::Tab:
+      // One code unit, like every other segment: a cluster index is a segment
+      // index. A tab is a segment separator for bidi, so the fields on its two
+      // sides keep their logical order along the direction of the line.
+      plainText.append(QChar('\t'));
+      break;
     case LC_BidiSegment::Stack:
       plainText.append(QChar(0xFFFC));
       break;
     }
   }
 
-  // For an explicit RightToLeft setting, lay out characters in pure
-  // positional reverse — matching AutoCAD's `drawingDirection` semantics and
-  // the property-panel/dialog widget mirrors. UAX#9 leaves EN digits
-  // direction-immune, so a UAX#9 pass would render "1234" identically in LTR
-  // and RTL on the canvas while the widget shows "4321" — diverging from the
-  // user's edited buffer. The other settings (LeftToRight, TopToBottom,
-  // ByStyle) keep going through UAX#9 with an LTR base so embedded
-  // strong-RTL runs (Hebrew/Arabic) still display correctly.
-  //
-  // Surrogate-pair caveat: segments are built one QChar each, so a non-BMP
-  // codepoint already arrives as two adjacent segments. Reversal swaps the
-  // halves; rendering then fails the font lookup on each half and falls
-  // back to U+FFFD anyway (addLetter is QChar-scoped). Fixing this needs
-  // grapheme-aware segment building plus codepoint-based font lookup —
-  // broader rendering work, not bidi.
-  std::vector<int> visualOrder;
-  if (m_data.drawingDirection == RS_MTextData::RightToLeft) {
-    visualOrder.resize(segments.size());
-    for (size_t i = 0; i < segments.size(); ++i) {
-      visualOrder[i] = static_cast<int>(segments.size() - 1 - i);
-    }
-  } else {
-    visualOrder = computeBidiVisualOrder(plainText, Qt::LeftToRight);
-  }
+  const auto direction = m_data.drawingDirection == RS_MTextData::RightToLeft
+      ? Qt::RightToLeft : Qt::LeftToRight;
+  // A line flows from the left unless the text is right-to-left. Only such a
+  // line is indented and has tab stops: in a right-to-left line the blanks on
+  // the visual left are the trailing ones, and a stop would have to be measured
+  // from the far end of the line.
+  const bool flowsFromLeft = direction == Qt::LeftToRight;
+  const bool leftAttached = m_data.halign != RS_MTextData::HACenter
+      && m_data.halign != RS_MTextData::HARight;
 
-  for (int logIdx : visualOrder) {
-    const auto &seg = segments[logIdx];
-    switch (seg.kind) {
-    case LC_BidiSegment::Char: {
-      RS_Font *segFont = seg.font;
-      if (segFont == nullptr) {
-        // Fallback: should not normally happen, but stay defensive.
-        segFont = RS_FONTLIST->requestFont(m_data.style);
-      }
-      if (segFont != nullptr) {
-        addLetter(oneLine, seg.codepoint, *segFont, letterSpace,
-                  letterPosition);
-      }
-      break;
+  // The ink laid out so far, and the advance of the spaces and tabs in front
+  // of it. A stack without ink moves the pen as well, but is no indentation.
+  bool hasInk = false;
+  double inkMin = 0.0;
+  double inkMax = 0.0;
+  double leadingAdvance = 0.0;
+  // Where the edge that tab stops are measured from is, as the pen sees it.
+  // A left-attached line ends up with its ink the leading advance from the
+  // insertion point (see updateAddLine()), so that is where its stops count
+  // from. A centered or right-attached line is anchored on its ink, and its
+  // leading blanks are without effect: its stops count from its first ink.
+  const auto stopOrigin = [&]() {
+    if (!hasInk) {
+      return letterPosition.x - leadingAdvance;
     }
-    case LC_BidiSegment::Space:
-      letterPosition.x += seg.width;
-      break;
-    case LC_BidiSegment::Stack: {
-      double upperWidth = 0.0;
-      if (!seg.upperText.isEmpty()) {
-        RS_MText *upper = createUpperLower(seg.upperText, m_data,
-                                           letterPosition + RS_Vector{0., 9.});
-        oneLine.addEntity(upper);
-        upper->reparent(&oneLine);
-        upperWidth = upper->getSize().x;
+    return leftAttached ? inkMin - leadingAdvance : inkMin;
+  };
+  // The ink behind a tab starts on the stop exactly, as the ink of a line
+  // starts on the edge of the line: the left bearing of a letter shifts
+  // neither. Otherwise the same stop would be at different places in two lines
+  // that begin with different letters. What a tab opens is a field: its first
+  // child, where its ink belongs, and its ink so far.
+  bool tabPending = false;
+  bool inTabField = false;
+  unsigned fieldFirst = 0;
+  double fieldStart = 0.0;
+  double fieldInkMin = 0.0;
+  double fieldInkMax = 0.0;
+  double inkMaxBeforeField = 0.0;
+
+  for (const auto &cluster : lc::textbidi::visualClusters(
+           plainText, direction,
+           m_data.legacyRtlLayout && direction == Qt::RightToLeft)) {
+    RS_Vector clusterOrigin = letterPosition;
+    for (int offset = 0; offset < cluster.length; ++offset) {
+      const int logIdx = cluster.start + offset;
+      const auto &seg = segments[logIdx];
+      const unsigned firstAdded = oneLine.count();
+      switch (seg.kind) {
+      case LC_BidiSegment::Char: {
+        char32_t scalar = seg.codepoint.unicode();
+        if (seg.codepoint.isHighSurrogate() &&
+            offset + 1 < cluster.length &&
+            segments[logIdx + 1].codepoint.isLowSurrogate()) {
+          scalar = QChar::surrogateToUcs4(
+              seg.codepoint, segments[logIdx + 1].codepoint);
+          ++offset;
+        }
+        const auto category = QChar::category(scalar);
+        if (category == QChar::Other_Format ||
+            category == QChar::Other_Control) {
+          break;
+        }
+        RS_Font *segFont = seg.font;
+        if (segFont == nullptr) {
+          // Fallback: should not normally happen, but stay defensive.
+          segFont = RS_FONTLIST->requestFont(m_data.style);
+        }
+        if (segFont != nullptr) {
+          if (cluster.rightToLeft)
+            scalar = QChar::mirroredChar(scalar);
+          const auto glyph = QString::fromUcs4(&scalar, 1);
+          if (category == QChar::Mark_NonSpacing ||
+              category == QChar::Mark_Enclosing) {
+            auto markPosition = clusterOrigin;
+            addLetter(oneLine, glyph, *segFont, letterSpace, markPosition);
+          } else {
+            addLetter(oneLine, glyph, *segFont, letterSpace, letterPosition);
+          }
+        }
+        break;
       }
-      double lowerWidth = 0.0;
-      if (!seg.lowerText.isEmpty()) {
-        RS_MText *lower = createUpperLower(seg.lowerText, m_data,
-                                           letterPosition + RS_Vector{0., 4.});
-        oneLine.addEntity(lower);
-        lower->reparent(&oneLine);
-        lowerWidth = lower->getSize().x;
+      case LC_BidiSegment::Space:
+        letterPosition.x += seg.width;
+        if (!hasInk) {
+          leadingAdvance += seg.width;
+        } else if (tabPending) {
+          fieldStart += seg.width;
+        }
+        break;
+      case LC_BidiSegment::Tab: {
+        if (!flowsFromLeft) {
+          letterPosition.x += seg.width;
+          break;
+        }
+        const double origin = stopOrigin();
+        // The pen of a font without letter spacing can be left of the ink.
+        const double reached = hasInk ? std::max(letterPosition.x, inkMax) : letterPosition.x;
+        const double stop = nextTabStop(reached - origin);
+        if (!std::isfinite(stop)) {
+          break;
+        }
+        letterPosition.x = stop + origin;
+        if (!hasInk) {
+          // in front of all ink the tab is part of the indentation of the line
+          leadingAdvance = stop;
+        } else {
+          tabPending = true;
+          inTabField = false;
+          fieldFirst = oneLine.count();
+          fieldStart = letterPosition.x;
+          inkMaxBeforeField = inkMax;
+        }
+        break;
       }
-      letterPosition.x += std::max(upperWidth, lowerWidth);
-      letterPosition += letterSpace;
-      break;
-    }
+      case LC_BidiSegment::Stack: {
+        // The parts are measured from where they start, so that blanks in front
+        // of a numerator widen the stack rather than push it into what follows.
+        double upperWidth = 0.0;
+        if (!seg.upperText.isEmpty()) {
+          RS_MText *upper = createUpperLower(
+              seg.upperText, m_data, letterPosition + RS_Vector{0., 9.});
+          oneLine.addEntity(upper);
+          upper->reparent(&oneLine);
+          upperWidth = upper->getUsedTextWidth();
+        }
+        double lowerWidth = 0.0;
+        if (!seg.lowerText.isEmpty()) {
+          RS_MText *lower = createUpperLower(
+              seg.lowerText, m_data, letterPosition + RS_Vector{0., 4.});
+          oneLine.addEntity(lower);
+          lower->reparent(&oneLine);
+          lowerWidth = lower->getUsedTextWidth();
+        }
+        letterPosition.x += std::max(upperWidth, lowerWidth);
+        letterPosition += letterSpace;
+        break;
+      }
+      }
+
+      // The ink of what this segment added to the line.
+      bool addedInk = false;
+      double addedMin = 0.0;
+      double addedMax = 0.0;
+      for (unsigned index = firstAdded; index < oneLine.count(); ++index) {
+        const RS_Entity *added = oneLine.entityAt(static_cast<int>(index));
+        if (added == nullptr || !added->hasValidBorders()) {
+          continue;
+        }
+        addedMin = addedInk ? std::min(addedMin, added->getMin().x) : added->getMin().x;
+        addedMax = addedInk ? std::max(addedMax, added->getMax().x) : added->getMax().x;
+        addedInk = true;
+      }
+      if (!addedInk) {
+        continue;
+      }
+      if (tabPending) {
+        // the first ink of the field
+        tabPending = false;
+        inTabField = true;
+        fieldInkMin = addedMin;
+        fieldInkMax = addedMax;
+      } else if (inTabField) {
+        fieldInkMin = std::min(fieldInkMin, addedMin);
+        fieldInkMax = std::max(fieldInkMax, addedMax);
+      }
+      if (inTabField && fieldInkMin != fieldStart) {
+        // Put the leftmost ink of the field on its start. That is the bearing
+        // of its first letter, and more when a later letter reaches further
+        // left, which happens in a font whose spacing is all in its bearings.
+        const RS_Vector shift{fieldStart - fieldInkMin, 0.0};
+        for (unsigned index = fieldFirst; index < oneLine.count(); ++index) {
+          if (RS_Entity *placed = oneLine.entityAt(static_cast<int>(index))) {
+            placed->move(shift);
+          }
+        }
+        letterPosition.x += shift.x;
+        clusterOrigin.x += shift.x;
+        addedMin += shift.x;
+        addedMax += shift.x;
+        fieldInkMin = fieldStart;
+        fieldInkMax += shift.x;
+      }
+      if (!hasInk) {
+        hasInk = true;
+        inkMin = addedMin;
+        inkMax = addedMax;
+      } else if (inTabField) {
+        // a field is right of everything in front of its tab
+        inkMax = std::max(inkMaxBeforeField, fieldInkMax);
+      } else {
+        inkMin = std::min(inkMin, addedMin);
+        inkMax = std::max(inkMax, addedMax);
+      }
     }
   }
 
   segments.clear();
+  return flowsFromLeft && hasInk ? leadingAdvance : 0.0;
 }
 
 void RS_MText::alignVertically() {
@@ -846,7 +1238,7 @@ void RS_MText::alignVertically() {
     }
     for (RS_Entity* e : std::as_const(*this)) {
         const auto line = dynamic_cast<LC_TextLine*>(e);
-        if (line != nullptr) {
+        if (line != nullptr && line->hasValidBorders()) {
             auto corner = RS_Vector(line->getMin().rotate(m_data.insertionPoint, m_data.angle));
             RS_Vector size = line->getSize();
             line->setLeftBottomCorner(corner);
@@ -863,7 +1255,7 @@ void RS_MText::alignVertically() {
 void RS_MText::rotateLinesRefs() const {
     for (RS_Entity* e : std::as_const(*this)) {
         const auto line = dynamic_cast<LC_TextLine*>(e);
-        if (line != nullptr) {
+        if (line != nullptr && line->hasValidBorders()) {
             RS_Vector corner = line->getLeftBottomCorner();
             const RS_Vector size = line->getTextSize();
             RS_Vector shiftVector(size.y / 2, 0);
@@ -897,8 +1289,7 @@ void RS_MText::rotateLinesRefs() const {
  * after addition
  *
  */
-void RS_MText::addLetter(LC_TextLine& oneLine, const QChar letter, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition) {
-    auto letterText{QString(letter)};
+void RS_MText::addLetter(LC_TextLine& oneLine, QString letterText, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition) {
     if (nullptr == font.findLetter(letterText)) {
         RS_DEBUG->print("RS_MText::update: missing font for letter( %s ), replaced " "it with QChar(0xfffd)", qPrintable(letterText));
         letterText = QChar(0xfffd);
@@ -933,20 +1324,12 @@ void RS_MText::addLetter(LC_TextLine& oneLine, const QChar letter, RS_Font& font
 }
 
 RS_MText* RS_MText::createUpperLower(QString text, const RS_MTextData& data, const RS_Vector& position) {
-    auto* line = new RS_MText(nullptr, {
-                                  position,
-                                  4.0,
-                                  100.0,
-                                  RS_MTextData::VATop,
-                                  RS_MTextData::HALeft,
-                                  data.drawingDirection,
-                                  RS_MTextData::Exact,
-                                  1.0,
-                                  std::move(text),
-                                  data.style,
-                                  0.0,
-                                  RS2::Update
-                              });
+    RS_MTextData childData(position, 4.0, 100.0, RS_MTextData::VATop,
+                          RS_MTextData::HALeft, data.drawingDirection,
+                          RS_MTextData::Exact, 1.0, text, data.style, 0.0,
+                          RS2::Update);
+    childData.legacyRtlLayout = data.legacyRtlLayout;
+    auto* line = new RS_MText(nullptr, childData);
     line->setLayer(nullptr);
     line->setPen(RS_Pen(RS2::FlagInvalid));
     line->calculateBorders();
@@ -959,10 +1342,13 @@ RS_MText* RS_MText::createUpperLower(QString text, const RS_MTextData& data, con
  *
  * @param textLine The text line.
  * @param lineCounter Line number.
+ * @param leadingAdvance What flushBidiLine() returned for the line: how far
+ * its first ink is from the edge a left-attached line starts at, in the units
+ * the line was laid out in.
  *
  * @return  distance over the text base-line
  */
-double RS_MText::updateAddLine(LC_TextLine* textLine, const int lineCounter) {
+double RS_MText::updateAddLine(LC_TextLine* textLine, const int lineCounter, const double leadingAdvance) {
     constexpr double ls = 5.0 / 3.0;
 
     RS_DEBUG->print("RS_MText::updateAddLine: width: %f", textLine->getSize().x);
@@ -977,8 +1363,12 @@ double RS_MText::updateAddLine(LC_TextLine* textLine, const int lineCounter) {
 
     textLine->forcedCalculateBorders();
 
+    // Width the line uses, measured over its ink.
+    double lineWidth = textLine->getSize().x;
+
     // Horizontal Align:
-    switch (m_data.halign) {
+    if (textLine->hasValidBorders()) {
+      switch (m_data.halign) {
         case RS_MTextData::HACenter:
             textLine->move(RS_Vector{-0.5 * (textLine->getMin().x + textLine->getMax().x), 0.});
             break;
@@ -988,19 +1378,28 @@ double RS_MText::updateAddLine(LC_TextLine* textLine, const int lineCounter) {
             break;
 
         default:
-            textLine->move(RS_Vector{-textLine->getMin().x, 0.});
+            // The ink of an unindented line starts at the insertion point,
+            // whatever the left bearing of its first letter is. Indentation,
+            // leading spaces and leading tabs move the ink on from there, and
+            // count for the width. A line without ink has nothing to move.
+            if (textLine->hasValidBorders()) {
+                const double indentation = std::abs(scale) * leadingAdvance;
+                textLine->move(RS_Vector{indentation - textLine->getMin().x, 0.});
+                lineWidth += indentation;
+            }
             break;
+        }
     }
 
     // Update actual text size (before rotating, after scaling!):
-    if (textLine->getSize().x > m_usedTextWidth) {
-        m_usedTextWidth = textLine->getSize().x;
+    if (lineWidth > m_usedTextWidth) {
+        m_usedTextWidth = lineWidth;
     }
 
     m_usedTextHeight += m_data.height * m_data.lineSpacingFactor * ls;
 
     // Gets the distance over text base-line (before rotating, after scaling!):
-    const double textTail = textLine->getMin().y;
+    const double textTail = textLine->hasValidBorders() ? textLine->getMin().y : 0.0;
 
     // Move:
     textLine->move(m_data.insertionPoint + RS_Vector{0., -m_data.height * lineCounter * m_data.lineSpacingFactor * ls});
@@ -1190,7 +1589,7 @@ void RS_MText::drawDraft(RS_Painter* painter) {
 #endif
     for (RS_Entity* entity : std::as_const(*this)) {
         const auto line = dynamic_cast<LC_TextLine*>(entity);
-        if (line != nullptr && line->count() > 0) {
+        if (line != nullptr && line->hasValidBorders()) {
             painter->drawLineWCS(line->getBaselineStart(), line->getBaselineEnd());
         }
     }

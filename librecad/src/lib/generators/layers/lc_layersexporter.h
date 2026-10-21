@@ -24,9 +24,12 @@
 
 #include <QString>
 #include <list>
+#include <memory>
+#include <vector>
+
+#include "rs_graphic.h"
 
 class RS_Layer;
-class RS_Graphic;
 
 struct LC_LayersExportOptions {
     bool createSeparateDocumentPerLayer{false};
@@ -37,9 +40,11 @@ struct LC_LayersExportOptions {
     QString sourceDrawingFileName;
 };
 
+// The export drawing is independent of the source one: dropping the export data
+// frees it and everything the exporter put into it.
 struct LC_LayerExportData {
     QString name;
-    RS_Graphic* graphic {nullptr};
+    std::unique_ptr<RS_Graphic> graphic;
 };
 
 class LC_LayersExporter {

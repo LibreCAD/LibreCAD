@@ -28,8 +28,11 @@
 #ifndef RS_LAYERLIST_H
 #define RS_LAYERLIST_H
 
+#include <QHash>
 #include <QList>
 #include <QSet>
+
+#include "lc_trackedlistener.h"
 
 class RS_Layer;
 class RS_LayerListListener;
@@ -43,6 +46,8 @@ class RS_LayerList {
 public:
     explicit RS_LayerList();
     virtual ~RS_LayerList();
+    RS_LayerList(const RS_LayerList&) = delete;
+    RS_LayerList& operator=(const RS_LayerList&) = delete;
     /**
      * @return Number of layers in the list.
      */
@@ -81,6 +86,8 @@ public:
 
     void addListener(RS_LayerListListener* listener);
     void removeListener(RS_LayerListListener* listener);
+    /// how many listeners are registered (a widget that is destroyed while attached must have unregistered)
+    int listenerCount() const {return static_cast<int>(m_layerListListeners.size());}
     /**
      * Sets the layer lists modified status to 'm'.
      */
@@ -138,8 +145,15 @@ private:
     //! mirror of m_layers for O(1) contains(); kept in sync at every
     //! mutation point (add/remove/clear) -- sort() never changes membership.
     QSet<RS_Layer*> m_layerSet;
+    //! m_layers by NFC-normalized name, for find(): exact while it has every
+    //! layer and RS_Layer::nameChanges() is still m_indexedAt.
+    QHash<QString, RS_Layer*> m_byName;
+    unsigned m_indexedAt = 0;
+    //! RS_Layer::nameChanges() when m_layers was last sorted: while it is the
+    //! same, add() keeps the list sorted.
+    unsigned m_sortedAt = 0;
     //! List of registered LayerListListeners
-    QList<RS_LayerListListener*> m_layerListListeners;
+    LC_ListenerList<RS_LayerListListener, RS_LayerList> m_layerListListeners{this};
     RS_Layer* m_activeLayer = nullptr;
     /** Flag set if the layer list was modified and not yet saved. */
     bool m_modified = false;

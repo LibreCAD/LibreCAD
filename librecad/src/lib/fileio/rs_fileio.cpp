@@ -61,7 +61,8 @@
  */
 bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
                            RS2::FormatType type,
-                           std::function<bool(bool, const QString&)> errorCallback) const {
+                           std::function<bool(bool, const QString&)> errorCallback,
+                           const RS2::DxfTextEncoding encoding) const {
 
     RS_DEBUG->print("Trying to import file '%s'...", file.toLatin1().data());
 
@@ -76,9 +77,13 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
     if (RS2::FormatUnknown != t) {
         std::unique_ptr<RS_FilterInterface>&& filter(getImportFilter(file, t));
         if (filter) {
+            filter->setDxfTextEncoding(encoding);
 #ifdef DWGSUPPORT
             const bool isDwg{file.endsWith(".dwg", Qt::CaseInsensitive)};
 #endif
+            // Save writes the drawing back in the format it was read from. A
+            // filter that reads several versions of a format narrows it down.
+            graphic.setFormatType(t);
             const bool bImported{filter->fileImport(graphic, file, t)};
             if (!bImported) {
                 if (errorCallback != nullptr) {
@@ -113,6 +118,8 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
                                                                                         QMessageBox::Yes | QMessageBox::No,
                                                                                         QMessageBox::NoButton);
                         if (QMessageBox::Yes == answer) {
+                            // Save must not write over a file that was not read completely
+                            graphic.setFormatType(RS2::FormatUnknown);
                             return true; // open the file anyhow
                         }
                     }
@@ -206,13 +213,25 @@ bool RS_FileIO::fileExport(RS_Graphic& graphic, const QString& file, RS2::Format
         type = detectFormat(file, false);
     }
 
+    m_lastExportReport.clear();
+    if (graphic.isDxfRecoverySourceFile(file)) {
+        m_lastExportReport = QObject::tr("The original legacy DXF is protected. Save the recovered drawing to a different file.");
+        RS_DIALOGFACTORY->commandMessage(m_lastExportReport);
+        return false;
+    }
     std::unique_ptr<RS_FilterInterface>&& filter(getExportFilter(file, type));
     if (filter) {
-        return filter->fileExport(graphic, file, type);
+        const bool exported = filter->fileExport(graphic, file, type);
+        m_lastExportReport = filter->exportReport();
+        return exported;
     }
     RS_DEBUG->print("RS_FileIO::fileExport: no filter found");
 
     return false;
+}
+
+bool RS_FileIO::canExport(const RS2::FormatType type) const {
+    return type != RS2::FormatUnknown && getExportFilter(QString(), type) != nullptr;
 }
 
 RS_FileIO* RS_FileIO::instance() {

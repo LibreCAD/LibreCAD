@@ -30,10 +30,21 @@
 #include<iostream>
 
 #include <QSet>
+#include <QtAlgorithms>
 
 #include "rs_debug.h"
 #include "rs_layer.h"
 #include "rs_layerlistlistener.h"
+
+namespace {
+bool byName(const RS_Layer* l0, const RS_Layer* l1) {
+    return l0->getName() < l1->getName();
+}
+
+QString nameKey(const QString& name) {
+    return name.normalized(QString::NormalizationForm_C);
+}
+} // namespace
 
 /**
  * Default constructor.
@@ -43,18 +54,43 @@ RS_LayerList::RS_LayerList() {
     setModified(false);
 }
 
+/**
+ * Frees the layers, after telling the listeners that still listen (see
+ * RS_LayerListListener::layerListDestroyed()): a dock attached to the list has a pointer to it, and
+ * rows for the layers. The listeners are unlisted one at a time, oldest first, each before it is told,
+ * so one that unregisters itself in the callback, or deletes another, cannot make the loop skip or
+ * repeat one.
+ */
 RS_LayerList::~RS_LayerList() {
-    // LC_ERR << "LayerList destructor";
+    QList<RS_Layer*> removed;
+    removed.swap(m_layers);
+    m_layerSet.clear();
+    m_byName.clear();
+    m_activeLayer = nullptr;
+    m_layerListListeners.drain([](RS_LayerListListener* listener) {
+        listener->layerListDestroyed();
+    });
+    qDeleteAll(removed);
 }
 
 /**
- * Removes all layers in the layerlist.
+ * Removes all layers in the layerlist and frees them: the list owns its
+ * layers, as remove() and add() (for a rejected duplicate) always assumed.
+ * Listeners are told once the list is empty and before the layers are freed,
+ * as remove() does for one layer: a dock's table model lists layers by
+ * pointer, and reading a freed one crashed (#2969).
  */
 void RS_LayerList::clear() {
-    m_layers.clear();
+    QList<RS_Layer*> removed;
+    removed.swap(m_layers);
     m_layerSet.clear();
+    m_byName.clear();
     m_activeLayer = nullptr;
     setModified(true);
+    for (const auto l : std::as_const(m_layerListListeners)) {
+        l->layerListCleared();
+    }
+    qDeleteAll(removed);
 }
 
 QList<RS_Layer*>::iterator RS_LayerList::begin() {
@@ -110,10 +146,8 @@ void RS_LayerList::activate(RS_Layer* layer, const bool notify) {
  * @brief sort by layer names
  */
 void RS_LayerList::sort() {
-    std::stable_sort(m_layers.begin(), m_layers.end(), [](const RS_Layer* l0, const RS_Layer* l1)-> bool
-    {
-        return l0->getName() < l1->getName();
-    });
+    std::stable_sort(m_layers.begin(), m_layers.end(), byName);
+    m_sortedAt = RS_Layer::nameChanges();
 }
 
 void RS_LayerList::fireLayerAdded(RS_Layer* layer) const {
@@ -140,9 +174,16 @@ void RS_LayerList::add(RS_Layer* layerToAdd) {
     // check if layer already exists:
     RS_Layer* existingLayer = find(layerToAdd->getName());
     if (existingLayer == nullptr) {
-        m_layers.append(layerToAdd);
+        if (m_sortedAt == RS_Layer::nameChanges()) {
+            // still sorted: the place a stable sort would move the layer to
+            m_layers.insert(std::upper_bound(m_layers.cbegin(), m_layers.cend(), layerToAdd, byName), layerToAdd);
+        }
+        else {
+            m_layers.append(layerToAdd);
+            this->sort();
+        }
         m_layerSet.insert(layerToAdd);
-        this->sort();
+        m_byName.insert(nameKey(layerToAdd->getName()), layerToAdd);
         // notify listeners
         fireLayerAdded(layerToAdd);
         setModified(true);
@@ -156,6 +197,10 @@ void RS_LayerList::add(RS_Layer* layerToAdd) {
         // if there was no active layer so far, activate this one.
         if (m_activeLayer == nullptr) {
             activate(existingLayer);
+        }
+        if (existingLayer == layerToAdd) {
+            // already listed: nothing to merge, and it must not be freed
+            return;
         }
 
         existingLayer->freeze(layerToAdd->isFrozen());
@@ -190,6 +235,7 @@ void RS_LayerList::remove(RS_Layer* layerToRemove) {
     // here the layer is removed from the list but not deleted
     m_layers.removeOne(layerToRemove);
     m_layerSet.remove(layerToRemove);
+    m_byName.clear(); // find() indexes the layers that are left
 
     setModified(true);
 
@@ -234,15 +280,15 @@ RS_Layer* RS_LayerList::find(const QString& name) {
     // fixme - sand - merge - copypaste
     // NFC-normalize both sides so a layer round-tripped through tools that
     // emit decomposed (NFD) Unicode still matches a composed (NFC) lookup.
-    const QString k = name.normalized(QString::NormalizationForm_C);
-    RS_Layer* ret = nullptr;
-    for (auto l : m_layers) {
-        if (l->getName().normalized(QString::NormalizationForm_C) == k) {
-            ret = l;
-            break;
+    if (m_indexedAt != RS_Layer::nameChanges() || m_byName.size() != m_layers.size()) {
+        // Last to first, so that of two layers of one name the first is found.
+        m_byName.clear();
+        for (auto it = m_layers.crbegin(); it != m_layers.crend(); ++it) {
+            m_byName.insert(nameKey((*it)->getName()), *it);
         }
+        m_indexedAt = RS_Layer::nameChanges();
     }
-    return ret;
+    return m_byName.value(nameKey(name));
 }
 
 /**
@@ -361,13 +407,15 @@ void RS_LayerList::fireLayerToggled() {
 }
 
 /**
- * Freezes or defreezes all layers.
+ * Freezes or defreezes all layers that the Layer List dock lists; its filter
+ * leaves the other layers as they are. The active layer is never frozen:
+ * frozen, it would be replaced by a layer the filter left visible.
  *
  * @param freeze true: freeze, false: defreeze
  */
 void RS_LayerList::freezeAll(const bool freeze) {
     for (unsigned l = 0; l < count(); l++) {
-        if (at(l)->isVisibleInLayerList()) {
+        if (at(l)->isVisibleInLayerList() && !(freeze && at(l) == m_activeLayer)) {
             at(l)->freeze(freeze);
         }
     }
@@ -522,8 +570,13 @@ void RS_LayerList::ensureActiveLayerIsVisible() {
     RS_Layer* fallback = nullptr;
     for (RS_Layer* layer : std::as_const(m_layers)) {
         if (!layer->isFrozen()) {
-            fallback = layer;
-            break;
+            if (fallback == nullptr) {
+                fallback = layer;
+            }
+            if (!layer->isLocked()) {
+                fallback = layer;
+                break;
+            }
         }
     }
 
@@ -547,23 +600,15 @@ void RS_LayerList::ensureActiveLayerIsVisible() {
  * Typical listeners are: layer list widgets, pen toolbar, graphic view
  */
 void RS_LayerList::addListener(RS_LayerListListener* listener) {
-    // ensure that listener is added only once
-    if (listener == nullptr) {
-        return;
-    }
-    for (const auto l : std::as_const(m_layerListListeners)) {
-        if (l == listener) {
-            return;
-        }
-    }
-    m_layerListListeners.append(listener);
+    // added only once; the listener is told which lists have it, and removes itself when destroyed
+    m_layerListListeners.add(listener);
 }
 
 /**
  * removes a LayerListListener from the list of listeners.
  */
 void RS_LayerList::removeListener(RS_LayerListListener* listener) {
-    m_layerListListeners.removeOne(listener);
+    m_layerListListeners.remove(listener);
 }
 
 /**

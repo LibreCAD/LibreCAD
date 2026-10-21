@@ -21,6 +21,7 @@ DRW_TextCodec::~DRW_TextCodec() = default;
 void DRW_TextCodec::setVersion(DRW::Version v, bool dxfFormat){
     sourceVersion = v;
     m_sourceVersionSet = v != DRW::UNKNOWNV;
+    m_legacyDxfInputEligible = false;
     switch (v)
     {
         case DRW::UNKNOWNV:
@@ -40,7 +41,7 @@ void DRW_TextCodec::setVersion(DRW::Version v, bool dxfFormat){
         {
             version = DRW::AC1009;
             cp = "ANSI_1252";
-            setCodePage( cp, dxfFormat);
+            configureCodePage( cp, dxfFormat);
             break;
         }
 
@@ -52,7 +53,7 @@ void DRW_TextCodec::setVersion(DRW::Version v, bool dxfFormat){
             version = DRW::AC1015;
 //            if (cp.empty()) { //codepage not set, initialize ??
                 cp = "ANSI_1252";
-                setCodePage( cp, dxfFormat);
+                configureCodePage( cp, dxfFormat);
 //          }
             break;
         }
@@ -65,11 +66,11 @@ void DRW_TextCodec::setVersion(DRW::Version v, bool dxfFormat){
             version = DRW::AC1021;
             if (dxfFormat) {
                 cp = "UTF-8";
-                setCodePage(cp, dxfFormat);
+                configureCodePage(cp, dxfFormat);
             } else {
                 if (cp.empty() || cp == "ANSI_1252") {
                     cp = "UTF-16";
-                    setCodePage(cp, dxfFormat);
+                    configureCodePage(cp, dxfFormat);
                 }
             }
             break;
@@ -81,6 +82,7 @@ void DRW_TextCodec::setVersion(const std::string &v, bool dxfFormat){
     version = DRW::UNKNOWNV;
     sourceVersion = DRW::UNKNOWNV;
     m_sourceVersionSet = false;
+    m_legacyDxfInputEligible = false;
     for (const auto& [verName, verId] : DRW::dwgVersionStrings)
     {
         if ( v == verName ) {
@@ -92,8 +94,29 @@ void DRW_TextCodec::setVersion(const std::string &v, bool dxfFormat){
 }
 
 void DRW_TextCodec::setCodePage(const std::string &c, bool dxfFormat){
+    configureCodePage(c, dxfFormat, true);
+}
+
+void DRW_TextCodec::configureCodePage(const std::string &c, bool dxfFormat,
+                                     bool explicitDeclaration){
     cp = correctCodePage(c);
+    // Only an explicit DXF declaration updates this gate. Internal default
+    // selection by setVersion() must not erase a preceding non-1252 choice.
+    if (dxfFormat && explicitDeclaration)
+        m_legacyDxfCodePageAllowed = cp == "ANSI_1252";
+    m_legacyDxfInputEligible = dxfFormat && m_sourceVersionSet
+        && sourceVersion >= DRW::AC1006 && sourceVersion <= DRW::AC1018
+        && cp == "ANSI_1252" && m_legacyDxfCodePageAllowed;
     conv.reset();
+    if (dxfFormat && m_sourceVersionSet && version == DRW::AC1021) {
+        // R2007+ DXF text is UTF-8 whatever $DWGCODEPAGE says (LibreCAD 2.2
+        // saves a drawing opened from a CP1250 file with ANSI_1250 above
+        // UTF-8 text); cp is kept so the header round-trips.
+        if (cp == "UTF-8")
+            cp = "ANSI_1252";
+        conv.reset( new DRW_Converter(nullptr, 0) );
+        return;
+    }
     if (cp == "ANSI_874")
         conv.reset( new DRW_ConvTable(DRW_Table874, CPLENGTHCOMMON) );
     else if (cp == "ANSI_932")
@@ -128,6 +151,12 @@ void DRW_TextCodec::setCodePage(const std::string &c, bool dxfFormat){
         conv.reset( new DRW_Converter(nullptr, 0) );
     } else if (cp == "UTF-16") {
         conv.reset( new DRW_ConvUTF16() );
+    } else if (dxfFormat && m_sourceVersionSet
+               && (version == DRW::AC1009 || version == DRW::AC1015)) {
+        // R12-R2004 DXF text is in the Windows codepage of the file, and
+        // ANSI_1252 is also what correctCodePage() makes of a name it does
+        // not know. A DXF that declares no version keeps its bytes.
+        conv.reset( new DRW_ConvTable(DRW_Table1252, CPLENGTHCOMMON) );
     } else if (dxfFormat) {
         conv.reset( new DRW_Converter(nullptr, 0) );
     } else {
@@ -136,6 +165,14 @@ void DRW_TextCodec::setCodePage(const std::string &c, bool dxfFormat){
 }
 
 std::string DRW_TextCodec::toUtf8(std::string_view s) {
+    if (m_dxfTextEncoding == DRW::DxfTextEncoding::LegacyLibreCadUtf8
+        && m_legacyDxfInputEligible) {
+        // The base converter keeps UTF-8 bytes while still interpreting DXF
+        // Unicode/MIF escapes. Leave conv alone: fromUtf8() must encode the
+        // declared output codepage, even on a codec used for recovery input.
+        DRW_Converter utf8(nullptr, 0);
+        return utf8.toUtf8(s);
+    }
     return conv->toUtf8(s);
 }
 
@@ -206,6 +243,10 @@ std::string DRW_ConvTable::fromUtf8(std::string_view s) {
             code = decodeNum(part1, &l);
             j = i+l;
             i = j - 1;
+            if (code < 0) { // not UTF-8 (a string the reader kept raw): keep the byte
+                result += static_cast<char>(c);
+                continue;
+            }
             notFound = true;
             for (int k=0; k<cpLength; k++){
                 if(table[k] == code) {
@@ -358,29 +399,44 @@ std::string DRW_Converter::encodeNum(int c){
     return std::string(reinterpret_cast<char*>(ret));
 }
 
-/** 's' is a string with at least 4 bytes length
+/** 's' holds up to 4 bytes, the first one above 0x7F
 ** returned 'b' is byte length of encoded char: 2,3 or 4
+** bytes that are not UTF-8 return -1, with 1 in 'b'
 **/
 int DRW_Converter::decodeNum(const std::string &s, int *b){
+    *b = 1;
+    if (s.empty())
+        return -1;
     int code= 0;
+    int length = 0;
     unsigned char c = s.at(0);
     if ( (c& 0xE0)  == 0xC0) { //2 bytes
-        code = ( c&0x1F)<<6;
-        code = (s.at(1) &0x3F) | code;
-        *b = 2;
+        code = c&0x1F;
+        length = 2;
     } else if ( (c& 0xF0)  == 0xE0) { //3 bytes
-        code = ( c&0x0F)<<12;
-        code = ((s.at(1) &0x3F)<<6) | code;
-        code = (s.at(2) &0x3F) | code;
-        *b = 3;
+        code = c&0x0F;
+        length = 3;
     } else if ( (c& 0xF8)  == 0xF0) { //4 bytes
-        code = ( c&0x07)<<18;
-        code = ((s.at(1) &0x3F)<<12) | code;
-        code = ((s.at(2) &0x3F)<<6) | code;
-        code = (s.at(3) &0x3F) | code;
-        *b = 4;
+        code = c&0x07;
+        length = 4;
+    } else {
+        return -1;
     }
+    if (s.length() < static_cast<std::size_t>(length))
+        return -1;
+    for (int k=1; k < length; k++) {
+        unsigned char t = s.at(k);
+        if ((t& 0xC0) != 0x80)
+            return -1;
+        code = (code<<6) | (t&0x3F);
+    }
+    // an overlong form, a surrogate and a value past U+10FFFF are not UTF-8
+    static const int minCode[] = {0, 0, 0x80, 0x800, 0x10000};
+    if (code < minCode[length] || code > 0x10FFFF
+        || (code >= 0xD800 && code <= 0xDFFF))
+        return -1;
 
+    *b = length;
     return code;
 }
 
@@ -411,6 +467,10 @@ std::string DRW_ConvDBCSTable::fromUtf8(std::string_view s) {
             code = decodeNum(part1, &l);
             j = i+l;
             i = j - 1;
+            if (code < 0) { // not UTF-8 (a string the reader kept raw): keep the byte
+                result += static_cast<char>(c);
+                continue;
+            }
             const auto it = index.find(code);
             if (it != index.end()) {
                 result += static_cast<char>(it->second >> 8);
@@ -499,6 +559,10 @@ std::string DRW_Conv932Table::fromUtf8(std::string_view s) {
             code = decodeNum(part1, &l);
             j = i+l;
             i = j - 1;
+            if (code < 0) { // not UTF-8 (a string the reader kept raw): keep the byte
+                result += static_cast<char>(c);
+                continue;
+            }
             notFound = true;
             // 1 byte table
             if (code > 0xff60 && code < 0xFFA0) {

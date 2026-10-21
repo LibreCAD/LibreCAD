@@ -24,65 +24,17 @@
 
 #include "lc_workspacesmanager.h"
 
-#include <QGuiApplication>
 #include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
-#include <QScreen>
 
 #include "qc_applicationwindow.h"
 #include "rs_debug.h"
 #include "rs_settings.h"
 #include "rs_system.h"
 
-namespace {
-    // Re-place an already-positioned QWidget so its frame geometry fits
-    // within an available screen. Picks the screen that contains the
-    // saved frame's centre when one exists, falling back to the primary.
-    // If the saved size exceeds the chosen screen's available area, the
-    // window is shrunk to fit; otherwise position-only is corrected.
-    // No-op when the frame is already fully contained.
-    //
-    // Mitigates the Qt6 "re-center keeping saved size" fallback path in
-    // QWidget::restoreGeometry, which on a topology change can land the
-    // window centred on a screen narrower than itself — overflowing
-    // visibly onto a horizontally adjacent secondary.
-    void clampWidgetToScreen(QWidget& w) {
-        const auto screens = QGuiApplication::screens();
-        if (screens.isEmpty()) {
-            return; // headless / not yet realised
-        }
-        const QRect frame = w.frameGeometry();
-
-        // Already fully on some screen? Leave it alone.
-        for (const QScreen* s : screens) {
-            if (s->availableGeometry().contains(frame)) {
-                return;
-            }
-        }
-
-        const QScreen* target = QGuiApplication::screenAt(frame.center());
-        if (target == nullptr) {
-            target = QGuiApplication::primaryScreen();
-        }
-        const QRect available = target->availableGeometry();
-        const int width = qMin(frame.width(), available.width());
-        const int height = qMin(frame.height(), available.height());
-
-        // Centre the resized rect on the chosen screen.
-        QRect dst(0, 0, width, height);
-        dst.moveCenter(available.center());
-
-        // setGeometry sets the *client* rect, not the frame rect. Account
-        // for the frame inset Qt already knows about.
-        const QPoint frameInset = w.geometry().topLeft() - frame.topLeft();
-        const QSize  frameSize  = frame.size() - w.size();
-        w.setGeometry(QRect(dst.topLeft() + frameInset,
-                            QSize(width, height) - frameSize));
-    }
-}
 LC_WorkspacesManager::LC_WorkspacesManager() = default;
 
 LC_WorkspacesManager::~LC_WorkspacesManager() {
@@ -197,6 +149,15 @@ void LC_WorkspacesManager::fillBySettings(LC_Workspace &workspace){
         workspace.windowY = LC_GET_INT("WindowY", 32);
 
         workspace.widgetsState = LC_GET_STR("StateOfWidgets", "");
+        const QByteArray dockVisibilityJson = LC_GET_STR("DockVisibility", "").toUtf8();
+        const QJsonDocument dockVisibility = QJsonDocument::fromJson(dockVisibilityJson);
+        if (dockVisibility.isObject()) {
+            workspace.hasDockVisibility = true;
+            const QJsonObject values = dockVisibility.object();
+            for (auto it = values.begin(); it != values.end(); ++it) {
+                if (it.value().isBool()) workspace.dockVisibility.insert(it.key(), it.value().toBool());
+            }
+        }
 
         workspace.dockAreaLeftActive = LC_GET_BOOL("LeftDockArea", false);
         workspace.dockAreaRightActive = LC_GET_BOOL("RightDockArea", true);
@@ -219,20 +180,21 @@ void LC_WorkspacesManager::fillBySettings(LC_Workspace &workspace){
 void LC_WorkspacesManager::fillByState(LC_Workspace &workspace){
     QC_ApplicationWindow& appWin = *QC_ApplicationWindow::getAppWindow();
     const QString geometryB64 = appWin.saveGeometry().toBase64(QByteArray::Base64Encoding);
-    const QString stateB64 = appWin.saveState().toBase64(QByteArray::Base64Encoding);
+    const QString stateB64 = appWin.dockLayoutStateForSaving().toBase64(QByteArray::Base64Encoding);
     workspace.geometry = geometryB64;
     workspace.widgetsState = stateB64;
+    workspace.dockVisibility = appWin.requestedDockVisibility();
+    workspace.hasDockVisibility = true;
     workspace.windowHeight = appWin.height();
     workspace.windowWidth = appWin.width();
     workspace.windowX = appWin.x();
     workspace.windowY = appWin.y();
 
-    const auto& dockAreaToggleActions = appWin.getDockAreaToggleActions();
-    workspace.dockAreaLeftActive = dockAreaToggleActions.left->isChecked();
-    workspace.dockAreaRightActive = dockAreaToggleActions.right->isChecked();
-    workspace.dockAreaBottomActive = dockAreaToggleActions.bottom->isChecked();
-    workspace.dockAreaToptActive = dockAreaToggleActions.top->isChecked();
-    workspace.docAreaFloatingActive = dockAreaToggleActions.floating->isChecked();
+    workspace.dockAreaLeftActive = appWin.dockAreaRequested(Qt::LeftDockWidgetArea);
+    workspace.dockAreaRightActive = appWin.dockAreaRequested(Qt::RightDockWidgetArea);
+    workspace.dockAreaBottomActive = appWin.dockAreaRequested(Qt::BottomDockWidgetArea);
+    workspace.dockAreaToptActive = appWin.dockAreaRequested(Qt::TopDockWidgetArea);
+    workspace.docAreaFloatingActive = appWin.floatingDocksRequested();
 
     const auto& tbAreaToggleActions = appWin.getToolbarAreaToggleActions();
 
@@ -254,6 +216,12 @@ void LC_WorkspacesManager::applyToSettings(const LC_Workspace &workspace){
         LC_SET("WindowY", workspace.windowY);
         LC_SET("WindowX", workspace.windowX);
         LC_SET("StateOfWidgets",workspace.widgetsState);
+        QJsonObject dockVisibility;
+        for (auto it = workspace.dockVisibility.cbegin(); it != workspace.dockVisibility.cend(); ++it)
+            dockVisibility.insert(it.key(), it.value());
+        LC_SET("DockVisibility", workspace.hasDockVisibility
+            ? QString::fromUtf8(QJsonDocument(dockVisibility).toJson(QJsonDocument::Compact))
+            : QString());
 
         LC_SET("LeftDockArea", workspace.dockAreaLeftActive);
         LC_SET("RightDockArea", workspace.dockAreaRightActive);
@@ -302,14 +270,12 @@ void LC_WorkspacesManager::restoreGeometryAndState(const LC_Workspace &workspace
     appWin.setUpdatesEnabled(false);
 
     const auto widgetsState = QByteArray::fromBase64(workspace.widgetsState.toUtf8(), QByteArray::Base64Encoding);
-    appWin.restoreState(widgetsState);
-
-    const auto& dockAreas = appWin.getDockAreaToggleActions();
-    dockAreas.left->setChecked(workspace.dockAreaLeftActive);
-    dockAreas.right->setChecked(workspace.dockAreaRightActive);
-    dockAreas.bottom->setChecked(workspace.dockAreaBottomActive);
-    dockAreas.top->setChecked(workspace.dockAreaToptActive);
-    dockAreas.floating->setChecked(workspace.docAreaFloatingActive);
+    const QHash<int, bool> areas{{int(Qt::LeftDockWidgetArea), workspace.dockAreaLeftActive},
+                                 {int(Qt::RightDockWidgetArea), workspace.dockAreaRightActive},
+                                 {int(Qt::TopDockWidgetArea), workspace.dockAreaToptActive},
+                                 {int(Qt::BottomDockWidgetArea), workspace.dockAreaBottomActive},
+                                 {int(Qt::NoDockWidgetArea), workspace.docAreaFloatingActive}};
+    appWin.restoreDockLayout(workspace.dockVisibility, workspace.hasDockVisibility, areas, widgetsState);
 
     const auto& tbAreas = appWin.getToolbarAreaToggleActions();
     tbAreas.left->setChecked(workspace.tbAreaLeftActive);
@@ -334,12 +300,7 @@ void LC_WorkspacesManager::restoreGeometryAndState(const LC_Workspace &workspace
         appWin.move(windowX, windowY);
     }
 
-    // Post-restore clamp. Qt6's restoreGeometry re-centres on the chosen
-    // screen but keeps the saved width/height, so a wide saved window
-    // restored on a narrower primary overflows onto an adjacent secondary.
-    // The raw move/resize branch above doesn't validate at all. Apply a
-    // common clamp so both paths produce a window fully on some screen.
-    clampWidgetToScreen(appWin);
+    appWin.prepareWindowForShow();
 
     appWin.slotViewStatusBar(workspace.showStatusBar);
     appWin.toggleMainMenu(workspace.showMainMenu);
@@ -417,8 +378,15 @@ void LC_WorkspacesManager::loadWorkspaces(){
                                 p->widgetsState = wsObj["widgetState"].toString();
                                 p->windowX = wsObj["winX"].toInt();
                                 p->windowY = wsObj["winY"].toInt();
-                                p->windowWidth = wsObj["winHeight"].toInt();
-                                p->windowHeight = wsObj["winWidth"].toInt();
+                                p->windowWidth = wsObj["winWidth"].toInt();
+                                p->windowHeight = wsObj["winHeight"].toInt();
+                                if (wsObj.value("dockVisibility").isObject()) {
+                                    p->hasDockVisibility = true;
+                                    const QJsonObject values = wsObj.value("dockVisibility").toObject();
+                                    for (auto it = values.begin(); it != values.end(); ++it) {
+                                        if (it.value().isBool()) p->dockVisibility.insert(it.key(), it.value().toBool());
+                                    }
+                                }
 
                                 p->dockAreaLeftActive = wsObj["dockLeft"].toBool();
                                 p->dockAreaRightActive = wsObj["dockRight"].toBool();
@@ -490,6 +458,12 @@ void LC_WorkspacesManager::saveWorkspaces(QWidget* parent){
                 wsObj.insert("id", QJsonValue::fromVariant(p->id));
                 wsObj.insert("geometry", QJsonValue::fromVariant(p->geometry));
                 wsObj.insert("widgetState", QJsonValue::fromVariant(p->widgetsState));
+                if (p->hasDockVisibility) {
+                    QJsonObject dockVisibility;
+                    for (auto it = p->dockVisibility.cbegin(); it != p->dockVisibility.cend(); ++it)
+                        dockVisibility.insert(it.key(), it.value());
+                    wsObj.insert("dockVisibility", dockVisibility);
+                }
                 wsObj.insert("winX", QJsonValue::fromVariant(p->windowX));
                 wsObj.insert("winY", QJsonValue::fromVariant(p->windowY));
                 wsObj.insert("winHeight", QJsonValue::fromVariant(p->windowHeight));
@@ -499,7 +473,7 @@ void LC_WorkspacesManager::saveWorkspaces(QWidget* parent){
                 wsObj.insert("dockRight", QJsonValue::fromVariant(p->dockAreaRightActive));
                 wsObj.insert("dockTop", QJsonValue::fromVariant(p->dockAreaToptActive));
                 wsObj.insert("dockBottom", QJsonValue::fromVariant(p->dockAreaBottomActive));
-                wsObj.insert("dockFloat", QJsonValue::fromVariant(p->dockAreaBottomActive));
+                wsObj.insert("dockFloat", QJsonValue::fromVariant(p->docAreaFloatingActive));
 
                 wsObj.insert("columnCountLeftDock", QJsonValue::fromVariant(p->columnCountLeftDoc));
                 wsObj.insert("columnCountLeftAllDock", QJsonValue::fromVariant(p->columnCountLeftAllDoc));

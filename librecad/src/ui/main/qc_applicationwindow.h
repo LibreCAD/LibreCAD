@@ -34,6 +34,11 @@
 #include "lc_mdiapplicationwindow.h"
 #include "lc_plugininvoker.h"
 
+#include <QHash>
+#include <QMap>
+#include <QSet>
+#include <QStringList>
+
 class RS_Graphic;
 class RS_GraphicView;
 class LC_PropertySheetWidget;
@@ -76,10 +81,15 @@ class QG_RecentFiles;
 class QG_SelectionWidget;
 class QG_SnapToolBar;
 class QSplashScreen;
+class QDockWidget;
 class RS_ActionInterface;
 class RS_Block;
 class RS_Pen;
 class TwoStackedLabels;
+
+namespace LC_Printing {
+    enum class PrinterType;
+}
 
 struct AreasToggleActions {
     QAction* left{nullptr};
@@ -137,10 +147,24 @@ class QC_ApplicationWindow : public LC_MDIApplicationWindow {
     /** generates a new document for a graphic. */
     QC_MDIWindow* createNewDrawingWindow(RS_Document* doc, const QString& expectedFileName);
     void recreateToolbarsMenu();
+    void initializeDockLayout();
+    void prepareWindowForShow();
+    void restoreDockLayout(const QMap<QString, bool>& requested, bool hasRequested,
+                           const QHash<int, bool>& areas, const QByteArray& state);
+    QMap<QString, bool> requestedDockVisibility() const;
+    QByteArray dockLayoutStateForSaving();
+    bool dockAreaRequested(Qt::DockWidgetArea area) const;
+    bool floatingDocksRequested() const;
+    void requestDockVisible(QDockWidget* dock);
 public slots:
     void slotFocus();
     void slotKillAllActions();
     void slotFocusCommandLine();
+    void toggleLeftDockArea(bool state);
+    void toggleRightDockArea(bool state);
+    void toggleTopDockArea(bool state);
+    void toggleBottomDockArea(bool state);
+    void toggleFloatingDockwidgets(bool state);
     void slotFocusOptionsWidget();
     void slotError(const QString& msg) const;
     void slotShowDrawingOptions() const;
@@ -156,6 +180,8 @@ public slots:
     void slotFileNewFromTemplate();
     /** opens a document */
     void slotFileOpen();
+    /** explicitly recovers UTF-8 text in a mislabeled old LibreCAD DXF */
+    void slotFileOpenLegacyLibreCadUtf8();
     void slotEditActiveBlock();
     void slotFileOpenRecent(const QAction* action);
     /** saves a document */
@@ -171,7 +197,7 @@ public slots:
     /** close all files; return false == operation cancelled */
     void slotFileCloseAll();
     /** prints the current file */
-    void slotFilePrint(bool printPDF = false);
+    void slotFilePrint();
     void slotFilePrintPDF();
     /** shows print preview of the current file */
     void slotFilePrintPreview(bool on);
@@ -308,7 +334,8 @@ public:
     /**
  * opens the given file.
  */
-    void openFile(const QString& fileName, RS2::FormatType type);
+    void openFile(const QString& fileName, RS2::FormatType type,
+                  RS2::DxfTextEncoding encoding = RS2::DxfTextEncoding::Declared);
     void notifyCurrentDrawingOptionsChanged();
     void changeDrawingOptions(int tabToShowIndex);
     void closeWindow(QC_MDIWindow* win) override;
@@ -345,6 +372,8 @@ public:
     LC_ActionContext* getActionContext() const;
 
 protected:
+    friend struct LC_DockLayoutTestAccess;
+    void doPrint(LC_Printing::PrinterType printerType);
     bool closePrintPreview(QC_MDIWindow* parent);
     void openPrintPreview(QC_MDIWindow* parent);
     bool doSaveAllFiles();
@@ -355,6 +384,8 @@ protected:
     void dropEvent(QDropEvent* event) override;
     void dragEnterEvent(QDragEnterEvent* event) override;
     void changeEvent(QEvent* event) override;
+    void showEvent(QShowEvent* event) override;
+    void resizeEvent(QResizeEvent* event) override;
     //! \}
 
     QG_GraphicView* setupNewGraphicView(const QC_MDIWindow* w);
@@ -373,6 +404,18 @@ protected:
     void setupMDIWindowTitleByFile(QC_MDIWindow* w, const QString& drawingFileFullPath, bool draftMode, bool forPreview);
 
     bool tryCloseAllBeforeExist();
+
+    void setDockAreaRequested(Qt::DockWidgetArea area, bool state);
+    void applyRequestedDockVisibility();
+    void updateDockAreaActions();
+    void scheduleDockFit();
+    void fitDocksToWindow();
+    void clampWindowToScreen(QWidget* window);
+    void reflowBottomToolbars(int availableWidth);
+    QString dockGroupKey(QDockWidget* dock) const;
+    void restoreCollapsedGroup(const QString& key);
+    void collapseDockGroup(const QList<QDockWidget*>& docks, const QString& key, QDockWidget* selected,
+                           Qt::Orientation pressure = Qt::Horizontal);
 
     void enableWidgets(bool enable);
     void doRestoreNamedView(int i) const;
@@ -415,6 +458,26 @@ protected:
     //! toggle actions for the dock areas
     AreasToggleActions m_dockAreasToggleActions;
     AreasToggleActions m_toolbarAreasToggleActions;
+    QMap<QString, bool> m_requestedDockVisibility;
+    QMap<QString, bool> m_factoryDockVisibility;
+    QHash<int, bool> m_requestedDockAreas;
+    QStringList m_autoCollapsedGroups;
+    QHash<QString, QString> m_collapsedSelectedTabs;
+    QHash<QString, QStringList> m_collapsedGroupMembers;
+    QHash<QString, QString> m_collapsedMemberKey;
+    QHash<QString, Qt::Orientation> m_collapsedPressure;
+    QSet<QString> m_autoToolbarBreaks;
+    QHash<QString, QString> m_selectedTabs;
+    QString m_priorityDockName;
+    bool m_floatingDocksRequested{true};
+    bool m_dockLayoutApplying{false};
+    bool m_dockFitPending{false};
+    bool m_dockFitRunning{false};
+    bool m_dockLayoutInitialized{false};
+    bool m_screenSignalsConnected{false};
+    QByteArray m_fittedDockState;
+    QSize m_fittedDockCanvas;
+    QSize m_fittedDockScreen;
 
     // --- Dock widgets ---
     QG_LayerWidget* m_layerWidget{nullptr};

@@ -51,6 +51,7 @@
 #include <QCoreApplication>
 
 #include "lc_containertraverser.h"
+#include "lc_testtempdirectory.h"
 #include "rs_entity.h"
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
@@ -316,8 +317,9 @@ TEST_CASE("DXF corpus: round-trip ~/dev/dwg_samples/*.dxf to a tmp dir",
     SKIP("no DXF samples at " << src.string() << "; skipping");
   }
 
+  // not the process's own directory: the audit scripts read this afterwards
   const std::filesystem::path outDir =
-      std::filesystem::temp_directory_path() / "lc_dxf_corpus_out";
+      lc::test::sharedTempDirectory() / "lc_dxf_corpus_out";
   std::filesystem::remove_all(outDir);
   std::filesystem::create_directories(outDir);
 
@@ -361,8 +363,9 @@ TEST_CASE("DWG corpus: convert ~/doc/dwg{,2}/*.dwg to DXF in a tmp dir",
     SKIP("no DWG samples at ~/doc/dwg{,2}; skipping");
   }
 
+  // not the process's own directory: the audit scripts read this afterwards
   const std::filesystem::path outDir =
-      std::filesystem::temp_directory_path() / "lc_dwg_corpus_out";
+      lc::test::sharedTempDirectory() / "lc_dwg_corpus_out";
   std::filesystem::remove_all(outDir);
   std::filesystem::create_directories(outDir);
 

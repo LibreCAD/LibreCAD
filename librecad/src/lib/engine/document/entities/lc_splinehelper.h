@@ -133,6 +133,21 @@ std::vector<double>
 clampKnotVector(const std::vector<double> &inputKnotVector,
                 size_t controlPointCount, size_t splineOrder);
 
+/**
+ * @brief Rewrite an open B-spline as a clamped one drawing the same curve.
+ *
+ * The spline has control points with weights and control points + degree + 1
+ * knots, and draws its curve over [knots[degree], knots[count]]. The ends of
+ * that range are inserted as knots (Boehm's algorithm, which keeps the curve)
+ * until each is a knot degree + 1 times, and the control points and knots
+ * outside it are dropped. clampKnotVector() replaces the end knots instead,
+ * which changes the curve of a spline that is not clamped.
+ *
+ * @param splineData Spline data to rewrite; made ClampedOpen.
+ * @return false, leaving @p splineData unchanged, if it is no such spline.
+ */
+bool clampPreservingShape(RS_SplineData &splineData);
+
        // ============================================================================
        // Spline Type Conversions
        // ============================================================================

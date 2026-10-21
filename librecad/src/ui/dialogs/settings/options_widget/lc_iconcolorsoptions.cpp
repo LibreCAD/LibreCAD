@@ -351,7 +351,10 @@ QString LC_IconColorsOptions::loadStyleNameFromFile(const QString& styleName) co
     absFileName.append("/").append(styleName);
 
     auto jsonFile = QFile(absFileName);
-    jsonFile.open(QFile::ReadOnly);
+    if (!jsonFile.open(QFile::ReadOnly)) {
+        LC_ERR << "Can't open json file for reading:" << absFileName;
+        return "";
+    }
     const QJsonDocument doc = QJsonDocument().fromJson(jsonFile.readAll());
     const QJsonObject obj = doc.object();
     const QString type = obj.value("type").toString();
@@ -425,11 +428,11 @@ bool LC_IconColorsOptions::saveToFile(const QString& styleName) const {
     style.insert("settings", settings);
 
     const QJsonDocument doc(style);
-    jsonFile.open(QFile::WriteOnly);
-    jsonFile.write(doc.toJson());
-
-    // LC_ERR << doc.toJson();
-    return false;
+    if (!jsonFile.open(QFile::WriteOnly)) {
+        LC_ERR << "Can't open json file for writing:" << absFileName;
+        return false;
+    }
+    return jsonFile.write(doc.toJson()) != -1;
 }
 
 void LC_IconColorsOptions::exportColor(const LC_SVGIconEngineAPI::IconMode mode, const LC_SVGIconEngineAPI::IconState state,

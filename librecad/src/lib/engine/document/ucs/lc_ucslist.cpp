@@ -27,8 +27,40 @@ LC_UCSList::LC_UCSList() {
     setModified(false);
 }
 
-void LC_UCSList::clear() {
+/**
+ * Frees the UCSs, after telling the listeners that still listen (see
+ * LC_UCSListListener::ucsListDestroyed()): a dock attached to the list has a pointer to it, and rows
+ * for the UCSs. m_wcs is listed too, but its unique_ptr owns it.
+ */
+LC_UCSList::~LC_UCSList() {
+    QList<LC_UCS*> removed;
+    removed.swap(m_ucsList);
+    m_activeUCS = nullptr;
+    m_ucsListListeners.drain([](LC_UCSListListener* listener) {
+        listener->ucsListDestroyed();
+    });
+    for (const auto ucs : std::as_const(removed)) {
+        if (ucs != m_wcs.get()) {
+            delete ucs;
+        }
+    }
+}
+
+// m_wcs is listed too, but its unique_ptr owns it
+void LC_UCSList::deleteOwnedEntries() {
+    for (const auto ucs : std::as_const(m_ucsList)) {
+        if (ucs != m_wcs.get()) {
+            delete ucs;
+        }
+    }
     m_ucsList.clear();
+    if (m_activeUCS != m_wcs.get()) {
+        m_activeUCS = nullptr;
+    }
+}
+
+void LC_UCSList::clear() {
+    deleteOwnedEntries();
     m_ucsList.append(m_wcs.get());
     setModified(true);
 }
@@ -43,6 +75,10 @@ void LC_UCSList::add(LC_UCS *ucs) {
     if (v == nullptr) {
         m_ucsList.append(ucs);
     }
+    else if (v != ucs) {
+        // the name is taken; we own ucs, so drop it
+        delete ucs;
+    }
 }
 
 void LC_UCSList::addNew(LC_UCS *ucs) {
@@ -56,6 +92,10 @@ void LC_UCSList::addNew(LC_UCS *ucs) {
         m_ucsList.append(ucs);
         setModified(true);
     }
+    else if (v != ucs) {
+        // the name is taken; we own ucs, so drop it
+        delete ucs;
+    }
 }
 
 // note - if this method is called, list should be marked as modified externally!
@@ -63,6 +103,9 @@ void LC_UCSList::remove(LC_UCS *ucs) {
     if (ucs->isUCS()) {
         m_ucsList.removeOne(ucs);
         // setModified(true);
+        if (m_activeUCS == ucs) {
+            m_activeUCS = nullptr;
+        }
         delete ucs;
     }
 }
@@ -131,6 +174,10 @@ LC_UCS *LC_UCSList::tryAddUCS(LC_UCS *candidate) {
         result = candidate;
     }
     else{
+        if (existingUCS != candidate) {
+            // an equivalent UCS is already listed; we own candidate, so drop it
+            delete candidate;
+        }
         result = existingUCS;
     }
     return result;

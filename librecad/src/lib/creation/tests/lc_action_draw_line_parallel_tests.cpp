@@ -31,6 +31,8 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <algorithm>
+#include <cmath>
 #include <memory>
 
 #include <QApplication>
@@ -42,6 +44,7 @@
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
+#include "rs_spline.h"
 #include "rs_settings.h"
 #include "rs_vector.h"
 
@@ -226,4 +229,50 @@ TEST_CASE("parallel tool: click on a caught entity still creates the parallel",
     // NOTE: count() includes undone entities, so no count check after undo().
     REQUIRE(f.m_graphic.undo());
     CHECK(f.redoAvailable());
+}
+
+TEST_CASE("parallel tool: a spline is offset as a whole, not one of the lines it is drawn with",
+          "[parallel_action][spline]") {
+    ParallelActionFixture f;
+    RS_SplineData data(3, false);
+    data.controlPoints = {{0, 0}, {4, 6}, {8, -6}, {12, 0}};
+    data.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+    data.weights.assign(4, 1.0);
+    auto* spline = new RS_Spline(&f.m_graphic, data);
+    f.m_graphic.addEntity(spline);
+    f.m_action->setDistance(0.5);
+    const unsigned countBefore = f.m_graphic.count();
+
+    // near the start, on its right
+    LC_MouseEvent moveEvent = eventAt(0.2, 0.1);
+    f.m_action->onMouseMoveEvent(STATUS_SET_ENTITY, &moveEvent);
+    LC_MouseEvent clickEvent = eventAt(0.2, 0.1);
+    f.m_action->onMouseLeftButtonRelease(STATUS_SET_ENTITY, &clickEvent);
+
+    REQUIRE(f.m_graphic.count() > countBefore);
+    int created = 0;
+    for (const RS_Entity* e : f.m_graphic) {
+        if (e == spline || e->isDeleted()) {
+            continue;
+        }
+        ++created;
+        // the offset of the curve, not of one drawn line: a spline, all of it 0.5 away
+        CHECK(e->rtti() == RS2::EntitySpline);
+        const auto* piece = static_cast<const RS_Spline*>(e);
+        double t0 = 0.0;
+        double t1 = 0.0;
+        REQUIRE(piece->getParameterDomain(t0, t1));
+        for (int k = 0; k <= 8; ++k) {
+            LC_CurveJet jet;
+            REQUIRE(piece->tryEvaluateJet(t0 + (t1 - t0) * k / 8.0, LC_CurveEvaluationSide::Interior, jet));
+            double nearest = RS_MAXDOUBLE;
+            for (int j = 0; j <= 2000; ++j) {
+                LC_CurveJet c;
+                REQUIRE(spline->tryEvaluateJet(j / 2000.0, LC_CurveEvaluationSide::Interior, c));
+                nearest = std::min(nearest, c.point.distanceTo(jet.point));
+            }
+            CHECK(std::abs(nearest - 0.5) < 1e-3);
+        }
+    }
+    CHECK(created > 0);
 }

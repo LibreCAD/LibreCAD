@@ -32,6 +32,35 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_math.h"
 #include "rs_vector.h"
 
+namespace {
+/** A control point in homogeneous coordinates: its position times its weight, and the weight. */
+struct HomogeneousPoint {
+  double x = 0.;
+  double y = 0.;
+  double w = 1.;
+};
+
+/**
+ * Inserts the knot u once without changing the curve (Boehm's algorithm; Piegl & Tiller, The NURBS
+ * Book, A5.1 with one insertion). span is the index with knots[span] <= u < knots[span + 1], at least
+ * the degree, and multiplicity the number of knots equal to u, below the degree.
+ */
+void insertKnotOnce(std::vector<double> &knots, std::vector<HomogeneousPoint> &points, const size_t degree,
+                    const double u, const size_t span, const size_t multiplicity) {
+  std::vector<HomogeneousPoint> inserted(points.size() + 1);
+  std::copy(points.begin(), points.begin() + (span - degree + 1), inserted.begin());
+  std::copy(points.begin() + (span - multiplicity), points.end(), inserted.begin() + (span - multiplicity + 1));
+  for (size_t i = span - degree + 1; i <= span - multiplicity; ++i) {
+    const double alpha = (u - knots[i]) / (knots[i + degree] - knots[i]);
+    inserted[i] = {alpha * points[i].x + (1. - alpha) * points[i - 1].x,
+                   alpha * points[i].y + (1. - alpha) * points[i - 1].y,
+                   alpha * points[i].w + (1. - alpha) * points[i - 1].w};
+  }
+  knots.insert(knots.begin() + span + 1, u);
+  points = std::move(inserted);
+}
+} // namespace
+
 /**
  * Convert a closed wrapped knot vector to an open clamped knot vector.
  * Extracts internal knots and adds clamping multiplicities.
@@ -171,6 +200,80 @@ LC_SplineHelper::clampKnotVector(const std::vector<double> &inputKnotVector, con
   std::fill(clampedKnotVector.end() - (splineDegree + 1),
             clampedKnotVector.end(), rightClampValue);
   return clampedKnotVector;
+}
+
+/**
+ * Rewrite an open B-spline as a clamped one drawing the same curve.
+ */
+bool LC_SplineHelper::clampPreservingShape(RS_SplineData &splineData) {
+  const size_t degree = splineData.degree;
+  const size_t count = splineData.controlPoints.size();
+  if (degree < 1 || count < degree + 1 || splineData.weights.size() != count ||
+      splineData.knotslist.size() != count + degree + 1) {
+    return false;
+  }
+  std::vector<double> knots = splineData.knotslist;
+  if (!std::all_of(knots.begin(), knots.end(), [](const double k) { return std::isfinite(k); }) ||
+      !std::is_sorted(knots.begin(), knots.end())) {
+    return false;
+  }
+  const double start = knots[degree];
+  const double end = knots[count];
+  if (!(start < end)) {
+    return false;
+  }
+  // knots validate() counts as equal to an end are the same knot here
+  for (double &k : knots) {
+    if (std::abs(k - start) <= RS_TOLERANCE) {
+      k = start;
+    }
+    else if (std::abs(k - end) <= RS_TOLERANCE) {
+      k = end;
+    }
+  }
+
+  std::vector<HomogeneousPoint> points;
+  points.reserve(count);
+  for (size_t i = 0; i < count; ++i) {
+    const double w = splineData.weights[i];
+    const RS_Vector &p = splineData.controlPoints[i];
+    if (!(w > 0.) || !std::isfinite(w) || !p.valid) {
+      return false;
+    }
+    points.push_back({p.x * w, p.y * w, w});
+  }
+
+  // The end of the curve first: the knots before it stay where they are. Once it is a knot degree
+  // times, the knots and control points after it no longer touch the curve.
+  const size_t firstEnd = std::lower_bound(knots.begin(), knots.end(), end) - knots.begin();
+  size_t lastEnd = std::upper_bound(knots.begin(), knots.end(), end) - knots.begin() - 1;
+  for (size_t multiplicity = lastEnd - firstEnd + 1; multiplicity < degree; ++multiplicity, ++lastEnd) {
+    insertKnotOnce(knots, points, degree, end, lastEnd, multiplicity);
+  }
+  knots.resize(firstEnd + degree);
+  knots.push_back(end);
+  points.resize(firstEnd);
+
+  // Then its start, where the knots and control points before the last degree copies drop out.
+  const size_t firstStart = std::lower_bound(knots.begin(), knots.end(), start) - knots.begin();
+  size_t lastStart = std::upper_bound(knots.begin(), knots.end(), start) - knots.begin() - 1;
+  for (size_t multiplicity = lastStart - firstStart + 1; multiplicity < degree; ++multiplicity, ++lastStart) {
+    insertKnotOnce(knots, points, degree, start, lastStart, multiplicity);
+  }
+  const size_t dropped = lastStart - degree;
+  knots.erase(knots.begin(), knots.begin() + dropped);
+  knots.front() = start;
+  points.erase(points.begin(), points.begin() + dropped);
+
+  splineData.knotslist = std::move(knots);
+  splineData.controlPoints.clear();
+  splineData.weights.clear();
+  for (const HomogeneousPoint &p : points) {
+    splineData.controlPoints.emplace_back(p.x / p.w, p.y / p.w);
+    splineData.weights.push_back(p.w);
+  }
+  splineData.type = RS_SplineData::SplineType::ClampedOpen;
+  return true;
 }
 
 /**

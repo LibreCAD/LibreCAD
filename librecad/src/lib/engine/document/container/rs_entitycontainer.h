@@ -30,6 +30,7 @@
 #include <QList>
 
 #include "rs_entity.h"
+class LC_SelectedSet;
 
 /**
  * Class representing a tree of entities.
@@ -47,17 +48,18 @@ public:
     };
 
     explicit RS_EntityContainer(RS_EntityContainer* parent = nullptr, bool owner = true);
+    /** A deep copy: an owner clones its children, a non-owner shares them. */
     RS_EntityContainer(const RS_EntityContainer& other);
     RS_EntityContainer(const RS_EntityContainer& other, bool copyChildren);
-    RS_EntityContainer& operator =(const RS_EntityContainer& other);
-    RS_EntityContainer(RS_EntityContainer&& other) noexcept;
-    RS_EntityContainer& operator =(RS_EntityContainer&& other) noexcept;
-    //RS_EntityContainer(const RS_EntityContainer& ec);
+    // Containers own their children: an assigned or moved-from container could
+    // neither keep nor share them safely.
+    RS_EntityContainer& operator =(const RS_EntityContainer& other) = delete;
+    RS_EntityContainer(RS_EntityContainer&& other) = delete;
+    RS_EntityContainer& operator =(RS_EntityContainer&& other) = delete;
 
     ~RS_EntityContainer() override;
 
     RS_Entity* clone() const override;
-    virtual void detach();
 
     /** @return RS2::EntityContainer */
     RS2::EntityType rtti() const override {
@@ -65,6 +67,7 @@ public:
     }
 
     void reparent(RS_EntityContainer* newParent) override;
+    void clearDwgProvenance(unsigned what) override;
 
     /**
      * @return true: because entities made from this class
@@ -119,6 +122,8 @@ public:
     int findEntityIndex(const RS_Entity* entity) const;
     bool areNeighborsEntities(RS_Entity const *const  e1, RS_Entity const *const  e2) const;
     virtual void clear();
+    /** Empties the container without deleting its entities: the caller owns them, parentless. */
+    std::vector<std::unique_ptr<RS_Entity>> takeEntities();
 
     //virtual unsigned long int count() {
     // return count(false);
@@ -266,6 +271,26 @@ public:
     RS_Entity* cloneProxy() const override;
 
 protected:
+    class OwnedReplacement {
+    public:
+        OwnedReplacement(OwnedReplacement &&) noexcept = default;
+        OwnedReplacement &operator=(OwnedReplacement &&) noexcept = default;
+        OwnedReplacement(const OwnedReplacement &) = delete;
+        OwnedReplacement &operator=(const OwnedReplacement &) = delete;
+        // Explicitly postcommit: listeners observe complete new geometry and
+        // caller-published metrics. Listener exceptions are NOT build failures.
+        void notify();
+    private:
+        friend class RS_EntityContainer;
+        OwnedReplacement() = default;
+        std::vector<LC_SelectedSet*> m_changed;
+    };
+    // Fresh uniquely-owned, unparented top-level children with already computed
+    // bounds only. Rejects non-owners without consuming input. All allocation,
+    // validation and selection preparation precede the no-fail commit. The
+    // model thread must not mutate selection/reenter during prepare/commit.
+    OwnedReplacement replaceOwnedEntities(std::vector<std::unique_ptr<RS_Entity>> &&incoming);
+
     /**
      * @brief getLoops for hatch, split closed loops into single simple loops. All returned containers are owned by
      * the returned object.

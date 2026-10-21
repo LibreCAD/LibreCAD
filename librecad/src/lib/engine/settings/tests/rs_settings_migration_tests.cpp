@@ -19,17 +19,20 @@
 
 // Tests for RS_Settings cross-major migration helpers (copyAll and
 // migrateFromPriorMajor). The unit-under-test is the static helpers on
-// RS_Settings, not RS_Settings::init() — init() owns a global singleton
-// that can't be safely re-initialised between Catch2 cases.
+// RS_Settings, not RS_Settings::init(): init() points the process-wide
+// singleton at the store it is given, and these cases use throwaway stores
+// that the rest of the suite must not be left reading. init() has its own
+// tests in lc_settings_init_tests.cpp.
 //
 // copyAll() works on arbitrary QSettings pairs so we drive it with
 // QSettings(filePath, QSettings::IniFormat) instances under a
 // QTemporaryDir for hermetic, platform-independent isolation.
 //
-// migrateFromPriorMajor() probes QSettings(org, app) — i.e. goes through
-// the platform-native QSettings backend. We use a unique organization
-// name per test case so probes can't pick up real user settings on the
-// developer's machine.
+// migrateFromPriorMajor() probes stores opened in the default QSettings
+// format, which the tests set to an INI file in a private directory (see
+// lc_testsettingsisolation.h), so they open stores with
+// lc::test::openSettings(). We still use a unique organization name per test
+// case so one case can't pick up another's stores.
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -39,6 +42,7 @@
 #include <QTemporaryDir>
 #include <QUuid>
 
+#include "lc_testsettingsisolation.h"
 #include "rs_settings.h"
 
 namespace {
@@ -52,7 +56,7 @@ QString uniqueOrgName() {
 // values into the developer's machine config between runs.
 void purgeOrgSettings(const QString& org, const QStringList& appNames) {
     for (const QString& app : appNames) {
-        QSettings s(org, app);
+        QSettings s = lc::test::openSettings(org, app);
         s.clear();
         s.sync();
     }
@@ -159,7 +163,7 @@ TEST_CASE("copyAll: underscore-prefixed keys *inside groups* are not skipped",
 TEST_CASE("migrateFromPriorMajor: returns empty when no prior store exists",
           "[rs_settings][migrate]") {
     const QString org = uniqueOrgName();
-    QSettings dst(org, QStringLiteral("LibreCAD-2"));
+    QSettings dst = lc::test::openSettings(org, QStringLiteral("LibreCAD-2"));
     dst.clear();
     dst.sync();
 
@@ -178,14 +182,14 @@ TEST_CASE("migrateFromPriorMajor: copies from a single prior major",
           "[rs_settings][migrate]") {
     const QString org = uniqueOrgName();
     {
-        QSettings prior(org, QStringLiteral("LibreCAD-1"));
+        QSettings prior = lc::test::openSettings(org, QStringLiteral("LibreCAD-1"));
         prior.clear();
         prior.setValue("Appearance/Language", QStringLiteral("de"));
         prior.setValue("Defaults/Unit", QStringLiteral("Inch"));
         prior.sync();
     }
 
-    QSettings dst(org, QStringLiteral("LibreCAD-3"));
+    QSettings dst = lc::test::openSettings(org, QStringLiteral("LibreCAD-3"));
     dst.clear();
 
     const QString from =
@@ -211,23 +215,23 @@ TEST_CASE("migrateFromPriorMajor: picks the highest-numbered prior",
           "[rs_settings][migrate]") {
     const QString org = uniqueOrgName();
     {
-        QSettings prior1(org, QStringLiteral("LibreCAD-1"));
+        QSettings prior1 = lc::test::openSettings(org, QStringLiteral("LibreCAD-1"));
         prior1.clear();
         prior1.setValue("source", QStringLiteral("v1"));
         prior1.sync();
 
-        QSettings prior2(org, QStringLiteral("LibreCAD-2"));
+        QSettings prior2 = lc::test::openSettings(org, QStringLiteral("LibreCAD-2"));
         prior2.clear();
         prior2.setValue("source", QStringLiteral("v2"));
         prior2.sync();
 
-        QSettings prior3(org, QStringLiteral("LibreCAD-3"));
+        QSettings prior3 = lc::test::openSettings(org, QStringLiteral("LibreCAD-3"));
         prior3.clear();
         prior3.setValue("source", QStringLiteral("v3"));
         prior3.sync();
     }
 
-    QSettings dst(org, QStringLiteral("LibreCAD-5"));
+    QSettings dst = lc::test::openSettings(org, QStringLiteral("LibreCAD-5"));
     dst.clear();
 
     const QString from =
@@ -248,13 +252,13 @@ TEST_CASE("migrateFromPriorMajor: falls back to legacy un-versioned name",
           "[rs_settings][migrate]") {
     const QString org = uniqueOrgName();
     {
-        QSettings legacy(org, QStringLiteral("LibreCAD"));
+        QSettings legacy = lc::test::openSettings(org, QStringLiteral("LibreCAD"));
         legacy.clear();
         legacy.setValue("pre-versioned/value", QStringLiteral("kept"));
         legacy.sync();
     }
 
-    QSettings dst(org, QStringLiteral("LibreCAD-2"));
+    QSettings dst = lc::test::openSettings(org, QStringLiteral("LibreCAD-2"));
     dst.clear();
 
     const QString from =
@@ -279,7 +283,7 @@ TEST_CASE("migrateFromPriorMajor: meta-state from prior is not propagated",
     // sentinels must reflect the *current* major, not the prior's.
     const QString org = uniqueOrgName();
     {
-        QSettings prior(org, QStringLiteral("LibreCAD-1"));
+        QSettings prior = lc::test::openSettings(org, QStringLiteral("LibreCAD-1"));
         prior.clear();
         prior.setValue("real", QStringLiteral("payload"));
         prior.setValue("_schemaMajor", 1);
@@ -288,7 +292,7 @@ TEST_CASE("migrateFromPriorMajor: meta-state from prior is not propagated",
         prior.sync();
     }
 
-    QSettings dst(org, QStringLiteral("LibreCAD-3"));
+    QSettings dst = lc::test::openSettings(org, QStringLiteral("LibreCAD-3"));
     dst.clear();
 
     const QString from =

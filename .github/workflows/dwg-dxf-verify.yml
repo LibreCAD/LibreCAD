@@ -31,6 +31,24 @@ on:
       - 'CMakeLists.txt'
       - 'libraries/libdxfrw/**'
       - 'librecad/src/lib/filters/**'
+      - 'librecad/src/lib/engine/undo/**'
+      - 'librecad/src/lib/engine/document/entities/rs_entity.*'
+      - 'librecad/src/lib/engine/document/entities/rs_mtext.*'
+      - 'librecad/src/lib/engine/document/entities/rs_text.*'
+      - 'librecad/src/lib/engine/document/entities/rs_insert.*'
+      - 'librecad/src/lib/engine/document/entities/lc_text*'
+      - 'librecad/src/lib/engine/document/entities/rs_entitycontainer.*'
+      - 'librecad/src/lib/engine/document/entities/tests/**'
+      - 'librecad/src/lib/engine/document/fonts/**'
+      - 'librecad/src/test/**'
+      - 'librecad/src/main/console_dxf2png.*'
+      - 'librecad/src/main/tests/lc_consolesvgexporttests.cpp'
+      - 'librecad/src/lib/gui/render/headless/lc_printviewportrenderer.*'
+      - 'librecad/src/lib/gui/render/rs_painter.*'
+      - 'librecad/src/lib/gui/render/widget/lc_graphicviewrenderer.*'
+      - 'librecad/src/lib/gui/grid/lc_gridsystem.*'
+      - 'librecad/src/lib/gui/tests/rs_painter_tests.cpp'
+      - 'librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp'
       - 'scripts/dwg-fast-check.sh'
   pull_request:
     branches: [master]
@@ -39,6 +57,24 @@ on:
       - 'CMakeLists.txt'
       - 'libraries/libdxfrw/**'
       - 'librecad/src/lib/filters/**'
+      - 'librecad/src/lib/engine/undo/**'
+      - 'librecad/src/lib/engine/document/entities/rs_entity.*'
+      - 'librecad/src/lib/engine/document/entities/rs_mtext.*'
+      - 'librecad/src/lib/engine/document/entities/rs_text.*'
+      - 'librecad/src/lib/engine/document/entities/rs_insert.*'
+      - 'librecad/src/lib/engine/document/entities/lc_text*'
+      - 'librecad/src/lib/engine/document/entities/rs_entitycontainer.*'
+      - 'librecad/src/lib/engine/document/entities/tests/**'
+      - 'librecad/src/lib/engine/document/fonts/**'
+      - 'librecad/src/test/**'
+      - 'librecad/src/main/console_dxf2png.*'
+      - 'librecad/src/main/tests/lc_consolesvgexporttests.cpp'
+      - 'librecad/src/lib/gui/render/headless/lc_printviewportrenderer.*'
+      - 'librecad/src/lib/gui/render/rs_painter.*'
+      - 'librecad/src/lib/gui/render/widget/lc_graphicviewrenderer.*'
+      - 'librecad/src/lib/gui/grid/lc_gridsystem.*'
+      - 'librecad/src/lib/gui/tests/rs_painter_tests.cpp'
+      - 'librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp'
       - 'scripts/dwg-fast-check.sh'
   workflow_dispatch:
 
@@ -69,6 +105,7 @@ jobs:
         run: |
           cmake -S . -B format-tests -G Ninja \
             -DBUILD_TESTS=ON \
+            -DLIBRECAD_ENABLE_OPENTYPE=OFF \
             -DLIBDXFRW_BUILD_DOC=OFF \
             -DLIBRECAD_REGISTER_INTEGRATION_TESTS=ON \
             -DLIBRECAD_REGISTER_FULL_TESTS=OFF \
@@ -78,7 +115,8 @@ jobs:
       - name: Build bounded DWG/DXF test lanes
         run: |
           cmake --build format-tests \
-            --target librecad_dwg_fast_tests librecad_dxf_fast_tests \
+            --target librecad_dwg_fast_tests librecad_dxf_fast_tests librecad_lc_consolesvgexporttests librecad_painter_tests \
+              libdxfrw_dxf_embedded_scope_tests libdxfrw_verified_write_tests librecad_text_native_tests \
             -j"$(nproc)"
 
       - name: Run bounded DWG/DXF test lanes
@@ -94,12 +132,14 @@ jobs:
             qt_arch: win64_msvc2022_64
             cmake_arch: x64
             msbuild_arch: x64
+            vcvars_arch: x64
             qt_modules: qt3d qt5compat qtimageformats qtshadertools
           - os: windows-11-arm
             qt_host: windows_arm64
             qt_arch: win64_msvc2022_arm64
             cmake_arch: ARM64
             msbuild_arch: arm64
+            vcvars_arch: arm64
             qt_modules: qt5compat qtimageformats qtshadertools
     runs-on: ${{ matrix.os }}
     steps:
@@ -133,16 +173,29 @@ jobs:
           rm boost.7z
         shell: bash
 
-      - name: Configure bounded DWG/DXF test lanes
+      - name: Report the toolchain the runner has
         run: |
-          cmake.exe -S . -B generated-tests -G "Visual Studio 17 2022" -A "${{ matrix.cmake_arch }}" -DBOOST_ROOT="%CD%\boost" -DCMAKE_CXX_FLAGS="/MP8 /EHsc" -DBUILD_TESTS=ON -DLIBRECAD_REGISTER_INTEGRATION_TESTS=ON -DLIBRECAD_REGISTER_FULL_TESTS=OFF -DLIBRECAD_REGISTER_FORMAT_TESTS=OFF -DLIBRECAD_REGISTER_CROSS_READ_SMOKE=OFF
+          cmake --version
+          "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -property installationVersion
         shell: cmd
 
-      - name: Build bounded DWG/DXF test lanes
+      # Ninja inside the Visual Studio environment, not a "Visual Studio NN"
+      # generator: the windows-11-arm image now carries Visual Studio 18, and
+      # the CMake on PATH (Qt's, 3.30) knows no generator by that name - it
+      # fell back to NMake Makefiles, which takes no -A. vcvarsall puts the
+      # compiler of whatever Visual Studio is installed on PATH, so no version
+      # is named anywhere. The Linux lanes above already build with Ninja.
+      - name: Configure and build the bounded DWG/DXF test lanes
         run: |
-          cmake --build generated-tests --config Release --parallel --target librecad_dwg_fast_tests librecad_dxf_fast_tests
+          for /f "usebackq delims=" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -property installationPath`) do set "VSPATH=%%i"
+          if not defined VSPATH exit /b 1
+          call "%VSPATH%\VC\Auxiliary\Build\vcvarsall.bat" ${{ matrix.vcvars_arch }} || exit /b 1
+          set "PATH=%VSPATH%\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja;%PATH%"
+          ninja --version || exit /b 1
+          cmake.exe -S . -B generated-tests -G Ninja -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT="%CD%\boost" -DCMAKE_CXX_FLAGS="/EHsc" -DBUILD_TESTS=ON -DLIBRECAD_ENABLE_OPENTYPE=OFF -DLIBRECAD_REGISTER_INTEGRATION_TESTS=ON -DLIBRECAD_REGISTER_FULL_TESTS=OFF -DLIBRECAD_REGISTER_FORMAT_TESTS=OFF -DLIBRECAD_REGISTER_CROSS_READ_SMOKE=OFF || exit /b 1
+          cmake --build generated-tests --parallel --target librecad_dwg_fast_tests librecad_dxf_fast_tests librecad_lc_consolesvgexporttests librecad_painter_tests libdxfrw_dxf_embedded_scope_tests libdxfrw_verified_write_tests librecad_text_native_tests || exit /b 1
         shell: cmd
 
       - name: Run bounded DWG/DXF test lanes
-        run: ctest --test-dir generated-tests -C Release --output-on-failure
+        run: ctest --test-dir generated-tests --output-on-failure
         shell: cmd

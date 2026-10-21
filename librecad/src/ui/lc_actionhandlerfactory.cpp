@@ -1002,9 +1002,8 @@ namespace InnerFactory{
                 break;
             }
             default:
-                RS_DEBUG->print(RS_Debug::D_WARNING,
-                                &"LC_ActionsHandlerFactory::createActionInstance: No such action found. Type "[
-                                    actionType]);
+                LC_LOG(RS_Debug::D_WARNING) << "LC_ActionsHandlerFactory::createActionInstance: No such action found. Type "
+                                            << static_cast<int>(actionType);
                 break;
         }
         return nullptr;

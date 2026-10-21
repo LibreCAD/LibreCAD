@@ -126,6 +126,12 @@ void patchRLL(std::vector<std::uint8_t>& bytes, std::size_t offset,
         bytes[offset + i] = static_cast<std::uint8_t>(value >> (i * 8));
 }
 
+void patchRL(std::vector<std::uint8_t>& bytes, std::size_t offset,
+             std::uint32_t value) {
+    for (unsigned int i = 0; i < 4; ++i)
+        bytes[offset + i] = static_cast<std::uint8_t>(value >> (i * 8));
+}
+
 void putRLL(std::uint8_t* bytes, std::uint64_t value) {
     for (unsigned int i = 0; i < 8; ++i)
         bytes[i] = static_cast<std::uint8_t>(value >> (i * 8));
@@ -247,11 +253,11 @@ R2007HeaderProtection buildR2007HeaderProtection() {
     const std::uint64_t mirroredCrc = dwgUtil::crc64Mirrored(
         ~random1, mirroredBuffer.data(), mirroredBuffer.size());
 
-    putRLL(protection.checkData.data(), random1);
-    putRLL(protection.checkData.data() + 8, random2);
-    putRLL(protection.checkData.data() + 16, checkCrcSeed);
-    putRLL(protection.checkData.data() + 24, normalCrc);
-    putRLL(protection.checkData.data() + 32, mirroredCrc);
+    putRLL(protection.checkData.data(), normalCrc);
+    putRLL(protection.checkData.data() + 8, mirroredCrc);
+    putRLL(protection.checkData.data() + 16, random1);
+    putRLL(protection.checkData.data() + 24, random2);
+    putRLL(protection.checkData.data() + 32, checkCrcSeed);
     return protection;
 }
 
@@ -591,6 +597,8 @@ std::uint64_t sectionHashCode(std::string_view name) {
         return 0x586e0544u;
     if (name == "AcDb:AppInfo")
         return 0x3fa0043eu;
+    if (name == "AcDb:AppInfoHistory")
+        return 0x96de0737u;
     if (name == "AcDb:Preview")
         return 0x40aa0473u;
     if (name == "AcDb:SummaryInfo")
@@ -657,6 +665,8 @@ void appendUtf16Name(std::vector<std::uint8_t>& bytes,
         bytes.push_back(c);
         bytes.push_back(0);
     }
+    bytes.push_back(0);
+    bytes.push_back(0);
 }
 
 std::vector<std::uint8_t> buildSectionMap(const std::vector<Section>& sections) {
@@ -664,7 +674,7 @@ std::vector<std::uint8_t> buildSectionMap(const std::vector<Section>& sections) 
     try {
         for (const Section& section : sections) {
             std::uint64_t nameByteLength = 0;
-            if (!dwgSafety::multiply(section.name.size(), 2,
+            if (!dwgSafety::multiply(section.name.size() + 1u, 2,
                                      nameByteLength))
                 return {};
             putRLL(bytes, section.size);
@@ -760,7 +770,7 @@ std::vector<std::uint8_t> buildFileHeader(std::uint64_t fileSize,
                                           std::uint64_t sectionCount,
                                           const R2007HeaderProtection& protection) {
     std::vector<std::uint8_t> header(kR2007FileHeaderDataSize, 0);
-    patchRLL(header, 0, kR2007FileHeaderDataSize);
+    patchRLL(header, 0, 0x70);
     patchRLL(header, 8, fileSize);
     patchRLL(header, 16, pageMap.compressedCrc);
     patchRLL(header, 24, pageMap.correctionFactor);
@@ -769,7 +779,7 @@ std::vector<std::uint8_t> buildFileHeader(std::uint64_t fileSize,
     patchRLL(header, 48, pageMap2Id);
     patchRLL(header, 56, 0); // page map 1 is at the data-section start
     patchRLL(header, 64, pageMapId);
-    patchRLL(header, 72, 0); // no second header
+    patchRLL(header, 72, fileSize - kR2007FileHeaderPageSize - kR2007DataStart);
     patchRLL(header, 80, pageMap.compressedSize);
     patchRLL(header, 88, pageMap.uncompressedSize);
     patchRLL(header, 96, pageCount);
@@ -777,6 +787,9 @@ std::vector<std::uint8_t> buildFileHeader(std::uint64_t fileSize,
     patchRLL(header, 112, 0x20);
     patchRLL(header, 120, 0x40);
     patchRLL(header, 128, pageMap.uncompressedCrc);
+    patchRLL(header, 136, 0xf800);
+    patchRLL(header, 144, 4);
+    patchRLL(header, 152, 1);
     patchRLL(header, 160, sectionCount + 1u);
     patchRLL(header, 168, sectionMap.uncompressedCrc);
     patchRLL(header, 176, sectionMap.compressedSize);
@@ -821,15 +834,22 @@ std::vector<std::uint8_t> buildEncodedFileHeader(
         sequence.data(), sequence.size()));
     patchRLL(decoded, 8, protection.sequenceFirst);
     patchRLL(decoded, 16, dwgUtil::crc64Normal(
-        dwgUtil::updateSeed1(kR2007CrcSeed, data.size()),
+        dwgUtil::updateSeed2(kR2007CrcSeed, data.size()),
         data.data(), data.size()));
-    const std::uint32_t dataSize = static_cast<std::uint32_t>(
-        -static_cast<std::int32_t>(data.size()));
-    for (unsigned int i = 0; i < 4; ++i)
-        decoded[24 + i] = static_cast<std::uint8_t>(dataSize >> (i * 8));
+    patchRLL(decoded, 24, static_cast<std::uint64_t>(
+        -static_cast<std::int64_t>(data.size())));
     std::copy(data.cbegin(), data.cend(), decoded.begin() + 32);
+    const std::size_t blockSize = (32u + data.size() + 7u) & ~std::size_t{7};
     protection.random.fillPadding(decoded.data() + 32 + data.size(),
-                                  decoded.size() - 32 - data.size());
+                                  blockSize - 32 - data.size());
+    std::size_t repeatedSize = blockSize;
+    while (decoded.size() - repeatedSize >= blockSize) {
+        std::copy_n(decoded.cbegin(), blockSize,
+                    decoded.begin() + static_cast<std::ptrdiff_t>(repeatedSize));
+        repeatedSize += blockSize;
+    }
+    protection.random.fillPadding(decoded.data() + repeatedSize,
+                                  decoded.size() - repeatedSize);
     std::vector<std::uint8_t> encoded(kR2007EncodedHeaderSize, 0);
     if (!dwgRSCodec::encode239I(decoded.data(), encoded.data(), 3))
         return {};
@@ -891,7 +911,7 @@ void dwgWriter21::finishObject() {
         return;
     }
     const std::uint64_t mergedStringBaseBit = m_objectBody.bitCount();
-    if (!appendR2007StringStream(m_objectBody, m_objectStrings, false)) {
+    if (!appendR2007StringStream(m_objectBody, m_objectStrings, true)) {
         m_writeError = true;
         m_objectStrings.reset();
         m_objectHandles.reset();
@@ -1205,6 +1225,7 @@ bool dwgWriter21::finalize() {
     const std::uint16_t codePage = fileCodePageId();
     metadata[0x13] = static_cast<std::uint8_t>(codePage);
     metadata[0x14] = static_cast<std::uint8_t>(codePage >> 8);
+    patchRL(metadata, 0x28, static_cast<std::uint32_t>(kR2007FileHeaderOffset));
     R2007LayoutReceipt receipt;
     receipt.version = m_version;
     receipt.metadataSize = metadata.size();
@@ -1262,6 +1283,11 @@ bool dwgWriter21::finalize() {
             sectionName = sectionIt->name;
             logicalOffset = metadataIt->second.startOffset;
             encodedSize = metadataIt->second.compressedSize;
+            if (sectionName == "AcDb:AppInfo" && logicalOffset == 0) {
+                if (receiptAddress > std::numeric_limits<std::uint32_t>::max())
+                    return false;
+                patchRL(metadata, 0x2c, static_cast<std::uint32_t>(receiptAddress));
+            }
         }
         receipt.pages.push_back({page.id, receiptAddress, page.bytes.size(),
                                  kind, sectionName, logicalOffset, encodedSize});

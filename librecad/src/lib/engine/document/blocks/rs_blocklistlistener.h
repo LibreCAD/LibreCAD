@@ -28,13 +28,14 @@
 #ifndef RS_BLOCKLISTLISTENER_H
 #define RS_BLOCKLISTLISTENER_H
 
+#include "lc_trackedlistener.h"
 #include "rs_block.h"
 
 /**
  * This class is an interface for classes that are interested in
  * knowing about changes in the block list. 
  */
-class RS_BlockListListener {
+class RS_BlockListListener : public LC_TrackedListener<RS_BlockListListener> {
 public:
     virtual ~RS_BlockListListener() = default;
 
@@ -62,6 +63,25 @@ public:
      * Called when a block's visibility is toggled. 
      */
     virtual void blockToggled(RS_Block*) {}
+
+    /**
+     * Called when every block was removed from the list (RS_BlockList::clear(), which loading a
+     * file begins with), after the list was emptied and before the blocks are deleted. A
+     * listener that keeps blocks, or rows for them, must drop them here: they are freed next.
+     */
+    virtual void blockListCleared() {blockListModified(true);}
+
+    /**
+     * Called once, from the destructor of the list (its drawing is being destroyed), after the list
+     * was emptied and this listener was unregistered from it (the listeners not told yet are still
+     * listed, and unregister themselves if a callback deletes them), and before the blocks are deleted. The list and its drawing are partly destroyed: forget them (drop the
+     * pointer to the list, to the drawing, and any row or pointer for a block) and do not read them,
+     * or list yourself with the list again. Nothing is forwarded to blockListModified(): a listener
+     * that keeps nothing needs no override. A list that does not own its blocks is told too, and
+     * frees nothing. (A listener that is destroyed while listed needs nothing: see
+     * LC_TrackedListener.)
+     */
+    virtual void blockListDestroyed() {}
 
     /**
      * Called when block list is modified.

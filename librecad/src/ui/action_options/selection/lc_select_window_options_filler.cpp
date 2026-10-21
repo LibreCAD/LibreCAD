@@ -23,8 +23,5 @@
 
 #include "lc_select_window_options_filler.h"
 
-#include "lc_action_select_window.h"
-
-void LC_SelectWindowOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* container) {
-    auto action = static_cast<LC_ActionSelectWindow*>(m_action);
+void LC_SelectWindowOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer*) {
 }

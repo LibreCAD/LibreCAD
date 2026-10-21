@@ -34,17 +34,23 @@
 
 #include <algorithm>
 #include <filesystem>
+#include <fstream>
+#include <string>
+#include <vector>
 
 #include <QCoreApplication>
 #include <QString>
 
 #include "lc_containertraverser.h"
+#include "lc_linetypenames.h"
 #include "rs.h"
 #include "rs_entitycontainer.h"
+#include "rs_filterdxfrw.h"
 #include "rs_filtershp.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
 #include "rs_mtext.h"
+#include "rs_pen.h"
 #include "rs_point.h"
 #include "rs_polyline.h"
 #include "rs_settings.h"
@@ -312,6 +318,60 @@ TEST_CASE("RS_FilterSHP: Latin-1 codepage decodes accented characters",
     CHECK(foundEAcute);
 }
 
+// cp*.* hold one POINT with a LAYER, an LTYPE and a NAME value in the code
+// page of the name, which the DBF declares in a .cpg file or in the language
+// driver byte of its header: 0x57 is 1252 and 0xC8 is 1250 in ESRI's table.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_FilterSHP: DBF text is read in the code page the DBF declares",
+          "[shp][filter][matrix][codepage]") {
+    ensureQtContext();
+    struct Fixture {
+        const char* shp;
+        QString layer;
+        QString lineType;
+        QString label;
+    };
+    // Windows-1252 has characters where ISO-8859-1 has control codes: the
+    // quote, the ligature, the dash and the euro sign.  It has none for the
+    // byte 0x81, which stays U+0081.  Of the Shift-JIS label, U+4E88 ends in
+    // the byte 0x5C, a backslash, the half-width katakana are one byte each,
+    // and \U+7BA1 is a code in DXF but text in a shapefile.
+    const Fixture western{
+        nullptr, QStringLiteral("Rue de l\u2019\u00C9glise"),
+        QStringLiteral("N\u0153ud"),
+        QStringLiteral("Caf\u00E9 \u2013 5 \u20AC") + QChar(0x81)};
+    const Fixture fixtures[] = {
+        {"cp1252_cpg.shp", western.layer, western.lineType, western.label},
+        {"cp1252_ldid.shp", western.layer, western.lineType, western.label},
+        {"cp932_cpg.shp", QStringLiteral("\u9053\u8DEF"),
+         QStringLiteral("\u7834\u7DDA"),
+         QStringLiteral("\u4E88\u5B9A\uFF76\uFF9E\uFF7D\u7BA1\\U+7BA1")},
+        {"cp1250_ldid.shp", QStringLiteral("\u0160achta"),
+         QStringLiteral("p\u0159eru\u0161ovan\u00E1"),
+         QStringLiteral("\u017Dlu\u0165ou\u010Dk\u00FD k\u016F\u0148")},
+    };
+    for (const Fixture& fixture : fixtures) {
+        CAPTURE(fixture.shp);
+        RS_Graphic graphic;
+        RS_FilterSHP filter;
+        REQUIRE(filter.fileImport(graphic, corpusPath(fixture.shp),
+                                  RS2::FormatSHP));
+        QString layer, lineType, label;
+        for (RS_Entity* e :
+             lc::LC_ContainerTraverser{graphic, RS2::ResolveNone}.entities()) {
+            if (e->rtti() == RS2::EntityPoint) {
+                layer = e->getLayer()->getName();
+                lineType = e->getPen(false).getLineTypeName();
+            } else if (e->rtti() == RS2::EntityMText) {
+                label = static_cast<RS_MText*>(e)->getText();
+            }
+        }
+        CHECK(layer.toStdString() == fixture.layer.toStdString());
+        CHECK(lineType.toStdString() == fixture.lineType.toStdString());
+        CHECK(label.toStdString() == fixture.label.toStdString());
+    }
+}
+
 // ---------------------------------------------------------------------------
 // Edge cases: empty, missing-shx, singleton, and the "hostile" fixtures
 // whose whole point is to prove RS_FilterSHP fails gracefully.
@@ -404,9 +464,9 @@ TEST_CASE("RS_FilterSHP: malformed_dbf.shp -> false, no crash",
 
 // ---------------------------------------------------------------------------
 // Phase-4a generated fixtures — Z types and MULTIPATCH parts + CVE-class DoS.
-// These are the only fixtures under test_data/shp/ produced by
-// scripts/make_shp_fixtures.py; the rest of the corpus is fixed reference
-// data.  See the plan's Phase 4a for the rationale.
+// These, ltype_*.*, layer_point.* and cp*.* are the only fixtures under
+// test_data/shp/ produced by scripts/make_shp_fixtures.py; the rest of the
+// corpus is fixed reference data.  See the plan's Phase 4a for the rationale.
 // ---------------------------------------------------------------------------
 
 // NOLINTNEXTLINE(readability-identifier-naming)
@@ -516,4 +576,218 @@ TEST_CASE("RS_FilterSHP: canExport is always false (import-only)",
     CHECK_FALSE(filter.canImport("dummy.shp", RS2::FormatDXFRW));
     CHECK_FALSE(filter.canExport("dummy.shp", RS2::FormatSHP));
     CHECK_FALSE(filter.canExport("dummy.shp", RS2::FormatDXFRW));
+}
+
+// ---------------------------------------------------------------------------
+// The DBF LTYPE column keeps its name.  ltype_point.* holds one POINT per
+// value: "VENDOR_TAB", which is no built-in, "Dashed", "ACAD_ISO02W100",
+// "DASHED\t", "\t", a blank one, "DASH/DOT" and "DASH\tDOT", which DXF
+// cannot hold as a symbol name: both become "DASH_DOT", and the bytes of a
+// name in Shift-JIS (read as Latin-1) and two NFC-equivalent UTF-8 names.
+// ---------------------------------------------------------------------------
+
+namespace {
+
+// Group `code` values of every `recordType` record, or only of the one whose
+// group 2 is `name` when one is given; a twin of the helpers in
+// dxf_roundtrip_tests.cpp, whose namespace is private to that file.
+std::vector<std::string> recordGroupValues(const std::string& path,
+                                           const std::string& recordType,
+                                           const std::string& code,
+                                           const std::string& name = {}) {
+    std::ifstream in(path);
+    std::string codeLine, valueLine;
+    std::vector<std::string> values;
+    bool inRecord = false;
+    bool nameMatched = false;
+    auto trim = [](std::string value) {
+        if (!value.empty() && value.back() == '\r')
+            value.pop_back();
+        const size_t first = value.find_first_not_of(" \t");
+        return first == std::string::npos ? std::string() : value.substr(first);
+    };
+    while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
+        const std::string groupCode = trim(codeLine);
+        const std::string value = trim(valueLine);
+        if (groupCode == "0") {
+            inRecord = value == recordType;
+            nameMatched = name.empty();
+        } else if (inRecord && !name.empty() && groupCode == "2") {
+            nameMatched = value == name;
+        } else if (inRecord && nameMatched && groupCode == code) {
+            values.push_back(value);
+        }
+    }
+    return values;
+}
+
+std::vector<RS_Point*> importedPoints(RS_Graphic& g) {
+    std::vector<RS_Point*> points;
+    for (RS_Entity* e :
+         lc::LC_ContainerTraverser{g, RS2::ResolveNone}.entities()) {
+        if (e != nullptr && e->rtti() == RS2::EntityPoint)
+            points.push_back(static_cast<RS_Point*>(e));
+    }
+    return points;
+}
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_FilterSHP: the DBF LTYPE column reaches the pen as a name",
+          "[shp][filter][linetype][named]") {
+    ensureQtContext();
+    const QString path = corpusPath("ltype_point.shp");
+    REQUIRE(std::filesystem::is_regular_file(path.toStdString()));
+
+    RS_Graphic graphic;
+    RS_FilterSHP filter;
+    REQUIRE(filter.fileImport(graphic, path, RS2::FormatSHP));
+
+    const std::vector<RS_Point*> points = importedPoints(graphic);
+    REQUIRE(points.size() == 11);
+    // shapelib trims the spaces that pad a C field; the filter trims tabs too.
+    CHECK(points[0]->getPen(false).getLineTypeName().toStdString()
+          == "VENDOR_TAB");
+    std::vector<RS2::LineType> lineTypes;
+    for (const RS_Point* point : points)
+        lineTypes.push_back(point->getPen(false).getLineType());
+    CHECK(lineTypes == std::vector<RS2::LineType>{
+                           RS2::SolidLine, RS2::DashLine, RS2::DashLine,
+                           RS2::DashLine, RS2::LineByLayer, RS2::LineByLayer,
+                           RS2::SolidLine, RS2::SolidLine, RS2::SolidLine,
+                           RS2::SolidLine, RS2::SolidLine});
+    // U+0080 to U+009F are not the control characters a name cannot hold.
+    const QString misread = QString::fromLatin1("\x94j\x90\xfc");
+    CHECK(points[8]->getPen(false).getLineTypeName() == misread);
+    const QString firstSpelling = QString::fromUtf8("Cafe\xcc\x81");
+    CHECK(points[9]->getPen(false).getLineTypeName() == firstSpelling);
+    CHECK(points[10]->getPen(false).getLineTypeName() == firstSpelling);
+
+    const std::string out = (std::filesystem::temp_directory_path() /
+                             "shp_named_linetype_out.dxf").string();
+    std::filesystem::remove(out);
+    {
+        RS_FilterDXFRW dxf;
+        REQUIRE(dxf.fileExport(graphic, QString::fromStdString(out),
+                               RS2::FormatDXFRW));
+    }
+    // A built-in in another case is saved as before, the alias by its name,
+    // and a value with a character no symbol name holds with '_' for it.
+    CHECK(recordGroupValues(out, "POINT", "6")
+          == std::vector<std::string>{"VENDOR_TAB", "DASHED", "ACAD_ISO02W100",
+                                      "DASHED", "ByLayer", "ByLayer",
+                                      "DASH_DOT", "DASH_DOT",
+                                      misread.toStdString(),
+                                      firstSpelling.toStdString(),
+                                      firstSpelling.toStdString()});
+    // A shapefile has no LTYPE table, so the export gives each name a record:
+    // no dashes for one LibreCAD does not know, the family's for the alias.
+    CHECK(recordGroupValues(out, "LTYPE", "73", "VENDOR_TAB")
+          == std::vector<std::string>{"0"});
+    CHECK(recordGroupValues(out, "LTYPE", "73", "DASH_DOT")
+          == std::vector<std::string>{"0"});
+    CHECK(recordGroupValues(out, "LTYPE", "73", "ACAD_ISO02W100")
+          == std::vector<std::string>{"2"});
+    CHECK(recordGroupValues(out, "LTYPE", "73", firstSpelling.toStdString())
+          == std::vector<std::string>{"0"});
+
+    RS_Graphic reloaded;
+    RS_FilterDXFRW dxf;
+    REQUIRE(dxf.fileImport(reloaded, QString::fromStdString(out), RS2::FormatDXFRW));
+    const auto reloadedPoints = importedPoints(reloaded);
+    REQUIRE(reloadedPoints.size() == points.size());
+    for (size_t i = 0; i < points.size(); ++i) {
+        CAPTURE(i);
+        CHECK(LC_LineTypeNames::foldName(reloadedPoints[i]->getPen(false).getLineTypeName())
+              == LC_LineTypeNames::foldName(points[i]->getPen(false).getLineTypeName()));
+    }
+
+    std::filesystem::remove(out);
+}
+
+// Each name takes a place in the pen's name table, which the session shares,
+// so an import keeps the first 256 distinct names. Case variants before and
+// after the limit reuse the first spelling; a new built-in still falls back.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_FilterSHP: an import keeps its first 256 linetype names",
+          "[shp][filter][linetype][named]") {
+    ensureQtContext();
+    const QString path = corpusPath("ltype_many.shp");
+    REQUIRE(std::filesystem::is_regular_file(path.toStdString()));
+
+    RS_Graphic graphic;
+    RS_FilterSHP filter;
+    REQUIRE(filter.fileImport(graphic, path, RS2::FormatSHP));
+
+    const std::vector<RS_Point*> points = importedPoints(graphic);
+    REQUIRE(points.size() == 261);
+    CHECK(points[0]->getPen(false).getLineTypeName().toStdString() == "NAME_001");
+    CHECK(points[1]->getPen(false).getLineTypeName().toStdString() == "NAME_001");
+    for (size_t i = 0; i < 258; ++i) {
+        CAPTURE(i);
+        const RS_Pen pen = points[i]->getPen(false);
+        CHECK(pen.hasLineTypeName() == (i < 257));
+        CHECK(pen.getLineType() == RS2::SolidLine);
+    }
+    // Past the 256th name, one the import has kept stays, in any letter case
+    // and by its first spelling; any other folds to its built-in.
+    CHECK(points[258]->getPen(false).getLineTypeName().toStdString()
+          == "NAME_001");
+    CHECK(points[259]->getPen(false).getLineTypeName().toStdString()
+          == "NAME_001");
+    CHECK_FALSE(points[260]->getPen(false).hasLineTypeName());
+    CHECK(points[260]->getPen(false).getLineType() == RS2::DashLine);
+
+    RS_Graphic nextGraphic;
+    REQUIRE(filter.fileImport(nextGraphic, corpusPath("ltype_point.shp"), RS2::FormatSHP));
+    const auto nextPoints = importedPoints(nextGraphic);
+    REQUIRE_FALSE(nextPoints.empty());
+    CHECK(nextPoints[0]->getPen(false).getLineTypeName().toStdString() == "VENDOR_TAB");
+}
+
+// ---------------------------------------------------------------------------
+// The DBF LAYER column names layers DXF can hold.  layer_point.* holds one
+// POINT per value: two legal layer names, then names with a control character
+// or one of <>/\":;?*|,=` which AutoCAD refuses in a layer name; a line break
+// also made the DXF export fail.
+// ---------------------------------------------------------------------------
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_FilterSHP: a DBF LAYER value becomes a legal layer name",
+          "[shp][filter][layer]") {
+    ensureQtContext();
+    const QString path = corpusPath("layer_point.shp");
+    REQUIRE(std::filesystem::is_regular_file(path.toStdString()));
+
+    RS_Graphic graphic;
+    RS_FilterSHP filter;
+    REQUIRE(filter.fileImport(graphic, path, RS2::FormatSHP));
+
+    const std::vector<std::string> expected{
+        "ROADS", "Lot 7-A", "N_A", "1_500", "a_b", "_", "TAB_IN", "CR_LF_IN",
+        "_____________", QString::fromLatin1("\x94j\x90\xfc").toStdString()};
+    std::vector<std::string> layers;
+    for (const RS_Point* point : importedPoints(graphic))
+        layers.push_back(point->getLayer()->getName().toStdString());
+    CHECK(layers == expected);
+
+    const std::string out = (std::filesystem::temp_directory_path() /
+                             "shp_layer_name_out.dxf").string();
+    std::filesystem::remove(out);
+    {
+        RS_FilterDXFRW dxf;
+        REQUIRE(dxf.fileExport(graphic, QString::fromStdString(out),
+                               RS2::FormatDXFRW));
+    }
+    CHECK(recordGroupValues(out, "POINT", "8") == expected);
+    // The LAYER table holds the same names, and layer "0".
+    std::vector<std::string> names = expected;
+    names.push_back("0");
+    std::vector<std::string> records = recordGroupValues(out, "LAYER", "2");
+    std::sort(names.begin(), names.end());
+    std::sort(records.begin(), records.end());
+    CHECK(records == names);
+
+    std::filesystem::remove(out);
 }

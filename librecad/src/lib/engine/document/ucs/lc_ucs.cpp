@@ -27,7 +27,7 @@
 #include "lc_linemath.h"
 #include "rs_math.h"
 
-LC_UCS LC_WCS::instance = LC_WCS();
+LC_WCS LC_WCS::instance;
 
 LC_UCS::LC_UCS() {}
 
@@ -136,13 +136,21 @@ LC_WCS::LC_WCS():
 LC_UCS::~LC_UCS() = default;
 
 LC_UCS* LC_UCS::clone() const {
-    auto* clone = new LC_UCS();
-    clone->m_name =  m_name;
-    clone->m_ucsOrigin = m_ucsOrigin;
-    clone->m_ucsXAxis = m_ucsXAxis;
-    clone->m_ucsYAxis = m_ucsYAxis;
-    clone->m_orthoOrigin = m_orthoOrigin;
-    clone->m_ucsOrthoType = m_ucsOrthoType;
-    clone->m_ucsElevation = m_ucsElevation;
-    return clone;
+    return copyInto(new LC_UCS());
+}
+
+LC_UCS* LC_WCS::clone() const {
+    // keep the copy a WCS (isUCS() == false)
+    return copyInto(new LC_WCS());
+}
+
+LC_UCS* LC_UCS::copyInto(LC_UCS* target) const {
+    target->m_name =  m_name;
+    target->m_ucsOrigin = m_ucsOrigin;
+    target->m_ucsXAxis = m_ucsXAxis;
+    target->m_ucsYAxis = m_ucsYAxis;
+    target->m_orthoOrigin = m_orthoOrigin;
+    target->m_ucsOrthoType = m_ucsOrthoType;
+    target->m_ucsElevation = m_ucsElevation;
+    return target;
 }

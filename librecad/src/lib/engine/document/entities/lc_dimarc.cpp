@@ -176,14 +176,12 @@ void LC_DimArc::doUpdateDim() {
         extLine1 = nullptr;
     }
 
-    RS_Arc* refArc{
-        new RS_Arc(this,RS_ArcData(m_dimArcData.centre,
-                              m_dimArcData.radius,
-                              m_dimArcData.startAngle.angle(),
-                              m_dimArcData.endAngle.angle(),
-                              false)
-            )
-    };
+    // Only places the text, at its middle point; not a part of the dimension.
+    const RS_Arc refArc{RS_ArcData(m_dimArcData.centre,
+                                   m_dimArcData.radius,
+                                   m_dimArcData.startAngle.angle(),
+                                   m_dimArcData.endAngle.angle(),
+                                   false)};
 
     if (!m_dimArcData.isPartial)
         arrow(arrowStartPoint, m_dimArcData.startAngle.angle(), +1.0, pen);
@@ -191,7 +189,7 @@ void LC_DimArc::doUpdateDim() {
 
     double textAngle{0.0};
 
-    RS_Vector textPos{refArc->getMiddlePoint()};
+    RS_Vector textPos{refArc.getMiddlePoint()};
 
     const double textAngle_preliminary{std::trunc((textPos.angleTo(m_dimArcData.centre) - M_PI) * 1.0E+10) * 1.0E-10};
 
@@ -232,11 +230,11 @@ void LC_DimArc::doUpdateDim() {
                      RS_MTextData::LeftToRight, RS_MTextData::Exact, 1.0, dimLabel, QString("unicode"), textAngle)
     };
 
-    auto text = std::make_unique<RS_MText>(this, textData);
+    auto* text = new RS_MText(this, textData);
 
     text->setPen(RS_Pen(getTextColor(), RS2::WidthByBlock, RS2::SolidLine));
     text->setLayer(nullptr);
-    addEntity(text.get());
+    addEntity(text);
 
     double halfWidth_plusGap = (text->getUsedTextWidth() / 2.0) + getDimensionLineGap() * getGeneralScale();
     double halfHeight_plusGap = (getTextHeight() / 2.0) + getDimensionLineGap() * getGeneralScale();
@@ -264,13 +262,12 @@ void LC_DimArc::doUpdateDim() {
         truncF(corner, 1.0E-4);
         textRectRotated = textRectRotated.merge(corner);
     }
-    text.release();
 
     if (RS_DEBUG->getLevel() == RS_Debug::D_INFORMATIONAL) {
         std::cout << std::endl << " LC_DimArc::updateEntity: Text position / angle : " << textPos << " / " << text->getAngle() << std::endl;
 
         std::cout << std::endl
-            << " LC_DimArc::updateEntity: Reference arc middle point : " << refArc->getMiddlePoint()
+            << " LC_DimArc::updateEntity: Reference arc middle point : " << refArc.getMiddlePoint()
             << std::endl;
 
         std::cout << std::endl

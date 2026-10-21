@@ -25,7 +25,9 @@
 **
 **********************************************************************/
 
+#include <algorithm>
 #include <cmath>
+#include <limits>
 
 #include <QPainterPath>
 #include "rs_ellipse.h"
@@ -33,13 +35,13 @@
 #include <QPainterPath>
 
 #include "lc_creation_ellipse.h"
+#include "lc_curveoffset.h"
 #include "lc_quadratic.h"
 #include "lc_rect.h"
 #include "rs_circle.h"
 #include "rs_debug.h"
 #include "rs_entitycontainer.h"
 #include "rs_information.h"
-#include "lc_splinepoints.h"
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_painter.h"
@@ -50,12 +52,7 @@
 // Workaround for Qt bug: https://bugreports.qt-project.org/browse/QTBUG-22829
 // TODO: the Q_MOC_RUN detection shouldn't be necessary after this Qt bug is resolved
 #ifndef Q_MOC_RUN
-#include <boost/version.hpp>
 #include <boost/math/special_functions/ellint_2.hpp>
-#include <boost/math/tools/roots.hpp>
-#if BOOST_VERSION > 104500
-#include <boost/tuple/tuple.hpp>
-#endif
 #endif
 
 namespace {
@@ -81,70 +78,100 @@ bool hasUsableEllipseData(const RS_EllipseData& data) {
         && data.majorP.magnitude() > RS_TOLERANCE;
 }
 
-    //functor to solve for distance, used by snapDistance
-    class EllipseDistanceFunctor {
-    public:
-        EllipseDistanceFunctor(const RS_Ellipse& ellipse, const double target) :
-            m_distance{target}, m_e{ellipse}, m_ra{m_e.getMajorRadius()}, m_k2{1. - (m_e.getRatio() * m_e.getRatio())},
-            m_k2Ra{m_k2 * m_ra} {
-        }
-#if BOOST_VERSION > 104500
-        boost::tuples::tuple<double, double, double> operator()(const double z) const {
-#else
-            boost::fusion::tuple<double, double, double> operator()(const double& z) const {
-
-#endif
+    /**
+     * @brief solveArcLength find the elliptic angle at which the arc length from the angle \p x1 is \p length
+     *
+     * The length grows with the angle from 0 at \p x1 to the whole length of the ellipse at \p x1 + 2 pi, so
+     * there is exactly one such angle in between. Newton's method is kept inside a bracket of the angles, and
+     * bisects when a step leaves it, so it always ends: in a few steps, or in at most maxSteps. It also ends
+     * when the bracket is down to neighbouring numbers, for the length of a thin ellipse near the end of its
+     * axis is not exact to the tolerance below (the elliptic integral is off by more than that there).
+     * @param e ellipse which is not reversed, with ratio <= 1
+     * @param x1 the start angle, in [0, 2 pi)
+     * @param length between 0 and \p wholeLength, and not within a hair of either
+     * @return the angle, or NaN if the search did not converge
+     */
+    double solveArcLength(const RS_Ellipse& e, const double x1, const double length, const double wholeLength) {
+        constexpr int maxSteps = 100;
+        const double ra = e.getMajorRadius();
+        const double k2 = 1. - (e.getRatio() * e.getRatio());
+        // the length is 0 at x1 but the whole ellipse for an angle that does not differ from it
+        double low = x1 + (2. * RS_TOLERANCE_ANGLE);
+        double high = x1 + (2. * M_PI) - (2. * RS_TOLERANCE_ANGLE);
+        double z = std::clamp(x1 + (2. * M_PI * length / wholeLength), low, high);
+        for (int step = 0; step < maxSteps; ++step) {
+            const double f = e.getEllipseLength(x1, z) - length;
+            if (std::abs(f) <= 1e-13 * wholeLength) {
+                return z;
+            }
+            if (f < 0.) {
+                low = z;
+            }
+            else {
+                high = z;
+            }
+            if (high - low <= 4. * std::numeric_limits<double>::epsilon() * high) {
+                return 0.5 * (low + high);
+            }
+            // the speed of the point at the elliptic angle z, the derivative of the length: the integrand
+            // of getEllipseLength() is sqrt(1 - k^2 cos^2 z)
             const double cz = std::cos(z);
-            const double sz = std::sin(z);
-            //delta amplitude
-            const double d = std::sqrt(1 - (m_k2 * sz * sz));
-            // return f(x), f'(x) and f''(x)
-#if BOOST_VERSION > 104500
-            return boost::tuples::make_tuple(
-#else
-                return boost::fusion::make_tuple(
-#endif
-                m_e.getEllipseLength(z) - m_distance, m_ra * d, m_k2Ra * sz * cz / d);
+            const double speed = ra * std::sqrt(1. - (k2 * cz * cz));
+            double next = z - (f / speed);
+            if (!(next > low && next < high)) {
+                next = 0.5 * (low + high);
+            }
+            z = next;
         }
-
-    private:
-        double m_distance;
-        const RS_Ellipse& m_e;
-        const double m_ra;
-        const double m_k2;
-        const double m_k2Ra;
-    };
+        return std::numeric_limits<double>::quiet_NaN();
+    }
 
     /**
      * @brief getNearestDistHelper find end point after trimmed by amount
-     * @param e ellipse which is not reversed, assume ratio (a/b) >= 1
+     * @param e ellipse which is not reversed, with ratio (minor/major) <= 1
      * @param trimAmount the length of the trimmed is increased by this amount
      * @param coord current mouse position
      * @param dist if this pointer is not nullptr, save the distance from the new
-     * end point to mouse position coord
-     * @return the new end point of the trimmed. Only one end of the entity is
-     *  trimmed
+     * end point to mouse position coord (RS_MAXDOUBLE if there is none)
+     * @return the new end point of the trimmed, or an invalid vector if there is none: the arc is trimmed
+     *  to nothing. Only one end of the entity is trimmed
      */
     RS_Vector getNearestDistHelper(const RS_Ellipse& e, const double trimAmount, const RS_Vector& coord, double* dist = nullptr) {
-        const double x1 = e.getAngle1();
-
-        const double guess = x1 + M_PI;
-        constexpr int digits = std::numeric_limits<double>::digits;
-
-        double trimmed = e.getLength() + trimAmount;
+        const double arcLength = e.getLength();
+        if (!(arcLength + trimAmount > 0.)) {
+            if (dist != nullptr) {
+                *dist = RS_MAXDOUBLE;
+            }
+            return RS_Vector{false};
+        }
+        const double wholeLength = e.getEllipseLength(0, 0); // start/end angle 0 is used for whole ellipses
 
         // choose the end to trim by the mouse position coord
         const bool trimEnd = coord.squaredTo(e.getStartpoint()) <= coord.squaredTo(e.getEndpoint());
 
+        // the arc length from the start point to the wanted point; past a whole turn the ellipse goes round again
+        double trimmed = arcLength + trimAmount;
         if (trimEnd) {
-            const double wholeLength = e.getEllipseLength(0, 0); // start/end angle 0 is used for whole ellipses
             trimmed = trimAmount > 0 ? wholeLength - trimAmount : -trimAmount;
         }
+        trimmed = std::fmod(trimmed, wholeLength);
+        if (trimmed < 0.) {
+            trimmed += wholeLength;
+        }
 
-        //solve equation of the distance by second order newton_raphson
-        const EllipseDistanceFunctor X{e, trimmed};
-        using namespace boost::math::tools;
-        const double sol = halley_iterate<EllipseDistanceFunctor, double>(X, guess, x1, x1 + (2 * M_PI) - RS_TOLERANCE_ANGLE, digits);
+        const double x1 = RS_Math::correctAngle(e.getAngle1());
+        double sol = x1;
+        // the search stops a hair short of the start point, which is where these lie
+        const double nearStart = 2. * e.getMajorRadius() * RS_TOLERANCE_ANGLE;
+        if (trimmed > nearStart && trimmed < wholeLength - nearStart) {
+            sol = solveArcLength(e, x1, trimmed, wholeLength);
+            if (!std::isfinite(sol)) {
+                if (dist != nullptr) {
+                    *dist = RS_MAXDOUBLE;
+                }
+                return RS_Vector{false};
+            }
+        }
 
         const RS_Vector vp = e.getEllipsePoint(sol);
         if (dist != nullptr) {
@@ -166,8 +193,10 @@ bool hasUsableEllipseData(const RS_EllipseData& data) {
         }
 
         // Newton-Raphson steps from the elliptic angle of a point near the closest one, taken while they do
-        // not move away from the point. Updates theta, and returns the squared distance at it.
-        double polishTheta(double& theta) const {
+        // not move away from the point. Steps stop at low and high, the angles of the ends of an arc, which
+        // run counterclockwise from low without a jump. Updates theta, and returns the squared distance at it.
+        double polishTheta(double& theta, const double low = -std::numeric_limits<double>::infinity(),
+                           const double high = std::numeric_limits<double>::infinity()) const {
             double best = ds2(theta);
             for (short i = 0; i < 8; ++i) {
                 const double d2 = ds2D2(theta);
@@ -175,7 +204,13 @@ bool hasUsableEllipseData(const RS_EllipseData& data) {
                 if (!(d2 > 0.)) {
                     break;
                 }
-                const double next = theta - ds2D1(theta) / d2;
+                double next = theta - ds2D1(theta) / d2;
+                if (next < low) {
+                    next = low;
+                }
+                else if (next > high) {
+                    next = high;
+                }
                 const double d = ds2(next);
                 if (!(d <= best)) {
                     break;
@@ -452,31 +487,40 @@ double RS_Ellipse::getEllipseLength(double angle1, double angle2) const {
     const double a(getMajorRadius());
     double k(getRatio());
     k = std::sqrt(1 - (k * k)); // elliptic modulus, or eccentricity
+    if (!std::isfinite(a) || !std::isfinite(angle1) || !std::isfinite(angle2) || !std::isfinite(k)) {
+        return 0.; // no length for what is not an ellipse (k is not a number for a ratio above 1)
+    }
     //    std::cout<<"1, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
     //    if(isReversed())  std::swap(x1,x2);
     angle1 = RS_Math::correctAngle(angle1);
     angle2 = RS_Math::correctAngle(angle2);
     //    std::cout<<"2, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
-    if (angle2 < angle1 + RS_TOLERANCE_ANGLE) {
+    if (std::abs(angle2 - angle1) < RS_TOLERANCE_ANGLE) {
+        // no sweep is a whole turn: four quarters
+        return 4. * a * boost::math::ellint_2<double>(k);
+    }
+    if (angle2 < angle1) {
         angle2 += 2. * M_PI;
     }
-    double ret = 0.;
-    //    std::cout<<"3, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
-    if (angle2 >= M_PI) {
-        // the complete elliptic integral
-        ret = (static_cast<int>((angle2 + RS_TOLERANCE_ANGLE) / M_PI) - (static_cast<int>((angle1 + RS_TOLERANCE_ANGLE) / M_PI))) * 2;
-        //        std::cout<<"Adding "<<ret<<" of E("<<k<<")\n";
-        ret *= boost::math::ellint_2<double>(k);
-    }
-    else {
-        ret = 0.;
-    }
-    angle1 = std::fmod(angle1,M_PI);
-    angle2 = std::fmod(angle2,M_PI);
-    if (std::abs(angle2 - angle1) > RS_TOLERANCE_ANGLE) {
-        ret += RS_Math::ellipticIntegral_2(k, angle2) - RS_Math::ellipticIntegral_2(k, angle1);
-    }
-    return a * ret;
+    // The length (in units of a) up to \p angle from a fixed angle, which cancels in the difference: the
+    // whole half periods, and what is left in the last one. Both come from one split of the angle, so the
+    // length has no jump at a multiple of pi, where a count made with a tolerance and a remainder made
+    // without one disagree.
+    const double halfPeriod = 2. * boost::math::ellint_2<double>(k);
+    const auto lengthTo = [halfPeriod, k](const double angle) {
+        double periods = std::floor(angle / M_PI);
+        double rest = angle - (periods * M_PI);
+        if (rest < 0.) {
+            periods -= 1.;
+            rest += M_PI;
+        }
+        else if (rest >= M_PI) {
+            periods += 1.;
+            rest -= M_PI;
+        }
+        return (periods * halfPeriod) + RS_Math::ellipticIntegral_2(k, rest);
+    };
+    return a * (lengthTo(angle2) - lengthTo(angle1));
 }
 
 /**
@@ -489,7 +533,7 @@ double RS_Ellipse::getEllipseLength(const double angleLength) const {
 /**
   * get the point on the ellipse arc and with arc distance from the start point
   * the distance is expected to be within 0 and getLength()
-  * using Newton-Raphson from boost
+  * (a positive distance lengthens the arc at the end the mouse is near, a negative one shortens it)
   *
   *@author: Dongxu Li
   */
@@ -548,12 +592,16 @@ bool RS_Ellipse::switchMajorMinor() {
         return false;
     }
 
+    // The end points of an arc are taken before the axes change: the new axes describe the same
+    // ellipse, but the old angles would then name other points on it.
+    const bool arc = isEllipticArc();
+    const RS_Vector vpStart = getStartpoint();
+    const RS_Vector vpEnd = getEndpoint();
+
     const RS_Vector vp = getMajorP();
     setMajorP(RS_Vector(-m_data.ratio * vp.y, m_data.ratio * vp.x)); //direction pi/2 relative to old MajorP;
     setRatio(1. / m_data.ratio);
-    if (isEllipticArc()) {
-        const RS_Vector vpStart = getStartpoint();
-        const RS_Vector vpEnd = getEndpoint();
+    if (arc) {
         //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
         setAngle1(getEllipseAngle(vpStart));
         setAngle2(getEllipseAngle(vpEnd));
@@ -678,6 +726,21 @@ RS_Vector RS_Ellipse::doGetNearestPointOnEntity(const RS_Vector& coord, const bo
     // minima and maxima. The global minimum is the critical point with the
     // smallest squared distance, so simply compare distances and keep the
     // smallest; no second-derivative test is needed.
+    // On an elliptic arc the squared distance is least at a critical point on the arc or at an end, so only
+    // those count: the nearest point of the whole ellipse can be off the arc while another critical point on
+    // the arc is nearer than both ends. For the upper half of an ellipse and a point inside, just below the
+    // major axis near a vertex, the nearest point of the whole ellipse is on the lower half, but the upper
+    // half has a point nearer than the vertex.
+    // The angles of the arc run counterclockwise from low to high without a jump. An arc whose angles do
+    // not differ is the whole ellipse, as for RS_Math::isAngleBetween().
+    const bool arcOnly = onEntity && isEllipticArc()
+        && RS_Math::getAngleDifferenceU(getAngle2(), getAngle1()) >= RS_TOLERANCE_ANGLE;
+    double low = -std::numeric_limits<double>::infinity();
+    double high = std::numeric_limits<double>::infinity();
+    if (arcOnly) {
+        low = isReversed() ? getAngle2() : getAngle1();
+        high = low + RS_Math::getAngleDifference(getAngle1(), getAngle2(), isReversed());
+    }
     RS_Vector const query = ret;
     double theta = 0.;
     for (const auto &[cosTheta, sinTheta] : directions) {
@@ -685,15 +748,35 @@ RS_Vector RS_Ellipse::doGetNearestPointOnEntity(const RS_Vector& coord, const bo
       double d = (vp3 - query).squared();
       if (d >= dDistance)
         continue;
+      double angle = std::atan2(sinTheta, cosTheta);
+      if (arcOnly) {
+        angle = low + RS_Math::correctAngle(angle - low);
+        if (angle > high)
+          continue;
+      }
       ret = vp3;
       dDistance = d;
-      theta = std::atan2(sinTheta, cosTheta);
+      theta = angle;
+    }
+    if (arcOnly) {
+        // the ends, at the angles of the entity: an end comes back as the start or end point itself
+        const std::pair<double, double> ends[] = {{low, low}, {isReversed() ? getAngle1() : getAngle2(), high}};
+        for (const auto& [angle, unwrapped] : ends) {
+            const RS_Vector vp3{a * std::cos(angle), b * std::sin(angle)};
+            const double d = (vp3 - query).squared();
+            if (d < dDistance) {
+                ret = vp3;
+                dDistance = d;
+                theta = unwrapped;
+            }
+        }
     }
     // Refine the angle of the nearest candidate. The angle from a root carries the root's error divided by
     // the sine, which is small near a vertex: within 1e-4 of one the distance was up to 1e-5 too large.
     // The stationary points for a point on an axis are only close to those for a point near it.
-    const double polished = ClosestEllipticPoint{a, b, query}.polishTheta(theta);
-    if (polished < dDistance) {
+    // On an arc the steps keep to it; one that ends at an end of the arc keeps that end point.
+    const double polished = ClosestEllipticPoint{a, b, query}.polishTheta(theta, low, high);
+    if (polished < dDistance && theta != low && theta != high) {
         ret = RS_Vector{a * std::cos(theta), b * std::sin(theta)};
         dDistance = polished;
     }
@@ -710,13 +793,6 @@ RS_Vector RS_Ellipse::doGetNearestPointOnEntity(const RS_Vector& coord, const bo
     ret.rotate(getAngle());
     ret.move(getCenter());
     //    ret=vp2;
-    if (onEntity) {
-        if (!RS_Math::isAngleBetween(getEllipseAngle(ret), getAngle1(), getAngle2(), isReversed())) {
-            // not on entity, use the nearest endpoint
-            //std::cout<<"not on ellipse, ( "<<getAngle1()<<" "<<getEllipseAngle(ret)<<" "<<getAngle2()<<" ) reversed= "<<isReversed()<<"\n";
-            ret = getNearestEndpoint(coord, nullptr,dist);
-        }
-    }
 
     //    if(! ret.valid) {
     //        std::cout<<"RS_Ellipse::getNearestOnEntity() returns invalid by mistake. This should not happen!"<<std::endl;
@@ -963,175 +1039,8 @@ void RS_Ellipse::revertDirection() {
     }
 }
 
-std::vector<RS_Entity*> RS_Ellipse::createOffset(const RS_Vector& coord,
-                                                 const double& distance) const {
-    const double a = getMajorRadius();
-    const double b = getMinorRadius();
-    if (a < RS_TOLERANCE || b < RS_TOLERANCE) {
-        return {};
-    }
-    if (std::abs(distance) < RS_TOLERANCE) {
-        return {};
-    }
-
-    // Sign convention: positive when `coord` is outside the ellipse.
-    // Use the implicit form in the ellipse-aligned frame: q = (u/a)^2 + (v/b)^2.
-    // q > 1 ⇒ outside, q < 1 ⇒ inside.
-    const RS_Vector center = getCenter();
-    const RS_Vector majorP = getMajorP();
-    const double majorAngle = majorP.angle();
-    RS_Vector local = coord - center;
-    local.rotate(-majorAngle);
-    const double q = (local.x / a) * (local.x / a)
-                   + (local.y / b) * (local.y / b);
-    const double signedD = (q >= 1.0) ? std::abs(distance) : -std::abs(distance);
-
-    // Cusp / self-intersection rejection: inward offset cusps when |d| ≥ b²/a.
-    // Reject with a 1% safety margin.
-    if (signedD < 0.0) {
-        const double cuspLimit = (b * b) / a;
-        if (std::abs(signedD) >= 0.99 * cuspLimit) {
-            return {};
-        }
-    }
-
-    // Parameter range.
-    const bool isArc = isEllipticArc();
-    double angleStart;
-    double angleEnd;
-    if (isArc) {
-        angleStart = getAngle1();
-        angleEnd = getAngle2();
-        if (isReversed()) {
-            // Sweep from angle1 down to angle2 (CW). Normalize so end > start
-            // by adding 2π if needed; we then walk negatively.
-            if (angleEnd > angleStart) {
-                angleEnd -= 2.0 * M_PI;
-            }
-        } else {
-            if (angleEnd < angleStart) {
-                angleEnd += 2.0 * M_PI;
-            }
-        }
-    } else {
-        angleStart = 0.0;
-        angleEnd = 2.0 * M_PI;
-    }
-    const double sweep = angleEnd - angleStart;
-    const double sweepLen = std::abs(sweep);
-    if (sweepLen < RS_TOLERANCE_ANGLE) {
-        return {};
-    }
-    const double dir = (sweep >= 0.0) ? 1.0 : -1.0;
-
-    // Adaptive sagitta-based sampling on the offset curve.
-    // Tolerance: 0.1% of major radius, with an absolute floor.
-    const double epsilon = std::max(a * 1.0e-3, RS_TOLERANCE * 100.0);
-
-    // Per-revolution caps (scaled to the actual sweep below).
-    constexpr int kNMinFull = 16;
-    constexpr int kNMaxFull = 512;
-    const double sweepFraction = sweepLen / (2.0 * M_PI);
-    const int nMin = std::max(2, static_cast<int>(std::ceil(kNMinFull * sweepFraction)));
-    const int nMax = std::max(nMin + 1, static_cast<int>(std::ceil(kNMaxFull * sweepFraction)));
-
-    // Sagitta-bounded step size in the ellipse parameter θ. For the ellipse
-    // p(θ) = (a cosθ, b sinθ):
-    //   |p_ell'(θ)|² = a²sin²θ + b²cos²θ ≡ T(θ)
-    //   ρ_ell(θ) = T(θ)^(3/2) / (a·b)
-    // Offsetting by signedD along the outward unit normal:
-    //   ρ_off(θ) = ρ_ell(θ) + signedD      (signedD>0 outward, <0 inward)
-    //   |p_off'(θ)| = (ρ_off / ρ_ell) · |p_ell'(θ)|     ← key correction
-    // The offset curve's parametric speed differs from the ellipse's; for
-    // inner offsets it slows down, vanishing at a cusp (ρ_off→0). Bounding
-    // sagitta h ≈ chord_off²/(8 ρ_off) ≤ ε with chord_off = |p_off'|·Δθ:
-    //   Δθ = (ρ_ell / √T) · √(8 ε / ρ_off) = (T / (a·b)) · √(8 ε / ρ_off)
-    // Result: uniform sagitta along the offset curve regardless of offset
-    // direction. Sample density on the offset is 1/√(8ε ρ_off) per unit arc
-    // length — high at sharp regions, low at shallow ones, in both inner and
-    // outer offsets.
-    auto stepTheta = [&](double theta) {
-        const double s = std::sin(theta);
-        const double c = std::cos(theta);
-        const double term = (a * s) * (a * s) + (b * c) * (b * c);
-        const double rhoEll = std::pow(term, 1.5) / (a * b);
-        const double rhoOff = std::max(rhoEll + signedD, RS_TOLERANCE);
-        return (term / (a * b)) * std::sqrt(8.0 * epsilon / rhoOff);
-    };
-
-    // Hard caps on per-step Δθ regardless of curvature.
-    const double dThetaMax = M_PI / 8.0;                // 22.5°
-    const double dThetaMin = sweepLen / static_cast<double>(nMax);
-
-    std::vector<RS_Vector> offsetPoints;
-    offsetPoints.reserve(64);
-
-    auto pushSample = [&](double theta) {
-        // Work in the ellipse-aligned local frame, then transform once to world.
-        // p_local(θ) = (a cosθ, b sinθ); tangent ∝ (-a sinθ, b cosθ); rotating
-        // the tangent by -90° gives the outward normal (b cosθ, a sinθ), which
-        // is always outward since dot(n, p_local) = a·b > 0.
-        const double s = std::sin(theta);
-        const double c = std::cos(theta);
-        RS_Vector n(b * c, a * s);
-        n.normalize();
-        RS_Vector p = RS_Vector(a * c, b * s) + signedD * n;
-        p.rotate(majorAngle);
-        p += center;
-        offsetPoints.push_back(p);
-    };
-
-    double theta = angleStart;
-    pushSample(theta);
-    while (true) {
-        double dTheta = stepTheta(theta);
-        if (!std::isfinite(dTheta) || dTheta < dThetaMin) {
-            dTheta = dThetaMin;
-        }
-        if (dTheta > dThetaMax) {
-            dTheta = dThetaMax;
-        }
-
-        const double remaining = std::abs(angleEnd - theta);
-        if (remaining <= dTheta) {
-            if (isArc) {
-                // Open spline: include exact endpoint.
-                theta = angleEnd;
-                pushSample(theta);
-            }
-            // Closed spline: omit the duplicate endpoint (LC_SplinePoints
-            // closes implicitly).
-            break;
-        }
-        theta += dir * dTheta;
-        pushSample(theta);
-    }
-
-    // Bounds: ensure at least nMin points (e.g. for very low-curvature
-    // shallow arcs where the adaptive step is huge).
-    if (static_cast<int>(offsetPoints.size()) < nMin) {
-        offsetPoints.clear();
-        const int n = nMin;
-        for (int i = 0; i < n; ++i) {
-            const double t = angleStart + sweep * (static_cast<double>(i) / (n - (isArc ? 1 : 0)));
-            pushSample(t);
-        }
-        if (!isArc && !offsetPoints.empty()){
-            offsetPoints.pop_back();  // drop duplicate wrap point
-        }
-    }
-
-    if (offsetPoints.size() < 3) {
-        return {};
-    }
-
-    LC_SplinePointsData spd(/*closed=*/!isArc, /*cut=*/false);
-    spd.splinePoints = std::move(offsetPoints);
-    auto* sp = new LC_SplinePoints(nullptr, spd);
-    sp->setPen(getPen(false));
-    sp->setLayer(getLayer());
-    sp->calculateBorders();
-    return { sp };
+std::vector<RS_Entity*> RS_Ellipse::createOffset(const RS_Vector& coord, const double& distance) const {
+    return LC_CurveOffset::createLegacyOffset(*this, coord, distance);
 }
 
 void RS_Ellipse::rotate(const RS_Vector& center, const RS_Vector& angleVector) {

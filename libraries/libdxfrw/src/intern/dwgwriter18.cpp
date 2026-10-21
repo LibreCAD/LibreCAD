@@ -192,9 +192,8 @@ static std::uint32_t litLen18Bytes(std::uint32_t n) {
 
 // Compress a system section as an R2004-LZ77 *literal-only* stream: one initial
 // literal run covering the whole input, no back-references. The decompressor's
-// output window fills on that run, so its opcode loop never executes and no
-// terminator is needed (matches dwgCompressor::decompress18 and libreDWG's
-// decompress_R2004_section, which both loop while output < decompSize).
+// Terminate explicitly even when the literal run fills the output window:
+// independent readers may continue until the on-disk end opcode.
 // Conformant readers UNCONDITIONALLY decompress the Section/Data Page Map
 // (libreDWG decode.c:1453); a store-mode page (compType 1) therefore decoded to
 // garbage -> wrong section addresses -> every R2004+ file libdxfrw wrote was
@@ -205,6 +204,7 @@ static std::vector<std::uint8_t> compressSysSection(const std::uint8_t* data,
     out.reserve(n + 6);
     putLitLen18(out, n);
     out.insert(out.end(), data, data + n);
+    out.insert(out.end(), {0x11, 0, 0});
     return out;
 }
 
@@ -307,7 +307,7 @@ static void appendSectionDesc(std::vector<std::uint8_t>& v,
     putRLL(v, section.dataSize);         // logical size of section (uint64)
     putRL (v, static_cast<std::uint32_t>(section.pages.size()));
     putRL (v, section.maxPageSize);
-    putRL (v, 0);                // unknown
+    putRL (v, 1);                // section descriptor flag
     putRL (v, section.compressionType);
     putRL (v, section.sectionId);
     putRL (v, section.encrypted);
@@ -455,14 +455,14 @@ static std::vector<std::uint8_t> buildFileHeader(std::uint64_t secPageMapAddr,
     std::vector<std::uint8_t> hdr(kR2004FileHeaderSize, 0);
 
     std::memcpy(hdr.data(), verStr, 6);
-    // Byte 11: maintenance version = 0 (already 0).
-    // Byte 12: 0x00 (already 0).
+    hdr[12] = 3;
+    hdr[17] = 33; // Application version (R2018 writer, including older formats).
     // Bytes 13-16: preview image position = 0 (no preview).
-    // Bytes 17-18: app version / maintenance = 0. R2013 files use an
-    // application-maintenance release greater than 3; this selects the
-    // extended header/class layout used by strict R2013 readers.
-    if (std::strcmp(verStr, "AC1027") == 0)
+    // R2013's extended size fields require file maintenance > 3.
+    if (std::strcmp(verStr, "AC1027") == 0) {
+        hdr[11] = 6;
         hdr[18] = 6;
+    }
     // Bytes 19-20: codepage matching $DWGCODEPAGE, little-endian.
     hdr[19] = static_cast<std::uint8_t>(codePage);
     hdr[20] = static_cast<std::uint8_t>(codePage >> 8);
@@ -571,8 +571,14 @@ bool dwgWriter18::addRawDwgSection(const DRW_RawDwgSection& section) {
         || (!opaqueName && !prototypeAllowed && !vbaAllowed)
         || (m_version < DRW::AC1021 && section.m_name.size() > 63))
         return false;
+    // Encoding 1 (stored) is version-agnostic, but 2 and 4 are each a
+    // version's own compressed-page marker: 2 is R2004's plain-LZ scheme, 4
+    // is R2007+'s RS+LZ scheme. A section whose own m_version already
+    // targets R2007+ claiming encoding 2 is simply wrong metadata for that
+    // format, not a value replay is expected to carry forward.
     if ((section.m_encoding != 1 && section.m_encoding != 2
          && section.m_encoding != 4)
+        || (m_version >= DRW::AC1021 && section.m_encoding == 2)
         || section.m_encrypted != 0
         || section.m_maxSize > dwgSafety::MaxBufferSize
         || (section.m_maxSize != 0
@@ -605,7 +611,7 @@ bool dwgWriter18::writeDwgClasses() {
     m_buf.putBitShort(maxDwgClassNumber());
     m_buf.putRawChar8(0);  // rc1
     m_buf.putRawChar8(0);  // rc2
-    m_buf.putBit(0);       // flag
+    m_buf.putBit(1);       // class data present
 
     if (!emitDwgClassDefinitions(
             [this](const DwgClassDefinition& definition) {
@@ -952,7 +958,7 @@ bool dwgWriter18::finalize() {
     const std::uint32_t spmContentSize =
         static_cast<std::uint32_t>((pageSizes.size() + 1) * 8);  // +1: SPM self-entry
     const std::uint32_t spmPageSizePredicted =
-        20 + litLen18Bytes(spmContentSize) + spmContentSize;
+        20 + litLen18Bytes(spmContentSize) + spmContentSize + 3;
     pageSizes.push_back(spmPageSizePredicted);                        // SPM self-page
     auto spmData = buildSectionPageMapContent(pageSizes);
     auto spmPage = buildSysPage(0x41630e3b, spmData.data(),

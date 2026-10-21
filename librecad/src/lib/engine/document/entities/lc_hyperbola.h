@@ -94,6 +94,14 @@ public:
   RS2::EntityType rtti() const override { return RS2::EntityHyperbola; }
   bool isValid() const { return m_valid; }
 
+  /**
+   * The trimmed offset of a bounded arc of the hyperbola through the curve
+   * offset engine, as splines; empty for an unbounded one, or where the
+   * engine refuses. See LC_CurveOffset::createLegacyOffset().
+   */
+  std::vector<RS_Entity *> createOffset(const RS_Vector &coord,
+                                        const double &distance) const override;
+
   LC_HyperbolaData &getData() { return m_data; }
   const LC_HyperbolaData &getData() const { return m_data; }
 

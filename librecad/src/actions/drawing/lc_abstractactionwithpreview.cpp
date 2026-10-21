@@ -132,9 +132,11 @@ bool LC_AbstractActionWithPreview::isAcceptSelectedEntityToTriggerOnInit([[maybe
 void LC_AbstractActionWithPreview::doPerformOriginalEntitiesDeletionOnInitTrigger([[maybe_unused]]QList<RS_Entity *> &list, [[maybe_unused]]LC_DocumentModificationBatch & ctx){}
 
 
-void LC_AbstractActionWithPreview::updateSnapperAndCoordinateWidget([[maybe_unused]] const LC_MouseEvent* e, [[maybe_unused]]int status){
-    // todo - actually, this is a bit ugly to call snap point  - yet as side effect, it will draw snapper and update coordinates widget..
-//    snapPoint(e);
+void LC_AbstractActionWithPreview::updateSnapperAndCoordinateWidget(const LC_MouseEvent* event, [[maybe_unused]] int status) {
+    if (event != nullptr) {
+        // States without a geometry preview still need to refresh the cursor snap indicator.
+        setSnapPoint(event->snapPoint, true);
+    }
 }
 
 /**

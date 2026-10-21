@@ -38,6 +38,7 @@ LC_UCSListModel::LC_UCSListModel(LC_UCSListOptions *modelOptions, QObject *paren
 }
 
 LC_UCSListModel::~LC_UCSListModel() {
+    qDeleteAll(m_ucss);
     m_ucss.clear();
 }
 
@@ -46,6 +47,7 @@ void LC_UCSListModel::setUCSList(LC_UCSList *ucsList, LC_Formatter* formatter) {
     m_formatter = formatter;
     beginResetModel();
 
+    qDeleteAll(m_ucss);
     m_ucss.clear();
     if (ucsList != nullptr) {
         for (unsigned i=0; i < ucsList->count(); ++i) {
@@ -255,7 +257,7 @@ QString LC_UCSListModel::getGridViewType(const int orthoType){
 }
 
 QModelIndex LC_UCSListModel::getIndexForUCS(const LC_UCS *ucs) const {
-    if (ucs != nullptr){
+    if (ucs != nullptr && m_ucsList != nullptr){
         for (unsigned int i = 0; i < m_ucsList->count(); i++){
             const auto v = m_ucsList->at(i);
             if (v == ucs){
@@ -267,6 +269,9 @@ QModelIndex LC_UCSListModel::getIndexForUCS(const LC_UCS *ucs) const {
 }
 
 void LC_UCSListModel::markActive(const LC_UCS *ucs) {
+    if (m_ucsList == nullptr) {
+        return;
+    }
     m_ucsList->tryToSetActive(ucs);
     const QModelIndex topLeft = createIndex(0,0);
     const QModelIndex bottomRight = createIndex( m_ucsList->count(), columnCount(topLeft));
@@ -274,6 +279,9 @@ void LC_UCSListModel::markActive(const LC_UCS *ucs) {
 }
 
 LC_UCS *LC_UCSListModel::getWCS() const {
+    if (m_ucsList == nullptr) {
+        return nullptr;
+    }
     return m_ucsList->getWCS();
 }
 

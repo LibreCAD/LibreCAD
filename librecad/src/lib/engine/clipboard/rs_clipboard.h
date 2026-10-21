@@ -68,10 +68,14 @@ public:
     RS_Entity* firstEntity() const;
     RS_Entity* nextEntity() const;
     RS_Graphic* getGraphic() const;
+    /** Id of the drawing the contents were copied from, 0 if none. */
+    unsigned long long getSourceId() const;
+    void setSourceId(unsigned long long id);
     friend std::ostream& operator <<(std::ostream& os, const RS_Clipboard& cb);
 
 protected:
     std::unique_ptr<RS_Graphic> m_graphic;
+    unsigned long long m_sourceId = 0;
 };
 
 #endif

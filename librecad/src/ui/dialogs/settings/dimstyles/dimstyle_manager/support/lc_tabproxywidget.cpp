@@ -133,10 +133,3 @@ void LC_TabProxyWidget::adoptTargetWidget() {
         m_layout->addWidget(m_targetWidget);
     }
 }
-
-static void setWidgetBackgroundColor(QWidget* w, const QColor bc) {
-    QPalette p = w->palette();
-    p.setColor(QPalette::Window, bc);
-    w->setAutoFillBackground(true);
-    w->setPalette(p);
-}

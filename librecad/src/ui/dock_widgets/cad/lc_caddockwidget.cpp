@@ -46,7 +46,7 @@ LC_CADDockWidget::LC_CADDockWidget(QWidget *parent, const bool allTools)
       m_scrollArea = new QScrollArea(this);
       m_scrollArea->setWidgetResizable(true);
       m_scrollArea->setFrameStyle(QFrame::NoFrame); // Avoid double borders with the dock widget
-      m_scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // Clip horizontally instead of showing scrollbars
+      m_scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
       m_scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
       m_scrollArea->setWidget(m_frame);
       setWidget(m_scrollArea);
@@ -154,31 +154,10 @@ void LC_CADDockWidget::updateMinimumWidth() {
     // Mathematically calculate the exact horizontal space required by the grid
     const int contentWidth = m_columns * (m_iconSize + 8);
 
-    // Retrieve the OS vertical scrollbar width
-    int sbWidth = m_scrollArea->verticalScrollBar()->sizeHint().width();
-    if (sbWidth <= 0) {
-        sbWidth = 16;
-    }
-
     // Account for m_frame's Raised border shadows
     const int framePadding = 2 * m_frame->lineWidth();
-
-    const int totalMinWidth = contentWidth + sbWidth + framePadding;
-
-    m_scrollArea->setMinimumWidth(totalMinWidth);
-    setMinimumWidth(totalMinWidth);
-
-
+    m_frame->setMinimumWidth(contentWidth + framePadding);
+    m_scrollArea->setMinimumWidth(0);
+    setMinimumWidth(0);
     updateGeometry();
-}
-
-QSize LC_CADDockWidget::minimumSizeHint() const {
-    QSize baseHint = QDockWidget::minimumSizeHint();
-    if (m_scrollArea != nullptr) {
-        const int minW = m_scrollArea->minimumWidth();
-        if (minW > 0) {
-            baseHint.setWidth(minW);
-        }
-    }
-    return baseHint;
 }

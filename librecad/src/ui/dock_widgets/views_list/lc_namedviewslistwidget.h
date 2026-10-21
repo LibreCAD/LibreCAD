@@ -23,6 +23,7 @@
 #ifndef LC_NAMEDVIEWSLISTWIDGET_H
 #define LC_NAMEDVIEWSLISTWIDGET_H
 
+#include "lc_viewslist.h"
 #include <QIcon>
 #include <QItemSelection>
 
@@ -41,12 +42,14 @@ namespace Ui {
     class LC_NamedViewsListWidget;
 }
 
-class LC_NamedViewsListWidget : public LC_GraphicViewAwareWidget{
+class LC_NamedViewsListWidget : public LC_GraphicViewAwareWidget, LC_ViewListListener {
  Q_OBJECT
 public:
     explicit LC_NamedViewsListWidget(const QString& title, QWidget* parent);
     ~LC_NamedViewsListWidget() override;
     void setViewsList(LC_ViewList* viewsList);
+    /// the list is being destroyed with its drawing: forget it, the view and the viewport, and clear the table
+    void viewsListDestroyed() override;
     void setGraphicView(RS_GraphicView* gv) override;
     void reload();
     void restoreView(int index);

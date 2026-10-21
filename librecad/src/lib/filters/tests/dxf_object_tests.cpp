@@ -51,6 +51,12 @@
 namespace {
 
 std::string slurp(const std::filesystem::path &path);
+std::vector<std::pair<std::string, std::string>> readGroups(
+    const std::filesystem::path &path);
+bool recordHasConsecutive(
+    const std::vector<std::pair<std::string, std::string>> &groups,
+    const std::string &recordType, const std::string &recordName,
+    const std::vector<std::pair<std::string, std::string>> &sequence);
 
 // Stub satisfying every DRW_Interface pure virtual.
 class StubInterface : public DRW_Interface {
@@ -129,7 +135,8 @@ public:
     Underlay,
     MText,
     Light,
-    Mesh
+    Mesh,
+    Image
   };
 
   dxfRW *m_rw = nullptr;
@@ -208,6 +215,14 @@ public:
       m_result = m_rw->writeMesh(&entity);
       break;
     }
+    case Kind::Image: {
+      // writeImage() returns the IMAGEDEF it wrote, not a bool: nullptr
+      // with no write error is how it says "left out", the same as every
+      // other writer here says it by returning true.
+      DRW_Image entity;
+      m_result = m_rw->writeImage(&entity, "img") == nullptr;
+      break;
+    }
     }
   }
 };
@@ -256,9 +271,186 @@ TEST_CASE("DXF table writers do not normalize caller-owned state",
   std::filesystem::remove(path, ignored);
 }
 
-TEST_CASE("DXF legacy writer rejects unsupported entity emitters",
+class DxfTableReferenceEmitter final : public StubInterface {
+public:
+  dxfRW *m_writer = nullptr;
+  DRW_UCS m_ucs;
+  DRW_Vport m_vport;
+  bool m_ucsResult = false;
+  bool m_activeVportResult = false;
+  bool m_vportResult = false;
+
+  void writeUCSs() override { m_ucsResult = m_writer->writeUCS(&m_ucs); }
+  void writeVports() override {
+    DRW_Vport active;
+    active.name = "*ACTIVE";
+    m_activeVportResult = m_writer->writeVport(&active);
+    m_vportResult = m_writer->writeVport(&m_vport);
+  }
+};
+
+TEST_CASE("DXF writes table targets before their references",
+          "[dxf][writer][handles]") {
+  const auto path = std::filesystem::temp_directory_path() /
+                    "lc_dxf_table_reference_order.dxf";
+  std::error_code ignored;
+  std::filesystem::remove(path, ignored);
+
+  DxfTableReferenceEmitter emitter;
+  emitter.m_ucs.handle = 0x700u;
+  emitter.m_ucs.name = "REFERENCED_UCS";
+  emitter.m_vport.name = "CUSTOM_VPORT";
+  emitter.m_vport.namedUcsHandle = 0x700u;
+
+  dxfRW writer(path.string().c_str());
+  emitter.m_writer = &writer;
+  writer.setReferenceResolver(
+      [&writer](std::uint32_t source) { return writer.remapHandle(source); });
+  REQUIRE(writer.write(&emitter, DRW::AC1018, false));
+  CHECK(emitter.m_ucsResult);
+  CHECK(emitter.m_activeVportResult);
+  CHECK(emitter.m_vportResult);
+
+  const auto groups = readGroups(path);
+  const auto tablePosition = [&groups](const std::string &name) {
+    const auto entry = std::find(groups.begin(), groups.end(),
+                                 std::make_pair(std::string("2"), name));
+    return std::distance(groups.begin(), entry);
+  };
+  CHECK(tablePosition("UCS") < tablePosition("VPORT"));
+  CHECK(tablePosition("STYLE") < tablePosition("LTYPE"));
+  CHECK(recordHasConsecutive(
+      groups, "VPORT", "CUSTOM_VPORT",
+      {{"345", writer.toHexStrHandle(writer.remapHandle(0x700u))}}));
+  std::filesystem::remove(path, ignored);
+}
+
+class RepeatedWriteEmitter final : public StubInterface {
+public:
+  dxfRW *m_writer = nullptr;
+  bool m_addVport = true;
+  bool m_activeVportResult = false;
+  bool m_vportResult = false;
+  bool m_textStyleResult = false;
+
+  void writeVports() override {
+    DRW_Vport active;
+    active.name = "*ACTIVE";
+    m_activeVportResult = m_writer->writeVport(&active);
+    if (!m_addVport)
+      return;
+    DRW_Vport vport;
+    vport.name = "EXTRA_VPORT";
+    m_vportResult = m_writer->writeVport(&vport);
+  }
+
+  void writeTextstyles() override {
+    DRW_Textstyle style;
+    style.handle = 0x40u;
+    style.name = "REMAPPED_STYLE";
+    m_textStyleResult = m_writer->writeTextstyle(&style);
+  }
+};
+
+TEST_CASE("DXF write sessions discard generated handle mappings",
+          "[dxf][writer][handles]") {
+  const auto path = std::filesystem::temp_directory_path() /
+                    "lc_dxf_writer_session_remap.dxf";
+  std::error_code ignored;
+  std::filesystem::remove(path, ignored);
+
+  dxfRW writer(path.string().c_str());
+  writer.setHandleRemap({{0x700u, 0x710u}});
+  RepeatedWriteEmitter emitter;
+  emitter.m_writer = &writer;
+
+  REQUIRE(writer.write(&emitter, DRW::AC1018, false));
+  CHECK(emitter.m_activeVportResult);
+  CHECK(emitter.m_vportResult);
+  CHECK(emitter.m_textStyleResult);
+  const std::uint32_t firstStyleHandle = writer.remapHandle(0x40u);
+  CHECK(writer.remapHandle(0x700u) == 0x710u);
+
+  emitter.m_addVport = false;
+  REQUIRE(writer.write(&emitter, DRW::AC1018, false));
+  CHECK(emitter.m_activeVportResult);
+  CHECK(emitter.m_textStyleResult);
+  const std::uint32_t secondStyleHandle = writer.remapHandle(0x40u);
+  CHECK(secondStyleHandle != firstStyleHandle);
+  CHECK(writer.remapHandle(0x700u) == 0x710u);
+
+  std::filesystem::remove(path, ignored);
+}
+
+class DxfObjectReferenceEmitter final : public StubInterface {
+public:
+  dxfRW *m_writer = nullptr;
+  DRW_Layout m_layout;
+  DRW_GeoData m_geoData;
+  DRW_MLeaderStyle m_mleaderStyle;
+  bool m_layoutResult = false;
+  bool m_geoDataResult = false;
+  bool m_mleaderStyleResult = false;
+
+  void writeObjects() override {
+    m_layoutResult = m_writer->writeLayout(&m_layout);
+    m_geoDataResult = m_writer->writeGeoData(&m_geoData);
+    m_mleaderStyleResult = m_writer->writeMLeaderStyle(&m_mleaderStyle);
+  }
+};
+
+TEST_CASE("DXF typed objects remap their handle references",
+          "[dxf][writer][handles]") {
+  const auto path = std::filesystem::temp_directory_path() /
+                    "lc_dxf_object_reference_remap.dxf";
+  std::error_code ignored;
+  std::filesystem::remove(path, ignored);
+
+  DxfObjectReferenceEmitter emitter;
+  emitter.m_layout.handle = 0x41u;
+  emitter.m_layout.name = "Sheet";
+  emitter.m_layout.shadePlotHandle.ref = 0x704u;
+  emitter.m_layout.paperSpaceBlockRecordHandle.ref = 0x700u;
+  emitter.m_layout.lastActiveViewportHandle.ref = 0x701u;
+  emitter.m_layout.namedUcsHandle.ref = 0x702u;
+  emitter.m_layout.baseUcsHandle.ref = 0x703u;
+  emitter.m_geoData.handle = 0x42u;
+  emitter.m_geoData.m_hostBlockHandle = 0x700u;
+  emitter.m_mleaderStyle.handle = 0x43u;
+  emitter.m_mleaderStyle.name = "REFS";
+  emitter.m_mleaderStyle.leaderLineTypeHandle.ref = 0x700u;
+  emitter.m_mleaderStyle.arrowHeadBlockHandle.ref = 0x701u;
+  emitter.m_mleaderStyle.textStyleHandle.ref = 0x702u;
+  emitter.m_mleaderStyle.blockHandle.ref = 0x703u;
+
+  dxfRW writer(path.string().c_str());
+  emitter.m_writer = &writer;
+  writer.setReferenceResolver([](std::uint32_t handle) {
+    return handle >= 0x700u && handle <= 0x704u ? handle + 0x100u : handle;
+  });
+  DRW_Class geoDataClass;
+  REQUIRE(dxfRW::dxfClassForRecordName("GEODATA", geoDataClass));
+  geoDataClass.instanceCount = 1;
+  DRW_Class mleaderStyleClass;
+  REQUIRE(dxfRW::dxfClassForRecordName("MLEADERSTYLE", mleaderStyleClass));
+  mleaderStyleClass.instanceCount = 1;
+  writer.setDxfClasses({geoDataClass, mleaderStyleClass});
+
+  REQUIRE(writer.write(&emitter, DRW::AC1021, false));
+  CHECK(emitter.m_layoutResult);
+  CHECK(emitter.m_geoDataResult);
+  CHECK(emitter.m_mleaderStyleResult);
+  const auto groups = readGroups(path);
+  for (const std::string &handle : {"800", "801", "802", "803", "804"})
+    CHECK(std::any_of(groups.begin(), groups.end(), [&](const auto &group) {
+      return group.second == handle;
+    }));
+  std::filesystem::remove(path, ignored);
+}
+
+TEST_CASE("DXF R12 leaves out the records it has no place for",
           "[dxf][writer][unsupported][safety]") {
-  const std::array<LegacyUnsupportedEmitter::Kind, 14> kinds = {
+  const std::array<LegacyUnsupportedEmitter::Kind, 15> kinds = {
       LegacyUnsupportedEmitter::Kind::LwPolyline,
       LegacyUnsupportedEmitter::Kind::Spline,
       LegacyUnsupportedEmitter::Kind::Helix,
@@ -272,7 +464,8 @@ TEST_CASE("DXF legacy writer rejects unsupported entity emitters",
       LegacyUnsupportedEmitter::Kind::Underlay,
       LegacyUnsupportedEmitter::Kind::MText,
       LegacyUnsupportedEmitter::Kind::Light,
-      LegacyUnsupportedEmitter::Kind::Mesh};
+      LegacyUnsupportedEmitter::Kind::Mesh,
+      LegacyUnsupportedEmitter::Kind::Image};
 
   int index = 0;
   for (const auto kind : kinds) {
@@ -288,9 +481,13 @@ TEST_CASE("DXF legacy writer rejects unsupported entity emitters",
     emitter.m_kind = kind;
     dxfRW writer(path.string().c_str());
     emitter.m_rw = &writer;
-    CHECK_FALSE(writer.write(&emitter, DRW::AC1009, false));
-    CHECK_FALSE(emitter.m_result);
-    CHECK(slurp(path) == "previous output\n");
+    CHECK(writer.write(&emitter, DRW::AC1009, false));
+    CHECK(emitter.m_result);
+    CHECK(slurp(path) != "previous output\n");
+    REQUIRE(writer.leftOut().size() == 1);
+    const auto &[what, count] = *writer.leftOut().cbegin();
+    CHECK(count == 1);
+    CHECK(what.find("(not in this DXF version)") != std::string::npos);
     std::error_code ignored;
     std::filesystem::remove(path, ignored);
   }
@@ -3232,6 +3429,69 @@ TEST_CASE("DXF BLOCK without a name is dropped with its entities",
   CHECK(cap.m_lineCount == 0);
 }
 
+TEST_CASE("DXF reads an explicitly unnamed BLOCK_RECORD from older LibreCAD",
+          "[dxf][block][blockrecord][compat][regression]") {
+  // #3050: an unused unnamed block must not prevent opening the drawing.
+  std::string blockName;
+  bool keepBlock = false;
+  SECTION("unnamed BLOCK and its children are dropped") {}
+  SECTION("a name on BLOCK itself is retained") {
+    blockName = "RECOVERED";
+    keepBlock = true;
+  }
+  const std::string dxf =
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nBLOCK_RECORD\n70\n2\n"
+      "0\nBLOCK_RECORD\n5\n135\n330\n1\n100\nAcDbSymbolTableRecord\n"
+      "100\nAcDbBlockTableRecord\n2\n\n70\n0\n280\n1\n281\n0\n"
+      "0\nBLOCK_RECORD\n5\n138\n2\nNAMED\n70\n0\n280\n1\n281\n0\n"
+      "0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nBLOCKS\n"
+      "0\nBLOCK\n5\n136\n330\n135\n8\n0\n2\n" + blockName +
+      "\n70\n0\n10\n0\n20\n0\n"
+      "0\nLINE\n5\n290\n8\n0\n10\n0\n20\n0\n11\n1\n21\n1\n"
+      "0\nENDBLK\n5\n137\n330\n135\n8\n0\n"
+      "0\nBLOCK\n5\n139\n330\n138\n8\n0\n70\n0\n10\n0\n20\n0\n"
+      "0\nLINE\n5\n296\n8\n0\n10\n2\n20\n2\n11\n3\n21\n3\n"
+      "0\nENDBLK\n5\n13A\n330\n138\n8\n0\n"
+      "0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
+      "0\nLINE\n5\n400\n8\n0\n10\n4\n20\n4\n11\n5\n21\n5\n"
+      "0\nENDSEC\n0\nEOF\n";
+
+  BlockCapture capture;
+  REQUIRE(tryReadDxf(dxf, capture, "lc_unnamed_block_record.dxf"));
+  REQUIRE(capture.m_blocks.size() == (keepBlock ? 2u : 1u));
+  CHECK(capture.m_blocks.back().name == "NAMED");
+  CHECK(capture.m_lineCount == (keepBlock ? 3 : 2));
+  CHECK(capture.m_endBlockCount == (keepBlock ? 2 : 1));
+  if (keepBlock)
+    CHECK(capture.m_blocks.front().name == "RECOVERED");
+}
+
+TEST_CASE("DXF unnamed BLOCK_RECORD still validates required fields and structure",
+          "[dxf][blockrecord][malformed][regression]") {
+  std::string fields = "5\n135\n2\n\n";
+  std::string endTable = "0\nENDTAB\n";
+  SECTION("missing name group") { fields = "5\n135\n"; }
+  SECTION("missing name group after a named record") {
+    fields = "5\n135\n2\nNAMED\n0\nBLOCK_RECORD\n5\n138\n";
+  }
+  SECTION("missing modern self handle") { fields = "2\n\n"; }
+  SECTION("null modern self handle") { fields = "5\n0\n2\n\n"; }
+  SECTION("invalid self handle") { fields = "5\nNOT_HEX\n2\n\n"; }
+  SECTION("duplicate self handle") {
+    fields += "0\nBLOCK_RECORD\n5\n135\n2\nNAMED\n";
+  }
+  SECTION("invalid explode flag") { fields += "280\n2\n"; }
+  SECTION("unbalanced application group") { fields += "102\n{BLKREFS\n"; }
+  SECTION("missing table terminator") { endTable.clear(); }
+  const std::string dxf =
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nBLOCK_RECORD\n"
+      "0\nBLOCK_RECORD\n" + fields + endTable + "0\nENDSEC\n0\nEOF\n";
+  StubInterface capture;
+  CHECK_FALSE(tryReadDxf(dxf, capture, "lc_unnamed_block_record_invalid.dxf"));
+}
+
 TEST_CASE("DXF BLOCK record boundaries are case-insensitive",
           "[dxf][block]") {
   BlockCapture cap;
@@ -3465,8 +3725,9 @@ TEST_CASE("DXF SHAPE requires its identifying geometry fields",
   const std::string prefix =
       "0\nSECTION\n2\nENTITIES\n";
   const std::string suffix = "0\nENDSEC\n0\nEOF\n";
+  // The name (group 2) is not among them: a SHAPE converted from a DWG has
+  // none, see lc_dxf_shape_name_tests.cpp.
   const std::vector<std::string> malformed = {
-      "0\nSHAPE\n10\n0\n20\n0\n40\n1\n",
       "0\nSHAPE\n2\nTEST\n20\n0\n40\n1\n",
       "0\nSHAPE\n2\nTEST\n10\n0\n20\n0\n"};
 
@@ -4776,9 +5037,12 @@ TEST_CASE("DXF table-entry application groups round trip typed records",
     auto &group = emitter.m_layer.appData.emplace_back();
     group.emplace_back(102, std::string{"CUSTOM_TABLE_APP"});
     group.emplace_back(102, std::string{"}"});
-    CHECK_FALSE(writer.write(&emitter, DRW::AC1009, false));
-    CHECK_FALSE(emitter.m_writeResult);
+    // R12 has no application data: left out, not refused
+    CHECK(writer.write(&emitter, DRW::AC1009, false));
+    CHECK(emitter.m_writeResult);
+    CHECK(writer.leftOut().count("application data of a table record (R12)") == 1);
   }
+  CHECK(slurp(legacyPath).find("CUSTOM_TABLE_APP") == std::string::npos);
   std::filesystem::remove(legacyPath);
 }
 
@@ -5278,6 +5542,85 @@ TEST_CASE("DXF SHAPE preserves typed fields", "[dxf][shape]") {
   CHECK(cap.m_line.basePoint.y == 5.0);
   CHECK(cap.m_line.secPoint.x == 6.0);
   CHECK(cap.m_line.secPoint.y == 7.0);
+}
+
+// A DXF SHAPE is found by its name (group 2) in the shape files of the
+// drawing. A DWG holds the number of the shape instead, and the name is in the
+// .shx file, so a SHAPE converted from a DWG may have no name. Such a record
+// names no shape: ODA drops it, and LibreCAD reads it only to keep the file.
+TEST_CASE("DXF writer leaves out a SHAPE that has no name",
+          "[dxf][writer][shape]") {
+  class ShapeEmitter : public StubInterface {
+  public:
+    dxfRW *m_rw = nullptr;
+    std::vector<bool> m_results;
+
+    void writeEntities() override {
+      DRW_Line before;
+      before.secPoint = DRW_Coord(10.0, 5.0, 0.0);
+      m_results.push_back(m_rw->writeLine(&before));
+      DRW_Shape nameless;
+      nameless.m_insertionPoint = DRW_Coord(15.25, -20.5, 0.0);
+      nameless.m_scale = 2.5;
+      m_results.push_back(m_rw->writeShape(&nameless));
+      DRW_Shape named;
+      named.m_styleName = "MY-SHAPE";
+      named.m_insertionPoint = DRW_Coord(1.0, 2.0, 0.0);
+      named.m_scale = 3.0;
+      m_results.push_back(m_rw->writeShape(&named));
+      DRW_Line after;
+      after.basePoint = DRW_Coord(4.0, 5.0, 0.0);
+      after.secPoint = DRW_Coord(6.0, 7.0, 0.0);
+      m_results.push_back(m_rw->writeLine(&after));
+    }
+  };
+
+  for (const DRW::Version version :
+       {DRW::AC1009, DRW::AC1015, DRW::AC1021, DRW::AC1032}) {
+    CAPTURE(static_cast<int>(version));
+    const auto path = std::filesystem::temp_directory_path() /
+                      ("lc_dxf_shape_without_name_" +
+                       std::to_string(static_cast<int>(version)) + ".dxf");
+    std::filesystem::remove(path);
+
+    ShapeEmitter emitter;
+    {
+      dxfRW writer(path.string().c_str());
+      emitter.m_rw = &writer;
+      REQUIRE(writer.write(&emitter, version, false));
+      CHECK(emitter.m_results == std::vector<bool>{true, true, true, true});
+      REQUIRE(writer.leftOut().size() == 1);
+      CHECK(writer.leftOut().count("SHAPE without a name") == 1);
+      CHECK(writer.leftOut().cbegin()->second == 1);
+    }
+
+    const auto groups = readGroups(path);
+    std::vector<std::string> shapeNames;
+    for (std::size_t i = 0; i < groups.size(); ++i) {
+      if (groups[i] != std::make_pair(std::string("0"), std::string("SHAPE")))
+        continue;
+      std::string name = "(none)";
+      for (std::size_t j = i + 1; j < groups.size() && groups[j].first != "0";
+           ++j) {
+        if (groups[j].first == "2")
+          name = groups[j].second;
+      }
+      shapeNames.push_back(name);
+    }
+    CHECK(shapeNames == std::vector<std::string>{"MY-SHAPE"});
+
+    // And the file opens, with everything that was written.
+    ShapeCapture cap;
+    {
+      dxfRW reader(path.string().c_str());
+      CHECK(reader.read(&cap, false));
+    }
+    CHECK(cap.m_callCount == 1);
+    CHECK(cap.m_captured.m_styleName == "MY-SHAPE");
+    CHECK(cap.m_captured.m_insertionPoint.x == 1.0);
+    CHECK(cap.m_lineCallCount == 2);
+    std::filesystem::remove(path);
+  }
 }
 
 TEST_CASE("DXF CAMERA preserves its view reference and writes back",
@@ -7250,6 +7593,20 @@ TEST_CASE("DXF ACAD_PROXY_ENTITY exposes typed payloads and references",
   CHECK(entity.m_objectIdRefs[1].m_handleCode == 3);
   CHECK(entity.m_objectIdRefs[1].m_handle == 0x41u);
   CHECK(cap.m_raw.front().parentHandle == 0x1Fu);
+}
+
+TEST_CASE("DXF proxy entity group 60 is not parsed as a bit field",
+          "[dxf][proxy-entity][visibility]") {
+  ProxyEntityCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nACAD_PROXY_ENTITY\n5\n25\n60\n2\n"
+      "90\n501\n91\n600\n92\n1\n310\nAB\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_proxy_entity_visibility_scalar.dxf");
+
+  REQUIRE(cap.m_entities.size() == 1);
+  CHECK_FALSE(cap.m_entities.front().visible);
 }
 
 TEST_CASE("DXF ACAD_PROXY_OBJECT separates binary and object payloads",
@@ -9844,6 +10201,84 @@ TEST_CASE("DXF IMAGE and WIPEOUT reject non-finite payload fields",
   }
 }
 
+TEST_CASE("DXF objects a version has no place for are left out",
+          "[dxf][writer][unsupported]") {
+  // FIELD needs R2000, an evaluation graph R2007: older targets leave them
+  // out instead of failing the save.
+  class OldVersionEmitter : public StubInterface {
+  public:
+    dxfRW *m_rw = nullptr;
+    bool m_result = false;
+    void writeObjects() override {
+      DRW_Field field;
+      DRW_EvaluationGraph graph;
+      m_result = m_rw->writeField(&field) && m_rw->writeEvaluationGraph(&graph);
+    }
+  };
+  const auto path = std::filesystem::temp_directory_path() /
+                    "lc_dxf_old_version_objects.dxf";
+  std::filesystem::remove(path);
+  OldVersionEmitter emitter;
+  dxfRW writer(path.string().c_str());
+  emitter.m_rw = &writer;
+  CHECK(writer.write(&emitter, DRW::AC1014, false));
+  CHECK(emitter.m_result);
+  CHECK(writer.leftOut().count("FIELD (not in this DXF version)") == 1);
+  CHECK(writer.leftOut().count("EVALUATION_GRAPH (not in this DXF version)") == 1);
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DXF raw strings with line breaks become caret codes in ASCII",
+          "[dxf][writer][raw]") {
+  // A binary DXF can hold a line break inside a string; an ASCII one cannot.
+  RawObjectEmitter emitter;
+  emitter.m_obj.name = "ACME_THING";
+  emitter.m_obj.handle = 0x91u;
+  emitter.m_obj.groups = {DRW_Variant(5, std::string("91")),
+                          DRW_Variant(100, std::string("AcmeThing")),
+                          DRW_Variant(1, std::string("line one\nline two"))};
+  const auto path = std::filesystem::temp_directory_path() /
+                    "lc_dxf_raw_line_break.dxf";
+  std::filesystem::remove(path);
+  {
+    dxfRW writer(path.string().c_str());
+    emitter.m_rw = &writer;
+    REQUIRE(writer.reserveHandle(0x91u));
+    CHECK(writer.write(&emitter, DRW::AC1021, false));
+    CHECK(emitter.m_writeResult);
+  }
+  CHECK(slurp(path).find("\nline one^Jline two\n") != std::string::npos);
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DXF built-in linetypes leave out application data",
+          "[dxf][ltype][writer]") {
+  // BYLAYER, BYBLOCK and CONTINUOUS are written by the codec itself; the
+  // payload a source file attaches to them (R14 DWG) cannot follow.
+  class LTypeEmitter : public StubInterface {
+  public:
+    dxfRW *m_rw = nullptr;
+    bool m_result = false;
+    void writeLTypes() override {
+      DRW_LType continuous;
+      continuous.name = "Continuous";
+      continuous.reactorHandles = {0x40u};
+      m_result = m_rw->writeLineType(&continuous);
+    }
+  };
+
+  const auto path = std::filesystem::temp_directory_path() /
+                    "lc_dxf_builtin_ltype_payload.dxf";
+  std::filesystem::remove(path);
+  LTypeEmitter emitter;
+  dxfRW writer(path.string().c_str());
+  emitter.m_rw = &writer;
+  CHECK(writer.write(&emitter, DRW::AC1021, false));
+  CHECK(emitter.m_result);
+  CHECK(writer.leftOut().count("application data of a built-in linetype") == 1);
+  std::filesystem::remove(path);
+}
+
 TEST_CASE("DXF UNDERLAY rejects invalid writer payloads",
           "[dxf][underlay][writer][safety]") {
   class UnderlayEmitter : public StubInterface {
@@ -9868,17 +10303,26 @@ TEST_CASE("DXF UNDERLAY rejects invalid writer payloads",
     std::filesystem::remove(path);
   }
 
-  SECTION("inverse clipping before R2010") {
+  SECTION("inverse clipping before R2010 is left out") {
     UnderlayEmitter emitter;
     emitter.m_underlay.inverseClipBoundary = {
         DRW_Coord{0.0, 0.0, 0.0}, DRW_Coord{1.0, 1.0, 0.0}};
+    emitter.m_underlay.flags = 0x10;
     const auto path = std::filesystem::temp_directory_path() /
                       "lc_dxf_underlay_old_inverse.dxf";
     std::filesystem::remove(path);
     dxfRW writer(path.string().c_str());
     emitter.m_rw = &writer;
-    CHECK_FALSE(writer.write(&emitter, DRW::AC1021, false));
-    CHECK_FALSE(emitter.m_result);
+    CHECK(writer.write(&emitter, DRW::AC1021, false));
+    CHECK(emitter.m_result);
+    const std::string written = slurp(path);
+    const auto start = written.find("PDFUNDERLAY");
+    REQUIRE(start != std::string::npos);
+    const std::string record = written.substr(start, written.find("\n  0\n", start) - start);
+    CHECK(record.find("\n170\n") == std::string::npos);
+    CHECK(record.find("\n280\n") != std::string::npos);
+    CHECK(record.find("\n280\n    16\n") == std::string::npos);
+    CHECK(writer.leftOut().count("inverted clip of an underlay (R2007 and older)") == 1);
     std::filesystem::remove(path);
   }
 }
@@ -11435,7 +11879,7 @@ TEST_CASE("DXF OBJECTS helper failures latch the enclosing write",
   }
 }
 
-TEST_CASE("DXF SORTENTSTABLE rejects unresolved remapped entity handles",
+TEST_CASE("DXF SORTENTSTABLE leaves out entries for entities it does not write",
           "[dxf][sortents][writer][safety]") {
   class SortEntsFailureEmitter : public StubInterface {
   public:
@@ -11469,10 +11913,13 @@ TEST_CASE("DXF SORTENTSTABLE rejects unresolved remapped entity handles",
   SortEntsFailureEmitter emitter;
   dxfRW writer(path.string().c_str());
   emitter.m_rw = &writer;
-  CHECK_FALSE(writer.write(&emitter, DRW::AC1027, false));
+  CHECK(writer.write(&emitter, DRW::AC1027, false));
   CHECK(emitter.m_entityResult);
-  CHECK_FALSE(emitter.m_sortResult);
-  CHECK(slurp(path) == "previous output\n");
+  CHECK(emitter.m_sortResult);
+  const std::string written = slurp(path);
+  CHECK(written.find("SORTENTSTABLE") != std::string::npos);
+  CHECK(written.find("\n331\n") == std::string::npos);
+  CHECK(writer.leftOut().count("draw-order entry of an entity not written") == 1);
   std::error_code ignored;
   std::filesystem::remove(path, ignored);
 }
@@ -11590,8 +12037,16 @@ TEST_CASE("DXF EVALUATION_GRAPH writer enforces native limits",
     CHECK_FALSE(emitter.m_writeResult);
   };
 
-  SECTION("unsupported DXF version") {
-    verifyRejected(DRW::AC1018, makeGraph());
+  SECTION("a version without evaluation graphs leaves the graph out") {
+    std::filesystem::remove(path);
+    EvaluationGraphEmitter emitter;
+    emitter.m_graph = makeGraph();
+    emitter.m_recordName = "EVALUATION_GRAPH";
+    dxfRW writer(path.string().c_str());
+    emitter.m_rw = &writer;
+    CHECK(writer.write(&emitter, DRW::AC1018, false));
+    CHECK(emitter.m_writeResult);
+    CHECK(writer.leftOut().count("EVALUATION_GRAPH (not in this DXF version)") == 1);
   }
 
   SECTION("node count exceeds the DWG-native limit") {

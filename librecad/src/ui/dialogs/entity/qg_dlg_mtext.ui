@@ -821,7 +821,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QTextEdit" name="teText">
+        <widget class="LC_TextEdit" name="teText">
          <property name="focusPolicy">
           <enum>Qt::StrongFocus</enum>
          </property>
@@ -829,7 +829,7 @@
           <string>Text lines to insert</string>
          </property>
          <property name="tabChangesFocus">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
          <property name="linkUnderline" stdset="0">
           <bool>false</bool>
@@ -1606,6 +1606,11 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
+  <customwidget>
+   <class>LC_TextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>lc_textedit.h</header>
+  </customwidget>
   <customwidget>
    <class>QG_WidgetPen</class>
    <extends>QWidget</extends>

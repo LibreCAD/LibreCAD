@@ -362,16 +362,21 @@ Skipped/failed record counts logged via `RS_DEBUG->print(RS_Debug::D_WARNING, �
 readable records *and* had `numEntities > 0`.
 
 ### Sub-plan 2c — DBF attributes, layers, styling (the fidelity win)
-1. **Codepage**: `DBFGetCodePage()` (shapelib reads `.cpg`/LDID itself) → map to
-   `QStringDecoder` (UTF-8, LDID/87→Latin-1, common LDID table); fallback: try UTF-8, on
-   invalid sequences re-decode Latin-1. Fixtures `utf8-property`/`latin1-property` pin this.
+1. **Codepage**: `DBFGetCodePage()` (shapelib reads `.cpg`/LDID itself) → a Windows code
+   page (874, 932, 936, 949, 950, 1250-1258; an LDID by ESRI's table, where 87 is 1252) is
+   decoded with libdxfrw's tables; anything else: try UTF-8, on invalid sequences re-decode
+   Latin-1. Fixtures `utf8-property`/`latin1-property` and `cp*_cpg`/`cp*_ldid` pin this.
 2. **Field auto-detection** (case-insensitive, first match):
-   - layer: `LAYER`, `LEVEL`, `LYR`
+   - layer: `LAYER`, `LEVEL`, `LYR` — a layer per value; a character DXF cannot hold in
+     a symbol name becomes `_`
    - color: `COLOR`, `COLOUR` — value `0-255` treated as AutoCAD color index (reuse the
      ACI→`RS_Color` mapping from `rs_filterdxfrw.cpp`, `numberToColor`-equivalent), larger
      values as 24-bit RGB
-   - linetype: `LINETYPE`, `LTYPE` — name→`RS2::LineType` via the same mapping
-     `rs_filterdxfrw` uses (`CONTINUOUS`, `DASHED`, …; unknown → `SolidLine`)
+   - linetype: `LINETYPE`, `LTYPE` — kept as the pen's linetype name, as from DXF, with
+     `_` for a character DXF cannot hold in a symbol name (the first 256 distinct names of
+     an import, reusing the first spelling for ASCII case and NFC-equivalent names);
+     a name past those → `RS2::LineType` via the mapping `rs_filterdxfrw` uses
+     (`CONTINUOUS`, `DASHED`, …; unknown → `SolidLine`)
    - width: `WIDTH`, `LWEIGHT`, `LINEWT` — numeric → nearest `RS2::LineWidth`
    - label: `NAME`, `LABEL`, `TEXT` — for point shapes, adds an `RS_MText` next to the point
      (height = 2.0 drawing units default)

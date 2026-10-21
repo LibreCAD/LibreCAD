@@ -1685,7 +1685,7 @@ void LC_QuickInfoEntityData::addAreaProperty(const QString& name, const double v
 RS_Vector LC_QuickInfoEntityData::getVectorForIndex(const int index) const {
     auto result = RS_Vector(false);
     const size_t size = m_properties.size();
-    if (index < size) {
+    if (index >= 0 && static_cast<std::size_t>(index) < size) {
         const auto property = static_cast<VectorPropertyInfo*>(m_properties.at(index));
         result = property->data;
     }

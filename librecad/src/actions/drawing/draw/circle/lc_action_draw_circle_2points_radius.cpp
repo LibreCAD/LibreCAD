@@ -41,6 +41,7 @@ LC_ActionDrawCircle2PointsRadius::~LC_ActionDrawCircle2PointsRadius() = default;
 
 void LC_ActionDrawCircle2PointsRadius::reset() {
     deletePreview();
+    m_center = {};
     m_actionData->point1 = {};
     m_actionData->point2 = {};
 }
@@ -72,13 +73,20 @@ void LC_ActionDrawCircle2PointsRadius::doTriggerCompletion([[maybe_unused]] bool
 bool LC_ActionDrawCircle2PointsRadius::preparePreview(const RS_Vector& mouse, RS_Vector& altCenter) {
     RS_CircleData circleData(m_center, m_radius);
     const bool result = LC_CreationCircle::create2PRadius(m_actionData->point1, m_actionData->point2, m_radius, altCenter, circleData);
+    // not only where there are two: points a diameter apart have one center, and points further apart have none
+    m_center = circleData.center;
     if (result) {
-        m_center = circleData.center;
         const double ds = mouse.squaredTo(m_center) - mouse.squaredTo(altCenter);
         if (ds > 0.) {
             const RS_Vector center = m_center;
             m_center = altCenter;
             altCenter = center;
+        }
+        else if (!(ds < 0.) && getStatus() == SelectCenter) {
+            // As far from one center as from the other, the mouse chooses neither. Only where it is to choose: as
+            // the second point it is on the chord, and that far from both.
+            m_center.valid = false;
+            return false;
         }
     }
     return result;
@@ -94,7 +102,7 @@ void LC_ActionDrawCircle2PointsRadius::onMouseMoveEvent(const int status, const 
 
         case SetPoint2: {
             mouse = getSnapAngleAwarePoint(e, m_actionData->point1, mouse, true);
-            if (mouse.distanceTo(m_actionData->point1) <= 2. * m_radius) {
+            if (LC_CreationCircle::canCreate2PRadius(m_actionData->point1, mouse, m_radius)) {
                 m_actionData->point2 = mouse;
             }
 
@@ -128,7 +136,7 @@ void LC_ActionDrawCircle2PointsRadius::onMouseMoveEvent(const int status, const 
                 }
             }
             else {
-                const bool dataValid = m_center.valid && m_radius > RS_TOLERANCE;
+                const bool dataValid = RS_CircleData(m_center, m_radius).isValid();
                 if (dataValid) {
                     trigger();
                 }
@@ -153,7 +161,14 @@ void LC_ActionDrawCircle2PointsRadius::onMouseLeftButtonRelease(const int status
 
 void LC_ActionDrawCircle2PointsRadius::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
     deletePreview();
+    // LC_ActionDrawCircleBase::init() resets the action for every status. A step back from the choice of the center
+    // asks for the second point again, of the first point that was given.
+    const RS_Vector point1 = m_actionData->point1;
     initPrevious(status);
+    if (status == SelectCenter) {
+        m_actionData->point1 = point1;
+        moveRelativeZero(point1);
+    }
 }
 
 void LC_ActionDrawCircle2PointsRadius::onCoordinateEvent(const int status, [[maybe_unused]] bool isZero, const RS_Vector& coord) {
@@ -167,7 +182,8 @@ void LC_ActionDrawCircle2PointsRadius::onCoordinateEvent(const int status, [[may
         }
         case SetPoint2: {
             const double distance = coord.distanceTo(m_actionData->point1);
-            if (distance <= 2. * m_radius) {
+            // as create2PRadius() has it: a diameter may round to more than twice the radius
+            if (LC_CreationCircle::canCreate2PRadius(m_actionData->point1, coord, m_radius)) {
                 m_actionData->point2 = coord;
                 addSnappedPointToVisualSnap(coord);
                 moveRelativeZero(coord);
@@ -183,7 +199,7 @@ void LC_ActionDrawCircle2PointsRadius::onCoordinateEvent(const int status, [[may
         case SelectCenter: {
             RS_Vector altCenter;
             const bool showPreview = preparePreview(coord, altCenter);
-            const bool circleValid = m_center.valid && m_radius < RS_TOLERANCE;
+            const bool circleValid = RS_CircleData(m_center, m_radius).isValid();
             if (showPreview || circleValid) {
                 trigger();
             }

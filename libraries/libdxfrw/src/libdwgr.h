@@ -18,6 +18,7 @@
 #include <cstdint>
 #include <functional>
 #include <limits>
+#include <map>
 #include <string>
 #include <memory>
 #include <set>
@@ -135,7 +136,32 @@ enum class DwgIntegrityCheckKind : std::uint8_t {
     ObjectMapCrc,
     ObjectMapDuplicateOffset,
     ObjectFrameBounds,
-    FrameLedgerTransition
+    FrameLedgerTransition,
+    /// The BLOCK_CONTROL object lists a block record that has no entry in the
+    /// object map: an erased record that the producer left in the list. Always
+    /// a Warning; the entry is skipped and every other record of the table is
+    /// read normally. `logicalHandle` is the absent record and `expected` is
+    /// the handle of the control. Only an ordinary entry of the block table is
+    /// tolerated: a missing model or paper space record, and a record that
+    /// any other table control lists and the object map lacks, fail the table
+    /// phase.
+    TableControlDanglingHandle,
+    /// The entity sweep rejected an entity whose owner handle names no
+    /// BLOCK_RECORD of the drawing: an erased block record whose entities were
+    /// left in the file. Always a Warning; the entity is not published and is
+    /// counted as an entity parse failure. `logicalHandle` is the entity,
+    /// `fileOffset` its frame and `expected` the absent owner. An INSERT or
+    /// POLYLINE with children is classified as one entity: its ATTRIB, VERTEX
+    /// and SEQEND frames name the group, not the block, so they are staged
+    /// under it and abandoned, each group counted as an entity parse failure,
+    /// when the sweep ends. An owner the sweep cannot read stays a structural
+    /// failure and gets no such diagnostic.
+    EntityOwnerRecordMissing,
+    /// An INSERT places a block record that BLOCK_CONTROL lists but the file
+    /// does not hold (see TableControlDanglingHandle). Always an Error: the
+    /// INSERT is not published and the read fails. `logicalHandle` is the
+    /// INSERT, `fileOffset` its frame and `expected` the absent block record.
+    EntityBlockRecordErased
 };
 
 /// Version of the field and enum contract carried by DwgIntegrityDiagnostic.
@@ -225,6 +251,10 @@ public:
     /// kept for API symmetry with `dxfRW::write`.  Returns true on
     /// success, false on error; error code accessible via `getError()`.
     [[nodiscard]] bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
+    /// Requires a nonnull per-call verifier; ordinary write remains unchecked.
+    [[nodiscard]] bool writeVerified(DRW_Interface *interface_, DRW::Version ver,
+                                    bool bin, DRW_StagedFileVerifier verifier,
+                                    void* context);
 
     struct WriteSkipCounters {
         std::size_t entityWrites { 0 };
@@ -242,6 +272,9 @@ public:
         }
     };
     WriteSkipCounters getWriteSkipCounters() const { return m_writeSkipCounters; }
+    /// What the last write left out of objects it wrote, by what it was, and
+    /// how often; see dxfRW::leftOut().
+    const std::map<std::string, std::size_t> &leftOut() const { return m_leftOut; }
     /// Mark the current callback-driven write as incomplete. Ordinary
     /// per-record false returns remain recoverable skips; callers use this
     /// latch when a required phase item could not be emitted.
@@ -597,6 +630,17 @@ public:
     /// load. Like getEntityParseFailures, these are non-fatal warnings — the
     /// file still loads with the surviving objects. Zero on a clean load.
     size_t getObjectParseFailures() const;
+    /// Block records the drawing's block table lists but the file does not
+    /// hold (erased records the producer left in the list). Each was skipped;
+    /// nothing that lives in the file names them, or the read would have
+    /// failed. Zero on a clean load. Surface next to getEntityParseFailures
+    /// so users know the drawing was not read as a clean one.
+    size_t getDanglingBlockRecords() const;
+    /// Entities skipped because the block record that owned them no longer
+    /// exists (the leftovers of an erased block, typically an anonymous
+    /// dimension block's BLOCK, ENDBLK and contents). Each is also counted by
+    /// getEntityParseFailures.
+    size_t getOrphanedEntities() const;
     /// CLASSES-section CRC mismatches (warn-only compatibility policy). Zero
     /// CRC fields are treated as absent for legacy writers; non-zero
     /// mismatches are surfaced as a non-fatal diagnostic.
@@ -651,6 +695,8 @@ bool testReader();
     friend class dwgReader;
 
 private:
+    bool writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                   DRW_StagedFileVerifier verifier, void* context);
     friend class DwgCompoundWriteTestAccess;
     friend class DwgWriteFailureTestAccess;
 
@@ -746,6 +792,10 @@ private:
     /// Captured from reader->m_objectParseFailures before reader.reset()
     /// so getObjectParseFailures() works post-read.
     size_t m_objectParseFailures { 0 };
+    /// Captured from reader->m_danglingBlockRecords before reader.reset().
+    size_t m_danglingBlockRecords { 0 };
+    /// Captured from reader->m_orphanedEntityRejections before reader.reset().
+    size_t m_orphanedEntities { 0 };
     /// Captured from reader->m_classesCrcMismatch before reader.reset()
     /// so getClassesCrcMismatch() works post-read.
     size_t m_classesCrcMismatch { 0 };
@@ -772,6 +822,7 @@ private:
     std::vector<std::string> m_layerNameOrder;
     std::vector<std::string> m_ltypeNameOrder;
     WriteSkipCounters m_writeSkipCounters;
+    std::map<std::string, std::size_t> m_leftOut;
     std::size_t m_successfulEntityWrites { 0 };
     std::uint32_t m_lastSuccessfulEntityHandle { 0 };
     DRW::DwgObjectFrameReceipt m_lastDwgObjectFrame;

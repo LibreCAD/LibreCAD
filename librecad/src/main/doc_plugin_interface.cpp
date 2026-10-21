@@ -31,9 +31,9 @@
 #include <QInputDialog>
 #include <QList>
 
-#include "lc_action_select_single.h"
 #include "lc_actioncontext.h"
 #include "lc_containertraverser.h"
+#include "lc_copyutils.h"
 #include "lc_documentsstorage.h"
 #include "lc_splinepoints.h"
 #include "lc_undosection.h"
@@ -840,7 +840,6 @@ Doc_plugin_interface::Doc_plugin_interface(LC_ActionContext* actionContext, QWid
 }
 
 bool Doc_plugin_interface::addToUndo(RS_Entity* current, RS_Entity* modified, const DPI::Disposition how) const {
-    m_document->addEntity(modified);
     const LC_UndoSection undo(m_document, m_viewport);
     current->clearSelectionFlag();
     if (how == DPI::DELETE_ORIGINAL) {
@@ -1016,22 +1015,22 @@ QString Doc_plugin_interface::addBlockfromFromdisk(const QString fullName) {
             delete b;
             return nullptr;
         }
-        const RS_LayerList* ll = g.getLayerList();
-        for (unsigned int i = 0; i < ll->count(); i++) {
-            RS_Layer* nl = ll->at(i)->clone();
-            m_docGr->addLayer(nl);
-        }
+        // Everything read is new to this drawing, and goes on its layers of the same names.
+        constexpr unsigned provenance = RS_Entity::Identity | RS_Entity::TableRefs;
         RS_BlockList* bl = g.getBlockList();
         for (int i = 0; i < bl->count(); i++) {
-            auto* nb = static_cast<RS_Block*>(bl->at(i)->clone());
-            m_docGr->addBlock(nb);
+            LC_CopyUtils::doCopyBlock(bl->at(i), m_docGr, provenance);
         }
         for (unsigned int i = 0; i < g.count(); i++) {
             RS_Entity* e = g.entityAt(i)->clone();
             e->reparent(b);
+            e->clearDwgProvenance(provenance);
+            LC_CopyUtils::doCopyEntityLayer(e, m_docGr, &g);
             b->addEntity(e);
         }
         m_docGr->addBlock(b);
+        // as in LC_CopyUtils::doCopyBlock(): the expansions of its inserts are those of g, which is about to go
+        b->updateInserts();
         return name;
     }
     return nullptr;
@@ -1214,21 +1213,15 @@ bool Doc_plugin_interface::performSelect(RS2::EntityType typeToSelect, const QSt
         a->setMessage(message);
         RS_DIALOGFACTORY->commandMessage(message);
     }
-    const auto inner = typeToSelect == RS2::EntityType::EntityUnknown
-                     ? std::make_shared<LC_ActionSelectSingle>(m_actionContext, a.get())
-                     : std::make_shared<LC_ActionSelectSingle>(typeToSelect, m_actionContext, a.get());
-    if (inner == nullptr) {
-        return false; // Rare shared_ptr fail
-    }
     m_graphicView->killAllActions();
-    m_graphicView->setCurrentAction(inner);
+    // init() installs the selection step that collects the picks and hands the
+    // finish key back to this action.
+    a->init(0);
     if (!m_graphicView->hasAction()) {
         // Robustness: Verify set succeeded
         m_graphicView->killAllActions();
         return false;
     }
-    inner->init(0);
-    a->init(0);
     QEventLoop ev;
     while (!a->isCompleted()) {
         ev.processEvents();
@@ -1236,7 +1229,7 @@ bool Doc_plugin_interface::performSelect(RS2::EntityType typeToSelect, const QSt
             break;
         }
     }
-    const bool completed = a->isCompleted();
+    const bool completed = a->isCompleted() && !a->wasCanceled();
     m_graphicView->killAllActions(); // Always cleanup
     if (completed) {
         a->getSelected(sel, this);
@@ -1284,8 +1277,8 @@ bool Doc_plugin_interface::getAllEntities(QList<Plug_Entity*>* sel, const bool v
 }
 
 void Doc_plugin_interface::unselectEntities() {
-    const auto a = new QC_ActionGetSelect(m_actionContext);
-    a->unselectEntities();
+    const QC_ActionGetSelect a(m_actionContext);
+    a.unselectEntities();
 }
 
 bool Doc_plugin_interface::getVariableInt(const QString& key, int* num) {

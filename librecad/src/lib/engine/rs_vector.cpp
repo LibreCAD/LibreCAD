@@ -918,8 +918,8 @@ RS_Vector RS_VectorSolutions::getClosest(const RS_Vector& coord, double* dist, s
 double RS_VectorSolutions::getClosestDistance(const RS_Vector& coord, const int counts) {
     double ret = RS_MAXDOUBLE * RS_MAXDOUBLE;
     size_t i = m_vector.size();
-    if (counts < i && counts >= 0) {
-        i = counts;
+    if (counts >= 0 && static_cast<std::size_t>(counts) < i) {
+        i = static_cast<std::size_t>(counts);
     }
     std::for_each(m_vector.begin(), m_vector.begin() + i, [&ret, &coord](const RS_Vector& vp) {
         if (vp.valid) {

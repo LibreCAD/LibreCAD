@@ -133,6 +133,12 @@ public:
     void layerAdded(RS_Layer* layer) override;
     void layerEdited(RS_Layer*) override;
     void layerRemoved(RS_Layer*) override;
+    /// the layers are about to be freed: drop the model's rows for them
+    void layerListCleared() override {
+        updateWidget();
+    }
+    /// the list is being destroyed: forget it and its drawing
+    void layerListDestroyed() override;
 
     void layerToggled(RS_Layer*) override {
         updateWidget();

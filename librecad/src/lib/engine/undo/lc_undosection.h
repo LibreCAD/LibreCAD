@@ -25,6 +25,12 @@
 
 #ifndef LC_UNDOSECTION_H
 #define LC_UNDOSECTION_H
+#include <map>
+#include <utility>
+
+#include <QHash>
+#include <QSet>
+
 #include "rs_document.h"
 
 class RS_Entity;
@@ -60,6 +66,16 @@ protected:
 private:
     RS_Document *m_document {nullptr};
     LC_GraphicViewport* m_viewport {nullptr};
+    /** Source handles of the entities this section deleted and no added entity has taken yet. */
+    mutable QSet<quint32> m_freedHandles;
+    /** Lineages of the tracked entities this section deleted and no added entity has taken yet. */
+    mutable QSet<unsigned long long> m_freedLineages;
+    /** How many clones of an entity, by its lineage, this section has added: copies, and the one that took its place. */
+    mutable QHash<unsigned long long, int> m_clonesAdded;
+    /** The lineage this section gave a copy, by the lineage copied and the number of the clone. */
+    mutable std::map<std::pair<unsigned long long, int>, unsigned long long> m_copyLineages;
+
+    unsigned long long copyLineage(unsigned long long lineage, int number) const;
 };
 
 #endif

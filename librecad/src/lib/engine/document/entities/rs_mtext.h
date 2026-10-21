@@ -30,6 +30,7 @@
 #include <vector>
 
 #include "rs_entitycontainer.h"
+#include "lc_textentitystate.h"
 
 class RS_Text;
 class RS_Font;
@@ -115,12 +116,16 @@ struct RS_MTextData {
     HAlign halign = HALeft;
     /** Drawing direction */
     MTextDrawingDirection drawingDirection = LeftToRight;
+    // Imported LibreCad RTL marker 1 retains the historical reversal layout.
+    bool legacyRtlLayout = false;
     /** Line spacing style */
     MTextLineSpacingStyle lineSpacingStyle = AtLeast;
     /** Line spacing factor */
     double lineSpacingFactor = 1.;
     /** Text string */
     QString text;
+    /** Canonical source and explicit profile edit authority; never shaped text. */
+    LC_TextEntityState textState;
     /** Text style name */
     QString style;
     /** Rotation angle */
@@ -168,7 +173,8 @@ public:
    */
   static std::vector<int>
   computeBidiVisualOrder(const QString &text,
-                         Qt::LayoutDirection baseDirection);int getNumberOfLines() const;
+                         Qt::LayoutDirection baseDirection);
+    int getNumberOfLines() const;
 
     RS_Vector getInsertionPoint() const {
         return m_data.insertionPoint;
@@ -241,8 +247,36 @@ public:
         return m_data.text;
     }
 
+    QString getCanonicalText() const { return m_data.textState.source(); }
+    const LC_TextEntityState &getTextState() const { return m_data.textState; }
+    const LC_TextEntityState::Error &getTextStateError() const { return m_textStateError; }
+    LC_TextEntityState::Error importText(const LC_TextEntityState::Import &, const QString &compatibilityInput);
+    // compatibilityInput is the legacy interpretation BEFORE one leading
+    // alignment directive is stripped, not necessarily the final getText().
+    LC_TextEntityState::Error setCanonicalText(const QString &, const QString &compatibilityInput,
+                                              const LC_TextEntityState::Convention &);
+    const LC_TextProfileBinding &getTextProfile() const { return m_data.textState.profile(); }
+    LC_TextEntityState::CurrentProfile getCurrentTextProfile() const { return m_data.textState.currentProfile(); }
+    LC_TextProfile::Error replaceTextProfile(const LC_TextProfile::Value &value) { return m_data.textState.replaceProfile(value); }
+    LC_TextProfile::Error removeTextProfile() { return m_data.textState.removeProfile(); }
+    void resetTextProfile() { m_data.textState.resetProfile(); }
+    /**
+     * @return @p text, the content of an MText, as one line of plain text: what
+     * a TEXT or a single-line ATTRIB can hold of it.
+     *
+     * The content is read the way a program that knows MTEXT reads it, not the
+     * way update() draws it: formatting commands and the braces that scope them
+     * are left out, a stack is the text it was typed as, a tab is a space, and
+     * a run of line breaks is one space where it stands between two pieces of
+     * text. The commands without arguments (underline, overline, strike
+     * through, line and column breaks) always count. A command with arguments
+     * counts only if it is complete up to its ";", as a paragraph command does
+     * in update(); otherwise its backslash is text.
+     */
+    static QString toPlainLine(const QString& text);
+
     void setStyle(const QString& s) {
-        m_data.style = s;
+        m_data.style = s.isNull() ? QString{} : QString(s.constData(), s.size());
     }
 
     QString getStyle() const {
@@ -263,6 +297,15 @@ public:
 
     double getUsedTextHeight() const {
         return m_usedTextHeight;
+    }
+
+    /**
+     * @return true if the text holds a paragraph command ("\\p...;"). Such a
+     * command is not drawn and not laid out, so the used width says less about
+     * the room the text needs elsewhere than the width it was given.
+     */
+    bool hasParagraphCommands() const {
+        return m_hasParagraphCommands;
     }
 
     //	virtual double getLength() const {
@@ -325,26 +368,31 @@ protected:
      * flushBidiLine() in visual order after Unicode bidi reordering.
      */
     struct LC_BidiSegment {
-      enum Kind { Char, Space, Stack };
+      enum Kind { Char, Space, Tab, Stack };
       Kind kind = Char;
       QChar codepoint;         ///< for Char
       RS_Font *font = nullptr; ///< for Char: active font when parsed
-      double width = 0.0;      ///< for Space: advance width
+      double width = 0.0;      ///< for Space: advance width; for Tab: advance in a right-to-left line
       QString upperText;       ///< for Stack: upper text (super-/numerator)
       QString lowerText;       ///< for Stack: lower text (sub-/denominator)
     };
 
-    double updateAddLine(LC_TextLine* textLine, int lineCounter);
-    void addLetter(LC_TextLine& oneLine, QChar letter, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition);
-    void flushBidiLine(LC_TextLine &oneLine,
-                       std::vector<LC_BidiSegment> &segments,
-                       const RS_Vector &letterSpace, RS_Vector &letterPosition);
+    double updateAddLine(LC_TextLine* textLine, int lineCounter, double leadingAdvance);
+    void addLetter(LC_TextLine& oneLine, QString letter, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition);
+    double flushBidiLine(LC_TextLine &oneLine,
+                         std::vector<LC_BidiSegment> &segments,
+                         const RS_Vector &letterSpace, RS_Vector &letterPosition);
     void alignVertically();
     static RS_MText* createUpperLower(QString text, const RS_MTextData& data, const RS_Vector& position);
     RS_MTextData m_data;
+    LC_TextEntityState::Error m_textStateError;
+    LC_TextEntityState::Error applyText(const QString &, bool constructor,
+                                      const LC_TextEntityState *preparedState = nullptr);
 
     /**
-     * Text width used by the current contents of this text entity.
+     * Text width used by the current contents of this text entity: the widest
+     * line, measured over its ink. A left-attached line is measured from the
+     * insertion point instead, so that its indentation counts.
      * This property is updated by the update method.
      * @see update
      */
@@ -355,6 +403,8 @@ protected:
      * @see update
      */
     double m_usedTextHeight = 0.;
+    /** Set by update(): the text holds a paragraph command. */
+    bool m_hasParagraphCommands = false;
     void rotateLinesRefs() const;
     RS_Entity* cloneProxy() const override;
 };

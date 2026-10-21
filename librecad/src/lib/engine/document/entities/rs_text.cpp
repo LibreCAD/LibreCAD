@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include "rs_text.h"
+#include "lc_textbidi.h"
 
 #include<iostream>
 
@@ -34,36 +35,9 @@
 #include "rs_insert.h"
 #include "rs_line.h"
 #include "rs_math.h"
-#include "rs_mtext.h"
 #include "rs_painter.h"
 #include "rs_pen.h"
 
-namespace {
-/**
- * Resolve the UAX#9 base direction for an RS_Text update pass. Honors an
- * explicit @c LeftToRight / @c RightToLeft setting when set; for @c ByContent
- * scans the string for the first strong-directional character and uses that
- * (UAX#9 P-rules), defaulting to LTR when there is no strong character.
- */
-Qt::LayoutDirection
-resolveTextBaseDirection(const QString &text,
-                         RS_TextData::DrawingDirection setting) {
-  if (setting == RS_TextData::LeftToRight)
-    return Qt::LeftToRight;
-  if (setting == RS_TextData::RightToLeft)
-    return Qt::RightToLeft;
-  for (int i = 0; i < text.size(); ++i) {
-    const QChar::Direction d = text.at(i).direction();
-    if (d == QChar::DirL)
-      return Qt::LeftToRight;
-    if (d == QChar::DirR || d == QChar::DirAL)
-      return Qt::RightToLeft;
-  }
-  return Qt::LeftToRight;
-}
-} // namespace
-
-class RS_Font;
 
 RS_TextData::RS_TextData(const RS_Vector& insertionPoint, const RS_Vector& secondPoint, const double height, const double widthRel,
                          const VAlign valign, const HAlign halign, const TextGeneration textGeneration, const QString& text,
@@ -86,14 +60,12 @@ RS_Text::RS_Text(RS_EntityContainer* parent, const RS_TextData& d)
     : RS_EntityContainer(parent), m_data(d) {
     m_usedTextHeight = 0.0;
     m_usedTextWidth = 0.0;
-    RS_Text::setText(m_data.text);
+    setStyle(m_data.style);
+    applyText(m_data.text, true);
 }
 
 RS_Entity* RS_Text::clone() const {
-    const auto t = new RS_Text(*this);
-    t->setOwner(isOwner());
-    t->detach();
-    return t;
+    return new RS_Text(*this);
 }
 
 /**
@@ -101,25 +73,70 @@ RS_Entity* RS_Text::clone() const {
  * text are updated.
  */
 void RS_Text::setText(const QString& t) {
-    m_data.text = t;
+    applyText(t, false);
+}
+
+LC_TextEntityState::Error RS_Text::applyText(const QString &t, bool constructor,
+                                            const LC_TextEntityState *preparedState) {
+    const QString input = t.isNull() ? QString{} : QString(t.constData(), t.size());
+    const bool unchanged = !preparedState && m_data.textState.initialized() && input == m_data.textState.compatibilityText();
+    auto text = input;
+    auto valign = m_data.valign;
 
     // handle some special flags embedded in the text:
-    if (m_data.text.left(4) == "\\A0;") {
-        m_data.text = m_data.text.mid(4);
-        m_data.valign = RS_TextData::VABottom;
+    if (!unchanged && text.left(4) == "\\A0;") {
+        text = text.mid(4);
+        valign = RS_TextData::VABottom;
     }
-    else if (m_data.text.left(4) == "\\A1;") {
-        m_data.text = m_data.text.mid(4);
-        m_data.valign = RS_TextData::VAMiddle;
+    else if (!unchanged && text.left(4) == "\\A1;") {
+        text = text.mid(4);
+        valign = RS_TextData::VAMiddle;
     }
-    else if (m_data.text.left(4) == "\\A2;") {
-        m_data.text = m_data.text.mid(4);
-        m_data.valign = RS_TextData::VATop;
+    else if (!unchanged && text.left(4) == "\\A2;") {
+        text = text.mid(4);
+        valign = RS_TextData::VATop;
     }
+    auto next = preparedState ? *preparedState : m_data.textState;
+    if (!preparedState) {
+        auto failure = next.acceptLegacyText(input, text, LC_TextDocument::Syntax::Plain, constructor);
+        if (failure) {
+            m_textStateError = failure;
+            return failure;
+        }
+    }
+    m_data.text = std::move(text);
+    m_data.valign = valign;
+    m_data.textState = std::move(next);
+    m_textStateError = {};
     if (m_data.updateMode == RS2::Update) {
         update();
         //calculateBorders();
     }
+    return {};
+}
+
+LC_TextEntityState::Error RS_Text::importText(const LC_TextEntityState::Import &input, const QString &compatibilityInput) {
+    if (input.convention.syntax != LC_TextDocument::Syntax::Plain)
+        return {LC_TextEntityState::ErrorCode::InvalidConvention, QStringLiteral("TEXT requires a plain source convention")};
+    auto source = input;
+    if (!source.compatibilityStyle) source.compatibilityStyle = m_data.style;
+    auto next = m_data.textState;
+    auto failure = next.initializeImport(source, compatibilityInput);
+    if (failure) return failure;
+    const auto finalText = next.compatibilityText();
+    failure = next.acceptLegacyText(compatibilityInput, finalText, LC_TextDocument::Syntax::Plain, true);
+    if (failure) return failure;
+    return applyText(compatibilityInput, false, &next);
+}
+
+LC_TextEntityState::Error RS_Text::setCanonicalText(const QString &source, const QString &compatibilityInput,
+                                                   const LC_TextEntityState::Convention &convention) {
+    if (convention.syntax != LC_TextDocument::Syntax::Plain)
+        return {LC_TextEntityState::ErrorCode::InvalidConvention, QStringLiteral("TEXT requires a plain source convention")};
+    auto next = m_data.textState;
+    const auto failure = next.editSource(source, compatibilityInput, convention);
+    if (failure) return failure;
+    return applyText(compatibilityInput, false, &next);
 }
 
 void RS_Text::setDrawingDirection(RS_TextData::DrawingDirection direction) {
@@ -298,61 +315,61 @@ void RS_Text::update() {
     //   height: 9.0
     // Rotation, scaling and centering is done later
 
-    // Visual ordering depends on the drawingDirection setting:
-    //   * RightToLeft: pure positional reversal — matches AutoCAD semantics
-    //     and the editor mirror. UAX#9 alone leaves EN digits direction-
-    //     immune, so widget and canvas would diverge for "1234" otherwise.
-    //   * ByContent (and the other settings): UAX#9 with first-strong base
-    //     detection so embedded strong-RTL runs (Hebrew/Arabic) still
-    //     display in correct visual order.
-    std::vector<int> visual;
-    if (m_data.drawingDirection == RS_TextData::RightToLeft) {
-      visual.resize(m_data.text.size());
-      for (int i = 0; i < m_data.text.size(); ++i) {
-        visual[i] = m_data.text.size() - 1 - i;
-      }
-    } else {
-      const Qt::LayoutDirection baseDir =
-          resolveTextBaseDirection(m_data.text, m_data.drawingDirection);
-      visual = RS_MText::computeBidiVisualOrder(m_data.text, baseDir); // fixme - sand - it's better to use separate utility
-    }
-
-    for (int logIdx : visual) {
-      const QChar ch = m_data.text.at(logIdx);
-      // Space:
-      if (ch.unicode() == 0x20) {
-        letterPos += space;
-      } else {
-        // One Letter:
-        QString letterText = QString(ch);
-        if (font->findLetter(letterText) == nullptr) {
-          RS_DEBUG->print("RS_Text::update: missing font for letter( %s ), "
-                          "replaced it with QChar(0xfffd)",
-                          qPrintable(letterText));
-          letterText = QChar(0xfffd);
-        }
-        RS_DEBUG->print("RS_Text::update: insert a "
-                        "letter at pos: %f/%f",
-                        letterPos.x, letterPos.y);
-
-            RS_InsertData d(letterText, letterPos, RS_Vector(1.0, 1.0), 0.0, 1, 1, RS_Vector(0.0, 0.0), font->getLetterList(),
+    const auto direction = m_data.drawingDirection == RS_TextData::RightToLeft
+        ? Qt::RightToLeft
+        : m_data.drawingDirection == RS_TextData::LeftToRight
+              ? Qt::LeftToRight : Qt::LayoutDirectionAuto;
+    for (const auto &cluster : lc::textbidi::visualClusters(m_data.text, direction)) {
+        const RS_Vector clusterOrigin = letterPos;
+        for (int offset = 0; offset < cluster.length; ++offset) {
+            const int i = cluster.start + offset;
+            const QChar ch = m_data.text.at(i);
+            char32_t scalar = ch.unicode();
+            if (ch.isHighSurrogate() && offset + 1 < cluster.length &&
+                m_data.text.at(i + 1).isLowSurrogate()) {
+                scalar = QChar::surrogateToUcs4(ch, m_data.text.at(i + 1));
+                ++offset;
+            }
+            if (scalar == '\t') {
+                // A single line has no tab stops. Every release has drawn the
+                // "^I" of a DXF file as four spaces.
+                letterPos += space * 4.0;
+                continue;
+            }
+            const auto category = QChar::category(scalar);
+            if (category == QChar::Other_Format ||
+                category == QChar::Other_Control) {
+                continue;
+            }
+            if (scalar == ' ') {
+                letterPos += space;
+                continue;
+            }
+            if (cluster.rightToLeft)
+                scalar = QChar::mirroredChar(scalar);
+            QString letterText = QString::fromUcs4(&scalar, 1);
+            if (font->findLetter(letterText) == nullptr) {
+                letterText = QChar(0xfffd);
+            }
+            const bool combining = category == QChar::Mark_NonSpacing ||
+                                   category == QChar::Mark_Enclosing;
+            const RS_Vector glyphPos = combining ? clusterOrigin : letterPos;
+            RS_InsertData d(letterText, glyphPos, RS_Vector(1.0, 1.0), 0.0,
+                            1, 1, RS_Vector(0.0, 0.0), font->getLetterList(),
                             RS2::NoUpdate);
-
-            auto* letter = new RS_Insert(this, d);
+            auto *letter = new RS_Insert(this, d);
             letter->setPen(RS_Pen(RS2::FlagInvalid));
             letter->setLayer(nullptr);
             letter->update();
             letter->forcedCalculateBorders();
-
-        auto letterWidth = RS_Vector(letter->getMax().x - letterPos.x, 0.0);
-            if (letterWidth.x < 0) {
-                letterWidth.x = -letterSpace.x;
-            }
             addEntity(letter);
-
-            // next letter position:
-            letterPos += letterWidth;
-            letterPos += letterSpace;
+            if (!combining) {
+                double width = letter->getMax().x - letterPos.x;
+                if (width < 0.0) {
+                    width = -letterSpace.x;
+                }
+                letterPos.x += width + letterSpace.x;
+            }
         }
     }
 
@@ -361,6 +378,9 @@ void RS_Text::update() {
         forcedCalculateBorders();
     }
     const RS_Vector textSize = getSize();
+    const RS_Vector textMin = getMin();
+    const RS_Vector textMax = getMax();
+    const bool hasTextBounds = textMin.valid && textMax.valid;
 
     RS_DEBUG->print("RS_Text::updateAddLine: width 2: %f", textSize.x);
 
@@ -373,7 +393,12 @@ void RS_Text::update() {
     RS_Vector offset(0.0, 0.0);
     switch (m_data.valign) {
         case RS_TextData::VAMiddle: {
-            offset.move(RS_Vector(0.0, vSize / 2.0));
+            // Fonts can have non-zero bearings and cap heights.  Align to
+            // the rendered bounds instead of the nominal 9-unit cell.
+            const double middleY = hasTextBounds
+                ? -0.5 * (textMin.y + textMax.y)
+                : vSize / 2.0;
+            offset.move(RS_Vector(0.0, middleY));
             break;
         }
         case RS_TextData::VABottom: {
@@ -395,8 +420,11 @@ void RS_Text::update() {
             break;
         }
         case RS_TextData::HACenter: {
-            RS_DEBUG->print("RS_Text::updateAddLine: move by: %f", -textSize.x / 2.0);
-            offset.move(RS_Vector(-textSize.x / 2.0, 0.0));
+            const double middleX = hasTextBounds
+                ? -0.5 * (textMin.x + textMax.x)
+                : -textSize.x / 2.0;
+            RS_DEBUG->print("RS_Text::updateAddLine: move by: %f", middleX);
+            offset.move(RS_Vector(middleX, 0.0));
             break;
         }
         case RS_TextData::HARight: {

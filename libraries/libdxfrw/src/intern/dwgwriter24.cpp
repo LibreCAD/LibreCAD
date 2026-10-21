@@ -14,6 +14,7 @@
 #include "dwgwriter24.h"
 #include "dwgutil.h"
 #include "../drw_entities.h"
+#include <algorithm>
 #include <cctype>
 #include <limits>
 
@@ -83,7 +84,8 @@ bool dwgWriter24::writeDwgHeader() {
 
     // R2013 files emitted by this writer use application maintenance 6, so
     // the R2010/R2013 high-size field is required. R2018 always carries it.
-    if (m_version == DRW::AC1027 || m_version >= DRW::AC1032)
+    const bool hasHSize = m_version == DRW::AC1027 || m_version >= DRW::AC1032;
+    if (hasHSize)
         m_buf.putRawLong32(0);
 
     // AC1024+: RL bitSize placeholder.
@@ -121,7 +123,8 @@ bool dwgWriter24::writeDwgHeader() {
             m_buf.putBytes(handleBuf.data().data(), handleBuf.size());
     }
 
-    endSentinelSection(sectionStart, sizeOffset, dwgSentinels::HEADER_END);
+    endSentinelSection(sectionStart, sizeOffset, dwgSentinels::HEADER_END,
+                       0, hasHSize ? 4 : 0);
 
     m_sectionSizes[recno::HEADER] =
         static_cast<std::uint32_t>(m_buf.size() - sectionStart);
@@ -131,7 +134,7 @@ bool dwgWriter24::writeDwgHeader() {
 // --- dwgWriter24::writeDwgClasses -------------------------------------------
 // AC1024 CLASSES section differs from AC1018 in two ways:
 //   1. An RL bitSize field is inserted after RL size.
-//   2. Eight ODA-defined unknown zero bytes are written before the end
+//   2. Eight ODA-defined unknown zero bytes are written after the end
 //      sentinel.
 //
 bool dwgWriter24::writeDwgClasses() {
@@ -158,7 +161,7 @@ bool dwgWriter24::writeDwgClasses() {
     m_buf.putBitShort(maxDwgClassNumber());
     m_buf.putRawChar8(0);   // rc1
     m_buf.putRawChar8(0);   // rc2
-    m_buf.putBit(0);        // flag
+    m_buf.putBit(1);        // class data present
 
     dwgBufferW classStrings;
     if (!emitDwgClassDefinitions(
@@ -167,9 +170,6 @@ bool dwgWriter24::writeDwgClasses() {
                                                &classStrings);
             }))
         return false;
-
-    m_buf.alignToByte();
-    classStrings.alignToByte();
 
     if (classStrings.size() > 0)
         m_buf.putBytes(classStrings.data().data(), classStrings.size());
@@ -206,15 +206,14 @@ bool dwgWriter24::writeDwgClasses() {
 
     // The RL covers the payload up to, but not including, the CRC.
     std::uint32_t payloadSize =
-        static_cast<std::uint32_t>(m_buf.size()) - static_cast<std::uint32_t>(sizeOffset + 4);
+        static_cast<std::uint32_t>(m_buf.size() - sizeOffset - 4 - (hasHSize ? 4 : 0));
     m_buf.patchRawLong32(sizeOffset, payloadSize);
 
     const std::uint16_t crc = m_buf.crc16(0xC0C1, sectionStart + 16, m_buf.size());
     m_buf.putRawShort16(crc);
+    m_buf.putBytes(dwgSentinels::CLASSES_END, 16);
     for (std::size_t i = 0; i < dwgSpec::kClassesUnknownTailBytes; ++i)
         m_buf.putRawChar8(0);
-
-    m_buf.putBytes(dwgSentinels::CLASSES_END, 16);
 
     m_sectionSizes[recno::CLASSES] =
         static_cast<std::uint32_t>(m_buf.size() - sectionStart);
@@ -260,6 +259,30 @@ bool dwgWriter24::encodeEntity(DRW_Entity *ent) {
                 styleIt != m_writingCtx.mlineStyleMap.end())
                 mline->styleHandle = styleIt->second;
         }
+    }
+    // The MTEXT embedded in a multi-line attribute names a layer, a linetype
+    // and a text style by handle. One that was read from another drawing says
+    // nothing here, where the table records have handles of their own: keep it
+    // only if this drawing has such a record, else use what the attribute has.
+    if (auto *attrib = dynamic_cast<DRW_Attrib *>(ent);
+        attrib != nullptr && attrib->mtext != nullptr) {
+        const auto names = [](const auto& table, std::uint32_t handle) {
+            return std::any_of(table.cbegin(), table.cend(),
+                               [handle](const auto& record) {
+                                   return record.second == handle;
+                               });
+        };
+        DRW_MText& embedded = *attrib->mtext;
+        if (!names(m_writingCtx.layerMap, embedded.dwgLayerHandle()))
+            embedded.setDwgLayerHandle(ent->layerH.ref);
+        if (embedded.dwgLinetypeHandle() != 0
+            && !names(m_writingCtx.ltypeMap, embedded.dwgLinetypeHandle())) {
+            embedded.setDwgLinetypeHandle(0);
+            if (embedded.lineType.empty())
+                embedded.lineType = "BYLAYER";
+        }
+        if (!names(m_writingCtx.styleMap, embedded.styleH.ref))
+            embedded.styleH.ref = attrib->styleH.ref;
     }
     prepareBlockOwnedEntity(*ent);
     if (!canRecordBlockOwnedEntity(*ent))

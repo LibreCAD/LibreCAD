@@ -137,7 +137,8 @@ public:
     //Ellipse must have ratio<1, and not reversed
     *@ x1, ellipse angle
     *@ x2, ellipse angle
-    //@return the arc length between ellipse angle x1, x2
+    //@return the arc length between ellipse angle x1, x2: that of the whole ellipse if they do not differ,
+    // and 0 if an angle or the ratio is not a finite number (or the ratio is above 1)
     **/
     double getEllipseLength(double angle1, double angle2) const;
     double getEllipseLength(double angleLength) const;
@@ -236,10 +237,13 @@ public:
     void revertDirection() override;
 
     /**
-     * Produce a true equidistant offset of this ellipse approximated by an
-     * `LC_SplinePoints` (the offset of an ellipse is not itself an ellipse).
-     * Returns one spline (full ellipse → closed; elliptic arc → open) wrapped
-     * in a vector, or empty for degenerate/cusp inputs.
+     * The trimmed offset through @p coord at |@p distance|, by the
+     * curve-offset engine (LC_CurveOffset::createLegacyOffset()): cubic
+     * RS_Spline chains within its tolerance, the loops past b^2/a cut, judged
+     * on the arc's own sweep. A whole ellipse's offset is an open-typed spline
+     * whose ends meet at a smooth point. Empty when nothing is left, or on a
+     * failure; callers that must tell those apart use
+     * LC_CurveOffset::createEntities().
      */
     std::vector<RS_Entity*> createOffset(const RS_Vector& coord,
                                          const double& distance) const override;

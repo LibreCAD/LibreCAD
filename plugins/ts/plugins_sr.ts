@@ -78,7 +78,12 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ако је &apos;Задржи оригиналне објекте&apos; чекирано,
+поравнање ће умножити а не преместити изабране објекте.
+
+Ако је &apos;Изаберите базне тачке прво&apos; чекирано,
+Поравнање ће питати за тачке порвнања редом
+прво базна, друга базна, први циљ, други циљ.</translation>
     </message>
     <message>
         <source>If &apos;Keep original objects&apos; is checked,

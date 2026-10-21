@@ -1,0 +1,37 @@
+{
+  "manifestVersion": 1,
+  "profile": "lc-amiri-1.003-ot-v1",
+  "family": "Amiri",
+  "style": "Regular",
+  "version": "1.003",
+  "file": "Amiri-Regular.ttf",
+  "faceIndex": 0,
+  "sha256": "cd2550c0f4c05eb341bf97958211aaa39382bca96577ba3a67d4a3b4912c43c0",
+  "source": "https://github.com/aliftype/amiri/releases/download/1.003/Amiri-1.003.zip",
+  "sourceArchiveSha256": "81af0aff7d2086d8af24cea7202f7546130997982534691373485cd96744d05e",
+  "license": "OFL-1.1",
+  "licenseFile": "OFL.txt",
+  "copyright": "Copyright 2010-2022 The Amiri Project Authors (https://github.com/aliftype/amiri).",
+  "unitsPerEm": 1000,
+  "metrics": {
+    "convention": "nominal-9-from-U0041-outline-maxY",
+    "normalizationNumerator": 9,
+    "normalizationDenominator": 647,
+    "baseline": 0,
+    "ascender": 1124,
+    "descender": -634,
+    "lineHeight": 1758,
+    "referenceGlyph": "U+0041",
+    "referenceOutlineBounds": [-14, -3, 618, 647]
+  },
+  "shaping": {
+    "backend": "harfbuzz-ot",
+    "script": "Arab",
+    "language": "ar",
+    "scale": "unitsPerEm",
+    "clusterLevel": "monotone-characters",
+    "features": "OpenType defaults",
+    "tracking": 0
+  },
+  "activation": "explicit profile only; does not replace amiri-regular.lff"
+}

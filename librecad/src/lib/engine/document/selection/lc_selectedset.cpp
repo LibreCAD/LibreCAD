@@ -25,12 +25,38 @@
 
 #include "rs_entity.h"
 #include "rs_layer.h"
+#include <utility>
 
 LC_SelectedSet::LC_SelectedSet() = default;
 
+LC_SelectedSet::PreparedRemoval LC_SelectedSet::prepareRemoval(const std::unordered_set<RS_Entity*> &candidates) const {
+    PreparedRemoval prepared;
+    prepared.remaining.reserve(m_entitiesList.size());
+    prepared.removed.reserve(m_entitiesList.size());
+    for (auto *entity:std::as_const(m_entitiesList)) {
+        if (candidates.find(entity)!=candidates.end()) prepared.removed.push_back(entity);
+        else prepared.remaining.push_back(entity);
+    }
+    return prepared;
+}
+
+bool LC_SelectedSet::commitRemoval(PreparedRemoval &&prepared) noexcept {
+    if (prepared.removed.empty()) return false;
+    m_entitiesList.swap(prepared.remaining);
+    for (auto *entity:std::as_const(prepared.removed))
+        if (entity) entity->RS_Entity::setSelectionFlag(false);
+    return true;
+}
+
+/**
+ * Tells the listeners that still listen (see LC_SelectedSetListener::selectedSetDestroyed()): a dock
+ * attached to the selection keeps its drawing, which this is the last part of.
+ */
 LC_SelectedSet::~LC_SelectedSet() {
     m_entitiesList.clear();
-    m_listeners.clear();
+    m_listeners.drain([](LC_SelectedSetListener* listener) {
+        listener->selectedSetDestroyed();
+    });
 }
 
 void LC_SelectedSet::clear() {
@@ -74,19 +100,12 @@ void LC_SelectedSet::replaceBy(QList<RS_Entity*>& entities) {
 }
 
 void LC_SelectedSet::addListener(LC_SelectedSetListener* listener) {
-    if (listener == nullptr) {
-        return;
-    }
-    for (const auto l : std::as_const(m_listeners)) {
-        if (l == listener) {
-            return;
-        }
-    }
-    m_listeners.append(listener);
+    // added only once; the listener removes itself when it is destroyed
+    m_listeners.add(listener);
 }
 
 void LC_SelectedSet::removeListener(LC_SelectedSetListener* listener) {
-    m_listeners.removeOne(listener);
+    m_listeners.remove(listener);
 }
 
 void LC_SelectedSet::fireSelectionChanged() {

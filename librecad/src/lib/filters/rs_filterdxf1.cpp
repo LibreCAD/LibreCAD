@@ -25,10 +25,11 @@
 **********************************************************************/
 
 #include<cstdlib>
+#include<cstring>
 #include<QRegularExpression>
 #include<QStringDecoder>
 
-#include "rs_filterdxfrw.h"
+#include "lc_colornumbers.h"
 #include "rs_filterdxf1.h"
 
 #include "rs_arc.h"
@@ -53,7 +54,7 @@ RS_FilterDXF1::RS_FilterDXF1()
 		:RS_FilterInterface()
 		, graphic(nullptr)
 {
-	RS_DEBUG->print("Setting up DXF 1 filter...");
+	LC_LOG << "Setting up DXF 1 filter...";
 }
 
 /**
@@ -65,7 +66,7 @@ RS_FilterDXF1::RS_FilterDXF1()
  * taken to be stored in a file.
  */
 bool RS_FilterDXF1::fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/) {
-    RS_DEBUG->print("DXF1 Filter: importing file '%s'...", file.toLatin1().data());
+    LC_LOG << "DXF1 Filter: importing file '" << file << "'...";
 
 	this->graphic = &g;
 
@@ -86,8 +87,7 @@ bool RS_FilterDXF1::fileImport(RS_Graphic& g, const QString& file, RS2::FormatTy
 
 bool RS_FilterDXF1::fileExport(RS_Graphic& /*g*/, const QString& /*file*/,
 	RS2::FormatType /*type*/) {
-	RS_DEBUG->print(RS_Debug::D_WARNING,
-					"Exporting of QCad 1.x file not implemented");
+	LC_LOG(RS_Debug::D_WARNING) << "Exporting of QCad 1.x file not implemented";
 	return false;
 }
 
@@ -95,7 +95,7 @@ bool RS_FilterDXF1::fileExport(RS_Graphic& /*g*/, const QString& /*file*/,
  * Reads a dxf1 file from buffer.
  */
 bool RS_FilterDXF1::readFromBuffer() {
-    RS_DEBUG->print( "\nDXF: Read from buffer" );
+    LC_LOG << "\nDXF: Read from buffer";
 
     bool      ret;                    // returned value
     QString   dxfLine;                // A line in the dxf file
@@ -123,27 +123,22 @@ bool RS_FilterDXF1::readFromBuffer() {
 
     //graphic->addLayer(DEF_DEFAULTLAYER);
 
-    //RS_DEBUG->print( "\nDefault layer added" );
-
     // Loaded graphics without unit information: load as unit less:
     //graphic->setUnit( None );
 
-    RS_DEBUG->print( "\nUnit set" );
+    LC_LOG << "\nUnit set";
 
     resetBufP();
 
     if(fBuf) {
 
-        RS_DEBUG->print( "\nBuffer OK" );
-        RS_DEBUG->print( "\nBuffer: " );
-        RS_DEBUG->print( fBuf );
+        LC_LOG << "\nBuffer OK\n\nBuffer: \n" << fBuf;
 
         do {
             dxfLine=getBufLine();
             pen = RS_Pen(RS_Color(RS2::FlagByLayer), RS2::WidthByLayer, RS2::LineByLayer);
 
-            RS_DEBUG->print( "\ndxfLine: " );
-            RS_DEBUG->print( dxfLine.toLatin1().data() );
+            LC_LOG << "\ndxfLine: \n" << dxfLine;
 
             // $-Setting in the header of DXF found
             // RVT_PORT changed all occurenses of if (dxfline && ....) to if (dxfline.size() ......)
@@ -564,14 +559,14 @@ bool RS_FilterDXF1::readFromBuffer() {
                                 case  6:  // style
                                     //if(currentLayer)
                                     //currentLayer->setStyle( graphic->nameToStyle(dxfLine) );
-                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
+                                    pen.setLineTypeName(dxfLine);
                                     break;
                                 case 39:  // Thickness
                                     //if(currentLayer) currentLayer->setWidth(dxfLine.toInt());
                                     pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(LC_ColorNumbers::numberToColor(dxfLine.toInt()));
                                     //if(currentLayer) {
                                     //	currentLayer->setColor( graphic->numberToColor(dxfLine.toInt(), !oldColorNumbers));
                                     //}
@@ -603,7 +598,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             if(dxfLine.size()) {
                                 switch(code) {
                                 case  6:  // style
-                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
+                                    pen.setLineTypeName(dxfLine);
                                     break;
                                 case  8:  // Layer
                                     //if(dxfLine!=lastLayer) {
@@ -626,7 +621,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(LC_ColorNumbers::numberToColor(dxfLine.toInt()));
                                     break;
                                 default:
                                     break;
@@ -655,7 +650,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             if(dxfLine.size()) {
                                 switch(code) {
                                 case  6:  // style
-                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
+                                    pen.setLineTypeName(dxfLine);
                                     break;
                                 case  8:  // Layer
                                     //if(dxfLine!=lastLayer) {
@@ -686,7 +681,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(LC_ColorNumbers::numberToColor(dxfLine.toInt()));
                                     break;
                                 default:
                                     break;
@@ -717,7 +712,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             if(dxfLine.size()) {
                                 switch(code) {
                                 case  6:  // style
-                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
+                                    pen.setLineTypeName(dxfLine);
                                     break;
                                 case  8:  // Layer
                                     //if(dxfLine!=lastLayer) {
@@ -752,7 +747,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(LC_ColorNumbers::numberToColor(dxfLine.toInt()));
                                     break;
                                 default:
                                     break;
@@ -782,7 +777,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             if(dxfLine.size()) {
                                 switch(code) {
                                 case  6:  // style
-                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
+                                    pen.setLineTypeName(dxfLine);
                                     break;
                                 case  8:  // Layer
                                     //if(dxfLine!=lastLayer) {
@@ -809,7 +804,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(LC_ColorNumbers::numberToColor(dxfLine.toInt()));
                                     break;
                                 default:
                                     break;
@@ -926,7 +921,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     break;
 
                                 case  6:  // style
-                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
+                                    pen.setLineTypeName(dxfLine);
                                     break;
 
                                 case  7:  
@@ -1038,7 +1033,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(LC_ColorNumbers::numberToColor(dxfLine.toInt()));
                                     break;
                                 default:
                                     break;
@@ -1102,7 +1097,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                         strDecodeDxfString(dimText);
                                     break;
                                 case  6:  // style
-                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
+                                    pen.setLineTypeName(dxfLine);
                                     break;
                                 case  8:  // Layer
                                     //if(dxfLine!=lastLayer) {
@@ -1168,7 +1163,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(LC_ColorNumbers::numberToColor(dxfLine.toInt()));
                                     break;
 
                                 default:

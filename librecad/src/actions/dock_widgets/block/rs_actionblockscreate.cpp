@@ -58,7 +58,7 @@ bool RS_ActionBlocksCreate::doTriggerModifications(LC_DocumentModificationBatch&
     }
     RS_BlockList* blockList = m_graphic->getBlockList();
     if (blockList != nullptr) {
-        const RS_BlockData d = RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
+        const RS_BlockData d = RS_DIALOGFACTORY->requestNewBlockDialog(blockList, tr("Create Block"));
 
         if (!d.name.isEmpty()) {
             RS_Block* block = RS_Creation::createBlock(&d, *m_referencePoint, m_selectedEntities);

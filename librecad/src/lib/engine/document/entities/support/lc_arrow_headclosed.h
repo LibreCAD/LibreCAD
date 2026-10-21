@@ -30,6 +30,7 @@ public:
     LC_ArrowHeadClosed(RS_EntityContainer* container, const RS_Vector& point, double dirAngle, double size, double ownAngle, bool filled);
     RS_Entity* clone() const override;
     void draw(RS_Painter* painter) override;
+    std::vector<std::unique_ptr<RS_Entity>> exportPrimitives() const override;
     double getOwnAngle() const {return m_ownAngle;}
 protected:
     void createVertexes();

@@ -56,6 +56,7 @@ protected slots:
     void onLineTypeChanged(RS2::LineType);
 protected:
     bool m_initialized = false;
+    RS_Pen m_sourcePen;
     void notifyPenChanged();
     void focusInEvent(QFocusEvent *event) override;
     void focusOutEvent(QFocusEvent *event) override;

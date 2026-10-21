@@ -350,7 +350,8 @@ bool dwgReaderR11::readDwgHeader(DRW_Header& hdr) {
     return true;
 }
 
-bool dwgReaderR11::readNameTable(std::uint32_t hdrPos, std::vector<std::string>& out) {
+bool dwgReaderR11::readNameTable(std::uint32_t hdrPos, std::vector<std::string>& out,
+                                 std::map<std::uint32_t, std::string>* blockNameByOffset) {
     // Table-section header (10 bytes): size(RS) number(RS) flags(RS) address(RL).
     // Each record is `size` bytes: flag(RC) + name(32 fixed null-padded bytes) +
     // used(RS,R11) + per-table fields. We only need the name (at record+1).
@@ -389,6 +390,21 @@ bool dwgReaderR11::readNameTable(std::uint32_t hdrPos, std::vector<std::string>&
             std::string name = preR13FixedText(*fileBuf, 32, decoder);
             if (!fileBuf->isGood())
                 return false;
+            // An anonymous block is named by its prefix alone (*D, *U, *X);
+            // number it, as a DXF of the drawing does, to tell them apart.
+            if (name.size() == 2 && name.front() == '*')
+                name += std::to_string(i);
+            // A BLOCK record ends with the offset of its block in the BLOCKS
+            // section (tagged in the top bits, as the section sizes are). A
+            // BLOCK entity without an inline name takes it from there.
+            const bool hasUsed = (version == DRW::AC1009);
+            const std::uint64_t offsetField = nameOffset + 32 + (hasUsed ? 2 : 0);
+            if (blockNameByOffset != nullptr && offsetField + 4 <= recordOffset + recSize
+                && fileBuf->setPosition(offsetField)) {
+                const std::uint32_t blockOffset = fileBuf->getRawLong32() & 0x3FFFFFFFu;
+                if (fileBuf->isGood())
+                    blockNameByOffset->emplace(blockOffset, name);
+            }
             names.push_back(std::move(name));
         }
         out.swap(names);
@@ -662,7 +678,8 @@ bool dwgReaderR11::readStyleTable(std::uint32_t hdrPos) {
 bool dwgReaderR11::readDwgTables(DRW_Header& /*hdr*/) {
     // The 5 leading table-section headers (BLOCK, LAYER, STYLE, LTYPE, VIEW) are
     // 10 bytes each starting at file offset 0x2C.
-    if (!readNameTable(0x2C, m_blockNames))
+    m_blockNameByOffset.clear();
+    if (!readNameTable(0x2C, m_blockNames, &m_blockNameByOffset))
         return false;                    // BLOCK table
     // Per-record decoders for BOTH R11/AC1009 and R10/AC1006: R10 records are
     // byte-identical minus the 2-byte `used` field, which the walkers skip via
@@ -1097,6 +1114,20 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa,
             std::string xref, name;
             if (opts & 0x02) xref = readTv();   // xref path name
             if (opts & 0x04) name = readTv();   // block name (inline)
+            // A bare anonymous prefix (*D, *U, *X) carries no number of its
+            // own; the matching BLOCK table record has it numbered by table
+            // index (readNameTable), as the DXF of the drawing does. Prefer
+            // that name here too, the way an empty inline name already does
+            // below, so both name the same block the same way.
+            if (name.size() == 2 && name.front() == '*')
+                name.clear();
+            if (name.empty() && recStart >= m_blocksStart) {
+                const auto offset = static_cast<std::uint32_t>(recStart - m_blocksStart);
+                const auto named = m_blockNameByOffset.find(offset);
+                name = named != m_blockNameByOffset.end()
+                    ? named->second
+                    : "*U" + std::to_string(offset); // never unnamed
+            }
             DRW_Block blk;
             blk.basePoint = base; blk.basePoint.z = elevation;
             blk.name = name;

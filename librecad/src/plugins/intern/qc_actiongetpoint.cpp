@@ -26,6 +26,7 @@
 
 #include "qc_actiongetpoint.h"
 
+#include <QKeyEvent>
 #include <QMouseEvent>
 
 #include "rs_coordinateevent.h"
@@ -90,6 +91,22 @@ void QC_ActionGetPoint::mouseReleaseEvent(QMouseEvent* e) {
         m_canceled = true;
         m_completed = true;
         finish();
+    }
+}
+
+// Escape cancels, as it does in the selection the plugin API offers; without
+// this the only way out of a plugin's point request is a right-click.
+void QC_ActionGetPoint::keyPressEvent(QKeyEvent* e) {
+    if (e->key() == Qt::Key_Escape) {
+        m_canceled = true;
+        updatePrompt();
+        finish();
+        m_completed = true;
+    }
+    else {
+        // The base handles Tab, and ignores what it does not use so the key
+        // carries on past this action.
+        RS_PreviewActionInterface::keyPressEvent(e);
     }
 }
 

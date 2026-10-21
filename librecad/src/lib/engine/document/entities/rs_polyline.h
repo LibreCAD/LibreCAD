@@ -56,6 +56,7 @@ class RS_Polyline : public RS_EntityContainer {
 public:
     explicit RS_Polyline(RS_EntityContainer* parent = nullptr);
     RS_Polyline(RS_EntityContainer* parent, const RS_PolylineData& d);
+    RS_Polyline(const RS_Polyline& other);
     RS_Entity* clone() const override;
 
     /**	@return RS2::EntityPolyline */
@@ -71,6 +72,9 @@ public:
     RS_PolylineData& getData() {
         return m_data;
     }
+
+    void setLayer(const QString& name) override;
+    void setLayer(RS_Layer* layer) override;
 
     /** sets a new start point of the polyline */
     void setStartpoint(const RS_Vector& v);

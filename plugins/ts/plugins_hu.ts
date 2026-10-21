@@ -103,7 +103,12 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ha az "Eredeti objektumok megőrzése" be van jelölve,
+Az igazítás nem áthelyezi, hanem másolja a kijelölt objektumokat.
+
+Ha a "Először adja meg a bázispontokat" jelölőnégyzet be van jelölve,
+Az Igazítás kérni fogja sorrendben a nyomvonalpontokat:
+első bázis, második bázis, első cél, második cél.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="89"/>

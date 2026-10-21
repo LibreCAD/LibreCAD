@@ -23,6 +23,7 @@
 #include "rs_painter.h"
 
 #include <QPainterPath>
+#include <QPaintEngine>
 
 #include <algorithm>
 #include <cmath>
@@ -90,17 +91,13 @@ namespace {
             && radiusY > 0.;
     }
 
-    // Screen units per pattern millimetre. Both the dash pattern and the dash
-    // offset are scaled by it.
-    double dashPatternScale(const double screenWidth, double dpmm) {
-        // dash pattern is in mm
-        // d*dpmm/screenWidth, so, the scaling factor k = dpmm/screenWidth
-        dpmm = std::max(dpmm, 1e-6);
-        return dpmm / std::max(screenWidth, 1.);
+    // Qt measures dashes and offsets in pen widths; a zero-width pen uses one pixel.
+    double dashPatternScale(const double screenWidth, const double deviceScale) {
+        return std::max(deviceScale, 1e-6) / (screenWidth > 0. ? screenWidth : 1.);
     }
 
     // Convert from LibreCAD line style pattern to QPen Dash Pattern.
-    // QPen dash pattern by default is in the unit of pixel
+    // Pattern lengths are in drawing units, not device pixels.
     QVector<qreal> rsToQDashPattern(const RS2::LineType t, const double k) {
         const RS_LineTypePattern* linePattern = RS_LineTypePattern::getPattern(t);
         if (linePattern == nullptr) {
@@ -110,7 +107,7 @@ namespace {
         }
         QVector<qreal> dashPattern = linePattern->pattern;
         std::transform(dashPattern.begin(), dashPattern.end(), dashPattern.begin(), [k](const qreal d) {
-            return std::max(k * std::abs(d), 1.);
+            return k * std::abs(d);
         });
         dashPattern.resize(dashPattern.size() - dashPattern.size() % 2);
         return dashPattern;
@@ -1245,8 +1242,8 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops) co
                 if (!hasUsableEllipseParameters(uiCenter, radius, radius))
                     break;
 
-                    loopPath.moveTo(uiCenter);
-                    loopPath.addEllipse(uiCenter, radius, radius);
+                loopPath.moveTo(uiCenter);
+                loopPath.addEllipse(uiCenter, radius, radius);
             }
                     break;
                 case RS2::EntityEllipse: {
@@ -1262,13 +1259,13 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops) co
                     if (!hasUsableArcParameters(ellipseRect, startAngle, angularLength))
                         break;
 
-                        ellipsePath.arcMoveTo(ellipseRect, startAngle);
-                        ellipsePath.arcTo(ellipseRect, startAngle, angularLength);
+                    ellipsePath.arcMoveTo(ellipseRect, startAngle);
+                    ellipsePath.arcTo(ellipseRect, startAngle, angularLength);
                 } else {
                     if (!hasUsableArcParameters(ellipseRect, 0., 360.))
                         break;
 
-                        ellipsePath.addEllipse(ellipseRect);
+                    ellipsePath.addEllipse(ellipseRect);
                     }
 
                     QTransform ellipseTransform;
@@ -1293,7 +1290,7 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops) co
                 if (!hasFiniteValue(ellipseAngle))
                     break;
 
-                    ellipseTransform.rotate(-ellipseAngle);
+                ellipseTransform.rotate(-ellipseAngle);
                     loopPath.addPath(ellipseTransform.map(ellipsePath));
                     break;
                 }
@@ -1554,6 +1551,10 @@ void RS_Painter::noCapStyle() {
 }
 
 void RS_Painter::setPen(const RS_Pen& pen) {
+    setPen(pen, DashSpace::Model);
+}
+
+void RS_Painter::setPen(const RS_Pen& pen, const DashSpace dashSpace) {
     m_lpen = pen;
     QColor pColor;
     switch (m_drawingMode) {
@@ -1576,11 +1577,15 @@ void RS_Painter::setPen(const RS_Pen& pen) {
 
     double screenWidth = pen.getScreenWidth();
     if (style == Qt::CustomDashLine) {
-        const double dpmm = getDpmmCached();
-        const double k = dashPatternScale(screenWidth/*p.widthF()*/, dpmm);
-        // The pattern depends only on the line type, width and resolution.
+        double deviceScale = m_viewport && dashSpace == DashSpace::Model
+            ? std::abs(toGuiDX(1.0)) : getDpmmCached();
+        // Cosmetic dashes use physical pixels rather than logical viewport pixels.
+        if (m_viewport && screenWidth == 0.0)
+            deviceScale *= getDevicePixelRatio();
+        const double k = dashPatternScale(screenWidth, deviceScale);
+        // Rebuild when the line type, width or viewport scale changes.
         if (!m_lastDashValid || m_lastDashLineType != lineType
-            || m_lastDashScreenWidth != screenWidth || m_lastDashDpmm != dpmm) {
+            || m_lastDashScreenWidth != screenWidth || m_lastDashDeviceScale != deviceScale) {
             QVector<qreal> dashPattern = rsToQDashPattern(lineType, k);
             if (dashPattern.isEmpty()) {
                 style = Qt::SolidLine;
@@ -1590,7 +1595,7 @@ void RS_Painter::setPen(const RS_Pen& pen) {
                 m_lastDashValid = true;
                 m_lastDashLineType = lineType;
                 m_lastDashScreenWidth = screenWidth;
-                m_lastDashDpmm = dpmm;
+                m_lastDashDeviceScale = deviceScale;
             }
         }
         if (style == Qt::CustomDashLine) {
@@ -1609,11 +1614,36 @@ void RS_Painter::setPen(const RS_Pen& pen) {
     m_lastUsedPen.setJoinStyle(m_penJoinStyle);
     m_lastUsedPen.setCapStyle(m_penCapStyle);
 
+    QPen devicePen = m_lastUsedPen;
+    // A painter that could not begin on its device, as on a view squashed to
+    // no height, has no paint engine.
+    const QPaintEngine* engine = paintEngine();
+    if (style == Qt::CustomDashLine && engine != nullptr && engine->type() == QPaintEngine::Raster
+            && (screenWidth == 0.0 || screenWidth == 1.0)) {
+        auto pattern = devicePen.dashPattern();
+        // Qt's fast stroker caps dashes at 1024 pixels. Step past its one-pixel
+        // width cutoff to use the general stroker without a visible width change.
+        if (std::any_of(pattern.cbegin(), pattern.cend(), [](qreal dash) {
+                constexpr qreal cosmeticDashLimit = 1024.0;
+                return dash > cosmeticDashLimit;
+            })) {
+            const qreal width = std::nextafter(qreal(1.0), qreal(2.0));
+            // A fresh pen avoids setWidthF's fuzzy comparison with an existing width of one.
+            devicePen = QPen(devicePen.brush(), width, Qt::CustomDashLine, m_penCapStyle, m_penJoinStyle);
+            devicePen.setCosmetic(screenWidth == 0.0);
+            devicePen.setMiterLimit(m_lastUsedPen.miterLimit());
+            for (auto& dash : pattern)
+                dash /= width;
+            devicePen.setDashPattern(pattern);
+            devicePen.setDashOffset(m_lastUsedPen.dashOffset() / width);
+        }
+    }
+
     // QPen setters leave an unchanged pen shared, so this is a pointer comparison
     // unless something changed. It checks the painter's own pen, which
     // QPainter::restore() or a pen set on the QPainter base may have replaced.
-    if (QPainter::pen() != m_lastUsedPen) {
-        QPainter::setPen(m_lastUsedPen);
+    if (QPainter::pen() != devicePen) {
+        QPainter::setPen(devicePen);
     }
 }
 

@@ -120,7 +120,7 @@ void RS_ActionDrawEllipseInscribe::onMouseMoveEvent(const int status, const LC_M
     if (en != nullptr) {
         auto* line = dynamic_cast<RS_Line*>(en);
         bool uniqueLine = true;
-        for (size_t i = 0; i < status; ++i) {
+        for (int i = 0; i < status; ++i) {
             //do not pull in the same line again
             if (en->getId() == m_actionData->lines[i]->getId()) {
                 uniqueLine = false;
@@ -195,7 +195,7 @@ void RS_ActionDrawEllipseInscribe::onMouseLeftButtonRelease(const int status, co
     RS_Entity* en = catchModifiableEntity(e, RS2::EntityLine);
 
     if (en != nullptr) {
-        for (size_t i = 0; i < status; ++i) {
+        for (int i = 0; i < status; ++i) {
             if (en->getId() == m_actionData->lines[i]->getId()) {
                 return; //do not pull in the same line again
             }

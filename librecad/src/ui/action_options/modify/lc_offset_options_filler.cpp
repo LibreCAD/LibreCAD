@@ -23,6 +23,8 @@
 
 #include "lc_offset_options_filler.h"
 
+#include "rs_modification.h"
+
 #include "lc_action_modify_offset.h"
 
 void LC_OffsetOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* container) {
@@ -63,7 +65,7 @@ void LC_OffsetOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* cont
                       return action->getCopiesNumber();
                   }, [action](int val)-> void {
                       action->setCopiesNumber(val);
-                  }, container, 1, -1, [action](LC_PropertyViewDescriptor&) {
+                  }, container, 1, RS_OffsetData::kMaximumOffsetCopies, [action](LC_PropertyViewDescriptor&) {
                       return !action->isUseMultipleCopies();
                   });
 

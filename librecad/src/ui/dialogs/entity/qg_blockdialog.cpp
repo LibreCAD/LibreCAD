@@ -74,7 +74,7 @@ void QG_BlockDialog::validate() {
         if ((m_blockList != nullptr) && (m_blockList->find(name) == nullptr)) {
             accept();
         } else {
-            QMessageBox::warning( this, tr("Renaming Block"),
+            QMessageBox::warning( this, windowTitle(),
                                   tr("Could not name block. A block named \"%1\" "
                                      "already exists.").arg(leName->text()));
         }

@@ -3315,7 +3315,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Mettre à jour le stylo actuel par stylo Active Layer&apos;</translation>
+        <translation>Mettre à jour le stylo actuel avec le stylo du calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -3456,7 +3456,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layers operations</source>
-        <translation>Opérations des couches</translation>
+        <translation>Opérations sur les calques</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
@@ -3648,12 +3648,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>Couche de l&apos;entité</translation>
+        <translation>Calque de l&apos;entité</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Couche de l&apos;entité</translation>
+        <translation>Calque de l&apos;entité</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
@@ -3673,12 +3673,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
         <source>Hide Entity&apos;s Layer</source>
-        <translation>Masquer le calque de l&apos;entité</translation>
+        <translation>Cacher le calque de l&apos;entité</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>Cacher les autres calques que ceux de l&apos;entité</translation>
+        <translation>Cacher les calques autres que celui de l&apos;entité</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
@@ -3688,12 +3688,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>Mettre en place la couche de construction de l&apos;entité</translation>
+        <translation>Basculer le mode construction du calque de l&apos;entité</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>Basculer l&apos;impression de calque de l&apos;entité</translation>
+        <translation>Basculer l&apos;impression du calque de l&apos;entité</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
@@ -4555,17 +4555,17 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
-        <translation>&amp;Montrer toutes les couches</translation>
+        <translation>A&amp;fficher tous les calques</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Cacher toutes les couches</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Cac&amp;her tous les calques sauf le calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>&amp;Tout débloquer</translation>
+        <translation>Tout &amp;déverrouiller</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
@@ -4580,7 +4580,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Exporter &amp;Visible Layer(s)</translation>
+        <translation>Ex&amp;porter les calques visibles</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -5156,7 +5156,7 @@ Point: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>activate</source>
-        <translation>active</translation>
+        <translation>activer</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -6898,7 +6898,7 @@ Point: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">Spécifier l&apos;entité avec le calque désiré</translation>
+        <translation type="unfinished">Indiquer une entité du calque souhaité</translation>
     </message>
 </context>
 <context>
@@ -7509,12 +7509,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Si coché, les entités miroirs seront placées sur la couche courante, sinon elles seront placées dans les couches originales.</translation>
+        <translation type="unfinished">Si coché, les entités créées par symétrie seront placées sur le calque actif, sinon elles seront placées sur leur calque d&apos;origine.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Couche actuelle de l&apos;utilisateur</translation>
+        <translation type="unfinished">Utiliser le calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8804,7 +8804,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
         <source>Layer to apply</source>
-        <translation type="unfinished">Couche à appliquer</translation>
+        <translation type="unfinished">Calque à appliquer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
@@ -8837,7 +8837,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">Couche à laquelle le cercle créé doit être placé</translation>
+        <translation type="unfinished">Calque sur lequel le cercle créé doit être placé</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -11151,7 +11151,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>Couche d&apos;entité</translation>
+        <translation>Calque de l&apos;entité</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
@@ -12310,7 +12310,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="118"/>
         <source>Active Layer</source>
-        <translation type="unfinished">Couche active</translation>
+        <translation type="unfinished">Calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="125"/>
@@ -12634,7 +12634,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>Couche de dimension</translation>
+        <translation>Calque de la cote</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
@@ -12644,7 +12644,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="58"/>
         <source>Layer:</source>
-        <translation>Calque &amp; #160;:</translation>
+        <translation>Calque :</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="91"/>
@@ -13610,7 +13610,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Couche à laquelle le duplicata doit être placé</translation>
+        <translation type="unfinished">Calque sur lequel le duplicata doit être placé</translation>
     </message>
 </context>
 <context>
@@ -13623,7 +13623,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Couche à laquelle le duplicata doit être placé</translation>
+        <translation type="unfinished">Calque sur lequel le duplicata doit être placé</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -14415,7 +14415,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">Couche d&apos;entité</translation>
+        <translation type="unfinished">Calque de l&apos;entité</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -14479,12 +14479,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="135"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="179"/>
         <source>Export Layers</source>
-        <translation>Couches d&apos;exportation</translation>
+        <translation>Exporter les calques</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="152"/>
         <source>Exported Layers</source>
-        <translation>Couches exportées</translation>
+        <translation>Calques exportés</translation>
     </message>
 </context>
 <context>
@@ -15325,7 +15325,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
         <source>Parent Layers Path:</source>
-        <translation>Voie des couches parentales :</translation>
+        <translation>Chemin des calques parents :</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="81"/>
@@ -15335,17 +15335,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>Couche pour différents éléments, notes, ébauches, etc.</translation>
+        <translation>Calque pour divers éléments d&apos;information, notes, ébauches, etc.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
         <source>Informational</source>
-        <translation>Informations</translation>
+        <translation>Information</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>Couche normale avec éléments de dessin</translation>
+        <translation>Calque normal avec des éléments de dessin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
@@ -15355,44 +15355,44 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>Calque contenant des dimensions</translation>
+        <translation>Calque contenant les cotes</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
         <source>Dimensions</source>
-        <translation>Dimensions</translation>
+        <translation>Cotation</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>Calque avec position alternative des entités situées sur des couches normales</translation>
+        <translation>Calque avec position alternative des entités situées sur des calques normaux</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
         <source>Alternative Position</source>
-        <translation>Autre position</translation>
+        <translation>Position alternative</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Un calque de construction a des entités de lignes droites infinies destinées à être utilisées pour la construction géométrique.
-Le contenu d&apos;un calque de construction ne doit pas être imprimé.</translation>
+        <translation>Un calque de construction contient des lignes droites de longueur infinie prévues pour être utilisées dans les constructions géométriques.
+Le contenu d&apos;un calque de construction ne devrait pas être imprimé.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
         <source>Construction Layer</source>
-        <translation>Couche de construction</translation>
+        <translation>Calque de construction</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
         <source>Path for parent layer</source>
-        <translation>Voie pour la couche mère</translation>
+        <translation>Chemin du calque parent</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="197"/>
         <source>Layer Name:</source>
-        <translation>Nom du calque &amp; #160;:</translation>
+        <translation>Nom du calque :</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="68"/>
@@ -15419,7 +15419,7 @@ Le contenu d&apos;un calque de construction ne doit pas être imprimé.</transla
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="221"/>
         <source>Default Pen</source>
-        <translation>Stylo par défaut</translation>
+        <translation>Trait par défaut</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
@@ -15437,7 +15437,7 @@ Le contenu d&apos;un calque de construction ne doit pas être imprimé.</transla
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57"/>
         <source>Layers Export Options</source>
-        <translation>Options d&apos;exportation des couches</translation>
+        <translation>Options d&apos;exportation des calques</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
@@ -15447,12 +15447,12 @@ Le contenu d&apos;un calque de construction ne doit pas être imprimé.</transla
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>Vues à l&apos;exportation aussi</translation>
+        <translation>Exporter aussi les vues nommées</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>Si coché, chaque couche exportée originale sera stockée dans un dessin séparé. Sinon, toutes les couches seront exportées vers un seul dessin combiné.</translation>
+        <translation>Si coché, chaque calque d&apos;origine exporté sera stocké dans un dessin séparé. Sinon, tous les calques seront exportés vers un seul dessin combiné.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
@@ -15462,22 +15462,22 @@ Le contenu d&apos;un calque de construction ne doit pas être imprimé.</transla
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>Si coché, les entités seront stockées dans la couche d&apos;origine. Sinon, ils sont placés sur la couche &quot;0&quot;.</translation>
+        <translation>Si coché, les entités seront stockées dans leur calque d&apos;origine. Sinon, elles sont placées sur le calque &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>Conserver la couche originale pour les entités</translation>
+        <translation>Conserver le calque d&apos;origine des entités</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>Si elle est cochée, les UCS du document seront inclus dans les dessins exportés. Autrement, les UCS ne sont pas inclus.</translation>
+        <translation>Si coché, les UCS du document seront inclus dans les dessins exportés. Autrement, les UCS ne sont pas inclus.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>Exporter aussi des UCS</translation>
+        <translation>Exporter aussi les UCS</translation>
     </message>
 </context>
 <context>
@@ -15490,12 +15490,12 @@ Le contenu d&apos;un calque de construction ne doit pas être imprimé.</transla
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>Paramètres pour nommer la convention qui est utilisée pour créer la hiérarchie des calques basée sur la liste plate des calques</translation>
+        <translation>Paramètres de la convention de nommage utilisée pour créer la hiérarchie des calques à partir de la liste plate des calques</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>Convention sur la désignation</translation>
+        <translation>Convention de nommage</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15505,7 +15505,7 @@ Le contenu d&apos;un calque de construction ne doit pas être imprimé.</transla
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>Séparateur utilisé pour diviser le nom intérieur du calque en noms hiérarchiques</translation>
+        <translation>Séparateur utilisé pour diviser le nom interne du calque en noms hiérarchiques</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15519,28 +15519,28 @@ Le contenu d&apos;un calque de construction ne doit pas être imprimé.</transla
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>Dimensionnel</translation>
+        <translation>Cotation</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Suffixe du nom du calque qui définit que le calque est dimensionnel</translation>
+        <translation>Suffixe du nom du calque qui définit que le calque est un calque de cotation</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="809"/>
         <source>Informational</source>
-        <translation>Informations</translation>
+        <translation>Information</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>Le suffixe du nom du calque qui définit ce calque est informatif.</translation>
+        <translation>Suffixe du nom du calque qui définit que le calque est un calque d&apos;information.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Autre position</translation>
+        <translation>Position alternative </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
@@ -15599,7 +15599,7 @@ Le contenu d&apos;un calque de construction ne doit pas être imprimé.</transla
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="268"/>
         <source>Display and operations settings</source>
-        <translation>Paramètres d&apos;affichage et d&apos;exploitation</translation>
+        <translation>Paramètres d&apos;affichage et des opérations</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="271"/>
@@ -15609,12 +15609,12 @@ Le contenu d&apos;un calque de construction ne doit pas être imprimé.</transla
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>Si coché, tooltip comprendra le nom complet du calque (avec tous les niveaux supérieurs)</translation>
+        <translation>Si coché, l&apos;infobulle comprendra le nom complet du calque (avec tous les niveaux supérieurs)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>Afficher le nom complet comme ToolTip</translation>
+        <translation>Afficher le nom complet en infobulle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15654,17 +15654,17 @@ Le contenu d&apos;un calque de construction ne doit pas être imprimé.</transla
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>Identification des couches d &apos; enfants</translation>
+        <translation>Indentation des calques enfants</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Afficher les noms de calques. Taille de l&apos;identifiant:</translation>
+        <translation>Afficher les noms de calque indentés. Taille de l&apos;indentation :</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>Taille du tiret en caractères pour le nom du tiret de la couche enfant des parents</translation>
+        <translation>Taille de l&apos;indentation, en caractères, du nom d&apos;un calque enfant par rapport à ses parents</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
@@ -15674,17 +15674,17 @@ Le contenu d&apos;un calque de construction ne doit pas être imprimé.</transla
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Permettre la restructuration via Drag&amp;Drop</translation>
+        <translation>Autoriser la restructuration par glisser-déposer</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>Si la couche primaire est renommée, les couches secondaires sont rebaptisées aussi.</translation>
+        <translation>Si le calque principal est renommé, les calques secondaires sont renommés aussi.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Renommer les couches secondaires sur le nom primaire</translation>
+        <translation>Renommer les calques secondaires lors du renommage du calque principal</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
@@ -15720,7 +15720,7 @@ Le contenu d&apos;un calque de construction ne doit pas être imprimé.</transla
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Élément correspondant en mode filtre surligné</translation>
+        <translation>Élément correspondant au filtre en mode de mise en évidence</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
@@ -15735,7 +15735,7 @@ Le contenu d&apos;un calque de construction ne doit pas être imprimé.</transla
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="406"/>
         <source>#1E90FF</source>
-        <translation>N°1E90FF</translation>
+        <translation>#1E90FF</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
@@ -15754,12 +15754,12 @@ Le contenu d&apos;un calque de construction ne doit pas être imprimé.</transla
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>Couleur de fond pour l&apos;élément de couche actif dans l&apos;arborescence des couches</translation>
+        <translation>Couleur de fond pour l&apos;élément du calque actif dans l&apos;arborescence des calques</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
         <source>Active layer background color</source>
-        <translation>Couleur de fond active du calque</translation>
+        <translation>Couleur de fond du calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="588"/>
@@ -15774,7 +15774,7 @@ Le contenu d&apos;un calque de construction ne doit pas être imprimé.</transla
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="599"/>
         <source>Pens that will be set for newly created layers of different types.</source>
-        <translation>Stylos qui seront définis pour les couches nouvellement créées de différents types.</translation>
+        <translation>Stylos qui seront définis pour les calques nouvellement créés de différents types.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
@@ -15784,22 +15784,22 @@ Le contenu d&apos;un calque de construction ne doit pas être imprimé.</transla
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
         <source>Normal Layer</source>
-        <translation>Couche normale</translation>
+        <translation>Calque normal</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>Couche dimensionnelle</translation>
+        <translation>Calque de cotation</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
         <source>Informational Layer</source>
-        <translation>Couche informationnelle</translation>
+        <translation>Calque d&apos;information</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
-        <translation>Couche de position différente</translation>
+        <translation>Calque de position alternative</translation>
     </message>
     <message>
         <source>grid</source>
@@ -15808,22 +15808,22 @@ Le contenu d&apos;un calque de construction ne doit pas être imprimé.</transla
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>point souligné</translation>
+        <translation>l&apos;élément mis en évidence</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
         <source>virtual layer background</source>
-        <translation>fond de couche virtuelle</translation>
+        <translation>fond du calque virtuel</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="118"/>
         <source>selected item background</source>
-        <translation>arrière-plan sélectionné</translation>
+        <translation>fond de l&apos;élément sélectionné</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="126"/>
         <source>active layer background</source>
-        <translation>fond actif de la couche</translation>
+        <translation>fond du calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
@@ -15834,7 +15834,7 @@ Le contenu d&apos;un calque de construction ne doit pas être imprimé.</transla
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>La valeur non valide fournit la couleur %1.
+        <translation>Valeur non valide fournie pour la couleur de %1.
 Veuillez indiquer une valeur différente.</translation>
     </message>
     <message>
@@ -15853,7 +15853,7 @@ Veuillez indiquer une valeur différente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>Recherche de noms de calques correspondants</translation>
+        <translation>Recherche de noms de calque correspondants</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
@@ -15872,8 +15872,8 @@ Veuillez indiquer une valeur différente.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Cacher toutes les couches</translation>
+        <source>Hide all layers except current</source>
+        <translation>Cacher tous les calques sauf le calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -15888,27 +15888,27 @@ Veuillez indiquer une valeur différente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="218"/>
         <source>Expand All</source>
-        <translation>Tout agrandir</translation>
+        <translation>Tout développer</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="226"/>
         <source>Collapse All</source>
-        <translation>Tout tomber</translation>
+        <translation>Tout réduire</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>Suppression secondaire</translation>
+        <translation>Réduire les calques secondaires</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
         <source>Unlock all layers</source>
-        <translation>Déverrouiller toutes les couches</translation>
+        <translation>Déverrouiller tous les calques</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="249"/>
         <source>Lock all layers</source>
-        <translation>Verrouiller toutes les couches</translation>
+        <translation>Verrouiller tous les calques</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="256"/>
@@ -15918,7 +15918,7 @@ Veuillez indiquer une valeur différente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Ajouter des dimensions</translation>
+        <translation>Ajouter un calque de cotation</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
@@ -15933,42 +15933,42 @@ Veuillez indiquer une valeur différente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>Mode liste plate)</translation>
+        <translation>Mode liste plate</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp; Ajouter la couche enfant</translation>
+        <translation>&amp;Ajouter un calque enfant</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>&amp;Renommer</translation>
+        <translation>Re&amp;nommer</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp;Supprimer les calques (sous-tree)</translation>
+        <translation>&amp;Supprimer les calques (sous-arborescence)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>Structure &amp;Copier (sous-Tree)</translation>
+        <translation>&amp;Copier la structure (sous-arborescence)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp;Dupliquer le contenu (sous-traité)</translation>
+        <translation>D&amp;upliquer le contenu (sous-arborescence)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp;Sélectionner les entités (sous-tree)</translation>
+        <translation>Sélecti&amp;onner les entités (sous-arborescence)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;Modifier les &amp;attributs du calque</translation>
+        <translation>Modi&amp;fier les attributs du calque</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
@@ -15978,40 +15978,40 @@ Veuillez indiquer une valeur différente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Ajouter des dimensions sous-couche</translation>
+        <translation>Aj&amp;outer un sous-calque de cotation</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp;Ajouter des informations sous-layer</translation>
+        <translation>Ajouter un sous-cal&amp;que d&apos;information</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp;Ajouter une vue alternative sous-couche</translation>
+        <translation>A&amp;jouter un sous-calque de position alternative</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp;Enlever les sous-couches</translation>
+        <translation>Suppri&amp;mer les sous-calques</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Convertir en calque dimensionnel</translation>
+        <translation>Convertir en calque de cotation</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>Convertir en Info Layer</translation>
+        <translation>Convertir en calque d&apos;information</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Convertir en calque de position alternatif</translation>
+        <translation>Convertir en calque de position alternative</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
@@ -16021,7 +16021,7 @@ Veuillez indiquer une valeur différente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>Sélectionner les entités du calque</translation>
+        <translation>Sélectio&amp;nner les entités du calque</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
@@ -16031,7 +16031,7 @@ Veuillez indiquer une valeur différente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp;Dupliquer le calque avec le contenu</translation>
+        <translation>D&amp;upliquer le calque avec le contenu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
@@ -16051,7 +16051,7 @@ Veuillez indiquer une valeur différente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp;Congeler les autres calques</translation>
+        <translation>&amp;Geler les autres calques</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
@@ -16060,28 +16060,28 @@ Veuillez indiquer une valeur différente.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Congeler tous les calques</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Cac&amp;her tous les calques sauf le calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp;Déverrouiller tous les calques</translation>
+        <translation>Dé&amp;verrouiller tous les calques</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp;Cacher tous les calques</translation>
+        <translation>Verrouiller &amp;tous les calques</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Activer et imprimer tous les calques</translation>
+        <translation>Activer l&apos;impression de tous les ca&amp;lques</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp; Désactiver l&apos;impression de tous les calques</translation>
+        <translation>Désact&amp;iver l&apos;impression de tous les calques</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
@@ -16091,12 +16091,12 @@ Veuillez indiquer une valeur différente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>Sous-tree de &amp;Exporter la couche</translation>
+        <translation>E&amp;xporter la sous-arborescence du calque</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Exporter &amp;Visible Layer(s)</translation>
+        <translation>Ex&amp;porter les calques visibles</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
@@ -23390,12 +23390,12 @@ Veuillez indiquer une valeur différente.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Si coché, les entités miroirs seront placées sur la couche courante, sinon elles seront placées dans les couches originales.</translation>
+        <translation type="unfinished">Si coché, les entités créées par symétrie seront placées sur le calque actif, sinon elles seront placées sur leur calque d&apos;origine.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Couche actuelle de l&apos;utilisateur</translation>
+        <translation type="unfinished">Utiliser le calque actif</translation>
     </message>
 </context>
 <context>
@@ -23689,12 +23689,12 @@ Veuillez indiquer une valeur différente.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">Si coché, les entités créées seront placées dans le calque courant. Sinon, ils seront placés dans des couches originales.</translation>
+        <translation type="unfinished">Si coché, les entités créées seront placées sur le calque actif. Sinon, elles seront placées sur leur calque d&apos;origine. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Utiliser le calque actuel</translation>
+        <translation type="unfinished">Utiliser le calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="55"/>
@@ -23875,12 +23875,12 @@ Veuillez indiquer une valeur différente.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">Si coché, les entités créées seront placées dans le calque courant, sinon le sera dans les calques originaux.</translation>
+        <translation type="unfinished">Si coché, les entités créées seront placées sur le calque actif, sinon elles seront placées sur leur calque d&apos;origine. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Utiliser le calque actuel</translation>
+        <translation type="unfinished">Utiliser le calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="166"/>
@@ -24291,12 +24291,12 @@ Attention : cette action ne peut pas être annulée !</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Si coché, les entités créées seront placées dans le calque courant, sinon elles seront dans les calques originaux.</translation>
+        <translation type="unfinished">Si coché, les entités créées seront placées sur le calque actif, sinon elles seront placées sur leur calque d&apos;origine.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Utiliser le calque actuel</translation>
+        <translation type="unfinished">Utiliser le calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="109"/>
@@ -25417,22 +25417,22 @@ Attention : cette action ne peut pas être annulée !</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Mettre à jour le stylo actuel par stylo Active Layer&apos;</translation>
+        <translation>Mettre à jour le stylo actuel avec le stylo du calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Remplir l&apos;éditeur de stylo du stylo Active Layer</translation>
+        <translation>Remplir l&apos;éditeur de stylo à partir du stylo du calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
         <source>Pick from Active Layer</source>
-        <translation>Choisir dans la couche active</translation>
+        <translation>Choisir depuis le calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Appliquer le stylo éditeur au stylo actif</translation>
+        <translation>Appliquer le stylo de l&apos;éditeur au stylo du calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
@@ -29537,7 +29537,7 @@ Veuillez noter que si vous enregistrez un stylo via l&apos;éditeur sans redéma
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
         <source>Active Layer</source>
-        <translation type="unfinished">Couche active</translation>
+        <translation type="unfinished">Calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
@@ -29593,7 +29593,7 @@ Veuillez noter que si vous enregistrez un stylo via l&apos;éditeur sans redéma
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Dimensionnel</translation>
+        <translation type="unfinished">Cotation</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29603,7 +29603,7 @@ Veuillez noter que si vous enregistrez un stylo via l&apos;éditeur sans redéma
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="179"/>
         <source>Informational</source>
-        <translation type="unfinished">Informations</translation>
+        <translation type="unfinished">Information</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
@@ -29683,7 +29683,7 @@ Veuillez noter que si vous enregistrez un stylo via l&apos;éditeur sans redéma
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>Unlock all layers</source>
-        <translation type="unfinished">Déverrouiller toutes les couches</translation>
+        <translation type="unfinished">Déverrouiller tous les calques</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
@@ -33156,7 +33156,8 @@ Veuillez noter que si vous enregistrez un stylo via l&apos;éditeur sans redéma
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>Calque &amp; #160;:</translation>
+        <translation>
+Calque : </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35962,12 +35963,12 @@ p, li { espace blanc: pré-emballage; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">Spécifie que des copies whetether seront insérées dans le calque courant ou original</translation>
+        <translation type="unfinished">Indique si les copies seront insérées sur le calque actif ou sur le calque d&apos;origine</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Utiliser le calque actuel</translation>
+        <translation type="unfinished">Utiliser le calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="218"/>
@@ -36208,12 +36209,12 @@ p, li { espace blanc: pré-emballage; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Si coché, de nouvelles entrées seront placées sur le calque courant, sinon elles seront dans les calques d&apos;origine.</translation>
+        <translation type="unfinished">Si coché, les nouvelles entités seront placées sur le calque actif, sinon elles seront placées sur leur calque d&apos;origine.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Utiliser le calque actuel</translation>
+        <translation type="unfinished">Utiliser le calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="219"/>
@@ -36451,12 +36452,12 @@ p, li { espace blanc: pré-emballage; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">Si coché, les entités créées seront placées dans le calque courant. Sinon, ils seront placés sur des couches originales.</translation>
+        <translation type="unfinished">Si coché, les entités créées seront placées sur le calque actif. Sinon, elles seront placées sur leur calque d&apos;origine. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Utiliser le calque actuel</translation>
+        <translation type="unfinished">Utiliser le calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="107"/>
@@ -37365,7 +37366,7 @@ p, li { espace blanc: pré-emballage; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Si coché, les entités créées seront placées sur le calque courant, sinon elles seront placées dans les calques originaux.</translation>
+        <translation type="unfinished">Si coché, les entités créées seront placées sur le calque actif, sinon elles seront placées sur leur calque d&apos;origine.</translation>
     </message>
 </context>
 <context>
@@ -37403,12 +37404,12 @@ p, li { espace blanc: pré-emballage; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Si coché, les entités créées seront placées sur le calque courant, sinon elles seront placées dans les calques originaux.</translation>
+        <translation type="unfinished">Si coché, les entités créées seront placées sur le calque actif, sinon elles seront placées sur leur calque d&apos;origine.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Utiliser le calque actuel</translation>
+        <translation type="unfinished">Utiliser le calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
@@ -37550,7 +37551,7 @@ p, li { espace blanc: pré-emballage; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Si coché, les entités créées seront placées sur le calque courant, sinon elles seront placées dans les calques originaux.</translation>
+        <translation type="unfinished">Si coché, les entités créées seront placées sur le calque actif, sinon elles seront placées sur leur calque d&apos;origine.</translation>
     </message>
 </context>
 <context>
@@ -37563,12 +37564,12 @@ p, li { espace blanc: pré-emballage; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Si coché, les entités créées seront placées sur le calque courant, sinon elles seront placées dans les calques originaux.</translation>
+        <translation type="unfinished">Si coché, les entités créées seront placées sur le calque actif, sinon elles seront placées sur leur calque d&apos;origine.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Couche actuelle de l&apos;utilisateur</translation>
+        <translation type="unfinished">Utiliser le calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -38438,7 +38439,7 @@ p, li { espace blanc: pré-emballage; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="216"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Couche de l&apos;entité</translation>
+        <translation>Calque de l&apos;entité</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
@@ -39127,7 +39128,7 @@ Attention : cette action ne peut pas être annulée !</translation>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <source>Layers</source>
-        <translation>Calque</translation>
+        <translation>Calques</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="201"/>
@@ -39148,7 +39149,7 @@ Attention : cette action ne peut pas être annulée !</translation>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <source>Layers Tree</source>
-        <translation>Arbre des calques</translation>
+        <translation>Arborescence des calques</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261"/>
@@ -39229,7 +39230,7 @@ Attention : cette action ne peut pas être annulée !</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="540"/>
         <source>Active Layer</source>
-        <translation>Couche active</translation>
+        <translation>Calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="542"/>
@@ -39893,7 +39894,7 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
         <source>Name of Current Active Layer</source>
-        <translation>Nom du calque actif actuel</translation>
+        <translation>Nom du calque actif</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
@@ -40391,7 +40392,7 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="54"/>
         <source>Layer to apply</source>
-        <translation>Couche à appliquer</translation>
+        <translation>Calque à appliquer</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
@@ -41046,7 +41047,7 @@ Cela modifie récursivement toutes les entités du Bloc lui-même.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="70"/>
         <source>Layer of MText</source>
-        <translation>Couche de MText</translation>
+        <translation>Calque du texte multiligne</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="144"/>
@@ -43589,7 +43590,7 @@ Cela modifie récursivement toutes les entités du Bloc lui-même.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Une fois activé, sélectionner un calque attribuera toutes les entités sélectionnées à ce calque. Pour modifier le calque de plusieurs entités : tout d&apos;abord sélectionnez les entités désirées, puis sélectionnez un calque dans la liste des calques. Cela attribuera toutes les entités sélectionnées à ce calque.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Si cette option est cochée, activer un calque attribuera toutes les entités sélectionnées à ce calque. Pour modifier le calque de plusieurs entités : tout d&apos;abord sélectionnez les entités désirées, puis activez un calque dans la liste des calques. Cela attribuera toutes les entités sélectionnées à ce calque.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -47367,7 +47368,8 @@ par défaut pour la cuisson</translation>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Un calque de construction contient des lignes droites de longueur infinie prévues pour être utilisée dans les constructions géométriques. Le contenu d&apos;un calque de construction ne devrait pas être imprimé.</translation>
+        <translation>Un calque de construction contient des lignes droites de longueur infinie prévues pour être utilisées dans les constructions géométriques.
+Le contenu d&apos;un calque de construction ne devrait pas être imprimé.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="33"/>
@@ -47818,7 +47820,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Le calque &quot;%1&quot; ne peut plus être supprimé.</translation>
+        <translation>Le calque &quot;%1&quot; ne peut jamais être supprimé.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="304"/>
@@ -47891,7 +47893,7 @@ Cette action NE peut PAS être annulée.</translation>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="260"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1790"/>
         <source>Layers for removal:</source>
-        <translation>Couches à supprimer:</translation>
+        <translation>Calques à supprimer :</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="463"/>
@@ -47914,7 +47916,7 @@ Cette action NE peut PAS être annulée.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Le nom vide de calque n&apos;est pas autorisé.</translation>
+        <translation>Un nom de calque vide n&apos;est pas autorisé.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47926,7 +47928,7 @@ Cette action NE peut PAS être annulée.</translation>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Tentative de créer un calque avec un nom de duplication. Le nom du calque double
+        <translation>Tentative de création d&apos;un calque avec un nom déjà existant. Le nom de calque en double est 
 [%1].
 Veuillez indiquer un nom différent.</translation>
     </message>
@@ -47940,7 +47942,7 @@ Veuillez indiquer un nom différent.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>La chaîne de séparateur de liste des calques est vide. Il ne sera pas possible de construire un arbre de couches.
+        <translation>La chaîne de séparateur de liste des calques est vide. Il ne sera pas possible de construire l&apos;arborescence des calques.
 Veuillez indiquer une valeur différente.</translation>
     </message>
     <message>
@@ -47967,7 +47969,7 @@ Effacez le masque de filtrage et recommencez.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Aucune couche sans entités trouvées, rien à supprimer.</translation>
+        <translation>Aucun calque sans entités trouvé, rien à supprimer.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
@@ -47981,7 +47983,7 @@ Effacez le masque de filtrage et recommencez.</translation>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Cette couche d&apos;enfant existe déjà pour
+        <translation>Un tel calque enfant existe déjà pour 
 [%1].
 Veuillez indiquer un nom différent.</translation>
     </message>
@@ -47990,14 +47992,16 @@ Veuillez indiquer un nom différent.</translation>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Cette couche d&apos;enfant existe déjà pour
-[%1].</translation>
+        <translation>Un tel calque enfant existe déjà pour 
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>La couche dimensionnelle ne peut être ajoutée que pour la couche active normale.</translation>
+        <translation>Un calque de cotation ne peut être ajouté que pour un calque actif normal.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -48034,7 +48038,7 @@ Si vous répondez « Non », les valeurs « Par couche » seront conservées, et
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1863"/>
         <source>Layer DialogEx</source>
-        <translation>Boîte de dialogue du calqueEx</translation>
+        <translation>Boîte de dialogue Calque (étendue)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="202"/>
@@ -48087,19 +48091,21 @@ Veuillez indiquer une valeur différente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Il n&apos;y a aucune entité qui correspond au stylo sur les couches visibles.</translation>
+        <translation>Il n&apos;y a aucune entité qui correspond au stylo sur les calques visibles.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Ces entités existent sur des couches gelées.</translation>
+        <translation>De telles entités existent sur des calques gelés.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Ces entités existent sur les couches verrouillées.</translation>
+        <translation>De telles entités existent sur des calques verrouillés.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -49347,7 +49353,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="83"/>
         <source>cnlayer</source>
-        <translation>cncouche</translation>
+        <translation>cncalque</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="84"/>
@@ -49357,7 +49363,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="88"/>
         <source>cslayer</source>
-        <translation>couche</translation>
+        <translation>cscalque</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="89"/>
@@ -52184,7 +52190,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="195"/>
         <source>Combine all layers</source>
-        <translation>Combiner toutes les couches</translation>
+        <translation>Combiner tous les calques</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>

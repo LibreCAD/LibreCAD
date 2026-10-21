@@ -312,6 +312,7 @@ protected:
     std::map<std::uint32_t, std::uint32_t> handleRemap;
     std::set<std::uint32_t> knownHandles;
     std::map<const RS_Entity *, std::uint32_t> entityHandlesByEntity;
+    bool entityHandleMapPrepared = false;
     std::map<std::uint32_t, std::uint32_t> entityHandleRemap;
     std::set<std::uint32_t> entityHandlesEmitted;
     std::set<std::uint32_t> duplicateEntityHandles;
@@ -322,6 +323,7 @@ protected:
     std::map<std::uint32_t, std::uint32_t> blockHandleRemap;
     std::set<std::uint32_t> duplicateBlockHandles;
     std::map<std::string, std::uint32_t> ltypeHandleByName;
+    std::map<std::string, std::uint32_t> layerHandleByName;
     std::map<std::string, std::uint32_t> textStyleHandleByName;
   };
 
@@ -349,6 +351,7 @@ protected:
     checkpoint.handleRemap = m_dwgWriteHandleRemap;
     checkpoint.knownHandles = m_dwgWriteKnownHandles;
     checkpoint.entityHandlesByEntity = m_dwgWriteEntityHandleByEntity;
+    checkpoint.entityHandleMapPrepared = m_dwgWriteEntityHandleMapPrepared;
     checkpoint.entityHandleRemap = m_dwgWriteEntityHandleRemap;
     checkpoint.entityHandlesEmitted = m_dwgWriteEntityHandlesEmitted;
     checkpoint.duplicateEntityHandles = m_dwgWriteDuplicateEntityHandles;
@@ -359,6 +362,7 @@ protected:
     checkpoint.blockHandleRemap = m_dwgWriteBlockHandleRemap;
     checkpoint.duplicateBlockHandles = m_dwgWriteDuplicateBlockHandles;
     checkpoint.ltypeHandleByName = m_dwgWriteLTypeHandleByName;
+    checkpoint.layerHandleByName = m_dwgWriteLayerHandleByName;
     checkpoint.textStyleHandleByName = m_dwgWriteTextStyleHandleByName;
     return checkpoint;
   }
@@ -386,6 +390,7 @@ protected:
     m_dwgWriteHandleRemap = checkpoint.handleRemap;
     m_dwgWriteKnownHandles = checkpoint.knownHandles;
     m_dwgWriteEntityHandleByEntity = checkpoint.entityHandlesByEntity;
+    m_dwgWriteEntityHandleMapPrepared = checkpoint.entityHandleMapPrepared;
     m_dwgWriteEntityHandleRemap = checkpoint.entityHandleRemap;
     m_dwgWriteEntityHandlesEmitted = checkpoint.entityHandlesEmitted;
     m_dwgWriteDuplicateEntityHandles = checkpoint.duplicateEntityHandles;
@@ -396,6 +401,7 @@ protected:
     m_dwgWriteBlockHandleRemap = checkpoint.blockHandleRemap;
     m_dwgWriteDuplicateBlockHandles = checkpoint.duplicateBlockHandles;
     m_dwgWriteLTypeHandleByName = checkpoint.ltypeHandleByName;
+    m_dwgWriteLayerHandleByName = checkpoint.layerHandleByName;
     m_dwgWriteTextStyleHandleByName = checkpoint.textStyleHandleByName;
   }
 
@@ -415,6 +421,9 @@ protected:
     m_dwgWriteHandleRemap.clear();
     m_dwgWriteKnownHandles.clear();
     m_dwgWriteEntityHandleByEntity.clear();
+    m_dwgWriteEntityHandleMapPrepared = false;
+    m_dwgWriteGeneratedEntityHandleByEntity.clear();
+    m_dwgWriteInsertChildHandlesByEntity.clear();
     m_dwgWriteEntityHandleRemap.clear();
     m_dwgWriteEntityHandlesEmitted.clear();
     m_dwgWriteDuplicateEntityHandles.clear();
@@ -428,6 +437,7 @@ protected:
     m_dwgWriteReferenceReceipts.clear();
     m_dwgWriteOptionalDropReceipts.clear();
     m_dwgWriteLTypeHandleByName.clear();
+    m_dwgWriteLayerHandleByName.clear();
     m_dwgWriteTextStyleHandleByName.clear();
   }
 
@@ -1508,6 +1518,14 @@ protected:
     return m_dwgWriteKnownHandles.count(sourceHandle) != 0;
   }
 
+  //! True when the source drawing carries some record, object, or entity
+  //! under this handle, whether or not this export can emit it. Unlike the
+  //! known-handle set (emittable targets only) this tells a reference to a
+  //! missing object from a reference to one that exists but is not written.
+  bool hasDwgWriteSourceKind(std::uint32_t sourceHandle) const {
+    return m_dwgWriteSourceKinds.count(sourceHandle) != 0;
+  }
+
   bool hasDwgWriteHandleRemap(std::uint32_t sourceHandle) const {
     return m_dwgWriteHandleRemap.count(sourceHandle) != 0;
   }
@@ -1873,6 +1891,17 @@ protected:
 
   // Entity source identity and commit state.
   std::map<const RS_Entity *, std::uint32_t> m_dwgWriteEntityHandleByEntity;
+  bool m_dwgWriteEntityHandleMapPrepared = false;
+  // R2000 owners that hold source-backed entities or metadata SHAPEs take
+  // every entity handle before the sweep so the owner's handles stay consecutive
+  // (prepareDwgEntityHandleMap). These are the output handles of entities
+  // without a source handle, whose identities are still committed as
+  // generated entities on write, and the ATTRIB..SEQEND handles that follow
+  // each INSERT. Filled once per write, read-only afterwards.
+  std::map<const RS_Entity *, std::uint32_t>
+      m_dwgWriteGeneratedEntityHandleByEntity;
+  std::map<const RS_Entity *, std::vector<std::uint32_t>>
+      m_dwgWriteInsertChildHandlesByEntity;
   std::map<std::uint32_t, std::uint32_t> m_dwgWriteEntityHandleRemap;
   std::set<std::uint32_t> m_dwgWriteEntityHandlesEmitted;
   std::set<std::uint32_t> m_dwgWriteDuplicateEntityHandles;
@@ -1911,6 +1940,7 @@ protected:
   // Name-based table identities used when source numeric handles are not
   // portable across DWG files.
   std::map<std::string, std::uint32_t> m_dwgWriteLTypeHandleByName;
+  std::map<std::string, std::uint32_t> m_dwgWriteLayerHandleByName;
   std::map<std::string, std::uint32_t> m_dwgWriteTextStyleHandleByName;
 };
 #endif
@@ -1977,18 +2007,25 @@ public:
         t == RS2::FormatDWG2013 || t == RS2::FormatDWG2018)
       return true;
 #endif
-    return (t == RS2::FormatDXFRW2018 || t == RS2::FormatDXFRW ||
+    return (t == RS2::FormatDXFRW2018 || t == RS2::FormatDXFRW2013 ||
+            t == RS2::FormatDXFRW2010 || t == RS2::FormatDXFRW ||
             t == RS2::FormatDXFRW2004 || t == RS2::FormatDXFRW2000 ||
             t == RS2::FormatDXFRW14 || t == RS2::FormatDXFRW12);
   }
 
   // Error messages
   QString lastError() const override;
+  QString exportReport() const override;
 
 #ifdef DWGSUPPORT
   // Snapshot of the current DWG admission attempt for the explicit-path
   // developer diagnostic command. It is read-only and never discovers files.
   QString dwgExportAdmissionReport() const;
+
+  // The format that writes DWG files of @p version, or RS2::FormatUnknown
+  // for a version LibreCAD cannot write.
+  static RS2::FormatType formatForDwgVersion(DRW::Version version);
+  static RS2::FormatType formatForDxfVersion(DRW::Version version);
 #endif
 
   // Import:
@@ -2249,6 +2286,7 @@ public:
   void writeObjects() override;
   bool finalizeDwgWrite() override;
   bool finalizeDwgWriteStructure() override;
+  bool finalizeDxfWrite() override;
   void collectDwgAppIds() override;
   void writeAppId() override;
 
@@ -2256,6 +2294,7 @@ public:
   void writeLine(const RS_Line *l);
   void writeCircle(const RS_Circle *c);
   void writeArc(const RS_Arc *a);
+  bool writeDimArcSymbolAsArc(RS_Entity *e);
   void writeEllipse(const RS_Ellipse *s);
   void writeHyperbola(LC_Hyperbola *h);
   void writeParabola(LC_Parabola *p);
@@ -2287,9 +2326,28 @@ public:
 
   void setEntityAttributes(RS_Entity *entity, const DRW_Entity *attrib);
   void getEntityAttributes(DRW_Entity *ent, const RS_Entity *entity);
+  std::uint32_t dxfReference(std::uint32_t source) const;
+  /** Numbered paper spaces (*Paper_Space0, ...) the written layouts need. */
+  std::vector<std::string> dxfExtraPaperSpaceNames() const;
+  /** Make references to source block records follow them to their written handles. */
+  void installDxfBlockRecordRemap();
+  /** Whether a raw DXF record read from version @p source is written into the DXF being exported. */
+  bool replaysInDxfExport(DRW::Version source) const;
 
-  static QString toDxfString(const QString &str);
+  //! @param caretCodes Caret-encode control characters and a literal '^', as
+  //!   an ASCII DXF value must (toNativeString() decodes them back). A DWG
+  //!   string holds the characters themselves and must not be caret-encoded;
+  //!   callers that may write either pass caretCodes = (m_dwgW == nullptr).
+  static QString toDxfString(const QString &str, bool caretCodes = true);
   static QString toNativeString(const QString &data);
+  //! The value of a single-line text (TEXT, ATTRIB, ATTDEF). It has no MTEXT
+  //! markup: "\P", "\~" and "{\f...;}" are ordinary characters there, as in
+  //! the path "D:\PROJECTS\PLAN.dwg". Only the %%C, %%D and %%P symbols and
+  //! the caret codes of toDxfString() are converted, so a line feed is the
+  //! control character "^J" in an ASCII DXF value and itself in a DWG string.
+  static QString toDxfSingleLineString(const QString &str,
+                                       bool caretCodes = true);
+  static QString toNativeSingleLineString(const QString &data);
 
   /** Build an LC_SplinePoints from a DRW_Spline boundary edge of a hatch
    *  loop. Degrees 1, 2, and 3 all converge to a quadratic spline-points
@@ -2305,13 +2363,6 @@ public:
 
 public:
   RS_Pen attributesToPen(const DRW_Layer *att) const;
-
-  static RS_Color numberToColor(int num);
-  static int colorToNumber(const RS_Color &col, int *rgb);
-
-  static RS2::LineType nameToLineType(const QString &name);
-  static QString lineTypeToName(RS2::LineType lineType);
-  // static QString lineTypeToDescription(RS2::LineType lineType);
 
   /// True when raw-preserved OBJECT bytes captured at DWG version `src` can
   /// replay verbatim into target `tgt`. Opaque object frames are only safe
@@ -2341,6 +2392,17 @@ protected:
   void parseDimStyleExtData(const DRW_Dimstyle &s, LC_DimStyle *result);
   bool resolveBlockNameByHandle(std::uint32_t handle,
                                 QString &block_name) const;
+  // A DIMSTYLE's arrow-block fields (DIMLDRBLK/DIMBLK/DIMBLK1/DIMBLK2) can
+  // name their BLOCK_RECORD only by handle (V2000+); resolving that requires
+  // the BLOCK_RECORD table, which the DIMSTYLE table can precede in the file.
+  // createDimStyle() queues one entry per handle seen; this applies every
+  // queued resolution once the whole file has been read.
+  struct PendingDimStyleArrowRef {
+    std::uint32_t handle;
+    std::function<void(const QString &)> apply;
+  };
+  std::vector<PendingDimStyleArrowRef> m_pendingDimStyleArrowRefs;
+  void resolvePendingDimStyleArrowBlocks();
   DimStyleOverrideParseResult
   parseDimStyleOverride(const LC_ExtEntityData *data,
                         std::unique_ptr<LC_DimStyle> &result) const;
@@ -2359,6 +2421,21 @@ protected:
 private:
   void prepareBlocks();
   void prepareDxfEntityHandleMap();
+  /** The application names of the XDATA a DXF export writes: on its table
+   * records, the entities of the model space and of the blocks, and its
+   * objects. Each name comes once, case-insensitively, in the spelling and
+   * order the export first meets it. */
+  std::vector<std::string> dxfXDataApplications();
+  void buildInsertAttribPlan();
+  /** A text its INSERT writes as an ATTRIB. */
+  bool isInsertAttribChild(const RS_Entity *entity) const {
+    return m_insertAttribPlan.claimed.count(entity) != 0;
+  }
+  /** A text without a record of its own: an ATTRIB of its INSERT, or left out. */
+  bool hasNoOwnRecord(const RS_Entity *entity) const {
+    return isInsertAttribChild(entity) ||
+           m_insertAttribPlan.leftOut.count(entity) != 0;
+  }
   void writeEntity(RS_Entity *e);
 #ifdef DWGSUPPORT
   void prepareDwgEntityHandleMap();
@@ -2712,11 +2789,26 @@ private:
               LC_DwgAdvancedMetadata::DwgFieldListSourceAuthorizationStatus::
                   NotDwgSource;
       DRW_FieldList payload;
+      //! For a list read from a DWG: the ordinals of the members its receipt
+      //! proves name no object frame of the source file, the only members the
+      //! plan may drop from such a list.
+      std::vector<std::uint32_t> framelessMembers;
+      //! One flag per payload member: true when the member names no object at
+      //! all (see prepareDwgFieldWritePlan) and is left out of the emitted
+      //! FIELDLIST.  The payload itself stays the source-faithful record so
+      //! the frozen-plan comparison against the metadata keeps working.
+      std::vector<bool> memberDropped;
+      //! For each kept, non-null member in payload order, the index of its
+      //! FIELD candidate.
       std::vector<std::size_t> fieldCandidateIndexes;
       bool classAdmitted = false;
       bool objectEmitted = false;
       std::uint32_t outputHandle = 0;
       DRW::DwgObjectFrameReceipt frame;
+
+      bool isMemberDropped(std::size_t ordinal) const {
+        return ordinal < memberDropped.size() && memberDropped[ordinal];
+      }
     };
 
     DRW::Version version = DRW::UNKNOWNV;
@@ -2987,6 +3079,11 @@ private:
   bool stageDwgTableRecordIdentity(DwgWriteSourceKind kind,
                                    std::uint32_t sourceHandle,
                                    std::uint32_t outputHandle);
+  // The output handle of the APPID record a DWG source handle names, for a
+  // reference replayed from source data. False if this export writes no
+  // such record; a null handle resolves to itself.
+  bool resolveDwgWriteAppIdHandle(std::uint32_t sourceHandle,
+                                  std::uint32_t *outputHandle) const;
   bool commitDwgTableRecordIdentities();
   bool commitDwgTableControlIdentities();
   bool commitDwgGeneratedEntityWrite(std::uint32_t outputHandle);
@@ -3021,9 +3118,35 @@ private:
    *  colliding with the fixed root/group handles C/D). Computed in fileExport
    *  before write(), consumed by the rawDxfObjects re-emit in writeObjects. */
   std::set<std::uint32_t> m_dxfSuppressedObjectHandles;
+  // Objects entity references may name that the DXF being written lacks:
+  // GROUPs not written, or whose handle is structural.
+  std::set<std::uint32_t> m_dxfDroppedReferenceHandles;
+  // The version of the DXF being exported, and how many raw records read
+  // from another version it leaves out.
+  DRW::Version m_dxfExportVersion = DRW::UNKNOWNV;
+  std::size_t m_dxfLeftOutRawRecords = 0;
+  // What the codec left out of the last export (DXF or DWG leftOut()).
+  std::map<std::string, std::size_t> m_writeLeftOut;
+  std::map<std::string, std::size_t> m_shapeLeftOut;
+  QString m_shapeExportDirectory;
+  std::map<std::uint32_t, QString> m_shapeFileResolvedPaths;
+  struct ShapeExportRecord {
+    DRW_Shape shape;
+    std::string ownerBlockName;
+  };
+  std::vector<ShapeExportRecord> m_shapesToExport;
+  void prepareShapesForExport();
+  void writeDxfShapes(const std::string &blockName);
+  // Multi-line attributes whose stored annotation-scale payload or column
+  // layout the last export did not write: only DWG R2018 can hold them, and
+  // only for attribute text that was not edited. Counted by writeInsert(),
+  // reported by exportReport().
+  std::size_t m_exportAttribScaleDataLeftOut = 0;
   // Normalised names of the built-in LTYPE records written by writeLType()
   // during writeLTypes(); imported raw records with these names are skipped.
   std::set<std::string> m_builtinLTypeNames;
+  // The same records' own dashes, before any imported record replaced them.
+  std::map<std::string, std::vector<double>> m_builtinLTypePaths;
 
   /** DXF export (DWG->DXF): SOURCE handles of the named parent dictionaries
    *  emitted via setNamedDictObjects (F4-followup). Computed in fileExport,
@@ -3132,11 +3255,31 @@ private:
   QHash<RS_Entity *, QString> m_noNameBlock;
   /** Planned DXF INSERT handles grouped by their referenced block name. */
   std::map<QString, std::vector<std::uint32_t>> m_dxfBlockInsertHandles;
+  /**
+   * What becomes of the texts read as block attributes, for the export in
+   * progress. Built by buildInsertAttribPlan() before either writer starts,
+   * emptied when fileExport() returns.
+   */
+  struct InsertAttribPlan {
+    /** The sibling texts each INSERT writes as its ATTRIBs, in attribute order. */
+    std::map<const RS_Entity *, std::vector<RS_Entity *>> children;
+    /** All of those: written inside their INSERT, never as records of their own. */
+    std::set<const RS_Entity *> claimed;
+    /** Texts no INSERT claims that show nothing (hidden or empty): not written. */
+    std::set<const RS_Entity *> leftOut;
+  };
+  InsertAttribPlan m_insertAttribPlan;
+  /** Numbered paper spaces written, empty, for the layouts naming them. */
+  std::vector<std::string> m_dxfExtraPaperSpaces;
+  /** Source handles of the objects the DXF being written holds. */
+  std::set<std::uint32_t> m_dxfEmittedObjectHandles;
   QHash<QString, QString> m_fontList;
   bool m_oldMText = false;
+  // Non-owning active-export observers; local RAII owners clear before delete.
   dxfRW *m_dxfW{nullptr};
   dxfRW *m_dxfR{nullptr};
 #ifdef DWGSUPPORT
+  // Null outside the current fileExport() operation, including failed saves.
   dwgRW *m_dwgW{nullptr};
   DwgExportAdmissionPlan m_dwgExportAdmissionPlan;
   DwgFieldWritePlan m_dwgFieldWritePlan;

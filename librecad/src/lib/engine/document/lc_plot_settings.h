@@ -127,7 +127,16 @@ public:
     void setCurrentStyleName(const QString& name);
 
     RS_Vector getPaperSize() const;
+    /**
+     * Sets the paper size of the drawing, in its units, and remembers it as the
+     * paper size of new drawings.
+     */
     void setPaperSize(const RS_Vector& s) const;
+    /**
+     * Sets the paper size of the drawing, in its units, and nothing else: the
+     * paper size the settings remember for new drawings stays as it is.
+     */
+    void setDrawingPaperSize(const RS_Vector& s) const;
     RS_Vector getPrintAreaSize(bool total = true) const;
 
     //if set to true, will refuse to modify paper scale
@@ -231,8 +240,8 @@ private:
     double m_plotWindowLowerLeftY = 0.0;
     double m_plotWindowUpperRightX = 0.0;
     double m_plotWindowUpperRightY = 0.0;
-    double m_customPrintScalePaperUnitsNumerator = 0.0;
-    double m_customPrintScaleDrawingUnitsDenominator = 0.0;
+    double m_customPrintScalePaperUnitsNumerator = 1.0;
+    double m_customPrintScaleDrawingUnitsDenominator = 1.0;
     int m_plotLayoutFlag = 0;
     int m_plotPaperUnits  = 0;
     int m_plotRotation = 0;
@@ -241,7 +250,7 @@ private:
     int m_shadePlotMode = 0;
     int m_shadePlotResolutionMode  = 0;
     int m_shadePlotCustomDPI  = 0;
-    double m_standardScaleFactor  = 0.0;
+    double m_standardScaleFactor  = 1.0;
     double m_paperImageOriginX = 0.0;
     double m_paperImageOriginY = 0.0;
 

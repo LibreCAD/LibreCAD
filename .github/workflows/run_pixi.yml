@@ -16,11 +16,12 @@ jobs:
         os: [windows-latest, ubuntu-latest, ubuntu-24.04-arm, macos-latest, macos-15-intel]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6
       name: Checkout
 
     - uses: prefix-dev/setup-pixi@v0.8.1
       with:
         pixi-version: v0.41.4
         cache: true
-    - run: pixi run build
+    - name: Build and check plugin and resource installation
+      run: pixi run check-resource-install

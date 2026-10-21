@@ -27,10 +27,17 @@ public:
     void setVersion(DRW::Version v, bool dxfFormat);
     void setCodePage(const std::string &c, bool dxfFormat);
     void setByteCodePage(const std::string &c);
+    /// Input-only policy. Header version/codepage changes retain the choice;
+    /// DWG, other declared codepages and fromUtf8() keep their normal behavior.
+    void setDxfTextEncoding(DRW::DxfTextEncoding encoding) noexcept {
+        m_dxfTextEncoding = encoding;
+    }
     std::string getCodePage(){return cp;}
 
 private:
     std::string correctCodePage(const std::string& s);
+    void configureCodePage(const std::string &c, bool dxfFormat,
+                           bool explicitDeclaration = false);
 
 private:
     DRW::Version version{DRW::UNKNOWNV};
@@ -43,6 +50,12 @@ private:
     // table records legitimately carry no handle.
     DRW::Version sourceVersion{DRW::UNKNOWNV};
     bool m_sourceVersionSet { false };
+    DRW::DxfTextEncoding m_dxfTextEncoding {DRW::DxfTextEncoding::Declared};
+    // A codepage explicitly read before $ACADVER must still exclude recovery
+    // when setVersion() selects its existing default converter afterward.
+    // Keep this gating metadata separate: declared/default behavior is unchanged.
+    bool m_legacyDxfCodePageAllowed {true};
+    bool m_legacyDxfInputEligible {false};
     std::string cp;
     std::unique_ptr< DRW_Converter> conv;
     std::unique_ptr< DRW_Converter> cp8Conv;

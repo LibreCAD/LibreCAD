@@ -43,6 +43,12 @@ public:
     RS_Vector toWorld(const RS_Vector& ucsPos) const;
     bool hasUCS() const {return m_hasUcs;}
     void ucsBoundingBox(const RS_Vector& wcsMin, const RS_Vector&wcsMax, RS_Vector& ucsMin, RS_Vector& ucsMax) const;
+    /**
+     * UCS-aligned bounding box of the WCS box [wcsMin, wcsMax], built from all four corners,
+     * so it always contains the box. Used for scrolling; ucsBoundingBox() keeps its
+     * zoom-auto framing semantics.
+     */
+    void ucsBoundsOfWcsBox(const RS_Vector& wcsMin, const RS_Vector& wcsMax, RS_Vector& ucsMin, RS_Vector& ucsMax) const;
     void worldBoundingBox(const RS_Vector& ucsMin, const RS_Vector &ucsMax, RS_Vector& worldMin, RS_Vector& worldMax) const;
     RS_Vector restrictHorizontal(const RS_Vector &baseWCSPoint, const RS_Vector& wcsCoord) const;
     RS_Vector restrictVertical(const RS_Vector &baseWCSPoint, const RS_Vector& wcsCoord) const;

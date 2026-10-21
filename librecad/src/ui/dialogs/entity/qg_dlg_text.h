@@ -68,6 +68,7 @@ public slots:
     void reject() override;
 protected slots:
     void languageChange();
+    void layoutDirectionChanged(bool checked);
 
 protected:
     bool m_isNew;

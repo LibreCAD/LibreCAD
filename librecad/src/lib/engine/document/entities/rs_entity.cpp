@@ -64,6 +64,9 @@ struct RS_Entity::Impl {
     /// import → save cycle. Each shared_ptr<DRW_Variant> is a single
     /// group-code/value pair (see DRW_Entity::extData for the exact
     /// schema). Empty for the common case of entities without XDATA.
+    /// Copies of an entity share the items: nothing modifies them once an
+    /// entity holds them (the DWG reader edits them before the entity
+    /// exists), so replace the whole list with setDrwExtData() instead.
     std::vector<std::shared_ptr<DRW_Variant>> drwExtData;
 
     // Passive metadata sidecars (DBCOLOR-style). All defaults map to
@@ -82,41 +85,9 @@ struct RS_Entity::Impl {
     // set / minted by LibreCAD. Lets the writer build an old->new handle map
     // for refs that point at model entities (e.g. GROUP code-340 members).
     quint32 m_sourceHandle = 0;
-
-    void fromOther(const Impl* other) {
-        if (other != nullptr) {
-            pen = other->pen;
-            varList = other->varList;
-            // Deep-copy so the destination owns independent DRW_Variants;
-            // shared_ptrs would otherwise alias, which is correct only
-            // for read-only consumers.
-
-            // fixme - sand - 2dxli well, it is 100% percents necessary to use deeep-copy?
-            // fixme  - there might be lost of copies and creation of clones during normal user operations and editing
-            // fixme -  operations. It seems no need to create lots of copies for transient data and hold them in
-            // fixme -  undo history and so. Potentially the only case that may be reasonable for deepcopy is copy/paste
-            // fixme - between documents or explicit entity copy creation by the user
-            drwExtData.clear();
-            drwExtData.reserve(other->drwExtData.size());
-            for (const auto &sp : other->drwExtData) {
-              if (sp) {
-                drwExtData.push_back(std::make_shared<DRW_Variant>(*sp));
-              } else {
-                drwExtData.push_back(nullptr);
-              }
-            }
-            m_materialHandle = other->m_materialHandle;
-            m_plotStyleHandle = other->m_plotStyleHandle;
-            m_shadowMode = other->m_shadowMode;
-            m_shadowHandle = other->m_shadowHandle;
-            m_fullVisualStyleH = other->m_fullVisualStyleH;
-            m_faceVisualStyleH = other->m_faceVisualStyleH;
-            m_edgeVisualStyleH = other->m_edgeVisualStyleH;
-            m_reactorHandles = other->m_reactorHandles;
-            m_xDictHandle = other->m_xDictHandle;
-            m_sourceHandle = other->m_sourceHandle;
-        }
-    }
+    // What the entity is across its replacing clones, and what it belongs to (see lineage()).
+    unsigned long long m_lineage = RS_Entity::newLineage();
+    unsigned long long m_ownerLineage = 0;
 };
 
 /**
@@ -135,9 +106,10 @@ RS_Entity::RS_Entity(RS_EntityContainer* parent)
 //     init(setPenToActive);
 // }
 
-RS_Entity::RS_Entity(const RS_Entity& other) : m_parent{other.m_parent}, m_minV{other.m_minV}, m_maxV{other.m_maxV}, m_layer{other.m_layer},
-                                               m_updateEnabled{other.m_updateEnabled}, m_pImpl{std::make_unique<Impl>(*other.m_pImpl)} {
-    setFlag(RS2::FlagVisible);
+RS_Entity::RS_Entity(const RS_Entity& other) : RS_Undoable{other}, m_parent{other.m_parent}, m_minV{other.m_minV}, m_maxV{other.m_maxV},
+                                               m_layer{other.m_layer}, m_updateEnabled{other.m_updateEnabled},
+                                               m_pImpl{std::make_unique<Impl>(*other.m_pImpl)} {
+    delFlag(RS2::FlagsTransient);
     initId();
 }
 
@@ -149,27 +121,7 @@ RS_Entity& RS_Entity::operator =(const RS_Entity& other) {
         m_layer = other.m_layer;
         m_updateEnabled = other.m_updateEnabled;
         m_pImpl = std::make_unique<Impl>(*other.m_pImpl);
-        setFlag(RS2::FlagVisible);
-        initId();
-    }
-    return *this;
-}
-
-RS_Entity::RS_Entity(RS_Entity&& other) noexcept : m_parent{other.m_parent}, m_minV{other.m_minV}, m_maxV{other.m_maxV}, m_layer{other.m_layer},
-                                                   m_updateEnabled{other.m_updateEnabled}, m_pImpl{std::move(other.m_pImpl)} {
-    setFlag(RS2::FlagVisible);
-    initId();
-}
-
-RS_Entity& RS_Entity::operator =(RS_Entity&& other) noexcept {
-    if (this != &other) {
-        m_parent = other.m_parent;
-        m_minV = other.m_minV;
-        m_maxV = other.m_maxV;
-        m_layer = other.m_layer;
-        m_updateEnabled = other.m_updateEnabled;
-        m_pImpl = std::move(other.m_pImpl);
-        setFlag(RS2::FlagVisible);
+        setFlags((getFlags() & RS2::FlagsTransient) | (other.getFlags() & ~RS2::FlagsTransient));
         initId();
     }
     return *this;
@@ -487,7 +439,17 @@ bool RS_Entity::isVisible() const {
         return true;
     }*/
     if (m_layer != nullptr) {
-        return !m_layer->isFrozen();
+        // An expansion child's layer pointer is copied verbatim from the
+        // entity it was cloned from (see the RS_Entity copy constructor);
+        // RS_Graphic::removeLayer() does not sweep a nested INSERT's own
+        // cached children, so this can already be dangling here once the
+        // entity belongs to a graphic (select an insert after deleting a
+        // layer a block it inserts, in turn, draws on). validatedLayer()
+        // only compares the pointer, so it is safe to call even then; the
+        // same fallback getLayerResolved() uses below when there is no
+        // explicit layer applies when the pointer no longer names one.
+        RS_Layer *layer = getGraphic() != nullptr ? validatedLayer(m_layer) : m_layer;
+        return layer == nullptr || !layer->isFrozen();
     }
     /*RS_EntityContainer* parent = getParent();
 if (parent && parent->isUndone()) {
@@ -895,22 +857,11 @@ void RS_Entity::setLayer(RS_Layer* l) {
  */
 void RS_Entity::setLayerToActive() {
     const RS_Graphic* graphic = getGraphic();
-    if (graphic != nullptr) {
-        m_layer = graphic->getActiveLayer();
-    }
-    else {
-        m_layer = nullptr;
-    }
+    setLayer(graphic != nullptr ? graphic->getActiveLayer() : nullptr);
 }
 
 void RS_Entity::setPenAndLayerToActive() {
-    const auto graphic = getGraphic();
-    if (graphic != nullptr) {
-        m_layer = graphic->getActiveLayer();
-    }
-    else {
-        m_layer = nullptr;
-    }
+    setLayerToActive();
     const auto doc = getDocument();
     if (doc != nullptr) {
         m_pImpl->pen = doc->getActivePen();
@@ -919,72 +870,60 @@ void RS_Entity::setPenAndLayerToActive() {
 
 RS_Pen RS_Entity::getPenResolved() const {
     RS_Pen p = m_pImpl->pen;
-    // use parental attributes (e.g. vertex of a polyline, block
-    // entities when they are drawn in block documents):
-    if (m_parent != nullptr && m_parent->rtti() != RS2::EntityGraphic) {
-        //if pen is invalid gets all from parent
-        if (!p.isValid()) {
-            p = m_parent->getPen(false);
-        }
-        //pen is valid, verify byBlock parts
-        const RS_EntityContainer* ep = m_parent;
-        //If parent is byblock check parent.parent (nested blocks)
-        while (p.isColorByBlock()) {
-            if (ep != nullptr) {
-                p.setColorFromPen(m_parent->getPen(false)); // fixme - check whether resolved pen is actually needed there...
-                ep = ep->m_parent;
-            }
-            else {
-                break;
-            }
-        }
-        ep = m_parent;
-        while (p.isWidthByBlock()) {
-            if (ep != nullptr) {
-                p.setWidthFromPen(m_parent->getPen(false)); // fixme - check whether resolved pen is actually needed there...
-                ep = ep->m_parent;
-            }
-            else {
-                break;
-            }
-        }
-        ep = m_parent;
-        while (p.isLineTypeByBlock()) {
-            if (ep != nullptr) {
-                p.setLineTypeFromPen(m_parent->getPen(false)); // fixme - check whether resolved pen is actually needed there...
-                ep = ep->m_parent;
-            }
-            else {
-                break;
-            }
+    const RS_Entity *owner = this;
+    // Invalid container pens mean transparent inheritance, not a default pen.
+    // Graphic is a document boundary, never a containing INSERT's block pen.
+    while (!p.isValid() && owner->m_parent != nullptr && owner->m_parent->rtti() != RS2::EntityGraphic) {
+        owner = owner->m_parent;
+        p = owner->getPen(false);
+    }
+    if (!p.isValid()) return p;
+    const RS_Entity *colorOwner=owner, *widthOwner=owner, *typeOwner=owner;
+    // Only a ByBlock component looks further up. This function runs for every
+    // entity of every repaint, and most pens have no such component.
+    if (p.isColorByBlock() || p.isWidthByBlock() || p.isLineTypeByBlock()) {
+        for (const RS_Entity *ancestor=owner->m_parent;
+             ancestor != nullptr && ancestor->rtti() != RS2::EntityGraphic;
+             ancestor=ancestor->m_parent) {
+            const RS_Pen inherited=ancestor->getPen(false);
+            if (!inherited.isValid()) continue;
+            if (p.isColorByBlock()) { p.setColorFromPen(inherited);colorOwner=ancestor; }
+            if (p.isWidthByBlock()) { p.setWidthFromPen(inherited);widthOwner=ancestor; }
+            if (p.isLineTypeByBlock()) { p.setLineTypeFromPen(inherited);typeOwner=ancestor; }
+            if (!p.isColorByBlock()&&!p.isWidthByBlock()&&!p.isLineTypeByBlock()) break;
         }
     }
 
-    // use layer's color:
+    // Each ByLayer component belongs to the nearest valid pen that supplied
+    // that component. A child's own layer must not replace an INSERT's layer
+    // after ByBlock has explicitly inherited the INSERT's ByLayer component.
     const bool colorByLayer = p.isColorByLayer();
     const bool widthByLayer = p.isWidthByLayer();
     const bool lineByLayer = p.isLineTypeByLayer();
     if (colorByLayer || widthByLayer || lineByLayer) {
         // Drop dangling layer pointers left on block members after import
         // (updateInserts crash: getName/getPen on freed RS_Layer).
-        RS_Layer *l = validatedLayer(getLayerResolved());
-        // check byLayer attributes:
-        if (l != nullptr) {
-            // Copy by value — avoids holding a reference into layer storage.
-            const RS_Pen layerPen = l->getPen();
-            if (colorByLayer) {
-                p.setColorFromPen(layerPen);
+        // An ancestor that has no layer leaves the layer of this entity in
+        // charge, as it was before the components were told apart.
+        const auto layerOf = [this](const RS_Entity *supplier) {
+            RS_Layer *layer = supplier->validatedLayer(supplier->getLayerResolved());
+            if (layer == nullptr && supplier != this)
+                layer = validatedLayer(getLayerResolved());
+            return layer;
+        };
+        if (colorOwner == widthOwner && widthOwner == typeOwner) {
+            // The rule: one entity supplies all three components. One lookup
+            // and one copy of the layer's pen, on every repaint of every entity.
+            if (RS_Layer *layer = layerOf(colorOwner)) {
+                const RS_Pen layerPen = layer->getPen();
+                if (colorByLayer) p.setColorFromPen(layerPen);
+                if (widthByLayer) p.setWidthFromPen(layerPen);
+                if (lineByLayer) p.setLineTypeFromPen(layerPen);
             }
-
-            // use layer's width:
-            if (widthByLayer) {
-                p.setWidthFromPen(layerPen);
-            }
-
-            // use layer's linetype:
-            if (lineByLayer) {
-                p.setLineTypeFromPen(layerPen);
-            }
+        } else {
+            if (colorByLayer) if (RS_Layer *layer = layerOf(colorOwner)) p.setColorFromPen(layer->getPen());
+            if (widthByLayer) if (RS_Layer *layer = layerOf(widthOwner)) p.setWidthFromPen(layer->getPen());
+            if (lineByLayer) if (RS_Layer *layer = layerOf(typeOwner)) p.setLineTypeFromPen(layer->getPen());
         }
     }
     return p;
@@ -1183,6 +1122,31 @@ void RS_Entity::setXDictHandle(quint32 h) { m_pImpl->m_xDictHandle = h; }
 quint32 RS_Entity::sourceHandle() const { return m_pImpl->m_sourceHandle; }
 void RS_Entity::setSourceHandle(quint32 h) { m_pImpl->m_sourceHandle = h; }
 
+unsigned long long RS_Entity::lineage() const { return m_pImpl->m_lineage; }
+void RS_Entity::setLineage(const unsigned long long lineage) { m_pImpl->m_lineage = lineage; }
+unsigned long long RS_Entity::newLineage() {
+    static unsigned long long counter = 0;
+    return ++counter;
+}
+unsigned long long RS_Entity::ownerLineage() const { return m_pImpl->m_ownerLineage; }
+void RS_Entity::setOwnerLineage(const unsigned long long lineage) { m_pImpl->m_ownerLineage = lineage; }
+
+void RS_Entity::clearDwgProvenance(const unsigned what) {
+    if ((what & Identity) != 0) {
+        m_pImpl->m_sourceHandle = 0;
+        m_pImpl->m_xDictHandle = 0;
+        m_pImpl->m_reactorHandles.clear();
+    }
+    if ((what & TableRefs) != 0) {
+        m_pImpl->m_materialHandle = 0;
+        m_pImpl->m_plotStyleHandle = 0;
+        m_pImpl->m_shadowHandle = 0;
+        m_pImpl->m_fullVisualStyleH = 0;
+        m_pImpl->m_faceVisualStyleH = 0;
+        m_pImpl->m_edgeVisualStyleH = 0;
+    }
+}
+
 //! constructionLayer contains entities of infinite length, constructionLayer doesn't show up in print
 bool RS_Entity::isConstruction(const bool typeCheck) const {
     if (typeCheck && (getParent() != nullptr) && rtti() != RS2::EntityLine) {
@@ -1197,7 +1161,19 @@ bool RS_Entity::isConstruction(const bool typeCheck) const {
     /*if (isHatchMember(this))
         return false;*/
 
-    return (m_layer != nullptr) && m_layer->isConstruction();
+    // A polyline's segments carry no layer of their own, so that they follow
+    // the polyline's; they are its own geometry and are drawn and caught as
+    // construction lines with it. The parts a dimension, a leader or a glyph
+    // is built from carry none either, and are not drawn as construction
+    // lines, so only a polyline is looked through. The layer is walked to
+    // rather than resolved with getLayer(): this is called for every entity
+    // of a frame, and no name is read from the layer.
+    const RS_Entity* entity = this;
+    while (entity->m_layer == nullptr && entity->m_parent != nullptr &&
+           entity->m_parent->rtti() == RS2::EntityPolyline) {
+        entity = entity->m_parent;
+    }
+    return (entity->m_layer != nullptr) && entity->m_layer->isConstruction();
 }
 
 //! whether printing is enabled or disabled for the entity's layer

@@ -35,6 +35,7 @@
 
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
 
 #include <algorithm>
 #include <array>
@@ -45,6 +46,7 @@
 #include <filesystem>
 #include <fstream>
 #include <functional>
+#include <iterator>
 #include <limits>
 #include <map>
 #include <memory>
@@ -1712,6 +1714,19 @@ public:
         DRW::DwgModelSpaceEndBlockEntityHandle);
   }
 };
+
+// Fails the export in the last callback of the low-level writer without
+// telling that writer, which then completes and publishes the staged file.
+// Only fileExport is left to see the failure, as it is for a write that
+// dropped typed items.
+class PublishedThenFailedDwgFilter final : public RS_FilterDXFRW {
+public:
+  bool finalizeDwgWriteStructure() override {
+    const bool finalized = RS_FilterDXFRW::finalizeDwgWriteStructure();
+    DwgWriteFailureTestAccess::latch(*this);
+    return finalized;
+  }
+};
 #endif
 
 TEST_CASE("DWG writer patches legacy object size at the encoded OT boundary",
@@ -2836,8 +2851,13 @@ public:
     firstFrame.objectHandle = second.handle;
     for (DRW::DwgObjectHandleOccurrence &occurrence : firstFrame.occurrences)
       occurrence.objectHandle = second.handle;
-    m_staleReceiptRejected = !DwgWriteFailureTestAccess::recordFrame(
-        *m_filter, second.handle, firstFrame);
+    // DwgWriteFailureTestAccess::recordFrame() calls the base-class
+    // structural-consistency check only; go through the filter's own public
+    // overload instead, which additionally rejects a receipt whose
+    // generation no longer matches the writer's current one -- the
+    // provenance guard this test means to exercise.
+    m_staleReceiptRejected =
+        !m_filter->recordDwgWriteObjectOccurrences(second.handle, firstFrame);
   }
 };
 
@@ -3006,6 +3026,28 @@ class FailingDwgLine final : public DRW_Line {
 public:
   bool reject{false};
 
+  void seedEedWriteState() {
+    dwgEedAppIdWriteRefs = {{0u, 0x123u, 0, false, true}};
+    dwgEedLayerWriteRefs = {{1u, 0x456u, 0x0102030405060708ULL, true, false}};
+    dwgEedCodePage = 1251;
+  }
+
+  void checkEedWriteState() const {
+    REQUIRE(dwgEedAppIdWriteRefs.size() == 1u);
+    CHECK(dwgEedAppIdWriteRefs.front().indexInExtData == 0u);
+    CHECK(dwgEedAppIdWriteRefs.front().handleRef == 0x123u);
+    CHECK(dwgEedAppIdWriteRefs.front().rawHandleRef == 0u);
+    CHECK_FALSE(dwgEedAppIdWriteRefs.front().useRawHandleRef);
+    CHECK(dwgEedAppIdWriteRefs.front().leftOut);
+    REQUIRE(dwgEedLayerWriteRefs.size() == 1u);
+    CHECK(dwgEedLayerWriteRefs.front().indexInExtData == 1u);
+    CHECK(dwgEedLayerWriteRefs.front().handleRef == 0x456u);
+    CHECK(dwgEedLayerWriteRefs.front().rawHandleRef == 0x0102030405060708ULL);
+    CHECK(dwgEedLayerWriteRefs.front().useRawHandleRef);
+    CHECK_FALSE(dwgEedLayerWriteRefs.front().leftOut);
+    CHECK(dwgEedCodePage == 1251);
+  }
+
 protected:
   bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs = 0,
                  dwgBufferW *strBuf = nullptr,
@@ -3033,6 +3075,7 @@ public:
     rejected.setDwgLayerHandle(0x456u);
     rejected.setDwgLinetypeHandle(0x789u);
     rejected.setDwgAcDbColorHandle(true, 0x9ABu);
+    rejected.seedEedWriteState();
     rejected.reject = true;
     CHECK_FALSE(m_writer->writeLine(&rejected));
     CHECK(rejected.handle == 0u);
@@ -3041,13 +3084,15 @@ public:
     CHECK(rejected.dwgLinetypeHandle() == 0x789u);
     CHECK(rejected.hasDwgAcDbColorHandle());
     CHECK(rejected.dwgAcDbColorHandle() == 0x9ABu);
+    rejected.checkEedWriteState();
 
     rejected.reject = false;
     REQUIRE(m_writer->writeLine(&rejected));
     REQUIRE(rejected.handle != 0u);
     REQUIRE(m_writer->endBlockContent());
 
-    DRW_Line tracked;
+    FailingDwgLine tracked;
+    tracked.seedEedWriteState();
     const std::uint64_t transaction =
         m_writer->beginDwgWriteTransaction(false, true);
     REQUIRE(transaction != 0);
@@ -3057,6 +3102,7 @@ public:
     CHECK(tracked.handle == 0u);
     CHECK(tracked.parentHandle == 0u);
     CHECK(tracked.dwgLayerHandle() == 0u);
+    tracked.checkEedWriteState();
   }
 };
 
@@ -3160,6 +3206,9 @@ public:
 
 TEST_CASE("dwgRW restores caller state on failed and tracked writes",
           "[dwg-write][transaction][caller-state]") {
+  const auto version = GENERATE(DRW::AC1015, DRW::AC1018, DRW::AC1021,
+                                DRW::AC1024, DRW::AC1027, DRW::AC1032);
+  CAPTURE(version);
   const std::string path = tempPath("dwg_caller_mutation_rollback.dwg");
   std::remove(path.c_str());
 
@@ -3167,7 +3216,7 @@ TEST_CASE("dwgRW restores caller state on failed and tracked writes",
   {
     dwgRW writer(path.c_str());
     iface.m_writer = &writer;
-    REQUIRE(writer.write(&iface, DRW::AC1027, /*bin=*/false));
+    REQUIRE(writer.write(&iface, version, /*bin=*/false));
   }
   std::remove(path.c_str());
 }
@@ -3497,6 +3546,53 @@ TEST_CASE("RS_FilterDXFRW rolls back late structure publication",
 
   std::remove(failedPath.c_str());
   std::remove(successPath.c_str());
+}
+
+TEST_CASE("RS_FilterDXFRW removes the staged file of a failed export",
+          "[dwg-write][transaction][filter][safety]") {
+  ensureQtSettings();
+
+  RS_Graphic source;
+  source.initForNewDocument();
+  source.addEntity(new RS_Line(
+      &source, RS_LineData(RS_Vector(0.0, 0.0), RS_Vector(10.0, 10.0))));
+
+  // A directory of its own, so that whatever the export leaves in it is seen.
+  const std::filesystem::path directory = tempPath("failed_export_staging");
+  std::filesystem::remove_all(directory);
+  REQUIRE(std::filesystem::create_directory(directory));
+  const std::filesystem::path path = directory / "drawing.dwg";
+  const auto entryNames = [&directory] {
+    std::vector<std::string> names;
+    for (const auto &entry : std::filesystem::directory_iterator(directory))
+      names.push_back(entry.path().filename().string());
+    return names;
+  };
+
+  SECTION("to a new file") {
+    PublishedThenFailedDwgFilter filter;
+    CHECK_FALSE(filter.fileExport(source, QString::fromStdString(path.string()),
+                                  RS2::FormatDWG2013));
+    CHECK(entryNames() == std::vector<std::string>{});
+  }
+
+  SECTION("onto an existing file, which it keeps") {
+    const std::string previous = "the previous drawing";
+    {
+      std::ofstream out(path, std::ios::binary);
+      out << previous;
+    }
+    PublishedThenFailedDwgFilter filter;
+    CHECK_FALSE(filter.fileExport(source, QString::fromStdString(path.string()),
+                                  RS2::FormatDWG2013));
+    CHECK(entryNames() == std::vector<std::string>{"drawing.dwg"});
+    std::ifstream in(path, std::ios::binary);
+    const std::string kept((std::istreambuf_iterator<char>(in)),
+                           std::istreambuf_iterator<char>());
+    CHECK(kept == previous);
+  }
+
+  std::filesystem::remove_all(directory);
 }
 
 TEST_CASE("RS_FilterDXFRW clears deferred table failure state on reuse",
@@ -4159,10 +4255,10 @@ TEST_CASE("R18+ CLASSES writes its eight-byte unknown tail",
                   classesBegin + sentinelSize);
     REQUIRE(classesEnd != std::string::npos);
     REQUIRE(classesEnd >= classesBegin + sentinelSize + sizeof(std::uint32_t) +
-                              sizeof(std::uint16_t) +
-                              dwgSpec::kClassesUnknownTailBytes);
+                              sizeof(std::uint16_t));
 
-    const size_t tail = classesEnd - dwgSpec::kClassesUnknownTailBytes;
+    const size_t tail = classesEnd + sentinelSize;
+    REQUIRE(tail + dwgSpec::kClassesUnknownTailBytes <= bytes.size());
     for (size_t i = 0; i < dwgSpec::kClassesUnknownTailBytes; ++i)
       CHECK(bytes[tail + i] == 0);
 
@@ -5715,18 +5811,26 @@ DRW_UnsupportedObject makeRawFixedPlaceholderObject(DRW::Version version,
                                                     const char *recordName,
                                                     std::uint32_t handle) {
   dwgBufferW body;
+  dwgBufferW handles;
   putRawObjectPreamble(body, version, objectType, handle);
   if (version > DRW::AC1024)
     body.putBit(0); // has_ds_data
-  putRawCommonObjectHandles(body, 0);
   body.putRawChar8(static_cast<std::uint8_t>(objectType));
   if (version > DRW::AC1018) {
+    // R2007+ keeps the owner/xdictionary handle pair in a separate trailing
+    // handle-stream (bodyBitSize below), not inline -- matching every other
+    // raw-object helper in this file (see makeRawWideHandleReplayObject).
     body.alignToByte();
     for (int i = 0; i < 7; ++i)
       body.putBit(0);
     body.putRawShort16(0);
     body.putBit(0);
     body.alignToByte();
+    handles.putHandle(rawObjectHandle(4, 0)); // owner
+    handles.putHandle(rawObjectHandle(0, 0)); // xdictionary
+    handles.alignToByte();
+  } else {
+    putRawCommonObjectHandles(body, 0);
   }
   if (version > DRW::AC1014 && version < DRW::AC1024) {
     const std::uint8_t bsCode = (body.data()[0] >> 6) & 0x03;
@@ -5741,12 +5845,16 @@ DRW_UnsupportedObject makeRawFixedPlaceholderObject(DRW::Version version,
   object.m_version = version;
   object.m_objectType = objectType;
   object.m_handle = handle;
-  object.m_bodyBitSize = 0;
-  object.m_objectSize = static_cast<std::uint32_t>(body.data().size());
+  std::vector<std::uint8_t> rawBytes = body.data();
+  rawBytes.insert(rawBytes.end(), handles.data().begin(), handles.data().end());
+  object.m_bodyBitSize = version > DRW::AC1021
+                             ? static_cast<std::uint32_t>(handles.size() * 8u)
+                             : 0u;
+  object.m_objectSize = static_cast<std::uint32_t>(rawBytes.size());
   object.m_isEntity = false;
   object.m_isCustomClass = false;
   object.m_recordName = recordName;
-  object.m_rawBytes = body.data();
+  object.m_rawBytes = std::move(rawBytes);
   return object;
 }
 
@@ -6139,6 +6247,22 @@ DRW_UnsupportedObject makeRawModelerGeometryEntity(DRW::Version version,
   putRawEntityPreamble(body, version, objectType, handle);
   body.putBit(1); // empty modeler payload
   body.putBit(0); // modeler-data unknown bit
+  if (version > DRW::AC1014 && version < DRW::AC1024) {
+    // Patch the object-size-in-bits placeholder putRawEntityPreamble left as
+    // 0 -- DRW_ModelerGeometry::parseDwg rejects objSize==0 outright. Unlike
+    // an OBJECT's objSize (which covers its inline handles too, see
+    // makeRawReplayObject), an ENTITY's objSize marks the end of its own
+    // body data only, immediately before the common-handle stream that
+    // DRW_Entity::parseDwgEntHandle reads separately afterward -- patch it
+    // here, before putRawCommonEntityHandles appends that stream, or the
+    // handle reader is left with almost no bits to work with.
+    const std::uint8_t bsCode = (body.data()[0] >> 6) & 0x03;
+    const std::size_t rlBitOffset = (bsCode == 0x01)   ? 10
+                                    : (bsCode == 0x00) ? 18
+                                                       : 2;
+    body.patchRawLong32AtBit(rlBitOffset,
+                             static_cast<std::uint32_t>(body.bitCount()));
+  }
   putRawCommonEntityHandles(body, 0x12u);
 
   DRW_UnsupportedObject object;
@@ -7983,6 +8107,8 @@ public:
     mtext->interlin = 1.0;
     mtext->text = value;
     mtext->m_r2018IsNotAnnotative = true;
+    // An attribute has no place for this bit; it must not leak into the
+    // fields that follow the MTEXT.
     mtext->m_r2018ReallyLocked = true;
     mtext->m_r2018AppIdHandle = 0x14u;
     mtext->m_r2018AnnotativeData = {0x01, 0x7F, 0xFE};
@@ -8078,6 +8204,7 @@ class InsertAttributeRoundTripIface : public EmptyIface {
 public:
   dwgRW *m_writer{nullptr};
   std::uint32_t m_blockRecH{0};
+  std::function<void(DRW_Attrib &)> configureAttribute;
   std::vector<DRW_Insert> m_inserts;
   std::vector<DRW_DwgFramePublication> m_framePublications;
 
@@ -8108,6 +8235,8 @@ public:
     attrib->m_attributeType = 2;
     attrib->keepDuplicateRecords = 0xA6;
     attrib->mtext = MultilineAttributeWriteIface::makeMText("line 1\\Pline 2");
+    if (configureAttribute)
+      configureAttribute(*attrib);
     insert.attlist.push_back(std::move(attrib));
 
     REQUIRE(m_writer->writeInsert(&insert));
@@ -10108,6 +10237,46 @@ public:
   }
 };
 
+// A FIELD and a FIELDLIST written straight through the low-level writer, which
+// does not check that a member names an object. It produces the source file
+// for the DWG-sourced FIELDLIST tests: a real drawing whose FIELDLIST has a
+// member that points at nothing (or at something that is not a FIELD), read
+// back with its receipts like any DWG the filter opens.
+class SourcedFieldListIface : public EmptyIface {
+public:
+  static constexpr std::uint32_t kFieldHandle = 0x9D1u;
+  static constexpr std::uint32_t kListHandle = 0x9D2u;
+
+  dwgRW *m_writer{nullptr};
+  DRW_Field m_field;
+  DRW_FieldList m_fieldList;
+
+  explicit SourcedFieldListIface(std::vector<std::uint32_t> members) {
+    m_field.handle = kFieldHandle;
+    m_field.parentHandle = 0xCu;
+    m_field.m_evaluatorId = "AcDbBlockEval";
+    m_field.m_fieldCode = "%<\\AcDbBlock>%";
+    m_field.m_value.m_dataType = 0;
+    m_field.m_value.m_value.addInt(91, 1);
+    m_field.m_value.m_unitType = 12;
+    m_fieldList.handle = kListHandle;
+    m_fieldList.parentHandle = 0xCu;
+    m_fieldList.m_fieldHandles = std::move(members);
+  }
+
+  void writeDwgClasses() override {
+    REQUIRE(m_writer != nullptr);
+    REQUIRE(m_writer->registerFieldObjectClass(&m_field));
+    REQUIRE(m_writer->registerFieldListObjectClass(&m_fieldList));
+  }
+
+  void writeObjects() override {
+    REQUIRE(m_writer != nullptr);
+    REQUIRE(m_writer->writeField(&m_field));
+    REQUIRE(m_writer->writeFieldList(&m_fieldList));
+  }
+};
+
 } // namespace
 
 TEST_CASE("dwgRW writes POINT/LINE/CIRCLE/ARC and reader recovers them",
@@ -10802,7 +10971,13 @@ TEST_CASE("dwgRW preserves fixed opaque OBJECTS placeholder types",
     REQUIRE(reader.getVersion() == version);
     REQUIRE(reader.getError() == DRW::BAD_NONE);
     CHECK(reader.getSkippedUnsupportedObjects().empty());
-    REQUIRE(readIface.m_readObjects.size() == writeIface.m_objects.size());
+    // Every dwgRW::write() call also bootstraps the root Named Objects
+    // Dictionary and an ACAD_GROUP dictionary, which the reader dual-delivers
+    // as raw DRW_UnsupportedObject records too (readDwgObjects' DICTIONARY
+    // case) -- so m_readObjects always has 2 more entries than the fixed
+    // placeholders this test wrote; the per-item find_if loop below already
+    // checks each of those, so a blanket size assertion isn't needed.
+    REQUIRE(readIface.m_readObjects.size() >= writeIface.m_objects.size());
     REQUIRE(readIface.m_readVbaProjects.size() == 1u);
     CHECK(readIface.m_readVbaProjects.front().handle == 0x717u);
     CHECK(readIface.m_readVbaProjects.front().parentHandle == 0xA11);
@@ -10851,7 +11026,10 @@ TEST_CASE("dwgRW decodes and preserves ACAD_PROXY_OBJECT payloads",
     REQUIRE(reader.getObjectParseFailures() == 0);
     CHECK(reader.getSkippedUnsupportedObjects().empty());
     REQUIRE(readIface.m_readObjects.size() == 1);
-    REQUIRE(readIface.m_readRawObjects.size() == 1);
+    // Every write() call also bootstraps a root Named Objects Dictionary and
+    // an ACAD_GROUP dictionary, which the reader dual-delivers as raw
+    // records too (readDwgObjects' DICTIONARY case) -- find the proxy's own
+    // raw carrier by type rather than assuming it is the only entry.
 
     const DRW_ProxyObject &proxy = readIface.m_readObjects.front();
     CHECK(proxy.handle == writeIface.m_rawObject.m_handle);
@@ -10877,7 +11055,13 @@ TEST_CASE("dwgRW decodes and preserves ACAD_PROXY_OBJECT payloads",
     CHECK(proxy.m_objectIdRefs.front().m_dxfCode == 360);
     CHECK(proxy.m_objectIdRefs.front().m_handle == 0x735u);
 
-    const DRW_UnsupportedObject &raw = readIface.m_readRawObjects.front();
+    const auto rawIt = std::find_if(
+        readIface.m_readRawObjects.begin(), readIface.m_readRawObjects.end(),
+        [&](const DRW_UnsupportedObject &object) {
+          return object.m_handle == writeIface.m_rawObject.m_handle;
+        });
+    REQUIRE(rawIt != readIface.m_readRawObjects.end());
+    const DRW_UnsupportedObject &raw = *rawIt;
     CHECK(raw.m_objectType == DRW_ProxyObject::kDwgType);
     CHECK(raw.m_recordName == "ACAD_PROXY_OBJECT");
     CHECK(raw.m_className == "AcDbProxyObject");
@@ -10903,7 +11087,15 @@ TEST_CASE("dwgRW rejects truncated ACAD_PROXY_OBJECT metadata atomically",
   CHECK(reader.read(&readIface, /*ext=*/false));
   CHECK(reader.getObjectParseFailures() > 0);
   CHECK(readIface.m_readObjects.empty());
-  CHECK(readIface.m_readRawObjects.empty());
+  // The root Named Objects Dictionary and ACAD_GROUP dictionary that every
+  // write() call bootstraps are unrelated to the truncated proxy object and
+  // still dual-deliver their own raw records; only the proxy's raw carrier
+  // should be absent.
+  CHECK(std::none_of(readIface.m_readRawObjects.begin(),
+                     readIface.m_readRawObjects.end(),
+                     [&](const DRW_UnsupportedObject &object) {
+                       return object.m_handle == writeIface.m_rawObject.m_handle;
+                     }));
   CHECK(reader.getSkippedUnsupportedObjects().empty());
   std::remove(path.c_str());
 }
@@ -10926,7 +11118,13 @@ TEST_CASE(
   CHECK(reader.read(&readIface, /*ext=*/false));
   CHECK(reader.getObjectParseFailures() > 0);
   CHECK(readIface.m_readObjects.empty());
-  CHECK(readIface.m_readRawObjects.empty());
+  // See the sibling truncated-metadata test above: the dictionary bootstrap
+  // objects still dual-deliver raw records regardless of the proxy failure.
+  CHECK(std::none_of(readIface.m_readRawObjects.begin(),
+                     readIface.m_readRawObjects.end(),
+                     [&](const DRW_UnsupportedObject &object) {
+                       return object.m_handle == writeIface.m_rawObject.m_handle;
+                     }));
   CHECK(reader.getSkippedUnsupportedObjects().empty());
   std::remove(path.c_str());
 }
@@ -13149,7 +13347,7 @@ TEST_CASE("RS_FilterDXFRW distinguishes imported and generated active VPORTs",
       source.dwgAdvancedMetadata().addVport(vport);
       if (value.markImported) {
         source.dwgAdvancedMetadata().setSourceDwgVersion(DRW::AC1018);
-        source.dwgAdvancedMetadata().markVportsImportedFromDwg();
+        source.dwgAdvancedMetadata().markVportsImported();
       }
     }
 
@@ -14914,6 +15112,11 @@ TEST_CASE("RS_FilterDXFRW does not replay dictionary count diagnostics",
   std::remove(path.c_str());
 }
 
+// A soft pointer that names no object is dropped, not written and not a
+// reason to refuse the export. This holds for every typed family here,
+// FIELDLIST members included; the FIELDLIST cases that are still refused (a
+// member that names an existing object) are covered by the FIELDLIST tests
+// further down.
 TEST_CASE("RS_FilterDXFRW removes dangling typed object references",
           "[dwg-write][objects][filter][raw-replay]") {
   ensureQtSettings();
@@ -15310,31 +15513,111 @@ TEST_CASE("RS_FilterDXFRW rejects a zero CURVEPATH entity reference",
   std::remove(path.c_str());
 }
 
-TEST_CASE("RS_FilterDXFRW rejects a SORTENTSTABLE row with a missing sort key",
+TEST_CASE("RS_FilterDXFRW omits and reports XDATA naming a missing layer",
+          "[dwg-write][filter][eed][xdata]") {
+  ensureQtSettings();
+  const auto format = GENERATE(RS2::FormatDWG, RS2::FormatDWG2004,
+                              RS2::FormatDWG2007, RS2::FormatDWG2010,
+                              RS2::FormatDWG2013, RS2::FormatDWG2018);
+  const bool lostFirst = GENERATE(false, true);
+  CAPTURE(format, lostFirst);
+  RS_Graphic source;
+  source.initForNewDocument();
+  auto *line = new RS_Line(&source, {RS_Vector{0.0, 0.0}, RS_Vector{10.0, 5.0}});
+  std::vector<std::shared_ptr<DRW_Variant>> data{
+      std::make_shared<DRW_Variant>(1001, "LC_KEPT"),
+      std::make_shared<DRW_Variant>(1003, "0", true),
+      std::make_shared<DRW_Variant>(1000, "kept"),
+      std::make_shared<DRW_Variant>(1001, "LC_LOST"),
+      std::make_shared<DRW_Variant>(1003, "NO_SUCH_LAYER", true),
+      std::make_shared<DRW_Variant>(1000, "lost")};
+  if (lostFirst)
+    std::rotate(data.begin(), data.begin() + 3, data.end());
+  line->setDrwExtData(std::move(data));
+  source.addEntity(line);
+  const std::string path = tempPath("filter_missing_xdata_layer.dwg");
+  RS_FilterDXFRW exporter;
+  REQUIRE(exporter.fileExport(source, QString::fromStdString(path), format));
+  CHECK(exporter.exportReport().contains(
+      QStringLiteral("application data naming a layer not in the drawing")));
+  const std::string dxf = tempPath("filter_missing_xdata_layer.dxf");
+  REQUIRE(exporter.fileExport(source, QString::fromStdString(dxf), RS2::FormatDXFRW));
+  CHECK(exporter.exportReport().isEmpty());
+  std::remove(dxf.c_str());
+
+  RS_Graphic imported;
+  RS_FilterDXFRW reader;
+  REQUIRE(reader.fileImport(imported, QString::fromStdString(path), RS2::FormatDWG));
+  REQUIRE(imported.count() == 1);
+  const auto &kept = imported.entityAt(0)->getDrwExtData();
+  REQUIRE(kept.size() == 3u);
+  CHECK(std::string(kept[0]->c_str()) == "LC_KEPT");
+  CHECK(std::string(kept[1]->c_str()) == "0");
+  CHECK(kept[1]->isLayerRef());
+  CHECK(std::string(kept[2]->c_str()) == "kept");
+  REQUIRE(exporter.fileExport(imported, QString::fromStdString(path), format));
+  CHECK(exporter.exportReport().isEmpty());
+  std::remove(path.c_str());
+}
+
+// A sort handle need not name an object (ODA, SORTENTSTABLE).
+TEST_CASE("RS_FilterDXFRW keeps a SORTENTSTABLE sort key that names no object",
           "[dwg-write][sortentstable][references]") {
   ensureQtSettings();
+  const auto format = GENERATE(RS2::FormatDWG, RS2::FormatDWG2004,
+                              RS2::FormatDWG2007, RS2::FormatDWG2010,
+                              RS2::FormatDWG2013, RS2::FormatDWG2018);
+  const std::uint32_t freeKey = GENERATE(0xC62u, 0xF000u);
+  CAPTURE(format, freeKey);
 
   RS_Graphic source;
   source.initForNewDocument();
-  auto *line = new RS_Line(
-      &source, RS_LineData{RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}});
-  line->setSourceHandle(0xC51u);
-  source.addEntity(line);
+  for (const auto &[handle, y] : {std::pair{0xC61u, 0.0}, std::pair{0xC63u, 1.0}}) {
+    auto *line = new RS_Line(
+        &source, RS_LineData{RS_Vector{0.0, y}, RS_Vector{10.0, y}});
+    line->setSourceHandle(handle);
+    source.addEntity(line);
+  }
 
   DRW_SortEntsTable table;
-  table.handle = 0xC52u;
+  table.handle = 0xC64u;
   table.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
   table.m_blockOwnerHandle = DRW::DwgModelSpaceBlockRecordHandle;
-  table.m_entityHandles = {line->sourceHandle()};
-  table.m_sortHandles = {0xDEADu};
+  table.m_entityHandles = {0xC61u, 0xC63u};
+  table.m_sortHandles = {0xC63u, freeKey};
   source.dwgAdvancedMetadata().addSortEntsTable(table);
 
   const std::string path = tempPath("filter_sortentstable_missing_sort.dwg");
   std::remove(path.c_str());
-  RS_FilterDXFRW filter;
-  CHECK_FALSE(filter.fileExport(source, QString::fromStdString(path),
-                                RS2::FormatDWG2013));
-  CHECK_FALSE(std::filesystem::exists(path));
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(source, QString::fromStdString(path),
+                              format));
+  }
+
+  RS_Graphic imported;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(imported, QString::fromStdString(path),
+                              RS2::FormatDWG));
+  }
+  const auto &tables = imported.dwgAdvancedMetadata().sortEntsTables();
+  const auto written =
+      std::find_if(tables.begin(), tables.end(), [](const auto &candidate) {
+        return candidate.handle == 0xC64u;
+      });
+  REQUIRE(written != tables.end());
+  REQUIRE(written->entityHandles.size() == 2u);
+  REQUIRE(written->sortHandles.size() == 2u);
+  CHECK(written->sortHandles[0] == written->entityHandles[1]);
+  CHECK(written->sortHandles[1] == freeKey);
+  CHECK(written->sortHandles[1] < written->sortHandles[0]);
+  std::set<std::uint32_t> entityHandles;
+  for (RS_Entity *entity : imported)
+    entityHandles.insert(entity->sourceHandle());
+  CHECK(entityHandles.count(freeKey) == 0u);
+  CHECK(entityHandles.count(written->entityHandles[0]) == 1u);
+  CHECK(entityHandles.count(written->entityHandles[1]) == 1u);
 
   std::remove(path.c_str());
 }
@@ -15420,7 +15703,11 @@ TEST_CASE("dwgRW remaps conflicting custom class registrations",
     dwgRW reader(path.c_str());
     REQUIRE(reader.read(&readIface, /*ext=*/false));
     REQUIRE(reader.getError() == DRW::BAD_NONE);
-    REQUIRE(readIface.m_readObjects.size() == 2);
+    // The root Named Objects Dictionary and ACAD_GROUP dictionary that every
+    // write() call bootstraps dual-deliver raw records too (readDwgObjects'
+    // DICTIONARY case); the two find_if checks below already identify this
+    // test's own two conflicting-class objects by handle.
+    REQUIRE(readIface.m_readObjects.size() >= 2);
     const auto first = std::find_if(readIface.m_readObjects.cbegin(),
                                     readIface.m_readObjects.cend(),
                                     [](const DRW_UnsupportedObject &object) {
@@ -16775,7 +17062,7 @@ TEST_CASE("dwgRW round-trips AC1032 INSERT ATTRIB ownership",
   CHECK(insert.attlist.front()->keepDuplicateRecords == 0);
   REQUIRE(insert.seqendH.ref != DRW::NoHandle);
   REQUIRE(insert.attlist.front()->mtext != nullptr);
-  CHECK(insert.attlist.front()->mtext->m_r2018ReallyLocked);
+  CHECK_FALSE(insert.attlist.front()->mtext->m_r2018ReallyLocked);
   CHECK(insert.attlist.front()->mtext->m_r2018AppIdHandle == 0x14u);
   CHECK(insert.attlist.front()->mtext->styleH.ref == 0x13u);
   CHECK(insert.attlist.front()->mtext->m_r2018AnnotativeData ==
@@ -16792,7 +17079,9 @@ TEST_CASE("dwgRW round-trips AC1032 INSERT ATTRIB ownership",
   CHECK(insert.attlist.front()->mtext->hasDwgAcDbColorHandle());
   CHECK(insert.attlist.front()->mtext->dwgAcDbColorHandle() == 0x35u);
   CHECK(insert.attlist.front()->mtext->ltypeScale == Catch::Approx(1.25));
-  CHECK(insert.attlist.front()->mtext->lineType.empty());
+  // 0x3C and 0x3D are no layer and no linetype of this drawing, so the MTEXT
+  // is on the attribute's layer and takes the linetype from it.
+  CHECK(insert.attlist.front()->mtext->lineType == "BYLAYER");
   CHECK_FALSE(insert.attlist.front()->mtext->visible);
   CHECK(insert.attlist.front()->mtext->lWeight == DRW_LW_Conv::width05);
   CHECK(insert.attlist.front()->mtext->material == 0x36u);
@@ -16802,8 +17091,9 @@ TEST_CASE("dwgRW round-trips AC1032 INSERT ATTRIB ownership",
   CHECK(insert.attlist.front()->mtext->fullVisualStyleHandle == 0x39u);
   CHECK(insert.attlist.front()->mtext->faceVisualStyleHandle == 0x3Au);
   CHECK(insert.attlist.front()->mtext->edgeVisualStyleHandle == 0x3Bu);
-  CHECK(insert.attlist.front()->mtext->dwgLayerHandle() == 0x3Cu);
-  CHECK(insert.attlist.front()->mtext->dwgLinetypeHandle() == 0x3Du);
+  CHECK(insert.attlist.front()->mtext->dwgLayerHandle() ==
+        insert.attlist.front()->dwgLayerHandle());
+  CHECK(insert.attlist.front()->mtext->dwgLinetypeHandle() == 0u);
   CHECK(insert.attlist.front()->text == "line 1");
   CHECK(insert.attlist.front()->mtext->text == "line 1\\Pline 2");
 
@@ -20253,6 +20543,103 @@ TEST_CASE("LC_DwgAdvancedMetadata authorizes FIELDLIST membership exactly",
     checkStatus(complete.authorizeDwgFieldListSource(completeRecord),
                 Status::Authorized);
   }
+
+  // The strict proof above answers "does the receipt show every member's FIELD
+  // frame?". The exporter asks a narrower question: is anything wrong beyond
+  // members that point at no frame of the source file at all? Such a member
+  // proves and disproves nothing, and the exporter may drop it; every other
+  // deviation still refuses.
+  SECTION("the export proof tolerates only members that name no source frame") {
+    const auto exportProof = [](const Graph &metadata,
+                                const Graph::FieldListRecord &record) {
+      return metadata.authorizeDwgFieldListSourceForExport(record);
+    };
+
+    // No FIELD frame for the member, and no frame of any kind in the coverage
+    // report: the member points at nothing. Strict: refused. Export: allowed,
+    // and the member is reported.
+    Graph frameless;
+    addFrames(frameless, {listPublication});
+    const auto &framelessRecord = addRecord(frameless, list);
+    frameless.addDwgFieldListMembership(membership);
+    checkStatus(frameless.authorizeDwgFieldListSource(framelessRecord),
+                Status::MissingFieldEndpoint);
+    CHECK(frameless.authorizeDwgFieldListSource(framelessRecord)
+              .framelessMembers.empty());
+    const auto tolerated = exportProof(frameless, framelessRecord);
+    checkStatus(tolerated, Status::Authorized);
+    CHECK(tolerated.framelessMembers == std::vector<std::uint32_t>{0u});
+
+    // With every member resolved, both proofs agree and report nothing.
+    Graph complete;
+    addFrames(complete, {listPublication, fieldPublication});
+    const auto &completeRecord = addRecord(complete, list);
+    complete.addDwgFieldListMembership(membership);
+    checkStatus(exportProof(complete, completeRecord), Status::Authorized);
+    CHECK(exportProof(complete, completeRecord).framelessMembers.empty());
+
+    // The coverage report names a frame for the member although no FIELD
+    // frame was published for it: the file has something there that the
+    // reader did not turn into a FIELD. That is a real problem, not a
+    // dangling pointer.
+    Graph unpublished;
+    unpublished.addDwgFramePublication(listPublication);
+    DRW_DwgFrameCoverageReport unpublishedReport;
+    unpublishedReport.m_status = DRW_DwgFrameCoverageStatus::FinalizedComplete;
+    unpublishedReport.m_complete = true;
+    unpublishedReport.m_entries = {makeCoverage(listPublication),
+                                   makeCoverage(fieldPublication)};
+    unpublished.addDwgFrameCoverageReport(unpublishedReport);
+    const auto &unpublishedRecord = addRecord(unpublished, list);
+    unpublished.addDwgFieldListMembership(membership);
+    checkStatus(exportProof(unpublished, unpublishedRecord),
+                Status::MissingFieldEndpoint);
+
+    // A member whose frame exists but is not a FIELD, an ambiguous frame, and
+    // a member mixed in with a valid one that is refused for its own reason.
+    Graph invalidEndpoint;
+    auto invalidField = fieldPublication;
+    invalidField.m_className = "AcDbNotAField";
+    addFrames(invalidEndpoint, {listPublication, invalidField});
+    const auto &invalidEndpointRecord = addRecord(invalidEndpoint, list);
+    invalidEndpoint.addDwgFieldListMembership(membership);
+    checkStatus(exportProof(invalidEndpoint, invalidEndpointRecord),
+                Status::InvalidFieldEndpoint);
+
+    Graph duplicateEndpoint;
+    auto duplicateField = fieldPublication;
+    ++duplicateField.m_sourceOffset;
+    addFrames(duplicateEndpoint,
+              {listPublication, fieldPublication, duplicateField});
+    const auto &duplicateEndpointRecord = addRecord(duplicateEndpoint, list);
+    duplicateEndpoint.addDwgFieldListMembership(membership);
+    checkStatus(exportProof(duplicateEndpoint, duplicateEndpointRecord),
+                Status::DuplicateFieldEndpoint);
+
+    // A frameless member does not excuse the rest of the receipt: the list
+    // must still match what was read, and the coverage must be complete.
+    Graph changedList;
+    addFrames(changedList, {listPublication});
+    const auto &changedListRecord = addRecord(changedList, list);
+    auto changedMembership = membership;
+    changedMembership.m_entries.front().m_fieldHandle = DRW::NoHandle;
+    changedList.addDwgFieldListMembership(changedMembership);
+    checkStatus(exportProof(changedList, changedListRecord),
+                Status::MismatchedMembership);
+
+    Graph partial;
+    addFrames(partial, {listPublication},
+              DRW_DwgFrameCoverageStatus::FinalizedPartial, false);
+    const auto &partialRecord = addRecord(partial, list);
+    partial.addDwgFieldListMembership(membership);
+    checkStatus(exportProof(partial, partialRecord),
+                Status::FrameCoverageIncomplete);
+
+    // A list that was not read from a DWG is not affected either way.
+    Graph newList;
+    const auto &newRecord = addRecord(newList, list);
+    checkStatus(exportProof(newList, newRecord), Status::NotDwgSource);
+  }
 }
 
 TEST_CASE("RS_FilterDXFRW preserves only unchanged DWG FIELD graphs",
@@ -23009,24 +23396,294 @@ TEST_CASE("RS_FilterDXFRW rejects duplicate FIELD handles for DWG",
   std::remove(path.c_str());
 }
 
-TEST_CASE("RS_FilterDXFRW rejects unresolved FIELDLIST members for DWG",
+// FIELDLIST members are soft pointers to FIELD objects. The export takes
+// three different positions on a member that is not a FIELD it writes:
+//  - it names no object at all (dangling): the member is dropped with a
+//    warning, as for every other dangling soft pointer of the DWG writer
+//    (see "removes dangling typed object references"). The emitted list never
+//    carries a pointer that cannot be resolved, and nothing of the document is
+//    lost, because there is no object behind the pointer;
+//  - it names an object that exists but is not a FIELD this export writes:
+//    the export is refused, because leaving the member out would silently
+//    lose part of the document and keeping it would point the list at
+//    something that is not a FIELD.
+// This test used to require the first case to be refused too, which
+// contradicted "removes dangling typed object references" for the same shape;
+// the pair is now consistent, and the second case keeps its own test below.
+TEST_CASE("RS_FilterDXFRW drops dangling FIELDLIST members for DWG",
           "[dwg-write][fieldlist][filter]") {
   ensureQtSettings();
 
   RS_Graphic source;
   source.initForNewDocument();
+
+  DRW_Field field;
+  field.handle = 0xB7Cu;
+  field.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
+  field.m_evaluatorId = "AcDbBlockEval";
+  field.m_fieldCode = "%<\\AcDbBlock>%";
+  field.m_value.m_dataType = 0;
+  field.m_value.m_value.addInt(91, 1);
+  field.m_value.m_unitType = 12;
+  source.dwgAdvancedMetadata().addField(field);
+
   DRW_FieldList fieldList;
   fieldList.handle = 0xB7Du;
   fieldList.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
-  fieldList.m_fieldHandles = {DRW::NoHandle, 0xB7Eu};
+  // A live FIELD, an explicit null slot, and a handle that names nothing.
+  fieldList.m_fieldHandles = {field.handle, DRW::NoHandle, 0xB7Eu};
   source.dwgAdvancedMetadata().addFieldList(fieldList);
 
-  const std::string path = tempPath("filter_fieldlist_missing_field.dwg");
+  const std::string path = tempPath("filter_fieldlist_dangling_member.dwg");
+  std::remove(path.c_str());
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(source, QString::fromStdString(path),
+                              RS2::FormatDWG2013));
+  }
+
+  RS_Graphic imported;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(imported, QString::fromStdString(path),
+                              RS2::FormatDWG));
+  }
+  const auto &fieldLists = imported.dwgAdvancedMetadata().fieldLists();
+  const auto it = std::find_if(
+      fieldLists.begin(), fieldLists.end(),
+      [handle = fieldList.handle](
+          const LC_DwgAdvancedMetadata::FieldListRecord &record) {
+        return record.handle == handle;
+      });
+  REQUIRE(it != fieldLists.end());
+  // The dangling member is gone; the live FIELD and the null slot are kept,
+  // in order.
+  CHECK(it->fieldHandles ==
+        std::vector<std::uint32_t>{field.handle, DRW::NoHandle});
+  std::remove(path.c_str());
+}
+
+TEST_CASE("RS_FilterDXFRW rejects FIELDLIST members that name another object "
+          "for DWG",
+          "[dwg-write][fieldlist][filter]") {
+  ensureQtSettings();
+
+  RS_Graphic source;
+  source.initForNewDocument();
+
+  // An object that exists in the drawing but is not a FIELD.
+  DRW_XRecord xrecord;
+  xrecord.handle = 0xB7Eu;
+  xrecord.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
+  source.dwgAdvancedMetadata().addXRecord(xrecord);
+
+  DRW_FieldList fieldList;
+  fieldList.handle = 0xB7Du;
+  fieldList.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
+  fieldList.m_fieldHandles = {DRW::NoHandle, xrecord.handle};
+  source.dwgAdvancedMetadata().addFieldList(fieldList);
+
+  const std::string path = tempPath("filter_fieldlist_foreign_member.dwg");
   std::remove(path.c_str());
   RS_FilterDXFRW filter;
   CHECK_FALSE(filter.fileExport(source, QString::fromStdString(path),
                                 RS2::FormatDWG2013));
+  CHECK_FALSE(std::filesystem::exists(path));
   std::remove(path.c_str());
+}
+
+TEST_CASE("RS_FilterDXFRW rejects FIELDLIST members naming an unwritable FIELD "
+          "for DWG",
+          "[dwg-write][fieldlist][filter]") {
+  ensureQtSettings();
+
+  const auto populate = [](RS_Graphic &source, bool listReferencesField) {
+    source.initForNewDocument();
+
+    DRW_Field field;
+    field.handle = 0xB7Cu;
+    field.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
+    field.m_evaluatorId = "AcDbBlockEval";
+    field.m_fieldCode = "%<\\AcDbBlock>%";
+    field.m_value.m_dataType = 0;
+    field.m_value.m_value.addInt(91, 1);
+    field.m_value.m_unitType = 12;
+    source.dwgAdvancedMetadata().addField(field);
+    // An edited FIELD is no longer replayable, so the export does not write
+    // it (and reports the record as diagnostic-only).
+    const_cast<std::vector<LC_DwgAdvancedMetadata::FieldRecord> &>(
+        source.dwgAdvancedMetadata().fields())
+        .front()
+        .replayState = LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated;
+
+    DRW_FieldList fieldList;
+    fieldList.handle = 0xB7Du;
+    fieldList.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
+    if (listReferencesField)
+      fieldList.m_fieldHandles = {field.handle};
+    source.dwgAdvancedMetadata().addFieldList(fieldList);
+  };
+
+  // The FIELD is there, so a list that points at it cannot simply lose the
+  // member: the export is refused.
+  {
+    RS_Graphic source;
+    populate(source, true);
+    const std::string path = tempPath("filter_fieldlist_unwritable_field.dwg");
+    std::remove(path.c_str());
+    RS_FilterDXFRW filter;
+    CHECK_FALSE(filter.fileExport(source, QString::fromStdString(path),
+                                  RS2::FormatDWG2013));
+    CHECK_FALSE(std::filesystem::exists(path));
+    std::remove(path.c_str());
+  }
+
+  // Control: the same drawing without the pointer exports, so the refusal
+  // above is about the member and not about the unwritable FIELD itself.
+  {
+    RS_Graphic source;
+    populate(source, false);
+    const std::string path =
+        tempPath("filter_fieldlist_unwritable_field_control.dwg");
+    std::remove(path.c_str());
+    RS_FilterDXFRW filter;
+    CHECK(filter.fileExport(source, QString::fromStdString(path),
+                            RS2::FormatDWG2013));
+    std::remove(path.c_str());
+  }
+}
+
+// A FIELDLIST read from a DWG carries receipts for what the file held. A member
+// that names no object frame of that file at all -- no FIELD frame, no frame of
+// any kind -- is a dangling pointer: dropped with a warning, and the export goes
+// through, exactly as for a list that never came from a file. Everything else
+// about the receipt still has to hold: a member that names a frame that is not
+// a FIELD, a list that no longer matches what was read, a member whose frame the
+// file has but the reader could not turn into a FIELD.
+TEST_CASE("RS_FilterDXFRW drops FIELDLIST members that name no frame of the "
+          "source DWG",
+          "[dwg-write][fieldlist][filter][source]") {
+  ensureQtSettings();
+  using Status = LC_DwgAdvancedMetadata::DwgFieldListSourceAuthorizationStatus;
+  constexpr std::uint32_t kDangling = 0x9DFu;
+  const std::string sourcePath = tempPath("filter_fieldlist_sourced_frameless.dwg");
+  const std::string outputPath = tempPath("filter_fieldlist_sourced_pruned.dwg");
+  std::remove(sourcePath.c_str());
+  std::remove(outputPath.c_str());
+
+  {
+    SourcedFieldListIface iface{
+        {SourcedFieldListIface::kFieldHandle, DRW::NoHandle, kDangling}};
+    dwgRW writer(sourcePath.c_str());
+    iface.m_writer = &writer;
+    REQUIRE(writer.write(&iface, DRW::AC1027, /*bin=*/false));
+  }
+
+  RS_Graphic imported;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(imported, QString::fromStdString(sourcePath),
+                              RS2::FormatDWG));
+  }
+  const auto &metadata = imported.dwgAdvancedMetadata();
+  REQUIRE(metadata.fieldLists().size() == 1u);
+  const auto &record = metadata.fieldLists().front();
+  CHECK(record.fieldHandles ==
+        std::vector<std::uint32_t>{SourcedFieldListIface::kFieldHandle,
+                                   DRW::NoHandle, kDangling});
+  // The strict receipt proof cannot show the member's FIELD; the export proof
+  // authorizes the list and reports exactly that member.
+  CHECK(metadata.authorizeDwgFieldListSource(record).status ==
+        Status::MissingFieldEndpoint);
+  const auto proof = metadata.authorizeDwgFieldListSourceForExport(record);
+  CHECK(proof.authorized());
+  CHECK(proof.framelessMembers == std::vector<std::uint32_t>{2u});
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(imported, QString::fromStdString(outputPath),
+                              RS2::FormatDWG2013));
+  }
+  RS_Graphic reopened;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reopened, QString::fromStdString(outputPath),
+                              RS2::FormatDWG));
+  }
+  REQUIRE(reopened.dwgAdvancedMetadata().fieldLists().size() == 1u);
+  CHECK(reopened.dwgAdvancedMetadata().fieldLists().front().fieldHandles ==
+        std::vector<std::uint32_t>{SourcedFieldListIface::kFieldHandle,
+                                   DRW::NoHandle});
+  CHECK(reopened.dwgAdvancedMetadata().fields().size() == 1u);
+
+  std::remove(sourcePath.c_str());
+  std::remove(outputPath.c_str());
+}
+
+TEST_CASE("RS_FilterDXFRW still refuses a DWG-sourced FIELDLIST whose receipt "
+          "does not hold",
+          "[dwg-write][fieldlist][filter][source]") {
+  ensureQtSettings();
+  constexpr std::uint32_t kDangling = 0x9DFu;
+  const std::string sourcePath =
+      tempPath("filter_fieldlist_sourced_refused.dwg");
+  const std::string outputPath =
+      tempPath("filter_fieldlist_sourced_refused_out.dwg");
+
+  const auto writeSource = [&](std::vector<std::uint32_t> members) {
+    std::remove(sourcePath.c_str());
+    SourcedFieldListIface iface{std::move(members)};
+    dwgRW writer(sourcePath.c_str());
+    iface.m_writer = &writer;
+    REQUIRE(writer.write(&iface, DRW::AC1027, /*bin=*/false));
+  };
+  const auto importSource = [&](RS_Graphic &graphic) {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(sourcePath),
+                              RS2::FormatDWG));
+  };
+  const auto exportRefused = [&](RS_Graphic &graphic) {
+    std::remove(outputPath.c_str());
+    RS_FilterDXFRW filter;
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(outputPath),
+                                  RS2::FormatDWG2013));
+    CHECK_FALSE(std::filesystem::exists(outputPath));
+  };
+
+  SECTION("a member that names a frame of another kind") {
+    // The root dictionary is a real object frame of the file, and not a FIELD.
+    writeSource({SourcedFieldListIface::kFieldHandle,
+                 DRW::DwgNamedObjectsDictionaryHandle});
+    RS_Graphic imported;
+    importSource(imported);
+    exportRefused(imported);
+  }
+
+  SECTION("a dangling member does not excuse a member of another kind") {
+    writeSource({kDangling, DRW::DwgNamedObjectsDictionaryHandle});
+    RS_Graphic imported;
+    importSource(imported);
+    exportRefused(imported);
+  }
+
+  SECTION("a list edited since it was read") {
+    writeSource({SourcedFieldListIface::kFieldHandle, kDangling});
+    RS_Graphic imported;
+    importSource(imported);
+    // Sanity: as read, the list exports (the dangling member is dropped).
+    const auto &fieldLists = imported.dwgAdvancedMetadata().fieldLists();
+    REQUIRE(fieldLists.size() == 1u);
+    // The user drops the member from the list themselves: it no longer
+    // matches the membership receipt, so the source proof does not hold.
+    const_cast<std::vector<LC_DwgAdvancedMetadata::FieldListRecord> &>(
+        fieldLists)
+        .front()
+        .fieldHandles = {SourcedFieldListIface::kFieldHandle};
+    exportRefused(imported);
+  }
+
+  std::remove(sourcePath.c_str());
+  std::remove(outputPath.c_str());
 }
 
 TEST_CASE("RS_FilterDXFRW rejects stale FIELDLIST DWG receipts",
@@ -28518,6 +29175,10 @@ TEST_CASE("RS_FilterDXFRW receives AC1032 INSERT ATTRIB content",
       tempPath("filter_insert_multiline_attrib_exported_ac1032.dwg");
   {
     InsertAttributeRoundTripIface writeIface;
+    // The payload must name an APPID record of the file to be replayed.
+    writeIface.configureAttribute = [](DRW_Attrib &attribute) {
+      attribute.mtext->m_r2018AnnotativeAppHandle = 0x14u;
+    };
     dwgRW writer(path.c_str());
     writeIface.m_writer = &writer;
     REQUIRE(writer.write(&writeIface, DRW::AC1032, /*bin=*/false));
@@ -28583,12 +29244,14 @@ TEST_CASE("RS_FilterDXFRW receives AC1032 INSERT ATTRIB content",
   const DRW_MText &exportedMText =
       *exportedRead.m_inserts.front().attlist.front()->mtext;
   CHECK(exportedMText.m_r2018IsNotAnnotative);
-  CHECK(exportedMText.m_r2018ReallyLocked);
-  CHECK(exportedMText.m_r2018AppIdHandle == 0x14u);
+  CHECK_FALSE(exportedMText.m_r2018ReallyLocked);
+  // The full R2018 body is rebuilt without a source-file registered APPID.
+  // Its separate annotative application reference below is still retained.
+  CHECK(exportedMText.m_r2018AppIdHandle == 0u);
   CHECK(exportedMText.m_r2018AnnotativeData ==
         std::vector<std::uint8_t>{0x01, 0x7F, 0xFE});
   CHECK(exportedMText.m_r2018AnnotativeUnknown == 0x72);
-  CHECK(exportedMText.m_r2018AnnotativeAppHandle == 0x24u);
+  CHECK(exportedMText.m_r2018AnnotativeAppHandle == 0x14u);
 
   RS_Graphic exportedGraphic;
   {
@@ -28613,6 +29276,63 @@ TEST_CASE("RS_FilterDXFRW receives AC1032 INSERT ATTRIB content",
 
   std::remove(path.c_str());
   std::remove(exportedPath.c_str());
+}
+
+TEST_CASE("RS_FilterDXFRW exports an AutoCAD-form multi-line attribute",
+          "[dxf-write][filter-roundtrip][attrib][ac1032]") {
+  ensureQtSettings();
+  // Written by the ODA File Converter, in the form AutoCAD uses; see
+  // lc_attrib_embedded_mtext_dwg_tests.cpp.
+  const std::string sourcePath =
+      std::string(LIBRECAD_TEST_DIR) + "/lc_multiline_attrib_ac1032.dwg";
+  REQUIRE(std::filesystem::is_regular_file(sourcePath));
+  const std::string exportedPath =
+      tempPath("filter_autocad_form_multiline_attrib_r2018.dxf");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(sourcePath),
+                              RS2::FormatDWG));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(exportedPath),
+                              RS2::FormatDXFRW2018));
+  }
+
+  InsertAttributeRoundTripIface exported;
+  {
+    dxfRW reader(exportedPath.c_str());
+    const bool readOk = reader.read(&exported, /*ext=*/false);
+    INFO("DXF read error: " << reader.getError());
+    REQUIRE(readOk);
+  }
+  std::remove(exportedPath.c_str());
+
+  REQUIRE(exported.m_inserts.size() == 1);
+  const DRW_Attrib *multiLine = nullptr;
+  const DRW_Attrib *singleLine = nullptr;
+  for (const auto &attribute : exported.m_inserts.front().attlist) {
+    REQUIRE(attribute != nullptr);
+    if (attribute->tag == "ML_TAG")
+      multiLine = attribute.get();
+    else if (attribute->tag == "SL_TAG")
+      singleLine = attribute.get();
+  }
+  // The export replays what the import stored: 70 = 104 and 73 = 293 while
+  // the embedded MTEXT was not read in AutoCAD's form.
+  REQUIRE(multiLine != nullptr);
+  CHECK(multiLine->attribFlags == 0);
+  CHECK(multiLine->m_fieldLength == 0);
+  CHECK(multiLine->lockPosition);
+  CHECK(multiLine->m_attributeType == 2);
+  REQUIRE(multiLine->mtext != nullptr);
+  CHECK(multiLine->mtext->text == "value line 1\\Pvalue line 2");
+
+  REQUIRE(singleLine != nullptr);
+  CHECK(singleLine->text == "single value");
+  CHECK(singleLine->attribFlags == 8);
 }
 
 TEST_CASE("RS_FilterDXFRW preserves nested INSERT ATTRIB MTEXT XDATA",
@@ -28701,7 +29421,9 @@ TEST_CASE("RS_FilterDXFRW preserves nested INSERT ATTRIB MTEXT XDATA",
   bool sawDouble = false;
   bool sawCoordinate = false;
   bool sawBinary = false;
-  for (const auto &value : attribute.mtext->extData) {
+  // XDATA follows the embedded object and is the ATTRIB's.
+  CHECK(attribute.mtext->extData.empty());
+  for (const auto &value : attribute.extData) {
     if (!value)
       continue;
     if (value->code() == 1001 && value->type() == DRW_Variant::STRING &&
@@ -28748,29 +29470,37 @@ TEST_CASE("RS_FilterDXFRW preserves nested INSERT ATTRIB MTEXT XDATA",
   REQUIRE(dwgReadIface.m_inserts.size() == 1);
   REQUIRE(dwgReadIface.m_inserts.front().attlist.size() == 1);
   REQUIRE(dwgReadIface.m_inserts.front().attlist.front()->mtext != nullptr);
-  const DRW_MText &dwgMText =
-      *dwgReadIface.m_inserts.front().attlist.front()->mtext;
-  CHECK(dwgMText.reactorHandles == std::vector<std::uint32_t>{0x31u, 0x32u});
-  CHECK(dwgMText.xDictHandle == 0x33u);
-  CHECK(dwgMText.hasDataStorageBinaryData());
+  const DRW_Attrib &dwgAttribute =
+      *dwgReadIface.m_inserts.front().attlist.front();
+  const DRW_MText &dwgMText = *dwgAttribute.mtext;
+  // The MTEXT of the source refers to objects by handles of the source file,
+  // which are other objects, or none, in the exported file. No such
+  // reference is written: the layer is the attribute's own, the linetype is
+  // ByLayer, and a colour of a colour book is ByLayer without its name. What
+  // is a value and no reference is kept.
+  CHECK(dwgMText.reactorHandles.empty());
+  CHECK(dwgMText.xDictHandle == 0u);
+  CHECK_FALSE(dwgMText.hasDataStorageBinaryData());
   CHECK(dwgMText.color == 256);
-  CHECK(dwgMText.colorName == "Book$Entry");
+  CHECK(dwgMText.colorName.empty());
   CHECK(dwgMText.transparency == 0x03000080);
-  CHECK(dwgMText.hasDwgAcDbColorHandle());
-  CHECK(dwgMText.dwgAcDbColorHandle() == 0x35u);
+  CHECK_FALSE(dwgMText.hasDwgAcDbColorHandle());
+  CHECK(dwgMText.dwgAcDbColorHandle() == 0u);
   CHECK(dwgMText.ltypeScale == Catch::Approx(1.25));
-  CHECK(dwgMText.lineType.empty());
+  // Neither drawing has a layer 0x3C or a linetype 0x3D: the exported MTEXT
+  // is on the attribute's layer and takes the linetype from it.
+  CHECK(dwgMText.lineType == "BYLAYER");
   CHECK_FALSE(dwgMText.visible);
   CHECK(dwgMText.lWeight == DRW_LW_Conv::width05);
-  CHECK(dwgMText.material == 0x36u);
-  CHECK(dwgMText.shadow == DRW::IgnoreShadows);
-  CHECK(dwgMText.shadowHandle == 0x37u);
-  CHECK(dwgMText.plotStyle == 0x38u);
-  CHECK(dwgMText.fullVisualStyleHandle == 0x39u);
-  CHECK(dwgMText.faceVisualStyleHandle == 0x3Au);
-  CHECK(dwgMText.edgeVisualStyleHandle == 0x3Bu);
-  CHECK(dwgMText.dwgLayerHandle() == 0x3Cu);
-  CHECK(dwgMText.dwgLinetypeHandle() == 0x3Du);
+  CHECK(dwgMText.material == DRW::MaterialByLayer);
+  CHECK(dwgMText.shadow == DRW::CastAndReceieveShadows);
+  CHECK(dwgMText.shadowHandle == 0u);
+  CHECK(dwgMText.plotStyle == DRW::DefaultPlotStyle);
+  CHECK(dwgMText.fullVisualStyleHandle == 0u);
+  CHECK(dwgMText.faceVisualStyleHandle == 0u);
+  CHECK(dwgMText.edgeVisualStyleHandle == 0u);
+  CHECK(dwgMText.dwgLayerHandle() == dwgAttribute.dwgLayerHandle());
+  CHECK(dwgMText.dwgLinetypeHandle() == 0u);
 
   std::remove(path.c_str());
   std::remove(exportedPath.c_str());
@@ -28822,9 +29552,10 @@ TEST_CASE("RS_FilterDXFRW drops malformed INSERT ATTRIB sidecars atomically",
           std::string{value->c_str()} == "LibreCAD_INSERT_ATTRIB_MTEXT";
       continue;
     }
-    if (inMTextGroup && value->code() == 1070 && seenMText1070++ == 15) {
-      // Schema 2 field 15 declares three annotative bytes. Make the
-      // sidecar structurally invalid without touching the source DWG.
+    if (inMTextGroup && value->code() == 1070 && seenMText1070++ == 14) {
+      // The fifteenth 1070 value of the MTEXT sidecar declares three
+      // annotative bytes. Make the sidecar structurally invalid without
+      // touching the source DWG.
       value = std::make_shared<DRW_Variant>(1070, 4);
       changed = true;
       break;
@@ -28982,6 +29713,14 @@ public:
 
 } // namespace
 
+// Whole-file view of a legacy INSERT whose ATTRIB names a foreign owner. The
+// group is rejected atomically -- no INSERT, no ATTRIB, no SEQEND is
+// published, the frames are not "Published" in the coverage report, the
+// failure is counted -- but the rest of the file still reads. The low-level
+// view of the same shape is "DWG legacy INSERT rejects a foreign ATTRIB owner
+// atomically" (dwg_safety_tests.cpp): there the block walk itself reports the
+// violation (returns false) with outcome ContainedGroupRejection, and it is
+// the BLOCKS phase that decides that such a failure does not end the read.
 TEST_CASE("RS_FilterDXFRW rejects a serialized INSERT child-owner mismatch "
           "atomically",
           "[dwg-write][filter-roundtrip][insert][safety][external]") {
@@ -29147,6 +29886,419 @@ TEST_CASE("RS_FilterDXFRW rejects a serialized INSERT child-owner mismatch "
     CHECK(entity->rtti() != RS2::EntityText);
     CHECK(entity->rtti() != RS2::EntityMText);
   }
+
+  std::remove(validPath.c_str());
+  std::remove(malformedPath.c_str());
+}
+
+namespace {
+
+// A serialized POLYLINE group for the R2000 file tests: POLYLINE 0x201 with the
+// VERTEXes 0x202 and 0x203; the writer mints the SEQEND.
+class SerializedMalformedPolylineIface : public EmptyIface {
+public:
+  dwgRW *m_writer{nullptr};
+  std::vector<DRW_Polyline> m_polylines;
+  std::vector<DRW_DwgFramePublication> m_framePublications;
+  DRW_DwgFrameCoverageReport m_frameCoverage;
+  bool m_receivedFrameCoverage{false};
+
+  void writeEntities() override {
+    REQUIRE(m_writer != nullptr);
+    DRW_Polyline polyline;
+    polyline.handle = 0x201;
+    double x = 0.0;
+    for (const std::uint32_t handle : {0x202u, 0x203u}) {
+      DRW_Vertex vertex(x, 0.0, 0.0, 0.0);
+      vertex.handle = handle;
+      polyline.addVertex(vertex);
+      x += 10.0;
+    }
+    REQUIRE(m_writer->writePolyline(&polyline));
+  }
+
+  void addPolyline(const DRW_Polyline &polyline) override {
+    m_polylines.push_back(polyline);
+  }
+
+  void
+  addDwgFramePublication(const DRW_DwgFramePublication &publication) override {
+    m_framePublications.push_back(publication);
+  }
+
+  void
+  addDwgFrameCoverageReport(const DRW_DwgFrameCoverageReport &report) override {
+    m_frameCoverage = report;
+    m_receivedFrameCoverage = true;
+  }
+};
+
+// Rewrites, in place, the owner handle of one legacy (R2000) entity frame of
+// the file at `sourcePath` and stores the result at `targetPath`. The owner is
+// the first handle of the frame's handle stream; the replacement has the same
+// encoded size, so the frame keeps its size.
+void rewriteLegacyOwner(const std::string &sourcePath,
+                        const std::string &targetPath,
+                        std::uint32_t objectHandle, int expectedObjectType,
+                        std::uint32_t expectedOwner, std::uint32_t newOwner) {
+  auto bytes = slurp(sourcePath);
+  REQUIRE(!bytes.empty());
+  const LegacyDwgSection handles = legacyDwgSection(bytes, 2);
+  REQUIRE(handles.address > 0);
+  REQUIRE(handles.size > 0);
+
+  DwgHandleReaderProbe handleReader(
+      std::make_unique<dwgBuffer>(bytes.data(), bytes.size()));
+  dwgBuffer handleBuffer(bytes.data(), bytes.size());
+  REQUIRE(handleReader.readDwgHandles(&handleBuffer, handles.address,
+                                      handles.size));
+  const auto objectIt = handleReader.ObjectMap.find(objectHandle);
+  REQUIRE(objectIt != handleReader.ObjectMap.end());
+  const std::uint32_t offset = objectIt->second.loc;
+  REQUIRE(offset < bytes.size());
+
+  DwgObjectFrame sourceFrame;
+  dwgBuffer sourceBuffer(bytes.data(), bytes.size());
+  REQUIRE(sourceFrame.readAt(sourceBuffer, DRW::AC1015, offset));
+
+  dwgBuffer frameSizeBuffer(bytes.data(), bytes.size());
+  REQUIRE(frameSizeBuffer.setPosition(offset));
+  const std::int32_t bodySize = frameSizeBuffer.getModularShort();
+  REQUIRE(frameSizeBuffer.isGood());
+  REQUIRE(bodySize >= 0);
+  const std::size_t framePrefixSize =
+      static_cast<std::size_t>(frameSizeBuffer.getPosition()) - offset;
+  const std::size_t frameSize = framePrefixSize +
+                                static_cast<std::size_t>(bodySize) +
+                                sizeof(std::uint16_t);
+  REQUIRE(offset <= bytes.size() - frameSize);
+
+  dwgBuffer bodyHeader(sourceFrame.body().data(), sourceFrame.body().size());
+  REQUIRE(bodyHeader.getObjType(DRW::AC1015) == expectedObjectType);
+  const std::uint32_t dataBitSize = bodyHeader.getRawLong32();
+  REQUIRE(bodyHeader.isGood());
+  REQUIRE(dataBitSize < sourceFrame.body().size() * 8u);
+
+  dwgBuffer ownerReader(sourceFrame.body().data(), sourceFrame.body().size());
+  REQUIRE(ownerReader.setPosition(dataBitSize / 8u));
+  ownerReader.setBitPos(static_cast<std::uint8_t>(dataBitSize % 8u));
+  const std::uint64_t ownerStartBit =
+      ownerReader.getPosition() * 8u + ownerReader.getBitPos();
+  const dwgHandle owner = ownerReader.getHandle();
+  const std::uint64_t ownerEndBit =
+      ownerReader.getPosition() * 8u + ownerReader.getBitPos();
+  REQUIRE(ownerReader.isGood());
+  REQUIRE(owner.code == 4);
+  REQUIRE(owner.ref == expectedOwner);
+  REQUIRE(ownerEndBit > ownerStartBit);
+
+  dwgHandle replacement = owner;
+  replacement.ref = newOwner;
+  replacement.ref64 = newOwner;
+  dwgBufferW replacementWriter;
+  replacementWriter.putHandle(replacement);
+  dwgBuffer replacementReader(replacementWriter.data().data(),
+                              replacementWriter.data().size());
+  dwgBuffer sourceBits(sourceFrame.body().data(), sourceFrame.body().size());
+  dwgBufferW rebuiltBody;
+  const std::uint64_t totalBodyBits =
+      static_cast<std::uint64_t>(sourceFrame.body().size()) * 8u;
+  for (std::uint64_t bit = 0; bit < totalBodyBits; ++bit) {
+    const std::uint8_t sourceValue = sourceBits.getBit();
+    rebuiltBody.putBit(bit >= ownerStartBit && bit < ownerEndBit
+                           ? replacementReader.getBit()
+                           : sourceValue);
+  }
+  rebuiltBody.alignToByte();
+  REQUIRE(rebuiltBody.data().size() == sourceFrame.body().size());
+  REQUIRE(rebuiltBody.data() != sourceFrame.body());
+  const auto malformedFrame = makeLegacyEntityFrame(rebuiltBody.data());
+  REQUIRE(malformedFrame.size() == frameSize);
+  std::copy(malformedFrame.cbegin(), malformedFrame.cend(),
+            bytes.begin() + offset);
+  std::ofstream output(targetPath, std::ios::binary);
+  REQUIRE(output.good());
+  output.write(reinterpret_cast<const char *>(bytes.data()),
+               static_cast<std::streamsize>(bytes.size()));
+  REQUIRE(output.good());
+}
+
+} // namespace
+
+// The same whole-file view for every shape the group rejection covers: an
+// INSERT or a POLYLINE group whose first child, last child or SEQEND names a
+// foreign owner. Whichever child it is, the whole group is dropped as one
+// counted entity failure and the file still reads; nothing of the group is
+// published, in the callbacks, the coverage report or the graph.
+TEST_CASE("RS_FilterDXFRW contains a serialized group's foreign child owner",
+          "[dwg-write][filter-roundtrip][insert][polyline][safety][external]") {
+  ensureQtSettings();
+  enum class Child { First, Last, SeqEnd };
+  const bool polyline = GENERATE(false, true);
+  const Child foreign = GENERATE(Child::First, Child::Last, Child::SeqEnd);
+  const char *const childName = foreign == Child::First  ? "first child"
+                                : foreign == Child::Last ? "last child"
+                                                         : "SEQEND";
+  INFO((polyline ? "POLYLINE" : "INSERT") << ", foreign owner on the "
+       << childName);
+  const std::string validPath = tempPath("external_group_valid_r2000.dwg");
+  const std::string malformedPath = tempPath("external_group_mismatch_r2000.dwg");
+  std::remove(validPath.c_str());
+  std::remove(malformedPath.c_str());
+
+  // Write the valid group and learn its SEQEND handle.
+  std::uint32_t seqEndHandle = 0x204;
+  if (polyline) {
+    dwgRW writer(validPath.c_str());
+    SerializedMalformedPolylineIface writeIface;
+    writeIface.m_writer = &writer;
+    REQUIRE(writer.write(&writeIface, DRW::AC1015, /*bin=*/false));
+    dwgRW reader(validPath.c_str());
+    SerializedMalformedPolylineIface readIface;
+    REQUIRE(reader.read(&readIface, /*ext=*/false));
+    REQUIRE(readIface.m_polylines.size() == 1u);
+    const auto seqEnd = std::find_if(
+        readIface.m_framePublications.cbegin(),
+        readIface.m_framePublications.cend(),
+        [](const DRW_DwgFramePublication &publication) {
+          return publication.m_isEntity &&
+                 publication.m_resolvedType == dwgType::SEQEND;
+        });
+    REQUIRE(seqEnd != readIface.m_framePublications.cend());
+    seqEndHandle = seqEnd->m_handle;
+  } else {
+    dwgRW writer(validPath.c_str());
+    SerializedMalformedInsertIface writeIface;
+    writeIface.m_writer = &writer;
+    REQUIRE(writer.write(&writeIface, DRW::AC1015, /*bin=*/false));
+  }
+
+  constexpr std::uint32_t kGroup = 0x201;
+  constexpr std::uint32_t kFirst = 0x202;
+  constexpr std::uint32_t kLast = 0x203;
+  const int childType = polyline ? dwgType::VERTEX_2D : dwgType::ATTRIB;
+  switch (foreign) {
+  case Child::First:
+    rewriteLegacyOwner(validPath, malformedPath, kFirst, childType, kGroup,
+                       seqEndHandle);
+    break;
+  case Child::Last:
+    rewriteLegacyOwner(validPath, malformedPath, kLast, childType, kGroup,
+                       seqEndHandle);
+    break;
+  case Child::SeqEnd:
+    rewriteLegacyOwner(validPath, malformedPath, seqEndHandle, dwgType::SEQEND,
+                       kGroup, kFirst);
+    break;
+  }
+
+  const std::vector<std::uint32_t> groupHandles = {kGroup, kFirst, kLast,
+                                                   seqEndHandle};
+  const auto checkCoverage = [&](const DRW_DwgFrameCoverageReport &report,
+                                 bool received) {
+    REQUIRE(received);
+    CHECK(report.m_status == DRW_DwgFrameCoverageStatus::FinalizedPartial);
+    CHECK_FALSE(report.m_complete);
+    for (const std::uint32_t handle : groupHandles) {
+      const auto entry = std::find_if(
+          report.m_entries.cbegin(), report.m_entries.cend(),
+          [handle](const DRW_DwgFrameCoverageEntry &coverage) {
+            return coverage.m_handle == handle;
+          });
+      REQUIRE(entry != report.m_entries.cend());
+      CHECK(entry->m_disposition != DRW_DwgFrameDisposition::Published);
+      CHECK(entry->m_publicationCount == 0u);
+    }
+  };
+  const auto checkNoGroupPublication =
+      [&](const std::vector<DRW_DwgFramePublication> &publications) {
+        for (const DRW_DwgFramePublication &publication : publications) {
+          CHECK_FALSE((publication.m_isEntity &&
+                       std::find(groupHandles.cbegin(), groupHandles.cend(),
+                                 publication.m_handle) != groupHandles.cend()));
+        }
+      };
+
+  if (polyline) {
+    SerializedMalformedPolylineIface lowLevelRead;
+    dwgRW reader(malformedPath.c_str());
+    REQUIRE(reader.read(&lowLevelRead, /*ext=*/false));
+    CHECK(reader.getError() == DRW::BAD_NONE);
+    CHECK(reader.getEntityParseFailures() >= 1);
+    CHECK(lowLevelRead.m_polylines.empty());
+    checkCoverage(lowLevelRead.m_frameCoverage,
+                  lowLevelRead.m_receivedFrameCoverage);
+    checkNoGroupPublication(lowLevelRead.m_framePublications);
+  } else {
+    SerializedMalformedInsertIface lowLevelRead;
+    dwgRW reader(malformedPath.c_str());
+    REQUIRE(reader.read(&lowLevelRead, /*ext=*/false));
+    CHECK(reader.getError() == DRW::BAD_NONE);
+    CHECK(reader.getEntityParseFailures() >= 1);
+    CHECK(lowLevelRead.m_inserts.empty());
+    checkCoverage(lowLevelRead.m_frameCoverage,
+                  lowLevelRead.m_receivedFrameCoverage);
+    checkNoGroupPublication(lowLevelRead.m_framePublications);
+  }
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(malformedPath),
+                              RS2::FormatDWG));
+  }
+  CHECK_FALSE(
+      graphic.dwgAdvancedMetadata().dwgFramePublicationCoverageComplete());
+  for (RS_Entity *entity :
+       lc::LC_ContainerTraverser{graphic, RS2::ResolveNone}.entities()) {
+    if (entity == nullptr)
+      continue;
+    CHECK(entity->rtti() != RS2::EntityInsert);
+    CHECK(entity->rtti() != RS2::EntityPolyline);
+    CHECK(entity->rtti() != RS2::EntityText);
+    CHECK(entity->rtti() != RS2::EntityMText);
+  }
+
+  std::remove(validPath.c_str());
+  std::remove(malformedPath.c_str());
+}
+
+namespace {
+
+// Two serialized INSERT groups for the R2000 file tests: INSERT 0x201 with the
+// ATTRIBs 0x202 and 0x203 and the SEQEND 0x204, then INSERT 0x205 with the
+// ATTRIB 0x206 and the SEQEND 0x207, all in model space.
+class SerializedTwoInsertGroupsIface : public EmptyIface {
+public:
+  dwgRW *m_writer{nullptr};
+  std::vector<DRW_Insert> m_inserts;
+  std::vector<DRW_DwgFramePublication> m_framePublications;
+  DRW_DwgFrameCoverageReport m_frameCoverage;
+  bool m_receivedFrameCoverage{false};
+
+  void writeEntities() override {
+    REQUIRE(m_writer != nullptr);
+    const auto makeAttrib = [](std::uint32_t handle) {
+      auto attrib = std::make_shared<DRW_Attrib>();
+      attrib->handle = handle;
+      attrib->styleH.ref = 0x13;
+      attrib->basePoint = DRW_Coord{2.0, 3.0, 0.0};
+      attrib->secPoint = attrib->basePoint;
+      attrib->extPoint = DRW_Coord{0.0, 0.0, 1.0};
+      attrib->height = 2.5;
+      attrib->text = "attribute";
+      attrib->tag = "TAG";
+      attrib->attribFlags = 1;
+      return attrib;
+    };
+    DRW_Insert first;
+    first.handle = 0x201;
+    first.blockRecH.ref = DRW::DwgModelSpaceBlockRecordHandle;
+    first.seqendH.ref = 0x204;
+    first.attlist.push_back(makeAttrib(0x202));
+    first.attlist.push_back(makeAttrib(0x203));
+    REQUIRE(m_writer->writeInsert(&first));
+
+    DRW_Insert second;
+    second.handle = 0x205;
+    second.blockRecH.ref = DRW::DwgModelSpaceBlockRecordHandle;
+    second.seqendH.ref = 0x207;
+    second.attlist.push_back(makeAttrib(0x206));
+    REQUIRE(m_writer->writeInsert(&second));
+  }
+
+  void addInsert(const DRW_Insert &insert) override {
+    m_inserts.push_back(insert);
+  }
+
+  void
+  addDwgFramePublication(const DRW_DwgFramePublication &publication) override {
+    m_framePublications.push_back(publication);
+  }
+
+  void
+  addDwgFrameCoverageReport(const DRW_DwgFrameCoverageReport &report) override {
+    m_frameCoverage = report;
+    m_receivedFrameCoverage = true;
+  }
+};
+
+} // namespace
+
+// The whole-file view of a group whose child names another group of the file.
+// The declaring group is dropped as one counted entity failure and the file
+// still reads; the group the child names, which the child only claims to belong
+// to, is read on its own merits and reaches the graph.
+TEST_CASE("RS_FilterDXFRW contains a serialized group whose child names another "
+          "group",
+          "[dwg-write][filter-roundtrip][insert][safety][external]") {
+  ensureQtSettings();
+  const bool foreignFirst = GENERATE(false, true);
+  INFO("the " << (foreignFirst ? "first" : "last")
+       << " ATTRIB of the first group names the second group");
+  const std::string validPath = tempPath("external_named_group_valid_r2000.dwg");
+  const std::string malformedPath =
+      tempPath("external_named_group_mismatch_r2000.dwg");
+  std::remove(validPath.c_str());
+  std::remove(malformedPath.c_str());
+
+  {
+    dwgRW writer(validPath.c_str());
+    SerializedTwoInsertGroupsIface writeIface;
+    writeIface.m_writer = &writer;
+    REQUIRE(writer.write(&writeIface, DRW::AC1015, /*bin=*/false));
+  }
+  rewriteLegacyOwner(validPath, malformedPath, foreignFirst ? 0x202 : 0x203,
+                     /*ATTRIB*/ 2, 0x201, 0x205);
+
+  SerializedTwoInsertGroupsIface lowLevelRead;
+  {
+    dwgRW reader(malformedPath.c_str());
+    REQUIRE(reader.read(&lowLevelRead, /*ext=*/false));
+    CHECK(reader.getError() == DRW::BAD_NONE);
+    CHECK(reader.getEntityParseFailures() >= 1);
+  }
+  REQUIRE(lowLevelRead.m_inserts.size() == 1u);
+  CHECK(lowLevelRead.m_inserts.front().handle == 0x205u);
+  CHECK(lowLevelRead.m_inserts.front().attlist.size() == 1u);
+  REQUIRE(lowLevelRead.m_receivedFrameCoverage);
+  CHECK(lowLevelRead.m_frameCoverage.m_status ==
+        DRW_DwgFrameCoverageStatus::FinalizedPartial);
+  const auto coverageFor = [&](std::uint32_t handle) {
+    return std::find_if(lowLevelRead.m_frameCoverage.m_entries.cbegin(),
+                        lowLevelRead.m_frameCoverage.m_entries.cend(),
+                        [handle](const DRW_DwgFrameCoverageEntry &entry) {
+                          return entry.m_handle == handle;
+                        });
+  };
+  for (const std::uint32_t handle : {0x201u, 0x202u, 0x203u, 0x204u}) {
+    const auto entry = coverageFor(handle);
+    REQUIRE(entry != lowLevelRead.m_frameCoverage.m_entries.cend());
+    CHECK(entry->m_disposition != DRW_DwgFrameDisposition::Published);
+    CHECK(entry->m_publicationCount == 0u);
+  }
+  for (const std::uint32_t handle : {0x205u, 0x206u, 0x207u}) {
+    const auto entry = coverageFor(handle);
+    REQUIRE(entry != lowLevelRead.m_frameCoverage.m_entries.cend());
+    CHECK(entry->m_disposition == DRW_DwgFrameDisposition::Published);
+    CHECK(entry->m_publicationCount == 1u);
+  }
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(malformedPath),
+                              RS2::FormatDWG));
+  }
+  CHECK_FALSE(
+      graphic.dwgAdvancedMetadata().dwgFramePublicationCoverageComplete());
+  std::size_t inserts = 0;
+  for (RS_Entity *entity :
+       lc::LC_ContainerTraverser{graphic, RS2::ResolveNone}.entities()) {
+    if (entity != nullptr && entity->rtti() == RS2::EntityInsert)
+      ++inserts;
+  }
+  CHECK(inserts == 1u);
 
   std::remove(validPath.c_str());
   std::remove(malformedPath.c_str());
@@ -30497,10 +31649,15 @@ TEST_CASE("DWG LIGHTLIST writer preserves named light references",
     CHECK(lightList.extData[1]->code() == 1000);
     CHECK(std::string(lightList.extData[1]->c_str()) == "lightlist payload");
     // The typed LightList remains replayable through its raw carrier;
-    // AC1015 additionally retains the fixed VPORT control carrier.
-    const std::size_t expectedRawObjects = version >= DRW::AC1021   ? 3u
-                                           : version == DRW::AC1015 ? 2u
-                                                                    : 1u;
+    // AC1015 additionally retains the fixed VPORT control carrier. Every
+    // write() call also bootstraps a root Named Objects Dictionary and an
+    // ACAD_GROUP dictionary, which the reader dual-delivers as raw records
+    // too (readDwgObjects' DICTIONARY case), adding 2 more regardless of
+    // version.
+    const std::size_t expectedRawObjects = (version >= DRW::AC1021   ? 3u
+                                            : version == DRW::AC1015 ? 2u
+                                                                     : 1u) +
+                                            2u;
     CHECK(readIface.m_rawObjects.size() == expectedRawObjects);
     std::remove(path.c_str());
   }
@@ -30937,4 +32094,289 @@ TEST_CASE("dwgRW remaps raw class ordinal conflicts instead of aborting write",
   // write should succeed (no class conflict abort) even with ordinal clash.
   REQUIRE(writer.write(&iface, DRW::AC1018, /*bin=*/false));
   std::remove(path.c_str());
+}
+
+namespace {
+// Records what the mixed-handle tests read back from a written DWG.
+class DwgOwnerChainIface final : public EmptyIface {
+public:
+  std::vector<DRW_Line> lines;
+  std::vector<DRW_Insert> inserts;
+
+  void addLine(const DRW_Line &line) override { lines.push_back(line); }
+  void addInsert(const DRW_Insert &insert) override {
+    inserts.push_back(insert);
+  }
+};
+
+class LinkedLineProbe final : public DRW_Line {
+public:
+  explicit LinkedLineProbe(const DRW_Line& line) : DRW_Line(line) {}
+  std::uint32_t previous() const { return prevEntLink; }
+  std::uint32_t next() const { return nextEntLink; }
+  bool explicitLinks() const { return haveNextLinks == 0; }
+};
+
+void checkExplicitLineChain(std::vector<DRW_Line> lines) {
+  std::sort(lines.begin(), lines.end(), [](const auto& a, const auto& b) {
+    return a.handle < b.handle;
+  });
+  for (std::size_t i = 0; i < lines.size(); ++i) {
+    const LinkedLineProbe line(lines[i]);
+    CHECK(line.explicitLinks());
+    CHECK(line.previous() == (i == 0 ? 0 : lines[i - 1].handle));
+    CHECK(line.next() == (i + 1 == lines.size() ? 0 : lines[i + 1].handle));
+  }
+}
+
+void readOwnerChainDwg(const std::string &path, DwgOwnerChainIface &iface) {
+  dwgRW reader(path.c_str());
+  REQUIRE(reader.read(&iface, /*ext=*/false));
+  REQUIRE(reader.getError() == DRW::BAD_NONE);
+  REQUIRE(reader.getEntityParseFailures() == 0);
+}
+
+const RS2::FormatType kMixedHandleFormats[] = {
+    RS2::FormatDWG, RS2::FormatDWG2004, RS2::FormatDWG2013,
+    RS2::FormatDWG2018};
+} // namespace
+
+// The R2000 writer retains its contiguous handle allocation contract, while
+// explicit links terminate each owner chain. Source-backed entities used to
+// get their output handles before the
+// table records were written and everything else only when encoded, so
+// opening a drawing and adding one entity made every Save As R2000 DWG fail
+// with BAD_OPEN.
+TEST_CASE("RS_FilterDXFRW saves source-handled and new entities together",
+          "[dwg-write][handles][filter][mixed-source-handles]") {
+  ensureQtSettings();
+  struct Case {
+    const char *name;
+    std::uint32_t first;
+    std::uint32_t second;
+  };
+  const Case cases[] = {
+      {"none_none", 0u, 0u},  {"a1_a2", 0xA1u, 0xA2u},
+      {"a1_none", 0xA1u, 0u}, {"none_a1", 0u, 0xA1u},
+      {"40_none", 0x40u, 0u}, {"2000_none", 0x2000u, 0u},
+  };
+  for (const Case &c : cases) {
+    for (RS2::FormatType format : kMixedHandleFormats) {
+      CAPTURE(c.name, static_cast<int>(format));
+      const std::string path =
+          tempPath(std::string("mixed_source_handles_") + c.name + ".dwg");
+      std::remove(path.c_str());
+
+      RS_Graphic source;
+      source.initForNewDocument();
+      auto *first = new RS_Line(
+          &source, RS_LineData{RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}});
+      first->setSourceHandle(c.first);
+      source.addEntity(first);
+      auto *second = new RS_Line(
+          &source, RS_LineData{RS_Vector{0.0, 5.0}, RS_Vector{10.0, 5.0}});
+      second->setSourceHandle(c.second);
+      source.addEntity(second);
+
+      {
+        RS_FilterDXFRW filter;
+        REQUIRE(
+            filter.fileExport(source, QString::fromStdString(path), format));
+      }
+
+      DwgOwnerChainIface readIface;
+      readOwnerChainDwg(path, readIface);
+      REQUIRE(readIface.lines.size() == 2u);
+      const std::uint32_t low =
+          std::min(readIface.lines[0].handle, readIface.lines[1].handle);
+      const std::uint32_t high =
+          std::max(readIface.lines[0].handle, readIface.lines[1].handle);
+      CHECK(low != DRW::NoHandle);
+      CHECK(low != high);
+      if (format == RS2::FormatDWG) {
+        CHECK(high == low + 1u);
+        checkExplicitLineChain(readIface.lines);
+      }
+      std::remove(path.c_str());
+    }
+  }
+}
+
+TEST_CASE("RS_FilterDXFRW saves a block mixing source-handled and new "
+          "entities",
+          "[dwg-write][handles][filter][mixed-source-handles]") {
+  ensureQtSettings();
+  for (RS2::FormatType format : kMixedHandleFormats) {
+    CAPTURE(static_cast<int>(format));
+    const std::string path = tempPath("mixed_source_handles_block.dwg");
+    std::remove(path.c_str());
+
+    RS_Graphic source;
+    source.initForNewDocument();
+    auto *block = new RS_Block(
+        &source,
+        RS_BlockData(QStringLiteral("MIXED"), RS_Vector(0.0, 0.0), false));
+    block->setSourceHandle(0xB0u);
+    source.addBlock(block);
+    auto *sourceLine = new RS_Line(
+        block, RS_LineData{RS_Vector{0.0, 0.0}, RS_Vector{1.0, 0.0}});
+    sourceLine->setSourceHandle(0xB1u);
+    block->addEntity(sourceLine);
+    block->addEntity(new RS_Line(
+        block, RS_LineData{RS_Vector{0.0, 1.0}, RS_Vector{1.0, 1.0}}));
+
+    // Only the INSERT in model space: the R2000 reader follows an INSERT
+    // without ATTRIBs to handle SEQEND + 1 = 1 and loses the rest of the
+    // chain (dwgReader insert commit), a separate reader bug.
+    auto *insert = new RS_Insert(
+        &source, RS_InsertData(QStringLiteral("MIXED"), RS_Vector(5.0, 5.0),
+                               RS_Vector(1.0, 1.0), 0.0, 1, 1, RS_Vector(),
+                               nullptr, RS2::NoUpdate));
+    insert->setSourceHandle(0xA1u);
+    source.addEntity(insert);
+
+    {
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileExport(source, QString::fromStdString(path), format));
+    }
+
+    DwgOwnerChainIface readIface;
+    readOwnerChainDwg(path, readIface);
+    REQUIRE(readIface.lines.size() == 2u);
+    if (format == RS2::FormatDWG) {
+      CHECK(std::max(readIface.lines[0].handle, readIface.lines[1].handle) ==
+            std::min(readIface.lines[0].handle, readIface.lines[1].handle) +
+                1u);
+      checkExplicitLineChain(readIface.lines);
+    }
+    REQUIRE(readIface.inserts.size() == 1u);
+    CHECK(readIface.inserts.front().name == "MIXED");
+    std::remove(path.c_str());
+  }
+}
+
+// An INSERT's ATTRIBs and SEQEND are frames of the INSERT's owner too; for a
+// source-backed INSERT they have to follow its early handle in R2000.
+TEST_CASE("RS_FilterDXFRW saves an imported attributed INSERT as DWG",
+          "[dwg-write][handles][filter][mixed-source-handles]") {
+  ensureQtSettings();
+  const std::string dxfPath = tempPath("mixed_source_handles_attrib.dxf");
+  {
+    std::ofstream dxf(dxfPath, std::ios::binary | std::ios::trunc);
+    const char *const tags[] = {
+        // clang-format off
+        "0", "SECTION", "2", "HEADER", "9", "$ACADVER", "1", "AC1015",
+        "9", "$HANDSEED", "5", "100", "0", "ENDSEC",
+        "0", "SECTION", "2", "BLOCKS",
+        "0", "BLOCK", "5", "B0", "100", "AcDbEntity", "8", "0",
+        "100", "AcDbBlockBegin", "2", "B", "70", "2",
+        "10", "0.0", "20", "0.0", "30", "0.0", "3", "B", "1", "",
+        "0", "LINE", "5", "B1", "100", "AcDbEntity", "8", "0",
+        "100", "AcDbLine", "10", "0.0", "20", "1.0", "30", "0.0",
+        "11", "10.0", "21", "1.0", "31", "0.0",
+        "0", "ATTDEF", "5", "B3", "100", "AcDbEntity", "8", "0",
+        "100", "AcDbText", "10", "0.0", "20", "0.0", "30", "0.0",
+        "40", "1.0", "1", "", "100", "AcDbAttributeDefinition",
+        "3", "TAG", "2", "TAG", "70", "0",
+        "0", "ENDBLK", "5", "B4", "100", "AcDbEntity", "8", "0",
+        "100", "AcDbBlockEnd", "0", "ENDSEC",
+        "0", "SECTION", "2", "ENTITIES",
+        "0", "INSERT", "5", "A1", "100", "AcDbEntity", "8", "0",
+        "100", "AcDbBlockReference", "66", "1", "2", "B",
+        "10", "5.0", "20", "5.0", "30", "0.0",
+        "0", "ATTRIB", "5", "A3", "100", "AcDbEntity", "8", "0",
+        "100", "AcDbText", "10", "5.0", "20", "5.0", "30", "0.0",
+        "40", "1.0", "1", "val", "100", "AcDbAttribute",
+        "2", "TAG", "70", "0",
+        "0", "SEQEND", "5", "A4", "100", "AcDbEntity", "8", "0",
+        "0", "LINE", "5", "A2", "100", "AcDbEntity", "8", "0",
+        "100", "AcDbLine", "10", "0.0", "20", "0.0", "30", "0.0",
+        "11", "10.0", "21", "0.0", "31", "0.0",
+        "0", "ENDSEC", "0", "EOF",
+        // clang-format on
+    };
+    for (const char *tag : tags)
+      dxf << tag << '\n';
+  }
+
+  for (const bool addEntity : {false, true}) {
+    for (RS2::FormatType format : kMixedHandleFormats) {
+      CAPTURE(addEntity, static_cast<int>(format));
+      RS_Graphic source;
+      {
+        RS_FilterDXFRW filter;
+        REQUIRE(filter.fileImport(source, QString::fromStdString(dxfPath),
+                                  RS2::FormatDXFRW));
+      }
+      if (addEntity) {
+        source.addEntity(new RS_Line(
+            &source, RS_LineData{RS_Vector{0.0, 9.0}, RS_Vector{10.0, 9.0}}));
+      }
+
+      const std::string path = tempPath("mixed_source_handles_attrib.dwg");
+      std::remove(path.c_str());
+      {
+        RS_FilterDXFRW filter;
+        REQUIRE(
+            filter.fileExport(source, QString::fromStdString(path), format));
+      }
+
+      DwgOwnerChainIface readIface;
+      readOwnerChainDwg(path, readIface);
+      CHECK(readIface.lines.size() == (addEntity ? 3u : 2u));
+      REQUIRE(readIface.inserts.size() == 1u);
+      const DRW_Insert &insert = readIface.inserts.front();
+      REQUIRE(insert.attlist.size() == 1u);
+      REQUIRE(insert.attlist.front() != nullptr);
+      CHECK(insert.attlist.front()->tag == "TAG");
+      CHECK(insert.attlist.front()->text == "val");
+      if (format == RS2::FormatDWG) {
+        // INSERT, ATTRIB and SEQEND take consecutive handles.
+        CHECK(insert.attlist.front()->handle == insert.handle + 1u);
+        CHECK(insert.seqendH.ref == insert.handle + 2u);
+      }
+      std::remove(path.c_str());
+    }
+  }
+  std::remove(dxfPath.c_str());
+}
+
+// A handle-less entity the writers drop (an empty polyline) must not leave an
+// unused handle inside an R2000 owner chain.
+TEST_CASE("RS_FilterDXFRW saves source-handled entities around a dropped "
+          "new one",
+          "[dwg-write][handles][filter][mixed-source-handles]") {
+  ensureQtSettings();
+  for (RS2::FormatType format : kMixedHandleFormats) {
+    CAPTURE(static_cast<int>(format));
+    const std::string path = tempPath("mixed_source_handles_dropped.dwg");
+    std::remove(path.c_str());
+
+    RS_Graphic source;
+    source.initForNewDocument();
+    auto *first = new RS_Line(
+        &source, RS_LineData{RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}});
+    first->setSourceHandle(0xA1u);
+    source.addEntity(first);
+    source.addEntity(new RS_Polyline(&source));
+    auto *last = new RS_Line(
+        &source, RS_LineData{RS_Vector{0.0, 5.0}, RS_Vector{10.0, 5.0}});
+    last->setSourceHandle(0xA2u);
+    source.addEntity(last);
+
+    {
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileExport(source, QString::fromStdString(path), format));
+    }
+
+    DwgOwnerChainIface readIface;
+    readOwnerChainDwg(path, readIface);
+    REQUIRE(readIface.lines.size() == 2u);
+    if (format == RS2::FormatDWG) {
+      CHECK(std::max(readIface.lines[0].handle, readIface.lines[1].handle) ==
+            std::min(readIface.lines[0].handle, readIface.lines[1].handle) +
+                1u);
+    }
+    std::remove(path.c_str());
+  }
 }

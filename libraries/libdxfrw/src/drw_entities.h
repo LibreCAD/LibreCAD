@@ -315,6 +315,17 @@ public:
         hasDsData = value ? 1 : 0;
     }
 
+    //! A VERTEX or SEQEND's own layer, linetype and color default to "0",
+    //! BYLAYER and ByLayer -- construction never sets them from its owning
+    //! POLYLINE or INSERT. Across a large DXF corpus these three always
+    //! equal the owner's (lineweight does not: real files never carry an
+    //! explicit one on either record, so it is left alone here).
+    void copyPresentationFrom(const DRW_Entity &owner) {
+        layer = owner.layer;
+        lineType = owner.lineType;
+        color = owner.color;
+    }
+
     //! Values decoded from the common DWG entity handle tail.
     [[nodiscard]] std::int32_t dwgReactorCount() const noexcept {
         return numReactors;
@@ -366,6 +377,8 @@ public:
         std::uint32_t handleRef{0};
         std::uint64_t rawHandleRef{0};
         bool useRawHandleRef{false};
+        // Writing only: omit this APPID's entire data group.
+        bool leftOut{false};
     };
     std::vector<PendingHandleRef> pendingAppIdResolutions;
     std::vector<PendingHandleRef> pendingLayerRefResolutions;
@@ -378,6 +391,7 @@ public:
         std::uint16_t codePage, dwgBufferW& output);
 
 protected: //only for read dwg
+    bool m_dwgWriteExplicitLinks{false}; // R2000 writer owns final chain endpoints.
     std::uint8_t haveNextLinks = 0; //R13..R2002 nolinks (no prev/next chain when 1) //B
     std::uint8_t hasDsData = 0; //R2013+ has_ds_data: 1 advertises inline ACIS SAB datastore //B
     std::uint8_t plotFlags = 0; //presence of plot style //BB
@@ -398,11 +412,16 @@ protected: //only for read dwg
 	std::uint8_t xDictFlag = 0;
 	std::int32_t numReactors = 0; //
 	bool commonLinkTailValidated = false;
-	std::uint32_t objSize;  //RL 32bits object data size in bits
+	// RL 32bits object data size in bits. R2000/R2004 read it first thing,
+	// R13/R14 only later in the common header (after the graphics data),
+	// and R2010+ derive it from the frame. Until it has been read every
+	// bound derived from it (proxyEntityEndBit) must see 0, which means "the
+	// whole frame": never leave it indeterminate.
+	std::uint32_t objSize{0};
 	// End of the common/entity data portion. R2007+ stores the string stream
 	// after this boundary but still includes it in objSize.
     std::uint64_t dwgDataEndBit = 0;
-    std::int16_t oType;
+    std::int16_t oType{0};
 	// Writer-only EED name resolutions. They are rebuilt by dwgWriter15 for
 	// every output entity after APPID/LAYER table handles are known.
 	std::vector<PendingHandleRef> dwgEedAppIdWriteRefs;
@@ -935,11 +954,9 @@ public:
     std::uint16_t m_shapeIndex = 0;
     DRW_Coord m_extrusion {0.0, 0.0, 1.0};
     std::uint32_t m_shapeFileHandle = 0;
-    std::string m_styleName;  /*!< name of the SHAPEFILE/STYLE record (DXF code 2);
-                                   resolved from m_shapeFileHandle on DWG read. The
-                                   DWG stores only m_shapeIndex; the per-glyph name
-                                   lives in the external .shx, so DXF round-trips the
-                                   style-record name (as libredwg/ACadSharp do). */
+    std::string m_styleName;  /*!< DXF glyph name (code 2). On DWG read this holds
+                                   the STYLE name, not the glyph name; the caller
+                                   needs the external SHX to resolve m_shapeIndex. */
     std::uint32_t m_objectSize = 0;
     std::uint32_t m_bodyBitSize = 0;
     std::vector<std::uint8_t> m_rawBytes;
@@ -1749,6 +1766,17 @@ public:
 class DRW_Attrib : public DRW_Text {
     SETENTFRIENDS
 public:
+    // DXF-only read provenance: how the record spelled the marker of its
+    // embedded MTEXT. AutoCAD writes group 101; LibreCAD wrote group 100
+    // until that was corrected. Both are read the same way, and the XDATA
+    // that follows the embedded object is the ATTRIB's with either.
+    enum class EmbeddedDxfMarker { None, Canonical101, Legacy100 };
+    EmbeddedDxfMarker embeddedDxfMarker() const { return dxfEmbeddedMarker; }
+    // Whether a record with the old marker carries XDATA on its embedded
+    // MTEXT. The reader puts none there, and the DXF writer writes none from
+    // there: true only for a value that a caller built that way.
+    bool hasAmbiguousLegacyEmbeddedXData() const;
+
     DRW_Attrib() {
         eType = DRW::ATTRIB;
         attribFlags = 0;
@@ -1779,7 +1807,7 @@ public:
     std::uint8_t m_attributeType;    /*!< R2018+ attribute type: 1=single-line, 2=multi-line ATTRIB, 4=multi-line ATTDEF */
     std::uint8_t keepDuplicateRecords = 0; /*!< DXF xrecord duplicate-record policy */
     /* MText-style payload (R2010+).  Non-null iff attVersion > 0 (DWG) or the
-       AcDbMText nested subclass was seen (DXF).  Carries the multi-line text
+       `101 / Embedded Object` marker was seen (DXF).  Carries the multi-line text
        and formatting (paragraph breaks, font runs, etc.) that the single-line
        `text` field can't represent. */
     std::unique_ptr<DRW_MText> mtext;
@@ -1788,6 +1816,7 @@ protected:
     // DXF R2018 places the attribute type in the AcDbAttribute subclass,
     // where code 71 otherwise means TEXT generation flags.
     bool dxfInAttributeSubclass = false;
+    EmbeddedDxfMarker dxfEmbeddedMarker = EmbeddedDxfMarker::None;
 };
 
 //! Class to handle ATTDEF entities (block attribute definition).
@@ -1856,9 +1885,14 @@ protected:
 public:
     double interlin;              /*!< linespacing factor, code 44 */
     std::uint16_t linespacingStyle = 1; /*!< linespacing style, code 73 (1=at least, 2=exact) */
+    /*! Code 73 as the DXF writers store it: 2 (exact) or 1 (at least). A file
+     *  may hold 0 or another value no reader defines; a DXF never gets it.
+     *  The DWG encoders write the member as it is. */
+    std::uint16_t writtenLinespacingStyle() const { return linespacingStyle == 2 ? 2 : 1; }
     std::int32_t m_backgroundFlags = 0;
     double m_backgroundScale = 0.0; /*!< background-fill box scale (DWG BitDouble) */
     int m_backgroundColor = 0;
+    std::int32_t m_backgroundTrueColor = -1; /*!< background-fill true colour, code 421; -1 = none (DXF only) */
     std::int32_t m_backgroundTransparency = 0;
     bool m_r2018IsNotAnnotative = false;
     bool m_r2018ReallyLocked = false;
@@ -1884,6 +1918,7 @@ public:
     std::uint32_t m_r2018AnnotativeAppHandle = 0;
 private:
     bool hasXAxisVec; /* renamed by djm for better description */
+    bool m_dxfInEmbeddedObject = false; /*!< DXF: past a 101 / Embedded Object marker, whose groups are skipped */
 };
 
 //! Class to handle RTEXT (RText, AutoCAD Express Tools "reactive text").

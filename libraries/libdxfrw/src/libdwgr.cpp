@@ -321,8 +321,8 @@ struct dwgRW::DwgEntityWriteState {
     std::uint32_t objSize {0};
     std::uint64_t dwgDataEndBit {0};
     std::int16_t oType {0};
-    std::vector<std::pair<std::size_t, std::uint32_t>> eedAppIdRefs;
-    std::vector<std::pair<std::size_t, std::uint32_t>> eedLayerRefs;
+    std::vector<DRW_Entity::PendingHandleRef> eedAppIdRefs;
+    std::vector<DRW_Entity::PendingHandleRef> eedLayerRefs;
     std::uint16_t eedCodePage {30};
 
     bool hasInsertState {false};
@@ -421,12 +421,8 @@ dwgRW::DwgEntityWriteState dwgRW::captureEntityWriteState(
     state.objSize = entity->objSize;
     state.dwgDataEndBit = entity->dwgDataEndBit;
     state.oType = entity->oType;
-    state.eedAppIdRefs.reserve(entity->dwgEedAppIdWriteRefs.size());
-    for (const auto& ref : entity->dwgEedAppIdWriteRefs)
-        state.eedAppIdRefs.emplace_back(ref.indexInExtData, ref.handleRef);
-    state.eedLayerRefs.reserve(entity->dwgEedLayerWriteRefs.size());
-    for (const auto& ref : entity->dwgEedLayerWriteRefs)
-        state.eedLayerRefs.emplace_back(ref.indexInExtData, ref.handleRef);
+    state.eedAppIdRefs = entity->dwgEedAppIdWriteRefs;
+    state.eedLayerRefs = entity->dwgEedLayerWriteRefs;
     state.eedCodePage = entity->dwgEedCodePage;
 
     if (auto *insert = dynamic_cast<DRW_Insert *>(entity)) {
@@ -510,12 +506,8 @@ void dwgRW::restoreEntityWriteState(const DwgEntityWriteState& state) {
     entity->objSize = state.objSize;
     entity->dwgDataEndBit = state.dwgDataEndBit;
     entity->oType = state.oType;
-    entity->dwgEedAppIdWriteRefs.clear();
-    for (const auto& ref : state.eedAppIdRefs)
-        entity->dwgEedAppIdWriteRefs.push_back({ref.first, ref.second});
-    entity->dwgEedLayerWriteRefs.clear();
-    for (const auto& ref : state.eedLayerRefs)
-        entity->dwgEedLayerWriteRefs.push_back({ref.first, ref.second});
+    entity->dwgEedAppIdWriteRefs = state.eedAppIdRefs;
+    entity->dwgEedLayerWriteRefs = state.eedLayerRefs;
     entity->dwgEedCodePage = state.eedCodePage;
 
     if (state.hasInsertState) {
@@ -761,6 +753,13 @@ bool dwgRW::readInstalledReader() {
     return isOk;
 }
 
+namespace {
+size_t saturateToSize(std::uint64_t value) {
+    constexpr std::uint64_t maxSize = (std::numeric_limits<size_t>::max)();
+    return static_cast<size_t>(value < maxSize ? value : maxSize);
+}
+} // namespace
+
 void dwgRW::captureReaderDiagnostics() {
     if (!reader)
         return;
@@ -770,6 +769,8 @@ void dwgRW::captureReaderDiagnostics() {
     // them.
     m_entityParseFailures = reader->m_entityParseFailures;
     m_objectParseFailures = reader->m_objectParseFailures;
+    m_danglingBlockRecords = reader->m_danglingBlockRecords.size();
+    m_orphanedEntities = saturateToSize(reader->m_orphanedEntityRejections);
     m_classesCrcMismatch = reader->m_classesCrcMismatch;
     m_r2007CrcMismatch = reader->m_r2007CrcMismatch;
     m_r2004CrcMismatch = reader->m_r2004CrcMismatch;
@@ -791,6 +792,8 @@ void dwgRW::captureReaderDiagnostics() {
 void dwgRW::resetReadDiagnostics() {
     m_entityParseFailures = 0;
     m_objectParseFailures = 0;
+    m_danglingBlockRecords = 0;
+    m_orphanedEntities = 0;
     m_classesCrcMismatch = 0;
     m_r2007CrcMismatch = 0;
     m_r2004CrcMismatch = 0;
@@ -821,6 +824,16 @@ size_t dwgRW::getObjectParseFailures() const {
     // Mirrors getEntityParseFailures: prefer the dwgRW-side cache (survives
     // reader.reset()), fall back to the live reader for a mid-read query.
     return reader ? reader->m_objectParseFailures : m_objectParseFailures;
+}
+
+size_t dwgRW::getDanglingBlockRecords() const {
+    return reader ? reader->m_danglingBlockRecords.size()
+                  : m_danglingBlockRecords;
+}
+
+size_t dwgRW::getOrphanedEntities() const {
+    return reader ? saturateToSize(reader->m_orphanedEntityRejections)
+                  : m_orphanedEntities;
 }
 
 size_t dwgRW::getClassesCrcMismatch() const {
@@ -864,6 +877,7 @@ std::unordered_map<std::string, size_t> dwgRW::getSkippedUnsupportedObjects() co
 
 void dwgRW::resetWriteSkipCounters() {
     m_writeSkipCounters = {};
+    m_leftOut.clear();
     m_requiredWriteFailure = false;
     m_successfulEntityWrites = 0;
     m_lastSuccessfulEntityHandle = 0;
@@ -1193,7 +1207,21 @@ bool dwgRW::encodeEntityForWrite(DRW_Entity *ent,
     return recordWriteResult(WriteSkipKind::Entity, true);
 }
 
-bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) try {
+bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
+    return writeImpl(interface_, ver, bin, nullptr, nullptr);
+}
+
+bool dwgRW::writeVerified(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                         DRW_StagedFileVerifier verifier, void* context) {
+    if (!verifier) {
+        error = DRW::BAD_OPEN;
+        return false;
+    }
+    return writeImpl(interface_, ver, bin, verifier, context);
+}
+
+bool dwgRW::writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                     DRW_StagedFileVerifier verifier, void* context) try {
     // The 'bin' parameter is accepted only for signature symmetry with
     // dxfRW::write — DWG is always binary on disk.
     (void)bin;
@@ -1346,9 +1374,10 @@ bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) try {
     const bool secondHeaderOk = handlesOk && writer->writeSecondHeader();
     const bool finalOk = secondHeaderOk && writer->finalize();
     ok = finalOk;
+    m_leftOut = writer->leftOut();
     writer.reset();
     if (ok && !filestr.fail())
-        ok = output.commit();
+        ok = verifier ? output.commitVerified(verifier, context) : output.commit();
     else
         output.abort();
     if (!ok)
@@ -1551,6 +1580,7 @@ bool dwgRW::writeInsert(DRW_Insert *ent) {
         seqEnd.handle = ent->seqendH.ref;
         seqEnd.parentHandle = ent->handle;
         seqEnd.space = ent->space;
+        seqEnd.copyPresentationFrom(*ent);
         if (consumeCompoundSeqEndFailureForTest()
             || !writer->encodeEntity(&seqEnd))
             return fail();
@@ -1702,6 +1732,7 @@ bool dwgRW::writePolyline(DRW_Polyline *ent) {
             return fail();
         v->parentHandle = ent->handle;
         v->space = ent->space;
+        v->copyPresentationFrom(*ent);
         if (v->dwgSubtype() == DRW_Vertex::DwgSubtype::Auto) {
             if (isPolyface) {
                 v->setDwgSubtype((v->flags & 64) != 0
@@ -1729,6 +1760,7 @@ bool dwgRW::writePolyline(DRW_Polyline *ent) {
     seqEnd.handle = writer->allocNextHandle();
     seqEnd.parentHandle = ent->handle;
     seqEnd.space = ent->space;
+    seqEnd.copyPresentationFrom(*ent);
     if (seqEnd.handle == ent->handle
         || !childHandles.insert(seqEnd.handle).second)
         return fail();
@@ -3376,7 +3408,10 @@ bool dwgRW::processDwg() {
             ret = false;
         }
     }
-    if (ret && !ret2) {
+    // An entity sweep that only rejected orphaned entities (owner erased,
+    // entity left behind) counted each one as an entity failure; the file
+    // is read on like any file with skipped entities.
+    if (ret && !ret2 && !reader->entitySweepFailureContained()) {
         error = DRW::BAD_READ_ENTITIES;
         ret = ret2;
     }

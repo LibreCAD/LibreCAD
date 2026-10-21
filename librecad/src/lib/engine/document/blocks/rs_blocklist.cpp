@@ -28,11 +28,22 @@
 
 #include <QRegularExpression>
 #include <QSet>
+#include <QtAlgorithms>
+#include <atomic>
 #include <iostream>
+#include <utility>
 
 #include "rs_block.h"
 #include "rs_blocklistlistener.h"
 #include "rs_debug.h"
+
+namespace {
+/** Next generation value, unique across all block lists (see generation()). */
+std::size_t nextGeneration() {
+    static std::atomic<std::size_t> counter{0U};
+    return ++counter;
+}
+}
 
 /**
  * Constructor.
@@ -41,20 +52,48 @@
  *              If so, the blocks will be deleted when the block
  *              list is deleted.
  */
-RS_BlockList::RS_BlockList(const bool owner) {
-    m_owner = owner;
-    m_activeBlock = nullptr;
+RS_BlockList::RS_BlockList(const bool owner)
+    : m_owner{owner}, m_generation{nextGeneration()} {
     setModified(false);
 }
 
 /**
- * Removes all blocks in the blocklist.
+ * Frees the blocks if the list owns them, after telling the listeners that still listen (see
+ * RS_BlockListListener::blockListDestroyed()): a dock attached to the list has a pointer to it, and
+ * rows for the blocks. The listeners are unlisted one at a time, oldest first, each before it is told,
+ * so one that unregisters itself in the callback, or deletes another, cannot make the loop skip or
+ * repeat one.
+ */
+RS_BlockList::~RS_BlockList() {
+    QList<RS_Block*> removed;
+    removed.swap(m_blocks);
+    m_activeBlock = nullptr;
+    m_blockListListeners.drain([](RS_BlockListListener* listener) {
+        listener->blockListDestroyed();
+    });
+    if (m_owner) {
+        qDeleteAll(removed);
+    }
+}
+
+/**
+ * Removes all blocks in the blocklist, and deletes them if the list owns them.
+ * Listeners are told once the list is empty and before the blocks are freed,
+ * as remove() does for one block: a dock's table model lists blocks by
+ * pointer, and reading a freed one crashed (#2969).
  */
 void RS_BlockList::clear() {
-    m_blocks.clear();
+    QList<RS_Block*> removed;
+    removed.swap(m_blocks);
     m_activeBlock = nullptr;
-    ++m_generation;
+    m_generation = nextGeneration();
     setModified(true);
+    for (const auto l : std::as_const(m_blockListListeners)) {
+        l->blockListCleared();
+    }
+    if (m_owner) {
+        qDeleteAll(removed);
+    }
 }
 
 /**
@@ -92,12 +131,17 @@ bool RS_BlockList::add(RS_Block* block, const bool notify) {
     if (block == nullptr) {
         return false;
     }
+    // Already listed: keep it, and don't list it twice (find() skips blocks
+    // flagged deleted, so the name check below would miss those).
+    if (m_blocks.contains(block)) {
+        return false;
+    }
 
     // check if block already exists:
     const RS_Block* b = find(block->getName());
     if (b == nullptr) {
         m_blocks.append(block);
-        ++m_generation;
+        m_generation = nextGeneration();
 
         if (notify) {
             addNotification();
@@ -133,7 +177,7 @@ void RS_BlockList::remove(RS_Block* block) {
 
     // here the block is removed from the list but not deleted
     if (m_blocks.removeOne(block)) {
-        ++m_generation;
+        m_generation = nextGeneration();
     }
 
     for (const auto l : std::as_const(m_blockListListeners)) {
@@ -168,7 +212,7 @@ bool RS_BlockList::rename(RS_Block* block, const QString& name) {
         if (find(name) == nullptr) {
             const QString oldName = block->getName();
             block->setName(name);
-            ++m_generation;
+            m_generation = nextGeneration();
             setModified(true);
 
             // when the renamed block is nested within other block, we need to rename its inserts as well
@@ -381,19 +425,15 @@ void RS_BlockList::toggleBlock(const QString& name) {
  * are notified when the block list changes.
  */
 void RS_BlockList::addListener(RS_BlockListListener* listener) {
-    for (const auto l : std::as_const(m_blockListListeners)) {
-        if (l == listener) {
-            return;
-        }
-    }
-    m_blockListListeners.append(listener);
+    // added only once; the listener is told which lists have it, and removes itself when destroyed
+    m_blockListListeners.add(listener);
 }
 
 /**
  * removes a BlockListListener from the list of listeners.
  */
 void RS_BlockList::removeListener(RS_BlockListListener* listener) {
-    m_blockListListeners.removeOne(listener);
+    m_blockListListeners.remove(listener);
 }
 
 int RS_BlockList::count() const {

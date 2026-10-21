@@ -337,7 +337,7 @@ bool validateFile(const std::string &path) {
   EntityValidationIface iface;
   try {
     dwgR reader(path.c_str());
-    bool ok = reader.read(&iface, true);
+    const bool ok = reader.read(&iface, true);
     DRW::Version version = reader.getVersion();
     DRW::error error = reader.getError();
 
@@ -354,6 +354,11 @@ bool validateFile(const std::string &path) {
               << versionStr(version) << std::setw(20) << errorStr(error)
               << std::setw(10) << iface.totalEntities << std::setw(8)
               << iface.blocks << iface.layers << "\n";
+
+    if (!ok) {
+      std::cerr << "  [FAILED] reader.read returned false\n";
+      return false;
+    }
 
     if (error != DRW::BAD_NONE) {
       std::cerr << "  [FAILED] read failed with error " << errorStr(error) << "\n";

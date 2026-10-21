@@ -26,11 +26,11 @@
 #ifndef QC_MDIWINDOW_H
 #define QC_MDIWINDOW_H
 #include <QMdiSubWindow>
+#include <QPointer>
 
 #include "rs_graphic.h"
 
 class QG_GraphicView;
-class LC_DocumentsStorage;
 class LC_ActionContext;
 class LC_LayoutTabBar;
 class RS_EventHandler;
@@ -49,7 +49,8 @@ public slots:
     void slotPenChanged(const RS_Pen &pen) const;
     void slotFileNew() const;
     bool loadDocumentFromTemplate(const QString &fileName, RS2::FormatType type) const;
-    bool loadDocument(const QString &fileName, RS2::FormatType type);
+    bool loadDocument(const QString &fileName, RS2::FormatType type,
+                      RS2::DxfTextEncoding encoding = RS2::DxfTextEncoding::Declared);
     bool saveDocument(bool &cancelled, bool isAutoSave = false);
     bool autoSaveDocument(QString &autosaveFileName) const;
     bool saveDocumentAs(bool &cancelled);
@@ -101,7 +102,6 @@ public:
     }
 
 protected:
-    LC_DocumentsStorage *m_documentsStorage;
     // window ID
     unsigned m_id = 0;
     // Graphic view
@@ -115,6 +115,10 @@ protected:
     bool m_owner = false;
     // List of known child windows that show blocks of the same drawing.
     QList<QC_MDIWindow *> m_childWindows;
+    // The child windows not destroyed yet, including closed ones that are no
+    // longer in m_childWindows: they point into this window's document, so
+    // the destructor destroys them first.
+    QList<QPointer<QC_MDIWindow>> m_dependentWindows;
     //  Pointer to parent window which needs to know if this window is closed or NULL.
     QC_MDIWindow *m_parentWindow{nullptr};
     QMdiArea *m_cadMdiArea = nullptr;

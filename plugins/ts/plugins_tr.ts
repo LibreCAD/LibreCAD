@@ -103,7 +103,12 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;Özgün nesneleri koru&apos; seçeneği işaretliyse,
+Hizala, seçilen nesneleri taşımak yerine kopyalar.
+
+&apos;Önce kaynak noktaları belirt&apos; seçeneği işaretliyse,
+Hizala, hizalama noktalarını sırayla soracaktır
+birinci kaynak, ikinci kaynak, birinci hedef, ikinci hedef.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="89"/>

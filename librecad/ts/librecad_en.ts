@@ -4067,7 +4067,7 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
+        <source>&amp;Hide all layers except current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14740,7 +14740,7 @@ Please specify a different value.</source>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
+        <source>Hide all layers except current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14928,7 +14928,7 @@ Please specify a different value.</source>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
+        <source>&amp;Hide all layers except current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

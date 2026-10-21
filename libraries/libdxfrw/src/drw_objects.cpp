@@ -129,11 +129,10 @@ bool objectBodyIsEmpty(const dwgBuffer *buf, DRW::Version version,
         && currentObjectDwgBit(buf) == bodyEnd;
 }
 
-// ODA handle reference codes (dwg_spec.txt §2.13). Emits a null handle
-// (code 0) when ref==0, which is the canonical NULL encoding.
+// Preserve the reference type for null handles as well (ODA §2.13).
 dwgHandle makeRefW(std::uint32_t ref, std::uint8_t code) {
     dwgHandle h;
-    h.code = ref ? code : 0;
+    h.code = code;
     h.ref = ref;
     h.ref64 = ref;
     h.size = 0;
@@ -158,7 +157,6 @@ void putCommonObjectHandlePrefix(dwgBufferW* hb, std::uint32_t ownerRef,
 dwgHandle writeHandleWithCode(const dwgHandle& handle, std::uint8_t code) {
     return makeRefW(handle.ref, code);
 }
-dwgHandle makeNullHandleW() { dwgHandle h; h.code = 0; h.size = 0; h.ref = 0; return h; }
 
 void seekObjectHandleStream(DRW::Version version, dwgBuffer *buf,
                             std::uint32_t objSize,
@@ -830,17 +828,6 @@ bool readCmColorWithinBounds(dwgBuffer *buf, dwgBuffer *stringBuf,
     if (!sharedBuffer)
         *stringBuf = stringProbe;
     return true;
-}
-
-bool readCmColorWithinBody(dwgBuffer *buf, dwgBuffer *stringBuf,
-                           DRW::Version version, std::uint32_t objSize,
-                           std::uint32_t& value, std::int32_t *rgb24 = nullptr,
-                           UTF8STRING *outName = nullptr,
-                           UTF8STRING *outBookName = nullptr,
-                           bool *hasRgbColor = nullptr) {
-    return readCmColorWithinBounds(buf, stringBuf, version, objSize, objSize,
-                                   value, rgb24, outName, outBookName,
-                                   hasRgbColor);
 }
 
 bool readHandleWithinBody(dwgBuffer *buf, DRW::Version version,
@@ -2869,16 +2856,39 @@ bool DRW_Dimstyle::parseCode(int code, const std::unique_ptr<dxfReader>& reader)
         dimtxsty = reader->getUtf8String();
         break;
     case 341:
-        dimldrblk = reader->getUtf8String();
+        // V2000+ handle to the leader arrow's BLOCK_RECORD; DIMLDRBLK has no
+        // legacy name-only code, unlike 342-344 below. Left for the consumer
+        // to resolve once BLOCK_RECORD is readable (dimldrblk itself is never
+        // a plain name in a real file).
+        dimldrblkH.ref = reader->getHandleString();
         break;
     case 342:
-        dimblk = reader->getUtf8String();
+        // V2000+ files usually carry both this handle and the legacy name in
+        // 5 (see below); some (BricsCAD-family among them) write only this.
+        // Storing it as a string here would overwrite a correct 5 with a raw
+        // handle, so keep it in the handle field for the consumer to resolve.
+        dimblkH.ref = reader->getHandleString();
         break;
     case 343:
-        dimblk1 = reader->getUtf8String();
+        dimblk1H.ref = reader->getHandleString();
         break;
     case 344:
-        dimblk2 = reader->getUtf8String();
+        dimblk2H.ref = reader->getHandleString();
+        break;
+    case 345:
+        dimltypeH.ref = reader->getHandleString();
+        break;
+    case 346:
+        dimltex1H.ref = reader->getHandleString();
+        break;
+    case 347:
+        dimltex2H.ref = reader->getHandleString();
+        break;
+    case 348:
+        // Legacy LibreCAD wrote DIMLTEX1 and DIMLTEX2 as 347 and 348, in
+        // that order.
+        dimltex1H = dimltex2H;
+        dimltex2H.ref = reader->getHandleString();
         break;
     default:
         return DRW_TableEntry::parseCode(code, reader);
@@ -3590,9 +3600,12 @@ bool DRW_LType::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
             || !readFiniteBitDouble(rotation)
             || !readBitShortWithinBody(bodyBuf, version, bodyEnd, dashFlags))
             return fail();
+        // Bit 3 (0x08) is set by real writers on text elements (AutoCAD's
+        // GAS_LINE carries 0x0A); the DXF reader and both writers already
+        // accept every combination up to 0x0F, so the DWG reader must too.
         if (shapeCode < 0
             || shapeCode > std::numeric_limits<std::uint16_t>::max()
-            || dashFlags < 0 || dashFlags > 0x07)
+            || dashFlags < 0 || dashFlags > 0x0F)
             return fail();
         DRW_LTypeSegment segment;
         segment.length = dashLength;
@@ -4017,15 +4030,15 @@ bool DRW_Block_Record::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint3
         || !readBitWithinBody(bodyBuf, version, bodyEnd, blockIsXref)
         || !readBitWithinBody(bodyBuf, version, bodyEnd, xrefOverlaid))
         return fail();
-    parsedFlags |= isAnonymous; //if is anonymous block (*U) block code 70, bit 1 (1)
-    parsedFlags |= hasAttributes << 1; //if block contains attdefs, block code 70, bit 2 (2)
-    parsedFlags |= blockIsXref << 2; //if is a Xref, block code 70, bit 3 (4)
-    parsedFlags |= xrefOverlaid << 3; //if is a overlaid Xref, block code 70, bit 4 (8)
+    parsedFlags |= static_cast<int>(isAnonymous); //if is anonymous block (*U) block code 70, bit 1 (1)
+    parsedFlags |= static_cast<int>(hasAttributes) << 1; //if block contains attdefs, block code 70, bit 2 (2)
+    parsedFlags |= static_cast<int>(blockIsXref) << 2; //if is a Xref, block code 70, bit 3 (4)
+    parsedFlags |= static_cast<int>(xrefOverlaid) << 3; //if is a overlaid Xref, block code 70, bit 4 (8)
     if (version > DRW::AC1014) {//2000+
         bool xrefLoaded = false;
         if (!readBitWithinBody(bodyBuf, version, bodyEnd, xrefLoaded))
             return fail();
-        parsedFlags |= xrefLoaded << 5; //if is a loaded Xref, block code 70, bit 6 (32)
+        parsedFlags |= static_cast<int>(xrefLoaded) << 5; //if is a loaded Xref, block code 70, bit 6 (32)
     }
     // Per ODA spec / libreDWG dwg.spec (SINCE R_2004a), num_owned is only
     // present when the block_record is neither an xref nor an overlaid xref.
@@ -4647,10 +4660,6 @@ bool DRW_Vport::validatePayloadFields() const {
     const auto finite3D = [](const DRW_Coord& point) {
         return std::isfinite(point.x) && std::isfinite(point.y)
             && std::isfinite(point.z);
-    };
-    const auto fitsSignedShort = [](int value) {
-        return value >= static_cast<int>(std::numeric_limits<std::int16_t>::min())
-            && value <= static_cast<int>(std::numeric_limits<std::int16_t>::max());
     };
     const auto fitsByte = [](int value) {
         return value >= 0
@@ -6855,7 +6864,7 @@ bool DRW_Dimstyle::encodeDwg(DRW::Version version, dwgBufferW *buf,
 
     hb->putHandle(makeRefW(kDimstyleControl, DRW::DwgSoftPointer));
     hb->putHandle(makeRefW(0, DRW::DwgSoftPointer));
-    hb->putHandle(makeNullHandleW()); // external-reference block
+    hb->putHandle(makeRefW(0, DRW::DwgHardPointer)); // external-reference block
     hb->putHandle(makeRefW(dimtxstyH.ref, DRW::DwgHardPointer));
     if (version >= DRW::AC1015) {
         hb->putHandle(makeRefW(dimldrblkH.ref, DRW::DwgHardPointer));
@@ -7935,7 +7944,7 @@ bool DRW_AppId::encodeDwg(DRW::Version version, dwgBufferW *buf,
 
     putCommonObjectHandlePrefix(hb, kAppIdControl, reactorCount,
                                 xDictFlag, &reactorHandles, xDictHandle);
-    hb->putHandle(makeNullHandleW());  // XRef null
+    hb->putHandle(makeRefW(0, DRW::DwgHardPointer));  // XRef null
     return buf->isGood() && sb->isGood() && hb->isGood();
 }
 
@@ -8053,7 +8062,7 @@ bool DRW_Dictionary::parseDwgImpl(DRW::Version version, dwgBuffer *buf,
         bodyEnd = static_cast<std::uint32_t>(stringStartBit);
         stringEnd = static_cast<std::uint32_t>(stringEndBit);
     }
-    const auto bodyFits = [version, this, buf, sBuf, bodyEnd, stringEnd]() {
+    const auto bodyFits = [version, buf, sBuf, bodyEnd, stringEnd]() {
         return version < DRW::AC1012
             || (objectBodyFitsSize(currentObjectDwgBit(buf), bodyEnd)
                 && objectBodyFitsSize(currentObjectDwgBit(sBuf), stringEnd));
@@ -18083,11 +18092,11 @@ bool DRW_SpatialFilter::parseCode(int code, const std::unique_ptr<dxfReader>& re
     // AcDbSpatialFilter / AcDbFilter DXF: the clip boundary polygon, the OCS
     // normal + origin, clip flags/distances, and the two 4x3 transform matrices.
     constexpr std::size_t kMatrixValueCount = 24;
-    auto parseCode40Stream = [this, kMatrixValueCount]() {
-        if (m_dxfCode40Values.size() < kMatrixValueCount)
+    auto parseCode40Stream = [this, matrixValueCount = kMatrixValueCount]() {
+        if (m_dxfCode40Values.size() < matrixValueCount)
             return true;
         const std::size_t matrixStart =
-            m_dxfCode40Values.size() - kMatrixValueCount;
+            m_dxfCode40Values.size() - matrixValueCount;
         std::vector<double> inverse;
         std::vector<double> insert;
         if (!DRW::reserve(inverse, 12) || !DRW::reserve(insert, 12))
@@ -22500,7 +22509,7 @@ bool DRW_DynamicBlockObject::parseDwg(DRW::Version version, dwgBuffer *buf, std:
             buf, version > DRW::AC1018 ? sBuf : buf, value);
     };
 
-    auto readPropertyInfo = [this, buf, sBuf, version, dynamicBodyEnd,
+    auto readPropertyInfo = [buf, sBuf, version, dynamicBodyEnd,
                              dynamicStringEnd,
                              &readDynamicText](
                                 std::int32_t& count,

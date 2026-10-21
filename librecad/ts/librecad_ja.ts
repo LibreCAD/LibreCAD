@@ -3690,7 +3690,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>図形のレイヤーを構築レイヤー切替</translation>
+        <translation>図形のレイヤーの構築レイヤー切替</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
@@ -4014,17 +4014,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
         <source>&amp;Add Layer</source>
-        <translation>レイヤー追加(&amp;A)</translation>
+        <translation>レイヤーを追加(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
         <source>&amp;Remove Layer</source>
-        <translation>レイヤー削除(&amp;R)</translation>
+        <translation>レイヤーを削除(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>&amp;Edit Layer</source>
-        <translation>レイヤー編集(&amp;E)</translation>
+        <translation>レイヤー設定を編集(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
@@ -4569,22 +4569,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
-        <translation>全レイヤー表示(&amp;S)</translation>
+        <translation>すべてのレイヤーを表示(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>全レイヤー非表示(&amp;H)</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>現在のレイヤー以外を非表示(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>全ロック解除(&amp;U)</translation>
+        <translation>すべてロック解除(&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Lock all</source>
-        <translation>全ロック(&amp;L)</translation>
+        <translation>すべてロック(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
@@ -5184,13 +5184,13 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>selected</source>
         <comment>Layers to export</comment>
-        <translation>選択</translation>
+        <translation>選択された</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>visible</source>
         <comment>Layers to export</comment>
-        <translation>表示</translation>
+        <translation>表示中の</translation>
     </message>
 </context>
 <context>
@@ -7490,7 +7490,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="62"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers</source>
-        <translation>チェックすると、現在のレイヤーに配置され、それ以外の場合は元のレイヤーに配置されます</translation>
+        <translation>チェックすると、ミラーされた図形が現在のレイヤーに配置され、それ以外の場合は元のレイヤーに配置されます</translation>
     </message>
 </context>
 <context>
@@ -15391,8 +15391,8 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>構築レイヤーは、幾何学的構築に使用するための無限直線の図形を持ちます。
-構築レイヤーの内容は印刷出力に表示されるべきではありません。</translation>
+        <translation>構築レイヤーは、幾何学的な作図に使用するための無限直線の図形を持ちます。
+構築レイヤーの内容は印刷されません。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
@@ -15684,12 +15684,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>チェックすると、レイヤーリストでのドラッグ＆ドロップ操作が有効になり、レイヤー階層を再構築できます(&amp;D)</translation>
+        <translation>チェックすると、レイヤーリストでのドラッグ&amp;ドロップ操作が有効になり、レイヤー階層を再構築できます</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>ドラッグ＆ドロップによる再構築を許可(&amp;D)</translation>
+        <translation>ドラッグ＆ドロップによる再構築を許可</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
@@ -15868,7 +15868,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>一致するレイヤー名を検索中</translation>
+        <translation>レイヤー名で検索</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
@@ -15887,8 +15887,8 @@ Please specify a different value.</source>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>すべてのレイヤーを非表示</translation>
+        <source>Hide all layers except current</source>
+        <translation>現在のレイヤー以外を非表示</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -15948,7 +15948,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>フラットリストモード)</translation>
+        <translation>フラットリストモード</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
@@ -15988,7 +15988,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>レイヤー削除(&amp;R)</translation>
+        <translation>レイヤーを削除(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
@@ -16003,7 +16003,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>代替表示副レイヤーを追加(&amp;A)</translation>
+        <translation>代替位置副レイヤーを追加(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
@@ -16061,22 +16061,22 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>レイヤー追加(&amp;A)</translation>
+        <translation>レイヤーを追加(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>他のレイヤーを凍結(&amp;F)</translation>
+        <translation>他のレイヤーをフリーズ(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>すべてのレイヤーの凍結を解除(&amp;D)</translation>
+        <translation>すべてのレイヤーのフリーズを解除(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>すべてのレイヤーを凍結(&amp;F)</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>現在のレイヤー以外を非表示(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
@@ -16091,12 +16091,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>すべてのレイヤーの印刷を有効(&amp;P)</translation>
+        <translation>すべてのレイヤーの印刷を有効化(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>すべてのレイヤーの印刷を無効(&amp;D)</translation>
+        <translation>すべてのレイヤーの印刷を無効化(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
@@ -23078,7 +23078,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="58"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers</source>
-        <translation>チェックすると、現在のレイヤーに配置され、それ以外の場合は元のレイヤーに配置されます</translation>
+        <translation>チェックすると、ミラーされた図形が現在のレイヤーに配置され、それ以外の場合は元のレイヤーに配置されます</translation>
     </message>
 </context>
 <context>
@@ -29566,7 +29566,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="78"/>
         <source>Currently active layer of the document</source>
-        <translation>現在アクティブなドキュメントのレイヤー</translation>
+        <translation>ドキュメントの現在のアクティブレイヤー</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="101"/>
@@ -29627,7 +29627,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
         <source>Type of the currently active layer of the document</source>
-        <translation>現在アクティブなドキュメントのレイヤーのタイプ</translation>
+        <translation>ドキュメントの現在のアクティブレイヤーのタイプ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="200"/>
@@ -41065,7 +41065,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="70"/>
         <source>Layer of MText</source>
-        <translation>マルチテキストのレイヤー</translation>
+        <translation>複数行テキストのレイヤー</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="144"/>
@@ -44214,7 +44214,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>レイヤー有効化時に選択エンティティのレイヤーを変更</translation>
+        <translation>レイヤーのアクティブ化時に選択図形のレイヤーを変更</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -45800,7 +45800,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;有効にすると、レイヤーをアクティブ化したときに、選択されているすべてのエンティティのレイヤーがその新しいレイヤーに変更されます。複数のエンティティのレイヤーを変更するには: まず必要なエンティティを選択し、レイヤーウィジェットでレイヤーをアクティブ化します。これにより、選択されたすべてのエンティティが新しいレイヤーに属するように変更されます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;有効にすると、レイヤーをアクティブ化したときに、選択されているすべての図形のレイヤーがその新しいレイヤーに変更されます。複数の図形のレイヤーを変更するには: まず必要な図形を選択し、レイヤーウィジェットでレイヤーをアクティブ化します。これにより、選択されたすべての図形が新しいレイヤーに属するように変更されます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -47389,8 +47389,8 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>構築レイヤーは、幾何学的な作図に使用するための無限直線エンティティを持ちます。
-構築レイヤーの内容は印刷出力に表示されるべきではありません。</translation>
+        <translation>構築レイヤーは、幾何学的な作図に使用するための無限直線の図形を持ちます。
+構築レイヤーの内容は印刷されません。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="33"/>
@@ -47403,7 +47403,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="298"/>
         <source>Looking for matching layer names</source>
-        <translation>一致するレイヤー名を検索中</translation>
+        <translation>レイヤー名で検索</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="296"/>
@@ -47878,7 +47878,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>レイヤー &quot;%1&quot; とその上のすべてのエンティティが削除されます。
+        <translation>レイヤー &quot;%1&quot; とその上のすべての図形が削除されます。
 この操作は元に戻せません。</translation>
     </message>
     <message>
@@ -47899,7 +47899,7 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>リストされたレイヤーとその上のすべてのエンティティが削除されます。</translation>
+        <translation>リストされたレイヤーとその上のすべての図形が削除されます。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47984,14 +47984,14 @@ Clear filtering mask and repeat.</source>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>エンティティのないレイヤーが見つかりましたが、フィルタリングされて表示されていません。
+        <translation>図形のないレイヤーが見つかりましたが、フィルタリングされて表示されていません。
 
 フィルターをクリアして再試行してください。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>エンティティのないレイヤーは見つかりませんでした。削除するものはありません。</translation>
+        <translation>図形のないレイヤーは見つかりませんでした。削除するものはありません。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
@@ -48005,7 +48005,8 @@ Clear filtering mask and repeat.</source>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>このような子レイヤーは [%1] に既に存在します。
+        <translation>このような子レイヤーは
+[%1] に既に存在します。
 別の名前を指定してください。</translation>
     </message>
     <message>
@@ -48013,8 +48014,8 @@ Please specify a different name.</source>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>このような子レイヤーは既に存在します 
-[%1]。
+        <translation>このような子レイヤーは
+[%1] に既に存在します。
 </translation>
     </message>
     <message>
@@ -48043,9 +48044,9 @@ If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
         <translation>&quot;レイヤー別&quot; の値をソースレイヤーの値に置き換えますか？
 
-はいの場合 — &quot;レイヤー別&quot; ペンを持つエンティティは新しいレイヤーでも以前と同様に表示され、値は解決されたペンに置き換えられます。
+はいの場合 — &quot;レイヤー別&quot; ペンを持つ図形は新しいレイヤーでも以前と同様に表示され、値は解決されたペンに置き換えられます。
 
-いいえの場合 — &quot;レイヤー別&quot; の値はそのまま残り、ターゲットレイヤーのペンがそのようなエンティティのペンを定義します。</translation>
+いいえの場合 — &quot;レイヤー別&quot; の値はそのまま残り、ターゲットレイヤーのペンがそのような図形のペンを定義します。</translation>
     </message>
     <message>
         <source>Replace &quot;By Layer&quot; value to source layers values?
@@ -48112,20 +48113,20 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>可視レイヤーにこのペンに一致するエンティティはありません。</translation>
+        <translation>表示中のレイヤーに、このペンに一致する図形はありません。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>そのようなエンティティはフリーズされたレイヤーに存在します。
+        <translation>そのような図形はフリーズされたレイヤーに存在します。
 </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>そのようなエンティティはロックされたレイヤーに存在します。
+        <translation>そのような図形はロックされたレイヤーに存在します。
 </translation>
     </message>
     <message>
@@ -50279,7 +50280,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>%1 レイヤーが見つかりません</translation>
+        <translation>%1レイヤーが見つかりません</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
@@ -52233,7 +52234,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="195"/>
         <source>Combine all layers</source>
-        <translation>全レイヤーを統合</translation>
+        <translation>すべてのレイヤーを統合</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>

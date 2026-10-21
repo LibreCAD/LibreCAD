@@ -35,6 +35,7 @@
 #include "lc_plot_settings.h"
 #include "lc_textstylelist.h"
 #include "lc_dwgadvancedmetadata.h"
+#include "lc_linetypelist.h"
 #include "lc_ucslist.h"
 #include "lc_viewslist.h"
 #include "rs_blocklist.h"
@@ -155,7 +156,6 @@ public:
     void activateLayer(RS_Layer* layer, const bool notify = false) {m_layerList.activate(layer, notify);}
     RS_Layer* getActiveLayer() const {return m_layerList.getActive();}
     virtual void addLayer(RS_Layer* layer) {m_layerList.add(layer);}
-    void addEntity(const RS_Entity* entity) override;
     void removeLayer(RS_Layer* layer);
     void editLayer(RS_Layer* layer, const RS_Layer& source) {m_layerList.edit(layer, source);}
     RS_Layer* findLayer(const QString& name) {return m_layerList.find(name);}
@@ -179,6 +179,12 @@ public:
     void removeLayerListListener(RS_LayerListListener* listener) {m_layerList.removeListener(listener);}
     void addViewListListener(LC_ViewListListener* listener) { m_namedViewsList.addListener(listener);}
     void removeViewListListener(LC_ViewListListener* listener) { m_namedViewsList.removeListener(listener);}
+
+    // Wrappers for line type functions:
+    unsigned countLineTypes() const {return m_lineTypeList.count();}
+    LC_LineType* lineTypeAt(const unsigned i) const {return m_lineTypeList.at(i);}
+    LC_LineType* addLineType(LC_LineType* lineType) {return m_lineTypeList.add(lineType);}
+    LC_LineType* findLineType(const QString& name) const {return m_lineTypeList.find(name);}
 
     // Wrapper for block functions:
     void clearBlocks() {m_blockList.clear();}
@@ -317,6 +323,13 @@ public:
     */
     QString getFilename() const {return m_filename;}
 
+    /** Original of a legacy UTF-8 recovery import, protected for this document
+     * session even after Save As. Not serialized into the corrected drawing.
+     */
+    void setDxfRecoverySourceFile(const QString& file) { m_dxfRecoverySourceFile = file; }
+    const QString& dxfRecoverySourceFile() const { return m_dxfRecoverySourceFile; }
+    bool isDxfRecoverySourceFile(const QString& file) const;
+
     /**
      * @return Auto-save file name of the document currently loaded.
      */
@@ -356,6 +369,7 @@ private:
 
     // fixme - sand - files - change to unique_ptrs?
     RS_LayerList m_layerList;
+    LC_LineTypeList m_lineTypeList;
     RS_BlockList m_blockList{true};
     RS_VariableDict m_variableDict;
     RS_VariableDict m_customVariablesDict;
@@ -370,9 +384,6 @@ private:
      *  (legacy behavior — UI defaults to modelspace / first layout). */
     std::uint32_t m_activeLayoutHandle = 0;
 
-    //if set to true, will refuse to modify paper scale
-    bool paperScaleFixed = false;
-
     /** Format type */
     RS2::FormatType m_formatType = RS2::FormatUnknown;
 
@@ -380,6 +391,7 @@ private:
 
     /** File name of the document or empty for a new document. */
     QString m_filename;
+    QString m_dxfRecoverySourceFile;
     /** Auto-save file name of document. */
     QString m_autosaveFilename;
 

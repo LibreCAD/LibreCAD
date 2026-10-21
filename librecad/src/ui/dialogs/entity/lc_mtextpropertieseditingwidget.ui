@@ -26,7 +26,7 @@
      </property>
      <layout class="QVBoxLayout" name="vlContent">
       <item>
-       <widget class="QPlainTextEdit" name="teText">
+       <widget class="LC_TextEdit" name="teText">
         <property name="toolTip">
          <string>MText content. Format codes (\F, \P, \S) are accepted as-is.</string>
         </property>
@@ -91,6 +91,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>LC_TextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>lc_textedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

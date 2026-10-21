@@ -77,6 +77,7 @@ void QG_WidgetPen::setPen(const RS_Pen& pen, const bool showByLayer, const bool 
         m_initialized = true;
     }
     if (!showUnchanged) {
+        m_sourcePen = pen;
         cbColor->setColor(pen.getColor());
         cbWidth->setWidth(pen.getWidth());
         cbLineType->setLineType(pen.getLineType());
@@ -96,7 +97,7 @@ void QG_WidgetPen::setPen(const RS_Entity* entity, const RS_Layer* layer, const 
     resolvedColor.applyFlags(originalColor);
     entityResolvedPen.setColor(resolvedColor);
 
-    entityResolvedPen.setLineType(entityPen.getLineType());
+    entityResolvedPen.setLineTypeFromPen(entityPen);
     entityResolvedPen.setWidth(entityPen.getWidth());
 
     setPen(entityResolvedPen, layer, title);
@@ -120,7 +121,13 @@ RS_Pen QG_WidgetPen::getPen() const {
 
     pen.setColor(cbColor->getColor());
     pen.setWidth(cbWidth->getWidth());
-    pen.setLineType(cbLineType->getLineType());
+    // The combo lists built-ins only: keep a name it cannot show.
+    if (cbLineType->getLineType() == m_sourcePen.getLineType()) {
+        pen.setLineTypeFromPen(m_sourcePen);
+    }
+    else {
+        pen.setLineType(cbLineType->getLineType());
+    }
 
     return pen;
 }

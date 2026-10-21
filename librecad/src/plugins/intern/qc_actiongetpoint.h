@@ -45,6 +45,7 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
     void mouseReleaseEvent(QMouseEvent* e) override;
+    void keyPressEvent(QKeyEvent* e) override;
     void getPoint(QPointF* point) const;
     void setBasepoint(const QPointF* basepoint);
     void setMessage(const QString& msg) const;

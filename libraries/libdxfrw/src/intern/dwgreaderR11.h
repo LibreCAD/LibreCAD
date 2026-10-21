@@ -14,6 +14,7 @@
 #define DWGREADERR11_H
 
 #include <cstdint>
+#include <map>
 #include <memory>
 
 #include "drw_textcodec.h"
@@ -161,9 +162,12 @@ private:
     // Index 0 == "0" (the default layer), verified vs dwgread.
     std::vector<std::string> m_layerNames;
     std::vector<std::string> m_blockNames;
+    // BLOCK table names by the offset of their block in the BLOCKS section.
+    std::map<std::uint32_t, std::string> m_blockNameByOffset;
     std::vector<std::string> m_ltypeNames;
     std::vector<std::string> m_styleNames;
-    bool readNameTable(std::uint32_t hdrPos, std::vector<std::string>& out);
+    bool readNameTable(std::uint32_t hdrPos, std::vector<std::string>& out,
+                       std::map<std::uint32_t, std::string>* blockNameByOffset = nullptr);
     bool readPreR13String(std::string& out);
     std::string layerName(std::uint16_t idx) const;
     std::string ltypeName(std::int16_t idx) const;  // signed: -1/sentinels -> ""

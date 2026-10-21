@@ -5,6 +5,11 @@ exists( custom.pri ):include( custom.pri )
 
 include( settings.pri )
 
+contains(CONFIG, plugin):!isEmpty(LIBRECAD_PLUGIN_INSTALL_DIR) {
+    target.path = $$quote($$LIBRECAD_PLUGIN_INSTALL_DIR)
+    INSTALLS += target
+}
+
 # Store intermedia stuff somewhere else
 isEmpty(GENERATED_DIR){
  GENERATED_DIR = generated

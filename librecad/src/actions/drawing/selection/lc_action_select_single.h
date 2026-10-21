@@ -57,6 +57,9 @@ protected:
     void onMouseMoveEvent(int status, const LC_MouseEvent* event) override;
     bool isEntityAllowedToSelect(RS_Entity* ent) const override;
     void selectionFinishedByKey(QKeyEvent *e, bool escape) override;
+    // Plugins ask for a selection through this action; Enter must end the
+    // step even with nothing picked, or their event loop never returns.
+    bool isAllowSelectionFinishByEnterForEmptySelection() override {return true;}
     void doSelectEntity(RS_Entity *entityToSelect, bool selectContour) const override;
     void updateActionPrompt() override;
     bool doTriggerModifications([[maybe_unused]]LC_DocumentModificationBatch& modificationData) override{return true;}

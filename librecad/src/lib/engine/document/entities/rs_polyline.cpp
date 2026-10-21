@@ -27,6 +27,8 @@
 
 #include "rs_polyline.h"
 
+#include <memory>
+
 #include <iostream>
 
 #include "lc_containertraverser.h"
@@ -69,11 +71,33 @@ RS_Polyline::RS_Polyline(RS_EntityContainer* parent, const RS_PolylineData& d)
     RS_Polyline::calculateBorders();
 }
 
+/**
+ * The copy's closing segment is its own, at the same place in its list.
+ */
+RS_Polyline::RS_Polyline(const RS_Polyline& other)
+    : RS_EntityContainer(other), m_data(other.m_data), m_nextBulge(other.m_nextBulge) {
+    if (other.m_closingEntity != nullptr) {
+        const int index = other.findEntityIndex(other.m_closingEntity);
+        m_closingEntity = index >= 0 ? entityAt(index) : nullptr;
+    }
+}
+
 RS_Entity* RS_Polyline::clone() const {
-    auto* p = new RS_Polyline(*this);
-    p->setOwner(isOwner());
-    p->detach();
-    return p;
+    return new RS_Polyline(*this);
+}
+
+void RS_Polyline::setLayer(const QString& name) {
+    RS_Entity::setLayer(name);
+    setLayer(getLayer(false));
+}
+
+void RS_Polyline::setLayer(RS_Layer* layer) {
+    RS_Entity::setLayer(layer);
+    for (RS_Entity* entity : *this) {
+        if (entity != nullptr) {
+            entity->setLayer(nullptr);
+        }
+    }
 }
 
 /**
@@ -229,7 +253,7 @@ std::unique_ptr<RS_Entity> RS_Polyline::createVertex(const RS_Vector& v, const d
     }
     // entity->setSelectionFlag(isSelected());  // fixme - what for? entity is part of the polyline, selected status is from polyline..
     // entity->setPen(RS_Pen(RS2::FlagInvalid));
-    // entity->setLayer(nullptr);
+    entity->setLayer(nullptr);
     return entity;
 }
 
@@ -245,13 +269,15 @@ void RS_Polyline::endPolyline() {
         // remove old closing entity:
         if (m_closingEntity != nullptr) {
             removeEntity(m_closingEntity);
+            m_closingEntity = nullptr;
         }
 
-        // add closing entity to the polyline:
+        // add closing entity to the polyline, unless it has no length (the last
+        // vertex is the start): it adds nothing then, and is freed here, as no
+        // list holds it to free it later
         std::unique_ptr<RS_Entity> vertex = createVertex(m_data.startpoint, m_nextBulge);
-        m_closingEntity = vertex.get();
-        vertex.release();
-        if ((m_closingEntity != nullptr) && m_closingEntity->getLength() > 1.0E-4) {
+        if (vertex != nullptr && vertex->getLength() > 1.0E-4) {
+            m_closingEntity = vertex.release();
             RS_EntityContainer::addEntity(m_closingEntity);
             //data.endpoint = data.startpoint;
         }
@@ -401,7 +427,8 @@ RS_Vector RS_Polyline::doGetNearestSelectedRef(const RS_Vector& coord, double* d
   *@Author, Dongxu Li
   */
 bool RS_Polyline::offset(const RS_Vector& coord, double distance) {
-    double dist;
+    // getNearestEntity() reads it as the distance to beat
+    double dist = RS_MAXDOUBLE;
     //find the nearest one
     int length = count();
     std::vector<RS_Vector> intersections(length);
@@ -563,7 +590,19 @@ bool RS_Polyline::offset(const RS_Vector& coord, double distance) {
         }
     }
 
-    *this = *pnew;
+    // pnew's segments replace this polyline's own
+    const std::unique_ptr<RS_Polyline> result{pnew};
+    RS_Entity* const closing = result->m_closingEntity;
+    clear();
+    for (auto& segment : result->takeEntities()) {
+        segment->setParent(this);
+        RS_EntityContainer::addEntity(segment.release());
+    }
+    m_closingEntity = closing;
+    // pnew was cloned before its segments moved: the start and end are read
+    // back from the segments
+    updateEndpoints();
+    calculateBorders();
     return true;
 }
 

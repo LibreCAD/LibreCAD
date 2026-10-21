@@ -188,7 +188,7 @@ void LC_MLeader::drawBlockContent(RS_Painter *painter) {
   insert.draw(painter);
 }
 
-RS_Vector LC_MLeader::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
+RS_Vector LC_MLeader::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity**) const {
     RS_Vector nearest{false};
     double bestSq = RS_MAXDOUBLE;
     auto check = [&](const RS_Vector& v)
@@ -219,7 +219,7 @@ RS_Vector LC_MLeader::doGetNearestPointOnEntity(const RS_Vector& coord,
     return getNearestEndpoint(coord, nullptr, dist);
 }
 
-RS_Vector LC_MLeader::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const {
+RS_Vector LC_MLeader::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity**) const {
     if (m_data.contentBasePoint.valid) {
         if (dist != nullptr)
             *dist = (m_data.contentBasePoint - coord).magnitude();

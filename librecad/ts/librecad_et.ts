@@ -2652,7 +2652,7 @@ või [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>(De-)Select Layer</source>
-        <translation>(De-) Vali kiht</translation>
+        <translation>Vali kiht / tühista valik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
@@ -3444,7 +3444,7 @@ või [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Aktiivse ampullsüstla uuendamine aktiivse kihi pensüsteli abil</translation>
+        <translation>Uuenda aktiivne pliiats aktiivse kihi pliiatsi järgi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -3580,12 +3580,12 @@ või [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>Kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layers operations</source>
-        <translation>Kihid</translation>
+        <translation>Kihitoimingud</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
@@ -3777,12 +3777,12 @@ või [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>Üksusekiht</translation>
+        <translation>Elemendi kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Üksuse kiht</translation>
+        <translation>Elemendi kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
@@ -3797,32 +3797,32 @@ või [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>Aktiveeri olemi kiht</translation>
+        <translation>Aktiveeri elemendi kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
         <source>Hide Entity&apos;s Layer</source>
-        <translation>Peida olemi kiht</translation>
+        <translation>Peida elemendi kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>Peida muud kihid kui entiteedi kihid</translation>
+        <translation>Peida kõik kihid peale elemendi kihi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>Lukusta entiteedi kiht</translation>
+        <translation>Lukusta elemendi kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>Lülita olemi kihi ehitust</translation>
+        <translation>Lülita elemendi kihi abijoonte olekut</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>Olemikihi trükkimise lülitamine</translation>
+        <translation>Lülita elemendi kihi printimist</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
@@ -4096,37 +4096,37 @@ või [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp; Lisakiht</translation>
+        <translation>Li&amp;sa kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
         <source>&amp;Remove Layer</source>
-        <translation>Eemalda kiht</translation>
+        <translation>Eemal&amp;da kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>&amp;Edit Layer</source>
-        <translation>&amp; Edit Layer</translation>
+        <translation>&amp;Muuda kihti</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Kihi asukoha &amp; k lülitamine</translation>
+        <translation>Lül&amp;ita kihi lukustust</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp; Lülita kihi nähtavus</translation>
+        <translation>Lülita &amp;kihi nähtavust</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>Kihi &amp; trükkimise lülitamine</translation>
+        <translation>Lüli&amp;ta kihi printimist</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>&amp; Ehituskihi lülitamine</translation>
+        <translation>Lülita &amp;abijoonte kihi olekut</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
@@ -4519,32 +4519,32 @@ või [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
-        <translation>&amp; Näita kõiki kihte</translation>
+        <translation>&amp;Näita kõiki kihte</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp; Peida kõik kihid</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Peida kõik kihid peale aktiivse</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>&amp; Vabasta kõik</translation>
+        <translation>&amp;Vabasta kõik lukust</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Lock all</source>
-        <translation>&amp;Lock kõik</translation>
+        <translation>&amp;Lukusta kõik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp; Ekspordi valitud kiht/ kihid</translation>
+        <translation>Eksp&amp;ordi valitud kihid</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>&amp; Nähtavate kihtide eksport</translation>
+        <translation>&amp;Ekspordi nähtavad kihid</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -5115,7 +5115,7 @@ Punkt: (%8 ,%9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Sisesta kihi nimi%1</translation>
+        <translation>Sisesta selle kihi nimi, mida soovid %1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -6862,7 +6862,7 @@ Punkt: (%8 ,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">Määra soovitud kihiga olem</translation>
+        <translation type="unfinished">Määra soovitud kihil asuv element</translation>
     </message>
 </context>
 <context>
@@ -7467,12 +7467,12 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Sisselülitamisel asetatakse aktiivsele kihile peegelduvad üksused, vastasel juhul paigutatakse need originaalkihtidesse.</translation>
+        <translation type="unfinished">Sisselülitamisel paigutatakse peegeldatud elemendid aktiivsele kihile, vastasel juhul paigutatakse need algsetele kihtidele.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Kasutaja aktiivne kiht</translation>
+        <translation type="unfinished">Aktiivse kihi kasutamine</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8795,7 +8795,7 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">Kihik, kuhu loodud ring asetatakse</translation>
+        <translation type="unfinished">Kiht, kuhu loodud ringjoon paigutatakse</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -10778,7 +10778,7 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="209"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>Kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="236"/>
@@ -11082,7 +11082,7 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="64"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>Kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="76"/>
@@ -11092,7 +11092,7 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>Üksuse kiht</translation>
+        <translation>Elemendi kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
@@ -12247,7 +12247,7 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="118"/>
         <source>Active Layer</source>
-        <translation type="unfinished">Aktiivkiht</translation>
+        <translation type="unfinished">Aktiivne kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="125"/>
@@ -12564,7 +12564,7 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>Dimensioonikiht</translation>
+        <translation>Mõõdu kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
@@ -12574,7 +12574,7 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="58"/>
         <source>Layer:</source>
-        <translation>Kihik:</translation>
+        <translation>Kiht:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="91"/>
@@ -14340,12 +14340,12 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer</source>
-        <translation type="unfinished">Layer</translation>
+        <translation type="unfinished">Kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">Üksuse kiht</translation>
+        <translation type="unfinished">Elemendi kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -14409,7 +14409,7 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="135"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="179"/>
         <source>Export Layers</source>
-        <translation>Ekspordikihid</translation>
+        <translation>Kihtide eksport</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="152"/>
@@ -15250,7 +15250,7 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>Uue kihi nimi. Hierarhiliste kihtide loomiseks lisage virtuaalse kihi ja kihinime eraldaja nimi.</translation>
+        <translation>Uue kihi nimi. Hierarhiliste kihtide loomiseks lisa nimesse virtuaalse kihi nimi ja kihinimede eraldaja.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
@@ -15265,12 +15265,12 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>Kihid erinevate instatsionaalsete elementide, märkmete, mustandite jms jaoks.</translation>
+        <translation>Kiht mitmesuguste teabeelementide, märkmete, mustandite jms jaoks.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
         <source>Informational</source>
-        <translation>Informatiivne</translation>
+        <translation>Teave</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
@@ -15280,44 +15280,44 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
         <source>Normal</source>
-        <translation>Normaalne</translation>
+        <translation>Tavaline</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>Kihid, mis hoiavad mõõtmeid</translation>
+        <translation>Kiht, mis sisaldab mõõte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
         <source>Dimensions</source>
-        <translation>Mõõtmed</translation>
+        <translation>Mõõdud</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>Tavalistel kihtidel asuvate üksuste vahelduva asendiga kiht</translation>
+        <translation>Tavalistel kihtidel asuvate elementide alternatiivse asendi kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
         <source>Alternative Position</source>
-        <translation>Alternatiivne positsioon</translation>
+        <translation>Alternatiivne asend</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Ehituskihil on lõpmatute sirgjoonte üksused, mis on mõeldud geomeetriliseks ehituseks.
-Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
+        <translation>Abijoonte kihi elemendid on lõpmatud sirgjooned, mis on mõeldud geomeetriliseks konstrueerimiseks.
+       Abijoonte kihi sisu ei tohiks väljatrükis näha olla.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
         <source>Construction Layer</source>
-        <translation>Ehituskiht</translation>
+        <translation>Abijoonte kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
         <source>Path for parent layer</source>
-        <translation>Algkihi asukoht</translation>
+        <translation>Vanemkihi tee</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="197"/>
@@ -15327,12 +15327,12 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="68"/>
         <source>Rename Virtual Layer</source>
-        <translation>Virtuaalkihi ümbernimetamine</translation>
+        <translation>Nimeta virtuaalne kiht ümber</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="72"/>
         <source>Add Secondary Layer</source>
-        <translation>Lisa sekundaarkiht</translation>
+        <translation>Lisa sekundaarne kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="78"/>
@@ -15349,12 +15349,12 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="221"/>
         <source>Default Pen</source>
-        <translation>Vaikimisi pensüstel</translation>
+        <translation>Vaikimisi pliiats</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
         <source>Rename Layer</source>
-        <translation>Ümbernimeta kiht</translation>
+        <translation>Nimeta kiht ümber</translation>
     </message>
 </context>
 <context>
@@ -15362,22 +15362,22 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="39"/>
         <source>Form</source>
-        <translation>Vormi</translation>
+        <translation>Vorm</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57"/>
         <source>Layers Export Options</source>
-        <translation>Kihid Ekspordi valikud</translation>
+        <translation>Kihtide ekspordi valikud</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>Sisselülitamisel lisatakse eksporditud joonistele dokumendi nimega vaated. Vastasel juhul ei võeta seisukohti arvesse.</translation>
+        <translation>Sisselülitamisel lisatakse eksporditud joonistesse dokumendis olevad nimega vaated. Vastasel juhul vaateid ei lisata.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>Ekspordi nimega vaated</translation>
+        <translation>Ekspordi ka nimega vaated</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
@@ -15387,27 +15387,27 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
         <source>Export each layer to own drawing file</source>
-        <translation>Iga kihi eksport joonistusfaili omamiseks</translation>
+        <translation>Ekspordi iga kiht eraldi joonisefaili</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>Sisselülitamisel salvestatakse olemid originaalkihina. Vastasel juhul paigutatakse need kihti &quot;0&quot;.</translation>
+        <translation>Sisselülitamisel salvestatakse elemendid algsele kihile. Vastasel juhul paigutatakse need kihile &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>Algupärase kihi säilitamine üksustele</translation>
+        <translation>Säilita elementide algne kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>Märkimise korral kaasatakse eksporditud joonistesse dokumendi UCS- d. Vastasel juhul UCS ei kuulu siia.</translation>
+        <translation>Sisselülitamisel lisatakse eksporditud joonistesse dokumendis olevad UCS-id. Vastasel juhul UCS-e ei lisata.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>UCS- i eksport</translation>
+        <translation>Ekspordi ka UCS-id</translation>
     </message>
 </context>
 <context>
@@ -15415,17 +15415,17 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>Kihid Puu valikud</translation>
+        <translation>Kihtide puu valikud</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>Kihtide hierarhia loomiseks kasutatava konventsiooni nimetamise seadistused kihtide lameda nimekirja põhjal</translation>
+        <translation>Nimetamisreeglite seadistused, mida kasutatakse kihtide hierarhia loomiseks kihtide lameda nimekirja põhjal</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>Nimetamiskonventsioon</translation>
+        <translation>Nimetamisreeglid</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15435,7 +15435,7 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>Separaator kihi sisemise nime jagamiseks hierarhilisteks nimedeks</translation>
+        <translation>Eraldaja, mille järgi jagatakse kihi sisemine nimi hierarhilisteks nimedeks</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15449,33 +15449,33 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>Dimensiooni</translation>
+        <translation>Mõõdud</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Kihi nime sufiks, mis määrab, et kiht on mõõtmeline</translation>
+        <translation>Kihi nime sufiks, mis määrab, et kiht on mõõtude kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="809"/>
         <source>Informational</source>
-        <translation>Informatiivne</translation>
+        <translation>Teave</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>Kihi nime sufiks, mis määrab selle kihi, on informatiivne.</translation>
+        <translation>Kihi nime sufiks, mis määrab, et kiht on teabekiht.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Alternatiivne positsioon</translation>
+        <translation>Alternatiivne asend </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>Kihi nime sufiks, mis määrab selle kihi, on alternatiivse positsiooni jaoks.</translation>
+        <translation>Kihi nime sufiks, mis määrab, et kiht on alternatiivse asendi kiht.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15484,7 +15484,7 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
         <source>Prefix</source>
-        <translation>Prefiks</translation>
+        <translation>Eesliide</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
@@ -15494,7 +15494,7 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
         <source>Suffix</source>
-        <translation>Suffix</translation>
+        <translation>Sufiks</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
@@ -15529,22 +15529,22 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="268"/>
         <source>Display and operations settings</source>
-        <translation>Kuva ja operatsioonide seadistused</translation>
+        <translation>Kuvamise ja toimingute seadistused</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="271"/>
         <source>Display and Operations</source>
-        <translation>Kuva ja operatsioonid</translation>
+        <translation>Kuvamine ja toimingud</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>Sisselülitamisel sisaldab kohtspiker kihi täielikku nime (koos kõigi ülemise kihi tasanditega)</translation>
+        <translation>Sisselülitamisel sisaldab kohtspikker kihi täielikku nime (koos kõigi ülemiste kihitasemetega)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>Täisnime näitamine tööriistatipina</translation>
+        <translation>Näita täielikku nime kohtspikrina</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15564,7 +15564,7 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="794"/>
         <source>Normal</source>
-        <translation type="unfinished">Normaalne</translation>
+        <translation type="unfinished">Tavaline</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="804"/>
@@ -15579,42 +15579,42 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
         <source>Show layer type icons</source>
-        <translation>Kihi tüübi ikoonide näitamine</translation>
+        <translation>Näita kihitüüpide ikoone</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>Lapsekihtide treppimine</translation>
+        <translation>Alamkihtide taane</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Näita treppitud kihtide nimesid. Identiteedi suurus:</translation>
+        <translation>Näita kihtide nimesid taandega. Taande suurus:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>Tehase suurus tähemärkides kuni taandeni lapsekihi nimi vanematest</translation>
+        <translation>Taande suurus tähemärkides, mille võrra alamkihi nimi vanemkihi nime suhtes taandatakse</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>Sisselülitamisel on lohistamine kihtide nimekirjas lubatud ja kihtide hierarhia ümber ehitatud</translation>
+        <translation>Sisselülitamisel on lohistamine kihtide nimekirjas lubatud ja kihtide hierarhiat saab ümber korraldada</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Ümberkorraldamise lubamine Drag&amp;Dropi kaudu</translation>
+        <translation>Luba ümberkorraldamine lohistamisega</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>Kui esmane kiht on ümbernimetatud, nimetatakse ümber ka sekundaarsed kihid.</translation>
+        <translation>Kui esmane kiht ümber nimetatakse, nimetatakse ümber ka sekundaarsed kihid.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Teisese kihi ümbernimetamine esmasel ümbernimetamisel</translation>
+        <translation>Esmase kihi ümbernimetamisel nimeta ümber ka sekundaarsed kihid</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
@@ -15650,7 +15650,7 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Sobiv element esiletõstetud filtri režiimis</translation>
+        <translation>Filtrile vastav element esiletõstmise režiimis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
@@ -15684,7 +15684,7 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>Aktiivse kihielemendi taustavärv kihipuus</translation>
+        <translation>Aktiivse kihi elemendi taustavärv kihtide puus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
@@ -15709,17 +15709,17 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
         <source>Default Pens</source>
-        <translation>Vaikepliiatsid</translation>
+        <translation>Vaikimisi pliiatsid</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
         <source>Normal Layer</source>
-        <translation>Normaalne kiht</translation>
+        <translation>Tavaline kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>Mõõtmekiht</translation>
+        <translation>Mõõtude kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
@@ -15729,7 +15729,7 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
-        <translation>Alternatiivne asukohakiht</translation>
+        <translation>Alternatiivse asendi kiht</translation>
     </message>
     <message>
         <source>grid</source>
@@ -15738,7 +15738,7 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>esiletõstetud</translation>
+        <translation>esiletõstetud element</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
@@ -15764,8 +15764,8 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Vigane väärtus määrab%1 värvi.
-Palun määra teistsugune väärtus.</translation>
+        <translation>Värvi &quot;%1&quot; väärtus on vigane.
+Palun määra muu väärtus.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="245"/>
@@ -15798,12 +15798,12 @@ Palun määra teistsugune väärtus.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="186"/>
         <source>Show all layers</source>
-        <translation>Kõigi kihtide näitamine</translation>
+        <translation>Näita kõiki kihte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Peida kõik kihid</translation>
+        <source>Hide all layers except current</source>
+        <translation>Peida kõik kihid peale aktiivse</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -15813,7 +15813,7 @@ Palun määra teistsugune väärtus.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="210"/>
         <source>Show Active Layer Only</source>
-        <translation>Ainult aktiivse kihi näitamine</translation>
+        <translation>Näita ainult aktiivset kihti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="218"/>
@@ -15823,17 +15823,17 @@ Palun määra teistsugune väärtus.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="226"/>
         <source>Collapse All</source>
-        <translation>Kokkuvarisemine</translation>
+        <translation>Ahenda kõik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>Kollaps Sekundaarne</translation>
+        <translation>Ahenda sekundaarsed kihid</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
         <source>Unlock all layers</source>
-        <translation>Ava kõik kihid</translation>
+        <translation>Vabasta kõik kihid lukust</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="249"/>
@@ -15848,7 +15848,7 @@ Palun määra teistsugune väärtus.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Mõõtmete lisamine kiht</translation>
+        <translation>Lisa mõõtude kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
@@ -15868,100 +15868,100 @@ Palun määra teistsugune väärtus.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp; Lisa lapsekiht</translation>
+        <translation>&amp;Lisa alamkiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>&amp; Nimeta ümber</translation>
+        <translation>&amp;Nimeta ümber</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp; Eemalda kihid (alampuu)</translation>
+        <translation>Ee&amp;malda kihid (alampuu)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>&amp; Koopia struktuur (alamtöö)</translation>
+        <translation>Kopee&amp;ri struktuur (alampuu)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp; Topeltsisu (alampuu)</translation>
+        <translation>&amp;Dubleeri sisu (alampuu)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp; Valitud üksused (alampuu)</translation>
+        <translation>&amp;Vali elemendid (alampuu)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp; Edit Layer &amp; Atribuudid</translation>
+        <translation>Muuda kihi at&amp;ribuute</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>Eemalda kiht</translation>
+        <translation>Eemal&amp;da kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp; Lisamõõtmete alamkiht</translation>
+        <translation>Lisa m&amp;õõtude alamkiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp; Lisainfo alamkiht</translation>
+        <translation>L&amp;isa teabe alamkiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp; Lisa alternatiivvaate alamkiht</translation>
+        <translation>Lisa alter&amp;natiivse asendi alamkiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp; Eemalda alamkihid</translation>
+        <translation>Ee&amp;malda alamkihid</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Teisenda mõõtkihiks</translation>
+        <translation>Teisenda mõõtude kihiks</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>Teisendamine infokihiks</translation>
+        <translation>Teisenda teabekihiks</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Teisenda alternatiivse asukoha kiht</translation>
+        <translation>Teisenda alternatiivse asendi kihiks</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
         <source>Convert to Normal Layer</source>
-        <translation>Teisendamine normaalkihiks</translation>
+        <translation>Teisenda tavaliseks kihiks</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp; Vali kihi olendid</translation>
+        <translation>&amp;Vali kihi elemendid</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp; Loo kihi koopia</translation>
+        <translation>&amp;Loo kihi koopia</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp; Topeltkiht sisuga</translation>
+        <translation>Dubleeri kiht koos sisu&amp;ga</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
@@ -15971,67 +15971,67 @@ Palun määra teistsugune väärtus.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Topeltvalik kihiks</translation>
+        <translation>Dubleeri valik kihile</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp; Lisakiht</translation>
+        <translation>&amp;Lisa kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>Teiste kihtide külmutamine</translation>
+        <translation>Külmuta &amp;teised kihid</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp; Defreeze kõik kihid</translation>
+        <translation>S&amp;ulata kõik kihid</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>Kõigi kihtide külmutamine</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Peida kõik kihid peale &amp;aktiivse</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp; Ava kõik kihid</translation>
+        <translation>Vabasta kõik ki&amp;hid lukust</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>Kõigi kihtide lukustamine</translation>
+        <translation>Lukusta &amp;kõik kihid</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Kõigi kihtide &amp; trükkimise lubamine</translation>
+        <translation>Lu&amp;ba kõigi kihtide printimine</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>Kõigi kihtide trükkimise keelamine</translation>
+        <translation>Keela kõigi kihtide &amp;printimine</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>&amp; Ekspordi üksikkiht</translation>
+        <translation>&amp;Ekspordi üksikkiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>&amp; Ekspordikihi alampuu</translation>
+        <translation>Ek&amp;spordi kihi alampuu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>&amp; Nähtavate kihtide eksport</translation>
+        <translation>Ekspordi n&amp;ähtavad kihid</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp; Otsi ja eemalda tühjad kihid</translation>
+        <translation>&amp;Otsi ja eemalda tühjad kihid</translation>
     </message>
 </context>
 <context>
@@ -18591,7 +18591,7 @@ Palun määra teistsugune väärtus.</translation>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="39"/>
         <source>Layer</source>
-        <translation type="unfinished">Layer</translation>
+        <translation type="unfinished">Kiht</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="39"/>
@@ -23320,12 +23320,12 @@ Palun määra teistsugune väärtus.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Sisselülitamisel asetatakse aktiivsele kihile peegelduvad üksused, vastasel juhul paigutatakse need originaalkihtidesse.</translation>
+        <translation type="unfinished">Sisselülitamisel paigutatakse peegeldatud elemendid aktiivsele kihile, vastasel juhul paigutatakse need algsetele kihtidele.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Kasutaja aktiivne kiht</translation>
+        <translation type="unfinished">Aktiivse kihi kasutamine</translation>
     </message>
 </context>
 <context>
@@ -23619,7 +23619,7 @@ Palun määra teistsugune väärtus.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">Sisselülitamisel asetatakse loodud olemid aktiivsele kihile. Vastasel juhul pannakse need algsetesse kihtidesse.</translation>
+        <translation type="unfinished">Sisselülitamisel paigutatakse loodud elemendid aktiivsele kihile. Vastasel juhul paigutatakse need algsetele kihtidele. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
@@ -23805,7 +23805,7 @@ Palun määra teistsugune väärtus.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">Sisselülitamisel paigutatakse loodud olemid aktiivsesse kihti, vastasel juhul on need algkihtides.</translation>
+        <translation type="unfinished">Sisselülitamisel paigutatakse loodud elemendid aktiivsele kihile, vastasel juhul on need algsetel kihtidel. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
@@ -24221,7 +24221,7 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Sisselülitamisel paigutatakse loodud olemid aktiivsesse kihti, vastasel juhul on nad originaalkihtides.</translation>
+        <translation type="unfinished">Sisselülitamisel paigutatakse loodud elemendid aktiivsele kihile, vastasel juhul on need algsetel kihtidel.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
@@ -24719,13 +24719,13 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="263"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="298"/>
         <source>By Layer</source>
-        <translation>Layer</translation>
+        <translation>Kihi järgi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="299"/>
         <source>By Block</source>
-        <translation>Block</translation>
+        <translation>Ploki järgi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="266"/>
@@ -25347,12 +25347,12 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Aktiivse ampullsüstla uuendamine aktiivse kihi pensüsteli abil</translation>
+        <translation>Uuenda aktiivne pliiats aktiivse kihi pliiatsi järgi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Täitke pensüsteli redaktor aktiivse kihi ampullsüstalt</translation>
+        <translation>Täida pliiatsiredaktor aktiivse kihi pliiatsi järgi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
@@ -25362,7 +25362,7 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Redaktori pensüstel kantakse aktiivsele kihile</translation>
+        <translation>Rakenda redaktori pliiats aktiivse kihi pliiatsile</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
@@ -25452,7 +25452,7 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp; Pen’ i rakendamine aktiivsele kihile</translation>
+        <translation>&amp;Rakenda pliiats aktiivsele kihile</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29465,7 +29465,7 @@ Palun pange tähele, et kui salvestate pliiatsi redaktoris ilma taaskäivitamise
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
         <source>Active Layer</source>
-        <translation type="unfinished">Aktiivkiht</translation>
+        <translation type="unfinished">Aktiivne kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
@@ -29505,7 +29505,7 @@ Palun pange tähele, et kui salvestate pliiatsi redaktoris ilma taaskäivitamise
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
         <source>Line Type</source>
-        <translation type="unfinished">Liinitüüp</translation>
+        <translation type="unfinished">Joonetüüp</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
@@ -29516,12 +29516,12 @@ Palun pange tähele, et kui salvestate pliiatsi redaktoris ilma taaskäivitamise
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="167"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="183"/>
         <source>Normal</source>
-        <translation type="unfinished">Normaalne</translation>
+        <translation type="unfinished">Tavaline</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Dimensiooni</translation>
+        <translation type="unfinished">Mõõdud</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29531,7 +29531,7 @@ Palun pange tähele, et kui salvestate pliiatsi redaktoris ilma taaskäivitamise
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="179"/>
         <source>Informational</source>
-        <translation type="unfinished">Informatiivne</translation>
+        <translation type="unfinished">Teave</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
@@ -29611,7 +29611,7 @@ Palun pange tähele, et kui salvestate pliiatsi redaktoris ilma taaskäivitamise
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>Unlock all layers</source>
-        <translation type="unfinished">Ava kõik kihid</translation>
+        <translation type="unfinished">Vabasta kõik kihid lukust</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
@@ -29636,7 +29636,7 @@ Palun pange tähele, et kui salvestate pliiatsi redaktoris ilma taaskäivitamise
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
         <source>Show all layers</source>
-        <translation type="unfinished">Kõigi kihtide näitamine</translation>
+        <translation type="unfinished">Näita kõiki kihte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
@@ -32723,7 +32723,7 @@ Palun pange tähele, et kui salvestate pliiatsi redaktoris ilma taaskäivitamise
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="533"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>Kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="538"/>
@@ -33084,7 +33084,8 @@ Palun pange tähele, et kui salvestate pliiatsi redaktoris ilma taaskäivitamise
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>Kihik:</translation>
+        <translation>
+Kiht: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35890,7 +35891,7 @@ p, li { white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">Määrab, kas koopiad lisatakse aktiivsele või originaalkihile</translation>
+        <translation type="unfinished">Määrab, kas koopiad lisatakse aktiivsele või algsele kihile</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
@@ -36136,7 +36137,7 @@ p, li { white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Sisselülitamisel asetatakse aktiivsele kihile uued olemid, vastasel juhul on need originaalkihtides.</translation>
+        <translation type="unfinished">Sisselülitamisel paigutatakse uued elemendid aktiivsele kihile, vastasel juhul on need algsetel kihtidel.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
@@ -36379,7 +36380,7 @@ p, li { white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">Sisselülitamisel asetatakse loodud olemid aktiivsele kihile. Vastasel juhul asetatakse need algsetele kihtidele.</translation>
+        <translation type="unfinished">Sisselülitamisel paigutatakse loodud elemendid aktiivsele kihile. Vastasel juhul paigutatakse need algsetele kihtidele. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
@@ -37293,7 +37294,7 @@ p, li { white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Sisselülitamisel asetatakse loodud olemid aktiivsele kihile, vastasel juhul asetatakse need originaalkihtidesse.</translation>
+        <translation type="unfinished">Sisselülitamisel paigutatakse loodud elemendid aktiivsele kihile, vastasel juhul paigutatakse need algsetele kihtidele.</translation>
     </message>
 </context>
 <context>
@@ -37331,7 +37332,7 @@ p, li { white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Sisselülitamisel asetatakse loodud olemid aktiivsele kihile, vastasel juhul asetatakse need originaalkihtidesse.</translation>
+        <translation type="unfinished">Sisselülitamisel paigutatakse loodud elemendid aktiivsele kihile, vastasel juhul paigutatakse need algsetele kihtidele.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
@@ -37474,7 +37475,7 @@ p, li { white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Sisselülitamisel asetatakse loodud olemid aktiivsele kihile, vastasel juhul asetatakse need originaalkihtidesse.</translation>
+        <translation type="unfinished">Sisselülitamisel paigutatakse loodud elemendid aktiivsele kihile, vastasel juhul paigutatakse need algsetele kihtidele.</translation>
     </message>
 </context>
 <context>
@@ -37487,12 +37488,12 @@ p, li { white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Sisselülitamisel asetatakse loodud olemid aktiivsele kihile, vastasel juhul asetatakse need originaalkihtidesse.</translation>
+        <translation type="unfinished">Sisselülitamisel paigutatakse loodud elemendid aktiivsele kihile, vastasel juhul paigutatakse need algsetele kihtidele.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Kasutaja aktiivne kiht</translation>
+        <translation type="unfinished">Aktiivse kihi kasutamine</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -38358,7 +38359,7 @@ p, li { white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="216"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Üksuse kiht</translation>
+        <translation>Elemendi kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
@@ -39054,7 +39055,7 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <source>Layers Tree</source>
-        <translation>Kihikupuu</translation>
+        <translation>Kihtide puu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261"/>
@@ -39149,7 +39150,7 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="540"/>
         <source>Active Layer</source>
-        <translation>Aktiivkiht</translation>
+        <translation>Aktiivne kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="542"/>
@@ -39818,7 +39819,7 @@ Palun kontrollige nende olemasolu ja õigusi.</translation>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
-        <translation>Praegune kiht</translation>
+        <translation>Aktiivne kiht</translation>
     </message>
 </context>
 <context>
@@ -39868,7 +39869,7 @@ Palun kontrollige nende olemasolu ja õigusi.</translation>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="100"/>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="276"/>
         <source>By Layer</source>
-        <translation>Kile järgi</translation>
+        <translation>Kihi järgi</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="101"/>
@@ -40294,7 +40295,7 @@ Palun kontrollige nende olemasolu ja õigusi.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="44"/>
         <source>Layer:</source>
-        <translation>Kile:</translation>
+        <translation>Kiht:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="54"/>
@@ -40788,7 +40789,7 @@ See rekursiivselt muudab kõiki ploki üksusi.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="51"/>
         <source>Layer:</source>
-        <translation>Kihik:</translation>
+        <translation>Kiht:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="241"/>
@@ -43401,7 +43402,7 @@ See rekursiivselt muudab kõiki ploki üksusi.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Kui see on lubatud, muudab kihi aktiveerimine kõik valitud olemid sellesse uude kihti. Mitme olemikihi muutmiseks: esmalt vali vajalikud olemid; aktiveeri kiht kihividinas. See muudab kõik valitud üksused uude kihti kuulumiseks.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kui see on sisse lülitatud, viib kihi aktiveerimine kõik valitud elemendid sellele kihile. Mitme elemendi kihi muutmiseks vali kõigepealt vajalikud elemendid ja aktiveeri seejärel kiht kihtide vidinas. Selle tulemusel kuuluvad kõik valitud elemendid uuele kihile.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -44522,7 +44523,7 @@ See rekursiivselt muudab kõiki ploki üksusi.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>Valitud olemite kihi muutmine kihi aktiveerimisel</translation>
+        <translation>Valitud elementide kihi muutmine kihi aktiveerimisel</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -45696,7 +45697,7 @@ See rekursiivselt muudab kõiki ploki üksusi.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Export visible construction layers</source>
-        <translation>Ekspordi nähtavad ehituskihid</translation>
+        <translation>Nähtavate abijoonte kihtide eksport</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="104"/>
@@ -46239,7 +46240,7 @@ Küpsetamiseks vajalik vaikeastme väärtus</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
-        <translation>Tekstikiht</translation>
+        <translation>Teksti kiht</translation>
     </message>
     <message>
         <source>Obligue of text</source>
@@ -46838,7 +46839,7 @@ Küpsetamiseks vajalik vaikeastme väärtus</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="178"/>
         <source>Layer:</source>
-        <translation>Kihik:</translation>
+        <translation>Kiht:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="240"/>
@@ -47107,12 +47108,12 @@ Küpsetamiseks vajalik vaikeastme väärtus</translation>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Kile sätted</translation>
+        <translation>Kihi seadistused</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="46"/>
         <source>Layer Name:</source>
-        <translation>Kile nimi:</translation>
+        <translation>Kihi nimi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="63"/>
@@ -47123,13 +47124,13 @@ Küpsetamiseks vajalik vaikeastme väärtus</translation>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Ehituskihil on lõpmatute sirgjoonte üksused, mis on mõeldud geomeetriliseks ehituseks.
-Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
+        <translation>Abijoonte kihi elemendid on lõpmatud sirgjooned, mis on mõeldud geomeetriliseks konstrueerimiseks.
+Abijoonte kihi sisu ei tohiks väljatrükis näha olla.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="33"/>
         <source>Construction Layer</source>
-        <translation>Ehituskiht</translation>
+        <translation>Abijoonte kiht</translation>
     </message>
 </context>
 <context>
@@ -47174,7 +47175,7 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="83"/>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="189"/>
         <source>By Layer</source>
-        <translation>Kile järgi</translation>
+        <translation>Kihi järgi</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="84"/>
@@ -47503,7 +47504,7 @@ p, li { white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="239"/>
         <source>By Layer</source>
-        <translation>Kile järgi</translation>
+        <translation>Kihi järgi</translation>
     </message>
 </context>
 <context>
@@ -47522,17 +47523,17 @@ p, li { white- space: pre- wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Remove Layer</source>
-        <translation>Eemalda kile</translation>
+        <translation>Eemalda kiht</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Kilet &quot;%1&quot; ei saa kunagi eemaldada.</translation>
+        <translation>Kihti &quot;%1&quot; ei saa kunagi eemaldada.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="304"/>
         <source>Layer Dialog</source>
-        <translation>Dialoog Kile</translation>
+        <translation>Kihi dialoog</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="406"/>
@@ -47550,25 +47551,25 @@ p, li { white- space: pre- wrap; }
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="308"/>
         <source>Layer Properties</source>
-        <translation>Kile omadused</translation>
+        <translation>Kihi omadused</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Kile nimega &quot;%1&quot; on juba olemas. Palun määra muu nimi.</translation>
+        <translation>Kiht nimega &quot;%1&quot; on juba olemas. Palun määra muu nimi.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Kihi &quot;%1&quot; ja kõik sellel olevad olemid eemaldatakse.
-Seda toimingut ei saa tagasi võtta.</translation>
+        <translation>Kiht &quot;%1&quot; ja kõik sellel olevad elemendid eemaldatakse.
+Seda toimingut EI SAA tagasi võtta.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Kihi &quot;0&quot; ei saa kunagi eemaldada.</translation>
+        <translation>Kihti &quot;0&quot; ei saa kunagi eemaldada.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="248"/>
@@ -47583,7 +47584,7 @@ Seda toimingut ei saa tagasi võtta.</translation>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Loetletud kihid ja kõik nende üksused eemaldatakse.</translation>
+        <translation>Loetletud kihid ja kõik neil olevad elemendid eemaldatakse.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47635,9 +47636,9 @@ Seda toimingut ei saa tagasi võtta.</translation>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Proovige luua kiht dubleeriva nimega. Topeltkihi nimi on
-[%1]
-Palun määra teine nimi.</translation>
+        <translation>Katse luua juba olemasoleva nimega kiht. Korduv kihi nimi on 
+[%1].
+Palun määra muu nimi.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="142"/>
@@ -47649,8 +47650,8 @@ Palun määra teine nimi.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Kihiloendi eraldajastring on tühi. Ei ole võimalik ehitada puukoort.
-Palun määra teistsugune väärtus.</translation>
+        <translation>Kihtide nimekirja eraldaja on tühi. Kihtide puud ei ole võimalik koostada.
+Palun määra muu väärtus.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
@@ -47674,7 +47675,7 @@ Clear filtering mask and repeat.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Ühtegi kihti pole leitud, pole midagi eemaldada.</translation>
+        <translation>Elementideta kihte ei leitud, eemaldada pole midagi.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
@@ -47688,23 +47689,25 @@ Clear filtering mask and repeat.</source>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Selline laps on juba olemas.
-[%1]
-Palun määra teine nimi.</translation>
+        <translation>Selline alamkiht on juba olemas kihil 
+[%1].
+Palun määra muu nimi.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1162"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Selline laps on juba olemas.
-[%1].</translation>
+        <translation>Selline alamkiht on juba olemas kihil 
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Dimensionaalset kihti võib lisada ainult normaalse aktiivse kihi puhul.</translation>
+        <translation>Mõõtude kihi saab lisada ainult tavalisele aktiivsele kihile.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -47737,7 +47740,7 @@ Kui ei, siis väärtused „Kihtide järgi” jäävad samaks ja seega määrab 
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1863"/>
         <source>Layer DialogEx</source>
-        <translation>Kihi DialogEx</translation>
+        <translation>Kihi laiendatud dialoog</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="202"/>
@@ -47790,19 +47793,21 @@ Palun määra teistsugune väärtus.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Puuduvad üksused, mis sobivad pliiatsiga nähtavatel kihtidel.</translation>
+        <translation>Nähtavatel kihtidel ei ole pliiatsile vastavaid elemente.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Sellised üksused eksisteerivad külmutatud kihtidel.</translation>
+        <translation>Sellised elemendid on olemas külmutatud kihtidel.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Sellised üksused eksisteerivad lukustatud kihtidel.</translation>
+        <translation>Sellised elemendid on olemas lukustatud kihtidel.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -48696,7 +48701,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="83"/>
         <source>cnlayer</source>
-        <translation>cnlayeri</translation>
+        <translation>cnlayer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="84"/>
@@ -49376,7 +49381,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>%1 kihte ei leitud</translation>
+        <translation>Ei leitud ühtegi kihti, mis oleks %1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
@@ -51707,13 +51712,13 @@ Tahad sa seda asendada?</translation>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
-        <translation>Layer</translation>
+        <translation>Kihi järgi</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="209"/>
         <source>By Block</source>
-        <translation>Block</translation>
+        <translation>Ploki järgi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="212"/>

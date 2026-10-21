@@ -22,31 +22,12 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <QChar>
-#include <QGuiApplication>
 #include <QString>
 #include <Qt>
 
 #include "rs_mtext.h"
 
 namespace {
-
-// QTextLayout (used inside computeBidiVisualOrder) reaches into the Qt font
-// database, which requires a live QGuiApplication. Catch2's default main()
-// does not construct one, so we spin up a minimal offscreen instance via a
-// static fixture before any test runs. Process-singleton, intentionally never
-// destroyed.
-struct QtAppBootstrap {
-  QtAppBootstrap() {
-    if (QGuiApplication::instance() != nullptr)
-      return;
-    qputenv("QT_QPA_PLATFORM", "offscreen");
-    static int argc = 1;
-    static char arg0[] = "librecad_tests";
-    static char *argv[] = {arg0, nullptr};
-    new QGuiApplication(argc, argv);
-  }
-};
-static QtAppBootstrap s_qtAppBootstrap;
 
 /** Helper: invoke the bidi pass and return result. */
 std::vector<int> visualOrder(const QString &s,

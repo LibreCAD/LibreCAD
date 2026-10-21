@@ -23,8 +23,8 @@
 
 #include "lc_dimstyletovariablesmapper.h"
 
+#include "lc_colornumbers.h"
 #include "lc_dimstyle.h"
-#include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
 #include "rs_units.h"
 
@@ -382,7 +382,7 @@ void LC_DimStyleToVariablesMapper::textFromVars(LC_DimStyle::Text* s, const RS_V
         s->setHorizontalPositioningRaw(vd->getInt(QStringLiteral("$DIMJUST"), LC_DimStyle::Text::ABOVE_AND_CENTERED));
     }
     if (vd->has("$DIMCLRT")) {
-        const RS_Color dimclrt = RS_FilterDXFRW::numberToColor(vd->getInt("$DIMCLRT", 0));
+        const RS_Color dimclrt = LC_ColorNumbers::numberToColor(vd->getInt("$DIMCLRT", 0));
 
         s->setColor(dimclrt);
     }
@@ -416,7 +416,7 @@ void LC_DimStyleToVariablesMapper::textFromVars(LC_DimStyle::Text* s, const RS_V
         s->setBackgroundFillModeRaw(vd->getInt("$DIMTFILL", LC_DimStyle::Text::NONE));
     }
     if (vd->has("$DIMTFILLCLR")) {
-        const RS_Color fillClr = RS_FilterDXFRW::numberToColor(vd->getInt("$DIMTFILLCLR", 0));
+        const RS_Color fillClr = LC_ColorNumbers::numberToColor(vd->getInt("$DIMTFILLCLR", 0));
         s->setExplicitBackgroundFillColor(fillClr);
     }
     if (vd->has("$DIMTFILL")) {
@@ -439,7 +439,7 @@ void LC_DimStyleToVariablesMapper::text2Vars(const LC_DimStyle::Text* s, RS_Vari
     }
 
     int colRGB;
-    int colNum = RS_FilterDXFRW::colorToNumber(s->color(), &colRGB);
+    int colNum = LC_ColorNumbers::colorToNumber(s->color(), &colRGB);
 
     if (s->checkModifyState(LC_DimStyle::Text::$DIMCLRT)) {
         vd->add("$DIMCLRT", colNum, 70);
@@ -474,7 +474,7 @@ void LC_DimStyleToVariablesMapper::text2Vars(const LC_DimStyle::Text* s, RS_Vari
         vd->add("$DIMTFILL", s->backgroundFillMode(), 70);
     }
     if (s->checkModifyState(LC_DimStyle::Text::$DIMTFILLCLR)) {
-        colNum = RS_FilterDXFRW::colorToNumber(s->explicitBackgroundFillColor(), &colRGB);
+        colNum = LC_ColorNumbers::colorToNumber(s->explicitBackgroundFillColor(), &colRGB);
 
         vd->add("$DIMTFILLCLR", colNum, 70);
     }
@@ -485,7 +485,7 @@ void LC_DimStyleToVariablesMapper::text2Vars(const LC_DimStyle::Text* s, RS_Vari
 
 void LC_DimStyleToVariablesMapper::extensionLineFromVars(LC_DimStyle::ExtensionLine* s, const RS_VariableDict* vd, const RS2::Unit unit) {
     if (vd->has("$DIMCLRE")) {
-        const RS_Color color = RS_FilterDXFRW::numberToColor(vd->getInt("$DIMCLRE", 0));
+        const RS_Color color = LC_ColorNumbers::numberToColor(vd->getInt("$DIMCLRE", 0));
         s->setColor(color);
     }
     if (vd->has("$DIMEXE")) {
@@ -527,7 +527,7 @@ void LC_DimStyleToVariablesMapper::extensionLineFromVars(LC_DimStyle::ExtensionL
 void LC_DimStyleToVariablesMapper::extensionLine2Vars(const LC_DimStyle::ExtensionLine* s, RS_VariableDict* vd) {
     int colRGB;
     if (s->checkModifyState(LC_DimStyle::ExtensionLine::$DIMCLRE)) {
-        const int colNum = RS_FilterDXFRW::colorToNumber(s->color(), &colRGB);
+        const int colNum = LC_ColorNumbers::colorToNumber(s->color(), &colRGB);
         vd->add("$DIMCLRE", colNum, 70);
     }
     if (s->checkModifyState(LC_DimStyle::ExtensionLine::$DIMEXE)) {
@@ -564,7 +564,7 @@ void LC_DimStyleToVariablesMapper::extensionLine2Vars(const LC_DimStyle::Extensi
 
 void LC_DimStyleToVariablesMapper::dimLineFromVars(LC_DimStyle::DimensionLine* s, const RS_VariableDict* vd, const RS2::Unit unit) {
     if (vd->has("$DIMCLRD")) {
-        const RS_Color dimclrd = RS_FilterDXFRW::numberToColor(vd->getInt("$DIMCLRD", 0));
+        const RS_Color dimclrd = LC_ColorNumbers::numberToColor(vd->getInt("$DIMCLRD", 0));
         s->setColor(dimclrd);
     }
     if (vd->has("$DIMDLE")) {
@@ -593,7 +593,7 @@ void LC_DimStyleToVariablesMapper::dimLineFromVars(LC_DimStyle::DimensionLine* s
 void LC_DimStyleToVariablesMapper::dimLine2Vars(const LC_DimStyle::DimensionLine* s, RS_VariableDict* vd) {
     if (s->checkModifyState(LC_DimStyle::DimensionLine::$DIMCLRD)) {
         int colRGB;
-        const int colNum = RS_FilterDXFRW::colorToNumber(s->color(), &colRGB);
+        const int colNum = LC_ColorNumbers::colorToNumber(s->color(), &colRGB);
         vd->add("$DIMCLRD", colNum, 70);
     }
     if (s->checkModifyState(LC_DimStyle::DimensionLine::$DIMDLE)) {

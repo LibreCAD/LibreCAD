@@ -104,8 +104,9 @@ void setTextStreamEncoding(QTextStream& stream, const QString& encoding)
  * Constructor.
  *
  * @param fileName
- * @param owner true if the font owns the letters (blocks). Otherwise
- *              the letters will be deleted when the font is deleted.
+ * @param owner true if the font owns the letters (blocks): they are
+ *              deleted when the font is deleted. Otherwise they belong
+ *              to someone else.
  */
 RS_Font::RS_Font(const QString& fileName, const bool owner)
     : m_letterList(owner), m_fileName(fileName), m_fileLicense("unknown") {
@@ -197,7 +198,9 @@ bool RS_Font::loadFont() {
 
 void RS_Font::readCXF(const QString& path) {
     QFile f(path);
-    f.open(QIODevice::ReadOnly);
+    if (!f.open(QIODevice::ReadOnly)) {
+        return;
+    }
     QTextStream ts(&f);
 
     // Read line by line until we find a new letter:
@@ -348,7 +351,9 @@ QString letterNameToHexUnicodeCode(const QString& originalName) {
 void RS_Font::readLFF(const QString& path) {
     QFile f(path);
     m_encoding = "UTF-8";
-    f.open(QIODevice::ReadOnly);
+    if (!f.open(QIODevice::ReadOnly)) {
+        return;
+    }
     QTextStream ts(&f);
 
     // Read line by line until we find a new letter:

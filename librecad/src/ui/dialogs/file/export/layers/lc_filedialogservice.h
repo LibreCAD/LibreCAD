@@ -52,7 +52,13 @@ namespace LC_FileDialogService {
         RS2::FormatType fileType = RS2::FormatUnknown;
         int checkState = 0;
     };
+    /**
+     * Asks for the file to save to. The dialog starts in the directory of
+     * @p currentFileName with its name, and with the filter of
+     * @p preferredType selected, or else the filter used last time.
+     */
     FileDialogResult getFileDetails(FileDialogMode fileDialogMode,
-                                    const QString &currentFileName = QString{});
+                                    const QString &currentFileName = QString{},
+                                    RS2::FormatType preferredType = RS2::FormatUnknown);
 }
 #endif

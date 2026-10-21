@@ -108,7 +108,7 @@ void LC_Wipeout::draw(RS_Painter *painter) {
   }
 }
 
-RS_Vector LC_Wipeout::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const{
+RS_Vector LC_Wipeout::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity**) const{
   RS_Vector nearest{false};
   double bestSq = RS_MAXDOUBLE;
   for (const RS_Vector &v : m_data.vertices) {
@@ -124,7 +124,7 @@ RS_Vector LC_Wipeout::doGetNearestEndpoint(const RS_Vector& coord, double* dist,
   return nearest;
 }
 
-RS_Vector LC_Wipeout::doGetNearestPointOnEntity(const RS_Vector& coord, bool onEntity, double* dist,
+RS_Vector LC_Wipeout::doGetNearestPointOnEntity(const RS_Vector& coord, bool, double* dist,
     RS_Entity** entity) const {
   if (entity != nullptr) {
     *entity = const_cast<LC_Wipeout *>(this);
@@ -132,7 +132,7 @@ RS_Vector LC_Wipeout::doGetNearestPointOnEntity(const RS_Vector& coord, bool onE
   return doGetNearestEndpoint(coord, dist, nullptr);
 }
 
-RS_Vector LC_Wipeout::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const {
+RS_Vector LC_Wipeout::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity**) const {
   if (m_data.vertices.empty()) {
     return RS_Vector{false};
   }
@@ -147,16 +147,16 @@ RS_Vector LC_Wipeout::doGetNearestCenter(const RS_Vector& coord, double* dist, R
   return centroid;
 }
 
-RS_Vector LC_Wipeout::doGetNearestMiddle(const RS_Vector& coord, double* dist, int middlePoints) const {
+RS_Vector LC_Wipeout::doGetNearestMiddle(const RS_Vector& coord, double* dist, int) const {
   return getNearestCenter(coord, dist);
 }
 
-RS_Vector LC_Wipeout::doGetNearestDist(double distance, const RS_Vector& coord, double* dist) const {
+RS_Vector LC_Wipeout::doGetNearestDist(double, const RS_Vector& coord, double* dist) const {
   return doGetNearestEndpoint(coord, dist, nullptr);
 }
 
-double LC_Wipeout::doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, RS2::ResolveLevel level,
-    double solidDist) const {
+double LC_Wipeout::doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, RS2::ResolveLevel,
+    double) const {
   double dist = RS_MAXDOUBLE;
   doGetNearestEndpoint(coord, &dist, nullptr);
   if (entity != nullptr) {

@@ -617,7 +617,7 @@ void LC_ActionFactory::createViewActions(QMap<QString, QAction*>& map, QActionGr
 void LC_ActionFactory::createLayerActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) const {
     createActionHandlerActions(map, group, {
         {"LayersDefreezeAll",        RS2::ActionLayersDefreezeAll,        tr("&Show all layers"),           ":/icons/visible_all.lci"},
-        {"LayersFreezeAll",          RS2::ActionLayersFreezeAll,          tr("&Hide all layers"),           ":/icons/not_visible_all.lci"},
+        {"LayersFreezeAll",          RS2::ActionLayersFreezeAll,          tr("&Hide all layers except current"), ":/icons/not_visible_all.lci"},
         {"LayersUnlockAll",          RS2::ActionLayersUnlockAll,          tr("&Unlock all"),                ":/icons/unlocked.lci"},
         {"LayersLockAll",            RS2::ActionLayersLockAll,            tr("&Lock all"),                  ":/icons/locked.lci"},
         {"LayersAdd",                RS2::ActionLayersAdd,                tr("&Add Layer"),                 ":/icons/add.lci"},
@@ -680,6 +680,7 @@ void LC_ActionFactory::createFileActionsUncheckable(QMap<QString, QAction *> &ma
         {"FileNew",         &QC_ApplicationWindow::slotFileNewFromDefaultTemplate, tr("&New"),        ":/icons/new.lci",               "document-new"},
         {"FileNewTemplate", &QC_ApplicationWindow::slotFileNewFromTemplate, tr("New From &Template"), ":/icons/new_from_template.lci", "document-new"},// fixme - check
         {"FileOpen",        &QC_ApplicationWindow::slotFileOpen,        tr("&Open..."),           ":/icons/open.lci",              "document-open"},
+        {"FileOpenLegacyLibreCadUtf8", &QC_ApplicationWindow::slotFileOpenLegacyLibreCadUtf8, tr("Open Legacy LibreCAD DXF (UTF-8)..."), ":/icons/open.lci"},
         {"FileSave",        &QC_ApplicationWindow::slotFileSave,        tr("&Save"),              ":/icons/save.lci",              "document-save"},
         {"FileSaveAs",      &QC_ApplicationWindow::slotFileSaveAs,      tr("Save &as..."),        ":/icons/save_as.lci",           "document-save-as"},
         {"FileSaveAll",     &QC_ApplicationWindow::slotFileSaveAll,     tr("Save A&ll..."),       ":/icons/save_all.lci"},
@@ -823,7 +824,6 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
     const bool additiveSelection = LC_GET_ONE_BOOL("Selection", "Additivity", true);
     map["SelectionModeToggle"]->setChecked(additiveSelection);
 
-    connect(m_appWin, &QC_ApplicationWindow::printPreviewChanged, map["FilePrint"], &QAction::setChecked);
     connect(m_appWin, &QC_ApplicationWindow::printPreviewChanged, map["FilePrintPreview"], &QAction::setChecked);
     connect(m_appWin, &QC_ApplicationWindow::gridChanged, map["ViewGrid"], &QAction::setChecked);
     connect(m_appWin, &QC_ApplicationWindow::draftChanged, map["ViewDraft"], &QAction::setChecked);
@@ -909,7 +909,7 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, const L
         {"OrderTop", QKeySequence(Qt::Key_Home)},
         {"SelectAll", QKeySequence::SelectAll},
         // RVT April 29, 2011 - Added esc key to de-select all entities
-        {"DeselectAll", QKeySequence(tr("Ctrl+K"))},
+        {"DeselectAll", QKeySequence(Qt::CTRL | Qt::Key_K)},
         {"EditUndo", QKeySequence::Undo},
         {"EditRedo", QKeySequence::Redo},
         {"EditCut", QKeySequence::Cut},
@@ -926,10 +926,10 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, const L
         {"ReloadStyleSheet", QKeySequence("Ctrl+T")},
         {"FileClose", QKeySequence::Close},
         {"FileCloseAll", QKeySequence("Shift+" + QKeySequence(QKeySequence::Close).toString())},
-        {"ViewGrid", QKeySequence(tr("Ctrl+G", "Toggle Grid"))},
+        {"ViewGrid", QKeySequence(Qt::CTRL | Qt::Key_G)},
         // todo - it's better to replace to something different.... ctrl+d is rather for duplicate
-        {"ViewDraft", QKeySequence(tr("Ctrl+D","Toggle Draft Mode"))},
-        {"ViewStatusBar", QKeySequence(tr("Ctrl+I", "Hide Statusbar"))},
+        {"ViewDraft", QKeySequence(Qt::CTRL | Qt::Key_D)},
+        {"ViewStatusBar", QKeySequence(Qt::CTRL | Qt::Key_I)},
         {"ModifyDeleteQuick",QKeySequence::Delete  /*QList<QKeySequence>() << QKeySequence::Delete << QKeySequence(Qt::Key_Backspace)*/},
         {"FileNew", QKeySequence::New},
         {"FileOpen", QKeySequence::Open},

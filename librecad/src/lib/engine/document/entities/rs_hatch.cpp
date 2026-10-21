@@ -104,8 +104,6 @@ RS_Hatch::~RS_Hatch() = default;
 RS_Entity* RS_Hatch::clone() const {
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::clone()");
     auto* cloneHatch = new RS_Hatch(*this);
-    cloneHatch->setOwner(isOwner());
-    cloneHatch->detach();
 
     // Force re-optimization and update to deep-copy caches and subcontainers
     cloneHatch->m_needOptimization = true;
@@ -173,9 +171,15 @@ bool RS_Hatch::validate() {
           if (edges.empty())
             continue;
 
+          // A clone keeps its source's parent and layer, and so does every clone
+          // made of it, down to the cached loops. Those outlive both: drop them.
           RS_EntityContainer perLoopCont{nullptr, true};
-          for (RS_Entity *e : edges)
-            perLoopCont.addEntity(e->clone());
+          for (RS_Entity *e : edges) {
+            RS_Entity *edge = e->clone();
+            edge->setParent(nullptr);
+            edge->setLayer(nullptr);
+            perLoopCont.addEntity(edge);
+          }
 
           // For pattern hatches apply the rotation before extraction so the
           // extracted loop coordinates are in the axis-aligned tiling frame.
@@ -239,14 +243,11 @@ RS_EntityContainer* RS_Hatch::getBoundaryContainer(const int loopIndex) const {
 }
 
 /**
- * Calculates the bounding box, temporarily activating contours for accurate computation.
+ * Calculates the bounding box as update() does. The contour bounds the hatch
+ * even while the layer its edges were picked from is hidden.
  */
 void RS_Hatch::calculateBorders() {
-    RS_DEBUG->print("RS_Hatch::calculateBorders");
-    activateContour(true);
-    RS_EntityContainer::calculateBorders();
-    RS_DEBUG->print("RS_Hatch::calculateBorders: size: %f,%f", getSize().x, getSize().y);
-    activateContour(false);
+    forcedCalculateBorders();
 }
 
 /**
@@ -297,6 +298,8 @@ void RS_Hatch::update() {
     // Validate and optimize loops (moves boundaries to subcontainers)
     if (!validate()) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::update: Validation failed");
+        // Surviving contours must remain bounded when a copy cannot revalidate.
+        forcedCalculateBorders();
         activateContour(false);
         m_updateRunning = false;
         return;
@@ -397,19 +400,16 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
     int addedCount = 0;
     for (size_t i = 0; i < m_orderedLoops->size(); ++i) {
         const auto& loop = (*m_orderedLoops)[i];
-        auto trimmedEntities = loop.trimPatternEntities(*pattern);
-        for (RS_Entity* entity : *trimmedEntities) {
-            if (entity != nullptr) {
-                entity->setPen(pen);
-                entity->setLayer(layer);
-                entity->reparent(this);  // Reparent to RS_Hatch
-                entity->setFlag(RS2::FlagHatchChild);
-                entity->rotate(center, rotationVector);
-                addEntity(entity);  // Transfers ownership; direct child
-                ++addedCount;
-            }
+        for (auto& owned : loop.trimPatternEntities(*pattern)->takeEntities()) {
+            RS_Entity* entity = owned.release();
+            entity->setPen(pen);
+            entity->setLayer(layer);
+            entity->reparent(this);
+            entity->setFlag(RS2::FlagHatchChild);
+            entity->rotate(center, rotationVector);
+            addEntity(entity);
+            ++addedCount;
         }
-        trimmedEntities->setOwner(false);  // Release after transfer
     }
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::updatePatternHatch: Added %d direct entities",

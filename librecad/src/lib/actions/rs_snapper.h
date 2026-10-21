@@ -364,7 +364,8 @@ protected:
     RS_Vector restrictHorizontal(const RS_Vector& base, const RS_Vector& coord) const;
     RS_Vector restrictVertical(const RS_Vector& base, const RS_Vector& coord) const;
     RS_Vector restrictAngle(const RS_Vector& basePoint, const RS_Vector& snap, double angle) const;
-    RS_Entity* catchEntity(const RS_Vector& pos, RS2::ResolveLevel level = RS2::ResolveNone) const;
+    RS_Entity* catchEntity(const RS_Vector& pos, RS2::ResolveLevel level = RS2::ResolveNone,
+                           double* distance = nullptr) const;
     RS_Entity* catchEntity(const QMouseEvent* e, RS2::ResolveLevel level = RS2::ResolveNone) const;
     // catch Entity closest to pos and of the given entity type of enType, only search for a particular entity type
     RS_Entity* catchEntity(const RS_Vector& pos, RS2::EntityType enType, RS2::ResolveLevel level = RS2::ResolveNone) const;

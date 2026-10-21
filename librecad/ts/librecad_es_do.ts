@@ -187,7 +187,7 @@ distancia entre puntos=%2 es mayor que el diámetro= %3</translation>
   </message>
   <message>
    <source>(De-)Select Layer</source>
-   <translation>(De-)Pilih Lapisan</translation>
+   <translation>(De)seleccionar capa</translation>
   </message>
   <message>
    <source>&amp;Points</source>
@@ -576,31 +576,31 @@ distancia entre puntos=%2 es mayor que el diámetro= %3</translation>
   </message>
   <message>
    <source>&amp;Add Layer</source>
-   <translation>&quot; Add Layer</translation>
+   <translation>&amp;Agregar una capa</translation>
   </message>
   <message>
    <source>&amp;Remove Layer</source>
-   <translation>&quot; Remove Layer</translation>
+   <translation>&amp;Quitar capa</translation>
   </message>
   <message>
    <source>&amp;Edit Layer</source>
-   <translation>&quot; Editar capas &quot;</translation>
+   <translation>&amp;Editar la capa</translation>
   </message>
   <message>
    <source>Toggle Layer Loc&amp;k</source>
-   <translation>Toggle Layer Loc contaminak</translation>
+   <translation>Alternar bloqueo de &amp;capas</translation>
   </message>
   <message>
    <source>&amp;Toggle Layer Visibility</source>
-   <translation>Visibilidad de capas</translation>
+   <translation>Alternar &amp;visibilidad de capas</translation>
   </message>
   <message>
    <source>Toggle Layer &amp;Print</source>
-   <translation>Toggle Layer &gt;</translation>
+   <translation>Alternar &amp;impresión de capas</translation>
   </message>
   <message>
    <source>Toggle &amp;Construction Layer</source>
-   <translation>Toggle &amp; capa de construcción</translation>
+   <translation>A&amp;lternar capa de construcción</translation>
   </message>
   <message>
    <source>&amp;Add Block</source>
@@ -3137,7 +3137,7 @@ Por favor, compruebe su existencia y permisos.</translation>
   </message>
   <message>
    <source>Current Layer</source>
-   <translation>Corrección actual</translation>
+   <translation>Capa actual</translation>
   </message>
   <message>
    <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3945,11 +3945,11 @@ en otra ventana</translation>
   <name>QG_ColorBox</name>
   <message>
    <source>By Layer</source>
-   <translation>Por Capa</translation>
+   <translation>Por capa</translation>
   </message>
   <message>
    <source>By Block</source>
-   <translation>Por Bloque</translation>
+   <translation>Por bloque</translation>
   </message>
   <message>
    <source>Red</source>
@@ -6367,7 +6367,7 @@ Pre&amp;cisión:</translation>
   </message>
   <message>
    <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-   <translation>- No. Cuando esté habilitado, la activación de una capa modificaría todas las entidades seleccionadas a esa nueva capa. Para cambiar la capa de múltiples entidades: primero seleccione las entidades necesarias; active una capa en el widget de capa. Esto hace que todas las entidades seleccionadas sean modificadas para pertenecer a la nueva capa</translation>
+   <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cuando está habilitado, la activación de una capa modificaría todas las entidades seleccionadas a esa nueva capa. Para cambiar la capa de varias entidades: primero seleccionar las entidades necesarias; activar una capa en el widget de capa. Esto hace que todas las entidades seleccionadas se modifiquen para pertenecer a la nueva capa.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
   </message>
   <message>
    <source>Variable File:</source>
@@ -6402,11 +6402,11 @@ Pre&amp;cisión:</translation>
   </message>
   <message>
    <source>Export invisible layers</source>
-   <translation>Exportar capas invisibles</translation>
+   <translation>Exportar capas ocultas</translation>
   </message>
   <message>
    <source>Export visible construction layers</source>
-   <translation>Exportar capas de construcción visibles</translation>
+   <translation>Exportar capas visibles de construcción</translation>
   </message>
   <message>
    <source>Blocks</source>
@@ -7773,7 +7773,7 @@ Pre&amp;cisión:</translation>
   <name>QG_LayerDialog</name>
   <message>
    <source>Layer Settings</source>
-   <translation>Parámetros de la Capa</translation>
+   <translation>Ajustes de capa</translation>
   </message>
   <message>
    <source>Layer Name:</source>
@@ -7785,7 +7785,7 @@ Pre&amp;cisión:</translation>
   </message>
   <message>
    <source>Default Pen</source>
-   <translation>Trazador por defecto</translation>
+   <translation>Pluma predeterminada</translation>
   </message>
   <message>
    <source>&amp;OK</source>
@@ -7802,12 +7802,12 @@ Pre&amp;cisión:</translation>
   <message>
    <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-   <translation>Una capa de construcción tiene entidades de líneas rectas infinitas destinadas a ser utilizados para la construcción geométrica.
-El contenido de una capa de construcción no debe aparecer en impresión.</translation>
+   <translation>Una capa de construcción tiene entidades de líneas rectas infinitas destinadas a ser usadas para la construcción geométrica.
+Los contenidos de una capa de construcción no deberán aparecer en la impresión.</translation>
   </message>
   <message>
    <source>Construction Layer</source>
-   <translation>Construcción</translation>
+   <translation>Capa de construcción</translation>
   </message>
  </context>
  <context>
@@ -7862,7 +7862,7 @@ El contenido de una capa de construcción no debe aparecer en impresión.</trans
   </message>
   <message>
    <source>Looking for matching layer names</source>
-   <translation>Buscando nombres de capas iguales</translation>
+   <translation>Buscando coincidencias en nombres de capas</translation>
   </message>
   <message>
    <source>Edit Layer &amp;Attributes</source>
@@ -8095,11 +8095,11 @@ El contenido de una capa de construcción no debe aparecer en impresión.</trans
   <name>QG_LineTypeBox</name>
   <message>
    <source>By Layer</source>
-   <translation>Por Capa</translation>
+   <translation>Por capa</translation>
   </message>
   <message>
    <source>By Block</source>
-   <translation>Por Bloque</translation>
+   <translation>Por bloque</translation>
   </message>
   <message>
    <source>No Pen</source>
@@ -8621,7 +8621,7 @@ p, li { white-space: pre-wrap; }
   <name>QG_WidthBox</name>
   <message>
    <source>By Layer</source>
-   <translation>Por Capa</translation>
+   <translation>Por capa</translation>
   </message>
   <message>
    <source>By Block</source>
@@ -8740,7 +8740,7 @@ p, li { white-space: pre-wrap; }
   </message>
   <message>
    <source>Remove Layer</source>
-   <translation>Eliminar Capa</translation>
+   <translation>Eliminar capa</translation>
   </message>
   <message>
    <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
@@ -8752,7 +8752,7 @@ p, li { white-space: pre-wrap; }
   </message>
   <message>
    <source>Layer Dialog</source>
-   <translation>Diálogo de la capa</translation>
+   <translation>Diálogo de capa</translation>
   </message>
   <message>
    <source>Remove Block</source>
@@ -8768,13 +8768,13 @@ p, li { white-space: pre-wrap; }
   </message>
   <message>
    <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-   <translation>Ya existe una capa con nombre &quot;%1&quot;. Por favor especifique otro nombre.</translation>
+   <translation>Ya existe una capa &quot;%1&quot;. Por favor especificar otro nombre.</translation>
   </message>
   <message>
    <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-   <translation>Layer &quot;%1&quot; y todas las entidades en ella serán eliminadas.
-Esta acción no puede ser deshecha.</translation>
+   <translation>Se eliminarán la capa &quot;%1&quot; y todas sus entidades.
+Esta acción NO se puede deshacer.</translation>
   </message>
  </context>
  <context>

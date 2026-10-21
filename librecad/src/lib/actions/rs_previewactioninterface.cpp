@@ -863,7 +863,10 @@ void RS_PreviewActionInterface::mouseMoveEvent(QMouseEvent* event) {
     const bool applyVisualSnap = isVisualSnapApplicable();
     m_visualSnapManager->skipDelayedOperations();
     const LC_MouseEvent lcEvent = toLCMouseMoveEvent(event);
-    deletePreviewAndHighlights();
+    deletePreview();
+    if (clearHighlightsOnMouseMove()) {
+        deleteHighlights();
+    }
     if (applyVisualSnap) {
         RS_Entity* ent = catchEntity(lcEvent.graphPoint, g_visualSnapEntities, RS2::ResolveAll);
         bool tryToProcessVertex = true;
@@ -963,6 +966,7 @@ void RS_PreviewActionInterface::addProjectedRelativePointToVisualSnap(const LC_R
     if (apply) {
         m_lastMouseMoveEvent.snapPoint = projectedPoint;
         m_lastMouseMoveEvent.graphPoint = projectedPoint;
+        m_lastMouseMoveEvent.isShift = false; // a typed point: not the Shift of the last mouse move
         onMouseLeftButtonRelease(getStatus(), &m_lastMouseMoveEvent);
         // fixme - or it's better to use coordinate event? what about modifiers?
         // fireCoordinateEvent(projectedPoint);
@@ -976,6 +980,7 @@ void RS_PreviewActionInterface::addProjectedRelativePointToVisualSnap(const LC_R
 
 void RS_PreviewActionInterface::moveMouseToRefreshPreview(const RS_Vector& wcsPos) {
     m_lastMouseMoveEvent.snapPoint = wcsPos;
+    m_lastMouseMoveEvent.isShift = false;
     deletePreviewAndHighlights();
     onMouseMoveEvent(getStatus(), &m_lastMouseMoveEvent);
     drawPreviewAndHighlights();

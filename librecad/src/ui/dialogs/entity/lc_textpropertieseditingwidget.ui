@@ -26,7 +26,7 @@
      </property>
      <layout class="QVBoxLayout" name="vlContent">
       <item>
-       <widget class="QLineEdit" name="leText">
+       <widget class="LC_SingleLineTextEdit" name="leText">
         <property name="toolTip">
          <string>Single-line text content</string>
         </property>
@@ -98,6 +98,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>LC_SingleLineTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>lc_textedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

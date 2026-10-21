@@ -99,8 +99,6 @@ namespace LC_PropertyFieldUtils {
                                                     const QByteArray& viewName = QByteArray()) {
         using CallbackValueType = typename FieldPropertyType::ValueType;
         using CallbackValueTypeStore = typename FieldPropertyType::ValueTypeStore;
-        using ValueTypeStore = typename LC_PropertySingle<ValueType>::ValueTypeStore;
-
         Q_ASSERT(property);
 
         auto result = new FieldPropertyType(nullptr, false);

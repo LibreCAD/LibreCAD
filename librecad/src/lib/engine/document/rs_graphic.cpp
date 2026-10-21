@@ -43,6 +43,9 @@
 #include "rs_settings.h"
 #include "rs_units.h"
 
+#include <filesystem>
+#include <QFileInfo>
+
 namespace {
     // default paper size A4: 210x297 mm
     const RS_Vector g_paperSizeA4{210., 297.};
@@ -304,12 +307,32 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
 void RS_Graphic::initForNewDocument() {
     RS_DEBUG->print("RS_Graphic::newDoc: before clear, autosaveFilename='%s'", m_autosaveFilename.toLatin1().data());
     m_dwgAdvancedMetadata.clear();
+    m_dxfRecoverySourceFile.clear();
+    m_lineTypeList.clear();
     clear();
     clearLayers();
     clearBlocks();
     addLayer(new RS_Layer("0"));
     setModified(false);
     RS_DEBUG->print("RS_Graphic::newDoc: after clear, autosaveFilename='%s'", m_autosaveFilename.toLatin1().data());
+}
+
+bool RS_Graphic::isDxfRecoverySourceFile(const QString& file) const {
+    if (m_dxfRecoverySourceFile.isEmpty() || file.isEmpty())
+        return false;
+    // equivalent() also catches hard links; canonical paths alone do not.
+    std::error_code error;
+    if (std::filesystem::equivalent(
+            std::filesystem::u8path(m_dxfRecoverySourceFile.toUtf8().constData()),
+            std::filesystem::u8path(file.toUtf8().constData()), error))
+        return true;
+    const auto sourcePath = QFileInfo(m_dxfRecoverySourceFile).absoluteFilePath();
+    const auto targetPath = QFileInfo(file).absoluteFilePath();
+#ifdef Q_OS_WIN
+    return sourcePath.compare(targetPath, Qt::CaseInsensitive) == 0;
+#else
+    return sourcePath == targetPath;
+#endif
 }
 
 void RS_Graphic::clearVariables() {
@@ -537,7 +560,12 @@ void RS_Graphic::setIsoView(const RS2::IsoGridViewType viewType) {
  */
 void RS_Graphic::setUnit(const RS2::Unit u) {
     // fixme - sand - add caching
-    m_plotSettings->setPaperSize(RS_Units::convert(m_plotSettings->getPaperSize(), getUnit(), u));
+    // The paper keeps its physical size, so only its numbers change with the unit.
+    // That is not a choice of paper by the user: the size remembered for new
+    // drawings (in millimetres) must not be touched. It used to be overwritten
+    // with these numbers read as millimetres, so every drawing set to inches
+    // divided it by 25.4 and every drawing made afterwards got a smaller page.
+    m_plotSettings->setDrawingPaperSize(RS_Units::convert(m_plotSettings->getPaperSize(), getUnit(), u));
     addVariable("$INSUNITS", u, 70);
 }
 
@@ -736,17 +764,6 @@ bool RS_Graphic::fitToPage() {
 }
 
 
-void RS_Graphic::addEntity(const RS_Entity* entity) {
-    RS_Document::addEntity(entity);
-    if ( /*entity->rtti() == RS2::EntityBlock ||*/
-        entity->rtti() == RS2::EntityContainer) {
-        auto* e = static_cast<const RS_EntityContainer*>(entity);
-        for (const auto e1 : *e) {
-            addEntity(e1);
-        }
-    }
-}
-
 /**
  * Dumps the entities to stdout.
  */
@@ -880,7 +897,7 @@ QString RS_Graphic::formatLinear(const double linear) const {
   */
 bool RS_Graphic::isModified() const {
     return m_modified || m_layerList.isModified() || m_blockList.isModified() || m_namedViewsList.isModified() || m_ucsList.isModified() ||
-        m_dimstyleList.isModified() || m_variableDict.isModified();
+        m_dimstyleList.isModified() || m_variableDict.isModified() || m_lineTypeList.isModified();
 }
 
 /**
@@ -895,6 +912,7 @@ void RS_Graphic::setModified(const bool m) {
         m_ucsList.setModified(m);
         m_dimstyleList.setModified(m);
         m_variableDict.setModified(m);
+        m_lineTypeList.setModified(m);
     }
 
     fireGraphicModified(m);
@@ -1018,11 +1036,12 @@ void RS_Graphic::replaceDimStylesList(const QString& defaultStyleName, const QLi
 void RS_Graphic::prepareForSave() {
     // fixme - sand - check what if dimension
     const auto entities = lc::LC_ContainerTraverser{*this, RS2::ResolveNone}.entities();
+    QList<LC_DimStyle*> dimStyleOverrides;
+    QList<RS_Dimension*> dimsWithOverrides;
     for (const auto e : entities) {
         if (e->isDeleted()) {
             continue;
         }
-        QList<LC_DimStyle*> dimStyleOverrides;
         const RS2::EntityType rtti = e->rtti();
         if (RS2::isDimensionalEntity(rtti)) {
             const auto dim = dynamic_cast<RS_Dimension*>(e);
@@ -1030,11 +1049,21 @@ void RS_Graphic::prepareForSave() {
                 LC_DimStyle* override = dim->getDimStyleOverride();
                 if (override != nullptr) {
                     dimStyleOverrides.append(override);
+                    dimsWithOverrides.append(dim);
                 }
             }
         }
-        if (!dimStyleOverrides.isEmpty()) {
-            LC_DimArrowRegistry::insertStandardArrowBlocks(this, dimStyleOverrides);
+    }
+    if (!dimStyleOverrides.isEmpty()) {
+        LC_DimArrowRegistry::insertStandardArrowBlocks(this, dimStyleOverrides);
+        // An override's arrow can only become a real block reference once its
+        // block exists -- which the call above may have just made true for
+        // the first time. Recompute now so this save, not just the next
+        // reopen, draws it as an INSERT instead of falling back to a bare
+        // LC_DimArrow that the writer can only approximate (or not draw at
+        // all, for a kind with no export primitives of its own).
+        for (const auto dim : dimsWithOverrides) {
+            dim->update();
         }
     }
 }

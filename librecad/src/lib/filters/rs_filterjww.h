@@ -175,8 +175,6 @@ public:
     DL_Attributes getEntityAttributes(RS_Entity* entity);
 
     static QString toDxfString(const QString& string);
-    QString toNativeString(const char* data, const QString& encoding);
-    QString getDXFEncoding();
 
 public:
     RS_Pen attributesToPen(const DL_Attributes& attrib) const;

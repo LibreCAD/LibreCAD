@@ -3646,12 +3646,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>Пребаци стање конструкције слоја ентитета</translation>
+        <translation>Измени конструктивни слој ентитета</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>Prebacivanje štampanja sloja entiteta</translation>
+        <translation>Измени штампање слоја ентитета</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
@@ -3985,7 +3985,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Измени &amp;закључавање слоја</translation>
+        <translation>&amp;Измени закључавање слоја</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
@@ -4517,8 +4517,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Склони све слојеве</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Сакриј све слојеве осим тренутног</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -4533,12 +4533,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>И&amp;звези одабране слојеве</translation>
+        <translation>Изв&amp;ези одабране слојеве</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Извези &amp;Видљиви слој</translation>
+        <translation>Извези вид&amp;љиве слојеве</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -5109,17 +5109,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Unesite ime sloja za %1</translation>
+        <translation>Унесите име слоја за %1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>activate</source>
-        <translation>aktiviraj</translation>
+        <translation>активирање</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>create</source>
-        <translation>kreiraj</translation>
+        <translation>креирање</translation>
     </message>
 </context>
 <context>
@@ -5128,13 +5128,13 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>selected</source>
         <comment>Layers to export</comment>
-        <translation>izabrano</translation>
+        <translation>изабрани</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>visible</source>
         <comment>Layers to export</comment>
-        <translation>vidljivo</translation>
+        <translation>видљиви</translation>
     </message>
 </context>
 <context>
@@ -6856,7 +6856,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">Odredite entitet sa željenim slojem.</translation>
+        <translation type="unfinished">Одредите ентитет са жељеним слојем</translation>
     </message>
 </context>
 <context>
@@ -8756,7 +8756,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
         <source>Layer to apply</source>
-        <translation type="unfinished">Слој на који се примењује</translation>
+        <translation type="unfinished">Слој који се примењује</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
@@ -8789,7 +8789,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">Слој на који треба поставити креирани круг</translation>
+        <translation type="unfinished">Слој у који треба поставити креирани круг</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -10768,7 +10768,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="209"/>
         <source>Layer</source>
-        <translation>Sloj</translation>
+        <translation>Слој</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="236"/>
@@ -11082,7 +11082,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>Слој објекта</translation>
+        <translation>Слој ентитета</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
@@ -14283,7 +14283,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">Слој објекта</translation>
+        <translation type="unfinished">Слој ентитета</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -15188,7 +15188,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>Име новог слоја. Да бисте креирали хијерархијске слојеве, укључите име виртуелног слоја и разделите га од имена слоја.</translation>
+        <translation>Име новог слоја. Да бисте креирали хијерархијске слојеве, укључите име виртуелног слоја и раздвајач имена слојева.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
@@ -15244,13 +15244,13 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Конструкциони слој има ентитете бесконачних правих линија намењених за геометријску конструкцију.
-       Садржај конструкционог слоја не треба да се појави у испису.</translation>
+        <translation>Конструктивни слој садржи ентитете од бесконачних правих линија намењених за геометријску конструкцију.
+       Садржај конструктивног слоја не би требало да се појави на штампи.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
         <source>Construction Layer</source>
-        <translation>Конструкциони слој</translation>
+        <translation>Конструктивни слој</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
@@ -15305,47 +15305,47 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57"/>
         <source>Layers Export Options</source>
-        <translation>Opcije za izvoz slojeva</translation>
+        <translation>Опције за извоз слојева</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>Ako je označeno, nazvani prikazi iz dokumenta biće uključeni u izvezene crteže. U suprotnom, prikazi neće biti uključeni.</translation>
+        <translation>Ако је означено, именовани прикази из документа ће бити укључени у извезене цртеже. У супротном, прикази неће бити укључени.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>Izvezi i nazvane prikaze</translation>
+        <translation>Извези и именоване приказе</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>Ako je označeno, svaki originalni izvezeni sloj će biti sačuvan u zasebnom crtežu. U suprotnom, svi slojevi će biti izvezeni u jedan kombinovani crtež.</translation>
+        <translation>Ако је означено, сваки оригинални извезени слој ће бити сачуван у засебном цртежу. У супротном, сви слојеви ће бити извезени у један комбиновани цртеж.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
         <source>Export each layer to own drawing file</source>
-        <translation>Izvezi svaki sloj u zasebnu datoteku crteža</translation>
+        <translation>Извези сваки слој у засебну датотеку цртежа</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>Ako je označeno, entiteti će biti sačuvani u originalnom sloju. U suprotnom, oni će biti postavljeni u sloj „0”.</translation>
+        <translation>Ако је означено, ентитети ће бити сачувани у оригиналном слоју. У супротном, биће постављени у слој &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>Zadrži originalni sloj za entitete</translation>
+        <translation>Задржи оригинални слој за ентитете</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>Ako je označeno, UCS-ovi iz dokumenta biće uključeni u izvezene crteže. U suprotnom, UCS-ovi neće biti uključeni.</translation>
+        <translation>Ако је означено, УКС-ови из документа ће бити укључени у извезене цртеже. У супротном, УКС-ови неће бити укључени.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>Izvezi i UCS-ove</translation>
+        <translation>Извези и УКС-ове</translation>
     </message>
 </context>
 <context>
@@ -15358,7 +15358,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>Podešavanja za konvenciju imenovanja koja se koristi za kreiranje hijerarhije slojeva na osnovu ravne liste slojeva</translation>
+        <translation>Подешавања за конвенцију именовања која се користи за креирање хијерархије слојева на основу равне листе слојева</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
@@ -15373,7 +15373,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>Разделилац који се користи за поделу унутрашњег имена слоја на хијерархијска имена</translation>
+        <translation>Раздвајач који се користи за поделу унутрашњег имена слоја на хијерархијска имена</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15403,17 +15403,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>Суфикс имена слоја који означава да је слој информативни</translation>
+        <translation>Суфикс имена слоја који означава да је слој информативан.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Алтернативна позиција</translation>
+        <translation>Алтернативна позиција </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>Суфикс имена слоја који означава да је слој за алтернативну позицију</translation>
+        <translation>Суфикс имена слоја који означава да је слој за алтернативну позицију.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15482,7 +15482,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>Прикажи пуно име као тултип</translation>
+        <translation>Прикажи пуно име као помоћни текст</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15522,7 +15522,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>Удубљење за подређене слојеве</translation>
+        <translation>Увлачење за подређене слојеве</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
@@ -15532,7 +15532,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>Величина удеса у знаковима за удес име дечјег слоја у односу на родитељски слој</translation>
+        <translation>Величина увлачења, у знаковима, имена подређеног слоја у односу на родитељски слој</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
@@ -15542,7 +15542,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Дозволи реструктурирање преко превлачења&amp;испуштања</translation>
+        <translation>Дозволи реструктурирање превлачењем и испуштањем</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
@@ -15588,7 +15588,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Подударајући елемент у режиму истицања филтера</translation>
+        <translation>Ставка која одговара филтеру у режиму истицања</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
@@ -15598,7 +15598,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="379"/>
         <source>Appearance</source>
-        <translation type="unfinished">Izgled</translation>
+        <translation type="unfinished">Изглед</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="406"/>
@@ -15617,12 +15617,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
         <source>Selected items background color</source>
-        <translation>Боја позадине изабраних елемената</translation>
+        <translation>Боја позадине изабраних ставки</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>Боја позадине за активну ставку слоја у стаблу слојева</translation>
+        <translation>Боја позадине за ставку активног слоја у стаблу слојева</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
@@ -15702,7 +15702,8 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Неважећа вредност је унета за боју %1. Молимо, унесите другачију вредност.</translation>
+        <translation>Неважећа вредност је унета за боју „%1“.
+Молимо, наведите другачију вредност.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="245"/>
@@ -15720,7 +15721,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>Тражење имена слојева која се подударају</translation>
+        <translation>Тражим слојеве са одговарајућим називима</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
@@ -15739,8 +15740,8 @@ Please specify a different value.</source>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Сакриј све слојеве</translation>
+        <source>Hide all layers except current</source>
+        <translation>Сакриј све слојеве осим тренутног</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -15800,42 +15801,42 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>Режим равне листе)</translation>
+        <translation>Режим равне листе</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp;Додај дете слој</translation>
+        <translation>&amp;Додај подређени слој</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>&amp;Преименуј</translation>
+        <translation>П&amp;реименуј</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp;Уклони слојеве (под-стабло)</translation>
+        <translation>&amp;Уклони слојеве (подстабло)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>&amp;Копирај структуру (под-стабло)</translation>
+        <translation>&amp;Копирај структуру (подстабло)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp;Дуплирај садржај (под-стабло)</translation>
+        <translation>Дуп&amp;лирај садржај (подстабло)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp;Изабери ентитете (под-стабло)</translation>
+        <translation>&amp;Изабери ентитете (подстабло)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;Уреди &amp;атрибуте слоја</translation>
+        <translation>У&amp;реди атрибуте слоја</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
@@ -15845,22 +15846,22 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Додај под-слој димензија</translation>
+        <translation>Додај подслој ди&amp;мензија</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp;Додај под-слој информација</translation>
+        <translation>Додај подслој ин&amp;формација</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp;Додај под-слој алтернативног погледа</translation>
+        <translation>Додај подслој алтернативне пози&amp;ције</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp;Уклони под-слојеве</translation>
+        <translation>Ук&amp;лони подслојеве</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
@@ -15927,18 +15928,18 @@ Please specify a different value.</source>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Замрзни све слојеве</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Сакриј све слојеве осим тренутног</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp;Откључај све слојеве</translation>
+        <translation>О&amp;ткључај све слојеве</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp;Закључај све слојеве</translation>
+        <translation>З&amp;акључај све слојеве</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
@@ -15948,22 +15949,22 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp;Онемогући штампање свих слојева</translation>
+        <translation>О&amp;немогући штампање свих слојева</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>Извези један слој</translation>
+        <translation>Извези &amp;један слој</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>Извези под-дрво слоја</translation>
+        <translation>Из&amp;вези подстабло слоја</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Извези видљиве слојеве</translation>
+        <translation>Извези вид&amp;љиве слојеве</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
@@ -23556,7 +23557,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">Ако је означено, креирани објекти ће бити постављени на тренутни слој. У супротном, биће постављени у оригиналне слојеве.</translation>
+        <translation type="unfinished">Ако је означено, креирани ентитети ће бити постављени у тренутни слој. У супротном, биће постављени у оригиналне слојеве. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
@@ -23742,7 +23743,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">Ако је означено, креирани објекти ће бити смештени у тренутни слој, у супротном ће бити у оригиналним слојевима.</translation>
+        <translation type="unfinished">Ако је означено, креирани ентитети ће бити постављени у тренутни слој, у супротном ће бити у оригиналним слојевима. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
@@ -24157,7 +24158,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Ako je označeno, kreirani objekti će biti postavljeni u trenutni sloj, u suprotnom će biti u originalnim slojevima.</translation>
+        <translation type="unfinished">Ако је означено, креирани ентитети ће бити постављени у тренутни слој, у супротном ће бити у оригиналним слојевима.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
@@ -24655,13 +24656,13 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="263"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="298"/>
         <source>By Layer</source>
-        <translation>Према слоју</translation>
+        <translation>По слоју</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="299"/>
         <source>By Block</source>
-        <translation>Према блоку</translation>
+        <translation>По блоку</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="266"/>
@@ -33020,7 +33021,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>Слој:</translation>
+        <translation>
+Слој: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35826,7 +35828,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">Опредељује да ли ће копије бити уметнуте у тренутни или оригинални слој.</translation>
+        <translation type="unfinished">Одређује да ли ће копије бити уметнуте у тренутни или оригинални слој</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
@@ -36072,7 +36074,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Ако је означено, нови елементи ће бити постављени на тренутни слој, у супротном ће бити у оригиналним слојевима.</translation>
+        <translation type="unfinished">Ако је означено, нови ентитети ће бити постављени у тренутни слој, у супротном ће бити у оригиналним слојевима.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
@@ -36315,7 +36317,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">Ako je ovo označeno, kreirani elementi će biti postavljeni na trenutni sloj. U suprotnom, biće postavljeni na originalne slojeve.</translation>
+        <translation type="unfinished">Ако је означено, креирани ентитети ће бити постављени у тренутни слој. У супротном, биће постављени у оригиналне слојеве. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
@@ -38986,7 +38988,7 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <source>Layers</source>
-        <translation>Слоеви</translation>
+        <translation>Слојеви</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="201"/>
@@ -39753,7 +39755,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
         <source>Name of Current Active Layer</source>
-        <translation>Naziv trenutnog aktivnog sloja</translation>
+        <translation>Назив тренутно активног слоја</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
@@ -40215,7 +40217,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="54"/>
         <source>Layer to apply</source>
-        <translation>Слој на који се примењује</translation>
+        <translation>Слој који се примењује</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
@@ -43245,7 +43247,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Када је омогућено, активирање слоја модификује све означене ентитете да припадају том слоју. За промену слоја више ентитета: прво означите више ентитета; активирајте слој у виџету слојева. Ово ће учинити да се сви ентитети промене тако да припадају новом слоју.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Када је омогућено, активирање слоја модификује све изабране ентитете да припадају том слоју. За промену слоја више ентитета: прво изаберите потребне ентитете; активирајте слој у виџету слојева. Ово ће учинити да се сви изабрани ентитети промене тако да припадају новом слоју.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -44366,7 +44368,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>Измени слој одабраних објеката при активирању слоја</translation>
+        <translation>Измени слој изабраних ентитета при активирању слоја</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -46937,14 +46939,14 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="63"/>
         <source>Default Pen</source>
-        <translation>Подразумевано перо</translation>
+        <translation>Подразумевана оловка</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Конструктивни слој садржи елементе од бесконачних правих линије намењених за геометријску конструкцију.
-Садржај конструктивног слоја не би требао да се појави на штампи.</translation>
+        <translation>Конструктивни слој садржи ентитете од бесконачних правих линија намењених за геометријску конструкцију.
+Садржај конструктивног слоја не би требало да се појави на штампи.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="33"/>
@@ -46994,12 +46996,12 @@ The contents of a Construction Layer should not appear in printout.</source>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="83"/>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="189"/>
         <source>By Layer</source>
-        <translation>по слоју</translation>
+        <translation>По слоју</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="84"/>
         <source>By Block</source>
-        <translation>по блоку</translation>
+        <translation>По блоку</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="87"/>
@@ -47319,7 +47321,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="239"/>
         <source>By Layer</source>
-        <translation>Према слоју</translation>
+        <translation>По слоју</translation>
     </message>
 </context>
 <context>
@@ -47441,7 +47443,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Nije dozvoljeno da ime sloja bude prazno.</translation>
+        <translation>Није дозвољено да име слоја буде празно.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47453,8 +47455,9 @@ This action can NOT be undone.</source>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Pokušaj kreiranja sloja sa dupliranim imenom. Duplirano ime sloja je \n[%1].
-Molimo, navedite drugačije ime.</translation>
+        <translation>Покушај креирања слоја са дуплираним именом. Дуплирано име слоја је 
+[%1].
+Молимо, наведите другачије име.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="142"/>
@@ -47466,14 +47469,14 @@ Molimo, navedite drugačije ime.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Niz za razdvajanje slojeva je prazan. Neće biti moguće izgraditi stablo slojeva.
-Molimo, navedite drugačiju vrednost.</translation>
+        <translation>Раздвајач листе слојева је празан. Неће бити могуће изградити стабло слојева.
+Молимо, наведите другачију вредност.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="972"/>
         <source>Remove empty layers</source>
-        <translation>Uklonite prazne slojeve</translation>
+        <translation>Уклони празне слојеве</translation>
     </message>
     <message>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
@@ -47491,35 +47494,39 @@ Clear filtering mask and repeat.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Nisu pronadjeni slojevi bez entiteta, nema šta da se ukloni.</translation>
+        <translation>Није пронађен ниједан слој без ентитета, нема шта да се уклони.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1161"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1169"/>
         <source>Add Layer</source>
-        <translation>Dodaj sloj</translation>
+        <translation>Додај слој</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1117"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Takav podređeni sloj već postoji za \n[%1].
-Molimo, navedite drugačije ime.</translation>
+        <translation>Такав подређени слој већ постоји за 
+[%1].
+Молимо, наведите другачије име.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1162"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Takav podređeni sloj već postoji za \n[%1].</translation>
+        <translation>Такав подређени слој већ постоји за 
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Димензионални слој може се додати само за нормалан, активни слој.</translation>
+        <translation>Димензионални слој може се додати само за нормални активни слој.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -47611,13 +47618,15 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Такви ентитети постоје на замрзнутим слојевима.</translation>
+        <translation>Такви ентитети постоје на замрзнутим слојевима.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Такви ентитети постоје на закључаним слојевима.</translation>
+        <translation>Такви ентитети постоје на закључаним слојевима.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -51759,13 +51768,13 @@ Do you want to replace it?</source>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
-        <translation>Po sloju</translation>
+        <translation>По слоју</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="209"/>
         <source>By Block</source>
-        <translation>Po bloku</translation>
+        <translation>По блоку</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="212"/>

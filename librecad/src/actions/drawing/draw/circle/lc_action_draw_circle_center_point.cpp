@@ -53,7 +53,7 @@ void LC_ActionDrawCircleCenterPoint::doTriggerCompletion([[maybe_unused]] bool s
 }
 
 void LC_ActionDrawCircleCenterPoint::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
-    const RS_Vector mouse = e->snapPoint;
+    RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetCenter: {
             m_circleData->center = mouse;
@@ -63,6 +63,7 @@ void LC_ActionDrawCircleCenterPoint::onMouseMoveEvent(const int status, const LC
         case SetRadius: {
             const auto& center = m_circleData->center;
             if (center.valid) {
+                mouse = getPointOnCircle(e);
                 m_circleData->radius = center.distanceTo(mouse);
                 previewToCreateCircle(*m_circleData);
                 if (m_showRefEntitiesOnPreview) {
@@ -76,6 +77,20 @@ void LC_ActionDrawCircleCenterPoint::onMouseMoveEvent(const int status, const LC
         default:
             break;
     }
+}
+
+void LC_ActionDrawCircleCenterPoint::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
+    fireCoordinateEvent(status == SetRadius ? getPointOnCircle(e) : e->snapPoint);
+}
+
+bool LC_ActionDrawCircleCenterPoint::isRelativeZeroOffCenter() const {
+    const RS_Vector relZero = getRelativeZero();
+    return relZero.valid && relZero.distanceTo(m_circleData->center) > RS_TOLERANCE;
+}
+
+// with Shift, the relative zero, which is no point on a circle if it is the center
+RS_Vector LC_ActionDrawCircleCenterPoint::getPointOnCircle(const LC_MouseEvent* e) const {
+    return isRelativeZeroOffCenter() ? getRelZeroAwarePoint(e, e->snapPoint) : e->snapPoint;
 }
 
 bool LC_ActionDrawCircleCenterPoint::isInVisualSnapStatus(int status) {
@@ -131,7 +146,7 @@ void LC_ActionDrawCircleCenterPoint::updateActionPrompt() {
             updatePromptTRCancel(tr("Specify center"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetRadius:
-            updatePromptTRBack(tr("Specify point on circle"));
+            updatePromptTRBack(tr("Specify point on circle"), isRelativeZeroOffCenter() ? MOD_SHIFT_RELATIVE_ZERO : MOD_NONE);
             break;
         default:
             updatePrompt();

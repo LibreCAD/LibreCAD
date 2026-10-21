@@ -146,6 +146,15 @@ public:
      * store into the current one and stamps `_migratedFrom`,
      * `_schemaMajor`, `_schemaMinor` sentinels at the top level.
      *
+     * The first call creates the settings singleton. A later call keeps
+     * that instance and switches it to the store named by the new keys,
+     * dropping its cache and open group; pointers to the instance and
+     * signal connections made to it stay valid.
+     *
+     * The store is opened in QSettings::defaultFormat(): the native store
+     * (registry, plist or .conf file) unless the program chose another format
+     * before the call.
+     *
      * @param companyKey Company Key
      * @param appKey Application key
      */
@@ -217,7 +226,7 @@ public:
     QStringList getAllKeys() const;
     QStringList getChildKeys() const;
 
-    void remove(const QString &key) const;
+    void remove(const QString &key);
 
 signals:
     void optionChanged(const QString& groupName, const QString &propertyName, QVariant oldValue, QVariant newValue);
@@ -225,6 +234,7 @@ signals:
 
 private:
     explicit RS_Settings(QSettings *qsettings);
+    void replaceStore(QSettings *qsettings);
     QVariant readEntryCache(const QString& key);
 
 protected:

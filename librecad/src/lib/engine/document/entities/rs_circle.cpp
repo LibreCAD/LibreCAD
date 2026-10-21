@@ -45,22 +45,6 @@ namespace {
     // two circles are considered tangent, if the distance is within this factor of the radii
     constexpr double TANGENT_TOLERANCE_FACTOR = 1e-6; // fixme - sand - options candidate?
 
-    /**
-     * @brief isCollinearXY whether the 2x3 matrix has degenerate columns
-     * @param mat - a 2x3 linear equation to solve an Appollonius
-     * @return  true, if the matrix is degenerate, i.e. the 3 input circle centers have identical
-     *                x or y-coordinates
-     */
-    bool identicalXOrY(const std::vector<std::vector<double>>& mat) {
-        // matrix must be 2x3 in dimension
-        assert(mat.size() >= 2 && mat.front().size() >= 3);
-        const auto isDegenerateCol = [&mat](const size_t column) {
-            return RS_Math::equal(std::max(std::abs(mat[0][column]), std::abs(mat[1][column])), 0., RS_TOLERANCE);
-        };
-        // first(x) or second(y) column
-        return isDegenerateCol(0) || isDegenerateCol(1);
-    }
-
 bool hasFiniteValue(double value) {
     return std::isfinite(value);
 }

@@ -76,9 +76,9 @@ LC_LayerTreeWidget::LC_LayerTreeWidget(const QG_ActionHandler* ah, QWidget* pare
 }
 
 void LC_LayerTreeWidget::initTreeModel(){
-    auto *options = new LC_LayerTreeModelOptions();
+    auto options = std::make_unique<LC_LayerTreeModelOptions>();
     options->load();
-    m_layerTreeModel = new LC_LayerTreeModel(this, options);
+    m_layerTreeModel = new LC_LayerTreeModel(this, std::move(options));
     m_layerTreeModel->setFlatMode(m_flatListMode);
 }
 
@@ -190,7 +190,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // hide all layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/not_visible_all.lci"));
-    but->setToolTip(tr("Hide all layers"));
+    but->setToolTip(tr("Hide all layers except current"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::hideAllLayers);
     layButtons->addWidget(but);
 
@@ -725,6 +725,26 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
                 if (layerItem->isVisible() && !layerItem->isLocked()){
                     addActionFunc("deselect_layer",tr("&Select Layer's Entities"), &LC_LayerTreeWidget::selectLayersEntities);
                 }
+
+                if (layerItem->isVisible() && !layerItem->isLocked() && m_graphic != nullptr) {
+                    QList<RS_Entity*> invisibleEntities;
+                    const RS_Layer* layer = layerItem->getLayer();
+                    if (layer != nullptr) {
+                        for (RS_Entity* entity : *m_graphic) {
+                            if (entity != nullptr && entity->getLayer(true) == layer &&
+                                !entity->getFlag(RS2::FlagVisible)) {
+                                invisibleEntities.append(entity);
+                            }
+                        }
+                    }
+                    if (!invisibleEntities.isEmpty()) {
+                        contextMenu->addAction(
+                            tr("Restore Model/Paper Space Entity Visibility..."), this,
+                            [this, layer, invisibleEntities]() {
+                                makeLayerEntitiesVisible(layer, invisibleEntities);
+                            });
+                    }
+                }
                 contextMenu->addSeparator();
                 addActionFunc("copy", tr("&Create Layer Copy"), &LC_LayerTreeWidget::createLayerCopy);
                 addActionFunc("paste", tr("&Duplicate Layer With Content"),  &LC_LayerTreeWidget::createLayerDuplicate);
@@ -743,7 +763,7 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
         }
         addActionFunc("visible", tr("&Freeze Others Layers"), &LC_LayerTreeWidget::hideOtherThanSelectedLayers);
         addActionFunc("visible_all",   tr("&Defreeze All Layers"),  &LC_LayerTreeWidget::showAllLayers);
-        addActionFunc("not_visible_all",tr("&Freeze All Layers"), &LC_LayerTreeWidget::hideAllLayers);
+        addActionFunc("not_visible_all",tr("&Hide all layers except current"), &LC_LayerTreeWidget::hideAllLayers);
         addActionFunc("unlocked", tr("&Unlock All Layers"), &LC_LayerTreeWidget::unlockAllLayers);
         addActionFunc("locked", tr("&Lock All Layers"), &LC_LayerTreeWidget::lockAllLayers);
         addActionFunc("print", tr("Enable &Printing All Layers"),  &LC_LayerTreeWidget::printAllLayers);
@@ -797,13 +817,18 @@ void LC_LayerTreeWidget::showActiveLayerOnly() const {
     }
 }
 /**
- * Makes all layers invisible
+ * Makes all layers of the tree invisible except the active one. In filter mode
+ * the tree holds the matching layers only, and the others are left as they are.
  */
 void LC_LayerTreeWidget::hideAllLayers() {
     m_btnShowSecondaryLayers->setChecked(false);
     const LC_LayerTreeItemAcceptor acceptAll;
     const QList<RS_Layer *> layersToShow;
-    const QList<RS_Layer *> layersToHide = m_layerTreeModel->collectLayers(acceptAll);
+    QList<RS_Layer *> layersToHide = m_layerTreeModel->collectLayers(acceptAll);
+    if (m_layerList != nullptr) {
+        // frozen, the active layer would be replaced by one the filter left visible
+        layersToHide.removeAll(m_layerList->getActive());
+    }
     manageLayersVisibilityFlag(layersToShow, layersToHide, false);
 }
 
@@ -1014,6 +1039,26 @@ void LC_LayerTreeWidget::layerEdited(RS_Layer *){
 
 void LC_LayerTreeWidget::layerRemoved(RS_Layer *){
     RS_DEBUG->print("LC_LayerTreeWidget::layerRemoved()");
+    update();
+}
+
+void LC_LayerTreeWidget::layerListCleared() {
+    RS_DEBUG->print("LC_LayerTreeWidget::layerListCleared()");
+    update();
+}
+
+/**
+ * The layer list is being destroyed with its drawing, which was not detached from this widget first:
+ * the list has already dropped this listener, so forget it and the drawing, and clear the tree.
+ */
+void LC_LayerTreeWidget::layerListDestroyed() {
+    RS_DEBUG->print("LC_LayerTreeWidget::layerListDestroyed()");
+    // the state of setGraphicView(nullptr): the handlers of the buttons test m_graphicView, and
+    // then use m_graphic
+    m_layerList = nullptr;
+    m_graphic = nullptr;
+    m_document = nullptr;
+    m_graphicView = nullptr;
     update();
 }
 
@@ -1587,6 +1632,7 @@ void LC_LayerTreeWidget::doCreateLayersCopy(const QModelIndex &sourceIndex, bool
     QHash<RS_Layer *, RS_Layer *> layersMap = m_layerTreeModel->createLayersCopy(sourceIndex);
     if (!layersMap.empty()) {
         m_graphic->undoableModify(m_graphicView->getViewPort(), [this, layersMap,duplicateEntities](LC_DocumentModificationBatch& ctx)-> bool {
+                                      ctx.dontSetActiveLayerAndPen();
                                       QHashIterator<RS_Layer*, RS_Layer*> iter{layersMap};
                                       while (iter.hasNext()) {
                                           iter.next();
@@ -1642,7 +1688,7 @@ void LC_LayerTreeWidget::copyLayerAttributes(RS_Layer *copyLayer, const RS_Layer
 
     pen.setColor(sourcePen.getColor());
     pen.setWidth(sourcePen.getWidth());
-    pen.setLineType(sourcePen.getLineType());
+    pen.setLineTypeFromPen(sourcePen);
     pen.setAlpha(sourcePen.getAlpha());
     pen.setScreenWidth(sourcePen.getScreenWidth());
     pen.setDashOffset(sourcePen.dashOffset());
@@ -1678,6 +1724,7 @@ void LC_LayerTreeWidget::doMoveSelectionToLayer(const LC_LayerTreeItem* layerIte
         bool removeOriginals = !duplicate;
         m_document->undoableModify(m_graphicView->getViewPort(),
                                    [ removeOriginals, targetLayer, resolvePens, selectedEntities](LC_DocumentModificationBatch& ctx)-> bool {
+                                       ctx.dontSetActiveLayerAndPen();
                                        for (const auto en : selectedEntities) {
                                            // iterate over all entities
                                            if (!en->isParentSelected()) {
@@ -1708,6 +1755,34 @@ void LC_LayerTreeWidget::doMoveSelectionToLayer(const LC_LayerTreeItem* layerIte
                                        doc->select(ctx.entitiesToAdd);
                                    });
     }
+    redrawView();
+}
+
+void LC_LayerTreeWidget::makeLayerEntitiesVisible(const RS_Layer* layer, const QList<RS_Entity*>& entities) {
+    if (layer == nullptr || entities.isEmpty() || m_graphic == nullptr || m_graphicView == nullptr) {
+        return;
+    }
+
+    const QString message = tr("Make %1 individually invisible model/paper-space entities on layer \"%2\" visible?\n\n"
+                               "This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entities "
+                               "that were intentionally hidden.")
+                                .arg(entities.size())
+                                .arg(layer->getName());
+    if (QMessageBox::warning(this, tr("Restore Entity Visibility"), message,
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes) {
+        return;
+    }
+
+    m_graphic->undoableModify(m_graphicView->getViewPort(),
+                              [entities](LC_DocumentModificationBatch& ctx) {
+                                  ctx.dontSetActiveLayerAndPen();
+                                  for (RS_Entity* entity : entities) {
+                                      RS_Entity* visibleEntity = entity->clone();
+                                      visibleEntity->setVisible(true);
+                                      ctx.replace(entity, visibleEntity);
+                                  }
+                                  return true;
+                              });
     redrawView();
 }
 

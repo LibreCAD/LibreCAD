@@ -25,11 +25,12 @@
 #include <QRegularExpression>
 #include<iostream>
 
+#include "lc_colornumbers.h"
 #include "rs_color.h"
 #include "rs_debug.h"
 #include "rs_document.h"
-#include "rs_filterdxfrw.h"
 #include "rs_line.h"
+#include "rs_mtext.h"
 #include "rs_units.h"
 
 LC_ToleranceData::~LC_ToleranceData() = default;
@@ -40,10 +41,7 @@ LC_Tolerance::LC_Tolerance(RS_EntityContainer* parent, const LC_ToleranceData& d
 }
 
 RS_Entity* LC_Tolerance::clone() const {
-    auto* d = new LC_Tolerance(*this);
-    d->setOwner(isOwner());
-    d->detach();
-    return d;
+    return new LC_Tolerance(*this);
 }
 
 void LC_Tolerance::update() {
@@ -181,7 +179,7 @@ QString LC_Tolerance::getTextStyle() const {
 }
 
 RS_Color LC_Tolerance::getTextColor() const {
-    return RS_FilterDXFRW::numberToColor(getGraphicVariableInt("$DIMCLRT", 0));
+    return LC_ColorNumbers::numberToColor(getGraphicVariableInt("$DIMCLRT", 0));
 }
 
 RS_Pen LC_Tolerance::getPenForText() const {
@@ -190,7 +188,7 @@ RS_Pen LC_Tolerance::getPenForText() const {
 }
 
 RS_Color LC_Tolerance::getDimensionLineColor() const {
-    return RS_FilterDXFRW::numberToColor(getGraphicVariableInt("$DIMCLRD", 0));
+    return LC_ColorNumbers::numberToColor(getGraphicVariableInt("$DIMCLRD", 0));
 }
 
 RS_Pen LC_Tolerance::getPenForLines() const {

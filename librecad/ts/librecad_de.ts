@@ -3315,7 +3315,7 @@ oder [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Aktualisieren Sie den aktuellen Pen von Active Layer&apos; Pen</translation>
+        <translation>Aktuellen Stift mit Stift der aktiven Ebene aktualisieren</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -3456,7 +3456,7 @@ oder [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layers operations</source>
-        <translation>Ebenen-Betrieb</translation>
+        <translation>Ebenenoperationen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
@@ -3648,12 +3648,12 @@ oder [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>Entry Layer</translation>
+        <translation>Ebene des Objekts</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Die Ebene der Entity</translation>
+        <translation>Ebene des Objekts</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
@@ -3668,32 +3668,32 @@ oder [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>Aktiviere die Ebene der Entity</translation>
+        <translation>Ebene des Objekts aktivieren</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
         <source>Hide Entity&apos;s Layer</source>
-        <translation>Die Ebene der Entity verbergen</translation>
+        <translation>Ebene des Objekts ausschalten</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>Andere Ebenen verstecken als Entity&apos;s</translation>
+        <translation>Andere Ebenen als die des Objekts ausschalten</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>Ebene der Entität sperren</translation>
+        <translation>Ebene des Objekts sperren</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>Anzeige der Konstruktionslinien der Entität ein-/ausblenden</translation>
+        <translation>Konstruktionsebene für Ebene des Objekts umschalten</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>Druck der Entität ein-/ausblenden</translation>
+        <translation>Drucken der Ebene des Objekts umschalten</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
@@ -4027,7 +4027,7 @@ oder [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>&amp;Sperre umschalten </translation>
+        <translation>&amp;Sperre umschalten</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
@@ -4555,12 +4555,12 @@ oder [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
-        <translation>Alle Layer ein&amp;schalten</translation>
+        <translation>&amp;Alle Ebenen einschalten</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>Alle Layer aussc&amp;halten</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Alle Ebe&amp;nen außer der aktuellen ausschalten</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -4575,12 +4575,12 @@ oder [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>Ausgewählte Layer &amp;exportieren</translation>
+        <translation>A&amp;usgewählte Ebenen exportieren</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Sichtbare Layer exp&amp;ortieren</translation>
+        <translation>Si&amp;chtbare Ebenen exportieren</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -5151,7 +5151,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Schichtname auf %1 eingeben</translation>
+        <translation>Ebenennamen eingeben, um die Ebene zu %1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -6898,7 +6898,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">Einheit mit gewünschter Schicht angeben</translation>
+        <translation type="unfinished">Objekt auf der gewünschten Ebene wählen</translation>
     </message>
 </context>
 <context>
@@ -7509,12 +7509,12 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Wenn überprüft, werden Spiegeleinheiten auf der aktuellen Schicht platziert, sonst werden sie in Originalschichten platziert.</translation>
+        <translation type="unfinished">Wenn aktiviert, werden die gespiegelten Objekte auf die aktuelle Ebene gelegt, andernfalls auf ihre ursprünglichen Ebenen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Benutzer aktuelle Ebene</translation>
+        <translation type="unfinished">Aktuelle Ebene verwenden</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8804,7 +8804,7 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
         <source>Layer to apply</source>
-        <translation type="unfinished">Ebene zur Anwendung</translation>
+        <translation type="unfinished">Anzuwendende Ebene</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
@@ -8837,7 +8837,7 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">Ebene, auf die erstellte Kreis sollte platziert werden</translation>
+        <translation type="unfinished">Ebene, auf die der erstellte Kreis gelegt werden soll</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -11151,7 +11151,7 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>Ebene der Einheit</translation>
+        <translation>Ebene des Objekts</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
@@ -12634,7 +12634,7 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>Ebene der Dimension</translation>
+        <translation>Ebene der Bemaßung</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
@@ -13610,7 +13610,7 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Ebene, auf die Duplikat platziert werden sollte</translation>
+        <translation type="unfinished">Ebene, auf die das Duplikat gelegt werden soll</translation>
     </message>
 </context>
 <context>
@@ -13623,7 +13623,7 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Ebene, auf die Duplikat platziert werden sollte</translation>
+        <translation type="unfinished">Ebene, auf die das Duplikat gelegt werden soll</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -14415,7 +14415,7 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">Ebene der Einheit</translation>
+        <translation type="unfinished">Ebene des Objekts</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -15320,32 +15320,32 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>Name der neuen Schicht. Um hierarchische Schichten zu erzeugen, gehören der Name des virtuellen Schicht- und Schichtnamensabscheiders.</translation>
+        <translation>Name der neuen Ebene. Um hierarchische Ebenen zu erstellen, geben Sie den Namen der virtuellen Ebene und das Trennzeichen für Ebenennamen mit an.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
         <source>Parent Layers Path:</source>
-        <translation>Pfad der Elternschichten:</translation>
+        <translation>Pfad der übergeordneten Ebenen:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="81"/>
         <source>Layer Type</source>
-        <translation>Ebene</translation>
+        <translation>Ebenentyp</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>Schicht für verschiedene Infromationselemente, Notizen, Entwürfe usw.</translation>
+        <translation>Ebene für verschiedene Informationselemente, Notizen, Entwürfe usw.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
         <source>Informational</source>
-        <translation>Information</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>Normale Schicht mit Zeichnungsektionen</translation>
+        <translation>Normale Ebene mit Zeichnungselementen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
@@ -15355,17 +15355,17 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>Ebene, die Abmessungen hält</translation>
+        <translation>Ebene, die Bemaßungen enthält</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
         <source>Dimensions</source>
-        <translation>Abmessungen</translation>
+        <translation>Bemaßung</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>Schicht mit abwechselnder Position von Einheiten auf normalen Schichten</translation>
+        <translation>Ebene mit alternativer Position von Objekten, die auf normalen Ebenen liegen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
@@ -15376,8 +15376,8 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Eine Bauebene hat Wesen von unendlichen geraden Linien, die für die geometrische Konstruktion verwendet werden sollen.
-Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translation>
+        <translation>Eine Konstruktionsebene enthält Objekte von unendlichen geraden Linien, die für die Konstruktion benutzt werden können.
+       Der Inhalt von Konstruktionsebenen wird nicht ausgedruckt.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
@@ -15387,12 +15387,12 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
         <source>Path for parent layer</source>
-        <translation>Pfad für Elternschicht</translation>
+        <translation>Pfad der übergeordneten Ebene</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="197"/>
         <source>Layer Name:</source>
-        <translation>Schichtname:</translation>
+        <translation>Ebenenname:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="68"/>
@@ -15408,12 +15408,12 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="78"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="85"/>
         <source>Add Layer</source>
-        <translation>Fügen Sie Ebene</translation>
+        <translation>Ebene hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="91"/>
         <source>Edit Layer</source>
-        <translation>Datei bearbeiten</translation>
+        <translation>Ebene bearbeiten</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
@@ -15432,47 +15432,47 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="39"/>
         <source>Form</source>
-        <translation>Formblatt</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57"/>
         <source>Layers Export Options</source>
-        <translation>Ebenen Exportoptionen</translation>
+        <translation>Exportoptionen für Ebenen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>Bei der Prüfung werden Named Views aus dem Dokument in exportierte Zeichnungen aufgenommen. Ansonsten sind Ansichten nicht enthalten.</translation>
+        <translation>Wenn aktiviert, werden benannte Ansichten aus dem Dokument in die exportierten Zeichnungen übernommen. Andernfalls werden keine Ansichten übernommen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>Export Named Views auch</translation>
+        <translation>Benannte Ansichten auch exportieren</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>Bei der Überprüfung wird jede ursprünglich exportierte Schicht in separater Zeichnung gespeichert. Ansonsten werden alle Schichten in einer kombinierten Zeichnung exportiert.</translation>
+        <translation>Wenn aktiviert, wird jede exportierte Ebene in einer eigenen Zeichnung gespeichert. Andernfalls werden alle Ebenen in eine gemeinsame Zeichnung exportiert.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
         <source>Export each layer to own drawing file</source>
-        <translation>Exportieren Sie jede Schicht in eigene Zeichnungsdatei</translation>
+        <translation>Jede Ebene in eine eigene Zeichnungsdatei exportieren</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>Wenn überprüft, werden die Entitäten in der ursprünglichen Schicht gespeichert. Ansonsten werden sie auf die Schicht &quot;0&quot; gelegt.</translation>
+        <translation>Wenn aktiviert, werden die Objekte auf ihrer ursprünglichen Ebene gespeichert. Andernfalls werden sie auf die Ebene &quot;0&quot; gelegt.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>Originalschicht für Entitäten halten</translation>
+        <translation>Ursprüngliche Ebene der Objekte beibehalten</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>Bei der Prüfung werden UCS aus dem Dokument in exportierte Zeichnungen aufgenommen. Ansonsten sind UCS nicht enthalten.</translation>
+        <translation>Wenn aktiviert, werden UCS aus dem Dokument in die exportierten Zeichnungen übernommen. Andernfalls werden keine UCS übernommen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
@@ -15485,17 +15485,17 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>Ebenen Baum Optionen</translation>
+        <translation>Optionen für den Ebenenbaum</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>Einstellungen für die Benennung Konvention, die verwendet wird, um Schichten Hierarchie basierend auf einer flachen Liste von Schichten erstellen</translation>
+        <translation>Einstellungen für die Namenskonvention, nach der aus der flachen Liste der Ebenen die Ebenenhierarchie erstellt wird</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>Benennungsabkommen</translation>
+        <translation>Namenskonvention</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15505,7 +15505,7 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>Separator verwendet für Spalten inneren Namen der Schicht zu hierarchischen Namen</translation>
+        <translation>Trennzeichen, mit dem der interne Name einer Ebene in hierarchische Namen aufgeteilt wird</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15519,33 +15519,33 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>Abmessungen</translation>
+        <translation>Bemaßung</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Suffix des Schichtnamens, der definiert, dass Schicht dimensional ist</translation>
+        <translation>Suffix des Ebenennamens, das die Ebene als Bemaßungsebene kennzeichnet</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="809"/>
         <source>Informational</source>
-        <translation>Information</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>Suffix des Schichtnamens, der definiert, dass Schicht informationell ist.</translation>
+        <translation>Suffix des Ebenennamens, das die Ebene als Infoebene kennzeichnet.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Alternative Position</translation>
+        <translation>Alternative Position </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>Suffix des Schichtnamens, der definiert, dass Schicht für alternative Position ist.</translation>
+        <translation>Suffix des Ebenennamens, das die Ebene als Ebene für alternative Position kennzeichnet.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15559,7 +15559,7 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Präfix des Namens der Schicht, der verwendet wird, wenn Schicht mit einem solchen Namen vorhanden ist (Test, wenn Duplikat erstellt wird)</translation>
+        <translation>Präfix des Ebenennamens, das verwendet wird, wenn bereits eine Ebene mit diesem Namen existiert (etwa beim Erstellen eines Duplikats)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
@@ -15569,7 +15569,7 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Suffix des Schichtnamens, der verwendet wird, wenn Schicht mit einem solchen Namen vorhanden ist (Schaubild, wenn Duplikat erstellt wird)</translation>
+        <translation>Suffix des Ebenennamens, das verwendet wird, wenn bereits eine Ebene mit diesem Namen existiert (etwa beim Erstellen eines Duplikats)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15599,7 +15599,7 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="268"/>
         <source>Display and operations settings</source>
-        <translation>Anzeige- und Betriebseinstellungen</translation>
+        <translation>Einstellungen für Anzeige und Bedienung</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="271"/>
@@ -15609,12 +15609,12 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>Wenn überprüft, wird Tooltip den vollständigen Namen der Schicht enthalten (mit allen oberen Ebenen)</translation>
+        <translation>Wenn aktiviert, enthält der Tooltip den vollständigen Namen der Ebene (mit allen übergeordneten Ebenen)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>Vollständigen Namen als ToolTip anzeigen</translation>
+        <translation>Vollständigen Namen als Tooltip anzeigen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15644,47 +15644,47 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>Wenn überprüft, werden Icons für Schichttypen angezeigt</translation>
+        <translation>Wenn aktiviert, werden Symbole für die Ebenentypen angezeigt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
         <source>Show layer type icons</source>
-        <translation>Icons mit Schichttyp anzeigen</translation>
+        <translation>Symbole für Ebenentypen anzeigen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>Vertiefung für Kinderschichten</translation>
+        <translation>Einrückung für Unterebenen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Zeige identifizierte Layer-Namen. Kenngröße:</translation>
+        <translation>Ebenennamen eingerückt anzeigen. Einrückungstiefe:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>Größe des Gedankenstrichs in Zeichen zum Namen der Kinderschicht aus den Eltern</translation>
+        <translation>Anzahl der Zeichen, um die der Name einer Unterebene gegenüber der übergeordneten Ebene eingerückt wird</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>Falls überprüft, werden Drag&amp;drop-Operationen in der Layerliste aktiviert und Schichtenhierarchie kann restructuture</translation>
+        <translation>Wenn aktiviert, ist Drag&amp;Drop in der Ebenenliste möglich und die Ebenenhierarchie kann umstrukturiert werden</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Umstrukturierung durch Drag&amp;Drop zulassen</translation>
+        <translation>Umstrukturierung durch Drag&amp;&amp;Drop zulassen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>Wenn die Primärschicht umbenannt wird, werden auch Sekundärschichten umbenannt.</translation>
+        <translation>Wenn die Primärebene umbenannt wird, werden auch die Sekundärebenen umbenannt.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Sekundärschichten umbenennen auf primärem Umbenennen</translation>
+        <translation>Sekundärebenen beim Umbenennen der Primärebene umbenennen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
@@ -15698,7 +15698,7 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
-        <translation>Hintergrundfarbe für ausgewählte Elemente in Schichten Baum.</translation>
+        <translation>Hintergrundfarbe für ausgewählte Elemente im Ebenenbaum.</translation>
     </message>
     <message>
         <source>Color for separator lines in layers tree view</source>
@@ -15707,7 +15707,7 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
         <source>Background color for virtual layers items in layers list</source>
-        <translation>Hintergrundfarbe für virtuelle Schichten Elemente in Schichten Liste</translation>
+        <translation>Hintergrundfarbe für Elemente virtueller Ebenen in der Ebenenliste</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="449"/>
@@ -15715,12 +15715,12 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="546"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="567"/>
         <source>Click to select color</source>
-        <translation>Klicken Sie auf die Farbe auswählen</translation>
+        <translation>Klicken, um eine Farbe auszuwählen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Passendes Element im Highlight-Filtermodus</translation>
+        <translation>Passendes Element im Hervorhebungsmodus des Filters</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
@@ -15735,12 +15735,12 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="406"/>
         <source>#1E90FF</source>
-        <translation>E90FF</translation>
+        <translation>#1E90FF</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
-        <translation>Virtuelle Schicht Hintergrundfarbe</translation>
+        <translation>Hintergrundfarbe virtueller Ebenen</translation>
     </message>
     <message>
         <source>Threeview items separator grid</source>
@@ -15749,17 +15749,17 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
         <source>Selected items background color</source>
-        <translation>Ausgewählte Artikel Hintergrundfarbe</translation>
+        <translation>Hintergrundfarbe ausgewählter Elemente</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>Hintergrundfarbe für aktives Schichtelement in Schichten Baum</translation>
+        <translation>Hintergrundfarbe für das Element der aktiven Ebene im Ebenenbaum</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
         <source>Active layer background color</source>
-        <translation>Aktive Schicht Hintergrundfarbe</translation>
+        <translation>Hintergrundfarbe der aktiven Ebene</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="588"/>
@@ -15774,12 +15774,12 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="599"/>
         <source>Pens that will be set for newly created layers of different types.</source>
-        <translation>Stifte, die für neu erstellte Schichten verschiedener Typen eingestellt werden.</translation>
+        <translation>Stifte, die neu erstellten Ebenen der verschiedenen Typen zugewiesen werden.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
         <source>Default Pens</source>
-        <translation>Standardschreiber</translation>
+        <translation>Standardstifte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
@@ -15789,17 +15789,17 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>Abmessungsebene</translation>
+        <translation>Bemaßungsebene</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
         <source>Informational Layer</source>
-        <translation>Informationsebene</translation>
+        <translation>Infoebene</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
-        <translation>Alternative Position Ebene</translation>
+        <translation>Ebene für alternative Position</translation>
     </message>
     <message>
         <source>grid</source>
@@ -15808,22 +15808,22 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>hervorgehobener artikel</translation>
+        <translation>hervorgehobenes Element</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
         <source>virtual layer background</source>
-        <translation>virtueller schicht hintergrund</translation>
+        <translation>Hintergrund virtueller Ebenen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="118"/>
         <source>selected item background</source>
-        <translation>ausgewählter artikel hintergrund</translation>
+        <translation>Hintergrund ausgewählter Elemente</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="126"/>
         <source>active layer background</source>
-        <translation>aktive schicht hintergrund</translation>
+        <translation>Hintergrund der aktiven Ebene</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
@@ -15834,13 +15834,13 @@ Der Inhalt einer Bauebene sollte nicht im Ausdruck angezeigt werden.</translatio
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Ungültiger Wert für %1 Farbe.
+        <translation>Ungültiger Wert für die Farbe &quot;%1&quot;.
 Bitte geben Sie einen anderen Wert an.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="245"/>
         <source>Select Color</source>
-        <translation>Wählen Sie Farbe</translation>
+        <translation>Farbe auswählen</translation>
     </message>
 </context>
 <context>
@@ -15853,12 +15853,12 @@ Bitte geben Sie einen anderen Wert an.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>Suche nach passenden Schichtnamen</translation>
+        <translation>Suche passende Ebenennamen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
         <source>Highlight Mode</source>
-        <translation>Highlight-Modus</translation>
+        <translation>Hervorhebungsmodus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="167"/>
@@ -15868,107 +15868,107 @@ Bitte geben Sie einen anderen Wert an.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="186"/>
         <source>Show all layers</source>
-        <translation>Alle Schichten anzeigen</translation>
+        <translation>Alle Ebenen einschalten</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Alle Schichten verstecken</translation>
+        <source>Hide all layers except current</source>
+        <translation>Alle Ebenen außer der aktuellen ausschalten</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
         <source>Show Secondary Layers</source>
-        <translation>Sekundärschichten anzeigen</translation>
+        <translation>Sekundärebenen einschalten</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="210"/>
         <source>Show Active Layer Only</source>
-        <translation>Aktive Ebene nur anzeigen</translation>
+        <translation>Nur aktive Ebene einschalten</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="218"/>
         <source>Expand All</source>
-        <translation>Alle erweitern</translation>
+        <translation>Alle aufklappen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="226"/>
         <source>Collapse All</source>
-        <translation>Zurück zur Übersicht</translation>
+        <translation>Alle einklappen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>Zusammenbruch Sekundär</translation>
+        <translation>Sekundärebenen einklappen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
         <source>Unlock all layers</source>
-        <translation>Entsperren Sie alle Schichten</translation>
+        <translation>Alle Ebenen entsperren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="249"/>
         <source>Lock all layers</source>
-        <translation>Alle Schichten schließen</translation>
+        <translation>Alle Ebenen sperren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="256"/>
         <source>Add a layer</source>
-        <translation>Eine Schicht hinzufügen</translation>
+        <translation>Ebene hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Dimensionen hinzufügen</translation>
+        <translation>Bemaßungsebene hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
         <source>Remove layer</source>
-        <translation>Entfernen der Schicht</translation>
+        <translation>Ebene entfernen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Schichtattribute ändern / umbenennen</translation>
+        <translation>Ebenenattribute ändern / umbenennen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>Flacher Listenmodus)</translation>
+        <translation>Flacher Listenmodus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>Kindebene hinzufügen</translation>
+        <translation>&amp;Unterebene hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>&amp; Name</translation>
+        <translation>U&amp;mbenennen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>Ebenen entfernen (Unterbaum)</translation>
+        <translation>&amp;Ebenen entfernen (Unterbaum)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>&amp;Copy Struktur (Sub-Tree)</translation>
+        <translation>Struktur &amp;kopieren (Unterbaum)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp;Duplikate Inhalte (Sub-Tree)</translation>
+        <translation>&amp;Inhalt duplizieren (Unterbaum)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>Entitäten auswählen (Unterbaum)</translation>
+        <translation>&amp;Objekte auswählen (Unterbaum)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;Bearbeiten von Layer &amp;Attribute</translation>
+        <translation>Ebenena&amp;ttribute bearbeiten</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
@@ -15978,7 +15978,7 @@ Bitte geben Sie einen anderen Wert an.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Dimensionen-Unterebene hinzufügen</translation>
+        <translation>Bemaßungs-Unterebene &amp;hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
@@ -15988,60 +15988,60 @@ Bitte geben Sie einen anderen Wert an.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp;Add Alternative anzeigen Sub-Layer</translation>
+        <translation>Unterebene für alternative &amp;Position hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp;Remove Subschichten</translation>
+        <translation>&amp;Unterebenen entfernen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Nach Maßebene umrechnen</translation>
+        <translation>In Bemaßungsebene umwandeln</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>In Info Layer umrechnen</translation>
+        <translation>In Infoebene umwandeln</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Umrechnen in Alternative Position Layer</translation>
+        <translation>In Ebene für alternative Position umwandeln</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
         <source>Convert to Normal Layer</source>
-        <translation>In Normalebene umrechnen</translation>
+        <translation>In normale Ebene umwandeln</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp;Entitäten der Ebene auswählen</translation>
+        <translation>&amp;Objekte der Ebene auswählen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp;Create Layer Kopieren</translation>
+        <translation>Ebenen&amp;kopie erstellen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp;Duplizierte Ebene mit Inhalt</translation>
+        <translation>Ebene &amp;mit Inhalt duplizieren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>Move Selection to Layer</source>
-        <translation>Auswahl verschieben in Ebene</translation>
+        <translation>Auswahl auf Ebene verschieben</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Doppelte Auswahl auf Ebene</translation>
+        <translation>Auswahl auf Ebene duplizieren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
@@ -16051,57 +16051,57 @@ Bitte geben Sie einen anderen Wert an.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp;Freeze Andere Ebenen</translation>
+        <translation>An&amp;dere Ebenen einfrieren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp;Defreeze Alle Ebenen</translation>
+        <translation>Alle E&amp;benen auftauen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Freeze alle Ebenen</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Alle Ebe&amp;nen außer der aktuellen ausschalten</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>Alle Ebenen entsperren</translation>
+        <translation>&amp;Alle Ebenen entsperren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp;Lock Alle Ebenen</translation>
+        <translation>A&amp;lle Ebenen sperren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Alle Ebenen aktivieren und drucken</translation>
+        <translation>D&amp;rucken aller Ebenen aktivieren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp;Disable Drucken Alle Ebenen</translation>
+        <translation>Dru&amp;cken aller Ebenen deaktivieren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>&amp;Export Einzelschicht</translation>
+        <translation>Ein&amp;zelne Ebene exportieren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>&amp;Teilbaum der Ebene exportieren</translation>
+        <translation>Unterbaum der Ebene e&amp;xportieren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>&amp;Sichtbare Ebene(n) exportieren</translation>
+        <translation>&amp;Sichtbare Ebenen exportieren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp;Find und entfernen Leere Ebenen</translation>
+        <translation>Leere Ebenen &amp;finden und entfernen</translation>
     </message>
 </context>
 <context>
@@ -23390,12 +23390,12 @@ Bitte geben Sie einen anderen Wert an.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Wenn überprüft, werden Spiegeleinheiten auf der aktuellen Schicht platziert, sonst werden sie in Originalschichten platziert.</translation>
+        <translation type="unfinished">Wenn aktiviert, werden die gespiegelten Objekte auf die aktuelle Ebene gelegt, andernfalls auf ihre ursprünglichen Ebenen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Benutzer aktuelle Ebene</translation>
+        <translation type="unfinished">Aktuelle Ebene verwenden</translation>
     </message>
 </context>
 <context>
@@ -23689,7 +23689,7 @@ Bitte geben Sie einen anderen Wert an.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">Wenn überprüft, erstellte Entitäten werden auf aktuelle Ebene platziert. Ansonsten werden sie in Originalschichten gelegt.</translation>
+        <translation type="unfinished">Wenn aktiviert, werden die erstellten Objekte auf die aktuelle Ebene gelegt. Andernfalls werden sie auf ihre ursprünglichen Ebenen gelegt. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
@@ -23875,7 +23875,7 @@ Bitte geben Sie einen anderen Wert an.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">Wenn überprüft, erstellte Einheiten werden in die aktuelle Schicht gelegt, sonst wird die in ursprünglichen Schichten.</translation>
+        <translation type="unfinished">Wenn aktiviert, werden die erstellten Objekte auf die aktuelle Ebene gelegt, andernfalls auf ihre ursprünglichen Ebenen. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
@@ -24291,7 +24291,7 @@ Warnung: Diese Aktion kann NICHT rückgängig gemacht werden!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Wenn überprüft, erstellte Einheiten werden in die aktuelle Schicht gelegt, sonst werden sie in Originalschichten.</translation>
+        <translation type="unfinished">Wenn aktiviert, werden die erstellten Objekte auf die aktuelle Ebene gelegt, andernfalls auf ihre ursprünglichen Ebenen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
@@ -24789,13 +24789,13 @@ Warnung: Diese Aktion kann NICHT rückgängig gemacht werden!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="263"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="298"/>
         <source>By Layer</source>
-        <translation>Von der Ebene</translation>
+        <translation>wie Ebene</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="299"/>
         <source>By Block</source>
-        <translation>Von Block</translation>
+        <translation>wie Block</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="266"/>
@@ -25417,27 +25417,27 @@ Warnung: Diese Aktion kann NICHT rückgängig gemacht werden!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Aktualisieren Sie den aktuellen Pen von Active Layer&apos; Pen</translation>
+        <translation>Aktuellen Stift mit Stift der aktiven Ebene aktualisieren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Füllen Sie Pen Editor von Active Layer&apos;s Pen</translation>
+        <translation>Stift-Editor mit Stift der aktiven Ebene füllen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
         <source>Pick from Active Layer</source>
-        <translation>Wählen Sie aus Active Layer</translation>
+        <translation>Von aktiver Ebene übernehmen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Bewerben Sie Editor Pen auf Active Layer Pen</translation>
+        <translation>Editor-Stift auf Stift der aktiven Ebene anwenden</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
         <source>Apply To Layer</source>
-        <translation>Anwenden auf Ebene</translation>
+        <translation>Auf Ebene anwenden</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="239"/>
@@ -25522,7 +25522,7 @@ Warnung: Diese Aktion kann NICHT rückgängig gemacht werden!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp;Apply Pen auf aktive Ebene</translation>
+        <translation>&amp;Stift auf aktive Ebene anwenden</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29567,7 +29567,7 @@ Beachten Sie, dass beim Speichern eines Stifts über den Editor ohne Neustart di
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line Width</source>
-        <translation type="unfinished">Line Witth</translation>
+        <translation type="unfinished">Linienbreite</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
@@ -29577,7 +29577,7 @@ Beachten Sie, dass beim Speichern eines Stifts über den Editor ohne Neustart di
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
         <source>Line Type</source>
-        <translation type="unfinished">Warenbezeichnung</translation>
+        <translation type="unfinished">Linientyp</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
@@ -29593,7 +29593,7 @@ Beachten Sie, dass beim Speichern eines Stifts über den Editor ohne Neustart di
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Abmessungen</translation>
+        <translation type="unfinished">Bemaßung</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29603,7 +29603,7 @@ Beachten Sie, dass beim Speichern eines Stifts über den Editor ohne Neustart di
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="179"/>
         <source>Informational</source>
-        <translation type="unfinished">Information</translation>
+        <translation type="unfinished">Info</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
@@ -29683,7 +29683,7 @@ Beachten Sie, dass beim Speichern eines Stifts über den Editor ohne Neustart di
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>Unlock all layers</source>
-        <translation type="unfinished">Entsperren Sie alle Schichten</translation>
+        <translation type="unfinished">Alle Ebenen entsperren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
@@ -29708,7 +29708,7 @@ Beachten Sie, dass beim Speichern eines Stifts über den Editor ohne Neustart di
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
         <source>Show all layers</source>
-        <translation type="unfinished">Alle Schichten anzeigen</translation>
+        <translation type="unfinished">Alle Ebenen einschalten</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
@@ -33156,7 +33156,8 @@ Beachten Sie, dass beim Speichern eines Stifts über den Editor ohne Neustart di
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>Ebene:</translation>
+        <translation>
+Ebene: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35962,7 +35963,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">Gibt an, ob die Papiere in die aktuelle oder ursprüngliche Schicht eingefügt werden</translation>
+        <translation type="unfinished">Legt fest, ob Kopien auf der aktuellen oder der ursprünglichen Ebene eingefügt werden</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
@@ -36208,7 +36209,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Wenn überprüft, werden neue Enties auf der aktuellen Schicht platziert, sonst werden sie in ursprünglichen Schichten.</translation>
+        <translation type="unfinished">Wenn aktiviert, werden neue Objekte auf die aktuelle Ebene gelegt, andernfalls auf ihre ursprünglichen Ebenen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
@@ -36451,7 +36452,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">Wenn überprüft, erstellte Entitäten werden auf aktuelle Ebene platziert. Ansonsten werden sie auf ursprüngliche Schichten gelegt.</translation>
+        <translation type="unfinished">Wenn aktiviert, werden die erstellten Objekte auf die aktuelle Ebene gelegt. Andernfalls werden sie auf ihre ursprünglichen Ebenen gelegt. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
@@ -37365,7 +37366,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Wenn überprüft, erstellte Einheiten werden auf der aktuellen Schicht platziert, sonst werden sie in Originalschichten platziert.</translation>
+        <translation type="unfinished">Wenn aktiviert, werden die erstellten Objekte auf die aktuelle Ebene gelegt, andernfalls auf ihre ursprünglichen Ebenen.</translation>
     </message>
 </context>
 <context>
@@ -37403,7 +37404,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Wenn überprüft, erstellte Einheiten werden auf der aktuellen Schicht platziert, sonst werden sie in Originalschichten platziert.</translation>
+        <translation type="unfinished">Wenn aktiviert, werden die erstellten Objekte auf die aktuelle Ebene gelegt, andernfalls auf ihre ursprünglichen Ebenen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
@@ -37550,7 +37551,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Wenn überprüft, erstellte Einheiten werden auf der aktuellen Schicht platziert, sonst werden sie in Originalschichten platziert.</translation>
+        <translation type="unfinished">Wenn aktiviert, werden die erstellten Objekte auf die aktuelle Ebene gelegt, andernfalls auf ihre ursprünglichen Ebenen.</translation>
     </message>
 </context>
 <context>
@@ -37563,12 +37564,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Wenn überprüft, erstellte Einheiten werden auf der aktuellen Schicht platziert, sonst werden sie in Originalschichten platziert.</translation>
+        <translation type="unfinished">Wenn aktiviert, werden die erstellten Objekte auf die aktuelle Ebene gelegt, andernfalls auf ihre ursprünglichen Ebenen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Benutzer aktuelle Ebene</translation>
+        <translation type="unfinished">Aktuelle Ebene verwenden</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -38438,7 +38439,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="216"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Die Ebene der Entity</translation>
+        <translation>Ebene des Objekts</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
@@ -39148,7 +39149,7 @@ Warnung: Diese Aktion kann NICHT rückgängig gemacht werden!</translation>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <source>Layers Tree</source>
-        <translation>Ebenen Baum</translation>
+        <translation>Ebenenbaum</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261"/>
@@ -39898,7 +39899,7 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
-        <translation>aktuelle Ebene</translation>
+        <translation>Aktuelle Ebene</translation>
     </message>
 </context>
 <context>
@@ -40391,7 +40392,7 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="54"/>
         <source>Layer to apply</source>
-        <translation>Ebene zur Anwendung</translation>
+        <translation>Anzuwendende Ebene</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
@@ -43589,7 +43590,7 @@ Dies verändert alle Elemente des Block rekursiv.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wenn aktiviert, verschiebt die Auswahl einer Ebene alle selektierten Objekte in diese Ebene.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wenn aktiviert, werden beim Aktivieren einer Ebene alle ausgewählten Objekte auf diese Ebene verschoben. So ändern Sie die Ebene mehrerer Objekte: Wählen Sie zuerst die gewünschten Objekte aus und aktivieren Sie dann eine Ebene im Ebenen-Widget. Dadurch gehören alle ausgewählten Objekte zur neuen Ebene.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -44710,7 +44711,7 @@ Dies verändert alle Elemente des Block rekursiv.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>Ändern der Schicht ausgewählter Einheiten, bei der Schichtaktivierung</translation>
+        <translation>Ebene ausgewählter Objekte beim Aktivieren einer Ebene ändern</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -45884,7 +45885,7 @@ Dies verändert alle Elemente des Block rekursiv.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Export visible construction layers</source>
-        <translation>Konstruktionsebenen exportieren</translation>
+        <translation>Sichtbare Konstruktionsebenen exportieren</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="104"/>
@@ -46483,7 +46484,7 @@ so Standardschrittwert zum Backen erforderlich</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
-        <translation>Textebene</translation>
+        <translation>Ebene des Textes</translation>
     </message>
     <message>
         <source>Obligue of text</source>
@@ -47351,7 +47352,7 @@ so Standardschrittwert zum Backen erforderlich</translation>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Einstellungen Ebene</translation>
+        <translation>Ebeneneinstellungen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="46"/>
@@ -47361,19 +47362,19 @@ so Standardschrittwert zum Backen erforderlich</translation>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="63"/>
         <source>Default Pen</source>
-        <translation>Standard Stift</translation>
+        <translation>Standardstift</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Eine Entwurfsebene enthält Objekte von unendlichen geraden Linien, die für die Konstruktion benutzt werden können.
-Der Inhalt von Entwurfsebenen wird nicht ausgedruckt.</translation>
+        <translation>Eine Konstruktionsebene enthält Objekte von unendlichen geraden Linien, die für die Konstruktion benutzt werden können.
+Der Inhalt von Konstruktionsebenen wird nicht ausgedruckt.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="33"/>
         <source>Construction Layer</source>
-        <translation>Entwurfsebene</translation>
+        <translation>Konstruktionsebene</translation>
     </message>
 </context>
 <context>
@@ -47814,7 +47815,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Remove Layer</source>
-        <translation>Ebene löschen</translation>
+        <translation>Ebene entfernen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
@@ -47853,29 +47854,29 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Ebene &quot;%1&quot; und alle Objekte darin werden gelöscht.
+        <translation>Ebene &quot;%1&quot; und alle Objekte darauf werden entfernt.
 Diese Aktion kann NICHT rückgängig gemacht werden.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Schicht &quot;0&quot; kann nie entfernt werden.</translation>
+        <translation>Ebene &quot;0&quot; kann nie entfernt werden.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="248"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1787"/>
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform>%n Ebene(n) entfernen</numerusform>
-            <numerusform>%n Ebene(n) entfernen</numerusform>
+            <numerusform>%n Ebene entfernen</numerusform>
+            <numerusform>%n Ebenen entfernen</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Gelistete Schichten und alle Einheiten auf ihnen werden entfernt.</translation>
+        <translation>Die aufgeführten Ebenen und alle Objekte darauf werden entfernt.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47886,7 +47887,7 @@ Diese Aktion kann NICHT rückgängig gemacht werden.</translation>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="257"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Warnung: Schicht &quot;0&quot; kann nie entfernt werden.</translation>
+        <translation>Warnung: Ebene &quot;0&quot; kann nie entfernt werden.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="260"/>
@@ -47915,7 +47916,7 @@ Diese Aktion kann NICHT rückgängig gemacht werden.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Layer leer Name ist nicht erlaubt.</translation>
+        <translation>Ein leerer Ebenenname ist nicht zulässig.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47927,7 +47928,7 @@ Diese Aktion kann NICHT rückgängig gemacht werden.</translation>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Versucht, Schicht mit doppeltem Namen zu erstellen. Duplizierter Schichtname ist
+        <translation>Versuch, eine Ebene mit einem bereits vorhandenen Namen zu erstellen. Der doppelte Ebenenname ist 
 [%1].
 Bitte geben Sie einen anderen Namen an.</translation>
     </message>
@@ -47941,14 +47942,14 @@ Bitte geben Sie einen anderen Namen an.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Layer List Separator String ist leer. Es wird nicht möglich sein, Schichten Baum zu bauen.
+        <translation>Die Trennzeichenfolge für die Ebenenliste ist leer. Der Ebenenbaum kann damit nicht aufgebaut werden.
 Bitte geben Sie einen anderen Wert an.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="972"/>
         <source>Remove empty layers</source>
-        <translation>Leere Schichten entfernen</translation>
+        <translation>Leere Ebenen entfernen</translation>
     </message>
     <message>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
@@ -47961,28 +47962,28 @@ Filtermaske löschen und wiederholen.</translation>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>Ebene(n) ohne Entitäten gefunden, aber sie werden gefiltert und sind nicht sichtbar.
+        <translation>Es wurden Ebenen ohne Objekte gefunden, die jedoch gefiltert und nicht sichtbar sind.
 
 Filtermaske löschen und wiederholen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Keine Schichten ohne Entitäten gefunden, nichts zu entfernen.</translation>
+        <translation>Keine Ebenen ohne Objekte gefunden, nichts zu entfernen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1161"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1169"/>
         <source>Add Layer</source>
-        <translation>Fügen Sie Ebene</translation>
+        <translation>Ebene hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1117"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Eine solche Kinderschicht existiert bereits für
+        <translation>Eine solche Unterebene existiert bereits für 
 [%1].
 Bitte geben Sie einen anderen Namen an.</translation>
     </message>
@@ -47991,14 +47992,16 @@ Bitte geben Sie einen anderen Namen an.</translation>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Eine solche Kinderschicht existiert bereits für
-[%1].</translation>
+        <translation>Eine solche Unterebene existiert bereits für 
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Die Dimensionsschicht kann nur für normale aktive Schicht zugegeben werden.</translation>
+        <translation>Eine Bemaßungsebene kann nur für eine normale aktive Ebene hinzugefügt werden.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -48017,11 +48020,11 @@ Bitte geben Sie einen anderen Namen an.</translation>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>„Nach Ebene&quot;-Wert durch Quellschichwerte ersetzen?
+        <translation>Wert &quot;wie Ebene&quot; durch die Werte der Quellebenen ersetzen?
 
-Ja: Entitäten mit „Nach Ebene&quot;-Stift sehen auf der neuen Ebene genauso aus wie auf den vorherigen Ebenen, und der „Nach Ebene&quot;-Wert wird durch den aufgelösten Stift ersetzt.
+Ja: Objekte mit Stiften &quot;wie Ebene&quot; sehen auf der neuen Ebene genauso aus wie auf den bisherigen Ebenen, und der Wert &quot;wie Ebene&quot; wird durch die aufgelösten Stifte ersetzt.
 
-Nein: Der „Nach Ebene&quot;-Wert bleibt erhalten, sodass der Stift der Zielebene für solche Entitäten gilt.</translation>
+Nein: Die Werte &quot;wie Ebene&quot; bleiben erhalten, sodass der Stift der Zielebene den Stift dieser Objekte bestimmt.</translation>
     </message>
     <message>
         <source>Replace &quot;By Layer&quot; value to source layers values?
@@ -48035,7 +48038,7 @@ Wenn Nein - bleiben die Werte &quot;Nach Layer&quot; erhalten, und der Stift des
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1863"/>
         <source>Layer DialogEx</source>
-        <translation>DialogEx</translation>
+        <translation>Ebenendialog</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="202"/>
@@ -48088,19 +48091,21 @@ Bitte geben Sie einen anderen Wert an.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Es gibt keine Entitäten, die auf sichtbaren Schichten mit Stift übereinstimmen.</translation>
+        <translation>Auf sichtbaren Ebenen gibt es keine Objekte, die dem Stift entsprechen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Solche Einrichtungen existieren auf gefrorenen Schichten.</translation>
+        <translation>Solche Objekte existieren auf eingefrorenen Ebenen.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Solche Wesen existieren auf verschlossenen Schichten.</translation>
+        <translation>Solche Objekte existieren auf gesperrten Ebenen.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -49556,7 +49561,7 @@ Wollen Sie die Datei überschreiben?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="88"/>
         <source>cslayer</source>
-        <translation>c-schicht</translation>
+        <translation>cslayer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="89"/>
@@ -50231,7 +50236,7 @@ Wollen Sie die Datei überschreiben?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Keine %1 gefundene Schichten</translation>
+        <translation>Keine Ebenen gefunden, die %1 sind</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
@@ -52185,7 +52190,7 @@ Wollen Sie die Datei überschreiben?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="195"/>
         <source>Combine all layers</source>
-        <translation>Alle Schichten kombinieren</translation>
+        <translation>Alle Ebenen kombinieren</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>
@@ -52244,13 +52249,13 @@ Wollen Sie die Datei überschreiben?</translation>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
-        <translation>Von der Ebene</translation>
+        <translation>wie Ebene</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="209"/>
         <source>By Block</source>
-        <translation>Von Block</translation>
+        <translation>wie Block</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="212"/>

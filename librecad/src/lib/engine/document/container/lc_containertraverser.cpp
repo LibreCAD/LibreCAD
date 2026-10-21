@@ -167,7 +167,7 @@ RS_Entity* LC_ContainerTraverser::get(){
         return nullptr;
     }
     auto& [container, ii] = m_pImp->indices.back();
-    if (ii < 0 || ii >= container->count()) {
+    if (ii < 0 || static_cast<std::size_t>(ii) >= container->count()) {
         // exhausted the current
         m_pImp->indices.pop_back();
         return get();

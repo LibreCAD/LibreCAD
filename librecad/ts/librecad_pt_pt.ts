@@ -2688,7 +2688,7 @@ quer [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>(De-)Select Layer</source>
-        <translation>(De-) Seleccionar a Camada</translation>
+        <translation>(Des)selecionar camada</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
@@ -3480,7 +3480,7 @@ quer [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Atualizar a caneta atual pela caneta ativa da camada</translation>
+        <translation>Atualizar a caneta atual pela caneta da camada ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -3843,7 +3843,7 @@ quer [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>Ocultar outras camadas que não as da Entidade</translation>
+        <translation>Esconder todas as camadas exceto a da entidade</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
@@ -4132,37 +4132,37 @@ quer [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
         <source>&amp;Add Layer</source>
-        <translation>Adicionar Camada</translation>
+        <translation>Adici&amp;onar camada</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Remover Camada</translation>
+        <translation>&amp;Remover camada</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>&amp;Edit Layer</source>
-        <translation>&amp;Editar Camada</translation>
+        <translation>&amp;Editar camada</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Alternar Loc&amp;k da Camada</translation>
+        <translation>Alternar bloqueio da &amp;camada</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>Alternar a Visibilidade da Camada</translation>
+        <translation>&amp;Alternar visibilidade da camada</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>Alternar a &amp; Impressão da Camada</translation>
+        <translation>Alternar &amp;impressão da camada</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Alternar a Camada de &amp; Construção</translation>
+        <translation>A&amp;lternar camada de construção</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
@@ -4550,32 +4550,32 @@ quer [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
-        <translation>Mostrar todas as camadas</translation>
+        <translation>&amp;Mostrar todas as camadas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp; Esconder todas as camadas</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Esconder &amp;todas as camadas exceto a atual</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>Desbloquear tudo</translation>
+        <translation>&amp;Desbloquear tudo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Lock all</source>
-        <translation>&amp; Bloquear todos</translation>
+        <translation>&amp;Bloquear tudo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;Exportar as Camadas Seleccionadas</translation>
+        <translation>Exportar camadas &amp;selecionadas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Exportar as Camadas &amp; Visíveis</translation>
+        <translation>Exportar camadas &amp;visíveis</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -5151,12 +5151,12 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Indique o nome da camada para%1</translation>
+        <translation>Indique o nome da camada para %1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>activate</source>
-        <translation>activar</translation>
+        <translation>ativar</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -5170,7 +5170,7 @@ Ponto: (%8,%9)</translation>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>selected</source>
         <comment>Layers to export</comment>
-        <translation>selecionado</translation>
+        <translation>selecionada</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
@@ -7509,12 +7509,12 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Se marcada, as entidades espelhadas serão colocadas na camada atual, caso contrário elas serão colocadas em camadas originais.</translation>
+        <translation type="unfinished">Se marcada, as entidades espelhadas serão colocadas na camada atual; caso contrário, serão colocadas nas camadas originais.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Camada Actual do Utilizador</translation>
+        <translation type="unfinished">Usar a camada atual</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8837,7 +8837,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">Camada para a qual o círculo criado deve ser colocado</translation>
+        <translation type="unfinished">Camada em que o círculo criado deve ser colocado</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -12310,7 +12310,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="118"/>
         <source>Active Layer</source>
-        <translation type="unfinished">Camada Activa</translation>
+        <translation type="unfinished">Camada Ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="125"/>
@@ -12634,7 +12634,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>Camada de dimensão</translation>
+        <translation>Camada da dimensão</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
@@ -13610,7 +13610,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Camada à qual deve ser colocado o duplicado</translation>
+        <translation type="unfinished">Camada em que o duplicado deve ser colocado</translation>
     </message>
 </context>
 <context>
@@ -13623,7 +13623,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Camada à qual deve ser colocado o duplicado</translation>
+        <translation type="unfinished">Camada em que o duplicado deve ser colocado</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -15315,12 +15315,12 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Configuração da Camada</translation>
+        <translation>Opções de Camada</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>Nome da nova camada. Para criar camadas hierárquicas, inclua o nome do separador de camada virtual e nome de camada.</translation>
+        <translation>Nome da nova camada. Para criar camadas hierárquicas, inclua o nome da camada virtual e o separador de nomes de camadas.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
@@ -15340,7 +15340,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
         <source>Informational</source>
-        <translation>Informação</translation>
+        <translation>Informações</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
@@ -15397,7 +15397,7 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="68"/>
         <source>Rename Virtual Layer</source>
-        <translation>Mudar o Nome da Camada Virtual</translation>
+        <translation>Renomear Camada Virtual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="72"/>
@@ -15413,7 +15413,7 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="91"/>
         <source>Edit Layer</source>
-        <translation>Editar a Camada</translation>
+        <translation>Editar Camada</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
@@ -15424,7 +15424,7 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
         <source>Rename Layer</source>
-        <translation>Mudar o Nome da Camada</translation>
+        <translation>Renomear Camada</translation>
     </message>
 </context>
 <context>
@@ -15432,7 +15432,7 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="39"/>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Formulário</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57"/>
@@ -15442,12 +15442,12 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>Se seleccionado, as vistas nomeadas do documento serão incluídas nos desenhos exportados. Caso contrário, as opiniões não estão incluídas.</translation>
+        <translation>Se marcada, as vistas nomeadas do documento serão incluídas nos desenhos exportados. Caso contrário, as vistas não são incluídas.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>Exportar também as Visões Nomeadas</translation>
+        <translation>Exportar também as vistas nomeadas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
@@ -15457,12 +15457,12 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
         <source>Export each layer to own drawing file</source>
-        <translation>Exportar cada camada para o próprio ficheiro de desenho</translation>
+        <translation>Exportar cada camada para o seu próprio ficheiro de desenho</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>Se marcada, as entidades serão armazenadas na camada original. Caso contrário, eles são colocados na camada &quot;0&quot;.</translation>
+        <translation>Se marcada, as entidades serão armazenadas na camada original. Caso contrário, são colocadas na camada &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
@@ -15472,12 +15472,12 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>Se marcada, os UCSs do documento serão incluídos em desenhos exportados. Caso contrário, UCS não estão incluídos.</translation>
+        <translation>Se marcada, os UCS do documento serão incluídos nos desenhos exportados. Caso contrário, os UCS não são incluídos.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>Exportar UCSs também</translation>
+        <translation>Exportar também os UCS</translation>
     </message>
 </context>
 <context>
@@ -15495,7 +15495,7 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>Convenção de nomeação</translation>
+        <translation>Convenção de Nomes</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15505,7 +15505,7 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>Separador usado para dividir o nome interno da camada para nomes hierárquicos</translation>
+        <translation>Separador usado para dividir o nome interno da camada em nomes hierárquicos</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15519,33 +15519,33 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>Dimensional</translation>
+        <translation>Dimensões</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Sufixo do nome da camada que define que a camada é dimensional</translation>
+        <translation>Sufixo do nome da camada que define que a camada é de dimensões</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="809"/>
         <source>Informational</source>
-        <translation>Informação</translation>
+        <translation>Informações</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>Sufixo do nome da camada que define que a camada é informacional.</translation>
+        <translation>Sufixo do nome da camada que define que a camada é de informações.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Posição Alternativa</translation>
+        <translation>Posição Alternativa </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>Sufixo do nome da camada que define essa camada é para posição alternativa.</translation>
+        <translation>Sufixo do nome da camada que define que a camada é para posição alternativa.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15559,7 +15559,7 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Prefixo do nome da camada que é usado se a camada com esse nome existe (dizer, quando duplicado é criado)</translation>
+        <translation>Prefixo do nome da camada que é usado se já existir uma camada com esse nome (por exemplo, quando é criado um duplicado)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
@@ -15569,7 +15569,7 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Sufixo do nome da camada que é usado se a camada com esse nome existe (dizer, quando duplicado é criado)</translation>
+        <translation>Sufixo do nome da camada que é usado se já existir uma camada com esse nome (por exemplo, quando é criado um duplicado)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15599,17 +15599,17 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="268"/>
         <source>Display and operations settings</source>
-        <translation>Configurações de exibição e operações</translation>
+        <translation>Configurações de visualização e operações</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="271"/>
         <source>Display and Operations</source>
-        <translation>Exibir e Operações</translation>
+        <translation>Visualização e Operações</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>Se seleccionado, a dica irá incluir o nome completo da camada (com todos os níveis da camada superior)</translation>
+        <translation>Se marcada, a dica irá incluir o nome completo da camada (com todos os níveis de camadas superiores)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
@@ -15644,7 +15644,7 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>Se seleccionado, os ícones dos tipos de camadas serão apresentados</translation>
+        <translation>Se marcada, os ícones dos tipos de camadas serão mostrados</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
@@ -15654,37 +15654,37 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>Indentação para camadas infantis</translation>
+        <translation>Indentação para camadas filhas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Mostrar os nomes das camadas indentadas. Tamanho do identificador:</translation>
+        <translation>Mostrar os nomes das camadas indentados. Tamanho da indentação:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>Tamanho do travessão em caracteres para indentar o nome da camada do filho dos pais</translation>
+        <translation>Tamanho da indentação, em caracteres, para indentar o nome da camada filha em relação ao da camada pai</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>Se marcada, as operações de arrastar &amp; soltar na lista de camadas estão habilitadas e a hierarquia de camadas pode ser reestruturada</translation>
+        <translation>Se marcada, as operações de arrastar&amp;largar na lista de camadas estão ativadas e a hierarquia de camadas pode ser reestruturada</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Permitir a reestruturação através da Drag&amp;Drop</translation>
+        <translation>Permitir a reestruturação através de arrastar&amp;&amp;largar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>Se camada primária é renomear, camadas secundárias são renomeadas também.</translation>
+        <translation>Se a camada primária for renomeada, as camadas secundárias também são renomeadas.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Renomear camadas secundárias ao renomear primário</translation>
+        <translation>Renomear camadas secundárias ao renomear a primária</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
@@ -15720,7 +15720,7 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Item correspondente no modo filtro de realce</translation>
+        <translation>Item correspondente no modo de realce do filtro</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
@@ -15789,12 +15789,12 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>Camada Dimensional</translation>
+        <translation>Camada de Dimensões</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
         <source>Informational Layer</source>
-        <translation>Camada Informacional</translation>
+        <translation>Camada de Informações</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
@@ -15808,7 +15808,7 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>item destacado</translation>
+        <translation>item realçado</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
@@ -15834,7 +15834,7 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>O valor inválido fornece a cor%1.
+        <translation>Valor inválido fornecido para a cor de %1.
 Por favor, indique um valor diferente.</translation>
     </message>
     <message>
@@ -15858,7 +15858,7 @@ Por favor, indique um valor diferente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
         <source>Highlight Mode</source>
-        <translation>Modo de Realce</translation>
+        <translation>Modo de realce</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="167"/>
@@ -15872,33 +15872,33 @@ Por favor, indique um valor diferente.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Esconder todas as camadas</translation>
+        <source>Hide all layers except current</source>
+        <translation>Esconder todas as camadas exceto a atual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
         <source>Show Secondary Layers</source>
-        <translation>Mostrar Camadas Secundárias</translation>
+        <translation>Mostrar camadas secundárias</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="210"/>
         <source>Show Active Layer Only</source>
-        <translation>Mostrar apenas a Camada Activa</translation>
+        <translation>Mostrar apenas a camada ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="218"/>
         <source>Expand All</source>
-        <translation>Expandir Tudo</translation>
+        <translation>Expandir tudo</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="226"/>
         <source>Collapse All</source>
-        <translation>Recolher Tudo</translation>
+        <translation>Recolher tudo</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>Recolher Secundário</translation>
+        <translation>Recolher camadas secundárias</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
@@ -15918,7 +15918,7 @@ Por favor, indique um valor diferente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Adicionar uma Camada de Dimensões</translation>
+        <translation>Adicionar camada de dimensões</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
@@ -15933,95 +15933,95 @@ Por favor, indique um valor diferente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>Modo de lista plana)</translation>
+        <translation>Modo de lista plana</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>Adicionar Camada de Crianças</translation>
+        <translation>Adicionar &amp;camada filha</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>&amp; Renomear</translation>
+        <translation>&amp;Renomear</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>Remover Camadas (Sub- Árvore)</translation>
+        <translation>Re&amp;mover camadas (subárvore)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>&amp;Copiar Estrutura (Sub- Árvore)</translation>
+        <translation>Co&amp;piar estrutura (subárvore)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>Conteúdo &amp; Duplicado (Sub- Árvore)</translation>
+        <translation>D&amp;uplicar conteúdo (subárvore)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp; Seleccionar Entidades (Sub- Árvore)</translation>
+        <translation>Selecio&amp;nar entidades (subárvore)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;Editar os Atributos da Camada</translation>
+        <translation>Editar atrib&amp;utos da camada</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Remover Camada</translation>
+        <translation>Re&amp;mover camada</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Adicionar Sub- Camada de Dimensões</translation>
+        <translation>Adicionar subcamada de dimens&amp;ões</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>Adicionar uma Sub- Camada de Informações</translation>
+        <translation>Adicionar subcamada de in&amp;formações</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp;Adicionar Sub- Camada de Vista Alternativa</translation>
+        <translation>Adicionar subcamada de &amp;posição alternativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp; Remover as Sub- Camadas</translation>
+        <translation>&amp;Remover subcamadas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Converter para Camada Dimensional</translation>
+        <translation>Converter para camada de dimensões</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>Converter para a Camada de Informações</translation>
+        <translation>Converter para camada de informações</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Converter para Camada de Posição Alternativa</translation>
+        <translation>Converter para camada de posição alternativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
         <source>Convert to Normal Layer</source>
-        <translation>Converter para Camada Normal</translation>
+        <translation>Converter para camada normal</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp; Seleccionar as Entidades da Camada</translation>
+        <translation>Selecio&amp;nar entidades da camada</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
@@ -16031,27 +16031,27 @@ Por favor, indique um valor diferente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp;Duplicar Camada com Conteúdo</translation>
+        <translation>Duplicar camada com conte&amp;údo</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>Move Selection to Layer</source>
-        <translation>Mover a Seleção para a Camada</translation>
+        <translation>Mover seleção para a camada</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Duplicar a Selecção para Camada</translation>
+        <translation>Duplicar seleção para a camada</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>Adicionar Camada</translation>
+        <translation>Adicionar &amp;camada</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>Congelar Outras Camadas</translation>
+        <translation>Congelar as &amp;outras camadas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
@@ -16060,48 +16060,48 @@ Por favor, indique um valor diferente.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp; Congelar todas as camadas</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Esconder &amp;todas as camadas exceto a atual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>Desbloquear todas as camadas</translation>
+        <translation>D&amp;esbloquear todas as camadas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp; Trancar todas as camadas</translation>
+        <translation>&amp;Bloquear todas as camadas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Habilitar &amp; Imprimir todas as camadas</translation>
+        <translation>&amp;Ativar impressão de todas as camadas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp;Desactivar a Impressão de Todas as Camadas</translation>
+        <translation>Desativar &amp;impressão de todas as camadas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>&amp;Exportar Camada Única</translation>
+        <translation>E&amp;xportar camada única</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>Sub- Árvore da Camada de &amp; Exportação</translation>
+        <translation>Exportar &amp;subárvore da camada</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Exportar as Camadas &amp; Visíveis</translation>
+        <translation>Exportar camadas &amp;visíveis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp; Localizar e remover camadas vazias</translation>
+        <translation>&amp;Localizar e remover camadas vazias</translation>
     </message>
 </context>
 <context>
@@ -23390,12 +23390,12 @@ Por favor, indique um valor diferente.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Se marcada, as entidades espelhadas serão colocadas na camada atual, caso contrário elas serão colocadas em camadas originais.</translation>
+        <translation type="unfinished">Se marcada, as entidades espelhadas serão colocadas na camada atual; caso contrário, serão colocadas nas camadas originais.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Camada Actual do Utilizador</translation>
+        <translation type="unfinished">Usar a camada atual</translation>
     </message>
 </context>
 <context>
@@ -23689,12 +23689,12 @@ Por favor, indique um valor diferente.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">Se marcada, as entidades criadas serão colocadas na camada atual. Caso contrário, serão colocados em camadas originais.</translation>
+        <translation type="unfinished">Se marcada, as entidades criadas serão colocadas na camada atual. Caso contrário, serão colocadas nas camadas originais. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Usar a Camada Actual</translation>
+        <translation type="unfinished">Usar a camada atual</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="55"/>
@@ -23875,12 +23875,12 @@ Por favor, indique um valor diferente.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">Se marcada, as entidades criadas serão colocadas na camada atual, caso contrário, as serão em camadas originais.</translation>
+        <translation type="unfinished">Se marcada, as entidades criadas serão colocadas na camada atual; caso contrário, ficarão nas camadas originais. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Usar a Camada Actual</translation>
+        <translation type="unfinished">Usar a camada atual</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="166"/>
@@ -24291,12 +24291,12 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Se marcada, as entidades criadas serão colocadas na camada atual, caso contrário elas estarão em camadas originais.</translation>
+        <translation type="unfinished">Se marcada, as entidades criadas serão colocadas na camada atual; caso contrário, ficarão nas camadas originais.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Usar a Camada Actual</translation>
+        <translation type="unfinished">Usar a camada atual</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="109"/>
@@ -24789,13 +24789,13 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="263"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="298"/>
         <source>By Layer</source>
-        <translation>Por Camada</translation>
+        <translation>Pela Camada</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="299"/>
         <source>By Block</source>
-        <translation>Por Bloco</translation>
+        <translation>Pelo Bloco</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="266"/>
@@ -25417,12 +25417,12 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Atualizar a caneta atual pela caneta ativa da camada</translation>
+        <translation>Atualizar a caneta atual pela caneta da camada ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Preencha o editor da caneta da camada ativa</translation>
+        <translation>Preencher o editor de canetas com a caneta da camada ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
@@ -25432,7 +25432,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Aplicar a caneta do editor na caneta ativa da camada</translation>
+        <translation>Aplicar a caneta do editor à caneta da camada ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
@@ -29537,7 +29537,7 @@ Tenha em atenção que, se guardar uma caneta através do editor sem reiniciar, 
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
         <source>Active Layer</source>
-        <translation type="unfinished">Camada Activa</translation>
+        <translation type="unfinished">Camada Ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
@@ -29593,7 +29593,7 @@ Tenha em atenção que, se guardar uma caneta através do editor sem reiniciar, 
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Dimensional</translation>
+        <translation type="unfinished">Dimensões</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29603,7 +29603,7 @@ Tenha em atenção que, se guardar uma caneta através do editor sem reiniciar, 
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="179"/>
         <source>Informational</source>
-        <translation type="unfinished">Informação</translation>
+        <translation type="unfinished">Informações</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
@@ -33156,7 +33156,8 @@ Tenha em atenção que, se guardar uma caneta através do editor sem reiniciar, 
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>Camada:</translation>
+        <translation>
+Camada: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35962,12 +35963,12 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">Especifica onde as cópias serão inseridas na camada atual ou original</translation>
+        <translation type="unfinished">Especifica se as cópias serão inseridas na camada atual ou na camada original</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Usar a Camada Actual</translation>
+        <translation type="unfinished">Usar a camada atual</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="218"/>
@@ -36208,12 +36209,12 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Se marcada, as novas enties serão colocadas na camada atual, caso contrário elas estarão em camadas originais.</translation>
+        <translation type="unfinished">Se marcada, as novas entidades serão colocadas na camada atual; caso contrário, ficarão nas camadas originais.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Usar a Camada Actual</translation>
+        <translation type="unfinished">Usar a camada atual</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="219"/>
@@ -36451,12 +36452,12 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">Se marcada, as entidades criadas serão colocadas na camada atual. Caso contrário, serão colocados em camadas originais.</translation>
+        <translation type="unfinished">Se marcada, as entidades criadas serão colocadas na camada atual. Caso contrário, serão colocadas nas camadas originais. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Usar a Camada Actual</translation>
+        <translation type="unfinished">Usar a camada atual</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="107"/>
@@ -37365,7 +37366,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Se marcada, as entidades criadas serão colocadas na camada atual, caso contrário elas serão colocadas nas camadas originais.</translation>
+        <translation type="unfinished">Se marcada, as entidades criadas serão colocadas na camada atual; caso contrário, serão colocadas nas camadas originais.</translation>
     </message>
 </context>
 <context>
@@ -37403,12 +37404,12 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Se marcada, as entidades criadas serão colocadas na camada atual, caso contrário elas serão colocadas nas camadas originais.</translation>
+        <translation type="unfinished">Se marcada, as entidades criadas serão colocadas na camada atual; caso contrário, serão colocadas nas camadas originais.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Usar a Camada Actual</translation>
+        <translation type="unfinished">Usar a camada atual</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
@@ -37550,7 +37551,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Se marcada, as entidades criadas serão colocadas na camada atual, caso contrário elas serão colocadas nas camadas originais.</translation>
+        <translation type="unfinished">Se marcada, as entidades criadas serão colocadas na camada atual; caso contrário, serão colocadas nas camadas originais.</translation>
     </message>
 </context>
 <context>
@@ -37563,12 +37564,12 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Se marcada, as entidades criadas serão colocadas na camada atual, caso contrário elas serão colocadas nas camadas originais.</translation>
+        <translation type="unfinished">Se marcada, as entidades criadas serão colocadas na camada atual; caso contrário, serão colocadas nas camadas originais.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Camada Actual do Utilizador</translation>
+        <translation type="unfinished">Usar a camada atual</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -39225,7 +39226,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="540"/>
         <source>Active Layer</source>
-        <translation>Camada Activa</translation>
+        <translation>Camada Ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="542"/>
@@ -39889,12 +39890,12 @@ Por favor, verifique a sua existência e permissões.</translation>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
         <source>Name of Current Active Layer</source>
-        <translation>Nome da Camada Activa Actual</translation>
+        <translation>Nome da Camada Ativa Atual</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
-        <translation>Camada Actual</translation>
+        <translation>Camada Atual</translation>
     </message>
 </context>
 <context>
@@ -39988,7 +39989,7 @@ Por favor, verifique a sua existência e permissões.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="101"/>
         <source>By Block</source>
-        <translation>Pelo Carimbo</translation>
+        <translation>Pelo Bloco</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="100"/>
@@ -41042,7 +41043,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="70"/>
         <source>Layer of MText</source>
-        <translation>Camada de MText</translation>
+        <translation>Camada do MText</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="144"/>
@@ -43585,7 +43586,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Quando habilitado, ativar uma camada modificaria todas as entidades selecionadas para essa nova camada. Para alterar a camada de várias entidades: primeiro selecione as entidades necessárias; ative uma camada no widget da camada. Isso torna todas as entidades selecionadas modificadas para pertencer à nova camada.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Quando ativado, ativar uma camada muda todas as entidades selecionadas para essa nova camada. Para alterar a camada de várias entidades: primeiro selecione as entidades necessárias; depois ative uma camada no widget de camadas. Isto faz com que todas as entidades selecionadas passem a pertencer à nova camada.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -46432,7 +46433,7 @@ então o valor padrão do passo necessário para cozimento</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
-        <translation>Camada de texto</translation>
+        <translation>Camada do texto</translation>
     </message>
     <message>
         <source>Obligue of text</source>
@@ -47352,7 +47353,7 @@ então o valor padrão do passo necessário para cozimento</translation>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="63"/>
         <source>Default Pen</source>
-        <translation>Pena Padrão</translation>
+        <translation>Caneta Predefinida</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="46"/>
@@ -47488,7 +47489,7 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="84"/>
         <source>By Block</source>
-        <translation>Pelo Carimbo</translation>
+        <translation>Pelo Bloco</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="96"/>
@@ -47812,7 +47813,7 @@ p, li { espaço em branco: pre- wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Remove Layer</source>
-        <translation>Remove Camada</translation>
+        <translation>Remover Camada</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="83"/>
@@ -47850,7 +47851,7 @@ p, li { espaço em branco: pre- wrap; }
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
         <translation>A camada &quot;%1&quot; e todas as entidades nela serão removidas.
-Essa ação NÃO pode ser desfeita.</translation>
+Esta ação NÃO pode ser desfeita.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
@@ -47911,7 +47912,7 @@ Essa ação NÃO pode ser desfeita.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>O nome da camada vazia não é permitido.</translation>
+        <translation>Não é permitido um nome de camada vazio.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47923,7 +47924,7 @@ Essa ação NÃO pode ser desfeita.</translation>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Tentativa de criar camada com o nome duplicado. O nome da camada duplicada é
+        <translation>Tentativa de criar uma camada com um nome duplicado. O nome de camada duplicado é
 [%1].
 Por favor, indique um nome diferente.</translation>
     </message>
@@ -47964,7 +47965,7 @@ Limpe o filtro e repita.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Nenhuma camada sem entidades encontradas, nada para remover.</translation>
+        <translation>Não foram encontradas camadas sem entidades, nada para remover.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
@@ -47978,7 +47979,7 @@ Limpe o filtro e repita.</translation>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Essa camada infantil já existe para
+        <translation>Essa camada filha já existe para
 [%1].
 Por favor, indique um nome diferente.</translation>
     </message>
@@ -47987,14 +47988,16 @@ Por favor, indique um nome diferente.</translation>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Essa camada infantil já existe para
-[%1].</translation>
+        <translation>Essa camada filha já existe para
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>A camada dimensional só pode ser adicionada para a camada ativa normal.</translation>
+        <translation>A camada de dimensões só pode ser adicionada para a camada ativa normal.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -48013,11 +48016,11 @@ Por favor, indique um nome diferente.</translation>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Substituir valor &quot;Por camada&quot; pelos valores das camadas de origem?
+        <translation>Substituir valor &quot;Pela Camada&quot; pelos valores das camadas de origem?
 
-Se Sim — entidades com canetas &quot;Por camada&quot; terão o mesmo aspecto na nova camada que nas camadas anteriores e o valor &quot;Por camada&quot; será substituído pelas canetas resolvidas.
+Se Sim — entidades com canetas &quot;Pela Camada&quot; terão o mesmo aspeto na nova camada que nas camadas anteriores e o valor &quot;Pela Camada&quot; será substituído pelas canetas resolvidas.
 
-Se Não — os valores &quot;Por camada&quot; permanecem e a caneta da camada de destino definirá a caneta de tais entidades.</translation>
+Se Não — os valores &quot;Pela Camada&quot; permanecem e a caneta da camada de destino definirá a caneta de tais entidades.</translation>
     </message>
     <message>
         <source>Replace &quot;By Layer&quot; value to source layers values?
@@ -48090,13 +48093,15 @@ Por favor, indique um valor diferente.</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Tais entidades existem em camadas congeladas.</translation>
+        <translation>Tais entidades existem em camadas congeladas.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Tais entidades existem em camadas bloqueadas.</translation>
+        <translation>Tais entidades existem em camadas bloqueadas.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -49998,7 +50003,7 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Nenhuma camada%1 encontrada</translation>
+        <translation>Nenhuma camada %1 encontrada</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
@@ -52005,13 +52010,13 @@ Queres substituí-lo?</translation>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
-        <translation>Por Camada</translation>
+        <translation>Pela Camada</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="209"/>
         <source>By Block</source>
-        <translation>Por Bloco</translation>
+        <translation>Pelo Bloco</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="212"/>

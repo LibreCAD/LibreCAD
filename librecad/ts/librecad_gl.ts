@@ -2652,7 +2652,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>(De-)Select Layer</source>
-        <translation>(Sel-)Deseleccionar c&amp;apa</translation>
+        <translation>(Sel-)Deseleccionar capa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
@@ -3279,7 +3279,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Actualizar o Pen actual por Active Layer&apos; Pen</translation>
+        <translation>Actualizar o trazo actual co trazo da capa activa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -3420,7 +3420,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layers operations</source>
-        <translation>Operacións Layers</translation>
+        <translation>Operacións de capas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
@@ -3612,7 +3612,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>Entidad Layer</translation>
+        <translation>Capa da entidade</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
@@ -3642,7 +3642,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>Ocultar outras capas que a da entidade</translation>
+        <translation>Ocultar todas as capas agás a da entidade</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
@@ -3652,12 +3652,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>Construción da capa de Toggle</translation>
+        <translation>Alternar a capa da entidade como capa de construción</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>Impresión de capa da entidade Toggle</translation>
+        <translation>Alternar impresión da capa da entidade</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
@@ -4519,32 +4519,32 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
-        <translation>Mostrar todas as capas</translation>
+        <translation>&amp;Mostrar todas as capas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp; Manteña todas as capas</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Ocultar &amp;todas as capas agás a actual</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>Sincronizar todo</translation>
+        <translation>De&amp;sbloquear todo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Lock all</source>
-        <translation>&amp;Lock todo</translation>
+        <translation>B&amp;loquear todo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;Exportar capa(s) seleccionada</translation>
+        <translation>Exportar &amp;capas seleccionadas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Exportación e capa visible(s)</translation>
+        <translation>E&amp;xportar capas visibles</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -5115,7 +5115,7 @@ Punto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Introduza o seu nome a %1</translation>
+        <translation>Introduza o nome da capa para %1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -5125,7 +5125,7 @@ Punto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>create</source>
-        <translation>crea</translation>
+        <translation>crear</translation>
     </message>
 </context>
 <context>
@@ -5134,13 +5134,13 @@ Punto: (%8,%9)</translation>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>selected</source>
         <comment>Layers to export</comment>
-        <translation>seleccionado</translation>
+        <translation>seleccionadas</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>visible</source>
         <comment>Layers to export</comment>
-        <translation>visible</translation>
+        <translation>visibles</translation>
     </message>
 </context>
 <context>
@@ -7467,12 +7467,12 @@ Estás seguro de que eliminarás os cambios?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Se son verificados, as entidades espellos colocaranse na capa actual, se non, colocaranse en capas orixinais.</translation>
+        <translation type="unfinished">Se está marcada, as entidades reflectidas colocaranse na capa actual; en caso contrario, colocaranse nas capas orixinais.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Usuario Actual Layer</translation>
+        <translation type="unfinished">Usar capa actual</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8795,7 +8795,7 @@ Estás seguro de que eliminarás os cambios?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">A capa á que se debe colocar o círculo</translation>
+        <translation type="unfinished">Capa na que se debe colocar o círculo creado</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -12568,7 +12568,7 @@ Estás seguro de que eliminarás os cambios?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>Capa de dimensión</translation>
+        <translation>Capa do acoutamento</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
@@ -13544,7 +13544,7 @@ Estás seguro de que eliminarás os cambios?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Capa a que se debe colocar duplicado</translation>
+        <translation type="unfinished">Capa na que se debe colocar o duplicado</translation>
     </message>
 </context>
 <context>
@@ -13557,7 +13557,7 @@ Estás seguro de que eliminarás os cambios?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Capa a que se debe colocar duplicado</translation>
+        <translation type="unfinished">Capa na que se debe colocar o duplicado</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -14413,7 +14413,7 @@ Estás seguro de que eliminarás os cambios?</translation>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="135"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="179"/>
         <source>Export Layers</source>
-        <translation>Capas de exportación</translation>
+        <translation>Exportar capas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="152"/>
@@ -15249,37 +15249,37 @@ Estás seguro de que eliminarás os cambios?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Configuración da capa</translation>
+        <translation>Configuración de capa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>Nome da nova capa. Para crear capas xerárquicas, inclúese o nome da capa virtual e o separador do nome da capa.</translation>
+        <translation>Nome da nova capa. Para crear capas xerárquicas, inclúa o nome da capa virtual e o separador do nome da capa.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
         <source>Parent Layers Path:</source>
-        <translation>Camiño dos Parentes:</translation>
+        <translation>Ruta das capas pai:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="81"/>
         <source>Layer Type</source>
-        <translation>Tipo capa</translation>
+        <translation>Tipo de capa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>Capa para varios elementos infromacionais, notas, borradores etc.</translation>
+        <translation>Capa para varios elementos informativos, notas, borradores, etc.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
         <source>Informational</source>
-        <translation>Información</translation>
+        <translation>Informativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>Unha capa normal con elementos</translation>
+        <translation>Capa normal con elementos de debuxo</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
@@ -15289,12 +15289,12 @@ Estás seguro de que eliminarás os cambios?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>Capa que ten dimensións</translation>
+        <translation>Capa que contén acoutamentos</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
         <source>Dimensions</source>
-        <translation>Dimensións</translation>
+        <translation>Acoutamento</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
@@ -15321,7 +15321,7 @@ O contido dunha capa de construción non debe aparecer na impresión.</translati
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
         <source>Path for parent layer</source>
-        <translation>Camiño para a capa parental</translation>
+        <translation>Ruta da capa pai</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="197"/>
@@ -15331,7 +15331,7 @@ O contido dunha capa de construción non debe aparecer na impresión.</translati
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="68"/>
         <source>Rename Virtual Layer</source>
-        <translation>Baixar Virtual Layer</translation>
+        <translation>Renomear capa virtual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="72"/>
@@ -15353,12 +15353,12 @@ O contido dunha capa de construción non debe aparecer na impresión.</translati
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="221"/>
         <source>Default Pen</source>
-        <translation>Pen defecto</translation>
+        <translation>Trazo por defecto</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
         <source>Rename Layer</source>
-        <translation>Renomeando Layer</translation>
+        <translation>Renomear capa</translation>
     </message>
 </context>
 <context>
@@ -15366,7 +15366,7 @@ O contido dunha capa de construción non debe aparecer na impresión.</translati
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="39"/>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Formulario</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57"/>
@@ -15376,42 +15376,42 @@ O contido dunha capa de construción non debe aparecer na impresión.</translati
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>En caso de ser comprobado, as vistas con nome do documento incluiranse en debuxos exportados. En caso contrario, as vistas non están incluídas.</translation>
+        <translation>Se está marcada, as vistas con nome do documento incluiranse nos debuxos exportados. En caso contrario, as vistas non se inclúen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>Tamén se exportan opinións</translation>
+        <translation>Exportar tamén as vistas con nome</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>Se está comprobado, cada capa orixinal exportado será almacenada nun debuxo separado. En caso contrario, todas as capas serán exportadas a un debuxo combinado.</translation>
+        <translation>Se está marcada, cada capa orixinal exportada será almacenada nun debuxo separado. En caso contrario, todas as capas serán exportadas a un debuxo combinado.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
         <source>Export each layer to own drawing file</source>
-        <translation>Exportar cada capa ao propio ficheiro de debuxo</translation>
+        <translation>Exportar cada capa ao seu propio ficheiro de debuxo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>En caso de ser verificado, as entidades serán almacenadas na capa orixinal. En caso contrario, colocaranse na capa &quot;0&quot;.</translation>
+        <translation>Se está marcada, as entidades serán almacenadas na capa orixinal. En caso contrario, colocaranse na capa &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>Retallar a capa orixinal para entidades</translation>
+        <translation>Conservar a capa orixinal das entidades</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>Se está comprobado, os UCS do documento incluiranse en debuxos exportados. En caso contrario, os UCS non están incluídos.</translation>
+        <translation>Se está marcada, os UCS do documento incluiranse nos debuxos exportados. En caso contrario, os UCS non se inclúen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>Exportación UCS</translation>
+        <translation>Exportar tamén os UCS</translation>
     </message>
 </context>
 <context>
@@ -15429,7 +15429,7 @@ O contido dunha capa de construción non debe aparecer na impresión.</translati
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>Naming Convención</translation>
+        <translation>Convención de nomeamento</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15439,7 +15439,7 @@ O contido dunha capa de construción non debe aparecer na impresión.</translati
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>Separador usado para dividir o nome interno da capa a nomes xerárquicos</translation>
+        <translation>Separador usado para dividir o nome interno da capa en nomes xerárquicos</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15453,33 +15453,33 @@ O contido dunha capa de construción non debe aparecer na impresión.</translati
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>Dimensión</translation>
+        <translation>Acoutamento</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Suffix do nome da capa que define que a capa é dimensional</translation>
+        <translation>Sufixo do nome da capa que define que a capa é de acoutamento</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="809"/>
         <source>Informational</source>
-        <translation>Información</translation>
+        <translation>Informativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>O nome de Suffix da capa que define esta capa é informativo.</translation>
+        <translation>Sufixo do nome da capa que define que a capa é informativa.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Posición alternativa</translation>
+        <translation>Posición alternativa </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>O nome de Suffix da capa que define esta capa é para unha posición alternativa.</translation>
+        <translation>Sufixo do nome da capa que define que a capa é de posición alternativa.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15498,12 +15498,12 @@ O contido dunha capa de construción non debe aparecer na impresión.</translati
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
         <source>Suffix</source>
-        <translation>Suffix</translation>
+        <translation>Sufixo</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Suffix do nome da capa que se usa se existe unha capa con ese nome (por exemplo, cando se crea un duplicado)</translation>
+        <translation>Sufixo do nome da capa que se usa se existe unha capa con ese nome (por exemplo, cando se crea un duplicado)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15538,17 +15538,17 @@ O contido dunha capa de construción non debe aparecer na impresión.</translati
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="271"/>
         <source>Display and Operations</source>
-        <translation>Exposición e operacións</translation>
+        <translation>Visualización e operacións</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>Se está comprobado, a ferramenta incluirá o nome completo de capa (con todos os niveis superiores da capa)</translation>
+        <translation>Se está marcada, o consello emerxente incluirá o nome completo da capa (con todos os niveis de capa superiores)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>Mostrar o nome completo como ToolTip</translation>
+        <translation>Mostrar o nome completo como consello emerxente</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15578,52 +15578,52 @@ O contido dunha capa de construción non debe aparecer na impresión.</translati
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>Se está comprobado, mostraranse iconas para tipos de capas</translation>
+        <translation>Se está marcada, mostraranse as iconas dos tipos de capa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
         <source>Show layer type icons</source>
-        <translation>Mostrar iconas tipo capas</translation>
+        <translation>Mostrar iconas de tipo de capa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>Indentación para capas infantís</translation>
+        <translation>Sangría para as capas fillas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Mostrar nomes de capas indentadas. Tamaño claro:</translation>
+        <translation>Mostrar nomes de capa sangrados. Tamaño da sangría:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>Tamaño do indentido nos caracteres para o nome claro da capa infantil dos pais</translation>
+        <translation>Tamaño da sangría, en caracteres, para sangrar o nome da capa filla respecto das capas pai</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>Se está comprobado, as operacións de drag&amp;drop na lista de capas están activadas e a xerarquía de capas pode ser reestruturada</translation>
+        <translation>Se está marcada, as operacións de arrastrar&amp;soltar na lista de capas están activadas e a xerarquía de capas pode ser reestruturada</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Baixar Drag&amp;Drop</translation>
+        <translation>Permitir a reestruturación mediante arrastrar e soltar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>Se a capa primaria é renombrada, as capas secundarias tamén son renomeadas.</translation>
+        <translation>Se se renomea a capa primaria, as capas secundarias tamén se renomean.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Renomear capas secundarias no nome primario</translation>
+        <translation>Renomear capas secundarias ao renomear a primaria</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
         <source>Various colors settings</source>
-        <translation>Varias cores configuración</translation>
+        <translation>Configuración de varias cores</translation>
     </message>
     <message>
         <source>Colors</source>
@@ -15632,7 +15632,7 @@ O contido dunha capa de construción non debe aparecer na impresión.</translati
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
-        <translation>Cor de fondo para elementos seleccionados en árbore de capas.</translation>
+        <translation>Cor de fondo para os elementos seleccionados na árbore de capas.</translation>
     </message>
     <message>
         <source>Color for separator lines in layers tree view</source>
@@ -15654,12 +15654,12 @@ O contido dunha capa de construción non debe aparecer na impresión.</translati
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Comentarios en Highlight filter mode</translation>
+        <translation>Elemento coincidente no modo de realce do filtro</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
         <source>Color for items that matches filter conditions</source>
-        <translation>Color para elementos que corresponden a condicións de filtro</translation>
+        <translation>Cor para os elementos que coinciden coas condicións do filtro</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="379"/>
@@ -15674,7 +15674,7 @@ O contido dunha capa de construción non debe aparecer na impresión.</translati
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
-        <translation>Cor de fondo virtual</translation>
+        <translation>Cor de fondo da capa virtual</translation>
     </message>
     <message>
         <source>Threeview items separator grid</source>
@@ -15683,17 +15683,17 @@ O contido dunha capa de construción non debe aparecer na impresión.</translati
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
         <source>Selected items background color</source>
-        <translation>Selección de color de fondo</translation>
+        <translation>Cor de fondo dos elementos seleccionados</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>Cor de fondo para elemento de capa activa en árbore de capas</translation>
+        <translation>Cor de fondo para o elemento da capa activa na árbore de capas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
         <source>Active layer background color</source>
-        <translation>Color de fondo de capa activa</translation>
+        <translation>Cor de fondo da capa activa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="588"/>
@@ -15708,12 +15708,12 @@ O contido dunha capa de construción non debe aparecer na impresión.</translati
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="599"/>
         <source>Pens that will be set for newly created layers of different types.</source>
-        <translation>Pens que se configurarán para novas capas de diferentes tipos.</translation>
+        <translation>Trazos que se establecerán para as novas capas de diferentes tipos.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
         <source>Default Pens</source>
-        <translation>Pens defecto</translation>
+        <translation>Trazos por defecto</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
@@ -15723,7 +15723,7 @@ O contido dunha capa de construción non debe aparecer na impresión.</translati
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>Capa dimensional</translation>
+        <translation>Capa de acoutamento</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
@@ -15742,17 +15742,17 @@ O contido dunha capa de construción non debe aparecer na impresión.</translati
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>elemento destacado</translation>
+        <translation>elemento realzado</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
         <source>virtual layer background</source>
-        <translation>cadro virtual de fondo</translation>
+        <translation>fondo de capa virtual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="118"/>
         <source>selected item background</source>
-        <translation>elemento seleccionado de fondo</translation>
+        <translation>fondo de elemento seleccionado</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="126"/>
@@ -15768,8 +15768,8 @@ O contido dunha capa de construción non debe aparecer na impresión.</translati
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>O valor inválido é a cor de %1.
-Por favor, especifica outro valor.</translation>
+        <translation>Valor inválido para a cor de %1.
+Por favor, especifique outro valor.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="245"/>
@@ -15787,12 +15787,12 @@ Por favor, especifica outro valor.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>Buscando nomes de capas iguais</translation>
+        <translation>Mirando polas coincidencias en nomes de capas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
         <source>Highlight Mode</source>
-        <translation>Destacado Mode</translation>
+        <translation>Modo de realce</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="167"/>
@@ -15806,8 +15806,8 @@ Por favor, especifica outro valor.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Ocultar todas as capas</translation>
+        <source>Hide all layers except current</source>
+        <translation>Ocultar todas as capas agás a actual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -15822,17 +15822,17 @@ Por favor, especifica outro valor.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="218"/>
         <source>Expand All</source>
-        <translation>Expande todo</translation>
+        <translation>Expandir todo</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="226"/>
         <source>Collapse All</source>
-        <translation>Colapso todo</translation>
+        <translation>Contraer todo</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>Colapso secundario</translation>
+        <translation>Contraer capas secundarias</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
@@ -15852,42 +15852,42 @@ Por favor, especifica outro valor.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Engadir tamaños Layer</translation>
+        <translation>Engadir capa de acoutamento</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
         <source>Remove layer</source>
-        <translation>Eliminar capa</translation>
+        <translation>Desbotar capa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Cambiar atributos de capa / renome</translation>
+        <translation>Modificar atributos da capa / renomear</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>Lista de moda)</translation>
+        <translation>Modo de lista plana</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>Add Child Layer</translation>
+        <translation>Engadir &amp;capa filla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>&amp; Nome</translation>
+        <translation>Re&amp;nomear</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp; Remove Layers (sub-tree)</translation>
+        <translation>Des&amp;botar capas (subárbore)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>Estrutura &amp;Copy (Sub-Tree)</translation>
+        <translation>Co&amp;piar estrutura (subárbore)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
@@ -15902,70 +15902,70 @@ Por favor, especifica outro valor.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;Edit Layer &amp; Attributes</translation>
+        <translation>Editar atributos da ca&amp;pa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>Baixar Layer</translation>
+        <translation>Desbot&amp;ar capa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>Add Dimensions Sub-Layer</translation>
+        <translation>En&amp;gadir subcapa de acoutamento</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>Add Info Sub-Layer</translation>
+        <translation>E&amp;ngadir subcapa informativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>Add Alternative View Sub-Layer</translation>
+        <translation>Enga&amp;dir subcapa de posición alternativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp;Remove Subcapas</translation>
+        <translation>Des&amp;botar subcapas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Convertido en tamaño</translation>
+        <translation>Converter en capa de acoutamento</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>Convertido en Info Layer</translation>
+        <translation>Converter en capa informativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Converte a capa de posición alternativa</translation>
+        <translation>Converter en capa de posición alternativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
         <source>Convert to Normal Layer</source>
-        <translation>Converte a capa normal</translation>
+        <translation>Converter en capa normal</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>Entidades de &amp;Select Layer</translation>
+        <translation>&amp;Seleccionar entidades da capa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>Creación de Layer Copy</translation>
+        <translation>&amp;Facer copia da capa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>+Duplicar capa con contido</translation>
+        <translation>Duplicar &amp;capa con contido</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
@@ -15975,52 +15975,52 @@ Por favor, especifica outro valor.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Selección duplicada a capa</translation>
+        <translation>Duplicar a selección na capa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp; Add Layer</translation>
+        <translation>Engadir &amp;capa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>Liberar outras capas</translation>
+        <translation>&amp;Ocultar as outras capas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp;Descongelar todas as capas</translation>
+        <translation>&amp;Mostrar todas as capas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>Freezer todas as capas</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Ocultar &amp;todas as capas agás a actual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>Desbloquear todas as capas</translation>
+        <translation>Desblo&amp;quear todas as capas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp;Lock todas as capas</translation>
+        <translation>B&amp;loquear todas as capas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Permite e filtra todas as capas</translation>
+        <translation>Acti&amp;var impresión de todas as capas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>Imprimir todas as capas</translation>
+        <translation>Desactivar &amp;impresión de todas as capas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>&amp; Exportador Single Layer</translation>
+        <translation>Exportar &amp;unha soa capa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
@@ -16030,12 +16030,12 @@ Por favor, especifica outro valor.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Exportación e capa visible(s)</translation>
+        <translation>E&amp;xportar capas visibles</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>Buscar e eliminar capas baleiras</translation>
+        <translation>Busca&amp;r e desbotar capas baleiras</translation>
     </message>
 </context>
 <context>
@@ -23324,12 +23324,12 @@ Por favor, especifica outro valor.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Se son verificados, as entidades espellos colocaranse na capa actual, se non, colocaranse en capas orixinais.</translation>
+        <translation type="unfinished">Se está marcada, as entidades reflectidas colocaranse na capa actual; en caso contrario, colocaranse nas capas orixinais.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Usuario Actual Layer</translation>
+        <translation type="unfinished">Usar capa actual</translation>
     </message>
 </context>
 <context>
@@ -23623,12 +23623,12 @@ Por favor, especifica outro valor.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">En caso de ser verificado, as entidades creadas colocaranse na capa actual. En caso contrario, colocaranse en capas orixinais.</translation>
+        <translation type="unfinished">Se está marcada, as entidades creadas colocaranse na capa actual. En caso contrario, colocaranse nas capas orixinais. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Use a capa actual</translation>
+        <translation type="unfinished">Usar capa actual</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="55"/>
@@ -23809,12 +23809,12 @@ Por favor, especifica outro valor.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">En caso de ser verificado, as entidades creadas colocaranse na capa actual, se non, o serán en capas orixinais.</translation>
+        <translation type="unfinished">Se está marcada, as entidades creadas colocaranse na capa actual; en caso contrario, quedarán nas capas orixinais. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Use a capa actual</translation>
+        <translation type="unfinished">Usar capa actual</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="166"/>
@@ -24225,12 +24225,12 @@ Aviso: esta acción non se pode desfacer!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Se se comproban, as entidades creadas colocaranse na capa actual, se non, estarán en capas orixinais.</translation>
+        <translation type="unfinished">Se está marcada, as entidades creadas colocaranse na capa actual; en caso contrario, quedarán nas capas orixinais.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Use a capa actual</translation>
+        <translation type="unfinished">Usar capa actual</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="109"/>
@@ -25351,27 +25351,27 @@ Aviso: esta acción non se pode desfacer!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Actualizar o Pen actual por Active Layer&apos; Pen</translation>
+        <translation>Actualizar o trazo actual co trazo da capa activa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Editor de pluma de capa activa</translation>
+        <translation>Encher o editor de trazos co trazo da capa activa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
         <source>Pick from Active Layer</source>
-        <translation>Baixar Active Layer</translation>
+        <translation>Escoller da capa activa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Aplicación do editor Pen para Active Layer Pen</translation>
+        <translation>Aplicar o trazo do editor ao trazo da capa activa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
         <source>Apply To Layer</source>
-        <translation>Aplicar a capa</translation>
+        <translation>Aplicar á capa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="239"/>
@@ -25456,7 +25456,7 @@ Aviso: esta acción non se pode desfacer!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>Aplicación de Pen a capa activa</translation>
+        <translation>&amp;Aplicar o trazo á capa activa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29489,7 +29489,7 @@ Téña en conta que, se garda un bolígrafo a través do editor sen reiniciar, o
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="101"/>
         <source>Color</source>
-        <translation type="unfinished">Color</translation>
+        <translation type="unfinished">Cor</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="101"/>
@@ -29499,7 +29499,7 @@ Téña en conta que, se garda un bolígrafo a través do editor sen reiniciar, o
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line Width</source>
-        <translation type="unfinished">Liña Ancho</translation>
+        <translation type="unfinished">Grosor da liña</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
@@ -29525,7 +29525,7 @@ Téña en conta que, se garda un bolígrafo a través do editor sen reiniciar, o
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Dimensión</translation>
+        <translation type="unfinished">Acoutamento</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29535,7 +29535,7 @@ Téña en conta que, se garda un bolígrafo a través do editor sen reiniciar, o
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="179"/>
         <source>Informational</source>
-        <translation type="unfinished">Información</translation>
+        <translation type="unfinished">Informativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
@@ -33088,7 +33088,8 @@ Téña en conta que, se garda un bolígrafo a través do editor sen reiniciar, o
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>Capa:</translation>
+        <translation>
+Capa: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35894,12 +35895,12 @@ p {\displaystyle \scriptstyle }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">As copias en whetether serán inseridas na capa actual ou orixinal</translation>
+        <translation type="unfinished">Especifica se as copias se inserirán na capa actual ou na orixinal</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Use a capa actual</translation>
+        <translation type="unfinished">Usar capa actual</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="218"/>
@@ -36140,12 +36141,12 @@ p {\displaystyle \scriptstyle }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">En caso de ser verificado, colocaranse novos en capas actuais, se non, estarán en capas orixinais.</translation>
+        <translation type="unfinished">Se está marcada, as novas entidades colocaranse na capa actual; en caso contrario, quedarán nas capas orixinais.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Use a capa actual</translation>
+        <translation type="unfinished">Usar capa actual</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="219"/>
@@ -36383,12 +36384,12 @@ p {\displaystyle \scriptstyle }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">En caso de ser verificado, as entidades creadas colocaranse na capa actual. En caso contrario, colocaranse en capas orixinais.</translation>
+        <translation type="unfinished">Se está marcada, as entidades creadas colocaranse na capa actual. En caso contrario, colocaranse nas capas orixinais. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Use a capa actual</translation>
+        <translation type="unfinished">Usar capa actual</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="107"/>
@@ -37297,7 +37298,7 @@ p {\displaystyle \scriptstyle }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Se se comproban, as entidades creadas colocaranse na capa actual, se non se colocarán en capas orixinais.</translation>
+        <translation type="unfinished">Se está marcada, as entidades creadas colocaranse na capa actual; en caso contrario, colocaranse nas capas orixinais.</translation>
     </message>
 </context>
 <context>
@@ -37335,12 +37336,12 @@ p {\displaystyle \scriptstyle }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Se se comproban, as entidades creadas colocaranse na capa actual, se non se colocarán en capas orixinais.</translation>
+        <translation type="unfinished">Se está marcada, as entidades creadas colocaranse na capa actual; en caso contrario, colocaranse nas capas orixinais.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Use a capa actual</translation>
+        <translation type="unfinished">Usar capa actual</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
@@ -37478,7 +37479,7 @@ p {\displaystyle \scriptstyle }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Se se comproban, as entidades creadas colocaranse na capa actual, se non se colocarán en capas orixinais.</translation>
+        <translation type="unfinished">Se está marcada, as entidades creadas colocaranse na capa actual; en caso contrario, colocaranse nas capas orixinais.</translation>
     </message>
 </context>
 <context>
@@ -37491,12 +37492,12 @@ p {\displaystyle \scriptstyle }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Se se comproban, as entidades creadas colocaranse na capa actual, se non se colocarán en capas orixinais.</translation>
+        <translation type="unfinished">Se está marcada, as entidades creadas colocaranse na capa actual; en caso contrario, colocaranse nas capas orixinais.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Usuario Actual Layer</translation>
+        <translation type="unfinished">Usar capa actual</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -47143,8 +47144,8 @@ O valor predeterminado do paso necesario para a cocción</translation>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Unha Capa de Construción ten entidades de liñas rectas infinitas destinadas a ser usadas para a construción xeométrica.
-Os contidos dunha Capa de Construción non deberan aparecer na impresión.</translation>
+        <translation>Unha capa de construción ten entidades de liñas rectas infinitas destinadas a ser utilizadas para a construción xeométrica.
+O contido dunha capa de construción non debe aparecer na impresión.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="33"/>
@@ -47194,12 +47195,12 @@ Os contidos dunha Capa de Construción non deberan aparecer na impresión.</tran
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="83"/>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="189"/>
         <source>By Layer</source>
-        <translation>Da capa</translation>
+        <translation>Por capa</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="84"/>
         <source>By Block</source>
-        <translation>Do bloque</translation>
+        <translation>Por bloque</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="87"/>
@@ -47523,7 +47524,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="239"/>
         <source>By Layer</source>
-        <translation>Da capa</translation>
+        <translation>Por capa</translation>
     </message>
 </context>
 <context>
@@ -47547,12 +47548,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>A capa &quot;%1&quot; nunca se pode desbotar</translation>
+        <translation>A capa &quot;%1&quot; nunca se pode desbotar.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="304"/>
         <source>Layer Dialog</source>
-        <translation>Diálogo capa</translation>
+        <translation>Diálogo de capa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="406"/>
@@ -47575,35 +47576,35 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Xa hai unha capa co nome &quot;%1&quot; . Por favor, especifique outro nome diferente.</translation>
+        <translation>Xa hai unha capa co nome &quot;%1&quot;. Por favor, especifique outro nome diferente.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>A capa &quot;%1&quot; e tódalas entidades dela van ser desbotadas.
+        <translation>A capa &quot;%1&quot; e todas as entidades dela van ser desbotadas.
 Esta acción NON pode ser desfeita despois.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>O &quot;0&quot; nunca pode ser eliminado.</translation>
+        <translation>A capa &quot;0&quot; nunca se pode desbotar.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="248"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1787"/>
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform>Eliminar %n capa</numerusform>
-            <numerusform>Eliminar %n capas</numerusform>
+            <numerusform>Desbotar %n capa</numerusform>
+            <numerusform>Desbotar %n capas</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Todas as entidades e entidades incluídas nelas serán eliminadas.</translation>
+        <translation>As capas da lista e todas as entidades delas van ser desbotadas.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47614,13 +47615,13 @@ Esta acción NON pode ser desfeita despois.</translation>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="257"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Aviso: a capa &quot;0&quot; nunca pode ser eliminada.</translation>
+        <translation>Aviso: a capa &quot;0&quot; nunca se pode desbotar.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="260"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1790"/>
         <source>Layers for removal:</source>
-        <translation>Capas para a eliminación:</translation>
+        <translation>Capas para desbotar:</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="463"/>
@@ -47655,9 +47656,9 @@ Esta acción NON pode ser desfeita despois.</translation>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Crear unha capa co nome duplicado. O nome duplicado é
-[%1]
-Por favor, especifica outro nome.</translation>
+        <translation>Tentouse crear unha capa cun nome duplicado. O nome de capa duplicado é 
+[%1].
+Por favor, especifique outro nome.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="142"/>
@@ -47669,14 +47670,14 @@ Por favor, especifica outro nome.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>O separador da lista de capas está baleiro. Non será posible construír árbores.
-Por favor, especifica outro valor.</translation>
+        <translation>O separador da lista de capas está baleiro. Non será posible construír a árbore de capas.
+Por favor, especifique outro valor.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="972"/>
         <source>Remove empty layers</source>
-        <translation>Eliminar capas baleiras</translation>
+        <translation>Desbotar capas baleiras</translation>
     </message>
     <message>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
@@ -47694,7 +47695,7 @@ Clear filtering mask and repeat.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Non se atoparon capas sen entidades, nada que eliminar.</translation>
+        <translation>Non se atoparon capas sen entidades, non hai nada que desbotar.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
@@ -47708,23 +47709,25 @@ Clear filtering mask and repeat.</source>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Este neno xa existe para
-[%1]
-Por favor, especifica outro nome.</translation>
+        <translation>Xa existe unha capa filla dese tipo para 
+[%1].
+Por favor, especifique outro nome.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1162"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Este neno xa existe para
-[%1].</translation>
+        <translation>Xa existe unha capa filla dese tipo para 
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>A capa dimensional só se pode engadir para a capa activa normal.</translation>
+        <translation>A capa de acoutamento só se pode engadir para unha capa activa normal.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -47810,19 +47813,21 @@ Por favor, especifica outro valor.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Non hai entidades que coincidan con pluma en capas visibles.</translation>
+        <translation>Non hai entidades que coincidan co trazo nas capas visibles.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Tales entidades existen en capas conxeladas.</translation>
+        <translation>Tales entidades existen en capas ocultas.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Tales entidades existen en capas pechadas.</translation>
+        <translation>Tales entidades existen en capas bloqueadas.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -49949,7 +49954,7 @@ Quere reemprazalo?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>No se han encontrado resultados para %1</translation>
+        <translation>Non se atoparon capas %1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
@@ -51903,7 +51908,7 @@ Quere reemprazalo?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="195"/>
         <source>Combine all layers</source>
-        <translation>Combina todas as capas</translation>
+        <translation>Combinar todas as capas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>

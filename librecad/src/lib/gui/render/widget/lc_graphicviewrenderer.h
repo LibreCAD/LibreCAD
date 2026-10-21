@@ -103,6 +103,8 @@ protected:
     bool m_lastPaintedSelected = false;
     bool m_lastPaintOverlay = false;
     bool m_lastPenInVisualSnap = false;
+    // Whether setPenForDraftEntity() installed the cached pen, at screen width 0.
+    bool m_lastPaintedDraft = false;
     bool m_draftMode = false;
 
     QString m_draftMarkText = QObject::tr("Draft");

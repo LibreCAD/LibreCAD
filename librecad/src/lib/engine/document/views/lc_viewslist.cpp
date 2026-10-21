@@ -22,12 +22,29 @@
 
 #include "lc_viewslist.h"
 
+#include <QtAlgorithms>
+
 LC_ViewList::LC_ViewList() {
     setModified(false);
 }
 
+/**
+ * Frees the views, after telling the listeners that still listen (see
+ * LC_ViewListListener::viewsListDestroyed()): a dock attached to the list has a pointer to it, and
+ * rows for the views.
+ */
+LC_ViewList::~LC_ViewList() {
+    QList<LC_View*> removed;
+    removed.swap(m_namedViews);
+    m_viewListListeners.drain([](LC_ViewListListener* listener) {
+        listener->viewsListDestroyed();
+    });
+    qDeleteAll(removed);
+}
+
 void LC_ViewList::clear() {
-    m_namedViews.clear(); // fixme - sand - shouldn't we delete items there???
+    qDeleteAll(m_namedViews);
+    m_namedViews.clear();
     setModified(false);
 }
 
@@ -36,10 +53,14 @@ void LC_ViewList::add(LC_View *view) {
         return;
     }
 
-    // check if layer already exists:
+    // check if view already exists:
     const LC_View *v = find(view->getName());
     if (v == nullptr) {
         m_namedViews.append(view);
+    }
+    else if (v != view) {
+        // the name is taken; we own view, so drop it
+        delete view;
     }
 }
 
@@ -48,11 +69,15 @@ void LC_ViewList::addNew(LC_View *view) {
         return;
     }
 
-    // check if layer already exists:
+    // check if view already exists:
     const LC_View *v = find(view->getName());
     if (v == nullptr) {
         m_namedViews.append(view);
         setModified(true);
+    }
+    else if (v != view) {
+        // the name is taken; we own view, so drop it
+        delete view;
     }
 }
 

@@ -36,7 +36,10 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <cmath>
+#include <cstddef>
+#include <cstdint>
 #include <limits>
+#include <memory>
 #include <utility>
 #include <vector>
 
@@ -1771,6 +1774,421 @@ TEST_CASE("DRW_Attdef preserves AC1032 multiline annotation data",
     CHECK(reader.isGood());
 }
 
+namespace {
+
+// The multi-line attribute of a drawing saved by AutoCAD 2018: object records
+// 0x79D (ATTRIB) and 0x796 (its ATTDEF) of ACadSharp's
+// samples/sample_AC1032.dwg, from the object type to the end of the handle
+// stream. See testdata/PROVENANCE.md.
+const std::uint8_t kAutoCadMultiLineAttrib[] = {
+    0x00, 0x80, 0x81, 0xE7, 0x61, 0x5A, 0x00, 0x00, 0x87, 0x5F, 0x72, 0x38,
+    0x1B, 0x5E, 0x90, 0x22, 0xA3, 0x90, 0x0E, 0x05, 0xFB, 0xA3, 0x2E, 0x01,
+    0xCE, 0xD0, 0x0D, 0x20, 0xE9, 0x9D, 0x70, 0xD7, 0x00, 0xF1, 0x03, 0x1D,
+    0x31, 0x92, 0xF7, 0xCC, 0x87, 0xFB, 0x3F, 0x40, 0xC0, 0x00, 0x8A, 0xDF,
+    0x00, 0x04, 0x3A, 0x64, 0x70, 0x36, 0xBD, 0x20, 0x45, 0x47, 0x20, 0x09,
+    0x07, 0x4C, 0xEB, 0x86, 0xB8, 0x07, 0x88, 0x15, 0x2D, 0x50, 0x3A, 0x63,
+    0x25, 0xEF, 0x99, 0x0F, 0xF6, 0x7E, 0x80, 0xA0, 0xA2, 0x91, 0x52, 0xE6,
+    0xF0, 0x10, 0x60, 0x12, 0x00, 0xB9, 0x1B, 0xE1, 0xC1, 0x85, 0xDE, 0x7E,
+    0x80, 0x80, 0xAA, 0x82, 0x50, 0x16, 0x8C, 0x8E, 0x06, 0xD7, 0xA4, 0x08,
+    0xA8, 0xE4, 0x01, 0x20, 0xE9, 0x9D, 0x70, 0xD7, 0x00, 0xF1, 0x02, 0xA1,
+    0x72, 0x37, 0xC3, 0x83, 0x0B, 0xBC, 0xFD, 0x00, 0x52, 0x2A, 0x5C, 0xDE,
+    0x02, 0x0C, 0x02, 0x40, 0xA8, 0x03, 0x24, 0x4D, 0xA0, 0x0F, 0x20, 0x04,
+    0x00, 0x0D, 0xA0, 0x0E, 0xA0, 0x0D, 0x80, 0x0E, 0x80, 0x0D, 0x20, 0x04,
+    0x00, 0x0D, 0x80, 0x0D, 0x20, 0x0D, 0xC0, 0x0C, 0xA0, 0x04, 0x00, 0x0E,
+    0x80, 0x0C, 0xA0, 0x0F, 0x00, 0x0E, 0x80, 0x04, 0x00, 0x0C, 0xC0, 0x0D,
+    0xE0, 0x0E, 0x40, 0x04, 0x00, 0x0E, 0x80, 0x0D, 0x00, 0x0C, 0xA0, 0x04,
+    0x00, 0x0C, 0x20, 0x0E, 0x80, 0x0E, 0x80, 0x0E, 0x40, 0x0E, 0x40, 0x0D,
+    0x20, 0x0C, 0x40, 0x08, 0x72, 0x68, 0x02, 0xA8, 0x02, 0x60, 0x02, 0xA0,
+    0x02, 0x48, 0x02, 0xF8, 0x02, 0x60, 0x02, 0x48, 0x02, 0x70, 0x02, 0x28,
+    0x02, 0xF8, 0x02, 0x08, 0x02, 0xA0, 0x02, 0xA0, 0x00, 0xB0, 0x1E, 0x01,
+    0x44, 0x41, 0x44, 0x45, 0x01, 0x44, 0x41, 0x44, 0x55, 0x46, 0x59, 0x44,
+    0x45, 0x43,
+};
+constexpr std::uint32_t kAutoCadAttribHandleBits = 122;
+// The embedded MTEXT starts at this bit; the body ends, and the string stream
+// starts, at the other.
+constexpr std::uint32_t kAutoCadAttribEmbeddedBit = 370;
+constexpr std::uint32_t kAutoCadAttribBodyEndBit = 1103;
+
+const std::uint8_t kAutoCadMultiLineAttdef[] = {
+    0x00, 0xC0, 0x81, 0xE5, 0xA1, 0x5A, 0x00, 0x00, 0x87, 0x5F, 0x5C, 0x76,
+    0x00, 0x2D, 0xDD, 0x75, 0xA3, 0x50, 0x3E, 0x7B, 0xCA, 0xCF, 0x9F, 0x3B,
+    0xC5, 0xD0, 0x0F, 0xBB, 0x4F, 0x0E, 0x07, 0x8A, 0x4C, 0x65, 0x03, 0x51,
+    0x3F, 0x7E, 0x39, 0x64, 0x46, 0xDA, 0x3F, 0x40, 0xC0, 0x01, 0x0A, 0xDF,
+    0x00, 0x04, 0x3A, 0x38, 0xEC, 0x00, 0x5B, 0xBA, 0xEB, 0x46, 0xA0, 0x1D,
+    0xDA, 0x78, 0x70, 0x3C, 0x52, 0x63, 0x28, 0x15, 0x2D, 0x50, 0xA2, 0x7E,
+    0xFC, 0x72, 0xC8, 0x8D, 0xB4, 0x7E, 0x80, 0xA0, 0xB4, 0x80, 0xAA, 0x82,
+    0x50, 0x16, 0x87, 0x1D, 0x80, 0x0B, 0x77, 0x5D, 0x68, 0xD4, 0x03, 0xBB,
+    0x4F, 0x0E, 0x07, 0x8A, 0x4C, 0x65, 0x02, 0xAA, 0xA8, 0x02, 0x01, 0x48,
+    0x72, 0x68, 0x02, 0xA8, 0x02, 0x60, 0x02, 0xA0, 0x02, 0x48, 0x02, 0xF8,
+    0x02, 0x60, 0x02, 0x48, 0x02, 0x70, 0x02, 0x28, 0x02, 0xF8, 0x02, 0x08,
+    0x02, 0xA0, 0x02, 0xA0, 0x02, 0x38, 0xE8, 0x00, 0xD0, 0x00, 0xD2, 0x00,
+    0xE6, 0x00, 0x40, 0x00, 0xD2, 0x00, 0xE6, 0x00, 0x40, 0x00, 0xC2, 0x00,
+    0xDC, 0x00, 0x40, 0x00, 0xCA, 0x00, 0xF0, 0x00, 0xC2, 0x00, 0xDA, 0x00,
+    0xE0, 0x00, 0xD8, 0x00, 0xCA, 0x00, 0x40, 0x00, 0xDE, 0x00, 0xCC, 0x00,
+    0x40, 0x00, 0xE0, 0x00, 0xE4, 0x00, 0xDE, 0x00, 0xDA, 0x00, 0xE0, 0x00,
+    0xE8, 0x01, 0x70, 0x05, 0xC1, 0x17, 0x51, 0x10, 0x51, 0x11, 0x40, 0x51,
+    0x10, 0x51, 0x15, 0x51, 0x96, 0x51, 0x11, 0x50,
+};
+constexpr std::uint32_t kAutoCadAttdefHandleBits = 128;
+constexpr std::uint32_t kAutoCadAttdefEmbeddedBit = 370;
+constexpr std::uint32_t kAutoCadAttdefBodyEndBit = 855;
+
+// The text style handle and the six handles of the embedded MTEXT close the
+// handle stream of either record, apart from the padding of the ATTRIB.
+constexpr std::uint32_t kAutoCadEmbeddedHandleBits = 96;
+constexpr std::uint32_t kAutoCadAttribHandleEndBit = 2030;
+constexpr std::uint32_t kAutoCadAttdefHandleEndBit = 1696;
+
+// A multi-line ATTRIB and ATTDEF as LibreCAD wrote them into DWG 2018 before
+// it matched AutoCAD: after the "is not annotative" bit one more bit and the
+// annotative data size, no R2018 block, the embedded handles ahead of the text
+// style, and no second version byte in the ATTDEF. The ATTRIB has the bit
+// set, the ATTDEF clear.
+const std::uint8_t kLegacyMultiLineAttrib[] = {
+    0x00, 0x80, 0x4D, 0xE1, 0x1B, 0x80, 0x00, 0x87, 0x40, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x16,
+    0x50, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x12, 0x90, 0x30, 0x00, 0x00,
+    0x00, 0x00, 0x04, 0x05, 0x94, 0x0C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01,
+    0x29, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x04, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0, 0x3F, 0xA8, 0x04,
+    0x0A, 0xAD, 0x00, 0x00, 0x43, 0xA0, 0x00, 0x00, 0x00, 0x00, 0x02, 0x02,
+    0xCA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x94, 0x81, 0x52, 0xD0,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x68, 0x81, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x88, 0x08, 0x0A, 0x0B, 0x52, 0xAA, 0x00, 0x80, 0x90,
+    0xF6, 0xC0, 0x06, 0x90, 0x06, 0xE0, 0x06, 0x50, 0x02, 0x00, 0x03, 0x10,
+    0x05, 0xC0, 0x05, 0x00, 0x06, 0xC0, 0x06, 0x90, 0x06, 0xE0, 0x06, 0x50,
+    0x02, 0x00, 0x03, 0x20, 0x00, 0x00, 0x04, 0x1D, 0x34, 0x01, 0x30, 0x01,
+    0x7C, 0x01, 0x50, 0x01, 0x04, 0x01, 0x1C, 0x00, 0x00, 0x00, 0x00, 0xFE,
+    0x03, 0x41, 0x36, 0x30, 0x51, 0x12, 0x51, 0x10, 0x51, 0x12, 0x51, 0x13,
+    0x51, 0x14, 0x51, 0x13,
+};
+constexpr std::uint32_t kLegacyAttribHandleBits = 120;
+
+const std::uint8_t kLegacyMultiLineAttdef[] = {
+    0x00, 0xC0, 0x4D, 0x21, 0x1B, 0x80, 0x00, 0x87, 0x40, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3C,
+    0x0F, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x30, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x0F, 0x03, 0xFC, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x01, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x04, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0, 0x3F, 0xA8, 0x04,
+    0x12, 0xAD, 0x00, 0x00, 0x43, 0xA8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x81, 0x52, 0xD0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x68, 0x81,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x88, 0x08, 0x0A, 0x0B, 0x52,
+    0x8A, 0x00, 0x80, 0x90, 0xF6, 0x40, 0x06, 0x50, 0x06, 0x60, 0x06, 0x10,
+    0x07, 0x50, 0x06, 0xC0, 0x07, 0x40, 0x05, 0xC0, 0x05, 0x00, 0x07, 0x60,
+    0x06, 0x10, 0x06, 0xC0, 0x07, 0x50, 0x06, 0x50, 0x00, 0x00, 0x04, 0x1D,
+    0x34, 0x01, 0x30, 0x01, 0x7C, 0x01, 0x50, 0x01, 0x04, 0x01, 0x1C, 0x00,
+    0x00, 0x01, 0x12, 0x4D, 0x00, 0x75, 0x00, 0x6C, 0x00, 0x74, 0x00, 0x69,
+    0x00, 0x20, 0x00, 0x6C, 0x00, 0x69, 0x00, 0x6E, 0x00, 0x65, 0x00, 0x20,
+    0x00, 0x70, 0x00, 0x72, 0x00, 0x6F, 0x00, 0x6D, 0x00, 0x70, 0x00, 0x74,
+    0x00, 0x00, 0x00, 0x01, 0x4E, 0x05, 0x41, 0x30, 0x30, 0x51, 0x12, 0x51,
+    0x10, 0x51, 0x12, 0x51, 0x13, 0x51, 0x13,
+};
+constexpr std::uint32_t kLegacyAttdefHandleBits = 104;
+
+template <std::size_t N>
+std::vector<std::uint8_t> recordBytes(const std::uint8_t (&record)[N]) {
+    return std::vector<std::uint8_t>(record, record + N);
+}
+
+bool bitAt(const std::vector<std::uint8_t>& bytes, std::uint32_t bit) {
+    return ((bytes[bit / 8] >> (7 - bit % 8)) & 1) != 0;
+}
+
+// Compares the count bits that end at lhsEnd and at rhsEnd.
+bool sameBitsBefore(const std::vector<std::uint8_t>& lhs, std::uint32_t lhsEnd,
+                    const std::vector<std::uint8_t>& rhs, std::uint32_t rhsEnd,
+                    std::uint32_t count) {
+    if (count > lhsEnd || count > rhsEnd || lhsEnd > lhs.size() * 8
+        || rhsEnd > rhs.size() * 8)
+        return false;
+    for (std::uint32_t i = 1; i <= count; ++i) {
+        if (bitAt(lhs, lhsEnd - i) != bitAt(rhs, rhsEnd - i))
+            return false;
+    }
+    return true;
+}
+
+void checkAutoCadEmbeddedMText(const DRW_MText& mtext,
+                               const DRW_Coord& insertion) {
+    CHECK(mtext.basePoint.x == Approx(insertion.x));
+    CHECK(mtext.basePoint.y == Approx(insertion.y));
+    CHECK(mtext.secPoint.x == Approx(1.0));
+    CHECK(mtext.secPoint.y == Approx(0.0));
+    CHECK(mtext.textgen == 1);
+    CHECK(static_cast<int>(mtext.alignH) == 5);
+    CHECK(mtext.linespacingStyle == 1);
+    CHECK(mtext.interlin == Approx(1.0));
+    CHECK(mtext.m_backgroundFlags == 0);
+
+    // The R2018 block repeats the fields above.
+    CHECK(mtext.m_r2018IsNotAnnotative);
+    CHECK(mtext.m_r2018Version == 4);
+    CHECK(mtext.m_r2018DefaultFlag);
+    CHECK(mtext.m_r2018Attachment == 1);
+    CHECK(mtext.m_r2018XAxisDir.x == Approx(1.0));
+    CHECK(mtext.m_r2018XAxisDir.y == Approx(0.0));
+    CHECK(mtext.m_r2018InsertionPoint.x == Approx(insertion.x));
+    CHECK(mtext.m_r2018InsertionPoint.y == Approx(insertion.y));
+    CHECK(mtext.m_r2018RectWidth == Approx(0.0));
+    CHECK(mtext.m_r2018RectHeight == Approx(0.0));
+    CHECK(mtext.m_r2018ColumnType == 0);
+    CHECK(mtext.m_r2018AnnotativeData.empty());
+
+    // In that drawing 0x10 is layer "0", 0x15 linetype ByLayer and 0x11 text
+    // style Standard. The owner and the registered application are null.
+    CHECK(mtext.parentHandle == DRW::NoHandle);
+    CHECK(mtext.dwgLayerHandle() == 0x10u);
+    CHECK(mtext.dwgLinetypeHandle() == 0x15u);
+    CHECK(mtext.styleH.ref == 0x11u);
+    CHECK(mtext.m_r2018AppIdHandle == 0u);
+    CHECK(mtext.m_r2018AnnotativeAppHandle == 0u);
+}
+
+} // namespace
+
+TEST_CASE("DRW_Attrib reads and rewrites AutoCAD's AC1032 multi-line attribute",
+          "[dwg-write][dwg-read][attrib][ac1032]") {
+    std::vector<std::uint8_t> record = recordBytes(kAutoCadMultiLineAttrib);
+    DRW_TextCodec codec;
+    codec.setVersion(DRW::AC1032, false);
+    dwgBuffer reader(record.data(), record.size(), &codec);
+    DRW_Attrib parsed;
+    REQUIRE(DrwEntityEncodeTestAccess::parse(
+        parsed, DRW::AC1032, &reader, kAutoCadAttribHandleBits));
+    CHECK(reader.isGood());
+
+    // AutoCAD's DXF of the same drawing has 70 = 0, 280 = 1 and no 73.
+    CHECK(parsed.handle == 0x79Du);
+    CHECK(parsed.parentHandle == 0x79Cu);
+    CHECK(parsed.tag == "MULTI_LINE_ATT");
+    CHECK(parsed.attribFlags == 0);
+    CHECK(parsed.m_fieldLength == 0);
+    CHECK(parsed.lockPosition);
+    CHECK(parsed.attVersion == 0);
+    CHECK(parsed.m_attributeType == 2);
+    CHECK(parsed.text.empty());
+    CHECK(parsed.styleH.ref == 0x11u);
+    REQUIRE(parsed.mtext != nullptr);
+    CHECK(parsed.mtext->text == "my multi line text for the attrrib");
+    CHECK(parsed.mtext->height == Approx(1.720654456209621));
+    CHECK(parsed.mtext->m_r2018ExtentsWidth == Approx(31.9366).epsilon(1e-5));
+    CHECK(parsed.mtext->m_r2018ExtentsHeight == Approx(2.25586).epsilon(1e-5));
+    checkAutoCadEmbeddedMText(
+        *parsed.mtext, DRW_Coord{977.2814835151885, 28.7508142234822, 0.0});
+
+    // Written back, the embedded MTEXT, the fields after it and their
+    // handles are AutoCAD's bit for bit.
+    dwgBufferW body;
+    dwgBufferW strings;
+    dwgBufferW handles;
+    REQUIRE(DrwEntityEncodeTestAccess::encode(
+        parsed, DRW::AC1032, &body, &strings, &handles));
+    CHECK(sameBitsBefore(
+        record, kAutoCadAttribBodyEndBit, body.data(), body.bitCount(),
+        kAutoCadAttribBodyEndBit - kAutoCadAttribEmbeddedBit));
+    CHECK(sameBitsBefore(
+        record, kAutoCadAttribHandleEndBit, handles.data(),
+        handles.bitCount(), kAutoCadEmbeddedHandleBits));
+
+    EncodedEntityFrame frame;
+    REQUIRE(encodeThreeStreams(parsed, DRW::AC1032, frame));
+    dwgBuffer rereader(frame.bytes.data(), frame.bytes.size(), &codec);
+    DRW_Attrib reparsed;
+    REQUIRE(DrwEntityEncodeTestAccess::parse(
+        reparsed, DRW::AC1032, &rereader, frame.handleBitSize));
+    CHECK(reparsed.tag == parsed.tag);
+    CHECK(reparsed.attribFlags == 0);
+    CHECK(reparsed.m_fieldLength == 0);
+    CHECK(reparsed.lockPosition);
+    CHECK(reparsed.attVersion == 0);
+    CHECK(reparsed.styleH.ref == 0x11u);
+    REQUIRE(reparsed.mtext != nullptr);
+    CHECK(reparsed.mtext->text == parsed.mtext->text);
+    checkAutoCadEmbeddedMText(*reparsed.mtext, parsed.mtext->basePoint);
+}
+
+TEST_CASE("DRW_Attdef reads and rewrites AutoCAD's AC1032 multi-line definition",
+          "[dwg-write][dwg-read][attdef][ac1032]") {
+    std::vector<std::uint8_t> record = recordBytes(kAutoCadMultiLineAttdef);
+    DRW_TextCodec codec;
+    codec.setVersion(DRW::AC1032, false);
+    dwgBuffer reader(record.data(), record.size(), &codec);
+    DRW_Attdef parsed;
+    REQUIRE(DrwEntityEncodeTestAccess::parse(
+        parsed, DRW::AC1032, &reader, kAutoCadAttdefHandleBits));
+    CHECK(reader.isGood());
+
+    CHECK(parsed.handle == 0x796u);
+    CHECK(parsed.tag == "MULTI_LINE_ATT");
+    CHECK(parsed.prompt == "this is an example of prompt");
+    CHECK(parsed.attribFlags == 0);
+    CHECK(parsed.m_fieldLength == 0);
+    CHECK(parsed.lockPosition);
+    CHECK(parsed.attVersion == 0);
+    CHECK(parsed.m_attributeType == 4);
+    CHECK(parsed.styleH.ref == 0x11u);
+    REQUIRE(parsed.mtext != nullptr);
+    CHECK(parsed.mtext->text.empty());
+    CHECK(parsed.mtext->height == Approx(0.410546).epsilon(1e-5));
+    checkAutoCadEmbeddedMText(
+        *parsed.mtext, DRW_Coord{954.8074779573491, 6.394418742730506, 0.0});
+
+    // The compared bits include the version byte an R2010+ ATTDEF repeats
+    // after the lock position.
+    dwgBufferW body;
+    dwgBufferW strings;
+    dwgBufferW handles;
+    REQUIRE(DrwEntityEncodeTestAccess::encode(
+        parsed, DRW::AC1032, &body, &strings, &handles));
+    CHECK(sameBitsBefore(
+        record, kAutoCadAttdefBodyEndBit, body.data(), body.bitCount(),
+        kAutoCadAttdefBodyEndBit - kAutoCadAttdefEmbeddedBit));
+    CHECK(sameBitsBefore(
+        record, kAutoCadAttdefHandleEndBit, handles.data(),
+        handles.bitCount(), kAutoCadEmbeddedHandleBits));
+
+    EncodedEntityFrame frame;
+    REQUIRE(encodeThreeStreams(parsed, DRW::AC1032, frame));
+    dwgBuffer rereader(frame.bytes.data(), frame.bytes.size(), &codec);
+    DRW_Attdef reparsed;
+    REQUIRE(DrwEntityEncodeTestAccess::parse(
+        reparsed, DRW::AC1032, &rereader, frame.handleBitSize));
+    CHECK(reparsed.tag == parsed.tag);
+    CHECK(reparsed.prompt == parsed.prompt);
+    CHECK(reparsed.attribFlags == 0);
+    CHECK(reparsed.m_fieldLength == 0);
+    CHECK(reparsed.lockPosition);
+    CHECK(reparsed.styleH.ref == 0x11u);
+    REQUIRE(reparsed.mtext != nullptr);
+    checkAutoCadEmbeddedMText(*reparsed.mtext, parsed.mtext->basePoint);
+}
+
+TEST_CASE("DRW_Attrib writes the R2018 block of its MTEXT from the fields it repeats",
+          "[dwg-write][dwg-read][attrib][ac1032]") {
+    DRW_Attrib source;
+    source.handle = 0xA8;
+    source.basePoint = DRW_Coord{3.0, 7.5, 0.0};
+    source.secPoint = source.basePoint;
+    source.height = 2.5;
+    source.tag = "NOTE";
+    source.lockPosition = true;
+    source.m_attributeType = 2;
+    DrwEntityEncodeTestAccess::layerH(source).ref = 0x2A;
+    source.styleH.ref = 0x2B;
+
+    // Not annotative, but with a block that was never filled in: that is what
+    // a file in LibreCAD's earlier form leaves behind.
+    source.mtext = std::make_unique<DRW_MText>();
+    source.mtext->basePoint = DRW_Coord{3.0, 9.0, 0.0};
+    source.mtext->secPoint = DRW_Coord{0.0, 1.0, 0.0};
+    source.mtext->widthscale = 40.0;
+    source.mtext->height = 2.5;
+    source.mtext->textgen = 5;
+    source.mtext->text = "LINE 1\\PLINE 2";
+    source.mtext->m_r2018IsNotAnnotative = true;
+    source.mtext->m_r2018Version = 4;
+    source.mtext->m_r2018DefaultFlag = true;
+    source.mtext->m_r2018RectHeight = 12.0;
+    source.mtext->m_r2018ExtentsWidth = 32.0;
+    source.mtext->m_r2018ExtentsHeight = 8.0;
+
+    EncodedEntityFrame frame;
+    REQUIRE(encodeThreeStreams(source, DRW::AC1032, frame));
+    DRW_TextCodec codec;
+    codec.setVersion(DRW::AC1032, false);
+    dwgBuffer reader(frame.bytes.data(), frame.bytes.size(), &codec);
+    DRW_Attrib parsed;
+    REQUIRE(DrwEntityEncodeTestAccess::parse(
+        parsed, DRW::AC1032, &reader, frame.handleBitSize));
+    CHECK(parsed.tag == "NOTE");
+    CHECK(parsed.attribFlags == 0);
+    CHECK(parsed.m_fieldLength == 0);
+    CHECK(parsed.lockPosition);
+    CHECK(parsed.styleH.ref == 0x2Bu);
+    REQUIRE(parsed.mtext != nullptr);
+    const DRW_MText& mtext = *parsed.mtext;
+    CHECK(mtext.text == source.mtext->text);
+    CHECK(mtext.m_r2018IsNotAnnotative);
+    CHECK(mtext.m_r2018Version == 4);
+    CHECK(mtext.m_r2018DefaultFlag);
+    CHECK(mtext.m_r2018Attachment == 5);
+    CHECK(mtext.m_r2018XAxisDir.x == Approx(0.0));
+    CHECK(mtext.m_r2018XAxisDir.y == Approx(1.0));
+    CHECK(mtext.m_r2018InsertionPoint.x == Approx(3.0));
+    CHECK(mtext.m_r2018InsertionPoint.y == Approx(9.0));
+    CHECK(mtext.m_r2018RectWidth == Approx(40.0));
+    CHECK(mtext.m_r2018RectHeight == Approx(12.0));
+    CHECK(mtext.m_r2018ExtentsWidth == Approx(32.0));
+    CHECK(mtext.m_r2018ExtentsHeight == Approx(8.0));
+    // Without handles of its own the MTEXT is on the attribute's layer and in
+    // its text style; AutoCAD stores an owner, null here, and no application.
+    CHECK(mtext.parentHandle == DRW::NoHandle);
+    CHECK(mtext.dwgLayerHandle() == 0x2Au);
+    CHECK(mtext.styleH.ref == 0x2Bu);
+    CHECK(mtext.m_r2018AppIdHandle == 0u);
+}
+
+TEST_CASE("DRW_Attrib and DRW_Attdef read the multi-line form of earlier LibreCAD builds",
+          "[dwg-read][attrib][attdef][ac1032]") {
+    DRW_TextCodec codec;
+    codec.setVersion(DRW::AC1032, false);
+
+    std::vector<std::uint8_t> attribRecord = recordBytes(kLegacyMultiLineAttrib);
+    dwgBuffer attribReader(attribRecord.data(), attribRecord.size(), &codec);
+    DRW_Attrib attrib;
+    REQUIRE(DrwEntityEncodeTestAccess::parse(
+        attrib, DRW::AC1032, &attribReader, kLegacyAttribHandleBits));
+    CHECK(attrib.tag == "ML_TAG");
+    CHECK(attrib.attribFlags == 0);
+    CHECK(attrib.m_fieldLength == 0);
+    CHECK(attrib.lockPosition);
+    CHECK(attrib.m_attributeType == 2);
+    CHECK(attrib.styleH.ref == 0x13u);
+    REQUIRE(attrib.mtext != nullptr);
+    CHECK(attrib.mtext->text == "line 1\\Pline 2");
+    CHECK(attrib.mtext->basePoint.x == Approx(101.0));
+    CHECK(attrib.mtext->basePoint.y == Approx(52.0));
+    CHECK(attrib.mtext->m_r2018IsNotAnnotative);
+    CHECK(attrib.mtext->dwgLayerHandle() == 0x12u);
+    CHECK(attrib.mtext->styleH.ref == 0x13u);
+    CHECK(attrib.mtext->m_r2018AppIdHandle == 0x14u);
+
+    std::vector<std::uint8_t> attdefRecord = recordBytes(kLegacyMultiLineAttdef);
+    dwgBuffer attdefReader(attdefRecord.data(), attdefRecord.size(), &codec);
+    DRW_Attdef attdef;
+    REQUIRE(DrwEntityEncodeTestAccess::parse(
+        attdef, DRW::AC1032, &attdefReader, kLegacyAttdefHandleBits));
+    CHECK(attdef.tag == "ML_TAG");
+    CHECK(attdef.prompt == "Multi line prompt");
+    CHECK(attdef.attribFlags == 0);
+    CHECK(attdef.m_fieldLength == 0);
+    CHECK(attdef.lockPosition);
+    CHECK(attdef.m_attributeType == 4);
+    CHECK(attdef.styleH.ref == 0x13u);
+    REQUIRE(attdef.mtext != nullptr);
+    CHECK(attdef.mtext->text == "default\\Pvalue");
+    CHECK_FALSE(attdef.mtext->m_r2018IsNotAnnotative);
+    CHECK(attdef.mtext->dwgLayerHandle() == 0x12u);
+    CHECK(attdef.mtext->styleH.ref == 0x13u);
+
+    // Written again, both are in AutoCAD's form.
+    EncodedEntityFrame frame;
+    REQUIRE(encodeThreeStreams(attrib, DRW::AC1032, frame));
+    dwgBuffer rereader(frame.bytes.data(), frame.bytes.size(), &codec);
+    DRW_Attrib rewritten;
+    REQUIRE(DrwEntityEncodeTestAccess::parse(
+        rewritten, DRW::AC1032, &rereader, frame.handleBitSize));
+    REQUIRE(rewritten.mtext != nullptr);
+    CHECK(rewritten.mtext->text == attrib.mtext->text);
+    CHECK(rewritten.mtext->m_r2018Attachment == attrib.mtext->textgen);
+    CHECK(rewritten.mtext->m_r2018InsertionPoint.x == Approx(101.0));
+    CHECK(rewritten.mtext->m_r2018XAxisDir.x == Approx(1.0));
+}
+
 TEST_CASE("DRW_Attdef::encodeDwg round-trips tag + prompt",
           "[dwg-write][entity-encode]") {
     DRW_Attdef src;
@@ -3442,6 +3860,50 @@ TEST_CASE("DRW_Underlay::parseDwg resets reused clip state",
     CHECK(reused.inverseClipBoundary.empty());
     CHECK(reused.flags == 2);
     CHECK(reused.definitionHandle == 0x743u);
+}
+
+namespace {
+
+// The PDF underlay of a drawing saved by AutoCAD as R14: object record 0xD07
+// of ACadSharp's samples/sample_AC1014.dwg, from the object type to the end
+// of the handles. Its last handle names the PDFDEFINITION 0xD06. See
+// testdata/PROVENANCE.md.
+const std::uint8_t kAutoCadR14PdfUnderlay[] = {
+    0x07, 0xC0, 0x80, 0x83, 0x41, 0xE8, 0x40, 0x00, 0x00, 0x00, 0x40, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x78, 0x08, 0x00, 0x05, 0x4E, 0x0B,
+    0x52, 0x00, 0x14, 0x2F, 0x7A, 0xB9, 0xA4, 0x98, 0x20, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x05, 0xC8, 0x14, 0xA8, 0x1B, 0x20, 0x04, 0x60, 0xA2,
+    0x21, 0x82, 0xC7, 0x42, 0x50, 0xA4, 0x1A, 0x0D,
+};
+
+} // namespace
+
+// R13 and R14 keep the handles behind the data of the same record, the
+// definition last, as the later versions do in their handle stream. Read
+// without it, the underlay cannot be written again in any format.
+TEST_CASE("DRW_Underlay reads the definition handle of AutoCAD's R14 underlay",
+          "[dwg-read][entity-encode][underlay][r14]") {
+    std::vector<std::uint8_t> record = recordBytes(kAutoCadR14PdfUnderlay);
+    dwgBuffer reader(record.data(), record.size());
+    DRW_Underlay parsed;
+    REQUIRE(DrwEntityEncodeTestAccess::parse(parsed, DRW::AC1014, &reader));
+    CHECK(reader.isGood());
+
+    CHECK(parsed.handle == 0xD07u);
+    CHECK(parsed.definitionHandle == 0xD06u);
+    CHECK(DrwEntityEncodeTestAccess::layerH(parsed).ref == 0x10u);
+    CHECK(parsed.position.x == Catch::Approx(16.28692563580262));
+    CHECK(parsed.position.y == Catch::Approx(15.0));
+    CHECK(parsed.position.z == Catch::Approx(0.0));
+    CHECK(parsed.scale.x == Catch::Approx(1.0));
+    CHECK(parsed.scale.y == Catch::Approx(1.0));
+    CHECK(parsed.scale.z == Catch::Approx(1.0));
+    CHECK(parsed.rotation == Catch::Approx(0.0));
+    CHECK(parsed.extPoint.z == Catch::Approx(1.0));
+    CHECK(parsed.flags == 3);
+    CHECK(parsed.contrast == 100);
+    CHECK(parsed.fade == 0);
+    CHECK(parsed.clipBoundary.empty());
 }
 
 // HELIX encoder round-trip (Phase 8a-1): a HELIX encodes as a SPLINE body

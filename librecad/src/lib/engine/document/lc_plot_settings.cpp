@@ -115,11 +115,20 @@ void LC_PlotSettings::setMarginsInMm(const double left, const double top, const 
 }
 
 /**
- * Sets a new paper size.
+ * Sets a new paper size of the drawing, in its units. The size the settings
+ * remember for new drawings is left alone.
  */
-void LC_PlotSettings::setPaperSize(const RS_Vector& s) const {
+void LC_PlotSettings::setDrawingPaperSize(const RS_Vector& s) const {
     m_graphic->addVariable("$PLIMMIN", RS_Vector(0.0, 0.0), 10);
     m_graphic->addVariable("$PLIMMAX", s, 10);
+    m_graphic->setModified(true);
+}
+
+/**
+ * Sets a new paper size, and remembers it as the paper size of new drawings.
+ */
+void LC_PlotSettings::setPaperSize(const RS_Vector& s) const {
+    setDrawingPaperSize(s);
     //set default paper size
     const RS_Vector def = RS_Units::convert(s, getUnit(), RS2::Millimeter);
     LC_GROUP_GUARD("Print"); // fixme - rework
@@ -127,7 +136,6 @@ void LC_PlotSettings::setPaperSize(const RS_Vector& s) const {
         LC_SET("PaperSizeX", def.x);
         LC_SET("PaperSizeY", def.y);
     }
-    m_graphic->setModified(true);
 }
 
 QString LC_PlotSettings::getPaperSizeName() const {
