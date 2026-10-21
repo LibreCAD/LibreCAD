@@ -9112,12 +9112,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_device/lc_deviceoptions.ui" line="26"/>
         <source>Selection of pointing device</source>
-        <translation>選擇指點裝置</translation>
+        <translation>選取指標裝置</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_device/lc_deviceoptions.ui" line="56"/>
         <source>Save</source>
-        <translation>保存</translation>
+        <translation>儲存</translation>
     </message>
 </context>
 <context>
@@ -9125,7 +9125,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="198"/>
         <source>Closed Filled</source>
-        <translation>已填入</translation>
+        <translation>實心閉合</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="201"/>
@@ -9135,22 +9135,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="202"/>
         <source>Dot Small</source>
-        <translation>小點</translation>
+        <translation>小圓點</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="203"/>
         <source>Dot Blank</source>
-        <translation>點空白</translation>
+        <translation>空心圓點</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="204"/>
         <source>Origin Indicator</source>
-        <translation>出自指示器</translation>
+        <translation>來源標識符</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="205"/>
         <source>Origin Indicator 2</source>
-        <translation>出地指示器 2</translation>
+        <translation>來源標識符 2</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="206"/>
@@ -9160,7 +9160,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="207"/>
         <source>Right Angle</source>
-        <translation>右角</translation>
+        <translation>直角</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="208"/>
@@ -9175,7 +9175,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="210"/>
         <source>Dot Small Blank</source>
-        <translation>小點空白</translation>
+        <translation>小空心圓點</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="211"/>
@@ -9185,42 +9185,42 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="212"/>
         <source>Oblique</source>
-        <translation>二相相</translation>
+        <translation>斜線</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="213"/>
         <source>Box Filled</source>
-        <translation>已填入</translation>
+        <translation>實心方塊</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="214"/>
         <source>Box Blank</source>
-        <translation>空白框</translation>
+        <translation>空心方塊</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="215"/>
         <source>Closed Blank</source>
-        <translation>已關閉的空白</translation>
+        <translation>空心閉合</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="216"/>
         <source>Datum Filled</source>
-        <translation>已填充</translation>
+        <translation>實心基準點</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="217"/>
         <source>Datum Blank</source>
-        <translation>大通空白</translation>
+        <translation>空心基準點</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="218"/>
         <source>Integral</source>
-        <translation>集成</translation>
+        <translation>整數</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="219"/>
         <source>Architecture Tick</source>
-        <translation>二. 通訊錄</translation>
+        <translation>建築標記</translation>
     </message>
 </context>
 <context>
@@ -9228,32 +9228,32 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="91"/>
         <source>Linear</source>
-        <translation>有線</translation>
+        <translation>線性標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="95"/>
         <source>Angular</source>
-        <translation>角</translation>
+        <translation>角度標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="99"/>
         <source>Diametric</source>
-        <translation>二相</translation>
+        <translation>直徑標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="103"/>
         <source>Radial</source>
-        <translation>放射</translation>
+        <translation>半徑標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="107"/>
         <source>Ordinate</source>
-        <translation>整數</translation>
+        <translation>坐標標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="111"/>
         <source>Leader and Tolerance</source>
-        <translation>領袖和容忍</translation>
+        <translation>引線與公差</translation>
     </message>
 </context>
 <context>
@@ -9266,7 +9266,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="35"/>
         <source>Zoom Auto</source>
-        <translation>縮放自動</translation>
+        <translation>自動縮放</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="62"/>
@@ -9276,12 +9276,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="76"/>
         <source>Zoom Out</source>
-        <translation>縮放</translation>
+        <translation>縮小</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="90"/>
         <source>Zoom Pan</source>
-        <translation>縮放泛</translation>
+        <translation>平移視圖</translation>
     </message>
 </context>
 <context>
@@ -9289,73 +9289,73 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="104"/>
         <source>Dimension Styles Export Error</source>
-        <translation>大小樣式匯出錯誤</translation>
+        <translation>標註型式匯出錯誤</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="105"/>
         <source>Can&apos;t open provided file for writing - check that provided location is writable. Dimension styles were not exported.</source>
-        <translation>不能開啟已提供要寫入的檔案 -- 檢查已提供的位置可寫入 。 尺寸樣式沒有被匯出 .</translation>
+        <translation>無法開啟指定的檔案以進行寫入，請檢查該位置是否具備寫入權限。標註型式未匯出。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
         <source>Dimension Styles Export</source>
-        <translation>大小樣式匯出</translation>
+        <translation>標註型式匯出</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
         <source>Dimensions Styles were exported.</source>
-        <translation>尺寸樣式被匯出 .</translation>
+        <translation>標註型式已成功匯出。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="125"/>
         <source>Dimension Styles Import Error</source>
-        <translation>尺寸樣式匯入出錯</translation>
+        <translation>標註型式匯入錯誤</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="127"/>
         <source>Can&apos;t open provided file for reading. Dimension styles were not imported.</source>
-        <translation>無法開啟已提供檔案以讀取 。 尺寸樣式沒有被匯入 .</translation>
+        <translation>無法開啟指定的檔案以進行讀取。標註型式未匯入。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="133"/>
         <source>Unexpected error during dimension styles parsing. Message:</source>
-        <translation>在大小樣式分析出出意料出錯 。 訊息 :</translation>
+        <translation>解析標註型式時發生未預期的錯誤。訊息：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="137"/>
         <source>Unexpected format of file, it does not contains LibreCAD dimension styles.</source>
-        <translation>文件出乎意料的格式, 它不包含 LibreCAD 維度樣式 .</translation>
+        <translation>不支援的檔案格式，該檔案不包含 LibreCAD 的標註型式。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="175"/>
         <source>Dimension Styles Import</source>
-        <translation>尺寸樣式匯入</translation>
+        <translation>標註型式匯入</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
         <source>No dimension styles to import.</source>
-        <translation>沒有要匯入的尺寸樣式 .</translation>
+        <translation>沒有可供匯入的標註型式。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="175"/>
         <source>Dimension styles were imported.</source>
-        <translation>尺寸樣式被匯入 .</translation>
+        <translation>標註型式已成功匯入。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="183"/>
         <source>Import Dimension Styles</source>
-        <translation>匯入尺寸樣式</translation>
+        <translation>匯入標註型式</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="183"/>
         <source>Export Dimension Styles</source>
-        <translation>匯出尺寸樣式</translation>
+        <translation>匯出標註型式</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="184"/>
         <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation>LibreCAD 尺寸樣式檔案 (*.%1)</translation>
+        <translation>LibreCAD 標註型式檔 (*.%1)</translation>
     </message>
 </context>
 <context>
@@ -9368,7 +9368,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.ui" line="33"/>
         <source>Version Information</source>
-        <translation>版本信息</translation>
+        <translation>版本資訊</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.ui" line="57"/>
@@ -9379,17 +9379,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.ui" line="73"/>
         <source>Copies version information into clipboard</source>
-        <translation>將版本信息复制到剪贴板</translation>
+        <translation>複製版本資訊至剪貼簿</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.ui" line="76"/>
         <source>&amp;Copy Version Info</source>
-        <translation>Copy 版本信息( C)</translation>
+        <translation>複製版本資訊(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.ui" line="83"/>
         <source>Force check whether new version is available</source>
-        <translation>強取檢查新版本是否可用</translation>
+        <translation>強制檢查是否有新版本可用</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.ui" line="86"/>
@@ -9404,52 +9404,52 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="72"/>
         <source>Version: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>版本: &lt;b&gt;%1 &lt;/b&gt;</translation>
+        <translation>版本：&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="74"/>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation>編譯器: Clang%1.%2.%3</translation>
+        <translation>編譯器：Clang %1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="76"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation>編譯: GNU GCC%1.%2.%3</translation>
+        <translation>編譯器：GNU GCC %1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="78"/>
         <source>Compiler: Microsoft Visual C++</source>
-        <translation>編譯器: Microsoft Visual C++</translation>
+        <translation>編譯器：Microsoft Visual C++</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="80"/>
         <source>Compiled on: %1</source>
-        <translation>已編譯于 :%1</translation>
+        <translation>編譯日期：%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="81"/>
         <source>Qt Version: %1</source>
-        <translation>Qt 版本 :%1</translation>
+        <translation>Qt 版本：%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="82"/>
         <source>Boost Version: %1.%2.%3</source>
-        <translation>提示版本 :%1.%2.%3</translation>
+        <translation>Boost 版本：%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="92"/>
         <source>Contributors</source>
-        <translation>二. 捐款人</translation>
+        <translation>貢獻者</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="93"/>
         <source>License</source>
-        <translation>授權</translation>
+        <translation>授權條款</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="94"/>
         <source>The Code</source>
-        <translation>《法典》</translation>
+        <translation>原始碼</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="105"/>
@@ -9506,58 +9506,58 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="43"/>
         <source>Lines</source>
-        <translation>行</translation>
+        <translation>線條</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="55"/>
         <source>Dimension Lines</source>
-        <translation>尺寸行</translation>
+        <translation>標註線</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="74"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="243"/>
         <source>Color:</source>
-        <translation>顏色 :</translation>
+        <translation>顏色：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="124"/>
         <source>Displays and sets the color for the dimension line (DIMCLRD system variable).</source>
-        <translation>顯示并設定尺寸行的顏色 (DIMCLRD system variable) .</translation>
+        <translation>顯示並設定標註線的顏色（DIMCLRD 系統變數）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="81"/>
         <source>Linetype:</source>
-        <translation>行型態 :</translation>
+        <translation>線型：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="67"/>
         <source>Sets the linetype of the dimension line. (DIMLTYPE system variable)</source>
-        <translation>設定尺寸行的行型 。 (DIMLTYPE 系統變數)</translation>
+        <translation>設定標註線的線型。（DIMLTYPE 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"/>
         <source>Linewidth:</source>
-        <translation>行向:</translation>
+        <translation>線寬：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
         <source>Sets the lineweight of the dimension line. (DIMLWD system variable)</source>
-        <translation>設定尺寸行的行重。 (DIMLWD 系統變數)</translation>
+        <translation>設定標註線的線寬。（DIMLWD 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="111"/>
         <source>Extend beyond</source>
-        <translation>延伸至</translation>
+        <translation>延伸量</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"/>
         <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation>在您使用斜方、 建築、 勾選、 元件分類而箭頭沒有印記時, 指定相距以將等距線延伸至延伸行 。 (DIMDLE系統變數)</translation>
+        <translation>當箭頭形式使用斜線、建築標記、刻度線、積分號或無標記時，指定標註線超出延伸線的距離。（DIMDLE 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
-        <translation>基线相距:</translation>
+        <translation>基線間距：</translation>
     </message>
     <message>
         <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
@@ -9567,122 +9567,122 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
         <source>Suppresses display of first dimension line (DIMSD1 system variable)</source>
-        <translation>第一個尺寸行( DIMSD1 system variable) 的壓制顯示</translation>
+        <translation>抑制第一條標註線的顯示（DIMSD1 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="194"/>
         <source>Suppress Dim line 1 and arrow</source>
-        <translation>第1行和箭頭</translation>
+        <translation>抑制標註線 1 與箭頭</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="175"/>
         <source>Suppresses display of second dimension line (DIMSD2 system variable)</source>
-        <translation>二等分線( DIMSD2 system variable) 的壓制顯示</translation>
+        <translation>抑制第二條標註線的顯示（DIMSD2 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="178"/>
         <source>Suppress Dim line 2 and arrow</source>
-        <translation>第2行和箭頭</translation>
+        <translation>抑制標註線 2 與箭頭</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="204"/>
         <source>Extension Lines</source>
-        <translation>延伸行</translation>
+        <translation>延伸線</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="216"/>
         <source>Sets the color for the extension line (DIMCLRE system variable.)</source>
-        <translation>設定延伸行的顏色 (DIMCLRE 系統變數)</translation>
+        <translation>設定延伸線的顏色（DIMCLRE 系統變數）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="295"/>
         <source>Linetype ext line 1:</source>
-        <translation>第 1行:</translation>
+        <translation>延伸線 1 線型：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="361"/>
         <source>Sets the linetype of the first extension line. (DIMLTEX1 system variable)</source>
-        <translation>設定第一延伸行的行型 。 (DIMLTEX1 系統變數)</translation>
+        <translation>設定第一條延伸線的線型。（DIMLTEX1 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="338"/>
         <source>Linetype ext line 2:</source>
-        <translation>第2行出行:</translation>
+        <translation>延伸線 2 線型：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="308"/>
         <source>Sets the linetype of the second extension line. (DIMLTEX2 system variable)</source>
-        <translation>設定第二延伸行的行型 。 (DIMLTEX2系統變數)</translation>
+        <translation>設定第二條延伸線的線型。（DIMLTEX2 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="331"/>
         <source>Lineweight:</source>
-        <translation>行重 :</translation>
+        <translation>線寬：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="236"/>
         <source>Sets the lineweight of the extension line. (DIMLWE system variable)</source>
-        <translation>設定延伸行的行重 。 (DIMLWE 系統變數)</translation>
+        <translation>設定延伸線的線寬。（DIMLWE 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="368"/>
         <source>Extend beyond dim lines:</source>
-        <translation>延伸至淡出行 :</translation>
+        <translation>超出標註線：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="285"/>
         <source>Specifies a distance to extend the extension lines above the dimension line. (DIMEXE system variable)</source>
-        <translation>指定在尺寸行上方延伸行的相距 。 (DIMEXE系統變數)</translation>
+        <translation>指定延伸線超出標註線的距離。（DIMEXE 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="375"/>
         <source>Offset from origin:</source>
-        <translation>从原生地除去:</translation>
+        <translation>原點偏移量：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
         <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation>在定義尺寸的地圖上設定相距以抵消延伸行 。 (DIMEXO系統變數)</translation>
+        <translation>設定延伸線與圖面上定義標註點之間的偏移距離。（DIMEXO 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="223"/>
         <source>Length:</source>
-        <translation>長度 :</translation>
+        <translation>長度：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="388"/>
         <source>Sets the total length of the extension lines starting from the dimension line toward the dimension origin. (DIMFXL system variable)</source>
-        <translation>从尺寸行起到尺寸出處的延伸行的總長 。 ( DMFXL 系統變數)</translation>
+        <translation>設定從標註線向標註原點延伸的延伸線總長度。（DIMFXL 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="345"/>
         <source>Enables fixed length extension lines. (DIMFXLON system variable)</source>
-        <translation>開啟固定長線 。 (DMFXLON 系統變數)</translation>
+        <translation>啟用固定長度延伸線。（DIMFXLON 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="348"/>
         <source>Fixed length extension lines</source>
-        <translation>固定延伸行</translation>
+        <translation>固定長度延伸線</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"/>
         <source>Suppresses the display of first extension line (DIMSE1 system variable).</source>
-        <translation>第一個延伸行( DIMSE1 系統變數) 的顯示被壓制 .</translation>
+        <translation>抑制第一條延伸線的顯示（DIMSE1 系統變數）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="272"/>
         <source>Suppress Ext line 1</source>
-        <translation>第 1行</translation>
+        <translation>抑制延伸線 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="321"/>
         <source>Suppresses the display of second extension line (DIMSE2 system variable).</source>
-        <translation>第 二 延伸行 (DIMSE2 系統變數) 的顯示被壓制 .</translation>
+        <translation>抑制第二條延伸線的顯示（DIMSE2 系統變數）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="324"/>
         <source>Suppress Ext line 2</source>
-        <translation>第 二 行</translation>
+        <translation>抑制延伸線 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="429"/>
@@ -9698,17 +9698,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="437"/>
         <source>Symbols and Arrows</source>
-        <translation>符號和箭頭</translation>
+        <translation>符號與箭頭</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="443"/>
         <source>Linear jog dimension</source>
-        <translation>有線性慢跑尺寸</translation>
+        <translation>線性折彎標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="449"/>
         <source>Jog height factor:</source>
-        <translation>慢跑高度因子 :</translation>
+        <translation>折彎高度係數：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="463"/>
@@ -9718,17 +9718,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="473"/>
         <source>Radius jog dimension</source>
-        <translation>半徑慢跑尺寸</translation>
+        <translation>半徑折彎標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="479"/>
         <source>Jog angle:</source>
-        <translation>慢跑角度 :</translation>
+        <translation>折彎角度：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="486"/>
         <source>Determines the angle of the transverse segment of the dimension line in a jogged radius dimension. (DIMJOGANG system variable)</source>
-        <translation>在慢跑半徑尺寸中确定尺寸線截面的角度。 (DIMJOGANG系統變數)</translation>
+        <translation>決定半徑折彎標註中，標註線橫向段的夾角。（DIMJOGANG 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="505"/>
@@ -9738,62 +9738,62 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="553"/>
         <source>Displays and sets the size of arrowheads. (DIMASZ system variable)</source>
-        <translation>顯示并設定箭頭的大小 。 (DIMASZ系統變數)</translation>
+        <translation>顯示並設定箭頭的大小。（DIMASZ 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="539"/>
         <source>Sets the arrowhead for the leader line. (DIMLDRBLK system variable)</source>
-        <translation>为領導行設定箭頭 。 (DIMLDRBLK 系統變數)</translation>
+        <translation>設定引線的箭頭形式。（DIMLDRBLK 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="511"/>
         <source>Leader:</source>
-        <translation>主演:</translation>
+        <translation>引線：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="518"/>
         <source>Sets the arrowhead for the first dimension line. When you change the first arrowhead type, the second arrowhead automatically changes to match it. (DIMBLK1 system variable)</source>
-        <translation>第一個尺寸線的箭頭已設定 。 第一個箭頭型態被變更后, 第一個箭頭会自動變更以相匹配. (DIMBLK1系統變數)</translation>
+        <translation>設定第一條標註線的箭頭形式。當您變更第一個箭頭類型時，第二個箭頭會自動變更以保持一致。（DIMBLK1 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="588"/>
         <source>Sets the arrowhead for the second dimension line. (DIMBLK2 system variable)</source>
-        <translation>为第二維線設定箭頭。 (DIMBLK2 系統變數)</translation>
+        <translation>設定第二條標註線的箭頭形式。（DIMBLK2 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="570"/>
         <source>Use the same arrowhead for dimension line</source>
-        <translation>尺寸行用同一個箭頭</translation>
+        <translation>標註線使用相同的箭頭</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="546"/>
         <source>Second:</source>
-        <translation>二:</translation>
+        <translation>第二個：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="525"/>
         <source>First:</source>
-        <translation>第:</translation>
+        <translation>第一個：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="563"/>
         <source>Arrow size:</source>
-        <translation>箭頭大小 :</translation>
+        <translation>箭頭大小：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="532"/>
         <source>Tick Size:</source>
-        <translation>勾選大小 :</translation>
+        <translation>刻度大小：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="598"/>
         <source>Dimension break</source>
-        <translation>尺寸分解</translation>
+        <translation>標註切斷</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="604"/>
         <source>Break size:</source>
-        <translation>打斷大小 :</translation>
+        <translation>切斷量：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="624"/>
@@ -9803,7 +9803,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="630"/>
         <source>Suppresses the display of arc length symbols. (DIMARCSYM system variable)</source>
-        <translation>壓制弧長符號的顯示。 (DIMARCSYM 系統變數)</translation>
+        <translation>抑制弧長符號的顯示。（DIMARCSYM 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="633"/>
@@ -9815,62 +9815,62 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="640"/>
         <source>Places arc length symbols before the dimension text. (DIMARCSYM system variable)</source>
-        <translation>在尺寸文字前放置弧長符號。 (DIMARCSYM 系統變數)</translation>
+        <translation>將弧長符號放置於標註文字之前。（DIMARCSYM 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="643"/>
         <source>Preceding dimension text</source>
-        <translation>在尺寸前文本</translation>
+        <translation>置於標註文字前</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="650"/>
         <source>Places arc length symbols above the dimension text. (DIMARCSYM system variable)</source>
-        <translation>在尺寸文字上方放置弧長符號。 (DIMARCSYM 系統變數)</translation>
+        <translation>將弧長符號放置於標註文字上方。（DIMARCSYM 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="653"/>
         <source>Above dimension text</source>
-        <translation>在尺寸文字上方</translation>
+        <translation>置於標註文字上方</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="663"/>
         <source>Centermarks</source>
-        <translation>中印</translation>
+        <translation>中心標記</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="669"/>
         <source>Creates no center mark or centerline. The value is stored as 0 in the DIMCEN system variable.</source>
-        <translation>沒有建立中心標記或中心線 。 该值以 0 儲存于 DIMCEN 系統變數中 .</translation>
+        <translation>不建立中心標記或中心線。該值作為 0 儲存在 DIMCEN 系統變數中。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="679"/>
         <source>Creates a center mark. The size of the center mark is stored as a positive value in the DIMCEN system variable.</source>
-        <translation>建立中標 。 在 DIMCEN 系統變數中, 中心標記的大小被儲存为正值 .</translation>
+        <translation>建立中心標記。中心標記的大小作為正值儲存在 DIMCEN 系統變數中。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="682"/>
         <source>Mark</source>
-        <translation>馬克</translation>
+        <translation>標記</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="689"/>
         <source>Creates a centerline. The size of the centerline is stored as a negative value in the DIMCEN system variable.</source>
-        <translation>建立中線 。 中線的大小被儲存为 DIMCEN 系統變數中的負值 .</translation>
+        <translation>建立中心線。中心線的大小作為負值儲存在 DIMCEN 系統變數中。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="692"/>
         <source>Line</source>
-        <translation>行</translation>
+        <translation>直線</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="699"/>
         <source>Size:</source>
-        <translation>大小:</translation>
+        <translation>尺寸：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="706"/>
         <source>Displays and sets the size of the center mark or centerline. (DIMCEN system variable)</source>
-        <translation>顯示并設定中標或中線的大小 。 (DIMCEN 系統變數)</translation>
+        <translation>顯示並設定中心標記或中心線的大小。（DIMCEN 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="746"/>
@@ -9886,27 +9886,27 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="764"/>
         <source>Lists the available text styles.</source>
-        <translation>列出可用的文字樣式.</translation>
+        <translation>列出可用的文字型式。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="774"/>
         <source>Fill Color:</source>
-        <translation>填充顏色 :</translation>
+        <translation>填滿顏色：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="781"/>
         <source>Text Style:</source>
-        <translation>文字樣式 :</translation>
+        <translation>文字型式：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="788"/>
         <source>Sets the color for the text background in dimensions (DIMTFILLCLR system variable)</source>
-        <translation>在尺寸上設定文字背景的顏色( DIMTFILLCLR 系統變數)</translation>
+        <translation>設定標註中文字背景的顏色（DIMTFILLCLR 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="795"/>
         <source>Text Color:</source>
-        <translation>文字顏色 :</translation>
+        <translation>文字顏色：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="802"/>
@@ -9916,42 +9916,42 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="809"/>
         <source>Sets the scale of fractions relative to dimension text. (DIMTFAC system variable)</source>
-        <translation>設定分數相對尺寸文字的大小。 (DIMTFAC系統變數)</translation>
+        <translation>設定分數相對於標註文字的比例。（DIMTFAC 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="822"/>
         <source>Fraction height scale:</source>
-        <translation>分數高度平分 :</translation>
+        <translation>分數高度比例：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="829"/>
         <source>Sets the height of the current dimension text style. (DIMTXT system variable)</source>
-        <translation>設定目前尺寸文字樣式的高度。 (DIMTXT系統變數)</translation>
+        <translation>設定目前標註文字型式的高度。（DIMTXT 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="842"/>
         <source>Sets the color for the dimension text (DIMCLRT system variable)</source>
-        <translation>設定尺寸文字的顏色 (DIMCLRT 系統變數)</translation>
+        <translation>設定標註文字的顏色（DIMCLRT 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="849"/>
         <source>Defines whether text background will be filled by color</source>
-        <translation>定義文字背景是否由顏色填充</translation>
+        <translation>定義文字背景是否填滿顏色</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="852"/>
         <source>Fill text background by color</source>
-        <translation>按顏色填入文字背景</translation>
+        <translation>以顏色填滿文字背景</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="859"/>
         <source>Displays a rectangular frame around the dimension text. This option changes the value stored in the DIMGAP system variable to a negative value.</source>
-        <translation>在大小文字上顯示矩形框架。 此選項會把 DIMGAP 系統變數所儲存的值變更成負值 .</translation>
+        <translation>在標註文字周圍顯示矩形外框。此選項會將 DIMGAP 系統變數中儲存的值變更為負值。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="862"/>
         <source>Draw frame around text</source>
-        <translation>在文字上畫出相框</translation>
+        <translation>繪製文字外框</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="885"/>
@@ -9961,7 +9961,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="891"/>
         <source>Places text in a horizontal position (DIMTIH and DIMTOH system variables).</source>
-        <translation>在水平位置上放入文字( DIMTIH 和 DIMTOH 系統變數) .</translation>
+        <translation>將文字放置於水平位置。（DIMTIH 與 DIMTOH 系統變數）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="894"/>
@@ -9972,24 +9972,24 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="901"/>
         <source>Aligns text with the dimension line (DIMTIH and DIMTOH system variables).</source>
-        <translation>以尺寸行( DIMTIH 和 DIMTOH 系統變數) 對齊文字 .</translation>
+        <translation>將文字與標註線對齊。（DIMTIH 與 DIMTOH 系統變數）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="911"/>
         <source>Aligns text with the dimension line when text is inside the extension lines, but aligns it horizontally when text is outside the extension lines (DIMTIH and DIMTOH system variables).</source>
-        <translation>在文字介于延伸行以內時使文字和尺寸行相對;但在文字介于延伸行外時使文字水平相對(DIMTIH和DIMTOH系統變數).</translation>
+        <translation>當文字位於延伸線之內時與標註線對齊；當文字位於延伸線之外時則呈水平對齊。（DIMTIH 與 DIMTOH 系統變數）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="904"/>
         <source>Aligned with dimension line</source>
-        <translation>和尺寸行相接</translation>
+        <translation>與標註線對齊</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="150"/>
         <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
 
 </source>
-        <translation>設定基線標注的標注線間距。輸入距離值。有關基線標注的資訊，請參閱 DIMBASELINE。（系統變數 DIMDLI）
+        <translation>設定基線標註中各標註線之間的間隔。請輸入距離。有關基線標註的更多資訊，請參閱 DIMBASELINE。（DIMDLI 系統變數）
 
 </translation>
     </message>
@@ -9997,8 +9997,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="577"/>
         <source>Specifies the size of oblique strokes drawn instead of arrowheads for linear, radius, and diameter dimensioning. If = 0 – draws arrowheads.
 &gt;0 – Draws oblique strokes instead of arrowheads (DIMTSZ variable). </source>
-        <translation>为直線、半徑和直徑尺寸指定所畫出取而未取出箭頭的斜線中斷的大小。 如果 = 0 – 畫出箭頭 。
-&gt; 0 – 畫出斜線取而不用箭頭( DIMTSZ 變數) .</translation>
+        <translation>指定用於線性、半徑與直徑標註中，取代箭頭的斜線記號大小。若等於 0 則繪製箭頭；大於 0 則繪製斜線記號以取代箭頭。（DIMTSZ 變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="914"/>
@@ -10014,234 +10013,234 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="930"/>
         <source>Controls the dimension text viewing direction. (DIMTXTDIRECTION system variable)</source>
-        <translation>控制大小文字取景方向。 (DIMTXTDRICTION系統變數)</translation>
+        <translation>控制標註文字的檢視方向。（DIMTXTDIRECTION 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="934"/>
         <source>Left-To-Right</source>
-        <translation>从左到右</translation>
+        <translation>由左至右</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="939"/>
         <source>Right-To-Left</source>
-        <translation>从右到左</translation>
+        <translation>由右至左</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="947"/>
         <source>Offset from dim line:</source>
-        <translation>从淡行取去:</translation>
+        <translation>偏移自標註線：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="954"/>
         <source>Horizontal:</source>
-        <translation>水平 :</translation>
+        <translation>水平：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="961"/>
         <source>Controls the horizontal placement of dimension text along the dimension line, in relation to the extension lines. (DIMJUST system variable)</source>
-        <translation>控制尺寸文字沿尺寸線的水平位置，相對於延伸線。（DIMJUST 系統變數）</translation>
+        <translation>相對於延伸線，控制標註文字沿著標註線的水平放置位置。（DIMJUST 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="965"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1011"/>
         <source>Centered</source>
-        <translation>居中</translation>
+        <translation>置中</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="970"/>
         <source>At Ext Line 1</source>
-        <translation>在外行 1</translation>
+        <translation>在延伸線 1 旁</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="975"/>
         <source>At Ext Line 2</source>
-        <translation>在外行 2</translation>
+        <translation>在延伸線 2 旁</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="980"/>
         <source>Over Ext Line 1</source>
-        <translation>在外行 1</translation>
+        <translation>在延伸線 1 上方</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="985"/>
         <source>Over Ext Line 2</source>
-        <translation>在外行 2</translation>
+        <translation>在延伸線 2 上方</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="993"/>
         <source>View Direction:</source>
-        <translation>檢視方向 :</translation>
+        <translation>檢視方向：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1000"/>
         <source>Vertical:</source>
-        <translation>垂直 :</translation>
+        <translation>垂直：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1007"/>
         <source>Controls the vertical placement of dimension text in relation to the dimension line. (DIMTAD system variable)</source>
-        <translation>控制尺寸文字相對於尺寸線的垂直位置。（DIMTAD 系統變數）</translation>
+        <translation>控制標註文字相對於標註線的垂直放置位置。（DIMTAD 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1016"/>
         <source>Above</source>
-        <translation>在上方</translation>
+        <translation>置於上方</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1021"/>
         <source>Outside</source>
-        <translation>外出</translation>
+        <translation>外部</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1026"/>
         <source>JIS</source>
-        <translation>杰斯</translation>
+        <translation>JIS</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1031"/>
         <source>Below</source>
-        <translation>下方</translation>
+        <translation>置於下方</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1039"/>
         <source>Vertical position of text above or below dimension line if vertical placement (DIMTAD) is not &quot;Centered&quot; (DIMTVP variable).</source>
-        <translation>如果垂直放入( DIMTAD) 不是&quot; Center&quot; (DIMTVP 變數) , 文字上下方的垂直位置 .</translation>
+        <translation>當垂直放置（DIMTAD）非「置中」時，文字在標註線上或下的垂直位置。（DIMTVP 變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1052"/>
         <source>Broken dim line text gap:</source>
-        <translation>已破碎的淡行文字缺口 :</translation>
+        <translation>標註線切斷文字間隙：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1059"/>
         <source>Sets the current text gap, which is the distance around the dimension text when the dimension line is broken to accommodate the dimension text (DIMGAP system variable).</source>
-        <translation>設定目前的文字空白, 它就是尺寸行被打斷以容納尺寸文字( DIMGAP system variable) 相關於尺寸文字的相距 .</translation>
+        <translation>設定目前的文字間隙，即當標註線切斷以容納標註文字時，文字周圍的距離。（DIMGAP 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1086"/>
         <source>Fit</source>
-        <translation>有相</translation>
+        <translation>調整</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1092"/>
         <source>Fine tuning</source>
-        <translation>有好調音</translation>
+        <translation>微調</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1098"/>
         <source>Ignores any horizontal justification settings and places the text at the position you specify at the Dimension Line Location prompt. (DIMUPT system variable)</source>
-        <translation>忽略任何水平正義設定并將正文放入您所指定位置的尺寸行位置 。 ( DIMUPT 系統變數)</translation>
+        <translation>忽略任何水平對齊設定，並將文字放置於您在提示「標註線位置」時所指定的位置。（DIMUPT 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1101"/>
         <source>Place text manually</source>
-        <translation>手動放入文字</translation>
+        <translation>手動放置文字</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1108"/>
         <source>Draws dimension lines between the measured points even when the arrowheads are placed outside the measured points. (DIMTOFL system variable)</source>
-        <translation>即使箭頭位於測量點之外，也會在測量點之間繪製尺寸線。（DIMTOFL 系統變數）</translation>
+        <translation>即使箭頭放置於量測點之外，仍於量測點之間繪製標註線。（DIMTOFL 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1111"/>
         <source>Draw dim line betwen ext lines</source>
-        <translation>畫出暗行取出行</translation>
+        <translation>在延伸線之間繪製標註線</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1121"/>
         <source>Scale</source>
-        <translation>二. 尺度</translation>
+        <translation>比例</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1127"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1137"/>
         <source>Sets a scale for all dimension style settings that specify size, distance, or spacing, including text and arrowhead sizes. This scale does not change dimension measurement values. (DIMSCALE system variable)</source>
-        <translation>为指定大小、相距或相距(包括文字和箭頭大小)的所有尺寸樣式設定比例尺。 此尺度不變更尺寸度量值 。 (DIMSCALE系統變數)</translation>
+        <translation>為所有指定大小、距離或間隔的標註型式設定建立比例（包含文字與箭頭大小）。此比例不會變更標註量測值。（DIMSCALE 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1130"/>
         <source>Use overall scale of:</source>
-        <translation>使用:</translation>
+        <translation>使用整體比例：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1147"/>
         <source>Determines a scale factor based on the scaling between the current model space viewport and paper space. (DIMSCALE system variable)</source>
-        <translation>根據目前模型空間視窗與圖紙空間之間的縮放比例，決定一個縮放係數。（DIMSCALE 系統變數）</translation>
+        <translation>根據目前模型空間視埠與圖紙空間之間的縮放比例來決定比例係數。（DIMSCALE 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1150"/>
         <source>Scale to layout</source>
-        <translation>大小到布局</translation>
+        <translation>縮放至配置</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1175"/>
         <source>If selected, moves the dimension line whenever dimension text is moved. (DIMTMOVE system variable)</source>
-        <translation>如果被選取, 在大小文字被移動時移出尺寸行 。 (DIMTMOVE系統變數)</translation>
+        <translation>若選取，當標註文字移動時，標註線會隨之移動。（DIMTMOVE 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1178"/>
         <source>Beside the dimention line</source>
-        <translation>在分離線外</translation>
+        <translation>位於標註線旁</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1185"/>
         <source>If selected, dimension lines are not moved when text is moved. If text is moved away from the dimension line, a leader line is created connecting the text to the dimension line. The leader line is omitted when text is too close to the dimension line. (DIMTMOVE system variable)</source>
-        <translation>如果被選取了, 在移出文字后尺寸行不被移出 。 如果文字被移出尺寸行, 就將文字和尺寸行相接相接而成 。 在文字太相近于尺寸行時, 首行被略去 。 (DIMTMOVE系統變數)</translation>
+        <translation>若選取，當文字移動時不移動標註線。若文字移離標註線，將建立一條引線將文字連接至標註線。當文字太靠近標註線時則省略引線。（DIMTMOVE 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1188"/>
         <source>Over dimension line, with leader</source>
-        <translation>有領袖出道了</translation>
+        <translation>在標註線上，帶有引線</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1195"/>
         <source>When text is not in the default position, place it:</source>
-        <translation>如果文字不是被預設的位置, 就放入:</translation>
+        <translation>當文字不在預設位置時，將其放置於：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1202"/>
         <source>If selected, dimension lines are not moved when text is moved. Text that is moved away from the dimension line is not connected to the dimension line with a leader. (DIMTMOVE system variable)</source>
-        <translation>如果被選取了, 在移出文字后尺寸行不被移出 。 从等分線移走的文字与等分線相接不通 有領導者 。 (DIMTMOVE系統變數)</translation>
+        <translation>若選取，當文字移動時不移動標註線。移離標註線的文字不會透過引線連接至標註線。（DIMTMOVE 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1205"/>
         <source>Over dimension line, without leader</source>
-        <translation>在地平線上, 沒有領導者</translation>
+        <translation>在標註線上，不帶引線</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1234"/>
         <source>Fit Options</source>
-        <translation>符合選項</translation>
+        <translation>調整選項</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1240"/>
         <source>If there isn&apos;t enough room to place both text and arrow inside extension lines, the first thing to move outside the extension lines is:</source>
-        <translation>如果沒有足夠的空間把文字和箭頭都放入延伸行中, 第一件事就是移出延伸行外:</translation>
+        <translation>若延伸線內沒有足夠空間同時放置文字與箭頭，最先移至延伸線外的是：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1250"/>
         <source>Suppresses arrowheads if not enough space is available inside the extension lines. (DIMSOXD system variable)</source>
-        <translation>如果延伸線內沒有足夠的空間，則隱藏箭頭。（DIMSOXD 系統變數）</translation>
+        <translation>若延伸線內部空間不足，則抑制箭頭顯示。（DIMSOXD 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1253"/>
         <source>Suppress arrows if they don&apos;t fit inside extension lines</source>
-        <translation>如果箭頭不適合於延伸行內, 就去壓制它</translation>
+        <translation>若箭頭無法放入延伸線內則予以抑制</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1260"/>
         <source>When not enough space is available for text and arrowheads, moves both outside the extension lines (DIMATFIT system variable).</source>
-        <translation>在文本和箭頭的空間不足時, 二者都移出延伸行外 (DIMATFIT system variable) .</translation>
+        <translation>當文字與箭頭皆無足夠空間時，將兩者均移至延伸線外。（DIMATFIT 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1263"/>
         <source>Both text and arrows</source>
-        <translation>有文字和箭頭</translation>
+        <translation>文字與箭頭兩者</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1270"/>
         <source>Moves either the text or the arrowheads outside the extension lines based on the best fit (DIMATFIT system variable).</source>
-        <translation>將文字或箭頭移出以最適合( DAMATFIT system variable) 为依據的延伸行外.</translation>
+        <translation>根據最佳調整方式，將文字或箭頭其中之一移至延伸線外。（DIMATFIT 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1273"/>
@@ -10251,7 +10250,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1280"/>
         <source>Moves arrowheads outside the extension lines first, then text (DIMATFIT system variable).</source>
-        <translation>在延伸行外先移出箭頭,再移出文字 (DIMATFIT system variable) .</translation>
+        <translation>先將箭頭移至延伸線外，然後才是文字。（DIMATFIT 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1283"/>
@@ -10261,17 +10260,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1290"/>
         <source>Moves text outside the extension lines first, then arrowheads (DIMATFIT system variable).</source>
-        <translation>在延伸行外先移出文字,再移出箭頭 (DIMATFIT system variable) .</translation>
+        <translation>先將文字移至延伸線外，然後才是箭頭。（DIMATFIT 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1300"/>
         <source>Always places text between extension lines. (DIMTIX system variable)</source>
-        <translation>總是把文字放入延伸行中 。 ( DIMTIX 系統變數)</translation>
+        <translation>始終將文字放置於延伸線之間。（DIMTIX 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1303"/>
         <source>Always fit text between ext lines</source>
-        <translation>在出行相接文字</translation>
+        <translation>始終在延伸線之間調整文字</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1327"/>
@@ -10281,7 +10280,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1333"/>
         <source>Angular Dimensions</source>
-        <translation>角尺寸</translation>
+        <translation>角度標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1339"/>
@@ -10290,7 +10289,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2120"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2220"/>
         <source>Precision:</source>
-        <translation>精度 :</translation>
+        <translation>精確度：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1346"/>
@@ -10299,12 +10298,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2010"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2234"/>
         <source>Zero suppression</source>
-        <translation>零压制</translation>
+        <translation>消零</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1352"/>
         <source>Controls the suppression of leading zeros (DIMAZIN system variable)</source>
-        <translation>控制對正 0 (DIMAZIN 系統變數) 的壓縮</translation>
+        <translation>控制前導零的消除。（DIMAZIN 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1355"/>
@@ -10313,12 +10312,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2019"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2243"/>
         <source>Leading</source>
-        <translation>主要</translation>
+        <translation>字首零</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1362"/>
         <source>Controls the suppression of  trailing zeros. (DIMAZIN system variable)</source>
-        <translation>控制了后方零的抑制. (DIMAZIN系統變數)</translation>
+        <translation>控制尾隨零的消除。（DIMAZIN 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1365"/>
@@ -10327,153 +10326,153 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2029"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2253"/>
         <source>Trailing</source>
-        <translation>追蹤</translation>
+        <translation>尾數零</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1375"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1568"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1945"/>
         <source>Unit Format:</source>
-        <translation>單位格式 :</translation>
+        <translation>單位格式：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1382"/>
         <source>Sets the number of decimal places for angular dimensions. DIMADEC system variable)</source>
-        <translation>設定角尺寸的小數位數。 DIMADEC 系統變數)</translation>
+        <translation>設定角度標註的小數位數。（DIMADEC 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1389"/>
         <source>Sets the angular units format. (DIMAUNIT system variable)</source>
-        <translation>設定角單位格式。 (DIMAUNIT系統變數)</translation>
+        <translation>設定角度單位格式。（DIMAUNIT 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1418"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1994"/>
         <source>Linear Dimensions</source>
-        <translation>線性尺寸</translation>
+        <translation>線性標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1431"/>
         <source>Measurement scale</source>
-        <translation>量度尺度</translation>
+        <translation>量測比例</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1437"/>
         <source>Scale factor:</source>
-        <translation>比例因子 :</translation>
+        <translation>比例係數：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1450"/>
         <source>Sets a scale factor for linear dimension measurements. It is recommended that you do not change this value from the default value of 1.00. (DIMLFAC system variable)</source>
-        <translation>为線性維度測量设置了比例因子。 建議您不要用 1. 00 的預設值去改變此值 。 (DIMLFAC系統變數)</translation>
+        <translation>設定線性標註量測值的比例係數。建議您保持預設值 1.00，勿任意變更。（DIMLFAC 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1460"/>
         <source>Applies the measurement scale factor only to dimensions created in layout viewports. </source>
-        <translation>只在布局取景口所產生的尺寸上使用度量尺度因子 .</translation>
+        <translation>僅將量測比例係數套用於在配置視埠中建立的標註。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1463"/>
         <source>Apply to layout dimensions only</source>
-        <translation>只套用到布局尺寸</translation>
+        <translation>僅套用於配置標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1473"/>
         <source>Fraction format:</source>
-        <translation>分數格式 :</translation>
+        <translation>分數格式：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1480"/>
         <source>Round off:</source>
-        <translation>回合:</translation>
+        <translation>捨入：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1487"/>
         <source>Decimal separator:</source>
-        <translation>二分位分隔符:</translation>
+        <translation>小數分隔符：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1500"/>
         <source>Includes a suffix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>在大小文字中包含您指定的后缀。 (DIMPOST 系統變數)</translation>
+        <translation>在標註文字中包含您指定的字尾。（DIMPOST 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1507"/>
         <source>Sets the current units format for all dimension types except Angular. (DIMLUNIT system variable)</source>
-        <translation>为除Angular外的所有維度型態設定目前的單位格式。 (DIMLUNIT 系統變數)</translation>
+        <translation>設定除角度以外所有標註類型的目前單位格式。（DIMLUNIT 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1514"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1838"/>
         <source>Prefix:</source>
-        <translation>前列:</translation>
+        <translation>字首：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1521"/>
         <source>Sets the separator for decimal formats. (DIMDSEP system variable)</source>
-        <translation>为小數點格式设置分隔符。 (DIMDEP系統變數)</translation>
+        <translation>設定小數格式的分隔符。（DIMDSEP 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1525"/>
         <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;&quot; (平分)</translation>
+        <translation>&apos;.&apos; (句點)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1530"/>
         <source>&apos;,&apos; (Comma)</source>
-        <translation>「,」（逗號）</translation>
+        <translation>&apos;,&apos; (逗號)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1538"/>
         <source>Sets nearest rounding value for dimension measurements for all dimension types except Angular. (DIMRND system variable)</source>
-        <translation>為所有尺寸類型（角度類型除外）設定最近的四捨五入值，用於尺寸測量。（DIMRND 系統變數）</translation>
+        <translation>設定除角度以外所有標註類型的標註量測值之最接近捨入值。（DIMRND 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1548"/>
         <source>Displays and sets the number of decimal places in the dimension text. (DIMDEC system variable)</source>
-        <translation>在尺寸文字中顯示并設定小數位數 。 (DIMDEC系統變數)</translation>
+        <translation>顯示並設定標註文字中的小數位數。（DIMDEC 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1561"/>
         <source>Includes a prefix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>在尺寸文本中包含您指定的前缀。 (DIMPOST 系統變數)</translation>
+        <translation>在標註文字中包含您指定的字首。（DIMPOST 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1575"/>
         <source>Sets the format for fractions. (DIMFRAC system variable)</source>
-        <translation>为分數設定格式。 (DMFRAC 系統變數)</translation>
+        <translation>設定分數的格式。（DIMFRAC 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1584"/>
         <source>Diagonal Stacked</source>
-        <translation>對角堆放</translation>
+        <translation>斜向堆疊</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1589"/>
         <source>Not Stacked</source>
-        <translation>未堆放</translation>
+        <translation>不堆疊</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1597"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1755"/>
         <source>Suffix:</source>
-        <translation>后缀:</translation>
+        <translation>字尾：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1610"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1868"/>
         <source>Sub-units factor:</source>
-        <translation>分單位因子:</translation>
+        <translation>次要單位係數：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1617"/>
         <source>Suppresses trailing zeros in all decimal dimensions. (DIMZIN system variable)</source>
-        <translation>隱藏所有小數尺寸中的尾隨零。（DIMZIN 系統變數）</translation>
+        <translation>消除所有十進位標註中的尾隨零。（DIMZIN 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1627"/>
         <source> Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMZIN system variable)</source>
-        <translation>當距離為整數英尺時，隱藏英尺與英寸尺寸中的英寸部分。（DIMZIN 系統變數）</translation>
+        <translation>當距離為英呎整數時，消除英呎-英吋標註中的英吋部分。（DIMZIN 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1630"/>
@@ -10481,12 +10480,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2049"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2273"/>
         <source>0 inches</source>
-        <translation>0英寸</translation>
+        <translation>0 英吋</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1637"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than one foot.  (DIMZIN system variable)</source>
-        <translation>當距離小於一英尺時，隱藏英尺與英寸尺寸中的英尺部分。（DIMZIN 系統變數）</translation>
+        <translation>當距離小於一英呎時，消除英呎-英吋標註中的英呎部分。（DIMZIN 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1640"/>
@@ -10494,28 +10493,28 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2039"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2263"/>
         <source>0 feet</source>
-        <translation>0 英尺</translation>
+        <translation>0 英呎</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1647"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMZIN system variable)</source>
-        <translation>抑制所有小數維度中的前導零（DIMZIN 系統變數）</translation>
+        <translation>消除所有十進位標註中的前導零。（DIMZIN 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1657"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1898"/>
         <source>Sub-unit suffix:</source>
-        <translation>子單位后缀:</translation>
+        <translation>次要單位字尾：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1664"/>
         <source>Sets the number of sub units to a unit. It is used to calculate the dimension distance in a sub unit when the distance is less than one unit. </source>
-        <translation>設定子單位的數量到一單位 。 它被用於在相距小于一單位時計出子單位的尺寸相距 .</translation>
+        <translation>設定一個主單位所包含的次要單位數量。當距離小於一個主單位時，用於計算次要單位的標註距離。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1680"/>
         <source>Includes a suffix to the dimension value sub unit. You can enter text or use control codes to display special symbols.</source>
-        <translation>在尺寸值子單位中包含后缀 。 您可以輸入文字或使用控制碼以顯示特殊符號 .</translation>
+        <translation>在次要單位標註值中包含字尾。您可以輸入文字或使用控制碼以顯示特殊符號。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1707"/>
@@ -10525,12 +10524,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1726"/>
         <source>Adds alternate measurement units to dimension text. Sets the DIMALT system variable to 1.</source>
-        <translation>在尺寸文字中加入相交量度單位 。 設定 DIMALT 系統變數到 1 .</translation>
+        <translation>在標註文字中加入替代量測單位。將 DIMALT 系統變數設定為 1。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1729"/>
         <source>Display alternate units</source>
-        <translation>顯示其它單位</translation>
+        <translation>顯示替代單位</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1742"/>
@@ -10540,22 +10539,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1762"/>
         <source>Specifies the multiplier used as the conversion factor between primary and alternate units.For example, to convert inches to millimeters, enter 25.4. The value has no effect on angular dimensions, and it is not applied to the rounding value or the plus or minus tolerance values. (DIMALTF system variable)</source>
-        <translation>指定用於將主要單位和次要單位之間轉換的乘數。例如，若要將英吋轉換為毫米，請輸入 25.4。此值不會影響角度維度，也不會影響四捨五入值或正負公差值。（DIMALTF 系統變數）</translation>
+        <translation>指定主要單位與替代單位之間的換算比例係數（乘數）。例如，若要將英吋轉換為公釐，請輸入 25.4。此值對角度標註無效，亦不會套用於捨入值或正負公差值。（DIMALTF 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1772"/>
         <source>Multiplier for alt units:</source>
-        <translation>變更單位的乘數 :</translation>
+        <translation>替代單位換算係數：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1779"/>
         <source>Sets rounding rules for alternate units for all dimension types except Angular. If you enter a value of 0.25, all alternate measurements are rounded to the nearest 0.25 unit. If you enter a value of 1.0, all dimension measurements are rounded to the nearest integer. The number of digits displayed after the decimal point depends on the Precision setting. (DIMALTRND system variable)</source>
-        <translation>設定所有維度類型（角度除外）的次要單位的四捨五入規則。如果您輸入 0.25，則所有次要測量值都會四捨五入到最接近的 0.25 單位。如果您輸入 1.0，則所有維度測量值都會四捨五入到最接近的整數。顯示在小數點後面的數字取決於「精確度」設定。（DIMALTRND 系統變數）</translation>
+        <translation>設定除角度以外所有標註類型的替代單位捨入規則。若輸入 0.25，所有替代量測值都會捨入至最接近的 0.25 單位。若輸入 1.0，所有標註量測值都會捨入至最接近的整數。小數點後顯示的位數取決於精確度設定。（DIMALTRND 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1789"/>
         <source>Sets the unit format for alternate units. (DIMALTU system variable)</source>
-        <translation>为相交單位設定單位格式。 (DIMALTU 系統變數)</translation>
+        <translation>設定替代單位的單位格式。（DIMALTU 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1796"/>
@@ -10565,107 +10564,107 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1802"/>
         <source>Places alternate units after the primary units in dimension text.</source>
-        <translation>在大小文字中将相接單位放在主單位后.</translation>
+        <translation>在標註文字中，將替代單位放置於主要單位之後。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1805"/>
         <source>After primary value</source>
-        <translation>在主值后</translation>
+        <translation>置於主要數值後</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1812"/>
         <source>Places alternate units below the primary units in dimension text.</source>
-        <translation>在大小文字中把相交單位放在主單位下方.</translation>
+        <translation>在標註文字中，將替代單位放置於主要單位下方。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1815"/>
         <source>Below primary value</source>
-        <translation>在一等值以下</translation>
+        <translation>置於主要數值下方</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1831"/>
         <source>Includes a prefix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the control code %%c displays the diameter symbol. (DIMAPOST system variable)</source>
-        <translation>在相交尺寸文本中包含前缀。 您可以輸入文字或使用控制碼以顯示特殊符號 。 如入控制碼&quot;\&quot;c&quot;就顯示了直径符號. (DIMAPOST 系統變數)</translation>
+        <translation>在替代標註文字中包含字首。您可以輸入文字或使用控制碼以顯示特殊符號。例如，輸入控制碼 %%c 可顯示直徑符號。（DIMAPOST 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"/>
         <source>Round distances to:</source>
-        <translation>相距至:</translation>
+        <translation>距離捨入至：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1858"/>
         <source>Suppresses leading zeros in all decimal dimensions. For example, 0.5000 becomes .5000.</source>
-        <translation>抑制所有小數維度中的前導零。例如，0.5000 會變成 .5000。</translation>
+        <translation>消除所有十進位標註中的前導零。例如：0.5000 會變成 .5000。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1888"/>
         <source>Suppresses trailing zeros in all decimal dimensions. For example, 12.5000 becomes 12.5, and 30.0000 becomes 30 (DIMALTZ system variable).</source>
-        <translation>抑制所有小數維度中的尾隨零。例如，12.5000 會變成 12.5，而 30.0000 會變成 30（DIMALTZ 系統變數）。</translation>
+        <translation>消除所有十進位標註中的尾隨零。例如：12.5000 會變成 12.5，30.0000 會變成 30。（DIMALTZ 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1915"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot. For example, 0&apos;-6 1/2&quot; becomes 6 1/2&quot; (DIMALTZ system variable)</source>
-        <translation>當距離小於 1 英尺時，抑制英尺-英吋維度中的英尺部分。例如，0&apos;-6 1/2&quot; 會變成 6 1/2&quot;（DIMALTZ 系統變數）。</translation>
+        <translation>當距離小於 1 英呎時，消除英呎-英吋標註中的英呎部分。例如：0&apos;-6 1/2&quot; 會變成 6 1/2&quot;。（DIMALTZ 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1925"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet. For example, 1&apos;-0&quot; becomes 1&apos;. (DIMALTZ system variable)</source>
-        <translation>當距離為整數英尺時，抑制英尺-英吋維度中的英吋部分。例如，1&apos;-0&quot; 會變成 1&apos;。（DIMALTZ 系統變數）。</translation>
+        <translation>當距離為英呎整數時，消除英呎-英吋標註中的英吋部分。例如：1&apos;-0&quot; 會變成 1&apos;。（DIMALTZ 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1938"/>
         <source>Sets the number of decimal places for alternate units. (DIMALTD system variable)</source>
-        <translation>設定替代單位的小數位數。 (DIMALTD 系統變數)</translation>
+        <translation>設定替代單位的偏置／小數位數。（DIMALTD 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1958"/>
         <source>Includes a suffix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the text cm results in dimension text similar to that shown in the illustration. When you enter a suffix, it overrides any default suffixes. (DIMAPOST system variable)</source>
-        <translation>在相換維數文字中包含后缀 。 您可以輸入文字或使用控制碼以顯示特殊符號 。 例如,入出 cm 就以相當於插圖所顯示的尺寸文字來取出 。 在您輸入后缀后, 它會取代任何預設后缀 。 (DIMAPOST 系統變數)</translation>
+        <translation>在替代標註文字中包含字尾。您可以輸入文字或使用控制碼以顯示特殊符號。例如，輸入文字 cm 會產生類似圖示中的標註文字。當您輸入字尾時，它將覆蓋任何預設字尾。（DIMAPOST 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1982"/>
         <source>Tolerances</source>
-        <translation>容忍</translation>
+        <translation>公差</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2000"/>
         <source>Sets the minimum or lower tolerance value. (DIMTM system variable)</source>
-        <translation>設定最小或下等相容值。 (DIMTM系統變數)</translation>
+        <translation>設定最小或下限公差值。（DIMTM 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2016"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>抑制所有小數維度中的前導零（DIMTZIN 系統變數）。</translation>
+        <translation>消除所有十進位標註中的前導零（DIMTZIN 系統變數）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2026"/>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>抑制所有小數維度中的尾隨零（DIMTZIN 系統變數）。</translation>
+        <translation>消除所有十進位標註中的尾隨零（DIMTZIN 系統變數）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2036"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMTZIN system variable). </source>
-        <translation>當距離小於 1 英尺時，會隱藏英尺與英寸尺寸中的英尺部分 (DIMTZIN 系統變數)。</translation>
+        <translation>當距離小於 1 英呎時，消除英呎-英吋標註中的英呎部分（DIMTZIN 系統變數）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2046"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMTZIN system variable). </source>
-        <translation>當距離為整數英尺時，會隱藏英尺與英寸尺寸中的英寸部分 (DIMTZIN 系統變數)。</translation>
+        <translation>當距離為英呎整數時，消除英呎-英吋標註中的英吋部分（DIMTZIN 系統變數）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2059"/>
         <source>Sets the method for calculating the tolerance. (DIMTOL system variable)</source>
-        <translation>設定相容性的計算方法。 (DIMTOL系統變數)</translation>
+        <translation>設定計算公差的方法。（DIMTOL 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2068"/>
         <source>Symmetrical</source>
-        <translation>相對</translation>
+        <translation>對稱</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2073"/>
         <source>Deviation</source>
-        <translation>偏航</translation>
+        <translation>偏差</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2078"/>
@@ -10680,7 +10679,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2091"/>
         <source>Controls text justification for symmetrical and deviation tolerances (DIMTOLJ system variable).</source>
-        <translation>控制對稱和偏移相容的文字理由 (DIMTOLJ system variable) .</translation>
+        <translation>控制對稱與偏差公差的文字對齊方式（DIMTOLJ 系統變數）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2095"/>
@@ -10700,52 +10699,52 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2113"/>
         <source>Upper value:</source>
-        <translation>上值 :</translation>
+        <translation>上限值：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2127"/>
         <source>Lower value:</source>
-        <translation>下值 :</translation>
+        <translation>下限值：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2134"/>
         <source>Sets the number of decimal places. (DIMTDEC system variable)</source>
-        <translation>設定小數位數。 (DIMTDEC 系統變數)</translation>
+        <translation>設定小數位數。（DIMTDEC 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2141"/>
         <source>Sets the maximum or upper tolerance value. When you select Symmetrical in Method, this value is used for the tolerance. (DIMTP system variable)</source>
-        <translation>設定最大或上等相容值。 在方法中選擇對稱性時, 此值被用於相容性 。 ( DIMTP 系統變數)</translation>
+        <translation>設定最大或上限公差值。當您在方式中選擇「對稱」時，此值將作為公差值使用。（DIMTP 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2151"/>
         <source>Method:</source>
-        <translation>方法 :</translation>
+        <translation>方法：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2158"/>
         <source>Vertical position:</source>
-        <translation>垂直位置 :</translation>
+        <translation>垂直位置：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2165"/>
         <source>Sets the current height for the tolerance text. The ratio of the tolerance height to the main dimension text height is calculated and stored in the DIMTFAC system variable.</source>
-        <translation>設定容忍文字目前的高度。 在 DIMTFAC 系統變數中被計算出并儲存了相容度高度与正元文字高度之比.</translation>
+        <translation>設定目前公差文字的高度。公差高度與主要標註文字高度的比例將計算並儲存在 DIMTFAC 系統變數中。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2175"/>
         <source>Scaling for height:</source>
-        <translation>高度放大 :</translation>
+        <translation>高度縮放：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2182"/>
         <source>Tolerance Adjustment</source>
-        <translation>相容性調整</translation>
+        <translation>公差調整</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2188"/>
         <source>Values are stacked by their decimal separators.</source>
-        <translation>有數值被小數分離符所堆放 .</translation>
+        <translation>數值依據其小數點分隔符進行堆疊對齊。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2191"/>
@@ -10755,54 +10754,54 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2198"/>
         <source>Values are stacked by their operational symbols.</source>
-        <translation>有數值被活用符號所堆放.</translation>
+        <translation>數值依據其運算符號進行堆疊對齊。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2201"/>
         <source>Align operational symbols</source>
-        <translation>對接操作符號</translation>
+        <translation>對齊運算符號</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2214"/>
         <source>Alternate Unit Tolerance</source>
-        <translation>替代單位相容性</translation>
+        <translation>替代單位公差</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2227"/>
         <source>Displays and sets the number of decimal places. (DIMALTTD system variable)</source>
-        <translation>顯示并設定小數位數 。 (DIMALTD 系統變數)</translation>
+        <translation>顯示並設定小數位數。（DIMALTTD 系統變數）</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2240"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMALTTZ system variable). </source>
-        <translation>隱藏所有小數尺寸中的前導零 (DIMALTTZ 系統變數)。</translation>
+        <translation>消除所有十進位標註中的前導零（DIMALTTZ 系統變數）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2250"/>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMALTTZ system variable).</source>
-        <translation>隱藏所有小數尺寸中的尾隨零 (DIMALTTZ 系統變數)。</translation>
+        <translation>消除所有十進位標註中的尾隨零（DIMALTTZ 系統變數）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2260"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMALTTZ system variable).</source>
-        <translation>當距離小於 1 英尺時，會隱藏英尺與英寸尺寸中的英尺部分 (DIMALTTZ 系統變數)。</translation>
+        <translation>當距離小於 1 英呎時，消除英呎-英吋標註中的英呎部分（DIMALTTZ 系統變數）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2270"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMALTTZ system variable).</source>
-        <translation>當距離為整數英尺時，會隱藏英尺與英寸尺寸中的英寸部分 (DIMALTTZ 系統變數)。</translation>
+        <translation>當距離為英呎整數時，消除英呎-英吋標註中的英吋部分（DIMALTTZ 系統變數）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="354"/>
         <source>Select Block for arrow</source>
-        <translation>選擇箭頭的區塊</translation>
+        <translation>選擇箭頭用的圖塊</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="1138"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="1139"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="1140"/>
         <source>User Block...</source>
-        <translation>使用者區塊...</translation>
+        <translation>使用者圖塊...</translation>
     </message>
 </context>
 <context>
