@@ -53,10 +53,23 @@ jobs:
     steps:
       - name: Download the bundle
         run: |
-          gh run download ${{ inputs.run_id }} --repo "$env:GITHUB_REPOSITORY" --name winMsixBundle --dir msix-bundle
+          # The input reaches the script through the environment, never as
+          # script text, and only a bundle built by build-all.yml for a push
+          # to master of this repository is accepted: a pull request run can
+          # upload an artifact of the same name.
+          if ($env:RUN_ID -notmatch '^[0-9]+$') { throw "run_id must be a numeric run ID, not '$env:RUN_ID'." }
+          $run = gh api "repos/$env:GITHUB_REPOSITORY/actions/runs/$env:RUN_ID" | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0 -or -not $run) { throw "Run $env:RUN_ID was not found." }
+          if ($run.path -notlike '.github/workflows/build-all.yml*' -or $run.event -ne 'push' -or
+              $run.head_branch -ne 'master' -or $run.head_repository.full_name -ne $env:GITHUB_REPOSITORY) {
+            throw "Run $env:RUN_ID is not a push run of build-all.yml on master ($($run.path), $($run.event), $($run.head_branch), $($run.head_repository.full_name))."
+          }
+          gh run download $env:RUN_ID --repo "$env:GITHUB_REPOSITORY" --name winMsixBundle --dir msix-bundle
+          if ($LASTEXITCODE -ne 0) { throw "Run $env:RUN_ID has no winMsixBundle artifact." }
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ inputs.run_id }}
 
       - name: Refuse placeholder identities
         run: |
