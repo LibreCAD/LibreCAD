@@ -66,7 +66,10 @@ param(
 
     [string]$LicenseDirectory = (Join-Path $PSScriptRoot '..\licenses'),
 
-    [string]$IconPath = (Join-Path $PSScriptRoot 'msix\librecad-logo.png')
+    [string]$IconPath = (Join-Path $PSScriptRoot 'msix\librecad-logo.png'),
+
+    # The commit the package is built from; licenses\SOURCE.txt names it.
+    [string]$SourceRevision = $env:GITHUB_SHA
 )
 
 Set-StrictMode -Version Latest
@@ -506,6 +509,82 @@ Copy-MatchingFiles -Source $licenseDirectory -Filter '*.txt' -Destination $layou
 Copy-MatchingFiles -Source $licenseDirectory -Filter 'readme.md' -Destination $layoutLicenses -Required
 Copy-Item -LiteralPath $licenseFile -Destination (Join-Path $layoutLicenses 'LICENSE') -Force
 
+# Tell recipients which commit this very build comes from, where its source is,
+# and offer them the source, as GPLv2 section 3(b) asks.
+$repositoryUrl = 'https://github.com/LibreCAD/LibreCAD'
+if ($env:GITHUB_SERVER_URL -and $env:GITHUB_REPOSITORY) {
+    $repositoryUrl = "$env:GITHUB_SERVER_URL/$env:GITHUB_REPOSITORY"
+}
+if (-not $SourceRevision) {
+    try {
+        $SourceRevision = (& git -C $PSScriptRoot rev-parse HEAD 2>$null | Out-String).Trim()
+    }
+    catch {
+        $SourceRevision = ''
+    }
+}
+if ($SourceRevision -notmatch '^[0-9a-f]{40}$') {
+    throw "Cannot tell which commit this package is built from; pass -SourceRevision: '$SourceRevision'"
+}
+# The Qt libraries ship under the GPLv2 too, so the offer below covers them.
+$qtCoreVersion = (Get-Item -LiteralPath (Join-Path $inputDirectory 'Qt6Core.dll')).VersionInfo
+if ($qtCoreVersion.FileMajorPart -lt 6) {
+    throw "Cannot read the Qt version from Qt6Core.dll: '$($qtCoreVersion.FileVersion)'"
+}
+$qtVersion = "$($qtCoreVersion.FileMajorPart).$($qtCoreVersion.FileMinorPart).$($qtCoreVersion.FileBuildPart)"
+$qtSourceUrl = "https://download.qt.io/archive/qt/$($qtCoreVersion.FileMajorPart).$($qtCoreVersion.FileMinorPart)/$qtVersion/"
+# Boost is compiled into LibreCAD.exe (header-only) but is not in the
+# repository, so the offer names the release this build used.
+$cmakeCache = Join-Path $buildDirectory 'CMakeCache.txt'
+$boostIncludeEntry = $null
+if (Test-Path -LiteralPath $cmakeCache -PathType Leaf) {
+    $boostIncludeEntry = Select-String -LiteralPath $cmakeCache -Pattern '^Boost_INCLUDE_DIR:[A-Z]+=(.+)$' |
+        Select-Object -First 1
+}
+if (-not $boostIncludeEntry) {
+    throw "Cannot find Boost_INCLUDE_DIR in $cmakeCache"
+}
+$boostVersionHeader = Join-Path $boostIncludeEntry.Matches[0].Groups[1].Value.Trim() 'boost\version.hpp'
+$boostVersionDefine = $null
+if (Test-Path -LiteralPath $boostVersionHeader -PathType Leaf) {
+    $boostVersionDefine = Select-String -LiteralPath $boostVersionHeader -Pattern '^#define\s+BOOST_VERSION\s+(\d+)' |
+        Select-Object -First 1
+}
+if (-not $boostVersionDefine) {
+    throw "Cannot read the Boost version from $boostVersionHeader"
+}
+$boostNumber = [int]$boostVersionDefine.Matches[0].Groups[1].Value
+$boostVersion = '{0}.{1}.{2}' -f [Math]::Floor($boostNumber / 100000), ([Math]::Floor($boostNumber / 100) % 1000), ($boostNumber % 100)
+$boostSourceUrl = "https://archives.boost.io/release/$boostVersion/source/"
+$sourceNotice = @"
+LibreCAD is free software, licensed under the GNU General Public License
+version 2; see LICENSE and gpl-2.0.txt in this folder. This package also
+contains the libraries of Qt $qtVersion, which LibreCAD uses under the same
+licence, and LibreCAD.exe contains code from Boost $boostVersion (Boost
+Software License 1.0).
+
+This package was built from commit $SourceRevision.
+The source code of LibreCAD at that commit is at:
+$repositoryUrl/tree/$SourceRevision
+The source code of Qt $qtVersion is at:
+$qtSourceUrl
+The source code of Boost $boostVersion is at:
+$boostSourceUrl
+
+Written offer, as section 3(b) of the GPLv2 asks: for at least three years
+after this package was distributed, the LibreCAD project will give any third
+party, for a charge no more than the cost of physically performing source
+distribution, a complete machine-readable copy of the corresponding source
+code of this package - LibreCAD at the commit above, Boost $boostVersion and
+Qt $qtVersion - under the terms of the GPLv2, on a medium customarily used
+for software interchange. Ask for it at https://github.com/LibreCAD/LibreCAD/issues
+"@
+[System.IO.File]::WriteAllText(
+    (Join-Path $layoutLicenses 'SOURCE.txt'),
+    ($sourceNotice -replace "`r?`n", "`r`n") + "`r`n",
+    [System.Text.UTF8Encoding]::new($false)
+)
+
 Add-Type -AssemblyName System.Drawing
 $assetDirectory = Join-Path $layoutDirectory 'Assets'
 New-Item -ItemType Directory -Force -Path $assetDirectory | Out-Null
@@ -608,7 +687,7 @@ try {
         'unpack', '/o', '/p', $packagePath, '/d', $validationDirectory
     )
 
-    foreach ($requiredPath in @('AppxManifest.xml', 'LibreCAD.exe', 'resources.pri', 'Assets\Square150x150Logo.png', 'resources\fonts\standard.lff', 'licenses\gpl-2.0.txt', 'licenses\LICENSE')) {
+    foreach ($requiredPath in @('AppxManifest.xml', 'LibreCAD.exe', 'resources.pri', 'Assets\Square150x150Logo.png', 'resources\fonts\standard.lff', 'licenses\gpl-2.0.txt', 'licenses\gpl-3.0.txt', 'licenses\OFL-noto-cjk.txt', 'licenses\LICENSE', 'licenses\SOURCE.txt')) {
         if (-not (Test-Path -LiteralPath (Join-Path $validationDirectory $requiredPath) -PathType Leaf)) {
             throw "MSIX validation output is missing $requiredPath"
         }
