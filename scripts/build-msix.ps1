@@ -495,6 +495,20 @@ Copy-SupportTree -Source (Join-Path $resourceDirectory 'library') -Destination (
 $pluginsDirectory = Join-Path $buildDirectory 'plugins'
 Copy-PluginModules -Source $pluginsDirectory -Destination (Join-Path $layoutResources 'plugins')
 
+# LibreCAD's own icon engine, which draws the icons in the colours set in the
+# options, builds outside the staged Release folder, so the staged folder
+# lacks it; main.cpp looks for it in iconengines\ beside LibreCAD.exe.
+$layoutIconEngine = Join-Path $layoutDirectory 'iconengines\lc_svgiconengine.dll'
+if (-not (Test-Path -LiteralPath $layoutIconEngine -PathType Leaf)) {
+    $builtIconEngine = Get-ChildItem -LiteralPath $buildDirectory -Recurse -File -Filter 'lc_svgiconengine.dll' |
+        Select-Object -First 1
+    if (-not $builtIconEngine) {
+        throw "lc_svgiconengine.dll was not found under $buildDirectory."
+    }
+    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $layoutIconEngine) | Out-Null
+    Copy-Item -LiteralPath $builtIconEngine.FullName -Destination $layoutIconEngine -Force
+}
+
 $translationDirectory = Join-Path $layoutResources 'qm'
 Copy-MatchingFiles -Source (Join-Path $inputDirectory 'translations') -Filter '*.qm' -Destination $translationDirectory
 Copy-MatchingFiles -Source $buildDirectory -Filter 'librecad_*.qm' -Destination $translationDirectory -Recurse -Required
@@ -687,7 +701,7 @@ try {
         'unpack', '/o', '/p', $packagePath, '/d', $validationDirectory
     )
 
-    foreach ($requiredPath in @('AppxManifest.xml', 'LibreCAD.exe', 'resources.pri', 'Assets\Square150x150Logo.png', 'resources\fonts\standard.lff', 'licenses\gpl-2.0.txt', 'licenses\gpl-3.0.txt', 'licenses\OFL-noto-cjk.txt', 'licenses\LICENSE', 'licenses\SOURCE.txt')) {
+    foreach ($requiredPath in @('AppxManifest.xml', 'LibreCAD.exe', 'resources.pri', 'Assets\Square150x150Logo.png', 'iconengines\lc_svgiconengine.dll', 'resources\fonts\standard.lff', 'licenses\gpl-2.0.txt', 'licenses\gpl-3.0.txt', 'licenses\OFL-noto-cjk.txt', 'licenses\LICENSE', 'licenses\SOURCE.txt')) {
         if (-not (Test-Path -LiteralPath (Join-Path $validationDirectory $requiredPath) -PathType Leaf)) {
             throw "MSIX validation output is missing $requiredPath"
         }

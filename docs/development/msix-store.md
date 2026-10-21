@@ -54,6 +54,10 @@ listed below.
   the software OpenGL renderer and the Direct3D shader compilers
   (`d3dcompiler_47.dll`, `dxcompiler.dll`, `dxil.dll`) are left out.
   LibreCAD paints with QPainter and loads none of them.
+- LibreCAD's own icon engine, `iconengines\lc_svgiconengine.dll`, which
+  draws the icons in the colours set in the options, is copied from the
+  build folder: it builds outside the staged Release folder, so the staged
+  folder (and the NSIS installer) lacks it.
 - Fonts, hatch patterns, the block library, plugins and translations go under
   `resources\`, where LibreCAD looks for them. The translations are packaged
   as files even though the program embeds them, because the language list in
