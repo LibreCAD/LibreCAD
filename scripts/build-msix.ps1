@@ -409,6 +409,9 @@ if (-not (Test-Path -LiteralPath $licenseFile -PathType Leaf)) {
 if (-not (Test-Path -LiteralPath $IconPath -PathType Leaf)) {
     throw "MSIX icon source does not exist: $IconPath"
 }
+# System.Drawing resolves a relative path against the process directory,
+# which Set-Location does not change.
+$IconPath = (Resolve-Path -LiteralPath $IconPath).Path
 
 $libreCadExecutable = Join-Path $inputDirectory 'LibreCAD.exe'
 if (-not (Test-Path -LiteralPath $libreCadExecutable -PathType Leaf)) {
@@ -512,9 +515,7 @@ if (-not (Test-Path -LiteralPath $layoutIconEngine -PathType Leaf)) {
 $translationDirectory = Join-Path $layoutResources 'qm'
 Copy-MatchingFiles -Source (Join-Path $inputDirectory 'translations') -Filter '*.qm' -Destination $translationDirectory
 Copy-MatchingFiles -Source $buildDirectory -Filter 'librecad_*.qm' -Destination $translationDirectory -Recurse -Required
-# plugins_*.qm are not produced today: every qt_add_translations in
-# plugins/*/CMakeLists.txt is commented out.  Not required, so this stays quiet.
-Copy-MatchingFiles -Source $pluginsDirectory -Filter 'plugins_*.qm' -Destination $translationDirectory -Recurse
+Copy-MatchingFiles -Source $buildDirectory -Filter 'plugins_*.qm' -Destination $translationDirectory -Recurse -Required
 
 # GPLv2 asks for a copy of the licence with every copy of the program, and the
 # fonts and libraries LibreCAD bundles carry their own licences.
@@ -682,9 +683,23 @@ if (Test-Path -LiteralPath $priConfigPath) {
 if ($LASTEXITCODE -ne 0) {
     throw "MakePri createconfig failed with exit code $LASTEXITCODE."
 }
+# The default config splits the index by scale into resources.scale-*.pri for
+# resource packs, which this package does not have; Windows reads only
+# resources.pri, so every logo variant above 100% would be lost.  Without the
+# packaging section MakePri writes one index with every variant.
+$priConfig = [xml](Get-Content -LiteralPath $priConfigPath -Raw)
+$priPackaging = $priConfig.DocumentElement.SelectSingleNode('packaging')
+if ($priPackaging) {
+    [void]$priConfig.DocumentElement.RemoveChild($priPackaging)
+}
+$priConfig.Save($priConfigPath)
 & $makePri new /pr $layoutDirectory /mn (Join-Path $layoutDirectory 'AppxManifest.xml') /cf $priConfigPath /of (Join-Path $layoutDirectory 'resources.pri') /o
 if ($LASTEXITCODE -ne 0) {
     throw "MakePri new failed with exit code $LASTEXITCODE."
+}
+$splitIndexes = @(Get-ChildItem -LiteralPath $layoutDirectory -Filter '*.pri' -File | Where-Object { $_.Name -ne 'resources.pri' })
+if ($splitIndexes.Count -gt 0) {
+    throw "MakePri split the resource index: $($splitIndexes.Name -join ', ')"
 }
 # The config lives outside the layout so it is never packaged.
 Remove-Item -LiteralPath $priConfigPath -Force
