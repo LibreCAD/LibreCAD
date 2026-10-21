@@ -64,7 +64,9 @@ param(
 
     [string]$ResourceDirectory = (Join-Path $PSScriptRoot '..\librecad\support'),
 
-    [string]$IconPath = (Join-Path $PSScriptRoot '..\librecad\res\images\librecad.png')
+    [string]$LicenseDirectory = (Join-Path $PSScriptRoot '..\licenses'),
+
+    [string]$IconPath = (Join-Path $PSScriptRoot 'msix\librecad-logo.png')
 )
 
 Set-StrictMode -Version Latest
@@ -132,6 +134,53 @@ function Test-MsixVersion {
     # that does not build it as 0.
     if ([int]$components[3] -ne 0) {
         throw "The PackageVersion revision component must be 0 for Store submission: $Version"
+    }
+}
+
+function Get-PeSubsystem {
+    param([Parameter(Mandatory = $true)][string]$Path)
+
+    $stream = [System.IO.File]::OpenRead($Path)
+    try {
+        $reader = [System.IO.BinaryReader]::new($stream)
+        if ($reader.ReadUInt16() -ne 0x5A4D) {
+            throw "$Path is not a Windows executable."
+        }
+        $stream.Position = 0x3C
+        $peHeader = $reader.ReadInt32()
+        $stream.Position = $peHeader
+        if ($reader.ReadUInt32() -ne 0x00004550) {
+            throw "$Path has no PE header."
+        }
+        # Subsystem sits 68 bytes into the optional header, which follows the
+        # 4-byte signature and the 20-byte COFF header, in PE32 and PE32+ alike.
+        $stream.Position = $peHeader + 4 + 20 + 68
+        return $reader.ReadUInt16()
+    }
+    finally {
+        $stream.Dispose()
+    }
+}
+
+function Set-PeSubsystem {
+    param(
+        [Parameter(Mandatory = $true)][string]$Path,
+        [Parameter(Mandatory = $true)][uint16]$Subsystem
+    )
+
+    # Call Get-PeSubsystem first: it checks that the file is a PE image.
+    $stream = [System.IO.File]::Open($Path, [System.IO.FileMode]::Open, [System.IO.FileAccess]::ReadWrite)
+    try {
+        $reader = [System.IO.BinaryReader]::new($stream)
+        $stream.Position = 0x3C
+        $peHeader = $reader.ReadInt32()
+        $stream.Position = $peHeader + 4 + 20 + 68
+        $writer = [System.IO.BinaryWriter]::new($stream)
+        $writer.Write($Subsystem)
+        $writer.Flush()
+    }
+    finally {
+        $stream.Dispose()
     }
 }
 
@@ -349,6 +398,11 @@ if ($IdentityName -notmatch '^[A-Za-z0-9.-]+$') {
 $inputDirectory = Resolve-ExistingDirectory -Path $InputDirectory -Description 'Input'
 $buildDirectory = Resolve-ExistingDirectory -Path $BuildDirectory -Description 'Build'
 $resourceDirectory = Resolve-ExistingDirectory -Path $ResourceDirectory -Description 'Resource'
+$licenseDirectory = Resolve-ExistingDirectory -Path $LicenseDirectory -Description 'License'
+$licenseFile = Join-Path $PSScriptRoot '..\LICENSE'
+if (-not (Test-Path -LiteralPath $licenseFile -PathType Leaf)) {
+    throw "LICENSE does not exist: $licenseFile"
+}
 if (-not (Test-Path -LiteralPath $IconPath -PathType Leaf)) {
     throw "MSIX icon source does not exist: $IconPath"
 }
@@ -356,6 +410,24 @@ if (-not (Test-Path -LiteralPath $IconPath -PathType Leaf)) {
 $libreCadExecutable = Join-Path $inputDirectory 'LibreCAD.exe'
 if (-not (Test-Path -LiteralPath $libreCadExecutable -PathType Leaf)) {
     throw "Input directory does not contain LibreCAD.exe: $inputDirectory"
+}
+
+# windeployqt --compiler-runtime brings only vc_redist.<arch>.exe, which is left
+# out below; scripts\copy-vc-runtime.ps1 stages the runtime DLLs themselves.
+foreach ($runtimeDll in @('vcruntime140.dll', 'msvcp140.dll')) {
+    if (-not (Test-Path -LiteralPath (Join-Path $inputDirectory $runtimeDll) -PathType Leaf)) {
+        throw "Input directory is missing $runtimeDll; run scripts\copy-vc-runtime.ps1 on it first."
+    }
+}
+
+# A console-subsystem LibreCAD.exe, which is what master builds, opens a console
+# window beside the GUI each time Start, a file association or certification
+# starts it.  The package gets its own copy marked as a Windows GUI program
+# (subsystem 2) below, as editbin /SUBSYSTEM:WINDOWS would mark it; the entry
+# point stays the same, and the installers keep the program as it was built.
+$subsystem = Get-PeSubsystem -Path $libreCadExecutable
+if ($subsystem -ne 2 -and $subsystem -ne 3) {
+    throw "LibreCAD.exe has PE subsystem $subsystem, neither Windows GUI (2) nor console (3)."
 }
 
 New-Item -ItemType Directory -Force -Path $OutputDirectory | Out-Null
@@ -370,11 +442,22 @@ foreach ($directory in @($layoutDirectory, $validationDirectory)) {
 
 New-Item -ItemType Directory -Force -Path $layoutDirectory | Out-Null
 Copy-DirectoryContents -Source $inputDirectory -Destination $layoutDirectory
+$layoutExecutable = Join-Path $layoutDirectory 'LibreCAD.exe'
+if ($subsystem -eq 3) {
+    Set-PeSubsystem -Path $layoutExecutable -Subsystem 2
+    Write-Host 'Marked the packaged LibreCAD.exe as a Windows GUI program.'
+}
+if ((Get-PeSubsystem -Path $layoutExecutable) -ne 2) {
+    throw "The packaged LibreCAD.exe is not a Windows GUI program."
+}
 
 # windeployqt's translations\ is re-staged under resources\qm below, which is
-# where rs_system looks; .pdb are debug symbols; the Universal CRT in the system
-# directory is always used on Windows 10 and later, so an app-local copy is dead
-# weight.
+# where rs_system looks; .pdb are debug symbols; .lib, .exp and .ilk are linker
+# output of the build directory (its static librecad_lib.lib alone is close to
+# 300 MB); the Universal CRT in the system directory is always used on Windows 10
+# and later, so an app-local copy is dead weight; and LibreCAD paints with
+# QPainter, never OpenGL or Direct3D, so the software OpenGL renderer and the
+# Direct3D shader compilers windeployqt may deploy are dead weight too.
 $layoutExclusions = @(
     (Join-Path $layoutDirectory 'translations')
 )
@@ -383,9 +466,21 @@ foreach ($exclusion in $layoutExclusions) {
         Remove-Item -LiteralPath $exclusion -Recurse -Force
     }
 }
+$excludedExtensions = @('.pdb', '.lib', '.exp', '.ilk')
+$excludedNames = @('ucrtbase.dll', 'opengl32sw.dll', 'd3dcompiler_47.dll', 'dxcompiler.dll', 'dxil.dll')
 Get-ChildItem -LiteralPath $layoutDirectory -Recurse -File |
-    Where-Object { $_.Extension -eq '.pdb' -or $_.Name -eq 'ucrtbase.dll' -or $_.Name -like 'api-ms-win-*.dll' } |
+    Where-Object { $_.Extension -in $excludedExtensions -or $_.Name -in $excludedNames -or $_.Name -like 'api-ms-win-*.dll' } |
     Remove-Item -Force
+
+# The build directory also holds test and developer programs such as
+# dwg_tarch_test.exe and libdxfrw_json_dump.exe.  LibreCAD.exe is the only
+# program the package runs.
+Get-ChildItem -LiteralPath $layoutDirectory -Recurse -File |
+    Where-Object { $_.Extension -eq '.exe' -and $_.Name -ne 'LibreCAD.exe' } |
+    ForEach-Object {
+        Write-Host "Leaving $($_.Name) out of the package."
+        Remove-Item -LiteralPath $_.FullName -Force
+    }
 
 # Only the payload the NSIS installer ships, which also keeps repository stray
 # files such as .DS_Store out of the package.
@@ -403,6 +498,13 @@ Copy-MatchingFiles -Source $buildDirectory -Filter 'librecad_*.qm' -Destination 
 # plugins_*.qm are not produced today: every qt_add_translations in
 # plugins/*/CMakeLists.txt is commented out.  Not required, so this stays quiet.
 Copy-MatchingFiles -Source $pluginsDirectory -Filter 'plugins_*.qm' -Destination $translationDirectory -Recurse
+
+# GPLv2 asks for a copy of the licence with every copy of the program, and the
+# fonts and libraries LibreCAD bundles carry their own licences.
+$layoutLicenses = Join-Path $layoutDirectory 'licenses'
+Copy-MatchingFiles -Source $licenseDirectory -Filter '*.txt' -Destination $layoutLicenses -Required
+Copy-MatchingFiles -Source $licenseDirectory -Filter 'readme.md' -Destination $layoutLicenses -Required
+Copy-Item -LiteralPath $licenseFile -Destination (Join-Path $layoutLicenses 'LICENSE') -Force
 
 Add-Type -AssemblyName System.Drawing
 $assetDirectory = Join-Path $layoutDirectory 'Assets'
@@ -503,7 +605,7 @@ Invoke-MakeAppx -MakeAppx $makeAppx -Operation 'unpack validation' -Arguments @(
     'unpack', '/o', '/p', $packagePath, '/d', $validationDirectory
 )
 
-foreach ($requiredPath in @('AppxManifest.xml', 'LibreCAD.exe', 'resources.pri', 'Assets\Square150x150Logo.png', 'resources\fonts\standard.lff')) {
+foreach ($requiredPath in @('AppxManifest.xml', 'LibreCAD.exe', 'resources.pri', 'Assets\Square150x150Logo.png', 'resources\fonts\standard.lff', 'licenses\gpl-2.0.txt', 'licenses\LICENSE')) {
     if (-not (Test-Path -LiteralPath (Join-Path $validationDirectory $requiredPath) -PathType Leaf)) {
         throw "MSIX validation output is missing $requiredPath"
     }
@@ -523,4 +625,5 @@ if ($env:GITHUB_OUTPUT) {
 }
 
 Write-Host "Created unsigned package: $packagePath"
+Write-Host "Size: $([Math]::Round((Get-Item -LiteralPath $packagePath).Length / 1MB, 1)) MB"
 Write-Host "SHA256: $hash"
