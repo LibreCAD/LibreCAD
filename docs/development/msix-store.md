@@ -46,9 +46,11 @@ listed below.
 
 `scripts/build-msix.ps1` packages the staged folder with these changes:
 
-- `LibreCAD.exe` must be a Windows GUI program (PE subsystem 2); the script
-  refuses a console build (`-DLIBRECAD_WINDOWS_CONSOLE=ON`), which would open
-  a console window beside LibreCAD on every start.
+- The packaged `LibreCAD.exe` is a Windows GUI program (PE subsystem 2).
+  master builds a console program, which would open a console window beside
+  LibreCAD on every start, so the script marks its copy in the package as a
+  GUI program, as `editbin /SUBSYSTEM:WINDOWS` would. The installers keep
+  the program as built.
 - It is the only program in the package: test and developer programs, linker
   files (`.lib`, `.exp`, `.ilk`), debug symbols, the app-local Universal CRT,
   the software OpenGL renderer and the Direct3D shader compilers
@@ -378,8 +380,10 @@ rejected at upload fails during packaging instead.
 - It runs the packaged `LibreCAD.exe` once, converting
   `resources\library\misc\screw.dxf` to PNG with stderr redirected to a
   file, and fails unless that exits with 0, writes the PNG and leaves Qt's
-  messages in the file. This catches a missing Qt DLL and a broken
-  GUI-subsystem build before certification does; the runner has the Visual
+  messages in the file (`QT_FORCE_STDERR_LOGGING` is set, since a GUI program
+  without a console window otherwise logs to the debugger). This catches a
+  missing Qt DLL and a packaged program that does not start before
+  certification does; the runner has the Visual
   C++ runtime installed, so a missing runtime DLL is caught by
   `build-msix.ps1` instead.
 - It runs the Windows App Certification Kit against the bundle when
@@ -430,13 +434,13 @@ registrations are cleaned by the NSIS installers.
 
 ## Local package creation
 
-On a Windows machine with the Windows SDK, build LibreCAD (not with
-`LIBRECAD_WINDOWS_CONSOLE`), deploy it with `windeployqt --release
---no-opengl-sw --no-system-d3d-compiler --no-system-dxc-compiler
---include-plugins qoffscreen`, copy the Visual C++ runtime next to
-`LibreCAD.exe` with `scripts\copy-vc-runtime.ps1 -Architecture AMD64
--Destination <folder>` (`ARM64` on Arm), then run `scripts/build-msix.ps1`
-on that folder from a Git checkout, so that it can name the commit in
-`licenses\SOURCE.txt`. The package must be signed with a locally trusted
+On a Windows machine with the Windows SDK, build LibreCAD and stage it as
+`build-all.yml` does for the installer: `windeployqt --release
+--compiler-runtime` on the built `LibreCAD.exe`, copy the build's `Release`
+folder to a staging folder, and copy the Visual C++ runtime into it with
+`scripts\copy-vc-runtime.ps1 -Architecture AMD64 -Destination <folder>`
+(`ARM64` on Arm). Then run `scripts/build-msix.ps1` on that folder, with
+the build folder as `-BuildDirectory`, from a Git checkout, so that it can
+name the commit in `licenses\SOURCE.txt`. The package must be signed with a locally trusted
 development certificate before it can be installed outside the Store. Do not
 add a production certificate to this repository or to GitHub Actions secrets.
