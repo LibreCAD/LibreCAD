@@ -366,6 +366,14 @@ jobs:
           mv generated/LibreCAD-*.exe LibreCAD-`git describe --always`-win-x64.exe
         shell: bash
 
+      - name: Upload artifact
+        id: artifact-upload-step
+        uses: actions/upload-artifact@main
+        with:
+          name: win64Assets
+          path: LibreCAD*.exe
+          retention-days: 2
+
       - name: Package MSIX
         id: package-msix
         # A failed Store package must not hold back the installers on master;
@@ -411,14 +419,6 @@ jobs:
           name: win64Msix
           path: msix-output/*.msix*
           if-no-files-found: error
-          retention-days: 2
-
-      - name: Upload artifact
-        id: artifact-upload-step
-        uses: actions/upload-artifact@main
-        with:
-          name: win64Assets
-          path: LibreCAD*.exe
           retention-days: 2
 
   BuildWindowsARM64:
@@ -534,6 +534,14 @@ jobs:
           mv generated/LibreCAD-*.exe LibreCAD-`git describe --always`-win-arm64.exe
         shell: bash
 
+      - name: Upload artifact
+        id: artifact-upload-step
+        uses: actions/upload-artifact@main
+        with:
+          name: winARM64Assets
+          path: LibreCAD*.exe
+          retention-days: 2
+
       - name: Package MSIX
         id: package-msix
         # A failed Store package must not hold back the installers on master;
@@ -579,14 +587,6 @@ jobs:
           name: winARM64Msix
           path: msix-output/*.msix*
           if-no-files-found: error
-          retention-days: 2
-
-      - name: Upload artifact
-        id: artifact-upload-step
-        uses: actions/upload-artifact@main
-        with:
-          name: winARM64Assets
-          path: LibreCAD*.exe
           retention-days: 2
 
   PackageWindowsMsix:

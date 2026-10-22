@@ -48,8 +48,8 @@ import urllib.request
 
 # qt_attribution.json files of code built into the Qt DLLs and plugins that
 # windeployqt deploys for LibreCAD on Windows (Core, Gui, Widgets, Network,
-# PrintSupport, Svg, the windows and offscreen platforms, the image format
-# and icon engine plugins).  Unix-, macOS-, Android-, SQL-, D-Bus- and
+# PrintSupport, Svg, the windows platform plugin, the image format and icon
+# engine plugins).  Unix-, macOS-, Android-, SQL-, D-Bus- and
 # test-only components are left out.
 ATTRIBUTIONS = {
     'qtbase': [

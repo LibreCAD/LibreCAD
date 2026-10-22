@@ -503,13 +503,17 @@ Copy-PluginModules -Source $pluginsDirectory -Destination (Join-Path $layoutReso
 # lacks it; main.cpp looks for it in iconengines\ beside LibreCAD.exe.
 $layoutIconEngine = Join-Path $layoutDirectory 'iconengines\lc_svgiconengine.dll'
 if (-not (Test-Path -LiteralPath $layoutIconEngine -PathType Leaf)) {
-    $builtIconEngine = Get-ChildItem -LiteralPath $buildDirectory -Recurse -File -Filter 'lc_svgiconengine.dll' |
-        Select-Object -First 1
+    # The Release build of a multi-config build folder, or a single-config
+    # one; never a Debug copy, which needs Qt's debug DLLs.
+    $builtIconEngine = @(
+        (Join-Path $buildDirectory 'libraries\lciconengine\Release\lc_svgiconengine.dll'),
+        (Join-Path $buildDirectory 'libraries\lciconengine\lc_svgiconengine.dll')
+    ) | Where-Object { Test-Path -LiteralPath $_ -PathType Leaf } | Select-Object -First 1
     if (-not $builtIconEngine) {
-        throw "lc_svgiconengine.dll was not found under $buildDirectory."
+        throw "No Release lc_svgiconengine.dll under $buildDirectory\libraries\lciconengine."
     }
     New-Item -ItemType Directory -Force -Path (Split-Path -Parent $layoutIconEngine) | Out-Null
-    Copy-Item -LiteralPath $builtIconEngine.FullName -Destination $layoutIconEngine -Force
+    Copy-Item -LiteralPath $builtIconEngine -Destination $layoutIconEngine -Force
 }
 
 $translationDirectory = Join-Path $layoutResources 'qm'

@@ -24,8 +24,9 @@
 
 # Microsoft Store MSIX
 
-`build-all.yml` packages an MSIX in each of its Windows jobs, right after the
-payload is staged for the NSIS installer, so no extra compile is needed. On
+`build-all.yml` packages an MSIX in each of its Windows jobs after the NSIS
+installer has been built and uploaded, from the payload staged for it, so no
+extra compile is needed and the installer is built exactly as before. On
 pushes to `master` its `PackageWindowsMsix` job combines the x64 and ARM64
 packages into one `.msixbundle` and a `.msixupload` archive, the
 `winMsixBundle` artifact. `msix-store-submit.yml` submits that archive to the
