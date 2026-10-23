@@ -41,7 +41,7 @@ main-track slices remain incomplete; no native entity is claimed.
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
 | Latest product checkpoint | `d4a0b081a` (C) |
-| Latest auxiliary checkpoint | `a95a5c5ff` (H7 checker/preflight; guards ceacd01a3, workers e83aaf3f0) |
+| Latest auxiliary checkpoint | `5a3e47039` (H7 driver; core a95a5c5ff, guards ceacd01a3, workers e83aaf3f0) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
 | A-core | Atomic work adoption, separate ordering allowance and sticky terminal status implemented; A04/A10 registered |
@@ -279,7 +279,7 @@ D-core needs justified rounding/error and topology preservation, or an explicit
 unchanged refusal when a requested transform cannot be certified. Do not weaken
 the ordinary-transform no-regeneration contract or silently restamp stale data.
 
-The active auxiliary sequence is H7 qualification driver -> complete affected regression
+The active auxiliary sequence is H7 complete affected regression
 rerun -> two complete qualification runs. Suite inventory/worker execution is
 committed separately; it is not whole H7 or native feature completion.
 
@@ -1526,7 +1526,7 @@ one plan update, not another candidate/freeze lifecycle.
 | X-H4 | Committed 3e06e3894; explicit API | Complete genesis/chained case rows, pinned identities/order/actual outputs, exclusive publication/replay/mutation checks; not automatic CLI persistence |
 | X-H5 | Committed 6d4fd25b3; explicit API | Actual source/runtime/receipt/diagnostic/ledger/output evidence, exclusive absent publication and bound automated checker; 44 focused tests and independent review |
 | X-H6 | Committed 507e44ad7; core 9170b0cc9 | All 93 obligations executable, all original71 IDs retained; owned H4/H5 protocols, precise root scopes and mutation/prefix checks; 94 inventory tests pass |
-| X-H7 | Checker/preflight a95a5c5ff, guards ceacd01a3, workers e83aaf3f0 committed; qualification pending | Driver, complete affected regressions and two complete qualification runs remain |
+| X-H7 | Driver 5a3e47039, core a95a5c5ff, guards ceacd01a3, workers e83aaf3f0 committed; qualification pending | Complete affected regressions and two complete qualification runs remain |
 
 ### Concrete H2 Capture Corrections
 
@@ -1824,6 +1824,53 @@ C's 18 new contact-matching cases passed 687 assertions; combined C/refinement
 119 cases passed 18618 assertions. Independent static review cleared the matcher,
 actual route-port integration, owner-validity guard and owner allocation ordering.
 Final qualification is recorded below; native feature remains incomplete.
+
+### X-H7 Driver Validation (2026-10-23)
+
+Implementation `5a3e47039` creates two isolated actual validation attempts, pins an
+immutable actual roadmap snapshot before capture, uses fresh UUIDs and exact real
+registry/configuration, and invokes genuine H2 preflight and the H3/H4/H5 pipeline.
+Raw input hashes differ across explicit per-run configuration namespaces; only
+the declared canonical suite outcomes are compared byte-for-byte. Sources, runtime
+and original inputs remain pinned. All source components are now committed; this
+is readiness for qualification, not a claim that the full runs have succeeded.
+
+Independent review found and verified corrections for original-owner lifetime,
+same-byte result replacement/mode laundering, borrowed mutable options and bounded
+growth reads. Completed-run H4/H5 owners and H2 captures remain live and are
+revalidated before and after final report publication. Result publication binds
+the original fd/path identity, mode0400, single-link status and exact readback.
+Failure diagnostics retain real bounded stdin/stdout/stderr/child/input records.
+No failed or independently created artifact is cleaned up.
+
+The persisted qualification report is RECORDED with an explicit verification
+scope, not a standalone completion token. CLI/API PASS is returned only after the
+final original-owner checks and binds the report's bytes/hash. Parent driver7
+tests and preflight4 tests pass11/11 in X-H7-parent-reviewed-06.tap under
+`/private/tmp/lc2961-impl-evidence.9GtLO2`. Independent consolidated rereview passes
+the same11 with zero skips in X-H7-independent-consolidated-9514da84-8f8f-42b4-920d-c12579ebe8f8.tap.
+Retained probes exercised first-run late mutation, writer identity/mode replacement,
+bounded growth reads and early-FAIL/late-PASS concurrent sibling completion. No
+remaining focused P1/P2 issue. No canonical timing or complete-run PASS is inferred.
+
+Prepared actual byte-replay artifacts in the same evidence directory:
+H7-base-initial.cpp comes from git show of9c06e9c77, geometry source249744 bytes,
+SHA2561ce0bd467d9512044cc2f039cbfd6fa8dfd2073b963eba5acd014a47c7e94069;
+H7-product-before-C.cpp comes from9bf0546b6,265173 bytes,
+SHA256726008f85d176265515f9c304422b1e5869eb1423ef292ba7d66b6dd5f6a0947.
+Candidate is the actual C geometry source326493 bytes,
+SHA2560ef69286b0bc4e9371f2bea59faaf4a4233686b7b910687a3e626b96b7095fdb.
+These are genuine different historical/current byte artifacts, not fabricated gate
+results or future/self-referential commit hashes. The replay is explicitly a
+bounded byte replacement, not Git patch or C++ semantic validation.
+
+Next: run all affected Node tests on frozen committed sources, then invoke the
+driver twice-run qualification with a fresh absent output namespace. Confirm all
+four canonical suites, all93 required IDs, actual309-case inventory, complete
+original-owner/failure/persistence checks and the unchanged300-second preflight
+deadline. Preserve and diagnose failures; never relabel them as success. Only
+after actual evidence may X-H7 be marked complete. D-core and later main slices
+remain outstanding, independent of this optional tooling.
 
 ### X-H7 Checker And Preflight Validation (2026-10-23)
 
