@@ -24,12 +24,11 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-23. Status: all A slices, B and X-H1 through X-H5 plus H6-core committed; native feature incomplete.
+Updated: 2026-10-23. Status: all A slices, B, C and X-H1 through X-H5 plus H6-core committed; native feature incomplete.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
-This checkpoint records tested A-core/A-strict/A-reference/A-cache/B and auxiliary X-H1 through X-H5 plus H6-core commits. Later
-main-track slices remain incomplete; no native entity or complete topology checker
-is claimed.
+This checkpoint records tested A-core/A-strict/A-reference/A-cache/B/C and auxiliary X-H1 through X-H5 plus H6-core commits. Later
+main-track slices remain incomplete; no native entity is claimed.
 
 ## 1. Verified Baseline and Scope
 
@@ -41,7 +40,7 @@ is claimed.
 | Difference between initial checkpoints | Only this plan file; no product-source change |
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
-| Latest product checkpoint | `9bf0546b6` (B) |
+| Latest product checkpoint | `d4a0b081a` (C) |
 | Latest auxiliary checkpoint | `6d4fd25b3` (H5 evidence; H4 3e06e3894, H6 core 9170b0cc9) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
@@ -50,15 +49,15 @@ is claimed.
 | A-reference | Bounded geometry ordering/scans/capacity and atomic ordinary/exceptional solver-work adoption |
 | A-cache | Atomic Candidate/Proof subdivision, inherited combined depth, prepared capacity, bounded dispatch/coverage |
 | B terminals | Immutable exact occurrence/edge-side classification, separate source incidence, bounded storage/scans |
-| Missing geometry stages | Complete global topology checker |
+| C topology | Complete bounded unique-path checker, owned contact query and exact root-to-port matching; unresolved correspondence refuses Ambiguous |
 | Native entity | No `LC_OffsetCurve` or `EntityOffsetCurve` yet |
 | Product integration | No native offset adoption, private file schema, creation/editing UI, or target-trim integration yet |
-| Build registration | Both geometry implementations in CMake and qmake; both geometry test TUs in `librecad_tests` |
+| Build registration | Geometry, contact and routing sources in CMake/qmake; focused geometry/contact/routing/budget tests in `librecad_tests` |
 | Validation harness | X-H1 through X-H5 and H6-core committed; remaining H6 integration, complete CLI orchestration and H7 pending |
 | Latest validation | A-core, geometry and format fast lanes passed Release/ASan; full Release and qmake6 passed; see section 14 |
 
 Recheck these facts against the selected implementation checkout before starting
-C. Inventory Qt6/Catch2/build tools and available independently authored
+D-core. Inventory Qt6/Catch2/build tools and available independently authored
 DXF/DWG fixtures/inspection tools once, recording provenance/access gaps early;
 source-level progress need not wait for unrelated external-tool installation. The user's main checkout is a different, dirty branch and is not the
 source baseline above. Do not overwrite its unrelated changes or apply this plan
@@ -214,7 +213,7 @@ test commit followed by the section 4 plan checkpoint.
 | A-reference | A-strict | Geometry scans/callback ownership and exception-safe work transfers (`5c12fbeef`) | committed |
 | A-cache | A-reference | Candidate/proof split accounting and inherited combined depth (`dbf895638`) | committed |
 | B | A-cache | Immutable occurrence-specific producer terminals (`9bf0546b6`) | committed |
-| C | B | Full unique-path topology checker and public result | pending |
+| C | B | Full unique-path topology checker and public result | committed d4a0b081a |
 | D-core | C | Native enum/entity, real validated adoption, stamp, clone and transforms | pending |
 | D-edit | D-core | Real create/mutators, one-run staging, run limits and refusal results | pending |
 | D-grips | D-edit | Cached definition grips, safe snaps and through-parameter query | pending |
@@ -1735,7 +1734,7 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 | Recursive plan/activation routing | Removed as a planning deadlock | Execute A-core's finite card |
 | Atomic budget API | Committed and validated (`0eb2a0cfa`) | Integrate solver/geometry work in A-strict/A-reference |
 | Geometry work/exception/split/depth/terminal proof | All A slices and B committed and validated | C complete checker |
-| Complete semantic path checker | Missing implementation | A-cache -> B -> C |
+| Complete semantic path checker | C committed d4a0b081a; explicit Ambiguous refusals retained | D-core native validated adoption |
 | Native feature/UI/persistence/trim | Not implemented | Follow D through T; do not label scaffolding complete |
 | Independent DWG/version fixtures | Required, not yet qualified | Inventory/tool/license/provenance during G-fixtures; close all rows in G-matrix |
 | Harness production readiness | X-H1/X-H2 committed; workers and independent evidence incomplete | X-H3 through X-H7, independent from starting product work |
@@ -1799,7 +1798,45 @@ those rows executable; do not pretend a fake issuer reaches a later binding guar
 C's 18 new contact-matching cases passed 687 assertions; combined C/refinement
 119 cases passed 18618 assertions. Independent static review cleared the matcher,
 actual route-port integration, owner-validity guard and owner allocation ordering.
-Final full-source qualification/commit remains pending; native feature incomplete.
+Final qualification is recorded below; native feature remains incomplete.
+
+### C Topology Validation (2026-10-23)
+
+Implementation `d4a0b081a` completes the immutable public checker transaction,
+bounded canonical path search, whole-candidate/reference coverage, fixed-terminal
+preflight, one-root symbolic phase cut, strict nonlocal contact query and exact
+owned-root/incidence-port matching. No gap is waived around a numerical phase
+root: paired domains retain the same symbolic root, and its full enclosing image
+contributes to geometric bounds. Numerical seeds propose correspondence only;
+fresh outward bounds certify it. Non-exact or unproved contact alignment refuses
+Ambiguous rather than inventing a topological match. Immutable proof owners and
+allocation-before-debit ordering survive exceptional exits.
+
+All 54 named obligations are present exactly once: 53 public-checker cases and
+C27's separately specified two-cycle production routing-kernel case. The latter
+is not mislabeled a realizable two-cycle ellipse fixture. The final focused run
+has 104 cases / 18056 assertions, all passed; native successful-assertion XML
+confirms each identity executed assertions. Including retained-refinement tests,
+119 cases / 18618 assertions passed. Independent static reviews cleared the
+global checker/kernel, contact query, symbolic-cut correction and matcher.
+
+Final evidence in `/private/tmp/lc2961-impl-evidence.9GtLO2`:
+
+- `C-acceptance-release-07`, `C-acceptance-assertions-07.xml` and
+  `C-identities-07.json`: exact identities, zero missing/extra/empty cases.
+- `C-full-release-03`: 3979 total, 3953 passed, the same 26 baseline skips,
+  7426232 passing assertions; baseline comparison has no lost identities.
+- `C-geometry-asan-03`: 357 cases / 1570740 assertions, all passed.
+- `C-dxf-release-02` and `C-dxf-asan-02`: 744 total, 741 passed, same 3 skips,
+  39929 passing assertions in each lane.
+- `C-dwg-release-02` and `C-dwg-asan-02`: 1006 total, 1002 passed, same 4 skips,
+  34948 passing assertions in each lane.
+- `C-build-release-24.log`, `C-build-asan-08.log`, `C-qmake6-03.log`: successful
+  builds, including the qmake6 application/plugins/tools. ASan used
+  `detect_leaks=0`; no full-application ASan or leak qualification is claimed.
+
+Next main slice is D-core. Remaining H6 integration, runner orchestration and H7
+are independent auxiliary obligations, not proof of native feature completion.
 
 ### X-H4 Joined Ledger Validation (2026-10-23)
 
