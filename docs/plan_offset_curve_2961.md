@@ -24,11 +24,11 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-23. Status: all A slices, B, C, D-core/D-edit and X-H1 through X-H6 committed; native workflow incomplete.
+Updated: 2026-10-23. Status: all A slices, B, C, D-core/D-edit committed; X-H1 through X-H7 complete for the observed source; native workflow incomplete.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
 This checkpoint records tested A-core/A-strict/A-reference/A-cache/B/C/D-core/D-edit
-and auxiliary X-H1 through X-H6 commits. Native adoption, creation and staged
+and auxiliary X-H1 through X-H7 commits/qualification. Native adoption, creation and staged
 definition editing are implemented; grip/tool integration, persistence, UI and
 trimming remain later slices.
 
@@ -55,7 +55,7 @@ trimming remain later slices.
 | Native entity | `LC_OffsetCurve` / `EntityOffsetCurve`, checked adoption, real creation, transactional mutators, actual stage results, consistency stamp, clone, exact proof transport and bounded owned extensions |
 | Product integration | Spline-shaped export, explicit INSERT plain-cache fallback and interim property refusal; tool adoption, private file schema, UI and trim pending |
 | Build registration | Geometry/contact/routing/native sources in CMake/qmake6; native and adjacent tests registered and executed |
-| Validation harness | X-H1 through X-H6 and CLI orchestration committed; both full H7 runs returned PASS, independent evidence audit pending |
+| Validation harness | X-H1 through X-H7 complete: source90714f758,407-case regression, two full qualification runs and independent retained-evidence audit |
 | Latest validation | A-core, geometry and format fast lanes passed Release/ASan; full Release and qmake6 passed; see section 14 |
 
 Recheck these facts against the selected implementation checkout before starting
@@ -218,7 +218,7 @@ test commit followed by the section 4 plan checkpoint.
 | C | B | Full unique-path topology checker and public result | committed d4a0b081a |
 | D-core | C | Native enum/entity, real validated adoption, stamp, clone and transforms | committed 92758859c |
 | D-edit | D-core | Real create/mutators, one-run staging, run limits and refusal results | committed 4300c1031 |
-| D-grips | D-edit | Cached definition grips, safe snaps and through-parameter query | pending |
+| D-grips | D-edit | Cached definition grips, safe snaps and through-parameter query | in progress |
 | E-tools | D-grips | Tool result adoption, explicit plain fallback, explode/scale/INSERT/plugin | pending |
 | E-again | E-tools | Bounded repeated offset/rebase with plain fallback | pending |
 | F-types | E-again | Complete engine/document/filter type-site integration census | pending |
@@ -293,8 +293,9 @@ cache or refuse the whole operation, never silently publish an unmoved clone.
 The auxiliary scheduler correction `90714f758` passed the407-case regression.
 Both isolated full runs of `H7-qualification-03` returned PASS through the actual
 CLI, with all four preflight captures under the unchanged deadline. Independent
-evidence/readback audit is pending before promoting X-H7 to complete. Retain
-failed qualifications01/02. The observation is not a future runtime guarantee.
+evidence/readback audit passed; X-H7 is complete for those observed source/runtime
+bytes. Retain failed qualifications01/02. This is neither a future runtime
+guarantee nor completion of any remaining native product slice.
 
 ### C Implementation Card (Completed)
 
@@ -1539,7 +1540,7 @@ one plan update, not another candidate/freeze lifecycle.
 | X-H4 | Committed 3e06e3894; explicit API | Complete genesis/chained case rows, pinned identities/order/actual outputs, exclusive publication/replay/mutation checks; not automatic CLI persistence |
 | X-H5 | Committed 6d4fd25b3; explicit API | Actual source/runtime/receipt/diagnostic/ledger/output evidence, exclusive absent publication and bound automated checker; 44 focused tests and independent review |
 | X-H6 | Committed 507e44ad7; core 9170b0cc9 | All 93 obligations executable, all original71 IDs retained; owned H4/H5 protocols, precise root scopes and mutation/prefix checks; 94 inventory tests pass |
-| X-H7 | Source fixes c1b2fa095 and 90714f758 committed; frozen407 regression and both full qualification03 runs returned PASS | Independent retained-evidence audit pending; unchanged 300-second deadline |
+| X-H7 | Complete: c1b2fa095/90714f758,407 regression, two full qualification03 runs and independent retained-evidence audit passed | Observed source/runtime only; unchanged300-second deadline; no product-completion claim |
 
 ### Concrete H2 Capture Corrections
 
@@ -1799,6 +1800,41 @@ The plan checkpoint column never depends on its own future SHA.
 | D-edit | 4300c1031 | Immediate plan-only checkpoint | 43 focused native/edit cases; full Release, affected ASan, DXF/DWG Release/ASan, qmake6 and committed-blob audit passed; independent static review |
 | X-H7 timeout source fix | c1b2fa095 | Immediate plan-only checkpoint | Author55 + independent15 controls and parent399 runner regression passed; actual runtime qualification remains open |
 | X-H7 bounded scheduling | 90714f758 | Immediate plan-only checkpoint | Author85 + independent12 controls, parent407 runner regression and real224.790-second preflight probe passed; full two-run qualification remains open |
+
+### X-H7 Runtime Qualification (2026-10-23)
+
+`H7-qualification-03` under `/private/tmp/lc2961-impl-evidence.9GtLO2` completed
+both isolated full runs; the actual CLI exited0. Returned
+`X-H7-qualification-03.json` has status PASS and SHA-256
+79a99b3efad30166e021c63a0bba1c15a3a6f2b99bb3076fa83d307a9d7ce9c1.
+The durable `qualification.json` intentionally remains RECORDED,12581 bytes,
+SHA-256 2a083f6a1b761ed74c82da16492ec497a91ba0460c36cfa5ea67de4dc417b938,
+exactly bound by the returned report after the original-owner final readbacks.
+It is not a standalone persisted PASS token.
+
+Independent builtins-only readback audited17,995 actual raw events across40 suite
+captures:3,090 top-level test-case passes, zero failures/skips/cancellations/TODO,
+40 successful final global summaries and no unknown entry files. Each H3 run
+derived309 passes; all four preflight receipts bind two actual309-case repeats.
+Both complete309-row chained ledgers, H4/H5 joins, checker process results and
+five independent checker checks bind to the actual artifacts. Semantics match
+between isolated runs, without claiming equal namespace-dependent input hashes.
+
+The auditor independently reconstructed input manifests; all40 source/candidate
+pins per run match committed90714f758, and all93 required H6 baseline obligations
+are present. The historical roadmap input/snapshot matches1344dc7f4, Git blob
+91f9126ac7d55d2f54b908644c821aadf0579543. It remained frozen until successful CLI
+return; subsequent source/roadmap advancement does not retroactively alter that
+captured input. The actual recorded direct-child deadline remains300000ms; the
+maximum recorded Node-suite duration is223708.202875ms, not a fabricated total
+preflight duration or a promise of future runtime under arbitrary host load.
+
+No remaining P1/P2 qualification finding was reported. The audit did not invoke
+production validators or reconstruct WeakMap issuance after process exit. This
+is observational automated evidence, not historical process-origin/stdin-delivery
+attestation, human approval, process-tree containment, filesystem race elimination
+or native-feature completion. Failed qualifications01/02 remain retained. X-H7
+is complete for this source/runtime checkpoint; follow the native D-grips track.
 
 ### D-edit Validation (2026-10-23)
 
