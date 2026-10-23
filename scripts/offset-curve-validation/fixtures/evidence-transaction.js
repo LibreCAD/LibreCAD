@@ -19,16 +19,20 @@ const h4 = require('../formal-ledger');
 const directory = path.dirname(__dirname);
 const workerPath = path.join(__dirname, 'formal-child.js');
 const checkerPath = path.join(__dirname, 'evidence-checker.js');
+const capturePath = path.join(__dirname, 'capture-child.js');
 const ids = Object.freeze(['10000000-0000-4000-8000-000000000001', '20000000-0000-4000-8000-000000000002']);
 
 // No automatic teardown: callers remove successful attempts after all their
 // assertions. Unexpected failures retain actual captured inputs and prefixes.
 async function setup(t, {checkerMode = 'pass', execute = true, purpose = 'synthetic', omitSource,
     omitCaptures = false, omitCheckerConfig = false, timeout = 3000, streamCap = 65536, emptySource = false,
-    captureOnly = false, extraSources = [], checkerModule = checkerPath, workerMode = 'pass'} = {}) {
+    captureOnly = false, extraSources = [], checkerModule = checkerPath, workerMode = 'pass', captureRunner = capturePath,
+    captureEvidence = false} = {}) {
     assert.ok(Array.isArray(extraSources), 'extraSources must be an explicit array');
+    assert.equal(typeof captureEvidence, 'boolean', 'captureEvidence must be an explicit boolean');
     const pinnedExtras = extraSources.map(p => h2.canonicalPath(p));
     const selectedChecker = h2.canonicalPath(checkerModule, 'checkerModule');
+    const selectedRunner = h2.canonicalPath(captureRunner, 'captureRunner');
     h2.string(workerMode, 'workerMode', 128);
     const base = fs.mkdtempSync(path.join(fs.realpathSync(os.tmpdir()), 'lc-offset-h5-'));
     t.diagnostic(`attempt ${base}`);
@@ -56,13 +60,14 @@ async function setup(t, {checkerMode = 'pass', execute = true, purpose = 'synthe
     }
     const sourceNames = ['formal-registry.js', 'formal-runner.js', 'run-formal-gates.js', 'formal-ledger.js',
         'ledger-descriptors.js', 'p0f-evidence.js', 'evidence-descriptors.js'].filter(name => name !== omitSource);
-    const sourcePaths = [...new Set(sourceNames.map(name => path.join(directory, name)).concat(workerPath, selectedChecker, pinnedExtras))];
+    const sourcePaths = [...new Set(sourceNames.map(name => path.join(directory, name)).concat(workerPath, selectedChecker,
+        selectedRunner === capturePath ? [] : [selectedRunner, capturePath], pinnedExtras))];
     if (emptySource) {
         const p = path.join(base, 'empty-source.js'); fs.writeFileSync(p, ''); sourcePaths.push(p);
     }
-    const preflight = {purpose, candidatePath, runnerPath: path.join(__dirname, 'capture-child.js'), sourcePaths,
+    const preflight = {purpose, candidatePath, runnerPath: selectedRunner, sourcePaths,
         inputPaths: [raw], fixturePaths: [], configPaths: [configPath, registryPath, ...(omitCheckerConfig ? [] : [checkerConfigPath])],
-        caseInventoryPath: inventoryPath, runnerArgs: ['pass'], cwd: base, environment: env};
+        caseInventoryPath: inventoryPath, runnerArgs: ['pass', ...(captureEvidence ? ['--genuine-preflight-evidence'] : [])], cwd: base, environment: env};
     const config = {schema_version: 1, purpose, registry_path: registryPath, run_root: path.join(runParent, 'run'),
         receipt_ids: [...ids], receipt_roots: roots, preflight};
     fs.writeFileSync(configPath, h1.canonicalJson(config));
@@ -86,7 +91,7 @@ async function setup(t, {checkerMode = 'pass', execute = true, purpose = 'synthe
     return {base, config, request, h3, captures, raw, ledgerReadback, evidenceParent, checkerConfigPath, evidenceRequest,
         configPath, registryPath, candidatePath, inventoryPath, runParent, ledgerParent, ledgerPath,
         ledgerContext, ledgerDocument, receiptDirs, receiptRoots: roots, sourcePaths,
-        checkerModule: selectedChecker, workerMode,
+        checkerModule: selectedChecker, workerMode, captureRunner: selectedRunner, captureEvidence,
         phase: captureOnly ? 'captured' : execute ? 'ledger' : 'configured'};
 }
 

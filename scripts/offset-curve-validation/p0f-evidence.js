@@ -22,6 +22,8 @@ const {LIMITS, FILES, CHECKS, SCHEMA} = require('./evidence-descriptors');
 // No descendant-process containment or adversarial filesystem race elimination.
 const contexts = new WeakMap();
 const readbacks = new WeakMap();
+const PREFLIGHT_ARTIFACT_LIMITS = Object.freeze({references: 64, fileBytes: 8388608, totalBytes: 134217728});
+const PREFLIGHT_EVIDENCE_KIND = 'genuine-preflight-evidence';
 const BASE_LIMITATIONS = Object.freeze([
     'Automated checker execution is not human review or independent H7 qualification.',
     'Preflight stdin origin/delivery cannot be independently proven from receipts or caller-supplied capture snapshots.',
@@ -178,6 +180,109 @@ function checkTransport(captures, d) {
     });
 }
 
+function artifactDirectory(root, io) {
+    h2.checkDirectoryGuards(root.guards, io);
+    const before = io.lstatSync(root.path);
+    ensure(before.isDirectory() && !before.isSymbolicLink(), 'REVALIDATION', 'PREFLIGHT_ARTIFACT_CHANGED', 'artifact root is not a real directory');
+    const identity = h2.statIdentity(before);
+    if (root.identity !== undefined)
+        ensure(identity === root.identity, 'REVALIDATION', 'PREFLIGHT_ARTIFACT_CHANGED', 'original artifact directory changed');
+    const fd = io.openSync(root.path, io.constants.O_RDONLY | io.constants.O_NOFOLLOW | io.constants.O_DIRECTORY);
+    try {
+        ensure(h2.statIdentity(io.fstatSync(fd)) === identity, 'REVALIDATION', 'PREFLIGHT_ARTIFACT_CHANGED', 'artifact directory descriptor differs');
+        const directory = io.opendirSync(root.path), names = [];
+        try {
+            for (;;) {
+                const entry = directory.readSync(); if (entry === null) break;
+                ensure(names.length < root.names.length, 'REVALIDATION', 'PREFLIGHT_ARTIFACT_CHANGED', 'extra preflight artifact entry');
+                names.push(entry.name);
+            }
+        } finally { directory.closeSync(); }
+        ensure(equal(names.sort(), root.names), 'REVALIDATION', 'PREFLIGHT_ARTIFACT_CHANGED', 'preflight artifact membership differs');
+        ensure(h2.statIdentity(io.fstatSync(fd)) === identity && h2.statIdentity(io.lstatSync(root.path)) === identity,
+            'REVALIDATION', 'PREFLIGHT_ARTIFACT_CHANGED', 'artifact directory changed while listing');
+        h2.checkDirectoryGuards(root.guards, io);
+        return identity;
+    } finally { io.closeSync(fd); }
+}
+function capturePreflightArtifacts(d) {
+    const {io} = d, files = [], roots = new Map(), paths = new Set(), references = [];
+    const required = d.config.preflight.runnerPath === path.join(__dirname, 'genuine-preflight.js') ||
+        d.config.preflight.runnerArgs.includes('--genuine-preflight-evidence');
+    let totalBytes = 0;
+    try {
+        for (const [i, receipt] of d.receipts.receipts.entries()) {
+            // Only the H1-bound stderr snapshot supplies references, never caller claims.
+            const bytes = Buffer.from(receipt.snapshot.stderr.base64, 'base64');
+            let envelope;
+            try { envelope = h1.parseCanonicalJson(bytes, {maxBytes: h1.MAX_STREAM_BYTES, label: 'preflight evidence stderr'}); }
+            catch (error) {
+                if (required) throw error;
+                continue;
+            }
+            if (!required && (!envelope || envelope.kind !== PREFLIGHT_EVIDENCE_KIND)) continue;
+            keys(envelope, ['schema_version', 'purpose', 'kind', 'context_sha256', 'artifacts', 'limitations'], 'preflight evidence');
+            ensure(envelope.schema_version === 1 && envelope.purpose === d.config.purpose && envelope.kind === PREFLIGHT_EVIDENCE_KIND &&
+                envelope.context_sha256 === d.transport[i].expected.sha256,
+            'CONTEXT', 'PREFLIGHT_ARTIFACT_CHANGED', 'preflight evidence purpose/context differs');
+            ensure(Array.isArray(envelope.artifacts) && envelope.artifacts.length > 0 &&
+                envelope.artifacts.length <= PREFLIGHT_ARTIFACT_LIMITS.references &&
+                Array.isArray(envelope.limitations) && envelope.limitations.length <= 64,
+            'CONTEXT', 'PREFLIGHT_ARTIFACT_CHANGED', 'preflight evidence arrays exceed bounds');
+            for (const limitation of envelope.limitations) h2.string(limitation, 'preflight limitation', 8192);
+            const roles = new Set();
+            for (const ref of envelope.artifacts) {
+                keys(ref, ['role', 'path', 'bytes', 'sha256'], 'preflight artifact');
+                h2.string(ref.role, 'preflight artifact role', 256); h2.canonicalPath(ref.path);
+                ensure(!roles.has(ref.role) && !paths.has(ref.path) && references.length < PREFLIGHT_ARTIFACT_LIMITS.references &&
+                    Number.isSafeInteger(ref.bytes) && ref.bytes >= 0 && ref.bytes <= PREFLIGHT_ARTIFACT_LIMITS.fileBytes &&
+                    typeof ref.sha256 === 'string' && /^[a-f0-9]{64}$/.test(ref.sha256),
+                'CONTEXT', 'PREFLIGHT_ARTIFACT_CHANGED', 'invalid/aliased/oversized preflight artifact reference');
+                totalBytes += ref.bytes;
+                ensure(totalBytes <= PREFLIGHT_ARTIFACT_LIMITS.totalBytes,
+                    'CONTEXT', 'PREFLIGHT_ARTIFACT_CHANGED', 'preflight artifacts exceed total byte cap');
+                roles.add(ref.role); paths.add(ref.path); references.push(ref);
+            }
+        }
+        // Validate all declared caps before reading any external artifact bytes.
+        const protectedPaths = [...d.protected, d.directory].map(p => physical(p, io));
+        const identities = new Set([...d.inputs.snapshots, ...d.outputs, d.ledgerFile].map(file => `${file.device}:${file.inode}`));
+        for (const ref of references) {
+            const rootPath = path.dirname(ref.path), rootPhysical = physical(rootPath, io);
+            for (const p of protectedPaths)
+                ensure(!related(rootPhysical, p) && !related(p, rootPhysical),
+                    'CONTEXT', 'PREFLIGHT_ARTIFACT_CHANGED', 'preflight artifacts overlap protected paths');
+            const saved = read(ref.path, PREFLIGHT_ARTIFACT_LIMITS.fileBytes, io, 0o400);
+            const identity = `${saved.device}:${saved.inode}`;
+            ensure(!identities.has(identity) && saved.byte_length === ref.bytes && saved.sha256 === ref.sha256,
+                'CONTEXT', 'PREFLIGHT_ARTIFACT_CHANGED', 'preflight artifact bytes/hash/identity differ');
+            identities.add(identity); files.push(saved);
+            if (!roots.has(rootPath)) roots.set(rootPath, {path: rootPath, names: [], guards: saved.guards});
+            roots.get(rootPath).names.push(path.basename(ref.path));
+        }
+        for (const root of roots.values()) {
+            root.names.sort(); root.identity = artifactDirectory(root, io);
+        }
+        return h2.freeze({files, roots: [...roots.values()]});
+    } catch (error) {
+        throw new EvidenceError('CONTEXT', 'PREFLIGHT_ARTIFACT_CHANGED', `invalid preflight artifacts: ${error.message}`);
+    }
+}
+function recheckPreflightArtifacts(d, io, metadataOnly = false) {
+    if (!metadataOnly) for (const root of d.preflightArtifacts.roots) artifactDirectory(root, io);
+    for (const file of d.preflightArtifacts.files) {
+        if (!metadataOnly) registry.recheckFile(file, io);
+        h2.checkDirectoryGuards(file.guards, io);
+        ensure(h2.statIdentity(io.lstatSync(file.path)) === file.identity,
+            'REVALIDATION', 'PREFLIGHT_ARTIFACT_CHANGED', 'original preflight artifact identity changed');
+    }
+    for (const root of d.preflightArtifacts.roots) {
+        h2.checkDirectoryGuards(root.guards, io);
+        ensure(h2.statIdentity(io.lstatSync(root.path)) === root.identity,
+            'REVALIDATION', 'PREFLIGHT_ARTIFACT_CHANGED', 'final original artifact directory changed');
+    }
+}
+
 function captureEvidenceContext(requestInput, dependencies = {}) {
     ensure(SCHEMA.revision === h1.REVISION, 'CONFIG', 'REVISION_MISMATCH', 'evidence/receipt revisions differ');
     const descriptors = ownData(requestInput);
@@ -252,6 +357,7 @@ function captureEvidenceContext(requestInput, dependencies = {}) {
         const other = physical(p, io);
         ensure(!related(target, other) && !related(other, target), 'PATH', 'PATH_POLICY', 'evidence directory overlaps protected inputs/outputs/ledger/receipts');
     }
+    d.preflightArtifacts = capturePreflightArtifacts(d);
     verify(d, null, 'capture');
     const out = h2.freeze({schema_version: 1, purpose: config.purpose, manifest_path: manifestPath,
         ledger_path: d.ledgerFile.path, source_manifest_sha256: d.inputs.sourceManifestSha256});
@@ -293,6 +399,7 @@ function verify(d, saved, phase, io = d.io) {
     const checks = [
         ['inputs', () => h2.revalidateInputs(d.inputs, {io}), 'INPUT_CHANGED'],
         ['receipts', () => h1.revalidateReceiptSet(d.receipts, {...d.receiptOptions, io}), 'RECEIPT_CHANGED'],
+        ['preflight_artifacts', () => recheckPreflightArtifacts(d, io), 'PREFLIGHT_ARTIFACT_CHANGED'],
         ['outputs', () => { for (const file of d.outputs) registry.recheckFile(file, io); }, 'OUTPUT_CHANGED'],
         ['ledger', () => ledger.revalidateJoinedLedger(d.originalLedger, ioDeps(d, io)), 'LEDGER_CHANGED'],
         ['parents', () => { h2.checkDirectoryGuards(d.parentGuards, io); h2.checkDirectoryGuards(d.cwdGuards, io); }, 'PARENT_CHANGED'],
@@ -327,6 +434,8 @@ function verify(d, saved, phase, io = d.io) {
         for (const file of d.outputs) ensure(h2.statIdentity(io.lstatSync(file.path)) === file.identity,
             'REVALIDATION', 'OUTPUT_CHANGED', 'output changed at final boundary');
     } catch (error) { failures.push({phase, check: 'final_boundary', stage: 'REVALIDATION', reason: error.reason || 'PARENT_CHANGED', message: error.message}); }
+    try { recheckPreflightArtifacts(d, io, true); }
+    catch (error) { failures.push({phase, check: 'final_preflight_artifacts', stage: 'REVALIDATION', reason: 'PREFLIGHT_ARTIFACT_CHANGED', message: error.message}); }
     d.failures.push(...failures);
     if (failures.length) throw new EvidenceError('REVALIDATION', failures[0].reason, failures.map(row => row.message).join('; '));
 }

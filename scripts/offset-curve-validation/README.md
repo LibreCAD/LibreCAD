@@ -57,6 +57,22 @@ controls were tested on Node 26.12.0; other runtimes must satisfy the same event
 contract or refuse. Full H7 independent checking and two-run qualification remain
 separate steps.
 
+## Referenced Preflight Artifacts
+
+H5 retains original byte/identity/mode snapshots for files referenced by a
+canonical `genuine-preflight-evidence` stderr envelope. It rechecks them and exact
+directory membership before publication, through checker dispatch/failure and at
+final readback. Limits are 64 references across the pair, 8 MiB per file and
+128 MiB total. Files must be regular, single-link, mode0400 and disjoint from
+protected inputs, receipts and worker/ledger/evidence output scopes.
+
+The genuine preflight runner always requires that envelope. Other runners may
+explicitly require it with the pinned `--genuine-preflight-evidence` argument, or
+self opt in with its valid canonical JSON kind. Ordinary log text mentioning the
+kind is not an opt-in. Refusal reports `PREFLIGHT_ARTIFACT_CHANGED`, retains actual
+prefixes and never blesses a new baseline after mutation. Synthetic envelope
+fixtures exercise these guards; they do not qualify product or suite results.
+
 ## Implemented
 
 X-H1 provides immutable format descriptors and receipt parsing/readback. Run:

@@ -410,3 +410,262 @@ test('manifest pre-readback output substitution prevents dispatch and retains pa
     assert.equal(fs.existsSync(f.evidenceRequest.manifestPath), true);
     fs.rmSync(f.base, {recursive: true, force: true});
 });
+
+const controlRunner = path.join(__dirname, 'fixtures', 'genuine-control-child.js');
+async function setupArtifactControl(t, mode = 'pass', options = {}) {
+    const captureEvidence = options.captureEvidence === undefined ? true : options.captureEvidence;
+    const controls = {...options, captureRunner: controlRunner, captureEvidence};
+    if (mode === 'pass') return setup(t, controls);
+    const f = await setup(t, {...controls, execute: false});
+    f.config.preflight.runnerArgs = [mode, ...(captureEvidence ? ['--genuine-preflight-evidence'] : [])];
+    fs.writeFileSync(f.configPath, h1.canonicalJson(f.config));
+    const {capturePreflight} = require('./preflight-capture');
+    for (let i = 0; i < 2; i++) f.captures.push(await capturePreflight({...f.config.preflight,
+        receiptId: f.config.receipt_ids[i], runRoot: f.receiptRoots[i], receiptDirectory: f.receiptDirs[i]}));
+    f.h3 = await require('./formal-runner').runFormalTransaction(f.request);
+    assert.equal(f.h3.status, 'PASS', f.h3.message);
+    f.ledgerContext = h4.captureLedgerContext({configPath: f.configPath, receiptPaths: f.request.receiptPaths});
+    f.ledgerDocument = h4.buildJoinedLedger(f.h3, f.ledgerContext);
+    f.ledgerReadback = h4.publishJoinedLedger(f.ledgerDocument, f.ledgerPath);
+    Object.assign(f.evidenceRequest, {h3Result: f.h3, ledgerReadback: f.ledgerReadback});
+    return f;
+}
+function artifactEnvelopes(f) {
+    return f.request.receiptPaths.map(p => {
+        const receipt = JSON.parse(fs.readFileSync(p));
+        return h1.parseCanonicalJson(fs.readFileSync(receipt.stderr.path));
+    });
+}
+function artifactProtected(f) {
+    return [f.configPath, f.registryPath, f.checkerConfigPath, f.candidatePath, f.inventoryPath, f.raw,
+        ...f.sourcePaths, ...f.receiptDirs, ...f.receiptRoots.map(p => path.dirname(p)),
+        f.config.run_root, path.dirname(f.ledgerPath)].flatMap(p => tree(p));
+}
+function syntheticCheckerPass(context) {
+    return {schema_version: 1, purpose: 'synthetic', status: 'PASS', manifest_sha256: context.manifest.sha256,
+        ledger_sha256: context.ledger.sha256, source_manifest_sha256: context.source_manifest_sha256,
+        case_ids: context.case_ids, output_count: context.output_count,
+        checks: context.required_checks.map(id => ({id, status: 'PASS'}))};
+}
+function artifactFailure(error) { return error instanceof evidence.EvidenceError && error.reason === 'PREFLIGHT_ARTIFACT_CHANGED'; }
+
+test('synthetic envelope control pins two actual 28-file artifact roots through a real checker process', async t => {
+    const f = await setupArtifactControl(t), before = tree(f.base), environment = env();
+    assert.equal(f.captureRunner, controlRunner); assert.ok(f.sourcePaths.includes(controlRunner));
+    const envelopes = artifactEnvelopes(f);
+    assert.equal(envelopes.length, 2);
+    for (const [i, envelope] of envelopes.entries()) {
+        assert.equal(envelope.artifacts.length, 28); assert.equal(envelope.context_sha256, f.captures[i].stdin.sha256);
+        assert.match(envelope.limitations[0], /Synthetic envelope control/);
+        const root = path.dirname(envelope.artifacts[0].path);
+        assert.deepEqual(fs.readdirSync(root).sort(), envelope.artifacts.map(row => path.basename(row.path)).sort());
+        for (const row of envelope.artifacts) {
+            assert.equal(fs.lstatSync(row.path).mode & 0o7777, 0o400);
+            assert.equal(fs.readFileSync(row.path).length, row.bytes); assert.equal(h1.sha256(fs.readFileSync(row.path)), row.sha256);
+        }
+    }
+    const context = evidence.captureEvidenceContext(f.evidenceRequest), previous = evidence.publishEvidenceManifest(context);
+    assert.equal(evidence.readEvidenceManifest(f.evidenceRequest.manifestPath, context).manifest_sha256, previous.manifest_sha256);
+    const result = await evidence.runEvidenceChecker(previous);
+    assert.equal(result.status, 'PASS', result.message); assert.equal(result.dispatch.mode, 'process');
+    assert.equal(result.checker_launches, 1); assert.deepEqual(result.verification_failures, []);
+    assert.equal(evidence.revalidateEvidenceManifest(result), result);
+    assert.deepEqual(tree(f.base).filter(row => !row.path.startsWith(f.evidenceParent)), before.filter(row => !row.path.startsWith(f.evidenceParent)));
+    assert.deepEqual(env(), environment);
+    fs.rmSync(f.base, {recursive: true, force: true});
+});
+
+for (const mode of ['missing', 'wrong-hash', 'wrong-size', 'hardlink', 'symlink', 'mode', 'extra-file', 'duplicate-path',
+    'wrong-context', 'wrong-purpose', 'extra-key', 'oversized', 'too-many', 'input-overlap', 'h3-overlap', 'h4-overlap',
+    'h5-overlap', 'parent-link', 'noncanonical', 'duplicate-key', 'total-cap', 'combined-count'])
+    test(`bound preflight artifact control ${mode} is refused before evidence publication or checker dispatch`, async t => {
+        const f = await setupArtifactControl(t, mode), before = tree(f.base), environment = env();
+        let launches = 0;
+        const result = await evidence.runP0fEvidence(f.evidenceRequest, {dispatch() { launches++; throw new Error('must not dispatch'); }});
+        expectRefused(result, 'PREFLIGHT_ARTIFACT_CHANGED', f); assert.equal(result.stage, 'CONTEXT');
+        if (mode === 'total-cap') assert.match(result.message, /total byte cap/);
+        assert.equal(launches, 0); assert.deepEqual(tree(f.base), before); assert.deepEqual(env(), environment);
+        fs.rmSync(f.base, {recursive: true, force: true});
+    });
+
+test('original preflight artifact bytes are rechecked before publication without creating an evidence root', async t => {
+    const f = await setupArtifactControl(t), protectedBefore = artifactProtected(f), environment = env();
+    const context = evidence.captureEvidenceContext(f.evidenceRequest), p = artifactEnvelopes(f)[0].artifacts[0].path;
+    rewrite(p, Buffer.from('substituted after context capture\n'));
+    assert.throws(() => evidence.publishEvidenceManifest(context), artifactFailure);
+    assert.equal(fs.existsSync(path.dirname(f.evidenceRequest.manifestPath)), false);
+    assert.equal(fs.readFileSync(p, 'utf8'), 'substituted after context capture\n');
+    assert.deepEqual(artifactProtected(f), protectedBefore); assert.deepEqual(env(), environment);
+    fs.rmSync(f.base, {recursive: true, force: true});
+});
+
+for (const mutation of ['bytes', 'inode', 'mode', 'hardlink', 'membership', 'parent-link'])
+    test(`issued preflight artifact ${mutation} mutation cannot be blessed by manifest readback or dispatched`, async t => {
+        const f = await setupArtifactControl(t), protectedBefore = artifactProtected(f), environment = env();
+        const context = evidence.captureEvidenceContext(f.evidenceRequest), previous = evidence.publishEvidenceManifest(context);
+        const p = artifactEnvelopes(f)[0].artifacts[0].path, root = path.dirname(p), bytes = fs.readFileSync(p);
+        if (mutation === 'bytes') rewrite(p, Buffer.from('changed external bytes\n'));
+        if (mutation === 'inode') { fs.renameSync(p, `${p}.original`); fs.writeFileSync(p, bytes, {mode: 0o400}); fs.unlinkSync(`${p}.original`); }
+        if (mutation === 'mode') fs.chmodSync(p, 0o600);
+        if (mutation === 'hardlink') fs.linkSync(p, path.join(root, 'alias'));
+        if (mutation === 'membership') fs.writeFileSync(path.join(root, 'extra'), 'extra', {mode: 0o400});
+        if (mutation === 'parent-link') { fs.renameSync(root, `${root}.original`); fs.symlinkSync(`${root}.original`, root); }
+        const failedPrefix = tree(f.base);
+        assert.throws(() => evidence.revalidateEvidenceManifest(previous), artifactFailure);
+        assert.throws(() => evidence.readEvidenceManifest(f.evidenceRequest.manifestPath, context), artifactFailure);
+        let launches = 0;
+        const result = await evidence.runEvidenceChecker(previous, {dispatch() { launches++; throw new Error('must not dispatch'); }});
+        assert.equal(result.status, 'FAIL'); assert.equal(result.reason, 'PREFLIGHT_ARTIFACT_CHANGED');
+        assert.equal(result.stage, 'REVALIDATION'); assert.equal(result.checker_launches, 0); assert.equal(launches, 0);
+        assert.deepEqual(tree(f.base), failedPrefix);
+        assert.deepEqual(artifactProtected(f), protectedBefore); assert.deepEqual(env(), environment);
+        fs.rmSync(f.base, {recursive: true, force: true});
+    });
+
+for (const failure of [false, true]) test(`synthetic checker artifact substitution ${failure ? 'with a thrown error' : 'with a claimed PASS'} cannot pass`, async t => {
+    const f = await setupArtifactControl(t), protectedBefore = artifactProtected(f), environment = env();
+    const p = artifactEnvelopes(f)[1].artifacts[27].path;
+    let launches = 0;
+    const result = await evidence.runP0fEvidence(f.evidenceRequest, {dispatch(context) {
+        launches++; rewrite(p, Buffer.from('checker substituted external artifact\n'));
+        if (failure) throw new Error('synthetic checker failed after substitution');
+        return syntheticCheckerPass(context);
+    }});
+    assert.equal(result.status, 'FAIL'); assert.equal(result.checker_launches, 1); assert.equal(launches, 1);
+    assert.equal(result.reason, failure ? 'CHECKER_THROWN' : 'PREFLIGHT_ARTIFACT_CHANGED');
+    assert.ok(result.verification_failures.some(row => row.phase === (failure ? 'dispatch-failure' : 'post-dispatch') &&
+        row.check === 'preflight_artifacts' && row.reason === 'PREFLIGHT_ARTIFACT_CHANGED'));
+    assert.equal(fs.readFileSync(p, 'utf8'), 'checker substituted external artifact\n');
+    assert.ok(result.review_path); assert.equal(JSON.parse(fs.readFileSync(result.review_path)).status, 'RECORDED');
+    assert.throws(() => evidence.revalidateEvidenceManifest(result), artifactFailure);
+    assert.deepEqual(artifactProtected(f), protectedBefore); assert.deepEqual(env(), environment);
+    fs.rmSync(f.base, {recursive: true, force: true});
+});
+
+test('a failed real checker still rechecks original external preflight artifacts after dispatch', async t => {
+    const f = await setupArtifactControl(t, 'pass', {checkerMode: 'fail'}), protectedBefore = artifactProtected(f), environment = env();
+    const p = artifactEnvelopes(f)[0].artifacts[0].path;
+    const result = await evidence.runP0fEvidence(f.evidenceRequest, {spawn(...args) {
+        const child = spawn(...args);
+        child.on('close', () => rewrite(p, Buffer.from('changed after real checker failure\n')));
+        return child;
+    }});
+    assert.equal(result.status, 'FAIL'); assert.equal(result.reason, 'PREFLIGHT_ARTIFACT_CHANGED');
+    assert.equal(result.checker_launches, 1); assert.equal(result.dispatch.mode, 'process');
+    assert.ok(result.verification_failures.some(row => row.phase === 'post-dispatch' && row.check === 'preflight_artifacts'));
+    assert.deepEqual(artifactProtected(f), protectedBefore); assert.deepEqual(env(), environment);
+    fs.rmSync(f.base, {recursive: true, force: true});
+});
+
+for (const target of ['manifest.json', 'review.json']) test(`external preflight artifact substitution during ${target} readback cannot pass`, async t => {
+    const f = await setupArtifactControl(t), protectedBefore = artifactProtected(f), environment = env();
+    const p = artifactEnvelopes(f)[0].artifacts[0].path, paths = new Map(); let changed = false;
+    const io = {...h2.nodeFsAdapter,
+        openSync(file, ...args) { const fd = fs.openSync(file, ...args); paths.set(fd, file); return fd; },
+        closeSync(fd) { paths.delete(fd); fs.closeSync(fd); },
+        readSync(fd, buffer, offset, length, position) {
+            const n = fs.readSync(fd, buffer, offset, length, position);
+            if (!changed && n > 0 && paths.get(fd) === path.join(path.dirname(f.evidenceRequest.manifestPath), target)) {
+                changed = true; rewrite(p, Buffer.from('external substitution during readback\n'));
+            }
+            return n;
+        }};
+    const result = await evidence.runP0fEvidence(f.evidenceRequest, {fs: io});
+    assert.equal(changed, true); assert.equal(result.status, 'FAIL'); assert.equal(result.reason, 'PREFLIGHT_ARTIFACT_CHANGED');
+    assert.equal(result.checker_launches, target === 'manifest.json' ? 0 : 1);
+    assert.equal(fs.existsSync(f.evidenceRequest.manifestPath), true);
+    assert.equal(fs.readFileSync(p, 'utf8'), 'external substitution during readback\n');
+    assert.deepEqual(artifactProtected(f), protectedBefore); assert.deepEqual(env(), environment);
+    fs.rmSync(f.base, {recursive: true, force: true});
+});
+
+test('final metadata checks catch external artifact changes after its content recheck', async t => {
+    const f = await setupArtifactControl(t), protectedBefore = artifactProtected(f), environment = env();
+    const p = artifactEnvelopes(f)[0].artifacts[0].path, paths = new Map(); let armed = false, changed = false;
+    const io = {...h2.nodeFsAdapter,
+        openSync(file, ...args) { const fd = fs.openSync(file, ...args); paths.set(fd, file); return fd; },
+        closeSync(fd) { paths.delete(fd); fs.closeSync(fd); },
+        readSync(fd, buffer, offset, length, position) {
+            const n = fs.readSync(fd, buffer, offset, length, position);
+            if (armed && !changed && n > 0 && paths.get(fd) === f.ledgerPath) {
+                changed = true; rewrite(p, Buffer.from('substitution after artifact content check\n'));
+            }
+            return n;
+        }};
+    const result = await evidence.runP0fEvidence(f.evidenceRequest, {fs: io, dispatch(context) {
+        armed = true; return syntheticCheckerPass(context);
+    }});
+    assert.equal(changed, true); assert.equal(result.status, 'FAIL'); assert.equal(result.reason, 'PREFLIGHT_ARTIFACT_CHANGED');
+    assert.equal(result.checker_launches, 1);
+    assert.equal(result.verification_failures[0].phase, 'post-dispatch');
+    assert.equal(result.verification_failures[0].check, 'final_preflight_artifacts');
+    assert.equal(fs.readFileSync(p, 'utf8'), 'substitution after artifact content check\n');
+    assert.deepEqual(artifactProtected(f), protectedBefore); assert.deepEqual(env(), environment);
+    fs.rmSync(f.base, {recursive: true, force: true});
+});
+
+for (const mode of ['ordinary-text', 'ordinary-marker', 'ordinary-json-marker'])
+    test(`unflagged ${mode} stderr remains ordinary through real H2/H3/H4 and H5 checker execution`, async t => {
+        const f = await setupArtifactControl(t, mode, {captureEvidence: false}), before = tree(f.base), environment = env();
+        assert.equal(f.captureEvidence, false);
+        assert.deepEqual(f.config.preflight.runnerArgs, [mode]);
+        const receipts = f.request.receiptPaths.map(p => h1.validateReceipt(p));
+        for (const receipt of receipts) {
+            assert.deepEqual(receipt.receipt.argv.slice(1), [controlRunner, mode]);
+            const stderr = Buffer.from(receipt.snapshot.stderr.base64, 'base64');
+            if (mode === 'ordinary-json-marker') assert.equal(h1.parseCanonicalJson(stderr).kind, 'ordinary-control');
+            else assert.throws(() => h1.parseCanonicalJson(stderr));
+            if (mode !== 'ordinary-text') assert.ok(stderr.includes(Buffer.from('genuine-preflight-evidence')));
+        }
+        const result = await evidence.runP0fEvidence(f.evidenceRequest);
+        assert.equal(result.status, 'PASS', result.message); assert.equal(result.reason, 'H5_EVIDENCE_COMPLETE');
+        assert.equal(result.checker_launches, 1); assert.equal(result.dispatch.mode, 'process');
+        assert.deepEqual(result.verification_failures, []);
+        assert.equal(evidence.revalidateEvidenceManifest(result), result);
+        assert.deepEqual(tree(f.base).filter(row => !row.path.startsWith(f.evidenceParent)), before.filter(row => !row.path.startsWith(f.evidenceParent)));
+        assert.deepEqual(env(), environment);
+        fs.rmSync(f.base, {recursive: true, force: true});
+    });
+
+for (const mode of ['ordinary-marker', 'ordinary-json-marker'])
+    test(`pinned evidence argv flag requires a valid envelope for ${mode} stderr`, async t => {
+        const f = await setupArtifactControl(t, mode), before = tree(f.base), environment = env();
+        assert.equal(f.captureEvidence, true);
+        assert.deepEqual(f.config.preflight.runnerArgs, [mode, '--genuine-preflight-evidence']);
+        for (const p of f.request.receiptPaths)
+            assert.deepEqual(h1.validateReceipt(p).receipt.argv.slice(1), [controlRunner, mode, '--genuine-preflight-evidence']);
+        let launches = 0;
+        const result = await evidence.runP0fEvidence(f.evidenceRequest, {dispatch() { launches++; throw new Error('must not dispatch'); }});
+        expectRefused(result, 'PREFLIGHT_ARTIFACT_CHANGED', f); assert.equal(result.stage, 'CONTEXT'); assert.equal(launches, 0);
+        assert.deepEqual(tree(f.base), before); assert.deepEqual(env(), environment);
+        fs.rmSync(f.base, {recursive: true, force: true});
+    });
+
+for (const mode of ['pass', 'wrong-hash'])
+    test(`unflagged canonical evidence kind self opts in for ${mode} artifact controls`, async t => {
+        const f = await setupArtifactControl(t, mode, {captureEvidence: false}), before = tree(f.base), environment = env();
+        assert.equal(f.captureEvidence, false);
+        assert.deepEqual(f.config.preflight.runnerArgs, [mode]);
+        assert.ok(artifactEnvelopes(f).every(envelope => envelope.kind === 'genuine-preflight-evidence'));
+        const result = await evidence.runP0fEvidence(f.evidenceRequest);
+        if (mode === 'pass') {
+            assert.equal(result.status, 'PASS', result.message); assert.equal(result.checker_launches, 1);
+            assert.equal(result.dispatch.mode, 'process'); assert.deepEqual(result.verification_failures, []);
+            assert.equal(evidence.revalidateEvidenceManifest(result), result);
+        } else {
+            expectRefused(result, 'PREFLIGHT_ARTIFACT_CHANGED', f); assert.equal(result.stage, 'CONTEXT');
+        }
+        assert.deepEqual(tree(f.base).filter(row => !row.path.startsWith(f.evidenceParent)), before.filter(row => !row.path.startsWith(f.evidenceParent)));
+        assert.deepEqual(env(), environment);
+        fs.rmSync(f.base, {recursive: true, force: true});
+    });
+
+test('synthetic envelope control rejects oversized stdin before parsing or creating artifacts', async t => {
+    const f = await setup(t, {captureRunner: controlRunner, execute: false}), before = tree(f.base), environment = env();
+    const child = require('node:child_process').spawnSync(process.execPath, [controlRunner, 'pass'], {
+        cwd: f.base, env: f.config.preflight.environment, input: Buffer.alloc(32769, 0x20), timeout: 3000, maxBuffer: 65536});
+    assert.equal(child.error, undefined); assert.equal(child.status, 1); assert.equal(child.signal, null);
+    assert.equal(child.stdout.length, 0); assert.match(child.stderr.toString(), /control stdin context exceeds byte cap/);
+    assert.deepEqual(tree(f.base), before); assert.deepEqual(env(), environment);
+    fs.rmSync(f.base, {recursive: true, force: true});
+});
