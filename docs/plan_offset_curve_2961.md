@@ -24,11 +24,11 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-22. Status: A-core and X-H1 committed; A-strict in progress; native feature incomplete.
+Updated: 2026-10-22. Status: A-core, A-strict and X-H1 committed; native feature incomplete.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
-This checkpoint records tested A-core and auxiliary X-H1 commits. Main-track
-successor slices remain incomplete; no native entity or complete topology checker
+This checkpoint records tested A-core/A-strict and auxiliary X-H1 commits. Later
+main-track slices remain incomplete; no native entity or complete topology checker
 is claimed.
 
 ## 1. Verified Baseline and Scope
@@ -41,12 +41,13 @@ is claimed.
 | Difference between initial checkpoints | Only this plan file; no product-source change |
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
-| Latest product checkpoint | `0eb2a0cfa31c29ba7740e4fb698c8417f4d43fa5` (A-core) |
+| Latest product checkpoint | `dc016f6e2b8294cd1f1524f22a568f9d4196459c` (A-strict) |
 | Latest auxiliary checkpoint | `29ab281635f85590a7db1f7a02db1fcf65ce3cfb` (X-H1) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
 | A-core | Atomic work adoption, separate ordering allowance and sticky terminal status implemented; A04/A10 registered |
-| Missing geometry stages | Strict-solver/geometry accounting integration, occurrence terminals, complete global topology checker |
+| A-strict | Bounded validation, capacity, ordering, callbacks and exceptional-exit snapshots; per-call retained ordering allowance |
+| Missing geometry stages | Geometry-side accounting integration, occurrence terminals, complete global topology checker |
 | Native entity | No `LC_OffsetCurve` or `EntityOffsetCurve` yet |
 | Product integration | No native offset adoption, private file schema, creation/editing UI, or target-trim integration yet |
 | Build registration | Both geometry implementations in CMake and qmake; both geometry test TUs in `librecad_tests` |
@@ -54,7 +55,7 @@ is claimed.
 | Latest validation | A-core, geometry and format fast lanes passed Release/ASan; full Release and qmake6 passed; see section 14 |
 
 Recheck these facts against the selected implementation checkout before starting
-A-strict. Inventory Qt6/Catch2/build tools and available independently authored
+A-reference. Inventory Qt6/Catch2/build tools and available independently authored
 DXF/DWG fixtures/inspection tools once, recording provenance/access gaps early;
 source-level progress need not wait for unrelated external-tool installation. The user's main checkout is a different, dirty branch and is not the
 source baseline above. Do not overwrite its unrelated changes or apply this plan
@@ -206,7 +207,7 @@ test commit followed by the section 4 plan checkpoint.
 | Slice | Dependency | Deliverable | Status |
 |---|---|---|---|
 | A-core | Existing geometry base | Atomic work adoption and sticky terminal status (`0eb2a0cfa`) | committed |
-| A-strict | A-core | Strict-solver bounded ordering/validation/capacity and exit snapshots | in progress; not committed |
+| A-strict | A-core | Strict-solver bounded ordering/validation/capacity and exit snapshots (`dc016f6e2`) | committed |
 | A-reference | A-strict | Geometry scans/callback ownership and exception-safe work transfers | pending |
 | A-cache | A-reference | Candidate/proof split accounting and inherited combined depth | pending |
 | B | A-cache | Immutable occurrence-specific producer terminals | pending |
@@ -266,54 +267,53 @@ editing; changes beyond the named concern require a scope note in the slice card
 | T-actions/T-files | actions/drawing/modify/lc_action_modify_trim.{h,cpp}, tests/lc_action_modify_trim_tests.cpp; modification/batch ownership and offset filter tests |
 | All new sources/tests/UI | CMakeLists.txt; librecad/src/src.pro (HEADERS/SOURCES/FORMS as appropriate); exact Catch2 target registration |
 
-### Immediate Next Card: A-strict
+### Immediate Next Card: A-reference
 
 **Files (only these three):**
 
-- `librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h`
-- `librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.cpp`
-- `librecad/src/lib/engine/document/entities/tests/lc_parametriccurveintersection_tests.cpp`
+- `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h`
+- `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp`
+- `librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp`
 
-**Base:** committed A-core `0eb2a0cfa31c29ba7740e4fb698c8417f4d43fa5`.
-Geometry-side counters/adoptWork/latches now exist. StrictSolver still has
-uncounted ordering, post-callback certificate admission, incomplete record/
-capacity charging and no factory workOnExit. Its segment vector is already
-borrowed; preserve that lifetime contract and make validation/accessor work explicit.
+**Base:** committed A-strict `dc016f6e2b8294cd1f1524f22a568f9d4196459c`.
+Both budget APIs now exist. Geometry still uses uncounted axis/occurrence sorts,
+four-value min/max reductions and fixed scans. Its factory handoff uses three
+separate debits, while retained handoff loses exceptional-exit work. Capacity
+checks/reserves at retained publication, proof queues and paired storage remain
+after some debits. No new strict-solver edit is planned for this slice.
 
 **Steps:**
 
-1. Capture current strict/refinement and planned-selector discovery in Release/
-   ASan. Append solver ordering limit/stats and validation visits/next-call stats;
-   preserve existing aggregate field meanings and ordinary-mode decisions.
-2. Bound validation and mandatory seed capacity before scans/geometric callbacks.
-   Count accepted leaves separately from pending roots. Preserve canonical A13
-   full-query caps 4/3 ordinary and 6/5 retained, plus separate preflight refusals.
-3. Reserve bounded seed/split/output/scratch capacity before debit/storage.
-   Admit two children atomically; account for remaining mandatory seeds. Record
-   actual entered depths, not a refused or merely queued child's depth.
-4. Admit certificate callbacks before invocation, including unavailable/throwing
-   results. Atomically preflight the identity callback's pair/item dimensions.
-   Remove duplicate parent/helper charges; keep the three-term pair total.
-5. Replace only strict ordering with deterministic counted operations whose
-   comparison admission occurs outside the comparator. Ordering cap zero is a
-   valid zero-comparison strict allowance: refuse LimitExceeded before a needed
-   predicate; do not change ordinary mode or geometry CheckLimits' nonzero rule.
-6. Add optional workOnExit to the certified factory and friend declaration.
-   Initialize before guards; report admitted setup/query work on all returns and
-   throws without replacing the provider exception. Retained invalidation/retry
-   preserves cumulative work and does no work after invalidation.
-7. Implement A08/A12/A13 in the budget-accounting selector and A14 in
-   intersection-refine. Retain existing regression names and independently
-   expected geometry. Run focused/adjacent/full Release, geometry and fast
-   Release/ASan, plus incremental qmake6. Review the complete three-path diff.
-8. Commit the validated slice, then update this roadmap in a separate commit.
-   Next is A-reference; it owns geometry-side query handoffs and fixed scans.
+1. Preserve current reference/critical/event/component discovery and run baseline
+   selectors. Inventory each fixed scan, callback and capacity owner from source.
+2. Use stable bounded insertion ordering for at most 21 axes / 20 occurrences;
+   admit each finite-key comparison before evaluation. Replace each four-value
+   reduction with six admitted comparisons under its existing pair owner.
+3. Charge fixed scan visits before inspecting entries. Preserve provider-internal
+   bounded helper multiplicity under its outer callback; no duplicate debit.
+   Confirm the existing classify/frame root admission rather than charging it twice.
+4. Reserve/check retained records, staged snapshots, DFS queues, paired
+   region/segment storage and join output before logical debit/append. Paired
+   publication cannot expose a partial logical record. Keep the proof/candidate
+   split distinction; A-cache owns its remaining integration tests/callsites.
+5. Pass remaining ordering allowance at both solver handoffs. Factory workOnExit
+   supports atomic adoption on success/refusal/throw; retained deltas come from
+   safe monotone cumulative snapshots and are adopted once, including throws.
+   Preserve original exceptions and independent provider/event ownership.
+6. Implement exact A05/A06/A07/A11 identities. Update existing accounting oracles
+   only with source-derived admission traces; preserve all geometry expectations.
+   Add exact/one-short/pre-spent ordering cases and sticky retries.
+7. Review all three paths; run focused/reference/geometry Release/ASan, full
+   Release, relevant format fast lanes and incremental qmake6. Compare discovery
+   names/skips and run a bounded source/runtime envelope census.
+8. Commit the tested slice, then immediately update this roadmap separately.
+   Next is A-cache; occurrence-specific B and the public checker C remain pending.
 
-**Exit:** four new exact identities pass with nonzero assertions, retained-throw
-and tight-cap oracles hold, existing strict/geometry identities remain covered,
-and legacy non-strict behavior is unchanged. No global checker, entity, UI,
-geometry-side handoff or file-format edit belongs in this slice. Source changes
-outside the three files require a concrete dependency note, not silent scope growth.
+**Exit:** four new exact identities pass with nonzero assertions; both handoffs
+adopt all work atomically, including exceptional paths; fixed ordering/scans and
+capacity preparation are source-bounded. Existing reference geometry is unchanged.
+No native entity, global checker, UI or file-format edit belongs in this slice.
+Changes beyond these three paths require a concrete dependency note.
 
 ## 6. Geometry and Work Contracts
 
@@ -421,6 +421,10 @@ Own `lc_parametriccurveintersection.{h,cpp}` and its test TU.
 - Retained `cumulativeWork()` is monotone. A throwing retained query invalidates
   its credential/root, preserves admitted work, rethrows the original exception,
   and retry performs no work. No allocation/callback fault hook only for tests.
+- Retained contraction intersects each call's remaining ordering allowance with
+  the original cumulative ceiling. The appended field defaults to SIZE_MAX to
+  preserve old three-field aggregates; geometry callers supply the actual shared
+  remainder. A refused comparison does not refund its already staged event.
 
 ### 6.4 A-reference: Scans and Both Handoffs
 
@@ -1638,7 +1642,7 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 |---|---|---|
 | Recursive plan/activation routing | Removed as a planning deadlock | Execute A-core's finite card |
 | Atomic budget API | Committed and validated (`0eb2a0cfa`) | Integrate solver/geometry work in A-strict/A-reference |
-| Strict work/ordering/exception proof | A-strict implementation and review in progress; no commit or closure claim | Finish A-strict validation, then A-reference integration |
+| Strict work/ordering/exception proof | A-strict committed and validated (dc016f6e2); geometry integration missing | A-reference |
 | Complete semantic path checker | Missing implementation | A-cache -> B -> C |
 | Native feature/UI/persistence/trim | Not implemented | Follow D through T; do not label scaffolding complete |
 | Independent DWG/version fixtures | Required, not yet qualified | Inventory/tool/license/provenance during G-fixtures; close all rows in G-matrix |
@@ -1655,7 +1659,60 @@ The plan checkpoint column never depends on its own future SHA.
 |---|---|---|---|
 | Existing foundations | 9c06e9c77b313b62cc20e9ec39c22952fee501f2 | 9309885cef66aef0cca0f3c8862e0c210518da3b | Historical source baseline; no new test PASS asserted |
 | A-core | 0eb2a0cfa31c29ba7740e4fb698c8417f4d43fa5 | e31d5a024b473b26148c66bd2726c290bf7976ef | Independent static review: no findings; Release/ASan and qmake6 passed as detailed below |
-| X-H1 | 29ab281635f85590a7db1f7a02db1fcf65ce3cfb | This immediate plan-only checkpoint | 24/24 Node tests; syntax/whitespace checks; independent review fixes applied |
+| X-H1 | 29ab281635f85590a7db1f7a02db1fcf65ce3cfb | e4b6e900f | 24/24 Node tests; syntax/whitespace checks; independent review fixes applied |
+| A-strict | dc016f6e2b8294cd1f1524f22a568f9d4196459c | This immediate plan-only checkpoint | Full Release, geometry/acceptance Release+ASan, format fast lanes and qmake6 passed; independent review |
+
+### A-strict Validation (2026-10-22)
+
+Scope: exactly the solver header, implementation and test TU. Worker Gibbs
+implemented the slice. Parent reproduced the tall, bit-reversed separated-cloud
+pruning regression in the initial global-order proposal; adaptive longest-axis
+partitioning was restored with counted per-node heapsort. Its regression uses
+128 separated lines: 127 candidate pair examinations, versus refusal at 512 in
+the rejected proposal. Three legacy non-strict ordering paths remain unchanged.
+
+Independent reviewer 01a16687-2244-7373-9bb9-fdad31c25cb9 found no actionable
+issue in the frozen worker diff. Parent integration review added a per-call
+retained ordering allowance; bounded independent recheck resolved the sole test
+oracle correction (a staged event remains charged on comparison refusal).
+Failed experimental reports remain preserved, not relabeled as passing.
+
+- Exact A08/A12/A13/A14 acceptance: 4 cases / 942 assertions, Release and ASan.
+- Final ASan geometry: 237 cases / 1,547,904 assertions, zero failures/skips.
+  Full Release includes the same geometry identities; no prior JUnit name lost.
+- Final full Release: 3,859 cases (3,833 passed, same 26 skips),
+  7,403,396 assertions passed. Name/skip comparison against A-core passed.
+- Worker pre-integration focused strict/refinement suite: 50 identities and
+  3,887 assertions in both configurations; all its identities remain in the
+  final full/geometry reports. The final allowance adds one A13 section, not a
+  fifth required acceptance identity.
+- DXF fast Release/ASan: 744 cases, 3 existing skips, 39,929 assertions.
+  DWG fast Release/ASan: 1,006 cases, 4 existing skips, 34,948 assertions.
+  Exact baseline names/skips retained. Final allowance changes do not enter
+  either fast binary's source graph; both targets were explicitly rebuilt.
+- CMake all three targets and incremental full qmake6 build passed. Final
+  application header/implementation bytes were rebuilt in both configurations.
+- ASan used detect_leaks=0; no ASan diagnostics in completed final runs. Leak
+  checking and full-app ASan are not claimed. The existing ASan compact-unwind
+  size warning remains outside this slice.
+
+Canonical A13 straight-query trace: four centroid reductions + one axis choice +
+one heap comparison + two BVH index reductions + two same-branch range reductions
+= 10 ordering comparisons; first eight precede the single candidate pair debit.
+Caps remain 4/3 synchronous strict and 6/5 retained. The new per-call allowance
+tests both current remaining work and original session ceilings at zero/one.
+No partial event or owner is published on refusal; staged logical work remains.
+
+Evidence directory: /private/tmp/lc2961-impl-evidence.9GtLO2. Final reports use
+A-strict-parent-*-final-02; fast reports use A-strict-parent-{dxf,dwg}-*. The
+worker's source-derived census and rejected pruning probe are retained there.
+Source SHA-256 (committed blobs equal tested working bytes):
+
+| File in entity directory | SHA-256 |
+|---|---|
+| lc_parametriccurveintersection.h | 7278eb9d18b10121ef066a0d7534e0a69f4e143f0822c5704dcdc645dadc8b14 |
+| lc_parametriccurveintersection.cpp | 5c85d70852193f1dc2c17cd1f61e24bf2e2ff3b831d6b0682bcce82c54f70405 |
+| tests/lc_parametriccurveintersection_tests.cpp | 46f18c21b78811942b4ec5e0b89488fb7d94cb403a99b241fe5dc0cdbb9196e6 |
 
 ### X-H1 Validation (2026-10-22)
 
@@ -1676,7 +1733,7 @@ hostile-filesystem race elimination or X-H2-X-H7 completion is claimed.
 
 Evidence: /private/tmp/lc2961-impl-evidence.9GtLO2/X-H1-node-tests.tap.
 The historical scratch tree remains unchanged. The next main card remains
-A-strict, with A-reference following its tested commit; the auxiliary next card
+A-reference; the auxiliary next card
 is X-H2 above.
 
 ### A-core Validation (2026-10-22)
