@@ -219,7 +219,7 @@ test commit followed by the section 4 plan checkpoint.
 | D-core | C | Native enum/entity, real validated adoption, stamp, clone and transforms | committed 92758859c |
 | D-edit | D-core | Real create/mutators, one-run staging, run limits and refusal results | committed 4300c1031 |
 | D-grips | D-edit | Cached definition grips, safe snaps and through-parameter query | committed 47e14c74b |
-| E-tools | D-grips | Tool result adoption, explicit plain fallback, explode/scale/INSERT/plugin | pending |
+| E-tools | D-grips | Tool result adoption, explicit plain fallback, explode/scale/INSERT/plugin | committed a37982bd6 |
 | E-again | E-tools | Bounded repeated offset/rebase with plain fallback | pending |
 | F-types | E-again | Complete engine/document/filter type-site integration census | pending |
 | F-names | F-types | Names, quick info, context/selection/menu descriptors | pending |
@@ -273,7 +273,7 @@ editing; changes beyond the named concern require a scope note in the slice card
 
 ### Current Next Cards
 
-The main track resumes at E-tools (section 8.4). D-core `92758859c` uses the actual
+The main track resumes at E-again (section 8.5). D-core `92758859c` uses the actual
 C checker, not a layout-only adoption gate. Similarity transport requires exact
 dyadic affine images of every stored coordinate and unchanged normalized semantic
 basis fields. Rounded similarities and arc reflections refuse unchanged; whole
@@ -286,22 +286,24 @@ before publication via `replacePreparedSpline` / `replaceOwnedEntities`. The
 private checked-constructor path is not a caller-controlled validation flag.
 D-grips `47e14c74b` prepares visible quarter/corner/midpoint grips and safe snap
 behavior before publication. It separates visibility witnesses from ordering
-correspondence; unresolved optional hints are omitted. E-tools must
-cover move/rotate/mirror as well as scale/INSERT: any document transform that
-cannot transport a native proof must explicitly use a correctly transformed plain
-cache or refuse the whole operation, never silently publish an unmoved clone.
+correspondence; unresolved optional hints are omitted. E-tools `a37982bd6` stages
+typed transforms for document/plugin/clipboard paths and wraps already-produced
+single ellipse outputs only after real C admission and document membership.
+Rounded/nonuniform transforms use the actual transformed ordinary cache; unsafe
+trees and invalid compound steps refuse before publication. Native-containing
+transparent groups admit only validated known carriers. Borrowed subtrees refuse;
+ordinary non-native INSERT text/image policy remains unchanged. Cut deletes only
+identities actually published to the clipboard. Short mirror-axis enlargement
+proves exact collinearity. Explode once yields one ordinary spline. Native
+creation still defaults off until H-enable; previews remain ordinary geometry.
 
-For E-tools use the prepared fixed-capacity typed transform-step helper, not an
-opaque callback: validate all steps before cloning, reject borrowed subtrees,
-check every INSERT source edit before a later step can clear its failure, and
-compare complete actual cache values before retaining a transported definition.
-Short mirror-axis enlargement must prove exact collinearity or refuse. Register
-and execute the prepared19 helper tests before integration; their source exists
-but is not built or validated yet. Keep ordinary preview/text/image behavior.
-Add committed top-level ellipse adoption with option default false, bounded
-per-copy kept-plain reasons/counts, and correct native display-tree accounting.
-Explode once yields one ordinary spline. Plugin and document transforms must
-either publish the correctly transformed plain cache or refuse the whole edit.
+For E-again register and test the prepared value-only structural proposal helper,
+then integrate one bounded rebase attempt and one cache fallback per copy. Do not
+count the proposal as materializer/checker evidence. Preserve displayed-cache
+side parity, exact signed combinations, remaining output allowance and separate
+attempt accounting. Execute every mandatory section8.5 actual document case,
+especially zero-sum fallback and the near-critical successful rebase. The helper,
+future carrier/schema scaffolding and pending F work are not completed slices.
 
 The auxiliary scheduler correction `90714f758` passed the407-case regression.
 Both isolated full runs of `H7-qualification-03` returned PASS through the actual
@@ -1787,9 +1789,9 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 | Atomic budget API | Committed and validated (`0eb2a0cfa`) | Integrate solver/geometry work in A-strict/A-reference |
 | Geometry work/exception/split/depth/terminal proof | All A slices and B committed and validated | C complete checker |
 | Complete semantic path checker | C committed d4a0b081a; used by D-core public adoption | D-edit staged regeneration |
-| Native feature/UI/persistence/trim | All D slices committed; later workflow incomplete | Follow E-tools through T; do not label unregistered helper scaffolding complete |
+| Native feature/UI/persistence/trim | All D slices and E-tools committed; later workflow incomplete | Follow E-again through T; do not label unregistered helper scaffolding complete |
 | Independent DWG/version fixtures | Required, not yet qualified | Inventory/tool/license/provenance during G-fixtures; close all rows in G-matrix |
-| Harness production readiness | X-H1-X-H6 and H7 source fixes committed; actual qualification incomplete | Two complete quiet-CPU qualification runs |
+| Harness production readiness | X-H1-X-H7 committed; actual two-run qualification03 independently audited | Retain observed-byte/runtime scope and failed attempts; no future timing guarantee |
 | Independent review and test evidence | A-core independent static review and actual test reports complete | Obtain fresh review/validation for each successor |
 | Dirty unrelated main checkout | Not the selected source baseline | Preserve it; reconcile only if changing implementation worktree |
 
@@ -1812,8 +1814,57 @@ The plan checkpoint column never depends on its own future SHA.
 | D-core | 92758859c | Immediate plan-only checkpoint | Native/adjacent/full Release, ASan adjacent, both format fast lanes and qmake6 passed; independent static review corrections verified |
 | D-edit | 4300c1031 | Immediate plan-only checkpoint | 43 focused native/edit cases; full Release, affected ASan, DXF/DWG Release/ASan, qmake6 and committed-blob audit passed; independent static review |
 | D-grips | 47e14c74b | Immediate plan-only checkpoint | 19 focused cases, full Release,583 affected ASan cases, both format lanes Release/ASan and qmake6 passed; independent static corrections and nine-blob audit |
+| E-tools | a37982bd6 | Immediate plan-only checkpoint | 55 focused Release/ASan cases, full Release,638 affected ASan cases, both format lanes Release/ASan and qmake6; independent review corrections and13-blob audit |
 | X-H7 timeout source fix | c1b2fa095 | Immediate plan-only checkpoint | Author55 + independent15 controls and parent399 runner regression passed; actual runtime qualification remains open |
 | X-H7 bounded scheduling | 90714f758 | Immediate plan-only checkpoint | Author85 + independent12 controls, parent407 runner regression and real224.790-second preflight probe passed; full two-run qualification remains open |
+
+### E-tools Validation (2026-10-23)
+
+Product `a37982bd6` implements section8.4. It adds typed fixed-capacity transform
+plans, real single-output adoption, bounded committed-copy plain reasons,
+two-stage explode, document/plugin/clipboard fallback and successful-copy Cut
+identities. Complete-step preflight, ownership/geometry checks and private staging
+precede publication. The default option remains false; no UI/persistence claim.
+
+Independent review found and corrected Cut deletion after refused copy, primitive
+overflow in native-containing groups, and parent-only adoption of uncommitted
+clones. Regression cases exercise the actual Cut and plugin APIs, not just helper
+results. Unknown carriers on native paths refuse explicitly; native-free INSERT
+text/image compatibility is retained. Nonfinite Align Reference scale is not
+silently filtered away. Ordinary preview/text/image transform paths remain intact.
+
+Evidence root: `/private/tmp/lc2961-impl-evidence.9GtLO2`.
+
+- `E-tools-focused-release-03` / `E-tools-focused-asan-03`:55 cases,
+  1,164,110 assertions, zero failures/skips. Includes25 helper,20 modification
+  and10 actual plugin cases; real undo/redo, fallback geometry and source-state
+  assertions cover direct, nested, INSERT, clipboard and refused Cut paths.
+- `E-tools-full-release-01`:4,102 cases,4,076 passed, same26 baseline skips,
+  8,634,177 assertions. JUnit retained all prior rows and added55, with no changed
+  skip identities in `E-tools-baseline-comparison-01.json`.
+- `E-tools-affected-asan-01`:638 cases,2,818,610 assertions, zero failures/skips;
+  all prior690 JUnit rows retained,55 new rows. Same host-only
+  ASAN_OPTIONS=detect_leaks=0; no other sanitizer disabled.
+- Final DXF Release/ASan02:748 cases,745 passed, same3 skips,40,175 assertions.
+  DWG Release/ASan02:1,006 cases,1,002 passed, same4 skips,34,948 assertions.
+  Parsed rows/skips match D-grips exactly. No no-tests-selected lane counts.
+- Explicit three-target Release/ASan build07 and qmake6 build04 exited0.
+  `E-tools-source-build-identity-01.json` records13 owned source and7 actual
+  binary hashes; `E-tools-asan-identity-audit-01.json` confirms unchanged tested
+  bytes. `E-tools-committed-blob-audit-01.txt` verifies all13 committed blobs.
+- Cppcheck2.22 exited2 with16 reviewed warnings, not a clean-analysis result.
+  Existing aggregate/duplicate-interface/constructor-precondition diagnostics,
+  explicit aggregate initialization and intentional ownership-release handoffs
+  are retained in `E-tools-cppcheck-02.log`. The prior chainThrough null warning
+  is guarded by its sole caller's members.size()>1 condition. Independent static
+  review cleared the corrected P1/P2 paths; actual tests provide runtime evidence.
+
+Exploratory failures are retained: the first clipboard fixture omitted required
+selection; setup now uses the existing selection contract. Compile iterations
+corrected the typed scalar scale argument, protected selection APIs and test
+selection flags. Earlier reports/binaries are not substituted for final07/03
+validation. Future E-again/carrier/schema files remain unregistered/unexecuted
+and are not included in this product commit. Next: E-again, then F-types/F-names.
 
 ### D-grips Validation (2026-10-23)
 
@@ -1877,8 +1928,9 @@ macro expressions needing parentheses; focus03 accidentally exercised old
 binaries after that failed build and is explicitly not validation. The distinct
 ordering, large-distance and admitted-band regressions passed on rebuilt sources.
 
-Next E-tools. Prepared transform/schema helpers remain unregistered and untested;
-they are not completed product slices. Keep the E/F/G dependency order.
+Historical next card was E-tools; it is now committed above. E-again and future
+schema/carrier scaffolding still require their own registration, integration,
+validation and commits. Keep the E/F/G dependency order.
 
 ### X-H7 Runtime Qualification (2026-10-23)
 
