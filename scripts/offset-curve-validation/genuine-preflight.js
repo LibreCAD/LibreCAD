@@ -136,33 +136,60 @@ async function runPreflight(context, configPath) {
     check(syntax.length > 0, 'syntax inventory is empty');
     save('syntax.json', 'syntax', {schema_version: 1, checks: syntax});
     const attempts = [];
-    for (const suite of definitions.suites) {
-        rootGuard(context); h2.revalidateInputs(captured);
-        // Two independent attempts share only immutable inputs. Wait for BOTH
-        // children even on refusal; never abandon a running sibling or count a
-        // discovery/partial prefix as a successful repeat.
-        const executions = await Promise.allSettled([1, 2].map(() =>
-            executeSuite(definitions, suite.name, {environment: formal.preflight.environment, cwd: definitions.cwd})));
-        const pair = [];
-        for (let ordinal = 1; ordinal <= 2; ordinal++) {
-            const observed = executions[ordinal - 1];
-            if (observed.status !== 'fulfilled') continue;
-            const execution = observed.value;
-            const prefix = `${suite.name}-${ordinal}`;
-            persist(directory, `${prefix}.report.json`, `suite:${suite.name}:attempt:${ordinal}:report`, execution.semantic, artifacts, guards);
-            save(`${prefix}.diagnostics.json`, `suite:${suite.name}:attempt:${ordinal}:diagnostics`, execution.diagnostics);
-            persist(directory, `${prefix}.events.jsonl`, `suite:${suite.name}:attempt:${ordinal}:events`, execution.rawEvents, artifacts, guards);
-            pair.push({ordinal, status: execution.report.status, report_bytes: execution.semantic.length,
-                report_sha256: h1.sha256(execution.semantic), assertions: execution.assertions});
+    for (let offset = 0; offset < definitions.suites.length; offset += 2) {
+        // At most two suite pairs (four independent real executions) overlap.
+        // Retain per-pair guards and settle every launched sibling on refusal.
+        const pending = [];
+        let boundaryError = null;
+        for (const suite of definitions.suites.slice(offset, offset + 2)) {
+            try {
+                rootGuard(context); h2.revalidateInputs(captured);
+                pending.push({suite, executions: Promise.allSettled([1, 2].map(async () =>
+                    executeSuite(definitions, suite.name, {environment: formal.preflight.environment, cwd: definitions.cwd}))).then(executions => {
+                    // Observe this pair's completion boundary immediately, but
+                    // defer refusal until every sibling and diagnostic is retained.
+                    try { rootGuard(context); h2.revalidateInputs(captured); }
+                    catch (error) { boundaryError = boundaryError || error; }
+                    return executions;
+                })});
+            } catch (error) { boundaryError = error; break; }
         }
-        rootGuard(context); h2.revalidateInputs(captured);
-        const rejected = executions.find(row => row.status === 'rejected');
-        if (rejected) throw rejected.reason;
-        for (const row of executions) check(row.value.report.status === 'PASS' && row.value.assertions > 0,
-            `actual suite failed: ${suite.name}: ${row.value.report.reason}`);
-        check(pair[0].report_bytes === pair[1].report_bytes && pair[0].report_sha256 === pair[1].report_sha256 &&
-            pair[0].assertions === pair[1].assertions, `repeated semantic reports differ: ${suite.name}`);
-        attempts.push({name: suite.name, status: 'PASS', attempts: pair});
+        const completion = Promise.allSettled(pending.map(row => row.executions));
+        const pairs = [];
+        // Publication order is canonical, not completion order. Preserve every
+        // available actual sibling result before reporting a boundary/status refusal.
+        try {
+            for (const {suite, executions: task} of pending) {
+                const [outcome] = await Promise.allSettled([task]), pair = [];
+                const executions = outcome.status === 'fulfilled' ? outcome.value : [];
+                for (let ordinal = 1; ordinal <= 2; ordinal++) {
+                    const observed = executions[ordinal - 1];
+                    if (!observed || observed.status !== 'fulfilled') continue;
+                    const execution = observed.value;
+                    const prefix = `${suite.name}-${ordinal}`;
+                    persist(directory, `${prefix}.report.json`, `suite:${suite.name}:attempt:${ordinal}:report`, execution.semantic, artifacts, guards);
+                    save(`${prefix}.diagnostics.json`, `suite:${suite.name}:attempt:${ordinal}:diagnostics`, execution.diagnostics);
+                    persist(directory, `${prefix}.events.jsonl`, `suite:${suite.name}:attempt:${ordinal}:events`, execution.rawEvents, artifacts, guards);
+                    pair.push({ordinal, status: execution.report.status, report_bytes: execution.semantic.length,
+                        report_sha256: h1.sha256(execution.semantic), assertions: execution.assertions});
+                }
+                pairs.push(pair);
+            }
+        } finally { await completion; }
+        const completed = await completion;
+        if (boundaryError) throw boundaryError;
+        for (const [index, {suite}] of pending.entries()) {
+            const outcome = completed[index];
+            if (outcome.status === 'rejected') throw outcome.reason;
+            const executions = outcome.value, pair = pairs[index];
+            const rejected = executions.find(row => row.status === 'rejected');
+            if (rejected) throw rejected.reason;
+            for (const row of executions) check(row.value.report.status === 'PASS' && row.value.assertions > 0,
+                `actual suite failed: ${suite.name}: ${row.value.report.reason}`);
+            check(pair[0].report_bytes === pair[1].report_bytes && pair[0].report_sha256 === pair[1].report_sha256 &&
+                pair[0].assertions === pair[1].assertions, `repeated semantic reports differ: ${suite.name}`);
+            attempts.push({name: suite.name, status: 'PASS', attempts: pair});
+        }
     }
     const traceInput = h1.canonicalJson({purpose: context.purpose, candidate: context.candidate,
         source_manifest_sha256: context.source_manifest_sha256, case_ids_sha256: context.case_ids_sha256});
