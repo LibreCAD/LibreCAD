@@ -889,6 +889,9 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
      librecad/src/lib/engine/document/entities/lc_offsetcurve.cpp
      librecad/src/lib/engine/document/entities/lc_offsetcurve.h
+     librecad/src/lib/engine/document/entities/lc_offsetcurvegrips.cpp
+     librecad/src/lib/engine/document/entities/lc_offsetcurvegrips.h
+     librecad/src/lib/engine/document/entities/lc_offsetcurvesnaps.cpp
      librecad/src/lib/engine/document/entities/lc_offsetcachecontacts.cpp
      librecad/src/lib/engine/document/entities/lc_offsetcachecontacts.h
      librecad/src/lib/engine/document/entities/lc_offsetcontactmatching.cpp
@@ -2620,6 +2623,8 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_edit_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_grips_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_grip_order_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcachecontacts_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcontactmatching_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_topology_budget_tests.cpp

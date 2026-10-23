@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "lc_offsetcurve.h"
+#include "lc_offsetcurvegrips.h"
 
 #include <algorithm>
 #include <cmath>
@@ -203,8 +204,10 @@ std::unique_ptr<LC_OffsetCurve> LC_OffsetCurve::adopt(const RS_Entity &cache,
                     nativeRefusal = LC_OffsetCurveRefusal::NotCacheRepresentable;
                 } else {
                     result.reset(new LC_OffsetCurve(cache, *data, normalized, tolerance,
-                        checked.analysis->closed(), ValidatedCache{}));
-                    nativeRefusal = LC_OffsetCurveRefusal::None;
+                        *checked.analysis, ValidatedCache{}));
+                    if (result->m_grips.empty() || !geo::isFinite2D(result->m_cachedMiddlePoint)) {
+                        result.reset(); nativeRefusal = LC_OffsetCurveRefusal::NotCacheRepresentable;
+                    } else nativeRefusal = LC_OffsetCurveRefusal::None;
                 }
             }
         } else nativeRefusal = LC_OffsetCurveRefusal::NotCacheRepresentable;
@@ -257,8 +260,9 @@ LC_OffsetCurveCreateResult LC_OffsetCurve::runEngine(const RS_Entity &attributes
         result.refusal = Refusal::NotCacheRepresentable; return result;
     }
     result.entity.reset(new LC_OffsetCurve(attributes, *data, normalized, tolerance,
-        checked.analysis->closed(), ValidatedCache{}));
-    if (!result.entity->validate() || !fitsOutputBudget(*result.entity, output)) {
+        *checked.analysis, ValidatedCache{}));
+    if (!result.entity->validate() || result.entity->m_grips.empty() ||
+        !geo::isFinite2D(result.entity->m_cachedMiddlePoint) || !fitsOutputBudget(*result.entity, output)) {
         result.entity.reset(); result.refusal = Refusal::NotCacheRepresentable; return result;
     }
     result.refusal = Refusal::None; result.changed = true;
@@ -293,7 +297,7 @@ LC_OffsetCurveEditResult LC_OffsetCurve::commitPrepared(LC_OffsetCurveCreateResu
     auto &next = *prepared.entity;
     const auto definition = next.m_definition;
     auto grips = std::move(next.m_grips);
-    publish(next, definition, grips, next.m_worldTolerance, true, next.m_closed);
+    publish(next, definition, grips, next.m_worldTolerance, true, next.m_closed, next.m_cachedMiddlePoint);
     return result;
 }
 
@@ -393,16 +397,14 @@ LC_OffsetCurveEditResult LC_OffsetCurve::setThrough(const RS_Vector &point, cons
 }
 
 LC_OffsetCurve::LC_OffsetCurve(const RS_Entity &source, const RS_SplineData &cache,
-    const LC_EllipseOffsetDefinition &definition, const double tolerance, const bool closed, ValidatedCache)
-    : RS_Spline(source.getParent(), cache), m_definition(definition), m_worldTolerance(tolerance), m_closed(closed) {
+    const LC_EllipseOffsetDefinition &definition, const double tolerance,
+    const geo::CacheTopologyAnalysis &topology, ValidatedCache)
+    : RS_Spline(source.getParent(), cache), m_definition(definition), m_worldTolerance(tolerance), m_closed(topology.closed()) {
     RS_Entity::operator=(source);
     calculateBorders();
     m_stamp = geometryFingerprint(getData());
-    // D-grips adds visible analytic grips. These cache-owned endpoints are a
-    // bounded initial fallback, never borrowed from the source entity.
-    m_grips.push_back(getData().controlPoints.front());
-    if (!samePoint(getData().controlPoints.front(), getData().controlPoints.back()))
-        m_grips.push_back(getData().controlPoints.back());
+    auto hints = LC_OffsetCurveGrips::prepare(getData(), m_definition, tolerance, m_closed, &topology);
+    m_grips = std::move(hints.grips); m_cachedMiddlePoint = hints.midpoint;
 }
 
 RS_Entity *LC_OffsetCurve::clone() const { return new LC_OffsetCurve(*this); }
@@ -459,12 +461,14 @@ bool LC_OffsetCurve::setOwnedExtensions(const unsigned flags, const OwnedTail &t
 }
 
 void LC_OffsetCurve::publish(RS_Spline &prepared, const LC_EllipseOffsetDefinition &definition,
-    std::vector<RS_Vector> &grips, const double tolerance, const bool defined, const bool closed) {
+    std::vector<RS_Vector> &grips, const double tolerance, const bool defined, const bool closed,
+    const RS_Vector &midpoint) {
     static_assert(std::is_nothrow_copy_assignable_v<LC_EllipseOffsetDefinition>);
     const auto stamp = geometryFingerprint(prepared.getData());
     auto notification = replacePreparedSpline(prepared);
     m_definition = definition; m_grips.swap(grips); m_worldTolerance = tolerance;
     m_defined = defined; m_stamp = stamp; m_closed = closed;
+    m_cachedMiddlePoint = midpoint;
     m_unknownFlags = 0; m_unknownTail.clear();
     notification.notify();
 }
@@ -505,7 +509,9 @@ bool LC_OffsetCurve::transform(const Matrix &matrix, const double scale, const b
         for (auto &point : grips) if (!mapPoint(matrix, point, point, true)) return false;
     } else grips.clear();
     RS_Spline prepared{nullptr, data};
-    publish(prepared, definition, grips, tolerance, preserve, m_closed);
+    const auto midpoint = preserve ? LC_OffsetCurveGrips::prepareMiddle(prepared.getData(), tolerance, m_closed) : RS_Vector{false};
+    if (preserve && !geo::isFinite2D(midpoint)) return false;
+    publish(prepared, definition, grips, tolerance, preserve, m_closed, midpoint);
     return true;
 }
 
@@ -571,5 +577,7 @@ void LC_OffsetCurve::revertDirection() {
     if (defined) definition.cacheReversed = !definition.cacheReversed;
     auto grips = m_grips; std::reverse(grips.begin(), grips.end());
     RS_Spline prepared{nullptr, data};
-    publish(prepared, definition, grips, m_worldTolerance, defined, m_closed);
+    const auto midpoint = defined ? LC_OffsetCurveGrips::prepareMiddle(prepared.getData(), m_worldTolerance, m_closed) : RS_Vector{false};
+    if (defined && !geo::isFinite2D(midpoint)) return;
+    publish(prepared, definition, grips, m_worldTolerance, defined, m_closed, midpoint);
 }

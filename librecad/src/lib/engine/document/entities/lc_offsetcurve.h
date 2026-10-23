@@ -87,6 +87,11 @@ public:
     std::unique_ptr<RS_Ellipse> originalEllipse() const;
 
     const std::vector<RS_Vector> &cachedDefinitionGrips() const noexcept { return m_grips; }
+    /** A unique cached grip match, using local roundoff and explicit coordinate ULPs. */
+    std::optional<std::size_t> definitionGripIndex(const RS_Vector &ref) const;
+    RS_VectorSolutions getRefPoints() const override;
+    RS_Vector getMiddlePoint() const override;
+    void moveRef(const RS_Vector &ref, const RS_Vector &offset) override;
     unsigned unknownOwnedFlags() const noexcept { return m_unknownFlags; }
     const OwnedTail &unknownOwnedTail() const noexcept { return m_unknownTail; }
     bool setOwnedExtensions(unsigned flags, const OwnedTail &tail);
@@ -100,15 +105,24 @@ public:
     void mirror(const RS_Vector &axisPoint1, const RS_Vector &axisPoint2) override;
     void revertDirection() override;
 
+protected:
+    RS_Vector doGetNearestRef(const RS_Vector &coord, double *dist) const override;
+    RS_Vector doGetNearestSelectedRef(const RS_Vector &coord, double *dist) const override;
+    RS_Vector doGetNearestEndpoint(const RS_Vector &coord, double *dist, RS_Entity **entity) const override;
+    RS_Vector doGetNearestCenter(const RS_Vector &coord, double *dist, RS_Entity **entity) const override;
+    RS_Vector doGetNearestMiddle(const RS_Vector &coord, double *dist, int middlePoints) const override;
+    RS_Vector doGetNearestDist(double distance, const RS_Vector &coord, double *dist) const override;
+
 private:
     struct ValidatedCache {};
     LC_OffsetCurve(const RS_Entity &source, const RS_SplineData &cache,
-        const LC_EllipseOffsetDefinition &definition, double tolerance, bool closed, ValidatedCache);
+        const LC_EllipseOffsetDefinition &definition, double tolerance,
+        const LC_EllipseOffsetGeometry::CacheTopologyAnalysis &topology, ValidatedCache);
     // Similarities transport the existing proof only if every stored coordinate
     // is the exact affine image. Rounded similarities refuse unchanged, not restamp.
     bool transform(const std::array<double, 6> &matrix, double similarityScale, bool reflected);
     void publish(RS_Spline &prepared, const LC_EllipseOffsetDefinition &definition,
-        std::vector<RS_Vector> &grips, double tolerance, bool defined, bool closed);
+        std::vector<RS_Vector> &grips, double tolerance, bool defined, bool closed, const RS_Vector &midpoint);
     static LC_OffsetCurveCreateResult runEngine(const RS_Entity &attributes,
         const LC_EllipseOffsetDefinition &definition, const LC_OffsetRunLimits &limits);
     LC_OffsetCurveEditResult eligibility() const noexcept;
@@ -122,6 +136,7 @@ private:
     bool m_defined = true;
     bool m_closed = false;
     std::vector<RS_Vector> m_grips;
+    RS_Vector m_cachedMiddlePoint{false};
     unsigned m_unknownFlags = 0;
     OwnedTail m_unknownTail;
 };
