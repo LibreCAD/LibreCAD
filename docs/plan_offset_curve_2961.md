@@ -24,11 +24,12 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-23. Status: all A slices, B, C and X-H1 through X-H6 committed; native feature incomplete.
+Updated: 2026-10-23. Status: all A slices, B, C, D-core and X-H1 through X-H6 committed; native workflow incomplete.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
-This checkpoint records tested A-core/A-strict/A-reference/A-cache/B/C and auxiliary X-H1 through X-H6 commits. Later
-main-track slices remain incomplete; no native entity is claimed.
+This checkpoint records tested A-core/A-strict/A-reference/A-cache/B/C/D-core and
+auxiliary X-H1 through X-H6 commits. Native adoption is implemented; creation,
+definition editing, persistence, UI and trimming remain later slices.
 
 ## 1. Verified Baseline and Scope
 
@@ -40,7 +41,7 @@ main-track slices remain incomplete; no native entity is claimed.
 | Difference between initial checkpoints | Only this plan file; no product-source change |
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
-| Latest product checkpoint | `d4a0b081a` (C) |
+| Latest product checkpoint | `92758859c` (D-core) |
 | Latest auxiliary checkpoint | `5a3e47039` (H7 driver; core a95a5c5ff, guards ceacd01a3, workers e83aaf3f0) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
@@ -50,14 +51,14 @@ main-track slices remain incomplete; no native entity is claimed.
 | A-cache | Atomic Candidate/Proof subdivision, inherited combined depth, prepared capacity, bounded dispatch/coverage |
 | B terminals | Immutable exact occurrence/edge-side classification, separate source incidence, bounded storage/scans |
 | C topology | Complete bounded unique-path checker, owned contact query and exact root-to-port matching; unresolved correspondence refuses Ambiguous |
-| Native entity | No `LC_OffsetCurve` or `EntityOffsetCurve` yet |
-| Product integration | No native offset adoption, private file schema, creation/editing UI, or target-trim integration yet |
-| Build registration | Geometry, contact and routing sources in CMake/qmake; focused geometry/contact/routing/budget tests in `librecad_tests` |
+| Native entity | `LC_OffsetCurve` / `EntityOffsetCurve`, checked adoption, consistency stamp, clone, exact proof transport and bounded owned extensions |
+| Product integration | Spline-shaped export, explicit INSERT plain-cache fallback and interim property refusal; creation/editing, private file schema, UI and trim pending |
+| Build registration | Geometry/contact/routing/native sources in CMake/qmake6; native and adjacent tests registered and executed |
 | Validation harness | X-H1 through X-H6 and CLI orchestration committed; H7 pending |
 | Latest validation | A-core, geometry and format fast lanes passed Release/ASan; full Release and qmake6 passed; see section 14 |
 
 Recheck these facts against the selected implementation checkout before starting
-D-core. Inventory Qt6/Catch2/build tools and available independently authored
+D-edit. Inventory Qt6/Catch2/build tools and available independently authored
 DXF/DWG fixtures/inspection tools once, recording provenance/access gaps early;
 source-level progress need not wait for unrelated external-tool installation. The user's main checkout is a different, dirty branch and is not the
 source baseline above. Do not overwrite its unrelated changes or apply this plan
@@ -214,7 +215,7 @@ test commit followed by the section 4 plan checkpoint.
 | A-cache | A-reference | Candidate/proof split accounting and inherited combined depth (`dbf895638`) | committed |
 | B | A-cache | Immutable occurrence-specific producer terminals (`9bf0546b6`) | committed |
 | C | B | Full unique-path topology checker and public result | committed d4a0b081a |
-| D-core | C | Native enum/entity, real validated adoption, stamp, clone and transforms | pending |
+| D-core | C | Native enum/entity, real validated adoption, stamp, clone and transforms | committed 92758859c |
 | D-edit | D-core | Real create/mutators, one-run staging, run limits and refusal results | pending |
 | D-grips | D-edit | Cached definition grips, safe snaps and through-parameter query | pending |
 | E-tools | D-grips | Tool result adoption, explicit plain fallback, explode/scale/INSERT/plugin | pending |
@@ -271,17 +272,27 @@ editing; changes beyond the named concern require a scope note in the slice card
 
 ### Current Next Cards
 
-The main track resumes at D-core (section 8.1). C is committed and its card below
-is a completed implementation contract, not a request to redo it. Preserve actual
-C adoption, immutable ownership and runtime consistency checks. In particular,
-hashing rounded transformed coordinates does not transport a geometric proof:
-D-core needs justified rounding/error and topology preservation, or an explicit
-unchanged refusal when a requested transform cannot be certified. Do not weaken
-the ordinary-transform no-regeneration contract or silently restamp stale data.
+The main track resumes at D-edit (section 8.2). D-core `92758859c` uses the actual
+C checker, not a layout-only adoption gate. Similarity transport requires exact
+dyadic affine images of every stored coordinate and unchanged normalized semantic
+basis fields. Rounded similarities and arc reflections refuse unchanged; whole
+reflections, exact signed-permutation rotations/translations/scales and reversal
+are supported without checker/materializer work. Nonuniform/singular scale and
+shear produce an undefined spline-shaped instance. Never restamp a stale cache.
 
-The active auxiliary sequence is H7 complete affected regression
-rerun -> two complete qualification runs. Suite inventory/worker execution is
-committed separately; it is not whole H7 or native feature completion.
+D-edit must stage a complete replacement, including the new validated closure
+and grips, before publishing. Reuse `replacePreparedSpline` / `replaceOwnedEntities`;
+do not add a caller-controlled validated flag. D-grips still replaces the current
+endpoint fallback with visible analytic grips and snap behavior. E-tools must
+cover move/rotate/mirror as well as scale/INSERT: any document transform that
+cannot transport a native proof must explicitly use a correctly transformed plain
+cache or refuse the whole operation, never silently publish an unmoved clone.
+
+The active auxiliary sequence is the reviewed H7 temporary-path/journal source
+checkpoint -> two complete quiet-CPU qualification runs. The fresh 399-test runner
+regression passed. Qualification01 timed out in its second preflight capture;
+retain that failed namespace. Neither unit success nor shortening the private
+temporary namespace proves the unchanged 300-second runtime envelope.
 
 ### C Implementation Card (Completed)
 
@@ -1759,10 +1770,10 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 | Recursive plan/activation routing | Removed as a planning deadlock | Execute A-core's finite card |
 | Atomic budget API | Committed and validated (`0eb2a0cfa`) | Integrate solver/geometry work in A-strict/A-reference |
 | Geometry work/exception/split/depth/terminal proof | All A slices and B committed and validated | C complete checker |
-| Complete semantic path checker | C committed d4a0b081a; explicit Ambiguous refusals retained | D-core native validated adoption |
-| Native feature/UI/persistence/trim | Not implemented | Follow D through T; do not label scaffolding complete |
+| Complete semantic path checker | C committed d4a0b081a; used by D-core public adoption | D-edit staged regeneration |
+| Native feature/UI/persistence/trim | D-core committed; later workflow incomplete | Follow D-edit through T; do not label later scaffolding complete |
 | Independent DWG/version fixtures | Required, not yet qualified | Inventory/tool/license/provenance during G-fixtures; close all rows in G-matrix |
-| Harness production readiness | X-H1/X-H2 committed; workers and independent evidence incomplete | X-H3 through X-H7, independent from starting product work |
+| Harness production readiness | X-H1-X-H6 and H7 source components implemented; actual qualification incomplete | Commit reviewed timeout fix, then two complete qualification runs |
 | Independent review and test evidence | A-core independent static review and actual test reports complete | Obtain fresh review/validation for each successor |
 | Dirty unrelated main checkout | Not the selected source baseline | Preserve it; reconcile only if changing implementation worktree |
 
@@ -1782,6 +1793,76 @@ The plan checkpoint column never depends on its own future SHA.
 | X-H1 physical parents | 8993e2848 | e8119501b | 25 receipt tests; independent review; 67-test H1/H2 integration passed |
 | B | 9bf0546b6 | b12a9a02c | All 8 terminal identities; full Release, geometry Release/ASan, format lanes, qmake6; independent review |
 | X-H2 | 25661f1a3 | Immediate plan-only checkpoint | 15 input + 27 process + 25 H1 tests; five syntax checks; independent input/process reviews |
+| D-core | 92758859c | Immediate plan-only checkpoint | Native/adjacent/full Release, ASan adjacent, both format fast lanes and qmake6 passed; independent static review corrections verified |
+
+### D-core Validation (2026-10-23)
+
+Product `92758859c` adds the private validated-constructor native entity, public
+actual-C adoption for exact lines and supported cubic caches, complete spline
+fingerprint, normalized data-only original, independent clones and value-owned
+bounded extension items. Caller check limits only lower native hard caps.
+Ordinary transforms do not run the checker or materializer; proof transport is
+the exact subset described in the next card, not a claim about arbitrary rounded
+affines. Cached endpoint fallback is intentional until D-grips.
+
+All 14 committed source/test/build files are recorded in
+`D-core-source-build-identity-01.json` under
+`/private/tmp/lc2961-impl-evidence.9GtLO2`, together with actual Release/ASan/qmake6
+binary hashes and tool identities. Reuse remains confined to this worktree's
+configured build directories. Source registrations and the full entity census
+include the appended enum; no previous enum value changed.
+
+Actual validation in that evidence directory:
+
+- Native final selector `[lc-offsetcurve][native]`: 19 cases / 333 assertions in
+  `D-core-native-release-03.log`, covering both source/cache directions, line and
+  generated cubic adoption, inward arcs, whole/arc lenses, hard caps, malformed
+  layouts, all fingerprint fields, stale-state refusal, transforms and extensions.
+- Final adjacent union: Release 539 cases / 1,611,302 assertions in
+  `D-core-affected-release-03.{log,xml}`; ASan 540 / 1,611,314 in
+  `D-core-affected-asan-02.{log,xml}`, zero skips/failures. The extra sanitizer-only
+  case checks allocation retention. The union covers offset geometry, entity
+  coverage, copy, spline and INSERT, with slow/corpus/fixture/external exclusions
+  attached to each OR branch.
+- Full comparable Release gate `~[fixture]~[external]`: 4,004 cases, 3,978 passed,
+  the same 26 baseline skips, 7,426,881 assertions in
+  `D-core-full-release-03.{log,xml}`. XML audit
+  `D-core-baseline-comparison-02.txt` finds no missing baseline identities and no
+  changed skips; 25 new case executions. JUnit section rows are counted separately
+  from Catch's test-case summary.
+- Format fast selector excludes hidden/slow/corpus/external/external-reader/fixture
+  cases: DXF Release `D-core-dxf-release-03` and ASan `D-core-dxf-asan-01` each
+  748 total / 745 passed / 3 existing skips, 40,175 assertions. DWG Release
+  `D-core-dwg-release-03` and ASan `D-core-dwg-asan-01` each 1,006 / 1,002 / 4
+  existing skips, 34,948 assertions. Both binaries were rebuilt explicitly.
+- Final CMake builds: `D-core-build-release-05.log`, `D-core-build-asan-03.log`;
+  qmake6 configuration `D-core-qmake6-config-01.log` and final application build
+  `D-core-qmake6-build-02.log`, all exit zero. ASan uses the previously qualified
+  host setting `detect_leaks=0`, without disabling other sanitizer checks.
+
+Independent read-only review found and closed stale-degree overflow and two INSERT
+numeric defects. Degree admission now precedes replacement construction and
+fingerprint work. INSERT demotes native caches explicitly, bounds the new walks,
+checks finite actual transform steps/full matrix and post-update data, refuses
+nested sub-tolerance scales, and rejects borrowed paths before source mutation.
+Tests include a safe first sibling followed by a failing cache, direct tiny-scale
+success, nested refusal and borrowed non-offset source preservation. The final
+correction received independent static clearance; allocation-failure injection is
+not claimed. Atomic staging reuses the existing shared replacement primitive.
+
+The first directed-arc test fixture was corrected to swap endpoints with source
+direction; the checker had correctly refused its long-arc chord. Preserve that
+initial failed report. Two exploratory adjacent runs accidentally selected hidden
+external corpus tests through positive tags; they were interrupted with exit130,
+not counted as PASS, and their logs/sample remain. Never use an unqualified
+positive tag union for the bounded gate: apply the negative tags to every branch.
+
+Current integration deliberately exports/reimports an ordinary visible SPLINE
+cache, and INSERT expansion also uses a plain cache, including identity/uniform
+transforms. These are explicit G persistence / E native-class preservation gaps
+in the census, not completed native round trips. Edit Properties refuses before
+selection/cloning until H-dialog. D-edit, D-grips and all later product slices
+remain pending. The next source slice is D-edit.
 
 ### X-H5 Evidence Validation (2026-10-23)
 
