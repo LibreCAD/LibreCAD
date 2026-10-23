@@ -40,6 +40,20 @@
 #include "rs_settings.h"
 #include "rs_solid.h"
 
+namespace {
+    RS_Entity* selectionOwner(RS_Entity* entity) {
+        if (entity != nullptr && entity->getParent() != nullptr &&
+            entity->getParent()->rtti() == RS2::EntityOffsetCurve) {
+            return entity->getParent();
+        }
+        return entity;
+    }
+
+    bool matchesSelectionType(RS2::EntityType actual, RS2::EntityType requested) {
+        return actual == requested || (actual == RS2::EntityOffsetCurve && requested == RS2::EntitySpline);
+    }
+}
+
 RS_Selection::RS_Selection(RS_Document* container, LC_GraphicViewport* graphicView) : m_document{container}, m_viewPort{graphicView} {
     m_additiveSelection = LC_GET_ONE_BOOL("Selection", "Additivity", true);
 }
@@ -48,10 +62,15 @@ RS_Selection::RS_Selection(const RS_GraphicView* graphicView) : m_document{graph
     m_additiveSelection = LC_GET_ONE_BOOL("Selection", "Additivity", true);
 }
 
+void RS_Selection::justSelect(RS_Entity* entity, const bool on) const {
+    if (auto* owner = selectionOwner(entity)) m_document->select(owner, on);
+}
+
 /**
  * Selects or deselects the given entity.
  */
 void RS_Selection::selectSingle(RS_Entity* e) const {
+    e = selectionOwner(e);
     if (e != nullptr && (e->getLayer() != nullptr && !e->getLayer()->isLocked())) {
         const bool selected = e->isSelected();
         if (m_additiveSelection) {
@@ -110,7 +129,7 @@ void RS_Selection::selectEntitiesVector(RS_Document* document, LC_GraphicViewpor
             select.doUnselectAllIfNeeded(container, doc);
         }
         for (const auto e : entities) {
-            doc->select(e, doSelect);
+            if (auto* owner = selectionOwner(e)) doc->select(owner, doSelect);
         }
     });
 }
@@ -128,7 +147,7 @@ void RS_Selection::selectEntitiesList(const QList<RS_Entity*>& entities, bool se
             doUnselectAllIfNeeded(container, doc);
         }
         for (const auto e : entities) {
-            doc->select(e, select);
+            if (auto* owner = selectionOwner(e)) doc->select(owner, select);
         }
     });
 }
@@ -139,8 +158,9 @@ void RS_Selection::selectIfMatched(const QList<RS_Entity*>& entities, bool selec
             doUnselectAllIfNeeded(container, doc);
         }
         for (const auto e : entities) {
-            if (matchFun(e)) {
-                doc->select(e, select);
+            auto* owner = selectionOwner(e);
+            if (owner != nullptr && matchFun(owner)) {
+                doc->select(owner, select);
             }
         }
     });
@@ -255,6 +275,8 @@ void RS_Selection::selectWindow(const QList<RS2::EntityType>& typesToSelect, con
 }
 
 void RS_Selection::selectIntersected(RS_Entity* entity, bool select) const {
+    entity = selectionOwner(entity);
+    if (entity == nullptr) return;
     performBulkSelection([entity, select, this](const RS_EntityContainer* container, LC_GraphicViewport*, RS_Document* doc)-> void {
         if (select) {
             doUnselectAllIfNeeded(container, doc);
@@ -364,7 +386,12 @@ void RS_Selection::selectIntersected(const RS_Vector& v1, const RS_Vector& v2, c
  * @param e The entity where the algorithm starts. Must be an atomic entity.
  */
 void RS_Selection::selectContour(RS_Entity* e) const {
+    e = selectionOwner(e);
     if (e == nullptr) {
+        return;
+    }
+    if (e->rtti() == RS2::EntityOffsetCurve) {
+        selectSingle(e);
         return;
     }
     if (!e->isAtomic()) {
@@ -434,6 +461,7 @@ void RS_Selection::selectContour(RS_Entity* e) const {
  * Selects all entities on the given layer.
  */
 void RS_Selection::selectLayer(const RS_Entity* e) const {
+    if (e && e->getParent() && e->getParent()->rtti() == RS2::EntityOffsetCurve) e = e->getParent();
     if (e == nullptr) {
         return;
     }
@@ -666,7 +694,7 @@ void RS_Selection::doSelectEntitiesWithTypeInWindow(const RS_EntityContainer* co
 
         if (included) {
             if (typeToSelect != RS2::EntityType::EntityUnknown) {
-                if (typeToSelect == e->rtti()) {
+                if (matchesSelectionType(e->rtti(), typeToSelect)) {
                     doc->select(e, select);
                 }
                 else {
@@ -695,7 +723,9 @@ void RS_Selection::doSelectEntitiesWithTypesInWindow(const RS_EntityContainer* c
                                                      const QList<RS2::EntityType>& typesToSelect, const RS_Vector& v1, const RS_Vector& v2,
                                                      const bool select, const bool cross) {
     for (RS_Entity* e : *container) {
-        if (!typesToSelect.contains(e->rtti())) {
+        if (!std::any_of(typesToSelect.begin(), typesToSelect.end(), [e](RS2::EntityType type) {
+            return matchesSelectionType(e->rtti(), type);
+        })) {
             continue;
         }
         bool included = false;

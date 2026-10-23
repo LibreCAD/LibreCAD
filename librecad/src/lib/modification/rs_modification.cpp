@@ -89,6 +89,10 @@ namespace {
         return parent == nullptr || parent->isDocument();
     }
 
+    bool isNativeCacheChild(const RS_Entity& entity) {
+        return entity.getParent() && entity.getParent()->rtti() == RS2::EntityOffsetCurve;
+    }
+
     RS_VectorSolutions findIntersection(const RS_Entity& trimEntity, const RS_Entity& limitEntity, double tolerance = 1e-4) {
         RS_VectorSolutions sol;
         if (limitEntity.isAtomic()) {
@@ -2164,6 +2168,7 @@ bool RS_Modification::moveRotate(const RS_MoveRotateData& data, const QList<RS_E
 LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord, RS_AtomicEntity* trimEntity, const RS_Vector& limitCoord,
                                     RS_Entity* limitEntity, const bool both, LC_DocumentModificationBatch& ctx) {
     Q_ASSERT(trimEntity != nullptr && limitEntity != nullptr);
+    if (both && (limitEntity->rtti() == RS2::EntityOffsetCurve || isNativeCacheChild(*limitEntity))) return {};
 
     // A container limit entity can still bound a one-sided trim, but it must never
     // be cast to RS_AtomicEntity: trimStartpoint(), trimEndpoint() and getTrimPoint()
@@ -2304,6 +2309,7 @@ void RS_Modification::trimEnding(const RS_Vector& trimCoord, RS_AtomicEntity* tr
 RS_Entity* RS_Modification::trimAmount(const RS_Vector& trimCoord, RS_AtomicEntity* entityToTrim, const double dist, const bool trimBoth,
                                        bool& trimStart, bool& trimEnd, LC_DocumentModificationBatch& ctx) {
     Q_ASSERT(entityToTrim != nullptr);
+    if (isNativeCacheChild(*entityToTrim)) return nullptr;
 
     if (entityToTrim->isLocked() || !entityToTrim->isVisible()) {
         return nullptr;
@@ -2353,6 +2359,7 @@ bool RS_Modification::cut(const RS_Vector& cutCoord, RS_AtomicEntity* cutEntity,
 #endif
 
     Q_ASSERT(cutEntity != nullptr);
+    if (isNativeCacheChild(*cutEntity)) return false;
 
     if (cutEntity->isLocked() || !cutEntity->isVisible()) {
         return false;

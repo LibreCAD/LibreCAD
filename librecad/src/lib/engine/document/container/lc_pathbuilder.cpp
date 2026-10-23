@@ -25,11 +25,13 @@
 // File: lc_pathbuilder.cpp
 
 #include "lc_pathbuilder.h"
+#include "lc_offsetoutputbudget.h"
 
 #include "rs_line.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_ellipse.h"
+#include "rs_entitycontainer.h"
 #include "lc_splinepoints.h"
 #include "lc_parabola.h"
 #include "rs_painter.h"
@@ -86,6 +88,29 @@ void PathBuilder::append(RS_Entity* entity) {
   bool appended = false;
 
   switch (type) {
+  case RS2::EntityOffsetCurve: {
+    // The native type is a spline-derived container, never an atomic curve.
+    // Consume only its existing display edges, including for stale instances.
+    const auto& cache = *static_cast<RS_EntityContainer*>(entity);
+    if (cache.empty() || cache.count() > kDefaultOffsetDeepEntitiesPerSource) {
+      RS_DEBUG->print(RS_Debug::D_WARNING, "PathBuilder::append: Offset display cache limit reached");
+      return;
+    }
+    for (const auto* edge : cache) {
+      if (!edge || edge->isDeleted() || edge->rtti() != RS2::EntityLine ||
+          !hasUsableVector(edge->getStartpoint()) || !hasUsableVector(edge->getEndpoint()) ||
+          edge->getStartpoint().z != 0 || edge->getEndpoint().z != 0 ||
+          !hasUsablePoint(toGuiPoint(edge->getStartpoint())) ||
+          !hasUsablePoint(toGuiPoint(edge->getEndpoint()))) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "PathBuilder::append: Unsupported offset display cache");
+        return;
+      }
+    }
+    for (auto* edge : cache) {
+      append(edge);
+    }
+    return; // retain the last displayed edge, not a closed spline's invalid end
+  }
   case RS2::EntityLine:
     appended = appendLine(static_cast<RS_Line*>(entity));
     break;

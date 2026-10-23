@@ -39,10 +39,25 @@
 #include "rs_modification.h"
 #include "rs_settings.h"
 
+namespace {
+    void promoteNativeSources(QList<RS_Entity*>& sources) {
+        QList<RS_Entity*> promoted;
+        std::unordered_set<const RS_Entity*> natives;
+        for (auto* entity : sources) {
+            if (entity != nullptr && entity->getParent() != nullptr &&
+                entity->getParent()->rtti() == RS2::EntityOffsetCurve) entity = entity->getParent();
+            if (entity != nullptr && entity->rtti() == RS2::EntityOffsetCurve && !natives.insert(entity).second) continue;
+            promoted.append(entity);
+        }
+        sources.swap(promoted);
+    }
+}
+
 LC_ActionModifyOffset::LC_ActionModifyOffset(LC_ActionContext *actionContext)
     :LC_ActionModifyBase("ActionModifyOffset", actionContext,RS2::ActionModifyOffset,
                          {RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityLine, RS2::EntityPolyline,
-                          RS2::EntitySpline, RS2::EntitySplinePoints, RS2::EntityParabola, RS2::EntityHyperbola})
+                          RS2::EntitySpline, RS2::EntityOffsetCurve, RS2::EntitySplinePoints,
+                          RS2::EntityParabola, RS2::EntityHyperbola})
     , m_offsetData(new RS_OffsetData())
     , m_previewCache(std::make_unique<LC_OffsetPreviewCache>()){
 
@@ -93,6 +108,7 @@ bool LC_ActionModifyOffset::isInVisualSnapStatus(const int status) {
 }
 
 bool LC_ActionModifyOffset::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
+    promoteNativeSources(m_selectedEntities);
     // the sources may be replaced: what the preview kept for them is dropped
     m_previewCache->clear();
     m_previewSources.clear();
@@ -307,6 +323,7 @@ std::size_t LC_ActionModifyOffset::maxPreviewDetail() {
 }
 
 void LC_ActionModifyOffset::previewOffset() {
+    promoteNativeSources(m_selectedEntities);
     // made on every mouse move: with preview limits, and from what was made
     // before for the same sources, side and distance
     if (m_previewSources != m_selectedEntities) {

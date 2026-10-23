@@ -2631,6 +2631,8 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_grip_order_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurvetransform_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurveagain_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_types_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_cached_dispatch_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetsample_budget_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcachecontacts_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcontactmatching_tests.cpp
@@ -2682,6 +2684,7 @@ if (BUILD_TESTS)
         librecad/src/lib/math/tests/lc_interval_tests.cpp
         librecad/src/lib/creation/tests/rs_creation_null_entity_tests.cpp
         librecad/src/lib/creation/tests/lc_creation_ellipse_tests.cpp
+        librecad/src/lib/creation/tests/lc_offsetcurve_action_dispatch_tests.cpp
         librecad/src/actions/print_preview/tests/rs_actionprintpreview_tests.cpp
         librecad/src/lib/printing/tests/lc_printingtests.cpp
         librecad/src/lib/modification/tests/lc_copy_identity_tests.cpp
@@ -2695,6 +2698,7 @@ if (BUILD_TESTS)
         librecad/src/lib/modification/tests/rs_modification_attributes_tests.cpp
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/filters/tests/spline_offset_representation_tests.cpp
+        librecad/src/lib/filters/tests/lc_offsetcurve_exportdispatch_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_line_parallel_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_fast_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_circle_center_point_tests.cpp

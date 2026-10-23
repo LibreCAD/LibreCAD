@@ -35,6 +35,21 @@
 #include "rs_information.h"
 #include "rs_modification.h"
 
+namespace {
+    bool isTrimTarget(const RS_Entity* entity) {
+        return entity != nullptr && entity->rtti() != RS2::EntityOffsetCurve && entity->isAtomic() &&
+            (entity->getParent() == nullptr || entity->getParent()->rtti() != RS2::EntityOffsetCurve);
+    }
+
+    RS_Entity* nativeLimitOwner(RS_Entity* entity) {
+        if (entity != nullptr && entity->getParent() != nullptr &&
+            entity->getParent()->rtti() == RS2::EntityOffsetCurve) {
+            return entity->getParent();
+        }
+        return entity;
+    }
+}
+
 struct LC_ActionModifyTrim::TrimActionData {
     RS_Vector limitCoord;
     RS_Vector trimCoord;
@@ -60,7 +75,7 @@ void LC_ActionModifyTrim::init(const int status) {
 }
 
 void LC_ActionModifyTrim::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
-    if (isAtomic(contextEntity)) {
+    if (isTrimTarget(contextEntity)) {
         m_trimEntity = static_cast<RS_AtomicEntity*>(contextEntity);
         m_actionData->trimCoord = clickPos;
     }
@@ -79,14 +94,14 @@ RS_Entity* LC_ActionModifyTrim::catchLimitEntity(const LC_MouseEvent* e) const {
         // like the second one it must be an atomic entity of the drawing itself: not a segment of a
         // polyline, nor a line of a spline, a block reference or a dimension
         RS_Entity* entity = catchEntityByEvent(e, RS2::ResolveNone);
-        return isAtomic(entity) ? entity : nullptr;
+        return isTrimTarget(entity) ? entity : nullptr;
     }
     RS_Entity* entity = catchEntityByEvent(e, RS2::ResolveAllButTextImage);
     // the lines a spline is drawn with only approximate it: the curve is the limit, not the line clicked
     if (entity != nullptr && entity->getParent() != nullptr && entity->getParent()->rtti() == RS2::EntitySpline) {
         entity = entity->getParent();
     }
-    return entity;
+    return nativeLimitOwner(entity);
 }
 
 /**
@@ -95,6 +110,8 @@ RS_Entity* LC_ActionModifyTrim::catchLimitEntity(const LC_MouseEvent* e) const {
  * redone. A limit the action keeps between clicks is therefore a copy of such an entity, apart from the drawing.
  */
 void LC_ActionModifyTrim::setLimitEntity(RS_Entity* entity) {
+    entity = nativeLimitOwner(entity);
+    if (m_both && !isTrimTarget(entity)) entity = nullptr;
     if (entity == m_limitEntity) {
         return;
     }
@@ -111,7 +128,7 @@ void LC_ActionModifyTrim::setLimitEntity(RS_Entity* entity) {
 }
 
 bool LC_ActionModifyTrim::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
-    if (isAtomic(m_trimEntity) && m_limitEntity != nullptr /* && limitEntity->isAtomic()*/) {
+    if (isTrimTarget(m_trimEntity) && m_limitEntity != nullptr && (!m_both || isTrimTarget(m_limitEntity))) {
         const LC_TrimResult trimResult = RS_Modification::trim(m_actionData->trimCoord, m_trimEntity, m_actionData->limitCoord,
                                                                m_limitEntity, m_both, ctx);
 
@@ -150,8 +167,8 @@ void LC_ActionModifyTrim::doTriggerCompletion(const bool success) {
 
 void LC_ActionModifyTrim::previewTrim(RS_Entity* entityToTrimCandidate, RS_Entity* limitingEntity, const RS_Vector& trimCoordinates,
                                       const RS_Vector& limitCoordinates, bool& trimInvalid) const {
-    if (entityToTrimCandidate != nullptr && entityToTrimCandidate != limitingEntity) {
-        if (entityToTrimCandidate->isAtomic()) {
+    if (limitingEntity != nullptr && entityToTrimCandidate != limitingEntity) {
+        if (isTrimTarget(entityToTrimCandidate) && (!m_both || isTrimTarget(limitingEntity))) {
             auto* atomicTrimCandidate = dynamic_cast<RS_AtomicEntity*>(entityToTrimCandidate);
 
             LC_DocumentModificationBatch ctx;
@@ -249,7 +266,7 @@ void LC_ActionModifyTrim::onMouseLeftButtonRelease(const int status, const LC_Mo
         }
         case ChooseTrimEntity: {
             RS_Entity* se = catchEntityByEvent(e, RS2::ResolveNone);
-            if (isAtomic(se) && se != m_limitEntity) {
+            if (isTrimTarget(se) && se != m_limitEntity) {
                 m_actionData->trimCoord = mouse;
                 m_trimEntity = static_cast<RS_AtomicEntity*>(se);
                 trigger();
