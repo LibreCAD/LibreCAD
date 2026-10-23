@@ -290,6 +290,8 @@ enough. The description may not contain URLs or HTML.
   > features and fixes first, and may also have new bugs.
 
 - **What's new in this version**: leave it blank for the first submission.
+  Later submissions made by CI copy it unchanged, so edit it in Partner
+  Center when it should say something.
 - **Product features** (up to 20, 200 characters each): the bullet points of
   the description, one per line.
 - **Screenshots**: PNG, at least 1366 x 768, up to 10; four are recommended.
@@ -313,8 +315,10 @@ Keep other companies' product names out of the listing and the keywords
 
 ### 8. Submission options
 
-- **Publishing hold options**: publish as soon as it passes certification,
-  or hold it to pick the moment.
+- **Publishing hold options**: choose **Publish this submission as soon as it
+  passes certification**. Every later submission made by CI copies this
+  choice, so a hold here would hold each CI update until someone presses
+  Publish in Partner Center.
 - **Notes for certification** (testers only, customers never see them):
 
   > LibreCAD is a free, open-source (GPLv2) 2D CAD desktop program built
@@ -353,8 +357,45 @@ through the **Submit MSIX to Microsoft Store** workflow below.
 - To submit an update, manually dispatch **Submit MSIX to Microsoft Store**
   on `master` with the run ID of the **Continuous build** run whose bundle
   should ship. A reviewer of the `microsoft-store` environment must approve
-  the job. It refuses a bundle built with the placeholder identity, then
-  uploads the `.msixupload` with `msstore publish`.
+  the job. The job:
+  1. accepts only a push run of `build-all.yml` on `master`, and refuses a
+     bundle with the placeholder identity;
+  2. refuses the run if its App Certification Kit report has a failing
+     required test (`ignore_wack` overrides);
+  3. refuses to start while another submission is in progress, whatever its
+     state, and links to it (`replace_pending` deletes it instead);
+  4. uploads the `.msixupload` to a new draft with a pinned msstore CLI;
+     `no_commit` stops here and leaves the draft, which
+     `msstore submission publish <product id>` sends on later (Partner
+     Center shows the uploaded package only once it is sent);
+  5. sends the draft to certification, waits up to an hour for the Store to
+     process the commit, and writes the submission's state and a Partner
+     Center link to the job summary.
+
+  A green job means the commit went through, not that the submission passed
+  certification, which can take up to three business days. If the commit was
+  still being processed when the job stopped waiting, the job warns, and the
+  commit can still fail; Partner Center shows the outcome.
+
+### What a dispatch does to the product
+
+- Each run creates a new submission as a copy of the last published one and
+  changes only its packages: the new `.msixupload` replaces the previous
+  `.msixupload`. The CLI replaces a package of the same file type only, so
+  the first submission must upload the `.msixupload` too, as above; a bare
+  `.msixbundle` uploaded there would stay in every later submission.
+  Everything else carries over: the listing fields of step 7 including its
+  "What's new" text, markets, the audience, the publishing hold option and
+  the price (free). Change those in a Partner Center submission, not through
+  CI. The pinned msstore CLI has no field for screenshot captions or the sort
+  title, and a submission update replaces the whole submission, so a CI run
+  most likely clears both; leave them empty.
+- The product must stay free: the Store CLI updates free products only.
+- After a submission with gradual rollout, the next run fails until the
+  rollout is finalized or halted in Partner Center
+  (`msstore submission rollout finalize|halt <product id>`).
+- Once a submission has shipped a `.msixbundle`, every later one must too,
+  which the `.msixupload` always contains.
 
 ## Package version
 

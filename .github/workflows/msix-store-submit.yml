@@ -22,12 +22,15 @@
 
 # Submits an MSIX bundle built by "Continuous build" to the Microsoft Store.
 #
-# The Store re-signs submissions after certification, so the bundle this takes
-# is deliberately unsigned.  Submission is manual because the first submission
-# of any app has to be made by hand in Partner Center -- msstore can only
-# update a product that is already published and live.
+# The Store signs a submission after certification, so the bundle this takes
+# is deliberately unsigned.  Submitting is a manual dispatch: every run creates
+# a Store submission that goes through certification, which can take up to
+# three business days, and a product has only one submission in progress at a
+# time.  The first submission of a product is made by hand in Partner Center;
+# msstore only updates a product that is already published.
 #
-# Setup lives in docs/development/msix-store.md.
+# Setup, and what a run does to the product in Partner Center:
+# docs/development/msix-store.md.
 
 name: Submit MSIX to Microsoft Store
 
@@ -38,6 +41,18 @@ on:
         description: 'Run ID of the "Continuous build" run to submit (its winMsixBundle artifact)'
         required: true
         type: string
+      no_commit:
+        description: 'Only upload to a draft submission; do not send it to certification'
+        type: boolean
+        default: false
+      replace_pending:
+        description: 'Delete a submission already in progress (a draft, in certification or held for release) and submit this one instead'
+        type: boolean
+        default: false
+      ignore_wack:
+        description: 'Submit even if the App Certification Kit reported a failing required test'
+        type: boolean
+        default: false
 
 concurrency: microsoft-store-submission
 
@@ -50,6 +65,10 @@ jobs:
     if: github.repository_owner == 'LibreCAD'
     runs-on: windows-2022
     environment: microsoft-store
+    # The commit can stay at CommitStarted for over an hour (msstore-cli#29).
+    timeout-minutes: 90
+    env:
+      MICROSOFT_STORE_PRODUCT_ID: ${{ vars.MICROSOFT_STORE_BETA_PRODUCT_ID }}
     steps:
       - name: Download the bundle
         run: |
@@ -65,11 +84,42 @@ jobs:
             throw "Run $env:RUN_ID is not a push run of build-all.yml on master ($($run.path), $($run.event), $($run.head_branch), $($run.head_repository.full_name))."
           }
           gh run download $env:RUN_ID --repo "$env:GITHUB_REPOSITORY" --name winMsixBundle --dir msix-bundle
-          if ($LASTEXITCODE -ne 0) { throw "Run $env:RUN_ID has no winMsixBundle artifact." }
+          if ($LASTEXITCODE -ne 0) {
+            throw "Run $env:RUN_ID has no winMsixBundle artifact: its PackageWindowsMsix job failed, or the artifact expired after 30 days."
+          }
+          # Absent when the runner had no App Certification Kit.
+          gh run download $env:RUN_ID --repo "$env:GITHUB_REPOSITORY" --name winMsixWackReport --dir wack
+          if ($LASTEXITCODE -ne 0) { Write-Host "Run $env:RUN_ID has no App Certification Kit report." }
+          exit 0
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
           RUN_ID: ${{ inputs.run_id }}
+
+      - name: Check the App Certification Kit report
+        run: |
+          $report = Get-ChildItem wack -Recurse -File -Filter 'wack-report.xml' -ErrorAction SilentlyContinue |
+            Select-Object -First 1
+          if (-not $report) {
+            Write-Host '::warning::No App Certification Kit report for this run; Store certification runs the kit anyway.'
+            exit 0
+          }
+          [xml]$xml = Get-Content -LiteralPath $report.FullName -Raw
+          $failed = @($xml.SelectNodes('//TEST[normalize-space(RESULT)="FAIL"]'))
+          foreach ($test in $failed) {
+            Write-Host "App Certification Kit test failed: $($test.NAME) (optional: $($test.OPTIONAL))"
+          }
+          $required = @($failed | Where-Object { $_.OPTIONAL -ne 'TRUE' })
+          Write-Host "App Certification Kit: overall $($xml.REPORT.OVERALL_RESULT), $($failed.Count) failing test(s), $($required.Count) of them required."
+          if ($required.Count -gt 0) {
+            if ($env:IGNORE_WACK -ne 'true') {
+              throw 'A required App Certification Kit test failed; fix it, or re-run with ignore_wack.'
+            }
+            Write-Host '::warning::Submitting despite a failing required App Certification Kit test (ignore_wack).'
+          }
+        shell: pwsh
+        env:
+          IGNORE_WACK: ${{ inputs.ignore_wack }}
 
       - name: Refuse placeholder identities
         run: |
@@ -81,12 +131,14 @@ jobs:
           # made without the repository variables set is not submittable.
           $bundle = Get-ChildItem msix-bundle -File |
             Where-Object { $_.Extension -eq '.msixbundle' } | Select-Object -First 1
+          if (-not $bundle) { throw 'The run did not produce a .msixbundle artifact.' }
           $staged = Join-Path $env:RUNNER_TEMP 'bundle-inspect'
           if (Test-Path $staged) { Remove-Item $staged -Recurse -Force }
           # Expand-Archive only accepts a .zip extension; the ZIP API does not care.
           Add-Type -AssemblyName System.IO.Compression.FileSystem
           [System.IO.Compression.ZipFile]::ExtractToDirectory($bundle.FullName, $staged)
           $inner = Get-ChildItem $staged -File | Where-Object { $_.Extension -eq '.msix' } | Select-Object -First 1
+          if (-not $inner) { throw 'The bundle holds no .msix package.' }
           $unpacked = Join-Path $staged 'package'
           [System.IO.Compression.ZipFile]::ExtractToDirectory($inner.FullName, $unpacked)
           [xml]$manifest = Get-Content -LiteralPath (Join-Path $unpacked 'AppxManifest.xml') -Raw
@@ -106,14 +158,17 @@ jobs:
             throw 'MICROSOFT_STORE_BETA_PRODUCT_ID must be the 12-character Store product ID.'
           }
           "upload_path=$($upload.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Append
+          "package_version=$($identity.Version)" | Out-File -FilePath $env:GITHUB_ENV -Append
         shell: pwsh
-        env:
-          MICROSOFT_STORE_PRODUCT_ID: ${{ vars.MICROSOFT_STORE_BETA_PRODUCT_ID }}
 
       - name: Set up the Store CLI
-        uses: microsoft/microsoft-store-apppublisher@v1.1
+        # Both pinned: with the default 'latest', msstore 0.4.0 and 0.4.1 broke
+        # every upload (msstore-cli#154, #162).  Update after reading the notes.
+        uses: microsoft/microsoft-store-apppublisher@cc9910a8d59f2eb55cbb83df0a3800cf3b5300e0 # v1.4
+        with:
+          version: v0.4.3
 
-      - name: Publish
+      - name: Configure the Store CLI
         run: |
           msstore reconfigure `
             --tenantId "$env:AZURE_AD_TENANT_ID" `
@@ -121,15 +176,102 @@ jobs:
             --clientId "$env:AZURE_AD_APPLICATION_CLIENT_ID" `
             --clientSecret "$env:AZURE_AD_APPLICATION_SECRET"
           if ($LASTEXITCODE -ne 0) { throw "msstore reconfigure failed with exit code $LASTEXITCODE." }
-
-          # The positional argument must be the .msixupload file itself, not the
-          # directory holding it.
-          msstore publish "$env:upload_path" --appId "$env:MICROSOFT_STORE_PRODUCT_ID"
-          if ($LASTEXITCODE -ne 0) { throw "msstore publish failed with exit code $LASTEXITCODE." }
+          # Telemetry is on by default and includes the seller ID.
+          msstore settings --enableTelemetry false
+          if ($LASTEXITCODE -ne 0) { throw "msstore settings failed with exit code $LASTEXITCODE." }
         shell: pwsh
         env:
           AZURE_AD_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
           AZURE_AD_APPLICATION_CLIENT_ID: ${{ secrets.AZURE_AD_APPLICATION_CLIENT_ID }}
           AZURE_AD_APPLICATION_SECRET: ${{ secrets.AZURE_AD_APPLICATION_SECRET }}
           SELLER_ID: ${{ secrets.SELLER_ID }}
-          MICROSOFT_STORE_PRODUCT_ID: ${{ vars.MICROSOFT_STORE_BETA_PRODUCT_ID }}
+
+      - name: Check for a submission in progress
+        run: |
+          # msstore publish deletes a submission in progress without looking at
+          # it, even one in certification or held for release.
+          $app = msstore apps get "$env:MICROSOFT_STORE_PRODUCT_ID" | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0 -or -not $app) { throw "msstore apps get failed with exit code $LASTEXITCODE." }
+          $pendingId = $app.pendingApplicationSubmission.id
+          if (-not $pendingId) {
+            Write-Host 'No submission in progress.'
+            exit 0
+          }
+          $pending = msstore submission get "$env:MICROSOFT_STORE_PRODUCT_ID" | ConvertFrom-Json
+          $url = "https://partner.microsoft.com/dashboard/products/$env:MICROSOFT_STORE_PRODUCT_ID/submissions/$pendingId"
+          if ($env:REPLACE_PENDING -ne 'true') {
+            throw "Submission $pendingId is in progress with status '$($pending.status)': $url. Wait until it is published or delete it in Partner Center, or re-run with replace_pending."
+          }
+          Write-Host "::warning::Replacing submission $pendingId (status '$($pending.status)'), as replace_pending asks."
+        shell: pwsh
+        env:
+          REPLACE_PENDING: ${{ inputs.replace_pending }}
+
+      - name: Upload to a draft submission
+        id: upload
+        run: |
+          # Never add -v: at that level msstore logs the submission's writable
+          # upload URL, and this repository's logs are public.  --priceId keeps
+          # the product free when the Store reports no usable price.
+          msstore publish "$env:upload_path" --appId "$env:MICROSOFT_STORE_PRODUCT_ID" --noCommit --priceId Free
+          if ($LASTEXITCODE -ne 0) { throw "msstore publish failed with exit code $LASTEXITCODE." }
+        shell: pwsh
+
+      - name: Send the submission to certification
+        id: commit
+        if: ${{ !inputs.no_commit }}
+        # A separate process from the upload: msstore never refreshes its
+        # one-hour token.
+        run: |
+          msstore submission publish "$env:MICROSOFT_STORE_PRODUCT_ID"
+          if ($LASTEXITCODE -ne 0) { throw "msstore submission publish failed with exit code $LASTEXITCODE." }
+        shell: pwsh
+
+      - name: Wait for the commit
+        if: ${{ !inputs.no_commit }}
+        # Waits for the commit only, not for certification, which takes days;
+        # a commit can take over an hour, and the next step reports whatever
+        # state the submission has reached.
+        timeout-minutes: 60
+        continue-on-error: true
+        run: |
+          msstore submission poll "$env:MICROSOFT_STORE_PRODUCT_ID"
+          if ($LASTEXITCODE -ne 0) { throw "msstore submission poll failed with exit code $LASTEXITCODE." }
+        shell: pwsh
+
+      - name: Report the submission
+        if: ${{ !cancelled() && ((inputs.no_commit && steps.upload.outcome == 'success') || steps.commit.outcome == 'success') }}
+        run: |
+          $submission = msstore submission get "$env:MICROSOFT_STORE_PRODUCT_ID" | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0 -or -not $submission) { throw "msstore submission get failed with exit code $LASTEXITCODE." }
+          $url = "https://partner.microsoft.com/dashboard/products/$env:MICROSOFT_STORE_PRODUCT_ID/submissions/$($submission.id)"
+          $committing = ($env:NO_COMMIT -ne 'true') -and ($submission.status -in @('PendingCommit', 'CommitStarted'))
+          $state = if ($env:NO_COMMIT -eq 'true') { 'draft, not sent to certification (no_commit)' } else { $submission.status }
+          $note = if ($env:NO_COMMIT -eq 'true') {
+            'Send the draft on with `msstore submission publish <product id>`, or delete it in Partner Center.'
+          } elseif ($committing) {
+            'The Store is still processing the commit, which can still fail; check the submission in Partner Center.'
+          } else {
+            'Certification can take up to three business days; Partner Center shows its progress.'
+          }
+          @(
+            '### Microsoft Store submission'
+            ''
+            "- Source: run [$env:RUN_ID]($env:GITHUB_SERVER_URL/$env:GITHUB_REPOSITORY/actions/runs/$env:RUN_ID), package version $env:package_version"
+            "- Submission: [$($submission.id)]($url), $state"
+            ''
+            $note
+          ) | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          Write-Host "Submission $($submission.id): $state ($url)"
+          if ($submission.status -like '*Failed' -or $submission.status -eq 'Canceled') {
+            $submission.statusDetails | ConvertTo-Json -Depth 8 | Write-Host
+            throw "The submission is $($submission.status)."
+          }
+          if ($committing) {
+            $submission.statusDetails | ConvertTo-Json -Depth 8 | Write-Host
+            Write-Host "::warning::Submission $($submission.id) is still $($submission.status); the commit can still fail: $url"
+          }
+        shell: pwsh
+        env:
+          NO_COMMIT: ${{ inputs.no_commit }}
+          RUN_ID: ${{ inputs.run_id }}
