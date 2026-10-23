@@ -894,6 +894,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/lc_offsetcurvesnaps.cpp
      librecad/src/lib/engine/document/entities/lc_offsetcurvetransform.cpp
      librecad/src/lib/engine/document/entities/lc_offsetcurvetransform.h
+     librecad/src/lib/engine/document/entities/lc_offsetcurveagain.cpp
+     librecad/src/lib/engine/document/entities/lc_offsetcurveagain.h
      librecad/src/lib/engine/document/entities/lc_offsetcachecontacts.cpp
      librecad/src/lib/engine/document/entities/lc_offsetcachecontacts.h
      librecad/src/lib/engine/document/entities/lc_offsetcontactmatching.cpp
@@ -2628,6 +2630,8 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_grips_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_grip_order_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurvetransform_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurveagain_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetsample_budget_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcachecontacts_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcontactmatching_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_topology_budget_tests.cpp
@@ -2686,6 +2690,7 @@ if (BUILD_TESTS)
         librecad/src/lib/modification/tests/rs_modification_trim_tests.cpp
         librecad/src/lib/modification/tests/rs_modification_offset_tests.cpp
         librecad/src/lib/modification/tests/rs_modification_offsetcurve_tests.cpp
+        librecad/src/lib/modification/tests/rs_modification_offsetcurveagain_tests.cpp
         librecad/src/lib/modification/tests/lc_offsetresultchecktests.cpp
         librecad/src/lib/modification/tests/rs_modification_attributes_tests.cpp
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp

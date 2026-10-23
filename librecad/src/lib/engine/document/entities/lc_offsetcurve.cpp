@@ -239,6 +239,9 @@ LC_OffsetCurveCreateResult LC_OffsetCurve::runEngine(const RS_Entity &attributes
     const auto side = (normalized.towardCentre != normalized.basis.reversed) ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right;
     ++result.engineRuns;
     auto made = LC_CurveOffset::createEntities(source, LC_CurveOffset::makeSideRequest(side, normalized.distance), options, output);
+    result.attemptedOutputUsage = made.attemptedOutputUsage;
+    result.attemptedDeepCountComplete = made.attemptedDeepCountComplete;
+    result.sampleUnits = made.sampleUnits;
     result.engineStatus = made.status;
     if (made.status != LC_CurveOffsetStatus::Ok) { result.refusal = Refusal::Engine; return result; }
     if (made.entities.empty()) { result.refusal = Refusal::NothingLeft; return result; }
@@ -265,6 +268,12 @@ LC_OffsetCurveCreateResult LC_OffsetCurve::runEngine(const RS_Entity &attributes
         !geo::isFinite2D(result.entity->m_cachedMiddlePoint) || !fitsOutputBudget(*result.entity, output)) {
         result.entity.reset(); result.refusal = Refusal::NotCacheRepresentable; return result;
     }
+    result.outputUsage = made.usage;
+    const auto nativeCost = measureOffsetOutput({result.entity.get()}, output.maxDeepEntities);
+    if (nativeCost.status != LC_OffsetTreeStatus::Ok) {
+        result.entity.reset(); result.refusal = Refusal::NotCacheRepresentable; return result;
+    }
+    result.outputUsage.deepEntities = nativeCost.deepEntities;
     result.refusal = Refusal::None; result.changed = true;
     return result;
 }

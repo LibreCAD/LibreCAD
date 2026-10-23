@@ -40,12 +40,14 @@
 #include "lc_copyutils.h"
 #include "lc_ellipseoffsetgeometry.h"
 #include "lc_offsetoutputbudget.h"
+#include "lc_offsetcurveagain.h"
 #include "rs_pen.h"
 #include "rs_vector.h"
 
 class RS_Arc;
 class RS_AtomicEntity;
 class RS_Entity;
+enum class LC_OffsetCurveRefusal;
 class RS_EntityContainer;
 class RS_MText;
 class RS_Text;
@@ -202,11 +204,28 @@ enum class LC_OffsetFailureDetail {
     AmbiguousSide
 };
 
-enum class LC_OffsetPlainReason { NotTopLevel, SeveralPieces, CheckFailed, NotCacheRepresentable, OutputBudget };
+enum class LC_OffsetPlainReason {
+    NotTopLevel, SeveralPieces, CheckFailed, NotCacheRepresentable, OutputBudget,
+    ZeroSum, RebaseRefused, UndefinedDefinition
+};
 struct LC_OffsetPlainOutcome {
     int copy = 0;
     LC_OffsetPlainReason reason = LC_OffsetPlainReason::NotCacheRepresentable;
     std::optional<LC_OffsetCheckResult::Reason> checkReason;
+};
+
+struct LC_OffsetRebaseOutcome {
+    int copy = 0;
+    std::optional<LC_OffsetCurveAgain::Refusal> proposalRefusal;
+    std::optional<LC_OffsetCurveRefusal> nativeRefusal;
+    std::optional<LC_CurveOffsetStatus> engineStatus;
+    std::optional<LC_OffsetCheckResult::Reason> checkReason;
+    LC_EllipseOffsetGeometry::CheckWork checkWork{};
+    std::size_t engineRuns = 0;
+    std::size_t sampleUnits = 0;
+    /** Reserved per-query ceiling, not an observed or total intersection-box count. */
+    std::size_t intersectionPairAllowance = 0;
+    bool adopted = false;
 };
 
 struct LC_OffsetSourceOutcome {
@@ -245,6 +264,13 @@ struct LC_OffsetSourceOutcome {
     int copiesKeptPlain = 0;
     /** Bounded by kMaximumOffsetCopies; describes committed visible copies only. */
     std::vector<LC_OffsetPlainOutcome> keptPlain;
+    /** Attempted work remains observable even if a later copy discards this source's outputs. */
+    std::size_t rebaseEngineRuns = 0, cacheEngineRuns = 0, reusedCacheCopies = 0;
+    std::size_t sampleUnits = 0, intersectionPairAllowance = 0;
+    LC_OffsetOutputUsage attemptedOutputUsage{};
+    bool attemptedDeepCountComplete = true;
+    /** At most one structural proposal and producer attempt per requested copy. */
+    std::vector<LC_OffsetRebaseOutcome> rebases;
 
     bool succeeded() const {
         return status == LC_OffsetSourceStatus::Succeeded;

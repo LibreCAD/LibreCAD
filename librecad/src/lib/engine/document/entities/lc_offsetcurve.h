@@ -143,6 +143,10 @@ private:
 
 struct LC_OffsetCurveCreateResult : LC_OffsetCurveEditResult {
     std::unique_ptr<LC_OffsetCurve> entity;
+    LC_OffsetOutputUsage attemptedOutputUsage{};
+    bool attemptedDeepCountComplete = true;
+    LC_OffsetOutputUsage outputUsage{};
+    std::size_t sampleUnits = 0;
     explicit operator bool() const noexcept {
         return LC_OffsetCurveEditResult::operator bool() && bool(entity);
     }

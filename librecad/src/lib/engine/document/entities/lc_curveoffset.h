@@ -268,6 +268,11 @@ struct LC_CurveOffsetMaterializationResult {
     LC_OffsetValidationLevel validationLevel{LC_OffsetValidationLevel::None};
     double maxObservedError{std::numeric_limits<double>::quiet_NaN()};
     double maxCertifiedError{std::numeric_limits<double>::quiet_NaN()};
+    /** Producer/materializer sample-budget demand, including a refused unit at exhaustion. */
+    std::size_t sampleUnits{0};
+    /** Completed fitted pieces, constructed roots, and bounded observed leaves, even on failure. */
+    LC_OffsetOutputUsage attemptedOutputUsage{};
+    bool attemptedDeepCountComplete = true;
 };
 
 /**

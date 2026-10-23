@@ -4859,11 +4859,19 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
             candidate.signedDistance = (dilate == fragment.regionOnLeft) ? -magnitude : magnitude;
             candidate.reverse = !fragment.regionOnLeft;
             double ignoredError = 0.0;
-            std::size_t ignoredSamples = 0;
+            std::size_t candidateSamples = 0;
+            if (result.exactSamples >= options.maxSamples) return LC_CurveOffsetStatus::LimitExceeded;
+            auto remainingOptions = options;
+            remainingOptions.maxSamples -= result.exactSamples;
             // the region's corners come from its circles, and a kink is refused
             const LC_CurveOffsetStatus status = directBranches(*candidate.part, scale, candidate.signedDistance,
-                                                               options, budget, KinkPolicy::Refuse,
-                                                               candidate.branches, ignoredError, ignoredSamples);
+                                                               remainingOptions, budget, KinkPolicy::Refuse,
+                                                               candidate.branches, ignoredError, candidateSamples);
+            if (candidateSamples > std::numeric_limits<std::size_t>::max() - result.exactSamples) {
+                result.exactSamples = std::numeric_limits<std::size_t>::max();
+                return LC_CurveOffsetStatus::LimitExceeded;
+            }
+            result.exactSamples += candidateSamples;
             if (status != LC_CurveOffsetStatus::Ok) {
                 return status;
             }
@@ -5422,6 +5430,7 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
                                                         const LC_CurveOffsetOptions& options,
                                                         const LC_OffsetSourceBudget& budget) {
     LC_CurveOffsetMaterializationResult result;
+    result.sampleUnits = geometry.exactSamples;
     if (!validDirectOptions(options) || !isValidOffsetBudget(budget)) {
         result.status = LC_CurveOffsetStatus::InvalidRequest;
         return result;
@@ -5464,12 +5473,14 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
         std::vector<LC_OffsetCubicPiece> pieces;
         double branchError = 0.0;
         const LC_CurveOffsetStatus status = materializer.run(branch, pieces, branchError);
+        result.sampleUnits = materializer.samples();
         if (status != LC_CurveOffsetStatus::Ok) {
             result.status = status;
             return result;
         }
         samples = materializer.samples();
         pieceCount += pieces.size();
+        result.attemptedOutputUsage.cubicPieces = pieceCount;
         maxError = std::max(maxError, branchError);
         validated.push_back(std::move(pieces));
     }
@@ -5520,10 +5531,13 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
             result.status = LC_CurveOffsetStatus::FitFailed;
             return result;
         }
+        ++result.attemptedOutputUsage.outputEntities;
         const LC_OffsetTreeCost cost =
             measureOffsetOutput({entity.get()}, budget.maxDeepEntities - std::min(budget.maxDeepEntities,
                                                                                 usage.deepEntities));
+        result.attemptedOutputUsage.deepEntities += cost.deepEntities;
         if (cost.status != LC_OffsetTreeStatus::Ok) {
+            result.attemptedDeepCountComplete = false;
             result.status = cost.status == LC_OffsetTreeStatus::LimitExceeded ? LC_CurveOffsetStatus::LimitExceeded
                                                                               : LC_CurveOffsetStatus::FitFailed;
             return result;
@@ -5553,6 +5567,7 @@ LC_CurveOffsetMaterializationResult createEntities(const RS_Entity& source, cons
     if (geometry.status != LC_CurveOffsetStatus::Ok) {
         LC_CurveOffsetMaterializationResult result;
         result.status = geometry.status;
+        result.sampleUnits = geometry.exactSamples;
         return result;
     }
     return materializeBranches(source, geometry, options, budget);

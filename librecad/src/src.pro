@@ -452,6 +452,7 @@ HEADERS += \
     lib/engine/document/entities/lc_offsetcurve.h \
     lib/engine/document/entities/lc_offsetcurvegrips.h \
     lib/engine/document/entities/lc_offsetcurvetransform.h \
+    lib/engine/document/entities/lc_offsetcurveagain.h \
     lib/engine/document/entities/lc_offsetcachecontacts.h \
     lib/engine/document/entities/lc_offsetcontactmatching.h \
     lib/engine/document/entities/lc_offsetpathsearch.h \
@@ -1039,6 +1040,7 @@ SOURCES += \
     lib/engine/document/entities/lc_offsetcurvegrips.cpp \
     lib/engine/document/entities/lc_offsetcurvesnaps.cpp \
     lib/engine/document/entities/lc_offsetcurvetransform.cpp \
+    lib/engine/document/entities/lc_offsetcurveagain.cpp \
     lib/engine/document/entities/lc_offsetcachecontacts.cpp \
     lib/engine/document/entities/lc_offsetcontactmatching.cpp \
     lib/engine/document/entities/lc_offsetpathsearch.cpp \
