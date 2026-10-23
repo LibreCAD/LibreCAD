@@ -42,7 +42,7 @@ is claimed.
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
 | Latest product checkpoint | `9bf0546b6` (B) |
-| Latest auxiliary checkpoint | `7da2bb144` (X-H3; capture hardening `c939c3de7`) |
+| Latest auxiliary checkpoint | `9170b0cc9` (H6 inventory core; H3 7da2bb144, capture hardening c939c3de7) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
 | A-core | Atomic work adoption, separate ordering allowance and sticky terminal status implemented; A04/A10 registered |
@@ -287,6 +287,9 @@ editing; changes beyond the named concern require a scope note in the slice card
   Keep the old default and counters for all old callers; contact queries opt into
   1/16 padding. This changes the domain of a fresh Krawczyk proof, not geometric
   tolerance, acceptance predicates or shared work limits.
+- New `lc_offsetpathsearch.{h,cpp}` and its routing test TU: extract canonical
+  bounded path enumeration for direct nonunique-route testing. It cannot mint a
+  geometry certificate or bypass public checkCache validation.
 
 **Base:** committed B `9bf0546b6`. Requirements R02/R12/R14; all A/B exact
 identities exist. ReferenceComponentAnalysis now owns exact terminal lookups.
@@ -341,7 +344,7 @@ may treat its Ok result as an editable-cache certificate.
     update this roadmap separately, then start D-core. A partial path checker
     cannot authorize native adoption or be labelled C complete.
 
-**Exit:** all 54 public identities and prior A/B/geometry regressions pass, with
+**Exit:** all 53 public identities plus C27 routing identity, and prior A/B/geometry regressions pass, with
 complete unique selected paths, bidirectional coverage and precise reasons/work.
 No native entity, UI or file-format edit belongs in this slice.
 Changes outside this concern require a concrete dependency note.
@@ -687,9 +690,12 @@ Assert exact terminal role/event/occurrence/node/edge side and producer mapping,
 not coordinate proximity. B04 uses the G2 incomplete E0-only lens. B07 verifies
 the hidden cusp has no terminal; it is not the public C50 reason test.
 
-### 7.3 C: Fifty-Four Public Checker Identities
+### 7.3 C: Fifty-Four Checker Obligations
 
-Selector: `[lc-offsetcurve][geometry][cache-topology-chain]`.
+Public selector: `[lc-offsetcurve][geometry][cache-topology-chain]` (53 identities).
+C27 uses `[cache-topology-routing]` and explicitly tests the extracted routing
+kernel, not a synthetic public ellipse certificate. Keep its identity and test
+obligation; do not count it as public geometry coverage.
 Partition: C01-C28 path/cut, C29-C37 nine public reasons, C38-C46 attribution/
 resources/producers, C47-C54 public endpoint outcomes. B tests do not count as C.
 
@@ -767,6 +773,17 @@ C09/C12 refuse wrong-return or wrong-occurrence paths even when coordinates agre
 C16/C54 reject a proper subset of the G2 closed lens. C28 distinguishes unresolved
 correspondence (Ambiguous) from a fabricated transition at a certified non-event
 cut (Topology). Preserve separate labels and reasons.
+
+C27 readiness correction (2026-10-23): independent review could not justify a
+public nonunique-cycle fixture. G1 has exactly one visible directed cycle: its
+crossings have sin(alpha)^2=11/75 and images (+/-4*sqrt(3),0); only speed s>=6
+is visible. The apparent alternate routes include hidden intervals (at (7,0),
+an admitted source foot with cos(phi)=14/15 has distance squared 26/3<9).
+G4 has one closed cycle and one open path, not two closed alternatives. Do not
+mislabel a repeated lap or hidden-interval rejection as nonunique public coverage.
+Test two-path saturation with independently specified distinct routing cycles,
+then exercise that SAME kernel from the public builder. A later genuine public
+multi-cycle fixture is additional coverage, not fabricated evidence for this one.
 
 ### 7.4 Independent Fixture Ledger
 
@@ -1490,7 +1507,7 @@ one plan update, not another candidate/freeze lifecycle.
 | X-H3 | Committed, 7da2bb144 | Real pinned registry/CLI, explicit worker contract and exact output inventory; missing/undefined/unknown/FAIL are refusals, never default PASS; 30 runner tests and independent review |
 | X-H4 | Runner exposes row count, not complete joined rows | Return all joined events with pinned identity/order/output hashes; test persistence, replay, mutation and duplicate/missing events |
 | X-H5 | Draft evidence validator incomplete, no tests | Implement missing helpers, actual tuple validation, absent-file publication and before/after-dispatch rechecks |
-| X-H6 | Planned inventory stale/incomplete | Preserve original71 scenario IDs; add stale-current-predecessor, strict worker-result and newly found regression cases; derive count from explicit unique inventory |
+| X-H6 | Core committed 9170b0cc9; 11 obligations pending | 93 explicit obligations, all original71 IDs retained, 82 executable scenarios; H4/H5 integration still required, no full H6 claim |
 | X-H7 | Generator/checker/reports absent | Generate exact source/runtime/case manifests; independent validation and four canonical suites run twice with reproducible semantic results |
 
 ### Concrete H2 Capture Corrections
@@ -1631,7 +1648,7 @@ instructions to reopen old evidence.
 | H6-RACE-02a..02b | Report/sidecar changes between validations | REVALIDATION / RECEIPT_CHANGED |
 | H6-RACE-03 | Readback differs | REVALIDATION / READBACK_MISMATCH |
 | H6-RACE-04 | Output root appears after final check | ROOT_CAS / ROOT_ALREADY_EXISTS |
-| H6-JOIN-01 | Same tree in both ordinals | RECEIPT_JOIN / RECEIPT_TREE_DUPLICATE |
+| H6-JOIN-01 | Same receipt tree/path through exported transaction | CLI / RECEIPT_PATH_DUPLICATE |
 | H6-JOIN-02 | Duplicate ID through exported transaction | RECEIPT_JOIN / RECEIPT_ID_DUPLICATE |
 | H6-JOIN-03 | Pair order mismatch through exported transaction | RECEIPT_JOIN / RECEIPT_ORDER_MISMATCH |
 | H6-JOIN-04 | Matching digest strings but wrong referenced bytes | RECEIPT_JOIN / REFERENCED_BYTES_MISMATCH |
@@ -1644,6 +1661,14 @@ Likewise JOIN04 is a direct persisted-join test on a previously valid prefix;
 ordinary initial bad sidecar input belongs to TREE05. Require each case to reach
 its intended production boundary, not merely any refusal. Pin validation order
 in X-H3 before X-H6 registration.
+
+JOIN01 readiness correction (2026-10-23): the exported transaction shares the
+request guard with CLI08, so the exact repeated path has the same early diagnosis.
+Do not demand a contradictory late join result. Stable case-fold aliases fail
+earlier exact directory/filename binding, and exact three-entry membership fixes
+a tree to one receipt ID; ID uniqueness also precedes physical tree uniqueness.
+Keep JOIN01 as distinct API-ingress coverage, not a claim that this fixture reaches
+the otherwise defensive physical-tree guard.
 
 New required identities, in addition to the71:
 
@@ -1728,6 +1753,32 @@ The plan checkpoint column never depends on its own future SHA.
 | X-H1 physical parents | 8993e2848 | e8119501b | 25 receipt tests; independent review; 67-test H1/H2 integration passed |
 | B | 9bf0546b6 | b12a9a02c | All 8 terminal identities; full Release, geometry Release/ASan, format lanes, qmake6; independent review |
 | X-H2 | 25661f1a3 | Immediate plan-only checkpoint | 15 input + 27 process + 25 H1 tests; five syntax checks; independent input/process reviews |
+
+### X-H6 Inventory Core Validation (2026-10-23)
+
+Implementation `9170b0cc9` adds explicit refusal-inventory.js, one reachable test
+per executable obligation and real transaction/CLI fixture generation. All 71
+original IDs remain in the 93-obligation inventory: 82 executable, 11 explicit
+pending H4/H5 declarations (not skipped tests or successful evidence). Typed stdout
+shape, sidecar binding and original-snapshot readback diagnoses repair five
+independently reproduced boundary mismatches. Original metadata is checked before
+byte readback/reparsing; both existing H1 mutation/identity diagnostics still pass.
+JOIN01 and C27 readiness corrections above are evidence-based plan corrections,
+not fabricated missing-feature coverage. The C source is still uncommitted.
+
+Parent report `/private/tmp/lc2961-impl-evidence.9GtLO2/X-H6-parent-initial-03.tap`:
+185/185 passed, no skips/failures (102 H1/H2/H3 plus inventory meta-test and 82
+scenarios). Independent author/reviewer 01a16889-ca4e-7f01-a931-d5b9dedf50d4
+reproduced all original mismatches, reviewed the fixes, and separately reran
+185/185 with zero failures/skips before approving this isolated core commit.
+Five changed/new JavaScript files passed syntax checks; staged whitespace passed.
+Failed initial qualification reports are retained, not overwritten.
+
+Next: finish/review/commit X-H4 joined ledger; implement X-H5 evidence review;
+wire the 11 remaining inventory obligations through those actual APIs, then X-H7.
+No H4, H5, full H6, H7, native entity or release completion is claimed here.
+C has 47 passing path identities plus six budget identities in separate focused
+runs; routing C27 and final shared source/regression review remain pending.
 
 ### X-H3 Validation (2026-10-23)
 
