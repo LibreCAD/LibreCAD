@@ -182,6 +182,37 @@ event ledger or independent evidence manifest. Direct-child timeout/stream bound
 are not process-tree containment, and observation-point checks do not eliminate
 concurrent filesystem races. Failed runs retain diagnostics and partial trees.
 
+## X-H4 Joined Ledger
+
+`formal-ledger.js` captures its own actual configuration, H2 manifest, two H1
+receipts and output snapshots after H3 completes. `buildJoinedLedger(h3, context)`
+checks complete H3 worker/event/stream/output joins against that context and
+derives an immutable genesis anchor plus one chained row per executed case.
+`ledger-descriptors.js` exports only inert version-1 format data for later
+independent checking; the production builder is not an independent oracle.
+
+```js
+const ledger = require('./formal-ledger');
+const context = ledger.captureLedgerContext({configPath, receiptPaths});
+const document = ledger.buildJoinedLedger(h3Result, context);
+const saved = ledger.publishJoinedLedger(document, newLedgerPath);
+ledger.revalidateJoinedLedger(saved);
+```
+
+The H4 source and descriptor must be declared actual H2 source inputs before
+capturing receipts. Publication creates an absent directory outside H3's exact
+worker-output root, with a single canonical mode-0400 ledger file. Exclusive
+no-follow writes, file/directory flushes and original-identity readback protect
+publication; failures preserve partial artifacts. Replay requires a freshly built
+expected document, not the persisted ledger's own claimed hashes. Revalidation
+checks original ledger, source, receipt and output bytes/metadata through final
+boundaries. Unsupported directory fsync is recorded explicitly. These are
+observation-point checks, not elimination of hostile filesystem races.
+
+H4 is an explicit API, not automatic CLI persistence. H5 still owns the evidence
+manifest and review dispatch; H7 owns independent checking. A failed H3 prefix
+remains diagnostics and cannot become a complete PASS ledger.
+
 ## Remaining
 
 `refusal-inventory.js` preserves all 71 original scenario identities and explicitly
@@ -195,7 +226,7 @@ Typed stdout-shape and substituted-readback diagnoses distinguish these failures
 from report parsing and on-disk receipt mutation. Repeated paths are refused by
 the same request guard at both API and CLI ingress.
 
-X-H4 through X-H7 still own persisted joins, independent evidence
+X-H5 through X-H7 still own evidence review, completed integration, independent evidence
 validation, adversarial case inventories
 and deterministic reports. In particular, the schema layer does not establish
 that a candidate/manifest digest names the current product source. Callers must
