@@ -129,13 +129,17 @@ jobs:
 
           # The bundle carries whatever identity the build job used.  A build
           # made without the repository variables set is not submittable.
-          $bundle = Get-ChildItem msix-bundle -File |
-            Where-Object { $_.Extension -eq '.msixbundle' } | Select-Object -First 1
-          if (-not $bundle) { throw 'The run did not produce a .msixbundle artifact.' }
-          $staged = Join-Path $env:RUNNER_TEMP 'bundle-inspect'
-          if (Test-Path $staged) { Remove-Item $staged -Recurse -Force }
+          # The artifact holds it only inside the .msixupload.
+          $uploadContents = Join-Path $env:RUNNER_TEMP 'upload-inspect'
+          if (Test-Path $uploadContents) { Remove-Item $uploadContents -Recurse -Force }
           # Expand-Archive only accepts a .zip extension; the ZIP API does not care.
           Add-Type -AssemblyName System.IO.Compression.FileSystem
+          [System.IO.Compression.ZipFile]::ExtractToDirectory($upload.FullName, $uploadContents)
+          $bundle = Get-ChildItem $uploadContents -File |
+            Where-Object { $_.Extension -eq '.msixbundle' } | Select-Object -First 1
+          if (-not $bundle) { throw 'The .msixupload holds no .msixbundle.' }
+          $staged = Join-Path $env:RUNNER_TEMP 'bundle-inspect'
+          if (Test-Path $staged) { Remove-Item $staged -Recurse -Force }
           [System.IO.Compression.ZipFile]::ExtractToDirectory($bundle.FullName, $staged)
           $inner = Get-ChildItem $staged -File | Where-Object { $_.Extension -eq '.msix' } | Select-Object -First 1
           if (-not $inner) { throw 'The bundle holds no .msix package.' }

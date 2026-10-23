@@ -378,8 +378,10 @@ jobs:
         id: package-msix
         # A failed Store package must not hold back the installers on master;
         # nothing is uploaded, so PackageWindowsMsix fails for want of the
-        # artifact instead.
+        # artifact instead.  It takes under a minute; the limit turns a hang
+        # into a failure, which continue-on-error absorbs, not a cancellation.
         continue-on-error: ${{ github.event_name == 'push' }}
+        timeout-minutes: 10
         run: |
           # The Store reserves the revision component, so it stays 0; the run
           # number keeps the build component increasing across pushes.
@@ -411,9 +413,20 @@ jobs:
             -PackageName LibreCAD-beta
         shell: pwsh
 
+      - name: Show MakeAppx output
+        # Package MSIX prints MakeAppx's file list only when MakeAppx fails;
+        # this also shows where it stopped if the step hit its time limit.
+        if: ${{ !cancelled() && steps.package-msix.outcome == 'failure' }}
+        continue-on-error: true
+        run: |
+          Get-ChildItem msix-output -Filter 'makeappx-*.log' -ErrorAction SilentlyContinue |
+            ForEach-Object { Write-Host "== $($_.Name)"; Get-Content -LiteralPath $_.FullName -Tail 40 }
+        shell: pwsh
+
       - name: Upload MSIX artifact
         if: steps.package-msix.outcome == 'success'
         continue-on-error: ${{ github.event_name == 'push' }}
+        timeout-minutes: 10
         uses: actions/upload-artifact@main
         with:
           name: win64Msix
@@ -546,8 +559,10 @@ jobs:
         id: package-msix
         # A failed Store package must not hold back the installers on master;
         # nothing is uploaded, so PackageWindowsMsix fails for want of the
-        # artifact instead.
+        # artifact instead.  It takes under a minute; the limit turns a hang
+        # into a failure, which continue-on-error absorbs, not a cancellation.
         continue-on-error: ${{ github.event_name == 'push' }}
+        timeout-minutes: 10
         run: |
           # The Store reserves the revision component, so it stays 0; the run
           # number keeps the build component increasing across pushes.
@@ -579,9 +594,20 @@ jobs:
             -PackageName LibreCAD-beta
         shell: pwsh
 
+      - name: Show MakeAppx output
+        # Package MSIX prints MakeAppx's file list only when MakeAppx fails;
+        # this also shows where it stopped if the step hit its time limit.
+        if: ${{ !cancelled() && steps.package-msix.outcome == 'failure' }}
+        continue-on-error: true
+        run: |
+          Get-ChildItem msix-output -Filter 'makeappx-*.log' -ErrorAction SilentlyContinue |
+            ForEach-Object { Write-Host "== $($_.Name)"; Get-Content -LiteralPath $_.FullName -Tail 40 }
+        shell: pwsh
+
       - name: Upload MSIX artifact
         if: steps.package-msix.outcome == 'success'
         continue-on-error: ${{ github.event_name == 'push' }}
+        timeout-minutes: 10
         uses: actions/upload-artifact@main
         with:
           name: winARM64Msix
@@ -722,7 +748,9 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: winMsixBundle
-          path: msix-bundle/*.msix*
+          # The .msixupload holds the .msixbundle; uploading both would store
+          # the same 200 MB twice.
+          path: msix-bundle/*.msixupload*
           if-no-files-found: error
           retention-days: 30
 

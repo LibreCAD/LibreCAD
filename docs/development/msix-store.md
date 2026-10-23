@@ -28,9 +28,10 @@
 installer has been built and uploaded, from the payload staged for it, so no
 extra compile is needed and the installer is built exactly as before. On
 pushes to `master` its `PackageWindowsMsix` job combines the x64 and ARM64
-packages into one `.msixbundle` and a `.msixupload` archive, the
-`winMsixBundle` artifact. `msix-store-submit.yml` submits that archive to the
-Store once the product is live.
+packages into one `.msixbundle`, wrapped in a `.msixupload` archive; the
+`winMsixBundle` artifact holds the `.msixupload`, so the bundle is stored
+once. `msix-store-submit.yml` submits that archive to the Store once the
+product is live.
 
 These artifacts are unsigned. **An unsigned MSIX cannot be installed**, so they
 are for Store submission and validation only, never direct-download
@@ -197,8 +198,8 @@ Before you start:
    after the repository variables were set; otherwise its package carries
    the placeholder identity and Partner Center refuses it.
 2. Download the `winMsixBundle` artifact (kept for 30 days) and unzip it. It
-   holds `LibreCAD-beta-<version>-windows.msixupload`, the file to upload, and
-   the `.msixbundle` inside it.
+   holds `LibreCAD-beta-<version>-windows.msixupload`, the file to upload.
+   The `.msixupload` is a ZIP archive with the `.msixbundle` inside it.
 
 Every run numbers its package `<major>.<minor>.<run number>.0`. The Store
 gives each device the highest version available to it, so a bundle reaches
@@ -351,9 +352,16 @@ through the **Submit MSIX to Microsoft Store** workflow below.
   `PackageWindowsMsix` bundles them. A packaging failure there does not stop
   the installers from being published: the MSIX steps continue on error,
   nothing is uploaded, and `PackageWindowsMsix` fails instead.
+- The packaging and upload steps stop after 10 minutes, so a hang counts as
+  an MSIX failure instead of holding back the installers. MakeAppx writes
+  its file list to `msix-output\makeappx-*.log`, which the job prints when
+  packaging fails or times out.
 - Pull requests that touch `build-all.yml`, the MSIX scripts or the manifest
   build and package the ARM64 job only, and a packaging failure fails the
-  job. Bundling runs on pushes only.
+  job, after its NSIS installer has been uploaded. Like every pull request
+  that starts `build-all.yml`, they also run the macOS build. Changes to
+  `licenses/` or `LICENSE` alone do not start it; they are first packaged
+  on `master`. Bundling runs on pushes only.
 - To submit an update, manually dispatch **Submit MSIX to Microsoft Store**
   on `master` with the run ID of the **Continuous build** run whose bundle
   should ship. A reviewer of the `microsoft-store` environment must approve

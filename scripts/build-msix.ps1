@@ -384,11 +384,17 @@ function Invoke-MakeAppx {
     param(
         [Parameter(Mandatory = $true)][string]$MakeAppx,
         [Parameter(Mandatory = $true)][string[]]$Arguments,
-        [Parameter(Mandatory = $true)][string]$Operation
+        [Parameter(Mandatory = $true)][string]$Operation,
+        [Parameter(Mandatory = $true)][string]$LogPath
     )
 
-    & $MakeAppx @Arguments
+    # MakeAppx lists every file it packs, which would double the length of
+    # the installer job's log, so its output goes to a file that is shown
+    # when it fails.  The file outlives a run stopped by a time limit.
+    Write-Host "MakeAppx $Operation, output in $LogPath"
+    & $MakeAppx @Arguments > $LogPath
     if ($LASTEXITCODE -ne 0) {
+        Get-Content -LiteralPath $LogPath | ForEach-Object { Write-Host $_ }
         throw "MakeAppx $Operation failed with exit code $LASTEXITCODE."
     }
 }
@@ -721,10 +727,12 @@ $packagePath = Join-Path $outputDirectory "$PackageName-$PackageVersion-windows-
 # A package that fails a check below is deleted, so that neither a later CI
 # step nor a person can take it for a good one.
 try {
-    Invoke-MakeAppx -MakeAppx $makeAppx -Operation 'pack' -Arguments @(
+    Invoke-MakeAppx -MakeAppx $makeAppx -Operation 'pack' `
+        -LogPath (Join-Path $outputDirectory "makeappx-pack-$Architecture.log") -Arguments @(
         'pack', '/o', '/d', $layoutDirectory, '/p', $packagePath
     )
-    Invoke-MakeAppx -MakeAppx $makeAppx -Operation 'unpack validation' -Arguments @(
+    Invoke-MakeAppx -MakeAppx $makeAppx -Operation 'unpack validation' `
+        -LogPath (Join-Path $outputDirectory "makeappx-unpack-$Architecture.log") -Arguments @(
         'unpack', '/o', '/p', $packagePath, '/d', $validationDirectory
     )
 
