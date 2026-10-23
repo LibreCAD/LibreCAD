@@ -220,7 +220,7 @@ test commit followed by the section 4 plan checkpoint.
 | D-edit | D-core | Real create/mutators, one-run staging, run limits and refusal results | committed 4300c1031 |
 | D-grips | D-edit | Cached definition grips, safe snaps and through-parameter query | committed 47e14c74b |
 | E-tools | D-grips | Tool result adoption, explicit plain fallback, explode/scale/INSERT/plugin | committed a37982bd6 |
-| E-again | E-tools | Bounded repeated offset/rebase with plain fallback | pending |
+| E-again | E-tools | Bounded repeated offset/rebase with plain fallback | committed bf7b512cf |
 | F-types | E-again | Complete engine/document/filter type-site integration census | pending |
 | F-names | F-types | Names, quick info, context/selection/menu descriptors | pending |
 | G-schema | F-names | Shared typed XDATA/EED definition parser/merger | pending |
@@ -273,7 +273,7 @@ editing; changes beyond the named concern require a scope note in the slice card
 
 ### Current Next Cards
 
-The main track resumes at E-again (section 8.5). D-core `92758859c` uses the actual
+The main track resumes at F-types (section 8.6). D-core `92758859c` uses the actual
 C checker, not a layout-only adoption gate. Similarity transport requires exact
 dyadic affine images of every stored coordinate and unchanged normalized semantic
 basis fields. Rounded similarities and arc reflections refuse unchanged; whole
@@ -297,13 +297,36 @@ identities actually published to the clipboard. Short mirror-axis enlargement
 proves exact collinearity. Explode once yields one ordinary spline. Native
 creation still defaults off until H-enable; previews remain ordinary geometry.
 
-For E-again register and test the prepared value-only structural proposal helper,
-then integrate one bounded rebase attempt and one cache fallback per copy. Do not
-count the proposal as materializer/checker evidence. Preserve displayed-cache
-side parity, exact signed combinations, remaining output allowance and separate
-attempt accounting. Execute every mandatory section8.5 actual document case,
-especially zero-sum fallback and the near-critical successful rebase. The helper,
-future carrier/schema scaffolding and pending F work are not completed slices.
+E-again `bf7b512cf` integrates the structural proposal, one rebase attempt and at
+most one cache fallback per copy. Actual document cases cover all section8.5
+mandatory profiles, including the zero-sum plain copy and near-critical C-admitted
+rebase. Exact signed combinations and displayed-cache parity are preserved.
+Samples consume the remaining per-copy budget; pair accounting reserves per-query
+ceilings, not observed total boxes. Attempted producer output and bounded observed
+leaves remain separate from committed usage, which is zero on source rollback.
+
+F-types starts with16 prepared but unregistered/unexecuted cases in
+`entities/tests/lc_offsetcurve_types_tests.cpp` and the preserved five-file patch
+under the evidence root, `F-types-prepared-01.patch` (SHA-256
+b9ef15bdc8caf27a0f2253affc050eeb4969aeec8add32583b1401bbfd66c258).
+Apply/review its owned hunks with the normal editing tool; those compiled source
+files were restored to HEAD so E-again validation contains no future F edits.
+Then finish the remaining core census, not merely those five files:
+
+1. Register/run the16 cases; add native neighbor-chord suppression and explicit
+   isTrimmable refusal in rs_information, plus spline-family matching in snapper.
+2. Reconcile justSelect and other owner bypasses. Native display chords must
+   select their curve, while Trim target paths stay explicit refusals until T.
+3. Cover parallel/parallel-through creation, offset/revert/explode availability,
+   preview handling, hatch/path/pattern flattening or refusal, and legacy DXF,
+   JWW and MakerCAM SVG export. Never cast the spline-derived native as atomic.
+4. Classify every current functional match (initial literal census:200 matches,
+   192 lines,66 files including tests/comments). Preserve analytic ellipse-only
+   cases. Finish core safe delegation/refusal now; F-names owns descriptors,
+   quick info, context/selection/menu names; H owns native property widgets.
+5. Execute focused/adjacent Release/ASan, full Release, both format lanes and
+   qmake6, audit tested bytes, commit, then checkpoint this roadmap. Future shared
+   schema/carrier helpers and independent fixture tooling remain unqualified.
 
 The auxiliary scheduler correction `90714f758` passed the407-case regression.
 Both isolated full runs of `H7-qualification-03` returned PASS through the actual
@@ -1789,7 +1812,7 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 | Atomic budget API | Committed and validated (`0eb2a0cfa`) | Integrate solver/geometry work in A-strict/A-reference |
 | Geometry work/exception/split/depth/terminal proof | All A slices and B committed and validated | C complete checker |
 | Complete semantic path checker | C committed d4a0b081a; used by D-core public adoption | D-edit staged regeneration |
-| Native feature/UI/persistence/trim | All D slices and E-tools committed; later workflow incomplete | Follow E-again through T; do not label unregistered helper scaffolding complete |
+| Native feature/UI/persistence/trim | All D and E slices committed; later workflow incomplete | Follow F-types through T; do not label unregistered helper scaffolding complete |
 | Independent DWG/version fixtures | Required, not yet qualified | Inventory/tool/license/provenance during G-fixtures; close all rows in G-matrix |
 | Harness production readiness | X-H1-X-H7 committed; actual two-run qualification03 independently audited | Retain observed-byte/runtime scope and failed attempts; no future timing guarantee |
 | Independent review and test evidence | A-core independent static review and actual test reports complete | Obtain fresh review/validation for each successor |
@@ -1815,8 +1838,70 @@ The plan checkpoint column never depends on its own future SHA.
 | D-edit | 4300c1031 | Immediate plan-only checkpoint | 43 focused native/edit cases; full Release, affected ASan, DXF/DWG Release/ASan, qmake6 and committed-blob audit passed; independent static review |
 | D-grips | 47e14c74b | Immediate plan-only checkpoint | 19 focused cases, full Release,583 affected ASan cases, both format lanes Release/ASan and qmake6 passed; independent static corrections and nine-blob audit |
 | E-tools | a37982bd6 | Immediate plan-only checkpoint | 55 focused Release/ASan cases, full Release,638 affected ASan cases, both format lanes Release/ASan and qmake6; independent review corrections and13-blob audit |
+| E-again | bf7b512cf | Immediate plan-only checkpoint | 37 focused Release/ASan cases, full Release,687 affected ASan cases, both format lanes Release/ASan and qmake6; three review corrections, actual profiles and13-blob audit |
 | X-H7 timeout source fix | c1b2fa095 | Immediate plan-only checkpoint | Author55 + independent15 controls and parent399 runner regression passed; actual runtime qualification remains open |
 | X-H7 bounded scheduling | 90714f758 | Immediate plan-only checkpoint | Author85 + independent12 controls, parent407 runner regression and real224.790-second preflight probe passed; full two-run qualification remains open |
+
+### E-again Validation (2026-10-23)
+
+Product `bf7b512cf` completes section8.5. A value-only fixed-work proof proposes
+one compatible embedded-source distance, never nested definitions. Exact signed
+sums and source/cache parity are checked before production. Structural refusal,
+zero sum, failed admission and undefined caches use at most one ordinary cache
+fallback. Preview remains ordinary. Each actual rebase uses the real producer
+and C checker, not a trusted proposal flag or a second adoption pass.
+
+Producer/materializer sample-budget demand includes a refused unit at exhaustion;
+it is not a count of every mathematical evaluation in the algorithm. Rebase and
+fallback share remaining sample allowance. Pair accounting sums reserved
+per-query ceilings; each engine attempt may run several bounded queries, so this
+is explicitly not an observed total box count. Attempted output counts completed
+fits, constructed roots and bounded observed leaves, with an incomplete-deep-count
+flag when a capped walk stops. Committed usage counts handed-over output once.
+
+Independent review corrected partial-materialization accounting, RegionBoundary
+candidate sample propagation/remaining allowance, and provisional usage left over
+after a later-copy rollback. Full and sanitizer regressions cover those shared
+paths. Refusals preserve sources; actual undo regeneration is compared by stored
+values, not by dangling pointers to replaced display children.
+
+Evidence root: `/private/tmp/lc2961-impl-evidence.9GtLO2`.
+
+- `E-again-focused-release-03` / `E-again-focused-asan-03`:37 cases,54,982
+  assertions, zero failures/skips. Includes18 structural,5 producer-accounting
+  and14 actual document cases. Mandatory E(100,50) four-copy, basis/cache orders,
+  placed arcs, E(100,60) total inward36.036, undefined/trimmed fallbacks, preview
+  reuse, effort/deep limits, source attributes and one-batch undo/redo all passed.
+- `E-again-full-release-01`:4,139 cases,4,113 passed, same26 baseline skips,
+  8,689,159 assertions. All prior5,051 JUnit rows retained;39 new rows reflect
+  the37 cases plus section paths. No skip identities changed.
+- `E-again-affected-asan-01`:687 cases,2,896,608 assertions, zero failures/skips.
+  Previous745 JUnit rows retained,51 new rows including the expanded region
+  coverage. Same host-only ASAN_OPTIONS=detect_leaks=0; no other sanitizer off.
+- DXF Release/ASan01:748 cases,745 passed, same3 skips,40,175 assertions. DWG
+  Release/ASan01:1,006 cases,1,002 passed, same4 skips,34,948 assertions. All
+  format JUnit identities/skips match E-tools; baseline comparison is recorded.
+- Final explicit three-target Release/ASan build07 and qmake6 build03 exited0.
+  Thirteen owned source and seven binary hashes are recorded in
+  `E-again-source-build-identity-01.json`, rechecked in
+  `E-again-asan-identity-audit-01.json`; all committed blobs match in
+  `E-again-committed-blob-audit-01.txt`.
+- `E-again-cppcheck-02.log` retains22 reviewed warnings, exit2, not a clean
+  analysis claim. Four new Proposal aggregate scalars are explicitly initialized
+  on the sole engaged construction path; prior aggregate/duplicate-interface and
+  guarded chainThrough diagnostics remain. Independent static review cleared
+  the corrected accounting and found no unsafe composition acceptance.
+
+Retained failed attempts: build02 used the wrong test limit member name; it was
+corrected to maxDistancePairs. Focus01 found a fixture use-after-free after real
+undo replaced display children (Release bus error, ASan report). The snapshot now
+never dereferences saved child pointers; strict storage checks still apply to
+staging/refusal, and full bit/value checks apply after commit/undo/redo. Focus02
+passed36/37 but its one-root cap rejected the first curved attempt before the
+intended rollback. The final test independently measures a successful first
+native output's deep cost, then exhausts that allowance on copy two. No engine
+bound was weakened. Preliminary73-case results predate these corrections and
+are not substituted for final validation. Next: F-types, then F-names/G.
 
 ### E-tools Validation (2026-10-23)
 
