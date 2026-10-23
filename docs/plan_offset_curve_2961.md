@@ -24,30 +24,35 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-22. Status: foundations implemented; native feature incomplete.
+Updated: 2026-10-22. Status: A-core committed; native feature incomplete.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
-No product code was changed by this plan update.
+This checkpoint records the tested A-core product commit. All successor slices
+remain pending; no native entity or complete topology checker is claimed.
 
 ## 1. Verified Baseline and Scope
 
 | Item | Verified state |
 |---|---|
 | Working tree used for this update | `/private/tmp/lc2961-v513-plan` |
-| Plan/source checkpoint | `9309885cef66aef0cca0f3c8862e0c210518da3b` |
-| Last product checkpoint | `9c06e9c77b313b62cc20e9ec39c22952fee501f2` |
-| Difference between those checkpoints | Only this plan file; no product-source change |
+| Initial audited checkpoint | `9309885cef66aef0cca0f3c8862e0c210518da3b` |
+| Initial product base | `9c06e9c77b313b62cc20e9ec39c22952fee501f2` |
+| Difference between initial checkpoints | Only this plan file; no product-source change |
+| Roadmap consolidation commit | `87ebe5428` |
+| Current feature branch | `codex/offset-2961-implementation` |
+| Latest product checkpoint | `0eb2a0cfa31c29ba7740e4fb698c8417f4d43fa5` (A-core) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
-| Missing geometry stages | Atomic/bounded accounting corrections, occurrence terminals, complete global topology checker |
+| A-core | Atomic work adoption, separate ordering allowance and sticky terminal status implemented; A04/A10 registered |
+| Missing geometry stages | Strict-solver/geometry accounting integration, occurrence terminals, complete global topology checker |
 | Native entity | No `LC_OffsetCurve` or `EntityOffsetCurve` yet |
 | Product integration | No native offset adoption, private file schema, creation/editing UI, or target-trim integration yet |
 | Build registration | Both geometry implementations in CMake and qmake; both geometry test TUs in `librecad_tests` |
 | Scratch validation harness | H1-H4 partially implemented/tested; H5 incomplete; H6-H7 absent |
-| Product tests during this update | Not run: documentation-only update |
+| Latest validation | A-core, geometry and format fast lanes passed Release/ASan; full Release and qmake6 passed; see section 14 |
 
 Recheck these facts against the selected implementation checkout before starting
-A-core. Inventory Qt6/Catch2/build tools and available independently authored
+A-strict. Inventory Qt6/Catch2/build tools and available independently authored
 DXF/DWG fixtures/inspection tools once, recording provenance/access gaps early;
 source-level progress need not wait for unrelated external-tool installation. The user's main checkout is a different, dirty branch and is not the
 source baseline above. Do not overwrite its unrelated changes or apply this plan
@@ -73,8 +78,9 @@ Preserve any evidence needed for delivery in Git or the project's durable artifa
 store before removing a temporary worktree.
 
 The previous V513 mechanical P0a-d result applies only to the old draft bytes.
-It does not validate this rewritten plan. No independent review, current source
-test PASS, candidate freeze, formal receipt, or feature completion is claimed.
+It does not validate this rewritten plan. Actual A-core source review and test
+results are recorded in section 14. No candidate freeze, formal receipt, or
+whole-feature completion is claimed.
 
 ### Scope That Must Not Be Reduced
 
@@ -197,7 +203,7 @@ test commit followed by the section 4 plan checkpoint.
 
 | Slice | Dependency | Deliverable | Status |
 |---|---|---|---|
-| A-core | Existing geometry base | Atomic work adoption and sticky terminal status | pending |
+| A-core | Existing geometry base | Atomic work adoption and sticky terminal status (`0eb2a0cfa`) | committed |
 | A-strict | A-core | Strict-solver bounded ordering/validation/capacity and exit snapshots | pending |
 | A-reference | A-strict | Geometry scans/callback ownership and exception-safe work transfers | pending |
 | A-cache | A-reference | Candidate/proof split accounting and inherited combined depth | pending |
@@ -258,43 +264,54 @@ editing; changes beyond the named concern require a scope note in the slice card
 | T-actions/T-files | actions/drawing/modify/lc_action_modify_trim.{h,cpp}, tests/lc_action_modify_trim_tests.cpp; modification/batch ownership and offset filter tests |
 | All new sources/tests/UI | CMakeLists.txt; librecad/src/src.pro (HEADERS/SOURCES/FORMS as appropriate); exact Catch2 target registration |
 
-### Immediate Next Card: A-core
+### Immediate Next Card: A-strict
 
 **Files (only these three):**
 
-- `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h`
-- `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp`
-- `librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp`
+- `librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h`
+- `librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.cpp`
+- `librecad/src/lib/engine/document/entities/tests/lc_parametriccurveintersection_tests.cpp`
 
-**Current facts:** `WorkBudget` has independent `consumePieces`,
-`consumeVertices`, `consumePairs`, `checkDepth` and
-`latchLimitExceeded`; it lacks atomic adoption and `latchInvalidInput`.
-The intersection stats and consumers are later owners.
+**Base:** committed A-core `0eb2a0cfa31c29ba7740e4fb698c8417f4d43fa5`.
+Geometry-side counters/adoptWork/latches now exist. StrictSolver still has
+uncounted ordering, post-callback certificate admission, incomplete record/
+capacity charging and no factory workOnExit. Its segment vector is already
+borrowed; preserve that lifetime contract and make validation/accessor work explicit.
 
 **Steps:**
 
-1. Add a production multi-counter adoption operation, planned
-   `adoptWork(const CheckWork& delta)`: additive span/vertex/pair/ordering
-   deltas plus delta.deepest as an absolute maximum. Preflight all arithmetic,
-   capacities and depth, then change every dimension together.
-2. Add the geometry-side ordering counter/cap and admission operation now:
-   `consumeOrderingComparisons`, remaining allowance and
-   `maxOrderingComparisons = std::size_t{1} << 20` as a finite initial default.
-   Append new struct fields after existing ones to preserve four-field aggregate
-   initialization semantics. A-strict adds its own corresponding solver fields;
-   it does not edit these geometry-owned files.
-3. Add public sticky `latchInvalidInput`. First terminal reason wins; latches and
-   later failed admissions preserve previously admitted work and are idempotent.
-4. Register A04 and A10, exercising nonzero pre-spent state, exact caps, isolated
-   one-less dimensions, over-depth, overflow, latch order and retry.
-5. Run focused Release/ASan and existing WorkBudget/geometry regressions. Build
-   all three named test targets and qmake6 application; compare pre-change skips.
-6. Review the staged three-path change and commit. Self-update with its actual SHA.
-   Next card becomes A-strict with its own three intersection files.
+1. Capture current strict/refinement and planned-selector discovery in Release/
+   ASan. Append solver ordering limit/stats and validation visits/next-call stats;
+   preserve existing aggregate field meanings and ordinary-mode decisions.
+2. Bound validation and mandatory seed capacity before scans/geometric callbacks.
+   Count accepted leaves separately from pending roots. Preserve canonical A13
+   full-query caps 4/3 ordinary and 6/5 retained, plus separate preflight refusals.
+3. Reserve bounded seed/split/output/scratch capacity before debit/storage.
+   Admit two children atomically; account for remaining mandatory seeds. Record
+   actual entered depths, not a refused or merely queued child's depth.
+4. Admit certificate callbacks before invocation, including unavailable/throwing
+   results. Atomically preflight the identity callback's pair/item dimensions.
+   Remove duplicate parent/helper charges; keep the three-term pair total.
+5. Replace only strict ordering with deterministic counted operations whose
+   comparison admission occurs outside the comparator. Ordering cap zero is a
+   valid zero-comparison strict allowance: refuse LimitExceeded before a needed
+   predicate; do not change ordinary mode or geometry CheckLimits' nonzero rule.
+6. Add optional workOnExit to the certified factory and friend declaration.
+   Initialize before guards; report admitted setup/query work on all returns and
+   throws without replacing the provider exception. Retained invalidation/retry
+   preserves cumulative work and does no work after invalidation.
+7. Implement A08/A12/A13 in the budget-accounting selector and A14 in
+   intersection-refine. Retain existing regression names and independently
+   expected geometry. Run focused/adjacent/full Release, geometry and fast
+   Release/ASan, plus incremental qmake6. Review the complete three-path diff.
+8. Commit the validated slice, then update this roadmap in a separate commit.
+   Next is A-reference; it owns geometry-side query handoffs and fixed scans.
 
-**Exit:** both named tests have nonzero assertions and all listed invariants hold.
-Do not require B/C/entity/file tests that do not exist yet. No public global
-checker or consumer integration belongs in A-core.
+**Exit:** four new exact identities pass with nonzero assertions, retained-throw
+and tight-cap oracles hold, existing strict/geometry identities remain covered,
+and legacy non-strict behavior is unchanged. No global checker, entity, UI,
+geometry-side handoff or file-format edit belongs in this slice. Source changes
+outside the three files require a concrete dependency note, not silent scope growth.
 
 ## 6. Geometry and Work Contracts
 
@@ -528,7 +545,8 @@ cycle; and invalid closure flags. A successful subset is never an editable cache
 Every listed identity is a separate Catch2 TEST_CASE with a reachable, nonzero
 assertion contract. SECTIONs/aliases/skips cannot stand in for identities. Preserve
 the existing strict regression names as an exact set; the historical count 61 is
-not a current test receipt. A/B/C tests are planned, not already registered.
+not a current test receipt. A04/A10 are implemented and validated; the remaining
+A/B/C identities are planned, not already registered.
 
 ### 7.1 A: Four Leaves, Fourteen Identities
 
@@ -1605,23 +1623,71 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 | Item | State | Next action |
 |---|---|---|
 | Recursive plan/activation routing | Removed as a planning deadlock | Execute A-core's finite card |
-| Atomic budget API | Missing implementation | A-core production API and A04/A10 |
+| Atomic budget API | Committed and validated (`0eb2a0cfa`) | Integrate solver/geometry work in A-strict/A-reference |
 | Strict work/ordering/exception proof | Missing implementation | A-strict, then A-reference integration |
 | Complete semantic path checker | Missing implementation | A-cache -> B -> C |
 | Native feature/UI/persistence/trim | Not implemented | Follow D through T; do not label scaffolding complete |
 | Independent DWG/version fixtures | Required, not yet qualified | Inventory/tool/license/provenance during G-fixtures; close all rows in G-matrix |
 | Harness production readiness | Incomplete with concrete defects | X-H1 through X-H7, independent from starting product work |
-| Independent review and new test receipts | Not obtained for this rewrite/product | Perform actual per-slice reviews/tests; record truthfully |
+| Independent review and test evidence | A-core independent static review and actual test reports complete | Obtain fresh review/validation for each successor |
 | Dirty unrelated main checkout | Not the selected source baseline | Preserve it; reconcile only if changing implementation worktree |
 
 ### Commit Ledger
 
-No product commit was made by this plan rewrite. Start the bounded ledger below
-after A-core; record only completed slices, not hundreds of failed plan versions.
+Record completed slices and actual product commits, not historical plan retries.
+The plan checkpoint column never depends on its own future SHA.
 
 | Slice | Product commit | Plan checkpoint | Evidence and result |
 |---|---|---|---|
 | Existing foundations | 9c06e9c77b313b62cc20e9ec39c22952fee501f2 | 9309885cef66aef0cca0f3c8862e0c210518da3b | Historical source baseline; no new test PASS asserted |
+| A-core | 0eb2a0cfa31c29ba7740e4fb698c8417f4d43fa5 | This immediate plan-only checkpoint | Independent static review: no findings; Release/ASan and qmake6 passed as detailed below |
+
+### A-core Validation (2026-10-22)
+
+Committed scope: exactly the geometry header, implementation and test TU from
+the original A-core card. No solver integration, entity or file/UI code changed.
+The validated staged bytes equal the committed blobs.
+
+- Worker: Gibbs implementation role (agent `01a1663b-5c1d-7333-98a2-ad49b643a3f4`).
+- Independent static reviewer: `01a16640-a9d5-7171-ae1f-16b92d7d23a2`;
+  no actionable defects or A04/A10 coverage gaps. Runtime claims come from the
+  actual parent-run reports, not the reviewer's static assessment.
+- Qt 6.12.0; AppleClang 21.0.0.21000334; Catch2 3.16.1.
+- Release and ASan A04/A10: exactly two registered names, 3,942 assertions passed.
+- Release and ASan geometry: 233 cases, 1,546,769 assertions passed.
+- Full Release: 3,855 cases (3,829 passed, 26 pre-existing skips),
+  7,402,261 assertions passed; no new skip or missing pre-existing JUnit name.
+- DXF fast Release/ASan: 744 cases (741 passed, same three baseline skips),
+  39,929 assertions passed; exact baseline name-set equality.
+- DWG fast Release/ASan: 1,006 cases (1,002 passed, same four baseline skips),
+  34,948 assertions passed; exact baseline name-set equality.
+- Fresh CMake Release/ASan explicitly built all three named targets; qmake6
+  recursive generation and full `make -j2` completed successfully. The initial
+  build jobs were bounded to eight across the three builds.
+- No AddressSanitizer diagnostic in the completed scoped runs. Full application
+  ASan was not run for A-core; full Release and all geometry/format lanes were.
+- Whitespace validation passed. Unrelated metadata-initializer warnings and the
+  host FreeType deployment-target warning remain outside this slice.
+
+Before-change comparison used the existing product-base build
+`/private/tmp/lc2961-v209-A-core-a03-baseline-release`. Its source tree differs
+from product base 9c06e9c77 only in this roadmap; Ninja confirmed the application
+test target up to date. Baseline full Release passed 3,853 cases with the same
+26 skips and 7,397,511 assertions. Fresh baseline fast binaries were also built/
+run and their actual JUnit names/skips compared to both new configurations.
+
+Evidence: `/private/tmp/lc2961-impl-evidence.9GtLO2` (JUnit, console, build logs and summaries).
+Builds: `/private/tmp/lc2961-impl-release.M4hycU`, `/private/tmp/lc2961-impl-asan.Npox8c`,
+`/private/tmp/lc2961-impl-qmake6.BUYu0S`. These are local artifacts, not permanent
+CI/report storage or evidence of unavailable external-reader tests.
+
+Validated source SHA-256:
+
+| File in entity directory | SHA-256 |
+|---|---|
+| lc_ellipseoffsetgeometry.h | ea4b5998a5cf1207591176671c7dcc8312b22ca16f73f16e3c598e683d3f23c5 |
+| lc_ellipseoffsetgeometry.cpp | f9019113ec5abaeb0ba692976088ae592e5dca6c16f00a99a81e3c6c496a3f6e |
+| tests/lc_offsetcurve_geometry_tests.cpp | e8ebfbe6709eaebcd34c723bf39e216fa68f3b4972d057e0ca3375481cac4e73 |
 
 After every slice update the status table, affected requirements, risks and next
 card together. Use actual commit IDs in the next plan-only checkpoint; never
