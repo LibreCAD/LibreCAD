@@ -25,6 +25,8 @@
 **********************************************************************/
 #include "qg_dlginitial.h"
 
+#include <QLocale>
+
 #include "rs_settings.h"
 #include "rs_system.h"
 #include "rs_units.h"
@@ -58,12 +60,13 @@ void QG_DlgInitial::languageChange(){
 void QG_DlgInitial::init() const {
     // Fill combobox with languages:
     QStringList languageList = RS_SYSTEM->getLanguageList();
-    const QString defaultLanguage=RS_SYSTEM->symbolToLanguage(QString("en"));
+    QStringList listed;
     for (const QString &language: std::as_const(languageList)) {
         QString l = RS_SYSTEM->symbolToLanguage(language);
         if (!l.isEmpty() && cbLanguage->findData(language) == -1) {
             cbLanguage->addItem(l, language);
             cbLanguageCmd->addItem(l, language);
+            listed << language;
         }
     }
 
@@ -74,8 +77,22 @@ void QG_DlgInitial::init() const {
     }
 
     cbUnit->setCurrentIndex( cbUnit->findText("Millimeter") );
-    cbLanguage->setCurrentIndex( cbLanguage->findText(defaultLanguage) );
-    cbLanguageCmd->setCurrentIndex( cbLanguageCmd->findText(defaultLanguage) );
+
+    // The list holds canonical codes ("en_US" for librecad_en.qm), so select by
+    // code: the GUI follows the user's preferred languages, commands stay English.
+    const QString english = RS_System::matchLanguage(listed, "en");
+    QString guiLanguage;
+    for (const QString& uiLanguage : QLocale().uiLanguages()) {
+        guiLanguage = RS_System::matchLanguage(listed, uiLanguage);
+        if (!guiLanguage.isEmpty()) {
+            break;
+        }
+    }
+    if (guiLanguage.isEmpty()) {
+        guiLanguage = english;
+    }
+    cbLanguage->setCurrentIndex( cbLanguage->findData(guiLanguage) );
+    cbLanguageCmd->setCurrentIndex( cbLanguageCmd->findData(english) );
 }
 
 void QG_DlgInitial::setText(const QString& t) const {
