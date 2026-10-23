@@ -7,18 +7,20 @@
 'use strict';
 
 // Expectations come from roadmap section 13.1, not the production validator.
-// Pending rows are obligations, never successful or skipped execution evidence.
+// Expectations describe the actual owned API protocol, not an invented common
+// runner envelope. A throwing boundary has no returned terminal status.
 function row(id, condition, stage, reason, options = {}) {
     return Object.freeze({id, condition, stage, reason, status: 'REFUSED', phase: 'pre-root',
-        ingress: 'transaction', state: 'executable', original: true, ...options});
+        ingress: 'transaction', protocol: 'result', scope: 'H3.runFormalTransaction',
+        state: 'executable', original: true, ...options});
 }
 
-const pendingReport = Object.freeze({state: 'pending', dependency: 'X-H4',
-    blockedBy: 'Shared transaction/CLI has no expected report bytes/hash/size ingress; H4 boundary integration is pending.'});
-const pendingJoin = Object.freeze({state: 'pending', dependency: 'X-H4', phase: 'post-root',
-    blockedBy: 'Shared transaction/CLI has no persisted-prefix join ingress; H4 sidecar boundary integration is pending.'});
-const pendingEvidence = Object.freeze({state: 'pending', dependency: 'X-H5', original: false,
-    blockedBy: 'No production evidence-manifest publication/validation API exists in H3.'});
+const report = Object.freeze({phase: 'post-root', ingress: 'owned-api', protocol: 'throw', status: null,
+    scope: 'H5.readEvidenceManifest', exceptionName: 'EvidenceError'});
+const joined = Object.freeze({phase: 'post-root', ingress: 'owned-api', protocol: 'throw', status: null,
+    scope: 'H4.buildJoinedLedger', exceptionName: 'LedgerError'});
+const evidence = Object.freeze({phase: 'post-root', ingress: 'owned-api', original: false,
+    scope: 'H5.runP0fEvidence'});
 const cli = Object.freeze({ingress: 'cli'});
 const added = Object.freeze({original: false});
 const worker = Object.freeze({original: false, phase: 'post-root', status: 'FAIL'});
@@ -70,9 +72,9 @@ const INVENTORY = Object.freeze([
     row('H6-TREE-04a', 'Zero stdout result lines', 'RECEIPT_STREAM', 'STDOUT_SHAPE'),
     row('H6-TREE-04b', 'Multiple stdout result lines', 'RECEIPT_STREAM', 'STDOUT_SHAPE'),
     row('H6-TREE-04c', 'Noncanonical stdout result line', 'RECEIPT_STREAM', 'STDOUT_SHAPE'),
-    row('H6-TREE-05a', 'Externally bound report bytes mismatch', 'RECEIPT_BINDING', 'FILE_BINDING_MISMATCH', pendingReport),
-    row('H6-TREE-05b', 'Externally bound report hash mismatch', 'RECEIPT_BINDING', 'FILE_BINDING_MISMATCH', pendingReport),
-    row('H6-TREE-05c', 'Externally bound report size mismatch', 'RECEIPT_BINDING', 'FILE_BINDING_MISMATCH', pendingReport),
+    row('H6-TREE-05a', 'Persisted genuine report-byte binding substitution', 'READBACK', 'MANIFEST_MISMATCH', report),
+    row('H6-TREE-05b', 'Persisted report-hash binding substitution', 'READBACK', 'MANIFEST_MISMATCH', report),
+    row('H6-TREE-05c', 'Persisted report-size binding substitution', 'READBACK', 'MANIFEST_MISMATCH', report),
     row('H6-TREE-05d', 'Stdout sidecar binding mismatch', 'RECEIPT_BINDING', 'FILE_BINDING_MISMATCH'),
     row('H6-TREE-05e', 'Stderr sidecar binding mismatch', 'RECEIPT_BINDING', 'FILE_BINDING_MISMATCH'),
     row('H6-TREE-05f', 'Report basename/ID mismatch', 'RECEIPT_BINDING', 'FILE_BINDING_MISMATCH'),
@@ -95,7 +97,7 @@ const INVENTORY = Object.freeze([
     row('H6-JOIN-02', 'Duplicate receipt ID through transaction', 'RECEIPT_JOIN', 'RECEIPT_ID_DUPLICATE'),
     row('H6-JOIN-03', 'Pair order mismatch through transaction', 'RECEIPT_JOIN', 'RECEIPT_ORDER_MISMATCH'),
     row('H6-JOIN-04', 'Valid persisted prefix references wrong bytes despite matching digest strings',
-        'RECEIPT_JOIN', 'REFERENCED_BYTES_MISMATCH', pendingJoin),
+        'JOIN', 'OUTPUT_MISMATCH', joined),
     row('H6-ID-02g', 'Synthetic staleV512 revision', 'IDENTITY', 'REVISION_MISMATCH', added),
     row('H6-ID-03d', 'Synthetic staleV512 candidate tuple', 'IDENTITY', 'CANDIDATE_MISMATCH', added),
     row('H6-ID-02h', 'Synthetic pre-consolidationV513 revision', 'IDENTITY', 'REVISION_MISMATCH', added),
@@ -108,24 +110,24 @@ const INVENTORY = Object.freeze([
     row('H6-WORKER-06', 'Extra worker output inventory', 'WORKER', 'WORKER_OUTPUT_UNEXPECTED', worker),
     row('H6-WORKER-07', 'Duplicate worker output inventory', 'WORKER', 'WORKER_OUTPUT_DUPLICATE', worker),
     row('H6-WORKER-08', 'Undefined worker status property', 'WORKER', 'WORKER_STATUS_MISSING', worker),
-    row('H6-EVIDENCE-01', 'Missing required evidence helper/export', null, null, pendingEvidence),
-    row('H6-EVIDENCE-02', 'Dummy source tuple', null, null, pendingEvidence),
-    row('H6-EVIDENCE-03', 'Absent evidence manifest is published successfully', null, null,
-        {...pendingEvidence, status: 'PASS', phase: 'post-root'}),
-    row('H6-EVIDENCE-04', 'Output changed after evidence dispatch', null, null,
-        {...pendingEvidence, status: 'FAIL', phase: 'post-root'}),
+    row('H6-EVIDENCE-01', 'Missing required evidence helper/export', 'CONFIG', 'DEPENDENCY_MISSING', evidence),
+    row('H6-EVIDENCE-02', 'Dummy source tuple', 'JOIN', 'DISPATCH_MISMATCH', evidence),
+    row('H6-EVIDENCE-03', 'Absent evidence manifest is published successfully', 'COMPLETE', 'H5_EVIDENCE_COMPLETE',
+        {...evidence, status: 'PASS'}),
+    row('H6-EVIDENCE-04', 'Output changed after evidence dispatch', 'REVALIDATION', 'OUTPUT_CHANGED',
+        {...evidence, status: 'FAIL'}),
     row('H6-CONTROL-01', 'Positive real-CLI control', 'COMPLETE', 'H3_DISPATCH_COMPLETE',
         {...worker, ingress: 'cli', status: 'PASS'}),
     row('H6-CONTROL-02', 'Positive shared-transaction control', 'COMPLETE', 'H3_DISPATCH_COMPLETE',
         {...worker, status: 'PASS'}),
     row('H6-CONTROL-03', 'Real CLI forwards reordered option pairs and receipt argv', 'COMPLETE', 'H3_DISPATCH_COMPLETE',
         {...worker, ingress: 'cli', status: 'PASS'}),
-    row('H6-POST-01', 'Post-root genesis mutation preserves valid prefix', null, null,
-        {...pendingJoin, original: false, status: 'FAIL'}),
-    row('H6-POST-02', 'Post-root ledger mutation preserves valid prefix', null, null,
-        {...pendingJoin, original: false, status: 'FAIL'}),
-    row('H6-POST-03', 'Post-root evidence manifest mutation preserves valid prefix', null, null,
-        {...pendingEvidence, phase: 'post-root', status: 'FAIL'})
+    row('H6-POST-01', 'Post-root genesis mutation preserves valid prefix', 'READBACK', 'LEDGER_MISMATCH',
+        {...joined, original: false, scope: 'H4.revalidateJoinedLedger'}),
+    row('H6-POST-02', 'Post-root ledger mutation preserves valid prefix', 'READBACK', 'LEDGER_MISMATCH',
+        {...joined, original: false, scope: 'H4.revalidateJoinedLedger'}),
+    row('H6-POST-03', 'Post-root evidence manifest mutation preserves valid prefix', 'REVALIDATION', 'MANIFEST_CHANGED',
+        {...report, original: false, scope: 'H5.revalidateEvidenceManifest'})
 ]);
 
 const IDS = Object.freeze([...new Set(INVENTORY.map(entry => entry.id))].sort());

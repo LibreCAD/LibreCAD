@@ -16,6 +16,7 @@ const {nodeFsAdapter} = require('./input-capture');
 const inventory = require('./refusal-inventory');
 const fixture = require('./fixtures/transaction-fixture');
 const {resultFor, writeOutputs} = require('./fixtures/formal-child');
+const post = require('./post-refusal-definitions');
 
 const cases = new Map();
 const mismatches = [];
@@ -321,8 +322,16 @@ register('H6-CONTROL-03', {prepare: f => ({args: ['--preflight-receipt', f.reque
     '--run-dir', f.request.runRoot, '--run', '--preflight-receipt', f.request.receiptPaths[1],
     '--config', f.request.configPath], assertAfter: result => assertPositive(f, result)})});
 
+for (const [id, definition] of post.DEFINITIONS) register(id, definition);
+
 function roadmapOriginalRows() {
-    const plan = fs.readFileSync(path.join(__dirname, '..', '..', 'docs', 'plan_offset_curve_2961.md'), 'utf8');
+    // Qualification pins an immutable copy as a real H2 input. Normal local
+    // tests still check the live roadmap; later plan commits cannot rewrite an
+    // already captured qualification's expectations.
+    const roadmapPath = process.env.LC_OFFSET_ROADMAP_SNAPSHOT ||
+        path.join(__dirname, '..', '..', 'docs', 'plan_offset_curve_2961.md');
+    require('./input-capture').canonicalPath(roadmapPath);
+    const plan = fs.readFileSync(roadmapPath, 'utf8');
     const table = plan.split('### 13.1 Preserved H6 Refusal Inventory\n')[1].split('**Correction to inherited expectations:**')[0];
     return table.split('\n').filter(line => line.startsWith('| H6-')).flatMap(line => {
         const cell = line.split('|')[1].trim();
@@ -361,9 +370,27 @@ test('inventory preserves every expanded original identity and exactly accounts 
         `${inventory.EXECUTABLE.length} executable; ${inventory.PENDING.length} pending declarations, not completed tests.`);
 });
 
-for (const entry of inventory.EXECUTABLE) test(`${entry.id}: ${entry.condition}`, async t => {
+for (const entry of [...inventory.EXECUTABLE].sort((a, b) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0)) test(`${entry.id}: ${entry.condition}`, async t => {
     const definition = cases.get(entry.id);
     assert.ok(definition, `no implementation for ${entry.id}`);
+    if (definition.execution === 'post') {
+        const observed = await definition.execute(t);
+        const error = observed.exception;
+        const actual = {protocol: observed.protocol, status: observed.result ? observed.result.status : null,
+            stage: error ? error.stage : observed.result.stage,
+            reason: error ? error.reason : observed.result.reason,
+            exceptionName: error ? error.name : null};
+        const expected = {protocol: entry.protocol, status: entry.status, stage: entry.stage,
+            reason: entry.reason, exceptionName: entry.exceptionName || null};
+        assert.deepEqual(actual, expected, entry.id);
+        assert.equal(observed.observations.scope, entry.scope);
+        assert.equal(observed.observations.h3_worker_launches, 2);
+        assert.equal(observed.observations.original_trees_unchanged, true);
+        assert.equal(observed.observations.original_h3_unchanged, true);
+        assert.equal(observed.observations.environment_unchanged, true);
+        observed.cleanup();
+        return;
+    }
     const f = await fixture.setup(definition);
     t.diagnostic(`attempt artifacts: ${f.base}; retained on failure`);
     const scenario = definition.prepare ? (await definition.prepare(f) || {}) : {};

@@ -9,7 +9,6 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const os = require('node:os');
 const vm = require('node:vm');
 const {spawn} = require('node:child_process');
 const test = require('node:test');
@@ -17,71 +16,12 @@ const {EventEmitter} = require('node:events');
 const {PassThrough, Writable} = require('node:stream');
 const h1 = require('./preflight-receipt');
 const h2 = require('./input-capture');
-const {capturePreflight} = require('./preflight-capture');
-const {runFormalTransaction} = require('./formal-runner');
 const h4 = require('./formal-ledger');
 const evidence = require('./p0f-evidence');
 const descriptors = require('./evidence-descriptors');
 const {tree} = require('./fixtures/transaction-fixture');
-const workerPath = path.join(__dirname, 'fixtures', 'formal-child.js');
-const checkerPath = path.join(__dirname, 'fixtures', 'evidence-checker.js');
-const ids = ['10000000-0000-4000-8000-000000000001', '20000000-0000-4000-8000-000000000002'];
+const {setup, checkerPath} = require('./fixtures/evidence-transaction');
 const clone = v => JSON.parse(h1.canonicalJson(v));
-
-async function setup(t, {checkerMode = 'pass', execute = true, purpose = 'synthetic', omitSource,
-    omitCaptures = false, omitCheckerConfig = false, timeout = 3000, streamCap = 65536, emptySource = false} = {}) {
-    const base = fs.mkdtempSync(path.join(fs.realpathSync(os.tmpdir()), 'lc-offset-h5-'));
-    t.diagnostic(`attempt ${base}`);
-    const configPath = path.join(base, 'formal-config.json'), registryPath = path.join(base, 'registry.json');
-    const checkerConfigPath = path.join(base, 'checker-config.json'), candidatePath = path.join(base, 'candidate.md');
-    const inventoryPath = path.join(base, 'cases.json'), raw = path.join(base, 'input.txt');
-    const runParent = path.join(base, 'worker-parent'), ledgerParent = path.join(base, 'ledger-parent'), evidenceParent = path.join(base, 'evidence-parent');
-    for (const p of [runParent, ledgerParent, evidenceParent]) fs.mkdirSync(p, {mode: 0o700});
-    fs.writeFileSync(candidatePath, 'actual synthetic H5 candidate\n');
-    fs.writeFileSync(raw, 'actual synthetic H5 input\n');
-    const env = {LC_ALL: 'C', ...(process.platform === 'darwin' ? {__CF_USER_TEXT_ENCODING: process.env.__CF_USER_TEXT_ENCODING} : {})};
-    const checker = {schema_version: 1, purpose, module_path: checkerPath, args: [checkerMode], cwd: base,
-        environment: env, timeout_ms: timeout, max_stream_bytes: streamCap};
-    fs.writeFileSync(checkerConfigPath, h1.canonicalJson(checker));
-    const workers = ['a', 'b'].map(name => ({id: `worker-${name}`, module_path: workerPath, args: ['pass'],
-        case_ids: [`case-${name}-01`], outputs: [`${name}.json`], timeout_ms: 3000, max_stream_bytes: 65536}));
-    fs.writeFileSync(registryPath, h1.canonicalJson({schema_version: 1, purpose, workers}));
-    fs.writeFileSync(inventoryPath, h1.canonicalJson({schema_version: 1, purpose,
-        cases: workers.flatMap(worker => worker.case_ids.map(id => ({id, source_path: workerPath})))}));
-    const roots = [], receiptDirs = [];
-    for (let i = 0; i < 2; i++) {
-        const rootParent = path.join(base, `root-parent-${i}`), receiptParent = path.join(base, `receipt-parent-${i}`);
-        fs.mkdirSync(rootParent, {mode: 0o700}); fs.mkdirSync(receiptParent, {mode: 0o700});
-        roots.push(path.join(rootParent, 'reserved')); receiptDirs.push(path.join(receiptParent, 'receipt'));
-    }
-    const sourceNames = ['formal-registry.js', 'formal-runner.js', 'run-formal-gates.js', 'formal-ledger.js',
-        'ledger-descriptors.js', 'p0f-evidence.js', 'evidence-descriptors.js'].filter(name => name !== omitSource);
-    const sourcePaths = sourceNames.map(name => path.join(__dirname, name)).concat(workerPath, checkerPath);
-    if (emptySource) {
-        const p = path.join(base, 'empty-source.js'); fs.writeFileSync(p, ''); sourcePaths.push(p);
-    }
-    const preflight = {purpose, candidatePath, runnerPath: path.join(__dirname, 'fixtures', 'capture-child.js'), sourcePaths,
-        inputPaths: [raw], fixturePaths: [], configPaths: [configPath, registryPath, ...(omitCheckerConfig ? [] : [checkerConfigPath])],
-        caseInventoryPath: inventoryPath, runnerArgs: ['pass'], cwd: base, environment: env};
-    const config = {schema_version: 1, purpose, registry_path: registryPath, run_root: path.join(runParent, 'run'),
-        receipt_ids: ids, receipt_roots: roots, preflight};
-    fs.writeFileSync(configPath, h1.canonicalJson(config));
-    const captures = [];
-    let h3 = null, ledgerReadback = null;
-    const request = {configPath, runRoot: config.run_root, receiptPaths: receiptDirs.map((p, i) => path.join(p, `${ids[i]}.json`))};
-    if (execute) {
-        for (let i = 0; i < 2; i++) captures.push(await capturePreflight({...preflight,
-            receiptId: ids[i], runRoot: roots[i], receiptDirectory: receiptDirs[i]}));
-        h3 = await runFormalTransaction(request); assert.equal(h3.status, 'PASS', h3.message);
-        const context = h4.captureLedgerContext({configPath, receiptPaths: request.receiptPaths});
-        const document = h4.buildJoinedLedger(h3, context);
-        ledgerReadback = h4.publishJoinedLedger(document, path.join(ledgerParent, 'ledger', 'joined-events.json'));
-    }
-    const evidenceRequest = {configPath, receiptPaths: request.receiptPaths, h3Result: h3, ledgerReadback,
-        preflightCaptures: omitCaptures ? null : captures, checkerConfigPath,
-        manifestPath: path.join(evidenceParent, 'attempt', 'manifest.json')};
-    return {base, config, request, h3, captures, raw, ledgerReadback, evidenceParent, checkerConfigPath, evidenceRequest};
-}
 function env() { return Object.keys(process.env).sort().map(k => [k, process.env[k]]); }
 function rewrite(p, bytes) {
     const mode = fs.statSync(p).mode & 0o7777;

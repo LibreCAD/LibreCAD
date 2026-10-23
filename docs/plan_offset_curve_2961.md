@@ -1643,7 +1643,8 @@ instructions to reopen old evidence.
 | H6-TREE-02a..02h | Duplicate/reordered/missing/extra key; BOM; CR; double LF; other noncanonical bytes | RECEIPT_CANONICAL / REPORT_NONCANONICAL |
 | H6-TREE-03a..03d | Non-PASS; nonzero exit; signal; spawn-error shape | RECEIPT_RESULT / CHILD_NOT_PASS |
 | H6-TREE-04a..04c | Zero/multiple/noncanonical stdout line | RECEIPT_STREAM / STDOUT_SHAPE |
-| H6-TREE-05a..05f | Report bytes/hash/size; stdout/stderr sidecar; basename/ID | RECEIPT_BINDING / FILE_BINDING_MISMATCH |
+| H6-TREE-05a..05c | Persisted genuine report bytes/hash/size binding substitution, H5 owned readback throws | READBACK / MANIFEST_MISMATCH |
+| H6-TREE-05d..05f | Stdout/stderr sidecar; basename/ID, H3 receipt binding | RECEIPT_BINDING / FILE_BINDING_MISMATCH |
 | H6-TREE-06a..06b | Wrong mode; nonregular file | FILESYSTEM / FILE_METADATA_MISMATCH |
 | H6-TREE-07a..07b | Missing/extra tree entry | FILESYSTEM / RECEIPT_TREE_MEMBERSHIP |
 | H6-TREE-08a..08c | Symlink; hardlink; alias | FILESYSTEM / PATH_NOT_REGULAR_SINGLE_LINK |
@@ -1655,7 +1656,7 @@ instructions to reopen old evidence.
 | H6-JOIN-01 | Same receipt tree/path through exported transaction | CLI / RECEIPT_PATH_DUPLICATE |
 | H6-JOIN-02 | Duplicate ID through exported transaction | RECEIPT_JOIN / RECEIPT_ID_DUPLICATE |
 | H6-JOIN-03 | Pair order mismatch through exported transaction | RECEIPT_JOIN / RECEIPT_ORDER_MISMATCH |
-| H6-JOIN-04 | Matching digest strings but wrong referenced bytes | RECEIPT_JOIN / REFERENCED_BYTES_MISMATCH |
+| H6-JOIN-04 | Self-consistent H3 output digest/bytes disagree with actual persisted prefix; H4 owned join throws | JOIN / OUTPUT_MISMATCH |
 
 **Correction to inherited expectations:** CLI09/10 and JOIN02/03 must not demand
 contradictory early/late classifications of the same condition. Assign receipt
@@ -1665,6 +1666,16 @@ Likewise JOIN04 is a direct persisted-join test on a previously valid prefix;
 ordinary initial bad sidecar input belongs to TREE05. Require each case to reach
 its intended production boundary, not merely any refusal. Pin validation order
 in X-H3 before X-H6 registration.
+
+H4/H5 integration correction (2026-10-23): TREE05a-c exercise the persisted H5
+manifest's actual report binding against a genuine original context, not a
+nonexistent caller-supplied H3 expected tuple. JOIN04 exercises H4's independently
+captured actual outputs. These boundaries throw typed errors and return no
+status; record that protocol explicitly rather than fabricating REFUSED/FAIL.
+The original71 identities remain unchanged. Explicit evidence/ledger root scopes
+are separate from H3's output root. H7 pins an immutable copy of this expectation
+table as an actual H2 input via LC_OFFSET_ROADMAP_SNAPSHOT; local tests default to
+the live plan. Discovery-only skips never count as executed qualification cases.
 
 JOIN01 readiness correction (2026-10-23): the exported transaction shares the
 request guard with CLI08, so the exact repeated path has the same early diagnosis.
