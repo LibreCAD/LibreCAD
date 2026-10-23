@@ -32,6 +32,31 @@ Success means automated worker evidence only, not human approval, native feature
 completion or H7 qualification. Filesystem observations/direct-child deadlines
 do not provide containment.
 
+## Canonical Suite Workers
+
+`suite-inventory.js`, `generate-suite-inventory.js` and `suite-worker.js` provide
+the four named H7 suites, actual case definitions, strict H3 registry mapping and
+bounded real Node test execution. Generated files are definitions, registry and
+case inventory, not qualification reports. Input options are copied as bounded
+inert data before asynchronous discovery; caller mutation cannot redirect output
+paths or promote purpose.
+
+Discovery uses an explicit isolated-child preload to register definitions as
+skipped. This does not execute test bodies or replace any production validator.
+Local Node 26 filtering probes suppress definitions rather than listing them, so
+filter-only discovery is not used. Actual execution is unmodified `node:test`;
+its exact argv forbids the discovery preload/filter. Skipped, TODO, missing,
+duplicate, failed or incomplete results cannot qualify. The report's assertion
+unit is explicitly top-level test cases, not JavaScript assertion calls.
+
+Raw events/process bindings are retained separately from deterministic semantic
+reports. The source/input/runtime closure is checked before and after execution;
+this is an explicit declared closure, not dynamic import discovery. Validation
+requires a real pinned `LC_OFFSET_ROADMAP_SNAPSHOT` input. The current focused
+controls were tested on Node 26.12.0; other runtimes must satisfy the same event
+contract or refuse. Full H7 independent checking and two-run qualification remain
+separate steps.
+
 ## Implemented
 
 X-H1 provides immutable format descriptors and receipt parsing/readback. Run:
