@@ -224,7 +224,7 @@ test commit followed by the section 4 plan checkpoint.
 | F-types | E-again | Complete engine/document/filter type-site integration census | complete:49c9b328b |
 | F-names | F-types | Names, quick info, context/selection/menu descriptors | complete:f0fb28fab |
 | G-schema | F-names | Shared typed XDATA/EED definition parser/merger | complete:305042903 (helper-only; adapter packetization prerequisite below) |
-| G-adapter | G-schema | Actual application DXF/DWG read/write and failure propagation | pending |
+| G-adapter | G-schema | Actual application DXF/DWG read/write and failure propagation | complete:32597762b (external interoperability remains G-matrix) |
 | G-fixtures | G-adapter | Hostile metadata/raw carrier, ownership and failed-save regressions | pending |
 | G-matrix | G-fixtures | Independent fixtures/output inspection for complete version/conversion matrix | pending |
 | H-sheet | G-matrix | Refusal-aware property provider and busy cursor | pending |
@@ -273,7 +273,7 @@ editing; changes beyond the named concern require a scope note in the slice card
 
 ### Current Next Cards
 
-The main track resumes at G-adapter (section 9.2). D-core `92758859c` uses the actual
+The main track resumes at G-fixtures (section 9.3). D-core `92758859c` uses the actual
 C checker, not a layout-only adoption gate. Similarity transport requires exact
 dyadic affine images of every stored coordinate and unchanged normalized semantic
 basis fields. Rounded similarities and arc reflections refuse unchanged; whole
@@ -327,37 +327,37 @@ G-schema `305042903` registers32 schema and33 raw-carrier cases, adds nine nativ
 storage cases and qualifies the actual native/schema4096-byte boundary bridge.
 Native tails are bounded, validated and densely owned before transactional swap;
 file-encoding limits stay in the shared layer. Raw carrier admission remains
-data-only, not C certification. No application callback uses these helpers yet.
+data-only, not C certification. G-adapter now wires these helpers into the
+application with the actual C adoption gate.
 
-Next G-adapter implementation order:
+G-adapter `32597762b` completes balanced-unit EED packetization and adjacent
+same-APPID packet coalescing in entity/object readers. The shared merger uses
+the same packet policy, including marker/brace boundaries and handle indices.
+DXF source context comes from the incoming header, never destination variables;
+DWG version comes from its magic. Input/output context is operation-local.
+Payload1000 follows the declared codec; identifiers1001/1003 follow the same
+recovery policy as their symbol tables. Only ASCII payload1000 uses caret
+transport. Braces, binary and handle lexemes stay opaque.
 
-1. **Packetization prerequisite:** fix `DRW_Entity::encodeDwgEed` to preflight a
-   complete top-level balanced braced unit before appending/flushing, with the
-   uint16 chunk cap and no split inside a brace scope. Its current post-brace
-   depth overflow check can flush before a closing brace and rejects a safe
-   flush before an opening brace. Add direct codec byte/brace boundary tests.
-2. Match that policy in shared `preflightEncoding`: lift the current conservative
-   whole-APPID65535 cap to per-balanced-unit packetization for merged LibreCad
-   and foreign data. Allow safe scalar/top-level chunk rollover, reject any
-   oversized indivisible item/scope, malformed braces and unresolved codec data.
-   This is mandatory before primary export wiring, not an interoperability waiver.
-3. Establish operation-scoped input/output version/origin/codec options and reset
-   them on every exit. Resolve raw DXF Unicode/caret decoding without mutating
-   shared foreign tags; test both modern and legacy text. Reuse actual codecs.
-4. Gate original raw SPLINE before projection/repair, then one actual C adoption;
-   apply attributes and successful stripping even when the remainder is empty
-   on every conic/high-degree/ordinary/fit fallback. HELIX never becomes native.
-5. Merge current metadata before DXF/DWG/R12 branches; reuse APPIDs, preserve
-   foreign values and unknown schemas, and latch every unsafe/count/encoding/
-   approximation/writer failure before publication. No silent definition omission.
-6. Use portable schema parameters in persistent native fixtures (the old generic
-   factory uses relativeTolerance .01 outside schema1's declared factor range).
-   Retain an explicit failed-save regression for an in-memory nonportable native;
-   do not loosen schema validation merely to export that fixture.
-7. Run real adapter/codec focused tests and all build/regression/audit lanes,
-   commit/checkpoint, then finish G-fixtures and independent G-matrix. Future
-   fixture/tooling/trim/UI scaffolding remains unqualified; generated ACadSharp
-   inputs are not LibreCAD interoperability PASS.
+Original eligible SPLINE controls/knots reach one real C adoption before any
+projection/repair; every fallback receives the stripped metadata. Output merges
+before modern/R12 branching and reuses APPID registration. Invalid raw native
+controls, unrepresentable metadata, nonportable definitions and unbounded R12
+approximations refuse publication. Native fixture tolerance is now portable;
+schema admission was not loosened to export the old .01 fixture.
+
+Next G-fixtures implementation order:
+
+1. Register the dedicated persistence fixture/test files and a focused target;
+   keep independent matrix assets and future UI/trim artifacts out of this slice.
+2. Qualify every section9.3 hostile schema/raw-carrier case through actual files,
+   distinguishing codec refusal from application fallback. Check ownership,
+   attributes, foreign data, meaningful edits, clone/paste/block/INSERT and hatch.
+3. Exercise failed saves against existing/absent targets, source aliases and
+   document state. Correct implementation defects, not merely expected results;
+   run focused/full/ASan/format/build/audit gates, commit and checkpoint.
+4. Continue with independent G-matrix input/output and external-reader controls.
+   Generated ACadSharp inputs alone are not LibreCAD interoperability PASS.
 
 The auxiliary scheduler correction `90714f758` passed the407-case regression.
 Both isolated full runs of `H7-qualification-03` returned PASS through the actual
@@ -1174,6 +1174,15 @@ The codec's zero normal sentinel is acceptable only with complete raw 2D checks;
 explicit incompatible plane is not. DWG control data normally has no DXF normal.
 Do not infer planarity from flags or reject every DWG for its unspecified normal.
 
+Capture DXF source version presence/type/value and codepage before merging header
+variables into the graphic. A missing source header cannot inherit a preseeded
+destination version/codepage; use the actual DWG magic for its source version.
+Decode payload1000 with the declared codec independently of typed-text recovery;
+decode APPID/layer references1001/1003 consistently with the symbol tables.
+Binary DXF bypasses caret transport. Native control validity, finite XYZ and
+exact Z=0 are checked before the exporter's ordinary XY conversion can sanitize
+an inconsistent native carrier.
+
 Construct eligible controls/knots without converter rounding/synthesis/
 reclassification (materialize implied unit weights), then real adopt. Invalid
 schema/eligibility/check retains ordinary visible geometry with bounded diagnostic,
@@ -1843,7 +1852,7 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 | Atomic budget API | Committed and validated (`0eb2a0cfa`) | Integrate solver/geometry work in A-strict/A-reference |
 | Geometry work/exception/split/depth/terminal proof | All A slices and B committed and validated | C complete checker |
 | Complete semantic path checker | C committed d4a0b081a; used by D-core public adoption | D-edit staged regeneration |
-| Native feature/UI/persistence/trim | All D/E/F and G-schema helper slice committed; application persistence incomplete | Follow G-adapter through T; close packetization prerequisite before wiring |
+| Native feature/UI/persistence/trim | D/E/F and G-schema/G-adapter committed; independent persistence matrix, UI and trim remain | Follow G-fixtures through T; do not substitute same-library reopen for interoperability |
 | Independent DWG/version fixtures | Required, not yet qualified | Inventory/tool/license/provenance during G-fixtures; close all rows in G-matrix |
 | Harness production readiness | X-H1-X-H7 committed; actual two-run qualification03 independently audited | Retain observed-byte/runtime scope and failed attempts; no future timing guarantee |
 | Independent review and test evidence | A-core independent static review and actual test reports complete | Obtain fresh review/validation for each successor |
@@ -1873,8 +1882,63 @@ The plan checkpoint column never depends on its own future SHA.
 | F-types | 49c9b328b | Immediate plan-only checkpoint | 73 focused Release/ASan cases (one unbuilt legacy-export skip), full Release,199 adjacent ASan cases, DXF/DWG Release/ASan, qmake6; independent review and27-blob audit |
 | F-names | f0fb28fab | Immediate plan-only checkpoint | 16 focused Release/ASan cases, full Release,67 adjacent ASan cases, both format lanes Release/ASan and qmake6; independent source/test review and17-blob audit |
 | G-schema | 305042903 | Immediate plan-only checkpoint | 94 focused Release/ASan cases, full Release,184 adjacent ASan cases, both format lanes and qmake6; independent review and11-blob audit; helpers not application wiring |
+| G-adapter | 32597762b | Immediate plan-only checkpoint | 148 focused Release/ASan cases, full Release,766 affected ASan cases, DXF/DWG Release/ASan and qmake6; three production review fixes,21-blob audit; external interoperability remains G-matrix |
 | X-H7 timeout source fix | c1b2fa095 | Immediate plan-only checkpoint | Author55 + independent15 controls and parent399 runner regression passed; actual runtime qualification remains open |
 | X-H7 bounded scheduling | 90714f758 | Immediate plan-only checkpoint | Author85 + independent12 controls, parent407 runner regression and real224.790-second preflight probe passed; full two-run qualification remains open |
+
+### G-adapter Validation (2026-10-23)
+
+Product `32597762b` wires actual application import/export in21 files. New
+coverage comprises21 real adapter cases,14 codec/common-object cases,15 direct
+EED packet cases and four additional shared schema cases. The operation-local
+source metadata is captured before merging graphic variables; DWG version is
+primed from its file magic. Raw eligibility precedes the one real C adoption.
+Modern DXF/DWG retains native definitions; R12 is bounded ordinary geometry.
+All unsafe serialization paths latch failure before transaction publication.
+
+Independent review found and closed three P2 issues: preseeded destination
+headers could masquerade as source context; recovery-aware symbol names could
+diverge from declared-only XDATA references; invalid native validity/Z could be
+discarded by XY export conversion. Regressions include fresh/preseeded missing
+versions, true unknown-version codec rejection, a source-default CP1252 tail at
+the exact4096-byte limit against a stale CP1251 destination, real non-ASCII
+APPID/layer identity resolution, and four invalid-control states across five
+formats and both existing/absent targets. The independent re-review found no
+remaining P1/P2 in those production fixes. Its253-byte boundary correction was
+also applied and passed the actual adapter target.
+
+Final qualification in `/private/tmp/lc2961-impl-evidence.9GtLO2`:
+
+- `G-adapter-focused-release-05` and `focused-asan-04`:148 cases,370030
+  assertions, no failures/skips; actual shared/native/carrier/adapter/codec cases.
+- `full-release-05`:4356 cases,4329 passed,27 unchanged skips,9115468 assertions.
+- `affected-asan-03`:766 cases,765 passed, the same one explicitly unbuilt legacy
+  DXF exporter skip,3198172 assertions. LeakSanitizer remains unavailable on this
+  host; `ASAN_OPTIONS=detect_leaks=0` is not a leak-free qualification.
+- `dxf-release-03` / `dxf-asan-03`:763 cases,760 passed, three unchanged skips,
+  43006 assertions. `dwg-release-03` / `dwg-asan-03`:1021 cases,1017 passed,
+  four unchanged skips,362942 assertions. No ASan diagnostic in scoped runs.
+- Explicit Release build08, ASan build06 and qmake6 recursive configure01 /
+  build05 passed. Three explicit micro targets use the existing helper and do
+  not alter default build/test membership. Their actual21/14/15-case discovery
+  runs also passed; main/format binaries provide the final qualification above.
+- `source-identity-05` / `source-audit-06` validate all21 source blobs;
+  `binary-identity-02` / `binary-audit-02` validate all seven final binaries.
+  `committed-blob-audit-01.json` matches the product commit to the source hashes.
+- `report-audit-01.json` preserves all5253 baseline JUnit rows, adding exactly54
+  rows, with identical full/format skip identities and focused Release/ASan
+  membership. Three explicit contract renames retain their subsection suffixes:
+  two codepage cases now assert declared logical text and physical output bytes;
+  the R12 over-limit case now asserts transactional refusal and source preservation.
+- Whitespace checks passed. Targeted cppcheck01 retained existing codec/header/
+  legacy warnings; it is not a clean whole-repository static-analysis claim.
+  Discovery failures and superseded source/test reports remain in the evidence
+  directory rather than being presented as final PASS.
+
+This qualifies the application adapter, not independent external interoperability
+or every hostile ownership path. G-fixtures and G-matrix remain mandatory. Their
+draft tests/assets, and future UI/trim artifacts, were excluded from this commit.
+Next: G-fixtures, then G-matrix, H, I, T and Z.
 
 ### G-schema Validation (2026-10-23)
 
