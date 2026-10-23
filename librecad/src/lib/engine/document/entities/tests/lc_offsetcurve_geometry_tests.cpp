@@ -7948,3 +7948,294 @@ TEST_CASE("bounds dispatch and coverage advancement charge before work",
         }
     }
 }
+
+namespace {
+constexpr std::size_t noTerminal = std::size_t(-1);
+RS_EllipseData terminalSource(RS_EllipseData source, const bool reversed) {
+    if (reversed) { std::swap(source.angle1, source.angle2); source.reversed = true; }
+    return source;
+}
+geo::ReferenceComponentResult terminalGraph(const RS_EllipseData& source, const double distance) {
+    geo::WorkBudget budget;
+    auto result = geo::analyseReferenceComponents(source, distance, 1e-5, budget);
+    CAPTURE(result.status, result.reason, result.eventReason);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok); REQUIRE(result.analysis);
+    checkWork(result.work, budget.consumed());
+    return result;
+}
+void checkTerminalMetadata(const geo::ReferenceComponentAnalysis& analysis) {
+    const auto& occurrences = analysis.events().occurrences();
+    REQUIRE(analysis.occurrenceIncidence().size() == occurrences.size());
+    std::vector<std::size_t> incoming(occurrences.size(), noTerminal), outgoing = incoming;
+    for (std::size_t e = 0; e < analysis.edges().size(); ++e) {
+        const auto& edge = analysis.edges()[e]; const auto& span = analysis.spans()[edge.span];
+        REQUIRE(outgoing[span.start.value] == noTerminal); REQUIRE(incoming[span.end.value] == noTerminal);
+        outgoing[span.start.value] = e; incoming[span.end.value] = e;
+        for (const auto side : {geo::ReferenceEdgeSide::Start, geo::ReferenceEdgeSide::End}) {
+            const auto* terminal = analysis.terminal(e, side);
+            if (!terminal) { continue; }
+            const bool start = side == geo::ReferenceEdgeSide::Start;
+            CHECK(terminal->role == geo::ReferenceRole::Own); CHECK(terminal->edge == e); CHECK(terminal->side == side);
+            CHECK(terminal->occurrence.value == (start ? span.start.value : span.end.value));
+            CHECK(terminal->node.value == (start ? edge.start.value : edge.end.value));
+            CHECK(occurrences[terminal->occurrence.value].node.value == terminal->node.value);
+            if (terminal->kind == geo::ReferenceTerminalKind::PairTrim) {
+                CHECK(terminal->freeEnd == noTerminal);
+                REQUIRE(terminal->pairEvent < analysis.events().pairs().size());
+                const auto& pair = analysis.events().pairs()[terminal->pairEvent];
+                CHECK(((pair.first.value == terminal->occurrence.value && pair.second.value == terminal->partner.value) ||
+                       (pair.second.value == terminal->occurrence.value && pair.first.value == terminal->partner.value)));
+                CHECK(occurrences[terminal->partner.value].node.value == terminal->node.value);
+            } else {
+                CHECK(terminal->pairEvent == noTerminal); CHECK(terminal->partner.value == noTerminal);
+                REQUIRE(terminal->freeEnd < analysis.events().freeEnds().size());
+                const auto& freeEnd = analysis.events().freeEnds()[terminal->freeEnd];
+                CHECK(freeEnd.occurrence.value == terminal->occurrence.value); CHECK(freeEnd.atStart == start);
+                CHECK(terminal->kind == (start ? geo::ReferenceTerminalKind::SourceStart : geo::ReferenceTerminalKind::SourceEnd));
+                const double parameter = start ? 0.0 : analysis.events().providers().frame().parameterEnd();
+                CHECK(occurrences[terminal->occurrence.value].parameter.lo() == parameter);
+                CHECK(occurrences[terminal->occurrence.value].parameter.hi() == parameter);
+            }
+        }
+        CHECK_FALSE(analysis.terminal(e, static_cast<geo::ReferenceEdgeSide>(99)));
+    }
+    for (std::size_t i = 0; i < occurrences.size(); ++i) {
+        CHECK(analysis.occurrenceIncidence()[i].incoming == incoming[i]);
+        CHECK(analysis.occurrenceIncidence()[i].outgoing == outgoing[i]);
+    }
+    CHECK_FALSE(analysis.terminal(noTerminal, geo::ReferenceEdgeSide::Start));
+}
+}
+
+TEST_CASE("source start maps to exact terminal", "[lc-offsetcurve][geometry][reference-terminals]") {
+    for (const bool reversed : {false, true}) {
+        const auto source = terminalSource(basis(1, 1, .25, .2501), reversed);
+        const auto result = terminalGraph(source, 1);
+        const auto& analysis = *result.analysis; REQUIRE(analysis.edges().size() == 1);
+        const auto* terminal = analysis.terminal(0, geo::ReferenceEdgeSide::Start); REQUIRE(terminal);
+        CHECK(terminal->kind == geo::ReferenceTerminalKind::SourceStart);
+        checkTerminalMetadata(analysis);
+    }
+    SECTION("terminal tables and all scan prefixes have exact cumulative caps") {
+        const auto source = basis(1, 1, .25, .2501);
+        const auto measured = terminalGraph(source, 1);
+        REQUIRE(measured.analysis->events().occurrences().size() == 4);
+        REQUIRE(measured.analysis->edges().size() == 1);
+        // Four occurrence slots + two edge-side slots, admitted together after the graph.
+        LC_OffsetCheckLimits limits;
+        limits.maxVertices = measured.work.vertices - 1;
+        geo::WorkBudget shortRecords{limits};
+        const auto refused = geo::analyseReferenceComponents(source, 1, 1e-5, shortRecords);
+        CHECK(refused.status == LC_IntersectionStatus::LimitExceeded); CHECK_FALSE(refused.analysis);
+        CHECK(refused.work.vertices == measured.work.vertices - 6);
+        // Incidence: edge + two ends = 3 pairs. Classification: edge + two ends + 2*two free ends = 7.
+        for (std::size_t pairs = 0; pairs <= 10; ++pairs) {
+            limits = {}; limits.maxVertices = measured.work.vertices;
+            limits.maxDistancePairs = measured.work.distancePairs - 10 + pairs;
+            geo::WorkBudget budget{limits};
+            const auto result = geo::analyseReferenceComponents(source, 1, 1e-5, budget);
+            CHECK(result.status == (pairs == 10 ? LC_IntersectionStatus::Ok : LC_IntersectionStatus::LimitExceeded));
+            CHECK(bool(result.analysis) == (pairs == 10));
+            CHECK(result.work.distancePairs == limits.maxDistancePairs); CHECK(result.work.vertices == measured.work.vertices);
+            checkWork(result.work, budget.consumed());
+            if (pairs != 10) {
+                const auto stopped = budget.consumed();
+                CHECK(geo::analyseReferenceComponents(source, 1, 1e-5, budget).status == LC_IntersectionStatus::LimitExceeded);
+                checkWork(budget.consumed(), stopped);
+            }
+        }
+    }
+}
+
+TEST_CASE("source end maps to exact terminal", "[lc-offsetcurve][geometry][reference-terminals]") {
+    for (const bool reversed : {false, true}) {
+        const auto source = terminalSource(basis(1, 1, .25, .2501), reversed);
+        auto result = terminalGraph(source, 1); // The helper's source budget has already died.
+        const auto* terminal = result.analysis->terminal(0, geo::ReferenceEdgeSide::End); REQUIRE(terminal);
+        CHECK(terminal->kind == geo::ReferenceTerminalKind::SourceEnd);
+        checkTerminalMetadata(*result.analysis);
+        LC_OffsetCheckLimits limits{1, result.work.vertices + 3, result.work.distancePairs + 7, 20, result.work.orderingComparisons + 5};
+        geo::WorkBudget prespent{limits};
+        REQUIRE(prespent.consumePieces(1)); REQUIRE(prespent.consumeVertices(3)); REQUIRE(prespent.consumePairs(7));
+        REQUIRE(prespent.consumeOrderingComparisons(5)); REQUIRE(prespent.checkDepth(15));
+        const auto again = geo::analyseReferenceComponents(source, 1, 1e-5, prespent);
+        REQUIRE(again.status == LC_IntersectionStatus::Ok);
+        checkWork(again.work, {1, result.work.vertices + 3, result.work.distancePairs + 7,
+            std::max(15u, result.work.deepest), result.work.orderingComparisons + 5});
+        CHECK(again.analysis->terminal(0, geo::ReferenceEdgeSide::End)->kind == geo::ReferenceTerminalKind::SourceEnd);
+    }
+}
+
+TEST_CASE("pair trim terminates without paired continuation", "[lc-offsetcurve][geometry][reference-terminals]") {
+    const auto original = basis(100, .05, M_PI / 12, 7 * M_PI / 4);
+    const Quad cx = Quad(100) * cos(Quad(original.angle2)), cy = Quad(5) * sin(Quad(original.angle2));
+    const auto point = [](const Quad& theta) -> std::array<Quad, 2> {
+        const Quad c = cos(theta), s = sin(theta), speed = sqrt(Quad(25) * c * c + Quad(10000) * s * s);
+        return {Quad(100) * c - Quad(20) * c / speed, Quad(5) * s - Quad(400) * s / speed};
+    };
+    const auto residual = [&](const Quad& theta) -> Quad {
+        const auto p = point(theta); const Quad x = p[0] - cx, y = p[1] - cy;
+        return x * x + y * y - 16;
+    };
+    Quad lo(".7"), hi(".75"); REQUIRE(residual(lo) > 0); REQUIRE(residual(hi) < 0);
+    // F>0 and h<0 make this first endpoint-circle crossing unique on [.7,.75].
+    CHECK(sin(lo) > Quad(".64")); CHECK(cos(hi) > Quad(".73")); CHECK(cx < 71); CHECK(abs(cy) < 5);
+    CHECK(Quad(".64") * (7100 - Quad(9975) * Quad(".73")) + 25 < 0);
+    CHECK(Quad(64) * 64 * 64 / 500 > 4);
+    for (unsigned i = 0; i < 80; ++i) {
+        const Quad mid = (lo + hi) / 2;
+        if (residual(mid) > 0) { lo = mid; } else { hi = mid; }
+    }
+    const auto p = point((lo + hi) / 2);
+    CHECK((p[0] - cx) * (-Quad(100) * sin(Quad(original.angle2))) +
+          (p[1] - cy) * (Quad(5) * cos(Quad(original.angle2))) > 0); // Actual end-cutter half-space.
+    for (const bool reversed : {false, true}) {
+        const auto source = terminalSource(original, reversed); const auto result = terminalGraph(source, -4);
+        const auto& analysis = *result.analysis; checkTerminalMetadata(analysis);
+        std::size_t found = 0;
+        for (std::size_t e = 0; e < analysis.edges().size(); ++e) {
+            for (const auto side : {geo::ReferenceEdgeSide::Start, geo::ReferenceEdgeSide::End}) {
+                const auto* terminal = analysis.terminal(e, side);
+                if (!terminal || terminal->kind != geo::ReferenceTerminalKind::PairTrim) { continue; }
+                ++found; CHECK(side == (reversed ? geo::ReferenceEdgeSide::Start : geo::ReferenceEdgeSide::End));
+                const auto& occurrences = analysis.events().occurrences();
+                CHECK(occurrences[terminal->partner.value].role ==
+                    (reversed ? geo::ReferenceRole::StartCutter : geo::ReferenceRole::EndCutter));
+                const Quad duration(analysis.events().providers().frame().parameterEnd());
+                const Quad sweep = idealDirectedSweep(source, false);
+                const Quad a = (lo - Quad(source.angle1)) * duration / sweep;
+                const Quad b = (hi - Quad(source.angle1)) * duration / sweep;
+                checkEnclosure(occurrences[terminal->occurrence.value].parameter, a);
+                checkEnclosure(occurrences[terminal->occurrence.value].parameter, b);
+                const auto& own = analysis.occurrenceIncidence()[terminal->occurrence.value];
+                CHECK((side == geo::ReferenceEdgeSide::Start ? own.incoming : own.outgoing) == noTerminal);
+            }
+        }
+        CHECK(found == 1);
+    }
+}
+
+TEST_CASE("paired retained continuation blocks trim terminal", "[lc-offsetcurve][geometry][reference-terminals]") {
+    const Quad pi = boost::math::constants::pi<Quad>();
+    const Quad alpha = asin(sqrt(Quad(7104) / 7500)); // s=98 for E(100,50), D=-49.
+    for (const bool reversed : {false, true}) {
+        const auto source = terminalSource(basis(100, .5), reversed); const auto result = terminalGraph(source, -49);
+        const auto& analysis = *result.analysis; checkTerminalMetadata(analysis);
+        REQUIRE(analysis.edges().size() == 2); REQUIRE(analysis.events().pairs().size() == 2);
+        const auto& frame = analysis.events().providers().frame();
+        const Quad phase(frame.sourceSweep().start), duration(frame.parameterEnd());
+        std::array<Quad, 4> parameters{{alpha, pi - alpha, pi + alpha, 2 * pi - alpha}};
+        for (auto& theta : parameters) {
+            if (reversed && theta > phase) { theta -= 2 * pi; }
+            if (!reversed && theta < phase) { theta += 2 * pi; }
+            theta = (theta - phase) * duration / (reversed ? -2 * pi : 2 * pi);
+        }
+        std::sort(parameters.begin(), parameters.end());
+        for (std::size_t e = 0; e < 2; ++e) {
+            const auto& span = analysis.spans()[analysis.edges()[e].span];
+            for (const auto side : {geo::ReferenceEdgeSide::Start, geo::ReferenceEdgeSide::End}) {
+                const bool start = side == geo::ReferenceEdgeSide::Start;
+                const auto id = start ? span.start : span.end;
+                checkEnclosure(analysis.events().occurrences()[id.value].parameter, parameters[2 * e + (start ? 0 : 1)]);
+                CHECK_FALSE(analysis.terminal(e, side)); // In particular, E0 alone has no authorized trim ends.
+                bool paired = false;
+                for (const auto& event : analysis.events().pairs()) {
+                    if (event.first.value != id.value && event.second.value != id.value) { continue; }
+                    const auto partner = event.first.value == id.value ? event.second : event.first;
+                    REQUIRE(analysis.events().occurrences()[partner.value].role == geo::ReferenceRole::Own);
+                    const auto& incidence = analysis.occurrenceIncidence()[partner.value];
+                    CHECK((start ? incidence.incoming : incidence.outgoing) != noTerminal); paired = true;
+                }
+                CHECK(paired);
+            }
+        }
+        REQUIRE(analysis.events().seam());
+        const auto node = analysis.events().occurrences()[analysis.events().seam()->start.value].node;
+        CHECK(analysis.incidence()[node.value].hiddenPoint);
+    }
+}
+
+TEST_CASE("through event is not a terminal", "[lc-offsetcurve][geometry][reference-terminals]") {
+    for (const double ratio : {1.0, .5}) {
+        for (const bool reversed : {false, true}) {
+            const auto source = terminalSource(basis(5, ratio), reversed);
+            const auto result = terminalGraph(source, 3);
+            const auto& analysis = *result.analysis; checkTerminalMetadata(analysis);
+            REQUIRE(analysis.events().seam());
+            REQUIRE(analysis.events().freeEnds().empty());
+            REQUIRE(analysis.edges().size() == 1);
+            const auto& seam = *analysis.events().seam();
+            const auto& first = analysis.occurrenceIncidence()[seam.start.value];
+            const auto& last = analysis.occurrenceIncidence()[seam.end.value];
+            REQUIRE(first.outgoing == 0); REQUIRE(last.incoming == 0);
+            CHECK(first.incoming == noTerminal); CHECK(last.outgoing == noTerminal);
+            const auto& start = analysis.events().occurrences()[seam.start.value];
+            const auto& end = analysis.events().occurrences()[seam.end.value];
+            REQUIRE(start.node.value == end.node.value);
+            const auto& physical = analysis.incidence()[start.node.value];
+            REQUIRE(physical.incoming.size() == 1); REQUIRE(physical.outgoing.size() == 1);
+            CHECK_FALSE(physical.hiddenPoint); CHECK_FALSE(physical.trimBoundary);
+            CHECK_FALSE(analysis.terminal(0, geo::ReferenceEdgeSide::Start));
+            CHECK_FALSE(analysis.terminal(0, geo::ReferenceEdgeSide::End));
+        }
+    }
+}
+
+TEST_CASE("wrong paired occurrence orientation is not a terminal", "[lc-offsetcurve][geometry][reference-terminals]") {
+    const auto result = terminalGraph(basis(100, .05, M_PI / 12, 7 * M_PI / 4), -4);
+    const auto& analysis = *result.analysis;
+    std::size_t checked = 0;
+    for (std::size_t e = 0; e < analysis.edges().size(); ++e) {
+        for (const auto side : {geo::ReferenceEdgeSide::Start, geo::ReferenceEdgeSide::End}) {
+            const auto* terminal = analysis.terminal(e, side);
+            if (!terminal || terminal->kind != geo::ReferenceTerminalKind::PairTrim) { continue; }
+            const auto wrongSide = side == geo::ReferenceEdgeSide::Start ? geo::ReferenceEdgeSide::End : geo::ReferenceEdgeSide::Start;
+            const auto* wrong = analysis.terminal(e, wrongSide);
+            CHECK((!wrong || wrong->occurrence.value != terminal->occurrence.value));
+            const auto& partner = analysis.occurrenceIncidence()[terminal->partner.value];
+            CHECK(partner.incoming == noTerminal); CHECK(partner.outgoing == noTerminal);
+            CHECK_FALSE(analysis.terminal(partner.incoming, wrongSide)); ++checked;
+        }
+    }
+    CHECK(checked == 1);
+}
+
+TEST_CASE("hidden simple cusp is not a terminal", "[lc-offsetcurve][geometry][reference-terminals]") {
+    const auto source = basis(100, .05, M_PI / 12, 7 * M_PI / 4);
+    const auto result = terminalGraph(source, -4); const auto& analysis = *result.analysis;
+    std::size_t hidden = 0;
+    for (const auto& critical : analysis.events().criticals()) {
+        if (critical.kind != geo::CriticalKind::SimpleCusp) { continue; }
+        const auto& occurrence = analysis.events().occurrences()[critical.occurrence.value];
+        REQUIRE(analysis.incidence()[occurrence.node.value].hiddenPoint);
+        const auto& incidence = analysis.occurrenceIncidence()[critical.occurrence.value];
+        CHECK(incidence.incoming == noTerminal); CHECK(incidence.outgoing == noTerminal);
+        const double t = occurrence.parameter.lo() + (occurrence.parameter.hi() - occurrence.parameter.lo()) / 2;
+        CHECK_FALSE(componentVisibilityOracle(source, -4, analysis.events().providers().frame(), t));
+        for (std::size_t e = 0; e < analysis.edges().size(); ++e) {
+            for (const auto side : {geo::ReferenceEdgeSide::Start, geo::ReferenceEdgeSide::End}) {
+                const auto* terminal = analysis.terminal(e, side);
+                CHECK((!terminal || terminal->occurrence.value != critical.occurrence.value));
+            }
+        }
+        ++hidden;
+    }
+    CHECK(hidden > 0);
+}
+
+TEST_CASE("arbitrary interior point is not a terminal", "[lc-offsetcurve][geometry][reference-terminals]") {
+    const auto result = terminalGraph(basis(1, 1, .25, .2501), 1); const auto& analysis = *result.analysis;
+    const double interior = analysis.events().providers().frame().parameterEnd() / 2;
+    for (const auto& occurrence : analysis.events().occurrences()) {
+        if (occurrence.role == geo::ReferenceRole::Own) { CHECK_FALSE(occurrence.parameter.contains(interior)); }
+    }
+    for (std::size_t e = 0; e < analysis.edges().size(); ++e) {
+        for (const auto side : {geo::ReferenceEdgeSide::Start, geo::ReferenceEdgeSide::End}) {
+            const auto* terminal = analysis.terminal(e, side); REQUIRE(terminal);
+            CHECK_FALSE(analysis.events().occurrences()[terminal->occurrence.value].parameter.contains(interior));
+        }
+    }
+    // Only issued edge/side identities can be queried; no coordinate-based promotion exists.
+    CHECK_FALSE(analysis.terminal(analysis.edges().size(), geo::ReferenceEdgeSide::Start));
+    CHECK_FALSE(analysis.terminal(0, static_cast<geo::ReferenceEdgeSide>(99)));
+}

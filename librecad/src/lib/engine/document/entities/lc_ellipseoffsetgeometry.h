@@ -473,6 +473,22 @@ struct ReferenceEdge {
     std::size_t span = std::size_t(-1);
     ReferenceNodeId start, end;
 };
+enum class ReferenceEdgeSide { Start, End };
+enum class ReferenceTerminalKind { SourceStart, SourceEnd, PairTrim };
+struct ReferenceOccurrenceIncidence {
+    /** Directed source edges at this exact occurrence, not all edges at its physical node. */
+    std::size_t incoming = std::size_t(-1), outgoing = std::size_t(-1);
+};
+struct ReferenceTerminal {
+    ReferenceTerminalKind kind{};
+    ReferenceRole role = ReferenceRole::Own;
+    ReferenceOccurrenceId occurrence, partner;
+    ReferenceNodeId node;
+    std::size_t edge = std::size_t(-1);
+    ReferenceEdgeSide side{};
+    /** Exactly one provenance locator is present, according to kind. */
+    std::size_t freeEnd = std::size_t(-1), pairEvent = std::size_t(-1);
+};
 struct ReferenceIncidence {
     ReferenceNodeId node;
     std::vector<std::size_t> incoming, outgoing;
@@ -503,6 +519,9 @@ public:
     const std::vector<ReferenceSpan>& spans() const noexcept;
     const std::vector<ReferenceEdge>& edges() const noexcept;
     const std::vector<ReferenceIncidence>& incidence() const noexcept;
+    const std::vector<ReferenceOccurrenceIncidence>& occurrenceIncidence() const noexcept;
+    /** Immutable constant-time lookup; a coordinate alone never establishes a terminal. */
+    const ReferenceTerminal* terminal(std::size_t edge, ReferenceEdgeSide side) const noexcept;
     const std::vector<ReferenceComponent>& components() const noexcept;
 private:
     friend class ReferenceEventBuilder;

@@ -2786,6 +2786,8 @@ struct ReferenceComponentAnalysis::Impl {
     std::vector<ReferenceSpan> spans;
     std::vector<ReferenceEdge> edges;
     std::vector<ReferenceIncidence> incidence;
+    std::vector<ReferenceOccurrenceIncidence> occurrenceIncidence;
+    std::vector<std::array<std::optional<ReferenceTerminal>, 2>> terminals;
     std::vector<ReferenceComponent> components;
 };
 
@@ -3647,6 +3649,99 @@ private:
             c.branching = c.branching || n.incoming.size() > 1 || n.outgoing.size() > 1;
             n.trimBoundary = end && !n.sourceStart && !n.sourceEnd;
         }
+        return terminals();
+    }
+    bool terminals() {
+        const auto occurrenceCount = m_data->occurrences.size();
+        const auto edgeCount = m_components->edges.size();
+        if (occurrenceCount > m_budget.remainingVertices() ||
+            edgeCount > (m_budget.remainingVertices() - occurrenceCount) / 2 ||
+            !reserveAdditional(m_components->occurrenceIncidence, occurrenceCount, m_budget) ||
+            !reserveAdditional(m_components->terminals, edgeCount, m_budget) ||
+            !vertices(occurrenceCount + 2 * edgeCount)) { return limit(); }
+        m_components->occurrenceIncidence.resize(occurrenceCount);
+        m_components->terminals.resize(edgeCount);
+        for (std::size_t e = 0; e < edgeCount; ++e) {
+            if (!pair()) { return false; }
+            const auto& edge = m_components->edges[e];
+            if (edge.span >= m_components->spans.size()) { return contradiction(); }
+            const auto& span = m_components->spans[edge.span];
+            for (const auto side : {ReferenceEdgeSide::Start, ReferenceEdgeSide::End}) {
+                if (!pair()) { return false; }
+                const bool start = side == ReferenceEdgeSide::Start;
+                const auto occurrence = start ? span.start : span.end;
+                const auto node = start ? edge.start : edge.end;
+                if (occurrence.value >= occurrenceCount || node.value >= m_data->nodes.size() ||
+                    m_data->occurrences[occurrence.value].role != ReferenceRole::Own ||
+                    m_data->occurrences[occurrence.value].node.value != node.value) { return contradiction(); }
+                auto& incidence = m_components->occurrenceIncidence[occurrence.value];
+                auto& slot = start ? incidence.outgoing : incidence.incoming;
+                if (slot != none) { return contradiction(); }
+                slot = e;
+            }
+        }
+        for (std::size_t e = 0; e < edgeCount; ++e) {
+            if (!pair()) { return false; }
+            const auto& edge = m_components->edges[e];
+            const auto& span = m_components->spans[edge.span];
+            for (const auto side : {ReferenceEdgeSide::Start, ReferenceEdgeSide::End}) {
+                if (!pair()) { return false; }
+                const bool start = side == ReferenceEdgeSide::Start;
+                const auto occurrence = start ? span.start : span.end;
+                ReferenceTerminal terminal;
+                terminal.occurrence = occurrence;
+                terminal.node = start ? edge.start : edge.end;
+                terminal.edge = e; terminal.side = side;
+                auto& output = m_components->terminals[e][start ? 0 : 1];
+                for (std::size_t f = 0; f < m_data->freeEnds.size(); ++f) {
+                    if (!pair()) { return false; }
+                    const auto& freeEnd = m_data->freeEnds[f];
+                    if (freeEnd.occurrence.value != occurrence.value || freeEnd.atStart != start) { continue; }
+                    const auto& parameter = m_data->occurrences[occurrence.value].parameter;
+                    const double endpoint = start ? 0.0 : provider().frame().parameterEnd();
+                    if (parameter.lo() != endpoint || parameter.hi() != endpoint) { return contradiction(); }
+                    terminal.kind = start ? ReferenceTerminalKind::SourceStart : ReferenceTerminalKind::SourceEnd;
+                    terminal.freeEnd = f;
+                    output = terminal;
+                }
+                if (output) { continue; }
+                const auto& own = m_components->occurrenceIncidence[occurrence.value];
+                // Retained source continuation is occurrence-specific, even at a multiway physical node.
+                if ((start ? own.incoming : own.outgoing) != none) { continue; }
+                if (m_data->seam) {
+                    if (!pair()) { return false; }
+                    const auto& seam = *m_data->seam;
+                    const auto other = start ? seam.end : seam.start;
+                    const auto atSeam = start ? seam.start : seam.end;
+                    if (occurrence.value == atSeam.value && other.value < occurrenceCount) {
+                        const auto& continuation = m_components->occurrenceIncidence[other.value];
+                        if ((start ? continuation.incoming : continuation.outgoing) != none) { continue; }
+                    }
+                }
+                bool continuation = false;
+                for (std::size_t p = 0; p < m_data->pairs.size(); ++p) {
+                    if (!pair()) { return false; }
+                    const auto& event = m_data->pairs[p];
+                    const bool first = event.first.value == occurrence.value;
+                    const bool second = event.second.value == occurrence.value;
+                    if (!first && !second) { continue; }
+                    const auto partner = first ? event.second : event.first;
+                    if ((first && second) || partner.value >= occurrenceCount ||
+                        m_data->occurrences[partner.value].node.value != terminal.node.value) { return contradiction(); }
+                    if (terminal.pairEvent == none) {
+                        terminal.pairEvent = p; terminal.partner = partner;
+                    }
+                    if (m_data->occurrences[partner.value].role == ReferenceRole::Own) {
+                        const auto& other = m_components->occurrenceIncidence[partner.value];
+                        continuation = continuation || (start ? other.incoming : other.outgoing) != none;
+                    }
+                }
+                if (terminal.pairEvent != none && !continuation) {
+                    terminal.kind = ReferenceTerminalKind::PairTrim;
+                    output = terminal;
+                }
+            }
+        }
         return true;
     }
     ReferenceOccurrenceId publicOccurrence(const std::size_t witness) {
@@ -3751,6 +3846,15 @@ const std::vector<ReferenceFringe>& ReferenceComponentAnalysis::fringes() const 
 const std::vector<ReferenceSpan>& ReferenceComponentAnalysis::spans() const noexcept { return m_impl->spans; }
 const std::vector<ReferenceEdge>& ReferenceComponentAnalysis::edges() const noexcept { return m_impl->edges; }
 const std::vector<ReferenceIncidence>& ReferenceComponentAnalysis::incidence() const noexcept { return m_impl->incidence; }
+const std::vector<ReferenceOccurrenceIncidence>& ReferenceComponentAnalysis::occurrenceIncidence() const noexcept {
+    return m_impl->occurrenceIncidence;
+}
+const ReferenceTerminal* ReferenceComponentAnalysis::terminal(const std::size_t edge, const ReferenceEdgeSide side) const noexcept {
+    if (edge >= m_impl->terminals.size() ||
+        (side != ReferenceEdgeSide::Start && side != ReferenceEdgeSide::End)) { return nullptr; }
+    const auto& result = m_impl->terminals[edge][side == ReferenceEdgeSide::Start ? 0 : 1];
+    return result ? &*result : nullptr;
+}
 const std::vector<ReferenceComponent>& ReferenceComponentAnalysis::components() const noexcept { return m_impl->components; }
 ReferenceComponentResult analyseReferenceComponents(const RS_EllipseData& basis, const double signedDistance,
                                                   const double worldTolerance, WorkBudget& budget) {
