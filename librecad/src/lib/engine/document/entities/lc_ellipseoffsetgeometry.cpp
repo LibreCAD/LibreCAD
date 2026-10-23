@@ -349,6 +349,23 @@ bool WorkBudget::adoptWork(const CheckWork& delta) {
     return true;
 }
 
+bool WorkBudget::admitSubdivision(const SubdivisionKind kind) {
+    switch (kind) {
+    case SubdivisionKind::Candidate: return adoptWork({2, 2});
+    case SubdivisionKind::Proof: return adoptWork({0, 2});
+    }
+    latchInvalidInput();
+    return false;
+}
+
+bool WorkBudget::checkDepth(const unsigned cacheDepth, const unsigned referenceDepth) {
+    if (cacheDepth > m_limits.maxDepth || referenceDepth > m_limits.maxDepth - cacheDepth) {
+        latchLimitExceeded();
+        return false;
+    }
+    return checkDepth(cacheDepth + referenceDepth);
+}
+
 bool WorkBudget::checkDepth(const unsigned depth) {
     if (m_status != BudgetStatus::Ok) {
         return false;
@@ -391,6 +408,20 @@ bool reserveAdditional(std::vector<T>& values, const std::size_t count, WorkBudg
         values.reserve(std::max(required, grown));
     }
     return true;
+}
+
+template<typename T>
+bool reserveProofQueue(std::vector<T>& values, const unsigned cacheDepth, const unsigned referenceDepth,
+                       WorkBudget& budget) {
+    if (cacheDepth > budget.depthLimit() || referenceDepth > budget.depthLimit() - cacheDepth ||
+        budget.remainingVertices() == 0) {
+        budget.latchLimitExceeded();
+        return false;
+    }
+    const auto splits = std::min({std::size_t(budget.depthLimit() - cacheDepth - referenceDepth),
+        budget.remainingPairs(), (budget.remainingVertices() - 1) / 2});
+    // One live root plus at most one retained DFS sibling per affordable split.
+    return reserveAdditional(values, splits + 1, budget);
 }
 
 template<typename T>
@@ -1664,7 +1695,7 @@ private:
             m_budget.latchLimitExceeded();
             return false;
         }
-        return generated(2, depth + 1);
+        return m_budget.admitSubdivision(SubdivisionKind::Proof);
     }
     std::optional<CriticalRegime> classify() {
         if (m_distance >= 0.0) {
@@ -3880,7 +3911,9 @@ private:
     bool limit() { m_budget.latchLimitExceeded(); return fail(CacheBoundsStatus::LimitExceeded); }
     bool pair() { return m_budget.consumePairs(1) || limit(); }
     bool vertices(const std::size_t count) { return m_budget.consumeVertices(count) || limit(); }
-    template<typename T> bool room(const std::vector<T>& values) { return values.size() < values.max_size() || limit(); }
+    template<typename T> bool room(std::vector<T>& values) {
+        return (m_budget.remainingVertices() != 0 && reserveAdditional(values, 1, m_budget)) || limit();
+    }
     static double middle(const LC_Interval& interval) { return interval.lo() + (interval.hi() - interval.lo()) / 2; }
     bool prepare() {
         if (!finiteInterval(m_threshold) || !(m_threshold.lo() > 0) ||
@@ -3888,7 +3921,9 @@ private:
         const auto& reference = *m_data->reference;
         const auto& events = reference.events();
         std::vector<std::size_t> fringeIndex;
-        if (events.occurrences().size() > fringeIndex.max_size() || !vertices(events.occurrences().size())) { return limit(); }
+        if (events.occurrences().size() > m_budget.remainingVertices() ||
+            !reserveAdditional(fringeIndex, events.occurrences().size(), m_budget) ||
+            !vertices(events.occurrences().size())) { return limit(); }
         fringeIndex.assign(events.occurrences().size(), none);
         for (std::size_t i = 0; i < reference.fringes().size(); ++i) {
             if (!pair()) { return false; }
@@ -3929,14 +3964,13 @@ private:
     }
     bool compare(const std::size_t span, const Fragment& fragment) {
         std::vector<Cell> pending;
-        if (!vertices(1)) { return false; }
+        if (!pair() || !reserveProofQueue(pending, 0, 0, m_budget) || !vertices(1)) { return limit(); }
         pending.push_back({{span, 0, 0, LC_Interval::hull(0, 1)}, fragment.parameter, 0});
         while (!pending.empty()) {
             if (!pair()) { return false; }
             const Cell cell = pending.back(); pending.pop_back();
             const unsigned referenceDepth = fragment.kind == CacheWitnessKind::Interior ? cell.referenceDepth : 0;
-            if (cell.cache.depth > m_budget.depthLimit() || referenceDepth > m_budget.depthLimit() - cell.cache.depth ||
-                !m_budget.checkDepth(cell.cache.depth + referenceDepth)) { return limit(); }
+            if (!m_budget.checkDepth(cell.cache.depth, referenceDepth)) { return limit(); }
             auto proof = proveCachePair(m_data->layout.spans[span], frame(), cell.cache.parameter, cell.reference,
                 fragment.kind, fragment.x, fragment.y, fragment.fringeError, m_threshold, m_distance, m_floor);
             if (proof.disposition == CachePairDisposition::Invalid) { return fail(CacheBoundsStatus::Ambiguous); }
@@ -3972,7 +4006,8 @@ private:
                 }
                 splitCache = true;
             }
-            if (pending.size() > pending.max_size() - 2 || !vertices(3)) { return limit(); }
+            if (std::size_t{2} > pending.max_size() - pending.size() || pending.size() + 2 > pending.capacity() ||
+                !m_budget.admitSubdivision(splitCache ? SubdivisionKind::Candidate : SubdivisionKind::Proof)) { return limit(); }
             Cell left = cell, right = cell;
             if (splitCache) {
                 const double mid = middle(cell.cache.parameter);
@@ -3992,14 +4027,17 @@ private:
     }
     bool compareAll() {
         for (std::size_t span = 0; span < m_data->layout.spanCount(); ++span) {
+            if (!pair()) { return false; }
             for (const auto& fragment : m_fragments) { if (!compare(span, fragment)) { return false; } }
         }
         return true;
     }
     bool covered() {
         for (std::size_t span = 0; span < m_data->layout.spanCount(); ++span) {
+            if (!pair()) { return false; }
             double covered = 0;
             while (covered < 1) {
+                if (!pair()) { return false; }
                 double next = covered;
                 for (const auto& witness : m_data->witnesses) {
                     if (!pair()) { return false; }
@@ -4094,7 +4132,9 @@ private:
     bool limit() { m_budget.latchLimitExceeded(); return fail(CacheLocalTopologyStatus::LimitExceeded); }
     bool pair() { return m_budget.consumePairs(1) || limit(); }
     bool vertices(const std::size_t count) { return m_budget.consumeVertices(count) || limit(); }
-    template<typename T> bool room(const std::vector<T>& values) { return values.size() < values.max_size() || limit(); }
+    template<typename T> bool room(std::vector<T>& values) {
+        return (m_budget.remainingVertices() != 0 && reserveAdditional(values, 1, m_budget)) || limit();
+    }
     static double middle(const LC_Interval& interval) { return interval.lo() + (interval.hi() - interval.lo()) / 2; }
     const ReferenceEventAnalysis& events() const { return m_reference.events(); }
 
@@ -4172,6 +4212,7 @@ private:
     bool process(const CacheBoundsWitness& witness) {
         Cell initial;
         if (!normalize(witness, initial)) { return false; }
+        if (!m_budget.checkDepth(initial.cache.depth, initial.referenceDepth)) { return limit(); }
         const ReferenceFringe* fringe;
         const ReferenceNode* node;
         LC_Interval fringeError;
@@ -4184,15 +4225,14 @@ private:
 
     bool processInterior(const CacheBoundsWitness& seed, const Cell& initial) {
         std::vector<Cell> pending;
-        if (!vertices(1)) { return false; }
+        if (!reserveProofQueue(pending, initial.cache.depth, initial.referenceDepth, m_budget) ||
+            !vertices(1)) { return limit(); }
         pending.push_back(initial);
         const auto span = orientedSpan(initial.normalizedSpan);
         while (!pending.empty()) {
             if (!pair()) { return false; }
             const Cell cell = pending.back(); pending.pop_back();
-            if (cell.cache.depth > m_budget.depthLimit() ||
-                cell.referenceDepth > m_budget.depthLimit() - cell.cache.depth ||
-                !m_budget.checkDepth(cell.cache.depth + cell.referenceDepth)) { return limit(); }
+            if (!m_budget.checkDepth(cell.cache.depth, cell.referenceDepth)) { return limit(); }
             const auto proof = proveCachePair(span, m_frame, cell.cache.parameter, cell.reference,
                 CacheWitnessKind::Interior, {}, {}, LC_Interval::point(0), m_threshold, m_distance, m_floor);
             if (proof.disposition == CachePairDisposition::Invalid) { return fail(CacheLocalTopologyStatus::Ambiguous); }
@@ -4240,6 +4280,7 @@ private:
                 local.cache = cell.cache; local.normalizedSpan = cell.normalizedSpan;
                 local.kind = CacheWitnessKind::Interior; local.edge = seed.edge;
                 local.referenceParameter = cell.reference;
+                local.referenceDepth = cell.referenceDepth;
                 local.startEndpointError = startError; local.endEndpointError = endError;
                 local.candidateDerivativeProjection = candidateProjection;
                 local.referenceDerivativeProjection = referenceProjection;
@@ -4311,6 +4352,7 @@ private:
         local.cache = cell.cache; local.normalizedSpan = cell.normalizedSpan; local.kind = seed.kind;
         local.edge = seed.edge; local.occurrence = seed.occurrence; local.node = seed.node;
         local.referenceParameter = fringe.parameter;
+        local.referenceDepth = cell.referenceDepth;
         local.startEndpointError = atStart ? proof.candidateNodeError : LC_Interval::point(0);
         local.endEndpointError = atStart ? LC_Interval::point(0) : proof.candidateNodeError;
         local.candidateDerivativeProjection = candidateProjection;
@@ -4480,7 +4522,10 @@ private:
         if (splitCache && !canCache) { splitCache = false; }
         else if (!splitCache && !canReference) { splitCache = true; }
         if ((splitCache && !canCache) || (!splitCache && !canReference)) { return limit(); }
-        if (pending.size() > pending.max_size() - 2 || !vertices(2)) { return limit(); }
+        if (cell.cache.depth > m_budget.depthLimit() ||
+            cell.referenceDepth >= m_budget.depthLimit() - cell.cache.depth) { return limit(); }
+        if (std::size_t{2} > pending.max_size() - pending.size() || pending.size() + 2 > pending.capacity() ||
+            !m_budget.admitSubdivision(splitCache ? SubdivisionKind::Candidate : SubdivisionKind::Proof)) { return limit(); }
         Cell left = cell, right = cell;
         if (splitCache) {
             const double mid = middle(cell.cache.parameter);
@@ -4500,8 +4545,10 @@ private:
 
     bool covered() {
         for (std::size_t span = 0; span < m_bounds.layout().spanCount(); ++span) {
+            if (!pair()) { return false; }
             double coveredUntil = 0;
             while (coveredUntil < 1) {
+                if (!pair()) { return false; }
                 double next = coveredUntil;
                 for (const auto& witness : m_data.witnesses) {
                     if (!pair()) { return false; }

@@ -54,6 +54,7 @@ struct Sweep {
 };
 
 enum class BudgetStatus { Ok, InvalidInput, LimitExceeded };
+enum class SubdivisionKind { Candidate, Proof };
 
 struct CheckWork {
     std::size_t cacheSpans = 0;
@@ -82,7 +83,11 @@ public:
     bool consumeOrderingComparisons(std::size_t count);
     /** Atomically add counters and retain the absolute maximum depth, even if delta aliases consumed(). */
     bool adoptWork(const CheckWork& delta);
+    /** Reserve both child slots first; a popped parent is not another generated record. */
+    bool admitSubdivision(SubdivisionKind kind);
     bool checkDepth(unsigned depth);
+    /** Check a combined depth without unsigned addition overflow. */
+    bool checkDepth(unsigned cacheDepth, unsigned referenceDepth);
     unsigned depthLimit() const;
     void latchLimitExceeded();
     void latchInvalidInput();
@@ -585,6 +590,7 @@ struct CacheLocalTopologyWitness {
     LC_Interval clearanceLowerBound;
     /** For fringe records, which endpoint of this normalized candidate cell is node-bound. */
     bool candidateAtStart = false;
+    unsigned referenceDepth = 0;
 };
 struct CacheLocalTopologyResult;
 class CacheLocalTopologyAnalysis {

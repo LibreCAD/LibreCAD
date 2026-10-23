@@ -6170,7 +6170,9 @@ void checkBoundsRelation(const geo::CacheBoundsResult& result, const double dist
             REQUIRE(next > covered); covered = next;
         }
     }
-    CHECK(result.work.cacheSpans == result.layoutWork.cacheSpans);
+    // Candidate refinement adds two spans per split, including discarded proof branches.
+    CHECK(result.work.cacheSpans >= result.layoutWork.cacheSpans);
+    CHECK((result.work.cacheSpans - result.layoutWork.cacheSpans) % 2 == 0);
     CHECK(result.work.vertices > result.referenceWork.vertices);
     CHECK(result.work.distancePairs > result.referenceWork.distancePairs);
 }
@@ -7714,4 +7716,235 @@ TEST_CASE("Local topology exact budgets succeed and one-less pair vertex and dep
     const auto refused = geo::analyseCacheTopologyLocally(cache, localTopologyDefinition(source), .01, sticky);
     checkLocalTopologyRefused(refused, sticky);
     CHECK(refused.status == geo::CacheLocalTopologyStatus::LimitExceeded);
+}
+
+namespace {
+RS_SplineData accountingBulgeCache(const RS_EllipseData& source) {
+    auto cache = arcCache(source, 1, 3);
+    const auto start = cache.controlPoints.front(), chord = cache.controlPoints.back() - start;
+    const double length = std::hypot(chord.x, chord.y);
+    const RS_Vector normal{-chord.y * .03 / length, chord.x * .03 / length};
+    // The cubic's actual perpendicular excursion is .03/(2*sqrt(3)) < .01,
+    // but the unsplit control hull has .03 deviation and cannot pass a .02 error bound.
+    cache.controlPoints[1] = start + chord / 3 + normal;
+    cache.controlPoints[2] = start + chord * (2.0 / 3.0) - normal;
+    return cache;
+}
+}
+
+TEST_CASE("cache split atomically charges two children",
+          "[lc-offsetcurve][geometry][cache-budget-accounting][cache-accounting]") {
+    SECTION("the production admission operation never recreates the popped parent") {
+        geo::WorkBudget candidate{LC_OffsetCheckLimits{3, 3, 7, 20}};
+        REQUIRE(candidate.consumePieces(1)); REQUIRE(candidate.consumeVertices(1));
+        REQUIRE(candidate.admitSubdivision(geo::SubdivisionKind::Candidate));
+        checkWork(candidate.consumed(), {3, 3});
+        geo::WorkBudget proof{LC_OffsetCheckLimits{1, 3, 7, 20}};
+        REQUIRE(proof.consumePieces(1)); REQUIRE(proof.consumeVertices(1));
+        REQUIRE(proof.admitSubdivision(geo::SubdivisionKind::Proof));
+        checkWork(proof.consumed(), {1, 3});
+    }
+    SECTION("the bounds call site charges candidate child spans") {
+        const auto source = basis(1, 1, .25, .2501);
+        const auto cache = accountingBulgeCache(source);
+        geo::WorkBudget budget;
+        const auto result = geo::analyseCacheBounds(cache, source, 1, .01, budget);
+        checkBoundsRelation(result, 1, .01);
+        CHECK(result.work.cacheSpans > result.layoutWork.cacheSpans);
+        CHECK(std::any_of(result.analysis->witnesses().begin(), result.analysis->witnesses().end(),
+            [](const auto& witness) { return witness.cache.depth > 0; }));
+    }
+    SECTION("the local-topology call site charges its own candidate children") {
+        const auto source = basis(1, 1, .25, .2501);
+        auto cache = arcCache(source, 1, 3);
+        const auto start = cache.controlPoints.front(), chord = cache.controlPoints.back() - start;
+        cache.controlPoints = {start, start + chord * (7.0 / 6.0), start + chord * (23.0 / 24.0), start + chord};
+        geo::WorkBudget budget;
+        const auto result = geo::analyseCacheTopologyLocally(cache, localTopologyDefinition(source), .01, budget);
+        checkLocalTopologyAccepted(result, budget);
+        const auto added = result.work.cacheSpans - result.analysis->bounds().work.cacheSpans;
+        CHECK(added >= 2); CHECK(added % 2 == 0);
+    }
+    SECTION("critical proof-only callers cannot spend candidate spans") {
+        geo::WorkBudget budget{LC_OffsetCheckLimits{1, 65536, 1u << 20, 20}};
+        const auto result = geo::analyseCritical(basis(100, .5), -30, budget);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        CHECK(result.work.deepest > 0); CHECK(result.work.cacheSpans == 0);
+    }
+}
+
+TEST_CASE("one-less split budget refuses without partial debit",
+          "[lc-offsetcurve][geometry][cache-budget-accounting][cache-accounting]") {
+    for (const bool shortSpans : {false, true}) {
+        LC_OffsetCheckLimits limits{3, 3, 7, 20};
+        if (shortSpans) { --limits.maxCacheSpans; } else { --limits.maxVertices; }
+        geo::WorkBudget budget{limits};
+        REQUIRE(budget.consumePieces(1)); REQUIRE(budget.consumeVertices(1));
+        const auto before = budget.consumed();
+        CHECK_FALSE(budget.admitSubdivision(geo::SubdivisionKind::Candidate));
+        CHECK(budget.status() == geo::BudgetStatus::LimitExceeded);
+        checkWork(budget.consumed(), before);
+        CHECK_FALSE(budget.admitSubdivision(geo::SubdivisionKind::Proof));
+        checkWork(budget.consumed(), before);
+    }
+    const auto maximum = std::numeric_limits<std::size_t>::max();
+    geo::WorkBudget overflow{LC_OffsetCheckLimits{maximum, maximum, 7, 20}};
+    REQUIRE(overflow.consumePieces(maximum - 1)); REQUIRE(overflow.consumeVertices(maximum - 2));
+    const auto before = overflow.consumed();
+    CHECK_FALSE(overflow.admitSubdivision(geo::SubdivisionKind::Candidate));
+    checkWork(overflow.consumed(), before);
+    geo::WorkBudget invalid;
+    CHECK_FALSE(invalid.admitSubdivision(static_cast<geo::SubdivisionKind>(99)));
+    CHECK(invalid.status() == geo::BudgetStatus::InvalidInput); checkWork(invalid.consumed(), {});
+
+    // A real bounds refinement must stop before the last two-span admission, not after its first child.
+    const auto source = basis(1, 1, .25, .2501); const auto cache = accountingBulgeCache(source);
+    geo::WorkBudget baseline;
+    const auto complete = geo::analyseCacheBounds(cache, source, 1, .01, baseline);
+    REQUIRE(complete.status == geo::CacheBoundsStatus::Ok);
+    REQUIRE(complete.work.cacheSpans > complete.layoutWork.cacheSpans);
+    for (const bool shortCap : {false, true}) {
+        LC_OffsetCheckLimits limits; limits.maxCacheSpans = complete.work.cacheSpans - shortCap;
+        geo::WorkBudget budget{limits};
+        const auto result = geo::analyseCacheBounds(cache, source, 1, .01, budget);
+        CHECK(result.status == (shortCap ? geo::CacheBoundsStatus::LimitExceeded : geo::CacheBoundsStatus::Ok));
+        CHECK(bool(result.analysis) == !shortCap);
+        CHECK(result.work.cacheSpans == complete.work.cacheSpans - (shortCap ? 2 : 0));
+        if (shortCap) {
+            const auto stopped = budget.consumed();
+            CHECK(geo::analyseCacheBounds(cache, source, 1, .01, budget).status == geo::CacheBoundsStatus::LimitExceeded);
+            checkWork(budget.consumed(), stopped);
+        }
+    }
+}
+
+TEST_CASE("reference depth survives subdivision and enforces combined depth",
+          "[lc-offsetcurve][geometry][cache-budget-accounting][cache-accounting]") {
+    SECTION("combined admission is exact overflow-safe and sticky without observing an unentered child") {
+        geo::WorkBudget budget{LC_OffsetCheckLimits{4096, 65536, 1u << 20, 7}};
+        REQUIRE(budget.checkDepth(2, 5)); CHECK(budget.consumed().deepest == 7);
+        const auto before = budget.consumed();
+        CHECK_FALSE(budget.checkDepth(2, 6)); checkWork(budget.consumed(), before);
+        CHECK_FALSE(budget.checkDepth(0, 0)); checkWork(budget.consumed(), before);
+        LC_OffsetCheckLimits limits; limits.maxDepth = std::numeric_limits<unsigned>::max();
+        geo::WorkBudget large{limits};
+        REQUIRE(large.checkDepth(limits.maxDepth - 1, 1));
+        const auto stopped = large.consumed();
+        CHECK_FALSE(large.checkDepth(1, limits.maxDepth)); checkWork(large.consumed(), stopped);
+    }
+    SECTION("published local witnesses retain the bounds reference history in both cache orders") {
+        const auto source = basis(100, .01, 0, .1);
+        for (const bool reversed : {false, true}) {
+            // A straight chord has a strictly forward derivative; the high-curvature
+            // reference needs genuine refinement even under this coarse internal-layer tolerance.
+            auto cache = arcCache(source, 1, 1);
+            if (reversed) { std::reverse(cache.controlPoints.begin(), cache.controlPoints.end()); }
+            geo::WorkBudget budget;
+            const auto result = geo::analyseCacheTopologyLocally(cache, localTopologyDefinition(source, 1, reversed), 2, budget);
+            checkLocalTopologyAccepted(result, budget);
+            const auto& bounds = result.analysis->bounds();
+            bool inherited = false;
+            for (const auto& local : result.analysis->witnesses()) {
+                CHECK(local.cache.depth <= budget.depthLimit());
+                CHECK(local.referenceDepth <= budget.depthLimit() - local.cache.depth);
+                CHECK(local.cache.depth + local.referenceDepth <= result.work.deepest);
+                for (const auto& input : bounds.analysis->witnesses()) {
+                    geo::CacheDyadicDomain domain = input.cache;
+                    if (reversed) { REQUIRE(geo::reflectCacheDyadicDomain(input.cache, domain)); }
+                    if (local.kind == geo::CacheWitnessKind::Interior && input.kind == local.kind && input.edge == local.edge &&
+                        local.cache.span == domain.span && local.cache.parameter.lo() >= domain.parameter.lo() &&
+                        local.cache.parameter.hi() <= domain.parameter.hi() &&
+                        local.referenceParameter.lo() >= input.referenceParameter.lo() &&
+                        local.referenceParameter.hi() <= input.referenceParameter.hi() && input.referenceDepth != 0) {
+                        CHECK(local.referenceDepth >= input.referenceDepth);
+                        inherited = true;
+                    }
+                }
+            }
+            CHECK(inherited);
+            LC_OffsetCheckLimits limits{result.work.cacheSpans, result.work.vertices, result.work.distancePairs,
+                result.work.deepest - 1, result.work.orderingComparisons};
+            geo::WorkBudget limited{limits};
+            const auto refused = geo::analyseCacheTopologyLocally(cache, localTopologyDefinition(source, 1, reversed), 2, limited);
+            CHECK(refused.status == geo::CacheLocalTopologyStatus::LimitExceeded); CHECK_FALSE(refused.analysis);
+            CHECK(refused.work.deepest <= limits.maxDepth);
+        }
+    }
+    SECTION("a one-short combined depth refuses inside local topology after bounds succeeded") {
+        const auto source = basis(100, .01, 0, .1);
+        auto original = arcCache(source, 1, 3);
+        const auto start = original.controlPoints.front(), chord = original.controlPoints.back() - start;
+        const double epsilon = std::ldexp(1.0, -18);
+        const double scale = 1.0 / 9.0 + epsilon;
+        original.controlPoints[1] = start + chord / 3;
+        original.controlPoints[2] = start + chord * (1.0 / 3.0 + (-2.0 / 9.0 + epsilon) / (3 * scale));
+        // Its ideal scalar derivative is proportional to (t-1/3)^2+epsilon.
+        // Prove positivity for the actual rounded world controls, not only the ideal polynomial.
+        std::array<EventRational, 3> projected;
+        const EventRational cx(chord.x), cy(chord.y);
+        for (std::size_t i = 0; i < projected.size(); ++i) {
+            projected[i] = 3 * ((EventRational(original.controlPoints[i + 1].x) - EventRational(original.controlPoints[i].x)) * cx +
+                (EventRational(original.controlPoints[i + 1].y) - EventRational(original.controlPoints[i].y)) * cy);
+        }
+        const EventRational a = projected[0] - 2 * projected[1] + projected[2];
+        const EventRational b = 2 * (projected[1] - projected[0]);
+        REQUIRE(a > 0); REQUIRE(4 * a * projected[0] - b * b > 0);
+        for (const bool reversed : {false, true}) {
+            auto cache = original;
+            if (reversed) { std::reverse(cache.controlPoints.begin(), cache.controlPoints.end()); }
+            geo::WorkBudget budget;
+            const auto definition = localTopologyDefinition(source, 1, reversed);
+            const auto complete = geo::analyseCacheTopologyLocally(cache, definition, 2, budget);
+            checkLocalTopologyAccepted(complete, budget);
+            const auto& bounds = complete.analysis->bounds();
+            REQUIRE(complete.work.deepest > bounds.work.deepest);
+            LC_OffsetCheckLimits limits{complete.work.cacheSpans, complete.work.vertices, complete.work.distancePairs,
+                complete.work.deepest - 1, complete.work.orderingComparisons};
+            REQUIRE(limits.maxDepth >= bounds.work.deepest);
+            geo::WorkBudget limited{limits};
+            const auto refused = geo::analyseCacheTopologyLocally(cache, definition, 2, limited);
+            REQUIRE(refused.boundsStatus == geo::CacheBoundsStatus::Ok);
+            CHECK(refused.status == geo::CacheLocalTopologyStatus::LimitExceeded); CHECK_FALSE(refused.analysis);
+            CHECK(refused.work.deepest == limits.maxDepth);
+        }
+    }
+}
+
+TEST_CASE("bounds dispatch and coverage advancement charge before work",
+          "[lc-offsetcurve][geometry][cache-budget-accounting][cache-accounting]") {
+    const auto source = basis(1, 1, .25, .2501); const auto cache = arcCache(source, 1, 3);
+    geo::WorkBudget baseline;
+    const auto complete = geo::analyseCacheBounds(cache, source, 1, .01, baseline);
+    REQUIRE(complete.status == geo::CacheBoundsStatus::Ok); REQUIRE(complete.analysis);
+    const auto& reference = complete.analysis->reference();
+    REQUIRE(reference.edges().size() == 1); REQUIRE(reference.fringes().size() == 2);
+    REQUIRE(reference.events().occurrences().size() == 4); REQUIRE(complete.analysis->witnesses().size() == 3);
+    for (const auto& witness : complete.analysis->witnesses()) {
+        REQUIRE(witness.cache.depth == 0); REQUIRE(witness.referenceDepth == 0);
+    }
+    // Prepare: two fringe-index visits, one edge, two fringe fragments = five pairs.
+    // Compare: one span + three (dispatch, examination) pairs. Coverage: span, advance, three witnesses.
+    CHECK(complete.work.distancePairs == complete.referenceWork.distancePairs + 5 + 1 + 6 + 5);
+    CHECK(complete.work.vertices == complete.referenceWork.vertices + 1 + 4 + 3 + 6);
+    const std::array<std::size_t, 18> generated{{5, 5, 5, 6, 7, 8, 8, 9, 10, 11, 12, 13, 14, 14, 14, 14, 14, 14}};
+    for (const bool prespent : {false, true}) {
+        for (std::size_t pairs = 0; pairs <= 17; ++pairs) {
+            CAPTURE(prespent, pairs);
+            LC_OffsetCheckLimits limits;
+            limits.maxDistancePairs = complete.referenceWork.distancePairs + pairs + (prespent ? 3 : 0);
+            geo::WorkBudget budget{limits};
+            if (prespent) { REQUIRE(budget.consumeVertices(2)); REQUIRE(budget.consumePairs(3)); }
+            const auto result = geo::analyseCacheBounds(cache, source, 1, .01, budget);
+            REQUIRE(result.referenceStatus == LC_IntersectionStatus::Ok);
+            CHECK(result.status == (pairs == 17 ? geo::CacheBoundsStatus::Ok : geo::CacheBoundsStatus::LimitExceeded));
+            CHECK(bool(result.analysis) == (pairs == 17)); CHECK(result.work.distancePairs == limits.maxDistancePairs);
+            CHECK(result.work.vertices == complete.referenceWork.vertices + generated[pairs] + (prespent ? 2 : 0));
+            checkWork(result.work, budget.consumed());
+            if (pairs != 17) {
+                const auto stopped = budget.consumed();
+                CHECK(geo::analyseCacheBounds(cache, source, 1, .01, budget).status == geo::CacheBoundsStatus::LimitExceeded);
+                checkWork(budget.consumed(), stopped);
+            }
+        }
+    }
 }
