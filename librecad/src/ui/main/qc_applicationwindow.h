@@ -410,6 +410,10 @@ protected:
     void updateDockAreaActions();
     void scheduleDockFit();
     void fitDocksToWindow();
+    QDockWidget* currentTab(QDockWidget* dock) const;
+    bool dockShown(QDockWidget* dock) const;
+    QSize defaultDockSizes() const;
+    void applyDefaultDockSizes();
     void clampWindowToScreen(QWidget* window);
     void reflowBottomToolbars(int availableWidth);
     QString dockGroupKey(QDockWidget* dock) const;
@@ -478,6 +482,10 @@ protected:
     QByteArray m_fittedDockState;
     QSize m_fittedDockCanvas;
     QSize m_fittedDockScreen;
+    // The factory layout sizes its docks for the window until anything else sizes them.
+    bool m_defaultDockSizing{false};
+    QSize m_defaultDockSizingWindow;
+    QSize m_defaultDockSizingResult;
 
     // --- Dock widgets ---
     QG_LayerWidget* m_layerWidget{nullptr};

@@ -210,6 +210,7 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
 void QC_ApplicationWindow::initializeDockLayout() {
     if (m_dockLayoutInitialized) return;
     m_dockLayoutInitialized = true;
+    m_defaultDockSizing = true;
     for (Qt::DockWidgetArea area : {Qt::LeftDockWidgetArea, Qt::RightDockWidgetArea,
                                      Qt::TopDockWidgetArea, Qt::BottomDockWidgetArea}) {
         m_requestedDockAreas.insert(int(area), true);
@@ -302,6 +303,9 @@ void QC_ApplicationWindow::restoreDockLayout(const QMap<QString, bool>& requeste
     m_priorityDockName.clear();
     m_requestedDockVisibility.clear();
     const bool stateRestored = !state.isEmpty() && restoreState(state);
+    m_defaultDockSizing = !stateRestored;
+    m_defaultDockSizingWindow = QSize();
+    m_defaultDockSizingResult = QSize();
     for (QDockWidget* dock : findChildren<QDockWidget*>()) {
         const QString name = dock->objectName();
         if (name.isEmpty()) continue;
@@ -405,7 +409,9 @@ void QC_ApplicationWindow::collapseDockGroup(const QList<QDockWidget*>& docks,
     }
     m_collapsedGroupMembers.insert(key, names);
     m_collapsedPressure.insert(key, pressure);
-    if (QDockWidget* remembered = findChild<QDockWidget*>(m_selectedTabs.value(key))) selected = remembered;
+    // findChild() with an empty name would return any dock
+    if (QDockWidget* remembered = m_selectedTabs.contains(key) ? findChild<QDockWidget*>(m_selectedTabs.value(key))
+                                                               : nullptr) selected = remembered;
     if (selected) {
         m_collapsedSelectedTabs.insert(key, selected->objectName());
         m_selectedTabs.insert(key, selected->objectName());
@@ -431,7 +437,7 @@ void QC_ApplicationWindow::restoreCollapsedGroup(const QString& key) {
         else tabifyDockWidget(first, dock);
     }
     applyRequestedDockVisibility();
-    if (QDockWidget* dock = findChild<QDockWidget*>(selected)) dock->raise();
+    if (QDockWidget* dock = selected.isEmpty() ? nullptr : findChild<QDockWidget*>(selected)) dock->raise();
 }
 
 QByteArray QC_ApplicationWindow::dockLayoutStateForSaving() {
@@ -620,6 +626,15 @@ void QC_ApplicationWindow::fitDocksToWindow() {
         if (dock->isFloating() && dock->isVisible()) clampWindowToScreen(dock);
     }
     activateLayout();
+    if (m_defaultDockSizing) {
+        // Follow the window (e.g. a maximize the window manager applies late) until anything else sizes the docks.
+        if (size() == m_defaultDockSizingWindow) {
+            if (defaultDockSizes() != m_defaultDockSizingResult) m_defaultDockSizing = false;
+        } else {
+            applyDefaultDockSizes();
+            activateLayout();
+        }
+    }
 
     const QSize floor(qMin(480, qMax(200, width() - 100)),
                       qMin(320, qMax(160, height() - 100)));
@@ -636,7 +651,7 @@ void QC_ApplicationWindow::fitDocksToWindow() {
                          + qMax(0, floor.height() - m_mdiAreaCAD->height()));
     };
 
-    struct Group { QString key; QList<QDockWidget*> docks; int priority; };
+    struct Group { QString key; QList<QDockWidget*> docks; int priority; bool command; };
     QList<Group> groups;
     for (QDockWidget* dock : findChildren<QDockWidget*>()) {
         if (dock->isFloating() || dock->objectName().isEmpty()) continue;
@@ -650,24 +665,36 @@ void QC_ApplicationWindow::fitDocksToWindow() {
             }
         } else members.append(tabifiedDockWidgets(dock));
         int priority = dockWidgetArea(dock) == Qt::RightDockWidgetArea ? 0 : 20;
-        if (std::any_of(members.cbegin(), members.cend(), [](QDockWidget* member) {
-                return member->objectName() == QLatin1String("layer_dockwidget")
-                    || member->objectName() == QLatin1String("command_dockwidget");
-            })) priority += 30;
-        groups.append({key, members, priority});
+        const auto holds = [&members](const char* name) {
+            return std::any_of(members.cbegin(), members.cend(), [name](QDockWidget* member) {
+                return member->objectName() == QLatin1String(name);
+            });
+        };
+        const bool layers = holds("layer_dockwidget");
+        const bool command = holds("command_dockwidget");
+        if (layers || command) priority += 30;
+        groups.append({key, members, priority, command && !layers});
     }
     std::sort(groups.begin(), groups.end(), [](const Group& a, const Group& b) {
         return a.priority == b.priority ? a.key < b.key : a.priority < b.priority;
     });
+    // As in 2.2.1, a Command Line of its own gives way first to a lack of height and last to a lack of width.
+    const auto rank = [](const Group& group, Qt::Orientation pressure) {
+        return group.command ? (pressure == Qt::Vertical ? 10 : 60) : group.priority;
+    };
+    const auto shownDock = [this](const Group& group) -> QDockWidget* {
+        for (QDockWidget* dock : group.docks) {
+            if (dock->isVisible()) return currentTab(dock);
+        }
+        return nullptr;
+    };
 
     if (violation().width() > 0) {
         for (const Group& group : std::as_const(groups)) {
             if (group.docks.isEmpty() || dockWidgetArea(group.docks.first()) != Qt::RightDockWidgetArea
                 || m_autoCollapsedGroups.contains(group.key)) continue;
-            QDockWidget* representative = nullptr;
-            for (QDockWidget* dock : group.docks) {
-                if (!dock->isHidden()) { representative = dock; break; }
-            }
+            // A parked tab keeps the width it had when it was last shown.
+            QDockWidget* representative = shownDock(group);
             if (!representative) continue;
             const int target = qMax(representative->minimumSizeHint().width(),
                                     representative->width() - violation().width());
@@ -689,6 +716,10 @@ void QC_ApplicationWindow::fitDocksToWindow() {
         const QRect rect = geometry();
         restoreCollapsedGroup(key);
         activateLayout();
+        if (m_defaultDockSizing) {
+            applyDefaultDockSizes();
+            activateLayout();
+        }
         if (violation() != QSize(0, 0)
             || (!isMaximized() && !isFullScreen() && size() != rect.size())
             || m_mdiAreaCAD->width() < floor.width() + (pressure == Qt::Horizontal ? 24 : 0)
@@ -697,7 +728,7 @@ void QC_ApplicationWindow::fitDocksToWindow() {
             for (const QString& name : names) {
                 if (QDockWidget* dock = findChild<QDockWidget*>(name)) docks.append(dock);
             }
-            collapseDockGroup(docks, key, findChild<QDockWidget*>(selected), pressure);
+            collapseDockGroup(docks, key, selected.isEmpty() ? nullptr : findChild<QDockWidget*>(selected), pressure);
             restoreLayout(state, rect);
         }
     }
@@ -707,21 +738,15 @@ void QC_ApplicationWindow::fitDocksToWindow() {
             return dock->objectName() == priorityName;
         });
     };
-    const auto shownDock = [](const Group& group) -> QDockWidget* {
-        for (QDockWidget* dock : group.docks) {
-            if (dock->isVisible()) return dock;
-        }
-        return nullptr;
-    };
     QSet<QString> tried;
     bool protectRequestedDock = true;
     while (violation() != QSize(0, 0)) {
+        const auto pending = violation().height() > 0 ? Qt::Vertical : Qt::Horizontal;
         const Group* candidate = nullptr;
         for (const Group& group : std::as_const(groups)) {
             if (tried.contains(group.key) || m_autoCollapsedGroups.contains(group.key)
                 || (protectRequestedDock && protectedGroup(group)) || !shownDock(group)) continue;
-            candidate = &group;
-            break;
+            if (!candidate || rank(group, pending) < rank(*candidate, pending)) candidate = &group;
         }
         if (!candidate) {
             const QSize required = layout() ? layout()->minimumSize() + windowSize() - size() : windowSize();
@@ -780,6 +805,56 @@ void QC_ApplicationWindow::fitDocksToWindow() {
     m_fittedDockState = saveState();
     m_fittedDockCanvas = m_mdiAreaCAD->size();
     m_fittedDockScreen = available;
+    if (m_defaultDockSizing) {
+        m_defaultDockSizingWindow = size();
+        m_defaultDockSizingResult = defaultDockSizes();
+    }
+}
+
+// The tab of the dock's group that is shown: the other tabs are visible too, but parked outside the window.
+QDockWidget* QC_ApplicationWindow::currentTab(QDockWidget* dock) const {
+    if (dock == nullptr || dock->isHidden() || dock->isFloating()) return dock;
+    const QList<QDockWidget*> peers = tabifiedDockWidgets(dock);
+    if (peers.isEmpty()) return dock;
+    for (QTabBar* bar : findChildren<QTabBar*>(QString(), Qt::FindDirectChildrenOnly)) {
+        if (bar->isHidden() || bar->currentIndex() < 0) continue;
+        bool holdsDock = false;
+        for (int tab = 0; tab < bar->count() && !holdsDock; ++tab) holdsDock = bar->tabText(tab) == dock->windowTitle();
+        if (!holdsDock) continue;
+        const QString current = bar->tabText(bar->currentIndex());
+        for (QDockWidget* peer : peers) {
+            if (peer->windowTitle() == current) return peer;
+        }
+        return dock;
+    }
+    return dock;
+}
+
+bool QC_ApplicationWindow::dockShown(QDockWidget* dock) const {
+    return dock != nullptr && dock->isVisible() && !dock->isFloating() && currentTab(dock) == dock;
+}
+
+QSize QC_ApplicationWindow::defaultDockSizes() const {
+    QRect column;
+    for (QDockWidget* dock : findChildren<QDockWidget*>()) {
+        if (dockShown(dock) && dockWidgetArea(dock) == Qt::RightDockWidgetArea) column |= dock->geometry();
+    }
+    auto* command = findChild<QDockWidget*>("command_dockwidget");
+    return {column.width(), dockShown(command) ? command->height() : 0};
+}
+
+void QC_ApplicationWindow::applyDefaultDockSizes() {
+    // About a fifth of the window for the right docks (the minimum widths may need more),
+    // and a short Command Line below them.
+    auto* command = findChild<QDockWidget*>("command_dockwidget");
+    for (QDockWidget* dock : findChildren<QDockWidget*>()) {
+        if (dock != command && dockShown(dock) && dockWidgetArea(dock) == Qt::RightDockWidgetArea) {
+            resizeDocks({dock}, {qMin(320, width() / 5)}, Qt::Horizontal);
+            break;
+        }
+    }
+    if (dockShown(command) && tabifiedDockWidgets(command).isEmpty())
+        resizeDocks({command}, {140}, Qt::Vertical);
 }
 
 void QC_ApplicationWindow::checkForNewVersion() const {

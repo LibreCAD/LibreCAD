@@ -49,6 +49,7 @@ struct LC_DockLayoutTestAccess {
     static void collapse(QC_ApplicationWindow& window, QDockWidget* dock) {
         window.collapseDockGroup({dock}, window.dockGroupKey(dock), dock, Qt::Vertical);
     }
+    static QStringList collapsedGroups(QC_ApplicationWindow& window) { return window.m_autoCollapsedGroups; }
     static int surfaceBlocks(QC_ApplicationWindow& window, RS_Graphic& graphic) {
         lc::test::TestGraphicView view;
         view.setDocument(&graphic);
@@ -162,6 +163,54 @@ struct DockFixture {
         return dock;
     }
 };
+
+// A window as main() builds it on the first start, shown at a realistic size. The offscreen
+// platform has an 800x600 screen unless given a larger one: run these tests with
+// QT_QPA_PLATFORM=offscreen:configfile=librecad/src/ui/main/tests/lc_docklayout_screen.json
+struct FirstStart {
+    QC_ApplicationWindow& window {testWindow()};
+    ~FirstStart() { window.hide(); }
+    void show(QSize size, bool maximized = false) {
+        window.prepareWindowForShow();
+        window.resize(size);
+        if (maximized) window.showMaximized();
+        else window.show();
+        settle();
+    }
+    QDockWidget* dock(const char* name) {
+        auto* dock = window.findChild<QDockWidget*>(name);
+        REQUIRE(dock != nullptr);
+        return dock;
+    }
+    bool shown(QDockWidget* dock) const {
+        return !dock->isHidden() && window.rect().intersects(dock->geometry());
+    }
+    int rightStrip() const { return window.width() - window.centralWidget()->geometry().right() - 1; }
+};
+
+void requireScreen(QSize size) {
+    REQUIRE(lc::test::application() != nullptr);
+    const QScreen* screen = QGuiApplication::primaryScreen();
+    REQUIRE(screen != nullptr);
+    const QSize available = screen->availableGeometry().size();
+    if (available.width() < size.width() + 8 || available.height() < size.height() + 8)
+        SKIP("needs a screen larger than " << size.width() << 'x' << size.height()
+             << ", see lc_docklayout_screen.json");
+}
+
+void checkDefaultRightDocks(FirstStart& start) {
+    auto& window = start.window;
+    INFO("window=" << window.width() << 'x' << window.height()
+         << " canvas=" << window.getMdiArea()->width() << 'x' << window.getMdiArea()->height()
+         << " strip=" << start.rightStrip()
+         << " collapsed=" << LC_DockLayoutTestAccess::collapsedGroups(window).join(',').toStdString());
+    CHECK(start.shown(start.dock("layer_dockwidget")));
+    CHECK(start.shown(start.dock("command_dockwidget")));
+    CHECK(LC_DockLayoutTestAccess::collapsedGroups(window).isEmpty());
+    CHECK(start.rightStrip() * 4 <= window.width());
+    CHECK(window.getMdiArea()->width() >= 480);
+    CHECK(window.getMdiArea()->height() >= 320);
+}
 
 QStringList tabOrder(QC_ApplicationWindow& window, const QString& first, const QString& second) {
     for (auto* bar : window.findChildren<QTabBar*>()) {
@@ -685,4 +734,123 @@ TEST_CASE("Named and global workspaces round-trip requested dock preferences", "
         auto paths = RS_SETTINGS->beginGroupGuard("Paths");
         RS_SETTINGS->writeEntry("OtherSettingsDir", lc::test::SettingsIsolation::directory());
     }
+}
+
+TEST_CASE("A first start shows the Layer List and the Command Line beside the drawing",
+          "[.gui][dock-window][first-start]") {
+    for (const QSize size : {QSize(1280, 720), QSize(1366, 768), QSize(1920, 1080)}) {
+        CAPTURE(size.width(), size.height());
+        requireScreen(size);
+        FirstStart start;
+        start.show(size);
+        checkDefaultRightDocks(start);
+    }
+    requireScreen({1280, 720});
+    FirstStart start;
+    start.show({1280, 720}, true);
+    CHECK(start.window.isMaximized());
+    checkDefaultRightDocks(start);
+}
+
+TEST_CASE("A saved window geometry does not skip the first-start dock widths", "[.gui][dock-window][first-start]") {
+    for (const QSize size : {QSize(1366, 768), QSize(1920, 1080)}) {
+        CAPTURE(size.width(), size.height());
+        requireScreen(size);
+        // As in a profile copied from 2.2.x: the geometry is there, the dock layout is not restored.
+        LC_SET_ONE("Geometry", "WindowGeometry", QString("AA=="));
+        FirstStart start;
+        {
+            const auto geometry = RS_SETTINGS->beginGroupGuard("Geometry");
+            RS_SETTINGS->remove("WindowGeometry");
+        }
+        for (QDockWidget* dock : start.window.findChildren<QDockWidget*>()) {
+            if (start.window.dockWidgetArea(dock) == Qt::RightDockWidgetArea) {
+                CAPTURE(dock->objectName().toStdString());
+                CHECK(dock->width() <= 390);
+            }
+        }
+        start.show(size);
+        checkDefaultRightDocks(start);
+    }
+}
+
+TEST_CASE("First-start dock widths follow the window until the user sizes the docks",
+          "[.gui][dock-window][first-start]") {
+    requireScreen({1920, 1080});
+    FirstStart start;
+    auto& window = start.window;
+    start.show({1280, 720});
+    const int small = start.rightStrip();
+    window.resize(1920, 1080);
+    settle();
+    INFO("strips " << small << " then " << start.rightStrip());
+    CHECK(start.rightStrip() > small);
+    checkDefaultRightDocks(start);
+
+    window.resizeDocks({start.dock("layer_dockwidget")}, {500}, Qt::Horizontal);
+    settle();
+    const int chosen = start.rightStrip();
+    CHECK(chosen > 480);
+    window.resize(1600, 900);
+    settle();
+    CHECK(start.rightStrip() == chosen);
+}
+
+TEST_CASE("Narrowing the window shrinks the right docks by the tab on screen", "[.gui][dock-window][first-start]") {
+    requireScreen({1920, 1080});
+    FirstStart start;
+    auto& window = start.window;
+    start.show({1920, 1080});
+    start.dock("command_dockwidget")->close();
+    // The Pens Palette is the first of its group and keeps the width it had when it was last on screen.
+    auto* palette = start.dock("pen_palette_dockwidget");
+    auto* layers = start.dock("layer_dockwidget");
+    palette->raise();
+    settle();
+    window.resizeDocks({palette}, {1100}, Qt::Horizontal);
+    settle();
+    layers->raise();
+    settle();
+    window.resizeDocks({layers}, {360}, Qt::Horizontal);
+    settle();
+    INFO("palette=" << palette->width() << " layers=" << layers->width());
+    REQUIRE_FALSE(start.shown(palette));
+    REQUIRE(palette->width() > 900);
+    REQUIRE(layers->width() - layers->minimumSizeHint().width() > 20);
+    // 10 pixels too narrow for the drawing area beside the docks as they are
+    window.resize(window.width() - window.getMdiArea()->width() + 480 - 10, window.height());
+    settle();
+    INFO("canvas=" << window.getMdiArea()->width() << " strip=" << start.rightStrip()
+         << " collapsed=" << LC_DockLayoutTestAccess::collapsedGroups(window).join(',').toStdString());
+    CHECK(start.shown(layers));
+    CHECK(LC_DockLayoutTestAccess::collapsedGroups(window).isEmpty());
+    CHECK(window.getMdiArea()->width() >= 480);
+}
+
+TEST_CASE("A short window gives up the Command Line before the Layer List", "[.gui][dock-window][first-start]") {
+    requireScreen({1366, 768});
+    FirstStart start;
+    start.show({1366, 460});
+    INFO("collapsed=" << LC_DockLayoutTestAccess::collapsedGroups(start.window).join(',').toStdString());
+    CHECK(start.shown(start.dock("layer_dockwidget")));
+    CHECK_FALSE(start.shown(start.dock("command_dockwidget")));
+    CHECK(start.window.layout()->minimumSize().height() <= start.window.height());
+}
+
+TEST_CASE("Docks hidden by a narrow first start come back at the first-start width",
+          "[.gui][dock-window][first-start]") {
+    requireScreen({1920, 1080});
+    int expected = 0;
+    {
+        FirstStart start;
+        start.show({1920, 1080});
+        expected = start.rightStrip();
+    }
+    FirstStart start;
+    start.show({700, 700});
+    CHECK_FALSE(start.shown(start.dock("layer_dockwidget")));
+    start.window.resize(1920, 1080);
+    settle();
+    checkDefaultRightDocks(start);
+    CHECK(start.rightStrip() == expected);
 }
