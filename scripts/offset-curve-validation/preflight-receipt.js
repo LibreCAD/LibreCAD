@@ -638,11 +638,17 @@ function validateReceipt(reportPath, {io = nodeFs, expected = {}, ordinal = 0} =
     }
 
     const stdout = streams.stdout.bytes;
-    assert(stdout.length > 0 && stdout[stdout.length - 1] === 0x0a && (stdout.length < 2 || stdout[stdout.length - 2] !== 0x0a), 'stdout must contain exactly one canonical result line');
-    const stdoutResult = parseCanonicalJson(stdout, {maxBytes: MAX_STREAM_BYTES, label: 'preflight stdout result'});
-    validatePreflightResult(stdoutResult);
-    assert(canonicalJson(stdoutResult).equals(stdout), 'stdout result line is not canonical');
-    assert(canonicalJson(receipt.preflight_result).equals(stdout), 'stdout result differs from receipt.preflight_result');
+    try {
+        assert(stdout.length > 0 && stdout[stdout.length - 1] === 0x0a && (stdout.length < 2 || stdout[stdout.length - 2] !== 0x0a), 'stdout must contain exactly one canonical result line');
+        const stdoutResult = parseCanonicalJson(stdout, {maxBytes: MAX_STREAM_BYTES, label: 'preflight stdout result'});
+        validatePreflightResult(stdoutResult);
+        assert(canonicalJson(stdoutResult).equals(stdout), 'stdout result line is not canonical');
+        assert(canonicalJson(receipt.preflight_result).equals(stdout), 'stdout result differs from receipt.preflight_result');
+    } catch (cause) {
+        const error = new TypeError(cause.message, {cause});
+        error.receiptBoundary = 'STDOUT_SHAPE';
+        throw error;
+    }
 
     const files = [reportFile, streams.stdout, streams.stderr];
     const snapshot = Object.freeze({
@@ -779,6 +785,29 @@ function validateReceiptSet(reportPaths, {io = nodeFs, expected = {}, requirePas
 
 function revalidateReceiptSet(previous, options = {}) {
     assert(previous && Array.isArray(previous.receiptPaths) && Array.isArray(previous.snapshot), 'prior receipt-set snapshot is required');
+    const io = options.io || nodeFs;
+    // Compare the original identities and bytes before reparsing. Stable metadata
+    // with substituted readback is distinct from an on-disk receipt mutation.
+    for (let i = 0; i < previous.receipts.length; ++i) {
+        const saved = previous.receipts[i];
+        const paths = [saved.receiptPath, saved.receipt.stdout.path, saved.receipt.stderr.path];
+        assert(statIdentity(io.lstatSync(saved.receiptDirectory)) === saved.receiptDirectoryIdentity,
+            `receipt ${i + 1} directory identity changed after initial validation`);
+        for (let j = 0; j < paths.length; ++j)
+            assert(statIdentity(io.lstatSync(paths[j])) === saved.fileIdentities[j],
+                `receipt ${i + 1} file identity changed after initial validation`);
+        assertReceiptIdentityStable(saved.receiptDirectory, saved.receiptDirectoryIdentity, paths, saved.fileIdentities, io);
+        for (let j = 0; j < paths.length; ++j) {
+            const file = readNoFollow(paths[j], {io, maxBytes: j === 0 ? MAX_REPORT_BYTES : MAX_STREAM_BYTES});
+            assert(fileIdentity(file) === saved.fileIdentities[j], 'receipt file changed during readback');
+            if (file.bytes.toString('base64') !== previous.snapshot[i][['receipt', 'stdout', 'stderr'][j]].base64) {
+                const error = new TypeError(`receipt ${i + 1} readback bytes differ from the original snapshot`);
+                error.receiptBoundary = 'READBACK_MISMATCH';
+                throw error;
+            }
+        }
+        assertReceiptIdentityStable(saved.receiptDirectory, saved.receiptDirectoryIdentity, paths, saved.fileIdentities, io);
+    }
     const current = validateReceiptSet(previous.receiptPaths, options);
     assert(current.snapshot.length === previous.snapshot.length, 'receipt-set cardinality changed');
     for (let i = 0; i < current.snapshot.length; i++) {

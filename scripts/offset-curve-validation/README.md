@@ -184,6 +184,17 @@ concurrent filesystem races. Failed runs retain diagnostics and partial trees.
 
 ## Remaining
 
+`refusal-inventory.js` preserves all 71 original scenario identities and explicitly
+separates executable obligations from pending H4/H5 integration. Run
+`test-refusal-inventory.js` to exercise the current inventory against the real
+transaction/CLI. Each executable identity has its own test; pending declarations
+are reported as pending obligations, never counted as successful or skipped tests.
+The current core has 93 obligations: 82 executable and 11 pending. Complete H6
+qualification still requires those remaining cases and the H7 independent runs.
+Typed stdout-shape and substituted-readback diagnoses distinguish these failures
+from report parsing and on-disk receipt mutation. Repeated paths are refused by
+the same request guard at both API and CLI ingress.
+
 X-H4 through X-H7 still own persisted joins, independent evidence
 validation, adversarial case inventories
 and deterministic reports. In particular, the schema layer does not establish

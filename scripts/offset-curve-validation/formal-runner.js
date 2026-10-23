@@ -52,6 +52,7 @@ function validateRequest(request) {
 
 function receiptError(error) {
     const message = error.message || String(error);
+    if (error.receiptBoundary === 'STDOUT_SHAPE') return new RunnerError('RECEIPT_STREAM', 'STDOUT_SHAPE', message);
     if (error.code === 'ENOENT') return new RunnerError('RECEIPT_IO', 'RECEIPT_NOT_FOUND', message);
     const mappings = [
         [/receipt IDs must be distinct/, 'RECEIPT_JOIN', 'RECEIPT_ID_DUPLICATE'],
@@ -69,6 +70,7 @@ function receiptError(error) {
         [/forbidden|overlap|contain one another/, 'PATH_POLICY', 'PATH_POLICY_VIOLATION'],
         [/duplicate object key|canonical|keys\/order|BOM|CR|LF/, 'RECEIPT_CANONICAL', 'REPORT_NONCANONICAL'],
         [/UTF-8|JSON|parse/, 'RECEIPT_PARSE', 'REPORT_PARSE_FAILED'],
+        [/^(stdout|stderr) (byte count|digest) mismatch/, 'RECEIPT_BINDING', 'FILE_BINDING_MISMATCH'],
         [/stdout/, 'RECEIPT_STREAM', 'STDOUT_SHAPE'],
         [/non-PASS|unsuccessful child|failed preflight|PASS preflight/, 'RECEIPT_RESULT', 'CHILD_NOT_PASS'],
         [/byte|digest|filename|basename/, 'RECEIPT_BINDING', 'FILE_BINDING_MISMATCH']
@@ -345,7 +347,9 @@ async function runFormalTransaction(requestInput, dependencies = {}) {
             const failures = [];
             for (const [name, check, boundary, reason] of checks) {
                 try { check(); }
-                catch (error) { failures.push({observation: stage, check: name, stage: boundary, reason, message: error.message}); }
+                catch (error) { failures.push({observation: stage, check: name, stage: boundary,
+                    reason: name === 'receipts' && error.receiptBoundary === 'READBACK_MISMATCH' ? 'READBACK_MISMATCH' : reason,
+                    message: error.message}); }
             }
             verificationFailures.push(...failures);
             if (failures.length) throw new RunnerError(failures[0].stage, failures[0].reason, failures.map(row => row.message).join('; '));
