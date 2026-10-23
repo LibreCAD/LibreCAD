@@ -7,6 +7,7 @@
 'use strict';
 
 const fs = require('node:fs');
+const os = require('node:os');
 const path = require('node:path');
 const {randomUUID} = require('node:crypto');
 const h1 = require('./preflight-receipt');
@@ -22,6 +23,7 @@ const {runWorkerPipeline} = require('./run-worker-pipeline');
 const check = (ok, message) => { if (!ok) throw new TypeError(message); };
 const equal = (a, b) => h1.canonicalJson(a).equals(h1.canonicalJson(b));
 const source = name => path.join(__dirname, name);
+const temporaryRoots = new WeakMap();
 function directory(p) { fs.mkdirSync(p, {mode: 0o700}); h2.directoryGuards(p); return p; }
 function persistBytes(p, bytes, cap) {
     check(Buffer.isBuffer(bytes), 'qualification publication requires bounded bytes');
@@ -52,6 +54,46 @@ function persistBytes(p, bytes, cap) {
     return observed;
 }
 function persistResult(p, result) { return persistBytes(p, h1.canonicalJson(result), 268435456); }
+
+function prepareQualificationTemporaryRoot(qualificationDirectory) {
+    const qualificationGuards = h2.directoryGuards(qualificationDirectory);
+    // macOS's default per-user temp directory adds four ancestors to every
+    // no-follow fixture read. Keep all checks, but shorten the owned namespace.
+    const parent = fs.realpathSync.native(process.platform === 'darwin' ? '/tmp' : os.tmpdir());
+    const parentGuards = h2.directoryGuards(parent);
+    const parentStat = fs.lstatSync(parent, {bigint: true});
+    check((parentStat.mode & 0o022n) === 0n || (parentStat.mode & 0o1000n) !== 0n &&
+        (parentStat.uid === 0n || typeof process.getuid === 'function' && parentStat.uid === BigInt(process.getuid())),
+    'writable qualification temporary parent must have a trusted owner and sticky bit');
+    const root = fs.mkdtempSync(path.join(parent, 'lc-h7-'));
+    const stat = fs.lstatSync(root, {bigint: true});
+    check(stat.isDirectory() && Number(stat.mode & 0o7777n) === 0o700 &&
+        (typeof process.getuid !== 'function' || stat.uid === BigInt(process.getuid())), 'new qualification temporary root is not private and owned');
+    const guards = h2.directoryGuards(root);
+    check(guards[guards.length - 1].identity === h2.directoryIdentity(stat), 'qualification temporary root changed during creation');
+    h2.checkDirectoryGuards(parentGuards);
+    h2.checkDirectoryGuards(qualificationGuards);
+    const manifestPath = path.join(qualificationDirectory, 'temporary-root.json');
+    const manifest = persistResult(manifestPath, {schema_version: 1, kind: 'qualification-temporary-root',
+        path: root, device: String(stat.dev), inode: String(stat.ino), mode: 0o700,
+        uid: String(stat.uid), gid: String(stat.gid)});
+    h2.checkDirectoryGuards(qualificationGuards);
+    const owner = Object.freeze({root, manifestPath});
+    temporaryRoots.set(owner, {guards, manifest, uid: stat.uid, gid: stat.gid});
+    revalidateQualificationTemporaryRoot(owner);
+    return owner;
+}
+
+function revalidateQualificationTemporaryRoot(owner) {
+    const original = temporaryRoots.get(owner);
+    check(original, 'original qualification temporary-root owner required');
+    h2.checkDirectoryGuards(original.guards);
+    const stat = fs.lstatSync(owner.root, {bigint: true});
+    check(stat.uid === original.uid && stat.gid === original.gid, 'qualification temporary-root ownership changed');
+    registry.recheckFile(original.manifest);
+    h2.checkDirectoryGuards(original.guards);
+}
+
 function captureFailure(error) {
     const d = error && error.details || {};
     return {schema_version: 1, status: 'FAIL', kind: 'preflight-capture-failure',
@@ -97,17 +139,19 @@ async function qualifyWorkerRunner(input, progress = () => {}) {
     for (const row of original) check(!row.path.startsWith(`${options.directory}${path.sep}`) && row.path !== options.directory,
         'qualification directory overlaps original input');
     directory(options.directory);
-    const snapshotPath = path.join(options.directory, 'roadmap-snapshot.md');
+    const temporary = prepareQualificationTemporaryRoot(options.directory);
+    const snapshotPath = path.join(temporary.root, 'roadmap-snapshot.md');
     const plan = registry.readStableFile(options.roadmapPath, 8388608);
     check(plan.sha256 === original[3].sha256 && plan.byte_length === original[3].bytes, 'original roadmap changed before copy');
     persistBytes(snapshotPath, Buffer.from(plan.base64, 'base64'), 8388608);
     const snapshot = suiteApi.pinFile(snapshotPath);
     check(snapshot.sha256 === original[3].sha256 && snapshot.bytes === original[3].bytes, 'roadmap copy differs from actual plan');
-    const environment = {LC_ALL: 'C', LC_OFFSET_ROADMAP_SNAPSHOT: snapshotPath,
+    const environment = {LC_ALL: 'C', TMPDIR: temporary.root, LC_OFFSET_ROADMAP_SNAPSHOT: snapshotPath,
         ...(process.platform === 'darwin' ? {__CF_USER_TEXT_ENCODING: process.env.__CF_USER_TEXT_ENCODING} : {})};
     const attempts = [], completedRuns = [];
     let expectedSemantics = null, expectedSources = null, expectedRuntime = null;
     for (let ordinal = 1; ordinal <= 2; ordinal++) {
+        revalidateQualificationTemporaryRoot(temporary);
         const root = directory(path.join(options.directory, `attempt-${ordinal}`));
         const ids = [randomUUID(), randomUUID()];
         progress({phase: 'generate', ordinal, directory: root});
@@ -120,6 +164,7 @@ async function qualifyWorkerRunner(input, progress = () => {}) {
             catch (publication) { process.stderr.write(`Generation diagnostic publication also failed: ${publication.message}\n`); }
             throw error;
         }
+        revalidateQualificationTemporaryRoot(temporary);
         check(generated.definitions.h6.pending_ids.length === 0 && generated.definitions.h6.original_ids.length === 71, 'H6 inventory is incomplete');
         const sources = generated.definitions.sources;
         if (expectedSources) check(equal(sources, expectedSources), 'actual source/runtime input set changed between qualification runs');
@@ -134,7 +179,7 @@ async function qualifyWorkerRunner(input, progress = () => {}) {
             receiptRoots.push(path.join(directory(path.join(root, `reserved-parent-${i}`)), 'reserved'));
             receiptDirectories.push(path.join(directory(path.join(root, `receipt-parent-${i}`)), 'receipt'));
         }
-        const inputPaths = [...new Set([...generated.capture.inputPaths, options.basePath, options.productPath])].sort();
+        const inputPaths = [...new Set([...generated.capture.inputPaths, temporary.manifestPath, options.basePath, options.productPath])].sort();
         const preflight = {purpose: 'validation', candidatePath: options.candidatePath, runnerPath: source('genuine-preflight.js'),
             sourcePaths: generated.capture.sourcePaths, inputPaths, fixturePaths: generated.capture.fixturePaths,
             configPaths: [...generated.capture.configPaths, formalPath, qualificationPath, checkerPath],
@@ -149,6 +194,7 @@ async function qualifyWorkerRunner(input, progress = () => {}) {
             args: [], cwd: root, environment, timeout_ms: 300000, max_stream_bytes: 1048576});
         const captures = [];
         for (let i = 0; i < 2; i++) {
+            revalidateQualificationTemporaryRoot(temporary);
             progress({phase: 'preflight', ordinal, capture: i + 1});
             try {
                 captures.push(await capturePreflight({...preflight, receiptId: ids[i], runRoot: receiptRoots[i], receiptDirectory: receiptDirectories[i]}));
@@ -157,14 +203,16 @@ async function qualifyWorkerRunner(input, progress = () => {}) {
                 catch (publication) { process.stderr.write(`Capture diagnostic publication also failed: ${publication.message}\n`); }
                 throw error;
             }
+            revalidateQualificationTemporaryRoot(temporary);
         }
         const receiptPaths = captures.map(row => row.receiptPath);
         progress({phase: 'pipeline', ordinal});
         const result = await runWorkerPipeline({configPath: formalPath, runRoot: formal.run_root, receiptPaths,
             ledgerPath: path.join(ledgerParent, 'joined', 'events.json'), checkerConfigPath: checkerPath,
             manifestPath: path.join(evidenceParent, 'evidence', 'manifest.json'), preflightCaptures: captures});
-        // Persist real refusal diagnostics before testing terminal success.
+        // Persist real refusal diagnostics before later guards or terminal success checks.
         const resultFile = persistResult(path.join(root, 'pipeline-result.json'), result);
+        revalidateQualificationTemporaryRoot(temporary);
         check(result.status === 'PASS', `qualification pipeline ${ordinal} refused: ${result.stage}/${result.reason}: ${result.message}`);
         const semantics = generated.definitions.suites.map(suite => {
             const reportPath = path.join(formal.run_root, `${suite.name}.report.json`);
@@ -188,8 +236,10 @@ async function qualifyWorkerRunner(input, progress = () => {}) {
     for (const row of original) check(equal(row, suiteApi.pinFile(row.path)), 'original input changed during qualification');
     for (const row of expectedSources) check(equal(row, suiteApi.pinFile(row.path)), 'source changed at final qualification boundary');
     revalidateCompletedRuns(completedRuns);
+    revalidateQualificationTemporaryRoot(temporary);
     const report = {schema_version: 1, purpose: 'validation', status: 'RECORDED', kind: 'worker-runner-qualification',
-        complete_runs: attempts.length, original_inputs: original, runtime: expectedRuntime, roadmap_snapshot: snapshot, attempts,
+        complete_runs: attempts.length, original_inputs: original, runtime: expectedRuntime, roadmap_snapshot: snapshot,
+        temporary_root: suiteApi.pinFile(temporary.manifestPath), attempts,
         identical_semantic_outcomes: true, completion_scope: 'automated-worker-evidence-only',
         verification_scope: 'before-report-publication; final readback requires successful CLI/API return',
         limitations: ['Each full run has isolated, explicitly pinned configuration/output paths; raw input-manifest hashes are not claimed equal across those namespaces.',
@@ -198,6 +248,7 @@ async function qualifyWorkerRunner(input, progress = () => {}) {
             'No human approval, native feature completion, process-tree containment or filesystem race elimination is asserted.']};
     const savedReport = persistResult(path.join(options.directory, 'qualification.json'), report);
     revalidateCompletedRuns(completedRuns);
+    revalidateQualificationTemporaryRoot(temporary);
     registry.recheckFile(savedReport);
     return {...report, status: 'PASS', recorded_report: {path: savedReport.path, bytes: savedReport.byte_length, sha256: savedReport.sha256}};
 }
@@ -211,4 +262,5 @@ async function cli(argv) {
 }
 if (require.main === module) cli(process.argv.slice(2)).catch(error => { process.stderr.write(`${error.stack || error}\n`); process.exitCode = 1; });
 
-module.exports = Object.freeze({validateQualificationOptions, persistResult, revalidateCompletedRuns, qualifyWorkerRunner, cli});
+module.exports = Object.freeze({validateQualificationOptions, persistResult, prepareQualificationTemporaryRoot,
+    revalidateQualificationTemporaryRoot, revalidateCompletedRuns, qualifyWorkerRunner, cli});
