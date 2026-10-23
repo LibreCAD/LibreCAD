@@ -24,10 +24,10 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-23. Status: all A slices and X-H1 committed; B and X-H2 in progress; native feature incomplete.
+Updated: 2026-10-23. Status: all A slices, B and X-H1 committed; X-H2 in progress; native feature incomplete.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
-This checkpoint records tested A-core/A-strict/A-reference/A-cache and auxiliary X-H1 commits. Later
+This checkpoint records tested A-core/A-strict/A-reference/A-cache/B and auxiliary X-H1 commits. Later
 main-track slices remain incomplete; no native entity or complete topology checker
 is claimed.
 
@@ -41,7 +41,7 @@ is claimed.
 | Difference between initial checkpoints | Only this plan file; no product-source change |
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
-| Latest product checkpoint | `dbf895638f4bbd6ee210d09e41066a93cb888024` (A-cache) |
+| Latest product checkpoint | `9bf0546b6` (B) |
 | Latest auxiliary checkpoint | `8993e2848` (X-H1 physical-parent correction; original X-H1 `29ab28163`) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
@@ -49,7 +49,8 @@ is claimed.
 | A-strict | Bounded validation, capacity, ordering, callbacks and exceptional-exit snapshots; per-call retained ordering allowance |
 | A-reference | Bounded geometry ordering/scans/capacity and atomic ordinary/exceptional solver-work adoption |
 | A-cache | Atomic Candidate/Proof subdivision, inherited combined depth, prepared capacity, bounded dispatch/coverage |
-| Missing geometry stages | Occurrence-specific terminals and complete global topology checker |
+| B terminals | Immutable exact occurrence/edge-side classification, separate source incidence, bounded storage/scans |
+| Missing geometry stages | Complete global topology checker |
 | Native entity | No `LC_OffsetCurve` or `EntityOffsetCurve` yet |
 | Product integration | No native offset adoption, private file schema, creation/editing UI, or target-trim integration yet |
 | Build registration | Both geometry implementations in CMake and qmake; both geometry test TUs in `librecad_tests` |
@@ -57,7 +58,7 @@ is claimed.
 | Latest validation | A-core, geometry and format fast lanes passed Release/ASan; full Release and qmake6 passed; see section 14 |
 
 Recheck these facts against the selected implementation checkout before starting
-B. Inventory Qt6/Catch2/build tools and available independently authored
+C. Inventory Qt6/Catch2/build tools and available independently authored
 DXF/DWG fixtures/inspection tools once, recording provenance/access gaps early;
 source-level progress need not wait for unrelated external-tool installation. The user's main checkout is a different, dirty branch and is not the
 source baseline above. Do not overwrite its unrelated changes or apply this plan
@@ -212,7 +213,7 @@ test commit followed by the section 4 plan checkpoint.
 | A-strict | A-core | Strict-solver bounded ordering/validation/capacity and exit snapshots (`dc016f6e2`) | committed |
 | A-reference | A-strict | Geometry scans/callback ownership and exception-safe work transfers (`5c12fbeef`) | committed |
 | A-cache | A-reference | Candidate/proof split accounting and inherited combined depth (`dbf895638`) | committed |
-| B | A-cache | Immutable occurrence-specific producer terminals | in progress |
+| B | A-cache | Immutable occurrence-specific producer terminals (`9bf0546b6`) | committed |
 | C | B | Full unique-path topology checker and public result | pending |
 | D-core | C | Native enum/entity, real validated adoption, stamp, clone and transforms | pending |
 | D-edit | D-core | Real create/mutators, one-run staging, run limits and refusal results | pending |
@@ -269,7 +270,7 @@ editing; changes beyond the named concern require a scope note in the slice card
 | T-actions/T-files | actions/drawing/modify/lc_action_modify_trim.{h,cpp}, tests/lc_action_modify_trim_tests.cpp; modification/batch ownership and offset filter tests |
 | All new sources/tests/UI | CMakeLists.txt; librecad/src/src.pro (HEADERS/SOURCES/FORMS as appropriate); exact Catch2 target registration |
 
-### Immediate Next Card: B
+### Immediate Next Card: C
 
 **Files (only these three):**
 
@@ -277,57 +278,57 @@ editing; changes beyond the named concern require a scope note in the slice card
 - `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp`
 - `librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp`
 
-**Base:** committed A-cache `dbf895638f4bbd6ee210d09e41066a93cb888024`.
-All A01-A14 identities exist. ReferenceComponentAnalysis has physical-node
-incidence, source-ordered spans/edges and typed occurrences, but no immutable
-occurrence/edge-side terminal classification. A node-level trimBoundary or source
-flag is insufficient: distinct own occurrences can meet at the same physical node.
+**Base:** committed B `9bf0546b6`. Requirements R02/R12/R14; all A/B exact
+identities exist. ReferenceComponentAnalysis now owns exact terminal lookups.
+CacheLocalTopologyAnalysis retains certified oriented alternatives but proves
+neither full reference coverage nor a unique complete producer path. No caller
+may treat its Ok result as an editable-cache certificate.
 
 **Steps:**
 
-1. Preserve current reference/event/component discovery and inspect graph/publish
-   ownership. Add ReferenceEdgeSide (Start/End), typed terminal kind (SourceStart,
-   SourceEnd, PairTrim), and owned terminal records containing role, occurrence,
-   node, incident edge/side and exact free-end or pair-event provenance.
-2. Build a bounded source-occurrence incidence table from span.start/end IDs,
-   distinct from physical-node incidence. Each own cut has at most one directed
-   incoming/outgoing source edge; impossible duplicates are proof contradictions.
-   Other-role occurrences cannot be own producer continuations.
-3. Prepare immutable lookup storage for both sides of every edge. A checked
-   2*edgeCount optional-record table permits constant-time terminal(edge,side)
-   lookup; invalid IDs/sides return no terminal. Reserve all tables before their
-   atomic record debit; count each logical slot and each scan before work.
-4. Qualify source terminals against the actual Own free-end occurrence and its
-   correct directed edge side, not a shared node's sourceStart/sourceEnd flag.
-   Reference parameters already increase along directed traversal for either
-   source sweep sign; do not apply cacheReversed in this factory.
-5. Otherwise, a retained opposite-side source edge at the same own occurrence
-   blocks termination (through event). Scan every relevant pair event: any
-   compatible opposite-side Own partner continuation also blocks PairTrim. Do
-   not stop after the first partner or treat cutter/opposite roles as own edges.
-6. PairTrim requires a genuine typed pair event and absence of all compatible
-   retained continuations. Preserve event/partner provenance in the result.
-   Hidden cusps, retained seams and arbitrary interior points acquire no terminal
-   identity. Never use coordinate proximity to grant one.
-7. Implement exact B01-B08 names in section 7.2. Use G2's complete upper/lower
-   lens to block E0-only trim endpoints; G4 supplies true source/cutter boundaries
-   and hidden cusp controls. Check exact role/occurrence/node/edge side and event
-   provenance, both sweep directions where applicable, wrong-side requests and
-   invalid IDs. Derive fixture expectations independently of runtime indices.
-8. Add exact/one-short/pre-spent terminal-storage and scan caps. Ensure no partial
-   analysis escapes and completed event/provider owners outlive caller locals.
-   Producer mapping remains separate from public cache validation in C.
-9. Independent full-diff review; geometry Release/ASan, full Release, affected
-   fast lanes and qmake6; compare all names/skips. Account for new records in
-   source-derived existing budget oracles without weakening geometry.
-10. Commit the tested slice, immediately update this roadmap separately, then
-    start C's complete path/coverage transaction and 54 public identities.
+1. Add the public result/reason contract of section 6.6 with deterministic original
+   span attribution, final CheckWork, and an owned immutable successful path proof.
+   Add shared-budget and limits overloads; neither owns a caller budget. Validate
+   finite normalized definitions, layout, TooSmall and exact closure flags first.
+2. Preserve existing standalone bounds/local APIs and tests. Qualify actual general
+   arc, whole-cycle and G2/G4 engine outputs before selecting a global algorithm:
+   the existing exhaustive Cartesian proximity relation can exhaust at a tolerance
+   boundary even when same-edge witnesses already cover a candidate. A complete
+   checker needs bounded on-demand/refined certificates, not unconditionally
+   trusting the coarse relation or converting every unresolved pair to success.
+3. Build source/paired/seam transitions from exact edge-side incidence. A fringe
+   certifies only a node/endpoint, never positive-length reference coverage. Every
+   chosen transition records both incident occurrences and its provenance.
+4. Tile normalized candidate domains and every selected reference edge exactly
+   once. Refine actual paired subcurves with the shared Candidate/Proof admissions;
+   retain all distinct semantic alternatives. Never infer identity/order from
+   rounded coordinates or reuse a coarse pair proof after subdivision.
+5. For closed paths, qualify start cuts including knot and interior dyadic phases;
+   unroll one lap, return to the same paired frontier, and canonicalize the complete
+   directed event/edge signature modulo rotation. Equivalent same-edge subdivisions
+   are one path, different directed cycles are not. Memoize equivalent partial
+   states and saturate semantic-path counts at two, with bounded scans/storage.
+6. Classify actual evidence: proven separation OffCurve; unresolved geometry/cut
+   correspondence Ambiguous; incomplete/invalid/nonunique traversal Topology;
+   unresolved reference ReferenceUnresolved; exhausted budget LimitExceeded.
+   Existing stationary-interior reference probes remain unresolved; never promote
+   them to success merely to test a terminal. See B validation below.
+7. Register all 54 exact C names in section 7.3 with independent fixture geometry,
+   role/side/signature, endpoint/cut-return, original span and work expectations.
+   Phase controls cross both source directions and cacheReversed. Check the actual
+   generated cubic and G4 separate producer outputs, not only hand-made tiny arcs.
+8. Test exact/one-short/pre-spent caps in every dimension, sticky retries, missing
+   and repeated tails, retrace, wrong occurrence, hidden cusp/seam shortcuts and
+   all nine reasons. No success or partial path may escape an unfinished proof.
+9. Independent full-diff review and the same geometry Release/ASan, full Release,
+   format fast lanes and qmake6 checks used by B. Compare exact names/skips.
+10. Commit C only after complete path/coverage/cut obligations pass; immediately
+    update this roadmap separately, then start D-core. A partial path checker
+    cannot authorize native adoption or be labelled C complete.
 
-**Exit:** eight exact terminal identities pass with nonzero assertions and bounded
-ownership/resource tests. The incomplete G2 E0-only path has no fabricated trim
-terminal. Existing reference geometry is unchanged; no public checkCache success,
-native entity, file schema or UI completion is claimed.
-No native entity, global checker, UI or file-format edit belongs in this slice.
+**Exit:** all 54 public identities and prior A/B/geometry regressions pass, with
+complete unique selected paths, bidirectional coverage and precise reasons/work.
+No native entity, UI or file-format edit belongs in this slice.
 Changes beyond these three paths require a concrete dependency note.
 
 ## 6. Geometry and Work Contracts
@@ -567,7 +568,8 @@ Every listed identity is a separate Catch2 TEST_CASE with a reachable, nonzero
 assertion contract. SECTIONs/aliases/skips cannot stand in for identities. Preserve
 the existing strict regression names as an exact set; the historical count 61 is
 not a current test receipt. All fourteen A identities are implemented and
-validated. B and C identities are still planned, not already registered.
+validated. All eight B identities are also registered and validated. C identities
+are planned, not already registered.
 
 ### 7.1 A: Four Leaves, Fourteen Identities
 
@@ -1657,7 +1659,7 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 |---|---|---|
 | Recursive plan/activation routing | Removed as a planning deadlock | Execute A-core's finite card |
 | Atomic budget API | Committed and validated (`0eb2a0cfa`) | Integrate solver/geometry work in A-strict/A-reference |
-| Geometry work/exception/split/depth proof | All A slices committed and validated | B terminals; C complete checker |
+| Geometry work/exception/split/depth/terminal proof | All A slices and B committed and validated | C complete checker |
 | Complete semantic path checker | Missing implementation | A-cache -> B -> C |
 | Native feature/UI/persistence/trim | Not implemented | Follow D through T; do not label scaffolding complete |
 | Independent DWG/version fixtures | Required, not yet qualified | Inventory/tool/license/provenance during G-fixtures; close all rows in G-matrix |
@@ -1679,6 +1681,59 @@ The plan checkpoint column never depends on its own future SHA.
 | A-reference | 5c12fbeef5fe3d41444d44bf2cc087a77a4fcf75 | 02a8e18f3 | 4 acceptance cases, full Release, ASan geometry, format lanes and qmake6 passed; independent review |
 | A-cache | dbf895638f4bbd6ee210d09e41066a93cb888024 | This immediate plan-only checkpoint | 4 acceptance cases, full Release, ASan geometry, format lanes, qmake6; independent review including stage-isolated depth proof |
 | X-H1 physical parents | 8993e2848 | Immediate plan-only checkpoint | 25 receipt tests; independent review; 67-test H1/H2 integration passed |
+| B | 9bf0546b6 | Immediate plan-only checkpoint | All 8 terminal identities; full Release, geometry Release/ASan, format lanes, qmake6; independent review |
+
+### B Validation (2026-10-23)
+
+Scope: only lc_ellipseoffsetgeometry.h/.cpp and their geometry test TU. Separate
+occurrence incidence and a two-slot-per-edge optional table are owned by immutable
+ReferenceComponentAnalysis. Exact source/free-end and pair provenance is retained;
+compatible source, paired-Own or explicit seam continuation prevents PairTrim.
+Other reference roles cannot supply Own continuation. Invalid lookup IDs/sides
+return no terminal. Discovery, visibility and reference geometry are unchanged.
+
+Storage Ns+2E is checked/reserved before one atomic vertex debit. Each edge/side
+and free-end/pair scan is charged before inspection. The simple open fixture has
+Ns=4/E=1: six terminal storage slots and ten terminal-stage pair debits. Tests cover
+every scan prefix, exact/one-short storage, pre-spent totals, sticky retries and
+owner lifetime beyond the caller budget. G4's cutter crossing and G2's paired
+lens endpoints use independent high-precision parameter/visibility oracles.
+
+- Acceptance Release/ASan: exactly 8 identities, 891 passing assertions, no skips.
+- Geometry Release/ASan: 253 cases, 1,552,678 assertions passed.
+- Full Release: 3,875 cases (3,849 passed, same 26 pre-existing skips),
+  7,408,170 assertions. No missing baseline names or new skips; exactly eight
+  new top-level identities plus B01's separate JUnit section row.
+- Fast DXF Release/ASan: 744 cases, same 3 skips, 39,929 assertions; fast DWG:
+  1,006 cases, same 4 skips, 34,948 assertions. Exact baseline names/skips match.
+- CMake built all three test targets in both configurations; full incremental
+  qmake6 make -j2 passed. No ASan diagnostic in scoped runs; leak checking and
+  full-app ASan are not claimed. No qmake5 changes.
+- Independent reviewer 01a1663b-5c1d-7333-98a2-ad49b643a3f4 reviewed the complete
+  production/test diff and reported no actionable findings. Whitespace passed.
+
+B05 runtime-covers a retained seam through event (circle and ellipse, both sweep
+directions), not same-Own-occurrence stationary-interior continuation. That branch
+is source-reviewed only. Whole E(100,50), D=-25 and an interior-pi arc probe both
+remain pre-terminal AmbiguousTopology in existing reference discovery. A negative
+angle probe correctly refused InvalidInput. Failed reports B-acceptance-release-
+01/02/03 are retained; neither skipped cases nor changed geometry hides these
+limits. Stationary source-endpoint support remains covered by prior tests. C must
+preserve precise refusal and may fix a proved reference dependency explicitly.
+
+Evidence: /private/tmp/lc2961-impl-evidence.9GtLO2/B-acceptance-{release,asan}-final,
+B-geometry-{release,asan}-01, B-full-release-01, B-{dxf,dwg}-{release,asan},
+B-release-build-05, B-asan-build-02, B-qmake6-build-01 (logs/XML/summaries as
+applicable). Tested bytes equal committed blobs; SHA-256:
+
+| Entity-directory file | SHA-256 |
+|---|---|
+| lc_ellipseoffsetgeometry.h | b0f96b19a8109797cc90457c1a76a91ca5697c6bf117df47af055cca3f0f44b5 |
+| lc_ellipseoffsetgeometry.cpp | 726008f85d176265515f9c304422b1e5869eb1423ef292ba7d66b6dd5f6a0947 |
+| tests/lc_offsetcurve_geometry_tests.cpp | 95d5e91b7fb735766259e0594b17c090c68b9fb870e97765e89a804680d34048 |
+
+B is complete within its terminal contract; no public cache validity, native
+entity/UI/file support or whole-roadmap completion is claimed. C is next.
 
 ### X-H1 Physical-Parent Correction (2026-10-23)
 
