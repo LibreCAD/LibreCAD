@@ -3,6 +3,35 @@
 Optional developer tooling for the auxiliary X-H1 through X-H7 roadmap. The
 application and its builds do not depend on Node.js or on these receipt files.
 
+## End-To-End Worker Pipeline
+
+`run-worker-pipeline.js` runs the actual H3 worker transaction, publishes the H4
+joined ledger, and runs H5 publication/checker/readback in order:
+
+```sh
+node scripts/offset-curve-validation/run-worker-pipeline.js --run \
+  --config /absolute/formal-config.json --run-dir /absolute/worker-parent/run \
+  --preflight-receipt /absolute/receipt-a/report.json \
+  --preflight-receipt /absolute/receipt-b/report.json \
+  --ledger /absolute/ledger-parent/attempt/events.json \
+  --checker-config /absolute/checker-config.json \
+  --evidence-manifest /absolute/evidence-parent/attempt/manifest.json
+```
+
+All implementation/configuration paths must already be real H2 inputs. In
+particular, add `run-worker-pipeline.js` to `sourcePaths` before capturing the
+receipts. Output scopes must be disjoint with existing real parents. No injection
+hooks are exposed. A failed stage retains its actual diagnostics and any prefix;
+post-root refusal becomes overall FAIL without rewriting the nested result.
+Final success revalidates original H4/H5 ownership and H2 inputs. Existing files
+and failed attempts are never removed.
+
+The API accepts two original preflight capture snapshots. The CLI does not claim
+observed stdin transport: it supplies explicit null, and H5 records that limitation.
+Success means automated worker evidence only, not human approval, native feature
+completion or H7 qualification. Filesystem observations/direct-child deadlines
+do not provide containment.
+
 ## Implemented
 
 X-H1 provides immutable format descriptors and receipt parsing/readback. Run:
