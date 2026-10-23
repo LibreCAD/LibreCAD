@@ -567,8 +567,7 @@ Every listed identity is a separate Catch2 TEST_CASE with a reachable, nonzero
 assertion contract. SECTIONs/aliases/skips cannot stand in for identities. Preserve
 the existing strict regression names as an exact set; the historical count 61 is
 not a current test receipt. All fourteen A identities are implemented and
-validated. B and C identities remain
-A/B/C identities are planned, not already registered.
+validated. B and C identities are still planned, not already registered.
 
 ### 7.1 A: Four Leaves, Fourteen Identities
 
