@@ -149,9 +149,42 @@ canonical success/result is fabricated for malformed or unsuccessful children,
 so those failures have diagnostics but no H1 receipt. Partial publication trees
 and independently created roots are never removed; retries need a new namespace.
 
+## X-H3 Formal Worker Runner
+
+`formal-registry.js` defines the version-1 canonical configuration, registry and
+worker-result contracts. `formal-runner.js` consumes the two H2 receipts and
+recaptures their actual input manifest before creating an absent run root. The
+configuration and registry must be pinned H2 configuration files; every worker
+module must be a declared source/fixture and own exactly its inventory cases.
+Registry order is dispatch order. The exported schema key arrays specify exact
+field order; the synthetic fixture/tests show a complete executable example.
+
+```sh
+node scripts/offset-curve-validation/run-formal-gates.js --run --config /absolute/config.json --run-dir /absolute/new-run --preflight-receipt /absolute/receipt-1 --preflight-receipt /absolute/receipt-2
+node --test scripts/offset-curve-validation/test-*.js
+```
+
+Workers receive bounded canonical context on stdin and run as direct Node
+children without a shell. Their explicit PASS result must contain the exact
+ordered cases, per-case events and output inventory. Missing, undefined, unknown
+or FAIL status is a refusal. Output files must be declared flat names, single-link
+regular files with mode 0400; actual bounded bytes/hashes are read back with
+no-follow opens and identity/membership checks. Actual child argv, environment,
+streams, exit and stdin delivery are retained. Inputs, receipt parents and root
+identities are rechecked around dispatch, including failed dispatch.
+
+Configuration purpose is established through trusted filesystem I/O before any
+injected adapter or hook can be accessed. Validation runs forbid injection;
+synthetic runs accept only explicit own data-property hooks. The shipped child
+fixture refuses validation purpose and provides no product-validation evidence.
+H3 returns in-memory worker events and output snapshots, not a persisted joined
+event ledger or independent evidence manifest. Direct-child timeout/stream bounds
+are not process-tree containment, and observation-point checks do not eliminate
+concurrent filesystem races. Failed runs retain diagnostics and partial trees.
+
 ## Remaining
 
-X-H3 through X-H7 still own worker dispatch, persisted joins, independent evidence
+X-H4 through X-H7 still own persisted joins, independent evidence
 validation, adversarial case inventories
 and deterministic reports. In particular, the schema layer does not establish
 that a candidate/manifest digest names the current product source. Callers must
