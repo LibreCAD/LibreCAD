@@ -9,8 +9,40 @@
 #include <memory>
 #include <variant>
 
+#include "lc_curveoffset.h"
 #include "lc_ellipseoffsetgeometry.h"
 #include "rs_spline.h"
+
+struct LC_OffsetRunLimits {
+    LC_OffsetSourceBudget outputBudget = makeDefaultOffsetSourceBudget();
+    /** Zero keeps the engine default; nonzero values may only lower it. */
+    std::size_t maxSamples = 0;
+    std::size_t maxIntersectionPairs = 0;
+    LC_OffsetCheckLimits checkLimits{};
+};
+
+enum class LC_OffsetCurveRefusal {
+    None, InvalidInput, Undefined, Inconsistent, TooSmall, NothingLeft,
+    SeveralPieces, NotCacheRepresentable, CheckFailed, Engine, ThroughNotOnCache
+};
+
+struct LC_OffsetCurveEditResult {
+    LC_OffsetCurveRefusal refusal = LC_OffsetCurveRefusal::InvalidInput;
+    /** Empty means that stage did not run, not a fabricated component result. */
+    std::optional<LC_CurveOffsetStatus> engineStatus;
+    std::optional<LC_OffsetCheckResult::Reason> checkReason;
+    LC_EllipseOffsetGeometry::CheckWork checkWork{};
+    std::size_t engineRuns = 0;
+    bool changed = false;
+    explicit operator bool() const noexcept { return refusal == LC_OffsetCurveRefusal::None; }
+};
+
+struct LC_OffsetCurveCreateResult;
+struct LC_OffsetThroughProposal {
+    double distance;
+    bool towardCentre;
+    double parameter;
+};
 
 /** Bounded, value-owned extension items; file adapters still validate target encoding. */
 struct LC_OffsetCurveExtension {
@@ -23,10 +55,23 @@ class LC_OffsetCurve final : public RS_Spline {
 public:
     using OwnedTail = std::vector<LC_OffsetCurveExtension>;
 
-    /** Caller limits may lower, but never raise, the native admission/work caps. */
+    /** Caller limits only lower caps. outcome is C's actual result; refusal is native admission. */
     static std::unique_ptr<LC_OffsetCurve> adopt(const RS_Entity &cache,
         const LC_EllipseOffsetDefinition &definition, double worldTolerance,
-        LC_OffsetCheckResult *outcome = nullptr, const LC_OffsetCheckLimits &limits = {});
+        LC_OffsetCheckResult *outcome = nullptr, const LC_OffsetCheckLimits &limits = {},
+        LC_OffsetCurveRefusal *refusal = nullptr);
+
+    /** Creates a new identity; relativeTolerance=0 selects the ellipse engine default. */
+    static LC_OffsetCurveCreateResult create(const RS_Ellipse &source, double distance, bool towardCentre,
+        const LC_OffsetRunLimits &limits = {}, double relativeTolerance = 0, bool cacheReversed = false);
+    LC_OffsetCurveEditResult setDefinition(const LC_EllipseOffsetDefinition &definition,
+        const LC_OffsetRunLimits &limits = {});
+    LC_OffsetCurveEditResult setDistance(double distance, const LC_OffsetRunLimits &limits = {});
+    LC_OffsetCurveEditResult setTowardCentre(bool towardCentre, const LC_OffsetRunLimits &limits = {});
+    LC_OffsetCurveEditResult setThrough(const RS_Vector &point, const LC_OffsetRunLimits &limits = {});
+    LC_OffsetCurveEditResult setBasis(const RS_EllipseData &basis, const LC_OffsetRunLimits &limits = {});
+    /** Bounded analytic proposal only; the final retained cache is checked separately on commit. */
+    std::optional<LC_OffsetThroughProposal> proposeThrough(const RS_Vector &point) const;
 
     LC_OffsetCurve(const LC_OffsetCurve &) = default;
     RS2::EntityType rtti() const override { return RS2::EntityOffsetCurve; }
@@ -63,7 +108,13 @@ private:
     // is the exact affine image. Rounded similarities refuse unchanged, not restamp.
     bool transform(const std::array<double, 6> &matrix, double similarityScale, bool reflected);
     void publish(RS_Spline &prepared, const LC_EllipseOffsetDefinition &definition,
-        std::vector<RS_Vector> &grips, double tolerance, bool defined);
+        std::vector<RS_Vector> &grips, double tolerance, bool defined, bool closed);
+    static LC_OffsetCurveCreateResult runEngine(const RS_Entity &attributes,
+        const LC_EllipseOffsetDefinition &definition, const LC_OffsetRunLimits &limits);
+    LC_OffsetCurveEditResult eligibility() const noexcept;
+    LC_OffsetCurveEditResult edit(const LC_EllipseOffsetDefinition &definition,
+        const LC_OffsetRunLimits &limits, const RS_Vector *through = nullptr);
+    LC_OffsetCurveEditResult commitPrepared(LC_OffsetCurveCreateResult &prepared);
 
     LC_EllipseOffsetDefinition m_definition;
     double m_worldTolerance = 0;
@@ -73,5 +124,12 @@ private:
     std::vector<RS_Vector> m_grips;
     unsigned m_unknownFlags = 0;
     OwnedTail m_unknownTail;
+};
+
+struct LC_OffsetCurveCreateResult : LC_OffsetCurveEditResult {
+    std::unique_ptr<LC_OffsetCurve> entity;
+    explicit operator bool() const noexcept {
+        return LC_OffsetCurveEditResult::operator bool() && bool(entity);
+    }
 };
 #endif

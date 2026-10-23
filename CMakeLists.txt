@@ -2619,6 +2619,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_curveoffsetellipsetests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_edit_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcachecontacts_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcontactmatching_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_topology_budget_tests.cpp

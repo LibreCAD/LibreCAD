@@ -106,6 +106,29 @@ TEST_CASE("native offset adoption certifies lines without changing saved directi
     }
 }
 
+TEST_CASE("native offset adoption refuses certified geometry outside spline display knot resolution",
+          "[lc-offsetcurve][native][display]") {
+    const auto definition = circle(false);
+    auto data = arc(definition);
+    for (auto &knot : data.knotslist) knot *= 1e-12;
+    // This is still the same exact unit-weight Bezier line in a different
+    // parameter domain. C's geometric admission is not a display certificate.
+    const auto geometric = geo::checkCache(data, definition, .01);
+    REQUIRE(geometric);
+    RS_Spline cache{nullptr, data};
+    CHECK_FALSE(cache.validate()); CHECK(cache.count() == 0);
+    LC_OffsetCheckResult checked;
+    LC_OffsetCurveRefusal refusal;
+    auto adopted = LC_OffsetCurve::adopt(cache, definition, .01, &checked, {}, &refusal);
+    CHECK_FALSE(adopted); CHECK(checked);
+    CHECK(checked.reason == LC_OffsetCheckResult::Reason::None);
+    CHECK(refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+    CHECK(checked.work.cacheSpans == geometric.work.cacheSpans);
+    CHECK(checked.work.vertices == geometric.work.vertices);
+    CHECK(checked.work.distancePairs == geometric.work.distancePairs);
+    CHECK(cache.getData().knotslist == data.knotslist);
+}
+
 TEST_CASE("native offset adoption retains cubic controls and refuses off-curve data", "[lc-offsetcurve][native]") {
     auto definition = circle(false);
     RS_Spline cache{nullptr, arc(definition, 3)};
