@@ -95,6 +95,33 @@ The matching focused tests use genuine real-child synthetic controls, not the
 complete canonical qualification. Full affected regressions and the driver’s two
 complete validation runs remain required before marking H7 complete.
 
+## Two-Run Qualification Driver
+
+The driver creates a new private namespace, pins an immutable copy of the actual
+roadmap, generates actual definitions/configuration, captures two genuine
+preflights and runs the complete pipeline, twice:
+
+```sh
+node scripts/offset-curve-validation/qualify-worker-runner.js \
+  --directory /absolute/existing-parent/new-qualification \
+  --base /absolute/base-artifact.cpp --product /absolute/product-artifact.cpp \
+  --candidate /absolute/current-artifact.cpp \
+  --roadmap /absolute/docs/plan_offset_curve_2961.md
+```
+
+All inputs must already exist and remain unchanged; the destination must not.
+Failed attempts and raw child/capture diagnostics are retained. Each full run has
+isolated, explicitly bound configuration/output paths, so their raw input-manifest
+hashes are not claimed equal. Their canonical suite outcomes must be byte-identical.
+Original H2 captures and H4/H5 owners remain live through both runs and final
+publication/readback; a late mutation in the first run invalidates completion.
+
+`qualification.json` is a RECORDED observation, not a standalone completion token.
+The CLI/API returns PASS only after final original-owner checks and binds that
+recorded report's bytes/hash. No native feature completion or human approval is
+asserted. The full canonical timing and successful two-run result must be observed,
+not inferred from the focused control tests.
+
 ## Implemented
 
 X-H1 provides immutable format descriptors and receipt parsing/readback. Run:
