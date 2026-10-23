@@ -223,7 +223,7 @@ test commit followed by the section 4 plan checkpoint.
 | E-again | E-tools | Bounded repeated offset/rebase with plain fallback | committed bf7b512cf |
 | F-types | E-again | Complete engine/document/filter type-site integration census | complete:49c9b328b |
 | F-names | F-types | Names, quick info, context/selection/menu descriptors | complete:f0fb28fab |
-| G-schema | F-names | Shared typed XDATA/EED definition parser/merger | pending |
+| G-schema | F-names | Shared typed XDATA/EED definition parser/merger | complete:305042903 (helper-only; adapter packetization prerequisite below) |
 | G-adapter | G-schema | Actual application DXF/DWG read/write and failure propagation | pending |
 | G-fixtures | G-adapter | Hostile metadata/raw carrier, ownership and failed-save regressions | pending |
 | G-matrix | G-fixtures | Independent fixtures/output inspection for complete version/conversion matrix | pending |
@@ -273,7 +273,7 @@ editing; changes beyond the named concern require a scope note in the slice card
 
 ### Current Next Cards
 
-The main track resumes at G-schema (section 9.1). D-core `92758859c` uses the actual
+The main track resumes at G-adapter (section 9.2). D-core `92758859c` uses the actual
 C checker, not a layout-only adoption gate. Similarity transport requires exact
 dyadic affine images of every stored coordinate and unchanged normalized semantic
 basis fields. Rounded similarities and arc reflections refuse unchanged; whole
@@ -323,28 +323,41 @@ native Edit Properties remains a safe refusal until H-dialog. Enum-wide naming
 coverage retains four explicit pre-existing legacy gaps rather than silently
 claiming every existing type has a name.
 
-Next G-schema implementation order:
+G-schema `305042903` registers32 schema and33 raw-carrier cases, adds nine native
+storage cases and qualifies the actual native/schema4096-byte boundary bridge.
+Native tails are bounded, validated and densely owned before transactional swap;
+file-encoding limits stay in the shared layer. Raw carrier admission remains
+data-only, not C certification. No application callback uses these helpers yet.
 
-1. Review/register the shared typed parser/merger and bounded raw SPLINE carrier
-   helpers in CMake/qmake6, with31 schema and33 carrier authored cases. These
-   cases have not run yet. Carrier admission is data-only, not C certification.
-2. Fix native owned-tail storage before using the parser as an adoption source:
-   replace target-independent four-byte-per-character rejection with a bounded
-   16-KiB logical payload/4096 UTF-16 units per string guard; retain64 items/depth8,
-   validate text, and allocate dense owned strings before a final swap. Never
-   retain QString::fromRawData backing storage or claim allocator-byte bounds.
-3. Keep the4096 target-encoded tail and65535 EED limits in the shared encoding
-   boundary. Qualify the corrected code1003 DXF name-size/EED handle-size split,
-   actual legacy expansion, UTF-16 and ASCII caret framing; no shared tag mutation.
-4. Test exact/over limits, invalid/surrogate/control text and refusal state/owned
-   raw-data lifetimes with real native fixtures. Run focused/adjacent Release/ASan,
-   full Release, format lanes, qmake6, static review and tested-blob audit.
-5. Commit/checkpoint before G-adapter wires the real callbacks. The adapter must
-   resolve raw DXF text decoding, operation-scoped target codec/options, raw
-   eligibility before repair, one actual C adoption, every fallback's stripping,
-   APPID reuse and sticky serialization failure. Future fixture/tooling/trim/UI
-   scaffolding remains unqualified until its named slice; generated independent
-   ACadSharp inputs are not LibreCAD interoperability PASS.
+Next G-adapter implementation order:
+
+1. **Packetization prerequisite:** fix `DRW_Entity::encodeDwgEed` to preflight a
+   complete top-level balanced braced unit before appending/flushing, with the
+   uint16 chunk cap and no split inside a brace scope. Its current post-brace
+   depth overflow check can flush before a closing brace and rejects a safe
+   flush before an opening brace. Add direct codec byte/brace boundary tests.
+2. Match that policy in shared `preflightEncoding`: lift the current conservative
+   whole-APPID65535 cap to per-balanced-unit packetization for merged LibreCad
+   and foreign data. Allow safe scalar/top-level chunk rollover, reject any
+   oversized indivisible item/scope, malformed braces and unresolved codec data.
+   This is mandatory before primary export wiring, not an interoperability waiver.
+3. Establish operation-scoped input/output version/origin/codec options and reset
+   them on every exit. Resolve raw DXF Unicode/caret decoding without mutating
+   shared foreign tags; test both modern and legacy text. Reuse actual codecs.
+4. Gate original raw SPLINE before projection/repair, then one actual C adoption;
+   apply attributes and successful stripping even when the remainder is empty
+   on every conic/high-degree/ordinary/fit fallback. HELIX never becomes native.
+5. Merge current metadata before DXF/DWG/R12 branches; reuse APPIDs, preserve
+   foreign values and unknown schemas, and latch every unsafe/count/encoding/
+   approximation/writer failure before publication. No silent definition omission.
+6. Use portable schema parameters in persistent native fixtures (the old generic
+   factory uses relativeTolerance .01 outside schema1's declared factor range).
+   Retain an explicit failed-save regression for an in-memory nonportable native;
+   do not loosen schema validation merely to export that fixture.
+7. Run real adapter/codec focused tests and all build/regression/audit lanes,
+   commit/checkpoint, then finish G-fixtures and independent G-matrix. Future
+   fixture/tooling/trim/UI scaffolding remains unqualified; generated ACadSharp
+   inputs are not LibreCAD interoperability PASS.
 
 The auxiliary scheduler correction `90714f758` passed the407-case regression.
 Both isolated full runs of `H7-qualification-03` returned PASS through the actual
@@ -1830,7 +1843,7 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 | Atomic budget API | Committed and validated (`0eb2a0cfa`) | Integrate solver/geometry work in A-strict/A-reference |
 | Geometry work/exception/split/depth/terminal proof | All A slices and B committed and validated | C complete checker |
 | Complete semantic path checker | C committed d4a0b081a; used by D-core public adoption | D-edit staged regeneration |
-| Native feature/UI/persistence/trim | All D/E/F slices committed; later workflow incomplete | Follow G-schema through T; do not label unregistered helper scaffolding complete |
+| Native feature/UI/persistence/trim | All D/E/F and G-schema helper slice committed; application persistence incomplete | Follow G-adapter through T; close packetization prerequisite before wiring |
 | Independent DWG/version fixtures | Required, not yet qualified | Inventory/tool/license/provenance during G-fixtures; close all rows in G-matrix |
 | Harness production readiness | X-H1-X-H7 committed; actual two-run qualification03 independently audited | Retain observed-byte/runtime scope and failed attempts; no future timing guarantee |
 | Independent review and test evidence | A-core independent static review and actual test reports complete | Obtain fresh review/validation for each successor |
@@ -1859,8 +1872,65 @@ The plan checkpoint column never depends on its own future SHA.
 | E-again | bf7b512cf | Immediate plan-only checkpoint | 37 focused Release/ASan cases, full Release,687 affected ASan cases, both format lanes Release/ASan and qmake6; three review corrections, actual profiles and13-blob audit |
 | F-types | 49c9b328b | Immediate plan-only checkpoint | 73 focused Release/ASan cases (one unbuilt legacy-export skip), full Release,199 adjacent ASan cases, DXF/DWG Release/ASan, qmake6; independent review and27-blob audit |
 | F-names | f0fb28fab | Immediate plan-only checkpoint | 16 focused Release/ASan cases, full Release,67 adjacent ASan cases, both format lanes Release/ASan and qmake6; independent source/test review and17-blob audit |
+| G-schema | 305042903 | Immediate plan-only checkpoint | 94 focused Release/ASan cases, full Release,184 adjacent ASan cases, both format lanes and qmake6; independent review and11-blob audit; helpers not application wiring |
 | X-H7 timeout source fix | c1b2fa095 | Immediate plan-only checkpoint | Author55 + independent15 controls and parent399 runner regression passed; actual runtime qualification remains open |
 | X-H7 bounded scheduling | 90714f758 | Immediate plan-only checkpoint | Author85 + independent12 controls, parent407 runner regression and real224.790-second preflight probe passed; full two-run qualification remains open |
+
+### G-schema Validation (2026-10-23)
+
+Product `305042903` qualifies the typed metadata/raw-carrier infrastructure and
+native owned-tail storage in11 files. Shared scans bound counts/payload/storage
+before copies; preserve foreign tag identity, unknown schemas and reserved bits;
+strip only known/malformed owned candidates; enforce exact types/order/angles,
+safe tails and target-codec byte admission. The raw SPLINE helper admits original
+degree1/3 clamped polynomial chains without projecting Z, repairing counts/knots/
+weights, consuming fit data or treating HELIX as SPLINE. It issues no C proof.
+
+Native `setOwnedExtensions` validates at most64 items, balanced depth8,4096 UTF16
+units per string and16-KiB logical payload before allocation, then stages fresh
+string copies and swaps. The API does not promise allocator-byte bounds. It no
+longer retains fromRawData pointers/excess caller capacity or rejects legitimate
+schema4096-byte tails due to a four-byte-per-unit native estimate. Refusal and
+propagating allocation exceptions preserve old flags/tail; allocation-failure
+protection is established by staging/RAII, not an invented allocator fault test.
+
+Evidence root: `/private/tmp/lc2961-impl-evidence.9GtLO2`.
+
+- Explicit Release/ASan three-target builds02 and qmake6 configure/build01 pass.
+  Same Qt6/C++17/ASan configuration and host leak-detector limitation. Only the
+  metadata storage contract changes; geometry/effort limits are unchanged.
+- `G-schema-focused-{release,asan}-02`:94 cases,29,585 assertions, no failures/
+  skips. Contains32 schema,33 carrier and29 current native cases, including nine
+  new native boundary/ownership cases. The new bridge parses independent exact
+ 4096-byte ASCII/UTF16/surrogate tails, admits an actual C-checked native, stores
+  its flags/values and serializes the original typed payload exactly.
+- `G-schema-full-release-01`:4,302 total,4,275 passed,27 unchanged skips;
+  all8,775,009 assertions pass. All5,179 previous rows remain;5,253 current rows
+  add exactly74, with identical skip identities.
+- `G-schema-affected-asan-02`:184 cases,52,979 assertions, no failures/skips.
+  Includes the full focused set, native editing/coverage, EED and actual
+  `[dxf_codec]` tests. Earlier adjacent01 used an unmatched codec-tag spelling;
+  it is retained but is not the final codec-selection evidence.
+- DXF Release/ASan01:749 total,746 passed,3 unchanged skips,40,279 assertions.
+  DWG Release/ASan01:1,006 total,1,002 passed,4 unchanged skips,34,948 assertions.
+  All previous format rows retained. These are existing format regressions, not
+  a claim that marked native file import/export has been integrated.
+- `G-schema-report-audit-01.json` checks reports, baseline row/skip retention,
+  exact additions and focused identities/adjacent containment. Source/binary
+  identity01 and audit02 bind11 source files and7 binaries. Committed-blob audit01
+  confirms every product blob equals the validated bytes.
+- Independent carrier/schema/storage reviews verified the code1003 encoded DXF
+  name versus EED handle accounting fix and the owned-storage corrections; no
+  additional actionable P1/P2 in the native delta. Cppcheck01 exits2 with four
+  reviewed existing initialization/inheritance warnings, not a clean PASS claim.
+
+**Integration limit:** the helper deliberately still rejects an entire APPID
+above65535 EED bytes. Parent inspection found that actual encoder rollover must
+first be corrected for complete balanced units, then this conservative cap lifted
+without permitting open-brace splits. That requirement is now G-adapter step1/2
+above and must be tested before primary export calls the helper. No application
+interoperability or full persistence completion is claimed here. Future fixtures,
+trim and UI artifacts are excluded from this commit. Next: G-adapter.
 
 ### F-names Validation (2026-10-23)
 
