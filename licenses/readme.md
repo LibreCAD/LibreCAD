@@ -116,15 +116,16 @@ The Amiri font was released under the Open Font License.
 - <https://github.com/khaledhosny/amiri-font/blob/0.108/OFL.txt>
 
 The Noto Sans SC and Noto Sans TC fonts were released under the
-Open Font License 1.1; their copyright notice and the licence are in
-`OFL-noto-cjk.txt`.
+Open Font License 1.1, with this copyright notice and licence:
 
+- <https://github.com/LibreCAD/LibreCAD/blob/master/licenses/OFL-noto-cjk.txt>
 - <https://github.com/notofonts/noto-cjk>
 
 The WenQuanYi Micro Hei font was released under the Apache License 2.0
 or the GPLv3 or later with the font exception. LibreCAD distributes it
-under the GPLv3, whose text is in `gpl-3.0.txt`.
+under the GPLv3.
 
+- <https://github.com/LibreCAD/LibreCAD/blob/master/licenses/gpl-3.0.txt>
 - <https://sourceforge.net/projects/wqy/>
 
 The Hershey Fonts were originally created by Dr. A. V. Hershey  
@@ -140,10 +141,19 @@ The format of the Font data in this distribution was originally created by:
 The Windows, macOS and AppImage packages of LibreCAD include the Qt
 libraries. Qt offers them under the LGPLv3, the GPLv2 and the GPLv3;
 LibreCAD, which is licensed under the GPLv2 only, uses them under the
-GPLv2 (`gpl-2.0.txt`). The Qt libraries contain third-party code under
-its own licenses; `qt-third-party.txt` lists each component with its
-copyright and license text. Qt's source code, and the licenses of the
-third-party code in Qt, can also be found at:
+GPLv2. The Qt libraries contain third-party code under its own licenses.
+For the Qt DLLs and plugins of the Windows packages, this list gives
+each component with its copyright and license text:
+
+- <https://github.com/LibreCAD/LibreCAD/blob/master/licenses/qt-third-party.txt>
+
+The x64 Windows installer also carries `opengl32sw.dll`, Qt's build of
+the Mesa llvmpipe software renderer, whose licenses Qt lists at:
+
+- <https://doc.qt.io/qt-6/qt-attribution-llvmpipe.html>
+
+Qt's source code, and the licenses of the third-party code in Qt, can
+also be found at:
 
 - <https://www.qt.io/download-open-source>
 - <https://doc.qt.io/qt-6/licenses-used-in-qt.html>
