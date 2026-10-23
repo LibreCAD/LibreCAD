@@ -42,7 +42,7 @@ is claimed.
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
 | Latest product checkpoint | `9bf0546b6` (B) |
-| Latest auxiliary checkpoint | `25661f1a3` (X-H2; X-H1 physical-parent correction `8993e2848`) |
+| Latest auxiliary checkpoint | `c939c3de7` (X-H2 purpose/injection hardening; original capture `25661f1a3`) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
 | A-core | Atomic work adoption, separate ordering allowance and sticky terminal status implemented; A04/A10 registered |
@@ -272,11 +272,21 @@ editing; changes beyond the named concern require a scope note in the slice card
 
 ### Immediate Next Card: C
 
-**Files (only these three):**
+**Files:**
 
 - `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h`
 - `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp`
 - `librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp`
+- New `lc_offsetcachecontacts.{h,cpp}` and tests/lc_offsetcachecontacts_tests.cpp
+  in the same entity directory; CMakeLists.txt and librecad/src/src.pro for exact
+  source/test registration. This bounded helper reuses strict intersection proofs
+  to detect nonlocal candidate contacts independently of matching proposals.
+- `lc_parametriccurveintersection.{h,cpp}` and its test TU: opt-in bounded strict
+  proof-domain padding. The contact query's transverse dyadic-boundary crossing
+  hit depth 20 with the historical 0.001 padding (debugged box recorded below).
+  Keep the old default and counters for all old callers; contact queries opt into
+  1/16 padding. This changes the domain of a fresh Krawczyk proof, not geometric
+  tolerance, acceptance predicates or shared work limits.
 
 **Base:** committed B `9bf0546b6`. Requirements R02/R12/R14; all A/B exact
 identities exist. ReferenceComponentAnalysis now owns exact terminal lookups.
@@ -308,6 +318,11 @@ may treat its Ok result as an editable-cache certificate.
    directed event/edge signature modulo rotation. Equivalent same-edge subdivisions
    are one path, different directed cycles are not. Memoize equivalent partial
    states and saturate semantic-path counts at two, with bounded scans/storage.
+   Include a bounded nonlocal candidate-contact check. Local projection positivity
+   alone cannot exclude a loop across matched cells, even adjacent ones. Never
+   exempt an entire adjacent span pair merely because they share a construction
+   endpoint: prove separation or the exact authorized contact and absence of others.
+   Check missing required reference contacts as well as unexpected candidate ones.
 6. Classify actual evidence: proven separation OffCurve; unresolved geometry/cut
    correspondence Ambiguous; incomplete/invalid/nonunique traversal Topology;
    unresolved reference ReferenceUnresolved; exhausted budget LimitExceeded.
@@ -329,7 +344,7 @@ may treat its Ok result as an editable-cache certificate.
 **Exit:** all 54 public identities and prior A/B/geometry regressions pass, with
 complete unique selected paths, bidirectional coverage and precise reasons/work.
 No native entity, UI or file-format edit belongs in this slice.
-Changes beyond these three paths require a concrete dependency note.
+Changes outside this concern require a concrete dependency note.
 
 ## 6. Geometry and Work Contracts
 
@@ -529,6 +544,21 @@ Ambiguous, Topology, LimitExceeded`, original candidate span attribution
    geometrically closed clamped cache. Do not infer periodic derivative continuity.
 10. Publish success only after complete bounds, local order, legal unique path,
     bidirectional exact-once coverage, terminal/cut return and flag checks.
+
+Additionally, certify nonlocal contact incidence. Positive projected progress in
+each paired cell does not imply a globally embedded cache: two monotone adjacent
+pieces may make a small loop across their interiors. Strict candidate intersections
+or equivalent outward pair proofs must exclude unexpected contacts and establish
+required nonlocal reference contacts with their exact directed occurrences. A
+shared endpoint is not a blanket adjacent-pair exclusion. Preserve original span
+attribution and atomically adopt strict-query work, including exceptional exits.
+
+Concrete regression: C1(t)=(3t-2t^2,2t^2-t) and
+C2(s)=(1-s+2s^2,1-3s+2s^2), each on [0,1], join at (1,1) and meet again at
+C1(1/2)=C2(1/2)=(1,0). Their respective chord-axis derivative projections are
+constantly 2; proximity can be made arbitrarily small by scaling. Thus local
+order plus tiled parameter domains cannot alone admit this candidate. Test the
+actual cubic representations and retain the unexpected contact as a falsifier.
 
 Geometric proof uses setwise Hausdorff bounds, not equal parameters or samples.
 For chord deviations eC/eQ and symmetric endpoint-to-opposite-segment chord bound
@@ -1456,7 +1486,7 @@ one plan update, not another candidate/freeze lifecycle.
 | Slice | Current state | Required repair and exit |
 |---|---|---|
 | X-H1 | Committed, 29ab28163; follow-up 8993e2848 | Schema 2 / offset-2961; explicit validation/synthetic purpose; bounded parsing and readback; inert descriptors; 25 passing tests and independent review |
-| X-H2 | Committed, 25661f1a3 | Actual input/runtime manifest, bounded stdin/child capture and durable receipt readback; 42 capture tests plus 25 H1 tests; independent review |
+| X-H2 | Committed, 25661f1a3; hardened c939c3de7 | Actual input/runtime manifest, bounded stdin/child capture and durable receipt readback; 15 input + 32 process tests plus 25 H1 tests; independent review |
 | X-H3 | In progress; new registry/runner/CLI | Configure real registry/CLI, explicit worker contract and exact output inventory; missing/undefined/unknown status is FAIL, never default PASS |
 | X-H4 | Runner exposes row count, not complete joined rows | Return all joined events with pinned identity/order/output hashes; test persistence, replay, mutation and duplicate/missing events |
 | X-H5 | Draft evidence validator incomplete, no tests | Implement missing helpers, actual tuple validation, absent-file publication and before/after-dispatch rechecks |
@@ -1701,6 +1731,22 @@ The plan checkpoint column never depends on its own future SHA.
 
 ### X-H2 Validation (2026-10-23)
 
+Follow-up `c939c3de7` rejects inherited, hidden and accessor injection before hook
+evaluation, and snapshots the plain configuration's own data properties before
+authorizing any dependency. A synthetic purpose cannot change into validation
+between authorization, input capture and publication. Regressions exercise zero
+getter/adapter calls on refusal and mutation of the original configuration during
+spawn without relabeling the synthetic receipt. Original capture schema unchanged.
+Parent integrated H1/H2/H3 run: 102 tests passed, zero skips/failures, in
+`/private/tmp/lc2961-impl-evidence.9GtLO2/X-H3-parent-integrated-02.tap`.
+H2 focused independent rerun: 32/32 passed in X-H2-purpose-pin-independent-02.tap
+in the same evidence directory. Reviewer 01a16786-0b92-7183-b563-f1bedab4ba28
+cleared the final tree with no remaining P1/P2 findings; both changed JavaScript
+files passed syntax checks and the whole diff passed whitespace checks.
+H3 remains uncommitted at this checkpoint; C is still incomplete. The C scope
+refinement below records the contact-query dependency and corrects the prior B
+status label; it is not a claim that those source changes have been committed.
+
 Six files committed: input-capture.js, preflight-capture.js, their two tests,
 fixtures/capture-child.js and README.md. Actual stable bytes derive the candidate
 SHA-256/length/Git-blob, explicit sorted source/input/fixture/config closure, exact
@@ -1783,7 +1829,8 @@ lens endpoints use independent high-precision parameter/visibility oracles.
 B05 runtime-covers a retained seam through event (circle and ellipse, both sweep
 directions), not same-Own-occurrence stationary-interior continuation. That branch
 is source-reviewed only. Whole E(100,50), D=-25 and an interior-pi arc probe both
-remain pre-terminal AmbiguousTopology in existing reference discovery. A negative
+remain pre-terminal LimitExceeded in existing reference discovery (status 3;
+the previous wording incorrectly called this AmbiguousTopology). A negative
 angle probe correctly refused InvalidInput. Failed reports B-acceptance-release-
 01/02/03 are retained; neither skipped cases nor changed geometry hides these
 limits. Stationary source-endpoint support remains covered by prior tests. C must
