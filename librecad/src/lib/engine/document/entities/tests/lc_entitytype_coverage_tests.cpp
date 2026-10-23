@@ -137,8 +137,8 @@ constexpr Row rowOf(RS2::EntityType type) {
     case RS2::EntitySnapConstructionLine: return notApplicable("Transient snap construction line, not persistent drawing geometry");
     case RS2::EntityDimArrowBlock: return notApplicable("Owned dimension arrow block, written as its primitives");
     case RS2::EntityOffsetCurve:
-        return withGap(drawing(type), DxfRoundTrip | DwgRoundTrip | InsertExpansion,
-                       "Offset definitions are not yet serialized; INSERT deliberately expands a plain SPLINE cache");
+        return withGap(drawing(type), InsertExpansion,
+                       "INSERT deliberately expands a plain SPLINE cache");
     }
     return notAnEnumerator();
 }
@@ -672,7 +672,7 @@ TEST_CASE("Every drawing entity has a DXF 2018 round-trip disposition", "[entity
     if (type == RS2::EntityOffsetCurve) {
         REQUIRE(observation.exported);
         REQUIRE(observation.imported);
-        CHECK(observation.loadedTypes == std::vector<RS2::EntityType>{RS2::EntitySpline});
+        CHECK(observation.loadedTypes == std::vector<RS2::EntityType>{RS2::EntityOffsetCurve});
         CHECK(observation.usableGeometry);
     }
 }
@@ -695,10 +695,8 @@ TEST_CASE("Every drawing entity has a DWG 2018 round-trip disposition", "[entity
     if ((row.knownGaps & DwgRoundTrip) != 0) {
         REQUIRE(observation.exported);
         REQUIRE(observation.imported);
-        REQUIRE((type == RS2::EntityMLeader || type == RS2::EntityOffsetCurve));
-        const std::vector<RS2::EntityType> expected = type == RS2::EntityOffsetCurve
-            ? std::vector<RS2::EntityType>{RS2::EntitySpline}
-            : std::vector<RS2::EntityType>{RS2::EntityDimLeader, RS2::EntityMText};
+        REQUIRE(type == RS2::EntityMLeader);
+        const std::vector<RS2::EntityType> expected{RS2::EntityDimLeader, RS2::EntityMText};
         CHECK(observation.loadedTypes == expected);
         CHECK(observation.usableGeometry);
     }

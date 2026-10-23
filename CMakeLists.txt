@@ -2705,6 +2705,9 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/filters/tests/spline_offset_representation_tests.cpp
         librecad/src/lib/filters/tests/lc_offsetcurve_exportdispatch_tests.cpp
+        librecad/src/lib/filters/tests/lc_offsetcurve_adapter_tests.cpp
+        librecad/src/lib/filters/tests/lc_offsetcurve_eed_packet_tests.cpp
+        librecad/src/lib/filters/tests/dxf_xdata_codec_tests.cpp
         tests/lc_offsetcurvecarrier_tests.cpp
         tests/lc_offsetcurvexdata_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_line_parallel_tests.cpp
@@ -3202,6 +3205,7 @@ if (BUILD_TESTS)
     # application startup or console commands, so they must not pull in
     # MAIN_SOURCES and its UI/resource compilation cost.
     set(LIBRECAD_DWG_FAST_TEST_SOURCES
+        librecad/src/lib/filters/tests/lc_offsetcurve_eed_packet_tests.cpp
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
@@ -3290,6 +3294,7 @@ if (BUILD_TESTS)
     )
 
     set(LIBRECAD_DXF_FAST_TEST_SOURCES
+        librecad/src/lib/filters/tests/dxf_xdata_codec_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_entitytype_coverage_tests.cpp
         librecad/src/lib/filters/tests/dxf_attribute_tests.cpp
         librecad/src/lib/filters/tests/dxf_object_tests.cpp
@@ -3382,6 +3387,16 @@ if (BUILD_TESTS)
             LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata"
         )
     endfunction()
+
+    add_librecad_filter_micro_test(
+        librecad_offset_adapter_tests
+        librecad/src/lib/filters/tests/lc_offsetcurve_adapter_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_xdata_codec_tests
+        librecad/src/lib/filters/tests/dxf_xdata_codec_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_eed_packet_tests
+        librecad/src/lib/filters/tests/lc_offsetcurve_eed_packet_tests.cpp)
 
     add_librecad_filter_micro_test(
         librecad_text_source_tests

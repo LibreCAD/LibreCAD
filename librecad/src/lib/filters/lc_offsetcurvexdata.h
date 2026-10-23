@@ -42,7 +42,7 @@ struct Options {
     TextEncoding textEncoding = TextEncoding::Utf8;
     bool eed = false;
     // Mirrors dxfRW's !binFile branch; ignored for EED. Only ASCII 1000
-    // values caret-escape bytes below 0x20 before the selected text encoder.
+    // values caret-escape bytes below 0x20 and literal '^' before encoding.
     bool asciiDxf = true;
     // Binary R12 extended group codes add the writer's 0xff escape byte.
     // Only affects binary-chunk framing; ignored for ASCII DXF and EED.
@@ -85,7 +85,10 @@ ParseResult parseAndStrip(const XData &input, const Options &options = {});
 // Tail byte limits include typed payload framing, not ASCII group-code lines.
 // Foreign DXF binary tags stay shared; their emitted 127-byte chunks are sized
 // using hexadecimal ASCII or raw binary payloads, with framing per chunk.
-// EED preflights each entire APPID payload (<=65535 bytes), never brace-splits.
+// EED packs scalar/complete top-level braced units into <=65535-byte packets,
+// never splitting a braced unit; at most 65536 packets. APPID headers and layer
+// names are resolved handles, not encoded payload text. Compatible merged
+// payloads precede the newly appended definition in this same simulation.
 // EED requires Utf16 or Legacy; layer/APPID handle resolution stays in the codec.
 // Returns nullopt on any unsafe merge/encoding/resource/current-definition error.
 // Diagnostics, if supplied, are replaced, bounded, and contain no payload text.

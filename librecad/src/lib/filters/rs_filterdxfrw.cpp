@@ -41,6 +41,7 @@
 #include <list>
 #include <map>
 #include <memory>
+#include <new>
 #include <optional>
 #include <set>
 #include <sstream>
@@ -72,6 +73,9 @@
 #include "dxf_format.h"
 #include "intern/dwgbufferw.h"
 #include "intern/dwgsafety.h"
+#include "intern/drw_textcodec.h"
+#include "lc_offsetcurve.h"
+#include "lc_offsetcurvecarrier.h"
 #include "lc_colornumbers.h"
 #include "lc_containertraverser.h"
 #include "lc_defaults.h"
@@ -127,6 +131,7 @@
 #include "lc_ucs.h"
 #include "lc_view.h"
 #include "libdwgr.h"
+#include "intern/dwgreader.h"
 #include "rs_debug.h"
 #endif // DWGSUPPORT
 
@@ -4250,6 +4255,16 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
 
   m_graphic = &g;
   m_currentContainer = m_graphic;
+  m_offsetInputKind = OffsetInputKind::None;
+  m_offsetInputVersion = DRW::UNKNOWNV;
+  m_offsetInputCodePage = QStringLiteral("ANSI_1252");
+  m_version = 0;
+  m_versionStr.clear();
+  const auto offsetInputGuard = qScopeGuard([this] {
+    m_offsetInputKind = OffsetInputKind::None;
+    m_offsetInputVersion = DRW::UNKNOWNV;
+    m_offsetInputCodePage = QStringLiteral("ANSI_1252");
+  });
   m_dummyContainer = new RS_EntityContainer(nullptr, true);
   // RAII: free the scratch container on every return path (success and the
   // BAD_VERSION / parse-failure early returns), not just the success path.
@@ -4306,8 +4321,12 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
     const int magicVersion = versionIdFromDwgMagic(file);
     if (magicVersion != 0)
       m_version = magicVersion;
+    const auto magic = std::string("AC") + std::to_string(magicVersion);
+    for (const auto &entry : DRW::dwgVersionStrings)
+      if (magic == entry.first) m_offsetInputVersion = entry.second;
 
     dwgR dwgr(QFile::encodeName(file));
+    m_offsetInputKind = OffsetInputKind::Dwg;
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file");
     if (RS_DEBUG->getLevel() == RS_Debug::D_DEBUGGING)
       dwgr.setDebug(DRW::DebugLevel::Debug);
@@ -4443,6 +4462,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
     if (m_dxfTextEncoding == RS2::DxfTextEncoding::LegacyLibreCadUtf8)
       m_graphic->setDxfRecoverySourceFile(QFileInfo(file).absoluteFilePath());
     m_dxfR = new dxfRW(QFile::encodeName(file));
+    m_offsetInputKind = OffsetInputKind::Dxf;
     m_dxfR->setDxfTextEncoding(
         m_dxfTextEncoding == RS2::DxfTextEncoding::LegacyLibreCadUtf8
             ? DRW::DxfTextEncoding::LegacyLibreCadUtf8
@@ -8032,7 +8052,138 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline &data) {
   m_currentContainer->addEntity(polyline.release());
 }
 
-bool RS_FilterDXFRW::handleQuadraticConicSpline(const DRW_Spline *data) {
+std::optional<RS_FilterDXFRW::OffsetXDataContext>
+RS_FilterDXFRW::makeOffsetXDataContext(bool dwg, DRW::Version version,
+                                      const QString &codePage, bool binary) {
+  switch (version) {
+  case DRW::AC1009: case DRW::AC1012: case DRW::AC1014:
+  case DRW::AC1015: case DRW::AC1018: case DRW::AC1021:
+  case DRW::AC1024: case DRW::AC1027: case DRW::AC1032:
+    break;
+  default:
+    return std::nullopt;
+  }
+  OffsetXDataContext context;
+  context.codec = std::make_shared<DRW_TextCodec>();
+  context.codec->setVersion(version, !dwg);
+  auto &options = context.options;
+  options.eed = dwg;
+  options.asciiDxf = !binary;
+  options.binaryDxfR12 = binary && version == DRW::AC1009;
+  if (dwg) {
+#ifdef DWGSUPPORT
+    const QByteArray name = codePage.toUtf8();
+    const char *selected = dwgCodePageName(dwgCodePageId(name.constData()));
+    context.codec->setByteCodePage(selected ? selected : "ANSI_1252");
+#else
+    return std::nullopt;
+#endif
+  } else {
+    context.codec->setCodePage(codePage.toUtf8().toStdString(), true);
+  }
+  options.textEncoding = version <= DRW::AC1018
+      ? LC_OffsetCurveXData::TextEncoding::Legacy
+      : dwg ? LC_OffsetCurveXData::TextEncoding::Utf16
+            : LC_OffsetCurveXData::TextEncoding::Utf8;
+  if (options.textEncoding == LC_OffsetCurveXData::TextEncoding::Legacy) {
+    const auto codec = context.codec;
+    options.legacyEncodedBytes = [codec, dwg](std::string_view text)
+        -> std::optional<std::size_t> {
+      const auto encoded = dwg ? codec->fromUtf8CP8(text) : codec->fromUtf8(text);
+      const auto decoded = dwg ? codec->toUtf8CP8(encoded) : codec->toUtf8(encoded);
+      if (decoded != text) return std::nullopt;
+      return encoded.size();
+    };
+  }
+  return context;
+}
+
+std::optional<RS_FilterDXFRW::OffsetXDataContext>
+RS_FilterDXFRW::offsetInputContext() const {
+  if (m_offsetInputKind == OffsetInputKind::None ||
+      (m_offsetInputKind == OffsetInputKind::Dxf && m_dxfR == nullptr))
+    return std::nullopt;
+  // Operation-local source metadata, never the destination graphic's variables.
+  const bool dwg = m_offsetInputKind == OffsetInputKind::Dwg;
+  return makeOffsetXDataContext(dwg, m_offsetInputVersion, m_offsetInputCodePage,
+                                !dwg && m_dxfR->isBinary());
+}
+
+void RS_FilterDXFRW::reportOffsetXDataDiagnostics(
+    const char *operation, const LC_OffsetCurveXData::Diagnostics &diagnostics) {
+  for (const auto &diagnostic : diagnostics)
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+        "RS_FilterDXFRW: offset XDATA %s reason=%d item=%zu",
+        operation, static_cast<int>(diagnostic.reason), diagnostic.item);
+}
+
+void RS_FilterDXFRW::applyImportedSplineAttributes(
+    RS_Entity *entity, const DRW_Spline *raw,
+    const LC_OffsetCurveXData::XData *remaining) {
+  if (!entity) return;
+  setEntityAttributes(entity, raw);
+  // The common setter ignores empty raw XDATA; successful empty stripping must
+  // still replace it. Null means parsing could not safely produce a remainder.
+  if (remaining) entity->setDrwExtData(*remaining);
+}
+
+std::optional<LC_OffsetCurveXData::XData>
+RS_FilterDXFRW::mergedOffsetSplineXData(const RS_Entity &source,
+                                       bool includeDefinition) {
+  namespace xd = LC_OffsetCurveXData;
+  const auto fail = [this](xd::Reason reason = xd::Reason::Encoding) -> std::optional<xd::XData> {
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+        "RS_FilterDXFRW: refusing unsafe offset spline serialization reason=%d",
+        static_cast<int>(reason));
+    m_writeFailed = true;
+    return std::nullopt;
+  };
+  if (!m_offsetOutputContext) return fail(xd::Reason::InvalidOptions);
+  try {
+    const auto &context = *m_offsetOutputContext;
+    std::optional<xd::Definition> current;
+    const auto *native = dynamic_cast<const LC_OffsetCurve *>(&source);
+    if (includeDefinition && native && native->hasEditableDefinition()) {
+      if (native->unknownOwnedTail().size() > xd::MaximumTailItems) return fail(xd::Reason::TailLimit);
+      current = xd::Definition{native->definition(), native->unknownOwnedFlags(),
+                               native->unknownOwnedTail()};
+    }
+    xd::Diagnostics diagnostics;
+    auto merged = xd::forExport(source.getDrwExtData(), current,
+                                 context.options, &diagnostics);
+    reportOffsetXDataDiagnostics("export", diagnostics);
+    if (!merged) return fail();
+    if (context.options.eed &&
+        context.options.textEncoding == xd::TextEncoding::Utf16) return merged;
+    // The helper sizes the actual encoder, but sizing cannot establish a
+    // lossless inverse. Do not rewrite shared foreign tags to make them fit.
+    for (const auto &tag : *merged) {
+      if (!tag || tag->type() != DRW_Variant::STRING || !tag->content.s) continue;
+      const int code = tag->code();
+      if (code != 1000 && code != 1001 && code != 1003) continue;
+      if (context.options.eed && code == 1003) continue;
+      const auto &original = *tag->content.s;
+      std::string encodedInput;
+      const bool caret = !context.options.eed && context.options.asciiDxf && code == 1000;
+      if (caret) encodedInput = DRW_TextCodec::encodeDxfXDataString(original);
+      const std::string_view input = caret ? std::string_view(encodedInput) : std::string_view(original);
+      const auto encoded = context.options.eed
+          ? context.codec->fromUtf8CP8(input) : context.codec->fromUtf8(input);
+      auto decoded = context.options.eed
+          ? context.codec->toUtf8CP8(encoded) : context.codec->toUtf8(encoded);
+      if (caret) decoded = DRW_TextCodec::decodeDxfXDataString(decoded);
+      // The selected reader must recover the exact logical string. Literal
+      // Unicode/MIF escape spellings without a lossless inverse still refuse.
+      if (decoded != original) return fail();
+    }
+    return merged;
+  } catch (const std::bad_alloc &) {
+    return fail(xd::Reason::ResourceLimit);
+  }
+}
+
+bool RS_FilterDXFRW::handleQuadraticConicSpline(
+    const DRW_Spline *data, const LC_OffsetCurveXData::XData *remaining) {
   if (data->degree != 2 || data->controllist.size() != 3) {
     return false;
   }
@@ -8055,7 +8206,7 @@ bool RS_FilterDXFRW::handleQuadraticConicSpline(const DRW_Spline *data) {
                     "parabola or hyperbola; falling through to addSpline");
     return false;
   }
-  setEntityAttributes(en.get(), data);
+  applyImportedSplineAttributes(en.get(), data, remaining);
   en->update();
   m_currentContainer->addEntity(en.release());
 
@@ -8066,10 +8217,57 @@ bool RS_FilterDXFRW::handleQuadraticConicSpline(const DRW_Spline *data) {
  * Implementation of the method which handles splines.
  */
 void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
+  if (data == nullptr) return;
   RS_DEBUG->print("RS_FilterDXFRW::addSpline: degree: %d", data->degree);
+  namespace xd = LC_OffsetCurveXData;
+  const auto context = offsetInputContext();
+  const auto parsed = xd::parseAndStrip(data->extData,
+      context ? context->options : xd::Options{});
+  reportOffsetXDataDiagnostics("import", parsed.diagnostics);
+  const auto *remaining = parsed.remaining ? &*parsed.remaining : nullptr;
+  if (context && parsed.status == xd::Status::Schema1 && parsed.definition &&
+      parsed.remaining && parsed.knownCandidates == 1 && data->eType == DRW::SPLINE) {
+    const auto raw = LC_OffsetCurveCarrier::fromRawSpline(*data);
+    if (raw) {
+      const auto &definition = parsed.definition->geometry;
+      const RS_Ellipse source{nullptr, definition.basis};
+      const double tolerance = LC_CurveOffset::toleranceFor(
+          source, definition.distance, definition.relTolerance);
+      if (std::isfinite(tolerance) && tolerance > 0) {
+        try {
+          RS_Spline cache{m_currentContainer, *raw.data};
+          LC_OffsetCheckResult checked;
+          LC_OffsetCurveRefusal refusal = LC_OffsetCurveRefusal::InvalidInput;
+          auto native = LC_OffsetCurve::adopt(cache, definition, tolerance,
+                                              &checked, {}, &refusal);
+          if (native) {
+            if (native->setOwnedExtensions(parsed.definition->reservedFlags,
+                                            parsed.definition->tail)) {
+              applyImportedSplineAttributes(native.get(), data, remaining);
+              m_currentContainer->addEntity(native.release());
+              return;
+            }
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                "RS_FilterDXFRW: offset owned-extension storage refused; keeping ordinary geometry");
+          } else {
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                "RS_FilterDXFRW: offset adoption refused native=%d check=%d",
+                static_cast<int>(refusal), static_cast<int>(checked.reason));
+          }
+        } catch (const std::bad_alloc &) {
+          RS_DEBUG->print(RS_Debug::D_WARNING,
+              "RS_FilterDXFRW: offset adoption allocation refused");
+        }
+      }
+    } else {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+          "RS_FilterDXFRW: raw offset carrier refused reason=%d item=%zu",
+          static_cast<int>(raw.refusal), raw.item.value_or(0));
+    }
+  }
 
   // Special case: rational quadratic conic (hyperbola or parabola)
-  if (handleQuadraticConicSpline(data)) {
+  if (handleQuadraticConicSpline(data, remaining)) {
     return; // Conic handled successfully
   }
 
@@ -8081,7 +8279,7 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
 
     const LC_SplinePointsData d(closed, controlOnly);
     const auto splinePoints = new LC_SplinePoints(m_currentContainer, d);
-    setEntityAttributes(splinePoints, data);
+    applyImportedSplineAttributes(splinePoints, data, remaining);
 
     for (const auto &vert : data->controllist) {
       if (vert) {
@@ -8114,7 +8312,7 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
                       "RS_FilterDXFRW::addSpline: approximating unsupported "
                       "spline degree %d",
                       data->degree);
-      setEntityAttributes(sampled.get(), data);
+      applyImportedSplineAttributes(sampled.get(), data, remaining);
       sampled->update();
       m_currentContainer->addEntity(sampled.release());
       return;
@@ -8140,7 +8338,7 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
   if (numCtrl != 0) {
     std::unique_ptr<RS_Spline> spline =
         makeSplineFromDrw(m_currentContainer, *data, data->weightlist);
-    setEntityAttributes(spline.get(), data);
+    applyImportedSplineAttributes(spline.get(), data, remaining);
     m_currentContainer->addEntity(spline.release());
     return;
   }
@@ -8152,7 +8350,7 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
                     : RS_SplineData::SplineType::ClampedOpen;
 
   const auto spline = new RS_Spline(m_currentContainer, d);
-  setEntityAttributes(spline, data);
+  applyImportedSplineAttributes(spline, data, remaining);
   m_currentContainer->addEntity(spline);
 
   if (data->degree != 2) {
@@ -11401,6 +11599,24 @@ void RS_FilterDXFRW::addHeader(const DRW_Header *data) {
   }
   RS_Graphic *container = static_cast<RS_Graphic *>(m_currentContainer);
 
+  // Capture origin before merging: an absent source variable must not inherit
+  // a previous drawing's version or text codec from the destination graphic.
+  if (m_offsetInputKind == OffsetInputKind::Dxf) {
+    m_offsetInputVersion = DRW::UNKNOWNV;
+    const auto incoming = data->vars.find("$ACADVER");
+    if (incoming != data->vars.end() && incoming->second &&
+        incoming->second->type() == DRW_Variant::STRING && incoming->second->content.s)
+      for (const auto &entry : DRW::dwgVersionStrings)
+        if (*incoming->second->content.s == entry.first)
+          m_offsetInputVersion = entry.second;
+  }
+  m_offsetInputCodePage = QStringLiteral("ANSI_1252");
+  auto incomingPage = data->vars.find("$DWGCODEPAGE");
+  if (incomingPage == data->vars.end()) incomingPage = data->vars.find("DWGCODEPAGE");
+  if (incomingPage != data->vars.end() && incomingPage->second &&
+      incomingPage->second->type() == DRW_Variant::STRING && incomingPage->second->content.s)
+    m_offsetInputCodePage = QString::fromUtf8(*incomingPage->second->content.s);
+
   // initialize units vars if not are present in dxf file - they will be
   // overriden if they are present
   m_graphic->addVariable("$LUNITS", 2, 70);
@@ -11552,6 +11768,14 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 
   this->m_graphic = &g;
   m_writeFailed = false;
+  m_offsetOutputContext.reset();
+  m_offsetOutputVersion = DRW::UNKNOWNV;
+  m_offsetOutputDwg = false;
+  const auto offsetOutputGuard = qScopeGuard([this] {
+    m_offsetOutputContext.reset();
+    m_offsetOutputVersion = DRW::UNKNOWNV;
+    m_offsetOutputDwg = false;
+  });
   m_dxfLeftOutRawRecords = 0;
   m_writeLeftOut.clear();
   m_shapeLeftOut.clear();
@@ -11598,6 +11822,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   };
   DRW::Version dwgVer = dwgVersionForFormat(type);
   if (dwgVer != DRW::UNKNOWNV) {
+    m_offsetOutputDwg = true;
+    m_offsetOutputVersion = dwgVer;
     switch (dwgVer) {
     case DRW::AC1015:
       m_version = 1015;
@@ -12064,6 +12290,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     m_exactColor = true;
   }
   m_dxfExportVersion = exportVersion;
+  m_offsetOutputVersion = exportVersion;
   /**
    * fixme - sand - files - RESTORE!!! Under win, encodeName() prevents using
    * unicode file names!!! Due to that, blocks/files may be saved incorrectly if
@@ -18181,6 +18408,12 @@ void RS_FilterDXFRW::writeHeader(DRW_Header &data) {
     //        );
     vars.insert(QString("$DWGCODEPAGE"), RS_Variable(m_codePage, 0));
   }
+  const auto codePage = vars.value("$DWGCODEPAGE");
+  m_offsetOutputContext = makeOffsetXDataContext(
+      m_offsetOutputDwg, m_offsetOutputVersion,
+      codePage.getType() == RS2::VariableString
+          ? codePage.getString() : QStringLiteral("ANSI_1252"));
+  if (!m_offsetOutputContext) m_writeFailed = true;
 
   QHash<QString, RS_Variable>::iterator it = vars.begin();
   while (it != vars.end()) {
@@ -27788,6 +28021,10 @@ void RS_FilterDXFRW::writeAppId() {
           emitRequired(name);
       }
     }
+    // Reuse the same collector for new foreign application groups on entities.
+    // EED lookup cannot register an APPID after the table phase has completed.
+    for (const std::string &name : dxfXDataApplications())
+      emitRequired(name);
     return;
   }
 
@@ -31288,15 +31525,33 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     return;
   }
 
-  if (s->getNumberOfControlPoints() < size_t(s->getDegree() + 1)) {
+  const auto degree = s->getDegree();
+  const auto &sourceData = s->getData();
+  const auto invalidNativeControls = [s, &sourceData] {
+    return s->rtti() == RS2::EntityOffsetCurve &&
+        std::any_of(sourceData.controlPoints.begin(), sourceData.controlPoints.end(),
+          [](const RS_Vector &point) {
+            return !point.valid || !std::isfinite(point.x) || !std::isfinite(point.y) ||
+                !std::isfinite(point.z) || point.z != 0;
+          });
+  };
+  constexpr auto maximum = static_cast<std::size_t>(std::numeric_limits<std::int32_t>::max());
+  if (degree < 1 || degree > 3 ||
+      sourceData.controlPoints.size() < static_cast<std::size_t>(degree) + 1 ||
+      sourceData.controlPoints.size() > maximum - 6 ||
+      sourceData.knotslist.size() > maximum - 6 || sourceData.weights.size() > maximum - 6 ||
+      invalidNativeControls() || !s->validate()) {
     RS_DEBUG->print(RS_Debug::D_ERROR,
                     "RS_FilterDXF::writeSpline: "
-                    "Discarding spline: not enough control points given.");
+                    "Refusing invalid spline geometry or counts.");
+    m_writeFailed = true;
     return;
   }
+  auto merged = mergedOffsetSplineXData(*s, m_offsetOutputVersion != DRW::AC1009);
+  if (!merged) return;
 
-  // R12 has no SPLINE: a polyline within its export tolerance, or the
-  // segments the spline is drawn with
+  // R12 has no SPLINE. Failure to bound its approximation is not permission
+  // to publish unrelated display segments or drop this entity.
   if (m_version == 1009) {
     // a spline read closed but kept with open ends is closed too, while its
     // ends meet: the polyline is closed and repeats no vertex
@@ -31306,24 +31561,11 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
                          splineCurveCloses(splineData));
     std::vector<RS_Vector> vertices;
     if (!r12SplineVertices(*s, closed, vertices)) {
-      // A curve the evaluator cannot bound, as a spline whose knots do not
-      // match its control points is. The file keeps what the screen shows
-      // rather than failing over one entity; a spline that draws nothing
-      // writes nothing, as it did before R12 export had a tolerance.
       RS_DEBUG->print(RS_Debug::D_WARNING,
                       "RS_FilterDXFRW::writeSpline: no R12 polyline within "
-                      "tolerance and vertex limit; writing the drawn segments");
-      vertices.clear();
-      for (const RS_Entity *e : lc::LC_ContainerTraverser{*s, RS2::ResolveNone}.entities()) {
-        vertices.push_back(e->getStartpoint());
-      }
-      if (vertices.empty()) {
-        return;
-      }
-      if (!closed) {
-        vertices.push_back(
-            lc::LC_ContainerTraverser{*s, RS2::ResolveNone}.entities().back()->getEndpoint());
-      }
+                      "tolerance and vertex limit; refusing export");
+      m_writeFailed = true;
+      return;
     }
     DRW_Polyline pol;
     for (const RS_Vector &v : vertices) {
@@ -31333,6 +31575,7 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
       pol.flags = 1;
     }
     getEntityAttributes(&pol, s);
+    pol.extData = std::move(*merged);
     noteDxfWrite(m_dxfW->writePolyline(&pol));
     return;
   }
@@ -31362,14 +31605,15 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     sp.flags |= 0x04;
   }
 
-  sp.ncontrol = sp.controllist.size();
-  sp.degree = s->getDegree();
+  sp.ncontrol = static_cast<std::int32_t>(sp.controllist.size());
+  sp.degree = static_cast<std::int32_t>(degree);
 
   // knot vector from RS_Spline
   sp.knotslist = s->getUnwrappedKnotVector();
-  sp.nknots = sp.knotslist.size();
+  sp.nknots = static_cast<std::int32_t>(sp.knotslist.size());
 
   getEntityAttributes(&sp, s);
+  sp.extData = std::move(*merged);
   if (m_dwgW) {
     if (!m_dwgW->writeSpline(&sp))
       m_writeFailed = true;

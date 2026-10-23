@@ -115,6 +115,7 @@ public:
         m_dxfTextEncoding = encoding;
     }
     void setBinary(bool b) {binFile = b;}
+    bool isBinary() const noexcept { return binFile; }
 
     [[nodiscard]] bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
     /// Requires a nonnull per-call verifier; ordinary write remains unchecked.

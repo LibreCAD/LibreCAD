@@ -2226,8 +2226,16 @@ bool DRW_TableEntry::parseCode(int code, const std::unique_ptr<dxfReader>& reade
         return parseDxfGroups(code, reader);
     case 1000:
     case 1001:
-    case 1002:
     case 1003:
+        if (extData.size() >= kMaxExtendedDataItems
+            || reader->type != dxfReader::STRING
+            || reader->getRawString().size() > 255)
+            return false;
+        if (!appendExtData(std::make_unique<DRW_Variant>(
+                code, reader->getUtf8XDataString(code))))
+            return false;
+        break;
+    case 1002:
     case 1004:
     case 1005:
         if (!appendExtData(std::make_unique<DRW_Variant>(code, reader->getString())))
@@ -2488,19 +2496,43 @@ DRW_DBG("\n***************************** parsing table entry *******************
     std::vector<PendingHandleRef> parsedAppIdResolutions;
     std::vector<PendingHandleRef> parsedLayerRefResolutions;
     try {
+        const auto cap = kMaxExtendedDataItems;
+        if (extData.size() > cap) return false;
+        std::size_t itemCount = 0, appCount = 0, layerCount = 0;
+        std::uint32_t lastApp = 0;
         for (const DwgEedChunk& chunk : eedChunks) {
-            const std::size_t appIndex =
-                extData.size() + parsedExtData.size();
-            parsedExtData.push_back(
-                std::make_unique<DRW_Variant>(1001, std::string{}));
-            parsedAppIdResolutions.push_back({appIndex, chunk.appHandle});
+            if (!appCount || lastApp != chunk.appHandle) {
+                if (itemCount == cap - extData.size()) return false;
+                ++itemCount;
+                ++appCount;
+            }
+            if (chunk.items.size() > cap - extData.size() - itemCount) return false;
+            itemCount += chunk.items.size();
+            layerCount += chunk.layerRefs.size();
+            lastApp = chunk.appHandle;
+        }
+        parsedExtData.reserve(itemCount);
+        parsedAppIdResolutions.reserve(appCount);
+        parsedLayerRefResolutions.reserve(layerCount);
+        std::uint32_t previousAppHandle = 0;
+        for (const DwgEedChunk& chunk : eedChunks) {
+            // Adjacent packets of one application are one logical XDATA group.
+            // A marker and its following braced unit may occupy separate packets.
+            if (parsedExtData.empty() || previousAppHandle != chunk.appHandle) {
+                const auto appIndex = extData.size() + parsedExtData.size();
+                parsedExtData.push_back(
+                    std::make_unique<DRW_Variant>(1001, std::string{}));
+                parsedAppIdResolutions.push_back({appIndex, chunk.appHandle});
+            }
+            const auto itemBase = extData.size() + parsedExtData.size();
             for (const DRW_Variant& item : chunk.items) {
                 parsedExtData.push_back(std::make_unique<DRW_Variant>(item));
             }
             for (const DwgEedHandleRef& ref : chunk.layerRefs) {
                 parsedLayerRefResolutions.push_back(
-                    {appIndex + 1 + ref.itemIndex, ref.handleRef});
+                    {itemBase + ref.itemIndex, ref.handleRef});
             }
+            previousAppHandle = chunk.appHandle;
         }
     } catch (...) {
         return false;

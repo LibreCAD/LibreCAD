@@ -64,6 +64,7 @@
 #include <QStringList>
 
 #include "lc_curveoffset.h"
+#include "lc_filtertestsupport.h"
 #include "lc_makercamsvg.h"
 #include "lc_splinepoints.h"
 #include "lc_xmlwriterqxmlstreamwriter.h"
@@ -847,7 +848,7 @@ TEST_CASE("R12 writes a closed or rational spline within the export tolerance", 
     }
 }
 
-TEST_CASE("A spline R12 cannot hold within its vertex limit is written as it is drawn",
+TEST_CASE("A spline R12 cannot hold within its vertex limit refuses publication",
           "[curve-offset][d1][persistence][r12]") {
     RS_SplineData zigzag(3, false);
     const int count = 1000;
@@ -863,22 +864,36 @@ TEST_CASE("A spline R12 cannot hold within its vertex limit is written as it is 
     REQUIRE(RS_Spline(nullptr, zigzag).validate());
 
     ensureSettings();
-    // No polyline of at most 32767 vertices is within the export tolerance of
-    // this curve, so the file keeps the segments the spline is drawn with
-    // rather than losing the whole drawing over one entity.
-    RS_Graphic reloaded;
-    bool exported = false;
-    const std::vector<RS_Polyline*> polylines =
-        r12RoundTrip(reloaded, {zigzag}, "over_limit_r12.dxf", exported);
-    REQUIRE(exported);
-    REQUIRE(polylines.size() == 1);
-
-    RS_Spline drawn(nullptr, zigzag);
-    const size_t segments = static_cast<size_t>(drawn.count());
-    REQUIRE(segments > 1);
-    const std::vector<RS_Vector> vertices = polylineVertices(*polylines[0]);
-    CHECK(vertices.size() == segments + 1); // the ends of the drawn segments
-    CHECK(vertices.front().distanceTo(zigzag.controlPoints.front()) < 1e-9);
+    // An unbounded display substitute is not the requested approximation.
+    // Refusal must preserve both an existing file and an absent destination.
+    lc::test::OutputDirectory directory("spline_r12_limit_refusal");
+    RS_Graphic graphic;
+    auto* spline = new RS_Spline(&graphic, zigzag);
+    graphic.addEntity(spline);
+    const auto fingerprint = RS_Spline::geometryFingerprint(spline->getData());
+    const auto id = spline->getId();
+    const auto children = spline->count();
+    REQUIRE(children > 1);
+    for (const bool existing : {false, true}) {
+        CAPTURE(existing);
+        const auto file = directory.file(existing ? "existing.dxf" : "absent.dxf");
+        const std::string original = "existing drawing bytes\n";
+        if (existing) {
+            std::ofstream stream(file, std::ios::binary);
+            stream << original;
+            stream.close();
+            REQUIRE(stream.good());
+        }
+        RS_FilterDXFRW filter;
+        CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(file.string()), RS2::FormatDXFRW12));
+        if (existing) CHECK(lc::test::fileBytes(file) == original);
+        else CHECK_FALSE(std::filesystem::exists(file));
+        CHECK(RS_Spline::geometryFingerprint(spline->getData()) == fingerprint);
+        CHECK(spline->getId() == id);
+        CHECK(spline->getParent() == &graphic);
+        CHECK(spline->count() == children);
+        CHECK(graphic.entityAt(0) == spline);
+    }
 }
 
 // ---------------------------------------------------------------------------

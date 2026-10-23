@@ -20,6 +20,8 @@ namespace {
 constexpr std::size_t HardItems = 1000000;
 constexpr std::size_t HardBytes = 64u * 1024u * 1024u;
 constexpr std::size_t HardDiagnostics = 32;
+constexpr std::size_t EedPacketBytes = 65535;
+constexpr std::size_t EedPackets = 65536;
 
 void diagnose(Diagnostics &out, const Options &options, Reason reason, std::size_t item) {
     if (out.size() < std::min(options.maximumDiagnostics, HardDiagnostics))
@@ -98,7 +100,7 @@ bool bounded(const XData &input, const Options &o) {
     return true;
 }
 
-struct TextSize { std::size_t utf8 = 0, utf16 = 0, controls = 0; };
+struct TextSize { std::size_t utf8 = 0, utf16 = 0, caretExtra = 0; };
 
 bool textBound(const TextSize &size, const Options &o) {
     const auto units = o.eed && o.textEncoding == TextEncoding::Utf16 ? 65535u : 255u;
@@ -112,7 +114,7 @@ std::optional<TextSize> textSize(std::string_view s, const Options &o) {
     for (const unsigned char c : s) {
         if (!c || c == '\r' || c == '\n') return std::nullopt;
         if ((c & 0xc0) != 0x80) size.utf16 += c >= 0xf0 ? 2 : 1;
-        if (c < 0x20) ++size.controls;
+        if (c < 0x20 || c == '^') ++size.caretExtra;
     }
     return size;
 }
@@ -123,7 +125,7 @@ std::optional<TextSize> textSize(const QString &s, const Options &o) {
     for (qsizetype i = 0; i < s.size(); ++i) {
         const auto c = s[i].unicode();
         if (!c || c == '\r' || c == '\n') return std::nullopt;
-        if (c < 0x20) ++size.controls;
+        if (c < 0x20 || c == '^') ++size.caretExtra;
         if (QChar::isHighSurrogate(c)) { size.utf8 += 4; ++i; }
         else size.utf8 += c < 0x80 ? 1 : c < 0x800 ? 2 : 3;
     }
@@ -131,7 +133,7 @@ std::optional<TextSize> textSize(const QString &s, const Options &o) {
 }
 
 std::optional<std::size_t> encodedTextSize(const TextSize &size, const Options &o, bool caret) {
-    const auto extra = caret && !o.eed && o.asciiDxf ? size.controls : 0;
+    const auto extra = caret && !o.eed && o.asciiDxf ? size.caretExtra : 0;
     const auto bytes = o.textEncoding == TextEncoding::Utf16 ? 2*(size.utf16 + extra) : size.utf8 + extra;
     const auto maximum = o.eed && o.textEncoding == TextEncoding::Utf16 ? 65535u * 2u : 255u;
     return bytes <= maximum ? std::optional<std::size_t>(bytes) : std::nullopt;
@@ -142,13 +144,14 @@ std::optional<std::size_t> stringBytes(std::string_view s, const Options &o, boo
     if (!size) return std::nullopt;
     if (o.textEncoding != TextEncoding::Legacy) return encodedTextSize(*size, o, caret);
     std::string escaped;
-    if (caret && !o.eed && o.asciiDxf && size->controls) {
-        const auto count = size->utf8 + size->controls;
+    if (caret && !o.eed && o.asciiDxf && size->caretExtra) {
+        const auto count = size->utf8 + size->caretExtra;
         if (count > std::min(o.maximumBytes, HardBytes)) return std::nullopt;
         escaped.reserve(count);
-        // Exact dxfCaretEncodedControls rule, before the writer's fromUtf8.
+        // ASCII XDATA escapes precede the selected legacy text encoder.
         for (const unsigned char c : s) {
             if (c < 0x20) { escaped.push_back('^'); escaped.push_back(static_cast<char>(c + 0x40)); }
+            else if (c == '^') escaped += "^ ";
             else escaped.push_back(static_cast<char>(c));
         }
         s = escaped;
@@ -495,7 +498,7 @@ std::optional<std::size_t> extensionBytes(const LC_OffsetCurveExtension &item, c
 
 struct CurrentSize {
     LC_EllipseOffsetDefinition geometry;
-    std::size_t items = 0, storage = 0, encoded = 0;
+    std::size_t items = 0, storage = 0, encoded = 0, markerEncoded = 0;
 };
 
 std::optional<CurrentSize> currentStorage(const Definition &current, const Options &o, Diagnostics &diagnostics) {
@@ -541,6 +544,7 @@ bool currentEncoding(const Definition &current, CurrentSize &size, const Options
     const auto framing = o.eed && o.textEncoding == TextEncoding::Legacy ? 4u : 3u;
     // Two coordinates, five doubles, two int16 values, and two braces.
     size.encoded = 105 + 2*framing + *marker + *kind + tail;
+    size.markerEncoded = framing + *marker;
     return true;
 }
 
@@ -591,42 +595,94 @@ bool balanced(const XData &data, std::size_t begin, std::size_t end) {
 bool preflightEncoding(const XData &raw, std::size_t preamble, std::size_t first, bool keepOurs,
     const std::optional<CurrentSize> &owned, const Options &o, Diagnostics &diagnostics) {
     const auto cap = std::min(o.maximumBytes, HardBytes);
-    std::size_t total = 0, ours = owned ? owned->encoded : 0;
-    if (!charge(total, ours, cap)) { diagnose(diagnostics, o, Reason::ResourceLimit, 0); return false; }
-    if (o.eed && (preamble || ours > 65535)) {
-        diagnose(diagnostics, o, preamble ? Reason::Encoding : Reason::EedChunkLimit, 0); return false;
-    }
+    std::size_t total = 0, packet = 0, packets = 0;
+    if (o.eed && preamble) { diagnose(diagnostics, o, Reason::Encoding, 0); return false; }
+    const auto debit = [&](std::size_t bytes, std::size_t item) {
+        if (charge(total, bytes, cap)) return true;
+        diagnose(diagnostics, o, Reason::ResourceLimit, item); return false;
+    };
+    const auto flush = [&](std::size_t item) {
+        if (!packet) { diagnose(diagnostics, o, Reason::UnsafeMerge, item); return false; }
+        if (!charge(packets, 1, EedPackets)) {
+            diagnose(diagnostics, o, Reason::EedChunkLimit, item); return false;
+        }
+        packet = 0;
+        return true;
+    };
+    const auto appendUnit = [&](std::size_t bytes, std::size_t item) {
+        if (!o.eed) return true;
+        if (!bytes || bytes > EedPacketBytes) {
+            diagnose(diagnostics, o, Reason::EedChunkLimit, item); return false;
+        }
+        if (packet > EedPacketBytes - bytes && !flush(item)) return false;
+        packet += bytes;
+        return true;
+    };
+    const auto header = [&](const std::string *name, std::size_t item) {
+        if (!name || name->empty()) { diagnose(diagnostics, o, Reason::Encoding, item); return false; }
+        // EED headers contain the resolved APPID handle, never its name bytes.
+        if (o.eed) return true;
+        const auto bytes = stringBytes(std::string_view(*name), o, false);
+        if (!bytes) { diagnose(diagnostics, o, Reason::Encoding, item); return false; }
+        return debit(*bytes + 3, item);
+    };
+    const auto payload = [&](std::size_t begin, std::size_t end) {
+        if (!balanced(raw, begin, end)) {
+            diagnose(diagnostics, o, Reason::UnsafeMerge, begin); return false;
+        }
+        std::size_t depth = 0, unit = 0;
+        for (std::size_t i = begin; i < end; ++i) {
+            const auto bytes = itemBytes(raw[i].get(), o, true);
+            if (!bytes) { diagnose(diagnostics, o, Reason::Encoding, i); return false; }
+            if (!debit(*bytes, i)) return false;
+            if (!o.eed) continue;
+            if (!charge(unit, *bytes, EedPacketBytes)) {
+                diagnose(diagnostics, o, Reason::EedChunkLimit, i); return false;
+            }
+            const int b = brace(raw[i].get());
+            if (b > 0) ++depth;
+            else if (b < 0) --depth; // balanced() admitted the full group.
+            if (!depth) {
+                if (!appendUnit(unit, i)) return false;
+                unit = 0;
+            }
+        }
+        return true;
+    };
+    const auto appendOwned = [&]() {
+        if (!owned) return true;
+        if (!debit(owned->encoded, first)) return false;
+        // The marker is a scalar; the following complete definition is one
+        // braced unit. This is exactly writeCurrent()'s emitted order.
+        return appendUnit(owned->markerEncoded, first) &&
+            appendUnit(owned->encoded - owned->markerEncoded, first);
+    };
     for (std::size_t i = 0; i < preamble; ++i) {
         const auto bytes = itemBytes(raw[i].get(), o, true);
         if (!bytes) { diagnose(diagnostics, o, Reason::Encoding, i); return false; }
-        if (!charge(total, *bytes, cap)) { diagnose(diagnostics, o, Reason::ResourceLimit, i); return false; }
+        if (!debit(*bytes, i)) return false;
     }
     for (std::size_t begin = preamble; begin < raw.size();) {
         const auto end = groupEnd(raw, begin);
         const bool isOurs = application(raw[begin].get());
-        if (isOurs && !keepOurs) { begin = end; continue; }
-        if (!balanced(raw, begin + 1, end)) { diagnose(diagnostics, o, Reason::UnsafeMerge, begin); return false; }
-        if (!isOurs || begin == first) {
-            const auto *s = text(raw[begin].get(), 1001);
-            const auto bytes = s && !s->empty() ? stringBytes(std::string_view(*s), o, false) : std::nullopt;
-            if (!bytes) { diagnose(diagnostics, o, Reason::Encoding, begin); return false; }
-            if (!charge(total, *bytes + 3, cap)) { diagnose(diagnostics, o, Reason::ResourceLimit, begin); return false; }
-        }
-        std::size_t chunk = 0;
-        for (std::size_t i = begin + 1; i < end; ++i) {
-            const auto bytes = itemBytes(raw[i].get(), o, true);
-            if (!bytes) { diagnose(diagnostics, o, Reason::Encoding, i); return false; }
-            if (!charge(total, *bytes, cap)) { diagnose(diagnostics, o, Reason::ResourceLimit, i); return false; }
-            if (o.eed && !charge(isOurs ? ours : chunk, *bytes, 65535)) {
-                diagnose(diagnostics, o, Reason::EedChunkLimit, i); return false;
+        if (isOurs && (!keepOurs || begin != first)) { begin = end; continue; }
+        if (!header(text(raw[begin].get(), 1001), begin) || !payload(begin + 1, end)) return false;
+        if (isOurs) {
+            // merge() moves every later compatible payload here before the
+            // current definition, not after intervening foreign APPIDs.
+            for (std::size_t later = end; later < raw.size();) {
+                const auto last = groupEnd(raw, later);
+                if (application(raw[later].get()) && !payload(later + 1, last)) return false;
+                later = last;
             }
+            if (!appendOwned()) return false;
         }
-        if (o.eed && !isOurs && chunk == 0) { diagnose(diagnostics, o, Reason::UnsafeMerge, begin); return false; }
+        if (o.eed && !flush(begin)) return false;
         begin = end;
     }
     if (owned && first == raw.size()) {
-        const auto bytes = stringBytes(std::string_view(AppId), o, false);
-        if (!bytes || !charge(total, *bytes + 3, cap)) { diagnose(diagnostics, o, Reason::ResourceLimit, 0); return false; }
+        const std::string app(AppId);
+        if (!header(&app, first) || !appendOwned() || (o.eed && !flush(first))) return false;
     }
     return true;
 }

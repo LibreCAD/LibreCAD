@@ -452,11 +452,11 @@ TEST_CASE("offset XDATA EED complete payload boundaries include closing braces",
     CHECK(has(diagnostics, xd::Reason::EedChunkLimit));
     input = {str(1001, "LibreCad"), str(1000, std::string(32766, 'x'))};
     REQUIRE(xd::forExport(input, std::nullopt, options));
-    CHECK_FALSE(xd::forExport(input, definition(), options));
+    REQUIRE(xd::forExport(input, definition(), options)); // Flat units may start another packet.
     input.push_back(str(1001, "OTHER")); input.push_back(str(1000, "independent chunk"));
     REQUIRE(xd::forExport(input, std::nullopt, options));
-    input[2] = str(1001, "LIBRECAD"); // Merging groups cannot conceal uint16 overflow.
-    CHECK_FALSE(xd::forExport(input, std::nullopt, options));
+    input[2] = str(1001, "LIBRECAD"); // Merged flat payloads can roll packets too.
+    REQUIRE(xd::forExport(input, std::nullopt, options));
     CHECK_FALSE(xd::forExport({str(1001, "FOREIGN")}, std::nullopt, options));
     CHECK_FALSE(xd::forExport({str(1000, "preamble")}, definition(), options));
 }
@@ -470,6 +470,9 @@ TEST_CASE("offset XDATA legacy EED accounts length byte and codepage per string"
     input.push_back(str(1000, "four")); // 253*(1+1+2+255) + (1+1+2+4) = 65535.
     REQUIRE(xd::forExport(input, std::nullopt, options));
     input.push_back(str(1000, ""));
+    REQUIRE(xd::forExport(input, std::nullopt, options));
+    input.insert(input.begin() + 1, str(1002, "{"));
+    input.push_back(str(1002, "}")); // A braced unit cannot roll across packets.
     xd::Diagnostics diagnostics;
     CHECK_FALSE(xd::forExport(input, std::nullopt, options, &diagnostics));
     CHECK(has(diagnostics, xd::Reason::EedChunkLimit));
@@ -662,6 +665,89 @@ TEST_CASE("offset XDATA ASCII control sizing follows the writer before text enco
     calls.clear(); legacy.eed = true;
     REQUIRE(xd::forExport({}, current, legacy));
     CHECK(std::find(calls.begin(), calls.end(), controls) != calls.end());
+}
+
+TEST_CASE("offset XDATA ASCII caret boundaries match the actual XDATA text codec", "[offset-xdata]") {
+    DRW_TextCodec codec;
+    codec.setVersion(DRW::AC1027, true);
+    const std::string exact = std::string(127, '^') + 'x';
+    const auto encoded = codec.encodeDxfXDataString(exact);
+    REQUIRE(encoded.size() == 255);
+    CHECK(codec.decodeDxfXDataString(encoded) == exact);
+    const Tags input{str(1001, "X"), str(1000, exact)};
+    const auto snapshot = deepTags(input);
+    REQUIRE(xd::forExport(input, std::nullopt));
+    auto current = definition();
+    current.tail = {{1000, QString::fromStdString(exact)}};
+    REQUIRE(xd::forExport({}, current));
+    const std::string over(128, '^');
+    REQUIRE(codec.encodeDxfXDataString(over).size() == 256);
+    CHECK_FALSE(xd::forExport({input[0], str(1000, over)}, std::nullopt));
+    current.tail = {{1000, QString::fromStdString(over)}};
+    CHECK_FALSE(xd::forExport({}, current));
+    auto binary = xd::Options{}; binary.asciiDxf = false;
+    REQUIRE(xd::forExport({}, current, binary));
+    REQUIRE(xd::forExport({}, current, eed()));
+    // APPID/layer spellings have no caret transform, even in ASCII DXF.
+    REQUIRE(xd::forExport({str(1001, std::string(255, '^')),
+                          str(1003, std::string(255, '^'))}, std::nullopt));
+    sameTags(input, snapshot);
+}
+
+TEST_CASE("offset XDATA legacy caret sizing passes escaped bytes once and never mutates tags", "[offset-xdata]") {
+    DRW_TextCodec codec;
+    codec.setVersion(DRW::AC1015, true); codec.setCodePage("ANSI_1252", true);
+    const std::string value = std::string(126, '^') + '\t' + 'x';
+    const auto bytes = codec.encodeDxfXDataString(value);
+    REQUIRE(bytes.size() == 255);
+    CHECK(codec.decodeDxfXDataString(bytes) == value);
+    auto options = xd::Options{}; options.textEncoding = xd::TextEncoding::Legacy;
+    std::vector<std::string> calls;
+    options.legacyEncodedBytes = [&](std::string_view s) -> std::optional<std::size_t> {
+        calls.emplace_back(s); return codec.fromUtf8(s).size();
+    };
+    const Tags input{str(1001, "X"), str(1000, value)};
+    const auto output = xd::forExport(input, std::nullopt, options);
+    REQUIRE(output);
+    CHECK(std::find(calls.begin(), calls.end(), bytes) != calls.end());
+    CHECK(std::find(calls.begin(), calls.end(), value) == calls.end());
+    CHECK((*output)[1] == input[1]); CHECK(*input[1]->content.s == value);
+    CHECK_FALSE(xd::forExport({input[0], str(1000, value + 'x')}, std::nullopt, options));
+    calls.clear(); options.eed = true;
+    REQUIRE(xd::forExport(input, std::nullopt, options));
+    CHECK(calls == std::vector<std::string>{value});
+    for (const auto &bad : {std::string("a\0b", 3), std::string("a\rb"), std::string("a\nb")})
+        CHECK_FALSE(xd::forExport({input[0], str(1000, bad)}, std::nullopt));
+}
+
+TEST_CASE("offset XDATA EED packet simulation follows merged payload and appended definition order", "[offset-xdata]") {
+    // First payload: 65502 bytes. The 33-byte marker exactly fills packet 1;
+    // its following braced definition must be wholly in packet 2.
+    const Tags input{str(1001, "lIbReCaD"), str(1000, std::string(32748, 'x')),
+        str(1001, "FOREIGN"), str(1002, "{"), integer(1071, 23), str(1002, "}"),
+        str(1001, "LIBRECAD"), integer(1070, 7)};
+    const auto snapshot = deepTags(input);
+    const auto output = xd::forExport(input, definition(), eed());
+    REQUIRE(output);
+    Tags expected{input[0], input[1], input[7]};
+    const auto schema = known(); expected.insert(expected.end(), schema.begin() + 1, schema.end());
+    expected.insert(expected.end(), input.begin() + 2, input.begin() + 6);
+    sameTags(*output, expected); sameTags(input, snapshot);
+    CHECK((*output)[0] == input[0]); CHECK((*output)[1] == input[1]); CHECK((*output)[2] == input[7]);
+    const auto parsed = xd::parseAndStrip(*output, eed());
+    REQUIRE(parsed.status == xd::Status::Schema1); REQUIRE(parsed.definition);
+}
+
+TEST_CASE("offset XDATA EED admits the exact packet count and refuses the next before publication", "[offset-xdata]") {
+    const auto app = str(1001, "FOREIGN"), scalar = str(1000, "");
+    Tags input; input.reserve(2 * 65537u);
+    for (std::size_t i = 0; i < 65536; ++i) { input.push_back(app); input.push_back(scalar); }
+    REQUIRE(xd::forExport(input, std::nullopt, eed()));
+    input.push_back(app); input.push_back(scalar);
+    xd::Diagnostics diagnostics;
+    CHECK_FALSE(xd::forExport(input, std::nullopt, eed(), &diagnostics));
+    CHECK(has(diagnostics, xd::Reason::EedChunkLimit));
+    CHECK(input.front() == app); CHECK(input.back() == scalar);
 }
 
 TEST_CASE("offset XDATA foreign binary chunk expansion admits actual target items and bytes", "[offset-xdata]") {
@@ -903,8 +989,7 @@ TEST_CASE("offset XDATA EED layer references do not encode their names and retai
         REQUIRE(provenance);
         CHECK(provenance->reference == 0x123456789abcdef0ULL);
         CHECK(provenance->sourceVersion == DRW::AC1018);
-        if (encoding == xd::TextEncoding::Legacy) CHECK(calls == std::vector<std::string>{"X"});
-        else CHECK(calls.empty());
+        CHECK(calls.empty()); // APPID and layer names are both resolved handles.
     }
     for (const Tag invalid : {integer(1003, 7), str(1003, "null")}) {
         if (invalid->type() == DRW_Variant::STRING) invalid->content.s = nullptr;
@@ -923,6 +1008,11 @@ TEST_CASE("offset XDATA EED layer handle charges nine bytes at the full payload 
     REQUIRE(output); sameTags(*output, snapshot); CHECK((*output)[1] == layer);
     auto above = input; above.push_back(integer(1070, 2));
     xd::Diagnostics diagnostics;
+    REQUIRE(xd::forExport(above, std::nullopt, eed(), &diagnostics));
+    const Tags braced{input[0], str(1002, "{"), layer,
+        str(1000, std::string(32758, 'y')), integer(1070, 1), str(1002, "}")};
+    REQUIRE(xd::forExport(braced, std::nullopt, eed())); // 2+9+65519+3+2 = 65535.
+    above = braced; above.insert(above.end() - 1, integer(1070, 2));
     CHECK_FALSE(xd::forExport(above, std::nullopt, eed(), &diagnostics));
     CHECK(has(diagnostics, xd::Reason::EedChunkLimit));
     sameTags(input, snapshot); CHECK(layer->isLayerRef());

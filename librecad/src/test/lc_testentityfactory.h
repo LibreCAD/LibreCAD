@@ -65,10 +65,10 @@ inline std::unique_ptr<LC_OffsetCurve> makeOffsetCurve(RS_EntityContainer* owner
     LC_EllipseOffsetDefinition definition;
     definition.basis = RS_EllipseData{{0, 0}, {1, 0}, 1.0, 0.25, 0.2501, false};
     definition.distance = 1.0;
-    definition.relTolerance = 0.01;
+    definition.relTolerance = 1e-4;
     const RS_Line cache(owner, RS_LineData({2 * std::cos(0.25), 2 * std::sin(0.25)},
                                          {2 * std::cos(0.2501), 2 * std::sin(0.2501)}));
-    return LC_OffsetCurve::adopt(cache, definition, 0.01);
+    return LC_OffsetCurve::adopt(cache, definition, 1e-4);
 }
 
 /**

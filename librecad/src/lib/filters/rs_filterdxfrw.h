@@ -41,6 +41,7 @@
 
 #include "drw_interface.h"
 #include "lc_extentitydata.h"
+#include "lc_offsetcurvexdata.h"
 #include "libdxfrw.h"
 #ifdef DWGSUPPORT
 #include "libdwgr.h"
@@ -51,6 +52,7 @@
 #include "rs_filterinterface.h"
 
 class DL_WriterA;
+class DRW_TextCodec;
 class LC_DimStyle;
 class LC_Hyperbola;
 class LC_MLeader;
@@ -3124,6 +3126,28 @@ private:
   // The version of the DXF being exported, and how many raw records read
   // from another version it leaves out.
   DRW::Version m_dxfExportVersion = DRW::UNKNOWNV;
+  enum class OffsetInputKind { None, Dxf, Dwg };
+  OffsetInputKind m_offsetInputKind = OffsetInputKind::None;
+  DRW::Version m_offsetInputVersion = DRW::UNKNOWNV;
+  QString m_offsetInputCodePage = QStringLiteral("ANSI_1252");
+  struct OffsetXDataContext {
+    LC_OffsetCurveXData::Options options;
+    std::shared_ptr<DRW_TextCodec> codec;
+  };
+  DRW::Version m_offsetOutputVersion = DRW::UNKNOWNV;
+  bool m_offsetOutputDwg = false;
+  std::optional<OffsetXDataContext> m_offsetOutputContext;
+  static std::optional<OffsetXDataContext>
+  makeOffsetXDataContext(bool dwg, DRW::Version version,
+                         const QString &codePage, bool binary = false);
+  std::optional<OffsetXDataContext> offsetInputContext() const;
+  void applyImportedSplineAttributes(
+      RS_Entity *entity, const DRW_Spline *raw,
+      const LC_OffsetCurveXData::XData *remaining);
+  std::optional<LC_OffsetCurveXData::XData>
+  mergedOffsetSplineXData(const RS_Entity &source, bool includeDefinition);
+  static void reportOffsetXDataDiagnostics(
+      const char *operation, const LC_OffsetCurveXData::Diagnostics &diagnostics);
   std::size_t m_dxfLeftOutRawRecords = 0;
   // What the codec left out of the last export (DXF or DWG leftOut()).
   std::map<std::string, std::size_t> m_writeLeftOut;
@@ -3343,7 +3367,9 @@ private:
    * @return true if a conic entity (hyperbola or parabola) was created and
    * handled
    */
-  bool handleQuadraticConicSpline(const DRW_Spline *data);
+  bool handleQuadraticConicSpline(
+      const DRW_Spline *data,
+      const LC_OffsetCurveXData::XData *remaining = nullptr);
 };
 
 #endif

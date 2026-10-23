@@ -7940,11 +7940,11 @@ bool dxfRW::writeExtData(const std::vector<DRW_Variant*> &ed){
                             break;
                         }
                     }
-                    // ASCII DXF cannot hold a line break inside a value:
-                    // write control characters as caret codes (^J, ^M, ...).
+                    // ASCII XDATA needs canonical control and literal-caret
+                    // escaping; binary DXF and other text codes stay unchanged.
                     recordResult(writer->writeUtf8String(
                         cc, cc == 1000 && !binFile
-                                ? dxfCaretEncodedControls(value)
+                                ? DRW_TextCodec::encodeDxfXDataString(value)
                                 : value));
                     break;
                 }
