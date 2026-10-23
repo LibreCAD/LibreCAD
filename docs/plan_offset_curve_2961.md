@@ -42,7 +42,7 @@ definition editing, persistence, UI and trimming remain later slices.
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
 | Latest product checkpoint | `92758859c` (D-core) |
-| Latest auxiliary checkpoint | `c1b2fa095` (H7 owned temp-path/journal fix; driver 5a3e47039, core a95a5c5ff, guards ceacd01a3, workers e83aaf3f0) |
+| Latest auxiliary checkpoint | `90714f758` (H7 bounded suite-pair scheduling; temp-path/journal fix c1b2fa095, driver 5a3e47039) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
 | A-core | Atomic work adoption, separate ordering allowance and sticky terminal status implemented; A04/A10 registered |
@@ -1537,7 +1537,7 @@ one plan update, not another candidate/freeze lifecycle.
 | X-H4 | Committed 3e06e3894; explicit API | Complete genesis/chained case rows, pinned identities/order/actual outputs, exclusive publication/replay/mutation checks; not automatic CLI persistence |
 | X-H5 | Committed 6d4fd25b3; explicit API | Actual source/runtime/receipt/diagnostic/ledger/output evidence, exclusive absent publication and bound automated checker; 44 focused tests and independent review |
 | X-H6 | Committed 507e44ad7; core 9170b0cc9 | All 93 obligations executable, all original71 IDs retained; owned H4/H5 protocols, precise root scopes and mutation/prefix checks; 94 inventory tests pass |
-| X-H7 | Source fixes c1b2fa095 committed; frozen399-test regression passed; qualification pending | Two complete actual qualification runs remain; unchanged 300-second deadline |
+| X-H7 | Source fixes c1b2fa095 and 90714f758 committed; frozen407-test regression and real single-preflight probe passed; qualification pending | Two complete actual qualification runs remain; unchanged 300-second deadline |
 
 ### Concrete H2 Capture Corrections
 
@@ -1795,6 +1795,45 @@ The plan checkpoint column never depends on its own future SHA.
 | X-H2 | 25661f1a3 | Immediate plan-only checkpoint | 15 input + 27 process + 25 H1 tests; five syntax checks; independent input/process reviews |
 | D-core | 92758859c | Immediate plan-only checkpoint | Native/adjacent/full Release, ASan adjacent, both format fast lanes and qmake6 passed; independent static review corrections verified |
 | X-H7 timeout source fix | c1b2fa095 | Immediate plan-only checkpoint | Author55 + independent15 controls and parent399 runner regression passed; actual runtime qualification remains open |
+| X-H7 bounded scheduling | 90714f758 | Immediate plan-only checkpoint | Author85 + independent12 controls, parent407 runner regression and real224.790-second preflight probe passed; full two-run qualification remains open |
+
+### X-H7 Bounded Scheduling Validation (2026-10-23)
+
+The second actual qualification, `H7-qualification-02` under
+`/private/tmp/lc2961-impl-evidence.9GtLO2`, still timed out in its first capture.
+Its measured formal-runner attempts took168.080/169.625 seconds with the short
+TMPDIR correctly applied. Preserve this failed attempt and its partial artifacts;
+the temporary-path correction alone did not resolve the runtime failure.
+
+Source `90714f758` overlaps at most two suite pairs, hence at most four actual
+suite executions. All eight executions remain mandatory. Per-pair completion
+guards run immediately, publication stays in canonical inventory order, and
+every launched sibling is drained on guard, execution or publication refusal.
+No deadline, suite membership, input/owner guard, repeat parity or evidence cap
+was relaxed. No worker, registry or independent checker changed.
+
+Validation uses the frozen two-file SHA-256 values:
+`genuine-preflight.js` ab7aee36ae5860d9f14642893212161afa095e9f1e6d5b7edfd677f9a9f748a1;
+`test-genuine-preflight.js` d96353ef871102978afc4347e99c6ba059701fc29048009b29daaa5b80d2aa89.
+Author focused12 plus affected73 controls passed85/85, with zero skips/failures,
+in `/private/tmp/lc2961-h7-pair-scheduler-focused-final-03.tap` and
+`/private/tmp/lc2961-h7-pair-scheduler-affected-final-02.tap`.
+Independent static review found no remaining P1/P2 issue. Independent focused12
+passed in `X-H7-scheduler-independent-915B32AB-BFF5-4B3D-A31A-1EC92830F5F6.tap`
+under the evidence root. Parent explicit-TAP whole regression
+`X-H7-frozen-all-03.tap` passed407/407, zero failures/cancellations/skips/TODO,
+exit0 in241.402 seconds.
+
+The real single-preflight scheduling probe at `H7-pair-scheduler-probe-02`
+passed in224.790 seconds under the unchanged300-second deadline:309 actual
+cases twice,618 passed, zero failures/skips, eight executions,51 pinned inputs
+and28 artifacts. Its retained `probe-result.json` explicitly records
+`qualification:false`. This is not the required two-run qualification.
+
+Next run `H7-qualification-03` in a fresh absent namespace after all parent
+build/test load finishes. Freeze captured harness/candidate/roadmap inputs until
+the actual CLI/API returns and audit the original-owner final readbacks. Keep
+X-H7 pending until both full runs and independent evidence checks pass.
 
 ### X-H7 Timeout Source Validation (2026-10-23)
 
