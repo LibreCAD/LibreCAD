@@ -555,8 +555,23 @@ jobs:
           path: LibreCAD*.exe
           retention-days: 2
 
+      - name: Detect MSIX changes
+        # A pull request checks the MSIX only when it changes what goes into
+        # it, so that other pull requests keep the checks they had.
+        id: msix-changes
+        if: github.event_name == 'pull_request'
+        run: |
+          # The checkout is the merge commit; its first parent is the base.
+          $files = git diff --name-only HEAD^1 HEAD
+          if ($LASTEXITCODE -ne 0 -or ($files | Select-String -Pattern '^(\.github/workflows/build-all\.yml|scripts/build-msix[^/]*\.ps1|scripts/msix/|licenses/|LICENSE$)' -Quiet)) {
+            Add-Content -LiteralPath $env:GITHUB_OUTPUT -Value 'changed=true'
+          }
+          exit 0
+        shell: pwsh
+
       - name: Package MSIX
         id: package-msix
+        if: github.event_name == 'push' || steps.msix-changes.outputs.changed == 'true'
         # A failed Store package must not hold back the installers on master;
         # nothing is uploaded, so PackageWindowsMsix fails for want of the
         # artifact instead.  It takes under a minute; the limit turns a hang

@@ -95,8 +95,8 @@ function Find-SdkTool {
     param([Parameter(Mandatory = $true)][string]$Name)
 
     # Sorting every hit by path puts the x86 build first, and there is no arm64
-    # build of makepri.exe at all, so ask for the x64 tools by name.  Package on
-    # an x64 runner.
+    # build of makepri.exe at all, so ask for the x64 tools by name.  An arm64
+    # runner runs them under emulation.
     $sdkBin = Join-Path ${env:ProgramFiles(x86)} 'Windows Kits\10\bin'
     if (Test-Path -LiteralPath $sdkBin -PathType Container) {
         $candidate = Get-ChildItem -LiteralPath $sdkBin -Directory -Filter '10.*' |

@@ -78,7 +78,7 @@ listed below.
   it names the copyright holders of the CJK fonts and says that Qt is used
   under the GPLv2. It is a separate file because `licenses/readme.md`, shown
   by Help > License, is compiled into every build, which this package must
-  not change. That file is for one Qt release: when
+  not change. `qt-third-party.txt` is for one Qt release: when
   `build-all.yml` installs another, `build-msix.ps1` warns, and
   `scripts/msix/update-qt-third-party.py --tag v<version>` regenerates it
   from Qt's own attribution data. `licenses\SOURCE.txt`
@@ -359,14 +359,16 @@ through the **Submit MSIX to Microsoft Store** workflow below.
   an MSIX failure instead of holding back the installers. MakeAppx writes
   its file list to `msix-output\makeappx-*.log`, which the job prints when
   packaging fails or times out.
-- Pull requests that touch `build-all.yml`, the MSIX scripts or the manifest
-  build and package the ARM64 job only, and a packaging failure fails the
-  job, after its NSIS installer has been uploaded. The package is a check
-  only: nothing is uploaded, so a pull request's artifacts are the ones it
-  had before. Like every pull request
-  that starts `build-all.yml`, they also run the macOS build. Changes to
-  `licenses/` or `LICENSE` alone do not start it; they are first packaged
-  on `master`. Bundling runs on pushes only.
+- A pull request that changes `build-all.yml`, `scripts/build-msix*.ps1` or
+  `scripts/msix/` starts `build-all.yml`, which builds macOS and ARM64 as
+  for any pull request, and also packages the ARM64 MSIX as a check: a
+  packaging failure fails the job after its NSIS installer has been
+  uploaded, and nothing is uploaded for the MSIX, so the pull request's
+  artifacts are the ones it had before. Pull requests that start the
+  workflow for other files (the macOS scripts, `nsis-msvc.nsi`) skip the
+  check unless they also change `licenses/` or `LICENSE`, which the
+  package copies; those two alone do not start the workflow and are first
+  packaged on `master`. Bundling runs on pushes only.
 - To submit an update, manually dispatch **Submit MSIX to Microsoft Store**
   on `master` with the run ID of the **Continuous build** run whose bundle
   should ship. A reviewer of the `microsoft-store` environment must approve
