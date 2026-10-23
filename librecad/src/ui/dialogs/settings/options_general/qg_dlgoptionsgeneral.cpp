@@ -32,7 +32,6 @@
 
 #include "dxf_format.h"
 #include "lc_defaults.h"
-#include "lc_releasechecker.h"
 #include "lc_settingsexporter.h"
 #include "main.h"
 #include "qc_applicationwindow.h"
@@ -784,8 +783,6 @@ void QG_DlgOptionsGeneral::init(){
     }
 
     cbCheckNewVersionIgnorePreRelease->setEnabled(!XSTR(LC_PRERELEASE));
-    // the Store updates its own packages
-    groupBox_12->setVisible(!LC_ReleaseChecker::runsFromStorePackage());
 
     initReferencePoints();
 

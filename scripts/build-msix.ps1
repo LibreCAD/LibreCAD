@@ -533,6 +533,9 @@ $layoutLicenses = Join-Path $layoutDirectory 'licenses'
 Copy-MatchingFiles -Source $licenseDirectory -Filter '*.txt' -Destination $layoutLicenses -Required
 Copy-MatchingFiles -Source $licenseDirectory -Filter 'readme.md' -Destination $layoutLicenses -Required
 Copy-Item -LiteralPath $licenseFile -Destination (Join-Path $layoutLicenses 'LICENSE') -Force
+# The notices of the fonts and Qt libraries that only this package names;
+# readme.md is compiled into every build and stays as it is.
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'msix\third-party-notices.md') -Destination $layoutLicenses -Force
 
 # Tell recipients which commit this very build comes from, where its source is,
 # and offer them the source, as GPLv2 section 3(b) asks.
@@ -736,7 +739,7 @@ try {
         'unpack', '/o', '/p', $packagePath, '/d', $validationDirectory
     )
 
-    foreach ($requiredPath in @('AppxManifest.xml', 'LibreCAD.exe', 'resources.pri', 'Assets\Square150x150Logo.png', 'iconengines\lc_svgiconengine.dll', 'resources\fonts\standard.lff', 'licenses\gpl-2.0.txt', 'licenses\gpl-3.0.txt', 'licenses\qt-third-party.txt', 'licenses\OFL-noto-cjk.txt', 'licenses\LICENSE', 'licenses\SOURCE.txt')) {
+    foreach ($requiredPath in @('AppxManifest.xml', 'LibreCAD.exe', 'resources.pri', 'Assets\Square150x150Logo.png', 'iconengines\lc_svgiconengine.dll', 'resources\fonts\standard.lff', 'licenses\gpl-2.0.txt', 'licenses\gpl-3.0.txt', 'licenses\qt-third-party.txt', 'licenses\OFL-noto-cjk.txt', 'licenses\third-party-notices.md', 'licenses\LICENSE', 'licenses\SOURCE.txt')) {
         if (-not (Test-Path -LiteralPath (Join-Path $validationDirectory $requiredPath) -PathType Leaf)) {
             throw "MSIX validation output is missing $requiredPath"
         }

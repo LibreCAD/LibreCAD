@@ -32,7 +32,6 @@
 #include "lc_actionfactory.h"
 #include "lc_actiongroupmanager.h"
 #include "lc_menufactory.h"
-#include "lc_releasechecker.h"
 #include "main.h"
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
@@ -145,14 +144,10 @@ void LC_MenuFactoryMain::createHelpMenu(QMenuBar* menuBar, QList<QMenu*>& topMen
     menuHelp->addSeparator();
     menuHelp->QWidget::addAction(urlActionTR(tr("&Submit Error"), "https://github.com/LibreCAD/LibreCAD/issues/new"));
     menuHelp->QWidget::addAction(urlActionTR(tr("&Request Feature"), "https://github.com/LibreCAD/LibreCAD/issues"));
-    // The Store updates its own packages; it should not lead to other downloads.
-    const bool fromStore = LC_ReleaseChecker::runsFromStorePackage();
-    if (!fromStore) {
-        menuHelp->QWidget::addAction(urlActionTR(tr("&Releases Page"), "https://github.com/LibreCAD/LibreCAD/releases"));
-    }
+    menuHelp->QWidget::addAction(urlActionTR(tr("&Releases Page"), "https://github.com/LibreCAD/LibreCAD/releases"));
     menuHelp->addSeparator();
 
-    if (XSTR(LC_PRERELEASE) && !fromStore) {
+    if (XSTR(LC_PRERELEASE)) {
         // fixme - this is makes sense only for pre-release versions. Of course, the generation of tag included into URL should be more intelligent..
         menuHelp->QWidget::addAction(urlActionTR(tr("&Dev Snapshot Release"), " https://github.com/LibreCAD/LibreCAD/releases/tag/continuous"));
         menuHelp->addSeparator();

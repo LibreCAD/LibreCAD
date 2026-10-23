@@ -33,7 +33,6 @@
 #include <QCloseEvent>
 #include <QApplication>
 #include <QGuiApplication>
-#include <QDesktopServices>
 #include <QDockWidget>
 #include <QFileDialog>
 #include <QFileInfo>
@@ -784,16 +783,10 @@ void QC_ApplicationWindow::fitDocksToWindow() {
 }
 
 void QC_ApplicationWindow::checkForNewVersion() const {
-    if (!LC_ReleaseChecker::runsFromStorePackage()) {
-        m_releaseChecker->checkForNewVersion();
-    }
+    m_releaseChecker->checkForNewVersion();
 }
 
 void QC_ApplicationWindow::forceCheckForNewVersion() const {
-    if (LC_ReleaseChecker::runsFromStorePackage()) {
-        QDesktopServices::openUrl(LC_ReleaseChecker::storePage());
-        return;
-    }
     m_releaseChecker->checkForNewVersion(true);
 }
 

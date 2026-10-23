@@ -74,7 +74,11 @@ listed below.
   LibreCAD and of the Qt libraries it ships, the GPLv3 of WenQuanYi Micro
   Hei, the licences of the other bundled fonts, and `qt-third-party.txt`
   with the copyright and licence text of each third-party component inside
-  the Qt DLLs and plugins. That file is for one Qt release: when
+  the Qt DLLs and plugins. `scripts/msix/third-party-notices.md` joins them:
+  it names the copyright holders of the CJK fonts and says that Qt is used
+  under the GPLv2. It is a separate file because `licenses/readme.md`, shown
+  by Help > License, is compiled into every build, which this package must
+  not change. That file is for one Qt release: when
   `build-all.yml` installs another, `build-msix.ps1` warns, and
   `scripts/msix/update-qt-third-party.py --tag v<version>` regenerates it
   from Qt's own attribution data. `licenses\SOURCE.txt`
@@ -237,8 +241,7 @@ complete.
   `https://github.com/LibreCAD/LibreCAD/blob/master/PRIVACY.md`. Store policy
   10.5.1 counts every Win32 desktop product as having access to personal
   information, so it always needs a privacy policy; this one says that
-  LibreCAD collects nothing and names the anonymous update check, which the
-  Store build does not make.
+  LibreCAD collects nothing and names the anonymous update check.
 - **Website**: `https://librecad.org`
 - **Support contact info**: `https://github.com/LibreCAD/LibreCAD/issues`
 - **System requirements**: keyboard and mouse recommended; under additional
@@ -325,10 +328,10 @@ Keep other companies' product names out of the listing and the keywords
   > LibreCAD is a free, open-source (GPLv2) 2D CAD desktop program built
   > with Qt. It needs no account and no sign-in, and depends on no driver or
   > service. On first start it asks for the language and units; then draw
-  > a line (Tools > Line > 2 Points) or open a .dxf or .dwg file. The
-  > Store build makes no network request of its own: the Store updates it,
-  > and Help > About > Check for New Version opens its Store page. Source
-  > code: https://github.com/LibreCAD/LibreCAD
+  > a line (Tools > Line > 2 Points) or open a .dxf or .dwg file. At start
+  > it asks api.github.com anonymously whether a newer LibreCAD release
+  > exists; Options > Application Preferences > Startup turns this off.
+  > Source code: https://github.com/LibreCAD/LibreCAD
 
 - **Restricted capabilities**, why the app needs `runFullTrust` and how it
   uses it:
@@ -358,7 +361,9 @@ through the **Submit MSIX to Microsoft Store** workflow below.
   packaging fails or times out.
 - Pull requests that touch `build-all.yml`, the MSIX scripts or the manifest
   build and package the ARM64 job only, and a packaging failure fails the
-  job, after its NSIS installer has been uploaded. Like every pull request
+  job, after its NSIS installer has been uploaded. The package is a check
+  only: nothing is uploaded, so a pull request's artifacts are the ones it
+  had before. Like every pull request
   that starts `build-all.yml`, they also run the macOS build. Changes to
   `licenses/` or `LICENSE` alone do not start it; they are first packaged
   on `master`. Bundling runs on pushes only.

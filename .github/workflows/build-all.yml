@@ -605,8 +605,10 @@ jobs:
         shell: pwsh
 
       - name: Upload MSIX artifact
-        if: steps.package-msix.outcome == 'success'
-        continue-on-error: ${{ github.event_name == 'push' }}
+        # Only pushes bundle the packages for the Store; on a pull request the
+        # package is a check and adds no artifact.
+        if: steps.package-msix.outcome == 'success' && github.event_name == 'push'
+        continue-on-error: true
         timeout-minutes: 10
         uses: actions/upload-artifact@main
         with:
