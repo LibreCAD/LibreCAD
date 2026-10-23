@@ -24,11 +24,12 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-22. Status: A-core committed; native feature incomplete.
+Updated: 2026-10-22. Status: A-core and X-H1 committed; A-strict in progress; native feature incomplete.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
-This checkpoint records the tested A-core product commit. All successor slices
-remain pending; no native entity or complete topology checker is claimed.
+This checkpoint records tested A-core and auxiliary X-H1 commits. Main-track
+successor slices remain incomplete; no native entity or complete topology checker
+is claimed.
 
 ## 1. Verified Baseline and Scope
 
@@ -41,6 +42,7 @@ remain pending; no native entity or complete topology checker is claimed.
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
 | Latest product checkpoint | `0eb2a0cfa31c29ba7740e4fb698c8417f4d43fa5` (A-core) |
+| Latest auxiliary checkpoint | `29ab281635f85590a7db1f7a02db1fcf65ce3cfb` (X-H1) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
 | A-core | Atomic work adoption, separate ordering allowance and sticky terminal status implemented; A04/A10 registered |
@@ -48,7 +50,7 @@ remain pending; no native entity or complete topology checker is claimed.
 | Native entity | No `LC_OffsetCurve` or `EntityOffsetCurve` yet |
 | Product integration | No native offset adoption, private file schema, creation/editing UI, or target-trim integration yet |
 | Build registration | Both geometry implementations in CMake and qmake; both geometry test TUs in `librecad_tests` |
-| Scratch validation harness | H1-H4 partially implemented/tested; H5 incomplete; H6-H7 absent |
+| Validation harness | X-H1 promoted into scripts/offset-curve-validation; X-H2 onward pending; historical scratch retained unchanged |
 | Latest validation | A-core, geometry and format fast lanes passed Release/ASan; full Release and qmake6 passed; see section 14 |
 
 Recheck these facts against the selected implementation checkout before starting
@@ -204,7 +206,7 @@ test commit followed by the section 4 plan checkpoint.
 | Slice | Dependency | Deliverable | Status |
 |---|---|---|---|
 | A-core | Existing geometry base | Atomic work adoption and sticky terminal status (`0eb2a0cfa`) | committed |
-| A-strict | A-core | Strict-solver bounded ordering/validation/capacity and exit snapshots | pending |
+| A-strict | A-core | Strict-solver bounded ordering/validation/capacity and exit snapshots | in progress; not committed |
 | A-reference | A-strict | Geometry scans/callback ownership and exception-safe work transfers | pending |
 | A-cache | A-reference | Candidate/proof split accounting and inherited combined depth | pending |
 | B | A-cache | Immutable occurrence-specific producer terminals | pending |
@@ -1424,15 +1426,15 @@ Its local synthetic runs (9 H1,17 H2,10 H3/H4) are historical progress, not curr
 formal receipts or product validation.
 
 Put reproducible harness source/tests under a clearly scoped version-controlled
-tools directory (planned
-`scripts/offset-curve-validation/`); reconcile existing script conventions first.
+tools directory `scripts/offset-curve-validation/`; reconcile existing script
+conventions before extending it.
 Do not make release builds depend on Node or this harness.
 Each X-H row gets ordinary focused tests, review, one implementation commit and
 one plan update, not another candidate/freeze lifecycle.
 
 | Slice | Current state | Required repair and exit |
 |---|---|---|
-| X-H1 | Partial receipt helpers/tests | One explicit versioned data schema; strict parsing/type/path/hash/identity validation; separate inert descriptors from validator implementation |
+| X-H1 | Committed, 29ab28163 | Schema 2 / offset-2961; explicit validation/synthetic purpose; bounded parsing and readback; inert descriptors; 24 passing tests and independent review |
 | X-H2 | Partial preflight capture/tests | Capture actual source/runtime/input tuple and exact inventory; no synthetic placeholder source rows; stable read and race/refusal tests |
 | X-H3 | Runner lacks production worker wiring | Configure real registry/CLI, explicit worker contract and exact output inventory; missing/undefined/unknown status is FAIL, never default PASS |
 | X-H4 | Runner exposes row count, not complete joined rows | Return all joined events with pinned identity/order/output hashes; test persistence, replay, mutation and duplicate/missing events |
@@ -1506,6 +1508,18 @@ input identities, independent results and two complete runs. Compare semantic
 outcomes/deterministic payloads while excluding declared run IDs/timestamps from
 byte equality. No self-referential future commit hash, fake reviewer PASS,
 fabricated gate artifacts or automatic authority escalation.
+
+**Next auxiliary card: X-H2.** Own preflight capture/source-tuple helpers and
+focused tests under the tools directory. Reconcile the historical capture code
+with schema 2; derive the candidate/blob, source manifest, exact case inventory,
+runtime/executable and runner identities from actual stable bytes. Bind the
+sanitized child environment without mutating the parent. Recheck inputs and the
+original bigint directory identities before spawn, after every child outcome and
+before/after exclusive durable publication. Preserve failed child diagnostics;
+never publish a synthetic source tuple as validation evidence. Add real-child
+positive controls plus mutation, replaced-parent, output-cap and failure tests.
+Keep X-H3 worker registry/CLI and X-H5 formal evidence publication out of this
+slice. Review/test/commit it, then immediately update this roadmap.
 
 
 ### 13.1 Preserved H6 Refusal Inventory
@@ -1624,11 +1638,11 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 |---|---|---|
 | Recursive plan/activation routing | Removed as a planning deadlock | Execute A-core's finite card |
 | Atomic budget API | Committed and validated (`0eb2a0cfa`) | Integrate solver/geometry work in A-strict/A-reference |
-| Strict work/ordering/exception proof | Missing implementation | A-strict, then A-reference integration |
+| Strict work/ordering/exception proof | A-strict implementation and review in progress; no commit or closure claim | Finish A-strict validation, then A-reference integration |
 | Complete semantic path checker | Missing implementation | A-cache -> B -> C |
 | Native feature/UI/persistence/trim | Not implemented | Follow D through T; do not label scaffolding complete |
 | Independent DWG/version fixtures | Required, not yet qualified | Inventory/tool/license/provenance during G-fixtures; close all rows in G-matrix |
-| Harness production readiness | Incomplete with concrete defects | X-H1 through X-H7, independent from starting product work |
+| Harness production readiness | X-H1 committed; actual capture, workers and independent evidence incomplete | X-H2 through X-H7, independent from starting product work |
 | Independent review and test evidence | A-core independent static review and actual test reports complete | Obtain fresh review/validation for each successor |
 | Dirty unrelated main checkout | Not the selected source baseline | Preserve it; reconcile only if changing implementation worktree |
 
@@ -1640,7 +1654,30 @@ The plan checkpoint column never depends on its own future SHA.
 | Slice | Product commit | Plan checkpoint | Evidence and result |
 |---|---|---|---|
 | Existing foundations | 9c06e9c77b313b62cc20e9ec39c22952fee501f2 | 9309885cef66aef0cca0f3c8862e0c210518da3b | Historical source baseline; no new test PASS asserted |
-| A-core | 0eb2a0cfa31c29ba7740e4fb698c8417f4d43fa5 | This immediate plan-only checkpoint | Independent static review: no findings; Release/ASan and qmake6 passed as detailed below |
+| A-core | 0eb2a0cfa31c29ba7740e4fb698c8417f4d43fa5 | e31d5a024b473b26148c66bd2726c290bf7976ef | Independent static review: no findings; Release/ASan and qmake6 passed as detailed below |
+| X-H1 | 29ab281635f85590a7db1f7a02db1fcf65ce3cfb | This immediate plan-only checkpoint | 24/24 Node tests; syntax/whitespace checks; independent review fixes applied |
+
+### X-H1 Validation (2026-10-22)
+
+Committed scope: four files in scripts/offset-curve-validation. Node v26.12.0:
+24 tests passed, zero failures/skips; three JavaScript syntax checks and staged
+whitespace validation passed. Optional POSIX tooling, not a build dependency.
+Independent reviewer 01a16673-d27c-7a73-a34b-4c8519852336 found final readback
+identity gaps, protected-root aliases (including dangling symlinks), and a missing
+PASS inventory digest equality check. All were fixed and regression-tested; the
+bounded final recheck found no remaining issue. No product runtime/build change.
+
+Receipt files and owned directories retain full identities through the final
+receipt/set boundary. Ancestors use device/inode/type/mode so unrelated sibling
+activity does not cause a false refusal. Enumeration stops at the fourth entry;
+JSON nesting is capped at 64. Explicit synthetic fixtures cannot enter the default
+validation-purpose path. No actual source/runtime capture, formal receipts,
+hostile-filesystem race elimination or X-H2-X-H7 completion is claimed.
+
+Evidence: /private/tmp/lc2961-impl-evidence.9GtLO2/X-H1-node-tests.tap.
+The historical scratch tree remains unchanged. The next main card remains
+A-strict, with A-reference following its tested commit; the auxiliary next card
+is X-H2 above.
 
 ### A-core Validation (2026-10-22)
 
