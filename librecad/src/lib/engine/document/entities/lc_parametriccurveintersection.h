@@ -190,6 +190,8 @@ struct LC_IntersectionOptions {
     std::size_t maxGeneratedItems{65536};
     /** Explicit opt-in; false preserves existing strict/ordinary decisions and work counters. */
     bool analyticOccurrenceIdentity{false};
+    /** Strict ordering predicates; zero is a valid exhausted allowance. */
+    std::size_t maxOrderingComparisons{std::size_t{1} << 20};
 };
 
 enum class LC_IntersectionStatus {
@@ -205,13 +207,13 @@ struct LC_IntersectionWorkStats {
     std::size_t candidateBoxPairs{0};
     /** Refinement boxes examined, including exclusions and terminal boxes. */
     std::size_t refinementBoxPairs{0};
-    /** Strict certificate validation/identity/order comparisons; zero in ordinary mode. */
+    /** Strict certificate callbacks and explicit contraction/order-attempt units; zero in ordinary mode. */
     std::size_t certificateBoxPairs{0};
     /** Sum of all three pair counts; a refused next examination is not consumed. */
     std::size_t totalBoxPairs{0};
     /** Leaves generated, including those retained before a refusal. */
     std::size_t generatedLeaves{0};
-    /** Strict preparation/certificate records and owned-session metadata, including discarded ones; zero in ordinary mode. */
+    /** Strict cells, leaves, candidate/event/certificate/scratch records and session metadata, including discarded ones. */
     std::size_t generatedItems{0};
     /** Entered preparation depth; segment roots are zero, queued/unexamined children do not count. */
     unsigned deepestPreparation{0};
@@ -221,6 +223,9 @@ struct LC_IntersectionWorkStats {
     unsigned deepestOrderingRefinement{0};
     /** Absolute admitted contraction depth of owned certified roots; zero for legacy queries. */
     unsigned deepestRootRefinement{0};
+    std::size_t orderingComparisons{0};
+    std::size_t validationSegmentVisits{0};
+    std::size_t validationNextCalls{0};
 
     unsigned deepest() const {
         return std::max({deepestPreparation, deepestPairRefinement, deepestOrderingRefinement, deepestRootRefinement});
@@ -277,6 +282,8 @@ struct LC_CertifiedContractionAllowance {
     std::size_t remainingItems{0};
     /** Absolute root depth, not an additional number of contractions. */
     unsigned absoluteRootDepth{0};
+    /** Intersected with the original ordering ceiling; legacy calls retain that ceiling. */
+    std::size_t remainingOrderingComparisons{std::numeric_limits<std::size_t>::max()};
 };
 
 struct LC_CertifiedContractionResult {
@@ -308,7 +315,7 @@ private:
     struct Impl;
     explicit LC_CertifiedIntersectionSession(std::unique_ptr<Impl> impl);
     friend LC_CertifiedQueryResult findCertifiedIntersections(
-        std::unique_ptr<const LC_ParametricCurves>, LC_IntersectionOptions);
+        std::unique_ptr<const LC_ParametricCurves>, LC_IntersectionOptions, LC_IntersectionWorkStats*);
     std::unique_ptr<Impl> m_impl;
 };
 
@@ -323,8 +330,10 @@ struct LC_CertifiedQueryResult {
  * Always strict. Takes sole ownership of an immutable provider (including its callback dependencies),
  * and copies options before binding proof-core references. Original item/pair/depth ceilings remain
  * cumulative through subsequent calls. Legacy findIntersections policies/counters are unchanged.
+ * workOnExit is initialized before guards and reports admitted work on every return or exception.
  */
 LC_CertifiedQueryResult findCertifiedIntersections(
-    std::unique_ptr<const LC_ParametricCurves> curves, LC_IntersectionOptions options);
+    std::unique_ptr<const LC_ParametricCurves> curves, LC_IntersectionOptions options,
+    LC_IntersectionWorkStats* workOnExit = nullptr);
 
 #endif

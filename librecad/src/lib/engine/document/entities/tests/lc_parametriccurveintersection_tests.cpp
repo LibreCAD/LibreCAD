@@ -27,6 +27,7 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <exception>
 #include <functional>
 #include <limits>
 #include <memory>
@@ -369,6 +370,8 @@ struct RefineProbe {
     bool unavailable{false};
     bool wrongUniqueCategory{false};
     bool wrongExcludedCategory{false};
+    std::size_t certificates{0};
+    std::exception_ptr certificateException;
 };
 
 /** Owns all callback dependencies. Fault switches intentionally violate immutability to test fail-closed behavior. */
@@ -399,6 +402,8 @@ public:
         return curves.certifyInjective(segment, parameter);
     }
     LC_AnalyticIntersectionCertificate certifyIntersection(const LC_IntersectionDomain& box) const override {
+        ++m_probe->certificates;
+        if (m_probe->certificateException) { std::rethrow_exception(m_probe->certificateException); }
         if (m_probe->unavailable) { return {}; }
         auto result = curves.certifyIntersection(box);
         if (m_probe->wrongUniqueCategory) {
@@ -508,6 +513,9 @@ void checkStrictWork(const LC_IntersectionResult& result, const LC_IntersectionO
     CHECK(result.work.totalBoxPairs <= options.maxBoxPairs);
     CHECK(result.work.generatedItems <= options.maxGeneratedItems);
     CHECK(result.work.generatedLeaves <= options.maxLeaves);
+    CHECK(result.work.orderingComparisons <= options.maxOrderingComparisons);
+    CHECK(result.work.validationSegmentVisits <= options.maxGeneratedItems);
+    CHECK(result.work.validationNextCalls <= result.work.validationSegmentVisits);
     if (result.status != LC_IntersectionStatus::Ok) {
         CHECK(result.intersections.empty());
     }
@@ -520,6 +528,104 @@ void checkStrictWork(const LC_IntersectionResult& result, const LC_IntersectionO
         CHECK(event.proofDomain.parameterB.contains(event.isolation.parameterB.lo()));
         CHECK(event.proofDomain.parameterB.contains(event.isolation.parameterB.hi()));
     }
+}
+
+struct StrictBudgetProbe {
+    std::size_t segments{0}, branches{0}, next{0}, evaluations{0}, bounds{0};
+    std::size_t leaves{0}, certificates{0}, identities{0};
+    bool unavailable{false}, identityUnavailable{false};
+    bool malformed{false}, oversizedBranches{false};
+    std::exception_ptr exception;
+    enum class ThrowAt { None, Segments, Branches, Next, Bound, Evaluate, Leaf, Certificate, Identity };
+    ThrowAt throwAt{ThrowAt::None};
+    void check(const ThrowAt at) const { if (throwAt == at) { std::rethrow_exception(exception); } }
+};
+
+/** Exact lines, with optional conservative derivative bounds; no spline or solver dependencies. */
+class StrictBudgetCurves final : public LC_ParametricCurves {
+public:
+    enum class Shape { Straight, LeafSplit, PairSplit, Triple };
+    StrictBudgetCurves(const Shape shape, std::shared_ptr<StrictBudgetProbe> probe, const std::size_t count = 2)
+        : m_shape{shape}, m_probe{std::move(probe)} {
+        const auto n = shape == Shape::Triple ? 3 : count;
+        for (std::size_t i = 0; i < n; ++i) {
+            const bool branch = shape == Shape::Triple || shape == Shape::PairSplit;
+            m_segments.push_back({branch ? i : 0, shape == Shape::Triple ? 0.5 : branch ? 0.0 : double(i),
+                                  branch ? 1.0 : double(i + 1)});
+        }
+        if (m_probe->malformed && m_segments.size() > 1) { m_segments[1].t1 = m_segments[1].t0; }
+    }
+    const std::vector<LC_ParametricSegment>& segments() const override {
+        ++m_probe->segments; m_probe->check(StrictBudgetProbe::ThrowAt::Segments); return m_segments;
+    }
+    std::size_t branchCount() const override {
+        ++m_probe->branches; m_probe->check(StrictBudgetProbe::ThrowAt::Branches);
+        if (m_probe->oversizedBranches) { return std::numeric_limits<std::size_t>::max(); }
+        return m_shape == Shape::Triple || m_shape == Shape::PairSplit ? m_segments.size() : 1;
+    }
+    std::ptrdiff_t next(std::size_t) const override {
+        ++m_probe->next; m_probe->check(StrictBudgetProbe::ThrowAt::Next); return -1;
+    }
+    bool evaluate(const std::size_t segment, const double t, RS_Vector& p, RS_Vector& d) const override {
+        ++m_probe->evaluations; m_probe->check(StrictBudgetProbe::ThrowAt::Evaluate);
+        const auto slope = m_shape == Shape::Triple ? double(segment) - 1 : 0.0;
+        p = {t, slope * (t - 0.5)}; d = {1, slope}; return true;
+    }
+    bool bound(const std::size_t segment, const double a, const double b, LC_Interval& x, LC_Interval& y,
+               LC_Interval& dx, LC_Interval& dy) const override {
+        ++m_probe->bounds; m_probe->check(StrictBudgetProbe::ThrowAt::Bound);
+        const auto slope = m_shape == Shape::Triple ? double(segment) - 1 : 0.0;
+        x = LC_Interval::hull(a, b); y = LC_Interval::hull(slope * (a - 0.5), slope * (b - 0.5));
+        dx = LC_Interval::point(1); dy = LC_Interval::point(slope);
+        if (m_shape == Shape::LeafSplit && b - a > 0.5) { dx = dy = LC_Interval::hull(-1, 1); }
+        return true;
+    }
+    LC_AnalyticLeafCertificate certifyInjective(std::size_t, const LC_Interval&) const override {
+        ++m_probe->leaves; m_probe->check(StrictBudgetProbe::ThrowAt::Leaf); return {};
+    }
+    LC_AnalyticIntersectionCertificate certifyIntersection(const LC_IntersectionDomain& box) const override {
+        ++m_probe->certificates; m_probe->check(StrictBudgetProbe::ThrowAt::Certificate);
+        if (m_shape != Shape::Triple || m_probe->unavailable) { return {}; }
+        LC_AnalyticIntersectionCertificate result;
+        // Distinct slopes meet only at the three free starts t=u=.5, even in these wide isolations.
+        result.outcome = LC_AnalyticIntersectionCertificate::Outcome::Unique;
+        result.proof = LC_IntersectionProof::AnalyticEndpoint; result.kind = Kind::Endpoint;
+        result.proofDomain = box;
+        result.isolationA = result.isolationB = LC_Interval::hull(0.5, 0.75);
+        return result;
+    }
+    LC_AnalyticOccurrenceIdentityCertificate certifyOccurrenceIdentity(
+        const LC_ParametricIntersection& a, const bool firstA,
+        const LC_ParametricIntersection& b, const bool firstB) const override {
+        ++m_probe->identities; m_probe->check(StrictBudgetProbe::ThrowAt::Identity);
+        // These two provider-internal proofs belong to the one solver-dispatched identity callback.
+        const auto ca = certifyIntersection(a.isolation);
+        const auto cb = certifyIntersection(b.isolation);
+        if (m_probe->identityUnavailable || ca.outcome != LC_AnalyticIntersectionCertificate::Outcome::Unique ||
+            cb.outcome != LC_AnalyticIntersectionCertificate::Outcome::Unique ||
+            (firstA ? a.branchA : a.branchB) != (firstB ? b.branchA : b.branchB)) { return {}; }
+        return {true, a.isolation, b.isolation, LC_Interval::point(0.5)};
+    }
+private:
+    Shape m_shape;
+    std::shared_ptr<StrictBudgetProbe> m_probe;
+    std::vector<LC_ParametricSegment> m_segments;
+};
+
+void checkSameStrictWork(const LC_IntersectionWorkStats& a, const LC_IntersectionWorkStats& b) {
+    CHECK(a.candidateBoxPairs == b.candidateBoxPairs);
+    CHECK(a.refinementBoxPairs == b.refinementBoxPairs);
+    CHECK(a.certificateBoxPairs == b.certificateBoxPairs);
+    CHECK(a.totalBoxPairs == b.totalBoxPairs);
+    CHECK(a.generatedLeaves == b.generatedLeaves);
+    CHECK(a.generatedItems == b.generatedItems);
+    CHECK(a.deepestPreparation == b.deepestPreparation);
+    CHECK(a.deepestPairRefinement == b.deepestPairRefinement);
+    CHECK(a.deepestOrderingRefinement == b.deepestOrderingRefinement);
+    CHECK(a.deepestRootRefinement == b.deepestRootRefinement);
+    CHECK(a.orderingComparisons == b.orderingComparisons);
+    CHECK(a.validationSegmentVisits == b.validationSegmentVisits);
+    CHECK(a.validationNextCalls == b.validationNextCalls);
 }
 
 LC_IntersectionResult intersect(std::vector<const RS_Spline*> splines, const double tolerance = 1e-9) {
@@ -600,13 +706,13 @@ TEST_CASE("Certified sessions charge fixed and retained metadata without changin
     CHECK(invalid.work.generatedItems == 0);
 
     options = strictOptions();
-    options.maxGeneratedItems = 3; // session + issuer + one preparation box, with no roots
+    options.maxGeneratedItems = 4; // session + issuer + preparation root + accepted leaf, with no contacts
     const auto empty = findCertifiedIntersections(
         std::make_unique<CertifiedPolynomials>(std::vector<PolynomialPiece>{polynomialLine(0, {0, 0}, {1, 0})}), options);
     REQUIRE(empty.status == LC_IntersectionStatus::Ok);
     REQUIRE(empty.session);
     CHECK(empty.session->rootCount() == 0);
-    CHECK(empty.work.generatedItems == 3);
+    CHECK(empty.work.generatedItems == 4);
     CHECK(empty.work.totalBoxPairs == 0);
     CHECK_FALSE(empty.session->snapshot(empty.session->rootHandle(0)));
 
@@ -926,7 +1032,7 @@ TEST_CASE("Original cumulative session ceilings cannot be reset by fresh call al
     options = strictOptions();
     const auto singularMeasured = findCertifiedIntersections(singularRefineCurves(false), options);
     REQUIRE(singularMeasured.status == LC_IntersectionStatus::Ok);
-    options.maxGeneratedItems = singularMeasured.work.generatedItems + 1;
+    options.maxGeneratedItems = singularMeasured.work.generatedItems + 2; // one callback record + one narrowed event
     auto items = findCertifiedIntersections(singularRefineCurves(false), options);
     REQUIRE(items.status == LC_IntersectionStatus::Ok);
     const auto handle = items.session->rootHandle(0);
@@ -935,7 +1041,7 @@ TEST_CASE("Original cumulative session ceilings cannot be reset by fresh call al
     const auto refused = items.session->contract(handle, refineAllowance());
     CHECK(refused.status == LC_IntersectionStatus::LimitExceeded);
     CHECK_FALSE(refused.snapshot);
-    CHECK(refused.work.totalBoxPairs == 2);
+    CHECK(refused.work.totalBoxPairs == 1); // contraction enters; paired callback admission refuses before debit
     CHECK(refused.work.generatedItems == 0);
     CHECK(refused.work.deepestRootRefinement == 2);
     CHECK(items.session->cumulativeWork().generatedItems == options.maxGeneratedItems);
@@ -974,16 +1080,16 @@ TEST_CASE("Singular issued contacts use qualified analytic contraction or honest
         const auto unknown = query.session->contract(handle, refineAllowance());
         CHECK(unknown.status == LC_IntersectionStatus::AmbiguousTopology);
         CHECK_FALSE(unknown.snapshot);
-        CHECK(unknown.work.totalBoxPairs == 1);
-        CHECK(unknown.work.generatedItems == 0);
+        CHECK(unknown.work.totalBoxPairs == 2); // contraction + unavailable certificate callback
+        CHECK(unknown.work.generatedItems == 1);
         CHECK(unknown.work.deepestRootRefinement == 1);
         REQUIRE(query.session->snapshot(handle));
         checkSameDomain(query.session->snapshot(handle)->event.isolation, original.event.isolation);
         probe->unavailable = false;
-        const auto step = query.session->contract(handle, {2, 1, 2});
+        const auto step = query.session->contract(handle, {2, 2, 2});
         REQUIRE(step.status == LC_IntersectionStatus::Ok);
         CHECK(step.work.totalBoxPairs == 2);
-        CHECK(step.work.generatedItems == 1);
+        CHECK(step.work.generatedItems == 2); // callback record + narrowed event
         CHECK(step.work.deepestRootRefinement == 2);
         CHECK(step.snapshot->event.proof == original.event.proof);
         checkSameDomain(step.snapshot->event.proofDomain, original.event.proofDomain);
@@ -1058,7 +1164,7 @@ TEST_CASE("An exact singular root refuses unchanged contraction without losing i
         CHECK(attempt.status == LC_IntersectionStatus::AmbiguousTopology);
         CHECK_FALSE(attempt.snapshot);
         CHECK(attempt.work.totalBoxPairs == 2);
-        CHECK(attempt.work.generatedItems == 0);
+        CHECK(attempt.work.generatedItems == 1); // unchanged contraction still admitted its analytic callback
         CHECK(attempt.work.deepestRootRefinement == h);
         REQUIRE(query.session->snapshot(handle));
         CHECK(query.session->snapshot(handle)->admittedContractions == h);
@@ -1232,10 +1338,10 @@ TEST_CASE("Refused preparation children and rounded midpoint stagnation do not i
         return true;
     };
     auto options = strictOptions();
-    options.maxGeneratedItems = 5; // root and two admitted two-child splits; the next children are refused
+    options.maxGeneratedItems = 8; // root + two (callback + two children) groups + final unavailable callback
     const auto refused = findIntersections(children, options);
     CHECK(refused.status == LC_IntersectionStatus::LimitExceeded);
-    CHECK(refused.work.generatedItems == 5);
+    CHECK(refused.work.generatedItems == 8);
     CHECK(refused.work.generatedLeaves == 0);
     CHECK(preparationTraceDepth(children) == 2);
     CHECK(refused.work.deepestPreparation == preparationTraceDepth(children));
@@ -1282,12 +1388,12 @@ TEST_CASE("Pair depths count charged examined cells rather than pending subdivis
     CHECK(pairTraceDepth(curves) == 2);
     CHECK(baseline.work.deepestPairRefinement == pairTraceDepth(curves));
     CHECK(baseline.work.deepestOrderingRefinement == 0);
-    REQUIRE(baseline.work.certificateBoxPairs == 2);
+    REQUIRE(baseline.work.certificateBoxPairs == 2 + 3); // two leaf callbacks + three entered solve-cell callbacks
 
     for (const unsigned admitted : {1u, 2u}) {
         CAPTURE(admitted);
         curves.calls.clear();
-        options.maxBoxPairs = baseline.work.candidateBoxPairs + baseline.work.certificateBoxPairs + admitted;
+        options.maxBoxPairs = 2 + 1 + 2 * admitted; // leaf callbacks + hierarchy pair + N (cell + callback) groups
         const auto shortWork = findIntersections(curves, options);
         CHECK(shortWork.status == LC_IntersectionStatus::LimitExceeded);
         CHECK(shortWork.intersections.empty());
@@ -1731,11 +1837,11 @@ TEST_CASE("Strict stationary leaves require whole-interval analytic injectivity"
     curves.leafProof = [](const std::size_t segment, const LC_Interval& parameter) {
         return LC_AnalyticLeafCertificate{true, segment, parameter}; // t^2 is injective on [0,1]
     };
-    options.maxGeneratedItems = 2;
+    options.maxGeneratedItems = 3; // preparation root + analytic leaf certificate + accepted leaf
     const auto qualified = findIntersections(curves, options);
     REQUIRE(qualified.status == LC_IntersectionStatus::Ok);
     CHECK(qualified.intersections.empty());
-    CHECK(qualified.work.generatedItems == 2);
+    CHECK(qualified.work.generatedItems == 3);
     CHECK(qualified.work.generatedLeaves == 1);
     CHECK(qualified.work.certificateBoxPairs == 1);
     checkStrictWork(qualified, options);
@@ -1876,7 +1982,7 @@ TEST_CASE("Strict generated-item pair and depth allowances are checked without r
     options.maxLeaves = 0;
     const auto noLeaves = findIntersections(curves, options);
     CHECK(noLeaves.status == LC_IntersectionStatus::LimitExceeded);
-    CHECK(noLeaves.work.generatedItems == 1);
+    CHECK(noLeaves.work.generatedItems == 0); // mandatory leaf capacity is checked before preparation
     checkStrictWork(noLeaves, options);
     CertifiedPolynomials stationary{{{{0, 0, 1}, {0, 0, 1, 0}, {0, 0, 0, 0}}}};
     options = strictOptions();
@@ -1907,7 +2013,7 @@ TEST_CASE("Strict hierarchy prunes separated two-axis and unanchored clouds with
         }
         auto options = strictOptions();
         options.maxBoxPairs = 4 * count;
-        options.maxGeneratedItems = count;
+        options.maxGeneratedItems = 2 * count; // one preparation root and one accepted leaf per source segment
         const auto result = findIntersections(CertifiedPolynomials{pieces}, options);
         REQUIRE(result.status == LC_IntersectionStatus::Ok);
         CHECK(result.intersections.empty());
@@ -1922,13 +2028,36 @@ TEST_CASE("Strict hierarchy prunes separated two-axis and unanchored clouds with
         }
         auto options = strictOptions();
         options.maxBoxPairs = 8 * pieces.size();
-        options.maxGeneratedItems = pieces.size();
+        options.maxGeneratedItems = 2 * pieces.size(); // distinct mandatory roots and accepted leaves
         options.anchoredBranches = 1;
         const auto result = findIntersections(CertifiedPolynomials{pieces}, options);
         REQUIRE(result.status == LC_IntersectionStatus::Ok);
         CHECK(result.intersections.empty());
         CHECK(result.work.refinementBoxPairs == 0);
         CHECK(result.work.totalBoxPairs < options.maxBoxPairs);
+        checkStrictWork(result, options);
+    }
+    SECTION("bit-reversed y separation keeps the adaptive hierarchy within its linear pair envelope") {
+        constexpr std::size_t n = 128;
+        std::vector<PolynomialPiece> pieces;
+        for (std::size_t i = 0; i < n; ++i) {
+            std::size_t reversed = 0;
+            for (unsigned bit = 0; bit < 7; ++bit) { reversed = 2 * reversed + ((i >> bit) & 1u); }
+            pieces.push_back(polynomialLine(i, {std::ldexp(double(i), -20), 4.0 * double(reversed)}, {1, 0}));
+        }
+        auto options = strictOptions();
+        options.maxGeneratedItems = 2 * n;
+        options.maxBoxPairs = 4 * n;
+        const auto result = findIntersections(CertifiedPolynomials{pieces}, options);
+        CAPTURE(result.work.candidateBoxPairs, result.work.generatedItems, result.work.orderingComparisons);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        CHECK(result.intersections.empty());
+        // Every adaptive split separates y ranges, so only the n-1 internal sibling pairs are examined.
+        CHECK(result.work.candidateBoxPairs == n - 1);
+        CHECK(result.work.refinementBoxPairs == 0);
+        // Seven levels scan 7*n-(n-1) additional centres: four reductions each, one axis and two index reductions/node.
+        CHECK(result.work.orderingComparisons >= 4 * (7 * n - (n - 1)) + 3 * (n - 1));
+        CHECK(result.work.orderingComparisons <= 4 * (7 * n - (n - 1)) + 3 * (n - 1) + 2 * n * 28);
         checkStrictWork(result, options);
     }
 }
@@ -1942,12 +2071,12 @@ TEST_CASE("Strict cached full-path projection qualifies contiguous multi-segment
         }
         auto options = strictOptions();
         options.maxBoxPairs = 2 * count;
-        options.maxGeneratedItems = count;
+        options.maxGeneratedItems = 2 * count; // distinct mandatory roots and accepted leaves
         const auto result = findIntersections(CertifiedPolynomials{pieces}, options);
         REQUIRE(result.status == LC_IntersectionStatus::Ok);
         CHECK(result.intersections.empty());
         CHECK(result.work.generatedLeaves == count);
-        CHECK(result.work.generatedItems == count);
+        CHECK(result.work.generatedItems == 2 * count);
         CHECK(result.work.refinementBoxPairs == 0);
         CHECK(result.work.certificateBoxPairs == 0);
         checkStrictWork(result, options);
@@ -2702,4 +2831,436 @@ TEST_CASE("A closed source's cusped offset is noded across its branch joins", "[
     }
     // the swallowtail between each pair of cusps crosses the rest of the offset
     CHECK(geometry.intersections.size() >= geometry.branches.size() / 2);
+}
+
+TEST_CASE("provider analytic scans are covered by query debit",
+          "[lc-offsetcurve][geometry][cache-budget-accounting][strict-budget]") {
+    using Shape = StrictBudgetCurves::Shape;
+    auto options = strictOptions();
+    options.analyticOccurrenceIdentity = true;
+    options.maxDepth = 0;
+    // Three roots + three leaves; three candidate records; three solve cells/certificates/events;
+    // three order-scratch records; three identity records = 24 items. BVH visits four distinct pairs.
+    // Three solves + three order attempts + three identity callbacks give certificate=9, total=16.
+    // BVH nodes of sizes 3/2 use (8+1+3+2)/(4+1+1+2) scan/axis/heap/index predicates = 22.
+    // Candidate/event canonicalization and pair/event heapsorts add 3 each: 34 total.
+    options.maxGeneratedItems = 24; options.maxBoxPairs = 16; options.maxOrderingComparisons = 34;
+    SECTION("wide analytic isolations share true parameter occurrences without duplicate helper debits") {
+        auto probe = std::make_shared<StrictBudgetProbe>();
+        const auto result = findIntersections(StrictBudgetCurves{Shape::Triple, probe}, options);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok);
+        REQUIRE(result.intersections.size() == 3);
+        CHECK(result.work.generatedItems == 24);
+        CHECK(result.work.candidateBoxPairs == 4);
+        CHECK(result.work.refinementBoxPairs == 3);
+        CHECK(result.work.certificateBoxPairs == 9);
+        CHECK(result.work.totalBoxPairs == 16);
+        CHECK(result.work.orderingComparisons == 34);
+        CHECK(probe->identities == 3);
+        CHECK(probe->certificates == 3 + 2 * 3);
+        for (const auto& event : result.intersections) {
+            CHECK(event.isolation.parameterA.contains(0.5));
+            CHECK(event.isolation.parameterB.contains(0.5));
+            CHECK(event.isolation.parameterA.width() > 0);
+            CHECK(event.isolation.parameterB.width() > 0);
+            CHECK(event.point.x >= 0.5); CHECK(event.point.x <= 0.75); // qualified seed, not an exact root coordinate
+            CHECK(event.point.y == Approx(0));
+        }
+        CHECK(result.intersections[0].branchA == 0); CHECK(result.intersections[0].branchB == 1);
+        CHECK(result.intersections[1].branchA == 0); CHECK(result.intersections[1].branchB == 2);
+        CHECK(result.intersections[2].branchA == 1); CHECK(result.intersections[2].branchB == 2);
+        checkStrictWork(result, options);
+    }
+    SECTION("direct and identity pair/item preflight refuses before callback execution") {
+        for (const bool identity : {false, true}) {
+            for (const bool itemShort : {false, true}) {
+                CAPTURE(identity, itemShort);
+                auto limited = options;
+                // Before first direct certificate: 6 preparation + 3 candidates + 1 solve cell;
+                // before first identity: 18 solved records + 3 scratch, and its order-attempt pair.
+                if (itemShort) { limited.maxGeneratedItems = identity ? 21 : 10; }
+                else { limited.maxBoxPairs = identity ? 11 : 5; }
+                auto probe = std::make_shared<StrictBudgetProbe>();
+                const auto result = findIntersections(StrictBudgetCurves{Shape::Triple, probe}, limited);
+                CHECK(result.status == LC_IntersectionStatus::LimitExceeded);
+                CHECK(probe->identities == 0);
+                CHECK(probe->certificates == (identity ? 3 : 0));
+                CHECK(result.work.generatedItems == (identity ? 21 : 10));
+                CHECK(result.work.totalBoxPairs == (identity ? 11 : 5));
+                CHECK(result.work.certificateBoxPairs == (identity ? 4 : 0));
+                checkStrictWork(result, limited);
+            }
+        }
+    }
+    SECTION("unavailable certificates are admitted once including provider-internal helpers") {
+        for (const bool identity : {false, true}) {
+            auto probe = std::make_shared<StrictBudgetProbe>();
+            probe->unavailable = !identity; probe->identityUnavailable = identity;
+            const auto result = findIntersections(StrictBudgetCurves{Shape::Triple, probe}, options);
+            CHECK(result.status == LC_IntersectionStatus::LimitExceeded);
+            CHECK(probe->identities == (identity ? 1 : 0));
+            CHECK(probe->certificates == (identity ? 5 : 1));
+            CHECK(result.work.generatedItems == (identity ? 22 : 11));
+            CHECK(result.work.totalBoxPairs == (identity ? 12 : 6));
+            CHECK(result.work.certificateBoxPairs == (identity ? 5 : 1));
+            checkStrictWork(result, options);
+        }
+    }
+    SECTION("throwing direct certificates report their pre-callback debit on factory exit") {
+        for (const bool identity : {false, true}) {
+            auto probe = std::make_shared<StrictBudgetProbe>();
+            probe->exception = std::make_exception_ptr(std::runtime_error("analytic callback failure"));
+            probe->throwAt = identity ? StrictBudgetProbe::ThrowAt::Identity : StrictBudgetProbe::ThrowAt::Certificate;
+            LC_IntersectionWorkStats exit;
+            auto retainedOptions = options; retainedOptions.maxGeneratedItems = 29; // 24 ordinary + session/issuer + 3 roots
+            try {
+                findCertifiedIntersections(std::make_unique<StrictBudgetCurves>(Shape::Triple, probe), retainedOptions, &exit);
+                FAIL("certificate did not throw");
+            } catch (...) { CHECK(std::current_exception() == probe->exception); }
+            CHECK(probe->certificates == (identity ? 3 : 1)); CHECK(probe->identities == (identity ? 1 : 0));
+            CHECK(exit.generatedItems == (identity ? 27 : 13));
+            CHECK(exit.candidateBoxPairs == 4); CHECK(exit.refinementBoxPairs == (identity ? 3 : 1));
+            CHECK(exit.certificateBoxPairs == (identity ? 5 : 1)); CHECK(exit.totalBoxPairs == (identity ? 12 : 6));
+            CHECK(exit.generatedLeaves == 3);
+        }
+    }
+}
+
+TEST_CASE("strict-core seed and split admissions precede queue mutation",
+          "[lc-offsetcurve][geometry][cache-budget-accounting][strict-budget]") {
+    using Shape = StrictBudgetCurves::Shape;
+    SECTION("preparation children are indivisible and unentered children do not raise depth") {
+        for (const std::size_t cap : {3u, 4u, 6u}) {
+            CAPTURE(cap);
+            auto options = strictOptions(); options.maxGeneratedItems = cap; options.maxLeafDepth = 1;
+            auto probe = std::make_shared<StrictBudgetProbe>();
+            const auto result = findIntersections(StrictBudgetCurves{Shape::LeafSplit, probe, 1}, options);
+            // Root + unavailable leaf certificate = 2; split adds 2; accepted leaves add 1 each.
+            CHECK(result.status == (cap == 6 ? LC_IntersectionStatus::Ok : LC_IntersectionStatus::LimitExceeded));
+            CHECK(result.work.generatedItems == (cap == 3 ? 2 : cap));
+            CHECK(result.work.generatedLeaves == (cap == 6 ? 2 : 0));
+            CHECK(result.work.deepestPreparation == (cap == 3 ? 0 : 1));
+            CHECK(probe->bounds == (cap == 3 ? 4 : cap == 4 ? 5 : 6));
+            CHECK(probe->leaves == 1); CHECK(result.work.certificateBoxPairs == 1);
+            checkStrictWork(result, options);
+        }
+    }
+    SECTION("remaining mandatory seeds cannot be spent on an earlier segment split") {
+        auto options = strictOptions(); options.maxGeneratedItems = 4;
+        auto probe = std::make_shared<StrictBudgetProbe>();
+        const auto result = findIntersections(StrictBudgetCurves{Shape::LeafSplit, probe, 2}, options);
+        CHECK(result.status == LC_IntersectionStatus::LimitExceeded);
+        CHECK(result.work.generatedItems == 2); // root + callback, with one untouched mandatory seed reserved
+        CHECK(result.work.deepestPreparation == 0); CHECK(probe->bounds == 4);
+        CHECK(result.work.validationSegmentVisits == 2); CHECK(probe->evaluations == 3);
+    }
+    SECTION("pair cells charge roots and atomic children before queue insertion") {
+        for (const std::size_t cap : {8u, 9u}) {
+            CAPTURE(cap);
+            auto options = strictOptions(); options.maxGeneratedItems = cap; options.maxDepth = 1;
+            auto probe = std::make_shared<StrictBudgetProbe>();
+            const auto result = findIntersections(StrictBudgetCurves{Shape::PairSplit, probe}, options);
+            CHECK(result.status == LC_IntersectionStatus::LimitExceeded);
+            // Four preparation records + candidate + solve root + unavailable certificate = 7.
+            CHECK(result.work.generatedItems == (cap == 8 ? 7 : 9));
+            CHECK(result.work.deepestPairRefinement == (cap == 8 ? 0 : 1));
+            CHECK(result.work.refinementBoxPairs == (cap == 8 ? 1 : 2));
+            CHECK(result.work.certificateBoxPairs == 1); CHECK(probe->certificates == 1);
+            CHECK(result.work.totalBoxPairs == (cap == 8 ? 3 : 4));
+            checkStrictWork(result, options);
+        }
+    }
+}
+
+TEST_CASE("strict-core validation, pair work, ordering comparisons and output scratch are bounded",
+          "[lc-offsetcurve][geometry][cache-budget-accounting][strict-budget]") {
+    using Shape = StrictBudgetCurves::Shape;
+    SECTION("two straight pieces have separate root and accepted-leaf records") {
+        for (const bool retained : {false, true}) {
+            for (const bool shortCap : {false, true}) {
+                CAPTURE(retained, shortCap);
+                auto options = strictOptions(); options.maxGeneratedItems = (retained ? 6 : 4) - shortCap;
+                options.maxBoxPairs = 1; options.maxOrderingComparisons = 10;
+                auto probe = std::make_shared<StrictBudgetProbe>();
+                LC_IntersectionWorkStats work;
+                LC_IntersectionStatus status;
+                if (retained) {
+                    const auto result = findCertifiedIntersections(
+                        std::make_unique<StrictBudgetCurves>(Shape::Straight, probe), options, &work);
+                    status = result.status; checkSameStrictWork(result.work, work);
+                    CHECK(bool(result.session) == !shortCap);
+                    if (result.session) { CHECK(result.session->rootCount() == 0); }
+                } else {
+                    const auto result = findIntersections(StrictBudgetCurves{Shape::Straight, probe}, options);
+                    status = result.status; work = result.work; CHECK(result.intersections.empty());
+                }
+                CHECK(status == (shortCap ? LC_IntersectionStatus::LimitExceeded : LC_IntersectionStatus::Ok));
+                CHECK(work.generatedItems == options.maxGeneratedItems);
+                CHECK(work.generatedLeaves == (shortCap ? 1 : 2));
+                CHECK(work.validationSegmentVisits == 2); CHECK(work.validationNextCalls == 1);
+                CHECK(probe->segments == 1); CHECK(probe->branches == 1); CHECK(probe->next == 1);
+                CHECK(probe->evaluations == 6); CHECK(probe->bounds == 8);
+                CHECK(probe->leaves == 0); CHECK(probe->certificates == 0);
+                CHECK(work.totalBoxPairs == (shortCap ? 0 : 1));
+                CHECK(work.orderingComparisons == (shortCap ? 0 : 10));
+            }
+        }
+    }
+    SECTION("root-cap refusal precedes scans and retained zero/one precedes all accessors") {
+        for (const std::size_t cap : {0u, 1u, 3u}) {
+            auto options = strictOptions(); options.maxGeneratedItems = cap;
+            auto probe = std::make_shared<StrictBudgetProbe>();
+            LC_IntersectionWorkStats work; work.generatedItems = 999;
+            const auto result = findCertifiedIntersections(
+                std::make_unique<StrictBudgetCurves>(Shape::Straight, probe), options, &work);
+            CHECK(result.status == (cap == 0 ? LC_IntersectionStatus::InvalidInput : LC_IntersectionStatus::LimitExceeded));
+            CHECK_FALSE(result.session); checkSameStrictWork(work, result.work);
+            CHECK(work.generatedItems == (cap < 2 ? 0 : 2));
+            CHECK(work.validationSegmentVisits == 0); CHECK(work.validationNextCalls == 0);
+            CHECK(probe->segments == (cap < 2 ? 0 : 1)); CHECK(probe->branches == (cap < 2 ? 0 : 1));
+            CHECK(probe->next == 0); CHECK(probe->evaluations == 0); CHECK(probe->bounds == 0);
+        }
+        auto options = strictOptions(); options.maxGeneratedItems = 1;
+        auto probe = std::make_shared<StrictBudgetProbe>();
+        const auto result = findIntersections(StrictBudgetCurves{Shape::Straight, probe}, options);
+        CHECK(result.status == LC_IntersectionStatus::LimitExceeded); CHECK(result.work.generatedItems == 0);
+        CHECK(result.work.validationSegmentVisits == 0); CHECK(probe->next == 0); CHECK(probe->bounds == 0);
+    }
+    SECTION("malformed and oversized metadata are distinct from exhausted geometry work") {
+        for (const bool retained : {false, true}) {
+            for (const bool oversized : {false, true}) {
+                auto probe = std::make_shared<StrictBudgetProbe>();
+                probe->malformed = !oversized; probe->oversizedBranches = oversized;
+                auto options = strictOptions();
+                LC_IntersectionWorkStats work; LC_IntersectionStatus status;
+                if (retained) {
+                    const auto result = findCertifiedIntersections(
+                        std::make_unique<StrictBudgetCurves>(Shape::Straight, probe), options, &work);
+                    status = result.status; CHECK_FALSE(result.session); checkSameStrictWork(result.work, work);
+                } else {
+                    const auto result = findIntersections(StrictBudgetCurves{Shape::Straight, probe}, options);
+                    status = result.status; work = result.work;
+                }
+                CHECK(status == (oversized ? LC_IntersectionStatus::LimitExceeded : LC_IntersectionStatus::InvalidInput));
+                CHECK(work.generatedItems == (retained ? 2 : 0));
+                CHECK(work.validationSegmentVisits == (oversized ? 0 : 2));
+                CHECK(work.validationNextCalls == (oversized ? 0 : 1));
+                CHECK(probe->bounds == 0); CHECK(probe->evaluations == 0);
+            }
+        }
+    }
+    SECTION("pair and ordering zero exact and one-short caps are independent") {
+        for (const std::size_t ordering : {0u, 9u, 10u}) {
+            for (const std::size_t pairs : {0u, 1u}) {
+                auto options = strictOptions(); options.maxOrderingComparisons = ordering; options.maxBoxPairs = pairs;
+                auto probe = std::make_shared<StrictBudgetProbe>();
+                const auto result = findIntersections(StrictBudgetCurves{Shape::Straight, probe}, options);
+                CHECK(result.status == (ordering == 10 && pairs == 1 ? LC_IntersectionStatus::Ok : LC_IntersectionStatus::LimitExceeded));
+                // Four axis reductions + axis choice + heap predicate + two index reductions precede the pair;
+                // two parameter-range reductions follow its admission.
+                CHECK(result.work.orderingComparisons == (pairs == 0 ? std::min(ordering, std::size_t{8}) : ordering));
+                CHECK(result.work.totalBoxPairs == (ordering == 0 ? 0 : pairs));
+                CHECK(result.work.generatedItems == 4); CHECK(probe->evaluations == 6); CHECK(probe->bounds == 8);
+                checkStrictWork(result, options);
+            }
+        }
+        auto options = strictOptions(); options.maxOrderingComparisons = 0;
+        auto probe = std::make_shared<StrictBudgetProbe>();
+        const auto singleton = findIntersections(StrictBudgetCurves{Shape::Straight, probe, 1}, options);
+        CHECK(singleton.status == LC_IntersectionStatus::Ok); CHECK(singleton.work.orderingComparisons == 0);
+        options.strict = false; options.maxGeneratedItems = 0;
+        const auto ordinary = findIntersections(StrictBudgetCurves{Shape::Straight, probe}, options);
+        CHECK(ordinary.status == LC_IntersectionStatus::Ok);
+        CHECK(ordinary.work.orderingComparisons == 0); CHECK(ordinary.work.validationSegmentVisits == 0);
+        CHECK(ordinary.work.validationNextCalls == 0);
+    }
+    SECTION("order scratch is reserved and admitted as a complete event-sized batch") {
+        for (const bool retained : {false, true}) {
+            auto probe = std::make_shared<StrictBudgetProbe>();
+            auto options = strictOptions(); options.analyticOccurrenceIdentity = true;
+            // Before order: 6 roots/leaves + 3 candidates + 9 solve/certificate/event records.
+            // Retention additionally owns 2 metadata and 3 root records. Three scratch tokens are required together.
+            options.maxGeneratedItems = retained ? 25 : 20;
+            LC_IntersectionWorkStats work;
+            if (retained) {
+                const auto result = findCertifiedIntersections(
+                    std::make_unique<StrictBudgetCurves>(Shape::Triple, probe), options, &work);
+                CHECK(result.status == LC_IntersectionStatus::LimitExceeded); CHECK_FALSE(result.session);
+                checkSameStrictWork(result.work, work);
+            } else {
+                const auto result = findIntersections(StrictBudgetCurves{Shape::Triple, probe}, options);
+                CHECK(result.status == LC_IntersectionStatus::LimitExceeded); CHECK(result.intersections.empty());
+                work = result.work;
+            }
+            CHECK(work.generatedItems == (retained ? 23 : 18));
+            CHECK(work.totalBoxPairs == 10); CHECK(work.certificateBoxPairs == 3);
+            CHECK(probe->certificates == 3); CHECK(probe->identities == 0);
+        }
+    }
+    SECTION("final output heapsort refuses one-short without publishing a partial result or owner") {
+        for (const bool retained : {false, true}) {
+            for (const bool oneShort : {false, true}) {
+                auto options = strictOptions(); options.analyticOccurrenceIdentity = true;
+                options.maxGeneratedItems = retained ? 29 : 24; options.maxBoxPairs = 16;
+                options.maxOrderingComparisons = oneShort ? 33 : 34;
+                auto probe = std::make_shared<StrictBudgetProbe>();
+                LC_IntersectionWorkStats work;
+                if (retained) {
+                    const auto result = findCertifiedIntersections(
+                        std::make_unique<StrictBudgetCurves>(Shape::Triple, probe), options, &work);
+                    CHECK(result.status == (oneShort ? LC_IntersectionStatus::LimitExceeded : LC_IntersectionStatus::Ok));
+                    CHECK(bool(result.session) == !oneShort); checkSameStrictWork(work, result.work);
+                    if (result.session) {
+                        REQUIRE(result.session->rootCount() == 3);
+                        for (std::size_t i = 0; i < 3; ++i) {
+                            const auto event = result.session->snapshot(result.session->rootHandle(i))->event;
+                            CHECK(event.branchA == (i == 2 ? 1 : 0)); CHECK(event.branchB == (i == 0 ? 1 : 2));
+                        }
+                    }
+                } else {
+                    const auto result = findIntersections(StrictBudgetCurves{Shape::Triple, probe}, options);
+                    CHECK(result.status == (oneShort ? LC_IntersectionStatus::LimitExceeded : LC_IntersectionStatus::Ok));
+                    CHECK(result.intersections.size() == (oneShort ? 0 : 3)); work = result.work;
+                }
+                CHECK(work.generatedItems == options.maxGeneratedItems);
+                CHECK(work.orderingComparisons == options.maxOrderingComparisons);
+                CHECK(work.totalBoxPairs == 16); CHECK(probe->identities == 3); CHECK(probe->certificates == 9);
+            }
+        }
+    }
+    SECTION("oversized segment inventories refuse before validation in either entry point") {
+        for (const bool retained : {false, true}) {
+            auto options = strictOptions(); options.maxGeneratedItems = retained ? 4 : 2;
+            auto probe = std::make_shared<StrictBudgetProbe>();
+            LC_IntersectionWorkStats work;
+            if (retained) {
+                const auto result = findCertifiedIntersections(
+                    std::make_unique<StrictBudgetCurves>(Shape::Straight, probe, 3), options, &work);
+                CHECK(result.status == LC_IntersectionStatus::LimitExceeded); CHECK_FALSE(result.session);
+            } else {
+                const auto result = findIntersections(StrictBudgetCurves{Shape::Straight, probe, 3}, options);
+                CHECK(result.status == LC_IntersectionStatus::LimitExceeded); work = result.work;
+            }
+            CHECK(work.generatedItems == (retained ? 2 : 0)); CHECK(work.validationSegmentVisits == 0);
+            CHECK(work.validationNextCalls == 0); CHECK(probe->bounds == 0); CHECK(probe->evaluations == 0);
+        }
+    }
+    SECTION("appended fields preserve legacy aggregates and unconstrained caps do not size scratch") {
+        static_assert(std::is_aggregate_v<LC_IntersectionOptions>);
+        static_assert(std::is_aggregate_v<LC_IntersectionWorkStats>);
+        const LC_IntersectionOptions legacy{1e-9, 3, 4, 5, 6, 7, true, 8, true};
+        CHECK(legacy.maxDepth == 3); CHECK(legacy.maxLeafDepth == 4); CHECK(legacy.maxLeaves == 5);
+        CHECK(legacy.maxBoxPairs == 6); CHECK(legacy.anchoredBranches == 7);
+        CHECK(legacy.strict); CHECK(legacy.maxGeneratedItems == 8); CHECK(legacy.analyticOccurrenceIdentity);
+        CHECK(legacy.maxOrderingComparisons == (std::size_t{1} << 20));
+        const LC_IntersectionWorkStats old{1, 2, 3, 6, 7, 8, 9, 10, 11, 12};
+        CHECK(old.deepestRootRefinement == 12); CHECK(old.orderingComparisons == 0);
+        CHECK(old.validationSegmentVisits == 0); CHECK(old.validationNextCalls == 0);
+        const LC_CertifiedContractionAllowance oldAllowance{3, 4, 5};
+        CHECK(oldAllowance.remainingPairs == 3); CHECK(oldAllowance.remainingItems == 4);
+        CHECK(oldAllowance.absoluteRootDepth == 5);
+        CHECK(oldAllowance.remainingOrderingComparisons == std::numeric_limits<std::size_t>::max());
+        auto options = strictOptions();
+        options.maxGeneratedItems = options.maxLeaves = options.maxBoxPairs =
+            options.maxOrderingComparisons = std::numeric_limits<std::size_t>::max();
+        auto probe = std::make_shared<StrictBudgetProbe>();
+        const auto result = findCertifiedIntersections(
+            std::make_unique<StrictBudgetCurves>(Shape::Straight, probe), options);
+        CHECK(result.status == LC_IntersectionStatus::Ok); CHECK(result.work.generatedItems == 6);
+        CHECK(result.work.orderingComparisons == 10); CHECK(result.work.totalBoxPairs == 1);
+    }
+    SECTION("retained ordering honors both current shared allowance and original cumulative ceiling") {
+        const auto measured = findCertifiedIntersections(endpointRefineCurves(), strictOptions());
+        REQUIRE(measured.status == LC_IntersectionStatus::Ok);
+        for (const bool cumulativeCeiling : {false, true}) {
+            for (const std::size_t extra : {0u, 1u}) {
+                CAPTURE(cumulativeCeiling, extra);
+                auto options = strictOptions();
+                options.maxOrderingComparisons = measured.work.orderingComparisons + (cumulativeCeiling ? extra : 3);
+                auto query = findCertifiedIntersections(endpointRefineCurves(), options);
+                REQUIRE(query.status == LC_IntersectionStatus::Ok);
+                const auto handle = query.session->rootHandle(0);
+                const auto original = *query.session->snapshot(handle);
+                auto allowance = refineAllowance();
+                allowance.remainingOrderingComparisons = cumulativeCeiling ? 100 : extra;
+                const auto step = query.session->contract(handle, allowance);
+                CHECK(step.status == (extra ? LC_IntersectionStatus::Ok : LC_IntersectionStatus::LimitExceeded));
+                CHECK(bool(step.snapshot) == bool(extra));
+                CHECK(step.work.orderingComparisons == extra);
+                // The contraction and staged event precede canonicalization; refusal cannot refund either.
+                CHECK(step.work.totalBoxPairs == 1); CHECK(step.work.generatedItems == 1);
+                CHECK(step.work.deepestRootRefinement == 1);
+                CHECK(query.session->cumulativeWork().orderingComparisons == measured.work.orderingComparisons + extra);
+                if (extra) {
+                    CHECK(step.snapshot->event.isolation.parameterA.width() < original.event.isolation.parameterA.width());
+                    allowance.remainingOrderingComparisons = cumulativeCeiling ? 100 : 0;
+                    const auto next = query.session->contract(handle, allowance);
+                    CHECK(next.status == LC_IntersectionStatus::LimitExceeded);
+                    CHECK(next.work.orderingComparisons == 0); CHECK_FALSE(next.snapshot);
+                } else {
+                    checkSameDomain(query.session->snapshot(handle)->event.isolation, original.event.isolation);
+                }
+                const auto stopped = query.session->cumulativeWork();
+                const auto retry = query.session->contract(handle, refineAllowance());
+                CHECK(retry.status == LC_IntersectionStatus::LimitExceeded);
+                checkSameStrictWork(retry.work, {});
+                checkSameStrictWork(query.session->cumulativeWork(), stopped);
+            }
+        }
+    }
+    SECTION("factory exit snapshots preserve original setup and provider exceptions") {
+        using At = StrictBudgetProbe::ThrowAt;
+        for (const auto at : {At::Segments, At::Branches, At::Next, At::Bound, At::Evaluate, At::Leaf}) {
+            auto probe = std::make_shared<StrictBudgetProbe>();
+            probe->throwAt = at; probe->exception = std::make_exception_ptr(std::runtime_error("provider failure"));
+            LC_IntersectionWorkStats exit;
+            try {
+                findCertifiedIntersections(std::make_unique<StrictBudgetCurves>(
+                    at == At::Leaf ? Shape::LeafSplit : Shape::Straight, probe), strictOptions(), &exit);
+                FAIL("provider did not throw");
+            } catch (...) { CHECK(std::current_exception() == probe->exception); }
+            CHECK(exit.generatedItems == (at == At::Leaf ? 4 : at == At::Bound || at == At::Evaluate ? 3 : 2));
+            CHECK(exit.certificateBoxPairs == (at == At::Leaf ? 1 : 0));
+            CHECK(exit.totalBoxPairs == exit.certificateBoxPairs); CHECK(exit.generatedLeaves == 0);
+        }
+        LC_IntersectionWorkStats exit; exit.generatedItems = 999;
+        const auto invalid = findCertifiedIntersections(nullptr, strictOptions(), &exit);
+        CHECK(invalid.status == LC_IntersectionStatus::InvalidInput); checkSameStrictWork(exit, {});
+    }
+}
+
+TEST_CASE("retained certificate callback throw preserves admitted work",
+          "[lc-offsetcurve][geometry][intersection-refine]") {
+    auto probe = std::make_shared<RefineProbe>();
+    auto provider = singularRefineCurves(false, probe); // A(t)=(t,0), B(u)=(u,(u-.5)^2)
+    for (const std::size_t segment : {0u, 1u}) {
+        RS_Vector p, d;
+        REQUIRE(provider->evaluate(segment, 0.5, p, d));
+        CHECK(p.x == 0.5); CHECK(p.y == 0); CHECK(d.x == 1); CHECK(d.y == 0);
+    }
+    LC_IntersectionWorkStats exit;
+    auto query = findCertifiedIntersections(std::move(provider), strictOptions(), &exit);
+    REQUIRE(query.status == LC_IntersectionStatus::Ok); REQUIRE(query.session);
+    REQUIRE(query.session->rootCount() == 1); checkSameStrictWork(exit, query.work);
+    const auto handle = query.session->rootHandle(0);
+    REQUIRE(query.session->snapshot(handle));
+    const auto before = query.session->cumulativeWork();
+    const auto callbacks = probe->certificates;
+    probe->certificateException = std::make_exception_ptr(std::runtime_error("retained analytic failure"));
+    try {
+        query.session->contract(handle, refineAllowance());
+        FAIL("retained callback did not throw");
+    } catch (...) { CHECK(std::current_exception() == probe->certificateException); }
+    const auto after = query.session->cumulativeWork();
+    CHECK(probe->certificates == callbacks + 1);
+    CHECK(after.certificateBoxPairs == before.certificateBoxPairs + 2);
+    CHECK(after.totalBoxPairs == before.totalBoxPairs + 2);
+    CHECK(after.generatedItems == before.generatedItems + 1);
+    CHECK(after.deepestRootRefinement == before.deepestRootRefinement + 1);
+    CHECK(query.session->rootCount() == 0); CHECK_FALSE(query.session->snapshot(handle));
+    const auto bounds = probe->bounds, evaluations = probe->evaluations;
+    const auto retry = query.session->contract(handle, refineAllowance());
+    CHECK(retry.status == LC_IntersectionStatus::InvalidInput); CHECK_FALSE(retry.snapshot);
+    checkSameStrictWork(retry.work, {}); checkSameStrictWork(query.session->cumulativeWork(), after);
+    CHECK(probe->bounds == bounds); CHECK(probe->evaluations == evaluations); CHECK(probe->certificates == callbacks + 1);
 }
