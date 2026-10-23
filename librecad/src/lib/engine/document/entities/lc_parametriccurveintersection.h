@@ -192,6 +192,8 @@ struct LC_IntersectionOptions {
     bool analyticOccurrenceIdentity{false};
     /** Strict ordering predicates; zero is a valid exhausted allowance. */
     std::size_t maxOrderingComparisons{std::size_t{1} << 20};
+    /** Strict proof-domain padding per side, clipped to the segment; not a distance tolerance. */
+    double strictProofDomainPadding{0.001};
 };
 
 enum class LC_IntersectionStatus {
@@ -306,9 +308,13 @@ public:
     LC_CertifiedIntersectionSession& operator=(const LC_CertifiedIntersectionSession&) = delete;
 
     std::size_t rootCount() const;
+    /** False after provider/proof invalidation or a move; resource refusal preserves prior proofs. */
+    bool hasValidProofs() const noexcept;
     LC_CertifiedRootHandle rootHandle(std::size_t index) const;
     std::optional<LC_CertifiedRootSnapshot> snapshot(const LC_CertifiedRootHandle&) const;
-    LC_CertifiedContractionResult contract(const LC_CertifiedRootHandle&, const LC_CertifiedContractionAllowance&);
+    /** Optional call-local ledger is also reported when provider evaluation throws. */
+    LC_CertifiedContractionResult contract(const LC_CertifiedRootHandle&, const LC_CertifiedContractionAllowance&,
+        LC_IntersectionWorkStats* workOnExit = nullptr);
     const LC_IntersectionWorkStats& cumulativeWork() const;
 
 private:

@@ -199,11 +199,15 @@ struct CurveChordBounds {
     LC_Interval x, y;
     LC_Interval deviation;
 };
+struct CacheBezierPoint { LC_Interval x, y; };
 
 /** Fixed-cost proof primitives; callers admit their comparison work before calling. */
 bool boundCacheChord(const CacheSpan& span, const ReferenceFrame& frame, double a, double b,
                      CurveChordBounds& out);
 bool boundReferenceChord(const ReferenceFrame& frame, double a, double b, CurveChordBounds& out);
+/** Bernstein derivative controls on a subdomain, in the original span's parameter convention. */
+bool boundCacheDerivativeControls(const CacheSpan& span, const ReferenceFrame& frame, double a, double b,
+                                 std::array<CacheBezierPoint, 4>& net, std::size_t& degree);
 
 enum class CriticalRegime {
     PositiveFactor, MinimumStationary, IntermediateThresholds, MaximumStationary, NegativeFactor
@@ -360,6 +364,9 @@ public:
                LC_Interval& dx, LC_Interval& dy) const override;
     /** Full local-coordinate jet bounds, including zero-width queries; cleared on refusal. */
     bool boundJet(std::size_t segment, double a, double b, LC_CurveJetBounds& out) const;
+    /** Own offset only; preserves its shared factor and factory-proved global sign. */
+    bool boundOwnProjectedDerivative(double a, double b, const LC_Interval& axisX,
+        const LC_Interval& axisY, LC_Interval& out) const;
     LC_AnalyticOccurrenceIdentityCertificate certifyOccurrenceIdentity(
         const LC_ParametricIntersection&, bool, const LC_ParametricIntersection&, bool) const override;
     LC_AnalyticLeafCertificate certifyInjective(std::size_t segment, const LC_Interval& parameter) const override;
@@ -646,6 +653,65 @@ CacheLocalTopologyResult analyseCacheTopologyLocally(const RS_SplineData& cache,
                                                     const LC_EllipseOffsetDefinition& definition,
                                                     double worldTolerance, WorkBudget& budget);
 
+enum class CachePathJoinKind { SourceContinuation, PairEvent, Seam };
+struct CachePathJoin {
+    CachePathJoinKind kind{};
+    std::size_t incoming = std::size_t(-1), outgoing = std::size_t(-1);
+    ReferenceOccurrenceId from, to;
+    std::size_t pairEvent = std::size_t(-1);
+};
+struct CachePathPiece {
+    /** Original span identity is unchanged by whole-cache reversal or refinement. */
+    std::size_t span = std::size_t(-1), normalizedSpan = std::size_t(-1), edge = std::size_t(-1);
+    LC_Interval candidateParameter, referenceParameter;
+    unsigned candidateDepth = 0, referenceDepth = 0;
+    LC_Interval geometryError, clearanceLowerBound;
+    /** Bounds enclose the actual domain; these endpoints are the SAME owned cut root, not lo/hi. */
+    bool startsAtCut = false, endsAtCut = false;
+};
+struct CachePathCut {
+    std::size_t edge = std::size_t(-1), span = std::size_t(-1);
+    LC_Interval candidateParameter, referenceParameter;
+    std::size_t closingSpan = std::size_t(-1);
+    LC_Interval closingCandidateParameter, closingReferenceParameter;
+    std::optional<CachePathJoin> transition;
+    /** For an interior cut, a unique scalar projection root, not a numerical phase seed. */
+    LC_Interval proofParameter, axisX, axisY, derivativeProjection, firstSign, lastSign;
+    LC_Interval geometryError, clearanceLowerBound;
+    LC_Interval referenceImageDiameter;
+    unsigned referenceDepth = 0;
+};
+struct CachePathEndpoint {
+    std::size_t edge = std::size_t(-1), span = std::size_t(-1);
+    ReferenceEdgeSide side{};
+    ReferenceOccurrenceId occurrence;
+    ReferenceNodeId node;
+    double candidateParameter = 0;
+    LC_Interval geometryError, clearanceLowerBound;
+};
+/** A complete directed path certificate, never a successful local prefix. */
+class CacheTopologyAnalysis {
+public:
+    ~CacheTopologyAnalysis();
+    CacheTopologyAnalysis(const CacheTopologyAnalysis&) = delete;
+    CacheTopologyAnalysis& operator=(const CacheTopologyAnalysis&) = delete;
+    const CacheLayoutResult& layout() const noexcept;
+    const ReferenceComponentAnalysis& reference() const noexcept;
+    const std::vector<std::size_t>& edges() const noexcept;
+    const std::vector<CachePathJoin>& joins() const noexcept;
+    const std::vector<CachePathPiece>& pieces() const noexcept;
+    const std::vector<CachePathEndpoint>& endpoints() const noexcept;
+    bool closed() const noexcept;
+    const std::optional<CachePathCut>& cut() const noexcept;
+    const std::optional<ReferenceTerminal>& startTerminal() const noexcept;
+    const std::optional<ReferenceTerminal>& endTerminal() const noexcept;
+private:
+    friend class CacheTopologyBuilder;
+    struct Impl;
+    explicit CacheTopologyAnalysis(std::unique_ptr<Impl> impl);
+    std::unique_ptr<const Impl> m_impl;
+};
+
 bool isFinite2D(const RS_Vector& point);
 /** Validate raw fields before RS_Ellipse can canonicalize tiny angles. Unchanged on refusal. */
 bool normaliseBasis(RS_EllipseData& basis);
@@ -668,6 +734,26 @@ std::vector<RS_Vector> lensCorners(const RS_EllipseData& basis, double distance)
 /** Analytic nearest-point query with a bounded exterior solve, not a conservative cache-validation proof. */
 double distanceToOriginal(const RS_EllipseData& basis, const RS_Vector& point, double* parameter = nullptr);
 
+} // namespace LC_EllipseOffsetGeometry
+
+struct LC_OffsetCheckResult {
+    enum class Reason {
+        None, InvalidInput, Layout, TooSmall, ReferenceUnresolved, OffCurve,
+        Ambiguous, Topology, LimitExceeded
+    };
+    Reason reason = Reason::InvalidInput;
+    std::size_t span = std::size_t(-1);
+    LC_EllipseOffsetGeometry::CheckWork work{};
+    std::unique_ptr<const LC_EllipseOffsetGeometry::CacheTopologyAnalysis> analysis;
+    explicit operator bool() const noexcept { return reason == Reason::None && bool(analysis); }
+};
+
+namespace LC_EllipseOffsetGeometry {
+/** Validate stored geometry without running the offset materializer or repairing its layout. */
+LC_OffsetCheckResult checkCache(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definition,
+                                double worldTolerance, WorkBudget& budget);
+LC_OffsetCheckResult checkCache(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definition,
+                                double worldTolerance, const LC_OffsetCheckLimits& limits = {});
 } // namespace LC_EllipseOffsetGeometry
 
 #endif

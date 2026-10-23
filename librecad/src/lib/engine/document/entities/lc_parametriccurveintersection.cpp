@@ -1163,9 +1163,16 @@ public:
         return m_roots[index].snapshot;
     }
     const LC_IntersectionWorkStats& work() const { return m_work; }
+    bool hasValidProofs() const noexcept { return m_status != LC_IntersectionStatus::InvalidInput; }
 
-    LC_CertifiedContractionResult contract(const std::size_t index, const LC_CertifiedContractionAllowance& allowance) {
+    LC_CertifiedContractionResult contract(const std::size_t index, const LC_CertifiedContractionAllowance& allowance,
+                                          LC_IntersectionWorkStats* workOnExit) {
         LC_CertifiedContractionResult result;
+        struct ReportWork {
+            const LC_IntersectionWorkStats& work;
+            LC_IntersectionWorkStats* output;
+            ~ReportWork() { if (output) { *output = work; } }
+        } report{result.work, workOnExit};
         if (m_status != LC_IntersectionStatus::Ok) {
             result.status = m_status;
             return result;
@@ -1379,7 +1386,8 @@ private:
     }
     bool validate() {
         if (!(m_options.tolerance > 0.0) || !std::isfinite(m_options.tolerance) ||
-            m_options.maxGeneratedItems == 0) {
+            m_options.maxGeneratedItems == 0 || !std::isfinite(m_options.strictProofDomainPadding) ||
+            m_options.strictProofDomainPadding < 0 || m_options.strictProofDomainPadding > 0.25) {
             return fail(LC_IntersectionStatus::InvalidInput);
         }
         m_sourceSegments = &m_curves.segments();
@@ -1737,8 +1745,9 @@ private:
         result = {};
         result.proofDomain = requested;
         if (inflate) {
-            const auto enlarged = [](const LC_Interval& input, const LC_ParametricSegment& segment) {
-                const double margin = 0.001 * input.hi() - 0.001 * input.lo();
+            const auto enlarged = [padding = m_options.strictProofDomainPadding](const LC_Interval& input,
+                                                                               const LC_ParametricSegment& segment) {
+                const double margin = padding * input.hi() - padding * input.lo();
                 return LC_Interval::hull(std::max(segment.t0, input.lo() - margin),
                                          std::min(segment.t1, input.hi() + margin));
             };
@@ -2270,6 +2279,10 @@ std::size_t LC_CertifiedIntersectionSession::rootCount() const {
     return m_impl ? m_impl->solver.rootCount() : 0;
 }
 
+bool LC_CertifiedIntersectionSession::hasValidProofs() const noexcept {
+    return m_impl && m_impl->solver.hasValidProofs();
+}
+
 LC_CertifiedRootHandle LC_CertifiedIntersectionSession::rootHandle(const std::size_t index) const {
     LC_CertifiedRootHandle handle;
     if (index < rootCount()) {
@@ -2287,11 +2300,13 @@ std::optional<LC_CertifiedRootSnapshot> LC_CertifiedIntersectionSession::snapsho
 }
 
 LC_CertifiedContractionResult LC_CertifiedIntersectionSession::contract(
-    const LC_CertifiedRootHandle& handle, const LC_CertifiedContractionAllowance& allowance) {
+    const LC_CertifiedRootHandle& handle, const LC_CertifiedContractionAllowance& allowance,
+    LC_IntersectionWorkStats* workOnExit) {
+    if (workOnExit) { *workOnExit = {}; }
     if (!m_impl || !m_impl->matches(handle.m_issuer, handle.m_index)) {
         return {};
     }
-    return m_impl->solver.contract(handle.m_index, allowance);
+    return m_impl->solver.contract(handle.m_index, allowance, workOnExit);
 }
 
 const LC_IntersectionWorkStats& LC_CertifiedIntersectionSession::cumulativeWork() const {
@@ -2309,7 +2324,9 @@ LC_CertifiedQueryResult findCertifiedIntersections(
         LC_IntersectionWorkStats* output;
         ~ReportWork() { if (output) { *output = work; } }
     } report{result.work, workOnExit};
-    if (!curves || !(options.tolerance > 0.0) || !std::isfinite(options.tolerance) || options.maxGeneratedItems == 0) {
+    if (!curves || !(options.tolerance > 0.0) || !std::isfinite(options.tolerance) || options.maxGeneratedItems == 0 ||
+        !std::isfinite(options.strictProofDomainPadding) || options.strictProofDomainPadding < 0 ||
+        options.strictProofDomainPadding > 0.25) {
         return result;
     }
     // Two fixed metadata tokens cover the owned session/PIMPL and issuer control block before allocation.

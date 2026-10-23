@@ -449,6 +449,9 @@ HEADERS += \
     lib/engine/document/entities/lc_curvejet.h \
     lib/engine/document/entities/lc_curveoffset.h \
     lib/engine/document/entities/lc_ellipseoffsetgeometry.h \
+    lib/engine/document/entities/lc_offsetcachecontacts.h \
+    lib/engine/document/entities/lc_offsetcontactmatching.h \
+    lib/engine/document/entities/lc_offsetpathsearch.h \
     lib/engine/document/entities/lc_parametriccurveintersection.h \
     lib/engine/document/entities/lc_offsetoutputbudget.h \
     lib/engine/document/entities/lc_offsetresultcheck.h \
@@ -1029,6 +1032,9 @@ SOURCES += \
     lib/engine/document/entities/lc_mleader.cpp \
     lib/engine/document/entities/lc_curveoffset.cpp \
     lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp \
+    lib/engine/document/entities/lc_offsetcachecontacts.cpp \
+    lib/engine/document/entities/lc_offsetcontactmatching.cpp \
+    lib/engine/document/entities/lc_offsetpathsearch.cpp \
     lib/engine/document/entities/lc_parametriccurveintersection.cpp \
     lib/engine/document/entities/lc_offsetoutputbudget.cpp \
     lib/engine/document/entities/lc_offsetresultcheck.cpp \

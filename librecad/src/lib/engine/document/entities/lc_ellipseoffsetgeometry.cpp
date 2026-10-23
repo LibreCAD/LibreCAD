@@ -13,6 +13,9 @@
  ******************************************************************************/
 
 #include "lc_ellipseoffsetgeometry.h"
+#include "lc_offsetcachecontacts.h"
+#include "lc_offsetcontactmatching.h"
+#include "lc_offsetpathsearch.h"
 
 #include <algorithm>
 #include <array>
@@ -538,8 +541,6 @@ bool isFinite2D(const RS_Vector& point) {
 }
 
 namespace {
-struct CacheBezierPoint { LC_Interval x, y; };
-
 bool cacheControlsInFrame(const CacheSpan& span, const ReferenceFrame& frame, const double a, const double b,
                           std::array<CacheBezierPoint, 4>& net) {
     net = {};
@@ -661,6 +662,11 @@ bool cacheDerivativeControlsInFrame(const CacheSpan& span, const ReferenceFrame&
     return true;
 }
 } // namespace
+
+bool boundCacheDerivativeControls(const CacheSpan& span, const ReferenceFrame& frame, const double a, const double b,
+                                 std::array<CacheBezierPoint, 4>& net, std::size_t& degree) {
+    return cacheDerivativeControlsInFrame(span, frame, a, b, net, degree);
+}
 
 bool boundCacheChord(const CacheSpan& span, const ReferenceFrame& frame, const double a, const double b,
                      CurveChordBounds& out) {
@@ -1171,6 +1177,16 @@ LC_AnalyticIntersectionCertificate CriticalAdapter::certifyIntersection(const LC
     } else if (last - first == 1) {
         const auto& proof = m_joins[first];
         excluded = proof.from <= a.lo() && b.hi() <= proof.to;
+    }
+    if (!excluded && a.hi() <= b.lo() && m_regime != CriticalRegime::IntermediateThresholds) {
+        // Constant-sign offset factor (isolated stationary zeros allowed): over less
+        // than half a turn a fixed tangent projection is strictly monotone. This
+        // also covers nonadjacent pieces separated only by a stationary root band.
+        LC_Interval angle;
+        if (m_frame.boundUnwrappedAngle(a.lo(), b.hi(), angle)) {
+            const auto width = LC_Interval::point(angle.hi()) - LC_Interval::point(angle.lo());
+            excluded = finiteInterval(width) && width.hi() < realPi().lo();
+        }
     }
     if (!excluded && m_seam && first == 0 && last == m_segments.size() - 1) {
         excluded = a.hi() <= m_seam->to && m_seam->from <= b.lo();
@@ -2370,6 +2386,37 @@ bool ReferenceProviders::evaluate(const std::size_t segment, const double t,
     if (!boundJet(segment, t, t, bounds) || !jetFromBounds(bounds, seed)) { return false; }
     point = seed.point;
     derivative = seed.first;
+    return true;
+}
+
+bool ReferenceProviders::boundOwnProjectedDerivative(const double a, const double b,
+    const LC_Interval& axisX, const LC_Interval& axisY, LC_Interval& out) const {
+    out = {};
+    if (!finiteInterval(axisX) || !finiteInterval(axisY) || !m_impl->adapters[0]) { return false; }
+    const auto& adapter = *m_impl->adapters[0];
+    LC_CurveJetBounds source;
+    LC_Interval factor, derivative;
+    if (!adapter.frame().boundSourceJet(a, b, source) || !adapter.frame().boundOffsetFactor(a, b, factor, derivative)) {
+        return false;
+    }
+    const auto regime = adapter.regime();
+    if (regime == CriticalRegime::PositiveFactor || regime == CriticalRegime::MinimumStationary) {
+        if (factor.hi() < 0) { return false; }
+        factor = LC_Interval::hull(std::max(0.0, factor.lo()), factor.hi());
+    } else if (regime == CriticalRegime::NegativeFactor || regime == CriticalRegime::MaximumStationary) {
+        if (factor.lo() > 0) { return false; }
+        factor = LC_Interval::hull(factor.lo(), std::min(0.0, factor.hi()));
+    }
+    const auto sourceProjection = source.dx * axisX + source.dy * axisY;
+    auto value = factor * sourceProjection;
+    if (!finiteInterval(value)) { return false; }
+    if ((factor.lo() >= 0 && sourceProjection.lo() >= 0) ||
+        (factor.hi() <= 0 && sourceProjection.hi() <= 0)) {
+        if (value.hi() < 0) { return false; }
+        // Outward multiplication can round a mathematical zero to -denorm_min.
+        value = LC_Interval::hull(std::max(0.0, value.lo()), value.hi());
+    }
+    out = value;
     return true;
 }
 
@@ -4677,6 +4724,989 @@ private:
     LC_Interval m_threshold, m_distance, m_floor;
     CacheLocalTopologyStatus m_status = CacheLocalTopologyStatus::Ok;
 };
+
+struct CacheTopologyAnalysis::Impl {
+    CacheLayoutResult layout;
+    std::unique_ptr<const ReferenceComponentAnalysis> reference;
+    std::vector<std::size_t> edges;
+    std::vector<CachePathJoin> joins;
+    std::vector<CachePathPiece> pieces;
+    std::vector<CachePathEndpoint> endpoints;
+    std::optional<CachePathCut> cut;
+    std::optional<ReferenceTerminal> startTerminal, endTerminal;
+    std::unique_ptr<CacheContactAnalysis> contacts;
+    std::vector<CacheContactPort> contactPorts;
+    std::vector<CacheContactMatch> contactMatches;
+    bool closed = false;
+};
+
+class CacheTopologyBuilder {
+public:
+    using Reason = LC_OffsetCheckResult::Reason;
+    static LC_OffsetCheckResult run(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definition,
+                                    const double tolerance, WorkBudget& budget);
+
+private:
+    static constexpr std::size_t none = std::size_t(-1);
+    static constexpr unsigned seedRefinements = 48;
+    struct Position {
+        std::size_t span = 0;
+        double parameter = 0;
+        unsigned depth = 0;
+    };
+    struct Section {
+        std::size_t edge = none;
+        LC_Interval reference;
+        bool sourceStart = true, sourceEnd = true;
+        unsigned referenceDepth = 0;
+        bool startsAtCut = false, endsAtCut = false;
+    };
+    struct Packet {
+        std::vector<CachePathPiece> pieces;
+        std::vector<CachePathEndpoint> endpoints;
+        std::optional<CachePathCut> cut;
+        std::optional<ReferenceTerminal> startTerminal, endTerminal;
+        std::vector<CacheContactPort> contactPorts;
+        std::vector<CacheContactMatch> contactMatches;
+    };
+    struct Cell {
+        std::size_t span = none, edge = none;
+        LC_Interval candidate, reference;
+        unsigned candidateDepth = 0, referenceDepth = 0;
+        bool startsAtCut = false, endsAtCut = false;
+    };
+
+    CacheTopologyBuilder(WorkBudget& budget, const LC_EllipseOffsetDefinition& definition,
+                         const double tolerance, std::unique_ptr<CacheTopologyAnalysis::Impl> data)
+        : m_budget{budget}, m_reversed{definition.cacheReversed}, m_circle{definition.basis.ratio == 1}, m_data{std::move(data)},
+          m_reference{*m_data->reference}, m_frame{m_reference.events().providers().frame()} {
+        const auto scale = LC_Interval::point(m_frame.scale());
+        m_threshold = LC_Interval::point(2) * LC_Interval::point(tolerance) / scale;
+        m_distance = LC_Interval::point(definition.distance) / scale;
+        m_floor = (LC_Interval::point(definition.distance) -
+            LC_Interval::point(2.5) * LC_Interval::point(tolerance)) / scale;
+    }
+    bool limit() { m_budget.latchLimitExceeded(); return false; }
+    bool pair() { return m_budget.consumePairs(1) || limit(); }
+    bool ordering(const std::size_t count = 1) { return m_budget.consumeOrderingComparisons(count) || limit(); }
+    bool vertices(const std::size_t count) { return m_budget.consumeVertices(count) || limit(); }
+    template<typename T> bool room(std::vector<T>& values, const std::size_t count = 1) {
+        return (count <= m_budget.remainingVertices() && reserveAdditional(values, count, m_budget)) || limit();
+    }
+    CacheSpan orientedSpan(const std::size_t span) const {
+        auto out = m_data->layout.spans[rawSpan(span)];
+        if (m_reversed) { std::reverse(out.controls.begin(), out.controls.begin() + out.degree + 1); }
+        return out;
+    }
+    std::size_t rawSpan(const std::size_t span) const {
+        return m_reversed ? m_data->layout.spanCount() - 1 - span : span;
+    }
+    static double middle(const LC_Interval& value) { return value.lo() + (value.hi() - value.lo()) / 2; }
+    bool cachePoint(const Position& position, RS_Vector& point) {
+        if (!pair()) { return false; }
+        CurveChordBounds bound;
+        if (!boundCacheChord(orientedSpan(position.span), m_frame, position.parameter, position.parameter, bound)) {
+            return false;
+        }
+        point = {middle(bound.startX), middle(bound.startY)};
+        return isFinite2D(point);
+    }
+    bool before(const Position& a, const Position& b) {
+        if (!pair()) { return false; }
+        return a.span < b.span || (a.span == b.span && a.parameter < b.parameter);
+    }
+    bool addTransition(const CachePathJoin& join) {
+        if (!pair()) { return false; }
+        if (join.outgoing >= m_reference.edges().size() ||
+            join.from.value >= m_reference.occurrenceIncidence().size() ||
+            join.to.value >= m_reference.occurrenceIncidence().size()) { m_invalidGraph = true; return false; }
+        const auto& next = m_reference.spans()[m_reference.edges()[join.outgoing].span];
+        if (next.start.value != join.to.value) { m_invalidGraph = true; return false; }
+        for (std::size_t i = m_offsets.back(); i < m_successors.size(); ++i) {
+            if (!pair()) { return false; }
+            const auto& old = m_successors[i];
+            if (old.outgoing == join.outgoing && old.from.value == join.from.value && old.to.value == join.to.value &&
+                old.kind == join.kind && old.pairEvent == join.pairEvent) { return true; }
+        }
+        if (!room(m_successors) || !vertices(1)) { return false; }
+        m_successors.push_back(join);
+        return true;
+    }
+    bool transitions() {
+        const auto count = m_reference.edges().size();
+        if (count == std::numeric_limits<std::size_t>::max() || !room(m_offsets, count + 1) ||
+            !vertices(count + 1)) { return limit(); }
+        m_offsets.push_back(0);
+        const auto& events = m_reference.events();
+        for (std::size_t e = 0; e < count; ++e) {
+            if (!pair()) { return false; }
+            const auto& span = m_reference.spans()[m_reference.edges()[e].span];
+            const auto own = span.end;
+            const auto next = m_reference.occurrenceIncidence()[own.value].outgoing;
+            if (next != none && !addTransition({CachePathJoinKind::SourceContinuation, e, next, own, own, none})) {
+                return false;
+            }
+            for (std::size_t p = 0; p < events.pairs().size(); ++p) {
+                if (!pair()) { return false; }
+                const auto& event = events.pairs()[p];
+                if (event.first.value != own.value && event.second.value != own.value) { continue; }
+                const auto partner = event.first.value == own.value ? event.second : event.first;
+                if (events.occurrences()[partner.value].role != ReferenceRole::Own) { continue; }
+                const auto outgoing = m_reference.occurrenceIncidence()[partner.value].outgoing;
+                if (outgoing != none && !addTransition({CachePathJoinKind::PairEvent, e, outgoing, own, partner, p})) {
+                    return false;
+                }
+            }
+            if (events.seam()) {
+                if (!pair()) { return false; }
+                const auto& seam = *events.seam();
+                if (own.value == seam.end.value) {
+                    const auto outgoing = m_reference.occurrenceIncidence()[seam.start.value].outgoing;
+                    if (outgoing != none && !addTransition({CachePathJoinKind::Seam, e, outgoing, own, seam.start, none})) {
+                        return false;
+                    }
+                }
+            }
+            m_offsets.push_back(m_successors.size());
+        }
+        return true;
+    }
+    bool savePacket(Packet packet) {
+        if (++m_successes == 2) { return false; }
+        if (!room(m_data->edges, m_route.size()) || !room(m_data->joins, m_routeJoins.size()) ||
+            m_route.size() > m_budget.remainingVertices() ||
+            m_routeJoins.size() > m_budget.remainingVertices() - m_route.size() ||
+            !vertices(m_route.size() + m_routeJoins.size())) { return false; }
+        m_data->edges.assign(m_route.begin(), m_route.end());
+        m_data->joins.assign(m_routeJoins.begin(), m_routeJoins.end());
+        m_data->pieces = std::move(packet.pieces); m_data->endpoints = std::move(packet.endpoints);
+        m_data->cut = packet.cut; m_data->startTerminal = packet.startTerminal; m_data->endTerminal = packet.endTerminal;
+        m_data->contactPorts = std::move(packet.contactPorts);
+        m_data->contactMatches = std::move(packet.contactMatches);
+        return true;
+    }
+    bool examineRoute() {
+        if (!pair()) { return false; }
+        Packet packet;
+        auto reason = Reason::None;
+        if (!m_data->closed) {
+            const auto section = [&](const std::size_t edge) {
+                return Section{edge, m_reference.spans()[m_reference.edges()[edge].span].interior};
+            };
+            reason = endpoint(section(m_route.front()), true, {0, 0, 0}, packet, false);
+            if (reason == Reason::None) {
+                reason = endpoint(section(m_route.back()), false, {m_data->layout.spanCount()-1, 1, 0}, packet, false);
+            }
+        }
+        if (reason == Reason::None) { reason = qualifyContacts(); }
+        if (reason == Reason::None) { reason = proveRoute(packet); }
+        if (reason == Reason::None && m_data->contacts && m_data->contacts->contactCount() != 0) {
+            reason = qualifyContacts(&packet);
+        }
+        if (m_budget.status() != BudgetStatus::Ok) { return false; }
+        if (reason == Reason::None) { return savePacket(std::move(packet)); }
+        m_unresolved = m_unresolved || reason == Reason::Ambiguous;
+        return true;
+    }
+    bool search() {
+        if (!transitions()) { return false; }
+        const auto count = m_reference.edges().size();
+        std::vector<std::uint8_t> starts, ends;
+        if (!m_data->closed) {
+            if (count > m_budget.remainingVertices()/2 || !room(starts, count) || !room(ends, count) ||
+                !vertices(2*count)) { return limit(); }
+            for (std::size_t edge = 0; edge < count; ++edge) {
+                if (!pair()) { return false; }
+                starts.push_back(m_reference.terminal(edge, ReferenceEdgeSide::Start) != nullptr);
+                ends.push_back(m_reference.terminal(edge, ReferenceEdgeSide::End) != nullptr);
+            }
+        }
+        const auto searched = searchOffsetPaths({m_offsets, m_successors, starts, ends, count, m_data->closed},
+            m_budget, [&](const OffsetPathRouteView& route) {
+                if (route.edges.size() > m_budget.remainingVertices() ||
+                    route.joins.size() > m_budget.remainingVertices()-route.edges.size() ||
+                    !room(m_route, route.edges.size()) || !room(m_routeJoins, route.joins.size()) ||
+                    !vertices(route.edges.size()+route.joins.size())) {
+                    limit(); return OffsetPathVisit::Stop;
+                }
+                m_route.assign(route.edges.begin(), route.edges.end());
+                m_routeJoins.assign(route.joins.begin(), route.joins.end());
+                return examineRoute() ? OffsetPathVisit::Continue : OffsetPathVisit::Stop;
+            });
+        return searched.status == OffsetPathSearchStatus::Exhausted;
+    }
+    Reason proveRoute(Packet& packet);
+    bool nearestReference(const RS_Vector& point, const Section& section, double& parameter);
+    bool nearestCandidate(const RS_Vector& localPoint, const Position& from, Position& position);
+    Reason matchSection(const Section& section, const Position& from, const Position& to, Packet& packet);
+    Reason matchCell(const Cell& cell, Packet& packet);
+    Reason endpoint(const Section& section, bool start, const Position& candidate, Packet& packet, bool retain = true);
+    Reason separatedPoint(const Position& position);
+    Reason qualifyContacts(Packet* packet = nullptr);
+    Reason certifyPhaseCut(CachePathCut& cut, double seed);
+
+    WorkBudget& m_budget;
+    bool m_reversed;
+    bool m_circle;
+    std::unique_ptr<CacheTopologyAnalysis::Impl> m_data;
+    const ReferenceComponentAnalysis& m_reference;
+    const ReferenceFrame& m_frame;
+    LC_Interval m_threshold, m_distance, m_floor;
+    std::vector<std::size_t> m_offsets, m_route;
+    std::vector<CachePathJoin> m_successors, m_routeJoins;
+    std::vector<std::array<LC_Interval, 2>> m_virtualSplits;
+    std::size_t m_successes = 0, m_failureSpan = none;
+    bool m_unresolved = false, m_invalidGraph = false;
+    std::optional<LC_IntersectionStatus> m_contactStatus;
+};
+
+bool CacheTopologyBuilder::nearestReference(const RS_Vector& point, const Section& section, double& parameter) {
+    const double low = section.reference.lo(), high = section.reference.hi();
+    if (!(low < high) || !isFinite2D(point)) { return false; }
+    const auto score = [&](const double t, double& value) {
+        if (!pair()) { return false; }
+        LC_CurveJet jet;
+        if (!m_frame.offsetJet(t, jet)) { return false; }
+        const double x = jet.point.x - point.x, y = jet.point.y - point.y;
+        value = x * x + y * y;
+        return std::isfinite(value);
+    };
+    constexpr unsigned seeds = 32;
+    double best = std::numeric_limits<double>::infinity();
+    unsigned bestSeed = 0;
+    for (unsigned i = 0; i <= seeds; ++i) {
+        const double t = i == seeds ? high : low + (high - low) * (double(i) / seeds);
+        double value;
+        if (!score(t, value)) { return false; }
+        if (!ordering()) { return false; }
+        if (value < best) { best = value; bestSeed = i; parameter = t; }
+    }
+    double a = low + (high - low) * (double(bestSeed == 0 ? 0 : bestSeed - 1) / seeds);
+    double b = bestSeed == seeds ? high : low + (high - low) * (double(bestSeed + 1) / seeds);
+    for (unsigned i = 0; i < seedRefinements; ++i) {
+        const double left = a + (b - a) / 3, right = b - (b - a) / 3;
+        if (!(a < left && left < right && right < b)) { break; }
+        double first, second;
+        if (!score(left, first) || !score(right, second)) { return false; }
+        if (!ordering(3)) { return false; }
+        if (first < best) { best = first; parameter = left; }
+        if (second < best) { best = second; parameter = right; }
+        if (first < second) { b = right; } else { a = left; }
+    }
+    // Numerical minimization proposes a cut only. Every accepted subcurve is bounded again.
+    return std::isfinite(parameter) && low <= parameter && parameter <= high;
+}
+
+bool CacheTopologyBuilder::nearestCandidate(const RS_Vector& point, const Position& from, Position& position) {
+    constexpr unsigned seeds = 8;
+    const auto count = m_data->layout.spanCount();
+    double best = std::numeric_limits<double>::infinity();
+    unsigned bestSeed = 0;
+    double bestLow = 0;
+    const auto score = [&](const std::size_t span, const double u, double& value) {
+        RS_Vector candidate;
+        if (!cachePoint({span, u, 0}, candidate)) { return false; }
+        const double x = candidate.x - point.x, y = candidate.y - point.y;
+        value = x * x + y * y;
+        return std::isfinite(value);
+    };
+    for (std::size_t span = from.span; span < count; ++span) {
+        if (!pair()) { return false; }
+        const double low = span == from.span ? from.parameter : 0;
+        for (unsigned i = 0; i <= seeds; ++i) {
+            const double u = i == seeds ? 1 : low + (1 - low) * (double(i) / seeds);
+            double value;
+            if (!score(span, u, value)) { return false; }
+            if (!ordering()) { return false; }
+            if (value < best) { best = value; position = {span, u, 0}; bestSeed = i; bestLow = low; }
+        }
+    }
+    double a = bestLow + (1 - bestLow) * (double(bestSeed == 0 ? 0 : bestSeed - 1) / seeds);
+    double b = bestSeed == seeds ? 1 : bestLow + (1 - bestLow) * (double(bestSeed + 1) / seeds);
+    for (unsigned i = 0; i < seedRefinements; ++i) {
+        const double left = a + (b - a) / 3, right = b - (b - a) / 3;
+        if (!(a < left && left < right && right < b)) { break; }
+        double first, second;
+        if (!score(position.span, left, first) || !score(position.span, right, second)) { return false; }
+        if (!ordering(3)) { return false; }
+        if (first < best) { best = first; position.parameter = left; }
+        if (second < best) { best = second; position.parameter = right; }
+        if (first < second) { b = right; } else { a = left; }
+    }
+    constexpr double grid = 0x1p20;
+    position.parameter = std::round(position.parameter * grid) / grid;
+    if (position.span == from.span) { position.parameter = std::max(from.parameter, position.parameter); }
+    if (position.parameter == 1 && position.span + 1 < count) { ++position.span; position.parameter = 0; }
+    if (position.parameter == 0 || position.parameter == 1) { position.depth = 0; }
+    else {
+        const auto depth = position.span == from.span ? from.depth : 0;
+        if (depth >= m_budget.depthLimit()) { return limit(); }
+        position.depth = depth + 1;
+    }
+    return std::isfinite(best) && position.depth <= m_budget.depthLimit();
+}
+
+CacheTopologyBuilder::Reason CacheTopologyBuilder::matchCell(const Cell& root, Packet& packet) {
+    std::vector<Cell> pending;
+    if (root.candidateDepth > m_budget.depthLimit() ||
+        root.referenceDepth > m_budget.depthLimit() - root.candidateDepth) { limit(); return Reason::LimitExceeded; }
+    const auto splits = std::min({std::size_t((m_budget.depthLimit() - root.candidateDepth - root.referenceDepth) / 2),
+        m_budget.remainingPieces() / 2, m_budget.remainingPairs(),
+        m_budget.remainingVertices() == 0 ? 0 : (m_budget.remainingVertices() - 1) / 4});
+    if (!room(pending, splits + 1) || !vertices(1)) { return Reason::LimitExceeded; }
+    pending.push_back(root);
+    const auto span = orientedSpan(root.span);
+    while (!pending.empty()) {
+        if (!pair()) { return Reason::LimitExceeded; }
+        const auto cell = pending.back(); pending.pop_back();
+        if (!m_budget.checkDepth(cell.candidateDepth, cell.referenceDepth)) { return Reason::LimitExceeded; }
+        auto proof = proveCachePair(span, m_frame, cell.candidate, cell.reference,
+            CacheWitnessKind::Interior, {}, {}, LC_Interval::point(0), m_threshold, m_distance, m_floor);
+        if (proof.disposition == CachePairDisposition::Invalid || proof.disposition == CachePairDisposition::Separated) {
+            return Reason::Ambiguous;
+        }
+        if (cell.startsAtCut || cell.endsAtCut) {
+            if ((cell.startsAtCut && cell.endsAtCut) || !packet.cut || packet.cut->transition ||
+                packet.cut->edge != cell.edge || !pair()) {
+                return Reason::Ambiguous;
+            }
+            LC_CurveJetBounds cut;
+            const auto& root = packet.cut->referenceParameter;
+            if (!m_frame.boundOffsetJet(root.lo(), root.hi(), cut)) { return Reason::Ambiguous; }
+            // The actual endpoint is a unique root inside this box. The extra
+            // diameter bounds Hausdorff distance from the enclosing curve to ANY
+            // actual root-bounded subcurve, not just to the larger enclosing set.
+            proof.geometryError = proof.geometryError + packet.cut->referenceImageDiameter;
+            proof.clearance = m_distance - proof.geometryError;
+            if (!finiteInterval(proof.geometryError) || !finiteInterval(proof.clearance)) { return Reason::Ambiguous; }
+            proof.disposition = proof.geometryError.hi() <= m_threshold.lo() && proof.clearance.lo() >= m_floor.hi()
+                ? CachePairDisposition::Within : CachePairDisposition::Refine;
+            if (cell.startsAtCut) { proof.reference.startX = cut.x; proof.reference.startY = cut.y; }
+            if (cell.endsAtCut) { proof.reference.endX = cut.x; proof.reference.endY = cut.y; }
+        }
+        const auto endpointError = [](const LC_Interval& ax, const LC_Interval& ay,
+                                      const LC_Interval& bx, const LC_Interval& by) {
+            return sqrt(sqr(ax - bx) + sqr(ay - by));
+        };
+        if (!pair()) { return Reason::LimitExceeded; }
+        const auto startError = endpointError(proof.candidate.startX, proof.candidate.startY,
+            proof.reference.startX, proof.reference.startY);
+        const auto endError = endpointError(proof.candidate.endX, proof.candidate.endY,
+            proof.reference.endX, proof.reference.endY);
+        if (!finiteInterval(startError) || !finiteInterval(endError)) { return Reason::Ambiguous; }
+        const auto axisX = LC_Interval::point(middle(proof.candidate.endX) - middle(proof.candidate.startX));
+        const auto axisY = LC_Interval::point(middle(proof.candidate.endY) - middle(proof.candidate.startY));
+        const auto length = sqr(axisX) + sqr(axisY);
+        bool candidateForward = false, referenceForward = false;
+        if (finiteInterval(length) && length.lo() > 0) {
+            if (!pair()) { return Reason::LimitExceeded; }
+            std::array<CacheBezierPoint, 4> derivatives;
+            std::size_t degree = 0;
+            if (!boundCacheDerivativeControls(span, m_frame, cell.candidate.lo(), cell.candidate.hi(), derivatives, degree)) {
+                return Reason::Ambiguous;
+            }
+            bool nonnegative = true, positive = false;
+            for (std::size_t i = 0; i <= degree; ++i) {
+                const bool zero = derivatives[i].x.lo() == 0 && derivatives[i].x.hi() == 0 &&
+                    derivatives[i].y.lo() == 0 && derivatives[i].y.hi() == 0;
+                const auto value = zero ? LC_Interval::point(0) : derivatives[i].x * axisX + derivatives[i].y * axisY;
+                if (!finiteInterval(value)) { return Reason::Ambiguous; }
+                nonnegative = nonnegative && value.lo() >= 0; positive = positive || value.lo() > 0;
+            }
+            candidateForward = nonnegative && positive;
+            if (!pair()) { return Reason::LimitExceeded; }
+            LC_Interval projection;
+            if (!m_reference.events().providers().boundOwnProjectedDerivative(
+                cell.reference.lo(), cell.reference.hi(), axisX, axisY, projection)) {
+                return Reason::Ambiguous;
+            }
+            const auto first = proof.reference.startX * axisX + proof.reference.startY * axisY;
+            const auto last = proof.reference.endX * axisX + proof.reference.endY * axisY;
+            referenceForward = finiteInterval(projection) && finiteInterval(first) && finiteInterval(last) &&
+                projection.lo() >= 0 && last.lo() > first.hi();
+        }
+        if (proof.disposition == CachePairDisposition::Within && startError.hi() <= m_threshold.lo() &&
+            endError.hi() <= m_threshold.lo() && candidateForward && referenceForward) {
+            if (!room(packet.pieces) || !vertices(1)) { return Reason::LimitExceeded; }
+            packet.pieces.push_back({rawSpan(cell.span), cell.span, cell.edge, cell.candidate, cell.reference,
+                cell.candidateDepth, cell.referenceDepth, proof.geometryError, proof.clearance, cell.startsAtCut, cell.endsAtCut});
+            continue;
+        }
+        if (cell.candidateDepth > m_budget.depthLimit() ||
+            cell.referenceDepth > m_budget.depthLimit() - cell.candidateDepth ||
+            m_budget.depthLimit() - cell.candidateDepth - cell.referenceDepth < 2) {
+            limit(); return Reason::LimitExceeded;
+        }
+        const double candidateMid = middle(cell.candidate);
+        double referenceMid = middle(cell.reference);
+        if (!(cell.candidate.lo() < candidateMid && candidateMid < cell.candidate.hi()) ||
+            !(cell.reference.lo() < referenceMid && referenceMid < cell.reference.hi())) { return Reason::Ambiguous; }
+        RS_Vector point;
+        if (!cachePoint({cell.span, candidateMid, cell.candidateDepth}, point) ||
+            !nearestReference(point, {cell.edge, cell.reference, false, false}, referenceMid)) { return Reason::Ambiguous; }
+        const auto safeLow = cell.startsAtCut ? packet.cut->referenceParameter.hi() : cell.reference.lo();
+        const auto safeHigh = cell.endsAtCut ? packet.cut->referenceParameter.lo() : cell.reference.hi();
+        if (!(safeLow < safeHigh)) { return Reason::Ambiguous; }
+        if (!(safeLow < referenceMid && referenceMid < safeHigh)) { referenceMid = safeLow + (safeHigh-safeLow)/2; }
+        if (!(safeLow < referenceMid && referenceMid < safeHigh)) { return Reason::Ambiguous; }
+        if (pending.size() > pending.max_size() - 2 || pending.size() + 2 > pending.capacity() ||
+            !m_budget.adoptWork({2, 4, 0, 0, 0})) { limit(); return Reason::LimitExceeded; }
+        Cell left = cell, right = cell;
+        left.candidate = LC_Interval::hull(cell.candidate.lo(), candidateMid);
+        right.candidate = LC_Interval::hull(candidateMid, cell.candidate.hi());
+        left.reference = LC_Interval::hull(cell.reference.lo(), referenceMid);
+        right.reference = LC_Interval::hull(referenceMid, cell.reference.hi());
+        left.endsAtCut = false; right.startsAtCut = false;
+        ++left.candidateDepth; ++right.candidateDepth; ++left.referenceDepth; ++right.referenceDepth;
+        pending.push_back(right); pending.push_back(left);
+    }
+    return Reason::None;
+}
+
+CacheTopologyBuilder::Reason CacheTopologyBuilder::endpoint(const Section& section, const bool start,
+                                                            const Position& candidate, Packet& packet, const bool retain) {
+    if ((start && !section.sourceStart) || (!start && !section.sourceEnd)) { return Reason::None; }
+    const auto& edge = m_reference.edges()[section.edge];
+    const auto& span = m_reference.spans()[edge.span];
+    const auto occurrence = start ? span.start : span.end;
+    const auto node = start ? edge.start : edge.end;
+    const ReferenceFringe* fringe = nullptr;
+    for (const auto& item : m_reference.fringes()) {
+        if (!pair()) { return Reason::LimitExceeded; }
+        if (item.occurrence.value != occurrence.value) { continue; }
+        if (fringe) { return Reason::ReferenceUnresolved; }
+        fringe = &item;
+    }
+    if (!fringe) { return Reason::ReferenceUnresolved; }
+    auto position = candidate;
+    if (!start && position.parameter == 0 && position.span != 0) { --position.span; position.parameter = 1; }
+    const auto& point = m_reference.events().nodes()[node.value];
+    if (!pair()) { return Reason::LimitExceeded; }
+    const auto error = sqrt(sqr(fringe->localX - point.localX) + sqr(fringe->localY - point.localY));
+    if (!finiteInterval(error)) { return Reason::Ambiguous; }
+    const auto proof = proveCachePair(orientedSpan(position.span), m_frame, LC_Interval::point(position.parameter),
+        fringe->parameter, start ? CacheWitnessKind::StartFringe : CacheWitnessKind::EndFringe,
+        point.localX, point.localY, LC_Interval::hull(0, error.hi()), m_threshold, m_distance, m_floor);
+    if (proof.disposition != CachePairDisposition::Within) {
+        if (m_failureSpan == none) { m_failureSpan = rawSpan(position.span); }
+        const bool fixedEnd = (candidate.span == 0 && candidate.parameter == 0) ||
+            (candidate.span + 1 == m_data->layout.spanCount() && candidate.parameter == 1);
+        return fixedEnd && proof.disposition == CachePairDisposition::Separated ? Reason::Topology : Reason::Ambiguous;
+    }
+    if (!retain) { return Reason::None; }
+    if (!room(packet.endpoints) || !vertices(1)) { return Reason::LimitExceeded; }
+    packet.endpoints.push_back({section.edge, rawSpan(position.span), start ? ReferenceEdgeSide::Start : ReferenceEdgeSide::End,
+        occurrence, node, position.parameter, proof.geometryError, proof.clearance});
+    return Reason::None;
+}
+
+CacheTopologyBuilder::Reason CacheTopologyBuilder::matchSection(const Section& section, const Position& from,
+                                                                const Position& to, Packet& packet) {
+    auto reason = endpoint(section, true, from, packet);
+    if (reason != Reason::None) { return reason; }
+    std::vector<Cell> roots;
+    if (to.span < from.span || !room(roots, to.span - from.span + 1)) { return Reason::LimitExceeded; }
+    double reference = section.reference.lo();
+    for (std::size_t span = from.span; span <= to.span; ++span) {
+        if (!pair()) { return Reason::LimitExceeded; }
+        const double low = span == from.span ? from.parameter : 0;
+        const double high = span == to.span ? to.parameter : 1;
+        if (low == high) { continue; }
+        if (!(low < high)) { return Reason::Ambiguous; }
+        const bool last = span == to.span || (span + 1 == to.span && to.parameter == 0);
+        double end = section.reference.hi();
+        if (!last) {
+            RS_Vector point;
+            if (!cachePoint({span, high, 0}, point) ||
+                !nearestReference(point, {section.edge, LC_Interval::hull(reference, section.reference.hi()), false, false}, end)) {
+                return Reason::Ambiguous;
+            }
+        }
+        if (!(reference < end)) { return Reason::Ambiguous; }
+        const auto depth = std::max(span == from.span ? from.depth : 0, span == to.span ? to.depth : 0);
+        if (!vertices(1)) { return Reason::LimitExceeded; }
+        roots.push_back({span, section.edge, LC_Interval::hull(low, high), LC_Interval::hull(reference, end), depth, 0});
+        reference = end;
+    }
+    if (roots.empty() || reference != section.reference.hi()) { return Reason::Topology; }
+    roots.front().startsAtCut = section.startsAtCut;
+    roots.back().endsAtCut = section.endsAtCut;
+    if (section.startsAtCut && roots.front().reference.hi() <= packet.cut->referenceParameter.hi()) { return Reason::Ambiguous; }
+    if (section.endsAtCut && roots.back().reference.lo() >= packet.cut->referenceParameter.lo()) { return Reason::Ambiguous; }
+    struct Partition { std::size_t begin, end; unsigned depth; };
+    std::vector<Partition> pending;
+    if (!reserveProofQueue(pending, 0, section.referenceDepth, m_budget) || !vertices(1)) {
+        return Reason::LimitExceeded;
+    }
+    pending.push_back({0, roots.size(), section.referenceDepth});
+    while (!pending.empty()) {
+        if (!pair()) { return Reason::LimitExceeded; }
+        const auto range = pending.back(); pending.pop_back();
+        unsigned candidateDepth = 0;
+        for (std::size_t i = range.begin; i < range.end; ++i) {
+            if (!pair()) { return Reason::LimitExceeded; }
+            candidateDepth = std::max(candidateDepth, roots[i].candidateDepth);
+        }
+        if (!m_budget.checkDepth(candidateDepth, range.depth)) { return Reason::LimitExceeded; }
+        if (range.end - range.begin == 1) { roots[range.begin].referenceDepth = range.depth; continue; }
+        if (range.depth >= m_budget.depthLimit() || pending.size() > pending.max_size() - 2 ||
+            pending.size() + 2 > pending.capacity() || !m_budget.admitSubdivision(SubdivisionKind::Proof)) {
+            limit(); return Reason::LimitExceeded;
+        }
+        const auto mid = range.begin + (range.end - range.begin) / 2;
+        pending.push_back({mid, range.end, range.depth + 1});
+        pending.push_back({range.begin, mid, range.depth + 1});
+    }
+    for (const auto& root : roots) {
+        if (!pair()) { return Reason::LimitExceeded; }
+        reason = matchCell(root, packet);
+        if (reason != Reason::None) {
+            if (m_failureSpan == none) { m_failureSpan = rawSpan(root.span); }
+            return reason;
+        }
+    }
+    return endpoint(section, false, to, packet);
+}
+
+CacheTopologyBuilder::Reason CacheTopologyBuilder::separatedPoint(const Position& position) {
+    if (!pair()) { return Reason::LimitExceeded; }
+    CurveChordBounds candidate;
+    if (!boundCacheChord(orientedSpan(position.span), m_frame, position.parameter, position.parameter, candidate)) {
+        return Reason::Ambiguous;
+    }
+    const RS_Vector point{middle(candidate.startX), middle(candidate.startY)};
+    struct Probe { LC_Interval parameter; unsigned depth; };
+    for (std::size_t e = 0; e < m_reference.edges().size(); ++e) {
+        if (!pair()) { return Reason::LimitExceeded; }
+        const auto& span = m_reference.spans()[m_reference.edges()[e].span];
+        double seed = middle(span.interior);
+        if (!nearestReference(point, {e, span.interior}, seed)) { return Reason::Ambiguous; }
+        LC_CurveJetBounds near;
+        if (!pair()) { return Reason::LimitExceeded; }
+        if (!m_frame.boundOffsetJet(seed, seed, near)) { return Reason::Ambiguous; }
+        const auto upper = sqrt(sqr(candidate.startX - near.x) + sqr(candidate.startY - near.y));
+        if (!finiteInterval(upper)) { return Reason::Ambiguous; }
+        if (upper.hi() <= m_threshold.lo()) { return Reason::None; }
+        std::vector<Probe> pending;
+        if (!reserveProofQueue(pending, position.depth, 0, m_budget) || !vertices(1)) { return Reason::LimitExceeded; }
+        const auto& occurrences = m_reference.events().occurrences();
+        // This is a superset of the visible edge, including both full root enclosures.
+        pending.push_back({LC_Interval::hull(occurrences[span.start.value].parameter.lo(),
+            occurrences[span.end.value].parameter.hi()), 0});
+        while (!pending.empty()) {
+            if (!pair()) { return Reason::LimitExceeded; }
+            const auto probe = pending.back(); pending.pop_back();
+            if (!m_budget.checkDepth(position.depth, probe.depth)) { return Reason::LimitExceeded; }
+            LC_CurveJetBounds reference;
+            LC_Interval lower;
+            if (!m_frame.boundOffsetJet(probe.parameter.lo(), probe.parameter.hi(), reference) ||
+                !boxDistance(candidate.startX, candidate.startY, reference.x, reference.y, lower)) {
+                return Reason::Ambiguous;
+            }
+            if (lower.lo() > m_threshold.hi()) { continue; }
+            // A negative probe may remain inconclusive; it is never a mandatory acceptance gate.
+            if (probe.depth >= m_budget.depthLimit() - position.depth) { return Reason::Ambiguous; }
+            const double mid = middle(probe.parameter);
+            if (!(probe.parameter.lo() < mid && mid < probe.parameter.hi())) { return Reason::Ambiguous; }
+            if (pending.size() > pending.max_size() - 2 || pending.size() + 2 > pending.capacity() ||
+                !m_budget.admitSubdivision(SubdivisionKind::Proof)) { limit(); return Reason::LimitExceeded; }
+            pending.push_back({LC_Interval::hull(mid, probe.parameter.hi()), probe.depth + 1});
+            pending.push_back({LC_Interval::hull(probe.parameter.lo(), mid), probe.depth + 1});
+        }
+    }
+    if (m_failureSpan == none) { m_failureSpan = rawSpan(position.span); }
+    return Reason::OffCurve;
+}
+
+CacheTopologyBuilder::Reason CacheTopologyBuilder::proveRoute(Packet& packet) {
+    if (m_route.empty()) { return Reason::Topology; }
+    std::vector<Section> sections;
+    if (m_route.size() == std::numeric_limits<std::size_t>::max() || !room(sections, m_route.size() + 1)) {
+        return Reason::LimitExceeded;
+    }
+    const auto append = [&](const std::size_t index, const LC_Interval& parameter, const bool start,
+                             const bool end, const unsigned depth, const bool startsAtCut = false,
+                             const bool endsAtCut = false) {
+        if (!vertices(1)) { return false; }
+        sections.push_back({m_route[index], parameter, start, end, depth, startsAtCut, endsAtCut});
+        return true;
+    };
+    const auto referenceSpan = [&](const std::size_t index) -> const ReferenceSpan& {
+        return m_reference.spans()[m_reference.edges()[m_route[index]].span];
+    };
+    if (!m_data->closed) {
+        for (std::size_t i = 0; i < m_route.size(); ++i) {
+            if (!pair() || !append(i, referenceSpan(i).interior, true, true, 0)) { return Reason::LimitExceeded; }
+        }
+        const auto* start = m_reference.terminal(m_route.front(), ReferenceEdgeSide::Start);
+        const auto* end = m_reference.terminal(m_route.back(), ReferenceEdgeSide::End);
+        if (!start || !end) { return Reason::Topology; }
+        if (!vertices(2)) { return Reason::LimitExceeded; }
+        packet.startTerminal = *start; packet.endTerminal = *end;
+    } else {
+        RS_Vector first;
+        if (!cachePoint({0, 0, 0}, first)) { return Reason::Ambiguous; }
+        double best = std::numeric_limits<double>::infinity(), phase = 0;
+        std::size_t index = 0, nodeIndex = none;
+        double nodeScore = std::numeric_limits<double>::infinity();
+        for (std::size_t i = 0; i < m_route.size(); ++i) {
+            if (!pair()) { return Reason::LimitExceeded; }
+            double t = middle(referenceSpan(i).interior);
+            if (!nearestReference(first, {m_route[i], referenceSpan(i).interior}, t)) { return Reason::Ambiguous; }
+            LC_CurveJet value;
+            if (!pair()) { return Reason::LimitExceeded; }
+            if (!m_frame.offsetJet(t, value)) { return Reason::Ambiguous; }
+            const double x = value.point.x - first.x, y = value.point.y - first.y;
+            const double score = x * x + y * y;
+            if (!ordering(2)) { return Reason::LimitExceeded; }
+            if (score < best) { best = score; index = i; phase = t; }
+            const auto& node = m_reference.events().nodes()[m_reference.edges()[m_route[i]].start.value];
+            const double nx = middle(node.localX) - first.x, ny = middle(node.localY) - first.y;
+            const double distance = nx * nx + ny * ny;
+            if (distance < nodeScore) { nodeScore = distance; nodeIndex = i; }
+        }
+        const double snap = m_threshold.lo() / 32;
+        const bool atNode = nodeIndex != none && nodeScore <= snap * snap;
+        if (atNode) { index = nodeIndex; }
+        const auto& cutSpan = referenceSpan(index);
+        if (!atNode && !(cutSpan.interior.lo() < phase && phase < cutSpan.interior.hi())) { return Reason::Ambiguous; }
+        if (!vertices(1)) { return Reason::LimitExceeded; }
+        CachePathCut cut;
+        cut.edge = m_route[index]; cut.span = rawSpan(0); cut.candidateParameter = LC_Interval::point(0);
+        cut.closingSpan = rawSpan(m_data->layout.spanCount() - 1); cut.closingCandidateParameter = LC_Interval::point(1);
+        if (atNode) {
+            const auto previous = index == 0 ? m_route.size() - 1 : index - 1;
+            cut.referenceParameter = m_reference.events().occurrences()[cutSpan.start.value].parameter;
+            cut.closingReferenceParameter = m_reference.events().occurrences()[referenceSpan(previous).end.value].parameter;
+            cut.transition = m_routeJoins[previous];
+        } else {
+            const auto reason = certifyPhaseCut(cut, phase);
+            if (reason != Reason::None) { return reason; }
+            if (cut.referenceDepth >= m_budget.depthLimit()) { limit(); return Reason::LimitExceeded; }
+            if (!room(m_virtualSplits) || !m_budget.admitSubdivision(SubdivisionKind::Proof)) { return Reason::LimitExceeded; }
+            m_virtualSplits.push_back({{LC_Interval::hull(cutSpan.interior.lo(), cut.referenceParameter.hi()),
+                LC_Interval::hull(cut.referenceParameter.lo(), cutSpan.interior.hi())}});
+        }
+        packet.cut = cut;
+        if (!atNode && !append(index, LC_Interval::hull(cut.referenceParameter.lo(), cutSpan.interior.hi()),
+                               false, true, cut.referenceDepth + 1, true, false)) {
+            return Reason::LimitExceeded;
+        }
+        for (std::size_t offset = 0; offset < m_route.size(); ++offset) {
+            if (!pair()) { return Reason::LimitExceeded; }
+            const auto i = offset < m_route.size() - index ? index + offset : offset - (m_route.size() - index);
+            if (!atNode && i == index) { continue; }
+            if (!append(i, referenceSpan(i).interior, true, true, 0)) { return Reason::LimitExceeded; }
+        }
+        if (!atNode && !append(index, LC_Interval::hull(cutSpan.interior.lo(), cut.referenceParameter.hi()),
+                               true, false, cut.referenceDepth + 1, false, true)) {
+            return Reason::LimitExceeded;
+        }
+    }
+    Position from{0, 0, 0};
+    for (std::size_t i = 0; i < sections.size(); ++i) {
+        if (!pair()) { return Reason::LimitExceeded; }
+        Position to{m_data->layout.spanCount() - 1, 1, 0};
+        if (i + 1 != sections.size()) {
+            const auto& edge = m_reference.edges()[sections[i].edge];
+            const auto& point = m_reference.events().nodes()[edge.end.value];
+            if (!nearestCandidate({middle(point.localX), middle(point.localY)}, from, to)) { return Reason::Ambiguous; }
+        }
+        if (!before(from, to)) { return Reason::Ambiguous; }
+        if (to.parameter != 0 && to.parameter != 1) {
+            if (!room(m_virtualSplits) || !m_budget.adoptWork({2, 2, 0, 0, 0})) { return Reason::LimitExceeded; }
+            m_virtualSplits.push_back({{LC_Interval::hull(to.span == from.span ? from.parameter : 0, to.parameter),
+                LC_Interval::hull(to.parameter, 1)}});
+        }
+        const auto reason = matchSection(sections[i], from, to, packet);
+        if (reason != Reason::None) { return reason; }
+        from = to;
+    }
+    return Reason::None;
+}
+
+CacheTopologyBuilder::Reason CacheTopologyBuilder::certifyPhaseCut(CachePathCut& cut, const double seed) {
+    const auto& span = m_reference.spans()[m_reference.edges()[cut.edge].span];
+    if (!pair()) { return Reason::LimitExceeded; }
+    CurveChordBounds candidate;
+    if (!boundCacheChord(orientedSpan(0), m_frame, 0, 0, candidate)) { return Reason::Ambiguous; }
+    LC_CurveJet tangent;
+    if (!pair()) { return Reason::LimitExceeded; }
+    if (!m_frame.offsetJet(seed, tangent)) { return Reason::Ambiguous; }
+    double x = tangent.first.x, y = tangent.first.y;
+    if (m_circle) {
+        const double direction = m_frame.sourceSweep().signedSweep < 0 ? -1 : 1;
+        x = -direction * middle(candidate.startY); y = direction * middle(candidate.startX);
+    }
+    const double length = std::hypot(x, y);
+    if (!(length > 0) || !std::isfinite(length)) { return Reason::Ambiguous; }
+    cut.axisX = LC_Interval::point(m_circle ? x : x / length);
+    cut.axisY = LC_Interval::point(m_circle ? y : y / length);
+    const auto valueAt = [&](const double parameter, LC_Interval& value) {
+        if (!pair()) { return false; }
+        LC_CurveJetBounds point;
+        if (!m_frame.boundOffsetJet(parameter, parameter, point)) { return false; }
+        value = (point.x - candidate.startX) * cut.axisX + (point.y - candidate.startY) * cut.axisY;
+        return finiteInterval(value);
+    };
+    const double halfWidth = (span.interior.hi() - span.interior.lo()) / 64;
+    LC_Interval root = LC_Interval::hull(std::max(span.interior.lo(), seed - halfWidth),
+        std::min(span.interior.hi(), seed + halfWidth));
+    if (!(root.lo() < seed && seed < root.hi()) || !vertices(1)) { return Reason::Ambiguous; }
+    if (!valueAt(root.lo(), cut.firstSign) || !valueAt(root.hi(), cut.lastSign) ||
+        !(cut.firstSign.hi() < 0 && cut.lastSign.lo() > 0)) { return Reason::Ambiguous; }
+    if (!pair()) { return Reason::LimitExceeded; }
+    LC_CurveJetBounds bracket;
+    if (!m_frame.boundOffsetJet(root.lo(), root.hi(), bracket)) { return Reason::Ambiguous; }
+    cut.derivativeProjection = bracket.dx * cut.axisX + bracket.dy * cut.axisY;
+    if (!finiteInterval(cut.derivativeProjection) || !(cut.derivativeProjection.lo() > 0)) { return Reason::Ambiguous; }
+    cut.proofParameter = root;
+    unsigned depth = 0;
+    for (;;) {
+        if (!m_budget.checkDepth(0, depth) || !pair()) { return Reason::LimitExceeded; }
+        LC_CurveJetBounds bound;
+        if (!m_frame.boundOffsetJet(root.lo(), root.hi(), bound)) { return Reason::Ambiguous; }
+        const auto error = sqrt(sqr(bound.x - candidate.startX) + sqr(bound.y - candidate.startY));
+        const auto width = sqrt(sqr(LC_Interval::point(bound.x.hi()) - LC_Interval::point(bound.x.lo())) +
+            sqr(LC_Interval::point(bound.y.hi()) - LC_Interval::point(bound.y.lo())));
+        const auto clearance = m_distance - error;
+        if (!finiteInterval(error) || !finiteInterval(width) || !finiteInterval(clearance)) { return Reason::Ambiguous; }
+        if (error.hi() <= m_threshold.lo() && width.hi() <= m_threshold.lo() / 32 && clearance.lo() >= m_floor.hi()) {
+            cut.referenceParameter = cut.closingReferenceParameter = root;
+            cut.geometryError = error; cut.clearanceLowerBound = clearance; cut.referenceDepth = depth;
+            cut.referenceImageDiameter = width;
+            break;
+        }
+        if (depth >= m_budget.depthLimit()) { limit(); return Reason::LimitExceeded; }
+        const double mid = middle(root);
+        LC_Interval value;
+        if (!valueAt(mid, value)) { return Reason::Ambiguous; }
+        const auto derivative = bound.dx * cut.axisX + bound.dy * cut.axisY;
+        if (!finiteInterval(derivative) || !(derivative.lo() > 0)) { return Reason::Ambiguous; }
+        const auto proposed = LC_Interval::point(mid) - value / derivative;
+        if (!finiteInterval(proposed)) { return Reason::Ambiguous; }
+        const double low = std::max(root.lo(), proposed.lo()), high = std::min(root.hi(), proposed.hi());
+        if (!(low <= high) || (low == root.lo() && high == root.hi())) { return Reason::Ambiguous; }
+        if (!vertices(1)) { return Reason::LimitExceeded; }
+        root = LC_Interval::hull(low, high); ++depth;
+    }
+    // Each one-sided cache direction must also agree with this particular issued cut.
+    for (const bool start : {true, false}) {
+        if (!pair()) { return Reason::LimitExceeded; }
+        std::array<CacheBezierPoint, 4> net;
+        std::size_t degree = 0;
+        if (!boundCacheDerivativeControls(orientedSpan(start ? 0 : m_data->layout.spanCount() - 1),
+            m_frame, 0, 1, net, degree)) { return Reason::Ambiguous; }
+        bool proved = false;
+        for (std::size_t offset = 0; offset <= degree; ++offset) {
+            const auto i = start ? offset : degree - offset;
+            const bool zero = net[i].x.lo() == 0 && net[i].x.hi() == 0 && net[i].y.lo() == 0 && net[i].y.hi() == 0;
+            if (zero) { continue; }
+            const auto projection = net[i].x * cut.axisX + net[i].y * cut.axisY;
+            if (!finiteInterval(projection) || !(projection.lo() > 0)) { return Reason::Ambiguous; }
+            proved = true; break;
+        }
+        if (!proved) { return Reason::Ambiguous; }
+    }
+    return Reason::None;
+}
+
+CacheTopologyBuilder::Reason CacheTopologyBuilder::qualifyContacts(Packet* packet) {
+    if (!m_contactStatus) {
+        auto contacts = analyseCacheContacts(m_data->layout, m_frame, m_reversed, m_data->closed, m_budget);
+        m_contactStatus = contacts.status;
+        if (contacts.status == LC_IntersectionStatus::Ok && contacts.analysis) { m_data->contacts = std::move(contacts.analysis); }
+    }
+    if (*m_contactStatus == LC_IntersectionStatus::LimitExceeded) { return Reason::LimitExceeded; }
+    if (*m_contactStatus != LC_IntersectionStatus::Ok || !m_data->contacts) { return Reason::Ambiguous; }
+    std::vector<ReferenceNodeId> frontiers;
+    if (m_routeJoins.size() > frontiers.max_size() - 2 || !room(frontiers, m_routeJoins.size() + 2)) {
+        return Reason::LimitExceeded;
+    }
+    const auto append = [&](const ReferenceNodeId node) {
+        if (!vertices(1)) { return false; }
+        frontiers.push_back(node); return true;
+    };
+    if (!m_data->closed && !append(m_reference.edges()[m_route.front()].start)) { return Reason::LimitExceeded; }
+    for (const auto& join : m_routeJoins) {
+        if (!pair() || !append(m_reference.edges()[join.incoming].end)) { return Reason::LimitExceeded; }
+    }
+    if (!m_data->closed && !append(m_reference.edges()[m_route.back()].end)) { return Reason::LimitExceeded; }
+    bool required = false;
+    for (std::size_t i = 0; i < frontiers.size() && !required; ++i) {
+        if (!pair()) { return Reason::LimitExceeded; }
+        for (std::size_t j = 0; j < i; ++j) {
+            if (!pair()) { return Reason::LimitExceeded; }
+            if (frontiers[i].value == frontiers[j].value) { required = true; break; }
+        }
+    }
+    const bool present = m_data->contacts->contactCount() != 0;
+    if (required != present) { return Reason::Topology; }
+    if (!required || !packet) { return Reason::None; }
+    if (!room(packet->contactPorts, frontiers.size())) { return Reason::LimitExceeded; }
+    const auto locate = [&](const std::size_t edge, const ReferenceEdgeSide side,
+                            const ReferenceOccurrenceId occurrence, const CachePathEndpoint*& found) {
+        found = nullptr;
+        for (const auto& endpoint : packet->endpoints) {
+            if (!pair()) { return false; }
+            if (endpoint.edge != edge || endpoint.side != side || endpoint.occurrence.value != occurrence.value) { continue; }
+            if (found) { return false; }
+            found = &endpoint;
+        }
+        return found != nullptr;
+    };
+    const auto position = [&](const CachePathEndpoint& endpoint, CacheContactPosition& output) {
+        if (!pair() || endpoint.span >= m_data->layout.spanCount()) { return false; }
+        output = {m_reversed ? m_data->layout.spanCount()-1-endpoint.span : endpoint.span, endpoint.candidateParameter};
+        return true;
+    };
+    const auto addPort = [&](const ReferenceNodeId node, const CachePathEndpoint& first,
+                             const CachePathEndpoint* second) {
+        CacheContactPort port; port.referenceNode = node.value;
+        port.positionCount = second ? 2 : 1;
+        if (!position(first, port.positions[0]) || (second && !position(*second, port.positions[1])) || !vertices(1)) {
+            return false;
+        }
+        packet->contactPorts.push_back(port); return true;
+    };
+    const CachePathEndpoint *first = nullptr, *second = nullptr;
+    if (!m_data->closed) {
+        const auto edge = m_route.front();
+        const auto& span = m_reference.spans()[m_reference.edges()[edge].span];
+        if (!locate(edge, ReferenceEdgeSide::Start, span.start, first) || !addPort(frontiers.front(), *first, nullptr)) {
+            return m_budget.status() == BudgetStatus::Ok ? Reason::ReferenceUnresolved : Reason::LimitExceeded;
+        }
+    }
+    for (std::size_t i = 0; i < m_routeJoins.size(); ++i) {
+        if (!pair()) { return Reason::LimitExceeded; }
+        const auto& join = m_routeJoins[i];
+        if (!locate(join.incoming, ReferenceEdgeSide::End, join.from, first) ||
+            !locate(join.outgoing, ReferenceEdgeSide::Start, join.to, second) ||
+            !addPort(frontiers[i + (m_data->closed ? 0 : 1)], *first, second)) {
+            return m_budget.status() == BudgetStatus::Ok ? Reason::ReferenceUnresolved : Reason::LimitExceeded;
+        }
+    }
+    if (!m_data->closed) {
+        const auto edge = m_route.back();
+        const auto& span = m_reference.spans()[m_reference.edges()[edge].span];
+        if (!locate(edge, ReferenceEdgeSide::End, span.end, first) || !addPort(frontiers.back(), *first, nullptr)) {
+            return m_budget.status() == BudgetStatus::Ok ? Reason::ReferenceUnresolved : Reason::LimitExceeded;
+        }
+    }
+    auto matched = matchCacheContacts(*m_data->contacts, packet->contactPorts, m_budget);
+    switch (matched.status) {
+    case CacheContactMatchStatus::Matched: packet->contactMatches = std::move(matched.matches); return Reason::None;
+    case CacheContactMatchStatus::Topology: return Reason::Topology;
+    case CacheContactMatchStatus::LimitExceeded: return Reason::LimitExceeded;
+    case CacheContactMatchStatus::InvalidInput: return Reason::ReferenceUnresolved;
+    case CacheContactMatchStatus::Ambiguous: return Reason::Ambiguous;
+    }
+    return Reason::Ambiguous;
+}
+
+LC_OffsetCheckResult CacheTopologyBuilder::run(const RS_SplineData& cache,
+                                             const LC_EllipseOffsetDefinition& definition,
+                                             const double tolerance, WorkBudget& budget) {
+    LC_OffsetCheckResult out;
+    const auto finish = [&]() {
+        if (budget.status() == BudgetStatus::LimitExceeded) { out.reason = Reason::LimitExceeded; out.analysis.reset(); }
+        else if (budget.status() == BudgetStatus::InvalidInput) { out.reason = Reason::InvalidInput; out.analysis.reset(); }
+        out.work = budget.consumed(); return std::move(out);
+    };
+    if (budget.status() != BudgetStatus::Ok || !std::isfinite(tolerance) || !(tolerance > 0) ||
+        !std::isfinite(definition.distance) || !(definition.distance > 0) ||
+        !std::isfinite(definition.relTolerance) || !(definition.relTolerance > 0)) { return finish(); }
+    const double distance = definition.towardCentre ? -definition.distance : definition.distance;
+    if (!ReferenceFrame::create(definition.basis, distance)) { return finish(); }
+    auto layout = inspectCacheLayout(cache, budget);
+    if (layout.status != CacheLayoutStatus::Ok) {
+        out.reason = layout.status == CacheLayoutStatus::LimitExceeded ? Reason::LimitExceeded : Reason::Layout;
+        return finish();
+    }
+    if (definition.distance <= tolerance) { out.reason = Reason::TooSmall; return finish(); }
+    // Exact constant/repeated/retraced Bernstein pieces cannot belong to an exact-once path.
+    for (std::size_t i = 0; i < layout.spanCount(); ++i) {
+        if (!budget.consumePairs(1)) { return finish(); }
+        const auto& a = layout.spans[i];
+        bool constant = true;
+        for (std::size_t k = 1; k <= a.degree; ++k) {
+            constant = constant && a.controls[k].x == a.controls[0].x && a.controls[k].y == a.controls[0].y;
+        }
+        if (constant) { out.reason = Reason::Topology; out.span = i; return finish(); }
+        for (std::size_t j = 0; j < i; ++j) {
+            if (!budget.consumePairs(1)) { return finish(); }
+            const auto& b = layout.spans[j];
+            bool same = true, reverse = true;
+            for (std::size_t k = 0; k <= a.degree; ++k) {
+                same = same && a.controls[k].x == b.controls[k].x && a.controls[k].y == b.controls[k].y;
+                reverse = reverse && a.controls[k].x == b.controls[a.degree - k].x &&
+                    a.controls[k].y == b.controls[a.degree - k].y;
+            }
+            if (same || reverse) { out.reason = Reason::Topology; out.span = i; return finish(); }
+        }
+    }
+    const auto& first = cache.controlPoints.front(); const auto& last = cache.controlPoints.back();
+    const bool closed = first.x == last.x && first.y == last.y;
+    if ((cache.m_periodicFlag && !cache.m_closedFlag) || ((cache.m_closedFlag || cache.m_periodicFlag) && !closed)) {
+        out.reason = Reason::Topology; return finish();
+    }
+    auto reference = analyseReferenceComponents(definition.basis, distance, tolerance, budget);
+    if (reference.status != LC_IntersectionStatus::Ok || !reference.analysis) {
+        out.reason = reference.status == LC_IntersectionStatus::LimitExceeded ? Reason::LimitExceeded : Reason::ReferenceUnresolved;
+        return finish();
+    }
+    if (reference.analysis->edges().empty()) { out.reason = Reason::OffCurve; return finish(); }
+    if (budget.remainingVertices() == 0) { budget.latchLimitExceeded(); return finish(); }
+    auto data = std::make_unique<CacheTopologyAnalysis::Impl>();
+    if (!budget.consumeVertices(1)) { return finish(); }
+    data->layout = std::move(layout); data->reference = std::move(reference.analysis); data->closed = closed;
+    CacheTopologyBuilder builder{budget, definition, tolerance, std::move(data)};
+    if (!finiteInterval(builder.m_threshold) || !(builder.m_threshold.lo() > 0) ||
+        !finiteInterval(builder.m_distance) || !finiteInterval(builder.m_floor)) { out.reason = Reason::Ambiguous; return finish(); }
+    for (const auto position : {Position{0, 0, 0}, Position{builder.m_data->layout.spanCount() - 1, 1, 0}}) {
+        const auto separated = builder.separatedPoint(position);
+        if (separated == Reason::OffCurve || separated == Reason::LimitExceeded) {
+            out.reason = separated; out.span = builder.m_failureSpan; return finish();
+        }
+    }
+    const bool complete = builder.search();
+    out.span = builder.m_failureSpan;
+    if (builder.m_successes >= 2) { out.reason = Reason::Topology; }
+    else if (!complete || builder.m_invalidGraph) { out.reason = Reason::Ambiguous; }
+    else if (builder.m_unresolved) { out.reason = Reason::Ambiguous; }
+    else if (builder.m_successes != 1) { out.reason = Reason::Topology; }
+    else {
+        if (budget.remainingVertices() == 0) { budget.latchLimitExceeded(); return finish(); }
+        std::unique_ptr<const CacheTopologyAnalysis> owner{new CacheTopologyAnalysis{std::move(builder.m_data)}};
+        if (!budget.consumeVertices(1)) { return finish(); }
+        out.analysis = std::move(owner);
+        out.reason = Reason::None; out.span = none;
+    }
+    return finish();
+}
+
+LC_OffsetCheckResult checkCache(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definition,
+                                const double tolerance, WorkBudget& budget) {
+    return CacheTopologyBuilder::run(cache, definition, tolerance, budget);
+}
+LC_OffsetCheckResult checkCache(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definition,
+                                const double tolerance, const LC_OffsetCheckLimits& limits) {
+    WorkBudget budget{limits};
+    return checkCache(cache, definition, tolerance, budget);
+}
+
+CacheTopologyAnalysis::CacheTopologyAnalysis(std::unique_ptr<Impl> impl) : m_impl{std::move(impl)} {}
+CacheTopologyAnalysis::~CacheTopologyAnalysis() = default;
+const CacheLayoutResult& CacheTopologyAnalysis::layout() const noexcept { return m_impl->layout; }
+const ReferenceComponentAnalysis& CacheTopologyAnalysis::reference() const noexcept { return *m_impl->reference; }
+const std::vector<std::size_t>& CacheTopologyAnalysis::edges() const noexcept { return m_impl->edges; }
+const std::vector<CachePathJoin>& CacheTopologyAnalysis::joins() const noexcept { return m_impl->joins; }
+const std::vector<CachePathPiece>& CacheTopologyAnalysis::pieces() const noexcept { return m_impl->pieces; }
+const std::vector<CachePathEndpoint>& CacheTopologyAnalysis::endpoints() const noexcept { return m_impl->endpoints; }
+bool CacheTopologyAnalysis::closed() const noexcept { return m_impl->closed; }
+const std::optional<CachePathCut>& CacheTopologyAnalysis::cut() const noexcept { return m_impl->cut; }
+const std::optional<ReferenceTerminal>& CacheTopologyAnalysis::startTerminal() const noexcept { return m_impl->startTerminal; }
+const std::optional<ReferenceTerminal>& CacheTopologyAnalysis::endTerminal() const noexcept { return m_impl->endTerminal; }
 
 CacheBoundsAnalysis::CacheBoundsAnalysis(std::unique_ptr<Impl> impl) : m_impl{std::move(impl)} {}
 CacheBoundsAnalysis::~CacheBoundsAnalysis() = default;

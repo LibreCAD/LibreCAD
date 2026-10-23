@@ -3242,13 +3242,15 @@ TEST_CASE("retained certificate callback throw preserves admitted work",
     auto query = findCertifiedIntersections(std::move(provider), strictOptions(), &exit);
     REQUIRE(query.status == LC_IntersectionStatus::Ok); REQUIRE(query.session);
     REQUIRE(query.session->rootCount() == 1); checkSameStrictWork(exit, query.work);
+    CHECK(query.session->hasValidProofs());
     const auto handle = query.session->rootHandle(0);
     REQUIRE(query.session->snapshot(handle));
     const auto before = query.session->cumulativeWork();
     const auto callbacks = probe->certificates;
     probe->certificateException = std::make_exception_ptr(std::runtime_error("retained analytic failure"));
+    LC_IntersectionWorkStats callExit;
     try {
-        query.session->contract(handle, refineAllowance());
+        query.session->contract(handle, refineAllowance(), &callExit);
         FAIL("retained callback did not throw");
     } catch (...) { CHECK(std::current_exception() == probe->certificateException); }
     const auto after = query.session->cumulativeWork();
@@ -3257,10 +3259,46 @@ TEST_CASE("retained certificate callback throw preserves admitted work",
     CHECK(after.totalBoxPairs == before.totalBoxPairs + 2);
     CHECK(after.generatedItems == before.generatedItems + 1);
     CHECK(after.deepestRootRefinement == before.deepestRootRefinement + 1);
+    CHECK(callExit.totalBoxPairs == 2); CHECK(callExit.certificateBoxPairs == 2);
+    CHECK(callExit.generatedItems == 1);
+    CHECK(callExit.deepestRootRefinement == after.deepestRootRefinement);
     CHECK(query.session->rootCount() == 0); CHECK_FALSE(query.session->snapshot(handle));
+    CHECK_FALSE(query.session->hasValidProofs());
     const auto bounds = probe->bounds, evaluations = probe->evaluations;
     const auto retry = query.session->contract(handle, refineAllowance());
     CHECK(retry.status == LC_IntersectionStatus::InvalidInput); CHECK_FALSE(retry.snapshot);
     checkSameStrictWork(retry.work, {}); checkSameStrictWork(query.session->cumulativeWork(), after);
     CHECK(probe->bounds == bounds); CHECK(probe->evaluations == evaluations); CHECK(probe->certificates == callbacks + 1);
+}
+
+TEST_CASE("Strict proof-domain padding is bounded and opt in", "[lc-offsetcurve][geometry][strict-proof-domain]") {
+    LC_IntersectionOptions options; options.strict = true; options.tolerance = 1e-6;
+    CHECK(options.strictProofDomainPadding == 0.001);
+    const AnalyticLines lines{{1, 0}, {0, 1}};
+    for (const double padding : {0.0, 0.001, 1.0 / 16.0, 0.25}) {
+        CAPTURE(padding); options.strictProofDomainPadding = padding;
+        const auto result = findIntersections(lines, options);
+        REQUIRE(result.status == LC_IntersectionStatus::Ok); REQUIRE(result.intersections.size() == 1);
+        const auto& root = result.intersections[0];
+        CHECK(root.proof == LC_IntersectionProof::IntervalUniqueTransverse);
+        CHECK(root.isolation.parameterA.contains(.5)); CHECK(root.isolation.parameterB.contains(.5));
+        LC_IntersectionWorkStats entered;
+        const auto owned = findCertifiedIntersections(std::make_unique<AnalyticLines>(RS_Vector{1, 0}, RS_Vector{0, 1}), options, &entered);
+        REQUIRE(owned.status == LC_IntersectionStatus::Ok); REQUIRE(owned.session); CHECK(owned.session->rootCount() == 1);
+        checkSameStrictWork(entered, owned.work);
+    }
+    for (const double padding : {-0.001, std::nextafter(.25, 1.0),
+                                 std::numeric_limits<double>::infinity(), std::numeric_limits<double>::quiet_NaN()}) {
+        CAPTURE(padding); options.strictProofDomainPadding = padding;
+        const auto result = findIntersections(lines, options);
+        CHECK(result.status == LC_IntersectionStatus::InvalidInput); CHECK(result.intersections.empty());
+        checkSameStrictWork(result.work, {});
+        LC_IntersectionWorkStats entered;
+        const auto owned = findCertifiedIntersections(std::make_unique<AnalyticLines>(RS_Vector{1, 0}, RS_Vector{0, 1}), options, &entered);
+        CHECK(owned.status == LC_IntersectionStatus::InvalidInput); CHECK_FALSE(owned.session);
+        checkSameStrictWork(entered, {}); checkSameStrictWork(owned.work, {});
+    }
+    options.strict = false;
+    const auto ordinary = findIntersections(lines, options);
+    CHECK(ordinary.status == LC_IntersectionStatus::Ok); CHECK(ordinary.intersections.size() == 1);
 }

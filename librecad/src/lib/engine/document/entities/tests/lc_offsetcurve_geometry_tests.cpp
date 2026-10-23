@@ -8239,3 +8239,790 @@ TEST_CASE("arbitrary interior point is not a terminal", "[lc-offsetcurve][geomet
     CHECK_FALSE(analysis.terminal(analysis.edges().size(), geo::ReferenceEdgeSide::Start));
     CHECK_FALSE(analysis.terminal(0, static_cast<geo::ReferenceEdgeSide>(99)));
 }
+
+namespace {
+void checkPublicPath(const LC_OffsetCheckResult& result, const geo::WorkBudget& budget, const double distance,
+                     const double tolerance) {
+    CAPTURE(result.reason, result.span, result.work.cacheSpans, result.work.vertices,
+            result.work.distancePairs, result.work.orderingComparisons, result.work.deepest);
+    REQUIRE(result.reason == LC_OffsetCheckResult::Reason::None); REQUIRE(bool(result)); REQUIRE(result.analysis);
+    checkWork(result.work, budget.consumed());
+    const auto& proof = *result.analysis;
+    REQUIRE_FALSE(proof.pieces().empty()); REQUIRE_FALSE(proof.edges().empty());
+    const double scale = proof.reference().events().providers().frame().scale();
+    const auto threshold = LC_Interval::point(2) * LC_Interval::point(tolerance) / LC_Interval::point(scale);
+    const auto floor = (LC_Interval::point(distance) - LC_Interval::point(2.5) * LC_Interval::point(tolerance)) /
+        LC_Interval::point(scale);
+    std::size_t span = 0;
+    double candidate = 0;
+    for (const auto& piece : proof.pieces()) {
+        if (piece.normalizedSpan != span) {
+            REQUIRE(candidate == 1); REQUIRE(piece.normalizedSpan == span + 1);
+            ++span; candidate = 0;
+        }
+        CHECK(piece.candidateParameter.lo() == candidate);
+        REQUIRE(piece.candidateParameter.lo() < piece.candidateParameter.hi());
+        candidate = piece.candidateParameter.hi();
+        REQUIRE(piece.referenceParameter.lo() < piece.referenceParameter.hi());
+        CHECK(piece.geometryError.hi() <= threshold.lo()); CHECK(piece.clearanceLowerBound.lo() >= floor.hi());
+        CHECK(piece.candidateDepth + piece.referenceDepth <= budget.depthLimit());
+    }
+    CHECK(candidate == 1); CHECK(span + 1 == proof.layout().spanCount());
+    for (const auto edge : proof.edges()) {
+        const auto& reference = proof.reference().spans()[proof.reference().edges()[edge].span];
+        std::vector<const geo::CachePathPiece*> intervals;
+        for (const auto& piece : proof.pieces()) { if (piece.edge == edge) { intervals.push_back(&piece); } }
+        REQUIRE_FALSE(intervals.empty());
+        std::sort(intervals.begin(), intervals.end(), [](const auto* a, const auto* b) {
+            return a->referenceParameter.lo() < b->referenceParameter.lo();
+        });
+        double covered = reference.interior.lo();
+        bool symbolicJoin = false;
+        const geo::CachePathPiece* previous = nullptr;
+        unsigned startsAtCut = 0, endsAtCut = 0;
+        for (const auto* piece : intervals) {
+            const auto& interval = piece->referenceParameter;
+            startsAtCut += piece->startsAtCut; endsAtCut += piece->endsAtCut;
+            if (piece->startsAtCut || piece->endsAtCut) {
+                REQUIRE(proof.cut()); REQUIRE_FALSE(proof.cut()->transition); CHECK(proof.cut()->edge == edge);
+                if (piece->startsAtCut) { CHECK(interval.lo() == proof.cut()->referenceParameter.lo()); }
+                if (piece->endsAtCut) { CHECK(interval.hi() == proof.cut()->referenceParameter.hi()); }
+            }
+            if (previous && previous->endsAtCut && piece->startsAtCut) {
+                // Enclosing boxes overlap, but actual domains meet at ONE shared certified root.
+                REQUIRE_FALSE(symbolicJoin); symbolicJoin = true;
+                CHECK(covered == proof.cut()->referenceParameter.hi());
+                CHECK(interval.lo() == proof.cut()->referenceParameter.lo());
+            } else { CHECK(interval.lo() == covered); }
+            covered = interval.hi(); previous = piece;
+        }
+        CHECK(covered == reference.interior.hi());
+        const bool cutEdge = proof.cut() && !proof.cut()->transition && proof.cut()->edge == edge;
+        CHECK(symbolicJoin == cutEdge); CHECK(startsAtCut == unsigned(cutEdge)); CHECK(endsAtCut == unsigned(cutEdge));
+        for (const auto side : {geo::ReferenceEdgeSide::Start, geo::ReferenceEdgeSide::End}) {
+            CHECK(std::count_if(proof.endpoints().begin(), proof.endpoints().end(), [&](const auto& endpoint) {
+                return endpoint.edge == edge && endpoint.side == side;
+            }) == 1);
+        }
+    }
+    if (proof.closed()) {
+        REQUIRE(proof.cut()); CHECK_FALSE(proof.startTerminal()); CHECK_FALSE(proof.endTerminal());
+        const auto& cut = *proof.cut();
+        CHECK(cut.candidateParameter.lo() == 0); CHECK(cut.candidateParameter.hi() == 0);
+        CHECK(cut.closingCandidateParameter.lo() == 1); CHECK(cut.closingCandidateParameter.hi() == 1);
+        if (!cut.transition) {
+            CHECK(cut.proofParameter.lo() <= cut.referenceParameter.lo());
+            CHECK(cut.referenceParameter.hi() <= cut.proofParameter.hi());
+            CHECK(cut.firstSign.hi() < 0); CHECK(cut.lastSign.lo() > 0); CHECK(cut.derivativeProjection.lo() > 0);
+            CHECK(cut.geometryError.hi() <= threshold.lo()); CHECK(cut.clearanceLowerBound.lo() >= floor.hi());
+            CHECK(cut.referenceImageDiameter.hi() <= threshold.lo()/32);
+            CHECK(proof.pieces().front().startsAtCut); CHECK(proof.pieces().back().endsAtCut);
+            CHECK(cut.referenceParameter.lo() == cut.closingReferenceParameter.lo());
+            CHECK(cut.referenceParameter.hi() == cut.closingReferenceParameter.hi());
+        }
+    }
+    else { REQUIRE(proof.startTerminal()); REQUIRE(proof.endTerminal()); CHECK_FALSE(proof.cut()); }
+}
+LC_OffsetCheckResult publicArc(const std::size_t degree, const bool reversed, geo::WorkBudget& budget) {
+    const auto source = basis(1, 1, .25, .2501);
+    auto cache = arcCache(source, 1, degree);
+    if (reversed) { std::reverse(cache.controlPoints.begin(), cache.controlPoints.end()); }
+    return geo::checkCache(cache, localTopologyDefinition(source, 1, reversed), .01, budget);
+}
+RS_SplineData phaseRing(const bool split, const bool sourceReversed = false, const bool cacheReversed = false,
+                        const bool rotateKnot = false, const double splitParameter = .25) {
+    using Net = std::array<RS_Vector, 4>;
+    std::vector<Net> pieces;
+    Net net{{{2, 0}, {2, 9.0 / 8}, {9.0 / 8, 2}, {0, 2}}};
+    for (unsigned quadrant = 0; quadrant < 4; ++quadrant) {
+        pieces.push_back(net);
+        for (auto& p : net) { p = {-p.y, p.x}; }
+    }
+    if (split) {
+        net = pieces.front(); Net left, right;
+        left[0] = net[0]; right[3] = net[3];
+        for (unsigned level = 1; level <= 3; ++level) {
+            for (unsigned i = 0; i <= 3 - level; ++i) {
+                net[i] = net[i] * (1-splitParameter) + net[i + 1] * splitParameter;
+            }
+            left[level] = net[0]; right[3 - level] = net[3 - level];
+        }
+        pieces.front() = left; pieces.insert(pieces.begin() + 1, right);
+        std::rotate(pieces.begin(), pieces.begin() + 1, pieces.end());
+    } else if (rotateKnot) { std::rotate(pieces.begin(), pieces.begin() + 1, pieces.end()); }
+    std::vector<double> knots;
+    for (std::size_t i = 0; i <= pieces.size(); ++i) { knots.push_back(double(i)); }
+    auto cache = cacheLayoutFixture(3, knots);
+    for (std::size_t i = 0; i < pieces.size(); ++i) {
+        for (std::size_t j = 0; j <= 3; ++j) { cache.controlPoints[3 * i + j] = pieces[i][j]; }
+    }
+    if (sourceReversed != cacheReversed) { std::reverse(cache.controlPoints.begin(), cache.controlPoints.end()); }
+    return cache;
+}
+void checkPhaseOracle(const LC_OffsetCheckResult& result, const bool sourceReversed, const bool split,
+                      const bool north = false) {
+    REQUIRE(result.analysis); REQUIRE(result.analysis->cut());
+    const auto& cut = *result.analysis->cut(); REQUIRE_FALSE(cut.transition);
+    const auto& frame = result.analysis->reference().events().providers().frame();
+    const Quad pi = boost::math::constants::pi<Quad>();
+    const Quad angle = split ? atan2(Quad(403), Quad(945)) : north ? pi / 2 : Quad(0);
+    Quad difference = angle - Quad(frame.sourceSweep().start);
+    if (sourceReversed && difference > 0) { difference -= 2 * pi; }
+    if (!sourceReversed && difference < 0) { difference += 2 * pi; }
+    const Quad parameter = difference * Quad(frame.parameterEnd()) / (sourceReversed ? -2 * pi : 2 * pi);
+    checkEnclosure(cut.referenceParameter, parameter);
+    CHECK(2 * (sqrt(Quad(1) + Quad(89) / 8192) - 1) < Quad(".011"));
+    CHECK(Quad(114) - 150 * Quad(".25") > 0); // radial error polynomial increases for v in [0,1/4]
+    // Bernstein product coefficients of x*y'-y*x' are positive on the entire quarter.
+    const std::array<std::array<Quad, 2>, 4> p{{{{2,0}},{{2,Quad(9)/8}},{{Quad(9)/8,2}},{{0,2}}}};
+    constexpr unsigned c3[] = {1,3,3,1}, c2[] = {1,2,1}, c5[] = {1,5,10,10,5,1};
+    for (unsigned k = 0; k <= 5; ++k) {
+        Quad coefficient = 0;
+        for (unsigned i = 0; i <= 3; ++i) {
+            if (k < i || k - i > 2) { continue; }
+            const auto j = k - i;
+            const Quad dx = 3 * (p[j+1][0] - p[j][0]), dy = 3 * (p[j+1][1] - p[j][1]);
+            coefficient += (p[i][0] * dy - p[i][1] * dx) * c3[i] * c2[j] / c5[k];
+        }
+        CHECK(coefficient > 0);
+    }
+}
+RS_SplineData materializedCache(const RS_EllipseData& source, const double distance, const double tolerance) {
+    const RS_Ellipse ellipse{nullptr, source};
+    const auto side = ((distance < 0) != source.reversed) ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right;
+    auto options = LC_CurveOffset::makeDirectOptions(ellipse, std::abs(distance), tolerance);
+    if (distance < 0) { options.mode = LC_CurveOffsetMode::Trimmed; }
+    const auto made = LC_CurveOffset::createEntities(ellipse, LC_CurveOffset::makeSideRequest(side, std::abs(distance)),
+        options, LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(made.status == LC_CurveOffsetStatus::Ok); REQUIRE(made.entities.size() == 1);
+    const auto* spline = dynamic_cast<const RS_Spline*>(made.entities[0].get()); REQUIRE(spline);
+    return spline->getData();
+}
+RS_SplineData cachePieces(const RS_SplineData& source, const std::size_t begin, const std::size_t end) {
+    REQUIRE(begin < end);
+    const auto degree = std::size_t(source.degree);
+    REQUIRE(degree * end < source.controlPoints.size());
+    std::vector<double> knots;
+    for (std::size_t i = begin; i <= end; ++i) { knots.push_back(double(i)); }
+    auto result = cacheLayoutFixture(degree, knots);
+    std::copy(source.controlPoints.begin() + degree * begin, source.controlPoints.begin() + degree * end + 1,
+        result.controlPoints.begin());
+    return result;
+}
+void checkPublicRefusal(const LC_OffsetCheckResult& result, const LC_OffsetCheckResult::Reason reason,
+                        const geo::WorkBudget& budget) {
+    CAPTURE(result.reason, result.span, result.work.cacheSpans, result.work.vertices,
+        result.work.distancePairs, result.work.deepest, result.work.orderingComparisons);
+    CHECK(result.reason == reason); CHECK_FALSE(result.analysis); CHECK_FALSE(bool(result));
+    checkWork(result.work, budget.consumed());
+}
+std::array<RS_SplineData, 2> twoComponentCaches() {
+    const auto source = basis(100, .05, M_PI / 12, 7 * M_PI / 4);
+    const RS_Ellipse ellipse{nullptr, source};
+    auto options = LC_CurveOffset::makeDirectOptions(ellipse, 4, 1e-4); options.mode = LC_CurveOffsetMode::Trimmed;
+    const auto made = LC_CurveOffset::createEntities(ellipse,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 4), options, LC_CurveOffset::makeDirectSourceBudget());
+    CAPTURE(made.status, made.entities.size());
+    REQUIRE(made.status == LC_CurveOffsetStatus::Ok); REQUIRE(made.entities.size() == 2);
+    std::array<RS_SplineData, 2> caches;
+    for (unsigned i = 0; i < 2; ++i) {
+        const auto* spline = dynamic_cast<const RS_Spline*>(made.entities[i].get()); REQUIRE(spline);
+        caches[i] = spline->getData();
+    }
+    if (caches[0].controlPoints.front() == caches[0].controlPoints.back()) { std::swap(caches[0], caches[1]); }
+    REQUIRE(caches[0].controlPoints.front() != caches[0].controlPoints.back());
+    REQUIRE(caches[1].controlPoints.front() == caches[1].controlPoints.back());
+    return caches;
+}
+RS_SplineData upperLensCache() {
+    // Independent s=98 crossing: sin(alpha)^2=7104/7500 for E(100,50), D=-49.
+    const Quad pi = boost::math::constants::pi<Quad>();
+    const Quad alpha = asin(sqrt(Quad(7104) / 7500));
+    const Quad width = pi - 2 * alpha;
+    const auto jet = [](const Quad& angle) -> std::array<Quad, 4> {
+        const Quad c = cos(angle), s = sin(angle), h = sqrt(Quad(25) * c*c + 100*s*s);
+        const Quad factor = 1 - Quad(24500) / (100 * h*h*h);
+        return {100*c - 245*c/h, 50*s - 490*s/h, -100*s*factor, 50*c*factor};
+    };
+    std::vector<double> knots; for (unsigned i = 0; i <= 16; ++i) { knots.push_back(double(i)); }
+    auto cache = cacheLayoutFixture(3, knots);
+    const Quad step = width / 16;
+    for (unsigned i = 0; i < 16; ++i) {
+        const auto a = jet(alpha + step*i), b = jet(alpha + step*(i+1));
+        cache.controlPoints[3*i] = {double(a[0]), double(a[1])};
+        cache.controlPoints[3*i+1] = {double(a[0] + step*a[2]/3), double(a[1] + step*a[3]/3)};
+        cache.controlPoints[3*i+2] = {double(b[0] - step*b[2]/3), double(b[1] - step*b[3]/3)};
+        cache.controlPoints[3*i+3] = {double(b[0]), double(b[1])};
+    }
+    // The algebraic crossing image has exactly zero Y, not an arbitrary coordinate join.
+    cache.controlPoints.front().y = cache.controlPoints.back().y = 0;
+    REQUIRE(cache.controlPoints.front().x > 17); REQUIRE(cache.controlPoints.back().x < -17);
+    return cache;
+}
+}
+
+TEST_CASE("cache topology accepts degree one complete path", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    geo::WorkBudget budget;
+    const auto result = publicArc(1, false, budget);
+    checkPublicPath(result, budget, 1, .01);
+    CHECK(result.analysis->layout().spans[0].degree == 1);
+}
+
+TEST_CASE("cache topology accepts generated cubic complete path", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto source = basis(1, 1, .25, .5); const RS_Ellipse ellipse{nullptr, source};
+    const auto made = LC_CurveOffset::createEntities(ellipse,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, 1),
+        LC_CurveOffset::makeDirectOptions(ellipse, 1, 1e-4), LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(made.status == LC_CurveOffsetStatus::Ok); REQUIRE(made.entities.size() == 1);
+    const auto* spline = dynamic_cast<const RS_Spline*>(made.entities[0].get()); REQUIRE(spline);
+    REQUIRE(spline->getData().degree == 3);
+    geo::WorkBudget budget;
+    const auto result = geo::checkCache(spline->getData(), localTopologyDefinition(source), 1e-4, budget);
+    checkPublicPath(result, budget, 1, 1e-4);
+}
+
+TEST_CASE("cache topology accepts monotone cubic with stationary endpoint", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto source = basis(1, 1, .25, .2501);
+    auto cache = arcCache(source, 1, 3); cache.controlPoints[1] = cache.controlPoints[0];
+    geo::WorkBudget budget;
+    const auto result = geo::checkCache(cache, localTopologyDefinition(source), .01, budget);
+    checkPublicPath(result, budget, 1, .01);
+}
+
+TEST_CASE("cache topology accepts forward cache orientation", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    geo::WorkBudget budget; const auto result = publicArc(3, false, budget);
+    checkPublicPath(result, budget, 1, .01);
+}
+
+TEST_CASE("cache topology accepts reversed cache orientation", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    geo::WorkBudget budget; const auto result = publicArc(3, true, budget);
+    checkPublicPath(result, budget, 1, .01);
+    CHECK(result.analysis->pieces().front().span == 0);
+}
+
+TEST_CASE("cache topology directly asserts None reason", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    geo::WorkBudget budget; const auto result = publicArc(1, false, budget);
+    REQUIRE(result.reason == LC_OffsetCheckResult::Reason::None); REQUIRE(result.analysis); REQUIRE(bool(result));
+    CHECK(result.span == std::size_t(-1)); checkWork(result.work, budget.consumed());
+}
+
+TEST_CASE("cache topology directly asserts InvalidInput reason", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto source = basis(1, 1, .25, .2501); const auto cache = arcCache(source, 1, 1);
+    for (unsigned kind = 0; kind < 5; ++kind) {
+        auto definition = localTopologyDefinition(source); double tolerance = .01;
+        if (kind == 0) { tolerance = 0; }
+        if (kind == 1) { tolerance = std::numeric_limits<double>::quiet_NaN(); }
+        if (kind == 2) { definition.distance = -1; }
+        if (kind == 3) { definition.relTolerance = 0; }
+        if (kind == 4) { definition.basis.center.z = 1; }
+        geo::WorkBudget budget;
+        const auto result = geo::checkCache(cache, definition, tolerance, budget);
+        CHECK(result.reason == LC_OffsetCheckResult::Reason::InvalidInput); CHECK_FALSE(result.analysis); CHECK_FALSE(bool(result));
+        checkWork(result.work, {}); checkWork(result.work, budget.consumed());
+    }
+}
+
+TEST_CASE("cache topology directly asserts Layout reason", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto source = basis(1, 1, .25, .2501); auto cache = arcCache(source, 1, 1); cache.weights[0] = .5;
+    geo::WorkBudget budget; const auto result = geo::checkCache(cache, localTopologyDefinition(source), .01, budget);
+    CHECK(result.reason == LC_OffsetCheckResult::Reason::Layout); CHECK_FALSE(result.analysis); checkWork(result.work, budget.consumed());
+}
+
+TEST_CASE("cache topology directly asserts TooSmall reason", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto source = basis(1, 1, .25, .2501); const auto cache = arcCache(source, .01, 1);
+    for (const double tolerance : {.01, .02}) {
+        geo::WorkBudget budget; const auto result = geo::checkCache(cache, localTopologyDefinition(source, .01), tolerance, budget);
+        CHECK(result.reason == LC_OffsetCheckResult::Reason::TooSmall); CHECK_FALSE(result.analysis);
+        CHECK(result.work.cacheSpans == 1); checkWork(result.work, budget.consumed());
+    }
+}
+
+TEST_CASE("cache topology directly asserts OffCurve reason", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto source = basis(1, 1, .25, .2501); auto cache = arcCache(source, 1, 1);
+    cache.controlPoints = {{100, 100}, {101, 100}};
+    geo::WorkBudget budget; const auto result = geo::checkCache(cache, localTopologyDefinition(source), .01, budget);
+    CHECK(result.reason == LC_OffsetCheckResult::Reason::OffCurve); CHECK_FALSE(result.analysis);
+    CHECK(result.span == 0); checkWork(result.work, budget.consumed());
+}
+
+TEST_CASE("cache topology directly asserts LimitExceeded reason", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto source = basis(1, 1, .25, .2501); const auto cache = arcCache(source, 1, 1);
+    LC_OffsetCheckLimits limits; limits.maxVertices = 1;
+    geo::WorkBudget budget{limits}; const auto result = geo::checkCache(cache, localTopologyDefinition(source), .01, budget);
+    CHECK(result.reason == LC_OffsetCheckResult::Reason::LimitExceeded); CHECK_FALSE(result.analysis);
+    CHECK(budget.status() == geo::BudgetStatus::LimitExceeded); checkWork(result.work, {});
+}
+
+TEST_CASE("cache topology closed metadata requires exact closure", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto source = basis(1, 1, .25, .2501); auto cache = arcCache(source, 1, 1); cache.m_closedFlag = true;
+    geo::WorkBudget budget; const auto result = geo::checkCache(cache, localTopologyDefinition(source), .01, budget);
+    CHECK(result.reason == LC_OffsetCheckResult::Reason::Topology); CHECK_FALSE(result.analysis); checkWork(result.work, budget.consumed());
+}
+
+TEST_CASE("cache topology periodic metadata requires closed metadata", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto source = basis(1, 1, .25, .2501); auto cache = arcCache(source, 1, 1); cache.m_periodicFlag = true;
+    geo::WorkBudget budget; const auto result = geo::checkCache(cache, localTopologyDefinition(source), .01, budget);
+    CHECK(result.reason == LC_OffsetCheckResult::Reason::Topology); CHECK_FALSE(result.analysis); checkWork(result.work, budget.consumed());
+}
+
+TEST_CASE("cache topology accepts retained seam whole source cycle", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto source = basis(10, .5);
+    const auto cache = materializedCache(source, 3, 1e-3);
+    geo::WorkBudget budget; const auto result = geo::checkCache(cache, localTopologyDefinition(source, 3), .01, budget);
+    checkPublicPath(result, budget, 3, .01);
+    REQUIRE(result.analysis->closed()); REQUIRE(result.analysis->reference().events().seam());
+    CHECK(std::count_if(result.analysis->joins().begin(), result.analysis->joins().end(), [](const auto& join) {
+        return join.kind == geo::CachePathJoinKind::Seam;
+    }) == 1);
+}
+
+TEST_CASE("cache topology aligns phase at existing knot", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    for (const bool reversed : {false, true}) {
+        geo::WorkBudget budget;
+        const auto result = geo::checkCache(phaseRing(false, false, reversed, true),
+            localTopologyDefinition(basis(1, 1), 1, reversed), .02, budget);
+        checkPublicPath(result, budget, 1, .02); checkPhaseOracle(result, false, false, true);
+    }
+}
+
+TEST_CASE("cache topology aligns forward dyadic interior phase", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    for (const bool sourceReversed : {false, true}) for (const bool cacheReversed : {false, true}) {
+        auto source = basis(1, 1); source.reversed = sourceReversed;
+        const auto cache = phaseRing(true, sourceReversed, cacheReversed);
+        REQUIRE(cache.controlPoints.front().x == 945.0 / 512); REQUIRE(cache.controlPoints.front().y == 403.0 / 512);
+        geo::WorkBudget budget;
+        const auto result = geo::checkCache(cache, localTopologyDefinition(source, 1, cacheReversed), .02, budget);
+        checkPublicPath(result, budget, 1, .02); checkPhaseOracle(result, sourceReversed, true);
+    }
+}
+
+TEST_CASE("cache topology aligns reversed dyadic interior phase", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    for (const bool sourceReversed : {false, true}) for (const bool cacheReversed : {false, true}) {
+        auto source = basis(1, 1); source.reversed = sourceReversed;
+        auto cache = phaseRing(true, sourceReversed, cacheReversed);
+        std::reverse(cache.controlPoints.begin(), cache.controlPoints.end());
+        geo::WorkBudget budget;
+        const auto result = geo::checkCache(cache, localTopologyDefinition(source, 1, !cacheReversed), .02, budget);
+        checkPublicPath(result, budget, 1, .02); checkPhaseOracle(result, sourceReversed, true);
+    }
+}
+
+TEST_CASE("cache topology rejects missing reference tail", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto full = phaseRing(false);
+    const auto prefix = cachePieces(full, 0, 3);
+    geo::WorkBudget budget;
+    checkPublicRefusal(geo::checkCache(prefix, localTopologyDefinition(basis(1, 1)), .02, budget),
+        LC_OffsetCheckResult::Reason::Topology, budget);
+}
+
+TEST_CASE("cache topology rejects repeated reference tail", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto full = phaseRing(false);
+    auto cache = cacheLayoutFixture(3, {0, 1, 2, 3, 4, 5, 6, 7, 8});
+    std::copy(full.controlPoints.begin(), full.controlPoints.end(), cache.controlPoints.begin());
+    std::copy(full.controlPoints.begin() + 1, full.controlPoints.end(), cache.controlPoints.begin() + 13);
+    geo::WorkBudget budget;
+    const auto result = geo::checkCache(cache, localTopologyDefinition(basis(1, 1)), .02, budget);
+    checkPublicRefusal(result, LC_OffsetCheckResult::Reason::Topology, budget); CHECK(result.span == 4);
+}
+
+TEST_CASE("cache topology rejects candidate loop and retrace", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    SECTION("exact retrace is independent of tolerance") {
+        auto cache = cacheLayoutFixture(1, {0, 1, 2});
+        cache.controlPoints = {{2, 0}, {2, .001}, {2, 0}};
+        geo::WorkBudget budget;
+        const auto result = geo::checkCache(cache, localTopologyDefinition(basis(1, 1)), .02, budget);
+        checkPublicRefusal(result, LC_OffsetCheckResult::Reason::Topology, budget); CHECK(result.span == 1);
+    }
+    SECTION("adjacent monotone quadratic pieces still have a transverse interior contact") {
+        const auto source = basis(1, 1, .25, .2501);
+        const auto baseline = arcCache(source, 1, 1);
+        const auto origin = baseline.controlPoints.front();
+        auto cache = cacheLayoutFixture(3, {0, 1, 2});
+        // Exact degree elevations of (3t-2t^2,2t^2-t), then (1-s+2s^2,1-3s+2s^2).
+        const std::array<RS_Vector, 7> net{{{0,0},{1,-1.0/3},{4.0/3,0},{1,1},
+            {2.0/3,0},{1,-1.0/3},{2,0}}};
+        for (std::size_t i = 0; i < net.size(); ++i) { cache.controlPoints[i] = origin + net[i] * 1e-5; }
+        geo::WorkBudget budget;
+        checkPublicRefusal(geo::checkCache(cache, localTopologyDefinition(source), .01, budget),
+            LC_OffsetCheckResult::Reason::Topology, budget);
+    }
+}
+
+TEST_CASE("cache topology accepts exact event fringe join", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto source = basis(100, .5);
+    const auto full = materializedCache(source, -49, 1e-3);
+    for (const bool reversed : {false, true}) {
+        auto cache = full;
+        if (reversed) { std::reverse(cache.controlPoints.begin(), cache.controlPoints.end()); }
+        geo::WorkBudget budget;
+        const auto result = geo::checkCache(cache, localTopologyDefinition(source, -49, reversed), .01, budget);
+        checkPublicPath(result, budget, 49, .01);
+        REQUIRE(result.analysis->joins().size() == 2);
+        for (const auto& join : result.analysis->joins()) {
+            CHECK(join.kind == geo::CachePathJoinKind::PairEvent);
+            CHECK(join.from.value != join.to.value);
+        }
+    }
+}
+
+TEST_CASE("cache topology accepts closed trimmed cycle", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto source = basis(100, .5, 10 * M_PI / 180, 350 * M_PI / 180);
+    const auto cache = materializedCache(source, -49.5, 1e-3);
+    geo::WorkBudget budget;
+    const auto result = geo::checkCache(cache, localTopologyDefinition(source, -49.5), .01, budget);
+    checkPublicPath(result, budget, 49.5, .01);
+    CHECK(result.analysis->closed()); CHECK_FALSE(result.analysis->reference().events().seam());
+    CHECK(result.analysis->edges().size() == 2);
+}
+
+TEST_CASE("cache topology rejects open endpoint mismatch", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto source = basis(1, 1, .25, 1.25);
+    const auto cache = arcCache(basis(1, 1, .5, 1), 1, 3);
+    geo::WorkBudget budget;
+    checkPublicRefusal(geo::checkCache(cache, localTopologyDefinition(source), .001, budget),
+        LC_OffsetCheckResult::Reason::Topology, budget);
+}
+
+TEST_CASE("cache topology closure metadata false false permits open and closed geometry", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    for (const bool closed : {false, true}) {
+        const auto source = closed ? basis(1, 1) : basis(1, 1, .25, .2501);
+        auto cache = closed ? phaseRing(false) : arcCache(source, 1, 1);
+        cache.m_closedFlag = cache.m_periodicFlag = false;
+        geo::WorkBudget budget;
+        const auto result = geo::checkCache(cache, localTopologyDefinition(source), .02, budget);
+        checkPublicPath(result, budget, 1, .02); CHECK(result.analysis->closed() == closed);
+    }
+}
+
+TEST_CASE("cache topology periodic metadata does not infer derivative continuity", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    auto cache = phaseRing(true);
+    cache.m_closedFlag = cache.m_periodicFlag = true;
+    // One-sided speeds at this exact split are unequal; periodic metadata is not a C1 proof.
+    const auto first = cache.controlPoints[1] - cache.controlPoints[0];
+    const auto last = cache.controlPoints.back() - cache.controlPoints[cache.controlPoints.size() - 2];
+    REQUIRE(first.squared() != last.squared());
+    geo::WorkBudget budget;
+    checkPublicPath(geo::checkCache(cache, localTopologyDefinition(basis(1, 1)), .02, budget), budget, 1, .02);
+}
+
+TEST_CASE("cache topology directly asserts Topology reason", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto source = basis(1, 1, .25, 1.25);
+    const auto cache = arcCache(basis(1, 1, .5, 1), 1, 3);
+    geo::WorkBudget budget;
+    checkPublicRefusal(geo::checkCache(cache, localTopologyDefinition(source), .001, budget),
+        LC_OffsetCheckResult::Reason::Topology, budget);
+}
+
+TEST_CASE("cache topology accepts source start terminal", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    geo::WorkBudget budget; const auto result = publicArc(1, false, budget);
+    checkPublicPath(result, budget, 1, .01);
+    REQUIRE(result.analysis->startTerminal());
+    CHECK(result.analysis->startTerminal()->kind == geo::ReferenceTerminalKind::SourceStart);
+    CHECK(result.analysis->startTerminal()->occurrence.value == result.analysis->endpoints().front().occurrence.value);
+}
+
+TEST_CASE("cache topology accepts source end terminal", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    geo::WorkBudget budget; const auto result = publicArc(3, true, budget);
+    checkPublicPath(result, budget, 1, .01);
+    REQUIRE(result.analysis->endTerminal());
+    CHECK(result.analysis->endTerminal()->kind == geo::ReferenceTerminalKind::SourceEnd);
+    CHECK(result.analysis->endTerminal()->occurrence.value == result.analysis->endpoints().back().occurrence.value);
+}
+
+TEST_CASE("cache topology rejects through event endpoint", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto source = basis(1, 1);
+    const auto cache = arcCache(basis(1, 1, .25, .2501), 1, 1);
+    geo::WorkBudget budget;
+    checkPublicRefusal(geo::checkCache(cache, localTopologyDefinition(source), .01, budget),
+        LC_OffsetCheckResult::Reason::Topology, budget);
+}
+
+TEST_CASE("cache topology rejects arbitrary interior endpoint", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto source = basis(1, 1, .25, 1.25);
+    auto cache = arcCache(basis(1, 1, .5, 1.25), 1, 3);
+    geo::WorkBudget budget;
+    checkPublicRefusal(geo::checkCache(cache, localTopologyDefinition(source), .001, budget),
+        LC_OffsetCheckResult::Reason::Topology, budget);
+}
+
+TEST_CASE("cache topology rejects hidden cusp endpoint", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    auto cache = cacheLayoutFixture(1, {0, 1});
+    cache.controlPoints = {{-0x1.8700a72e08b38p+6, -0x1.8c704c47d1742p+1},
+        {-0x1.8700a72e08b38p+6, 0x1.8c704c47d1742p+1}};
+    geo::WorkBudget budget;
+    const auto result = geo::checkCache(cache, localTopologyDefinition(basis(100, .05, M_PI / 12, 7 * M_PI / 4), -4),
+        1e-5, budget);
+    checkPublicRefusal(result, LC_OffsetCheckResult::Reason::OffCurve, budget); CHECK(result.span == 0);
+}
+
+TEST_CASE("cache topology directly asserts ReferenceUnresolved reason", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    auto cache = cacheLayoutFixture(1, {0, 1}); cache.controlPoints = {{1, 0}, {2, 0}};
+    geo::WorkBudget budget;
+    checkPublicRefusal(geo::checkCache(cache, localTopologyDefinition(basis(1, 1), -1), .01, budget),
+        LC_OffsetCheckResult::Reason::ReferenceUnresolved, budget);
+    CHECK(budget.status() == geo::BudgetStatus::Ok);
+}
+
+TEST_CASE("cache topology refuses unresolved cut correspondence", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    auto cache = cacheLayoutFixture(1, {0, 1, 2, 3, 4});
+    cache.controlPoints = {{0,0},{.1,-.1},{.2,0},{.1,.1},{0,0}};
+    geo::WorkBudget budget;
+    checkPublicRefusal(geo::checkCache(cache, localTopologyDefinition(basis(1, 1), -.5), .49, budget),
+        LC_OffsetCheckResult::Reason::Ambiguous, budget);
+    CHECK(budget.status() == geo::BudgetStatus::Ok);
+}
+
+TEST_CASE("cache topology directly asserts Ambiguous reason", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    auto cache = cacheLayoutFixture(1, {0, 1, 2, 3, 4});
+    cache.controlPoints = {{0,0},{.1,-.1},{.2,0},{.1,.1},{0,0}};
+    geo::WorkBudget budget;
+    checkPublicRefusal(geo::checkCache(cache, localTopologyDefinition(basis(1, 1), -.5), .49, budget),
+        LC_OffsetCheckResult::Reason::Ambiguous, budget);
+}
+
+TEST_CASE("cache topology attributes original spans deterministically", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto source = basis(1, 1, .25, .2501);
+    const auto full = arcCache(source, 1, 1);
+    auto cache = cacheLayoutFixture(1, {0, 1, 2});
+    cache.controlPoints = {full.controlPoints[0], full.controlPoints[1], full.controlPoints[0]};
+    for (const bool reversed : {false, true}) {
+        geo::WorkBudget budget;
+        const auto result = geo::checkCache(cache, localTopologyDefinition(source, 1, reversed), .01, budget);
+        checkPublicRefusal(result, LC_OffsetCheckResult::Reason::Topology, budget);
+        CHECK(result.span == 1); // original raw order, not normalized traversal order
+    }
+}
+
+TEST_CASE("cache topology canonicalizes nearby same edge cut frontiers", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    for (const bool reversed : {false, true}) {
+        geo::WorkBudget aBudget, bBudget;
+        auto split = phaseRing(true, false, reversed);
+        auto nearby = phaseRing(true, false, reversed, false, .25 + 0x1p-12);
+        const auto definition = localTopologyDefinition(basis(1, 1), 1, reversed);
+        const auto a = geo::checkCache(split, definition, .02, aBudget);
+        const auto b = geo::checkCache(nearby, definition, .02, bBudget);
+        checkPublicPath(a, aBudget, 1, .02); checkPublicPath(b, bBudget, 1, .02);
+        CHECK(a.analysis->edges() == b.analysis->edges());
+        REQUIRE(a.analysis->joins().size() == 1); REQUIRE(b.analysis->joins().size() == 1);
+        CHECK(a.analysis->joins()[0].from.value == b.analysis->joins()[0].from.value);
+        CHECK(a.analysis->joins()[0].to.value == b.analysis->joins()[0].to.value);
+        REQUIRE(a.analysis->cut()); REQUIRE(b.analysis->cut());
+        REQUIRE_FALSE(a.analysis->cut()->transition); REQUIRE_FALSE(b.analysis->cut()->transition);
+        const auto& p = a.analysis->cut()->referenceParameter;
+        const auto& q = b.analysis->cut()->referenceParameter;
+        CHECK(p.hi() < q.lo()); CHECK(q.hi() - p.lo() < .01);
+    }
+}
+
+TEST_CASE("cache topology admits deterministic 64 span cycle", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto base = phaseRing(false);
+    geo::WorkBudget layoutBudget;
+    const auto layout = geo::inspectCacheLayout(base, layoutBudget);
+    REQUIRE(layout.status == geo::CacheLayoutStatus::Ok);
+    std::vector<std::array<RS_Vector, 4>> nets;
+    for (const auto& span : layout.spans) { nets.push_back(span.controls); }
+    for (unsigned level = 0; level < 4; ++level) {
+        std::vector<std::array<RS_Vector, 4>> children;
+        for (auto net : nets) {
+            std::array<RS_Vector, 4> left, right; left[0] = net[0]; right[3] = net[3];
+            for (unsigned row = 1; row <= 3; ++row) {
+                for (unsigned i = 0; i <= 3 - row; ++i) { net[i] = (net[i] + net[i+1]) * .5; }
+                left[row] = net[0]; right[3-row] = net[3-row];
+            }
+            children.push_back(left); children.push_back(right);
+        }
+        nets = std::move(children);
+    }
+    REQUIRE(nets.size() == 64);
+    std::vector<double> knots; for (unsigned i = 0; i <= 64; ++i) { knots.push_back(double(i)); }
+    auto cache = cacheLayoutFixture(3, knots);
+    for (std::size_t i = 0; i < nets.size(); ++i) {
+        for (unsigned j = 0; j <= 3; ++j) { cache.controlPoints[3*i+j] = nets[i][j]; }
+    }
+    geo::WorkBudget aBudget, bBudget;
+    const auto a = geo::checkCache(cache, localTopologyDefinition(basis(1, 1)), .02, aBudget);
+    const auto b = geo::checkCache(cache, localTopologyDefinition(basis(1, 1)), .02, bBudget);
+    checkPublicPath(a, aBudget, 1, .02); checkPublicPath(b, bBudget, 1, .02);
+    CHECK(a.work.cacheSpans >= 64); checkWork(a.work, b.work);
+    CHECK(a.analysis->pieces().size() == b.analysis->pieces().size());
+}
+
+TEST_CASE("cache topology follows source continuation without hidden interval", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto source = basis(100, .5, 2.6, 3.6);
+    const auto cache = materializedCache(source, -25, 1e-3);
+    geo::WorkBudget diagnosticBudget;
+    const auto diagnostic = geo::analyseReferenceComponents(source, -25, .01, diagnosticBudget);
+    CAPTURE(diagnostic.status, diagnostic.reason, diagnostic.eventReason, diagnostic.work.distancePairs,
+        diagnostic.work.vertices, diagnostic.work.deepest);
+    REQUIRE(diagnostic.status == LC_IntersectionStatus::Ok); REQUIRE(diagnostic.analysis);
+    geo::WorkBudget budget;
+    const auto result = geo::checkCache(cache, localTopologyDefinition(source, -25), .01, budget);
+    checkPublicPath(result, budget, 25, .01);
+    REQUIRE(std::any_of(result.analysis->joins().begin(), result.analysis->joins().end(), [](const auto& join) {
+        return join.kind == geo::CachePathJoinKind::SourceContinuation && join.from.value == join.to.value;
+    }));
+    for (const auto& join : result.analysis->joins()) {
+        if (join.kind != geo::CachePathJoinKind::SourceContinuation) { continue; }
+        CHECK_FALSE(result.analysis->reference().terminal(join.incoming, geo::ReferenceEdgeSide::End));
+        CHECK_FALSE(result.analysis->reference().terminal(join.outgoing, geo::ReferenceEdgeSide::Start));
+    }
+}
+
+TEST_CASE("cache topology selects separate paths from two component producer", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto caches = twoComponentCaches();
+    const auto definition = localTopologyDefinition(basis(100, .05, M_PI / 12, 7 * M_PI / 4), -4);
+    for (unsigned i = 0; i < 2; ++i) {
+        geo::WorkBudget budget;
+        const auto result = geo::checkCache(caches[i], definition, .001, budget);
+        checkPublicPath(result, budget, 4, .001);
+        CHECK(result.analysis->closed() == (i == 1));
+        CHECK(result.analysis->edges().size() == (i == 0 ? 1 : 2));
+        CHECK(result.analysis->reference().edges().size() == 3);
+    }
+}
+
+TEST_CASE("cache topology accepts pair trim without retained continuation", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto cache = twoComponentCaches()[0];
+    const auto source = basis(100, .05, M_PI / 12, 7 * M_PI / 4);
+    geo::WorkBudget budget;
+    const auto result = geo::checkCache(cache, localTopologyDefinition(source, -4), .001, budget);
+    checkPublicPath(result, budget, 4, .001);
+    REQUIRE(result.analysis->endTerminal());
+    const auto& terminal = *result.analysis->endTerminal();
+    CHECK(terminal.kind == geo::ReferenceTerminalKind::PairTrim);
+    CHECK(result.analysis->reference().events().occurrences()[terminal.partner.value].role == geo::ReferenceRole::EndCutter);
+    CHECK(result.analysis->reference().occurrenceIncidence()[terminal.occurrence.value].outgoing == noTerminal);
+}
+
+TEST_CASE("cache topology rejects wrong paired terminal orientation", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    auto cache = twoComponentCaches()[0];
+    std::reverse(cache.controlPoints.begin(), cache.controlPoints.end());
+    geo::WorkBudget budget;
+    checkPublicRefusal(geo::checkCache(cache, localTopologyDefinition(basis(100, .05, M_PI / 12, 7 * M_PI / 4), -4), .001, budget),
+        LC_OffsetCheckResult::Reason::Topology, budget);
+}
+
+TEST_CASE("cache topology rejects G2 upper lens E0 only path", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto cache = upperLensCache();
+    geo::WorkBudget budget;
+    checkPublicRefusal(geo::checkCache(cache, localTopologyDefinition(basis(100, .5), -49), .01, budget),
+        LC_OffsetCheckResult::Reason::Topology, budget);
+    const auto reference = terminalGraph(basis(100, .5), -49);
+    REQUIRE(reference.analysis->edges().size() == 2);
+    for (std::size_t i = 0; i < 2; ++i) {
+        CHECK_FALSE(reference.analysis->terminal(i, geo::ReferenceEdgeSide::Start));
+        CHECK_FALSE(reference.analysis->terminal(i, geo::ReferenceEdgeSide::End));
+    }
+}
+
+TEST_CASE("cache topology rejects crossing branch switch", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto upper = upperLensCache();
+    std::vector<double> knots; for (unsigned i = 0; i <= 32; ++i) { knots.push_back(double(i)); }
+    auto cache = cacheLayoutFixture(3, knots);
+    std::copy(upper.controlPoints.begin(), upper.controlPoints.end(), cache.controlPoints.begin());
+    // At the left crossing, the incoming upper occurrence must continue through its paired
+    // lower outgoing occurrence, not reverse along the same incoming upper edge.
+    std::reverse_copy(upper.controlPoints.begin(), upper.controlPoints.end() - 1, cache.controlPoints.begin() + 49);
+    geo::WorkBudget budget;
+    const auto result = geo::checkCache(cache, localTopologyDefinition(basis(100, .5), -49), .01, budget);
+    checkPublicRefusal(result, LC_OffsetCheckResult::Reason::Topology, budget); CHECK(result.span == 16);
+}
+
+TEST_CASE("cache topology rejects wrong event occurrence identity", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto upper = upperLensCache();
+    const auto reference = terminalGraph(basis(100, .5), -49);
+    const auto& edge = reference.analysis->edges()[0];
+    const auto& span = reference.analysis->spans()[edge.span];
+    REQUIRE(reference.analysis->occurrenceIncidence()[span.end.value].outgoing == noTerminal);
+    bool pairedOutgoing = false;
+    for (const auto& event : reference.analysis->events().pairs()) {
+        if (event.first.value != span.end.value && event.second.value != span.end.value) { continue; }
+        const auto partner = event.first.value == span.end.value ? event.second : event.first;
+        pairedOutgoing = reference.analysis->occurrenceIncidence()[partner.value].outgoing != noTerminal;
+        CHECK(partner.value != span.end.value);
+    }
+    REQUIRE(pairedOutgoing);
+    geo::WorkBudget budget;
+    // Its endpoints have correct physical node images but not a terminal return credential.
+    checkPublicRefusal(geo::checkCache(upper, localTopologyDefinition(basis(100, .5), -49), .01, budget),
+        LC_OffsetCheckResult::Reason::Topology, budget);
+}
+
+TEST_CASE("cache topology rejects continuation across hidden interval", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    // The untrimmed major-axis neighbourhood is hidden for this inward whole source.
+    const auto cache = arcCache(basis(100, .5, 0, .1), -49, 3);
+    geo::WorkBudget budget;
+    checkPublicRefusal(geo::checkCache(cache, localTopologyDefinition(basis(100, .5), -49), .01, budget),
+        LC_OffsetCheckResult::Reason::OffCurve, budget);
+}
+
+TEST_CASE("cache topology rejects hidden seam inward lens shortcut", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    // A source-wrap shortcut through theta=0 cannot supply G2's hidden seam.
+    const auto cache = arcCache(basis(100, .5, 6.2, .1), -49, 3);
+    geo::WorkBudget budget;
+    checkPublicRefusal(geo::checkCache(cache, localTopologyDefinition(basis(100, .5), -49), .01, budget),
+        LC_OffsetCheckResult::Reason::OffCurve, budget);
+}
+
+TEST_CASE("cache topology rejects unauthorized disconnected component join", "[lc-offsetcurve][geometry][cache-topology-chain]") {
+    const auto caches = twoComponentCaches();
+    const auto openSpans = (caches[0].controlPoints.size()-1)/3;
+    const auto closedSpans = (caches[1].controlPoints.size()-1)/3;
+    std::vector<double> knots;
+    for (std::size_t i = 0; i <= openSpans + 1 + closedSpans; ++i) { knots.push_back(double(i)); }
+    auto cache = cacheLayoutFixture(3, knots);
+    std::copy(caches[0].controlPoints.begin(), caches[0].controlPoints.end(), cache.controlPoints.begin());
+    const auto a = caches[0].controlPoints.back(), b = caches[1].controlPoints.front();
+    REQUIRE(a != b);
+    cache.controlPoints[3*openSpans+1] = a + (b-a)/3;
+    cache.controlPoints[3*openSpans+2] = b - (b-a)/3;
+    std::copy(caches[1].controlPoints.begin(), caches[1].controlPoints.end(), cache.controlPoints.begin() + 3*(openSpans+1));
+    geo::WorkBudget budget;
+    checkPublicRefusal(geo::checkCache(cache, localTopologyDefinition(basis(100, .05, M_PI/12, 7*M_PI/4), -4), .001, budget),
+        LC_OffsetCheckResult::Reason::Topology, budget);
+}
+
+TEST_CASE("Reference stationary root bands retain a complete weak-monotone projection proof",
+          "[lc-offsetcurve][geometry][reference-projection]") {
+    const auto source = basis(100, .5, 2.6, 3.6);
+    geo::WorkBudget budget;
+    const auto prepared = geo::prepareReferenceProviders(source, -25, budget);
+    REQUIRE(prepared.status == LC_IntersectionStatus::Ok); REQUIRE(prepared.provider);
+    const auto& provider = *prepared.provider;
+    LC_Interval bound;
+    REQUIRE(provider.boundOwnProjectedDerivative(0, 1, LC_Interval::point(0), LC_Interval::point(-1), bound));
+    CHECK(bound.lo() == 0); CHECK(bound.hi() > 0);
+    for (unsigned i = 0; i <= 128; ++i) {
+        checkEnclosure(bound, -referenceOracle(source, provider.frame(), -25, double(i)/128, true)[3]);
+    }
+    for (const auto& bad : {LC_Interval{}, LC_Interval::point(std::numeric_limits<double>::infinity())}) {
+        bound = LC_Interval::point(123);
+        CHECK_FALSE(provider.boundOwnProjectedDerivative(0, 1, bad, LC_Interval::point(1), bound));
+        CHECK_FALSE(bound.isValid());
+    }
+    CHECK_FALSE(provider.boundOwnProjectedDerivative(-1, 1, LC_Interval::point(0), LC_Interval::point(-1), bound));
+    CHECK_FALSE(bound.isValid());
+}
+
+TEST_CASE("Critical constant-factor exclusion spans nonadjacent stationary regions but no diagonal continuum",
+          "[lc-offsetcurve][geometry][reference-projection]") {
+    const auto source = basis(100, .5, 2.6, 3.6);
+    geo::WorkBudget budget;
+    const auto critical = geo::analyseCritical(source, -25, budget);
+    REQUIRE(critical.status == LC_IntersectionStatus::Ok); REQUIRE(critical.adapter);
+    REQUIRE(critical.adapter->regime() == geo::CriticalRegime::MinimumStationary);
+    const auto& segments = critical.adapter->segments(); REQUIRE(segments.size() == 3);
+    const auto domain = LC_IntersectionDomain{0, 2, LC_Interval::hull(segments[0].t0, segments[0].t1),
+        LC_Interval::hull(segments[2].t0, segments[2].t1)};
+    const auto certificate = critical.adapter->certifyIntersection(domain);
+    CHECK(certificate.outcome == LC_AnalyticIntersectionCertificate::Outcome::Excluded);
+    CHECK(certificate.proof == LC_IntersectionProof::AnalyticExclusion);
+    const auto continuum = critical.adapter->certifyIntersection({0, 0, domain.parameterA, domain.parameterA});
+    CHECK(continuum.outcome == LC_AnalyticIntersectionCertificate::Outcome::Unavailable);
+    const Quad pi = boost::math::constants::pi<Quad>();
+    CHECK(Quad(source.angle2)-Quad(source.angle1) < pi);
+    // F=1-25*5000/s^3 >=0 because s>=50, with only the isolated major-axis zero.
+    CHECK(Quad(25)*5000 == Quad(50)*50*50);
+    CHECK(-sin(Quad(source.angle1)) < 0); CHECK(-sin(Quad(source.angle2)) > 0);
+    CHECK(cos(Quad(source.angle1)) < 0); CHECK(cos(Quad(source.angle2)) < 0);
+}
