@@ -211,7 +211,8 @@ namespace RS2 {
         EntitySnapArc,
         EntitySnapCircle,
         EntitySnapConstructionLine,
-        EntityDimArrowBlock
+        EntityDimArrowBlock,
+        EntityOffsetCurve /**< Certified ellipse-offset spline cache */
     };
 
     inline bool isDimensionalEntity(EntityType type)  {

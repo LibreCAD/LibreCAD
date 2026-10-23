@@ -30723,6 +30723,7 @@ void RS_FilterDXFRW::writeEntity(RS_Entity *e) {
     writeLWPolyline(static_cast<RS_Polyline *>(e));
     break;
   case RS2::EntitySpline:
+  case RS2::EntityOffsetCurve:
     writeSpline(static_cast<RS_Spline *>(e));
     break;
   case RS2::EntitySplinePoints:
@@ -32669,7 +32670,8 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch *h) {
       std::vector<RS_Entity *> edges;
       for (RS_Entity *ed :
            lc::LC_ContainerTraverser{*loop, RS2::ResolveNone}.entities()) {
-        if (ed->isContainer() && ed->rtti() != RS2::EntitySpline) {
+        if (ed->isContainer() && ed->rtti() != RS2::EntitySpline &&
+            ed->rtti() != RS2::EntityOffsetCurve) {
           const auto parts = lc::LC_ContainerTraverser{
               *static_cast<RS_EntityContainer *>(ed), RS2::ResolveAll}.entities();
           edges.insert(edges.end(), parts.begin(), parts.end());
@@ -32737,7 +32739,8 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch *h) {
         } else if (ed->rtti() == RS2::EntitySplinePoints) {
           lData->objlist.push_back(makeDrwSplineFromSplinePoints(
               static_cast<LC_SplinePoints *>(ed)));
-        } else if (ed->rtti() == RS2::EntitySpline) {
+        } else if (ed->rtti() == RS2::EntitySpline ||
+                   ed->rtti() == RS2::EntityOffsetCurve) {
           lData->objlist.push_back(
               makeDrwSplineFromRSSpline(static_cast<RS_Spline *>(ed)));
         }

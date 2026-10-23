@@ -124,6 +124,9 @@ public:
   /** Get const spline data reference */
   const RS_SplineData &getData() const;
 
+  /** Mutation detector for the complete representation, not a geometric certificate. */
+  static std::uint64_t geometryFingerprint(const RS_SplineData &data) noexcept;
+
   /** Get unwrapped size (control points without wrapping) */
   size_t getUnwrappedSize() const;
 
@@ -368,6 +371,8 @@ public:
 
   friend class RS_FilterDXFRW;
 protected:
+    /** Publish staged data/display children without invoking update() or listeners midcommit. */
+    OwnedReplacement replacePreparedSpline(RS_Spline &prepared);
     /** Nearest endpoint or control point */
     RS_Vector doGetNearestEndpoint(const RS_Vector &coord, double *dist, RS_Entity** entity) const override;
     /** Nearest reference point (overrides container method) */

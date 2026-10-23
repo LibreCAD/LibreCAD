@@ -92,6 +92,13 @@ bool LC_ActionModifyEntity::doTriggerModifications(LC_DocumentModificationBatch&
     const int status = getStatus();
     if (status == ShowDialog) {
         if (m_entity != nullptr) {
+            if (m_entity->rtti() == RS2::EntityOffsetCurve) {
+                // Do not clone/select or open the generic spline editor before
+                // the native definition editor can commit a certified replacement.
+                commandMessage(tr("Offset curve properties are not yet editable."));
+                ctx.dontSetActiveLayerAndPen();
+                return false;
+            }
             const bool selected = m_entity->isSelected();
             select(m_entity);
             setStatus(InEditing);

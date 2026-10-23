@@ -30,8 +30,10 @@
 #include <type_traits>
 
 #include "drw_base.h"
+#include "lc_action_modify_entity.h"
 #include "lc_actiontestsupport.h"
 #include "lc_documentinvariants.h"
+#include "lc_testentityfactory.h"
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_filterdxfrw.h"
@@ -72,6 +74,14 @@ struct Drawing {
         m_graphic.onLoadingCompleted();
         m_view.setDocument(&m_graphic);
     }
+};
+
+class OffsetPropertiesAction final : public LC_ActionModifyEntity {
+public:
+    explicit OffsetPropertiesAction(LC_ActionContext* context) : LC_ActionModifyEntity(context) {}
+    using LC_ActionModifyEntity::ShowDialog;
+    using LC_ActionModifyEntity::doInitWithContextEntity;
+    using LC_ActionModifyEntity::doTriggerModifications;
 };
 
 // Fonts from the source tree, so that texts have glyphs.
@@ -200,6 +210,12 @@ std::vector<std::function<RS_Entity*(RS_Graphic&)>> containerMakers() {
             return s;
         },
         [](RS_Graphic& g) -> RS_Entity* {
+            auto offset = lc::test::makeOffsetCurve(&g);
+            REQUIRE(offset != nullptr);
+            REQUIRE(offset->hasEditableDefinition());
+            return offset.release();
+        },
+        [](RS_Graphic& g) -> RS_Entity* {
             auto* i = new RS_Insert(&g, RS_InsertData("B1", RS_Vector{20, 0}, RS_Vector{1, 1}, 0.0, 1, 1, RS_Vector{0, 0}));
             i->update();
             return i;
@@ -265,6 +281,63 @@ TEST_CASE("A value copy of a container is a deep copy", "[copy][container]") {
     CHECK(copy->entityAt(0)->getParent() == copy.get());
     copy.reset();
     CHECK(original->entityAt(0)->getLength() == 10.0);
+}
+
+TEST_CASE("Native offset clones own their cache and extension values", "[copy][container][lc-offsetcurve]") {
+    Drawing d;
+    auto original = lc::test::makeOffsetCurve(&d.m_graphic);
+    REQUIRE(original != nullptr);
+    LC_OffsetCurve::OwnedTail tail{{1000, QStringLiteral("original extension")},
+                                 {1010, RS_Vector{1, 2}}, {1070, std::int16_t{7}}};
+    REQUIRE(original->setOwnedExtensions(0x10, tail));
+    const std::unique_ptr<LC_OffsetCurve> clone{static_cast<LC_OffsetCurve*>(original->clone())};
+    REQUIRE(clone != nullptr);
+    REQUIRE(clone->rtti() == RS2::EntityOffsetCurve);
+    REQUIRE(clone->hasEditableDefinition());
+    CHECK(clone->getData().controlPoints.data() != original->getData().controlPoints.data());
+    CHECK(clone->cachedDefinitionGrips().data() != original->cachedDefinitionGrips().data());
+    CHECK(clone->unknownOwnedTail().data() != original->unknownOwnedTail().data());
+    CHECK(clone->unknownOwnedFlags() == 0x10);
+    REQUIRE(clone->unknownOwnedTail().size() == 3);
+    tail.front().value = QStringLiteral("changed caller storage");
+    CHECK(std::get<QString>(clone->unknownOwnedTail().front().value) == QStringLiteral("original extension"));
+    REQUIRE(clone->setOwnedExtensions(0x20, tail));
+    CHECK(original->unknownOwnedFlags() == 0x10);
+    CHECK(std::get<QString>(original->unknownOwnedTail().front().value) == QStringLiteral("original extension"));
+    CHECK(lc::test::containerProblems(*clone).isEmpty());
+    const double before = touch(clone.get());
+    original.reset();
+    CHECK(touch(clone.get()) == before);
+    CHECK(clone->hasEditableDefinition());
+    CHECK(std::get<QString>(clone->unknownOwnedTail().front().value) == QStringLiteral("changed caller storage"));
+}
+
+TEST_CASE("Offset Edit Properties refuses before selection cloning or document changes",
+          "[copy][lc-offsetcurve][properties]") {
+    lc::test::ActionFixture<OffsetPropertiesAction> f;
+    auto offset = lc::test::makeOffsetCurve(&f.m_graphic);
+    REQUIRE(offset != nullptr);
+    auto* entity = offset.get();
+    f.m_graphic.addEntity(offset.release());
+    f.m_graphic.setModified(false);
+    const auto flags = entity->getFlags();
+    const auto controls = entity->getData().controlPoints;
+    f.m_action->doInitWithContextEntity(entity, RS_Vector{0, 0});
+    f.m_action->setStatus(OffsetPropertiesAction::ShowDialog);
+    LC_DocumentModificationBatch batch;
+    CHECK_FALSE(f.m_action->doTriggerModifications(batch));
+    CHECK(batch.entitiesToAdd.isEmpty());
+    CHECK(batch.entitiesToDelete.isEmpty());
+    CHECK_FALSE(batch.setActiveLayer);
+    CHECK_FALSE(batch.setActivePen);
+    CHECK(f.m_action->getStatus() == OffsetPropertiesAction::ShowDialog);
+    CHECK(f.m_action->mayBeTerminatedExternally());
+    REQUIRE(f.m_graphic.count() == 1);
+    CHECK(f.m_graphic.entityAt(0) == entity);
+    CHECK(entity->getFlags() == flags);
+    CHECK(entity->getData().controlPoints == controls);
+    CHECK(entity->hasEditableDefinition());
+    CHECK_FALSE(f.m_graphic.isModified());
 }
 
 TEST_CASE("A cloned closed polyline closes itself, not the original", "[copy][polyline]") {

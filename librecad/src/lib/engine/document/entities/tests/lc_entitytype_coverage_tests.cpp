@@ -19,6 +19,7 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  ******************************************************************************/
 
+#include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/generators/catch_generators_range.hpp>
 
@@ -133,6 +134,9 @@ constexpr Row rowOf(RS2::EntityType type) {
     case RS2::EntitySnapCircle: return notApplicable("Transient snap circle, not persistent drawing geometry");
     case RS2::EntitySnapConstructionLine: return notApplicable("Transient snap construction line, not persistent drawing geometry");
     case RS2::EntityDimArrowBlock: return notApplicable("Owned dimension arrow block, written as its primitives");
+    case RS2::EntityOffsetCurve:
+        return withGap(drawing(type), DxfRoundTrip | DwgRoundTrip | InsertExpansion,
+                       "Offset definitions are not yet serialized; INSERT deliberately expands a plain SPLINE cache");
     }
     return notAnEnumerator();
 }
@@ -150,7 +154,7 @@ constexpr unsigned countRows() {
 }
 
 constexpr unsigned kRowCount = countRows();
-static_assert(kRowCount == static_cast<unsigned>(RS2::EntityDimArrowBlock) + 1u,
+static_assert(kRowCount == static_cast<unsigned>(RS2::EntityOffsetCurve) + 1u,
               "RS2::EntityType has a value without a row");
 
 constexpr unsigned textLength(const char* text) {
@@ -213,6 +217,14 @@ void requireDrawingFixture(const RS_Entity* entity, RS2::EntityType type, const 
     case RS2::EntitySpline:
         REQUIRE(static_cast<const RS_Spline*>(entity)->validate());
         break;
+    case RS2::EntityOffsetCurve: {
+        const auto* offset = static_cast<const LC_OffsetCurve*>(entity);
+        REQUIRE(offset->validate());
+        REQUIRE(offset->isDefined());
+        REQUIRE(offset->isConsistent());
+        REQUIRE(offset->hasEditableDefinition());
+        break;
+    }
     case RS2::EntitySplinePoints:
         REQUIRE(static_cast<const LC_SplinePoints*>(entity)->getNumberOfControlPoints() >= 3);
         break;
@@ -335,9 +347,19 @@ bool runCheck(Check check, RS2::EntityType type, bool mixedBlock = false,
     RS_Insert insert(&graphic, RS_InsertData(blockName, {10, 5}, {2, 2}, M_PI / 6.0, 1, 1, {0, 0}));
     insert.update();
     const unsigned expectedCount = mixedBlock ? 2u : 1u;
+    if (type == RS2::EntityOffsetCurve)
+        REQUIRE(insert.count() == expectedCount);
     if (insert.count() != expectedCount)
         return false;
     const RS_Entity* last = insert.entityAt(expectedCount - 1u);
+    if (type == RS2::EntityOffsetCurve) {
+        REQUIRE(last != nullptr);
+        REQUIRE(last != sourceIdentity);
+        REQUIRE(last->rtti() == RS2::EntitySpline);
+        REQUIRE(last->getParent() == &insert);
+        REQUIRE(last->hasValidBorders());
+        REQUIRE(static_cast<const RS_Spline*>(last)->validate());
+    }
     const auto expectedType = type == RS2::EntityInsert ? RS2::EntityLine : type;
     if (last == nullptr || last == sourceIdentity || last->rtti() != expectedType || last->getParent() != &insert)
         return false;
@@ -374,8 +396,8 @@ TEST_CASE("Every entity type has an explicit coverage disposition", "[entity-cov
             CHECK(textLength(row.reason) > 10);
         }
     }
-    CHECK(kRowCount == 50);
-    CHECK(drawingRows == 27);
+    CHECK(kRowCount == 51);
+    CHECK(drawingRows == 28);
     CHECK(exemptRows == 23);
 }
 
@@ -444,6 +466,151 @@ TEST_CASE("Construction lines retain native INSERT expansion", "[entity-coverage
     CHECK(insert.entityAt(0)->getParent() == &insert);
 }
 
+TEST_CASE("Offset INSERT fallback transforms the complete cache without editing its source",
+          "[entity-coverage][lc-offsetcurve][insert]") {
+    lc::test::ensureSettings();
+    const lc::test::QuietLog quiet;
+    const double angle = 0.37;
+    const RS_Vector translation{10.125, -3.75};
+    for (const RS_Vector scale : {RS_Vector{2, 2}, RS_Vector{2, 3}, RS_Vector{-2, 3}}) {
+        for (const bool nested : {false, true}) {
+            CAPTURE(scale.x, scale.y, nested);
+            RS_Graphic graphic;
+            graphic.initForNewDocument();
+            const QString name = QStringLiteral("LC_OFFSET_INSERT_FALLBACK");
+            auto block = std::make_unique<RS_Block>(&graphic, RS_BlockData(name, {0, 0}, false));
+            auto childBlock = std::make_unique<RS_Block>(block.get(), RS_BlockData("CHILD", {0, 0}, false));
+            RS_EntityContainer* owner = nested ? childBlock.get() : block.get();
+            auto offset = lc::test::makeOffsetCurve(owner);
+            REQUIRE(offset != nullptr);
+            auto* source = offset.get();
+            const auto data = source->getData();
+            const auto definition = source->definition();
+            owner->appendEntity(offset.release());
+            if (nested)
+                block->appendEntity(childBlock.release());
+            REQUIRE(graphic.addBlock(block.release()));
+
+            RS_Insert insert(&graphic, RS_InsertData(name, translation, scale, angle, 1, 1, {0, 0}));
+            insert.update();
+            REQUIRE(insert.count() == 1);
+            const RS_Entity* expanded = insert.entityAt(0);
+            REQUIRE(expanded != nullptr);
+            CHECK(expanded->getParent() == &insert);
+            if (nested) {
+                REQUIRE(expanded->rtti() == RS2::EntityBlock);
+                const auto* container = static_cast<const RS_EntityContainer*>(expanded);
+                REQUIRE(container->count() == 1);
+                expanded = container->entityAt(0);
+                REQUIRE(expanded != nullptr);
+                CHECK(expanded->getParent() == container);
+            }
+            REQUIRE(expanded->rtti() == RS2::EntitySpline);
+            const auto* spline = static_cast<const RS_Spline*>(expanded);
+            REQUIRE(spline->validate());
+            REQUIRE(spline->getData().controlPoints.size() == data.controlPoints.size());
+            for (std::size_t i = 0; i < data.controlPoints.size(); ++i) {
+                const auto& p = data.controlPoints[i];
+                const RS_Vector expected{translation.x + std::cos(angle) * scale.x * p.x - std::sin(angle) * scale.y * p.y,
+                                         translation.y + std::sin(angle) * scale.x * p.x + std::cos(angle) * scale.y * p.y};
+                CHECK(spline->getData().controlPoints[i].distanceTo(expected) < 1e-10);
+            }
+            CHECK(spline->getData().knotslist == data.knotslist);
+            CHECK(spline->getData().weights == data.weights);
+            CHECK(source->rtti() == RS2::EntityOffsetCurve);
+            CHECK(source->getParent() == owner);
+            CHECK(source->hasEditableDefinition());
+            CHECK(source->getData().controlPoints == data.controlPoints);
+            CHECK(source->definition().distance == definition.distance);
+        }
+    }
+}
+
+TEST_CASE("Offset descendants borrowed through a container reject INSERT without editing the source",
+          "[entity-coverage][lc-offsetcurve][insert]") {
+    lc::test::ensureSettings();
+    const lc::test::QuietLog quiet;
+    RS_EntityContainer originals(nullptr, true);
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    const QString name = QStringLiteral("LC_OFFSET_BORROWED_INSERT");
+    auto block = std::make_unique<RS_Block>(&graphic, RS_BlockData(name, {0, 0}, false));
+    auto offset = lc::test::makeOffsetCurve(&originals);
+    REQUIRE(offset != nullptr);
+    auto* source = offset.get();
+    const auto controls = source->getData().controlPoints;
+    originals.appendEntity(offset.release());
+    auto borrowed = std::make_unique<RS_EntityContainer>(block.get(), false);
+    borrowed->appendEntity(source);
+    block->appendEntity(borrowed.release());
+    auto wrapper = std::make_unique<RS_Block>(&graphic, RS_BlockData("LC_OFFSET_BORROWED_WRAPPER", {0, 0}, false));
+    wrapper->appendEntity(block.release());
+    REQUIRE(graphic.addBlock(wrapper.release()));
+    RS_Insert insert(&graphic, RS_InsertData("LC_OFFSET_BORROWED_WRAPPER", {10, 5}, {2, 2}, 0.37, 1, 1, {0, 0}));
+    insert.update();
+    CHECK(insert.count() == 0);
+    CHECK(source->getData().controlPoints == controls);
+    CHECK(source->hasEditableDefinition());
+}
+
+TEST_CASE("Offset INSERT refuses overflow and nested sub-tolerance scales atomically",
+          "[entity-coverage][lc-offsetcurve][insert]") {
+    lc::test::ensureSettings();
+    const lc::test::QuietLog quiet;
+    for (const bool nested : {false, true}) for (const bool overflow : {false, true}) {
+        CAPTURE(nested, overflow);
+        RS_Graphic graphic; graphic.initForNewDocument();
+        const QString name = QStringLiteral("LC_OFFSET_FINITE_INSERT");
+        auto block = std::make_unique<RS_Block>(&graphic, RS_BlockData(name, {0, 0}, false));
+        // This first sibling is representable even in the overflow case. A
+        // later refusal must not publish its already prepared expansion.
+        block->appendEntity(new RS_Line(block.get(), RS_LineData({0, 0}, {0, 1})));
+        auto child = std::make_unique<RS_Block>(block.get(), RS_BlockData("CHILD", {0, 0}, false));
+        RS_EntityContainer* owner = nested ? child.get() : block.get();
+        auto offset = lc::test::makeOffsetCurve(owner); REQUIRE(offset);
+        auto* source = offset.get(); const auto controls = source->getData().controlPoints;
+        owner->appendEntity(offset.release());
+        if (nested) block->appendEntity(child.release());
+        REQUIRE(graphic.addBlock(block.release()));
+        const RS_Vector scale = overflow ? RS_Vector{1e308, 1e-308} : RS_Vector{2, 5e-11};
+        RS_Insert insert(&graphic, RS_InsertData(name, {0, 0}, scale, 0, 1, 1, {0, 0}));
+        insert.update();
+        if (overflow || nested) CHECK(insert.count() == 0);
+        else {
+            REQUIRE(insert.count() == 2);
+            REQUIRE(insert.entityAt(1)->rtti() == RS2::EntitySpline);
+            const auto* spline = static_cast<const RS_Spline*>(insert.entityAt(1));
+            REQUIRE(spline->getData().controlPoints.size() == controls.size());
+            for (std::size_t i = 0; i < controls.size(); ++i) {
+                CHECK(spline->getData().controlPoints[i].x == Catch::Approx(scale.x*controls[i].x));
+                CHECK(spline->getData().controlPoints[i].y == Catch::Approx(scale.y*controls[i].y).margin(1e-24));
+            }
+        }
+        CHECK(source->getData().controlPoints == controls);
+        CHECK(source->hasEditableDefinition());
+    }
+}
+
+TEST_CASE("Offset fallback refuses borrowed non-offset siblings before transforming sources",
+          "[entity-coverage][lc-offsetcurve][insert]") {
+    lc::test::ensureSettings();
+    const lc::test::QuietLog quiet;
+    RS_EntityContainer originals(nullptr, true);
+    RS_Graphic graphic; graphic.initForNewDocument();
+    const QString name = QStringLiteral("LC_OFFSET_BORROWED_SIBLING");
+    auto* line = new RS_Line(&originals, RS_LineData({3, 4}, {5, 6})); originals.appendEntity(line);
+    auto block = std::make_unique<RS_Block>(&graphic, RS_BlockData(name, {0, 0}, false));
+    auto offset = lc::test::makeOffsetCurve(block.get()); REQUIRE(offset);
+    block->appendEntity(offset.release());
+    auto borrowed = std::make_unique<RS_EntityContainer>(block.get(), false);
+    borrowed->appendEntity(line); block->appendEntity(borrowed.release());
+    auto wrapper = std::make_unique<RS_Block>(&graphic, RS_BlockData("LC_OFFSET_SIBLING_WRAPPER", {0, 0}, false));
+    wrapper->appendEntity(block.release()); REQUIRE(graphic.addBlock(wrapper.release()));
+    RS_Insert insert(&graphic, RS_InsertData("LC_OFFSET_SIBLING_WRAPPER", {10, 5}, {2, 2}, .37, 1, 1, {0, 0}));
+    insert.update(); CHECK(insert.count() == 0);
+    CHECK(line->getStartpoint() == RS_Vector(3, 4)); CHECK(line->getEndpoint() == RS_Vector(5, 6));
+}
+
 TEST_CASE("An unsupported container rejects the complete mixed INSERT", "[entity-coverage]") {
     lc::test::ensureSettings();
     const lc::test::QuietLog quiet;
@@ -471,9 +638,16 @@ TEST_CASE("Every drawing entity has a DXF 2018 round-trip disposition", "[entity
     const lc::test::QuietLog quiet;
     const lc::test::SourceFonts fonts;
     std::string diagnostic;
-    const bool passed = runCheck(DxfRoundTrip, type, false, row.reloadsAs, &diagnostic);
+    RoundTripObservation observation;
+    const bool passed = runCheck(DxfRoundTrip, type, false, row.reloadsAs, &diagnostic, &observation);
     INFO(diagnostic);
     checkOutcome(row, DxfRoundTrip, passed);
+    if (type == RS2::EntityOffsetCurve) {
+        REQUIRE(observation.exported);
+        REQUIRE(observation.imported);
+        CHECK(observation.loadedTypes == std::vector<RS2::EntityType>{RS2::EntitySpline});
+        CHECK(observation.usableGeometry);
+    }
 }
 
 #ifdef DWGSUPPORT
@@ -492,10 +666,12 @@ TEST_CASE("Every drawing entity has a DWG 2018 round-trip disposition", "[entity
     INFO(diagnostic);
     checkOutcome(row, DwgRoundTrip, passed);
     if ((row.knownGaps & DwgRoundTrip) != 0) {
-        REQUIRE(type == RS2::EntityMLeader);
         REQUIRE(observation.exported);
         REQUIRE(observation.imported);
-        const std::vector<RS2::EntityType> expected{RS2::EntityDimLeader, RS2::EntityMText};
+        REQUIRE((type == RS2::EntityMLeader || type == RS2::EntityOffsetCurve));
+        const std::vector<RS2::EntityType> expected = type == RS2::EntityOffsetCurve
+            ? std::vector<RS2::EntityType>{RS2::EntitySpline}
+            : std::vector<RS2::EntityType>{RS2::EntityDimLeader, RS2::EntityMText};
         CHECK(observation.loadedTypes == expected);
         CHECK(observation.usableGeometry);
     }

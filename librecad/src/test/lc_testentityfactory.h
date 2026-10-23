@@ -31,6 +31,7 @@
 #include "lc_dimordinate.h"
 #include "lc_hyperbola.h"
 #include "lc_mleader.h"
+#include "lc_offsetcurve.h"
 #include "lc_parabola.h"
 #include "lc_splinepoints.h"
 #include "lc_tolerance.h"
@@ -58,6 +59,17 @@
 #include "rs_text.h"
 
 namespace lc::test {
+
+/** Tiny circular-offset chord admitted by the public complete-cache checker. */
+inline std::unique_ptr<LC_OffsetCurve> makeOffsetCurve(RS_EntityContainer* owner) {
+    LC_EllipseOffsetDefinition definition;
+    definition.basis = RS_EllipseData{{0, 0}, {1, 0}, 1.0, 0.25, 0.2501, false};
+    definition.distance = 1.0;
+    definition.relTolerance = 0.01;
+    const RS_Line cache(owner, RS_LineData({2 * std::cos(0.25), 2 * std::sin(0.25)},
+                                         {2 * std::cos(0.2501), 2 * std::sin(0.2501)}));
+    return LC_OffsetCurve::adopt(cache, definition, 0.01);
+}
 
 /**
  * One updated entity, parented to owner but not added to it. The caller must
@@ -224,6 +236,9 @@ inline std::unique_ptr<RS_Entity> makeDrawingEntity(RS2::EntityType type, RS_Gra
         entity = std::make_unique<RS_Spline>(owner, data);
         break;
     }
+    case RS2::EntityOffsetCurve:
+        entity = makeOffsetCurve(owner);
+        break;
     case RS2::EntitySplinePoints: {
         LC_SplinePointsData data(false, false);
         data.splinePoints = {{0, 0}, {5, 7}, {10, 0}};
@@ -237,6 +252,8 @@ inline std::unique_ptr<RS_Entity> makeDrawingEntity(RS2::EntityType type, RS_Gra
     default:
         return nullptr;
     }
+    if (!entity)
+        return nullptr;
     entity->setLayer(graphic.findLayer(QStringLiteral("0")));
     entity->update();
     entity->calculateBorders();
