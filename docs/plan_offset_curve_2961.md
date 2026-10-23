@@ -24,10 +24,10 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-23. Status: all A slices, B, C and X-H1 through X-H5 plus H6-core committed; native feature incomplete.
+Updated: 2026-10-23. Status: all A slices, B, C and X-H1 through X-H6 committed; native feature incomplete.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
-This checkpoint records tested A-core/A-strict/A-reference/A-cache/B/C and auxiliary X-H1 through X-H5 plus H6-core commits. Later
+This checkpoint records tested A-core/A-strict/A-reference/A-cache/B/C and auxiliary X-H1 through X-H6 commits. Later
 main-track slices remain incomplete; no native entity is claimed.
 
 ## 1. Verified Baseline and Scope
@@ -41,7 +41,7 @@ main-track slices remain incomplete; no native entity is claimed.
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
 | Latest product checkpoint | `d4a0b081a` (C) |
-| Latest auxiliary checkpoint | `6d4fd25b3` (H5 evidence; H4 3e06e3894, H6 core 9170b0cc9) |
+| Latest auxiliary checkpoint | `507e44ad7` (H6 integration; H5 6d4fd25b3, H4 3e06e3894) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
 | A-core | Atomic work adoption, separate ordering allowance and sticky terminal status implemented; A04/A10 registered |
@@ -53,7 +53,7 @@ main-track slices remain incomplete; no native entity is claimed.
 | Native entity | No `LC_OffsetCurve` or `EntityOffsetCurve` yet |
 | Product integration | No native offset adoption, private file schema, creation/editing UI, or target-trim integration yet |
 | Build registration | Geometry, contact and routing sources in CMake/qmake; focused geometry/contact/routing/budget tests in `librecad_tests` |
-| Validation harness | X-H1 through X-H5 and H6-core committed; remaining H6 integration, complete CLI orchestration and H7 pending |
+| Validation harness | X-H1 through X-H6 committed; complete CLI orchestration and H7 pending |
 | Latest validation | A-core, geometry and format fast lanes passed Release/ASan; full Release and qmake6 passed; see section 14 |
 
 Recheck these facts against the selected implementation checkout before starting
@@ -1511,7 +1511,7 @@ one plan update, not another candidate/freeze lifecycle.
 | X-H3 | Committed, 7da2bb144 | Real pinned registry/CLI, explicit worker contract and exact output inventory; missing/undefined/unknown/FAIL are refusals, never default PASS; 30 runner tests and independent review |
 | X-H4 | Committed 3e06e3894; explicit API | Complete genesis/chained case rows, pinned identities/order/actual outputs, exclusive publication/replay/mutation checks; not automatic CLI persistence |
 | X-H5 | Committed 6d4fd25b3; explicit API | Actual source/runtime/receipt/diagnostic/ledger/output evidence, exclusive absent publication and bound automated checker; 44 focused tests and independent review |
-| X-H6 | Core committed 9170b0cc9; 11 obligations pending | 93 explicit obligations, all original71 IDs retained, 82 executable scenarios; H4/H5 integration still required, no full H6 claim |
+| X-H6 | Committed 507e44ad7; core 9170b0cc9 | All 93 obligations executable, all original71 IDs retained; owned H4/H5 protocols, precise root scopes and mutation/prefix checks; 94 inventory tests pass |
 | X-H7 | Generator/checker/reports absent | Generate exact source/runtime/case manifests; independent validation and four canonical suites run twice with reproducible semantic results |
 
 ### Concrete H2 Capture Corrections
@@ -1810,6 +1810,38 @@ C's 18 new contact-matching cases passed 687 assertions; combined C/refinement
 119 cases passed 18618 assertions. Independent static review cleared the matcher,
 actual route-port integration, owner-validity guard and owner allocation ordering.
 Final qualification is recorded below; native feature remains incomplete.
+
+### X-H6 Integration Validation (2026-10-23)
+
+Implementation `507e44ad7` binds the remaining 11 obligations to actual owned
+H4/H5 APIs. All 93 scenarios are executable; the inventory meta-test makes 94
+passing cases, zero pending declarations or skips. Original71 IDs remain exact.
+TREE05a-c and JOIN04 reach the genuine persisted-binding guards documented in
+section 13.1. Typed exceptions have no invented terminal status. Evidence
+publication/control cases retain H3/ledger prefixes, full input/environment
+snapshots and actual checker dispatch counts. A hostile real checker that claims
+PASS after substituting an output is refused by the actual H5 revalidation.
+
+The shared fixture extraction preserves all 44 original H5 test names/behavior.
+It also supports capture-only setup, explicit extra sources and actual worker/
+checker module selection before capture; these are test controls, not validation
+authority. H6 definitions register once through the parent registry in sorted ID
+order. H7 can pin an immutable roadmap expectation snapshot as a real H2 input;
+ordinary tests continue to check the live plan.
+
+Parent evidence: X-H6-full-initial-01.tap (94/94) and
+X-H6-pipeline-integrated-01.tap (276/276 across H1-H6 plus the then-current 11
+pipeline controls) in `/private/tmp/lc2961-impl-evidence.9GtLO2`. The pipeline is
+still uncommitted and under correction; its test count is not H7 qualification.
+Author final H5 regression `/private/tmp/lc2961-h6-final-owned-h5-regression.tap`
+passed 44/44. Independent reviewer reran H6/H5 138/138, checked the original71
+against HEAD and separately probed four throwing boundaries; no H6 P1/P2 issue.
+
+Next auxiliary slice is end-to-end CLI orchestration. Independent review found
+two pipeline issues to fix before commit: final H5 evidence revalidation, and
+overall FAIL normalization when H5 refuses after H3/H4 output creation. Then
+finish H7's genuine suites/preflight, independent checker and two complete runs.
+No native entity, human approval or whole-roadmap completion is claimed.
 
 ### C Topology Validation (2026-10-23)
 
