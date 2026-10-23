@@ -24,12 +24,12 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-23. Status: all A slices, B, C, D-core/D-edit committed; X-H1 through X-H7 complete for the observed source; native workflow incomplete.
+Updated: 2026-10-23. Status: all A slices, B, C and all D slices committed; X-H1 through X-H7 complete for the observed source; native workflow incomplete.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
-This checkpoint records tested A-core/A-strict/A-reference/A-cache/B/C/D-core/D-edit
+This checkpoint records tested A-core/A-strict/A-reference/A-cache/B/C/D-core/D-edit/D-grips
 and auxiliary X-H1 through X-H7 commits/qualification. Native adoption, creation and staged
-definition editing are implemented; grip/tool integration, persistence, UI and
+definition editing and cached grips/snaps are implemented; tool integration, persistence, UI and
 trimming remain later slices.
 
 ## 1. Verified Baseline and Scope
@@ -42,7 +42,7 @@ trimming remain later slices.
 | Difference between initial checkpoints | Only this plan file; no product-source change |
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
-| Latest product checkpoint | `4300c1031` (D-edit; D-core 92758859c) |
+| Latest product checkpoint | `47e14c74b` (D-grips; D-edit 4300c1031, D-core 92758859c) |
 | Latest auxiliary checkpoint | `90714f758` (H7 bounded suite-pair scheduling; temp-path/journal fix c1b2fa095, driver 5a3e47039) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
@@ -52,14 +52,14 @@ trimming remain later slices.
 | A-cache | Atomic Candidate/Proof subdivision, inherited combined depth, prepared capacity, bounded dispatch/coverage |
 | B terminals | Immutable exact occurrence/edge-side classification, separate source incidence, bounded storage/scans |
 | C topology | Complete bounded unique-path checker, owned contact query and exact root-to-port matching; unresolved correspondence refuses Ambiguous |
-| Native entity | `LC_OffsetCurve` / `EntityOffsetCurve`, checked adoption, real creation, transactional mutators, actual stage results, consistency stamp, clone, exact proof transport and bounded owned extensions |
+| Native entity | Checked adoption/creation, transactional mutators and actual stage results; consistency stamp, clone, exact proof transport, cached visible grips/safe snaps and bounded owned extensions |
 | Product integration | Spline-shaped export, explicit INSERT plain-cache fallback and interim property refusal; tool adoption, private file schema, UI and trim pending |
 | Build registration | Geometry/contact/routing/native sources in CMake/qmake6; native and adjacent tests registered and executed |
 | Validation harness | X-H1 through X-H7 complete: source90714f758,407-case regression, two full qualification runs and independent retained-evidence audit |
 | Latest validation | A-core, geometry and format fast lanes passed Release/ASan; full Release and qmake6 passed; see section 14 |
 
 Recheck these facts against the selected implementation checkout before starting
-D-grips. Inventory Qt6/Catch2/build tools and available independently authored
+E-tools. Inventory Qt6/Catch2/build tools and available independently authored
 DXF/DWG fixtures/inspection tools once, recording provenance/access gaps early;
 source-level progress need not wait for unrelated external-tool installation. The user's main checkout is a different, dirty branch and is not the
 source baseline above. Do not overwrite its unrelated changes or apply this plan
@@ -218,7 +218,7 @@ test commit followed by the section 4 plan checkpoint.
 | C | B | Full unique-path topology checker and public result | committed d4a0b081a |
 | D-core | C | Native enum/entity, real validated adoption, stamp, clone and transforms | committed 92758859c |
 | D-edit | D-core | Real create/mutators, one-run staging, run limits and refusal results | committed 4300c1031 |
-| D-grips | D-edit | Cached definition grips, safe snaps and through-parameter query | in progress |
+| D-grips | D-edit | Cached definition grips, safe snaps and through-parameter query | committed 47e14c74b |
 | E-tools | D-grips | Tool result adoption, explicit plain fallback, explode/scale/INSERT/plugin | pending |
 | E-again | E-tools | Bounded repeated offset/rebase with plain fallback | pending |
 | F-types | E-again | Complete engine/document/filter type-site integration census | pending |
@@ -258,7 +258,7 @@ editing; changes beyond the named concern require a scope note in the slice card
 | A-core/A-reference/A-cache/B/C | librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.{h,cpp}; tests/lc_offsetcurve_geometry_tests.cpp in that entity directory |
 | A-strict | Same directory: lc_parametriccurveintersection.{h,cpp}; tests/lc_parametriccurveintersection_tests.cpp |
 | D-core/D-edit/D-grips | librecad/src/lib/engine/rs.h; entity directory rs_spline.{h,cpp}, rs_insert.cpp, new lc_offsetcurve.{h,cpp}, existing lc_offsetoutputbudget.h, new tests/lc_offsetcurve_tests.cpp; container/tests/lc_copy_semantics_tests.cpp; interim action guard |
-| E-tools/E-again | librecad/src/lib/modification/rs_modification.{h,cpp} and tests/rs_modification_offset_tests.cpp; optional small lc_offsetcurveagain helper; librecad/src/main/doc_plugin_interface.cpp |
+| E-tools/E-again | librecad/src/lib/modification/rs_modification.{h,cpp} and tests/rs_modification_offset_tests.cpp; entity helpers lc_offsetcurvetransform.{h,cpp}/tests and optional small lc_offsetcurveagain helper; librecad/src/main/doc_plugin_interface.cpp |
 | F-types/F-names | Current rg-derived enum/dispatch census; lib/selection/metaentity/lc_entitymatchdescriptorsregistry; ui/action_options/selection/lc_selectwindowoptions; entity name/quick-info/context/menu-activator registries |
 | G-schema | librecad/src/lib/filters/new lc_offsetcurvexdata.{h,cpp}; tests/lc_offsetcurvexdata_tests.cpp |
 | G-adapter/G-fixtures/G-matrix | librecad/src/lib/filters/rs_filterdxfrw.{h,cpp}; existing filter tests/testdata and new lc_offsetcurve_filter_tests.cpp; libraries/libdxfrw only for demonstrated codec loss plus focused codec tests |
@@ -273,7 +273,7 @@ editing; changes beyond the named concern require a scope note in the slice card
 
 ### Current Next Cards
 
-The main track resumes at D-grips (section 8.3). D-core `92758859c` uses the actual
+The main track resumes at E-tools (section 8.4). D-core `92758859c` uses the actual
 C checker, not a layout-only adoption gate. Similarity transport requires exact
 dyadic affine images of every stored coordinate and unchanged normalized semantic
 basis fields. Rounded similarities and arc reflections refuse unchanged; whole
@@ -284,11 +284,24 @@ shear produce an undefined spline-shaped instance. Never restamp a stale cache.
 D-edit `4300c1031` stages complete replacements, including validated closure,
 before publication via `replacePreparedSpline` / `replaceOwnedEntities`. The
 private checked-constructor path is not a caller-controlled validation flag.
-D-grips now replaces the cached endpoint fallback with visible analytic grips
-and snap behavior, preparing all new hint storage before publication. E-tools must
+D-grips `47e14c74b` prepares visible quarter/corner/midpoint grips and safe snap
+behavior before publication. It separates visibility witnesses from ordering
+correspondence; unresolved optional hints are omitted. E-tools must
 cover move/rotate/mirror as well as scale/INSERT: any document transform that
 cannot transport a native proof must explicitly use a correctly transformed plain
 cache or refuse the whole operation, never silently publish an unmoved clone.
+
+For E-tools use the prepared fixed-capacity typed transform-step helper, not an
+opaque callback: validate all steps before cloning, reject borrowed subtrees,
+check every INSERT source edit before a later step can clear its failure, and
+compare complete actual cache values before retaining a transported definition.
+Short mirror-axis enlargement must prove exact collinearity or refuse. Register
+and execute the prepared19 helper tests before integration; their source exists
+but is not built or validated yet. Keep ordinary preview/text/image behavior.
+Add committed top-level ellipse adoption with option default false, bounded
+per-copy kept-plain reasons/counts, and correct native display-tree accounting.
+Explode once yields one ordinary spline. Plugin and document transforms must
+either publish the correctly transformed plain cache or refuse the whole edit.
 
 The auxiliary scheduler correction `90714f758` passed the407-case regression.
 Both isolated full runs of `H7-qualification-03` returned PASS through the actual
@@ -1774,7 +1787,7 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 | Atomic budget API | Committed and validated (`0eb2a0cfa`) | Integrate solver/geometry work in A-strict/A-reference |
 | Geometry work/exception/split/depth/terminal proof | All A slices and B committed and validated | C complete checker |
 | Complete semantic path checker | C committed d4a0b081a; used by D-core public adoption | D-edit staged regeneration |
-| Native feature/UI/persistence/trim | D-core/D-edit committed; later workflow incomplete | Follow D-grips through T; do not label unregistered helper scaffolding complete |
+| Native feature/UI/persistence/trim | All D slices committed; later workflow incomplete | Follow E-tools through T; do not label unregistered helper scaffolding complete |
 | Independent DWG/version fixtures | Required, not yet qualified | Inventory/tool/license/provenance during G-fixtures; close all rows in G-matrix |
 | Harness production readiness | X-H1-X-H6 and H7 source fixes committed; actual qualification incomplete | Two complete quiet-CPU qualification runs |
 | Independent review and test evidence | A-core independent static review and actual test reports complete | Obtain fresh review/validation for each successor |
@@ -1798,8 +1811,74 @@ The plan checkpoint column never depends on its own future SHA.
 | X-H2 | 25661f1a3 | Immediate plan-only checkpoint | 15 input + 27 process + 25 H1 tests; five syntax checks; independent input/process reviews |
 | D-core | 92758859c | Immediate plan-only checkpoint | Native/adjacent/full Release, ASan adjacent, both format fast lanes and qmake6 passed; independent static review corrections verified |
 | D-edit | 4300c1031 | Immediate plan-only checkpoint | 43 focused native/edit cases; full Release, affected ASan, DXF/DWG Release/ASan, qmake6 and committed-blob audit passed; independent static review |
+| D-grips | 47e14c74b | Immediate plan-only checkpoint | 19 focused cases, full Release,583 affected ASan cases, both format lanes Release/ASan and qmake6 passed; independent static corrections and nine-blob audit |
 | X-H7 timeout source fix | c1b2fa095 | Immediate plan-only checkpoint | Author55 + independent15 controls and parent399 runner regression passed; actual runtime qualification remains open |
 | X-H7 bounded scheduling | 90714f758 | Immediate plan-only checkpoint | Author85 + independent12 controls, parent407 runner regression and real224.790-second preflight probe passed; full two-run qualification remains open |
+
+### D-grips Validation (2026-10-23)
+
+Product `47e14c74b` adds value-owned quarter/corner/midpoint preparation from the
+same actual C result, never another materializer/checker run. C PairEvent mapping
+supplies retained lens tips; unproved ideal points are not exposed. Exact line
+projection and bounded cubic distance/derivative subdivision determine ordering
+separately from visibility. Only disjoint optional correspondence enclosures are
+retained together; C-known corner parameters have priority. Sampling, visibility,
+correspondence, topology scans and output storage have explicit finite caps.
+
+Complete state publication includes the cached midpoint. Exact transforms
+recompute that sampled-arc-length hint from the transported cache, without engine
+or C; they do not require an old rounded hint to be an exact affine image.
+Editable moveRef is inert. Undefined/inconsistent instances delegate to ordinary
+spline controls without restamping. Ref/center/middle/end/distance snaps initialize
+outputs and reject invalid2D queries. Whole/closed endpoint snaps use visible
+grips, not an arbitrary construction seam; distance-along is invalid there.
+Local-scale roundoff plus explicit coordinate ULPs match unique grip indices;
+ambiguous matches refuse. Internal nearest searches use infinity, not the
+application's1e10 refusal-output sentinel.
+
+The review's third concrete boundary case is an actually C-admitted radius2.025
+carrier for an exact radius2 profile at T=.02. Its four quarter seeds are outside
+T but within C's admitted2T band. The helper now uses a checked actual cache
+evaluation in that band and separately checks rounding against T. These are
+separate bounds, not a claim that the final rounded hint is within2T of the ideal
+seed. Metadata, original C results, raw controls and knots remain unchanged.
+
+Evidence root: `/private/tmp/lc2961-impl-evidence.9GtLO2`.
+
+- `D-grips-focused-release-05` / `D-grips-focused-asan-05`:19 cases,32,426
+  assertions, zero failures/skips. Independent fixtures cover both cache orders,
+  reversed short line/cubic visibility neighborhoods, lens tips/closed arc results,
+  non-quarter seams, large-center ambiguity and exact2^34 scaling beyond1e10.
+- `D-grips-full-release-01`:4,047 cases,4,021 passed, same26 baseline skips,
+  7,470,067 assertions. All prior JUnit identities retained,19 new cases,
+  unchanged skip set in `D-grips-baseline-comparison-01.json`.
+- `D-grips-affected-asan-01`:583 cases,1,654,500 assertions, zero failures/skips.
+  Same host ASAN_OPTIONS=detect_leaks=0; no other sanitizer disabled.
+- DXF Release/ASan:748 cases,745 passed, same3 skips,40,175 assertions. DWG
+  Release/ASan:1,006 cases,1,002 passed, same4 skips,34,948 assertions. Parsed
+  identities and skips match the prior slice; see `D-grips-asan-comparison-01.json`.
+- Final Release build06, ASan build05 and qmake6 build04 exited0. The qmake
+  configure01 completed before final builds; early build01 raced configuration
+  and is retained as a failed exploratory attempt, not validation.
+- Nine source and seven actual binary hashes are in
+  `D-grips-source-build-identity-01.json`; all committed blobs match tested source
+  in `D-grips-committed-blob-audit-01.txt`. Static review cleared the corrected
+  ordering, nearest-distance and projection paths. Cppcheck2.22.0 exited2 with
+  twelve reviewed diagnostics: the four prior diagnostics plus eight internal
+  aggregate fields always explicitly initialized by their construction sites.
+  `D-grips-cppcheck-01.log` is retained; no clean-analysis claim.
+
+Retain exploratory failures: an eight-span phase-shifted cache was conservatively
+refused by C before hint preparation, so it is not a positive credential. The
+final fixed non-quarter source frame(.6,.8) earns real C admission in both cache
+orders; signed-zero assertions were corrected only for geometric seam equality,
+while complete-state checks remain bit exact. Build03 found two Catch2 ternary
+macro expressions needing parentheses; focus03 accidentally exercised old
+binaries after that failed build and is explicitly not validation. The distinct
+ordering, large-distance and admitted-band regressions passed on rebuilt sources.
+
+Next E-tools. Prepared transform/schema helpers remain unregistered and untested;
+they are not completed product slices. Keep the E/F/G dependency order.
 
 ### X-H7 Runtime Qualification (2026-10-23)
 
