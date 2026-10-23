@@ -222,7 +222,7 @@ test commit followed by the section 4 plan checkpoint.
 | E-tools | D-grips | Tool result adoption, explicit plain fallback, explode/scale/INSERT/plugin | committed a37982bd6 |
 | E-again | E-tools | Bounded repeated offset/rebase with plain fallback | committed bf7b512cf |
 | F-types | E-again | Complete engine/document/filter type-site integration census | complete:49c9b328b |
-| F-names | F-types | Names, quick info, context/selection/menu descriptors | pending |
+| F-names | F-types | Names, quick info, context/selection/menu descriptors | complete:f0fb28fab |
 | G-schema | F-names | Shared typed XDATA/EED definition parser/merger | pending |
 | G-adapter | G-schema | Actual application DXF/DWG read/write and failure propagation | pending |
 | G-fixtures | G-adapter | Hostile metadata/raw carrier, ownership and failed-save regressions | pending |
@@ -273,7 +273,7 @@ editing; changes beyond the named concern require a scope note in the slice card
 
 ### Current Next Cards
 
-The main track resumes at F-names (section 8.6). D-core `92758859c` uses the actual
+The main track resumes at G-schema (section 9.1). D-core `92758859c` uses the actual
 C checker, not a layout-only adoption gate. Similarity transport requires exact
 dyadic affine images of every stored coordinate and unchanged normalized semantic
 basis fields. Rounded similarities and arc reflections refuse unchanged; whole
@@ -314,24 +314,37 @@ Spline-category window selection still includes native curves. This avoids
 occluding ordinary spline control tools with a nearer unsupported native input.
 Native target trimming is refused until T; ordinary targets accept native limits.
 
-Next F-names implementation order:
+F-names `f0fb28fab` adds the dedicated translated name, native-only match metadata,
+bounded quick-info/descriptions and same-ID refresh. Native generated children
+resolve locally to their owner for hover/info/context. The Spline checkbox,
+selection totals, OC activator assignment/copy/serialization and context commands
+are covered by actual Qt tests. No control-net descriptor/provider is exposed;
+native Edit Properties remains a safe refusal until H-dialog. Enum-wide naming
+coverage retains four explicit pre-existing legacy gaps rather than silently
+claiming every existing type has a name.
 
-1. Add the distinct translated name and dedicated native match descriptor. Show
-   defined/consistent/editable state, embedded ellipse source, distance, physical
-   side and bounded cached length. Unavailable values must not match even under
-   NOT_EQUALS/MATCH_ALL. Never alias the ordinary control-net descriptor/provider.
-2. Add the native type to both directions of the existing Spline checkbox and
-   the OC menu activator. Include it in selection totals and coverage inventories.
-3. Add bounded native quick-info/descriptions, preserving existing units. Resolve
-   a direct generated child to its native owner before naming/context/info reads.
-   Native same-ID edits must not leave stale cached descriptions.
-4. Offer Offset/Explode/Revert context commands, not control-point editing. Keep
-   the temporary safe native Edit Properties refusal until H-dialog.
-5. Run real matcher/widget/context tests, entity coverage, adjacent Release/ASan,
-   full Release, both format lanes and qmake6; review/audit/commit/checkpoint.
-   The evidence-side F-names proposal/patch is not qualified implementation.
-   Unregistered shared schema/carrier helpers remain future work; independent
-   ACadSharp fixtures/tooling are generated but not LibreCAD interoperability PASS.
+Next G-schema implementation order:
+
+1. Review/register the shared typed parser/merger and bounded raw SPLINE carrier
+   helpers in CMake/qmake6, with31 schema and33 carrier authored cases. These
+   cases have not run yet. Carrier admission is data-only, not C certification.
+2. Fix native owned-tail storage before using the parser as an adoption source:
+   replace target-independent four-byte-per-character rejection with a bounded
+   16-KiB logical payload/4096 UTF-16 units per string guard; retain64 items/depth8,
+   validate text, and allocate dense owned strings before a final swap. Never
+   retain QString::fromRawData backing storage or claim allocator-byte bounds.
+3. Keep the4096 target-encoded tail and65535 EED limits in the shared encoding
+   boundary. Qualify the corrected code1003 DXF name-size/EED handle-size split,
+   actual legacy expansion, UTF-16 and ASCII caret framing; no shared tag mutation.
+4. Test exact/over limits, invalid/surrogate/control text and refusal state/owned
+   raw-data lifetimes with real native fixtures. Run focused/adjacent Release/ASan,
+   full Release, format lanes, qmake6, static review and tested-blob audit.
+5. Commit/checkpoint before G-adapter wires the real callbacks. The adapter must
+   resolve raw DXF text decoding, operation-scoped target codec/options, raw
+   eligibility before repair, one actual C adoption, every fallback's stripping,
+   APPID reuse and sticky serialization failure. Future fixture/tooling/trim/UI
+   scaffolding remains unqualified until its named slice; generated independent
+   ACadSharp inputs are not LibreCAD interoperability PASS.
 
 The auxiliary scheduler correction `90714f758` passed the407-case regression.
 Both isolated full runs of `H7-qualification-03` returned PASS through the actual
@@ -1817,7 +1830,7 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 | Atomic budget API | Committed and validated (`0eb2a0cfa`) | Integrate solver/geometry work in A-strict/A-reference |
 | Geometry work/exception/split/depth/terminal proof | All A slices and B committed and validated | C complete checker |
 | Complete semantic path checker | C committed d4a0b081a; used by D-core public adoption | D-edit staged regeneration |
-| Native feature/UI/persistence/trim | All D/E and F-types committed; later workflow incomplete | Follow F-names through T; do not label unregistered helper scaffolding complete |
+| Native feature/UI/persistence/trim | All D/E/F slices committed; later workflow incomplete | Follow G-schema through T; do not label unregistered helper scaffolding complete |
 | Independent DWG/version fixtures | Required, not yet qualified | Inventory/tool/license/provenance during G-fixtures; close all rows in G-matrix |
 | Harness production readiness | X-H1-X-H7 committed; actual two-run qualification03 independently audited | Retain observed-byte/runtime scope and failed attempts; no future timing guarantee |
 | Independent review and test evidence | A-core independent static review and actual test reports complete | Obtain fresh review/validation for each successor |
@@ -1845,8 +1858,58 @@ The plan checkpoint column never depends on its own future SHA.
 | E-tools | a37982bd6 | Immediate plan-only checkpoint | 55 focused Release/ASan cases, full Release,638 affected ASan cases, both format lanes Release/ASan and qmake6; independent review corrections and13-blob audit |
 | E-again | bf7b512cf | Immediate plan-only checkpoint | 37 focused Release/ASan cases, full Release,687 affected ASan cases, both format lanes Release/ASan and qmake6; three review corrections, actual profiles and13-blob audit |
 | F-types | 49c9b328b | Immediate plan-only checkpoint | 73 focused Release/ASan cases (one unbuilt legacy-export skip), full Release,199 adjacent ASan cases, DXF/DWG Release/ASan, qmake6; independent review and27-blob audit |
+| F-names | f0fb28fab | Immediate plan-only checkpoint | 16 focused Release/ASan cases, full Release,67 adjacent ASan cases, both format lanes Release/ASan and qmake6; independent source/test review and17-blob audit |
 | X-H7 timeout source fix | c1b2fa095 | Immediate plan-only checkpoint | Author55 + independent15 controls and parent399 runner regression passed; actual runtime qualification remains open |
 | X-H7 bounded scheduling | 90714f758 | Immediate plan-only checkpoint | Author85 + independent12 controls, parent407 runner regression and real224.790-second preflight probe passed; full two-run qualification remains open |
+
+### F-names Validation (2026-10-23)
+
+Product `f0fb28fab` completes the names/selection/menu/info part of section8.6
+in17 source/test/build files. Dedicated native metadata gates unavailable values
+before every comparator, including MATCH_ALL and inequality. Length readers cap
+counts before walking direct owned line children, require finite XY/exact zero Z,
+and reject malformed/nested/foreign-parent caches. They read existing displayed
+geometry without cloning, regeneration or C. Physical side is not traversal parity.
+
+Both Quick Info entry points resolve direct native children before identity reads;
+native same-ID updates bypass ordinary identity caches. Native hover/context paths
+select and describe the owner. OC assignment, serialization and copy retain the
+native type; fixing the missing activator type-copy field is necessary for that
+workflow. Existing ordinary-entity behavior is covered alongside native commands.
+No property provider/control-net editor is aliased and H's safety refusal remains.
+
+Evidence root: `/private/tmp/lc2961-impl-evidence.9GtLO2`.
+
+- Explicit CMake Release/ASan three-target builds03 and qmake6 configure/build01
+  passed. Same Qt6/C++17/Release and Debug-ASan configurations; host leak detector
+  limitation unchanged. No geometry/effort bound changed.
+- `F-names-focused-{release,asan}-01`:16 cases,463 assertions, no failures/skips.
+  Includes15 real matcher/widget/menu/info cases and one enum-wide naming check
+  using the compiler-exhaustive current coverage registry, not a stale type count.
+  Solid/Wipeout/MLeader/Tolerance retain their four explicit legacy name-list gaps;
+  every other drawing type has exactly one current name, including OffsetCurve.
+- `F-names-full-release-01`:4,228 total,4,201 passed,27 unchanged skips;
+  all8,745,772 assertions pass. All5,163 previous F-types JUnit rows remain;
+  current5,179 rows add exactly16, with identical skip identities.
+- `F-names-affected-asan-01`:67 cases,13,342 assertions, no failures/skips.
+  Includes the full focused set plus current entity coverage, hover, selection
+  and property-widget/lifetime regressions under offscreen QApplication.
+- DXF Release/ASan01:749 total,746 passed,3 unchanged skips,40,279 assertions.
+  The new enum-name check adds one row to the existing coverage lane; no widget
+  case is put into that lane. DWG Release/ASan01:1,006 total,1,002 passed,
+ 4 unchanged skips,34,948 assertions. All prior format rows retained.
+- `F-names-report-audit-01.json` checks row retention, exact additions, skip
+  identities, equal focused identities and focus containment in adjacent ASan.
+  Source/binary identity01 and audit01 bind17 source files and7 binaries.
+  Committed-blob audit01 confirms every committed blob equals the tested source.
+- Independent static source and test review reports no actionable P1/P2 findings.
+  Cppcheck02 (Qt slots configured) exits2 with four reviewed initialization/style
+  warnings, not a clean analysis claim. The pre-existing pen-registry diagnostic
+  and constructor-style suggestions are not runtime failures in the new path.
+
+The discovery build and first test compile (a C++17 aggregate initializer written
+with parentheses) remain preserved; neither is final evidence. No unrelated main
+checkout or unregistered G/T helpers are committed. Next: G-schema.
 
 ### F-types Validation (2026-10-23)
 
