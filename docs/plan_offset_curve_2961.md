@@ -24,10 +24,10 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-23. Status: all A slices, B and X-H1 through X-H4 plus H6-core committed; native feature incomplete.
+Updated: 2026-10-23. Status: all A slices, B and X-H1 through X-H5 plus H6-core committed; native feature incomplete.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
-This checkpoint records tested A-core/A-strict/A-reference/A-cache/B and auxiliary X-H1 through X-H4 plus H6-core commits. Later
+This checkpoint records tested A-core/A-strict/A-reference/A-cache/B and auxiliary X-H1 through X-H5 plus H6-core commits. Later
 main-track slices remain incomplete; no native entity or complete topology checker
 is claimed.
 
@@ -42,7 +42,7 @@ is claimed.
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
 | Latest product checkpoint | `9bf0546b6` (B) |
-| Latest auxiliary checkpoint | `3e06e3894` (H4 ledger; H6 inventory core 9170b0cc9) |
+| Latest auxiliary checkpoint | `6d4fd25b3` (H5 evidence; H4 3e06e3894, H6 core 9170b0cc9) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
 | A-core | Atomic work adoption, separate ordering allowance and sticky terminal status implemented; A04/A10 registered |
@@ -54,7 +54,7 @@ is claimed.
 | Native entity | No `LC_OffsetCurve` or `EntityOffsetCurve` yet |
 | Product integration | No native offset adoption, private file schema, creation/editing UI, or target-trim integration yet |
 | Build registration | Both geometry implementations in CMake and qmake; both geometry test TUs in `librecad_tests` |
-| Validation harness | X-H1 through X-H4 and H6-core committed; H5, remaining H6 integration and H7 pending; historical scratch unchanged |
+| Validation harness | X-H1 through X-H5 and H6-core committed; remaining H6 integration, complete CLI orchestration and H7 pending |
 | Latest validation | A-core, geometry and format fast lanes passed Release/ASan; full Release and qmake6 passed; see section 14 |
 
 Recheck these facts against the selected implementation checkout before starting
@@ -290,6 +290,11 @@ editing; changes beyond the named concern require a scope note in the slice card
 - New `lc_offsetpathsearch.{h,cpp}` and its routing test TU: extract canonical
   bounded path enumeration for direct nonunique-route testing. It cannot mint a
   geometry certificate or bypass public checkCache validation.
+- New `lc_offsetcontactmatching.{h,cpp}` and its test TU: exact rational candidate
+  positions anchored inside genuine owned contact proofs and specific route ports.
+  Unknown/non-exact port alignment remains Ambiguous, not tolerance-based identity.
+  Owner validity is separate from an empty root count, including moves, provider
+  invalidation and foreign-handle refusal. Prepare owner storage before work debit.
 
 **Base:** committed B `9bf0546b6`. Requirements R02/R12/R14; all A/B exact
 identities exist. ReferenceComponentAnalysis now owns exact terminal lookups.
@@ -1506,7 +1511,7 @@ one plan update, not another candidate/freeze lifecycle.
 | X-H2 | Committed, 25661f1a3; hardened c939c3de7 | Actual input/runtime manifest, bounded stdin/child capture and durable receipt readback; 15 input + 32 process tests plus 25 H1 tests; independent review |
 | X-H3 | Committed, 7da2bb144 | Real pinned registry/CLI, explicit worker contract and exact output inventory; missing/undefined/unknown/FAIL are refusals, never default PASS; 30 runner tests and independent review |
 | X-H4 | Committed 3e06e3894; explicit API | Complete genesis/chained case rows, pinned identities/order/actual outputs, exclusive publication/replay/mutation checks; not automatic CLI persistence |
-| X-H5 | Draft evidence validator incomplete, no tests | Implement missing helpers, actual tuple validation, absent-file publication and before/after-dispatch rechecks |
+| X-H5 | Committed 6d4fd25b3; explicit API | Actual source/runtime/receipt/diagnostic/ledger/output evidence, exclusive absent publication and bound automated checker; 44 focused tests and independent review |
 | X-H6 | Core committed 9170b0cc9; 11 obligations pending | 93 explicit obligations, all original71 IDs retained, 82 executable scenarios; H4/H5 integration still required, no full H6 claim |
 | X-H7 | Generator/checker/reports absent | Generate exact source/runtime/case manifests; independent validation and four canonical suites run twice with reproducible semantic results |
 
@@ -1753,6 +1758,48 @@ The plan checkpoint column never depends on its own future SHA.
 | X-H1 physical parents | 8993e2848 | e8119501b | 25 receipt tests; independent review; 67-test H1/H2 integration passed |
 | B | 9bf0546b6 | b12a9a02c | All 8 terminal identities; full Release, geometry Release/ASan, format lanes, qmake6; independent review |
 | X-H2 | 25661f1a3 | Immediate plan-only checkpoint | 15 input + 27 process + 25 H1 tests; five syntax checks; independent input/process reviews |
+
+### X-H5 Evidence Validation (2026-10-23)
+
+Implementation `6d4fd25b3` adds inert evidence descriptors, actual context capture
+from original H4 ownership and fresh actual joins, exclusive manifest/diagnostics/
+transport publication, pinned automated checker process/callback boundaries and
+original input/output/receipt/ledger/manifest readback before and after dispatch,
+including failure and late substitution. Callback injection and the shipped
+checker fixture are synthetic-only. Partial artifacts are retained; actual child
+diagnostics and named failures never default to PASS.
+
+Parent seven-suite report X-H5-parent-integrated-01.tap in
+`/private/tmp/lc2961-impl-evidence.9GtLO2/`: 254/254 passed, zero failures/skips.
+Focused author report `/private/tmp/lc2961-h5-evidence-02.tap`: 44/44 passed.
+Independent reviewer 01a168a8-2b07-77a0-ab4e-4bd44a98895f reviewed the four frozen
+files, separately reran 44/44, verified hashes before/after and found no P1/P2.
+Four syntax checks and staged whitespace passed. No independent full-regression
+rerun, H7 qualification, human approval or product validation is claimed.
+
+Validated SHA-256 under scripts/offset-curve-validation:
+p0f-evidence.js f9c3df5e1f90c40047f34b91c2a1aba1775fa1b88e6b5782c6e3f9fab526a9a7;
+evidence-descriptors.js 43e9b9a47134ab1c0e22f2d0559fb4f12b07ea6b549e14cf185eaa645cbc74d4;
+test-p0f-evidence.js bf94e3a0cfbcce9ca03abb30dba108b8ccb483f5fa0d1bd0fe48f3aaa269518a;
+fixtures/evidence-checker.js 9dadd7a365b911deded999329e5e5fa04b94f514149632991a08f168da4b38bf.
+
+Transport limitations remain explicit: caller snapshots cannot independently
+establish H2 stdin origin/delivery/consumption; absent snapshots are labeled derived
+expectations. Direct-child deadlines and open/fstat observations are not process
+or filesystem containment. These limits are retained in actual evidence/reviews.
+
+Next auxiliary slice: bind the 11 pending H6 obligations to real H4/H5 owned APIs,
+then add end-to-end CLI orchestration and H7's independent checker, real preflight
+and two complete qualification runs. Retain all scenario IDs. Where the old draft
+expected caller-supplied hash/byte tuples, exercise mutations of the actual
+persisted bindings instead: H4/H5 intentionally require their genuine owner and
+derive expected bytes independently. Pin exact observed boundaries before marking
+those rows executable; do not pretend a fake issuer reaches a later binding guard.
+
+C's 18 new contact-matching cases passed 687 assertions; combined C/refinement
+119 cases passed 18618 assertions. Independent static review cleared the matcher,
+actual route-port integration, owner-validity guard and owner allocation ordering.
+Final full-source qualification/commit remains pending; native feature incomplete.
 
 ### X-H4 Joined Ledger Validation (2026-10-23)
 
