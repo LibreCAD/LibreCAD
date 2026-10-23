@@ -33,12 +33,13 @@
 #include "rs_settings.h"
 
 #ifdef Q_OS_WIN
+#include <initializer_list>
+#include <string>
 #include <vector>
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
 #include <windows.h>
-#include <appmodel.h>
 #endif
 
 namespace {
@@ -60,6 +61,38 @@ void warnUpdateCheckFailedOnce(const QString &detail) {
     RS_Debug::Log(RS_Debug::D_WARNING)
         << "Checking for updates failed: " << detail;
 }
+
+#ifdef Q_OS_WIN
+// The package functions are looked up at run time: MinGW-w64 before v11 has
+// no <appmodel.h>, and kernel32.dll does not export GetStagedPackageOrigin;
+// kernelbase.dll does.
+template <typename Function>
+Function packageFunction(const char *name) {
+    for (const wchar_t *module : {L"kernel32.dll", L"kernelbase.dll"}) {
+        const HMODULE handle = GetModuleHandleW(module);
+        const FARPROC function = handle != nullptr ? GetProcAddress(handle, name) : nullptr;
+        if (function != nullptr) {
+            // void (*)() converts to any function type without -Wcast-function-type
+            return reinterpret_cast<Function>(reinterpret_cast<void (*)()>(function));
+        }
+    }
+    return nullptr;
+}
+
+// The name GetCurrentPackageFullName or GetCurrentPackageFamilyName reports;
+// empty when the process has no package identity.
+std::wstring currentPackageName(const char *function) {
+    using Query = LONG (WINAPI *)(UINT32 *, PWSTR);
+    const auto query = packageFunction<Query>(function);
+    UINT32 length = 0;
+    if (query == nullptr || query(&length, nullptr) != ERROR_INSUFFICIENT_BUFFER)
+        return {};
+    std::vector<wchar_t> name(length);
+    if (query(&length, name.data()) != ERROR_SUCCESS)
+        return {};
+    return name.data();
+}
+#endif
 } // namespace
 
 LC_TagInfo::LC_TagInfo(int majorVer, int minorVer, int revisionNum, int bugfixVer, const QString &labelVer, const QString &tagNameVer):m_major(majorVer), m_minor(minorVer), m_revision(
@@ -107,8 +140,16 @@ LC_ReleaseChecker::LC_ReleaseChecker(const QString& ownTagName, const bool ownPr
 
 bool LC_ReleaseChecker::runsFromStorePackage() {
 #ifdef Q_OS_WIN
-    UINT32 length = 0;
-    return GetCurrentPackageFullName(&length, nullptr) != APPMODEL_ERROR_NO_PACKAGE;
+    // PackageOrigin_Store of <appmodel.h>.  Sideloaded packages, and the NSIS
+    // payload repackaged as MSIX, report another origin and keep the GitHub
+    // check.
+    constexpr int storeOrigin = 3;
+    const std::wstring fullName = currentPackageName("GetCurrentPackageFullName");
+    using OriginQuery = LONG (WINAPI *)(PCWSTR, int *);
+    const auto query = packageFunction<OriginQuery>("GetStagedPackageOrigin");
+    int origin = 0;
+    return !fullName.empty() && query != nullptr
+        && query(fullName.c_str(), &origin) == ERROR_SUCCESS && origin == storeOrigin;
 #else
     return false;
 #endif
@@ -116,13 +157,9 @@ bool LC_ReleaseChecker::runsFromStorePackage() {
 
 QUrl LC_ReleaseChecker::storePage() {
 #ifdef Q_OS_WIN
-    UINT32 length = 0;
-    if (GetCurrentPackageFamilyName(&length, nullptr) == ERROR_INSUFFICIENT_BUFFER) {
-        std::vector<wchar_t> familyName(length);
-        if (GetCurrentPackageFamilyName(&length, familyName.data()) == ERROR_SUCCESS) {
-            return QUrl(QStringLiteral("ms-windows-store://pdp/?PFN=") + QString::fromWCharArray(familyName.data()));
-        }
-    }
+    const std::wstring familyName = currentPackageName("GetCurrentPackageFamilyName");
+    if (!familyName.empty())
+        return QUrl(QStringLiteral("ms-windows-store://pdp/?PFN=") + QString::fromStdWString(familyName));
     return QUrl(QStringLiteral("ms-windows-store://downloadsandupdates"));
 #else
     return {};

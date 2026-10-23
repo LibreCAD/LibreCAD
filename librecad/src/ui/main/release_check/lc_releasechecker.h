@@ -102,9 +102,9 @@ class LC_ReleaseChecker: public QObject{
 public:
     LC_ReleaseChecker(const QString& ownTagName, bool ownPreRelease);
     /**
-     * Whether this copy runs from an MSIX package, as the Microsoft Store
-     * installs it. The Store updates such a copy itself, so it must not
-     * send its users to GitHub for new versions.
+     * Whether this copy was installed from the Microsoft Store. The Store
+     * updates such a copy itself, so it must not send its users to GitHub
+     * for new versions. Other MSIX installs check GitHub as usual.
      */
     static bool runsFromStorePackage();
     /** The Store page of the running package, for the Store to update it. */
