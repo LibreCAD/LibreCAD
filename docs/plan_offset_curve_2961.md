@@ -41,7 +41,7 @@ main-track slices remain incomplete; no native entity is claimed.
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
 | Latest product checkpoint | `d4a0b081a` (C) |
-| Latest auxiliary checkpoint | `1f9f94753` (pipeline; H6 507e44ad7, H5 6d4fd25b3) |
+| Latest auxiliary checkpoint | `e83aaf3f0` (H7 suite workers; pipeline 1f9f94753, H6 507e44ad7) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
 | A-core | Atomic work adoption, separate ordering allowance and sticky terminal status implemented; A04/A10 registered |
@@ -269,7 +269,22 @@ editing; changes beyond the named concern require a scope note in the slice card
 | T-actions/T-files | actions/drawing/modify/lc_action_modify_trim.{h,cpp}, tests/lc_action_modify_trim_tests.cpp; modification/batch ownership and offset filter tests |
 | All new sources/tests/UI | CMakeLists.txt; librecad/src/src.pro (HEADERS/SOURCES/FORMS as appropriate); exact Catch2 target registration |
 
-### Immediate Next Card: C
+### Current Next Cards
+
+The main track resumes at D-core (section 8.1). C is committed and its card below
+is a completed implementation contract, not a request to redo it. Preserve actual
+C adoption, immutable ownership and runtime consistency checks. In particular,
+hashing rounded transformed coordinates does not transport a geometric proof:
+D-core needs justified rounding/error and topology preservation, or an explicit
+unchanged refusal when a requested transform cannot be certified. Do not weaken
+the ordinary-transform no-regeneration contract or silently restamp stale data.
+
+The active auxiliary sequence is H7 artifact-preservation guards -> independent
+checker -> genuine preflight/qualification driver -> complete affected regression
+rerun -> two complete qualification runs. Suite inventory/worker execution is
+committed separately; it is not whole H7 or native feature completion.
+
+### C Implementation Card (Completed)
 
 **Files:**
 
@@ -1512,7 +1527,7 @@ one plan update, not another candidate/freeze lifecycle.
 | X-H4 | Committed 3e06e3894; explicit API | Complete genesis/chained case rows, pinned identities/order/actual outputs, exclusive publication/replay/mutation checks; not automatic CLI persistence |
 | X-H5 | Committed 6d4fd25b3; explicit API | Actual source/runtime/receipt/diagnostic/ledger/output evidence, exclusive absent publication and bound automated checker; 44 focused tests and independent review |
 | X-H6 | Committed 507e44ad7; core 9170b0cc9 | All 93 obligations executable, all original71 IDs retained; owned H4/H5 protocols, precise root scopes and mutation/prefix checks; 94 inventory tests pass |
-| X-H7 | Generator/checker/reports absent | Generate exact source/runtime/case manifests; independent validation and four canonical suites run twice with reproducible semantic results |
+| X-H7 | Suite workers committed e83aaf3f0; qualification pending | Exact pinned generator/real workers implemented; referenced-artifact guards, independent checker, genuine preflight/driver and two complete qualification runs remain |
 
 ### Concrete H2 Capture Corrections
 
@@ -1810,6 +1825,44 @@ C's 18 new contact-matching cases passed 687 assertions; combined C/refinement
 119 cases passed 18618 assertions. Independent static review cleared the matcher,
 actual route-port integration, owner-validity guard and owner allocation ordering.
 Final qualification is recorded below; native feature remains incomplete.
+
+### X-H7 Suite Worker Validation (2026-10-23)
+
+Implementation `e83aaf3f0`: exact four-suite definitions, source/runtime/input
+pins, explicit H3 registry/inventory mapping, bounded real Node execution, actual
+raw events/diagnostics and deterministic semantic reports. A missing/failed/
+skipped/TODO/unknown/prefix result cannot become PASS. Final global Node summary
+and exact execution identities are required. Source/runtime/environment changes
+refuse; generated publication is exclusive and retains failed prefixes. Bounded
+own-data snapshots at both generator entrypoints prevent caller mutation across
+await from redirecting publication or promoting purpose. Synthetic one-module
+control groups remain supported; validation cannot substitute the actual7 files.
+
+Author focused run passed 22 cases. Parent independent static review identified
+the mutable-options defect; the correction and synthetic-control compatibility
+regression pass 23/23, zero skips/failures, in X-H7-worker-parent-03.tap under
+`/private/tmp/lc2961-impl-evidence.9GtLO2`. Source syntax and whitespace checks
+passed. Real-child controls test execution, skipped/failed/missing/reordered
+identities, mutation, deadlines/caps, strict H3 outputs and retained discovery
+failure diagnostics. These controls do not qualify the full canonical suites.
+
+Discovery readiness correction: local Node 26.12.0's nonmatching name/skip filters
+omit individual definitions; the ^$ probe unexpectedly executed the cases and
+was not treated as zero-execution evidence. Raw probes 02/03/04 confirm the
+filter-only listing gap. The explicit isolated-child preload therefore wraps
+registration to mark definitions skipped. This narrow discovery instrumentation
+does not replace H1-H6 validators or execute test bodies. Actual qualification
+uses unmodified node:test and rejects preload/filter argv; independent checking
+must require that exact execution contract. Discovery skips never count as PASS
+or executed assertions. No general Node-version compatibility is inferred.
+
+Remaining H7 work is unchanged: guard original externally referenced preflight
+artifacts through H5 dispatch/failure/final readback; independently derive all93
+mandatory IDs and raw-event completion (including final summary); qualify actual
+preflight/syntax/audit/byte-patch/trace evidence; retain original completed-run
+owners through final publication; rerun all affected tests and execute the four
+canonical suites twice in each of two full isolated qualification runs. Persisted
+observations are not human approval or native feature completion.
 
 ### Worker Pipeline Validation (2026-10-23)
 
