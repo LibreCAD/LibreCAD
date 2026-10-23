@@ -55,7 +55,9 @@ receives a copy of any of this.
   handles it under the
   [GitHub Privacy Statement](https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement).
   To turn the check off, clear **Options > Application Preferences > Startup >
-  Check for new versions on startup**.
+  Check for new versions on startup**. The Microsoft Store version never makes
+  this request: the Store updates it, and **Check for New Version** opens its
+  page in the Store.
 - **Links you open.** The Help menu opens web pages, such as the user manual,
   the wiki, the forum, the chat, the issue tracker and the donation page, in
   your web browser. Those sites have their own privacy policies.
