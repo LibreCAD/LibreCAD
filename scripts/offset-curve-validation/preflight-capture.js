@@ -185,11 +185,39 @@ async function capturePreflight(config, dependencies = {}) {
     const verificationFailures = [];
     const durabilityLimitations = [];
     const observations = [];
-    const io = dependencies.fs || nodeFsAdapter;
     try {
+        check(config && typeof config === 'object' && !Array.isArray(config) &&
+            [Object.prototype, null].includes(Object.getPrototypeOf(config)),
+        'configuration', 'configuration must be a plain object');
+        const configDescriptors = Object.getOwnPropertyDescriptors(config);
+        const configKeys = Reflect.ownKeys(configDescriptors);
+        check(configKeys.every(key => typeof key === 'string' && Object.hasOwn(configDescriptors[key], 'value')),
+            'configuration', 'configuration must contain only own data properties');
+        // Pin purpose once, before authorizing hooks; callbacks cannot relabel their synthetic run.
+        config = Object.freeze(Object.assign(Object.create(null), Object.fromEntries(
+            configKeys.map(key => [key, configDescriptors[key].value]))));
         check(config && ['validation', 'synthetic'].includes(config.purpose), 'configuration', 'explicit capture purpose is required');
-        check(config.purpose === 'synthetic' || Object.keys(dependencies).length === 0,
+        check(dependencies && typeof dependencies === 'object' && !Array.isArray(dependencies),
+            'configuration', 'dependencies must be an explicit object');
+        const prototype = Object.getPrototypeOf(dependencies);
+        const plain = prototype === Object.prototype || prototype === null;
+        // Snapshot descriptors without evaluating hooks, including non-enumerable ones.
+        const descriptors = Object.getOwnPropertyDescriptors(dependencies);
+        const keys = Reflect.ownKeys(descriptors);
+        const inherited = ['fs', 'spawn'].some(key => !Object.hasOwn(descriptors, key) && key in dependencies);
+        check(config.purpose === 'synthetic' || (keys.length === 0 && plain && !inherited),
             'configuration', 'dependency injection is restricted to synthetic controls');
+        check(plain && !inherited && keys.every(key => key === 'fs' || key === 'spawn'),
+            'configuration', 'synthetic dependencies must be own fs/spawn properties on a plain object');
+        check(keys.every(key => Object.hasOwn(descriptors[key], 'value')),
+            'configuration', 'synthetic dependencies must be data properties');
+        check(!Object.hasOwn(descriptors, 'spawn') || typeof descriptors.spawn.value === 'function',
+            'configuration', 'synthetic spawn dependency must be a function');
+        check(!Object.hasOwn(descriptors, 'fs') || (descriptors.fs.value &&
+            typeof descriptors.fs.value === 'object' && !Array.isArray(descriptors.fs.value)),
+        'configuration', 'synthetic fs dependency must be an object');
+        const io = Object.hasOwn(descriptors, 'fs') ? descriptors.fs.value : nodeFsAdapter;
+        const spawnProcess = Object.hasOwn(descriptors, 'spawn') ? descriptors.spawn.value : spawn;
         const environmentBefore = parentEnvironment();
         const baseEnvironment = normalizedEnvironment(config.environment);
         if (process.platform === 'darwin')
@@ -266,7 +294,7 @@ async function capturePreflight(config, dependencies = {}) {
         absent(receiptDirectory, io);
         verifyBoundary('pre-spawn');
         child = await collectChild({executable: inputs.runtime.executable_path, args, cwd, environment,
-            contextBytes, maxStreamBytes, timeoutMs}, dependencies.spawn || spawn);
+            contextBytes, maxStreamBytes, timeoutMs}, spawnProcess);
         verifyBoundary('post-child');
         check(!child.failure && child.stdinWriteCompleted && child.child.exit_code === 0 && child.child.signal === null && child.child.error === null,
             'child', child.failure || 'child did not exit successfully');

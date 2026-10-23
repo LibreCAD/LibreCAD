@@ -132,6 +132,128 @@ test('the real fixture refuses validation purpose and injected validation execut
     assert.equal(fs.existsSync(config.receiptDirectory), false);
 });
 
+test('purpose is pinned before hooks and cannot transition from synthetic to validation', async t => {
+    const {config} = fixture(t);
+    let reads = 0;
+    Object.defineProperty(config, 'purpose', {get() { return ++reads < 3 ? 'synthetic' : 'validation'; },
+        enumerable: true, configurable: true});
+    let launches = 0;
+    await assert.rejects(capturePreflight(config, {spawn() { ++launches; }}), /own data properties/);
+    assert.equal(reads, 0);
+    assert.equal(launches, 0);
+    assert.equal(fs.existsSync(config.receiptDirectory), false);
+    assert.equal(fs.existsSync(config.runRoot), false);
+
+    Object.defineProperty(config, 'purpose', {value: 'synthetic', writable: true, enumerable: true});
+    const spawn = fakeSpawn();
+    const result = await capturePreflight(config, {spawn(...args) {
+        config.purpose = 'validation';
+        return spawn(...args);
+    }});
+    assert.equal(config.purpose, 'validation');
+    assert.equal(result.receipt.purpose, 'synthetic');
+    assert.equal(result.receipt.preflight_result.purpose, 'synthetic');
+    assert.equal(result.inputs.manifest.purpose, 'synthetic');
+});
+
+test('validation rejects inherited and non-enumerable spawn/fs before input capture or publication', async t => {
+    for (const shape of ['inherited', 'non-enumerable']) for (const key of ['spawn', 'fs']) {
+        const {base, config, source} = fixture(t);
+        config.purpose = 'validation';
+        config.runnerPath = source;
+        const inventory = JSON.parse(fs.readFileSync(config.caseInventoryPath));
+        inventory.purpose = 'validation';
+        fs.writeFileSync(config.caseInventoryPath, h1.canonicalJson(inventory));
+        let spawns = 0;
+        let filesystemCalls = 0;
+        const value = key === 'spawn' ? () => { spawns++; throw new Error('must not spawn'); } :
+            {...nodeFsAdapter, lstatSync: p => { filesystemCalls++; return nodeFsAdapter.lstatSync(p); }};
+        const dependencies = shape === 'inherited' ? Object.create({[key]: value}) :
+            Object.defineProperty({}, key, {value});
+        const snapshot = () => fs.readdirSync(base).sort().map(name => {
+            const p = path.join(base, name);
+            const stat = fs.lstatSync(p, {bigint: true});
+            return [name, inputs.statIdentity(stat), stat.isFile() ? h1.sha256(fs.readFileSync(p)) : null];
+        });
+        const before = snapshot();
+        await assert.rejects(capturePreflight(config, dependencies), error => {
+            assert.ok(error instanceof CaptureError);
+            assert.equal(error.stage, 'configuration');
+            assert.match(error.message, /restricted to synthetic/);
+            assert.equal(error.details.inputs, null);
+            assert.equal(error.details.child, null);
+            assert.equal(error.details.receiptDirectory, null);
+            return true;
+        });
+        assert.equal(spawns, 0);
+        assert.equal(filesystemCalls, 0);
+        assert.equal(fs.existsSync(config.runRoot), false);
+        assert.equal(fs.existsSync(config.receiptDirectory), false);
+        assert.deepEqual(fs.readdirSync(path.dirname(config.runRoot)), []);
+        assert.deepEqual(fs.readdirSync(path.dirname(config.receiptDirectory)), []);
+        assert.deepEqual(snapshot(), before);
+    }
+});
+
+test('validation refuses dependency accessors without evaluating inherited or own getters', async t => {
+    for (const shape of ['inherited', 'enumerable', 'non-enumerable']) for (const key of ['spawn', 'fs']) {
+        const {config} = fixture(t);
+        let reads = 0;
+        const holder = Object.defineProperty({}, key, {enumerable: shape === 'enumerable', get() {
+            reads++;
+            throw new Error('dependency getter must not execute');
+        }});
+        const dependencies = shape === 'inherited' ? Object.create(holder) : holder;
+        await assert.rejects(capturePreflight({...config, purpose: 'validation'}, dependencies), error => {
+            assert.ok(error instanceof CaptureError);
+            assert.equal(error.stage, 'configuration');
+            assert.match(error.message, /restricted to synthetic/);
+            assert.equal(error.details.inputs, null);
+            assert.equal(error.details.receiptDirectory, null);
+            return true;
+        });
+        assert.equal(reads, 0);
+        assert.equal(fs.existsSync(config.receiptDirectory), false);
+        assert.equal(fs.existsSync(config.runRoot), false);
+    }
+});
+
+test('synthetic own data hooks work on ordinary and null-prototype objects regardless of enumerability', async t => {
+    for (const nullPrototype of [false, true]) for (const enumerable of [false, true]) {
+        const {config} = fixture(t);
+        const dependencies = Object.create(nullPrototype ? null : Object.prototype, {
+            fs: {value: nodeFsAdapter, enumerable}, spawn: {value: fakeSpawn(), enumerable}
+        });
+        const result = await capturePreflight(config, dependencies);
+        assert.equal(result.receipt.purpose, 'synthetic');
+        assert.equal(result.receipt.status, 'PASS');
+        assert.equal(result.validated.usable, true);
+        assert.equal(fs.existsSync(config.runRoot), false);
+        assert.equal(fs.existsSync(config.receiptDirectory), true);
+    }
+});
+
+test('synthetic dependency shape rejects accessors, inherited hooks, unknown keys and invalid values before I/O', async t => {
+    const {config} = fixture(t);
+    let reads = 0;
+    for (const dependencies of [null, [], () => {}, 'not an object',
+        {unknown: true}, {[Symbol('spawn')]: () => {}}, {spawn: undefined}, {fs: null},
+        Object.create({spawn: fakeSpawn()}),
+        Object.defineProperty({}, 'fs', {get() { reads++; throw new Error('must not evaluate getter'); }})]) {
+        await assert.rejects(capturePreflight(config, dependencies), error => {
+            assert.ok(error instanceof CaptureError);
+            assert.equal(error.stage, 'configuration');
+            assert.equal(error.details.inputs, null);
+            assert.equal(error.details.child, null);
+            assert.equal(error.details.receiptDirectory, null);
+            return true;
+        });
+        assert.equal(fs.existsSync(config.runRoot), false);
+        assert.equal(fs.existsSync(config.receiptDirectory), false);
+    }
+    assert.equal(reads, 0);
+});
+
 test('two real-child receipts join H1 with identical actual argv/environment and distinct stdin root contexts', async t => {
     const {base, config} = fixture(t);
     const secondRootParent = path.join(base, 'root-parent-second');
