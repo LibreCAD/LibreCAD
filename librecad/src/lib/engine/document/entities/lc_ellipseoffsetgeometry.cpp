@@ -268,8 +268,9 @@ RS_Vector farEllipseFoot(const RS_Vector& query, const double ratio, const doubl
 namespace LC_EllipseOffsetGeometry {
 
 WorkBudget::WorkBudget(const LC_OffsetCheckLimits& limits) : m_limits{limits} {
-    if (limits.maxCacheSpans == 0 || limits.maxVertices == 0 || limits.maxDistancePairs == 0 || limits.maxDepth == 0) {
-        m_status = BudgetStatus::InvalidInput;
+    if (limits.maxCacheSpans == 0 || limits.maxVertices == 0 || limits.maxDistancePairs == 0 ||
+        limits.maxDepth == 0 || limits.maxOrderingComparisons == 0) {
+        latchInvalidInput();
     }
 }
 
@@ -291,6 +292,10 @@ std::size_t WorkBudget::remainingVertices() const {
 
 std::size_t WorkBudget::remainingPairs() const {
     return m_status == BudgetStatus::Ok ? m_limits.maxDistancePairs - m_work.distancePairs : 0;
+}
+
+std::size_t WorkBudget::remainingOrderingComparisons() const {
+    return m_status == BudgetStatus::Ok ? m_limits.maxOrderingComparisons - m_work.orderingComparisons : 0;
 }
 
 bool WorkBudget::consume(const std::size_t count, const std::size_t limit, std::size_t& used) {
@@ -317,6 +322,32 @@ bool WorkBudget::consumePairs(const std::size_t count) {
     return consume(count, m_limits.maxDistancePairs, m_work.distancePairs);
 }
 
+bool WorkBudget::consumeOrderingComparisons(const std::size_t count) {
+    return consume(count, m_limits.maxOrderingComparisons, m_work.orderingComparisons);
+}
+
+bool WorkBudget::adoptWork(const CheckWork& delta) {
+    if (m_status != BudgetStatus::Ok) {
+        return false;
+    }
+    // Subtract before adding to reject both capacity excess and arithmetic overflow.
+    if (delta.cacheSpans > m_limits.maxCacheSpans - m_work.cacheSpans ||
+        delta.vertices > m_limits.maxVertices - m_work.vertices ||
+        delta.distancePairs > m_limits.maxDistancePairs - m_work.distancePairs ||
+        delta.orderingComparisons > m_limits.maxOrderingComparisons - m_work.orderingComparisons ||
+        delta.deepest > m_limits.maxDepth) {
+        latchLimitExceeded();
+        return false;
+    }
+    const CheckWork next{m_work.cacheSpans + delta.cacheSpans,
+                         m_work.vertices + delta.vertices,
+                         m_work.distancePairs + delta.distancePairs,
+                         std::max(m_work.deepest, delta.deepest),
+                         m_work.orderingComparisons + delta.orderingComparisons};
+    m_work = next;
+    return true;
+}
+
 bool WorkBudget::checkDepth(const unsigned depth) {
     if (m_status != BudgetStatus::Ok) {
         return false;
@@ -336,6 +367,12 @@ unsigned WorkBudget::depthLimit() const {
 void WorkBudget::latchLimitExceeded() {
     if (m_status == BudgetStatus::Ok) {
         m_status = BudgetStatus::LimitExceeded;
+    }
+}
+
+void WorkBudget::latchInvalidInput() {
+    if (m_status == BudgetStatus::Ok) {
+        m_status = BudgetStatus::InvalidInput;
     }
 }
 

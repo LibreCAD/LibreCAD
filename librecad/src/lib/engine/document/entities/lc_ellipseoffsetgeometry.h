@@ -40,6 +40,7 @@ struct LC_OffsetCheckLimits {
     std::size_t maxVertices = 65536;
     std::size_t maxDistancePairs = std::size_t{1} << 20;
     unsigned maxDepth = 20;
+    std::size_t maxOrderingComparisons = std::size_t{1} << 20;
 };
 
 namespace LC_EllipseOffsetGeometry {
@@ -59,6 +60,7 @@ struct CheckWork {
     std::size_t vertices = 0;
     std::size_t distancePairs = 0;
     unsigned deepest = 0;
+    std::size_t orderingComparisons = 0;
 };
 
 /** One irreversible allowance shared by all stages of a reference/cache query. */
@@ -73,12 +75,17 @@ public:
     std::size_t remainingPieces() const;
     std::size_t remainingVertices() const;
     std::size_t remainingPairs() const;
+    std::size_t remainingOrderingComparisons() const;
     bool consumePieces(std::size_t count);
     bool consumeVertices(std::size_t count);
     bool consumePairs(std::size_t count);
+    bool consumeOrderingComparisons(std::size_t count);
+    /** Atomically add counters and retain the absolute maximum depth, even if delta aliases consumed(). */
+    bool adoptWork(const CheckWork& delta);
     bool checkDepth(unsigned depth);
     unsigned depthLimit() const;
     void latchLimitExceeded();
+    void latchInvalidInput();
 
 private:
     friend class CriticalBuilder;

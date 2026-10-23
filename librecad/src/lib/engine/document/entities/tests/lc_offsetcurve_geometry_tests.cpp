@@ -282,6 +282,7 @@ void checkWork(const geo::CheckWork& actual, const geo::CheckWork& expected) {
     CHECK(actual.vertices == expected.vertices);
     CHECK(actual.distancePairs == expected.distancePairs);
     CHECK(actual.deepest == expected.deepest);
+    CHECK(actual.orderingComparisons == expected.orderingComparisons);
 }
 
 void checkCriticalSnapshot(const RS_EllipseData& data, const double distance, const geo::ReferenceFrame& frame,
@@ -1744,6 +1745,287 @@ TEST_CASE("Shared reference budgets reject zero limits and cannot overflow count
     CHECK(exact.consumed().distancePairs == maximum);
     CHECK_FALSE(exact.consumePairs(1));
     CHECK(exact.consumed().distancePairs == maximum);
+}
+
+TEST_CASE("shared work budget preserves sticky refusal",
+          "[lc-offsetcurve][geometry][cache-budget-accounting][budget-core]") {
+    const geo::CheckWork spent{2, 3, 5, 2, 7};
+    const geo::CheckWork delta{11, 13, 17, 5, 19};
+    const geo::CheckWork total{13, 16, 22, 5, 26};
+    const LC_OffsetCheckLimits limits{total.cacheSpans, total.vertices, total.distancePairs,
+                                    total.deepest, total.orderingComparisons};
+    const auto preSpend = [&](geo::WorkBudget& budget) {
+        REQUIRE(budget.consumePieces(spent.cacheSpans));
+        REQUIRE(budget.consumeVertices(spent.vertices));
+        REQUIRE(budget.consumePairs(spent.distancePairs));
+        REQUIRE(budget.checkDepth(spent.deepest));
+        REQUIRE(budget.consumeOrderingComparisons(spent.orderingComparisons));
+        checkWork(budget.consumed(), spent);
+    };
+
+    SECTION("complete adoption reaches every exact cap from pre-spent state") {
+        geo::WorkBudget budget{limits};
+        preSpend(budget);
+        CHECK(budget.remainingPieces() == delta.cacheSpans);
+        CHECK(budget.remainingVertices() == delta.vertices);
+        CHECK(budget.remainingPairs() == delta.distancePairs);
+        CHECK(budget.remainingOrderingComparisons() == delta.orderingComparisons);
+        REQUIRE(budget.adoptWork(delta));
+        CHECK(budget.status() == geo::BudgetStatus::Ok);
+        checkWork(budget.consumed(), total);
+        CHECK(budget.remainingPieces() == 0);
+        CHECK(budget.remainingVertices() == 0);
+        CHECK(budget.remainingPairs() == 0);
+        CHECK(budget.remainingOrderingComparisons() == 0);
+        REQUIRE(budget.adoptWork({}));
+        REQUIRE(budget.adoptWork({0, 0, 0, 1, 0}));
+        REQUIRE(budget.checkDepth(limits.maxDepth));
+        REQUIRE(budget.checkDepth(0));
+        checkWork(budget.consumed(), total);
+    }
+
+    SECTION("each isolated one-short additive cap refuses the entire delta") {
+        for (int resource = 0; resource < 4; ++resource) {
+            CAPTURE(resource);
+            auto shortLimits = limits;
+            if (resource == 0) { --shortLimits.maxCacheSpans; }
+            else if (resource == 1) { --shortLimits.maxVertices; }
+            else if (resource == 2) { --shortLimits.maxDistancePairs; }
+            else { --shortLimits.maxOrderingComparisons; }
+            geo::WorkBudget budget{shortLimits};
+            preSpend(budget);
+            CHECK_FALSE(budget.adoptWork(delta));
+            CHECK(budget.status() == geo::BudgetStatus::LimitExceeded);
+            checkWork(budget.consumed(), spent);
+            CHECK(budget.remainingPieces() == 0);
+            CHECK(budget.remainingVertices() == 0);
+            CHECK(budget.remainingPairs() == 0);
+            CHECK(budget.remainingOrderingComparisons() == 0);
+            CHECK_FALSE(budget.adoptWork({}));
+            checkWork(budget.consumed(), spent);
+            CHECK_FALSE(budget.adoptWork(delta));
+            checkWork(budget.consumed(), spent);
+        }
+    }
+
+    SECTION("over-depth adoption and direct depth refusal preserve every counter") {
+        auto shortLimits = limits;
+        shortLimits.maxDepth = delta.deepest - 1;
+        for (const bool adopt : {false, true}) {
+            CAPTURE(adopt);
+            geo::WorkBudget budget{shortLimits};
+            preSpend(budget);
+            REQUIRE(budget.checkDepth(shortLimits.maxDepth - 1));
+            REQUIRE(budget.checkDepth(shortLimits.maxDepth));
+            const auto before = budget.consumed();
+            const bool accepted = adopt ? budget.adoptWork(delta) : budget.checkDepth(delta.deepest);
+            CHECK_FALSE(accepted);
+            CHECK(budget.status() == geo::BudgetStatus::LimitExceeded);
+            checkWork(budget.consumed(), before);
+            CHECK_FALSE(budget.checkDepth(0));
+            CHECK_FALSE(budget.adoptWork({}));
+            checkWork(budget.consumed(), before);
+        }
+    }
+
+    SECTION("each additive dimension rejects size_t overflow without partial debit") {
+        const auto maximum = std::numeric_limits<std::size_t>::max();
+        const auto maximumDepth = std::numeric_limits<unsigned>::max();
+        const LC_OffsetCheckLimits large{maximum, maximum, maximum, maximumDepth, maximum};
+        const geo::CheckWork nearLimit{maximum - 1, maximum - 1, maximum - 1, 2, maximum - 1};
+        const std::array<std::size_t geo::CheckWork::*, 4> counters{{
+            &geo::CheckWork::cacheSpans, &geo::CheckWork::vertices,
+            &geo::CheckWork::distancePairs, &geo::CheckWork::orderingComparisons}};
+        const std::array<bool (geo::WorkBudget::*)(std::size_t), 4> admissions{{
+            &geo::WorkBudget::consumePieces, &geo::WorkBudget::consumeVertices,
+            &geo::WorkBudget::consumePairs, &geo::WorkBudget::consumeOrderingComparisons}};
+        for (std::size_t resource = 0; resource < counters.size(); ++resource) {
+            for (const bool adopt : {false, true}) {
+                CAPTURE(resource, adopt);
+                geo::WorkBudget budget{large};
+                REQUIRE(budget.adoptWork(nearLimit));
+                auto overflow = geo::CheckWork{1, 1, 1, 3, 1};
+                overflow.*counters[resource] = 2;
+                const bool accepted = adopt ? budget.adoptWork(overflow) : (budget.*admissions[resource])(2);
+                CHECK_FALSE(accepted);
+                CHECK(budget.status() == geo::BudgetStatus::LimitExceeded);
+                checkWork(budget.consumed(), nearLimit);
+                CHECK_FALSE(budget.adoptWork({}));
+                checkWork(budget.consumed(), nearLimit);
+            }
+        }
+        geo::WorkBudget exact{large};
+        REQUIRE(exact.adoptWork(nearLimit));
+        REQUIRE(exact.adoptWork({1, 1, 1, maximumDepth, 1}));
+        const geo::CheckWork atLimit{maximum, maximum, maximum, maximumDepth, maximum};
+        checkWork(exact.consumed(), atLimit);
+        CHECK(exact.remainingPieces() == 0);
+        CHECK(exact.remainingVertices() == 0);
+        CHECK(exact.remainingPairs() == 0);
+        CHECK(exact.remainingOrderingComparisons() == 0);
+        REQUIRE(exact.adoptWork({}));
+        REQUIRE(exact.checkDepth(maximumDepth));
+        REQUIRE(exact.checkDepth(0));
+        checkWork(exact.consumed(), atLimit);
+    }
+
+    SECTION("ordering comparisons and geometric pairs have independent allowances") {
+        for (const bool orderingFirst : {false, true}) {
+            CAPTURE(orderingFirst);
+            geo::WorkBudget budget{LC_OffsetCheckLimits{3, 5, 7, 2, 11}};
+            if (orderingFirst) {
+                REQUIRE(budget.consumeOrderingComparisons(11));
+                CHECK(budget.remainingPairs() == 7);
+                CHECK(budget.consumed().distancePairs == 0);
+                REQUIRE(budget.consumePairs(7));
+            } else {
+                REQUIRE(budget.consumePairs(7));
+                CHECK(budget.remainingOrderingComparisons() == 11);
+                CHECK(budget.consumed().orderingComparisons == 0);
+                REQUIRE(budget.consumeOrderingComparisons(11));
+            }
+            const geo::CheckWork expected{0, 0, 7, 0, 11};
+            checkWork(budget.consumed(), expected);
+            CHECK(budget.remainingPairs() == 0);
+            CHECK(budget.remainingOrderingComparisons() == 0);
+            CHECK(budget.remainingPieces() == 3);
+            CHECK(budget.remainingVertices() == 5);
+            const bool accepted = orderingFirst ? budget.consumePairs(1) : budget.consumeOrderingComparisons(1);
+            CHECK_FALSE(accepted);
+            CHECK(budget.status() == geo::BudgetStatus::LimitExceeded);
+            checkWork(budget.consumed(), expected);
+        }
+    }
+
+    SECTION("legacy four-field aggregates keep their meanings and ordering defaults") {
+        static_assert(std::is_aggregate_v<LC_OffsetCheckLimits>);
+        static_assert(std::is_aggregate_v<geo::CheckWork>);
+        const LC_OffsetCheckLimits legacyLimits{3, 5, 7, 2};
+        CHECK(legacyLimits.maxCacheSpans == 3);
+        CHECK(legacyLimits.maxVertices == 5);
+        CHECK(legacyLimits.maxDistancePairs == 7);
+        CHECK(legacyLimits.maxDepth == 2);
+        CHECK(legacyLimits.maxOrderingComparisons == (std::size_t{1} << 20));
+        const geo::CheckWork legacyWork{1, 2, 3, 2};
+        checkWork(legacyWork, geo::CheckWork{1, 2, 3, 2, 0});
+        geo::WorkBudget budget{legacyLimits};
+        REQUIRE(budget.adoptWork(legacyWork));
+        CHECK(budget.depthLimit() == 2);
+        CHECK(budget.remainingOrderingComparisons() == (std::size_t{1} << 20));
+        REQUIRE(budget.consumeOrderingComparisons(std::size_t{1} << 20));
+        checkWork(budget.consumed(), geo::CheckWork{1, 2, 3, 2, std::size_t{1} << 20});
+    }
+
+    SECTION("adoption can alias consumed work on both success and refusal") {
+        geo::WorkBudget budget{LC_OffsetCheckLimits{8, 12, 20, 7, 43}};
+        REQUIRE(budget.adoptWork({2, 3, 5, 7, 11}));
+        const auto& alias = budget.consumed();
+        REQUIRE(budget.adoptWork(alias));
+        const geo::CheckWork doubled{4, 6, 10, 7, 22};
+        checkWork(alias, doubled);
+        CHECK_FALSE(budget.adoptWork(alias));
+        CHECK(budget.status() == geo::BudgetStatus::LimitExceeded);
+        checkWork(alias, doubled);
+        CHECK_FALSE(budget.adoptWork(alias));
+        checkWork(budget.consumed(), doubled);
+    }
+}
+
+TEST_CASE("work budget terminal latches preserve counters",
+          "[lc-offsetcurve][geometry][cache-budget-accounting][budget-core]") {
+    const auto checkLatched = [](const geo::WorkBudget& budget, const geo::BudgetStatus status,
+                                const geo::CheckWork& before) {
+        CHECK(budget.status() == status);
+        checkWork(budget.consumed(), before);
+        CHECK(budget.remainingPieces() == 0);
+        CHECK(budget.remainingVertices() == 0);
+        CHECK(budget.remainingPairs() == 0);
+        CHECK(budget.remainingOrderingComparisons() == 0);
+    };
+    const auto retryLatched = [&](geo::WorkBudget& budget, const geo::BudgetStatus status,
+                                  const geo::CheckWork& before) {
+        for (const auto count : {std::size_t{0}, std::size_t{1}, std::numeric_limits<std::size_t>::max()}) {
+            CAPTURE(count);
+            CHECK_FALSE(budget.consumePieces(count));
+            checkLatched(budget, status, before);
+            CHECK_FALSE(budget.consumeVertices(count));
+            checkLatched(budget, status, before);
+            CHECK_FALSE(budget.consumePairs(count));
+            checkLatched(budget, status, before);
+            CHECK_FALSE(budget.consumeOrderingComparisons(count));
+            checkLatched(budget, status, before);
+        }
+        for (const unsigned depth : {0u, 1u, std::numeric_limits<unsigned>::max()}) {
+            CHECK_FALSE(budget.checkDepth(depth));
+            checkLatched(budget, status, before);
+        }
+        CHECK_FALSE(budget.adoptWork({}));
+        checkLatched(budget, status, before);
+        CHECK_FALSE(budget.adoptWork({1, 1, 1, 1, 1}));
+        checkLatched(budget, status, before);
+        CHECK_FALSE(budget.adoptWork(budget.consumed()));
+        checkLatched(budget, status, before);
+    };
+
+    SECTION("the first explicit terminal reason wins in either latch order") {
+        for (const bool invalidFirst : {false, true}) {
+            for (const bool preSpent : {false, true}) {
+                CAPTURE(invalidFirst, preSpent);
+                geo::WorkBudget budget{LC_OffsetCheckLimits{13, 17, 19, 5, 23}};
+                if (preSpent) { REQUIRE(budget.adoptWork({2, 3, 5, 2, 7})); }
+                const auto before = budget.consumed();
+                const auto status = invalidFirst ? geo::BudgetStatus::InvalidInput : geo::BudgetStatus::LimitExceeded;
+                if (invalidFirst) { budget.latchInvalidInput(); }
+                else { budget.latchLimitExceeded(); }
+                checkLatched(budget, status, before);
+                for (int repeat = 0; repeat < 2; ++repeat) {
+                    budget.latchInvalidInput();
+                    checkLatched(budget, status, before);
+                    budget.latchLimitExceeded();
+                    checkLatched(budget, status, before);
+                }
+                retryLatched(budget, status, before);
+            }
+        }
+    }
+
+    SECTION("every zero constructor limit starts with sticky invalid input and no work") {
+        const std::array<LC_OffsetCheckLimits, 5> invalidLimits{{
+            {0, 1, 1, 1, 1}, {1, 0, 1, 1, 1}, {1, 1, 0, 1, 1},
+            {1, 1, 1, 0, 1}, {1, 1, 1, 1, 0}}};
+        for (const auto& limits : invalidLimits) {
+            CAPTURE(limits.maxCacheSpans, limits.maxVertices, limits.maxDistancePairs,
+                    limits.maxDepth, limits.maxOrderingComparisons);
+            geo::WorkBudget budget{limits};
+            checkLatched(budget, geo::BudgetStatus::InvalidInput, {});
+            budget.latchLimitExceeded();
+            checkLatched(budget, geo::BudgetStatus::InvalidInput, {});
+            budget.latchInvalidInput();
+            checkLatched(budget, geo::BudgetStatus::InvalidInput, {});
+            retryLatched(budget, geo::BudgetStatus::InvalidInput, {});
+        }
+    }
+
+    SECTION("admission refusals cannot be replaced by invalid input or refund admitted work") {
+        const LC_OffsetCheckLimits limits{3, 5, 7, 2, 11};
+        const geo::CheckWork spent{3, 5, 7, 2, 11};
+        for (int resource = 0; resource < 6; ++resource) {
+            CAPTURE(resource);
+            geo::WorkBudget budget{limits};
+            REQUIRE(budget.adoptWork(spent));
+            const bool accepted = resource == 0 ? budget.consumePieces(1) :
+                resource == 1 ? budget.consumeVertices(1) : resource == 2 ? budget.consumePairs(1) :
+                resource == 3 ? budget.consumeOrderingComparisons(1) : resource == 4 ? budget.checkDepth(3) :
+                budget.adoptWork({1, 1, 1, 3, 1});
+            CHECK_FALSE(accepted);
+            checkLatched(budget, geo::BudgetStatus::LimitExceeded, spent);
+            budget.latchInvalidInput();
+            checkLatched(budget, geo::BudgetStatus::LimitExceeded, spent);
+            budget.latchLimitExceeded();
+            checkLatched(budget, geo::BudgetStatus::LimitExceeded, spent);
+            retryLatched(budget, geo::BudgetStatus::LimitExceeded, spent);
+        }
+    }
 }
 
 TEST_CASE("Retained critical issuance adds only its explicit publication records",
