@@ -1141,6 +1141,10 @@ set (SHARED_SOURCES
      librecad/src/lib/filters/lc_embeddedtextmodel.h
      librecad/src/lib/filters/lc_hyperbolaspline.cpp
      librecad/src/lib/filters/lc_hyperbolaspline.h
+     librecad/src/lib/filters/lc_offsetcurvecarrier.cpp
+     librecad/src/lib/filters/lc_offsetcurvecarrier.h
+     librecad/src/lib/filters/lc_offsetcurvexdata.cpp
+     librecad/src/lib/filters/lc_offsetcurvexdata.h
         librecad/src/lib/filters/lc_parabolaspline.cpp
     librecad/src/lib/filters/lc_parabolaspline.h
      librecad/src/lib/filters/rs_filtercxf.cpp
@@ -2701,6 +2705,8 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/filters/tests/spline_offset_representation_tests.cpp
         librecad/src/lib/filters/tests/lc_offsetcurve_exportdispatch_tests.cpp
+        tests/lc_offsetcurvecarrier_tests.cpp
+        tests/lc_offsetcurvexdata_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_line_parallel_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_fast_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_circle_center_point_tests.cpp

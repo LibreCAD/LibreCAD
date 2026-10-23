@@ -6,6 +6,7 @@
 #ifndef LC_OFFSETCURVE_H
 #define LC_OFFSETCURVE_H
 
+#include <cstddef>
 #include <memory>
 #include <variant>
 
@@ -54,6 +55,10 @@ struct LC_OffsetCurveExtension {
 class LC_OffsetCurve final : public RS_Spline {
 public:
     using OwnedTail = std::vector<LC_OffsetCurveExtension>;
+    static constexpr std::size_t MaximumOwnedTailItems = 64;
+    static constexpr std::size_t MaximumOwnedTailLogicalBytes = 16u * 1024u;
+    static constexpr std::size_t MaximumOwnedStringUnits = 4096;
+    static constexpr unsigned MaximumOwnedTailDepth = 8;
 
     /** Caller limits only lower caps. outcome is C's actual result; refusal is native admission. */
     static std::unique_ptr<LC_OffsetCurve> adopt(const RS_Entity &cache,
@@ -94,6 +99,15 @@ public:
     void moveRef(const RS_Vector &ref, const RS_Vector &offset) override;
     unsigned unknownOwnedFlags() const noexcept { return m_unknownFlags; }
     const OwnedTail &unknownOwnedTail() const noexcept { return m_unknownTail; }
+    /** Target-independent storage admission, not a target-encoding guarantee.
+     * Logical charges are 3+2*UTF16-units for strings, 25 for vectors, 9 for
+     * doubles, 3 for int16 and 5 for int32; bounded container overhead is separate.
+     * Strings must be valid UTF16 without NUL/CR/LF and are copied into fresh
+     * storage, including strings backed by fromRawData or excess caller capacity.
+     * Brace items count toward the item/depth caps. No partial tail is retained.
+     * Validation refusal and propagating allocation exceptions preserve prior
+     * flags/tail. File adapters separately enforce encoded-byte and codec limits.
+     */
     bool setOwnedExtensions(unsigned flags, const OwnedTail &tail);
 
     void update() override;

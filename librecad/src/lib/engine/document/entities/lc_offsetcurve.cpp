@@ -6,6 +6,8 @@
 #include "lc_offsetcurve.h"
 #include "lc_offsetcurvegrips.h"
 
+#include <QStringView>
+
 #include <algorithm>
 #include <cmath>
 #include <limits>
@@ -435,17 +437,21 @@ std::unique_ptr<RS_Ellipse> LC_OffsetCurve::originalEllipse() const {
 }
 
 bool LC_OffsetCurve::setOwnedExtensions(const unsigned flags, const OwnedTail &tail) {
-    if ((flags & ~0x7ff0u) || tail.size() > 64) return false;
+    if ((flags & ~0x7ff0u) || tail.size() > MaximumOwnedTailItems) return false;
     std::size_t bytes = 0;
     unsigned depth = 0;
     for (const auto &item : tail) {
         std::size_t size = 0;
         if (item.code == 1000 || item.code == 1002) {
             const auto *text = std::get_if<QString>(&item.value);
-            if (!text || text->size() > 1023) return false;
-            size = 3 + 4*static_cast<std::size_t>(text->size());
+            if (!text || static_cast<std::size_t>(text->size()) > MaximumOwnedStringUnits ||
+                !QStringView{*text}.isValidUtf16()) return false;
+            for (const QChar character : QStringView{*text})
+                if (character == QChar(char16_t{0}) || character == QChar(u'\r') || character == QChar(u'\n'))
+                    return false;
+            size = 3 + 2*static_cast<std::size_t>(text->size());
             if (item.code == 1002) {
-                if (*text == "{") { if (++depth > 8) return false; }
+                if (*text == "{") { if (++depth > MaximumOwnedTailDepth) return false; }
                 else if (*text == "}") { if (!depth) return false; --depth; }
                 else return false;
             }
@@ -460,11 +466,21 @@ bool LC_OffsetCurve::setOwnedExtensions(const unsigned flags, const OwnedTail &t
         } else if (item.code == 1070 && std::holds_alternative<std::int16_t>(item.value)) size = 3;
         else if (item.code == 1071 && std::holds_alternative<std::int32_t>(item.value)) size = 5;
         else return false;
-        if (size > 4096 - bytes) return false;
+        if (size > MaximumOwnedTailLogicalBytes - bytes) return false;
         bytes += size;
     }
     if (depth) return false;
-    auto owned = tail;
+    // Validate completely before allocation. Stage fresh text so neither reserved
+    // caller capacity nor fromRawData backing storage can escape into the entity.
+    OwnedTail owned;
+    owned.reserve(tail.size());
+    for (const auto &item : tail) {
+        if (const auto *text = std::get_if<QString>(&item.value))
+            owned.push_back({item.code, QString(text->constData(), text->size())});
+        else owned.push_back(item);
+    }
+    // Nothing published above: an allocation exception leaves the old state intact.
+    static_assert(noexcept(m_unknownTail.swap(owned)));
     m_unknownTail.swap(owned); m_unknownFlags = flags;
     return true;
 }

@@ -614,6 +614,8 @@ HEADERS += \
     lib/filters/lc_parabolaspline.h \
     lib/filters/rs_filtercxf.h \
     lib/filters/rs_filterdxfrw.h \
+    lib/filters/lc_offsetcurvecarrier.h \
+    lib/filters/lc_offsetcurvexdata.h \
     lib/filters/lc_shxshapenames.h \
     lib/filters/rs_filterdxf1.h \
     lib/filters/rs_filterjww.h \
@@ -1288,6 +1290,8 @@ SOURCES += \
     lib/fileio/lc_filenameselectionservice.cpp \
     lib/filters/rs_filtercxf.cpp \
     lib/filters/rs_filterdxfrw.cpp \
+    lib/filters/lc_offsetcurvecarrier.cpp \
+    lib/filters/lc_offsetcurvexdata.cpp \
     lib/filters/rs_filterdxf1.cpp \
     lib/filters/rs_filterjww.cpp \
     lib/filters/rs_filterlff.cpp \
