@@ -24,11 +24,13 @@
 #include <catch2/generators/catch_generators_range.hpp>
 
 #include <filesystem>
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
 
 #include "lc_filtertestsupport.h"
+#include "lc_entitymetauiutils.h"
 #include "lc_sourcefonts.h"
 #include "lc_testentityfactory.h"
 #include "rs.h"
@@ -399,6 +401,31 @@ TEST_CASE("Every entity type has an explicit coverage disposition", "[entity-cov
     CHECK(kRowCount == 51);
     CHECK(drawingRows == 28);
     CHECK(exemptRows == 23);
+}
+
+TEST_CASE("Every drawing type has a current UI name or an explicit legacy naming gap",
+          "[entity-coverage][lc-offsetcurve][f-names]") {
+    std::map<RS2::EntityType, unsigned> names;
+    for (const auto& [name, type] : LC_EntityMetaUIUtils::getEntityTypeNamesList()) {
+        CAPTURE(static_cast<unsigned>(type));
+        CHECK_FALSE(name.isEmpty());
+        CHECK(++names[type] == 1);
+        CHECK((rowOf(type).kind == Kind::DrawingEntity || type == RS2::EntityBlock));
+    }
+    for (unsigned index = 0; index < kRowCount; ++index) {
+        const auto type = static_cast<RS2::EntityType>(index);
+        if (rowOf(type).kind != Kind::DrawingEntity) continue;
+        CAPTURE(index);
+        const bool legacyGap = type == RS2::EntitySolid || type == RS2::EntityWipeout ||
+            type == RS2::EntityMLeader || type == RS2::EntityTolerance;
+        if (legacyGap) {
+            INFO("Pre-existing UI name-list gap, outside native offset integration");
+            CHECK(names[type] == 0);
+        } else {
+            CHECK(names[type] == 1);
+        }
+    }
+    CHECK(names[RS2::EntityOffsetCurve] == 1);
 }
 
 TEST_CASE("Drawing entity factories produce usable fixtures", "[entity-coverage]") {

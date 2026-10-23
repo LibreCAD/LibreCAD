@@ -807,6 +807,7 @@ HEADERS += \
     lib/selection/metaentity/entities/lc_matchdescriptor_arc.h           \
     lib/selection/metaentity/entities/lc_matchdescriptor_polyline.h      \
     lib/selection/metaentity/entities/lc_matchdescriptor_spline.h        \
+    lib/selection/metaentity/entities/lc_matchdescriptor_offsetcurve.h \
     lib/selection/metaentity/entities/lc_matchdescriptor_hatch.h         \
     lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.h     \
     lib/selection/metaentity/entities/lc_matchdescriptor_insert.h        \
@@ -1355,6 +1356,7 @@ SOURCES += \
     lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp        \
     lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp \
     lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp \
+    lib/selection/metaentity/entities/lc_matchdescriptor_offsetcurve.cpp \
     lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp \
     lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp \
     lib/selection/metaentity/entities/lc_matchdescriptor_insert.cpp \

@@ -186,6 +186,8 @@ void RS_ActionDefault::highlightHoveredEntities(const LC_MouseEvent *event){
     const RS2::ResolveLevel level = controlPressed ? RS2::ResolveAll : RS2::ResolveNone;
     double hitDistance = 0.0;
     auto entity = catchEntity(event->graphPoint, level, &hitDistance);
+    if (entity && entity->getParent() && entity->getParent()->rtti() == RS2::EntityOffsetCurve)
+        entity = entity->getParent();
 
     if (entity == nullptr) {
         clearHighLighting();

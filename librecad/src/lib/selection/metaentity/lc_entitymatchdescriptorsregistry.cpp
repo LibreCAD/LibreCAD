@@ -41,6 +41,7 @@
 #include "lc_matchdescriptor_line.h"
 #include "lc_matchdescriptor_mtext.h"
 #include "lc_matchdescriptor_multiple.h"
+#include "lc_matchdescriptor_offsetcurve.h"
 #include "lc_matchdescriptor_parabola.h"
 #include "lc_matchdescriptor_point.h"
 #include "lc_matchdescriptor_polyline.h"
@@ -85,6 +86,7 @@ void LC_EntityMatchDescriptorsRegistry::initEntityDescriptors(LC_ActionContext *
     LC_MatchDescriptorPolyline::init(m_entityMatchDescriptors);
     LC_MatchDescriptorPoint::init(m_entityMatchDescriptors);
     LC_MatchDescriptorSpline::init(m_entityMatchDescriptors);
+    LC_MatchDescriptorOffsetCurve::init(m_entityMatchDescriptors);
     LC_MatchDescriptorSplinePoints::init(m_entityMatchDescriptors);
     LC_MatchDescriptorHatch::init(m_entityMatchDescriptors);
     LC_MatchDescriptorInsert::init(m_entityMatchDescriptors, actionContext);

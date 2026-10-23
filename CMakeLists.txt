@@ -1297,6 +1297,8 @@ set (SHARED_SOURCES
      librecad/src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.h
      librecad/src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp
      librecad/src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.h
+     librecad/src/lib/selection/metaentity/entities/lc_matchdescriptor_offsetcurve.cpp
+     librecad/src/lib/selection/metaentity/entities/lc_matchdescriptor_offsetcurve.h
      librecad/src/lib/selection/metaentity/entities/lc_matchdescriptor_splinepoints.cpp
      librecad/src/lib/selection/metaentity/entities/lc_matchdescriptor_splinepoints.h
      librecad/src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp
@@ -2796,6 +2798,7 @@ if (BUILD_TESTS)
         librecad/src/ui/dock_widgets/layer_widget/tests/lc_layerblockwidgets_tests.cpp
         librecad/src/ui/dock_widgets/ucs_list/tests/lc_ucsviewsselectiondocks_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetlifetime_tests.cpp
+        librecad/src/ui/components/utils/tests/lc_offsetcurve_names_tests.cpp
         librecad/src/actions/dock_widgets/block/tests/lc_actionblockssave_tests.cpp
         librecad/src/ui/dock_widgets/ucs_list/tests/lc_ucslistmodel_tests.cpp
         librecad/src/ui/dock_widgets/views_list/tests/lc_namedviewsmodel_tests.cpp

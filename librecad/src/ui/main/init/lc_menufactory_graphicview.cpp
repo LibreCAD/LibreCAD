@@ -46,6 +46,8 @@ namespace {
 QMenu* LC_MenuFactoryGraphicView::createGraphicViewPopupMenu(QG_GraphicView* graphicView,
                                                   RS_Entity* contextEntity, const RS_Vector& contextPosition,
                                                   QStringList& actionNames, const bool mayInvokeDefaultMenu) {
+    if (contextEntity && contextEntity->getParent() && contextEntity->getParent()->rtti() == RS2::EntityOffsetCurve)
+        contextEntity = contextEntity->getParent();
     QMenu* contextMenu{nullptr};
 
     if (actionNames.isEmpty() && mayInvokeDefaultMenu) {
@@ -824,6 +826,13 @@ void LC_MenuFactoryGraphicView::createGVMenuEntitySpecific(QMenu* contextMenu, Q
                                            "ModifyRevertDirection"
                                        });
 
+                createGVMenuModifyGeneral(contextMenu, graphicView, entity, pos, actionContext);
+                break;
+            }
+            case RS2::EntityOffsetCurve: {
+                addProxyActionsSubMenu(contextMenu, tr("Modify Offset Curve"),
+                                       ":/icons/attributes.lci", entity, pos, actionContext,
+                                       {"ModifyOffset", "DrawSplineExplode", "ModifyRevertDirection"});
                 createGVMenuModifyGeneral(contextMenu, graphicView, entity, pos, actionContext);
                 break;
             }
