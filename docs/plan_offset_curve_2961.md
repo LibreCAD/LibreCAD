@@ -24,10 +24,10 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-23. Status: all A slices, B and X-H1 committed; X-H2 in progress; native feature incomplete.
+Updated: 2026-10-23. Status: all A slices, B and X-H1/X-H2 committed; native feature incomplete.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
-This checkpoint records tested A-core/A-strict/A-reference/A-cache/B and auxiliary X-H1 commits. Later
+This checkpoint records tested A-core/A-strict/A-reference/A-cache/B and auxiliary X-H1/X-H2 commits. Later
 main-track slices remain incomplete; no native entity or complete topology checker
 is claimed.
 
@@ -42,7 +42,7 @@ is claimed.
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
 | Latest product checkpoint | `9bf0546b6` (B) |
-| Latest auxiliary checkpoint | `8993e2848` (X-H1 physical-parent correction; original X-H1 `29ab28163`) |
+| Latest auxiliary checkpoint | `25661f1a3` (X-H2; X-H1 physical-parent correction `8993e2848`) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
 | A-core | Atomic work adoption, separate ordering allowance and sticky terminal status implemented; A04/A10 registered |
@@ -54,7 +54,7 @@ is claimed.
 | Native entity | No `LC_OffsetCurve` or `EntityOffsetCurve` yet |
 | Product integration | No native offset adoption, private file schema, creation/editing UI, or target-trim integration yet |
 | Build registration | Both geometry implementations in CMake and qmake; both geometry test TUs in `librecad_tests` |
-| Validation harness | X-H1 promoted into scripts/offset-curve-validation; X-H2 onward pending; historical scratch retained unchanged |
+| Validation harness | X-H1/X-H2 committed in scripts/offset-curve-validation; X-H3 onward pending; historical scratch unchanged |
 | Latest validation | A-core, geometry and format fast lanes passed Release/ASan; full Release and qmake6 passed; see section 14 |
 
 Recheck these facts against the selected implementation checkout before starting
@@ -1456,8 +1456,8 @@ one plan update, not another candidate/freeze lifecycle.
 | Slice | Current state | Required repair and exit |
 |---|---|---|
 | X-H1 | Committed, 29ab28163; follow-up 8993e2848 | Schema 2 / offset-2961; explicit validation/synthetic purpose; bounded parsing and readback; inert descriptors; 25 passing tests and independent review |
-| X-H2 | In progress; capture implementation and tests awaiting final review | Capture actual source/runtime/input tuple and exact inventory; no synthetic placeholder source rows; stable read and race/refusal tests |
-| X-H3 | Runner lacks production worker wiring | Configure real registry/CLI, explicit worker contract and exact output inventory; missing/undefined/unknown status is FAIL, never default PASS |
+| X-H2 | Committed, 25661f1a3 | Actual input/runtime manifest, bounded stdin/child capture and durable receipt readback; 42 capture tests plus 25 H1 tests; independent review |
+| X-H3 | In progress; new registry/runner/CLI | Configure real registry/CLI, explicit worker contract and exact output inventory; missing/undefined/unknown status is FAIL, never default PASS |
 | X-H4 | Runner exposes row count, not complete joined rows | Return all joined events with pinned identity/order/output hashes; test persistence, replay, mutation and duplicate/missing events |
 | X-H5 | Draft evidence validator incomplete, no tests | Implement missing helpers, actual tuple validation, absent-file publication and before/after-dispatch rechecks |
 | X-H6 | Planned inventory stale/incomplete | Preserve original71 scenario IDs; add stale-current-predecessor, strict worker-result and newly found regression cases; derive count from explicit unique inventory |
@@ -1530,17 +1530,32 @@ outcomes/deterministic payloads while excluding declared run IDs/timestamps from
 byte equality. No self-referential future commit hash, fake reviewer PASS,
 fabricated gate artifacts or automatic authority escalation.
 
-**Next auxiliary card: X-H2.** Own preflight capture/source-tuple helpers and
-focused tests under the tools directory. Reconcile the historical capture code
-with schema 2; derive the candidate/blob, source manifest, exact case inventory,
-runtime/executable and runner identities from actual stable bytes. Bind the
-sanitized child environment without mutating the parent. Recheck inputs and the
-original bigint directory identities before spawn, after every child outcome and
-before/after exclusive durable publication. Preserve failed child diagnostics;
-never publish a synthetic source tuple as validation evidence. Add real-child
-positive controls plus mutation, replaced-parent, output-cap and failure tests.
-Keep X-H3 worker registry/CLI and X-H5 formal evidence publication out of this
-slice. Review/test/commit it, then immediately update this roadmap.
+**Next auxiliary card: X-H3.** New formal-registry.js, formal-runner.js,
+run-formal-gates.js, test-formal-runner.js and fixtures/formal-child.js under
+scripts/offset-curve-validation. Existing H1/H2 modules remain frozen unless a
+specific integration defect is demonstrated. The historical runner is reference
+material only; its V512 tuple and default-PASS behavior are not current APIs.
+
+1. Define a bounded versioned registry with explicit purpose, pinned real worker
+   module/source, unique ordered case IDs and exact expected output declarations.
+   Bind actual bytes through the H2 input manifest; never invent source rows.
+2. Require explicit recognized worker result status and exact case/output
+   inventory. Missing/undefined/malformed/unknown/FAIL, child error/nonzero/signal,
+   thrown callback and partial/missing/extra/duplicate output are distinct refusals.
+   Read/hash actual output files, not caller-supplied digest strings.
+3. Implement the shared transaction with original parent/input identities, root
+   absence/exclusive creation, bounded real child lifecycle/diagnostics, and
+   before/after dispatch rechecks. Preserve failure prefixes and externally created
+   roots; no cleanup of a race winner. Do not mutate parent process.env.
+4. Wire the real CLI to that transaction and actual workers. Distinguish bounded
+   argument classifications in section 13.1; validate expected receipt pair IDs and
+   order in the shared transaction once. Pre-root failures launch no worker and
+   produce no owned root; test exact boundary/reason rather than any error.
+5. Add positive, negative, actual-child and actual-CLI controls. H4 still owns
+   complete persisted event joins; H5 owns durable evidence manifests; H6/H7 own
+   their full inventories/independent qualification. Do not claim those from H3.
+6. Independent review, focused plus H1/H2 regression tests, source/test commit,
+   immediate plan-only checkpoint. Node remains optional developer tooling.
 
 
 ### 13.1 Preserved H6 Refusal Inventory
@@ -1663,7 +1678,7 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 | Complete semantic path checker | Missing implementation | A-cache -> B -> C |
 | Native feature/UI/persistence/trim | Not implemented | Follow D through T; do not label scaffolding complete |
 | Independent DWG/version fixtures | Required, not yet qualified | Inventory/tool/license/provenance during G-fixtures; close all rows in G-matrix |
-| Harness production readiness | X-H1 committed; actual capture, workers and independent evidence incomplete | X-H2 through X-H7, independent from starting product work |
+| Harness production readiness | X-H1/X-H2 committed; workers and independent evidence incomplete | X-H3 through X-H7, independent from starting product work |
 | Independent review and test evidence | A-core independent static review and actual test reports complete | Obtain fresh review/validation for each successor |
 | Dirty unrelated main checkout | Not the selected source baseline | Preserve it; reconcile only if changing implementation worktree |
 
@@ -1679,9 +1694,62 @@ The plan checkpoint column never depends on its own future SHA.
 | X-H1 | 29ab281635f85590a7db1f7a02db1fcf65ce3cfb | e4b6e900f | 24/24 Node tests; syntax/whitespace checks; independent review fixes applied |
 | A-strict | dc016f6e2b8294cd1f1524f22a568f9d4196459c | eff902b97 | Full Release, geometry/acceptance Release+ASan, format fast lanes and qmake6 passed; independent review |
 | A-reference | 5c12fbeef5fe3d41444d44bf2cc087a77a4fcf75 | 02a8e18f3 | 4 acceptance cases, full Release, ASan geometry, format lanes and qmake6 passed; independent review |
-| A-cache | dbf895638f4bbd6ee210d09e41066a93cb888024 | This immediate plan-only checkpoint | 4 acceptance cases, full Release, ASan geometry, format lanes, qmake6; independent review including stage-isolated depth proof |
-| X-H1 physical parents | 8993e2848 | Immediate plan-only checkpoint | 25 receipt tests; independent review; 67-test H1/H2 integration passed |
-| B | 9bf0546b6 | Immediate plan-only checkpoint | All 8 terminal identities; full Release, geometry Release/ASan, format lanes, qmake6; independent review |
+| A-cache | dbf895638f4bbd6ee210d09e41066a93cb888024 | af68194ef | 4 acceptance cases, full Release, ASan geometry, format lanes, qmake6; independent review including stage-isolated depth proof |
+| X-H1 physical parents | 8993e2848 | e8119501b | 25 receipt tests; independent review; 67-test H1/H2 integration passed |
+| B | 9bf0546b6 | b12a9a02c | All 8 terminal identities; full Release, geometry Release/ASan, format lanes, qmake6; independent review |
+| X-H2 | 25661f1a3 | Immediate plan-only checkpoint | 15 input + 27 process + 25 H1 tests; five syntax checks; independent input/process reviews |
+
+### X-H2 Validation (2026-10-23)
+
+Six files committed: input-capture.js, preflight-capture.js, their two tests,
+fixtures/capture-child.js and README.md. Actual stable bytes derive the candidate
+SHA-256/length/Git-blob, explicit sorted source/input/fixture/config closure, exact
+case inventory, runner and actual Node executable/runtime tuple. Immutable
+snapshots retain bytes/metadata; in-process provenance prevents supplied fake
+captures from revalidation. Empty/missing source/runtime tuples cannot pass.
+
+The real child receives bounded canonical context on stdin, not per-run argv/env
+changes. Two real-child receipts with distinct physical parents successfully join
+H1 with identical actual argv/environment. Context delivery completion is recorded,
+not misrepresented as child consumption. Parent environment stays unchanged.
+The same original bigint run-root-parent identity and captured inputs/runtime are
+checked before/after every child outcome and receipt publication/readback.
+No malformed child result gets a fabricated receipt; immutable bounded diagnostics
+retain actual exit/signal/error/stdout/stderr and stdin transport information.
+
+All 67 integrated tests passed: 15 input, 27 process, 25 H1, no skips/failures.
+Five new JavaScript files passed syntax checks; whitespace passed. Independent
+reviewer 01a16687-2244-7373-9bb9-fdad31c25cb9 separately reviewed input and process
+scopes and reran their tests (15/15 and 27/27); no final P1/P2 findings. The parent
+found/fixed the context/environment pair incompatibility before this final tree;
+its real-child regression verifies the stdin design. H1's distinct-parent defect
+was committed separately first. Worker: 01a16673-d27c-7a73-a34b-4c8519852336.
+
+Limits: 128 files, 8 MiB ordinary file, 128 MiB executable, 256 MiB total, 1 MiB
+inventory/4096 cases, 32 KiB context, 64 MiB per child stream and a five-minute
+direct-child kill deadline (caller may lower stream/time caps). Publication uses
+exclusive/no-follow files, fsync, explicit modes and H1 readback. Unsupported
+directory fsync is recorded. Descendants can delay pipe closure; transient
+create/delete races between observations are not excluded. Failed publication
+may leave artifacts. Explicit dependency closure does not discover transitive
+imports/dynamic libraries. The synthetic fixture refuses validation purpose.
+H3-H7, persisted stdin/input evidence and whole-harness completion remain pending.
+
+Evidence: /private/tmp/lc2961-impl-evidence.9GtLO2/X-H2-integration-parent-01.tap;
+source syntax checks and independent test reruns. No application/build changes.
+Validated committed SHA-256:
+
+| File under scripts/offset-curve-validation | SHA-256 |
+|---|---|
+| input-capture.js | 55ff4be97c7b4603729e9e1b4f924ae05147bf0620719610937f515c260e7a3f |
+| preflight-capture.js | 05e0317ab327fc8ea4552f7d39680ed910c962adfc24b953f143def63138e54c |
+| test-input-capture.js | 7225b1d315b4104ba505b2cf846783789138eefebef950b3f4f8ead998b17721 |
+| test-preflight-capture.js | 2dcedf18a449bb60e91a2b0ad04bbb35529b5c99194ffc155d930adf0be8a103 |
+| fixtures/capture-child.js | 4d5d06c4857d5098d5ae5075d39beed4477844336ab933314b1af490726c1523 |
+| README.md | f097bc5a2ddb39def7a1e8ca2365be5830367366a9ee474056de8f468b11c35e |
+
+C remains next on the main track. X-H3 is being implemented in disjoint new
+tooling paths; neither track's unfinished work is labelled complete.
 
 ### B Validation (2026-10-23)
 
