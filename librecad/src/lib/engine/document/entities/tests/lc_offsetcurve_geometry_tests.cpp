@@ -1499,7 +1499,7 @@ TEST_CASE("Critical depth excludes a split refused before child examination",
     CHECK_FALSE(result.adapter);
     CHECK(budget.status() == geo::BudgetStatus::LimitExceeded);
     CHECK(result.work.vertices == 6);
-    CHECK(result.work.distancePairs == 23);
+    CHECK(result.work.distancePairs == 26); // Root + 21 axes + 3 axis adjacencies + scalar root.
     CHECK(result.work.cacheSpans == 0);
     CHECK(result.work.deepest == 0);
     CHECK(result.work.vertices == budget.consumed().vertices);
@@ -2028,6 +2028,258 @@ TEST_CASE("work budget terminal latches preserve counters",
     }
 }
 
+TEST_CASE("axis inventory ordering comparisons are separately budgeted",
+          "[lc-offsetcurve][geometry][cache-budget-accounting][reference-accounting]") {
+    for (const bool reversed : {false, true}) {
+        // Whole sources start at M_PI_4, not an axis: four maps (six comparisons
+        // each), then three ascending or six descending insertion predicates.
+        const std::size_t expected = 24 + (reversed ? 6 : 3);
+        for (const bool prespent : {false, true}) {
+            for (const bool shortCap : {false, true}) {
+                CAPTURE(reversed, prespent, shortCap);
+                LC_OffsetCheckLimits limits;
+                limits.maxOrderingComparisons = expected + (prespent ? 7 : 0) - shortCap;
+                geo::WorkBudget budget{limits};
+                if (prespent) { REQUIRE(budget.consumeOrderingComparisons(7)); }
+                const auto result = geo::analyseCritical(basis(100, .5, 0, 0, reversed), 1, budget);
+                CHECK(result.status == (shortCap ? LC_IntersectionStatus::LimitExceeded : LC_IntersectionStatus::Ok));
+                CHECK(bool(result.adapter) == !shortCap);
+                CHECK(result.work.orderingComparisons == limits.maxOrderingComparisons);
+                checkWork(result.work, budget.consumed());
+                if (result.adapter) { checkCriticalCoverage(*result.adapter); }
+                else {
+                    const auto stopped = budget.consumed();
+                    CHECK(geo::analyseCritical(basis(100, .5), 1, budget).status == LC_IntersectionStatus::LimitExceeded);
+                    checkWork(budget.consumed(), stopped);
+                }
+            }
+        }
+    }
+    geo::WorkBudget noOrdering{LC_OffsetCheckLimits{4096, 65536, 1u << 20, 20, 1}};
+    const auto empty = geo::analyseCritical(basis(100, .5, .01, .05), 1, noOrdering);
+    REQUIRE(empty.status == LC_IntersectionStatus::Ok);
+    CHECK(empty.work.orderingComparisons == 0); // No axis or occurrence to order/map.
+}
+
+TEST_CASE("critical occurrence ordering comparisons are separately budgeted",
+          "[lc-offsetcurve][geometry][cache-budget-accounting][reference-accounting]") {
+    for (const bool reversed : {false, true}) {
+        // Axis work as A05; four cusp maps cost 24, then three/six insertion predicates.
+        const std::size_t expected = 24 + (reversed ? 6 : 3) + 24 + (reversed ? 6 : 3);
+        for (const bool retained : {false, true}) {
+            for (const bool shortCap : {false, true}) {
+                CAPTURE(reversed, retained, shortCap);
+                LC_OffsetCheckLimits limits;
+                // Each retained occurrence adds its six-comparison map and two six-comparison image products.
+                limits.maxOrderingComparisons = expected + (retained ? 72 : 0) - shortCap;
+                geo::WorkBudget budget{limits};
+                const auto source = basis(100, .5, 0, 0, reversed);
+                if (retained) {
+                    auto result = geo::analyseCriticalRetained(source, -30, budget);
+                    CHECK(result.status == (shortCap ? LC_IntersectionStatus::LimitExceeded : LC_IntersectionStatus::Ok));
+                    CHECK(bool(result.adapter) == !shortCap); CHECK(bool(result.refinement) == !shortCap);
+                    if (result.adapter) { CHECK(result.adapter->criticalOccurrences().size() == 4); checkCriticalCoverage(*result.adapter); }
+                } else {
+                    const auto result = geo::analyseCritical(source, -30, budget);
+                    CHECK(result.status == (shortCap ? LC_IntersectionStatus::LimitExceeded : LC_IntersectionStatus::Ok));
+                    CHECK(bool(result.adapter) == !shortCap);
+                    if (result.adapter) { CHECK(result.adapter->criticalOccurrences().size() == 4); checkCriticalCoverage(*result.adapter); }
+                }
+                CHECK(budget.consumed().orderingComparisons == limits.maxOrderingComparisons);
+                if (shortCap) {
+                    const auto stopped = budget.consumed();
+                    CHECK(geo::analyseCriticalRetained(source, -30, budget).status == LC_IntersectionStatus::LimitExceeded);
+                    checkWork(budget.consumed(), stopped);
+                }
+            }
+        }
+    }
+    for (const bool prespent : {false, true}) {
+        for (const bool shortCap : {false, true}) {
+            LC_OffsetCheckLimits limits;
+            // Forward issuance: 54 for the inventory + 4*(6 map + 12 image).
+            // A compound contraction stages all four images with the same 18 predicates apiece.
+            limits.maxOrderingComparisons = 54 + 72 + 72 + (prespent ? 7 : 0) - shortCap;
+            geo::WorkBudget budget{limits};
+            if (prespent) { REQUIRE(budget.consumeOrderingComparisons(7)); }
+            auto query = geo::analyseCriticalRetained(basis(100, .5), -30, budget);
+            REQUIRE(query.status == LC_IntersectionStatus::Ok);
+            const auto handle = query.refinement->occurrenceHandle(0);
+            const auto original = *query.refinement->snapshot(handle);
+            const auto refined = query.refinement->contract(handle, budget);
+            CHECK(refined.status == (shortCap ? LC_IntersectionStatus::LimitExceeded : LC_IntersectionStatus::Ok));
+            CHECK(bool(refined.snapshot) == !shortCap);
+            CHECK(refined.entered.orderingComparisons == 72 - shortCap);
+            CHECK(refined.work.orderingComparisons == limits.maxOrderingComparisons);
+            if (shortCap) {
+                const auto unchanged = *query.refinement->snapshot(handle);
+                CHECK(unchanged.occurrence.parameter.lo() == original.occurrence.parameter.lo());
+                CHECK(unchanged.occurrence.parameter.hi() == original.occurrence.parameter.hi());
+                const auto stopped = budget.consumed();
+                CHECK(query.refinement->contract(handle, budget).status == LC_IntersectionStatus::LimitExceeded);
+                checkWork(budget.consumed(), stopped);
+            }
+        }
+    }
+}
+
+TEST_CASE("critical fixed scans charge before iteration",
+          "[lc-offsetcurve][geometry][cache-budget-accounting][reference-accounting]") {
+    const auto source = basis(100, .5);
+    for (std::size_t visits = 0; visits < 21; ++visits) {
+        CAPTURE(visits);
+        LC_OffsetCheckLimits limits;
+        limits.maxDistancePairs = 1 + visits; // Classify/frame root, then indices -8 through 12.
+        geo::WorkBudget budget{limits};
+        const auto result = geo::analyseCritical(source, 1, budget);
+        CHECK(result.status == LC_IntersectionStatus::LimitExceeded); CHECK_FALSE(result.adapter);
+        CHECK(result.work.distancePairs == limits.maxDistancePairs);
+        const auto accepted = visits < 10 ? 0 : std::min<std::size_t>(4, visits - 9);
+        CHECK(result.work.vertices == 1 + accepted);
+        CHECK(result.work.orderingComparisons == 6 * accepted);
+        const auto stopped = budget.consumed();
+        CHECK(geo::analyseCritical(source, 1, budget).status == LC_IntersectionStatus::LimitExceeded);
+        checkWork(budget.consumed(), stopped);
+    }
+    for (std::size_t adjacent = 0; adjacent <= 3; ++adjacent) {
+        CAPTURE(adjacent);
+        LC_OffsetCheckLimits limits;
+        limits.maxDistancePairs = 1 + 21 + adjacent;
+        geo::WorkBudget budget{limits};
+        const auto result = geo::analyseCritical(source, 1, budget);
+        CHECK(result.status == LC_IntersectionStatus::LimitExceeded); CHECK_FALSE(result.adapter);
+        CHECK(result.work.distancePairs == limits.maxDistancePairs);
+        CHECK(result.work.vertices == 5); CHECK(result.work.orderingComparisons == 27);
+    }
+    for (std::size_t visits = 0; visits < 4; ++visits) {
+        CAPTURE(visits);
+        LC_OffsetCheckLimits limits;
+        limits.maxDistancePairs = 1 + 21 + 3 + visits;
+        geo::WorkBudget budget{limits};
+        const auto result = geo::analyseCritical(source, -25, budget); // Exact minimum stationary threshold.
+        CHECK(result.status == LC_IntersectionStatus::LimitExceeded); CHECK_FALSE(result.adapter);
+        CHECK(result.work.distancePairs == limits.maxDistancePairs);
+        CHECK(result.work.vertices == 5 + visits / 2);
+        CHECK(result.work.orderingComparisons == 27);
+    }
+}
+
+TEST_CASE("geometry root and retained-record capacity checks precede debit",
+          "[lc-offsetcurve][geometry][cache-budget-accounting][reference-accounting]") {
+    const auto source = basis(100, .5);
+    SECTION("either exhausted root dimension refuses both debits before classification") {
+        for (const bool vertices : {false, true}) {
+            for (const bool retained : {false, true}) {
+                LC_OffsetCheckLimits limits{2, 3, 5, 20};
+                geo::WorkBudget budget{limits};
+                REQUIRE(budget.consumePieces(1)); REQUIRE(budget.checkDepth(7));
+                REQUIRE(budget.consumeVertices(vertices ? 3 : 2));
+                REQUIRE(budget.consumePairs(vertices ? 4 : 5));
+                const auto before = budget.consumed();
+                if (retained) {
+                    const auto result = geo::analyseCriticalRetained(source, -30, budget);
+                    CHECK(result.status == LC_IntersectionStatus::LimitExceeded);
+                    CHECK_FALSE(result.adapter); CHECK_FALSE(result.refinement);
+                } else {
+                    const auto result = geo::analyseCritical(source, -30, budget);
+                    CHECK(result.status == LC_IntersectionStatus::LimitExceeded); CHECK_FALSE(result.adapter);
+                }
+                checkWork(budget.consumed(), before);
+            }
+        }
+    }
+    SECTION("retained records are preflighted and published as one complete inventory") {
+        geo::WorkBudget legacyBudget;
+        const auto legacy = geo::analyseCritical(source, -30, legacyBudget);
+        REQUIRE(legacy.status == LC_IntersectionStatus::Ok);
+        const auto count = legacy.adapter->criticalOccurrences().size(); REQUIRE(count == 4);
+        // Three metadata records, one canonical state, one issuer, and all occurrence records.
+        const auto extra = 3 + 1 + 1 + count;
+        for (const bool oneShort : {false, true}) {
+            LC_OffsetCheckLimits limits;
+            limits.maxVertices = legacy.work.vertices + extra - oneShort;
+            geo::WorkBudget budget{limits};
+            const auto result = geo::analyseCriticalRetained(source, -30, budget);
+            CHECK(result.status == (oneShort ? LC_IntersectionStatus::LimitExceeded : LC_IntersectionStatus::Ok));
+            CHECK(bool(result.adapter) == !oneShort); CHECK(bool(result.refinement) == !oneShort);
+            CHECK(result.work.vertices == legacy.work.vertices + (oneShort ? 0 : extra));
+            if (oneShort) { checkWork(result.work, legacy.work); }
+        }
+    }
+    SECTION("staged contraction capacity is prepared before its complete record debit") {
+        geo::WorkBudget measured;
+        const auto issued = geo::analyseCriticalRetained(source, -30, measured);
+        REQUIRE(issued.status == LC_IntersectionStatus::Ok);
+        const auto count = issued.refinement->occurrenceCount();
+        for (const bool oneShort : {false, true}) {
+            LC_OffsetCheckLimits limits;
+            limits.maxVertices = issued.work.vertices + 1 + count - oneShort;
+            geo::WorkBudget budget{limits};
+            auto query = geo::analyseCriticalRetained(source, -30, budget);
+            REQUIRE(query.status == LC_IntersectionStatus::Ok);
+            const auto handle = query.refinement->occurrenceHandle(0);
+            const auto original = *query.refinement->snapshot(handle);
+            const auto result = query.refinement->contract(handle, budget);
+            CHECK(result.status == (oneShort ? LC_IntersectionStatus::LimitExceeded : LC_IntersectionStatus::Ok));
+            CHECK(bool(result.snapshot) == !oneShort);
+            CHECK(result.work.vertices == issued.work.vertices + 1 + (oneShort ? 0 : count));
+            if (oneShort) {
+                const auto unchanged = *query.refinement->snapshot(handle);
+                CHECK(unchanged.occurrence.parameter.lo() == original.occurrence.parameter.lo());
+                CHECK(unchanged.occurrence.parameter.hi() == original.occurrence.parameter.hi());
+                const auto stopped = budget.consumed();
+                CHECK(query.refinement->contract(handle, budget).status == LC_IntersectionStatus::LimitExceeded);
+                checkWork(budget.consumed(), stopped);
+            }
+        }
+    }
+    SECTION("one-shot solver handoff adopts the actual complete delta exactly once on refusal") {
+        const auto circle = basis(10, 1);
+        const double tolerance = std::ldexp(1.0, -10);
+        const auto queryCore = [&](geo::WorkBudget& ledger) {
+            auto prepared = geo::prepareReferenceContactProviders(circle, 1, ledger);
+            REQUIRE(prepared.status == LC_IntersectionStatus::Ok);
+            REQUIRE(ledger.consumePairs(1)); // Local-tolerance conversion in the production handoff.
+            LC_IntersectionOptions options;
+            options.tolerance = tolerance / prepared.provider->frame().scale();
+            options.strict = true; options.anchoredBranches = 1;
+            options.maxDepth = options.maxLeafDepth = ledger.depthLimit();
+            options.maxBoxPairs = ledger.remainingPairs();
+            options.maxLeaves = options.maxGeneratedItems = ledger.remainingVertices();
+            options.maxOrderingComparisons = ledger.remainingOrderingComparisons();
+            const auto before = ledger.consumed();
+            LC_IntersectionWorkStats entered;
+            const auto result = findCertifiedIntersections(std::move(prepared.provider), options, &entered);
+            CHECK(entered.generatedItems == result.work.generatedItems);
+            CHECK(entered.totalBoxPairs == result.work.totalBoxPairs);
+            CHECK(entered.orderingComparisons == result.work.orderingComparisons);
+            return std::make_pair(before, entered);
+        };
+        geo::WorkBudget measurement;
+        const auto baseline = queryCore(measurement);
+        REQUIRE(baseline.second.generatedItems > 1); REQUIRE(baseline.second.orderingComparisons > 1);
+        for (const unsigned shortDimension : {0u, 1u, 2u}) {
+            CAPTURE(shortDimension);
+            LC_OffsetCheckLimits limits;
+            limits.maxVertices = baseline.first.vertices + baseline.second.generatedItems - (shortDimension == 1);
+            limits.maxOrderingComparisons = baseline.first.orderingComparisons + baseline.second.orderingComparisons -
+                (shortDimension == 2);
+            geo::WorkBudget direct{limits};
+            const auto expected = queryCore(direct);
+            REQUIRE(direct.adoptWork({0, expected.second.generatedItems, expected.second.totalBoxPairs,
+                expected.second.deepest(), expected.second.orderingComparisons}));
+            geo::WorkBudget production{limits};
+            const auto refused = geo::analyseReferenceEvents(circle, 1, tolerance, production);
+            CHECK(refused.status == LC_IntersectionStatus::LimitExceeded); CHECK_FALSE(refused.analysis);
+            // Even the exact core cap leaves no record for the enclosing event analysis.
+            checkWork(refused.work, direct.consumed());
+            const auto stopped = production.consumed();
+            CHECK(geo::analyseReferenceEvents(circle, 1, tolerance, production).status == LC_IntersectionStatus::LimitExceeded);
+            checkWork(production.consumed(), stopped);
+        }
+    }
+}
+
 TEST_CASE("Retained critical issuance adds only its explicit publication records",
           "[lc-offsetcurve][geometry][reference-critical-refine]") {
     static_assert(!std::is_copy_constructible_v<geo::CriticalRefinementSession>);
@@ -2121,15 +2373,15 @@ TEST_CASE("Retained critical preparation preserves the original failed split bou
     CHECK_FALSE(result.adapter);
     CHECK_FALSE(result.refinement);
     CHECK(result.work.vertices == 6);
-    CHECK(result.work.distancePairs == 23);
+    CHECK(result.work.distancePairs == 26); // Includes the three admitted axis adjacency checks.
     CHECK(result.work.deepest == 0);
     checkWork(result.work, budget.consumed());
 
-    geo::WorkBudget examined{LC_OffsetCheckLimits{1, 8, 23, 20}};
+    geo::WorkBudget examined{LC_OffsetCheckLimits{1, 8, 26, 20}};
     const auto later = geo::analyseCritical(basis(100.0, 0.5), -30.0, examined);
     CHECK(later.status == LC_IntersectionStatus::LimitExceeded);
     CHECK(later.work.vertices == 8);
-    CHECK(later.work.distancePairs == 23);
+    CHECK(later.work.distancePairs == 26);
     CHECK(later.work.deepest == 1);
 }
 

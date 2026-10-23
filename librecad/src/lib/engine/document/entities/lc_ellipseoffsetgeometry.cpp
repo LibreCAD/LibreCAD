@@ -19,6 +19,7 @@
 #include <cmath>
 #include <cstdint>
 #include <limits>
+#include <type_traits>
 #include <utility>
 
 #include <boost/math/tools/toms748_solve.hpp>
@@ -375,6 +376,65 @@ void WorkBudget::latchInvalidInput() {
         m_status = BudgetStatus::InvalidInput;
     }
 }
+
+namespace {
+template<typename T>
+bool reserveAdditional(std::vector<T>& values, const std::size_t count, WorkBudget& budget) {
+    if (count > values.max_size() - values.size()) {
+        budget.latchLimitExceeded();
+        return false;
+    }
+    const auto required = values.size() + count;
+    if (required > values.capacity()) {
+        const auto grown = values.capacity() <= values.max_size() / 2 ?
+            2 * values.capacity() : values.max_size();
+        values.reserve(std::max(required, grown));
+    }
+    return true;
+}
+
+template<typename T>
+bool orderByParameter(std::vector<T>& values, WorkBudget& budget) {
+    static_assert(std::is_nothrow_move_constructible_v<T> && std::is_nothrow_move_assignable_v<T>);
+    // Fixed inventories: at most 21 axes or 20 critical occurrences. Equal keys stay stable.
+    for (std::size_t i = 1; i < values.size(); ++i) {
+        T value = std::move(values[i]);
+        std::size_t position = i;
+        while (position != 0) {
+            if (!budget.consumeOrderingComparisons(1)) { return false; }
+            if (!(value.parameter.lo() < values[position - 1].parameter.lo())) { break; }
+            values[position] = std::move(values[position - 1]);
+            --position;
+        }
+        values[position] = std::move(value);
+    }
+    return true;
+}
+
+template<typename T>
+bool rangeOfFour(const std::array<T, 4>& values, std::size_t& low, std::size_t& high, WorkBudget& budget) {
+    low = high = 0;
+    for (std::size_t i = 1; i < values.size(); ++i) {
+        if (!budget.consumeOrderingComparisons(1)) { return false; }
+        if (values[i] < values[low]) { low = i; }
+        if (!budget.consumeOrderingComparisons(1)) { return false; }
+        if (values[high] < values[i]) { high = i; }
+    }
+    return true;
+}
+
+bool adoptCoreWork(WorkBudget& budget, const LC_IntersectionWorkStats& before,
+                   const LC_IntersectionWorkStats& after) {
+    if (after.generatedItems < before.generatedItems || after.totalBoxPairs < before.totalBoxPairs ||
+        after.orderingComparisons < before.orderingComparisons || after.deepest() < before.deepest()) {
+        budget.latchInvalidInput();
+        return false;
+    }
+    return budget.adoptWork({0, after.generatedItems - before.generatedItems,
+        after.totalBoxPairs - before.totalBoxPairs, after.deepest(),
+        after.orderingComparisons - before.orderingComparisons});
+}
+} // namespace
 
 std::optional<CacheLayoutCounts> cacheLayoutCounts(const std::size_t degree, const std::size_t spans) noexcept {
     if ((degree != 1 && degree != 3) || spans == 0 ||
@@ -1237,22 +1297,24 @@ LC_Interval intersect(const LC_Interval& a, const LC_Interval& b) {
     return lo <= hi ? LC_Interval::hull(lo, hi) : LC_Interval{};
 }
 
-RationalRange product(const RationalRange& a, const RationalRange& b) {
+bool product(const RationalRange& a, const RationalRange& b, RationalRange& out, WorkBudget& budget) {
     const std::array<Rational, 4> values{{a.lo * b.lo, a.lo * b.hi, a.hi * b.lo, a.hi * b.hi}};
-    return {*std::min_element(values.begin(), values.end()), *std::max_element(values.begin(), values.end())};
+    std::size_t low, high;
+    if (!rangeOfFour(values, low, high, budget)) { return false; }
+    out = {values[low], values[high]};
+    return true;
 }
 
 RationalRange product(const RationalRange& a, const Rational& b) {
     return b < 0 ? RationalRange{a.hi * b, a.lo * b} : RationalRange{a.lo * b, a.hi * b};
 }
 
-bool powerThreeHalves(const RationalRange& value, RationalRange& out) {
+bool powerThreeHalves(const RationalRange& value, RationalRange& out, WorkBudget& budget) {
     LC_Interval bounds;
     if (value.lo < 0 || !rationalBounds(value.lo, value.hi, bounds)) { return false; }
     const LC_Interval root = sqrt(bounds);
     if (!finiteInterval(root)) { return false; }
-    out = product(value, RationalRange{exactDouble(std::max(0.0, root.lo())), exactDouble(root.hi())});
-    return true;
+    return product(value, RationalRange{exactDouble(std::max(0.0, root.lo())), exactDouble(root.hi())}, out, budget);
 }
 } // namespace
 
@@ -1300,7 +1362,8 @@ struct CriticalProvenance {
         const ExactAngle angle{start.constant + extent.constant * fraction, start.pi + extent.pi * fraction};
         return exactFactorSign(kernel, piLow, piHigh, angle, angle);
     }
-    bool map(const CriticalOccurrence& occurrence, const LC_Interval& alpha, LC_Interval& out) const {
+    bool map(const CriticalOccurrence& occurrence, const LC_Interval& alpha, LC_Interval& out,
+             WorkBudget& budget) const {
         const int q = occurrence.quadrant + 4 * occurrence.winding;
         const bool even = q % 2 == 0;
         // Use alpha directly: in complement mode beta=real*pi/2-alpha, not rounded pi/2-beta.
@@ -1319,10 +1382,12 @@ struct CriticalProvenance {
                     denominator;
             }
         }
-        return rationalBounds(*std::min_element(values.begin(), values.end()),
-                              *std::max_element(values.begin(), values.end()), out);
+        std::size_t lowIndex, highIndex;
+        return rangeOfFour(values, lowIndex, highIndex, budget) &&
+            rationalBounds(values[lowIndex], values[highIndex], out);
     }
-    bool image(const CriticalOccurrence& occurrence, const LC_Interval& u, LC_Interval& x, LC_Interval& y) const {
+    bool image(const CriticalOccurrence& occurrence, const LC_Interval& u, LC_Interval& x, LC_Interval& y,
+               WorkBudget& budget) const {
         x = {};
         y = {};
         const Rational r = exactDouble(basis.ratio);
@@ -1342,8 +1407,8 @@ struct CriticalProvenance {
         const RationalRange small{exactDouble(u.lo()), exactDouble(u.hi())};
         const RationalRange large{1 - small.hi, 1 - small.lo};
         RationalRange zPower, cosPower;
-        if (!powerThreeHalves(initial.complement ? large : small, zPower) ||
-            !powerThreeHalves(initial.complement ? small : large, cosPower)) { return false; }
+        if (!powerThreeHalves(initial.complement ? large : small, zPower, budget) ||
+            !powerThreeHalves(initial.complement ? small : large, cosPower, budget)) { return false; }
         const int cosSign = occurrence.quadrant == 0 || occurrence.quadrant == 3 ? 1 : -1;
         const int sinSign = occurrence.quadrant < 2 ? 1 : -1;
         // Keep coefficients rational until AFTER multiplication by raw axes/scale and tiny powers.
@@ -1487,7 +1552,13 @@ public:
             m_budget.latchLimitExceeded();
             return finish();
         }
-        // These are extra retained logical records. Legacy preparation has already finished unchanged.
+        std::vector<CriticalRefinementSession::Impl::Record> records;
+        if (fixed + occurrences.size() > m_budget.remainingVertices()) {
+            m_budget.latchLimitExceeded();
+            return finish();
+        }
+        if (!reserveAdditional(records, occurrences.size(), m_budget)) { return finish(); }
+        // Extra retained records are admitted only after their publication capacity is prepared.
         if (!m_budget.consumeVertices(fixed + occurrences.size()) || !m_budget.consumePairs(1)) {
             return finish();
         }
@@ -1496,6 +1567,7 @@ public:
         auto provenance = std::make_shared<const CriticalProvenance>(m_basis, m_frame, m_kernel,
             m_piLow, m_piHigh, m_duration, m_start, m_extent, m_canonical, m_scalarDepth);
         auto impl = std::make_unique<CriticalRefinementSession::Impl>();
+        impl->records = std::move(records);
         impl->provenance = provenance;
         impl->canonical = m_canonical;
         impl->depth = m_scalarDepth;
@@ -1510,11 +1582,6 @@ public:
                 return finish();
             }
         }
-        if (occurrences.size() > impl->records.max_size()) {
-            m_budget.latchLimitExceeded();
-            return finish();
-        }
-        impl->records.reserve(occurrences.size());
         for (const auto& occurrence : occurrences) {
             if (!m_budget.consumePairs(1)) { return finish(); }
             CriticalOccurrenceSnapshot snapshot;
@@ -1523,11 +1590,11 @@ public:
             if (canonical) {
                 snapshot.canonical = m_canonical;
                 LC_Interval parameter;
-                if (!provenance->map(occurrence, m_canonical.inverseAngle, parameter)) { return finish(); }
+                if (!provenance->map(occurrence, m_canonical.inverseAngle, parameter, m_budget)) { return finish(); }
                 snapshot.occurrence.parameter = intersect(occurrence.parameter, parameter);
                 if (!finiteInterval(snapshot.occurrence.parameter)) { return finish(); }
             }
-            if (!provenance->image(occurrence, m_canonical.variable, snapshot.imageX, snapshot.imageY)) {
+            if (!provenance->image(occurrence, m_canonical.variable, snapshot.imageX, snapshot.imageY, m_budget)) {
                 return finish();
             }
             impl->records.push_back({occurrence, snapshot});
@@ -1654,8 +1721,9 @@ private:
             }
         }
         // A linear-fractional function of pi has constant derivative sign on this nonzero denominator.
-        return rationalBounds(*std::min_element(values.begin(), values.end()),
-                              *std::max_element(values.begin(), values.end()), out);
+        std::size_t lowIndex, highIndex;
+        return rangeOfFour(values, lowIndex, highIndex, m_budget) &&
+            rationalBounds(values[lowIndex], values[highIndex], out);
     }
     bool axes() {
         for (int index = -8; index <= 12; ++index) {
@@ -1664,7 +1732,8 @@ private:
             const int b = compareAxis(index, m_end);
             if ((a != 2 && direction() * a < 0) || (b != 2 && direction() * b > 0)) { continue; }
             if (a == 2 || b == 2) { return unresolved(); }
-            if (!generated(1, 0)) { return false; }
+            if (m_budget.remainingVertices() == 0) { m_budget.latchLimitExceeded(); return false; }
+            if (!reserveAdditional(m_axes, 1, m_budget) || !generated(1, 0)) { return false; }
             LC_Interval parameter;
             const ExactAngle axis{0, Rational{index} / 2};
             if (a == 0) { parameter = LC_Interval::point(0.0); }
@@ -1675,10 +1744,9 @@ private:
             if (!(lo <= hi)) { return unresolved(); }
             m_axes.push_back({index, LC_Interval::hull(lo, hi), a == 0, b == 0});
         }
-        std::sort(m_axes.begin(), m_axes.end(), [](const Axis& a, const Axis& b) {
-            return a.parameter.lo() < b.parameter.lo();
-        });
+        if (!orderByParameter(m_axes, m_budget)) { return false; }
         for (std::size_t i = 1; i < m_axes.size(); ++i) {
+            if (!m_budget.consumePairs(1)) { return false; }
             if (m_axes[i - 1].parameter.hi() > m_axes[i].parameter.lo()) { return unresolved(); }
         }
         return true;
@@ -1750,7 +1818,8 @@ private:
     }
     bool appendOccurrence(const LC_Interval& parameter, const CriticalKind kind, const int index,
                           const bool atStart, const bool atEnd) {
-        if (!generated(1, 0)) { return false; }
+        if (m_budget.remainingVertices() == 0) { m_budget.latchLimitExceeded(); return false; }
+        if (!reserveAdditional(m_adapter->m_occurrences, 1, m_budget) || !generated(1, 0)) { return false; }
         const int quadrant = (index % 4 + 4) % 4;
         m_adapter->m_occurrences.push_back({parameter, kind,
             kind == CriticalKind::SimpleCusp ? CriticalProof::MonotonePolynomial : CriticalProof::ExactAxisThreshold,
@@ -1761,6 +1830,7 @@ private:
         const auto regime = m_adapter->m_regime;
         if (regime == CriticalRegime::MinimumStationary || regime == CriticalRegime::MaximumStationary) {
             for (const auto& axis : m_axes) {
+                if (!m_budget.consumePairs(1)) { return false; }
                 const bool major = axis.index % 2 == 0;
                 if (major == (regime == CriticalRegime::MinimumStationary) &&
                     !appendOccurrence(axis.parameter, CriticalKind::CriticalStationary, axis.index,
@@ -1787,10 +1857,9 @@ private:
             }
         }
         auto& occurrences = m_adapter->m_occurrences;
-        std::sort(occurrences.begin(), occurrences.end(), [](const auto& a, const auto& b) {
-            return a.parameter.lo() < b.parameter.lo();
-        });
+        if (!orderByParameter(occurrences, m_budget)) { return false; }
         for (std::size_t i = 1; i < occurrences.size(); ++i) {
+            if (!m_budget.consumePairs(1)) { return false; }
             if (!(occurrences[i - 1].parameter.hi() < occurrences[i].parameter.lo())) { return unresolved(); }
         }
         return true;
@@ -1809,6 +1878,7 @@ private:
                 InjectivityProof::StationaryProjection : InjectivityProof::RegularProjection;
         }
         for (int q = -8; q < 12; ++q) {
+            if (!m_budget.consumePairs(1)) { return {}; }
             const int left = compareAxis(q, first);
             const int right = compareAxis(q + 1, last);
             if (left != 2 && right != 2 && left <= 0 && right >= 0) {
@@ -1821,6 +1891,7 @@ private:
         if (from < 0.0 || to > m_frame.parameterEnd()) { return {}; }
         std::size_t roots = 0;
         for (const auto& occurrence : m_adapter->m_occurrences) {
+            if (!m_budget.consumePairs(1)) { return {}; }
             if (occurrence.parameter.hi() < from || occurrence.parameter.lo() > to) { continue; }
             if (!(from < occurrence.parameter.lo() && occurrence.parameter.hi() < to)) { return {}; }
             ++roots;
@@ -1831,8 +1902,12 @@ private:
     bool addRegions(const double from, const double to, const bool band) {
         if (from == to) { return true; }
         struct Box { double from; double to; unsigned depth; };
-        if (!generated(1, 0)) { return false; }
-        std::vector<Box> pending{{from, to, 0}};
+        std::vector<Box> pending;
+        if (m_budget.remainingVertices() == 0) { m_budget.latchLimitExceeded(); return false; }
+        const auto splits = std::min<std::size_t>(m_budget.depthLimit(), (m_budget.remainingVertices() - 1) / 2);
+        if (splits == std::numeric_limits<std::size_t>::max() ||
+            !reserveAdditional(pending, splits + 1, m_budget) || !generated(1, 0)) { return false; }
+        pending.push_back({from, to, 0});
         while (!pending.empty()) {
             if (!m_budget.consumePairs(1)) { return false; }
             const Box box = pending.back();
@@ -1840,11 +1915,8 @@ private:
             if (!m_budget.checkDepth(box.depth)) { return false; }
             const auto proof = prove(box.from, box.to);
             if (proof) {
-                if (m_adapter->m_regions.size() == m_adapter->m_regions.max_size() ||
-                    m_adapter->m_segments.size() == m_adapter->m_segments.max_size()) {
-                    m_budget.latchLimitExceeded();
-                    return false;
-                }
+                if (!reserveAdditional(m_adapter->m_regions, 1, m_budget) ||
+                    !reserveAdditional(m_adapter->m_segments, 1, m_budget)) { return false; }
                 const LC_ParametricSegment segment{0, box.from, box.to};
                 m_adapter->m_regions.push_back({segment, band, *proof});
                 m_adapter->m_segments.push_back(segment);
@@ -1852,11 +1924,11 @@ private:
             }
             const double mid = box.from + 0.5 * (box.to - box.from);
             if (!(box.from < mid && mid < box.to)) { return unresolved(); }
-            if (!split(box.depth)) { return false; }
-            if (pending.size() > pending.max_size() - 2) {
+            if (std::size_t{2} > pending.max_size() - pending.size() || pending.size() + 2 > pending.capacity()) {
                 m_budget.latchLimitExceeded();
                 return false;
             }
+            if (!split(box.depth)) { return false; }
             pending.push_back({mid, box.to, box.depth + 1});
             pending.push_back({box.from, mid, box.depth + 1});
         }
@@ -1865,6 +1937,7 @@ private:
     bool regions() {
         double cursor = 0.0;
         for (const auto& axis : m_axes) {
+            if (!m_budget.consumePairs(1)) { return false; }
             if (!addRegions(cursor, axis.parameter.lo(), false) ||
                 !addRegions(axis.parameter.lo(), axis.parameter.hi(), true)) { return false; }
             cursor = axis.parameter.hi();
@@ -1874,14 +1947,16 @@ private:
     bool joins() {
         const auto& segments = m_adapter->m_segments;
         for (std::size_t i = 1; i < segments.size(); ++i) {
-            if (!generated(1, 0)) { return false; }
+            if (m_budget.remainingVertices() == 0) { m_budget.latchLimitExceeded(); return false; }
+            if (!reserveAdditional(m_adapter->m_joins, 1, m_budget) || !generated(1, 0) ||
+                !m_budget.consumePairs(1)) { return false; }
             const double join = segments[i].t0;
             double from = segments[i - 1].t0 + 0.5 * (join - segments[i - 1].t0);
             double to = join + 0.5 * (segments[i].t1 - join);
             if (from == join) { from = segments[i - 1].t0; }
             if (to == join) { to = segments[i].t1; }
             for (unsigned depth = 0;; ++depth) {
-                if (!m_budget.consumePairs(1) || !m_budget.checkDepth(depth)) { return false; }
+                if ((depth != 0 && !m_budget.consumePairs(1)) || !m_budget.checkDepth(depth)) { return false; }
                 if (prove(from, to)) { break; }
                 const double left = from + 0.5 * (join - from);
                 const double right = join + 0.5 * (to - join);
@@ -1912,6 +1987,7 @@ private:
             LC_CurveJetBounds bounds;
             if (!m_frame.boundOffsetJet(segment.t0, segment.t1, bounds)) { return unresolved(); }
             for (const double t : {segment.t0, segment.t0 + 0.5 * (segment.t1 - segment.t0), segment.t1}) {
+                if (!m_budget.consumePairs(1)) { return false; }
                 LC_CurveJet seed;
                 if (!m_frame.boundOffsetJet(t, t, bounds) || !m_frame.offsetJet(t, seed) ||
                     !isFinite2D(seed.point) || !isFinite2D(seed.first)) { return unresolved(); }
@@ -1935,7 +2011,7 @@ CriticalAnalysis analyseCritical(const RS_EllipseData& basis, const double signe
         !(basis.ratio > 0.0 && basis.ratio <= 1.0) || !std::isfinite(signedDistance) || !domain ||
         (!domain->whole && (!(basis.angle1 >= 0.0 && basis.angle1 < turn) ||
                             !(basis.angle2 >= 0.0 && basis.angle2 < turn)))) { return snapshot(); }
-    if (!budget.consumeVertices(1) || !budget.consumePairs(1) || !budget.checkDepth(0)) { return snapshot(); }
+    if (!budget.adoptWork({0, 1, 1})) { return snapshot(); }
     const auto reference = ReferenceFrame::create(basis, signedDistance);
     if (!reference) {
         out.status = LC_IntersectionStatus::AmbiguousTopology;
@@ -1960,7 +2036,7 @@ CriticalRetainedAnalysis analyseCriticalRetained(const RS_EllipseData& basis, co
         !(basis.ratio > 0.0 && basis.ratio <= 1.0) || !std::isfinite(signedDistance) || !domain ||
         (!domain->whole && (!(basis.angle1 >= 0.0 && basis.angle1 < turn) ||
                             !(basis.angle2 >= 0.0 && basis.angle2 < turn)))) { return finish(); }
-    if (!budget.consumeVertices(1) || !budget.consumePairs(1) || !budget.checkDepth(0)) { return finish(); }
+    if (!budget.adoptWork({0, 1, 1})) { return finish(); }
     const auto reference = ReferenceFrame::create(basis, signedDistance);
     if (!reference) {
         out.status = LC_IntersectionStatus::AmbiguousTopology;
@@ -2486,9 +2562,10 @@ ReferenceProviderPreparation ReferenceProviderBuilder::run(
             if (!impl->cutters[cap]->bound(t, t, bounds) || !jetFromBounds(bounds, seed)) { return finish(); }
         }
     }
-    if (!budget.consumeVertices(size)) { return finish(); }
+    if (size > budget.remainingVertices()) { budget.latchLimitExceeded(); return finish(); }
     impl->segments.reserve(size);
     impl->maps.reserve(size);
+    if (!budget.consumeVertices(size)) { return finish(); }
     for (std::size_t part = 0; part < 4; ++part) {
         const bool present = part < 2 ? bool(impl->adapters[part]) : bool(impl->cutters[part - 2]);
         if (!present) { continue; }
@@ -2758,12 +2835,17 @@ public:
         options.maxDepth = options.maxLeafDepth = budget.depthLimit();
         options.maxBoxPairs = budget.remainingPairs();
         options.maxLeaves = options.maxGeneratedItems = budget.remainingVertices();
+        options.maxOrderingComparisons = budget.remainingOrderingComparisons();
         options.analyticOccurrenceIdentity = components && bool(view->m_impl->axisContacts);
-        auto query = findCertifiedIntersections(std::move(prepared.provider), options);
-        const bool items = budget.consumeVertices(query.work.generatedItems);
-        const bool pairs = budget.consumePairs(query.work.totalBoxPairs);
-        const bool depth = budget.checkDepth(query.work.deepest());
-        if (!items || !pairs || !depth || query.status == LC_IntersectionStatus::LimitExceeded) {
+        LC_IntersectionWorkStats entered;
+        LC_CertifiedQueryResult query;
+        try {
+            query = findCertifiedIntersections(std::move(prepared.provider), options, &entered);
+        } catch (...) {
+            adoptCoreWork(budget, {}, entered);
+            throw;
+        }
+        if (!adoptCoreWork(budget, {}, entered) || query.status == LC_IntersectionStatus::LimitExceeded) {
             budget.latchLimitExceeded();
             out.status = LC_IntersectionStatus::LimitExceeded;
             return finish();
@@ -2844,7 +2926,9 @@ private:
     bool vertices(const std::size_t n) { return m_budget.consumeVertices(n) || limit(); }
     bool contradiction() { return fail(LC_IntersectionStatus::InvalidInput, ReferenceEventReason::ProofContradiction); }
     bool good() const { return m_status == LC_IntersectionStatus::Ok; }
-    template<typename T> bool room(const std::vector<T>& v) { return v.size() < v.max_size() || limit(); }
+    template<typename T> bool room(std::vector<T>& v) {
+        return (m_budget.remainingVertices() != 0 && reserveAdditional(v, 1, m_budget)) || limit();
+    }
     static double middle(const LC_Interval& value) {
         if (value.lo() == value.hi()) { return value.lo(); }
         const double difference = value.hi() - value.lo();
@@ -2853,9 +2937,10 @@ private:
         return std::max(value.lo(), std::min(value.hi(), result));
     }
     const ReferenceProviders& provider() const { return *m_data->providerView; }
-    std::optional<ReferenceRole> role(const std::size_t branch) const {
+    std::optional<ReferenceRole> role(const std::size_t branch) {
         for (const auto candidate : {ReferenceRole::Own, ReferenceRole::Opposite,
                                      ReferenceRole::StartCutter, ReferenceRole::EndCutter}) {
+            if (!pair()) { return {}; }
             if (provider().branchFor(candidate) == branch) { return candidate; }
         }
         return {};
@@ -2909,6 +2994,7 @@ private:
             if (!snapshot) { return contradiction(); }
             m_roots.push_back({handle, *snapshot, false});
             const auto a = role(snapshot->event.branchA), b = role(snapshot->event.branchB);
+            if (!good()) { return false; }
             if (!a || !b || (*a != ReferenceRole::Own && *b != ReferenceRole::Own)) { return contradiction(); }
             const auto n = addNode(snapshot->imageX, snapshot->imageY);
             Witness wa, wb;
@@ -2967,8 +3053,9 @@ private:
         }
         if (provider().frame().sourceSweep().whole &&
             !joinNodes(m_witnesses[m_boundaryStart].node, m_witnesses[m_boundaryStart + 1].node)) { return false; }
-        if (m_witnesses.size() > m_order.max_size() || !vertices(m_witnesses.size())) { return limit(); }
-        m_order.reserve(m_witnesses.size());
+        if (m_witnesses.size() > m_budget.remainingVertices() ||
+            !reserveAdditional(m_order, m_witnesses.size(), m_budget) ||
+            !vertices(m_witnesses.size())) { return limit(); }
         return true;
     }
     LC_Interval criticalParameter(const CriticalOccurrenceSnapshot& snapshot) const {
@@ -3024,12 +3111,6 @@ private:
         m_nodes[n].x = ix; m_nodes[n].y = iy;
         return true;
     }
-    bool debit(const LC_IntersectionWorkStats& work) {
-        const bool v = m_budget.consumeVertices(work.generatedItems);
-        const bool p = m_budget.consumePairs(work.totalBoxPairs);
-        const bool d = m_budget.checkDepth(work.deepest());
-        return (v && p && d) || limit();
-    }
     bool refineWitness(const std::size_t index) {
         auto& w = m_witnesses[index];
         if (w.origin == Origin::Boundary) { return false; }
@@ -3039,9 +3120,17 @@ private:
             LC_CertifiedContractionAllowance allowance;
             allowance.remainingItems = m_budget.remainingVertices();
             allowance.remainingPairs = m_budget.remainingPairs();
+            allowance.remainingOrderingComparisons = m_budget.remainingOrderingComparisons();
             allowance.absoluteRootDepth = m_budget.depthLimit();
-            const auto result = m_data->core->contract(root.handle, allowance);
-            if (!debit(result.work)) { return false; }
+            const auto before = m_data->core->cumulativeWork();
+            LC_CertifiedContractionResult result;
+            try {
+                result = m_data->core->contract(root.handle, allowance);
+            } catch (...) {
+                adoptCoreWork(m_budget, before, m_data->core->cumulativeWork());
+                throw;
+            }
+            if (!adoptCoreWork(m_budget, before, m_data->core->cumulativeWork())) { return limit(); }
             if (result.status == LC_IntersectionStatus::LimitExceeded) { return limit(); }
             if (result.status == LC_IntersectionStatus::InvalidInput) { return contradiction(); }
             if (result.status != LC_IntersectionStatus::Ok) { root.blocked = true; return false; }
@@ -3108,7 +3197,7 @@ private:
                 return fail(LC_IntersectionStatus::AmbiguousTopology, ReferenceEventReason::UnresolvedIdentity);
             }
             if (!merged) {
-                m_order.push_back({i}); // Storage was admitted before reserve; moves are separately examined.
+                m_order.push_back({i}); // Capacity and records were admitted above; moves are separately examined.
                 for (std::size_t j = m_order.size() - 1; j > position; --j) {
                     if (!pair()) { return false; }
                     m_order[j] = m_order[j - 1];
@@ -3294,8 +3383,11 @@ private:
     }
     bool classify(const VisibilityBasis& basis, const LC_Interval& interval, ReferenceVisibility& visibility) {
         struct Box { double a, b; unsigned depth; };
-        if (!vertices(1)) { return false; }
-        std::vector<Box> pending{{interval.lo(), interval.hi(), 0}};
+        std::vector<Box> pending;
+        if (m_budget.remainingVertices() == 0) { return limit(); }
+        const auto splits = std::min<std::size_t>(m_budget.depthLimit(), (m_budget.remainingVertices() - 1) / 2);
+        if (!reserveAdditional(pending, splits + 1, m_budget) || !vertices(1)) { return limit(); }
+        pending.push_back({interval.lo(), interval.hi(), 0});
         while (!pending.empty()) {
             if (!pair()) { return false; }
             const Box box = std::move(pending.back()); pending.pop_back();
@@ -3315,7 +3407,8 @@ private:
             if (!(box.a < mid && mid < box.b)) {
                 return componentFailure(ReferenceComponentReason::UnresolvedVisibility);
             }
-            if (pending.size() > pending.max_size() - 2 || !vertices(2)) { return limit(); }
+            if (std::size_t{2} > pending.max_size() - pending.size() ||
+                pending.size() + 2 > pending.capacity() || !vertices(2)) { return limit(); }
             pending.push_back({mid, box.b, box.depth + 1});
             pending.push_back({box.a, mid, box.depth + 1});
         }
@@ -3428,9 +3521,9 @@ private:
             bool own = false;
         };
         std::vector<Parent> parents;
-        if (count > parents.max_size() || count > m_components->incidence.max_size() ||
-            !vertices(count) || !vertices(count)) { return limit(); }
-        parents.reserve(count); m_components->incidence.reserve(count);
+        if (count > m_budget.remainingVertices() / 2 ||
+            !reserveAdditional(parents, count, m_budget) ||
+            !reserveAdditional(m_components->incidence, count, m_budget) || !vertices(2 * count)) { return limit(); }
         for (std::size_t i = 0; i < count; ++i) {
             if (!pair()) { return false; }
             parents.push_back({i});
@@ -3466,7 +3559,8 @@ private:
             }
             auto& outgoing = m_components->incidence[edge.start.value].outgoing;
             auto& incoming = m_components->incidence[edge.end.value].incoming;
-            if (!room(outgoing) || !vertices(1) || !room(incoming) || !vertices(1)) { return false; }
+            if (m_budget.remainingVertices() < 2) { return limit(); }
+            if (!room(outgoing) || !room(incoming) || !vertices(2)) { return false; }
             outgoing.push_back(e); incoming.push_back(e);
         }
         for (const auto& f : m_data->freeEnds) {
@@ -3534,10 +3628,10 @@ private:
             if (!pair()) { return false; }
             if (m_nodes[i].parent == i) { ++nodeCount; }
         }
-        if (nodeCount > m_data->nodes.max_size() || m_order.size() > m_data->occurrences.max_size() ||
-            !vertices(nodeCount) || !vertices(m_order.size())) { return limit(); }
-        m_data->nodes.reserve(nodeCount);
-        m_data->occurrences.reserve(m_order.size());
+        if (nodeCount > m_budget.remainingVertices() || m_order.size() > m_budget.remainingVertices() - nodeCount ||
+            !reserveAdditional(m_data->nodes, nodeCount, m_budget) ||
+            !reserveAdditional(m_data->occurrences, m_order.size(), m_budget) ||
+            !vertices(nodeCount + m_order.size())) { return limit(); }
         // Assign stable physical IDs by the first issued node, independent of union-tree rank.
         for (std::size_t i = 0; i < m_nodes.size(); ++i) {
             if (!pair()) { return false; }
@@ -4543,6 +4637,11 @@ CriticalContractionResult CriticalRefinementSession::contract(const CriticalOccu
     const auto finish = [&]() {
         state.lastWork = budget.consumed();
         out.work = state.lastWork;
+        if (budget.status() == BudgetStatus::LimitExceeded) {
+            state.limited = true;
+            out.status = LC_IntersectionStatus::LimitExceeded;
+            out.snapshot.reset();
+        }
         return out;
     };
     if (state.terminal) { return finish(); }
@@ -4609,17 +4708,18 @@ CriticalContractionResult CriticalRefinementSession::contract(const CriticalOccu
             out.status = LC_IntersectionStatus::AmbiguousTopology;
             return finish();
         }
-        // One logical staged record per occurrence, before allocating the publication vector.
-        if (!vertices(state.records.size())) { return limit(); }
         std::vector<CriticalOccurrenceSnapshot> staged;
-        if (state.records.size() > staged.max_size()) { return limit(); }
-        staged.reserve(state.records.size());
+        if (state.records.size() > budget.remainingVertices() ||
+            !reserveAdditional(staged, state.records.size(), budget) || !vertices(state.records.size())) { return limit(); }
         for (const auto& record : state.records) {
             if (!pair()) { return limit(); }
             CriticalOccurrenceSnapshot candidate = record.current;
             LC_Interval parameter, x, y;
-            if (!state.provenance->map(record.original, next.inverseAngle, parameter) ||
-                !state.provenance->image(record.original, next.variable, x, y)) {
+            const auto beforeOrdering = budget.consumed().orderingComparisons;
+            const bool mapped = state.provenance->map(record.original, next.inverseAngle, parameter, budget);
+            const bool projected = mapped && state.provenance->image(record.original, next.variable, x, y, budget);
+            out.entered.orderingComparisons += budget.consumed().orderingComparisons - beforeOrdering;
+            if (!projected) {
                 out.status = LC_IntersectionStatus::AmbiguousTopology;
                 return finish();
             }
