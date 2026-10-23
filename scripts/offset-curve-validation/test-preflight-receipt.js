@@ -190,6 +190,24 @@ test('readReceiptFile returns an immutable, identity-bound byte summary', () => 
     });
 });
 
+test('different declared parent paths cannot hide a repeated physical parent', () => {
+    let firstParent;
+    withFixture(({reports}) => {
+        assert.throws(() => schema.validateReceiptSet(reports, {expected: {purpose: 'synthetic'}}),
+            /run-root parents must be physically distinct/);
+    }, (value, ordinal) => {
+        if (ordinal === 0) firstParent = value.run_root.parent;
+        else {
+            value.run_root.parent.device = firstParent.device;
+            value.run_root.parent.inode = firstParent.inode;
+            assert.notEqual(value.run_root.parent.path, firstParent.path);
+            const stdout = schema.canonicalJson(value.preflight_result);
+            value.stdout.bytes = stdout.length;
+            value.stdout.sha256 = value.stdout.file_sha256 = schema.sha256(stdout);
+        }
+    });
+});
+
 test('receipt file mutation after initial validation is detected', () => {
     withFixture(({reports}) => {
         const before = schema.validateReceiptSet(reports, {expected: {purpose: 'synthetic'}});

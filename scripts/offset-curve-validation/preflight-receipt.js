@@ -714,7 +714,7 @@ function validateReceiptSet(reportPaths, {io = nodeFs, expected = {}, requirePas
     assert(new Set(receiptDirectoryIdentities).size === 2, 'receipt directories must not alias the same filesystem object');
     assert(new Set(reportFiles).size === 2 && new Set(sidecars).size === 4, 'receipt report/sidecar paths must be distinct');
     assert(new Set(runRoots).size === 2, 'receipt run roots must be distinct');
-    assert(new Set(runParents.map(p => `${p.path}:${p.device}:${p.inode}`)).size === 2, 'receipt run-root parents must be distinct');
+    assert(new Set(runParents.map(p => `${p.device}:${p.inode}`)).size === 2, 'receipt run-root parents must be physically distinct');
 
     const receiptFiles = receipts.map(r => [r.receiptPath, r.receipt.stdout.path, r.receipt.stderr.path]);
     const allPaths = [...receiptDirs, ...receiptFiles.flat(), ...runRoots];
