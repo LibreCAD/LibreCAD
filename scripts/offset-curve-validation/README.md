@@ -213,6 +213,39 @@ H4 is an explicit API, not automatic CLI persistence. H5 still owns the evidence
 manifest and review dispatch; H7 owns independent checking. A failed H3 prefix
 remains diagnostics and cannot become a complete PASS ledger.
 
+## X-H5 Evidence And Automated Review
+
+`p0f-evidence.js` binds an original H4 readback and a fresh actual H4 join to the
+source/runtime/input manifest, both receipts, retained H3 diagnostics, preflight
+transport snapshots, worker outputs and an explicitly pinned checker configuration.
+Its format constants live in inert `evidence-descriptors.js`.
+
+```js
+const evidence = require('./p0f-evidence');
+const context = evidence.captureEvidenceContext(request);
+const ready = evidence.publishEvidenceManifest(context);
+const reviewed = await evidence.runEvidenceChecker(ready);
+evidence.revalidateEvidenceManifest(reviewed);
+```
+
+The exact request/config key order is exported by the descriptors. Original H4
+issuer objects are mandatory; cloned payloads cannot grant publication. Declare
+the actual H5 sources, checker source and checker configuration in H2's input
+closure before capturing receipts. `runP0fEvidence(request)` combines the stages.
+Publication creates an absent private directory outside H3/H4 membership roots,
+with canonical mode-0400 manifest, diagnostics and transport files. Review retains
+actual checker argv/environment/runtime/stdin/streams/exit and a bound envelope.
+Original bytes, metadata, parents and membership are checked before and after
+dispatch, including child failures and late output/readback substitution.
+
+Validation forbids injected hooks and synthetic fixture checkers. The shipped
+checker fixture refuses validation purpose. Automated checker execution is not
+human approval or independent H7 qualification. Caller-supplied preflight stdin
+snapshots cannot independently prove origin, delivery or child consumption; missing
+snapshots are explicitly derived expectations, never fabricated observations.
+These limits, direct-child containment limits and filesystem observation limits
+are retained in evidence/review results. Failed artifacts are preserved.
+
 ## Remaining
 
 `refusal-inventory.js` preserves all 71 original scenario identities and explicitly
@@ -226,7 +259,7 @@ Typed stdout-shape and substituted-readback diagnoses distinguish these failures
 from report parsing and on-disk receipt mutation. Repeated paths are refused by
 the same request guard at both API and CLI ingress.
 
-X-H5 through X-H7 still own evidence review, completed integration, independent evidence
+Remaining H6 integration and X-H7 still own completed orchestration, independent evidence
 validation, adversarial case inventories
 and deterministic reports. In particular, the schema layer does not establish
 that a candidate/manifest digest names the current product source. Callers must
