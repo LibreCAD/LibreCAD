@@ -41,7 +41,7 @@ main-track slices remain incomplete; no native entity is claimed.
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
 | Latest product checkpoint | `d4a0b081a` (C) |
-| Latest auxiliary checkpoint | `ceacd01a3` (H7 artifact guards; workers e83aaf3f0, pipeline 1f9f94753) |
+| Latest auxiliary checkpoint | `a95a5c5ff` (H7 checker/preflight; guards ceacd01a3, workers e83aaf3f0) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
 | A-core | Atomic work adoption, separate ordering allowance and sticky terminal status implemented; A04/A10 registered |
@@ -279,8 +279,7 @@ D-core needs justified rounding/error and topology preservation, or an explicit
 unchanged refusal when a requested transform cannot be certified. Do not weaken
 the ordinary-transform no-regeneration contract or silently restamp stale data.
 
-The active auxiliary sequence is H7 independent checker/genuine preflight ->
-qualification driver -> complete affected regression
+The active auxiliary sequence is H7 qualification driver -> complete affected regression
 rerun -> two complete qualification runs. Suite inventory/worker execution is
 committed separately; it is not whole H7 or native feature completion.
 
@@ -1527,7 +1526,7 @@ one plan update, not another candidate/freeze lifecycle.
 | X-H4 | Committed 3e06e3894; explicit API | Complete genesis/chained case rows, pinned identities/order/actual outputs, exclusive publication/replay/mutation checks; not automatic CLI persistence |
 | X-H5 | Committed 6d4fd25b3; explicit API | Actual source/runtime/receipt/diagnostic/ledger/output evidence, exclusive absent publication and bound automated checker; 44 focused tests and independent review |
 | X-H6 | Committed 507e44ad7; core 9170b0cc9 | All 93 obligations executable, all original71 IDs retained; owned H4/H5 protocols, precise root scopes and mutation/prefix checks; 94 inventory tests pass |
-| X-H7 | Workers e83aaf3f0 and artifact guards ceacd01a3 committed; qualification pending | Independent checker/genuine preflight, driver, affected regressions and two complete qualification runs remain |
+| X-H7 | Checker/preflight a95a5c5ff, guards ceacd01a3, workers e83aaf3f0 committed; qualification pending | Driver, complete affected regressions and two complete qualification runs remain |
 
 ### Concrete H2 Capture Corrections
 
@@ -1825,6 +1824,44 @@ C's 18 new contact-matching cases passed 687 assertions; combined C/refinement
 119 cases passed 18618 assertions. Independent static review cleared the matcher,
 actual route-port integration, owner-validity guard and owner allocation ordering.
 Final qualification is recorded below; native feature remains incomplete.
+
+### X-H7 Checker And Preflight Validation (2026-10-23)
+
+Implementation `a95a5c5ff` couples genuine preflight with its independent audit/
+checker, because each's real focused tests require the other. Preflight runs
+actual suite attempts, syntax checks, source/runtime/input audits, four explicit
+byte-replacement directions and a real stdin-consumption trace child. Replacement
+patches are not represented as Git textual patches or semantic C++ proofs.
+Declared artifact outputs retain real raw events/diagnostics and exact ordered
+bindings. Input/config/roadmap reads are capped before allocation. A fixed pair
+of attempts runs concurrently per suite, awaits both siblings even on refusal,
+persists their actual outputs in ordinal order and rejects any failed prefix.
+H2's300-second deadline and all stream/data caps remain unchanged.
+
+The independent checker imports built-ins and inert descriptors only. It derives
+actual input manifests, receipt/transport/process bindings, genesis/chained events,
+outputs and canonical suite reports independently; it does not call production
+validators. Parent review found and corrected two completeness gaps: require all93
+baseline obligations (not86), and require the unique final successful global Node
+summary with no failed/cancelled/skipped/TODO counts or unknown top-level entry.
+Seven consistent-map ID omission negatives and eight fully rebound raw-event
+negatives now pass. Original file identities/bytes are rechecked at the end.
+
+Author independent-checker run:35/35 passed in100.057 seconds, no skips/failures.
+Parent combined X-H7-checker-preflight-parent-01.tap under
+`/private/tmp/lc2961-impl-evidence.9GtLO2`:39/39 passed (35 checker,4 preflight),
+100.122 seconds. Parent own preflight/driver control report
+X-H7-parent-reviewed-06.tap passed11/11; the driver remains a separate uncommitted
+slice. Independent reviewer separately passed those11 and probed bounded growth
+reads, ordered early-FAIL/late-PASS sibling completion and absence of a successful
+H2 receipt on failure. No remaining focused preflight/checker P1/P2 finding.
+
+These are synthetic real-child controls, not the complete canonical309-case
+qualification or a proof of its runtime envelope. Raw records do not independently
+attest historical process origin or stdin delivery. Persisted observations and
+automated checker results are not human approval, containment or native feature
+completion. Next commit is the reviewed two-run driver, followed by a frozen-source
+affected regression run and two complete actual validation runs.
 
 ### X-H7 Referenced Artifact Validation (2026-10-23)
 
