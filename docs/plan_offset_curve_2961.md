@@ -24,10 +24,10 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-22. Status: A-core, A-strict, A-reference and X-H1 committed; native feature incomplete.
+Updated: 2026-10-22. Status: all A slices and X-H1 committed; native feature incomplete.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
-This checkpoint records tested A-core/A-strict/A-reference and auxiliary X-H1 commits. Later
+This checkpoint records tested A-core/A-strict/A-reference/A-cache and auxiliary X-H1 commits. Later
 main-track slices remain incomplete; no native entity or complete topology checker
 is claimed.
 
@@ -41,14 +41,15 @@ is claimed.
 | Difference between initial checkpoints | Only this plan file; no product-source change |
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
-| Latest product checkpoint | `5c12fbeef5fe3d41444d44bf2cc087a77a4fcf75` (A-reference) |
+| Latest product checkpoint | `dbf895638f4bbd6ee210d09e41066a93cb888024` (A-cache) |
 | Latest auxiliary checkpoint | `29ab281635f85590a7db1f7a02db1fcf65ce3cfb` (X-H1) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
 | A-core | Atomic work adoption, separate ordering allowance and sticky terminal status implemented; A04/A10 registered |
 | A-strict | Bounded validation, capacity, ordering, callbacks and exceptional-exit snapshots; per-call retained ordering allowance |
 | A-reference | Bounded geometry ordering/scans/capacity and atomic ordinary/exceptional solver-work adoption |
-| Missing geometry stages | Cache split/depth/dispatch integration, occurrence terminals, complete global topology checker |
+| A-cache | Atomic Candidate/Proof subdivision, inherited combined depth, prepared capacity, bounded dispatch/coverage |
+| Missing geometry stages | Occurrence-specific terminals and complete global topology checker |
 | Native entity | No `LC_OffsetCurve` or `EntityOffsetCurve` yet |
 | Product integration | No native offset adoption, private file schema, creation/editing UI, or target-trim integration yet |
 | Build registration | Both geometry implementations in CMake and qmake; both geometry test TUs in `librecad_tests` |
@@ -56,7 +57,7 @@ is claimed.
 | Latest validation | A-core, geometry and format fast lanes passed Release/ASan; full Release and qmake6 passed; see section 14 |
 
 Recheck these facts against the selected implementation checkout before starting
-A-cache. Inventory Qt6/Catch2/build tools and available independently authored
+B. Inventory Qt6/Catch2/build tools and available independently authored
 DXF/DWG fixtures/inspection tools once, recording provenance/access gaps early;
 source-level progress need not wait for unrelated external-tool installation. The user's main checkout is a different, dirty branch and is not the
 source baseline above. Do not overwrite its unrelated changes or apply this plan
@@ -210,7 +211,7 @@ test commit followed by the section 4 plan checkpoint.
 | A-core | Existing geometry base | Atomic work adoption and sticky terminal status (`0eb2a0cfa`) | committed |
 | A-strict | A-core | Strict-solver bounded ordering/validation/capacity and exit snapshots (`dc016f6e2`) | committed |
 | A-reference | A-strict | Geometry scans/callback ownership and exception-safe work transfers (`5c12fbeef`) | committed |
-| A-cache | A-reference | Candidate/proof split accounting and inherited combined depth | pending |
+| A-cache | A-reference | Candidate/proof split accounting and inherited combined depth (`dbf895638`) | committed |
 | B | A-cache | Immutable occurrence-specific producer terminals | pending |
 | C | B | Full unique-path topology checker and public result | pending |
 | D-core | C | Native enum/entity, real validated adoption, stamp, clone and transforms | pending |
@@ -268,7 +269,7 @@ editing; changes beyond the named concern require a scope note in the slice card
 | T-actions/T-files | actions/drawing/modify/lc_action_modify_trim.{h,cpp}, tests/lc_action_modify_trim_tests.cpp; modification/batch ownership and offset filter tests |
 | All new sources/tests/UI | CMakeLists.txt; librecad/src/src.pro (HEADERS/SOURCES/FORMS as appropriate); exact Catch2 target registration |
 
-### Immediate Next Card: A-cache
+### Immediate Next Card: B
 
 **Files (only these three):**
 
@@ -276,42 +277,56 @@ editing; changes beyond the named concern require a scope note in the slice card
 - `librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp`
 - `librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp`
 
-**Base:** committed A-reference `5c12fbeef5fe3d41444d44bf2cc087a77a4fcf75`.
-Reference ordering/scans and both handoffs are integrated. CacheBoundsBuilder
-still charges three vertices for two children, neither cache split site charges
-candidate spans, and local topology must retain its input witness's reference
-depth. Cache dispatch/coverage and pending/publication capacity need bounded
-admissions. Existing geometry/public acceptance must remain unchanged.
+**Base:** committed A-cache `dbf895638f4bbd6ee210d09e41066a93cb888024`.
+All A01-A14 identities exist. ReferenceComponentAnalysis has physical-node
+incidence, source-ordered spans/edges and typed occurrences, but no immutable
+occurrence/edge-side terminal classification. A node-level trimBoundary or source
+flag is insufficient: distinct own occurrences can meet at the same physical node.
 
 **Steps:**
 
-1. Capture cache layout/bounds/local-topology discovery. Inspect both split
-   implementations and all three CriticalBuilder::split callers before editing.
-2. Add one production budget operation for explicit Candidate/Proof subdivision:
-   atomically admit two child vertices and, only for Candidate, two cache spans.
-   Prepare storage first; the popped parent adds no third item. Keep old aggregate
-   fields and sticky terminal semantics. Test the helper and actual call sites.
-3. Integrate candidate/proof admission into CacheBoundsBuilder::compare,
-   CacheLocalTopologyBuilder::subdivide and the three critical proof-only callers.
-   Check arithmetic/capacity before debit and preserve nonthrowing paired appends.
-4. Carry the bounds witness's reference depth into local topology and onward.
-   Check cacheDepth + referenceDepth safely on entry and before subdivision;
-   refused/unentered children cannot raise observed depth.
-5. Bound pending scratch from remaining depth/pairs/items, reserve before root/
-   split publication, and prepare witness/fragment storage before debit. Charge
-   dispatch, span advancement and witness examinations before reading their data.
-6. Implement exact A01/A02/A03/A09 tests. Use exact/one-short/pre-spent caps,
-   proof-only span invariance, combined-depth and production-callsite regressions.
-   Correct accounting expectations from source traces, never weaken geometry.
-7. Independent complete-diff review; geometry Release/ASan, full Release,
-   affected fast lanes and qmake6. Compare all names/skips; qualify default caps
-   against the actual corpus, recording any required evidence-backed adjustment.
-8. Commit tested source, then update this roadmap immediately in a plan-only
-   commit. Next is occurrence-specific terminal slice B; checker C still follows B.
+1. Preserve current reference/event/component discovery and inspect graph/publish
+   ownership. Add ReferenceEdgeSide (Start/End), typed terminal kind (SourceStart,
+   SourceEnd, PairTrim), and owned terminal records containing role, occurrence,
+   node, incident edge/side and exact free-end or pair-event provenance.
+2. Build a bounded source-occurrence incidence table from span.start/end IDs,
+   distinct from physical-node incidence. Each own cut has at most one directed
+   incoming/outgoing source edge; impossible duplicates are proof contradictions.
+   Other-role occurrences cannot be own producer continuations.
+3. Prepare immutable lookup storage for both sides of every edge. A checked
+   2*edgeCount optional-record table permits constant-time terminal(edge,side)
+   lookup; invalid IDs/sides return no terminal. Reserve all tables before their
+   atomic record debit; count each logical slot and each scan before work.
+4. Qualify source terminals against the actual Own free-end occurrence and its
+   correct directed edge side, not a shared node's sourceStart/sourceEnd flag.
+   Reference parameters already increase along directed traversal for either
+   source sweep sign; do not apply cacheReversed in this factory.
+5. Otherwise, a retained opposite-side source edge at the same own occurrence
+   blocks termination (through event). Scan every relevant pair event: any
+   compatible opposite-side Own partner continuation also blocks PairTrim. Do
+   not stop after the first partner or treat cutter/opposite roles as own edges.
+6. PairTrim requires a genuine typed pair event and absence of all compatible
+   retained continuations. Preserve event/partner provenance in the result.
+   Hidden cusps, retained seams and arbitrary interior points acquire no terminal
+   identity. Never use coordinate proximity to grant one.
+7. Implement exact B01-B08 names in section 7.2. Use G2's complete upper/lower
+   lens to block E0-only trim endpoints; G4 supplies true source/cutter boundaries
+   and hidden cusp controls. Check exact role/occurrence/node/edge side and event
+   provenance, both sweep directions where applicable, wrong-side requests and
+   invalid IDs. Derive fixture expectations independently of runtime indices.
+8. Add exact/one-short/pre-spent terminal-storage and scan caps. Ensure no partial
+   analysis escapes and completed event/provider owners outlive caller locals.
+   Producer mapping remains separate from public cache validation in C.
+9. Independent full-diff review; geometry Release/ASan, full Release, affected
+   fast lanes and qmake6; compare all names/skips. Account for new records in
+   source-derived existing budget oracles without weakening geometry.
+10. Commit the tested slice, immediately update this roadmap separately, then
+    start C's complete path/coverage transaction and 54 public identities.
 
-**Exit:** four new exact identities pass with nonzero assertions; both production
-cache split sites and all critical callers have correct atomic charges; inherited
-depth/dispatch/coverage are bounded. Existing accepted geometry is unchanged.
+**Exit:** eight exact terminal identities pass with nonzero assertions and bounded
+ownership/resource tests. The incomplete G2 E0-only path has no fabricated trim
+terminal. Existing reference geometry is unchanged; no public checkCache success,
+native entity, file schema or UI completion is claimed.
 No native entity, global checker, UI or file-format edit belongs in this slice.
 Changes beyond these three paths require a concrete dependency note.
 
@@ -551,8 +566,8 @@ cycle; and invalid closure flags. A successful subset is never an editable cache
 Every listed identity is a separate Catch2 TEST_CASE with a reachable, nonzero
 assertion contract. SECTIONs/aliases/skips cannot stand in for identities. Preserve
 the existing strict regression names as an exact set; the historical count 61 is
-not a current test receipt. A04/A05/A06/A07/A08/A10/A11/A12/A13/A14 are implemented
-and validated; the remaining
+not a current test receipt. All fourteen A identities are implemented and
+validated. B and C identities remain
 A/B/C identities are planned, not already registered.
 
 ### 7.1 A: Four Leaves, Fourteen Identities
@@ -1643,7 +1658,7 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 |---|---|---|
 | Recursive plan/activation routing | Removed as a planning deadlock | Execute A-core's finite card |
 | Atomic budget API | Committed and validated (`0eb2a0cfa`) | Integrate solver/geometry work in A-strict/A-reference |
-| Strict/reference work and exception proof | A-strict/A-reference committed and validated | A-cache integration; B terminals; C complete checker |
+| Geometry work/exception/split/depth proof | All A slices committed and validated | B terminals; C complete checker |
 | Complete semantic path checker | Missing implementation | A-cache -> B -> C |
 | Native feature/UI/persistence/trim | Not implemented | Follow D through T; do not label scaffolding complete |
 | Independent DWG/version fixtures | Required, not yet qualified | Inventory/tool/license/provenance during G-fixtures; close all rows in G-matrix |
@@ -1662,7 +1677,71 @@ The plan checkpoint column never depends on its own future SHA.
 | A-core | 0eb2a0cfa31c29ba7740e4fb698c8417f4d43fa5 | e31d5a024b473b26148c66bd2726c290bf7976ef | Independent static review: no findings; Release/ASan and qmake6 passed as detailed below |
 | X-H1 | 29ab281635f85590a7db1f7a02db1fcf65ce3cfb | e4b6e900f | 24/24 Node tests; syntax/whitespace checks; independent review fixes applied |
 | A-strict | dc016f6e2b8294cd1f1524f22a568f9d4196459c | eff902b97 | Full Release, geometry/acceptance Release+ASan, format fast lanes and qmake6 passed; independent review |
-| A-reference | 5c12fbeef5fe3d41444d44bf2cc087a77a4fcf75 | This immediate plan-only checkpoint | 4 acceptance cases, full Release, ASan geometry, format lanes and qmake6 passed; independent review |
+| A-reference | 5c12fbeef5fe3d41444d44bf2cc087a77a4fcf75 | 02a8e18f3 | 4 acceptance cases, full Release, ASan geometry, format lanes and qmake6 passed; independent review |
+| A-cache | dbf895638f4bbd6ee210d09e41066a93cb888024 | This immediate plan-only checkpoint | 4 acceptance cases, full Release, ASan geometry, format lanes, qmake6; independent review including stage-isolated depth proof |
+
+### A-cache Validation (2026-10-22)
+
+Scope: geometry header, implementation and test TU. Candidate subdivision now
+atomically admits two child spans/two vertices; proof-only subdivision admits
+zero spans/two vertices. All five production callers use the helper. Storage is
+prepared first; no popped parent is recharged. Two-argument checkDepth safely
+checks the sum; normalized reference history was already present and is preserved,
+now also published on both local witness paths. Existing combined-loop guards
+were preserved/hardened, not presented as an invented missing reset fix.
+
+Independent reviewer Gibbs (01a1663b-5c1d-7333-98a2-ad49b643a3f4) found no
+actionable issue in the full three-file diff. Its initial review noted that A03's
+reduced-depth failure was not stage-isolated. A test-only extension resolves it:
+the actual rounded controls have an exactly rational positive projected
+quadratic derivative (A>0, 4AC-B^2>0), requiring candidate refinement near the
+non-dyadic parameter 1/3. Both cache orders pass at depth 11 versus bounds depth
+8; ceiling 10 retains successful bounds, refuses local publication, and observes
+exactly 10. The bounded recheck found no new issue. Allocation exception paths
+remain source-reviewed, not fault-injected.
+
+- Exact A01/A02/A03/A09 discovery: four names in Release/ASan; final acceptance
+  each passed 986 assertions. The stage-isolated section separately passed 35
+  assertions; its successful-value trace is retained.
+- Final full Release: 3,867 cases (3,841 passed, same 26 skips),
+  7,407,279 assertions. No missing prior name or added skip against A-reference.
+- Final ASan geometry: 245 cases / 1,551,787 assertions, zero failures/skips;
+  prior name set retained. No sanitizer diagnostics, detect_leaks=0 as before.
+- DXF fast Release/ASan: 744 cases / same 3 skips / 39,929 assertions.
+  DWG fast Release/ASan: 1,006 cases / same 4 skips / 34,948 assertions.
+  Name/skip comparisons passed. All CMake targets and full incremental qmake6
+  passed. Final test-only strengthening did not alter either fast binary or app
+  source; affected application tests were rebuilt/rerun in both configurations.
+
+A01's cubic control hull has .03 perpendicular deviation but actual excursion
+.03/(2*sqrt(3)) < .01, so it qualifies candidate refinement without requiring
+unproved broad-arc acceptance. The local folded-net fixture's scalar derivative
+minimum is 1/104 >0. A03's high-curvature/coarse-tolerance fixtures test internal
+layers only; they are not public TooSmall/cache-acceptance claims. Initial
+unqualified broad-arc/Hermite probes are retained as failures, not relabeled.
+
+A09 independently accounts for 17 pairs after the reference stage: prepare 5;
+one span plus 3*(dispatch+examination)=7; coverage span/advance/3 witnesses=5.
+Logical vertices are metadata1 + occurrence-index4 + fragments3 + roots/output6
+=14. All 18 pair boundaries, with/without pre-spent work, match source-derived
+snapshots and sticky retries. The existing bounds helper's old no-refinement span
+equality was corrected to the invariant initialSpans+2*candidateSplits; direct
+production and exact/short cap tests enforce the actual split admissions.
+
+The current whole geometry corpus passed default 4096 candidate spans, 65536
+vertices, 1<<20 pairs/ordering and depth20; no default was silently broadened.
+DFS scratch is one root plus a sibling per affordable remaining split. Public
+global coverage/unique-path validity remains C, not an A-cache claim.
+
+Evidence: /private/tmp/lc2961-impl-evidence.9GtLO2/A-cache-*; final full/ASan
+reports use *-final, acceptance Release uses *-04-depth, and the isolated trace
+is A-cache-stage-isolated-depth-trace.log. Validated committed source SHA-256:
+
+| File in entity directory | SHA-256 |
+|---|---|
+| lc_ellipseoffsetgeometry.h | 44e1ee29bfdd17ad531c9fcac457b2a75f953b56f4590599b49f9255be074525 |
+| lc_ellipseoffsetgeometry.cpp | c0bb0bac67938999d34526628e834233418ac1aec7f46f7ba7442bfa8695900a |
+| tests/lc_offsetcurve_geometry_tests.cpp | 6de41728d7f87a546f57088371b22d147d81298e2b4b3b6250ac4148d62e7292 |
 
 ### A-reference Validation (2026-10-22)
 
@@ -1789,7 +1868,7 @@ hostile-filesystem race elimination or X-H2-X-H7 completion is claimed.
 
 Evidence: /private/tmp/lc2961-impl-evidence.9GtLO2/X-H1-node-tests.tap.
 The historical scratch tree remains unchanged. The next main card remains
-A-cache; the auxiliary next card
+B; the auxiliary next card
 is X-H2 above.
 
 ### A-core Validation (2026-10-22)
