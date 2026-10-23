@@ -1,6 +1,6 @@
 # LibreCAD Privacy Policy
 
-*Last updated: 21 October 2026*
+*Last updated: 23 October 2026*
 
 LibreCAD is a free, open-source 2D CAD program made by volunteers. **It does
 not collect, store, sell or share personal data.** It has no user accounts,

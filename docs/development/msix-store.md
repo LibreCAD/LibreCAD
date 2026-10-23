@@ -48,20 +48,21 @@ listed below.
 
 `scripts/build-msix.ps1` packages the staged folder with these changes:
 
-- The packaged `LibreCAD.exe` is a Windows GUI program (PE subsystem 2).
-  master builds a console program, which would open a console window beside
-  LibreCAD on every start, so the script marks its copy in the package as a
-  GUI program, as `editbin /SUBSYSTEM:WINDOWS` would. The installers keep
-  the program as built.
+- The packaged `LibreCAD.exe` is a Windows GUI program (PE subsystem 2). A
+  console build, which would open a console window beside LibreCAD on every
+  start, gets its copy in the package marked as a GUI program, as
+  `editbin /SUBSYSTEM:WINDOWS` would; a GUI build is packaged as it is. The
+  installers keep the program as built.
 - It is the only program in the package: test and developer programs, linker
   files (`.lib`, `.exp`, `.ilk`), debug symbols, the app-local Universal CRT,
   the software OpenGL renderer and the Direct3D shader compilers
   (`d3dcompiler_47.dll`, `dxcompiler.dll`, `dxil.dll`) are left out.
   LibreCAD paints with QPainter and loads none of them.
 - LibreCAD's own icon engine, `iconengines\lc_svgiconengine.dll`, which
-  draws the icons in the colours set in the options, is copied from the
-  build folder: it builds outside the staged Release folder, so the staged
-  folder (and the NSIS installer) lacks it.
+  draws the icons in the colours set in the options, must be in the package.
+  If the staged folder lacks it, as it does when the CMake build writes the
+  DLL outside the Release folder that is staged, it is copied from the build
+  folder.
 - Fonts, hatch patterns, the block library, plugins and translations go under
   `resources\`, where LibreCAD looks for them. The translations, LibreCAD's
   and its plugins', are packaged as files even though the program embeds
@@ -247,7 +248,12 @@ complete.
 - **System requirements**: keyboard and mouse recommended; under additional
   requirements, Windows 10 version 1809 or later.
 - **Product declarations**: keep the two that are on by default (installing
-  to alternate drives, OneDrive backups) and leave the rest clear.
+  to alternate drives, OneDrive backups) and leave the rest clear. LibreCAD
+  sells nothing; Help > Donate only opens the project's donation page in the
+  browser, which the certification notes below say. If certification still
+  cites policy 10.8.2 for it, tick **This product allows users to make
+  purchases, but does not use the Microsoft Store commerce system** and
+  resubmit.
 
 ### 5. Age ratings
 
@@ -331,7 +337,10 @@ Keep other companies' product names out of the listing and the keywords
   > a line (Tools > Line > 2 Points) or open a .dxf or .dwg file. At start
   > it asks api.github.com anonymously whether a newer LibreCAD release
   > exists; Options > Application Preferences > Startup turns this off.
-  > Source code: https://github.com/LibreCAD/LibreCAD
+  > Help > Donate only opens https://librecad.org/donate.html in the default
+  > browser, where voluntary donations go through Open Collective or GitHub
+  > Sponsors; the app takes no payment, and donating unlocks or changes
+  > nothing in it. Source code: https://github.com/LibreCAD/LibreCAD
 
 - **Restricted capabilities**, why the app needs `runFullTrust` and how it
   uses it:

@@ -432,11 +432,12 @@ foreach ($runtimeDll in @('vcruntime140.dll', 'msvcp140.dll')) {
     }
 }
 
-# A console-subsystem LibreCAD.exe, which is what master builds, opens a console
-# window beside the GUI each time Start, a file association or certification
-# starts it.  The package gets its own copy marked as a Windows GUI program
-# (subsystem 2) below, as editbin /SUBSYSTEM:WINDOWS would mark it; the entry
-# point stays the same, and the installers keep the program as it was built.
+# A console-subsystem LibreCAD.exe opens a console window beside the GUI each
+# time Start, a file association or certification starts it.  Such a build
+# gets its own copy in the package marked as a Windows GUI program (subsystem
+# 2) below, as editbin /SUBSYSTEM:WINDOWS would mark it; the entry point stays
+# the same, and the installers keep the program as it was built.  A GUI build
+# is packaged as it is.
 $subsystem = Get-PeSubsystem -Path $libreCadExecutable
 if ($subsystem -ne 2 -and $subsystem -ne 3) {
     throw "LibreCAD.exe has PE subsystem $subsystem, neither Windows GUI (2) nor console (3)."
@@ -504,19 +505,23 @@ Copy-SupportTree -Source (Join-Path $resourceDirectory 'library') -Destination (
 $pluginsDirectory = Join-Path $buildDirectory 'plugins'
 Copy-PluginModules -Source $pluginsDirectory -Destination (Join-Path $layoutResources 'plugins')
 
-# LibreCAD's own icon engine, which draws the icons in the colours set in the
-# options, builds outside the staged Release folder, so the staged folder
-# lacks it; main.cpp looks for it in iconengines\ beside LibreCAD.exe.
+# LibreCAD's own icon engine draws the icons in the colours set in the options;
+# main.cpp looks for it in iconengines\ beside LibreCAD.exe.  A staged folder
+# can lack it when the CMake build writes the DLL outside the staged Release
+# folder, so it is then copied from the build folder.
 $layoutIconEngine = Join-Path $layoutDirectory 'iconengines\lc_svgiconengine.dll'
 if (-not (Test-Path -LiteralPath $layoutIconEngine -PathType Leaf)) {
     # The Release build of a multi-config build folder, or a single-config
-    # one; never a Debug copy, which needs Qt's debug DLLs.
+    # one, where the build puts it beside LibreCAD.exe or in its own folder;
+    # never a Debug copy, which needs Qt's debug DLLs.
     $builtIconEngine = @(
+        (Join-Path $buildDirectory 'Release\iconengines\lc_svgiconengine.dll'),
+        (Join-Path $buildDirectory 'iconengines\lc_svgiconengine.dll'),
         (Join-Path $buildDirectory 'libraries\lciconengine\Release\lc_svgiconengine.dll'),
         (Join-Path $buildDirectory 'libraries\lciconengine\lc_svgiconengine.dll')
     ) | Where-Object { Test-Path -LiteralPath $_ -PathType Leaf } | Select-Object -First 1
     if (-not $builtIconEngine) {
-        throw "No Release lc_svgiconengine.dll under $buildDirectory\libraries\lciconengine."
+        throw "No Release lc_svgiconengine.dll under $buildDirectory (Release\iconengines, iconengines or libraries\lciconengine)."
     }
     New-Item -ItemType Directory -Force -Path (Split-Path -Parent $layoutIconEngine) | Out-Null
     Copy-Item -LiteralPath $builtIconEngine -Destination $layoutIconEngine -Force
