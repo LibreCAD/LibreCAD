@@ -42,10 +42,117 @@ was validated. Protected roots are compared through physical paths, resolving an
 existing prefix even when the final component does not exist. PASS inventory
 records require matching identity digests as well as matching counts.
 
+## X-H2 Input And Process Capture
+
+Run the focused capture tests, or include the H1 suite as a regression check:
+
+```sh
+node --test scripts/offset-curve-validation/test-input-capture.js scripts/offset-curve-validation/test-preflight-capture.js
+node --test scripts/offset-curve-validation/test-*.js
+```
+
+`input-capture.js` owns a separate version-1 input-manifest format. Its
+`captureInputs(config)` API requires explicit `purpose`, `candidatePath`,
+`runnerPath`, `caseInventoryPath`, and the arrays `sourcePaths`, `inputPaths`,
+`fixturePaths`, `configPaths`. Empty input/fixture/config arrays are explicit;
+the source array must be nonempty. All paths must be absolute, normalized and
+free of symlink components. Files must be regular and single-link. Sources,
+candidate, runner, inventory and configuration files must be nonempty; actual
+empty raw input files are allowed. Missing files are errors, never dummy records.
+Caller-supplied candidate tuples or `sourceManifestSha256` are refused.
+
+The canonical JSON+LF case inventory has ordered keys `schema_version` (1),
+`purpose`, `cases`. Each case has ordered keys `id`, `source_path`; IDs are
+nonempty, sorted and unique, and definitions must name a declared source or
+fixture file. This is the exact declared inventory, not proof that a future
+worker executed those cases. H3/H7 still own worker wiring and execution reports.
+
+The returned immutable manifest includes the candidate tuple computed from actual
+bytes (SHA-256, byte count and Git SHA-1 blob hash), sorted file paths and roles,
+actual hashes/bytes for every declared file, the runner, four capture/schema
+modules, `process.execPath`, `process.version` and the resolved actual executable.
+`sourceManifestSha256` hashes this manifest and binds H1 schema-2 receipts without
+changing H1. It is an explicit file closure, not automatic dependency discovery;
+in particular, loaded dynamic libraries and transitive runner imports are not
+discovered. Callers must declare source/fixture/config/input dependencies.
+
+Limits are 128 distinct files, 8 MiB per ordinary file, 128 MiB for the executable,
+256 MiB total, 1 MiB for the inventory and 4096 cases. Immutable base64 byte and
+full metadata snapshots remain in the returned `inputs`; `revalidateInputs`
+requires the original in-process capture and rereads bytes and metadata. Snapshot
+metadata includes device/inode, type/mode, link count, size, mtime and ctime, not
+atime (ordinary reads can update atime). Ancestor guards pin device/inode/type/mode
+without treating unrelated sibling activity as input mutation. Captures with the
+same file bytes and declared tuple have the same manifest hash; filesystem
+metadata is retained for revalidation, not included in that hash.
+
+`preflight-capture.js` exports async `capturePreflight(config, dependencies?)`.
+In addition to the input fields above it requires `runnerArgs`, `cwd`, an explicit
+string-valued `environment`, UUIDv4 `receiptId`, absent `receiptDirectory`, and
+absent `runRoot` with existing real parents. Optional `maxStreamBytes` lowers the
+64 MiB per-stream cap; `timeoutMs` lowers the five-minute direct-child kill
+deadline. Capture waits for the child's `close` event, not merely `exit`. This is
+not process-tree containment: descendants retaining inherited pipes can delay
+closure; H3 still owns worker lifecycles. No shell is used.
+The generated tuple/inventory/root-observation context is one bounded canonical
+JSON+LF payload on stdin (fd 0), followed by EOF. The limit is 32 KiB. Runners must
+read this channel; no per-run root/parent context is added to argv or environment.
+The obsolete `LC_OFFSET_CAPTURE_CONTEXT` environment key is refused. Actual argv
+and the entire actual launch environment are retained and hashed without removing
+or normalizing per-run values. Callers can therefore capture two distinct roots
+with identical pinned inputs/runtime/argv/cwd/environment and join them through
+H1 without weakening its equality checks. A real-child pair regression exercises
+the join and revalidation. Node, loader and OpenSSL injection environment keys
+are refused, not inherited. On
+macOS callers must also explicitly include the current runtime's
+`__CF_USER_TEXT_ENCODING` value: the platform injects/replaces it even for a
+custom environment, so omitting it would make the environment digest misleading.
+The complete sorted parent environment is compared but never changed or restored.
+
+The returned `stdin` snapshot retains the exact generated payload bytes, byte
+count, SHA-256 and `write_completed` transport result, derived from the pinned
+tuple and original root-parent observations. Failure diagnostics retain the same
+snapshot. Write completion means delivery to the pipe, not independent proof of
+child consumption; a failed write may have delivered only a prefix. Stdin errors
+are refusals, retain stdout/stderr/exit diagnostics, and still run boundary checks.
+No stdin hash is inserted into the unchanged H1 schema; future persisted evidence
+owners must retain/check this returned snapshot alongside the input manifest.
+
+The runner must print one H1 canonical preflight result with matching purpose,
+actual candidate/manifest, exact inventory count/ID hash and original parent/root
+proof. `fixtures/capture-child.js` is only a synthetic positive/negative process
+control; it refuses validation purpose and does not execute the named H7 suites.
+Injected `spawn`/`fs` dependencies are permitted only for synthetic controls, not
+validation evidence. No capture here grants formal evidence or feature completion.
+
+Inputs, runtime, cwd, original receipt parent, parent environment and the SAME
+bigint original run-root-parent identity are checked before spawn, after child
+completion (also spawn/stream/exit/signal/timeout failures), before publication,
+after publication and after H1 readback. Run-root absence is checked at these
+observation points. `write_attempts: 0` means no root presence was observed; this
+is not a watcher and cannot detect a transient create/delete between observations.
+No filesystem race elimination or dynamic-library closure is claimed.
+
+Publication creates one new directory (0700) and exactly report/stdout/stderr
+files (0400), using no-follow/exclusive opens, checked writes, file fsync,
+directory fsync and H1 byte/identity/membership readback. Unsupported directory
+fsync is recorded in returned/error `durabilityLimitations`; file flush failures
+and other directory flush errors refuse publication. The manifest and snapshots
+are returned separately, not added as a fourth receipt entry. Persisting and
+independently checking them belongs to H5/H7.
+
+Failures throw `CaptureError` with immutable `details.child`, `stdin`, `stdout`, `stderr`
+base64/byte/hash snapshots, observed stream counts and all failed boundary checks.
+Overflow retains each stream's bounded prefix and records truncation via observed
+counts/failure; it never advertises full-stream hashes for omitted bytes. No
+canonical success/result is fabricated for malformed or unsuccessful children,
+so those failures have diagnostics but no H1 receipt. Partial publication trees
+and independently created roots are never removed; retries need a new namespace.
+
 ## Remaining
 
-X-H2 through X-H7 still own actual source/runtime capture, worker dispatch,
-persisted joins, independent evidence validation, adversarial case inventories
+X-H3 through X-H7 still own worker dispatch, persisted joins, independent evidence
+validation, adversarial case inventories
 and deterministic reports. In particular, the schema layer does not establish
 that a candidate/manifest digest names the current product source. Callers must
 derive the expected tuple from actual inputs and validate those inputs at their
