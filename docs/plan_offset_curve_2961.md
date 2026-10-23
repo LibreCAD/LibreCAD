@@ -41,7 +41,7 @@ main-track slices remain incomplete; no native entity is claimed.
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
 | Latest product checkpoint | `d4a0b081a` (C) |
-| Latest auxiliary checkpoint | `507e44ad7` (H6 integration; H5 6d4fd25b3, H4 3e06e3894) |
+| Latest auxiliary checkpoint | `1f9f94753` (pipeline; H6 507e44ad7, H5 6d4fd25b3) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
 | A-core | Atomic work adoption, separate ordering allowance and sticky terminal status implemented; A04/A10 registered |
@@ -53,7 +53,7 @@ main-track slices remain incomplete; no native entity is claimed.
 | Native entity | No `LC_OffsetCurve` or `EntityOffsetCurve` yet |
 | Product integration | No native offset adoption, private file schema, creation/editing UI, or target-trim integration yet |
 | Build registration | Geometry, contact and routing sources in CMake/qmake; focused geometry/contact/routing/budget tests in `librecad_tests` |
-| Validation harness | X-H1 through X-H6 committed; complete CLI orchestration and H7 pending |
+| Validation harness | X-H1 through X-H6 and CLI orchestration committed; H7 pending |
 | Latest validation | A-core, geometry and format fast lanes passed Release/ASan; full Release and qmake6 passed; see section 14 |
 
 Recheck these facts against the selected implementation checkout before starting
@@ -1810,6 +1810,30 @@ C's 18 new contact-matching cases passed 687 assertions; combined C/refinement
 119 cases passed 18618 assertions. Independent static review cleared the matcher,
 actual route-port integration, owner-validity guard and owner allocation ordering.
 Final qualification is recorded below; native feature remains incomplete.
+
+### Worker Pipeline Validation (2026-10-23)
+
+Implementation `1f9f94753` runs real H3 -> H4 -> H5 APIs and exposes a working CLI
+with explicit ledger/checker/manifest paths. It requires its own actual H2 source
+pin, snapshots ingress data without getters, rejects overlapping output scopes,
+exposes no injection hooks, and retains actual failed-stage diagnostics/prefixes.
+Post-root REFUSED is overall FAIL; the nested H5 result remains unchanged.
+Final success revalidates the original H5 owner after H4/H2 checks. A real-stage
+mutation regression proves a manifest changed at H5 return cannot escape as PASS.
+
+Parent report X-pipeline-reviewed-02.tap in
+`/private/tmp/lc2961-impl-evidence.9GtLO2`: 13/13 passed, no skips/failures.
+Independent review found and verified both corrections, separately reran all13
+and repeated its original two probes; no remaining focused P1/P2 issue. The earlier
+276-case integrated run includes the pre-correction 11 pipeline tests; it is not
+misrepresented as final13 integration. H7 must rerun all affected components.
+
+This slice automates persisted H4/H5 evidence, not human review or product/native
+completion. CLI transport remains explicitly derived rather than claimed observed;
+the API can retain actual caller capture snapshots. No filesystem/process-tree
+containment or cleanup of failed/external artifacts is claimed. Next auxiliary
+slice is H7: genuine execution/inventory/preflight, independent checker, safety
+rechecks for referenced preflight artifacts and two complete qualification runs.
 
 ### X-H6 Integration Validation (2026-10-23)
 
