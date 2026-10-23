@@ -24,10 +24,10 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-23. Status: all A slices, B and X-H1/X-H2/X-H3 committed; native feature incomplete.
+Updated: 2026-10-23. Status: all A slices, B and X-H1 through X-H4 plus H6-core committed; native feature incomplete.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
-This checkpoint records tested A-core/A-strict/A-reference/A-cache/B and auxiliary X-H1/X-H2/X-H3 commits. Later
+This checkpoint records tested A-core/A-strict/A-reference/A-cache/B and auxiliary X-H1 through X-H4 plus H6-core commits. Later
 main-track slices remain incomplete; no native entity or complete topology checker
 is claimed.
 
@@ -42,7 +42,7 @@ is claimed.
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
 | Latest product checkpoint | `9bf0546b6` (B) |
-| Latest auxiliary checkpoint | `9170b0cc9` (H6 inventory core; H3 7da2bb144, capture hardening c939c3de7) |
+| Latest auxiliary checkpoint | `3e06e3894` (H4 ledger; H6 inventory core 9170b0cc9) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
 | A-core | Atomic work adoption, separate ordering allowance and sticky terminal status implemented; A04/A10 registered |
@@ -54,7 +54,7 @@ is claimed.
 | Native entity | No `LC_OffsetCurve` or `EntityOffsetCurve` yet |
 | Product integration | No native offset adoption, private file schema, creation/editing UI, or target-trim integration yet |
 | Build registration | Both geometry implementations in CMake and qmake; both geometry test TUs in `librecad_tests` |
-| Validation harness | X-H1/X-H2/X-H3 committed in scripts/offset-curve-validation; X-H4 onward pending; historical scratch unchanged |
+| Validation harness | X-H1 through X-H4 and H6-core committed; H5, remaining H6 integration and H7 pending; historical scratch unchanged |
 | Latest validation | A-core, geometry and format fast lanes passed Release/ASan; full Release and qmake6 passed; see section 14 |
 
 Recheck these facts against the selected implementation checkout before starting
@@ -1505,7 +1505,7 @@ one plan update, not another candidate/freeze lifecycle.
 | X-H1 | Committed, 29ab28163; follow-up 8993e2848 | Schema 2 / offset-2961; explicit validation/synthetic purpose; bounded parsing and readback; inert descriptors; 25 passing tests and independent review |
 | X-H2 | Committed, 25661f1a3; hardened c939c3de7 | Actual input/runtime manifest, bounded stdin/child capture and durable receipt readback; 15 input + 32 process tests plus 25 H1 tests; independent review |
 | X-H3 | Committed, 7da2bb144 | Real pinned registry/CLI, explicit worker contract and exact output inventory; missing/undefined/unknown/FAIL are refusals, never default PASS; 30 runner tests and independent review |
-| X-H4 | Runner exposes row count, not complete joined rows | Return all joined events with pinned identity/order/output hashes; test persistence, replay, mutation and duplicate/missing events |
+| X-H4 | Committed 3e06e3894; explicit API | Complete genesis/chained case rows, pinned identities/order/actual outputs, exclusive publication/replay/mutation checks; not automatic CLI persistence |
 | X-H5 | Draft evidence validator incomplete, no tests | Implement missing helpers, actual tuple validation, absent-file publication and before/after-dispatch rechecks |
 | X-H6 | Core committed 9170b0cc9; 11 obligations pending | 93 explicit obligations, all original71 IDs retained, 82 executable scenarios; H4/H5 integration still required, no full H6 claim |
 | X-H7 | Generator/checker/reports absent | Generate exact source/runtime/case manifests; independent validation and four canonical suites run twice with reproducible semantic results |
@@ -1753,6 +1753,37 @@ The plan checkpoint column never depends on its own future SHA.
 | X-H1 physical parents | 8993e2848 | e8119501b | 25 receipt tests; independent review; 67-test H1/H2 integration passed |
 | B | 9bf0546b6 | b12a9a02c | All 8 terminal identities; full Release, geometry Release/ASan, format lanes, qmake6; independent review |
 | X-H2 | 25661f1a3 | Immediate plan-only checkpoint | 15 input + 27 process + 25 H1 tests; five syntax checks; independent input/process reviews |
+
+### X-H4 Joined Ledger Validation (2026-10-23)
+
+Implementation `3e06e3894`: inert ledger descriptors, independent actual context
+capture after H3, complete genesis and one chained event per executed case, strict
+H3 source/runtime/argv/stdin/stream/result/output joins, exclusive mode-0400 ledger
+publication in a new nonoverlapping directory and original-identity replay and
+revalidation. Failed H3 cannot publish a complete PASS ledger. Publication errors
+retain partial trees; unsupported directory fsync is explicit. No filesystem race
+elimination, automatic CLI integration, H5 or H7 completion is claimed.
+
+Parent six-suite report in `/private/tmp/lc2961-impl-evidence.9GtLO2/`:
+X-H4-parent-integrated-01.tap, 210/210 passed with zero skips/failures. Focused H4
+has 25 cases; author combined H1-H4 report X-H4-descriptors-integrated-06.tap has
+127/127. Independent reviewer 01a168a8-2b07-77a0-ab4e-4bd44a98895f reviewed all
+three frozen source/test files, separately reran H4 25/25, verified hashes before
+and after, and found no P1/P2 issues. Three syntax checks and staged whitespace
+passed. README documents the actual API and its limits.
+
+Validated SHA-256 for the three files under scripts/offset-curve-validation:
+ledger-descriptors.js 160a389332da609a773a77a3e8a0a3cd25a77d5a55db2ba9359071c099acf86d;
+formal-ledger.js 0b8452473c4275039d86b2b9f829f0cd3632d0d396edb33bdb66b12deeb8c0b8;
+test-formal-ledger.js 04a12d9b217dd6c3a6da3aba8aa4a05eeabbdc10210abc56a3e9c2f2219df341.
+
+Next auxiliary slice: H5 actual evidence manifest, absent publication and review
+dispatch with original-byte/identity checks before and after all child outcomes.
+Then wire the 11 pending H6 obligations through the real H4/H5 APIs and qualify H7.
+C's current source passed all 86 focused cases, full Release (3935 passed/same26
+skips), ASan geometry (339 cases), both format fast lanes and qmake6. Independent
+C global review remains in progress; none of that uncommitted source is marked
+complete by this tooling checkpoint.
 
 ### X-H6 Inventory Core Validation (2026-10-23)
 
