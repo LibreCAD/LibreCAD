@@ -24,7 +24,7 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-22. Status: all A slices and X-H1 committed; native feature incomplete.
+Updated: 2026-10-23. Status: all A slices and X-H1 committed; B and X-H2 in progress; native feature incomplete.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
 This checkpoint records tested A-core/A-strict/A-reference/A-cache and auxiliary X-H1 commits. Later
@@ -42,7 +42,7 @@ is claimed.
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
 | Latest product checkpoint | `dbf895638f4bbd6ee210d09e41066a93cb888024` (A-cache) |
-| Latest auxiliary checkpoint | `29ab281635f85590a7db1f7a02db1fcf65ce3cfb` (X-H1) |
+| Latest auxiliary checkpoint | `8993e2848` (X-H1 physical-parent correction; original X-H1 `29ab28163`) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
 | A-core | Atomic work adoption, separate ordering allowance and sticky terminal status implemented; A04/A10 registered |
@@ -212,7 +212,7 @@ test commit followed by the section 4 plan checkpoint.
 | A-strict | A-core | Strict-solver bounded ordering/validation/capacity and exit snapshots (`dc016f6e2`) | committed |
 | A-reference | A-strict | Geometry scans/callback ownership and exception-safe work transfers (`5c12fbeef`) | committed |
 | A-cache | A-reference | Candidate/proof split accounting and inherited combined depth (`dbf895638`) | committed |
-| B | A-cache | Immutable occurrence-specific producer terminals | pending |
+| B | A-cache | Immutable occurrence-specific producer terminals | in progress |
 | C | B | Full unique-path topology checker and public result | pending |
 | D-core | C | Native enum/entity, real validated adoption, stamp, clone and transforms | pending |
 | D-edit | D-core | Real create/mutators, one-run staging, run limits and refusal results | pending |
@@ -1453,8 +1453,8 @@ one plan update, not another candidate/freeze lifecycle.
 
 | Slice | Current state | Required repair and exit |
 |---|---|---|
-| X-H1 | Committed, 29ab28163 | Schema 2 / offset-2961; explicit validation/synthetic purpose; bounded parsing and readback; inert descriptors; 24 passing tests and independent review |
-| X-H2 | Partial preflight capture/tests | Capture actual source/runtime/input tuple and exact inventory; no synthetic placeholder source rows; stable read and race/refusal tests |
+| X-H1 | Committed, 29ab28163; follow-up 8993e2848 | Schema 2 / offset-2961; explicit validation/synthetic purpose; bounded parsing and readback; inert descriptors; 25 passing tests and independent review |
+| X-H2 | In progress; capture implementation and tests awaiting final review | Capture actual source/runtime/input tuple and exact inventory; no synthetic placeholder source rows; stable read and race/refusal tests |
 | X-H3 | Runner lacks production worker wiring | Configure real registry/CLI, explicit worker contract and exact output inventory; missing/undefined/unknown status is FAIL, never default PASS |
 | X-H4 | Runner exposes row count, not complete joined rows | Return all joined events with pinned identity/order/output hashes; test persistence, replay, mutation and duplicate/missing events |
 | X-H5 | Draft evidence validator incomplete, no tests | Implement missing helpers, actual tuple validation, absent-file publication and before/after-dispatch rechecks |
@@ -1678,6 +1678,29 @@ The plan checkpoint column never depends on its own future SHA.
 | A-strict | dc016f6e2b8294cd1f1524f22a568f9d4196459c | eff902b97 | Full Release, geometry/acceptance Release+ASan, format fast lanes and qmake6 passed; independent review |
 | A-reference | 5c12fbeef5fe3d41444d44bf2cc087a77a4fcf75 | 02a8e18f3 | 4 acceptance cases, full Release, ASan geometry, format lanes and qmake6 passed; independent review |
 | A-cache | dbf895638f4bbd6ee210d09e41066a93cb888024 | This immediate plan-only checkpoint | 4 acceptance cases, full Release, ASan geometry, format lanes, qmake6; independent review including stage-isolated depth proof |
+| X-H1 physical parents | 8993e2848 | Immediate plan-only checkpoint | 25 receipt tests; independent review; 67-test H1/H2 integration passed |
+
+### X-H1 Physical-Parent Correction (2026-10-23)
+
+The receipt pair now distinguishes physical run-root parents by device/inode,
+not path/device/inode. Different declared paths cannot hide a repeated physical
+parent. The focused regression refreshes the nested stdout byte/hash binding
+after mutation and reaches this exact refusal, not an earlier digest error.
+Only preflight-receipt.js and its test changed in product commit 8993e2848.
+
+Parent and independent reviewer 01a16687-2244-7373-9bb9-fdad31c25cb9 each passed
+all 25 receipt tests, zero failures/skips. Parent H1/H2 integration passed all
+67 tests; this is scoped integration evidence, not H2 final review or H3-H7
+completion. Evidence: /private/tmp/lc2961-impl-evidence.9GtLO2/
+X-H1-physical-parent-tests-02.tap and X-H2-integration-parent-01.tap. The first
+test attempt hit the deliberately stale stdout digest and is retained separately.
+
+Validated SHA-256: preflight-receipt.js
+7c2a58d8c2ed02fddc9d01fda5a7669684c682164f512cb569608c7f2f406194;
+test-preflight-receipt.js
+4558d85404c560bb3f4f74ed71287f4078cdc310a9c31a180d9bd6d7f83793bf.
+B remains the next main slice; X-H2 awaits final process-capture review. No
+application or geometry correctness is inferred from these receipt tests.
 
 ### A-cache Validation (2026-10-22)
 
