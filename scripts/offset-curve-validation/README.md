@@ -73,6 +73,28 @@ kind is not an opt-in. Refusal reports `PREFLIGHT_ARTIFACT_CHANGED`, retains act
 prefixes and never blesses a new baseline after mutation. Synthetic envelope
 fixtures exercise these guards; they do not qualify product or suite results.
 
+## Genuine Preflight And Independent Checking
+
+`genuine-preflight.js` executes both attempts of each actual configured suite,
+with at most two attempts in flight. It waits for both even after failure, keeps
+actual output triples in order and never qualifies a successful prefix. It also
+performs actual syntax checks, bounded reversible byte-replacement replays,
+separately derived input audits and a real stdin trace probe. Byte replacements
+are explicitly not Git textual patches or proof of C++ semantics.
+
+`independent-evidence-checker.js` imports only Node built-ins and inert format
+descriptors. It independently reads and derives H2/H3/receipt/ledger/output
+bindings and canonical suite outcomes from raw events, including final Node
+summary and all 93 mandatory refusal/control IDs. It does not call production
+validators or trust a claimed PASS report. Genuine preflight artifacts are checked
+against actual files and their declared source/runtime/input context. Raw process
+records cannot attest historical origin or stdin delivery, and neither checker
+claims human approval or product completion.
+
+The matching focused tests use genuine real-child synthetic controls, not the
+complete canonical qualification. Full affected regressions and the driver’s two
+complete validation runs remain required before marking H7 complete.
+
 ## Implemented
 
 X-H1 provides immutable format descriptors and receipt parsing/readback. Run:
