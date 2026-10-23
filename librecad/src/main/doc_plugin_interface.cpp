@@ -35,6 +35,7 @@
 #include "lc_containertraverser.h"
 #include "lc_copyutils.h"
 #include "lc_documentsstorage.h"
+#include "lc_offsetcurvetransform.h"
 #include "lc_splinepoints.h"
 #include "lc_undosection.h"
 #include "rs_arc.h"
@@ -58,6 +59,31 @@
 #include "intern/qc_actiongetent.h"
 #include "intern/qc_actiongetpoint.h"
 #include "intern/qc_actiongetselect.h"
+
+namespace {
+// true means handled, including whole refusal; only ordinary entities use the
+// historical in-place fallback when the document cannot accept an undo entry.
+bool handleStagedPluginTransform(RS_Entity*& entity, const Doc_plugin_interface* dpi,
+    const LC_OffsetCurveTransform::Steps& steps, const DPI::Disposition disposition) {
+    if (entity == nullptr) return true;
+    if (!LC_OffsetCurveTransform::needsStaging(*entity)) return false;
+    if (dpi == nullptr || (disposition != DPI::DELETE_ORIGINAL && disposition != DPI::KEEP_ORIGINAL)) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "Plugin_Entity::transform: offset/INSERT undo publication unavailable");
+        return true;
+    }
+    auto staged = LC_OffsetCurveTransform::prepare(*entity, steps);
+    if (!staged) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "Plugin_Entity::transform: offset/INSERT staging refused (%d, step %d)",
+                        static_cast<int>(staged.refusal), static_cast<int>(staged.failedStep));
+        return true;
+    }
+    // addToUndo(true) takes ownership. On false, retain the source and let the
+    // staged unique_ptr clean up; never retry a native void transform in place.
+    if (dpi->addToUndo(entity, staged.entity.get(), disposition)) entity = staged.entity.release();
+    else RS_DEBUG->print(RS_Debug::D_WARNING, "Plugin_Entity::transform: offset/INSERT undo publication refused");
+    return true;
+}
+}
 
 convLTW::convLTW() {
     //    QHash<int, QString> lType;
@@ -232,7 +258,8 @@ Plugin_Entity::~Plugin_Entity() {
 }
 
 RS2::EntityType Plugin_Entity::getEntityType() {
-    return entity->rtti();
+    const auto type = entity->rtti();
+    return type == RS2::EntityOffsetCurve ? RS2::EntitySpline : type;
 }
 
 void Plugin_Entity::getData(QHash<int, QVariant>* data) {
@@ -361,6 +388,7 @@ void Plugin_Entity::getData(QHash<int, QVariant>* data) {
         case RS2::EntityHatch:
             data->insert(DPI::ETYPE, DPI::HATCH);
             break;
+        case RS2::EntityOffsetCurve:
         case RS2::EntitySpline:
             data->insert(DPI::ETYPE, DPI::SPLINE);
             break;
@@ -659,6 +687,7 @@ void Plugin_Entity::updateData(QHash<int, QVariant>* data) {
         }
         case RS2::EntityHatch:
             break;
+        case RS2::EntityOffsetCurve:
         case RS2::EntitySpline:
             break;
         case RS2::EntityPolyline: {
@@ -772,6 +801,8 @@ void Plugin_Entity::updatePolylineData(QList<Plug_VertexData>* data) {
 }
 
 void Plugin_Entity::move(const QPointF offset, const DPI::Disposition disp) {
+    using Step = LC_OffsetCurveTransform::Step;
+    if (handleStagedPluginTransform(entity, dpi, {Step::move({offset.x(), offset.y()})}, disp)) return;
     RS_Entity* ne = entity->clone();
     ne->move(RS_Vector(offset.x(), offset.y()));
     const bool ok = dpi->addToUndo(entity, ne, disp);
@@ -786,6 +817,9 @@ void Plugin_Entity::move(const QPointF offset, const DPI::Disposition disp) {
 }
 
 void Plugin_Entity::moveRotate(const QPointF& offset, const QPointF& center, const double angle, const DPI::Disposition disp) {
+    using Step = LC_OffsetCurveTransform::Step;
+    if (handleStagedPluginTransform(entity, dpi,
+        {Step::move({offset.x(), offset.y()}), Step::rotate({center.x(), center.y()}, angle)}, disp)) return;
     RS_Entity* ne = entity->clone();
     ne->move(RS_Vector(offset.x(), offset.y()));
     ne->rotate(RS_Vector(center.x(), center.y()), angle);
@@ -802,6 +836,8 @@ void Plugin_Entity::moveRotate(const QPointF& offset, const QPointF& center, con
 }
 
 void Plugin_Entity::rotate(const QPointF center, const double angle, const DPI::Disposition disp) {
+    using Step = LC_OffsetCurveTransform::Step;
+    if (handleStagedPluginTransform(entity, dpi, {Step::rotate({center.x(), center.y()}, angle)}, disp)) return;
     RS_Entity* ne = entity->clone();
     ne->rotate(RS_Vector(center.x(), center.y()), angle);
     const bool ok = dpi->addToUndo(entity, ne, disp);
@@ -816,6 +852,9 @@ void Plugin_Entity::rotate(const QPointF center, const double angle, const DPI::
 }
 
 void Plugin_Entity::scale(const QPointF center, const QPointF factor, const DPI::Disposition disp) {
+    using Step = LC_OffsetCurveTransform::Step;
+    if (handleStagedPluginTransform(entity, dpi,
+        {Step::scale({center.x(), center.y()}, {factor.x(), factor.y()})}, disp)) return;
     RS_Entity* ne = entity->clone();
     ne->scale(RS_Vector(center.x(), center.y()), RS_Vector(factor.x(), factor.y()));
     const bool ok = dpi->addToUndo(entity, ne, disp);
@@ -840,6 +879,14 @@ Doc_plugin_interface::Doc_plugin_interface(LC_ActionContext* actionContext, QWid
 }
 
 bool Doc_plugin_interface::addToUndo(RS_Entity* current, RS_Entity* modified, const DPI::Disposition how) const {
+    if (current == nullptr || modified == nullptr) return false;
+    if (LC_OffsetCurveTransform::needsStaging(*current) &&
+        (current->getParent() != m_document || modified->getParent() != m_document ||
+         (how != DPI::DELETE_ORIGINAL && how != DPI::KEEP_ORIGINAL))) {
+        // This undo path adds to m_document, not a borrowed/expanded child's owner.
+        // Refuse before clearing selection or beginning a document undo cycle.
+        return false;
+    }
     const LC_UndoSection undo(m_document, m_viewport);
     current->clearSelectionFlag();
     if (how == DPI::DELETE_ORIGINAL) {

@@ -31,12 +31,14 @@
 #include <cstddef>
 #include <map>
 #include <memory>
+#include <optional>
 #include <tuple>
 #include <vector>
 
 #include <QList>
 
 #include "lc_copyutils.h"
+#include "lc_ellipseoffsetgeometry.h"
 #include "lc_offsetoutputbudget.h"
 #include "rs_pen.h"
 #include "rs_vector.h"
@@ -61,6 +63,7 @@ struct LC_DocumentModificationBatch;
 struct LC_CurveOffsetMaterializationResult;
 enum class LC_CurveOffsetSide;
 enum class LC_CurveOffsetStatus;
+namespace LC_OffsetCurveTransform { class Steps; }
 
 struct LC_ModifyOperationFlags {
     int number = 0;
@@ -138,6 +141,8 @@ struct RS_OffsetData : LC_ModifyOperationFlags {
      */
     RS_Vector sideFallback{false};
     double distance = 0.;
+    /** Native ellipse definitions are opt-in until the H-enable UI slice. */
+    bool asOffsetCurve = false;
 };
 
 /**
@@ -197,6 +202,13 @@ enum class LC_OffsetFailureDetail {
     AmbiguousSide
 };
 
+enum class LC_OffsetPlainReason { NotTopLevel, SeveralPieces, CheckFailed, NotCacheRepresentable, OutputBudget };
+struct LC_OffsetPlainOutcome {
+    int copy = 0;
+    LC_OffsetPlainReason reason = LC_OffsetPlainReason::NotCacheRepresentable;
+    std::optional<LC_OffsetCheckResult::Reason> checkReason;
+};
+
 struct LC_OffsetSourceOutcome {
     /** Identity only: a source removed by a destructive offset must not be dereferenced. */
     const RS_Entity* source = nullptr;
@@ -230,6 +242,9 @@ struct LC_OffsetSourceOutcome {
      * for the caller to unselect.
      */
     bool sourceRemoved = false;
+    int copiesKeptPlain = 0;
+    /** Bounded by kMaximumOffsetCopies; describes committed visible copies only. */
+    std::vector<LC_OffsetPlainOutcome> keptPlain;
 
     bool succeeded() const {
         return status == LC_OffsetSourceStatus::Succeeded;
@@ -555,6 +570,8 @@ protected:
                                                        const RS_Vector& selectionPoint2);
 
     static RS_Entity* getClone(bool forPreviewOnly, const RS_Entity* e);
+    static RS_Entity* getTransformedClone(bool forPreviewOnly, const RS_Entity* e,
+        const LC_OffsetCurveTransform::Steps& steps, bool forcePlain = false);
     static void selectClone(const RS_Entity* original, RS_Entity* clone);
 };
 

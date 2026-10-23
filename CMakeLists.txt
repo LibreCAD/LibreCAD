@@ -892,6 +892,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/lc_offsetcurvegrips.cpp
      librecad/src/lib/engine/document/entities/lc_offsetcurvegrips.h
      librecad/src/lib/engine/document/entities/lc_offsetcurvesnaps.cpp
+     librecad/src/lib/engine/document/entities/lc_offsetcurvetransform.cpp
+     librecad/src/lib/engine/document/entities/lc_offsetcurvetransform.h
      librecad/src/lib/engine/document/entities/lc_offsetcachecontacts.cpp
      librecad/src/lib/engine/document/entities/lc_offsetcachecontacts.h
      librecad/src/lib/engine/document/entities/lc_offsetcontactmatching.cpp
@@ -2625,6 +2627,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_edit_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_grips_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_grip_order_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurvetransform_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcachecontacts_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcontactmatching_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_topology_budget_tests.cpp
@@ -2682,6 +2685,7 @@ if (BUILD_TESTS)
         librecad/src/lib/modification/tests/lc_division_tests.cpp
         librecad/src/lib/modification/tests/rs_modification_trim_tests.cpp
         librecad/src/lib/modification/tests/rs_modification_offset_tests.cpp
+        librecad/src/lib/modification/tests/rs_modification_offsetcurve_tests.cpp
         librecad/src/lib/modification/tests/lc_offsetresultchecktests.cpp
         librecad/src/lib/modification/tests/rs_modification_attributes_tests.cpp
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
@@ -2795,6 +2799,7 @@ if (BUILD_TESTS)
         librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreewidget_tests.cpp
         librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreemodel_tests.cpp
         librecad/src/plugins/tests/qc_actiongetselect_tests.cpp
+        librecad/src/plugins/tests/doc_plugin_offsetcurve_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
         librecad/src/lib/gui/tests/lc_scrollmodel_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewport_zoomauto_tests.cpp

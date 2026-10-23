@@ -40,6 +40,8 @@
 #include "lc_hyperbola.h"
 #include "lc_linemath.h"
 #include "lc_offsetresultcheck.h"
+#include "lc_offsetcurve.h"
+#include "lc_offsetcurvetransform.h"
 #include "lc_splinepoints.h"
 #include "rs_spline.h"
 #include "lc_undosection.h"
@@ -68,6 +70,7 @@
 #endif
 
 class LC_SplinePoints;
+namespace offsetTx = LC_OffsetCurveTransform;
 
 namespace {
       // fixme - sand - add option for intersection tolerance????
@@ -991,9 +994,8 @@ void RS_Modification::move(const RS_MoveData& data, const QList<RS_Entity*>& ent
     for (const auto e : entitiesList) {
         // Create new entities
         for (int num = 1; num <= numberOfCopies; num++) {
-            RS_Entity* clone = getClone(forPreviewOnly, e);
-            clone->move(data.offset * num);
-            if (!acceptedInsertSourceEdit(*clone)) {
+            RS_Entity* clone = getTransformedClone(forPreviewOnly, e, {offsetTx::Step::move(data.offset * num)});
+            if (!clone || !acceptedInsertSourceEdit(*clone)) {
                 transformedOriginals.removeAll(e);
                 delete clone;
                 continue;
@@ -1042,24 +1044,54 @@ RS_Entity* RS_Modification::getClone(const bool forPreviewOnly, const RS_Entity*
     return result;
 }
 
+RS_Entity* RS_Modification::getTransformedClone(const bool preview, const RS_Entity* e,
+    const LC_OffsetCurveTransform::Steps& steps, const bool forcePlain) {
+    if (!e || !steps.valid()) return nullptr;
+    if (LC_OffsetCurveTransform::needsStaging(*e)) {
+        auto prepared = LC_OffsetCurveTransform::prepare(*e, steps, forcePlain || preview);
+        if (!prepared) return nullptr;
+        if (prepared.keptPlain && !preview)
+            RS_DEBUG->print(RS_Debug::D_WARNING, "Offset definition demoted to a transformed ordinary spline");
+        return prepared.entity.release();
+    }
+    auto clone = std::unique_ptr<RS_Entity>{getClone(preview, e)};
+    if (!clone) return nullptr;
+    using Kind = LC_OffsetCurveTransform::Step::Kind;
+    for (std::size_t i = 0; i < steps.size(); ++i) {
+        const auto& step = steps[i];
+        switch (step.kind) {
+        case Kind::Move: clone->move(step.first); break;
+        case Kind::Rotate: clone->rotate(step.first, step.scalar); break;
+        case Kind::Scale: clone->scale(step.first, step.second); break;
+        case Kind::Mirror: clone->mirror(step.first, step.second); break;
+        case Kind::Shear: clone->shear(step.scalar); break;
+        case Kind::Reverse: clone->revertDirection(); break;
+        }
+    }
+    return clone.release();
+}
+
 bool RS_Modification::alignRef(const LC_AlignRefData& data, const QList<RS_Entity*>& entitiesList, const bool forPreviewOnly,
                                LC_DocumentModificationBatch& ctx) {
     constexpr int numberOfCopies = 1; /*data.obtainNumberOfCopies();*/
     const RS_Vector offset = data.offset;
+    bool succeeded = false;
     // too slow:
     for (const auto e : entitiesList) {
         // Create new entities
         for (int num = 1; num <= numberOfCopies; num++) {
-            RS_Entity* clone = getClone(forPreviewOnly, e);
-            clone->rotate(data.rotationCenter, data.rotationAngle);
-            if (data.scale && LC_LineMath::isMeaningful(data.scaleFactor - 1.0)) {
-                clone->scale(data.rotationCenter, data.scaleFactor);
+            offsetTx::Steps steps{offsetTx::Step::rotate(data.rotationCenter, data.rotationAngle)};
+            if (data.scale && (!std::isfinite(data.scaleFactor) || LC_LineMath::isMeaningful(data.scaleFactor - 1.0))) {
+                steps.append(offsetTx::Step::scale(data.rotationCenter, {data.scaleFactor, data.scaleFactor}));
             }
-            clone->move(offset * num);
+            steps.append(offsetTx::Step::move(offset * num));
+            RS_Entity* clone = getTransformedClone(forPreviewOnly, e, steps);
+            if (!clone) continue;
             ctx.replace(e, clone);
+            succeeded = true;
         }
     }
-    return true;
+    return succeeded;
 }
 
 bool LC_OffsetBatchOutcome::anySourceSucceeded() const {
@@ -1500,6 +1532,57 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
             result.stoppedBy = LC_OffsetSourceStatus::OffsetFailed;
             return true;
         };
+        const auto adoptProduced = [&](LC_CurveOffsetMaterializationResult& copy, const int ordinal,
+                                       const double magnitude, const LC_CurveOffsetSide side,
+                                       const LC_OffsetSourceBudget& left) {
+            if (!data.asOffsetCurve || forPreviewOnly ||
+                (e.rtti() != RS2::EntityEllipse && e.rtti() != RS2::EntityOffsetCurve)) return;
+            const auto kept = [&](const LC_OffsetPlainReason reason,
+                                  std::optional<LC_OffsetCheckResult::Reason> checked = std::nullopt) {
+                result.keptPlain.push_back({ordinal, reason, checked});
+                ++result.copiesKeptPlain;
+            };
+            for (auto& entity : copy.entities) {
+                entity->RS_Entity::operator=(e);
+                entity->setLayer(e.getLayer(false));
+                entity->clearDwgProvenance(RS_Entity::Identity);
+                entity->setLineage(RS_Entity::newLineage()); entity->setOwnerLineage(0);
+                entity->delFlag(RS2::FlagHatchChild);
+                entity->calculateBorders();
+            }
+            if (!e.getParent() || !e.getParent()->isDocument() || e.isDeleted() ||
+                e.getParent()->findEntityIndex(&e) < 0) {
+                kept(LC_OffsetPlainReason::NotTopLevel); return;
+            }
+            if (copy.entities.size() != 1) { kept(LC_OffsetPlainReason::SeveralPieces); return; }
+            const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&e);
+            if (!ellipse) { kept(LC_OffsetPlainReason::NotCacheRepresentable); return; }
+            // A one-leaf LINE expands to a native spline's display children.
+            if (left.maxDeepEntities < kOffsetDeepEntitiesPerOutputSpline) {
+                kept(LC_OffsetPlainReason::OutputBudget); return;
+            }
+            LC_EllipseOffsetDefinition definition;
+            definition.basis = ellipse->getData(); definition.distance = magnitude;
+            definition.towardCentre = (side == LC_CurveOffsetSide::Left) != definition.basis.reversed;
+            definition.relTolerance = LC_CurveOffset::kEllipseRelativeOffsetTolerance;
+            const double tolerance = LC_CurveOffset::toleranceFor(e, magnitude, definition.relTolerance);
+            LC_OffsetCheckResult checked;
+            LC_OffsetCurveRefusal refusal;
+            auto native = LC_OffsetCurve::adopt(*copy.entities.front(), definition, tolerance, &checked, {}, &refusal);
+            if (!native) {
+                const auto reason = refusal == LC_OffsetCurveRefusal::CheckFailed || checked ?
+                    std::optional<LC_OffsetCheckResult::Reason>{checked.reason} : std::nullopt;
+                kept(refusal == LC_OffsetCurveRefusal::CheckFailed ? LC_OffsetPlainReason::CheckFailed :
+                     LC_OffsetPlainReason::NotCacheRepresentable, reason);
+                return;
+            }
+            const auto cost = measureOffsetOutput({native.get()}, left.maxDeepEntities);
+            if (cost.status != LC_OffsetTreeStatus::Ok) {
+                kept(LC_OffsetPlainReason::OutputBudget, checked.reason); return;
+            }
+            copy.usage.deepEntities = cost.deepEntities;
+            copy.entities.front() = std::move(native);
+        };
 
         // causes known before anything is offset
         if (e.rtti() == RS2::EntityLine && (e.getEndpoint() - e.getStartpoint()).magnitude() < RS_TOLERANCE) {
@@ -1563,6 +1646,7 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
                     result.stoppedBy = LC_OffsetSourceStatus::Vanished;
                     break; // trimmed away entirely, as it is at any larger distance on this side
                 }
+                adoptProduced(copy, num, magnitude, side.side, left);
                 if (!addUsage(usage, copy.usage)) {
                     return LC_OffsetSourceStatus::LimitExceeded;
                 }
@@ -1739,6 +1823,7 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
             result.status = offsetOneSource(*target, requestDeepLeft, roots, result);
             if (!result.succeeded()) {
                 result.copiesMade = 0; // none is handed over
+                result.copiesKeptPlain = 0; result.keptPlain.clear();
             }
         }
         if (result.succeeded()) {
@@ -1750,7 +1835,8 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
                 result.createdEntities.append(root.get());
                 ctx += root.release();
             }
-            if (result.complete() && segmentRun == nullptr) {
+            if (result.complete() && segmentRun == nullptr &&
+                (!e->getParent() || (e->getParent()->isDocument() && e->getParent()->findEntityIndex(e) >= 0))) {
                 offsetOriginals.append(e); // a source short of copies is kept
                 result.sourceRemoved = !data.keepOriginals && !forPreviewOnly;
             }
@@ -1793,11 +1879,8 @@ bool RS_Modification::rotate(const RS_RotateData& data, const QList<RS_Entity*>&
     QList<RS_Entity*> transformedOriginals = entitiesList;
     for (const auto e : entitiesList) {
         for (int num = 1; num <= numberOfCopies; num++) {
-            RS_Entity* clone = getClone(forPreviewOnly, e);
-
             const double rotationAngle = data.angle * num;
-            clone->rotate(data.center, rotationAngle);
-            bool accepted = acceptedInsertSourceEdit(*clone);
+            offsetTx::Steps steps{offsetTx::Step::rotate(data.center, rotationAngle)};
 
             bool rotateTwice = data.twoRotations;
             const double distance = data.refPoint.distanceTo(data.center);
@@ -1813,10 +1896,10 @@ bool RS_Modification::rotate(const RS_RotateData& data, const QList<RS_Entity*>&
                 if (data.secondAngleIsAbsolute) {
                     secondRotationAngle -= rotationAngle;
                 }
-                clone->rotate(rotatedRefPoint, secondRotationAngle);
-                accepted = accepted && acceptedInsertSourceEdit(*clone);
+                steps.append(offsetTx::Step::rotate(rotatedRefPoint, secondRotationAngle));
             }
-            if (!accepted) {
+            RS_Entity* clone = getTransformedClone(forPreviewOnly, e, steps);
+            if (!clone) {
                 transformedOriginals.removeAll(e);
                 delete clone;
                 continue;
@@ -1877,9 +1960,10 @@ bool RS_Modification::scale(const RS_ScaleData& data, const QList<RS_Entity*>& e
     for (const RS_Entity* e : entitiesToScale) {
         if (e != nullptr) {
             for (int num = 1; num <= numberOfCopies; num++) {
-                RS_Entity* clone = getClone(forPreviewOnly, e);
-                clone->scale(data.referencePoint, RS_Math::pow(data.factor, num));
-                if (!acceptedInsertSourceEdit(*clone)) {
+                const auto factor = RS_Math::pow(data.factor, num);
+                RS_Entity* clone = getTransformedClone(forPreviewOnly, e,
+                    {offsetTx::Step::scale(data.referencePoint, factor)}, std::abs(factor.x) != std::abs(factor.y));
+                if (!clone || !acceptedInsertSourceEdit(*clone)) {
                     transformedOriginals.removeAll(const_cast<RS_Entity*>(e));
                     delete clone;
                     continue;
@@ -1916,9 +2000,9 @@ bool RS_Modification::mirror(const RS_MirrorData& data, const QList<RS_Entity*>&
     // Create new entities
     for (const auto e : entitiesList) {
         for (int num = 1; num <= numberOfCopies; ++num) {
-            RS_Entity* clone = getClone(forPreviewOnly, e);
-            clone->mirror(data.axisPoint1, data.axisPoint2);
-            if (!acceptedInsertSourceEdit(*clone)) {
+            RS_Entity* clone = getTransformedClone(forPreviewOnly, e,
+                {offsetTx::Step::mirror(data.axisPoint1, data.axisPoint2)});
+            if (!clone || !acceptedInsertSourceEdit(*clone)) {
                 transformedOriginals.removeAll(e);
                 delete clone;
                 continue;
@@ -1940,28 +2024,26 @@ bool RS_Modification::mirror(const RS_MirrorData& data, const QList<RS_Entity*>&
 bool RS_Modification::rotate2(const RS_Rotate2Data& data, const QList<RS_Entity*>& entitiesList, const bool forPreviewOnly,
                               LC_DocumentModificationBatch& ctx) {
     const int numberOfCopies = data.obtainNumberOfCopies();
+    QList<RS_Entity*> transformedOriginals = entitiesList;
 
     // Create new entities
     for (const auto e : entitiesList) {
         for (int num = 1; num <= numberOfCopies; num++) {
-            RS_Entity* clone = getClone(forPreviewOnly, e);
-
             const double angle1ForCopy = /*data.sameAngle1ForCopies ?  data.angle1 :*/ data.angle1 * num;
             const double angle2ForCopy = data.sameAngle2ForCopies ? data.angle2 : data.angle2 * num;
-            clone->rotate(data.center1, angle1ForCopy);
-
             RS_Vector center2 = data.center2;
             center2.rotate(data.center1, angle1ForCopy);
-            clone->rotate(center2, angle2ForCopy);
-
+            RS_Entity* clone = getTransformedClone(forPreviewOnly, e,
+                {offsetTx::Step::rotate(data.center1, angle1ForCopy), offsetTx::Step::rotate(center2, angle2ForCopy)});
+            if (!clone) { transformedOriginals.removeAll(e); continue; }
             ctx += clone;
         }
     }
 
     if (!data.keepOriginals) {
-        ctx -= entitiesList;
+        ctx -= transformedOriginals;
     }
-    return true;
+    return !transformedOriginals.isEmpty();
 }
 
 /**
@@ -1970,25 +2052,24 @@ bool RS_Modification::rotate2(const RS_Rotate2Data& data, const QList<RS_Entity*
 bool RS_Modification::moveRotate(const RS_MoveRotateData& data, const QList<RS_Entity*>& entitiesList, const bool forPreviewOnly,
                                  LC_DocumentModificationBatch& ctx) {
     const int numberOfCopies = data.obtainNumberOfCopies();
+    QList<RS_Entity*> transformedOriginals = entitiesList;
 
     // Create new entities
     for (const auto entity : entitiesList) {
         for (int num = 1; num <= numberOfCopies; ++num) {
-            RS_Entity* clone = getClone(forPreviewOnly, entity);
-
             const RS_Vector& offset = data.offset * num;
-            clone->move(offset);
             const double angleForCopy = data.sameAngleForCopies ? data.angle : data.angle * num;
-            clone->rotate(data.referencePoint + offset, angleForCopy);
-
+            RS_Entity* clone = getTransformedClone(forPreviewOnly, entity,
+                {offsetTx::Step::move(offset), offsetTx::Step::rotate(data.referencePoint + offset, angleForCopy)});
+            if (!clone) { transformedOriginals.removeAll(entity); continue; }
             ctx += clone;
         }
     }
 
     if (!data.keepOriginals) {
-        ctx -= entitiesList;
+        ctx -= transformedOriginals;
     }
-    return true;
+    return !transformedOriginals.isEmpty();
 }
 
 /**
@@ -2768,6 +2849,12 @@ static void updateExplodedChildrenRecursively(const RS_EntityContainer* ec, cons
 
 bool RS_Modification::explode(const QList<RS_Entity*>& entitiesList, LC_DocumentModificationBatch& ctx) {
     for (const auto e : entitiesList) {
+        if (const auto* native = dynamic_cast<const LC_OffsetCurve*>(e)) {
+            auto plain = native->toPlainSpline();
+            ctx += plain.release();
+            ctx -= e;
+            continue;
+        }
         if (e->isContainer()) {
             // add entities from container:
             const auto* container = static_cast<RS_EntityContainer*>(e);

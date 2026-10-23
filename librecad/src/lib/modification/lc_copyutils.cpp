@@ -24,6 +24,7 @@
 #include "lc_copyutils.h"
 
 #include "lc_linemath.h"
+#include "lc_offsetcurvetransform.h"
 #include "rs_block.h"
 #include "rs_clipboard.h"
 #include "rs_debug.h"
@@ -34,7 +35,7 @@
 #include "rs_units.h"
 
 namespace LC_CopyUtils {
-    void doCopyEntity(RS_Entity* e, const RS_Vector& ref, RS_Graphic* clipboardGraphic);
+    bool doCopyEntity(RS_Entity* e, const RS_Vector& ref, RS_Graphic* clipboardGraphic);
     void doCopyInsert(const RS_Insert* insert, RS_Graphic* graphic, unsigned provenance);
 
     RS_PasteData::RS_PasteData(const RS_Vector& insertionPoint, const double factor, const double angle) : insertionPoint{insertionPoint},
@@ -74,8 +75,9 @@ RS_Vector LC_CopyUtils::getInterGraphicsScaleFactor(const double userFactor, con
  * @param entities
  * @param graphic
  */
-void LC_CopyUtils::copy(const RS_Vector& ref, QList<RS_Entity*>& entities, const RS_Graphic* graphic) {
+QList<RS_Entity*> LC_CopyUtils::copy(const RS_Vector& ref, QList<RS_Entity*>& entities, const RS_Graphic* graphic) {
     Q_ASSERT(!entities.empty());
+    QList<RS_Entity*> copied;
 
     const auto clipboard = RS_Clipboard::instance();
     clipboard->clear();
@@ -83,7 +85,7 @@ void LC_CopyUtils::copy(const RS_Vector& ref, QList<RS_Entity*>& entities, const
     RS_Graphic* clipboardGraphic = clipboard->getGraphic();
     if (clipboardGraphic == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "LC_CopyUtils::copy: clipboard has no graphic");
-        return;
+        return copied;
     }
     if (graphic != nullptr) {
         clipboardGraphic->setUnit(graphic->getUnit());
@@ -105,11 +107,10 @@ void LC_CopyUtils::copy(const RS_Vector& ref, QList<RS_Entity*>& entities, const
     clipboard->setSourceId(graphic != nullptr ? graphic->getId() : 0);
     clipboard->startCopy();
     for (const auto e : std::as_const(entities)) {
-        if (e != nullptr) {
-            doCopyEntity(e, refPoint, clipboardGraphic);
-        }
+        if (e != nullptr && doCopyEntity(e, refPoint, clipboardGraphic)) copied.append(e);
     }
     clipboard->endCopy();
+    return copied;
 }
 
 /**
@@ -121,10 +122,10 @@ void LC_CopyUtils::copy(const RS_Vector& ref, QList<RS_Entity*>& entities, const
  * @param ref Reference point. The entities will be moved by -ref.
  * @param clipboardGraphic
  */
-void LC_CopyUtils::doCopyEntity(RS_Entity* e, const RS_Vector& ref, RS_Graphic* clipboardGraphic) {
+bool LC_CopyUtils::doCopyEntity(RS_Entity* e, const RS_Vector& ref, RS_Graphic* clipboardGraphic) {
     if (!e->isSelected()) {
         // fixme - redundant check...
-        return;
+        return false;
     }
 
     const bool isInsert = e->rtti() == RS2::EntityInsert;
@@ -140,10 +141,22 @@ void LC_CopyUtils::doCopyEntity(RS_Entity* e, const RS_Vector& ref, RS_Graphic* 
     // its children are its derived expansion, which RS_Insert::move() and the paste's transform
     // edit the insert's data for, and update() rebuilds from that data and the block, so nothing
     // is applied twice (issues #1616 and #2957).
-    RS_Entity* clone = e->clone();
-    clone->move(-ref);
+    std::unique_ptr<RS_Entity> staged;
+    if (LC_OffsetCurveTransform::needsStaging(*e)) {
+        auto prepared = LC_OffsetCurveTransform::prepare(*e, {LC_OffsetCurveTransform::Step::move(-ref)});
+        if (!prepared) {
+            RS_DEBUG->print(RS_Debug::D_WARNING, "LC_CopyUtils::copy: native/INSERT transform refused");
+            return false;
+        }
+        staged = std::move(prepared.entity);
+    } else {
+        staged.reset(e->clone());
+        staged->move(-ref);
+    }
+    RS_Entity* clone = staged.get();
 
     clipboardGraphic->addEntity(clone);
+    staged.release();
     clone->reparent(clipboardGraphic);
 
     // e, not clone: once reparented, the clone's own getGraphic() answers
@@ -157,6 +170,7 @@ void LC_CopyUtils::doCopyEntity(RS_Entity* e, const RS_Vector& ref, RS_Graphic* 
         // them from the clipboard's own block. The paste preview draws them.
         clone->update();
     }
+    return true;
 }
 
 void LC_CopyUtils::doCopyEntityLayer(RS_Entity* entity, RS_Graphic* graphic, RS_Graphic* source) {
@@ -260,15 +274,27 @@ void LC_CopyUtils::paste(const RS_PasteData& data, RS_Graphic* graphic, LC_Docum
         if (e == nullptr || e->isDeleted()) {
             continue;
         }
+        // **Symmetric**: scale/rot **around center** → move
+        std::unique_ptr<RS_Entity> clone;
+        if (LC_OffsetCurveTransform::needsStaging(*e)) {
+            using Step = LC_OffsetCurveTransform::Step;
+            auto prepared = LC_OffsetCurveTransform::prepare(*e,
+                {Step::scale(zero, scaleV), Step::rotate(zero, data.angle), Step::move(data.insertionPoint)});
+            if (!prepared) {
+                RS_DEBUG->print(RS_Debug::D_WARNING, "LC_CopyUtils::paste: native/INSERT transform refused");
+                continue;
+            }
+            clone = std::move(prepared.entity);
+        } else {
+            clone.reset(e->clone());
+            clone->scale(zero, scaleV);
+            clone->rotate(zero, data.angle);
+            clone->move(data.insertionPoint);
+        }
         if (e->rtti() == RS2::EntityInsert) {
             doCopyInsert(static_cast<const RS_Insert*>(e), graphic, RS_Entity::Identity | foreignTables);
         }
-        RS_Entity* clone = e->clone();
-        // **Symmetric**: scale/rot **around center** → move
-        clone->scale(zero, scaleV);
-        clone->rotate(zero, data.angle);
-        clone->move(data.insertionPoint);
-        doCopyEntityLayer(clone, graphic, src);
+        doCopyEntityLayer(clone.get(), graphic, src);
         // A pasted entity never replaces what it was copied from, so it never
         // keeps that entity's identity, even when the caller's undo section
         // also deletes entities of its own in the same batch (Paste to
@@ -276,7 +302,8 @@ void LC_CopyUtils::paste(const RS_PasteData& data, RS_Graphic* graphic, LC_Docum
         // section) and would otherwise let the paste take over a freed
         // handle that names something else entirely.
         clone->clearDwgProvenance(RS_Entity::Identity | foreignTables);
-        ctx += clone;
+        ctx += clone.get();
+        clone.release();
     }
     graphic->updateInserts();
 }
