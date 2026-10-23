@@ -42,7 +42,7 @@ definition editing, persistence, UI and trimming remain later slices.
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
 | Latest product checkpoint | `92758859c` (D-core) |
-| Latest auxiliary checkpoint | `5a3e47039` (H7 driver; core a95a5c5ff, guards ceacd01a3, workers e83aaf3f0) |
+| Latest auxiliary checkpoint | `c1b2fa095` (H7 owned temp-path/journal fix; driver 5a3e47039, core a95a5c5ff, guards ceacd01a3, workers e83aaf3f0) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
 | A-core | Atomic work adoption, separate ordering allowance and sticky terminal status implemented; A04/A10 registered |
@@ -288,8 +288,8 @@ cover move/rotate/mirror as well as scale/INSERT: any document transform that
 cannot transport a native proof must explicitly use a correctly transformed plain
 cache or refuse the whole operation, never silently publish an unmoved clone.
 
-The active auxiliary sequence is the reviewed H7 temporary-path/journal source
-checkpoint -> two complete quiet-CPU qualification runs. The fresh 399-test runner
+The active auxiliary sequence is two complete quiet-CPU qualification runs after
+the reviewed H7 temporary-path/journal commit `c1b2fa095`. The fresh 399-test runner
 regression passed. Qualification01 timed out in its second preflight capture;
 retain that failed namespace. Neither unit success nor shortening the private
 temporary namespace proves the unchanged 300-second runtime envelope.
@@ -1537,7 +1537,7 @@ one plan update, not another candidate/freeze lifecycle.
 | X-H4 | Committed 3e06e3894; explicit API | Complete genesis/chained case rows, pinned identities/order/actual outputs, exclusive publication/replay/mutation checks; not automatic CLI persistence |
 | X-H5 | Committed 6d4fd25b3; explicit API | Actual source/runtime/receipt/diagnostic/ledger/output evidence, exclusive absent publication and bound automated checker; 44 focused tests and independent review |
 | X-H6 | Committed 507e44ad7; core 9170b0cc9 | All 93 obligations executable, all original71 IDs retained; owned H4/H5 protocols, precise root scopes and mutation/prefix checks; 94 inventory tests pass |
-| X-H7 | All source slices committed; frozen391-test regression passed; qualification pending | Two complete actual qualification runs remain |
+| X-H7 | Source fixes c1b2fa095 committed; frozen399-test regression passed; qualification pending | Two complete actual qualification runs remain; unchanged 300-second deadline |
 
 ### Concrete H2 Capture Corrections
 
@@ -1773,7 +1773,7 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 | Complete semantic path checker | C committed d4a0b081a; used by D-core public adoption | D-edit staged regeneration |
 | Native feature/UI/persistence/trim | D-core committed; later workflow incomplete | Follow D-edit through T; do not label later scaffolding complete |
 | Independent DWG/version fixtures | Required, not yet qualified | Inventory/tool/license/provenance during G-fixtures; close all rows in G-matrix |
-| Harness production readiness | X-H1-X-H6 and H7 source components implemented; actual qualification incomplete | Commit reviewed timeout fix, then two complete qualification runs |
+| Harness production readiness | X-H1-X-H6 and H7 source fixes committed; actual qualification incomplete | Two complete quiet-CPU qualification runs |
 | Independent review and test evidence | A-core independent static review and actual test reports complete | Obtain fresh review/validation for each successor |
 | Dirty unrelated main checkout | Not the selected source baseline | Preserve it; reconcile only if changing implementation worktree |
 
@@ -1794,6 +1794,57 @@ The plan checkpoint column never depends on its own future SHA.
 | B | 9bf0546b6 | b12a9a02c | All 8 terminal identities; full Release, geometry Release/ASan, format lanes, qmake6; independent review |
 | X-H2 | 25661f1a3 | Immediate plan-only checkpoint | 15 input + 27 process + 25 H1 tests; five syntax checks; independent input/process reviews |
 | D-core | 92758859c | Immediate plan-only checkpoint | Native/adjacent/full Release, ASan adjacent, both format fast lanes and qmake6 passed; independent static review corrections verified |
+| X-H7 timeout source fix | c1b2fa095 | Immediate plan-only checkpoint | Author55 + independent15 controls and parent399 runner regression passed; actual runtime qualification remains open |
+
+### X-H7 Timeout Source Validation (2026-10-23)
+
+Source `c1b2fa095` changes only `qualify-worker-runner.js` and its tests. The first
+actual qualification namespace `H7-qualification-01` remains retained beneath
+`/private/tmp/lc2961-impl-evidence.9GtLO2`: capture1 completed all eight actual suite
+executions; capture2 exceeded the unchanged 300,000ms direct-child deadline.
+Its actual failure record and partial diagnostics were not deleted or relabeled.
+The successful capture already spent approximately 287 seconds on suite pairs.
+
+The correction creates a private exclusive0700 short temporary namespace with
+trusted sticky-parent checks, records its device/inode/mode/uid/gid in an exclusive
+immutable file, pins that file as actual H2 input and forwards the explicit TMPDIR
+in the captured environment. The actual roadmap snapshot is pinned inside this
+owned namespace. Original guards, owner identity and manifest bytes are checked
+through each capture, pipeline and final qualification boundary. Nothing relaxes
+no-follow/single-link/readback checks, suite membership, two-repeat execution,
+deadline, stream caps or original completed-run ownership.
+
+Independent review found a late-guard diagnostics-order defect in the initial
+change. The actual pipeline result is now persisted before temporary-root
+revalidation can throw, while all guards remain before any overall PASS. A genuine
+synthetic H3 worker-failure regression proves exact FAIL/WORKER_FAILED journal
+bytes, one-worker prefix and unchanged receipts survive the guard refusal.
+
+Validation:
+
+- Author combined controls: 55/55, zero failures/skips in
+  `/private/tmp/lc2961-h7-temp-journal-controls-01.tap`.
+- Independent final driver controls: 15/15, zero failures/skips in
+  `X-H7-temp-journal-independent-9eb204fa-0db6-4f9a-822a-07d14b449527.tap` under the
+  evidence root. Independent static review closed the diagnostics-order finding
+  and cleared the two-file correction.
+- Parent whole runner regression: 399/399, zero failures/cancellations/skips/TODO,
+  exit0 in `X-H7-frozen-all-02.tap` under the evidence root. This particular file
+  contains Node26's default spec-reporter output despite its historical `.tap`
+  suffix; it is not being presented as parsed TAP or as qualification evidence.
+- Reviewed/committed SHA-256: driver
+  `a0581c1e2f1669805d9b596163f4c549798a0da80f72e171b98208b9381ff667`, test
+  `516bb69502936bc02d23abbd75f09f8960e6b0d2163cde87c05f20ea6281115e`.
+
+The author measured one diagnostic control at 2.822s with deep default temporary
+ancestry and 2.470s with the shorter namespace. These noisy profiling measurements
+are motivation, not a verified runtime guarantee. All build/test processes must
+finish before the next real qualification. Use a new absent namespace, retain
+both full runs and final original-owner audits, and freeze the live roadmap and
+all harness source through the successful CLI/API return. Do not mark X-H7 done
+until those actual results pass. Product C++ outside the pinned candidate and
+harness input set may be prepared meanwhile, but its next plan checkpoint must
+wait for qualification to finish rather than mutate a captured input.
 
 ### D-core Validation (2026-10-23)
 
