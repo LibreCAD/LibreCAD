@@ -1,0 +1,542 @@
+/* Copyright (C) 2026 LibreCAD.org. SPDX-License-Identifier: GPL-2.0-or-later */
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
+
+#include <array>
+#include <limits>
+#include <stdexcept>
+#include <type_traits>
+
+#include "lc_offsetcurve_persistence_fixture.h"
+#include "intern/dwg_dxf_output_transaction.h"
+#include "rs_layer.h"
+#include "rs_undo.h"
+#include "rs_variable.h"
+
+namespace {
+namespace f = lc::test::offset_persistence;
+
+struct Setup {
+    const bool ready{lc::test::ensureSettings()};
+    lc::test::QuietLog quiet;
+};
+
+enum class Lane { Ascii, Binary14, Binary18, Eed2000, Eed18 };
+std::vector<Lane> lanes() {
+    std::vector<Lane> result{Lane::Ascii, Lane::Binary14, Lane::Binary18};
+#ifdef DWGSUPPORT
+    result.insert(result.end(), {Lane::Eed2000, Lane::Eed18});
+#endif
+    return result;
+}
+bool isDwg(Lane lane) { return lane == Lane::Eed2000 || lane == Lane::Eed18; }
+RS2::FormatType format(Lane lane) {
+#ifdef DWGSUPPORT
+    if (lane == Lane::Eed2000) return RS2::FormatDWG;
+    if (lane == Lane::Eed18) return RS2::FormatDWG2018;
+#endif
+    return lane == Lane::Binary14 ? RS2::FormatDXFRW14 : RS2::FormatDXFRW2018;
+}
+void writeInput(const std::filesystem::path& path, Lane lane, const DRW_Spline& raw) {
+    switch (lane) {
+    case Lane::Ascii: f::put(path, f::ascii(raw)); return;
+    case Lane::Binary14: f::binaryDxf(path, raw, DRW::AC1014); return;
+    case Lane::Binary18: f::binaryDxf(path, raw, DRW::AC1032); return;
+#ifdef DWGSUPPORT
+    case Lane::Eed2000: f::dwgFile(path, raw, DRW::AC1015); return;
+    case Lane::Eed18: f::dwgFile(path, raw, DRW::AC1032); return;
+#else
+    default: FAIL("DWG fixture requested in a build without DWGSUPPORT");
+#endif
+    }
+}
+std::shared_ptr<DRW_Variant> text(int code, const std::string& value) {
+    return std::make_shared<DRW_Variant>(code, value);
+}
+std::shared_ptr<DRW_Variant> integer(int code, std::int32_t value) {
+    return std::make_shared<DRW_Variant>(code, value);
+}
+f::Tags withTail(const f::Tags& tail) {
+    auto payload = f::owned(0x40, false);
+    payload.insert(payload.end() - 1, tail.begin(), tail.end());
+    return payload;
+}
+f::Tags repeatedItems(std::size_t count) {
+    f::Tags result;
+    for (std::size_t i = 0; i < count; ++i) result.push_back(integer(1071, static_cast<std::int32_t>(i)));
+    return result;
+}
+f::Tags nestedItems(unsigned depth) {
+    f::Tags result;
+    for (unsigned i = 0; i < depth; ++i) result.push_back(text(1002, "{"));
+    result.push_back(text(1000, "innermost retained item"));
+    for (unsigned i = 0; i < depth; ++i) result.push_back(text(1002, "}"));
+    return result;
+}
+
+void vectorState(std::ostream& out, const RS_Vector& p) {
+    out << p.valid << ':' << f::bits(p.x) << ',' << f::bits(p.y) << ',' << f::bits(p.z) << ';';
+}
+void stringState(std::ostream& out, const QString& value) {
+    out << value.size() << ':';
+    for (const auto unit : value) out << unit.unicode() << ',';
+    out << ';';
+}
+void cacheState(std::ostream& out, const RS_SplineData& data) {
+    out << data.degree << ':' << static_cast<int>(data.type) << ':' << data.m_closedFlag << data.m_periodicFlag << ':';
+    out << static_cast<int>(data.savedOpenType) << ';';
+    for (const auto* points : {&data.controlPoints, &data.fitPoints}) {
+        out << points->size() << ':';
+        for (const auto& p : *points) vectorState(out, p);
+    }
+    for (const auto* numbers : {&data.knotslist, &data.weights, &data.savedOpenKnots}) {
+        out << numbers->size() << ':';
+        for (double value : *numbers) out << f::bits(value) << ';';
+    }
+}
+std::string state(RS_Graphic& graphic) {
+    std::ostringstream out;
+    bool undo = false, redo = false;
+    graphic.collectUndoState(undo, redo);
+    out << graphic.count() << graphic.isModified() << undo << redo << ';';
+    out << static_cast<const RS_Undo&>(graphic);
+    out << static_cast<int>(graphic.getFormatType()) << ':'; stringState(out, graphic.getFilename());
+    out << graphic.getVariableDictObjectRef()->isModified() << ';';
+    const auto variables = graphic.getVariableDict();
+    auto keys = variables.keys(); std::sort(keys.begin(), keys.end());
+    for (const auto& key : keys) {
+        stringState(out, key);
+        const auto& value = variables[key];
+        out << value.getCode() << ':' << static_cast<int>(value.getType()) << ':';
+        stringState(out, value.getString()); out << value.getInt() << ':' << f::bits(value.getDouble()) << ';';
+        vectorState(out, value.getVector());
+    }
+    REQUIRE(graphic.count() < 8);
+    for (const auto* entity : graphic) {
+        REQUIRE(entity);
+        out << entity << ':' << entity->getParent() << ':' << entity->getLayer() << ':' << entity->getId() << ':';
+        out << entity->rtti() << ':' << entity->getFlags() << ':' << entity->sourceHandle() << ':';
+        out << entity->xDictHandle() << ':' << entity->lineage() << ':' << entity->ownerLineage() << ';';
+        for (auto handle : entity->reactorHandles()) out << handle << ',';
+        out << f::tagsState(entity->getDrwExtData()) << ';';
+        for (const auto& tag : entity->getDrwExtData()) out << tag.get() << ',';
+        vectorState(out, entity->getStartpoint()); vectorState(out, entity->getEndpoint());
+        if (const auto* spline = dynamic_cast<const RS_Spline*>(entity)) {
+            cacheState(out, spline->getData()); REQUIRE(spline->count() < 128);
+            for (const auto* child : *spline) {
+                REQUIRE(child); out << child << ':' << child->getParent() << ':' << child->getFlags() << ':';
+                vectorState(out, child->getStartpoint()); vectorState(out, child->getEndpoint());
+            }
+        }
+        if (const auto* curve = dynamic_cast<const LC_OffsetCurve*>(entity)) {
+            const auto& d = curve->definition();
+            vectorState(out, d.basis.center); vectorState(out, d.basis.majorP);
+            for (double value : {d.basis.ratio, d.basis.angle1, d.basis.angle2, d.distance, d.relTolerance}) out << f::bits(value) << ';';
+            out << d.basis.reversed << d.basis.isArc << d.towardCentre << d.cacheReversed << curve->isDefined() << ':';
+            out << curve->unknownOwnedFlags() << ':' << f::bits(curve->checkedWorldTolerance()) << ';';
+            for (const auto& item : curve->unknownOwnedTail()) {
+                out << item.code << ':' << item.value.index() << ':';
+                std::visit([&](const auto& value) {
+                    using T = std::decay_t<decltype(value)>;
+                    if constexpr (std::is_same_v<T, QString>) stringState(out, value);
+                    else if constexpr (std::is_same_v<T, RS_Vector>) vectorState(out, value);
+                    else if constexpr (std::is_same_v<T, double>) out << f::bits(value);
+                    else out << value;
+                }, item.value);
+            }
+            for (const auto& grip : curve->cachedDefinitionGrips()) vectorState(out, grip);
+        }
+    }
+    return out.str();
+}
+struct Snapshot {
+    RS_Graphic& graphic;
+    std::string before;
+    std::vector<RS_Pen> pens;
+    explicit Snapshot(RS_Graphic& graphic) : graphic(graphic), before(state(graphic)) {
+        for (const auto* entity : graphic) pens.push_back(entity->getPen(false));
+    }
+    void check() const {
+        CHECK(state(graphic) == before);
+        std::size_t i = 0;
+        for (const auto* entity : graphic) { REQUIRE(i < pens.size()); CHECK(entity->getPen(false) == pens[i++]); }
+        CHECK(i == pens.size());
+    }
+};
+
+void checkTail(const LC_OffsetCurve& curve, const f::Tags& expected) {
+    const auto& actual = curve.unknownOwnedTail(); REQUIRE(actual.size() == expected.size());
+    for (std::size_t i = 0; i < expected.size(); ++i) {
+        CAPTURE(i); REQUIRE(expected[i]); CHECK(actual[i].code == expected[i]->code());
+        const auto& value = actual[i].value;
+        switch (expected[i]->type()) {
+        case DRW_Variant::STRING:
+            REQUIRE(std::holds_alternative<QString>(value));
+            CHECK(std::get<QString>(value).toUtf8().toStdString() == *expected[i]->content.s); break;
+        case DRW_Variant::INTEGER:
+            if (expected[i]->code() == 1070) {
+                REQUIRE(std::holds_alternative<std::int16_t>(value)); CHECK(std::get<std::int16_t>(value) == expected[i]->i_val());
+            } else {
+                REQUIRE(std::holds_alternative<std::int32_t>(value)); CHECK(std::get<std::int32_t>(value) == expected[i]->i_val());
+            }
+            break;
+        case DRW_Variant::DOUBLE:
+            REQUIRE(std::holds_alternative<double>(value)); CHECK(f::bits(std::get<double>(value)) == f::bits(expected[i]->d_val())); break;
+        case DRW_Variant::COORD: {
+            REQUIRE(std::holds_alternative<RS_Vector>(value));
+            const auto& p = std::get<RS_Vector>(value); const auto& q = *expected[i]->coord();
+            CHECK(f::bits(p.x) == f::bits(q.x)); CHECK(f::bits(p.y) == f::bits(q.y)); CHECK(f::bits(p.z) == f::bits(q.z)); break;
+        }
+        default: FAIL("Expected safe tail must be a representable typed scalar");
+        }
+    }
+}
+
+// The raw codec read is mandatory: it proves the hostile records reached the
+// adapter, rather than letting a writer's normalization satisfy the assertion.
+void fileCase(Lane lane, const f::Tags& payload, bool editable,
+              const f::Tags& remainder = {}, const f::Tags& tail = {},
+              const f::Tags* decodedPayload = nullptr) {
+    CAPTURE(static_cast<int>(lane));
+    lc::test::OutputDirectory directory("offset-hostile-file-case");
+    const auto input = directory.file(isDwg(lane) ? "input.dwg" : "input.dxf");
+    writeInput(input, lane, f::raw(3, f::metadata(payload)));
+    const auto decoded = f::readCodec(input, isDwg(lane)); REQUIRE(decoded.splines.size() == 1);
+    REQUIRE(f::tagsState(decoded.splines.front().extData) == f::tagsState(f::metadata(decodedPayload ? *decodedPayload : payload)));
+    RS_Graphic graphic; REQUIRE(lc::test::importDrawing(graphic, input, format(lane)));
+    auto* entity = f::sole(graphic); REQUIRE(entity); f::foreign(*entity);
+    CHECK(entity->isVisible()); CHECK(entity->getLength() > 0); CHECK(entity->getParent() == &graphic);
+    CHECK(f::tagsState(entity->getDrwExtData()) == f::tagsState(f::metadata(remainder)));
+    if (editable) {
+        auto* curve = f::native(graphic, 3); CHECK(curve->unknownOwnedFlags() == 0x40); checkTail(*curve, tail);
+    } else {
+        CHECK(entity->rtti() == RS2::EntitySpline); CHECK(dynamic_cast<LC_OffsetCurve*>(entity) == nullptr);
+    }
+    Snapshot before(graphic);
+    const auto output = directory.file(isDwg(lane) ? "saved.dwg" : "saved.dxf");
+    REQUIRE(lc::test::exportDrawing(graphic, output, format(lane))); before.check();
+    const auto saved = f::readCodec(output, isDwg(lane)); REQUIRE(saved.splines.size() == 1); CHECK(saved.ellipses == 0);
+    auto expectedOwn = f::application(f::metadata(remainder), "LibreCad");
+    if (editable) f::append(expectedOwn, withTail(tail));
+    CHECK(f::tagsState(f::application(saved.splines.front().extData, "LibreCad")) == f::tagsState(expectedOwn));
+    CHECK(f::tagsState(f::application(saved.splines.front().extData, "FOREIGN_A")) == f::tagsState(f::foreignBefore()));
+    CHECK(f::tagsState(f::application(saved.splines.front().extData, "FOREIGN_B")) == f::tagsState(f::foreignAfter()));
+    const auto controls = f::controls(3); REQUIRE(saved.splines.front().controllist.size() == controls.size());
+    for (std::size_t i = 0; i < controls.size(); ++i) {
+        const auto& actual = saved.splines.front().controllist[i]; REQUIRE(actual);
+        CHECK(f::bits(actual->x) == f::bits(controls[i].x)); CHECK(f::bits(actual->y) == f::bits(controls[i].y)); CHECK(actual->z == 0);
+    }
+    RS_Graphic reopened; REQUIRE(lc::test::importDrawing(reopened, output, format(lane)));
+    if (editable) checkTail(*f::native(reopened, 3), tail);
+    else CHECK(f::sole(reopened)->rtti() == RS2::EntitySpline);
+    CHECK(f::tagsState(f::sole(reopened)->getDrwExtData()) == f::tagsState(f::metadata(remainder)));
+    before.check();
+}
+
+void allFiles(const f::Tags& payload, bool editable, const f::Tags& remainder = {}, const f::Tags& tail = {}) {
+    for (auto lane : lanes()) fileCase(lane, payload, editable, remainder, tail);
+}
+void replaceUnique(std::string& bytes, const std::string& oldValue, const std::string& newValue) {
+    const auto position = bytes.find(oldValue); REQUIRE(position != std::string::npos);
+    REQUIRE(bytes.find(oldValue, position + oldValue.size()) == std::string::npos);
+    bytes.replace(position, oldValue.size(), newValue);
+}
+void codecRefuses(const std::filesystem::path& path) {
+    f::Capture capture;
+    dxfRW reader(path.string().c_str()); CHECK_FALSE(reader.read(&capture, false)); CHECK(capture.splines.empty());
+    RS_Graphic graphic; CHECK_FALSE(lc::test::importDrawing(graphic, path, RS2::FormatDXFRW2018));
+    for (const auto* entity : graphic) if (entity) CHECK(entity->rtti() != RS2::EntityOffsetCurve);
+}
+void seedHistory(lc::test::EditableDrawing& drawing) {
+    auto* marker = new RS_Line(&drawing.m_graphic, RS_Vector(-2, -3), RS_Vector(-1, -3));
+    drawing.modify([&](LC_DocumentModificationBatch& batch) { batch.add(marker); });
+    REQUIRE(drawing.m_graphic.undo()); REQUIRE(marker->isDeleted());
+    bool undo = false, redo = false; drawing.m_graphic.collectUndoState(undo, redo); REQUIRE(redo);
+    drawing.m_graphic.addVariable("$G_HOSTILE_SENTINEL", "retained variables", 1);
+}
+}
+
+TEST_CASE("G hostile malformed then valid candidate never promotes the valid suffix", "[lc-offsetcurve][g-hostile-file][duplicate]") {
+    Setup setup; auto bad = f::owned(); bad[10] = std::make_shared<DRW_Variant>(1040, 1.);
+    f::append(bad, f::owned()); allFiles(bad, false);
+}
+TEST_CASE("G hostile valid then malformed candidate never promotes the valid prefix", "[lc-offsetcurve][g-hostile-file][duplicate]") {
+    Setup setup; auto bad = f::owned(); bad[3] = text(1000, "NOT_ELLIPSE");
+    auto payload = f::owned(); f::append(payload, bad); allFiles(payload, false);
+}
+TEST_CASE("G hostile malformed duplicate strips only known candidates beside an opaque future subtree", "[lc-offsetcurve][g-hostile-file][duplicate]") {
+    Setup setup; auto future = f::owned(0x40, false, 2);
+    const auto nested = f::owned(); future.insert(future.end() - 1, nested.begin(), nested.end());
+    auto malformed = f::owned(); malformed[2] = text(1000, "1");
+    auto payload = malformed; f::append(payload, future); f::append(payload, f::owned());
+    allFiles(payload, false, future);
+}
+TEST_CASE("G hostile marker with another string group code remains foreign-looking ordinary metadata", "[lc-offsetcurve][g-hostile-file][marker]") {
+    Setup setup; auto payload = f::owned(); payload[0] = text(1003, "LC_OFFSET_CURVE");
+    for (auto lane : {Lane::Ascii, Lane::Binary14, Lane::Binary18}) fileCase(lane, payload, false, payload);
+}
+TEST_CASE("G hostile numeric marker cannot be mistaken for the owned string marker", "[lc-offsetcurve][g-hostile-file][marker]") {
+    Setup setup; auto payload = f::owned(); payload[0] = integer(1071, 1); allFiles(payload, false, payload);
+}
+TEST_CASE("G hostile marker spelling is case sensitive even in an owned APPID", "[lc-offsetcurve][g-hostile-file][marker]") {
+    Setup setup; auto payload = f::owned(); payload[0] = text(1000, "lc_offset_curve"); allFiles(payload, false, payload);
+}
+TEST_CASE("G hostile brace-looking strings do not authorize an owned candidate", "[lc-offsetcurve][g-hostile-file][marker]") {
+    Setup setup; auto payload = f::owned(); payload[1] = text(1000, "{"); payload.back() = text(1000, "}");
+    allFiles(payload, false, payload);
+}
+TEST_CASE("G hostile schema INTEGER32 code cannot substitute for INTEGER16 schema one", "[lc-offsetcurve][g-hostile-file][schema]") {
+    Setup setup; auto payload = f::owned(); payload[2] = integer(1071, 1); allFiles(payload, false);
+}
+TEST_CASE("G hostile schema DOUBLE cannot substitute for INTEGER16 schema one", "[lc-offsetcurve][g-hostile-file][schema]") {
+    Setup setup; auto payload = f::owned(); payload[2] = std::make_shared<DRW_Variant>(1040, 1.); allFiles(payload, false);
+}
+TEST_CASE("G hostile schema decimal text cannot substitute for INTEGER16 schema one", "[lc-offsetcurve][g-hostile-file][schema]") {
+    Setup setup; auto payload = f::owned(); payload[2] = text(1000, "1"); allFiles(payload, false);
+}
+TEST_CASE("G hostile numeric kind cannot substitute for the exact ELLIPSE string", "[lc-offsetcurve][g-hostile-file][schema]") {
+    Setup setup; auto payload = f::owned(); payload[3] = integer(1070, 1); allFiles(payload, false);
+}
+TEST_CASE("G hostile exact tail item budget retains 64 and drops 65 items", "[lc-offsetcurve][g-hostile-file][tail][boundary]") {
+    Setup setup; const unsigned count = GENERATE(64u, 65u);
+    const auto tail = repeatedItems(count); allFiles(withTail(tail), true, {}, count == 64 ? tail : f::Tags{});
+}
+TEST_CASE("G hostile unsupported tail records still debit the raw 64 item limit", "[lc-offsetcurve][g-hostile-file][tail][boundary]") {
+    Setup setup; const unsigned count = GENERATE(63u, 64u);
+    const auto safe = repeatedItems(count); auto tail = safe; tail.push_back(text(1005, "1234"));
+    allFiles(withTail(tail), true, {}, count == 63 ? safe : f::Tags{});
+}
+TEST_CASE("G hostile tail depth eight is retained and depth nine is dropped whole", "[lc-offsetcurve][g-hostile-file][tail][boundary]") {
+    Setup setup; const unsigned depth = GENERATE(8u, 9u);
+    const auto tail = nestedItems(depth); allFiles(withTail(tail), true, {}, depth == 8 ? tail : f::Tags{});
+}
+TEST_CASE("G hostile tail finite signed integer endpoints and three dimensional extension points remain exact", "[lc-offsetcurve][g-hostile-file][tail]") {
+    Setup setup;
+    const f::Tags tail{integer(1070, -32768), integer(1070, 32767), integer(1071, std::numeric_limits<std::int32_t>::min()),
+        integer(1071, std::numeric_limits<std::int32_t>::max()), std::make_shared<DRW_Variant>(1010, DRW_Coord(1, -2, 3)),
+        std::make_shared<DRW_Variant>(1042, -0.)};
+    allFiles(withTail(tail), true, {}, tail);
+}
+TEST_CASE("G hostile unsigned INTEGER16 tail cannot be retained as a signed owned extension", "[lc-offsetcurve][g-hostile-file][tail]") {
+    Setup setup; const f::Tags tail{text(1000, "valid prefix"), integer(1070, 32768), integer(1071, 9)};
+    fileCase(Lane::Ascii, withTail(tail), true);
+}
+TEST_CASE("G hostile malformed tail brace token invalidates the known definition rather than truncating it", "[lc-offsetcurve][g-hostile-file][tail]") {
+    Setup setup; const auto payload = withTail({text(1000, "before"), text(1002, "not a brace"), integer(1071, 7)});
+    // DXF permits the string record; DWG's EED encoder correctly refuses it before a file exists.
+    for (auto lane : {Lane::Ascii, Lane::Binary14, Lane::Binary18}) fileCase(lane, payload, false);
+}
+TEST_CASE("G hostile tail NUL CR and LF decoded from actual ASCII caret records drop the whole tail", "[lc-offsetcurve][g-hostile-file][tail]") {
+    Setup setup;
+    for (char control : {'\0', '\r', '\n'}) {
+        CAPTURE(static_cast<unsigned>(control));
+        const std::string escaped = std::string("bad^") + static_cast<char>(control + 0x40) + "text";
+        const auto encoded = withTail({text(1000, "valid prefix"), text(1000, escaped), integer(1071, 9)});
+        const auto decoded = withTail({text(1000, "valid prefix"), text(1000, std::string("bad") + control + "text"), integer(1071, 9)});
+        fileCase(Lane::Ascii, encoded, true, {}, {}, &decoded);
+    }
+}
+TEST_CASE("G hostile binary DXF CR and LF strings drop the tail without erasing the definition", "[lc-offsetcurve][g-hostile-file][tail][binary]") {
+    Setup setup;
+    for (auto lane : {Lane::Binary14, Lane::Binary18}) for (char control : {'\r', '\n'})
+        fileCase(lane, withTail({integer(1071, 1), text(1000, std::string("bad") + control + "text"), integer(1071, 2)}), true);
+}
+TEST_CASE("G hostile unsupported handle and layer tail items are omitted individually in real files", "[lc-offsetcurve][g-hostile-file][tail]") {
+    Setup setup;
+    const f::Tags safe{text(1000, "safe before"), integer(1071, 41), text(1000, "safe after")};
+    const f::Tags tail{safe[0], text(1003, "FixtureOffsets"), safe[1], text(1005, "1234"), safe[2]};
+    allFiles(withTail(tail), true, {}, safe);
+}
+TEST_CASE("G hostile unsupported binary tail drops only that item in DXF and EED files", "[lc-offsetcurve][g-hostile-file][tail][binary]") {
+    Setup setup; const f::Tags safe{text(1000, "before binary"), integer(1071, 91)};
+    const auto payload = withTail({safe[0], text(1004, "00017FFF"), safe[1]});
+    for (auto lane : lanes()) {
+        const auto decoded = isDwg(lane)
+            ? withTail({safe[0], std::make_shared<DRW_Variant>(1004, std::vector<std::uint8_t>{0, 1, 127, 255}), safe[1]})
+            : payload;
+        fileCase(lane, payload, true, {}, safe, &decoded);
+    }
+}
+TEST_CASE("G hostile actual DXF nonfinite tail scalar is a codec refusal not adapter fallback", "[lc-offsetcurve][g-hostile-file][tail][codec-refusal]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-hostile-nonfinite-ascii");
+    auto bytes = f::ascii(f::raw(3, f::metadata(withTail({std::make_shared<DRW_Variant>(1042, 17.25)}))));
+    replaceUnique(bytes, "1042\n17.25\n", "1042\nnan\n");
+    const auto input = directory.file("nan.dxf"); f::put(input, bytes); codecRefuses(input);
+}
+TEST_CASE("G hostile actual DXF nonfinite tail coordinate is a codec refusal not a sanitized extension", "[lc-offsetcurve][g-hostile-file][tail][codec-refusal]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-hostile-nonfinite-point");
+    auto bytes = f::ascii(f::raw(3, f::metadata(withTail({std::make_shared<DRW_Variant>(1010, DRW_Coord(17.25, 18.5, 19.75))}))));
+    replaceUnique(bytes, "1030\n19.75\n", "1030\ninf\n");
+    const auto input = directory.file("inf.dxf"); f::put(input, bytes); codecRefuses(input);
+}
+TEST_CASE("G hostile actual DXF INTEGER16 overflow fails the codec before candidate admission", "[lc-offsetcurve][g-hostile-file][tail][codec-refusal]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-hostile-int16-overflow");
+    const auto invalid = GENERATE(std::string("65536"), std::string("-32769"));
+    auto bytes = f::ascii(f::raw(3, f::metadata(withTail({integer(1070, 12345)}))));
+    replaceUnique(bytes, "1070\n12345\n", "1070\n" + invalid + "\n");
+    const auto input = directory.file("overflow.dxf"); f::put(input, bytes); codecRefuses(input);
+}
+TEST_CASE("G hostile actual DXF INTEGER32 overflow fails the codec before candidate admission", "[lc-offsetcurve][g-hostile-file][tail][codec-refusal]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-hostile-int32-overflow");
+    const auto invalid = GENERATE(std::string("2147483648"), std::string("-2147483649"));
+    auto bytes = f::ascii(f::raw(3, f::metadata(withTail({integer(1071, 12345)}))));
+    replaceUnique(bytes, "1071\n12345\n", "1071\n" + invalid + "\n");
+    const auto input = directory.file("overflow.dxf"); f::put(input, bytes); codecRefuses(input);
+}
+TEST_CASE("G hostile nonfinite binary DXF tail bytes fail the real codec", "[lc-offsetcurve][g-hostile-file][tail][binary][codec-refusal]") {
+    Setup setup;
+    for (auto lane : {Lane::Binary14, Lane::Binary18}) {
+        lc::test::OutputDirectory directory("offset-hostile-nonfinite-binary");
+        const auto input = directory.file("nonfinite.dxf");
+        writeInput(input, lane, f::raw(3, f::metadata(withTail({std::make_shared<DRW_Variant>(1042, 17.25)}))));
+        auto bytes = lc::test::fileBytes(input);
+        const auto record = [](std::uint64_t value) {
+            std::string result{"\x12\x04", 2}; // Binary DXF group 1042, little endian.
+            for (unsigned i = 0; i < 8; ++i) result.push_back(static_cast<char>((value >> (8*i)) & 255));
+            return result;
+        };
+        replaceUnique(bytes, record(f::bits(17.25)), record(0x7ff0000000000000ULL));
+        f::put(input, bytes); codecRefuses(input);
+    }
+}
+
+#ifdef DWGSUPPORT
+TEST_CASE("G hostile actual EED embedded NUL CR and LF drop the entire owned tail", "[lc-offsetcurve][g-hostile-file][tail][dwg]") {
+    Setup setup;
+    for (auto lane : {Lane::Eed2000, Lane::Eed18}) for (char control : {'\0', '\r', '\n'})
+        fileCase(lane, withTail({integer(1071, 1), text(1000, std::string("bad") + control + "text"), integer(1071, 2)}), true);
+}
+TEST_CASE("G hostile actual DWG tail byte budget includes legacy or Unicode framing", "[lc-offsetcurve][g-hostile-file][tail][dwg][boundary]") {
+    Setup setup; const bool unicode = GENERATE(false, true); const bool over = GENERATE(false, true);
+    f::Tags tail;
+    for (unsigned i = 0; i < 15; ++i) tail.push_back(text(1000, std::string(unicode ? 120 : 255, 'x')));
+    tail.push_back(text(1000, std::string((unicode ? 224 : 207) + (over ? 1 : 0), 'y')));
+    // Unicode: 15*243+451=4096 (then 4098); legacy: 15*259+211=4096 (then 4097).
+    fileCase(unicode ? Lane::Eed18 : Lane::Eed2000, withTail(tail), true, {}, over ? f::Tags{} : tail);
+}
+
+namespace {
+f::Tags eedUnit(bool unicode, bool over) {
+    f::Tags result{text(1002, "{")};
+    if (unicode) {
+        // 2 + (3 + 2*32764) + 2 == 65535; one more UTF-16 unit gives 65537.
+        result.push_back(text(1000, std::string(over ? 32765 : 32764, 'x')));
+    } else {
+        // 2 + 253*(4+255) + (4+0) + 2 == 65535; one extra byte gives 65536.
+        for (unsigned i = 0; i < 253; ++i) result.push_back(text(1000, std::string(255, 'x')));
+        result.push_back(text(1000, over ? "x" : ""));
+    }
+    result.push_back(text(1002, "}")); return result;
+}
+void addForeignUnit(LC_OffsetCurve& curve, const f::Tags& unit) {
+    auto tags = curve.getDrwExtData();
+    // Reuse the real input's registered APPID, not a missing-reference failure.
+    const auto next = std::find_if(tags.begin() + 1, tags.end(), [](const auto& tag) { return tag->code() == 1001; });
+    REQUIRE(next != tags.end()); tags.insert(next, unit.begin(), unit.end()); curve.setDrwExtData(tags);
+}
+}
+TEST_CASE("G hostile exact 65535 byte EED braced unit publishes and reopens with native schema", "[lc-offsetcurve][g-hostile-file][dwg][boundary]") {
+    Setup setup; const bool unicode = GENERATE(false, true);
+    lc::test::OutputDirectory directory("offset-hostile-eed-unit-positive");
+    const auto input = directory.file("input.dxf"); f::put(input, f::ascii(f::raw(3)));
+    RS_Graphic graphic; REQUIRE(lc::test::importDrawing(graphic, input, RS2::FormatDXFRW2018));
+    auto* curve = f::native(graphic, 3); addForeignUnit(*curve, eedUnit(unicode, false));
+    const auto expected = f::tagsState(f::application(curve->getDrwExtData(), "FOREIGN_A")); Snapshot before(graphic);
+    const auto target = directory.file("exact.dwg"); const auto targetFormat = unicode ? RS2::FormatDWG2018 : RS2::FormatDWG;
+    REQUIRE(lc::test::exportDrawing(graphic, target, targetFormat)); before.check();
+    const auto raw = f::readCodec(target, true); REQUIRE(raw.splines.size() == 1);
+    CHECK(f::tagsState(f::application(raw.splines.front().extData, "FOREIGN_A")) == expected);
+    CHECK(f::markerCount(raw.splines.front().extData) == 1);
+    RS_Graphic reopened; REQUIRE(lc::test::importDrawing(reopened, target, targetFormat));
+    auto* again = f::native(reopened, 3);
+    CHECK(f::tagsState(f::application(again->getDrwExtData(), "FOREIGN_A")) == expected); before.check();
+}
+TEST_CASE("G hostile indivisible EED unit over 65535 never publishes and retains real redo history", "[lc-offsetcurve][g-hostile-file][dwg][save-refusal]") {
+    Setup setup; const bool unicode = GENERATE(false, true);
+    for (bool existing : {false, true}) {
+        CAPTURE(existing, unicode); lc::test::OutputDirectory directory("offset-hostile-eed-unit-refusal");
+        const auto input = directory.file("input.dxf"); f::put(input, f::ascii(f::raw(3)));
+        lc::test::EditableDrawing drawing; auto& graphic = drawing.m_graphic;
+        REQUIRE(lc::test::importDrawing(graphic, input, RS2::FormatDXFRW2018));
+        auto* curve = f::native(graphic, 3); addForeignUnit(*curve, eedUnit(unicode, true)); seedHistory(drawing);
+        const Snapshot before(graphic); const auto target = directory.file("target.dwg");
+        const std::string sentinel("prior drawing\0keep every byte", 28); if (existing) f::put(target, sentinel);
+        const auto entries = directory.entries(); const auto targetFormat = unicode ? RS2::FormatDWG2018 : RS2::FormatDWG;
+        RS_FilterDXFRW writer; REQUIRE_FALSE(writer.fileExport(graphic, lc::test::toQString(target), targetFormat));
+        before.check(); CHECK(writer.dimStyleTargetVersion() == DRW::UNKNOWNV); CHECK(directory.entries() == entries);
+        if (existing) CHECK(lc::test::fileBytes(target) == sentinel); else CHECK_FALSE(std::filesystem::exists(target));
+        RS_Graphic retry; REQUIRE(lc::test::importDrawing(retry, input, RS2::FormatDXFRW2018));
+        const auto retryPath = directory.file("retry.dwg"); REQUIRE(writer.fileExport(retry, lc::test::toQString(retryPath), targetFormat));
+        RS_Graphic reopened; REQUIRE(lc::test::importDrawing(reopened, retryPath, targetFormat)); f::native(reopened, 3); before.check();
+        REQUIRE(graphic.redo()); CHECK(f::live(graphic).size() == 2); REQUIRE(graphic.undo()); before.check();
+    }
+}
+#endif
+
+namespace {
+class ThrowAfterEntities final : public RS_FilterDXFRW {
+public:
+    bool throwNext = true;
+    unsigned visits = 0;
+    void writeEntities() override {
+        RS_FilterDXFRW::writeEntities(); ++visits;
+        if (throwNext) { throwNext = false; throw std::runtime_error("test failure after actual native entity serialization"); }
+    }
+};
+struct Verification {
+    unsigned calls = 0;
+    static bool visit(const std::filesystem::path&, void* context) {
+        ++static_cast<Verification*>(context)->calls; return true;
+    }
+};
+}
+TEST_CASE("G hostile actual native writer callback failure cannot publish a completed prefix", "[lc-offsetcurve][g-hostile-file][save-refusal][callback]") {
+    Setup setup;
+    std::vector<RS2::FormatType> formats{RS2::FormatDXFRW2018};
+#ifdef DWGSUPPORT
+    formats.push_back(RS2::FormatDWG2018);
+#endif
+    for (auto targetFormat : formats) for (bool existing : {false, true}) {
+        CAPTURE(targetFormat, existing); lc::test::OutputDirectory directory("offset-hostile-callback-failure");
+        const auto input = directory.file("input.dxf"); f::put(input, f::ascii(f::raw(3)));
+        lc::test::EditableDrawing drawing; auto& graphic = drawing.m_graphic;
+        REQUIRE(lc::test::importDrawing(graphic, input, RS2::FormatDXFRW2018)); f::native(graphic, 3); seedHistory(drawing);
+        const Snapshot before(graphic);
+        const auto suffix = targetFormat == RS2::FormatDXFRW2018 ? ".dxf" : ".dwg";
+        const auto target = directory.file(std::string("target") + suffix);
+        const std::string sentinel = "old target must survive"; if (existing) f::put(target, sentinel);
+        const auto entries = directory.entries(); ThrowAfterEntities writer;
+        REQUIRE_FALSE(writer.fileExport(graphic, lc::test::toQString(target), targetFormat)); REQUIRE(writer.visits == 1);
+        CHECK(writer.dimStyleTargetVersion() == DRW::UNKNOWNV); before.check(); CHECK(directory.entries() == entries);
+        if (existing) CHECK(lc::test::fileBytes(target) == sentinel); else CHECK_FALSE(std::filesystem::exists(target));
+        const auto retry = directory.file(std::string("retry") + suffix); REQUIRE(writer.fileExport(graphic, lc::test::toQString(retry), targetFormat));
+        CHECK(writer.visits == 2); CHECK(writer.dimStyleTargetVersion() == DRW::UNKNOWNV); before.check();
+        RS_Graphic reopened; REQUIRE(lc::test::importDrawing(reopened, retry, targetFormat)); f::native(reopened, 3);
+    }
+}
+TEST_CASE("G hostile existing publisher stream failure cannot publish real native drawing bytes", "[lc-offsetcurve][g-hostile-file][save-refusal][stream]") {
+    Setup setup;
+    std::vector<Lane> outputLanes{Lane::Ascii};
+#ifdef DWGSUPPORT
+    outputLanes.push_back(Lane::Eed18);
+#endif
+    for (auto lane : outputLanes) for (bool existing : {false, true}) {
+        CAPTURE(static_cast<int>(lane), existing); lc::test::OutputDirectory directory("offset-hostile-stream-failure");
+        const auto input = directory.file("input.dxf"); f::put(input, f::ascii(f::raw(3)));
+        RS_Graphic graphic; REQUIRE(lc::test::importDrawing(graphic, input, RS2::FormatDXFRW2018)); f::native(graphic, 3);
+        const auto complete = directory.file(isDwg(lane) ? "complete.dwg" : "complete.dxf");
+        REQUIRE(lc::test::exportDrawing(graphic, complete, format(lane)));
+        RS_Graphic reopened; REQUIRE(lc::test::importDrawing(reopened, complete, format(lane))); f::native(reopened, 3);
+        const auto bytes = lc::test::fileBytes(complete); REQUIRE_FALSE(bytes.empty()); const Snapshot before(graphic);
+        const auto target = directory.file("target.drawing"); const std::string sentinel = "prior drawing bytes";
+        if (existing) f::put(target, sentinel); const auto entries = directory.entries();
+        DwgDxfOutputTransaction output(target.string(), std::ios::binary); REQUIRE(output.open());
+        output.stream().write(bytes.data(), static_cast<std::streamsize>(bytes.size())); REQUIRE(output.stream().good());
+        // Existing public publisher seam, not an invented filter I/O hook or a simulated C result.
+        output.stream().setstate(std::ios::badbit); output.stream().put('!'); REQUIRE(output.stream().fail());
+        Verification verification;
+        REQUIRE_FALSE(output.commitVerified(&Verification::visit, &verification)); CHECK(verification.calls == 0);
+        CHECK_FALSE(output.isOpen()); CHECK_FALSE(output.commit()); CHECK(directory.entries() == entries); before.check();
+        if (existing) CHECK(lc::test::fileBytes(target) == sentinel); else CHECK_FALSE(std::filesystem::exists(target));
+    }
+}

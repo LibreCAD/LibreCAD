@@ -3330,6 +3330,10 @@ bool dwgRW::processDwg() {
 
     if (ret) {
     try {
+    // The byte codec is file metadata, not a DWG header-variable field.
+    // Consumers need it before entity callbacks to admit and reencode EED.
+    if (version >= DRW::AC1012 && version <= DRW::AC1018)
+        hdr.addStr("$DWGCODEPAGE", reader->getCodePage(), 3);
     iface->addHeader(&hdr);
     } catch (...) {
         error = DRW::BAD_READ_HEADER;
