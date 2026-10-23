@@ -41,7 +41,7 @@ main-track slices remain incomplete; no native entity is claimed.
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
 | Latest product checkpoint | `d4a0b081a` (C) |
-| Latest auxiliary checkpoint | `e83aaf3f0` (H7 suite workers; pipeline 1f9f94753, H6 507e44ad7) |
+| Latest auxiliary checkpoint | `ceacd01a3` (H7 artifact guards; workers e83aaf3f0, pipeline 1f9f94753) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
 | A-core | Atomic work adoption, separate ordering allowance and sticky terminal status implemented; A04/A10 registered |
@@ -279,8 +279,8 @@ D-core needs justified rounding/error and topology preservation, or an explicit
 unchanged refusal when a requested transform cannot be certified. Do not weaken
 the ordinary-transform no-regeneration contract or silently restamp stale data.
 
-The active auxiliary sequence is H7 artifact-preservation guards -> independent
-checker -> genuine preflight/qualification driver -> complete affected regression
+The active auxiliary sequence is H7 independent checker/genuine preflight ->
+qualification driver -> complete affected regression
 rerun -> two complete qualification runs. Suite inventory/worker execution is
 committed separately; it is not whole H7 or native feature completion.
 
@@ -1527,7 +1527,7 @@ one plan update, not another candidate/freeze lifecycle.
 | X-H4 | Committed 3e06e3894; explicit API | Complete genesis/chained case rows, pinned identities/order/actual outputs, exclusive publication/replay/mutation checks; not automatic CLI persistence |
 | X-H5 | Committed 6d4fd25b3; explicit API | Actual source/runtime/receipt/diagnostic/ledger/output evidence, exclusive absent publication and bound automated checker; 44 focused tests and independent review |
 | X-H6 | Committed 507e44ad7; core 9170b0cc9 | All 93 obligations executable, all original71 IDs retained; owned H4/H5 protocols, precise root scopes and mutation/prefix checks; 94 inventory tests pass |
-| X-H7 | Suite workers committed e83aaf3f0; qualification pending | Exact pinned generator/real workers implemented; referenced-artifact guards, independent checker, genuine preflight/driver and two complete qualification runs remain |
+| X-H7 | Workers e83aaf3f0 and artifact guards ceacd01a3 committed; qualification pending | Independent checker/genuine preflight, driver, affected regressions and two complete qualification runs remain |
 
 ### Concrete H2 Capture Corrections
 
@@ -1825,6 +1825,41 @@ C's 18 new contact-matching cases passed 687 assertions; combined C/refinement
 119 cases passed 18618 assertions. Independent static review cleared the matcher,
 actual route-port integration, owner-validity guard and owner allocation ordering.
 Final qualification is recorded below; native feature remains incomplete.
+
+### X-H7 Referenced Artifact Validation (2026-10-23)
+
+Implementation `ceacd01a3` retains original external preflight artifact bytes,
+full file identity/mode and exact directory membership. Strict bounded canonical
+envelopes are derived from H1-bound stderr, not caller reference claims. The
+combined pair admits at most64 distinct references, 8 MiB each, 128 MiB total;
+single-link mode0400 files and disjoint protected/output scopes are mandatory.
+Original baselines survive checker dispatch, exceptions/failure, review readback
+and final metadata checks. Mutation reports PREFLIGHT_ARTIFACT_CHANGED, never a
+newly blessed baseline. The manifest schema is unchanged: references are already
+bound through receipt stderr.
+
+Independent review found one P2: substring matching could mistake ordinary stderr
+for an evidence envelope. Fixed by explicit pinned argv opt-in or the actual
+genuine runner requirement; a valid canonical envelope kind also self opts in.
+Unflagged opaque text merely mentioning the kind stays ordinary. The synthetic
+control fixture opts in before capture and rejects oversized stdin before parsing.
+All original44 H5 test names/behavior are preserved, with44 new guard controls.
+
+Author final `/private/tmp/lc2961-h7-optin-full-02.tap`: 88/88 passed, zero skips,
+168.147 seconds. Independent first80 rerun passed in171.102 seconds; the corrected
+eight opt-in/stdin regressions passed separately in
+`/private/tmp/lc2961-h7-optin-independent-targeted-01.tap`, hashes unchanged.
+Review then found no remaining focused P1/P2 issue. Parent pre-fix integration
+X-H7-artifact-parent-integration-01.tap passed187 cases (80 H5,94 H6,13 pipeline);
+it is not represented as the final88 integration. Full affected rerun remains.
+
+Timing is a real readiness gate: serial repetition would exceed H2's unchanged
+300-second deadline. The reviewed genuine preflight runs each suite's two attempts
+concurrently with a fixed limit of two, awaits both on failure and publishes actual
+outputs in deterministic order. Its focused controls are not canonical timing
+qualification. Next commit pairs the independent checker with genuine preflight
+because their focused tests/real audit require one another; then commit the driver
+and run complete frozen-source qualification. No whole H7/native completion claim.
 
 ### X-H7 Suite Worker Validation (2026-10-23)
 
