@@ -1526,7 +1526,7 @@ one plan update, not another candidate/freeze lifecycle.
 | X-H4 | Committed 3e06e3894; explicit API | Complete genesis/chained case rows, pinned identities/order/actual outputs, exclusive publication/replay/mutation checks; not automatic CLI persistence |
 | X-H5 | Committed 6d4fd25b3; explicit API | Actual source/runtime/receipt/diagnostic/ledger/output evidence, exclusive absent publication and bound automated checker; 44 focused tests and independent review |
 | X-H6 | Committed 507e44ad7; core 9170b0cc9 | All 93 obligations executable, all original71 IDs retained; owned H4/H5 protocols, precise root scopes and mutation/prefix checks; 94 inventory tests pass |
-| X-H7 | Driver 5a3e47039, core a95a5c5ff, guards ceacd01a3, workers e83aaf3f0 committed; qualification pending | Complete affected regressions and two complete qualification runs remain |
+| X-H7 | All source slices committed; frozen391-test regression passed; qualification pending | Two complete actual qualification runs remain |
 
 ### Concrete H2 Capture Corrections
 
@@ -1826,6 +1826,14 @@ actual route-port integration, owner-validity guard and owner allocation orderin
 Final qualification is recorded below; native feature remains incomplete.
 
 ### X-H7 Driver Validation (2026-10-23)
+
+Frozen-source affected regression: X-H7-frozen-all-01.tap under
+`/private/tmp/lc2961-impl-evidence.9GtLO2` passed391/391 tests with zero failures,
+cancelled, skips or TODOs,220.575 seconds, exit0. It executes all current Node
+test modules, including final88 H5,94 H6,13 pipeline,23 worker,35 independent
+checker,4 genuine-preflight and7 driver controls, plus the earlier H1-H4 suites.
+The working tree was clean at source/plan checkpoint631172792. This is full
+affected regression evidence, not the still-pending H7 actual qualification.
 
 Implementation `5a3e47039` creates two isolated actual validation attempts, pins an
 immutable actual roadmap snapshot before capture, uses fresh UUIDs and exact real
