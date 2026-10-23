@@ -221,7 +221,7 @@ test commit followed by the section 4 plan checkpoint.
 | D-grips | D-edit | Cached definition grips, safe snaps and through-parameter query | committed 47e14c74b |
 | E-tools | D-grips | Tool result adoption, explicit plain fallback, explode/scale/INSERT/plugin | committed a37982bd6 |
 | E-again | E-tools | Bounded repeated offset/rebase with plain fallback | committed bf7b512cf |
-| F-types | E-again | Complete engine/document/filter type-site integration census | pending |
+| F-types | E-again | Complete engine/document/filter type-site integration census | complete:49c9b328b |
 | F-names | F-types | Names, quick info, context/selection/menu descriptors | pending |
 | G-schema | F-names | Shared typed XDATA/EED definition parser/merger | pending |
 | G-adapter | G-schema | Actual application DXF/DWG read/write and failure propagation | pending |
@@ -273,7 +273,7 @@ editing; changes beyond the named concern require a scope note in the slice card
 
 ### Current Next Cards
 
-The main track resumes at F-types (section 8.6). D-core `92758859c` uses the actual
+The main track resumes at F-names (section 8.6). D-core `92758859c` uses the actual
 C checker, not a layout-only adoption gate. Similarity transport requires exact
 dyadic affine images of every stored coordinate and unchanged normalized semantic
 basis fields. Rounded similarities and arc reflections refuse unchanged; whole
@@ -305,28 +305,33 @@ Samples consume the remaining per-copy budget; pair accounting reserves per-quer
 ceilings, not observed total boxes. Attempted producer output and bounded observed
 leaves remain separate from committed usage, which is zero on source rollback.
 
-F-types starts with16 prepared but unregistered/unexecuted cases in
-`entities/tests/lc_offsetcurve_types_tests.cpp` and the preserved five-file patch
-under the evidence root, `F-types-prepared-01.patch` (SHA-256
-b9ef15bdc8caf27a0f2253affc050eeb4969aeec8add32583b1401bbfd66c258).
-Apply/review its owned hunks with the normal editing tool; those compiled source
-files were restored to HEAD so E-again validation contains no future F edits.
-Then finish the remaining core census, not merely those five files:
+F-types `49c9b328b` completes the bounded core/action/cache/export dispatch pass.
+The final literal census classifies200 rows across68 files, including declarations,
+comments and nonbuilt code, without calling the named future slices complete.
+Owner selection includes justSelect/contour/bulk/intersection paths. Exact typed
+pickers remain exact: native-capable tools request `{Spline, OffsetCurve}`;
+Spline-category window selection still includes native curves. This avoids
+occluding ordinary spline control tools with a nearer unsupported native input.
+Native target trimming is refused until T; ordinary targets accept native limits.
 
-1. Register/run the16 cases; add native neighbor-chord suppression and explicit
-   isTrimmable refusal in rs_information, plus spline-family matching in snapper.
-2. Reconcile justSelect and other owner bypasses. Native display chords must
-   select their curve, while Trim target paths stay explicit refusals until T.
-3. Cover parallel/parallel-through creation, offset/revert/explode availability,
-   preview handling, hatch/path/pattern flattening or refusal, and legacy DXF,
-   JWW and MakerCAM SVG export. Never cast the spline-derived native as atomic.
-4. Classify every current functional match (initial literal census:200 matches,
-   192 lines,66 files including tests/comments). Preserve analytic ellipse-only
-   cases. Finish core safe delegation/refusal now; F-names owns descriptors,
-   quick info, context/selection/menu names; H owns native property widgets.
-5. Execute focused/adjacent Release/ASan, full Release, both format lanes and
-   qmake6, audit tested bytes, commit, then checkpoint this roadmap. Future shared
-   schema/carrier helpers and independent fixture tooling remain unqualified.
+Next F-names implementation order:
+
+1. Add the distinct translated name and dedicated native match descriptor. Show
+   defined/consistent/editable state, embedded ellipse source, distance, physical
+   side and bounded cached length. Unavailable values must not match even under
+   NOT_EQUALS/MATCH_ALL. Never alias the ordinary control-net descriptor/provider.
+2. Add the native type to both directions of the existing Spline checkbox and
+   the OC menu activator. Include it in selection totals and coverage inventories.
+3. Add bounded native quick-info/descriptions, preserving existing units. Resolve
+   a direct generated child to its native owner before naming/context/info reads.
+   Native same-ID edits must not leave stale cached descriptions.
+4. Offer Offset/Explode/Revert context commands, not control-point editing. Keep
+   the temporary safe native Edit Properties refusal until H-dialog.
+5. Run real matcher/widget/context tests, entity coverage, adjacent Release/ASan,
+   full Release, both format lanes and qmake6; review/audit/commit/checkpoint.
+   The evidence-side F-names proposal/patch is not qualified implementation.
+   Unregistered shared schema/carrier helpers remain future work; independent
+   ACadSharp fixtures/tooling are generated but not LibreCAD interoperability PASS.
 
 The auxiliary scheduler correction `90714f758` passed the407-case regression.
 Both isolated full runs of `H7-qualification-03` returned PASS through the actual
@@ -1812,7 +1817,7 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 | Atomic budget API | Committed and validated (`0eb2a0cfa`) | Integrate solver/geometry work in A-strict/A-reference |
 | Geometry work/exception/split/depth/terminal proof | All A slices and B committed and validated | C complete checker |
 | Complete semantic path checker | C committed d4a0b081a; used by D-core public adoption | D-edit staged regeneration |
-| Native feature/UI/persistence/trim | All D and E slices committed; later workflow incomplete | Follow F-types through T; do not label unregistered helper scaffolding complete |
+| Native feature/UI/persistence/trim | All D/E and F-types committed; later workflow incomplete | Follow F-names through T; do not label unregistered helper scaffolding complete |
 | Independent DWG/version fixtures | Required, not yet qualified | Inventory/tool/license/provenance during G-fixtures; close all rows in G-matrix |
 | Harness production readiness | X-H1-X-H7 committed; actual two-run qualification03 independently audited | Retain observed-byte/runtime scope and failed attempts; no future timing guarantee |
 | Independent review and test evidence | A-core independent static review and actual test reports complete | Obtain fresh review/validation for each successor |
@@ -1839,8 +1844,68 @@ The plan checkpoint column never depends on its own future SHA.
 | D-grips | 47e14c74b | Immediate plan-only checkpoint | 19 focused cases, full Release,583 affected ASan cases, both format lanes Release/ASan and qmake6 passed; independent static corrections and nine-blob audit |
 | E-tools | a37982bd6 | Immediate plan-only checkpoint | 55 focused Release/ASan cases, full Release,638 affected ASan cases, both format lanes Release/ASan and qmake6; independent review corrections and13-blob audit |
 | E-again | bf7b512cf | Immediate plan-only checkpoint | 37 focused Release/ASan cases, full Release,687 affected ASan cases, both format lanes Release/ASan and qmake6; three review corrections, actual profiles and13-blob audit |
+| F-types | 49c9b328b | Immediate plan-only checkpoint | 73 focused Release/ASan cases (one unbuilt legacy-export skip), full Release,199 adjacent ASan cases, DXF/DWG Release/ASan, qmake6; independent review and27-blob audit |
 | X-H7 timeout source fix | c1b2fa095 | Immediate plan-only checkpoint | Author55 + independent15 controls and parent399 runner regression passed; actual runtime qualification remains open |
 | X-H7 bounded scheduling | 90714f758 | Immediate plan-only checkpoint | Author85 + independent12 controls, parent407 runner regression and real224.790-second preflight probe passed; full two-run qualification remains open |
+
+### F-types Validation (2026-10-23)
+
+Product `49c9b328b` completes the core/action/cache/export part of section8.6 in
+27 source/test/build files. Four registered test files contain20 core,23 action,
+21 cached-dispatch and9 export cases. Actual C-admitted fixtures test owner
+selection/picking, ordinary trim against a native limit, safe native target
+refusal, plain-cache parallel/through creation, typed reversal, explode, preview,
+paths, loops, patterns, solid hatches, SVG and unsupported JWW reporting.
+
+Independent static review found and verified fixes for recursive borrowed-pattern
+ownership, preview preflight before recursive list/stretch queries, partial-loop
+publication on endpoint-key refusal, strict spline-control pick occlusion, and
+deleted-input resurrection. Tests cover mixed boundaries in both orders, nested
+borrowed/cyclic/oversized trees, all four control tools with real mouse picking
+in both draw orders, and both adopting preview-list APIs. No P1/P2 findings remain
+in that reviewed diff. The full suite additionally caught the ordinary hatch
+cache-parent contract; final sorted caches retain null parent/layer and independent
+owned storage. Detached native display edges preserve the curve's effective pen.
+
+Evidence root: `/private/tmp/lc2961-impl-evidence.9GtLO2`.
+
+- Explicit CMake Release/ASan three-target builds06 and qmake6 build04 passed.
+  Release is Qt6/C++17/O3; Debug ASan uses `-fsanitize=address` and
+  `-fno-omit-frame-pointer`. `ASAN_OPTIONS=detect_leaks=0` is the same host
+  limitation, not a new suppression. No renderer/solver bound was weakened.
+- `F-types-focused-{release,asan}-04`:73 cases,72 passed,1 skipped;
+  all56,150 assertions pass. The sole skip is the legacy RS_FilterDXF exporter:
+  it is absent from both build registrations and its external headers/format
+  enums are unavailable. Its source dispatch change is explicitly unqualified;
+  no surrogate writer or invented runtime PASS is substituted.
+- `F-types-full-release-03`:4,212 total,4,185 passed,27 skipped;
+  all8,745,309 assertions pass. All5,090 previous E-again JUnit rows remain;
+  current5,163 rows add exactly73, with the same26 prior skip identities plus
+  the one explicitly unbuilt legacy-export case.
+- `F-types-affected-asan-03`:199 cases,198 passed,1 legacy skip;
+  all130,313 assertions pass. Includes actual `[snap]`, hover, selection, trim,
+  hatch/hatch-move, entity coverage and new action/cache/export tags. An unused
+  `[snapper]` selector branch matched nothing; the combined suite is nonempty and
+  the actual snapper catch tests are selected by `[snap]`.
+- Final DXF Release/ASan02:748 total,745 passed,3 unchanged skips,
+ 40,175 passing assertions. DWG Release/ASan01:1,006 total,1,002 passed,
+ 4 unchanged skips,34,948 passing assertions. All prior format rows retained.
+- `F-types-report-audit-03.json` validates the structured reports, row retention,
+  exact new-skip policy and identical focus identities. Source/binary identity03
+  and audit04 bind27 source files and7 binaries. Committed-blob audit01 confirms
+  every committed product blob equals those validated bytes.
+- Final census `F-types-functional-census-final-03.json` classifies200 literal
+  matches/68 files, including34 F-names rows,12 H-property rows,11 G-adapter rows
+  and named H-drag/T exclusions. Those pending slices are not waived.
+- Cppcheck02 reports8 reviewed existing warnings, not a clean static-analysis
+  PASS. Final preview-only cppcheck03 exits0. Existing pointer/initialization/
+  inheritance/performance diagnostics lie outside the changed behavior.
+
+Earlier attempts remain preserved: Catch2 expression/protected-selection test
+compile mistakes; focus01 effective-pen failures; full01 ordinary hatch-parent
+regressions. Focus03/full02 predate the deleted-input fix and are not substituted
+for final qualification. No unrelated main-checkout work or future G helpers are
+included. Next: F-names, then G-schema/G-adapter/fixtures/matrix, H, I, T and Z.
 
 ### E-again Validation (2026-10-23)
 
