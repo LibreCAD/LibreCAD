@@ -18,6 +18,11 @@ public:
     static std::unique_ptr<LC_OffsetCurveEditSnapshot> capture(const LC_OffsetCurve& curve);
     ~LC_OffsetCurveEditSnapshot();
     bool matches(const LC_OffsetCurve& curve) const;
+    /** No virtual display reads. Use after every callbackful batch read and
+     * renewed live membership checks, before handing off prepared replacements.
+     * Bounded value copies may still throw; this does not own the source.
+     */
+    bool matchesStoredState(const LC_OffsetCurve& curve) const;
     LC_OffsetCurveEditSnapshot(const LC_OffsetCurveEditSnapshot&) = delete;
     LC_OffsetCurveEditSnapshot& operator=(const LC_OffsetCurveEditSnapshot&) = delete;
 private:

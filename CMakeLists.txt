@@ -1546,6 +1546,7 @@ set (SHARED_SOURCES
      librecad/src/ui/components/utils/lc_offsetcurveui.h
      librecad/src/ui/components/utils/lc_offsetcurveeditsnapshot.cpp
      librecad/src/ui/components/utils/lc_offsetcurveeditsnapshot.h
+     librecad/src/ui/components/utils/lc_offsetcurvefinalinput.h
      librecad/src/ui/components/utils/lc_guarded_signals_blocker.h
      librecad/src/ui/components/utils/lc_item_info.h
      librecad/src/ui/components/utils/lc_mouse_tracking_table_view.cpp

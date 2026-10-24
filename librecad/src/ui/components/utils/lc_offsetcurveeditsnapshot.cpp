@@ -2,7 +2,9 @@
 #include "lc_offsetcurveeditsnapshot.h"
 
 #include <algorithm>
+#include <cmath>
 #include <cstring>
+#include <optional>
 #include <tuple>
 #include <type_traits>
 #include <utility>
@@ -11,6 +13,7 @@
 #include "lc_offsetcurve.h"
 #include "lc_offsetcurvereadutils.h"
 #include "rs_pen.h"
+#include "rs_line.h"
 
 namespace {
 unsigned stableFlags(const RS_Entity& entity) {
@@ -57,16 +60,32 @@ bool samePen(const RS_Pen& a, const RS_Pen& b) {
         sameDouble(a.getScreenWidth(), b.getScreenWidth()) && sameDouble(a.getAlpha(), b.getAlpha()) &&
         sameDouble(a.dashOffset(), b.dashOffset()) && a.getColor().colorName() == b.getColor().colorName();
 }
-bool boundedSource(const LC_OffsetCurve& curve) {
+bool boundedStoredSource(const LC_OffsetCurve& curve) {
     const auto& data = curve.getData();
     const auto cap = LC_OffsetCheckLimits{}.maxVertices;
     if (!(data.degree >= 1 && data.degree <= 3 && data.controlPoints.size() <= cap &&
         data.fitPoints.size() <= cap && data.weights.size() <= cap && data.knotslist.size() <= 4*cap &&
         data.savedOpenKnots.size() <= 4*cap && curve.reactorHandles().size() <= cap &&
         curve.getDrwExtData().size() <= cap && boundedPen(curve.getPen(false)) &&
-        LC_OffsetCurveRead::cachedLength(curve).has_value())) return false;
-    for (const auto* child : curve) if (!boundedPen(child->getPen(false))) return false;
+        curve.count() > 0 && curve.count() <= cap)) return false;
+    for (const auto* child : curve) {
+        const auto* line = dynamic_cast<const RS_Line*>(child);
+        if (!line || line->getParent() != &curve || !boundedPen(line->getPen(false))) return false;
+        const auto stored = line->RS_Line::getData();
+        for (const auto& point : {stored.startpoint, stored.endpoint})
+            if (!point.valid || !std::isfinite(point.x) || !std::isfinite(point.y) || point.z != 0)
+                return false;
+    }
     return true;
+}
+bool boundedSource(const LC_OffsetCurve& curve) {
+    return boundedStoredSource(curve) && LC_OffsetCurveRead::cachedLength(curve).has_value() &&
+        boundedStoredSource(curve);
+}
+std::optional<RS_LineData> storedLine(const RS_Entity* child) {
+    const auto* line = dynamic_cast<const RS_Line*>(child);
+    if (!line) return std::nullopt;
+    return line->RS_Line::getData();
 }
 auto metadata(const RS_Entity& entity) {
     return std::make_tuple(entity.sourceHandle(), entity.lineage(), entity.ownerLineage(),
@@ -175,6 +194,8 @@ struct LC_OffsetCurveEditSnapshot::Data {
     LC_EllipseOffsetDefinition definition;
     bool defined, consistent;
     double tolerance;
+    RS_EntityContainer* parent;
+    bool owner;
     RS_Layer* layer;
     RS_Pen pen;
     unsigned flags, ownedFlags;
@@ -190,6 +211,7 @@ struct LC_OffsetCurveEditSnapshot::Data {
         unsigned flags;
         RS_Pen pen;
         RS_Layer* layer;
+        std::optional<RS_LineData> stored;
     };
     std::vector<Child> children;
 
@@ -205,12 +227,16 @@ struct LC_OffsetCurveEditSnapshot::Data {
             if (size > LC_OffsetCurve::MaximumOwnedTailLogicalBytes/2 - units) return {};
             units += size;
         }
-        return std::unique_ptr<Data>(new Data(curve, keys));
+        auto result = std::unique_ptr<Data>(new Data(curve, keys));
+        // Child reads during capture must not admit a newly changed/oversized root to cloning.
+        if (!result->matchesStoredState(curve)) return {};
+        return result;
     }
     Data(const LC_OffsetCurve& curve, const std::vector<QString>& keys)
         : id(curve.getId()), cache(curve.getData()),
           definition(curve.definition()), defined(curve.isDefined()), consistent(curve.isConsistent()),
-          tolerance(curve.checkedWorldTolerance()), layer(curve.getLayer(false)), pen(curve.getPen(false)),
+          tolerance(curve.checkedWorldTolerance()), parent(curve.getParent()), owner(curve.isOwner()),
+          layer(curve.getLayer(false)), pen(curve.getPen(false)),
           flags(stableFlags(curve)), ownedFlags(curve.unknownOwnedFlags()),
           tail(curve.unknownOwnedTail()), provenance(metadata(curve)), reactors(curve.reactorHandles()),
           extData(curve.getDrwExtData()) {
@@ -219,13 +245,14 @@ struct LC_OffsetCurveEditSnapshot::Data {
         for (const auto& key : keys) variables.emplace_back(key, curve.getUserDefVar(key));
         for (const auto* child : curve)
             children.push_back({child->getId(), child->getStartpoint(), child->getEndpoint(),
-                stableFlags(*child), child->getPen(false), child->getLayer(false)});
+                stableFlags(*child), child->getPen(false), child->getLayer(false), storedLine(child)});
     }
-    bool matches(const LC_OffsetCurve& curve) const {
-        if (curve.getId() != id || !boundedSource(curve) || !boundedExtData(curve.getDrwExtData()) ||
+    bool matchesStoredState(const LC_OffsetCurve& curve) const {
+        if (curve.getId() != id || !boundedStoredSource(curve) || !boundedExtData(curve.getDrwExtData()) ||
             !sameCache(curve.getData(), cache) ||
             !sameDefinition(curve.definition(), definition) || curve.isDefined() != defined ||
             curve.isConsistent() != consistent || !sameDouble(curve.checkedWorldTolerance(), tolerance) ||
+            curve.getParent() != parent || curve.isOwner() != owner ||
             curve.getLayer(false) != layer || !samePen(curve.getPen(false), pen) ||
             stableFlags(curve) != flags || curve.unknownOwnedFlags() != ownedFlags ||
             !sameTail(curve.unknownOwnedTail(), tail) || metadata(curve) != provenance ||
@@ -240,11 +267,26 @@ struct LC_OffsetCurveEditSnapshot::Data {
         std::size_t i = 0;
         for (const auto* child : curve) {
             const auto& before = children[i++];
+            const auto stored = storedLine(child);
+            if (!stored || !before.stored || child->getId() != before.id ||
+                !samePoint(stored->startpoint, before.stored->startpoint) ||
+                !samePoint(stored->endpoint, before.stored->endpoint) ||
+                stableFlags(*child) != before.flags || !samePen(child->getPen(false), before.pen) ||
+                child->getLayer(false) != before.layer) return false;
+        }
+        return true;
+    }
+    bool matches(const LC_OffsetCurve& curve) const {
+        if (!matchesStoredState(curve) || !boundedSource(curve)) return false;
+        std::size_t i = 0;
+        for (const auto* child : curve) {
+            const auto& before = children[i++];
             if (child->getId() != before.id || !samePoint(child->getStartpoint(), before.start) ||
                 !samePoint(child->getEndpoint(), before.end) || stableFlags(*child) != before.flags ||
                 !samePen(child->getPen(false), before.pen) || child->getLayer(false) != before.layer) return false;
         }
-        return true;
+        // The last successful virtual getter may have changed root or peer data.
+        return matchesStoredState(curve);
     }
 };
 
@@ -259,4 +301,7 @@ std::unique_ptr<LC_OffsetCurveEditSnapshot> LC_OffsetCurveEditSnapshot::capture(
 }
 bool LC_OffsetCurveEditSnapshot::matches(const LC_OffsetCurve& curve) const {
     return m_data->matches(curve);
+}
+bool LC_OffsetCurveEditSnapshot::matchesStoredState(const LC_OffsetCurve& curve) const {
+    return m_data->matchesStoredState(curve);
 }

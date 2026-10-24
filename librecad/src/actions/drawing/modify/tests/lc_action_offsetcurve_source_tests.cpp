@@ -960,6 +960,103 @@ TEST_CASE("I update prepares complete shared batch prefixes using only actual ch
     CHECK_FALSE(f.graphic.isModified()); noUndo(f.graphic);
 }
 
+TEST_CASE("R03 final successful getter preserves late metadata instead of publishing an older clone",
+          "[lc-offsetcurve][i-update][r03-final-closure]") {
+    bool earlierPeer = false;
+    SECTION("the final getter changes its own root") {}
+    SECTION("the final getter changes an already checked peer") { earlierPeer = true; }
+    struct Observation {
+        bool fired = false;
+        unsigned updatedAtMutation = 0;
+    } observation;
+    class LateSuccessfulLine final : public RS_Line {
+    public:
+        LateSuccessfulLine(LC_OffsetCurve& root, LC_OffsetCurve& victim,
+                           const Probe& action, Observation& observation)
+            : RS_Line(&root, root.getStartpoint(), root.getEndpoint()),
+              victim(victim), action(action), observation(observation) {}
+        RS_Entity* clone() const override {
+            auto* copy = RS_Line::clone();
+            copied = true;
+            readsSinceClone = 0;
+            return copy;
+        }
+        RS_Vector getStartpoint() const override {
+            // Read four is the final child comparison, after root metadata was read.
+            if (copied && ++readsSinceClone == 4) {
+                observation.fired = true;
+                observation.updatedAtMutation = action.lastReport().updated;
+                victim.setUserDefVar("R03_LATE_SUCCESSFUL_GETTER", "must survive");
+            }
+            return RS_Line::getStartpoint();
+        }
+        LC_OffsetCurve& victim;
+        const Probe& action;
+        Observation& observation;
+        mutable bool copied = false;
+        mutable unsigned readsSinceClone = 0;
+    };
+    Fixture f;
+    auto* victim = f.arc();
+    auto* later = earlierPeer ? f.arc(.5) : victim;
+    auto basis = victim->definition().basis;
+    basis.center = {4, 8};
+    auto* source = f.ellipse(basis);
+    if (earlierPeer) f.start({victim, later});
+    else f.start({victim});
+    auto* line = new LateSuccessfulLine(*later, *victim, *f.action, observation);
+    later->clear();
+    later->addEntity(line);
+    const auto originalFingerprint = RS_Spline::geometryFingerprint(victim->getData());
+    f.graphic.setModified(false);
+    f.action->useSource(source);
+
+    REQUIRE(observation.fired);
+    CHECK(observation.updatedAtMutation == (earlierPeer ? 2 : 1));
+    CHECK(f.action->lastReport().updated == (earlierPeer ? 1 : 0));
+    CHECK(f.action->lastReport().refused == 1);
+    CHECK_FALSE(victim->isDeleted());
+    CHECK(f.live().contains(victim));
+    CHECK(victim->getUserDefVar("R03_LATE_SUCCESSFUL_GETTER") == "must survive");
+    CHECK(RS_Spline::geometryFingerprint(victim->getData()) == originalFingerprint);
+    unsigned liveCopiesOfExternalValue = 0;
+    for (const auto* curve : f.live())
+        if (curve->getUserDefVar("R03_LATE_SUCCESSFUL_GETTER") == "must survive")
+            ++liveCopiesOfExternalValue;
+    CHECK(liveCopiesOfExternalValue == 1);
+    if (!earlierPeer) {
+        CHECK_FALSE(f.graphic.isModified());
+        noUndo(f.graphic);
+    }
+}
+
+TEST_CASE("R03 capture rechecks storage bounds after display admission callbacks",
+          "[lc-offsetcurve][i-update][r03-final-closure]") {
+    class OversizingLine final : public RS_Line {
+    public:
+        explicit OversizingLine(LC_OffsetCurve& root)
+            : RS_Line(&root, root.getStartpoint(), root.getEndpoint()), root(root) {}
+        RS_Vector getStartpoint() const override {
+            if (++reads == 1)
+                root.getData().controlPoints.resize(LC_OffsetCheckLimits{}.maxVertices + 1);
+            return RS_Line::getStartpoint();
+        }
+        LC_OffsetCurve& root;
+        mutable unsigned reads = 0;
+    };
+    Fixture f;
+    auto* curve = f.arc();
+    auto* line = new OversizingLine(*curve);
+    curve->clear();
+    curve->addEntity(line);
+    const auto snapshot = LC_OffsetCurveEditSnapshot::capture(*curve);
+    CHECK_FALSE(snapshot);
+    CHECK(line->reads == 1); // No Data constructor/second display read after the cap became stale.
+    CHECK(curve->getData().controlPoints.size() == LC_OffsetCheckLimits{}.maxVertices + 1);
+    CHECK_FALSE(curve->isDeleted());
+    noUndo(f.graphic);
+}
+
 TEST_CASE("I update retains caller prefixes when a later final snapshot read throws",
           "[lc-offsetcurve][i-update][action][publication][exception]") {
     struct SnapshotReadFailure final : std::runtime_error {

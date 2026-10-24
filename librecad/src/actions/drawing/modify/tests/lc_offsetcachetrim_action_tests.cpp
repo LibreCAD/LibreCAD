@@ -1067,3 +1067,88 @@ TEST_CASE("T Trim completion abandons detached closing destroyed and switched vi
         CHECK(other.redrawMethod == RS2::RedrawNone);
     }
 }
+
+TEST_CASE("R03 Trim Two seals both natives after final peer mutation or late cancellation",
+          "[lc-offsetcurve][trim-action][r03-final-closure]") {
+    class FourthReadLine final : public RS_Line {
+    public:
+        FourthReadLine(LC_OffsetCurve& root, const RS_LineData& data) : RS_Line(&root, data) {}
+        RS_Vector getStartpoint() const override {
+            const auto point = RS_Line::getStartpoint();
+            if (armed && ++reads == 4 && onFourth) {
+                auto callback = std::move(onFourth);
+                callback();
+            }
+            return point;
+        }
+        bool armed = false;
+        mutable unsigned reads = 0;
+        mutable std::function<void()> onFourth;
+    };
+    for (bool reverse : {false, true}) for (unsigned mode : {0u, 1u, 2u}) {
+        CAPTURE(reverse, mode); // New metadata, cancellation, unchanged positive control.
+        Drawing<true> f;
+        auto* left = addNative(f.graphic);
+        auto* right = addNative(f.graphic, 1);
+        auto* first = reverse ? right : left;
+        auto* later = reverse ? left : right;
+        const RS_Vector firstPick = reverse ? RS_Vector{3, 0} : RS_Vector{-2, 0};
+        const RS_Vector laterPick = reverse ? RS_Vector{-2, 0} : RS_Vector{3, 0};
+        const auto* old = dynamic_cast<const RS_Line*>(later->entityAt(0));
+        REQUIRE(old);
+        const auto data = old->getData();
+        auto* observed = new FourthReadLine(*later, data);
+        observed->setPen(old->getPen(false)); observed->setLayer(old->getLayer(false));
+        REQUIRE(later->removeEntity(const_cast<RS_Line*>(old)));
+        later->insertEntity(0, observed);
+        REQUIRE(first->hasEditableDefinition()); REQUIRE(later->hasEditableDefinition());
+        const auto firstGeometry = RS_Spline::geometryFingerprint(first->getData());
+        const auto laterGeometry = RS_Spline::geometryFingerprint(later->getData());
+        REQUIRE(first->getUserDefVar("R03_TRIM_FINAL_METADATA").isEmpty());
+        auto prefix = std::make_unique<RS_Line>(nullptr, RS_Vector{10, 0}, RS_Vector{11, 0});
+        auto* oldPrefix = line(f.graphic, {10, 1}, {11, 1});
+        LC_DocumentModificationBatch batch;
+        batch.entitiesToAdd.append(prefix.get()); batch.entitiesToDelete.append(oldPrefix);
+        const auto addPrefix = batch.entitiesToAdd, deletePrefix = batch.entitiesToDelete;
+        const auto cleanup = qScopeGuard([&] {
+            while (batch.entitiesToAdd.size() > 1) delete batch.entitiesToAdd.takeLast();
+        });
+        LC_StoredCacheTrimOptions options;
+        auto cancelled = std::make_shared<std::atomic_bool>(false);
+        options.cancellation.requested = cancelled;
+        unsigned fired = 0, readAtMutation = 0;
+        observed->onFourth = [&] {
+            ++fired; readAtMutation = observed->reads;
+            if (mode == 0) first->setUserDefVar("R03_TRIM_FINAL_METADATA", "external final change");
+            if (mode == 1) cancelled->store(true, std::memory_order_relaxed);
+        };
+        observed->armed = true;
+        f.graphic.setModified(false);
+        const auto result = RS_Modification::trimStoredCache(f.graphic, *first, firstPick,
+            *later, laterPick, true, batch, options);
+        REQUIRE(fired == 1); REQUIRE(readAtMutation == 4);
+        CHECK(observed->getData().startpoint == data.startpoint);
+        CHECK(observed->getData().endpoint == data.endpoint);
+        CHECK(RS_Spline::geometryFingerprint(first->getData()) == firstGeometry);
+        CHECK(RS_Spline::geometryFingerprint(later->getData()) == laterGeometry);
+        CHECK_FALSE(first->isDeleted()); CHECK_FALSE(later->isDeleted());
+        CHECK_FALSE(oldPrefix->isDeleted()); CHECK_FALSE(f.graphic.isModified());
+        CHECK_FALSE(canUndo(f.graphic));
+        if (mode < 2) {
+            CHECK_FALSE(result.result); REQUIRE(result.cacheRefusal);
+            CHECK(result.trimmed1 == nullptr); CHECK(result.trimmed2 == nullptr);
+            CHECK(batch.entitiesToAdd == addPrefix); CHECK(batch.entitiesToDelete == deletePrefix);
+            if (mode == 0) {
+                CHECK(*result.cacheRefusal == LC_OffsetCacheTrim::Refusal::UnsupportedLayout);
+                CHECK(first->getUserDefVar("R03_TRIM_FINAL_METADATA") == "external final change");
+            } else CHECK(*result.cacheRefusal == LC_OffsetCacheTrim::Refusal::Cancelled);
+        } else {
+            REQUIRE(result.result); CHECK_FALSE(result.cacheRefusal);
+            REQUIRE(result.trimmed1); REQUIRE(result.trimmed2);
+            CHECK(result.nativeDemotions == 2);
+            REQUIRE(batch.entitiesToAdd.size() == 3); REQUIRE(batch.entitiesToDelete.size() == 3);
+            CHECK(batch.entitiesToAdd.front() == prefix.get()); CHECK(batch.entitiesToDelete.front() == oldPrefix);
+            plain(*result.trimmed1, *first); plain(*result.trimmed2, *later);
+        }
+    }
+}

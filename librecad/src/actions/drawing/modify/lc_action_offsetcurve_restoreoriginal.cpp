@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <cstring>
 #include <limits>
 #include <memory>
 #include <optional>
@@ -20,12 +21,15 @@
 #include "lc_ellipseoffsetgeometry.h"
 #include "lc_offsetcurve.h"
 #include "lc_offsetcurveeditsnapshot.h"
+#include "lc_offsetcurvefinalinput.h"
 #include "rs_document.h"
 #include "rs_ellipse.h"
+#include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_preview.h"
 #include "lc_selectedset.h"
 #include "rs_layer.h"
+#include "rs_layerlist.h"
 
 namespace {
 namespace geo = LC_EllipseOffsetGeometry;
@@ -36,6 +40,81 @@ struct Basis {
     RS_EllipseData data;
     RS_EllipseData raw;
     geo::Sweep sweep;
+};
+
+bool sameAttributePen(const RS_Pen& a, const RS_Pen& b) {
+    const auto sameNumber = [](const double x, const double y) {
+        return std::memcmp(&x, &y, sizeof(double)) == 0;
+    };
+    return a == b && a.getFlags() == b.getFlags() && a.getLineTypeId() == b.getLineTypeId() &&
+        sameNumber(a.getScreenWidth(), b.getScreenWidth()) && sameNumber(a.getAlpha(), b.getAlpha()) &&
+        sameNumber(a.dashOffset(), b.dashOffset()) && a.getColor().colorName() == b.getColor().colorName();
+}
+
+// Pin the bounded inputs to the existing resolver; do not duplicate ByBlock/
+// ByLayer resolution or call that callback-bearing resolver after the seal.
+struct AttributeState {
+    struct Entry {
+        const RS_Entity* address;
+        decltype(std::declval<const RS_Entity&>().getId()) id;
+        RS_Layer* layer;
+        RS_Pen pen;
+        bool registered = false;
+        RS_Pen layerPen;
+    };
+    std::vector<Entry> entries;
+    const RS_Graphic* graphic = nullptr;
+
+    static std::optional<AttributeState> capture(const RS_Entity& source) {
+        AttributeState result;
+        std::size_t count = 0;
+        for (const RS_Entity* item = &source; item; item = item->getParent()) {
+            if (++count > 64) return std::nullopt;
+            if (dynamic_cast<const RS_Graphic*>(item)) break;
+        }
+        result.entries.reserve(count);
+        for (const RS_Entity* item = &source; item; item = item->getParent()) {
+            const auto pen = item->getPen(false);
+            if (std::size_t(pen.getColor().colorName().size()) > LC_OffsetCurve::MaximumOwnedStringUnits)
+                return std::nullopt;
+            result.entries.push_back({item, item->getId(), item->getLayer(false), pen, false, {}});
+            result.graphic = dynamic_cast<const RS_Graphic*>(item);
+            if (result.graphic) break;
+        }
+        const auto* layers = result.graphic ?
+            const_cast<RS_Graphic*>(result.graphic)->RS_Graphic::getLayerList() : nullptr;
+        for (auto& entry : result.entries) {
+            if (entry.layer && !layers) return std::nullopt;
+            entry.registered = entry.layer && layers->contains(entry.layer);
+            if (!entry.registered) continue;
+            const auto pen = entry.layer->getPen(); // Registry membership precedes dereference.
+            if (std::size_t(pen.getColor().colorName().size()) > LC_OffsetCurve::MaximumOwnedStringUnits)
+                return std::nullopt;
+            entry.layerPen = pen;
+        }
+        return result;
+    }
+
+    bool matches(const RS_Entity& source) const {
+        const RS_Entity* item = &source;
+        const RS_Graphic* currentGraphic = nullptr;
+        for (const auto& entry : entries) {
+            if (!item || item != entry.address || item->getId() != entry.id ||
+                item->getLayer(false) != entry.layer || !sameAttributePen(item->getPen(false), entry.pen))
+                return false;
+            currentGraphic = dynamic_cast<const RS_Graphic*>(item);
+            item = currentGraphic ? nullptr : item->getParent();
+        }
+        if (item || currentGraphic != graphic) return false;
+        const auto* layers = currentGraphic ?
+            const_cast<RS_Graphic*>(currentGraphic)->RS_Graphic::getLayerList() : nullptr;
+        for (const auto& entry : entries) {
+            const bool registered = entry.layer && layers && layers->contains(entry.layer);
+            if (registered != entry.registered ||
+                (registered && !sameAttributePen(entry.layer->getPen(), entry.layerPen))) return false;
+        }
+        return true;
+    }
 };
 
 std::optional<Basis> normalized(const RS_EllipseData& raw) {
@@ -302,12 +381,16 @@ void LC_ActionOffsetCurveRestoreOriginal::trigger() {
 bool LC_ActionOffsetCurveRestoreOriginal::doTriggerModifications(LC_DocumentModificationBatch& batch) {
     batch.dontSetActiveLayerAndPen();
     m_report = {};
+    if (!currentContext()) return false;
+    auto* const admittedDocument = m_document;
+    const auto admittedEpoch = m_document->undoStateEpoch();
     struct Prepared {
         Target target;
         std::unique_ptr<RS_Ellipse> ellipse;
         Basis basis;
         std::unique_ptr<LC_OffsetCurveEditSnapshot> snapshot;
         qsizetype outcomeIndex;
+        std::optional<AttributeState> attributes;
     };
     std::vector<Prepared> pending;
     std::size_t comparisons = 0;
@@ -350,7 +433,7 @@ bool LC_ActionOffsetCurveRestoreOriginal::doTriggerModifications(LC_DocumentModi
             ellipse->setPen(pen);
             ellipse->clearSelectionFlag();
             pending.push_back({target, std::move(ellipse), *basis, std::move(snapshot),
-                m_report.outcomes.size()});
+                m_report.outcomes.size(), std::nullopt});
         }
         m_report.outcomes.append(std::move(outcome));
     }
@@ -367,13 +450,16 @@ bool LC_ActionOffsetCurveRestoreOriginal::doTriggerModifications(LC_DocumentModi
             outcome.refusal = tr("Target changed while its original ellipse was prepared.");
         } else {
             // Effective layer attributes may change without changing the entity's ByLayer pen.
+            auto attributes = AttributeState::capture(*curve);
             auto* layer = curve->getLayer(true);
             const auto pen = curve->getPen(true);
-            if ((curve->getLayer(false) && !layer) || !pen.isValid())
+            if (!attributes || !attributes->matches(*curve) ||
+                (curve->getLayer(false) && !layer) || !pen.isValid())
                 outcome.refusal = tr("Target attributes are unavailable.");
             else {
                 prepared.ellipse->setLayer(layer);
                 prepared.ellipse->setPen(pen);
+                prepared.attributes = std::move(attributes);
             }
         }
         if (!outcome.refusal.isEmpty()) {
@@ -382,6 +468,8 @@ bool LC_ActionOffsetCurveRestoreOriginal::doTriggerModifications(LC_DocumentModi
         }
     }
 
+    if (std::none_of(pending.begin(), pending.end(), [](const auto& prepared) { return bool(prepared.ellipse); }))
+        return false;
     // A caller's retiring originals cannot witness presence in the final container.
     QSet<const RS_Entity*> retiring;
     bool boundedPrefixes = true;
@@ -390,105 +478,138 @@ bool LC_ActionOffsetCurveRestoreOriginal::doTriggerModifications(LC_DocumentModi
         ++comparisons;
         retiring.insert(entity);
     }
-    const bool contextStillCurrent = currentContext();
-    qsizetype published = 0;
+    bool contextStillCurrent = currentContext();
+    bool boundedCandidates = boundedPrefixes;
+    // Observe candidate callbacks once, before ANY duplicate decision. No
+    // iterator or candidate pointer survives a callback; re-read current slots.
+    for (std::size_t i = 0; boundedCandidates && contextStillCurrent && i < m_document->size(); ++i) {
+        if (comparisons >= m_comparisonLimit || i > std::size_t(std::numeric_limits<int>::max())) {
+            boundedCandidates = false;
+            break;
+        }
+        ++comparisons;
+        const auto* candidate = m_document->RS_EntityContainer::entityAt(static_cast<int>(i));
+        if (candidate && !retiring.contains(candidate) && candidate->getParent() == m_document &&
+            !candidate->isDeleted()) (void)candidate->rtti();
+        contextStillCurrent = currentContext() && m_document == admittedDocument &&
+            m_document->undoStateEpoch() == admittedEpoch;
+    }
+    for (qsizetype i = 0; boundedCandidates && contextStillCurrent && i < batch.entitiesToAdd.size(); ++i) {
+        if (comparisons >= m_comparisonLimit) { boundedCandidates = false; break; }
+        ++comparisons;
+        const auto* candidate = std::as_const(batch.entitiesToAdd).at(i);
+        if (candidate && !candidate->isDeleted()) (void)candidate->rtti();
+        contextStillCurrent = currentContext() && m_document == admittedDocument &&
+            m_document->undoStateEpoch() == admittedEpoch;
+    }
+    qsizetype preparedCount = 0;
     for (auto& prepared : pending) {
         if (!prepared.ellipse) continue;
-        auto& outcome = m_report.outcomes[prepared.outcomeIndex];
-        if (!contextStillCurrent || !boundedPrefixes) {
+        if (!contextStillCurrent || !boundedCandidates) {
+            auto& outcome = m_report.outcomes[prepared.outcomeIndex];
             outcome.refusal = !contextStillCurrent ? tr("The editable document or view has changed.") :
                 tr("Bounded duplicate search limit reached.");
             ++m_report.refused;
             prepared.ellipse.reset();
-            continue;
+        } else ++preparedCount;
+    }
+    if (!preparedCount) return false;
+    // Preserve caller prefixes and every candidate owner if detach/reserve/append throws.
+    QList<RS_Entity*> additions = batch.entitiesToAdd;
+    if (preparedCount > std::numeric_limits<qsizetype>::max() - additions.size())
+        throw std::length_error("Restore Original batch exceeds native list capacity");
+    additions.detach();
+    additions.reserve(additions.size() + preparedCount);
+    std::vector<LC_OffsetCurveFinalInput::Input> inputs;
+    inputs.reserve(pending.size());
+    for (const auto& prepared : pending)
+        if (m_report.outcomes[prepared.outcomeIndex].refusal.isEmpty())
+            inputs.push_back({static_cast<const LC_OffsetCurve*>(prepared.target.address), prepared.snapshot.get(), true, false});
+    const auto lateRefusal = tr("Target changed while its original ellipse was prepared.");
+    const auto duplicateLimitRefusal = tr("Bounded duplicate search limit reached.");
+    const auto duplicateUncertainRefusal = tr("Duplicate geometry comparison is numerically uncertain.");
+    const auto attributeRefusal = tr("Target effective attributes changed while its original ellipse was prepared.");
+    // Context checks may themselves dispatch virtual document methods. They
+    // precede both the stored seal and all raw ordinary geometry comparisons.
+    if (currentContext() && m_document == admittedDocument &&
+        m_document->undoStateEpoch() == admittedEpoch)
+        LC_OffsetCurveFinalInput::validate(*m_document, inputs);
+    std::size_t input = 0;
+    qsizetype published = 0;
+    for (auto& prepared : pending) {
+        auto& outcome = m_report.outcomes[prepared.outcomeIndex];
+        if (!outcome.refusal.isEmpty()) continue;
+        if (!inputs[input++].matches) {
+            ++m_report.refused;
+            outcome.refusal = lateRefusal;
+            prepared.ellipse.reset();
+        } else if (!prepared.attributes ||
+            !prepared.attributes->matches(*static_cast<const LC_OffsetCurve*>(prepared.target.address))) {
+            ++m_report.refused;
+            outcome.refusal = attributeRefusal;
+            prepared.ellipse.reset();
         }
-        const auto* basis = &prepared.basis;
+    }
+    // No callback-bearing getters below. All ordinary and private witnesses
+    // are decided from their final raw values, never a pre-callback presence bit.
+    for (auto& prepared : pending) {
+        if (!prepared.ellipse) continue;
+        auto& outcome = m_report.outcomes[prepared.outcomeIndex];
         bool present = false;
-        if (outcome.refusal.isEmpty()) {
-            for (const auto* candidate : *m_document) {
-                if (comparisons >= m_comparisonLimit) {
-                    outcome.refusal = tr("Bounded duplicate search limit reached.");
-                    break;
-                }
+        for (const auto* candidate : *m_document) {
+            if (comparisons >= m_comparisonLimit) { outcome.refusal = duplicateLimitRefusal; break; }
+            ++comparisons;
+            if (!candidate || retiring.contains(candidate) || candidate->getParent() != m_document ||
+                candidate->isDeleted()) continue;
+            const auto* ellipse = dynamic_cast<const RS_Ellipse*>(candidate);
+            if (!ellipse) continue;
+            // Hidden/locked ordinary ellipses remain read-only duplicate evidence.
+            const auto other = normalized(ellipse->RS_Ellipse::getData());
+            if (!other) continue;
+            const auto equality = equivalent(prepared.basis, *other);
+            if (!equality) { outcome.refusal = duplicateUncertainRefusal; break; }
+            if (*equality) { present = true; break; }
+        }
+        if (outcome.refusal.isEmpty() && !present) {
+            for (const auto* candidate : std::as_const(batch.entitiesToAdd)) {
+                if (comparisons >= m_comparisonLimit) { outcome.refusal = duplicateLimitRefusal; break; }
                 ++comparisons;
-                if (!candidate || retiring.contains(candidate) ||
-                    candidate->getParent() != m_document || candidate->isDeleted() ||
-                    candidate->rtti() != RS2::EntityEllipse) continue;
+                if (!candidate || candidate->isDeleted()) continue;
                 const auto* ellipse = dynamic_cast<const RS_Ellipse*>(candidate);
                 if (!ellipse) continue;
-                // Existing ellipses are read-only evidence. Another layer, or
-                // a hidden/locked layer, does not make an equal live source absent.
-                const auto other = normalized(ellipse->getData());
-                if (other) {
-                    const auto equality = equivalent(*basis, *other);
-                    if (!equality) {
-                        outcome.refusal = tr("Duplicate geometry comparison is numerically uncertain.");
-                        break;
-                    }
-                    if (*equality) { present = true; break; }
-                }
+                const auto other = normalized(ellipse->RS_Ellipse::getData());
+                if (!other) continue;
+                const auto equality = equivalent(prepared.basis, *other);
+                if (!equality) { outcome.refusal = duplicateUncertainRefusal; break; }
+                if (*equality) { present = true; break; }
             }
-            if (outcome.refusal.isEmpty() && !present) {
-                // Existing caller additions will enter this same container at publication.
-                for (const auto* candidate : std::as_const(batch.entitiesToAdd)) {
-                    if (comparisons >= m_comparisonLimit) {
-                        outcome.refusal = tr("Bounded duplicate search limit reached.");
-                        break;
-                    }
-                    ++comparisons;
-                    if (!candidate || candidate->isDeleted() || candidate->rtti() != RS2::EntityEllipse) continue;
-                    const auto* ellipse = dynamic_cast<const RS_Ellipse*>(candidate);
-                    if (!ellipse) continue;
-                    const auto other = normalized(ellipse->getData());
-                    if (!other) continue;
-                    const auto equality = equivalent(*basis, *other);
-                    if (!equality) {
-                        outcome.refusal = tr("Duplicate geometry comparison is numerically uncertain.");
-                        break;
-                    }
-                    if (*equality) { present = true; break; }
-                }
+        }
+        if (outcome.refusal.isEmpty() && !present) for (const auto& earlier : pending) {
+            if (&earlier == &prepared) break;
+            if (!earlier.ellipse) continue;
+            if (comparisons >= m_comparisonLimit) {
+                outcome.refusal = duplicateLimitRefusal;
+                break;
             }
-            if (outcome.refusal.isEmpty() && !present) {
-                for (const auto& earlier : pending) {
-                    if (&earlier == &prepared) break;
-                    if (!earlier.ellipse) continue;
-                    if (comparisons >= m_comparisonLimit) {
-                        outcome.refusal = tr("Bounded duplicate search limit reached.");
-                        break;
-                    }
-                    ++comparisons;
-                    const auto equality = equivalent(*basis, earlier.basis);
-                    if (!equality) {
-                        outcome.refusal = tr("Duplicate geometry comparison is numerically uncertain.");
-                        break;
-                    }
-                    if (*equality) { present = true; break; }
-                }
+            ++comparisons;
+            const auto equality = equivalent(prepared.basis, earlier.basis);
+            if (!equality) {
+                outcome.refusal = duplicateUncertainRefusal;
+                break;
             }
+            if (*equality) { present = true; break; }
         }
         if (!outcome.refusal.isEmpty()) {
-            ++m_report.refused;
-            prepared.ellipse.reset();
-        }
-        else if (present) {
-            outcome.alreadyPresent = true;
-            ++m_report.alreadyPresent;
+            ++m_report.refused; prepared.ellipse.reset();
+        } else if (present) {
+            ++m_report.alreadyPresent; outcome.alreadyPresent = true;
             prepared.ellipse.reset();
         } else {
-            outcome.restored = true;
-            ++m_report.restored;
+            ++m_report.restored; outcome.restored = true;
             ++published;
         }
     }
     if (published == 0) return false;
-
-    // Preserve caller prefixes and every candidate owner if detach/reserve/append throws.
-    QList<RS_Entity*> additions = batch.entitiesToAdd;
-    if (published > std::numeric_limits<qsizetype>::max() - additions.size())
-        throw std::length_error("Restore Original batch exceeds native list capacity");
-    additions.detach();
-    additions.reserve(additions.size() + published);
     for (const auto& prepared : pending)
         if (prepared.ellipse) additions.append(prepared.ellipse.get());
 

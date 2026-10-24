@@ -16,6 +16,7 @@
 #include "lc_busycursorguard.h"
 #include "lc_offsetcurveui.h"
 #include "lc_offsetcurveeditsnapshot.h"
+#include "lc_offsetcurvefinalinput.h"
 #include "rs_document.h"
 #include "rs_ellipse.h"
 #include "rs_graphicview.h"
@@ -201,6 +202,9 @@ void LC_ActionOffsetCurveUpdateSource::trigger() {
 bool LC_ActionOffsetCurveUpdateSource::doTriggerModifications(LC_DocumentModificationBatch& batch) {
     batch.dontSetActiveLayerAndPen();
     m_report = {};
+    if (!currentContext()) return false;
+    auto* const admittedDocument = m_document;
+    const auto admittedEpoch = m_document->undoStateEpoch();
     auto* source = liveMember(m_source);
     if (source && source->getId() != m_sourceId) source = nullptr;
     m_report.sourceRefusal = sourceRefusal(source);
@@ -213,6 +217,7 @@ bool LC_ActionOffsetCurveUpdateSource::doTriggerModifications(LC_DocumentModific
         std::unique_ptr<LC_OffsetCurve> clone;
         std::unique_ptr<LC_OffsetCurveEditSnapshot> snapshot;
         qsizetype outcomeIndex;
+        bool publish = false;
     };
     std::vector<Staged> staged;
     {
@@ -293,8 +298,30 @@ bool LC_ActionOffsetCurveUpdateSource::doTriggerModifications(LC_DocumentModific
     prepared.entitiesToDelete.detach();
     prepared.entitiesToAdd.reserve(prepared.entitiesToAdd.size() + published);
     prepared.entitiesToDelete.reserve(prepared.entitiesToDelete.size() + published);
+    std::vector<LC_OffsetCurveFinalInput::Input> inputs;
+    inputs.reserve(staged.size());
     for (const auto& entry : staged)
-        if (entry.clone) prepared.replace(entry.original, entry.clone.get());
+        if (entry.clone) inputs.push_back({entry.original, entry.snapshot.get()});
+    const auto lateRefusal = tr("Target changed while its private replacement was prepared.");
+    // All observed callbacks and private-list preparation precede the all-root
+    // stored seal. A later target can have changed an earlier observed peer.
+    if (currentContext() && m_document == admittedDocument &&
+        m_document->undoStateEpoch() == admittedEpoch)
+        LC_OffsetCurveFinalInput::validate(*m_document, inputs);
+    std::size_t input = 0;
+    published = 0;
+    for (auto& entry : staged) if (entry.clone) {
+        entry.publish = inputs[input++].matches;
+        if (!entry.publish) {
+            --m_report.updated;
+            ++m_report.refused;
+            m_report.outcomes[entry.outcomeIndex].refusal = lateRefusal;
+        } else {
+            prepared.replace(entry.original, entry.clone.get());
+            ++published;
+        }
+    }
+    if (published == 0) return false;
 
     // No validation, allocation or virtual callback below the ownership boundary.
     static_assert(noexcept(batch.entitiesToAdd.swap(prepared.entitiesToAdd)));
@@ -302,7 +329,7 @@ bool LC_ActionOffsetCurveUpdateSource::doTriggerModifications(LC_DocumentModific
     static_assert(noexcept(std::declval<std::unique_ptr<LC_OffsetCurve>&>().release()));
     batch.entitiesToAdd.swap(prepared.entitiesToAdd);
     batch.entitiesToDelete.swap(prepared.entitiesToDelete);
-    for (auto& entry : staged) entry.clone.release();
+    for (auto& entry : staged) if (entry.publish) entry.clone.release();
     return true;
 }
 

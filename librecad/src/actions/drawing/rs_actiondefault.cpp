@@ -41,6 +41,7 @@
 #include "lc_busycursorguard.h"
 #include "lc_offsetcurve.h"
 #include "lc_offsetcurveeditsnapshot.h"
+#include "lc_offsetcurvefinalinput.h"
 #include "lc_offsetcurveui.h"
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_cursoroverlayinfo.h"
@@ -500,6 +501,13 @@ void RS_ActionDefault::completeOffsetGrip(const LC_MouseEvent* event) {
             commandMessage(tr("Offset Curve: the source changed while preparing the edit."));
             return;
         }
+        // Recheck the retained context AFTER the observed point pass, then
+        // seal raw source storage without another virtual point/length read.
+        if (liveOffsetGrip(false) != original) return;
+        std::vector<LC_OffsetCurveFinalInput::Input> inputs{{
+            original, m_actionData->offsetGrip->snapshot.get()}};
+        if (!LC_OffsetCurveFinalInput::validate(*m_document, inputs) ||
+            !original->getFlag(RS2::FlagSelected)) return;
         auto* replacement = staged.get();
         // Keep ownership until the established batch actually owns the replacement.
         const auto retainDocumentOwner = qScopeGuard([&] {

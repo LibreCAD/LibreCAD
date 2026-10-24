@@ -30,6 +30,7 @@
 #include <utility>
 #include "lc_offsetcurve.h"
 #include "lc_offsetcurveeditsnapshot.h"
+#include "lc_offsetcurvefinalinput.h"
 #include "rs_document.h"
 #include "rs_preview.h"
 #include "lc_selectedset.h"
@@ -405,15 +406,38 @@ bool LC_ActionModifyEntity::doTriggerModifications(LC_DocumentModificationBatch&
         }
     }
     else if (status == InEditing) {
+        auto* const nativeSource = m_nativeDialogSource.get();
+        if (nativeSource && !nativeDialogDocumentIsCurrent()) return false;
+        auto* const admittedDocument = nativeSource ? m_document : nullptr;
+        const auto admittedEpoch = nativeSource ? m_document->undoStateEpoch() : 0;
         if (m_nativeDialogSource && !nativeDialogSourceIsCurrent()) {
             ctx.dontSetActiveLayerAndPen();
             return false;
         }
+        if (nativeSource && (!nativeDialogDocumentIsCurrent() ||
+            m_nativeDialogSource.get() != nativeSource)) return false;
         // Native per-field setters already publish a checked cache. Accept must
         // not regenerate it, including on attribute-only and same-value edits.
         if (m_clonedEntity->rtti() != RS2::EntityOffsetCurve) m_clonedEntity->update();
         m_clonedEntity->calculateBorders();
         m_clonedEntity->clearSelectionFlag();
+
+        if (nativeSource) {
+            // Candidate callbacks must not make the saved dialog source valid
+            // by merely leaving its earlier observed snapshot comparison true.
+            if (!nativeDialogDocumentIsCurrent() || m_nativeDialogSource.get() != nativeSource ||
+                m_document != admittedDocument || m_document->undoStateEpoch() != admittedEpoch) return false;
+            const auto& source = *m_nativeDialogSource;
+            if (!source.view || source.view->isClosing() || source.view.data() != m_graphicView ||
+                m_actionContext->getDocument() != source.document ||
+                m_actionContext->getGraphicView() != source.view.data() ||
+                source.view->getDocument() != source.document || source.view->getViewPort() != source.viewport ||
+                m_viewport != source.viewport || m_entity != source.original ||
+                m_document->getId() != source.documentId) return false;
+            std::vector<LC_OffsetCurveFinalInput::Input> inputs{{
+                static_cast<const LC_OffsetCurve*>(source.original), source.snapshot.get()}};
+            if (!LC_OffsetCurveFinalInput::validate(*m_document, inputs)) return false;
+        }
 
         const unsigned long cloneEntityId = m_clonedEntity->getId();
         const unsigned long originalEntityId = m_entity->getId();

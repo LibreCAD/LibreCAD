@@ -1072,3 +1072,77 @@ TEST_CASE("H drag a second actual preview registration cancels under lock withou
     queuedLifetimeOperation([&] { f.clean(); CHECK(peer.contains(line)); before.unchanged(f.graphic); });
     hDragPeerFreshCommit(f, before, cycles);
 }
+
+TEST_CASE("R03 native drag rechecks same document view context after a successful final source endpoint read",
+          "[gui][lc-offsetcurve][h-drag][r03][final-read][context]") {
+    class EndpointReadLine final : public RS_Line {
+    public:
+        EndpointReadLine(RS_EntityContainer* parent, const RS_Vector& start, const RS_Vector& end)
+            : RS_Line(parent, start, end) {}
+        std::function<void()> onFinalRead;
+        mutable unsigned remaining = 0, callbacks = 0;
+        mutable RS_Vector returned{false};
+        RS_Vector getEndpoint() const override {
+            const auto endpoint = RS_Line::getEndpoint();
+            if (remaining && --remaining == 0) {
+                ++callbacks; returned = endpoint; onFinalRead();
+            }
+            return endpoint;
+        }
+    };
+    const bool changeView = GENERATE(false, true);
+    Fixture f;
+    lc::test::TestGraphicView otherView; otherView.setDocument(&f.graphic);
+    REQUIRE(f.source->count() > 0);
+    const auto index = f.source->count() - 1;
+    auto* old = dynamic_cast<RS_Line*>(f.source->entityAt(index));
+    REQUIRE(old);
+    const auto start = old->RS_Line::getStartpoint();
+    const auto end = old->RS_Line::getEndpoint();
+    auto* line = new EndpointReadLine(f.source, start, end);
+    line->setPen(old->getPen(false)); line->setLayer(old->getLayer(false));
+    REQUIRE(f.source->removeEntity(old));
+    f.source->insertEntity(index, line);
+    REQUIRE(f.source->hasEditableDefinition());
+    f.graphic.setModified(false);
+    const State before(*f.source, f.graphic);
+    const auto epoch = f.graphic.undoStateEpoch();
+    const auto cycles = f.graphic.countUndoCycles(); const auto count = f.graphic.count();
+    unsigned preparations = 0;
+    const auto restore = qScopeGuard([&] {
+        f.action->beforeLimits = {};
+        line->remaining = 0; line->onFinalRead = {};
+        f.context.setDocumentAndView(&f.graphic, &f.view);
+    });
+    f.action->beforeLimits = [&] {
+        ++preparations;
+        // The real clone already exists; its inherited RS_Line::clone has no
+        // observer. Arm only the original's post-setter snapshot comparison:
+        // cachedLength reads once, then matches() makes its final point read.
+        line->onFinalRead = [&] {
+            if (changeView) f.context.setDocumentAndView(&f.graphic, &otherView);
+        };
+        line->remaining = 2;
+    };
+    f.begin(); f.mouse(QEvent::MouseButtonRelease, {1.5, 0}); f.clean();
+    REQUIRE(preparations == 1); REQUIRE(line->callbacks == 1); CHECK(line->remaining == 0);
+    CHECK(bits(line->returned.x) == bits(end.x)); CHECK(bits(line->returned.y) == bits(end.y));
+    CHECK(bits(line->returned.z) == bits(end.z)); CHECK(line->returned.valid == end.valid);
+    const auto* result = f.action->lastOffsetGripResult(); REQUIRE(result); REQUIRE(*result);
+    CHECK(result->changed); CHECK(result->engineRuns == 1); CHECK(f.action->limitsCalls == 1);
+    REQUIRE(f.context.getDocument() == &f.graphic);
+    REQUIRE(f.view.getDocument() == &f.graphic); REQUIRE(otherView.getDocument() == &f.graphic);
+    const auto live = f.live(); REQUIRE(live.size() == 1);
+    if (changeView) {
+        CHECK(f.context.getGraphicView() == &otherView); CHECK(live.front() == f.source);
+        CHECK(f.graphic.count() == count); CHECK(f.graphic.undoStateEpoch() == epoch);
+        CHECK(f.graphic.countUndoCycles() == cycles); before.unchanged(f.graphic);
+    } else {
+        // An unchanged context under the identical getter observation still
+        // publishes the actual successful Through edit exactly once.
+        CHECK(f.context.getGraphicView() == &f.view); CHECK(live.front() != f.source);
+        CHECK(live.front()->definition().distance == Catch::Approx(.5));
+        CHECK(f.source->isDeleted()); CHECK(f.graphic.count() == count + 1);
+        CHECK(f.graphic.countUndoCycles() == cycles + 1); before.sourceExact();
+    }
+}

@@ -287,9 +287,15 @@ public:
 class Action final : public LC_ActionModifyEntity {
 public:
     explicit Action(LC_ActionContext* context) : LC_ActionModifyEntity(context) {}
+    std::function<void()> beforeNativeCommit;
     void start(RS_Entity* entity) {
         doInitWithContextEntity(entity, RS_Vector{0, 0});
         init(ShowDialog); // real delayed editor, trigger and document batch
+    }
+protected:
+    bool doTriggerModifications(LC_DocumentModificationBatch& batch) override {
+        if (getStatus() == InEditing && beforeNativeCommit) beforeNativeCommit();
+        return LC_ActionModifyEntity::doTriggerModifications(batch);
     }
 };
 
@@ -1667,5 +1673,90 @@ TEST_CASE("Ordinary delayed dialogs abandon Accept and Cancel safely after docum
         CHECK(f.fallback.countUndoCycles() == 0); CHECK_FALSE(f.fallback.isModified());
         CHECK(f.callbacks == 1);
         f.restoreContext(); // Restore before the borrowed alternative view is destroyed.
+    }
+}
+
+TEST_CASE("R03 native modal Accept rechecks undo epoch after a successful final source endpoint read",
+          "[gui][dialog][offsetcurve][action][r03][final-read][epoch]") {
+    class EndpointReadLine final : public RS_Line {
+    public:
+        EndpointReadLine(RS_EntityContainer* parent, const RS_Vector& start, const RS_Vector& end)
+            : RS_Line(parent, start, end) {}
+        std::function<void()> onFinalRead;
+        mutable unsigned remaining = 0, callbacks = 0;
+        mutable RS_Vector returned{false};
+        RS_Vector getEndpoint() const override {
+            const auto endpoint = RS_Line::getEndpoint();
+            if (remaining && --remaining == 0) {
+                ++callbacks; returned = endpoint; onFinalRead();
+            }
+            return endpoint;
+        }
+    };
+    for (const bool changeEpoch : {false, true}) {
+        CAPTURE(changeEpoch);
+        ActionFixture f;
+        REQUIRE(f.original->count() > 0);
+        const auto index = f.original->count() - 1;
+        auto* old = dynamic_cast<RS_Line*>(f.original->entityAt(index));
+        REQUIRE(old);
+        const auto start = old->RS_Line::getStartpoint();
+        const auto end = old->RS_Line::getEndpoint();
+        auto* line = new EndpointReadLine(f.original, start, end);
+        line->setPen(old->getPen(false)); line->setLayer(old->getLayer(false));
+        REQUIRE(f.original->removeEntity(old));
+        f.original->insertEntity(index, line);
+        REQUIRE(f.original->hasEditableDefinition());
+        f.graphic.setModified(false);
+        const Snapshot before(*f.original);
+        const auto undoBefore = dialogUndoHistory(f.graphic);
+        const auto cycles = f.graphic.countUndoCycles();
+        const auto count = f.graphic.count();
+        unsigned admissions = 0;
+        bool undoReturned = true;
+        std::uint64_t admittedEpoch = 0, readEpoch = 0, afterReadEpoch = 0;
+        const auto disarm = qScopeGuard([&] {
+            f.action->beforeNativeCommit = {};
+            line->remaining = 0; line->onFinalRead = {};
+        });
+        f.action->beforeNativeCommit = [&] {
+            ++admissions; admittedEpoch = f.graphic.undoStateEpoch();
+            // Only arm inside the real InEditing transaction, after all modal
+            // guards. matches() reads cachedLength's endpoint, then its final
+            // point comparison; the latter must still return the original value.
+            line->onFinalRead = [&] {
+                readEpoch = f.graphic.undoStateEpoch();
+                if (changeEpoch) undoReturned = f.graphic.undo();
+                afterReadEpoch = f.graphic.undoStateEpoch();
+            };
+            line->remaining = 2;
+        };
+        f.drive([&](LC_DlgEntityProperties& dialog, unsigned opening) {
+            REQUIRE(opening == 1);
+            auto& widget = native(dialog);
+            enter(widget, "leDistance", ".3");
+            REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+            CHECK(widget.lastEditResult()->changed); CHECK(widget.lastEditResult()->engineRuns == 1);
+            CHECK(widget.editAttemptCount() == 1); before.exact(*f.original);
+            button(dialog, QDialogButtonBox::Ok);
+        });
+        REQUIRE(admissions == 1); REQUIRE(line->callbacks == 1); CHECK(line->remaining == 0);
+        pointEqual(line->returned, end); pointEqual(line->RS_Line::getEndpoint(), end);
+        CHECK(readEpoch == admittedEpoch);
+        if (changeEpoch) {
+            CHECK_FALSE(undoReturned); CHECK(afterReadEpoch == readEpoch + 1);
+            CHECK(f.graphic.undoStateEpoch() == afterReadEpoch);
+            CHECK(&f.current() == f.original); before.exact(*f.original);
+            CHECK_FALSE(f.original->isDeleted()); CHECK_FALSE(f.graphic.isModified());
+            CHECK(f.graphic.count() == count); CHECK(f.graphic.countUndoCycles() == cycles);
+            CHECK(dialogUndoHistory(f.graphic) == undoBefore);
+        } else {
+            // The same getter and real edit must succeed when its callback
+            // leaves the admitted context/epoch unchanged.
+            CHECK(afterReadEpoch == readEpoch);
+            CHECK(&f.current() != f.original); CHECK(f.current().definition().distance == .3);
+            CHECK(f.original->isDeleted()); CHECK(f.graphic.count() == count + 1);
+            CHECK(f.graphic.countUndoCycles() == cycles + 1); before.geometry(*f.original);
+        }
     }
 }

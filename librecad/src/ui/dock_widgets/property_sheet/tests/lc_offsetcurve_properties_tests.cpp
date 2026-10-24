@@ -1340,3 +1340,151 @@ TEST_CASE("Suppressed native sheet refills retain live rows and actual picker co
     CHECK_FALSE(source->isDeleted());
     CHECK_FALSE(f.graphic.undo());
 }
+
+TEST_CASE("R03 native sheet refuses a peer changed by the actual pending cancellation signal",
+          "[gui][properties][offsetcurve][r03-final-closure]") {
+    const bool mutate = GENERATE(true, false);
+    CAPTURE(mutate);
+    Fixture f;
+    auto* first = addArc(f.graphic);
+    auto* cancelled = addArc(f.graphic, {4, 0});
+    f.show({first, cancelled});
+    Snapshot beforeFirst(*first), beforeCancelled(*cancelled);
+    auto* queue = f.queue();
+    queue->apply(queue->epoch(), {first, cancelled},
+        [](LC_OffsetCurve& candidate, const LC_OffsetRunLimits& limits) {
+            return candidate.setDistance(.5, limits); // Genuine producer + actual C once per target.
+        });
+    REQUIRE(queue->lastAttempts().size() == 2);
+    for (const auto& attempt : queue->lastAttempts()) {
+        REQUIRE(attempt.editInvoked); ranOnce(attempt.result);
+    }
+    REQUIRE(queue->pendingCount() == 2);
+    REQUIRE(first->getUserDefVar("R03_SHEET_FINAL_METADATA").isEmpty());
+    cancelled->setUserDefVar("R03_SHEET_CANCEL_TRIGGER", "earlier refusal");
+    unsigned fired = 0;
+    std::size_t pendingAtMutation = 0;
+    const auto connection = QObject::connect(queue, &LC_OffsetCurvePropertyQueue::pendingCancelled,
+        queue, [&] {
+            if (++fired != 1) return;
+            pendingAtMutation = queue->pendingCount();
+            if (mutate) first->setUserDefVar("R03_SHEET_FINAL_METADATA", "external final change");
+        }, Qt::DirectConnection);
+    f.graphic.setModified(false);
+    waitForCommit(); // Actual queue timer, observed matches, signal and prepared publication.
+    QObject::disconnect(connection);
+    REQUIRE(fired >= 1);
+    REQUIRE(pendingAtMutation == 1);
+    CHECK(queue->pendingCount() == 0);
+    beforeFirst.check(*first); beforeCancelled.check(*cancelled);
+    CHECK_FALSE(cancelled->isDeleted());
+    CHECK(cancelled->getUserDefVar("R03_SHEET_CANCEL_TRIGGER") == "earlier refusal");
+    if (mutate) {
+        CHECK_FALSE(first->isDeleted());
+        CHECK(first->getUserDefVar("R03_SHEET_FINAL_METADATA") == "external final change");
+        const auto current = live(f.graphic);
+        REQUIRE(current.size() == 2);
+        CHECK(std::find(current.begin(), current.end(), first) != current.end());
+        CHECK(f.graphic.countUndoCycles() == 0); CHECK_FALSE(f.graphic.isModified());
+        bool undo = true, redo = true; f.graphic.collectUndoState(undo, redo);
+        CHECK_FALSE(undo); CHECK_FALSE(redo);
+    } else {
+        CHECK(first->isDeleted());
+        const auto current = live(f.graphic);
+        REQUIRE(current.size() == 2);
+        auto* replacement = current[0] == cancelled ? current[1] : current[0];
+        CHECK(replacement->definition().distance == .5);
+        CHECK(f.graphic.countUndoCycles() == 1);
+        REQUIRE(f.graphic.undo()); CHECK_FALSE(first->isDeleted());
+        REQUIRE(f.graphic.redo()); CHECK(first->isDeleted());
+    }
+}
+
+TEST_CASE("R03 queue cancel inside successful source getters retains executing snapshots and retires old work",
+          "[gui][properties][offsetcurve][r03-final-closure][r03-queue-reentry]") {
+    class CancelReadLine final : public RS_Line {
+    public:
+        explicit CancelReadLine(LC_OffsetCurve& root)
+            : RS_Line(&root, root.getStartpoint(), root.getEndpoint()) {}
+        RS_Vector getStartpoint() const override {
+            const auto point = RS_Line::getStartpoint();
+            if (onRead) {
+                auto callback = std::move(onRead);
+                callback();
+                ++returned;
+            }
+            return point; // The real getter succeeds with exactly the same stored coordinates.
+        }
+        mutable std::function<void()> onRead;
+        mutable unsigned returned = 0;
+    };
+    const unsigned route = GENERATE(0u, 1u, 2u); // value, repeated apply, actual timed commit.
+    const bool cancel = GENERATE(true, false);
+    CAPTURE(route, cancel);
+    Fixture f;
+    auto* source = addArc(f.graphic);
+    auto* line = new CancelReadLine(*source);
+    source->clear(); source->addEntity(line);
+    REQUIRE(source->hasEditableDefinition());
+    f.graphic.select(QList<RS_Entity*>{source});
+    Snapshot before(*source);
+    const auto raw = line->getData();
+    // A real production queue without painted property rows prevents unrelated
+    // GUI getters from consuming the armed callback before the chosen route.
+    LC_OffsetCurvePropertyQueue queue(nullptr, &f.context);
+    queue.setContext(&f.graphic, &f.view);
+    queue.apply(queue.epoch(), {source},
+        [](LC_OffsetCurve& candidate, const LC_OffsetRunLimits& limits) {
+            return candidate.setDistance(.5, limits);
+        });
+    REQUIRE(queue.lastAttempts().size() == 1);
+    REQUIRE(queue.lastAttempts().front().editInvoked);
+    ranOnce(queue.lastAttempts().front().result);
+    REQUIRE(queue.pendingCount() == 1);
+    const auto epoch = queue.epoch();
+    unsigned fired = 0, secondEdits = 0;
+    std::size_t pendingAtCallback = 0;
+    line->onRead = [&] {
+        ++fired;
+        pendingAtCallback = queue.pendingCount();
+        if (cancel) queue.cancel(); // Actual map destruction from inside SourceSnapshot::matches.
+    };
+    f.graphic.setModified(false);
+    if (route == 0) {
+        const auto* value = queue.value(epoch, source);
+        if (cancel) CHECK(value == nullptr);
+        else { REQUIRE(value); CHECK(value != source); CHECK(value->definition().distance == .5); }
+    } else if (route == 1) {
+        queue.apply(epoch, {source}, [&](LC_OffsetCurve& candidate, const LC_OffsetRunLimits& limits) {
+            ++secondEdits;
+            return candidate.setDistance(.75, limits);
+        });
+        CHECK(secondEdits == (cancel ? 0u : 1u));
+    }
+    waitForCommit(); // For route 2 this is the first possible observed read after arming.
+    REQUIRE(fired == 1);
+    REQUIRE(line->returned == 1);
+    REQUIRE(pendingAtCallback == 1);
+    CHECK(line->getData().startpoint == raw.startpoint);
+    CHECK(line->getData().endpoint == raw.endpoint);
+    before.check(*source);
+    CHECK(queue.pendingCount() == 0);
+    if (cancel) {
+        CHECK(queue.epoch() != epoch);
+        CHECK_FALSE(source->isDeleted());
+        const auto current = live(f.graphic);
+        REQUIRE(current.size() == 1); CHECK(current.front() == source);
+        CHECK(f.graphic.countUndoCycles() == 0); CHECK_FALSE(f.graphic.isModified());
+        bool undo = true, redo = true; f.graphic.collectUndoState(undo, redo);
+        CHECK_FALSE(undo); CHECK_FALSE(redo);
+    } else {
+        CHECK(source->isDeleted());
+        const auto current = live(f.graphic);
+        REQUIRE(current.size() == 1); CHECK(current.front() != source);
+        CHECK(current.front()->definition().distance == (route == 1 ? .75 : .5));
+        CHECK(f.graphic.countUndoCycles() == 1);
+        REQUIRE(f.graphic.undo()); CHECK_FALSE(source->isDeleted());
+        CHECK_FALSE(f.graphic.undo());
+        REQUIRE(f.graphic.redo()); CHECK(source->isDeleted());
+    }
+}

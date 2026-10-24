@@ -56,7 +56,7 @@ private:
     struct SourceSnapshot;
     struct Pending {
         std::unique_ptr<LC_OffsetCurve> candidate;
-        std::unique_ptr<SourceSnapshot> source;
+        std::shared_ptr<SourceSnapshot> source;
     };
     bool currentContext() const;
     bool isLive(const RS_Entity* original) const;

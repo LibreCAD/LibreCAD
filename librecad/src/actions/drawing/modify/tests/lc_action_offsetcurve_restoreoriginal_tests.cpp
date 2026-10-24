@@ -73,6 +73,19 @@ public:
     mutable std::function<void()> onRead;
 };
 
+class TypeCallbackLine final : public RS_Line {
+public:
+    using RS_Line::RS_Line;
+    RS2::EntityType rtti() const override {
+        if (onType) {
+            auto callback = std::move(onType);
+            callback();
+        }
+        return RS2::EntityLine;
+    }
+    mutable std::function<void()> onType;
+};
+
 struct KeepSelected {
     QSettings* store = RS_Settings::instance()->getSettings();
     bool present = store->contains("Modify/KeepModifiedSelected");
@@ -892,10 +905,12 @@ TEST_CASE("I restore bounded duplicate refusal neither inserts uncertain geometr
     auto* first = f.arc();
     auto* second = f.ring({16, 32});
     f.start({first, second}, true);
-    const bool allowFirst = GENERATE(false, true);
-    // Each target scans every direct document member before comparing pending
-    // insertions; this cap admits exactly the first complete search, or none.
-    f.action->m_comparisonLimit = allowFirst ? f.graphic.count() : 0;
+    const unsigned passes = GENERATE(0u, 1u, 2u);
+    const bool allowFirst = passes == 2;
+    // The callback prepass costs one direct-member pass before any decision.
+    // The OLD one-pass allowance now refuses honestly; two admit only the first
+    // complete raw search, without increasing the production comparison cap.
+    f.action->m_comparisonLimit = passes*f.graphic.count();
     f.action->commit();
     counts(*f.action, allowFirst ? 1 : 0, 0, allowFirst ? 1 : 2);
     CHECK(first->isSelected());
@@ -1159,6 +1174,126 @@ TEST_CASE("I restore decides live document duplicates after every source snapsho
     REQUIRE(f.graphic.redo()); CHECK(f.liveEllipses().size() == (erased ? 2 : 3));
 }
 
+TEST_CASE("R03 Restore decides ordinary witnesses after all candidate type callbacks",
+          "[lc-offsetcurve][i-restore][action][publication][r03-final-closure]") {
+    const bool callerPrefix = GENERATE(false, true);
+    const bool mutate = GENERATE(false, true);
+    CAPTURE(callerPrefix, mutate);
+    Fixture f;
+    auto* first = f.arc();
+    auto* later = f.ring({16, 32});
+    auto witnessOwner = std::make_unique<RS_Ellipse>(nullptr, first->definition().basis);
+    auto callbackOwner = std::make_unique<TypeCallbackLine>(nullptr, RS_Vector{30, 30}, RS_Vector{31, 30});
+    auto* witness = witnessOwner.get();
+    auto* callback = callbackOwner.get();
+    witness->setLayer(f.graphic.findLayer("0"));
+    witness->setUserDefVar("R03_ORDINARY_WITNESS", "external evidence");
+    witness->setSourceHandle(727);
+    QList<RS_Entity*> prefix;
+    if (callerPrefix) {
+        prefix.append(witness); prefix.append(callback);
+    } else {
+        f.add(witnessOwner.release()); f.add(callbackOwner.release());
+    }
+    f.start({first, later}, true);
+    NativeSnapshot a(*first), b(*later);
+    unsigned fired = 0;
+    callback->onType = [&] {
+        ++fired;
+        if (mutate) witness->move({4, 8});
+    };
+    LC_DocumentModificationBatch batch;
+    batch.entitiesToAdd = prefix;
+    const auto cleanup = qScopeGuard([&] {
+        while (batch.entitiesToAdd.size() > prefix.size()) delete batch.entitiesToAdd.takeLast();
+    });
+    const auto count = f.graphic.count();
+    f.graphic.setModified(false);
+    REQUIRE(f.action->prepare(batch)); // Actual production preparation, including its genuine snapshots.
+    REQUIRE(fired == 1);
+    counts(*f.action, mutate ? 2 : 1, mutate ? 0 : 1, 0);
+    REQUIRE(batch.entitiesToAdd.size() == prefix.size() + (mutate ? 2 : 1));
+    for (qsizetype i = 0; i < prefix.size(); ++i) CHECK(batch.entitiesToAdd.at(i) == prefix.at(i));
+    unsigned firstOriginals = 0, laterOriginals = 0;
+    for (qsizetype i = prefix.size(); i < batch.entitiesToAdd.size(); ++i) {
+        const auto* restored = dynamic_cast<const RS_Ellipse*>(batch.entitiesToAdd.at(i));
+        REQUIRE(restored);
+        CHECK(restored->getParent() == nullptr); CHECK_FALSE(restored->isSelected());
+        CHECK(restored->sourceHandle() == 0); CHECK(restored->ownerLineage() == 0);
+        if (restored->getData().center == first->definition().basis.center) {
+            ++firstOriginals; sameBasis(restored->getData(), first->definition().basis);
+        } else {
+            ++laterOriginals; sameBasis(restored->getData(), later->definition().basis);
+        }
+    }
+    CHECK(firstOriginals == (mutate ? 1 : 0)); CHECK(laterOriginals == 1);
+    CHECK(witness->getData().center == (mutate ? RS_Vector(4, 8) : RS_Vector(0, 0)));
+    CHECK(witness->getUserDefVar("R03_ORDINARY_WITNESS") == "external evidence");
+    CHECK(witness->sourceHandle() == 727); CHECK_FALSE(witness->isDeleted());
+    a.check(); b.check();
+    CHECK(batch.entitiesToDelete.isEmpty()); CHECK(f.graphic.count() == count);
+    CHECK_FALSE(f.graphic.isModified()); noUndo(f.graphic);
+}
+
+TEST_CASE("R03 Restore refuses late effective layer and inherited pen changes without publishing stale attributes",
+          "[lc-offsetcurve][i-restore][action][publication][r03-final-closure]") {
+    const bool inherited = GENERATE(false, true);
+    const bool mutate = GENERATE(false, true);
+    CAPTURE(inherited, mutate);
+    Fixture f; KeepSelected keep(false);
+    auto* layer = new RS_Layer("R03_RESTORE_LATE_PEN");
+    const RS_Pen oldPen(RS_Color(17, 31, 47), RS2::Width11, RS2::DashLine);
+    const RS_Pen newPen(RS_Color(71, 53, 29), RS2::Width07, RS2::SolidLine);
+    layer->setPen(oldPen); f.graphic.addLayer(layer);
+    RS_Block* block = nullptr;
+    if (inherited) {
+        block = new RS_Block(&f.graphic, RS_BlockData("R03_RESTORE_PEN_BLOCK", {0, 0}, false));
+        REQUIRE(f.graphic.addBlock(block));
+        block->setLayer(layer); block->setPen(oldPen);
+        f.graphic.activateBlock("R03_RESTORE_PEN_BLOCK");
+        f.view.setDocument(block); f.context.setDocumentAndView(block, &f.view);
+    }
+    auto* curve = f.arc();
+    curve->setLayer(layer);
+    if (inherited)
+        curve->setPen(RS_Pen(RS_Color(RS2::FlagByBlock), RS2::WidthByBlock, RS2::LineByBlock));
+    else curve->setPen(RS_Pen(RS_Color(RS2::FlagByLayer), RS2::WidthByLayer, RS2::LineByLayer));
+    const auto rawPen = curve->getPen(false);
+    const auto effectiveBefore = curve->getPen(true);
+    REQUIRE(effectiveBefore == oldPen);
+    auto* callback = f.add(new TypeCallbackLine(nullptr, RS_Vector{30, 30}, RS_Vector{31, 30}));
+    f.start({curve}, true);
+    NativeSnapshot before(*curve);
+    unsigned fired = 0;
+    callback->onType = [&] {
+        ++fired;
+        if (mutate) {
+            if (inherited) block->setPen(newPen);
+            else layer->setPen(newPen);
+        }
+    };
+    const auto count = f.document().count();
+    f.action->commit(); // Public action and real undo publisher; no fake checker results.
+    REQUIRE(fired == 1);
+    before.check(); CHECK(curve->getPen(false) == rawPen);
+    CHECK(curve->getPen(true) == (mutate ? newPen : oldPen));
+    counts(*f.action, mutate ? 0 : 1, 0, mutate ? 1 : 0);
+    CHECK(f.document().count() == count + (mutate ? 0 : 1));
+    if (mutate) {
+        REQUIRE(f.action->lastReport().outcomes.size() == 1);
+        CHECK(f.action->lastReport().outcomes.front().refusal.contains("attributes"));
+        CHECK(f.liveEllipses().isEmpty()); noUndo(f.document());
+    } else {
+        REQUIRE(f.liveEllipses().size() == 1);
+        auto* restored = f.liveEllipses().front();
+        CHECK(restored->getPen(false) == effectiveBefore); CHECK(restored->getLayer(false) == layer);
+        sameBasis(restored->getData(), curve->definition().basis);
+        REQUIRE(f.document().undo()); CHECK(restored->isDeleted()); before.check();
+        CHECK_FALSE(f.document().undo());
+        REQUIRE(f.document().redo()); CHECK_FALSE(restored->isDeleted()); before.check();
+    }
+}
+
 TEST_CASE("I restore KeepSelected fixture updates the public settings cache across alternating actions",
           "[lc-offsetcurve][i-restore][action][settings]") {
     const bool initial = LC_GET_ONE_BOOL("Modify", "KeepModifiedSelected", true);
@@ -1266,4 +1401,87 @@ TEST_CASE("I source update preserves hidden context selection without duplicate 
     CHECK(selection.count(curve) == 1);
     CHECK(f.graphic.count() == 2);
     noUndo(f.graphic);
+}
+
+TEST_CASE("R03 Restore seals peers after successful final points and ordinary duplicate callbacks",
+          "[lc-offsetcurve][i-restore][action][r03-final-closure]") {
+    class ObservedLine final : public RS_Line {
+    public:
+        explicit ObservedLine(LC_OffsetCurve& root)
+            : RS_Line(&root, root.getStartpoint(), root.getEndpoint()) {}
+        RS_Vector getStartpoint() const override {
+            const auto point = RS_Line::getStartpoint();
+            if (armed && ++reads == 4 && onFourth) {
+                auto callback = std::move(onFourth);
+                callback();
+            }
+            return point;
+        }
+        bool armed = false;
+        mutable unsigned reads = 0;
+        mutable std::function<void()> onFourth;
+    };
+    class OrdinaryCandidate final : public RS_Line {
+    public:
+        using RS_Line::RS_Line;
+        RS2::EntityType rtti() const override {
+            if (onType) {
+                auto callback = std::move(onType);
+                callback();
+            }
+            return RS2::EntityLine;
+        }
+        mutable std::function<void()> onType;
+    };
+    const bool mutate = GENERATE(true, false);
+    CAPTURE(mutate);
+    KeepSelected keep(true);
+    Fixture f;
+    auto* first = f.arc(.25);
+    auto* later = f.arc(.5); // Same embedded original: exercise private dedup dependencies.
+    auto* firstDisplay = new ObservedLine(*first);
+    auto* laterDisplay = new ObservedLine(*later);
+    first->clear(); first->addEntity(firstDisplay);
+    later->clear(); later->addEntity(laterDisplay);
+    auto* candidate = f.add(new OrdinaryCandidate(&f.graphic, RS_Vector{20, 20}, RS_Vector{21, 20}));
+    f.start({first, later}, true);
+    NativeSnapshot firstBefore(*first), laterBefore(*later);
+    REQUIRE(first->getUserDefVar("R03_RESTORE_FINAL_METADATA").isEmpty());
+    unsigned fired = 0, firstReadsAtMutation = 0, laterReadsAtMutation = 0;
+    const auto mutation = [&] {
+        ++fired;
+        firstReadsAtMutation = firstDisplay->reads;
+        laterReadsAtMutation = laterDisplay->reads;
+        if (mutate) first->setUserDefVar("R03_RESTORE_FINAL_METADATA", "external final change");
+    };
+    SECTION("later native final point getter changes an earlier source") {
+        laterDisplay->onFourth = mutation;
+    }
+    SECTION("ordinary duplicate candidate type getter changes an already checked source") {
+        candidate->onType = mutation;
+    }
+    firstDisplay->armed = laterDisplay->armed = true;
+    f.graphic.setModified(false);
+    f.action->commit(); // Actual public action, source snapshots, dedup and document handoff.
+    REQUIRE(fired == 1);
+    REQUIRE(firstReadsAtMutation == 4);
+    REQUIRE(laterReadsAtMutation == 4);
+    firstBefore.check(); laterBefore.check();
+    CHECK_FALSE(candidate->isDeleted());
+    REQUIRE(f.liveEllipses().size() == 1);
+    sameBasis(f.liveEllipses().front()->getData(), later->definition().basis);
+    if (mutate) {
+        counts(*f.action, 1, 0, 1);
+        CHECK(first->getUserDefVar("R03_RESTORE_FINAL_METADATA") == "external final change");
+        CHECK_FALSE(f.action->lastReport().outcomes.front().restored);
+        CHECK_FALSE(f.action->lastReport().outcomes.front().alreadyPresent);
+        CHECK(f.action->lastReport().outcomes.back().restored);
+    } else counts(*f.action, 1, 1, 0);
+    CHECK(f.graphic.countUndoCycles() == 1);
+    REQUIRE(f.graphic.undo());
+    CHECK(f.liveEllipses().isEmpty());
+    CHECK_FALSE(first->isDeleted()); CHECK_FALSE(later->isDeleted());
+    if (mutate) CHECK(first->getUserDefVar("R03_RESTORE_FINAL_METADATA") == "external final change");
+    CHECK_FALSE(f.graphic.undo());
+    REQUIRE(f.graphic.redo()); CHECK(f.liveEllipses().size() == 1);
 }

@@ -26,6 +26,7 @@
 **********************************************************************/
 #include "rs_modification.h"
 #include "lc_offsetcurveeditsnapshot.h"
+#include "lc_offsetcurvefinalinput.h"
 
 #include <algorithm>
 #include <cmath>
@@ -2291,6 +2292,7 @@ LC_TrimResult RS_Modification::trimStoredCache(RS_Document& document, RS_Entity&
     LC_TrimResult result;
     result.cacheRefusal = trim::Refusal::InvalidInput;
     result.intersection1 = result.intersection2 = RS_Vector{false};
+    const auto admittedUndoEpoch = document.undoStateEpoch();
     const auto checkCancel = [&] {
         return options.cancellation.requested && options.cancellation.requested->load(std::memory_order_relaxed);
     };
@@ -2588,8 +2590,19 @@ LC_TrimResult RS_Modification::trimStoredCache(RS_Document& document, RS_Entity&
                 (input.replacement && input.address->isLocked()) || !nativeReady(*input.address) ||
                 !input.snapshot->matches(*input.address)) return refuse(reason);
         }
-        // No external operand callback after the complete native closure.
+        std::vector<LC_OffsetCurveFinalInput::Input> finalInputs;
+        finalInputs.reserve(2);
+        for (const auto& input : nativeInputs) if (input.address)
+            finalInputs.push_back({input.address, input.snapshot.get(), input.replacement});
+        if (document.undoStateEpoch() != admittedUndoEpoch)
+            return refuse(trim::Refusal::UnsupportedLayout);
+        LC_OffsetCurveFinalInput::validate(document, finalInputs);
+        for (const auto& input : finalInputs) if (!input.matches)
+            return refuse(input.requireUnlocked ? trim::Refusal::UnsupportedLayout : trim::Refusal::UnsupportedCutter);
+        // The atomic token read cannot invalidate the stored seal. Keep this
+        // final probe after all validation allocations, immediately before handoff.
         if (checkCancel()) return refuse(trim::Refusal::Cancelled);
+        // No operand callback or notification follows.
         ctx.entitiesToAdd.swap(additions); ctx.entitiesToDelete.swap(deletions); ctx.dontSetActiveLayerAndPen();
         for (auto& e : owned) e.release();
         result.result = true; result.cacheRefusal.reset();

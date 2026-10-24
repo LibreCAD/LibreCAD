@@ -659,6 +659,7 @@ HEADERS += \
     ui/components/utils/lc_busycursorguard.h \
     ui/components/utils/lc_offsetcurveui.h \
     ui/components/utils/lc_offsetcurveeditsnapshot.h \
+    ui/components/utils/lc_offsetcurvefinalinput.h \
     ui/components/utils/lc_guarded_signals_blocker.h \
     ui/components/utils/lc_mouse_tracking_table_view.h \
     ui/components/utils/lc_tableitem_delegate_base.h \
