@@ -38,6 +38,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 struct RS_OffsetData;
 struct LC_OffsetBatchOutcome;
 struct LC_OffsetSourceOutcome;
+struct LC_OffsetPlainOutcome;
 class LC_OffsetPreviewCache;
 
 /**
@@ -54,6 +55,8 @@ public:
     void setDistance(double distance) const;
     bool isFixedDistance() const {return m_distanceIsFixed;}
     void setDistanceFixed(bool value);
+    bool isEditableOffsetCurve() const;
+    void setEditableOffsetCurve(bool enabled) const;
 protected:
     /**
      * Action States.
@@ -66,7 +69,7 @@ protected:
     bool m_distanceIsFixed = true;
     RS_Vector m_referencePoint = RS_Vector(false);
     std::unique_ptr<RS_OffsetData> m_offsetData;
-    /** The committed outcome, kept only until its selection update has used it. */
+    /** Keep committed source diagnostics through selection and completion messages. */
     std::unique_ptr<LC_OffsetBatchOutcome> m_pendingOutcome;
     /** Offsets the preview made, for the sources it made them for. */
     std::unique_ptr<LC_OffsetPreviewCache> m_previewCache;
@@ -79,6 +82,9 @@ protected:
     static QString stopReason(const LC_OffsetSourceOutcome& source);
     /** Why an offset, or the copy that stopped a series, could not be made. */
     static QString offsetFailureReason(const LC_OffsetSourceOutcome& source);
+    /** Committed native-request fallback only; never dereferences source identity pointers. */
+    static QString keptPlainReason(const LC_OffsetSourceOutcome& source, const LC_OffsetPlainOutcome& plain);
+    static QString keptPlainMessage(const LC_OffsetBatchOutcome& outcome);
     /** Appearance/MaxPreview, read signed: a non-positive value means none in detail. */
     static std::size_t maxPreviewDetail();
     void finish() override;

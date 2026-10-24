@@ -143,7 +143,7 @@ struct RS_OffsetData : LC_ModifyOperationFlags {
      */
     RS_Vector sideFallback{false};
     double distance = 0.;
-    /** Native ellipse definitions are opt-in until the H-enable UI slice. */
+    /** Programmatic requests opt in; Modify Offset loads its saved interactive default separately. */
     bool asOffsetCurve = false;
 };
 

@@ -44,6 +44,7 @@ protected slots:
     void languageChange() override;
     void onDistEditingFinished();
     void onFixedDistanceClicked(bool val);
+    void onEditableOffsetCurveClicked(bool enabled);
     void cbKeepOriginalsClicked(bool val);
     void cbMultipleCopiesClicked(bool val);
     void cbUseCurrentAttributesClicked(bool val);

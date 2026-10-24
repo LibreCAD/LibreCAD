@@ -27,6 +27,8 @@
 #include "lc_action_modify_offset.h"
 
 #include <cmath>
+#include <algorithm>
+#include <vector>
 #include <unordered_set>
 
 #include <QStringList>
@@ -35,6 +37,7 @@
 #include "lc_curveoffset.h"
 #include "lc_offset_options_filler.h"
 #include "lc_offset_options_widget.h"
+#include "lc_offsetcurveui.h"
 #include "rs_document.h"
 #include "rs_modification.h"
 #include "rs_settings.h"
@@ -69,6 +72,14 @@ LC_ActionModifyOffset::LC_ActionModifyOffset(LC_ActionContext *actionContext)
 
 LC_ActionModifyOffset::~LC_ActionModifyOffset() = default;
 
+bool LC_ActionModifyOffset::isEditableOffsetCurve() const {
+    return m_offsetData->asOffsetCurve;
+}
+
+void LC_ActionModifyOffset::setEditableOffsetCurve(bool enabled) const {
+    m_offsetData->asOffsetCurve = enabled;
+}
+
 void LC_ActionModifyOffset::doSaveOptions() {
     save("Distance", getDistance());
     save("DistanceFixed",isFixedDistance());
@@ -78,6 +89,7 @@ void LC_ActionModifyOffset::doSaveOptions() {
     save("KeepOriginals", isKeepOriginals());
     save("MultipleCopies", isUseMultipleCopies());
     save("Copies", getCopiesNumber());
+    save("EditableOffsetCurve", isEditableOffsetCurve());
 }
 
 void LC_ActionModifyOffset::doLoadOptions() {
@@ -101,6 +113,8 @@ void LC_ActionModifyOffset::doLoadOptions() {
 
     const int copies = loadInt("Copies", 1);
     setCopiesNumber(copies);
+    // The interactive default belongs to the saved-options lifecycle, not construction.
+    setEditableOffsetCurve(loadBool("EditableOffsetCurve", true));
 }
 
 bool LC_ActionModifyOffset::isInVisualSnapStatus(const int status) {
@@ -191,6 +205,103 @@ QString LC_ActionModifyOffset::offsetFailureReason(const LC_OffsetSourceOutcome&
     }
 }
 
+QString LC_ActionModifyOffset::keptPlainReason(
+    const LC_OffsetSourceOutcome& source, const LC_OffsetPlainOutcome& plain) {
+    switch (plain.reason) {
+    case LC_OffsetPlainReason::NotTopLevel:
+        return {}; // no native-request notices for nested, detached or staged-only sources
+    case LC_OffsetPlainReason::SeveralPieces:
+        return tr("the offset has several pieces");
+    case LC_OffsetPlainReason::OutputBudget:
+        return tr("the editable cache would exceed the output budget");
+    case LC_OffsetPlainReason::ZeroSum:
+        return tr("the accumulated offset is exactly zero");
+    case LC_OffsetPlainReason::UndefinedDefinition:
+        return tr("the native definition is undefined or inconsistent");
+    case LC_OffsetPlainReason::CheckFailed:
+    case LC_OffsetPlainReason::NotCacheRepresentable: {
+        LC_OffsetCurveEditResult result;
+        result.refusal = plain.reason == LC_OffsetPlainReason::CheckFailed
+            ? LC_OffsetCurveRefusal::CheckFailed : LC_OffsetCurveRefusal::NotCacheRepresentable;
+        result.checkReason = plain.checkReason;
+        return LC_OffsetCurveUI::refusalText(result);
+    }
+    case LC_OffsetPlainReason::RebaseRefused:
+        break;
+    }
+    for (const auto& attempt : source.rebases) {
+        if (attempt.copy != plain.copy) continue;
+        if (attempt.nativeRefusal && *attempt.nativeRefusal != LC_OffsetCurveRefusal::None) {
+            LC_OffsetCurveEditResult result;
+            result.refusal = *attempt.nativeRefusal;
+            result.engineStatus = attempt.engineStatus;
+            result.checkReason = attempt.checkReason;
+            return tr("native rebasing was refused: %1").arg(LC_OffsetCurveUI::refusalText(result));
+        }
+        if (attempt.proposalRefusal) {
+            using Refusal = LC_OffsetCurveAgain::Refusal;
+            switch (*attempt.proposalRefusal) {
+            case Refusal::None:
+                return tr("the remaining work allowance did not admit native rebasing");
+            case Refusal::InvalidDefinition:
+                return tr("the native source definition is invalid");
+            case Refusal::NonCanonicalBasis:
+                return tr("the native source basis is not canonical");
+            case Refusal::InvalidIncrement:
+                return tr("the offset increment is invalid");
+            case Refusal::UnresolvedSide:
+                return tr("the cache side could not be resolved");
+            case Refusal::InvalidCurrentProfile:
+                return tr("the retained native profile is invalid");
+            case Refusal::ZeroSum:
+                return tr("the accumulated offset is exactly zero");
+            case Refusal::NonFiniteCombination:
+                return tr("the accumulated distance is not finite");
+            case Refusal::InexactCombination:
+                return tr("the accumulated distance cannot be represented exactly");
+            case Refusal::FirstNotProvedUntrimmed:
+                return tr("the first inward profile is not proved untrimmed");
+            case Refusal::FinalNotProvedUntrimmed:
+                return tr("the final arc profile is not proved untrimmed");
+            }
+        }
+        break;
+    }
+    return tr("the native retained-set composition was not certified");
+}
+
+QString LC_ActionModifyOffset::keptPlainMessage(const LC_OffsetBatchOutcome& outcome) {
+    // Four fixed-vocabulary reason buckets plus one counted remainder: no
+    // per-source output, source names, pointer dereferences or unbounded text.
+    struct Bucket { QString reason; qulonglong count = 0; };
+    constexpr std::size_t maximumReasons = 4;
+    std::vector<Bucket> buckets;
+    buckets.reserve(maximumReasons);
+    qulonglong copies = 0, sources = 0, otherCopies = 0;
+    for (const auto& source : outcome.sources) {
+        if (!source.succeeded()) continue; // attempted/rolled-back output is not a committed plain copy
+        bool countedSource = false;
+        for (const auto& plain : source.keptPlain) {
+            const QString reason = keptPlainReason(source, plain);
+            if (reason.isEmpty()) continue;
+            ++copies;
+            if (!countedSource) { ++sources; countedSource = true; }
+            auto bucket = std::find_if(buckets.begin(), buckets.end(),
+                [&](const Bucket& item) { return item.reason == reason; });
+            if (bucket != buckets.end()) ++bucket->count;
+            else if (buckets.size() < maximumReasons) buckets.push_back({reason, 1});
+            else ++otherCopies;
+        }
+    }
+    if (!copies) return {};
+    QStringList reasons;
+    for (const auto& bucket : buckets)
+        reasons.append(tr("%1: %2").arg(bucket.count).arg(bucket.reason));
+    if (otherCopies) reasons.append(tr("%1 further copies had other plain fallback reasons").arg(otherCopies));
+    return tr("Offset copies kept plain: %1 (sources: %2). %3")
+        .arg(copies).arg(sources).arg(reasons.join(QStringLiteral("; ")));
+}
+
 void LC_ActionModifyOffset::doTriggerSelectionUpdate(const bool keepSelected, const LC_DocumentModificationBatch& ctx) {
     // Only sources that were offset change selection; a failed source stays
     // selected. A removed source is known by identity only and never touched.
@@ -241,6 +352,7 @@ void LC_ActionModifyOffset::doTriggerCompletion(const bool success) {
     int stoppedMade = 0;
     int stoppedRequested = 0;
     QStringList stopReasons;
+    QString plainNotice;
     if (m_pendingOutcome != nullptr) {
         for (const LC_OffsetSourceOutcome& source : std::as_const(m_pendingOutcome->sources)) {
             ++total;
@@ -269,6 +381,7 @@ void LC_ActionModifyOffset::doTriggerCompletion(const bool success) {
             }
         }
     }
+    if (m_pendingOutcome != nullptr) plainNotice = keptPlainMessage(*m_pendingOutcome);
     m_pendingOutcome.reset();
     if (failed > 0) {
         commandMessage(tr("%1 of %2 selected entities could not be offset: %3")
@@ -299,6 +412,7 @@ void LC_ActionModifyOffset::doTriggerCompletion(const bool success) {
                            .arg(stoppedRequested)
                            .arg(stopReasons.join(QStringLiteral("; "))));
     }
+    if (!plainNotice.isEmpty()) commandMessage(plainNotice);
     if (success) {
         finish();
         return;
