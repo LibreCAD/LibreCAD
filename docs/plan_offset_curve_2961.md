@@ -24,14 +24,14 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-23. Status: A through H-dialog committed; X-H1 through X-H7 complete for the observed source; drag/creation UI, source actions and trimming incomplete.
+Updated: 2026-10-23. Status: A through H-drag committed; X-H1 through X-H7 complete for the observed source; creation enablement, source actions and trimming incomplete.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
-This checkpoint records tested A through H-dialog and auxiliary X-H1 through
+This checkpoint records tested A through H-drag and auxiliary X-H1 through
 X-H7 commits/qualification. Native adoption, creation, staged editing, cached
 grips/snaps, tool/type integration and independently checked DXF/DWG persistence
-are implemented. Native interactive creation remains off until H-enable; editing
-drag UI, source actions and trimming remain later slices. Native property sheet
+are implemented. Native interactive creation remains off until H-enable;
+source actions and trimming remain later slices. Native property sheet
 and Edit Properties dialog share bounded source snapshots; modal clone ownership
 survives document, editor, action and view teardown until widgets unwind.
 
@@ -45,7 +45,7 @@ survives document, editor, action and view teardown until widgets unwind.
 | Difference between initial checkpoints | Only this plan file; no product-source change |
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
-| Latest product checkpoint | `22f9e5609` (H-dialog; H-sheet 678590af4) |
+| Latest product checkpoint | `f214b3408` (H-drag; H-dialog 22f9e5609) |
 | Latest auxiliary checkpoint | `90714f758` (H7 bounded suite-pair scheduling; temp-path/journal fix c1b2fa095, driver 5a3e47039) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
@@ -56,13 +56,13 @@ survives document, editor, action and view teardown until widgets unwind.
 | B terminals | Immutable exact occurrence/edge-side classification, separate source incidence, bounded storage/scans |
 | C topology | Complete bounded unique-path checker, owned contact query and exact root-to-port matching; unresolved correspondence refuses Ambiguous |
 | Native entity | Checked adoption/creation, transactional mutators and actual stage results; consistency stamp, clone, exact proof transport, cached visible grips/safe snaps and bounded owned extensions |
-| Product integration | Tool/type/name, independently checked persistence and native sheet/dialog committed; explicit INSERT plain-cache fallback; drag/enable, source actions and trim pending |
+| Product integration | Tool/type/name, independently checked persistence and native sheet/dialog/drag committed; explicit INSERT plain-cache fallback; enablement, source actions and trim pending |
 | Build registration | Geometry/contact/routing/native sources in CMake/qmake6; native and adjacent tests registered and executed |
 | Validation harness | X-H1 through X-H7 complete: source90714f758,407-case regression, two full qualification runs and independent retained-evidence audit |
-| Latest validation | H-dialog:37 focused Release/ASan cases, full Release4537,953 affected ASan, both format lanes, qmake6 and prior sheet/allocation gates passed; G-matrix176 external observations retain their scope; see section14 |
+| Latest validation | H-drag:35 focused Release/ASan cases, full Release4572,988 affected ASan, both format lanes, qmake6,56 adjacent ASan cases and allocation gates passed; G-matrix176 external observations retain their scope; see section14 |
 
 Recheck these facts against the selected implementation checkout before starting
-H-drag. Qt6/Catch2/CMake/qmake6 and independent ACadSharp/ODA fixture/inspection
+H-enable. Qt6/Catch2/CMake/qmake6 and independent ACadSharp/ODA fixture/inspection
 tools are inventoried and qualified within the scopes recorded in section14.
 The user's main checkout is a different, dirty branch and is not the
 source baseline above. Do not overwrite its unrelated changes or apply this plan
@@ -232,7 +232,7 @@ test commit followed by the section 4 plan checkpoint.
 | G-matrix | G-fixtures | Independent fixtures/output inspection for complete version/conversion matrix | complete:79ae1930b |
 | H-sheet | G-matrix | Refusal-aware property provider and busy cursor | complete:678590af4 |
 | H-dialog | H-sheet | Full Edit Properties widget and commit path | complete:22f9e5609 |
-| H-drag | H-dialog | Bounded mouse preview, one-run grip commit and undo | pending |
+| H-drag | H-dialog | Bounded mouse preview, one-run grip commit and undo | complete:f214b3408 |
 | H-enable | H-drag | Persisted default-on option and kept-plain command messages | pending |
 | I-update | H-enable | Update from Source action and tests | pending |
 | I-restore | I-update | Restore Original action and equality/dedup tests | pending |
@@ -276,7 +276,7 @@ editing; changes beyond the named concern require a scope note in the slice card
 
 ### Current Next Cards
 
-The main track resumes at H-drag (section10.3). D-core `92758859c` uses the actual
+The main track resumes at H-enable (section10.4). D-core `92758859c` uses the actual
 C checker, not a layout-only adoption gate. Similarity transport requires exact
 dyadic affine images of every stored coordinate and unchanged normalized semantic
 basis fields. Rounded similarities and arc reflections refuse unchanged; whole
@@ -386,28 +386,37 @@ context refusal cleans up without stranding the action. Legacy synchronous
 dimension dialogs are not rewritten. Accept never regenerates native geometry;
 same-value/attributes-only Accept retains the established one-replacement policy.
 
-Next H-drag implementation order:
+H-drag `f214b3408` captures the complete bounded snapshot before sampling and
+revalidates before release-time cloning. Motion uses at most128 existing-cache
+feedback points, with intersection suppression before the first transition.
+Visible-grip no-ops preserve redo; successful release performs one real setter
+and replacement. Tracked document/view lifetimes, ownership/locks and the undo
+activity epoch guard retained pointers. Native cleanup does not recursively
+clear shared visual-snap data; actual peer-manager clear/registration and locked
+late-release tests cover the discovered mutex deadlock. Detached views no longer
+instantiate the application window merely to query quick-info settings.
 
-1. Apply the frozen H-drag draft, James's unchanged-visible-grip/first-motion
-   correction, and the independent bounded-snapshot/view-context correction.
-   Reconcile all contexts against the committed H-dialog helper API.
-2. Capture one complete bounded snapshot at gesture entry, before sampling;
-   revalidate it before any release-time clone. Appended/nested/foreign display
-   children must refuse before virtual cloning. Do not copy snapshots, clone,
-   materialize, adaptively check or search intersections on motion.
-3. Validate originating view/viewport and current context before dispatch and
-   commit, including a second view of the same document. Cancel an old-view
-   release instead of publishing through its retained viewport.
-4. Qualify actual press/move/release, at most128 preview points, first-motion
-   intersection suppression, admitted tolerance-band grip no-op, source-tree
-   mutation, context swaps, refusal/cancel and exact one-step undo/redo.
-5. Build both systems, run focused/adjacent/full/format Release/ASan and exact
-   identity audits, commit and immediately checkpoint. Then H-enable, I and T.
-   H-enable remains gated by the complete sheet/dialog/drag paths.
-6. T readiness remains explicit: real typed conic replacements in both orders,
-   retained-operand guards, R13 demotion, exact subnormal cuts/certified endpoint
-   identity and refusal of rounded constant fragments. Apply phase-split drafts
-   without committing unregistered later slices or calling authored tests PASS.
+Next implementation order:
+
+1. Apply and qualify H-enable's persisted interactive-only default, checkbox,
+   compact filler and bounded kept-plain diagnostics. Programmatic requests
+   remain opt-in. Sheet/dialog/drag prerequisites are now committed.
+2. Implement I-update and I-restore as separate slices, using their split
+   readiness fixes for bounded pre-clone snapshots, document lifetime, saved
+   context, ownership and closing-view guards. Include Restore's reviewed
+   full-turn/uncertainty correction; uncertain equality refuses insertion.
+3. Implement I-ui with its stale-popup-context and closing-view corrections;
+   qualify actual action links and updated/restored file persistence.
+4. Apply T-kernel completion, conic-kernel, final reviewed numeric overlay and
+   actual-chart endpoint-certificate correction, in that order. Preserve exact
+   subnormal cuts, certified endpoint identity and constant-fragment refusal.
+   Qualify the50 authored cases and isolated failure harness before T-actions.
+5. Apply T-actions' own readiness/conic overlays, with real typed conic targets
+   in both orders and retained-operand guards. T-files then adds R13 demotion,
+   closed degree1/3 C-admitted rows and DXF/DWG Undo/Redo/second reopens. These
+   artifacts remain unqualified until actually registered, built and executed.
+6. Test/commit/checkpoint every slice, then perform Z's final application,
+   available platform/static/sanitizer, GUI and retained interoperability audit.
 
 The auxiliary scheduler correction `90714f758` passed the407-case regression.
 Both isolated full runs of `H7-qualification-03` returned PASS through the actual
@@ -1898,13 +1907,13 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 
 | Item | State | Next action |
 |---|---|---|
-| Recursive plan/activation routing | Removed as a planning deadlock | Execute the finite H-drag card |
+| Recursive plan/activation routing | Removed as a planning deadlock | Execute the finite H-enable card |
 | Atomic budget and bounded geometry APIs | A slices, B and C committed/validated; used by native adoption/editing | Preserve bounds and stage-result contracts in UI/trim |
-| Native feature/UI/source actions/trim | A through H-dialog committed; H-drag onward remain | Execute H-drag through T-files, then Z |
+| Native feature/UI/source actions/trim | A through H-drag committed; H-enable onward remain | Execute H-enable through T-files, then Z |
 | Independent DWG/version fixtures | G-matrix79ae1930b qualifies genuine marked R13/R14/R2007 and all modern rows | Preserve fixture/tool/source hashes and scope; no local tool install required by CI |
 | Auxiliary empty-DWG conversion | Exact48 plot observations;24 ODA-converted files have duplicate-Continuous strict-read failures, originals unique; source-control order anomaly recorded, causation unresolved | Retain diagnostic scope in Z; not a mandatory native-row failure or general-DWG conformance claim |
 | Harness production readiness | X-H1-X-H7 committed; actual two-run qualification03 independently audited | Retain observed-byte/runtime scope and failed attempts; no future timing guarantee |
-| Independent review and test evidence | H-dialog independent review and actual runtime/identity gates complete; G-matrix external scopes retained | Obtain fresh review/validation for H-drag and each successor |
+| Independent review and test evidence | H-drag independent review and actual runtime/identity gates complete; G-matrix external scopes retained | Obtain fresh validation for each remaining slice; preserve reviewed correction order |
 | Dirty unrelated main checkout | Not the selected source baseline | Preserve it; reconcile only if changing implementation worktree |
 
 ### Commit Ledger
@@ -1936,8 +1945,77 @@ The plan checkpoint column never depends on its own future SHA.
 | G-matrix | 79ae1930b | Immediate plan-only checkpoint | 24 focused Release/ASan cases, full Release4467,877 affected ASan cases, both format lanes, qmake6 and non-DWG compile;63-blob audit;128 mandatory external rows plus48 scoped plot observations |
 | H-sheet | 678590af4 | Immediate plan-only checkpoint | 40 focused Release/ASan cases, full Release4501,917 affected ASan, both format lanes, qmake6, isolated allocation gates and27-blob identity audit |
 | H-dialog | 22f9e5609 | Immediate plan-only checkpoint | 37 focused Release/ASan cases, full Release4537,953 affected ASan, both format lanes, qmake6, sheet/allocation regressions and16-blob identity audit; one obsolete refusal row retired |
+| H-drag | f214b3408 | Immediate plan-only checkpoint | 35 focused Release/ASan cases, full Release4572,988 affected ASan, unchanged format lanes, qmake6,56 adjacent ASan cases, allocation gates and10-blob identity audit; actual shared-snap mutex regression fixed |
 | X-H7 timeout source fix | c1b2fa095 | Immediate plan-only checkpoint | Author55 + independent15 controls and parent399 runner regression passed; actual runtime qualification remains open |
 | X-H7 bounded scheduling | 90714f758 | Immediate plan-only checkpoint | Author85 + independent12 controls, parent407 runner regression and real224.790-second preflight probe passed; full two-run qualification remains open |
+
+### H-drag Validation (2026-10-23)
+
+Product `f214b3408` contains10 owned files,1576 insertions/11 deletions and35
+actual Qt/Catch cases. Complete source snapshots precede sampling/cloning;
+bounded native feedback contains at most63 cache segments plus two point marks.
+No motion-time clone, materializer, adaptive checker or intersection query is
+introduced. Release calls setThrough once and publishes one replacement on
+success; admitted visible-grip no-ops, refusals and cancellation preserve source,
+extensions and redo. A result is absent when no setter actually ran.
+
+Review corrections include source-tree/metadata admission before virtual clone,
+original view/viewport/context checks, tracked document death and view destruction,
+owning document/cache and lock revalidation, and an undo activity epoch. Failed
+undo-entry allocation does not advance that epoch. Detached preview cleanup has
+necessary null guards; visual-snap detachment stops pending work without visiting
+retired view storage. Actual eventual action/base destruction is tested.
+
+Discovery02 exposed a real mutex deadlock: native entry cleared visual snap,
+whose synchronous redraw callback tried to cancel and clear the same shared data
+again. Final code distinguishes its own visual-snap redraw and omits redundant
+native cancellation clearing. Actual second-manager clear AND delayed registration
+tests deliver a late release while that shared lock is held, require immediate
+safe cancellation, preserve the peer's new data, and permit a fresh gesture.
+The provisional queued-cancellation draft was removed, not qualified. A separate
+runtime sample exposed lazy application-window creation/library scanning from a
+quick-info query; final code finds the existing view ancestor instead. Undo tests
+retain exact restored values but do not dereference or require old cache buffers
+after legitimate Undo/Redo reconstruction.
+
+Selected worktree and build/evidence directories remain those recorded above.
+Authoritative builds: Release/ASan07, all three test targets plus the isolated
+batch-failure target; qmake6 configure01/final build04 and application --help07.
+Final test executions use the frozen08 source/binary identities:
+
+| Lane | Actual result |
+|---|---|
+| Focused Release/ASan08 | 35 cases,40685 assertions, zero skips/failures each |
+| Full Release08 | 4572 cases:4545 passed, the same27 skips;9364125 assertions |
+| Affected ASan08 | 988 cases:987 passed, the same one legacy-export skip;3450295 assertions |
+| DXF Release/ASan08 | 765 cases:762 passed, same3 skips;82553 assertions each |
+| DWG Release/ASan08 | 1021 cases:1017 passed, same4 skips;362942 assertions each |
+| Adjacent snapping/hover/undo ASan08 | 56 cases,13723 assertions, zero skips/failures |
+| Isolated preparation/undo-entry Release/ASan08 | 2 std-new preparation failures exercised,0 after prepared pairs,1 failed undo entry,0 handoff allocations, both passed |
+
+The tests-only runner's ten real process results and exact commands are retained
+under `H-drag-test-invocations-08/`; process-adapter XML is not counted as Catch
+assertion evidence. Generated root report aliases point to those unchanged bytes.
+`H-drag-report-audit-08.json` PASS protects all5748 full and1376 affected JUnit
+rows, exact old skip identities/multiplicities and unchanged1049 DXF/1099 DWG
+rows. No row was retired or renamed. All10 source and nine binary identities
+match before/after execution; the product Git blobs match the qualified census.
+
+Evidence root: `/private/tmp/lc2961-impl-evidence.9GtLO2`.
+Audit SHA256 `4a5d7c1bddebc88a4050e7b2c1b3dc61ac7164b66a562f6c4144bdd1bb55e6a7`;
+auditor v2 SHA256 `3192c15fe22bcaea9e4e132e1f60c0e78563ba932fe831e035008e28581b6dbc`;
+runner manifest SHA256 `619ed6fbd377c35bdc11777b3ab7bf1e7fca5244378fbc4040f2ceb98f307ce8`;
+committed-blob audit SHA256 `d511deb359405c562493a4f0f8ede531a5c8f6064514f16bdc2de6e54ba8076c`.
+Failed/interim01-07 artifacts, the terminated02 tests and runtime samples remain
+retained and are not substituted for final08 qualification.
+
+ASan uses detect_leaks=0 on this host; no leak-free claim. Existing Qt deprecation,
+metadata initialization/deployment and ASan unwind-table warnings remain scoped,
+not a whole-repository warning-clean claim. Generic post-publication allocation
+atomicity and arbitrary destruction inside a document's own active member call
+remain outside the established transaction contract. The unrelated main checkout,
+future unregistered T sources and EVID-only drafts were not committed. Native
+interactive creation remains off until the next H-enable slice.
 
 ### H-dialog Validation (2026-10-23)
 
