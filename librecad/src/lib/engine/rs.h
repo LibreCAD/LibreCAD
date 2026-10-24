@@ -558,7 +558,7 @@ namespace RS2 {
         ActionInteractivePickPoint_Y,
         ActionInteractivePickLength,
         ActionInteractivePickAngle,
-        // Identity only; source-action UI/factory registration is deferred to I-ui.
+        // Native source actions for context-menu and property-sheet entry points.
         ActionOffsetCurveUpdateSource,
         ActionOffsetCurveRestoreOriginal,
         /** Needed to loop through all actions */

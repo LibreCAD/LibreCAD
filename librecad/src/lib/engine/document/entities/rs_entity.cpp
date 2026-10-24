@@ -1081,6 +1081,19 @@ RS_Entity::getDrwExtData() const {
   return m_pImpl->drwExtData;
 }
 
+bool RS_Entity::cloneMetadataFits(std::size_t variables, std::size_t stringUnits,
+                                 std::size_t reactors) const noexcept {
+    if (m_pImpl->varList.size() > variables || m_pImpl->m_reactorHandles.size() > reactors) return false;
+    for (const auto& [key, value] : m_pImpl->varList) {
+        const auto a = static_cast<std::size_t>(key.size()), b = static_cast<std::size_t>(value.size());
+        if (a > stringUnits) return false;
+        stringUnits -= a;
+        if (b > stringUnits) return false;
+        stringUnits -= b;
+    }
+    return true;
+}
+
 void RS_Entity::setDrwExtData(
     std::vector<std::shared_ptr<DRW_Variant>> extData) {
   m_pImpl->drwExtData = std::move(extData);

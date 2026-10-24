@@ -41,6 +41,7 @@
 #include "lc_ellipseoffsetgeometry.h"
 #include "lc_offsetoutputbudget.h"
 #include "lc_offsetcurveagain.h"
+#include "lc_offsetcachetrim.h"
 #include "rs_pen.h"
 #include "rs_vector.h"
 
@@ -386,6 +387,16 @@ struct LC_TrimResult {
     RS_Vector intersection1;
     RS_Vector intersection2;
     bool result = false;
+    std::size_t nativeDemotions = 0;
+    std::optional<LC_OffsetCacheTrim::Refusal> cacheRefusal;
+    LC_OffsetCacheTrim::Work cacheWork;
+};
+
+struct LC_StoredCacheTrimOptions {
+    LC_OffsetCacheTrim::Limits kernel;
+    LC_OffsetCacheTrim::Cancellation cancellation;
+    std::size_t maxOutputEntities = 4;
+    std::size_t maxDisplayEntities = kDefaultOffsetDeepEntitiesPerSource;
 };
 
 struct LC_BevelResult {
@@ -522,6 +533,16 @@ public:
 
     static LC_TrimResult trim(const RS_Vector& trimCoord, RS_AtomicEntity* trimEntity, const RS_Vector& limitCoord, RS_Entity* limitEntity,
                               bool both, LC_DocumentModificationBatch& ctx);
+    /** Native-involved path only. Stages BOTH operands before a single batch
+     * publication. Ordinary lines retain their type; conics retain exact stored
+     * centers/axes/radii and use typed angular restrictions (circles become arcs).
+     * Plain normalized degree-1/3 spline caches are also supported when a native
+     * participates. Fit/rational/wrapped representations remain explicit refusals.
+     * Ordinary-only Trim, Trim Amount and Cut retain their existing paths.
+     */
+    static LC_TrimResult trimStoredCache(RS_Document& document, RS_Entity& target, const RS_Vector& targetPick,
+        RS_Entity& cutter, const RS_Vector& cutterPick, bool both, LC_DocumentModificationBatch& ctx,
+        const LC_StoredCacheTrimOptions& options = {});
 
     static RS_Entity* trimAmount(const RS_Vector& trimCoord, RS_AtomicEntity* entityToTrim, double dist, bool trimBoth, bool& trimStart,
                                  bool& trimEnd, LC_DocumentModificationBatch& ctx);

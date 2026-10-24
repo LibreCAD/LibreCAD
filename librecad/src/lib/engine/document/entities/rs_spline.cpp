@@ -472,6 +472,16 @@ RS_Entity *RS_Spline::clone() const {
   return new RS_Spline(*this);
 }
 
+std::optional<std::size_t> RS_Spline::displayEntityUpperBound(const RS_SplineData& data) noexcept {
+    // fillDisplayPoints can continue one segment per span after reaching its
+    // nominal cap, and insert an extra one-sided corner point per break.
+    // The number of breaks is at most the number of stored knots. Include
+    // the uniform fallback and the possible final wrapped closing segment.
+    const std::size_t base = std::max<std::size_t>(g_maximumDisplaySegments, g_minimumDisplaySegments) + 3;
+    if (data.knotslist.size() > (std::numeric_limits<std::size_t>::max() - base) / 2) return std::nullopt;
+    return base + 2 * data.knotslist.size();
+}
+
 /** M_Data access */
 RS_SplineData &RS_Spline::getData() { return m_data; }
 const RS_SplineData &RS_Spline::getData() const { return m_data; }

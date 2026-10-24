@@ -23,6 +23,7 @@
 #include "rs_line.h"
 #include "rs_modification.h"
 #include "rs_pen.h"
+#include "rs_preview.h"
 #include "rs_selection.h"
 
 namespace {
@@ -209,6 +210,7 @@ class TrimProbe final : public LC_ActionModifyTrim {
 public:
     explicit TrimProbe(LC_ActionContext* context) : LC_ActionModifyTrim(context, Both) {}
     using RS_Snapper::catchEntity;
+    using RS_PreviewActionInterface::m_preview;
     using LC_ActionModifyTrim::ChooseLimitEntity;
     using LC_ActionModifyTrim::ChooseTrimEntity;
     using LC_ActionModifyTrim::doInitWithContextEntity;
@@ -441,24 +443,47 @@ TEST_CASE("F updateSplines rebuilds the native display without restamping extern
     CHECK(curve->isDefined());
 }
 
-TEST_CASE("F Trim context and preview explicitly refuse native targets and generated native chords",
+TEST_CASE("F Trim context maps native owners and generated chords while preview prepares plain fragments",
           "[lc-offsetcurve][types][trim][actions]") {
     Drawing drawing;
     auto* curve = addNative(drawing);
     const Unchanged original(*curve);
     auto* limit = addLine(drawing, {-3, .25}, {3, .25});
+    const auto undoEpoch = drawing.graphic.undoStateEpoch();
     TrimProbe<> action(&drawing.context);
     action.doInitWithContextEntity(curve, {2, 0});
-    CHECK(action.m_trimEntity == nullptr);
+    CHECK(action.m_trimEntity == curve);
+    original.check();
     action.doInitWithContextEntity(curve->entityAt(0), {2, 0});
-    CHECK(action.m_trimEntity == nullptr);
-    bool invalid = true;
-    action.previewTrim(curve, limit, {2, 0}, {0, .25}, invalid);
-    CHECK(invalid);
-    action.previewTrim(curve->entityAt(0), limit, {2, 0}, {0, .25}, invalid);
-    CHECK(invalid);
+    CHECK(action.m_trimEntity == curve);
+    original.check();
+    REQUIRE(action.m_preview);
+    for (auto* target : {static_cast<RS_Entity*>(curve), curve->entityAt(0)}) {
+        CAPTURE(target == curve);
+        action.m_preview->clear();
+        bool invalid = true;
+        action.previewTrim(target, limit, {2, 0}, {0, .25}, invalid);
+        REQUIRE_FALSE(invalid);
+        REQUIRE(action.m_preview->count() == 1);
+        const auto* fragment = action.m_preview->entityAt(0);
+        REQUIRE(fragment);
+        CHECK(fragment != curve);
+        CHECK(fragment->rtti() == RS2::EntitySpline);
+        CHECK(dynamic_cast<const LC_OffsetCurve*>(fragment) == nullptr);
+        CHECK(fragment->getParent() == action.m_preview.get());
+        CHECK_FALSE(fragment->isDeleted());
+        CHECK(drawing.graphic.count() == 2);
+        CHECK_FALSE(curve->isDeleted());
+        original.check();
+    }
     CHECK(drawing.graphic.count() == 2);
     CHECK_FALSE(curve->isDeleted());
+    CHECK_FALSE(limit->isDeleted());
+    bool undoAvailable = true, redoAvailable = true;
+    drawing.graphic.collectUndoState(undoAvailable, redoAvailable);
+    CHECK_FALSE(undoAvailable);
+    CHECK_FALSE(redoAvailable);
+    CHECK(drawing.graphic.undoStateEpoch() == undoEpoch);
     original.check();
 }
 
@@ -489,24 +514,34 @@ TEST_CASE("F actual Trim clicks cut an ordinary line at the whole native limit w
     REQUIRE(drawing.graphic.count() == 3);
     const auto* trimmed = drawing.graphic.last();
     REQUIRE(trimmed->rtti() == RS2::EntityLine);
-    CHECK(trimmed->getStartpoint().distanceTo({0, 2}) < 1e-6);
-    CHECK(trimmed->getEndpoint().distanceTo({0, 4}) < 1e-6);
+    // Stored-cache Trim removes the clicked interval above the independently known y = 2 crossing.
+    CHECK(trimmed->getStartpoint().distanceTo({0, 0}) < 1e-6);
+    CHECK(trimmed->getEndpoint().distanceTo({0, 2}) < 1e-6);
     CHECK(curve->hasEditableDefinition());
     CHECK_FALSE(curve->isDeleted());
     original.check();
 }
 
-TEST_CASE("F Trim Two refuses the native limit as a replacement target even through its chord", "[lc-offsetcurve][types][trim][actions]") {
+TEST_CASE("F Trim Two accepts a native chord owner and waits for its second operand without mutation", "[lc-offsetcurve][types][trim][actions]") {
     Drawing drawing;
     auto* curve = addNative(drawing);
     const Unchanged original(*curve);
+    const auto undoEpoch = drawing.graphic.undoStateEpoch();
     TrimProbe<true> action(&drawing.context);
     action.setLimitEntity(curve->entityAt(0));
-    CHECK(action.m_limitEntity == nullptr);
+    CHECK(action.m_limitEntity == curve);
+    original.check();
     action.click({-2, 0});
-    CHECK(action.getStatus() == TrimProbe<true>::ChooseLimitEntity);
-    CHECK(action.m_limitEntity == nullptr);
+    CHECK(action.getStatus() == TrimProbe<true>::ChooseTrimEntity);
+    CHECK(action.m_limitEntity == curve);
+    CHECK(action.m_trimEntity == nullptr);
     CHECK(drawing.graphic.count() == 1);
+    CHECK_FALSE(curve->isDeleted());
+    bool undoAvailable = true, redoAvailable = true;
+    drawing.graphic.collectUndoState(undoAvailable, redoAvailable);
+    CHECK_FALSE(undoAvailable);
+    CHECK_FALSE(redoAvailable);
+    CHECK(drawing.graphic.undoStateEpoch() == undoEpoch);
     original.check();
 }
 

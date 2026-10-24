@@ -33,6 +33,7 @@
 #include <iosfwd>
 #include <cstdint>
 #include <vector>
+#include <optional>
 
 #include "lc_curvejet.h"
 #include "rs_entitycontainer.h"
@@ -126,6 +127,9 @@ public:
 
   /** Mutation detector for the complete representation, not a geometric certificate. */
   static std::uint64_t geometryFingerprint(const RS_SplineData &data) noexcept;
+
+  /** Data-only bound for constructor/update display allocation, including fallbacks. */
+  static std::optional<std::size_t> displayEntityUpperBound(const RS_SplineData &data) noexcept;
 
   /** Get unwrapped size (control points without wrapping) */
   size_t getUnwrappedSize() const;

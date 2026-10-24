@@ -25,6 +25,7 @@
 **
 **********************************************************************/
 #include "rs_modification.h"
+#include "lc_offsetcurveeditsnapshot.h"
 
 #include <algorithm>
 #include <cmath>
@@ -33,6 +34,9 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
+#include <array>
+#include <cstdint>
+#include <new>
 
 #include "lc_containertraverser.h"
 #include "lc_curveoffset.h"
@@ -42,6 +46,8 @@
 #include "lc_offsetresultcheck.h"
 #include "lc_offsetcurve.h"
 #include "lc_offsetcurvetransform.h"
+#include "lc_offsetcurvexdata.h"
+#include "rs_document.h"
 #include "lc_splinepoints.h"
 #include "rs_spline.h"
 #include "lc_undosection.h"
@@ -2276,6 +2282,319 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord, RS_AtomicEntity*
         result.intersection2 = trimmed1->getEndpoint();
     }
     return result;
+}
+
+LC_TrimResult RS_Modification::trimStoredCache(RS_Document& document, RS_Entity& target,
+    const RS_Vector& targetPick, RS_Entity& cutter, const RS_Vector& cutterPick, const bool both,
+    LC_DocumentModificationBatch& ctx, const LC_StoredCacheTrimOptions& options) {
+    namespace trim = LC_OffsetCacheTrim;
+    LC_TrimResult result;
+    result.cacheRefusal = trim::Refusal::InvalidInput;
+    result.intersection1 = result.intersection2 = RS_Vector{false};
+    const auto checkCancel = [&] {
+        return options.cancellation.requested && options.cancellation.requested->load(std::memory_order_relaxed);
+    };
+    const auto refuse = [&](trim::Refusal reason) {
+        // A late refusal must not expose pointers into privately owned outputs.
+        result.trimmed1 = result.trimmed2 = nullptr;
+        result.intersection1 = result.intersection2 = RS_Vector{false};
+        result.nativeDemotions = 0;
+        result.result = false; result.cacheRefusal = reason; return result;
+    };
+    constexpr std::size_t memberCap = std::size_t{1} << 20;
+    const auto outputCap = std::min<std::size_t>(options.maxOutputEntities, 4);
+    const auto displayCap = std::min(options.maxDisplayEntities, kDefaultOffsetDeepEntitiesPerSource);
+    // Membership is checked by POINTER before dereferencing a replacement
+    // source. No countDeep(), recursive findEntity(), native clone or C call.
+    const auto member = [&](const RS_Entity* source) {
+        return document.size() <= memberCap && document.isOwner() &&
+            std::find(document.begin(), document.end(), source) != document.end() &&
+            source->getParent() == &document && !source->isDeleted() && source->isVisible();
+    };
+    const auto live = [&](const RS_Entity* source) { return member(source) && !source->isLocked(); };
+    const auto nativeReady = [&](const LC_OffsetCurve& source) {
+        if (!source.isOwner() || source.size() > kDefaultOffsetDeepEntitiesPerSource || !source.hasEditableDefinition()) return false;
+        for (const auto* child : source) {
+            if (!child || child->getParent() != &source || child->rtti() != RS2::EntityLine) return false;
+        }
+        return true;
+    };
+    const auto conic = [](const RS_Entity* source) {
+        return (source->rtti() == RS2::EntityCircle && dynamic_cast<const RS_Circle*>(source)) ||
+            (source->rtti() == RS2::EntityArc && dynamic_cast<const RS_Arc*>(source)) ||
+            (source->rtti() == RS2::EntityEllipse && dynamic_cast<const RS_Ellipse*>(source));
+    };
+    const auto eligible = [&](const RS_Entity* source) {
+        if (!live(source)) return false;
+        if (const auto* native = dynamic_cast<const LC_OffsetCurve*>(source)) return nativeReady(*native);
+        if (conic(source)) return true;
+        if (source->rtti() == RS2::EntitySpline) {
+            const auto* spline = dynamic_cast<const RS_Spline*>(source);
+            if (!spline || !spline->isOwner() || spline->size() > kDefaultOffsetDeepEntitiesPerSource) return false;
+            const auto& data = spline->getData(); const trim::Limits hard;
+            if (data.degree != 1 && data.degree != 3) return false;
+            const auto layout = LC_EllipseOffsetGeometry::cacheLayoutCountsFromControls(data.degree, data.controlPoints.size());
+            if (!layout || layout->spans > hard.maxSpansPerCurve) return false;
+            std::size_t records = 0;
+            for (const auto n : {data.controlPoints.size(), data.weights.size(), data.knotslist.size(), data.fitPoints.size(),
+                    data.savedOpenKnots.size(), layout->spans, layout->spans}) {
+                if (n > hard.maxInputRecords - records) return false;
+                records += n;
+            }
+            for (const auto* child : *spline) if (!child || child->getParent() != spline || child->rtti() != RS2::EntityLine) return false;
+            return true; // Raw counts/layout/finite checks precede copying in the pure kernel.
+        }
+        return source->rtti() == RS2::EntityLine && dynamic_cast<const RS_Line*>(source);
+    };
+    try {
+        if (checkCancel()) return refuse(trim::Refusal::Cancelled);
+        if (&target == &cutter || !outputCap || !displayCap || document.size() > memberCap ||
+            ctx.entitiesToAdd.size() > qsizetype(memberCap) || ctx.entitiesToDelete.size() > qsizetype(memberCap))
+            return refuse(trim::Refusal::LimitExceeded);
+        const auto* nativeA = dynamic_cast<const LC_OffsetCurve*>(&target);
+        const auto* nativeB = dynamic_cast<const LC_OffsetCurve*>(&cutter);
+        if (!nativeA && !nativeB) return refuse(trim::Refusal::UnsupportedCutter);
+        // Capture EVERY native operand before replacement-source getter reads.
+        // Native admission/snapshot getters are bounded, shared value reads;
+        // an ordinary operand's virtual endpoints must not precede this baseline.
+        struct NativeInput {
+            const LC_OffsetCurve* address = nullptr;
+            unsigned long long id = 0;
+            bool replacement = false;
+            std::unique_ptr<LC_OffsetCurveEditSnapshot> snapshot;
+        };
+        std::array<NativeInput, 2> nativeInputs;
+        nativeInputs[0].address = nativeA; nativeInputs[0].replacement = true;
+        nativeInputs[1].address = nativeB; nativeInputs[1].replacement = both;
+        for (auto& input : nativeInputs) if (input.address) {
+            const auto reason = input.replacement ? trim::Refusal::UnsupportedLayout : trim::Refusal::UnsupportedCutter;
+            if (!member(input.address) || (input.replacement && input.address->isLocked()) || !nativeReady(*input.address))
+                return refuse(reason);
+            input.id = input.address->getId();
+            input.snapshot = LC_OffsetCurveEditSnapshot::capture(*input.address);
+            if (!input.snapshot) return refuse(trim::Refusal::LimitExceeded);
+        }
+        if (!eligible(&target) || (both && !eligible(&cutter))) return refuse(trim::Refusal::UnsupportedLayout);
+        if (nativeB && !nativeReady(*nativeB)) return refuse(trim::Refusal::UnsupportedCutter);
+        // A one-sided limit is read-only, but a native limit must still be a
+        // live top-level source, not a borrowed/generated/block clone.
+        if (nativeB && !member(&cutter)) return refuse(trim::Refusal::UnsupportedCutter);
+        const auto supportedLimit = [](const RS_Entity& e) {
+            return dynamic_cast<const RS_Line*>(&e) || dynamic_cast<const RS_Arc*>(&e) ||
+                dynamic_cast<const RS_Circle*>(&e) || dynamic_cast<const RS_Ellipse*>(&e) ||
+                dynamic_cast<const RS_Spline*>(&e);
+        };
+        if (!supportedLimit(cutter)) return refuse(trim::Refusal::UnsupportedCutter);
+        std::array<RS_Entity*, 2> sources{{&target, both ? &cutter : nullptr}};
+        std::array<std::uint64_t, 2> stamps{};
+        const auto stamp = [](const RS_Entity& e) {
+            if (const auto* spline = dynamic_cast<const RS_Spline*>(&e)) return RS_Spline::geometryFingerprint(spline->getData());
+            RS_SplineData data{1, false};
+            if (const auto* circle = dynamic_cast<const RS_Circle*>(&e)) {
+                data.controlPoints = {circle->getCenter()}; data.weights = {circle->getRadius()};
+            } else if (const auto* arc = dynamic_cast<const RS_Arc*>(&e)) {
+                const auto& d = arc->getData(); data.controlPoints = {d.center};
+                data.weights = {d.radius, d.angle1, d.angle2, d.reversed ? 1. : 0.};
+            } else if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&e)) {
+                const auto& d = ellipse->getData(); data.controlPoints = {d.center, d.majorP};
+                data.weights = {d.ratio, d.angle1, d.angle2, d.reversed ? 1. : 0., d.isArc ? 1. : 0.,
+                    d.angleDegrees, d.startAngleDegrees, d.otherAngleDegrees, d.angularLength};
+            } else data.controlPoints = {e.getStartpoint(), e.getEndpoint()};
+            return RS_Spline::geometryFingerprint(data);
+        };
+        // Attribute copies use the same RS_Entity base copy as E-tools. Admit
+        // opaque maps/vectors first; the schema parser never mutates variants.
+        std::array<LC_OffsetCurveXData::XData, 2> foreign;
+        for (std::size_t i = 0; i < sources.size() && sources[i]; ++i) {
+            if (!sources[i]->cloneMetadataFits(1024, std::size_t{1} << 20, 4096)) return refuse(trim::Refusal::LimitExceeded);
+            auto parsed = LC_OffsetCurveXData::parseAndStrip(sources[i]->getDrwExtData());
+            if (!parsed.remaining) return refuse(trim::Refusal::LimitExceeded);
+            foreign[i] = std::move(*parsed.remaining); stamps[i] = stamp(*sources[i]);
+        }
+        trim::Limits remaining = options.kernel;
+        const trim::Limits hard;
+#define LC_TRIM_LOWER(f) remaining.f = std::min(remaining.f, hard.f)
+        LC_TRIM_LOWER(maxSpansPerCurve); LC_TRIM_LOWER(maxInputSpans); LC_TRIM_LOWER(maxInputRecords);
+        LC_TRIM_LOWER(maxBoxPairs); LC_TRIM_LOWER(maxLeaves); LC_TRIM_LOWER(maxGeneratedItems);
+        LC_TRIM_LOWER(maxOrderingComparisons); LC_TRIM_LOWER(maxRoots); LC_TRIM_LOWER(maxDepth);
+        LC_TRIM_LOWER(maxLeafDepth); LC_TRIM_LOWER(maxFragments); LC_TRIM_LOWER(maxOutputSpans);
+        LC_TRIM_LOWER(maxOutputControls); LC_TRIM_LOWER(maxOutputKnots);
+#undef LC_TRIM_LOWER
+        const auto debit = [&](const trim::Work& work) {
+#define LC_TRIM_DEBIT(f, amount) if ((amount) > remaining.f) return false; remaining.f -= (amount)
+            LC_TRIM_DEBIT(maxInputSpans, work.inputSpans); LC_TRIM_DEBIT(maxInputRecords, work.inputRecords);
+            LC_TRIM_DEBIT(maxRoots, work.rootRecords); LC_TRIM_DEBIT(maxBoxPairs, work.intersections.totalBoxPairs);
+            LC_TRIM_DEBIT(maxLeaves, work.intersections.generatedLeaves);
+            LC_TRIM_DEBIT(maxGeneratedItems, work.kernelItems + work.intersections.generatedItems);
+            LC_TRIM_DEBIT(maxOrderingComparisons, work.kernelComparisons + work.intersections.orderingComparisons);
+            LC_TRIM_DEBIT(maxOutputSpans, work.outputSpans); LC_TRIM_DEBIT(maxOutputControls, work.outputControls);
+            LC_TRIM_DEBIT(maxOutputKnots, work.outputKnots);
+#undef LC_TRIM_DEBIT
+            auto& total = result.cacheWork;
+#define LC_TRIM_SUM(f) total.f += work.f
+            LC_TRIM_SUM(inputSpans); LC_TRIM_SUM(inputRecords); LC_TRIM_SUM(rootRecords); LC_TRIM_SUM(kernelItems);
+            LC_TRIM_SUM(kernelComparisons); LC_TRIM_SUM(outputSpans); LC_TRIM_SUM(outputControls); LC_TRIM_SUM(outputKnots);
+#undef LC_TRIM_SUM
+            auto& s = total.intersections; const auto& d = work.intersections;
+#define LC_TRIM_SUM(f) s.f += d.f
+            LC_TRIM_SUM(candidateBoxPairs); LC_TRIM_SUM(refinementBoxPairs); LC_TRIM_SUM(certificateBoxPairs);
+            LC_TRIM_SUM(totalBoxPairs); LC_TRIM_SUM(generatedLeaves); LC_TRIM_SUM(generatedItems);
+            LC_TRIM_SUM(orderingComparisons); LC_TRIM_SUM(validationSegmentVisits); LC_TRIM_SUM(validationNextCalls);
+#undef LC_TRIM_SUM
+#define LC_TRIM_MAX(f) s.f = std::max(s.f, d.f)
+            LC_TRIM_MAX(deepestPreparation); LC_TRIM_MAX(deepestPairRefinement);
+            LC_TRIM_MAX(deepestOrderingRefinement); LC_TRIM_MAX(deepestRootRefinement);
+#undef LC_TRIM_MAX
+            return true;
+        };
+        std::array<trim::Result, 2> prepared;
+        const bool conicReplacement = conic(&target) || (both && conic(&cutter));
+        if (conicReplacement) {
+            const std::size_t ci = conic(&target) ? 0 : 1, ni = 1 - ci;
+            const auto* cache = ci == 0 ? nativeB : nativeA;
+            if (!cache) return refuse(trim::Refusal::UnsupportedLayout);
+            const trim::Pick cp{ci == 0 ? targetPick : cutterPick};
+            std::optional<trim::Pick> np;
+            if (both) np = trim::Pick{ni == 0 ? targetPick : cutterPick};
+            auto pair = trim::prepareConic(cache->getData(), *sources[ci], cp, np, remaining, options.cancellation);
+            if (!debit(pair.work)) return refuse(trim::Refusal::LimitExceeded);
+            if (pair.refusal != trim::Refusal::None) return refuse(pair.refusal);
+            if (pair.conicFragments.empty() || (both && pair.fragments.empty())) return refuse(trim::Refusal::Arithmetic);
+            prepared[ni] = std::move(pair);
+            prepared[ci].conicFragments.swap(prepared[ni].conicFragments);
+        } else {
+            for (std::size_t i = 0; i < sources.size() && sources[i]; ++i) {
+                if (checkCancel()) return refuse(trim::Refusal::Cancelled);
+                RS_SplineData line{1, false}; const RS_SplineData* raw = nullptr;
+                if (const auto* spline = dynamic_cast<const RS_Spline*>(sources[i])) raw = &spline->getData();
+                else {
+                    if (sources[i]->rtti() != RS2::EntityLine) return refuse(trim::Refusal::UnsupportedLayout);
+                    line.controlPoints = {sources[i]->getStartpoint(), sources[i]->getEndpoint()};
+                    line.knotslist = {0, 0, 1, 1}; line.weights = {1, 1}; raw = &line;
+                }
+                prepared[i] = trim::prepare(*raw, i == 0 ? cutter : target, {i == 0 ? targetPick : cutterPick}, remaining, options.cancellation);
+                if (!debit(prepared[i].work)) return refuse(trim::Refusal::LimitExceeded);
+                if (prepared[i].refusal != trim::Refusal::None) return refuse(prepared[i].refusal);
+                if (prepared[i].fragments.empty()) return refuse(trim::Refusal::Arithmetic);
+            }
+        }
+        std::array<std::size_t, 2> sideCount{};
+        std::size_t count = 0, display = 0;
+        for (std::size_t i = 0; i < sources.size() && sources[i]; ++i) {
+            sideCount[i] = prepared[i].fragments.size() + prepared[i].conicFragments.size();
+            if (!sideCount[i] || sideCount[i] > outputCap - count) return refuse(trim::Refusal::LimitExceeded);
+            count += sideCount[i];
+            if (conic(sources[i])) {
+                if (!prepared[i].fragments.empty() || sideCount[i] > displayCap - display) return refuse(trim::Refusal::LimitExceeded);
+                display += sideCount[i];
+            } else for (const auto& fragment : prepared[i].fragments) {
+                const auto upper = sources[i]->rtti() == RS2::EntityLine ? std::optional<std::size_t>{1} :
+                    RS_Spline::displayEntityUpperBound(fragment.data);
+                if (!upper || *upper > displayCap - display) return refuse(trim::Refusal::LimitExceeded);
+                display += *upper;
+            }
+        }
+        // BOTH geometry preparations and ALL count/attribute/display admissions
+        // precede the first output constructor. No original has been changed.
+        std::vector<std::unique_ptr<RS_Entity>> owned; owned.reserve(count);
+        for (std::size_t i = 0; i < sources.size() && sources[i]; ++i) {
+            if (dynamic_cast<const LC_OffsetCurve*>(sources[i])) ++result.nativeDemotions;
+            for (std::size_t j = 0; j < sideCount[i]; ++j) {
+                if (checkCancel()) return refuse(trim::Refusal::Cancelled);
+                std::unique_ptr<RS_Entity> output;
+                if (conic(sources[i])) {
+                    const auto& data = prepared[i].conicFragments[j].data;
+                    // Owned typed restrictions of the original primitive, never
+                    // endpoint chords, display intersections or fitted splines.
+                    if (sources[i]->rtti() == RS2::EntityEllipse) {
+                        auto clone = std::make_unique<RS_Ellipse>(*static_cast<const RS_Ellipse*>(sources[i]));
+                        clone->setParent(nullptr);
+                        // Keep at least one nonzero angle installed while the
+                        // ordinary API recalculates its fuzzy whole-ellipse flag.
+                        if (std::abs(data.angle1) >= std::abs(data.angle2)) {
+                            clone->setAngle1(data.angle1); clone->setAngle2(data.angle2);
+                        } else { clone->setAngle2(data.angle2); clone->setAngle1(data.angle1); }
+                        if (clone->getAngle1() != data.angle1 || clone->getAngle2() != data.angle2 || !clone->isEllipticArc())
+                            return refuse(trim::Refusal::Arithmetic);
+                        output = std::move(clone);
+                    } else if (sources[i]->rtti() == RS2::EntityArc) {
+                        auto clone = std::make_unique<RS_Arc>(*static_cast<const RS_Arc*>(sources[i])); clone->setParent(nullptr);
+                        clone->setData(RS_ArcData{data.center, data.majorP.x, data.angle1, data.angle2, data.reversed});
+                        output = std::move(clone);
+                    } else output = std::make_unique<RS_Arc>(nullptr,
+                        RS_ArcData{data.center, data.majorP.x, data.angle1, data.angle2, data.reversed});
+                    if (!(output->getLength() > 0) || !std::isfinite(output->getLength())) return refuse(trim::Refusal::Arithmetic);
+                } else if (sources[i]->rtti() == RS2::EntityLine) {
+                    const auto& fragment = prepared[i].fragments[j];
+                    if (fragment.data.degree != 1 || fragment.data.controlPoints.size() != 2) return refuse(trim::Refusal::UnsupportedLayout);
+                    output = std::make_unique<RS_Line>(nullptr, fragment.data.controlPoints.front(), fragment.data.controlPoints.back());
+                } else {
+                    const auto& fragment = prepared[i].fragments[j];
+                    auto spline = std::make_unique<RS_Spline>(nullptr, fragment.data);
+                    if (!spline->validate() || !spline->size() ||
+                        RS_Spline::geometryFingerprint(spline->getData()) != RS_Spline::geometryFingerprint(fragment.data))
+                        return refuse(trim::Refusal::Arithmetic);
+                    output = std::move(spline);
+                }
+                output->RS_Entity::operator=(*sources[i]);
+                output->setDrwExtData(foreign[i]);
+                output->clearDwgProvenance(RS_Entity::Identity);
+                output->setOwnerLineage(0); output->setLineage(RS_Entity::newLineage());
+                output->setParent(&document); output->calculateBorders();
+                if (!LC_EllipseOffsetGeometry::isFinite2D(output->getMin()) ||
+                    !LC_EllipseOffsetGeometry::isFinite2D(output->getMax())) return refuse(trim::Refusal::Arithmetic);
+                owned.push_back(std::move(output));
+            }
+        }
+        std::vector<const RS_Entity*> roots; roots.reserve(owned.size());
+        for (const auto& e : owned) roots.push_back(e.get());
+        if (measureOffsetOutput(roots, displayCap).status != LC_OffsetTreeStatus::Ok) return refuse(trim::Refusal::LimitExceeded);
+        if (checkCancel()) return refuse(trim::Refusal::Cancelled);
+        for (std::size_t i = 0; i < sources.size() && sources[i]; ++i) {
+            if (!eligible(sources[i]) || stamp(*sources[i]) != stamps[i] || ctx.entitiesToDelete.contains(sources[i]))
+                return refuse(trim::Refusal::UnsupportedLayout);
+        }
+        if (count > memberCap - std::size_t(ctx.entitiesToAdd.size()) ||
+            (both ? 2u : 1u) > memberCap - std::size_t(ctx.entitiesToDelete.size())) return refuse(trim::Refusal::LimitExceeded);
+        auto additions = ctx.entitiesToAdd, deletions = ctx.entitiesToDelete;
+        additions.reserve(additions.size() + qsizetype(count)); deletions.reserve(deletions.size() + (both ? 2 : 1));
+        for (const auto& e : owned) additions.append(e.get());
+        deletions.append(&target); if (both) deletions.append(&cutter);
+        result.trimmed1 = owned.front().get();
+        if (both) result.trimmed2 = owned[sideCount[0]].get();
+        std::optional<std::size_t> firstRoot;
+        for (const auto& fragment : prepared[0].fragments) {
+            const std::array<std::pair<const trim::Endpoint*, RS_Vector>, 2> ends{{
+                {&fragment.start, fragment.data.controlPoints.front()}, {&fragment.end, fragment.data.controlPoints.back()}}};
+            for (const auto& [end, point] : ends) if (end->rootId) {
+                if (!firstRoot) { firstRoot = end->rootId; result.intersection1 = point; }
+                else if (end->rootId != firstRoot) result.intersection2 = point;
+            }
+        }
+        // No allocation or user callback after the first swap. The standard
+        for (std::size_t j = 0; j < prepared[0].conicFragments.size(); ++j) {
+            const auto& fragment = prepared[0].conicFragments[j];
+            if (fragment.startRoot) result.intersection1 = owned[j]->getStartpoint();
+            if (fragment.endRoot) result.intersection2 = owned[j]->getEndpoint();
+        }
+        // All typed geometry, attributes and BOTH output sets are complete.
+        // document batch is the only publication; no compensating rollback.
+        // This is after the final source stamps and typed endpoint getters.
+        // Revalidate the complete native root set, not only the last operand.
+        // Pointer membership precedes ID/type/value reads through each address.
+        for (const auto& input : nativeInputs) if (input.address) {
+            const auto reason = input.replacement ? trim::Refusal::UnsupportedLayout : trim::Refusal::UnsupportedCutter;
+            if (!member(input.address) || input.address->getId() != input.id ||
+                (input.replacement && input.address->isLocked()) || !nativeReady(*input.address) ||
+                !input.snapshot->matches(*input.address)) return refuse(reason);
+        }
+        // No external operand callback after the complete native closure.
+        if (checkCancel()) return refuse(trim::Refusal::Cancelled);
+        ctx.entitiesToAdd.swap(additions); ctx.entitiesToDelete.swap(deletions); ctx.dontSetActiveLayerAndPen();
+        for (auto& e : owned) e.release();
+        result.result = true; result.cacheRefusal.reset();
+        return result;
+    } catch (const std::bad_alloc&) { return refuse(trim::Refusal::AllocationFailure); }
 }
 
 void RS_Modification::trimEnding(const RS_Vector& trimCoord, RS_AtomicEntity* trimmed1, const RS_Vector& is) {
