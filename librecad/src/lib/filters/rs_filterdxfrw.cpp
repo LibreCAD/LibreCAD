@@ -896,6 +896,121 @@ bool restoreTableEntryExtData(DRW_TableEntry &destination,
   return true;
 }
 
+// DIMTALN is the only generated XDATA on a DIMSTYLE with a saved source
+// record (the linetype producer below deliberately excludes such records).
+// Replace its owned top-level 392/value pair, not the application's foreign
+// payload. Keep one application delimiter even when repairing an older save
+// that appended several copies. Other applications retain their exact order.
+bool restoreDimStyleExtData(DRW_Dimstyle &destination,
+                            const std::vector<DRW_Variant *> &source) {
+  const auto isDimtaln = [](const DRW_Variant *value) {
+    constexpr char app[] = "ACAD_DSTYLE_DIMTALN";
+    return value != nullptr && value->code() == 1001 &&
+           value->type() == DRW_Variant::STRING && value->content.s != nullptr &&
+           value->content.s->size() == sizeof(app) - 1 &&
+           std::equal(value->content.s->begin(), value->content.s->end(), app,
+                      [](unsigned char a, unsigned char b) {
+                        return std::toupper(a) == std::toupper(b);
+                      });
+  };
+  const auto isOwnedPair = [](const DRW_Variant *key,
+                              const DRW_Variant *value) {
+    return key != nullptr && key->code() == 1070 &&
+           key->type() == DRW_Variant::INTEGER && key->i_val() == 392 &&
+           value != nullptr && value->code() == 1070 &&
+           value->type() == DRW_Variant::INTEGER;
+  };
+  try {
+    constexpr auto cap = DRW_TableEntry::kMaxExtendedDataItems;
+    if (destination.extData.size() > cap ||
+        source.size() > cap - destination.extData.size())
+      return false;
+    if (destination.extData.empty())
+      return restoreTableEntryExtData(destination, source);
+    // Refuse an unexpected producer layout rather than silently dropping it.
+    if (destination.extData.size() != 3 || !isDimtaln(destination.extData[0]) ||
+        !isOwnedPair(destination.extData[1], destination.extData[2]))
+      return false;
+
+    // Each source APPID is an independent brace scope. Validate owned scopes
+    // before combining them, and reject null/orphan items before any copies.
+    bool owned = false;
+    std::size_t depth = 0;
+    for (std::size_t i = 0; i < source.size(); ++i) {
+      const DRW_Variant *value = source[i];
+      if (value == nullptr || (i == 0 && value->code() != 1001))
+        return false;
+      if (value->code() == 1001) {
+        if (depth != 0 || value->type() != DRW_Variant::STRING ||
+            value->content.s == nullptr || value->content.s->empty())
+          return false;
+        owned = isDimtaln(value);
+      } else if (owned && value->code() == 1002) {
+        if (value->type() != DRW_Variant::STRING || value->content.s == nullptr)
+          return false;
+        if (*value->content.s == "{") {
+          ++depth;
+        } else if (*value->content.s == "}" && depth != 0) {
+          --depth;
+        } else {
+          return false;
+        }
+      }
+    }
+    if (depth != 0)
+      return false;
+
+    DRW_Dimstyle merged;
+    if (!restoreTableEntryExtData(merged, destination.extData))
+      return false;
+    // First collect foreign tails of DIMTALN under the generated delimiter;
+    // then replay every other application without changing any of its items.
+    for (const bool ownedPass : {true, false}) {
+      owned = false;
+      depth = 0;
+      for (std::size_t i = 0; i < source.size(); ++i) {
+        const DRW_Variant *value = source[i];
+        if (value->code() == 1001) {
+          owned = isDimtaln(value);
+          depth = 0;
+          if (owned)
+            continue;
+        }
+        if (owned != ownedPass)
+          continue;
+        if (owned && depth == 0 && i + 1 < source.size() &&
+            (value->code() == 1070 || value->code() == 1071) &&
+            (value->type() == DRW_Variant::INTEGER ||
+             value->type() == DRW_Variant::INTEGER64) &&
+            source[i + 1]->code() != 1001 && source[i + 1]->code() != 1002) {
+          // Keep unknown pairs atomic: a foreign pair's value can itself be
+          // 392, and is not the key of the following pair.
+          if (!isOwnedPair(value, source[i + 1]) &&
+              (!merged.addExtData(std::make_unique<DRW_Variant>(*value)) ||
+               !merged.addExtData(std::make_unique<DRW_Variant>(*source[i + 1]))))
+            return false;
+          ++i;
+          continue;
+        }
+        if (owned && value->code() == 1002) {
+          if (*value->content.s == "{")
+            ++depth;
+          else
+            --depth;
+        }
+        if (!merged.addExtData(std::make_unique<DRW_Variant>(*value)))
+          return false;
+      }
+    }
+    // Both are fresh write-only entries, with no parser cursor. The temporary
+    // takes ownership of the old generated items; saved metadata is untouched.
+    destination.extData.swap(merged.extData);
+    return true;
+  } catch (...) {
+    return false;
+  }
+}
+
 bool sameDxfClassDefinition(const DRW_Class &lhs, const DRW_Class &rhs) {
   // instanceCount is recomputed from emitted records, while DWG-only fields
   // do not participate in the DXF CLASS record. Compare only values that can
@@ -21087,7 +21202,7 @@ void RS_FilterDXFRW::writeDimstyles() {
         m_writeFailed = true;
         continue;
       }
-      if (!restoreTableEntryExtData(dst, sourceStyle->extData)) {
+      if (!restoreDimStyleExtData(dst, sourceStyle->extData)) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_FilterDXFRW: cannot restore DXF "
                         "DIMSTYLE XDATA");
@@ -21530,11 +21645,9 @@ void RS_FilterDXFRW::prepareDRWDimStyleExtData(DRW_Dimstyle &d,
   }
   // R2000/R2004 keep a style's own DIMLTYPE/DIMLTEX1/DIMLTEX2 in this XDATA
   // instead of the native groups 345-347 that prepareDRWDimStyleDimLine/
-  // ExtLine write for > AC1018. writeDimstyles() replays a source table
-  // entry's own raw extData verbatim right after this returns, byte for
-  // byte, whenever this style came from one; only add these three ourselves
-  // when there is no such source, so a style with a name a file already
-  // carried never ends up with the pair written twice.
+  // ExtLine write for > AC1018. writeDimstyles() preserves these imported
+  // linetype application sections verbatim (only DIMTALN is regenerated).
+  // Add the three sections ourselves only when there is no saved source.
   if (m_dxfW != nullptr && m_dxfW->getVersion() > DRW::AC1014 &&
       m_dxfW->getVersion() <= DRW::AC1018 &&
       m_graphic->dwgAdvancedMetadata().findDimStyleTableEntryByName(

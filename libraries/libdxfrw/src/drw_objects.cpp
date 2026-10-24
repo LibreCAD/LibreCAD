@@ -5588,7 +5588,8 @@ bool DRW_PlotSettings::encodeDwg(DRW::Version version, dwgBufferW *buf,
     if (version >= DRW::AC1018) {
         buf->putBitShort(static_cast<std::uint16_t>(shadePlotMode));
         buf->putBitShort(static_cast<std::uint16_t>(shadePlotResLevel));
-        buf->putBitShort(static_cast<std::uint16_t>(shadePlotCustomDPI));
+        buf->putBitShort(static_cast<std::uint16_t>(
+            shadePlotCustomDPI == 0 ? 300 : shadePlotCustomDPI));
     }
 
     putCommonObjectHandlePrefix(
@@ -15236,7 +15237,8 @@ bool DRW_Layout::encodeDwg(DRW::Version version, dwgBufferW *buf,
     if (version >= DRW::AC1018) {  // R2004+
         buf->putBitShort(static_cast<std::uint16_t>(shadePlotMode));
         buf->putBitShort(static_cast<std::uint16_t>(shadePlotResLevel));
-        buf->putBitShort(static_cast<std::uint16_t>(shadePlotCustomDPI));
+        buf->putBitShort(static_cast<std::uint16_t>(
+            shadePlotCustomDPI == 0 ? 300 : shadePlotCustomDPI));
     }
 
     // --- LAYOUT-specific fields ---

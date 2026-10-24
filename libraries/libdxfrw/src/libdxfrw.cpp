@@ -14892,7 +14892,8 @@ void dxfRW::writePlotSettingsFields(const DRW_PlotSettings *ent) {
     if (version > DRW::AC1015) {   // shade-plot settings are R2004+
         writer->writeInt16(76, ent->shadePlotMode);
         writer->writeInt16(77, ent->shadePlotResLevel);
-        writer->writeInt16(78, ent->shadePlotCustomDPI);
+        // Zero is the legacy in-memory "unspecified" value, not a valid DPI.
+        writer->writeInt16(78, ent->shadePlotCustomDPI == 0 ? 300 : ent->shadePlotCustomDPI);
     }
     writer->writeDouble(147, ent->scaleFactor);
     writer->writeDouble(148, ent->paperImageOriginX);

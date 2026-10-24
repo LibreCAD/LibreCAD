@@ -2708,6 +2708,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/lc_offsetcurve_adapter_tests.cpp
         librecad/src/lib/filters/tests/lc_offsetcurve_persistence_tests.cpp
         librecad/src/lib/filters/tests/lc_offsetcurve_hostilefile_tests.cpp
+        librecad/src/lib/filters/tests/lc_offsetcurve_matrix_tests.cpp
         librecad/src/lib/filters/tests/lc_offsetcurve_eed_packet_tests.cpp
         librecad/src/lib/filters/tests/dxf_xdata_codec_tests.cpp
         tests/lc_offsetcurvecarrier_tests.cpp
@@ -3399,6 +3400,12 @@ if (BUILD_TESTS)
     add_librecad_filter_micro_test(
         librecad_offset_hostilefile_tests
         librecad/src/lib/filters/tests/lc_offsetcurve_hostilefile_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_offset_matrix_tests
+        librecad/src/lib/filters/tests/lc_offsetcurve_matrix_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_xdata_appid_tests
+        librecad/src/lib/filters/tests/lc_dxf_xdata_appid_tests.cpp)
     add_librecad_filter_micro_test(
         librecad_xdata_codec_tests
         librecad/src/lib/filters/tests/dxf_xdata_codec_tests.cpp)
