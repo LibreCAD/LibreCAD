@@ -321,6 +321,28 @@ TEST_CASE("Chinese UI translations preserve default keyboard shortcuts", "[gui][
     }
 }
 
+// QObject::receivers() is protected; a member pointer formed through a subclass reaches it.
+struct SignalReceivers : QObject {
+    template <typename Signal>
+    static int count(const QObject* sender, Signal signal) {
+        const QByteArray signature = QByteArray::number(QSIGNAL_CODE) + QMetaMethod::fromSignal(signal).methodSignature();
+        return (sender->*&SignalReceivers::receivers)(signature.constData());
+    }
+};
+
+TEST_CASE("A replaced main window leaves no listeners on the settings", "[gui][settings-listeners]") {
+    testWindow();
+    const int options = SignalReceivers::count(RS_SETTINGS, &RS_Settings::optionsChanged);
+    const int option = SignalReceivers::count(RS_SETTINGS, &RS_Settings::optionChanged);
+
+    // destroys the window above and builds another
+    testWindow();
+    REQUIRE(SignalReceivers::count(RS_SETTINGS, &RS_Settings::optionsChanged) == options);
+    REQUIRE(SignalReceivers::count(RS_SETTINGS, &RS_Settings::optionChanged) == option);
+    // a listener left by the destroyed window crashed here
+    RS_SETTINGS->emitOptionsChanged();
+}
+
 TEST_CASE("Opening a drawing keeps its saved current layer", "[.gui][dock-window][saved-current-layer]") {
     DockFixture fixture;
     auto& window = fixture.window;
