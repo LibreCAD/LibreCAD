@@ -3476,6 +3476,10 @@ if (BUILD_TESTS)
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp)
     target_sources(librecad_dock_layout_tests PRIVATE ${LIBRECAD_RES})
     set_target_properties(librecad_dock_layout_tests PROPERTIES AUTORCC ON)
+    # The shortcut test loads the built Chinese catalogs, as in librecad_tests.
+    target_compile_definitions(librecad_dock_layout_tests PRIVATE
+        LIBRECAD_TEST_TRANSLATION_DIR="${CMAKE_CURRENT_BINARY_DIR}")
+    add_dependencies(librecad_dock_layout_tests librecad_test_translations)
     add_librecad_filter_micro_test(
         librecad_printing_tests
         librecad/src/lib/printing/tests/lc_printingtests.cpp)
@@ -3763,10 +3767,13 @@ if (BUILD_TESTS)
             WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
             ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
         )
+        # A relative configfile: Qt splits the platform argument at colons, as in C:/
         add_test(NAME librecad_dock_layout_tests
             COMMAND $<TARGET_FILE:librecad_dock_layout_tests> "[dock-window]" --reporter compact)
         set_tests_properties(librecad_dock_layout_tests PROPERTIES
-            ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen:configfile=librecad/src/ui/main/tests/lc_docklayout_screen.json"
+            TIMEOUT 120)
     endif()
     if (LIBRECAD_REGISTER_INTEGRATION_TESTS)
         add_test(NAME librecad_painter_tests
