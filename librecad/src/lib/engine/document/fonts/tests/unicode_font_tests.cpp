@@ -17,7 +17,12 @@
 **********************************************************************/
 
 /**
- * Coverage tests for unicode.lff.
+ * Coverage tests for unicode.lff and unicode_scripts.lff.
+ *
+ * The scripts traced from the Noto fonts live in unicode_scripts.lff, as the
+ * SIL Open Font License keeps them out of the GPL font unicode.lff; LibreCAD
+ * draws a glyph from it whenever the chosen font lacks one. A code point
+ * counts as covered when either font has it.
  *
  * unicode.lff is the font offering the widest script coverage LibreCAD
  * ships, yet it was missing every accented Latin letter needed by Turkish,
@@ -36,10 +41,17 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <QCoreApplication>
+#include <QFile>
+#include <QRegularExpression>
 #include <QString>
 
-#include "rs_font.h"
+#include "lc_sourcefonts.h"
 #include "rs_block.h"
+#include "rs_font.h"
+#include "rs_fontlist.h"
+#include "rs_insert.h"
+#include "rs_mtext.h"
+#include "rs_text.h"
 #include "rs_settings.h"
 #include "rs_vector.h"
 
@@ -68,6 +80,21 @@ RS_Font &unicodeFont() {
     static bool loaded = font.loadFont();
     REQUIRE(loaded);
     return font;
+}
+
+RS_Font &scriptsFont() {
+    static RS_Font font(QString(LIBRECAD_SOURCE_DIR) +
+                        "/librecad/support/fonts/unicode_scripts.lff");
+    static bool loaded = font.loadFont();
+    REQUIRE(loaded);
+    return font;
+}
+
+// The glyph LibreCAD draws for a code point of the Unicode fonts.
+RS_Block *unicodeLetter(char16_t cp) {
+    const QString letter(QChar(static_cast<char16_t>(cp)));
+    RS_Block *found = unicodeFont().findLetter(letter);
+    return found != nullptr ? found : scriptsFont().findLetter(letter);
 }
 
 // Latin letters required by the shipped tr/ro/lv/hu/cs/sk/pl/vi translations.
@@ -744,10 +771,9 @@ const char16_t kCyrillicMinority[] = {
 
 void checkRange(const char16_t *codepoints, double minX = -2.5, double maxX = 9.0,
                  double minY = -4.5, double maxY = 15.0, double minMaxY = 1.0) {
-    RS_Font &font = unicodeFont();
     for (const char16_t *cp = codepoints; *cp != 0; ++cp) {
         INFO("U+" << QString::number(*cp, 16).toUpper().toStdString());
-        RS_Block *letter = font.findLetter(QString(QChar(*cp)));
+        RS_Block *letter = unicodeLetter(*cp);
         REQUIRE(letter != nullptr);
         REQUIRE_FALSE(letter->isEmpty());
 
@@ -767,40 +793,40 @@ void checkRange(const char16_t *codepoints, double minX = -2.5, double maxX = 9.
 
 } // namespace
 
-TEST_CASE("unicode.lff covers the accented Latin letters the translations use",
+TEST_CASE("The Unicode fonts cover the accented Latin letters the translations use",
           "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kLatin);
 }
 
-TEST_CASE("unicode.lff covers Macedonian and Serbian Cyrillic",
+TEST_CASE("The Unicode fonts cover Macedonian and Serbian Cyrillic",
           "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kCyrillic);
 }
 
-TEST_CASE("unicode.lff covers the Turkic/Volga/Mongolian Cyrillic extras",
+TEST_CASE("The Unicode fonts cover the Turkic/Volga/Mongolian Cyrillic extras",
           "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kCyrillicTurkic, /*minX=*/-1.0, /*maxX=*/11.0, /*minY=*/-3.0,
                /*maxY=*/12.5);
 }
 
-TEST_CASE("unicode.lff covers the Armenian alphabet", "[font][unicode][i18n]") {
+TEST_CASE("The Unicode fonts cover the Armenian alphabet", "[font][unicode][i18n]") {
     ensureApp();
     // A couple of Armenian letters run slightly wider than the default
     // envelope (e.g. Ա's crossbar reaches past x=9).
     checkRange(kArmenian, /*minX=*/-2.5, /*maxX=*/10.5);
 }
 
-TEST_CASE("unicode.lff covers Hebrew base letters, final forms and Yiddish "
+TEST_CASE("The Unicode fonts cover Hebrew base letters, final forms and Yiddish "
           "ligatures",
           "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kHebrew);
 }
 
-TEST_CASE("unicode.lff covers the Ethiopic (Ge'ez) syllabary",
+TEST_CASE("The Unicode fonts cover the Ethiopic (Ge'ez) syllabary",
           "[font][unicode][i18n]") {
     ensureApp();
     // A few Ethiopic letters carry two or three vertical strokes side by
@@ -809,18 +835,18 @@ TEST_CASE("unicode.lff covers the Ethiopic (Ge'ez) syllabary",
                /*maxY=*/15.0, /*minMaxY=*/1.0);
 }
 
-TEST_CASE("unicode.lff covers the Ol Chiki (Santali) alphabet",
+TEST_CASE("The Unicode fonts cover the Ol Chiki (Santali) alphabet",
           "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kOlChiki);
 }
 
-TEST_CASE("unicode.lff covers the Yi syllabary", "[font][unicode][i18n]") {
+TEST_CASE("The Unicode fonts cover the Yi syllabary", "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kYi);
 }
 
-TEST_CASE("unicode.lff covers Canadian Aboriginal Syllabics",
+TEST_CASE("The Unicode fonts cover Canadian Aboriginal Syllabics",
           "[font][unicode][i18n]") {
     ensureApp();
     // The widest/tallest envelope needed anywhere in this PR - some
@@ -830,7 +856,7 @@ TEST_CASE("unicode.lff covers Canadian Aboriginal Syllabics",
                /*maxY=*/13.0);
 }
 
-TEST_CASE("unicode.lff covers Tai Viet base letters and combining marks",
+TEST_CASE("The Unicode fonts cover Tai Viet base letters and combining marks",
           "[font][unicode][i18n]") {
     ensureApp();
     // TAI VIET VOWEL U sits entirely below the baseline, same as a few of
@@ -839,20 +865,20 @@ TEST_CASE("unicode.lff covers Tai Viet base letters and combining marks",
                /*maxY=*/14.0, /*minMaxY=*/-3.5);
 }
 
-TEST_CASE("unicode.lff covers the New Tai Lue alphabet",
+TEST_CASE("The Unicode fonts cover the New Tai Lue alphabet",
           "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kNewTaiLue, /*minX=*/-2.0, /*maxX=*/15.0, /*minY=*/-6.0,
                /*maxY=*/13.0);
 }
 
-TEST_CASE("unicode.lff covers the Vai syllabary", "[font][unicode][i18n]") {
+TEST_CASE("The Unicode fonts cover the Vai syllabary", "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kVai, /*minX=*/-2.0, /*maxX=*/16.0, /*minY=*/-4.5,
                /*maxY=*/13.0);
 }
 
-TEST_CASE("unicode.lff covers Bamum base letters, numerals and combining "
+TEST_CASE("The Unicode fonts cover Bamum base letters, numerals and combining "
           "marks",
           "[font][unicode][i18n]") {
     ensureApp();
@@ -860,7 +886,7 @@ TEST_CASE("unicode.lff covers Bamum base letters, numerals and combining "
                /*maxY=*/13.0);
 }
 
-TEST_CASE("unicode.lff covers Thaana base letters and vowel marks",
+TEST_CASE("The Unicode fonts cover Thaana base letters and vowel marks",
           "[font][unicode][i18n]") {
     ensureApp();
     // A couple of vowel marks sit entirely below the baseline.
@@ -868,32 +894,32 @@ TEST_CASE("unicode.lff covers Thaana base letters and vowel marks",
                /*maxY=*/12.0, /*minMaxY=*/-3.5);
 }
 
-TEST_CASE("unicode.lff covers the Samaritan alphabet", "[font][unicode][i18n]") {
+TEST_CASE("The Unicode fonts cover the Samaritan alphabet", "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kSamaritan, /*minX=*/-2.0, /*maxX=*/14.5, /*minY=*/-4.5,
                /*maxY=*/14.5);
 }
 
-TEST_CASE("unicode.lff covers the modern Georgian (Mkhedruli) alphabet",
+TEST_CASE("The Unicode fonts cover the modern Georgian (Mkhedruli) alphabet",
           "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kGeorgian);
 }
 
-TEST_CASE("unicode.lff covers the Cherokee syllabary", "[font][unicode][i18n]") {
+TEST_CASE("The Unicode fonts cover the Cherokee syllabary", "[font][unicode][i18n]") {
     ensureApp();
     // Several Cherokee "W"-shaped syllables run much wider than any other
     // script covered so far (up to x=15.6).
     checkRange(kCherokee, /*minX=*/-2.5, /*maxX=*/16.0);
 }
 
-TEST_CASE("unicode.lff covers the Tifinagh (Berber/Amazigh) alphabet",
+TEST_CASE("The Unicode fonts cover the Tifinagh (Berber/Amazigh) alphabet",
           "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kTifinagh);
 }
 
-TEST_CASE("unicode.lff covers Thai consonants, vowels and combining marks",
+TEST_CASE("The Unicode fonts cover Thai consonants, vowels and combining marks",
           "[font][unicode][i18n]") {
     ensureApp();
     // Thai letters run wider than Latin/Cyrillic/Georgian (some consonants
@@ -906,7 +932,7 @@ TEST_CASE("unicode.lff covers Thai consonants, vowels and combining marks",
                /*minMaxY=*/-3.5);
 }
 
-TEST_CASE("unicode.lff covers Lao base letters and combining marks",
+TEST_CASE("The Unicode fonts cover Lao base letters and combining marks",
           "[font][unicode][i18n]") {
     ensureApp();
     // Same shape as the Thai envelope: some Lao consonants carry a second
@@ -917,7 +943,7 @@ TEST_CASE("unicode.lff covers Lao base letters and combining marks",
                /*minMaxY=*/-3.5);
 }
 
-TEST_CASE("unicode.lff covers the Greek base block completion (archaic "
+TEST_CASE("The Unicode fonts cover the Greek base block completion (archaic "
           "letters, symbol variants, and the Coptic-in-Greek-block letters)",
           "[font][unicode][i18n]") {
     ensureApp();
@@ -927,28 +953,28 @@ TEST_CASE("unicode.lff covers the Greek base block completion (archaic "
                /*maxY=*/11.0, /*minMaxY=*/-3.5);
 }
 
-TEST_CASE("unicode.lff covers Ethiopic Extended-A (Gurage languages)",
+TEST_CASE("The Unicode fonts cover Ethiopic Extended-A (Gurage languages)",
           "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kEthiopicExtA, /*minX=*/-2.5, /*maxX=*/16.0, /*minY=*/-2.5,
                /*maxY=*/12.0);
 }
 
-TEST_CASE("unicode.lff covers the Old Church Slavonic liturgical letters",
+TEST_CASE("The Unicode fonts cover the Old Church Slavonic liturgical letters",
           "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kChurchSlavonic, /*minX=*/-2.0, /*maxX=*/16.0, /*minY=*/-3.5,
                /*maxY=*/13.5);
 }
 
-TEST_CASE("unicode.lff covers Greek Extended (polytonic)",
+TEST_CASE("The Unicode fonts cover Greek Extended (polytonic)",
           "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kGreekExtended, /*minX=*/-2.0, /*maxX=*/14.0, /*minY=*/-3.5,
                /*maxY=*/13.0);
 }
 
-TEST_CASE("unicode.lff covers the modern minority-language Cyrillic "
+TEST_CASE("The Unicode fonts cover the modern minority-language Cyrillic "
           "extensions",
           "[font][unicode][i18n]") {
     ensureApp();
@@ -969,4 +995,76 @@ TEST_CASE("unicode.lff keeps its base letters intact", "[font][unicode]") {
         letter->calculateBorders();
         CHECK(letter->getMax().y > 4.0);
     }
+}
+
+TEST_CASE("unicode.lff and unicode_scripts.lff share no code point",
+          "[font][unicode]") {
+    ensureApp();
+    // The traced glyphs are under the OFL, which no part of the GPL font may
+    // carry; a glyph that crept back into unicode.lff would mix the licences.
+    // The code points come from the file itself: the loaded font also holds
+    // the U+FFFD that RS_Font makes up for a font without one.
+    QFile file(QString(LIBRECAD_SOURCE_DIR) +
+               "/librecad/support/fonts/unicode_scripts.lff");
+    REQUIRE(file.open(QIODevice::ReadOnly | QIODevice::Text));
+    const QRegularExpression glyphHeader(QStringLiteral("^\\[#?([0-9A-Fa-f]{4})\\]"));
+    int glyphs = 0;
+    while (!file.atEnd()) {
+        const QRegularExpressionMatch match =
+            glyphHeader.match(QString::fromUtf8(file.readLine()));
+        if (!match.hasMatch()) {
+            continue;
+        }
+        ++glyphs;
+        const QString letter(QChar(static_cast<char16_t>(match.captured(1).toUShort(nullptr, 16))));
+        INFO("U+" << match.captured(1).toUpper().toStdString());
+        CHECK(unicodeFont().findLetter(letter) == nullptr);
+        CHECK(scriptsFont().findLetter(letter) != nullptr);
+    }
+    CHECK(glyphs == 3748);
+}
+
+TEST_CASE("A letter the chosen font lacks is drawn from unicode_scripts.lff",
+          "[font][unicode][text]") {
+    ensureApp();
+    lc::test::SourceFonts fonts;
+    const QString thai(QChar(0x0E01));
+
+    RS_Font *fallback = RS_FONTLIST->findFallbackFont(thai);
+    REQUIRE(fallback != nullptr);
+    CHECK(fallback->getFileName() == "unicode_scripts");
+    CHECK(RS_FONTLIST->findFallbackFont(QStringLiteral("A")) == nullptr);
+
+    for (const auto& style : {QStringLiteral("standard"), QStringLiteral("unicode")}) {
+        INFO("style " << style.toStdString());
+        RS_TextData data(RS_Vector(0.0, 0.0), RS_Vector(0.0, 0.0), 9.0, 1.0,
+                         RS_TextData::VABaseline, RS_TextData::HALeft,
+                         RS_TextData::None, thai, style, 0.0, RS2::Update);
+        RS_Text text(nullptr, data);
+        REQUIRE(text.count() == 1);
+        auto *glyph = static_cast<RS_Insert *>(text.entityAt(0));
+        CHECK(glyph->getName() == thai);
+        CHECK(glyph->getMax().x > glyph->getMin().x);
+
+        RS_MTextData mdata(RS_Vector(0.0, 0.0), 9.0, 100.0, RS_MTextData::VATop,
+                           RS_MTextData::HALeft, RS_MTextData::LeftToRight,
+                           RS_MTextData::Exact, 1.0, thai, style, 0.0, RS2::Update);
+        RS_MText mtext(nullptr, mdata);
+        REQUIRE(mtext.count() == 1);
+        auto *line = static_cast<RS_EntityContainer *>(mtext.entityAt(0));
+        REQUIRE(line->count() == 1);
+        CHECK(static_cast<RS_Insert *>(line->entityAt(0))->getName() == thai);
+    }
+}
+
+TEST_CASE("Drawings naming the old OpenGost files find the renamed fonts",
+          "[font]") {
+    ensureApp();
+    lc::test::SourceFonts fonts;
+    RS_Font *narrow = RS_FONTLIST->requestFont(QStringLiteral("OpenGostTypeA-Regular"));
+    REQUIRE(narrow != nullptr);
+    CHECK(narrow->getFileName() == "lc_gost-outline-narrow");
+    RS_Font *wide = RS_FONTLIST->requestFont(QStringLiteral("opengosttypeb-regular"));
+    REQUIRE(wide != nullptr);
+    CHECK(wide->getFileName() == "lc_gost-outline-wide");
 }

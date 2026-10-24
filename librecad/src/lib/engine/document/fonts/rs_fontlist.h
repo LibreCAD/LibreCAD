@@ -54,6 +54,12 @@ public:
     void clearFonts();
     size_t countFonts() const;
     RS_Font* requestFont(const QString& name);
+    /**
+     * @return A font that has a glyph for \p letter, which the requested font
+     * lacks, or nullptr: the scripts LibreCAD keeps in fonts of their own
+     * because of their licence.
+     */
+    RS_Font* findFallbackFont(const QString& letter);
     std::vector<std::unique_ptr<RS_Font> >::const_iterator begin() const;
     std::vector<std::unique_ptr<RS_Font> >::const_iterator end() const;
     static QString getDefaultFont();

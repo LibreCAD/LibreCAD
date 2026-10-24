@@ -134,11 +134,14 @@ which were withdrawn in 2003.
 
 - <https://web.archive.org/web/20021205031218/http://www.on.cs.keio.ac.jp/~yasu/jp_fonts.html>
 
-The OpenGost Type A and Type B fonts (`opengosttypea-regular.lff`,
-`opengosttypeb-regular.lff`) were converted with ttf2lff from version 0.3
-of the OpenGost TrueType fonts by Nikita Volchenkov. They are released
-under the SIL Open Font License 1.1, and each file carries the licence and
-these notices:
+The GOST outline fonts `lc_gost-outline-narrow.lff` and
+`lc_gost-outline-wide.lff` were converted with ttf2lff from version 0.3 of
+the OpenGost Type A and Type B TrueType fonts by Nikita Volchenkov. Until
+2026 they were named `opengosttypea-regular.lff` and
+`opengosttypeb-regular.lff`; they were renamed because their licence
+reserves the OpenGost names, and LibreCAD still finds them under the old
+names. They are released under the SIL Open Font License 1.1, and each
+file carries the licence and these notices:
 
     Copyright (c) 2011-2012, Nikita Volchenkov (<nikitavolchenkov@gmail.com>),
     with Reserved Font Name OpenGost Type A.
@@ -148,10 +151,13 @@ these notices:
 
 - <https://github.com/LibreCAD/LibreCAD/blob/master/licenses/OFL-opengost.txt>
 
-The glyphs added to `unicode.lff` in 2026 for Thai, Lao, Armenian, Hebrew,
-Ethiopic, Yi and other scripts were traced from the centrelines of the Noto
-fonts, Copyright the Noto Project Authors, under the SIL Open Font License
-1.1.
+The Unicode Scripts font (`unicode_scripts.lff`) holds the Thai, Lao,
+Armenian, Hebrew, Ethiopic, Yi and other glyphs traced in 2026 from the
+centrelines of the Noto fonts, Copyright 2022 The Noto Project Authors. It
+is released under the SIL Open Font License 1.1, which does not allow
+these glyphs in a GPL font, and the file carries the licence and the
+notice of each Noto font it was traced from. LibreCAD draws a glyph from
+it when the chosen font lacks one.
 
 - <https://github.com/notofonts>
 

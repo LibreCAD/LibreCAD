@@ -1,7 +1,7 @@
 # Format:            LibreCAD Font 1
 # Creator:           ttf2lff
 # Version:           1
-# Name:              OpenGost Type A TT
+# Name:              LC GOST Outline Narrow
 # LetterSpacing:     3
 # WordSpacing:       6.75
 # LineSpacingFactor: 1
@@ -11,7 +11,9 @@
 # Author:            Dongxu Li <dongxuli2011@gmail.com> (ttf2lff conversion, 2012)
 # License:           SIL Open Font License 1.1
 #
-# Converted with ttf2lff from OpenGostTypeA-Regular.ttf of OpenGost 0.3.
+# Converted with ttf2lff from OpenGostTypeA-Regular.ttf of OpenGost 0.3,
+# and renamed from opengosttypea-regular.lff in 2026: the licence reserves
+# the font name OpenGost Type A.
 # The licence of the OpenGost fonts follows; it is also licenses/OFL-opengost.txt.
 #
 # Copyright (c) 2011-2012, Nikita Volchenkov (<nikitavolchenkov@gmail.com>),
