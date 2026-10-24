@@ -633,6 +633,10 @@ void QC_ApplicationWindow::fitDocksToWindow() {
             applyDefaultDockSizes();
             activateLayout();
         }
+    } else if (m_fittedDockState.isEmpty() && 5 * (width() - centralWidget()->geometry().right() - 1) > 2 * width()) {
+        // A restored layout with right docks over 40% of the window, as earlier builds saved them
+        applyDefaultDockSizes();
+        activateLayout();
     }
 
     const QSize floor(qMin(480, qMax(200, width() - 100)),

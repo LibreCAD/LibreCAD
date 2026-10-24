@@ -854,3 +854,29 @@ TEST_CASE("Docks hidden by a narrow first start come back at the first-start wid
     checkDefaultRightDocks(start);
     CHECK(start.rightStrip() == expected);
 }
+
+TEST_CASE("A restored layout gets the first-start width only if its right docks are over-wide",
+          "[.gui][dock-window][first-start]") {
+    requireScreen({1920, 1080});
+    const QHash<int, bool> areas{{Qt::RightDockWidgetArea, true}};
+    for (const int saved : {1100, 560}) {
+        CAPTURE(saved);
+        QByteArray state;
+        int savedStrip = 0;
+        {
+            FirstStart start;
+            start.show({1920, 1080});
+            start.window.resizeDocks({start.dock("layer_dockwidget")}, {saved}, Qt::Horizontal);
+            settle();
+            savedStrip = start.rightStrip();
+            state = start.window.saveState();
+        }
+        FirstStart start;
+        start.window.restoreDockLayout({}, false, areas, state);
+        start.show({1920, 1080});
+        INFO("saved strip=" << savedStrip << " restored strip=" << start.rightStrip());
+        CHECK(start.shown(start.dock("layer_dockwidget")));
+        if (5 * savedStrip > 2 * start.window.width()) CHECK(start.rightStrip() * 4 <= start.window.width());
+        else CHECK(start.rightStrip() == savedStrip);
+    }
+}
