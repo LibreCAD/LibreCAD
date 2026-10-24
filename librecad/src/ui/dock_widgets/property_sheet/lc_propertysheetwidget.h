@@ -25,6 +25,7 @@
 #define LC_PROPERTYSHEETWIDGET_H
 
 #include <QPointer>
+#include "lc_offsetcurvepropertyqueue.h"
 
 #include "lc_actioncontext.h"
 #include "lc_entitypropertyvaluedelegate.h"
@@ -86,6 +87,7 @@ public:
     void viewsListDestroyed() override {onDocumentDestroyed();}
     void selectedSetDestroyed() override {onDocumentDestroyed();}
     LC_PropertySheetWidgetOptions* getOptions() const {return m_propertySheetOptions.get();}
+    LC_OffsetCurvePropertyQueue* offsetPropertyQueue() const { return m_offsetPropertyQueue.get(); }
 public slots :
     void onViewDestroyed();
     void onUcsChanged(LC_UCS* ucs);
@@ -144,6 +146,7 @@ private:
     QSet<QString> m_collapsedContainerNames;
     QList<RS_Entity*> m_orginalEntities;
     QList<RS_Entity*> m_modifiedEntities;
+    std::unique_ptr<LC_OffsetCurvePropertyQueue> m_offsetPropertyQueue;
     OperationMode m_operationMode = MODE_SELECTION;
     QString m_activePropertyName;
 };

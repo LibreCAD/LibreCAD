@@ -78,12 +78,16 @@ void RS_Undo::addUndoCycle(std::shared_ptr<RS_UndoCycle> undoCycle) {
  * added after calling this method goes into this cycle.
  */
 void RS_Undo::startUndoCycle() {
-    if (1 < ++m_refCount) {
+    if (m_refCount > 0) {
+        ++m_refCount;
         // only the first fresh top call starts a new cycle
         return;
     }
 
-    m_currentCycle = std::make_shared<RS_UndoCycle>();
+    // Allocation failure must leave nesting and the previous cycle unchanged.
+    auto cycle = std::make_shared<RS_UndoCycle>();
+    m_currentCycle = std::move(cycle);
+    m_refCount = 1;
 }
 
 /**

@@ -1072,6 +1072,10 @@ std::vector<QString> RS_Entity::getAllKeys() const {
     return ret;
 }
 
+std::size_t RS_Entity::userDefVarCount() const {
+    return m_pImpl->varList.size();
+}
+
 const std::vector<std::shared_ptr<DRW_Variant>> &
 RS_Entity::getDrwExtData() const {
   return m_pImpl->drwExtData;

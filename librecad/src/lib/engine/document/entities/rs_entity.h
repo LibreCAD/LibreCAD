@@ -28,6 +28,7 @@
 #ifndef RS_ENTITY_H
 #define RS_ENTITY_H
 
+#include <cstddef>
 #include <memory>
 #include <vector>
 
@@ -501,6 +502,7 @@ public:
     //    double getStyleFactor(RS_GraphicView *view);
     QString getUserDefVar(const QString& key) const;
     std::vector<QString> getAllKeys() const;
+    std::size_t userDefVarCount() const;
     void setUserDefVar(QString key, QString val) const;
     void delUserDefVar(const QString& key) const;
 

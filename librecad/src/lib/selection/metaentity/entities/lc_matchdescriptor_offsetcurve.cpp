@@ -6,22 +6,11 @@
 #include <utility>
 
 #include "lc_offsetcurve.h"
+#include "lc_offsetcurvereadutils.h"
 #include "rs_line.h"
 
 namespace {
-std::optional<double> cachedLength(const LC_OffsetCurve& curve) {
-    const auto cap = LC_OffsetCheckLimits{}.maxVertices;
-    if (curve.count() == 0 || curve.count() > cap) return std::nullopt;
-    for (const auto* child : curve) {
-        const auto* line = dynamic_cast<const RS_Line*>(child);
-        if (!line || child->rtti() != RS2::EntityLine || child->getParent() != &curve) return std::nullopt;
-        for (const auto& p : {line->getStartpoint(), line->getEndpoint()})
-            if (!p.valid || !std::isfinite(p.x) || !std::isfinite(p.y) || p.z != 0) return std::nullopt;
-    }
-    const double length = curve.getLength();
-    if (!std::isfinite(length) || length < 0) return std::nullopt;
-    return length;
-}
+using LC_OffsetCurveRead::cachedLength;
 
 template <typename T>
 using OffsetValue = std::function<std::optional<T>(const LC_OffsetCurve&)>;

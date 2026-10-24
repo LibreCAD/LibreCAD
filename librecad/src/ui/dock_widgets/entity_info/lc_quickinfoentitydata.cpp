@@ -31,6 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_dimordinate.h"
 #include "lc_hyperbola.h"
 #include "lc_offsetcurve.h"
+#include "lc_offsetcurvereadutils.h"
 #include "lc_parabola.h"
 #include "lc_peninforegistry.h"
 #include "lc_quickinfowidgetoptions.h"
@@ -63,19 +64,6 @@ RS_Entity* offsetInfoOwner(RS_Entity* entity) {
     return entity;
 }
 
-std::optional<double> offsetCachedLength(const LC_OffsetCurve& curve) {
-    const auto cap = LC_OffsetCheckLimits{}.maxVertices;
-    if (curve.count() == 0 || curve.count() > cap) return std::nullopt;
-    for (const auto* child : curve) {
-        const auto* line = dynamic_cast<const RS_Line*>(child);
-        if (!line || child->rtti() != RS2::EntityLine || child->getParent() != &curve) return std::nullopt;
-        for (const auto& p : {line->getStartpoint(), line->getEndpoint()})
-            if (!p.valid || !std::isfinite(p.x) || !std::isfinite(p.y) || p.z != 0) return std::nullopt;
-    }
-    const double length = curve.getLength();
-    if (!std::isfinite(length) || length < 0) return std::nullopt;
-    return length;
-}
 
 QString formatDimensionLabelForInfo(const QString& label) {
     if (label.isEmpty()) {
@@ -1335,7 +1323,7 @@ void LC_QuickInfoEntityData::collectOffsetCurveProperties(const LC_OffsetCurve* 
         addProperty(tr("Distance"), tr("Unavailable"), PROPERTY_TYPE_OTHER);
         addProperty(tr("Side"), tr("Unavailable"), PROPERTY_TYPE_OTHER);
     }
-    const auto length = offsetCachedLength(*curve);
+    const auto length = LC_OffsetCurveRead::cachedLength(*curve);
     if (length) addLinearProperty(tr("Cached Length"), *length);
     else addProperty(tr("Cached Length"), tr("Unavailable"), PROPERTY_TYPE_OTHER);
 }
@@ -1353,7 +1341,7 @@ QString LC_QuickInfoEntityData::prepareOffsetCurveDescription(const LC_OffsetCur
         appendValue(result, tr("Distance"), tr("Unavailable"));
         appendValue(result, tr("Side"), tr("Unavailable"));
     }
-    const auto length = offsetCachedLength(*curve);
+    const auto length = LC_OffsetCurveRead::cachedLength(*curve);
     if (length) appendLinear(result, tr("Cached Length"), *length);
     else appendValue(result, tr("Cached Length"), tr("Unavailable"));
     return result;

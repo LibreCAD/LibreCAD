@@ -889,6 +889,7 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
      librecad/src/lib/engine/document/entities/lc_offsetcurve.cpp
      librecad/src/lib/engine/document/entities/lc_offsetcurve.h
+     librecad/src/lib/engine/document/entities/lc_offsetcurvereadutils.h
      librecad/src/lib/engine/document/entities/lc_offsetcurvegrips.cpp
      librecad/src/lib/engine/document/entities/lc_offsetcurvegrips.h
      librecad/src/lib/engine/document/entities/lc_offsetcurvesnaps.cpp
@@ -1534,6 +1535,9 @@ set (SHARED_SOURCES
      librecad/src/ui/components/toolbars/qg_snaptoolbar.h
      librecad/src/ui/components/utils/lc_entitymetauiutils.cpp
      librecad/src/ui/components/utils/lc_entitymetauiutils.h
+     librecad/src/ui/components/utils/lc_busycursorguard.h
+     librecad/src/ui/components/utils/lc_offsetcurveui.cpp
+     librecad/src/ui/components/utils/lc_offsetcurveui.h
      librecad/src/ui/components/utils/lc_guarded_signals_blocker.h
      librecad/src/ui/components/utils/lc_item_info.h
      librecad/src/ui/components/utils/lc_mouse_tracking_table_view.cpp
@@ -1855,6 +1859,11 @@ set (SHARED_SOURCES
      librecad/src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.h
      librecad/src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp
      librecad/src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.h
+     librecad/src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_offsetcurve.cpp
+     librecad/src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_offsetcurve.h
+     librecad/src/ui/dock_widgets/property_sheet/metaentity/lc_offsetcurvepropertyqueue.cpp
+     librecad/src/ui/dock_widgets/property_sheet/metaentity/lc_offsetcurvepropertyqueue.h
+     librecad/src/ui/dock_widgets/property_sheet/metaentity/lc_offsetcurvepropertybatch.h
      librecad/src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp
      librecad/src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.h
      librecad/src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hyperbola.cpp
@@ -2810,6 +2819,8 @@ if (BUILD_TESTS)
         librecad/src/ui/dock_widgets/layer_widget/tests/lc_layerblockwidgets_tests.cpp
         librecad/src/ui/dock_widgets/ucs_list/tests/lc_ucsviewsselectiondocks_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetlifetime_tests.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_offsetcurve_properties_tests.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_offsetcurve_uihelpers_tests.cpp
         librecad/src/ui/components/utils/tests/lc_offsetcurve_names_tests.cpp
         librecad/src/actions/dock_widgets/block/tests/lc_actionblockssave_tests.cpp
         librecad/src/ui/dock_widgets/ucs_list/tests/lc_ucslistmodel_tests.cpp
@@ -3445,6 +3456,23 @@ if (BUILD_TESTS)
         BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES)
     if(MSVC)
         target_compile_options(librecad_entity_container_replace_failure_tests PRIVATE /bigobj)
+    endif()
+
+    # Native H-sheet construction gate only. Never add global-new overrides
+    # to librecad_tests, a Catch micro runner or the application's fast lane.
+    add_executable(librecad_offsetcurve_batch_failure_tests EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_offsetcurve_batch_failure_tests.cpp)
+    set_target_properties(librecad_offsetcurve_batch_failure_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+    target_include_directories(librecad_offsetcurve_batch_failure_tests PRIVATE ${SHARED_INCLUDES})
+    target_link_libraries(librecad_offsetcurve_batch_failure_tests PRIVATE
+        librecad_lib Qt6::Core Qt6::Gui Qt6::Network Qt6::PrintSupport Qt6::Svg Qt6::Widgets)
+    target_compile_features(librecad_offsetcurve_batch_failure_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_offsetcurve_batch_failure_tests PRIVATE
+        BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES)
+    if(MSVC)
+        target_compile_options(librecad_offsetcurve_batch_failure_tests PRIVATE /bigobj)
     endif()
 
     # Keep the large corpus/diagnostic source isolated. It is an explicit

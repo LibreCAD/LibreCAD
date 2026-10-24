@@ -78,6 +78,9 @@ LC_PropertySheetWidget::LC_PropertySheetWidget(QWidget* parent, LC_ActionContext
     registrator.registerViews();
 
     ui->setupUi(this);
+    m_offsetPropertyQueue = std::make_unique<LC_OffsetCurvePropertyQueue>(this, actionContext);
+    connect(m_offsetPropertyQueue.get(), &LC_OffsetCurvePropertyQueue::pendingCancelled,
+        this, &LC_PropertySheetWidget::refill, Qt::QueuedConnection);
 
     const auto propertiesSheet = ui->propertySheet->propertiesSheet();
     connect(propertiesSheet, &LC_PropertiesSheet::propertyEdited, this, &LC_PropertySheetWidget::onPropertyEdited);
@@ -122,6 +125,7 @@ LC_PropertySheetWidget::LC_PropertySheetWidget(QWidget* parent, LC_ActionContext
 }
 
 LC_PropertySheetWidget::~LC_PropertySheetWidget() {
+    m_offsetPropertyQueue->setContext(nullptr, nullptr);
     delete ui;
 }
 
@@ -187,6 +191,7 @@ void LC_PropertySheetWidget::setGraphicView(RS_GraphicView* gv) {
         }
 
         m_viewport = viewport;
+        m_offsetPropertyQueue->setContext(doc, gv);
 
         m_entityContainerProvider->setGraphicView(gv);
 
@@ -229,6 +234,7 @@ void LC_PropertySheetWidget::clearSheet() {
  * drawing an edit is applied to. The clones were never added to a drawing.
  */
 void LC_PropertySheetWidget::forgetEditedEntities() {
+    m_offsetPropertyQueue->setContext(nullptr, nullptr);
     m_orginalEntities.clear();
     m_modifiedEntities.clear();
 }
@@ -276,6 +282,7 @@ void LC_PropertySheetWidget::onViewDestroyed() {
 }
 
 void LC_PropertySheetWidget::stopInplaceEdit() const {
+    emit m_offsetPropertyQueue->finishEditors();
     ui->propertySheet->stopInplaceEdit();
 }
 
@@ -287,6 +294,8 @@ void LC_PropertySheetWidget::refill() {
     }
     if (m_operationMode == MODE_SELECTION) {
         if (m_handleSelectionChange) {
+            // Retire getters only when replacing their providers.
+            m_offsetPropertyQueue->invalidateGetters();
             const int selectionIndex = ui->cbSelection->currentIndex();
             if (selectionIndex >= 0) {
                 // save current state
@@ -304,6 +313,7 @@ void LC_PropertySheetWidget::refill() {
         }
     }
     else {
+        m_offsetPropertyQueue->invalidateGetters();
         LC_PropertyContainer* container = prepareToolOptionsContainer(m_toolOptionsPropertiesContainerProvider);
         replaceTopLevelContainer(container);
     }
@@ -483,6 +493,9 @@ void LC_PropertySheetWidget::onBeforePropertyEdited([[maybe_unused]] LC_Property
 }
 
 void LC_PropertySheetWidget::onPropertyEdited(LC_Property* property) {
+    if (property->property("offsetCurveProperty").toBool()) {
+        return; // native setters already staged (or refused) through the owning queue
+    }
     const bool propertyIsVirtual = isVirtualProperty(property);
     if (propertyIsVirtual) {
         return;
@@ -544,6 +557,8 @@ void LC_PropertySheetWidget::replaceTopLevelContainer(LC_PropertyContainer* cons
 }
 
 void LC_PropertySheetWidget::onSelectionIndexChanged(const int index) {
+    stopInplaceEdit();
+    m_offsetPropertyQueue->invalidateGetters();
     int itemEntityType = getCurrentlySelectedEntityType(index);
     const auto entityType = static_cast<RS2::EntityType>(itemEntityType);
     const auto newContainer = preparePropertiesContainer(entityType);
@@ -647,6 +662,12 @@ void LC_PropertySheetWidget::setPickedPropertyCoordinateValue(const QString& pro
     else {
         const auto sheetModel = propertiesSheet->getModel();
         for (const auto p : std::as_const(propertiesByName)) {
+            if (p->property("offsetCurveProperty").toBool()) {
+                if (auto* scalar = dynamic_cast<LC_PropertyDouble*>(p)) {
+                    scalar->setValue(interactiveInputValue, PropertyChangeReasonEdit);
+                    continue; // native center components are independent aggregate scalars
+                }
+            }
             const auto* vectorMultiProperty = dynamic_cast<LC_PropertyMulti*>(p);
             if (vectorMultiProperty == nullptr) {
                 const auto vectorProperty = dynamic_cast<LC_PropertyRSVector*>(p);

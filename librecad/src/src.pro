@@ -450,6 +450,7 @@ HEADERS += \
     lib/engine/document/entities/lc_curveoffset.h \
     lib/engine/document/entities/lc_ellipseoffsetgeometry.h \
     lib/engine/document/entities/lc_offsetcurve.h \
+    lib/engine/document/entities/lc_offsetcurvereadutils.h \
     lib/engine/document/entities/lc_offsetcurvegrips.h \
     lib/engine/document/entities/lc_offsetcurvetransform.h \
     lib/engine/document/entities/lc_offsetcurveagain.h \
@@ -655,6 +656,8 @@ HEADERS += \
     ui/components/relative_position_assistant/lc_relative_position_editing_widget.h \
     ui/components/relative_position_assistant/lc_relative_position_evaluator.h \
     ui/components/utils/lc_entitymetauiutils.h \
+    ui/components/utils/lc_busycursorguard.h \
+    ui/components/utils/lc_offsetcurveui.h \
     ui/components/utils/lc_guarded_signals_blocker.h \
     ui/components/utils/lc_mouse_tracking_table_view.h \
     ui/components/utils/lc_tableitem_delegate_base.h \
@@ -940,6 +943,9 @@ HEADERS += \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_multiple.h \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.h \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.h \
+    ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_offsetcurve.h \
+    ui/dock_widgets/property_sheet/metaentity/lc_offsetcurvepropertyqueue.h \
+    ui/dock_widgets/property_sheet/metaentity/lc_offsetcurvepropertybatch.h \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.h \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.h \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.h \
@@ -1108,6 +1114,7 @@ SOURCES += \
     ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp \
     ui/components/relative_position_assistant/lc_relative_position_evaluator.cpp \
     ui/components/utils/lc_entitymetauiutils.cpp \
+    ui/components/utils/lc_offsetcurveui.cpp \
     ui/components/creators/lc_creatorinvoker.cpp \
     ui/components/utils/lc_mouse_tracking_table_view.cpp \
     ui/components/utils/lc_tableitem_delegate_base.cpp \
@@ -2231,6 +2238,8 @@ SOURCES +=  ui/action_options/circle/lc_circle_by_arc_options_widget.cpp \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp \
+    ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_offsetcurve.cpp \
+    ui/dock_widgets/property_sheet/metaentity/lc_offsetcurvepropertyqueue.cpp \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp \
