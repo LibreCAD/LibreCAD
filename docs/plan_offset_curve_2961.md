@@ -24,15 +24,16 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-24. Status: A through I-ui committed; X-H1 through X-H7 complete for the observed source; trimming and final application qualification incomplete.
+Updated: 2026-10-24. Status: A through T-kernel committed; X-H1 through X-H7 complete for the observed source; trim actions/persistence and final application qualification incomplete.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
-This checkpoint records tested A through I-ui and auxiliary X-H1 through
+This checkpoint records tested A through T-kernel and auxiliary X-H1 through
 X-H7 commits/qualification. Native adoption, creation, staged editing, cached
 grips/snaps, tool/type integration and independently checked DXF/DWG persistence
 are implemented. Interactive Offset now loads a persisted default-on native
 option; programmatic requests still opt in. Value-only Update from Source and
-Restore Original and their UI integration are implemented; trimming remains later
+Restore Original and their UI integration are implemented. Bounded pure trim
+preparation is implemented; action/publication and persistence remain later
 slices. Native property sheet
 and Edit Properties dialog share bounded source snapshots; modal clone ownership
 survives document, editor, action and view teardown until widgets unwind.
@@ -47,7 +48,7 @@ survives document, editor, action and view teardown until widgets unwind.
 | Difference between initial checkpoints | Only this plan file; no product-source change |
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
-| Latest product checkpoint | `4a231d243` (I-ui; I-restore0d3fed653) |
+| Latest product checkpoint | `04c712069` (T-kernel; I-ui4a231d243) |
 | Latest auxiliary checkpoint | `90714f758` (H7 bounded suite-pair scheduling; temp-path/journal fix c1b2fa095, driver 5a3e47039) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
@@ -58,13 +59,13 @@ survives document, editor, action and view teardown until widgets unwind.
 | B terminals | Immutable exact occurrence/edge-side classification, separate source incidence, bounded storage/scans |
 | C topology | Complete bounded unique-path checker, owned contact query and exact root-to-port matching; unresolved correspondence refuses Ambiguous |
 | Native entity | Checked adoption/creation, transactional mutators and actual stage results; consistency stamp, clone, exact proof transport, cached visible grips/safe snaps and bounded owned extensions |
-| Product integration | Tool/type/name, independently checked persistence, native sheet/dialog/drag, interactive enablement, both value-only source actions and source UI committed; explicit INSERT plain-cache fallback; trim pending |
+| Product integration | Tool/type/name, independently checked persistence, native sheet/dialog/drag, interactive enablement, both value-only source actions, source UI and pure trim kernel committed; explicit INSERT plain-cache fallback; trim actions/files pending |
 | Build registration | Geometry/contact/routing/native sources in CMake/qmake6; native and adjacent tests registered and executed |
 | Validation harness | X-H1 through X-H7 complete: source90714f758,407-case regression, two full qualification runs and independent retained-evidence audit |
-| Latest validation | I-ui:12 focused Release/ASan cases, full Release4657,1073 affected ASan, both format lanes, qmake6,93 adjacent ASan cases and allocation gates passed; G-matrix176 external observations retain their scope; see section14 |
+| Latest validation | T-kernel:55 focused Release/ASan cases, full Release4712,1128 affected ASan, both format lanes, qmake6,48 adjacent ASan cases and two isolated failure modules passed; G-matrix176 retained byte observations rechecked; see section14 |
 
 Recheck these facts against the selected implementation checkout before starting
-T-kernel. Qt6/Catch2/CMake/qmake6 and independent ACadSharp/ODA fixture/inspection
+T-actions. Qt6/Catch2/CMake/qmake6 and independent ACadSharp/ODA fixture/inspection
 tools are inventoried and qualified within the scopes recorded in section14.
 The user's main checkout is a different, dirty branch and is not the
 source baseline above. Do not overwrite its unrelated changes or apply this plan
@@ -239,7 +240,7 @@ test commit followed by the section 4 plan checkpoint.
 | I-update | H-enable | Update from Source action and tests | complete:379729bb3 |
 | I-restore | I-update | Restore Original action and equality/dedup tests | complete:0d3fed653 |
 | I-ui | I-restore | Source-action registration/links and persistence/GUI coverage | committed:4a231d243; physical GUI remains Z |
-| T-kernel | I-ui | Pure bounded stored-cache trim preparation/clipping | pending |
+| T-kernel | I-ui | Pure bounded stored-cache trim preparation/clipping | committed:04c712069 |
 | T-actions | T-kernel | Trim/Trim Two atomic owner-level replacement | pending |
 | T-files | T-actions | Trim persistence/demotion across format lanes | pending |
 | Z-release | T-files and auxiliary track closure | Complete regressions, build/GUI/interoperability audit | pending |
@@ -274,13 +275,13 @@ editing; changes beyond the named concern require a scope note in the slice card
 | I-update | actions/drawing/modify/lc_action_offsetcurve_updatesource.{h,cpp}; tests/lc_action_offsetcurve_source_tests.cpp |
 | I-restore | actions/drawing/modify/lc_action_offsetcurve_restoreoriginal.{h,cpp}; tests/lc_action_offsetcurve_restoreoriginal_tests.cpp |
 | I-ui | action factories/context/property providers; ui/components/utils/tests/lc_offsetcurve_source_ui_tests.cpp; lib/filters/tests/lc_offsetcurve_source_actions_persistence_tests.cpp; docs/offset_curve_interactive_smoke.md |
-| T-kernel | librecad/src/lib/modification/new lc_offsetcachetrim.{h,cpp}; tests/lc_offsetcachetrim_tests.cpp |
+| T-kernel | librecad/src/lib/modification/lc_offsetcachetrim.{h,cpp}; tests/lc_offsetcachetrim{,_failure}_tests.cpp; whole-frame chart copy in lc_ellipseoffsetgeometry.{h,cpp}; CMake/qmake registration |
 | T-actions/T-files | actions/drawing/modify/lc_action_modify_trim.{h,cpp}, tests/lc_offsetcachetrim_action_tests.cpp; modification/batch ownership; lib/filters/tests/lc_offsetcachetrim_file_tests.cpp |
 | All new sources/tests/UI | CMakeLists.txt; librecad/src/src.pro (HEADERS/SOURCES/FORMS as appropriate); exact Catch2 target registration |
 
 ### Current Next Cards
 
-The main track resumes at T-kernel (section11.2). D-core `92758859c` uses the actual
+The main track resumes at T-actions (section11.3). D-core `92758859c` uses the actual
 C checker, not a layout-only adoption gate. Similarity transport requires exact
 dyadic affine images of every stored coordinate and unchanged normalized semantic
 basis fields. Rounded similarities and arc reflections refuse unchanged; whole
@@ -418,15 +419,19 @@ Next implementation order:
    and hash lookups, including delayed revalidation, rather than per-item linear
    membership scans. Main Catch contains both new test TUs; actual updated and
    restored DXF/DWG R2018 persistence passed. Physical GUI remains Z.
-3. Apply T-kernel completion, conic-kernel, final reviewed numeric overlay and
-   actual-chart endpoint-certificate correction, in that order. Preserve exact
-   subnormal cuts, certified endpoint identity and constant-fragment refusal.
-   Apply the two-file registration overlay: kernel in the ordinary library and
-   qmake, pure tests in main Catch, allocator main EXCLUDE_FROM_ALL only. Remove
-   duplicate explicit kernel compilation from that isolated target. Qualify the50
-   authored cases and isolated failure harness before T-actions.
-4. Apply T-actions' own readiness/conic overlays, with real typed conic targets
-   in both orders and retained-operand guards. T-files then adds R13 demotion,
+3. T-kernel04c712069 is tested/committed:55 actual cases, genuine strict contact
+   credentials, rational seam identity and no partial outputs. Trim whole conics
+   use an explicit zero-origin frame copy and eight nonuniform dyadic patches;
+   native frame defaults are unchanged. Preserve exact subnormal cuts, certified
+   endpoint identity, fixed budgets and constant-fragment refusal. The isolated
+   allocator main remains EXCLUDE_FROM_ALL, never linked into Catch or app.
+4. Apply T-actions' readiness/conic/syntax/registration overlays, then frozen
+   correctness overlay fc763e9e78bbe78814f2e3c821438796a723b2affdf67dd5a1c2a1171b55c4f5.
+   The29 authored cases cover typed conic targets in both orders, tracked
+   document/view destruction, saved-context address admission, ordinary nested
+   polyline limit copies, undo epochs and final read-only native-limit snapshots.
+   Strengthen the existing view-switch control with actual drawn overlays.
+   These are syntax/static readiness, not runtime PASS. T-files then adds R13 demotion,
    closed degree1/3 C-admitted rows and DXF/DWG Undo/Redo/second reopens. Include
    test-only syntax fixes (Width07 and qualified NullDrwInterface). These
    artifacts remain unqualified until actually registered, built and executed.
@@ -1922,13 +1927,14 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 
 | Item | State | Next action |
 |---|---|---|
-| Recursive plan/activation routing | Removed as a planning deadlock | Execute the finite T-kernel card |
+| Recursive plan/activation routing | Removed as a planning deadlock | Execute the finite T-actions card |
 | Atomic budget and bounded geometry APIs | A slices, B and C committed/validated; used by native adoption/editing | Preserve bounds and stage-result contracts in UI/trim |
-| Native feature/UI/source actions/trim | A through I-ui committed; trim remains | Execute T-kernel through T-files, then Z |
+| Native feature/UI/source actions/trim | A through T-kernel committed; trim actions/files remain | Execute T-actions and T-files, then Z |
 | Independent DWG/version fixtures | G-matrix79ae1930b qualifies genuine marked R13/R14/R2007 and all modern rows | Preserve fixture/tool/source hashes and scope; no local tool install required by CI |
 | Auxiliary empty-DWG conversion | Exact48 plot observations;24 ODA-converted files have duplicate-Continuous strict-read failures, originals unique; source-control order anomaly recorded, causation unresolved | Retain diagnostic scope in Z; not a mandatory native-row failure or general-DWG conformance claim |
 | Harness production readiness | X-H1-X-H7 committed; actual two-run qualification03 independently audited | Retain observed-byte/runtime scope and failed attempts; no future timing guarantee |
-| Independent review and test evidence | I-ui independent source review and actual runtime/identity gates complete; G-matrix external scopes retained | Obtain fresh validation for each remaining slice; preserve reviewed correction order |
+| Independent review and test evidence | T-kernel independent source/numeric reviews and actual runtime/identity gates complete; G-matrix external scopes retained | Obtain fresh validation for each remaining slice; preserve reviewed correction order |
+| Physical GUI settings route | Human approved normal profile on2026-10-24 | Run actual final apps on private drawing copies; restore intentionally changed visible options, do not claim native-store isolation or exact preference rollback |
 | Dirty unrelated main checkout | Not the selected source baseline | Preserve it; reconcile only if changing implementation worktree |
 
 ### Commit Ledger
@@ -1965,8 +1971,79 @@ The plan checkpoint column never depends on its own future SHA.
 | I-update | 379729bb3 | Immediate plan-only checkpoint | 24 focused Release/ASan cases, full Release4613,1029 affected ASan, unchanged format lanes, qmake6,32 adjacent ASan cases, allocation gates and six-blob correspondence; locked read-only picker and duplicate-context selection fixes |
 | I-restore | 0d3fed653 | Immediate plan-only checkpoint | 32 focused Release/ASan cases, full Release4645,1061 affected ASan, unchanged format lanes, qmake6,57 adjacent ASan cases, allocation gates and seven-blob correspondence; bounded dedup, exact circular phase certificate and hidden-context flag regression |
 | I-ui | 4a231d243 | Immediate plan-only checkpoint | 12 focused Release/ASan cases, full Release4657,1073 affected ASan, unchanged format lanes, qmake6,93 adjacent ASan cases, allocation gates and eleven-blob correspondence; deduplicated guarded source links and real file persistence |
+| T-kernel | 04c712069 | Immediate plan-only checkpoint | 55 focused Release/ASan cases, full Release4712,1128 affected ASan, unchanged format lanes, qmake6,48 adjacent ASan cases, both failure modules and eight-blob correspondence; exact rational seam identity and value-only whole-chart copy |
 | X-H7 timeout source fix | c1b2fa095 | Immediate plan-only checkpoint | Author55 + independent15 controls and parent399 runner regression passed; actual runtime qualification remains open |
 | X-H7 bounded scheduling | 90714f758 | Immediate plan-only checkpoint | Author85 + independent12 controls, parent407 runner regression and real224.790-second preflight probe passed; full two-run qualification remains open |
+
+### T-kernel Validation (2026-10-24)
+
+Product `04c712069` contains eight owned files and3207 insertions. The pure
+kernel prepares ordinary open/clamped degree1/3 stored-cache fragments and typed
+conic complements without document mutation, native adoption or refitting.
+Session-owned strict contact proofs, closest-occurrence uniqueness, endpoint
+provenance, shared finite budgets, cancellation and all-or-nothing private output
+staging precede success. Unsupported/unproved/tangent/ambiguous cases refuse.
+
+Linked discovery01 exposed nine failures in both configurations. Three distinct
+corrections retain every original positive expectation and fixed work cap:
+
+- Compare exact rational line occurrences for a shared stored endpoint, rather
+  than requiring its outward double enclosure to be a singleton. Equal floating
+  enclosures never identify distinct rational roots. Three regressions cover
+  both storage/cutter directions, touching seams and distinct same-enclosure roots.
+- Stop conic root contraction at the existing geometric endpoint allowance.
+  A redundant angular criterion hit a rounding floor; actual typed endpoints
+  and represented sweep still undergo their original geometric/angular checks.
+- Add `ReferenceFrame::withWholeStart`, a value-only whole-frame copy. Trim uses
+  zero start and fixed eight dyadic patches k*(24+k)/256, removing common chart
+  boundary coincidences without inventing a root certificate. Arbitrary unresolved
+  contacts still refuse. Native defaults, rates, shape and periodic closure are
+  unchanged. Two API regressions exercise copies, reverse traversal, old defaults,
+  periodic source/offset bounds and invalid/open/nonfinite refusal.
+
+Final actual02 reports in `/private/tmp/lc2961-impl-evidence.9GtLO2`:
+
+- Focused Release/ASan:55 cases and39616 assertions each, zero skips/failures.
+- Full Release:4712 cases,4685 passed,27 unchanged skips,9412483 assertions.
+- Affected ASan:1128 cases,1127 passed,one unchanged legacy skip,3498653 assertions.
+- DXF Release/ASan:765 cases,three unchanged skips,82553 assertions each.
+  DWG Release/ASan:1021 cases,four unchanged skips,362942 assertions each.
+- Adjacent actual `[trim]` ASan:48 cases,59729 assertions,zero skips/failures.
+- Isolated trim harness in each build:1616 staging allocation-failure injections,
+  20 cancellations after first-fragment staging or later, four conic failures
+  and four conic cancellations. Existing batch harness actual2/0/1/0 also passed.
+  These are process-specific ordinary-new controls, not exhaustive Qt/malloc OOM.
+- CMake Release/ASan explicitly built all five named targets; qmake6 application
+  built and help-smoked. Final Ninja states report no pending work. The initial
+  qmake attempt started before recursive generation completed; successful rerun
+  followed completion. Later qmake3 was cleanly interrupted/restarted as qmake4
+  at three jobs after verifying only its own process group. Logs retained.
+- All12 runner lanes exited0, with no sanitizer diagnostics or identity errors.
+  Eight source and eleven executable identities are byte-identical before/after.
+  Counter audit03 PASS preserves prior Counters/multiplicities and exact skip
+  sets; full/affected rows5888/1516, focus55. Eight committed blobs match the
+  qualified source (`T-kernel-committed-blob-audit-03.json`). Audit02 merely ran
+  before the after-identity writer finished and refused an empty artifact; it is
+  retained, not a product failure or qualified audit.
+
+Independent bounded reviews cover the math/API/seam/ownership changes with no
+remaining P1/P2. EVID frozen-copy discovery55/39616 and standalone injections
+also passed, but do not replace the rebuilt-graph runs above. ASan leak detection
+remains disabled on this host; no full-app, other-platform or leak-free claim.
+
+`Z-retained-G-matrix-01.json` rechecked all176 drawing/tool/evidence byte pins;
+no new external CAD execution or whole-document strict PASS is claimed. H7 remains
+qualified for90714f758, its observed runtime and archived326493-byte0ef69286
+candidate. Current geometry is326899 bytes,9ec3dfd1e8569d3538b9e16cf3debe6afe803f79a9235edc553f1f736bef7ed1;
+only the406-byte frame-copy API was added. All39 harness source pins remain
+unchanged. Historical byte-replay qualification is not current-C++ validation;
+the current geometry receives the fresh T/Z tests instead of a fabricated H7 rerun.
+
+Next: apply/qualify/commit T-actions, then T-files and Z-release. Physical GUI,
+actual CMake apps and final whole-feature evidence remain open. Human approval
+selects the normal profile for that GUI work; do not erase/import preferences or
+upgrade functional setting restoration to isolation. No future action/file or
+unrelated main-checkout changes are committed in this slice.
 
 ### I-ui Validation (2026-10-24)
 
