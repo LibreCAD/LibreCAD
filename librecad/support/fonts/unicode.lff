@@ -9,10 +9,26 @@
 # LineSpacingFactor: 1
 # Created:           2011-09-25
 # Last modified:     2011-09-29
-# Author:            Rallaz <rallazz@gmail.com> (latin basic + 1 + extended-A)
-# Author:            Eugene Osintsev <osgene@omskelecom.ru> (Cyrillic)
-# Author:            Yoshimune Kobayashi <cfg47520@syd.odn.ne.jp> (Japanese)
-# License:           GPL v2 or later + unknown
+# Author:            Rallaz <rallazz@gmail.com> (Latin, Latin-1, Latin Extended-A)
+# Author:            Eugene Osintsev <osgene@omskelecom.ru> (Cyrillic, from QCad)
+# Author:            Yoshimune Kobayashi <cfg47520@syd.odn.ne.jp> (Japanese, from QCad)
+# Author:            LibreCAD contributors (Czech, Greek, Ukrainian, Georgian, accented letters, symbols)
+# Author:            The Noto Project Authors (glyphs traced from the Noto fonts, see Notes)
+# License:           GPL v2 or later, except the glyphs traced from the Noto fonts (see Notes)
+#
+# Notes:             - The Latin glyphs are based on the public-domain drawing
+#                      http://commons.wikimedia.org/wiki/File:ISO3098.svg
+#                    - The Cyrillic and Japanese glyphs come from japanese.cxf by
+#                      Yoshimune Kobayashi (QCad 1.4.12 to 1.5.4, 2002), which holds
+#                      Eugene Osintsev's QCad 1.4 Cyrillic font; QCad 2 shipped it as
+#                      unicode.cxf. RibbonSoft releases the CXF fonts shipped with
+#                      QCAD, whose Unicode.cxf holds these glyphs, as public domain.
+#                    - The glyphs added in 2026 for Thai, Lao, Armenian, Hebrew,
+#                      Thaana, Samaritan, Ethiopic, Cherokee, Canadian Syllabics,
+#                      New Tai Lue, Ol Chiki, Tifinagh, Yi, Vai, Bamum, Tai Viet,
+#                      Coptic, Greek Extended and the Cyrillic extensions were traced
+#                      from the centrelines of the Noto fonts, Copyright the Noto
+#                      Project Authors, under the SIL Open Font License 1.1.
 
 [0021] !
 0,0;0,.5
