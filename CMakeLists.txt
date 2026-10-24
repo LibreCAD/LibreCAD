@@ -2846,6 +2846,7 @@ if (BUILD_TESTS)
         librecad/src/ui/dock_widgets/views_list/tests/lc_namedviewsmodel_tests.cpp
         librecad/src/lib/generators/layers/tests/lc_layersexporter_tests.cpp
         librecad/src/ui/main/persistence/tests/lc_documentsstorage_tests.cpp
+        librecad/src/ui/main/persistence/tests/lc_dwg_save_filter_tests.cpp
         librecad/src/ui/main/tests/lc_mdiwindow_close_tests.cpp
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp
         librecad/src/ui/components/pen/tests/qg_widgetpen_tests.cpp
