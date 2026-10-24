@@ -75,11 +75,9 @@ listed below.
   LibreCAD and of the Qt libraries it ships, the GPLv3 of WenQuanYi Micro
   Hei, the licences of the other bundled fonts, and `qt-third-party.txt`
   with the copyright and licence text of each third-party component inside
-  the Qt DLLs and plugins. `scripts/msix/third-party-notices.md` joins them:
-  it names the copyright holders of the CJK fonts and says that Qt is used
-  under the GPLv2. It is a separate file because `licenses/readme.md`, shown
-  by Help > License, is compiled into every build, which this package must
-  not change. `qt-third-party.txt` is for one Qt release: when
+  the Qt DLLs and plugins. `readme.md` names the copyright holders of the
+  CJK fonts and says that Qt is used under the GPLv2. `qt-third-party.txt`
+  is for one Qt release: when
   `build-all.yml` installs another, `build-msix.ps1` warns, and
   `scripts/msix/update-qt-third-party.py --tag v<version>` regenerates it
   from Qt's own attribution data. `licenses\SOURCE.txt`
