@@ -80,6 +80,7 @@ void RS_Undo::addUndoCycle(std::shared_ptr<RS_UndoCycle> undoCycle) {
 void RS_Undo::startUndoCycle() {
     if (m_refCount > 0) {
         ++m_refCount;
+        ++m_undoStateEpoch;
         // only the first fresh top call starts a new cycle
         return;
     }
@@ -88,6 +89,7 @@ void RS_Undo::startUndoCycle() {
     auto cycle = std::make_shared<RS_UndoCycle>();
     m_currentCycle = std::move(cycle);
     m_refCount = 1;
+    ++m_undoStateEpoch;
 }
 
 /**
@@ -182,6 +184,7 @@ void RS_Undo::endUndoCycle() {
  * Undoes the last undo cycle.
  */
 bool RS_Undo::undo() {
+    ++m_undoStateEpoch;
     RS_DEBUG->print("RS_Undo::undo");
 
     if (m_redoPointer == m_undoList.cbegin()) {
@@ -200,6 +203,7 @@ bool RS_Undo::undo() {
  * Redoes the undo cycle which was at last undone.
  */
 bool RS_Undo::redo() {
+    ++m_undoStateEpoch;
     RS_DEBUG->print("RS_Undo::redo");
 
     if (m_redoPointer != m_undoList.cend()) {

@@ -57,6 +57,7 @@ struct Fixture {
     std::map<const RS_Entity*, Entry> pending;
     std::array<LC_OffsetCurve*, 2> originals{}, candidates{};
     std::uint64_t epoch = 17;
+    std::uint64_t undoEpoch = 0;
     bool originalBorders = false;
     Fixture() {
         graphic.initForNewDocument();
@@ -78,9 +79,11 @@ struct Fixture {
             pending.emplace(originals[i], Entry{std::move(candidate)});
         }
         graphic.select(QList<RS_Entity*>{originals[0]});
+        undoEpoch = graphic.undoStateEpoch();
     }
     bool untouched() const {
-        if (epoch != 17 || graphic.nesting() != 0 || graphic.getAutoUpdateBorders() != originalBorders ||
+        if (epoch != 17 || graphic.undoStateEpoch() != undoEpoch ||
+            graphic.nesting() != 0 || graphic.getAutoUpdateBorders() != originalBorders ||
             const_cast<Graphic&>(graphic).countUndoCycles() != 0 || pending.size() != 2 ||
             !originals[0]->isSelected() || originals[1]->isSelected()) return false;
         for (unsigned i = 0; i < 2; ++i) {

@@ -31,6 +31,10 @@
 
 #include "lc_overlayboxaction.h"
 
+class LC_OffsetCurve;
+struct LC_OffsetCurveEditResult;
+struct LC_OffsetRunLimits;
+
 /**
  * This action class can handle user events to select all entities.
  *
@@ -45,7 +49,10 @@ public:
     explicit RS_ActionDefault(LC_ActionContext *actionContext);
     ~RS_ActionDefault() override;
 
-    void finish() override{}
+    void finish() override;
+    void mouseMoveEvent(QMouseEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
 
     void init(int status) override;
     void resume() override;
@@ -98,8 +105,23 @@ protected:
     bool isShowEntityDescriptionOnHighlight() const;
     void forceUpdateInfoCursor(const LC_MouseEvent *event) const;
     RS_Entity* getClone(const RS_Entity* e);
+    // Absence includes an unchanged cached-grip gesture: no native setter was called.
+    const LC_OffsetCurveEditResult* lastOffsetGripResult() const;
+    bool isOffsetGripDragging() const;
+    virtual LC_OffsetRunLimits offsetGripRunLimits() const;
+    void onVisualSnapEntityRegistered(RS_Entity* entity) override;
     bool doTriggerModifications([[maybe_unused]]LC_DocumentModificationBatch& modificationData) override {return true;}
 private:
+    struct OffsetGripLifetime;
+    bool offsetGripLifetimeIsAlive() const;
+    void abandonOffsetGripContext(bool viewportMayBeAlive);
+    bool offsetGripContextIsCurrent() const;
+    bool hasPendingOffsetGrip() const;
+    bool beginOffsetGrip(RS_Entity* entity, const RS_Vector& press, const RS_Vector& grip);
+    LC_OffsetCurve* liveOffsetGrip(bool checkGeometry) const;
+    void previewOffsetGrip(const LC_MouseEvent* event);
+    void completeOffsetGrip(const LC_MouseEvent* event);
+    void dispatchOffsetMouse(QMouseEvent* event, int kind);
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
     RS2::EntityType m_typeToSelect = RS2::EntityType::EntityUnknown;
