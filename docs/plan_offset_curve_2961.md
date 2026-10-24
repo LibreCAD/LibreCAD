@@ -24,7 +24,7 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-24. Status: IMPLEMENTED. All main-track slices through Z-release are committed; X-H1 through X-H7 are complete for the observed source/runtime scope. No implementation cards remain.
+Updated: 2026-10-24. Status: REOPENED BY COMPLETION AUDIT. Two concrete requirements remain: R03 callback-safe final snapshot closure and section6.6 complete start-cut/memoized search. Earlier completed slices/receipts remain valid only for their recorded scope.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
 This checkpoint records tested A through Z-release and auxiliary X-H1 through
@@ -46,6 +46,13 @@ production/tests, completed final runs, actual receipt hashes and residual
 limits. The [interactive record](offset_curve_interactive_smoke.md) distinguishes
 observed workflows from unobserved physical variants. Completion here is not an
 all-platform, whole-CAD, warning-clean, leak-free or full-ASan claim.
+
+The follow-up completion audit did not infer success from the status above. It
+found a successful child-point getter can mutate root metadata after that root
+has already been compared, including a previously validated batch peer. It also
+found section6.6's all-certified-start-cut and equivalent-partial-state memoization
+mechanisms missing from the best-cut/bounded-DFS implementation. Fix both in
+separate tested/committed slices; do not weaken those requirements to match code.
 
 ## 1. Verified Baseline and Scope
 
@@ -254,6 +261,9 @@ test commit followed by the section 4 plan checkpoint.
 | T-files | T-actions | Trim persistence/demotion across format lanes | complete,905158174 |
 | Z-save-filters | T-files | Expose existing DWG writer versions in primary Save As; canonical local preference keys | complete,091de1a6a |
 | Z-release | Z-save-filters and auxiliary track closure | Final evidence/requirement index and scoped GUI documentation | complete,60376bd87; available-host scope and limits recorded |
+| R03-final-closure | Recorded product091de1a6a | Callback-safe root/display validation and final all-target closure | pending; concrete completion-audit P2 |
+| C-search-completion | R03-final-closure | All certified closed start cuts and bounded equivalent-state memoization | pending; section6.6(7-8) not literally implemented |
+| Z-completion-audit | Both follow-up source slices | Fresh affected final gates, retained adjacent command/exit receipts and corrected final evidence | pending; do not credit old receipts to new source |
 
 The auxiliary harness track is X-H1 -> X-H2 -> X-H3 -> X-H4 -> X-H5 ->
 X-H6 -> X-H7 (section 13). Retain these obligations as a separate finite
@@ -294,10 +304,45 @@ Confirm signatures before any further changes beyond the completed slices.
 
 ### Current Next Cards
 
-There are no pending implementation or documentation cards. The descriptions
-below preserve slice contracts/history, not instructions to restart completed
-work. Earlier section14 receipts retain their then-current next steps; this
-current status, completed slice table and final Z receipt govern completion.
+Execute R03-final-closure, then C-search-completion, each with tests, independent
+review, product commit and immediate plan checkpoint. The descriptions below
+preserve previously completed slice contracts/history. This completion audit
+supersedes the earlier blanket completion claim without discarding valid evidence.
+
+**R03-final-closure readiness:** shared `lc_offsetcurveeditsnapshot.{h,cpp}`,
+Update/property-queue/Trim final publication sites and reachable regression TUs.
+Keep callbackful display reads distinct from a bounded callback-free stored-state
+check. Validate every staged root after the last callback, not just the root read
+last; preserve external metadata mutations rather than rolling them back or
+publishing an older clone. Retain existing per-target Update/sheet refusal policy
+and all-or-nothing Trim Two. Place cancellation callbacks before the final seal.
+Keep membership/lifetime/owner/lock/context checks, caller batch prefixes and
+exception cleanup; no new quadratic peer rescans or weaker clone admission.
+First reproduce successful late-child metadata mutation and cross-peer mutation
+through real supported paths. Require the callback actually to execute. Cover
+unchanged endpoint returns, active extended payload changes and late cancellation
+where reachable. Existing exception and ordinary positive paths must remain.
+
+**C-search-completion readiness:** `lc_offsetpathsearch.{h,cpp}` and the
+CacheTopologyBuilder route/cut proof in `lc_ellipseoffsetgeometry.cpp`, with
+dedicated search/public-checker regressions. Enumerate all certified eligible
+closed cuts instead of selecting only the lowest-score proposal. Certify each
+one-lap frontier and retain canonical occurrence/event/edge signatures modulo
+rotation. Memoize genuinely equivalent partial states without collapsing distinct
+successful path prefixes; saturate semantic path counts at two only after actual
+compatible proof. Charge validation/comparison/storage/depth and attempted work;
+no cap/tolerance increase or partial success on exhaustion. Exercise alternate
+cut success, equivalent states, distinct-path ambiguity and exact/one-less bounds.
+Retain all76 existing identities and the mathematically corrected C27 routing-only
+scope (53 public checker obligations plus one routing-kernel obligation).
+
+**Final evidence readiness:** old four adjacent Trim/storage XML/console results
+are positive, but their separate command/environment/exit file receipts are
+missing. A fresh pre-fix Release Trim baseline passed; retain it only as baseline.
+After the source fixes, capture all four actual adjacent invocations and native
+tool completion results together. Do not fabricate historical process metadata.
+Use the existing finite test graph and report comparisons for each source slice;
+do not restart unrelated completed work or add a new validation framework.
 D-core `92758859c` uses the actual
 C checker, not a layout-only adoption gate. Similarity transport requires exact
 dyadic affine images of every stored coordinate and unchanged normalized semantic
@@ -1974,13 +2019,13 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 
 | Item | State | Next action |
 |---|---|---|
-| Recursive plan/activation routing | Removed; every implementation/documentation slice complete | No restart or new execution graph required |
+| Recursive plan/activation routing | Removed; finite follow-up audit found two real source gaps | Implement the two named cards, not a routing restart |
 | Atomic budget and bounded geometry APIs | A slices, B and C committed/validated; used by native adoption/editing | Preserve bounds and stage-result contracts in UI/trim |
-| Native feature/UI/source actions/trim | A through Z-release committed; actual mixed/conic/native-pair and final both-format GUI paths observed | Preserve bounded refusal policies and recorded scope in future changes |
+| Native feature/UI/source actions/trim | Recorded prior slices committed; R03 final getter/peer closure incomplete | Fix the shared snapshot publication boundary and revalidate affected callers |
 | Independent DWG/version fixtures | G-matrix79ae1930b qualifies genuine marked R13/R14/R2007 and all modern rows | Preserve fixture/tool/source hashes and scope; no local tool install required by CI |
 | Auxiliary empty-DWG conversion | Exact48 plot observations;24 ODA-converted files have duplicate-Continuous strict-read failures, originals unique; source-control order anomaly recorded, causation unresolved | Retain diagnostic scope in Z; not a mandatory native-row failure or general-DWG conformance claim |
 | Harness production readiness | X-H1-X-H7 committed; actual two-run qualification03 independently audited | Retain observed-byte/runtime scope and failed attempts; no future timing guarantee |
-| Independent review and test evidence | Final twelve-lane Z-save-filters01, exact76 identities, adjacent lanes, byte freeze and three-blob proof passed; reviewed documentation committed; G-matrix external scopes retained | No further qualification gate pending for this roadmap |
+| Independent review and test evidence | Prior Z-save-filters01 exact bytes passed; follow-up source fixes are not yet covered | Fresh focused/full/affected/format/failure gates and adjacent command/exit receipts after fixes |
 | Physical GUI settings route | Approved normal-profile sessions complete; effective Editable ON and temporary keyboard navigation OFF restored/verified | Preserve precise observations and unobserved variants; no native-store isolation or exact whole-profile rollback claim |
 | Dirty unrelated main checkout | Not the selected source baseline | Preserve it; reconcile only if changing implementation worktree |
 
