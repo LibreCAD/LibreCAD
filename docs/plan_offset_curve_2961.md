@@ -24,13 +24,14 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-23. Status: A through G-fixtures committed; X-H1 through X-H7 complete for the observed source; independent matrix, UI, source actions and trimming incomplete.
+Updated: 2026-10-23. Status: A through G-matrix committed; X-H1 through X-H7 complete for the observed source; UI, source actions and trimming incomplete.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
-This checkpoint records tested A-core/A-strict/A-reference/A-cache/B/C/D-core/D-edit/D-grips
-and auxiliary X-H1 through X-H7 commits/qualification. Native adoption, creation and staged
-definition editing and cached grips/snaps are implemented; tool integration, persistence, UI and
-trimming remain later slices.
+This checkpoint records tested A through G-matrix and auxiliary X-H1 through
+X-H7 commits/qualification. Native adoption, creation, staged editing, cached
+grips/snaps, tool/type integration and independently checked DXF/DWG persistence
+are implemented. Native interactive creation remains off until H-enable; editing
+UI, source actions and trimming remain later slices.
 
 ## 1. Verified Baseline and Scope
 
@@ -42,7 +43,7 @@ trimming remain later slices.
 | Difference between initial checkpoints | Only this plan file; no product-source change |
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
-| Latest product checkpoint | `7e46b2de8` (G-fixtures; G-adapter 32597762b) |
+| Latest product checkpoint | `79ae1930b` (G-matrix; G-fixtures 7e46b2de8) |
 | Latest auxiliary checkpoint | `90714f758` (H7 bounded suite-pair scheduling; temp-path/journal fix c1b2fa095, driver 5a3e47039) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
@@ -53,15 +54,15 @@ trimming remain later slices.
 | B terminals | Immutable exact occurrence/edge-side classification, separate source incidence, bounded storage/scans |
 | C topology | Complete bounded unique-path checker, owned contact query and exact root-to-port matching; unresolved correspondence refuses Ambiguous |
 | Native entity | Checked adoption/creation, transactional mutators and actual stage results; consistency stamp, clone, exact proof transport, cached visible grips/safe snaps and bounded owned extensions |
-| Product integration | Tool/type/name integration and private-schema file persistence committed; explicit INSERT plain-cache fallback; independent matrix, UI and trim pending |
+| Product integration | Tool/type/name integration and independently checked private-schema persistence committed; explicit INSERT plain-cache fallback; UI, source actions and trim pending |
 | Build registration | Geometry/contact/routing/native sources in CMake/qmake6; native and adjacent tests registered and executed |
 | Validation harness | X-H1 through X-H7 complete: source90714f758,407-case regression, two full qualification runs and independent retained-evidence audit |
-| Latest validation | A-core, geometry and format fast lanes passed Release/ASan; full Release and qmake6 passed; see section 14 |
+| Latest validation | G-matrix:24 focused and877 affected ASan cases; full Release4467, both format lanes and qmake6 passed;176 actual-byte external observations with explicit scopes; see section14 |
 
 Recheck these facts against the selected implementation checkout before starting
-E-tools. Inventory Qt6/Catch2/build tools and available independently authored
-DXF/DWG fixtures/inspection tools once, recording provenance/access gaps early;
-source-level progress need not wait for unrelated external-tool installation. The user's main checkout is a different, dirty branch and is not the
+H-sheet. Qt6/Catch2/CMake/qmake6 and independent ACadSharp/ODA fixture/inspection
+tools are inventoried and qualified within the scopes recorded in section14.
+The user's main checkout is a different, dirty branch and is not the
 source baseline above. Do not overwrite its unrelated changes or apply this plan
 to it without first reconciling the branch and source differences. Use the existing
 isolated feature worktree or a suitable managed worktree.
@@ -226,7 +227,7 @@ test commit followed by the section 4 plan checkpoint.
 | G-schema | F-names | Shared typed XDATA/EED definition parser/merger | complete:305042903 (helper-only; adapter packetization prerequisite below) |
 | G-adapter | G-schema | Actual application DXF/DWG read/write and failure propagation | complete:32597762b (external interoperability remains G-matrix) |
 | G-fixtures | G-adapter | Hostile metadata/raw carrier, ownership and failed-save regressions | complete:7e46b2de8 |
-| G-matrix | G-fixtures | Independent fixtures/output inspection for complete version/conversion matrix | pending |
+| G-matrix | G-fixtures | Independent fixtures/output inspection for complete version/conversion matrix | complete:79ae1930b |
 | H-sheet | G-matrix | Refusal-aware property provider and busy cursor | pending |
 | H-dialog | H-sheet | Full Edit Properties widget and commit path | pending |
 | H-drag | H-dialog | Bounded mouse preview, one-run grip commit and undo | pending |
@@ -273,7 +274,7 @@ editing; changes beyond the named concern require a scope note in the slice card
 
 ### Current Next Cards
 
-The main track resumes at G-matrix (section 9.4). D-core `92758859c` uses the actual
+The main track resumes at H-sheet (section10.1). D-core `92758859c` uses the actual
 C checker, not a layout-only adoption gate. Similarity transport requires exact
 dyadic affine images of every stored coordinate and unchanged normalized semantic
 basis fields. Rounded similarities and arc reflections refuse unchanged; whole
@@ -353,21 +354,31 @@ bits, complete unknown subtrees, hostile duplicate/tail boundaries, failed saves
 actual undo/redo state and publisher stream-state refusal. This is not a claim
 of physical disk-failure injection or external interoperability.
 
-Next G-matrix implementation order:
+G-matrix `79ae1930b` registers22 matrix cases, two DIMSTYLE regressions and52
+independent inputs (48 binaries/four hand inputs). Genuine ODA R13 through R2018
+DWGs reach application adoption; upstream R14 visibility and modern counted-NUL
+defects remain negative regressions, not decoder workarounds. Actual128 native/
+LINE/R12 outputs have independent payload/geometry qualification. A further48
+auxiliary plot outputs have exact field/graph readback observations. Final176
+bytes match the independently observed bytes; no whole-CAD strict-reader PASS
+is claimed. DIMSTYLE internal XDATA replacement is idempotent and unspecified
+plot DPI normalizes on wire without changing source metadata.
 
-1. Register and qualify the17 authored matrix cases and28 independently authored
-   inputs; pin tool/license/geometry provenance and both cache degrees. Correct
-   actual application failures, not expectations or membership.
-2. Acquire genuinely encoded marked R13/R2007 DWG inputs using the available ODA
-   converter, inspect complete decoded payloads independently and add real
-   application-adoption tests. ACadSharp unsupported-writer rows and magic-only
-   checks are not substitutes.
-3. Retain actual application DXF/DWG outputs for every explicit version, edits,
-   conversions and binary-codec rows. Run available ACadSharp/ODA inspection,
-   including LINE controls, and compare geometry/schema/APPID contents.
-4. Run focused/full/ASan/format/build/audit gates, commit and checkpoint. Any
-   external rejection remains explicit and requires a real fix or unresolved
-   disposition; same-library reopen alone is not interoperability PASS.
+Next H-sheet implementation order:
+
+1. Apply the frozen H-sheet implementation and its reviewed correction artifact;
+   keep H-dialog/H-drag/H-enable and I/T drafts out of this product commit.
+2. Implement the dedicated native provider/owning queue, shared refusal text and
+   GUI-thread busy guard. Preserve accepted edits across same-document refill;
+   separate stale getters from pending ownership and reject concurrent source
+   changes before composing/publishing another edit.
+3. Exercise actual center picker buttons, per-peer oblique-radius no-ops,
+   bounded computed length, mixed/refused edits, attribute composition, context
+   destruction and one-step undo. No empty undo group or stale queued commit.
+4. Compile CMake/qmake/MOC, run actual GUI Release/ASan cases and affected
+   F-names/property regressions, full/format gates and source/binary audits.
+   Resolve fresh findings, commit and immediately checkpoint. Continue H-dialog,
+   H-drag and H-enable only after the required helper paths are qualified.
 
 The auxiliary scheduler correction `90714f758` passed the407-case regression.
 Both isolated full runs of `H7-qualification-03` returned PASS through the actual
@@ -1858,14 +1869,13 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 
 | Item | State | Next action |
 |---|---|---|
-| Recursive plan/activation routing | Removed as a planning deadlock | Execute A-core's finite card |
-| Atomic budget API | Committed and validated (`0eb2a0cfa`) | Integrate solver/geometry work in A-strict/A-reference |
-| Geometry work/exception/split/depth/terminal proof | All A slices and B committed and validated | C complete checker |
-| Complete semantic path checker | C committed d4a0b081a; used by D-core public adoption | D-edit staged regeneration |
-| Native feature/UI/persistence/trim | D/E/F and G-schema/G-adapter committed; independent persistence matrix, UI and trim remain | Follow G-fixtures through T; do not substitute same-library reopen for interoperability |
-| Independent DWG/version fixtures | Required, not yet qualified | Inventory/tool/license/provenance during G-fixtures; close all rows in G-matrix |
+| Recursive plan/activation routing | Removed as a planning deadlock | Execute the finite H-sheet card |
+| Atomic budget and bounded geometry APIs | A slices, B and C committed/validated; used by native adoption/editing | Preserve bounds and stage-result contracts in UI/trim |
+| Native feature/UI/source actions/trim | A through G-matrix committed; H/I/T remain | Execute H-sheet through T-files, then Z |
+| Independent DWG/version fixtures | G-matrix79ae1930b qualifies genuine marked R13/R14/R2007 and all modern rows | Preserve fixture/tool/source hashes and scope; no local tool install required by CI |
+| Auxiliary empty-DWG conversion | Exact48 plot observations;24 ODA-converted files have duplicate-Continuous strict-read failures, originals unique; source-control order anomaly recorded, causation unresolved | Retain diagnostic scope in Z; not a mandatory native-row failure or general-DWG conformance claim |
 | Harness production readiness | X-H1-X-H7 committed; actual two-run qualification03 independently audited | Retain observed-byte/runtime scope and failed attempts; no future timing guarantee |
-| Independent review and test evidence | A-core independent static review and actual test reports complete | Obtain fresh review/validation for each successor |
+| Independent review and test evidence | G-matrix production/fixture/hash-join reviews and actual runtime gates complete | Obtain fresh review/validation for H and each successor |
 | Dirty unrelated main checkout | Not the selected source baseline | Preserve it; reconcile only if changing implementation worktree |
 
 ### Commit Ledger
@@ -1894,8 +1904,77 @@ The plan checkpoint column never depends on its own future SHA.
 | G-schema | 305042903 | Immediate plan-only checkpoint | 94 focused Release/ASan cases, full Release,184 adjacent ASan cases, both format lanes and qmake6; independent review and11-blob audit; helpers not application wiring |
 | G-adapter | 32597762b | Immediate plan-only checkpoint | 148 focused Release/ASan cases, full Release,766 affected ASan cases, DXF/DWG Release/ASan and qmake6; three production review fixes,21-blob audit; external interoperability remains G-matrix |
 | G-fixtures | 7e46b2de8 | Immediate plan-only checkpoint | 87 focused Release/ASan cases, full Release,853 affected ASan cases, unchanged format lanes and qmake6; legacy codepage fix, independent review and five-blob audit |
+| G-matrix | 79ae1930b | Immediate plan-only checkpoint | 24 focused Release/ASan cases, full Release4467,877 affected ASan cases, both format lanes, qmake6 and non-DWG compile;63-blob audit;128 mandatory external rows plus48 scoped plot observations |
 | X-H7 timeout source fix | c1b2fa095 | Immediate plan-only checkpoint | Author55 + independent15 controls and parent399 runner regression passed; actual runtime qualification remains open |
 | X-H7 bounded scheduling | 90714f758 | Immediate plan-only checkpoint | Author85 + independent12 controls, parent407 runner regression and real224.790-second preflight probe passed; full two-run qualification remains open |
+
+### G-matrix Validation (2026-10-23)
+
+Product `79ae1930b` contains63 files: explicit matrix registration/tests,
+independent fixture binaries/text/hashes/licenses and two interoperability fixes.
+Generated DIMSTYLE DIMTALN top-level392/value pairs are replaced rather than
+appended, preserving nested/foreign data and source ownership. Plot/layout zero
+in-memory DPI emits300 inside existing R2004+ guards; nonzero/source values and
+older field ordering remain unchanged. This is interoperability normalization,
+not a claim that every earlier inactive zero-valued setting was malformed.
+
+Reader fixtures include24 genuine ODA DWGs across R13/R14/R2000/R2004/R2007/
+R2010/R2013/R2018, six independent binary DXFs and the original ACadSharp DWGs.
+The latter's R14 visibility inversion and counted Unicode NULs are explicitly
+negative regressions: no production visibility flip or payload trimming.
+Hand templates now have valid table handles. R12 samples use an independently
+calculated approximation tolerance, not a bound loose enough to accept a chord
+for the cubic. All inputs are committed with source/tool/license/hash provenance.
+
+Final local evidence: `/private/tmp/lc2961-impl-evidence.9GtLO2/G-matrix-*`.
+
+- `focused-release-03` / `focused-asan-03`:24 named cases,100201 assertions,
+  no failures/skips.22 matrix cases plus two repeated/alternating-save DIMSTYLE
+  regressions;237 JUnit section/generator rows.
+- `full-release-03`:4467 cases,4440 passed,27 unchanged skips,9305393 assertions.
+- `affected-asan-03`:877 cases,876 passed, the same unbuilt legacy DXF exporter
+  skip,3388098 assertions. No ASan diagnostic; leak checking remains unavailable
+  on this host (`detect_leaks=0`).
+- DXF Release/ASan01:765 cases,762 passed, three unchanged skips,82553 assertions.
+  DWG Release/ASan01:1021 cases,1017 passed, four unchanged skips,362942 assertions.
+- CMake explicit Release/ASan builds03, qmake6 configure/build01 and compile-only
+  non-DWG schema/matrix03 passed. No linked non-DWG application claim. Micro
+  targets use the existing optional helper without changing default membership.
+- Source identity/audit03 pins63 files; binary identity03 pins all seven final
+  binaries. Committed-blob audit03 matches actual Git blobs. Whitespace passed.
+- Report audit03 retains all5394 predecessor full JUnit rows and adds precisely
+  237, for5631; affected and both format memberships/skips also match exactly.
+  DXF adds only the two DIMSTYLE identities; DWG fast membership is unchanged.
+
+External evidence is conjunctive with the application tests, not their replacement:
+
+- Independent fixture contract: `G-matrix-oda-standardsafe.Q9wHyg`,24 exact
+  typed/geometry/version contracts, zero failures, unmodified ODA/ACadSharp tools.
+- `G-matrix-final07-oda.yGcy6e/qualified-primary-07.json`:128 actual mandatory
+  outputs (110 native SPLINE,16 LINE, two R12 POLYLINE).119 have direct strict
+  ACadSharp inspection; nine uncompressed R2007-header refusals are covered by
+  actual no-audit ODA conversion and independently checked DXF readback. Complete
+  ordered payloads, APPIDs, controls/knots and sampled geometry were compared.
+- `G-matrix-plot-parent-observation-10.json`:48 auxiliary plot/layout field and
+  owner-graph readback observations. Original strict acceptance is44/48; the
+  other four use the same unsupported ACadSharp header branch. ODA accepts all
+  originals, but24 of its converted empty-DWG files hit strict duplicate
+  `Continuous` errors. Original LTYPE records are unique; the conversion adds
+  the duplicate. A separate source-control ordering anomaly has unresolved
+  causation. These diagnostics remain recorded, not strict successes.
+- `G-matrix-final-output-join-03.json` hashes all176 final11 outputs against
+  the128 independently qualified originals and48 observed plot files, with no
+  changed/missing/extra bytes. The bounded independent re-review found no
+  remaining mandatory native9.4 gap or actionable P1/P2.
+- `G-matrix-qualified-176.bsw7rm/qualified-summary-176-final11.json` retains the
+  combined scoped verdict and full diagnostic/reference chain. No whole-document
+  or general CAD conformance PASS, synthetic fallback reader, audit repair, or
+  continuous proof from samples is claimed. Original discovery failures remain.
+
+Binary codec emitters clear imported source owners on write-only copies; fresh
+external entity-count checks closed three previously vacuous "inspected" rows.
+Auxiliary object controls use actual named/owning dictionaries and start at R2000,
+not unsupported R14 LAYOUT. Native R14 rows remain covered. Next: H-sheet.
 
 ### G-fixtures Validation (2026-10-23)
 
