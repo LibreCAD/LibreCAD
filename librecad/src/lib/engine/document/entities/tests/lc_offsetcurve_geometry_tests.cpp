@@ -8915,6 +8915,408 @@ TEST_CASE("cache topology rejects G2 upper lens E0 only path", "[lc-offsetcurve]
     }
 }
 
+namespace {
+RS_SplineData nonNearestCutCache(const bool sourceReversed = false, const bool cacheReversed = false) {
+    // An independently specified CCW triangle, with its horizontal top split at
+    // an interior point. No producer, private certificate or fitted inverse.
+    auto cache = cacheLayoutFixture(1, {0,1,2,3,4});
+    cache.controlPoints = {{.25,0},{-4,0},{0,-4},{4,0},{.25,0}};
+    if (sourceReversed != cacheReversed) { std::reverse(cache.controlPoints.begin(), cache.controlPoints.end()); }
+    return cache;
+}
+
+void checkStartCutInventory(const geo::CacheTopologyAnalysis& proof, const double tolerance) {
+    REQUIRE_FALSE(proof.startCutAxes().empty()); REQUIRE_FALSE(proof.startCuts().empty());
+    const auto& stats = proof.searchStats();
+    REQUIRE(stats.selectedCut < proof.startCuts().size()); REQUIRE(stats.nearestCut < proof.startCuts().size());
+    CHECK(stats.acceptedRoutes == 1); CHECK(stats.memoStates > 0);
+    REQUIRE_FALSE(proof.startCutPieces(stats.selectedCut).empty());
+    const auto& frame = proof.reference().events().providers().frame();
+    const auto threshold = LC_Interval::point(2) * LC_Interval::point(tolerance) / LC_Interval::point(frame.scale());
+    for (std::size_t axis = 0; axis < proof.startCutAxes().size(); ++axis) {
+        for (const auto edge : proof.edges()) {
+            const auto& span = proof.reference().spans()[proof.reference().edges()[edge].span];
+            std::vector<const geo::CacheStartCutRegion*> cells;
+            for (const auto& region : proof.startCutRegions()) {
+                if (region.edge == edge && region.axis == axis) { cells.push_back(&region); }
+            }
+            REQUIRE_FALSE(cells.empty());
+            std::sort(cells.begin(), cells.end(), [](const auto* a, const auto* b) {
+                return a->parameter.lo() < b->parameter.lo();
+            });
+            double covered = span.interior.lo();
+            for (const auto* cell : cells) {
+                CHECK(cell->parameter.lo() == covered); REQUIRE(cell->parameter.lo() < cell->parameter.hi());
+                covered = cell->parameter.hi();
+                switch (cell->kind) {
+                case geo::CacheStartCutRegionKind::Separated:
+                    CHECK((cell->value.lo() > 0 || cell->value.hi() < 0)); break;
+                case geo::CacheStartCutRegionKind::Far:
+                    CHECK(cell->distance.lo() > threshold.hi()); break;
+                case geo::CacheStartCutRegionKind::Reverse:
+                    CHECK(cell->derivative.hi() < 0); break;
+                case geo::CacheStartCutRegionKind::UniqueRoot: {
+                    REQUIRE(cell->cut < proof.startCuts().size()); const auto& cut = proof.startCuts()[cell->cut];
+                    CHECK_FALSE(cut.transition); CHECK(cut.edge == edge);
+                    CHECK(cut.proofParameter.lo() <= cell->parameter.lo());
+                    CHECK(cell->parameter.hi() <= cut.proofParameter.hi());
+                    CHECK(cut.firstSign.hi() < 0); CHECK(cut.lastSign.lo() > 0);
+                    CHECK(cut.derivativeProjection.lo() > 0);
+                    REQUIRE_FALSE(proof.startCutPieces(cell->cut).empty());
+                    CHECK(proof.startCutLapAdmission(cell->cut).has_value());
+                    CHECK(proof.startCutExclusion(cell->cut).kind == geo::CacheStartCutExclusionKind::None);
+                    break;
+                }
+                case geo::CacheStartCutRegionKind::ExcludedRoot: {
+                    REQUIRE(cell->cut < proof.startCuts().size()); const auto& cut = proof.startCuts()[cell->cut];
+                    CHECK_FALSE(cut.transition); CHECK(cut.edge == edge);
+                    CHECK(cut.proofParameter.lo() <= cell->parameter.lo());
+                    CHECK(cell->parameter.hi() <= cut.proofParameter.hi());
+                    CHECK(cut.firstSign.hi() < 0); CHECK(cut.lastSign.lo() > 0);
+                    CHECK(cut.derivativeProjection.lo() > 0);
+                    CHECK(proof.startCutPieces(cell->cut).empty());
+                    CHECK_FALSE(proof.startCutLapAdmission(cell->cut));
+                    const auto evidence = proof.startCutExclusion(cell->cut);
+                    REQUIRE(evidence.kind != geo::CacheStartCutExclusionKind::None);
+                    if (evidence.kind == geo::CacheStartCutExclusionKind::Distance) {
+                        CHECK(evidence.bound.lo() > threshold.hi());
+                    } else if (evidence.kind == geo::CacheStartCutExclusionKind::BackwardEndpoint) {
+                        CHECK(evidence.bound.hi() < 0);
+                        const auto& net = proof.layout().spans[evidence.start ? cut.span : cut.closingSpan];
+                        bool foundDirection = false;
+                        for (std::size_t k = 1; k <= net.degree; ++k) {
+                            const Quad x = Quad(net.controls[k].x) - Quad(net.controls[0].x);
+                            const Quad y = Quad(net.controls[k].y) - Quad(net.controls[0].y);
+                            if (x == 0 && y == 0) { continue; }
+                            foundDirection = true;
+                            for (std::size_t j = 0; j <= net.degree; ++j) {
+                                CHECK((Quad(net.controls[j].x) - Quad(net.controls[0].x))*y ==
+                                      (Quad(net.controls[j].y) - Quad(net.controls[0].y))*x);
+                            }
+                            break;
+                        }
+                        CHECK(foundDirection);
+                    } else {
+                        REQUIRE(evidence.kind == geo::CacheStartCutExclusionKind::CircleSupport);
+                        CHECK(evidence.bound.lo() > 0);
+                        CHECK((Quad(evidence.point.x)-Quad(evidence.centre.x))*Quad(cut.axisX.lo()) +
+                              (Quad(evidence.point.y)-Quad(evidence.centre.y))*Quad(cut.axisY.lo()) == 0);
+                    }
+                    break;
+                }
+                }
+            }
+            CHECK(covered == span.interior.hi()); // no omitted cut-search fringe
+        }
+    }
+}
+}
+
+TEST_CASE("Public cache search proves a non-nearest certified start cut in every directed cache order",
+          "[lc-offsetcurve][geometry][cache-topology-chain][cache-search-completion]") {
+    for (const bool sourceReversed : {false,true}) for (const bool cacheReversed : {false,true}) {
+        auto source = basis(1,1); source.reversed = sourceReversed;
+        const auto cache = nonNearestCutCache(sourceReversed, cacheReversed);
+        geo::WorkBudget budget;
+        const auto result = geo::checkCache(cache, localTopologyDefinition(source, 3, cacheReversed), 2.5, budget);
+        checkPublicPath(result, budget, 3, 2.5); checkStartCutInventory(*result.analysis, 2.5);
+        const auto& proof = *result.analysis; const auto& stats = proof.searchStats();
+        REQUIRE(stats.selectedCut != stats.nearestCut);
+        const auto& nearest = proof.startCuts()[stats.nearestCut];
+        REQUIRE_FALSE(nearest.transition); CHECK(proof.startCutPieces(stats.nearestCut).empty());
+        // Reference circle radius 4: nearest radial foot is (4,0), distance
+        // 15/4 from P=(1/4,0). Its north/south phase axis is perpendicular to
+        // BOTH nonzero horizontal cache seam derivatives, so that cut refuses.
+        // A farther exact seam or upper/lower transverse cut still proves one lap.
+        const auto& frame = proof.reference().events().providers().frame();
+        const Quad pi = boost::math::constants::pi<Quad>();
+        const Quad angle = sourceReversed ? Quad(0) : 2*pi;
+        const Quad parameter = (angle - Quad(frame.sourceSweep().start)) * Quad(frame.parameterEnd()) /
+            (sourceReversed ? -2*pi : 2*pi);
+        checkEnclosure(nearest.referenceParameter, parameter);
+        CHECK(nearest.axisX.lo() == 0); CHECK(nearest.axisX.hi() == 0);
+        CHECK(proof.startCuts()[stats.selectedCut].geometryError.hi() > nearest.geometryError.lo());
+        CHECK(stats.acceptedRoutes == 1); // never count equivalent cuts as another cycle
+    }
+}
+
+TEST_CASE("Public cache search retains exhaustive cut covers and independent equivalent full laps",
+          "[lc-offsetcurve][geometry][cache-topology-chain][cache-search-completion]") {
+    for (const bool reversed : {false,true}) {
+        geo::WorkBudget budget;
+        const auto result = geo::checkCache(phaseRing(true, false, reversed),
+            localTopologyDefinition(basis(1,1), 1, reversed), .02, budget);
+        checkPublicPath(result, budget, 1, .02); checkPhaseOracle(result, false, true);
+        checkStartCutInventory(*result.analysis, .02);
+        REQUIRE(result.analysis->searchStats().cutsProved >= 2);
+        std::size_t proved = 0;
+        for (std::size_t i = 0; i < result.analysis->startCuts().size(); ++i) {
+            if (!result.analysis->startCutPieces(i).empty()) { ++proved; }
+        }
+        CHECK(proved == result.analysis->searchStats().cutsProved);
+        CHECK(result.analysis->searchStats().acceptedRoutes == 1);
+    }
+}
+
+TEST_CASE("Public root-straddling inventory cannot borrow an earlier node lap",
+          "[lc-offsetcurve][geometry][cache-topology-chain][cache-search-completion]") {
+    // The exact band is 1. This distance enclosure contains 1 but lies above
+    // the outward threshold's lower endpoint: that is NOT negative evidence.
+    const auto band = LC_Interval::point(2)*LC_Interval::point(.5)/LC_Interval::point(1);
+    const auto gray = LC_Interval::hull(std::nextafter(1.,0.),std::nextafter(1.,2.));
+    CHECK(Quad(gray.lo()) < Quad(1)); CHECK(Quad(gray.hi()) > Quad(1));
+    CHECK(gray.lo() > band.lo()); CHECK_FALSE(gray.lo() > band.hi());
+    const auto source = basis(1,1); const auto cache = nonNearestCutCache();
+    const auto definition = localTopologyDefinition(source,3);
+    geo::WorkBudget budget;
+    const auto result = geo::checkCache(cache, definition, 2.5, budget);
+    checkPublicPath(result, budget, 3, 2.5); checkStartCutInventory(*result.analysis, 2.5);
+    const auto& proof = *result.analysis;
+    const auto& frame = proof.reference().events().providers().frame();
+    const auto selected = proof.searchStats().selectedCut;
+    REQUIRE(proof.startCuts()[selected].transition);
+    const auto earlier = proof.startCutLapAdmission(selected); REQUIRE(earlier);
+
+    // On the FIRST quarter of the stored whole chart, west projection has
+    // opposite endpoint signs and strictly positive derivative. Its actual
+    // interior root is theta=acos(1/16), not the retained theta=pi/4 node.
+    const double a = 0, b = frame.parameterEnd()/4;
+    LC_CurveJetBounds first, last;
+    REQUIRE(frame.boundOffsetJet(a,a,first)); REQUIRE(frame.boundOffsetJet(b,b,last));
+    LC_Interval px, py; REQUIRE(frame.pointToFrame(cache.controlPoints.front(),px,py));
+    CHECK((px-first.x).hi() < 0); CHECK((px-last.x).lo() > 0);
+    LC_Interval derivative;
+    REQUIRE(proof.reference().events().providers().boundOwnProjectedDerivative(
+        a,b,LC_Interval::point(-1),LC_Interval::point(0),derivative));
+    REQUIRE(derivative.lo() > 0);
+    const Quad pi = boost::math::constants::pi<Quad>();
+    const Quad expected = (acos(Quad(1)/16)-Quad(frame.sourceSweep().start))*
+        Quad(frame.parameterEnd())/(2*pi);
+    std::size_t target = std::size_t(-1), matches = 0;
+    for (std::size_t i = 0; i < proof.startCuts().size(); ++i) {
+        const auto& cut = proof.startCuts()[i];
+        if (!cut.transition && cut.axisX.hi() < 0 && cut.axisY.lo() == 0 && cut.axisY.hi() == 0 &&
+            Quad(cut.referenceParameter.lo()) <= expected && expected <= Quad(cut.referenceParameter.hi())) {
+            target = i; ++matches;
+        }
+    }
+    REQUIRE(matches == 1); REQUIRE(target != selected);
+    REQUIRE_FALSE(proof.startCutPieces(target).empty());
+    CHECK(proof.startCutExclusion(target).kind == geo::CacheStartCutExclusionKind::None);
+    const auto admission = proof.startCutLapAdmission(target); REQUIRE(admission);
+    REQUIRE(admission->vertices > earlier->vertices);
+
+    // Leave exactly the actually entered prefix up to this root's own lap.
+    // A successful earlier node packet MUST NOT make this incomplete run None.
+    LC_OffsetCheckLimits limits; limits.maxVertices = admission->vertices;
+    geo::WorkBudget limited{limits};
+    const auto refused = geo::checkCache(cache,definition,2.5,limited);
+    CHECK(refused.reason == LC_OffsetCheckResult::Reason::LimitExceeded); CHECK_FALSE(refused.analysis);
+    CHECK(refused.work.vertices <= admission->vertices); checkWork(refused.work,limited.consumed());
+    const auto retry = geo::checkCache(cache,definition,2.5,limited);
+    CHECK(retry.reason == LC_OffsetCheckResult::Reason::LimitExceeded); CHECK_FALSE(retry.analysis);
+    checkWork(retry.work,refused.work);
+}
+
+TEST_CASE("Public curved endpoint cut receives an own lap despite negative leading tangent dot",
+          "[lc-offsetcurve][geometry][cache-topology-chain][cache-search-completion]") {
+    using Net = std::array<RS_Vector,4>;
+    const RS_Vector p{3,2.5};
+    // eps=1/4 times (1,0),(1,3),(1,3) derivative controls. The
+    // finite first chord is parallel to A=(1,2), NOT the leading (1,0).
+    const std::array<Net,6> nets{{
+        Net{{p,{3.25,2.5},{3.5,3.25},{3.75,4}}},
+        Net{{{3.75,4},{3.75,4},{-4,0},{-4,0}}},
+        Net{{{-4,0},{-4,0},{0,-4},{0,-4}}},
+        Net{{{0,-4},{0,-4},{4,0},{4,0}}},
+        Net{{{4,0},{4,0},{3.75,1.5},{3.75,1.5}}},
+        Net{{{3.75,1.5},{3.75,1.5},p,p}}
+    }};
+    auto cache = cacheLayoutFixture(3,{0,1,2,3,4,5,6});
+    for (std::size_t k = 0; k < nets.size(); ++k) for (std::size_t j = 0; j <= 3; ++j) {
+        cache.controlPoints[3*k+j] = nets[k][j];
+    }
+    geo::WorkBudget budget;
+    const auto result = geo::checkCache(cache,localTopologyDefinition(basis(1,1),3),2.5,budget);
+    checkPublicPath(result,budget,3,2.5); checkStartCutInventory(*result.analysis,2.5);
+    const auto& proof = *result.analysis;
+    const auto nearest = proof.searchStats().nearestCut;
+    const auto& cut = proof.startCuts()[nearest]; REQUIRE_FALSE(cut.transition);
+    const auto& frame = proof.reference().events().providers().frame();
+    std::array<geo::CacheBezierPoint,4> derivatives; std::size_t degree = 0;
+    REQUIRE(geo::boundCacheDerivativeControls(proof.layout().spans.front(),frame,0,1,derivatives,degree));
+    for (std::size_t j = 0; j <= degree; ++j) {
+        CHECK((derivatives[j].x+LC_Interval::point(2)*derivatives[j].y).lo() > 0);
+    }
+    LC_CurveJetBounds root;
+    REQUIRE(frame.boundOffsetJet(cut.referenceParameter.lo(),cut.referenceParameter.hi(),root));
+    CHECK((root.dx*derivatives[0].x+root.dy*derivatives[0].y).hi() < 0);
+    CHECK((root.dx+LC_Interval::point(2)*root.dy).lo() > 0);
+    REQUIRE_FALSE(proof.startCutPieces(nearest).empty());
+    CHECK(proof.startCutLapAdmission(nearest).has_value());
+    CHECK(proof.startCutExclusion(nearest).kind == geo::CacheStartCutExclusionKind::None);
+    // The issued root precedes the retained seam. Both sides of that seam
+    // must use the SAME nonempty interior candidate frontier, not cache u=0.
+    const auto& referenceSpan = proof.reference().spans()[proof.reference().edges()[cut.edge].span];
+    std::optional<double> incomingSeam, outgoingSeam;
+    for (const auto& piece : proof.startCutPieces(nearest)) {
+        if (piece.edge != cut.edge || piece.normalizedSpan != 0) { continue; }
+        if (piece.referenceParameter.hi() == referenceSpan.interior.hi()) {
+            REQUIRE_FALSE(incomingSeam); incomingSeam = piece.candidateParameter.hi();
+        }
+        if (piece.referenceParameter.lo() == referenceSpan.interior.lo()) {
+            REQUIRE_FALSE(outgoingSeam); outgoingSeam = piece.candidateParameter.lo();
+        }
+    }
+    REQUIRE(incomingSeam); REQUIRE(outgoingSeam);
+    CHECK(*incomingSeam > 0); CHECK(*incomingSeam < 1);
+    CHECK(*incomingSeam == *outgoingSeam);
+}
+
+TEST_CASE("Public circle support exclusion keeps world axes under rotated translated source bases",
+          "[lc-offsetcurve][geometry][cache-topology-chain][cache-search-completion]") {
+    for (const bool sourceReversed : {false,true}) for (const bool cacheReversed : {false,true}) {
+        RS_EllipseData source{{16,-32},{3,4},1,0,0,sourceReversed}; // exact radius 5, rotated basis
+        auto cache = nonNearestCutCache(sourceReversed,cacheReversed);
+        for (auto& point : cache.controlPoints) { point = {16+5*point.x,-32+5*point.y}; }
+        geo::WorkBudget budget;
+        const auto result = geo::checkCache(cache,localTopologyDefinition(source,15,cacheReversed),12.5,budget);
+        checkPublicPath(result,budget,15,12.5); checkStartCutInventory(*result.analysis,12.5);
+        const auto& proof = *result.analysis;
+        const auto& frame = proof.reference().events().providers().frame();
+        LC_Interval x,y; REQUIRE(frame.pointToFrame({21,-32},x,y));
+        checkEnclosure(x,Quad(5)/Quad(frame.scale())); checkEnclosure(y,Quad(0));
+        CHECK(x.lo() > 0); CHECK(y.width() < std::numeric_limits<double>::epsilon());
+        const auto nearest = proof.searchStats().nearestCut;
+        const auto& cut = proof.startCuts()[nearest]; REQUIRE_FALSE(cut.transition);
+        const auto evidence = proof.startCutExclusion(nearest);
+        REQUIRE(evidence.kind == geo::CacheStartCutExclusionKind::CircleSupport);
+        CHECK(evidence.centre.x == 16); CHECK(evidence.centre.y == -32);
+        CHECK(evidence.point.x == 17.25); CHECK(evidence.point.y == -32);
+        CHECK(cut.axisX.lo() == 0); CHECK(cut.axisX.hi() == 0);
+        CHECK(evidence.bound.lo() > 0); CHECK(proof.startCutPieces(nearest).empty());
+        CHECK_FALSE(proof.startCutLapAdmission(nearest));
+        CHECK(proof.searchStats().acceptedRoutes == 1);
+    }
+}
+
+TEST_CASE("Public nonaxis radial support retains an exactly orthogonal unnormalized circle axis",
+          "[lc-offsetcurve][geometry][cache-topology-chain][cache-search-completion]") {
+    // Independently show why the old blanket normalization cannot confer an
+    // exact support-plane credential, even for a dyadic 3-4-5 direction.
+    const double length = std::hypot(-1,.75);
+    const Quad normalizedDot = Quad(.75)*Quad(-1/length)+Quad(.75/length);
+    CHECK(normalizedDot == -Quad(0x1p-54));
+    for (const bool sourceReversed : {false,true}) for (const bool cacheReversed : {false,true}) {
+        RS_EllipseData source{{16,-32},{3,4},1,0,0,sourceReversed};
+        auto cache = nonNearestCutCache(sourceReversed,cacheReversed);
+        // Exact dyadic similarity [[3,-4],[4,3]], not a rounded trig rotation.
+        // Rotate BOTH geometry and cache: P-centre=(.75,1), not a world axis.
+        for (auto& point : cache.controlPoints) {
+            const double x = point.x, y = point.y;
+            point = {16+3*x-4*y,-32+4*x+3*y};
+        }
+        geo::WorkBudget budget;
+        const auto result = geo::checkCache(cache,localTopologyDefinition(source,15,cacheReversed),12.5,budget);
+        checkPublicPath(result,budget,15,12.5); checkStartCutInventory(*result.analysis,12.5);
+        const auto& proof = *result.analysis;
+        const auto& frame = proof.reference().events().providers().frame();
+        const auto nearest = proof.searchStats().nearestCut;
+        const auto& cut = proof.startCuts()[nearest]; REQUIRE_FALSE(cut.transition);
+        const auto evidence = proof.startCutExclusion(nearest);
+        REQUIRE(evidence.kind == geo::CacheStartCutExclusionKind::CircleSupport);
+        CHECK(evidence.point.x == 16.75); CHECK(evidence.point.y == -31);
+        const double direction = sourceReversed ? -1 : 1;
+        CHECK(cut.axisX.lo() == -direction/frame.scale());
+        CHECK(cut.axisX.hi() == cut.axisX.lo());
+        CHECK(cut.axisY.lo() == direction*.75/frame.scale());
+        CHECK(cut.axisY.hi() == cut.axisY.lo());
+        CHECK(Quad(.75)*Quad(cut.axisX.lo())+Quad(cut.axisY.lo()) == 0);
+        CHECK(evidence.bound.lo() > 0);
+        CHECK(proof.startCutPieces(nearest).empty()); CHECK_FALSE(proof.startCutLapAdmission(nearest));
+        CHECK(proof.searchStats().acceptedRoutes == 1);
+    }
+}
+
+TEST_CASE("Source projection bounds tighten rotated cancellation only with a monotone sinusoid proof",
+          "[lc-offsetcurve][geometry][source-projection-tightening]") {
+    RS_EllipseData source{{16,-32},{3,4},1,0,0,false};
+    auto frame = geo::ReferenceFrame::create(source,15); REQUIRE(frame);
+    LC_CurveJetBounds jet; LC_Interval tight;
+    REQUIRE(frame->boundSourceJet(2.125,2.35,jet));
+    const auto independentXY = LC_Interval::point(-3)*jet.dx+LC_Interval::point(-4)*jet.dy;
+    REQUIRE(independentXY.lo() < 0);
+    REQUIRE(frame->boundSourceProjectedDerivative(2.125,2.35,LC_Interval::point(-3),LC_Interval::point(-4),tight));
+    CHECK(tight.lo() > 0); // same true projection, not a clipped negative bound
+    for (unsigned k = 0; k <= 16; ++k) {
+        const double t = 2.125+(2.35-2.125)*double(k)/16;
+        const auto oracle = referenceOracle(source,*frame,15,t,false);
+        checkEnclosure(tight,-3*oracle[2]-4*oracle[3]);
+    }
+    source.reversed = true; frame = geo::ReferenceFrame::create(source,15); REQUIRE(frame);
+    REQUIRE(frame->boundSourceJet(.3125,.625,jet));
+    const auto naive = -jet.dx; // world-X projection: no X/Y dependency to remove
+    REQUIRE(frame->boundSourceProjectedDerivative(.3125,.625,LC_Interval::point(-1),LC_Interval::point(0),tight));
+    CHECK(tight.hi() < 0); CHECK(tight.width() < naive.width()); // endpoint tightening itself is exercised
+    for (unsigned k = 0; k <= 16; ++k) {
+        const double t = .3125+(.625-.3125)*double(k)/16;
+        checkEnclosure(tight,-referenceOracle(source,*frame,15,t,false)[2]);
+    }
+    const auto ax = LC_Interval::hull(-1,-.5), ay = LC_Interval::hull(0,.25);
+    REQUIRE(frame->boundSourceProjectedDerivative(.1,.2,ax,ay,tight));
+    for (unsigned k = 0; k <= 8; ++k) for (const double x : {-1.,-.5}) for (const double y : {0.,.25}) {
+        const auto oracle = referenceOracle(source,*frame,15,.1+.1*double(k)/8,false);
+        checkEnclosure(tight,Quad(x)*oracle[2]+Quad(y)*oracle[3]);
+    }
+    REQUIRE(frame->boundSourceProjectedDerivative(0,frame->parameterEnd(),LC_Interval::point(-1),LC_Interval::point(0),tight));
+    CHECK(tight.lo() < 0); CHECK(tight.hi() > 0); // equal whole-turn endpoints MUST NOT collapse its range
+    CHECK_FALSE(frame->boundSourceProjectedDerivative(.2,.1,ax,ay,tight)); CHECK_FALSE(tight.isValid());
+}
+
+TEST_CASE("Public complete cut search accepts exact caps and refuses every one-less ledger without a certificate",
+          "[lc-offsetcurve][geometry][cache-topology-chain][cache-search-completion]") {
+    const auto source = basis(1,1); const auto cache = nonNearestCutCache();
+    const auto definition = localTopologyDefinition(source, 3);
+    const geo::CheckWork before{2,3,5,1,7};
+    geo::WorkBudget measured; REQUIRE(measured.adoptWork(before));
+    const auto baseline = geo::checkCache(cache, definition, 2.5, measured);
+    checkPublicPath(baseline, measured, 3, 2.5); checkStartCutInventory(*baseline.analysis, 2.5);
+    const auto work = baseline.work;
+    const LC_OffsetCheckLimits exact{work.cacheSpans, work.vertices, work.distancePairs, work.deepest, work.orderingComparisons};
+    geo::WorkBudget exactBudget{exact}; REQUIRE(exactBudget.adoptWork(before));
+    const auto accepted = geo::checkCache(cache, definition, 2.5, exactBudget);
+    checkPublicPath(accepted, exactBudget, 3, 2.5); checkWork(accepted.work, work);
+    for (unsigned dimension = 0; dimension < 5; ++dimension) {
+        CAPTURE(dimension); auto limits = exact;
+        if (dimension == 0) { REQUIRE(work.cacheSpans > before.cacheSpans); --limits.maxCacheSpans; }
+        if (dimension == 1) { REQUIRE(work.vertices > before.vertices); --limits.maxVertices; }
+        if (dimension == 2) { REQUIRE(work.distancePairs > before.distancePairs); --limits.maxDistancePairs; }
+        if (dimension == 3) { REQUIRE(work.deepest > before.deepest); --limits.maxDepth; }
+        if (dimension == 4) { REQUIRE(work.orderingComparisons > before.orderingComparisons); --limits.maxOrderingComparisons; }
+        geo::WorkBudget budget{limits}; REQUIRE(budget.adoptWork(before));
+        const auto refused = geo::checkCache(cache, definition, 2.5, budget);
+        CHECK(refused.reason == LC_OffsetCheckResult::Reason::LimitExceeded); CHECK_FALSE(refused.analysis);
+        checkWork(refused.work, budget.consumed()); const auto stopped = refused.work;
+        const auto retry = geo::checkCache(cache, definition, 2.5, budget);
+        CHECK(retry.reason == LC_OffsetCheckResult::Reason::LimitExceeded); CHECK_FALSE(retry.analysis);
+        checkWork(retry.work, stopped);
+        CHECK(cache.controlPoints.front().x == .25); CHECK(cache.controlPoints.front().y == 0);
+        CHECK(cache.knotslist == nonNearestCutCache().knotslist);
+    }
+}
+
+TEST_CASE("Public cut inventory and memo diagnostics own no caller graph frame or budget",
+          "[lc-offsetcurve][geometry][cache-topology-chain][cache-search-completion]") {
+    std::unique_ptr<const geo::CacheTopologyAnalysis> proof;
+    {
+        auto source = basis(1,1); auto cache = nonNearestCutCache(); geo::WorkBudget budget;
+        auto result = geo::checkCache(cache, localTopologyDefinition(source,3), 2.5, budget);
+        REQUIRE(result); proof = std::move(result.analysis);
+    }
+    REQUIRE(proof); checkStartCutInventory(*proof, 2.5);
+    CHECK(proof->searchStats().acceptedRoutes == 1); CHECK_FALSE(proof->pieces().empty());
+}
+
 TEST_CASE("cache topology rejects crossing branch switch", "[lc-offsetcurve][geometry][cache-topology-chain]") {
     const auto upper = upperLensCache();
     std::vector<double> knots; for (unsigned i = 0; i <= 32; ++i) { knots.push_back(double(i)); }

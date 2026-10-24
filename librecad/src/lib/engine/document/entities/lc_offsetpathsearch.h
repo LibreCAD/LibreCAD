@@ -53,11 +53,20 @@ struct OffsetPathSearchResult {
     /** Complete callback invocations, including a visitor-requested stop. Not accepted geometry paths. */
     std::size_t routesVisited = 0;
     CheckWork work{};
+    /** Structural suffix counts, NOT accepted geometry. Global only on Exhausted. */
+    std::uint8_t structuralRoutes = 0;
+    std::size_t memoStates = 0, memoHits = 0;
 };
 
 /** Enumerate complete open simple routes or closed simple cycles modulo rotation.
  * Traversal is deterministic in seed/CSR order, bounded by the shared work caps,
- * with O(edgeCount) scratch and no retained budget/graph/callback. Scratch is
+ * with O(edgeCount) traversal scratch and a budget-bounded suffix memo. No budget,
+ * graph or callback is retained. A memo key is (seed, current edge, used-edge set),
+ * not merely current edge. It owns a packed copy of the set and a complete 0/1/2
+ * saturated continuation count. Equal suffixes may share this structural proof;
+ * different ordered prefixes still reach the geometry visitor independently.
+ * Zero-count suffixes are not expanded a second time. Memo insertion and traversal
+ * scratch are
  * prepared before atomic record admission; popped records are never refunded.
  * Row/key/seed/stack scans consume pair work; duplicate-key and traversal-order
  * predicates also consume ordering work. Callback admission consumes one pair.
@@ -67,7 +76,8 @@ struct OffsetPathSearchResult {
  * after two accepted routes; Stopped does not assert validity or nonuniqueness.
  * Exceptions propagate unchanged, with admitted work remaining in the caller's
  * budget. Invalid input/resource refusal is sticky. No geometry certificate is
- * issued. Distinct-route output may be exponential; duplicate transitions are
+ * issued. Memo storage is never evicted or silently disabled on exhaustion.
+ * Distinct-route output may be exponential; duplicate transitions are
  * refused and rotated cycles are pruned, never stored as duplicate assignments.
  */
 OffsetPathSearchResult searchOffsetPaths(const OffsetPathGraphView& graph, WorkBudget& budget,

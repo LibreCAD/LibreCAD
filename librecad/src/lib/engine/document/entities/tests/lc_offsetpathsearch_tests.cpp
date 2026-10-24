@@ -293,22 +293,25 @@ TEST_CASE("Offset path search admits scratch roots and child records atomically"
         geo::WorkBudget budget{limits}; Routes paths;
         const auto result = collect(input, budget, paths);
         CHECK(result.status == geo::OffsetPathSearchStatus::LimitExceeded); CHECK(paths.empty());
-        CHECK(result.work.vertices == 4); CHECK(result.work.distancePairs == 7);
-        CHECK(result.work.orderingComparisons == 1);
+        // Root marker/frame/edge are live (4); one key-word hash entered (pair 6).
+        // The three-record memo key/state/frame cannot fit the two remaining slots.
+        CHECK(result.work.vertices == 4); CHECK(result.work.distancePairs == 6);
+        CHECK(result.work.orderingComparisons == 0);
     }
 }
 
 TEST_CASE("Offset path search admits callback work before invoking a visitor",
           "[lc-offsetcurve][geometry][offset-path-search]") {
     const auto input = graph(1, false, {}, {0}, {0});
-    for (const std::size_t cap : {4u, 5u}) {
+    for (const std::size_t cap : {7u, 8u}) {
         CAPTURE(cap);
         LC_OffsetCheckLimits limits; limits.maxDistancePairs = cap;
         geo::WorkBudget budget{limits}; Routes paths;
         const auto result = collect(input, budget, paths);
-        CHECK(result.status == (cap == 5 ? geo::OffsetPathSearchStatus::Exhausted : geo::OffsetPathSearchStatus::LimitExceeded));
-        CHECK(result.routesVisited == (cap == 5 ? 1 : 0)); CHECK(paths.size() == result.routesVisited);
-        CHECK(result.work.distancePairs == cap); CHECK(result.work.vertices == 3);
+        CHECK(result.status == (cap == 8 ? geo::OffsetPathSearchStatus::Exhausted : geo::OffsetPathSearchStatus::LimitExceeded));
+        CHECK(result.routesVisited == (cap == 8 ? 1 : 0)); CHECK(paths.size() == result.routesVisited);
+        // Validation 2 + seed 1 + memo hash/copy/finish 3 + walk 1 + callback 1.
+        CHECK(result.work.distancePairs == cap); CHECK(result.work.vertices == 6);
     }
 }
 
@@ -324,8 +327,8 @@ TEST_CASE("Offset path search admits pair and ordering predicates together",
         const auto result = collect(input, budget, paths);
         CHECK(result.status == geo::OffsetPathSearchStatus::LimitExceeded); CHECK(paths.empty());
         CHECK(result.work.orderingComparisons == 1);
-        CHECK(result.work.distancePairs == (duringValidation ? 4 : 5));
-        CHECK(result.work.vertices == (duringValidation ? 0 : 3));
+        CHECK(result.work.distancePairs == (duringValidation ? 4 : 7));
+        CHECK(result.work.vertices == (duringValidation ? 0 : 6));
         // The refused next predicate cannot consume only its pair half.
         checkSameWork(result.work, budget.consumed());
     }
@@ -438,4 +441,105 @@ TEST_CASE("Offset path search stops explicitly and cannot hide visitor budget re
         CHECK(result.status == geo::OffsetPathSearchStatus::LimitExceeded); CHECK(result.routesVisited == 1);
         CHECK(budget.status() == geo::BudgetStatus::LimitExceeded);
     }
+}
+
+TEST_CASE("Memoized offset suffixes preserve different ordered prefix multiplicity",
+          "[lc-offsetcurve][geometry][offset-path-search][cache-search-completion]") {
+    const auto input = graph(5, false, {join(0,1,1), join(0,2,2), join(1,2,3), join(1,3,4),
+        join(2,1,5), join(2,3,6), join(3,4,7)}, {0}, {4});
+    geo::WorkBudget budget; Routes paths;
+    const auto result = collect(input, budget, paths);
+    const Routes expected{{0,1,2,3,4}, {0,1,3,4}, {0,2,1,3,4}, {0,2,3,4}};
+    REQUIRE(result.status == geo::OffsetPathSearchStatus::Exhausted);
+    CHECK(paths == expected); CHECK(result.routesVisited == 4);
+    CHECK(result.structuralRoutes == 2); CHECK(result.memoHits > 0); CHECK(result.memoStates > 0);
+    // Both five-edge prefixes reach (seed=0, edge=3, used={0,1,2,3}).
+    // Sharing its one suffix must NEVER collapse the two whole route orders.
+    checkSameWork(result.work, budget.consumed());
+}
+
+TEST_CASE("Memoized offset suffixes retain distinct transition prefixes and saturate at two",
+          "[lc-offsetcurve][geometry][offset-path-search][cache-search-completion]") {
+    const auto input = graph(3, false, {join(0,1,10), join(0,1,20), join(0,1,30), join(1,2,40)}, {0}, {2});
+    geo::WorkBudget budget; std::vector<std::size_t> events;
+    const auto result = geo::searchOffsetPaths(input.view(), budget, [&](const auto& route) {
+        checkRoute(input, route); events.push_back(route.joins.front().pairEvent);
+        return geo::OffsetPathVisit::Continue;
+    });
+    const std::vector<std::size_t> expected{10,20,30};
+    REQUIRE(result.status == geo::OffsetPathSearchStatus::Exhausted);
+    CHECK(events == expected); CHECK(result.routesVisited == 3); CHECK(result.structuralRoutes == 2);
+    CHECK(result.memoStates == 3); CHECK(result.memoHits == 2);
+}
+
+TEST_CASE("Memoized offset dead suffixes prove zero without losing endpoint eligibility",
+          "[lc-offsetcurve][geometry][offset-path-search][cache-search-completion]") {
+    const auto input = graph(5, false, {join(0,1,1), join(0,2,2), join(1,2,3), join(1,3,4),
+        join(2,1,5), join(2,3,6)}, {0}, {4});
+    geo::WorkBudget budget; Routes paths;
+    const auto result = collect(input, budget, paths);
+    CHECK(result.status == geo::OffsetPathSearchStatus::Exhausted); CHECK(paths.empty());
+    CHECK(result.structuralRoutes == 0); CHECK(result.routesVisited == 0);
+    CHECK(result.memoHits > 0); CHECK(result.memoStates > 0);
+}
+
+TEST_CASE("Memoized offset state keys retain all used words and exact cumulative caps",
+          "[lc-offsetcurve][geometry][offset-path-search][cache-search-completion]") {
+    std::vector<geo::CachePathJoin> transitions;
+    for (std::size_t i = 0; i < 64; ++i) { transitions.push_back(join(i, i+1, i)); }
+    const auto input = graph(65, false, transitions, {0}, {64}), original = input;
+    geo::WorkBudget measuredBudget; REQUIRE(measuredBudget.adoptWork(preSpent)); Routes expected;
+    const auto measured = collect(input, measuredBudget, expected);
+    REQUIRE(measured.status == geo::OffsetPathSearchStatus::Exhausted);
+    REQUIRE(expected.size() == 1); CHECK(measured.structuralRoutes == 1); CHECK(measured.memoStates == 65);
+    auto limits = exactLimits(measured.work);
+    geo::WorkBudget exact{limits}; REQUIRE(exact.adoptWork(preSpent)); Routes actual;
+    const auto accepted = collect(input, exact, actual);
+    CHECK(accepted.status == geo::OffsetPathSearchStatus::Exhausted); CHECK(actual == expected);
+    checkSameWork(accepted.work, measured.work);
+    for (unsigned dimension = 0; dimension < 3; ++dimension) {
+        auto shortLimits = limits;
+        if (dimension == 0) { --shortLimits.maxVertices; }
+        if (dimension == 1) { --shortLimits.maxDistancePairs; }
+        if (dimension == 2) { --shortLimits.maxOrderingComparisons; }
+        geo::WorkBudget shortBudget{shortLimits}; REQUIRE(shortBudget.adoptWork(preSpent)); Routes prefix;
+        const auto refused = collect(input, shortBudget, prefix);
+        CHECK(refused.status == geo::OffsetPathSearchStatus::LimitExceeded);
+        checkBounded(refused.work, preSpent, shortLimits); checkSameWork(refused.work, shortBudget.consumed());
+        const auto stopped = shortBudget.consumed();
+        const auto retry = collect(input, shortBudget, prefix);
+        CHECK(retry.status == geo::OffsetPathSearchStatus::LimitExceeded); CHECK(retry.routesVisited == 0);
+        checkSameWork(retry.work, stopped);
+    }
+    checkGraphUnchanged(input, original);
+}
+
+TEST_CASE("Memoized structural multiplicity never becomes geometric acceptance",
+          "[lc-offsetcurve][geometry][offset-path-search][cache-search-completion]") {
+    const auto input = twoCycles();
+    geo::WorkBudget budget; std::size_t visited = 0;
+    const auto result = geo::searchOffsetPaths(input.view(), budget, [&](const auto& route) {
+        checkRoute(input, route); ++visited;
+        // A real geometry consumer may reject the first and accept the second;
+        // the structural count cannot stop or fabricate that decision.
+        return geo::OffsetPathVisit::Continue;
+    });
+    CHECK(result.status == geo::OffsetPathSearchStatus::Exhausted);
+    CHECK(result.structuralRoutes == 2); CHECK(visited == 2); CHECK(result.routesVisited == 2);
+}
+
+TEST_CASE("Memoized route replay honors sticky cancellation after complete prefix admission",
+          "[lc-offsetcurve][geometry][offset-path-search][cache-search-completion]") {
+    const auto input = twoCycles();
+    geo::WorkBudget budget; geo::CheckWork atCancellation; unsigned callbacks = 0;
+    const auto result = geo::searchOffsetPaths(input.view(), budget, [&](const auto&) {
+        ++callbacks; budget.latchInvalidInput(); atCancellation = budget.consumed();
+        return geo::OffsetPathVisit::Continue;
+    });
+    CHECK(result.status == geo::OffsetPathSearchStatus::InvalidInput); CHECK(callbacks == 1);
+    checkSameWork(result.work, atCancellation); checkSameWork(budget.consumed(), atCancellation);
+    Routes paths;
+    const auto retry = collect(input, budget, paths);
+    CHECK(retry.status == geo::OffsetPathSearchStatus::InvalidInput); CHECK(paths.empty());
+    checkSameWork(retry.work, atCancellation);
 }

@@ -17,6 +17,7 @@
 
 #include <array>
 #include <cstddef>
+#include <cstdint>
 #include <memory>
 #include <optional>
 #include <vector>
@@ -162,6 +163,9 @@ public:
     bool offsetJet(double t, LC_CurveJet& out) const;
     /** Continuous exact-sweep bounds, including zero-width queries and periodic endpoint limits. */
     bool boundSourceJet(double t0, double t1, LC_CurveJetBounds& out) const;
+    /** Fixed-axis source derivative bound; monotone sinusoid endpoint tightening, no fitted phase. */
+    bool boundSourceProjectedDerivative(double t0, double t1, const LC_Interval& axisX,
+                                        const LC_Interval& axisY, LC_Interval& out) const;
     bool boundOffsetJet(double t0, double t1, LC_CurveJetBounds& out) const;
     /** Physical offset factor and its traversal derivative; both cleared on refusal. */
     bool boundOffsetFactor(double t0, double t1, LC_Interval& factor, LC_Interval& derivative) const;
@@ -691,6 +695,33 @@ struct CachePathEndpoint {
     double candidateParameter = 0;
     LC_Interval geometryError, clearanceLowerBound;
 };
+enum class CacheStartCutRegionKind { Separated, Far, Reverse, UniqueRoot, ExcludedRoot };
+struct CacheStartCutAxis { LC_Interval x, y; };
+/** Exhaustive phase-search cover, not positive-length cache/reference coverage.
+ * UniqueRoot means every phase zero IN THIS CELL is the named issued root; it
+ * does not assert that the root lies in each smaller covered cell. An endpoint
+ * identity or cyclic signature alone never supplies an interior cut's lap.
+ */
+struct CacheStartCutRegion {
+    std::size_t edge = std::size_t(-1), axis = std::size_t(-1), cut = std::size_t(-1);
+    LC_Interval parameter, value, derivative, distance;
+    CacheStartCutRegionKind kind{};
+    unsigned depth = 0;
+};
+enum class CacheStartCutExclusionKind { None, Distance, BackwardEndpoint, CircleSupport };
+/** Negative evidence for this root's own frontier, never a failed positive proof. */
+struct CacheStartCutExclusion {
+    CacheStartCutExclusionKind kind = CacheStartCutExclusionKind::None;
+    LC_Interval bound;
+    bool start = false;
+    std::size_t coefficient = 0;
+    RS_Vector centre, point;
+};
+struct CacheTopologySearchStats {
+    std::size_t routes = 0, memoStates = 0, memoHits = 0, cutsProved = 0;
+    std::size_t selectedCut = std::size_t(-1), nearestCut = std::size_t(-1);
+    std::uint8_t acceptedRoutes = 0;
+};
 /** A complete directed path certificate, never a successful local prefix. */
 class CacheTopologyAnalysis {
 public:
@@ -707,6 +738,15 @@ public:
     const std::optional<CachePathCut>& cut() const noexcept;
     const std::optional<ReferenceTerminal>& startTerminal() const noexcept;
     const std::optional<ReferenceTerminal>& endTerminal() const noexcept;
+    const std::vector<CacheStartCutAxis>& startCutAxes() const noexcept;
+    const std::vector<CachePathCut>& startCuts() const noexcept;
+    const std::vector<CacheStartCutRegion>& startCutRegions() const noexcept;
+    /** Empty for an unproved alignment; otherwise an owned independent complete lap. */
+    const std::vector<CachePathPiece>& startCutPieces(std::size_t cut) const noexcept;
+    CacheStartCutExclusion startCutExclusion(std::size_t cut) const noexcept;
+    /** Actual cumulative snapshot immediately before this root's independent lap. */
+    std::optional<CheckWork> startCutLapAdmission(std::size_t cut) const noexcept;
+    const CacheTopologySearchStats& searchStats() const noexcept;
 private:
     friend class CacheTopologyBuilder;
     struct Impl;
