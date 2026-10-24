@@ -796,6 +796,7 @@ HEADERS += \
     lib/math/lc_convert.h \
     lib/math/lc_linemath.h \
     lib/math/lc_formatter.h \
+    lib/modification/lc_offsetcachetrim.h \
     lib/modification/rs_modification.h \
     lib/selection/rs_selection.h \
     lib/selection/lc_selectionpredicate.h \
@@ -1361,6 +1362,7 @@ SOURCES += \
     lib/math/rs_math.cpp \
     lib/math/lc_quadratic.cpp \
     lib/math/lc_formatter.cpp \
+    lib/modification/lc_offsetcachetrim.cpp \
     lib/modification/rs_modification.cpp \
     lib/selection/rs_selection.cpp \
     lib/selection/lc_selectionpredicate.cpp \

@@ -144,6 +144,8 @@ CacheLayoutResult inspectCacheLayout(const RS_SplineData& cache, WorkBudget& bud
 class ReferenceFrame {
 public:
     static std::optional<ReferenceFrame> create(const RS_EllipseData& basis, double signedDistance);
+    /** Value-only reparameterization of a whole curve. Open frames and noncanonical starts refuse. */
+    std::optional<ReferenceFrame> withWholeStart(double canonicalAngle) const;
 
     double scale() const;
     double parameterEnd() const;

@@ -856,6 +856,17 @@ std::optional<ReferenceFrame> ReferenceFrame::create(const RS_EllipseData& basis
     return candidate;
 }
 
+std::optional<ReferenceFrame> ReferenceFrame::withWholeStart(const double canonicalAngle) const {
+    if (!m_sweep.whole || !std::isfinite(canonicalAngle) ||
+        !(canonicalAngle >= 0.0 && canonicalAngle < turn)) {
+        return std::nullopt;
+    }
+    ReferenceFrame candidate = *this;
+    candidate.m_sweep.start = canonicalAngle;
+    candidate.m_endAngle = canonicalAngle;
+    return candidate;
+}
+
 double ReferenceFrame::scale() const {
     return m_scale;
 }

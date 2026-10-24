@@ -1244,6 +1244,8 @@ set (SHARED_SOURCES
      librecad/src/lib/modification/lc_copyutils.h
      librecad/src/lib/modification/lc_division.cpp
      librecad/src/lib/modification/lc_division.h
+     librecad/src/lib/modification/lc_offsetcachetrim.cpp
+     librecad/src/lib/modification/lc_offsetcachetrim.h
      librecad/src/lib/modification/rs_modification.cpp
      librecad/src/lib/modification/rs_modification.h
      librecad/src/lib/printing/lc_printing.cpp
@@ -2717,6 +2719,7 @@ if (BUILD_TESTS)
         librecad/src/lib/modification/tests/lc_copy_identity_tests.cpp
         librecad/src/lib/modification/tests/lc_copy_insert_transform_tests.cpp
         librecad/src/lib/modification/tests/lc_division_tests.cpp
+        librecad/src/lib/modification/tests/lc_offsetcachetrim_tests.cpp
         librecad/src/lib/modification/tests/rs_modification_trim_tests.cpp
         librecad/src/lib/modification/tests/rs_modification_offset_tests.cpp
         librecad/src/lib/modification/tests/rs_modification_offsetcurve_tests.cpp
@@ -3488,6 +3491,25 @@ if (BUILD_TESTS)
         BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES)
     if(MSVC)
         target_compile_options(librecad_offsetcurve_batch_failure_tests PRIVATE /bigobj)
+    endif()
+
+    # T readiness is an opt-in standalone process. No Catch/main-runner or
+    # ordinary fast-lane registration may pull in its allocator interposition.
+    # The registered kernel is supplied by librecad_lib, not compiled here.
+    add_executable(librecad_offset_cache_trim_failure_tests EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        librecad/src/lib/modification/tests/lc_offsetcachetrim_failure_tests.cpp)
+    set_target_properties(librecad_offset_cache_trim_failure_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+    target_include_directories(librecad_offset_cache_trim_failure_tests PRIVATE
+        ${SHARED_INCLUDES})
+    target_link_libraries(librecad_offset_cache_trim_failure_tests PRIVATE
+        librecad_lib Qt6::Core Qt6::Gui Qt6::Network Qt6::PrintSupport Qt6::Svg Qt6::Widgets)
+    target_compile_features(librecad_offset_cache_trim_failure_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_offset_cache_trim_failure_tests PRIVATE
+        BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES)
+    if(MSVC)
+        target_compile_options(librecad_offset_cache_trim_failure_tests PRIVATE /bigobj)
     endif()
 
     # Keep the large corpus/diagnostic source isolated. It is an explicit
