@@ -65,7 +65,8 @@ void LC_AppWindowDialogsInvoker::showLicenseWindow() const {
 
     // Check and add files with error handling
     QStringList missingFiles;
-    std::pair<QString, QString> files[] = {{"readme.md", "readme"}, {"gpl-2.0.txt", "GPLv2"},};
+    std::pair<QString, QString> files[] = {{"readme.md", "readme"}, {"gpl-2.0.txt", "GPLv2"}, {"gpl-3.0.txt", "GPLv3"},
+                                           {"OFL-noto-cjk.txt", "OFL (Noto Sans SC/TC)"},};
     for (const auto& [fileName, title] : files) {
         const QString file = ":/" + fileName;
         if (QFile::exists(file)) {

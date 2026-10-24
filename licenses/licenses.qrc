@@ -2,5 +2,7 @@
 <qresource>
     <file>readme.md</file>
     <file>gpl-2.0.txt</file>
+    <file>gpl-3.0.txt</file>
+    <file>OFL-noto-cjk.txt</file>
 </qresource>
 </RCC>
