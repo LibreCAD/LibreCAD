@@ -125,7 +125,9 @@ unix {
 win32 {
     TARGET = LibreCAD
 
-    CONFIG += console
+    # A GUI program, as in the 2.2.1 releases (no console window behind the
+    # main window). For a console window with the debug output, run qmake with
+    # CONFIG+=console.
 
     # add MSYSGIT_DIR = PathToGitBinFolder (without quotes) in custom.pro file, for commit hash in about dialog
     !isEmpty( MSYSGIT_DIR ) {

@@ -357,6 +357,10 @@ jobs:
           for /r generated %%f in (plugins_*.qm) do copy "%%f" plugins\ts\
           powershell.exe -ExecutionPolicy Bypass -File scripts\copy-vc-runtime.ps1 -Architecture AMD64 -Destination windows
           if errorlevel 1 exit /b 1
+          rem LibreCAD's own icon engine, with its linker leftovers removed.
+          if exist windows\iconengines\*.lib del /q windows\iconengines\*.lib
+          if exist windows\iconengines\*.exp del /q windows\iconengines\*.exp
+          if not exist windows\iconengines\lc_svgiconengine.dll exit /b 1
           set LC_ARCH=AMD64
           call "${{ github.workspace }}\scripts\build-nsis.bat"
         shell: cmd
@@ -538,6 +542,10 @@ jobs:
           for /r generated %%f in (plugins_*.qm) do copy "%%f" plugins\ts\
           powershell.exe -ExecutionPolicy Bypass -File scripts\copy-vc-runtime.ps1 -Architecture ARM64 -Destination windows
           if errorlevel 1 exit /b 1
+          rem LibreCAD's own icon engine, with its linker leftovers removed.
+          if exist windows\iconengines\*.lib del /q windows\iconengines\*.lib
+          if exist windows\iconengines\*.exp del /q windows\iconengines\*.exp
+          if not exist windows\iconengines\lc_svgiconengine.dll exit /b 1
           set LC_ARCH=ARM64
           call "${{ github.workspace }}\scripts\build-nsis.bat"
         shell: cmd
