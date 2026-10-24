@@ -1067,4 +1067,18 @@ TEST_CASE("Drawings naming the old OpenGost files find the renamed fonts",
     RS_Font *wide = RS_FONTLIST->requestFont(QStringLiteral("opengosttypeb-regular"));
     REQUIRE(wide != nullptr);
     CHECK(wide->getFileName() == "lc_gost-outline-wide");
+
+    // The Text and MText dialogs resolve the names the same way.
+    CHECK(RS_FontList::resolveFontName(QStringLiteral("OpenGostTypeA-Regular")) ==
+          "lc_gost-outline-narrow");
+    CHECK(RS_FontList::resolveFontName(QStringLiteral("standard")) == "standard");
+}
+
+TEST_CASE("unicode_scripts is a fallback font only", "[font][unicode]") {
+    // It has no Latin letters or digits, so the font boxes do not offer it.
+    CHECK(RS_FontList::isFallbackOnlyFont(QStringLiteral("unicode_scripts")));
+    CHECK_FALSE(RS_FontList::isFallbackOnlyFont(QStringLiteral("unicode")));
+    ensureApp();
+    CHECK(scriptsFont().findLetter(QStringLiteral("A")) == nullptr);
+    CHECK(scriptsFont().findLetter(QStringLiteral("1")) == nullptr);
 }

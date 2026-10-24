@@ -391,7 +391,7 @@ int QG_DlgMText::getAlignment() const {
 }
 
 void QG_DlgMText::setFont(const QString& f) {
-    int index = cbFont->findText(f);
+    int index = cbFont->findText(RS_FontList::resolveFontName(f));
 
     // Issue #2069: default to the last font, likely unicode fonts
     if (index == -1) {

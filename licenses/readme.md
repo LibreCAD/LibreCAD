@@ -61,6 +61,7 @@ Copyright (C):
 - 2012 Valek Filippov (frob@gnome.org)
 - 2014 stranger573 (stranger573@mail.ru)
 - 2015 AZO (typesylph@gmail.com)
+- 2022 The Noto Project Authors (glyphs traced into unicode_scripts.lff)
 
 ### Rights holders of the art ###
 
@@ -87,7 +88,11 @@ A list of contributors to the LibreCAD repository can be found at:
 
 The LibreCAD source code is released as a whole under the GPLv2.  
 The following refers to the licenses used by these resources,  
-when they were released independently from LibreCAD.
+when they were released independently from LibreCAD.  
+The fonts under the SIL Open Font License (`amiri-regular.lff`,  
+`lc_opengost-ar.lff`, `lc_opengost-br.lff`, `lc_gost-outline-narrow.lff`,  
+`lc_gost-outline-wide.lff` and `unicode_scripts.lff`) stay under that  
+licence only, also when they are distributed with LibreCAD.
 
 The SVG icons in `librecad/res/icons` were all released under the CC0 license.  
 
