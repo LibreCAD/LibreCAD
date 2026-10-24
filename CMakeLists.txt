@@ -3467,7 +3467,7 @@ if (BUILD_TESTS)
     # The shortcut test loads the built Chinese catalogs, as in librecad_tests.
     target_compile_definitions(librecad_dock_layout_tests PRIVATE
         LIBRECAD_TEST_TRANSLATION_DIR="${CMAKE_CURRENT_BINARY_DIR}")
-    add_dependencies(librecad_dock_layout_tests LibreCAD_lrelease)
+    add_dependencies(librecad_dock_layout_tests librecad_test_translations)
     add_librecad_filter_micro_test(
         librecad_printing_tests
         librecad/src/lib/printing/tests/lc_printingtests.cpp)
