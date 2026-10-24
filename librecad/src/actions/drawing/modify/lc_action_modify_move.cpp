@@ -37,6 +37,9 @@ struct LC_ActionModifyMove::MoveActionData {
     RS_Vector referencePoint;
     RS_Vector targetPoint;
     bool createCopy{false};
+    // a Ctrl copy has been placed: the right button now finishes, as the
+    // originals it would go back to are no longer the selection
+    bool copyPlaced{false};
 };
 
 LC_ActionModifyMove::LC_ActionModifyMove(LC_ActionContext* actionContext)
@@ -96,7 +99,11 @@ void LC_ActionModifyMove::doTriggerSelectionUpdate(const bool keepSelected, cons
 }
 
 void LC_ActionModifyMove::doTriggerCompletion([[maybe_unused]] bool success) {
-    if (!m_actionData->createCopy) {
+    if (m_actionData->createCopy) {
+        m_actionData->copyPlaced = true;
+        updateActionPrompt();
+    }
+    else {
         finish();
     }
 }
@@ -171,6 +178,9 @@ void LC_ActionModifyMove::onMouseRightButtonReleaseSelected(const int status, [[
             initPrevious(status);
         }
     }
+    else if (m_actionData->copyPlaced) {
+        finish();
+    }
     else {
         initPrevious(status);
     }
@@ -193,6 +203,8 @@ void LC_ActionModifyMove::onCoordinateEvent(const int status, [[maybe_unused]] b
             addSnappedPointToVisualSnap(pos);
             m_actionData->data.offset = m_actionData->targetPoint - m_actionData->referencePoint;
             trigger();
+            // only a click with Ctrl held copies; a typed target moves
+            m_actionData->createCopy = false;
             break;
         }
         default:
@@ -206,7 +218,12 @@ void LC_ActionModifyMove::updateActionPromptForSelected(const int status) {
             updatePromptTRCancel(tr("Specify reference point"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetTargetPoint:
-            updatePromptTRBack(tr("Specify target point"), MOD_SHIFT_AND_CTRL_ANGLE(tr("Create a Copy")));
+            if (m_actionData->copyPlaced) {
+                updatePrompt(tr("Specify target point"), tr("Finish"), MOD_SHIFT_AND_CTRL_ANGLE(tr("Create a Copy")));
+            }
+            else {
+                updatePromptTRBack(tr("Specify target point"), MOD_SHIFT_AND_CTRL_ANGLE(tr("Create a Copy")));
+            }
             break;
         default:
             updatePrompt();
