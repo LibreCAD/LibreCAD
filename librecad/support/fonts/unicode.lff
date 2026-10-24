@@ -9,10 +9,9 @@
 # LineSpacingFactor: 1
 # Created:           2011-09-25
 # Last modified:     2011-09-29
-# Author:            Rallaz <rallazz@gmail.com> (Latin, Latin-1, Latin Extended-A)
-# Author:            Eugene Osintsev <osgene@omskelecom.ru> (Cyrillic, from QCad)
-# Author:            Yoshimune Kobayashi <cfg47520@syd.odn.ne.jp> (Japanese, from QCad)
-# Author:            LibreCAD contributors (Czech, Greek, Ukrainian, Georgian, accented letters, symbols)
+# Author:            Rallaz <rallazz@gmail.com> (latin basic + 1 + extended-A)
+# Author:            Eugene Osintsev <osgene@omskelecom.ru> (Cyrillic)
+# Author:            Yoshimune Kobayashi <cfg47520@syd.odn.ne.jp> (Japanese)
 # License:           GPL v2 or later
 #
 # Notes:             - The Latin glyphs are based on the public-domain drawing

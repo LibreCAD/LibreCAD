@@ -45,15 +45,15 @@
 #include <QRegularExpression>
 #include <QString>
 
-#include "lc_sourcefonts.h"
-#include "rs_block.h"
 #include "rs_font.h"
+#include "rs_block.h"
+#include "rs_settings.h"
+#include "rs_vector.h"
+#include "lc_sourcefonts.h"
 #include "rs_fontlist.h"
 #include "rs_insert.h"
 #include "rs_mtext.h"
 #include "rs_text.h"
-#include "rs_settings.h"
-#include "rs_vector.h"
 
 namespace {
 
@@ -793,13 +793,13 @@ void checkRange(const char16_t *codepoints, double minX = -2.5, double maxX = 9.
 
 } // namespace
 
-TEST_CASE("The Unicode fonts cover the accented Latin letters the translations use",
+TEST_CASE("unicode.lff covers the accented Latin letters the translations use",
           "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kLatin);
 }
 
-TEST_CASE("The Unicode fonts cover Macedonian and Serbian Cyrillic",
+TEST_CASE("unicode.lff covers Macedonian and Serbian Cyrillic",
           "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kCyrillic);
@@ -900,7 +900,7 @@ TEST_CASE("The Unicode fonts cover the Samaritan alphabet", "[font][unicode][i18
                /*maxY=*/14.5);
 }
 
-TEST_CASE("The Unicode fonts cover the modern Georgian (Mkhedruli) alphabet",
+TEST_CASE("unicode.lff covers the modern Georgian (Mkhedruli) alphabet",
           "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kGeorgian);
@@ -1030,10 +1030,18 @@ TEST_CASE("A letter the chosen font lacks is drawn from unicode_scripts.lff",
     lc::test::SourceFonts fonts;
     const QString thai(QChar(0x0E01));
 
-    RS_Font *fallback = RS_FONTLIST->findFallbackFont(thai);
-    REQUIRE(fallback != nullptr);
-    CHECK(fallback->getFileName() == "unicode_scripts");
-    CHECK(RS_FONTLIST->findFallbackFont(QStringLiteral("A")) == nullptr);
+    RS_Font *standard = RS_FONTLIST->requestFont(QStringLiteral("standard"));
+    REQUIRE(standard != nullptr);
+    QString letter = thai;
+    CHECK(RS_FONTLIST->fontForLetter(*standard, letter)->getFileName() == "unicode_scripts");
+    CHECK(letter == thai);
+    // unicode_scripts has no Latin letters or digits, so it is no text's own font.
+    RS_Font *scripts = RS_FONTLIST->requestFont(QStringLiteral("unicode_scripts"));
+    REQUIRE(scripts != nullptr);
+    letter = QStringLiteral("1");
+    CHECK(RS_FONTLIST->fontForLetter(*scripts, letter) == scripts);
+    CHECK(letter == QString(QChar(0xfffd)));
+    CHECK(RS_FontList::isFallbackOnlyFont(scripts->getFileName()));
 
     for (const auto& style : {QStringLiteral("standard"), QStringLiteral("unicode")}) {
         INFO("style " << style.toStdString());
@@ -1054,6 +1062,7 @@ TEST_CASE("A letter the chosen font lacks is drawn from unicode_scripts.lff",
         auto *line = static_cast<RS_EntityContainer *>(mtext.entityAt(0));
         REQUIRE(line->count() == 1);
         CHECK(static_cast<RS_Insert *>(line->entityAt(0))->getName() == thai);
+        CHECK(line->entityAt(0)->getMax().x > line->entityAt(0)->getMin().x);
     }
 }
 
@@ -1072,13 +1081,4 @@ TEST_CASE("Drawings naming the old OpenGost files find the renamed fonts",
     CHECK(RS_FontList::resolveFontName(QStringLiteral("OpenGostTypeA-Regular")) ==
           "lc_gost-outline-narrow");
     CHECK(RS_FontList::resolveFontName(QStringLiteral("standard")) == "standard");
-}
-
-TEST_CASE("unicode_scripts is a fallback font only", "[font][unicode]") {
-    // It has no Latin letters or digits, so the font boxes do not offer it.
-    CHECK(RS_FontList::isFallbackOnlyFont(QStringLiteral("unicode_scripts")));
-    CHECK_FALSE(RS_FontList::isFallbackOnlyFont(QStringLiteral("unicode")));
-    ensureApp();
-    CHECK(scriptsFont().findLetter(QStringLiteral("A")) == nullptr);
-    CHECK(scriptsFont().findLetter(QStringLiteral("1")) == nullptr);
 }

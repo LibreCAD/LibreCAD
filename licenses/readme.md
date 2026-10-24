@@ -189,15 +189,7 @@ the OpenGost Type A and Type B TrueType fonts by Nikita Volchenkov. Until
 `opengosttypeb-regular.lff`; they were renamed because their licence
 reserves the OpenGost names, and LibreCAD still finds them under the old
 names. They are released under the SIL Open Font License 1.1, and each
-file carries the licence and these notices:
-
-    Copyright (c) 2011-2012, Nikita Volchenkov (<nikitavolchenkov@gmail.com>),
-    with Reserved Font Name OpenGost Type A.
-    Copyright (c) 2011-2012, Nikita Volchenkov (<nikitavolchenkov@gmail.com>),
-    with Reserved Font Name OpenGost Type B.
-    Copyright (c) 2012, Valek Filippov (<frob@gnome.org>).
-
-- <https://github.com/LibreCAD/LibreCAD/blob/master/licenses/OFL-opengost.txt>
+file carries the licence and the copyright notices of the OpenGost fonts.
 
 The Unicode Scripts font (`unicode_scripts.lff`) holds the Thai, Lao,
 Armenian, Hebrew, Ethiopic, Yi and other glyphs traced in 2026 from the

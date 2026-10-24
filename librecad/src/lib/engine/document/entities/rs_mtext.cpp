@@ -1290,15 +1290,7 @@ void RS_MText::rotateLinesRefs() const {
  *
  */
 void RS_MText::addLetter(LC_TextLine& oneLine, QString letterText, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition) {
-    RS_Font* glyphFont = &font;
-    if (nullptr == font.findLetter(letterText)) {
-        glyphFont = RS_FONTLIST->findFallbackFont(letterText);
-        if (glyphFont == nullptr) {
-            RS_DEBUG->print("RS_MText::update: missing font for letter( %s ), replaced " "it with QChar(0xfffd)", qPrintable(letterText));
-            glyphFont = &font;
-            letterText = QChar(0xfffd);
-        }
-    }
+    RS_Font* glyphFont = RS_FONTLIST->fontForLetter(font, letterText);
 
     LC_LOG << "RS_MText::update: insert a letter at pos:(" << letterPosition.x << ", " << letterPosition.y << ")";
 

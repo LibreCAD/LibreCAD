@@ -449,7 +449,6 @@ RS_Block* RS_Font::generateLffFont(const QString& key) {
     }
 
     if (!m_rawLffFontList.contains(key)) {
-        LC_ERR << QString{"RS_Font::generateLffFont([%1]) : can not find the letter in LFF file %2"}.arg(key.at(0)).arg(m_fileName);
         return nullptr;
     }
 
@@ -544,12 +543,7 @@ RS_Block* RS_Font::generateLffFont(const QString& key) {
 
 RS_Block* RS_Font::findLetter(const QString& name) {
     RS_Block* ret = m_letterList.find(name);
-    // A letter the font does not have is not an error: the text falls back to
-    // another font or to U+FFFD.
-    if (ret == nullptr && m_rawLffFontList.contains(name)) {
-        ret = generateLffFont(name);
-    }
-    return ret;
+    return (ret != nullptr) ? ret : generateLffFont(name);
 }
 
 /**

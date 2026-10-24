@@ -348,14 +348,7 @@ void RS_Text::update() {
             if (cluster.rightToLeft)
                 scalar = QChar::mirroredChar(scalar);
             QString letterText = QString::fromUcs4(&scalar, 1);
-            RS_Font* glyphFont = font;
-            if (font->findLetter(letterText) == nullptr) {
-                glyphFont = RS_FONTLIST->findFallbackFont(letterText);
-                if (glyphFont == nullptr) {
-                    glyphFont = font;
-                    letterText = QChar(0xfffd);
-                }
-            }
+            RS_Font* glyphFont = RS_FONTLIST->fontForLetter(*font, letterText);
             const bool combining = category == QChar::Mark_NonSpacing ||
                                    category == QChar::Mark_Enclosing;
             const RS_Vector glyphPos = combining ? clusterOrigin : letterPos;

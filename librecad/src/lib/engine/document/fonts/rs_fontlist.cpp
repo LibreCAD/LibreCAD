@@ -27,7 +27,6 @@
 #include "rs_fontlist.h"
 
 #include <QFileInfo>
-#include <QHash>
 #include <QLocale>
 #include <QString>
 #include <iostream>
@@ -148,14 +147,18 @@ bool RS_FontList::isFallbackOnlyFont(const QString& fileName) {
     return fileName.compare(QStringLiteral("unicode_scripts"), Qt::CaseInsensitive) == 0;
 }
 
-RS_Font* RS_FontList::findFallbackFont(const QString& letter) {
-    for (const auto& f : m_fonts) {
-        if (isFallbackOnlyFont(f->getFileName())) {
-            f->loadFont();
-            return f->findLetter(letter) != nullptr ? f.get() : nullptr;
+// The font that draws letter: font itself, the fallback font, or font with
+// letter replaced by U+FFFD.
+RS_Font* RS_FontList::fontForLetter(RS_Font& font, QString& letter) {
+    if (font.findLetter(letter) == nullptr) {
+        for (const auto& f : m_fonts) {
+            if (isFallbackOnlyFont(f->getFileName()) && f->loadFont() && f->findLetter(letter) != nullptr) {
+                return f.get();
+            }
         }
+        letter = QChar(0xfffd);
     }
-    return nullptr;
+    return &font;
 }
 
 QString RS_FontList::getDefaultFont() {
@@ -166,7 +169,7 @@ QString RS_FontList::getDefaultFont() {
         case QLocale::ArabicScript:
             return "amiri-regular";
         case QLocale::CyrillicScript:
-            return "lc_gost-outline-narrow";
+            return "OpenGostTypeA-Regular";
         case QLocale::GreekScript:
             return "greeks";
         case QLocale::JapaneseScript:
