@@ -1715,9 +1715,13 @@ bool readTableStyleCellStyle(DRW::Version version, dwgBuffer *buf,
         return readBitDoubleWithinBody(buf, version, bodySize, value)
             && std::isfinite(value);
     };
-    const auto readColor = [buf, strBuf, version, bodySize, stringSize](int& value) {
+    // Cell-style colors use full CMC just like their content-format colors,
+    // including populated CELLSTYLEMAP records carried in legacy files.
+    const DRW::Version colorVersion =
+        version < DRW::AC1018 ? DRW::AC1018 : version;
+    const auto readColor = [buf, strBuf, colorVersion, bodySize, stringSize](int& value) {
         std::uint32_t parsed = 0;
-        if (!readCmColorWithinBounds(buf, strBuf ? strBuf : buf, version,
+        if (!readCmColorWithinBounds(buf, strBuf ? strBuf : buf, colorVersion,
                                      bodySize, stringSize, parsed))
             return false;
         value = static_cast<int>(parsed);
@@ -13607,6 +13611,15 @@ bool DRW_CellStyleMap::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint3
         cellStyles.push_back(std::move(style));
     }
 
+    // Legacy handles share the body cursor. Check the data/string boundary
+    // before consuming the separately bounded common and cell-style handles.
+    const std::uint64_t bodyBitOffset =
+        bodyBuf->getPosition() * 8u + bodyBuf->getBitPos();
+    if (!bodyBuf->isGood() || !bodySBuf->isGood() || !hBuf->isGood()
+        || !objectBodyFitsSize(bodyBitOffset, bodyEnd)
+        || !objectBodyFitsSize(currentObjectDwgBit(bodySBuf), stringEnd))
+        return fail();
+
     if (version <= DRW::AC1018) {
         if (!this->readDwgObjectCommonHandles(version, bodyBuf, &parsedParentHandle, &parsedReactors, &parsedXDictHandle))
             return fail();
@@ -13616,11 +13629,7 @@ bool DRW_CellStyleMap::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint3
         }
     }
 
-    const std::uint64_t bodyBitOffset =
-        bodyBuf->getPosition() * 8u + bodyBuf->getBitPos();
-    if (!bodyBuf->isGood() || !bodySBuf->isGood() || !hBuf->isGood()
-        || !objectBodyFitsSize(bodyBitOffset, bodyEnd)
-        || !objectBodyFitsSize(currentObjectDwgBit(bodySBuf), stringEnd))
+    if (!bodyBuf->isGood() || !bodySBuf->isGood() || !hBuf->isGood())
         return fail();
 
     m_cellStyles = std::move(cellStyles);

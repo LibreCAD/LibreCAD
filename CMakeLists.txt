@@ -2729,6 +2729,7 @@ if (BUILD_TESTS)
         librecad/src/lib/modification/tests/rs_modification_attributes_tests.cpp
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/filters/tests/spline_offset_representation_tests.cpp
+        librecad/src/lib/filters/tests/lc_offsetcachetrim_file_tests.cpp
         librecad/src/lib/filters/tests/lc_offsetcurve_exportdispatch_tests.cpp
         librecad/src/lib/filters/tests/lc_offsetcurve_adapter_tests.cpp
         librecad/src/lib/filters/tests/lc_offsetcurve_persistence_tests.cpp

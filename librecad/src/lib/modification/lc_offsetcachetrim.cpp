@@ -1195,7 +1195,15 @@ Endpoint endpoint(const Input& input, const std::vector<Root>& roots, const Boun
         const auto t = root.snapshot.event.isolation.parameterA;
         const auto u = intersect(t - I::point(double(id)), I::hull(0, 1));
         I rx, ry, dx, dy;
-        if (!rawBound((*input.source)[id], input.frame, u.lo(), u.hi(), rx, ry, dx, dy)) { fail(Refusal::Arithmetic); }
+        const auto& span = (*input.source)[id];
+        if (exactParameter(t, double(id)) || exactParameter(t, double(id + 1))) {
+            // A certified singleton span endpoint is the stored control itself.
+            // Do not widen its exact local 0/1 by interval subtraction/evaluation.
+            const auto& control = span.controls[exactParameter(t, double(id)) ? 0 : span.degree];
+            if (!input.frame.pointToFrame(control, rx, ry)) { fail(Refusal::Arithmetic); }
+        } else if (!rawBound(span, input.frame, u.lo(), u.hi(), rx, ry, dx, dy)) {
+            fail(Refusal::Arithmetic);
+        }
         const auto allowance = arithmeticAllowance((*input.source)[id], input.frame);
         const auto ulp = [](double value) {
             const double next = std::nextafter(value, INFINITY);
