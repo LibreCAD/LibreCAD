@@ -27,6 +27,7 @@
 #include "rs_fontlist.h"
 
 #include <QFileInfo>
+#include <QHash>
 #include <QLocale>
 #include <QString>
 #include <iostream>
@@ -110,6 +111,8 @@ RS_Font* RS_FontList::requestFont(const QString& name) {
         name2 = name2.left(name2.indexOf('#'));
     }
 
+    name2 = resolveFontName(name2);
+
     RS_DEBUG->print("name2: %s", name2.toLatin1().data());
 
     // Search our list of available fonts:
@@ -129,6 +132,32 @@ RS_Font* RS_FontList::requestFont(const QString& name) {
     return foundFont;
 }
 
+QString RS_FontList::resolveFontName(const QString& name) {
+    // The OpenGost fonts were renamed, as their licence reserves the OpenGost
+    // names; drawings made before still name the old files.
+    static const QHash<QString, QString> renamedFonts{
+        {QStringLiteral("opengosttypea-regular"), QStringLiteral("lc_gost-outline-narrow")},
+        {QStringLiteral("opengosttypeb-regular"), QStringLiteral("lc_gost-outline-wide")}};
+    return renamedFonts.value(name.toLower(), name);
+}
+
+bool RS_FontList::isFallbackOnlyFont(const QString& fileName) {
+    // unicode_scripts holds the scripts traced from the Noto fonts, which the
+    // SIL Open Font License keeps out of the GPL fonts; it has no Latin
+    // letters, digits or punctuation of its own.
+    return fileName.compare(QStringLiteral("unicode_scripts"), Qt::CaseInsensitive) == 0;
+}
+
+RS_Font* RS_FontList::findFallbackFont(const QString& letter) {
+    for (const auto& f : m_fonts) {
+        if (isFallbackOnlyFont(f->getFileName())) {
+            f->loadFont();
+            return f->findLetter(letter) != nullptr ? f.get() : nullptr;
+        }
+    }
+    return nullptr;
+}
+
 QString RS_FontList::getDefaultFont() {
     const QLocale loc = QLocale::system();
     const QLocale::Script script = loc.script();
@@ -137,7 +166,7 @@ QString RS_FontList::getDefaultFont() {
         case QLocale::ArabicScript:
             return "amiri-regular";
         case QLocale::CyrillicScript:
-            return "OpenGostTypeA-Regular";
+            return "lc_gost-outline-narrow";
         case QLocale::GreekScript:
             return "greeks";
         case QLocale::JapaneseScript:

@@ -544,7 +544,12 @@ RS_Block* RS_Font::generateLffFont(const QString& key) {
 
 RS_Block* RS_Font::findLetter(const QString& name) {
     RS_Block* ret = m_letterList.find(name);
-    return (ret != nullptr) ? ret : generateLffFont(name);
+    // A letter the font does not have is not an error: the text falls back to
+    // another font or to U+FFFD.
+    if (ret == nullptr && m_rawLffFontList.contains(name)) {
+        ret = generateLffFont(name);
+    }
+    return ret;
 }
 
 /**
