@@ -24,7 +24,7 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-24. Status: IN PROGRESS. R03 callback-safe final snapshot closure is implemented and qualified in f617fcf70. Section6.6 complete start-cut/memoized search remains open. Earlier slices/receipts remain valid only for their recorded scope.
+Updated: 2026-10-24. Status: IN PROGRESS (final documentation only). R03 final snapshot closure is qualified in f617fcf70; section6.6 complete start-cut/memoized search is qualified in b6814fb3a. Earlier slices/receipts remain valid only for their recorded scope.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
 This checkpoint records tested A through Z-release and auxiliary X-H1 through
@@ -51,10 +51,11 @@ The follow-up completion audit did not infer success from the status above. It
 found a successful child-point getter can mutate root metadata after that root
 has already been compared, including a previously validated batch peer. It also
 found section6.6's all-certified-start-cut and equivalent-partial-state memoization
-mechanisms missing from the best-cut/bounded-DFS implementation. Fix both in
-separate tested/committed slices; do not weaken those requirements to match code.
-R03 is now closed by the nineteen-file product f617fcf70 and its fresh02 gates
-below. C-search still needs implementation and runtime qualification.
+mechanisms missing from the best-cut/bounded-DFS implementation. Both are now
+fixed in separate tested/committed slices, without weakening those requirements.
+R03 is closed by nineteen-file product f617fcf70 and its fresh02 gates;
+C-search is closed by six-file product b6814fb3a and its fresh01 gates below.
+Only the final evidence-index/documentation checkpoint remains.
 
 ## 1. Verified Baseline and Scope
 
@@ -66,7 +67,7 @@ below. C-search still needs implementation and runtime qualification.
 | Difference between initial checkpoints | Only this plan file; no product-source change |
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
-| Latest product checkpoint | `f617fcf70` (R03 final stored-state closure and cancellation correction; earlier Z-release60376bd87 and product091de1a6a retained as historical scopes) |
+| Latest product checkpoint | `b6814fb3a` (complete bounded cut/memoized search); R03 f617fcf70 and earlier Z-release60376bd87/product091de1a6a retain their historical scopes |
 | Latest auxiliary checkpoint | `90714f758` (H7 bounded suite-pair scheduling; temp-path/journal fix c1b2fa095, driver 5a3e47039) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
@@ -75,12 +76,12 @@ below. C-search still needs implementation and runtime qualification.
 | A-reference | Bounded geometry ordering/scans/capacity and atomic ordinary/exceptional solver-work adoption |
 | A-cache | Atomic Candidate/Proof subdivision, inherited combined depth, prepared capacity, bounded dispatch/coverage |
 | B terminals | Immutable exact occurrence/edge-side classification, separate source incidence, bounded storage/scans |
-| C topology | Prior bounded selected-cut/path checker, owned contact query and exact root-to-port matching; all-certified-cut/memoized completion remains pending |
+| C topology | All certified closed cuts have their own lap or explicit negative evidence; exact used-edge suffix memoization preserves distinct ordered geometry proofs and canonical directed signatures |
 | Native entity | Checked adoption/creation, transactional mutators and actual stage results; consistency stamp, clone, exact proof transport, cached visible grips/safe snaps and bounded owned extensions |
 | Product integration | Tool/type/name, independently checked persistence, native sheet/dialog/drag, interactive enablement, both value-only source actions, source UI, trim kernel/actions/files and primary Save As correction committed; explicit INSERT plain-cache fallback |
 | Build registration | Geometry/contact/routing/native sources in CMake/qmake6; native and adjacent tests registered and executed |
 | Validation harness | X-H1 through X-H7 complete: source90714f758,407-case regression, two full qualification runs and independent retained-evidence audit |
-| Latest validation | R03-final02:202 focused Release/ASan cases, full Release4771,1187 affected ASan, unchanged format lanes, both failure modules including actual wrapper cancellation at allocation238, CMake apps/qmake6,48 Trim/26 storage cases per configuration;19 committed blobs match tested bytes. Earlier exact76/GUI evidence remains byte-scoped; current-C closure is pending |
+| Latest validation | C-search01:285 focused cases per configuration,4786 full Release,1202 affected ASan, unchanged format/failure lanes, fresh48 Trim/26 storage cases per configuration, exact76 required identities, six source/13 executable identities stable and six committed blobs matching tested bytes. R03-final02 and earlier GUI/H7 evidence retain their distinct scopes |
 
 Recheck these facts against the selected implementation checkout before further
 product changes. Qt6/Catch2/CMake/qmake6 and independent ACadSharp/ODA fixture/inspection
@@ -264,8 +265,8 @@ test commit followed by the section 4 plan checkpoint.
 | Z-save-filters | T-files | Expose existing DWG writer versions in primary Save As; canonical local preference keys | complete,091de1a6a |
 | Z-release | Z-save-filters and auxiliary track closure | Final evidence/requirement index and scoped GUI documentation | complete,60376bd87; available-host scope and limits recorded |
 | R03-final-closure | Recorded product091de1a6a | Callback-safe root/display validation and final all-target closure | complete:f617fcf70; corrected final02 qualification |
-| C-search-completion | R03-final-closure | All certified closed start cuts and bounded equivalent-state memoization | pending; section6.6(7-8) not literally implemented |
-| Z-completion-audit | Both follow-up source slices | Fresh affected final gates, retained adjacent command/exit receipts and corrected final evidence | pending; do not credit old receipts to new source |
+| C-search-completion | R03-final-closure | All certified closed start cuts and bounded equivalent-state memoization | complete:b6814fb3a; fresh01 qualification and six-blob audit |
+| Z-completion-audit | Both follow-up source slices | Fresh affected final gates, retained adjacent command/exit receipts and corrected final evidence | native gates/receipts complete; final three-file documentation product and plan checkpoint remain |
 
 The auxiliary harness track is X-H1 -> X-H2 -> X-H3 -> X-H4 -> X-H5 ->
 X-H6 -> X-H7 (section 13). Retain these obligations as a separate finite
@@ -306,9 +307,8 @@ Confirm signatures before any further changes beyond the completed slices.
 
 ### Current Next Cards
 
-Execute C-search-completion, then Z-completion-audit, with tests, independent
-review, product commit and immediate plan checkpoint. R03-final-closure is committed
-and qualified. The descriptions below
+Execute only Z-completion-audit's final documentation product, then its immediate
+plan-only checkpoint. Both source follow-ups are committed and qualified. The descriptions below
 preserve previously completed slice contracts/history. This completion audit
 supersedes the earlier blanket completion claim without discarding valid evidence.
 
@@ -326,31 +326,26 @@ through real supported paths. Require the callback actually to execute. Cover
 unchanged endpoint returns, active extended payload changes and late cancellation
 where reachable. Existing exception and ordinary positive paths must remain.
 
-**C-search-completion readiness:** `lc_offsetpathsearch.{h,cpp}` and the
-CacheTopologyBuilder route/cut proof in `lc_ellipseoffsetgeometry.cpp`, with
-dedicated search/public-checker regressions. Enumerate all certified eligible
-closed cuts instead of selecting only the lowest-score proposal. Certify each
-one-lap frontier and retain canonical occurrence/event/edge signatures modulo
-rotation. Memoize genuinely equivalent partial states without collapsing distinct
-successful path prefixes; saturate semantic path counts at two only after actual
-compatible proof. Charge validation/comparison/storage/depth and attempted work;
-no cap/tolerance increase or partial success on exhaustion. Exercise alternate
-cut success, equivalent states, distinct-path ambiguity and exact/one-less bounds.
-The statically reviewed candidate is frozen draft03 plus the separate raw-circle
-radial-axis correction: six existing source/test paths and fourteen authored
-new cases. These are not runtime passes. Apply only after this R03 checkpoint;
-run the actual new positives and complete affected catalogs before the full gates.
-Every admitted cut needs its own lap or a valid cut-specific exclusion; a failed
-node proof cannot be ignored or borrowed from another cut. Retain exact radial
-orthogonality rather than weakening its predicate after rounded normalization.
-Retain all76 existing identities and the mathematically corrected C27 routing-only
-scope (53 public checker obligations plus one routing-kernel obligation).
+**Completed C-search contract:** b6814fb3a changes the geometry/path-search
+headers, implementations and two existing regression TUs. Every admitted cut has
+its own complete lap or valid cut-specific exclusion; another successful node or
+cyclic signature cannot resolve an unknown cut. Full directed signatures remain
+canonical modulo rotation. Exact used-edge suffix memoization prunes only dead
+structural suffixes; distinct ordered/transition prefixes still receive geometry
+proofs. Semantic multiplicity saturates at two only after compatible proofs.
+Finite split proposals and tighter analytic projection bounds preserve all
+geometry/clearance/order predicates, work ledgers and default limits. Fifteen
+new cases and all270 old cases in the two TUs pass in both configurations.
+The exact76 A/B/C identities remain unskipped, including C27's routing-only scope.
 
-**Final evidence readiness:** old four adjacent Trim/storage XML/console results
-are positive, but their separate command/environment/exit file receipts are
-missing. A fresh pre-fix Release Trim baseline passed; retain it only as baseline.
-After the source fixes, capture all four actual adjacent invocations and native
-tool completion results together. Do not fabricate historical process metadata.
+**Final evidence readiness:** the R03 adjacent command/environment/exit gap is
+closed by `R03-final-adjacent-native-tool-records-02.json` for product f617fcf70.
+C-search has its own four actual command/tool completion records, twelve-lane
+run, unchanged before/after identities, Counter audit and actual-SHA blob audit.
+The final documentation must link these actual scopes, update R01-R15 navigation,
+correct the two C-identity descriptions and README's93-executable/zero-pending
+inventory, and retain older GUI/H7/analyzer/CAD limits. No new execution graph is
+required. Commit the three documentation files, then update this plan immediately.
 Use the existing finite test graph and report comparisons for each source slice;
 do not restart unrelated completed work or add a new validation framework.
 D-core `92758859c` uses the actual
@@ -873,7 +868,8 @@ assertion contract. SECTIONs/aliases/skips cannot stand in for identities. Prese
 the existing strict regression names as an exact set; the historical count 61 is
 not a current test receipt. All fourteen A identities are implemented and
 validated. All eight B identities are also registered and validated. C identities
-are planned, not already registered.
+are registered; the recorded C validation covers 53 public-checker cases and
+C27's separate routing-kernel case, not 54 public-checker cases.
 
 ### 7.1 A: Four Leaves, Fourteen Identities
 
@@ -1737,7 +1733,8 @@ Geometry gates:
 - A aggregate: all14 exact new identities and the freshly captured existing
   strict regression identity set, in Release/ASan.
 - B: all8 terminal identities plus reference/local/bounds regressions.
-- C: all54 exact chain identities plus A/B and existing geometry regressions.
+- C: all53 public-checker chain identities plus the separate C27 routing-kernel
+  identity, A/B and existing geometry regressions.
 - Strict/reference regression selector union includes reference-critical,
   reference-critical-depth, reference-critical-refine, reference-events and
   reference-components under [lc-offsetcurve][geometry]; confirm registration
@@ -2029,13 +2026,13 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 
 | Item | State | Next action |
 |---|---|---|
-| Recursive plan/activation routing | Removed; finite follow-up audit found two real source gaps | Implement the two named cards, not a routing restart |
-| Atomic budget and bounded geometry APIs | A/B and the prior bounded C implementation committed/validated; section6.6(7-8) completion remains open | Preserve bounds/stage-result contracts and implement the named C-search card |
-| Native feature/UI/source actions/trim | R03 final getter/peer, queue lifetime, Restore witness/attribute and final cancellation closure committed in f617fcf70 | Preserve the tested contracts while implementing C-search |
+| Recursive plan/activation routing | Removed; the finite audit's two source gaps are fixed and qualified | Finish the named documentation checkpoint, not a routing restart |
+| Atomic budget and bounded geometry APIs | A/B/C complete; section6.6(7-8) closed by b6814fb3a with unchanged caps/tolerance | Preserve the qualified contracts and actual evidence |
+| Native feature/UI/source actions/trim | R03 final getter/peer, queue lifetime, Restore witness/attribute and final cancellation closure committed in f617fcf70 | Preserve its scope; current native regressions pass |
 | Independent DWG/version fixtures | G-matrix79ae1930b qualifies genuine marked R13/R14/R2007 and all modern rows | Preserve fixture/tool/source hashes and scope; no local tool install required by CI |
 | Auxiliary empty-DWG conversion | Exact48 plot observations;24 ODA-converted files have duplicate-Continuous strict-read failures, originals unique; source-control order anomaly recorded, causation unresolved | Retain diagnostic scope in Z; not a mandatory native-row failure or general-DWG conformance claim |
 | Harness production readiness | X-H1-X-H7 committed; actual two-run qualification03 independently audited | Retain observed-byte/runtime scope and failed attempts; no future timing guarantee |
-| Independent review and test evidence | R03-final02 qualified19 source/13 executable identities; fresh adjacent command/environment/exit records retained | C-search needs its own fresh gates and final evidence update; no transfer of R03 runtime claims to changed C bytes |
+| Independent review and test evidence | R03-final02 and C-search01 separately qualified; current six source/13 executable identities stable, fresh adjacent commands/exits, exact76 identities and six committed blobs checked | Link the completed scopes in the final evidence index; no transfer of older GUI/H7 results to new C bytes |
 | Physical GUI settings route | Approved normal-profile sessions complete; effective Editable ON and temporary keyboard navigation OFF restored/verified | Preserve precise observations and unobserved variants; no native-store isolation or exact whole-profile rollback claim |
 | Dirty unrelated main checkout | Not the selected source baseline | Preserve it; reconcile only if changing implementation worktree |
 
@@ -2078,9 +2075,101 @@ The plan checkpoint column never depends on its own future SHA.
 | T-files | 9051581740f5b71f49551311ae7ad7186730662a | a1ea520d6 | 12 focused Release/ASan cases, full Release4758,1174 affected ASan, unchanged format lanes, CMake apps/qmake6,48 adjacent cases in both configurations, both failure modules and four-blob correspondence; actual Trim/Trim Two, conic/native-pair and DXF reopens |
 | Z-save-filters | 091de1a6a3e2ed684080608b1102ffe06b483ab3 | 861b58957 | Three actual Save As cases in Release/ASan; full Release4761,1177 affected ASan, unchanged formats, both failure modules,48 Trim/26 storage adjacent cases per configuration, CMake apps/qmake6, exact76 mandatory identities, final GUI and three-blob correspondence |
 | Z-release | 60376bd87026efa62a1a24945a753419e5c6bf51 | Immediate plan-only checkpoint | Documentation-only closure: R01-R15 current source/test/evidence index, exact GUI/build/file identities, scoped final results and limits; whitespace/103 local links checked, independent39-anchor/11-hash review; no code or duplicate execution graph |
-| R03-final-closure | f617fcf70b46a0236a8725140aeb10d475c7d9ec | Immediate plan-only checkpoint | Corrected final02:202 focused cases per configuration,4771 full Release,1187 affected ASan, unchanged format/failure lanes, fresh48 Trim/26 storage cases per configuration, actual wrapper red65/green at allocation238 and19-blob correspondence |
+| R03-final-closure | f617fcf70b46a0236a8725140aeb10d475c7d9ec | 27ee1ecc | Corrected final02:202 focused cases per configuration,4771 full Release,1187 affected ASan, unchanged format/failure lanes, fresh48 Trim/26 storage cases per configuration, actual wrapper red65/green at allocation238 and19-blob correspondence |
+| C-search-completion | b6814fb3a63dd66bb3aeae9e5b5e66668f8b8591 | Immediate plan-only checkpoint | Fifteen additions;285 focused cases per configuration,4786 full Release,1202 affected ASan, all12 lanes0, fresh adjacent records, exact76 required identities, stable six-source/13-executable freeze and six-blob correspondence |
 | X-H7 timeout source fix | c1b2fa095 | Immediate plan-only checkpoint | Author55 + independent15 controls and parent399 runner regression passed; actual runtime qualification remains open |
 | X-H7 bounded scheduling | 90714f758 | Immediate plan-only checkpoint | Author85 + independent12 controls, parent407 runner regression and real224.790-second preflight probe passed; full two-run qualification remains open |
+
+### C-search-completion Validation (2026-10-24)
+
+Product `b6814fb3a63dd66bb3aeae9e5b5e66668f8b8591` changes exactly six existing
+source/test paths:1322 insertions and102 deletions. No version codec, application
+UI or harness JavaScript source changed. This is the section6.6 follow-up, not a
+transfer of R03's earlier qualification to new bytes.
+
+The public closed-path checker inventories every certified eligible cut in its
+bounded axis families and all exact eligible joins. Each issued cut retains its
+own complete one-lap packet or explicit distance, collinear-backward or exact
+circle-support exclusion. Unknown cuts, failed own laps, cancellation and budget
+exhaustion cannot borrow another packet. Negative distance evidence uses the
+outward threshold's upper endpoint; positive admission uses its lower endpoint.
+Raw radial axes retain the exact support predicate rather than weakening it for
+rounded normalization or enclosure midpoints. Endpoint controls are value copies.
+
+Numerical proposals are not proof credentials. A first wrapping section can try
+one nonempty candidate midpoint when either closed endpoint would leave a side
+empty. Degree1 incident joins probe finite reference neighborhoods; overly
+end-biased reference splits use a balanced midpoint. Every resulting cell still
+needs the complete geometry, clearance, derivative and strict-progress proof.
+Source projected derivatives combine coefficients before trig; endpoint range
+tightening requires a whole-domain monotonicity proof for all enclosed fixed
+coefficients. Otherwise the conservative bound remains. No tolerance/depth/work
+ceiling was raised, reset or refunded.
+
+Routing memo keys contain seed, current edge and every used-edge word. Structural
+0/1/2 suffix counts prune only zero suffixes; distinct ordered and exact-transition
+prefixes still reach geometry. Accepted directed signatures remain canonical
+modulo rotation; compatible semantic multiplicity alone saturates at two.
+Immutable cuts/packets/diagnostics own their state after caller graphs, frames and
+budgets unwind. All comparisons, generated storage and attempted work retain the
+existing shared-ledger/depth rules and sticky failure behavior.
+
+Independent final mathematics/protocol and C++ lifetime/UB/resource reviews found
+no remaining P1/P2 in the six frozen hashes. Discovery failures and diagnostic
+traces remain in EVID, including the corrected radial temporary-member lifetime
+mistake; none are promoted to a PASS. All temporary tracing was removed before
+the final builds and qualification.
+
+| Actual final01 execution | Cases / assertions | Result and scope |
+|---|---|---|
+| Complete changed-TU focus, Release/ASan | 285 /1568398 each | No skips; all270 predecessors plus15 additions;261 geometry+24 routing bases |
+| Full Release | 4786 /10236612 | 4759 passed,27 unchanged skips;165.539231 seconds |
+| Affected ASan | 1202 /4322782 | 1201 passed,one unchanged unbuilt legacy-export skip;844.059022 seconds under unchanged1800-second limit |
+| DXF fast Release/ASan | 765 /82553 each | Three unchanged skips |
+| DWG fast Release/ASan | 1021 /362942 each | Four unchanged skips |
+| Fresh adjacent Trim Release/ASan | 48 /63167 each | No skips; exact native identities/states match R03-final02 |
+| Fresh storage Release/ASan | 26 /773 each | One unchanged JWW-writer skip; exact native identities/states match R03-final02 |
+| Isolated failure modules | Four actual processes, all0 | Batch2/0/1/0; trim1616 allocation faults,20 late cancels,four conic faults/four cancels; wrapper allocation238 cancellation and three positive controls retained; not Catch assertions |
+
+All twelve lanes exited0 with no timeout, sanitizer diagnostic, execution gap or
+identity error. CMake Release/ASan applications and all five named test/failure
+targets built; full qmake6 application build passed. Host LSan remains disabled
+(`detect_leaks=0`); full main-suite ASan, other-platform CI and warning-clean builds
+are not claimed. Existing compiler/linker diagnostics remain.
+
+The v4 Counter audit protects every predecessor identity, SECTION multiplicity
+and skip state, accounts for all15 new declarations, and uses no retirement,
+rename or format-addition allowance. Exact A14/B8/C54 membership occurs once and
+unskipped in both actual main XMLs;43 mandatory SECTION detail rows are not extra
+bases. C54 means53 public-checker obligations plus C27 routing. No duplicate
+geometry execution graph was added.
+
+Six source and13 executable identities are identical before/after all12 lanes
+and four adjacent executions (`cmp` exit0). The actual full product SHA, not
+literal HEAD, was audited: all six committed blobs equal qualified working bytes.
+Four adjacent receipts retain actual commands, environment overrides, raw native
+tool starts/polls/completions and explicitly parent-observed UTC times.
+
+Evidence root: `/private/tmp/lc2961-impl-evidence.9GtLO2`.
+
+| Receipt | SHA256 |
+|---|---|
+| C-search-before-01.json / identical after-01 | a016ac8745510c2b95214c604d971a381bd078d3b9e9d030dd2d46cdb5e63b52 |
+| C-search-test-invocations-01/run-manifest.json | 3d223234886bd428367c5ab212787f31c0e25874b938d4102861504594f3e836 |
+| C-search-report-audit-01.json | 07dd982a7834e533bc186544457ef156c6d5ae513a930aa9feed2829f022cf7c |
+| C-search-committed-blob-audit-01.json | ffaccdb8547397ec16c5b24fbf2038213708cb1fee06fa1bff54c2ec8403c947 |
+| C-search-adjacent-native-tool-records-01.json | 502de8cd6b1287eded5607ae570eb2d3d3dc3d0d196faec4c9d4ceb2c4eac84a |
+| C-search-adjacent-comparison-01.json | f74cfa701fe7a7c15e2d988bce6c4b7011ee12ed719aa9a70957a9dfda30bf27 |
+| C-search-mandatory-geometry-01.json | 61e160f3c0d9f117cb7b2407f46317496189cc370dcbc3c48ec528944a491222 |
+| C-search-independent-final-static-review-01.md | 27510d5c30de65a2bff2fdcc326081c8a81e5d99c7dba8790f77efff48c5704b |
+| C-search-cpp-safety-review-02.md | c01591f540b59e243872642290c390caccc863bfc14a5be43daa3cbc2c527b24 |
+
+The current native gates qualify these C++ changes. Earlier GUI/application,
+external CAD and H7 archived candidate/runtime observations remain byte-scoped;
+README is outside both captured H7 manifests and all39 JavaScript source pins.
+No fresh physical/CAD/harness execution or analyzer qualification is inferred.
+Next: commit the prepared three-file final evidence documentation, then its
+immediate plan-only checkpoint. No implementation card remains open.
 
 ### R03-final-closure Validation (2026-10-24)
 
@@ -2161,8 +2250,8 @@ The committed documentation bytes match the reviewed working files. Whitespace
 checks and103 local file/heading links passed; independent review checked39
 anchors and11 evidence hashes with no actionable P1/P2 or broken link.
 
-The final product-code checkpoint remains `091de1a6a`; no C++/build/test source
-changed after its final gates. Documentation closure reuses that actual completed
+At documentation product60376bd87, the product-code checkpoint was `091de1a6a`;
+no C++/build/test source changed within that closure. It reused that actual completed
 twelve-lane graph, adjacent Trim/storage runs, source/binary freeze, report audit
 and actual-SHA blob comparison below. Exact76 geometry identities use those same
 completed main XMLs, not a new graph or synthetic report projection. All five
@@ -2180,8 +2269,9 @@ ASan and unavailable GCC/MSVC/Linux/Windows CI are not claimed. Static attempt/
 Boost-blocked/exit2 scopes remain as recorded. These are documented qualification
 limits, not unimplemented main-track features silently presented as successful.
 
-Every main-track implementation and auxiliary deliverable is now committed with
-its immediate checkpoint. No active implementation/documentation card remains.
+At60376bd87, the recorded main-track and auxiliary cards had their immediate
+checkpoints and were considered closed. The later finite audit and separately
+qualified R03/C-search follow-ups above supersede that blanket status claim.
 R01-R15 evidence is navigable in the validation index. The original dirty user
 checkout was never used as this source baseline or reset; local feature-branch
 mirroring does not switch its checkout/index. No push, merge or remote publication
@@ -2466,8 +2556,10 @@ remains disabled on this host; no full-app, other-platform or leak-free claim.
 `Z-retained-G-matrix-01.json` rechecked all176 drawing/tool/evidence byte pins;
 no new external CAD execution or whole-document strict PASS is claimed. H7 remains
 qualified for90714f758, its observed runtime and archived326493-byte0ef69286
-candidate. Current geometry is326899 bytes,9ec3dfd1e8569d3538b9e16cf3debe6afe803f79a9235edc553f1f736bef7ed1;
-only the406-byte frame-copy API was added. All39 harness source pins remain
+candidate. At that T-kernel checkpoint, geometry was326899 bytes,
+9ec3dfd1e8569d3538b9e16cf3debe6afe803f79a9235edc553f1f736bef7ed1;
+its delta was the406-byte frame-copy API. That is not the later C-search source.
+All39 harness source pins remained
 unchanged. Historical byte-replay qualification is not current-C++ validation;
 the current geometry receives the fresh T/Z tests instead of a fabricated H7 rerun.
 
