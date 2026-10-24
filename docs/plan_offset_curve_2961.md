@@ -24,10 +24,10 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-24. Status: A through Z-save-filters committed; X-H1 through X-H7 complete for the observed source; only final documentation closure remains.
+Updated: 2026-10-24. Status: IMPLEMENTED. All main-track slices through Z-release are committed; X-H1 through X-H7 are complete for the observed source/runtime scope. No implementation cards remain.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
-This checkpoint records tested A through Z-save-filters and auxiliary X-H1 through
+This checkpoint records tested A through Z-release and auxiliary X-H1 through
 X-H7 commits/qualification. Native adoption, creation, staged editing, cached
 grips/snaps, tool/type integration and independently checked DXF/DWG persistence
 are implemented. Interactive Offset now loads a persisted default-on native
@@ -41,6 +41,12 @@ Native property sheet
 and Edit Properties dialog share bounded source snapshots; modal clone ownership
 survives document, editor, action and view teardown until widgets unwind.
 
+The [R01-R15 validation index](offset_curve_2961_validation.md) links current
+production/tests, completed final runs, actual receipt hashes and residual
+limits. The [interactive record](offset_curve_interactive_smoke.md) distinguishes
+observed workflows from unobserved physical variants. Completion here is not an
+all-platform, whole-CAD, warning-clean, leak-free or full-ASan claim.
+
 ## 1. Verified Baseline and Scope
 
 | Item | Verified state |
@@ -51,7 +57,7 @@ survives document, editor, action and view teardown until widgets unwind.
 | Difference between initial checkpoints | Only this plan file; no product-source change |
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
-| Latest product checkpoint | `091de1a6a` (Z-save-filters; T-files905158174, T-actions49bb7755f, T-kernel04c712069) |
+| Latest product checkpoint | `60376bd87` (Z-release documentation; final product code091de1a6a, T-files905158174, T-actions49bb7755f, T-kernel04c712069) |
 | Latest auxiliary checkpoint | `90714f758` (H7 bounded suite-pair scheduling; temp-path/journal fix c1b2fa095, driver 5a3e47039) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
@@ -242,12 +248,12 @@ test commit followed by the section 4 plan checkpoint.
 | H-enable | H-drag | Persisted default-on option and kept-plain command messages | complete:3d7195631 |
 | I-update | H-enable | Update from Source action and tests | complete:379729bb3 |
 | I-restore | I-update | Restore Original action and equality/dedup tests | complete:0d3fed653 |
-| I-ui | I-restore | Source-action registration/links and persistence/GUI coverage | committed:4a231d243; physical GUI remains Z |
+| I-ui | I-restore | Source-action registration/links and persistence/GUI coverage | committed:4a231d243; observed physical scope recorded in Z |
 | T-kernel | I-ui | Pure bounded stored-cache trim preparation/clipping | committed:04c712069 |
 | T-actions | T-kernel | Trim/Trim Two atomic owner-level replacement (`49bb7755f`) | committed |
 | T-files | T-actions | Trim persistence/demotion across format lanes | complete,905158174 |
 | Z-save-filters | T-files | Expose existing DWG writer versions in primary Save As; canonical local preference keys | complete,091de1a6a |
-| Z-release | Z-save-filters and auxiliary track closure | Final evidence/requirement index and scoped GUI documentation | pending documentation only; execution gates complete |
+| Z-release | Z-save-filters and auxiliary track closure | Final evidence/requirement index and scoped GUI documentation | complete,60376bd87; available-host scope and limits recorded |
 
 The auxiliary harness track is X-H1 -> X-H2 -> X-H3 -> X-H4 -> X-H5 ->
 X-H6 -> X-H7 (section 13). Retain these obligations as a separate finite
@@ -259,9 +265,10 @@ grants product correctness.
 
 ### Implementation File Map
 
-All paths below are relative to the selected feature worktree. New paths are
-proposed, not claims that a class/test already exists. Confirm signatures before
-editing; changes beyond the named concern require a scope note in the slice card.
+All paths below are relative to the selected feature worktree. This map retains
+the original slice ownership, including historical proposed names; current
+canonical production/test paths are linked in the completed validation index.
+Confirm signatures before any further changes beyond the completed slices.
 
 | Owner | Existing sites / planned additions |
 |---|---|
@@ -282,11 +289,15 @@ editing; changes beyond the named concern require a scope note in the slice card
 | T-kernel | librecad/src/lib/modification/lc_offsetcachetrim.{h,cpp}; tests/lc_offsetcachetrim{,_failure}_tests.cpp; whole-frame chart copy in lc_ellipseoffsetgeometry.{h,cpp}; CMake/qmake registration |
 | T-actions/T-files | actions/drawing/modify/lc_action_modify_trim.{h,cpp}, tests/lc_offsetcachetrim_action_tests.cpp; modification/batch ownership; lib/filters/tests/lc_offsetcachetrim_file_tests.cpp |
 | Z-save-filters | ui/dialogs/file/export/layers/lc_filedialogservice.cpp; ui/main/persistence/tests/lc_dwg_save_filter_tests.cpp; one CMake test registration |
+| Z-release | docs/offset_curve_2961_validation.md; docs/offset_curve_interactive_smoke.md; final plan checkpoint and retained evidence |
 | All new sources/tests/UI | CMakeLists.txt; librecad/src/src.pro (HEADERS/SOURCES/FORMS as appropriate); exact Catch2 target registration |
 
 ### Current Next Cards
 
-Only Z-release documentation closure remains; no product implementation is pending.
+There are no pending implementation or documentation cards. The descriptions
+below preserve slice contracts/history, not instructions to restart completed
+work. Earlier section14 receipts retain their then-current next steps; this
+current status, completed slice table and final Z receipt govern completion.
 D-core `92758859c` uses the actual
 C checker, not a layout-only adoption gate. Similarity transport requires exact
 dyadic affine images of every stored coordinate and unchanged normalized semantic
@@ -416,7 +427,7 @@ population-time signal blockers restore prior states. Compact delayed reloads
 are now QObject-context-bound; actual toggle/teardown/queue-drain tests cover
 the former raw-action lifetime risk.
 
-Next implementation order:
+Completed implementation order:
 
 1. I-update379729bb3 and I-restore0d3fed653 are tested/committed. Keep bounded
    snapshots, document/view/context guards and prefix-preserving handoff. Restore
@@ -457,10 +468,11 @@ Next implementation order:
    plain and actual Trim/Undo-before-save native DWG checks passed in CMake.
 7. Exact76 mandatory geometry identities were checked in those completed final
    full Release/affected ASan reports, without another C++ run. Final format,
-   failure, adjacent, source/binary and GUI gates are complete. Commit the scoped
-   smoke observations and R01-R15 source/test/evidence index, then immediately
-   checkpoint final Z status. Preserve unavailable-platform/static, retained
-   interoperability, settings and unobserved-physical-variant limitations.
+   failure, adjacent, source/binary and GUI gates are complete. Z-release60376bd87
+   commits the scoped smoke observations and R01-R15 source/test/evidence index.
+   This immediate plan checkpoint closes the roadmap. Unavailable-platform/static,
+   retained interoperability, settings and unobserved-physical-variant limits
+   remain explicit, not missing implementation cards or silently waived PASSes.
 
 The auxiliary scheduler correction `90714f758` passed the407-case regression.
 Both isolated full runs of `H7-qualification-03` returned PASS through the actual
@@ -1962,13 +1974,13 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 
 | Item | State | Next action |
 |---|---|---|
-| Recursive plan/activation routing | Removed as a planning deadlock | Finish Z documentation/checkpoint; do not add another execution graph |
+| Recursive plan/activation routing | Removed; every implementation/documentation slice complete | No restart or new execution graph required |
 | Atomic budget and bounded geometry APIs | A slices, B and C committed/validated; used by native adoption/editing | Preserve bounds and stage-result contracts in UI/trim |
-| Native feature/UI/source actions/trim | A through Z-save-filters committed; actual mixed/conic/native-pair and final both-format GUI paths observed | Record final scoped observations/index; preserve bounded refusal policies |
+| Native feature/UI/source actions/trim | A through Z-release committed; actual mixed/conic/native-pair and final both-format GUI paths observed | Preserve bounded refusal policies and recorded scope in future changes |
 | Independent DWG/version fixtures | G-matrix79ae1930b qualifies genuine marked R13/R14/R2007 and all modern rows | Preserve fixture/tool/source hashes and scope; no local tool install required by CI |
 | Auxiliary empty-DWG conversion | Exact48 plot observations;24 ODA-converted files have duplicate-Continuous strict-read failures, originals unique; source-control order anomaly recorded, causation unresolved | Retain diagnostic scope in Z; not a mandatory native-row failure or general-DWG conformance claim |
 | Harness production readiness | X-H1-X-H7 committed; actual two-run qualification03 independently audited | Retain observed-byte/runtime scope and failed attempts; no future timing guarantee |
-| Independent review and test evidence | Final twelve-lane Z-save-filters01, exact76 identities, adjacent lanes, byte freeze and three-blob proof passed; G-matrix external scopes retained | Commit final documentation with actual scope, not new gates |
+| Independent review and test evidence | Final twelve-lane Z-save-filters01, exact76 identities, adjacent lanes, byte freeze and three-blob proof passed; reviewed documentation committed; G-matrix external scopes retained | No further qualification gate pending for this roadmap |
 | Physical GUI settings route | Approved normal-profile sessions complete; effective Editable ON and temporary keyboard navigation OFF restored/verified | Preserve precise observations and unobserved variants; no native-store isolation or exact whole-profile rollback claim |
 | Dirty unrelated main checkout | Not the selected source baseline | Preserve it; reconcile only if changing implementation worktree |
 
@@ -2008,10 +2020,49 @@ The plan checkpoint column never depends on its own future SHA.
 | I-ui | 4a231d243 | Immediate plan-only checkpoint | 12 focused Release/ASan cases, full Release4657,1073 affected ASan, unchanged format lanes, qmake6,93 adjacent ASan cases, allocation gates and eleven-blob correspondence; deduplicated guarded source links and real file persistence |
 | T-kernel | 04c712069 | Immediate plan-only checkpoint | 55 focused Release/ASan cases, full Release4712,1128 affected ASan, unchanged format lanes, qmake6,48 adjacent ASan cases, both failure modules and eight-blob correspondence; exact rational seam identity and value-only whole-chart copy |
 | T-actions | 49bb7755f72a9b1f40e2a97206b7038845f48ba4 | Immediate plan-only checkpoint | 34 focused Release/ASan cases, full Release4746,1162 affected ASan, unchanged format lanes, both CMake apps/qmake6,48 adjacent ASan cases, both failure modules and twelve-blob correspondence; complete native input and own-cycle completion guards |
-| T-files | 9051581740f5b71f49551311ae7ad7186730662a | Immediate plan-only checkpoint | 12 focused Release/ASan cases, full Release4758,1174 affected ASan, unchanged format lanes, CMake apps/qmake6,48 adjacent cases in both configurations, both failure modules and four-blob correspondence; actual Trim/Trim Two, conic/native-pair and DXF reopens |
-| Z-save-filters | 091de1a6a3e2ed684080608b1102ffe06b483ab3 | Immediate plan-only checkpoint | Three actual Save As cases in Release/ASan; full Release4761,1177 affected ASan, unchanged formats, both failure modules,48 Trim/26 storage adjacent cases per configuration, CMake apps/qmake6, exact76 mandatory identities, final GUI and three-blob correspondence |
+| T-files | 9051581740f5b71f49551311ae7ad7186730662a | a1ea520d6 | 12 focused Release/ASan cases, full Release4758,1174 affected ASan, unchanged format lanes, CMake apps/qmake6,48 adjacent cases in both configurations, both failure modules and four-blob correspondence; actual Trim/Trim Two, conic/native-pair and DXF reopens |
+| Z-save-filters | 091de1a6a3e2ed684080608b1102ffe06b483ab3 | 861b58957 | Three actual Save As cases in Release/ASan; full Release4761,1177 affected ASan, unchanged formats, both failure modules,48 Trim/26 storage adjacent cases per configuration, CMake apps/qmake6, exact76 mandatory identities, final GUI and three-blob correspondence |
+| Z-release | 60376bd87026efa62a1a24945a753419e5c6bf51 | Immediate plan-only checkpoint | Documentation-only closure: R01-R15 current source/test/evidence index, exact GUI/build/file identities, scoped final results and limits; whitespace/103 local links checked, independent39-anchor/11-hash review; no code or duplicate execution graph |
 | X-H7 timeout source fix | c1b2fa095 | Immediate plan-only checkpoint | Author55 + independent15 controls and parent399 runner regression passed; actual runtime qualification remains open |
 | X-H7 bounded scheduling | 90714f758 | Immediate plan-only checkpoint | Author85 + independent12 controls, parent407 runner regression and real224.790-second preflight probe passed; full two-run qualification remains open |
+
+### Z-release Validation (2026-10-24)
+
+Documentation product `60376bd87026efa62a1a24945a753419e5c6bf51` contains two
+owned files,212 insertions/four deletions. The102-line validation index links
+all R01-R15 production/test paths and stable section14 anchors; the updated smoke
+record replaces its obsolete not-executed status with actual, build-scoped
+observations. It deliberately does not claim the whole manual catalogue ran.
+The committed documentation bytes match the reviewed working files. Whitespace
+checks and103 local file/heading links passed; independent review checked39
+anchors and11 evidence hashes with no actionable P1/P2 or broken link.
+
+The final product-code checkpoint remains `091de1a6a`; no C++/build/test source
+changed after its final gates. Documentation closure reuses that actual completed
+twelve-lane graph, adjacent Trim/storage runs, source/binary freeze, report audit
+and actual-SHA blob comparison below. Exact76 geometry identities use those same
+completed main XMLs, not a new graph or synthetic report projection. All five
+actual final GUI output hashes were independently read back as AC1032. Raw logs,
+native XML, receipts and private drawing artifacts remain at the recorded EVID
+root; committed summaries contain their actual receipt/output hashes.
+
+Retained G evidence rehashes176 already observed outputs; it does not rerun CAD
+or hide the24 auxiliary strict-reader diagnostics. H7 retains both actual full
+qualification runs and their exact observed source/runtime scope, not a future
+timing promise. The rounded exact-top trim depth refusal, genuine legacy read-only
+foreign-migration refusal, normal-profile settings disposition and unobserved
+physical variants remain explicit. Host leak detection is unsupported; full main
+ASan and unavailable GCC/MSVC/Linux/Windows CI are not claimed. Static attempt/
+Boost-blocked/exit2 scopes remain as recorded. These are documented qualification
+limits, not unimplemented main-track features silently presented as successful.
+
+Every main-track implementation and auxiliary deliverable is now committed with
+its immediate checkpoint. No active implementation/documentation card remains.
+R01-R15 evidence is navigable in the validation index. The original dirty user
+checkout was never used as this source baseline or reset; local feature-branch
+mirroring does not switch its checkout/index. No push, merge or remote publication
+was requested or performed. This immediate final plan checkpoint closes Z within
+the available-host and explicitly retained external-evidence scopes above.
 
 ### Z-save-filters Validation (2026-10-24)
 
