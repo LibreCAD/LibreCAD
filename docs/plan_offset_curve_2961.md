@@ -24,17 +24,17 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-24. Status: A through T-kernel committed; X-H1 through X-H7 complete for the observed source; trim actions/persistence and final application qualification incomplete.
+Updated: 2026-10-24. Status: A through T-actions committed; X-H1 through X-H7 complete for the observed source; trim persistence and final application qualification incomplete.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
-This checkpoint records tested A through T-kernel and auxiliary X-H1 through
+This checkpoint records tested A through T-actions and auxiliary X-H1 through
 X-H7 commits/qualification. Native adoption, creation, staged editing, cached
 grips/snaps, tool/type integration and independently checked DXF/DWG persistence
 are implemented. Interactive Offset now loads a persisted default-on native
 option; programmatic requests still opt in. Value-only Update from Source and
 Restore Original and their UI integration are implemented. Bounded pure trim
-preparation is implemented; action/publication and persistence remain later
-slices. Native property sheet
+preparation and atomic action/publication are implemented; persistence remains
+the next slice. Native property sheet
 and Edit Properties dialog share bounded source snapshots; modal clone ownership
 survives document, editor, action and view teardown until widgets unwind.
 
@@ -48,7 +48,7 @@ survives document, editor, action and view teardown until widgets unwind.
 | Difference between initial checkpoints | Only this plan file; no product-source change |
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
-| Latest product checkpoint | `04c712069` (T-kernel; I-ui4a231d243) |
+| Latest product checkpoint | `49bb7755f` (T-actions; T-kernel04c712069) |
 | Latest auxiliary checkpoint | `90714f758` (H7 bounded suite-pair scheduling; temp-path/journal fix c1b2fa095, driver 5a3e47039) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
@@ -59,13 +59,13 @@ survives document, editor, action and view teardown until widgets unwind.
 | B terminals | Immutable exact occurrence/edge-side classification, separate source incidence, bounded storage/scans |
 | C topology | Complete bounded unique-path checker, owned contact query and exact root-to-port matching; unresolved correspondence refuses Ambiguous |
 | Native entity | Checked adoption/creation, transactional mutators and actual stage results; consistency stamp, clone, exact proof transport, cached visible grips/safe snaps and bounded owned extensions |
-| Product integration | Tool/type/name, independently checked persistence, native sheet/dialog/drag, interactive enablement, both value-only source actions, source UI and pure trim kernel committed; explicit INSERT plain-cache fallback; trim actions/files pending |
+| Product integration | Tool/type/name, independently checked persistence, native sheet/dialog/drag, interactive enablement, both value-only source actions, source UI, trim kernel and atomic trim actions committed; explicit INSERT plain-cache fallback; trim files pending |
 | Build registration | Geometry/contact/routing/native sources in CMake/qmake6; native and adjacent tests registered and executed |
 | Validation harness | X-H1 through X-H7 complete: source90714f758,407-case regression, two full qualification runs and independent retained-evidence audit |
-| Latest validation | T-kernel:55 focused Release/ASan cases, full Release4712,1128 affected ASan, both format lanes, qmake6,48 adjacent ASan cases and two isolated failure modules passed; G-matrix176 retained byte observations rechecked; see section14 |
+| Latest validation | T-actions:34 focused Release/ASan cases, full Release4746,1162 affected ASan, both format lanes, CMake apps/qmake6,48 adjacent ASan cases and two isolated failure modules passed; see section14 |
 
 Recheck these facts against the selected implementation checkout before starting
-T-actions. Qt6/Catch2/CMake/qmake6 and independent ACadSharp/ODA fixture/inspection
+T-files. Qt6/Catch2/CMake/qmake6 and independent ACadSharp/ODA fixture/inspection
 tools are inventoried and qualified within the scopes recorded in section14.
 The user's main checkout is a different, dirty branch and is not the
 source baseline above. Do not overwrite its unrelated changes or apply this plan
@@ -241,7 +241,7 @@ test commit followed by the section 4 plan checkpoint.
 | I-restore | I-update | Restore Original action and equality/dedup tests | complete:0d3fed653 |
 | I-ui | I-restore | Source-action registration/links and persistence/GUI coverage | committed:4a231d243; physical GUI remains Z |
 | T-kernel | I-ui | Pure bounded stored-cache trim preparation/clipping | committed:04c712069 |
-| T-actions | T-kernel | Trim/Trim Two atomic owner-level replacement | pending |
+| T-actions | T-kernel | Trim/Trim Two atomic owner-level replacement (`49bb7755f`) | committed |
 | T-files | T-actions | Trim persistence/demotion across format lanes | pending |
 | Z-release | T-files and auxiliary track closure | Complete regressions, build/GUI/interoperability audit | pending |
 
@@ -281,7 +281,7 @@ editing; changes beyond the named concern require a scope note in the slice card
 
 ### Current Next Cards
 
-The main track resumes at T-actions (section11.3). D-core `92758859c` uses the actual
+The main track resumes at T-files (section11.4). D-core `92758859c` uses the actual
 C checker, not a layout-only adoption gate. Similarity transport requires exact
 dyadic affine images of every stored coordinate and unchanged normalized semantic
 basis fields. Rounded similarities and arc reflections refuse unchanged; whole
@@ -320,7 +320,8 @@ Owner selection includes justSelect/contour/bulk/intersection paths. Exact typed
 pickers remain exact: native-capable tools request `{Spline, OffsetCurve}`;
 Spline-category window selection still includes native curves. This avoids
 occluding ordinary spline control tools with a nearer unsupported native input.
-Native target trimming is refused until T; ordinary targets accept native limits.
+T-actions now replaces the temporary native-target refusal with bounded stored-cache
+Trim/Trim Two; ordinary-only modification paths retain their established contract.
 
 F-names `f0fb28fab` adds the dedicated translated name, native-only match metadata,
 bounded quick-info/descriptions and same-ID refresh. Native generated children
@@ -425,17 +426,22 @@ Next implementation order:
    native frame defaults are unchanged. Preserve exact subnormal cuts, certified
    endpoint identity, fixed budgets and constant-fragment refusal. The isolated
    allocator main remains EXCLUDE_FROM_ALL, never linked into Catch or app.
-4. Apply T-actions' readiness/conic/syntax/registration overlays, then frozen
-   correctness overlay fc763e9e78bbe78814f2e3c821438796a723b2affdf67dd5a1c2a1171b55c4f5.
-   The29 authored cases cover typed conic targets in both orders, tracked
-   document/view destruction, saved-context address admission, ordinary nested
-   polyline limit copies, undo epochs and final read-only native-limit snapshots.
-   Strengthen the existing view-switch control with actual drawn overlays.
-   These are syntax/static readiness, not runtime PASS. T-files then adds R13 demotion,
-   closed degree1/3 C-admitted rows and DXF/DWG Undo/Redo/second reopens. Include
-   test-only syntax fixes (Width07 and qualified NullDrwInterface). These
-   artifacts remain unqualified until actually registered, built and executed.
-5. Test/commit/checkpoint every slice, then perform Z's final application,
+4. T-actions49bb7755f is tested/committed:34 actual cases, both replacement sets
+   privately staged, complete native input closure after all ordinary getters,
+   tracked document/view/context lifetimes and drawn-overlay cleanup. Only the
+   attempt's own undo-epoch increment is admitted; end-cycle external undo and
+   teardown observers cannot make retained picks current again.
+5. T-files adds real demotion/Undo/Redo/second reopens in every required format.
+   Keep all12 authored identities, both degrees, N128/N256 closed variants and
+   all legacy rows. Early pinned-copy runtime found three concrete dependencies:
+   exact certified span-endpoint evaluation has an avoidable interval rounding
+   floor; legacy CELLSTYLEMAP uses full CMC and must check its body before shared
+   handle-cursor consumption; required foreign dictionary targets need lossless
+   target-version emission (CELLSTYLEMAP, SECTIONVIEWSTYLE, DETAILVIEWSTYLE and
+   TABLESTYLE). Apply/review the narrow kernel/parser fixes and implement missing
+   target producers/reference admission without dropping dictionary members or
+   bypassing encoding-family/owner guards. Discovery is not final qualification.
+6. Test/commit/checkpoint every slice, then perform Z's final application,
    available platform/static/sanitizer, GUI and retained interoperability audit.
 
 The auxiliary scheduler correction `90714f758` passed the407-case regression.
@@ -1927,13 +1933,13 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 
 | Item | State | Next action |
 |---|---|---|
-| Recursive plan/activation routing | Removed as a planning deadlock | Execute the finite T-actions card |
+| Recursive plan/activation routing | Removed as a planning deadlock | Execute the finite T-files card |
 | Atomic budget and bounded geometry APIs | A slices, B and C committed/validated; used by native adoption/editing | Preserve bounds and stage-result contracts in UI/trim |
-| Native feature/UI/source actions/trim | A through T-kernel committed; trim actions/files remain | Execute T-actions and T-files, then Z |
+| Native feature/UI/source actions/trim | A through T-actions committed; trim files remain | Fix the concrete persistence dependencies, qualify T-files, then Z |
 | Independent DWG/version fixtures | G-matrix79ae1930b qualifies genuine marked R13/R14/R2007 and all modern rows | Preserve fixture/tool/source hashes and scope; no local tool install required by CI |
 | Auxiliary empty-DWG conversion | Exact48 plot observations;24 ODA-converted files have duplicate-Continuous strict-read failures, originals unique; source-control order anomaly recorded, causation unresolved | Retain diagnostic scope in Z; not a mandatory native-row failure or general-DWG conformance claim |
 | Harness production readiness | X-H1-X-H7 committed; actual two-run qualification03 independently audited | Retain observed-byte/runtime scope and failed attempts; no future timing guarantee |
-| Independent review and test evidence | T-kernel independent source/numeric reviews and actual runtime/identity gates complete; G-matrix external scopes retained | Obtain fresh validation for each remaining slice; preserve reviewed correction order |
+| Independent review and test evidence | T-actions independent source/ownership/epoch reviews and actual runtime/identity gates complete; G-matrix external scopes retained | Obtain fresh validation for each remaining slice; preserve reviewed correction order |
 | Physical GUI settings route | Human approved normal profile on2026-10-24 | Run actual final apps on private drawing copies; restore intentionally changed visible options, do not claim native-store isolation or exact preference rollback |
 | Dirty unrelated main checkout | Not the selected source baseline | Preserve it; reconcile only if changing implementation worktree |
 
@@ -1972,8 +1978,70 @@ The plan checkpoint column never depends on its own future SHA.
 | I-restore | 0d3fed653 | Immediate plan-only checkpoint | 32 focused Release/ASan cases, full Release4645,1061 affected ASan, unchanged format lanes, qmake6,57 adjacent ASan cases, allocation gates and seven-blob correspondence; bounded dedup, exact circular phase certificate and hidden-context flag regression |
 | I-ui | 4a231d243 | Immediate plan-only checkpoint | 12 focused Release/ASan cases, full Release4657,1073 affected ASan, unchanged format lanes, qmake6,93 adjacent ASan cases, allocation gates and eleven-blob correspondence; deduplicated guarded source links and real file persistence |
 | T-kernel | 04c712069 | Immediate plan-only checkpoint | 55 focused Release/ASan cases, full Release4712,1128 affected ASan, unchanged format lanes, qmake6,48 adjacent ASan cases, both failure modules and eight-blob correspondence; exact rational seam identity and value-only whole-chart copy |
+| T-actions | 49bb7755f72a9b1f40e2a97206b7038845f48ba4 | Immediate plan-only checkpoint | 34 focused Release/ASan cases, full Release4746,1162 affected ASan, unchanged format lanes, both CMake apps/qmake6,48 adjacent ASan cases, both failure modules and twelve-blob correspondence; complete native input and own-cycle completion guards |
 | X-H7 timeout source fix | c1b2fa095 | Immediate plan-only checkpoint | Author55 + independent15 controls and parent399 runner regression passed; actual runtime qualification remains open |
 | X-H7 bounded scheduling | 90714f758 | Immediate plan-only checkpoint | Author85 + independent12 controls, parent407 runner regression and real224.790-second preflight probe passed; full two-run qualification remains open |
+
+### T-actions Validation (2026-10-24)
+
+Product `49bb7755f72a9b1f40e2a97206b7038845f48ba4` contains12 owned files,
+1822 insertions/37 deletions. Native-involved Trim/Trim Two prepares both sides
+before one document batch. Ordinary line/conic/spline operands retain supported
+types; native outputs become ordinary open/clamped splines with foreign data,
+without stale owned schema, identity handles or lineage. Existing ordinary-only
+Trim, Trim Amount and Cut paths remain separate.
+
+Runtime/review corrections include complete native snapshots before ordinary
+virtual getters and after all staging; live address/ID/owner admission; detached
+ordinary nested-limit ownership; actual drawn-overlay cleanup; and an action-local
+undo admission epoch. The public action admits exactly its own E-to-E+1 cycle,
+supports retry after an empty refusal without pruning redo, and rejects external
+undo or obsolete context during the actual end-cycle notification/draw tail.
+Independent source reviews found no remaining P1/P2 in the final correction.
+
+Final actual03 reports under `/private/tmp/lc2961-impl-evidence.9GtLO2`:
+
+- Focused Release/ASan:34 cases,2599 assertions each, no skips/failures.
+- Full Release:4746 cases,4719 passed,27 unchanged skips,9418520 assertions.
+- Affected ASan:1162 cases,1161 passed,one unchanged skip,3504690 assertions.
+- DXF Release/ASan:765 cases,three unchanged skips,82553 assertions each.
+  DWG Release/ASan:1021 cases,four unchanged skips,362942 assertions each.
+- Adjacent `[trim]` ASan04:48 cases,63167 assertions, no skips/failures.
+  Adjacent03 also passed but overlapped the runner's ASan process;04 is the
+  serialized final adjacent run. No build overlapped binary execution.
+- Both isolated failure modules passed in each build. Trim retains1616 staging
+  allocation failures,20 late cancellations,four conic failures/four cancellations;
+  the batch module retains2/0/1/0. This is not exhaustive Qt/malloc OOM injection.
+- CMake Release/ASan explicitly built the application and all five test/failure
+  targets; qmake6 application03 built successfully. Twelve source and thirteen
+  executable identities are unchanged before/after the twelve runner lanes.
+- `T-actions-report-audit-03.json` PASS compares actual prior XML Counters and
+  exact skips. V3's separately tested81-control adapter authorizes only the two
+  exact F-type names replacing the temporary refusal contract. No old XML or
+  accepted audit was rewritten, no case retired and no missing-row slack added.
+  The existing successful line-trim oracle now checks the independently known
+  retained lower interval. `T-actions-committed-blob-audit-03.json` matches all12
+  committed blobs to the qualified source.
+
+Earlier actual01/02 and EVID discovery failures remain retained. Two negative
+tests initially called an insert-only user-variable setter on an existing key;
+they now delete/set/assert a genuine mutation. Undo restores the native root,
+geometry, definition, provenance and attributes; its update regenerates temporary
+display-child IDs. Tests explicitly verify both facts instead of demanding stale
+child identities or weakening semantic equality.
+
+Normal-profile visible CMake03 checks observed invalid-radius restoration,
+accepted-edit Cancel, native distance3-to4 with one Undo/Redo, ordinary-line trim
+against an unchanged native, and native trim producing a real ordinary Spline
+Properties dialog. One rounded top pick refused at its work limit unchanged; a
+left-side pick succeeded. Private DXF R2018 plain and Undo-native Save As copies
+were written. These are partial interaction observations, not complete P1-P6,
+reopen/DWG/qmake GUI or settings-isolation qualification. No normal-profile
+settings were erased/imported. Final GUI and portable file gates remain open.
+
+Next: retain every required T-files row while fixing its concrete kernel/parser
+and legacy foreign-object conversion dependencies, then test/commit/checkpoint
+T-files and execute Z. No future persistence fix is claimed by this commit.
 
 ### T-kernel Validation (2026-10-24)
 
