@@ -6,6 +6,8 @@
 #include "lc_propertiesprovider_offsetcurve.h"
 
 #include <QCoreApplication>
+#include <QHash>
+#include <QSet>
 #include <QSignalBlocker>
 #include <cmath>
 #include <functional>
@@ -475,6 +477,72 @@ void LC_PropertiesProviderOffsetCurve::fillComputedProperites(
     });
     section->addChildProperty(length);
     session->refresh();
+}
+
+void LC_PropertiesProviderOffsetCurve::createSourceActionLinks(
+    LC_PropertyContainer* container, LC_PropertySheetWidget* widget, LC_ActionContext* context,
+    const QList<RS_Entity*>& entities, const bool single) {
+    if (!container || !widget || !context) return;
+    const QPointer<LC_PropertySheetWidget> sheet(widget);
+    const QPointer<RS_GraphicView> view(context->getGraphicView());
+    const QPointer<LC_OffsetCurvePropertyQueue> queue(widget->offsetPropertyQueue());
+    auto* document = context->getDocument();
+    if (!document || !view || view->isClosing() || !queue || view->getDocument() != document) return;
+    const auto epoch = queue->epoch();
+    // Supplied addresses may be stale. Walk live members once instead of doing
+    // a linear membership search for every selected (including ordinary) entity.
+    const QSet<RS_Entity*> requested(entities.cbegin(), entities.cend());
+    QHash<RS_Entity*, unsigned long long> targets;
+    for (auto* entity : std::as_const(*document)) {
+        if (!entity || !requested.contains(entity) || entity->getParent() != document ||
+            entity->isDeleted() || entity->rtti() != RS2::EntityOffsetCurve ||
+            !dynamic_cast<LC_OffsetCurve*>(entity)) continue;
+        targets.insert(entity, entity->getId());
+    }
+    if (targets.empty() || (single && targets.size() != 1)) return;
+    // The existing link utility defers activation by 10 ms. Capture identities,
+    // not a provider or an entity to dereference before checking current ownership.
+    LC_PropertyProviderUtils::createSingleEntityCommand<RS_Entity>(
+        container, single ? "offsetSourceSingle" : "offsetSourceSelection",
+        nativeTr("Update from Source"), nativeTr("Update selected offset curves from a picked ellipse"),
+        nativeTr("Restore Original"), nativeTr("Restore embedded source ellipses"),
+        nullptr,
+        [sheet, view, queue, context, document, epoch, targets, single](RS_Entity*, const int index) {
+            if (!sheet || !view || view->isClosing() || !queue || queue->epoch() != epoch ||
+                context->getDocument() != document || context->getGraphicView() != view.data() ||
+                view->getDocument() != document || (index != 0 && index != 1)) return;
+            if (queue->pendingCount() != 0) {
+                context->commandMessage(nativeTr("Offset Curve: finish pending property edits before starting a source action."));
+                return;
+            }
+            RS_Entity* contextEntity = nullptr;
+            for (auto* entity : std::as_const(*document)) {
+                const auto target = targets.constFind(entity);
+                if (target == targets.cend()) continue;
+                if (entity->getParent() != document || entity->isDeleted() || entity->getId() != target.value() ||
+                    entity->rtti() != RS2::EntityOffsetCurve || !dynamic_cast<LC_OffsetCurve*>(entity)) continue;
+                if (single || entity->isSelected()) { contextEntity = entity; break; }
+            }
+            if (!contextEntity) return;
+            // The old popup entity is unrelated to these guarded targets and
+            // may already be dead. Discard its identity without deselecting it.
+            context->saveContextMenuActionContext(nullptr, RS_Vector(false), false);
+            if (single) context->saveContextMenuActionContext(contextEntity, {0, 0}, false);
+            context->setCurrentAction(index == 0 ? RS2::ActionOffsetCurveUpdateSource :
+                RS2::ActionOffsetCurveRestoreOriginal, nullptr);
+        }, nativeTr("Offset source operations"));
+}
+
+void LC_PropertiesProviderOffsetCurve::fillSingleEntityCommands(
+    LC_PropertyContainer* container, const QList<RS_Entity*>& list) {
+    auto* section = createSingleEntityActionsSection(container);
+    createSourceActionLinks(section, m_widget, m_actionContext, list, true);
+}
+
+void LC_PropertiesProviderOffsetCurve::doCreateSelectedSetCommands(
+    LC_PropertyContainer* container, const QList<RS_Entity*>& list) {
+    LC_EntityTypePropertiesProvider::doCreateSelectedSetCommands(container, list);
+    createSourceActionLinks(container, m_widget, m_actionContext, list, false);
 }
 
 void LC_PropertiesProviderOffsetCurve::fillSelectedSetCommands(

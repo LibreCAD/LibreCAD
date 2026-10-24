@@ -2728,6 +2728,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/lc_offsetcurve_exportdispatch_tests.cpp
         librecad/src/lib/filters/tests/lc_offsetcurve_adapter_tests.cpp
         librecad/src/lib/filters/tests/lc_offsetcurve_persistence_tests.cpp
+        librecad/src/lib/filters/tests/lc_offsetcurve_source_actions_persistence_tests.cpp
         librecad/src/lib/filters/tests/lc_offsetcurve_hostilefile_tests.cpp
         librecad/src/lib/filters/tests/lc_offsetcurve_matrix_tests.cpp
         librecad/src/lib/filters/tests/lc_offsetcurve_eed_packet_tests.cpp
@@ -2834,6 +2835,7 @@ if (BUILD_TESTS)
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_offsetcurve_properties_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_offsetcurve_uihelpers_tests.cpp
         librecad/src/ui/components/utils/tests/lc_offsetcurve_names_tests.cpp
+        librecad/src/ui/components/utils/tests/lc_offsetcurve_source_ui_tests.cpp
         librecad/src/actions/dock_widgets/block/tests/lc_actionblockssave_tests.cpp
         librecad/src/ui/dock_widgets/ucs_list/tests/lc_ucslistmodel_tests.cpp
         librecad/src/ui/dock_widgets/views_list/tests/lc_namedviewsmodel_tests.cpp

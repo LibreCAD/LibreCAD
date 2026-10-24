@@ -88,6 +88,8 @@ void LC_ActionFactory::initActionGroupManager(LC_ActionGroupManager* agm) {
         {"interactive_pick", tr("Interactive"), tr("Interactive Pick"), ":/icons/interactive_pick_point.lci", true}
     },agm);
 
+    createOffsetCurveActions(agm);
+
     const auto fileGroup = agm->getGroupByName("file");
     const auto optionsGroup = agm->getGroupByName("options");
 
@@ -102,6 +104,19 @@ void LC_ActionFactory::initActionGroupManager(LC_ActionGroupManager* agm) {
     for (auto actionGroup : toolGroups) {
         connect(actionGroup, &LC_ActionGroup::triggered, m_appWin, &QC_ApplicationWindow::relayAction);
     }*/
+}
+
+void LC_ActionFactory::createOffsetCurveActions(LC_ActionGroupManager* manager) const {
+    // Context/property entry points only: do not grow the global Modify tools.
+    createActionGroups({
+        {"offset_curve", tr("Offset Curve"), tr("Explicit offset source operations"), ":/icons/offset.lci", false}
+    }, manager);
+    createActionHandlerActions(manager->getActionsMap(), manager->getGroupByName("offset_curve"), {
+        {"OffsetCurveUpdateSource", RS2::ActionOffsetCurveUpdateSource,
+            tr("Update from Source"), ":/icons/offset.lci"},
+        {"OffsetCurveRestoreOriginal", RS2::ActionOffsetCurveRestoreOriginal,
+            tr("Restore Original"), ":/icons/ellipses.lci"}
+    });
 }
 
 void LC_ActionFactory::createEntityLayerActions(QMap<QString, QAction*>& map, LC_ActionGroup* group) const {
@@ -1262,6 +1277,8 @@ void LC_ActionFactory::prepareActionsToDisableInPrintPreview(QList<QAction*>& ac
         "ViewLinesDraft",
         "ViewAntialiasing",
         "ModifyDeleteQuick",
+        "OffsetCurveUpdateSource",
+        "OffsetCurveRestoreOriginal",
         "EditKillAllActions",
         "ZoomIn",
         "ZoomOut",

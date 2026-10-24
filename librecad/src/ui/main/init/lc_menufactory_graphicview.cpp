@@ -832,7 +832,8 @@ void LC_MenuFactoryGraphicView::createGVMenuEntitySpecific(QMenu* contextMenu, Q
             case RS2::EntityOffsetCurve: {
                 addProxyActionsSubMenu(contextMenu, tr("Modify Offset Curve"),
                                        ":/icons/attributes.lci", entity, pos, actionContext,
-                                       {"ModifyOffset", "DrawSplineExplode", "ModifyRevertDirection"});
+                                       {"OffsetCurveUpdateSource", "OffsetCurveRestoreOriginal", "",
+                                        "ModifyOffset", "DrawSplineExplode", "ModifyRevertDirection"});
                 createGVMenuModifyGeneral(contextMenu, graphicView, entity, pos, actionContext);
                 break;
             }
