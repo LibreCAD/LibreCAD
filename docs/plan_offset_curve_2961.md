@@ -24,7 +24,7 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-24. Status: IN PROGRESS (final documentation only). R03 final snapshot closure is qualified in f617fcf70; section6.6 complete start-cut/memoized search is qualified in b6814fb3a. Earlier slices/receipts remain valid only for their recorded scope.
+Updated: 2026-10-24. Status: COMPLETE within the recorded scopes. R03 final snapshot closure is qualified in f617fcf70; section6.6 complete start-cut/memoized search is qualified in b6814fb3a. Final evidence documentation is committed in a68dc0df9. Earlier receipts remain valid only for their recorded scope; no implementation or documentation card remains open.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
 This checkpoint records tested A through Z-release and auxiliary X-H1 through
@@ -55,7 +55,8 @@ mechanisms missing from the best-cut/bounded-DFS implementation. Both are now
 fixed in separate tested/committed slices, without weakening those requirements.
 R03 is closed by nineteen-file product f617fcf70 and its fresh02 gates;
 C-search is closed by six-file product b6814fb3a and its fresh01 gates below.
-Only the final evidence-index/documentation checkpoint remains.
+The final evidence index and documentation corrections are committed in
+a68dc0df9 and recorded in this immediate plan-only checkpoint.
 
 ## 1. Verified Baseline and Scope
 
@@ -68,6 +69,7 @@ Only the final evidence-index/documentation checkpoint remains.
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
 | Latest product checkpoint | `b6814fb3a` (complete bounded cut/memoized search); R03 f617fcf70 and earlier Z-release60376bd87/product091de1a6a retain their historical scopes |
+| Latest documentation checkpoint | `a68dc0df9` (current R01-R15 evidence index, historical scope corrections and93/0 harness README inventory);115 links,14 receipt hashes and three committed blobs checked |
 | Latest auxiliary checkpoint | `90714f758` (H7 bounded suite-pair scheduling; temp-path/journal fix c1b2fa095, driver 5a3e47039) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
@@ -266,7 +268,7 @@ test commit followed by the section 4 plan checkpoint.
 | Z-release | Z-save-filters and auxiliary track closure | Final evidence/requirement index and scoped GUI documentation | complete,60376bd87; available-host scope and limits recorded |
 | R03-final-closure | Recorded product091de1a6a | Callback-safe root/display validation and final all-target closure | complete:f617fcf70; corrected final02 qualification |
 | C-search-completion | R03-final-closure | All certified closed start cuts and bounded equivalent-state memoization | complete:b6814fb3a; fresh01 qualification and six-blob audit |
-| Z-completion-audit | Both follow-up source slices | Fresh affected final gates, retained adjacent command/exit receipts and corrected final evidence | native gates/receipts complete; final three-file documentation product and plan checkpoint remain |
+| Z-completion-audit | Both follow-up source slices | Fresh affected final gates, retained adjacent command/exit receipts and corrected final evidence | complete:a68dc0df9; current native scopes,115 links,14 receipt hashes and three documentation blobs checked; this is its immediate plan-only checkpoint |
 
 The auxiliary harness track is X-H1 -> X-H2 -> X-H3 -> X-H4 -> X-H5 ->
 X-H6 -> X-H7 (section 13). Retain these obligations as a separate finite
@@ -307,8 +309,9 @@ Confirm signatures before any further changes beyond the completed slices.
 
 ### Current Next Cards
 
-Execute only Z-completion-audit's final documentation product, then its immediate
-plan-only checkpoint. Both source follow-ups are committed and qualified. The descriptions below
+No open implementation or documentation card remains. Both source follow-ups
+and Z-completion-audit are committed and qualified within their recorded scopes.
+No recursive plan restart or additional execution graph is required. The descriptions below
 preserve previously completed slice contracts/history. This completion audit
 supersedes the earlier blanket completion claim without discarding valid evidence.
 
@@ -338,14 +341,15 @@ geometry/clearance/order predicates, work ledgers and default limits. Fifteen
 new cases and all270 old cases in the two TUs pass in both configurations.
 The exact76 A/B/C identities remain unskipped, including C27's routing-only scope.
 
-**Final evidence readiness:** the R03 adjacent command/environment/exit gap is
+**Final evidence closure:** the R03 adjacent command/environment/exit gap is
 closed by `R03-final-adjacent-native-tool-records-02.json` for product f617fcf70.
 C-search has its own four actual command/tool completion records, twelve-lane
 run, unchanged before/after identities, Counter audit and actual-SHA blob audit.
-The final documentation must link these actual scopes, update R01-R15 navigation,
-correct the two C-identity descriptions and README's93-executable/zero-pending
-inventory, and retain older GUI/H7/analyzer/CAD limits. No new execution graph is
-required. Commit the three documentation files, then update this plan immediately.
+Documentation product a68dc0df9 links these scopes, updates R01-R15 navigation,
+corrects the C-identity descriptions and README's93-executable/zero-pending
+inventory, and retains older GUI/H7/analyzer/CAD limits. Its115 local links and14
+receipt hashes pass; all three committed blobs match independently reviewed bytes.
+This checkpoint closes the finite audit without adding an execution graph.
 Use the existing finite test graph and report comparisons for each source slice;
 do not restart unrelated completed work or add a new validation framework.
 D-core `92758859c` uses the actual
@@ -2026,13 +2030,13 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 
 | Item | State | Next action |
 |---|---|---|
-| Recursive plan/activation routing | Removed; the finite audit's two source gaps are fixed and qualified | Finish the named documentation checkpoint, not a routing restart |
+| Recursive plan/activation routing | Removed; the finite audit's two source gaps and final documentation are complete | Preserve the completed finite scope; no routing restart |
 | Atomic budget and bounded geometry APIs | A/B/C complete; section6.6(7-8) closed by b6814fb3a with unchanged caps/tolerance | Preserve the qualified contracts and actual evidence |
 | Native feature/UI/source actions/trim | R03 final getter/peer, queue lifetime, Restore witness/attribute and final cancellation closure committed in f617fcf70 | Preserve its scope; current native regressions pass |
 | Independent DWG/version fixtures | G-matrix79ae1930b qualifies genuine marked R13/R14/R2007 and all modern rows | Preserve fixture/tool/source hashes and scope; no local tool install required by CI |
 | Auxiliary empty-DWG conversion | Exact48 plot observations;24 ODA-converted files have duplicate-Continuous strict-read failures, originals unique; source-control order anomaly recorded, causation unresolved | Retain diagnostic scope in Z; not a mandatory native-row failure or general-DWG conformance claim |
 | Harness production readiness | X-H1-X-H7 committed; actual two-run qualification03 independently audited | Retain observed-byte/runtime scope and failed attempts; no future timing guarantee |
-| Independent review and test evidence | R03-final02 and C-search01 separately qualified; current six source/13 executable identities stable, fresh adjacent commands/exits, exact76 identities and six committed blobs checked | Link the completed scopes in the final evidence index; no transfer of older GUI/H7 results to new C bytes |
+| Independent review and test evidence | R03-final02 and C-search01 separately qualified; current six source/13 executable identities stable, fresh adjacent commands/exits, exact76 identities and six committed blobs checked | Final index links all completed scopes; preserve older GUI/H7 limits rather than transferring them to new C bytes |
 | Physical GUI settings route | Approved normal-profile sessions complete; effective Editable ON and temporary keyboard navigation OFF restored/verified | Preserve precise observations and unobserved variants; no native-store isolation or exact whole-profile rollback claim |
 | Dirty unrelated main checkout | Not the selected source baseline | Preserve it; reconcile only if changing implementation worktree |
 
@@ -2076,9 +2080,45 @@ The plan checkpoint column never depends on its own future SHA.
 | Z-save-filters | 091de1a6a3e2ed684080608b1102ffe06b483ab3 | 861b58957 | Three actual Save As cases in Release/ASan; full Release4761,1177 affected ASan, unchanged formats, both failure modules,48 Trim/26 storage adjacent cases per configuration, CMake apps/qmake6, exact76 mandatory identities, final GUI and three-blob correspondence |
 | Z-release | 60376bd87026efa62a1a24945a753419e5c6bf51 | Immediate plan-only checkpoint | Documentation-only closure: R01-R15 current source/test/evidence index, exact GUI/build/file identities, scoped final results and limits; whitespace/103 local links checked, independent39-anchor/11-hash review; no code or duplicate execution graph |
 | R03-final-closure | f617fcf70b46a0236a8725140aeb10d475c7d9ec | 27ee1ecc | Corrected final02:202 focused cases per configuration,4771 full Release,1187 affected ASan, unchanged format/failure lanes, fresh48 Trim/26 storage cases per configuration, actual wrapper red65/green at allocation238 and19-blob correspondence |
-| C-search-completion | b6814fb3a63dd66bb3aeae9e5b5e66668f8b8591 | Immediate plan-only checkpoint | Fifteen additions;285 focused cases per configuration,4786 full Release,1202 affected ASan, all12 lanes0, fresh adjacent records, exact76 required identities, stable six-source/13-executable freeze and six-blob correspondence |
-| X-H7 timeout source fix | c1b2fa095 | Immediate plan-only checkpoint | Author55 + independent15 controls and parent399 runner regression passed; actual runtime qualification remains open |
-| X-H7 bounded scheduling | 90714f758 | Immediate plan-only checkpoint | Author85 + independent12 controls, parent407 runner regression and real224.790-second preflight probe passed; full two-run qualification remains open |
+| C-search-completion | b6814fb3a63dd66bb3aeae9e5b5e66668f8b8591 | 4fa45611a | Fifteen additions;285 focused cases per configuration,4786 full Release,1202 affected ASan, all12 lanes0, fresh adjacent records, exact76 required identities, stable six-source/13-executable freeze and six-blob correspondence |
+| Z-completion-audit | a68dc0df924231cab01094f29e6f29de46b3ba12 | Immediate plan-only checkpoint | Three documentation files,107 insertions/31 deletions;115 local links,14 receipt hashes,15 requirement rows, no placeholders and three reviewed/committed blob matches; no runtime source change or duplicate graph |
+| X-H7 timeout source fix | c1b2fa095 | Immediate plan-only checkpoint | Author55 + independent15 controls and parent399 runner regression passed at this source commit; later qualification03 closes its runtime follow-up |
+| X-H7 bounded scheduling | 90714f758 | Immediate plan-only checkpoint | Author85 + independent12 controls, parent407 runner regression and real224.790-second preflight probe passed at this commit; the later two-run qualification03 closes runtime qualification |
+
+### Z-completion-audit Validation (2026-10-24)
+
+Documentation product `a68dc0df924231cab01094f29e6f29de46b3ba12` changes exactly
+three files,107 insertions/31 deletions: the R01-R15 validation index, interactive
+smoke record and harness README. No production, test, build or JavaScript logic
+changed. Independent read-only review found no actionable P1/P2 or documentation
+blocker:115 local links resolve (67 file-only/48 heading links), all14 actual
+receipt hashes match, exactly15 requirement rows remain ordered R01-R15, and no
+placeholder remains. Parent whitespace checks pass; all three actual committed
+blobs equal the final independently reviewed working bytes.
+
+| Documentation file | Qualified and committed SHA256 |
+|---|---|
+| docs/offset_curve_2961_validation.md | d159ccbbf3b4437421b033793713b9368f4e690dc5b72d2da829e0135f607f61 |
+| docs/offset_curve_interactive_smoke.md | 131627fec224e79e54a38f199b22c930ed4824f839b7545008eb47b1f71745a5 |
+| scripts/offset-curve-validation/README.md | 2a785e77876daa0249798550ffd107eb53c6caf454803064fbbd8f73a4bb28ed |
+
+Retained EVID receipts: `Z-final-doc-applied-review-01.md`, SHA256
+e2aa0f6d95d5f0f2693f55ab005c1fc998e299f0cf8d506164d1fdf9359db2fa;
+`Z-final-doc-committed-blob-audit-01.json`, SHA256
+bdbe3b22b244480248352998067ebe602485f38396574c0d776bc6b3c6d5b239.
+The current C-search twelve-lane/four-adjacent runs, exact76 membership, v4 Counter
+audit and six-source/13-binary freeze remain the final native qualification.
+Documentation does not relabel old GUI, external CAD, H7 or static-analyzer
+observations as new-source execution. No duplicate graph, fresh CAD/H7 run or
+unsupported analyzer/platform/full-ASan/leak-free claim was added.
+
+R03 and section6.6's actual source gaps are closed by their tested source commits
+and immediate plan checkpoints. The evidence index now connects those fixes to
+the existing feature, persistence, trimming and UI requirements. All normative
+implementation/documentation cards are complete within the available-host and
+explicitly retained external-evidence scopes. Main-worktree files/index remain
+untouched; local feature-ref mirroring neither switches that checkout nor pushes,
+merges or publishes remotely. No next card or automatic restart remains.
 
 ### C-search-completion Validation (2026-10-24)
 
@@ -2168,8 +2208,8 @@ The current native gates qualify these C++ changes. Earlier GUI/application,
 external CAD and H7 archived candidate/runtime observations remain byte-scoped;
 README is outside both captured H7 manifests and all39 JavaScript source pins.
 No fresh physical/CAD/harness execution or analyzer qualification is inferred.
-Next: commit the prepared three-file final evidence documentation, then its
-immediate plan-only checkpoint. No implementation card remains open.
+Follow-up documentation is committed as a68dc0df9 and closed in its immediate
+plan checkpoint above. No implementation or documentation card remains open.
 
 ### R03-final-closure Validation (2026-10-24)
 
