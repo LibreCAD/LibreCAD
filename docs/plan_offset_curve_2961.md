@@ -433,14 +433,18 @@ Next implementation order:
    teardown observers cannot make retained picks current again.
 5. T-files adds real demotion/Undo/Redo/second reopens in every required format.
    Keep all12 authored identities, both degrees, N128/N256 closed variants and
-   all legacy rows. Early pinned-copy runtime found three concrete dependencies:
+   all legacy rows. Early pinned-copy runtime found two production dependencies:
    exact certified span-endpoint evaluation has an avoidable interval rounding
    floor; legacy CELLSTYLEMAP uses full CMC and must check its body before shared
-   handle-cursor consumption; required foreign dictionary targets need lossless
-   target-version emission (CELLSTYLEMAP, SECTIONVIEWSTYLE, DETAILVIEWSTYLE and
-   TABLESTYLE). Apply/review the narrow kernel/parser fixes and implement missing
-   target producers/reference admission without dropping dictionary members or
-   bypassing encoding-family/owner guards. Discovery is not final qualification.
+   handle-cursor consumption. Apply/review those narrow kernel/parser fixes.
+   Correct the new legacy test's overbroad export expectation: section9.4 defines
+   R13/R14 as read-only adoption, not arbitrary foreign-object migration to every
+   newer encoding. Retain successful legacy import, both-degree trim/demotion,
+   supported DXF export/second reopen and full foreign-data/history checks. For
+   unavailable foreign-object re-encoding, verify section9.2's specific atomic
+   refusal, not successful conversion. Do not blanket-refuse by source version,
+   remove foreign dictionaries or weaken encoding-family/owner guards. Every
+   positive modern writer/conversion/binary/chain row remains mandatory.
 6. Test/commit/checkpoint every slice, then perform Z's final application,
    available platform/static/sanitizer, GUI and retained interoperability audit.
 
@@ -1551,6 +1555,17 @@ fragment count/order, geometry/attributes/foreign data and absence of owned sche
 No silent re-adoption after a second save. Undo before save restores the native
 definition correctly. No schema change is needed.
 
+The additional R13/R14 lane in section9.4 is explicitly read-only. It requires
+genuine independent input, adoption and both-degree trim/demotion, not a new
+legacy writer or migration of arbitrary unrelated foreign classes. Keep supported
+legacy-to-modern exports positive, including second reopens. Where retained
+foreign OBJECTS cannot be re-encoded, require the actual specific admission
+diagnostic, unchanged complete document/metadata/history, byte-identical existing
+target, absent target remaining absent and no staging residue. This is qualified
+refusal under section9.2, never a positive conversion PASS. Positive modern DXF
+and DWG writes, both conversion directions, alternating chains, binary lanes
+and second saves must still succeed independently.
+
 Run focused/adjacent Release/ASan, full Release and format fast lanes; build both
 systems and exercise actual Trim/Trim Two GUI paths before slice closure.
 
@@ -1935,7 +1950,7 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 |---|---|---|
 | Recursive plan/activation routing | Removed as a planning deadlock | Execute the finite T-files card |
 | Atomic budget and bounded geometry APIs | A slices, B and C committed/validated; used by native adoption/editing | Preserve bounds and stage-result contracts in UI/trim |
-| Native feature/UI/source actions/trim | A through T-actions committed; trim files remain | Fix the concrete persistence dependencies, qualify T-files, then Z |
+| Native feature/UI/source actions/trim | A through T-actions committed; trim files remain | Fix the kernel/parser dependencies, qualify the explicit legacy read-only/refusal and positive modern file lanes, then Z |
 | Independent DWG/version fixtures | G-matrix79ae1930b qualifies genuine marked R13/R14/R2007 and all modern rows | Preserve fixture/tool/source hashes and scope; no local tool install required by CI |
 | Auxiliary empty-DWG conversion | Exact48 plot observations;24 ODA-converted files have duplicate-Continuous strict-read failures, originals unique; source-control order anomaly recorded, causation unresolved | Retain diagnostic scope in Z; not a mandatory native-row failure or general-DWG conformance claim |
 | Harness production readiness | X-H1-X-H7 committed; actual two-run qualification03 independently audited | Retain observed-byte/runtime scope and failed attempts; no future timing guarantee |
@@ -2039,9 +2054,24 @@ were written. These are partial interaction observations, not complete P1-P6,
 reopen/DWG/qmake GUI or settings-isolation qualification. No normal-profile
 settings were erased/imported. Final GUI and portable file gates remain open.
 
-Next: retain every required T-files row while fixing its concrete kernel/parser
-and legacy foreign-object conversion dependencies, then test/commit/checkpoint
-T-files and execute Z. No future persistence fix is claimed by this commit.
+Next: retain every applicable T-files row while fixing its concrete kernel/parser
+dependencies and correctly qualifying unsupported legacy foreign-object conversion,
+then test/commit/checkpoint T-files and execute Z. No future persistence fix is
+claimed by this commit.
+
+T-files readiness correction: actual main-graph discovery01 returned11/12 cases
+passing (799695 assertions, one failed required DWG save). The same R13/R14
+degree1/3 untrimmed originals fail that export in the finite diagnostic survey;
+it is not a trim regression. Independent requirements review distinguishes
+section9.4's read-only legacy lane from the newly authored test's broader arbitrary
+foreign-dictionary migration requirement. The earlier next-card instruction to
+implement four target producers was an accidental scope expansion, now removed
+explicitly before changing that test. CELLSTYLEMAP, SECTIONVIEWSTYLE,
+DETAILVIEWSTYLE and TABLESTYLE payload migration across encoding families remains
+unsupported where no lossless target producer exists. Preserve those records
+and fail safely; do not call summaries or omitted members lossless conversion.
+This correction does not retire an accepted test or relax any positive modern
+format, foreign preservation or save-atomicity obligation.
 
 ### T-kernel Validation (2026-10-24)
 
