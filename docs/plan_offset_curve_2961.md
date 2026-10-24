@@ -24,17 +24,19 @@ USA.
 
 # Editable Ellipse Offset Curves: Implementation Roadmap (#2961)
 
-Updated: 2026-10-24. Status: A through T-actions committed; X-H1 through X-H7 complete for the observed source; trim persistence and final application qualification incomplete.
+Updated: 2026-10-24. Status: A through T-files committed; X-H1 through X-H7 complete for the observed source; final Save As correction and application qualification remain.
 This is the single active roadmap for this work. It replaces the routing rules
 and duplicated status mirrors in the earlier draft, not its product requirements.
-This checkpoint records tested A through T-actions and auxiliary X-H1 through
+This checkpoint records tested A through T-files and auxiliary X-H1 through
 X-H7 commits/qualification. Native adoption, creation, staged editing, cached
 grips/snaps, tool/type integration and independently checked DXF/DWG persistence
 are implemented. Interactive Offset now loads a persisted default-on native
 option; programmatic requests still opt in. Value-only Update from Source and
 Restore Original and their UI integration are implemented. Bounded pure trim
-preparation and atomic action/publication are implemented; persistence remains
-the next slice. Native property sheet
+preparation, atomic action/publication and trim persistence are implemented.
+Actual GUI checks exposed missing versioned DWG Save As choices and stale cached
+save preferences; the bounded Z-save-filters correction precedes final closure.
+Native property sheet
 and Edit Properties dialog share bounded source snapshots; modal clone ownership
 survives document, editor, action and view teardown until widgets unwind.
 
@@ -48,7 +50,7 @@ survives document, editor, action and view teardown until widgets unwind.
 | Difference between initial checkpoints | Only this plan file; no product-source change |
 | Roadmap consolidation commit | `87ebe5428` |
 | Current feature branch | `codex/offset-2961-implementation` |
-| Latest product checkpoint | `49bb7755f` (T-actions; T-kernel04c712069) |
+| Latest product checkpoint | `905158174` (T-files; T-actions49bb7755f, T-kernel04c712069) |
 | Latest auxiliary checkpoint | `90714f758` (H7 bounded suite-pair scheduling; temp-path/journal fix c1b2fa095, driver 5a3e47039) |
 | Geometry implementation | `lc_ellipseoffsetgeometry.{h,cpp}`, `lc_parametriccurveintersection.{h,cpp}` |
 | Existing geometry stages | Normalization, reference frames/jets, critical/event/component analysis, cache layout, bounds, local topology |
@@ -59,13 +61,13 @@ survives document, editor, action and view teardown until widgets unwind.
 | B terminals | Immutable exact occurrence/edge-side classification, separate source incidence, bounded storage/scans |
 | C topology | Complete bounded unique-path checker, owned contact query and exact root-to-port matching; unresolved correspondence refuses Ambiguous |
 | Native entity | Checked adoption/creation, transactional mutators and actual stage results; consistency stamp, clone, exact proof transport, cached visible grips/safe snaps and bounded owned extensions |
-| Product integration | Tool/type/name, independently checked persistence, native sheet/dialog/drag, interactive enablement, both value-only source actions, source UI, trim kernel and atomic trim actions committed; explicit INSERT plain-cache fallback; trim files pending |
+| Product integration | Tool/type/name, independently checked persistence, native sheet/dialog/drag, interactive enablement, both value-only source actions, source UI, trim kernel/actions/files committed; explicit INSERT plain-cache fallback; primary Save As correction pending |
 | Build registration | Geometry/contact/routing/native sources in CMake/qmake6; native and adjacent tests registered and executed |
 | Validation harness | X-H1 through X-H7 complete: source90714f758,407-case regression, two full qualification runs and independent retained-evidence audit |
-| Latest validation | T-actions:34 focused Release/ASan cases, full Release4746,1162 affected ASan, both format lanes, CMake apps/qmake6,48 adjacent ASan cases and two isolated failure modules passed; see section14 |
+| Latest validation | T-files:12 focused Release/ASan cases, full Release4758,1174 affected ASan, both format lanes, CMake apps/qmake6,48 adjacent cases in both configurations and both isolated failure modules passed; see section14 |
 
 Recheck these facts against the selected implementation checkout before starting
-T-files. Qt6/Catch2/CMake/qmake6 and independent ACadSharp/ODA fixture/inspection
+Z-save-filters. Qt6/Catch2/CMake/qmake6 and independent ACadSharp/ODA fixture/inspection
 tools are inventoried and qualified within the scopes recorded in section14.
 The user's main checkout is a different, dirty branch and is not the
 source baseline above. Do not overwrite its unrelated changes or apply this plan
@@ -242,8 +244,9 @@ test commit followed by the section 4 plan checkpoint.
 | I-ui | I-restore | Source-action registration/links and persistence/GUI coverage | committed:4a231d243; physical GUI remains Z |
 | T-kernel | I-ui | Pure bounded stored-cache trim preparation/clipping | committed:04c712069 |
 | T-actions | T-kernel | Trim/Trim Two atomic owner-level replacement (`49bb7755f`) | committed |
-| T-files | T-actions | Trim persistence/demotion across format lanes | pending |
-| Z-release | T-files and auxiliary track closure | Complete regressions, build/GUI/interoperability audit | pending |
+| T-files | T-actions | Trim persistence/demotion across format lanes | complete,905158174 |
+| Z-save-filters | T-files | Expose existing DWG writer versions in primary Save As; canonical local preference keys | pending |
+| Z-release | Z-save-filters and auxiliary track closure | Complete regressions, build/GUI/interoperability audit | pending |
 
 The auxiliary harness track is X-H1 -> X-H2 -> X-H3 -> X-H4 -> X-H5 ->
 X-H6 -> X-H7 (section 13). Retain these obligations as a separate finite
@@ -277,11 +280,12 @@ editing; changes beyond the named concern require a scope note in the slice card
 | I-ui | action factories/context/property providers; ui/components/utils/tests/lc_offsetcurve_source_ui_tests.cpp; lib/filters/tests/lc_offsetcurve_source_actions_persistence_tests.cpp; docs/offset_curve_interactive_smoke.md |
 | T-kernel | librecad/src/lib/modification/lc_offsetcachetrim.{h,cpp}; tests/lc_offsetcachetrim{,_failure}_tests.cpp; whole-frame chart copy in lc_ellipseoffsetgeometry.{h,cpp}; CMake/qmake registration |
 | T-actions/T-files | actions/drawing/modify/lc_action_modify_trim.{h,cpp}, tests/lc_offsetcachetrim_action_tests.cpp; modification/batch ownership; lib/filters/tests/lc_offsetcachetrim_file_tests.cpp |
+| Z-save-filters | ui/dialogs/file/export/layers/lc_filedialogservice.cpp; ui/main/persistence/tests/lc_dwg_save_filter_tests.cpp; one CMake test registration |
 | All new sources/tests/UI | CMakeLists.txt; librecad/src/src.pro (HEADERS/SOURCES/FORMS as appropriate); exact Catch2 target registration |
 
 ### Current Next Cards
 
-The main track resumes at T-files (section11.4). D-core `92758859c` uses the actual
+The main track resumes at Z-save-filters, then Z-release. D-core `92758859c` uses the actual
 C checker, not a layout-only adoption gate. Similarity transport requires exact
 dyadic affine images of every stored coordinate and unchanged normalized semantic
 basis fields. Rounded similarities and arc reflections refuse unchanged; whole
@@ -431,22 +435,31 @@ Next implementation order:
    tracked document/view/context lifetimes and drawn-overlay cleanup. Only the
    attempt's own undo-epoch increment is admitted; end-cycle external undo and
    teardown observers cannot make retained picks current again.
-5. T-files adds real demotion/Undo/Redo/second reopens in every required format.
-   Keep all12 authored identities, both degrees, N128/N256 closed variants and
-   all legacy rows. Early pinned-copy runtime found two production dependencies:
-   exact certified span-endpoint evaluation has an avoidable interval rounding
-   floor; legacy CELLSTYLEMAP uses full CMC and must check its body before shared
-   handle-cursor consumption. Apply/review those narrow kernel/parser fixes.
-   Correct the new legacy test's overbroad export expectation: section9.4 defines
-   R13/R14 as read-only adoption, not arbitrary foreign-object migration to every
-   newer encoding. Retain successful legacy import, both-degree trim/demotion,
-   supported DXF export/second reopen and full foreign-data/history checks. For
-   unavailable foreign-object re-encoding, verify section9.2's specific atomic
-   refusal, not successful conversion. Do not blanket-refuse by source version,
-   remove foreign dictionaries or weaken encoding-family/owner guards. Every
-   positive modern writer/conversion/binary/chain row remains mandatory.
-6. Test/commit/checkpoint every slice, then perform Z's final application,
-   available platform/static/sanitizer, GUI and retained interoperability audit.
+5. T-files905158174 is tested/committed: all12 identities, both degrees,
+   N128/N256 closed variants, positive modern writer/conversion/binary/chain
+   lanes and second reopens remain. Certified singleton endpoints use actual
+   stored controls without avoidable interval widening. CELLSTYLEMAP uses full
+   CMC and checks data/string bounds before shared legacy handle consumption.
+   Genuine R13/R14 inputs adopt and trim; supported DXF reopens stay positive.
+   Unsupported foreign-object migration refuses on an actual required dictionary
+   edge, preserving the complete tested source graph/history and target bytes.
+   No foreign dictionaries are removed or replay/owner/version guards weakened.
+6. Z-save-filters is ready: the primary LC_FileDialogService advertises only
+   generic DWG/AC1015 although five newer writers exist. Add the five year-specific
+   filter/enum pairs while retaining generic compatibility and DXF defaults.
+   Normalize its six local Save/SaveDrawingFilter keys: doubled-slash cache keys
+   currently leave same-process defaults stale, despite normalized persisted
+   QSettings keys. Do not refactor RS_Settings globally or expand old block-save
+   dialogs. Register three actual modal QFileDialog tests in one dedicated TU:
+   all six signatures/reopens, preferred/remembered selection, and default/Cancel
+   behavior; verify the selected destination is remembered from a different
+   initial folder. Frozen EVID patch-v3 and independent review are ready, not
+   runtime qualification. Build/test/commit this slice and immediately checkpoint.
+7. Reuse its final full Release/affected ASan reports for all76 mandatory geometry
+   identities, alongside final format/failure/adjacent gates. Finish actual
+   DXF/DWG R2018 Save/Open on the real updated/restored/trimmed scene, including
+   the separately built qmake app. Preserve available-tool/static, retained
+   interoperability and precise physical-observation limitations in Z.
 
 The auxiliary scheduler correction `90714f758` passed the407-case regression.
 Both isolated full runs of `H7-qualification-03` returned PASS through the actual
@@ -1948,13 +1961,13 @@ the whole roadmap or disguise the gap with a synthetic fixture.
 
 | Item | State | Next action |
 |---|---|---|
-| Recursive plan/activation routing | Removed as a planning deadlock | Execute the finite T-files card |
+| Recursive plan/activation routing | Removed as a planning deadlock | Execute Z-save-filters, then final Z closure |
 | Atomic budget and bounded geometry APIs | A slices, B and C committed/validated; used by native adoption/editing | Preserve bounds and stage-result contracts in UI/trim |
-| Native feature/UI/source actions/trim | A through T-actions committed; trim files remain | Fix the kernel/parser dependencies, qualify the explicit legacy read-only/refusal and positive modern file lanes, then Z |
+| Native feature/UI/source actions/trim | A through T-files committed; actual mixed/conic/native-pair GUI paths observed | Correct primary Save As version/default exposure, then finish final GUI/evidence closure |
 | Independent DWG/version fixtures | G-matrix79ae1930b qualifies genuine marked R13/R14/R2007 and all modern rows | Preserve fixture/tool/source hashes and scope; no local tool install required by CI |
 | Auxiliary empty-DWG conversion | Exact48 plot observations;24 ODA-converted files have duplicate-Continuous strict-read failures, originals unique; source-control order anomaly recorded, causation unresolved | Retain diagnostic scope in Z; not a mandatory native-row failure or general-DWG conformance claim |
 | Harness production readiness | X-H1-X-H7 committed; actual two-run qualification03 independently audited | Retain observed-byte/runtime scope and failed attempts; no future timing guarantee |
-| Independent review and test evidence | T-actions independent source/ownership/epoch reviews and actual runtime/identity gates complete; G-matrix external scopes retained | Obtain fresh validation for each remaining slice; preserve reviewed correction order |
+| Independent review and test evidence | T-files independent kernel/parser/fixture/refusal reviews, actual runtime/identity and four-blob gates complete; G-matrix external scopes retained | Obtain fresh validation for Z-save-filters; preserve reviewed correction order |
 | Physical GUI settings route | Human approved normal profile on2026-10-24 | Run actual final apps on private drawing copies; restore intentionally changed visible options, do not claim native-store isolation or exact preference rollback |
 | Dirty unrelated main checkout | Not the selected source baseline | Preserve it; reconcile only if changing implementation worktree |
 
@@ -1994,8 +2007,79 @@ The plan checkpoint column never depends on its own future SHA.
 | I-ui | 4a231d243 | Immediate plan-only checkpoint | 12 focused Release/ASan cases, full Release4657,1073 affected ASan, unchanged format lanes, qmake6,93 adjacent ASan cases, allocation gates and eleven-blob correspondence; deduplicated guarded source links and real file persistence |
 | T-kernel | 04c712069 | Immediate plan-only checkpoint | 55 focused Release/ASan cases, full Release4712,1128 affected ASan, unchanged format lanes, qmake6,48 adjacent ASan cases, both failure modules and eight-blob correspondence; exact rational seam identity and value-only whole-chart copy |
 | T-actions | 49bb7755f72a9b1f40e2a97206b7038845f48ba4 | Immediate plan-only checkpoint | 34 focused Release/ASan cases, full Release4746,1162 affected ASan, unchanged format lanes, both CMake apps/qmake6,48 adjacent ASan cases, both failure modules and twelve-blob correspondence; complete native input and own-cycle completion guards |
+| T-files | 9051581740f5b71f49551311ae7ad7186730662a | Immediate plan-only checkpoint | 12 focused Release/ASan cases, full Release4758,1174 affected ASan, unchanged format lanes, CMake apps/qmake6,48 adjacent cases in both configurations, both failure modules and four-blob correspondence; actual Trim/Trim Two, conic/native-pair and DXF reopens |
 | X-H7 timeout source fix | c1b2fa095 | Immediate plan-only checkpoint | Author55 + independent15 controls and parent399 runner regression passed; actual runtime qualification remains open |
 | X-H7 bounded scheduling | 90714f758 | Immediate plan-only checkpoint | Author85 + independent12 controls, parent407 runner regression and real224.790-second preflight probe passed; full two-run qualification remains open |
+
+### T-files Validation (2026-10-24)
+
+Product `9051581740f5b71f49551311ae7ad7186730662a` contains four owned files,
+1269 insertions/eight deletions. The new1243-line main Catch TU registers12
+literal cases exactly once. The only production corrections are exact certified
+span-endpoint evaluation and legacy CELLSTYLEMAP full-CMC/boundary handling.
+Independent fixture/math/kernel/parser reviews and the final refusal-test review
+reported no remaining P1/P2 in their stated scopes.
+
+The genuine closed fixtures use default-portable tolerances and actual C
+admission for degree1/3, N128/N256 and both directions, not unchecked tolerance
+changes. All14 modern application format rows, binary codecs, both conversion
+directions, alternating chains, trim demotion, Undo/Redo and second reopens stay
+positive. Genuine independent R13/R14 reads are read-only under section9.4.
+Their unavailable unrelated foreign-object migration is a qualified refusal,
+never a successful conversion or a source-version blacklist. Every actual
+unresolved required dictionary target is checked against source graph membership;
+TABLESTYLE unsupported-target payload is a separate concrete witness. Thirty-two
+absent/existing-target save attempts preserve file/directory bytes and the tested
+complete entity/raw/typed-style/dictionary/frame/history snapshots. A final real
+Undo/native and Redo/plain check covers history membership, not just addresses.
+The broad foreign-style producer draft remains unapplied and uncredited.
+
+Final actual03 results, serialized test execution and no build during gates:
+
+- Focused Release/ASan:12 cases/809556 assertions each, zero failures/skips;
+ 28 native JUnit rows include16 closed-case SECTION rows, not28 test cases.
+- Full Release:4758 cases,4731 passed/27 unchanged fixture/environment skips,
+ 10228076 assertions. Affected ASan:1174 cases,1173 passed/one unchanged skip,
+ 4314246 assertions and no sanitizer diagnostic; host leak detection unsupported.
+- DXF fast Release/ASan:765 cases/three unchanged skips/82553 assertions each.
+ DWG fast Release/ASan:1021 cases/four unchanged skips/362942 assertions each.
+- Separate adjacent Trim Release/ASan:48 cases/63167 assertions each, no skips.
+ Both isolated failure modules returned0 in both configurations: batch2/0/1/0;
+ trim1616 allocation failures,20 late cancellations,four conic failures/four
+ conic cancellations. These standalone results are not Catch2 assertions.
+- Both CMake application/main/fast/failure configurations and qmake6 built01;
+ later test-only corrections recompiled/linked both main Catch binaries03.
+ Existing Apple linker/deprecation warnings remain, not a warning-clean claim.
+- Four source and13 executable identities were byte-identical before/after all
+ final gates (`cmp`0). `T-files-report-audit-03.json` passed exact membership,
+ multiplicity/source-catalog and skip comparisons against T-actions03. Actual
+ product-SHA `T-files-committed-blob-audit-03.json` passed all four files.
+
+Evidence root: `/private/tmp/lc2961-impl-evidence.9GtLO2`;
+`T-files-test-invocations-03/run-manifest.json`, `T-files-{before,after}-03.json`,
+`T-files-sources-03.json`, both `T-files-adjacent-*-03.{log,xml}`, build/configure01
+logs and `T-files-final-build-03.md`. Discovery01's overbroad legacy expectation
+and run02's weaker assertions remain retained; neither substitutes for final03.
+
+Actual private-drawing GUI observations are recorded in
+`Z-physical-observations-01.md`: qmake mixed native/line Trim Two in both orders;
+CMake native/circle Trim Two retains an ordinary Radius6 Arc and open degree3
+spline; native/native Trim Two in both orders converts both and one Undo restores
+both distinct native dialogs. Pending-second-pick cancellation preserves redo.
+Actual modern DXF second reopen stays plain; Undo-before-save reopens native.
+Mixed source links report changed/unchanged correctly, ordinary peers remain
+selected, repeated Restore is a no-op, and a real updated/restored/trimmed scene
+is saved with AC1032 header. These are precise observations, not full-CAD or
+every manual catalogue variant qualification. The rounded exact-top pick's
+conservative depth refusal remains documented; nearby/left picks succeed.
+
+Human-approved normal-profile testing verified saved OFF, restored ON after a
+fresh process restart, and all original effective Offset options unchanged.
+Temporary keyboard navigation was explicitly restored OFF after each session.
+Exact whole-profile rollback/fresh-native-key absence is not claimed. Actual
+primary DWG Save As still exposes only AC1015, and local doubled-slash preference
+keys leave stale defaults; Z-save-filters corrects those concrete GUI dependencies.
+Next: apply/review/build/test/commit that three-file slice, checkpoint it, then Z.
 
 ### T-actions Validation (2026-10-24)
 
