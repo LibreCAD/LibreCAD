@@ -76,14 +76,6 @@ struct Drawing {
     }
 };
 
-class OffsetPropertiesAction final : public LC_ActionModifyEntity {
-public:
-    explicit OffsetPropertiesAction(LC_ActionContext* context) : LC_ActionModifyEntity(context) {}
-    using LC_ActionModifyEntity::ShowDialog;
-    using LC_ActionModifyEntity::doInitWithContextEntity;
-    using LC_ActionModifyEntity::doTriggerModifications;
-};
-
 // Fonts from the source tree, so that texts have glyphs.
 struct SourceFonts {
     SourceFonts() {
@@ -312,33 +304,8 @@ TEST_CASE("Native offset clones own their cache and extension values", "[copy][c
     CHECK(std::get<QString>(clone->unknownOwnedTail().front().value) == QStringLiteral("changed caller storage"));
 }
 
-TEST_CASE("Offset Edit Properties refuses before selection cloning or document changes",
-          "[copy][lc-offsetcurve][properties]") {
-    lc::test::ActionFixture<OffsetPropertiesAction> f;
-    auto offset = lc::test::makeOffsetCurve(&f.m_graphic);
-    REQUIRE(offset != nullptr);
-    auto* entity = offset.get();
-    f.m_graphic.addEntity(offset.release());
-    f.m_graphic.setModified(false);
-    const auto flags = entity->getFlags();
-    const auto controls = entity->getData().controlPoints;
-    f.m_action->doInitWithContextEntity(entity, RS_Vector{0, 0});
-    f.m_action->setStatus(OffsetPropertiesAction::ShowDialog);
-    LC_DocumentModificationBatch batch;
-    CHECK_FALSE(f.m_action->doTriggerModifications(batch));
-    CHECK(batch.entitiesToAdd.isEmpty());
-    CHECK(batch.entitiesToDelete.isEmpty());
-    CHECK_FALSE(batch.setActiveLayer);
-    CHECK_FALSE(batch.setActivePen);
-    CHECK(f.m_action->getStatus() == OffsetPropertiesAction::ShowDialog);
-    CHECK(f.m_action->mayBeTerminatedExternally());
-    REQUIRE(f.m_graphic.count() == 1);
-    CHECK(f.m_graphic.entityAt(0) == entity);
-    CHECK(entity->getFlags() == flags);
-    CHECK(entity->getData().controlPoints == controls);
-    CHECK(entity->hasEditableDefinition());
-    CHECK_FALSE(f.m_graphic.isModified());
-}
+// H-dialog replaces the temporary native-properties refusal with real
+// widget/action Accept, Cancel and undo/redo tests in lc_offsetcurve_propertiesdialog_tests.cpp.
 
 TEST_CASE("A cloned closed polyline closes itself, not the original", "[copy][polyline]") {
     Drawing d;

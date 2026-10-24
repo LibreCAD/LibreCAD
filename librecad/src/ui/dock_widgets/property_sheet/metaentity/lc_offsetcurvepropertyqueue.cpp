@@ -5,21 +5,17 @@
  */
 #include "lc_offsetcurvepropertyqueue.h"
 #include "lc_offsetcurvepropertybatch.h"
+#include "lc_offsetcurveeditsnapshot.h"
 
 #include <QCoreApplication>
 #include <QMap>
 #include <QStringList>
 #include <QTimer>
-#include <cstring>
-#include <tuple>
 #include <type_traits>
 #include <utility>
-#include <variant>
-#include "drw_base.h"
 #include "lc_actioncontext.h"
 #include "lc_busycursorguard.h"
 #include "lc_offsetcurveui.h"
-#include "lc_offsetcurvereadutils.h"
 #include "rs_document.h"
 #include "rs_graphicview.h"
 #include "rs_layer.h"
@@ -34,221 +30,20 @@ bool unlocked(const RS_Entity* entity) {
     return layer == nullptr || !layer->isLocked();
 }
 
-unsigned stableFlags(const RS_Entity& entity) {
-    return entity.getFlags() & ~(RS2::FlagsTransient & ~RS2::FlagDeleted);
 }
-bool sameDouble(const double a, const double b) {
-    return std::memcmp(&a, &b, sizeof(double)) == 0;
-}
-bool samePoint(const RS_Vector& a, const RS_Vector& b) {
-    return a.valid == b.valid && sameDouble(a.x, b.x) && sameDouble(a.y, b.y) && sameDouble(a.z, b.z);
-}
-bool sameDefinition(const LC_EllipseOffsetDefinition& a, const LC_EllipseOffsetDefinition& b) {
-    return samePoint(a.basis.center, b.basis.center) && samePoint(a.basis.majorP, b.basis.majorP) &&
-        sameDouble(a.basis.ratio, b.basis.ratio) && sameDouble(a.basis.angle1, b.basis.angle1) &&
-        sameDouble(a.basis.angle2, b.basis.angle2) && a.basis.reversed == b.basis.reversed &&
-        a.basis.isArc == b.basis.isArc &&
-        sameDouble(a.distance, b.distance) && a.towardCentre == b.towardCentre &&
-        sameDouble(a.relTolerance, b.relTolerance) && a.cacheReversed == b.cacheReversed;
-}
-bool boundedPen(const RS_Pen& pen) {
-    return std::size_t(pen.getColor().colorName().size()) <= LC_OffsetCurve::MaximumOwnedStringUnits;
-}
-bool samePen(const RS_Pen& a, const RS_Pen& b) {
-    // Painting equality omits alpha, dash offset and passive naming metadata.
-    return a == b && a.getFlags() == b.getFlags() && a.getLineTypeId() == b.getLineTypeId() &&
-        sameDouble(a.getScreenWidth(), b.getScreenWidth()) && sameDouble(a.getAlpha(), b.getAlpha()) &&
-        sameDouble(a.dashOffset(), b.dashOffset()) && a.getColor().colorName() == b.getColor().colorName();
-}
-bool boundedSource(const LC_OffsetCurve& curve) {
-    const auto& data = curve.getData();
-    const auto cap = LC_OffsetCheckLimits{}.maxVertices;
-    if (!(data.degree >= 1 && data.degree <= 3 && data.controlPoints.size() <= cap &&
-        data.fitPoints.size() <= cap && data.weights.size() <= cap && data.knotslist.size() <= 4*cap &&
-        data.savedOpenKnots.size() <= 4*cap && curve.reactorHandles().size() <= cap &&
-        curve.getDrwExtData().size() <= cap && boundedPen(curve.getPen(false)) &&
-        LC_OffsetCurveRead::cachedLength(curve).has_value())) return false;
-    for (const auto* child : curve) if (!boundedPen(child->getPen(false))) return false;
-    return true;
-}
-auto metadata(const RS_Entity& entity) {
-    return std::make_tuple(entity.sourceHandle(), entity.lineage(), entity.ownerLineage(),
-        entity.xDictHandle(), entity.materialHandle(), entity.plotStyleHandle(), entity.shadowMode(),
-        entity.shadowHandle(), entity.fullVisualStyleHandle(), entity.faceVisualStyleHandle(),
-        entity.edgeVisualStyleHandle());
-}
-bool sameTail(const LC_OffsetCurve::OwnedTail& a, const LC_OffsetCurve::OwnedTail& b) {
-    if (a.size() != b.size()) return false;
-    for (std::size_t i = 0; i < a.size(); ++i) {
-        if (a[i].code != b[i].code || a[i].value.index() != b[i].value.index()) return false;
-        const bool equal = std::visit([&](const auto& left) {
-            using T = std::decay_t<decltype(left)>;
-            const auto& right = std::get<T>(b[i].value);
-            if constexpr (std::is_same_v<T, RS_Vector>) return samePoint(left, right);
-            else if constexpr (std::is_same_v<T, double>) return sameDouble(left, right);
-            else return left == right;
-        }, a[i].value);
-        if (!equal) return false;
-    }
-    return true;
-}
+static_assert(LC_OffsetCurvePropertyQueue::MaximumSnapshotItems == LC_OffsetCurveEditSnapshot::MaximumSnapshotItems);
+static_assert(LC_OffsetCurvePropertyQueue::MaximumSnapshotBytes == LC_OffsetCurveEditSnapshot::MaximumSnapshotBytes);
 
-bool boundedExtData(const std::vector<std::shared_ptr<DRW_Variant>>& tags) {
-    if (tags.size() > LC_OffsetCurvePropertyQueue::MaximumSnapshotItems) return false;
-    std::size_t bytes = 0;
-    for (const auto& tag : tags) {
-        if (!tag) return false;
-        std::size_t size = 0;
-        switch (tag->type()) {
-        case DRW_Variant::STRING:
-            if (!tag->content.s) return false;
-            size = tag->content.s->size();
-            break;
-        case DRW_Variant::BINARY:
-            if (tag->content.b != tag->binary()) return false;
-            size = tag->binary()->size();
-            break;
-        case DRW_Variant::COORD:
-            if (!tag->coord()) return false;
-            break;
-        case DRW_Variant::INTEGER:
-        case DRW_Variant::INTEGER64:
-        case DRW_Variant::DOUBLE:
-        case DRW_Variant::INVALID:
-            break;
-        default: return false;
-        }
-        if (size > LC_OffsetCurvePropertyQueue::MaximumSnapshotBytes - bytes) return false;
-        bytes += size;
-    }
-    return true;
-}
-
-struct TagSnapshot {
-    int code;
-    DRW_Variant::TYPE type;
-    bool layerRef;
-    std::optional<DRW_Variant::ActiveDwgLayerReference> reference;
-    using Payload = std::variant<std::monostate, std::string, std::int32_t, std::int64_t,
-        double, DRW_Coord, std::vector<std::uint8_t>>;
-    Payload payload;
-
-    explicit TagSnapshot(const DRW_Variant& tag)
-        : code(tag.code()), type(tag.type()), layerRef(tag.isLayerRef()),
-          reference(tag.activeDwgLayerReference()) {
-        // Copy only active payload, not potentially large inactive variant storage.
-        switch (type) {
-        case DRW_Variant::STRING: payload = *tag.content.s; break;
-        case DRW_Variant::INTEGER: payload = tag.i_val(); break;
-        case DRW_Variant::INTEGER64: payload = tag.i64_val(); break;
-        case DRW_Variant::DOUBLE: payload = tag.d_val(); break;
-        case DRW_Variant::COORD: payload = *tag.coord(); break;
-        case DRW_Variant::BINARY: payload = *tag.binary(); break;
-        case DRW_Variant::INVALID: break;
-        }
-    }
-    bool matches(const DRW_Variant& tag) const {
-        const auto active = tag.activeDwgLayerReference();
-        if (tag.code() != code || tag.type() != type || tag.isLayerRef() != layerRef ||
-            bool(active) != bool(reference) || (active &&
-            (active->reference != reference->reference || active->sourceVersion != reference->sourceVersion)))
-            return false;
-        switch (type) {
-        case DRW_Variant::STRING: return std::get<std::string>(payload) == *tag.content.s;
-        case DRW_Variant::INTEGER: return std::get<std::int32_t>(payload) == tag.i_val();
-        case DRW_Variant::INTEGER64: return std::get<std::int64_t>(payload) == tag.i64_val();
-        case DRW_Variant::DOUBLE: return sameDouble(std::get<double>(payload), tag.d_val());
-        case DRW_Variant::COORD: {
-            const auto& point = std::get<DRW_Coord>(payload);
-            return sameDouble(point.x, tag.coord()->x) && sameDouble(point.y, tag.coord()->y) &&
-                sameDouble(point.z, tag.coord()->z);
-        }
-        case DRW_Variant::BINARY: return std::get<std::vector<std::uint8_t>>(payload) == *tag.binary();
-        case DRW_Variant::INVALID: return true;
-        }
-        return false;
-    }
-};
-}
-
-/** Native-only replacement guard, captured before the first accepted edit. */
+/** Keep the private queue ABI/header and diagnostic source ID unchanged. */
 struct LC_OffsetCurvePropertyQueue::SourceSnapshot {
     unsigned long long id;
-    std::uint64_t cache;
-    LC_EllipseOffsetDefinition definition;
-    bool defined, consistent;
-    double tolerance;
-    RS_Layer* layer;
-    RS_Pen pen;
-    unsigned flags, ownedFlags;
-    LC_OffsetCurve::OwnedTail tail;
-    decltype(metadata(std::declval<const RS_Entity&>())) provenance;
-    std::vector<quint32> reactors;
-    std::vector<std::shared_ptr<DRW_Variant>> extData;
-    std::vector<TagSnapshot> extValues;
-    std::vector<std::pair<QString, QString>> variables;
-    struct Child {
-        unsigned long long id;
-        RS_Vector start, end;
-        unsigned flags;
-        RS_Pen pen;
-        RS_Layer* layer;
-    };
-    std::vector<Child> children;
-
+    std::unique_ptr<LC_OffsetCurveEditSnapshot> value;
     static std::unique_ptr<SourceSnapshot> capture(const LC_OffsetCurve& curve) {
-        if (!boundedSource(curve) || !boundedExtData(curve.getDrwExtData()) ||
-            curve.userDefVarCount() > LC_OffsetCurve::MaximumOwnedTailItems) return {};
-        auto keys = curve.getAllKeys();
-        if (keys.size() > LC_OffsetCurve::MaximumOwnedTailItems) return {};
-        std::size_t units = 0;
-        for (const auto& key : keys) {
-            const auto value = curve.getUserDefVar(key);
-            const auto size = std::size_t(key.size()) + std::size_t(value.size());
-            if (size > LC_OffsetCurve::MaximumOwnedTailLogicalBytes/2 - units) return {};
-            units += size;
-        }
-        return std::unique_ptr<SourceSnapshot>(new SourceSnapshot(curve, keys));
+        auto value = LC_OffsetCurveEditSnapshot::capture(curve);
+        if (!value) return {};
+        return std::unique_ptr<SourceSnapshot>(new SourceSnapshot{curve.getId(), std::move(value)});
     }
-    SourceSnapshot(const LC_OffsetCurve& curve, const std::vector<QString>& keys)
-        : id(curve.getId()), cache(RS_Spline::geometryFingerprint(curve.getData())),
-          definition(curve.definition()), defined(curve.isDefined()), consistent(curve.isConsistent()),
-          tolerance(curve.checkedWorldTolerance()), layer(curve.getLayer(false)), pen(curve.getPen(false)),
-          flags(stableFlags(curve)), ownedFlags(curve.unknownOwnedFlags()),
-          tail(curve.unknownOwnedTail()), provenance(metadata(curve)), reactors(curve.reactorHandles()),
-          extData(curve.getDrwExtData()) {
-        extValues.reserve(extData.size());
-        for (const auto& tag : extData) extValues.emplace_back(*tag);
-        for (const auto& key : keys) variables.emplace_back(key, curve.getUserDefVar(key));
-        for (const auto* child : curve)
-            children.push_back({child->getId(), child->getStartpoint(), child->getEndpoint(),
-                stableFlags(*child), child->getPen(false), child->getLayer(false)});
-    }
-    bool matches(const LC_OffsetCurve& curve) const {
-        if (curve.getId() != id || !boundedSource(curve) || !boundedExtData(curve.getDrwExtData()) ||
-            RS_Spline::geometryFingerprint(curve.getData()) != cache ||
-            !sameDefinition(curve.definition(), definition) || curve.isDefined() != defined ||
-            curve.isConsistent() != consistent || !sameDouble(curve.checkedWorldTolerance(), tolerance) ||
-            curve.getLayer(false) != layer || !samePen(curve.getPen(false), pen) ||
-            stableFlags(curve) != flags || curve.unknownOwnedFlags() != ownedFlags ||
-            !sameTail(curve.unknownOwnedTail(), tail) || metadata(curve) != provenance ||
-            curve.reactorHandles() != reactors || curve.getDrwExtData() != extData ||
-            std::size_t(curve.count()) != children.size() || curve.userDefVarCount() != variables.size()) return false;
-        for (std::size_t item = 0; item < extValues.size(); ++item)
-            if (!extValues[item].matches(*curve.getDrwExtData()[item])) return false;
-        const auto keys = curve.getAllKeys();
-        if (keys.size() != variables.size()) return false;
-        for (std::size_t i = 0; i < keys.size(); ++i)
-            if (keys[i] != variables[i].first || curve.getUserDefVar(keys[i]) != variables[i].second) return false;
-        std::size_t i = 0;
-        for (const auto* child : curve) {
-            const auto& before = children[i++];
-            if (child->getId() != before.id || !samePoint(child->getStartpoint(), before.start) ||
-                !samePoint(child->getEndpoint(), before.end) || stableFlags(*child) != before.flags ||
-                !samePen(child->getPen(false), before.pen) || child->getLayer(false) != before.layer) return false;
-        }
-        return true;
-    }
+    bool matches(const LC_OffsetCurve& curve) const { return value->matches(curve); }
 };
 
 LC_OffsetCurvePropertyQueue::LC_OffsetCurvePropertyQueue(QObject* parent, LC_ActionContext* context)

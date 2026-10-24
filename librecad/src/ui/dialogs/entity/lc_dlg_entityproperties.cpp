@@ -32,6 +32,7 @@
 #include "lc_propertieseditingwidget_arc.h"
 #include "lc_propertieseditingwidget_circle.h"
 #include "lc_propertieseditingwidget_ellipse.h"
+#include "lc_propertieseditingwidget_offsetcurve.h"
 #include "lc_propertieseditingwidget_hyperbola.h"
 #include "lc_propertieseditingwidget_image.h"
 #include "lc_propertieseditingwidget_insert.h"
@@ -198,6 +199,12 @@ void LC_DlgEntityProperties::prepareTypeSpecificUI(LC_EntityPropertiesEditorWidg
             primaryWidget = new LC_PropertiesEditingWidgetEllipse(this);
             windowTitle = tr("Ellipse Properties");
             dlgName = "DlgEllipseProperties";
+            break;
+        }
+        case RS2::EntityOffsetCurve: {
+            primaryWidget = new LC_PropertiesEditingWidgetOffsetCurve(this);
+            windowTitle = tr("Offset Curve Properties");
+            dlgName = "DlgOffsetCurveProperties";
             break;
         }
         case RS2::EntityHyperbola: {

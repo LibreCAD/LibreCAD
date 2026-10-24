@@ -1538,6 +1538,8 @@ set (SHARED_SOURCES
      librecad/src/ui/components/utils/lc_busycursorguard.h
      librecad/src/ui/components/utils/lc_offsetcurveui.cpp
      librecad/src/ui/components/utils/lc_offsetcurveui.h
+     librecad/src/ui/components/utils/lc_offsetcurveeditsnapshot.cpp
+     librecad/src/ui/components/utils/lc_offsetcurveeditsnapshot.h
      librecad/src/ui/components/utils/lc_guarded_signals_blocker.h
      librecad/src/ui/components/utils/lc_item_info.h
      librecad/src/ui/components/utils/lc_mouse_tracking_table_view.cpp
@@ -1566,6 +1568,8 @@ set (SHARED_SOURCES
      librecad/src/ui/dialogs/entity/lc_dlg_tolerance.h
      librecad/src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.cpp
      librecad/src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.h
+     librecad/src/ui/dialogs/entity/lc_propertieseditingwidget_offsetcurve.cpp
+     librecad/src/ui/dialogs/entity/lc_propertieseditingwidget_offsetcurve.h
     librecad/src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.cpp
     librecad/src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.h
      librecad/src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.cpp
@@ -2831,6 +2835,7 @@ if (BUILD_TESTS)
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp
         librecad/src/ui/components/pen/tests/qg_widgetpen_tests.cpp
         librecad/src/ui/dialogs/tests/lc_dialog_tests.cpp
+        librecad/src/ui/dialogs/entity/tests/lc_offsetcurve_propertiesdialog_tests.cpp
         librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreewidget_tests.cpp
         librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreemodel_tests.cpp
         librecad/src/plugins/tests/qc_actiongetselect_tests.cpp

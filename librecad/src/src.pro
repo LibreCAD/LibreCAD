@@ -658,6 +658,7 @@ HEADERS += \
     ui/components/utils/lc_entitymetauiutils.h \
     ui/components/utils/lc_busycursorguard.h \
     ui/components/utils/lc_offsetcurveui.h \
+    ui/components/utils/lc_offsetcurveeditsnapshot.h \
     ui/components/utils/lc_guarded_signals_blocker.h \
     ui/components/utils/lc_mouse_tracking_table_view.h \
     ui/components/utils/lc_tableitem_delegate_base.h \
@@ -672,6 +673,7 @@ HEADERS += \
     ui/dialogs/entity/lc_dlg_dimension.h \
     ui/dialogs/entity/lc_dlg_entityproperties.h \
     ui/dialogs/entity/lc_propertieseditingwidget_ellipse.h \
+    ui/dialogs/entity/lc_propertieseditingwidget_offsetcurve.h \
     ui/dialogs/entity/lc_hatchpropertieseditingwidget.h \
     ui/dialogs/entity/lc_mtextpropertieseditingwidget.h \
     ui/dialogs/entity/lc_textpropertieseditingwidget.h \
@@ -1115,6 +1117,7 @@ SOURCES += \
     ui/components/relative_position_assistant/lc_relative_position_evaluator.cpp \
     ui/components/utils/lc_entitymetauiutils.cpp \
     ui/components/utils/lc_offsetcurveui.cpp \
+    ui/components/utils/lc_offsetcurveeditsnapshot.cpp \
     ui/components/creators/lc_creatorinvoker.cpp \
     ui/components/utils/lc_mouse_tracking_table_view.cpp \
     ui/components/utils/lc_tableitem_delegate_base.cpp \
@@ -1129,6 +1132,7 @@ SOURCES += \
     ui/dialogs/entity/lc_dlg_entityproperties.cpp \
     ui/dialogs/entity/lc_dlg_tolerance.cpp \
     ui/dialogs/entity/lc_propertieseditingwidget_ellipse.cpp \
+    ui/dialogs/entity/lc_propertieseditingwidget_offsetcurve.cpp \
     ui/dialogs/entity/lc_hatchpropertieseditingwidget.cpp \
     ui/dialogs/entity/lc_mtextpropertieseditingwidget.cpp \
     ui/dialogs/entity/lc_textpropertieseditingwidget.cpp \
@@ -2368,6 +2372,7 @@ FORMS = ui/action_options/circle/lc_circle_by_arc_options_widget.ui \
        ui/dialogs/entity/lc_dlg_entityproperties.ui \
        ui/dialogs/entity/lc_dlg_tolerance.ui \
        ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui \
+       ui/dialogs/entity/lc_propertieseditingwidget_offsetcurve.ui \
        ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui \
        ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui \
        ui/dialogs/entity/lc_textpropertieseditingwidget.ui \
