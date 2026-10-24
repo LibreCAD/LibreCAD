@@ -194,16 +194,24 @@ matrix or unavailable platforms into PASS.
 ## Automated Validation And Scope
 
 The [validation index](offset_curve_2961_validation.md) links all R01-R15
-production/test paths and the actual final results. The roadmap's
+production/test paths and checkpoint-specific results. The roadmap's
 [Save As validation](plan_offset_curve_2961.md#z-save-filters-validation-2026-10-24)
 records product `091de1a6a`, immediate plan checkpoint `861b58957`, the twelve
 completed lanes, adjacent regressions and source/binary/blob correspondence.
-The GUI observations above do not substitute for those separate results.
+Those are the historical Save As01 results, not later-source executions.
+The [R03 final02 record](plan_offset_curve_2961.md#r03-final-closure-validation-2026-10-24)
+belongs to product `f617fcf70` / checkpoint `27ee1ecc`; the
+[later native qualification](offset_curve_2961_validation.md#current-native-qualification)
+records C-search product `b6814fb3a63dd66bb3aeae9e5b5e66668f8b8591` / checkpoint `4fa45611a291e06f9f0122f84120e23d1c2e87ac`
+and its own receipts. No new physical interaction is inferred from those native
+tests or from rechecking the older GUI/file hashes.
 
-The final full-Release/affected-ASan XMLs contain each exact unskipped A14/B8/C54
-base identity once. The 43 native mandatory SECTION detail rows per report receive
-no additional identity credit. No duplicate C++ geometry graph, external matrix
-replay or analyzer run was added for documentation closure.
+At Save As01, its full-Release/affected-ASan XMLs contain each exact unskipped
+A14/B8/C54 base once, with 43 mandatory SECTION detail rows per report receiving
+no extra identity credit. C54 is 53 public-checker identities plus C27 routing.
+The later native record supplies the current-source geometry membership result;
+the old XMLs are not substituted for new C-search results. This documentation
+adds no duplicate C++ geometry graph, external matrix replay or analyzer run.
 
 T-files `905158174` and its modern positive/legacy read-only refusal scope remain
 as qualified. Platform/static/sanitizer limitations and the physical observations

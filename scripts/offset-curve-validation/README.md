@@ -365,23 +365,28 @@ snapshots are explicitly derived expectations, never fabricated observations.
 These limits, direct-child containment limits and filesystem observation limits
 are retained in evidence/review results. Failed artifacts are preserved.
 
-## Remaining
+## Refusal Inventory And Qualification Scope
 
-`refusal-inventory.js` preserves all 71 original scenario identities and explicitly
-separates executable obligations from pending H4/H5 integration. Run
+`refusal-inventory.js` preserves all 71 original scenario identities within the
+current 93 executable obligations, with zero pending declarations. Run
 `test-refusal-inventory.js` to exercise the current inventory against the real
-transaction/CLI. Each executable identity has its own test; pending declarations
-are reported as pending obligations, never counted as successful or skipped tests.
-The current core has 93 obligations: 82 executable and 11 pending. Complete H6
-qualification still requires those remaining cases and the H7 independent runs.
+transaction/CLI. Each obligation has its own test; the inventory-accounting test
+is separate. The earlier 82-executable/11-pending core was an intermediate state,
+not the current inventory.
 Typed stdout-shape and substituted-readback diagnoses distinguish these failures
 from report parsing and on-disk receipt mutation. Repeated paths are refused by
 the same request guard at both API and CLI ingress.
 
-Remaining H6 integration and X-H7 still own completed orchestration, independent evidence
-validation, adversarial case inventories
-and deterministic reports. In particular, the schema layer does not establish
-that a candidate/manifest digest names the current product source. Callers must
+H6/H7 own orchestration, independent evidence validation, adversarial case
+inventories and deterministic reports. Qualification03 records two complete runs
+for its actual pinned source/runtime/inputs, not semantic validation of later
+C++ changes. All 39 source pins in both runs name JavaScript files. This README
+is absent from those source lists and their full captured input manifests;
+this documentation correction changes no pinned JavaScript logic. No automatic
+H7 rerun solely for product C++ changes follows from that historical scope.
+
+The schema layer alone does not establish that a candidate/manifest digest names
+the current product source. Callers must
 derive the expected tuple from actual inputs and validate those inputs at their
 execution boundaries. A well-formed receipt or synthetic PASS is not a source
 edit permission, independent review, or feature-completion claim.
