@@ -560,6 +560,7 @@ namespace RS2 {
         ActionInteractivePickAngle,
         // Identity only; source-action UI/factory registration is deferred to I-ui.
         ActionOffsetCurveUpdateSource,
+        ActionOffsetCurveRestoreOriginal,
         /** Needed to loop through all actions */
         ActionLast
     };

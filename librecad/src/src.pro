@@ -1576,6 +1576,7 @@ HEADERS += actions/dock_widgets/block/rs_actionblocksadd.h \
     actions/drawing/modify/lc_action_modify_move_rotate.h \
     actions/drawing/modify/lc_action_modify_offset.h \
     actions/drawing/modify/lc_action_offsetcurve_updatesource.h \
+    actions/drawing/modify/lc_action_offsetcurve_restoreoriginal.h \
     actions/drawing/modify/lc_action_modify_revert_direction.h \
     actions/drawing/modify/lc_action_modify_rotate.h \
     actions/drawing/modify/lc_action_modify_rotate_twice.h \
@@ -1743,6 +1744,7 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/drawing/modify/lc_action_modify_move_rotate.cpp \
     actions/drawing/modify/lc_action_modify_offset.cpp \
     actions/drawing/modify/lc_action_offsetcurve_updatesource.cpp \
+    actions/drawing/modify/lc_action_offsetcurve_restoreoriginal.cpp \
     actions/drawing/modify/lc_action_modify_revert_direction.cpp \
     actions/drawing/modify/lc_action_modify_rotate.cpp \
     actions/drawing/modify/lc_action_modify_rotate_twice.cpp \

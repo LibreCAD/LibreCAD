@@ -88,7 +88,7 @@ void LC_ActionOffsetCurveUpdateSource::doInitWithContextEntity(RS_Entity* entity
     if (!isEntityAllowedToSelect(entity)) return;
     // The base helper toggles selection. Context activation must not deselect
     // an already-selected target or disturb unrelated preselection.
-    if (!entity->isSelected()) m_document->select(QList<RS_Entity*>{entity}, true);
+    if (!entity->getFlag(RS2::FlagSelected)) m_document->select(QList<RS_Entity*>{entity}, true);
     m_selectedEntities = {entity};
     onSelectionCompleted(true, true);
     redrawDrawing();

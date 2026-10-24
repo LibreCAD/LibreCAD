@@ -733,6 +733,8 @@ set (SHARED_SOURCES
      librecad/src/actions/drawing/modify/lc_action_modify_offset.h
      librecad/src/actions/drawing/modify/lc_action_offsetcurve_updatesource.cpp
      librecad/src/actions/drawing/modify/lc_action_offsetcurve_updatesource.h
+     librecad/src/actions/drawing/modify/lc_action_offsetcurve_restoreoriginal.cpp
+     librecad/src/actions/drawing/modify/lc_action_offsetcurve_restoreoriginal.h
      librecad/src/actions/drawing/modify/lc_action_modify_revert_direction.cpp
      librecad/src/actions/drawing/modify/lc_action_modify_revert_direction.h
      librecad/src/actions/drawing/modify/lc_action_modify_rotate.cpp
@@ -2696,6 +2698,7 @@ if (BUILD_TESTS)
         librecad/src/actions/drawing/modify/tests/lc_action_modify_offset_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_offsetcurve_enable_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_offsetcurve_source_tests.cpp
+        librecad/src/actions/drawing/modify/tests/lc_action_offsetcurve_restoreoriginal_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_offsetmatrixtests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_codepage_tests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_section_size_tests.cpp
