@@ -335,14 +335,9 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
             switch (type) {
                 case RS2::EntityLine: {
                     auto *refMovingLine = static_cast<RS_Line *>(refMovingEntity);
-                    RS_Vector basePoint;
-                    if (refMovingLine->getStartpoint() == m_actionData->v1){
-                        basePoint = refMovingLine->getEndpoint();
-                    }
-                    else {
-                        basePoint = refMovingLine->getStartpoint();
-                    }
-                    mouse = getSnapAngleAwarePoint(e, basePoint, mouse, true);
+                    // As for every other grip and Stretch, the angle snap is of the
+                    // grip's move, not of the line about its other end (#3174).
+                    mouse = getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true);
                     if (ctrlPressed){ // - if CTRL pressed, move endpoint with saving current angle of line
                         auto constructionLine = RS_ConstructionLine(nullptr,
                             RS_ConstructionLineData(refMovingLine->getStartpoint(),
@@ -692,13 +687,7 @@ void RS_ActionDefault::onMouseMovingRefCompleted(const LC_MouseEvent* e) {
     switch (type) {
         case RS2::EntityLine: {
             const auto *refMovingLine = static_cast<RS_Line *>(refMovingEntity);
-            RS_Vector basePoint;
-            if (refMovingLine->getStartpoint() == m_actionData->v1) {
-                basePoint = refMovingLine->getEndpoint();
-            } else {
-                basePoint = refMovingLine->getStartpoint();
-            }
-            mouse = getSnapAngleAwarePoint(e, basePoint, mouse);
+            mouse = getSnapAngleAwarePoint(e, m_actionData->v1, mouse);
             if (ctrlPressed) {
                 // - if CTRL pressed, move endpoint with saving current angle of line
                 const auto constructionLine = RS_ConstructionLine(nullptr,

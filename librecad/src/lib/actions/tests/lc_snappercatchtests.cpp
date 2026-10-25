@@ -573,6 +573,60 @@ TEST_CASE("direct drag source respects the enabled snap modes", "[snap][drag][is
     CHECK(viewport->getRelativeZero() == expected);
 }
 
+TEST_CASE("Shift snaps the move of a line's grip, as for other grips", "[snap][drag][issue3174]") {
+    ActionFixture<HoverProbe> f;
+    f.m_action->RS_Snapper::init();
+    auto* viewport = f.m_view.getViewPort();
+    viewport->justSetOffsetAndFactor(0, 0, 1.0);
+    const RS_Vector bottom(200.0, 100.0);
+    const RS_Vector top(200.0, 350.0);
+    auto* line = addLine(f.m_graphic, bottom, top);
+    f.m_graphic.select(QList<RS_Entity*>{line});
+    RS_SnapMode mode;
+    mode.snapFree = true;
+    f.m_action->setSnapMode(mode);
+
+    const auto send = [&](const QEvent::Type type, const RS_Vector& at, const Qt::MouseButton button,
+                          const Qt::MouseButtons buttons, const Qt::KeyboardModifiers modifiers) {
+        const QPointF gui(viewport->toGuiX(at.x), viewport->toGuiY(at.y));
+        QMouseEvent event(type, gui, gui, button, buttons, modifiers);
+        if (type == QEvent::MouseMove) {
+            f.m_action->mouseMoveEvent(&event);
+        }
+        else if (type == QEvent::MouseButtonPress) {
+            f.m_action->mousePressEvent(&event);
+        }
+        else {
+            f.m_action->mouseReleaseEvent(&event);
+        }
+    };
+    // Drag the bottom grip right and a little up, then hold Shift. A press or a
+    // release ends the move, depending on a setting: send both.
+    const RS_Vector target = bottom + RS_Vector(30.0, 12.0);
+    send(QEvent::MouseMove, bottom, Qt::NoButton, Qt::NoButton, Qt::NoModifier);
+    send(QEvent::MouseButtonPress, bottom, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    send(QEvent::MouseMove, bottom + RS_Vector(20.0, 0.0), Qt::NoButton, Qt::LeftButton, Qt::NoModifier);
+    send(QEvent::MouseMove, target, Qt::NoButton, Qt::LeftButton, Qt::ShiftModifier);
+    send(QEvent::MouseButtonPress, target, Qt::LeftButton, Qt::LeftButton, Qt::ShiftModifier);
+    send(QEvent::MouseButtonRelease, target, Qt::LeftButton, Qt::NoButton, Qt::ShiftModifier);
+
+    RS_Line* moved = nullptr;
+    for (RS_Entity* entity : f.m_graphic) {
+        if (entity->rtti() == RS2::EntityLine && !entity->isDeleted()) {
+            moved = static_cast<RS_Line*>(entity);
+        }
+    }
+    REQUIRE(moved != nullptr);
+    CHECK(moved->getEndpoint() == top);
+    const RS_Vector shift = moved->getStartpoint() - bottom;
+    REQUIRE(shift.magnitude() > 10.0);
+    // The grip moved along an angle step from where it was; about the top end
+    // the snap would have kept the line vertical.
+    const double steps = shift.angle() / f.m_action->getAngleStep();
+    CHECK(std::abs(steps - std::round(steps)) < 1e-9);
+    CHECK(moved->getStartpoint().x > bottom.x + 10.0);
+}
+
 TEST_CASE("selection windows do not display a drag source snap", "[snap][drag][issue3127]") {
     ActionFixture<HoverProbe> f;
     f.m_action->RS_Snapper::init();
