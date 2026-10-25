@@ -54,6 +54,9 @@ public:
     void clearFonts();
     size_t countFonts() const;
     RS_Font* requestFont(const QString& name);
+    RS_Font* fontForLetter(RS_Font& font, QString& letter);
+    static QString resolveFontName(const QString& name);
+    static bool isFallbackOnlyFont(const QString& fileName);
     std::vector<std::unique_ptr<RS_Font> >::const_iterator begin() const;
     std::vector<std::unique_ptr<RS_Font> >::const_iterator end() const;
     static QString getDefaultFont();

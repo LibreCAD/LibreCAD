@@ -6,8 +6,8 @@
 # LetterSpacing:     3
 # WordSpacing:       6.75
 # LineSpacingFactor: 1
-# Author:            ?
-# License:           unknown
+# Author:            RibbonSoft (QCad 2 symbol.cxf), Latin glyphs from Andrew Mustun's Normal font
+# License:           public domain
 
 [0021] !
 -0.132743,9;-0.132743,3

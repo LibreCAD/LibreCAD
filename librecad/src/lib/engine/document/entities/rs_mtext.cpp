@@ -1290,15 +1290,12 @@ void RS_MText::rotateLinesRefs() const {
  *
  */
 void RS_MText::addLetter(LC_TextLine& oneLine, QString letterText, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition) {
-    if (nullptr == font.findLetter(letterText)) {
-        RS_DEBUG->print("RS_MText::update: missing font for letter( %s ), replaced " "it with QChar(0xfffd)", qPrintable(letterText));
-        letterText = QChar(0xfffd);
-    }
+    RS_Font* glyphFont = RS_FONTLIST->fontForLetter(font, letterText);
 
     LC_LOG << "RS_MText::update: insert a letter at pos:(" << letterPosition.x << ", " << letterPosition.y << ")";
 
     const RS_InsertData d(letterText, letterPosition, RS_Vector(1.0, 1.0), 0.0, 1, 1,
-                    RS_Vector(0.0, 0.0), font.getLetterList(), RS2::NoUpdate);
+                    RS_Vector(0.0, 0.0), glyphFont->getLetterList(), RS2::NoUpdate);
 
     const auto letterEntity{new RS_Insert(this, d)};
     letterEntity->setPen(RS_Pen(RS2::FlagInvalid));
