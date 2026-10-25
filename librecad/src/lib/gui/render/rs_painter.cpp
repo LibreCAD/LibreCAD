@@ -27,6 +27,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <utility>
 
 #include "dxf_format.h"
 #include "lc_graphicviewport.h"
@@ -207,6 +208,55 @@ namespace {
 // RVT_PORT changed from RS_PainterQt::RS_PainterQt( const QPaintDevice* pd)
 RS_Painter::RS_Painter(QPaintDevice* pd)
     : QPainter{pd}, m_cachedDpmm{getDpmm()} {
+}
+
+QVector<qreal> RS_Painter::canonicalDashPattern(const std::vector<double>& raw) {
+    if (raw.empty())
+        return {};
+    // Runs of one state, in drawing units. A zero element takes the state the
+    // previous one left open, so the alternation survives DOT-like records.
+    std::vector<std::pair<bool, double>> runs; // dash, length
+    bool nextIsDash = true;
+    for (const double value : raw) {
+        if (!std::isfinite(value))
+            return {};
+        const bool isDash = value > 0.0 || (value == 0.0 && nextIsDash);
+        nextIsDash = !isDash;
+        const double length = std::abs(value);
+        if (!runs.empty() && runs.back().first == isDash)
+            runs.back().second += length;
+        else
+            runs.push_back({isDash, length});
+    }
+    // The list is cyclic: a run shared by both ends is one run.
+    if (runs.size() > 1 && runs.front().first == runs.back().first) {
+        runs.front().second += runs.back().second;
+        runs.pop_back();
+    }
+    // No dash or no gap means nothing Qt can draw.
+    if (runs.size() < 2)
+        return {};
+    // Rotate to start with a dash; the states alternate, so one step suffices.
+    const std::size_t first = runs.front().first ? 0 : 1;
+    double period = 0.0;
+    QVector<qreal> result;
+    result.reserve(static_cast<int>(runs.size()));
+    for (std::size_t i = 0; i < runs.size(); ++i) {
+        const auto& run = runs[(first + i) % runs.size()];
+        result.push_back(run.second);
+        period += run.second;
+    }
+    if (period <= 0.0)
+        return {};
+    return result;
+}
+
+QVector<qreal> RS_Painter::dashPatternForQt(const QVector<qreal>& canonical, const double k) {
+    // The single place where the painter scales a table pattern.
+    QVector<qreal> pattern = canonical;
+    for (qreal& dash : pattern)
+        dash *= k;
+    return pattern;
 }
 
 /**

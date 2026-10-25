@@ -29,6 +29,10 @@
 #define RS_PAINTER_H
 
 #include <QPainter>
+#include <QVector>
+
+#include <cstdint>
+#include <vector>
 
 #include "lc_coordinates_mapper.h"
 #include "lc_rect.h"
@@ -113,6 +117,12 @@ public:
     double currentDashOffset(DashSpace dashSpace = DashSpace::Model) const;
     // Whether the pen setPen() last built carries a dash pattern.
     bool penHasDashPattern() const {return m_lastUsedPen.style() == Qt::CustomDashLine;}
+
+    /// A group 49 list as Qt needs it: positive dashes, positive gaps,
+    /// starting with a dash; empty when the list cannot draw.
+    static QVector<qreal> canonicalDashPattern(const std::vector<double>& raw);
+    /// The single place where the painter scales a table pattern.
+    static QVector<qreal> dashPatternForQt(const QVector<qreal>& canonical, double k);
 
     void drawEntityArc(RS_Arc* arc);
     void drawEntityPolyline(const RS_Polyline *polyline);
