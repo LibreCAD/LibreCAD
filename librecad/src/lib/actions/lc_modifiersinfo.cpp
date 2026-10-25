@@ -66,6 +66,15 @@ LC_ModifiersInfo LC_ModifiersInfo::SHIFT_AND_CTRL(const QString &shiftMsg, const
     return result;
 }
 
+QString LC_ModifiersInfo::withNativeCtrlKey(QString hint) {
+#ifdef Q_OS_MACOS
+    // Qt's Ctrl modifier is the Command key there, and a Control+click arrives
+    // as a right click
+    hint.replace(QLatin1String("CTRL"), QStringLiteral("\u2318"));
+#endif
+    return hint;
+}
+
 const QString& LC_ModifiersInfo::getShiftMessage() const {
     if ((m_modifiers & Qt::ShiftModifier) != 0u) {
         return m_shiftMsg;
