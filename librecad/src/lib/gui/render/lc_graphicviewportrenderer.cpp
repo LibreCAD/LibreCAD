@@ -22,9 +22,13 @@
 
 #include "lc_graphicviewportrenderer.h"
 
+#include <cmath>
+
 #include "lc_defaults.h"
 #include "lc_graphicviewport.h"
 #include "lc_linemath.h"
+#include "lc_linetype.h"
+#include "lc_linetypenames.h"
 #include "rs_entity.h"
 #include "rs_graphic.h"
 #include "rs_painter.h"
@@ -203,11 +207,56 @@ void LC_GraphicViewportRenderer::updateUnitFactors(const RS_Graphic *g) {
 }
 
 void LC_GraphicViewportRenderer::setupPainter(RS_Painter *painter) {
+    // The line type table is read once per pass; every paint path starts here.
+    m_dashByFold.clear();
+    m_dashCacheBuilt = false;
+    painter->invalidateDashPattern();
     painter->setRenderer(this);
     painter->setViewPort(m_viewport);
     painter->updatePointsScreenSize(m_pdsize);
     painter->setPointsMode(m_pdmode);
     painter->setWorldBoundingRect(m_renderBoundingClipRect);
+}
+
+const QVector<qreal>* LC_GraphicViewportRenderer::resolveDashPattern(const RS_Pen& pen) {
+    if (!m_dashCacheBuilt)
+        buildDashPatternCache();
+    // No entry is ever added after the build, so the address stays valid.
+    const auto it = m_dashByFold.constFind(pen.getLineTypeFoldId());
+    return it == m_dashByFold.cend() ? nullptr : &it.value();
+}
+
+void LC_GraphicViewportRenderer::buildDashPatternCache() {
+    m_dashCacheBuilt = true;
+    const RS_Graphic* graphic = m_viewport != nullptr ? m_viewport->getGraphic() : nullptr;
+    if (graphic == nullptr)
+        return;
+    // The stored list is group 49 before $LTSCALE, and the table is drawn once.
+    double lineTypeScale = graphic->getVariableDouble("$LTSCALE", 1.0);
+    if (!std::isfinite(lineTypeScale) || lineTypeScale <= 0.0)
+        lineTypeScale = 1.0;
+    const unsigned count = graphic->countLineTypes();
+    for (unsigned i = 0; i < count; ++i) {
+        const LC_LineType* entry = graphic->lineTypeAt(i);
+        if (entry == nullptr || entry->pattern.empty())
+            continue;
+        // A name LibreCAD knows keeps the shipped screen pattern for now.
+        if (LC_LineTypeNames::isKnownName(entry->key()))
+            continue;
+        RS_Pen probe;
+        probe.setLineTypeName(entry->name);
+        const std::uint16_t foldId = probe.getLineTypeFoldId();
+        if (foldId == 0)
+            continue;
+        QVector<qreal> pattern = RS_Painter::canonicalDashPattern(entry->pattern);
+        if (pattern.isEmpty())
+            continue;
+        for (qreal& dash : pattern)
+            dash *= lineTypeScale;
+        // The first entry of a fold wins.
+        if (!m_dashByFold.contains(foldId))
+            m_dashByFold.insert(foldId, pattern);
+    }
 }
 
 bool LC_GraphicViewportRenderer::isTextLineNotRenderable([[maybe_unused]]double uiLineHeight) const {

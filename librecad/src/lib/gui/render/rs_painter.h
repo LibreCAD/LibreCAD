@@ -117,6 +117,8 @@ public:
     double currentDashOffset(DashSpace dashSpace = DashSpace::Model) const;
     // Whether the pen setPen() last built carries a dash pattern.
     bool penHasDashPattern() const {return m_lastUsedPen.style() == Qt::CustomDashLine;}
+    // The next setPen() rebuilds the dash pattern; the renderer calls it once per pass.
+    void invalidateDashPattern() {m_lastDashValid = false;}
 
     /// A group 49 list as Qt needs it: positive dashes, positive gaps,
     /// starting with a dash; empty when the list cannot draw.
@@ -444,6 +446,7 @@ protected:
     // What the dash pattern in m_lastUsedPen was built from, valid while it holds
     // that pattern. Compared exactly: a mismatch only rebuilds the pattern.
     bool m_lastDashValid = false;
+    std::uint16_t m_lastDashLineTypeId = 0;
     RS2::LineType m_lastDashLineType = RS2::SolidLine;
     double m_lastDashScreenWidth = 0.;
     double m_lastDashDeviceScale = 0.;

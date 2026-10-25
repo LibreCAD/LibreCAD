@@ -1624,6 +1624,14 @@ void RS_Painter::setPen(const RS_Pen& pen, const DashSpace dashSpace) {
     pColor.setAlphaF(pen.getAlpha());
     RS2::LineType lineType = pen.getLineType();
     Qt::PenStyle style = rsToQtLineType(lineType);
+    // A named pen may draw dashes from the drawing's line type table; without
+    // a renderer or outside model space the enum decides, as it always did.
+    const std::uint16_t lineTypeId = pen.getLineTypeId();
+    const QVector<qreal>* tablePattern = nullptr;
+    if (lineTypeId != 0 && m_renderer != nullptr && dashSpace == DashSpace::Model)
+        tablePattern = m_renderer->resolveDashPattern(pen);
+    if (tablePattern != nullptr)
+        style = Qt::CustomDashLine;
 
     double screenWidth = pen.getScreenWidth();
     if (style == Qt::CustomDashLine) {
@@ -1633,16 +1641,19 @@ void RS_Painter::setPen(const RS_Pen& pen, const DashSpace dashSpace) {
         if (m_viewport && screenWidth == 0.0)
             deviceScale *= getDevicePixelRatio();
         const double k = dashPatternScale(screenWidth, deviceScale);
-        // Rebuild when the line type, width or viewport scale changes.
-        if (!m_lastDashValid || m_lastDashLineType != lineType
+        // Rebuild when the spelled identity, line type, width or viewport scale changes.
+        if (!m_lastDashValid || m_lastDashLineTypeId != lineTypeId
+            || m_lastDashLineType != lineType
             || m_lastDashScreenWidth != screenWidth || m_lastDashDeviceScale != deviceScale) {
-            QVector<qreal> dashPattern = rsToQDashPattern(lineType, k);
+            QVector<qreal> dashPattern = tablePattern != nullptr
+                ? dashPatternForQt(*tablePattern, k) : rsToQDashPattern(lineType, k);
             if (dashPattern.isEmpty()) {
                 style = Qt::SolidLine;
             }
             else {
                 m_lastUsedPen.setDashPattern(dashPattern); // also sets Qt::CustomDashLine
                 m_lastDashValid = true;
+                m_lastDashLineTypeId = lineTypeId;
                 m_lastDashLineType = lineType;
                 m_lastDashScreenWidth = screenWidth;
                 m_lastDashDeviceScale = deviceScale;
