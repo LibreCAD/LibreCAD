@@ -125,6 +125,8 @@ public:
     static QVector<qreal> canonicalDashPattern(const std::vector<double>& raw,
                                                qreal* phaseOffset = nullptr);
     /// Scale a table pattern for QPen and make its lengths strictly positive.
+    /// The list must alternate dash and gap (even length); longer lists fold
+    /// to the 32 elements Qt's stroker honours.
     static QVector<qreal> dashPatternForQt(const QVector<qreal>& canonical, double k);
     /// Whether a Qt-scaled dash period survives Qt's stroker limits.
     static bool periodFitsQt(double periodPx, double diagonalPx);
@@ -462,6 +464,8 @@ protected:
     RS2::LineType m_lastDashLineType = RS2::SolidLine;
     double m_lastDashScreenWidth = 0.;
     double m_lastDashDeviceScale = 0.;
+    // The memo holds a floor rejection, so the dash branch installs solid.
+    bool m_lastDashSolid = false;
     double m_cachedDpmm = 0.;
     double m_minCircleDrawingRadius = 2.0;
     double m_minArcDrawingRadius = 0.8;

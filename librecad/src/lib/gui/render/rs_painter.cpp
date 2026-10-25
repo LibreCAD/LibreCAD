@@ -264,31 +264,31 @@ QVector<qreal> RS_Painter::canonicalDashPattern(const std::vector<double>& raw, 
 }
 
 QVector<qreal> RS_Painter::dashPatternForQt(const QVector<qreal>& canonical, const double k) {
-    // The single place where the painter scales a table pattern.
     QVector<qreal> pattern = canonical;
     for (qreal& dash : pattern)
         dash *= k;
+    // The fold pairs dash with gap, so an odd list cannot draw.
     if (pattern.size() % 2 != 0)
         return {};
     // Qt's stroker honours only the first 32 elements, so fold longer lists to
     // that count without moving the period: the shortest dash+gap pair goes
     // into the previous dash and the following gap. Deterministic, O(n^2) at
-    // worst, and reached only on a painter memo miss, never per entity.
-    constexpr int qtDashElementLimit = 32;
+    // worst, and reached only when the painter memo misses.
+    constexpr qsizetype qtDashElementLimit = 32;
     while (pattern.size() > qtDashElementLimit) {
-        const int count = pattern.size();
-        int shortest = 0;
+        const qsizetype count = pattern.size();
+        qsizetype shortest = 0;
         qreal shortestPair = pattern.at(0) + pattern.at(1);
-        for (int i = 2; i < count; i += 2) {
+        for (qsizetype i = 2; i < count; i += 2) {
             const qreal pair = pattern.at(i) + pattern.at(i + 1);
             if (pair < shortestPair) {
                 shortestPair = pair;
                 shortest = i;
             }
         }
-        const int gapIndex = shortest + 1;
-        const int previousDash = (shortest - 2 + count) % count;
-        const int followingGap = (gapIndex + 2) % count;
+        const qsizetype gapIndex = shortest + 1;
+        const qsizetype previousDash = (shortest - 2 + count) % count;
+        const qsizetype followingGap = (gapIndex + 2) % count;
         pattern[previousDash] += pattern.at(shortest);
         pattern[followingGap] += pattern.at(gapIndex);
         pattern.remove(shortest, 2);
@@ -1725,9 +1725,15 @@ void RS_Painter::setPen(const RS_Pen& pen, const DashSpace dashSpace) {
                     period += dash;
                 period *= screenWidth > 0.0 ? screenWidth : 1.0;
                 double diagonal = 0.0;
-                if (m_viewport != nullptr && !m_wcsBoundingRect.isEmpty(0.0))
+                // The view diagonal is a conservative proxy for the device length
+                // Qt strokes; a longer entity may still exceed the repetition limit.
+                if (m_viewport != nullptr
+                    && m_wcsBoundingRect.width() > 0.0 && m_wcsBoundingRect.height() > 0.0)
                     diagonal = std::hypot(toGuiDX(m_wcsBoundingRect.width()),
                                           toGuiDY(m_wcsBoundingRect.height()));
+                // A cosmetic pen's period is in device pixels, so is its diagonal.
+                if (m_viewport != nullptr && screenWidth == 0.0)
+                    diagonal *= getDevicePixelRatio();
                 // A pattern Qt cannot draw at this zoom falls back to solid, as
                 // an empty pattern does.
                 if (!periodFitsQt(period, diagonal))
@@ -1738,12 +1744,19 @@ void RS_Painter::setPen(const RS_Pen& pen, const DashSpace dashSpace) {
             }
             else {
                 m_lastUsedPen.setDashPattern(dashPattern); // also sets Qt::CustomDashLine
-                m_lastDashValid = true;
-                m_lastDashLineTypeId = lineTypeId;
-                m_lastDashLineType = lineType;
-                m_lastDashScreenWidth = screenWidth;
-                m_lastDashDeviceScale = deviceScale;
             }
+            // A rejected or empty pattern validates the memo too, so the next
+            // install of this key rebuilds nothing.
+            m_lastDashValid = true;
+            m_lastDashLineTypeId = lineTypeId;
+            m_lastDashLineType = lineType;
+            m_lastDashScreenWidth = screenWidth;
+            m_lastDashDeviceScale = deviceScale;
+            m_lastDashSolid = dashPattern.isEmpty();
+        }
+        else if (m_lastDashSolid) {
+            // The memo holds a rejected pattern: reuse the solid fallback.
+            style = Qt::SolidLine;
         }
         if (style == Qt::CustomDashLine) {
             m_lastUsedPen.setDashOffset((pen.dashOffset() + tablePhaseOffset) * k);
@@ -1751,7 +1764,9 @@ void RS_Painter::setPen(const RS_Pen& pen, const DashSpace dashSpace) {
     }
     if (style != Qt::CustomDashLine && m_lastUsedPen.style() != style) {
         m_lastUsedPen.setStyle(style); // drops any dash pattern
-        m_lastDashValid = false;
+        // A forced-solid memo is a verdict, not a stale pattern.
+        if (!m_lastDashSolid)
+            m_lastDashValid = false;
     }
     if (m_lastUsedPen.color() != pColor) {
         m_lastUsedPen.setColor(pColor);

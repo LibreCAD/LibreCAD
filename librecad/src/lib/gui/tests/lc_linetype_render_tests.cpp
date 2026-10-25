@@ -959,7 +959,9 @@ TEST_CASE("A new view rectangle rebuilds a table pattern", "[gui][pen][linetype]
     CHECK(painter.pen().style() == Qt::SolidLine);
     CHECK_FALSE(painter.penHasDashPattern());
 
-    painter.setWorldBoundingRect(LC_Rect{});
+    // A zero-area rectangle means "no view rectangle" for the floor.
+    painter.setWorldBoundingRect(
+        LC_Rect{RS_Vector{0., 0.}, RS_Vector{0., 0.}});
     painter.setPen(pen);
     CHECK(painter.pen().style() == Qt::CustomDashLine);
     CHECK(painter.penHasDashPattern());
@@ -997,10 +999,9 @@ TEST_CASE("A long table pattern draws the same with and without lineweight",
     REQUIRE(painter.pen().style() == Qt::CustomDashLine);
     const QVector<qreal> strokerPattern = painter.pen().dashPattern();
 
+    CHECK(cosmeticPattern.size() == strokerPattern.size());
     CHECK(cosmeticPattern.size() <= 32);
-    CHECK(strokerPattern.size() <= 32);
     CHECK(cosmeticPattern.size() % 2 == 0);
-    CHECK(strokerPattern.size() % 2 == 0);
     qreal cosmeticPeriod = 0.;
     qreal strokerPeriod = 0.;
     for (const qreal value : cosmeticPattern) {
@@ -1009,8 +1010,14 @@ TEST_CASE("A long table pattern draws the same with and without lineweight",
     for (const qreal value : strokerPattern) {
         strokerPeriod += value;
     }
-    // A zero-width pen multiplies by one pixel, a three-pixel pen by three.
-    CHECK(cosmeticPeriod * 1.0 == Catch::Approx(strokerPeriod * 3.0));
+    REQUIRE(cosmeticPeriod > 0.);
+    REQUIRE(strokerPeriod > 0.);
+    // The pen width cancels out of the pattern, so each element is the same
+    // fraction of the period at any width.
+    for (qsizetype i = 0; i < cosmeticPattern.size(); ++i) {
+        CHECK(cosmeticPattern.at(i) / cosmeticPeriod
+              == Catch::Approx(strokerPattern.at(i) / strokerPeriod));
+    }
 }
 
 TEST_CASE("Two names with one enum keep separate dash lists", "[gui][pen][linetype]") {

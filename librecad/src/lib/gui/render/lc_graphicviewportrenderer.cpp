@@ -210,11 +210,11 @@ void LC_GraphicViewportRenderer::setupPainter(RS_Painter *painter) {
     // The line type table is read once per pass; every paint path starts here.
     m_dashByFold.clear();
     m_dashCacheBuilt = false;
-    painter->invalidateDashPattern();
     painter->setRenderer(this);
     painter->setViewPort(m_viewport);
     painter->updatePointsScreenSize(m_pdsize);
     painter->setPointsMode(m_pdmode);
+    // A new view rectangle invalidates the dash memo.
     painter->setWorldBoundingRect(m_renderBoundingClipRect);
 }
 
