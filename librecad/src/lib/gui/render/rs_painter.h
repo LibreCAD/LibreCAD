@@ -126,6 +126,8 @@ public:
                                                qreal* phaseOffset = nullptr);
     /// Scale a table pattern for QPen and make its lengths strictly positive.
     static QVector<qreal> dashPatternForQt(const QVector<qreal>& canonical, double k);
+    /// Whether a Qt-scaled dash period survives Qt's stroker limits.
+    static bool periodFitsQt(double periodPx, double diagonalPx);
 
     void drawEntityArc(RS_Arc* arc);
     void drawEntityPolyline(const RS_Polyline *polyline);

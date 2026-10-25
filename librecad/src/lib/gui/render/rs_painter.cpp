@@ -270,6 +270,29 @@ QVector<qreal> RS_Painter::dashPatternForQt(const QVector<qreal>& canonical, con
         dash *= k;
     if (pattern.size() % 2 != 0)
         return {};
+    // Qt's stroker honours only the first 32 elements, so fold longer lists to
+    // that count without moving the period: the shortest dash+gap pair goes
+    // into the previous dash and the following gap. Deterministic, O(n^2) at
+    // worst, and reached only on a painter memo miss, never per entity.
+    constexpr int qtDashElementLimit = 32;
+    while (pattern.size() > qtDashElementLimit) {
+        const int count = pattern.size();
+        int shortest = 0;
+        qreal shortestPair = pattern.at(0) + pattern.at(1);
+        for (int i = 2; i < count; i += 2) {
+            const qreal pair = pattern.at(i) + pattern.at(i + 1);
+            if (pair < shortestPair) {
+                shortestPair = pair;
+                shortest = i;
+            }
+        }
+        const int gapIndex = shortest + 1;
+        const int previousDash = (shortest - 2 + count) % count;
+        const int followingGap = (gapIndex + 2) % count;
+        pattern[previousDash] += pattern.at(shortest);
+        pattern[followingGap] += pattern.at(gapIndex);
+        pattern.remove(shortest, 2);
+    }
     // QPen requires strictly positive dash and gap lengths. A zero group 49
     // element is a dot; with the pen cap it becomes a point at this tiny length.
     const qreal dotLength = std::numeric_limits<qreal>::epsilon();
@@ -280,6 +303,12 @@ QVector<qreal> RS_Painter::dashPatternForQt(const QVector<qreal>& canonical, con
             return {};
     }
     return pattern;
+}
+
+bool RS_Painter::periodFitsQt(const double periodPx, const double diagonalPx) {
+    // Qt's stroker honours the first 32 dash elements only, and its repetition
+    // limit of 10000 periods across the view turns a line solid.
+    return periodPx >= std::max(3.0, diagonalPx / 10000.0);
 }
 
 /**
