@@ -263,7 +263,11 @@ public:
 
     void disableUCS();
 
-    void setWorldBoundingRect(const LC_Rect &worldBoundingRect) {m_wcsBoundingRect = worldBoundingRect;}
+    void setWorldBoundingRect(const LC_Rect &worldBoundingRect) {
+        m_wcsBoundingRect = worldBoundingRect;
+        // The period floor reads the view diagonal, so the memo cannot stay valid.
+        invalidateDashPattern();
+    }
     bool isFullyWithinBoundingRect(const RS_Entity* e) const;
     bool isFullyWithinBoundingRect(const LC_Rect &rect) const;
 

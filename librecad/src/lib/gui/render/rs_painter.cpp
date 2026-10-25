@@ -1717,6 +1717,22 @@ void RS_Painter::setPen(const RS_Pen& pen, const DashSpace dashSpace) {
             || m_lastDashScreenWidth != screenWidth || m_lastDashDeviceScale != deviceScale) {
             QVector<qreal> dashPattern = tablePattern != nullptr
                 ? dashPatternForQt(*tablePattern, k) : rsToQDashPattern(lineType, k);
+            if (tablePattern != nullptr && !dashPattern.isEmpty()) {
+                // The period in device pixels: Qt multiplies each dash by the
+                // pen width, which k divides out again.
+                double period = 0.0;
+                for (const qreal dash : dashPattern)
+                    period += dash;
+                period *= screenWidth > 0.0 ? screenWidth : 1.0;
+                double diagonal = 0.0;
+                if (m_viewport != nullptr && !m_wcsBoundingRect.isEmpty(0.0))
+                    diagonal = std::hypot(toGuiDX(m_wcsBoundingRect.width()),
+                                          toGuiDY(m_wcsBoundingRect.height()));
+                // A pattern Qt cannot draw at this zoom falls back to solid, as
+                // an empty pattern does.
+                if (!periodFitsQt(period, diagonal))
+                    dashPattern.clear();
+            }
             if (dashPattern.isEmpty()) {
                 style = Qt::SolidLine;
             }
