@@ -226,7 +226,12 @@ complete.
 - **Audience**: **Private audience**, with a group of testers' Microsoft
   accounts, to try the Store install before anyone else sees it; **Public
   audience** to list it. Once a submission has gone out public, the product
-  can never be made private again.
+  can never be made private again. Only an install from the Store leaves
+  updates to the Store, so check it there before going public: the Help
+  menu has no Releases Page or Dev Snapshot Release, Options > Application
+  Preferences > Startup has no New Versions group, and Help > About > Check
+  for New Version opens the Microsoft Store. Sideloaded and test-signed
+  packages behave like the installer.
 - **Discoverability**: make it available and discoverable.
 - **Pricing**: **Free**, no free trial. The Store CLI only updates free
   products.
@@ -240,7 +245,8 @@ complete.
   `https://github.com/LibreCAD/LibreCAD/blob/master/PRIVACY.md`. Store policy
   10.5.1 counts every Win32 desktop product as having access to personal
   information, so it always needs a privacy policy; this one says that
-  LibreCAD collects nothing and names the anonymous update check.
+  LibreCAD collects nothing and names the anonymous update check, which the
+  Store build does not make.
 - **Website**: `https://librecad.org`
 - **Support contact info**: `https://github.com/LibreCAD/LibreCAD/issues`
 - **System requirements**: keyboard and mouse recommended; under additional
@@ -332,9 +338,10 @@ Keep other companies' product names out of the listing and the keywords
   > LibreCAD is a free, open-source (GPLv2) 2D CAD desktop program built
   > with Qt. It needs no account and no sign-in, and depends on no driver or
   > service. On first start it asks for the language and units; then draw
-  > a line (Tools > Line > 2 Points) or open a .dxf or .dwg file. At start
-  > it asks api.github.com anonymously whether a newer LibreCAD release
-  > exists; Options > Application Preferences > Startup turns this off.
+  > a line (Tools > Line > 2 Points) or open a .dxf or .dwg file. The
+  > Store build makes no network request of its own: the Store updates it,
+  > and Help > About > Check for New Version opens the Microsoft Store's
+  > Updates and downloads page.
   > Help > Donate only opens https://librecad.org/donate.html in the default
   > browser, where voluntary donations go through Open Collective or GitHub
   > Sponsors; the app takes no payment, and donating unlocks or changes
