@@ -92,12 +92,12 @@ jobs:
 
       - name: Install Clang
         run: |
-          sudo apt-get -qq install clang-15 clang-tools-15
+          sudo apt-get -qq install clang clang-tools
 
       - name: Build and analyze
         run: |
           export CC=g++
-          export ANALYZE="scan-build-15 -o out --use-cc=g++ --use-analyzer=/usr/bin/clang++ "
+          export ANALYZE="scan-build -o out --use-cc=g++ --use-analyzer=/usr/bin/clang++ "
           ${ANALYZE}qmake6 -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
           ${ANALYZE}make release -j$(nproc)
 
