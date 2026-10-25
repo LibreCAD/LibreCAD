@@ -628,9 +628,7 @@ void LC_GraphicViewRenderer::setPenForEntity(RS_Painter* painter, const RS_Entit
         }
     }
 
-    if (pen.getLineType() != RS2::SolidLine) {
-        pen.setDashOffset(patternOffset * m_defaultWidthFactor);
-    }
+    pen.setDashOffset(patternOffset);
 
     // deleting not drawing:
 
@@ -638,12 +636,12 @@ void LC_GraphicViewRenderer::setPenForEntity(RS_Painter* painter, const RS_Entit
 #ifdef DEBUG_RENDERING
     setPenTime += setPenTimer.nsecsElapsed(); painterSetPenTimer.start();
 #endif
-    m_lastPaintedPattern = pen.getLineType() != RS2::SolidLine;
     painter->setPen(pen, selected && !overlayPaint ? RS_Painter::DashSpace::Screen : RS_Painter::DashSpace::Model);
 #ifdef DEBUG_RENDERING
     painterSetPenTime += painterSetPenTimer.nsecsElapsed();
 
 #endif
+    m_lastPaintedPattern = painter->penHasDashPattern();
 }
 
 void LC_GraphicViewRenderer::setPenForDraftEntity(RS_Painter* painter, const RS_Entity* e, const bool inOverlay) {
@@ -716,16 +714,14 @@ void LC_GraphicViewRenderer::setPenForDraftEntity(RS_Painter* painter, const RS_
         }
     }
 
-    if (pen.getLineType() != RS2::SolidLine) {
-        pen.setDashOffset(patternOffset * m_defaultWidthFactor);
-    }
+    pen.setDashOffset(patternOffset);
 
     // LC_ERR << "PEN " << pen.getColor().name() << "Width: " << pen.getWidth() <<  " | " << pen.getScreenWidth() << " LT " << pen.getLineType();
-    m_lastPaintedPattern = pen.getLineType() != RS2::SolidLine;
     painter->setPen(pen, selected && !overlayPaint ? RS_Painter::DashSpace::Screen : RS_Painter::DashSpace::Model);
 #ifdef DEBUG_RENDERING
     setPenTime += setPenTimer.nsecsElapsed();
 #endif
+    m_lastPaintedPattern = painter->penHasDashPattern();
 }
 
 /**

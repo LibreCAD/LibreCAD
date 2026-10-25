@@ -236,7 +236,6 @@ public:
     void setMinEllipseMinorRadius(double val);
     void setMinLineDrawingLen(double val);
     void setMinRenderableTextHeightInPx(int i);
-    void setDefaultWidthFactor(const double factor){ m_defaultWidthFactor = factor;}
     void updatePointsScreenSize(double pdSize);
 
     bool isTextLineNotRenderable(double wcsLineHeight) const;
@@ -454,7 +453,6 @@ protected:
     bool m_circleRenderSameAsArcs = false;
 
     double m_minRenderableTextHeightInPx = 1;
-    double m_defaultWidthFactor = 1.0;
 
     double m_currenPatternOffset = 0.0;
 

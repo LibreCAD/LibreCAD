@@ -1613,6 +1613,8 @@ void RS_Painter::setPen(const RS_Pen& pen, const DashSpace dashSpace) {
     m_lastUsedPen.setWidthF(screenWidth);
     m_lastUsedPen.setJoinStyle(m_penJoinStyle);
     m_lastUsedPen.setCapStyle(m_penCapStyle);
+    m_lastPenDashed = (style == Qt::CustomDashLine);
+    m_lastPenDashSpace = dashSpace;
 
     QPen devicePen = m_lastUsedPen;
     // A painter that could not begin on its device, as on a view squashed to
@@ -1803,14 +1805,16 @@ void RS_Painter::setMinRenderableTextHeightInPx(const int i) {
 }
 
 void RS_Painter::updateDashOffset(const RS_Entity* e) {
-    // Adjust dash offset
-    if (m_lpen.getLineType() == RS2::SolidLine /*|| view.getGraphic() == nullptr*/) {
+    // Only a pen the painter installed with a dash pattern has a phase to advance.
+    if (!m_lastPenDashed) {
         return;
     }
-
-    // factor from model space to GUI
-    const double toMm = m_defaultWidthFactor;
-    m_currenPatternOffset -= e->getLength() * toMm;
+    // A model pattern is in drawing units; a screen pattern (selection) is in device millimetres.
+    double length = e->getLength();
+    if (m_lastPenDashSpace == DashSpace::Screen && getDpmmCached() > 0.0) {
+        length *= std::abs(toGuiDX(1.0)) / getDpmmCached();
+    }
+    m_currenPatternOffset -= length;
 }
 
 int RS_Painter::determinePointScreenSize(const double pdsize) const {
