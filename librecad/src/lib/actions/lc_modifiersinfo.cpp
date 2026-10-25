@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_modifiersinfo.h"
 
+#include <QKeySequence>
 #include <QObject>
 
 LC_ModifiersInfo::LC_ModifiersInfo() = default;
@@ -69,8 +70,8 @@ LC_ModifiersInfo LC_ModifiersInfo::SHIFT_AND_CTRL(const QString &shiftMsg, const
 QString LC_ModifiersInfo::withNativeCtrlKey(QString hint) {
 #ifdef Q_OS_MACOS
     // Qt's Ctrl modifier is the Command key there, and a Control+click arrives
-    // as a right click
-    hint.replace(QLatin1String("CTRL"), QStringLiteral("\u2318"));
+    // as a right click; Qt names the key as the Mac does
+    hint.replace(QLatin1String("CTRL"), QKeySequence(Qt::CTRL).toString(QKeySequence::NativeText));
 #endif
     return hint;
 }

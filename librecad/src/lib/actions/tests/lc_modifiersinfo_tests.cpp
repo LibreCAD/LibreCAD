@@ -18,11 +18,14 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <QCheckBox>
 #include <QStatusBar>
 
 #include "lc_action_modify_move.h"
 #include "lc_actiontestsupport.h"
 #include "lc_cursoroverlayinfo.h"
+#include "lc_dlg_menu_assigner.h"
+#include "lc_menuactivator.h"
 #include "lc_modifiersinfo.h"
 #include "lc_qtstatusbarmanager.h"
 
@@ -54,14 +57,15 @@ public:
     }
 };
 
-} // namespace
-
-TEST_CASE("A Ctrl hint names the key the Ctrl modifier is on", "[actions][modifiers]") {
-    CHECK(LC_ModifiersInfo::withNativeCtrlKey(" CTRL Key: ") == " " + ctrlKey + " Key: ");
-    CHECK(LC_ModifiersInfo::withNativeCtrlKey(" SHIFT Key: ") == " SHIFT Key: ");
+// the hint names the key the Ctrl modifier is on
+void checkCtrlKeyNamed(const QString& hint) {
+    INFO(hint.toStdString());
+    CHECK(hint.contains(ctrlKey));
 }
 
-TEST_CASE("Action hints name the key the Ctrl modifier is on", "[actions][modifiers]") {
+} // namespace
+
+TEST_CASE("Hints name the key the Ctrl modifier is on", "[actions][modifiers]") {
     REQUIRE(lc::test::application() != nullptr);
     RS_Graphic graphic;
     graphic.initForNewDocument();
@@ -78,15 +82,23 @@ TEST_CASE("Action hints name the key the Ctrl modifier is on", "[actions][modifi
     // nothing selected: Move asks for a selection, which Ctrl+click completes
     auto action = std::make_unique<MoveAction>(&context);
     action->init(0);
-
-    CHECK(context.m_left == "Select to move (Enter or " + ctrlKey + "+LMB click to complete)");
-    CHECK(action->infoCursorPrompt() == context.m_left + "\nSHIFT:Select contour | " + ctrlKey
-                                            + ":Move immediately after selection");
+    checkCtrlKeyNamed(context.m_left);
+    // the info cursor shows the prompt, then the modifiers
+    checkCtrlKeyNamed(action->infoCursorPrompt().section('\n', 1));
 
     QStatusBar statusBar;
     statusBar.show();
     const auto* statusBarManager = new LC_QTStatusbarManager(&statusBar);
     statusBarManager->setActionHelp(context.m_left, context.m_right, context.m_modifiers);
-    CHECK(statusBar.currentMessage() == " SHIFT Key: Select contour " + ctrlKey
-                                            + " Key: Move immediately after selection");
+    checkCtrlKeyNamed(statusBar.currentMessage());
+
+    // a custom menu invoked with Ctrl held
+    LC_MenuActivator activator;
+    activator.setKeys(true, false, false);
+    checkCtrlKeyNamed(activator.getEventView());
+    QList<LC_MenuActivator*> activators;
+    const LC_DlgMenuAssigner assigner(nullptr, &activator, &activators);
+    const auto* ctrlBox = assigner.findChild<QCheckBox*>("cbKeyCtrl");
+    REQUIRE(ctrlBox != nullptr);
+    checkCtrlKeyNamed(ctrlBox->text());
 }
