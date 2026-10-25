@@ -27,6 +27,7 @@
 #include <QMouseEvent>
 
 #include "lc_dialog.h"
+#include "lc_modifiersinfo.h"
 #include "ui_lc_dlg_menu_assigner.h"
 
 LC_DlgMenuAssigner::LC_DlgMenuAssigner(QWidget *parent, LC_MenuActivator* activator, QList<LC_MenuActivator*>* activators)
@@ -34,6 +35,7 @@ LC_DlgMenuAssigner::LC_DlgMenuAssigner(QWidget *parent, LC_MenuActivator* activa
     m_activator{activator}, m_activators{activators}{
 
     ui->setupUi(this);
+    ui->cbKeyCtrl->setText(LC_ModifiersInfo::withNativeCtrlKey(ui->cbKeyCtrl->text()));
 
     bool ctrl{false}, alt{false}, shift{false};
     m_activator->getKeysState(ctrl, alt, shift);

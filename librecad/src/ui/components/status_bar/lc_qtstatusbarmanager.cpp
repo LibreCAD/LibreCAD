@@ -41,7 +41,7 @@ void LC_QTStatusbarManager::setActionHelp(const QString &left, [[maybe_unused]]c
         }
         const QString &ctrlMessage = modifiersInfo.getCtrlMessage();
         if (!ctrlMessage.isEmpty()){
-            modifiersMsg = modifiersMsg + tr(" CTRL Key: ") + ctrlMessage;
+            modifiersMsg = modifiersMsg + LC_ModifiersInfo::withNativeCtrlKey(tr(" CTRL Key: ")) + ctrlMessage;
         }
 
         QString infoMessage = left.trimmed();
