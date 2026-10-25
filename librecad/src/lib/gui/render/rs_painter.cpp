@@ -1413,11 +1413,24 @@ void RS_Painter::drawSplinePointsUI(const std::vector<RS_Vector> &uiControlPoint
 void RS_Painter::drawEntityPolyline(const RS_Polyline* polyline) {
     QPainterPath path;
     path.moveTo(toGuiPointF(polyline->getStartpoint()));
+    // A child that starts where the path ended continues the same subpath, so
+    // the dash phase runs through the join. The dash phase is the only reason
+    // to join subpaths: a solid pen keeps one subpath per segment, with its
+    // caps and joins. The comparison is in GUI pixels, the space
+    // currentPosition() lives in, with a tolerance below raster detail.
+    constexpr double uiJoinTolerance = 1e-3;
+    auto continuesPath = [&path](const QPointF& start) {
+        const QPointF end = path.currentPosition();
+        return std::abs(end.x() - start.x()) <= uiJoinTolerance
+            && std::abs(end.y() - start.y()) <= uiJoinTolerance;
+    };
 
     for (RS_Entity* entity : *polyline) {
         switch (entity->rtti()) {
             case RS2::EntityLine: {
-                path.moveTo(toGuiPointF(entity->getStartpoint()));
+                const QPointF start = toGuiPointF(entity->getStartpoint());
+                if (!(penHasDashPattern() && continuesPath(start)))
+                    path.moveTo(start);
                 path.lineTo(toGuiPointF(entity->getEndpoint()));
                 break;
             }
