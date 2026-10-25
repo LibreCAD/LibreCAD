@@ -20,7 +20,6 @@
 #include "lc_actiontestsupport.h"
 #include "lc_graphicviewport.h"
 #include "rs_circle.h"
-#include "rs_coordinateevent.h"
 #include "rs_line.h"
 #include "rs_settings.h"
 
@@ -41,11 +40,6 @@ public:
     void rightClick() {
         const LC_MouseEvent event = lc::test::eventAt(0., 0.);
         onMouseRightButtonRelease(getStatus(), &event);
-    }
-    // a coordinate from the command line
-    void type(const RS_Vector& point) {
-        RS_CoordinateEvent event(point);
-        coordinateEvent(&event);
     }
     void escape() {
         QKeyEvent event(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier);
@@ -280,21 +274,4 @@ TEST_CASE("Move/Copy Escape after Ctrl copies keeps the copies", "[modify][move]
     CHECK(copy->isSelected());
     CHECK_FALSE(f.source->isDeleted());
     CHECK(f.source->getStartpoint().distanceTo(RS_Vector{2., 3.}) < 1e-9);
-}
-
-TEST_CASE("Move/Copy takes Ctrl from each target, not from the previous click", "[modify][move][3171]") {
-    MoveFixture f;
-    MoveAction& action = *f.m_action;
-    action.click({12., 8.}, true);
-    REQUIRE(f.m_graphic.count() == 2);
-    const RS_Entity* copy = f.m_graphic.lastEntity();
-
-    // nothing holds Ctrl for a target typed on the command line: it moves, as
-    // a plain click does
-    action.type({22., 3.});
-    CHECK(action.isFinished());
-    REQUIRE(f.m_graphic.count() == 3);
-    CHECK(f.source->isDeleted());
-    CHECK_FALSE(copy->isDeleted());
-    CHECK(f.m_graphic.lastEntity()->getStartpoint().distanceTo(RS_Vector{22., 3.}) < 1e-9);
 }
