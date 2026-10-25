@@ -152,6 +152,8 @@ public:
 
     static QString languageToSymbol(const QString& lang);
     static QString symbolToLanguage(const QString& symb);
+    // Return the entry of languages that stands for lang, empty when none does.
+    static QString matchLanguage(const QStringList& languages, const QString& lang);
 
     static QString getEncoding(const QString& str);
 

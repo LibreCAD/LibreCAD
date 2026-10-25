@@ -172,15 +172,27 @@ void QG_DlgOptionsGeneral::init(){
 
     LC_GROUP("Appearance"); // fixme - refactor to several groups?
     {
-        // set current language:
+        // set current language by code: the combos list canonical codes ("de_DE"),
+        // settings may hold an older bare code ("de") or an empty one
         QString def_lang = "en";
+        const auto languageIndex = [&def_lang](const QComboBox* combo, const QString& lang) {
+            QStringList languages;
+            for (int i = 0; i < combo->count(); ++i) {
+                languages << combo->itemData(i).toString();
+            }
+            QString match = RS_System::matchLanguage(languages, lang);
+            if (match.isEmpty()) {
+                match = RS_System::matchLanguage(languages, def_lang);
+            }
+            return combo->findData(match);
+        };
         QString lang = LC_GET_STR("Language", def_lang);
-        cbLanguage->setCurrentIndex(cbLanguage->findText(RS_SYSTEM->symbolToLanguage(lang)));
+        cbLanguage->setCurrentIndex(languageIndex(cbLanguage, lang));
 
         m_initialLanguageGUIIdx = cbLanguage->currentIndex();
 
         QString langCmd = LC_GET_STR("LanguageCmd", def_lang);
-        cbLanguageCmd->setCurrentIndex(cbLanguageCmd->findText(RS_SYSTEM->symbolToLanguage(langCmd)));
+        cbLanguageCmd->setCurrentIndex(languageIndex(cbLanguageCmd, langCmd));
 
         // graphic view:
 
