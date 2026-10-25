@@ -110,6 +110,8 @@ public:
     void updateDashOffset(const RS_Entity* e);
     void clearDashOffset() {m_currenPatternOffset = 0.0;}
     double currentDashOffset() const {return m_currenPatternOffset;}
+    // Whether the pen setPen() last built carries a dash pattern.
+    bool penHasDashPattern() const {return m_lastPenDashed;}
 
     void drawEntityArc(RS_Arc* arc);
     void drawEntityPolyline(const RS_Polyline *polyline);
@@ -436,6 +438,9 @@ protected:
     RS2::LineType m_lastDashLineType = RS2::SolidLine;
     double m_lastDashScreenWidth = 0.;
     double m_lastDashDeviceScale = 0.;
+    // What setPen(const RS_Pen&) last built, so the phase check needs no readback.
+    bool m_lastPenDashed = false;
+    DashSpace m_lastPenDashSpace = DashSpace::Model;
     double m_cachedDpmm = 0.;
     double m_minCircleDrawingRadius = 2.0;
     double m_minArcDrawingRadius = 0.8;
