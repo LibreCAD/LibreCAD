@@ -96,7 +96,10 @@ void LC_ActionModifyMove::doTriggerSelectionUpdate(const bool keepSelected, cons
 }
 
 void LC_ActionModifyMove::doTriggerCompletion([[maybe_unused]] bool success) {
-    if (!m_actionData->createCopy) {
+    if (m_actionData->createCopy) {
+        updateActionPrompt();
+    }
+    else {
         finish();
     }
 }
@@ -171,6 +174,11 @@ void LC_ActionModifyMove::onMouseRightButtonReleaseSelected(const int status, [[
             initPrevious(status);
         }
     }
+    else if (m_actionData->createCopy) {
+        // copies are placed: finish rather than go back to a reference point
+        // for the originals, which are no longer selected
+        finish();
+    }
     else {
         initPrevious(status);
     }
@@ -206,7 +214,12 @@ void LC_ActionModifyMove::updateActionPromptForSelected(const int status) {
             updatePromptTRCancel(tr("Specify reference point"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetTargetPoint:
-            updatePromptTRBack(tr("Specify target point"), MOD_SHIFT_AND_CTRL_ANGLE(tr("Create a Copy")));
+            if (m_actionData->createCopy) {
+                updatePrompt(tr("Specify target point"), tr("Finish"), MOD_SHIFT_AND_CTRL_ANGLE(tr("Create a Copy")));
+            }
+            else {
+                updatePromptTRBack(tr("Specify target point"), MOD_SHIFT_AND_CTRL_ANGLE(tr("Create a Copy")));
+            }
             break;
         default:
             updatePrompt();
