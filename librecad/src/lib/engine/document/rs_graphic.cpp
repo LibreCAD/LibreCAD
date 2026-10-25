@@ -27,6 +27,9 @@
 #include "rs_graphic.h"
 
 #include <iostream>
+#include <unordered_set>
+
+#include <QSet>
 
 #include "dxf_format.h"
 #include "lc_containertraverser.h"
@@ -38,6 +41,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_dimension.h"
+#include "rs_hatch.h"
 #include "rs_layer.h"
 #include "rs_math.h"
 #include "rs_settings.h"
@@ -298,6 +302,91 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
         }
         validateSelection();
     }
+}
+
+/**
+ * The names are in the order first seen. It walks what the writers walk: the
+ * top level of model space and of each block, the children of pattern hatches,
+ * dimension overrides, layers, dim styles, header variables and MLINESTYLE
+ * elements. Names given by handle are left out: a handle only resolves through
+ * a record the file already has.
+ */
+std::vector<QString> RS_Graphic::referencedLineTypeNames() const {
+    std::vector<QString> names;
+    QSet<QString> seenNames;
+    std::unordered_set<std::uint16_t> seenIds;
+    const auto addName = [&](const QString& name) {
+        if (name.trimmed().isEmpty() || seenNames.contains(name)) {
+            return;
+        }
+        seenNames.insert(name);
+        names.push_back(name);
+    };
+    const auto addPen = [&](const RS_Pen& pen) {
+        if (pen.getLineTypeFoldId() != 0 && seenIds.insert(pen.getLineTypeId()).second) {
+            addName(pen.getLineTypeName());
+        }
+    };
+    const auto addDimStyle = [&](const LC_DimStyle& style) {
+        addName(style.dimensionLine()->lineTypeName());
+        addName(style.extensionLine()->lineTypeFirstRaw());
+        addName(style.extensionLine()->lineTypeSecondRaw());
+    };
+    const auto addEntities = [&](const RS_EntityContainer& container) {
+        for (RS_Entity* e : lc::LC_ContainerTraverser{container, RS2::ResolveNone}.entities()) {
+            if (e->getFlag(RS2::FlagDeleted)) {
+                continue;
+            }
+            addPen(e->getPen(false));
+            switch (e->rtti()) {
+                case RS2::EntityDimLinear:
+                case RS2::EntityDimOrdinate:
+                case RS2::EntityDimAligned:
+                case RS2::EntityDimAngular:
+                case RS2::EntityDimRadial:
+                case RS2::EntityDimDiametric:
+                case RS2::EntityDimArc:
+                    if (const LC_DimStyle* style = static_cast<RS_Dimension*>(e)->getDimStyleOverride()) {
+                        addDimStyle(*style);
+                    }
+                    break;
+                case RS2::EntityHatch:
+                    // R12 writes the pattern children with their own pens.
+                    if (!static_cast<RS_Hatch*>(e)->isSolid()) {
+                        for (RS_Entity* child :
+                             lc::LC_ContainerTraverser{*static_cast<RS_Hatch*>(e), RS2::ResolveNone}.entities()) {
+                            addPen(child->getPen(false));
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    addEntities(*this);
+    for (int i = 0; i < m_blockList.count(); i++) {
+        const RS_Block* block = m_blockList.at(i);
+        if (!block->isDeleted()) {
+            addEntities(*block);
+        }
+    }
+    for (unsigned i = 0; i < m_layerList.count(); i++) {
+        addPen(m_layerList.at(i)->getPen());
+    }
+    for (const LC_DimStyle* style : *m_dimstyleList.getStylesList()) {
+        addDimStyle(*style);
+    }
+    for (const char* key : {"$CELTYPE", "$DIMLTYPE", "$DIMLTEX1", "$DIMLTEX2"}) {
+        addName(getVariableString(QLatin1String(key), QString()));
+    }
+    for (const auto& style : m_dwgAdvancedMetadata.mlineStyles()) {
+        for (const auto& element : style.elements) {
+            addName(QString::fromStdString(element.linetype));
+        }
+    }
+    return names;
 }
 
 /**

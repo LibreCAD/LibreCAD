@@ -369,6 +369,8 @@ void RS_Modification::libraryInsert(const LC_LibraryInsertData& data, RS_Graphic
             }
         }
     }
+    // Its line types come along as its layers do.
+    destination->mergeLineTypes(*src);
 
     // Everything read is new to this drawing, and goes on its layers of the same names.
     constexpr unsigned provenance = RS_Entity::Identity | RS_Entity::TableRefs;

@@ -110,6 +110,10 @@ void LC_CopyUtils::copy(const RS_Vector& ref, QList<RS_Entity*>& entities, const
         }
     }
     clipboard->endCopy();
+    if (graphic != nullptr) {
+        // the line types the copy names come along, as its layers and blocks did
+        clipboardGraphic->importReferencedLineTypes(*graphic);
+    }
 }
 
 /**
@@ -253,6 +257,10 @@ void LC_CopyUtils::paste(const RS_PasteData& data, RS_Graphic* graphic, LC_Docum
     Q_ASSERT(src != nullptr);
 
     const unsigned foreignTables = clipboard->getSourceId() == graphic->getId() ? 0 : RS_Entity::TableRefs;
+    if (foreignTables != 0) {
+        // a line type the drawing defines wins, as its layer or block does below
+        graphic->mergeLineTypes(*src);
+    }
     const RS_Vector scaleV = getInterGraphicsScaleFactor(data.factor, src, graphic);
     const RS_Vector zero(0, 0);
     // here we iterate over direct children only, to ensure that containers (like polyline) are not exploded.
