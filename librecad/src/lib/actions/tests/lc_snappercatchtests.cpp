@@ -21,6 +21,7 @@
 
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
 
 #include <algorithm>
 #include <cmath>
@@ -46,6 +47,7 @@
 #include "lc_hyperbola.h"
 #include "lc_highlight.h"
 #include "lc_overlayentitiescontainer.h"
+#include "lc_settingguard.h"
 #include "rs_arc.h"
 #include "rs_actiondefault.h"
 #include "rs_block.h"
@@ -67,6 +69,7 @@
 #include "rs_point.h"
 #include "rs_polyline.h"
 #include "rs_preview.h"
+#include "rs_settings.h"
 #include "rs_spline.h"
 #include "rs_text.h"
 
@@ -575,8 +578,15 @@ TEST_CASE("direct drag source respects the enabled snap modes", "[snap][drag][is
 }
 
 TEST_CASE("Shift snaps the move of a line's grip, as for other grips", "[snap][drag][issue3174]") {
+    // A setting decides whether a press or a release ends the move.
+    const bool endsByPress = GENERATE(true, false);
+    // Ctrl keeps the line's angle.
+    const bool lengthen = GENERATE(false, true);
+    CAPTURE(endsByPress, lengthen);
     ActionFixture<HoverProbe> f;
-    f.m_action->RS_Snapper::init();
+    lc::test::SettingGuard endsByClick{RS_SETTINGS, "CADPreferences", "AdHockMovingEndsByMouseClick"};
+    endsByClick.set(endsByPress);
+    f.m_action->RS_Snapper::init(); // reads the settings
     auto* viewport = f.m_view.getViewPort();
     viewport->justSetOffsetAndFactor(0, 0, 1.0);
     const RS_Vector bottom(200.0, 100.0);
@@ -601,22 +611,26 @@ TEST_CASE("Shift snaps the move of a line's grip, as for other grips", "[snap][d
             f.m_action->mouseReleaseEvent(&event);
         }
     };
-    // Drag the bottom grip right and a little up, then hold Shift. A press or a
-    // release ends the move, depending on a setting: send both.
+    // Drag the bottom grip right and a little up, then hold Shift, and end the move.
     const RS_Vector target = bottom + RS_Vector(30.0, 12.0);
+    const Qt::KeyboardModifiers held = lengthen ? Qt::ShiftModifier | Qt::ControlModifier : Qt::ShiftModifier;
     send(QEvent::MouseMove, bottom, Qt::NoButton, Qt::NoButton, Qt::NoModifier);
     send(QEvent::MouseButtonPress, bottom, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
     send(QEvent::MouseMove, bottom + RS_Vector(20.0, 0.0), Qt::NoButton, Qt::LeftButton, Qt::NoModifier);
-    send(QEvent::MouseMove, target, Qt::NoButton, Qt::LeftButton, Qt::ShiftModifier);
+    send(QEvent::MouseMove, target, Qt::NoButton, Qt::LeftButton, held);
     // The grip moves along an angle step from where it was; about the top end
     // the snap would have kept the line vertical.
     const auto onAngleStep = [&](const RS_Vector& point) {
         const double steps = (point - bottom).angle() / f.m_action->getAngleStep();
         return std::abs(steps - std::round(steps)) < 1e-9;
     };
-    CHECK(onAngleStep(f.m_action->m_lastAngleSnapPoint)); // the preview
-    send(QEvent::MouseButtonPress, target, Qt::LeftButton, Qt::LeftButton, Qt::ShiftModifier);
-    send(QEvent::MouseButtonRelease, target, Qt::LeftButton, Qt::NoButton, Qt::ShiftModifier);
+    if (!lengthen) {
+        CHECK(onAngleStep(f.m_action->m_lastAngleSnapPoint)); // the preview
+    }
+    if (endsByPress) {
+        send(QEvent::MouseButtonPress, target, Qt::LeftButton, Qt::LeftButton, held);
+    }
+    send(QEvent::MouseButtonRelease, target, Qt::LeftButton, Qt::NoButton, held);
 
     RS_Line* moved = nullptr;
     for (RS_Entity* entity : f.m_graphic) {
@@ -626,9 +640,15 @@ TEST_CASE("Shift snaps the move of a line's grip, as for other grips", "[snap][d
     }
     REQUIRE(moved != nullptr);
     CHECK(moved->getEndpoint() == top);
-    REQUIRE(moved->getStartpoint().distanceTo(bottom) > 10.0);
-    CHECK(onAngleStep(moved->getStartpoint()));
-    CHECK(moved->getStartpoint().x > bottom.x + 10.0);
+    if (lengthen) {
+        // Along the line, to where the mouse projects: no angle snap Ctrl then discards.
+        CHECK(moved->getStartpoint().distanceTo(RS_Vector(bottom.x, target.y)) < 1e-9);
+    }
+    else {
+        REQUIRE(moved->getStartpoint().distanceTo(bottom) > 10.0);
+        CHECK(onAngleStep(moved->getStartpoint()));
+        CHECK(moved->getStartpoint().x > bottom.x + 10.0);
+    }
 }
 
 TEST_CASE("selection windows do not display a drag source snap", "[snap][drag][issue3127]") {

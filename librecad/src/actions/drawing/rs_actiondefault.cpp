@@ -335,9 +335,6 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
             switch (type) {
                 case RS2::EntityLine: {
                     auto *refMovingLine = static_cast<RS_Line *>(refMovingEntity);
-                    // As for every other grip and Stretch, the angle snap is of the
-                    // grip's move, not of the line about its other end (#3174).
-                    mouse = getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true);
                     if (ctrlPressed){ // - if CTRL pressed, move endpoint with saving current angle of line
                         auto constructionLine = RS_ConstructionLine(nullptr,
                             RS_ConstructionLineData(refMovingLine->getStartpoint(),
@@ -346,11 +343,15 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
                         m_actionData->v2 = newEndpoint;
                     }
                     else{
-                        m_actionData->v2 = mouse;
+                        // As for every other grip and Stretch, the angle snap is of the
+                        // grip's move, not of the line about its other end (#3174).
+                        m_actionData->v2 = getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true);
                         previewRefLine(m_actionData->v2, m_actionData->v1);
                     }
                     if (isInfoCursorForModificationEnabled()) {
-                        createEditedLineDescription(nullptr, ctrlPressed, shiftPressed);
+                        RS_Line edited(nullptr, refMovingLine->getData());
+                        edited.moveRef(m_actionData->v1, m_actionData->v2 - m_actionData->v1);
+                        createEditedLineDescription(&edited, ctrlPressed, shiftPressed);
                     }
                     break;
                 }
@@ -642,10 +643,11 @@ RS_Entity* RS_ActionDefault::getClone(const RS_Entity* e){
     return clone;
 }
 
-void RS_ActionDefault::createEditedLineDescription([[maybe_unused]]RS_Line* clone, [[maybe_unused]]bool ctrlPressed,  [[maybe_unused]]bool shiftPressed) const {
+void RS_ActionDefault::createEditedLineDescription(RS_Line* clone, [[maybe_unused]]bool ctrlPressed,  [[maybe_unused]]bool shiftPressed) const {
+    // The line as edited; the grip's move is under "Offset".
     msg(tr("Line"))
-        .linear(tr("Length: "), m_actionData->v1.distanceTo(m_actionData->v2))
-        .wcsAngle(tr("Angle: "), m_actionData->v1.angleTo(m_actionData->v2))
+        .linear(tr("Length: "), clone->getLength())
+        .wcsAngle(tr("Angle: "), clone->getAngle1())
         .toInfoCursorZone2(true);
 }
 
@@ -687,7 +689,6 @@ void RS_ActionDefault::onMouseMovingRefCompleted(const LC_MouseEvent* e) {
     switch (type) {
         case RS2::EntityLine: {
             const auto *refMovingLine = static_cast<RS_Line *>(refMovingEntity);
-            mouse = getSnapAngleAwarePoint(e, m_actionData->v1, mouse);
             if (ctrlPressed) {
                 // - if CTRL pressed, move endpoint with saving current angle of line
                 const auto constructionLine = RS_ConstructionLine(nullptr,
@@ -696,7 +697,7 @@ void RS_ActionDefault::onMouseMovingRefCompleted(const LC_MouseEvent* e) {
                 const RS_Vector newEndpoint = constructionLine.getNearestPointOnEntity(mouse, false);
                 m_actionData->v2      = newEndpoint;
             } else {
-                m_actionData->v2 = mouse;
+                m_actionData->v2 = getSnapAngleAwarePoint(e, m_actionData->v1, mouse);
             }
             break;
         }
