@@ -1057,7 +1057,12 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow * w, bool activateNext)
     foreach (auto&& child, w->getChildWindows()) // block editors and print previews; just force these closed
 		doClose(child, false); // they belong to the document (changes already saved there)
 	w->getChildWindows().clear();
+	// removeSubWindow() leaves a window of its own, which only a close event deleted. With a
+	// style sheet, Qt shows such a window again if it was maximized (QMdiSubWindow on
+	// StyleChange), and it then outlives the main window. Clear that state and delete it.
+	w->overrideWindowState(Qt::WindowNoState);
 	mdiAreaCAD->removeSubWindow(w);
+	w->deleteLater();
 	window_list.removeOne(w);
 
 	if (!activedMdiSubWindow || activedMdiSubWindow == w)
