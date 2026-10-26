@@ -742,11 +742,40 @@ identities; case counts above come from the compact execution reports.
 | `S0-ordinary-restored-counts.log` | `dc6eb23fd3667452023271f5e46e19ab6fae290514ee0f0b4f0f67abab259ba7` |
 | `S0-ordinary-red.xml` | `e4a207068ea28d4f141e25b3817ede20b77e0e92e4ab253be3c6d1a1b4b86aef` |
 
-The preliminary wire implementation is still uncommitted at this checkpoint.
+The immediate ordinary-test plan checkpoint is `7363cd753`.
+
+`7bfbe5f49811454d7bab5d29aa3c063648746bff` implements the preliminary native
+wire sub-slice described in4.2. Final wire tests passed7/7 with1022 assertions
+each in CMake Release, AddressSanitizer (`detect_leaks=0`, no leak-free claim)
+and qmake6. Exact hard item/depth/array and lower frame boundaries, every split,
+one-byte delivery, finite double/sign-bit fidelity, signed integer boundaries
+and immediate overflows, malformed/extra/truncated frames and sticky refusal
+lifecycle are executed. The retained first run correctly failed on CBOR -2^64;
+the fixed range check refuses Qt's wrapped negative-magnitude accessor value.
+Review P2s were closed by adding immediate-overflow/lifecycle cases and opt-in
+CTest registration. Default configuration registers zero offset-worker tests;
+`LIBRECAD_REGISTER_OFFSET_WORKER_TESTS=ON` plus building the named wire target
+passes the actual CTest row1/1. Existing explicit-target CI is not made to run a
+missing `EXCLUDE_FROM_ALL` executable.
+
+Toolchain: CMake4.4.4, Qt6.12.0, installed Catch2 3.16.1, AppleClang21,
+macOS SDK27.0. The initial qmake attempt encountered the existing shared SDK26.5
+stash. A private `.qmake.cache`/stash selected SDK27.0 and the isolated wire
+project built/passed. The shared stash was not removed or changed. This qmake
+result qualifies the wire sources, not the full application/helper package.
+
+| Artifact | SHA256 |
+|---|---|
+| `W0-wire-final.xml` | `81ff40f417d3f6d49d3224e1ac613e4d518e653950165eef63d8ee25d84d4aff` |
+| `W0-wire-asan-final.xml` | `94ef9d803f6f685a8af95ab4a8684eeaaf115935744b0ebd9d95ea1369057bd1` |
+| `W0-wire-qmake-final.xml` | `7a420e06969d0578fc376e79d6ece4bfa17c27ca99f216065041c7f25f05bf1a` |
+
 S0 overall, A-C requalification, W0-W2, integration and R remain open. Next:
-commit the independently qualified wire sub-slice, then finish S0 geometry/type
-qualification and W0's operation/deadline/ownership freeze. Neither a framing
-codec nor the existing developer runner constitutes a native geometry worker.
+finish S0 geometry/type qualification and W0's typed operation/deadline/ownership
+freeze, then the helper and GUI lifecycle. Neither a framing codec nor the
+existing developer runner constitutes a native geometry worker. Both shared
+indexes retain their recorded hashes; all three code slices and their immediate
+plan checkpoints belong only to `codex/offset-2961-native-worker`.
 
 - [x] Read-only reconciliation: identify the later descendant candidate and its
   real entity/checker/UI/file/source/trim code instead of calling it all missing.
