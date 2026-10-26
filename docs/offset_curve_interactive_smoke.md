@@ -1,14 +1,18 @@
 # Offset Curve Interactive Smoke Script
 
-Status: REPRESENTATIVE GUI CHECKS RECORDED. Actual
+Status: HISTORICAL REPRESENTATIVE GUI CHECKS RECORDED. Actual
 observations below cover identified CMake/qmake applications and interactions,
 not every script step. The final versioned Save As/Open representatives are
 observed; completed automated results and source/commit correspondence are
 recorded separately in the roadmap and validation index. Record actual executable
 identities, file bytes and observed results; do not transfer an earlier build's
-observations to later bytes.
+observations to later bytes. These records are historical evidence, not current
+acceptance or fresh PASS claims.
 
-This is the manual interactive extension for roadmap 10.7. It uses real menus,
+This is the manual interactive extension originally recorded for roadmap 10.7;
+the consolidated roadmap indexes it under
+[historical candidate evidence](plan_offset_curve_2961.md#54-historical-candidate-evidence).
+It uses real menus,
 property links, picking and application Save/Open, not command aliases. No
 new source-action command names or global Modify toolbar buttons are expected.
 
@@ -109,9 +113,11 @@ new source-action command names or global Modify toolbar buttons are expected.
 
 ## Recorded Checks (2026-10-24)
 
-The retained trace is
+The original historical trace was recorded at
 `/private/tmp/lc2961-impl-evidence.9GtLO2/Z-physical-observations-01.md`,
 including its "Final Versioned Save As And Reopens (Z-save-filters01)" section.
+The original temporary trace and output files may now be gone. Their paths and
+hashes identify historical evidence, not current availability or acceptance.
 These are actual CUA interactions on private drawings in the human-approved
 normal profile, not a claim that the complete catalogue above was executed.
 
@@ -156,7 +162,7 @@ The separate actual-SHA audit matched all three validated source blobs.
 | qmake mixed DXF to DWG2018 | Actual primary Save As wrote AC1032; fresh DWG Open reported R2018. Three real dialogs showed Defined native Distance3/Center(16,-64), ordinary restored Ellipse Center(16,-64)/radii12, and ordinary trimmed Spline Degree3/Closed0. All were cancelled. | Positive interaction followed exact-path rebinding; two initial CUA binding timeouts are not credited as successful interactions. |
 | qmake DWG to DXF2018 | Explicit DXF2018 Save As wrote AC1032. Close/Open through the DXF filter retained all three roles in separate native/ellipse/spline dialogs. A following cancelled Save As remembered DXF2018 in the same process. | Same-process filter memory, not restart persistence or all-version GUI coverage. |
 
-Final output filenames below are under the retained EVID directory. Each hash
+Final output filenames below were under the original temporary EVID directory. Each hash
 binds the actual saved file, not a projected native definition:
 
 | Output | SHA256 |
@@ -195,11 +201,11 @@ matrix or unavailable platforms into PASS.
 
 The [validation index](offset_curve_2961_validation.md) links all R01-R15
 production/test paths and checkpoint-specific results. The roadmap's
-[Save As validation](plan_offset_curve_2961.md#z-save-filters-validation-2026-10-24)
+[Save As validation](plan_offset_curve_2961.md#54-historical-candidate-evidence)
 records product `091de1a6a`, immediate plan checkpoint `861b58957`, the twelve
 completed lanes, adjacent regressions and source/binary/blob correspondence.
 Those are the historical Save As01 results, not later-source executions.
-The [R03 final02 record](plan_offset_curve_2961.md#r03-final-closure-validation-2026-10-24)
+The [R03 final02 record](plan_offset_curve_2961.md#54-historical-candidate-evidence)
 belongs to product `f617fcf70` / checkpoint `27ee1ecc`; the
 [later native qualification](offset_curve_2961_validation.md#current-native-qualification)
 records C-search product `b6814fb3a63dd66bb3aeae9e5b5e66668f8b8591` / checkpoint `4fa45611a291e06f9f0122f84120e23d1c2e87ac`
@@ -209,7 +215,7 @@ tests or from rechecking the older GUI/file hashes.
 At Save As01, its full-Release/affected-ASan XMLs contain each exact unskipped
 A14/B8/C54 base once, with 43 mandatory SECTION detail rows per report receiving
 no extra identity credit. C54 is 53 public-checker identities plus C27 routing.
-The later native record supplies the current-source geometry membership result;
+The later native record supplies its own candidate-source geometry membership result;
 the old XMLs are not substituted for new C-search results. This documentation
 adds no duplicate C++ geometry graph, external matrix replay or analyzer run.
 
