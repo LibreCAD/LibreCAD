@@ -895,6 +895,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/lc_offsetcurve.h
      librecad/src/lib/engine/document/entities/lc_offsetworkerwire.cpp
      librecad/src/lib/engine/document/entities/lc_offsetworkerwire.h
+     librecad/src/lib/offset_worker/lc_offsetworkerrequest.cpp
+     librecad/src/lib/offset_worker/lc_offsetworkerrequest.h
      librecad/src/lib/engine/document/entities/lc_offsetcurvereadutils.h
      librecad/src/lib/engine/document/entities/lc_offsetcurvegrips.cpp
      librecad/src/lib/engine/document/entities/lc_offsetcurvegrips.h
@@ -3447,6 +3449,14 @@ if (BUILD_TESTS)
     add_librecad_filter_micro_test(
         librecad_offset_adapter_tests
         librecad/src/lib/filters/tests/lc_offsetcurve_adapter_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_offset_worker_probe_tests
+        librecad/src/lib/engine/document/entities/tests/lc_offsetworkerprobe_tests.cpp)
+    target_include_directories(librecad_offset_worker_probe_tests PRIVATE
+        librecad/src/lib/offset_worker)
+    add_librecad_filter_micro_test(
+        librecad_offset_worker_request_tests
+        librecad/src/lib/offset_worker/tests/lc_offsetworkerrequest_tests.cpp)
     add_librecad_filter_micro_test(
         librecad_offset_persistence_tests
         librecad/src/lib/filters/tests/lc_offsetcurve_persistence_tests.cpp)
