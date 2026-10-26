@@ -19762,6 +19762,8 @@ void RS_FilterDXFRW::writeLTypes() {
   // record of its own, spelt and described as the entry is.
   for (unsigned i = 0; i < m_graphic->countLineTypes(); ++i) {
     const LC_LineType *lineType = m_graphic->lineTypeAt(i);
+    if (!isWritableLineTypeName(lineType->name))
+      continue;
     const std::string key =
         normalizeDwgTableName(lineType->name.toStdString());
     if (listedNames.count(key) != 0 || !emittedNames.insert(key).second)

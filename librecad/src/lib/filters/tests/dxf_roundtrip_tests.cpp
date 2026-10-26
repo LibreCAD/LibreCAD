@@ -9867,6 +9867,25 @@ std::string ltypeNameOnly(const std::string &name) {
 
 } // namespace
 
+TEST_CASE("DXF does not synthesize LTYPE records for unwritable names",
+          "[dxf][roundtrip][filter][linetype][named][table]") {
+  ensureSettings();
+  const std::string out = tmpFile("unwritable_ltype_out.dxf");
+  RS_Graphic graphic;
+  REQUIRE(exportAs(graphic, out));
+  const int originalRecords = countRecords(out, "LTYPE");
+
+  RS_Graphic source;
+  auto *lineType = new LC_LineType(QStringLiteral("VENDOR\nTYPE"));
+  lineType->pattern = {2.0, -2.0};
+  REQUIRE(source.addLineType(lineType) == lineType);
+  graphic.mergeLineTypes(source);
+
+  REQUIRE(exportAs(graphic, out));
+  CHECK(countRecords(out, "LTYPE") == originalRecords);
+  std::filesystem::remove(out);
+}
+
 // A list entry no record backs, as a library insert leaves it, gets a record
 // of its own: spelt and described as the entry is, after the drawing's own
 // records and before those written for names that have none.
