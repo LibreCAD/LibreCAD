@@ -94,7 +94,7 @@ This inventory compares the older attached tree with the later candidate.
 | Type/UI/source actions | Entity enum/coverage, property queue/dialog, default drag, Update/Restore actions | Candidate present. Property queue defers publication with a timer, but prepares geometry synchronously in `apply`; a deferred commit is not background computation. |
 | Stored-cache Trim | `lc_offsetcachetrim`, contacts/matching helpers, Modify Trim action and file tests | Candidate present: pure preparation, exact fragments, two-operand publication and plain-fragment persistence. Recheck precision/ownership/undo guarantees. |
 | Validation workers | `scripts/offset-curve-validation/`, X-H1 through X-H7 | Candidate has Node developer/test workers and recorded timeout fixes. These tools are not a shipped isolated geometry worker. Do not confuse their deadlines with GUI computation limits. |
-| Native geometry-worker path | No dedicated product helper/transport in inspected CMake/qmake lists; edits call the engine/checker in process | W0-W2 remain an explicit architecture/readiness gap in this draft. Resolve this distinction before any whole-plan completion claim. |
+| Native geometry-worker path | Bounded wire and four-operation request codec now committed; no product helper/client yet; UI math remains in process | W0 partially implemented. Reply authority, process lifecycle and caller integration remain mandatory W0-W2 work. |
 | Tests/build targets | Main Catch target, filter micro targets and two standalone offset allocation-failure targets | Candidate present; source registration is not discovery/execution. Use the actual targets in section5.3, not just the old grouped fast lanes. |
 | Surviving test defect | `spline_offset_representation_tests.cpp` lines205 and668 in candidate still use DWG enum ranges | `FormatDWG2007` is outside the range; those ordinary representation loops also omit it. Fix classification and add an executed R2007 regression in S0. The separate candidate matrix already lists all six DWG versions. |
 
@@ -299,7 +299,7 @@ candidate except the explicitly proposed native-worker tags.
 | B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; audit/retest | geometry terminal/occurrence case inventory |
 | C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; audit/retest | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
 | C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a` plus later search; audit/retest | `[lc-offsetcurve][cache-topology-chain]` |
-| W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | unresolved product architecture; bounded probe required | operation/cap/deadline/call-site table |
+| W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request syntax and bounded calibration implemented; reply/lifecycle/ownership freeze still open | operation/cap/deadline/call-site table |
 | W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | absent from inspected product; implement after W0 | proposed `[lc-offsetcurve][worker-protocol]` |
 | W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | native path absent; Node X-H7 is separate existing work | proposed `[lc-offsetcurve][worker-lifecycle]`; retained runner regression |
 | E1 | Guarded entity/factories, RTTI, stamp, clone, downgrade and transforms | C-check | candidate `92758859c` and later fixes; audit/retest | `[lc-offsetcurve][native]`, `[entity-coverage]` |
@@ -458,6 +458,43 @@ startup/preview/commit/termination bounds, packaging destinations and supported
 platform behavior are recorded, with worst-admitted-case probes and refusal
 behavior. Probe work is finite and cannot change geometry tolerances or hard work
 caps merely to achieve a timing target. No unresolved choice is hidden in W1.
+An early helper-launch prototype may supply W0's startup measurements; it does
+not close W1 packaging, result-authority or lifecycle acceptance before the
+remaining W0 choices are frozen.
+
+The committed request envelope is `[1,token,operation,body]`. Token contains
+positive request ID and nonnegative generation/source-revision/undo-epoch int64
+values. `lc_offsetworkerrequest.h` fixes every nested positional record, native
+member order, enum and count admission. Request values do not confer editability.
+
+| Operation | Body / callers | Remaining integration constraint |
+|---|---|---|
+| Generate0 | `[definition,runLimits,throughPoint-or-null]`; eligible creation/repeat, distance/side/basis edits, grip/dialog/sheet/Update preparation | Generate/check once in child. For Through, retain the actual picked point and run the existing final cache-containment proof with the remaining allowance. Derived distance alone is insufficient. |
+| ValidateCache1 | `[rawCache,definition,worldTolerance,checkLimits]`; file/native cache admission | Validate original raw arrays before any repairing constructor can establish eligibility. Preserve callback lifetime and unpublished-document transaction. Do not rerun the generator. |
+| TrimCache2 | `[cache,cutter,pick,trimLimits]`; stored-cache Trim and cache operand preparation | Exact stored cache only; parent attributes/owner/metadata stay outside child. Preserve all sections, roots and work records in the reply. |
+| TrimConic3 | `[cache,conic,conicPick,cachePick-or-null,trimLimits]`; conic complement and Trim Two | One original contact session and shared budget; prepare both operands before one parent undo/publication. |
+
+Cutters are owned Segment/Arc/Circle/Ellipse/Spline values. Every spline member,
+including latent fit/saved-open fields and flags, and every ellipse/arc render
+cache field is transported without normalization. Caps are16384 controls/weights,
+32768 knots/saved knots,4096 fit points; semantic layout, positive tolerance and
+degree eligibility remain kernel decisions. All wire doubles are finite actual
+float64, not coerced integers. Run/Check/Trim budgets may only lower existing
+named caps, with zero preserved for a typed kernel refusal.
+
+Before closing W0, implement the matched-token reply layout and private native
+adoption authority: the fixed built child runs the full checker, prepares cache
+hints locally, and joins successfully; only the owning client may mint a private
+prepared-result capability after strict bounded reply checks. Never expose a
+public `checked=true` or raw-value factory. Topology issuer pointers never cross
+the process boundary. Parent structural/transport work is separately bounded;
+do not hide a second expensive C run or reset the child's work allowance.
+Through checking must return its actual additional work, without repurposing
+the existing C-only `checkWork` field. If crash/kill loses exact counters, record
+that uncertainty and conservatively charge the reserved remainder for that
+failed operation, never invent zero consumption or retry it with fresh limits.
+Freeze/test no-op, exact-translation and cached clone paths separately so a new
+worker does not force generator runs for existing cheap proof-preserving edits.
 
 W1/W2 launch only the built offset helper through a fixed executable/argument
 contract. Handle partial I/O, short/oversized/truncated frames, invalid numeric
@@ -627,7 +664,13 @@ linked into the normal application/Catch target. Retain observed fault counts,
 exit statuses, diagnostic prefixes and later recovery checks, not invented
 expected assertion counts. At R also build the CMake application explicitly.
 
-After W1 adds its named native helper/protocol/lifecycle targets, add them to
+Current additional native targets are `librecad_offset_worker_wire_tests`,
+`librecad_offset_worker_request_tests` and the explicit opt-in
+`librecad_offset_worker_probe_tests` (`[worker-probe]`). The first two selectors
+are `[lc-offsetcurve][worker-protocol][wire]` and
+`[lc-offsetcurve][worker-protocol][request]`; reject zero discovery. The probe
+is hidden from ordinary suites and reports measurements/refusals, not GUI timing
+acceptance. After W1 adds its named native helper/lifecycle targets, add them to
 both build and execution manifests and test the packaged helper launch. Merely
 building the application or optional Node validation scripts cannot cover them.
 
@@ -770,23 +813,65 @@ result qualifies the wire sources, not the full application/helper package.
 | `W0-wire-asan-final.xml` | `94ef9d803f6f685a8af95ab4a8684eeaaf115935744b0ebd9d95ea1369057bd1` |
 | `W0-wire-qmake-final.xml` | `7a420e06969d0578fc376e79d6ece4bfa17c27ca99f216065041c7f25f05bf1a` |
 
-S0 overall, A-C requalification, W0-W2, integration and R remain open. Next:
+The immediate wire plan checkpoint is `870903b52`.
+
+`22a7ee970a656ed15bd62b756b0a62c330e95275` adds the typed request module and
+bounded, opt-in framed calibration probes. Final request tests passed10/10 with
+591570 assertions in both Release and ASan, including optional Through points.
+The initial `[worker-request]` selector matched zero and failed; only the
+discovered `[lc-offsetcurve][worker-protocol][request]` run receives credit.
+The worker module is outside the geometry package to avoid adding a modification
+dependency to the kernel. CMake and qmake source registrations are updated;
+this is not a new full-application qmake qualification.
+
+Framed probe runs passed2/2 with194 assertions in each configuration and emitted
+13 actual measurement rows. Degree1/3 caches at1,64,256,1024 spans were admitted;
+4096-span cases refused at the unchanged1048576-pair cap. Largest request frame:
+577825 bytes/86079 decoded wire values. Largest observed Release row:600369us;
+ASan:1193974us. These measured families are not a proof of universal worst-case
+latency or a GUI deadline. The separate120-second probe watchdog is not a product
+timeout. Startup/preview/commit/kill/reap policy remains to be frozen/tested.
+
+Fresh broader Release and exact-bundled-Catch2 ASan offset selections each ran
+1107 cases:1106 passed,1 named unavailable legacy-writer skip,4895381 passed
+assertions. Release geometry/type selection passed387/387 with1577933 assertions.
+The ASan provider is the exact local gitlink
+`5aa8d113215bd9a97ecc1a2f3fc9506947a2fa57`, with no network install; Release
+results above retain their installed-Catch2 provider identity. Standalone failure
+executables passed in both configurations: batch preparation2 C++ new failures,
+undo-entry failure1 and allocation-free handoff; trim1616 staging failures,
+20 later cancellations,4 conic failures and4 conic cancellations. They do not
+inject Qt/private malloc or prove generic post-publication allocation atomicity.
+
+| Artifact | SHA256 |
+|---|---|
+| `W0-request-through.xml` | `aa3bfae521949a33e1f64bb5496b8fbf188f08209fcbcedea22a8b7410c34d09` |
+| `W0-request-through-asan.xml` | `b5c066d0c337f691c607e07b992427ae06b2dcd3bcff173ad5d1a55f32a75e05` |
+| `W0-probe-framed-runtime.log` | `befcee7e9f36f150a889e50baaac85a9475660645ea9813d7908f7810d12a97b` |
+| `W0-probe-framed-asan-runtime.log` | `d5396ceecf432d28a534ef7a768938eb5642cfdd058704b403ed7b79eb6ca25c` |
+| `S0-offset-all-asan.xml` | `f46b20db584093f4e436836b53041f5fb01e8af0ea0271165777804d3035e6d1` |
+| `S0-offset-all.xml` | `7905daf7ff6b5e697fc49946628a999283650452272186fe7f60106ba2506883` |
+| `S0-geometry.xml` | `0558640e6c0687e45accee90360c2f6f36bcb70b07e22ba6351668c2aef96425` |
+
+S0 source/target reconciliation, A-C review, W0-W2, integration and R remain open. Next:
 finish S0 geometry/type qualification and W0's typed operation/deadline/ownership
 freeze, then the helper and GUI lifecycle. Neither a framing codec nor the
 existing developer runner constitutes a native geometry worker. Both shared
-indexes retain their recorded hashes; all three code slices and their immediate
+indexes retain their recorded hashes; all implementation slices and their immediate
 plan checkpoints belong only to `codex/offset-2961-native-worker`.
 
 - [x] Read-only reconciliation: identify the later descendant candidate and its
   real entity/checker/UI/file/source/trim code instead of calling it all missing.
 - [x] Verify 14 retained receipt hashes and 52 pinned fixture hashes. This is
   identity/provenance checking only, not new runtime or interoperability evidence.
-- [ ] S0: audit scope and pin a clean candidate source; fresh baseline/discovery;
-  fix/execute the ordinary DWG2007 regression and reconcile evidence links.
+- [ ] S0: finish the source/target reconciliation on the durable tree. Fresh
+  baseline, ordinary DWG2007 correction, evidence links and broad offset/failure
+  executions are recorded above; do not redo them as missing implementation.
 - [ ] A-core through C-check: review/requalify existing code and patch only proven
   accounting, ownership, occurrence or global-topology gaps. No duplicate checker.
-- [ ] W0-W2: resolve the native runtime contract, freeze bounded design and
-  implement/validate its missing product path; retain Node runner scope separately.
+- [ ] W0-W2: finish the reply/deadline/ownership freeze and implement/validate
+  helper, parent lifecycle and GUI adoption; reuse the committed wire/request
+  modules and retain Node runner scope separately. Native isolation is required.
 - [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
   DXF/DWG, source and trim implementation with any new worker/publication changes.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
@@ -809,7 +894,7 @@ The original plan-only audit did not implement product changes or commit the
 existing staged draft. This execution now implements the roadmap in the isolated
 worktree above. The prior archive and both shared indexes remain untouched.
 
-## 8. Validation of This Plan Update
+## 8. Historical Plan-Only Audit
 
 Document checks cover all 27 unique slices, known/ordered predecessors, no cycles,
 and every slice reaching final R. Negative controls reject a duplicate slice,
@@ -830,7 +915,8 @@ The earlier document-only audit remains at
 `/private/tmp/lc2961-plan-audit.gRHoJ7/report-final.json`; it qualified its own draft
 structure, not this newer candidate reconciliation. Neither audit qualifies
 geometry, native workers, current DXF/DWG interoperability, visible interaction
-or a product milestone. Product builds/tests remain not run for this update.
+or a product milestone. Those document-only audits did not run product builds or
+tests. Subsequent executions and their exact scopes are in the current ledger.
 
 ## 9. Preserved Validation-Runner Contract
 
