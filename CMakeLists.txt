@@ -893,6 +893,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
      librecad/src/lib/engine/document/entities/lc_offsetcurve.cpp
      librecad/src/lib/engine/document/entities/lc_offsetcurve.h
+     librecad/src/lib/engine/document/entities/lc_offsetworkerwire.cpp
+     librecad/src/lib/engine/document/entities/lc_offsetworkerwire.h
      librecad/src/lib/engine/document/entities/lc_offsetcurvereadutils.h
      librecad/src/lib/engine/document/entities/lc_offsetcurvegrips.cpp
      librecad/src/lib/engine/document/entities/lc_offsetcurvegrips.h
@@ -2574,6 +2576,8 @@ option (LIBRECAD_REGISTER_CROSS_READ_SMOKE
         "Register the cross-reader DWG fixture smoke test with CTest" OFF)
 option (LIBRECAD_REGISTER_TEXT_FOUNDATION_TESTS
         "Register headless text/source-state foundation tests with CTest" OFF)
+option (LIBRECAD_REGISTER_OFFSET_WORKER_TESTS
+        "Register the separately built native offset worker tests with CTest" OFF)
 
 if (BUILD_TESTS)
     enable_testing()
@@ -2601,6 +2605,22 @@ if (BUILD_TESTS)
                 "git submodule update --init externals/Catch2")
         endif()
     endif()
+
+    # The wire codec needs neither document state nor a GUI application.
+    add_executable(librecad_offset_worker_wire_tests EXCLUDE_FROM_ALL
+        librecad/src/lib/engine/document/entities/lc_offsetworkerwire.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetworkerwire_tests.cpp)
+    set_target_properties(librecad_offset_worker_wire_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+    target_include_directories(librecad_offset_worker_wire_tests PRIVATE
+        librecad/src/lib/engine/document/entities)
+    target_compile_features(librecad_offset_worker_wire_tests PRIVATE cxx_std_17)
+    target_link_libraries(librecad_offset_worker_wire_tests PRIVATE
+        Qt6::Core Catch2::Catch2WithMain)
+    if (LIBRECAD_REGISTER_OFFSET_WORKER_TESTS)
+        add_test(NAME offset_worker_wire COMMAND librecad_offset_worker_wire_tests
+            "[lc-offsetcurve][worker-protocol][wire]")
+    endif ()
 
     # A Catch2 listener that gives each test process a settings store of its own
     # (see librecad/src/test/lc_testsettingsisolation.h). It registers itself
