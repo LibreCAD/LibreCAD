@@ -291,7 +291,7 @@ candidate except the explicitly proposed native-worker tags.
 
 | ID | Owns / concrete deliverable | Depends on | Current state | Acceptance selector or artifact |
 |---|---|---|---|---|
-| S0 | Pin/reconcile candidate, main and feature; baseline/discovery; fix DWG enum classification and add R2007 execution | - | next; no product execution here | `[curve-offset]`, `[lc-offsetcurve]`, `[entity-coverage]`, actual target/version inventory |
+| S0 | Pin/reconcile candidate, main and feature; baseline/discovery; fix DWG enum classification and add R2007 execution | - | recovered; parser and ordinary R2007 slices qualified below; geometry/type/target qualification remains | `[curve-offset]`, `[lc-offsetcurve]`, `[entity-coverage]`, actual target/version inventory |
 | A-core | Atomic shared admissions, frozen results, sticky status and ownership/lifetime | S0 | candidate `0eb2a0cfa`; audit/retest | `[lc-offsetcurve][budget-core]` |
 | A-strict | Strict-query callback/record/order/depth/exception accounting | A-core | candidate `dc016f6e2`; audit/retest | `lc_parametriccurveintersection_tests.cpp`, named strict-budget cases |
 | A-reference | Critical/provider/event accounting and atomic paired graph publication | A-strict | candidate `5c12fbeef`; audit/retest | `[lc-offsetcurve][reference-accounting]` |
@@ -717,11 +717,36 @@ Evidence is under the durable root in the introduction:
 | `S0-node-genuine.log` | `7a2547e13f1070b47a6a3a41fd54a4aa91f00b62e1411111e17975242a476259` |
 | `Gibbs-validation.txt` (commands, red controls, scope and review) | `59b8ff5c137e95c6aeadead8feba48b683864a88e8f44b9b6e3435dbb3f63fac` |
 
-Fresh full Release compilation is still running. The ordinary DWG2007 correction
-and preliminary native wire implementation are uncommitted and not covered by
-the code commit above. S0 overall, A-C requalification, W0-W2, integration and R
-remain open. Follow this code commit immediately with this plan-only checkpoint;
-do not treat it as whole-roadmap completion.
+The immediate plan checkpoint for that commit is `311eb0ffd`. It is not
+whole-roadmap completion.
+
+`cbb9b581214d09e5120ab92fb6dcbcc17f827a45` closes the ordinary DWG2007
+representation-test correction. Both ordinary round-trip paths use explicit
+DWG enum cases and execute the R2007 row. The new physical-file control checks
+`AC1021`, both ASCII DXF negatives, retained ordinary type, exact degree/knots/
+weights, endpoints and independent Bezier samples/derivatives, layer and pen.
+Fresh CMake Release built `librecad_tests`, `librecad_dxf_fast_tests` and
+`librecad_dwg_fast_tests`. Final selected ordinary tests passed14/14 with16618
+assertions. Removing only the DWG2007 switch case caused four reported failures
+across the routing test and both ordinary R2007 file paths (exit42); the mapping
+was restored, rebuilt and the full selected set passed again. Adjacent DXF:
+625 cases,624 passed,1 optional external-SHAPE skip,75336 passed assertions.
+Adjacent DWG:481 cases,480 passed,1 absent optional visualstyle fixture skip,
+26805 passed assertions. No external/native-worker/whole-suite acceptance is
+inferred from these selectors. Catch2 JUnit SECTION entries are not extra test
+identities; case counts above come from the compact execution reports.
+
+| Artifact | SHA256 |
+|---|---|
+| `S0-ordinary-restored.xml` | `3d4befeae74e4bf708d2fed204aa54216c08283ac1f019e5984efd910c8d0c8d` |
+| `S0-ordinary-restored-counts.log` | `dc6eb23fd3667452023271f5e46e19ab6fae290514ee0f0b4f0f67abab259ba7` |
+| `S0-ordinary-red.xml` | `e4a207068ea28d4f141e25b3817ede20b77e0e92e4ab253be3c6d1a1b4b86aef` |
+
+The preliminary wire implementation is still uncommitted at this checkpoint.
+S0 overall, A-C requalification, W0-W2, integration and R remain open. Next:
+commit the independently qualified wire sub-slice, then finish S0 geometry/type
+qualification and W0's operation/deadline/ownership freeze. Neither a framing
+codec nor the existing developer runner constitutes a native geometry worker.
 
 - [x] Read-only reconciliation: identify the later descendant candidate and its
   real entity/checker/UI/file/source/trim code instead of calling it all missing.
