@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-26. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0 resumed in the durable implementation worktree; plan incomplete**.
+Status: **S0 partially implemented in the durable worktree; plan incomplete**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -696,6 +696,32 @@ publishing/CI dispatch and D0 approval remain explicit user actions, not evidenc
 that local implementation is complete or a reason to silently bypass local tests.
 
 ## 7. Immediate Next Steps and Completion
+
+### Current Execution Ledger
+
+`3e3f158f631a1bc3007520afc2d824bbb2d847f0` closes the bounded S0 roadmap/runner
+compatibility sub-slice: consolidated roadmap,117 checked links, correct public
+checker reference and strict stable-marker/legacy H6 parsing. Gibbs' final
+focused parser/accounting run passed6/6 against both the live roadmap and the
+actual immutable candidate snapshot; final single-file H6 run passed99/99,
+zero skipped/cancelled/pending, all71 original classifications and93 executable
+obligations intact. The two previously failed unchanged genuine-preflight cases
+passed2/2 on this source/runtime without increasing timeouts or dropping checks.
+Node version: `v26.12.0`. These are developer-tool results, not native isolation.
+
+Evidence is under the durable root in the introduction:
+
+| Artifact | SHA256 |
+|---|---|
+| `S0-H6-final.log` | `0d9ad8ffebbd34d7e40851ecbb85f53146769d072462433407a7fefb418403b8` |
+| `S0-node-genuine.log` | `7a2547e13f1070b47a6a3a41fd54a4aa91f00b62e1411111e17975242a476259` |
+| `Gibbs-validation.txt` (commands, red controls, scope and review) | `59b8ff5c137e95c6aeadead8feba48b683864a88e8f44b9b6e3435dbb3f63fac` |
+
+Fresh full Release compilation is still running. The ordinary DWG2007 correction
+and preliminary native wire implementation are uncommitted and not covered by
+the code commit above. S0 overall, A-C requalification, W0-W2, integration and R
+remain open. Follow this code commit immediately with this plan-only checkpoint;
+do not treat it as whole-roadmap completion.
 
 - [x] Read-only reconciliation: identify the later descendant candidate and its
   real entity/checker/UI/file/source/trim code instead of calling it all missing.
