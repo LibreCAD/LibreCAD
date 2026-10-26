@@ -26,6 +26,7 @@
 
 #include <cmath>
 #include <memory>
+#include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 
@@ -47,6 +48,7 @@
 #include "lc_containertraverser.h"
 #include "lc_graphicviewport.h"
 #include "lc_hatchpropertieseditingwidget.h"
+#include "lc_hyperbola.h"
 #include "lc_looputils.h"
 #include "lc_secondmoment.h"
 #include "lc_splinepoints.h"
@@ -1613,4 +1615,32 @@ TEST_CASE("RS_Hatch keeps one set of pattern lines across updates and edits", "[
     edited->setSolid(true);
     edited->update();
     CHECK(patternLineDirections(*edited).empty());
+}
+
+TEST_CASE("RS_Hatch area: left-branch hyperbola segment (#2559)",
+          "[lc-hatchfix][moments]") {
+    // Reproduces evidence/fixalgo/verify_moments/c5/probe5.cpp section 2: one
+    // hyperbola edge from phi=-0.5 to phi=1.2 with a=2, b=1, theta=25deg,
+    // c=(3,-2), closed by a straight chord between its ends. On both branches
+    // the enclosed region is the same, so getTotalArea() must agree. The
+    // expected value is 0.945631933837233; the e8dd54132 defect gives
+    // 12.4023240632 on the left branch.
+    constexpr double kExpected = 0.945631933837233;
+    for (bool reversed : {false, true}) {
+        const double th = 25.0 * M_PI / 180.0;
+        LC_HyperbolaData d(RS_Vector(3, -2),
+                           RS_Vector(2.0 * std::cos(th), 2.0 * std::sin(th)),
+                           0.5, -0.5, 1.2, reversed);
+        RS_Hatch hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+        auto* loop = new RS_EntityContainer(&hatch);
+        hatch.addEntity(loop);
+        auto* hb = new LC_Hyperbola(loop, d);
+        loop->addEntity(hb);
+        loop->addEntity(new RS_Line(loop, hb->getEndpoint(), hb->getStartpoint()));
+        hatch.update();
+        INFO("reversed=" << reversed);
+        REQUIRE(hatch.getUpdateError() == RS_Hatch::HATCH_OK);
+        REQUIRE(hatch.getTotalArea() ==
+                Catch::Approx(kExpected).margin(1e-12));
+    }
 }

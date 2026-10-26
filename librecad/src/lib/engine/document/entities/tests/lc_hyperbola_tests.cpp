@@ -946,17 +946,27 @@ TEST_CASE("LC_Hyperbola: reversed branch flips area / odd-x moments (A12)",
   auto rb = makeCanonicalHyperbola(2.0, 1.0, -1.0, 1.0, /*reversed=*/false);
   auto lb = makeCanonicalHyperbola(2.0, 1.0, -1.0, 1.0, /*reversed=*/true);
 
-  // Area integral and odd-x moments flip sign on the left branch (x → -x).
+  // Area integral flips sign on the left branch (x_local = -a·cosh φ).
   REQUIRE(lb.areaLineIntegral() == Approx(-rb.areaLineIntegral()).margin(1e-9));
-  // mx (∫ x² dy) is x², so unchanged.
+  // mx = ½∫x²dy: x² is unchanged by the branch.
   REQUIRE(lb.firstMomentLineIntegral().mx ==
           Approx(rb.firstMomentLineIntegral().mx).margin(1e-9));
-  // my (-∫ y² dx) — x doesn't appear, unchanged.
-  REQUIRE(lb.firstMomentLineIntegral().my ==
-          Approx(rb.firstMomentLineIntegral().my).margin(1e-9));
-  // ixx (∫ x³ dy) flips sign.
+  // ixx = ⅓∫x³dy flips sign with x_local.
   REQUIRE(lb.secondMomentLineIntegral().ixx ==
           Approx(-rb.secondMomentLineIntegral().ixx).margin(1e-9));
+  // ixy = ½∫x²y·dy: x² is unchanged.
+  REQUIRE(lb.secondMomentLineIntegral().ixy ==
+          Approx(rb.secondMomentLineIntegral().ixy).margin(1e-9));
+
+  // my = -½∫y²dx: dx = sx·a·sinh φ·dφ flips with the branch, so my flips.
+  // iyy = -⅓∫y³dx likewise flips. Use an asymmetric interval where neither is
+  // zero by symmetry; a symmetric [-1,1] gives my ≡ 0 and would mask the bug.
+  auto rb2 = makeCanonicalHyperbola(2.0, 1.0, -0.3, 1.1, /*reversed=*/false);
+  auto lb2 = makeCanonicalHyperbola(2.0, 1.0, -0.3, 1.1, /*reversed=*/true);
+  REQUIRE(lb2.firstMomentLineIntegral().my ==
+          Approx(-rb2.firstMomentLineIntegral().my).margin(1e-12));
+  REQUIRE(lb2.secondMomentLineIntegral().iyy ==
+          Approx(-rb2.secondMomentLineIntegral().iyy).margin(1e-12));
 }
 
 TEST_CASE("LC_Hyperbola: getParamFromPoint round-trips on both branches (A17)",
@@ -1217,4 +1227,119 @@ TEST_CASE("LC_Hyperbola: setters keep the borders current",
   CHECK(end.y <= hb.getMax().y);
   CHECK(end.x >= hb.getMin().x);
   CHECK(end.y >= hb.getMin().y);
+}
+
+namespace {
+// Build an LC_Hyperbola with a=2, b=1, chosen theta, center and phi range.
+// theta is in radians; majorP has magnitude a and lies along the major axis.
+LC_Hyperbola makeHyperbola(double cx, double cy, double theta, double phi1,
+                           double phi2, bool reversed) {
+  LC_HyperbolaData d;
+  d.center = RS_Vector{cx, cy};
+  d.majorP = RS_Vector{2.0 * std::cos(theta), 2.0 * std::sin(theta)};
+  d.ratio = 0.5;  // b/a = 1/2
+  d.angle1 = phi1;
+  d.angle2 = phi2;
+  d.reversed = reversed;
+  return LC_Hyperbola{nullptr, d};
+}
+}  // namespace
+
+TEST_CASE("LC_Hyperbola: left-branch area uses 2.2.1's primitive (#2559)",
+          "[lc-hatchfix][moments]") {
+  // Each row builds LC_HyperbolaData(center, (2cosθ, 2sinθ), 0.5, φ1, φ2,
+  // reversed), so a = 2 and b = 1. The expected values were produced by a
+  // SymPy-verified closed form; the e8dd54132-era values are the broken ones
+  // this step restores.
+  constexpr double kAbs = 1e-12;
+
+  SECTION("left c=(4,0) θ=0 φ∈[-1,1]") {
+    auto hb = makeHyperbola(4.0, 0.0, 0.0, -1.0, 1.0, /*reversed=*/true);
+    REQUIRE(hb.areaLineIntegral() == Approx(3.77474914130339).margin(kAbs));
+  }
+  SECTION("left c=(3,-2) θ=25° φ∈[-0.5,1.2]") {
+    const double th = 25.0 * M_PI / 180.0;
+    auto hb = makeHyperbola(3.0, -2.0, th, -0.5, 1.2, /*reversed=*/true);
+    REQUIRE(hb.areaLineIntegral() == Approx(1.10749871133751).margin(kAbs));
+  }
+  SECTION("left c=(-6,1) θ=-1.1 rad φ∈[0.2,2.5]") {
+    auto hb = makeHyperbola(-6.0, 1.0, -1.1, 0.2, 2.5, /*reversed=*/true);
+    REQUIRE(hb.areaLineIntegral() == Approx(-73.3489410109838).margin(kAbs));
+  }
+  SECTION("left canonical c=(0,0) θ=0 φ∈[-1,1]") {
+    auto hb = makeHyperbola(0.0, 0.0, 0.0, -1.0, 1.0, /*reversed=*/true);
+    REQUIRE(hb.areaLineIntegral() == Approx(-5.62686040784702).margin(kAbs));
+  }
+  SECTION("right branches of the three non-canonical cases are unchanged") {
+    auto h1 = makeHyperbola(4.0, 0.0, 0.0, -1.0, 1.0, /*reversed=*/false);
+    REQUIRE(h1.areaLineIntegral() == Approx(15.0284699569974).margin(kAbs));
+    const double th = 25.0 * M_PI / 180.0;
+    auto h2 = makeHyperbola(3.0, -2.0, th, -0.5, 1.2, /*reversed=*/false);
+    REQUIRE(h2.areaLineIntegral() == Approx(12.2404572857327).margin(kAbs));
+    auto h3 = makeHyperbola(-6.0, 1.0, -1.1, 0.2, 2.5, /*reversed=*/false);
+    REQUIRE(h3.areaLineIntegral() == Approx(-2.83067270669094).margin(kAbs));
+  }
+  SECTION("left c=(5,2) θ=30° φ∈[-1,1.5] matches Gauss-Kronrod") {
+    const double th = 30.0 * M_PI / 180.0;
+    auto hb = makeHyperbola(5.0, 2.0, th, -1.0, 1.5, /*reversed=*/true);
+
+    // Numerical oracle: ∫ x dy by Gauss-Kronrod on x_world(φ)·(dy/dφ)(φ).
+    double cx = hb.getData().center.x;
+    double cos_th = std::cos(hb.getData().majorP.angle());
+    double sin_th = std::sin(hb.getData().majorP.angle());
+    double a = hb.getMajorRadius();
+    double b = hb.getMinorRadius();
+    int sign_x = hb.getData().reversed ? -1 : 1;
+    auto x_world = [cx, cos_th, sin_th, a, b, sign_x](double phi) {
+      double lx = sign_x * a * std::cosh(phi);
+      double ly = b * std::sinh(phi);
+      return cx + lx * cos_th - ly * sin_th;
+    };
+    auto dy_dphi = [cos_th, sin_th, a, b, sign_x](double phi) {
+      double dlx = sign_x * a * std::sinh(phi);
+      double dly = b * std::cosh(phi);
+      return dlx * sin_th + dly * cos_th;
+    };
+    auto integrand = [x_world, dy_dphi](double phi) {
+      return x_world(phi) * dy_dphi(phi);
+    };
+    double abs_err = 0.0;
+    const double numerical =
+        boost::math::quadrature::gauss_kronrod<double, 61>::integrate(
+            integrand, hb.getData().angle1, hb.getData().angle2, 0, 1e-12,
+            &abs_err);
+    REQUIRE(hb.areaLineIntegral() ==
+            Approx(numerical).epsilon(1e-10).margin(1e-10));
+  }
+}
+
+TEST_CASE("LC_Hyperbola: left branch flips the local my and Iyy",
+          "[lc-hatchfix][moments]") {
+  // Canonical a=2, b=1 at origin: majorP = (2, 0), ratio = 0.5, θ = 0, so the
+  // world integrals equal the local ones through the public API.
+  constexpr double kAbs = 1e-12;
+
+  SECTION("canonical φ∈[-0.3,1.1]") {
+    auto lb = makeCanonicalHyperbola(2.0, 1.0, -0.3, 1.1, /*reversed=*/true);
+    const auto f = lb.firstMomentLineIntegral();
+    const auto s = lb.secondMomentLineIntegral();
+    REQUIRE(f.my == Approx(+0.544421191778352).margin(kAbs));
+    REQUIRE(s.iyy == Approx(+0.380805979093159).margin(kAbs));
+    // Unchanged by the branch flip: area, mx, ixx, ixy.
+    REQUIRE(lb.areaLineIntegral() == Approx(-3.94687937634207).margin(kAbs));
+    REQUIRE(f.mx == Approx(4.8876507457464).margin(1e-11));
+    REQUIRE(s.ixx == Approx(-8.31490225328481).margin(1e-11));
+    REQUIRE(s.ixy == Approx(3.27816811735844).margin(1e-11));
+
+    auto rb = makeCanonicalHyperbola(2.0, 1.0, -0.3, 1.1, /*reversed=*/false);
+    const auto rf = rb.firstMomentLineIntegral();
+    const auto rs = rb.secondMomentLineIntegral();
+    REQUIRE(rf.my == Approx(-0.544421191778352).margin(kAbs));
+    REQUIRE(rs.iyy == Approx(-0.380805979093159).margin(kAbs));
+  }
+  SECTION("canonical left φ∈[-1,1]") {
+    auto lb = makeCanonicalHyperbola(2.0, 1.0, -1.0, 1.0, /*reversed=*/true);
+    REQUIRE(lb.secondMomentLineIntegral().iyy ==
+            Approx(+0.428126413931317).margin(kAbs));
+  }
 }
