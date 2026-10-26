@@ -106,6 +106,7 @@ public:
 
     using RS_PreviewActionInterface::m_highlight;
     using RS_PreviewActionInterface::m_lastMouseMoveEvent;
+    using RS_PreviewActionInterface::m_lastAngleSnapPoint;
 
     void showGrips(bool enabled) { m_highlightEntitiesRefPointsOnHover = enabled; }
     void resetToNeutral() { goToNeutralStatus(); }
@@ -607,6 +608,13 @@ TEST_CASE("Shift snaps the move of a line's grip, as for other grips", "[snap][d
     send(QEvent::MouseButtonPress, bottom, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
     send(QEvent::MouseMove, bottom + RS_Vector(20.0, 0.0), Qt::NoButton, Qt::LeftButton, Qt::NoModifier);
     send(QEvent::MouseMove, target, Qt::NoButton, Qt::LeftButton, Qt::ShiftModifier);
+    // The grip moves along an angle step from where it was; about the top end
+    // the snap would have kept the line vertical.
+    const auto onAngleStep = [&](const RS_Vector& point) {
+        const double steps = (point - bottom).angle() / f.m_action->getAngleStep();
+        return std::abs(steps - std::round(steps)) < 1e-9;
+    };
+    CHECK(onAngleStep(f.m_action->m_lastAngleSnapPoint)); // the preview
     send(QEvent::MouseButtonPress, target, Qt::LeftButton, Qt::LeftButton, Qt::ShiftModifier);
     send(QEvent::MouseButtonRelease, target, Qt::LeftButton, Qt::NoButton, Qt::ShiftModifier);
 
@@ -618,12 +626,8 @@ TEST_CASE("Shift snaps the move of a line's grip, as for other grips", "[snap][d
     }
     REQUIRE(moved != nullptr);
     CHECK(moved->getEndpoint() == top);
-    const RS_Vector shift = moved->getStartpoint() - bottom;
-    REQUIRE(shift.magnitude() > 10.0);
-    // The grip moved along an angle step from where it was; about the top end
-    // the snap would have kept the line vertical.
-    const double steps = shift.angle() / f.m_action->getAngleStep();
-    CHECK(std::abs(steps - std::round(steps)) < 1e-9);
+    REQUIRE(moved->getStartpoint().distanceTo(bottom) > 10.0);
+    CHECK(onAngleStep(moved->getStartpoint()));
     CHECK(moved->getStartpoint().x > bottom.x + 10.0);
 }
 
