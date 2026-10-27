@@ -313,7 +313,7 @@ candidate except the explicitly proposed native-worker tags.
 | F2 | Actual DXF/DWG SPLINE writer/adoption and transactional errors | F1,G | candidate `32597762b`, `7e46b2de8`; audit/retest | offset adapter/persistence/hostile-file TUs |
 | F3 | Version/read/write/conversion, clipboard, independent fixtures and output inspection | F2 | candidate `79ae1930b`; fixtures present, rerun scope required | `[lc-offsetcurve][g-matrix]`, explicit per-row evidence |
 | U2 | Single/multi properties, busy state, async preparation and stale-result protection | E2,U1,W2 | dialog `705a0135b` and sheet `ac7c7646f` isolated/qualified; final R requalification remains open | sheet/dialog/batch-failure TUs |
-| U3 | Grip drag, cancel, ownership, undo/redo and no late publication | E2,U2 | candidate `f214b3408` plus final snapshots; audit/integrate worker | `[lc-offsetcurve][h-drag]` |
+| U3 | Grip drag, cancel, ownership, undo/redo and no late publication | E2,U2 | worker continuation `0e80b8540` qualified Release/ASan; final R remains | `[lc-offsetcurve][h-drag]` |
 | U4 | Ellipse-only persisted option, preview/commit parity and messages | G,F3,U2,U3 | candidate `3d7195631`; audit/retest | option-enable TU and visible workflows |
 | O1 | Transactional Update from legal live ellipse; no-op/refusal counts | U4 | candidate `379729bb3` and snapshot fixes; audit/retest | `lc_action_offsetcurve_source_tests.cpp` |
 | O2 | Restore Original, same-container dedup, attributes and all entry points | O1 | candidate `0d3fed653`, `4a231d243` plus final fixes; audit/retest | Restore/source-UI TUs |
@@ -1115,10 +1115,47 @@ genuine hung-geometry or final R claim follows from these foundation tests.
 | fault | `03485d128a2af3a30d25d03d247fe6a86e6b94f129c94b1bf7cd27bfb9484e31` | `66c99e012f18629d50ed029256983850fe62522ab7be23d9d103e4a1413600a4` |
 
 Files are `W5-qualified-{receipt}-{release|asan}.xml` in the durable evidence root.
-Next bounded slice: commit the tested grip GUI continuation using this preparation;
-preserve bounded cached preview feedback, cheap original-grip no-op, cancellation,
-undo and final publication seals. Continue Update, creation and trim in4.2 order.
-File/import lifetime and typed ordinary fallback are not waived.
+`0e80b8540a6771f18e422983ef322ff1e9803fee` routes native grip commits through
+the fixed helper without a product nested event loop. Preview still draws only
+bounded cached feedback; returning to the original cached grip stays a pre-clone
+no-op. One action-owned continuation retains its private clone/input witness and
+monotonic request identity. Repeated releases do not submit another job. Escape,
+right cancel, init, suspend, finish and action/view/document death revoke it before
+late delivery. A fresh gesture can recover while the cancelled child is reaped.
+Completed child work is retained even if source/undo/context/UCS/layer checks
+refuse publication. Parent display expansion must fit the original reservation.
+All callbackful reads precede renewed membership and the final stored seal, then
+one ordinary undo replacement transfers ownership. Attributes/foreign metadata,
+cheap no-op redo and unchanged-cache membership are preserved.
+
+The44 grip cases retain all36 original identities and add8 real-helper cases.
+Release passes77934 assertions; ASan passes90582 (heartbeat/event polling makes
+counts timing-dependent). Both complete suites pass strict XML checks; the
+existing3500ms single-job harness bound and1ms heartbeat were not raised. Earlier
+red receipts are retained: a radial decimal query projected to another distance,
+the tangent-line fixture had no unique chosen grip, and a non-pixel-aligned mouse
+query was rounded by device conversion. The final membership test uses a real
+certified Through baseline and repeats its exact pixel-aligned interior query.
+These are explicit fixture corrections, not relaxed geometry, grip matching or
+producer/checker limits. ASan remains `detect_leaks=0` without a generic Qt OOM or
+leak-free claim. No current-protocol qmake/deployed or visible-GUI claim yet.
+
+| Artifact | SHA256 |
+|---|---|
+| `W6-qualified-grip-release.xml` | `cec8a0db22377fcb9b3cc2e479b60a1c875c66a9cc8ebfc37a388283e1cbd935` |
+| `W6-qualified-grip-asan.xml` | `175183e17903026afdd881ede1617c55ca466cb9551736a7e3d75ceea35a2fe3` |
+
+Next bounded GUI slice: Update from Source. Snapshot the selected native inventory
+and picked ellipse values; prepare cheap no-op/translation locally and remaining
+peers sequentially through the existing worker. Retain actual per-peer stages and
+full lost-work reservations, shared output/work/deadline bounds and private owners.
+Cancel conflicting picks/context changes without pruning redo. Before a single
+undo handoff, recheck the picked source, all target values/membership, selection,
+undo/context and UCS; report individual refusals without silently rerunning math.
+Exercise real-helper heartbeat, cancellation/recovery, source removal/change,
+late peer invalidation, batch failures and action/view/document death. Continue
+creation and trim in4.2 order; file/import lifetime, typed ordinary fallback,
+genuine geometry-entry timeout and packaging/final R remain mandatory.
 
 S0 source/target reconciliation, A-C review, W0-W2 caller integration and R remain
 open. Next execute the remaining bounded worker sub-slices in4.2, not a second
@@ -1143,8 +1180,8 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** checkpoint the tested grip GUI
-routing using the qualified Through preparation/client/completion, then the remaining
+**Next concrete action on implementation resume:** Update from Source worker GUI
+routing using the qualified preparation/client/completion, then the remaining
 4.2 caller adapters. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
 Nothing is automatically copied into the dirty main tree. Native caller routing,
