@@ -11,11 +11,19 @@
 #include <stdexcept>
 #include <utility>
 #include <type_traits>
+#include <functional>
+#include <exception>
 
 #include <QApplication>
 #include <QCursor>
 #include <QSettings>
 #include <QStringList>
+#include <QElapsedTimer>
+#include <QEventLoop>
+#include <QFileInfo>
+#include <QPointer>
+#include <QTimer>
+#include <QKeyEvent>
 
 #include "drw_base.h"
 #include "lc_action_offsetcurve_updatesource.h"
@@ -23,6 +31,7 @@
 #include "lc_offsetcurveeditsnapshot.h"
 #include <QScopeGuard>
 #include "lc_offsetcurveui.h"
+#include "../../../../lib/offset_worker/lc_offsetworkerclient.h"
 #include "rs_block.h"
 #include "rs_document.h"
 #include "rs_ellipse.h"
@@ -43,17 +52,59 @@ public:
     void commandMessage(const QString& message) override { messages.append(message); }
 };
 
+void awaitUpdate(LC_ActionOffsetCurveUpdateSource& action) {
+    if (!action.isPreparing()) return;
+    REQUIRE(QFileInfo(LC_OffsetWorkerClient::helperPath()).isExecutable());
+    const QPointer<LC_ActionOffsetCurveUpdateSource> alive(&action);
+    QElapsedTimer total, peer; total.start(); peer.start();
+    const auto peers = std::max<qsizetype>(1, action.lastReport().outcomes.size());
+    const auto totalLimit = std::min<qint64>(LC_OffsetWorkerClient::Deadlines::commit, peers * 3500);
+    qsizetype runningPeer = -1;
+    QEventLoop loop;
+    QTimer poll; bool expired = false;
+    QObject::connect(&poll, &QTimer::timeout, &loop, [&] {
+        if (!alive || !alive->isPreparing()) { loop.quit(); return; }
+        if (total.elapsed() >= totalLimit || peer.elapsed() >= 3500) { expired = true; loop.quit(); return; }
+        const auto& outcomes = alive->lastReport().outcomes;
+        for (qsizetype i = 0; i < outcomes.size(); ++i) {
+            const auto& outcome = outcomes.at(i);
+            if (outcome.workerReservation && !outcome.edit && outcome.refusal.isEmpty() && i != runningPeer) {
+                runningPeer = i; peer.restart(); break;
+            }
+        }
+    });
+    const auto cancelOnUnwind = qScopeGuard([&] { if (alive && alive->isPreparing()) alive->suspend(); });
+    poll.start(1); loop.exec();
+    INFO("Update worker exceeded its 3500ms per-peer / shared 30000ms GUI-test bounds");
+    REQUIRE_FALSE(expired); REQUIRE(alive); REQUIRE_FALSE(alive->isPreparing());
+}
+
+void observeUpdate(const std::function<bool()>& ready) {
+    if (ready()) return;
+    QEventLoop loop; QTimer poll, watchdog; bool expired = false;
+    std::exception_ptr error;
+    QObject::connect(&poll, &QTimer::timeout, &loop, [&] {
+        try { if (ready()) loop.quit(); }
+        catch (...) { error = std::current_exception(); loop.quit(); }
+    });
+    QObject::connect(&watchdog, &QTimer::timeout, &loop, [&] { expired = true; loop.quit(); });
+    poll.start(1); watchdog.setSingleShot(true); watchdog.start(3500); loop.exec();
+    if (error) std::rethrow_exception(error);
+    REQUIRE_FALSE(expired); REQUIRE(ready());
+}
+
 class Probe final : public LC_ActionOffsetCurveUpdateSource {
 public:
     explicit Probe(LC_ActionContext* context) : LC_ActionOffsetCurveUpdateSource(context) {}
     using LC_ActionOffsetCurveUpdateSource::isEntityAllowedToSelect;
     using LC_ActionOffsetCurveUpdateSource::m_limits;
-    using LC_ActionOffsetCurveUpdateSource::useSource;
     using LC_ActionPreSelectionAwareBase::m_selectionComplete;
     using RS_PreviewActionInterface::m_preview;
     // Call the real protected preparation callback while useSource supplies its private source identity.
     LC_DocumentModificationBatch* preparationOnlyBatch = nullptr;
     std::optional<bool> preparationOnlyResult;
+    void submitSource(RS_Entity* source) { LC_ActionOffsetCurveUpdateSource::useSource(source); }
+    void useSource(RS_Entity* source) { submitSource(source); awaitUpdate(*this); }
     void trigger() override {
         if (!preparationOnlyBatch) {
             LC_ActionOffsetCurveUpdateSource::trigger();
@@ -71,6 +122,7 @@ public:
     void click(const RS_Vector& point) {
         const auto event = lc::test::eventAt(point.x, point.y);
         onMouseLeftButtonReleaseSelected(0, &event);
+        awaitUpdate(*this);
     }
 };
 
@@ -228,6 +280,295 @@ TEST_CASE("I update ignores wrong type context and collects real native preselec
     CHECK(f.action->lastReport().refused == 0);
     CHECK(line->isSelected());
     noUndo(f.graphic);
+}
+
+TEST_CASE("I update real worker batch returns asynchronously and publishes peers in one undo",
+          "[lc-offsetcurve][i-update][async-update][heartbeat][batch]") {
+    Fixture f;
+    auto* first = f.arc(); auto* second = f.arc(.5);
+    auto basis = first->definition().basis; basis.ratio = .8;
+    auto* source = f.ellipse(basis);
+    auto ignoredBasis = basis; ignoredBasis.majorP = {3, 0};
+    auto* ignored = f.ellipse(ignoredBasis);
+    f.start({first, second}); f.graphic.setModified(false);
+    const auto firstShape = RS_Spline::geometryFingerprint(first->getData());
+    const auto secondShape = RS_Spline::geometryFingerprint(second->getData());
+    const auto epoch = f.graphic.undoStateEpoch(); const auto count = f.graphic.count();
+    unsigned heartbeats = 0;
+    std::exception_ptr error;
+    QTimer heartbeat;
+    QObject::connect(&heartbeat, &QTimer::timeout, &heartbeat, [&] {
+        try {
+            ++heartbeats;
+            if (!f.action->isPreparing()) return;
+            CHECK_FALSE(first->isDeleted()); CHECK_FALSE(second->isDeleted());
+            CHECK(f.graphic.count() == count); CHECK(f.graphic.undoStateEpoch() == epoch);
+            CHECK(RS_Spline::geometryFingerprint(first->getData()) == firstShape);
+            CHECK(RS_Spline::geometryFingerprint(second->getData()) == secondShape);
+        } catch (...) { error = std::current_exception(); heartbeat.stop(); }
+    });
+    heartbeat.start(1);
+    f.action->submitSource(source);
+    CHECK(heartbeats == 0); REQUIRE(f.action->isPreparing());
+    f.action->submitSource(ignored); // A conflicting pick cannot replace the admitted source.
+    awaitUpdate(*f.action); heartbeat.stop();
+    if (error) std::rethrow_exception(error);
+    CHECK(heartbeats > 0);
+    const auto& report = f.action->lastReport();
+    CHECK(report.updated == 2); CHECK(report.refused == 0); CHECK(report.unchanged == 0);
+    REQUIRE(report.outcomes.size() == 2);
+    for (const auto& outcome : report.outcomes) {
+        REQUIRE(outcome.edit); regenerated(*outcome.edit); REQUIRE(outcome.workerReservation);
+        CHECK(outcome.exactWorkerWorkKnown);
+    }
+    REQUIRE(f.live().size() == 2);
+    CHECK(first->isDeleted()); CHECK(second->isDeleted());
+    for (const auto* curve : f.live()) { sameBasis(curve->definition().basis, basis); certified(*curve); }
+    REQUIRE(f.graphic.undo()); CHECK_FALSE(first->isDeleted()); CHECK_FALSE(second->isDeleted());
+    CHECK(RS_Spline::geometryFingerprint(first->getData()) == firstShape);
+    CHECK(RS_Spline::geometryFingerprint(second->getData()) == secondShape);
+    CHECK_FALSE(f.graphic.undo()); // Both replacements belong to the same cycle.
+    REQUIRE(f.graphic.redo()); CHECK(first->isDeleted()); CHECK(second->isDeleted());
+}
+
+TEST_CASE("I update pending worker cancellation freezes receipts preserves redo and permits same-action recovery",
+          "[lc-offsetcurve][i-update][async-update][cancel][recovery]") {
+    const unsigned kind = GENERATE(0u, 1u, 2u, 3u);
+    CAPTURE(kind);
+    Fixture f; auto* curve = f.arc();
+    auto basis = curve->definition().basis; basis.ratio = .8;
+    auto* source = f.ellipse(basis);
+    auto* marker = new RS_Line(&f.graphic, RS_Vector{0, 20}, RS_Vector{1, 20});
+    REQUIRE(f.graphic.undoableModify(f.view.getViewPort(), [&](LC_DocumentModificationBatch& batch) {
+        batch.add(marker); return true;
+    }));
+    REQUIRE(f.graphic.undo());
+    f.start({curve}); f.graphic.setModified(false);
+    const auto shape = RS_Spline::geometryFingerprint(curve->getData()); const auto epoch = f.graphic.undoStateEpoch();
+    f.action->submitSource(source);
+    observeUpdate([&] {
+        const auto& report = f.action->lastReport();
+        return f.action->isPreparing() && report.outcomes.size() == 1 && report.outcomes.front().workerReservation.has_value();
+    });
+    const auto* active = std::as_const(f.action->lastReport().outcomes).constData();
+    if (kind == 0) {
+        QKeyEvent escape(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier); escape.ignore();
+        f.action->keyPressEvent(&escape); CHECK(escape.isAccepted());
+    } else if (kind == 1) f.action->suspend();
+    else if (kind == 2) f.action->finish();
+    else f.action->init(0);
+    REQUIRE_FALSE(f.action->isPreparing());
+    const auto cancelled = f.action->lastReport();
+    REQUIRE(cancelled.outcomes.size() == 1);
+    CHECK(std::as_const(cancelled.outcomes).constData() != active);
+    CHECK(cancelled.refused == 1); CHECK(cancelled.updated == 0); CHECK_FALSE(cancelled.sourceRefusal.isEmpty());
+    REQUIRE(cancelled.outcomes.front().workerReservation); CHECK_FALSE(cancelled.outcomes.front().exactWorkerWorkKnown);
+    CHECK_FALSE(cancelled.outcomes.front().edit);
+    CHECK_FALSE(curve->isDeleted()); CHECK(RS_Spline::geometryFingerprint(curve->getData()) == shape);
+    CHECK(f.graphic.undoStateEpoch() == epoch); CHECK_FALSE(f.graphic.isModified());
+    bool undo = true, redo = false; f.graphic.collectUndoState(undo, redo); CHECK_FALSE(undo); CHECK(redo);
+    f.action->init(0); f.action->useSource(source);
+    CHECK(f.action->lastReport().updated == 1); REQUIRE(f.live().size() == 1); CHECK(curve->isDeleted());
+    regenerated(onlyEdit(*f.action));
+    CHECK(cancelled.refused == 1); CHECK(cancelled.updated == 0); CHECK_FALSE(cancelled.outcomes.front().edit);
+}
+
+TEST_CASE("I update source changes deletion and history ABA after submission refuse late real geometry",
+          "[lc-offsetcurve][i-update][async-update][stale][source]") {
+    const unsigned kind = GENERATE(0u, 1u, 2u);
+    CAPTURE(kind);
+    Fixture f; auto* curve = f.arc();
+    auto basis = curve->definition().basis; basis.ratio = .8;
+    auto* source = f.ellipse(basis);
+    if (kind == 2) {
+        auto* marker = new RS_Line(&f.graphic, RS_Vector{0, 20}, RS_Vector{1, 20});
+        REQUIRE(f.graphic.undoableModify(f.view.getViewPort(), [&](LC_DocumentModificationBatch& batch) {
+            batch.add(marker); return true;
+        }));
+    }
+    f.start({curve}); f.graphic.setModified(false);
+    const auto shape = RS_Spline::geometryFingerprint(curve->getData());
+    f.action->submitSource(source);
+    observeUpdate([&] { return f.action->isPreparing() && f.action->lastReport().outcomes.front().workerReservation.has_value(); });
+    if (kind == 0) source->move({4, 8});
+    else if (kind == 1) { REQUIRE(f.graphic.removeEntity(source)); source = nullptr; }
+    else { REQUIRE(f.graphic.undo()); REQUIRE(f.graphic.redo()); }
+    const auto epoch = f.graphic.undoStateEpoch(); const auto count = f.graphic.count();
+    const bool modified = f.graphic.isModified();
+    awaitUpdate(*f.action);
+    const auto& report = f.action->lastReport(); CHECK(report.updated == 0); CHECK(report.refused == 1);
+    CHECK_FALSE(report.sourceRefusal.isEmpty());
+    const auto& edit = onlyEdit(*f.action); regenerated(edit); // Actual child receipt, not document publication.
+    CHECK(report.outcomes.front().exactWorkerWorkKnown);
+    CHECK_FALSE(curve->isDeleted()); CHECK(RS_Spline::geometryFingerprint(curve->getData()) == shape);
+    CHECK(f.graphic.undoStateEpoch() == epoch); CHECK(f.graphic.count() == count); CHECK(f.graphic.isModified() == modified);
+    if (source && kind == 0) CHECK(source->getData().center == RS_Vector(4, 8));
+}
+
+TEST_CASE("I update rechecks an earlier prepared peer after a later real helper finishes",
+          "[lc-offsetcurve][i-update][async-update][late-peer][publication]") {
+    Fixture f; auto* first = f.arc(); auto* second = f.arc(.5);
+    auto basis = first->definition().basis; basis.ratio = .8; auto* source = f.ellipse(basis);
+    f.start({first, second}); f.action->submitSource(source);
+    observeUpdate([&] {
+        const auto& report = f.action->lastReport();
+        return f.action->isPreparing() && report.updated == 1 && report.outcomes.at(1).workerReservation.has_value();
+    });
+    first->setUserDefVar("ASYNC_UPDATE_LATE_PEER", "retained");
+    awaitUpdate(*f.action);
+    const auto& report = f.action->lastReport(); CHECK(report.updated == 1); CHECK(report.refused == 1);
+    CHECK_FALSE(first->isDeleted()); CHECK(second->isDeleted());
+    CHECK(first->getUserDefVar("ASYNC_UPDATE_LATE_PEER") == "retained");
+    REQUIRE(report.outcomes.size() == 2);
+    for (const auto& outcome : report.outcomes) { REQUIRE(outcome.edit); regenerated(*outcome.edit); CHECK(outcome.exactWorkerWorkKnown); }
+    CHECK(report.outcomes.front().refusal.contains("changed"));
+    REQUIRE(f.graphic.undo()); CHECK_FALSE(first->isDeleted()); CHECK_FALSE(second->isDeleted());
+    CHECK(first->getUserDefVar("ASYNC_UPDATE_LATE_PEER") == "retained");
+}
+
+TEST_CASE("I update pending context view and UCS changes cannot publish a completed child",
+          "[lc-offsetcurve][i-update][async-update][context][ucs]") {
+    const unsigned kind = GENERATE(0u, 1u, 2u, 3u, 4u);
+    CAPTURE(kind);
+    Fixture f; auto* curve = f.arc();
+    auto basis = curve->definition().basis; basis.ratio = .8; auto* source = f.ellipse(basis);
+    RS_Graphic other; other.initForNewDocument();
+    lc::test::TestGraphicView otherView; otherView.setDocument(&f.graphic);
+    if (kind == 3) f.graphic.setAnglesBase(M_PI);
+    const auto restore = qScopeGuard([&] {
+        f.view.setDocument(&f.graphic); f.context.setDocumentAndView(&f.graphic, &f.view);
+        f.graphic.setAnglesCounterClockwise(true);
+        if (kind == 4) f.view.getViewPort()->createUCS({0, 0}, 0);
+        if (f.action) f.action->suspend();
+    });
+    f.start({curve}); f.graphic.setModified(false);
+    const auto shape = RS_Spline::geometryFingerprint(curve->getData());
+    const auto zero = f.view.getViewPort()->toWorldAngle(f.view.getViewPort()->toAbsUCSAngle(0));
+    f.action->submitSource(source);
+    observeUpdate([&] { return f.action->isPreparing() && f.action->lastReport().outcomes.front().workerReservation.has_value(); });
+    if (kind == 0) f.context.setDocumentAndView(&other, &f.view);
+    else if (kind == 1) f.context.setDocumentAndView(&f.graphic, &otherView);
+    else if (kind == 2) f.view.setDocument(&other);
+    else if (kind == 3) {
+        f.graphic.setAnglesCounterClockwise(false);
+        CHECK(f.view.getViewPort()->toWorldAngle(f.view.getViewPort()->toAbsUCSAngle(0)) == zero);
+    } else f.view.getViewPort()->createUCS({4, 8}, 0);
+    const auto epoch = f.graphic.undoStateEpoch(); const bool modified = f.graphic.isModified();
+    awaitUpdate(*f.action);
+    CHECK(f.action->lastReport().updated == 0); CHECK(f.action->lastReport().refused == 1);
+    regenerated(onlyEdit(*f.action));
+    CHECK_FALSE(curve->isDeleted()); CHECK(RS_Spline::geometryFingerprint(curve->getData()) == shape);
+    CHECK(f.graphic.undoStateEpoch() == epoch); CHECK(f.graphic.isModified() == modified); CHECK(other.isEmpty());
+}
+
+TEST_CASE("I update pending document and view death detach before late callbacks",
+          "[lc-offsetcurve][i-update][async-update][lifetime][asan]") {
+    const bool viewDeath = GENERATE(false, true);
+    CAPTURE(viewDeath);
+    REQUIRE(lc::test::application());
+    auto graphic = std::make_unique<RS_Graphic>(); graphic->initForNewDocument();
+    auto view = std::make_unique<lc::test::TestGraphicView>(); view->setDocument(graphic.get());
+    Context context; context.setDocumentAndView(graphic.get(), view.get());
+    LC_EllipseOffsetDefinition definition;
+    definition.basis = {{0, 0}, {1, 0}, 1, 0, .1, false}; definition.distance = .25; definition.relTolerance = .01;
+    const RS_Line cache{nullptr, {1.25, 0}, {1.25 * std::cos(.1), 1.25 * std::sin(.1)}};
+    auto native = LC_OffsetCurve::adopt(cache, definition, .01); REQUIRE(native);
+    auto* curve = native.release(); curve->setParent(graphic.get()); curve->setLayer(graphic->findLayer("0"));
+    graphic->addEntity(curve); graphic->select(QList<RS_Entity*>{curve}, true);
+    auto basis = definition.basis; basis.ratio = .8;
+    auto* source = new RS_Ellipse(graphic.get(), basis); source->setLayer(graphic->findLayer("0")); graphic->addEntity(source);
+    auto action = std::make_unique<Probe>(&context); action->init(0); action->submitSource(source);
+    observeUpdate([&] { return action->isPreparing() && action->lastReport().outcomes.front().workerReservation.has_value(); });
+    const auto shape = RS_Spline::geometryFingerprint(curve->getData());
+    if (viewDeath) view.reset();
+    else graphic.reset();
+    REQUIRE_FALSE(action->isPreparing()); CHECK(action->isFinished());
+    CHECK(action->lastReport().refused == 1); CHECK_FALSE(action->lastReport().sourceRefusal.isEmpty());
+    action->init(0); action->suspend(); action->finish();
+    QKeyEvent escape(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier); action->keyPressEvent(&escape); CHECK(escape.isAccepted());
+    action.reset(); // Real worker/preview/visual-snap destruction, not a leaked orphan.
+    if (graphic) {
+        CHECK_FALSE(curve->isDeleted()); CHECK(RS_Spline::geometryFingerprint(curve->getData()) == shape); noUndo(*graphic);
+    } else {
+        RS_Graphic fallback; fallback.initForNewDocument();
+        view->setDocument(&fallback); context.setDocumentAndView(&fallback, view.get());
+        view.reset(); // Do not leave its document pointing at the deceased original or fallback.
+    }
+}
+
+TEST_CASE("I update initial source callbacks cannot revive a reset or destroyed action admission",
+          "[lc-offsetcurve][i-update][async-update][reentry][lifetime]") {
+    const bool destroy = GENERATE(false, true);
+    CAPTURE(destroy);
+    class ReentrantEllipse final : public RS_Ellipse {
+    public:
+        ReentrantEllipse(RS_Document* parent, const RS_EllipseData& basis) : RS_Ellipse(parent, basis) {}
+        RS2::EntityType rtti() const override {
+            const auto hook = std::exchange(callback, {});
+            if (hook) hook();
+            return RS_Ellipse::rtti();
+        }
+        mutable std::function<void()> callback;
+    };
+    Fixture f; auto* curve = f.arc();
+    auto basis = curve->definition().basis; basis.ratio = .8;
+    auto* source = f.add(new ReentrantEllipse(&f.graphic, basis));
+    f.start({curve}); const auto shape = RS_Spline::geometryFingerprint(curve->getData());
+    bool called = false;
+    source->callback = [&] { called = true; if (destroy) f.action.reset(); else f.action->init(0); };
+    f.action->submitSource(source);
+    REQUIRE(called); CHECK_FALSE(curve->isDeleted());
+    CHECK(RS_Spline::geometryFingerprint(curve->getData()) == shape); noUndo(f.graphic);
+    if (destroy) CHECK_FALSE(f.action);
+    else {
+        REQUIRE(f.action); CHECK_FALSE(f.action->isPreparing()); CHECK(f.action->lastReport().updated == 0);
+        f.action->useSource(source); CHECK(f.action->lastReport().updated == 1); regenerated(onlyEdit(*f.action));
+    }
+}
+
+TEST_CASE("I update bounds child metadata before cloning and shares the input-copy allowance across peers",
+          "[lc-offsetcurve][i-update][async-update][admission][quota]") {
+    SECTION("child variable counts refuse before a virtual clone") {
+        class CountedLine final : public RS_Line {
+        public:
+            CountedLine(LC_OffsetCurve& root, unsigned& calls)
+                : RS_Line(&root, root.getStartpoint(), root.getEndpoint()), calls(calls) {}
+            RS_Entity* clone() const override { ++calls; return RS_Line::clone(); }
+            unsigned& calls;
+        };
+        Fixture f; auto* curve = f.arc(); unsigned clones = 0;
+        auto* child = new CountedLine(*curve, clones);
+        curve->clear(); curve->addEntity(child);
+        for (unsigned i = 0; i <= LC_OffsetCurve::MaximumOwnedTailItems; ++i)
+            child->setUserDefVar(QString::number(i), "bounded");
+        auto basis = curve->definition().basis; basis.ratio = .8; auto* source = f.ellipse(basis);
+        f.start({curve}); f.action->useSource(source);
+        CHECK(clones == 0); CHECK(f.action->lastReport().refused == 1); CHECK(f.action->lastReport().updated == 0);
+        REQUIRE(f.action->lastReport().outcomes.size() == 1); CHECK_FALSE(f.action->lastReport().outcomes.front().edit);
+        CHECK(f.action->lastReport().outcomes.front().refusal.contains("admission")); noUndo(f.graphic);
+    }
+    SECTION("large but individually admitted metadata cannot multiply without a request bound") {
+        Fixture f;
+        std::vector<LC_OffsetCurve*> curves;
+        for (unsigned i = 0; i < 24; ++i) {
+            auto* curve = f.ring();
+            curve->setDrwExtData({std::make_shared<DRW_Variant>(1000, std::string(300000, 'x'))});
+            curves.push_back(curve); f.graphic.select(QList<RS_Entity*>{curve}, true);
+        }
+        auto basis = curves.front()->definition().basis; basis.center = {4, 8}; auto* source = f.ellipse(basis);
+        f.action = std::make_unique<Probe>(&f.context); f.action->init(0); f.action->useSource(source);
+        const auto& report = f.action->lastReport();
+        CHECK(report.updated > 0); CHECK(report.updated < curves.size()); CHECK(report.refused > 0);
+        CHECK(report.updated + report.refused == curves.size()); CHECK(report.unchanged == 0);
+        for (const auto& outcome : report.outcomes) {
+            CHECK_FALSE(outcome.workerReservation);
+            if (outcome.edit) { REQUIRE(*outcome.edit); notRun(*outcome.edit); }
+            else CHECK(outcome.refusal.contains("admission budget"));
+        }
+        REQUIRE(f.graphic.undo());
+        for (const auto* curve : curves) { CHECK_FALSE(curve->isDeleted()); CHECK(curve->definition().basis.center == RS_Vector(0, 0)); }
+        CHECK_FALSE(f.graphic.undo());
+    }
 }
 
 TEST_CASE("I update wrong context without targets stays in target selection",

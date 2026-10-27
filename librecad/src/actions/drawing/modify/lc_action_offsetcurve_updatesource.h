@@ -4,6 +4,7 @@
 
 #include <optional>
 #include <utility>
+#include <vector>
 
 #include "lc_actionpreselectionawarebase.h"
 #include "lc_selectedsetlistener.h"
@@ -11,6 +12,8 @@
 #include "lc_offsetcurve.h"
 
 class RS_Ellipse;
+class LC_OffsetWorkerClient;
+class QTimer;
 
 /** Explicit, value-only source replacement; no persistent source relationship. */
 class LC_ActionOffsetCurveUpdateSource : public LC_ActionPreSelectionAwareBase, private LC_SelectedSetListener {
@@ -18,13 +21,20 @@ class LC_ActionOffsetCurveUpdateSource : public LC_ActionPreSelectionAwareBase, 
 public:
     using EntityId = decltype(std::declval<const RS_Entity&>().getId());
     explicit LC_ActionOffsetCurveUpdateSource(LC_ActionContext* context);
+    ~LC_ActionOffsetCurveUpdateSource() override;
     void init(int status) override;
     void trigger() override;
+    void finish() override;
+    void suspend() override;
+    void keyPressEvent(QKeyEvent* event) override;
+    bool isPreparing() const { return bool(m_work); }
 
     struct Outcome {
         EntityId targetId = 0;
         std::optional<LC_OffsetCurveEditResult> edit;
         QString refusal;
+        std::optional<LC_OffsetRunLimits> workerReservation;
+        bool exactWorkerWorkKnown = false;
     };
     struct Report {
         unsigned updated = 0;
@@ -33,7 +43,8 @@ public:
         QList<Outcome> outcomes;
         QString sourceRefusal;
     };
-    const Report& lastReport() const { return m_report; }
+    /** Borrowed current work or frozen final report; copy values across event turns. */
+    const Report& lastReport() const;
 
 protected:
     void doInitWithContextEntity(RS_Entity* entity, const RS_Vector& position) override;
@@ -54,6 +65,18 @@ protected:
     LC_OffsetRunLimits m_limits{};
 
 private:
+    struct PreparedRow;
+    struct Work;
+    void cancelPreparation(const QString& reason = {});
+    void detachContext(bool documentDestroyed);
+    void beginPreparation();
+    void advance(const std::shared_ptr<Work>& work);
+    void completePreparation(const std::shared_ptr<Work>& work, const QString& reason = {});
+    bool currentWork(const std::shared_ptr<Work>& work) const;
+    bool currentRow(const std::shared_ptr<Work>& work, std::size_t index) const;
+    bool publishPrepared(LC_DocumentModificationBatch& batch, std::vector<PreparedRow>& staged,
+        RS_Document* admittedDocument, std::uint64_t admittedEpoch, Report& report,
+        const std::shared_ptr<Work>& work = {});
     struct Target {
         RS_Entity* address = nullptr;
         EntityId id = 0;
@@ -72,6 +95,10 @@ private:
     RS_Entity* m_source = nullptr;
     EntityId m_sourceId = 0;
     Report m_report;
+    std::unique_ptr<LC_OffsetWorkerClient> m_worker;
+    std::unique_ptr<QTimer> m_deadline;
+    std::shared_ptr<Work> m_work;
+    qint64 m_serial = 0, m_requestId = 0;
 };
 
 #endif
