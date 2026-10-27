@@ -57,6 +57,7 @@ protected
     void updateAnglePrecision() const;
     void updateUnitsPreview() const;
     void updatePaperSize() const;
+    void updatePaperUnit();
     void updateUnitLabels();
     void updateDimLengthPrecision() const;
     void updateDimAnglePrecision() const;
@@ -112,6 +113,8 @@ protected:
 private:
     std::unique_ptr<QStringList> m_listPrec1;
     RS_Graphic* m_graphic{nullptr};
+    // the unit of the paper size and margins on the Paper tab
+    RS2::Unit m_paperUnit{RS2::None};
     QGraphicsScene* m_paperScene{nullptr};
     std::unique_ptr<RS_Vector> m_spacing;
     LC_DimStylePreviewGraphicView* m_previewView{nullptr};
