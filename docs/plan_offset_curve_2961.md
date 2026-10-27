@@ -97,7 +97,7 @@ This inventory compares the older attached tree with the later candidate.
 | Type/UI/source actions | Entity enum/coverage, property queue/dialog, default drag, Update/Restore actions | Candidate present. Property queue defers publication with a timer, but prepares geometry synchronously in `apply`; a deferred commit is not background computation. |
 | Stored-cache Trim | `lc_offsetcachetrim`, contacts/matching helpers, Modify Trim action and file tests | Candidate present: pure preparation, exact fragments, two-operand publication and plain-fragment persistence. Recheck precision/ownership/undo guarantees. |
 | Validation workers | `scripts/offset-curve-validation/`, X-H1 through X-H7 | Candidate has Node developer/test workers and recorded timeout fixes. These tools are not a shipped isolated geometry worker. Do not confuse their deadlines with GUI computation limits. |
-| Native geometry-worker path | Real five-operation helper/client plus dialog, sheet, grip and Update GUI routing committed/qualified | W0/W1, these callers and the isolated real-geometry-entry timeout lane are recorded. Creation/repeat, trim, import and packaged/final acceptance remain mandatory W0-W2 work. |
+| Native geometry-worker path | Real five-operation protocol3 helper/client, same-producer ordinary fallback, plus dialog, sheet, grip and Update GUI routing committed/qualified | W0/W1, these callers and the isolated real-geometry-entry timeout lane are recorded. Creation/repeat routing, trim, import and packaged/final acceptance remain mandatory W0-W2 work. |
 | Tests/build targets | Main Catch target, filter micro targets and two standalone offset allocation-failure targets | Candidate present; source registration is not discovery/execution. Use the actual targets in section5.3, not just the old grouped fast lanes. |
 | Surviving test defect | `spline_offset_representation_tests.cpp` lines205 and668 in candidate still use DWG enum ranges | `FormatDWG2007` is outside the range; those ordinary representation loops also omit it. Fix classification and add an executed R2007 regression in S0. The separate candidate matrix already lists all six DWG versions. |
 
@@ -437,7 +437,7 @@ the same quarantine rule, not QProcess's unbounded destructor wait.
 One active request and one replaceable queued request are owned per client.
 Request IDs increase; stale/cancelled deferred deliveries cannot publish even
 after a successful child exit. Only the fixed sibling `LibreCADOffsetWorker`
-(`.exe` on Windows) and `--protocol=2` are launched. The helper has private Ini
+(`.exe` on Windows) and `--protocol=3` are launched. The helper has private Ini
 settings and no document or window. CMake installs it beside the executable,
 including `Contents/MacOS` on macOS; qmake builds it before the application.
 The existing macOS packager already enumerates extra Mach-O executables.
@@ -488,7 +488,7 @@ An early helper-launch prototype may supply W0's startup measurements; it does
 not close W1 packaging, result-authority or lifecycle acceptance before the
 remaining W0 choices are frozen.
 
-The committed request envelope is `[1,token,operation,body]`. Token contains
+The current request envelope is `[3,token,operation,body]`. Token contains
 positive request ID and nonnegative generation/source-revision/undo-epoch int64
 values. `lc_offsetworkerrequest.h` fixes every nested positional record, native
 member order, enum and count admission. Request values do not confer editability.
@@ -499,6 +499,7 @@ member order, enum and count admission. Request values do not confer editability
 | ValidateCache1 | `[rawCache,definition,worldTolerance,checkLimits]`; file/native cache admission | Validate original raw arrays before any repairing constructor can establish eligibility. Preserve callback lifetime and unpublished-document transaction. Do not rerun the generator. |
 | TrimCache2 | `[cache,cutter,pick,trimLimits]`; stored-cache Trim and cache operand preparation | Exact stored cache only; parent attributes/owner/metadata stay outside child. Preserve all sections, roots and work records in the reply. |
 | TrimConic3 | `[cache,conic,conicPick,cachePick-or-null,trimLimits]`; conic complement and Trim Two | One original contact session and shared budget; prepare both operands before one parent undo/publication. |
+| CheckThrough4 | `[cache,definition,worldTolerance,point,checkLimits]`; unchanged-definition Through grip/dialog edits | Membership-only receipt; no generation, C rerun, returned curve or native admission. The exact raw input remains bound through parent completion. |
 
 Cutters are owned Segment/Arc/Circle/Ellipse/Spline values. Every spline member,
 including latent fit/saved-open fields and flags, and every ellipse/arc render
@@ -508,8 +509,8 @@ degree eligibility remain kernel decisions. All wire doubles are finite actual
 float64, not coerced integers. Run/Check/Trim budgets may only lower existing
 named caps, with zero preserved for a typed kernel refusal.
 
-Before closing W0, implement the matched-token reply layout and private native
-adoption authority: the fixed built child runs the full checker, prepares cache
+The matched-token reply layout and private native adoption authority are
+implemented: the fixed built child runs the full checker, prepares cache
 hints locally, and joins successfully; only the owning client may mint a private
 prepared-result capability after strict bounded reply checks. Never expose a
 public `checked=true` or raw-value factory. Topology issuer pointers never cross
@@ -522,8 +523,8 @@ failed operation, never invent zero consumption or retry it with fresh limits.
 Freeze/test no-op, exact-translation and cached clone paths separately so a new
 worker does not force generator runs for existing cheap proof-preserving edits.
 
-The implemented reply envelope is `[2,token,operation,failure,payload]`.
-`lc_offsetworkerresult.h/.cpp` defines exact Native12/Curve6 and Trim8 records,
+The current reply envelope is `[3,token,operation,failure,payload]`.
+`lc_offsetworkerresult.h/.cpp` defines exact Native15/Curve6 and Trim8 records,
 including all trim sections, endpoint/root domains and work diagnostics. Fatal
 allocation/internal failures carry null payloads; their stderr prefix is only
 the observed partial work, never a refund or final total. Through vertices/pairs
@@ -538,6 +539,19 @@ native materialization retains child-prepared hints and checks unchanged cache
 representation; it does not rerun the expensive generator/C checker. Ordinary
 wire values cannot call a public checked constructor. Failure or suppressed
 delivery without a returned exact record keeps the full reservation charged.
+
+Native15 appends ordinary status, ordinary values and original producer usage.
+Only Generate0 native refusals after one successful producer run may carry
+Complete/Unsupported; native success, ValidateCache and CheckThrough carry None.
+Complete values are exact Segment or normalized raw degree1/3 ClampedOpen spline
+records, including flags/knots/unit weights. Unknown output kinds or aggregate
+span/control/knot overflow yield Unsupported with no usable prefix. Preserve the
+producer's attempted usage: closed-chain seam subdivision and collinear compaction
+can change stored span count, which has its own independently enforced cap.
+Parent ordinary materialization grants no native eligibility, repeats no producer/C,
+strips stale owned schema1 metadata, preserves foreign/local attributes, establishes
+fresh graph identity and bounds actual display output. Through-point requests cannot
+use this fallback to bypass their required membership proof.
 Caller-level shared reservations/final snapshot checks must still be integrated;
 the client itself never retries a failed geometry operation with fresh caps.
 
@@ -1213,17 +1227,94 @@ explicitly forbidden in the new reply. ASan remains `detect_leaks=0`.
 | `W8-qualified-timeout-release.xml` | `3a50afc68766544b9f2de1c20e5870fc2517b9420d55ae423fe06caa48cfe3ca` |
 | `W8-qualified-timeout-asan.xml` | `b5d19a3fdc4113b30f6342f02114540f5a48239b8c7297088ba64be0b954923c` |
 
-Next bounded slice: freeze typed ordinary output retained from the SAME producer
-invocation for native SeveralPieces/representation/C refusals. Extend the owned
-result and strict positional reply, bump the protocol, retain original work/usage,
-bound every output/aggregate and make unsupported kinds explicit. Parent ordinary
-materialization must preserve geometry and local attributes without granting native
-eligibility. Test one engine run/no second fallback generation in Release/ASan,
-then route creation/repeat GUI transactions. Native-only Generate cannot carry
-this fallback today. Continue stored-cache/conic trim and unpublished import
-ownership in4.2 order. Full current-source application/deployed builds, complete
-file/version matrix, visible acceptance, source reconciliation/A-C audit and final
-R remain open. This client-level fixture alone is not whole-GUI acceptance.
+`1d17448e61f52b5faa41167bda1d1a638c88c81a` implements and qualifies the
+same-invocation ordinary fallback foundation (W9). Core creation retains owned
+producer output only on native refusal, reverses the complete directed output
+when requested, and clears it on native success. Protocol3 carries all-or-Unsupported
+ordinary output with strict two-pass shape/aggregate admission, actual producer
+usage and no public native-proof bypass. Private completion materializes ordinary
+geometry without regenerating/checking C, rejects Through fallback, strips stale
+owned XDATA and keeps foreign metadata/local attributes with fresh identity.
+Current helper/client/fault invocation and version-negative tests agree on3.
+
+Both builds pass all13 complete micro suites with strict XML and no failures/errors.
+Names are `W9-qualified-<suite>-{release,asan}.xml` under the durable evidence root
+recorded above. Full micro discovery includes ordinary/Restore cases beyond the
+older filtered sheet/Update runs; do not mistake those additional cases for renamed
+or removed original tests. Polling assertions vary with scheduling.
+
+| Suite | Cases | Release / ASan assertions |
+|---|---:|---:|
+| worker_request | 11 | 596917 / 596917 |
+| worker_result | 22 | 467435 / 467435 |
+| worker_kernel | 10 | 1557 / 1557 |
+| native_edit | 29 | 15311 / 15311 |
+| worker_edit | 15 | 101553 / 101553 |
+| worker_process | 2 | 3348 / 3702 |
+| worker_client | 10 | 9629 / 12470 |
+| worker_fault | 7 | 25985 / 19501 |
+| worker_geometry_timeout | 1 | 1594 / 2678 |
+| properties_dialog | 56 | 25937 / 25937 |
+| properties_sheet | 53 | 9367 / 9367 |
+| grip | 44 | 77686 / 89838 |
+| update_source | 36 | 3154 / 3688 |
+
+| Suite | Release receipt SHA256 | ASan receipt SHA256 |
+|---|---|---|
+| worker_request | `f4d48e0137fedd4b1cd459235f2dc4a200d79d349877b0f9e393d25a197491b2` | `874c7ceed4937a6c6a07be05d0607e0960e3e21b0888fae3f9444f9ba81cda2e` |
+| worker_result | `6e117414140c8a5f7d8b5a2d1e90e856e7ec175d202ace5f833181b079d8a781` | `cee222c28296f6a7d3325fcdabe35ec6c7152a38071487729a830c2f05d47945` |
+| worker_kernel | `129ab8e6b98c28585313be44c306bf8957c4839b084767b99df8e4d5ff14e108` | `f6704dcfc0a1dd4825c4d2267093b5903ae20a6db341e8974c3123a7aa3e3dd0` |
+| native_edit | `e1ee2b69507376511d35fc2da966acf206eb179df76fa977a19c2624f468bb92` | `2fae5707bf316297dc98ef8ca64f1fa1c42dcb79a027d2b2a00df52a1c62aa3b` |
+| worker_edit | `5d4e81bd6a1c139f75f47d95e1c149c4a368b96bdf4eeb039abe33d484ca29d1` | `2d456f5c840fce8c7be576b8925d9f32f4e0cd46339db98c6366b463684ae1f8` |
+| worker_process | `1a6df3d31d785b1932006b6f9feedbc7e26d7237a8189024254967232274e486` | `bc647a408ada892838a6c46f4c8708d5aa3a2df06b285a856ea1f836cb9f397f` |
+| worker_client | `806c1792b7403b13ef9e4b43abc13c3aa72c8551c9c0b01b5a0c53f48a525432` | `779d3a8be05aedf5ce08618488088c42877a01aa915e58323f6ab717db114115` |
+| worker_fault | `1d7fe84d88b527ad4997dec49fdf1ef265e24adb6b8d250ff3196ef22235b964` | `5070580d4d43b796a9d00640d2692ebb609ffa90b7b4b1c8ab20bfc8b9b843d1` |
+| worker_geometry_timeout | `5df787ca2ac9e69e1869c6965851829f2a5c51c969431f7f0725edcd4ef8c2f4` | `08749f57cd1d7470019cb3c37c5696b6493be15c809f90172f9b856d6b01035e` |
+| properties_dialog | `86ad02eedd967c1f8aa3f0fa807c8e41de6d5c6059eed2d29bf22bce5cef71ce` | `8acc83c87a03757ac597235d9f0080c804d3de36cbddac7f1c4c09b822aa49e5` |
+| properties_sheet | `6c7ace8a3d56054dd7f26a70c74fbe4bbb2d33df314d02e97ef07211a5584200` | `b97486f165a132d32a8268c875456c48c69ced6d74f1f62a1c9f0dddcbc39f49` |
+| grip | `b545c8c19a8d46df9b8deb58e6762199c3aa7c8b700b28aa14174d6ff1b5fc56` | `256a7b8d112344a568811896e1936d100cda52ce5c064653983d192828895574` |
+| update_source | `00c8892e7a883d1926abb74645b2b32b0d704aa38323f964ab2c024b8baf8d10` | `a7db8805be31a33b4c619b24f313f9af7d0caf1e638921c2c3cba147f8ab6985` |
+
+CTest discovers/passes9/9 in both builds, including wire, all five operations,
+faults and real-geometry-entry kill/reap/recovery. New ordinary subprocess exchanges
+have their own case/CTest row; the original case keeps all its assertions and
+unchanged2500ms child/24000ms aggregate guards. Each CTest row keeps30s. The initial
+aggregate watchdog red after adding exchanges is retained; no numeric/product
+deadline was raised. Two loaded-host full ASan fault-watchdog reds are also retained;
+subsequent unchanged full CTest and standalone runs both pass. No other host job
+was stopped. Other retained red receipts cover the producer15/stored16 seam split,
+line-fixture correction, and preservation of an empty LibreCad APPID group after
+owned-definition stripping. These were not geometry tolerance relaxations. The
+temporary-buffer lifetime assertion also no longer needs a C++20 structured-binding
+capture extension. ASan remains `detect_leaks=0`; this is no leak-free claim.
+
+| Artifact | SHA256 |
+|---|---|
+| `W9-ctest-release.xml` | `015a53dd1d1b69ded80a8b64e467e48ff173e11e4117c1f2e3628eab0505b8cf` |
+| `W9-ctest-asan.xml` | `6a9efda7f63626f18217ac2e7abca5a2a881a25ba2006ca1dbc2bbdd5cf8d8f1` |
+
+Next bounded creation/repeat steps:
+1. Extract the existing per-source copy-series preparation into a shared owned
+   preparation API, with explicit top-level/native-definition eligibility context.
+   Keep the synchronous API and existing tests; use no synthetic document or
+   unchecked native source to make detached inputs pass membership checks.
+2. Add a typed child Produce path for ellipse/native stored-cache source values,
+   complete pointer-free diagnostics and bounded outputs. Preserve side-once,
+   copy-series prefixes/rollback, samples, pair reservations and output limits.
+   An original-definition rebase followed by the existing stored-cache fallback
+   intentionally uses DIFFERENT inputs/remaining allowances; do not replace that
+   fallback with ordinary geometry from the rebase invocation.
+3. Preserve budget-sensitive preview-cache reuse, zero new producer effort on
+   hits and its256-entry clearing policy across worker lifetimes. Qualify parity
+   before GUI routing. Leave unrelated ordinary source tools unchanged.
+4. Route preview/commit through owned continuations, complete context/source/undo/
+   selection/UCS seals, cancellation/death handling and one atomic publication.
+   Parent materialization must use the correct existing local attribute policy
+   and charge actual display expansion before settling output reservations.
+
+Then continue stored-cache/conic trim and unpublished import ownership in4.2 order.
+Full current-source application/deployed builds, complete file/version matrix,
+visible acceptance, source reconciliation/A-C audit and final R remain open.
 
 S0 source/target reconciliation, A-C review, W0-W2 caller integration and R remain
 open. Next execute the remaining bounded worker sub-slices in4.2, not a second
@@ -1240,7 +1331,7 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   executions are recorded above; do not redo them as missing implementation.
 - [ ] A-core through C-check: review/requalify existing code and patch only proven
   accounting, ownership, occurrence or global-topology gaps. No duplicate checker.
-- [ ] W0-W2: finish typed ordinary fallback/import ownership and remaining GUI
+- [ ] W0-W2: finish shared creation/repeat preparation, import ownership and remaining GUI
   adoption/failure acceptance. Reuse the qualified geometry-entry timeout/helper/client/
   reply modules; do not redo them as absent. Keep Node runner scope separate.
 - [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
@@ -1248,8 +1339,8 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** typed same-invocation ordinary
-fallback, then creation/repeat routing in the remaining
+**Next concrete action on implementation resume:** shared per-source creation/repeat
+preparation and typed Produce, then cache portability/GUI routing in the remaining
 4.2 caller adapters. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
 Nothing is automatically copied into the dirty main tree. Native caller routing,
