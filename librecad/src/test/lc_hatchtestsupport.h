@@ -23,7 +23,11 @@
 // bundled hatch patterns under librecad/support/patterns and must never be
 // included from a headless fast-lane target.
 
+#include <array>
+#include <cstdint>
+#include <cstdlib>
 #include <memory>
+#include <utility>
 #include <vector>
 
 #include <catch2/catch_test_macros.hpp>
@@ -76,29 +80,111 @@ inline Ring shiftedRing(const Ring& ring, const RS_Vector& shift) {
     return out;
 }
 
+/** Fills `container` with the ring's edges (closing the ring). */
+inline void makePolygonLoop(RS_EntityContainer& container, const Ring& pts) {
+    const size_t n = pts.size();
+    for (size_t i = 0; i < n; ++i) {
+        const RS_Vector& a = pts[i];
+        const RS_Vector& b = pts[(i + 1) % n];
+        container.addEntity(new RS_Line(&container, a, b));
+    }
+}
+
 /**
- * A pattern hatch covering `rings`. Each ring becomes an RS_EntityContainer
- * loop of RS_Line edges joining consecutive vertices (and the last back to
- * the first). `parent` is kept null unless the caller needs the hatch inside
- * a drawing or block; the hatch is updated before it is returned.
+ * Builds a hatch from ready-made loop containers. Each loop container is
+ * reparented into the hatch; the hatch's update() runs after every loop is
+ * attached. Any atomic edge type is accepted (RS_Arc, RS_Circle, RS_Ellipse,
+ * LC_Parabola, LC_SplinePoints, LC_Hyperbola, ...).
+ */
+inline std::unique_ptr<RS_Hatch> makeHatch(
+    std::vector<std::unique_ptr<RS_EntityContainer>> loops,
+    const RS_HatchData& data,
+    RS_EntityContainer* parent = nullptr) {
+    auto hatch = std::make_unique<RS_Hatch>(parent, data);
+    for (auto& loop : loops) {
+        if (!loop) continue;
+        loop->setParent(hatch.get());
+        hatch->addEntity(loop.release());
+    }
+    hatch->update();
+    return hatch;
+}
+
+/**
+ * Builds a hatch from rings of vertices. Each ring becomes a container of
+ * RS_Line edges joining consecutive vertices (and the last back to the first);
+ * forwards to the container overload.
+ */
+inline std::unique_ptr<RS_Hatch> makeHatch(
+    const std::vector<Ring>& rings,
+    const RS_HatchData& data,
+    RS_EntityContainer* parent = nullptr) {
+    std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+    loops.reserve(rings.size());
+    for (const Ring& ring : rings) {
+        if (ring.size() < 3) continue;
+        auto loop = std::make_unique<RS_EntityContainer>(nullptr);
+        makePolygonLoop(*loop, ring);
+        loops.push_back(std::move(loop));
+    }
+    return makeHatch(std::move(loops), data, parent);
+}
+
+/**
+ * A pattern hatch covering `rings`. Forwards to makeHatch; keeps the same
+ * signature as the earlier helper so existing callers do not need to change.
  */
 inline std::unique_ptr<RS_Hatch> makePatternHatch(
     const QString& pattern, double scale, double angle,
     const std::vector<Ring>& rings, RS_EntityContainer* parent = nullptr) {
-    auto hatch = std::make_unique<RS_Hatch>(
-        parent, RS_HatchData(false, scale, angle, pattern));
-    for (const Ring& ring : rings) {
-        if (ring.size() < 3) continue;
-        auto* loop = new RS_EntityContainer(hatch.get());
-        hatch->addEntity(loop);
-        for (size_t i = 0; i < ring.size(); ++i) {
-            const RS_Vector& a = ring[i];
-            const RS_Vector& b = ring[(i + 1) % ring.size()];
-            loop->addEntity(new RS_Line(loop, a, b));
+    return makeHatch(rings, RS_HatchData(false, scale, angle, pattern), parent);
+}
+
+/**
+ * Exact integer even-odd test. poly is a closed polygon; the point (x,y) is
+ * tested against it. When onBoundary != nullptr, it is set to true when the
+ * point lies exactly on an edge (then the return value is unspecified but set
+ * to true as a convention). All arithmetic is integer: there is no roundoff.
+ */
+inline bool exactInsideInteger(
+    const std::vector<std::array<long long, 2>>& poly,
+    long long x, long long y, bool* onBoundary = nullptr) {
+    if (onBoundary != nullptr) *onBoundary = false;
+    const size_t n = poly.size();
+    if (n < 3) return false;
+    bool inside = false;
+    for (size_t i = 0, j = n - 1; i < n; j = i++) {
+        const long long xi = poly[i][0], yi = poly[i][1];
+        const long long xj = poly[j][0], yj = poly[j][1];
+        // On-boundary check: collinear and within the edge's bbox.
+        const long long dxE = xj - xi;
+        const long long dyE = yj - yi;
+        const long long dxP = x - xi;
+        const long long dyP = y - yi;
+        const long long cross = dxE * dyP - dyE * dxP;
+        if (cross == 0) {
+            const long long dot = dxE * dxP + dyE * dyP;
+            const long long len2 = dxE * dxE + dyE * dyE;
+            if (dot >= 0 && dot <= len2) {
+                if (onBoundary != nullptr) *onBoundary = true;
+                return true;
+            }
+        }
+        // Half-open crossing: yi <= y < yj or yj <= y < yi
+        const bool yiLeY = (yi <= y);
+        const bool yjLeY = (yj <= y);
+        const bool crosses = (yiLeY != yjLeY);
+        if (crosses) {
+            // x-intercept: xi + (y - yi) * (xj - xi) / (yj - yi)
+            // Avoid division: compare (x - xi) * (yj - yi) with (y - yi) * (xj - xi)
+            // using the sign of (yj - yi).
+            const long long rhs = (y - yi) * dxE;
+            const long long lhs = (x - xi) * dyE;
+            const bool side = dyE > 0 ? (lhs < rhs) : (lhs > rhs);
+            if (side) inside = !inside;
         }
     }
-    hatch->update();
-    return hatch;
+    return inside;
 }
 
 /** A pattern child's position in world space, start and end. */

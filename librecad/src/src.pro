@@ -523,6 +523,7 @@ HEADERS += \
     lib/engine/document/views/lc_viewslist.h \
     lib/engine/document/entities/lc_cachedlengthentity.h \
     lib/engine/overlays/crosshair/lc_crosshair.h \
+    lib/engine/document/container/lc_loopclassifier.h \
     lib/engine/document/container/lc_looputils.h \
     lib/engine/document/entities/lc_parabola.h \
     lib/engine/overlays/references/lc_refarc.h \
@@ -1216,6 +1217,7 @@ SOURCES += \
     lib/engine/document/views/lc_viewslist.cpp \
     lib/engine/document/entities/lc_cachedlengthentity.cpp \
     lib/engine/overlays/crosshair/lc_crosshair.cpp \
+    lib/engine/document/container/lc_loopclassifier.cpp \
     lib/engine/document/container/lc_looputils.cpp \
     lib/engine/document/entities/lc_parabola.cpp \
     lib/engine/overlays/references/lc_refarc.cpp \
