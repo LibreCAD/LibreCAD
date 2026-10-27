@@ -1052,3 +1052,155 @@ TEST_CASE("Nesting is identical when built 100 times",
         }
     }
 }
+
+// --- Pinched-loop (figure-8) splitting --------------------------------------
+// The research oracle: a 7-line chain that forms a square sharing a single
+// vertex with a triangle must extract as a 4-edge loop and a 3-edge loop,
+// never as one 7-edge figure-8. Earlier builds merged the chain in 400 of
+// 896 edge-orientation plus traversal-order variants; after only the
+// oriented-start fix landed, 112 of 128 still merged. The extractor now
+// splits the chain at every repeated start vertex.
+
+namespace {
+
+// NOLINTBEGIN(readability-identifier-naming)
+
+/** The 7 lines of the figure-8 oracle (lobe1 = square, lobe2 = triangle). */
+std::array<std::pair<RS_Vector, RS_Vector>, 7> figure8Edges() {
+    return {{
+        {RS_Vector(0, 0),    RS_Vector(100, 0)},
+        {RS_Vector(100, 0),  RS_Vector(100, 100)},
+        {RS_Vector(100, 100), RS_Vector(200, 150)},
+        {RS_Vector(200, 150), RS_Vector(150, 200)},
+        {RS_Vector(150, 200), RS_Vector(100, 100)},
+        {RS_Vector(100, 100), RS_Vector(0, 100)},
+        {RS_Vector(0, 100),  RS_Vector(0, 0)},
+    }};
+}
+
+/** Build a container of 7 lines with per-edge stored orientation `rev[i]`
+ *  (true = swap start/end) and container order given by `order`. */
+std::unique_ptr<RS_EntityContainer> buildFigure8(
+    const std::array<std::pair<RS_Vector, RS_Vector>, 7>& edges,
+    const std::array<bool, 7>& rev,
+    const std::array<int, 7>& order) {
+    auto cont = std::make_unique<RS_EntityContainer>(nullptr, true);
+    for (int i : order) {
+        const auto& p = edges[i];
+        const RS_Vector a = rev[i] ? p.second : p.first;
+        const RS_Vector b = rev[i] ? p.first : p.second;
+        cont->addEntity(new RS_Line(cont.get(), a, b));
+    }
+    return cont;
+}
+
+// NOLINTEND(readability-identifier-naming)
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Pinched lobes never extract as one figure-8 loop",
+          "[lc-hatchfix][nesting]") {
+    // 2^7 stored-orientation variants x 7 rotations of the container order
+    // = 896 configurations. In every one the extractor must give loops of
+    // 4 and 3 edges, never 7. Master merges in 400/896.
+    const auto edges = figure8Edges();
+    std::array<int, 7> baseOrder = {0, 1, 2, 3, 4, 5, 6};
+    int merged = 0;
+    for (int mask = 0; mask < 128; ++mask) {
+        std::array<bool, 7> rev{};
+        for (int b = 0; b < 7; ++b) rev[b] = (mask >> b) & 1;
+        for (int rot = 0; rot < 7; ++rot) {
+            std::array<int, 7> order{};
+            for (int i = 0; i < 7; ++i) order[i] = baseOrder[(i + rot) % 7];
+            auto cont = buildFigure8(edges, rev, order);
+            LC_LoopUtils::LoopExtractor ex(*cont);
+            auto result = ex.extractLoops();
+            CAPTURE(mask, rot);
+            REQUIRE(result.size() >= 1u);
+            // Collect edge counts across all extracted loops.
+            std::vector<unsigned> counts;
+            for (const auto& el : result) counts.push_back(el.edges->count());
+            std::sort(counts.begin(), counts.end());
+            if (counts.size() == 1 && counts[0] == 7u) {
+                ++merged;
+            }
+            REQUIRE(counts != std::vector<unsigned>({7u}));
+            REQUIRE(counts == std::vector<unsigned>({3u, 4u}));
+        }
+    }
+    REQUIRE(merged == 0);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A figure-8 chain splits into two simple CCW loops",
+          "[lc-hatchfix][nesting]") {
+    // The research oracle chain (0,0),(0,1),(1,1),(1.5,2),(2,1.5),(1,1),(1,0).
+    // Split at the repeated (1,1): the first lobe is the triangle
+    // (1,1)-(1.5,2)-(2,1.5) with area 0.375 and the second lobe is the
+    // quadrilateral (0,0)-(0,1)-(1,1)-(1,0) with area 1. Both are positive
+    // once the extractor flips them to CCW.
+    auto cont = std::make_unique<RS_EntityContainer>(nullptr, true);
+    const RS_Vector pts[] = {
+        RS_Vector(0, 0),   RS_Vector(0, 1),   RS_Vector(1, 1),
+        RS_Vector(1.5, 2), RS_Vector(2, 1.5), RS_Vector(1, 1),
+        RS_Vector(1, 0)};
+    for (int i = 0; i < 7; ++i) {
+        const RS_Vector a = pts[i];
+        const RS_Vector b = pts[(i + 1) % 7];
+        cont->addEntity(new RS_Line(cont.get(), a, b));
+    }
+    LC_LoopUtils::LoopExtractor ex(*cont);
+    auto result = ex.extractLoops();
+    REQUIRE(result.size() == 2u);
+    std::vector<double> areas;
+    for (const auto& el : result) {
+        areas.push_back(el.edges->areaLineIntegral());
+    }
+    std::sort(areas.begin(), areas.end());
+    REQUIRE_THAT(areas[0], WithinAbs(0.375, 1e-10));
+    REQUIRE_THAT(areas[1], WithinAbs(1.0, 1e-10));
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Pinched lobes in an L room: triangle lobe outside, square lobe a hole",
+          "[lc-hatchfix][nesting]") {
+    // Research scene: an L-shaped room Q plus the figure-8 chain. The square
+    // lobe (0,0)-(100,100) is a hole inside the L room; the triangle lobe
+    // (100,100),(200,150),(150,200) sits in the L's notch, outside the room,
+    // and sorts as its own root. Total area 203750 at scale 100.
+    const Ring lRoom{RS_Vector(-200, -200), RS_Vector(300, -200),
+                     RS_Vector(300, 100),   RS_Vector(100, 100),
+                     RS_Vector(100, 300),   RS_Vector(-200, 300)};
+
+    std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+    loops.push_back(makeLoopContainer(lRoom));
+    // The 7-line figure-8 chain in one container.
+    auto chain = std::make_unique<RS_EntityContainer>(nullptr, true);
+    const auto edges = figure8Edges();
+    for (const auto& p : edges) {
+        chain->addEntity(new RS_Line(chain.get(), p.first, p.second));
+    }
+    // Extract the chain's loops first and append them to loops.
+    LC_LoopUtils::LoopExtractor ex(*chain);
+    auto subLoops = ex.extract();
+    for (auto& sl : subLoops) loops.push_back(std::move(sl));
+
+    LC_LoopUtils::LoopSorter sorter(std::move(loops));
+    auto roots = sorter.getResults();
+    REQUIRE(roots);
+    // Two roots: the L room (with the square lobe as its hole), and the
+    // triangle lobe which lies in the L's notch.
+    REQUIRE(roots->size() == 2u);
+
+    std::vector<int> depths;
+    for (const auto& r : *roots) collectDepths(r, 0, depths);
+    std::sort(depths.begin(), depths.end());
+    REQUIRE(depths == std::vector<int>({0, 0, 1}));
+
+    double totArea = 0.0;
+    for (const auto& r : *roots) totArea += r.getTotalArea();
+    // L_room (210000) - square lobe (10000) + triangle lobe (3750) = 203750.
+    REQUIRE_THAT(totArea, WithinAbs(203750.0, 1e-6));
+}
+

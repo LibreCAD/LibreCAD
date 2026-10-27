@@ -165,6 +165,81 @@ VectorKey makeVectorKey(const RS_Vector& v) {
           static_cast<long long>(std::round(v.y * SCALE))};
 }
 
+/**
+ * One sub-loop produced by splitAtRepeatedVertices: the owned cloned edges and
+ * their start-vertex table in traversal order. The returned clones keep the
+ * traversal direction of the input chain; a caller orients each sub-loop to
+ * CCW before storing it.
+ */
+struct SplitSubLoop {
+    std::unique_ptr<RS_EntityContainer> edges;
+    std::vector<RS_Vector> vertices;
+};
+
+/**
+ * Splits a closed chain at every repeated start-vertex into simple sub-loops.
+ *
+ * Edges share a vertex id (a 1e-8-quantised position) whenever they begin
+ * within ENDPOINT_TOLERANCE of the same point. When an edge whose start id
+ * matches an earlier entry on the current stack arrives, the stack is
+ * truncated at that earlier entry and the popped edges form their own closed
+ * sub-loop; the remainder closes at the initial start vertex when the chain
+ * is traversed to the end. Each sub-loop's edges are cloned into its own
+ * container, preserving the input traversal order.
+ */
+std::vector<SplitSubLoop> splitAtRepeatedVertices(
+    const RS_EntityContainer& loop) {
+    std::vector<SplitSubLoop> out;
+    const unsigned n = loop.count();
+    if (n == 0) return out;
+
+    // Build start-vertex ids keyed by quantised position.
+    std::vector<VectorKey> keys;
+    keys.reserve(n);
+    for (unsigned i = 0; i < n; ++i) {
+        keys.push_back(makeVectorKey(loop.entityAt(i)->getStartpoint()));
+    }
+
+    auto flush = [&](const std::vector<unsigned>& edgeIdx,
+                     const std::vector<RS_Vector>& vs) {
+        if (edgeIdx.empty()) return;
+        auto cont = std::make_unique<RS_EntityContainer>(nullptr, true);
+        for (unsigned i : edgeIdx) {
+            RS_Entity* copy = loop.entityAt(i)->clone();
+            copy->setParent(nullptr);
+            copy->setLayer(nullptr);
+            cont->addEntity(copy);
+        }
+        out.push_back({std::move(cont), vs});
+    };
+
+    std::unordered_map<VectorKey, unsigned, VectorKeyHash> pos;
+    std::vector<unsigned> stackEdge;
+    std::vector<RS_Vector> stackV;
+
+    for (unsigned i = 0; i < n; ++i) {
+        auto it = pos.find(keys[i]);
+        if (it != pos.end()) {
+            const unsigned k = it->second;
+            std::vector<unsigned> subEdge(stackEdge.begin() + k, stackEdge.end());
+            std::vector<RS_Vector> subV(stackV.begin() + k, stackV.end());
+            flush(subEdge, subV);
+            // Pop the sub-loop's positions out of the stack and the map.
+            for (unsigned j = k; j < stackV.size(); ++j) {
+                pos.erase(makeVectorKey(stackV[j]));
+            }
+            stackEdge.resize(k);
+            stackV.resize(k);
+        }
+        pos[keys[i]] = static_cast<unsigned>(stackEdge.size());
+        stackEdge.push_back(i);
+        stackV.push_back(loop.entityAt(i)->getStartpoint());
+    }
+    // The leftover stack closes at stackV[0].
+    flush(stackEdge, stackV);
+    return out;
+}
+
 }  // anonymous namespace
 
 namespace LC_LoopUtils {
@@ -259,30 +334,52 @@ std::vector<ExtractedLoop> LoopExtractor::extractLoops() const {
         }
       }
       if (validate()) {
-        const double area = m_loop->areaLineIntegral();
-        if (area < 0.0) {
-          // Reverse direction for positive area (counter-clockwise)
-          auto new_loop = std::make_unique<RS_EntityContainer>();
-          for (int i = static_cast<int>(m_loop->count()) - 1; i >= 0; --i) {
-            RS_Entity* e = m_loop->entityAt(static_cast<unsigned>(i))->clone();
-            e->revertDirection();
-            new_loop->addEntity(e);
+        // Split pinched loops at any repeated start vertex: a 7-edge figure-8
+        // chain in one container must come back as two simple sub-loops.
+        const unsigned chainN = m_loop->count();
+        std::vector<SplitSubLoop> subLoops;
+        if (chainN <= 1) {
+          SplitSubLoop single;
+          single.edges = std::move(m_loop);
+          if (chainN == 1 && !isClosed(*single.edges->entityAt(0))) {
+            single.vertices.push_back(single.edges->entityAt(0)->getStartpoint());
           }
-          m_loop = std::move(new_loop);
+          subLoops.push_back(std::move(single));
+        } else {
+          subLoops = splitAtRepeatedVertices(*m_loop);
+          m_loop.reset();
         }
-        ExtractedLoop el;
-        // Build the start-of-edge vertex table. A single closed atomic
-        // entity (circle, full ellipse, closed spline) has no valid vertex
-        // table; the classifier uses its own endpoints in that case.
-        const unsigned n = m_loop->count();
-        if (n > 1 || (n == 1 && !isClosed(*m_loop->entityAt(0)))) {
-          el.vertices.reserve(n);
-          for (unsigned k = 0; k < n; ++k) {
-            el.vertices.push_back(m_loop->entityAt(k)->getStartpoint());
+
+        for (SplitSubLoop& sub : subLoops) {
+          if (!sub.edges || sub.edges->count() == 0) continue;
+          const double area = sub.edges->areaLineIntegral();
+          // Drop degenerate zero-area sub-loops (as validate's MIN_AREA cut).
+          constexpr double kMinArea = ENDPOINT_TOLERANCE * ENDPOINT_TOLERANCE;
+          if (std::abs(area) < kMinArea) continue;
+          if (area < 0.0) {
+            auto new_loop = std::make_unique<RS_EntityContainer>(nullptr, true);
+            const unsigned m = sub.edges->count();
+            for (int i = static_cast<int>(m) - 1; i >= 0; --i) {
+              RS_Entity* e = sub.edges->entityAt(static_cast<unsigned>(i))->clone();
+              e->setParent(nullptr);
+              e->setLayer(nullptr);
+              e->revertDirection();
+              new_loop->addEntity(e);
+            }
+            sub.edges = std::move(new_loop);
+            sub.vertices.clear();
           }
+          ExtractedLoop el;
+          const unsigned m = sub.edges->count();
+          if (m > 1 || (m == 1 && !isClosed(*sub.edges->entityAt(0)))) {
+            el.vertices.reserve(m);
+            for (unsigned k = 0; k < m; ++k) {
+              el.vertices.push_back(sub.edges->entityAt(k)->getStartpoint());
+            }
+          }
+          el.edges = std::move(sub.edges);
+          results.push_back(std::move(el));
         }
-        el.edges = std::move(m_loop);
-        results.push_back(std::move(el));
       } else {
         RS_DEBUG->print("LoopExtractor: Invalid loop discarded");  // Log invalid loops
       }
@@ -502,8 +599,12 @@ LoopExtractor::FirstEdge LoopExtractor::findFirst() const
 }
 
 /**
- * @brief Selects the next edge making the strongest left turn (maximum CCW turn).
- * Purely tangent-based, so it handles curves and splines correctly.
+ * @brief Selects the next edge making the strongest left turn (maximum CCW
+ * turn) using the type-uniform travelDirection and signedCurvature helpers.
+ *
+ * Ties within 1e-12 radians resolve to the larger signed left curvature
+ * leaving the vertex (signedCurvature is negated when the vertex is the
+ * stored end), then to the lower stored container index.
  */
 RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
 {
@@ -514,39 +615,52 @@ RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
       return edges[0];
   }
 
-  // Incoming direction (how we arrived at the junction)
-  const double incoming = m_data->current->getDirection2();
+  // Arrival direction: the travel tangent of the current edge at its end.
+  const RS_Vector dinV =
+      LC_LoopUtils::travelDirection(*m_data->current, /*atStart=*/false);
+  const double din = std::atan2(dinV.y, dinV.x);
 
-  std::vector<std::pair<double, RS_Entity*>> candidates;
+  struct Candidate {
+      RS_Entity* edge = nullptr;
+      double turn = 0.0;
+      double curv = 0.0;
+      std::size_t idx = 0;
+  };
+  std::vector<Candidate> candidates;
   candidates.reserve(edges.size());
 
   for (RS_Entity* e : edges) {
-    // Determine whether we will need to reverse this edge
     const bool attachAtStart =
         e->getStartpoint().distanceTo(m_data->endPoint) <= ENDPOINT_TOLERANCE;
 
-    double outgoing;
-    if (attachAtStart) {
-      outgoing = e->getDirection1();                    // forward as-is
-    } else {
-      // Will be reversed → outgoing tangent = original direction2 + π
-      outgoing = RS_Math::correctAngle(e->getDirection2() + M_PI);
+    RS_Vector doutV = LC_LoopUtils::travelDirection(*e, attachAtStart);
+    if (!attachAtStart) {
+      doutV = doutV * (-1.0);  // reversed traversal flips the leaving tangent
     }
+    const double dout = std::atan2(doutV.y, doutV.x);
+    double turn = dout - din;
+    while (turn > M_PI) turn -= 2.0 * M_PI;
+    while (turn <= -M_PI) turn += 2.0 * M_PI;
 
-           // Signed turn angle in [-π, π]. Positive = left turn (CCW)
-    double turn = RS_Math::correctAngle(outgoing - incoming);
-    if (turn > M_PI) {
-        turn -= 2.0 * M_PI;
-    }
+    double curv = LC_LoopUtils::signedCurvature(*e, attachAtStart);
+    if (!attachAtStart) curv = -curv;
 
-    candidates.emplace_back(turn, e);
+    const auto it = m_data->order.find(e);
+    const std::size_t idx = (it != m_data->order.end())
+                                 ? it->second
+                                 : static_cast<std::size_t>(-1);
+    candidates.push_back({e, turn, curv, idx});
   }
 
-         // Prefer maximum left turn → this is what "outermost" actually means for CCW boundary following
-  std::sort(candidates.begin(), candidates.end(),
-            [](const auto& a, const auto& b) { return a.first > b.first; });
-
-  return candidates.front().second;
+  auto better = [](const Candidate& a, const Candidate& b) {
+      if (std::abs(a.turn - b.turn) > 1e-12) return a.turn > b.turn;
+      if (a.curv != b.curv) return a.curv > b.curv;
+      return a.idx < b.idx;
+  };
+  return std::min_element(candidates.begin(), candidates.end(),
+                           [&](const Candidate& a, const Candidate& b) {
+                               return better(a, b);
+                           })->edge;
 }
 
 /**
