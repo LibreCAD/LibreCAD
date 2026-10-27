@@ -62,21 +62,25 @@ subtasks and disjoint write scopes. No unrelated background work is authorized.
 | Relationship | Merge base of those commits is `41678d97626c05ab652ceaa02cf0ac7f7f6205cf` | The feature groundwork is not present in the main checkout. Do not substitute one tree's tests for the other's. |
 | Later implementation candidate | Local branch `codex/offset-2961-implementation`, HEAD `df0c891ad5a0bb5b0d0e864f4cd9cdd8036d5f83` | Descends from the attached feature HEAD. Contains the editable entity, public checker, file/UI/source/trim implementation and validation tooling. Not integrated into either checkout above. |
 | Candidate product checkpoints | `b6814fb3a63dd66bb3aeae9e5b5e66668f8b8591` (complete cut search), `f617fcf70b46a0236a8725140aeb10d475c7d9ec` (final edit snapshots) | Substantive later code, not merely a plan claiming completion. Audit and reuse it before proposing replacement implementation. |
-| Read-only candidate snapshot | `/private/tmp/lc2961-plan-refresh.NI3tkd/candidate`, detached at `df0c891ad5a0bb5b0d0e864f4cd9cdd8036d5f83` | Clean local shared clone used for this review; no dependency installation, builds or product edits. It is an inspection aid, not a new implementation owner. |
-| Preserved draft | `attic/plan_offset_curve_2961_history_20261026.md` | Exact pre-consolidation working draft, including pre-existing uncommitted work. |
+| Historical candidate inspection snapshot | `/private/tmp/lc2961-plan-refresh.NI3tkd/candidate`, detached at `df0c891ad5a0bb5b0d0e864f4cd9cdd8036d5f83` | Former read-only inspection aid; now absent. Use the surviving pinned local Git objects, not this disposable path. |
+| Historical draft archive | `attic/plan_offset_curve_2961_history_20261026.md` | Earlier audit recorded an exact pre-consolidation draft, including uncommitted work. It is now absent from all three recorded worktrees and is not tracked; do not claim present preservation. |
 
-**Next implementation baseline:** an isolated clean checkout pinned to the later
-candidate, after S0's scope/ancestry audit. Do not overwrite the dirty main tree,
+**Selected implementation baseline:** the isolated
+`/Users/dli/.codex/worktrees/offset-2961-runtime/LibreCAD` worktree on
+`codex/offset-2961-native-worker`, descending from the later candidate. Current
+slice SHAs/evidence and remaining S0 scope corrections are recorded below.
+Do not overwrite the dirty main tree,
 reset the attached worktree, rewrite the existing candidate branch, or recreate
 all implemented modules from the older feature snapshot. Carry this current plan
 into the isolated implementation checkout without importing another person's index.
 The candidate's committed roadmap and its `docs/offset_curve_2961_validation.md`
 are historical evidence at the pinned SHA, not competing scheduling instructions.
 
-The archived draft is 5,762,095 bytes, SHA-256
+The earlier audit recorded the draft as 5,762,095 bytes, SHA-256
 `2dc8b28eccb4092af8f2ffba05342abfa69aae93d3963b6b7d37e67b62d73ee0`.
-Its historical section numbers, V455 tuple/ledger proposals, failed attempts and
-receipts remain unchanged. They are historical evidence, not active routing or
+The bytes are not currently available for rechecking that hash or reconstructing
+uncommitted work. Its recorded section numbers, V455 proposals and receipt claims
+are historical provenance, not active routing or
 new PASS results. This document supersedes their scheduling instructions, not
 the underlying geometric correctness requirements. Reuse detailed design material
 only after checking it against the current contracts below and the selected code.
@@ -109,7 +113,7 @@ This inventory compares the older attached tree with the later candidate.
 | P1 | Test-runner success could be mistaken for product worker isolation/responsiveness | W0 pins which runtime is being qualified; W1/W2 implement the native path promised here. If only the validation runner was intended, record an explicit scope correction before removing the native requirement; do not silently count X-H7 as it. |
 | P2 | Ordinary representation tests misclassify DWG2007 and never execute that row | S0 adds explicit enum mapping, both affected round-trip paths and a physical `AC1021`/reader-routing assertion, plus non-DWG negatives. No unrelated codec rewrite. |
 | P2 | Existing entity/filter/failure tests would be missed by a geometry-only or grouped-fast-lane run | S0 inventories actual declarations/targets; each slice runs its named cases, relevant filter micro targets and standalone fault processes. Zero matches or omitted targets cannot close a slice. |
-| P2 | Historical evidence and temporary artifacts could be promoted into current or durable acceptance | Hashes of all 14 indexed receipts and all 52 pinned fixtures match in this review. Preserve source/runtime scopes; rerun affected lanes on the selected source and retain needed provenance outside disposable directories before delivery. |
+| P2 | Historical evidence and temporary artifacts could be promoted into current or durable acceptance | Earlier audit reported matching14 receipt/52 fixture hashes. The old14 receipt files are now absent; all52 committed fixtures still match. Use new scoped durable runtime receipts for current claims, never reconstruct old bytes or PASS results from hashes. |
 | P2 | Prior visible UI results explicitly omit physical variants | R carries the unobserved rows from the candidate interactive record: context menus, compact options, held-drag cancellation, locked/stale peers and preview/commit comparisons. Automated tests do not turn those rows into physical PASS. |
 | P2 | Candidate evidence links would become stale when this consolidated roadmap replaces its old plan | S0 retargets the two evidence documents without changing historical claims. R02 must point to `lc_ellipseoffsetgeometry.cpp`/`checkCache`, not just `lc_offsetresultcheck.cpp`, which checks legacy line/arc polylines. Validate files and heading anchors after consolidation. |
 
@@ -308,7 +312,7 @@ candidate except the explicitly proposed native-worker tags.
 | E1 | Guarded entity/factories, RTTI, stamp, clone, downgrade and transforms | C-check | candidate `92758859c` and later fixes; audit/retest | `[lc-offsetcurve][native]`, `[entity-coverage]` |
 | U1 | Type/INSERT/selection/SVG/menu/info dispatch and safe properties | E1 | candidate `49c9b328b`, `f0fb28fab`; audit/retest | native type/name/dispatch TUs, `[entity-coverage]` |
 | E2 | Cached grips/snaps, through proposal and transactional mutators | E1 | candidate `4300c1031`, `47e14c74b`; audit/retest | native edit/grip/transform TUs |
-| G | Eligible creation, repeated offset and bounded ordinary fallback/reporting | E2,U1,W2 | candidate `a37982bd6`, `bf7b512cf`; worker integration open | creation/repeat/modification TUs and existing Offset tests |
+| G | Eligible creation, repeated offset and bounded ordinary fallback/reporting | E2,U1,W2 | candidate `a37982bd6`, `bf7b512cf`; shared preparation `ef40eecad` qualified; typed Produce/cache/GUI integration open | creation/repeat/modification TUs and existing Offset tests |
 | F1 | Shared typed schema, raw-carrier eligibility, ownership and byte limits | E1 | candidate `305042903`; audit/retest | `lc_offsetcurvexdata_tests.cpp`, `lc_offsetcurvecarrier_tests.cpp` |
 | F2 | Actual DXF/DWG SPLINE writer/adoption and transactional errors | F1,G | candidate `32597762b`, `7e46b2de8`; audit/retest | offset adapter/persistence/hostile-file TUs |
 | F3 | Version/read/write/conversion, clipboard, independent fixtures and output inspection | F2 | candidate `79ae1930b`; fixtures present, rerun scope required | `[lc-offsetcurve][g-matrix]`, explicit per-row evidence |
@@ -352,7 +356,7 @@ candidate except the explicitly proposed native-worker tags.
    and interactive record links to current sections or immutable historical Git
    checkpoints. Preserve receipt hashes and historical source scopes. Correct
    R02's public-checker source mapping and check every relative file/heading link.
-   Keep one active roadmap; Git history and the existing attic archive are history,
+   Keep one active roadmap; Git history and any actually available archive are history,
    not additional live plans. Do not edit unrelated planning documents.
 
 Next, audit/requalify the existing A-C implementation in dependency order and
@@ -1293,11 +1297,64 @@ capture extension. ASan remains `detect_leaks=0`; this is no leak-free claim.
 | `W9-ctest-release.xml` | `015a53dd1d1b69ded80a8b64e467e48ff173e11e4117c1f2e3628eab0505b8cf` |
 | `W9-ctest-asan.xml` | `6a9efda7f63626f18217ac2e7abca5a2a881a25ba2006ca1dbc2bbdd5cf8d8f1` |
 
-Next bounded creation/repeat steps:
-1. Extract the existing per-source copy-series preparation into a shared owned
-   preparation API, with explicit top-level/native-definition eligibility context.
-   Keep the synchronous API and existing tests; use no synthetic document or
-   unchecked native source to make detached inputs pass membership checks.
+`ef40eecad63231bdb8dff70a9d2828fd96cea199` extracts the existing numeric
+copy-series into shared `RS_Modification::prepareOffsetSource` (W10), with a fixed
+value-owned top-level/native-definition context for detached inputs. The existing
+synchronous API uses the same implementation with its original live eligibility
+reads and early frozen copy count; no synthetic document or unchecked native source
+is constructed. Side-once resolution, original-source distances, ordinary/native
+attribute policy, rebase/cache remaining allowances, output accounting and preview
+cache behavior stay unchanged. All native outputs still use real create/adopt/C.
+
+The new public preparation entry clears provisional roots and committed usage on
+refusal or exception, retaining actual attempted work. It performs no document/list/
+undo publication. A dedicated micro target covers the three existing modification
+offset TUs. All75 prior cases plus6 new parity/callback/exception cases pass in both
+Release and ASan:81 cases/83207 assertions each. Existing case IDs/assertions remain.
+Detached ellipse/native-off/preview, reversed/raw-cache repeat, undefined or nested
+native sources, zero-sum fallback, cache hits, sample/pair limits and late-copy rollback
+match the synchronous API. Additional consumer qualification passes Update36 cases
+(3094/5386 assertions), sheet53/9367 and kernel10/1557 in both builds. Strict XML is
+valid with zero errors/failures. ASan remains `detect_leaks=0`.
+
+| Artifact | SHA256 |
+|---|---|
+| `W10-qualified-source_preparation-release.xml` | `0d47ce4d342f23298a37afb6747a2b2b8be7c67971487958a855d16d71f113f0` |
+| `W10-qualified-source_preparation-asan.xml` | `71ab99ade69e858b2f4e3b0df1f68a63e8315acac77990a754760748ff5b9caa` |
+| `W10-qualified-update_source-release.xml` | `989956d9c8c6eae4db45151a86a9f64bc7e3d9f357f6995067c8c70f2cb282a3` |
+| `W10-qualified-update_source-asan.xml` | `e28d2d7d93bf47e71c1ceacd2443c476a2eb81cded65d82a5b0c8d51efae25d4` |
+| `W10-qualified-properties_sheet-release.xml` | `edd350a9142058f5dc4ef1e5bff5090f5c29094a91653594284baf5884389714` |
+| `W10-qualified-properties_sheet-asan.xml` | `659ed5a18c1be533acb2aa00d5bd77bffa7b1a0bb694f0516a72226d2eac70a7` |
+| `W10-qualified-worker_kernel-release.xml` | `7687155e30e7f3075e773343ef4be942146e54654dc576252de10974e39d92ec` |
+| `W10-qualified-worker_kernel-asan.xml` | `36b8dd4ecb615740213db3d2ee69d1ad92da726fa96c570a8ed3eadc59dc792b` |
+
+The last complete CMake Release application relink passed on the clean W9 source
+before W10; `W9-build-app-release.log` SHA256 is
+`ab67d7ecac022f1d25e06db90cfecba2990fdd3018c0608f7b192930342dde65`.
+That is not current W10 application/deployed/qmake6/visible qualification.
+
+The bounded S0 audit now classifies every287 F..C path and identifies289 M..C paths,
+using the surviving pinned Git objects. Its target is explicitly `eee8454fc` before
+W9/W10, not a runtime PASS on current code. All117 evidence-document relative links
+(50 heading links) resolve, including corrected R02/checkCache attribution. All52
+committed independent fixtures still match. `W10-S0-reconciliation.md` in the durable
+evidence root has SHA256
+`24fb7623c0d306bf29f4ffad996a0d1caa0c6db128bb0b12c0da59faad8dcf4b`.
+
+S0 finds one scope correction: inherited `b05fb541df651dd9cb55a222dee4563e6127c436`
+(#3140 default shortcuts/translations) changes four shortcut initializers, one Chinese
+shortcut test and its test-only CMake translation setup. Remove ONLY those reviewed
+hunks in a separate tested slice; retain the same files' offset changes, the bounded
+entity-coverage workflow triggers and all protected main/recovery changes. The audit
+also confirms that the old14 disposable receipts, inspection clone, attic draft and
+both old plan-only JSON reports are absent. Earlier hash checks remain historical
+claims, not present availability or new PASS. Do not reconstruct lost bytes from
+hashes. Current acceptance must use new scoped durable receipts; missing old evidence
+does not waive any current runtime/manual gate. Both protected index hashes still match.
+
+Remaining creation/repeat steps:
+1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
+   Before broader integration, apply the narrow S0 inherited-shortcut scope correction.
 2. Add a typed child Produce path for ellipse/native stored-cache source values,
    complete pointer-free diagnostics and bounded outputs. Preserve side-once,
    copy-series prefixes/rollback, samples, pair reservations and output limits.
@@ -1324,14 +1381,15 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 
 - [x] Read-only reconciliation: identify the later descendant candidate and its
   real entity/checker/UI/file/source/trim code instead of calling it all missing.
-- [x] Verify 14 retained receipt hashes and 52 pinned fixture hashes. This is
-  identity/provenance checking only, not new runtime or interoperability evidence.
+- [x] Verify52 committed fixture hashes and classify old14 receipt checks as historical
+  and currently unavailable. This is provenance, not runtime/interoperability evidence.
 - [ ] S0: finish the source/target reconciliation on the durable tree. Fresh
   baseline, ordinary DWG2007 correction, evidence links and broad offset/failure
-  executions are recorded above; do not redo them as missing implementation.
+  executions and full path/link classification are recorded above. Narrow inherited
+  shortcut-scope removal remains; do not redo implemented geometry as missing work.
 - [ ] A-core through C-check: review/requalify existing code and patch only proven
   accounting, ownership, occurrence or global-topology gaps. No duplicate checker.
-- [ ] W0-W2: finish shared creation/repeat preparation, import ownership and remaining GUI
+- [ ] W0-W2: finish typed Produce, cache portability, import ownership and remaining GUI
   adoption/failure acceptance. Reuse the qualified geometry-entry timeout/helper/client/
   reply modules; do not redo them as absent. Keep Node runner scope separate.
 - [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
@@ -1339,8 +1397,8 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** shared per-source creation/repeat
-preparation and typed Produce, then cache portability/GUI routing in the remaining
+**Next concrete action on implementation resume:** narrowly remove inherited #3140
+shortcut hunks, then typed Produce and cache portability/GUI routing in the remaining
 4.2 caller adapters. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
 Nothing is automatically copied into the dirty main tree. Native caller routing,
@@ -1355,7 +1413,8 @@ mark a mandatory row PASS merely because its prerequisite is unavailable.
 
 The original plan-only audit did not implement product changes or commit the
 existing staged draft. This execution now implements the roadmap in the isolated
-worktree above. The prior archive and both shared indexes remain untouched.
+worktree above. Both shared indexes remain untouched; the prior draft archive is
+currently unavailable, as explicitly recorded in the current S0 audit.
 
 ## 8. Historical Plan-Only Audit
 
@@ -1366,16 +1425,17 @@ The selected SHAs/ancestry, candidate source and target presence, real acceptanc
 tags, explicit version enums and surviving DWG2007 defect are checked against
 source. Shell recipes are syntax-checked without running product commands.
 
-All 14 artifact hashes from the candidate's committed evidence index and all 52
-fixture hashes from its three manifests match. Source-blob receipts are checked
-against their recorded commits, not promoted into current runtime PASS. The
-existing archive/license and shared indexes are unchanged. The read-only candidate
-snapshot stays clean; only the live plan is edited in this pass (the earlier
-archive remains an existing untracked file). The machine-readable audit is
-`/private/tmp/lc2961-plan-refresh.NI3tkd/report.json`.
+That earlier pass reported matching14 receipt hashes and52 fixture hashes, with
+source blobs checked against their recorded commits and no runtime PASS transfer.
+Its clone, untracked attic draft and temporary receipt/report paths are now absent;
+the original machine-readable report path was
+`/private/tmp/lc2961-plan-refresh.NI3tkd/report.json`, also currently absent. Current
+S0 checks use the surviving Git objects and52 committed fixtures instead. Preserve
+the historical observation without asserting that unavailable bytes still exist.
 
-The earlier document-only audit remains at
-`/private/tmp/lc2961-plan-audit.gRHoJ7/report-final.json`; it qualified its own draft
+The other earlier document-only audit's recorded path was
+`/private/tmp/lc2961-plan-audit.gRHoJ7/report-final.json`, also currently absent;
+it qualified its own draft
 structure, not this newer candidate reconciliation. Neither audit qualifies
 geometry, native workers, current DXF/DWG interoperability, visible interaction
 or a product milestone. Those document-only audits did not run product builds or
