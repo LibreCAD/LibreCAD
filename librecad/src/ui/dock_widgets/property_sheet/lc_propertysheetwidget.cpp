@@ -24,6 +24,7 @@
 #include "lc_propertysheetwidget.h"
 
 #include <QMenu>
+#include <QShortcut>
 
 #include "lc_actioncontext.h"
 #include "lc_actiongroupmanager.h"
@@ -81,6 +82,13 @@ LC_PropertySheetWidget::LC_PropertySheetWidget(QWidget* parent, LC_ActionContext
     m_offsetPropertyQueue = std::make_unique<LC_OffsetCurvePropertyQueue>(this, actionContext);
     connect(m_offsetPropertyQueue.get(), &LC_OffsetCurvePropertyQueue::pendingCancelled,
         this, &LC_PropertySheetWidget::refill, Qt::QueuedConnection);
+    auto* cancelOffset = new QShortcut(QKeySequence(Qt::Key_Escape), this);
+    cancelOffset->setContext(Qt::WidgetWithChildrenShortcut);
+    cancelOffset->setEnabled(false);
+    connect(m_offsetPropertyQueue.get(), &LC_OffsetCurvePropertyQueue::preparationChanged,
+        cancelOffset, &QShortcut::setEnabled);
+    connect(cancelOffset, &QShortcut::activated, m_offsetPropertyQueue.get(),
+        &LC_OffsetCurvePropertyQueue::rejectPreparation);
 
     const auto propertiesSheet = ui->propertySheet->propertiesSheet();
     connect(propertiesSheet, &LC_PropertiesSheet::propertyEdited, this, &LC_PropertySheetWidget::onPropertyEdited);

@@ -8,11 +8,16 @@
 
 #include <QApplication>
 #include <QComboBox>
+#include <QDir>
+#include <QElapsedTimer>
 #include <QEventLoop>
+#include <QFileInfo>
 #include <QFocusEvent>
 #include <QKeyEvent>
 #include <QLineEdit>
 #include <QPointer>
+#include <QShortcut>
+#include <QShortcutEvent>
 #include <QTimer>
 #include <QToolButton>
 #include <cstring>
@@ -20,11 +25,13 @@
 #include <algorithm>
 #include <cmath>
 #include <memory>
+#include <optional>
 #include <vector>
 #include "lc_actioncontext.h"
 #include "lc_actiongroupmanager.h"
 #include "lc_actiontestsupport.h"
 #include "lc_offsetcurvepropertyqueue.h"
+#include "../../../../lib/offset_worker/lc_offsetworkerclient.h"
 #include "lc_offsetcurveui.h"
 #include "lc_offsetcurvereadutils.h"
 #include "lc_property_lineedit_with_button.h"
@@ -34,6 +41,7 @@
 #include "lc_property_bool.h"
 #include "lc_property_container.h"
 #include "lc_property_double.h"
+#include "lc_property_layer.h"
 #include "lc_property_linewidth.h"
 #include "lc_propertysheetwidget.h"
 #include "rs_ellipse.h"
@@ -45,6 +53,8 @@ namespace {
 class Graphic final : public RS_Graphic {
 public:
     using RS_Graphic::countUndoCycles;
+    using RS_Graphic::startUndoCycle;
+    using RS_Graphic::endUndoCycle;
 };
 
 class Context final : public LC_ActionContext {
@@ -63,7 +73,83 @@ QList<LC_Property*> namedRows(const LC_PropertyContainer* root, const QString& n
     return rows;
 }
 
-void waitForCommit() {
+void requireOffsetWorker() {
+    const QFileInfo helper(LC_OffsetWorkerClient::helperPath());
+    INFO("Required native property worker: " << helper.absoluteFilePath().toStdString());
+    REQUIRE(helper.isAbsolute());
+    REQUIRE(helper.isFile());
+    REQUIRE(helper.isExecutable());
+    REQUIRE(helper.absolutePath() == QDir(QCoreApplication::applicationDirPath()).absolutePath());
+#ifdef Q_OS_WIN
+    REQUIRE(helper.fileName() == QStringLiteral("LibreCADOffsetWorker.exe"));
+#else
+    REQUIRE(helper.fileName() == QStringLiteral("LibreCADOffsetWorker"));
+#endif
+}
+
+constexpr int PreparationWaitMs = 3500;
+
+template<class Predicate>
+void waitUntil(Predicate ready) {
+    if (ready()) return;
+    QEventLoop loop;
+    QTimer poll, deadline;
+    deadline.setSingleShot(true);
+    deadline.setTimerType(Qt::PreciseTimer);
+    QObject::connect(&poll, &QTimer::timeout, &loop, [&] { if (ready()) loop.quit(); });
+    QObject::connect(&deadline, &QTimer::timeout, &loop, &QEventLoop::quit);
+    poll.start(1);
+    deadline.start(PreparationWaitMs);
+    loop.exec();
+    INFO("Bounded Qt condition wait: " << PreparationWaitMs << "ms");
+    REQUIRE(ready());
+}
+
+void waitForPreparation(LC_OffsetCurvePropertyQueue* queue) {
+    const QPointer<LC_OffsetCurvePropertyQueue> guarded(queue);
+    const auto settled = [&] { return !guarded || !guarded->isPreparing(); };
+    if (settled()) return;
+    const auto count = guarded->lastAttempts().size();
+    REQUIRE(count > 0); REQUIRE(count <= LC_OffsetCurvePropertyQueue::MaximumSnapshotItems);
+    const auto totalBound = std::min<qint64>(LC_OffsetWorkerClient::Deadlines::commit,
+        qint64(count) * PreparationWaitMs);
+    QElapsedTimer elapsed; elapsed.start();
+    QEventLoop loop;
+    QTimer poll, deadline;
+    deadline.setSingleShot(true); deadline.setTimerType(Qt::PreciseTimer);
+    qint64 jobStarted = 0;
+    std::size_t observedJob = 0;
+    bool expired = false;
+    const auto observe = [&] {
+        const auto now = elapsed.elapsed();
+        if (now >= totalBound || now - jobStarted >= PreparationWaitMs) {
+            expired = true; loop.quit(); return;
+        }
+        if (settled()) { loop.quit(); return; }
+        const auto& attempts = guarded->lastAttempts();
+        std::size_t submitted = 0;
+        for (std::size_t i = 0; i < attempts.size(); ++i)
+            if (attempts[i].workerReservation) submitted = i;
+        // Only a different peer can start another watchdog window. Repeated
+        // callbacks/heartbeats cannot extend a stalled job or the batch bound.
+        if (submitted > observedJob) {
+            observedJob = submitted; jobStarted = now;
+            deadline.start(int(std::min<qint64>(PreparationWaitMs, totalBound - now)));
+        }
+    };
+    QObject::connect(guarded.data(), &LC_OffsetCurvePropertyQueue::preparationChanged, &loop, [&](bool) { observe(); });
+    QObject::connect(guarded.data(), &QObject::destroyed, &loop, &QEventLoop::quit);
+    QObject::connect(&poll, &QTimer::timeout, &loop, observe);
+    QObject::connect(&deadline, &QTimer::timeout, &loop, [&] { expired = true; loop.quit(); });
+    poll.start(1); deadline.start(int(std::min<qint64>(PreparationWaitMs, totalBound)));
+    while (!settled() && !expired) loop.exec();
+    INFO("Per-peer watchdog=" << PreparationWaitMs << "ms; batch bound=" << totalBound << "ms");
+    REQUIRE_FALSE(expired); REQUIRE(settled());
+    // Return in the completion signal's event turn, before the 30 ms commit.
+}
+
+void waitForCommit(LC_OffsetCurvePropertyQueue* queue = nullptr) {
+    if (queue) waitForPreparation(queue);
     QEventLoop loop;
     QTimer::singleShot(80, &loop, &QEventLoop::quit);
     loop.exec();
@@ -159,6 +245,8 @@ struct Fixture {
     std::unique_ptr<LC_PropertySheetWidget> sheet;
     Fixture() {
         REQUIRE(app != nullptr);
+        app->setQuitOnLastWindowClosed(false);
+        requireOffsetWorker();
         graphic.initForNewDocument();
         view.setDocument(&graphic);
         context.setDocumentAndView(&graphic, &view);
@@ -175,7 +263,8 @@ struct Fixture {
         context.setDocumentAndView(nullptr, nullptr);
     }
     void show(const QList<RS_Entity*>& entities) {
-        graphic.select(entities);
+        for (auto* entity : entities)
+            if (!entity->isSelected()) graphic.select(QList<RS_Entity*>{entity});
         sheet->show();
         sheet->setGraphicView(&view);
         QApplication::processEvents();
@@ -230,14 +319,17 @@ struct Fixture {
             QFocusEvent focusOut(QEvent::FocusOut, Qt::TabFocusReason);
             QApplication::sendEvent(editor, &focusOut);
         }
-        // No event-loop wait here: rapid-field tests must share the one delayed batch.
+        waitForPreparation(queue());
     }
     void toggleSide() {
         auto* props = properties();
         props->stopInplaceEdit(false, false);
         props->setActiveProperty(property("towardCentre"), true);
+        props->viewport()->repaint();
         props->setFocus();
         key(*props, Qt::Key_Space);
+        REQUIRE(queue()->isPreparing());
+        waitForPreparation(queue());
     }
 };
 
@@ -259,6 +351,24 @@ std::vector<LC_OffsetCurve*> live(const Graphic& graphic) {
         }
     }
     return result;
+}
+
+LC_OffsetCurvePropertyQueue::DefinitionEdit distanceDefinition(double distance) {
+    return [distance](const LC_OffsetCurve& curve) -> std::optional<LC_EllipseOffsetDefinition> {
+        auto definition = curve.definition();
+        definition.distance = distance;
+        return definition;
+    };
+}
+
+void waitForWorker(LC_OffsetCurvePropertyQueue* queue, std::size_t index = 0) {
+    waitUntil([&] {
+        return !queue->isPreparing() || (queue->lastAttempts().size() > index &&
+            queue->lastAttempts()[index].workerReservation.has_value());
+    });
+    REQUIRE(queue->isPreparing());
+    REQUIRE(queue->lastAttempts().size() > index);
+    REQUIRE(queue->lastAttempts()[index].workerReservation);
 }
 }
 
@@ -282,7 +392,7 @@ TEST_CASE("Native sheet population has definition rows and no spline control net
     auto* editor = f.beginNumber("distance");
     QFocusEvent focusOut(QEvent::FocusOut, Qt::TabFocusReason);
     QApplication::sendEvent(editor, &focusOut);
-    waitForCommit();
+    waitForCommit(f.queue());
     CHECK(f.queue()->lastAttempts().empty());
     CHECK(f.graphic.countUndoCycles() == 0);
 }
@@ -298,7 +408,7 @@ TEST_CASE("Real native distance editor stages once and commits one replacement w
     CHECK(f.queue()->pendingCount() == 1);
     before.check(*source);
     const auto result = f.queue()->lastAttempts().front().result;
-    waitForCommit();
+    waitForCommit(f.queue());
     CHECK(f.graphic.countUndoCycles() == 1);
     REQUIRE(live(f.graphic).size() == 1);
     auto* replacement = live(f.graphic).front();
@@ -340,7 +450,7 @@ TEST_CASE("Native editor restores refusals parse errors and exact no ops without
     }
     CHECK(static_cast<LC_PropertyDouble*>(f.property("distance"))->value() == .25);
     CHECK(f.queue()->pendingCount() == 0);
-    waitForCommit();
+    waitForCommit(f.queue());
     CHECK(f.graphic.countUndoCycles() == 0);
     before.check(*source);
 }
@@ -368,7 +478,7 @@ TEST_CASE("Native multi row retains requested payload when the first target refu
         before.check(*invalid);
         REQUIRE_FALSE(f.context.messages.isEmpty());
         CHECK(f.context.messages.back().contains("1 changed, 0 unchanged, 1 refused"));
-        waitForCommit();
+        waitForCommit(f.queue());
         CHECK(f.graphic.countUndoCycles() == 1);
         before.check(*invalid);
         CHECK_FALSE(invalid->isDeleted());
@@ -394,7 +504,7 @@ TEST_CASE("A mixed native value matching the first target still edits the other 
     CHECK_FALSE(noOp.checkReason);
     ranOnce(f.queue()->lastAttempts()[1].result);
     before.check(*first);
-    waitForCommit();
+    waitForCommit(f.queue());
     REQUIRE(live(f.graphic).size() == 2);
     for (auto* curve : live(f.graphic)) CHECK(curve->definition().distance == .25);
     CHECK_FALSE(first->isDeleted());
@@ -422,7 +532,7 @@ TEST_CASE("Native undefined rows are disabled but valid peers and attributes rem
         CHECK(result.engineRuns == 0);
         CHECK_FALSE(result.engineStatus);
         CHECK_FALSE(result.checkReason);
-        waitForCommit();
+        waitForCommit(f.queue());
         REQUIRE(live(f.graphic).size() == 1);
         CHECK_FALSE(live(f.graphic).front()->isDefined());
         CHECK(live(f.graphic).front()->getPen(false).getWidth() == RS2::Width07);
@@ -435,7 +545,7 @@ TEST_CASE("Native undefined rows are disabled but valid peers and attributes rem
         REQUIRE(f.queue()->lastAttempts().size() == 2);
         CHECK(f.queue()->lastAttempts()[0].result.refusal == LC_OffsetCurveRefusal::Undefined);
         ranOnce(f.queue()->lastAttempts()[1].result);
-        waitForCommit();
+        waitForCommit(f.queue());
         before.check(*invalid);
         CHECK_FALSE(invalid->isDeleted());
     }
@@ -457,7 +567,7 @@ TEST_CASE("Rapid native geometry side and attributes compose without erasing an 
     CHECK(f.queue()->lastAttempts().front().result.refusal == LC_OffsetCurveRefusal::InvalidInput);
     CHECK(f.queue()->pendingCount() == 1);
     CHECK(source->definition().distance == .25);
-    waitForCommit();
+    waitForCommit(f.queue());
     REQUIRE(live(f.graphic).size() == 1);
     auto* replacement = live(f.graphic).front();
     CHECK(replacement->definition().distance == .5);
@@ -495,7 +605,7 @@ TEST_CASE("Native sheet preserves raw parameters and each peer's other coordinat
         CHECK(candidate->definition().cacheReversed == source->definition().cacheReversed);
         CHECK(candidate->definition().relTolerance == source->definition().relTolerance);
     }
-    waitForCommit();
+    waitForCommit(f.queue());
     CHECK(f.graphic.countUndoCycles() == 1);
 }
 
@@ -532,7 +642,7 @@ TEST_CASE("Native sheet radius and rotation edits each return one checked native
         CHECK(std::abs(curve->definition().basis.majorP.angle() - expected) < 1e-12);
         CHECK(curve->definition().basis.angle2 == source->definition().basis.angle2);
     }
-    waitForCommit();
+    waitForCommit(f.queue());
     CHECK(f.graphic.countUndoCycles() == 1);
 }
 
@@ -566,7 +676,7 @@ TEST_CASE("Native sheet reports actual producer and checker exhaustion without r
             CHECK(f.context.messages.back().contains("bounded producer limit"));
         }
         CHECK(f.queue()->pendingCount() == 0);
-        waitForCommit();
+        waitForCommit(f.queue());
         CHECK(f.graphic.countUndoCycles() == 0);
         before.check(*source);
     }
@@ -597,6 +707,7 @@ TEST_CASE("Native center picker buttons issue and complete their own scalar tags
     // Complete the actual request without supplying or repairing its tag.
     input->wcsPoint = {4, 9};
     input->requestor->onLateRequestCompleted(false);
+    waitForPreparation(f.queue());
     REQUIRE(f.queue()->lastAttempts().size() == 1);
     const auto& result = f.queue()->lastAttempts().front().result;
     REQUIRE(result);
@@ -606,7 +717,7 @@ TEST_CASE("Native center picker buttons issue and complete their own scalar tags
     REQUIRE(candidate);
     CHECK(candidate->definition().basis.center.x == (x ? 4 : 0));
     CHECK(candidate->definition().basis.center.y == (x ? 0 : 9));
-    waitForCommit();
+    waitForCommit(f.queue());
     CHECK(f.graphic.countUndoCycles() == 1);
     REQUIRE(f.graphic.undo());
     CHECK_FALSE(source->isDeleted());
@@ -625,7 +736,7 @@ TEST_CASE("Native pending candidates and stale getters cannot cross detach or sh
         CHECK(f.queue()->pendingCount() == 0);
         CHECK(getter() == 0);
         f.sheet->setGraphicView(&f.view);
-        waitForCommit();
+        waitForCommit(f.queue());
         CHECK(f.graphic.countUndoCycles() == 0);
         CHECK(live(f.graphic).front() == source);
     }
@@ -639,7 +750,10 @@ TEST_CASE("Native pending candidates and stale getters cannot cross detach or sh
 }
 
 TEST_CASE("Native pending candidates are dropped when view or document dies", "[gui][properties][offsetcurve]") {
-    (void)lc::test::application();
+    auto* app = lc::test::application();
+    REQUIRE(app);
+    app->setQuitOnLastWindowClosed(false);
+    requireOffsetWorker();
     Context context;
     LC_ActionGroupManager actions(nullptr);
     LC_PropertySheetWidget sheet(nullptr, &context, &actions);
@@ -661,19 +775,28 @@ TEST_CASE("Native pending candidates are dropped when view or document dies", "[
     auto* property = static_cast<LC_PropertyDouble*>(rows.front());
     auto getter = property->getAsDelegateValue()->getFunValueGet();
     REQUIRE(property->setValue(.5, PropertyChangeReasonEdit));
-    REQUIRE(sheet.offsetPropertyQueue()->pendingCount() == 1);
+    const bool preparing = GENERATE(false, true);
+    if (preparing) {
+        waitForWorker(sheet.offsetPropertyQueue());
+        REQUIRE(sheet.offsetPropertyQueue()->pendingCount() == 0);
+    } else {
+        waitForPreparation(sheet.offsetPropertyQueue());
+        REQUIRE(sheet.offsetPropertyQueue()->pendingCount() == 1);
+    }
     SECTION("view destroyed") {
         view.reset();
+        CHECK_FALSE(sheet.offsetPropertyQueue()->isPreparing());
         CHECK(sheet.offsetPropertyQueue()->pendingCount() == 0);
         CHECK(getter() == 0);
-        waitForCommit();
+        waitForCommit(sheet.offsetPropertyQueue());
         CHECK(graphic->countUndoCycles() == 0);
     }
     SECTION("document destroyed while view remains") {
         graphic.reset();
+        CHECK_FALSE(sheet.offsetPropertyQueue()->isPreparing());
         CHECK(sheet.offsetPropertyQueue()->pendingCount() == 0);
         CHECK(getter() == 0);
-        waitForCommit();
+        waitForCommit(sheet.offsetPropertyQueue());
     }
     context.setDocumentAndView(nullptr, nullptr);
     sheet.setGraphicView(nullptr);
@@ -712,7 +835,7 @@ TEST_CASE("Native accepted edits survive same document refill selection and type
     const auto* pending = f.queue()->value(f.queue()->epoch(), source);
     REQUIRE(pending);
     CHECK(pending->definition().distance == .5);
-    waitForCommit();
+    waitForCommit(f.queue());
     REQUIRE(live(f.graphic).size() == 1);
     auto* made = live(f.graphic).front();
     CHECK(made->definition().distance == .5);
@@ -781,7 +904,7 @@ TEST_CASE("Native staged replacement never overwrites subsequent in place source
     const auto childFlags = child->getFlags();
     const auto childPen = child->getPen(false);
     CHECK(f.queue()->value(f.queue()->epoch(), source) == nullptr);
-    waitForCommit();
+    waitForCommit(f.queue());
     REQUIRE(f.queue()->pendingCount() == 0);
     CHECK_FALSE(source->isDeleted());
     CHECK(source->getId() == id);
@@ -845,7 +968,7 @@ TEST_CASE("Native partial conflict cancels only that source and commits the rest
     REQUIRE(f.queue()->pendingCount() == 2);
     const RS_Pen pen(RS_Color(37, 73, 109), RS2::Width07, RS2::DashLine);
     conflicted->setPen(pen);
-    waitForCommit();
+    waitForCommit(f.queue());
     CHECK_FALSE(conflicted->isDeleted());
     CHECK(conflicted->isSelected());
     CHECK(conflicted->getPen(false) == pen);
@@ -897,7 +1020,7 @@ TEST_CASE("Native radius aggregate leaves an already matching oblique peer compl
     CHECK(ran == 1);
     CHECK(noops == 1);
     CHECK(f.queue()->pendingCount() == 1);
-    waitForCommit();
+    waitForCommit(f.queue());
     before.check(*unchanged);
     CHECK_FALSE(unchanged->isDeleted());
     CHECK(std::memcmp(&unchanged->definition().basis.majorP.x, &axis.x, sizeof(double)) == 0);
@@ -947,7 +1070,7 @@ TEST_CASE("Native mixed center and rotation edits preserve an already matching p
         } else CHECK(attempt.result.changed);
     }
     before.check(*first);
-    waitForCommit();
+    waitForCommit(f.queue());
     before.check(*first);
     CHECK(first->unknownOwnedFlags() == 0x20);
     CHECK(first->unknownOwnedTail().size() == 1);
@@ -1075,7 +1198,7 @@ TEST_CASE("Native pending source owner removal locking and context changes refus
     if (change == 1) REQUIRE(f.graphic.removeEntity(source));
     if (change == 2) source->getLayer(true)->lock(true);
     if (change == 3) f.context.setDocumentAndView(nullptr, nullptr); // no sheet notification
-    waitForCommit();
+    waitForCommit(f.queue());
     CHECK(f.queue()->pendingCount() == 0);
     CHECK(f.graphic.countUndoCycles() == 0);
     if (change != 1) {
@@ -1158,10 +1281,11 @@ TEST_CASE("Native refill finishes an active editor before retiring its getters",
     const bool typeRow = GENERATE(false, true);
     if (typeRow) combo->setCurrentIndex(combo->findData(RS2::EntityContainer));
     else f.sheet->refill();
+    waitForPreparation(f.queue());
     REQUIRE(f.queue()->pendingCount() == 1);
     REQUIRE(f.queue()->lastAttempts().size() == 1);
     ranOnce(f.queue()->lastAttempts().front().result);
-    waitForCommit();
+    waitForCommit(f.queue());
     REQUIRE(live(f.graphic).size() == 1);
     CHECK(live(f.graphic).front()->definition().distance == .5);
     CHECK(f.graphic.countUndoCycles() == 1);
@@ -1326,11 +1450,12 @@ TEST_CASE("Suppressed native sheet refills retain live rows and actual picker co
         request->wcsPoint = {4, 9};
         request->requestor->onLateRequestCompleted(false);
     } else f.editNumber("distance", "0.5");
+    waitForPreparation(f.queue());
     REQUIRE(f.queue()->lastAttempts().size() == 1);
     REQUIRE(f.queue()->lastAttempts().front().result);
     CHECK(f.queue()->lastAttempts().front().result.changed);
     REQUIRE(f.queue()->pendingCount() == 1);
-    waitForCommit();
+    waitForCommit(f.queue());
     REQUIRE(live(f.graphic).size() == 1);
     auto* replacement = live(f.graphic).front();
     if (picker) CHECK(replacement->definition().basis.center == RS_Vector(4, 0));
@@ -1487,4 +1612,722 @@ TEST_CASE("R03 queue cancel inside successful source getters retains executing s
         CHECK_FALSE(f.graphic.undo());
         REQUIRE(f.graphic.redo()); CHECK(source->isDeleted());
     }
+}
+
+TEST_CASE("Native asynchronous property preparation keeps the Qt heartbeat live before one atomic commit",
+          "[gui][properties][offsetcurve][async-properties][heartbeat]") {
+    Fixture f;
+    auto* first = addArc(f.graphic);
+    auto* second = addArc(f.graphic, {4, 0});
+    const Snapshot beforeFirst(*first), beforeSecond(*second);
+    f.show({first, second});
+    auto* queue = f.queue();
+    QTimer heartbeat;
+    std::vector<bool> transitions;
+    unsigned beats = 0, workerBeats = 0;
+    bool mutatedWhileBusy = false;
+    QObject::connect(queue, &LC_OffsetCurvePropertyQueue::preparationChanged, &heartbeat,
+        [&](bool busy) { transitions.push_back(busy); });
+    QObject::connect(&heartbeat, &QTimer::timeout, &heartbeat, [&] {
+        if (!queue->isPreparing()) return;
+        ++beats;
+        for (const auto& attempt : queue->lastAttempts())
+            if (attempt.workerReservation) { ++workerBeats; break; }
+        mutatedWhileBusy |= first->isDeleted() || second->isDeleted() ||
+            first->definition().distance != .25 || second->definition().distance != .25 ||
+            queue->pendingCount() != 0 || f.graphic.countUndoCycles() != 0;
+    });
+    heartbeat.start(1);
+    auto* distance = static_cast<LC_PropertyDouble*>(f.property("distance"));
+    REQUIRE(distance->setValue(.5, PropertyChangeReasonEdit));
+    REQUIRE(queue->isPreparing());
+    CHECK_FALSE(distance->isEditableByUser());
+    CHECK_FALSE(f.property("linewidth")->isEditableByUser());
+    CHECK(queue->pendingCount() == 0);
+    waitForPreparation(queue);
+    heartbeat.stop();
+    CHECK(beats > 0);
+    CHECK(workerBeats > 0);
+    CHECK_FALSE(mutatedWhileBusy);
+    REQUIRE(transitions.size() == 2);
+    CHECK(transitions.front());
+    CHECK_FALSE(transitions.back());
+    REQUIRE(queue->lastAttempts().size() == 2);
+    for (const auto& attempt : queue->lastAttempts()) {
+        CHECK(attempt.editInvoked);
+        CHECK(attempt.contextRefusal.isEmpty());
+        REQUIRE(attempt.workerReservation);
+        CHECK(attempt.exactWorkerWorkKnown);
+        ranOnce(attempt.result);
+    }
+    REQUIRE(queue->pendingCount() == 2);
+    CHECK(f.graphic.countUndoCycles() == 0);
+    beforeFirst.check(*first); beforeSecond.check(*second);
+    CHECK(f.property("distance")->isEditableByUser());
+    CHECK(f.property("linewidth")->isEditableByUser());
+    waitForCommit(queue);
+    REQUIRE(live(f.graphic).size() == 2);
+    for (auto* curve : live(f.graphic)) CHECK(curve->definition().distance == .5);
+    CHECK(f.graphic.countUndoCycles() == 1);
+    REQUIRE(f.graphic.undo());
+    CHECK_FALSE(first->isDeleted()); CHECK_FALSE(second->isDeleted());
+    CHECK_FALSE(f.graphic.undo());
+    REQUIRE(f.graphic.redo());
+    for (auto* curve : live(f.graphic)) CHECK(curve->definition().distance == .5);
+}
+
+TEST_CASE("Native busy preparation refuses further geometry and attribute admission without mutation",
+          "[gui][properties][offsetcurve][async-properties]") {
+    Fixture f;
+    auto* source = addArc(f.graphic);
+    const Snapshot before(*source);
+    f.show({source});
+    auto* queue = f.queue();
+    auto* distance = static_cast<LC_PropertyDouble*>(f.property("distance"));
+    auto* side = static_cast<LC_PropertyBool*>(f.property("towardCentre"));
+    auto* width = static_cast<LC_PropertyLineWidth*>(f.property("linewidth"));
+    REQUIRE(distance->setValue(.5, PropertyChangeReasonEdit));
+    waitForWorker(queue);
+    const auto epoch = queue->epoch();
+    unsigned geometryEdits = 0, attributeEdits = 0;
+    queue->applyDefinition(epoch, {source}, [&](const LC_OffsetCurve& curve)
+        -> std::optional<LC_EllipseOffsetDefinition> {
+        ++geometryEdits;
+        return curve.definition();
+    });
+    queue->apply(epoch, {source}, [&](LC_OffsetCurve&, const LC_OffsetRunLimits&) {
+        ++attributeEdits;
+        return LC_OffsetCurveEditResult{};
+    });
+    CHECK_FALSE(distance->setValue(.75, PropertyChangeReasonEdit));
+    CHECK_FALSE(side->setValue(true, PropertyChangeReasonEdit));
+    CHECK_FALSE(width->setValue(RS2::Width07, PropertyChangeReasonEdit));
+    CHECK_FALSE(distance->isEditableByUser());
+    CHECK_FALSE(side->isEditableByUser());
+    CHECK_FALSE(width->isEditableByUser());
+    CHECK(geometryEdits == 0);
+    CHECK(attributeEdits == 0);
+    CHECK(queue->epoch() == epoch);
+    REQUIRE(queue->lastAttempts().size() == 1);
+    CHECK(queue->pendingCount() == 0);
+    CHECK(f.graphic.countUndoCycles() == 0);
+    before.check(*source);
+    waitForPreparation(queue);
+    ranOnce(queue->lastAttempts().front().result);
+    const auto* candidate = queue->value(queue->epoch(), source);
+    REQUIRE(candidate);
+    CHECK(candidate->definition().distance == .5);
+    CHECK_FALSE(candidate->definition().towardCentre);
+    CHECK(candidate->getPen(false) == before.pen);
+    REQUIRE(width->setValue(RS2::Width07, PropertyChangeReasonEdit));
+    REQUIRE(queue->lastAttempts().size() == 1);
+    CHECK(queue->lastAttempts().front().result.engineRuns == 0);
+    CHECK_FALSE(queue->lastAttempts().front().workerReservation);
+    waitForCommit(queue);
+    REQUIRE(live(f.graphic).size() == 1);
+    CHECK(live(f.graphic).front()->definition().distance == .5);
+    CHECK_FALSE(live(f.graphic).front()->definition().towardCentre);
+    CHECK(live(f.graphic).front()->getPen(false).getWidth() == RS2::Width07);
+    CHECK(f.graphic.countUndoCycles() == 1);
+}
+
+TEST_CASE("Native asynchronous peer refusal preserves each earlier accepted candidate in one undo batch",
+          "[gui][properties][offsetcurve][async-properties]") {
+    Fixture f;
+    auto* changed = addArc(f.graphic);
+    auto* refused = addArc(f.graphic, {4, 0});
+    const Snapshot beforeChanged(*changed), beforeRefused(*refused);
+    const bool refusedFirst = GENERATE(false, true);
+    f.show(refusedFirst ? QList<RS_Entity*>{refused, changed} : QList<RS_Entity*>{changed, refused});
+    f.editNumber("distance", "0.5");
+    REQUIRE(f.queue()->pendingCount() == 2);
+    auto* width = static_cast<LC_PropertyLineWidth*>(f.property("linewidth"));
+    REQUIRE(width->setValue(RS2::Width07, PropertyChangeReasonEdit));
+    auto* queue = f.queue();
+    queue->applyDefinition(queue->epoch(), refusedFirst ? QList<RS_Entity*>{refused, changed} :
+        QList<RS_Entity*>{changed, refused}, [](const LC_OffsetCurve& curve)
+        -> std::optional<LC_EllipseOffsetDefinition> {
+        auto definition = curve.definition();
+        definition.distance = definition.basis.center.x == 0 ? .75 : -1;
+        return definition;
+    });
+    REQUIRE(queue->isPreparing());
+    CHECK(queue->pendingCount() == 2);
+    CHECK(f.graphic.countUndoCycles() == 0);
+    waitForPreparation(queue);
+    REQUIRE(queue->lastAttempts().size() == 2);
+    for (const auto& attempt : queue->lastAttempts()) {
+        CHECK(attempt.editInvoked);
+        if (attempt.original == refused) {
+            CHECK(attempt.result.refusal == LC_OffsetCurveRefusal::InvalidInput);
+            CHECK(attempt.result.engineRuns == 0);
+            CHECK_FALSE(attempt.result.engineStatus);
+            CHECK_FALSE(attempt.result.checkReason);
+            CHECK_FALSE(attempt.workerReservation);
+            CHECK_FALSE(attempt.exactWorkerWorkKnown);
+        } else {
+            ranOnce(attempt.result);
+            REQUIRE(attempt.workerReservation);
+            CHECK(attempt.exactWorkerWorkKnown);
+        }
+    }
+    REQUIRE(queue->pendingCount() == 2);
+    const auto* changedCandidate = queue->value(queue->epoch(), changed);
+    const auto* refusedCandidate = queue->value(queue->epoch(), refused);
+    REQUIRE(changedCandidate);
+    REQUIRE(refusedCandidate);
+    CHECK(changedCandidate->definition().distance == .75);
+    CHECK(refusedCandidate->definition().distance == .5);
+    beforeChanged.check(*changed); beforeRefused.check(*refused);
+    CHECK(f.graphic.countUndoCycles() == 0);
+    waitForCommit(queue);
+    REQUIRE(live(f.graphic).size() == 2);
+    for (auto* curve : live(f.graphic)) {
+        CHECK(curve->definition().distance == (curve->definition().basis.center.x == 0 ? .75 : .5));
+        CHECK(curve->getPen(false).getWidth() == RS2::Width07);
+    }
+    CHECK(f.graphic.countUndoCycles() == 1);
+    REQUIRE(f.graphic.undo());
+    CHECK_FALSE(changed->isDeleted()); CHECK_FALSE(refused->isDeleted());
+    CHECK_FALSE(f.graphic.undo());
+}
+
+TEST_CASE("Native async cancellation retains real receipts and recovers after selection view document or undo changes",
+          "[gui][properties][offsetcurve][async-properties][lifetime]") {
+    const unsigned change = GENERATE(0u, 1u, 2u, 3u, 4u, 5u, 6u);
+    CAPTURE(change);
+    Fixture f;
+    if (change == 6) f.graphic.setAnglesBase(M_PI);
+    auto* first = addArc(f.graphic);
+    auto* second = addArc(f.graphic, {4, 0});
+    f.show({first, second});
+    f.editNumber("distance", "0.4");
+    waitForCommit(f.queue());
+    REQUIRE(live(f.graphic).size() == 2);
+    first = live(f.graphic)[0]; second = live(f.graphic)[1];
+    const Snapshot beforeFirst(*first), beforeSecond(*second);
+    Graphic otherDocument;
+    otherDocument.initForNewDocument();
+    lc::test::TestGraphicView otherView;
+    otherView.setDocument(change == 3 ? &otherDocument : &f.graphic);
+    const bool oldCounterClockwise = f.view.getViewPort()->areAnglesCounterClockwise();
+    auto* queue = f.queue();
+    queue->applyDefinition(queue->epoch(), {first, second}, distanceDefinition(.5));
+    waitForWorker(queue, 1);
+    REQUIRE(queue->lastAttempts().size() == 2);
+    ranOnce(queue->lastAttempts()[0].result);
+    REQUIRE(queue->lastAttempts()[0].exactWorkerWorkKnown);
+    CHECK(queue->pendingCount() == 0);
+    const auto firstResult = queue->lastAttempts()[0].result;
+    const auto undoEpoch = f.graphic.undoStateEpoch();
+    if (change == 0) { f.graphic.unselect(second); f.sheet->refill(); }
+    if (change == 1) f.view.getViewPort()->createUCS({2, 3}, .4);
+    if (change == 2 || change == 3) {
+        f.context.setDocumentAndView(change == 3 ? &otherDocument : &f.graphic, &otherView);
+        f.sheet->setGraphicView(&otherView);
+    }
+    if (change == 4) REQUIRE(f.graphic.undo());
+    if (change == 5) f.sheet->setGraphicView(nullptr);
+    if (change == 6) {
+        auto* viewport = f.view.getViewPort();
+        const double zeroAngle = viewport->toWorldAngle(viewport->toAbsUCSAngle(0));
+        const double nonzeroAngle = viewport->toWorldAngle(viewport->toAbsUCSAngle(.25));
+        CHECK(viewport->getAnglesBaseAngle() == M_PI);
+        f.graphic.setAnglesCounterClockwise(!oldCounterClockwise);
+        CHECK(viewport->areAnglesCounterClockwise() != oldCounterClockwise);
+        CHECK(viewport->toWorldAngle(viewport->toAbsUCSAngle(0)) == zeroAngle);
+        CHECK(viewport->toWorldAngle(viewport->toAbsUCSAngle(.25)) != nonzeroAngle);
+    }
+    waitForPreparation(queue);
+    REQUIRE(queue->lastAttempts().size() == 2);
+    const auto completed = queue->lastAttempts()[0];
+    CHECK_FALSE(completed.contextRefusal.isEmpty());
+    ranOnce(completed.result);
+    CHECK(completed.result.engineRuns == firstResult.engineRuns);
+    CHECK(completed.result.checkWork.cacheSpans == firstResult.checkWork.cacheSpans);
+    CHECK(completed.exactWorkerWorkKnown);
+    REQUIRE(completed.workerReservation);
+    const auto interrupted = queue->lastAttempts()[1];
+    CHECK_FALSE(interrupted.contextRefusal.isEmpty());
+    REQUIRE(interrupted.workerReservation);
+    if (!interrupted.exactWorkerWorkKnown) {
+        CHECK_FALSE(interrupted.result);
+        CHECK_FALSE(interrupted.result.changed);
+        CHECK(interrupted.result.engineRuns == 0);
+        CHECK_FALSE(interrupted.result.engineStatus);
+        CHECK_FALSE(interrupted.result.checkReason);
+    }
+    CHECK(queue->pendingCount() == 0);
+    beforeFirst.check(*first, change != 4); beforeSecond.check(*second, change != 4);
+    if (change == 4) {
+        CHECK(f.graphic.undoStateEpoch() != undoEpoch);
+        CHECK(f.graphic.countUndoCycles() == 0);
+    } else {
+        CHECK_FALSE(first->isDeleted()); CHECK_FALSE(second->isDeleted());
+        CHECK(f.graphic.countUndoCycles() == 1);
+    }
+    waitForCommit(queue);
+    for (auto* curve : live(f.graphic)) CHECK(curve->definition().distance == (change == 4 ? .25 : .4));
+    if (change == 4) REQUIRE(f.graphic.redo());
+    if (change == 6) f.graphic.setAnglesCounterClockwise(oldCounterClockwise);
+    f.context.setDocumentAndView(&f.graphic, &f.view);
+    f.show({first, second});
+    f.editNumber("distance", "0.75");
+    waitForCommit(queue);
+    REQUIRE(live(f.graphic).size() == 2);
+    for (auto* curve : live(f.graphic)) CHECK(curve->definition().distance == .75);
+    CHECK(f.graphic.countUndoCycles() == 2);
+    REQUIRE(f.graphic.undo());
+    for (auto* curve : live(f.graphic)) CHECK(curve->definition().distance == .4);
+}
+
+TEST_CASE("Native Escape shortcut and rejection API discard active and prior pending edits then recover",
+          "[gui][properties][offsetcurve][async-properties][escape]") {
+    const bool shortcutRoute = GENERATE(false, true);
+    Fixture f;
+    auto* first = addArc(f.graphic);
+    auto* second = addArc(f.graphic, {4, 0});
+    const Snapshot beforeFirst(*first), beforeSecond(*second);
+    f.show({first, second});
+    auto* queue = f.queue();
+    QShortcut* escape = nullptr;
+    for (auto* shortcut : f.sheet->findChildren<QShortcut*>())
+        if (shortcut->key() == QKeySequence(Qt::Key_Escape)) {
+            REQUIRE(escape == nullptr);
+            escape = shortcut;
+        }
+    REQUIRE(escape);
+    CHECK(escape->context() == Qt::WidgetWithChildrenShortcut);
+    CHECK_FALSE(escape->isEnabled());
+    f.editNumber("distance", "0.5");
+    REQUIRE(queue->pendingCount() == 2);
+    CHECK_FALSE(escape->isEnabled());
+    queue->applyDefinition(queue->epoch(), {first, second}, distanceDefinition(.75));
+    waitForWorker(queue, 1);
+    REQUIRE(queue->lastAttempts()[0].exactWorkerWorkKnown);
+    const auto receipt = queue->lastAttempts()[0].result;
+    const auto reservation = queue->lastAttempts()[1].workerReservation;
+    REQUIRE(reservation);
+    REQUIRE(escape->isEnabled());
+    CHECK(queue->pendingCount() == 2);
+    CHECK(f.graphic.countUndoCycles() == 0);
+    unsigned cancelled = 0, idle = 0;
+    QObject receiver;
+    QObject::connect(queue, &LC_OffsetCurvePropertyQueue::pendingCancelled, &receiver,
+        [&] { ++cancelled; }, Qt::DirectConnection);
+    QObject::connect(queue, &LC_OffsetCurvePropertyQueue::preparationChanged, &receiver,
+        [&](bool busy) { if (!busy) ++idle; }, Qt::DirectConnection);
+    if (shortcutRoute) {
+        // Deliver Qt's registered Escape shortcut event through the real widget wiring.
+        QShortcutEvent event(escape->key(), escape->id());
+        QApplication::sendEvent(escape, &event);
+    } else queue->rejectPreparation();
+    REQUIRE_FALSE(queue->isPreparing());
+    CHECK_FALSE(escape->isEnabled());
+    CHECK(cancelled == 1);
+    CHECK(idle == 1);
+    CHECK(queue->pendingCount() == 0);
+    REQUIRE(queue->lastAttempts().size() == 2);
+    ranOnce(queue->lastAttempts()[0].result);
+    CHECK(queue->lastAttempts()[0].result.checkWork.cacheSpans == receipt.checkWork.cacheSpans);
+    CHECK(queue->lastAttempts()[0].exactWorkerWorkKnown);
+    CHECK_FALSE(queue->lastAttempts()[0].contextRefusal.isEmpty());
+    const auto interrupted = queue->lastAttempts()[1];
+    REQUIRE(interrupted.workerReservation);
+    CHECK(interrupted.workerReservation->maxSamples == reservation->maxSamples);
+    CHECK_FALSE(interrupted.exactWorkerWorkKnown);
+    CHECK_FALSE(interrupted.result);
+    CHECK_FALSE(interrupted.result.changed);
+    CHECK(interrupted.result.engineRuns == 0);
+    CHECK_FALSE(interrupted.result.engineStatus);
+    CHECK_FALSE(interrupted.result.checkReason);
+    CHECK_FALSE(interrupted.contextRefusal.isEmpty());
+    waitForCommit(queue); // Includes the existing queued cancellation refill.
+    CHECK(queue->pendingCount() == 0);
+    CHECK(f.graphic.countUndoCycles() == 0);
+    beforeFirst.check(*first); beforeSecond.check(*second);
+    CHECK_FALSE(first->isDeleted()); CHECK_FALSE(second->isDeleted());
+    f.editNumber("distance", "0.6");
+    REQUIRE(queue->lastAttempts().size() == 2);
+    for (const auto& attempt : queue->lastAttempts()) ranOnce(attempt.result);
+    waitForCommit(queue);
+    CHECK(f.graphic.countUndoCycles() == 1);
+    for (auto* curve : live(f.graphic)) CHECK(curve->definition().distance == .6);
+    REQUIRE(f.graphic.undo());
+    CHECK_FALSE(first->isDeleted()); CHECK_FALSE(second->isDeleted());
+    CHECK_FALSE(f.graphic.undo());
+}
+
+TEST_CASE("Native worker candidates reject undo changes after preparation before delayed publication",
+          "[gui][properties][offsetcurve][async-properties][undo-seal]") {
+    const unsigned change = GENERATE(0u, 1u, 2u);
+    CAPTURE(change);
+    Fixture f;
+    auto* history = addArc(f.graphic, {4, 0});
+    f.show({history});
+    f.editNumber("distance", "0.4");
+    waitForCommit(f.queue());
+    if (change == 2) REQUIRE(f.graphic.undo());
+    auto* source = addArc(f.graphic);
+    const Snapshot before(*source);
+    for (auto* previous : live(f.graphic))
+        if (previous != source) f.graphic.unselect(previous);
+    f.show({source});
+    f.editNumber("distance", "0.5");
+    REQUIRE_FALSE(f.queue()->isPreparing());
+    REQUIRE(f.queue()->pendingCount() == 1);
+    REQUIRE(f.queue()->lastAttempts().size() == 1);
+    ranOnce(f.queue()->lastAttempts().front().result);
+    const auto epoch = f.graphic.undoStateEpoch();
+    if (change == 0) { f.graphic.startUndoCycle(); f.graphic.endUndoCycle(); }
+    if (change == 1) REQUIRE(f.graphic.undo());
+    if (change == 2) REQUIRE(f.graphic.redo());
+    REQUIRE(f.graphic.undoStateEpoch() != epoch);
+    const auto undoCycles = f.graphic.countUndoCycles();
+    before.check(*source);
+    CHECK_FALSE(source->isDeleted());
+    waitForCommit(f.queue());
+    CHECK(f.queue()->pendingCount() == 0);
+    CHECK(f.graphic.countUndoCycles() == undoCycles);
+    CHECK_FALSE(source->isDeleted());
+    before.check(*source);
+    for (auto* previous : live(f.graphic))
+        if (previous != source) f.graphic.unselect(previous);
+    f.show({source});
+    f.editNumber("distance", "0.75");
+    waitForCommit(f.queue());
+    CHECK(f.graphic.countUndoCycles() == undoCycles + 1);
+    CHECK(source->isDeleted());
+    REQUIRE(f.graphic.undo());
+    CHECK_FALSE(source->isDeleted());
+    // Undo rebuilds the display tessellation, not the native spline or definition.
+    CHECK(RS_Spline::geometryFingerprint(source->getData()) == before.fingerprint);
+    CHECK(source->getId() == before.id);
+    CHECK(source->getLayer() == before.layer);
+    CHECK(source->getPen(false) == before.pen);
+    CHECK(source->isDefined() == before.defined);
+    CHECK(source->isConsistent() == before.consistent);
+    const auto restored = source->definition();
+    CHECK(restored.distance == before.definition.distance);
+    CHECK(restored.towardCentre == before.definition.towardCentre);
+    CHECK(restored.cacheReversed == before.definition.cacheReversed);
+    CHECK(restored.relTolerance == before.definition.relTolerance);
+    CHECK(restored.basis.center == before.definition.basis.center);
+    CHECK(restored.basis.majorP == before.definition.basis.majorP);
+    CHECK(restored.basis.ratio == before.definition.basis.ratio);
+    CHECK(restored.basis.angle1 == before.definition.basis.angle1);
+    CHECK(restored.basis.angle2 == before.definition.basis.angle2);
+    CHECK(restored.basis.reversed == before.definition.basis.reversed);
+}
+
+TEST_CASE("Native worker completion endpoint getters can reject or destroy the sheet without losing actual receipts",
+          "[gui][properties][offsetcurve][async-properties][completion-reentry][lifetime]") {
+    class CompletionReadLine final : public RS_Line {
+    public:
+        explicit CompletionReadLine(LC_OffsetCurve& root)
+            : RS_Line(&root, root.getStartpoint(), root.getEndpoint()) {}
+        RS_Vector getEndpoint() const override {
+            const auto point = RS_Line::getEndpoint();
+            if (onRead) {
+                auto callback = std::move(onRead);
+                callback();
+                ++returned;
+            }
+            return point;
+        }
+        mutable std::function<void()> onRead;
+        mutable unsigned returned = 0;
+    };
+    const bool destroySheet = GENERATE(false, true);
+    const bool priorAttribute = GENERATE(false, true);
+    CAPTURE(destroySheet, priorAttribute);
+    Fixture f;
+    auto* source = addArc(f.graphic);
+    auto* line = new CompletionReadLine(*source);
+    source->clear(); source->addEntity(line);
+    REQUIRE(source->hasEditableDefinition());
+    const Snapshot before(*source);
+    const auto raw = line->getData();
+    f.show({source});
+    // Keep painted getters from consuming the hook before completion's currentRow seal.
+    f.sheet->setUpdatesEnabled(false);
+    const QPointer<LC_PropertySheetWidget> sheet(f.sheet.get());
+    const QPointer<LC_OffsetCurvePropertyQueue> queue(f.queue());
+    if (priorAttribute) {
+        auto* width = static_cast<LC_PropertyLineWidth*>(f.property("linewidth"));
+        REQUIRE(width->setValue(RS2::Width07, PropertyChangeReasonEdit));
+        REQUIRE(queue->pendingCount() == 1);
+        const auto* candidate = queue->value(queue->epoch(), source);
+        REQUIRE(candidate);
+        CHECK(candidate->getPen(false).getWidth() == RS2::Width07);
+        CHECK_FALSE(source->getPen(false).getWidth() == RS2::Width07);
+        CHECK(queue->lastAttempts().front().result.engineRuns == 0);
+    }
+    const auto flags = source->getFlags();
+    const auto undoEpoch = f.graphic.undoStateEpoch();
+    f.graphic.setModified(false);
+    queue->applyDefinition(queue->epoch(), {source}, distanceDefinition(.5));
+    waitForWorker(queue.data());
+    REQUIRE(queue->lastAttempts().size() == 1);
+    CHECK_FALSE(queue->lastAttempts().front().exactWorkerWorkKnown);
+    CHECK(queue->lastAttempts().front().result.engineRuns == 0);
+    unsigned fired = 0;
+    bool busyAtRead = false, queueAliveAtRead = false, detachedReceipts = false;
+    std::size_t pendingAtRead = 0;
+    std::vector<LC_OffsetCurvePropertyQueue::Attempt> captured, cancelled;
+    // RS_Line::clone() produces a base line, so only this original child is armed.
+    line->onRead = [&] {
+        ++fired;
+        queueAliveAtRead = !queue.isNull();
+        if (!queue) return;
+        captured = queue->lastAttempts();
+        const auto* executingReceipts = &queue->lastAttempts();
+        busyAtRead = queue->isPreparing();
+        pendingAtRead = queue->pendingCount();
+        if (destroySheet) f.sheet.reset();
+        else queue->rejectPreparation();
+        if (queue) {
+            detachedReceipts = &queue->lastAttempts() != executingReceipts;
+            cancelled = queue->lastAttempts();
+        }
+    };
+    waitUntil([&] { return fired != 0; });
+    REQUIRE(fired == 1);
+    REQUIRE(line->returned == 1);
+    CHECK(queueAliveAtRead);
+    CHECK(busyAtRead);
+    CHECK(pendingAtRead == (priorAttribute ? 1 : 0));
+    REQUIRE(captured.size() == 1);
+    const auto receipt = captured.front();
+    CHECK(receipt.original == source);
+    CHECK(receipt.editInvoked);
+    CHECK(receipt.contextRefusal.isEmpty());
+    REQUIRE(receipt.workerReservation);
+    CHECK(receipt.exactWorkerWorkKnown);
+    ranOnce(receipt.result);
+    if (destroySheet) {
+        CHECK(sheet.isNull());
+        CHECK(queue.isNull());
+        CHECK(cancelled.empty());
+    } else {
+        REQUIRE(sheet);
+        REQUIRE(queue);
+        CHECK(detachedReceipts);
+        CHECK_FALSE(queue->isPreparing());
+        CHECK(queue->pendingCount() == 0);
+        REQUIRE(cancelled.size() == 1);
+        const auto after = cancelled.front();
+        CHECK_FALSE(after.contextRefusal.isEmpty());
+        CHECK(after.editInvoked == receipt.editInvoked);
+        CHECK(after.exactWorkerWorkKnown == receipt.exactWorkerWorkKnown);
+        REQUIRE(after.workerReservation);
+        CHECK(after.workerReservation->maxSamples == receipt.workerReservation->maxSamples);
+        CHECK(after.result.engineRuns == receipt.result.engineRuns);
+        CHECK(after.result.engineStatus == receipt.result.engineStatus);
+        CHECK(after.result.checkReason == receipt.result.checkReason);
+        CHECK(after.result.checkWork.cacheSpans == receipt.result.checkWork.cacheSpans);
+        CHECK(after.result.checkWork.vertices == receipt.result.checkWork.vertices);
+        CHECK(after.result.checkWork.distancePairs == receipt.result.checkWork.distancePairs);
+        CHECK(after.result.checkWork.deepest == receipt.result.checkWork.deepest);
+        CHECK(after.result.checkWork.orderingComparisons == receipt.result.checkWork.orderingComparisons);
+        ranOnce(after.result);
+    }
+    const auto unchanged = [&] {
+        before.check(*source);
+        CHECK(line->getData().startpoint == raw.startpoint);
+        CHECK(line->getData().endpoint == raw.endpoint);
+        CHECK(source->getFlags() == flags);
+        CHECK_FALSE(source->isDeleted());
+        CHECK_FALSE(f.graphic.isModified());
+        CHECK(f.graphic.undoStateEpoch() == undoEpoch);
+        CHECK(f.graphic.countUndoCycles() == 0);
+        bool undo = true, redo = true;
+        f.graphic.collectUndoState(undo, redo);
+        CHECK_FALSE(undo); CHECK_FALSE(redo);
+    };
+    unchanged();
+    waitForCommit(queue.data()); // Bounded late window, including any queued cancellation refill.
+    CHECK(fired == 1);
+    CHECK(line->returned == 1);
+    unchanged();
+    if (destroySheet) {
+        CHECK(sheet.isNull());
+        CHECK(queue.isNull());
+    } else {
+        REQUIRE(queue);
+        CHECK_FALSE(queue->isPreparing());
+        CHECK(queue->pendingCount() == 0);
+        REQUIRE(queue->lastAttempts().size() == 1);
+        ranOnce(queue->lastAttempts().front().result);
+        CHECK(queue->lastAttempts().front().exactWorkerWorkKnown);
+        f.sheet->setUpdatesEnabled(true);
+        f.show({source});
+        f.editNumber("distance", "0.75");
+        REQUIRE(queue->pendingCount() == 1);
+        ranOnce(queue->lastAttempts().front().result);
+        waitForCommit(queue.data());
+        REQUIRE(live(f.graphic).size() == 1);
+        CHECK(live(f.graphic).front()->definition().distance == .75);
+        CHECK(live(f.graphic).front()->getPen(false) == before.pen);
+        CHECK(f.graphic.countUndoCycles() == 1);
+        REQUIRE(f.graphic.undo());
+        CHECK_FALSE(source->isDeleted());
+        // The regenerated display need not retain the original single hooked child.
+        CHECK(RS_Spline::geometryFingerprint(source->getData()) == before.fingerprint);
+        CHECK(source->getId() == before.id);
+        CHECK(source->getLayer() == before.layer);
+        CHECK(source->getPen(false) == before.pen);
+        CHECK(source->isDefined() == before.defined);
+        CHECK(source->isConsistent() == before.consistent);
+        const auto restored = source->definition();
+        CHECK(restored.distance == before.definition.distance);
+        CHECK(restored.towardCentre == before.definition.towardCentre);
+        CHECK(restored.cacheReversed == before.definition.cacheReversed);
+        CHECK(restored.relTolerance == before.definition.relTolerance);
+        CHECK(restored.basis.center == before.definition.basis.center);
+        CHECK(restored.basis.majorP == before.definition.basis.majorP);
+        CHECK(restored.basis.ratio == before.definition.basis.ratio);
+        CHECK(restored.basis.angle1 == before.definition.basis.angle1);
+        CHECK(restored.basis.angle2 == before.definition.basis.angle2);
+        CHECK(restored.basis.reversed == before.definition.basis.reversed);
+        CHECK_FALSE(f.graphic.undo());
+    }
+}
+
+TEST_CASE("Native batch quotas charge the received display expansion at the exact four-source limit",
+          "[gui][properties][offsetcurve][async-properties][output-accounting]") {
+    Fixture f;
+    QList<RS_Entity*> targets;
+    for (unsigned i = 0; i < 5; ++i) targets.append(addArc(f.graphic, {double(i) * 4, 0}));
+    f.show(targets);
+    auto limits = LC_OffsetCurveUI::sheetLimits();
+    limits.outputBudget.maxDeepEntities = 32;
+    f.queue()->setRunLimits(limits);
+    f.queue()->applyDefinition(f.queue()->epoch(), targets, distanceDefinition(.5));
+    waitForPreparation(f.queue());
+    const auto& attempts = f.queue()->lastAttempts();
+    REQUIRE(attempts.size() == 5);
+    std::size_t actualDeep = 0;
+    for (std::size_t i = 0; i < 4; ++i) {
+        CAPTURE(i);
+        ranOnce(attempts[i].result);
+        REQUIRE(attempts[i].workerReservation);
+        CHECK(attempts[i].exactWorkerWorkKnown);
+        CHECK(attempts[i].contextRefusal.isEmpty());
+        const auto* candidate = f.queue()->value(f.queue()->epoch(), targets[qsizetype(i)]);
+        REQUIRE(candidate);
+        const auto cost = measureOffsetOutput({candidate}, 32);
+        REQUIRE(cost.status == LC_OffsetTreeStatus::Ok);
+        CHECK(cost.deepEntities == 32);
+        actualDeep += cost.deepEntities;
+    }
+    CHECK(actualDeep == 4 * limits.outputBudget.maxDeepEntities);
+    CHECK_FALSE(attempts[4].workerReservation);
+    CHECK_FALSE(attempts[4].contextRefusal.isEmpty());
+    CHECK(attempts[4].result.engineRuns == 0);
+    CHECK_FALSE(attempts[4].result.engineStatus); CHECK_FALSE(attempts[4].result.checkReason);
+    CHECK(f.queue()->pendingCount() == 4); CHECK(f.graphic.countUndoCycles() == 0);
+    waitForCommit(f.queue());
+    CHECK(f.graphic.countUndoCycles() == 1);
+    for (qsizetype i = 0; i < targets.size(); ++i) CHECK(targets[i]->isDeleted() == (i < 4));
+    REQUIRE(f.graphic.undo());
+    for (auto* target : targets) CHECK_FALSE(target->isDeleted());
+}
+
+TEST_CASE("Native async candidates refuse a target layer deleted while their worker prepares",
+          "[gui][properties][offsetcurve][async-properties][removed-target-layer][lifetime]") {
+    Fixture f;
+    auto* source = addArc(f.graphic);
+    auto* originalLayer = f.graphic.findLayer("0");
+    REQUIRE(originalLayer);
+    REQUIRE(source->getLayer(false) == originalLayer);
+    const Snapshot before(*source);
+    const QString targetName = QStringLiteral("ASYNC_REMOVED_TARGET_LAYER");
+    auto* targetLayer = new RS_Layer(targetName);
+    f.graphic.addLayer(targetLayer);
+    REQUIRE(f.graphic.findLayer(targetName) == targetLayer);
+    f.show({source});
+    const auto flags = source->getFlags();
+    const auto undoEpoch = f.graphic.undoStateEpoch();
+    const QPointer<LC_OffsetCurvePropertyQueue> queue(f.queue());
+    auto* layer = dynamic_cast<LC_PropertyLayer*>(f.property("layer"));
+    REQUIRE(layer);
+    REQUIRE(layer->setValue(targetLayer, PropertyChangeReasonEdit));
+    REQUIRE(queue->pendingCount() == 1);
+    REQUIRE(queue->lastAttempts().size() == 1);
+    REQUIRE(queue->lastAttempts().front().result);
+    CHECK(queue->lastAttempts().front().result.changed);
+    CHECK(queue->lastAttempts().front().result.engineRuns == 0);
+    CHECK_FALSE(queue->lastAttempts().front().workerReservation);
+    {
+        const auto* candidate = queue->value(queue->epoch(), source);
+        REQUIRE(candidate);
+        CHECK(candidate->getLayer(false) == targetLayer);
+        CHECK(candidate->definition().distance == .25);
+    }
+    CHECK(source->getLayer(false) == originalLayer);
+    auto* distance = static_cast<LC_PropertyDouble*>(f.property("distance"));
+    REQUIRE(distance->setValue(.5, PropertyChangeReasonEdit));
+    REQUIRE(queue->isPreparing());
+    waitForWorker(queue.data());
+    before.check(*source);
+    CHECK(f.graphic.countUndoCycles() == 0);
+    f.context.messages.clear();
+    f.graphic.removeLayer(targetLayer); // Public API removes and deletes the real target.
+    targetLayer = nullptr;
+    CHECK(f.graphic.findLayer(targetName) == nullptr);
+    CHECK(source->getLayer(false) == originalLayer);
+    CHECK(source->getFlags() == flags);
+    REQUIRE(queue->isPreparing());
+    CHECK(queue->value(queue->epoch(), source) == nullptr);
+    f.sheet->refill();
+    REQUIRE(queue->isPreparing());
+    {
+        auto* props = f.properties();
+        auto* root = props->getPropertyContainer();
+        REQUIRE(root);
+        for (auto* child : root->childProperties()) child->expand();
+        auto* refilledLayer = dynamic_cast<LC_PropertyLayer*>(f.property("layer"));
+        REQUIRE(refilledLayer);
+        CHECK(refilledLayer->value() == nullptr);
+        CHECK_FALSE(refilledLayer->isEditableByUser());
+        props->viewport()->repaint();
+    }
+    REQUIRE(queue->isPreparing());
+    CHECK(queue->pendingCount() == 1);
+    CHECK(queue->value(queue->epoch(), source) == nullptr);
+    CHECK(f.graphic.undoStateEpoch() == undoEpoch);
+    before.check(*source);
+    waitForPreparation(queue.data());
+    REQUIRE(queue);
+    REQUIRE(queue->lastAttempts().size() == 1);
+    const auto receipt = queue->lastAttempts().front();
+    CHECK(receipt.original == source);
+    REQUIRE(receipt.workerReservation);
+    CHECK(receipt.exactWorkerWorkKnown);
+    CHECK_FALSE(receipt.contextRefusal.isEmpty());
+    ranOnce(receipt.result);
+    REQUIRE(queue->pendingCount() == 1);
+    CHECK(f.graphic.countUndoCycles() == 0);
+    before.check(*source);
+    waitForCommit(queue.data());
+    CHECK(queue->pendingCount() == 0);
+    CHECK(f.context.messages.join(" ").contains("target layer was removed", Qt::CaseInsensitive));
+    REQUIRE(live(f.graphic).size() == 1);
+    CHECK(live(f.graphic).front() == source);
+    CHECK_FALSE(source->isDeleted());
+    CHECK(source->getLayer(false) == originalLayer);
+    CHECK(source->getFlags() == flags);
+    {
+        auto* restoredLayer = dynamic_cast<LC_PropertyLayer*>(f.property("layer"));
+        REQUIRE(restoredLayer);
+        CHECK(restoredLayer->value() == originalLayer);
+        f.properties()->viewport()->repaint();
+    }
+    before.check(*source);
+    CHECK(f.graphic.undoStateEpoch() == undoEpoch);
+    CHECK(f.graphic.countUndoCycles() == 0);
+    bool undo = true, redo = true;
+    f.graphic.collectUndoState(undo, redo);
+    CHECK_FALSE(undo); CHECK_FALSE(redo);
 }

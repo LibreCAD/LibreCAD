@@ -12,6 +12,7 @@
 #include <cmath>
 #include <functional>
 #include <optional>
+#include <type_traits>
 #include <utility>
 #include <vector>
 #include "lc_offsetcurvepropertyqueue.h"
@@ -175,7 +176,11 @@ struct LC_OffsetCurvePropertySession {
         for (const auto& update : refreshers) update();
     }
     void apply(const LC_OffsetCurvePropertyQueue::Edit& edit) const {
-        if (queue != nullptr) queue->apply(epoch, targets, edit);
+        if (queue != nullptr && !queue->isPreparing()) queue->apply(epoch, targets, edit);
+        refresh();
+    }
+    void applyDefinition(const LC_OffsetCurvePropertyQueue::DefinitionEdit& edit) const {
+        if (queue != nullptr && !queue->isPreparing()) queue->applyDefinition(epoch, targets, edit);
         refresh();
     }
 };
@@ -197,9 +202,17 @@ void bind(Property* property, const std::shared_ptr<LC_OffsetCurvePropertySessio
     property->useOwnedDelegatedValue()->setupFull(getter,
         [session, set](Value value, LC_PropertyChangeReason) {
             // The requested payload is value-owned and identical for every target, even if the first refuses.
-            session->apply([set, value](LC_OffsetCurve& curve, const LC_OffsetRunLimits& limits) {
-                return set(curve, value, limits);
-            });
+            if constexpr (std::is_invocable_r_v<std::optional<LC_EllipseOffsetDefinition>,
+                                               Set, const LC_OffsetCurve&, Value>) {
+                session->applyDefinition([set, value](const LC_OffsetCurve& curve) {
+                    return set(curve, value);
+                });
+            }
+            else {
+                session->apply([set, value](LC_OffsetCurve& curve, const LC_OffsetRunLimits& limits) {
+                    return set(curve, value, limits);
+                });
+            }
         }, [session, geometry, get](Value value) {
             bool any = false;
             for (auto* target : session->targets) {
@@ -218,6 +231,7 @@ void bind(Property* property, const std::shared_ptr<LC_OffsetCurvePropertySessio
         Value first{};
         for (auto* target : session->targets) {
             const auto* curve = session->value(target);
+            if (!guarded) return;
             if (curve == nullptr || (geometry && !curve->hasEditableDefinition())) continue;
             const auto value = get(*curve);
             if (!available) first = value;
@@ -228,7 +242,8 @@ void bind(Property* property, const std::shared_ptr<LC_OffsetCurvePropertySessio
         }
         guarded->setProperty(unavailableProperty, geometry && !available);
         guarded->switchState(PropertyStateValueMulti, mixed);
-        guarded->setReadOnly(readOnly || !editable);
+        guarded->setReadOnly(readOnly || !editable ||
+            (session->queue != nullptr && session->queue->isPreparing()));
         guarded->postUpdateEvent(PropertyChangeReasonValueLoaded);
     });
 }
@@ -261,6 +276,11 @@ void LC_PropertiesProviderOffsetCurve::fillGenericAttributes(
     if (m_session->targets.isEmpty()) return;
     const auto section = createSection(container, {SECTION_GENERAL, tr("General"), tr("General properties")});
     const auto session = m_session;
+    const std::weak_ptr<LC_OffsetCurvePropertySession> weak = session;
+    // Refresh pending values and busy state without retaining a retired session or refilling the sheet.
+    connect(session->queue, &LC_OffsetCurvePropertyQueue::preparationChanged, container, [weak](bool) {
+        if (const auto session = weak.lock()) session->refresh();
+    });
     auto* document = getDocument();
 
     auto* layer = new LC_PropertyLayer(section, false);
@@ -338,13 +358,19 @@ void LC_PropertiesProviderOffsetCurve::doCreateEntitySpecificProperties(
     };
     number({"distance", tr("Distance"), tr("Positive offset distance")}, Input::DISTANCE, false,
         [](const LC_OffsetCurve& curve) { return curve.definition().distance; },
-        [](LC_OffsetCurve& curve, double value, const LC_OffsetRunLimits& limits) {
-            return curve.setDistance(value, limits);
+        [](const LC_OffsetCurve& curve, double value) -> std::optional<LC_EllipseOffsetDefinition> {
+            auto definition = curve.definition();
+            definition.distance = value;
+            return definition;
         });
 
     auto* side = createBoolProperty({"towardCentre", tr("Toward Centre"), tr("Physical inward side of the source ellipse")}, section);
     bind(side, session, true, [](const LC_OffsetCurve& curve) { return curve.definition().towardCentre; },
-        [](LC_OffsetCurve& curve, bool value, const LC_OffsetRunLimits& limits) { return curve.setTowardCentre(value, limits); });
+        [](const LC_OffsetCurve& curve, bool value) -> std::optional<LC_EllipseOffsetDefinition> {
+            auto definition = curve.definition();
+            definition.towardCentre = value;
+            return definition;
+        });
     section->addChildProperty(side);
 
     // Separate components preserve each peer's other UCS coordinate, not the first peer's.
@@ -355,51 +381,59 @@ void LC_PropertiesProviderOffsetCurve::doCreateEntitySpecificProperties(
             [view = session->view, x](const LC_OffsetCurve& curve) {
                 const auto center = view->getViewPort()->toUCS(curve.definition().basis.center);
                 return x ? center.x : center.y;
-            }, [view = session->view, x](LC_OffsetCurve& curve, double value, const LC_OffsetRunLimits& limits) {
-                auto basis = curve.definition().basis;
+            }, [view = session->view, x](const LC_OffsetCurve& curve, double value)
+                -> std::optional<LC_EllipseOffsetDefinition> {
+                if (view == nullptr) return std::nullopt;
+                auto definition = curve.definition();
+                auto& basis = definition.basis;
                 auto* viewport = view->getViewPort();
                 auto center = viewport->toUCS(basis.center);
-                if ((x ? center.x : center.y) == value) return curve.setBasis(basis, limits);
+                if ((x ? center.x : center.y) == value) return definition;
                 if (x) center.x = value; else center.y = value;
                 basis.center = viewport->toWorld(center);
-                return curve.setBasis(basis, limits);
+                return definition;
             });
     }
     number({"radiusMajor", tr("Radius Major"), tr("Major radius of the source ellipse")}, Input::DISTANCE, false,
         [](const LC_OffsetCurve& curve) { return curve.definition().basis.majorP.magnitude(); },
-        [](LC_OffsetCurve& curve, double value, const LC_OffsetRunLimits& limits) {
-            auto basis = curve.definition().basis;
+        [](const LC_OffsetCurve& curve, double value) -> std::optional<LC_EllipseOffsetDefinition> {
+            auto definition = curve.definition();
+            auto& basis = definition.basis;
             const double major = basis.majorP.magnitude();
             const double minor = major * basis.ratio;
             // Reject rather than flip an axis or silently exchange physical radii.
-            if (!(value > 0) || value < minor || !std::isfinite(value)) return LC_OffsetCurveEditResult{};
-            if (value == major) return curve.setBasis(basis, limits);
+            if (!(value > 0) || value < minor || !std::isfinite(value)) return std::nullopt;
+            if (value == major) return definition;
             basis.majorP = RS_Vector::polar(value, basis.majorP.angle());
             basis.ratio = minor / value;
-            return curve.setBasis(basis, limits);
+            return definition;
         });
     number({"radiusMinor", tr("Radius Minor"), tr("Minor radius of the source ellipse")}, Input::DISTANCE, false,
         [](const LC_OffsetCurve& curve) { return curve.definition().basis.majorP.magnitude() * curve.definition().basis.ratio; },
-        [](LC_OffsetCurve& curve, double value, const LC_OffsetRunLimits& limits) {
-            auto basis = curve.definition().basis;
+        [](const LC_OffsetCurve& curve, double value) -> std::optional<LC_EllipseOffsetDefinition> {
+            auto definition = curve.definition();
+            auto& basis = definition.basis;
             const double major = basis.majorP.magnitude();
-            if (!(value > 0) || value > major || !std::isfinite(value)) return LC_OffsetCurveEditResult{};
-            if (value == major * basis.ratio) return curve.setBasis(basis, limits);
+            if (!(value > 0) || value > major || !std::isfinite(value)) return std::nullopt;
+            if (value == major * basis.ratio) return definition;
             basis.ratio = value / major;
-            return curve.setBasis(basis, limits);
+            return definition;
         });
     number({"angle", tr("Rotation"), tr("Source major-axis rotation in UCS")}, Input::ANGLE, true,
         [view = session->view](const LC_OffsetCurve& curve) {
             auto* viewport = view->getViewPort();
             return viewport->toBasisUCSAngle(viewport->toUCSAngle(curve.definition().basis.majorP.angle()));
-        }, [view = session->view](LC_OffsetCurve& curve, double value, const LC_OffsetRunLimits& limits) {
-            auto basis = curve.definition().basis;
+        }, [view = session->view](const LC_OffsetCurve& curve, double value)
+            -> std::optional<LC_EllipseOffsetDefinition> {
+            if (view == nullptr) return std::nullopt;
+            auto definition = curve.definition();
+            auto& basis = definition.basis;
             auto* viewport = view->getViewPort();
             const auto current = viewport->toBasisUCSAngle(viewport->toUCSAngle(basis.majorP.angle()));
-            if (current == value) return curve.setBasis(basis, limits);
+            if (current == value) return definition;
             const auto world = viewport->toWorldAngle(viewport->toAbsUCSAngle(value));
             basis.majorP = RS_Vector::polar(basis.majorP.magnitude(), world);
-            return curve.setBasis(basis, limits);
+            return definition;
         });
     // Raw ellipse parameters are not WCS bearings; no angle-pick button here.
     for (const bool start : {true, false}) {
@@ -408,10 +442,11 @@ void LC_PropertiesProviderOffsetCurve::doCreateEntitySpecificProperties(
             Input::NOTNEEDED, true,
             [start](const LC_OffsetCurve& curve) {
                 return start ? curve.definition().basis.angle1 : curve.definition().basis.angle2;
-            }, [start](LC_OffsetCurve& curve, double value, const LC_OffsetRunLimits& limits) {
-                auto basis = curve.definition().basis;
+            }, [start](const LC_OffsetCurve& curve, double value) -> std::optional<LC_EllipseOffsetDefinition> {
+                auto definition = curve.definition();
+                auto& basis = definition.basis;
                 if (start) basis.angle1 = value; else basis.angle2 = value;
-                return curve.setBasis(basis, limits);
+                return definition;
             });
     }
 
@@ -419,6 +454,7 @@ void LC_PropertiesProviderOffsetCurve::doCreateEntitySpecificProperties(
     state->setNames({"definitionState", tr("Definition"), tr("Native definition availability")});
     state->setProperty(nativeProperty, true);
     state->useOwnedDelegatedValue()->setupFull([session] {
+        if (session->queue && session->queue->isPreparing()) return nativeTr("Preparing offset curves...");
         int defined = 0, undefined = 0, inconsistent = 0;
         for (auto* target : session->targets) {
             const auto* curve = session->value(target);
@@ -471,6 +507,7 @@ void LC_PropertiesProviderOffsetCurve::fillComputedProperites(
     session->refreshers.emplace_back([guarded, read] {
         if (!guarded) return;
         const auto value = read();
+        if (!guarded) return;
         guarded->setProperty(unavailableProperty, !value.first.has_value());
         guarded->switchState(PropertyStateValueMulti, value.second);
         guarded->postUpdateEvent(PropertyChangeReasonValueLoaded);

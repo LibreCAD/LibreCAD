@@ -31,12 +31,14 @@ struct OffsetDialogContext {
     RS_Document* document = nullptr; // Identity only; never dereferenced after an event turn.
     std::array<RS_Vector, 3> world;
     double angle = 0;
+    bool counterClockwise = true;
     static OffsetDialogContext capture(LC_GraphicViewport* viewport) {
         OffsetDialogContext context; context.viewport = viewport;
         if (viewport) {
             context.document = viewport->getDocument();
             context.world = {viewport->toWorld({0, 0}), viewport->toWorld({1, 0}), viewport->toWorld({0, 1})};
             context.angle = viewport->toWorldAngle(viewport->toAbsUCSAngle(0));
+            context.counterClockwise = viewport->areAnglesCounterClockwise();
         }
         return context;
     }
@@ -48,7 +50,7 @@ struct OffsetDialogContext {
         for (std::size_t i = 0; i < world.size(); ++i)
             if (world[i].x != other.world[i].x || world[i].y != other.world[i].y ||
                 world[i].z != other.world[i].z || world[i].valid != other.world[i].valid) return false;
-        return angle == other.angle;
+        return angle == other.angle && counterClockwise == other.counterClockwise;
     }
 };
 }

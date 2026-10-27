@@ -3517,6 +3517,15 @@ if (BUILD_TESTS)
     set_target_properties(librecad_offset_properties_dialog_tests PROPERTIES AUTORCC ON)
     add_dependencies(librecad_offset_properties_dialog_tests librecad_offset_test_helper)
     add_librecad_filter_micro_test(
+        librecad_offset_properties_sheet_tests
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_offsetcurve_properties_tests.cpp)
+    target_include_directories(librecad_offset_properties_sheet_tests PRIVATE
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include"
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include_$<CONFIG>")
+    target_sources(librecad_offset_properties_sheet_tests PRIVATE ${LIBRECAD_RES})
+    set_target_properties(librecad_offset_properties_sheet_tests PROPERTIES AUTORCC ON)
+    add_dependencies(librecad_offset_properties_sheet_tests librecad_offset_test_helper)
+    add_librecad_filter_micro_test(
         librecad_offset_worker_edit_tests
         librecad/src/lib/offset_worker/tests/lc_offsetworkeredit_tests.cpp)
     add_librecad_filter_micro_test(

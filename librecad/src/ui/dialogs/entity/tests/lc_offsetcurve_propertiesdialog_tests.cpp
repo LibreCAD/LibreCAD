@@ -1043,6 +1043,30 @@ TEST_CASE("Native widget viewport or document context swaps invalidate pending h
     }
 }
 
+TEST_CASE("Native dialog angle direction changes revoke pending helper adoption",
+          "[gui][dialog][offsetcurve][async][context][angle-direction]") {
+    Fixture f; requireNativeHelper();
+    f.graphic.setAnglesBase(M_PI);
+    f.show(); auto& widget = native(*f.dialog);
+    const Snapshot before(*f.curve);
+    auto* viewport = f.view.getViewPort();
+    const auto zero = viewport->toWorldAngle(viewport->toAbsUCSAngle(0));
+    const auto nonzero = viewport->toWorldAngle(viewport->toAbsUCSAngle(.25));
+    const bool direction = f.graphic.areAnglesCounterClockWise();
+    submitInput(widget, "leDistance", ".3"); REQUIRE(widget.isPreparing());
+    f.graphic.setAnglesCounterClockwise(!direction);
+    CHECK(viewport->toWorldAngle(viewport->toAbsUCSAngle(0)) == zero);
+    CHECK(viewport->toWorldAngle(viewport->toAbsUCSAngle(.25)) != nonzero);
+    awaitPreparation(widget);
+    before.exact(*f.curve); CHECK_FALSE(widget.lastEditResult());
+    checkGeneratedWorkerStages(widget);
+    CHECK(f.graphic.countUndoCycles() == 0);
+    f.graphic.setAnglesCounterClockwise(direction);
+    enter(widget, "leDistance", ".4");
+    REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+    CHECK(f.curve->definition().distance == .4);
+}
+
 TEST_CASE("Actual native Edit Properties commits once and undo redo preserve native state",
           "[gui][dialog][offsetcurve][action][undo]") {
     ActionFixture f; const Snapshot before(*f.original);
