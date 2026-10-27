@@ -28,6 +28,7 @@
 
 #include<memory>
 #include <QGraphicsScene>
+#include "rs.h"
 #include "ui_qg_dlgoptionsdrawing.h"
 
 class QStringList;
@@ -78,6 +79,7 @@ private slots:
     void on_tabWidget_currentChanged(int index);
 
 	void on_rbRelSize_toggled(bool checked);
+    void updatePaperUnit();
 
 private:
     void updateCBLengthPrecision(QComboBox* u, QComboBox* l);
@@ -91,6 +93,8 @@ protected:
 private:
     std::unique_ptr<QStringList> listPrec1;
     RS_Graphic* graphic;
+    // the unit of the paper size and margins on the Paper tab
+    RS2::Unit paperUnit = RS2::None;
     QGraphicsScene* paperScene;
 	std::unique_ptr<RS_Vector> spacing;
     void init();
