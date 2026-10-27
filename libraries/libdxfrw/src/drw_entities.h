@@ -2556,6 +2556,10 @@ class DRW_MPolygon : public DRW_Hatch {
 public:
     DRW_MPolygon() {
         eType = DRW::MPOLYGON;
+        // DRW_Hatch() defaults solid = 1, but DXF code 70 on MPOLYGON is the
+        // version, not the solid flag. An MPOLYGON that omits 71 must read as
+        // a pattern-filled hatch, so start from 0.
+        solid = 0;
     }
 
     static constexpr std::uint16_t kDwgClassNum = 518; /*!< AcDbMPolygon DWG custom class id */
@@ -2565,15 +2569,29 @@ public:
     int fillColorAci {0};      /*!< fill color ACI index, code 63 */
     int fillColorRgb {-1};     /*!< fill color 24-bit RGB, code 421 (-1 = unset) */
     UTF8STRING fillColorName;  /*!< fill color book/name, code 430 */
-    double xDirX {0.0};        /*!< boundary x-direction vector x, code 11 */
-    double xDirY {0.0};        /*!< boundary x-direction vector y, code 21 */
+    double xDirX {0.0};        /*!< boundary x-direction offset vector x, code 11 */
+    double xDirY {0.0};        /*!< boundary x-direction offset vector y, code 21 */
     int degenerateLoops {0};   /*!< count of degenerate boundary paths, code 99 */
+    int mpVersion {1};         /*!< MPOLYGON version, DXF code 70, DWG leading BS */
+    int annotatedBoundary {0}; /*!< after-loop code 73 — read-only, writer rejects
+                                    nondefault to keep lossless semantics */
+
+    /**
+     * Flatten a boundary loop into a bulge polyline suitable for an MPOLYGON
+     * polyline-loop record (DXF path type bit 2). LINE and ARC edges are
+     * converted; ELLIPSE / SPLINE / unknown edges cause polylineLoop to
+     * return false. The output polyline sets its closed flag.
+     */
+    static bool polylineLoop(const DRW_HatchLoop& loop, DRW_LWPolyline& out);
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
                            dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+
+private:
+    bool m_loopsDone {false};  /*!< code 76 or last 91 count flips this */
 };
 
 //! Class to handle image entity

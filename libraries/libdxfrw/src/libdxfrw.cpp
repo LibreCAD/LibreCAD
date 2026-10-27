@@ -1862,8 +1862,21 @@ bool dxfRW::validateHatchPayload(const DRW_Hatch *ent) const {
             || polygon->fillColorRgb < -1
             || polygon->fillColorRgb > 0xFFFFFF
             || polygon->degenerateLoops < 0
+            || polygon->mpVersion < 0
+            || polygon->mpVersion > 32767
+            || polygon->annotatedBoundary != 0
             || !isSafeDxfRecordText(polygon->fillColorName))
             return false;
+        // ODA emits each MPOLYGON loop as a bulge polyline (DXF path bit 2);
+        // reject the record if any loop cannot be flattened. Round-tripping a
+        // record whose loops the writer would drop would not be lossless.
+        for (const auto& loop : polygon->looplist) {
+            if (!loop)
+                return false;
+            DRW_LWPolyline tmp;
+            if (!DRW_MPolygon::polylineLoop(*loop, tmp))
+                return false;
+        }
     }
     return true;
 }
@@ -4082,7 +4095,9 @@ bool dxfRW::writeMPolygon(DRW_MPolygon *ent){
         if (!writeEntity(ent))
             return false;
         writer->writeString(100, "AcDbMPolygon");
-        writer->writeInt16(70, ent->solid);
+        // ODA layout for an MPOLYGON record (DXF): 70 version, 10/20/30 elevation,
+        // 210/220/230 extrusion, 2 pattern name, 71 solid flag, 91 loop count.
+        writer->writeInt16(70, ent->mpVersion);
         writer->writeDouble(10, 0.0);
         writer->writeDouble(20, 0.0);
         writer->writeDouble(30, ent->basePoint.z);
@@ -4090,134 +4105,54 @@ bool dxfRW::writeMPolygon(DRW_MPolygon *ent){
         writer->writeDouble(220, ent->extPoint.y);
         writer->writeDouble(230, ent->extPoint.z);
         writer->writeString(2, ent->name);
-        writer->writeInt16(71, ent->associative);
+        writer->writeInt16(71, ent->solid ? 1 : 0);
         const int loopCount = static_cast<int>(ent->looplist.size());
         writer->writeInt32(91, loopCount);
+        // ODA writes each loop as a bulge polyline (path bit 2). polylineLoop
+        // flattens LINE/ARC edges into vertices with bulges; validateHatchPayload
+        // has already refused the record if any loop was unflattenable, so this
+        // never fails here. 73 comes BEFORE 72 by position.
         for (int i = 0; i < loopCount; ++i) {
             DRW_HatchLoop *loop = ent->looplist.at(i).get();
-            writer->writeInt32(92, loop->type);
-            if ((loop->type & 2) == 2) {
-                DRW_LWPolyline *pl = nullptr;
-                if (!loop->objlist.empty())
-                    pl = dynamic_cast<DRW_LWPolyline*>(loop->objlist.at(0).get());
-                const bool hasBulge = pl && std::any_of(
-                    pl->vertlist.begin(), pl->vertlist.end(),
-                    [](const std::shared_ptr<DRW_Vertex2D>& v){ return v && v->bulge != 0.0; });
-                writer->writeInt16(72, hasBulge ? 1 : 0);
-                writer->writeInt16(73, pl ? (pl->flags & 1) : 0);
-                const int nv = pl ? static_cast<int>(pl->vertlist.size()) : 0;
-                writer->writeInt32(93, nv);
-                for (int v = 0; v < nv; ++v) {
-                    const auto &vtx = pl->vertlist.at(v);
-                    writer->writeDouble(10, vtx->x);
-                    writer->writeDouble(20, vtx->y);
-                    if (hasBulge)
-                        writer->writeDouble(42, vtx->bulge);
-                }
-                writer->writeInt32(97, static_cast<int>(loop->m_boundaryHandles.size()));
-                for (std::uint32_t h : loop->m_boundaryHandles)
-                    writer->writeString(330, toHexStr(h));
-            } else {
-                const int edgeCount = static_cast<int>(loop->objlist.size());
-                writer->writeInt32(93, edgeCount);
-                for (int j = 0; j < edgeCount; ++j) {
-                    switch ((loop->objlist.at(j))->eType) {
-                    case DRW::LINE: {
-                        writer->writeInt16(72, 1);
-                        DRW_Line* l = (DRW_Line*)loop->objlist.at(j).get();
-                        writer->writeDouble(10, l->basePoint.x);
-                        writer->writeDouble(20, l->basePoint.y);
-                        writer->writeDouble(11, l->secPoint.x);
-                        writer->writeDouble(21, l->secPoint.y);
-                        break; }
-                    case DRW::ARC: {
-                        writer->writeInt16(72, 2);
-                        DRW_Arc* a = (DRW_Arc*)loop->objlist.at(j).get();
-                        writer->writeDouble(10, a->basePoint.x);
-                        writer->writeDouble(20, a->basePoint.y);
-                        writer->writeDouble(40, a->radious);
-                        writer->writeDouble(50, a->staangle*ARAD);
-                        writer->writeDouble(51, a->endangle*ARAD);
-                        writer->writeInt16(73, a->isccw);
-                        break; }
-                    case DRW::ELLIPSE: {
-                        writer->writeInt16(72, 3);
-                        DRW_Ellipse* a = (DRW_Ellipse*)loop->objlist.at(j).get();
-                        DRW_Ellipse normalized = *a;
-                        normalized.correctAxis();
-                        writer->writeDouble(10, normalized.basePoint.x);
-                        writer->writeDouble(20, normalized.basePoint.y);
-                        writer->writeDouble(11, normalized.secPoint.x);
-                        writer->writeDouble(21, normalized.secPoint.y);
-                        writer->writeDouble(40, normalized.ratio);
-                        writer->writeDouble(50, normalized.staparam*ARAD);
-                        writer->writeDouble(51, normalized.endparam*ARAD);
-                        writer->writeInt16(73, normalized.isccw);
-                        break; }
-                    case DRW::SPLINE: {
-                        writer->writeInt16(72, 4);
-                        DRW_Spline* sp = (DRW_Spline*)loop->objlist.at(j).get();
-                        writer->writeInt32(94, sp->degree);
-                        const bool rational = (sp->flags & 0x4) != 0;
-                        const bool periodic = (sp->flags & 0x2) != 0;
-                        writer->writeInt16(73, rational ? 1 : 0);
-                        writer->writeInt16(74, periodic ? 1 : 0);
-                        writer->writeInt32(95, static_cast<int>(sp->knotslist.size()));
-                        writer->writeInt32(96, static_cast<int>(sp->controllist.size()));
-                        for (double k : sp->knotslist)
-                            writer->writeDouble(40, k);
-                        for (size_t k = 0; k < sp->controllist.size(); ++k) {
-                            const auto& cp = sp->controllist[k];
-                            if (!cp) continue;
-                            writer->writeDouble(10, cp->x);
-                            writer->writeDouble(20, cp->y);
-                            if (rational) {
-                                double w = (k < sp->weightlist.size()) ? sp->weightlist[k] : 1.0;
-                                writer->writeDouble(42, w);
-                            }
-                        }
-                        writer->writeInt32(97, static_cast<int>(sp->fitlist.size()));
-                        for (const auto& fp : sp->fitlist) {
-                            if (!fp) continue;
-                            writer->writeDouble(11, fp->x);
-                            writer->writeDouble(21, fp->y);
-                        }
-                        if (sp->tgStart.x != 0.0 || sp->tgStart.y != 0.0) {
-                            writer->writeDouble(12, sp->tgStart.x);
-                            writer->writeDouble(22, sp->tgStart.y);
-                        }
-                        if (sp->tgEnd.x != 0.0 || sp->tgEnd.y != 0.0) {
-                            writer->writeDouble(13, sp->tgEnd.x);
-                            writer->writeDouble(23, sp->tgEnd.y);
-                        }
-                        break; }
-                    default:
-                        break;
-                    }
-                }
-                writer->writeInt32(97, static_cast<int>(loop->m_boundaryHandles.size()));
-                for (std::uint32_t h : loop->m_boundaryHandles)
-                    writer->writeString(330, toHexStr(h));
+            DRW_LWPolyline pl;
+            if (!DRW_MPolygon::polylineLoop(*loop, pl)) {
+                m_writeError = true;
+                return false;
             }
+            const bool hasBulge = std::any_of(
+                pl.vertlist.begin(), pl.vertlist.end(),
+                [](const std::shared_ptr<DRW_Vertex2D>& v){ return v && v->bulge != 0.0; });
+            writer->writeInt32(92, loop->type | 2);
+            writer->writeInt16(73, pl.flags & 1);
+            writer->writeInt16(72, hasBulge ? 1 : 0);
+            const int nv = static_cast<int>(pl.vertlist.size());
+            writer->writeInt32(93, nv);
+            for (int v = 0; v < nv; ++v) {
+                const auto& vtx = pl.vertlist.at(v);
+                writer->writeDouble(10, vtx->x);
+                writer->writeDouble(20, vtx->y);
+                if (hasBulge)
+                    writer->writeDouble(42, vtx->bulge);
+            }
+            // ODA emits neither 97 nor 330 for an MPOLYGON loop.
         }
-        writer->writeInt16(75, ent->hstyle);
         writer->writeInt16(76, ent->hpattern);
         if (!ent->solid) {
             writer->writeDouble(52, ent->angle);
             writer->writeDouble(41, ent->scale);
             writer->writeInt16(77, ent->doubleflag);
-        }
-        const int nDefLines = static_cast<int>(ent->patternLines.size());
-        writer->writeInt16(78, nDefLines);
-        for (const DRW_Hatch::PatternLine &pl : ent->patternLines) {
-            writer->writeDouble(53, pl.angle);
-            writer->writeDouble(43, pl.baseX);
-            writer->writeDouble(44, pl.baseY);
-            writer->writeDouble(45, pl.offsetX);
-            writer->writeDouble(46, pl.offsetY);
-            writer->writeInt16(79, static_cast<int>(pl.dashList.size()));
-            for (double d : pl.dashList)
-                writer->writeDouble(49, d);
+            const int nDefLines = static_cast<int>(ent->patternLines.size());
+            writer->writeInt16(78, nDefLines);
+            for (const DRW_Hatch::PatternLine &pl : ent->patternLines) {
+                writer->writeDouble(53, pl.angle);
+                writer->writeDouble(43, pl.baseX);
+                writer->writeDouble(44, pl.baseY);
+                writer->writeDouble(45, pl.offsetX);
+                writer->writeDouble(46, pl.offsetY);
+                writer->writeInt16(79, static_cast<int>(pl.dashList.size()));
+                for (double d : pl.dashList)
+                    writer->writeDouble(49, d);
+            }
         }
         if (ent->fillColorAci != 0)
             writer->writeInt16(63, ent->fillColorAci);
