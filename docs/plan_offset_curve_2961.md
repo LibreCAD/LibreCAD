@@ -97,7 +97,7 @@ This inventory compares the older attached tree with the later candidate.
 | Type/UI/source actions | Entity enum/coverage, property queue/dialog, default drag, Update/Restore actions | Candidate present. Property queue defers publication with a timer, but prepares geometry synchronously in `apply`; a deferred commit is not background computation. |
 | Stored-cache Trim | `lc_offsetcachetrim`, contacts/matching helpers, Modify Trim action and file tests | Candidate present: pure preparation, exact fragments, two-operand publication and plain-fragment persistence. Recheck precision/ownership/undo guarantees. |
 | Validation workers | `scripts/offset-curve-validation/`, X-H1 through X-H7 | Candidate has Node developer/test workers and recorded timeout fixes. These tools are not a shipped isolated geometry worker. Do not confuse their deadlines with GUI computation limits. |
-| Native geometry-worker path | Real four-operation helper/client and single-entity properties dialog routing committed; other UI callers still run geometry in process | W0/W1 foundation and dialog qualification recorded. Genuine geometry-entry timeout, remaining callers and packaged-application acceptance remain mandatory W0-W2 work. |
+| Native geometry-worker path | Real five-operation helper/client plus dialog, sheet, grip and Update GUI routing committed/qualified | W0/W1 and these caller receipts are recorded. Separately qualified geometry-entry timeout awaits its checkpoint; creation/repeat, trim, import and packaged/final acceptance remain mandatory W0-W2 work. |
 | Tests/build targets | Main Catch target, filter micro targets and two standalone offset allocation-failure targets | Candidate present; source registration is not discovery/execution. Use the actual targets in section5.3, not just the old grouped fast lanes. |
 | Surviving test defect | `spline_offset_representation_tests.cpp` lines205 and668 in candidate still use DWG enum ranges | `FormatDWG2007` is outside the range; those ordinary representation loops also omit it. Fix classification and add an executed R2007 regression in S0. The separate candidate matrix already lists all six DWG versions. |
 
@@ -304,7 +304,7 @@ candidate except the explicitly proposed native-worker tags.
 | C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a` plus later search; audit/retest | `[lc-offsetcurve][cache-topology-chain]` |
 | W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and initial deadline/authority policy implemented; finish caller/fallback/import ownership freeze before routing | operation/cap/deadline/call-site table |
 | W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; full app/deployed-package gates remain | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
-| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | transport faults/stateful clock and bounded edit preparation qualified; genuine geometry-entry timeout and GUI routing open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[edit][preparation]`; remaining integration and runner regression |
+| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit and dialog/sheet/grip/Update receipts qualified; geometry-entry timeout checkpoint, creation/trim/import and final gates open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[edit][preparation]`; remaining integration and runner regression |
 | E1 | Guarded entity/factories, RTTI, stamp, clone, downgrade and transforms | C-check | candidate `92758859c` and later fixes; audit/retest | `[lc-offsetcurve][native]`, `[entity-coverage]` |
 | U1 | Type/INSERT/selection/SVG/menu/info dispatch and safe properties | E1 | candidate `49c9b328b`, `f0fb28fab`; audit/retest | native type/name/dispatch TUs, `[entity-coverage]` |
 | E2 | Cached grips/snaps, through proposal and transactional mutators | E1 | candidate `4300c1031`, `47e14c74b`; audit/retest | native edit/grip/transform TUs |
@@ -315,7 +315,7 @@ candidate except the explicitly proposed native-worker tags.
 | U2 | Single/multi properties, busy state, async preparation and stale-result protection | E2,U1,W2 | dialog `705a0135b` and sheet `ac7c7646f` isolated/qualified; final R requalification remains open | sheet/dialog/batch-failure TUs |
 | U3 | Grip drag, cancel, ownership, undo/redo and no late publication | E2,U2 | worker continuation `0e80b8540` qualified Release/ASan; final R remains | `[lc-offsetcurve][h-drag]` |
 | U4 | Ellipse-only persisted option, preview/commit parity and messages | G,F3,U2,U3 | candidate `3d7195631`; audit/retest | option-enable TU and visible workflows |
-| O1 | Transactional Update from legal live ellipse; no-op/refusal counts | U4 | candidate `379729bb3` and snapshot fixes; audit/retest | `lc_action_offsetcurve_source_tests.cpp` |
+| O1 | Transactional Update from legal live ellipse; no-op/refusal counts | U4 | worker batch `075038088` qualified Release/ASan; final R remains | `lc_action_offsetcurve_source_tests.cpp` |
 | O2 | Restore Original, same-container dedup, attributes and all entry points | O1 | candidate `0d3fed653`, `4a231d243` plus final fixes; audit/retest | Restore/source-UI TUs |
 | T1 | Pure bounded trim prep and exact stored-cache fragments | C-check,E1,F2 | candidate `04c712069`; audit/retest | `[lc-offsetcurve][trim-kernel]`, standalone trim fault target |
 | T2 | Trim/Trim Two, owner mapping, common prep and atomic undo | T1,U1,W2 | candidate `49bb7755f` plus final fixes; audit/integrate worker | `[lc-offsetcurve][trim-action]` |
@@ -522,7 +522,7 @@ failed operation, never invent zero consumption or retry it with fresh limits.
 Freeze/test no-op, exact-translation and cached clone paths separately so a new
 worker does not force generator runs for existing cheap proof-preserving edits.
 
-The implemented reply envelope is `[1,token,operation,failure,payload]`.
+The implemented reply envelope is `[2,token,operation,failure,payload]`.
 `lc_offsetworkerresult.h/.cpp` defines exact Native12/Curve6 and Trim8 records,
 including all trim sections, endpoint/root domains and work diagnostics. Fatal
 allocation/internal failures carry null payloads; their stderr prefix is only
@@ -1145,17 +1145,49 @@ leak-free claim. No current-protocol qmake/deployed or visible-GUI claim yet.
 | `W6-qualified-grip-release.xml` | `cec8a0db22377fcb9b3cc2e479b60a1c875c66a9cc8ebfc37a388283e1cbd935` |
 | `W6-qualified-grip-asan.xml` | `175183e17903026afdd881ede1617c55ca466cb9551736a7e3d75ceea35a2fe3` |
 
-Next bounded GUI slice: Update from Source. Snapshot the selected native inventory
-and picked ellipse values; prepare cheap no-op/translation locally and remaining
-peers sequentially through the existing worker. Retain actual per-peer stages and
-full lost-work reservations, shared output/work/deadline bounds and private owners.
-Cancel conflicting picks/context changes without pruning redo. Before a single
-undo handoff, recheck the picked source, all target values/membership, selection,
-undo/context and UCS; report individual refusals without silently rerunning math.
-Exercise real-helper heartbeat, cancellation/recovery, source removal/change,
-late peer invalidation, batch failures and action/view/document death. Continue
-creation and trim in4.2 order; file/import lifetime, typed ordinary fallback,
-genuine geometry-entry timeout and packaging/final R remain mandatory.
+`075038088ea1ef87e8b594ad58f3a75a707b5025` routes the Update from Source
+GUI entry through an owned sequential worker batch. It freezes the selected
+inventory and picked ellipse values, preserves cheap no-op/exact translation,
+retains actual child stages, and seals source/targets/selection/undo/view/UCS
+before one undo handoff. The existing protected synchronous non-GUI batch callback
+and its prefix/exception controls remain; GUI publication reuses its pure handoff
+without invoking another setter/generator. Prepared counts observed by late
+getters include genuinely received child candidates, then decrement on refusal;
+they are not claims that document publication already happened.
+
+The request retains a shared30s preparation deadline, four-source output and C
+work allowances (depth is a maximum, not a sum), and conservative logical input
+copy charges capped at4MiB per target/16MiB per request. These active-storage
+charges bound cloning/witness amplification, including child metadata; they are
+not exact allocator/RSS measurements. Full lost-work reservations stay charged.
+Exact child C work can settle C allowances; output settles only after actual
+parent display expansion fits. No automatic retry receives fresh allowances.
+Cancellation freezes receipts in separate preallocated storage. Conflicting
+picks do not replace the admitted source; reset, Escape, suspend, finish and
+action/view/document death revoke pending work. Initial source callbacks cannot
+revive a reset/deleted action admission. Private owners survive executing callbacks
+and are retained until the document accepts the presealed lists.
+
+Release passes34 cases/4438 assertions; ASan passes34/7102 with1ms heartbeat and
+the existing3500ms per-submitted-peer/shared30000ms test ceilings. All26 original
+case identities and protected handoff assertions survive, plus8 new real-helper,
+context/lifetime, initial-reentry and quota cases. Strict XML checks pass. Retain
+the earlier red ordering receipt: a successful child candidate was not counted
+before late observed source reads; the fix preserves those reads and their final
+stored closure, rather than weakening the test. Polling changes assertion counts.
+ASan stays `detect_leaks=0`; no generic Qt allocation/leak guarantee is claimed.
+
+| Artifact | SHA256 |
+|---|---|
+| `W7-qualified-update-release.xml` | `ae5295d2364b4ddc3a4639d1c3f2dfb67fabc1fac7f8de3680621d1b2f2fa1b1` |
+| `W7-qualified-update-asan.xml` | `4e28682ab61fcc8dc8cadaf0ddc011cb5c4610d79ba8d05a99b835ea830b60c3` |
+
+Next checkpoint: commit the separately qualified geometry-entry timeout lane.
+Then freeze and implement typed ordinary output from the SAME producer call before
+routing creation/repeat; Native-only Generate cannot carry that fallback today.
+Continue stored-cache/conic trim and unpublished import ownership in4.2 order.
+Both full current-source application/deployed builds, complete file/version matrix,
+visible acceptance, source reconciliation/A-C audit and final R remain open.
 
 S0 source/target reconciliation, A-C review, W0-W2 caller integration and R remain
 open. Next execute the remaining bounded worker sub-slices in4.2, not a second
@@ -1180,8 +1212,8 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** Update from Source worker GUI
-routing using the qualified preparation/client/completion, then the remaining
+**Next concrete action on implementation resume:** checkpoint the qualified geometry
+timeout lane, then typed ordinary fallback and creation/repeat routing in the remaining
 4.2 caller adapters. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
 Nothing is automatically copied into the dirty main tree. Native caller routing,
