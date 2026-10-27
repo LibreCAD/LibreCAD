@@ -7,6 +7,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include <algorithm>
 #include <cmath>
+#include <limits>
 
 namespace req = LC_OffsetWorkerRequest;
 namespace result = LC_OffsetWorkerResult;
@@ -134,6 +135,116 @@ TEST_CASE("offset child validates original raw cache once without generating or 
     const auto exhausted = LC_OffsetWorkerKernel::run({token, op});
     const auto& noBudget = native(exhausted, 1);
     CHECK_FALSE(noBudget.curve); work(noBudget.checkWork, {});
+}
+
+TEST_CASE("offset child CheckThrough checks raw membership without generation C or native adoption",
+          "[lc-offsetcurve][worker-kernel][through]") {
+    for (const std::size_t degree : {1u, 3u}) {
+        req::CheckThrough op{lineCache(), definition(), .01, {-3, 0}, {}};
+        if (degree == 3) {
+            op.cache.degree = 3; op.cache.controlPoints = {{-3, 0}, {-1, 0}, {1, 0}, {3, 0}};
+            op.cache.knotslist = {0, 0, 0, 0, 1, 1, 1, 1}; op.cache.weights = {1, 1, 1, 1};
+        }
+        const auto raw = req::Values::encodeCache(op.cache); REQUIRE(raw);
+        geo::WorkBudget budget{op.limits};
+        const auto layout = geo::inspectCacheLayout(op.cache, budget);
+        REQUIRE(layout.status == geo::CacheLayoutStatus::Ok);
+        auto expected = budget.consumed(); ++expected.vertices; ++expected.distancePairs;
+        LC_OffsetWorkerKernel::Trace trace;
+        const req::Request input{token, op};
+        const auto reply = LC_OffsetWorkerKernel::run(input, &trace);
+        const auto& output = native(reply, 4);
+        REQUIRE(output); CHECK_FALSE(output.curve); CHECK_FALSE(output.changed);
+        CHECK(output.engineRuns == 0); CHECK_FALSE(output.engineStatus); CHECK_FALSE(output.checkReason);
+        CHECK_FALSE(trace.nativePrepareEntered); CHECK_FALSE(trace.checkEntered); CHECK_FALSE(trace.trimEntered);
+        CHECK(trace.throughEntered); CHECK(trace.computationCompleted);
+        work(output.checkWork, {}); work(trace.checkWork, {});
+        work(output.throughWork, expected); work(trace.throughWork, expected);
+        CHECK(output.outputUsage.cubicPieces == 0); CHECK(output.outputUsage.outputEntities == 0);
+        CHECK(output.outputUsage.deepEntities == 0); CHECK(output.sampleUnits == 0);
+        CHECK(req::Values::encodeCache(op.cache) == raw);
+        const auto encoded = result::encode(reply, input); REQUIRE(encoded);
+        const auto decoded = result::decode(*encoded, input); REQUIRE(decoded);
+        work(native(*decoded, 4).throughWork, expected);
+        for (const RS_Vector point : {RS_Vector{0, 0}, RS_Vector{50, 50}}) {
+            op.point = point;
+            const auto checked = LC_OffsetWorkerKernel::run({token, op}, &trace);
+            const auto& membership = native(checked, 4);
+            CHECK(membership.refusal == (point.x == 0 ? LC_OffsetCurveRefusal::None :
+                LC_OffsetCurveRefusal::ThroughNotOnCache));
+            CHECK_FALSE(membership.curve); CHECK_FALSE(membership.changed);
+            CHECK(membership.throughWork.vertices > layout.work.vertices);
+            CHECK(membership.throughWork.distancePairs > 0);
+            work(trace.throughWork, membership.throughWork);
+            work(membership.checkWork, {}); CHECK_FALSE(membership.checkReason);
+            REQUIRE(result::encode(checked, {token, op}));
+        }
+    }
+}
+
+TEST_CASE("offset child CheckThrough retains bounded layout and membership refusal prefixes",
+          "[lc-offsetcurve][worker-kernel][through][limits]") {
+    req::CheckThrough op{lineCache(), definition(), .01, {-3, 0}, {}};
+    LC_OffsetWorkerKernel::Trace trace;
+    for (int malformed : {0, 1, 2, 3, 4}) {
+        auto bad = op;
+        if (malformed == 0) bad.cache.degree = 2;
+        if (malformed == 1) bad.cache.weights[0] = 2;
+        if (malformed == 2) bad.cache.fitPoints.push_back({0, 0});
+        if (malformed == 3) bad.cache.knotslist[2] = -1;
+        if (malformed == 4) bad.cache.savedOpenKnots.push_back(1);
+        geo::WorkBudget budget{bad.limits};
+        const auto layout = geo::inspectCacheLayout(bad.cache, budget);
+        REQUIRE(layout.status != geo::CacheLayoutStatus::Ok);
+        const req::Request input{token, bad};
+        const auto reply = LC_OffsetWorkerKernel::run(input, &trace);
+        const auto& failed = native(reply, 4);
+        CHECK(failed.refusal == LC_OffsetCurveRefusal::ThroughNotOnCache);
+        CHECK_FALSE(failed.curve); CHECK_FALSE(failed.changed); CHECK_FALSE(failed.checkReason);
+        work(failed.checkWork, {}); work(failed.throughWork, budget.consumed());
+        work(trace.throughWork, failed.throughWork); REQUIRE(result::encode(reply, input));
+    }
+    for (int limit = 0; limit < 6; ++limit) {
+        CAPTURE(limit);
+        auto limited = op; limited.point = {0, 0};
+        if (limit == 0) limited.limits.maxCacheSpans = 0;
+        if (limit == 1) limited.limits.maxVertices = 0;
+        if (limit == 2) limited.limits.maxVertices = 2;
+        if (limit == 3) limited.limits.maxDistancePairs = 0;
+        if (limit == 4) limited.limits.maxDepth = 0;
+        if (limit == 5) limited.limits.maxOrderingComparisons = 0;
+        const req::Request input{token, limited};
+        const auto reply = LC_OffsetWorkerKernel::run(input, &trace);
+        const auto& output = native(reply, 4);
+        if (limit < 5) CHECK(output.refusal == LC_OffsetCurveRefusal::ThroughNotOnCache);
+        CHECK(output.throughWork.cacheSpans <= limited.limits.maxCacheSpans);
+        CHECK(output.throughWork.vertices <= limited.limits.maxVertices);
+        CHECK(output.throughWork.distancePairs <= limited.limits.maxDistancePairs);
+        CHECK(output.throughWork.deepest <= limited.limits.maxDepth);
+        CHECK(output.throughWork.orderingComparisons <= limited.limits.maxOrderingComparisons);
+        if (limit == 2) work(output.throughWork, {1, 2, 0});
+        // A zero pair allowance rejects the WorkBudget before layout entry.
+        if (limit == 3) work(output.throughWork, {});
+        work(output.checkWork, {}); CHECK_FALSE(output.checkReason);
+        work(trace.throughWork, output.throughWork); REQUIRE(result::encode(reply, input));
+    }
+    for (int invalid = 0; invalid < 3; ++invalid) {
+        auto bad = op;
+        if (invalid == 0) bad.worldTolerance = 0;
+        if (invalid == 1) bad.worldTolerance = -1;
+        if (invalid == 2) bad.definition.basis.majorP = {0, 0};
+        const req::Request input{token, bad};
+        const auto reply = LC_OffsetWorkerKernel::run(input, &trace);
+        const auto& output = native(reply, 4);
+        CHECK(output.refusal == LC_OffsetCurveRefusal::InvalidInput);
+        work(output.checkWork, {}); work(output.throughWork, {});
+        CHECK_FALSE(trace.throughEntered); CHECK_FALSE(trace.checkEntered); CHECK_FALSE(trace.nativePrepareEntered);
+        CHECK(trace.computationCompleted); REQUIRE(result::encode(reply, input));
+    }
+    op.point.x = std::numeric_limits<double>::quiet_NaN();
+    const auto unadmitted = LC_OffsetWorkerKernel::run({token, op}, &trace);
+    CHECK(unadmitted.failure == result::Failure::InternalFailure);
+    CHECK_FALSE(trace.throughEntered); CHECK_FALSE(trace.computationCompleted);
 }
 
 TEST_CASE("offset child raw trim adapters preserve original polynomial and conic payloads",

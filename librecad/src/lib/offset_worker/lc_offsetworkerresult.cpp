@@ -233,7 +233,8 @@ bool readCurve(const QCborValue& v, Curve& d, Counts& c, std::size_t cap, bool m
 
 LC_OffsetCheckLimits checkLimits(const Req::Request& r) {
     auto l = r.operation.index() == 0 ? std::get<Req::Generate>(r.operation).limits.checkLimits :
-        std::get<Req::ValidateCache>(r.operation).limits;
+        r.operation.index() == 4 ? std::get<Req::CheckThrough>(r.operation).limits :
+            std::get<Req::ValidateCache>(r.operation).limits;
     const LC_OffsetCheckLimits hard;
     l.maxCacheSpans = std::min(l.maxCacheSpans, hard.maxCacheSpans);
     l.maxVertices = std::min(l.maxVertices, hard.maxVertices);
@@ -251,11 +252,20 @@ bool usage(const LC_OffsetOutputUsage& u, const LC_OffsetSourceBudget& l) {
         u.deepEntities <= l.maxDeepEntities;
 }
 bool native(const Native& n, const Req::Request& r) {
-    if (r.operation.index() > 1 || !admitted(n.refusal) || !admitted(n.engineStatus) ||
+    if ((r.operation.index() > 1 && r.operation.index() != 4) || !admitted(n.refusal) || !admitted(n.engineStatus) ||
         !admitted(n.checkReason) || !admitted(n.checkWork) || !admitted(n.throughWork)) return false;
     const auto cap = checkLimits(r);
     const auto& c = n.checkWork;
     const auto& t = n.throughWork;
+    if (r.operation.index() == 4) {
+        return !n.engineStatus && !n.engineRuns && !n.checkReason && zero(c) && !n.curve && !n.changed &&
+            zero(n.attemptedOutputUsage) && n.attemptedDeepCountComplete && zero(n.outputUsage) && !n.sampleUnits &&
+            t.cacheSpans <= cap.maxCacheSpans && t.vertices <= cap.maxVertices &&
+            t.distancePairs <= cap.maxDistancePairs && t.deepest <= cap.maxDepth &&
+            t.orderingComparisons <= cap.maxOrderingComparisons &&
+            (n.refusal == Refusal::None || n.refusal == Refusal::ThroughNotOnCache ||
+                (n.refusal == Refusal::InvalidInput && zero(t)));
+    }
     std::size_t vertices = c.vertices, pairs = c.distancePairs;
     if (c.cacheSpans > cap.maxCacheSpans || c.orderingComparisons > cap.maxOrderingComparisons ||
         t.cacheSpans || t.orderingComparisons || !add(vertices, t.vertices, cap.maxVertices) ||
@@ -312,6 +322,7 @@ bool readNative(const QCborValue& v, Native& n, const Req::Request& r, bool mate
         !read(a.at(8), n.attemptedOutputUsage) || !read(a.at(9), n.attemptedDeepCountComplete) ||
         !read(a.at(10), n.outputUsage) || !read(a.at(11), n.sampleUnits)) return false;
     if (!a.at(7).isNull()) {
+        if (r.operation.index() == 4) return false;
         n.curve.emplace();
         Counts c;
         if (!readCurve(a.at(7), *n.curve, c, checkLimits(r).maxCacheSpans, materialize) || !nativeCounts(c, r)) return false;
@@ -532,7 +543,7 @@ bool token(const Req::Token& a, const Req::Token& b) {
         a.sourceRevision == b.sourceRevision && a.undoEpoch == b.undoEpoch;
 }
 bool envelope(const Reply& d, const Req::Request& r) {
-    return !r.operation.valueless_by_exception() && d.operation <= 3 && d.operation == r.operation.index() &&
+    return !r.operation.valueless_by_exception() && d.operation <= 4 && d.operation == r.operation.index() &&
         token(d.token, r.token) && admitted(d.failure) && !d.result.valueless_by_exception();
 }
 
@@ -582,7 +593,7 @@ std::optional<QCborArray> encode(const Reply& d, const Req::Request& r) {
     // The complete caller-owned payload is checked before constructing CBOR.
     if (d.failure != Failure::None) {
         if (!std::holds_alternative<std::monostate>(d.result)) return std::nullopt;
-    } else if (d.operation <= 1) {
+    } else if (d.operation <= 1 || d.operation == 4) {
         const auto* n = std::get_if<Native>(&d.result);
         Counts c;
         if (!n || !native(*n, r) || (n->curve && (!curve(*n->curve, c, checkLimits(r).maxCacheSpans) ||
@@ -592,9 +603,10 @@ std::optional<QCborArray> encode(const Reply& d, const Req::Request& r) {
         if (!t || !trim(*t, r) || itemCount(*t) > LC_OffsetWorkerWire::Limits{}.items - 9) return std::nullopt;
     }
     QCborValue payload(nullptr);
-    if (d.failure == Failure::None) payload = d.operation <= 1 ? fields(std::get<Native>(d.result)) : fields(std::get<Trim::Result>(d.result));
+    if (d.failure == Failure::None) payload = d.operation <= 1 || d.operation == 4 ?
+        fields(std::get<Native>(d.result)) : fields(std::get<Trim::Result>(d.result));
     const auto& t = d.token;
-    return QCborArray{1, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
+    return QCborArray{2, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
         qint64(d.operation), fields(d.failure), payload};
 }
 
@@ -603,14 +615,14 @@ std::optional<Reply> decode(const QCborArray& a, const Req::Request& r) {
     QCborArray t;
     std::size_t version;
     std::size_t items = 0;
-    if (a.size() != 5 || !wireValue(a, items) || !read(a.at(0), version) || version != 1 || !array(a.at(1), 4, t) ||
+    if (a.size() != 5 || !wireValue(a, items) || !read(a.at(0), version) || version != 2 || !array(a.at(1), 4, t) ||
         !read(t.at(0), d.token.requestId) || !read(t.at(1), d.token.generation) ||
         !read(t.at(2), d.token.sourceRevision) || !read(t.at(3), d.token.undoEpoch) ||
         !read(a.at(2), d.operation) || !read(a.at(3), d.failure) || !envelope(d, r)) return std::nullopt;
     if (d.failure != Failure::None) return a.at(4).isNull() ? std::optional<Reply>(std::move(d)) : std::nullopt;
     // First pass admits every nested collection, scalar and aggregate without
     // allocating native arrays. Only then may shared value readers copy them.
-    if (d.operation <= 1) {
+    if (d.operation <= 1 || d.operation == 4) {
         Native scan, value;
         if (!readNative(a.at(4), scan, r, false) || !readNative(a.at(4), value, r, true)) return std::nullopt;
         d.result = std::move(value);

@@ -49,9 +49,16 @@ struct TrimConic {
     std::optional<LC_OffsetCacheTrim::Pick> cachePick;
     LC_OffsetCacheTrim::Limits limits;
 };
+struct CheckThrough {
+    RS_SplineData cache;
+    LC_EllipseOffsetDefinition definition;
+    double worldTolerance = 0;
+    RS_Vector point;
+    LC_OffsetCheckLimits limits;
+};
 struct Request {
     Token token;
-    std::variant<Generate, ValidateCache, TrimCache, TrimConic> operation;
+    std::variant<Generate, ValidateCache, TrimCache, TrimConic, CheckThrough> operation;
 };
 
 /** Shared strict value syntax, NOT C certificates or geometric proof.
@@ -69,9 +76,10 @@ std::optional<QCborArray> encodeCutter(const Cutter&);
 std::optional<Cutter> decodeCutter(const QCborArray&);
 }
 
-/** Envelope [1, [requestId,generation,sourceRevision,undoEpoch], op, body].
+/** Envelope [2, [requestId,generation,sourceRevision,undoEpoch], op, body].
  * Bodies: [definition,run,throughPoint-or-null], [cache,definition,worldTolerance,check],
  * [cache,cutter,pick,trim], [cache,conic,conicPick,cachePick-or-null,trim].
+ * CheckThrough (op 4): [cache,definition,worldTolerance,point,check].
  * Cutter [ordinal 0..4,record]; vector [x,y,z,valid]; pick [point,hint-or-null,seed-or-null].
  * Definition [basis,distance,towardCentre,cacheReversed,relTolerance].
  * Spline [controls,knots,weights,fit,degree,type,savedOpenType,savedOpenKnots,closed,periodic].

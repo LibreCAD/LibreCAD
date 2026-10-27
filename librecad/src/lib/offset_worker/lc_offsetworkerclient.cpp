@@ -16,7 +16,9 @@ constexpr qsizetype Chunk = 65536, DiagnosticCap = 65536;
 bool matchesInputs(const LC_OffsetWorkerResult::Reply& reply, const LC_OffsetWorkerRequest::Request& request) {
     namespace Req = LC_OffsetWorkerRequest;
     const auto* result = std::get_if<LC_OffsetWorkerResult::Native>(&reply.result);
+    if (result && request.operation.index() == 4) return !result->curve;
     if (!result || !result->curve) return true;
+    if (request.operation.index() > 1) return false;
     const auto& curve = *result->curve;
     auto definition = request.operation.index() == 0 ? std::get<Req::Generate>(request.operation).definition :
         std::get<Req::ValidateCache>(request.operation).definition;
@@ -155,7 +157,7 @@ void LC_OffsetWorkerClient::start() {
         connect(m_process.get(), &QProcess::readyReadStandardError, this, [this] { drain(); });
         // Finalization is polled, not performed inside QProcess's signal stack.
         m_process->setProgram(helperPath());
-        m_process->setArguments({QStringLiteral("--protocol=1")});
+        m_process->setArguments({QStringLiteral("--protocol=2")});
         m_process->start();
         m_timer.start();
     } catch (...) {

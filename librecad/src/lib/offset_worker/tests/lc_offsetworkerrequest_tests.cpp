@@ -83,6 +83,8 @@ std::vector<request::Request> fixtures() {
             {point(), {}, {}}, {}, trimLimits()}});
     }
     values.push_back({token(), request::Generate{definition(), runLimits(), point(13.25, -0.0)}});
+    values.push_back({token(), request::CheckThrough{spline(), definition(), 0.125,
+        point(13.25, -0.0), checkLimits()}});
     return values;
 }
 void same(double a, double b) { CHECK(std::memcmp(&a, &b, sizeof(double)) == 0); }
@@ -171,6 +173,10 @@ void same(const request::TrimConic& a, const request::TrimConic& b) {
     same(a.cache, b.cache); same(a.conic, b.conic); same(a.conicPick, b.conicPick); same(a.limits, b.limits);
     REQUIRE(a.cachePick.has_value() == b.cachePick.has_value());
     if (a.cachePick) same(*a.cachePick, *b.cachePick);
+}
+void same(const request::CheckThrough& a, const request::CheckThrough& b) {
+    same(a.cache, b.cache); same(a.definition, b.definition); same(a.worldTolerance, b.worldTolerance);
+    same(a.point, b.point); same(a.limits, b.limits);
 }
 void same(const request::Request& a, const request::Request& b) {
     CHECK(a.token.requestId == b.token.requestId); CHECK(a.token.generation == b.token.generation);
@@ -312,11 +318,11 @@ TEST_CASE("offset worker request owns and bitwise round trips every operation an
     same(expected, *later);
 }
 
-TEST_CASE("offset worker request has exact version one positional shapes",
+TEST_CASE("offset worker request has exact version two positional shapes",
           "[lc-offsetcurve][worker-protocol][request]") {
     for (const auto& value : fixtures()) {
         const auto root = encoded(value);
-        REQUIRE(root.size() == 4); CHECK(root.at(0).isInteger()); CHECK(root.at(0).toInteger() == 1);
+        REQUIRE(root.size() == 4); CHECK(root.at(0).isInteger()); CHECK(root.at(0).toInteger() == 2);
         const auto t = root.at(1).toArray();
         REQUIRE(t.size() == 4); CHECK(t.at(0).toInteger() == value.token.requestId);
         CHECK(t.at(1).toInteger() == value.token.generation);
@@ -334,7 +340,7 @@ TEST_CASE("offset worker request has exact version one positional shapes",
             CHECK(at(root, {3, 1, 0}).toArray().size() == 3);
             CHECK(at(root, {3, 1, 3}).toArray().size() == 5);
         } else {
-            REQUIRE(body.size() == (value.operation.index() == 3 ? 5 : 4));
+            REQUIRE(body.size() == (value.operation.index() >= 3 ? 5 : 4));
             REQUIRE(body.at(0).toArray().size() == 10);
             const auto& source = value.operation;
             std::visit([&](const auto& op) {
@@ -346,7 +352,16 @@ TEST_CASE("offset worker request has exact version one positional shapes",
                     CHECK(at(root, {3, 0, 7}).toArray().size() == qsizetype(op.cache.savedOpenKnots.size()));
                 }
             }, source);
-            if (value.operation.index() >= 2) {
+            if (value.operation.index() == 4) {
+                CHECK(body.at(1).toArray().size() == 5);
+                CHECK(body.at(2).isDouble());
+                CHECK(body.at(3).toArray().size() == 4);
+                CHECK(body.at(4).toArray().size() == 5);
+                const auto& op = std::get<request::CheckThrough>(value.operation);
+                sameTree(body.at(1), *request::Values::encodeDefinition(op.definition));
+                same(body.at(2).toDouble(), op.worldTolerance);
+                sameTree(body.at(3), QCborArray{op.point.x, op.point.y, op.point.z, op.point.valid});
+            } else if (value.operation.index() >= 2) {
                 CHECK(at(root, {3, 1}).toArray().size() == 2);
                 const auto tag = at(root, {3, 1, 0}).toInteger();
                 const std::array<qsizetype, 5> arities{2, 8, 2, 11, 10};
@@ -404,9 +419,9 @@ TEST_CASE("offset worker request rejects invalid tokens versions operations enum
           "[lc-offsetcurve][worker-protocol][request]") {
     auto value = fixtures().front();
     const auto root = encoded(value);
-    for (qint64 bad : std::array<qint64, 4>{-1, 0, 2, std::numeric_limits<qint64>::max()})
+    for (qint64 bad : std::array<qint64, 5>{-1, 0, 1, 3, std::numeric_limits<qint64>::max()})
         CHECK_FALSE(request::decode(changed(root, {0}, bad)));
-    for (qint64 bad : std::array<qint64, 3>{-1, 4, std::numeric_limits<qint64>::max()})
+    for (qint64 bad : std::array<qint64, 3>{-1, 5, std::numeric_limits<qint64>::max()})
         CHECK_FALSE(request::decode(changed(root, {2}, bad)));
     for (qsizetype i = 0; i < 4; ++i) {
         CAPTURE(i);
@@ -706,4 +721,44 @@ TEST_CASE("offset worker shared value codecs use the request layouts and strict 
     }
     CHECK_FALSE(values::decodeCutter({}));
     CHECK_FALSE(values::encodeCutter(request::Cutter{invalidCache}));
+}
+
+TEST_CASE("offset worker CheckThrough owns raw values and bounds every membership allowance",
+          "[lc-offsetcurve][worker-protocol][request][through]") {
+    request::CheckThrough op{spline(), definition(), .125, point(), {}};
+    for (double tolerance : {-1.0, -0.0, 0.0, .125}) {
+        op.worldTolerance = tolerance;
+        roundTrip({token(), op}); // Semantic refusals remain the kernel's responsibility.
+    }
+    op.worldTolerance = .125;
+    const auto root = encoded({token(), op});
+    limitNodes(root, at(root, {3, 4}), {3, 4});
+    for (auto member : checkMembers) {
+        auto bad = op; ++(bad.limits.*member);
+        CHECK_FALSE(request::encode({token(), bad}));
+        auto zero = op; zero.limits.*member = 0; roundTrip({token(), zero});
+    }
+    auto bad = op; ++bad.limits.maxDepth; CHECK_FALSE(request::encode({token(), bad}));
+    bad = op; bad.limits.maxDepth = 0; roundTrip({token(), bad});
+    for (int malformed : {0, 1, 2, 3, 4}) {
+        bad = op;
+        if (malformed == 0) bad.point.valid = false;
+        if (malformed == 1) bad.point.z = 1;
+        if (malformed == 2) bad.point.x = std::numeric_limits<double>::infinity();
+        if (malformed == 3) bad.worldTolerance = std::numeric_limits<double>::quiet_NaN();
+        if (malformed == 4) bad.cache.savedOpenKnots.back() = std::numeric_limits<double>::infinity();
+        CHECK_FALSE(request::admitted({token(), bad}));
+        CHECK_FALSE(request::encode({token(), bad}));
+    }
+    auto decoded = request::decode(root); REQUIRE(decoded);
+    op.cache.controlPoints.clear(); op.point.x = 99;
+    const auto& owned = std::get<request::CheckThrough>(decoded->operation);
+    same(owned.cache, spline()); same(owned.point, point());
+    CHECK_FALSE(request::decode(changed(root, {0}, 1)));
+    CHECK_FALSE(request::decode(changed(root, {3, 2}, 1)));
+    CHECK_FALSE(request::decode(changed(root, {3, 3, 2}, 1.0)));
+    CHECK_FALSE(request::decode(changed(root, {3, 3, 3}, false)));
+    auto body = root.at(3).toArray();
+    const auto pointFields = body.at(3); body[3] = body.at(4); body[4] = pointFields;
+    CHECK_FALSE(request::decode(changed(root, {3}, body)));
 }

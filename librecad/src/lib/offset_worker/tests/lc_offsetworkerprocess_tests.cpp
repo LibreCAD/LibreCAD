@@ -88,7 +88,7 @@ public:
     }
 
     Completion exchange(const QByteArray& input,
-                        const QStringList& arguments = {QStringLiteral("--protocol=1")},
+                        const QStringList& arguments = {QStringLiteral("--protocol=2")},
                         bool partial = false) {
         REQUIRE(input.size() <= InputCap);
         ScopedProcess child;
@@ -147,7 +147,7 @@ public:
         REQUIRE(fields);
         const auto input = Wire::encode(*fields);
         REQUIRE_FALSE(input.isEmpty());
-        const auto completed = exchange(input, {QStringLiteral("--protocol=1")}, partial);
+        const auto completed = exchange(input, {QStringLiteral("--protocol=2")}, partial);
         INFO("helper stderr: " << completed.diagnostic.toStdString());
         REQUIRE(completed.status == QProcess::NormalExit);
         REQUIRE(completed.code == 0);
@@ -170,7 +170,7 @@ public:
     }
 
     void reject(const QByteArray& input,
-                const QStringList& arguments = {QStringLiteral("--protocol=1")}) {
+                const QStringList& arguments = {QStringLiteral("--protocol=2")}) {
         INFO("rejected bytes=" << input.size() << " arguments=" << arguments.join(' ').toStdString());
         const auto completed = exchange(input, arguments);
         INFO("helper stderr: " << completed.diagnostic.toStdString());
@@ -420,6 +420,49 @@ TEST_CASE("Built native offset helper qualifies computations and one-request pro
         }
     }
     {
+        INFO("CheckThrough returns only structural and membership work without C or native geometry");
+        Req::CheckThrough operation{lineCache(), definition(), .01, {-3, .5}, {}};
+        const auto original = Req::Values::encodeCache(operation.cache); REQUIRE(original);
+        const auto good = helper.run({Token, operation}, true);
+        const auto& accepted = native(good);
+        REQUIRE(accepted.refusal == LC_OffsetCurveRefusal::None);
+        CHECK_FALSE(accepted.curve); CHECK_FALSE(accepted.changed);
+        CHECK(accepted.engineRuns == 0); CHECK_FALSE(accepted.engineStatus); CHECK_FALSE(accepted.checkReason);
+        sameWork(accepted.checkWork, {}); sameWork(accepted.throughWork, {1, 3, 1});
+        CHECK(accepted.sampleUnits == 0); CHECK(accepted.outputUsage.outputEntities == 0);
+        CHECK(Req::Values::encodeCache(operation.cache) == original);
+
+        operation.point = {50, 50};
+        const auto far = helper.run({Token, operation});
+        const auto& missed = native(far);
+        CHECK(missed.refusal == LC_OffsetCurveRefusal::ThroughNotOnCache);
+        CHECK_FALSE(missed.curve); CHECK_FALSE(missed.changed); CHECK_FALSE(missed.checkReason);
+        sameWork(missed.checkWork, {}); CHECK(missed.throughWork.cacheSpans == 1);
+        CHECK(missed.throughWork.vertices > 2); CHECK(missed.throughWork.distancePairs > 0);
+
+        operation.point = {-3, .5}; operation.limits.maxVertices = 2;
+        const auto limited = helper.run({Token, operation});
+        const auto& exhausted = native(limited);
+        CHECK(exhausted.refusal == LC_OffsetCurveRefusal::ThroughNotOnCache);
+        sameWork(exhausted.throughWork, {1, 2, 0}); sameWork(exhausted.checkWork, {});
+        operation.limits = {}; operation.cache.weights[0] = 2;
+        const auto malformed = helper.run({Token, operation});
+        CHECK(native(malformed).refusal == LC_OffsetCurveRefusal::ThroughNotOnCache);
+        sameWork(native(malformed).throughWork, {1, 2, 0});
+        operation.cache = lineCache(); operation.worldTolerance = 0;
+        const auto invalid = helper.run({Token, operation});
+        CHECK(native(invalid).refusal == LC_OffsetCurveRefusal::InvalidInput);
+        sameWork(native(invalid).checkWork, {}); sameWork(native(invalid).throughWork, {});
+
+        operation.worldTolerance = .01;
+        const auto fields = Req::encode({Token, operation}); REQUIRE(fields);
+        helper.rejectFields(patched(*fields, {0}, 1));
+        helper.rejectFields(patched(*fields, {3, 3, 3}, false));
+        helper.rejectFields(patched(*fields, {3, 4, 1}, qint64(LC_OffsetCheckLimits{}.maxVertices + 1)));
+        auto body = fields->at(3).toArray(); body.removeLast();
+        helper.rejectFields(patched(*fields, {3}, body));
+    }
+    {
         INFO("Both trim operations execute with the off-axis two-root fixture");
         const Req::Cutter circle = RS_CircleData{{0, 0}, 2};
         for (const bool reverse : {false, true}) {
@@ -471,13 +514,13 @@ TEST_CASE("Built native offset helper qualifies computations and one-request pro
         // Only the oversized claim is sent; the test never allocates a huge body.
         helper.reject(header(quint32(Wire::Limits{}.frameBytes) + 1));
         helper.reject(header(1) + QByteArray(1, char(0x81)));
-        helper.rejectFields(patched(*fields, {0}, qint64(2)));
+        helper.rejectFields(patched(*fields, {0}, qint64(1)));
         helper.rejectFields(patched(*fields, {1, 0}, 7.0));
-        helper.rejectFields(patched(*fields, {2}, qint64(4)));
+        helper.rejectFields(patched(*fields, {2}, qint64(5)));
         helper.rejectFields(patched(*fields, {3, 0, 1}, qint64(1)));
         helper.rejectFields(patched(*fields, {3, 1, 3, 1}, true));
         helper.reject({}, QStringList{});
-        helper.reject({}, {QStringLiteral("--protocol=2")});
-        helper.reject({}, {QStringLiteral("--protocol=1"), QStringLiteral("extra")});
+        helper.reject(frame, {QStringLiteral("--protocol=1")});
+        helper.reject({}, {QStringLiteral("--protocol=2"), QStringLiteral("extra")});
     }
 }

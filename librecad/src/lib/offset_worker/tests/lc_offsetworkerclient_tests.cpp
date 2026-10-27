@@ -419,6 +419,35 @@ TEST_CASE("Worker client reports exact known work for a real geometric refusal",
     CHECK_FALSE(completion.native(attributes));
 }
 
+TEST_CASE("Worker membership receipts acknowledge only their unchanged raw native cache", Tags) {
+    auto& rt = runtime(); Receipts receipts; OwnedClient owned(rt);
+    REQUIRE(owned.get().submit(validate(1), Client::Mode::Commit, receipts.into(0)));
+    rt.until([&] { return receipts.calls[0] != 0; });
+    const auto& validation = completed(receipts.at(0), 1, 1);
+    RS_Line attributes{nullptr, {0, 0}, {1, 0}};
+    auto curve = validation.native(attributes); REQUIRE(curve);
+    const auto raw = curve->getData();
+    Req::Request request{token(2), Req::CheckThrough{raw, curve->definition(), curve->checkedWorldTolerance(),
+        raw.controlPoints.front(), {}}};
+    REQUIRE(owned.get().submit(request, Client::Mode::Commit, receipts.into(1)));
+    rt.until([&] { return receipts.calls[1] != 0; });
+    const auto& membership = completed(receipts.at(1), 2, 4);
+    const auto& result = std::get<Reply::Native>(membership.reply().result);
+    REQUIRE(result); CHECK_FALSE(result.changed); CHECK_FALSE(result.curve);
+    CHECK(result.engineRuns == 0); CHECK_FALSE(result.engineStatus); CHECK_FALSE(result.checkReason);
+    CHECK(result.checkWork.vertices == 0); CHECK(result.throughWork.vertices > 0);
+    CHECK_FALSE(membership.native(attributes));
+    curve->setUserDefVar("membership", "retained");
+    const auto applied = membership.apply(*curve);
+    REQUIRE(applied); CHECK_FALSE(applied.changed); exactCache(curve->getData(), raw);
+    CHECK(curve->getUserDefVar("membership") == "retained");
+    CHECK(curve->hasEditableDefinition());
+    curve->revertDirection(); REQUIRE(curve->hasEditableDefinition());
+    const auto stale = membership.apply(*curve);
+    CHECK_FALSE(stale); CHECK(stale.refusal == LC_OffsetCurveRefusal::Inconsistent);
+    CHECK_FALSE(stale.changed); CHECK(stale.throughWork.vertices == applied.throughWork.vertices);
+}
+
 TEST_CASE("Worker client keeps one active job and replaces its single queued job", Tags) {
     auto& rt = runtime();
     Receipts receipts;

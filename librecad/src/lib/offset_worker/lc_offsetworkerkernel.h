@@ -16,6 +16,7 @@ public:
     struct Trace {
         bool nativePrepareEntered = false;
         bool checkEntered = false;
+        bool throughEntered = false;
         bool trimEntered = false;
         bool computationCompleted = false;
         LC_EllipseOffsetGeometry::CheckWork checkWork{}, throughWork{};
@@ -29,5 +30,6 @@ public:
 private:
     static LC_OffsetWorkerResult::Native generate(const LC_OffsetWorkerRequest::Generate&, Trace&);
     static LC_OffsetWorkerResult::Native validate(const LC_OffsetWorkerRequest::ValidateCache&, Trace&);
+    static LC_OffsetWorkerResult::Native checkThrough(const LC_OffsetWorkerRequest::CheckThrough&, Trace&);
 };
 #endif

@@ -292,6 +292,7 @@ TEST_CASE("Worker fatal replies have unknown work and a null payload only", tags
     auto [trimRequest, result] = trimLine();
     std::vector<Req::Request> requests{nativeRequest(), nativeRequest(true), trimRequest};
     requests.push_back({token(), Req::TrimConic{cache(), RS_CircleData{{0, 0}, 2}, {{0, 2}}, {}, {}}});
+    requests.push_back({token(), Req::CheckThrough{cache(), definition(), .001, {5, 0}, {}}});
     for (const auto& r : requests) for (auto failure : {Reply::Failure::AllocationFailure, Reply::Failure::InternalFailure}) {
         Reply::Reply d{r.token, r.operation.index(), failure, std::monostate{}};
         roundtrip(r, d); auto encoded = Reply::encode(d, r); REQUIRE(encoded); CHECK(encoded->at(4).isNull());
@@ -316,7 +317,7 @@ TEST_CASE("Worker replies match all four token fields and the exact request oper
         CHECK_FALSE(Reply::encode(other, r));
     }
     for (qint64 i : {-1, 1, 2, 3, 4}) CHECK_FALSE(Reply::decode(patched(*encoded, {2}, i), r));
-    for (qint64 i : {-1, 0, 2}) CHECK_FALSE(Reply::decode(patched(*encoded, {0}, i), r));
+    for (qint64 i : {-1, 0, 1, 3}) CHECK_FALSE(Reply::decode(patched(*encoded, {0}, i), r));
     for (qint64 i : {-1, 3, 99}) CHECK_FALSE(Reply::decode(patched(*encoded, {3}, i), r));
     auto other = d; other.operation = 1; CHECK_FALSE(Reply::encode(other, r));
     other = d; other.operation = std::numeric_limits<std::size_t>::max(); CHECK_FALSE(Reply::encode(other, r));
@@ -367,6 +368,66 @@ TEST_CASE("Worker native work adds vertices and pairs but independently caps que
     op.limits.checkLimits.maxVertices = std::numeric_limits<std::size_t>::max();
     n.checkWork.vertices = LC_OffsetCheckLimits{}.maxVertices; n.throughWork.vertices = 1;
     CHECK_FALSE(Reply::encode(reply(r, n), r));
+}
+
+TEST_CASE("Worker CheckThrough receipts contain only bounded membership work and no authority", tags) {
+    Req::Request r{token(), Req::CheckThrough{cache(), definition(), .001, {5, 0}, {2, 11, 13, 3, 17}}};
+    Reply::Native n;
+    n.refusal = Refusal::None; n.throughWork = {2, 11, 13, 3, 17};
+    roundtrip(r, reply(r, n));
+    n.refusal = Refusal::ThroughNotOnCache; roundtrip(r, reply(r, n));
+    const auto encoded = Reply::encode(reply(r, n), r); REQUIRE(encoded);
+    CHECK(encoded->at(0).toInteger() == 2); CHECK(encoded->at(2).toInteger() == 4);
+    REQUIRE(encoded->at(4).toArray().size() == 12);
+    CHECK_FALSE(Reply::decode(patched(*encoded, {0}, 1), r));
+    CHECK_FALSE(Reply::decode(patched(*encoded, {2}, 5), r));
+    for (qint64 raw = 0; raw <= qint64(Refusal::ThroughNotOnCache); ++raw) {
+        auto value = n; value.refusal = Refusal(raw);
+        const bool allowed = value.refusal == Refusal::None || value.refusal == Refusal::ThroughNotOnCache;
+        CHECK(bool(Reply::encode(reply(r, value), r)) == allowed);
+        CHECK(bool(Reply::decode(patched(*encoded, {4, 0}, raw), r)) == allowed);
+    }
+    Reply::Native invalid; invalid.refusal = Refusal::InvalidInput;
+    roundtrip(r, reply(r, invalid));
+    invalid.throughWork.cacheSpans = 1; CHECK_FALSE(Reply::encode(reply(r, invalid), r));
+    const auto reject = [&](auto mutate) {
+        auto value = n; mutate(value); CHECK_FALSE(Reply::encode(reply(r, value), r));
+    };
+    reject([](auto& v) { v.engineRuns = 1; }); reject([](auto& v) { v.engineStatus = Status::Ok; });
+    reject([](auto& v) { v.checkReason = Reason::None; }); reject([](auto& v) { v.checkWork.vertices = 1; });
+    reject([](auto& v) { v.changed = true; }); reject([](auto& v) { v.curve = nativeValue().curve; });
+    reject([](auto& v) { v.attemptedOutputUsage.cubicPieces = 1; });
+    reject([](auto& v) { v.attemptedDeepCountComplete = false; });
+    reject([](auto& v) { v.outputUsage.outputEntities = 1; }); reject([](auto& v) { v.sampleUnits = 1; });
+    reject([](auto& v) { ++v.throughWork.cacheSpans; }); reject([](auto& v) { ++v.throughWork.vertices; });
+    reject([](auto& v) { ++v.throughWork.distancePairs; }); reject([](auto& v) { ++v.throughWork.deepest; });
+    reject([](auto& v) { ++v.throughWork.orderingComparisons; });
+    reject([](auto& v) { v.throughWork.vertices = std::numeric_limits<std::size_t>::max(); });
+    const std::array<qint64, 5> caps{2, 11, 13, 3, 17};
+    for (qsizetype field = 0; field < 5; ++field) {
+        CHECK_FALSE(Reply::decode(patched(*encoded, {4, 4, field}, caps[std::size_t(field)] + 1), r));
+        CHECK_FALSE(Reply::decode(patched(*encoded, {4, 3, field}, 1), r));
+        CHECK_FALSE(Reply::decode(patched(*encoded, {4, 4, field}, -1), r));
+        CHECK_FALSE(Reply::decode(patched(*encoded, {4, 4, field}, 0.0), r));
+    }
+    const auto generated = Reply::encode(reply(nativeRequest(), nativeValue()), nativeRequest()); REQUIRE(generated);
+    for (const auto& bad : {
+            patched(*encoded, {4, 1}, qint64(Status::Ok)), patched(*encoded, {4, 2}, qint64(Reason::None)),
+            patched(*encoded, {4, 5}, 1), patched(*encoded, {4, 6}, true),
+            patched(*encoded, {4, 7}, generated->at(4).toArray().at(7)),
+            patched(*encoded, {4, 8, 0}, 1), patched(*encoded, {4, 9}, false),
+            patched(*encoded, {4, 10, 0}, 1), patched(*encoded, {4, 11}, 1)})
+        CHECK_FALSE(Reply::decode(bad, r));
+    auto body = encoded->at(4).toArray(); body.removeLast();
+    CHECK_FALSE(Reply::decode(patched(*encoded, {4}, body), r));
+    body = encoded->at(4).toArray(); body.append(nullptr);
+    CHECK_FALSE(Reply::decode(patched(*encoded, {4}, body), r));
+    CHECK_FALSE(Reply::encode(reply(r, Trim::Result{}), r));
+
+    auto& limits = std::get<Req::CheckThrough>(r.operation).limits;
+    limits = {}; limits.maxVertices = std::numeric_limits<std::size_t>::max();
+    n.throughWork = {0, LC_OffsetCheckLimits{}.maxVertices, 0, 0, 0}; roundtrip(r, reply(r, n));
+    ++n.throughWork.vertices; CHECK_FALSE(Reply::encode(reply(r, n), r));
 }
 
 TEST_CASE("Worker native array and producer usage ceilings admit exact boundaries", tags) {

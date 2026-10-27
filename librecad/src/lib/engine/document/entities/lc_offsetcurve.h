@@ -80,6 +80,9 @@ public:
      */
     LC_OffsetCurveEditPreparation prepareDefinition(const LC_EllipseOffsetDefinition &definition,
         const LC_OffsetRunLimits &limits = {}) const;
+    /** Analytic proposal only; CheckThrough and Generate still require worker computation. */
+    LC_OffsetCurveEditPreparation prepareThrough(const RS_Vector &point,
+        const LC_OffsetRunLimits &limits = {}) const;
     LC_OffsetCurveEditResult setDistance(double distance, const LC_OffsetRunLimits &limits = {});
     LC_OffsetCurveEditResult setTowardCentre(bool towardCentre, const LC_OffsetRunLimits &limits = {});
     LC_OffsetCurveEditResult setThrough(const RS_Vector &point, const LC_OffsetRunLimits &limits = {});
@@ -158,6 +161,8 @@ private:
     static bool checkThrough(const LC_OffsetCurve &curve, const RS_Vector &point,
         const LC_OffsetCheckLimits &limits, const LC_EllipseOffsetGeometry::CheckWork &checked,
         LC_EllipseOffsetGeometry::CheckWork &throughWork);
+    static bool checkThroughCache(const RS_SplineData &cache, double tolerance, const RS_Vector &point,
+        const LC_OffsetCheckLimits &limits, LC_EllipseOffsetGeometry::CheckWork &throughWork);
     LC_OffsetCurveEditResult eligibility() const noexcept;
     LC_OffsetCurveEditResult edit(const LC_EllipseOffsetDefinition &definition,
         const LC_OffsetRunLimits &limits, const RS_Vector *through = nullptr);
@@ -186,7 +191,7 @@ struct LC_OffsetCurveCreateResult : LC_OffsetCurveEditResult {
 };
 
 struct LC_OffsetCurveEditPreparation {
-    enum class Kind { Refused, Unchanged, Prepared, Generate };
+    enum class Kind { Refused, Unchanged, Prepared, Generate, CheckThrough };
     Kind kind = Kind::Refused;
     LC_OffsetCurveEditResult result;
     std::unique_ptr<LC_OffsetCurve> local;

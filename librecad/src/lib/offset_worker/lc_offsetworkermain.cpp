@@ -22,21 +22,23 @@ void prefix(const LC_OffsetWorkerKernel::Trace& trace) noexcept {
     const auto& t = trace.throughWork;
     const auto& w = trace.trimWork;
     // A diagnostic prefix is not a refund, a final work total or a proof token.
-    std::fprintf(stderr, "LC_OFFSET_PREFIX completed=%d native_prepare=%d check=%d trim=%d "
+    std::fprintf(stderr, "LC_OFFSET_PREFIX completed=%d native_prepare=%d check=%d through=%d trim=%d "
         "c_spans=%llu c_vertices=%llu c_pairs=%llu c_order=%llu c_depth=%u "
-        "through_vertices=%llu through_pairs=%llu through_depth=%u "
+        "through_spans=%llu through_vertices=%llu through_pairs=%llu through_order=%llu through_depth=%u "
         "trim_input=%llu trim_records=%llu trim_items=%llu trim_pairs=%llu\n",
-        int(trace.computationCompleted), int(trace.nativePrepareEntered), int(trace.checkEntered), int(trace.trimEntered),
+        int(trace.computationCompleted), int(trace.nativePrepareEntered), int(trace.checkEntered),
+        int(trace.throughEntered), int(trace.trimEntered),
         static_cast<unsigned long long>(c.cacheSpans), static_cast<unsigned long long>(c.vertices),
         static_cast<unsigned long long>(c.distancePairs), static_cast<unsigned long long>(c.orderingComparisons), c.deepest,
-        static_cast<unsigned long long>(t.vertices), static_cast<unsigned long long>(t.distancePairs), t.deepest,
+        static_cast<unsigned long long>(t.cacheSpans), static_cast<unsigned long long>(t.vertices),
+        static_cast<unsigned long long>(t.distancePairs), static_cast<unsigned long long>(t.orderingComparisons), t.deepest,
         static_cast<unsigned long long>(w.inputSpans), static_cast<unsigned long long>(w.inputRecords),
         static_cast<unsigned long long>(w.kernelItems), static_cast<unsigned long long>(w.intersections.totalBoxPairs));
 }
 }
 
 int main(int argc, char** argv) {
-    if (argc != 2 || std::strcmp(argv[1], "--protocol=1") != 0) {
+    if (argc != 2 || std::strcmp(argv[1], "--protocol=2") != 0) {
         std::fputs("offset-worker: invalid invocation\n", stderr);
         return 2;
     }

@@ -6,6 +6,7 @@
 #include "lc_offsetworkerkernel.h"
 
 #include "rs_line.h"
+#include <cmath>
 #include <cstring>
 #include <type_traits>
 
@@ -88,6 +89,7 @@ result::Native LC_OffsetWorkerKernel::generate(const req::Generate& input, Trace
     output.sampleUnits = made.sampleUnits;
     trace.checkEntered = made.checkReason.has_value();
     if (made && input.throughPoint) {
+        trace.throughEntered = true;
         if (!LC_OffsetCurve::checkThrough(*made.entity, *input.throughPoint, input.limits.checkLimits,
                                          output.checkWork, output.throughWork)) {
             output.refusal = LC_OffsetCurveRefusal::ThroughNotOnCache;
@@ -131,6 +133,18 @@ result::Native LC_OffsetWorkerKernel::validate(const req::ValidateCache& input, 
     return output;
 }
 
+result::Native LC_OffsetWorkerKernel::checkThrough(const req::CheckThrough& input, Trace& trace) {
+    result::Native output;
+    const Snapshot observed{trace, output};
+    auto definition = input.definition;
+    if (!std::isfinite(input.worldTolerance) || input.worldTolerance <= 0 ||
+        !geo::normaliseBasis(definition.basis)) return output;
+    trace.throughEntered = true;
+    output.refusal = LC_OffsetCurve::checkThroughCache(input.cache, input.worldTolerance, input.point,
+        input.limits, output.throughWork) ? LC_OffsetCurveRefusal::None : LC_OffsetCurveRefusal::ThroughNotOnCache;
+    return output;
+}
+
 result::Reply LC_OffsetWorkerKernel::run(const req::Request& input, Trace* observed) noexcept {
     Trace local;
     Trace& trace = observed ? *observed : local;
@@ -158,6 +172,7 @@ result::Reply LC_OffsetWorkerKernel::run(const req::Request& input, Trace* obser
                                              op.limits, {}, &trace.trimWork);
             break;
         }
+        case 4: reply.result = checkThrough(std::get<req::CheckThrough>(input.operation), trace); break;
         default: return reply;
         }
         trace.computationCompleted = true;

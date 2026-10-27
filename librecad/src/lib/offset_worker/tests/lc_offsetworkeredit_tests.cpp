@@ -376,6 +376,64 @@ TEST_CASE("Worker edit no-op application retains complete source state and owned
     }
 }
 
+TEST_CASE("Worker Through preparation preserves exact endpoint no-ops without geometry work",
+          "[lc-offsetcurve][worker-edit][through]") {
+    auto source = adoptedRing(); const Snapshot before{*source};
+    LC_OffsetRunLimits limits; limits.checkLimits = {0, 0, 0, 0, 0};
+    auto plan = Edit::prepareThrough(*source, source->getData().controlPoints.front(), limits);
+    REQUIRE(plan.result()); CHECK_FALSE(plan.result().changed);
+    CHECK_FALSE(plan.generate()); CHECK_FALSE(plan.membership()); noStages(plan.result());
+    REQUIRE(Edit::applyLocal(*source, std::move(plan))); before.check(*source);
+}
+
+TEST_CASE("Worker Through preparation describes unchanged-cache membership without running C",
+          "[lc-offsetcurve][worker-edit][through]") {
+    auto source = adoptedRing(); const Snapshot before{*source};
+    LC_OffsetRunLimits limits; limits.checkLimits = {7, 129, 257, 9, 513};
+    const RS_Vector point{1.2, 1.6};
+    auto plan = Edit::prepareThrough(*source, point, limits);
+    REQUIRE(plan.membership()); CHECK_FALSE(plan.generate()); CHECK_FALSE(plan.result()); noStages(plan.result());
+    const auto owned = *plan.membership();
+    checkSpline(owned.cache, source->getData()); checkDefinition(owned.definition, source->definition());
+    CHECK(samePoint(owned.point, point)); CHECK(owned.worldTolerance == source->checkedWorldTolerance());
+    CHECK(owned.limits.maxDistancePairs == 257); CHECK(owned.limits.maxCacheSpans == 7);
+    CHECK_FALSE(Edit::applyLocal(*source, std::move(plan))); before.check(*source);
+}
+
+TEST_CASE("Worker Through preparation owns the raw target of a real generation proposal",
+          "[lc-offsetcurve][worker-edit][through]") {
+    auto source = adoptedRing(); const Snapshot before{*source};
+    LC_OffsetRunLimits limits; limits.maxSamples = 17;
+    const RS_Vector point{0, 3};
+    auto plan = Edit::prepareThrough(*source, point, limits);
+    REQUIRE(plan.generate()); CHECK_FALSE(plan.membership()); CHECK_FALSE(plan.result()); noStages(plan.result());
+    REQUIRE(plan.generate()->throughPoint); CHECK(samePoint(*plan.generate()->throughPoint, point));
+    CHECK(plan.generate()->definition.distance == 2); CHECK_FALSE(plan.generate()->definition.towardCentre);
+    checkLimits(plan.generate()->limits, limits);
+    CHECK_FALSE(Edit::applyLocal(*source, std::move(plan))); before.check(*source);
+}
+
+TEST_CASE("Worker Through preparation refuses invalid points before submitting work",
+          "[lc-offsetcurve][worker-edit][through]") {
+    auto source = adoptedRing(); const Snapshot before{*source};
+    for (const auto point : {RS_Vector{false}, RS_Vector{0, 2, 1},
+                            RS_Vector{std::numeric_limits<double>::infinity(), 0}}) {
+        auto plan = Edit::prepareThrough(*source, point, {});
+        CHECK_FALSE(plan.generate()); CHECK_FALSE(plan.membership());
+        checkRefused(plan.result(), Refusal::InvalidInput); before.check(*source);
+    }
+}
+
+TEST_CASE("Worker Through centre proposal still delegates disappearance to the producer",
+          "[lc-offsetcurve][worker-edit][through]") {
+    auto source = adoptedRing(); const Snapshot before{*source};
+    auto plan = Edit::prepareThrough(*source, {0, 0}, {});
+    REQUIRE(plan.generate()); CHECK_FALSE(plan.membership()); CHECK_FALSE(plan.result()); noStages(plan.result());
+    CHECK(plan.generate()->definition.distance == 1); CHECK(plan.generate()->definition.towardCentre);
+    REQUIRE(plan.generate()->throughPoint); CHECK(samePoint(*plan.generate()->throughPoint, {0, 0}));
+    CHECK_FALSE(Edit::applyLocal(*source, std::move(plan))); before.check(*source);
+}
+
 TEST_CASE("Worker edit exact translation stays private until one bounded local application",
           "[lc-offsetcurve][worker-edit][translation]") {
     RS_EntityContainer owner; RS_Layer layer{QStringLiteral("worker translation")};

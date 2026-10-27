@@ -34,6 +34,18 @@ LC_OffsetCurveEditResult LC_OffsetWorkerCompletion::apply(LC_OffsetCurve& clone)
         outcome.refusal = eligibility.refusal; outcome.changed = false;
         return outcome; // The child already ran: retain its actual stage work.
     }
+    if (const auto* membership = std::get_if<LC_OffsetWorkerRequest::CheckThrough>(&m_request.operation)) {
+        // A matched membership receipt can only acknowledge this unchanged raw
+        // cache. It cannot mint a native curve or publish a different definition.
+        if (clone.checkedWorldTolerance() != membership->worldTolerance ||
+            LC_OffsetWorkerRequest::Values::encodeCache(clone.getData()) !=
+                LC_OffsetWorkerRequest::Values::encodeCache(membership->cache) ||
+            LC_OffsetWorkerRequest::Values::encodeDefinition(clone.definition()) !=
+                LC_OffsetWorkerRequest::Values::encodeDefinition(membership->definition))
+            outcome.refusal = LC_OffsetCurveRefusal::Inconsistent;
+        outcome.changed = false;
+        return outcome;
+    }
     LC_OffsetCurveCreateResult prepared;
     static_cast<LC_OffsetCurveEditResult&>(prepared) = *result;
     prepared.entity = native(clone);

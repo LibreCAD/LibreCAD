@@ -39,10 +39,12 @@ struct Reply {
     std::variant<std::monostate, Native, LC_OffsetCacheTrim::Result> result;
 };
 
-/** Matched envelope [1,token,operation,failure,payload-or-null].
+/** Matched envelope [2,token,operation,failure,payload-or-null].
  * Native payload [refusal,engineStatus-or-null,checkReason-or-null,checkWork,
  * throughWork,engineRuns,changed,curve-or-null,attemptedOutputUsage,
  * attemptedDeepCountComplete,outputUsage,sampleUnits].
+ * CheckThrough uses Native with only refusal and bounded throughWork populated;
+ * success has no curve and changed=false, and grants no cache admission authority.
  * Curve [cache,definition,worldTolerance,closed,grips,midpoint].
  * Trim payload [refusal,fragments,conicFragments,roots,removed-or-null,
  * rootCount,fragmentCount,work]. All records retain their native field order.

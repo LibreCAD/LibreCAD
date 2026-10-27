@@ -291,6 +291,10 @@ bool valid(const TrimConic& op) {
     return valid(op.cache) && isConic(op.conic) && valid(op.conic) && valid(op.conicPick) &&
         (!op.cachePick || valid(*op.cachePick)) && valid(op.limits);
 }
+bool valid(const CheckThrough& op) {
+    return valid(op.cache) && valid(op.definition) && std::isfinite(op.worldTolerance) &&
+        valid(op.point) && valid(op.limits);
+}
 
 QCborArray fields(const RS_Vector& p) { return {p.x, p.y, p.z, p.valid}; }
 QCborArray fields(const RS_ArcData& d) {
@@ -358,6 +362,9 @@ QCborArray fields(const TrimConic& op) {
     return {fields(op.cache), fields(op.conic), fields(op.conicPick),
         op.cachePick ? QCborValue(fields(*op.cachePick)) : QCborValue(nullptr), fields(op.limits)};
 }
+QCborArray fields(const CheckThrough& op) {
+    return {fields(op.cache), fields(op.definition), op.worldTolerance, fields(op.point), fields(op.limits)};
+}
 }
 
 namespace Values {
@@ -408,14 +415,14 @@ std::optional<QCborArray> encode(const Request& request) {
     // No CBOR arrays are populated until the entire caller-owned value is admitted.
     if (!admitted(request)) return std::nullopt;
     const auto& t = request.token;
-    return QCborArray{1, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
+    return QCborArray{2, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
         qint64(request.operation.index()), std::visit([](const auto& op) { return fields(op); }, request.operation)};
 }
 
 std::optional<Request> decode(const QCborArray& a) {
     qint64 version, tag;
     Token token;
-    if (a.size() != 4 || !integer(a.at(0), version) || version != 1 ||
+    if (a.size() != 4 || !integer(a.at(0), version) || version != 2 ||
         !read(a.at(1), token) || !integer(a.at(2), tag) || !a.at(3).isArray()) return std::nullopt;
     const auto body = a.at(3).toArray();
     switch (tag) {
@@ -454,6 +461,13 @@ std::optional<Request> decode(const QCborArray& a) {
             op.cachePick = pick;
         }
         return Request{token, std::move(op)};
+    }
+    case 4: {
+        CheckThrough op;
+        if (body.size() == 5 && read(body.at(0), op.cache) && read(body.at(1), op.definition) &&
+            number(body.at(2), op.worldTolerance) && read(body.at(3), op.point) && read(body.at(4), op.limits))
+            return Request{token, std::move(op)};
+        break;
     }
     }
     return std::nullopt;

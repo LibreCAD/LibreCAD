@@ -329,6 +329,36 @@ bool LC_OffsetCurve::checkThrough(const LC_OffsetCurve &curve, const RS_Vector &
         cap.maxDepth, throughWork);
 }
 
+bool LC_OffsetCurve::checkThroughCache(const RS_SplineData &cache, const double tolerance,
+    const RS_Vector &point, const LC_OffsetCheckLimits &limits, geo::CheckWork &throughWork) {
+    throughWork = {};
+    if (!geo::isFinite2D(point) || !std::isfinite(tolerance) || !(tolerance > 0)) return false;
+    const auto cap = clampedLimits(limits);
+    geo::WorkBudget budget{cap};
+    geo::CacheLayoutResult layout;
+    try { layout = geo::inspectCacheLayout(cache, budget); }
+    catch (...) { throughWork = budget.consumed(); throw; }
+    throughWork = budget.consumed();
+    if (layout.status != geo::CacheLayoutStatus::Ok) return false;
+    // Layout admission is not C and grants no native entity authority. Keep the
+    // raw cache unchanged; membership needs no display children or file repair.
+    RS_Spline shell{nullptr, RS_SplineData{}};
+    shell.getData() = cache;
+    geo::CheckWork membership;
+    const auto appendWork = [&] {
+        throughWork.vertices += membership.vertices;
+        throughWork.distancePairs += membership.distancePairs;
+        throughWork.deepest = std::max(throughWork.deepest, membership.deepest);
+    };
+    bool contains;
+    try {
+        contains = containsThroughPoint(shell, point, tolerance, cap.maxVertices - throughWork.vertices,
+            cap.maxDistancePairs - throughWork.distancePairs, cap.maxDepth, membership);
+    } catch (...) { appendWork(); throw; }
+    appendWork();
+    return contains;
+}
+
 LC_OffsetCurveEditPreparation LC_OffsetCurve::prepareDefinition(const LC_EllipseOffsetDefinition &definition,
     const LC_OffsetRunLimits &limits) const {
     using Refusal = LC_OffsetCurveRefusal;
@@ -427,11 +457,13 @@ std::optional<LC_OffsetThroughProposal> LC_OffsetCurve::proposeThrough(const RS_
     return LC_OffsetThroughProposal{distance, geo::isInside(m_definition.basis, point), parameter};
 }
 
-LC_OffsetCurveEditResult LC_OffsetCurve::setThrough(const RS_Vector &point, const LC_OffsetRunLimits &limits) {
-    auto result = eligibility();
-    if (!result) return result;
+LC_OffsetCurveEditPreparation LC_OffsetCurve::prepareThrough(const RS_Vector &point,
+    const LC_OffsetRunLimits &) const {
+    LC_OffsetCurveEditPreparation plan;
+    plan.result = eligibility();
+    if (!plan.result) return plan;
     const auto proposal = proposeThrough(point);
-    if (!proposal) { result.refusal = LC_OffsetCurveRefusal::InvalidInput; return result; }
+    if (!proposal) { plan.result.refusal = LC_OffsetCurveRefusal::InvalidInput; return plan; }
     const double localScale = std::max({std::hypot(m_definition.basis.majorP.x, m_definition.basis.majorP.y),
                                        m_definition.distance, proposal->distance});
     const double projectionRoundoff = 32*std::numeric_limits<double>::epsilon()*localScale;
@@ -442,10 +474,25 @@ LC_OffsetCurveEditResult LC_OffsetCurve::setThrough(const RS_Vector &point, cons
         // must not manufacture a meaningful edit or clear preserved metadata.
         const auto &data = getData();
         for (std::size_t i = 0; i < data.controlPoints.size(); i += data.degree)
-            if (samePoint(data.controlPoints[i], point)) return result;
+            if (samePoint(data.controlPoints[i], point)) {
+                plan.kind = LC_OffsetCurveEditPreparation::Kind::Unchanged;
+                return plan;
+            }
     }
     auto next = m_definition; next.distance = proposal->distance; next.towardCentre = proposal->towardCentre;
-    return edit(next, limits, &point);
+    if (!normalizedDefinition(next)) { plan.result.refusal = LC_OffsetCurveRefusal::InvalidInput; return plan; }
+    plan.definition = next;
+    plan.kind = sameDefinition(next, m_definition) ? LC_OffsetCurveEditPreparation::Kind::CheckThrough :
+        LC_OffsetCurveEditPreparation::Kind::Generate;
+    plan.result = {}; // Neither membership nor generation has run.
+    return plan;
+}
+
+LC_OffsetCurveEditResult LC_OffsetCurve::setThrough(const RS_Vector &point, const LC_OffsetRunLimits &limits) {
+    auto plan = prepareThrough(point, limits);
+    if (plan.kind == LC_OffsetCurveEditPreparation::Kind::Refused ||
+        plan.kind == LC_OffsetCurveEditPreparation::Kind::Unchanged) return plan.result;
+    return edit(plan.definition, limits, &point);
 }
 
 LC_OffsetCurve::LC_OffsetCurve(const RS_Entity &source, const RS_SplineData &cache,

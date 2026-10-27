@@ -18,8 +18,23 @@ LC_OffsetWorkerEdit::Preparation LC_OffsetWorkerEdit::prepare(const LC_OffsetCur
     return result;
 }
 
+LC_OffsetWorkerEdit::Preparation LC_OffsetWorkerEdit::prepareThrough(const LC_OffsetCurve& clone,
+    const RS_Vector& point, const LC_OffsetRunLimits& limits) {
+    Preparation result;
+    result.m_origin = &clone; result.m_id = clone.getId(); result.m_stamp = clone.m_stamp;
+    result.m_original = clone.definition();
+    auto plan = clone.prepareThrough(point, limits);
+    result.m_result = plan.result;
+    if (plan.kind == LC_OffsetCurveEditPreparation::Kind::Generate)
+        result.m_generate = LC_OffsetWorkerRequest::Generate{plan.definition, limits, point};
+    else if (plan.kind == LC_OffsetCurveEditPreparation::Kind::CheckThrough)
+        result.m_membership = LC_OffsetWorkerRequest::CheckThrough{clone.getData(), clone.definition(),
+            clone.checkedWorldTolerance(), point, limits.checkLimits};
+    return result;
+}
+
 LC_OffsetCurveEditResult LC_OffsetWorkerEdit::applyLocal(LC_OffsetCurve& clone, Preparation&& plan) {
-    if (plan.m_generate) return {};
+    if (plan.m_generate || plan.m_membership) return {};
     if (!plan.m_result) return plan.m_result;
     if (plan.m_origin != &clone || plan.m_id != clone.getId() || !clone.hasEditableDefinition() ||
         plan.m_stamp != clone.m_stamp || LC_OffsetWorkerRequest::Values::encodeDefinition(plan.m_original) !=

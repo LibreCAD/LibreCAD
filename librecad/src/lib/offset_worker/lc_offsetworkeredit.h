@@ -19,11 +19,13 @@ public:
         Preparation& operator=(Preparation&&) noexcept = default;
         const LC_OffsetCurveEditResult& result() const noexcept { return m_result; }
         const std::optional<LC_OffsetWorkerRequest::Generate>& generate() const noexcept { return m_generate; }
+        const std::optional<LC_OffsetWorkerRequest::CheckThrough>& membership() const noexcept { return m_membership; }
     private:
         friend class LC_OffsetWorkerEdit;
         Preparation() = default;
         LC_OffsetCurveEditResult m_result;
         std::optional<LC_OffsetWorkerRequest::Generate> m_generate;
+        std::optional<LC_OffsetWorkerRequest::CheckThrough> m_membership;
         std::unique_ptr<LC_OffsetCurve> m_local;
         const LC_OffsetCurve* m_origin = nullptr;
         unsigned long long m_id = 0;
@@ -32,6 +34,7 @@ public:
     };
     static Preparation prepare(const LC_OffsetCurve& clone, const LC_EllipseOffsetDefinition&,
         const LC_OffsetRunLimits&);
+    static Preparation prepareThrough(const LC_OffsetCurve& clone, const RS_Vector&, const LC_OffsetRunLimits&);
     static LC_OffsetCurveEditResult applyLocal(LC_OffsetCurve& clone, Preparation&&);
 };
 #endif
