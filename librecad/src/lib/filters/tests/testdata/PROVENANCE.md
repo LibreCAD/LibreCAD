@@ -79,11 +79,18 @@ stripped on both sides.
 
 ## Generated DXF (hatch moments)
 
-`dxf/hatch_moments_spline_lens_10_5.dxf` was written for this repository with
-ezdxf 1.4.4 (`ezdxf.new("R2010")`): one SOLID HATCH whose edge path is a
-clamped degree-2 SPLINE with the control points (9, 5), (9.5, 6.2),
-(10.5, 6.2) and (11, 5), knots 0, 0, 0, 0.5, 1, 1, 1, closed by a LINE from
-(11, 5) back to (9, 5). It contains no imported drawing data.
+These were written for this repository with ezdxf 1.4.4
+(`ezdxf.new("R2010")`). Each holds one SOLID HATCH with one edge path and
+contains no imported drawing data:
+
+- `dxf/hatch_moments_half_ellipse_10_5.dxf`: the half (0 to 180 degrees, CCW)
+  of an ellipse centred at (10, 5) with major axis (3, 0) and ratio 2/3,
+  closed by a LINE between the major-axis ends.
+- `dxf/hatch_moments_half_ellipse_rot30_10_5.dxf`: the same with the major
+  axis rotated by 30 degrees.
+- `dxf/hatch_moments_spline_lens_10_5.dxf`: a clamped degree-2 SPLINE with the
+  control points (9, 5), (9.5, 6.2), (10.5, 6.2) and (11, 5), knots 0, 0, 0,
+  0.5, 1, 1, 1, closed by a LINE from (11, 5) back to (9, 5).
 
 | File | SHA-256 |
 | --- | --- |
@@ -94,9 +101,15 @@ clamped degree-2 SPLINE with the control points (9, 5), (9.5, 6.2),
 ## Generated DXF (hatch density)
 
 Sixty synthetic DXF scenes used by the hidden hatch regeneration-determinism
-regression test. Each is a small polyline boundary with one or two pattern
-hatches; they contain no imported drawing data. Produced by `common.py` in
-the hatch-fixes research tree, using ezdxf.
+regression test. They contain no imported drawing data. Each was written with
+ezdxf 1.4.4 (`ezdxf.new("R2010")`) and holds one pattern HATCH at angle 0,
+with ezdxf's definition of the pattern and closed polyline boundary paths.
+The file name gives the boundary, the pattern and the scale: five boundaries
+(`rect500x300`, a 500 x 300 rectangle; `circle_r200`, a 180-gon of radius
+200; `L_400_wall40`, an L with 400 legs and a 40 wall; `annulus_sq`, a 400
+square with a 200 square hole; `comb_10teeth`, a comb of ten 20-wide teeth),
+six patterns (ANSI31, BRICK, HEX, SAND, AR-CONC, PAISLEY) and the scales 1
+and 0.25.
 
 | File | SHA-256 |
 | --- | --- |

@@ -17,7 +17,7 @@
 ****************************************************************************/
 
 // Regression tests for island nesting and the per-hatch tolerance classifier.
-// The master build decided parentage from each child's bounding-box centre,
+// The old code decided parentage from each child's bounding-box centre,
 // which is outside the parent whenever the parent is a U, L or C: 11 of 24
 // probe shapes came back as a wrong tree, visible as filled lakes, missing
 // islands and islands that merge with the outer wall. The new sorter picks a
@@ -432,9 +432,9 @@ TEST_CASE("findFirst starts on the outer boundary when curves lie leftmost",
 }
 
 // --- Island nesting oracle ---------------------------------------------------
-// 24 topology cases built in code from the research oracle. Each row carries
+// 24 topology cases built in code. Each row carries
 // the expected number of root loops, the sorted multiset of per-root depths,
-// the total CCW area and a few probe points. Master is wrong on 11 of 24
+// the total CCW area and a few probe points. The old code is wrong on 11 of 24
 // (A, H, J, K, M, P, T4, T7, C1, C5, N4): its tree uses each child's bbox
 // centre, which is outside the parent whenever the parent is a U/L/C.
 
@@ -768,7 +768,7 @@ CaseList buildCases() {
                      1, {0, 1}, 89999.72, 1e-4,
                      {{150, 0.0006, false}}});
     // N4: a tangent island whose radius is computed exactly like 0.1*34*3 so
-    // the bbox overshoots y = 0 by 1.8e-15. The master's exact bbox-in-bbox
+    // the bbox overshoots y = 0 by 1.8e-15. The old exact bbox-in-bbox
     // check rejects it; the eps-slack check accepts.
     cases.push_back({"N4_tangent_island_bbox_ulp",
                      []() {
@@ -961,7 +961,7 @@ TEST_CASE("Duplicate loops: the lower index parents",
 TEST_CASE("Tree does not depend on the pattern angle",
           "[lc-hatchfix][nesting]") {
     // The frame-independent nesting lemma: the tree of an L wall and a U-in-U
-    // is the same at every hatch angle. Area is rotation-invariant; on master
+    // is the same at every hatch angle. Area is rotation-invariant; in the old code
     // the ill-chosen bbox-centre test gives 4100 instead of 1500 at angles
     // 0 / 30 / 90 degrees for the L wall.
     lc::test::SourcePatterns patterns;
@@ -1054,7 +1054,7 @@ TEST_CASE("Nesting is identical when built 100 times",
 }
 
 // --- Pinched-loop (figure-8) splitting --------------------------------------
-// The research oracle: a 7-line chain that forms a square sharing a single
+// A 7-line chain that forms a square sharing a single
 // vertex with a triangle must extract as a 4-edge loop and a 3-edge loop,
 // never as one 7-edge figure-8. Earlier builds merged the chain in 400 of
 // 896 edge-orientation plus traversal-order variants; after only the
@@ -1103,7 +1103,7 @@ TEST_CASE("Pinched lobes never extract as one figure-8 loop",
           "[lc-hatchfix][nesting]") {
     // 2^7 stored-orientation variants x 7 rotations of the container order
     // = 896 configurations. In every one the extractor must give loops of
-    // 4 and 3 edges, never 7. Master merges in 400/896.
+    // 4 and 3 edges, never 7. The old code merged in 400/896.
     const auto edges = figure8Edges();
     std::array<int, 7> baseOrder = {0, 1, 2, 3, 4, 5, 6};
     int merged = 0;
@@ -1135,7 +1135,7 @@ TEST_CASE("Pinched lobes never extract as one figure-8 loop",
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("A figure-8 chain splits into two simple CCW loops",
           "[lc-hatchfix][nesting]") {
-    // The research oracle chain (0,0),(0,1),(1,1),(1.5,2),(2,1.5),(1,1),(1,0).
+    // The chain (0,0),(0,1),(1,1),(1.5,2),(2,1.5),(1,1),(1,0).
     // Split at the repeated (1,1): the first lobe is the triangle
     // (1,1)-(1.5,2)-(2,1.5) with area 0.375 and the second lobe is the
     // quadrilateral (0,0)-(0,1)-(1,1)-(1,0) with area 1. Both are positive

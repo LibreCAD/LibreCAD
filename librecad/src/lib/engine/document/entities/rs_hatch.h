@@ -232,8 +232,8 @@ private:
     /**
      * The hatch's lattice origin in WCS. Every root uses one lattice through
      * this point; the pattern's minimum corner is placed on every lattice
-     * point anchor + (i*W, k*H). Fixed at (0, 0) on 2.2.2 (D30); H18 makes
-     * this read a stored, transform-tracked origin.
+     * point anchor + (i*W, k*H). Fixed at (0, 0) for now; a stored origin
+     * that follows the hatch's transforms would replace it.
      */
     RS_Vector latticeOrigin() const { return RS_Vector{0.0, 0.0}; }
 

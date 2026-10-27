@@ -65,7 +65,7 @@ std::shared_ptr<const LoopGeometry> buildPolygon(const std::vector<RS_Vector>& r
     return LoopGeometry::fromChain(*cont, ring);
 }
 
-// Build the twelve-point star of the plan's TDD case near one of its vertices.
+// Build a star polygon with `points` outer vertices around centre.
 std::vector<RS_Vector> buildStar(int points, double outerR, double innerR,
                                  const RS_Vector& centre) {
     std::vector<RS_Vector> ring;

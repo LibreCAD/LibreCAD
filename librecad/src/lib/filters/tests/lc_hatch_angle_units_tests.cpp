@@ -128,8 +128,8 @@ std::string hatchDxf(double group52, int def78 = 1, double group53 = 45.0) {
 }
 
 // Rewrites the first `999` comment of a sample file to `line` and the value
-// after the first `52` group to `group52`. Mirrors how the research probed
-// each writer-header class; keeps every other byte of the file intact.
+// after the first `52` group to `group52`. This makes one
+// sample per writer-header class; it keeps every other byte of the file intact.
 std::string rewriteFirstCommentAnd52(const std::string& text,
                                      const std::string& newComment,
                                      const std::string& new52) {

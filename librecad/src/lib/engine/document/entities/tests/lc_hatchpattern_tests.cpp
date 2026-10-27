@@ -494,12 +494,12 @@ TEST_CASE("Hatch pattern lines: BRICK around a square island matches the clipped
     REQUIRE(matchedFraction(carpet, fixed, 1e-7) == Catch::Approx(1.0));
 }
 
-// --- H02 lattice-anchor tests. --------------------------------------------
-// Master anchors each root's lattice at that root's rotated bbox corner, so
+// --- Lattice-anchor tests. --------------------------------------------
+// The old code anchored each root's lattice at that root's rotated bbox corner, so
 // two disjoint roots of one hatch get different phases and every edit moves
 // the pattern. The fix anchors every root to the WCS point h = (0, 0), passes
 // it through LC_Loops::trimPatternEntities and uses [floor, ceil) tile
-// indices in createTiles. See plan step H02.
+// indices in createTiles.
 
 namespace {
 
@@ -913,9 +913,8 @@ TEST_CASE("Density fixtures regenerate identically",
     std::sort(files.begin(), files.end());
 
     // Ten regenerations per fixture: enough to show that the extraction order
-    // is deterministic across repeated updates. (The research note's 100 is
-    // excessive here: some scale-1 fixtures produce hundreds of thousands of
-    // pieces per hatch.)
+    // is deterministic across repeated updates. Some scale-1 fixtures produce
+    // hundreds of thousands of pieces per hatch, so more would be slow.
     const int iterations = 10;
     for (const auto& file : files) {
         CAPTURE(file.string());
@@ -978,7 +977,7 @@ Ring hatchfixLInner() {
 TEST_CASE("Hatch pattern lines: islands in a U and an L wall match the clipped carpet",
           "[lc-hatchfix][pattern]") {
     // Three oracle rings. The parent is a U or an L, so each island's bbox
-    // centre lies outside its parent; the master build therefore leaves the
+    // centre lies outside its parent; the old code therefore left the
     // island a root and hatches its interior as well. The clipped carpet
     // uses global half-open parity and does not hatch the island; the
     // reference and the trimmer must agree only once the sorter picks a

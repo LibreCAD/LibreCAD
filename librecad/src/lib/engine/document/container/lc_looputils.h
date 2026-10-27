@@ -115,7 +115,7 @@ public:
    *
    * Tile indices are half-open [floor((bbMin - a)/P), ceil((bbMax - a)/P));
    * every tile whose rect intersects the bounding box and either overlaps the
-   * loop or contains the pattern's centre is kept. H10/H11 may use this.
+   * loop or contains the pattern's centre is kept.
    */
   std::vector<RS_Vector> createTiles(const RS_Pattern& pattern,
                                      const RS_Vector& latticeAnchor) const;

@@ -11543,7 +11543,7 @@ void RS_FilterDXFRW::addHeader(const DRW_Header *data) {
   }
   // Legacy writers stored DXF hatch angle 52 raw. Every LibreCAD 2.x file
   // (dxfrw < 0.6.4) and every dxflib 1.x / 2.x file; the standalone fork's
-  // 2.0.0 keeps raw too (G3). Everything else, including bare "dxfrw" and
+  // 2.0.0 keeps raw too. Everything else, including bare "dxfrw" and
   // dxflib 3+ (QCAD 3), is a degree writer.
   m_legacyHatchRadians =
       (1 <= m_dxflibMajor && m_dxflibMajor <= 2)
@@ -11560,7 +11560,7 @@ double RS_FilterDXFRW::importedHatchAngle(double drwAngle, bool legacyRadians,
   double a = drwAngle;
   if (legacyRadians && !solid) {
     // The number that stood in group 52 before libdxfrw's divide: use it for
-    // the tie-break of the three cases described in the plan.
+    // the tie-break of the three cases below.
     const double x = drwAngle * ARAD;
     if (std::fabs(x) <= 2.0 * M_PI + 1.0e-9) {
       // Within [-2pi, 2pi]: legacy LibreCAD/QCAD2 radians stored raw.

@@ -269,8 +269,8 @@ bool RS_Hatch::validate() {
 
         m_orderedLoops = results;
         // Remember the frame of m_orderedLoops: validate() rotated by
-        // -m_data.angle about rotCenter. H02's lattice anchor is mapped
-        // through this stored pair, and H04/H07/H08 read them too.
+        // -m_data.angle about rotCenter. The lattice anchor is mapped
+        // through this stored pair; picking, the centroid and the moments use it too.
         m_pivot = rotCenter;
         m_loopAngle = isSolid() ? 0.0 : m_data.angle;
         m_tolerance = tolerance;
@@ -478,8 +478,8 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
     }
 
     // The contour was optimized in a frame rotated by -m_loopAngle about
-    // m_pivot (see validate()). The lattice anchor is one WCS point (A9/D30:
-    // latticeOrigin() = (0, 0)) mapped into that frame; every root uses it,
+    // m_pivot (see validate()). The lattice anchor is one WCS point
+    // (latticeOrigin() = (0, 0)) mapped into that frame; every root uses it,
     // so two roots of one hatch share the WCS phase and a non-lattice move of
     // the boundary does not drag the pattern. The trimmed pieces are rotated
     // back to WCS by +m_loopAngle about the same m_pivot.
