@@ -13720,7 +13720,7 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         pixelSize = reader->getDouble();
         break;
     case 52:
-        angle = reader->getDouble();
+        angle = reader->getDouble() / ARAD;
         break;
     case 53: // pattern line angle — starts a new PatternLine record
         if (!validateCurrentPatternLineDxf())
@@ -13731,7 +13731,7 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         if (patternLines.size() >= static_cast<std::size_t>(kMaxHatchItems))
             return false;
         patternLines.push_back(PatternLine());
-        patternLines.back().angle = reader->getDouble();
+        patternLines.back().angle = reader->getDouble() / ARAD;
         m_dxfPatternDashCountExpected = -1;
         m_dxfPatternDashCountSeen = false;
         break;

@@ -133,7 +133,10 @@ public:
     void setScale(const double scale) { m_data.scale = scale; }
 
     double getAngle() const { return m_data.angle; }
-    void setAngle(const double angle) { m_data.angle = angle; m_needOptimization = true; }
+    /// Stores the angle normalised to [0, 2 pi), matching rotate() and
+    /// mirror() so a negative input and 2 pi + x behave the same as the
+    /// transform that would produce it.
+    void setAngle(double angle);
 
     /**
      * @return Total enclosed area (0th moment) of loops.

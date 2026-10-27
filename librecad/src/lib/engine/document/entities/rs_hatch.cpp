@@ -546,6 +546,11 @@ double RS_Hatch::doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity
     return RS_MAXDOUBLE;
 }
 
+void RS_Hatch::setAngle(double angle) {
+    m_data.angle = RS_Math::correctAngle(angle);
+    m_needOptimization = true;
+}
+
 void RS_Hatch::move(const RS_Vector& offset) {
     m_needOptimization = true;
     for(RS_Entity* en: std::as_const(*this)) {

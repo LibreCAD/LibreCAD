@@ -26,6 +26,7 @@
 #include <memory>
 #include <string>
 
+#include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
 #include "drw_entities.h"
@@ -155,6 +156,8 @@ TEST_CASE("DXF MPOLYGON: 70 is the version, 71 is the solid flag",
     CHECK(mp.hpattern == 1);        // code 76
     CHECK(mp.scale == 4.0);
     CHECK(mp.patternLines.size() == 1u);
+    // Group 53 reads as radians since libdxfrw 0.6.4: 45 deg -> pi/4.
+    CHECK(mp.patternLines.at(0).angle == Catch::Approx(0.7853981633974483).margin(1e-12));
     REQUIRE(mp.looplist.size() == 1u);
     const auto& loop = mp.looplist.at(0);
     CHECK((loop->type & 2) == 2);
