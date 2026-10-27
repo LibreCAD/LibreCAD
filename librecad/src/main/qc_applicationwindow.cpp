@@ -1061,6 +1061,12 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow * w, bool activateNext)
 	// style sheet, Qt shows such a window again if it was maximized (QMdiSubWindow on
 	// StyleChange), and it then outlives the main window. Clear that state and delete it.
 	w->overrideWindowState(Qt::WindowNoState);
+	// A view makes itself its document's view when it is created, so a print preview took
+	// over its drawing's: hand it back before the view is deleted with the window.
+	RS_Document* closingDocument = w->getDocument();
+	if (closingDocument->getGraphicView() == w->getGraphicView())
+		closingDocument->setGraphicView(parentWindow != nullptr && parentWindow->getDocument() == closingDocument
+		                                ? parentWindow->getGraphicView() : nullptr);
 	mdiAreaCAD->removeSubWindow(w);
 	w->deleteLater();
 	window_list.removeOne(w);
