@@ -16,7 +16,7 @@
 **
 ****************************************************************************/
 
-// H01 regression tests for the hatch pattern trimmer.
+// Regression tests for the hatch pattern trimmer.
 //
 // #2287 (dash extension and per-source intercept de-dup) stretched each
 // bundled LINE pattern to 1.5·max(W, H) of the loop bbox and de-duplicated
@@ -409,7 +409,7 @@ TEST_CASE("Hatch pattern lines: ANSI31 ink equals area over spacing",
     // ANSI31 is 45-deg lines at spacing 1/sqrt(2) within a 500x300 rect.
     // Projecting the rect normal to the line direction gives width 150000·sqrt(2)/2
     // over sqrt(2)/2 ≈ 150000 ÷ 1 ink units ≈ 106066. The ±P∥ bound: 500+300=800
-    // divided by sqrt(2) ≈ 565 — the plan gives ±1131.
+    // divided by sqrt(2) ≈ 565; the check allows twice that, ±1131.
     const double ink = inkOf(pieces);
     INFO("ink=" << ink);
     REQUIRE(std::abs(ink - 150000.0 / std::sqrt(2.0)) <= 1600.0 / std::sqrt(2.0));
@@ -459,7 +459,7 @@ TEST_CASE("Hatch pattern lines: PAISLEY piece count matches the clipped carpet",
                                      0.0, 0.0, 500.0, 300.0);
     REQUIRE_FALSE(carpet.empty());
 
-    // Range oracle until H05 provides deterministic equality.
+    // A range, not equality: the inside test still casts random rays.
     const double countRatio = static_cast<double>(fixed.size()) /
                               static_cast<double>(carpet.size());
     const double inkRatio = inkOf(fixed) / inkOf(carpet);

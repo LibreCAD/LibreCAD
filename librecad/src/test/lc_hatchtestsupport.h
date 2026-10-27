@@ -109,8 +109,7 @@ struct LinePiece {
 
 /**
  * Clones of the direct children of hatch that carry FlagHatchChild. The caller
- * owns the clones. H18-3 reimplements this on materializePattern() so tests
- * that read pieces keep working after pattern children are gone.
+ * owns the clones.
  */
 inline std::vector<std::unique_ptr<RS_Entity>> patternPieces(const RS_Hatch& hatch) {
     std::vector<std::unique_ptr<RS_Entity>> out;

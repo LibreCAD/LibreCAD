@@ -1249,8 +1249,7 @@ TEST_CASE("LC_Hyperbola: left-branch area uses 2.2.1's primitive (#2559)",
           "[lc-hatchfix][moments]") {
   // Each row builds LC_HyperbolaData(center, (2cosθ, 2sinθ), 0.5, φ1, φ2,
   // reversed), so a = 2 and b = 1. The expected values were produced by a
-  // SymPy-verified closed form; the e8dd54132-era values are the broken ones
-  // this step restores.
+  // SymPy-verified closed form.
   constexpr double kAbs = 1e-12;
 
   SECTION("left c=(4,0) θ=0 φ∈[-1,1]") {

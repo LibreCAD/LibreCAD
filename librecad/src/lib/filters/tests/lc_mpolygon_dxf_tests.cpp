@@ -11,8 +11,9 @@
 **
 ****************************************************************************/
 
-// H09-1 regression tests. MPOLYGON code 70 is the version and 71 is the solid
-// flag; libdxfrw used to hand both to DRW_Hatch which stored 70 as `solid`.
+// Regression tests for MPOLYGON DXF codes. Code 70 is the version and 71 is
+// the solid flag; libdxfrw used to hand both to DRW_Hatch which stored 70 as
+// `solid`.
 // Every ezdxf-written pattern MPOLYGON (71 = 0, 70 = version) therefore read
 // as a solid fill. The writer must now use ODA's tag order (70 version first,
 // 71 solid, loop records with 73 before 72, 76 trailer gates after-loop
@@ -123,9 +124,8 @@ bool readDxfString(const std::string& dxf, CaptureIface& cap, const char* name) 
     return ok;
 }
 
-// An ezdxf-written pattern MPOLYGON. Transcribed from
-// evidence/fixalgo/dxf_semantics/oda/in/m1_mpoly_pattern.dxf: ANSI31 at
-// scale 4, rectangle 100x60, fill is pattern (71 = 0), one definition line.
+// An ezdxf-written pattern MPOLYGON: ANSI31 at scale 4, rectangle 100x60,
+// fill is pattern (71 = 0), one definition line.
 const char* kPatternMPolygon =
     "0\nSECTION\n2\nENTITIES\n"
     "0\nMPOLYGON\n5\n30\n100\nAcDbEntity\n8\n0\n100\nAcDbMPolygon\n"

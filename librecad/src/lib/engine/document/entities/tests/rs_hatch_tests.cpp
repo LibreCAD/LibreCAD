@@ -1591,9 +1591,9 @@ TEST_CASE("RS_Hatch keeps one set of pattern lines across updates and edits", "[
 
 TEST_CASE("RS_Hatch moments: open control-net spline lens is a valid loop",
           "[lc-hatchfix][moments]") {
-    // Precondition for H08's hatch-moment pipeline: an open LC_SplinePoints
-    // built from a control net must report valid end points, so a closing
-    // chord can land on them. Before this fix the hatch was HATCH_INVALID_CONTOUR.
+    // An open LC_SplinePoints built from a control net must report valid end
+    // points, so a closing chord can land on them. Before this fix the hatch
+    // was HATCH_INVALID_CONTOUR.
     RS_Hatch hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
     auto* loop = new RS_EntityContainer(&hatch);
     hatch.addEntity(loop);
@@ -1610,7 +1610,7 @@ TEST_CASE("RS_Hatch moments: open control-net spline lens is a valid loop",
 
 TEST_CASE("RS_FilterDXFRW: hatch with a degree-2 control-net spline edge is kept",
           "[lc-hatchfix][moments]") {
-    // Before H08-1 the import of a DXF HATCH whose boundary edge is a degree-2
+    // Before this fix the import of a DXF HATCH whose boundary edge is a degree-2
     // control-net SPLINE emitted "no loops generated" and deleted the hatch.
     REQUIRE(lc::test::ensureSettings());
     lc::test::QuietLog quiet;
@@ -1640,11 +1640,10 @@ TEST_CASE("RS_FilterDXFRW: hatch with a degree-2 control-net spline edge is kept
 
 TEST_CASE("RS_Hatch area: left-branch hyperbola segment (#2559)",
           "[lc-hatchfix][moments]") {
-    // Reproduces evidence/fixalgo/verify_moments/c5/probe5.cpp section 2: one
-    // hyperbola edge from phi=-0.5 to phi=1.2 with a=2, b=1, theta=25deg,
+    // One hyperbola edge from phi=-0.5 to phi=1.2 with a=2, b=1, theta=25deg,
     // c=(3,-2), closed by a straight chord between its ends. On both branches
     // the enclosed region is the same, so getTotalArea() must agree. The
-    // expected value is 0.945631933837233; the e8dd54132 defect gives
+    // expected value is 0.945631933837233; #2559's primitive gives
     // 12.4023240632 on the left branch.
     constexpr double kExpected = 0.945631933837233;
     for (bool reversed : {false, true}) {

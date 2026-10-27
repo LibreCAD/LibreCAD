@@ -79,10 +79,11 @@ stripped on both sides.
 
 ## Generated DXF (hatch moments)
 
-These were produced by `make_fixtures.py` in the hatch-fixes research tree
-(`/Users/dli/.claude/plans/hatch-fixes/evidence/fixalgo/moments/make_fixtures.py`)
-using ezdxf. They contain no imported drawing data; each is a small synthetic
-scene whose moments are read by the hatch-moment regression tests.
+`dxf/hatch_moments_spline_lens_10_5.dxf` was written for this repository with
+ezdxf 1.4.4 (`ezdxf.new("R2010")`): one SOLID HATCH whose edge path is a
+clamped degree-2 SPLINE with the control points (9, 5), (9.5, 6.2),
+(10.5, 6.2) and (11, 5), knots 0, 0, 0, 0.5, 1, 1, 1, closed by a LINE from
+(11, 5) back to (9, 5). It contains no imported drawing data.
 
 | File | SHA-256 |
 | --- | --- |
