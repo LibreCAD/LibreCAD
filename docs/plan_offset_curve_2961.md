@@ -23,7 +23,7 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-10-26. Project: **LibreCAD**, not LibreCAD_3.
+Updated: 2026-10-27. Project: **LibreCAD**, not LibreCAD_3.
 Status: **S0/W0/W1 partially implemented; native helper/client qualified, GUI routing incomplete**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
@@ -304,7 +304,7 @@ candidate except the explicitly proposed native-worker tags.
 | C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a` plus later search; audit/retest | `[lc-offsetcurve][cache-topology-chain]` |
 | W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and initial deadline/authority policy implemented; finish caller/fallback/import ownership freeze before routing | operation/cap/deadline/call-site table |
 | W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; full app/deployed-package gates remain | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
-| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | real cancel/timeout/recovery and private completion tests implemented; fault/hung-kernel/stateful clock and GUI integration open | `[lc-offsetcurve][worker-client]`; remaining lifecycle tests and retained runner regression |
+| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | transport faults/stateful clock and bounded edit preparation qualified; genuine geometry-entry timeout and GUI routing open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[edit][preparation]`; remaining integration and runner regression |
 | E1 | Guarded entity/factories, RTTI, stamp, clone, downgrade and transforms | C-check | candidate `92758859c` and later fixes; audit/retest | `[lc-offsetcurve][native]`, `[entity-coverage]` |
 | U1 | Type/INSERT/selection/SVG/menu/info dispatch and safe properties | E1 | candidate `49c9b328b`, `f0fb28fab`; audit/retest | native type/name/dispatch TUs, `[entity-coverage]` |
 | E2 | Cached grips/snaps, through proposal and transactional mutators | E1 | candidate `4300c1031`, `47e14c74b`; audit/retest | native edit/grip/transform TUs |
@@ -542,17 +542,20 @@ Caller-level shared reservations/final snapshot checks must still be integrated;
 the client itself never retries a failed geometry operation with fresh caps.
 
 Finish W0-W2 in these bounded sub-slices before claiming GUI isolation:
-1. Add real parent fault-path tests in a separate owned test executable directory,
+1. Retain the now-implemented real parent fault-path tests in a separate owned test executable directory,
    leaving the production helper path fixed and never replacing the real app's
    helper. Exercise crash, truncated/duplicate/mismatched replies, excessive
    diagnostics, delayed exit and recovery; validate report syntax, not exit0 alone.
-   Add stateful injected-clock boundaries and a genuine geometry-entry timeout/
-   reap test. The existing1ms real-child timeout may occur during startup and is
-   explicitly not hung-kernel acceptance; the pure expiration predicate is not
-   a stateful fake-clock lifecycle test.
-2. Extract a bounded edit-preparation description: no-op/exact translation/cached
-   clone stay local, other definition/Through edits produce owned Generate
-   requests. Preserve current source eligibility and final Through proof. Route
+   Stateful injected-clock preview/commit/kill/reap transitions now execute with
+   real children; retain the missed-kill-tick regression. A genuine geometry-entry
+   timeout/reap test remains open. The existing1ms real-child timeout and stalled
+   fault fixture are explicitly not hung-kernel acceptance.
+2. Reuse the bounded `prepareDefinition` description now implemented: no-op/exact
+   translation stay local; Generate descriptions run no producer/C stage and are
+   not successful edit results. `Completion::apply` only updates a caller-owned
+   clone and retains actual completed-stage counters, including late eligibility
+   refusal. Extend preparation to preserve Through no-ops/membership without
+   forcing an unnecessary generator run. Preserve final Through proof. Route
    dialog clones, sheet batches, grips and Update through the owning client,
    retaining context/source/undo seals, one batch publication and cancellation.
    Do not use nested GUI event loops as a substitute for asynchronous ownership.
@@ -974,6 +977,50 @@ probes remain scoped measurements, not universal timing proofs. ASan retains
 | `W1-qmake-process.xml` | `5b6cc0fd948d16a47e5cde636a70db24ec690495c2272b89a5e7481bf4aad5b2` |
 | `W1-ctest.log` | `5c45478e1b2a94cc9424ff7c77e34324eaacbf9407fc3b6822cee5362fe07aba` |
 
+`5274355ef9ed44176fc8ac8e8110ffd9aa2ba762` is the next bounded foundation
+slice. It extracts generation-free immutable definition preparation, reuses it
+in the existing setter path, and adds private-completion application to owned
+clones. Source/cache/attributes and exact-translation/no-op behavior are preserved;
+invalid/stale sources refuse before job creation. A Generate description cannot
+pretend that producer/checker stages ran. Native edit tests pass28/28 with15262
+assertions in Release and ASan; client/application tests pass8/8 in both.
+
+Seven isolated fault cases exercise20 failure modes, same-client queue recovery,
+unknown-work charging, late clean exit, startup-independent stateful fake-clock
+preview/commit/kill transitions and the inclusive quarantine boundary. A real
+correctness gap was fixed: an event turn skipping the earlier kill tick must still
+request kill before detaching/quarantining. The retained notifier is observed to
+exit/clean up; `ReapFailed` is not mislabeled as a successful reap and the poisoned
+context cannot launch another job. Fixture code never installs into or replaces
+the real application helper and cannot fabricate native curve authority.
+
+Release CTest passes7/7 (41.60s in this loaded run). The ASan fault suite's24s
+aggregate watchdog failed while competing with the geometry suites, then passed
+unchanged7/7 when executed alone. Keep process/client/fault CTest lanes serial,
+and do not externally co-run proof-heavy sanitizer suites with them. No product
+deadline, watchdog or geometry cap was raised. Current reports pass strict XML
+syntax checks; polling assertion counts are timing-dependent. ASan continues with
+leak detection disabled and no generic leak/Qt-allocation claim. This qualifies
+transport fixtures, not a hung geometry kernel or a GUI transaction.
+
+| Artifact | SHA256 |
+|---|---|
+| `W2-preparation.xml` | `defeba1b7cf9fd0dcfff86b864ec2ba7b52d919277453d53e2f267e398b6712e` |
+| `W2-final-preparation-asan.xml` | `bfff4bb43e1a6f817ff6d9d706f6c5f869355f4fe216ea0913ffa2d0be1c95b2` |
+| `W2-apply.xml` | `a2d401633021c1213a43cd1ba32cf241e7efbefa999f70e68ad3ad83ef33d346` |
+| `W2-final-apply-asan.xml` | `761ce72a0a39da165c79b8f4265dee88b088316abb60354b1d3c74c15e6f2836` |
+| `W2-clock.xml` | `999dc1d576cb0f0a20275ac88e6aec07e491b6e1eb0d645f3e99e428b359c247` |
+| `W2-final-fault-serial-asan.xml` | `7b36d2ec37080021cbdd6981400b5ca5ffd0f5376a08d6a17d3bedacfbc99416` |
+| `W2-final-ctest.log` | `c0e7203dac50817f8e6860f398ad2e39380eec2203bd23016b9a350a164fefd5` |
+
+Next GUI slice: route the single-entity dialog's owned clone through preparation
+and its owning worker; seal the input again before application. Disable/veto
+accept and point-picker closure while pending, cancel on target/context/dialog
+destruction, preserve dirty peer editors, and test actual helper execution with
+an event-loop heartbeat. Retain the existing outer native edit guard/clone owner
+through `dlg.exec()`. Then route sheet batches, grips, Update, creation and trim
+in the4.2 order. File/import lifetime and ordinary fallback are not waived.
+
 S0 source/target reconciliation, A-C review, W0-W2 caller integration and R remain
 open. Next execute the remaining bounded worker sub-slices in4.2, not a second
 implementation of the completed Node runner or helper codecs. Both shared
@@ -989,7 +1036,7 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   executions are recorded above; do not redo them as missing implementation.
 - [ ] A-core through C-check: review/requalify existing code and patch only proven
   accounting, ownership, occurrence or global-topology gaps. No duplicate checker.
-- [ ] W0-W2: finish fault/hung-kernel/stateful-clock qualification, typed ordinary
+- [ ] W0-W2: finish genuine geometry-entry timeout qualification, typed ordinary
   fallback/import ownership and GUI adoption. Reuse the qualified helper/client/
   reply modules; do not redo them as absent. Keep Node runner scope separate.
 - [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
@@ -997,8 +1044,9 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:**4.2 sub-slice1, then the bounded
-edit-preparation/caller adapter. The ordinary DWG2007 correction and fresh broad
+**Next concrete action on implementation resume:** single-entity dialog GUI
+routing using the qualified preparation/client/completion, then the remaining
+4.2 caller adapters. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
 Nothing is automatically copied into the dirty main tree. Native caller routing,
 the remaining lifecycle/packaging gates and final UI/file acceptance are open.
