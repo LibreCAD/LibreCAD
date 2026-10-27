@@ -160,3 +160,35 @@ TEST_CASE("automatic print preview fits once after loading options",
     CHECK(action->getScale() == Catch::Approx(expectedScale));
     CHECK(action->getScale() != Catch::Approx(0.125));
 }
+
+TEST_CASE("Portrait and Landscape keep the size of a custom paper", "[print_preview][issue3187]") {
+    (void)application();
+    SettingGuard unit{RS_SETTINGS, "Defaults", "Unit"};
+    SettingGuard paperWidth{RS_SETTINGS, "Print", "PaperSizeX"};
+    SettingGuard paperHeight{RS_SETTINGS, "Print", "PaperSizeY"};
+    unit.set(QStringLiteral("Inch"));
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addTestGeometry(graphic);
+    LC_PlotSettings* ps = graphic.getPlotSettings();
+    ps->setPaperSize(RS_Vector{20.0, 13.0});
+    bool landscape = false;
+    REQUIRE(ps->getPaperFormat(&landscape) == RS2::Custom);
+
+    PrintPreviewTestView view;
+    view.setDocument(&graphic);
+    LC_ActionContext context;
+    context.setDocumentAndView(&graphic, &view);
+    auto action = std::make_unique<RS_ActionPrintPreview>(&context);
+    action->postCreateInit();
+
+    // what the Portrait and Landscape buttons of the print preview do;
+    // a custom paper used to become 0 x 0, which Fit then replaced by A4
+    action->setPaperOrientation(true);
+    CHECK(ps->getPaperSize().x == Catch::Approx(13.0));
+    CHECK(ps->getPaperSize().y == Catch::Approx(20.0));
+    action->setPaperOrientation(false);
+    CHECK(ps->getPaperSize().x == Catch::Approx(20.0));
+    CHECK(ps->getPaperSize().y == Catch::Approx(13.0));
+}
