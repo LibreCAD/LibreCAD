@@ -6,6 +6,7 @@
 #include <QApplication>
 #include <QCursor>
 #include <QEventLoop>
+#include <QFileInfo>
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QPointer>
@@ -27,6 +28,7 @@
 #include "lc_actiontestsupport.h"
 #include "lc_graphicviewport.h"
 #include "lc_offsetcurve.h"
+#include "../../../lib/offset_worker/lc_offsetworkerclient.h"
 #include "lc_overlayentitiescontainer.h"
 #include "lc_visual_snap_manager.h"
 #include "rs_actiondefault.h"
@@ -76,6 +78,7 @@ public:
     explicit DragAction(LC_ActionContext* context) : RS_ActionDefault(context) {}
     using RS_ActionDefault::lastOffsetGripResult;
     using RS_ActionDefault::isOffsetGripDragging;
+    using RS_ActionDefault::isOffsetGripPreparing;
     using RS_ActionDefault::Neutral;
     using RS_ActionDefault::MovingRef;
     using RS_Snapper::clearVisualSnap;
@@ -92,6 +95,65 @@ protected:
         return limits;
     }
 };
+constexpr int preparationWatchdogMs = 3500;
+
+void requireNativeHelper() {
+    const auto path = LC_OffsetWorkerClient::helperPath();
+    INFO("Build the real fixed sibling offset helper beside this test executable: " << path.toStdString());
+    REQUIRE(QFileInfo(path).isFile());
+    REQUIRE(QFileInfo(path).isExecutable());
+}
+
+bool pollEventsUntil(const std::function<bool()>& ready) {
+    if (ready()) return true;
+    QEventLoop loop;
+    QTimer poll, watchdog;
+    bool expired = false;
+    std::exception_ptr error;
+    QObject::connect(&poll, &QTimer::timeout, &loop, [&] {
+        try { if (ready()) loop.quit(); }
+        catch (...) { error = std::current_exception(); loop.quit(); }
+    });
+    QObject::connect(&watchdog, &QTimer::timeout, &loop, [&] { expired = true; loop.quit(); });
+    poll.start(1);
+    watchdog.setSingleShot(true); watchdog.start(preparationWatchdogMs);
+    loop.exec();
+    if (error) std::rethrow_exception(error);
+    return !expired && ready();
+}
+
+void awaitPreparation(DragAction& action) {
+    if (!action.isOffsetGripPreparing()) return;
+    const QPointer<DragAction> live(&action);
+    const auto cancelOnUnwind = qScopeGuard([&] {
+        if (live && live->isOffsetGripPreparing()) live->suspend();
+    });
+    requireNativeHelper();
+    const bool completed = pollEventsUntil([&] { return !live || !live->isOffsetGripPreparing(); });
+    INFO("Native grip preparation did not settle within the 3500ms single-job GUI-test watchdog");
+    REQUIRE(completed);
+    REQUIRE(live);
+    CHECK_FALSE(live->isOffsetGripPreparing());
+}
+
+void checkGeneratedStages(const DragAction& action) {
+    const auto* result = action.lastOffsetGripResult(); REQUIRE(result);
+    CHECK(result->engineRuns == 1);
+    REQUIRE(result->engineStatus); CHECK(*result->engineStatus == LC_CurveOffsetStatus::Ok);
+    REQUIRE(result->checkReason); CHECK(*result->checkReason == LC_OffsetCheckResult::Reason::None);
+    CHECK(result->checkWork.cacheSpans > 0); CHECK(result->checkWork.vertices > 0);
+    CHECK(result->throughWork.vertices > 0); CHECK(result->throughWork.distancePairs > 0);
+}
+
+void observeCancelledReplies() {
+    // Allow the real client's bounded terminate/reap path and queued deliveries
+    // to finish; no assertion depends on the child's speed or a minimum runtime.
+    QEventLoop loop;
+    QTimer::singleShot(int(LC_OffsetWorkerClient::Deadlines::terminate +
+        LC_OffsetWorkerClient::Deadlines::reap + 25), &loop, &QEventLoop::quit);
+    loop.exec();
+}
+
 std::uint64_t bits(double value) {
     std::uint64_t result; std::memcpy(&result, &value, sizeof(result)); return result;
 }
@@ -247,10 +309,14 @@ struct Fixture {
     void begin(const RS_Vector& grip = RS_Vector{1.25, 0}) {
         mouse(QEvent::MouseButtonPress, grip);
         mouse(QEvent::MouseMove, grip + RS_Vector{.125, 0});
+        INFO(context.messages.join(" ").toStdString());
+        CAPTURE(grip.x, grip.y, action->getStatus(), source->isSelected(), source->hasEditableDefinition());
         REQUIRE(action->isOffsetGripDragging()); REQUIRE(action->getStatus() == DragAction::MovingRef);
     }
     void clean() const {
+        if (action->isOffsetGripPreparing()) awaitPreparation(*action);
         CHECK(action->getStatus() == DragAction::Neutral); CHECK_FALSE(action->isOffsetGripDragging());
+        CHECK_FALSE(action->isOffsetGripPreparing());
         CHECK(action->m_preview->isEmpty());
         auto* snap = view.getViewPort()->getOverlaysDrawablesContainer(RS2::Snapper);
         REQUIRE(snap); CHECK(snap->first() == nullptr);
@@ -334,6 +400,84 @@ TEST_CASE("H drag commits one real Through edit and one replacement undo cycle o
     CHECK(geometry(*replacement) == committed); before.sourceExact(false);
 }
 
+TEST_CASE("H drag real helper release returns asynchronously and duplicate release keeps one request",
+          "[gui][lc-offsetcurve][h-drag][async-grip][heartbeat][duplicate-release]") {
+    Fixture f; requireNativeHelper();
+    const State before{*f.source, f.graphic};
+    const auto cycles = f.graphic.countUndoCycles(); const auto epoch = f.graphic.undoStateEpoch();
+    f.begin();
+    unsigned heartbeats = 0, pendingHeartbeats = 0;
+    std::exception_ptr error;
+    QTimer heartbeat;
+    QObject::connect(&heartbeat, &QTimer::timeout, &heartbeat, [&] {
+        try {
+            ++heartbeats;
+            if (!f.action->isOffsetGripPreparing()) return;
+            ++pendingHeartbeats;
+            REQUIRE(f.action->isOffsetGripDragging());
+            CHECK(f.action->getStatus() == DragAction::MovingRef);
+            CHECK(f.action->lastOffsetGripResult() == nullptr);
+            CHECK(f.graphic.count() == 1); CHECK(f.graphic.undoStateEpoch() == epoch);
+            before.unchanged(f.graphic);
+        } catch (...) { error = std::current_exception(); heartbeat.stop(); }
+    });
+    heartbeat.start(1);
+    f.mouse(QEvent::MouseButtonRelease, {1.5, 0});
+    CHECK(heartbeats == 0); // A product-side nested wait would dispatch the timer before returning.
+    REQUIRE(f.action->isOffsetGripPreparing()); REQUIRE(f.action->isOffsetGripDragging());
+    CHECK(f.action->lastOffsetGripResult() == nullptr); CHECK(f.action->limitsCalls == 1);
+    before.unchanged(f.graphic);
+    f.mouse(QEvent::MouseButtonRelease, {.5, 0});
+    REQUIRE(f.action->isOffsetGripPreparing()); REQUIRE(f.action->isOffsetGripDragging());
+    CHECK(f.action->limitsCalls == 1); CHECK(f.action->lastOffsetGripResult() == nullptr);
+    before.unchanged(f.graphic);
+    f.clean(); heartbeat.stop();
+    if (error) std::rethrow_exception(error);
+    CHECK(heartbeats > 0); CHECK(pendingHeartbeats > 0);
+    checkGeneratedStages(*f.action);
+    REQUIRE(*f.action->lastOffsetGripResult()); CHECK(f.action->lastOffsetGripResult()->changed);
+    const auto live = f.live(); REQUIRE(live.size() == 1); REQUIRE(live.front() != f.source);
+    CHECK(live.front()->definition().distance == Catch::Approx(.5));
+    CHECK_FALSE(live.front()->definition().towardCentre);
+    CHECK(f.action->limitsCalls == 1); CHECK(f.graphic.countUndoCycles() == cycles + 1);
+    CHECK(f.graphic.count() == 2); before.sourceExact();
+}
+
+TEST_CASE("H drag unchanged cache membership uses the real helper without replacement or lost redo",
+          "[gui][lc-offsetcurve][h-drag][async-grip][membership][noop]") {
+    Fixture f; requireNativeHelper();
+    // Prepare a real certified interior Through baseline. Repeating its exact
+    // pixel-aligned query reproduces the stored proposal, without radial-ULP
+    // assumptions or device-coordinate rounding changing the input on release.
+    auto basis = f.source->definition().basis; basis.angle2 = M_PI_2;
+    REQUIRE(f.source->setBasis(basis));
+    const RS_Vector target{.75, 1};
+    const auto baseline = f.source->setThrough(target); REQUIRE(baseline);
+    REQUIRE_FALSE(f.source->definitionGripIndex(target));
+    REQUIRE(f.source->prepareThrough(target).kind == LC_OffsetCurveEditPreparation::Kind::CheckThrough);
+    auto* marker = new RS_Line(&f.graphic, RS_Vector{-2, 0}, RS_Vector{-1, 0});
+    REQUIRE(f.graphic.undoableModify(f.view.getViewPort(), [&](LC_DocumentModificationBatch& batch) {
+        batch.add(marker); return true;
+    }));
+    REQUIRE(f.graphic.undo()); REQUIRE(marker->isDeleted());
+    const State before{*f.source, f.graphic};
+    const auto count = f.graphic.count(); const auto epoch = f.graphic.undoStateEpoch();
+    const auto cycles = f.graphic.countUndoCycles();
+    f.begin(f.source->cachedDefinitionGrips().front()); f.mouse(QEvent::MouseButtonRelease, target);
+    REQUIRE(f.action->isOffsetGripPreparing()); REQUIRE(f.action->isOffsetGripDragging());
+    CHECK(f.action->lastOffsetGripResult() == nullptr); before.unchanged(f.graphic);
+    f.clean();
+    const auto* result = f.action->lastOffsetGripResult(); REQUIRE(result); REQUIRE(*result);
+    CHECK_FALSE(result->changed); CHECK(result->engineRuns == 0);
+    CHECK_FALSE(result->engineStatus); CHECK_FALSE(result->checkReason);
+    CHECK(result->checkWork.cacheSpans == 0); CHECK(result->checkWork.vertices == 0);
+    CHECK(result->throughWork.vertices > 0); CHECK(result->throughWork.distancePairs > 0);
+    CHECK(f.action->limitsCalls == 1); CHECK(f.graphic.count() == count);
+    CHECK(f.graphic.undoStateEpoch() == epoch); CHECK(f.graphic.countUndoCycles() == cycles);
+    before.unchanged(f.graphic);
+    REQUIRE(f.graphic.redo()); CHECK_FALSE(marker->isDeleted()); before.sourceExact();
+}
+
 TEST_CASE("H drag side flip reaches setThrough without an angle or grip projection",
           "[gui][lc-offsetcurve][h-drag][side]") {
     Fixture f; f.begin();
@@ -356,7 +500,8 @@ TEST_CASE("H drag unchanged endpoint does not replace or prune existing redo",
     }));
     REQUIRE(f.graphic.undo()); REQUIRE(marker->isDeleted());
     const State before{*f.source, f.graphic}; const auto count = f.graphic.count();
-    f.begin(); f.mouse(QEvent::MouseMove, {1.5, .1}); f.mouse(QEvent::MouseButtonRelease, {1.25, 0}); f.clean();
+    f.begin(); f.mouse(QEvent::MouseMove, {1.5, .1}); f.mouse(QEvent::MouseButtonRelease, {1.25, 0});
+    CHECK_FALSE(f.action->isOffsetGripPreparing()); CHECK_FALSE(f.action->isOffsetGripDragging()); f.clean();
     CHECK(f.action->lastOffsetGripResult() == nullptr); CHECK(f.action->limitsCalls == 0);
     CHECK(f.graphic.count() == count); before.unchanged(f.graphic);
     REQUIRE(f.graphic.redo()); CHECK_FALSE(marker->isDeleted());
@@ -384,7 +529,8 @@ TEST_CASE("H drag tolerance band visible grip away and back is a pre-clone no op
     CHECK(f.action->lastOffsetGripResult() == nullptr); CHECK(f.action->limitsCalls == 0);
     REQUIRE_FALSE(f.action->m_preview->isEmpty());
     RS_Point first{nullptr, {0, 0}};
-    f.mouse(QEvent::MouseButtonRelease, grip); f.clean();
+    f.mouse(QEvent::MouseButtonRelease, grip);
+    CHECK_FALSE(f.action->isOffsetGripPreparing()); CHECK_FALSE(f.action->isOffsetGripDragging()); f.clean();
     RS_Point last{nullptr, {0, 0}};
     CHECK(last.getId() - first.getId() == 1); // No native clone or producer entity at release.
     CHECK(f.action->lastOffsetGripResult() == nullptr); CHECK(f.action->limitsCalls == 0);
@@ -512,6 +658,144 @@ TEST_CASE("H drag Escape right cancel suspend and finish all release preview wit
     else f.action->finish();
     f.clean(); CHECK(f.action->lastOffsetGripResult() == nullptr); before.unchanged(f.graphic);
     f.mouse(QEvent::MouseButtonRelease, {1.5, 0}); f.clean(); before.unchanged(f.graphic);
+}
+
+TEST_CASE("H drag pending real helper cancels on Escape right suspend finish or init and a fresh gesture recovers",
+          "[gui][lc-offsetcurve][h-drag][async-grip][cancel][recovery]") {
+    const unsigned kind = GENERATE(0u, 1u, 2u, 3u, 4u);
+    CAPTURE(kind);
+    Fixture f; requireNativeHelper();
+    const State before{*f.source, f.graphic}; const auto cycles = f.graphic.countUndoCycles();
+    f.begin(); f.mouse(QEvent::MouseButtonRelease, {1.5, 0});
+    REQUIRE(f.action->isOffsetGripPreparing()); REQUIRE(f.action->isOffsetGripDragging());
+    CHECK(f.action->lastOffsetGripResult() == nullptr); before.unchanged(f.graphic);
+    if (kind == 0) {
+        QKeyEvent event(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier); event.ignore();
+        f.action->keyPressEvent(&event); CHECK(event.isAccepted());
+    } else if (kind == 1) f.mouse(QEvent::MouseButtonPress, {1.5, 0}, Qt::RightButton);
+    else if (kind == 2) f.action->suspend();
+    else if (kind == 3) f.action->finish();
+    else f.action->init(0);
+    // Cancellation must invalidate the continuation before returning, not let clean() wait it out.
+    CHECK_FALSE(f.action->isOffsetGripPreparing()); CHECK_FALSE(f.action->isOffsetGripDragging());
+    f.clean(); CHECK(f.action->lastOffsetGripResult() == nullptr);
+    CHECK(f.action->limitsCalls == 1); before.unchanged(f.graphic);
+    f.mouse(QEvent::MouseButtonRelease, {1.5, 0});
+    CHECK_FALSE(f.action->isOffsetGripPreparing()); before.unchanged(f.graphic);
+    if (kind == 2) f.action->resume();
+    f.action->init(0);
+    // Queue a different target while the cancelled child's reap/delivery may still be pending.
+    f.begin(); f.mouse(QEvent::MouseButtonRelease, {.5, 0});
+    REQUIRE(f.action->isOffsetGripPreparing()); REQUIRE(f.action->isOffsetGripDragging());
+    before.unchanged(f.graphic); f.clean();
+    checkGeneratedStages(*f.action);
+    REQUIRE(*f.action->lastOffsetGripResult()); CHECK(f.action->lastOffsetGripResult()->changed);
+    const auto live = f.live(); REQUIRE(live.size() == 1); REQUIRE(live.front() != f.source);
+    CHECK(live.front()->definition().towardCentre);
+    CHECK(live.front()->definition().distance == Catch::Approx(.5));
+    CHECK(f.action->limitsCalls == 2); CHECK(f.graphic.countUndoCycles() == cycles + 1);
+    CHECK(f.graphic.count() == 2); before.sourceExact();
+}
+
+TEST_CASE("H drag undo redo ABA after real helper submission never publishes into restored source identity",
+          "[gui][lc-offsetcurve][h-drag][async-grip][epoch][stale]") {
+    Fixture f; requireNativeHelper();
+    auto* marker = new RS_Line(&f.graphic, RS_Vector{-2, 0}, RS_Vector{-1, 0});
+    REQUIRE(f.graphic.undoableModify(f.view.getViewPort(), [&](LC_DocumentModificationBatch& batch) {
+        batch.add(marker); return true;
+    }));
+    const State before{*f.source, f.graphic}; const auto epoch = f.graphic.undoStateEpoch();
+    const auto count = f.graphic.count(); const auto cycles = f.graphic.countUndoCycles();
+    f.begin(); f.mouse(QEvent::MouseButtonRelease, {1.5, 0});
+    REQUIRE(f.action->isOffsetGripPreparing()); before.unchanged(f.graphic);
+    REQUIRE(f.graphic.undo()); REQUIRE(f.graphic.redo());
+    CHECK(f.graphic.undoStateEpoch() != epoch); CHECK(history(f.graphic) == before.undo);
+    if (!f.action->isOffsetGripPreparing()) observeCancelledReplies();
+    f.clean();
+    if (f.action->lastOffsetGripResult()) checkGeneratedStages(*f.action);
+    CHECK(f.action->limitsCalls == 1); CHECK(f.graphic.count() == count);
+    CHECK(f.graphic.countUndoCycles() == cycles); before.unchanged(f.graphic);
+}
+
+TEST_CASE("H drag actual source deletion after real helper submission never dereferences or replaces it",
+          "[gui][lc-offsetcurve][h-drag][async-grip][stale][source-death]") {
+    Fixture f; requireNativeHelper();
+    f.begin(); f.mouse(QEvent::MouseButtonRelease, {1.5, 0});
+    REQUIRE(f.action->isOffsetGripPreparing()); REQUIRE(f.action->isOffsetGripDragging());
+    REQUIRE(f.graphic.removeEntity(f.source)); f.source = nullptr;
+    const auto undo = history(f.graphic); const auto epoch = f.graphic.undoStateEpoch();
+    const auto count = f.graphic.count(); const auto cycles = f.graphic.countUndoCycles();
+    const bool modified = f.graphic.isModified();
+    if (!f.action->isOffsetGripPreparing()) observeCancelledReplies();
+    f.clean();
+    if (f.action->lastOffsetGripResult()) checkGeneratedStages(*f.action);
+    CHECK(f.action->limitsCalls == 1); CHECK(f.live().empty()); CHECK(f.graphic.count() == count);
+    CHECK(f.graphic.undoStateEpoch() == epoch); CHECK(history(f.graphic) == undo);
+    CHECK(f.graphic.countUndoCycles() == cycles); CHECK(f.graphic.isModified() == modified);
+}
+
+TEST_CASE("H drag context or view document swap after real helper submission cannot publish into either drawing",
+          "[gui][lc-offsetcurve][h-drag][async-grip][owner][context][stale]") {
+    const unsigned kind = GENERATE(0u, 1u, 2u);
+    CAPTURE(kind);
+    Fixture f; requireNativeHelper();
+    Graphic other; other.initForNewDocument();
+    lc::test::TestGraphicView otherView; otherView.setDocument(&f.graphic);
+    const auto restore = qScopeGuard([&] {
+        f.action->suspend(); f.view.setDocument(&f.graphic);
+        f.context.setDocumentAndView(&f.graphic, &f.view);
+    });
+    const State before{*f.source, f.graphic};
+    const auto count = f.graphic.count(); const auto epoch = f.graphic.undoStateEpoch();
+    const auto cycles = f.graphic.countUndoCycles(); const auto otherUndo = history(other);
+    const auto otherEpoch = other.undoStateEpoch(); const bool otherModified = other.isModified();
+    f.begin(); f.mouse(QEvent::MouseButtonRelease, {1.5, 0});
+    REQUIRE(f.action->isOffsetGripPreparing()); before.unchanged(f.graphic);
+    if (kind == 0) f.context.setDocumentAndView(&other, &f.view);
+    else if (kind == 1) f.view.setDocument(&other);
+    else f.context.setDocumentAndView(&f.graphic, &otherView);
+    if (!f.action->isOffsetGripPreparing()) observeCancelledReplies();
+    f.clean();
+    if (f.action->lastOffsetGripResult()) checkGeneratedStages(*f.action);
+    CHECK(f.action->limitsCalls == 1); CHECK(f.graphic.count() == count);
+    CHECK(f.graphic.undoStateEpoch() == epoch); CHECK(f.graphic.countUndoCycles() == cycles);
+    before.unchanged(f.graphic);
+    CHECK(other.isEmpty()); CHECK(other.countUndoCycles() == 0); CHECK(history(other) == otherUndo);
+    CHECK(other.undoStateEpoch() == otherEpoch); CHECK(other.isModified() == otherModified);
+}
+
+TEST_CASE("H drag UCS clockwise direction or origin change after real helper submission revokes publication",
+          "[gui][lc-offsetcurve][h-drag][async-grip][ucs][context][stale]") {
+    const bool origin = GENERATE(false, true);
+    CAPTURE(origin);
+    Fixture f; requireNativeHelper();
+    if (!origin) f.graphic.setAnglesBase(M_PI); // Same zero-angle map, different nonzero direction.
+    const bool direction = f.graphic.areAnglesCounterClockWise();
+    const auto restore = qScopeGuard([&] {
+        f.action->suspend(); f.graphic.setAnglesCounterClockwise(direction);
+        if (origin) f.view.getViewPort()->createUCS({0, 0}, 0);
+    });
+    const State before{*f.source, f.graphic};
+    const auto count = f.graphic.count(); const auto epoch = f.graphic.undoStateEpoch();
+    const auto cycles = f.graphic.countUndoCycles(); auto* viewport = f.view.getViewPort();
+    const auto zero = viewport->toWorldAngle(viewport->toAbsUCSAngle(0));
+    const auto nonzero = viewport->toWorldAngle(viewport->toAbsUCSAngle(.25));
+    f.begin(); f.mouse(QEvent::MouseButtonRelease, {1.5, 0});
+    REQUIRE(f.action->isOffsetGripPreparing()); before.unchanged(f.graphic);
+    if (origin) viewport->createUCS({10, 20}, 0);
+    else {
+        f.graphic.setAnglesCounterClockwise(!direction);
+        CHECK(viewport->toWorldAngle(viewport->toAbsUCSAngle(0)) == zero);
+        CHECK(viewport->toWorldAngle(viewport->toAbsUCSAngle(.25)) != nonzero);
+    }
+    const bool modified = f.graphic.isModified();
+    if (!f.action->isOffsetGripPreparing()) observeCancelledReplies();
+    f.clean();
+    if (f.action->lastOffsetGripResult()) checkGeneratedStages(*f.action);
+    CHECK(f.action->limitsCalls == 1); CHECK(f.graphic.count() == count);
+    CHECK(f.graphic.undoStateEpoch() == epoch); CHECK(f.graphic.countUndoCycles() == cycles);
+    before.sourceExact(); CHECK_FALSE(f.source->isDeleted()); CHECK(f.source->isSelected() == before.selected);
+    CHECK(history(f.graphic) == before.undo); CHECK(f.graphic.isModified() == modified);
 }
 
 TEST_CASE("H drag redraw invalidates its epoch and consumes the late release",
@@ -893,6 +1177,64 @@ TEST_CASE("H drag a destroyed view leaves late input and eventual action destruc
     });
 }
 
+TEST_CASE("H drag real helper pending action view or document death is safe through late delivery and destruction",
+          "[gui][lc-offsetcurve][h-drag][async-grip][lifetime][asan]") {
+    const unsigned kind = GENERATE(0u, 1u, 2u);
+    CAPTURE(kind);
+    DragLifetimeFixture f; requireNativeHelper();
+    const State before{*f.source, *f.drawing};
+    const auto count = f.drawing->count(); const auto epoch = f.drawing->undoStateEpoch();
+    const auto cycles = f.drawing->countUndoCycles();
+    const auto fallbackUndo = history(f.fallback); const auto fallbackEpoch = f.fallback.undoStateEpoch();
+    const bool fallbackModified = f.fallback.isModified();
+    const auto listeners = f.drawing->getSelection()->listenerCount();
+    const std::weak_ptr<DRW_Variant> payload = f.source->getDrwExtData().back();
+    QPointer<DragAction> action(f.action.get());
+    QPointer<RS_GraphicView> view(f.view.get());
+    f.press(true); f.mouse(QEvent::MouseButtonRelease, {292, 240}); // WCS (1.5, 0).
+    REQUIRE(action->isOffsetGripPreparing()); REQUIRE(action->isOffsetGripDragging());
+    CHECK(action->limitsCalls == 1); CHECK(action->lastOffsetGripResult() == nullptr);
+    before.unchanged(*f.drawing);
+    // Destroy before pumping Qt: these are genuinely submitted, still-pending jobs.
+    if (kind == 0) {
+        f.action.reset(); CHECK(action.isNull());
+        CHECK(f.drawing->getSelection()->listenerCount() == listeners - 1);
+        CHECK(f.view->getViewPort()->getOverlayEntitiesContainer(RS2::ActionPreviewEntity)->isEmpty());
+        CHECK(f.view->getViewPort()->getOverlaysDrawablesContainer(RS2::Snapper)->first() == nullptr);
+    } else if (kind == 1) {
+        f.view.reset(); CHECK(view.isNull());
+    } else {
+        f.drawing.reset(); f.source = nullptr;
+    }
+    if (action) {
+        CHECK(action->isFinished()); CHECK(action->getStatus() == DragAction::Neutral);
+        CHECK_FALSE(action->isOffsetGripPreparing()); CHECK_FALSE(action->isOffsetGripDragging());
+        CHECK(action->m_preview->isEmpty()); CHECK(action->lastOffsetGripResult() == nullptr);
+        f.mouse(QEvent::MouseMove, {292, 240}); f.mouse(QEvent::MouseButtonRelease, {292, 240});
+        QKeyEvent escape(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier);
+        action->keyPressEvent(&escape); CHECK(escape.isAccepted());
+        action->init(0); action->resume(); action->suspend(); action->finish(); action->clearVisualSnap();
+    }
+    observeCancelledReplies();
+    if (!f.drawing) CHECK(payload.expired()); // The cancelled callback may own the private clone until reap.
+    if (action) {
+        CHECK_FALSE(action->isOffsetGripPreparing()); CHECK_FALSE(action->isOffsetGripDragging());
+        CHECK(action->limitsCalls == 1); CHECK(action->lastOffsetGripResult() == nullptr);
+    }
+    if (f.drawing) {
+        CHECK(f.drawing->count() == count); CHECK(f.drawing->undoStateEpoch() == epoch);
+        CHECK(f.drawing->countUndoCycles() == cycles); before.unchanged(*f.drawing);
+    }
+    f.action.reset(); CHECK(action.isNull()); // Real orphaned preview/snap base destructors must also run.
+    if (f.drawing) {
+        CHECK(f.drawing->getSelection()->listenerCount() == listeners - 1);
+        before.unchanged(*f.drawing);
+    }
+    CHECK(f.fallback.isEmpty()); CHECK(f.fallback.countUndoCycles() == 0);
+    CHECK(history(f.fallback) == fallbackUndo); CHECK(f.fallback.undoStateEpoch() == fallbackEpoch);
+    CHECK(f.fallback.isModified() == fallbackModified);
+}
+
 TEST_CASE("H drag ownership and document locks refuse both entry and late release without staging",
           "[gui][lc-offsetcurve][h-drag][ownership]") {
     const bool late = GENERATE(false, true);
@@ -943,6 +1285,7 @@ TEST_CASE("H drag ownership and document locks are checked again after the real 
     f.begin(); f.mouse(QEvent::MouseButtonRelease, {1.5, 0}); f.clean();
     const auto* attempted = f.action->lastOffsetGripResult(); REQUIRE(attempted); REQUIRE(*attempted);
     CHECK(attempted->changed); CHECK(attempted->engineRuns == 1); CHECK(f.action->limitsCalls == 1);
+    checkGeneratedStages(*f.action);
     CHECK(f.graphic.undoStateEpoch() == epoch); CHECK(f.graphic.count() == count);
     CHECK(f.graphic.countUndoCycles() == 0); before.unchanged(f.graphic);
     REQUIRE_FALSE(f.context.messages.isEmpty());

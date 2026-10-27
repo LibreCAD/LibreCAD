@@ -38,11 +38,12 @@
 #include <optional>
 #include <utility>
 
-#include "lc_busycursorguard.h"
 #include "lc_offsetcurve.h"
 #include "lc_offsetcurveeditsnapshot.h"
 #include "lc_offsetcurvefinalinput.h"
 #include "lc_offsetcurveui.h"
+#include "../../lib/offset_worker/lc_offsetworkerclient.h"
+#include "../../lib/offset_worker/lc_offsetworkeredit.h"
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_cursoroverlayinfo.h"
 #include "lc_graphicviewport.h"
@@ -59,6 +60,7 @@
 #include "rs_entity.h"
 #include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
+#include "rs_graphic.h"
 #include "rs_line.h"
 #include "rs_layer.h"
 #include "rs_modification.h"
@@ -90,6 +92,32 @@ bool boundedGripCache(const LC_OffsetCurve& curve) {
         d.knotslist.size() <= 4*hard.maxVertices && d.savedOpenKnots.size() <= 4*hard.maxVertices &&
         curve.count() > 0 && curve.count() <= (std::size_t{1} << 20);
 }
+bool registeredGripLayer(const RS_Entity& entity) {
+    const RS_Entity* ancestor = &entity;
+    RS_Layer* layer = nullptr;
+    for (unsigned depth = 0; ancestor && depth < 64; ++depth, ancestor = ancestor->getParent()) {
+        if (!layer) layer = ancestor->getLayer(false);
+        if (const auto* graphic = dynamic_cast<const RS_Graphic*>(ancestor))
+            return !layer || const_cast<RS_Graphic*>(graphic)->RS_Graphic::getLayerList()->contains(layer);
+    }
+    return !ancestor && !layer;
+}
+struct OffsetGripFrame {
+    std::array<RS_Vector, 3> world;
+    double angle = 0;
+    bool counterClockwise = true;
+    static OffsetGripFrame capture(LC_GraphicViewport& viewport) {
+        return {{viewport.toWorld({0, 0}), viewport.toWorld({1, 0}), viewport.toWorld({0, 1})},
+            viewport.toWorldAngle(viewport.toAbsUCSAngle(0)), viewport.areAnglesCounterClockwise()};
+    }
+    bool matches(LC_GraphicViewport& viewport) const {
+        const auto current = capture(viewport);
+        for (std::size_t i = 0; i < world.size(); ++i)
+            if (world[i].x != current.world[i].x || world[i].y != current.world[i].y ||
+                world[i].z != current.world[i].z || world[i].valid != current.world[i].valid) return false;
+        return angle == current.angle && counterClockwise == current.counterClockwise;
+    }
+};
 struct OffsetGripGesture {
     static constexpr std::size_t MaximumSegments = 63; // 126 endpoints plus two point marks.
     RS_Entity* original = nullptr; // Identity only; membership must precede every dereference.
@@ -97,13 +125,26 @@ struct OffsetGripGesture {
     std::uint64_t actionEpoch = 0, undoEpoch = 0;
     std::size_t index = 0;
     RS_Vector grip{false}, rawPoint{false};
-    std::unique_ptr<LC_OffsetCurveEditSnapshot> snapshot;
+    std::shared_ptr<LC_OffsetCurveEditSnapshot> snapshot;
+    OffsetGripFrame frame;
     QPointer<RS_GraphicView> view;
     LC_GraphicViewport* viewport = nullptr;
     std::array<std::pair<RS_Vector, RS_Vector>, MaximumSegments> feedback;
     std::size_t segments = 0;
 };
 }
+
+struct RS_ActionDefault::OffsetGripWork final : LC_SelectedSetListener {
+    explicit OffsetGripWork(RS_Document* owner) : document(owner) { document->getSelection()->addListener(this); }
+    void selectionChanged() override {}
+    void selectedSetDestroyed() override { document = nullptr; }
+    RS_Document* document;
+    std::unique_ptr<LC_OffsetCurve> staged;
+    std::unique_ptr<LC_OffsetCurveEditSnapshot> input;
+    LC_OffsetRunLimits limits;
+    RS_Entity* original = nullptr; // Identity only until renewed document membership.
+    std::uint64_t epoch = 0;
+};
 
 struct RS_ActionDefault::OffsetGripLifetime final : LC_SelectedSetListener {
     RS_ActionDefault& action;
@@ -131,6 +172,9 @@ struct RS_ActionDefault::ActionData {
     std::uint64_t gripEpoch = 0;
     std::optional<OffsetGripGesture> offsetGrip;
     std::optional<LC_OffsetCurveEditResult> lastOffsetResult;
+    std::unique_ptr<LC_OffsetWorkerClient> offsetWorker;
+    std::shared_ptr<OffsetGripWork> offsetWork;
+    qint64 offsetRequestId = 0;
     bool offsetCommitting = false;
     bool visualSnapRedraw = false;
     bool ignoreOffsetRelease = false;
@@ -194,6 +238,8 @@ RS_ActionDefault::RS_ActionDefault(LC_ActionContext *actionContext)
 }
 
 RS_ActionDefault::~RS_ActionDefault() {
+    cancelOffsetGripPreparation();
+    m_actionData->offsetWorker.reset(); // No callback may outlive the action or its private clone.
     if (m_actionData->offsetGrip && offsetGripLifetimeIsAlive()) deleteSnapper();
     m_actionData->offsetGrip.reset();
     if (m_actionData->lifetime->view)
@@ -204,6 +250,7 @@ void RS_ActionDefault::init(const int status){
     if (!offsetGripLifetimeIsAlive()) { abandonOffsetGripContext(false); return; }
     RS_DEBUG->print("RS_ActionDefault::init");
     ++m_actionData->gripEpoch;
+    cancelOffsetGripPreparation();
     if (m_actionData->offsetGrip) {
         m_actionData->ignoreOffsetRelease = true;
         m_preview->clear();
@@ -246,6 +293,7 @@ void RS_ActionDefault::finish() {
 }
 
 bool RS_ActionDefault::isOffsetGripDragging() const { return m_actionData->offsetGrip.has_value(); }
+bool RS_ActionDefault::isOffsetGripPreparing() const { return bool(m_actionData->offsetWork); }
 const LC_OffsetCurveEditResult* RS_ActionDefault::lastOffsetGripResult() const {
     return m_actionData->lastOffsetResult ? &*m_actionData->lastOffsetResult : nullptr;
 }
@@ -269,6 +317,7 @@ bool RS_ActionDefault::offsetGripLifetimeIsAlive() const {
 }
 
 void RS_ActionDefault::abandonOffsetGripContext(bool viewportMayBeAlive) {
+    cancelOffsetGripPreparation();
     const auto* lifetime = m_actionData->lifetime.get();
     auto* viewport = viewportMayBeAlive && lifetime && lifetime->view &&
         lifetime->view.data() == m_graphicView && lifetime->view->getViewPort() == m_viewport
@@ -307,7 +356,8 @@ bool RS_ActionDefault::offsetGripContextIsCurrent() const {
         m_actionContext->getGraphicView() != m_graphicView) return false;
     if (m_actionData->offsetGrip) {
         const auto& gesture = *m_actionData->offsetGrip;
-        if (!gesture.view || gesture.view.data() != m_graphicView || gesture.viewport != m_viewport) return false;
+        if (!gesture.view || gesture.view.data() != m_graphicView || gesture.viewport != m_viewport ||
+            !gesture.frame.matches(*m_viewport)) return false;
     }
     return !m_graphicView->isClosing() && m_graphicView->getDocument() == m_document &&
         m_graphicView->getViewPort() == m_viewport;
@@ -333,7 +383,10 @@ void RS_ActionDefault::dispatchOffsetMouse(QMouseEvent* event, int kind) {
         event->accept();
         return;
     }
-    if (m_actionData->offsetCommitting) { event->accept(); return; }
+    if (m_actionData->offsetCommitting) {
+        if (kind == 1 && event->button() == Qt::RightButton) goToNeutralStatus();
+        event->accept(); return;
+    }
     if (kind == 2 && event->button() == Qt::LeftButton && getStatus() == Neutral && m_actionData->ignoreOffsetRelease) {
         m_actionData->ignoreOffsetRelease = false;
         event->accept();
@@ -384,11 +437,11 @@ void RS_ActionDefault::dispatchOffsetMouse(QMouseEvent* event, int kind) {
 
 bool RS_ActionDefault::beginOffsetGrip(RS_Entity* entity, const RS_Vector& press, const RS_Vector& grip) {
     m_actionData->lastOffsetResult.reset();
-    if (!offsetGripContextIsCurrent() || !m_document->isOwner() || m_document->isLocked() ||
+    if (!offsetGripContextIsCurrent() || !registeredGripLayer(*m_document) || !m_document->isOwner() || m_document->isLocked() ||
         m_document->findEntityIndex(entity) < 0 ||
         !finiteGripPoint(press) || !finiteGripPoint(grip)) return false;
     auto* curve = dynamic_cast<LC_OffsetCurve*>(entity);
-    if (!curve || !curve->isOwner() || curve->getParent() != m_document || curve->isDeleted() || !curve->isSelected() ||
+    if (!curve || !registeredGripLayer(*curve) || !curve->isOwner() || curve->getParent() != m_document || curve->isDeleted() || !curve->isSelected() ||
         !curve->isVisible() || curve->isLocked() || !boundedGripCache(*curve) || !curve->hasEditableDefinition()) return false;
     // Admit the complete child tree and capture one bounded value witness before sampling.
     auto snapshot = LC_OffsetCurveEditSnapshot::capture(*curve);
@@ -412,6 +465,7 @@ bool RS_ActionDefault::beginOffsetGrip(RS_Entity* entity, const RS_Vector& press
     gesture.index = *index; gesture.grip = grip;
     gesture.snapshot = std::move(snapshot);
     gesture.view = m_graphicView; gesture.viewport = m_viewport;
+    gesture.frame = OffsetGripFrame::capture(*m_viewport);
     const auto count = static_cast<std::size_t>(curve->count());
     gesture.segments = std::min(count, OffsetGripGesture::MaximumSegments);
     for (std::size_t i = 0; i < gesture.segments; ++i) {
@@ -428,19 +482,27 @@ bool RS_ActionDefault::beginOffsetGrip(RS_Entity* entity, const RS_Vector& press
 
 LC_OffsetCurve* RS_ActionDefault::liveOffsetGrip(bool checkGeometry) const {
     if (!m_actionData->offsetGrip || !offsetGripContextIsCurrent() ||
-        !m_document->isOwner() || m_document->isLocked()) return nullptr;
+        !registeredGripLayer(*m_document) || !m_document->isOwner() || m_document->isLocked()) return nullptr;
+    // Retain the value witness across callbackful source reads/cancellation.
+    const QPointer<const RS_ActionDefault> alive(this);
     const auto& gesture = *m_actionData->offsetGrip;
+    const auto snapshot = gesture.snapshot;
+    const auto epoch = gesture.actionEpoch;
+    const auto grip = gesture.grip;
+    const auto gripIndex = gesture.index;
     if (gesture.actionEpoch != m_actionData->gripEpoch || gesture.undoEpoch != m_document->undoStateEpoch() ||
         m_document->findEntityIndex(gesture.original) < 0) return nullptr;
     // Only after the membership comparison is it safe to inspect the saved pointer.
     auto* curve = dynamic_cast<LC_OffsetCurve*>(gesture.original);
-    if (!curve || !curve->isOwner() || curve->getId() != gesture.id || curve->getParent() != m_document || curve->isDeleted() ||
+    if (!curve || !registeredGripLayer(*curve) || !curve->isOwner() || curve->getId() != gesture.id || curve->getParent() != m_document || curve->isDeleted() ||
         !curve->isSelected() || !curve->isVisible() || curve->isLocked()) return nullptr;
     if (checkGeometry) {
         if (!boundedGripCache(*curve) || !curve->hasEditableDefinition() ||
-            !gesture.snapshot || !gesture.snapshot->matches(*curve)) return nullptr;
-        const auto index = curve->definitionGripIndex(gesture.grip);
-        if (!index || *index != gesture.index) return nullptr;
+            !snapshot || !snapshot->matches(*curve)) return nullptr;
+        if (!alive || !m_actionData->offsetGrip || epoch != m_actionData->gripEpoch ||
+            !offsetGripContextIsCurrent() || m_document->findEntityIndex(curve) < 0) return nullptr;
+        const auto index = curve->definitionGripIndex(grip);
+        if (!index || *index != gripIndex) return nullptr;
     }
     return curve;
 }
@@ -469,62 +531,145 @@ void RS_ActionDefault::previewOffsetGrip(const LC_MouseEvent* event) {
 }
 
 void RS_ActionDefault::completeOffsetGrip(const LC_MouseEvent* event) {
+    const QPointer<RS_ActionDefault> alive(this);
     m_actionData->offsetCommitting = true;
-    const auto cleanup = qScopeGuard([this] {
-        m_actionData->offsetCommitting = false;
-        if (!offsetGripLifetimeIsAlive()) { abandonOffsetGripContext(false); return; }
-        goToNeutralStatus();
-        redraw();
+    bool deferred = false;
+    const auto cleanup = qScopeGuard([alive, &deferred] {
+        if (!alive || deferred) return;
+        alive->m_actionData->offsetCommitting = false;
+        if (!alive->offsetGripLifetimeIsAlive()) { alive->abandonOffsetGripContext(false); return; }
+        alive->goToNeutralStatus();
+        if (alive && alive->offsetGripLifetimeIsAlive()) alive->redraw();
     });
-    std::unique_ptr<LC_OffsetCurve> staged;
-    auto* document = m_document;
     try {
-        // matches() may allocate bounded metadata/key witnesses; retain the normal cleanup path.
         auto* original = liveOffsetGrip(true);
+        if (!alive) return;
         if (!original || !finiteGripPoint(event->snapPoint)) {
             commandMessage(tr("Offset Curve: the grip or target is no longer available."));
             return;
         }
-        // A visible cache grip can lie within the admitted tolerance band rather than
-        // on the ideal profile. Returning to that same handle must not rebase Through.
-        // The native matcher uses local roundoff/coordinate ULPs, not the cache tolerance.
         const auto unchangedGrip = original->definitionGripIndex(event->snapPoint);
         if (unchangedGrip && *unchangedGrip == m_actionData->offsetGrip->index) return;
-        const LC_BusyCursorGuard busy;
-        staged.reset(static_cast<LC_OffsetCurve*>(original->clone()));
-        staged->setParent(nullptr); // Staging must not visit a borrowed document's selection domain.
-        m_actionData->lastOffsetResult = staged->setThrough(event->snapPoint, offsetGripRunLimits());
-        const auto& result = *m_actionData->lastOffsetResult;
-        if (!result) { commandMessage(LC_OffsetCurveUI::refusalText(result)); return; }
-        if (!result.changed) return; // No empty undo cycle, replacement, or lost redo.
-        if (liveOffsetGrip(true) != original) {
-            commandMessage(tr("Offset Curve: the source changed while preparing the edit."));
+        auto work = std::make_shared<OffsetGripWork>(m_document);
+        work->epoch = m_actionData->gripEpoch; work->original = original;
+        work->staged.reset(static_cast<LC_OffsetCurve*>(original->clone()));
+        work->staged->setParent(nullptr);
+        work->input = LC_OffsetCurveEditSnapshot::capture(*work->staged);
+        if (!alive || !offsetGripLifetimeIsAlive() || !m_actionData->offsetGrip ||
+            work->epoch != m_actionData->gripEpoch) return;
+        if (!work->input) { commandMessage(tr("Offset Curve: the input exceeds the snapshot limits.")); return; }
+        m_actionData->offsetWork = work;
+        // A settings hook may reenter or revoke this context. The clone and its
+        // snapshot remain owned until the outer preparation/callback has unwound.
+        const auto limits = offsetGripRunLimits();
+        if (!alive || m_actionData->offsetWork != work || !offsetGripLifetimeIsAlive()) return;
+        work->limits = limits;
+        auto prepared = LC_OffsetWorkerEdit::prepareThrough(*work->staged, event->snapPoint, limits);
+        if (!prepared.generate() && !prepared.membership()) {
+            m_actionData->lastOffsetResult = LC_OffsetWorkerEdit::applyLocal(*work->staged, std::move(prepared));
+            if (!*m_actionData->lastOffsetResult) commandMessage(LC_OffsetCurveUI::refusalText(*m_actionData->lastOffsetResult));
             return;
         }
-        // Recheck the retained context AFTER the observed point pass, then
-        // seal raw source storage without another virtual point/length read.
-        if (liveOffsetGrip(false) != original) return;
-        std::vector<LC_OffsetCurveFinalInput::Input> inputs{{
-            original, m_actionData->offsetGrip->snapshot.get()}};
-        if (!LC_OffsetCurveFinalInput::validate(*m_document, inputs) ||
-            !original->getFlag(RS2::FlagSelected)) return;
-        auto* replacement = staged.get();
-        // Keep ownership until the established batch actually owns the replacement.
-        const auto retainDocumentOwner = qScopeGuard([&] {
-            if (staged && document->findEntityIndex(staged.get()) >= 0) staged.release();
+        const auto& gesture = *m_actionData->offsetGrip;
+        if (m_actionData->offsetRequestId == std::numeric_limits<qint64>::max() ||
+            gesture.actionEpoch > std::uint64_t(std::numeric_limits<qint64>::max()) ||
+            gesture.undoEpoch > std::uint64_t(std::numeric_limits<qint64>::max()) ||
+            gesture.id > static_cast<unsigned long long>(std::numeric_limits<qint64>::max())) {
+            commandMessage(tr("Offset Curve: the worker context is exhausted.")); return;
+        }
+        if (!m_actionData->offsetWorker) m_actionData->offsetWorker = std::make_unique<LC_OffsetWorkerClient>();
+        const auto id = ++m_actionData->offsetRequestId;
+        LC_OffsetWorkerRequest::Request request{{id, qint64(gesture.actionEpoch), qint64(gesture.id),
+            qint64(gesture.undoEpoch)}, LC_OffsetWorkerRequest::Generate{}};
+        if (prepared.generate()) request.operation = *prepared.generate();
+        else request.operation = *prepared.membership();
+        deferred = m_actionData->offsetWorker->submit(request, LC_OffsetWorkerClient::Mode::Commit,
+            [alive, work](LC_OffsetWorkerClient::Outcome outcome) {
+                if (!alive || alive->m_actionData->offsetWork != work) return;
+                const auto failure = outcome.status == LC_OffsetWorkerClient::Status::TimedOut ?
+                    tr("Offset Curve: computation timed out; the drawing was not changed.") :
+                    tr("Offset Curve: the worker could not complete the edit; the drawing was not changed.");
+                alive->finishOffsetGrip(work, std::move(outcome.completed), failure);
+            });
+        if (!deferred) commandMessage(tr("Offset Curve: the worker could not start; the drawing was not changed."));
+    } catch (...) {
+        if (alive && offsetGripLifetimeIsAlive()) commandMessage(tr("Offset Curve: the drag edit could not be completed."));
+    }
+}
+
+void RS_ActionDefault::cancelOffsetGripPreparation() {
+    m_actionData->offsetWork.reset();
+    m_actionData->offsetCommitting = false;
+    if (m_actionData->offsetWorker) m_actionData->offsetWorker->cancel();
+}
+
+void RS_ActionDefault::finishOffsetGrip(const std::shared_ptr<OffsetGripWork>& work,
+    std::unique_ptr<LC_OffsetWorkerCompletion> completion, const QString& failure) {
+    const QPointer<RS_ActionDefault> alive(this);
+    const auto cleanup = qScopeGuard([alive, work] {
+        if (!alive || alive->m_actionData->offsetWork != work) return;
+        alive->m_actionData->offsetCommitting = false;
+        if (!alive->offsetGripLifetimeIsAlive()) { alive->abandonOffsetGripContext(false); return; }
+        alive->goToNeutralStatus();
+        if (alive && alive->offsetGripLifetimeIsAlive()) alive->redraw();
+    });
+    try {
+        if (!completion) { if (offsetGripLifetimeIsAlive()) commandMessage(failure); return; }
+        if (const auto* result = std::get_if<LC_OffsetWorkerResult::Native>(&completion->reply().result))
+            m_actionData->lastOffsetResult = static_cast<const LC_OffsetCurveEditResult&>(*result);
+        const bool unchangedInput = work->input && work->input->matches(*work->staged);
+        if (!alive || m_actionData->offsetWork != work) return;
+        if (!unchangedInput || liveOffsetGrip(true) != work->original) {
+            if (alive && offsetGripLifetimeIsAlive()) commandMessage(tr("Offset Curve: the source changed while preparing the edit."));
+            return;
+        }
+        if (!alive || m_actionData->offsetWork != work) return;
+        m_actionData->lastOffsetResult = completion->apply(*work->staged);
+        const auto result = *m_actionData->lastOffsetResult;
+        if (!result) { commandMessage(LC_OffsetCurveUI::refusalText(result)); return; }
+        if (!result.changed) return;
+        const auto hard = makeDefaultOffsetSourceBudget();
+        const auto& requested = work->limits.outputBudget;
+        const auto layout = LC_EllipseOffsetGeometry::cacheLayoutCountsFromControls(
+            work->staged->getData().degree, work->staged->getData().controlPoints.size());
+        // Parent display settings may expand a child's cheap line cache. Its
+        // actual materialized tree must still fit the original reservation.
+        if (!isValidOffsetBudget(requested) || !layout ||
+            layout->spans > std::min(requested.maxCubicPieces, hard.maxCubicPieces) ||
+            measureOffsetOutput({work->staged.get()}, std::min(requested.maxDeepEntities,
+                hard.maxDeepEntities)).status != LC_OffsetTreeStatus::Ok) {
+            m_actionData->lastOffsetResult->refusal = LC_OffsetCurveRefusal::NotCacheRepresentable;
+            m_actionData->lastOffsetResult->changed = false;
+            commandMessage(LC_OffsetCurveUI::refusalText(*m_actionData->lastOffsetResult)); return;
+        }
+        auto* original = liveOffsetGrip(true);
+        if (!alive || m_actionData->offsetWork != work) return;
+        if (!original || original != work->original || liveOffsetGrip(false) != original) {
+            commandMessage(tr("Offset Curve: the source changed while preparing the edit.")); return;
+        }
+        const auto snapshot = m_actionData->offsetGrip->snapshot;
+        std::vector<LC_OffsetCurveFinalInput::Input> inputs{{original, snapshot.get()}};
+        if (!m_document->isSingleEntitySelected() || !registeredGripLayer(*original) ||
+            !LC_OffsetCurveFinalInput::validate(*m_document, inputs) || !original->getFlag(RS2::FlagSelected)) return;
+        auto* document = m_document;
+        auto* viewport = m_viewport;
+        auto* replacement = work->staged.get();
+        const auto retainDocumentOwner = qScopeGuard([work, document] {
+            if (work->document == document && work->staged &&
+                document->findEntityIndex(work->staged.get()) >= 0) work->staged.release();
         });
-        const bool committed = document->undoableModify(m_viewport, [&](LC_DocumentModificationBatch& batch) {
+        const bool committed = document->undoableModify(viewport, [&](LC_DocumentModificationBatch& batch) {
             batch.entitiesToAdd.reserve(1); batch.entitiesToDelete.reserve(1);
-            batch.dontSetActiveLayerAndPen();
-            batch.replace(original, replacement);
-            return true;
-        }, [this](const LC_DocumentModificationBatch& batch, RS_Document* doc) {
-            if (batch.success) RS_Selection::selectEntitiesList(doc, m_viewport, batch.entitiesToAdd, true);
+            batch.dontSetActiveLayerAndPen(); batch.replace(original, replacement); return true;
+        }, [alive, viewport](const LC_DocumentModificationBatch& batch, RS_Document* doc) {
+            if (alive && alive->offsetGripLifetimeIsAlive() && batch.success)
+                RS_Selection::selectEntitiesList(doc, viewport, batch.entitiesToAdd, true);
         });
+        if (!alive) return;
         if (!committed) commandMessage(tr("Offset Curve: the replacement was not committed."));
         else m_movingJustCompleted = true;
     } catch (...) {
-        commandMessage(tr("Offset Curve: the drag edit could not be completed."));
+        if (alive && offsetGripLifetimeIsAlive()) commandMessage(tr("Offset Curve: the drag edit could not be completed."));
     }
 }
 
@@ -1422,6 +1567,7 @@ void RS_ActionDefault::onMouseRightButtonRelease([[maybe_unused]]int status, [[m
 
 void RS_ActionDefault::goToNeutralStatus(){
     if (!offsetGripLifetimeIsAlive()) { abandonOffsetGripContext(false); return; }
+    cancelOffsetGripPreparation();
     ++m_actionData->gripEpoch;
     if (m_actionData->offsetGrip) {
         m_actionData->ignoreOffsetRelease = true;

@@ -32,6 +32,7 @@
 #include "lc_overlayboxaction.h"
 
 class LC_OffsetCurve;
+class LC_OffsetWorkerCompletion;
 struct LC_OffsetCurveEditResult;
 struct LC_OffsetRunLimits;
 
@@ -108,11 +109,16 @@ protected:
     // Absence includes an unchanged cached-grip gesture: no native setter was called.
     const LC_OffsetCurveEditResult* lastOffsetGripResult() const;
     bool isOffsetGripDragging() const;
+    bool isOffsetGripPreparing() const;
     virtual LC_OffsetRunLimits offsetGripRunLimits() const;
     void onVisualSnapEntityRegistered(RS_Entity* entity) override;
     bool doTriggerModifications([[maybe_unused]]LC_DocumentModificationBatch& modificationData) override {return true;}
 private:
     struct OffsetGripLifetime;
+    struct OffsetGripWork;
+    void cancelOffsetGripPreparation();
+    void finishOffsetGrip(const std::shared_ptr<OffsetGripWork>& work,
+        std::unique_ptr<LC_OffsetWorkerCompletion> completion, const QString& failure);
     bool offsetGripLifetimeIsAlive() const;
     void abandonOffsetGripContext(bool viewportMayBeAlive);
     bool offsetGripContextIsCurrent() const;
