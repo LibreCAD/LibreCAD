@@ -441,7 +441,7 @@ the same quarantine rule, not QProcess's unbounded destructor wait.
 One active request and one replaceable queued request are owned per client.
 Request IDs increase; stale/cancelled deferred deliveries cannot publish even
 after a successful child exit. Only the fixed sibling `LibreCADOffsetWorker`
-(`.exe` on Windows) and `--protocol=3` are launched. The helper has private Ini
+(`.exe` on Windows) and `--protocol=4` are launched. The helper has private Ini
 settings and no document or window. CMake installs it beside the executable,
 including `Contents/MacOS` on macOS; qmake builds it before the application.
 The existing macOS packager already enumerates extra Mach-O executables.
@@ -580,12 +580,13 @@ Finish W0-W2 in these bounded sub-slices before claiming GUI isolation:
    dialog clones, sheet batches, grips and Update through the owning client,
    retaining context/source/undo seals, one batch publication and cancellation.
    Do not use nested GUI event loops as a substitute for asynchronous ownership.
-3. Before routing creation/repeat, retain bounded typed ordinary fallback geometry
-   from the SAME producer invocation for native SeveralPieces/representation/C
-   refusals. Current strict Native-only Generate cannot carry those pieces. Extend
-   the reply with exact line/spline values, explicit unsupported-type refusal and
-   original work/usage; bump the protocol when changing its positional layout.
-   Never regenerate with fresh limits to recover discarded ordinary output.
+3. Retain the now-qualified same-invocation ordinary fallback (W9) and complete
+   typed Produce source series/private materialization (W12), including actual
+   adoption work and per-copy binding. Before creation/repeat GUI routing, implement
+   preview-cache portability and qualify budget/side/eviction parity. Native
+   SeveralPieces/representation/C refusals must never trigger same-input regeneration
+   with fresh limits. The existing original-definition rebase followed by a
+   DIFFERENT actual stored-cache fallback must retain its remaining allowance.
 4. Route stored-cache/conic trim through matched completions and the existing
    atomic parent staging/seals; diagnostic roots alone remain non-authoritative.
    Freeze import ownership separately: synchronous callbacks cannot return with
@@ -1428,6 +1429,41 @@ It is not runtime qualification or closure of A-C: a complete allocation-failure
 sweep, independently summed whole-checker accounting oracle and complete analytic
 review remain explicit coverage limits. Existing aggregate exact-cap replay and
 callback-throw tests must not be relabeled independent whole-path proofs.
+
+W13 requalifies all six existing geometry TUs through the complete CMake test
+executable on product `558c3bba2` (roadmap HEAD `7fd2265a4`, then documentation-only
+edits). Both complete test executables rebuild successfully. Exact
+`[lc-offsetcurve][geometry]` discovery matches372 declarations in Release/ASan:
+primary geometry261, intersections51, contact matching18, path search24,
+cache contacts12 and topology budget6. Each run executes every declared identity
+plus72 named section entries:444 unique JUnit cases and1576253 assertions,
+zero errors/failures/skips. The identity-set check distinguishes declarations
+from section cases; it does not misreport444 independent TEST_CASE declarations.
+ASan remains `detect_leaks=0`. This runtime checkpoint does not close the static
+A/B analytic review, allocation-failure sweep or independent whole-path accounting
+oracle limitations above, or substitute for final source/UI/file qualification.
+
+| W13 Artifact | SHA256 |
+|---|---|
+| `W13-build-full-tests-release.log` | `98b3608038d13ff6b210f8c330fa663cfd82597ad4dae6085890d47649e8f1f1` |
+| `W13-build-full-tests-asan.log` | `fb3fe076c4f95c5b89bbea14775730e1b8ff3812eb06e0d9e67d640f338b1d46` |
+| `W13-geometry-discovery-release.xml` | `124be6c26d982bc44aafad084ede851457a83796298f124f5a1d55e3eb8a559c` |
+| `W13-geometry-discovery-asan.xml` | `b9d1c1a7c38e04b41388b0151c40cbcba066d48ff3fce2efa78ac990b357af8b` |
+| `W13-qualified-geometry-release.xml` | `859bc28ee3e30ec16d2c7e308ab8bbe1da766bcf90b6475ef6f1a253e1dfcaaa` |
+| `W13-qualified-geometry-asan.xml` | `61ec8ecda6ee0105c1278872bb1e45ec97c867561cfb4491db3c7044845bdb09` |
+
+The read-only import caller design `W13-import-worker-design.md` has SHA256
+`95c7c7f21cb5951d1226a4d8d8b6145b80d42a93a144a51703cca1d1c3b11060`.
+It identifies actual raw SPLINE callbacks, recursive XREF clone/layer transfer,
+all INSERT finalizers, whole-graphic storage/MDI publication, library/thumbnail
+loads and direct plugin/pattern/sample escapes. It is supporting implementation
+design, not another active roadmap or runtime PASS. Capture/telemetry foundation,
+sequential owned admission and full publication/caller routing remain unimplemented.
+Ordinary clipboard Paste is an in-memory copy, not an invented DXF loader; keep
+it unchanged and prevent unpublished imports from becoming clipboard sources.
+Do not add an unrelated plugin API or use nested event loops to simulate async
+completion. Existing parser/ordinary finalization latency and bounded client
+destructor/reap behavior remain separately stated limitations, not worker success.
 
 Remaining creation/repeat steps:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
