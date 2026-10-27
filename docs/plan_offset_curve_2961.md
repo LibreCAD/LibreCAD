@@ -312,7 +312,7 @@ candidate except the explicitly proposed native-worker tags.
 | F1 | Shared typed schema, raw-carrier eligibility, ownership and byte limits | E1 | candidate `305042903`; audit/retest | `lc_offsetcurvexdata_tests.cpp`, `lc_offsetcurvecarrier_tests.cpp` |
 | F2 | Actual DXF/DWG SPLINE writer/adoption and transactional errors | F1,G | candidate `32597762b`, `7e46b2de8`; audit/retest | offset adapter/persistence/hostile-file TUs |
 | F3 | Version/read/write/conversion, clipboard, independent fixtures and output inspection | F2 | candidate `79ae1930b`; fixtures present, rerun scope required | `[lc-offsetcurve][g-matrix]`, explicit per-row evidence |
-| U2 | Single/multi properties, busy state, async preparation and stale-result protection | E2,U1,W2 | single-dialog isolation qualified in `705a0135b`; property-sheet batch isolation remains open | sheet/dialog/batch-failure TUs |
+| U2 | Single/multi properties, busy state, async preparation and stale-result protection | E2,U1,W2 | dialog `705a0135b` and sheet `ac7c7646f` isolated/qualified; final R requalification remains open | sheet/dialog/batch-failure TUs |
 | U3 | Grip drag, cancel, ownership, undo/redo and no late publication | E2,U2 | candidate `f214b3408` plus final snapshots; audit/integrate worker | `[lc-offsetcurve][h-drag]` |
 | U4 | Ellipse-only persisted option, preview/commit parity and messages | G,F3,U2,U3 | candidate `3d7195631`; audit/retest | option-enable TU and visible workflows |
 | O1 | Transactional Update from legal live ellipse; no-op/refusal counts | U4 | candidate `379729bb3` and snapshot fixes; audit/retest | `lc_action_offsetcurve_source_tests.cpp` |
@@ -1043,15 +1043,51 @@ helper-only evidence does not qualify the changed application or deployed bundle
 | `W3-worker-edit.xml` | `7cd4561007539b6f5903872bcd7a86afbec7db9c44cf1b403d343d0ecb902f11` |
 | `W3-worker-edit-asan.xml` | `8aa28a79a8fd2bc1aee48e1cad334478f1b1b1bf3a7be91543713b6899ca3b3d` |
 
-Next GUI slice: add explicit value-owned definition proposals to the property
-sheet, leaving attribute edits cheap. One owning client prepares batch peers
-sequentially; keep prior accepted candidates on an individual refusal, seal
-source/context/undo again, then publish one atomic batch. Keep worker completion
-ownership outside borrowed callbacks, disable conflicting edits while preparing,
-and test heartbeat, cancellation/rebinding and per-peer refusal. Do not implement
-isolation by intercepting arbitrary setters or nesting a GUI event loop. Then
-route grips, Update, creation and trim in the4.2 order. File/import lifetime,
-Through no-op membership and ordinary fallback are not waived.
+`ac7c7646fcb1afff115807fdc7524672b24350f2` routes property-sheet geometry
+proposals through one owning client, sequential peers and a shared deadline.
+Attributes remain cheap. Accepted peers stay private until the batch completes;
+prior accepted candidates survive an individual refusal. Publication seals the
+source, selection, document/view, undo epoch and complete UCS/angle direction.
+Same-context row refills retain value-owned work without retaining providers;
+changed contexts and Escape cancel. Attempt receipts freeze into separately
+preallocated storage, preserving actual child counters after late refusal without
+allowing an unwinding callback to mutate published diagnostics. Deleted target
+layers refuse before dereference/publication. Parent-rendered cache cost is
+charged against the reservation: four32-leaf candidates fit a128-leaf batch,
+and the fifth never starts the engine. No nested GUI wait or setter interception.
+
+Final current-source Release and ASan runs each pass all41 sheet cases/9367
+assertions and56 dialog cases/25937 assertions. All32 original sheet identities,
+seven direct synchronous queue test bodies and38 original dialog identities are
+retained. Reports pass strict XML syntax checks. The batch harness applies the
+existing3500ms watchdog per distinct submitted peer and a total
+`min(peerCount *3500ms,30000ms)` ceiling; progress callbacks cannot extend a
+stalled peer. Product deadlines and geometry caps are unchanged. Historical red
+reports remain: same-context refill cancellation exposed a product ownership bug;
+duplicate fixture selection, stale display-child assumptions, paint-cache input
+and a whole-batch3500ms harness bound were corrected explicitly. The ASan setting
+remains `detect_leaks=0`, with no generic Qt allocation/leak claim.
+
+The full qmake6 application build and subsequent incremental builds completed.
+A forced current-source application subproject rebuild also exits0
+(`W4-qmake-forced-app.log`). This is compilation evidence, not deployed-package,
+visible-GUI, file-matrix or hung-geometry acceptance. One process micro test under
+heavy concurrent build load hit its2500ms watchdog; it is not credited as a new
+foundation pass. Final R still requires serial current-source requalification.
+
+| Artifact | SHA256 |
+|---|---|
+| `W4-qualified-final-sheet-release.xml` | `4cb8ee7283bb20d5e501cb2c4fa1e11f180315da0f00d1dc9768aacc8d0ef23c` |
+| `W4-qualified-final-sheet-asan.xml` | `4ae58befb50925bbee874c173ef738d65d3b28ab21c2a1f177cc7964216363cb` |
+| `W4-qualified-final-dialog-release.xml` | `20280bd913b8c1daaa2486562ad3565857de45f9aa8b6098a511f5dcb38e7fe5` |
+| `W4-qualified-final-dialog-asan.xml` | `ffc8b3a9f92fd9c5a383927cb3d630bc96d471dcced70832f01db4349691be21` |
+
+Next bounded slice: transport Through membership without rerunning generation or
+C for a no-op, with opaque source/cache-bound application. Then route the grip
+commit continuation through that preparation and the existing helper/client;
+preserve bounded cached preview feedback, cheap original-grip no-op, cancellation,
+undo and final publication seals. Continue Update, creation and trim in4.2 order.
+File/import lifetime and typed ordinary fallback are not waived.
 
 S0 source/target reconciliation, A-C review, W0-W2 caller integration and R remain
 open. Next execute the remaining bounded worker sub-slices in4.2, not a second
@@ -1076,8 +1112,8 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** property-sheet batch GUI
-routing using the qualified preparation/client/completion, then the remaining
+**Next concrete action on implementation resume:** Through membership preparation
+and grip GUI routing using the qualified client/completion, then the remaining
 4.2 caller adapters. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
 Nothing is automatically copied into the dirty main tree. Native caller routing,
