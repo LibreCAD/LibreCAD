@@ -446,11 +446,16 @@ private:
    */
   void sortAndBuild();
   /**
-   * @brief Finds and assigns the parent for a loop.
-   * @param loop The child loop.
-   * @param sorted Sorted list of all loops.
+   * @brief Finds the smallest-area parent of the loop at index child among the
+   * full sorted list of all loops.
+   *
+   * The search walks every loop in ascending (|area|, loopIndex) order and
+   * accepts the first candidate whose bounding box contains the child's with
+   * an epsilon slack and whose interior lemma point (chosen on the child's
+   * geometry) has odd parity against the candidate. Duplicate-area loops
+   * resolve by extraction-order index: the lower index parents the higher.
    */
-  void findParent(RS_EntityContainer* loop, const std::multimap<double, RS_EntityContainer*>& sorted);
+  void findParent(std::size_t child);
   /**
    * @brief Converts a forest of containers to LC_Loops trees.
    * @param forest Vector of root containers.

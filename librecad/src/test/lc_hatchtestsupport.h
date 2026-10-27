@@ -23,7 +23,9 @@
 // bundled hatch patterns under librecad/support/patterns and must never be
 // included from a headless fast-lane target.
 
+#include <algorithm>
 #include <array>
+#include <cmath>
 #include <cstdint>
 #include <cstdlib>
 #include <memory>
@@ -32,16 +34,22 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <QColor>
+#include <QImage>
 #include <QString>
 #include <QStringLiteral>
 
 #include "lc_actiontestsupport.h"
+#include "lc_graphicviewport.h"
+#include "lc_rect.h"
 #include "lc_settingguard.h"
 #include "rs.h"
+#include "rs_color.h"
 #include "rs_entity.h"
 #include "rs_entitycontainer.h"
 #include "rs_hatch.h"
 #include "rs_line.h"
+#include "rs_painter.h"
 #include "rs_settings.h"
 #include "rs_vector.h"
 
@@ -228,6 +236,80 @@ inline std::size_t patternPieceCount(const RS_Hatch& hatch) {
     }
     return count;
 }
+
+/**
+ * Minimal raster rig for solid-fill tests. Defaults are the historical 256
+ * px canvas, 1:1 WCS mapping, y-axis flipped, origin at (0, 0): the hatch
+ * tests built against those defaults keep rendering identical ink.
+ *
+ * `fitting(box, size)` centres a bounding box in a square canvas with a
+ * 20-pixel margin: f = (size - 40) / max(w, h) and the offsets place the
+ * box's own min at image coordinates (20, size - 20).
+ *
+ * `filledAt(wcsX, wcsY)` reads the pixel at `toGuiX(wcsX)`/`toGuiY(wcsY)`;
+ * with the defaults that is `round(wcsX)` and `round(size - wcsY)`.
+ */
+class TestPainter {
+public:
+    TestPainter() : TestPainter(256, 1.0, RS_Vector(0.0, 0.0)) {}
+
+    TestPainter(int size, double factor, const RS_Vector& offset)
+        : m_size(size),
+          m_factor(factor),
+          m_offset(offset),
+          image(size, size, QImage::Format_RGB32),
+          painter(&image) {
+        image.fill(Qt::white);
+        viewport.setSize(size, size);
+        viewport.justSetOffsetAndFactor(offset.x, offset.y, factor);
+        painter.setViewPort(&viewport);
+        // Wide bounding rect so arc segments are never clipped as out-of-view.
+        const double w = static_cast<double>(size) / factor;
+        LC_Rect bounds{RS_Vector(-w, -w) + offset,
+                       RS_Vector(2.0 * w, 2.0 * w) + offset};
+        painter.setWorldBoundingRect(bounds);
+        painter.setPen(RS_Color(0, 0, 0));
+    }
+
+    /** Builds a TestPainter whose canvas just covers box with a margin. */
+    static TestPainter fitting(const LC_Rect& box, int size = 600) {
+        const RS_Vector mn = box.minP();
+        const RS_Vector mx = box.maxP();
+        const double w = std::max(1e-12, mx.x - mn.x);
+        const double h = std::max(1e-12, mx.y - mn.y);
+        const double f = static_cast<double>(size - 40) / std::max(w, h);
+        // Place box's min at image coordinates (20, size - 20):
+        //   toGuiX(mn.x) = (mn.x - offX) * f = 20
+        //   toGuiY(mn.y) = size - (mn.y - offY) * f = size - 20
+        const double offX = mn.x - 20.0 / f;
+        const double offY = mn.y - 20.0 / f;
+        return TestPainter(size, f, RS_Vector(offX, offY));
+    }
+
+    bool filledAt(double wcsX, double wcsY) const {
+        const int px = static_cast<int>(
+            std::round((wcsX - m_offset.x) * m_factor));
+        const int py = static_cast<int>(
+            std::round(m_size - (wcsY - m_offset.y) * m_factor));
+        if (px < 0 || px >= m_size || py < 0 || py >= m_size) {
+            return false;
+        }
+        return image.pixel(px, py) != qRgb(255, 255, 255);
+    }
+
+    // Legacy canvas constants used by existing tests.
+    static constexpr int W = 256;
+    static constexpr int H = 256;
+
+    QImage image;
+    LC_GraphicViewport viewport;
+    RS_Painter painter;
+
+private:
+    int m_size = 256;
+    double m_factor = 1.0;
+    RS_Vector m_offset{0.0, 0.0};
+};
 
 } // namespace lc::test
 

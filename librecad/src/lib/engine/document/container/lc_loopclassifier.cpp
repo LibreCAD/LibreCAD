@@ -941,6 +941,94 @@ bool oddParity(const RS_Vector& point,
     return (total % 2) != 0;
 }
 
+RS_Vector interiorPoint(const LoopGeometry& geom) {
+    const auto& pieces = geom.pieces();
+    if (pieces.empty()) return RS_Vector(false);
+
+    // Collect every distinct y-level from the pieces. The sorted de-duplicated
+    // y-levels partition the loop's vertical extent into gaps; the scan looks
+    // for the widest clearance over all of them.
+    std::vector<double> ys;
+    ys.reserve(pieces.size() * 2);
+    for (const MonoPiece& p : pieces) {
+        if (std::isfinite(p.ylo)) ys.push_back(p.ylo);
+        if (std::isfinite(p.yhi) && p.yhi != p.ylo) ys.push_back(p.yhi);
+    }
+    if (ys.size() < 2) return RS_Vector(false);
+    std::sort(ys.begin(), ys.end());
+    ys.erase(std::unique(ys.begin(), ys.end()), ys.end());
+    if (ys.size() < 2) return RS_Vector(false);
+
+    // Enumerate gaps and sort by width descending, then by index ascending.
+    struct Gap { double width; std::size_t index; };
+    std::vector<Gap> gaps;
+    gaps.reserve(ys.size() - 1);
+    for (std::size_t i = 0; i + 1 < ys.size(); ++i) {
+        const double w = ys[i + 1] - ys[i];
+        if (w > 0.0) gaps.push_back({w, i});
+    }
+    if (gaps.empty()) return RS_Vector(false);
+    std::sort(gaps.begin(), gaps.end(),
+              [](const Gap& a, const Gap& b) {
+                  if (a.width != b.width) return a.width > b.width;
+                  return a.index < b.index;
+              });
+
+    struct Best { RS_Vector c{false}; double clear = -1.0; };
+    Best best;
+
+    for (const Gap& g : gaps) {
+        // Early exit: a later gap's half-width cannot beat the current best.
+        if (g.width * 0.5 <= best.clear) break;
+
+        // Checked strictly interior midpoint. nextafter avoids landing on
+        // either endpoint when the gap is unrepresentable at double precision.
+        const double y0 = ys[g.index];
+        const double y1 = ys[g.index + 1];
+        const double mid = 0.5 * (y0 + y1);
+        double y = mid;
+        if (!(y > y0 && y < y1)) {
+            // Try the next-representable value up from y0.
+            const double up = std::nextafter(y0, y1);
+            if (up > y0 && up < y1) {
+                y = up;
+            } else {
+                continue;
+            }
+        }
+        if (!std::isfinite(y)) continue;
+
+        // x-intercepts of every piece whose half-open range includes y.
+        std::vector<double> xs;
+        xs.reserve(pieces.size());
+        for (const MonoPiece& p : pieces) {
+            if (p.ylo > y || p.yhi <= y) continue;
+            const double x = p.xAt(y);
+            if (std::isfinite(x)) xs.push_back(x);
+        }
+        if (xs.size() < 2 || (xs.size() % 2) != 0) continue;
+        std::sort(xs.begin(), xs.end());
+
+        for (std::size_t k = 0; k + 1 < xs.size(); k += 2) {
+            const double dx = xs[k + 1] - xs[k];
+            if (dx <= 0.0) continue;
+            const double clear = std::min(dx * 0.5, g.width * 0.5);
+            if (clear > best.clear) {
+                const RS_Vector c(0.5 * (xs[k] + xs[k + 1]), y);
+                best.c = c;
+                best.clear = clear;
+            }
+        }
+    }
+
+    if (best.clear <= 0.0 || !best.c.valid) return RS_Vector(false);
+
+    // Verify the chosen point has strictly odd parity against this geometry.
+    const std::vector<const LoopGeometry*> self{&geom};
+    if (!oddParity(best.c, self)) return RS_Vector(false);
+    return best.c;
+}
+
 bool isNearAnyEdge(const RS_Vector& point,
                    const std::vector<const RS_EntityContainer*>& contours,
                    double epsOn) {

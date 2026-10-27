@@ -935,3 +935,91 @@ TEST_CASE("Density fixtures regenerate identically",
         }
     }
 }
+
+namespace {
+
+// U-shape outer boundary (300 x 300 with a 100-wide inner notch from the top).
+Ring hatchfixOuterU() {
+    return {RS_Vector(0, 0),     RS_Vector(300, 0),   RS_Vector(300, 300),
+            RS_Vector(200, 300), RS_Vector(200, 100), RS_Vector(100, 100),
+            RS_Vector(100, 300), RS_Vector(0, 300)};
+}
+
+// U-shape hole nested in the above (bbox centre lies in the notch).
+Ring hatchfixInnerU() {
+    return {RS_Vector(30, 40),   RS_Vector(270, 40),  RS_Vector(270, 270),
+            RS_Vector(230, 270), RS_Vector(230, 80),  RS_Vector(70, 80),
+            RS_Vector(70, 270),  RS_Vector(30, 270)};
+}
+
+// Shifted U hole whose x- and y-walls are off the outer U by 1 and 3.5 so the
+// correct hierarchy answer still matches the clipped carpet exactly.
+Ring hatchfixShiftedInnerU() {
+    return {RS_Vector(31, 43.5),  RS_Vector(269, 43.5), RS_Vector(269, 270),
+            RS_Vector(231, 270),  RS_Vector(231, 83.5), RS_Vector(69, 83.5),
+            RS_Vector(69, 270),   RS_Vector(31, 270)};
+}
+
+// L-shape outer boundary.
+Ring hatchfixLOuter() {
+    return {RS_Vector(0, 0),     RS_Vector(300, 0),   RS_Vector(300, 100),
+            RS_Vector(100, 100), RS_Vector(100, 300), RS_Vector(0, 300)};
+}
+
+// L-shape hole whose bbox centre is outside the outer L (above its vertical leg).
+Ring hatchfixLInner() {
+    return {RS_Vector(20, 20),   RS_Vector(280, 20),  RS_Vector(280, 80),
+            RS_Vector(80, 80),   RS_Vector(80, 280),  RS_Vector(20, 280)};
+}
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern lines: islands in a U and an L wall match the clipped carpet",
+          "[lc-hatchfix][pattern]") {
+    // Three oracle rings. The parent is a U or an L, so each island's bbox
+    // centre lies outside its parent; the master build therefore leaves the
+    // island a root and hatches its interior as well. The clipped carpet
+    // uses global half-open parity and does not hatch the island; the
+    // reference and the trimmer must agree only once the sorter picks a
+    // strictly interior point of the island to decide its parent.
+    lc::test::SourcePatterns patterns;
+    SECTION("BRICK U-in-U") {
+        const std::vector<Ring> rings{hatchfixOuterU(), hatchfixInnerU()};
+        const auto fixed = interiorOnly(tilePathPieces("BRICK", 1.0, rings), rings);
+        REQUIRE_FALSE(fixed.empty());
+        auto scaled = scaledPattern("BRICK", 1.0);
+        const auto carpet = interiorOnly(
+            carpetInRings(*scaled, RS_Vector(0, 0), rings), rings);
+        REQUIRE_FALSE(carpet.empty());
+        REQUIRE(fixed.size() == carpet.size());
+        REQUIRE(matchedFraction(fixed, carpet, 1e-7) == Catch::Approx(1.0));
+        REQUIRE(matchedFraction(carpet, fixed, 1e-7) == Catch::Approx(1.0));
+    }
+    SECTION("BRICK L-wall") {
+        const std::vector<Ring> rings{hatchfixLOuter(), hatchfixLInner()};
+        const auto fixed = interiorOnly(tilePathPieces("BRICK", 1.0, rings), rings);
+        REQUIRE_FALSE(fixed.empty());
+        auto scaled = scaledPattern("BRICK", 1.0);
+        const auto carpet = interiorOnly(
+            carpetInRings(*scaled, RS_Vector(0, 0), rings), rings);
+        REQUIRE_FALSE(carpet.empty());
+        REQUIRE(fixed.size() == carpet.size());
+        REQUIRE(matchedFraction(fixed, carpet, 1e-7) == Catch::Approx(1.0));
+        REQUIRE(matchedFraction(carpet, fixed, 1e-7) == Catch::Approx(1.0));
+    }
+    SECTION("ANSI31 K_ansi_U_in_U_shifted") {
+        const RS_Vector shift(37.3, 11.9);
+        const std::vector<Ring> rings{shiftedRing(hatchfixOuterU(), shift),
+                                      shiftedRing(hatchfixShiftedInnerU(), shift)};
+        const auto fixed = interiorOnly(tilePathPieces("ANSI31", 1.0, rings), rings);
+        REQUIRE_FALSE(fixed.empty());
+        auto scaled = scaledPattern("ANSI31", 1.0);
+        const auto carpet = interiorOnly(
+            carpetInRings(*scaled, RS_Vector(0, 0), rings), rings);
+        REQUIRE_FALSE(carpet.empty());
+        REQUIRE(fixed.size() == carpet.size());
+        REQUIRE(matchedFraction(fixed, carpet, 1e-7) == Catch::Approx(1.0));
+        REQUIRE(matchedFraction(carpet, fixed, 1e-7) == Catch::Approx(1.0));
+    }
+}

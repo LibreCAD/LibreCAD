@@ -351,52 +351,7 @@ RS_Hatch* makeClosedSplineHatch()
     return hatch;
 }
 
-/**
- * Minimal painter rig for rendering tests.
- *
- * Coordinate system: 1 WCS unit = 1 pixel, y-axis flipped.
- *   screen_x = wcs_x
- *   screen_y = H - wcs_y
- *
- * Canvas is W×H pixels, filled with white.  Call draw() on an RS_Hatch with
- * a black pen and the interior pixels will be painted black.
- */
-struct TestPainter {
-    static constexpr int W = 256;
-    static constexpr int H = 256;
-
-    QImage           image{W, H, QImage::Format_RGB32};
-    LC_GraphicViewport viewport;
-    RS_Painter       painter;
-
-    TestPainter()
-        : painter(&image)
-    {
-        image.fill(Qt::white);
-        // factor = 1, offsets = 0 → 1:1 mapping, y-flipped
-        viewport.setSize(W, H);
-        viewport.justSetOffsetAndFactor(0, 0, 1.0);
-        painter.setViewPort(&viewport);
-
-        // Bounding rect covers the whole canvas (plus margin) so no arc segment
-        // is mistakenly clipped as "out of viewport" during path construction.
-        LC_Rect bounds{RS_Vector(-W, -H), RS_Vector(2 * W, 2 * H)};
-        painter.setWorldBoundingRect(bounds);
-
-        // Use black pen so drawSolidFill picks black as the fill colour.
-        painter.setPen(RS_Color(0, 0, 0));
-    }
-
-    /** True when the pixel at WCS (wcsX, wcsY) has been painted (non-white). */
-    bool filledAt(double wcsX, double wcsY) const {
-        const int px = static_cast<int>(std::round(wcsX));
-        const int py = static_cast<int>(std::round(H - wcsY));
-        if (px < 0 || px >= W || py < 0 || py >= H) {
-            return false;
-        }
-        return image.pixel(px, py) != qRgb(255, 255, 255);
-    }
-};
+using lc::test::TestPainter;
 
 } // anonymous namespace
 

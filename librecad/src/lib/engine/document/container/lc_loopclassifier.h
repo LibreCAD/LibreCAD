@@ -237,6 +237,24 @@ bool oddParity(const RS_Vector& point,
                const std::vector<const LoopGeometry*>& loops);
 
 /**
+ * A point strictly inside the simple closed loop represented by geom, chosen
+ * by scanning every y-gap of the loop's y-monotone pieces for the widest
+ * clearance.
+ *
+ * The scan picks a strictly interior y between successive distinct piece
+ * y-levels, intersects the half-open ray at that y with every piece whose
+ * ylo <= y < yhi, pairs the sorted x-intercepts (k, k+1 inside, k+2, k+3
+ * inside, ...), and returns the midpoint of the pair with the largest
+ * clearance min((x[k+1] - x[k])/2, w/2) over the whole scan. Gaps are
+ * processed in decreasing width order and the scan exits early when later
+ * gaps cannot improve on the current best clearance.
+ *
+ * The result's own strict parity is verified before it is returned; a
+ * degenerate or unrepresentable geometry yields an invalid vector.
+ */
+RS_Vector interiorPoint(const LoopGeometry& geom);
+
+/**
  * Returns true if any resolved atomic entity's bbox +- epsOn contains p and
  * its getDistanceToPoint(p) <= epsOn. Used by classifyPoint and by
  * isPointInsideContour's ON band.

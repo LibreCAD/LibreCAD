@@ -69,7 +69,16 @@ namespace {
         const auto loopCopy = std::make_shared<RS_EntityContainer>(nullptr, true);
         for (const RS_Entity* e : *cont) {
             if (e && !e->isContainer()) {
-                loopCopy->addEntity(e->clone()); // Clone atomics for independent ownership
+                RS_Entity* copy = e->clone(); // Clone atomics for independent ownership
+                // Clear the clone's parent and layer: both would otherwise
+                // keep pointing at the source container and its drawing, which
+                // can outlive the sorter result or disappear while the
+                // boundary cache is still read. RS_Hatch::validate wipes
+                // these on its own input, but every other caller of the
+                // LoopSorter has to be covered here.
+                copy->setParent(nullptr);
+                copy->setLayer(nullptr);
+                loopCopy->addEntity(copy);
             }
         }
         LC_LoopUtils::LC_Loops lc(loopCopy, true);
@@ -599,6 +608,15 @@ struct LoopSorter::Data {
   std::unordered_map<const RS_EntityContainer*, std::vector<RS_Vector>> vertexMap;
   std::unordered_map<const RS_EntityContainer*, std::shared_ptr<const LoopGeometry>> geometryMap;
   double eps = 0.0;
+
+  // Per-loop metrics parallel to loops. absArea[i] is the loop's |area|,
+  // perimeter[i] is the sum of edge lengths and box[i] is the loop's bbox,
+  // all built once in sortAndBuild. order[] holds loop indices sorted
+  // ascending by (absArea, extraction order) for the full-list parent walk.
+  std::vector<double> absArea;
+  std::vector<double> perimeter;
+  std::vector<LC_Rect> box;
+  std::vector<std::size_t> order;
 };
 
     /**
@@ -675,20 +693,28 @@ struct LoopSorter::Data {
     LoopSorter::~LoopSorter() = default;
 
     /**
-     * @brief Main sorting and hierarchy building: Filters zero-area, sorts ascending area, assigns parents small-to-large.
-     * Builds forest of roots and converts to LC_Loops.
+     * @brief Main sorting and hierarchy building: filters zero-area loops,
+     * builds the per-loop geometry once, then assigns the smallest-area
+     * parent for every loop against the full sorted list. Preserves the
+     * input's extraction order for duplicate-area tie-breaks.
      */
     void LoopSorter::sortAndBuild() {
-        std::multimap<double, RS_EntityContainer*> orderedLoops;
-        for (auto& p : m_data->loops) {
+        const std::size_t n = m_data->loops.size();
+        m_data->absArea.assign(n, 0.0);
+        m_data->perimeter.assign(n, 0.0);
+        m_data->box.assign(n, LC_Rect{RS_Vector(0.0, 0.0), RS_Vector(0.0, 0.0)});
+
+        for (std::size_t i = 0; i < n; ++i) {
+            RS_EntityContainer* p = m_data->loops[i].get();
             p->setParent(nullptr); // Reset parents
             p->forcedCalculateBorders();
-            double area = std::abs(p->areaLineIntegral());
-            if (area < RS_TOLERANCE) {
-                RS_DEBUG->print("LoopSorter: Skipping degenerate zero-area loop");
-                continue;
+            m_data->absArea[i] = std::abs(p->areaLineIntegral());
+            double per = 0.0;
+            for (const RS_Entity* e : *p) {
+                if (e) per += e->getLength();
             }
-            orderedLoops.emplace(area, p.get());
+            m_data->perimeter[i] = per;
+            m_data->box[i] = LC_Rect{p->getMin(), p->getMax()};
         }
 
         // Build each loop's geometry once; findParent reads them.
@@ -698,14 +724,32 @@ struct LoopSorter::Data {
             m_data->geometryMap[p.get()] = LoopGeometry::fromChain(*p, std::move(vs));
         }
 
-        std::vector<RS_EntityContainer*> forest;
-        while (!orderedLoops.empty()) {
-            RS_EntityContainer* child = orderedLoops.begin()->second;
-            findParent(child, orderedLoops); // Assign immediate parent
-            if (child->getParent() == nullptr) {
-                forest.push_back(child); // Root if no parent
+        // Keep only non-degenerate loops in the parent-search order; the walk
+        // visits every candidate in ascending (|area|, extraction index).
+        m_data->order.clear();
+        m_data->order.reserve(n);
+        for (std::size_t i = 0; i < n; ++i) {
+            if (m_data->absArea[i] < RS_TOLERANCE) {
+                RS_DEBUG->print("LoopSorter: Skipping degenerate zero-area loop");
+                continue;
             }
-            orderedLoops.erase(orderedLoops.begin());
+            m_data->order.push_back(i);
+        }
+        std::stable_sort(m_data->order.begin(), m_data->order.end(),
+                         [this](std::size_t a, std::size_t b) {
+                             if (m_data->absArea[a] != m_data->absArea[b]) {
+                                 return m_data->absArea[a] < m_data->absArea[b];
+                             }
+                             return a < b;
+                         });
+
+        std::vector<RS_EntityContainer*> forest;
+        for (std::size_t idx : m_data->order) {
+            findParent(idx);
+            RS_EntityContainer* child = m_data->loops[idx].get();
+            if (child->getParent() == nullptr) {
+                forest.push_back(child);
+            }
         }
         m_data->results = forestToLoops(forest);
     }
@@ -730,47 +774,62 @@ struct LoopSorter::Data {
     }
 
 /**
- * @brief Assigns the smallest enclosing parent using bbox inclusion and the
- * per-hatch ε classifier. Processes small-to-large to ensure the immediate
- * (direct) parent.
+ * @brief Assigns the smallest enclosing parent for the loop at index child
+ * among the full sorted list. Chooses an interior point of child (not a
+ * bbox centre), walks every candidate in ascending (|area|, extraction
+ * index) order, and accepts the first whose bbox contains child's with a
+ * per-hatch epsilon slack and whose geometry has odd parity at that point.
  */
-void LoopSorter::findParent(RS_EntityContainer* loop, const std::multimap<double, RS_EntityContainer*>& sorted) {
-  if (sorted.size() <= 1) {
-      return;
-  }
-  LC_Rect childBox{loop->getMin(), loop->getMax()};
-  double childArea = std::abs(loop->areaLineIntegral());
-  RS_Vector testPoint = (loop->getMin() + loop->getMax()) / 2.0;
-  const double eps = m_data->eps;
-  for (auto it = sorted.begin(); it != sorted.end(); ++it) {
-    auto* potentialParent = it->second;
-    if (potentialParent == loop) {
-        continue;
-    }
-    double parentArea = it->first;
-    if (parentArea <= childArea + RS_TOLERANCE) {
-        continue;
-    }
-    LC_Rect parentBox{potentialParent->getMin(), potentialParent->getMax()};
+void LoopSorter::findParent(std::size_t child) {
+    if (child >= m_data->loops.size()) return;
+    RS_EntityContainer* childLoop = m_data->loops[child].get();
+    if (!childLoop) return;
+    const double childArea = m_data->absArea[child];
+    const double childPerim = m_data->perimeter[child];
+    const LC_Rect& childBox = m_data->box[child];
+    const double eps = m_data->eps;
 
-            if (childBox.numCornersInside(parentBox) != 4) {
-                continue; // Quick bbox containment
-            }
-            auto geomIt = m_data->geometryMap.find(potentialParent);
-            if (geomIt == m_data->geometryMap.end()) continue;
-            const LoopGeometry* geom = geomIt->second.get();
-            const PointClass cls = classifyPoint(testPoint,
-                                                 {potentialParent},
-                                                 {geom},
-                                                 eps);
-            if (cls != PointClass::Outside) {
-                loop->setParent(potentialParent); // Track hierarchy via parent pointer only
-                RS_DEBUG->print("LoopSorter: Assigned parent for loop with area %f", childArea);
-                return;
-            }
-        }
-        RS_DEBUG->print("LoopSorter: No parent found for loop with area %f", childArea); // Log orphan
+    auto geomIt = m_data->geometryMap.find(childLoop);
+    if (geomIt == m_data->geometryMap.end()) return;
+    const LoopGeometry* childGeom = geomIt->second.get();
+    if (!childGeom) return;
+
+    const RS_Vector p = interiorPoint(*childGeom);
+    if (!p.valid) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "LoopSorter: no interior point for loop with area %f",
+                        childArea);
+        return;
     }
+
+    for (std::size_t q : m_data->order) {
+        if (q == child) continue;
+        const double parentArea = m_data->absArea[q];
+        const double parentPerim = m_data->perimeter[q];
+        const double epsA = eps * std::max(parentPerim, childPerim);
+        if (parentArea < childArea - epsA) continue;
+        if (parentArea <= childArea + epsA && q > child) {
+            // Duplicate areas: the lower-index loop parents the higher-index twin.
+            continue;
+        }
+        RS_EntityContainer* qLoop = m_data->loops[q].get();
+        if (!qLoop) continue;
+        const LC_Rect parentBoxSlack = m_data->box[q].increaseBy(eps);
+        if (!childBox.inArea(parentBoxSlack)) continue;
+        auto parentGeomIt = m_data->geometryMap.find(qLoop);
+        if (parentGeomIt == m_data->geometryMap.end()) continue;
+        const LoopGeometry* parentGeom = parentGeomIt->second.get();
+        if (!parentGeom) continue;
+        if (oddParity(p, {parentGeom})) {
+            childLoop->setParent(qLoop);
+            RS_DEBUG->print("LoopSorter: Assigned parent for loop with area %f",
+                            childArea);
+            return;
+        }
+    }
+    RS_DEBUG->print("LoopSorter: No parent found for loop with area %f",
+                    childArea);
+}
 
     // Private implementation for LoopOptimizer
     struct LoopOptimizer::Data {
