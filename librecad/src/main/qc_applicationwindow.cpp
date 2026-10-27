@@ -1057,10 +1057,16 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow * w, bool activateNext)
     foreach (auto&& child, w->getChildWindows()) // block editors and print previews; just force these closed
 		doClose(child, false); // they belong to the document (changes already saved there)
 	w->getChildWindows().clear();
-	// removeSubWindow() leaves a window of its own, which only a close event deleted. With a
-	// style sheet, Qt shows such a window again if it was maximized (QMdiSubWindow on
-	// StyleChange), and it then outlives the main window. Clear that state and delete it.
-	w->overrideWindowState(Qt::WindowNoState);
+	// removeSubWindow() makes the window a top-level window of its own, which only a close
+	// event deleted. With a style sheet, QMdiSubWindow's StyleChange handler shows it again
+	// if it was maximized or minimized, and it then outlives the main window. Clear that
+	// state first. QMdiSubWindow::changeEvent ignores the override, but QWidget::event still
+	// turns a cleared Minimized state into a show event that activates the window, so keep
+	// the MDI area from seeing its signals.
+	{
+		const QSignalBlocker blocker(w);
+		w->overrideWindowState(Qt::WindowNoState);
+	}
 	// A view makes itself its document's view when it is created, so a print preview took
 	// over its drawing's: hand it back before the view is deleted with the window.
 	RS_Document* closingDocument = w->getDocument();
