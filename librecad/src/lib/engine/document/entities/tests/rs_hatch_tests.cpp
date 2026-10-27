@@ -49,6 +49,7 @@
 #include "lc_graphicviewport.h"
 #include "lc_filtertestsupport.h"
 #include "lc_hatchpropertieseditingwidget.h"
+#include "lc_hatchtestsupport.h"
 #include "lc_hyperbola.h"
 #include "lc_looputils.h"
 #include "lc_secondmoment.h"
@@ -1542,36 +1543,6 @@ TEST_CASE("LC_HatchPropertiesEditingWidget shows 8 significant digits, fully vis
 
 namespace {
 
-// Points the pattern search at the source tree's patterns while it lives.
-class SourcePatterns {
-public:
-    SourcePatterns() {
-        static int qargc = 1;
-        static char qarg0[] = "librecad_tests";
-        static char* qargv[] = {qarg0, nullptr};
-        static QCoreApplication* qapp = QCoreApplication::instance()
-                                            ? QCoreApplication::instance()
-                                            : new QCoreApplication(qargc, qargv);
-        static bool settingsReady = [] {
-            QCoreApplication::setOrganizationName("LibreCAD");
-            QCoreApplication::setApplicationName("LibreCAD-tests");
-            RS_Settings::init("LibreCAD", "LibreCAD-tests");
-            return true;
-        }();
-        (void)qapp;
-        (void)settingsReady;
-        LC_GROUP_GUARD("Paths");
-        m_previous = LC_GET_STR("Patterns", "");
-        LC_SET("Patterns", QStringLiteral(LIBRECAD_SOURCE_DIR "/librecad/support/patterns"));
-    }
-    ~SourcePatterns() {
-        LC_GROUP_GUARD("Paths");
-        LC_SET("Patterns", m_previous);
-    }
-private:
-    QString m_previous;
-};
-
 // Directions of the pattern lines, in whole degrees from 0 to 179, and how many there are.
 std::map<long, int> patternLineDirections(const RS_Hatch& hatch) {
     std::map<long, int> directions;
@@ -1587,7 +1558,7 @@ std::map<long, int> patternLineDirections(const RS_Hatch& hatch) {
 } // namespace
 
 TEST_CASE("RS_Hatch keeps one set of pattern lines across updates and edits", "[rs_hatch][pattern]") {
-    SourcePatterns patterns;
+    lc::test::SourcePatterns patterns;
     RS_Hatch hatch(nullptr, RS_HatchData(false, 1.0, 0.0, "ANSI31"));
     auto* loop = new RS_EntityContainer(&hatch);
     hatch.addEntity(loop);

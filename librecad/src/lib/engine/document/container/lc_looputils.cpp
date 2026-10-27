@@ -28,7 +28,6 @@
 #include <cmath>
 #include <functional>
 #include <random>
-#include <set>
 #include <unordered_map>
 
 #include <QPen>
@@ -76,30 +75,6 @@ namespace {
         }
         return lc;
     }
-
-    /**
-     * @brief Extends a line to cover the bounding box by computing intersections with box sides.
-     * @param line The line to extend.
-     * @param bbox The bounding rectangle.
-     */
-    void extendLineToBBox(RS_Line& line, const LC_Rect& bbox) {
-        const double maxSize = 1.5 * std::max(bbox.width(), bbox.height());
-        const RS_Vector offset = line.getTangentDirection({}).normalized() * maxSize;
-
-        line.setStartpoint(line.getStartpoint() - offset);
-        line.setEndpoint(line.getEndpoint() + offset);
-    }
-
-    // Compare double with tolerance
-    struct DoublePredicate {
-        bool operator()(double a, double b) const {
-            // If the absolute difference is within epsilon, consider them equal
-            if (std::abs(a - b) <= RS_TOLERANCE * 100.) {
-                return false; // They are considered equal, so neither is "less than" the other in a strict sense
-            }
-            return a < b; // Otherwise, use standard less-than comparison
-        }
-    };
 
 // Returns true if the entity forms a closed loop by itself (circle, full ellipse,
 // full-circle arc, closed spline, or zero-length line).
@@ -957,16 +932,14 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
     }
 
     /**
-     * @brief Trims pattern entities to loop boundaries: Intersects, sorts params, creates subs inside loop.
-     * Handles closed/open entities; skips odd intersections for closed.
-     * For RS_Line: extends to bbox, dedups tiles by perpendicular intercept.
+     * @brief Clips every tile copy of every atomic pattern entity to this loop
+     * hierarchy: intersect with all boundary edges, sort, split, and keep the
+     * sub-pieces whose midpoint is inside. Copies are never extended.
      */
     std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Pattern& pattern) const {
         auto trimmed = std::make_unique<RS_EntityContainer>();
         std::vector<RS_Vector> tiles = createTiles(pattern);
         auto boundaries = getAllBoundaries();
-        std::map<const RS_Entity*, std::set<double, DoublePredicate>> savedIntercepts;
-        LC_Rect bBox = getBoundingBox();
         for (const RS_Vector& tile : tiles) {
             for (RS_Entity* e : pattern) {
                 if (!e->isAtomic()) {
@@ -975,20 +948,6 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
                 auto cloned = std::unique_ptr<RS_Entity>(e->clone());
                 cloned->move(tile);
 
-      if (e->rtti() == RS2::EntityLine) {
-        auto cline = static_cast<RS_Line*>(cloned.get());
-        RS_Vector normal = cline->getNormalVector();
-        double intr = normal.dotP(cline->getStartpoint());
-        constexpr double TOL = 1e-6;
-        double key = std::round(intr / TOL) * TOL;
-        std::set<double, DoublePredicate>& sset = savedIntercepts[e];
-        if (sset.find(key) != sset.end()) {
-            continue;
-        }
-        sset.insert(key);
-        // Extend to bbox
-        extendLineToBBox(*cline, bBox);
-      }
       std::vector<RS_Vector> all_inters;
       for (auto* b : boundaries) {
         RS_VectorSolutions sol = RS_Information::getIntersection(cloned.get(), b, true);
