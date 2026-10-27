@@ -2669,6 +2669,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/container/tests/lc_container_ownership_tests.cpp
         librecad/src/lib/engine/document/container/tests/lc_copy_semantics_tests.cpp
         librecad/src/lib/engine/document/container/tests/lc_loopclassifier_tests.cpp
+        librecad/src/lib/engine/document/container/tests/lc_looputils_tests.cpp
         librecad/src/lib/information/tests/lc_insidecontour_tests.cpp
         librecad/src/lib/engine/tests/rs_color_tests.cpp
         librecad/src/lib/engine/document/layers/tests/lc_layerlist_tests.cpp

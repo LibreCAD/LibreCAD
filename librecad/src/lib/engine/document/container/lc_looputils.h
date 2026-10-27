@@ -29,8 +29,9 @@
 #include <memory>
 #include <vector>
 
-#include "rs_entitycontainer.h"
+#include "lc_loopclassifier.h"
 #include "lc_secondmoment.h"
+#include "rs_entitycontainer.h"
 
 class QPainterPath;
 class RS_AtomicEntity;
@@ -166,6 +167,30 @@ public:
     return m_children;
   }
 
+  /**
+   * @brief Attaches the loop's precomputed geometry and the per-hatch
+   * tolerance epsOn used for the ON band of classify().
+   */
+  void setGeometry(std::shared_ptr<const LoopGeometry> geometry, double eps);
+
+  /** @brief The per-hatch tolerance stored in setGeometry(). */
+  double tolerance() const { return m_eps; }
+
+  /**
+   * @brief Lazy accessor for this node's own loop geometry. If setGeometry()
+   * has not been called, the geometry is built from the current loop with the
+   * tolerance last set (or hatchTolerance of the loop's bbox).
+   */
+  const LoopGeometry& geometry() const;
+
+  /**
+   * @brief Classifies a point against this tree. Returns On when the point
+   * sits within tolerance() of any edge in this node or any descendant,
+   * else the depth parity of the tree, each node's isInsideOuter() being
+   * exact oddParity on its own geometry.
+   */
+  PointClass classify(const RS_Vector& point) const;
+
 private:
   /**
    * @brief Checks if a point is inside the outer loop only (non-recursive).
@@ -255,6 +280,20 @@ private:
 
   std::shared_ptr<RS_EntityContainer> m_loop;  ///< Outer loop container
   std::vector<LC_Loops> m_children;             ///< Child loops (holes/islands)
+  mutable std::shared_ptr<const LoopGeometry> m_geometry;  ///< Lazily built
+  mutable double m_eps = 0.0;                    ///< Per-hatch ON tolerance
+};
+
+/**
+ * A single extracted loop in traversal order, plus the vertex table used by
+ * the half-open monotone classifier. vertices[i] is the start point of edge
+ * i; vertexIds is reserved for later id-based attach/splitting support and
+ * is empty here.
+ */
+struct ExtractedLoop {
+  std::unique_ptr<RS_EntityContainer> edges;
+  std::vector<RS_Vector> vertices;
+  std::vector<int> vertexIds;
 };
 
 /**
@@ -292,6 +331,14 @@ public:
    */
   LoopExtractor(const RS_EntityContainer& edges);
   ~LoopExtractor();
+
+  /**
+   * @brief Extracts all closed loops from the edges, with each loop paired
+   * with its traversal-order start-of-edge vertex table. For a loop made of
+   * a single closed atomic entity (circle, full ellipse, closed spline) the
+   * vertex table is empty.
+   */
+  std::vector<ExtractedLoop> extractLoops() const;
 
   /**
    * @brief Extracts all closed loops from the edges.
@@ -354,7 +401,19 @@ private:
  */
 class LoopSorter {
 public:
+  /**
+   * @brief Legacy ctor. Builds a per-loop vertex table from each container's
+   * edges' start points and uses a per-hatch tolerance taken from the union
+   * bbox and the edges' end points. New callers pass the vertex tables and
+   * tolerance in through the ExtractedLoop/eps overload.
+   */
   LoopSorter(std::vector<std::unique_ptr<RS_EntityContainer>> loops);
+
+  /**
+   * @brief Builds the hierarchy over per-container clones that already carry
+   * their vertex tables and the per-hatch ON band tolerance.
+   */
+  LoopSorter(std::vector<ExtractedLoop> loops, double eps);
   ~LoopSorter();
 
   struct AreaPredicate;  // Sorts by ascending absolute area (small to large), ties by bounding box diagonal

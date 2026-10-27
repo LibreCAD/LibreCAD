@@ -25,6 +25,7 @@
 #ifndef LC_LOOPCLASSIFIER_H
 #define LC_LOOPCLASSIFIER_H
 
+#include <functional>
 #include <memory>
 #include <vector>
 
@@ -252,6 +253,30 @@ PointClass classifyPoint(const RS_Vector& point,
                          const std::vector<const RS_EntityContainer*>& contours,
                          const std::vector<const LoopGeometry*>& loops,
                          double epsOn);
+
+/**
+ * A trimmer-side point classifier. The piece's own container(s) and
+ * geometry/epsOn are captured by the lambda; a fresh classifier is built per
+ * trim call.
+ */
+using PointClassifier = std::function<PointClass(const RS_Vector&)>;
+
+/**
+ * Collinear-safe keep rule for one pattern piece.
+ *
+ * The piece is classified at a representative point m (midpoint for lines and
+ * open curves; centre + (r, 0) for circles; the point itself for RS_Point).
+ * If m is strictly Inside/Outside the trimmer keeps/drops it; if m is On the
+ * piece is reclassified at m displaced by 2*epsOn along the +90-degree normal
+ * of its canonical direction (angle reduced to [0, pi) for lines; the inward
+ * normal for arcs/circles; (0, 1) for RS_Point). This picks one of two
+ * coincident tile edges deterministically: for a 0-degree family the bottom
+ * is drawn and the top is not; for 90 degrees the right is drawn and the
+ * left is not.
+ */
+bool keepPiece(const RS_Entity& piece,
+               const PointClassifier& classify,
+               double epsOn);
 
 } // namespace LC_LoopUtils
 

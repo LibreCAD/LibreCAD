@@ -963,4 +963,96 @@ PointClass classifyPoint(const RS_Vector& point,
     return oddParity(point, loops) ? PointClass::Inside : PointClass::Outside;
 }
 
+namespace {
+
+/** Representative point of a pattern piece. */
+RS_Vector pieceRepPoint(const RS_Entity& piece) {
+    switch (piece.rtti()) {
+    case RS2::EntityCircle: {
+        const auto& c = static_cast<const RS_Circle&>(piece);
+        return c.getCenter() + RS_Vector(c.getRadius(), 0.0);
+    }
+    case RS2::EntityPoint:
+        // RS_Point's position; its own getStartpoint and getMiddlePoint are
+        // both the position.
+        return piece.getStartpoint();
+    default:
+        return piece.getMiddlePoint();
+    }
+}
+
+/** +90-degree normal of the piece's canonical direction at m. */
+RS_Vector pieceCanonicalNormal(const RS_Entity& piece, const RS_Vector& m) {
+    switch (piece.rtti()) {
+    case RS2::EntityLine: {
+        const auto& ln = static_cast<const RS_Line&>(piece);
+        RS_Vector dir = ln.getEndpoint() - ln.getStartpoint();
+        const double len = dir.magnitude();
+        if (!(len > 0.0)) return RS_Vector(0.0, 1.0);
+        dir = dir / len;
+        // Reduce the direction's angle to [0, pi); flip if needed.
+        double ang = std::atan2(dir.y, dir.x);
+        while (ang < 0.0) ang += kPi;
+        while (ang >= kPi) ang -= kPi;
+        const RS_Vector uc(std::cos(ang), std::sin(ang));
+        return RS_Vector(-uc.y, uc.x);
+    }
+    case RS2::EntityPoint:
+        // Treat a dot as having a 0-degree canonical direction, so its
+        // +90-degree normal is (0, 1).
+        return RS_Vector(0.0, 1.0);
+    case RS2::EntityArc: {
+        const auto& arc = static_cast<const RS_Arc&>(piece);
+        RS_Vector d = arc.getCenter() - m;
+        const double len = d.magnitude();
+        if (!(len > 0.0)) return RS_Vector(0.0, 1.0);
+        return d / len;
+    }
+    case RS2::EntityCircle: {
+        const auto& c = static_cast<const RS_Circle&>(piece);
+        RS_Vector d = c.getCenter() - m;
+        const double len = d.magnitude();
+        if (!(len > 0.0)) return RS_Vector(0.0, 1.0);
+        return d / len;
+    }
+    default:
+        // Other atomic types (ellipse arc, spline, parabola, hyperbola):
+        // approximate tangent at m by a short finite difference from the
+        // entity's own endpoints, then rotate +90 and reduce.
+        RS_Vector dir;
+        const RS_Vector start = piece.getStartpoint();
+        const RS_Vector end = piece.getEndpoint();
+        if (start.valid && end.valid && start.distanceTo(end) > 0.0) {
+            dir = end - start;
+            dir = dir / dir.magnitude();
+            double ang = std::atan2(dir.y, dir.x);
+            while (ang < 0.0) ang += kPi;
+            while (ang >= kPi) ang -= kPi;
+            const RS_Vector uc(std::cos(ang), std::sin(ang));
+            return RS_Vector(-uc.y, uc.x);
+        }
+        return RS_Vector(0.0, 1.0);
+    }
+}
+
+} // namespace
+
+bool keepPiece(const RS_Entity& piece,
+               const PointClassifier& classify,
+               double epsOn) {
+    const RS_Vector m = pieceRepPoint(piece);
+    if (!m.valid) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+            "LC_LoopUtils::keepPiece: invalid representative point, dropping");
+        return false;
+    }
+    const PointClass r = classify(m);
+    if (r != PointClass::On) {
+        return r == PointClass::Inside;
+    }
+    const RS_Vector nc = pieceCanonicalNormal(piece, m);
+    const RS_Vector mShifted = m + nc * (2.0 * epsOn);
+    return classify(mShifted) == PointClass::Inside;
+}
+
 } // namespace LC_LoopUtils

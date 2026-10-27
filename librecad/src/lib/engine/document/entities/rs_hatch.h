@@ -138,6 +138,10 @@ public:
     /// transform that would produce it.
     void setAngle(double angle);
 
+    /// The per-hatch ε cached by the last successful validate(). Zero
+    /// before validate() has run or after a failed validate().
+    double getTolerance() const { return m_tolerance; }
+
     /**
      * @return Total enclosed area (0th moment) of loops.
      */
@@ -222,6 +226,7 @@ private:
     // The frame of m_orderedLoops: validate() rotated the loops by -m_loopAngle about m_pivot.
     RS_Vector m_pivot{0.0, 0.0};  ///< WCS centre of the combined bbox of the loop containers.
     double m_loopAngle = 0.0;     ///< isSolid() ? 0 : m_data.angle at the last successful validate().
+    double m_tolerance = 0.0;     ///< Per-hatch ε cached by validate().
 
     /**
      * The hatch's lattice origin in WCS. Every root uses one lattice through
