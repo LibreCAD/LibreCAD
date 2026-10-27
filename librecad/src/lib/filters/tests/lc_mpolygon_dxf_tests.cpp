@@ -240,9 +240,12 @@ TEST_CASE("DXF MPOLYGON writer: version 70 precedes solid 71 and emits ODA tag o
         REQUIRE(writer.write(&emit, DRW::AC1021, /*bin=*/false));
     }
 
-    std::ifstream in(path);
-    std::string body((std::istreambuf_iterator<char>(in)),
-                     std::istreambuf_iterator<char>());
+    std::string body;
+    {
+        // Close the stream before removing the file: Windows cannot delete an open file.
+        std::ifstream in(path);
+        body.assign(std::istreambuf_iterator<char>(in), std::istreambuf_iterator<char>());
+    }
     std::filesystem::remove(path);
     body.erase(std::remove(body.begin(), body.end(), '\r'), body.end());
 
