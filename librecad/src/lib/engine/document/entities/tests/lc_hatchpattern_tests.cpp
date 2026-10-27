@@ -38,6 +38,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/generators/catch_generators.hpp>
+#include <catch2/generators/catch_generators_range.hpp>
 
 #include <QDir>
 #include <QFileInfo>
@@ -58,6 +59,7 @@ namespace {
 using Piece = lc::test::LinePiece;
 using lc::test::Ring;
 using lc::test::rectRing;
+using lc::test::shiftedRing;
 
 // NOLINTBEGIN(readability-identifier-naming)
 
@@ -101,7 +103,7 @@ std::vector<Piece> tilePathPieces(const QString& name, double s,
     REQUIRE(roots);
     std::vector<Piece> out;
     for (const LC_LoopUtils::LC_Loops& root : *roots) {
-        auto trimmed = root.trimPatternEntities(*pattern);
+        auto trimmed = root.trimPatternEntities(*pattern, RS_Vector{0.0, 0.0});
         REQUIRE(trimmed);
         for (RS_Entity* en : *trimmed) {
             if (en && en->rtti() == RS2::EntityLine) {
@@ -498,4 +500,305 @@ TEST_CASE("Hatch pattern lines: BRICK around a square island matches the clipped
     const double matched = matchedFraction(fixed, carpet, 2.5);
     INFO("matched=" << matched);
     CHECK(matched > 0.30);
+}
+
+// --- H02 lattice-anchor tests. --------------------------------------------
+// Master anchors each root's lattice at that root's rotated bbox corner, so
+// two disjoint roots of one hatch get different phases and every edit moves
+// the pattern. The fix anchors every root to the WCS point h = (0, 0), passes
+// it through LC_Loops::trimPatternEntities and uses [floor, ceil) tile
+// indices in createTiles. See plan step H02.
+
+namespace {
+
+// NOLINTBEGIN(readability-identifier-naming)
+
+// Pattern end-point fractions ((e.x - pmin.x)/W mod 1, (e.y - pmin.y)/H mod 1)
+// for every LINE child of scaled.
+struct Fraction { double u, w; };
+std::vector<Fraction> tileFractions(const RS_Pattern& scaled) {
+    const RS_Vector pmin = scaled.getMin();
+    const RS_Vector pmax = scaled.getMax();
+    const double W = pmax.x - pmin.x;
+    const double H = pmax.y - pmin.y;
+    auto wrap = [](double v) { return v - std::floor(v); };
+    std::vector<Fraction> out;
+    for (const RS_Entity* en : scaled) {
+        if (!en || en->rtti() != RS2::EntityLine) continue;
+        const auto* line = static_cast<const RS_Line*>(en);
+        for (const RS_Vector& e : {line->getStartpoint(), line->getEndpoint()}) {
+            out.push_back({wrap((e.x - pmin.x) / W), wrap((e.y - pmin.y) / H)});
+        }
+    }
+    return out;
+}
+
+// min over fractions f of max(circ(u - f.u), circ(w - f.w)) with the lattice
+// h, rotated into the loop frame by -a. circ(d) = |d - round(d)|. Returns
+// RS_MAXDOUBLE if there are no fractions (an arcs-only pattern).
+double latticeResidue(const RS_Vector& p, const std::vector<Fraction>& fractions,
+                      double W, double H, const RS_Vector& h, double a) {
+    if (fractions.empty()) return RS_MAXDOUBLE;
+    RS_Vector v = p - h;
+    v.rotate(RS_Vector{-a});
+    const double u = v.x / W;
+    const double w = v.y / H;
+    auto circ = [](double d) { return std::abs(d - std::round(d)); };
+    double best = RS_MAXDOUBLE;
+    for (const Fraction& f : fractions) {
+        const double du = circ(u - f.u);
+        const double dw = circ(w - f.w);
+        best = std::min(best, std::max(du, dw));
+    }
+    return best;
+}
+
+// Shortest distance from a point to any edge of any ring.
+double distanceToRings(const RS_Vector& p, const std::vector<Ring>& rings) {
+    double best = RS_MAXDOUBLE;
+    for (const Ring& ring : rings) {
+        for (size_t i = 0; i < ring.size(); ++i) {
+            best = std::min(best, distanceToSegment(p, ring[i], ring[(i + 1) % ring.size()]));
+        }
+    }
+    return best;
+}
+
+// Liang-Barsky clip of every piece against the axis-aligned closed rect; drop
+// pieces with length <= 1e-9 after clipping.
+std::vector<Piece> clipToRect(const std::vector<Piece>& pieces,
+                              double xmin, double ymin, double xmax, double ymax) {
+    std::vector<Piece> out;
+    out.reserve(pieces.size());
+    for (const Piece& p : pieces) {
+        RS_Vector a = p.a;
+        RS_Vector b = p.b;
+        if (!clipSegment(a, b, xmin, ymin, xmax, ymax)) continue;
+        if (a.distanceTo(b) <= 1e-9) continue;
+        out.push_back({a, b});
+    }
+    return out;
+}
+
+struct FarPatternCase { const char* name; double angle; };
+const FarPatternCase kFarPatternCases[] = {
+    {"BRICK",   M_PI / 6.0},
+    {"HEX",     0.0},
+    {"ANSI31",  M_PI / 4.0},
+};
+
+struct TileCountCase { const char* name; size_t tiles; };
+const TileCountCase kTileCountCases[] = { {"BRICK", 15}, {"HEX", 20} };
+
+// NOLINTEND(readability-identifier-naming)
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern lattice: two disjoint roots share the WCS phase",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+    const double angle = M_PI / 6.0;
+    auto hatch = lc::test::makePatternHatch(
+        "BRICK", 1.0, angle,
+        {rectRing(0, 0, 500, 300), rectRing(700, 50, 900, 260)});
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    auto scaled = scaledPattern("BRICK", 1.0);
+    const RS_Vector pmin = scaled->getMin();
+    const RS_Vector pmax = scaled->getMax();
+    const double W = pmax.x - pmin.x;
+    const double H = pmax.y - pmin.y;
+    const std::vector<Fraction> fractions = tileFractions(*scaled);
+    REQUIRE_FALSE(fractions.empty());
+
+    const std::vector<Ring> rings = {rectRing(0, 0, 500, 300),
+                                     rectRing(700, 50, 900, 260)};
+    size_t rootA = 0;
+    size_t rootB = 0;
+    const auto pieces = lc::test::patternLines(*hatch);
+    REQUIRE_FALSE(pieces.empty());
+    for (const Piece& p : pieces) {
+        for (const RS_Vector& e : {p.a, p.b}) {
+            if (distanceToRings(e, rings) <= 1e-6) continue;  // boundary piece
+            const double r = latticeResidue(e, fractions, W, H, RS_Vector{0.0, 0.0}, angle);
+            INFO("end=(" << e.x << "," << e.y << ") residue=" << r);
+            REQUIRE(r <= 1e-9);
+            if (e.x < 600) ++rootA; else ++rootB;
+        }
+    }
+    CHECK(rootA > 0);
+    CHECK(rootB > 0);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern lattice: a hatch far from the origin keeps the WCS phase",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+    const auto c = GENERATE(from_range(std::begin(kFarPatternCases),
+                                       std::end(kFarPatternCases)));
+    CAPTURE(c.name);
+    const RS_Vector shift(1.0e6, -2.0e6);
+    const auto ring = shiftedRing(rectRing(0, 0, 500, 300), shift);
+    auto hatch = lc::test::makePatternHatch(
+        c.name, 1.0, c.angle, {ring});
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    auto scaled = scaledPattern(c.name, 1.0);
+    const RS_Vector pmin = scaled->getMin();
+    const RS_Vector pmax = scaled->getMax();
+    const double W = pmax.x - pmin.x;
+    const double H = pmax.y - pmin.y;
+    const std::vector<Fraction> fractions = tileFractions(*scaled);
+    REQUIRE_FALSE(fractions.empty());
+    const auto pieces = lc::test::patternLines(*hatch);
+    REQUIRE_FALSE(pieces.empty());
+    size_t interiorEnds = 0;
+    for (const Piece& p : pieces) {
+        for (const RS_Vector& e : {p.a, p.b}) {
+            if (distanceToRings(e, {ring}) <= 1e-6) continue;
+            const double r = latticeResidue(e, fractions, W, H, RS_Vector{0.0, 0.0}, c.angle);
+            INFO("end=(" << e.x << "," << e.y << ") residue=" << r);
+            REQUIRE(r <= 1e-9);
+            ++interiorEnds;
+        }
+    }
+    CHECK(interiorEnds > 0);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern lattice: the pattern stays put when the boundary moves",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+    const double angle = M_PI / 6.0;
+    const RS_Vector shift(37.3, 11.9);
+    auto hatchA = lc::test::makePatternHatch(
+        "BRICK", 1.0, angle, {rectRing(0, 0, 500, 300)});
+    auto hatchB = lc::test::makePatternHatch(
+        "BRICK", 1.0, angle, {shiftedRing(rectRing(0, 0, 500, 300), shift)});
+    REQUIRE(hatchA->getUpdateError() == RS_Hatch::HATCH_OK);
+    REQUIRE(hatchB->getUpdateError() == RS_Hatch::HATCH_OK);
+    // Shrunk interior Omega: (37.3,11.9)-(500,300) by 1e-3.
+    const double xmin = shift.x + 1e-3;
+    const double ymin = shift.y + 1e-3;
+    const double xmax = 500.0 - 1e-3;
+    const double ymax = 300.0 - 1e-3;
+    const auto A = clipToRect(lc::test::patternLines(*hatchA), xmin, ymin, xmax, ymax);
+    const auto B = clipToRect(lc::test::patternLines(*hatchB), xmin, ymin, xmax, ymax);
+    REQUIRE_FALSE(A.empty());
+    REQUIRE_FALSE(B.empty());
+    // Range until H05-3, which tightens it to == 1.0.
+    const double ab = matchedFraction(A, B, 1e-7);
+    const double ba = matchedFraction(B, A, 1e-7);
+    INFO("|A|=" << A.size() << " |B|=" << B.size()
+                << " ab=" << ab << " ba=" << ba);
+    // H05: tighten to exact.
+    REQUIRE(ab >= 0.99);
+    REQUIRE(ba >= 0.99);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern lattice: tile indices are half-open as in 2.2.1",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+    // Build a 500x300 rect boundary and extract the loop.
+    RS_EntityContainer contour;
+    const Ring ring = rectRing(0, 0, 500, 300);
+    for (size_t i = 0; i < ring.size(); ++i) {
+        const RS_Vector& a = ring[i];
+        const RS_Vector& b = ring[(i + 1) % ring.size()];
+        contour.addEntity(new RS_Line(&contour, a, b));
+    }
+    contour.calculateBorders();
+    LC_LoopUtils::LoopOptimizer opt(contour);
+    auto roots = opt.getResults();
+    REQUIRE(roots);
+    REQUIRE_FALSE(roots->empty());
+    const LC_LoopUtils::LC_Loops& root = (*roots)[0];
+
+    const auto c = GENERATE(from_range(std::begin(kTileCountCases),
+                                       std::end(kTileCountCases)));
+    CAPTURE(c.name);
+    auto scaled = scaledPattern(c.name, 1.0);
+    const auto tiles = root.createTiles(*scaled, RS_Vector{0.0, 0.0});
+    INFO("tiles=" << tiles.size());
+    REQUIRE(tiles.size() == c.tiles);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern lattice: an island off the lattice is hatched from the WCS lattice",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+    const RS_Vector shift(37.3, 11.9);
+    const Ring outer = shiftedRing(rectRing(0, 0, 300, 300), shift);
+    // Narrow U-shape I2 inside the outer rect.
+    const Ring I2raw = {RS_Vector(31, 43.5),  RS_Vector(269, 43.5),
+                        RS_Vector(269, 270),  RS_Vector(231, 270),
+                        RS_Vector(231, 83.5), RS_Vector(69, 83.5),
+                        RS_Vector(69, 270),   RS_Vector(31, 270)};
+    const Ring I2 = shiftedRing(I2raw, shift);
+    const std::vector<Ring> rings = {outer, I2};
+
+    const auto fixed = interiorOnly(tilePathPieces("ANSI31", 1.0, rings), rings);
+    REQUIRE_FALSE(fixed.empty());
+    auto scaled = scaledPattern("ANSI31", 1.0);
+    const auto carpet = interiorOnly(
+        carpetInRings(*scaled, RS_Vector(0, 0), rings), rings);
+    REQUIRE_FALSE(carpet.empty());
+
+    // Range until H05-3 tightens it to exact interior equality (D10).
+    const double countRatio = static_cast<double>(fixed.size()) /
+                              static_cast<double>(carpet.size());
+    const double inkRatio = inkOf(fixed) / inkOf(carpet);
+    INFO("fixed=" << fixed.size() << " carpet=" << carpet.size()
+                  << " countRatio=" << countRatio << " inkRatio=" << inkRatio);
+    // H05: tighten to exact.
+    REQUIRE(countRatio > 0.99);
+    REQUIRE(countRatio < 1.01);
+    REQUIRE(inkRatio > 0.99);
+    REQUIRE(inkRatio < 1.01);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern lattice: a scale-only edit keeps the phase",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+    const double angle = M_PI / 6.0;
+    const Ring ring = rectRing(0, 0, 500, 300);
+    auto hatch = std::make_unique<RS_Hatch>(
+        nullptr, RS_HatchData(false, 1.0, angle, QStringLiteral("BRICK")));
+    auto* loop = new RS_EntityContainer(hatch.get());
+    hatch->addEntity(loop);
+    for (size_t i = 0; i < ring.size(); ++i) {
+        const RS_Vector& a = ring[i];
+        const RS_Vector& b = ring[(i + 1) % ring.size()];
+        loop->addEntity(new RS_Line(loop, a, b));
+    }
+    hatch->update();
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    // setScale deliberately does not set m_needOptimization: validate() is
+    // skipped on the second update, so the stored m_pivot/m_loopAngle are
+    // what the trimmer uses.
+    hatch->setScale(0.5);
+    hatch->update();
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+
+    auto scaled = scaledPattern("BRICK", 0.5);
+    const RS_Vector pmin = scaled->getMin();
+    const RS_Vector pmax = scaled->getMax();
+    const double W = pmax.x - pmin.x;
+    const double H = pmax.y - pmin.y;
+    const std::vector<Fraction> fractions = tileFractions(*scaled);
+    REQUIRE_FALSE(fractions.empty());
+    const auto pieces = lc::test::patternLines(*hatch);
+    REQUIRE_FALSE(pieces.empty());
+    size_t interiorEnds = 0;
+    for (const Piece& p : pieces) {
+        for (const RS_Vector& e : {p.a, p.b}) {
+            if (distanceToRings(e, {ring}) <= 1e-6) continue;
+            const double r = latticeResidue(e, fractions, W, H, RS_Vector{0.0, 0.0}, angle);
+            INFO("end=(" << e.x << "," << e.y << ") residue=" << r);
+            REQUIRE(r <= 1e-9);
+            ++interiorEnds;
+        }
+    }
+    CHECK(interiorEnds > 0);
 }

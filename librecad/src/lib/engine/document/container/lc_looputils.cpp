@@ -895,10 +895,17 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
 }
 
     /**
-     * @brief Generates tile offsets for pattern repetition within the bounding box.
-     * Filters tiles that intersect or contain points inside the loop.
+     * @brief Generates tile offsets for pattern repetition over this tree's
+     * bounding box, anchored at latticeAnchor.
+     *
+     * Tile indices are half-open [floor((bbMin - a)/P), ceil((bbMax - a)/P))
+     * on each axis; the pattern's minimum corner sits on the lattice points
+     * latticeAnchor + (i*W, k*H), as in 2.2.1. Each tile is kept when its
+     * rect intersects bbox *and* either overlaps the loop or contains the
+     * pattern's centre.
      */
-    std::vector<RS_Vector> LC_Loops::createTiles(const RS_Pattern& pattern) const {
+    std::vector<RS_Vector> LC_Loops::createTiles(const RS_Pattern& pattern,
+                                                 const RS_Vector& latticeAnchor) const {
         const LC_Rect bBox = getBoundingBox();
         const LC_Rect pBox{pattern.getMin(), pattern.getMax()};
         const double pWidth = pBox.width();
@@ -907,16 +914,25 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
         {
             return {};
         }
-        const RS_Vector offsetBase = bBox.lowerLeftCorner() - pBox.lowerLeftCorner();
-        std::vector<RS_Vector> tiles;
-        // Use ceil for full coverage
-        const int nx = static_cast<int>(std::ceil(bBox.width() / pWidth)) + 1;
-        const int ny = static_cast<int>(std::ceil(bBox.height() / pHeight)) + 1;
+        // Half-open [floor, ceil) range of tile indices; indices stay in
+        // double/long long because |bbMin - anchor|/W can exceed 2^31 for a
+        // tiny tile far from the origin, and the cast would be UB in int.
+        // Never name these j0/j1 (glibc Bessel functions).
+        const double iFirst = std::floor((bBox.minP().x - latticeAnchor.x) / pWidth);
+        const double iEnd = std::ceil((bBox.maxP().x - latticeAnchor.x) / pWidth);
+        const double kFirst = std::floor((bBox.minP().y - latticeAnchor.y) / pHeight);
+        const double kEnd = std::ceil((bBox.maxP().y - latticeAnchor.y) / pHeight);
         // Use pattern center for inside check
         const RS_Vector pCenter = (pBox.lowerLeftCorner() + pBox.upperRightCorner()) / 2.0;
-        for (int i = 0; i < nx; ++i) {
-            for (int j = 0; j < ny; ++j) {
-                RS_Vector tile = offsetBase + RS_Vector{pWidth * i, pHeight * j};
+        const long long nIx = static_cast<long long>(iEnd - iFirst);
+        const long long nIy = static_cast<long long>(kEnd - kFirst);
+        std::vector<RS_Vector> tiles;
+        for (long long ci = 0; ci < nIx; ++ci) {
+            for (long long ck = 0; ck < nIy; ++ck) {
+                const RS_Vector tile = latticeAnchor
+                    + RS_Vector{(iFirst + static_cast<double>(ci)) * pWidth,
+                                (kFirst + static_cast<double>(ck)) * pHeight}
+                    - pBox.lowerLeftCorner();
                 LC_Rect tileRect{pBox.lowerLeftCorner() + tile, pBox.upperRightCorner() + tile};
                 // Quick bbox intersection
                 if (!tileRect.intersects(bBox)) {
@@ -936,9 +952,10 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
      * hierarchy: intersect with all boundary edges, sort, split, and keep the
      * sub-pieces whose midpoint is inside. Copies are never extended.
      */
-    std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Pattern& pattern) const {
+    std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Pattern& pattern,
+                                                                      const RS_Vector& latticeAnchor) const {
         auto trimmed = std::make_unique<RS_EntityContainer>();
-        std::vector<RS_Vector> tiles = createTiles(pattern);
+        std::vector<RS_Vector> tiles = createTiles(pattern, latticeAnchor);
         auto boundaries = getAllBoundaries();
         for (const RS_Vector& tile : tiles) {
             for (RS_Entity* e : pattern) {

@@ -208,6 +208,17 @@ private:
     bool m_needOptimization = true;
     bool m_updated = false;
     mutable std::shared_ptr<std::vector<LC_LoopUtils::LC_Loops>> m_orderedLoops;
+    // The frame of m_orderedLoops: validate() rotated the loops by -m_loopAngle about m_pivot.
+    RS_Vector m_pivot{0.0, 0.0};  ///< WCS centre of the combined bbox of the loop containers.
+    double m_loopAngle = 0.0;     ///< isSolid() ? 0 : m_data.angle at the last successful validate().
+
+    /**
+     * The hatch's lattice origin in WCS. Every root uses one lattice through
+     * this point; the pattern's minimum corner is placed on every lattice
+     * point anchor + (i*W, k*H). Fixed at (0, 0) on 2.2.2 (D30); H18 makes
+     * this read a stored, transform-tracked origin.
+     */
+    RS_Vector latticeOrigin() const { return RS_Vector{0.0, 0.0}; }
 
     // Internal: Vector of boundary subcontainers (one per loop, recursive)
     mutable std::vector<std::shared_ptr<RS_EntityContainer>> m_boundaryContainers;

@@ -101,9 +101,23 @@ public:
   /**
    * @brief Trims pattern entities to the boundaries of this loop hierarchy.
    * @param pattern The pattern to trim.
+   * @param latticeAnchor A lattice point in this tree's frame; the pattern's
+   *        minimum corner is placed on every lattice point
+   *        anchor + (i*W, k*H).
    * @return Unique pointer to a container of trimmed entities.
    */
-  std::unique_ptr<RS_EntityContainer> trimPatternEntities(const RS_Pattern& pattern) const;
+  std::unique_ptr<RS_EntityContainer> trimPatternEntities(const RS_Pattern& pattern,
+                                                          const RS_Vector& latticeAnchor) const;
+  /**
+   * @brief Generates tile offsets for pattern repetition over this loop
+   * hierarchy's bounding box, anchored at latticeAnchor.
+   *
+   * Tile indices are half-open [floor((bbMin - a)/P), ceil((bbMax - a)/P));
+   * every tile whose rect intersects the bounding box and either overlaps the
+   * loop or contains the pattern's centre is kept. H10/H11 may use this.
+   */
+  std::vector<RS_Vector> createTiles(const RS_Pattern& pattern,
+                                     const RS_Vector& latticeAnchor) const;
   /**
    * @brief Computes the total area of this loop, adding islands and subtracting holes.
    * @return The net area as a double.
@@ -238,12 +252,6 @@ private:
    * @return True if closed.
    */
   bool isEntityClosed(const RS_Entity* e) const;
-  /**
-   * @brief Creates tile offsets for a pattern within the bounding box.
-   * @param pattern The pattern.
-   * @return Vector of tile offsets.
-   */
-  std::vector<RS_Vector> createTiles(const RS_Pattern& pattern) const;
 
   std::shared_ptr<RS_EntityContainer> m_loop;  ///< Outer loop container
   std::vector<LC_Loops> m_children;             ///< Child loops (holes/islands)

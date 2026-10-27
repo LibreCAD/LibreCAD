@@ -204,6 +204,11 @@ bool RS_Hatch::validate() {
         }
 
         m_orderedLoops = results;
+        // Remember the frame of m_orderedLoops: validate() rotated by
+        // -m_data.angle about rotCenter. H02's lattice anchor is mapped
+        // through this stored pair, and H04/H07/H08 read them too.
+        m_pivot = rotCenter;
+        m_loopAngle = isSolid() ? 0.0 : m_data.angle;
         m_needOptimization = false;
 
         // Collect all loops (outer + holes) into flat boundary container list
@@ -393,20 +398,25 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
         return;
     }
 
-    // The contour was optimized in a frame rotated by -data.angle (see validate()).
-    // Rotate the trimmed pattern lines back to WCS by +data.angle.
-    const RS_Vector center = (getMin() + getMax()) * 0.5;
-    const RS_Vector rotationVector{m_data.angle};
+    // The contour was optimized in a frame rotated by -m_loopAngle about
+    // m_pivot (see validate()). The lattice anchor is one WCS point (A9/D30:
+    // latticeOrigin() = (0, 0)) mapped into that frame; every root uses it,
+    // so two roots of one hatch share the WCS phase and a non-lattice move of
+    // the boundary does not drag the pattern. The trimmed pieces are rotated
+    // back to WCS by +m_loopAngle about the same m_pivot.
+    RS_Vector anchor = latticeOrigin();
+    anchor.rotate(m_pivot, RS_Vector{-m_loopAngle});
+    const RS_Vector rotationVector{m_loopAngle};
     int addedCount = 0;
     for (size_t i = 0; i < m_orderedLoops->size(); ++i) {
         const auto& loop = (*m_orderedLoops)[i];
-        for (auto& owned : loop.trimPatternEntities(*pattern)->takeEntities()) {
+        for (auto& owned : loop.trimPatternEntities(*pattern, anchor)->takeEntities()) {
             RS_Entity* entity = owned.release();
             entity->setPen(pen);
             entity->setLayer(layer);
             entity->reparent(this);
             entity->setFlag(RS2::FlagHatchChild);
-            entity->rotate(center, rotationVector);
+            entity->rotate(m_pivot, rotationVector);
             addEntity(entity);
             ++addedCount;
         }
