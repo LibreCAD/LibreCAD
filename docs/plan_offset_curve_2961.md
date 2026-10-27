@@ -312,7 +312,7 @@ candidate except the explicitly proposed native-worker tags.
 | E1 | Guarded entity/factories, RTTI, stamp, clone, downgrade and transforms | C-check | candidate `92758859c` and later fixes; audit/retest | `[lc-offsetcurve][native]`, `[entity-coverage]` |
 | U1 | Type/INSERT/selection/SVG/menu/info dispatch and safe properties | E1 | candidate `49c9b328b`, `f0fb28fab`; audit/retest | native type/name/dispatch TUs, `[entity-coverage]` |
 | E2 | Cached grips/snaps, through proposal and transactional mutators | E1 | candidate `4300c1031`, `47e14c74b`; audit/retest | native edit/grip/transform TUs |
-| G | Eligible creation, repeated offset and bounded ordinary fallback/reporting | E2,U1,W2 | candidate `a37982bd6`, `bf7b512cf`; shared preparation `ef40eecad` qualified; typed Produce/cache/GUI integration open | creation/repeat/modification TUs and existing Offset tests |
+| G | Eligible creation, repeated offset and bounded ordinary fallback/reporting | E2,U1,W2 | candidate `a37982bd6`, `bf7b512cf`; shared preparation `ef40eecad` and typed Produce `558c3bba2` qualified; cache/GUI integration open | creation/repeat/modification TUs and existing Offset tests |
 | F1 | Shared typed schema, raw-carrier eligibility, ownership and byte limits | E1 | candidate `305042903`; audit/retest | `lc_offsetcurvexdata_tests.cpp`, `lc_offsetcurvecarrier_tests.cpp` |
 | F2 | Actual DXF/DWG SPLINE writer/adoption and transactional errors | F1,G | candidate `32597762b`, `7e46b2de8`; audit/retest | offset adapter/persistence/hostile-file TUs |
 | F3 | Version/read/write/conversion, clipboard, independent fixtures and output inspection | F2 | candidate `79ae1930b`; fixtures present, rerun scope required | `[lc-offsetcurve][g-matrix]`, explicit per-row evidence |
@@ -492,7 +492,7 @@ An early helper-launch prototype may supply W0's startup measurements; it does
 not close W1 packaging, result-authority or lifecycle acceptance before the
 remaining W0 choices are frozen.
 
-The current request envelope is `[3,token,operation,body]`. Token contains
+The current request envelope is `[4,token,operation,body]`. Token contains
 positive request ID and nonnegative generation/source-revision/undo-epoch int64
 values. `lc_offsetworkerrequest.h` fixes every nested positional record, native
 member order, enum and count admission. Request values do not confer editability.
@@ -504,6 +504,7 @@ member order, enum and count admission. Request values do not confer editability
 | TrimCache2 | `[cache,cutter,pick,trimLimits]`; stored-cache Trim and cache operand preparation | Exact stored cache only; parent attributes/owner/metadata stay outside child. Preserve all sections, roots and work records in the reply. |
 | TrimConic3 | `[cache,conic,conicPick,cachePick-or-null,trimLimits]`; conic complement and Trim Two | One original contact session and shared budget; prepare both operands before one parent undo/publication. |
 | CheckThrough4 | `[cache,definition,worldTolerance,point,checkLimits]`; unchanged-definition Through grip/dialog edits | Membership-only receipt; no generation, C rerun, returned curve or native admission. The exact raw input remains bound through parent completion. |
+| Produce5 | `[source,context,bounds,coordinate,fallback-or-null,distance,copies,asOffsetCurve,preview,batchLimits]`; shared ellipse/raw-native-cache copy series | Complete source diagnostics, exact per-copy output groups and definition/proposal binding. Parent uses private completion, preserves attribute policy and measures its own display expansion. Preview-cache portability and GUI routing remain open. |
 
 Cutters are owned Segment/Arc/Circle/Ellipse/Spline values. Every spline member,
 including latent fit/saved-open fields and flags, and every ellipse/arc render
@@ -527,7 +528,7 @@ failed operation, never invent zero consumption or retry it with fresh limits.
 Freeze/test no-op, exact-translation and cached clone paths separately so a new
 worker does not force generator runs for existing cheap proof-preserving edits.
 
-The current reply envelope is `[3,token,operation,failure,payload]`.
+The current reply envelope is `[4,token,operation,failure,payload]`.
 `lc_offsetworkerresult.h/.cpp` defines exact Native15/Curve6 and Trim8 records,
 including all trim sections, endpoint/root domains and work diagnostics. Fatal
 allocation/internal failures carry null payloads; their stderr prefix is only
@@ -1366,12 +1367,72 @@ claims, not present availability or new PASS. Do not reconstruct lost bytes from
 hashes. Current acceptance must use new scoped durable receipts; missing old evidence
 does not waive any current runtime/manual gate. Both protected index hashes still match.
 
+`558c3bba2a8742ae8a03bc3bca76311e74062573` qualifies typed Produce (W12).
+Protocol4 appends operation5; operations0-4 retain their body layouts. Source values
+are unrepaired ellipse or spline data plus captured bounds and explicit value-only
+top-level/native-definition context. The child invokes shared preparation once,
+including the distinct stored-cache fallback, side-once policy and stopped prefixes.
+It returns every bounded diagnostic, exact copy grouping, actual adoption-call/C
+work and typed output. Native outputs bind their copy ordinal and actual normalized
+ellipse definition or successful rebase proposal. Unsupported shapes/aggregate caps
+retain full diagnostics with no output prefix. Fatal/lost work remains unknown.
+
+Private `Completion::produced` materializes only joined receipts, never reruns the
+generator/C, strips stale owned metadata, creates fresh graph identities and grants
+no document/delete/publication authority. Native-requested committed ellipse/cache
+copies retain bounded local foreign metadata; ordinary/native-off/preview output
+retains only the existing pen/layer policy. Actual parent display expansion is
+independently admitted/measured before handoff. New curves do not inherit stale
+owned extension tails. GUI routing and portable preview cache are NOT implemented
+by this transport slice. All old test identities/assertions remain;12 new cases
+cover transport, exact ordinal/mode/proposal binding and private materialization.
+
+Fourteen full micro suites pass in both Release and ASan on the source-frozen W12
+slice. Case/assertion counts R/A: request12/597055 both; result25/467560 both;
+kernel14/2572 both; client13/6090/9071; process3/2495/2831; fault7/18867/21725;
+real-geometry timeout1/1082/1890; source preparation81/83385 both;
+worker edit15/101553 both; native edit29/15311 both; dialog56/25937 both;
+sheet53/9367 both; grip44/77438/90830; Update36/3076/3754.
+Strict XML has zero errors/failures/skips. Polling assertion totals vary with
+scheduling. ASan remains `detect_leaks=0`; no leak-free claim. No product cap,
+watchdog or deadline was increased. The first green Release fault receipt overlapped
+the end of source preparation and is retained as `W12-overlap-fault-release.xml`;
+the qualified fault receipt below is the later serial run, not that observation.
+
+Artifacts in the durable evidence root use
+`W12-qualified-<suite>-{release,asan}.xml`:
+
+| Suite | Release SHA256 | ASan SHA256 |
+|---|---|---|
+| request | `6e9bc47885e7231809c24698bb4f51487d25a34be8157c4b64698330128b9271` | `7d07b82ce317fa87bf59346bae95900f96a407bb5fca9545d9aab732e90981d6` |
+| result | `cf7986b0d4503ea8538a696e610e810eca37fb1fbe3477ab0ecf72fa76a44150` | `162a026134d7e99b005da41601568da765c1d9dcb779d6e2d4a0992939725f90` |
+| kernel | `5416ec6be607ecf8949764cf7397bca5a3ea255dbf4bdcb833044bae0e5f3871` | `dcb1d098be8ffe301dcbea084f3553ea24e4fc5ece2a5d31827c08e181c07043` |
+| client | `a9378f6428cc4676eff3fbe961985deb52c9d745c75f561ce00d2e6432270fad` | `2b81cdcd36b9f7d5ef968fca90dda10158b976a470636ee7f1bbdc6abaf0330c` |
+| process | `b0710b75156268769b06e9095fd592dd01c6c294bdeaac6ccfb62935c3093220` | `7357c0d25bf4026264dc60a644feea473b01be2494ab0cea6c2ec6bf65ee931f` |
+| fault | `8b3b63378c99f09d4c63ae26f950b5c2533c21b923bb9b2f7ca29ef94a31e240` | `b6fa98a11b160ab875b7d4d34a0fe786e04359ed24448efc399ea15af2e99258` |
+| geometry_timeout | `f6f12d07ef62c753e061594595b3793b76a21ac561a04edce6c1ae4d9285b4f9` | `32a3c028b73bbabf2cc9b31bce4cc32f345fc915f29d99b3e2e649b0b98e3933` |
+| source_preparation | `caefa0babf7dd609a18d6d48a363ea3141149bb5a247f0c285d8d80f1f3b7454` | `59513a493cdd9081b45dbabe05455765f787c53c612dd9ccf0f453b81a58668d` |
+| worker_edit | `0be30e277e68119d9f2903908c20a1ddf4e80713923ca17435916254544c8e38` | `1187358466bc09c67663476fc240de14a288a2c8f486af5fe829e4608d88c5ae` |
+| native_edit | `522b0a01c23ec934b3c68648deeb18a56ba0cffe35e6555aec860e4707dcf1da` | `d4526014b1aa3906fbc568e06ed5ebdcbaee626ea0218c0174a558686c12759e` |
+| dialog | `cb35b27bf9d79ce116e2e84c6f5a9269e974a4a003e2fee09b957c32837e6099` | `a872673734402731669a3f4e61b22cdbad1b4540285f942b68b97ad326dd6221` |
+| sheet | `959451611ad14dcada3e366b517bc0ef9de2a3d2d05559a2a21c11d4fb5095ee` | `7f0d38498539ecfccd2edd471b8da3705ad519c8dff281b8ecbd5a580ec736ac` |
+| grip | `26169fba3db7c5f880812637d8f1e8d1d03f05cb3792c0bfb3a7bc3b408facf3` | `898d3530836dce2599b89b100acecef89e8166932a70bce700b4bcc04f5be766` |
+| update_source | `2d9b347f7f6ed996c52e7b845108a0c598397bc663da05249f686b0d465b516f` | `7a0aee453e558b31b2efdb20cd5b0f3fbdd9a6d842095c4149af43515dff4456` |
+
+The bounded C-check static audit maps78 work/callback/publication sites,276 named
+test references and18 unchanged source/header/test files pinned to `06ffc4513`.
+No proven P1/P2 defect was established. `W11-C-check-static-audit.md` SHA256 is
+`c5a47554d38c02b9324ba6d4d34026871993285cb8a2b1014c5762b83ea15513`.
+It is not runtime qualification or closure of A-C: a complete allocation-failure
+sweep, independently summed whole-checker accounting oracle and complete analytic
+review remain explicit coverage limits. Existing aggregate exact-cap replay and
+callback-throw tests must not be relabeled independent whole-path proofs.
+
 Remaining creation/repeat steps:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
-2. Add a typed child Produce path for ellipse/native stored-cache source values,
-   complete pointer-free diagnostics and bounded outputs. Preserve side-once,
-   copy-series prefixes/rollback, samples, pair reservations and output limits.
+2. Typed child Produce is implemented/qualified at `558c3bba2`, including private
+   parent materialization, diagnostics, copy-series rollback and remaining limits.
    An original-definition rebase followed by the existing stored-cache fallback
    intentionally uses DIFFERENT inputs/remaining allowances; do not replace that
    fallback with ordinary geometry from the rebase invocation.
@@ -1412,8 +1473,8 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** typed Produce and cache
-portability/GUI routing in the remaining
+**Next concrete action on implementation resume:** preview-cache portability/parity,
+then creation/repeat GUI routing in the remaining
 4.2 caller adapters. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
 Nothing is automatically copied into the dirty main tree. Native caller routing,
