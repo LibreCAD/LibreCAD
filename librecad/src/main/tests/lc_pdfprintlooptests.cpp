@@ -24,16 +24,21 @@
  * ********************************************************************************
  */
 
+#include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
 #include <cstdlib>
 
 #include <QFile>
 #include <QFileInfo>
+#include <QRegularExpression>
+#include <QSizeF>
 #include <QTemporaryDir>
 
 #include "lc_actiontestsupport.h"
+#include "lc_settingguard.h"
 #include "pdf_print_loop.h"
+#include "rs_settings.h"
 
 namespace {
 
@@ -59,6 +64,16 @@ int printAndGetExitCode(const PdfPrintParams& params) {
                      [&exitCode](const int code) { exitCode = code; });
     loop.run();
     return exitCode;
+}
+
+// The size of the first page of a PDF file, in points.
+QSizeF pdfPageSize(const QString& path) {
+    QFile file{path};
+    REQUIRE(file.open(QIODevice::ReadOnly));
+    static const QRegularExpression mediaBox{R"(/MediaBox \[0 0 ([\d.]+) ([\d.]+)\])"};
+    const QRegularExpressionMatch match = mediaBox.match(QString::fromLatin1(file.readAll()));
+    REQUIRE(match.hasMatch());
+    return {match.captured(1).toDouble(), match.captured(2).toDouble()};
 }
 
 } // namespace
@@ -116,4 +131,29 @@ TEST_CASE("PDF printing succeeds when the output file can be written",
         CHECK(printAndGetExitCode(params) == EXIT_SUCCESS);
         CHECK(QFileInfo(dir.filePath("first.pdf")).size() > 0);
     }
+}
+
+TEST_CASE("PDF printing keeps a page size the system printer does not have",
+          "[console][pdf][issue3187]") {
+    REQUIRE(lc::test::application() != nullptr);
+    // the drawing, and so the page size given, in millimetres
+    const lc::test::SettingGuard unit{RS_SETTINGS, "Defaults", "Unit"};
+    const lc::test::SettingGuard paperWidth{RS_SETTINGS, "Print", "PaperSizeX"};
+    const lc::test::SettingGuard paperHeight{RS_SETTINGS, "Print", "PaperSizeY"};
+    unit.set(QStringLiteral("Millimeter"));
+    const QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+
+    // Where a printer is installed, the PDF used to get its default page
+    // (Letter or A4, portrait). Without one, as on CI, this passed already.
+    PdfPrintParams params;
+    params.inputFiles = {writeLineDxf(dir, "first.dxf")};
+    params.outFile = dir.filePath("out.pdf");
+    params.pageSize = RS_Vector{200.0, 150.0};
+    REQUIRE(printAndGetExitCode(params) == EXIT_SUCCESS);
+
+    // Qt keeps a custom page in whole points
+    const QSizeF page = pdfPageSize(params.outFile);
+    CHECK(page.width() == Catch::Approx(200.0 / 25.4 * 72.0).margin(1.0));
+    CHECK(page.height() == Catch::Approx(150.0 / 25.4 * 72.0).margin(1.0));
 }
