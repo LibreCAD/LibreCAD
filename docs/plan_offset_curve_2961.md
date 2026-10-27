@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-27. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0/W1 partially implemented; native helper/client and single-dialog routing qualified, remaining callers open**.
+Status: **S0/W0-W2 partially implemented; helper/client, dialog/sheet/grip/Update routing and typed Produce qualified; creation/cache/trim/import integration remains open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -101,7 +101,7 @@ This inventory compares the older attached tree with the later candidate.
 | Type/UI/source actions | Entity enum/coverage, property queue/dialog, default drag, Update/Restore actions | Candidate present. Property queue defers publication with a timer, but prepares geometry synchronously in `apply`; a deferred commit is not background computation. |
 | Stored-cache Trim | `lc_offsetcachetrim`, contacts/matching helpers, Modify Trim action and file tests | Candidate present: pure preparation, exact fragments, two-operand publication and plain-fragment persistence. Recheck precision/ownership/undo guarantees. |
 | Validation workers | `scripts/offset-curve-validation/`, X-H1 through X-H7 | Candidate has Node developer/test workers and recorded timeout fixes. These tools are not a shipped isolated geometry worker. Do not confuse their deadlines with GUI computation limits. |
-| Native geometry-worker path | Real five-operation protocol3 helper/client, same-producer ordinary fallback, plus dialog, sheet, grip and Update GUI routing committed/qualified | W0/W1, these callers and the isolated real-geometry-entry timeout lane are recorded. Creation/repeat routing, trim, import and packaged/final acceptance remain mandatory W0-W2 work. |
+| Native geometry-worker path | Real six-operation protocol4 helper/client, typed source-copy production, same-producer ordinary fallback, plus dialog, sheet, grip and Update GUI routing committed/qualified | W0/W1, these callers and the isolated real-geometry-entry timeout lane are recorded. Preview-cache portability, creation/repeat routing, trim, import and packaged/final acceptance remain mandatory W0-W2 work. |
 | Tests/build targets | Main Catch target, filter micro targets and two standalone offset allocation-failure targets | Candidate present; source registration is not discovery/execution. Use the actual targets in section5.3, not just the old grouped fast lanes. |
 | Surviving test defect | `spline_offset_representation_tests.cpp` lines205 and668 in candidate still use DWG enum ranges | `FormatDWG2007` is outside the range; those ordinary representation loops also omit it. Fix classification and add an executed R2007 regression in S0. The separate candidate matrix already lists all six DWG versions. |
 
@@ -1332,7 +1332,7 @@ valid with zero errors/failures. ASan remains `detect_leaks=0`.
 The last complete CMake Release application relink passed on the clean W9 source
 before W10; `W9-build-app-release.log` SHA256 is
 `ab67d7ecac022f1d25e06db90cfecba2990fdd3018c0608f7b192930342dde65`.
-That is not current W10 application/deployed/qmake6/visible qualification.
+That is not W10/W12 application/deployed/qmake6/visible qualification.
 
 The bounded S0 audit now classifies every287 F..C path and identifies289 M..C paths,
 using the surviving pinned Git objects. Its target is explicitly `eee8454fc` before
@@ -1349,8 +1349,9 @@ ALREADY an ancestor of local `origin/master` at
 Retain its shortcut initializers, Chinese test and test-only translation setup.
 Only the parent's uncommitted removal experiment was restored; no upstream fix
 was reverted or removal committed. Its W11-scope-qualified-* receipts describe
-the abandoned candidate, not retained-source qualification. W10 remains the last
-product qualification on the identical retained source.
+the abandoned candidate, not retained-source qualification. At that audit pin,
+W10 was the last product qualification on the identical retained source; W12
+qualification on the later source is recorded below.
 
 At feature HEAD `83ca73f99`, the actual merge-base diff has317 fully classified
 paths (101 modified/216 added); HEAD...origin/master has391 feature-only/31
@@ -1465,7 +1466,7 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   Do not redo implemented geometry as missing work.
 - [ ] A-core through C-check: review/requalify existing code and patch only proven
   accounting, ownership, occurrence or global-topology gaps. No duplicate checker.
-- [ ] W0-W2: finish typed Produce, cache portability, import ownership and remaining GUI
+- [ ] W0-W2: typed Produce is qualified; finish cache portability, import ownership and remaining GUI
   adoption/failure acceptance. Reuse the qualified geometry-entry timeout/helper/client/
   reply modules; do not redo them as absent. Keep Node runner scope separate.
 - [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
