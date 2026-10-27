@@ -276,3 +276,149 @@ TEST_CASE("Collinear pattern pieces: bottom and right drawn, top and left not",
         REQUIRE(left == 0);
     }
 }
+
+namespace {
+
+/** Signature of a loop container used to compare extraction runs byte-for-byte. */
+struct LoopSignature {
+    std::vector<std::tuple<int, double, double, double, double>> items;
+    bool operator==(const LoopSignature& o) const { return items == o.items; }
+};
+
+LoopSignature signatureOf(const std::vector<std::unique_ptr<RS_EntityContainer>>& loops) {
+    LoopSignature sig;
+    for (const auto& loop : loops) {
+        if (!loop) continue;
+        for (const RS_Entity* e : *loop) {
+            if (!e) continue;
+            const RS_Vector s = e->getStartpoint();
+            const RS_Vector t = e->getEndpoint();
+            sig.items.emplace_back(static_cast<int>(e->rtti()), s.x, s.y, t.x, t.y);
+        }
+        // Loop separator (invalid record): tells adjacent loops apart.
+        sig.items.emplace_back(-1, 0.0, 0.0, 0.0, 0.0);
+    }
+    return sig;
+}
+
+/** Builds a 4-line unit square container (CCW). */
+std::unique_ptr<RS_EntityContainer> makeSquare() {
+    auto c = std::make_unique<RS_EntityContainer>(nullptr, true);
+    const RS_Vector a(0.0, 0.0);
+    const RS_Vector b(1.0, 0.0);
+    const RS_Vector d(1.0, 1.0);
+    const RS_Vector e(0.0, 1.0);
+    c->addEntity(new RS_Line(c.get(), a, b));
+    c->addEntity(new RS_Line(c.get(), b, d));
+    c->addEntity(new RS_Line(c.get(), d, e));
+    c->addEntity(new RS_Line(c.get(), e, a));
+    c->calculateBorders();
+    return c;
+}
+
+/** Builds a three-loop container (big square, hole, far square). */
+std::unique_ptr<RS_EntityContainer> makeThreeLoops() {
+    auto c = std::make_unique<RS_EntityContainer>(nullptr, true);
+    // Outer 10x10.
+    const Ring outer = lc::test::rectRing(0.0, 0.0, 10.0, 10.0);
+    for (size_t i = 0; i < outer.size(); ++i) {
+        c->addEntity(new RS_Line(c.get(), outer[i], outer[(i + 1) % outer.size()]));
+    }
+    // Inner 4x4 (hole).
+    const Ring hole = lc::test::rectRing(3.0, 3.0, 7.0, 7.0);
+    for (size_t i = 0; i < hole.size(); ++i) {
+        c->addEntity(new RS_Line(c.get(), hole[i], hole[(i + 1) % hole.size()]));
+    }
+    // Disjoint 2x2 at (20,20).
+    const Ring far = lc::test::rectRing(20.0, 20.0, 22.0, 22.0);
+    for (size_t i = 0; i < far.size(); ++i) {
+        c->addEntity(new RS_Line(c.get(), far[i], far[(i + 1) % far.size()]));
+    }
+    c->calculateBorders();
+    return c;
+}
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Loop extraction does not depend on earlier extractions",
+          "[lc-hatchfix][nesting]") {
+    // Deterministic rule: given the same unit-square input, each extractor
+    // run must produce the identical (rtti, start, end) sequence, regardless
+    // of other extractors run before it. On the parent commit the
+    // function-static mt19937 in findFirst() picks a different corner with
+    // probability about 3/4 per call, so the sequence of 20 interleaved runs
+    // fluctuates.
+    std::vector<LoopSignature> signatures;
+    signatures.reserve(20);
+    LoopSignature baseline;
+    bool haveBaseline = false;
+    for (int iter = 0; iter < 20; ++iter) {
+        // Interleave an unrelated 3-loop extraction between every pair.
+        auto other = makeThreeLoops();
+        LC_LoopUtils::LoopExtractor otherEx(*other);
+        (void)otherEx.extract();  // consume
+
+        auto square = makeSquare();
+        LC_LoopUtils::LoopExtractor sqEx(*square);
+        auto result = sqEx.extract();
+        LoopSignature sig = signatureOf(result);
+        if (!haveBaseline) {
+            baseline = sig;
+            haveBaseline = true;
+        }
+        signatures.push_back(std::move(sig));
+    }
+    for (size_t i = 0; i < signatures.size(); ++i) {
+        INFO("iteration " << i);
+        REQUIRE(signatures[i] == baseline);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("findFirst starts on the outer boundary when curves lie leftmost",
+          "[lc-hatchfix][nesting]") {
+    // Outer circle as two half arcs (centre (0,0), r = 100). The left arc's
+    // leftmost extremum is (-100, 0) (interior). Plus a small square whose
+    // leftmost vertex is (-90, -10). Extraction picks the leftmost point
+    // (-100, 0) first, so the first loop has 2 arc edges and starts on the
+    // left arc.
+    auto c = std::make_unique<RS_EntityContainer>(nullptr, true);
+    const RS_Vector cen(0.0, 0.0);
+    const double r = 100.0;
+    // Left arc: angle1 = pi/2, angle2 = 3*pi/2 (CCW through (-100, 0)).
+    c->addEntity(new RS_Arc(c.get(),
+                             RS_ArcData(cen, r, M_PI / 2.0, 3.0 * M_PI / 2.0, false)));
+    // Right arc: angle1 = -pi/2, angle2 = pi/2 (CCW through (100, 0)).
+    c->addEntity(new RS_Arc(c.get(),
+                             RS_ArcData(cen, r, -M_PI / 2.0, M_PI / 2.0, false)));
+    // Small square inside the left half, around (-80, 0).
+    const Ring sq{RS_Vector(-90, -10), RS_Vector(-70, -10),
+                  RS_Vector(-70, 10),  RS_Vector(-90, 10)};
+    for (size_t i = 0; i < sq.size(); ++i) {
+        c->addEntity(new RS_Line(c.get(), sq[i], sq[(i + 1) % sq.size()]));
+    }
+    c->calculateBorders();
+
+    LC_LoopUtils::LoopExtractor ex(*c);
+    auto result = ex.extractLoops();
+    REQUIRE(result.size() == 2u);
+    // The first extracted loop is the outer circle (two arcs); the second is
+    // the inner square.
+    REQUIRE(result[0].edges->count() == 2u);
+    REQUIRE(result[1].edges->count() == 4u);
+    // Both edges of the first loop must be arcs.
+    for (unsigned k = 0; k < result[0].edges->count(); ++k) {
+        REQUIRE(result[0].edges->entityAt(k)->rtti() == RS2::EntityArc);
+    }
+    // The lexicographically smallest vertex (-90, -10) belongs to the square
+    // (the small inner island), not the outer boundary.
+    bool squareHasVertex = false;
+    for (const RS_Vector& v : result[1].vertices) {
+        if (std::abs(v.x - (-90.0)) < 1e-9 && std::abs(v.y - (-10.0)) < 1e-9) {
+            squareHasVertex = true;
+            break;
+        }
+    }
+    REQUIRE(squareHasVertex);
+}

@@ -36,6 +36,7 @@
 #include <unordered_map>
 #include <vector>
 
+#include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/generators/catch_generators.hpp>
 #include <catch2/generators/catch_generators_range.hpp>
@@ -45,9 +46,11 @@
 #include <QString>
 #include <QStringList>
 
+#include "lc_filtertestsupport.h"
 #include "lc_hatchtestsupport.h"
 #include "lc_looputils.h"
 #include "rs_entitycontainer.h"
+#include "rs_graphic.h"
 #include "rs_hatch.h"
 #include "rs_line.h"
 #include "rs_math.h"
@@ -461,16 +464,14 @@ TEST_CASE("Hatch pattern lines: PAISLEY piece count matches the clipped carpet",
                                      0.0, 0.0, 500.0, 300.0);
     REQUIRE_FALSE(carpet.empty());
 
-    // Range oracle until H05 provides deterministic equality.
-    const double countRatio = static_cast<double>(fixed.size()) /
-                              static_cast<double>(carpet.size());
-    const double inkRatio = inkOf(fixed) / inkOf(carpet);
-    INFO("fixed=" << fixed.size() << " carpet=" << carpet.size()
-                  << " countRatio=" << countRatio << " inkRatio=" << inkRatio);
-    REQUIRE(countRatio > 0.80);
-    REQUIRE(countRatio < 1.20);
-    REQUIRE(inkRatio > 0.80);
-    REQUIRE(inkRatio < 1.20);
+    // Exact interior equality: counts match and every piece has a mate within
+    // 1e-7 (orientation ignored).
+    const std::vector<Ring> rings{rect};
+    const auto fixedIn = interiorOnly(fixed, rings);
+    const auto carpetIn = interiorOnly(carpet, rings);
+    REQUIRE(fixedIn.size() == carpetIn.size());
+    REQUIRE(matchedFraction(fixedIn, carpetIn, 1e-7) == Catch::Approx(1.0));
+    REQUIRE(matchedFraction(carpetIn, fixedIn, 1e-7) == Catch::Approx(1.0));
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
@@ -486,20 +487,11 @@ TEST_CASE("Hatch pattern lines: BRICK around a square island matches the clipped
         carpetInRings(*scaled, RS_Vector(0, 0), rings), rings);
     REQUIRE_FALSE(carpet.empty());
 
-    const double countRatio = static_cast<double>(fixed.size()) /
-                              static_cast<double>(carpet.size());
-    const double inkRatio = inkOf(fixed) / inkOf(carpet);
-    INFO("fixed=" << fixed.size() << " carpet=" << carpet.size()
-                  << " countRatio=" << countRatio << " inkRatio=" << inkRatio);
-    REQUIRE(countRatio > 0.60);
-    REQUIRE(countRatio < 1.40);
-    REQUIRE(inkRatio > 0.60);
-    REQUIRE(inkRatio < 1.40);
-    // matchedFraction is informational: pieces may rotate within a tile but
-    // keep near-equal lengths and midpoints.
-    const double matched = matchedFraction(fixed, carpet, 2.5);
-    INFO("matched=" << matched);
-    CHECK(matched > 0.30);
+    // Exact interior equality: counts match and every piece has a mate within
+    // 1e-7 (orientation ignored).
+    REQUIRE(fixed.size() == carpet.size());
+    REQUIRE(matchedFraction(fixed, carpet, 1e-7) == Catch::Approx(1.0));
+    REQUIRE(matchedFraction(carpet, fixed, 1e-7) == Catch::Approx(1.0));
 }
 
 // --- H02 lattice-anchor tests. --------------------------------------------
@@ -685,14 +677,14 @@ TEST_CASE("Hatch pattern lattice: the pattern stays put when the boundary moves"
     const auto B = clipToRect(lc::test::patternLines(*hatchB), xmin, ymin, xmax, ymax);
     REQUIRE_FALSE(A.empty());
     REQUIRE_FALSE(B.empty());
-    // Range until H05-3, which tightens it to == 1.0.
+    // The two hatches share the WCS lattice, so inside the common clip rect
+    // the clipped line sets must agree exactly.
     const double ab = matchedFraction(A, B, 1e-7);
     const double ba = matchedFraction(B, A, 1e-7);
     INFO("|A|=" << A.size() << " |B|=" << B.size()
                 << " ab=" << ab << " ba=" << ba);
-    // H05: tighten to exact.
-    REQUIRE(ab >= 0.99);
-    REQUIRE(ba >= 0.99);
+    REQUIRE(ab == Catch::Approx(1.0));
+    REQUIRE(ba == Catch::Approx(1.0));
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
@@ -744,17 +736,10 @@ TEST_CASE("Hatch pattern lattice: an island off the lattice is hatched from the 
         carpetInRings(*scaled, RS_Vector(0, 0), rings), rings);
     REQUIRE_FALSE(carpet.empty());
 
-    // Range until H05-3 tightens it to exact interior equality (D10).
-    const double countRatio = static_cast<double>(fixed.size()) /
-                              static_cast<double>(carpet.size());
-    const double inkRatio = inkOf(fixed) / inkOf(carpet);
-    INFO("fixed=" << fixed.size() << " carpet=" << carpet.size()
-                  << " countRatio=" << countRatio << " inkRatio=" << inkRatio);
-    // H05: tighten to exact.
-    REQUIRE(countRatio > 0.99);
-    REQUIRE(countRatio < 1.01);
-    REQUIRE(inkRatio > 0.99);
-    REQUIRE(inkRatio < 1.01);
+    // Deterministic classifier: the island draws exactly the clipped carpet.
+    REQUIRE(fixed.size() == carpet.size());
+    REQUIRE(matchedFraction(fixed, carpet, 1e-7) == Catch::Approx(1.0));
+    REQUIRE(matchedFraction(carpet, fixed, 1e-7) == Catch::Approx(1.0));
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
@@ -801,4 +786,152 @@ TEST_CASE("Hatch pattern lattice: a scale-only edit keeps the phase",
         }
     }
     CHECK(interiorEnds > 0);
+}
+
+namespace {
+
+// A canonical bit-equal signature of a hatch's LINE children, sorted so that
+// the comparison is independent of insertion order inside the hatch.
+struct PieceSignature {
+    double ax, ay, bx, by;
+    bool operator<(const PieceSignature& o) const {
+        if (ax != o.ax) return ax < o.ax;
+        if (ay != o.ay) return ay < o.ay;
+        if (bx != o.bx) return bx < o.bx;
+        return by < o.by;
+    }
+    bool operator==(const PieceSignature& o) const {
+        return ax == o.ax && ay == o.ay && bx == o.bx && by == o.by;
+    }
+};
+
+std::vector<PieceSignature> hatchSignature(RS_Hatch& h) {
+    std::vector<PieceSignature> out;
+    const auto pieces = lc::test::patternLines(h);
+    out.reserve(pieces.size());
+    for (const Piece& p : pieces) {
+        PieceSignature s{p.a.x, p.a.y, p.b.x, p.b.y};
+        // Canonicalise orientation: the smaller end comes first.
+        if (std::tie(s.bx, s.by) < std::tie(s.ax, s.ay)) {
+            std::swap(s.ax, s.bx);
+            std::swap(s.ay, s.by);
+        }
+        out.push_back(s);
+    }
+    std::sort(out.begin(), out.end());
+    return out;
+}
+
+struct DetCase {
+    const char* name;
+    const char* pattern;
+    double scale;
+    std::vector<lc::test::Ring> rings;
+};
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Pattern children are identical over regenerations",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+    const auto L_outer = lc::test::Ring{
+        RS_Vector(0, 0),   RS_Vector(400, 0),  RS_Vector(400, 40),
+        RS_Vector(40, 40), RS_Vector(40, 400), RS_Vector(0, 400)};
+    const auto A_outer = lc::test::rectRing(0, 0, 300, 300);
+    const auto A_inner = lc::test::rectRing(100, 100, 200, 200);
+
+    const std::vector<DetCase> cases = {
+        {"ANSI31-rect", "ANSI31", 1.0, {rectRing(0, 0, 500, 300)}},
+        {"BRICK-rect",  "BRICK",  1.0, {rectRing(0, 0, 500, 300)}},
+        {"HEX-rect",    "HEX",    1.0, {rectRing(0, 0, 500, 300)}},
+        {"BRICK-L",     "BRICK",  1.0, {L_outer}},
+        {"HEX-annulus", "HEX",    1.0, {A_outer, A_inner}},
+    };
+    for (const DetCase& c : cases) {
+        CAPTURE(c.name);
+        auto hatch = std::make_unique<RS_Hatch>(
+            nullptr, RS_HatchData(false, c.scale, 0.0, QString::fromUtf8(c.pattern)));
+        for (const auto& ring : c.rings) {
+            auto* loop = new RS_EntityContainer(hatch.get());
+            hatch->addEntity(loop);
+            for (size_t i = 0; i < ring.size(); ++i) {
+                const RS_Vector& a = ring[i];
+                const RS_Vector& b = ring[(i + 1) % ring.size()];
+                loop->addEntity(new RS_Line(loop, a, b));
+            }
+        }
+        hatch->update();
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        const auto baseline = hatchSignature(*hatch);
+        REQUIRE_FALSE(baseline.empty());
+        for (int iter = 0; iter < 20; ++iter) {
+            hatch->update();
+            REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+            const auto again = hatchSignature(*hatch);
+            INFO("iteration " << iter << " pattern=" << c.name);
+            REQUIRE(again == baseline);
+        }
+    }
+}
+
+namespace {
+
+// Signature of all pattern hatches in a graphic (set of per-hatch sorted
+// LINE-piece tuples). Deterministic across hatch order inside the graphic.
+std::vector<std::vector<PieceSignature>> graphicSignature(RS_Graphic& g) {
+    std::vector<std::vector<PieceSignature>> out;
+    for (RS_Entity* en : g) {
+        if (!en || en->rtti() != RS2::EntityHatch) continue;
+        auto& h = static_cast<RS_Hatch&>(*en);
+        if (h.isSolid()) continue;
+        out.push_back(hatchSignature(h));
+    }
+    std::sort(out.begin(), out.end());
+    return out;
+}
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Density fixtures regenerate identically",
+          "[.slow][lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+    lc::test::QuietLog quiet;
+    const std::filesystem::path dir =
+        std::filesystem::path(LIBRECAD_TEST_DIR) / "hatch" / "density";
+    if (!std::filesystem::exists(dir)) {
+        SKIP("density fixtures not found: " << dir.string());
+    }
+    std::vector<std::filesystem::path> files;
+    for (const auto& entry : std::filesystem::directory_iterator(dir)) {
+        if (entry.is_regular_file() && entry.path().extension() == ".dxf") {
+            files.push_back(entry.path());
+        }
+    }
+    REQUIRE_FALSE(files.empty());
+    std::sort(files.begin(), files.end());
+
+    // Ten regenerations per fixture: enough to show that the extraction order
+    // is deterministic across repeated updates. (The research note's 100 is
+    // excessive here: some scale-1 fixtures produce hundreds of thousands of
+    // pieces per hatch.)
+    const int iterations = 10;
+    for (const auto& file : files) {
+        CAPTURE(file.string());
+        RS_Graphic g;
+        REQUIRE(lc::test::importDrawing(g, file, RS2::FormatDXFRW));
+        const auto baseline = graphicSignature(g);
+        if (baseline.empty()) continue;  // no pattern hatches in this file
+        for (int iter = 0; iter < iterations; ++iter) {
+            // Re-update every hatch and check the signature stays identical.
+            for (RS_Entity* en : g) {
+                if (!en || en->rtti() != RS2::EntityHatch) continue;
+                en->update();
+            }
+            const auto again = graphicSignature(g);
+            INFO("iteration " << iter);
+            REQUIRE(again == baseline);
+        }
+    }
 }

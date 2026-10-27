@@ -88,6 +88,77 @@ scene whose moments are read by the hatch-moment regression tests.
 | --- | --- |
 | `dxf/hatch_moments_spline_lens_10_5.dxf` | `0237038997a1d12aca93a441e06a12985976b7dd0615bba9715e8976145f6345` |
 
+## Generated DXF (hatch density)
+
+Sixty synthetic DXF scenes used by the hidden hatch regeneration-determinism
+regression test. Each is a small polyline boundary with one or two pattern
+hatches; they contain no imported drawing data. Produced by `common.py` in
+the hatch-fixes research tree, using ezdxf.
+
+| File | SHA-256 |
+| --- | --- |
+| `hatch/density/L_400_wall40__ansi31__0.25.dxf` | `d36aa351e6696f167b7b23705b3a800f6f74b14dfc30f4fbe5bb8e1c79717c22` |
+| `hatch/density/L_400_wall40__ansi31__1.dxf` | `68298d661546d35fabcebe68b30694429740738aad495adefe388aa22c1e6269` |
+| `hatch/density/L_400_wall40__ar-conc__0.25.dxf` | `bda2d7d875999fe797957c8e6e462caa659122b02e2a3842ba38e3dfbfd9c91f` |
+| `hatch/density/L_400_wall40__ar-conc__1.dxf` | `3c12403c776076e9b71a524a7451864e815ce7884cec5682c797dcd53f993212` |
+| `hatch/density/L_400_wall40__brick__0.25.dxf` | `ebe9243f307504fcf009b422e36fe7a74b549f5b215a687833a562f13bf0247f` |
+| `hatch/density/L_400_wall40__brick__1.dxf` | `8402301f298f7fe37f1f48bb30c2ff7adbffb57f9b61815121c71c8068b0250e` |
+| `hatch/density/L_400_wall40__hex__0.25.dxf` | `d53fb4e2ec95e2a9057257e53e051218eb4166681d1069f1b2e0d31992eb87ff` |
+| `hatch/density/L_400_wall40__hex__1.dxf` | `23b9ea57a4e61c760c2cf2a782cb838b5f8ab1b4d6078d5aa0dc42dd99ae2cbf` |
+| `hatch/density/L_400_wall40__paisley__0.25.dxf` | `c9da0f4b0f71146522407f8474dba9a11a5fb2749a765fbb5ce57ac712e0f147` |
+| `hatch/density/L_400_wall40__paisley__1.dxf` | `5a2553dc10e7b194d4b051fae3b96da9b58e9d59f60a4326bc64667a0b7bfa27` |
+| `hatch/density/L_400_wall40__sand__0.25.dxf` | `5a5c619e8834a084637b41a8e20b6fd92ab849af60ad8bd5048d3989f665e16c` |
+| `hatch/density/L_400_wall40__sand__1.dxf` | `878ec3c0d13e7865e5ff3c82154aa8c68bf86d7214e15eec36405834085a06c5` |
+| `hatch/density/annulus_sq__ansi31__0.25.dxf` | `55d0c6ddba32868c81eb281d449f74e88ea0a556ce83124936d89e6810d0506e` |
+| `hatch/density/annulus_sq__ansi31__1.dxf` | `1fc39e3b18a94f63b5c9399034756766524cb3231a6737d4cc213c9f0ab92bf5` |
+| `hatch/density/annulus_sq__ar-conc__0.25.dxf` | `398b0bede5d2d4d4aea86f1b64eb0ffa222b94413fa2a30e56ae7977213f3654` |
+| `hatch/density/annulus_sq__ar-conc__1.dxf` | `81eb85fb942cde7bd44dff0f1b5ea832bda4656e245f0cb795b0befbcf9bb715` |
+| `hatch/density/annulus_sq__brick__0.25.dxf` | `51405ef3b2de0a9278f32d6089dcd684666794e98d162de00e68de78502a38b7` |
+| `hatch/density/annulus_sq__brick__1.dxf` | `b48b4692ddaec319d572233a9eaa53e28ce57532642207d65974969ba0f320c7` |
+| `hatch/density/annulus_sq__hex__0.25.dxf` | `b47c06fb2d703ff31c49742b7e5d0cf880b383b7f672a29b13288c21f9340c43` |
+| `hatch/density/annulus_sq__hex__1.dxf` | `06ddf1b2da3ba72b76512c6222fc5ed44abe23e7896e8d9ee6c2249c3142e752` |
+| `hatch/density/annulus_sq__paisley__0.25.dxf` | `1b97c73303a2274b47d1fa7497a05b28608a506715b069126ce9e4e7188583eb` |
+| `hatch/density/annulus_sq__paisley__1.dxf` | `69f8bdc7a61a44ca975a929c03ebb9a307ce8758063c7d5c07387a9038f0f753` |
+| `hatch/density/annulus_sq__sand__0.25.dxf` | `3487bbd5317b16e63499dd2d1376c51eec13ccd7c510ac273eae61843bfb7e23` |
+| `hatch/density/annulus_sq__sand__1.dxf` | `76f08767dc53f32791d307e0995f500c61ab2248a303535a41ba0b3576c930b2` |
+| `hatch/density/circle_r200__ansi31__0.25.dxf` | `290ba21c818fb081d3b7f3e555c67b3936a3d2f3956203bb518f51e854309cae` |
+| `hatch/density/circle_r200__ansi31__1.dxf` | `2878bda2e21a1798343c0694bb873a1a388835e8f62b17a5aff4f0b8d78249d8` |
+| `hatch/density/circle_r200__ar-conc__0.25.dxf` | `a59c07511f0106f0192c80829156568a64dd0a7d7c1b6fe786cd09891bc1d64f` |
+| `hatch/density/circle_r200__ar-conc__1.dxf` | `8f38f99f49c7efc2999399c3dd485bb7ea5f2f65930a8090427980264c4c871f` |
+| `hatch/density/circle_r200__brick__0.25.dxf` | `1969a3be39204792156dafa4fb640faca077b28934d2109fecd50bf26b3ad476` |
+| `hatch/density/circle_r200__brick__1.dxf` | `656706661594417d5e108f204a767133c2fa61011ad9766211964533815ae4d5` |
+| `hatch/density/circle_r200__hex__0.25.dxf` | `71ddd73e6d1f9073b053df80fe639cdeb1c9735d26682d7ee6ce4bf2f670d6e7` |
+| `hatch/density/circle_r200__hex__1.dxf` | `774f0b8600979213ff925e65d0fafe2ad30822aacab5eb061bfda6e80b3604fe` |
+| `hatch/density/circle_r200__paisley__0.25.dxf` | `49a9fdfe555fb6de6dc47150de7014c17f5caaf9309cfcc8a7878bbfbbf0d0fd` |
+| `hatch/density/circle_r200__paisley__1.dxf` | `216f8b9ea8ff3498f187fcd4894c237244a8856b56a74735c5aa9300c88683f0` |
+| `hatch/density/circle_r200__sand__0.25.dxf` | `329e0330386b0706abb072f2f66dd9f6ee82199fdf6c08663dd8255794f4f338` |
+| `hatch/density/circle_r200__sand__1.dxf` | `c6e78b6ab26e50627b9b516259cdea26aeb71cbf667257444b8ec411137e8727` |
+| `hatch/density/comb_10teeth__ansi31__0.25.dxf` | `e595c10be0157f2d2c818edfe51651ab8d45b7f43c4655dc3671708c2373db8e` |
+| `hatch/density/comb_10teeth__ansi31__1.dxf` | `e88a77ca5b58d5198d71bd5ea8c13a11c0a728057af7ccd5c91b755f527cdb17` |
+| `hatch/density/comb_10teeth__ar-conc__0.25.dxf` | `66fad0181176b4eb92814585d8aa884fdc707ae82ab93444dc31bccc35c97487` |
+| `hatch/density/comb_10teeth__ar-conc__1.dxf` | `557dda78cbc61bc428114780a7c818cbb3b654442ccd84d1cfdd413446f17f0a` |
+| `hatch/density/comb_10teeth__brick__0.25.dxf` | `ef177b08e35cdf04897ee1e6acf6f454e314231ac7d84f145566ebb53c131db7` |
+| `hatch/density/comb_10teeth__brick__1.dxf` | `db207ee4598a5b2bf54db3f272a6900095e38a3f2d74526ee9159c2d6708b054` |
+| `hatch/density/comb_10teeth__hex__0.25.dxf` | `1ef3501942288b16678c3ecbac97ff586d2766b7802b648092a2d87cd2e08bfd` |
+| `hatch/density/comb_10teeth__hex__1.dxf` | `aeb6757f8ff113bab21b4fd7654559c88946f39705750c3e813d8189fa1c29c2` |
+| `hatch/density/comb_10teeth__paisley__0.25.dxf` | `1ff9a9bb78b71f7122c56ace475e4657c6cb20f30fcaef064d5cf2c0901ce13a` |
+| `hatch/density/comb_10teeth__paisley__1.dxf` | `8b015884fb69cdd34e406f583117a6aea0774f0555ff057ffdb68726b738070a` |
+| `hatch/density/comb_10teeth__sand__0.25.dxf` | `e7779687033590eb404b517213496a70b6771a360a898a2705e0064971519fc2` |
+| `hatch/density/comb_10teeth__sand__1.dxf` | `6f5c9cbbb711f90d574a43a95007be47412fd6bc7b2b4f30ee3afdf746be9e9a` |
+| `hatch/density/rect500x300__ansi31__0.25.dxf` | `87dfde8afafed7a0c7767531f5467dadf05bcf325760c7ba22f67556521f15cd` |
+| `hatch/density/rect500x300__ansi31__1.dxf` | `768667539190aa604e9981c18688eb6515e28fee2a868df3ffe79d893974867a` |
+| `hatch/density/rect500x300__ar-conc__0.25.dxf` | `e0aebe9a57889f78999b7245320619767ba017c0078f9a10074eb60957b1e511` |
+| `hatch/density/rect500x300__ar-conc__1.dxf` | `15407a2b3c25d4eef8f65fdda31378cf8b5b94076e0c73307aa49201c21d6c2a` |
+| `hatch/density/rect500x300__brick__0.25.dxf` | `74b3a0031a3e0461f69a477cfa512efec3314edb4eaa79df7a5364139426cc9b` |
+| `hatch/density/rect500x300__brick__1.dxf` | `8b4e3ecba4c4d934e715cd665d6b151f6afa9a30087608e95d42f8eb29359944` |
+| `hatch/density/rect500x300__hex__0.25.dxf` | `0527ffd5993e8b57ebdebcd522cb499fc935075cf18135a5c0522b760511bf3e` |
+| `hatch/density/rect500x300__hex__1.dxf` | `44c271a646207e3d386705906bdb37eaa827552922ab16c1525337a32b98b087` |
+| `hatch/density/rect500x300__paisley__0.25.dxf` | `e62588a74d7d8a0c33b7636490d08261551366a25d45997b8633b45911939260` |
+| `hatch/density/rect500x300__paisley__1.dxf` | `48f2cf66ce5a3df1b032b87db0b690543b95f54fd3f9c180866ea27dda163b5d` |
+| `hatch/density/rect500x300__sand__0.25.dxf` | `7f27f8997f1d22a7c3eceba722acda907f6e6d96c29157fdd9195dbbd53e72d0` |
+| `hatch/density/rect500x300__sand__1.dxf` | `c92a6bec915d31792314fbd033aa460f3a336217c69442873b8de60dc74d4404` |
+
+
 ## Hatch angle units fixtures
 
 Fixtures that the hatch-angle-units regression tests mutate at run time to

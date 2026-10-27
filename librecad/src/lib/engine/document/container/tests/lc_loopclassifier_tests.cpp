@@ -339,3 +339,135 @@ TEST_CASE("Hyperbola pieces produce exact x inverse",
     const bool p2 = oddParity(mid, {geom.get()});
     REQUIRE(p1 == p2);
 }
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("leftmostPoint, travelDirection and signedCurvature per edge type",
+          "[lc-hatchfix][classifier]") {
+    using LC_LoopUtils::leftmostPoint;
+    using LC_LoopUtils::signedCurvature;
+    using LC_LoopUtils::travelDirection;
+
+    SECTION("line") {
+        RS_Line line(nullptr, RS_LineData(RS_Vector(5, 3), RS_Vector(-2, 7)));
+        bool interior = true;  // sanity-check reset
+        const RS_Vector p = leftmostPoint(line, &interior);
+        REQUIRE_FALSE(interior);
+        REQUIRE(p.x == Approx(-2.0));
+        REQUIRE(p.y == Approx(7.0));
+        const RS_Vector t = travelDirection(line, true);
+        REQUIRE(t.x == Approx((-2.0 - 5.0) / std::hypot(-7.0, 4.0)));
+        REQUIRE(t.y == Approx((7.0 - 3.0) / std::hypot(-7.0, 4.0)));
+        REQUIRE(signedCurvature(line, true) == 0.0);
+    }
+
+    SECTION("arc") {
+        // CCW arc from (0, -5) through (-5, 0) to (0, 5): angle1 = -pi/2,
+        // angle2 = pi/2 passes through +x half. Flip to left half: angle1 =
+        // pi/2, angle2 = 3*pi/2 (interior through (-5, 0)).
+        RS_Arc arc(nullptr, RS_ArcData(RS_Vector(0.0, 0.0), 5.0,
+                                        M_PI / 2.0, 3.0 * M_PI / 2.0, false));
+        bool interior = false;
+        const RS_Vector p = leftmostPoint(arc, &interior);
+        REQUIRE(interior);
+        REQUIRE(p.x == Approx(-5.0));
+        REQUIRE(p.y == Approx(0.0));
+        // Travel at start (0, 5): CCW tangent is (-1, 0).
+        const RS_Vector t0 = travelDirection(arc, true);
+        REQUIRE(t0.x == Approx(-1.0));
+        REQUIRE(t0.y == Approx(0.0).margin(1e-12));
+        REQUIRE(signedCurvature(arc, true) == Approx(1.0 / 5.0));
+    }
+
+    SECTION("full circle") {
+        RS_Circle circ(nullptr, RS_CircleData(RS_Vector(3.0, 4.0), 2.0));
+        bool interior = false;
+        const RS_Vector p = leftmostPoint(circ, &interior);
+        REQUIRE(interior);
+        REQUIRE(p.x == Approx(1.0));
+        REQUIRE(p.y == Approx(4.0));
+        REQUIRE(signedCurvature(circ, true) == Approx(1.0 / 2.0));
+    }
+
+    SECTION("ellipse arc rotated 30 degrees") {
+        // Major axis rotated 30 deg; semiAxes 4 and 2; sweep is full circle.
+        const double th = M_PI / 6.0;
+        RS_EllipseData ed;
+        ed.center = RS_Vector(0, 0);
+        ed.majorP = RS_Vector(4.0 * std::cos(th), 4.0 * std::sin(th));
+        ed.ratio = 0.5;
+        ed.angle1 = 0.0;
+        ed.angle2 = 2.0 * M_PI;
+        ed.reversed = false;
+        RS_Ellipse ell(nullptr, ed);
+        bool interior = false;
+        const RS_Vector p = leftmostPoint(ell, &interior);
+        REQUIRE(interior);
+        // Sampled minimum for cross-check.
+        double sampledMinX = 1e9;
+        for (int i = 0; i <= 10000; ++i) {
+            const double t = (2.0 * M_PI * i) / 10000.0;
+            const RS_Vector q(4.0 * std::cos(th) * std::cos(t) +
+                                 -0.5 * 4.0 * std::sin(th) * std::sin(t),
+                              4.0 * std::sin(th) * std::cos(t) +
+                                 0.5 * 4.0 * std::cos(th) * std::sin(t));
+            sampledMinX = std::min(sampledMinX, q.x);
+        }
+        REQUIRE(p.x == Approx(sampledMinX).margin(1e-3));
+    }
+
+    SECTION("parabola apex is the leftmost point") {
+        // Bezier (0,0), (5,10), (10,0): symmetric about x = 5, apex at
+        // (5, 5). The x-wise leftmost in a strictly convex x polynomial is
+        // one of the ends; here both ends share x=0 and x=10, apex is NOT
+        // interior for x. The leftmost end is (0, 0).
+        LC_ParabolaData pd;
+        pd.m_controlPoints = {RS_Vector(0.0, 0.0), RS_Vector(5.0, 10.0),
+                              RS_Vector(10.0, 0.0)};
+        pd.m_valid = true;
+        LC_Parabola para(nullptr, pd);
+        bool interior = true;
+        const RS_Vector p = leftmostPoint(para, &interior);
+        REQUIRE_FALSE(interior);
+        REQUIRE(p.x == Approx(0.0));
+    }
+
+    SECTION("left-branch hyperbola") {
+        LC_HyperbolaData hd(RS_Vector(3.0, -2.0),
+                             RS_Vector(2.0 * std::cos(25.0 * M_PI / 180.0),
+                                        2.0 * std::sin(25.0 * M_PI / 180.0)),
+                             0.5, -0.5, 1.2, true);
+        LC_Hyperbola hyp(nullptr, hd);
+        bool interior = false;
+        const RS_Vector p = leftmostPoint(hyp, &interior);
+        // The leftmost point of the left branch for these parameters sits on
+        // the open curve: it is either an interior extremum or lies at one of
+        // the two stored endpoints.
+        REQUIRE(p.valid);
+        // Cross-check: sample 2001 points on the curve and verify no point
+        // has smaller x than the returned.
+        double minX = p.x;
+        for (int i = 0; i <= 2000; ++i) {
+            const double phi = -0.5 + (1.2 - (-0.5)) * (double(i) / 2000.0);
+            const RS_Vector q = hyp.getPoint(phi, hd.reversed);
+            if (q.valid) minX = std::min(minX, q.x);
+        }
+        REQUIRE(p.x <= minX + 1e-9);
+    }
+
+    SECTION("sweeps under 90 degrees: travelDirection is consistent at ends") {
+        // Arc of sweep 60 degrees: start at angle 0 (point (r, 0)), end at
+        // angle pi/3. The direction at the start points in +y (tangent of
+        // CCW motion), and the direction at the end heads further along the
+        // arc.
+        RS_Arc arc(nullptr, RS_ArcData(RS_Vector(0.0, 0.0), 2.0,
+                                        0.0, M_PI / 3.0, false));
+        const RS_Vector mid = arc.getMiddlePoint();
+        const RS_Vector s = arc.getStartpoint();
+        const RS_Vector e = arc.getEndpoint();
+        const RS_Vector t0 = travelDirection(arc, true);
+        const RS_Vector t1 = travelDirection(arc, false);
+        REQUIRE(t0.x * (mid.x - s.x) + t0.y * (mid.y - s.y) > 0);
+        REQUIRE(t1.x * (e.x - mid.x) + t1.y * (e.y - mid.y) > 0);
+    }
+}
+

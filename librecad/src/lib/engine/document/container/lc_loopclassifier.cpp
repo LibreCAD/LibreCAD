@@ -45,6 +45,7 @@
 #include "rs_entitycontainer.h"
 #include "rs_line.h"
 #include "rs_math.h"
+#include "rs_point.h"
 #include "rs_vector.h"
 
 namespace LC_LoopUtils {
@@ -1053,6 +1054,291 @@ bool keepPiece(const RS_Entity& piece,
     const RS_Vector nc = pieceCanonicalNormal(piece, m);
     const RS_Vector mShifted = m + nc * (2.0 * epsOn);
     return classify(mShifted) == PointClass::Inside;
+}
+
+// --------------------------------------------------------------------------
+// leftmostPoint, travelDirection, signedCurvature
+// --------------------------------------------------------------------------
+
+namespace {
+
+bool lexLess(const RS_Vector& a, const RS_Vector& b) {
+    if (a.x != b.x) return a.x < b.x;
+    return a.y < b.y;
+}
+
+/** Set *interior if it is non-null. Returns value for chaining. */
+RS_Vector asVertex(const RS_Vector& p, bool* interior) {
+    if (interior != nullptr) *interior = false;
+    return p;
+}
+
+RS_Vector lexminEndpoints(const RS_Entity& edge, bool* interior) {
+    const RS_Vector s = edge.getStartpoint();
+    const RS_Vector e = edge.getEndpoint();
+    if (!s.valid && !e.valid) return asVertex(RS_Vector(false), interior);
+    if (!s.valid) return asVertex(e, interior);
+    if (!e.valid) return asVertex(s, interior);
+    return asVertex(lexLess(s, e) ? s : e, interior);
+}
+
+RS_Vector leftmostArc(const RS_Arc& arc, bool* interior) {
+    const RS_Vector c = arc.getCenter();
+    const double r = arc.getRadius();
+    if (!(r > 0.0)) return lexminEndpoints(arc, interior);
+    // Walk CCW from a1 by sweep. The angle pi (relative to WCS) corresponds
+    // to parameter u in [0, sweep] with (a1 + u) == pi (mod 2*pi) for the
+    // non-reversed arc; the reversed arc negates the step but the point of
+    // minimum x is unchanged.
+    const double a1 = arc.isReversed() ? arc.getAngle2() : arc.getAngle1();
+    const double sweep = std::abs(arc.getAngleLength());
+    if (sweep <= 0.0) return lexminEndpoints(arc, interior);
+    double u = std::fmod(kPi - a1, kTwoPi);
+    if (u < 0.0) u += kTwoPi;
+    const double tolU = 8.0 * kU * std::max(1.0, std::abs(u));
+    if (u > tolU && u < sweep - tolU) {
+        if (interior != nullptr) *interior = true;
+        return RS_Vector(c.x - r, c.y);
+    }
+    return lexminEndpoints(arc, interior);
+}
+
+RS_Vector leftmostCircle(const RS_Circle& circ, bool* interior) {
+    const RS_Vector c = circ.getCenter();
+    const double r = circ.getRadius();
+    if (!(r > 0.0)) return asVertex(c, interior);
+    if (interior != nullptr) *interior = true;
+    return RS_Vector(c.x - r, c.y);
+}
+
+RS_Vector ellipsePointAt(const RS_Ellipse& ell, double t) {
+    const RS_Vector c = ell.getCenter();
+    const RS_Vector M = ell.getMajorP();
+    const double ratio = ell.getRatio();
+    const RS_Vector N(-ratio * M.y, ratio * M.x);
+    return RS_Vector(c.x + M.x * std::cos(t) + N.x * std::sin(t),
+                     c.y + M.y * std::cos(t) + N.y * std::sin(t));
+}
+
+RS_Vector leftmostEllipse(const RS_Ellipse& ell, bool* interior) {
+    const RS_Vector M = ell.getMajorP();
+    const double ratio = ell.getRatio();
+    const RS_Vector N(-ratio * M.y, ratio * M.x);
+    const double Rx = std::hypot(M.x, N.x);
+    if (!(Rx > 0.0)) return lexminEndpoints(ell, interior);
+    // x(t) = cx + Mx*cos(t) + Nx*sin(t) = cx + Rx*cos(t - beta), beta = atan2(Nx, Mx).
+    // Minimum at t = beta + pi, giving x = cx - Rx.
+    const double beta = std::atan2(N.x, M.x);
+    double tStar = beta + kPi;
+    bool fullCircle = !ell.isArc() ||
+        std::abs(ell.getAngleLength() - kTwoPi) < RS_TOLERANCE_ANGLE;
+    if (fullCircle) {
+        if (interior != nullptr) *interior = true;
+        return ellipsePointAt(ell, tStar);
+    }
+    const double a1 = ell.isReversed() ? ell.getAngle2() : ell.getAngle1();
+    const double sweep = std::abs(ell.getAngleLength());
+    if (sweep <= 0.0) return lexminEndpoints(ell, interior);
+    double u = std::fmod(tStar - a1, kTwoPi);
+    if (u < 0.0) u += kTwoPi;
+    const double tolU = 8.0 * kU * std::max(1.0, std::abs(u));
+    if (u > tolU && u < sweep - tolU) {
+        if (interior != nullptr) *interior = true;
+        return ellipsePointAt(ell, a1 + u);
+    }
+    return lexminEndpoints(ell, interior);
+}
+
+RS_Vector leftmostBezier(const RS_Vector& p0, const RS_Vector& p1,
+                         const RS_Vector& p2, bool* interior) {
+    const double denom = p0.x - 2.0 * p1.x + p2.x;
+    if (std::abs(denom) > 1e-14 && denom > 0.0) {
+        const double w = (p0.x - p1.x) / denom;
+        if (w > 1e-12 && w < 1.0 - 1e-12) {
+            const double om = 1.0 - w;
+            const RS_Vector p(om * om * p0.x + 2.0 * w * om * p1.x + w * w * p2.x,
+                              om * om * p0.y + 2.0 * w * om * p1.y + w * w * p2.y);
+            if (interior != nullptr) *interior = true;
+            return p;
+        }
+    }
+    if (interior != nullptr) *interior = false;
+    return lexLess(p0, p2) ? p0 : p2;
+}
+
+RS_Vector leftmostParabola(const LC_Parabola& para, bool* interior) {
+    const auto& cp = para.getData().m_controlPoints;
+    if (cp.size() < 3) return lexminEndpoints(para, interior);
+    return leftmostBezier(cp[0], cp[1], cp[2], interior);
+}
+
+RS_Vector leftmostSplinePoints(const LC_SplinePoints& spline, bool* interior) {
+    bool haveBest = false;
+    bool bestInterior = false;
+    RS_Vector best(false);
+    const size_t count = spline.getSegmentCount();
+    for (size_t i = 0; i < count; ++i) {
+        LC_SplinePointsSegment seg;
+        if (!spline.tryGetSegment(i, seg)) continue;
+        bool segInterior = false;
+        RS_Vector cand(false);
+        switch (seg.kind) {
+        case LC_SplinePointsSegment::Kind::Point:
+            if (seg.start.valid) cand = seg.start;
+            break;
+        case LC_SplinePointsSegment::Kind::Line:
+            cand = lexLess(seg.start, seg.end) ? seg.start : seg.end;
+            break;
+        case LC_SplinePointsSegment::Kind::Quadratic:
+            cand = leftmostBezier(seg.start, seg.control, seg.end, &segInterior);
+            break;
+        }
+        if (!cand.valid) continue;
+        if (!haveBest || lexLess(cand, best)) {
+            best = cand;
+            bestInterior = segInterior;
+            haveBest = true;
+        }
+    }
+    if (!haveBest) return lexminEndpoints(spline, interior);
+    if (interior != nullptr) *interior = bestInterior;
+    return best;
+}
+
+RS_Vector leftmostHyperbola(const LC_Hyperbola& hyp, bool* interior) {
+    if (hyp.isInfinite()) return lexminEndpoints(hyp, interior);
+    const auto& d = hyp.getData();
+    const double a = d.majorP.magnitude();
+    const double b = a * d.ratio;
+    if (!(a > 0.0) || !(b > 0.0)) return lexminEndpoints(hyp, interior);
+    const double th = d.majorP.angle();
+    const double sx = d.reversed ? -1.0 : 1.0;
+    // x(phi) = cx + sx*a*cosh(phi)*cos(th) - b*sinh(phi)*sin(th)
+    //        = cx + Ax*cosh(phi) + Bx*sinh(phi), Ax = sx*a*cos(th), Bx = -b*sin(th)
+    // Minimum iff |Bx| < |Ax| and Ax > 0, at tanh(phi*) = -Bx/Ax.
+    const double Ax = sx * a * std::cos(th);
+    const double Bx = -b * std::sin(th);
+    if (Ax > 0.0 && std::abs(Bx) < std::abs(Ax)) {
+        const double r = -Bx / Ax;
+        if (r > -1.0 && r < 1.0) {
+            const double phiStar = std::atanh(r);
+            const double phi1 = std::min(d.angle1, d.angle2);
+            const double phi2 = std::max(d.angle1, d.angle2);
+            if (phiStar > phi1 + 1e-12 && phiStar < phi2 - 1e-12) {
+                const RS_Vector p = hyp.getPoint(phiStar, d.reversed);
+                if (p.valid) {
+                    if (interior != nullptr) *interior = true;
+                    return p;
+                }
+            }
+        }
+    }
+    return lexminEndpoints(hyp, interior);
+}
+
+} // namespace
+
+RS_Vector leftmostPoint(const RS_Entity& edge, bool* interior) {
+    switch (edge.rtti()) {
+    case RS2::EntityLine:
+        return lexminEndpoints(edge, interior);
+    case RS2::EntityArc:
+        return leftmostArc(static_cast<const RS_Arc&>(edge), interior);
+    case RS2::EntityCircle:
+        return leftmostCircle(static_cast<const RS_Circle&>(edge), interior);
+    case RS2::EntityEllipse:
+        return leftmostEllipse(static_cast<const RS_Ellipse&>(edge), interior);
+    case RS2::EntityParabola:
+        return leftmostParabola(static_cast<const LC_Parabola&>(edge), interior);
+    case RS2::EntitySplinePoints:
+        return leftmostSplinePoints(static_cast<const LC_SplinePoints&>(edge),
+                                    interior);
+    case RS2::EntityHyperbola:
+        return leftmostHyperbola(static_cast<const LC_Hyperbola&>(edge),
+                                 interior);
+    default:
+        return lexminEndpoints(edge, interior);
+    }
+}
+
+RS_Vector travelDirection(const RS_Entity& edge, bool atStart) {
+    auto fromAngle = [](double a) {
+        return RS_Vector(std::cos(a), std::sin(a));
+    };
+    switch (edge.rtti()) {
+    case RS2::EntityLine: {
+        const auto& ln = static_cast<const RS_Line&>(edge);
+        const RS_Vector d = ln.getEndpoint() - ln.getStartpoint();
+        const double m = d.magnitude();
+        if (!(m > 0.0)) return RS_Vector(0.0, 0.0);
+        return d / m;
+    }
+    case RS2::EntityArc:
+    case RS2::EntityEllipse: {
+        const double a = atStart ? edge.getDirection1()
+                                 : edge.getDirection2() + kPi;
+        return fromAngle(a);
+    }
+    case RS2::EntitySplinePoints: {
+        const double a = atStart ? edge.getDirection1()
+                                 : edge.getDirection2() + kPi;
+        return fromAngle(a);
+    }
+    case RS2::EntityParabola: {
+        const double a = atStart ? edge.getDirection1()
+                                 : edge.getDirection2();
+        return fromAngle(a);
+    }
+    case RS2::EntityHyperbola: {
+        const auto& hyp = static_cast<const LC_Hyperbola&>(edge);
+        const auto& d = hyp.getData();
+        const double param = atStart ? d.angle1 : d.angle2;
+        RS_Vector t = hyp.getTangentDirectionParam(param);
+        if (!t.valid) return RS_Vector(0.0, 0.0);
+        const double sign = (d.angle2 >= d.angle1) ? 1.0 : -1.0;
+        return t * sign;
+    }
+    case RS2::EntityCircle:
+        // A circle has no well-defined start/end travel direction.
+        return RS_Vector(0.0, 0.0);
+    default:
+        return RS_Vector(0.0, 0.0);
+    }
+}
+
+double signedCurvature(const RS_Entity& edge, bool atStart) {
+    (void)atStart;  // signed curvature is uniform along the pieces we handle.
+    switch (edge.rtti()) {
+    case RS2::EntityLine:
+        return 0.0;
+    case RS2::EntityArc: {
+        const auto& arc = static_cast<const RS_Arc&>(edge);
+        const double r = arc.getRadius();
+        if (!(r > 0.0)) return 0.0;
+        return arc.isReversed() ? -1.0 / r : 1.0 / r;
+    }
+    case RS2::EntityCircle: {
+        const auto& circ = static_cast<const RS_Circle&>(edge);
+        const double r = circ.getRadius();
+        if (!(r > 0.0)) return 0.0;
+        return 1.0 / r;
+    }
+    case RS2::EntityEllipse: {
+        const auto& ell = static_cast<const RS_Ellipse&>(edge);
+        const RS_Vector M = ell.getMajorP();
+        const double ratio = ell.getRatio();
+        const double a = M.magnitude();
+        const double b = a * ratio;
+        if (!(a > 0.0) || !(b > 0.0)) return 0.0;
+        const double k = b / (a * a);
+        return ell.isReversed() ? -k : k;
+    }
+    case RS2::EntitySplinePoints:
+    case RS2::EntityParabola:
+    case RS2::EntityHyperbola:
+    default:
+        return 0.0;
+    }
 }
 
 } // namespace LC_LoopUtils

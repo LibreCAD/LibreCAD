@@ -27,7 +27,6 @@
 #include <algorithm>
 #include <cmath>
 #include <functional>
-#include <random>
 #include <unordered_map>
 
 #include <QPen>
@@ -169,6 +168,9 @@ struct LoopExtractor::LoopData {
   RS_Vector endPoint;
   RS_Vector targetPoint;
   std::unordered_map<VectorKey, std::vector<RS_Entity*>, VectorKeyHash> endpointToEdges;
+  // Stable container-order index, filled in the ctor. Used by findFirst() and
+  // findOutermost() for a deterministic tie-break between candidate edges.
+  std::unordered_map<const RS_Entity*, std::size_t> order;
 };
 
 /**
@@ -181,10 +183,12 @@ struct LoopExtractor::LoopData {
 LoopExtractor::LoopExtractor(const RS_EntityContainer& edges) :
                                                                 m_data(std::make_unique<LoopData>())
 {
+  std::size_t idx = 0;
   for (RS_Entity* e : edges) {
     if (e->isAtomic() && e->getLength() > ENDPOINT_TOLERANCE) {  // Skip degenerate zero-length edges
       m_data->unprocessed.push_back(e);
       m_data->processed[e] = false;
+      m_data->order[e] = idx;
 
              // Closed entities (circles, full ellipses) have no valid endpoints — skip adjacency map
       if (!isClosed(*e)) {
@@ -195,6 +199,7 @@ LoopExtractor::LoopExtractor(const RS_EntityContainer& edges) :
         m_data->endpointToEdges[k2].push_back(e);
       }
     }
+    ++idx;
   }
 }
 
@@ -210,9 +215,16 @@ std::vector<ExtractedLoop> LoopExtractor::extractLoops() const {
   std::vector<ExtractedLoop> results;
   while (!m_data->unprocessed.empty()) {
     m_loop = std::make_unique<RS_EntityContainer>();
-    RS_Entity* first = findFirst();
+    const FirstEdge choice = findFirst();
+    RS_Entity* first = choice.edge;
     if (first) {
       RS_Entity* cloned_first = first->clone();
+      // Walk the first edge in the direction we chose. For a closed atomic
+      // entity (circle, full ellipse, closed spline) revertDirection() is a
+      // no-op; for a line/arc/ellipse arc it swaps the stored traversal.
+      if (choice.reverse) {
+        cloned_first->revertDirection();
+      }
       m_loop->addEntity(cloned_first);
       m_data->processed[first] = true;
       m_data->current = cloned_first;
@@ -372,86 +384,112 @@ bool LoopExtractor::validate() const {
 
 /**
  * @brief Finds the first edge to start a new loop.
- * Uses a fixed-seed random ray direction to avoid axis-aligned degeneracies.
- * Selects the entity the ray hits first, falling back to the geometrically
- * extremal entity if no intersection is found.
+ *
+ * Deterministic rule: picks the lexicographically smallest (x, y, container
+ * index) among the leftmostPoint() of every unprocessed edge.
+ *
+ *   - When that point is interior to its chosen edge, the reverse flag is set
+ *     if the stored traversal walks away in +y at that point (we need to
+ *     start in -y so the loop turns counter-clockwise around what lies to the
+ *     right).
+ *   - When the point is a vertex (an edge's own start or end), all edges
+ *     attached at that vertex are compared by the CCW angle from -y of their
+ *     travel direction leaving the vertex; ties within 1e-12 break by smaller
+ *     signed curvature leaving the vertex, then by lower container index.
  */
-RS_Entity* LoopExtractor::findFirst() const
+LoopExtractor::FirstEdge LoopExtractor::findFirst() const
 {
-  if (m_data->unprocessed.empty()) {
-      return nullptr;
-  }
+  FirstEdge result;
+  if (m_data->unprocessed.empty()) return result;
 
-  // Fixed-seed RNG: deterministic across runs, yet never axis-aligned
-  static std::mt19937 gen(12345);
-  static std::uniform_real_distribution<double> dist(0.0, 2.0 * M_PI);
-  const double angle = dist(gen);
-  const RS_Vector dir(std::cos(angle), std::sin(angle));
+  struct Candidate {
+    RS_Entity* edge = nullptr;
+    RS_Vector point{};
+    bool interior = false;
+    std::size_t idx = 0;
+  };
 
-  // Compute bounding box of all unprocessed entities to size the test ray correctly
-  RS_Vector sceneMin(RS_MAXDOUBLE, RS_MAXDOUBLE);
-  RS_Vector sceneMax(-RS_MAXDOUBLE, -RS_MAXDOUBLE);
+  // Find the lexicographically smallest leftmostPoint among every edge.
+  std::vector<Candidate> all;
+  all.reserve(m_data->unprocessed.size());
   for (RS_Entity* e : m_data->unprocessed) {
-    e->calculateBorders();
-    sceneMin.x = std::min(sceneMin.x, e->getMin().x);
-    sceneMin.y = std::min(sceneMin.y, e->getMin().y);
-    sceneMax.x = std::max(sceneMax.x, e->getMax().x);
-    sceneMax.y = std::max(sceneMax.y, e->getMax().y);
+    bool interior = false;
+    const RS_Vector p = LC_LoopUtils::leftmostPoint(*e, &interior);
+    if (!p.valid) continue;
+    const auto it = m_data->order.find(e);
+    const std::size_t idx = (it != m_data->order.end()) ? it->second
+                                                        : static_cast<std::size_t>(-1);
+    all.push_back({e, p, interior, idx});
   }
-  const double rayLen = 1.5 * (sceneMax - sceneMin).magnitude() + 1.0;
+  if (all.empty()) {
+    // No valid leftmost points: keep the first unprocessed edge as a fallback.
+    result.edge = m_data->unprocessed.front();
+    return result;
+  }
+  auto betterLex = [](const Candidate& a, const Candidate& b) {
+    if (a.point.x != b.point.x) return a.point.x < b.point.x;
+    if (a.point.y != b.point.y) return a.point.y < b.point.y;
+    return a.idx < b.idx;
+  };
+  const Candidate& best = *std::min_element(all.begin(), all.end(), betterLex);
 
-  // Find the extremal point (minimum projection along ray direction)
-  double minProj = RS_MAXDOUBLE;
-  RS_Vector bestPoint;
-  RS_Entity* bestEntity = m_data->unprocessed[0];
-
-  for (RS_Entity* e : m_data->unprocessed) {
-    // Closed entities have no valid start/end/middle — use bounding box center
-    std::vector<RS_Vector> pts;
-    if (isClosed(*e)) {
-      pts.push_back((e->getMin() + e->getMax()) * 0.5);
-    } else {
-      for (const RS_Vector& p : {e->getStartpoint(), e->getEndpoint(), e->getMiddlePoint()}) {
-        if (p.valid) {
-            pts.push_back(p);
-        }
-      }
-    }
-    for (const RS_Vector& p : pts) {
-      const double proj = p.dotP(dir);
-      if (proj < minProj) {
-        minProj = proj;
-        bestPoint = p;
-        bestEntity = e;
-      }
-    }
+  if (best.interior) {
+    // Pick the stored traversal if it walks in -y at the extremum, otherwise
+    // reverse. The travel direction is the tangent; at a leftmost extremum of
+    // a smooth curve the tangent is vertical, so sign(dy/du) picks the branch.
+    const RS_Vector tangent = LC_LoopUtils::travelDirection(*best.edge, true);
+    result.edge = best.edge;
+    result.reverse = (tangent.y > 0.0);
+    return result;
   }
 
-  // Shoot a ray from outside the scene toward the extremal point
-  const RS_Vector rayStart = bestPoint - dir * rayLen;
-  const RS_Line testLine(rayStart, bestPoint);
-
-         // Find the intersection *closest* to the ray origin (i.e., the first edge the ray hits)
-  double minDist = RS_MAXDOUBLE;
-  RS_Entity* closest = nullptr;
-
-  for (RS_Entity* e : m_data->unprocessed) {
-    RS_VectorSolutions sol = RS_Information::getIntersection(&testLine, e, true);
-    if (!sol.hasValid()) {
-        continue;
-    }
-
-    for (const RS_Vector& v : sol) {
-      // Parameter along the ray (positive = ahead of rayStart)
-      const double d = (v - rayStart).dotP(dir);
-      if (d > -RS_TOLERANCE && d < minDist) {
-        minDist = d;
-        closest = e;
-      }
-    }
+  // The leftmost point is a vertex: collect every edge attached there (within
+  // ENDPOINT_TOLERANCE) and pick the one whose travel direction leaving the
+  // vertex has the smallest CCW angle measured from -y.
+  struct Attach {
+    RS_Entity* edge = nullptr;
+    bool atStart = false;
+    double ccw = 0.0;
+    double curv = 0.0;
+    std::size_t idx = 0;
+  };
+  std::vector<Attach> attached;
+  attached.reserve(all.size());
+  for (const Candidate& c : all) {
+    const RS_Vector s = c.edge->getStartpoint();
+    const RS_Vector e = c.edge->getEndpoint();
+    const bool atStart = (s.valid && s.distanceTo(best.point) <= ENDPOINT_TOLERANCE);
+    const bool atEnd = (e.valid && e.distanceTo(best.point) <= ENDPOINT_TOLERANCE);
+    if (!atStart && !atEnd) continue;
+    // Prefer start attachment if the vertex matches both ends (zero-length
+    // after tolerance): we still want a deterministic choice.
+    const bool pickStart = atStart;
+    RS_Vector h = LC_LoopUtils::travelDirection(*c.edge, pickStart);
+    if (!(h.valid && (std::abs(h.x) + std::abs(h.y) > 0.0))) continue;
+    if (!pickStart) h = h * (-1.0);  // heading at an end becomes -travelDir
+    const double a = std::atan2(h.y, h.x);
+    // CCW angle from -y: the heading -y has atan2 = -pi/2 and we want 0 for it.
+    double ccw = a + M_PI_2;
+    while (ccw < 0.0) ccw += 2.0 * M_PI;
+    while (ccw >= 2.0 * M_PI) ccw -= 2.0 * M_PI;
+    double curv = LC_LoopUtils::signedCurvature(*c.edge, pickStart);
+    if (!pickStart) curv = -curv;  // leaving an end flips the sign
+    attached.push_back({c.edge, pickStart, ccw, curv, c.idx});
   }
-
-  return closest ? closest : bestEntity;
+  if (attached.empty()) {
+    result.edge = best.edge;
+    result.reverse = false;
+    return result;
+  }
+  auto betterAttach = [](const Attach& a, const Attach& b) {
+    if (std::abs(a.ccw - b.ccw) > 1e-12) return a.ccw < b.ccw;
+    if (a.curv != b.curv) return a.curv < b.curv;
+    return a.idx < b.idx;
+  };
+  const Attach& pick = *std::min_element(attached.begin(), attached.end(), betterAttach);
+  result.edge = pick.edge;
+  result.reverse = !pick.atStart;  // if the vertex is e's end, walk in reverse
+  return result;
 }
 
 /**

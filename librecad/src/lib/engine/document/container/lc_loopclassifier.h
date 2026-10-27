@@ -278,6 +278,38 @@ bool keepPiece(const RS_Entity& piece,
                const PointClassifier& classify,
                double epsOn);
 
+/**
+ * The lexicographically smallest point on edge (x minimum; ties by y minimum).
+ * When the result is an interior extremum of a curve (an entity is "pinned at"
+ * its own leftmost point rather than at either stored endpoint), *interior is
+ * set to true; otherwise it is false. interior may be nullptr.
+ *
+ * Supported entity types: RS_Line, RS_Arc, RS_Circle, RS_Ellipse (arc or full),
+ * LC_SplinePoints (every valid quadratic/line segment is scanned),
+ * LC_Parabola, LC_Hyperbola. For an unsupported type the function returns the
+ * lexmin of getStartpoint() and getEndpoint() and sets interior = false.
+ */
+RS_Vector leftmostPoint(const RS_Entity& edge, bool* interior = nullptr);
+
+/**
+ * Unit tangent at edge's start or end in the direction of travel along the
+ * stored traversal. Returns (0, 0) if the tangent cannot be evaluated.
+ *
+ * The direction is uniform across entity types in spite of RS_Line/RS_Arc/
+ * RS_Ellipse/LC_SplinePoints returning the heading back into the entity from
+ * getDirection2(), while LC_Parabola returns forward-pointing directions and
+ * LC_Hyperbola ignores its traversal.
+ */
+RS_Vector travelDirection(const RS_Entity& edge, bool atStart);
+
+/**
+ * Signed curvature of edge at its start (atStart = true) or end. Positive for
+ * a counter-clockwise travel curvature; negative for clockwise. Returns 0 for
+ * straight pieces and for entity types whose signed curvature is not well
+ * defined (LC_SplinePoints, LC_Parabola, LC_Hyperbola).
+ */
+double signedCurvature(const RS_Entity& edge, bool atStart);
+
 } // namespace LC_LoopUtils
 
 #endif // LC_LOOPCLASSIFIER_H

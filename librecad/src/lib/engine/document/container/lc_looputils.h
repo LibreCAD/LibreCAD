@@ -355,10 +355,26 @@ private:
   bool validate() const;
 
   /**
-   * @brief Finds the first edge to start a loop.
-   * @return Starting entity or nullptr.
+   * @brief The result of findFirst: the chosen edge, plus the reverse flag
+   * that extractLoops() uses to call revertDirection() on the clone when the
+   * edge needs to be walked backwards for CCW traversal.
    */
-  RS_Entity* findFirst() const;
+  struct FirstEdge {
+    RS_Entity* edge = nullptr;
+    bool reverse = false;
+  };
+
+  /**
+   * @brief Finds the first edge to start a loop.
+   *
+   * Deterministic: picks the lexicographically smallest point among the
+   * leftmostPoint() of every unprocessed edge (ties by stored container
+   * index). If that point is interior to the chosen edge, the reverse flag
+   * says whether the stored traversal walks away in -y; otherwise the point
+   * is a vertex and candidates attached there are compared by the CCW angle
+   * from -y.
+   */
+  FirstEdge findFirst() const;
 
   /**
    * @brief Finds the next connected edge in the loop.
