@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-26. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0 partially implemented in the durable worktree; plan incomplete**.
+Status: **S0/W0/W1 partially implemented; native helper/client qualified, GUI routing incomplete**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -33,6 +33,9 @@ Implementation owner: `/Users/dli/.codex/worktrees/offset-2961-runtime/LibreCAD`
 branch `codex/offset-2961-native-worker`, initially pinned to
 `df0c891ad5a0bb5b0d0e864f4cd9cdd8036d5f83`. Build/evidence root:
 `/Users/dli/dev/LibreCAD/tmp/offset-2961-native-20261026`.
+The isolated qmake6 helper build is retained at
+`tmp/offset-2961-qmake-native` inside this implementation worktree; it uses a
+private SDK cache, not the shared checkout's stash.
 Gibbs started the first bounded test correction before that interruption.
 Shared source, attached draft/index and the earlier candidate branch are preserved.
 
@@ -94,7 +97,7 @@ This inventory compares the older attached tree with the later candidate.
 | Type/UI/source actions | Entity enum/coverage, property queue/dialog, default drag, Update/Restore actions | Candidate present. Property queue defers publication with a timer, but prepares geometry synchronously in `apply`; a deferred commit is not background computation. |
 | Stored-cache Trim | `lc_offsetcachetrim`, contacts/matching helpers, Modify Trim action and file tests | Candidate present: pure preparation, exact fragments, two-operand publication and plain-fragment persistence. Recheck precision/ownership/undo guarantees. |
 | Validation workers | `scripts/offset-curve-validation/`, X-H1 through X-H7 | Candidate has Node developer/test workers and recorded timeout fixes. These tools are not a shipped isolated geometry worker. Do not confuse their deadlines with GUI computation limits. |
-| Native geometry-worker path | Bounded wire and four-operation request codec now committed; no product helper/client yet; UI math remains in process | W0 partially implemented. Reply authority, process lifecycle and caller integration remain mandatory W0-W2 work. |
+| Native geometry-worker path | Real four-operation headless helper, bounded replies, private completion admission and asynchronous client now committed; UI math still remains in process | W0/W1 foundation qualified. Stateful fault/hung-kernel tests, caller integration and packaged-application acceptance remain mandatory W0-W2 work. |
 | Tests/build targets | Main Catch target, filter micro targets and two standalone offset allocation-failure targets | Candidate present; source registration is not discovery/execution. Use the actual targets in section5.3, not just the old grouped fast lanes. |
 | Surviving test defect | `spline_offset_representation_tests.cpp` lines205 and668 in candidate still use DWG enum ranges | `FormatDWG2007` is outside the range; those ordinary representation loops also omit it. Fix classification and add an executed R2007 regression in S0. The separate candidate matrix already lists all six DWG versions. |
 
@@ -299,9 +302,9 @@ candidate except the explicitly proposed native-worker tags.
 | B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; audit/retest | geometry terminal/occurrence case inventory |
 | C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; audit/retest | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
 | C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a` plus later search; audit/retest | `[lc-offsetcurve][cache-topology-chain]` |
-| W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request syntax and bounded calibration implemented; reply/lifecycle/ownership freeze still open | operation/cap/deadline/call-site table |
-| W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | absent from inspected product; implement after W0 | proposed `[lc-offsetcurve][worker-protocol]` |
-| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | native path absent; Node X-H7 is separate existing work | proposed `[lc-offsetcurve][worker-lifecycle]`; retained runner regression |
+| W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and initial deadline/authority policy implemented; finish caller/fallback/import ownership freeze before routing | operation/cap/deadline/call-site table |
+| W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; full app/deployed-package gates remain | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
+| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | real cancel/timeout/recovery and private completion tests implemented; fault/hung-kernel/stateful clock and GUI integration open | `[lc-offsetcurve][worker-client]`; remaining lifecycle tests and retained runner regression |
 | E1 | Guarded entity/factories, RTTI, stamp, clone, downgrade and transforms | C-check | candidate `92758859c` and later fixes; audit/retest | `[lc-offsetcurve][native]`, `[entity-coverage]` |
 | U1 | Type/INSERT/selection/SVG/menu/info dispatch and safe properties | E1 | candidate `49c9b328b`, `f0fb28fab`; audit/retest | native type/name/dispatch TUs, `[entity-coverage]` |
 | E2 | Cached grips/snaps, through proposal and transactional mutators | E1 | candidate `4300c1031`, `47e14c74b`; audit/retest | native edit/grip/transform TUs |
@@ -414,8 +417,31 @@ geometry requalification; it does not waive W0's C-check predecessor or close it
 Also retain 64KiB bounded diagnostic capture and one queued replacement per
 context. Derive smaller operation-specific per-array caps from existing geometry
 budgets, not the frame size. W0 must freeze actual preview/commit deadlines,
-clock source, cancellation and kill/reap bounds before W1 is ready; absence of
-those values is a W0 blocker, not permission to wait indefinitely.
+clock source, cancellation and kill/reap bounds before enabling GUI routing;
+the implemented policy below is not permission to wait indefinitely.
+
+The current `LC_OffsetWorkerClient` policy is fixed: startup2000ms,
+preview2000ms, commit30000ms, graceful termination100ms and an additional1000ms
+kill/reap allowance. `QElapsedTimer` supplies monotonic elapsed time, starting
+immediately before process setup; the total preview/commit deadline includes
+startup, pipe I/O and reply admission. Expiration is inclusive. A5ms precise Qt
+timer observes deadlines, including when a clean exit is observed too late;
+admission checks the deadline again before issuing a completion. This is not an
+OS scheduling guarantee when the parent event loop itself is unavailable.
+SIGTERM is deferred until Qt confirms exec via `started()`; the kill deadline
+still applies to Starting. A failed reap poisons this client, retains only a
+disconnected process notifier until exit, reports `ReapFailed`, and issues no
+completion or subsequent launch. Destruction uses a bounded kill/reap wait and
+the same quarantine rule, not QProcess's unbounded destructor wait.
+
+One active request and one replaceable queued request are owned per client.
+Request IDs increase; stale/cancelled deferred deliveries cannot publish even
+after a successful child exit. Only the fixed sibling `LibreCADOffsetWorker`
+(`.exe` on Windows) and `--protocol=1` are launched. The helper has private Ini
+settings and no document or window. CMake installs it beside the executable,
+including `Contents/MacOS` on macOS; qmake builds it before the application.
+The existing macOS packager already enumerates extra Mach-O executables.
+This does not yet qualify a deployed/signed bundle on another machine.
 
 W0's bounded deliverable contains an explicit operation/caller table for creation,
 validation/adoption, distance/side/basis/through edits, grip preview/commit,
@@ -495,6 +521,53 @@ that uncertainty and conservatively charge the reserved remainder for that
 failed operation, never invent zero consumption or retry it with fresh limits.
 Freeze/test no-op, exact-translation and cached clone paths separately so a new
 worker does not force generator runs for existing cheap proof-preserving edits.
+
+The implemented reply envelope is `[1,token,operation,failure,payload]`.
+`lc_offsetworkerresult.h/.cpp` defines exact Native12/Curve6 and Trim8 records,
+including all trim sections, endpoint/root domains and work diagnostics. Fatal
+allocation/internal failures carry null payloads; their stderr prefix is only
+the observed partial work, never a refund or final total. Through vertices/pairs
+share C's remaining allowance, while depth is a maximum across successive
+queries, not the sum of their depths. Every collection/scalar and aggregate is
+admitted before copying native arrays. Limits remain unchanged; the synthetic
+worst-shape codec test uses245943 values, not a raised frame cap or a geometry
+certificate. `LC_OffsetWorkerCompletion` is move-only and privately constructed
+by the owning client only after clean exit, exact token/operation join, bounded
+reply admission and matching retained definition/raw validation inputs. Its
+native materialization retains child-prepared hints and checks unchanged cache
+representation; it does not rerun the expensive generator/C checker. Ordinary
+wire values cannot call a public checked constructor. Failure or suppressed
+delivery without a returned exact record keeps the full reservation charged.
+Caller-level shared reservations/final snapshot checks must still be integrated;
+the client itself never retries a failed geometry operation with fresh caps.
+
+Finish W0-W2 in these bounded sub-slices before claiming GUI isolation:
+1. Add real parent fault-path tests in a separate owned test executable directory,
+   leaving the production helper path fixed and never replacing the real app's
+   helper. Exercise crash, truncated/duplicate/mismatched replies, excessive
+   diagnostics, delayed exit and recovery; validate report syntax, not exit0 alone.
+   Add stateful injected-clock boundaries and a genuine geometry-entry timeout/
+   reap test. The existing1ms real-child timeout may occur during startup and is
+   explicitly not hung-kernel acceptance; the pure expiration predicate is not
+   a stateful fake-clock lifecycle test.
+2. Extract a bounded edit-preparation description: no-op/exact translation/cached
+   clone stay local, other definition/Through edits produce owned Generate
+   requests. Preserve current source eligibility and final Through proof. Route
+   dialog clones, sheet batches, grips and Update through the owning client,
+   retaining context/source/undo seals, one batch publication and cancellation.
+   Do not use nested GUI event loops as a substitute for asynchronous ownership.
+3. Before routing creation/repeat, retain bounded typed ordinary fallback geometry
+   from the SAME producer invocation for native SeveralPieces/representation/C
+   refusals. Current strict Native-only Generate cannot carry those pieces. Extend
+   the reply with exact line/spline values, explicit unsupported-type refusal and
+   original work/usage; bump the protocol when changing its positional layout.
+   Never regenerate with fresh limits to recover discarded ordinary output.
+4. Route stored-cache/conic trim through matched completions and the existing
+   atomic parent staging/seals; diagnostic roots alone remain non-authoritative.
+   Freeze import ownership separately: synchronous callbacks cannot return with
+   outstanding work, publish half a document or resume against a deleted owner.
+5. Qualify both full application builds, installed helper discovery, GUI workflows,
+   failure injection and the complete file/version matrix. Only then close W1/W2.
 
 W1/W2 launch only the built offset helper through a fixed executable/argument
 contract. Handle partial I/O, short/oversized/truncated frames, invalid numeric
@@ -853,10 +926,57 @@ inject Qt/private malloc or prove generic post-publication allocation atomicity.
 | `S0-offset-all.xml` | `7905daf7ff6b5e697fc49946628a999283650452272186fe7f60106ba2506883` |
 | `S0-geometry.xml` | `0558640e6c0687e45accee90360c2f6f36bcb70b07e22ba6351668c2aef96425` |
 
-S0 source/target reconciliation, A-C review, W0-W2, integration and R remain open. Next:
-finish S0 geometry/type qualification and W0's typed operation/deadline/ownership
-freeze, then the helper and GUI lifecycle. Neither a framing codec nor the
-existing developer runner constitutes a native geometry worker. Both shared
+`9655dd18bf9a847dcef7879ac9c3c131d0d594e4` adds the real headless helper,
+strict owned replies, Through accounting and the asynchronous parent foundation
+described in4.2. Release and exact-bundled-Catch2 ASan each pass25 native edit
+cases/13404 assertions,17 reply cases/268869 assertions and6 kernel cases/527
+assertions. The kernel selection includes eight actual reduced producer/check
+budget refusals whose completed-stage records must still serialize unchanged.
+Actual subprocess qualification passes all four operations, Through success/
+refusal, original malformed validation/cutter payloads, EOF/partial delivery and
+invalid/truncated/extra frame refusal in Release, ASan and the qmake6 helper.
+Eight client cases pass in Release and ASan: private completion/native cache and
+attribute retention, exact known geometric refusal, queue replacement, immediate
+cancel, inclusive deadline predicate, lower-deadline timeout/recovery and owner/
+deferred-delivery destruction/cancellation. Polling assertions vary with timing;
+case identities, not those iteration counts, are the stable inventory.
+
+The first kernel trim fixture hit the existing exact-axis LimitExceeded response;
+the established off-axis admitted fixture passes without changing a geometry cap.
+The initial client run returned parent exit0 but produced malformed XML because
+a pre-exec child inherited Catch's signal handlers/report files. Those results
+are NOT accepted. Guarding graceful signals until `started()` fixed the race;
+fresh Release/ASan reports pass strict `xmllint --noout`, including the preserved
+red control's `Extra content at the end of the document`. No test is disabled and
+no timeout raised. Opt-in CTest now registers all six built worker lanes and
+passes6/6 in3.83s; default registration remains off. These are foundation tests,
+not UI routing, hung-geometry, deployed bundle or whole-roadmap acceptance.
+
+The qmake helper is a genuine full source-list headless build, using separate
+object/moc/uic products and the guarded GUI main; normal app source lists are
+reused rather than independently drifted. Its actual binary passes the same
+subprocess test TU via `LIBRECAD_OFFSET_EXTERNAL_TEST_HELPER`, a test-only CMake
+input never consulted by the product client. Measured initial Release process
+row395ms and subsequent46-50ms rows include launch+computation; earlier cap-boundary
+probes remain scoped measurements, not universal timing proofs. ASan retains
+`detect_leaks=0` and no leak-free claim. Both shared index hashes are unchanged.
+
+| Artifact | SHA256 |
+|---|---|
+| `W1-through-final.xml` | `db580964fed72928e23ba6cf4ca09daf7a4a2d6f1a4f9baf3e863162e7e1b8cc` |
+| `W1-through-asan.xml` | `a7f3d2369365eecbf8366bfe3e9dc1ff1ab8265fdfcd28ab4213d676daf79a48` |
+| `W1-result.xml` | `4cabc84b5365a24670672c0678e58e472c0427749202d19fb37bb049331623f3` |
+| `W1-result-asan.xml` | `5b22349f9c95b93b9beca489226c1d70c2bac5fc1dfa9127cc16d891691a170f` |
+| `W1-kernel-limits.xml` | `91aff6a47fbaa1dec5850b9d8262c80a6e51fcf81865aa30af8a1b3843d5155f` |
+| `W1-kernel-limits-asan.xml` | `d9857da49ba352370862b86cf3363967082331245fde8963cef56d524414518e` |
+| `W1-client-final.xml` | `41065a313a74c756657c9f6d5ea1c66d1c682510539a02245c8316f333b759d9` |
+| `W1-client-shipped-asan.xml` | `704aae7cac3ba791c07bb7abf9b9e0a2aa3c7c5ba7880a60b3e39fead9f900e2` |
+| `W1-qmake-process.xml` | `5b6cc0fd948d16a47e5cde636a70db24ec690495c2272b89a5e7481bf4aad5b2` |
+| `W1-ctest.log` | `5c45478e1b2a94cc9424ff7c77e34324eaacbf9407fc3b6822cee5362fe07aba` |
+
+S0 source/target reconciliation, A-C review, W0-W2 caller integration and R remain
+open. Next execute the remaining bounded worker sub-slices in4.2, not a second
+implementation of the completed Node runner or helper codecs. Both shared
 indexes retain their recorded hashes; all implementation slices and their immediate
 plan checkpoints belong only to `codex/offset-2961-native-worker`.
 
@@ -869,19 +989,19 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   executions are recorded above; do not redo them as missing implementation.
 - [ ] A-core through C-check: review/requalify existing code and patch only proven
   accounting, ownership, occurrence or global-topology gaps. No duplicate checker.
-- [ ] W0-W2: finish the reply/deadline/ownership freeze and implement/validate
-  helper, parent lifecycle and GUI adoption; reuse the committed wire/request
-  modules and retain Node runner scope separately. Native isolation is required.
+- [ ] W0-W2: finish fault/hung-kernel/stateful-clock qualification, typed ordinary
+  fallback/import ownership and GUI adoption. Reuse the qualified helper/client/
+  reply modules; do not redo them as absent. Keep Node runner scope separate.
 - [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
   DXF/DWG, source and trim implementation with any new worker/publication changes.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** S0 step1, then the candidate
-baseline and minimal representation-test correction. The later branch is not
-automatically accepted or copied into the dirty main tree. Native-worker deadlines,
-platform policy and integration are real open work; independent fixtures are
-available, while current-tool availability and output reinspection still need checks.
+**Next concrete action on implementation resume:**4.2 sub-slice1, then the bounded
+edit-preparation/caller adapter. The ordinary DWG2007 correction and fresh broad
+baseline are already recorded; do not restart them as missing implementation.
+Nothing is automatically copied into the dirty main tree. Native caller routing,
+the remaining lifecycle/packaging gates and final UI/file acceptance are open.
 
 Completion requires every required deliverable and validation row on the selected
 source, no unhandled type/lossy silent fallback, no pending P1/P2 finding, and an
