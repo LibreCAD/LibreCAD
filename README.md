@@ -71,6 +71,13 @@ librecad dxf2pdf -a -o drawing.pdf drawing.dxf
 Use `librecad <command> -h` for the full list of options. On systems without a
 display, set `QT_QPA_PLATFORM=offscreen` for PDF, PNG, and SVG conversion.
 
+On Windows, `LibreCAD.exe` is a GUI program: at an interactive cmd or
+PowerShell prompt, and in PowerShell scripts, the prompt returns before the
+conversion ends and no exit code is set, while cmd batch files wait for it. To
+wait and get the exit code, use `start /wait "" LibreCAD.exe dxf2pdf ...` in
+cmd (it sets `%ERRORLEVEL%`), or `Start-Process` with `-Wait -PassThru` in
+PowerShell.
+
 ## Releases and Milestones
 
 ### Quick Downloads

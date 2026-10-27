@@ -612,7 +612,7 @@ void RS_ActionInterface::preparePromptForInfoCursorOverlay(const QString& msg, c
             if (!modifiersStr.isEmpty()) {
                 modifiersStr = modifiersStr + " | ";
             }
-            modifiersStr = modifiersStr + tr("CTRL:") + ctrlMessage;
+            modifiersStr = modifiersStr + LC_ModifiersInfo::withNativeCtrlKey(tr("CTRL:")) + ctrlMessage;
         }
 
         if (!modifiersStr.isEmpty()) {

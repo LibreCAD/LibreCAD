@@ -770,6 +770,50 @@ QString RS_System::symbolToLanguage(const QString& symb) {
 }
 
 /**
+ * Finds the entry of a language list for a language code. The list holds
+ * canonical locale names (initLanguageList() lists librecad_de.qm as "de_DE"),
+ * while settings and callers may hold a bare or regional code ("de", "de_AT").
+ * Tries the code itself, its canonical name, the canonical name of its language
+ * and script, then any entry of the same language.
+ */
+QString RS_System::matchLanguage(const QStringList& languages, const QString& lang) {
+    QString code = lang.trimmed();
+    code.replace('-', '_');
+    if (code.isEmpty()) {
+        return {};
+    }
+
+    const auto find = [&languages](const QString& wanted) {
+        for (const QString& language : languages) {
+            if (language.compare(wanted, Qt::CaseInsensitive) == 0) {
+                return language;
+            }
+        }
+        return QString{};
+    };
+
+    if (QString match = find(code); !match.isEmpty()) {
+        return match;
+    }
+    const QLocale locale(code);
+    if (locale == QLocale::c()) {
+        return {};
+    }
+    const QLocale languageLocale(locale.language(), locale.script(), QLocale::AnyCountry);
+    for (const QString& wanted : {locale.name(), languageLocale.name()}) {
+        if (QString match = find(wanted); !match.isEmpty()) {
+            return match;
+        }
+    }
+    for (const QString& language : languages) {
+        if (QLocale(language).language() == locale.language()) {
+            return language;
+        }
+    }
+    return {};
+}
+
+/**
  * Tries to convert the given encoding string to an encoding Qt knows.
  */
 QString RS_System::getEncoding(const QString& str) {

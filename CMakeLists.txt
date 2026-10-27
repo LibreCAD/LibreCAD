@@ -2393,6 +2393,18 @@ if(APPLE)
     )
 endif()
 
+# On Windows, LibreCAD is a GUI program, as in the 2.2.1 releases. A console
+# program opens a console window behind the main window, and closing that window
+# ends LibreCAD without asking to save. The converters (librecad dxf2pdf ...)
+# attach to the console they are started from. LIBRECAD_WINDOWS_CONSOLE=ON keeps
+# the console window, which shows the debug output.
+if(WIN32)
+    option(LIBRECAD_WINDOWS_CONSOLE "Build the Windows program with a console window for debug output" OFF)
+    if(NOT LIBRECAD_WINDOWS_CONSOLE)
+        set_target_properties(librecad PROPERTIES WIN32_EXECUTABLE ON)
+    endif()
+endif()
+
 target_include_directories (librecad PRIVATE
                             ${SHARED_INCLUDES}
 )
@@ -2663,6 +2675,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/views/tests/lc_view_tests.cpp
         librecad/src/lib/engine/tests/rs_pen_tests.cpp
         librecad/src/lib/actions/tests/lc_snappercatchtests.cpp
+        librecad/src/lib/actions/tests/lc_modifiersinfo_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_trim_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_move_tests.cpp
@@ -2797,6 +2810,7 @@ if (BUILD_TESTS)
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp
         librecad/src/ui/components/pen/tests/qg_widgetpen_tests.cpp
         librecad/src/ui/dialogs/tests/lc_dialog_tests.cpp
+        librecad/src/ui/dialogs/tests/lc_language_selection_tests.cpp
         librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreewidget_tests.cpp
         librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreemodel_tests.cpp
         librecad/src/plugins/tests/qc_actiongetselect_tests.cpp
@@ -3464,6 +3478,10 @@ if (BUILD_TESTS)
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp)
     target_sources(librecad_dock_layout_tests PRIVATE ${LIBRECAD_RES})
     set_target_properties(librecad_dock_layout_tests PROPERTIES AUTORCC ON)
+    # The shortcut test loads the built Chinese catalogs, as in librecad_tests.
+    target_compile_definitions(librecad_dock_layout_tests PRIVATE
+        LIBRECAD_TEST_TRANSLATION_DIR="${CMAKE_CURRENT_BINARY_DIR}")
+    add_dependencies(librecad_dock_layout_tests librecad_test_translations)
     add_librecad_filter_micro_test(
         librecad_printing_tests
         librecad/src/lib/printing/tests/lc_printingtests.cpp)
@@ -3751,10 +3769,13 @@ if (BUILD_TESTS)
             WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
             ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
         )
+        # A relative configfile: Qt splits the platform argument at colons, as in C:/
         add_test(NAME librecad_dock_layout_tests
             COMMAND $<TARGET_FILE:librecad_dock_layout_tests> "[dock-window]" --reporter compact)
         set_tests_properties(librecad_dock_layout_tests PROPERTIES
-            ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen:configfile=librecad/src/ui/main/tests/lc_docklayout_screen.json"
+            TIMEOUT 120)
     endif()
     if (LIBRECAD_REGISTER_INTEGRATION_TESTS)
         add_test(NAME librecad_painter_tests

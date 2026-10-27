@@ -6,9 +6,10 @@
 # LetterSpacing:     3
 # WordSpacing:       6.75
 # LineSpacingFactor: 1
-# Author:            æ±é¢¨ãƒ•ã‚©ãƒ³ãƒˆ(ã‚´ã‚·ãƒƒã‚¯)
-# Author:            Yoshimune Kobayashi <cfg47520@syd.odn.ne.jp>
-# License:           unknown
+# Author:            東風フォント(ゴシック) Kochi Gothic, Latin outlines by Yasuyuki Furukawa
+# Author:            Yoshimune Kobayashi <cfg47520@syd.odn.ne.jp> (QCad CXF version, 2002)
+# Author:            Rallaz <rallazz@gmail.com> (LFF version, 2011)
+# License:           public domain
 
 [0021] !
 1.2388,9.04912;1.2359,8.83358

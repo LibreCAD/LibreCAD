@@ -46,6 +46,9 @@ void QG_FontBox::init() {
     QStringList fonts;
 
     for (const auto& f : *RS_FONTLIST) {
+        if (RS_FontList::isFallbackOnlyFont(f->getFileName())) {
+            continue;
+        }
         if (fonts.contains(f->getFileName())) {
             DEBUG_HEADER
             qDebug() << __func__ << ": WARNING: duplicated font: " << f->getFileName();

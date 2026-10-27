@@ -27,6 +27,7 @@
 #include <array>
 #include <cstdint>
 #include <memory>
+#include <vector>
 #include <QDateTime>
 #include <memory>
 
@@ -181,10 +182,18 @@ public:
     void removeViewListListener(LC_ViewListListener* listener) { m_namedViewsList.removeListener(listener);}
 
     // Wrappers for line type functions:
+    void clearLineTypes() {m_lineTypeList.clear();}
     unsigned countLineTypes() const {return m_lineTypeList.count();}
     LC_LineType* lineTypeAt(const unsigned i) const {return m_lineTypeList.at(i);}
     LC_LineType* addLineType(LC_LineType* lineType) {return m_lineTypeList.add(lineType);}
     LC_LineType* findLineType(const QString& name) const {return m_lineTypeList.find(name);}
+    void mergeLineTypes(const RS_Graphic& source) {m_lineTypeList.merge(source.m_lineTypeList);}
+    /// every line type name the drawing gives as a string, each once
+    std::vector<QString> referencedLineTypeNames() const;
+    /// takes from another drawing the definitions of the names this one gives
+    void importReferencedLineTypes(const RS_Graphic& source) {
+        m_lineTypeList.merge(source.m_lineTypeList, referencedLineTypeNames());
+    }
 
     // Wrapper for block functions:
     void clearBlocks() {m_blockList.clear();}
