@@ -181,6 +181,12 @@ private:
 
 struct LC_OffsetCurveCreateResult : LC_OffsetCurveEditResult {
     std::unique_ptr<LC_OffsetCurve> entity;
+    /** Complete output from the same successful producer invocation when native
+     * admission refuses. This is ordinary geometry, not a native certificate.
+     */
+    std::vector<std::unique_ptr<RS_Entity>> ordinary;
+    bool ordinaryComplete = false;
+    LC_OffsetOutputUsage ordinaryUsage{};
     LC_OffsetOutputUsage attemptedOutputUsage{};
     bool attemptedDeepCountComplete = true;
     LC_OffsetOutputUsage outputUsage{};

@@ -76,7 +76,7 @@ std::optional<QCborArray> encodeCutter(const Cutter&);
 std::optional<Cutter> decodeCutter(const QCborArray&);
 }
 
-/** Envelope [2, [requestId,generation,sourceRevision,undoEpoch], op, body].
+/** Envelope [3, [requestId,generation,sourceRevision,undoEpoch], op, body].
  * Bodies: [definition,run,throughPoint-or-null], [cache,definition,worldTolerance,check],
  * [cache,cutter,pick,trim], [cache,conic,conicPick,cachePick-or-null,trim].
  * CheckThrough (op 4): [cache,definition,worldTolerance,point,check].

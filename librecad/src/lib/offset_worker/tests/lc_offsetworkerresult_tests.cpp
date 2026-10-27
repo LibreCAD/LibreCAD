@@ -90,6 +90,15 @@ void same(const Reply::Native& a, const Reply::Native& b) {
     same(a.attemptedOutputUsage, b.attemptedOutputUsage);
     CHECK(a.attemptedDeepCountComplete == b.attemptedDeepCountComplete);
     same(a.outputUsage, b.outputUsage); CHECK(a.sampleUnits == b.sampleUnits);
+    CHECK(a.ordinaryStatus == b.ordinaryStatus); same(a.ordinaryUsage, b.ordinaryUsage);
+    REQUIRE(a.ordinary.size() == b.ordinary.size());
+    for (std::size_t i = 0; i < a.ordinary.size(); ++i) {
+        REQUIRE(a.ordinary[i].index() == b.ordinary[i].index());
+        if (const auto* line = std::get_if<Req::Segment>(&a.ordinary[i])) {
+            const auto& other = std::get<Req::Segment>(b.ordinary[i]);
+            same(line->start, other.start); same(line->end, other.end);
+        } else same(std::get<RS_SplineData>(a.ordinary[i]), std::get<RS_SplineData>(b.ordinary[i]));
+    }
 }
 void same(const LC_Interval& a, const LC_Interval& b) { same(a.lo(), b.lo()); same(a.hi(), b.hi()); }
 void same(const Trim::Location& a, const Trim::Location& b) {
@@ -179,6 +188,16 @@ Reply::Native nativeValue(bool validate = false) {
         n.engineRuns = 1; n.engineStatus = Status::Ok;
         n.attemptedOutputUsage = {1, 1, 32}; n.outputUsage = {1, 1, 33}; n.sampleUnits = 101;
     }
+    return n;
+}
+Reply::Native ordinaryValue() {
+    Reply::Native n;
+    n.refusal = Refusal::NotCacheRepresentable; n.engineRuns = 1; n.engineStatus = Status::Ok;
+    n.ordinaryStatus = Reply::OrdinaryStatus::Complete;
+    n.ordinary = {Req::Segment{{-0.0, 0}, {1, -0.0}},
+        cache({{1, 0}, {2, 1}, {3, 0}}, 1, -2.5, .125),
+        cache({{3, 0}, {4, 1}, {5, 1}, {6, 0}}, 3, 7.25, .5)};
+    n.ordinaryUsage = {4, 3, 65}; n.attemptedOutputUsage = n.ordinaryUsage; n.sampleUnits = 17;
     return n;
 }
 Reply::Reply reply(const Req::Request& r, Reply::Native n) {
@@ -288,6 +307,184 @@ TEST_CASE("Worker native refusals retain missing stages and failed attempted pre
     roundtrip(validate, reply(validate, notDisplayable));
 }
 
+TEST_CASE("Worker ordinary fallback retains exact raw values outside lowered C allowances", tags) {
+    auto r = nativeRequest(); auto n = ordinaryValue();
+    auto& limits = std::get<Req::Generate>(r.operation).limits;
+    limits.checkLimits = {1, 1, 1, 1, 1};
+    limits.outputBudget = {4, 3, 65};
+    for (bool flags : {false, true}) {
+        for (auto& item : n.ordinary) if (auto* spline = std::get_if<RS_SplineData>(&item)) {
+            spline->m_closedFlag = flags; spline->m_periodicFlag = flags;
+        }
+        const auto decoded = roundtrip(r, reply(r, n));
+        const auto wire = Reply::encode(decoded, r); REQUIRE(wire);
+        CHECK(wire->at(0).toInteger() == 3);
+        const auto body = wire->at(4).toArray(); REQUIRE(body.size() == 15);
+        CHECK(body.at(12).toInteger() == qint64(Reply::OrdinaryStatus::Complete));
+        REQUIRE(body.at(13).toArray().size() == 3);
+        CHECK(body.at(13).toArray().at(0).toArray().at(0).toInteger() == 0);
+        CHECK(body.at(13).toArray().at(1).toArray().at(0).toInteger() == 4);
+    }
+    for (auto refusal : {Refusal::SeveralPieces, Refusal::NotCacheRepresentable, Refusal::CheckFailed}) {
+        n.refusal = refusal;
+        n.checkReason = refusal == Refusal::CheckFailed ? std::optional<Reason>{Reason::LimitExceeded} : std::nullopt;
+        roundtrip(r, reply(r, n));
+    }
+    n.ordinary.clear(); n.ordinaryUsage = {}; n.attemptedOutputUsage = {};
+    n.refusal = Refusal::NothingLeft; n.checkReason.reset();
+    roundtrip(r, reply(r, n));
+    n.ordinaryStatus = Reply::OrdinaryStatus::None; roundtrip(r, reply(r, n));
+    n = ordinaryValue(); n.ordinary.clear(); n.ordinaryStatus = Reply::OrdinaryStatus::Unsupported;
+    roundtrip(r, reply(r, n)); // Exact producer usage survives without a supported prefix.
+
+    auto owned = ordinaryValue(); const auto original = owned;
+    auto encoded = Reply::encode(reply(r, owned), r); REQUIRE(encoded);
+    auto decoded = Reply::decode(*encoded, r); REQUIRE(decoded);
+    std::get<RS_SplineData>(owned.ordinary[1]).controlPoints[0].x = 99;
+    owned.ordinary.clear(); *encoded = {};
+    same(std::get<Reply::Native>(decoded->result), original);
+}
+
+TEST_CASE("Worker ordinary fallback status contradictions never cross native or Through stages", tags) {
+    auto r = nativeRequest(); const auto good = ordinaryValue();
+    const auto encoded = Reply::encode(reply(r, good), r); REQUIRE(encoded);
+    const auto reject = [&](auto mutate) {
+        auto n = good; mutate(n); CHECK_FALSE(Reply::encode(reply(r, n), r));
+    };
+    reject([](auto& n) { n.ordinaryStatus = Reply::OrdinaryStatus::None; });
+    reject([](auto& n) { n.ordinaryStatus = Reply::OrdinaryStatus::Unsupported; });
+    reject([](auto& n) { n.ordinaryStatus = static_cast<Reply::OrdinaryStatus>(3); });
+    reject([](auto& n) { n.ordinary.clear(); n.ordinaryUsage = {}; });
+    reject([](auto& n) { n.refusal = Refusal::NothingLeft; });
+    reject([](auto& n) { n.changed = true; });
+    reject([](auto& n) { n.curve = nativeValue().curve; });
+    reject([](auto& n) { n.engineStatus = Status::LimitExceeded; n.refusal = Refusal::Engine; });
+    reject([](auto& n) { n.engineStatus.reset(); n.engineRuns = 0; });
+    reject([](auto& n) { n.engineRuns = 2; });
+    reject([](auto& n) { --n.ordinaryUsage.cubicPieces; });
+    reject([](auto& n) { --n.ordinaryUsage.outputEntities; });
+    reject([](auto& n) { n.ordinaryUsage.deepEntities = 2; });
+    for (auto status : {Reply::OrdinaryStatus::Complete, Reply::OrdinaryStatus::Unsupported}) {
+        auto n = good; n.ordinaryStatus = status;
+        if (status == Reply::OrdinaryStatus::Unsupported) n.ordinary.clear();
+        for (qint64 raw = 0; raw <= qint64(Refusal::ThroughNotOnCache); ++raw) {
+            auto value = n; value.refusal = Refusal(raw);
+            const bool allowed = value.refusal == Refusal::SeveralPieces || value.refusal == Refusal::NotCacheRepresentable ||
+                value.refusal == Refusal::CheckFailed || (status == Reply::OrdinaryStatus::Unsupported && value.refusal == Refusal::NothingLeft);
+            value.checkReason = value.refusal == Refusal::CheckFailed ? std::optional<Reason>{Reason::Layout} : std::nullopt;
+            CHECK(bool(Reply::encode(reply(r, value), r)) == allowed);
+        }
+        auto success = nativeValue(); success.ordinaryStatus = status; success.ordinaryUsage = n.ordinaryUsage;
+        success.ordinary = n.ordinary; CHECK_FALSE(Reply::encode(reply(r, success), r));
+        auto validation = nativeRequest(true); auto refused = nativeValue(true);
+        refused.curve.reset(); refused.changed = false; refused.refusal = Refusal::NotCacheRepresentable;
+        refused.ordinaryStatus = status; refused.ordinary = n.ordinary; refused.ordinaryUsage = n.ordinaryUsage;
+        CHECK_FALSE(Reply::encode(reply(validation, refused), validation));
+        Req::Request through{token(), Req::CheckThrough{cache(), definition(), .001, {5, 0}, {}}};
+        refused = {}; refused.refusal = Refusal::ThroughNotOnCache;
+        refused.ordinaryStatus = status; refused.ordinary = n.ordinary; refused.ordinaryUsage = n.ordinaryUsage;
+        CHECK_FALSE(Reply::encode(reply(through, refused), through));
+        auto generatedThrough = nativeValue(); generatedThrough.curve.reset(); generatedThrough.changed = false;
+        generatedThrough.refusal = Refusal::ThroughNotOnCache; generatedThrough.ordinaryStatus = status;
+        generatedThrough.ordinary = n.ordinary; generatedThrough.ordinaryUsage = n.ordinaryUsage;
+        auto request = r; std::get<Req::Generate>(request.operation).throughPoint = RS_Vector{50, 50};
+        CHECK_FALSE(Reply::encode(reply(request, generatedThrough), request));
+    }
+    auto none = good; none.ordinaryStatus = Reply::OrdinaryStatus::None; none.ordinary.clear();
+    CHECK_FALSE(Reply::encode(reply(r, none), r));
+    none.ordinaryUsage = {}; roundtrip(r, reply(r, none));
+    auto empty = none; empty.ordinaryStatus = Reply::OrdinaryStatus::Complete; empty.refusal = Refusal::NothingLeft;
+    empty.ordinaryUsage.deepEntities = 1; CHECK_FALSE(Reply::encode(reply(r, empty), r));
+    for (const QCborValue& bad : std::vector<QCborValue>{-1, 0, 2, 3, 1.0, true, QCborValue(nullptr), QCborArray{}})
+        CHECK_FALSE(Reply::decode(patched(*encoded, {4, 12}, bad), r));
+    for (const auto& bad : {
+            patched(*encoded, {4, 13}, QCborArray{}), patched(*encoded, {4, 14, 0}, 3),
+            patched(*encoded, {4, 14, 1}, 2), patched(*encoded, {4, 14, 2}, -1),
+            patched(*encoded, {4, 14, 2}, 65.0), patched(*encoded, {4, 1}, qint64(Status::FitFailed)),
+            patched(*encoded, {4, 5}, 0), patched(*encoded, {4, 6}, true)})
+        CHECK_FALSE(Reply::decode(bad, r));
+    auto oldBody = encoded->at(4).toArray();
+    for (int i = 0; i < 3; ++i) oldBody.removeLast();
+    CHECK_FALSE(Reply::decode(patched(*encoded, {4}, oldBody), r));
+}
+
+TEST_CASE("Worker ordinary fallback rejects nonraw spline shapes scalars and unsupported types", tags) {
+    const auto r = nativeRequest(); const auto good = ordinaryValue();
+    const auto encoded = Reply::encode(reply(r, good), r); REQUIRE(encoded);
+    const auto reject = [&](auto mutate) {
+        auto n = good; mutate(std::get<RS_SplineData>(n.ordinary[1]));
+        CHECK_FALSE(Reply::encode(reply(r, n), r));
+    };
+    reject([](auto& d) { d.degree = 2; }); reject([](auto& d) { d.type = RS_SplineData::SplineType::Standard; });
+    reject([](auto& d) { d.savedOpenType = RS_SplineData::SplineType::WrappedClosed; });
+    reject([](auto& d) { d.fitPoints.push_back({0, 0}); }); reject([](auto& d) { d.savedOpenKnots.push_back(0); });
+    reject([](auto& d) { d.weights[0] = 2; }); reject([](auto& d) { d.weights.pop_back(); });
+    reject([](auto& d) { d.controlPoints[0].z = 1; }); reject([](auto& d) { d.controlPoints[0].valid = false; });
+    reject([](auto& d) { d.knotslist[1] += .01; }); reject([](auto& d) { d.knotslist.pop_back(); });
+    reject([](auto& d) { d.knotslist.back() = INFINITY; });
+    for (const Req::Cutter& unsupported : std::vector<Req::Cutter>{RS_ArcData{{0, 0}, 1, 0, 1, false},
+            RS_CircleData{{0, 0}, 1}, RS_EllipseData{{0, 0}, {2, 0}, .5}}) {
+        auto n = good; n.ordinary[1] = unsupported; CHECK_FALSE(Reply::encode(reply(r, n), r));
+        const auto raw = Req::Values::encodeCutter(unsupported); REQUIRE(raw);
+        CHECK_FALSE(Reply::decode(patched(*encoded, {4, 13, 1}, *raw), r));
+    }
+    for (const auto& bad : {
+            patched(*encoded, {4, 13, 0, 0}, 1), patched(*encoded, {4, 13, 0, 0}, 0.0),
+            patched(*encoded, {4, 13, 0, 1, 0, 0}, 0), patched(*encoded, {4, 13, 0, 1, 0, 2}, 1.0),
+            patched(*encoded, {4, 13, 0, 1, 0, 3}, false), patched(*encoded, {4, 13, 0, 1}, QCborArray{}),
+            patched(*encoded, {4, 13, 1, 1, 4}, 2), patched(*encoded, {4, 13, 1, 1, 5}, 0),
+            patched(*encoded, {4, 13, 1, 1, 6}, 2), patched(*encoded, {4, 13, 1, 1, 2, 0}, 2.0),
+            patched(*encoded, {4, 13, 1, 1, 1, 1}, -2.0),
+            patched(*encoded, {4, 13, 1, 1, 3}, QCborArray{QCborArray{0.0, 0.0, 0.0, true}}),
+            patched(*encoded, {4, 13, 1, 1, 7}, QCborArray{0.0}),
+            patched(*encoded, {4, 13, 1, 1, 8}, 1), patched(*encoded, {4, 13, 1, 1, 9}, 0)})
+        CHECK_FALSE(Reply::decode(bad, r));
+    auto record = encoded->at(4).toArray().at(13).toArray().at(0).toArray(); record.append(0);
+    CHECK_FALSE(Reply::decode(patched(*encoded, {4, 13, 0}, record), r));
+    record = encoded->at(4).toArray().at(13).toArray().at(1).toArray().at(1).toArray(); record.append(0);
+    CHECK_FALSE(Reply::decode(patched(*encoded, {4, 13, 1, 1}, record), r));
+}
+
+TEST_CASE("Worker ordinary fallback aggregates spans entities and producer usage before allocation", tags) {
+    auto r = nativeRequest(); auto n = ordinaryValue();
+    auto& limits = std::get<Req::Generate>(r.operation).limits;
+    limits.checkLimits = {1, 1, 1, 1, 1}; limits.outputBudget = {4, 3, 65};
+    const auto encoded = Reply::encode(reply(r, n), r); REQUIRE(encoded);
+    roundtrip(r, reply(r, n));
+    for (int field = 0; field < 3; ++field) {
+        auto request = r; auto& cap = std::get<Req::Generate>(request.operation).limits.outputBudget;
+        if (field == 0) --cap.maxCubicPieces;
+        if (field == 1) --cap.maxOutputEntities;
+        if (field == 2) --cap.maxDeepEntities;
+        auto value = n; value.attemptedOutputUsage = {};
+        CHECK_FALSE(Reply::encode(reply(request, value), request));
+        auto raw = patched(*encoded, {4, 8}, QCborArray{0, 0, 0});
+        CHECK_FALSE(Reply::decode(raw, request));
+    }
+    auto tooManySpans = n; std::get<RS_SplineData>(tooManySpans.ordinary[1]) = cache({{0, 0}, {1, 0}, {2, 0}, {3, 0}});
+    CHECK_FALSE(Reply::encode(reply(r, tooManySpans), r));
+    const auto raw = Req::Values::encodeCache(std::get<RS_SplineData>(tooManySpans.ordinary[1])); REQUIRE(raw);
+    CHECK_FALSE(Reply::decode(patched(*encoded, {4, 13, 1, 1}, *raw), r));
+    auto seam = r; std::get<Req::Generate>(seam.operation).limits.outputBudget.maxCubicPieces = 5;
+    roundtrip(seam, reply(seam, tooManySpans)); // Stored seam subdivision is not another producer evaluation.
+    n.ordinary.clear(); n.ordinaryStatus = Reply::OrdinaryStatus::Unsupported;
+    roundtrip(r, reply(r, n));
+    ++n.ordinaryUsage.deepEntities; CHECK_FALSE(Reply::encode(reply(r, n), r));
+    n = ordinaryValue();
+    for (bool lines : {false, true}) {
+        auto request = nativeRequest(); std::get<Req::Generate>(request.operation).limits.checkLimits = {1, 1, 1, 1, 1};
+        n.ordinary.assign(4096, lines ? Req::Cutter{Req::Segment{{0, 0}, {1, 0}}} :
+            Req::Cutter{cache({{0, 0}, {1, 1}, {2, 1}, {3, 0}}, 3)});
+        n.ordinaryUsage = {4096, 4096, lines ? 4096u : 32u * 4096u};
+        n.attemptedOutputUsage = n.ordinaryUsage;
+        roundtrip(request, reply(request, n));
+        const auto wire = Reply::encode(reply(request, n), request); REQUIRE(wire);
+        n.ordinary.push_back(n.ordinary.back()); CHECK_FALSE(Reply::encode(reply(request, n), request));
+        auto over = wire->at(4).toArray().at(13).toArray(); over.append(over.at(0));
+        CHECK_FALSE(Reply::decode(patched(*wire, {4, 13}, over), request));
+    }
+}
+
 TEST_CASE("Worker fatal replies have unknown work and a null payload only", tags) {
     auto [trimRequest, result] = trimLine();
     std::vector<Req::Request> requests{nativeRequest(), nativeRequest(true), trimRequest};
@@ -317,7 +514,7 @@ TEST_CASE("Worker replies match all four token fields and the exact request oper
         CHECK_FALSE(Reply::encode(other, r));
     }
     for (qint64 i : {-1, 1, 2, 3, 4}) CHECK_FALSE(Reply::decode(patched(*encoded, {2}, i), r));
-    for (qint64 i : {-1, 0, 1, 3}) CHECK_FALSE(Reply::decode(patched(*encoded, {0}, i), r));
+    for (qint64 i : {-1, 0, 1, 2}) CHECK_FALSE(Reply::decode(patched(*encoded, {0}, i), r));
     for (qint64 i : {-1, 3, 99}) CHECK_FALSE(Reply::decode(patched(*encoded, {3}, i), r));
     auto other = d; other.operation = 1; CHECK_FALSE(Reply::encode(other, r));
     other = d; other.operation = std::numeric_limits<std::size_t>::max(); CHECK_FALSE(Reply::encode(other, r));
@@ -377,8 +574,8 @@ TEST_CASE("Worker CheckThrough receipts contain only bounded membership work and
     roundtrip(r, reply(r, n));
     n.refusal = Refusal::ThroughNotOnCache; roundtrip(r, reply(r, n));
     const auto encoded = Reply::encode(reply(r, n), r); REQUIRE(encoded);
-    CHECK(encoded->at(0).toInteger() == 2); CHECK(encoded->at(2).toInteger() == 4);
-    REQUIRE(encoded->at(4).toArray().size() == 12);
+    CHECK(encoded->at(0).toInteger() == 3); CHECK(encoded->at(2).toInteger() == 4);
+    REQUIRE(encoded->at(4).toArray().size() == 15);
     CHECK_FALSE(Reply::decode(patched(*encoded, {0}, 1), r));
     CHECK_FALSE(Reply::decode(patched(*encoded, {2}, 5), r));
     for (qint64 raw = 0; raw <= qint64(Refusal::ThroughNotOnCache); ++raw) {
@@ -787,6 +984,6 @@ TEST_CASE("Worker reply storage is owned after caller and CBOR buffers change or
     auto retained = Reply::decode(*wire, tr); REQUIRE(retained);
     t.fragments[0].sourceSections[0].from = .75; t.fragments[0].data.controlPoints[0].x = 888;
     t.roots.clear(); wire.reset(); same(std::get<Trim::Result>(retained->result), before);
-    auto temporary = [&] { return Reply::decode(*Reply::encode(reply(tr, before), tr), tr); }();
+    auto temporary = Reply::decode(*Reply::encode(reply(tr, before), tr), tr);
     REQUIRE(temporary); same(std::get<Trim::Result>(temporary->result), before);
 }

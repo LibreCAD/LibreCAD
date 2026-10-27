@@ -35,7 +35,14 @@ const result::Native& native(const result::Reply& reply, std::size_t operation) 
     CHECK(reply.token.requestId == token.requestId); CHECK(reply.token.generation == token.generation);
     CHECK(reply.token.sourceRevision == token.sourceRevision); CHECK(reply.token.undoEpoch == token.undoEpoch);
     REQUIRE(std::holds_alternative<result::Native>(reply.result));
-    return std::get<result::Native>(reply.result);
+    const auto& output = std::get<result::Native>(reply.result);
+    if (operation != 0 || output.refusal == LC_OffsetCurveRefusal::None ||
+        output.refusal == LC_OffsetCurveRefusal::ThroughNotOnCache) {
+        CHECK(output.ordinaryStatus == result::OrdinaryStatus::None); CHECK(output.ordinary.empty());
+        CHECK(output.ordinaryUsage.cubicPieces == 0); CHECK(output.ordinaryUsage.outputEntities == 0);
+        CHECK(output.ordinaryUsage.deepEntities == 0);
+    }
+    return output;
 }
 const trim::Result& trimmed(const result::Reply& reply, std::size_t operation) {
     REQUIRE(reply.failure == result::Failure::None); CHECK(reply.operation == operation);
@@ -100,6 +107,86 @@ TEST_CASE("offset child Through checks use the remaining C allowance and retain 
     CHECK(missed.refusal == LC_OffsetCurveRefusal::ThroughNotOnCache); CHECK_FALSE(missed.curve);
     CHECK(missed.throughWork.vertices > 0); CHECK(missed.throughWork.distancePairs > 0);
     work(trace.throughWork, missed.throughWork);
+}
+
+TEST_CASE("offset child transports checked ordinary lines from the same refused engine invocation",
+          "[lc-offsetcurve][worker-kernel][ordinary]") {
+    for (bool reversed : {false, true}) {
+        auto def = definition(); def.cacheReversed = reversed; def.basis.center = {1e7, 0};
+        const auto baseline = LC_OffsetWorkerKernel::run({token, req::Generate{def, {}, {}}});
+        const auto& accepted = native(baseline, 0); REQUIRE(accepted.curve);
+        for (bool display : {false, true}) {
+            req::Generate op{def, {}, {}};
+            if (display) op.limits.outputBudget.maxDeepEntities = 31;
+            else op.limits.checkLimits.maxVertices = 1;
+            // A native C refusal occurs before any Through check, even if requested.
+            if (!display) op.throughPoint = RS_Vector{50, 50};
+            const req::Request input{token, op};
+            LC_OffsetWorkerKernel::Trace trace;
+            const auto reply = LC_OffsetWorkerKernel::run(input, &trace);
+            const auto& output = native(reply, 0);
+            CHECK(output.refusal == (display ? LC_OffsetCurveRefusal::NotCacheRepresentable : LC_OffsetCurveRefusal::CheckFailed));
+            CHECK(output.engineStatus == LC_CurveOffsetStatus::Ok); CHECK(output.engineRuns == 1);
+            CHECK_FALSE(output.changed); CHECK_FALSE(output.curve);
+            REQUIRE(output.ordinaryStatus == result::OrdinaryStatus::Complete);
+            REQUIRE(output.ordinary.size() == 1); REQUIRE(std::holds_alternative<req::Segment>(output.ordinary[0]));
+            const auto& line = std::get<req::Segment>(output.ordinary[0]);
+            auto data = accepted.curve->cache; data.controlPoints = {line.start, line.end};
+            CHECK(req::Values::encodeCache(data) == req::Values::encodeCache(accepted.curve->cache));
+            REQUIRE(geo::checkCache(data, accepted.curve->definition, accepted.curve->worldTolerance));
+            CHECK(output.ordinaryUsage.cubicPieces == 1); CHECK(output.ordinaryUsage.outputEntities == 1);
+            CHECK(output.ordinaryUsage.deepEntities == 1);
+            CHECK(output.sampleUnits == accepted.sampleUnits);
+            CHECK(output.attemptedOutputUsage.cubicPieces == accepted.attemptedOutputUsage.cubicPieces);
+            CHECK(trace.nativePrepareEntered); CHECK(trace.checkEntered); CHECK(trace.computationCompleted);
+            CHECK_FALSE(trace.throughEntered); work(output.throughWork, {}); work(trace.checkWork, output.checkWork);
+            if (display) work(output.checkWork, accepted.checkWork);
+            else { CHECK(output.checkWork.vertices <= 1); CHECK(output.checkReason == LC_OffsetCheckResult::Reason::LimitExceeded); }
+            const auto encoded = result::encode(reply, input); REQUIRE(encoded);
+            const auto decoded = result::decode(*encoded, input); REQUIRE(decoded);
+            const auto& transported = native(*decoded, 0);
+            CHECK(transported.ordinaryStatus == result::OrdinaryStatus::Complete);
+            REQUIRE(transported.ordinary.size() == 1);
+            CHECK(req::Values::encodeCutter(transported.ordinary[0]) == req::Values::encodeCutter(output.ordinary[0]));
+        }
+    }
+}
+
+TEST_CASE("offset child transports real empty and several-piece ordinary producer results",
+          "[lc-offsetcurve][worker-kernel][ordinary]") {
+    const double pi = std::acos(-1.0);
+    for (bool several : {false, true}) {
+        auto def = definition(); def.towardCentre = true;
+        def.basis = several ? RS_EllipseData{{0, 0}, {100, 0}, .05, pi / 12, 7 * pi / 4, false} :
+            RS_EllipseData{{0, 0}, {5, 0}, 1};
+        def.distance = several ? 4 : 5; def.relTolerance = several ? 1e-5 : 1e-4;
+        const req::Request input{token, req::Generate{def, {}, {}}};
+        const auto reply = LC_OffsetWorkerKernel::run(input);
+        const auto& output = native(reply, 0);
+        CHECK(output.refusal == (several ? LC_OffsetCurveRefusal::SeveralPieces : LC_OffsetCurveRefusal::NothingLeft));
+        CHECK(output.engineStatus == LC_CurveOffsetStatus::Ok); CHECK(output.engineRuns == 1);
+        CHECK_FALSE(output.curve); CHECK_FALSE(output.changed); CHECK_FALSE(output.checkReason);
+        REQUIRE(output.ordinaryStatus == result::OrdinaryStatus::Complete);
+        CHECK(output.ordinary.empty() == !several);
+        CHECK(output.ordinaryUsage.outputEntities == output.ordinary.size());
+        std::size_t spans = 0;
+        for (const auto& value : output.ordinary) {
+            if (std::holds_alternative<req::Segment>(value)) ++spans;
+            else {
+                REQUIRE(std::holds_alternative<RS_SplineData>(value));
+                const auto& data = std::get<RS_SplineData>(value);
+                REQUIRE((data.degree == 1 || data.degree == 3));
+                spans += (data.controlPoints.size() - 1) / data.degree;
+            }
+        }
+        CHECK(output.ordinaryUsage.cubicPieces == output.attemptedOutputUsage.cubicPieces);
+        CHECK(spans <= makeDefaultOffsetSourceBudget().maxCubicPieces);
+        CHECK(spans == output.ordinaryUsage.cubicPieces + (several ? 1 : 0));
+        if (several) CHECK(output.ordinary.size() > 1);
+        else CHECK(output.ordinaryUsage.deepEntities == 0);
+        const auto encoded = result::encode(reply, input); REQUIRE(encoded);
+        REQUIRE(result::decode(*encoded, input));
+    }
 }
 
 TEST_CASE("offset child validates original raw cache once without generating or repairing it",

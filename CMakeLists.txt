@@ -3609,11 +3609,19 @@ if (BUILD_TESTS)
     add_dependencies(librecad_offset_worker_geometry_timeout_tests librecad_offset_worker_geometry_timeout_fixture)
     if(LIBRECAD_REGISTER_OFFSET_WORKER_TESTS)
         foreach(kind request result kernel process client fault geometry_timeout)
+            set(worker_filter "[lc-offsetcurve]")
+            if(kind STREQUAL "process")
+                set(worker_filter "[lc-offsetcurve]~[ordinary]")
+            endif()
             add_test(NAME offset_worker_${kind}
-                COMMAND librecad_offset_worker_${kind}_tests "[lc-offsetcurve]")
+                COMMAND librecad_offset_worker_${kind}_tests "${worker_filter}")
             set_tests_properties(offset_worker_${kind} PROPERTIES
                 TIMEOUT 30 ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
         endforeach()
+        add_test(NAME offset_worker_process_ordinary
+            COMMAND librecad_offset_worker_process_tests "[lc-offsetcurve][ordinary]")
+        set_tests_properties(offset_worker_process_ordinary PROPERTIES
+            TIMEOUT 30 ENVIRONMENT "QT_QPA_PLATFORM=offscreen" RUN_SERIAL TRUE)
         set_tests_properties(offset_worker_process offset_worker_client offset_worker_fault offset_worker_geometry_timeout
             PROPERTIES RUN_SERIAL TRUE)
     endif()

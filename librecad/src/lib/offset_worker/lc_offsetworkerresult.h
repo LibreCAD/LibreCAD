@@ -21,12 +21,19 @@ struct Curve {
     std::vector<RS_Vector> grips;
     RS_Vector midpoint{false};
 };
+enum class OrdinaryStatus { None, Complete, Unsupported };
 struct Native : LC_OffsetCurveEditResult {
     std::optional<Curve> curve;
     LC_OffsetOutputUsage attemptedOutputUsage{};
     bool attemptedDeepCountComplete = true;
     LC_OffsetOutputUsage outputUsage{};
     std::size_t sampleUnits = 0;
+    OrdinaryStatus ordinaryStatus = OrdinaryStatus::None;
+    std::vector<LC_OffsetWorkerRequest::Cutter> ordinary;
+    /** Original producer usage, before seam splitting/collinear compaction;
+     * serialized stored spans/controls/knots are independently bounded.
+     */
+    LC_OffsetOutputUsage ordinaryUsage{};
 };
 /** A failed computation/serialization may have lost its exact work snapshot.
  * Such a reply has no result and must not refund an operation's reservation.
@@ -39,10 +46,13 @@ struct Reply {
     std::variant<std::monostate, Native, LC_OffsetCacheTrim::Result> result;
 };
 
-/** Matched envelope [2,token,operation,failure,payload-or-null].
+/** Matched envelope [3,token,operation,failure,payload-or-null].
  * Native payload [refusal,engineStatus-or-null,checkReason-or-null,checkWork,
  * throughWork,engineRuns,changed,curve-or-null,attemptedOutputUsage,
- * attemptedDeepCountComplete,outputUsage,sampleUnits].
+ * attemptedDeepCountComplete,outputUsage,sampleUnits,ordinaryStatus,ordinary,ordinaryUsage].
+ * Ordinary values use Cutter records, restricted to lines and normalized raw
+ * degree-1/3 ClampedOpen splines. Complete/Unsupported are Generate-only native
+ * refusals after one successful producer run; Unsupported carries no values.
  * CheckThrough uses Native with only refusal and bounded throughWork populated;
  * success has no curve and changed=false, and grants no cache admission authority.
  * Curve [cache,definition,worldTolerance,closed,grips,midpoint].

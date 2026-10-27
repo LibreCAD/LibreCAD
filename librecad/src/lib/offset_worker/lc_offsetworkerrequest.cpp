@@ -415,14 +415,14 @@ std::optional<QCborArray> encode(const Request& request) {
     // No CBOR arrays are populated until the entire caller-owned value is admitted.
     if (!admitted(request)) return std::nullopt;
     const auto& t = request.token;
-    return QCborArray{2, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
+    return QCborArray{3, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
         qint64(request.operation.index()), std::visit([](const auto& op) { return fields(op); }, request.operation)};
 }
 
 std::optional<Request> decode(const QCborArray& a) {
     qint64 version, tag;
     Token token;
-    if (a.size() != 4 || !integer(a.at(0), version) || version != 2 ||
+    if (a.size() != 4 || !integer(a.at(0), version) || version != 3 ||
         !read(a.at(1), token) || !integer(a.at(2), tag) || !a.at(3).isArray()) return std::nullopt;
     const auto body = a.at(3).toArray();
     switch (tag) {

@@ -6,6 +6,7 @@
 #include "lc_offsetworkerkernel.h"
 
 #include "rs_line.h"
+#include <algorithm>
 #include <cmath>
 #include <cstring>
 #include <type_traits>
@@ -33,6 +34,63 @@ bool same(const RS_SplineData& a, const RS_SplineData& b) {
 result::Curve value(const LC_OffsetCurve& curve) {
     return {curve.getData(), curve.definition(), curve.checkedWorldTolerance(),
         curve.cacheFormsClosedChain(), curve.cachedDefinitionGrips(), curve.getMiddlePoint()};
+}
+bool ordinarySpline(const RS_SplineData& data) {
+    const auto degree = data.degree;
+    const auto controls = data.controlPoints.size();
+    if ((degree != 1 && degree != 3) || controls < degree + 1 || controls > 16384 ||
+        (controls - 1) % degree || data.knotslist.size() != controls + degree + 1 ||
+        data.weights.size() != controls || data.type != RS_SplineData::SplineType::ClampedOpen ||
+        data.savedOpenType != data.type || !data.fitPoints.empty() || !data.savedOpenKnots.empty()) return false;
+    for (const auto& point : data.controlPoints) if (!geo::isFinite2D(point)) return false;
+    for (double weight : data.weights) if (weight != 1) return false;
+    const auto spans = (controls - 1) / degree;
+    if (spans > makeDefaultOffsetSourceBudget().maxCubicPieces) return false;
+    std::size_t index = 0;
+    double previous = 0;
+    for (std::size_t k = 0; k <= spans; ++k) {
+        const double knot = data.knotslist[index];
+        if (!std::isfinite(knot) || (k && !(previous < knot))) return false;
+        const auto multiplicity = k == 0 || k == spans ? degree + 1 : degree;
+        for (std::size_t j = 0; j < multiplicity; ++j) if (data.knotslist[index++] != knot) return false;
+        previous = knot;
+    }
+    return true;
+}
+void ordinary(result::Native& output, const LC_OffsetCurveCreateResult& made,
+              const LC_OffsetSourceBudget& limits) {
+    if (!made.ordinaryComplete) return;
+    output.ordinaryUsage = made.ordinaryUsage;
+    output.ordinaryStatus = result::OrdinaryStatus::Complete;
+    output.ordinary.reserve(made.ordinary.size());
+    const auto hard = makeDefaultOffsetSourceBudget();
+    const auto spanCap = std::min(limits.maxCubicPieces, hard.maxCubicPieces);
+    std::size_t spans = 0, controls = 0, knots = 0;
+    for (const auto& entity : made.ordinary) {
+        std::optional<req::Cutter> item;
+        std::size_t itemSpans = 0, itemControls = 0, itemKnots = 0;
+        if (const auto* line = dynamic_cast<const RS_Line*>(entity.get())) {
+            const req::Segment data{line->getStartpoint(), line->getEndpoint()};
+            if (geo::isFinite2D(data.start) && geo::isFinite2D(data.end)) {
+                item = data; itemSpans = 1; itemControls = 2;
+            }
+        } else if (const auto* spline = dynamic_cast<const RS_Spline*>(entity.get())) {
+            if (ordinarySpline(spline->getData())) {
+                const auto& data = spline->getData();
+                item = data; itemSpans = (data.controlPoints.size() - 1) / data.degree;
+                itemControls = data.controlPoints.size(); itemKnots = data.knotslist.size();
+            }
+        }
+        if (!item || itemSpans > spanCap - spans || itemControls > 16384 - controls ||
+            itemKnots > 32768 - knots) {
+            // Never publish a supported prefix of a producer's complete output.
+            output.ordinary.clear();
+            output.ordinaryStatus = result::OrdinaryStatus::Unsupported;
+            return;
+        }
+        spans += itemSpans; controls += itemControls; knots += itemKnots;
+        output.ordinary.push_back(std::move(*item));
+    }
 }
 struct Snapshot {
     LC_OffsetWorkerKernel::Trace& trace;
@@ -88,6 +146,10 @@ result::Native LC_OffsetWorkerKernel::generate(const req::Generate& input, Trace
     output.outputUsage = made.outputUsage;
     output.sampleUnits = made.sampleUnits;
     trace.checkEntered = made.checkReason.has_value();
+    if (!made) {
+        ordinary(output, made, input.limits.outputBudget);
+        return output;
+    }
     if (made && input.throughPoint) {
         trace.throughEntered = true;
         if (!LC_OffsetCurve::checkThrough(*made.entity, *input.throughPoint, input.limits.checkLimits,

@@ -67,6 +67,7 @@ template<class T> constexpr qint64 enumMax() {
     else if constexpr (std::is_same_v<T, Reason>) return qint64(Reason::LimitExceeded);
     else if constexpr (std::is_same_v<T, Status>) return qint64(Status::LimitExceeded);
     else if constexpr (std::is_same_v<T, Failure>) return qint64(Failure::InternalFailure);
+    else if constexpr (std::is_same_v<T, OrdinaryStatus>) return qint64(OrdinaryStatus::Unsupported);
     else if constexpr (std::is_same_v<T, Trim::Refusal>) return qint64(Trim::Refusal::AllocationFailure);
     else if constexpr (std::is_same_v<T, LC_IntersectionProof>) return qint64(LC_IntersectionProof::AnalyticExclusion);
     else { static_assert(std::is_same_v<T, void>, "Missing protocol enum range"); }
@@ -251,6 +252,86 @@ bool usage(const LC_OffsetOutputUsage& u, const LC_OffsetSourceBudget& l) {
     return admitted(u) && u.cubicPieces <= l.maxCubicPieces && u.outputEntities <= l.maxOutputEntities &&
         u.deepEntities <= l.maxDeepEntities;
 }
+LC_OffsetSourceBudget outputBudget(const Req::Generate& op) {
+    auto budget = op.limits.outputBudget;
+    const auto hard = makeDefaultOffsetSourceBudget();
+    budget.maxCubicPieces = std::min(budget.maxCubicPieces, hard.maxCubicPieces);
+    budget.maxOutputEntities = std::min(budget.maxOutputEntities, hard.maxOutputEntities);
+    budget.maxDeepEntities = std::min(budget.maxDeepEntities, hard.maxDeepEntities);
+    return budget;
+}
+bool ordinaryHeader(const Native& n, const Req::Request& r, std::size_t count) {
+    if (!admitted(n.ordinaryStatus) || !admitted(n.ordinaryUsage)) return false;
+    if (n.ordinaryStatus == OrdinaryStatus::None) return !count && zero(n.ordinaryUsage);
+    if (r.operation.index() != 0 || n.engineStatus != Status::Ok || n.engineRuns != 1 ||
+        n.curve || n.changed || !zero(n.throughWork) ||
+        (n.refusal != Refusal::SeveralPieces && n.refusal != Refusal::NotCacheRepresentable &&
+            n.refusal != Refusal::CheckFailed && n.refusal != Refusal::NothingLeft)) return false;
+    const auto cap = outputBudget(std::get<Req::Generate>(r.operation));
+    if (count > cap.maxOutputEntities || !usage(n.ordinaryUsage, cap) ||
+        n.ordinaryUsage.cubicPieces != n.attemptedOutputUsage.cubicPieces ||
+        n.ordinaryUsage.outputEntities != n.attemptedOutputUsage.outputEntities ||
+        n.ordinaryUsage.deepEntities != n.attemptedOutputUsage.deepEntities) return false;
+    if (n.ordinaryStatus == OrdinaryStatus::Unsupported) return !count;
+    if (!count) return n.refusal == Refusal::NothingLeft && zero(n.ordinaryUsage);
+    return n.refusal != Refusal::NothingLeft && n.ordinaryUsage.outputEntities == count &&
+        n.ordinaryUsage.deepEntities >= count && n.ordinaryUsage.cubicPieces >= count;
+}
+bool ordinaryCount(Counts& total, const Counts& c, std::size_t spans) {
+    return add(total.spans, c.spans, spans) && add(total.controls, c.controls, 16384) &&
+        add(total.knots, c.knots, 32768);
+}
+bool ordinary(const Native& n, const Req::Request& r) {
+    if (!ordinaryHeader(n, r, n.ordinary.size())) return false;
+    Counts total;
+    if (!n.ordinary.empty()) {
+        const auto cap = outputBudget(std::get<Req::Generate>(r.operation));
+        for (const auto& item : n.ordinary) {
+            Counts c;
+            if (const auto* line = std::get_if<Req::Segment>(&item)) {
+                if (!admitted(line->start) || !admitted(line->end)) return false;
+                c = {1, 2, 0};
+            } else if (const auto* spline = std::get_if<RS_SplineData>(&item)) {
+                if (!cache(*spline, c, cap.maxCubicPieces)) return false;
+            } else return false;
+            if (!ordinaryCount(total, c, cap.maxCubicPieces)) return false;
+        }
+    }
+    // Producer work is measured before chainEntity's seam subdivision and
+    // collinear compaction. Stored spans have their own independent cap above.
+    return true;
+}
+bool readOrdinary(const QCborValue& v, Native& n, const Req::Request& r, bool materialize) {
+    QCborArray values;
+    if (!bounded(v, makeDefaultOffsetSourceBudget().maxOutputEntities, values) ||
+        !ordinaryHeader(n, r, std::size_t(values.size()))) return false;
+    Counts total;
+    if (!values.isEmpty()) {
+        const auto cap = outputBudget(std::get<Req::Generate>(r.operation));
+        if (materialize) n.ordinary.reserve(std::size_t(values.size()));
+        for (const auto& item : values) {
+            QCborArray a, segment;
+            std::size_t type;
+            Counts c;
+            if (!array(item, 2, a) || !read(a.at(0), type)) return false;
+            if (type == 0) {
+                Req::Segment line;
+                if (!array(a.at(1), 2, segment) || !read(segment.at(0), line.start) ||
+                    !read(segment.at(1), line.end)) return false;
+                c = {1, 2, 0};
+            } else if (type == 4) {
+                if (!scanCache(a.at(1), c, cap.maxCubicPieces)) return false;
+            } else return false;
+            if (!ordinaryCount(total, c, cap.maxCubicPieces)) return false;
+            if (materialize) {
+                auto value = Req::Values::decodeCutter(a);
+                if (!value) return false;
+                n.ordinary.push_back(std::move(*value));
+            }
+        }
+    }
+    return true;
+}
 bool native(const Native& n, const Req::Request& r) {
     if ((r.operation.index() > 1 && r.operation.index() != 4) || !admitted(n.refusal) || !admitted(n.engineStatus) ||
         !admitted(n.checkReason) || !admitted(n.checkWork) || !admitted(n.throughWork)) return false;
@@ -282,11 +363,7 @@ bool native(const Native& n, const Req::Request& r) {
                 n.refusal == Refusal::NotCacheRepresentable);
     }
     const auto& op = std::get<Req::Generate>(r.operation);
-    auto budget = op.limits.outputBudget;
-    const auto hard = makeDefaultOffsetSourceBudget();
-    budget.maxCubicPieces = std::min(budget.maxCubicPieces, hard.maxCubicPieces);
-    budget.maxOutputEntities = std::min(budget.maxOutputEntities, hard.maxOutputEntities);
-    budget.maxDeepEntities = std::min(budget.maxDeepEntities, hard.maxDeepEntities);
+    const auto budget = outputBudget(op);
     const auto samples = op.limits.maxSamples ? std::min(op.limits.maxSamples, LC_CurveOffset::kDefaultMaxSamples) :
         LC_CurveOffset::kDefaultMaxSamples;
     if (n.engineRuns > 1 || bool(n.engineStatus) != (n.engineRuns == 1) ||
@@ -316,18 +393,19 @@ bool nativeCounts(const Counts& c, const Req::Request& r) {
 }
 bool readNative(const QCborValue& v, Native& n, const Req::Request& r, bool materialize) {
     QCborArray a;
-    if (!array(v, 12, a) || !read(a.at(0), n.refusal) || !read(a.at(1), n.engineStatus) ||
+    if (!array(v, 15, a) || !read(a.at(0), n.refusal) || !read(a.at(1), n.engineStatus) ||
         !read(a.at(2), n.checkReason) || !read(a.at(3), n.checkWork) || !read(a.at(4), n.throughWork) ||
         !read(a.at(5), n.engineRuns) || !read(a.at(6), n.changed) ||
         !read(a.at(8), n.attemptedOutputUsage) || !read(a.at(9), n.attemptedDeepCountComplete) ||
-        !read(a.at(10), n.outputUsage) || !read(a.at(11), n.sampleUnits)) return false;
+        !read(a.at(10), n.outputUsage) || !read(a.at(11), n.sampleUnits) ||
+        !read(a.at(12), n.ordinaryStatus) || !read(a.at(14), n.ordinaryUsage)) return false;
     if (!a.at(7).isNull()) {
         if (r.operation.index() == 4) return false;
         n.curve.emplace();
         Counts c;
         if (!readCurve(a.at(7), *n.curve, c, checkLimits(r).maxCacheSpans, materialize) || !nativeCounts(c, r)) return false;
     }
-    return native(n, r);
+    return native(n, r) && readOrdinary(a.at(13), n, r, materialize);
 }
 
 Trim::Limits trimLimits(const Req::Request& r) {
@@ -516,10 +594,13 @@ QCborArray fields(const Curve& d) {
         d.worldTolerance, d.closed, grips, fields(d.midpoint)};
 }
 QCborArray fields(const Native& n) {
+    QCborArray ordinary;
+    for (const auto& item : n.ordinary) ordinary.append(*Req::Values::encodeCutter(item));
     return {fields(n.refusal), fields(n.engineStatus), fields(n.checkReason), fields(n.checkWork),
         fields(n.throughWork), fields(n.engineRuns), n.changed,
         n.curve ? QCborValue(fields(*n.curve)) : QCborValue(nullptr), fields(n.attemptedOutputUsage),
-        n.attemptedDeepCountComplete, fields(n.outputUsage), fields(n.sampleUnits)};
+        n.attemptedDeepCountComplete, fields(n.outputUsage), fields(n.sampleUnits),
+        fields(n.ordinaryStatus), ordinary, fields(n.ordinaryUsage)};
 }
 QCborArray fields(const Trim::Result& d) {
     QCborArray fragments, conics, roots;
@@ -557,10 +638,18 @@ template<class T> std::size_t itemCount(const T& d) {
         return 11 + 5 * d.controlPoints.size() + d.knotslist.size() + d.weights.size();
     else if constexpr (std::is_same_v<T, Curve>)
         return 1 + itemCount(d.cache) + itemCount(d.definition) + 2 + 1 + 5 * d.grips.size() + itemCount(d.midpoint);
-    else if constexpr (std::is_same_v<T, Native>)
+    else if constexpr (std::is_same_v<T, Native>) {
+        std::size_t ordinary = 1;
+        for (const auto& item : d.ordinary) ordinary += 2 + std::visit([](const auto& value) {
+            using V = std::decay_t<decltype(value)>;
+            if constexpr (std::is_same_v<V, Req::Segment>) return std::size_t{11};
+            else if constexpr (std::is_same_v<V, RS_SplineData>) return itemCount(value);
+            else return std::size_t{0}; // Unsupported variants were already refused.
+        }, item);
         return 1 + itemCount(d.refusal) + itemCount(d.engineStatus) + itemCount(d.checkReason) +
             itemCount(d.checkWork) + itemCount(d.throughWork) + 2 + itemCount(d.curve) +
-            itemCount(d.attemptedOutputUsage) + 1 + itemCount(d.outputUsage) + 1;
+            itemCount(d.attemptedOutputUsage) + 1 + itemCount(d.outputUsage) + 2 + ordinary + itemCount(d.ordinaryUsage);
+    }
     else if constexpr (std::is_same_v<T, Trim::Result>) {
         std::size_t n = 1 + 1 + 3 + itemCount(d.removed) + 2 + itemCount(d.work);
         for (const auto& f : d.fragments) {
@@ -596,7 +685,7 @@ std::optional<QCborArray> encode(const Reply& d, const Req::Request& r) {
     } else if (d.operation <= 1 || d.operation == 4) {
         const auto* n = std::get_if<Native>(&d.result);
         Counts c;
-        if (!n || !native(*n, r) || (n->curve && (!curve(*n->curve, c, checkLimits(r).maxCacheSpans) ||
+        if (!n || !native(*n, r) || !ordinary(*n, r) || (n->curve && (!curve(*n->curve, c, checkLimits(r).maxCacheSpans) ||
             !nativeCounts(c, r))) || itemCount(*n) > LC_OffsetWorkerWire::Limits{}.items - 9) return std::nullopt;
     } else {
         const auto* t = std::get_if<Trim::Result>(&d.result);
@@ -606,7 +695,7 @@ std::optional<QCborArray> encode(const Reply& d, const Req::Request& r) {
     if (d.failure == Failure::None) payload = d.operation <= 1 || d.operation == 4 ?
         fields(std::get<Native>(d.result)) : fields(std::get<Trim::Result>(d.result));
     const auto& t = d.token;
-    return QCborArray{2, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
+    return QCborArray{3, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
         qint64(d.operation), fields(d.failure), payload};
 }
 
@@ -615,7 +704,7 @@ std::optional<Reply> decode(const QCborArray& a, const Req::Request& r) {
     QCborArray t;
     std::size_t version;
     std::size_t items = 0;
-    if (a.size() != 5 || !wireValue(a, items) || !read(a.at(0), version) || version != 2 || !array(a.at(1), 4, t) ||
+    if (a.size() != 5 || !wireValue(a, items) || !read(a.at(0), version) || version != 3 || !array(a.at(1), 4, t) ||
         !read(t.at(0), d.token.requestId) || !read(t.at(1), d.token.generation) ||
         !read(t.at(2), d.token.sourceRevision) || !read(t.at(3), d.token.undoEpoch) ||
         !read(a.at(2), d.operation) || !read(a.at(3), d.failure) || !envelope(d, r)) return std::nullopt;

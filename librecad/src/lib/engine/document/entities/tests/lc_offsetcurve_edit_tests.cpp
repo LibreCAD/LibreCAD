@@ -447,6 +447,38 @@ TEST_CASE("Offset engine zero and multiple outputs retain their real component s
     REQUIRE(several.engineStatus); CHECK(*several.engineStatus == LC_CurveOffsetStatus::Ok); CHECK_FALSE(several.checkReason);
 }
 
+TEST_CASE("Native refusal retains the same producer geometry without granting editable eligibility",
+          "[lc-offsetcurve][edit][create][ordinary]") {
+    const RS_Ellipse source{nullptr, shortArc()};
+    for (bool reversed : {false, true}) {
+        auto accepted = LC_OffsetCurve::create(source, .25, false, {}, .01, reversed);
+        REQUIRE(accepted); CHECK_FALSE(accepted.ordinaryComplete); CHECK(accepted.ordinary.empty());
+        CHECK(accepted.ordinaryUsage.outputEntities == 0);
+        LC_OffsetRunLimits limits; limits.checkLimits.maxVertices = 1;
+        auto refused = LC_OffsetCurve::create(source, .25, false, limits, .01, reversed);
+        REQUIRE_FALSE(refused); CHECK(refused.refusal == Refusal::CheckFailed);
+        REQUIRE(refused.ordinaryComplete); REQUIRE(refused.ordinary.size() == 1);
+        CHECK(refused.engineRuns == 1); CHECK_FALSE(refused.changed); CHECK_FALSE(refused.entity);
+        CHECK(refused.sampleUnits == accepted.sampleUnits);
+        CHECK(refused.ordinaryUsage.cubicPieces == accepted.outputUsage.cubicPieces);
+        CHECK(refused.ordinaryUsage.outputEntities == 1);
+        auto* line = dynamic_cast<RS_Line*>(refused.ordinary.front().get());
+        auto* spline = dynamic_cast<RS_Spline*>(refused.ordinary.front().get());
+        REQUIRE((line || spline));
+        if (line) {
+            CHECK(samePoint(line->getStartpoint(), accepted.entity->getStartpoint()));
+            CHECK(samePoint(line->getEndpoint(), accepted.entity->getEndpoint()));
+        } else checkPoints(spline->getData().controlPoints, accepted.entity->getData().controlPoints);
+        CHECK(refused.ordinary.front()->rtti() != RS2::EntityOffsetCurve);
+        const auto cost = measureOffsetOutput({refused.ordinary.front().get()}, limits.outputBudget.maxDeepEntities);
+        CHECK(cost.status == LC_OffsetTreeStatus::Ok);
+        CHECK(cost.deepEntities == refused.ordinaryUsage.deepEntities);
+    }
+    LC_OffsetRunLimits invalid; invalid.maxSamples = 1;
+    auto failed = LC_OffsetCurve::create(source, .25, false, invalid, .01);
+    CHECK_FALSE(failed); CHECK_FALSE(failed.ordinaryComplete); CHECK(failed.ordinary.empty());
+}
+
 TEST_CASE("Every exact offset edit no-op retains the complete live state and not-run statuses",
           "[lc-offsetcurve][edit][noop]") {
     for (unsigned operation = 0; operation < 5; ++operation) {

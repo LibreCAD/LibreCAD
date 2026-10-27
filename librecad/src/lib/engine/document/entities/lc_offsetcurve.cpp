@@ -250,11 +250,17 @@ LC_OffsetCurveCreateResult LC_OffsetCurve::runEngine(const RS_Entity &attributes
     result.sampleUnits = made.sampleUnits;
     result.engineStatus = made.status;
     if (made.status != LC_CurveOffsetStatus::Ok) { result.refusal = Refusal::Engine; return result; }
-    if (made.entities.empty()) { result.refusal = Refusal::NothingLeft; return result; }
-    if (made.entities.size() != 1) { result.refusal = Refusal::SeveralPieces; return result; }
-    if (!made.entities.front()) { result.refusal = Refusal::NotCacheRepresentable; return result; }
-    auto &entity = *made.entities.front();
-    if (normalized.cacheReversed) entity.revertDirection();
+    result.ordinary = std::move(made.entities);
+    result.ordinaryComplete = true;
+    result.ordinaryUsage = made.usage;
+    if (normalized.cacheReversed) {
+        for (auto& entity : result.ordinary) if (entity) entity->revertDirection();
+        std::reverse(result.ordinary.begin(), result.ordinary.end());
+    }
+    if (result.ordinary.empty()) { result.refusal = Refusal::NothingLeft; return result; }
+    if (result.ordinary.size() != 1) { result.refusal = Refusal::SeveralPieces; return result; }
+    if (!result.ordinary.front()) { result.refusal = Refusal::NotCacheRepresentable; return result; }
+    auto &entity = *result.ordinary.front();
     RS_SplineData line;
     const auto *data = cacheData(entity, line);
     if (!data || (data->degree != 1 && data->degree != 3)) {
@@ -280,6 +286,7 @@ LC_OffsetCurveCreateResult LC_OffsetCurve::runEngine(const RS_Entity &attributes
         result.entity.reset(); result.refusal = Refusal::NotCacheRepresentable; return result;
     }
     result.outputUsage.deepEntities = nativeCost.deepEntities;
+    result.ordinary.clear(); result.ordinaryComplete = false; result.ordinaryUsage = {};
     result.refusal = Refusal::None; result.changed = true;
     return result;
 }

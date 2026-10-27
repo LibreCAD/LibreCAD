@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "../lc_offsetworkerclient.h"
+#include "lc_offsetcurvexdata.h"
 #include "rs_entitycontainer.h"
 #include "rs_layer.h"
 #include "rs_line.h"
@@ -417,6 +418,68 @@ TEST_CASE("Worker client reports exact known work for a real geometric refusal",
     CHECK_FALSE(value.curve);
     const RS_Line attributes(nullptr, {0, 0}, {1, 0});
     CHECK_FALSE(completion.native(attributes));
+}
+
+TEST_CASE("Worker ordinary completions materialize exact plain output with fresh identities", Tags) {
+    auto& rt = runtime(); OwnedClient owned{rt};
+    RS_EntityContainer owner; RS_Layer layer{QStringLiteral("ordinary local")};
+    RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 1}}};
+    attributes.setLayer(&layer); attributes.setSourceHandle(91); attributes.setXDictHandle(92);
+    attributes.setReactorHandles({93}); attributes.setOwnerLineage(94);
+    attributes.setUserDefVar(QStringLiteral("ordinary-local"), QStringLiteral("kept"));
+    const LC_OffsetCurveXData::XData foreign{
+        std::make_shared<DRW_Variant>(1001, std::string("ORDINARY_FOREIGN")),
+        std::make_shared<DRW_Variant>(1000, std::string("keep exactly"))};
+    const auto stale = LC_OffsetCurveXData::forExport(foreign, LC_OffsetCurveXData::Definition{definition(), 0, {}});
+    REQUIRE(stale); attributes.setDrwExtData(*stale);
+    for (int mode = 0; mode < 5; ++mode) {
+        auto input = generate(mode + 1); auto& op = std::get<Req::Generate>(input.operation);
+        if (mode == 0) { op.definition.basis.center = {1e7, 0}; op.limits.outputBudget.maxDeepEntities = 31; }
+        if (mode == 1 || mode == 4) op.limits.checkLimits.maxVertices = 1;
+        if (mode == 2 || mode == 3) {
+            const auto pi = std::acos(-1.0);
+            op.definition.basis = mode == 2 ? RS_EllipseData{{0, 0}, {5, 0}, 1} :
+                RS_EllipseData{{0, 0}, {100, 0}, .05, pi / 12, 7 * pi / 4, false};
+            op.definition.distance = mode == 2 ? 5 : 4;
+            op.definition.towardCentre = true; op.definition.relTolerance = mode == 2 ? 1e-4 : 1e-5;
+        }
+        if (mode == 4) op.throughPoint = RS_Vector{50, 50};
+        Receipts receipts; REQUIRE(owned.get().submit(input, Client::Mode::Commit, receipts.into(0)));
+        rt.until([&] { return receipts.outcomes[0].has_value(); });
+        const auto& receipt = completed(receipts.at(0), mode + 1, 0);
+        const auto& result = std::get<Reply::Native>(receipt.reply().result);
+        CHECK(result.engineRuns == 1); CHECK_FALSE(result.changed); CHECK_FALSE(receipt.native(attributes));
+        REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+        auto output = receipt.ordinary(attributes);
+        if (mode == 4) { CHECK_FALSE(output); continue; }
+        REQUIRE(output); REQUIRE(output->size() == result.ordinary.size());
+        CHECK(output->empty() == (mode == 2));
+        for (std::size_t i = 0; i < output->size(); ++i) {
+            const auto& entity = *(*output)[i];
+            CHECK(entity.rtti() != RS2::EntityOffsetCurve); CHECK(entity.getParent() == &owner);
+            CHECK(entity.getLayer(false) == &layer); CHECK(entity.getPen(false) == attributes.getPen(false));
+            CHECK(entity.getUserDefVar("ordinary-local") == QStringLiteral("kept"));
+            const auto tags = LC_OffsetCurveXData::parseAndStrip(entity.getDrwExtData());
+            CHECK(tags.knownCandidates == 0); REQUIRE(tags.remaining);
+            REQUIRE(tags.remaining->size() == foreign.size() + 1);
+            CHECK((*tags.remaining)[0] == foreign[0]); CHECK((*tags.remaining)[1] == foreign[1]);
+            CHECK((*tags.remaining)[2]->code() == 1001);
+            CHECK(*(*tags.remaining)[2]->content.s == LC_OffsetCurveXData::AppId);
+            CHECK(entity.sourceHandle() == 0); CHECK(entity.xDictHandle() == 0);
+            CHECK(entity.reactorHandles().empty()); CHECK(entity.ownerLineage() == 0);
+            CHECK(entity.lineage() != attributes.lineage()); CHECK(entity.getId() != attributes.getId());
+            const auto& raw = result.ordinary[i];
+            if (const auto* line = std::get_if<Req::Segment>(&raw)) {
+                REQUIRE(entity.rtti() == RS2::EntityLine);
+                CHECK(exact(entity.getStartpoint(), line->start)); CHECK(exact(entity.getEndpoint(), line->end));
+            } else {
+                REQUIRE(entity.rtti() == RS2::EntitySpline);
+                exactCache(static_cast<const RS_Spline&>(entity).getData(), std::get<RS_SplineData>(raw));
+            }
+        }
+        CHECK(owner.count() == 0); CHECK(attributes.sourceHandle() == 91);
+        CHECK(LC_OffsetCurveXData::parseAndStrip(attributes.getDrwExtData()).knownCandidates == 1);
+    }
 }
 
 TEST_CASE("Worker membership receipts acknowledge only their unchanged raw native cache", Tags) {

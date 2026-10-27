@@ -322,7 +322,7 @@ TEST_CASE("offset worker request has exact version two positional shapes",
           "[lc-offsetcurve][worker-protocol][request]") {
     for (const auto& value : fixtures()) {
         const auto root = encoded(value);
-        REQUIRE(root.size() == 4); CHECK(root.at(0).isInteger()); CHECK(root.at(0).toInteger() == 2);
+        REQUIRE(root.size() == 4); CHECK(root.at(0).isInteger()); CHECK(root.at(0).toInteger() == 3);
         const auto t = root.at(1).toArray();
         REQUIRE(t.size() == 4); CHECK(t.at(0).toInteger() == value.token.requestId);
         CHECK(t.at(1).toInteger() == value.token.generation);
@@ -419,7 +419,7 @@ TEST_CASE("offset worker request rejects invalid tokens versions operations enum
           "[lc-offsetcurve][worker-protocol][request]") {
     auto value = fixtures().front();
     const auto root = encoded(value);
-    for (qint64 bad : std::array<qint64, 5>{-1, 0, 1, 3, std::numeric_limits<qint64>::max()})
+    for (qint64 bad : std::array<qint64, 5>{-1, 0, 1, 2, std::numeric_limits<qint64>::max()})
         CHECK_FALSE(request::decode(changed(root, {0}, bad)));
     for (qint64 bad : std::array<qint64, 3>{-1, 5, std::numeric_limits<qint64>::max()})
         CHECK_FALSE(request::decode(changed(root, {2}, bad)));

@@ -88,7 +88,7 @@ public:
     }
 
     Completion exchange(const QByteArray& input,
-                        const QStringList& arguments = {QStringLiteral("--protocol=2")},
+                        const QStringList& arguments = {QStringLiteral("--protocol=3")},
                         bool partial = false) {
         REQUIRE(input.size() <= InputCap);
         ScopedProcess child;
@@ -147,7 +147,7 @@ public:
         REQUIRE(fields);
         const auto input = Wire::encode(*fields);
         REQUIRE_FALSE(input.isEmpty());
-        const auto completed = exchange(input, {QStringLiteral("--protocol=2")}, partial);
+        const auto completed = exchange(input, {QStringLiteral("--protocol=3")}, partial);
         INFO("helper stderr: " << completed.diagnostic.toStdString());
         REQUIRE(completed.status == QProcess::NormalExit);
         REQUIRE(completed.code == 0);
@@ -170,7 +170,7 @@ public:
     }
 
     void reject(const QByteArray& input,
-                const QStringList& arguments = {QStringLiteral("--protocol=2")}) {
+                const QStringList& arguments = {QStringLiteral("--protocol=3")}) {
         INFO("rejected bytes=" << input.size() << " arguments=" << arguments.join(' ').toStdString());
         const auto completed = exchange(input, arguments);
         INFO("helper stderr: " << completed.diagnostic.toStdString());
@@ -234,7 +234,14 @@ RS_SplineData arcCache() {
 
 const Reply::Native& native(const Reply::Reply& reply) {
     REQUIRE(std::holds_alternative<Reply::Native>(reply.result));
-    return std::get<Reply::Native>(reply.result);
+    const auto& output = std::get<Reply::Native>(reply.result);
+    if (reply.operation != 0 || output.refusal == LC_OffsetCurveRefusal::None ||
+        output.refusal == LC_OffsetCurveRefusal::ThroughNotOnCache) {
+        CHECK(output.ordinaryStatus == Reply::OrdinaryStatus::None); CHECK(output.ordinary.empty());
+        CHECK(output.ordinaryUsage.cubicPieces == 0); CHECK(output.ordinaryUsage.outputEntities == 0);
+        CHECK(output.ordinaryUsage.deepEntities == 0);
+    }
+    return output;
 }
 
 const Trim::Result& trimmed(const Reply::Reply& reply) {
@@ -325,7 +332,7 @@ QByteArray header(quint32 size) {
 }
 }
 
-// One case shares an absolute watchdog across every real process, including failures.
+// Each case shares an absolute watchdog across its real processes, including failures.
 TEST_CASE("Built native offset helper qualifies computations and one-request process framing",
           "[lc-offsetcurve][worker-process]") {
     int argc = 1;
@@ -515,12 +522,85 @@ TEST_CASE("Built native offset helper qualifies computations and one-request pro
         helper.reject(header(quint32(Wire::Limits{}.frameBytes) + 1));
         helper.reject(header(1) + QByteArray(1, char(0x81)));
         helper.rejectFields(patched(*fields, {0}, qint64(1)));
+        helper.rejectFields(patched(*fields, {0}, qint64(2)));
         helper.rejectFields(patched(*fields, {1, 0}, 7.0));
         helper.rejectFields(patched(*fields, {2}, qint64(5)));
         helper.rejectFields(patched(*fields, {3, 0, 1}, qint64(1)));
         helper.rejectFields(patched(*fields, {3, 1, 3, 1}, true));
         helper.reject({}, QStringList{});
         helper.reject(frame, {QStringLiteral("--protocol=1")});
-        helper.reject({}, {QStringLiteral("--protocol=2"), QStringLiteral("extra")});
+        helper.reject(frame, {QStringLiteral("--protocol=2")});
+        helper.reject({}, {QStringLiteral("--protocol=3"), QStringLiteral("extra")});
+    }
+}
+
+TEST_CASE("Built native offset helper preserves same-invocation ordinary fallback",
+          "[lc-offsetcurve][worker-process][ordinary]") {
+    int argc = 1;
+    char name[] = "offset-worker-process-tests";
+    char* argv[] = {name, nullptr};
+    std::unique_ptr<QCoreApplication> application;
+    if (!QCoreApplication::instance()) application = std::make_unique<QCoreApplication>(argc, argv);
+    Helper helper;
+    {
+        INFO("Native C and display refusals transport checked ordinary output from one engine run");
+        for (bool reversed : {false, true}) for (bool display : {false, true}) {
+            auto def = definition(); def.cacheReversed = reversed; def.basis.center = {1e7, 0};
+            Req::Generate operation{def, {}, {}};
+            if (display) operation.limits.outputBudget.maxDeepEntities = 31;
+            else { operation.limits.checkLimits.maxVertices = 1; operation.throughPoint = RS_Vector{50, 50}; }
+            const auto reply = helper.run({Token, operation});
+            const auto& value = native(reply);
+            CHECK(value.refusal == (display ? LC_OffsetCurveRefusal::NotCacheRepresentable : LC_OffsetCurveRefusal::CheckFailed));
+            CHECK(value.engineStatus == LC_CurveOffsetStatus::Ok); CHECK(value.engineRuns == 1);
+            CHECK_FALSE(value.curve); CHECK_FALSE(value.changed);
+            REQUIRE(value.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+            REQUIRE(value.ordinary.size() == 1); REQUIRE(std::holds_alternative<Req::Segment>(value.ordinary[0]));
+            const auto& line = std::get<Req::Segment>(value.ordinary[0]);
+            RS_SplineData cache{1, false}; cache.controlPoints = {line.start, line.end};
+            cache.knotslist = {0, 0, 1, 1}; cache.weights = {1, 1};
+            const RS_Ellipse source{nullptr, def.basis};
+            const auto tolerance = LC_CurveOffset::toleranceFor(source, def.distance, def.relTolerance);
+            REQUIRE(Geo::checkCache(cache, def, tolerance));
+            CHECK((line.start.y > line.end.y) == reversed);
+            CHECK(value.ordinaryUsage.cubicPieces == 1); CHECK(value.ordinaryUsage.outputEntities == 1);
+            CHECK(value.ordinaryUsage.deepEntities == 1); CHECK(value.sampleUnits > 0);
+            sameWork(value.throughWork, {});
+            if (display) CHECK(value.checkReason == LC_OffsetCheckResult::Reason::None);
+            else { CHECK(value.checkReason == LC_OffsetCheckResult::Reason::LimitExceeded); CHECK(value.checkWork.vertices <= 1); }
+        }
+    }
+    {
+        INFO("Real SeveralPieces and NothingLeft preserve the producer's complete ordinary result");
+        const double pi = std::acos(-1.0);
+        for (bool several : {false, true}) {
+            auto def = definition(); def.towardCentre = true;
+            def.basis = several ? RS_EllipseData{{0, 0}, {100, 0}, .05, pi / 12, 7 * pi / 4, false} :
+                RS_EllipseData{{0, 0}, {5, 0}, 1};
+            def.distance = several ? 4 : 5; def.relTolerance = several ? 1e-5 : 1e-4;
+            const auto reply = helper.run({Token, Req::Generate{def, {}, {}}});
+            const auto& value = native(reply);
+            CHECK(value.refusal == (several ? LC_OffsetCurveRefusal::SeveralPieces : LC_OffsetCurveRefusal::NothingLeft));
+            CHECK(value.engineStatus == LC_CurveOffsetStatus::Ok); CHECK(value.engineRuns == 1);
+            REQUIRE(value.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+            CHECK_FALSE(value.curve); CHECK_FALSE(value.changed);
+            CHECK(value.ordinary.empty() == !several);
+            CHECK(value.ordinaryUsage.outputEntities == value.ordinary.size());
+            std::size_t spans = 0;
+            for (const auto& item : value.ordinary) {
+                if (std::holds_alternative<Req::Segment>(item)) ++spans;
+                else {
+                    REQUIRE(std::holds_alternative<RS_SplineData>(item));
+                    const auto& data = std::get<RS_SplineData>(item);
+                    REQUIRE((data.degree == 1 || data.degree == 3));
+                    spans += (data.controlPoints.size() - 1) / data.degree;
+                }
+            }
+            CHECK(value.ordinaryUsage.cubicPieces == value.attemptedOutputUsage.cubicPieces);
+            CHECK(spans <= makeDefaultOffsetSourceBudget().maxCubicPieces);
+            CHECK(spans == value.ordinaryUsage.cubicPieces + (several ? 1 : 0));
+            if (several) CHECK(value.ordinary.size() > 1);
+            else CHECK(value.ordinaryUsage.deepEntities == 0);
+        }
     }
 }
