@@ -437,7 +437,7 @@ the same quarantine rule, not QProcess's unbounded destructor wait.
 One active request and one replaceable queued request are owned per client.
 Request IDs increase; stale/cancelled deferred deliveries cannot publish even
 after a successful child exit. Only the fixed sibling `LibreCADOffsetWorker`
-(`.exe` on Windows) and `--protocol=1` are launched. The helper has private Ini
+(`.exe` on Windows) and `--protocol=2` are launched. The helper has private Ini
 settings and no document or window. CMake installs it beside the executable,
 including `Contents/MacOS` on macOS; qmake builds it before the application.
 The existing macOS packager already enumerates extra Mach-O executables.
@@ -458,7 +458,7 @@ Implementation order inside W0-W2:
 1. Qualify bounded wire syntax/partial delivery independently (the new pure
    `librecad_offset_worker_wire_tests` target). Record negative controls and
    Release/ASan/qmake6 results. No helper or UI-isolation claim at this step.
-2. Freeze typed Generate, ValidateCache, TrimCache and TrimConic requests,
+2. Freeze typed Generate, ValidateCache, TrimCache, TrimConic and CheckThrough requests,
    complete cache/basis value layouts and status/work snapshots. Every fixed
    array must have an exact arity and admitted numeric/enum/count ranges; source,
    request-generation and undo tokens must bind replies to the retained parent
@@ -1082,9 +1082,40 @@ foundation pass. Final R still requires serial current-source requalification.
 | `W4-qualified-final-dialog-release.xml` | `20280bd913b8c1daaa2486562ad3565857de45f9aa8b6098a511f5dcb38e7fe5` |
 | `W4-qualified-final-dialog-asan.xml` | `ffc8b3a9f92fd9c5a383927cb3d630bc96d471dcced70832f01db4349691be21` |
 
-Next bounded slice: transport Through membership without rerunning generation or
-C for a no-op, with opaque source/cache-bound application. Then route the grip
-commit continuation through that preparation and the existing helper/client;
+`0d4f77b1ca49e4bb21d0d794c892594776ddc927` adds pure Through preparation
+and protocol2 operation4, `CheckThrough [cache,definition,worldTolerance,point,check]`.
+Exact stored endpoint no-ops remain local. An unchanged definition requests only
+bounded raw-layout admission and membership, with actual costs in `throughWork`,
+no producer/C stages, no curve and `changed=false`. A changed proposal uses the
+existing Generate operation with its raw point. Membership cannot mint an entity;
+private completion application requires the still-editable identical cache,
+definition and tolerance. Existing synchronous setters reuse the pure proposal;
+the original28 edit cases/15262 assertions remain green. Version1 envelopes and
+invocation reject; frame/value/geometry caps and deadlines are unchanged.
+
+Release and ASan each pass request11/596917, result18/269143, kernel8/1112 and
+opaque-edit15/101553 (cases/assertions). The real process TU exercises all five
+operations; client9 and fault7 cases pass both builds. Process/client/fault
+assertion counts vary with event polling. Execution is serial; strict XML checks
+pass. Retain the initial red kernel report (zero pair allowance refuses before
+layout entry) and edit report (a centre point is a valid analytic proposal whose
+disappearance is the producer's decision), both corrected test expectations.
+ASan stays `detect_leaks=0`. No current-protocol qmake application/deployed-bundle,
+genuine hung-geometry or final R claim follows from these foundation tests.
+
+| Qualified W5 receipt | Release SHA256 | ASan SHA256 |
+|---|---|---|
+| request | `4a266867df72c5c44c8192c23071cdff795393902ad748adbfaffbf38d64e265` | `fafe53eaf2749d9b59a81bdacdf8f00a404d9fb2e7f47d319bb6cf8bf01f7ec0` |
+| result | `60e53fbe1410ee683c95bc7faa398c6ce419b34f18b6fd76836abfff4c1306aa` | `a7fac6a2be4517d317e8c14559a1d60cae9cdc4b75a7f007c8b213dad6f16c95` |
+| kernel | `0e5daf12a156384bf70e2db87fff8e9b9e4986d32f021669cf02b235c2d3def4` | `6bdc4090418214204e55177ef6d58ea9fdda39cf05bf5e0203715e4c6297d0d7` |
+| edit | `8b71dc553b96b501016ecfdc8ce7a61de2158591498eecb112256513cb30331e` | `804d37a20ff4c3e6f92b725093b2b6fd8c2ace65cafa92ce08cdb72811af4e64` |
+| native_edit | `5546d920b4f8464917df4c6fa3ec72f60de375badb497fa5f61a74e5f563fa18` | `0c8bfc9be4b55fdb9207e3e968b189bec6ee2065ddcb66ce7e03ab01679d389e` |
+| process | `edb7ad75c719274853e8d30c213aae61e23c482d886cb121b3d5981aaacc06cb` | `ed26573f403957a03114a641f261c2c360373b79d2b1cbd3813d90163e8a2f53` |
+| client | `e9cc200698cbffd4133cda2f8cbc180ff42dd746ce3f10554e0ae1fb5f41c237` | `3fadb24f72d6fe881d57f32ffa62d7f8d1178ee10572df2e8c14173a57e62586` |
+| fault | `03485d128a2af3a30d25d03d247fe6a86e6b94f129c94b1bf7cd27bfb9484e31` | `66c99e012f18629d50ed029256983850fe62522ab7be23d9d103e4a1413600a4` |
+
+Files are `W5-qualified-{receipt}-{release|asan}.xml` in the durable evidence root.
+Next bounded slice: commit the tested grip GUI continuation using this preparation;
 preserve bounded cached preview feedback, cheap original-grip no-op, cancellation,
 undo and final publication seals. Continue Update, creation and trim in4.2 order.
 File/import lifetime and typed ordinary fallback are not waived.
@@ -1112,8 +1143,8 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** Through membership preparation
-and grip GUI routing using the qualified client/completion, then the remaining
+**Next concrete action on implementation resume:** checkpoint the tested grip GUI
+routing using the qualified Through preparation/client/completion, then the remaining
 4.2 caller adapters. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
 Nothing is automatically copied into the dirty main tree. Native caller routing,
