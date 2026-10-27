@@ -42,6 +42,7 @@
 #include <QMessageBox>
 #include <QPagedPaintDevice>
 #include <QPluginLoader>
+#include <QPointer>
 #include <QPrinter>
 #include <QPrintDialog>
 #include <QRegExp>
@@ -1057,10 +1058,22 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow * w, bool activateNext)
     foreach (auto&& child, w->getChildWindows()) // block editors and print previews; just force these closed
 		doClose(child, false); // they belong to the document (changes already saved there)
 	w->getChildWindows().clear();
-	// removeSubWindow() leaves a window of its own, which only a close event deleted. With a
-	// style sheet, Qt shows such a window again if it was maximized (QMdiSubWindow on
-	// StyleChange), and it then outlives the main window. Clear that state and delete it.
-	w->overrideWindowState(Qt::WindowNoState);
+	// removeSubWindow() makes the window a top-level window of its own, which only a close
+	// event deleted. With a style sheet, QMdiSubWindow's StyleChange handler shows it again
+	// if it was maximized or minimized, and it then outlives the main window. Clear that
+	// state first. QMdiSubWindow::changeEvent ignores the override, but QWidget::event still
+	// turns a cleared Minimized state into a show event that activates the window, so keep
+	// the MDI area from seeing its signals.
+	{
+		const QSignalBlocker blocker(w);
+		w->overrideWindowState(Qt::WindowNoState);
+	}
+	// A view makes itself its document's view when it is created, so a print preview took
+	// over its drawing's: hand it back before the view is deleted with the window.
+	RS_Document* closingDocument = w->getDocument();
+	if (closingDocument->getGraphicView() == w->getGraphicView())
+		closingDocument->setGraphicView(parentWindow != nullptr && parentWindow->getDocument() == closingDocument
+		                                ? parentWindow->getGraphicView() : nullptr);
 	mdiAreaCAD->removeSubWindow(w);
 	w->deleteLater();
 	window_list.removeOne(w);
@@ -2223,7 +2236,15 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow* w) 
 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileNewHelper: creating new doc window");
     /*QC_MDIWindow* */ w = slotFileNew();
+    // The events processed below may close the new window (Close All, quit), and
+    // doClose() deletes it: stop as soon as it is closed.
+    const QPointer<QC_MDIWindow> guard(w);
+    const auto closed = [this, &guard, w]() { return guard.isNull() || !window_list.contains(w); };
     qApp->processEvents(QEventLoop::AllEvents, 1000);
+    if (closed()) {
+        QApplication::restoreOverrideCursor();
+        return true; // closed by the user: not a template error
+    }
 
     // link the layer widget to the new document:
     RS_LayerList *layerList = w->getDocument()->getLayerList();
@@ -2242,6 +2263,10 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow* w) 
     coordinateWidget->setGraphic(w->getGraphic());
 
     qApp->processEvents(QEventLoop::AllEvents, 1000);
+    if (closed()) {
+        QApplication::restoreOverrideCursor();
+        return true;
+    }
 
     // loads the template file in the new view:
     if (!fileName.isEmpty()) {
@@ -2438,13 +2463,17 @@ void QC_ApplicationWindow::
             commandWidget->appendHistory(message);
         }
         // Create new document window:
-		QMdiSubWindow* old=activedMdiSubWindow;
-        QRect geo;
-        //bool maximized=false;
-
         QC_MDIWindow* w = slotFileNew(nullptr);
+        // The events processed below may close the new window (Close All, quit), and
+        // doClose() deletes it: stop as soon as it is closed.
+        const QPointer<QC_MDIWindow> guard(w);
+        const auto closed = [this, &guard, w]() { return guard.isNull() || !window_list.contains(w); };
         // RVT_PORT qApp->processEvents(1000);
         qApp->processEvents(QEventLoop::AllEvents, 1000);
+        if (closed()) {
+            QApplication::restoreOverrideCursor();
+            return;
+        }
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: linking layer list");
              RS_LayerList *layerList = w->getDocument()->getLayerList();
@@ -2464,10 +2493,9 @@ void QC_ApplicationWindow::
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: open file");
 
         qApp->processEvents(QEventLoop::AllEvents, 1000);
-
-        if(old != nullptr) {//save old geometry
-            geo=old->geometry();
-            //maximized=old->isMaximized();
+        if (closed()) {
+            QApplication::restoreOverrideCursor();
+            return;
         }
 
         // open the file in the new view:
@@ -2481,6 +2509,10 @@ void QC_ApplicationWindow::
                     .arg( fileName);
             commandWidget->appendHistory( msg);
             QMessageBox::information( this, QMessageBox::tr("Warning"), msg, QMessageBox::Ok);
+        }
+        if (closed()) {
+            QApplication::restoreOverrideCursor();
+            return;
         }
         if (!success) {
                // error
@@ -2906,7 +2938,10 @@ void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
 bool QC_ApplicationWindow::slotFileCloseAll()
 {
 	bool cancel(false), closeAll(false), hasParent(false);
-	for (auto w : window_list) if (w) {
+	// doClose() removes windows from window_list, a drawing's block editors too:
+	// iterate over a copy, and skip a window once it is no longer listed.
+	const QList<QC_MDIWindow*> windows = window_list;
+	for (auto w : windows) if (w && window_list.contains(w)) {
 
 		hasParent = w->getParentWindow() != nullptr;
 
@@ -2918,6 +2953,7 @@ bool QC_ApplicationWindow::slotFileCloseAll()
 				break;
 			case QG_ExitDialog::SaveAll:
 				closeAll = slotFileSaveAll();
+				cancel = !closeAll; // a cancelled or failed save keeps the drawing open
 				break;
 			case QG_ExitDialog::Save:
 				cancel = !doSave(w);

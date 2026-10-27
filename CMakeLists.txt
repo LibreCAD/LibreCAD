@@ -967,7 +967,7 @@ if(BUILD_TESTS)
     find_package(Qt5 REQUIRED COMPONENTS Test)
     set(DOCK_TEST_SOURCES ${SOURCES})
     list(REMOVE_ITEM DOCK_TEST_SOURCES librecad/src/main/main.cpp)
-    foreach(test IN ITEMS dock_layout static_analysis mtext_indentation)
+    foreach(test IN ITEMS dock_layout static_analysis mtext_indentation mdi_close)
         add_executable(librecad_${test}_tests
             ${UI_HEADERS} ${DOCK_TEST_SOURCES} ${QRC_FILES}
             librecad/src/main/tests/${test}_tests.cpp)

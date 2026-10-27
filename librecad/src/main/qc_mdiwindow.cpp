@@ -36,6 +36,7 @@
 #include <QMessageBox>
 #include <QMdiArea>
 #include <QPainter>
+#include <QPointer>
 
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
@@ -333,7 +334,12 @@ bool QC_MDIWindow::slotFileOpen(const QString& fileName, RS2::FormatType type) {
 
                 // cosmetics..
                 // RVT_PORT qApp->processEvents(1000);
+                // The events processed may close this window (Close All, quit). doClose()
+                // takes it out of the MDI area and deletes it later.
+                const QPointer<QC_MDIWindow> self(this);
                 qApp->processEvents(QEventLoop::AllEvents, 1000);
+                if (self.isNull() || mdiArea() == nullptr)
+                    return false;
 
         ret = document->open(fileName, type);
 
