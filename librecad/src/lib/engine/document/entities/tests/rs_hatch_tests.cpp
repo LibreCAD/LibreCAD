@@ -47,6 +47,7 @@
 #include "drw_entities.h"
 #include "lc_containertraverser.h"
 #include "lc_graphicviewport.h"
+#include "lc_filtertestsupport.h"
 #include "lc_hatchpropertieseditingwidget.h"
 #include "lc_hyperbola.h"
 #include "lc_looputils.h"
@@ -1615,6 +1616,55 @@ TEST_CASE("RS_Hatch keeps one set of pattern lines across updates and edits", "[
     edited->setSolid(true);
     edited->update();
     CHECK(patternLineDirections(*edited).empty());
+}
+
+TEST_CASE("RS_Hatch moments: open control-net spline lens is a valid loop",
+          "[lc-hatchfix][moments]") {
+    // Precondition for H08's hatch-moment pipeline: an open LC_SplinePoints
+    // built from a control net must report valid end points, so a closing
+    // chord can land on them. Before this fix the hatch was HATCH_INVALID_CONTOUR.
+    RS_Hatch hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+    auto* loop = new RS_EntityContainer(&hatch);
+    hatch.addEntity(loop);
+    LC_SplinePointsData sd(/*closed=*/false, /*cut=*/false);
+    sd.useControlPoints = true;
+    sd.controlPoints = {{9.0, 5.0}, {9.5, 6.2}, {10.5, 6.2}, {11.0, 5.0}};
+    auto* lens = new LC_SplinePoints(loop, std::move(sd));
+    loop->addEntity(lens);
+    loop->addEntity(new RS_Line(loop, RS_Vector(11.0, 5.0), RS_Vector(9.0, 5.0)));
+    hatch.update();
+    REQUIRE(hatch.getUpdateError() == RS_Hatch::HATCH_OK);
+    REQUIRE(hatch.getTotalArea() == Catch::Approx(1.6).epsilon(1e-12).margin(1e-12));
+}
+
+TEST_CASE("RS_FilterDXFRW: hatch with a degree-2 control-net spline edge is kept",
+          "[lc-hatchfix][moments]") {
+    // Before H08-1 the import of a DXF HATCH whose boundary edge is a degree-2
+    // control-net SPLINE emitted "no loops generated" and deleted the hatch.
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::QuietLog quiet;
+
+    RS_Graphic g;
+    REQUIRE(lc::test::importDrawing(
+        g,
+        std::filesystem::path(LIBRECAD_TEST_DIR) / "dxf" /
+            "hatch_moments_spline_lens_10_5.dxf",
+        RS2::FormatDXFRW));
+
+    RS_Hatch* hatch = nullptr;
+    int count = 0;
+    for (RS_Entity* e :
+         lc::LC_ContainerTraverser{g, RS2::ResolveAll}.entities()) {
+        if (e && e->rtti() == RS2::EntityHatch) {
+            ++count;
+            if (!hatch) hatch = static_cast<RS_Hatch*>(e);
+        }
+    }
+    REQUIRE(count == 1);
+    REQUIRE(hatch != nullptr);
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    REQUIRE(hatch->getTotalArea() ==
+            Catch::Approx(1.6).epsilon(1e-10).margin(1e-10));
 }
 
 TEST_CASE("RS_Hatch area: left-branch hyperbola segment (#2559)",

@@ -641,11 +641,13 @@ RS_Vector LC_SplinePoints::getStartpoint() const {
     }
 
     const std::vector<RS_Vector>& pts = getPoints();
-    const size_t iCount = pts.size();
-    if (iCount < 1) {
-        return RS_Vector(false);
+    if (!pts.empty()) {
+        return pts.front();
     }
-    return pts.at(0);
+    // An open spline built from a control net (useControlPoints, no fit points)
+    // passes through its first and last control points, so those are its ends.
+    return m_data.controlPoints.empty() ? RS_Vector(false)
+                                        : m_data.controlPoints.front();
 }
 
 /** @return End point of the entity */
@@ -655,9 +657,11 @@ RS_Vector LC_SplinePoints::getEndpoint() const {
     }
 
     const std::vector<RS_Vector>& pts = getPoints();
-    const size_t iCount = pts.size();
-
-    return (iCount < 1) ? RS_Vector{false} : pts.at(iCount - 1);
+    if (!pts.empty()) {
+        return pts.back();
+    }
+    return m_data.controlPoints.empty() ? RS_Vector(false)
+                                        : m_data.controlPoints.back();
 }
 
 RS_Vector LC_SplinePoints::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
