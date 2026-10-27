@@ -56,14 +56,6 @@ struct LC_FirstMoment {
     LC_FirstMoment operator-() const { return {-mx, -my}; }
 
     /**
-     * @brief Shift origin to new point (new_x = old_x - dx, new_y = old_y - dy)
-     *        using the exact transformation for first moments.
-     */
-    LC_FirstMoment shifted(double dx, double dy, double area) const {
-        return {mx - area * dx, my - area * dy};
-    }
-
-    /**
      * @brief Rotate the first-moment vector by angle θ (radians, counterclockwise).
      */
     LC_FirstMoment rotated(double theta) const {
@@ -109,28 +101,8 @@ struct LC_SecondMoment {
     LC_SecondMoment operator-() const { return {-ixx, -iyy, -ixy}; }
 
     /**
-     * @brief Shift origin to new point using the parallel-axis theorem.
-     *
-     * FIXME: This formula is wrong for the documented `ixx = ∬x²dA` /
-     * `iyy = ∬y²dA` convention. The correct parallel-axis shift for ixx is
-     * `+area*dx*dx`, not `+area*dy*dy` (and vice versa for iyy). This
-     * matches `getCentral` below, which uses the right formula. New callers
-     * should NOT use `shifted`; perform the shift inline (see
-     * `LC_Hyperbola::firstMomentLineIntegral` for an example). Existing
-     * callers (RS_Ellipse arc moments, lc_parabola) are deferred — they
-     * have the same bug and will be fixed in a follow-up that swaps the
-     * formula here and audits all callers together.
-     */
-    LC_SecondMoment shifted(double dx, double dy, double area) const {
-        return {
-            ixx + area * dy * dy,
-            iyy + area * dx * dx,
-            ixy + area * dx * dy
-        };
-    }
-
-    /**
-     * @brief Rotate the second-moment tensor by angle θ (radians, counterclockwise).
+     * @brief Legacy rotation: turns by -theta. Kept while deprecated callers
+     *        exist; new code should use regionRotated(theta) instead.
      */
     LC_SecondMoment rotated(double theta) const {
         const double c  = std::cos(theta);
@@ -146,6 +118,27 @@ struct LC_SecondMoment {
     }
 
     /**
+     * @brief R(theta)*M*R(theta)^T: the tensor of a closed region turned
+     *        counter-clockwise by theta about the origin. This is the
+     *        companion to LC_FirstMoment::rotated, which also turns by
+     *        +theta. Use this on hatch moments mapped from the loop frame
+     *        back to WCS; do not use rotated() for that purpose (it turns
+     *        the tensor by -theta).
+     */
+    LC_SecondMoment regionRotated(double theta) const {
+        const double c  = std::cos(theta);
+        const double s  = std::sin(theta);
+        const double cc = c * c;
+        const double ss = s * s;
+        const double cs = c * s;
+        return {
+            cc * ixx - 2.0 * cs * ixy + ss * iyy,
+            ss * ixx + 2.0 * cs * ixy + cc * iyy,
+            cs * (ixx - iyy) + (cc - ss) * ixy
+        };
+    }
+
+    /**
      * @brief Convert raw second moments (about global origin) to central moments.
      */
     LC_SecondMoment getCentral(double area, double cx, double cy) const {
@@ -154,6 +147,72 @@ struct LC_SecondMoment {
             iyy - area * cy * cy,
             ixy - area * cx * cy
         };
+    }
+};
+
+/**
+ * @brief Area and raw first/second moments of a 2D region, bundled together.
+ *
+ * Returned by the Green's-theorem line integrals of (P − origin) summed around
+ * a closed loop. The three members hold ∬1, (∬x, ∬y) and (∬x², ∬y², ∬xy) in
+ * the WCS translated so that `origin` is at (0, 0). Loop code sums one such
+ * object per edge; the regionTranslated/regionRotated helpers map a *closed*
+ * region's moments to a different origin or frame.
+ */
+struct LC_AreaMoments {
+    double area = 0.0;
+    LC_FirstMoment first;
+    LC_SecondMoment second;
+
+    LC_AreaMoments& operator+=(const LC_AreaMoments& o) {
+        area += o.area;
+        first += o.first;
+        second += o.second;
+        return *this;
+    }
+    LC_AreaMoments& operator-=(const LC_AreaMoments& o) {
+        area -= o.area;
+        first -= o.first;
+        second -= o.second;
+        return *this;
+    }
+    LC_AreaMoments operator+(const LC_AreaMoments& o) const {
+        return {area + o.area, first + o.first, second + o.second};
+    }
+    LC_AreaMoments operator-(const LC_AreaMoments& o) const {
+        return {area - o.area, first - o.first, second - o.second};
+    }
+    LC_AreaMoments operator-() const { return {-area, -first, -second}; }
+
+    /**
+     * @brief Translate a *closed* region's moments: new_x = old_x + h,
+     *        new_y = old_y + k. For an open contour this transform does not
+     *        hold; sum the per-edge momentLineIntegrals around the loop first.
+     *
+     *   mx' = mx + h·A, my' = my + k·A
+     *   Ixx' = Ixx + 2h·mx + h²·A
+     *   Iyy' = Iyy + 2k·my + k²·A
+     *   Ixy' = Ixy + h·my + k·mx + h·k·A
+     */
+    LC_AreaMoments regionTranslated(double h, double k) const {
+        LC_AreaMoments out;
+        out.area = area;
+        out.first.mx = first.mx + h * area;
+        out.first.my = first.my + k * area;
+        out.second.ixx = second.ixx + 2.0 * h * first.mx + h * h * area;
+        out.second.iyy = second.iyy + 2.0 * k * first.my + k * k * area;
+        out.second.ixy = second.ixy + h * first.my + k * first.mx + h * k * area;
+        return out;
+    }
+
+    /**
+     * @brief Rotate a *closed* region's moments by +theta (counter-clockwise)
+     *        about the current origin. The area is invariant, the first moment
+     *        rotates as a vector, and the second-moment tensor transforms as
+     *        R·M·R^T; this is the companion of LC_FirstMoment::rotated.
+     */
+    LC_AreaMoments regionRotated(double theta) const {
+        return {area, first.rotated(theta), second.regionRotated(theta)};
     }
 };
 

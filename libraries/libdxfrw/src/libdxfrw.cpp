@@ -4024,7 +4024,7 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
         writer->writeInt16(75, ent->hstyle);
         writer->writeInt16(76, ent->hpattern);
         if (!ent->solid){
-            writer->writeDouble(52, ent->angle);
+            writer->writeDouble(52, ent->angle * ARAD);
             writer->writeDouble(41, ent->scale);
             writer->writeInt16(77, ent->doubleflag);
         }
@@ -4032,7 +4032,7 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
         const int nDefLines = static_cast<int>(ent->patternLines.size());
         writer->writeInt16(78, nDefLines);
         for (const DRW_Hatch::PatternLine &pl : ent->patternLines) {
-            writer->writeDouble(53, pl.angle);
+            writer->writeDouble(53, pl.angle * ARAD);
             writer->writeDouble(43, pl.baseX);
             writer->writeDouble(44, pl.baseY);
             writer->writeDouble(45, pl.offsetX);
@@ -4138,13 +4138,13 @@ bool dxfRW::writeMPolygon(DRW_MPolygon *ent){
         }
         writer->writeInt16(76, ent->hpattern);
         if (!ent->solid) {
-            writer->writeDouble(52, ent->angle);
+            writer->writeDouble(52, ent->angle * ARAD);
             writer->writeDouble(41, ent->scale);
             writer->writeInt16(77, ent->doubleflag);
             const int nDefLines = static_cast<int>(ent->patternLines.size());
             writer->writeInt16(78, nDefLines);
             for (const DRW_Hatch::PatternLine &pl : ent->patternLines) {
-                writer->writeDouble(53, pl.angle);
+                writer->writeDouble(53, pl.angle * ARAD);
                 writer->writeDouble(43, pl.baseX);
                 writer->writeDouble(44, pl.baseY);
                 writer->writeDouble(45, pl.offsetX);

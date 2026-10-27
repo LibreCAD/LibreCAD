@@ -133,7 +133,14 @@ public:
     void setScale(const double scale) { m_data.scale = scale; }
 
     double getAngle() const { return m_data.angle; }
-    void setAngle(const double angle) { m_data.angle = angle; m_needOptimization = true; }
+    /// Stores the angle normalised to [0, 2 pi), matching rotate() and
+    /// mirror() so a negative input and 2 pi + x behave the same as the
+    /// transform that would produce it.
+    void setAngle(double angle);
+
+    /// The per-hatch ε cached by the last successful validate(). Zero
+    /// before validate() has run or after a failed validate().
+    double getTolerance() const { return m_tolerance; }
 
     /**
      * @return Total enclosed area (0th moment) of loops.
@@ -141,16 +148,14 @@ public:
     double getTotalArea() const;
 
     /**
-     * @return Centroid of the hatch region as (cx, cy) = (∬ x dA / A, ∬ y dA / A).
+     * @return Centroid of the hatch region in WCS, (cx, cy) = (∬x dA/A, ∬y dA/A).
      * Returns an invalid RS_Vector if area is zero or update() has not run.
      */
     RS_Vector getCentroid() const;
 
     /**
-     * @brief getMomentOfInertia - the three second central moments of area for the
-     * hatch region, computed via Green's theorem line integrals about the centroid.
-     *
-     * Returns LC_SecondMoment{ixx, iyy, ixy} where:
+     * @brief getMomentOfInertia - the three second central moments of area
+     * for the hatch region in WCS axes, about the centroid:
      *   ixx = ∬ (x - cx)² dA,   iyy = ∬ (y - cy)² dA,   ixy = ∬ (x-cx)(y-cy) dA
      *
      * The full inertia tensor about the centroid is:
@@ -193,6 +198,14 @@ public:
 
 protected:
     RS_HatchData m_data;
+    /**
+     * Distance from `coord` (in WCS) to the hatch region. For a pattern hatch
+     * the cached loops live in the frame rotated by -m_loopAngle about
+     * m_pivot (see validate()); the query is mapped forward with the stored
+     * pair so picking agrees with what is drawn, at every angle. Returns 0 if
+     * the query is inside and RS_MAXDOUBLE otherwise. The out-parameter
+     * `entity` is set to `this` on a hit.
+     */
     double doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, RS2::ResolveLevel level, double solidDist) const override;
 private:
     void drawPatternLines(RS_Painter* painter) const;
@@ -200,14 +213,29 @@ private:
     void updatePatternHatch(RS_Layer* layer, const RS_Pen& pen);
     void updateSolidHatch(RS_Layer* layer, const RS_Pen& pen) const;
     mutable double m_area = RS_MAXDOUBLE;
-    mutable LC_FirstMoment m_firstMoment;
-    mutable LC_SecondMoment m_secondMoment;
+    /// WCS centroid of the hatch region, mapped from the loop frame through
+    /// (m_pivot, m_loopAngle); set by update() after a successful validate().
+    mutable RS_Vector m_centroid{false};
+    /// Central second-moment tensor about m_centroid, in WCS axes.
+    mutable LC_SecondMoment m_centralMoment;
     mutable bool m_secondMomentValid = false;
     RS_HatchError m_updateError = HATCH_UNDEFINED;
     bool m_updateRunning = false;
     bool m_needOptimization = true;
     bool m_updated = false;
     mutable std::shared_ptr<std::vector<LC_LoopUtils::LC_Loops>> m_orderedLoops;
+    // The frame of m_orderedLoops: validate() rotated the loops by -m_loopAngle about m_pivot.
+    RS_Vector m_pivot{0.0, 0.0};  ///< WCS centre of the combined bbox of the loop containers.
+    double m_loopAngle = 0.0;     ///< isSolid() ? 0 : m_data.angle at the last successful validate().
+    double m_tolerance = 0.0;     ///< Per-hatch ε cached by validate().
+
+    /**
+     * The hatch's lattice origin in WCS. Every root uses one lattice through
+     * this point; the pattern's minimum corner is placed on every lattice
+     * point anchor + (i*W, k*H). Fixed at (0, 0) on 2.2.2 (D30); H18 makes
+     * this read a stored, transform-tracked origin.
+     */
+    RS_Vector latticeOrigin() const { return RS_Vector{0.0, 0.0}; }
 
     // Internal: Vector of boundary subcontainers (one per loop, recursive)
     mutable std::vector<std::shared_ptr<RS_EntityContainer>> m_boundaryContainers;

@@ -523,6 +523,7 @@ HEADERS += \
     lib/engine/document/views/lc_viewslist.h \
     lib/engine/document/entities/lc_cachedlengthentity.h \
     lib/engine/overlays/crosshair/lc_crosshair.h \
+    lib/engine/document/container/lc_loopclassifier.h \
     lib/engine/document/container/lc_looputils.h \
     lib/engine/document/entities/lc_parabola.h \
     lib/engine/overlays/references/lc_refarc.h \
@@ -600,6 +601,7 @@ HEADERS += \
     lib/engine/document/entities/rs_spline.h \
     lib/engine/document/entities/lc_splinepoints.h \
     lib/engine/document/entities/lc_secondmoment.h \
+    lib/engine/document/entities/lc_momentquadrature.h \
     lib/engine/rs_system.h \
     lib/engine/document/entities/rs_text.h \
     lib/engine/undo/lc_undoablerelzero.h \
@@ -1216,6 +1218,7 @@ SOURCES += \
     lib/engine/document/views/lc_viewslist.cpp \
     lib/engine/document/entities/lc_cachedlengthentity.cpp \
     lib/engine/overlays/crosshair/lc_crosshair.cpp \
+    lib/engine/document/container/lc_loopclassifier.cpp \
     lib/engine/document/container/lc_looputils.cpp \
     lib/engine/document/entities/lc_parabola.cpp \
     lib/engine/overlays/references/lc_refarc.cpp \
@@ -1275,6 +1278,7 @@ SOURCES += \
     lib/engine/document/entities/rs_solid.cpp \
     lib/engine/document/entities/rs_spline.cpp \
     lib/engine/document/entities/lc_splinepoints.cpp \
+    lib/engine/document/entities/lc_momentquadrature.cpp \
     lib/engine/rs_system.cpp \
     lib/engine/document/entities/rs_text.cpp \
     lib/engine/undo/rs_undo.cpp \

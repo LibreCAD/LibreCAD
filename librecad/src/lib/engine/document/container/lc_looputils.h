@@ -29,8 +29,9 @@
 #include <memory>
 #include <vector>
 
-#include "rs_entitycontainer.h"
+#include "lc_loopclassifier.h"
 #include "lc_secondmoment.h"
+#include "rs_entitycontainer.h"
 
 class QPainterPath;
 class RS_AtomicEntity;
@@ -101,9 +102,23 @@ public:
   /**
    * @brief Trims pattern entities to the boundaries of this loop hierarchy.
    * @param pattern The pattern to trim.
+   * @param latticeAnchor A lattice point in this tree's frame; the pattern's
+   *        minimum corner is placed on every lattice point
+   *        anchor + (i*W, k*H).
    * @return Unique pointer to a container of trimmed entities.
    */
-  std::unique_ptr<RS_EntityContainer> trimPatternEntities(const RS_Pattern& pattern) const;
+  std::unique_ptr<RS_EntityContainer> trimPatternEntities(const RS_Pattern& pattern,
+                                                          const RS_Vector& latticeAnchor) const;
+  /**
+   * @brief Generates tile offsets for pattern repetition over this loop
+   * hierarchy's bounding box, anchored at latticeAnchor.
+   *
+   * Tile indices are half-open [floor((bbMin - a)/P), ceil((bbMax - a)/P));
+   * every tile whose rect intersects the bounding box and either overlaps the
+   * loop or contains the pattern's centre is kept. H10/H11 may use this.
+   */
+  std::vector<RS_Vector> createTiles(const RS_Pattern& pattern,
+                                     const RS_Vector& latticeAnchor) const;
   /**
    * @brief Computes the total area of this loop, adding islands and subtracting holes.
    * @return The net area as a double.
@@ -151,6 +166,30 @@ public:
   const std::vector<LC_Loops>& getChildren() const {
     return m_children;
   }
+
+  /**
+   * @brief Attaches the loop's precomputed geometry and the per-hatch
+   * tolerance epsOn used for the ON band of classify().
+   */
+  void setGeometry(std::shared_ptr<const LoopGeometry> geometry, double eps);
+
+  /** @brief The per-hatch tolerance stored in setGeometry(). */
+  double tolerance() const { return m_eps; }
+
+  /**
+   * @brief Lazy accessor for this node's own loop geometry. If setGeometry()
+   * has not been called, the geometry is built from the current loop with the
+   * tolerance last set (or hatchTolerance of the loop's bbox).
+   */
+  const LoopGeometry& geometry() const;
+
+  /**
+   * @brief Classifies a point against this tree. Returns On when the point
+   * sits within tolerance() of any edge in this node or any descendant,
+   * else the depth parity of the tree, each node's isInsideOuter() being
+   * exact oddParity on its own geometry.
+   */
+  PointClass classify(const RS_Vector& point) const;
 
 private:
   /**
@@ -238,15 +277,23 @@ private:
    * @return True if closed.
    */
   bool isEntityClosed(const RS_Entity* e) const;
-  /**
-   * @brief Creates tile offsets for a pattern within the bounding box.
-   * @param pattern The pattern.
-   * @return Vector of tile offsets.
-   */
-  std::vector<RS_Vector> createTiles(const RS_Pattern& pattern) const;
 
   std::shared_ptr<RS_EntityContainer> m_loop;  ///< Outer loop container
   std::vector<LC_Loops> m_children;             ///< Child loops (holes/islands)
+  mutable std::shared_ptr<const LoopGeometry> m_geometry;  ///< Lazily built
+  mutable double m_eps = 0.0;                    ///< Per-hatch ON tolerance
+};
+
+/**
+ * A single extracted loop in traversal order, plus the vertex table used by
+ * the half-open monotone classifier. vertices[i] is the start point of edge
+ * i; vertexIds is reserved for later id-based attach/splitting support and
+ * is empty here.
+ */
+struct ExtractedLoop {
+  std::unique_ptr<RS_EntityContainer> edges;
+  std::vector<RS_Vector> vertices;
+  std::vector<int> vertexIds;
 };
 
 /**
@@ -286,6 +333,14 @@ public:
   ~LoopExtractor();
 
   /**
+   * @brief Extracts all closed loops from the edges, with each loop paired
+   * with its traversal-order start-of-edge vertex table. For a loop made of
+   * a single closed atomic entity (circle, full ellipse, closed spline) the
+   * vertex table is empty.
+   */
+  std::vector<ExtractedLoop> extractLoops() const;
+
+  /**
    * @brief Extracts all closed loops from the edges.
    * @return Vector of unique_ptr to loop containers.
    */
@@ -300,10 +355,26 @@ private:
   bool validate() const;
 
   /**
-   * @brief Finds the first edge to start a loop.
-   * @return Starting entity or nullptr.
+   * @brief The result of findFirst: the chosen edge, plus the reverse flag
+   * that extractLoops() uses to call revertDirection() on the clone when the
+   * edge needs to be walked backwards for CCW traversal.
    */
-  RS_Entity* findFirst() const;
+  struct FirstEdge {
+    RS_Entity* edge = nullptr;
+    bool reverse = false;
+  };
+
+  /**
+   * @brief Finds the first edge to start a loop.
+   *
+   * Deterministic: picks the lexicographically smallest point among the
+   * leftmostPoint() of every unprocessed edge (ties by stored container
+   * index). If that point is interior to the chosen edge, the reverse flag
+   * says whether the stored traversal walks away in -y; otherwise the point
+   * is a vertex and candidates attached there are compared by the CCW angle
+   * from -y.
+   */
+  FirstEdge findFirst() const;
 
   /**
    * @brief Finds the next connected edge in the loop.
@@ -346,7 +417,19 @@ private:
  */
 class LoopSorter {
 public:
+  /**
+   * @brief Legacy ctor. Builds a per-loop vertex table from each container's
+   * edges' start points and uses a per-hatch tolerance taken from the union
+   * bbox and the edges' end points. New callers pass the vertex tables and
+   * tolerance in through the ExtractedLoop/eps overload.
+   */
   LoopSorter(std::vector<std::unique_ptr<RS_EntityContainer>> loops);
+
+  /**
+   * @brief Builds the hierarchy over per-container clones that already carry
+   * their vertex tables and the per-hatch ON band tolerance.
+   */
+  LoopSorter(std::vector<ExtractedLoop> loops, double eps);
   ~LoopSorter();
 
   struct AreaPredicate;  // Sorts by ascending absolute area (small to large), ties by bounding box diagonal
@@ -363,11 +446,16 @@ private:
    */
   void sortAndBuild();
   /**
-   * @brief Finds and assigns the parent for a loop.
-   * @param loop The child loop.
-   * @param sorted Sorted list of all loops.
+   * @brief Finds the smallest-area parent of the loop at index child among the
+   * full sorted list of all loops.
+   *
+   * The search walks every loop in ascending (|area|, loopIndex) order and
+   * accepts the first candidate whose bounding box contains the child's with
+   * an epsilon slack and whose interior lemma point (chosen on the child's
+   * geometry) has odd parity against the candidate. Duplicate-area loops
+   * resolve by extraction-order index: the lower index parents the higher.
    */
-  void findParent(RS_EntityContainer* loop, const std::multimap<double, RS_EntityContainer*>& sorted);
+  void findParent(std::size_t child);
   /**
    * @brief Converts a forest of containers to LC_Loops trees.
    * @param forest Vector of root containers.

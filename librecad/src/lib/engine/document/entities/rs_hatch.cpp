@@ -28,14 +28,20 @@
 
 #include <QPainterPath>
 #include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <memory>
-#include <set>
+#include <unordered_set>
 #include <vector>
 
 #include "lc_containertraverser.h"
+#include "lc_loopclassifier.h"
 #include "lc_looputils.h"
+#include "lc_splinepoints.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
 #include "rs_debug.h"
+#include "rs_ellipse.h"
 #include "rs_information.h"
 #include "rs_math.h"
 #include "rs_painter.h"
@@ -44,16 +50,35 @@
 #include "rs_pen.h"
 
 namespace {
-// Removes zero-length entities from the container
-void avoidZeroLength(std::set<RS_Entity*>& container) {
-    std::set<RS_Entity*> toCleanUp;
-    for (RS_Entity* e : container) {
-        if (e != nullptr && RS_Math::equal(e->getLength(), 0.)) {
-            toCleanUp.insert(e);
-        }
+
+// Removes zero-length entities from the vector in place.
+void avoidZeroLength(std::vector<RS_Entity*>& container) {
+    container.erase(std::remove_if(container.begin(), container.end(),
+                                   [](RS_Entity* e) {
+                                       return e != nullptr && RS_Math::equal(e->getLength(), 0.);
+                                   }),
+                    container.end());
+}
+
+/** True if entity is a closed atomic curve with no valid vertex endpoints. */
+bool isClosedAtomic(const RS_Entity& e) {
+    switch (e.rtti()) {
+    case RS2::EntityCircle:
+        return true;
+    case RS2::EntityEllipse: {
+        const auto& ell = static_cast<const RS_Ellipse&>(e);
+        return !ell.isArc() || std::abs(ell.getAngleLength() - 2.0 * M_PI) < RS_TOLERANCE_ANGLE;
     }
-    for (RS_Entity* e : toCleanUp) {
-        container.erase(e);
+    case RS2::EntityArc: {
+        const auto& arc = static_cast<const RS_Arc&>(e);
+        return std::abs(arc.getAngleLength() - 2.0 * M_PI) < RS_TOLERANCE_ANGLE;
+    }
+    case RS2::EntitySplinePoints: {
+        const auto& sp = static_cast<const LC_SplinePoints&>(e);
+        return sp.isClosed();
+    }
+    default:
+        return false;
     }
 }
 
@@ -108,7 +133,8 @@ RS_Entity* RS_Hatch::clone() const {
     // Force re-optimization and update to deep-copy caches and subcontainers
     cloneHatch->m_needOptimization = true;
     cloneHatch->m_area = RS_MAXDOUBLE;
-    cloneHatch->m_firstMoment = LC_FirstMoment{};
+    cloneHatch->m_centroid = RS_Vector(false);
+    cloneHatch->m_centralMoment = {};
     cloneHatch->m_secondMomentValid = false;
     cloneHatch->m_updated = false;
     cloneHatch->m_boundaryContainers.clear();  // Will be regenerated
@@ -137,35 +163,38 @@ bool RS_Hatch::validate() {
         setOwner(true);
         std::copy(loops.begin(), loops.end(), std::back_inserter(*this));
 
-        // Compute the combined bounding box of all boundary edges (for the
-        // pattern-rotation centre, which must be the same for every container
-        // so that all loops rotate into the same axis-aligned frame).
-        RS_Vector bbMin(RS_MAXDOUBLE, RS_MAXDOUBLE);
-        RS_Vector bbMax(-RS_MAXDOUBLE, -RS_MAXDOUBLE);
+        // Pre-pass: pre-rotation bbox for the pattern rotation centre, which
+        // must be the same for every container so that all loops rotate into
+        // the same axis-aligned frame.
+        RS_Vector preMin(RS_MAXDOUBLE, RS_MAXDOUBLE);
+        RS_Vector preMax(-RS_MAXDOUBLE, -RS_MAXDOUBLE);
         for (RS_Entity *en : loops) {
           auto *cont = static_cast<RS_EntityContainer *>(en);
           cont->forcedCalculateBorders();
-          bbMin.x = std::min(bbMin.x, cont->getMin().x);
-          bbMin.y = std::min(bbMin.y, cont->getMin().y);
-          bbMax.x = std::max(bbMax.x, cont->getMax().x);
-          bbMax.y = std::max(bbMax.y, cont->getMax().y);
+          preMin.x = std::min(preMin.x, cont->getMin().x);
+          preMin.y = std::min(preMin.y, cont->getMin().y);
+          preMax.x = std::max(preMax.x, cont->getMax().x);
+          preMax.y = std::max(preMax.y, cont->getMax().y);
         }
-        const RS_Vector rotCenter = (bbMin + bbMax) * 0.5;
+        const RS_Vector rotCenter = (preMin + preMax) * 0.5;
 
-        // Process each DWG boundary loop container through LoopExtractor
-        // independently.  Merging all loops into one flat container before
-        // extraction causes cross-contamination at shared corner points
-        // (common in architectural drawings), creating spurious zero-area
-        // paths that consume edge references and silently discard real loops.
-        std::vector<std::unique_ptr<RS_EntityContainer>> allExtracted;
-
+        // Pass 1: per-container clone+rotate, accumulate the post-rotation
+        // bbox D and the endpoint extremum M for the per-hatch tolerance.
+        // Closed atomic curves (circle, full ellipse, closed spline) have
+        // no valid vertex endpoints; include their finite bbox extrema in M.
+        std::vector<std::unique_ptr<RS_EntityContainer>> perContainerClones;
+        RS_Vector bbMin(RS_MAXDOUBLE, RS_MAXDOUBLE);
+        RS_Vector bbMax(-RS_MAXDOUBLE, -RS_MAXDOUBLE);
+        double maxAbsCoord = 0.0;
         for (RS_Entity *en : loops) {
-          std::set<RS_Entity *> edges;
+          std::vector<RS_Entity *> edges;
+          std::unordered_set<const RS_Entity *> seen;
           lc::LC_ContainerTraverser traverser{
               *static_cast<RS_EntityContainer *>(en), RS2::ResolveAll};
           for (RS_Entity *entity : traverser.entities()) {
-            if (entity != nullptr && entity->isAtomic())
-              edges.insert(entity);
+            if (entity != nullptr && entity->isAtomic() && seen.insert(entity).second) {
+              edges.push_back(entity);
+            }
           }
           avoidZeroLength(edges);
           if (edges.empty())
@@ -173,30 +202,65 @@ bool RS_Hatch::validate() {
 
           // A clone keeps its source's parent and layer, and so does every clone
           // made of it, down to the cached loops. Those outlive both: drop them.
-          RS_EntityContainer perLoopCont{nullptr, true};
+          auto perLoopCont = std::make_unique<RS_EntityContainer>(nullptr, true);
           for (RS_Entity *e : edges) {
             RS_Entity *edge = e->clone();
             edge->setParent(nullptr);
             edge->setLayer(nullptr);
-            perLoopCont.addEntity(edge);
+            perLoopCont->addEntity(edge);
           }
 
           // For pattern hatches apply the rotation before extraction so the
           // extracted loop coordinates are in the axis-aligned tiling frame.
           if (!isSolid())
-            perLoopCont.rotate(rotCenter, -m_data.angle);
+            perLoopCont->rotate(rotCenter, -m_data.angle);
+          perLoopCont->forcedCalculateBorders();
 
-          LC_LoopUtils::LoopExtractor extractor{perLoopCont};
-          auto extracted = extractor.extract();
-          for (auto &loop : extracted)
-            allExtracted.push_back(std::move(loop));
+          bbMin.x = std::min(bbMin.x, perLoopCont->getMin().x);
+          bbMin.y = std::min(bbMin.y, perLoopCont->getMin().y);
+          bbMax.x = std::max(bbMax.x, perLoopCont->getMax().x);
+          bbMax.y = std::max(bbMax.y, perLoopCont->getMax().y);
+
+          for (RS_Entity *e : *perLoopCont) {
+            if (e == nullptr) continue;
+            if (isClosedAtomic(*e)) {
+              const RS_Vector mn = e->getMin();
+              const RS_Vector mx = e->getMax();
+              maxAbsCoord = std::max({maxAbsCoord,
+                                      std::abs(mn.x), std::abs(mn.y),
+                                      std::abs(mx.x), std::abs(mx.y)});
+            } else {
+              const RS_Vector s = e->getStartpoint();
+              const RS_Vector t = e->getEndpoint();
+              maxAbsCoord = std::max({maxAbsCoord,
+                                      std::abs(s.x), std::abs(s.y),
+                                      std::abs(t.x), std::abs(t.y)});
+            }
+          }
+
+          perContainerClones.push_back(std::move(perLoopCont));
+        }
+
+        const double diagonal = (perContainerClones.empty())
+                                   ? 0.0
+                                   : (bbMax - bbMin).magnitude();
+        const double tolerance = LC_LoopUtils::hatchTolerance(diagonal, maxAbsCoord);
+
+        // Pass 2: extract each container's loops with their vertex tables,
+        // and run them through the geometry-aware LoopSorter.
+        std::vector<LC_LoopUtils::ExtractedLoop> allExtracted;
+        for (auto &cont : perContainerClones) {
+          LC_LoopUtils::LoopExtractor extractor{*cont};
+          auto extracted = extractor.extractLoops();
+          for (auto &el : extracted)
+            allExtracted.push_back(std::move(el));
         }
 
         if (allExtracted.empty())
           throw std::runtime_error(
               "Loop optimization failed: no loops generated");
 
-        LC_LoopUtils::LoopSorter sorter{std::move(allExtracted)};
+        LC_LoopUtils::LoopSorter sorter{std::move(allExtracted), tolerance};
         auto results = sorter.getResults();
 
         if (!results || results->empty()) {
@@ -204,6 +268,12 @@ bool RS_Hatch::validate() {
         }
 
         m_orderedLoops = results;
+        // Remember the frame of m_orderedLoops: validate() rotated by
+        // -m_data.angle about rotCenter. H02's lattice anchor is mapped
+        // through this stored pair, and H04/H07/H08 read them too.
+        m_pivot = rotCenter;
+        m_loopAngle = isSolid() ? 0.0 : m_data.angle;
+        m_tolerance = tolerance;
         m_needOptimization = false;
 
         // Collect all loops (outer + holes) into flat boundary container list
@@ -315,14 +385,28 @@ void RS_Hatch::update() {
         updatePatternHatch(layer, pen);
     }
 
-    // Compute 0th, 1st, and 2nd moments from loops
+    // Compute 0th, 1st, and 2nd moments from loops. The loops live in the
+    // frame rotated by -m_loopAngle about m_pivot; map the centroid and the
+    // central tensor back to WCS once their frame-local values are known.
     m_area = 0.0;
-    m_firstMoment = LC_FirstMoment{};
-    m_secondMoment = LC_SecondMoment{};
+    LC_FirstMoment first;    // raw first moment of the loop frame about (0, 0)
+    LC_SecondMoment second;  // raw second moment of the loop frame about (0, 0)
     for (const auto& loop : *m_orderedLoops) {
-        m_area         += loop.getTotalArea();
-        m_firstMoment  += loop.getTotalFirstMoment();
-        m_secondMoment += loop.getTotalSecondMoment();
+        m_area += loop.getTotalArea();
+        first  += loop.getTotalFirstMoment();
+        second += loop.getTotalSecondMoment();
+    }
+    m_centroid = RS_Vector(false);
+    m_centralMoment = {};
+    if (m_area >= RS_TOLERANCE) {
+        RS_Vector centroid{first.mx / m_area, first.my / m_area};
+        LC_SecondMoment central = second.getCentral(m_area, centroid.x, centroid.y);
+        if (m_loopAngle != 0.0) {
+            centroid.rotate(m_pivot, m_loopAngle);
+            central = central.regionRotated(m_loopAngle);
+        }
+        m_centroid = centroid;
+        m_centralMoment = central;
     }
     m_secondMomentValid = true;
 
@@ -393,20 +477,25 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
         return;
     }
 
-    // The contour was optimized in a frame rotated by -data.angle (see validate()).
-    // Rotate the trimmed pattern lines back to WCS by +data.angle.
-    const RS_Vector center = (getMin() + getMax()) * 0.5;
-    const RS_Vector rotationVector{m_data.angle};
+    // The contour was optimized in a frame rotated by -m_loopAngle about
+    // m_pivot (see validate()). The lattice anchor is one WCS point (A9/D30:
+    // latticeOrigin() = (0, 0)) mapped into that frame; every root uses it,
+    // so two roots of one hatch share the WCS phase and a non-lattice move of
+    // the boundary does not drag the pattern. The trimmed pieces are rotated
+    // back to WCS by +m_loopAngle about the same m_pivot.
+    RS_Vector anchor = latticeOrigin();
+    anchor.rotate(m_pivot, RS_Vector{-m_loopAngle});
+    const RS_Vector rotationVector{m_loopAngle};
     int addedCount = 0;
     for (size_t i = 0; i < m_orderedLoops->size(); ++i) {
         const auto& loop = (*m_orderedLoops)[i];
-        for (auto& owned : loop.trimPatternEntities(*pattern)->takeEntities()) {
+        for (auto& owned : loop.trimPatternEntities(*pattern, anchor)->takeEntities()) {
             RS_Entity* entity = owned.release();
             entity->setPen(pen);
             entity->setLayer(layer);
             entity->reparent(this);
             entity->setFlag(RS2::FlagHatchChild);
-            entity->rotate(center, rotationVector);
+            entity->rotate(m_pivot, rotationVector);
             addEntity(entity);
             ++addedCount;
         }
@@ -502,24 +591,29 @@ RS_Vector RS_Hatch::getCentroid() const {
     if (!m_secondMomentValid || m_area < RS_TOLERANCE) {
         return RS_Vector(false);
     }
-    return RS_Vector(m_firstMoment.mx / m_area, m_firstMoment.my / m_area);
+    return m_centroid;
 }
 
 LC_SecondMoment RS_Hatch::getMomentOfInertia() const {
     if (!m_secondMomentValid || m_area < RS_TOLERANCE) {
         return {};
     }
-    const double cx = m_firstMoment.mx / m_area;
-    const double cy = m_firstMoment.my / m_area;
-    return m_secondMoment.getCentral(m_area, cx, cy);
+    return m_centralMoment;
 }
 
 
 double RS_Hatch::doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity,
                                     [[maybe_unused]] RS2::ResolveLevel level, [[maybe_unused]] double solidDist) const{
+    // validate() cached the loops turned by -m_loopAngle about m_pivot: test
+    // the point in that frame so picking agrees with what is drawn at every
+    // angle. For solid hatches m_loopAngle is 0 and this is the identity.
+    RS_Vector query = coord;
+    if (m_loopAngle != 0.0) {
+        query.rotate(m_pivot, -m_loopAngle);
+    }
     // Check if point is on the solid fill/hatch
     for (const auto& loop : *m_orderedLoops) {
-        if (loop.isInside(coord)) {
+        if (loop.isInside(query)) {
             if (entity != nullptr) {
                 *entity = const_cast<RS_Hatch*>(this);
             }
@@ -527,6 +621,11 @@ double RS_Hatch::doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity
         }
     }
     return RS_MAXDOUBLE;
+}
+
+void RS_Hatch::setAngle(double angle) {
+    m_data.angle = RS_Math::correctAngle(angle);
+    m_needOptimization = true;
 }
 
 void RS_Hatch::move(const RS_Vector& offset) {

@@ -618,6 +618,23 @@ m0 x + m1 y + m2 =0
      * @return LC_SecondMoment containing the three line-integral contributions.
      */
     virtual LC_SecondMoment secondMomentLineIntegral() const;
+
+    /**
+     * @brief momentLineIntegrals - six Green's-theorem line integrals of
+     *        (P − origin), from the entity's start to its end, bundled into
+     *        the area, first and second moment accumulators of LC_AreaMoments.
+     *
+     * A closed atomic entity (full circle, whole ellipse) returns the moments
+     * of its region. Summed around a loop with one shared origin, the loop's
+     * area/centroid/tensor follow by LC_AreaMoments::getCentral and
+     * regionTranslated/regionRotated.
+     *
+     * Overriders in RS_Line/RS_Circle/RS_Arc/RS_Ellipse supply the stable
+     * closed forms or Gauss-Legendre quadrature. The default returns a
+     * zero-initialised LC_AreaMoments.
+     */
+    virtual LC_AreaMoments momentLineIntegrals(const RS_Vector& origin) const;
+
     /**
      * @brief trimmable, whether the entity type can be trimmed
      * @return true, for trimmable entity types

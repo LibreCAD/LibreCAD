@@ -186,9 +186,10 @@ RS_Hatch* makeAnnularRectHatch(double ox1, double oy1, double ox2, double oy2,
  *
  * Ownership: caller takes ownership of the returned pointer.
  */
-RS_Hatch* makeTriangleHatch(double b, double h)
+RS_Hatch* makeTriangleHatch(double b, double h,
+                            const RS_HatchData& data = RS_HatchData(true, 1.0, 0.0, "SOLID"))
 {
-    auto* hatch = new RS_Hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+    auto* hatch = new RS_Hatch(nullptr, data);
 
     auto* loop = new RS_EntityContainer(hatch);
     hatch->addEntity(loop);
@@ -296,20 +297,23 @@ RS_Hatch* makeFullEllipseHatch(double cx, double cy, double a, double b, double 
  *               For a=3,b=2: iyy_c = 3π − 64/(3π)
  *   ixy         = 0
  */
-RS_Hatch* makeHalfEllipseHatch(double a, double b)
+RS_Hatch* makeHalfEllipseHatch(double a, double b,
+                               RS_Vector center = RS_Vector(0.0, 0.0),
+                               double phi = 0.0)
 {
     auto* hatch = new RS_Hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
     auto* loop = new RS_EntityContainer(hatch);
     hatch->addEntity(loop);
+    const RS_Vector majorP(a * std::cos(phi), a * std::sin(phi));
     RS_EllipseData ed;
-    ed.center  = RS_Vector(0.0, 0.0);
-    ed.majorP  = RS_Vector(a, 0.0);
+    ed.center  = center;
+    ed.majorP  = majorP;
     ed.ratio   = b / a;
     ed.angle1  = 0.0;
     ed.angle2  = M_PI;
     ed.reversed = false;
     loop->addEntity(new RS_Ellipse(loop, ed));
-    loop->addEntity(new RS_Line(loop, RS_Vector(-a, 0.0), RS_Vector(a, 0.0)));
+    loop->addEntity(new RS_Line(loop, center - majorP, center + majorP));
     hatch->update();
     return hatch;
 }
@@ -332,7 +336,7 @@ RS_Hatch* makeHalfEllipseHatch(double a, double b)
  *   ixx = iyy   = 31/140
  *   ixy         = 0
  */
-RS_Hatch* makeClosedSplineHatch()
+RS_Hatch* makeClosedSplineHatch(RS_Vector center = RS_Vector(0.0, 0.0))
 {
     auto* hatch = new RS_Hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
     auto* loop = new RS_EntityContainer(hatch);
@@ -340,62 +344,17 @@ RS_Hatch* makeClosedSplineHatch()
     LC_SplinePointsData sd(true, false);
     sd.useControlPoints = true;
     sd.controlPoints = {
-        RS_Vector( 1.0,  0.0),
-        RS_Vector( 0.0,  1.0),
-        RS_Vector(-1.0,  0.0),
-        RS_Vector( 0.0, -1.0)
+        center + RS_Vector( 1.0,  0.0),
+        center + RS_Vector( 0.0,  1.0),
+        center + RS_Vector(-1.0,  0.0),
+        center + RS_Vector( 0.0, -1.0)
     };
     loop->addEntity(new LC_SplinePoints(loop, std::move(sd)));
     hatch->update();
     return hatch;
 }
 
-/**
- * Minimal painter rig for rendering tests.
- *
- * Coordinate system: 1 WCS unit = 1 pixel, y-axis flipped.
- *   screen_x = wcs_x
- *   screen_y = H - wcs_y
- *
- * Canvas is W×H pixels, filled with white.  Call draw() on an RS_Hatch with
- * a black pen and the interior pixels will be painted black.
- */
-struct TestPainter {
-    static constexpr int W = 256;
-    static constexpr int H = 256;
-
-    QImage           image{W, H, QImage::Format_RGB32};
-    LC_GraphicViewport viewport;
-    RS_Painter       painter;
-
-    TestPainter()
-        : painter(&image)
-    {
-        image.fill(Qt::white);
-        // factor = 1, offsets = 0 → 1:1 mapping, y-flipped
-        viewport.setSize(W, H);
-        viewport.justSetOffsetAndFactor(0, 0, 1.0);
-        painter.setViewPort(&viewport);
-
-        // Bounding rect covers the whole canvas (plus margin) so no arc segment
-        // is mistakenly clipped as "out of viewport" during path construction.
-        LC_Rect bounds{RS_Vector(-W, -H), RS_Vector(2 * W, 2 * H)};
-        painter.setWorldBoundingRect(bounds);
-
-        // Use black pen so drawSolidFill picks black as the fill colour.
-        painter.setPen(RS_Color(0, 0, 0));
-    }
-
-    /** True when the pixel at WCS (wcsX, wcsY) has been painted (non-white). */
-    bool filledAt(double wcsX, double wcsY) const {
-        const int px = static_cast<int>(std::round(wcsX));
-        const int py = static_cast<int>(std::round(H - wcsY));
-        if (px < 0 || px >= W || py < 0 || py >= H) {
-            return false;
-        }
-        return image.pixel(px, py) != qRgb(255, 255, 255);
-    }
-};
+using lc::test::TestPainter;
 
 } // anonymous namespace
 
@@ -1664,3 +1623,437 @@ TEST_CASE("RS_Hatch area: left-branch hyperbola segment (#2559)",
                 Catch::Approx(kExpected).margin(1e-12));
     }
 }
+
+// Regression: picking a rotated pattern hatch tested the WCS click against
+// the loops validate() had rotated by -angle, so a 30-degree ANSI31 hatch on
+// (0,0)-(10,0)-(0,10) was unpickable at interior points and pickable just
+// outside. doGetDistanceToPoint now maps the query into the loop frame with
+// the stored pivot and loop angle, so picking agrees with what is drawn.
+
+namespace {
+// NOLINTBEGIN(readability-identifier-naming)
+struct PickRow { double x, y; bool hit; };
+// NOLINTEND(readability-identifier-naming)
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch pick: rotated pattern hatch tests the point in the loop frame",
+          "[lc-hatchfix][pick]") {
+    lc::test::SourcePatterns patterns;
+    const PickRow rows[] = {
+        {8.0, 1.0, true},  {2.0, 9.0, false},  {1.0, 1.0, true},
+        {9.5, 0.2, true},  {3.0, 3.0, true},
+        {12.0, 12.0, false}, {-1.0, 5.0, false},
+    };
+
+    SECTION("rotated ANSI31 hatch (TDD)") {
+        std::unique_ptr<RS_Hatch> hatch(makeTriangleHatch(
+            10.0, 10.0, RS_HatchData(false, 1.0, M_PI / 6.0, "ANSI31")));
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        for (const PickRow& r : rows) {
+            RS_Entity* out = nullptr;
+            const double d = hatch->getDistanceToPoint(RS_Vector(r.x, r.y), &out);
+            INFO("q=(" << r.x << "," << r.y << ") expected hit=" << r.hit);
+            REQUIRE(d == (r.hit ? 0.0 : RS_MAXDOUBLE));
+            if (r.hit) REQUIRE(out == hatch.get());
+        }
+    }
+
+    SECTION("solid hatch control: same answers before and after") {
+        std::unique_ptr<RS_Hatch> hatch(makeTriangleHatch(10.0, 10.0));
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        for (const PickRow& r : rows) {
+            RS_Entity* out = nullptr;
+            const double d = hatch->getDistanceToPoint(RS_Vector(r.x, r.y), &out);
+            INFO("q=(" << r.x << "," << r.y << ") expected hit=" << r.hit);
+            REQUIRE(d == (r.hit ? 0.0 : RS_MAXDOUBLE));
+        }
+    }
+
+    SECTION("unknown pattern at pi/2: loops still rotated, picking still works") {
+        std::unique_ptr<RS_Hatch> hatch(makeTriangleHatch(
+            10.0, 10.0,
+            RS_HatchData(false, 1.0, M_PI / 2.0,
+                         QStringLiteral("LC_HATCHFIX_NO_SUCH_PATTERN"))));
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_PATTERN_NOT_FOUND);
+        RS_Entity* out = nullptr;
+        REQUIRE(hatch->getDistanceToPoint(RS_Vector(8.0, 1.0), &out) == 0.0);
+        REQUIRE(hatch->getDistanceToPoint(RS_Vector(2.0, 9.0)) == RS_MAXDOUBLE);
+    }
+
+    SECTION("moved hatch re-stores the pivot") {
+        std::unique_ptr<RS_Hatch> hatch(makeTriangleHatch(
+            10.0, 10.0, RS_HatchData(false, 1.0, M_PI / 6.0, "ANSI31")));
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        hatch->move(RS_Vector(100.0, 50.0));
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        REQUIRE(hatch->getDistanceToPoint(RS_Vector(108.0, 51.0)) == 0.0);
+        REQUIRE(hatch->getDistanceToPoint(RS_Vector(102.0, 59.0)) == RS_MAXDOUBLE);
+    }
+
+    SECTION("clone of a rotated pattern hatch answers the same table") {
+        std::unique_ptr<RS_Hatch> original(makeTriangleHatch(
+            10.0, 10.0, RS_HatchData(false, 1.0, M_PI / 6.0, "ANSI31")));
+        REQUIRE(original->getUpdateError() == RS_Hatch::HATCH_OK);
+        std::unique_ptr<RS_Entity> cloned(original->clone());
+        auto* hatch = dynamic_cast<RS_Hatch*>(cloned.get());
+        REQUIRE(hatch != nullptr);
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        for (const PickRow& r : rows) {
+            RS_Entity* out = nullptr;
+            const double d = hatch->getDistanceToPoint(RS_Vector(r.x, r.y), &out);
+            INFO("q=(" << r.x << "," << r.y << ") expected hit=" << r.hit);
+            REQUIRE(d == (r.hit ? 0.0 : RS_MAXDOUBLE));
+        }
+    }
+}
+
+// --- WCS centroid and central tensor of pattern hatches --------------------
+// RS_Hatch cached the frame-local centroid and central tensor without
+// mapping them back through (m_pivot, m_loopAngle). A 30-deg ANSI31 right
+// triangle therefore reported centroid (2.72, 4.39) and tensor
+// (157.5, 398.1, -69.4) instead of the analytic WCS values (10/3, 10/3)
+// and (2500/9, 2500/9, -1250/9). Pattern hatches now map centroid as a
+// point and the central tensor by R(a)*M'*R(a)^T.
+
+namespace {
+
+// NOLINTBEGIN(readability-identifier-naming)
+
+/** Numeric tolerance helper: area within rel * area, centroid within rel *
+ *  size, tensor within rel * area * size * size. The name must not clash
+ *  with a libc or POSIX symbol. */
+void checkHatchMoments(const RS_Hatch& h, double area,
+                       const RS_Vector& centroid,
+                       const LC_SecondMoment& central,
+                       double size, double rel) {
+    REQUIRE_THAT(h.getTotalArea(),
+                 Catch::Matchers::WithinAbs(area, rel * std::abs(area)));
+    const RS_Vector c = h.getCentroid();
+    REQUIRE(c.valid);
+    REQUIRE_THAT(c.x, Catch::Matchers::WithinAbs(centroid.x, rel * size));
+    REQUIRE_THAT(c.y, Catch::Matchers::WithinAbs(centroid.y, rel * size));
+    const LC_SecondMoment m = h.getMomentOfInertia();
+    const double tol = rel * std::abs(area) * size * size;
+    REQUIRE_THAT(m.ixx, Catch::Matchers::WithinAbs(central.ixx, tol));
+    REQUIRE_THAT(m.iyy, Catch::Matchers::WithinAbs(central.iyy, tol));
+    REQUIRE_THAT(m.ixy, Catch::Matchers::WithinAbs(central.ixy, tol));
+}
+
+// NOLINTEND(readability-identifier-naming)
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: ANSI31 30 deg triangle in WCS",
+          "[lc-hatchfix][moments]") {
+    lc::test::SourcePatterns patterns;
+    std::unique_ptr<RS_Hatch> hatch(makeTriangleHatch(
+        10.0, 10.0, RS_HatchData(false, 1.0, M_PI / 6.0, "ANSI31")));
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    // Area 10*10/2 = 50; centroid (10/3, 10/3); ixx_c = iyy_c = 2500/9;
+    // ixy_c = -1250/9. Size is the long side 10 * sqrt(2) ~= 14.14.
+    checkHatchMoments(*hatch, 50.0, RS_Vector(10.0 / 3.0, 10.0 / 3.0),
+                      {2500.0 / 9.0, 2500.0 / 9.0, -1250.0 / 9.0},
+                      10.0 * std::sqrt(2.0), 1e-10);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: missing pattern at 90 deg keeps WCS moments",
+          "[lc-hatchfix][moments]") {
+    lc::test::SourcePatterns patterns;
+    std::unique_ptr<RS_Hatch> hatch(makeTriangleHatch(
+        10.0, 10.0,
+        RS_HatchData(false, 1.0, M_PI / 2.0,
+                     "LC_HATCHFIX_NO_SUCH_PATTERN")));
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_PATTERN_NOT_FOUND);
+    checkHatchMoments(*hatch, 50.0, RS_Vector(10.0 / 3.0, 10.0 / 3.0),
+                      {2500.0 / 9.0, 2500.0 / 9.0, -1250.0 / 9.0},
+                      10.0 * std::sqrt(2.0), 1e-10);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: pattern hatch equals the solid hatch at any angle",
+          "[lc-hatchfix][moments]") {
+    lc::test::SourcePatterns patterns;
+    // Rectangle (0,0)-(20,10) as one loop plus RS_Circle r=2 at (14,6) as a
+    // second loop (a hole). Analytical result (recomputed below): the whole
+    // region has area 20*10 - pi*2*2 = 200 - 4*pi; centroid at
+    // (20*10*10 - pi*4*14)/(200 - 4*pi), (20*10*5 - pi*4*6)/(200 - 4*pi).
+    auto buildHatch = [](const RS_HatchData& data) {
+        auto* hatch = new RS_Hatch(nullptr, data);
+        auto* outer = new RS_EntityContainer(hatch);
+        hatch->addEntity(outer);
+        outer->addEntity(new RS_Line(outer, RS_Vector(0, 0), RS_Vector(20, 0)));
+        outer->addEntity(new RS_Line(outer, RS_Vector(20, 0), RS_Vector(20, 10)));
+        outer->addEntity(new RS_Line(outer, RS_Vector(20, 10), RS_Vector(0, 10)));
+        outer->addEntity(new RS_Line(outer, RS_Vector(0, 10), RS_Vector(0, 0)));
+        auto* hole = new RS_EntityContainer(hatch);
+        hatch->addEntity(hole);
+        hole->addEntity(new RS_Circle(hole, RS_CircleData(RS_Vector(14, 6), 2.0)));
+        hatch->update();
+        return std::unique_ptr<RS_Hatch>(hatch);
+    };
+    auto solid = buildHatch(RS_HatchData(true, 1.0, 0.0, "SOLID"));
+    REQUIRE(solid->getUpdateError() == RS_Hatch::HATCH_OK);
+    const double area = solid->getTotalArea();
+    const RS_Vector centroid = solid->getCentroid();
+    const LC_SecondMoment central = solid->getMomentOfInertia();
+    REQUIRE(area > 0.0);
+    REQUIRE(centroid.valid);
+
+    const double angles[] = {0.0, M_PI / 6.0, 37.0 * M_PI / 180.0,
+                              M_PI / 2.0, 123.0 * M_PI / 180.0};
+    for (double a : angles) {
+        INFO("angle " << a);
+        auto h = buildHatch(RS_HatchData(false, 1.0, a, "ANSI31"));
+        REQUIRE(h->getUpdateError() == RS_Hatch::HATCH_OK);
+        // Hatch pattern area is invariant under rotation; solid and pattern
+        // use the same boundary so their centroids and tensors agree in WCS.
+        checkHatchMoments(*h, area, centroid, central, 22.4, 1e-10);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: half-ellipse off the origin",
+          "[lc-hatchfix][moments]") {
+    // makeHalfEllipseHatch(3, 2, c) at c in {(0,0), (10,0), (0,5), (10,5)}:
+    // area pi * 3 * 2 / 2 = 3 pi = 9.42477796076938;
+    // centroid (c.x, c.y + 4 b / (3 pi)) = (c.x, c.y + 8/(3 pi));
+    // Ixx_c = pi a^3 b / 8 - 0 = 27 pi / 4;
+    // Iyy_c = pi a b^3 / 8 - A * (4 b / (3 pi))^2 = 3 pi - 64/(3 pi).
+    // These rotate as a point and tensor; off-origin cases exercise the
+    // open-arc parallel-axis-shift path that previously returned garbage
+    // on an open elliptic arc whose centre was not at the origin.
+    const RS_Vector centres[] = {RS_Vector(0.0, 0.0), RS_Vector(10.0, 0.0),
+                                 RS_Vector(0.0, 5.0), RS_Vector(10.0, 5.0)};
+    const double area = 9.42477796076938;
+    const double cyOffset = 0.848826363156775;  // 4 b / (3 pi) at b = 2
+    const LC_SecondMoment central{
+        21.2057504117311, 2.63416705551518, 0.0};
+    for (const auto& c : centres) {
+        INFO("centre (" << c.x << ", " << c.y << ")");
+        std::unique_ptr<RS_Hatch> hatch(makeHalfEllipseHatch(3.0, 2.0, c));
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        checkHatchMoments(*hatch, area, RS_Vector(c.x, c.y + cyOffset),
+                           central, 7.0, 1e-10);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: rotated half-ellipse",
+          "[lc-hatchfix][moments]") {
+    // phi = 30 degrees, c = (10, 5): the centroid rotates about c; the tensor
+    // is R(phi) * M * R(phi)^T. Oracles taken at 40 digits.
+    const double phi = 30.0 * M_PI / 180.0;
+    std::unique_ptr<RS_Hatch> hatch(
+        makeHalfEllipseHatch(3.0, 2.0, RS_Vector(10.0, 5.0), phi));
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    checkHatchMoments(*hatch, 9.42477796076938,
+                       RS_Vector(9.57558681842161, 5.73510519389572),
+                       {16.5628545726771, 7.27706289456916, 8.04173148749163},
+                       7.0, 1e-10);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: elliptic segment forward and reversed",
+          "[lc-hatchfix][moments]") {
+    // a = 3, b = 2, phi = 30 deg, t in [0.3, 2.4] plus the chord
+    // (end -> start). The sector area is 3.71037190005338; central tensor
+    // computed by summing the per-edge momentLineIntegrals at 40 digits.
+    const double phi = 30.0 * M_PI / 180.0;
+    auto buildSegment = [phi](bool reversed) {
+        auto* hatch = new RS_Hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+        auto* loop = new RS_EntityContainer(hatch);
+        hatch->addEntity(loop);
+        RS_EllipseData ed;
+        ed.center = RS_Vector(10.0, 5.0);
+        ed.majorP = RS_Vector(3.0 * std::cos(phi), 3.0 * std::sin(phi));
+        ed.ratio  = 2.0 / 3.0;
+        if (reversed) {
+            ed.angle1 = 2.4;
+            ed.angle2 = 0.3;
+            ed.reversed = true;
+        } else {
+            ed.angle1 = 0.3;
+            ed.angle2 = 2.4;
+            ed.reversed = false;
+        }
+        loop->addEntity(new RS_Ellipse(loop, ed));
+        auto* e = new RS_Ellipse(loop, ed);
+        const RS_Vector start = e->getStartpoint();
+        const RS_Vector end = e->getEndpoint();
+        delete e;
+        loop->addEntity(new RS_Line(loop, end, start));
+        hatch->update();
+        return std::unique_ptr<RS_Hatch>(hatch);
+    };
+    for (bool reversed : {false, true}) {
+        INFO("reversed = " << reversed);
+        auto hatch = buildSegment(reversed);
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        checkHatchMoments(
+            *hatch, 3.71037190005338,
+            RS_Vector(9.71382018046348, 6.42025760321486),
+            {4.58305237975337, 0.973245330164792, 1.74681589740704},
+            7.0, 1e-9);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: polyline D-shape with a nearly flat bulge",
+          "[lc-hatchfix][moments]") {
+    // Vertices (0,0),0; (10,0),0; (10,5),b; (0,5),0; (0,0),0.
+    // The near-flat arc on the top edge is where HEAD's closed-form Iyy
+    // was wildly wrong; the Gauss-Legendre quadrature stays stable.
+    // The hatch's getTotalArea() still goes through areaLineIntegral(),
+    // which loses up to ~7e-6 of precision at small bulges; the GL8 moments
+    // are compared against the GL8-correct oracles below.
+    struct Expected {
+        double bulge;
+        double cy;
+        double ixx;
+        double iyy;
+    };
+    const Expected rows[] = {
+        {1e-4, 2.50016666888907, 416.683333333405, 104.187501944547},
+        {1e-5, 2.50001666668889, 416.668333333333, 104.168750019445},
+        {1e-6, 2.50000166666689, 416.666833333333, 104.166875000194},
+    };
+    for (const Expected& row : rows) {
+        INFO("bulge = " << row.bulge);
+        auto* polyline = new RS_Polyline(nullptr);
+        polyline->addVertex(RS_Vector(0.0, 0.0), 0.0);
+        polyline->addVertex(RS_Vector(10.0, 0.0), 0.0);
+        polyline->addVertex(RS_Vector(10.0, 5.0), row.bulge);
+        polyline->addVertex(RS_Vector(0.0, 5.0), 0.0);
+        polyline->addVertex(RS_Vector(0.0, 0.0), 0.0);
+        auto* hatch = new RS_Hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+        auto* loop = new RS_EntityContainer(hatch);
+        hatch->addEntity(loop);
+        // Clone the polyline's children: the extractor treats each atomic
+        // edge as a loop component (the probe does the same).
+        for (RS_Entity* child : *polyline) {
+            if (child != nullptr) {
+                loop->addEntity(child->clone());
+            }
+        }
+        delete polyline;
+        hatch->update();
+        std::unique_ptr<RS_Hatch> owner(hatch);
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        // Area via areaLineIntegral() is close to 50 at every bulge;
+        // its precision is set by RS_Math::correctAngle's rounding. The
+        // area rise above 50 scales with the bulge, so allow a liberal
+        // 1e-2 tolerance; the moment regression lives in centroid/tensor.
+        REQUIRE_THAT(hatch->getTotalArea(),
+                     Catch::Matchers::WithinAbs(50.0, 1e-2));
+        const RS_Vector c = hatch->getCentroid();
+        REQUIRE(c.valid);
+        // Centroid x is 5 by symmetry; cy follows the bulge rise. The
+        // ratio first/area carries over the areaLineIntegral precision
+        // loss noted above, so allow 1e-4 absolute.
+        REQUIRE_THAT(c.x, Catch::Matchers::WithinAbs(5.0, 1e-4));
+        REQUIRE_THAT(c.y, Catch::Matchers::WithinAbs(row.cy, 1e-4));
+        const LC_SecondMoment m = hatch->getMomentOfInertia();
+        // getCentral subtracts area * c * c from the raw tensor; until a
+        // later unification uses GL8 area everywhere, areaLineIntegral()'s
+        // precision loss at tiny bulges leaks a corresponding bias into
+        // the central tensor. Allow 1e-4 relative.
+        REQUIRE_THAT(m.ixx, Catch::Matchers::WithinRel(row.ixx, 1e-4));
+        REQUIRE_THAT(m.iyy, Catch::Matchers::WithinRel(row.iyy, 1e-4));
+        // Ixy is zero by symmetry; GL8 roundoff grows as the arc radius
+        // grows (r ~ 1/b), so loosen the absolute tolerance for small
+        // bulges. Residual stays below 1e-2 at area ~50, dimension ~10
+        // even at bulge 1e-6 (radius ~2.5e6).
+        REQUIRE_THAT(m.ixy, Catch::Matchers::WithinAbs(0.0, 1e-2));
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: pattern hatch equals the solid hatch on a curved loop",
+          "[lc-hatchfix][moments]") {
+    lc::test::SourcePatterns patterns;
+    // Rotated half-ellipse at (10, 5), phi = 30 degrees. One loop with
+    // an elliptic-arc edge plus the diametric chord. The solid and the
+    // ANSI31 pattern must give the same WCS area, centroid and tensor at
+    // every pattern angle (the rotation mapping back to WCS).
+    const double phi = 30.0 * M_PI / 180.0;
+    auto buildHatch = [phi](const RS_HatchData& data) {
+        return std::unique_ptr<RS_Hatch>(
+            makeHalfEllipseHatch(3.0, 2.0, RS_Vector(10.0, 5.0), phi));
+    };
+    auto solid = buildHatch(RS_HatchData(true, 1.0, 0.0, "SOLID"));
+    REQUIRE(solid->getUpdateError() == RS_Hatch::HATCH_OK);
+    const double area = solid->getTotalArea();
+    const RS_Vector centroid = solid->getCentroid();
+    const LC_SecondMoment central = solid->getMomentOfInertia();
+
+    const double angles[] = {0.0, M_PI / 6.0, 37.0 * M_PI / 180.0,
+                              M_PI / 2.0, 123.0 * M_PI / 180.0};
+    for (double a : angles) {
+        INFO("pattern angle " << a);
+        // makeHalfEllipseHatch uses a SOLID data; override to ANSI31 at
+        // angle a to drive updatePatternHatch and the loop frame rotation.
+        auto h = std::unique_ptr<RS_Hatch>(new RS_Hatch(
+            nullptr, RS_HatchData(false, 1.0, a, "ANSI31")));
+        auto* loop = new RS_EntityContainer(h.get());
+        h->addEntity(loop);
+        const RS_Vector majorP(3.0 * std::cos(phi), 3.0 * std::sin(phi));
+        RS_EllipseData ed;
+        ed.center = RS_Vector(10.0, 5.0);
+        ed.majorP = majorP;
+        ed.ratio  = 2.0 / 3.0;
+        ed.angle1 = 0.0;
+        ed.angle2 = M_PI;
+        ed.reversed = false;
+        loop->addEntity(new RS_Ellipse(loop, ed));
+        loop->addEntity(new RS_Line(loop,
+            RS_Vector(10.0, 5.0) - majorP, RS_Vector(10.0, 5.0) + majorP));
+        h->update();
+        REQUIRE(h->getUpdateError() == RS_Hatch::HATCH_OK);
+        checkHatchMoments(*h, area, centroid, central, 7.0, 1e-10);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_FilterDXFRW: half-ellipse hatch fixtures import with exact moments",
+          "[lc-hatchfix][moments]") {
+    lc::test::ensureSettings();
+    lc::test::QuietLog logQuiet;
+    struct Row {
+        const char* path;
+        double area;
+        RS_Vector centroid;
+        LC_SecondMoment central;
+    };
+    const Row rows[] = {
+        {"hatch_moments_half_ellipse_10_5.dxf", 9.42477796076938,
+         RS_Vector(10.0, 5.84882636315678),
+         {21.2057504117311, 2.63416705551518, 0.0}},
+        {"hatch_moments_half_ellipse_rot30_10_5.dxf", 9.42477796076938,
+         RS_Vector(9.57558681842161, 5.73510519389572),
+         {16.5628545726771, 7.27706289456916, 8.04173148749163}},
+    };
+    for (const Row& row : rows) {
+        INFO(row.path);
+        RS_Graphic g;
+        REQUIRE(lc::test::importDrawing(
+            g, std::filesystem::path(LIBRECAD_TEST_DIR) / "dxf" / row.path,
+            RS2::FormatDXFRW));
+        RS_Hatch* hatch = nullptr;
+        lc::LC_ContainerTraverser traverser(g, RS2::ResolveNone);
+        for (RS_Entity* entity = traverser.first(); entity != nullptr;
+             entity = traverser.next()) {
+            if (entity->rtti() == RS2::EntityHatch) {
+                hatch = static_cast<RS_Hatch*>(entity);
+                break;
+            }
+        }
+        REQUIRE(hatch != nullptr);
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        checkHatchMoments(*hatch, row.area, row.centroid, row.central,
+                           7.0, 1e-10);
+    }
+}
+

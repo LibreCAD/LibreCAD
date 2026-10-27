@@ -14,7 +14,12 @@
 #ifndef DRW_BASE_H
 #define DRW_BASE_H
 
-#define DRW_VERSION "0.6.3"
+#define DRW_VERSION "0.6.4"
+
+// Since 0.6.4 DRW_Hatch::angle and PatternLine::angle are radians for DXF too:
+// DXF groups 52 and 53 are converted from and to degrees at the DXF boundary,
+// as 50/51 always were. DWG and the gradient angle 460 stay radians.
+#define DRW_HATCH_ANGLE_RADIANS 1
 
 #include <array>
 #include <cstdint>
