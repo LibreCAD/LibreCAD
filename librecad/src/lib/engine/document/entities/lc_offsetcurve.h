@@ -32,7 +32,10 @@ struct LC_OffsetCurveEditResult {
     /** Empty means that stage did not run, not a fabricated component result. */
     std::optional<LC_CurveOffsetStatus> engineStatus;
     std::optional<LC_OffsetCheckResult::Reason> checkReason;
+    /** C-only work; through-point membership is accounted separately. */
     LC_EllipseOffsetGeometry::CheckWork checkWork{};
+    /** Additional membership work, including a refused traversal's actual prefix. */
+    LC_EllipseOffsetGeometry::CheckWork throughWork{};
     std::size_t engineRuns = 0;
     bool changed = false;
     explicit operator bool() const noexcept { return refusal == LC_OffsetCurveRefusal::None; }
@@ -128,10 +131,16 @@ protected:
     RS_Vector doGetNearestDist(double distance, const RS_Vector &coord, double *dist) const override;
 
 private:
+    friend class LC_OffsetWorkerKernel;
+    friend class LC_OffsetWorkerCompletion;
     struct ValidatedCache {};
     LC_OffsetCurve(const RS_Entity &source, const RS_SplineData &cache,
         const LC_EllipseOffsetDefinition &definition, double tolerance,
         const LC_EllipseOffsetGeometry::CacheTopologyAnalysis &topology, ValidatedCache);
+    struct ReceivedCache {};
+    LC_OffsetCurve(const RS_Entity &source, const RS_SplineData &cache,
+        const LC_EllipseOffsetDefinition &definition, double tolerance, bool closed,
+        std::vector<RS_Vector> grips, const RS_Vector &midpoint, ReceivedCache);
     // Similarities transport the existing proof only if every stored coordinate
     // is the exact affine image. Rounded similarities refuse unchanged, not restamp.
     bool transform(const std::array<double, 6> &matrix, double similarityScale, bool reflected);
@@ -139,6 +148,9 @@ private:
         std::vector<RS_Vector> &grips, double tolerance, bool defined, bool closed, const RS_Vector &midpoint);
     static LC_OffsetCurveCreateResult runEngine(const RS_Entity &attributes,
         const LC_EllipseOffsetDefinition &definition, const LC_OffsetRunLimits &limits);
+    static bool checkThrough(const LC_OffsetCurve &curve, const RS_Vector &point,
+        const LC_OffsetCheckLimits &limits, const LC_EllipseOffsetGeometry::CheckWork &checked,
+        LC_EllipseOffsetGeometry::CheckWork &throughWork);
     LC_OffsetCurveEditResult eligibility() const noexcept;
     LC_OffsetCurveEditResult edit(const LC_EllipseOffsetDefinition &definition,
         const LC_OffsetRunLimits &limits, const RS_Vector *through = nullptr);

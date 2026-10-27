@@ -93,11 +93,13 @@ const RS_SplineData *cacheData(const RS_Entity &entity, RS_SplineData &lineData)
 }
 
 bool containsThroughPoint(const RS_Spline &cache, const RS_Vector &point, const double tolerance,
-                          const std::size_t maxVertices, const std::size_t maxPairs, const unsigned maxDepth) {
+                          const std::size_t maxVertices, const std::size_t maxPairs, const unsigned maxDepth,
+                          geo::CheckWork &work) {
+    // Publish each admitted debit directly, including on allocation exceptions.
+    work = {};
     if (!geo::isFinite2D(point) || !std::isfinite(tolerance) || !(tolerance > 0) || maxVertices == 0 || maxPairs == 0)
         return false;
     const Exact px{point.x}, py{point.y}, squaredTolerance = Exact(tolerance)*Exact(tolerance);
-    std::size_t vertices = 0, pairs = 0;
     const auto debit = [](std::size_t &used, const std::size_t cap, const std::size_t count = 1) {
         if (count > cap - used) return false;
         used += count; return true;
@@ -106,7 +108,8 @@ bool containsThroughPoint(const RS_Spline &cache, const RS_Vector &point, const 
     // interior knots. Its span endpoints are these exact stored control points.
     const auto &data = cache.getData();
     for (std::size_t i = 0; i < data.controlPoints.size(); i += data.degree) {
-        if (!debit(vertices, maxVertices) || !debit(pairs, maxPairs)) return false;
+        if (work.vertices == maxVertices || work.distancePairs == maxPairs) return false;
+        ++work.vertices; ++work.distancePairs;
         const auto &p = data.controlPoints[i];
         const Exact dx = px - Exact(p.x), dy = py - Exact(p.y);
         if (dx*dx + dy*dy <= squaredTolerance) return true;
@@ -128,16 +131,17 @@ bool containsThroughPoint(const RS_Spline &cache, const RS_Vector &point, const 
         return Exact(x*x + y*y);
     };
     for (std::size_t span = 1; span < breaks.size(); ++span) {
-        if (!debit(vertices, maxVertices)) return false;
+        if (!debit(work.vertices, maxVertices)) return false;
         pending.assign(1, {breaks[span - 1], breaks[span], 0});
         while (!pending.empty()) {
             const auto cell = pending.back(); pending.pop_back();
-            if (!debit(pairs, maxPairs)) return false;
+            if (!debit(work.distancePairs, maxPairs)) return false;
+            work.deepest = std::max(work.deepest, cell.depth);
             LC_CurveJetBounds bounds;
             if (!cache.tryBoundJet(cell.a, cell.b, bounds)) continue;
             const auto lower = distanceBounds(bounds, false);
             if (lower && *lower > squaredTolerance) continue;
-            if (!debit(pairs, maxPairs)) return false;
+            if (!debit(work.distancePairs, maxPairs)) return false;
             // This nonempty cell contains actual curve points. Its entire
             // outward position box being inside the target disk is a witness;
             // neither a rounded display vertex nor a zero-width query is used.
@@ -145,7 +149,7 @@ bool containsThroughPoint(const RS_Spline &cache, const RS_Vector &point, const 
             if (upper && *upper <= squaredTolerance) return true;
             const double mid = .5*cell.a + .5*cell.b;
             if (cell.depth >= maxDepth || !(mid > cell.a && mid < cell.b)) continue;
-            if (!debit(vertices, maxVertices, 2)) return false;
+            if (!debit(work.vertices, maxVertices, 2)) return false;
             pending.push_back({mid, cell.b, cell.depth + 1});
             pending.push_back({cell.a, mid, cell.depth + 1});
         }
@@ -312,6 +316,19 @@ LC_OffsetCurveEditResult LC_OffsetCurve::commitPrepared(LC_OffsetCurveCreateResu
     return result;
 }
 
+bool LC_OffsetCurve::checkThrough(const LC_OffsetCurve &curve, const RS_Vector &point,
+    const LC_OffsetCheckLimits &limits, const geo::CheckWork &checked, geo::CheckWork &throughWork) {
+    const auto cap = clampedLimits(limits);
+    const auto prior = checked;
+    throughWork = {};
+    if (prior.cacheSpans > cap.maxCacheSpans || prior.vertices > cap.maxVertices ||
+        prior.distancePairs > cap.maxDistancePairs || prior.deepest > cap.maxDepth ||
+        prior.orderingComparisons > cap.maxOrderingComparisons) return false;
+    return containsThroughPoint(curve, point, curve.m_worldTolerance,
+        cap.maxVertices - prior.vertices, cap.maxDistancePairs - prior.distancePairs,
+        cap.maxDepth, throughWork);
+}
+
 LC_OffsetCurveEditResult LC_OffsetCurve::edit(const LC_EllipseOffsetDefinition &definition,
     const LC_OffsetRunLimits &limits, const RS_Vector *through) {
     using Refusal = LC_OffsetCurveRefusal;
@@ -321,8 +338,7 @@ LC_OffsetCurveEditResult LC_OffsetCurve::edit(const LC_EllipseOffsetDefinition &
     if (!normalizedDefinition(normalized)) { result.refusal = Refusal::InvalidInput; return result; }
     if (sameDefinition(normalized, m_definition)) {
         if (through) {
-            const auto cap = clampedLimits(limits.checkLimits);
-            if (!containsThroughPoint(*this, *through, m_worldTolerance, cap.maxVertices, cap.maxDistancePairs, cap.maxDepth))
+            if (!checkThrough(*this, *through, limits.checkLimits, result.checkWork, result.throughWork))
                 result.refusal = Refusal::ThroughNotOnCache;
         }
         return result;
@@ -349,10 +365,7 @@ LC_OffsetCurveEditResult LC_OffsetCurve::edit(const LC_EllipseOffsetDefinition &
     auto prepared = runEngine(*this, normalized, limits);
     if (!prepared) return static_cast<const LC_OffsetCurveEditResult &>(prepared);
     if (through) {
-        const auto cap = clampedLimits(limits.checkLimits);
-        const auto vertices = cap.maxVertices - prepared.checkWork.vertices;
-        const auto pairs = cap.maxDistancePairs - prepared.checkWork.distancePairs;
-        if (!containsThroughPoint(*prepared.entity, *through, prepared.entity->m_worldTolerance, vertices, pairs, cap.maxDepth)) {
+        if (!checkThrough(*prepared.entity, *through, limits.checkLimits, prepared.checkWork, prepared.throughWork)) {
             auto refused = static_cast<const LC_OffsetCurveEditResult &>(prepared);
             refused.refusal = Refusal::ThroughNotOnCache; refused.changed = false;
             return refused;
@@ -419,6 +432,16 @@ LC_OffsetCurve::LC_OffsetCurve(const RS_Entity &source, const RS_SplineData &cac
 }
 
 RS_Entity *LC_OffsetCurve::clone() const { return new LC_OffsetCurve(*this); }
+
+LC_OffsetCurve::LC_OffsetCurve(const RS_Entity &source, const RS_SplineData &cache,
+    const LC_EllipseOffsetDefinition &definition, const double tolerance, const bool closed,
+    std::vector<RS_Vector> grips, const RS_Vector &midpoint, ReceivedCache)
+    : RS_Spline(source.getParent(), cache), m_definition(definition), m_worldTolerance(tolerance),
+      m_closed(closed), m_grips(std::move(grips)), m_cachedMiddlePoint(midpoint) {
+    RS_Entity::operator=(source);
+    calculateBorders();
+    m_stamp = geometryFingerprint(getData());
+}
 
 bool LC_OffsetCurve::isConsistent() const noexcept {
     return m_defined && boundedRepresentation(getData()) && m_stamp == geometryFingerprint(getData());

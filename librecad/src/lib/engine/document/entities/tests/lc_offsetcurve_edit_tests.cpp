@@ -225,6 +225,18 @@ std::unique_ptr<LC_OffsetCurve> adoptedArc(const double distance = 0.25, const R
     return curve;
 }
 
+std::unique_ptr<LC_OffsetCurve> adoptedThroughLine() {
+    // The tangent segment stays within .002 of the circular offset. Its
+    // dyadic midpoint is an exact interior witness for the unchanged definition.
+    const double angle = std::atan2(0.0625, 2.0);
+    LC_EllipseOffsetDefinition definition;
+    definition.basis = {{0, 0}, {1, 0}, 1, -angle, angle, false};
+    definition.distance = 1; definition.relTolerance = 0.01;
+    const RS_Line cache{nullptr, {2, -0.0625}, {2, 0.0625}};
+    auto curve = LC_OffsetCurve::adopt(cache, definition, 0.01);
+    REQUIRE(curve); decorate(*curve); return curve;
+}
+
 std::unique_ptr<LC_OffsetCurve> adoptedRing() {
     RS_SplineData data{3, false};
     std::array<RS_Vector, 4> net{{{2, 0}, {2, 9.0/8}, {9.0/8, 2}, {0, 2}}};
@@ -240,6 +252,27 @@ std::unique_ptr<LC_OffsetCurve> adoptedRing() {
     definition.basis = {{0, 0}, {1, 0}, 1}; definition.distance = 1; definition.relTolerance = 0.01;
     auto curve = LC_OffsetCurve::adopt(cache, definition, 0.02);
     REQUIRE(curve); decorate(*curve); return curve;
+}
+
+void checkWork(const geo::CheckWork& actual, const geo::CheckWork& expected) {
+    CHECK(actual.cacheSpans == expected.cacheSpans); CHECK(actual.vertices == expected.vertices);
+    CHECK(actual.distancePairs == expected.distancePairs); CHECK(actual.deepest == expected.deepest);
+    CHECK(actual.orderingComparisons == expected.orderingComparisons);
+}
+
+void combinedWorkFits(const LC_OffsetCurveEditResult& result, const LC_OffsetCheckLimits& requested = {}) {
+    const LC_OffsetCheckLimits hard;
+    const auto vertices = std::min(requested.maxVertices, hard.maxVertices);
+    const auto pairs = std::min(requested.maxDistancePairs, hard.maxDistancePairs);
+    const auto depth = std::min(requested.maxDepth, hard.maxDepth);
+    CHECK(result.checkWork.cacheSpans <= std::min(requested.maxCacheSpans, hard.maxCacheSpans));
+    CHECK(result.checkWork.orderingComparisons <= std::min(requested.maxOrderingComparisons, hard.maxOrderingComparisons));
+    REQUIRE(result.checkWork.vertices <= vertices); REQUIRE(result.checkWork.distancePairs <= pairs);
+    REQUIRE(result.checkWork.deepest <= depth);
+    CHECK(result.throughWork.vertices <= vertices - result.checkWork.vertices);
+    CHECK(result.throughWork.distancePairs <= pairs - result.checkWork.distancePairs);
+    CHECK(result.throughWork.deepest <= depth);
+    CHECK(result.throughWork.cacheSpans == 0); CHECK(result.throughWork.orderingComparisons == 0);
 }
 
 void notRun(const LC_OffsetCurveEditResult& result) {
@@ -649,6 +682,13 @@ TEST_CASE("Through edits commit distance and side together with an actual cache 
     regenerated(result, *curve); attributes.check(*curve);
     CHECK(curve->definition().distance == Catch::Approx(0.5)); CHECK(curve->definition().towardCentre);
     CHECK(hasEndpointWitness(*curve, point));
+    checkWork(result.throughWork, {0, 1, 1}); combinedWorkFits(result);
+    const auto checked = geo::checkCache(curve->getData(), curve->definition(), curve->checkedWorldTolerance());
+    REQUIRE(checked); checkWork(result.checkWork, checked.work);
+    decorate(*curve); const State before{*curve};
+    const auto unchanged = curve->setThrough(curve->getData().controlPoints.front());
+    REQUIRE(unchanged); CHECK_FALSE(unchanged.changed); notRun(unchanged);
+    checkWork(unchanged.throughWork, {}); before.check(*curve);
 }
 
 TEST_CASE("Through edits certify an interior cache point rather than requiring a cache endpoint",
@@ -664,9 +704,13 @@ TEST_CASE("Through edits certify an interior cache point rather than requiring a
     regenerated(result, *made.entity); attributes.check(*made.entity);
     CHECK(made.entity->definition().distance == Catch::Approx(2));
     CHECK_FALSE(hasEndpointWitness(*made.entity, point)); CHECK(hasInteriorWitness(*made.entity, point));
+    CHECK(result.throughWork.vertices > 0); CHECK(result.throughWork.distancePairs > 0);
+    CHECK(result.throughWork.deepest > 0); combinedWorkFits(result);
     decorate(*made.entity); const State before{*made.entity};
     const auto unchanged = made.entity->setThrough(point);
     REQUIRE(unchanged); CHECK_FALSE(unchanged.changed); notRun(unchanged); before.check(*made.entity);
+    CHECK(unchanged.throughWork.vertices > 0); CHECK(unchanged.throughWork.distancePairs > 0);
+    CHECK(unchanged.throughWork.deepest > 0); combinedWorkFits(unchanged);
 }
 
 TEST_CASE("Through edits spend only the checker remaining vertex and pair allowances",
@@ -675,6 +719,7 @@ TEST_CASE("Through edits spend only the checker remaining vertex and pair allowa
     const auto completed = control->setDefinition(next);
     regenerated(completed, *control);
     REQUIRE(completed.checkWork.vertices > 0); REQUIRE(completed.checkWork.distancePairs > 0);
+    checkWork(completed.throughWork, {});
     for (const bool vertices : {false, true}) {
         CAPTURE(vertices);
         auto curve = adoptedArc(); const State before{*curve}; LC_OffsetRunLimits limits;
@@ -686,8 +731,108 @@ TEST_CASE("Through edits spend only the checker remaining vertex and pair allowa
         REQUIRE(result.checkReason); CHECK(*result.checkReason == CheckReason::None);
         CHECK(result.checkWork.vertices == completed.checkWork.vertices);
         CHECK(result.checkWork.distancePairs == completed.checkWork.distancePairs);
+        checkWork(result.checkWork, completed.checkWork); checkWork(result.throughWork, {});
+        combinedWorkFits(result, limits.checkLimits);
         before.check(*curve);
     }
+
+    LC_OffsetRunLimits exact;
+    exact.checkLimits.maxVertices = completed.checkWork.vertices + 1;
+    exact.checkLimits.maxDistancePairs = completed.checkWork.distancePairs + 1;
+    exact.checkLimits.maxDepth = std::max(1u, completed.checkWork.deepest);
+    auto curve = adoptedArc();
+    const auto result = curve->setThrough({0.5, 0}, exact);
+    regenerated(result, *curve); checkWork(result.checkWork, completed.checkWork);
+    checkWork(result.throughWork, {0, 1, 1}); combinedWorkFits(result, exact.checkLimits);
+}
+
+TEST_CASE("Through membership reports actual partial work without partial endpoint or child debits",
+          "[lc-offsetcurve][edit][through][limits][accounting]") {
+    auto curve = adoptedThroughLine(); const State before{*curve};
+    const RS_Vector point{2, 0};
+    const auto proposal = curve->proposeThrough(point);
+    REQUIRE(proposal); REQUIRE(proposal->distance == curve->definition().distance);
+    REQUIRE(proposal->towardCentre == curve->definition().towardCentre);
+    REQUIRE_FALSE(hasEndpointWitness(*curve, point)); REQUIRE(hasInteriorWitness(*curve, point));
+    for (unsigned resource = 0; resource < 7; ++resource) {
+        CAPTURE(resource);
+        LC_OffsetRunLimits limits;
+        geo::CheckWork expected;
+        switch (resource) {
+        case 0: limits.checkLimits.maxVertices = 0; break;
+        case 1: limits.checkLimits.maxDistancePairs = 0; break;
+        case 2:
+            limits.checkLimits.maxVertices = 1; expected = {0, 1, 1}; break;
+        case 3:
+            limits.checkLimits.maxDistancePairs = 1; expected = {0, 1, 1}; break;
+        case 4:
+            // Two endpoints and a root were entered, but two child slots do not fit.
+            limits.checkLimits.maxVertices = 4; expected = {0, 3, 4}; break;
+        case 5:
+            // Root children are queued, but neither has an admitted distance pair.
+            limits.checkLimits.maxDistancePairs = 4; expected = {0, 5, 4}; break;
+        case 6:
+            limits.checkLimits.maxDistancePairs = 5; expected = {0, 5, 5, 1}; break;
+        }
+        const auto refused = curve->setThrough(point, limits);
+        CHECK_FALSE(refused); CHECK_FALSE(refused.changed); CHECK(refused.refusal == Refusal::ThroughNotOnCache);
+        notRun(refused); checkWork(refused.throughWork, expected);
+        combinedWorkFits(refused, limits.checkLimits); before.check(*curve);
+    }
+
+    LC_OffsetRunLimits shallow; shallow.checkLimits.maxDepth = 1;
+    const auto refused = curve->setThrough(point, shallow);
+    CHECK_FALSE(refused); CHECK_FALSE(refused.changed); CHECK(refused.refusal == Refusal::ThroughNotOnCache);
+    notRun(refused); checkWork(refused.throughWork, {0, 5, 8, 1});
+    combinedWorkFits(refused, shallow.checkLimits); before.check(*curve);
+
+    const auto completed = curve->setThrough(point);
+    REQUIRE(completed); CHECK_FALSE(completed.changed); notRun(completed);
+    CHECK(completed.throughWork.vertices > 5); CHECK(completed.throughWork.distancePairs > 8);
+    CHECK(completed.throughWork.deepest > 1); combinedWorkFits(completed); before.check(*curve);
+
+    LC_OffsetRunLimits raised;
+    raised.checkLimits = {std::numeric_limits<std::size_t>::max(), std::numeric_limits<std::size_t>::max(),
+        std::numeric_limits<std::size_t>::max(), std::numeric_limits<unsigned>::max(),
+        std::numeric_limits<std::size_t>::max()};
+    const auto clamped = curve->setThrough(point, raised);
+    REQUIRE(clamped); CHECK_FALSE(clamped.changed); notRun(clamped);
+    checkWork(clamped.throughWork, completed.throughWork); combinedWorkFits(clamped, raised.checkLimits);
+    before.check(*curve);
+
+    // A later short refusal must report its own prefix, not a prior successful traversal.
+    const auto retained = completed.throughWork;
+    const auto again = curve->setThrough(point, shallow);
+    checkWork(again.throughWork, refused.throughWork); checkWork(completed.throughWork, retained);
+    before.check(*curve);
+}
+
+TEST_CASE("Regenerated through checks share counts but not serial depth with C",
+          "[lc-offsetcurve][edit][through][limits][accounting]") {
+    const RS_Ellipse source{nullptr, RS_EllipseData{{0, 0}, {10, 0}, 1, 0, 1.2, false}};
+    const RS_Vector point{12*std::cos(0.5), 12*std::sin(0.5)};
+    auto control = LC_OffsetCurve::create(source, 1, false, {}, 0.01);
+    REQUIRE(control.entity);
+    const auto completed = control.entity->setThrough(point);
+    regenerated(completed, *control.entity); REQUIRE(completed.throughWork.deepest > 0);
+    const auto checked = geo::checkCache(control.entity->getData(), control.entity->definition(),
+        control.entity->checkedWorldTolerance());
+    REQUIRE(checked); checkWork(completed.checkWork, checked.work); combinedWorkFits(completed);
+
+    LC_OffsetRunLimits exact;
+    exact.checkLimits.maxVertices = completed.checkWork.vertices + completed.throughWork.vertices;
+    exact.checkLimits.maxDistancePairs = completed.checkWork.distancePairs + completed.throughWork.distancePairs;
+    // These are successive queries, not nested recursion. Both must fit the
+    // same ceiling; adding/subtracting their independent depths is incorrect.
+    exact.checkLimits.maxDepth = std::max(completed.checkWork.deepest, completed.throughWork.deepest);
+    auto replay = LC_OffsetCurve::create(source, 1, false, {}, 0.01);
+    REQUIRE(replay.entity);
+    const auto repeated = replay.entity->setThrough(point, exact);
+    regenerated(repeated, *replay.entity); checkWork(repeated.checkWork, completed.checkWork);
+    checkWork(repeated.throughWork, completed.throughWork); combinedWorkFits(repeated, exact.checkLimits);
+
+    REQUIRE(completed.checkWork.deepest > 0);
+    REQUIRE(exact.checkLimits.maxDepth < completed.checkWork.deepest + completed.throughWork.deepest);
 }
 
 TEST_CASE("Through edits near a large world center use local geometry not a world-sized epsilon",

@@ -399,10 +399,14 @@ std::optional<Cutter> decodeCutter(const QCborArray& a) {
 }
 }
 
+bool admitted(const Request& request) {
+    return valid(request.token) && !request.operation.valueless_by_exception() &&
+        std::visit([](const auto& op) { return valid(op); }, request.operation);
+}
+
 std::optional<QCborArray> encode(const Request& request) {
     // No CBOR arrays are populated until the entire caller-owned value is admitted.
-    if (!valid(request.token) || request.operation.valueless_by_exception() ||
-        !std::visit([](const auto& op) { return valid(op); }, request.operation)) return std::nullopt;
+    if (!admitted(request)) return std::nullopt;
     const auto& t = request.token;
     return QCborArray{1, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
         qint64(request.operation.index()), std::visit([](const auto& op) { return fields(op); }, request.operation)};

@@ -897,6 +897,11 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/lc_offsetworkerwire.h
      librecad/src/lib/offset_worker/lc_offsetworkerrequest.cpp
      librecad/src/lib/offset_worker/lc_offsetworkerrequest.h
+     librecad/src/lib/offset_worker/lc_offsetworkerresult.cpp
+     librecad/src/lib/offset_worker/lc_offsetworkerresult.h
+     librecad/src/lib/offset_worker/lc_offsetworkerclient.cpp
+     librecad/src/lib/offset_worker/lc_offsetworkerclient.h
+     librecad/src/lib/offset_worker/lc_offsetworkercompletion.cpp
      librecad/src/lib/engine/document/entities/lc_offsetcurvereadutils.h
      librecad/src/lib/engine/document/entities/lc_offsetcurvegrips.cpp
      librecad/src/lib/engine/document/entities/lc_offsetcurvegrips.h
@@ -2424,6 +2429,32 @@ target_link_libraries (librecad PRIVATE
                        Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network
 )
 
+# A one-request, headless helper. Keep it beside the application so the parent
+# never resolves a command from PATH or from drawing-controlled metadata.
+add_executable(librecad_offset_worker
+    librecad/src/main/lc_release_label.cpp
+    librecad/src/lib/offset_worker/lc_offsetworkerkernel.cpp
+    librecad/src/lib/offset_worker/lc_offsetworkermain.cpp
+)
+target_include_directories(librecad_offset_worker PRIVATE ${SHARED_INCLUDES})
+target_compile_features(librecad_offset_worker PRIVATE cxx_std_17)
+target_link_libraries(librecad_offset_worker PRIVATE librecad_lib
+    Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network)
+target_compile_definitions(librecad_offset_worker PRIVATE DWGSUPPORT)
+if(WIN32)
+    target_compile_definitions(librecad_offset_worker PRIVATE _USE_MATH_DEFINES)
+endif()
+set_target_properties(librecad_offset_worker PROPERTIES
+    OUTPUT_NAME LibreCADOffsetWorker
+    RUNTIME_OUTPUT_DIRECTORY "$<TARGET_FILE_DIR:librecad>"
+)
+add_dependencies(librecad librecad_offset_worker)
+if(APPLE)
+    install(TARGETS librecad_offset_worker RUNTIME DESTINATION bin/LibreCAD.app/Contents/MacOS)
+else()
+    install(TARGETS librecad_offset_worker RUNTIME DESTINATION bin)
+endif()
+
 if(APPLE)
     install(TARGETS librecad
         RUNTIME DESTINATION bin
@@ -3457,6 +3488,46 @@ if (BUILD_TESTS)
     add_librecad_filter_micro_test(
         librecad_offset_worker_request_tests
         librecad/src/lib/offset_worker/tests/lc_offsetworkerrequest_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_offset_native_edit_tests
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_edit_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_offset_worker_kernel_tests
+        librecad/src/lib/offset_worker/tests/lc_offsetworkerkernel_tests.cpp)
+    target_sources(librecad_offset_worker_kernel_tests PRIVATE
+        librecad/src/lib/offset_worker/lc_offsetworkerkernel.cpp)
+    add_librecad_filter_micro_test(
+        librecad_offset_worker_result_tests
+        librecad/src/lib/offset_worker/tests/lc_offsetworkerresult_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_offset_worker_process_tests
+        librecad/src/lib/offset_worker/tests/lc_offsetworkerprocess_tests.cpp)
+    target_compile_definitions(librecad_offset_worker_process_tests PRIVATE
+        LIBRECAD_OFFSET_HELPER_PATH="$<TARGET_FILE:librecad_offset_worker>")
+    add_dependencies(librecad_offset_worker_process_tests librecad_offset_worker)
+    add_librecad_filter_micro_test(
+        librecad_offset_worker_client_tests
+        librecad/src/lib/offset_worker/tests/lc_offsetworkerclient_tests.cpp)
+    set_target_properties(librecad_offset_worker_client_tests PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "$<TARGET_FILE_DIR:librecad>")
+    add_dependencies(librecad_offset_worker_client_tests librecad_offset_worker)
+    if(LIBRECAD_REGISTER_OFFSET_WORKER_TESTS)
+        foreach(kind request result kernel process client)
+            add_test(NAME offset_worker_${kind}
+                COMMAND librecad_offset_worker_${kind}_tests "[lc-offsetcurve]")
+            set_tests_properties(offset_worker_${kind} PROPERTIES
+                TIMEOUT 30 ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
+        endforeach()
+    endif()
+    set(LIBRECAD_OFFSET_EXTERNAL_TEST_HELPER "" CACHE FILEPATH
+        "Additional built offset helper to qualify (tests only, never a product command)")
+    if(LIBRECAD_OFFSET_EXTERNAL_TEST_HELPER)
+        add_librecad_filter_micro_test(
+            librecad_offset_worker_external_process_tests
+            librecad/src/lib/offset_worker/tests/lc_offsetworkerprocess_tests.cpp)
+        target_compile_definitions(librecad_offset_worker_external_process_tests PRIVATE
+            LIBRECAD_OFFSET_HELPER_PATH="${LIBRECAD_OFFSET_EXTERNAL_TEST_HELPER}")
+    endif()
     add_librecad_filter_micro_test(
         librecad_offset_persistence_tests
         librecad/src/lib/filters/tests/lc_offsetcurve_persistence_tests.cpp)

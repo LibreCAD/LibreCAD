@@ -85,5 +85,7 @@ std::optional<Cutter> decodeCutter(const QCborArray&);
  */
 std::optional<QCborArray> encode(const Request&);
 std::optional<Request> decode(const QCborArray&);
+/** Allocation-free admission for already owned values; still not geometry validation. */
+bool admitted(const Request&);
 }
 #endif
