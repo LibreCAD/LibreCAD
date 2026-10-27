@@ -193,6 +193,14 @@ public:
 
 protected:
     RS_HatchData m_data;
+    /**
+     * Distance from `coord` (in WCS) to the hatch region. For a pattern hatch
+     * the cached loops live in the frame rotated by -m_loopAngle about
+     * m_pivot (see validate()); the query is mapped forward with the stored
+     * pair so picking agrees with what is drawn, at every angle. Returns 0 if
+     * the query is inside and RS_MAXDOUBLE otherwise. The out-parameter
+     * `entity` is set to `this` on a hit.
+     */
     double doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, RS2::ResolveLevel level, double solidDist) const override;
 private:
     void drawPatternLines(RS_Painter* painter) const;

@@ -186,9 +186,10 @@ RS_Hatch* makeAnnularRectHatch(double ox1, double oy1, double ox2, double oy2,
  *
  * Ownership: caller takes ownership of the returned pointer.
  */
-RS_Hatch* makeTriangleHatch(double b, double h)
+RS_Hatch* makeTriangleHatch(double b, double h,
+                            const RS_HatchData& data = RS_HatchData(true, 1.0, 0.0, "SOLID"))
 {
-    auto* hatch = new RS_Hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+    auto* hatch = new RS_Hatch(nullptr, data);
 
     auto* loop = new RS_EntityContainer(hatch);
     hatch->addEntity(loop);
@@ -1663,5 +1664,89 @@ TEST_CASE("RS_Hatch area: left-branch hyperbola segment (#2559)",
         REQUIRE(hatch.getUpdateError() == RS_Hatch::HATCH_OK);
         REQUIRE(hatch.getTotalArea() ==
                 Catch::Approx(kExpected).margin(1e-12));
+    }
+}
+
+// Regression: picking a rotated pattern hatch tested the WCS click against
+// the loops validate() had rotated by -angle, so a 30-degree ANSI31 hatch on
+// (0,0)-(10,0)-(0,10) was unpickable at interior points and pickable just
+// outside. doGetDistanceToPoint now maps the query into the loop frame with
+// the stored pivot and loop angle, so picking agrees with what is drawn.
+
+namespace {
+// NOLINTBEGIN(readability-identifier-naming)
+struct PickRow { double x, y; bool hit; };
+// NOLINTEND(readability-identifier-naming)
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch pick: rotated pattern hatch tests the point in the loop frame",
+          "[lc-hatchfix][pick]") {
+    lc::test::SourcePatterns patterns;
+    const PickRow rows[] = {
+        {8.0, 1.0, true},  {2.0, 9.0, false},  {1.0, 1.0, true},
+        {9.5, 0.2, true},  {3.0, 3.0, true},
+        {12.0, 12.0, false}, {-1.0, 5.0, false},
+    };
+
+    SECTION("rotated ANSI31 hatch (TDD)") {
+        std::unique_ptr<RS_Hatch> hatch(makeTriangleHatch(
+            10.0, 10.0, RS_HatchData(false, 1.0, M_PI / 6.0, "ANSI31")));
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        for (const PickRow& r : rows) {
+            RS_Entity* out = nullptr;
+            const double d = hatch->getDistanceToPoint(RS_Vector(r.x, r.y), &out);
+            INFO("q=(" << r.x << "," << r.y << ") expected hit=" << r.hit);
+            REQUIRE(d == (r.hit ? 0.0 : RS_MAXDOUBLE));
+            if (r.hit) REQUIRE(out == hatch.get());
+        }
+    }
+
+    SECTION("solid hatch control: same answers before and after") {
+        std::unique_ptr<RS_Hatch> hatch(makeTriangleHatch(10.0, 10.0));
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        for (const PickRow& r : rows) {
+            RS_Entity* out = nullptr;
+            const double d = hatch->getDistanceToPoint(RS_Vector(r.x, r.y), &out);
+            INFO("q=(" << r.x << "," << r.y << ") expected hit=" << r.hit);
+            REQUIRE(d == (r.hit ? 0.0 : RS_MAXDOUBLE));
+        }
+    }
+
+    SECTION("unknown pattern at pi/2: loops still rotated, picking still works") {
+        std::unique_ptr<RS_Hatch> hatch(makeTriangleHatch(
+            10.0, 10.0,
+            RS_HatchData(false, 1.0, M_PI / 2.0,
+                         QStringLiteral("LC_HATCHFIX_NO_SUCH_PATTERN"))));
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_PATTERN_NOT_FOUND);
+        RS_Entity* out = nullptr;
+        REQUIRE(hatch->getDistanceToPoint(RS_Vector(8.0, 1.0), &out) == 0.0);
+        REQUIRE(hatch->getDistanceToPoint(RS_Vector(2.0, 9.0)) == RS_MAXDOUBLE);
+    }
+
+    SECTION("moved hatch re-stores the pivot") {
+        std::unique_ptr<RS_Hatch> hatch(makeTriangleHatch(
+            10.0, 10.0, RS_HatchData(false, 1.0, M_PI / 6.0, "ANSI31")));
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        hatch->move(RS_Vector(100.0, 50.0));
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        REQUIRE(hatch->getDistanceToPoint(RS_Vector(108.0, 51.0)) == 0.0);
+        REQUIRE(hatch->getDistanceToPoint(RS_Vector(102.0, 59.0)) == RS_MAXDOUBLE);
+    }
+
+    SECTION("clone of a rotated pattern hatch answers the same table") {
+        std::unique_ptr<RS_Hatch> original(makeTriangleHatch(
+            10.0, 10.0, RS_HatchData(false, 1.0, M_PI / 6.0, "ANSI31")));
+        REQUIRE(original->getUpdateError() == RS_Hatch::HATCH_OK);
+        std::unique_ptr<RS_Entity> cloned(original->clone());
+        auto* hatch = dynamic_cast<RS_Hatch*>(cloned.get());
+        REQUIRE(hatch != nullptr);
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        for (const PickRow& r : rows) {
+            RS_Entity* out = nullptr;
+            const double d = hatch->getDistanceToPoint(RS_Vector(r.x, r.y), &out);
+            INFO("q=(" << r.x << "," << r.y << ") expected hit=" << r.hit);
+            REQUIRE(d == (r.hit ? 0.0 : RS_MAXDOUBLE));
+        }
     }
 }

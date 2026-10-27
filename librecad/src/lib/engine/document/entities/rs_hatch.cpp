@@ -527,9 +527,16 @@ LC_SecondMoment RS_Hatch::getMomentOfInertia() const {
 
 double RS_Hatch::doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity,
                                     [[maybe_unused]] RS2::ResolveLevel level, [[maybe_unused]] double solidDist) const{
+    // validate() cached the loops turned by -m_loopAngle about m_pivot: test
+    // the point in that frame so picking agrees with what is drawn at every
+    // angle. For solid hatches m_loopAngle is 0 and this is the identity.
+    RS_Vector query = coord;
+    if (m_loopAngle != 0.0) {
+        query.rotate(m_pivot, -m_loopAngle);
+    }
     // Check if point is on the solid fill/hatch
     for (const auto& loop : *m_orderedLoops) {
-        if (loop.isInside(coord)) {
+        if (loop.isInside(query)) {
             if (entity != nullptr) {
                 *entity = const_cast<RS_Hatch*>(this);
             }
