@@ -97,7 +97,7 @@ This inventory compares the older attached tree with the later candidate.
 | Type/UI/source actions | Entity enum/coverage, property queue/dialog, default drag, Update/Restore actions | Candidate present. Property queue defers publication with a timer, but prepares geometry synchronously in `apply`; a deferred commit is not background computation. |
 | Stored-cache Trim | `lc_offsetcachetrim`, contacts/matching helpers, Modify Trim action and file tests | Candidate present: pure preparation, exact fragments, two-operand publication and plain-fragment persistence. Recheck precision/ownership/undo guarantees. |
 | Validation workers | `scripts/offset-curve-validation/`, X-H1 through X-H7 | Candidate has Node developer/test workers and recorded timeout fixes. These tools are not a shipped isolated geometry worker. Do not confuse their deadlines with GUI computation limits. |
-| Native geometry-worker path | Real five-operation helper/client plus dialog, sheet, grip and Update GUI routing committed/qualified | W0/W1 and these caller receipts are recorded. Separately qualified geometry-entry timeout awaits its checkpoint; creation/repeat, trim, import and packaged/final acceptance remain mandatory W0-W2 work. |
+| Native geometry-worker path | Real five-operation helper/client plus dialog, sheet, grip and Update GUI routing committed/qualified | W0/W1, these callers and the isolated real-geometry-entry timeout lane are recorded. Creation/repeat, trim, import and packaged/final acceptance remain mandatory W0-W2 work. |
 | Tests/build targets | Main Catch target, filter micro targets and two standalone offset allocation-failure targets | Candidate present; source registration is not discovery/execution. Use the actual targets in section5.3, not just the old grouped fast lanes. |
 | Surviving test defect | `spline_offset_representation_tests.cpp` lines205 and668 in candidate still use DWG enum ranges | `FormatDWG2007` is outside the range; those ordinary representation loops also omit it. Fix classification and add an executed R2007 regression in S0. The separate candidate matrix already lists all six DWG versions. |
 
@@ -304,7 +304,7 @@ candidate except the explicitly proposed native-worker tags.
 | C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a` plus later search; audit/retest | `[lc-offsetcurve][cache-topology-chain]` |
 | W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and initial deadline/authority policy implemented; finish caller/fallback/import ownership freeze before routing | operation/cap/deadline/call-site table |
 | W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; full app/deployed-package gates remain | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
-| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit and dialog/sheet/grip/Update receipts qualified; geometry-entry timeout checkpoint, creation/trim/import and final gates open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[edit][preparation]`; remaining integration and runner regression |
+| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update and geometry-entry timeout receipts qualified; creation/trim/import and final gates open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`; remaining integration and runner regression |
 | E1 | Guarded entity/factories, RTTI, stamp, clone, downgrade and transforms | C-check | candidate `92758859c` and later fixes; audit/retest | `[lc-offsetcurve][native]`, `[entity-coverage]` |
 | U1 | Type/INSERT/selection/SVG/menu/info dispatch and safe properties | E1 | candidate `49c9b328b`, `f0fb28fab`; audit/retest | native type/name/dispatch TUs, `[entity-coverage]` |
 | E2 | Cached grips/snaps, through proposal and transactional mutators | E1 | candidate `4300c1031`, `47e14c74b`; audit/retest | native edit/grip/transform TUs |
@@ -547,9 +547,11 @@ Finish W0-W2 in these bounded sub-slices before claiming GUI isolation:
    helper. Exercise crash, truncated/duplicate/mismatched replies, excessive
    diagnostics, delayed exit and recovery; validate report syntax, not exit0 alone.
    Stateful injected-clock preview/commit/kill/reap transitions now execute with
-   real children; retain the missed-kill-tick regression. A genuine geometry-entry
-   timeout/reap test remains open. The existing1ms real-child timeout and stalled
-   fault fixture are explicitly not hung-kernel acceptance.
+   real children; retain the missed-kill-tick regression. The isolated
+   geometry-entry timeout/reap lane is now qualified in `256c201a9` below. Its
+   deliberately nonreturning real-numeric-work request is not a naturally hung
+   primitive or OS-sandbox claim. The earlier1ms startup timeout and stalled
+   transport fixture remain explicitly insufficient on their own.
 2. Reuse the bounded `prepareDefinition` description now implemented: no-op/exact
    translation stay local; Generate descriptions run no producer/C stage and are
    not successful edit results. `Completion::apply` only updates a caller-owned
@@ -1182,12 +1184,46 @@ ASan stays `detect_leaks=0`; no generic Qt allocation/leak guarantee is claimed.
 | `W7-qualified-update-release.xml` | `ae5295d2364b4ddc3a4639d1c3f2dfb67fabc1fac7f8de3680621d1b2f2fa1b1` |
 | `W7-qualified-update-asan.xml` | `4e28682ab61fcc8dc8cadaf0ddc011cb5c4610d79ba8d05a99b835ea830b60c3` |
 
-Next checkpoint: commit the separately qualified geometry-entry timeout lane.
-Then freeze and implement typed ordinary output from the SAME producer call before
-routing creation/repeat; Native-only Generate cannot carry that fallback today.
-Continue stored-cache/conic trim and unpublished import ownership in4.2 order.
-Both full current-source application/deployed builds, complete file/version matrix,
-visible acceptance, source reconciliation/A-C audit and final R remain open.
+`256c201a9d505fc8c65124d7b3816c68ee457935` adds the isolated
+`offset_worker_geometry_timeout` lane (`RUN_SERIAL`). A dedicated uninstalled
+helper compiles the same main/kernel with a test-only Generate loop. It completes
+an actual engine+C pass, emits one bounded observed-work witness, then deliberately
+never returns while repeatedly doing real numeric work. After the witness, the
+parent's private test clock advances to the unchanged30000ms commit boundary;
+100ms termination/1000ms reap use real monotonic elapsed time. macOS observes
+SIGTERM ignored only after actual entry, kill escalation, successful reap, a
+responsive parent, no completion capability and full unknown-work reservation.
+The same client rejects ID reuse and recovers through a genuine cache-validation
+reply. This reproduces a deliberately nonreturning geometry request, not a
+naturally hung numeric primitive, and establishes no OS sandbox/process-tree claim.
+
+Release and ASan pass1 case each (1058/1926 timing-dependent assertions), with
+strict XML checks. CTest discovers and passes exactly1/1 in both builds. The ASan
+cache initially had worker test registration disabled and returned zero discovery;
+that run receives no credit. Registration was explicitly enabled and rerun. Product
+helper binaries in both builds contain no fixture marker; only the isolated test
+helpers contain it. No product input, environment switch, path setter or command
+option enables the compiled-out loop, and no application helper was replaced.
+Retain the red recovery assertion: the normal `RS_DEBUG::setLevel(0)` startup line
+is allowed, while stale geometry witness/failure prefixes from the killed job are
+explicitly forbidden in the new reply. ASan remains `detect_leaks=0`.
+
+| Artifact | SHA256 |
+|---|---|
+| `W8-qualified-timeout-release.xml` | `3a50afc68766544b9f2de1c20e5870fc2517b9420d55ae423fe06caa48cfe3ca` |
+| `W8-qualified-timeout-asan.xml` | `b5d19a3fdc4113b30f6342f02114540f5a48239b8c7297088ba64be0b954923c` |
+
+Next bounded slice: freeze typed ordinary output retained from the SAME producer
+invocation for native SeveralPieces/representation/C refusals. Extend the owned
+result and strict positional reply, bump the protocol, retain original work/usage,
+bound every output/aggregate and make unsupported kinds explicit. Parent ordinary
+materialization must preserve geometry and local attributes without granting native
+eligibility. Test one engine run/no second fallback generation in Release/ASan,
+then route creation/repeat GUI transactions. Native-only Generate cannot carry
+this fallback today. Continue stored-cache/conic trim and unpublished import
+ownership in4.2 order. Full current-source application/deployed builds, complete
+file/version matrix, visible acceptance, source reconciliation/A-C audit and final
+R remain open. This client-level fixture alone is not whole-GUI acceptance.
 
 S0 source/target reconciliation, A-C review, W0-W2 caller integration and R remain
 open. Next execute the remaining bounded worker sub-slices in4.2, not a second
@@ -1204,16 +1240,16 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   executions are recorded above; do not redo them as missing implementation.
 - [ ] A-core through C-check: review/requalify existing code and patch only proven
   accounting, ownership, occurrence or global-topology gaps. No duplicate checker.
-- [ ] W0-W2: finish genuine geometry-entry timeout qualification, typed ordinary
-  fallback/import ownership and GUI adoption. Reuse the qualified helper/client/
+- [ ] W0-W2: finish typed ordinary fallback/import ownership and remaining GUI
+  adoption/failure acceptance. Reuse the qualified geometry-entry timeout/helper/client/
   reply modules; do not redo them as absent. Keep Node runner scope separate.
 - [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
   DXF/DWG, source and trim implementation with any new worker/publication changes.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** checkpoint the qualified geometry
-timeout lane, then typed ordinary fallback and creation/repeat routing in the remaining
+**Next concrete action on implementation resume:** typed same-invocation ordinary
+fallback, then creation/repeat routing in the remaining
 4.2 caller adapters. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
 Nothing is automatically copied into the dirty main tree. Native caller routing,
