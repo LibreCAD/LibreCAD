@@ -130,7 +130,8 @@ struct LC_SecondMoment {
     }
 
     /**
-     * @brief Rotate the second-moment tensor by angle θ (radians, counterclockwise).
+     * @brief Legacy rotation: turns by -theta. Kept while deprecated callers
+     *        exist; new code should use regionRotated(theta) instead.
      */
     LC_SecondMoment rotated(double theta) const {
         const double c  = std::cos(theta);
@@ -142,6 +143,27 @@ struct LC_SecondMoment {
             cc * ixx + ss * iyy + 2.0 * cs * ixy,
             ss * ixx + cc * iyy - 2.0 * cs * ixy,
             cs * (iyy - ixx) + (cc - ss) * ixy
+        };
+    }
+
+    /**
+     * @brief R(theta)*M*R(theta)^T: the tensor of a closed region turned
+     *        counter-clockwise by theta about the origin. This is the
+     *        companion to LC_FirstMoment::rotated, which also turns by
+     *        +theta. Use this on hatch moments mapped from the loop frame
+     *        back to WCS; do not use rotated() for that purpose (it turns
+     *        the tensor by -theta).
+     */
+    LC_SecondMoment regionRotated(double theta) const {
+        const double c  = std::cos(theta);
+        const double s  = std::sin(theta);
+        const double cc = c * c;
+        const double ss = s * s;
+        const double cs = c * s;
+        return {
+            cc * ixx - 2.0 * cs * ixy + ss * iyy,
+            ss * ixx + 2.0 * cs * ixy + cc * iyy,
+            cs * (ixx - iyy) + (cc - ss) * ixy
         };
     }
 

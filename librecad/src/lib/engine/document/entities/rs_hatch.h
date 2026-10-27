@@ -148,16 +148,14 @@ public:
     double getTotalArea() const;
 
     /**
-     * @return Centroid of the hatch region as (cx, cy) = (∬ x dA / A, ∬ y dA / A).
+     * @return Centroid of the hatch region in WCS, (cx, cy) = (∬x dA/A, ∬y dA/A).
      * Returns an invalid RS_Vector if area is zero or update() has not run.
      */
     RS_Vector getCentroid() const;
 
     /**
-     * @brief getMomentOfInertia - the three second central moments of area for the
-     * hatch region, computed via Green's theorem line integrals about the centroid.
-     *
-     * Returns LC_SecondMoment{ixx, iyy, ixy} where:
+     * @brief getMomentOfInertia - the three second central moments of area
+     * for the hatch region in WCS axes, about the centroid:
      *   ixx = ∬ (x - cx)² dA,   iyy = ∬ (y - cy)² dA,   ixy = ∬ (x-cx)(y-cy) dA
      *
      * The full inertia tensor about the centroid is:
@@ -215,8 +213,11 @@ private:
     void updatePatternHatch(RS_Layer* layer, const RS_Pen& pen);
     void updateSolidHatch(RS_Layer* layer, const RS_Pen& pen) const;
     mutable double m_area = RS_MAXDOUBLE;
-    mutable LC_FirstMoment m_firstMoment;
-    mutable LC_SecondMoment m_secondMoment;
+    /// WCS centroid of the hatch region, mapped from the loop frame through
+    /// (m_pivot, m_loopAngle); set by update() after a successful validate().
+    mutable RS_Vector m_centroid{false};
+    /// Central second-moment tensor about m_centroid, in WCS axes.
+    mutable LC_SecondMoment m_centralMoment;
     mutable bool m_secondMomentValid = false;
     RS_HatchError m_updateError = HATCH_UNDEFINED;
     bool m_updateRunning = false;

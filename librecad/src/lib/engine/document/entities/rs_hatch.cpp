@@ -133,7 +133,8 @@ RS_Entity* RS_Hatch::clone() const {
     // Force re-optimization and update to deep-copy caches and subcontainers
     cloneHatch->m_needOptimization = true;
     cloneHatch->m_area = RS_MAXDOUBLE;
-    cloneHatch->m_firstMoment = LC_FirstMoment{};
+    cloneHatch->m_centroid = RS_Vector(false);
+    cloneHatch->m_centralMoment = {};
     cloneHatch->m_secondMomentValid = false;
     cloneHatch->m_updated = false;
     cloneHatch->m_boundaryContainers.clear();  // Will be regenerated
@@ -384,14 +385,28 @@ void RS_Hatch::update() {
         updatePatternHatch(layer, pen);
     }
 
-    // Compute 0th, 1st, and 2nd moments from loops
+    // Compute 0th, 1st, and 2nd moments from loops. The loops live in the
+    // frame rotated by -m_loopAngle about m_pivot; map the centroid and the
+    // central tensor back to WCS once their frame-local values are known.
     m_area = 0.0;
-    m_firstMoment = LC_FirstMoment{};
-    m_secondMoment = LC_SecondMoment{};
+    LC_FirstMoment first;    // raw first moment of the loop frame about (0, 0)
+    LC_SecondMoment second;  // raw second moment of the loop frame about (0, 0)
     for (const auto& loop : *m_orderedLoops) {
-        m_area         += loop.getTotalArea();
-        m_firstMoment  += loop.getTotalFirstMoment();
-        m_secondMoment += loop.getTotalSecondMoment();
+        m_area += loop.getTotalArea();
+        first  += loop.getTotalFirstMoment();
+        second += loop.getTotalSecondMoment();
+    }
+    m_centroid = RS_Vector(false);
+    m_centralMoment = {};
+    if (m_area >= RS_TOLERANCE) {
+        RS_Vector centroid{first.mx / m_area, first.my / m_area};
+        LC_SecondMoment central = second.getCentral(m_area, centroid.x, centroid.y);
+        if (m_loopAngle != 0.0) {
+            centroid.rotate(m_pivot, m_loopAngle);
+            central = central.regionRotated(m_loopAngle);
+        }
+        m_centroid = centroid;
+        m_centralMoment = central;
     }
     m_secondMomentValid = true;
 
@@ -576,16 +591,14 @@ RS_Vector RS_Hatch::getCentroid() const {
     if (!m_secondMomentValid || m_area < RS_TOLERANCE) {
         return RS_Vector(false);
     }
-    return RS_Vector(m_firstMoment.mx / m_area, m_firstMoment.my / m_area);
+    return m_centroid;
 }
 
 LC_SecondMoment RS_Hatch::getMomentOfInertia() const {
     if (!m_secondMomentValid || m_area < RS_TOLERANCE) {
         return {};
     }
-    const double cx = m_firstMoment.mx / m_area;
-    const double cy = m_firstMoment.my / m_area;
-    return m_secondMoment.getCentral(m_area, cx, cy);
+    return m_centralMoment;
 }
 
 

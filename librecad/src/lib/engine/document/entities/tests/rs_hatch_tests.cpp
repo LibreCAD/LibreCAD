@@ -1705,3 +1705,110 @@ TEST_CASE("RS_Hatch pick: rotated pattern hatch tests the point in the loop fram
         }
     }
 }
+
+// --- WCS centroid and central tensor of pattern hatches --------------------
+// RS_Hatch cached the frame-local centroid and central tensor without
+// mapping them back through (m_pivot, m_loopAngle). A 30-deg ANSI31 right
+// triangle therefore reported centroid (2.72, 4.39) and tensor
+// (157.5, 398.1, -69.4) instead of the analytic WCS values (10/3, 10/3)
+// and (2500/9, 2500/9, -1250/9). Pattern hatches now map centroid as a
+// point and the central tensor by R(a)*M'*R(a)^T.
+
+namespace {
+
+// NOLINTBEGIN(readability-identifier-naming)
+
+/** Numeric tolerance helper: area within rel * area, centroid within rel *
+ *  size, tensor within rel * area * size * size. The name must not clash
+ *  with a libc or POSIX symbol. */
+void checkHatchMoments(const RS_Hatch& h, double area,
+                       const RS_Vector& centroid,
+                       const LC_SecondMoment& central,
+                       double size, double rel) {
+    REQUIRE_THAT(h.getTotalArea(),
+                 Catch::Matchers::WithinAbs(area, rel * std::abs(area)));
+    const RS_Vector c = h.getCentroid();
+    REQUIRE(c.valid);
+    REQUIRE_THAT(c.x, Catch::Matchers::WithinAbs(centroid.x, rel * size));
+    REQUIRE_THAT(c.y, Catch::Matchers::WithinAbs(centroid.y, rel * size));
+    const LC_SecondMoment m = h.getMomentOfInertia();
+    const double tol = rel * std::abs(area) * size * size;
+    REQUIRE_THAT(m.ixx, Catch::Matchers::WithinAbs(central.ixx, tol));
+    REQUIRE_THAT(m.iyy, Catch::Matchers::WithinAbs(central.iyy, tol));
+    REQUIRE_THAT(m.ixy, Catch::Matchers::WithinAbs(central.ixy, tol));
+}
+
+// NOLINTEND(readability-identifier-naming)
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: ANSI31 30 deg triangle in WCS",
+          "[lc-hatchfix][moments]") {
+    lc::test::SourcePatterns patterns;
+    std::unique_ptr<RS_Hatch> hatch(makeTriangleHatch(
+        10.0, 10.0, RS_HatchData(false, 1.0, M_PI / 6.0, "ANSI31")));
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    // Area 10*10/2 = 50; centroid (10/3, 10/3); ixx_c = iyy_c = 2500/9;
+    // ixy_c = -1250/9. Size is the long side 10 * sqrt(2) ~= 14.14.
+    checkHatchMoments(*hatch, 50.0, RS_Vector(10.0 / 3.0, 10.0 / 3.0),
+                      {2500.0 / 9.0, 2500.0 / 9.0, -1250.0 / 9.0},
+                      10.0 * std::sqrt(2.0), 1e-10);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: missing pattern at 90 deg keeps WCS moments",
+          "[lc-hatchfix][moments]") {
+    lc::test::SourcePatterns patterns;
+    std::unique_ptr<RS_Hatch> hatch(makeTriangleHatch(
+        10.0, 10.0,
+        RS_HatchData(false, 1.0, M_PI / 2.0,
+                     "LC_HATCHFIX_NO_SUCH_PATTERN")));
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_PATTERN_NOT_FOUND);
+    checkHatchMoments(*hatch, 50.0, RS_Vector(10.0 / 3.0, 10.0 / 3.0),
+                      {2500.0 / 9.0, 2500.0 / 9.0, -1250.0 / 9.0},
+                      10.0 * std::sqrt(2.0), 1e-10);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: pattern hatch equals the solid hatch at any angle",
+          "[lc-hatchfix][moments]") {
+    lc::test::SourcePatterns patterns;
+    // Rectangle (0,0)-(20,10) as one loop plus RS_Circle r=2 at (14,6) as a
+    // second loop (a hole). Analytical result (recomputed below): the whole
+    // region has area 20*10 - pi*2*2 = 200 - 4*pi; centroid at
+    // (20*10*10 - pi*4*14)/(200 - 4*pi), (20*10*5 - pi*4*6)/(200 - 4*pi).
+    auto buildHatch = [](const RS_HatchData& data) {
+        auto* hatch = new RS_Hatch(nullptr, data);
+        auto* outer = new RS_EntityContainer(hatch);
+        hatch->addEntity(outer);
+        outer->addEntity(new RS_Line(outer, RS_Vector(0, 0), RS_Vector(20, 0)));
+        outer->addEntity(new RS_Line(outer, RS_Vector(20, 0), RS_Vector(20, 10)));
+        outer->addEntity(new RS_Line(outer, RS_Vector(20, 10), RS_Vector(0, 10)));
+        outer->addEntity(new RS_Line(outer, RS_Vector(0, 10), RS_Vector(0, 0)));
+        auto* hole = new RS_EntityContainer(hatch);
+        hatch->addEntity(hole);
+        hole->addEntity(new RS_Circle(hole, RS_CircleData(RS_Vector(14, 6), 2.0)));
+        hatch->update();
+        return std::unique_ptr<RS_Hatch>(hatch);
+    };
+    auto solid = buildHatch(RS_HatchData(true, 1.0, 0.0, "SOLID"));
+    REQUIRE(solid->getUpdateError() == RS_Hatch::HATCH_OK);
+    const double area = solid->getTotalArea();
+    const RS_Vector centroid = solid->getCentroid();
+    const LC_SecondMoment central = solid->getMomentOfInertia();
+    REQUIRE(area > 0.0);
+    REQUIRE(centroid.valid);
+
+    const double angles[] = {0.0, M_PI / 6.0, 37.0 * M_PI / 180.0,
+                              M_PI / 2.0, 123.0 * M_PI / 180.0};
+    for (double a : angles) {
+        INFO("angle " << a);
+        auto h = buildHatch(RS_HatchData(false, 1.0, a, "ANSI31"));
+        REQUIRE(h->getUpdateError() == RS_Hatch::HATCH_OK);
+        // Hatch pattern area is invariant under rotation; solid and pattern
+        // use the same boundary so their centroids and tensors agree in WCS.
+        checkHatchMoments(*h, area, centroid, central, 22.4, 1e-10);
+    }
+}
+

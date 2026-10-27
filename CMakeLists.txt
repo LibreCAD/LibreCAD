@@ -2657,6 +2657,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_polylineclosing_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_dimarrowtests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_hatch_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_secondmoment_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_hatchmovetests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_hatchpattern_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_image_tests.cpp
