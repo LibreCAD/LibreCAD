@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-27. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0/W1 partially implemented; native helper/client qualified, GUI routing incomplete**.
+Status: **S0/W0/W1 partially implemented; native helper/client and single-dialog routing qualified, remaining callers open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -97,7 +97,7 @@ This inventory compares the older attached tree with the later candidate.
 | Type/UI/source actions | Entity enum/coverage, property queue/dialog, default drag, Update/Restore actions | Candidate present. Property queue defers publication with a timer, but prepares geometry synchronously in `apply`; a deferred commit is not background computation. |
 | Stored-cache Trim | `lc_offsetcachetrim`, contacts/matching helpers, Modify Trim action and file tests | Candidate present: pure preparation, exact fragments, two-operand publication and plain-fragment persistence. Recheck precision/ownership/undo guarantees. |
 | Validation workers | `scripts/offset-curve-validation/`, X-H1 through X-H7 | Candidate has Node developer/test workers and recorded timeout fixes. These tools are not a shipped isolated geometry worker. Do not confuse their deadlines with GUI computation limits. |
-| Native geometry-worker path | Real four-operation headless helper, bounded replies, private completion admission and asynchronous client now committed; UI math still remains in process | W0/W1 foundation qualified. Stateful fault/hung-kernel tests, caller integration and packaged-application acceptance remain mandatory W0-W2 work. |
+| Native geometry-worker path | Real four-operation helper/client and single-entity properties dialog routing committed; other UI callers still run geometry in process | W0/W1 foundation and dialog qualification recorded. Genuine geometry-entry timeout, remaining callers and packaged-application acceptance remain mandatory W0-W2 work. |
 | Tests/build targets | Main Catch target, filter micro targets and two standalone offset allocation-failure targets | Candidate present; source registration is not discovery/execution. Use the actual targets in section5.3, not just the old grouped fast lanes. |
 | Surviving test defect | `spline_offset_representation_tests.cpp` lines205 and668 in candidate still use DWG enum ranges | `FormatDWG2007` is outside the range; those ordinary representation loops also omit it. Fix classification and add an executed R2007 regression in S0. The separate candidate matrix already lists all six DWG versions. |
 
@@ -312,7 +312,7 @@ candidate except the explicitly proposed native-worker tags.
 | F1 | Shared typed schema, raw-carrier eligibility, ownership and byte limits | E1 | candidate `305042903`; audit/retest | `lc_offsetcurvexdata_tests.cpp`, `lc_offsetcurvecarrier_tests.cpp` |
 | F2 | Actual DXF/DWG SPLINE writer/adoption and transactional errors | F1,G | candidate `32597762b`, `7e46b2de8`; audit/retest | offset adapter/persistence/hostile-file TUs |
 | F3 | Version/read/write/conversion, clipboard, independent fixtures and output inspection | F2 | candidate `79ae1930b`; fixtures present, rerun scope required | `[lc-offsetcurve][g-matrix]`, explicit per-row evidence |
-| U2 | Single/multi properties, busy state, async preparation and stale-result protection | E2,U1,W2 | candidate sheet/dialog and `f617fcf70`; compute isolation open | sheet/dialog/batch-failure TUs |
+| U2 | Single/multi properties, busy state, async preparation and stale-result protection | E2,U1,W2 | single-dialog isolation qualified in `705a0135b`; property-sheet batch isolation remains open | sheet/dialog/batch-failure TUs |
 | U3 | Grip drag, cancel, ownership, undo/redo and no late publication | E2,U2 | candidate `f214b3408` plus final snapshots; audit/integrate worker | `[lc-offsetcurve][h-drag]` |
 | U4 | Ellipse-only persisted option, preview/commit parity and messages | G,F3,U2,U3 | candidate `3d7195631`; audit/retest | option-enable TU and visible workflows |
 | O1 | Transactional Update from legal live ellipse; no-op/refusal counts | U4 | candidate `379729bb3` and snapshot fixes; audit/retest | `lc_action_offsetcurve_source_tests.cpp` |
@@ -1013,13 +1013,45 @@ transport fixtures, not a hung geometry kernel or a GUI transaction.
 | `W2-final-fault-serial-asan.xml` | `7b36d2ec37080021cbdd6981400b5ca5ffd0f5376a08d6a17d3bedacfbc99416` |
 | `W2-final-ctest.log` | `c0e7203dac50817f8e6860f398ad2e39380eec2203bd23016b9a350a164fefd5` |
 
-Next GUI slice: route the single-entity dialog's owned clone through preparation
-and its owning worker; seal the input again before application. Disable/veto
-accept and point-picker closure while pending, cancel on target/context/dialog
-destruction, preserve dirty peer editors, and test actual helper execution with
-an event-loop heartbeat. Retain the existing outer native edit guard/clone owner
-through `dlg.exec()`. Then route sheet batches, grips, Update, creation and trim
-in the4.2 order. File/import lifetime and ordinary fallback are not waived.
+`705a0135b4727c494c5fce9d13b469d0efafddbe` routes the single-entity
+properties dialog's owned clone through the real fixed-path helper. No-op/exact
+translation remain local through an opaque source-bound preparation; a moved-from
+translation cannot report a change. Generated replies retain actual child stages,
+then recheck generation, source snapshot and document/UCS/outer action guard before
+adoption. Rapid proposals coalesce; Accept/pickers are vetoed while pending;
+rejection cancels without preventing reuse; final acceptance/destruction detach
+before clone publication/release. Refusals restore cached text without revisiting
+a revoked formatter context. Executing editor guards are copied and followed by
+lifetime/generation checks; cancellation-signal reentry cannot overwrite a newer
+binding. Ordinary entity widgets retain their existing setters.
+
+Release and ASan each pass all55 dialog cases/25793 assertions, preserving all38
+original case identities plus17 new cases. The10 opaque-preparation cases/90569
+assertions also pass both builds. Reports pass strict XML validation. Retain the
+earlier red moved-from test and four-failure dialog report: the former exposed an
+authority-transfer bug; the latter included a synchronous picker expectation.
+The final55-case runs use that original failing order/seed3812149849. No geometry
+cap, product deadline or3500ms test watchdog was raised. ASan leak detection stays
+disabled; this is not a generic leak/allocation-atomicity claim. The qmake6 full
+application build was started and remains pending at this checkpoint; prior
+helper-only evidence does not qualify the changed application or deployed bundle.
+
+| Artifact | SHA256 |
+|---|---|
+| `W3-review-dialog-release.xml` | `f9fa4b50fb6826d6d0ad23b8c7f3ff85ecce3f5103476a25bea960eddaf78152` |
+| `W3-review-dialog-asan.xml` | `c365d6a5889abbc1de57fb4dfc363a8a783e4c7014bc8f54cafa22e1d74e332b` |
+| `W3-worker-edit.xml` | `7cd4561007539b6f5903872bcd7a86afbec7db9c44cf1b403d343d0ecb902f11` |
+| `W3-worker-edit-asan.xml` | `8aa28a79a8fd2bc1aee48e1cad334478f1b1b1bf3a7be91543713b6899ca3b3d` |
+
+Next GUI slice: add explicit value-owned definition proposals to the property
+sheet, leaving attribute edits cheap. One owning client prepares batch peers
+sequentially; keep prior accepted candidates on an individual refusal, seal
+source/context/undo again, then publish one atomic batch. Keep worker completion
+ownership outside borrowed callbacks, disable conflicting edits while preparing,
+and test heartbeat, cancellation/rebinding and per-peer refusal. Do not implement
+isolation by intercepting arbitrary setters or nesting a GUI event loop. Then
+route grips, Update, creation and trim in the4.2 order. File/import lifetime,
+Through no-op membership and ordinary fallback are not waived.
 
 S0 source/target reconciliation, A-C review, W0-W2 caller integration and R remain
 open. Next execute the remaining bounded worker sub-slices in4.2, not a second
@@ -1044,7 +1076,7 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** single-entity dialog GUI
+**Next concrete action on implementation resume:** property-sheet batch GUI
 routing using the qualified preparation/client/completion, then the remaining
 4.2 caller adapters. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
