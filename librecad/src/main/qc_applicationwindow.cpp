@@ -42,6 +42,7 @@
 #include <QMessageBox>
 #include <QPagedPaintDevice>
 #include <QPluginLoader>
+#include <QPointer>
 #include <QPrinter>
 #include <QPrintDialog>
 #include <QRegExp>
@@ -2235,7 +2236,15 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow* w) 
 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileNewHelper: creating new doc window");
     /*QC_MDIWindow* */ w = slotFileNew();
+    // The events processed below may close the new window (Close All, quit), and
+    // doClose() deletes it: stop as soon as it is closed.
+    const QPointer<QC_MDIWindow> guard(w);
+    const auto closed = [this, &guard, w]() { return guard.isNull() || !window_list.contains(w); };
     qApp->processEvents(QEventLoop::AllEvents, 1000);
+    if (closed()) {
+        QApplication::restoreOverrideCursor();
+        return true; // closed by the user: not a template error
+    }
 
     // link the layer widget to the new document:
     RS_LayerList *layerList = w->getDocument()->getLayerList();
@@ -2254,6 +2263,10 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow* w) 
     coordinateWidget->setGraphic(w->getGraphic());
 
     qApp->processEvents(QEventLoop::AllEvents, 1000);
+    if (closed()) {
+        QApplication::restoreOverrideCursor();
+        return true;
+    }
 
     // loads the template file in the new view:
     if (!fileName.isEmpty()) {
@@ -2450,13 +2463,17 @@ void QC_ApplicationWindow::
             commandWidget->appendHistory(message);
         }
         // Create new document window:
-		QMdiSubWindow* old=activedMdiSubWindow;
-        QRect geo;
-        //bool maximized=false;
-
         QC_MDIWindow* w = slotFileNew(nullptr);
+        // The events processed below may close the new window (Close All, quit), and
+        // doClose() deletes it: stop as soon as it is closed.
+        const QPointer<QC_MDIWindow> guard(w);
+        const auto closed = [this, &guard, w]() { return guard.isNull() || !window_list.contains(w); };
         // RVT_PORT qApp->processEvents(1000);
         qApp->processEvents(QEventLoop::AllEvents, 1000);
+        if (closed()) {
+            QApplication::restoreOverrideCursor();
+            return;
+        }
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: linking layer list");
              RS_LayerList *layerList = w->getDocument()->getLayerList();
@@ -2476,10 +2493,9 @@ void QC_ApplicationWindow::
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: open file");
 
         qApp->processEvents(QEventLoop::AllEvents, 1000);
-
-        if(old != nullptr) {//save old geometry
-            geo=old->geometry();
-            //maximized=old->isMaximized();
+        if (closed()) {
+            QApplication::restoreOverrideCursor();
+            return;
         }
 
         // open the file in the new view:
@@ -2493,6 +2509,10 @@ void QC_ApplicationWindow::
                     .arg( fileName);
             commandWidget->appendHistory( msg);
             QMessageBox::information( this, QMessageBox::tr("Warning"), msg, QMessageBox::Ok);
+        }
+        if (closed()) {
+            QApplication::restoreOverrideCursor();
+            return;
         }
         if (!success) {
                // error
