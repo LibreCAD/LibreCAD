@@ -3494,6 +3494,13 @@ if (BUILD_TESTS)
     endfunction()
 
     add_librecad_filter_micro_test(
+        librecad_offset_source_preparation_tests
+        librecad/src/lib/modification/tests/rs_modification_offsetcurveagain_tests.cpp)
+    target_sources(librecad_offset_source_preparation_tests PRIVATE
+        librecad/src/lib/modification/tests/rs_modification_offsetcurve_tests.cpp
+        librecad/src/lib/modification/tests/rs_modification_offset_tests.cpp)
+
+    add_librecad_filter_micro_test(
         librecad_offset_adapter_tests
         librecad/src/lib/filters/tests/lc_offsetcurve_adapter_tests.cpp)
     add_librecad_filter_micro_test(

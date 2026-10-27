@@ -170,6 +170,17 @@ struct LC_OffsetBatchLimits {
     static LC_OffsetBatchLimits preview();
 };
 
+/** Fixed source eligibility for owned geometry preparation, not a certificate.
+ * nativeDefinition is present only for an editable, consistent native source.
+ * A stored native cache may be an ordinary RS_Spline in the isolated helper;
+ * any new native output still requires the existing producer/checker admission.
+ */
+struct LC_OffsetSourceContext {
+    bool topLevel = false;
+    bool nativeSource = false;
+    std::optional<LC_EllipseOffsetDefinition> nativeDefinition;
+};
+
 enum class LC_OffsetSourceStatus {
     Succeeded,
     InvalidSource,
@@ -572,6 +583,20 @@ public:
                                                    LC_DocumentModificationBatch& ctx,
                                                    LC_OffsetPreviewCache* cache = nullptr);
 
+    /** Prepare one source's numeric copy series in caller-owned roots.
+     * The caller has already admitted visibility, target layer, finite nonzero
+     * distances and source/request limits. Pass empty roots and a fresh outcome.
+     * Eligibility is fixed input; this entry never discovers document membership.
+     * Sets copiesRequested and returns status; source identity, status assignment,
+     * document/list handoff remain the caller's job. A refusal or exception
+     * discards provisional roots/committed usage, retaining attempted-work data.
+     * Uses the existing preview cache and unchanged generation/C admission paths.
+     */
+    static LC_OffsetSourceStatus prepareOffsetSource(const RS_OffsetData& data, RS_Entity& source,
+        bool forPreviewOnly, const LC_OffsetBatchLimits& limits, std::size_t requestDeepLeft,
+        LC_OffsetSourceContext sourceContext, std::vector<std::unique_ptr<RS_Entity>>& roots,
+        LC_OffsetSourceOutcome& result, LC_OffsetPreviewCache* cache = nullptr);
+
     static bool cut(const RS_Vector& cutCoord, RS_AtomicEntity* cutEntity, LC_DocumentModificationBatch& ctx);
 
     // FIXME - sand - review & complete
@@ -609,6 +634,14 @@ private:
     static bool trimAtomicByEnding(RS_AtomicEntity* atomicToTrim, const RS_Vector& trimPoint, RS2::Ending ending);
     static bool doExplodeTextIntoLetters(const RS_MText* text, LC_DocumentModificationBatch& ctx);
     static bool doExplodeTextIntoLetters(RS_Text* text, LC_DocumentModificationBatch& ctx);
+
+    /** Null context preserves the synchronous adapter's live eligibility reads
+     * at their original callback boundaries; copies were frozen before preflight.
+     */
+    static LC_OffsetSourceStatus prepareOffsetSourceImpl(const RS_OffsetData& data, RS_Entity& source,
+        bool forPreviewOnly, const LC_OffsetBatchLimits& limits, std::size_t requestDeepLeft,
+        std::vector<std::unique_ptr<RS_Entity>>& roots, LC_OffsetSourceOutcome& result,
+        LC_OffsetPreviewCache* cache, const LC_OffsetSourceContext* sourceContext, int numberOfCopies);
 
 protected:
     static void trimEnding(const RS_Vector& trimCoord, RS_AtomicEntity* trimmed1, const RS_Vector& is);

@@ -1479,6 +1479,357 @@ bool RS_Modification::offset(const RS_OffsetData& data, const QList<RS_Entity*>&
     return offsetWithOutcome(data, entitiesList, forPreviewOnly, LC_OffsetBatchLimits{}, ctx).anySourceSucceeded();
 }
 
+LC_OffsetSourceStatus RS_Modification::prepareOffsetSource(const RS_OffsetData& data, RS_Entity& e,
+    const bool forPreviewOnly, const LC_OffsetBatchLimits& limits, const std::size_t requestDeepLeft,
+    const LC_OffsetSourceContext sourceContext, std::vector<std::unique_ptr<RS_Entity>>& roots,
+    LC_OffsetSourceOutcome& result, LC_OffsetPreviewCache* const cache) {
+    const int numberOfCopies = data.obtainNumberOfCopies();
+    result.copiesRequested = numberOfCopies;
+    const auto discard = [&]() noexcept {
+        roots.clear(); result.copiesMade = result.copiesKeptPlain = 0;
+        result.keptPlain.clear(); result.usage = {};
+    };
+    try {
+        const auto status = prepareOffsetSourceImpl(data, e, forPreviewOnly, limits, requestDeepLeft, roots, result,
+            cache, &sourceContext, numberOfCopies);
+        if (status != LC_OffsetSourceStatus::Succeeded) discard();
+        return status;
+    } catch (...) {
+        discard();
+        throw;
+    }
+}
+
+LC_OffsetSourceStatus RS_Modification::prepareOffsetSourceImpl(const RS_OffsetData& data, RS_Entity& e,
+    const bool forPreviewOnly, const LC_OffsetBatchLimits& limits, const std::size_t requestDeepLeft,
+    std::vector<std::unique_ptr<RS_Entity>>& roots, LC_OffsetSourceOutcome& result,
+    LC_OffsetPreviewCache* const cache, const LC_OffsetSourceContext* const sourceContext, const int numberOfCopies) {
+    // All copies stay provisional until the caller accepts the source as a whole.
+    LC_OffsetOutputUsage& usage = result.usage;
+    LC_OffsetSourceBudget budget = limits.perSource;
+    budget.maxDeepEntities = std::min(budget.maxDeepEntities, requestDeepLeft);
+    auto measureAll = [&roots, &budget]() {
+        std::vector<const RS_Entity*> all;
+        for (const std::unique_ptr<RS_Entity>& root : roots) {
+            all.push_back(root.get());
+        }
+        return measureOffsetOutput(all, budget.maxDeepEntities);
+    };
+    // whether a copy that cannot be made ends the series rather than fails the source
+    auto stopsSeries = [&result]() {
+        if (result.copiesMade == 0) {
+            return false;
+        }
+        result.stoppedBy = LC_OffsetSourceStatus::OffsetFailed;
+        return true;
+    };
+    const auto adoptProduced = [&](LC_CurveOffsetMaterializationResult& copy, const int ordinal,
+                                   const double magnitude, const LC_CurveOffsetSide side,
+                                   const LC_OffsetSourceBudget& left,
+                                   const LC_OffsetPlainReason nativeFallback,
+                                   const std::optional<LC_OffsetCheckResult::Reason> nativeCheck) {
+        if (!data.asOffsetCurve || forPreviewOnly ||
+            (e.rtti() != RS2::EntityEllipse && e.rtti() != RS2::EntityOffsetCurve &&
+                !(sourceContext && sourceContext->nativeSource))) return;
+        const auto kept = [&](const LC_OffsetPlainReason reason,
+                              std::optional<LC_OffsetCheckResult::Reason> checked = std::nullopt) {
+            result.keptPlain.push_back({ordinal, reason, checked});
+            ++result.copiesKeptPlain;
+        };
+        for (auto& entity : copy.entities) {
+            entity->RS_Entity::operator=(e);
+            entity->setLayer(e.getLayer(false));
+            entity->clearDwgProvenance(RS_Entity::Identity);
+            entity->setLineage(RS_Entity::newLineage()); entity->setOwnerLineage(0);
+            entity->delFlag(RS2::FlagHatchChild);
+            entity->calculateBorders();
+        }
+        if (sourceContext ? !sourceContext->topLevel :
+            (!e.getParent() || !e.getParent()->isDocument() || e.isDeleted() ||
+                e.getParent()->findEntityIndex(&e) < 0)) {
+            kept(LC_OffsetPlainReason::NotTopLevel); return;
+        }
+        if (copy.entities.size() != 1) { kept(LC_OffsetPlainReason::SeveralPieces); return; }
+        const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&e);
+        if (!ellipse) { kept(nativeFallback, nativeCheck); return; }
+        // A one-leaf LINE expands to a native spline's display children.
+        if (left.maxDeepEntities < kOffsetDeepEntitiesPerOutputSpline) {
+            kept(LC_OffsetPlainReason::OutputBudget); return;
+        }
+        LC_EllipseOffsetDefinition definition;
+        definition.basis = ellipse->getData(); definition.distance = magnitude;
+        definition.towardCentre = (side == LC_CurveOffsetSide::Left) != definition.basis.reversed;
+        definition.relTolerance = LC_CurveOffset::kEllipseRelativeOffsetTolerance;
+        const double tolerance = LC_CurveOffset::toleranceFor(e, magnitude, definition.relTolerance);
+        LC_OffsetCheckResult checked;
+        LC_OffsetCurveRefusal refusal;
+        auto native = LC_OffsetCurve::adopt(*copy.entities.front(), definition, tolerance, &checked, {}, &refusal);
+        if (!native) {
+            const auto reason = refusal == LC_OffsetCurveRefusal::CheckFailed || checked ?
+                std::optional<LC_OffsetCheckResult::Reason>{checked.reason} : std::nullopt;
+            kept(refusal == LC_OffsetCurveRefusal::CheckFailed ? LC_OffsetPlainReason::CheckFailed :
+                 LC_OffsetPlainReason::NotCacheRepresentable, reason);
+            return;
+        }
+        const auto cost = measureOffsetOutput({native.get()}, left.maxDeepEntities);
+        if (cost.status != LC_OffsetTreeStatus::Ok) {
+            kept(LC_OffsetPlainReason::OutputBudget, checked.reason); return;
+        }
+        copy.usage.deepEntities = cost.deepEntities;
+        copy.entities.front() = std::move(native);
+    };
+
+    // causes known before anything is offset
+    if (e.rtti() == RS2::EntityLine && (e.getEndpoint() - e.getStartpoint()).magnitude() < RS_TOLERANCE) {
+        result.detail = LC_OffsetFailureDetail::ZeroLength;
+        return LC_OffsetSourceStatus::OffsetFailed;
+    }
+    if (const auto* hyperbola = dynamic_cast<const LC_Hyperbola*>(&e);
+        hyperbola != nullptr && hyperbola->isInfinite()) {
+        result.detail = LC_OffsetFailureDetail::Unbounded;
+        return LC_OffsetSourceStatus::OffsetFailed;
+    }
+
+    if (LC_CurveOffset::isSupportedSource(e)) {
+        // The side is resolved once, so no copy can land on another side.
+        const LC_CurveOffsetOptions sideOptions = LC_CurveOffset::makeOffsetOptions(e, std::abs(data.distance));
+        LC_OffsetSideResolution side = LC_CurveOffset::resolveSide(e, data.coord, sideOptions);
+        // a point on the curve, or on the segments it is drawn with, gives no
+        // side the user chose: the fallback point decides, when it can
+        const bool onCurve =
+            side.status == LC_CurveOffsetStatus::AmbiguousSide ||
+            (side.status == LC_CurveOffsetStatus::Ok && side.distance <= drawnCurveTolerance(e, data.coord));
+        if (onCurve && data.sideFallback.valid) {
+            const LC_OffsetSideResolution fallback = LC_CurveOffset::resolveSide(e, data.sideFallback, sideOptions);
+            if (fallback.status == LC_CurveOffsetStatus::Ok) {
+                side = fallback;
+            }
+        }
+        if (side.status != LC_CurveOffsetStatus::Ok) {
+            result.engineStatus = side.status;
+            return engineFailure(side.status);
+        }
+        for (int num = 1; num <= numberOfCopies; ++num) {
+            const LC_OffsetSourceBudget left = remainingBudget(budget, usage);
+            if (!isValidOffsetBudget(left)) {
+                return LC_OffsetSourceStatus::LimitExceeded;
+            }
+            const double magnitude = std::abs(num * data.distance);
+            LC_CurveOffsetMaterializationResult copy;
+            auto options = LC_CurveOffset::makeOffsetOptions(e, magnitude);
+            if (limits.maxSamples) options.maxSamples = std::min(options.maxSamples, limits.maxSamples);
+            if (limits.maxIntersectionPairs)
+                options.maxIntersectionPairs = std::min(options.maxIntersectionPairs, limits.maxIntersectionPairs);
+            std::size_t samplesLeft = options.maxSamples, pairsLeft = options.maxIntersectionPairs;
+            const auto* nativeSource = sourceContext ? nullptr : dynamic_cast<const LC_OffsetCurve*>(&e);
+            const bool nativeRequested = data.asOffsetCurve && !forPreviewOnly &&
+                (sourceContext ? sourceContext->nativeSource : nativeSource != nullptr);
+            bool rebased = false;
+            auto plainReason = LC_OffsetPlainReason::NotCacheRepresentable;
+            std::optional<LC_OffsetCheckResult::Reason> nativeCheck;
+            if (nativeRequested) {
+                LC_OffsetRebaseOutcome attempt; attempt.copy = num;
+                plainReason = LC_OffsetPlainReason::RebaseRefused;
+                const auto* parent = sourceContext ? nullptr : e.getParent();
+                if (sourceContext ? !sourceContext->topLevel :
+                    (!parent || !parent->isDocument() || e.isDeleted() || parent->findEntityIndex(&e) < 0)) {
+                    plainReason = LC_OffsetPlainReason::NotTopLevel;
+                } else if (sourceContext ? !sourceContext->nativeDefinition.has_value() :
+                    !nativeSource->hasEditableDefinition()) {
+                    plainReason = LC_OffsetPlainReason::UndefinedDefinition;
+                } else {
+                    const auto& savedDefinition = sourceContext ? *sourceContext->nativeDefinition : nativeSource->definition();
+                    const auto proposal = LC_OffsetCurveAgain::propose(savedDefinition, side.side, magnitude);
+                    attempt.proposalRefusal = proposal.refusal;
+                    if (!proposal) {
+                        if (proposal.refusal == LC_OffsetCurveAgain::Refusal::ZeroSum)
+                            plainReason = LC_OffsetPlainReason::ZeroSum;
+                    } else if (samplesLeft && pairsLeft >= 2) {
+                        const auto& definition = proposal.proposal->definition;
+                        RS_Ellipse source{nullptr, definition.basis};
+                        source.RS_Entity::operator=(e);
+                        LC_OffsetRunLimits run; run.outputBudget = left; run.maxSamples = samplesLeft;
+                        // Reserve per-query ceilings, not observed total boxes.
+                        // Each attempt can run several independently bounded queries.
+                        run.maxIntersectionPairs = pairsLeft / 2;
+                        auto made = LC_OffsetCurve::create(source, definition.distance, definition.towardCentre,
+                            run, definition.relTolerance, definition.cacheReversed);
+                        attempt.engineRuns = made.engineRuns; attempt.sampleUnits = made.sampleUnits;
+                        attempt.nativeRefusal = made.refusal; attempt.engineStatus = made.engineStatus;
+                        attempt.checkReason = made.checkReason; attempt.checkWork = made.checkWork;
+                        nativeCheck = made.checkReason;
+                        result.rebaseEngineRuns += made.engineRuns; result.sampleUnits += made.sampleUnits;
+                        if (made.engineRuns) {
+                            attempt.intersectionPairAllowance = run.maxIntersectionPairs;
+                            result.intersectionPairAllowance += run.maxIntersectionPairs;
+                            pairsLeft -= run.maxIntersectionPairs;
+                            samplesLeft -= std::min(samplesLeft, made.sampleUnits);
+                        }
+                        if (!addUsage(result.attemptedOutputUsage, made.attemptedOutputUsage))
+                            return LC_OffsetSourceStatus::LimitExceeded;
+                        result.attemptedDeepCountComplete &= made.attemptedDeepCountComplete;
+                        if (made) {
+                            copy.status = LC_CurveOffsetStatus::Ok; copy.usage = made.outputUsage;
+                            copy.entities.emplace_back(std::move(made.entity));
+                            rebased = attempt.adopted = true;
+                        }
+                    }
+                }
+                result.rebases.push_back(std::move(attempt));
+            }
+            if (!rebased) {
+                bool reused = cache && cache->find(&e, side.side, magnitude, left, copy);
+                // A preview refusal carries no sample/pair allowance provenance.
+                // Native retries may reuse geometry, never an effort-based refusal.
+                if (reused && nativeRequested && copy.status != LC_CurveOffsetStatus::Ok) reused = false;
+                if (reused) ++result.reusedCacheCopies;
+                else {
+                    copy = LC_CurveOffsetMaterializationResult{};
+                    if (!samplesLeft || !pairsLeft) copy.status = LC_CurveOffsetStatus::LimitExceeded;
+                    else {
+                        options.maxSamples = samplesLeft; options.maxIntersectionPairs = pairsLeft;
+                        ++result.cacheEngineRuns;
+                        copy = LC_CurveOffset::createEntities(e, LC_CurveOffset::makeSideRequest(side.side, magnitude),
+                                                              options, left);
+                        result.sampleUnits += copy.sampleUnits;
+                        result.intersectionPairAllowance += pairsLeft;
+                        if (!addUsage(result.attemptedOutputUsage, copy.attemptedOutputUsage))
+                            return LC_OffsetSourceStatus::LimitExceeded;
+                        result.attemptedDeepCountComplete &= copy.attemptedDeepCountComplete;
+                        if (cache && !nativeRequested) cache->keep(&e, side.side, magnitude, left, copy);
+                    }
+                }
+            }
+            if (copy.status != LC_CurveOffsetStatus::Ok) {
+                result.engineStatus = copy.status;
+                if (copy.status != LC_CurveOffsetStatus::LimitExceeded && stopsSeries()) {
+                    break;
+                }
+                return engineFailure(copy.status);
+            }
+            if (copy.entities.empty()) {
+                result.stoppedBy = LC_OffsetSourceStatus::Vanished;
+                break; // trimmed away entirely, as it is at any larger distance on this side
+            }
+            if (!rebased) adoptProduced(copy, num, magnitude, side.side, left, plainReason, nativeCheck);
+            else for (auto& entity : copy.entities) {
+                entity->RS_Entity::operator=(e); entity->setLayer(e.getLayer(false));
+                entity->clearDwgProvenance(RS_Entity::Identity);
+                entity->setLineage(RS_Entity::newLineage()); entity->setOwnerLineage(0);
+                entity->delFlag(RS2::FlagHatchChild); entity->calculateBorders();
+            }
+            if (!addUsage(usage, copy.usage)) {
+                return LC_OffsetSourceStatus::LimitExceeded;
+            }
+            for (std::unique_ptr<RS_Entity>& entity : copy.entities) {
+                roots.push_back(std::move(entity));
+            }
+            ++result.copiesMade;
+        }
+    }
+    else {
+        // RS_Polyline::offset() moves lines and arcs only: an elliptic
+        // segment would stay where it is, between offset neighbours.
+        const auto* const polyline = e.rtti() == RS2::EntityPolyline ? static_cast<const RS_Polyline*>(&e) : nullptr;
+        if (polyline != nullptr && hasEllipticSegment(*polyline)) {
+            result.detail = LC_OffsetFailureDetail::EllipticSegments;
+            return LC_OffsetSourceStatus::OffsetFailed;
+        }
+        // A point on the entity gives no side the user chose, and each
+        // type would settle it its own way (a line to the left, a circle
+        // inwards): the second click decides, and without one, nothing.
+        RS_Vector coord = data.coord;
+        if (sideIsAmbiguous(e, coord)) {
+            if (!data.sideFallback.valid || sideIsAmbiguous(e, data.sideFallback)) {
+                result.engineStatus = LC_CurveOffsetStatus::AmbiguousSide;
+                result.detail = LC_OffsetFailureDetail::AmbiguousSide;
+                return LC_OffsetSourceStatus::OffsetFailed;
+            }
+            coord = data.sideFallback;
+        }
+        // Inwards, a circle or an arc has nothing left once its radius is
+        // within the band every exact offset vanishes in, relative to its size.
+        const bool circular = e.rtti() == RS2::EntityCircle || e.rtti() == RS2::EntityArc;
+        const bool inwards = circular && coord.distanceTo(e.getCenter()) < e.getRadius();
+        const double extent = e.getMin().valid && e.getMax().valid ? e.getMin().distanceTo(e.getMax()) : 0.0;
+        for (int num = 1; num <= numberOfCopies; ++num) {
+            if (!isValidOffsetBudget(remainingBudget(budget, usage))) {
+                return LC_OffsetSourceStatus::LimitExceeded;
+            }
+            const double magnitude = std::abs(num * data.distance);
+            if (inwards && e.getRadius() - magnitude <= kOffsetVanishBand * std::max(extent, magnitude)) {
+                result.stoppedBy = LC_OffsetSourceStatus::Vanished;
+                break; // as it is at any larger distance inwards
+            }
+            std::vector<std::unique_ptr<RS_Entity>> copy;
+            // First try the type-changing path (e.g. ellipse → spline).
+            for (RS_Entity* off : e.createOffset(coord, magnitude)) {
+                copy.emplace_back(off);
+            }
+            if (copy.empty()) {
+                // Fall back to the in-place clone+offset path.
+                std::unique_ptr<RS_Entity> clone{getClone(forPreviewOnly, &e)};
+                if (!clone->offset(coord, magnitude)) {
+                    if (e.rtti() == RS2::EntityCircle || e.rtti() == RS2::EntityArc) {
+                        result.stoppedBy = LC_OffsetSourceStatus::Vanished;
+                        break; // the radius would vanish, as it does at any larger distance inwards
+                    }
+                    if (stopsSeries()) {
+                        break;
+                    }
+                    return LC_OffsetSourceStatus::OffsetFailed;
+                }
+                if (polyline != nullptr) {
+                    // RS_Polyline::offset() joins neighbouring offsets and
+                    // never trims a loop, and it always reports success:
+                    // what it made is used only if it is a trimmed offset
+                    const LC_OffsetCheckReport check =
+                        checkLegacyPolylineOffset(*polyline, static_cast<const RS_Polyline&>(*clone), magnitude);
+                    if (check.verdict == LC_OffsetCheckVerdict::NothingLeft) {
+                        result.stoppedBy = LC_OffsetSourceStatus::Vanished;
+                        break; // shrunk past its size, as it is at any larger distance
+                    }
+                    if (check.verdict == LC_OffsetCheckVerdict::Invalid) {
+                        result.detail = LC_OffsetFailureDetail::PolylineNotTrimmed;
+                        if (stopsSeries()) {
+                            break;
+                        }
+                        return LC_OffsetSourceStatus::OffsetFailed;
+                    }
+                }
+                copy.push_back(std::move(clone));
+            }
+            std::vector<const RS_Entity*> copyRoots;
+            for (const std::unique_ptr<RS_Entity>& entity : copy) {
+                copyRoots.push_back(entity.get());
+            }
+            // against what the earlier copies left, as for splines
+            const LC_OffsetTreeCost cost =
+                measureOffsetOutput(copyRoots, remainingBudget(budget, usage).maxDeepEntities);
+            if (cost.status != LC_OffsetTreeStatus::Ok ||
+                !addUsage(usage, LC_OffsetOutputUsage{0, copy.size(), cost.deepEntities}) ||
+                !withinBudget(usage, budget)) {
+                return LC_OffsetSourceStatus::LimitExceeded;
+            }
+            for (std::unique_ptr<RS_Entity>& entity : copy) {
+                roots.push_back(std::move(entity));
+            }
+            ++result.copiesMade;
+        }
+    }
+    if (result.copiesMade == 0) {
+        return LC_OffsetSourceStatus::Vanished;
+    }
+    // the whole provisional set: within the source's limits, and no root
+    // or child shared between copies
+    const LC_OffsetTreeCost all = measureAll();
+    if (all.status != LC_OffsetTreeStatus::Ok || !withinBudget(usage, budget)) {
+        return LC_OffsetSourceStatus::LimitExceeded;
+    }
+    usage.deepEntities = all.deepEntities;
+    return LC_OffsetSourceStatus::Succeeded;
+}
+
 LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& data, const QList<RS_Entity*>& entitiesList,
                                                          const bool forPreviewOnly, const LC_OffsetBatchLimits& limits,
                                                          LC_DocumentModificationBatch& ctx,
@@ -1517,332 +1868,6 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
             break;
         }
     }
-
-    // The copies of one source, built in local ownership. A copy with nothing
-    // left, or one that cannot be made, ends the series and the copies before
-    // it are kept; the first copy failing fails the source, and exceeding the
-    // output limits fails it whichever copy does.
-    auto offsetOneSource = [&](RS_Entity& e, const std::size_t requestDeepLeft,
-                               std::vector<std::unique_ptr<RS_Entity>>& roots,
-                               LC_OffsetSourceOutcome& result) -> LC_OffsetSourceStatus {
-        LC_OffsetOutputUsage& usage = result.usage;
-        LC_OffsetSourceBudget budget = limits.perSource;
-        budget.maxDeepEntities = std::min(budget.maxDeepEntities, requestDeepLeft);
-        auto measureAll = [&roots, &budget]() {
-            std::vector<const RS_Entity*> all;
-            for (const std::unique_ptr<RS_Entity>& root : roots) {
-                all.push_back(root.get());
-            }
-            return measureOffsetOutput(all, budget.maxDeepEntities);
-        };
-        // whether a copy that cannot be made ends the series rather than fails the source
-        auto stopsSeries = [&result]() {
-            if (result.copiesMade == 0) {
-                return false;
-            }
-            result.stoppedBy = LC_OffsetSourceStatus::OffsetFailed;
-            return true;
-        };
-        const auto adoptProduced = [&](LC_CurveOffsetMaterializationResult& copy, const int ordinal,
-                                       const double magnitude, const LC_CurveOffsetSide side,
-                                       const LC_OffsetSourceBudget& left,
-                                       const LC_OffsetPlainReason nativeFallback,
-                                       const std::optional<LC_OffsetCheckResult::Reason> nativeCheck) {
-            if (!data.asOffsetCurve || forPreviewOnly ||
-                (e.rtti() != RS2::EntityEllipse && e.rtti() != RS2::EntityOffsetCurve)) return;
-            const auto kept = [&](const LC_OffsetPlainReason reason,
-                                  std::optional<LC_OffsetCheckResult::Reason> checked = std::nullopt) {
-                result.keptPlain.push_back({ordinal, reason, checked});
-                ++result.copiesKeptPlain;
-            };
-            for (auto& entity : copy.entities) {
-                entity->RS_Entity::operator=(e);
-                entity->setLayer(e.getLayer(false));
-                entity->clearDwgProvenance(RS_Entity::Identity);
-                entity->setLineage(RS_Entity::newLineage()); entity->setOwnerLineage(0);
-                entity->delFlag(RS2::FlagHatchChild);
-                entity->calculateBorders();
-            }
-            if (!e.getParent() || !e.getParent()->isDocument() || e.isDeleted() ||
-                e.getParent()->findEntityIndex(&e) < 0) {
-                kept(LC_OffsetPlainReason::NotTopLevel); return;
-            }
-            if (copy.entities.size() != 1) { kept(LC_OffsetPlainReason::SeveralPieces); return; }
-            const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&e);
-            if (!ellipse) { kept(nativeFallback, nativeCheck); return; }
-            // A one-leaf LINE expands to a native spline's display children.
-            if (left.maxDeepEntities < kOffsetDeepEntitiesPerOutputSpline) {
-                kept(LC_OffsetPlainReason::OutputBudget); return;
-            }
-            LC_EllipseOffsetDefinition definition;
-            definition.basis = ellipse->getData(); definition.distance = magnitude;
-            definition.towardCentre = (side == LC_CurveOffsetSide::Left) != definition.basis.reversed;
-            definition.relTolerance = LC_CurveOffset::kEllipseRelativeOffsetTolerance;
-            const double tolerance = LC_CurveOffset::toleranceFor(e, magnitude, definition.relTolerance);
-            LC_OffsetCheckResult checked;
-            LC_OffsetCurveRefusal refusal;
-            auto native = LC_OffsetCurve::adopt(*copy.entities.front(), definition, tolerance, &checked, {}, &refusal);
-            if (!native) {
-                const auto reason = refusal == LC_OffsetCurveRefusal::CheckFailed || checked ?
-                    std::optional<LC_OffsetCheckResult::Reason>{checked.reason} : std::nullopt;
-                kept(refusal == LC_OffsetCurveRefusal::CheckFailed ? LC_OffsetPlainReason::CheckFailed :
-                     LC_OffsetPlainReason::NotCacheRepresentable, reason);
-                return;
-            }
-            const auto cost = measureOffsetOutput({native.get()}, left.maxDeepEntities);
-            if (cost.status != LC_OffsetTreeStatus::Ok) {
-                kept(LC_OffsetPlainReason::OutputBudget, checked.reason); return;
-            }
-            copy.usage.deepEntities = cost.deepEntities;
-            copy.entities.front() = std::move(native);
-        };
-
-        // causes known before anything is offset
-        if (e.rtti() == RS2::EntityLine && (e.getEndpoint() - e.getStartpoint()).magnitude() < RS_TOLERANCE) {
-            result.detail = LC_OffsetFailureDetail::ZeroLength;
-            return LC_OffsetSourceStatus::OffsetFailed;
-        }
-        if (const auto* hyperbola = dynamic_cast<const LC_Hyperbola*>(&e);
-            hyperbola != nullptr && hyperbola->isInfinite()) {
-            result.detail = LC_OffsetFailureDetail::Unbounded;
-            return LC_OffsetSourceStatus::OffsetFailed;
-        }
-
-        if (LC_CurveOffset::isSupportedSource(e)) {
-            // The side is resolved once, so no copy can land on another side.
-            const LC_CurveOffsetOptions sideOptions = LC_CurveOffset::makeOffsetOptions(e, std::abs(data.distance));
-            LC_OffsetSideResolution side = LC_CurveOffset::resolveSide(e, data.coord, sideOptions);
-            // a point on the curve, or on the segments it is drawn with, gives no
-            // side the user chose: the fallback point decides, when it can
-            const bool onCurve =
-                side.status == LC_CurveOffsetStatus::AmbiguousSide ||
-                (side.status == LC_CurveOffsetStatus::Ok && side.distance <= drawnCurveTolerance(e, data.coord));
-            if (onCurve && data.sideFallback.valid) {
-                const LC_OffsetSideResolution fallback = LC_CurveOffset::resolveSide(e, data.sideFallback, sideOptions);
-                if (fallback.status == LC_CurveOffsetStatus::Ok) {
-                    side = fallback;
-                }
-            }
-            if (side.status != LC_CurveOffsetStatus::Ok) {
-                result.engineStatus = side.status;
-                return engineFailure(side.status);
-            }
-            for (int num = 1; num <= numberOfCopies; ++num) {
-                const LC_OffsetSourceBudget left = remainingBudget(budget, usage);
-                if (!isValidOffsetBudget(left)) {
-                    return LC_OffsetSourceStatus::LimitExceeded;
-                }
-                const double magnitude = std::abs(num * data.distance);
-                LC_CurveOffsetMaterializationResult copy;
-                auto options = LC_CurveOffset::makeOffsetOptions(e, magnitude);
-                if (limits.maxSamples) options.maxSamples = std::min(options.maxSamples, limits.maxSamples);
-                if (limits.maxIntersectionPairs)
-                    options.maxIntersectionPairs = std::min(options.maxIntersectionPairs, limits.maxIntersectionPairs);
-                std::size_t samplesLeft = options.maxSamples, pairsLeft = options.maxIntersectionPairs;
-                const auto* nativeSource = dynamic_cast<const LC_OffsetCurve*>(&e);
-                const bool nativeRequested = data.asOffsetCurve && !forPreviewOnly && nativeSource;
-                bool rebased = false;
-                auto plainReason = LC_OffsetPlainReason::NotCacheRepresentable;
-                std::optional<LC_OffsetCheckResult::Reason> nativeCheck;
-                if (nativeRequested) {
-                    LC_OffsetRebaseOutcome attempt; attempt.copy = num;
-                    plainReason = LC_OffsetPlainReason::RebaseRefused;
-                    const auto* parent = e.getParent();
-                    if (!parent || !parent->isDocument() || e.isDeleted() || parent->findEntityIndex(&e) < 0) {
-                        plainReason = LC_OffsetPlainReason::NotTopLevel;
-                    } else if (!nativeSource->hasEditableDefinition()) {
-                        plainReason = LC_OffsetPlainReason::UndefinedDefinition;
-                    } else {
-                        const auto proposal = LC_OffsetCurveAgain::propose(nativeSource->definition(), side.side, magnitude);
-                        attempt.proposalRefusal = proposal.refusal;
-                        if (!proposal) {
-                            if (proposal.refusal == LC_OffsetCurveAgain::Refusal::ZeroSum)
-                                plainReason = LC_OffsetPlainReason::ZeroSum;
-                        } else if (samplesLeft && pairsLeft >= 2) {
-                            const auto& definition = proposal.proposal->definition;
-                            RS_Ellipse source{nullptr, definition.basis};
-                            source.RS_Entity::operator=(e);
-                            LC_OffsetRunLimits run; run.outputBudget = left; run.maxSamples = samplesLeft;
-                            // Reserve per-query ceilings, not observed total boxes.
-                            // Each attempt can run several independently bounded queries.
-                            run.maxIntersectionPairs = pairsLeft / 2;
-                            auto made = LC_OffsetCurve::create(source, definition.distance, definition.towardCentre,
-                                run, definition.relTolerance, definition.cacheReversed);
-                            attempt.engineRuns = made.engineRuns; attempt.sampleUnits = made.sampleUnits;
-                            attempt.nativeRefusal = made.refusal; attempt.engineStatus = made.engineStatus;
-                            attempt.checkReason = made.checkReason; attempt.checkWork = made.checkWork;
-                            nativeCheck = made.checkReason;
-                            result.rebaseEngineRuns += made.engineRuns; result.sampleUnits += made.sampleUnits;
-                            if (made.engineRuns) {
-                                attempt.intersectionPairAllowance = run.maxIntersectionPairs;
-                                result.intersectionPairAllowance += run.maxIntersectionPairs;
-                                pairsLeft -= run.maxIntersectionPairs;
-                                samplesLeft -= std::min(samplesLeft, made.sampleUnits);
-                            }
-                            if (!addUsage(result.attemptedOutputUsage, made.attemptedOutputUsage))
-                                return LC_OffsetSourceStatus::LimitExceeded;
-                            result.attemptedDeepCountComplete &= made.attemptedDeepCountComplete;
-                            if (made) {
-                                copy.status = LC_CurveOffsetStatus::Ok; copy.usage = made.outputUsage;
-                                copy.entities.emplace_back(std::move(made.entity));
-                                rebased = attempt.adopted = true;
-                            }
-                        }
-                    }
-                    result.rebases.push_back(std::move(attempt));
-                }
-                if (!rebased) {
-                    bool reused = cache && cache->find(&e, side.side, magnitude, left, copy);
-                    // A preview refusal carries no sample/pair allowance provenance.
-                    // Native retries may reuse geometry, never an effort-based refusal.
-                    if (reused && nativeRequested && copy.status != LC_CurveOffsetStatus::Ok) reused = false;
-                    if (reused) ++result.reusedCacheCopies;
-                    else {
-                        copy = LC_CurveOffsetMaterializationResult{};
-                        if (!samplesLeft || !pairsLeft) copy.status = LC_CurveOffsetStatus::LimitExceeded;
-                        else {
-                            options.maxSamples = samplesLeft; options.maxIntersectionPairs = pairsLeft;
-                            ++result.cacheEngineRuns;
-                            copy = LC_CurveOffset::createEntities(e, LC_CurveOffset::makeSideRequest(side.side, magnitude),
-                                                                  options, left);
-                            result.sampleUnits += copy.sampleUnits;
-                            result.intersectionPairAllowance += pairsLeft;
-                            if (!addUsage(result.attemptedOutputUsage, copy.attemptedOutputUsage))
-                                return LC_OffsetSourceStatus::LimitExceeded;
-                            result.attemptedDeepCountComplete &= copy.attemptedDeepCountComplete;
-                            if (cache && !nativeRequested) cache->keep(&e, side.side, magnitude, left, copy);
-                        }
-                    }
-                }
-                if (copy.status != LC_CurveOffsetStatus::Ok) {
-                    result.engineStatus = copy.status;
-                    if (copy.status != LC_CurveOffsetStatus::LimitExceeded && stopsSeries()) {
-                        break;
-                    }
-                    return engineFailure(copy.status);
-                }
-                if (copy.entities.empty()) {
-                    result.stoppedBy = LC_OffsetSourceStatus::Vanished;
-                    break; // trimmed away entirely, as it is at any larger distance on this side
-                }
-                if (!rebased) adoptProduced(copy, num, magnitude, side.side, left, plainReason, nativeCheck);
-                else for (auto& entity : copy.entities) {
-                    entity->RS_Entity::operator=(e); entity->setLayer(e.getLayer(false));
-                    entity->clearDwgProvenance(RS_Entity::Identity);
-                    entity->setLineage(RS_Entity::newLineage()); entity->setOwnerLineage(0);
-                    entity->delFlag(RS2::FlagHatchChild); entity->calculateBorders();
-                }
-                if (!addUsage(usage, copy.usage)) {
-                    return LC_OffsetSourceStatus::LimitExceeded;
-                }
-                for (std::unique_ptr<RS_Entity>& entity : copy.entities) {
-                    roots.push_back(std::move(entity));
-                }
-                ++result.copiesMade;
-            }
-        }
-        else {
-            // RS_Polyline::offset() moves lines and arcs only: an elliptic
-            // segment would stay where it is, between offset neighbours.
-            const auto* const polyline = e.rtti() == RS2::EntityPolyline ? static_cast<const RS_Polyline*>(&e) : nullptr;
-            if (polyline != nullptr && hasEllipticSegment(*polyline)) {
-                result.detail = LC_OffsetFailureDetail::EllipticSegments;
-                return LC_OffsetSourceStatus::OffsetFailed;
-            }
-            // A point on the entity gives no side the user chose, and each
-            // type would settle it its own way (a line to the left, a circle
-            // inwards): the second click decides, and without one, nothing.
-            RS_Vector coord = data.coord;
-            if (sideIsAmbiguous(e, coord)) {
-                if (!data.sideFallback.valid || sideIsAmbiguous(e, data.sideFallback)) {
-                    result.engineStatus = LC_CurveOffsetStatus::AmbiguousSide;
-                    result.detail = LC_OffsetFailureDetail::AmbiguousSide;
-                    return LC_OffsetSourceStatus::OffsetFailed;
-                }
-                coord = data.sideFallback;
-            }
-            // Inwards, a circle or an arc has nothing left once its radius is
-            // within the band every exact offset vanishes in, relative to its size.
-            const bool circular = e.rtti() == RS2::EntityCircle || e.rtti() == RS2::EntityArc;
-            const bool inwards = circular && coord.distanceTo(e.getCenter()) < e.getRadius();
-            const double extent = e.getMin().valid && e.getMax().valid ? e.getMin().distanceTo(e.getMax()) : 0.0;
-            for (int num = 1; num <= numberOfCopies; ++num) {
-                if (!isValidOffsetBudget(remainingBudget(budget, usage))) {
-                    return LC_OffsetSourceStatus::LimitExceeded;
-                }
-                const double magnitude = std::abs(num * data.distance);
-                if (inwards && e.getRadius() - magnitude <= kOffsetVanishBand * std::max(extent, magnitude)) {
-                    result.stoppedBy = LC_OffsetSourceStatus::Vanished;
-                    break; // as it is at any larger distance inwards
-                }
-                std::vector<std::unique_ptr<RS_Entity>> copy;
-                // First try the type-changing path (e.g. ellipse → spline).
-                for (RS_Entity* off : e.createOffset(coord, magnitude)) {
-                    copy.emplace_back(off);
-                }
-                if (copy.empty()) {
-                    // Fall back to the in-place clone+offset path.
-                    std::unique_ptr<RS_Entity> clone{getClone(forPreviewOnly, &e)};
-                    if (!clone->offset(coord, magnitude)) {
-                        if (e.rtti() == RS2::EntityCircle || e.rtti() == RS2::EntityArc) {
-                            result.stoppedBy = LC_OffsetSourceStatus::Vanished;
-                            break; // the radius would vanish, as it does at any larger distance inwards
-                        }
-                        if (stopsSeries()) {
-                            break;
-                        }
-                        return LC_OffsetSourceStatus::OffsetFailed;
-                    }
-                    if (polyline != nullptr) {
-                        // RS_Polyline::offset() joins neighbouring offsets and
-                        // never trims a loop, and it always reports success:
-                        // what it made is used only if it is a trimmed offset
-                        const LC_OffsetCheckReport check =
-                            checkLegacyPolylineOffset(*polyline, static_cast<const RS_Polyline&>(*clone), magnitude);
-                        if (check.verdict == LC_OffsetCheckVerdict::NothingLeft) {
-                            result.stoppedBy = LC_OffsetSourceStatus::Vanished;
-                            break; // shrunk past its size, as it is at any larger distance
-                        }
-                        if (check.verdict == LC_OffsetCheckVerdict::Invalid) {
-                            result.detail = LC_OffsetFailureDetail::PolylineNotTrimmed;
-                            if (stopsSeries()) {
-                                break;
-                            }
-                            return LC_OffsetSourceStatus::OffsetFailed;
-                        }
-                    }
-                    copy.push_back(std::move(clone));
-                }
-                std::vector<const RS_Entity*> copyRoots;
-                for (const std::unique_ptr<RS_Entity>& entity : copy) {
-                    copyRoots.push_back(entity.get());
-                }
-                // against what the earlier copies left, as for splines
-                const LC_OffsetTreeCost cost =
-                    measureOffsetOutput(copyRoots, remainingBudget(budget, usage).maxDeepEntities);
-                if (cost.status != LC_OffsetTreeStatus::Ok ||
-                    !addUsage(usage, LC_OffsetOutputUsage{0, copy.size(), cost.deepEntities}) ||
-                    !withinBudget(usage, budget)) {
-                    return LC_OffsetSourceStatus::LimitExceeded;
-                }
-                for (std::unique_ptr<RS_Entity>& entity : copy) {
-                    roots.push_back(std::move(entity));
-                }
-                ++result.copiesMade;
-            }
-        }
-        if (result.copiesMade == 0) {
-            return LC_OffsetSourceStatus::Vanished;
-        }
-        // the whole provisional set: within the source's limits, and no root
-        // or child shared between copies
-        const LC_OffsetTreeCost all = measureAll();
-        if (all.status != LC_OffsetTreeStatus::Ok || !withinBudget(usage, budget)) {
-            return LC_OffsetSourceStatus::LimitExceeded;
-        }
-        usage.deepEntities = all.deepEntities;
-        return LC_OffsetSourceStatus::Succeeded;
-    };
 
     // Selected segments of a polyline: each run of consecutive ones is offset
     // once, as a chain; its other segments report the same outcome. A
@@ -1905,7 +1930,8 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
             result.status = LC_OffsetSourceStatus::LimitExceeded; // not evaluated
         }
         else {
-            result.status = offsetOneSource(*target, requestDeepLeft, roots, result);
+            result.status = prepareOffsetSourceImpl(data, *target, forPreviewOnly, limits, requestDeepLeft,
+                roots, result, cache, nullptr, numberOfCopies);
             if (!result.succeeded()) {
                 result.copiesMade = 0; // none is handed over
                 result.copiesKeptPlain = 0; result.keptPlain.clear();

@@ -10,8 +10,10 @@
 #include <cmath>
 #include <cstdint>
 #include <cstring>
+#include <functional>
 #include <initializer_list>
 #include <memory>
+#include <new>
 #include <optional>
 #include <sstream>
 #include <string>
@@ -646,4 +648,289 @@ TEST_CASE("E-again an exhausted request output cap makes no proposal and runs no
     CHECK(result.attemptedOutputUsage.cubicPieces == 0); CHECK(result.attemptedOutputUsage.outputEntities == 0);
     CHECK(result.attemptedOutputUsage.deepEntities == 0); CHECK(result.attemptedDeepCountComplete);
     noPublication(result, pending); before.check();
+}
+
+namespace {
+struct SharedSourcePreparation {
+    std::vector<std::unique_ptr<RS_Entity>> roots;
+    LC_OffsetSourceOutcome outcome;
+};
+
+SharedSourcePreparation prepareSharedSource(RS_Entity& source, const RS_OffsetData& data,
+    const LC_OffsetSourceContext& context, bool preview = false,
+    const LC_OffsetBatchLimits& limits = {}, LC_OffsetPreviewCache* cache = nullptr) {
+    SharedSourcePreparation prepared;
+    auto& result = prepared.outcome;
+    result.source = &source;
+    result.status = RS_Modification::prepareOffsetSource(data, source, preview, limits,
+        limits.maxDeepEntitiesPerRequest, context, prepared.roots, result, cache);
+    if (!result.succeeded()) {
+        CHECK(prepared.roots.empty()); CHECK(result.copiesMade == 0);
+        CHECK(result.copiesKeptPlain == 0); CHECK(result.keptPlain.empty());
+        CHECK(result.usage.cubicPieces == 0); CHECK(result.usage.outputEntities == 0);
+        CHECK(result.usage.deepEntities == 0);
+    } else {
+        for (const auto& root : prepared.roots) result.createdEntities.append(root.get());
+    }
+    return prepared;
+}
+
+void sameSharedUsage(const LC_OffsetOutputUsage& actual, const LC_OffsetOutputUsage& expected) {
+    CHECK(actual.cubicPieces == expected.cubicPieces);
+    CHECK(actual.outputEntities == expected.outputEntities);
+    CHECK(actual.deepEntities == expected.deepEntities);
+}
+
+void sameSharedPreparation(const LC_OffsetSourceOutcome& actual, const LC_OffsetSourceOutcome& expected) {
+    CHECK(traces(actual) == traces(expected));
+    CHECK(actual.engineStatus == expected.engineStatus); CHECK(actual.detail == expected.detail);
+    CHECK(actual.stoppedBy == expected.stoppedBy); CHECK(actual.copiesMade == expected.copiesMade);
+    CHECK(actual.copiesRequested == expected.copiesRequested);
+    CHECK(actual.copiesKeptPlain == expected.copiesKeptPlain);
+    CHECK(actual.sourceRemoved == expected.sourceRemoved);
+    sameSharedUsage(actual.usage, expected.usage);
+    sameSharedUsage(actual.attemptedOutputUsage, expected.attemptedOutputUsage);
+    CHECK(actual.attemptedDeepCountComplete == expected.attemptedDeepCountComplete);
+    REQUIRE(actual.keptPlain.size() == expected.keptPlain.size());
+    for (std::size_t i = 0; i < actual.keptPlain.size(); ++i) {
+        CHECK(actual.keptPlain[i].copy == expected.keptPlain[i].copy);
+        CHECK(actual.keptPlain[i].reason == expected.keptPlain[i].reason);
+        CHECK(actual.keptPlain[i].checkReason == expected.keptPlain[i].checkReason);
+    }
+    REQUIRE(actual.createdEntities.size() == expected.createdEntities.size());
+    for (qsizetype i = 0; i < actual.createdEntities.size(); ++i) {
+        const auto& a = *actual.createdEntities[i];
+        const auto& b = *expected.createdEntities[i];
+        CHECK(a.rtti() == b.rtti()); CHECK(a.getId() != b.getId());
+        CHECK(a.getPen(false) == b.getPen(false)); CHECK(a.getLayer(false) == b.getLayer(false));
+        CHECK(foreign(a) == foreign(b)); CHECK(a.getAllKeys() == b.getAllKeys());
+        for (const auto& key : a.getAllKeys()) CHECK(a.getUserDefVar(key) == b.getUserDefVar(key));
+        CHECK(a.sourceHandle() == b.sourceHandle()); CHECK(a.xDictHandle() == b.xDictHandle());
+        CHECK(a.reactorHandles() == b.reactorHandles()); CHECK(a.ownerLineage() == b.ownerLineage());
+        if (const auto* spline = dynamic_cast<const RS_Spline*>(&a)) {
+            const auto* other = dynamic_cast<const RS_Spline*>(&b); REQUIRE(other);
+            sameSpline(spline->getData(), other->getData());
+            if (const auto* native = dynamic_cast<const LC_OffsetCurve*>(&a)) {
+                const auto* otherNative = dynamic_cast<const LC_OffsetCurve*>(&b); REQUIRE(otherNative);
+                CHECK(native->hasEditableDefinition()); CHECK(otherNative->hasEditableDefinition());
+                sameDefinition(native->definition(), otherNative->definition());
+                CHECK(bits(native->checkedWorldTolerance()) == bits(otherNative->checkedWorldTolerance()));
+                samePoints(native->cachedDefinitionGrips(), otherNative->cachedDefinitionGrips());
+                samePoint(native->getMiddlePoint(), otherNative->getMiddlePoint());
+                CHECK(native->unknownOwnedFlags() == otherNative->unknownOwnedFlags());
+                CHECK(native->unknownOwnedTail().empty()); CHECK(otherNative->unknownOwnedTail().empty());
+            }
+        } else {
+            REQUIRE(dynamic_cast<const RS_Line*>(&a)); REQUIRE(dynamic_cast<const RS_Line*>(&b));
+            samePoint(a.getStartpoint(), b.getStartpoint()); samePoint(a.getEndpoint(), b.getEndpoint());
+        }
+    }
+}
+
+std::unique_ptr<RS_Spline> sharedRawCache(const LC_OffsetCurve& source) {
+    auto cache = std::make_unique<RS_Spline>(nullptr, RS_SplineData{});
+    cache->getData() = source.getData();
+    cache->RS_Entity::operator=(source);
+    cache->setParent(nullptr);
+    return cache;
+}
+
+LC_OffsetSourceContext sharedNativeContext(const LC_OffsetCurve& source, bool topLevel = true) {
+    LC_OffsetSourceContext context; context.topLevel = topLevel; context.nativeSource = true;
+    if (source.hasEditableDefinition()) context.nativeDefinition = source.definition();
+    return context;
+}
+
+class SharedEligibilityGraphic final : public RS_Graphic {
+public:
+    mutable bool armed = false;
+    std::function<void()> onDocumentRead;
+    bool isDocument() const override {
+        if (armed) { armed = false; onDocumentRead(); }
+        return RS_Graphic::isDocument();
+    }
+};
+
+class SharedCopyCountEllipse final : public RS_Ellipse {
+public:
+    SharedCopyCountEllipse(RS_EntityContainer* parent, const RS_EllipseData& data)
+        : RS_Ellipse(parent, data) {}
+    mutable bool armed = false;
+    RS_OffsetData* input = nullptr;
+    RS_Graphic* getGraphic() const override {
+        if (armed) { armed = false; input->number = 5; }
+        return RS_Ellipse::getGraphic();
+    }
+};
+
+class SharedThrowingLine final : public RS_Line {
+public:
+    SharedThrowingLine() : RS_Line(nullptr, RS_LineData{{0, 0}, {10, 0}}) {}
+    RS_Entity* clone() const override {
+        if (++copies == 2) throw std::bad_alloc{};
+        return new RS_Line(*this);
+    }
+    mutable unsigned copies = 0;
+};
+}
+
+TEST_CASE("Shared offset source preparation discards a provisional prefix on an exception",
+          "[modification][offsetcurve][source-preparation][failure]") {
+    SharedThrowingLine source;
+    RS_OffsetData input; input.distance = 1; input.coord = {0, 3};
+    input.multipleCopies = true; input.number = 2;
+    std::vector<std::unique_ptr<RS_Entity>> roots;
+    LC_OffsetSourceOutcome result;
+    REQUIRE_THROWS_AS(RS_Modification::prepareOffsetSource(input, source, false, {},
+        kDefaultOffsetDeepEntitiesPerRequest, {}, roots, result), std::bad_alloc);
+    CHECK(source.copies == 2); CHECK(roots.empty()); CHECK(result.copiesRequested == 2);
+    CHECK(result.copiesMade == 0); CHECK(result.copiesKeptPlain == 0); CHECK(result.keptPlain.empty());
+    CHECK(result.usage.cubicPieces == 0); CHECK(result.usage.outputEntities == 0);
+    CHECK(result.usage.deepEntities == 0); CHECK(result.rebaseEngineRuns == 0);
+    CHECK(result.cacheEngineRuns == 0); CHECK(result.sampleUnits == 0);
+}
+
+TEST_CASE("Shared offset source preparation matches ellipse creation without changing option-off attributes",
+          "[modification][offsetcurve][source-preparation]") {
+    for (bool native : {false, true}) for (bool preview : {false, true}) {
+        Drawing drawing;
+        const auto data = basis(8, .5, false, false, true);
+        auto* source = new RS_Ellipse(&drawing.graphic, data); drawing.graphic.addEntity(source);
+        decorate(*source, drawing.graphic.getActiveLayer());
+        RS_OffsetData input; input.distance = .25; input.coord = normalPoint(data, 1.55, 1);
+        input.number = 2; input.multipleCopies = true; input.keepOriginals = true; input.asOffsetCurve = native;
+        LC_OffsetSourceContext context; context.topLevel = true;
+        Pending pending;
+        const auto batch = RS_Modification::offsetWithOutcome(input, {source}, preview, {}, pending.ctx);
+        const auto& expected = single(batch); REQUIRE(expected.complete());
+        RS_Ellipse raw{nullptr, source->getData()}; raw.RS_Entity::operator=(*source); raw.setParent(nullptr);
+        auto prepared = prepareSharedSource(raw, input, context, preview);
+        sameSharedPreparation(prepared.outcome, expected);
+        CHECK(raw.getParent() == nullptr);
+        CHECK(pending.ctx.entitiesToDelete.empty());
+    }
+}
+
+TEST_CASE("Shared offset source preparation repeats detached raw caches with explicit native eligibility",
+          "[modification][offsetcurve][again][source-preparation]") {
+    for (bool reversed : {false, true}) for (int mode = 0; mode < 5; ++mode) {
+        CAPTURE(reversed, mode);
+        Drawing drawing;
+        auto* source = materialized(drawing, basis(8, .5, false, false, true), .5, false, reversed);
+        auto input = request(*source, mode == 2 ? .5 : .25, mode == 2, mode == 2 ? 1 : 2);
+        input.keepOriginals = true; input.asOffsetCurve = mode != 1;
+        if (mode == 3) source->getData().controlPoints.front().x += 1e-6;
+        if (mode == 4) source->setParent(nullptr);
+        const SourceState before{*source};
+        auto cache = sharedRawCache(*source);
+        const auto context = sharedNativeContext(*source, mode != 4);
+        Pending pending;
+        const auto batch = RS_Modification::offsetWithOutcome(input, {source}, false, {}, pending.ctx);
+        auto prepared = prepareSharedSource(*cache, input, context);
+        sameSharedPreparation(prepared.outcome, single(batch));
+        CHECK(cache->rtti() == RS2::EntitySpline); CHECK(cache->getParent() == nullptr);
+        if (mode == 1) { CHECK(prepared.outcome.rebaseEngineRuns == 0); CHECK(prepared.outcome.rebases.empty()); }
+        if (mode == 3) CHECK_FALSE(context.nativeDefinition);
+        before.check();
+        if (mode == 4) source->setParent(&drawing.graphic);
+    }
+}
+
+TEST_CASE("Shared offset source preparation preserves preview cache reuse and per-copy effort limits",
+          "[modification][offsetcurve][again][source-preparation][limits]") {
+    Drawing drawing;
+    auto* source = materialized(drawing, basis(8, .5, false, false, true), .5, false, false);
+    const SourceState before{*source};
+    auto cache = sharedRawCache(*source);
+    const auto context = sharedNativeContext(*source);
+    auto input = request(*source, .5, true); input.keepOriginals = true;
+    LC_OffsetPreviewCache liveCache, rawCache;
+    Pending preview;
+    const auto shown = RS_Modification::offsetWithOutcome(input, {source}, true, {}, preview.ctx, &liveCache);
+    auto preparedPreview = prepareSharedSource(*cache, input, context, true, {}, &rawCache);
+    sameSharedPreparation(preparedPreview.outcome, single(shown));
+    REQUIRE(preparedPreview.outcome.complete());
+    LC_OffsetBatchLimits oneSample; oneSample.maxSamples = 1;
+    Pending committed;
+    const auto reused = RS_Modification::offsetWithOutcome(input, {source}, false, oneSample, committed.ctx, &liveCache);
+    auto preparedReuse = prepareSharedSource(*cache, input, context, false, oneSample, &rawCache);
+    sameSharedPreparation(preparedReuse.outcome, single(reused));
+    REQUIRE(preparedReuse.outcome.complete()); CHECK(preparedReuse.outcome.reusedCacheCopies == 1);
+    CHECK(preparedReuse.outcome.rebaseEngineRuns == 0); CHECK(preparedReuse.outcome.cacheEngineRuns == 0);
+    CHECK(preparedReuse.outcome.sampleUnits == 0); CHECK(preparedReuse.outcome.intersectionPairAllowance == 0);
+    input = request(*source, .25, false); input.keepOriginals = true;
+    for (bool pairLimit : {false, true}) {
+        LC_OffsetBatchLimits limits;
+        if (pairLimit) limits.maxIntersectionPairs = 1;
+        else limits.maxSamples = 1;
+        Pending refused;
+        const auto result = RS_Modification::offsetWithOutcome(input, {source}, false, limits, refused.ctx);
+        auto prepared = prepareSharedSource(*cache, input, context, false, limits);
+        sameSharedPreparation(prepared.outcome, single(result));
+        CHECK(prepared.outcome.status == LC_OffsetSourceStatus::LimitExceeded);
+    }
+    input.number = 2; input.multipleCopies = true;
+    auto first = input; first.multipleCopies = false;
+    auto firstPrepared = prepareSharedSource(*cache, first, context);
+    REQUIRE(firstPrepared.outcome.complete());
+    LC_OffsetBatchLimits outputLimit; outputLimit.perSource.maxDeepEntities = firstPrepared.outcome.usage.deepEntities;
+    Pending rolledBack;
+    const auto result = RS_Modification::offsetWithOutcome(input, {source}, false, outputLimit, rolledBack.ctx);
+    auto prepared = prepareSharedSource(*cache, input, context, false, outputLimit);
+    sameSharedPreparation(prepared.outcome, single(result));
+    CHECK(prepared.outcome.status == LC_OffsetSourceStatus::LimitExceeded);
+    CHECK(prepared.roots.empty()); CHECK(prepared.outcome.rebaseEngineRuns == 1);
+    CHECK(prepared.outcome.attemptedOutputUsage.outputEntities == 1);
+    before.check();
+}
+
+TEST_CASE("Shared offset source preparation retains the local legacy exact-source branch",
+          "[modification][offsetcurve][source-preparation]") {
+    for (bool preview : {false, true}) {
+        Drawing drawing;
+        auto* source = new RS_Line(&drawing.graphic, RS_LineData{{0, 0}, {10, 0}});
+        drawing.graphic.addEntity(source); decorate(*source, drawing.graphic.getActiveLayer());
+        RS_OffsetData input; input.distance = 1; input.coord = {0, 3};
+        input.number = 2; input.multipleCopies = true; input.keepOriginals = true; input.asOffsetCurve = true;
+        Pending pending;
+        const auto batch = RS_Modification::offsetWithOutcome(input, {source}, preview, {}, pending.ctx);
+        auto prepared = prepareSharedSource(*source, input, {}, preview);
+        REQUIRE(prepared.outcome.complete()); sameSharedPreparation(prepared.outcome, single(batch));
+        CHECK(prepared.outcome.rebaseEngineRuns == 0); CHECK(prepared.outcome.cacheEngineRuns == 0);
+    }
+}
+
+TEST_CASE("Shared offset source extraction preserves live eligibility and early copy-count capture ordering",
+          "[modification][offsetcurve][again][source-preparation][callbacks]") {
+    const bool qtReady = lc::test::application() != nullptr; REQUIRE(qtReady);
+    {
+        SharedEligibilityGraphic graphic; graphic.initForNewDocument(); graphic.onLoadingCompleted();
+        RS_Ellipse original{&graphic, basis(8, .5, false, false, true)};
+        auto made = LC_OffsetCurve::create(original, .5, false); REQUIRE(made);
+        auto* source = made.entity.release(); graphic.addEntity(source);
+        auto input = request(*source, .25, false); input.keepOriginals = true;
+        LC_OffsetBatchLimits limits; limits.maxSamples = 1;
+        graphic.onDocumentRead = [source] { source->getData().weights.front() = 2; };
+        graphic.armed = true;
+        Pending pending;
+        const auto batch = RS_Modification::offsetWithOutcome(input, {source}, false, limits, pending.ctx);
+        const auto& result = single(batch);
+        CHECK_FALSE(graphic.armed); CHECK_FALSE(source->hasEditableDefinition());
+        REQUIRE(result.rebases.size() == 1); unattempted(result.rebases.front());
+        CHECK_FALSE(result.rebases.front().proposalRefusal);
+        CHECK(result.rebaseEngineRuns == 0); CHECK(result.cacheEngineRuns == 1);
+    }
+    {
+        Drawing drawing;
+        auto* source = new SharedCopyCountEllipse(&drawing.graphic, basis(8, .5, false, false, true));
+        drawing.graphic.addEntity(source);
+        RS_OffsetData input; input.distance = .25; input.coord = normalPoint(source->getData(), 1.55, 1);
+        input.number = 2; input.multipleCopies = true; input.keepOriginals = true; input.useCurrentLayer = true;
+        source->input = &input; source->armed = true;
+        Pending pending;
+        const auto batch = RS_Modification::offsetWithOutcome(input, {source}, false, {}, pending.ctx);
+        const auto& result = single(batch);
+        REQUIRE(result.complete()); CHECK_FALSE(source->armed); CHECK(input.number == 5);
+        CHECK(result.copiesRequested == 2); CHECK(result.copiesMade == 2);
+    }
 }
