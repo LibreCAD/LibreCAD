@@ -34,6 +34,9 @@ void quarantine(std::unique_ptr<QProcess>& process) {
     // An OS that has not reaped after kill must not block the GUI destructor.
     // Retain only the process notifier, with no client/document/callback links.
     auto* retained = process.release();
+    // A delayed event turn may jump straight past both deadlines, without
+    // observing the earlier kill boundary. Still request kill before detaching.
+    if (retained->state() != QProcess::NotRunning) retained->kill();
     QObject::disconnect(retained, nullptr, nullptr, nullptr);
     QObject::connect(retained, &QProcess::finished, retained, &QObject::deleteLater);
     if (retained->state() == QProcess::NotRunning) retained->deleteLater();
@@ -52,6 +55,7 @@ struct LC_OffsetWorkerClient::Job {
 };
 
 LC_OffsetWorkerClient::LC_OffsetWorkerClient(QObject* parent) : QObject(parent) {
+    m_clock.start();
     m_timer.setParent(this);
     m_timer.setInterval(5);
     m_timer.setTimerType(Qt::PreciseTimer);
@@ -80,6 +84,21 @@ QString LC_OffsetWorkerClient::helperPath() {
 }
 
 bool LC_OffsetWorkerClient::busy() const noexcept { return bool(m_active) || bool(m_queued); }
+
+QByteArray LC_OffsetWorkerClient::diagnosticPrefix() const {
+    return m_active ? m_active->diagnostics : QByteArray{};
+}
+
+qint64 LC_OffsetWorkerClient::now() const noexcept {
+    try { return m_testClock ? m_testClock() : m_clock.elapsed(); }
+    catch (...) { return -1; }
+}
+
+qint64 LC_OffsetWorkerClient::elapsedSince(qint64 origin) const noexcept {
+    const auto current = now();
+    if (origin < 0 || current < origin) return std::numeric_limits<qint64>::max();
+    return current - origin;
+}
 
 bool LC_OffsetWorkerClient::submit(const LC_OffsetWorkerRequest::Request& request, Mode mode, Callback callback) {
     if (!QCoreApplication::instance() || QThread::currentThread() != thread() || m_poisoned || !callback ||
@@ -121,7 +140,7 @@ void LC_OffsetWorkerClient::cancel() {
 void LC_OffsetWorkerClient::start() {
     if (!m_queued || m_active || m_poisoned) return;
     m_active = std::move(m_queued);
-    m_elapsed.start(); m_stopping.invalidate();
+    m_startedAt = now(); m_stoppedAt = 0;
     try {
         m_process = std::make_unique<QProcess>();
         m_process->setProcessChannelMode(QProcess::SeparateChannels);
@@ -182,7 +201,7 @@ void LC_OffsetWorkerClient::drain() {
 void LC_OffsetWorkerClient::stop(Status status) {
     if (!m_active || m_active->stopping) return;
     m_active->stopping = status;
-    m_stopping.start();
+    m_stoppedAt = now();
     // Before started(), a forked child may still carry the parent's signal
     // handlers and open report files. Wait for exec confirmation before SIGTERM;
     // the fixed kill deadline still bounds a child stuck in Starting.
@@ -192,14 +211,14 @@ void LC_OffsetWorkerClient::stop(Status status) {
 
 void LC_OffsetWorkerClient::tick() {
     if (!m_active) { m_timer.stop(); return; }
-    if (!m_active->stopping && ((!m_active->started && Deadlines::expired(m_elapsed.elapsed(), m_startupLimit)) ||
-        Deadlines::expired(m_elapsed.elapsed(), m_active->mode == Mode::Preview ? m_previewLimit : m_commitLimit)))
+    if (!m_active->stopping && ((!m_active->started && Deadlines::expired(elapsedSince(m_startedAt), m_startupLimit)) ||
+        Deadlines::expired(elapsedSince(m_startedAt), m_active->mode == Mode::Preview ? m_previewLimit : m_commitLimit)))
         stop(Status::TimedOut);
     if (!m_process || m_process->state() == QProcess::NotRunning) { finish(true); return; }
     if (m_active->stopping) {
-        if (Deadlines::expired(m_stopping.elapsed(), Deadlines::terminate + Deadlines::reap)) {
+        if (Deadlines::expired(elapsedSince(m_stoppedAt), Deadlines::terminate + Deadlines::reap)) {
             m_poisoned = true; quarantine(m_process); finish(false);
-        } else if (Deadlines::expired(m_stopping.elapsed(), Deadlines::terminate)) m_process->kill();
+        } else if (Deadlines::expired(elapsedSince(m_stoppedAt), Deadlines::terminate)) m_process->kill();
     }
 }
 
@@ -208,7 +227,7 @@ void LC_OffsetWorkerClient::finish(bool reaped) {
     if (!m_active->stopping) drain();
     Outcome outcome;
     outcome.reaped = reaped;
-    outcome.elapsedMilliseconds = m_elapsed.elapsed();
+    outcome.elapsedMilliseconds = elapsedSince(m_startedAt);
     try {
         if (!reaped) outcome.status = Status::ReapFailed;
         else if (m_active->stopping) outcome.status = *m_active->stopping;
@@ -221,7 +240,7 @@ void LC_OffsetWorkerClient::finish(bool reaped) {
             auto reply = message ? LC_OffsetWorkerResult::decode(message.fields, m_active->request) : std::nullopt;
             if (!reply || !matchesInputs(*reply, m_active->request)) outcome.status = Status::ProtocolFailed;
             else if (reply->failure != LC_OffsetWorkerResult::Failure::None) outcome.status = Status::ProcessFailed;
-            else if (Deadlines::expired(m_elapsed.elapsed(),
+            else if (Deadlines::expired(elapsedSince(m_startedAt),
                 m_active->mode == Mode::Preview ? m_previewLimit : m_commitLimit)) outcome.status = Status::TimedOut;
             else {
                 outcome.completed.reset(new LC_OffsetWorkerCompletion(std::move(m_active->request), std::move(*reply)));

@@ -23,3 +23,23 @@ std::unique_ptr<LC_OffsetCurve> LC_OffsetWorkerCompletion::native(const RS_Entit
         if (!curve->setOwnedExtensions(previous->unknownOwnedFlags(), previous->unknownOwnedTail())) return {};
     return curve;
 }
+
+LC_OffsetCurveEditResult LC_OffsetWorkerCompletion::apply(LC_OffsetCurve& clone) const {
+    const auto* result = std::get_if<LC_OffsetWorkerResult::Native>(&m_reply.result);
+    if (!result) return {};
+    auto outcome = static_cast<const LC_OffsetCurveEditResult&>(*result);
+    if (!*result) return outcome;
+    const auto eligibility = clone.eligibility();
+    if (!eligibility) {
+        outcome.refusal = eligibility.refusal; outcome.changed = false;
+        return outcome; // The child already ran: retain its actual stage work.
+    }
+    LC_OffsetCurveCreateResult prepared;
+    static_cast<LC_OffsetCurveEditResult&>(prepared) = *result;
+    prepared.entity = native(clone);
+    if (!prepared.entity) {
+        prepared.refusal = LC_OffsetCurveRefusal::NotCacheRepresentable;
+        prepared.changed = false;
+    }
+    return clone.commitPrepared(prepared);
+}

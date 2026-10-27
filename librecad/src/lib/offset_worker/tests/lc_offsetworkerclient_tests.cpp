@@ -279,6 +279,25 @@ void nativeOutput(const Completion& completion, const RS_Entity& attributes) {
     CHECK(exact(curve->checkedWorldTolerance(), value.curve->worldTolerance));
     REQUIRE_FALSE(curve->cachedDefinitionGrips().empty());
     CHECK(Geo::isFinite2D(curve->getMiddlePoint()));
+    REQUIRE(curve->setOwnedExtensions(0x10, {{1000, QStringLiteral("old geometry tail")}}));
+    const auto identity = curve->getId();
+    const auto applied = completion.apply(*curve);
+    REQUIRE(applied); CHECK(applied.changed);
+    CHECK(applied.engineRuns == value.engineRuns);
+    CHECK(applied.engineStatus == value.engineStatus); CHECK(applied.checkReason == value.checkReason);
+    CHECK(applied.checkWork.distancePairs == value.checkWork.distancePairs);
+    CHECK(applied.throughWork.distancePairs == value.throughWork.distancePairs);
+    CHECK(curve->getId() == identity); CHECK(curve->unknownOwnedFlags() == 0);
+    CHECK(curve->unknownOwnedTail().empty()); exactCache(curve->getData(), value.curve->cache);
+    // A late invalidation cannot be cured by applying a result intended for an
+    // earlier input; the caller's final seal is an additional transaction guard.
+    curve->getData().controlPoints.front().x += 1;
+    const auto stale = RS_Spline::geometryFingerprint(curve->getData());
+    const auto rejected = completion.apply(*curve);
+    CHECK(rejected.refusal == LC_OffsetCurveRefusal::Inconsistent); CHECK_FALSE(rejected.changed);
+    CHECK(rejected.engineRuns == value.engineRuns);
+    CHECK(rejected.checkWork.distancePairs == value.checkWork.distancePairs);
+    CHECK(RS_Spline::geometryFingerprint(curve->getData()) == stale);
 }
 
 struct LowerDeadlines {

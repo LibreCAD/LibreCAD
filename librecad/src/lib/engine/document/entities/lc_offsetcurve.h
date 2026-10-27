@@ -42,6 +42,7 @@ struct LC_OffsetCurveEditResult {
 };
 
 struct LC_OffsetCurveCreateResult;
+struct LC_OffsetCurveEditPreparation;
 struct LC_OffsetThroughProposal {
     double distance;
     bool towardCentre;
@@ -74,6 +75,11 @@ public:
         const LC_OffsetRunLimits &limits = {}, double relativeTolerance = 0, bool cacheReversed = false);
     LC_OffsetCurveEditResult setDefinition(const LC_EllipseOffsetDefinition &definition,
         const LC_OffsetRunLimits &limits = {});
+    /** No producer/C run. Owns a cheap proof-preserving replacement or describes
+     * a generation job; the Generate case is NOT a successful edit result.
+     */
+    LC_OffsetCurveEditPreparation prepareDefinition(const LC_EllipseOffsetDefinition &definition,
+        const LC_OffsetRunLimits &limits = {}) const;
     LC_OffsetCurveEditResult setDistance(double distance, const LC_OffsetRunLimits &limits = {});
     LC_OffsetCurveEditResult setTowardCentre(bool towardCentre, const LC_OffsetRunLimits &limits = {});
     LC_OffsetCurveEditResult setThrough(const RS_Vector &point, const LC_OffsetRunLimits &limits = {});
@@ -176,5 +182,13 @@ struct LC_OffsetCurveCreateResult : LC_OffsetCurveEditResult {
     explicit operator bool() const noexcept {
         return LC_OffsetCurveEditResult::operator bool() && bool(entity);
     }
+};
+
+struct LC_OffsetCurveEditPreparation {
+    enum class Kind { Refused, Unchanged, Prepared, Generate };
+    Kind kind = Kind::Refused;
+    LC_OffsetCurveEditResult result;
+    std::unique_ptr<LC_OffsetCurve> local;
+    LC_EllipseOffsetDefinition definition;
 };
 #endif

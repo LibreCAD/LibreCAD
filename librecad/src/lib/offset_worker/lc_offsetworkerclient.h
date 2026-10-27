@@ -11,6 +11,7 @@
 #include <QObject>
 #include <QElapsedTimer>
 #include <QTimer>
+#include <cstdint>
 #include <functional>
 #include <memory>
 
@@ -31,6 +32,10 @@ public:
     const LC_OffsetWorkerResult::Reply& reply() const noexcept { return m_reply; }
     /** No generation/C/grip proof is repeated in the parent. Attributes stay local. */
     std::unique_ptr<LC_OffsetCurve> native(const RS_Entity& attributes) const;
+    /** Apply to a caller-owned clone only after its retained input seal matches.
+     * Live document publication/undo remains the caller's separate transaction.
+     */
+    LC_OffsetCurveEditResult apply(LC_OffsetCurve& clone) const;
 private:
     friend class LC_OffsetWorkerClient;
     LC_OffsetWorkerCompletion(LC_OffsetWorkerRequest::Request&&, LC_OffsetWorkerResult::Reply&&);
@@ -85,9 +90,15 @@ private:
     void stop(Status);
     void finish(bool reaped);
     void deliver(Callback, Outcome);
+    qint64 now() const noexcept;
+    qint64 elapsedSince(qint64 origin) const noexcept;
+    QByteArray diagnosticPrefix() const;
     std::unique_ptr<Job> m_active, m_queued;
     std::unique_ptr<QProcess> m_process;
-    QElapsedTimer m_elapsed, m_stopping;
+    QElapsedTimer m_clock;
+    qint64 m_startedAt = 0, m_stoppedAt = 0;
+    // Private deterministic lifecycle seam; never set by product inputs.
+    std::function<qint64()> m_testClock;
     QTimer m_timer;
     qint64 m_lastRequestId = 0;
     qint64 m_cancelledThrough = 0;

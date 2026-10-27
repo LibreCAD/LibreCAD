@@ -329,26 +329,25 @@ bool LC_OffsetCurve::checkThrough(const LC_OffsetCurve &curve, const RS_Vector &
         cap.maxDepth, throughWork);
 }
 
-LC_OffsetCurveEditResult LC_OffsetCurve::edit(const LC_EllipseOffsetDefinition &definition,
-    const LC_OffsetRunLimits &limits, const RS_Vector *through) {
+LC_OffsetCurveEditPreparation LC_OffsetCurve::prepareDefinition(const LC_EllipseOffsetDefinition &definition,
+    const LC_OffsetRunLimits &limits) const {
     using Refusal = LC_OffsetCurveRefusal;
-    auto result = eligibility();
-    if (!result) return result;
+    LC_OffsetCurveEditPreparation plan;
+    plan.result = eligibility();
+    if (!plan.result) return plan;
     auto normalized = definition;
-    if (!normalizedDefinition(normalized)) { result.refusal = Refusal::InvalidInput; return result; }
+    if (!normalizedDefinition(normalized)) { plan.result.refusal = Refusal::InvalidInput; return plan; }
+    plan.definition = normalized;
     if (sameDefinition(normalized, m_definition)) {
-        if (through) {
-            if (!checkThrough(*this, *through, limits.checkLimits, result.checkWork, result.throughWork))
-                result.refusal = Refusal::ThroughNotOnCache;
-        }
-        return result;
+        plan.kind = LC_OffsetCurveEditPreparation::Kind::Unchanged;
+        return plan;
     }
     // A rigid fast path must reproduce every normalized semantic field. Never
     // infer one from axis lengths or a broad angular/coordinate tolerance.
     auto translated = m_definition;
     translated.basis.center = normalized.basis.center;
     const auto output = clampedOutputBudget(limits.outputBudget);
-    if (!through && sameDefinition(translated, normalized) && fitsOutputBudget(*this, output)) {
+    if (sameDefinition(translated, normalized) && fitsOutputBudget(*this, output)) {
         double dx, dy;
         if (exactValue(Exact(normalized.basis.center.x) - Exact(m_definition.basis.center.x), dx, true) &&
             exactValue(Exact(normalized.basis.center.y) - Exact(m_definition.basis.center.y), dy, true)) {
@@ -356,11 +355,40 @@ LC_OffsetCurveEditResult LC_OffsetCurve::edit(const LC_EllipseOffsetDefinition &
             staged->move({dx, dy});
             if (staged->hasEditableDefinition() && sameDefinition(staged->definition(), normalized) &&
                 fitsOutputBudget(*staged, output)) {
-                LC_OffsetCurveCreateResult prepared;
-                prepared.refusal = Refusal::None; prepared.changed = true; prepared.entity = std::move(staged);
-                return commitPrepared(prepared);
+                plan.kind = LC_OffsetCurveEditPreparation::Kind::Prepared;
+                plan.result.changed = true;
+                plan.local = std::move(staged);
+                return plan;
             }
         }
+    }
+    plan.kind = LC_OffsetCurveEditPreparation::Kind::Generate;
+    plan.result = {}; // Preparation is not a completed producer/checker result.
+    return plan;
+}
+
+LC_OffsetCurveEditResult LC_OffsetCurve::edit(const LC_EllipseOffsetDefinition &definition,
+    const LC_OffsetRunLimits &limits, const RS_Vector *through) {
+    using Refusal = LC_OffsetCurveRefusal;
+    if (!through) {
+        auto plan = prepareDefinition(definition, limits);
+        if (plan.kind == LC_OffsetCurveEditPreparation::Kind::Refused ||
+            plan.kind == LC_OffsetCurveEditPreparation::Kind::Unchanged) return plan.result;
+        LC_OffsetCurveCreateResult prepared;
+        if (plan.kind == LC_OffsetCurveEditPreparation::Kind::Prepared) {
+            static_cast<LC_OffsetCurveEditResult&>(prepared) = plan.result;
+            prepared.entity = std::move(plan.local);
+        } else prepared = runEngine(*this, plan.definition, limits);
+        return commitPrepared(prepared);
+    }
+    auto result = eligibility();
+    if (!result) return result;
+    auto normalized = definition;
+    if (!normalizedDefinition(normalized)) { result.refusal = Refusal::InvalidInput; return result; }
+    if (sameDefinition(normalized, m_definition)) {
+        if (!checkThrough(*this, *through, limits.checkLimits, result.checkWork, result.throughWork))
+            result.refusal = Refusal::ThroughNotOnCache;
+        return result;
     }
     auto prepared = runEngine(*this, normalized, limits);
     if (!prepared) return static_cast<const LC_OffsetCurveEditResult &>(prepared);

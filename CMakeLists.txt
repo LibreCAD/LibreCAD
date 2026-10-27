@@ -3511,13 +3511,34 @@ if (BUILD_TESTS)
     set_target_properties(librecad_offset_worker_client_tests PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY "$<TARGET_FILE_DIR:librecad>")
     add_dependencies(librecad_offset_worker_client_tests librecad_offset_worker)
+    # Fault fixtures live outside the app bundle and cannot replace/install the
+    # real helper, including when CTest runs the normal process lane in parallel.
+    add_executable(librecad_offset_worker_fault_fixture EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        librecad/src/lib/offset_worker/tests/lc_offsetworkerfaultfixture.cpp)
+    target_include_directories(librecad_offset_worker_fault_fixture PRIVATE ${SHARED_INCLUDES})
+    target_compile_features(librecad_offset_worker_fault_fixture PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_offset_worker_fault_fixture PRIVATE DWGSUPPORT _USE_MATH_DEFINES)
+    target_link_libraries(librecad_offset_worker_fault_fixture PRIVATE librecad_lib
+        Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network)
+    set_target_properties(librecad_offset_worker_fault_fixture PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF OUTPUT_NAME LibreCADOffsetWorker
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/native-offset-fault-tests")
+    add_librecad_filter_micro_test(
+        librecad_offset_worker_fault_tests
+        librecad/src/lib/offset_worker/tests/lc_offsetworkerfault_tests.cpp)
+    set_target_properties(librecad_offset_worker_fault_tests PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/native-offset-fault-tests")
+    add_dependencies(librecad_offset_worker_fault_tests librecad_offset_worker_fault_fixture)
     if(LIBRECAD_REGISTER_OFFSET_WORKER_TESTS)
-        foreach(kind request result kernel process client)
+        foreach(kind request result kernel process client fault)
             add_test(NAME offset_worker_${kind}
                 COMMAND librecad_offset_worker_${kind}_tests "[lc-offsetcurve]")
             set_tests_properties(offset_worker_${kind} PROPERTIES
                 TIMEOUT 30 ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
         endforeach()
+        set_tests_properties(offset_worker_process offset_worker_client offset_worker_fault
+            PROPERTIES RUN_SERIAL TRUE)
     endif()
     set(LIBRECAD_OFFSET_EXTERNAL_TEST_HELPER "" CACHE FILEPATH
         "Additional built offset helper to qualify (tests only, never a product command)")

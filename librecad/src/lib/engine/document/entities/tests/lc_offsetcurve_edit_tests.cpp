@@ -883,3 +883,59 @@ TEST_CASE("A removed elliptic loop cannot supply its obsolete normal distance to
     CHECK(made.entity->definition().distance == Catch::Approx(proposal->distance));
     CHECK(hasEndpointWitness(*made.entity, point));
 }
+
+TEST_CASE("Offset definition preparation owns cheap results without changing the source",
+          "[lc-offsetcurve][edit][preparation]") {
+    using Kind = LC_OffsetCurveEditPreparation::Kind;
+    auto source = adoptedRing(); const State before{*source};
+    auto unchanged = source->prepareDefinition(source->definition());
+    CHECK(unchanged.kind == Kind::Unchanged); REQUIRE(unchanged.result);
+    CHECK_FALSE(unchanged.result.changed); CHECK_FALSE(unchanged.local);
+    notRun(unchanged.result); before.check(*source);
+    auto next = source->definition(); next.basis.center = {4, 8};
+    auto local = source->prepareDefinition(next);
+    REQUIRE(local.kind == Kind::Prepared); REQUIRE(local.local); REQUIRE(local.result);
+    CHECK(local.result.changed); notRun(local.result); before.check(*source);
+    REQUIRE(local.local->hasEditableDefinition()); certified(*local.local);
+    REQUIRE(local.local->getData().controlPoints.size() == before.data.controlPoints.size());
+    for (std::size_t i = 0; i < before.data.controlPoints.size(); ++i)
+        CHECK(samePoint(local.local->getData().controlPoints[i], before.data.controlPoints[i] + RS_Vector{4, 8}));
+    // The returned value is independently owned, not the source's arrays/cache.
+    local.local->getData().controlPoints.front().x += 1;
+    before.check(*source);
+}
+
+TEST_CASE("Offset generation preparation is not a success or a fabricated stage result",
+          "[lc-offsetcurve][edit][preparation]") {
+    using Kind = LC_OffsetCurveEditPreparation::Kind;
+    auto source = adoptedArc(); const State before{*source};
+    auto next = source->definition(); next.distance *= 2;
+    auto job = source->prepareDefinition(next);
+    REQUIRE(job.kind == Kind::Generate); CHECK_FALSE(job.result); CHECK_FALSE(job.local);
+    notRun(job.result); CHECK(job.definition.distance == next.distance); before.check(*source);
+    next = source->definition(); next.basis.center = {4, 8};
+    auto rounded = source->prepareDefinition(next);
+    CHECK(rounded.kind == Kind::Generate); CHECK_FALSE(rounded.local); notRun(rounded.result);
+    before.check(*source);
+    auto ring = adoptedRing(); const State ringBefore{*ring};
+    next = ring->definition(); next.basis.center = {4, 8};
+    LC_OffsetRunLimits lowered; lowered.outputBudget.maxCubicPieces = 1;
+    auto limited = ring->prepareDefinition(next, lowered);
+    CHECK(limited.kind == Kind::Generate); CHECK_FALSE(limited.local); notRun(limited.result);
+    ringBefore.check(*ring);
+}
+
+TEST_CASE("Offset definition preparation refuses invalid and stale sources before any job",
+          "[lc-offsetcurve][edit][preparation]") {
+    using Kind = LC_OffsetCurveEditPreparation::Kind;
+    auto source = adoptedArc(); const State before{*source};
+    auto next = source->definition(); next.distance = std::numeric_limits<double>::quiet_NaN();
+    auto invalid = source->prepareDefinition(next);
+    CHECK(invalid.kind == Kind::Refused); CHECK(invalid.result.refusal == Refusal::InvalidInput);
+    CHECK_FALSE(invalid.local); notRun(invalid.result); before.check(*source);
+    next = source->definition(); source->getData().controlPoints.front().x += 1;
+    const State stale{*source};
+    auto inconsistent = source->prepareDefinition(next);
+    CHECK(inconsistent.kind == Kind::Refused); CHECK(inconsistent.result.refusal == Refusal::Inconsistent);
+    CHECK_FALSE(inconsistent.local); notRun(inconsistent.result); stale.check(*source);
+}
