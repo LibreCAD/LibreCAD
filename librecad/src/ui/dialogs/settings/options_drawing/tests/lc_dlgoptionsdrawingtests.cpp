@@ -31,6 +31,7 @@
 
 #include <QComboBox>
 #include <QDialogButtonBox>
+#include <QGroupBox>
 #include <QLineEdit>
 #include <QPushButton>
 
@@ -90,6 +91,9 @@ TEST_CASE("Drawing Preferences take the paper in the unit chosen", "[gui][dialog
     QG_DlgOptionsDrawing dialog;
     dialog.setGraphic(&graphic);
     choose(dialog, "cbUnit", RS2::Foot);
+    // the Paper tab names the unit its sizes are in
+    CHECK(dialog.findChild<QGroupBox*>("formatGroupBox")->title() == "Format (Foot)");
+    CHECK(dialog.findChild<QGroupBox*>("marginsGroupBox")->title() == "Margins (Foot)");
 
     SECTION("Cancel leaves the paper") {
         choose(dialog, "cbPaperFormat", RS2::Letter);

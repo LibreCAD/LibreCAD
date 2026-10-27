@@ -1810,6 +1810,10 @@ void QG_DlgOptionsDrawing::updatePaperSize() const {
         lePaperWidth->setEnabled(false);
         lePaperHeight->setEnabled(false);
     }
+    // the unit the sizes are in
+    const QString unit = m_paperUnit == RS2::None ? QString() : QString(" (%1)").arg(RS_Units::unitToString(m_paperUnit));
+    formatGroupBox->setTitle(tr("Format") + unit);
+    marginsGroupBox->setTitle(tr("Margins") + unit);
     updateUnitsPreview();
     updatePaperPreview();
 }
