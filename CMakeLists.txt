@@ -3585,14 +3585,36 @@ if (BUILD_TESTS)
     set_target_properties(librecad_offset_worker_fault_tests PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/native-offset-fault-tests")
     add_dependencies(librecad_offset_worker_fault_tests librecad_offset_worker_fault_fixture)
+    # Geometry-entry timeout qualification uses the same main/kernel, with its
+    # nonreturning Generate loop compiled ONLY into this uninstalled test helper.
+    # Its fixed sibling name is isolated from both the product and fault lanes.
+    add_executable(librecad_offset_worker_geometry_timeout_fixture EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        librecad/src/lib/offset_worker/lc_offsetworkerkernel.cpp
+        librecad/src/lib/offset_worker/lc_offsetworkermain.cpp)
+    target_include_directories(librecad_offset_worker_geometry_timeout_fixture PRIVATE ${SHARED_INCLUDES})
+    target_compile_features(librecad_offset_worker_geometry_timeout_fixture PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_offset_worker_geometry_timeout_fixture PRIVATE
+        DWGSUPPORT _USE_MATH_DEFINES LC_OFFSET_WORKER_GEOMETRY_TIMEOUT_TEST_ONLY=1)
+    target_link_libraries(librecad_offset_worker_geometry_timeout_fixture PRIVATE librecad_lib
+        Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network)
+    set_target_properties(librecad_offset_worker_geometry_timeout_fixture PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF OUTPUT_NAME LibreCADOffsetWorker
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/native-offset-geometry-timeout-tests")
+    add_librecad_filter_micro_test(
+        librecad_offset_worker_geometry_timeout_tests
+        librecad/src/lib/offset_worker/tests/lc_offsetworkergeometrytimeout_tests.cpp)
+    set_target_properties(librecad_offset_worker_geometry_timeout_tests PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/native-offset-geometry-timeout-tests")
+    add_dependencies(librecad_offset_worker_geometry_timeout_tests librecad_offset_worker_geometry_timeout_fixture)
     if(LIBRECAD_REGISTER_OFFSET_WORKER_TESTS)
-        foreach(kind request result kernel process client fault)
+        foreach(kind request result kernel process client fault geometry_timeout)
             add_test(NAME offset_worker_${kind}
                 COMMAND librecad_offset_worker_${kind}_tests "[lc-offsetcurve]")
             set_tests_properties(offset_worker_${kind} PROPERTIES
                 TIMEOUT 30 ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
         endforeach()
-        set_tests_properties(offset_worker_process offset_worker_client offset_worker_fault
+        set_tests_properties(offset_worker_process offset_worker_client offset_worker_fault offset_worker_geometry_timeout
             PROPERTIES RUN_SERIAL TRUE)
     endif()
     set(LIBRECAD_OFFSET_EXTERNAL_TEST_HELPER "" CACHE FILEPATH
