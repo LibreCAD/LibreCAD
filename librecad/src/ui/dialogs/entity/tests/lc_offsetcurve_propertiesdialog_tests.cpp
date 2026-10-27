@@ -32,6 +32,7 @@
 #include "lc_selectedset.h"
 #include "lc_offsetcurve.h"
 #include "lc_offsetcurveeditsnapshot.h"
+#include "../../../../lib/offset_worker/lc_offsetworkerclient.h"
 #include "rs_point.h"
 #include <tuple>
 #include "lc_offsetcurveui.h"
@@ -55,6 +56,62 @@
 namespace {
 using NativeWidget = LC_PropertiesEditingWidgetOffsetCurve;
 using Input = LC_ActionContext::InteractiveInputInfo;
+constexpr int preparationWatchdogMs = 3500;
+
+void requireNativeHelper() {
+    const auto path = LC_OffsetWorkerClient::helperPath();
+    INFO("The real fixed-path offset helper must be built beside this test executable: " << path.toStdString());
+    REQUIRE(QFileInfo(path).isFile());
+    REQUIRE(QFileInfo(path).isExecutable());
+}
+
+bool pollEventsUntil(const std::function<bool()>& ready) {
+    if (ready()) return true;
+    QEventLoop loop;
+    QTimer poll, watchdog;
+    bool expired = false;
+    QObject::connect(&poll, &QTimer::timeout, &loop, [&] {
+        if (ready()) loop.quit();
+    });
+    QObject::connect(&watchdog, &QTimer::timeout, &loop, [&] {
+        expired = true;
+        loop.quit();
+    });
+    poll.start(1);
+    watchdog.setSingleShot(true); watchdog.start(preparationWatchdogMs);
+    loop.exec();
+    return !expired && ready();
+}
+
+void awaitPreparation(NativeWidget& widget) {
+    const QPointer<NativeWidget> live(&widget);
+    const auto cancelOnUnwind = qScopeGuard([&] {
+        if (live && live->isPreparing()) live->cancelPreparation();
+    });
+    if (widget.isPreparing()) requireNativeHelper();
+    const bool completed = pollEventsUntil([&] { return !live || !live->isPreparing(); });
+    INFO("Native preparation did not settle within the 3500ms GUI-test watchdog");
+    REQUIRE(completed);
+    REQUIRE(live);
+    CHECK_FALSE(live->isPreparing());
+}
+
+void checkGeneratedWorkerStages(const NativeWidget& widget) {
+    REQUIRE(widget.lastWorkerResult());
+    const auto& result = *widget.lastWorkerResult();
+    REQUIRE(result); CHECK(result.changed); CHECK(result.engineRuns == 1);
+    REQUIRE(result.engineStatus); CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
+    REQUIRE(result.checkReason); CHECK(*result.checkReason == LC_OffsetCheckResult::Reason::None);
+    CHECK(result.checkWork.cacheSpans > 0); CHECK(result.checkWork.vertices > 0);
+}
+
+void observeCancelledReplies() {
+    // Cover the complete terminate/reap window, not just one posted callback.
+    QEventLoop loop;
+    QTimer::singleShot(int(LC_OffsetWorkerClient::Deadlines::terminate +
+        LC_OffsetWorkerClient::Deadlines::reap + 25), &loop, &QEventLoop::quit);
+    loop.exec();
+}
 
 class Graphic final : public RS_Graphic {
 public:
@@ -168,6 +225,26 @@ std::unique_ptr<LC_OffsetCurve> makeArc(Graphic& graphic) {
     return result;
 }
 
+std::unique_ptr<LC_OffsetCurve> makeDyadicRing(Graphic& graphic) {
+    // Match the exact-translation fixture used by the native edit tests.
+    RS_SplineData data{3, false};
+    std::array<RS_Vector, 4> net{{{2, 0}, {2, 9.0/8}, {9.0/8, 2}, {0, 2}}};
+    for (unsigned quadrant = 0; quadrant < 4; ++quadrant) {
+        for (unsigned i = quadrant ? 1 : 0; i < 4; ++i) data.controlPoints.push_back(net[i]);
+        for (auto& point : net) point = {-point.y, point.x};
+    }
+    for (unsigned i = 0; i <= 4; ++i)
+        for (unsigned j = 0; j < (i == 0 || i == 4 ? 4u : 3u); ++j) data.knotslist.push_back(i);
+    data.weights.assign(data.controlPoints.size(), 1); data.m_closedFlag = true;
+    const RS_Spline cache{nullptr, data};
+    LC_EllipseOffsetDefinition definition;
+    definition.basis = {{0, 0}, {1, 0}, 1}; definition.distance = 1; definition.relTolerance = .01;
+    auto result = LC_OffsetCurve::adopt(cache, definition, .02);
+    REQUIRE(result);
+    result->setParent(&graphic); result->setLayer(graphic.getActiveLayer());
+    return result;
+}
+
 void key(QWidget& widget, int code, Qt::KeyboardModifiers modifiers = Qt::NoModifier) {
     for (auto type : {QEvent::KeyPress, QEvent::KeyRelease}) {
         QKeyEvent event(type, code, modifiers);
@@ -200,11 +277,15 @@ NativeWidget& native(LC_DlgEntityProperties& dialog) {
     auto* result = dialog.findChild<NativeWidget*>();
     REQUIRE(result != nullptr); return *result;
 }
-void enter(QWidget& widget, const char* name, const QString& value) {
+void submitInput(QWidget& widget, const char* name, const QString& value) {
     auto& editor = edit(widget, name);
     type(editor, value);
     key(editor, Qt::Key_Tab); // actual focus-out editingFinished, not a direct slot invocation
-    QApplication::processEvents();
+}
+void enter(QWidget& widget, const char* name, const QString& value) {
+    submitInput(widget, name, value);
+    if (auto* offset = qobject_cast<NativeWidget*>(&widget)) awaitPreparation(*offset);
+    else QApplication::processEvents();
 }
 void button(LC_DlgEntityProperties& dialog, QDialogButtonBox::StandardButton which) {
     auto* box = dialog.findChild<QDialogButtonBox*>("buttonBox");
@@ -232,9 +313,9 @@ struct Fixture {
         graphic.initForNewDocument(); graphic.onLoadingCompleted(); view.setDocument(&graphic);
         curve = makeArc(graphic);
     }
-    void show() {
+    void show(std::function<bool()> nativeGuard = {}) {
         dialog = std::make_unique<LC_DlgEntityProperties>(nullptr, view.getViewPort(), curve.get(),
-            Input::NOTNEEDED, QString{}, 0, 0);
+            Input::NOTNEEDED, QString{}, 0, 0, std::move(nativeGuard));
         dialog->show(); dialog->activateWindow();
         QApplication::processEvents();
     }
@@ -340,7 +421,7 @@ struct ActionFixture {
             if (auto* dialog = qobject_cast<QDialog*>(QApplication::activeModalWidget())) dialog->reject();
             loop.quit();
         });
-        poll.start(); timeout.start(5000);
+        poll.start(); timeout.start(preparationWatchdogMs);
         action->start(original);
         loop.exec();
         poll.stop(); timeout.stop();
@@ -362,6 +443,8 @@ TEST_CASE("Native properties dialog constructs without control net edits or geom
     Fixture f; const Snapshot before(*f.curve); f.show();
     auto& widget = native(*f.dialog);
     CHECK(widget.editAttemptCount() == 0); CHECK_FALSE(widget.lastEditResult());
+    CHECK_FALSE(widget.lastWorkerResult());
+    CHECK_FALSE(widget.isPreparing());
     CHECK(widget.findChildren<QLineEdit*>().size() == 8);
     CHECK(widget.findChild<QTableWidget*>() == nullptr);
     CHECK(widget.findChild<QLabel*>("lRefusal")->wordWrap());
@@ -407,6 +490,8 @@ TEST_CASE("Native dialog side and reversed traversal use checked single edits",
         Fixture f; f.show(); auto& widget = native(*f.dialog);
         auto* box = widget.findChild<QCheckBox*>(name); REQUIRE(box);
         click(*box);
+        REQUIRE(widget.isPreparing());
+        awaitPreparation(widget);
         REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
         CHECK(widget.lastEditResult()->changed); CHECK(widget.lastEditResult()->engineRuns == 1);
         CHECK(widget.editAttemptCount() == 1); CHECK(f.curve->hasEditableDefinition());
@@ -426,9 +511,11 @@ TEST_CASE("Native dialog refusal and invalid expressions restore exact clone sta
         Fixture f; f.show(); auto& widget = native(*f.dialog);
         const Snapshot before(*f.curve); const auto text = edit(widget, "leDistance").text();
         QGuiApplication::setOverrideCursor(Qt::CrossCursor);
-        enter(widget, "leDistance", input);
+        const auto restoreCursor = qScopeGuard([] { QGuiApplication::restoreOverrideCursor(); });
+        submitInput(widget, "leDistance", input);
+        CHECK_FALSE(widget.isPreparing());
+        CHECK_FALSE(widget.lastWorkerResult());
         REQUIRE(QGuiApplication::overrideCursor()); CHECK(QGuiApplication::overrideCursor()->shape() == Qt::CrossCursor);
-        QGuiApplication::restoreOverrideCursor();
         before.exact(*f.curve);
         CHECK(edit(widget, "leDistance").text() == text);
         CHECK_FALSE(widget.findChild<QLabel*>("lRefusal")->text().isEmpty());
@@ -483,11 +570,14 @@ TEST_CASE("Native dialog untouched rounded and equivalent exact values do not re
     }
     CHECK(widget.editAttemptCount() == 0); before.exact(*f.curve);
     const auto shown = edit(widget, "leDistance").text();
-    enter(widget, "leDistance", shown); // explicitly typing the rounded display is still unchanged
+    submitInput(widget, "leDistance", shown); // explicitly typing the rounded display is still unchanged
+    CHECK_FALSE(widget.isPreparing());
     CHECK(widget.editAttemptCount() == 0); before.exact(*f.curve);
-    enter(widget, "leDistance", ".251234567890123+0");
+    submitInput(widget, "leDistance", ".251234567890123+0");
+    CHECK_FALSE(widget.isPreparing());
     REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
     CHECK_FALSE(widget.lastEditResult()->changed); CHECK(widget.lastEditResult()->engineRuns == 0);
+    CHECK_FALSE(widget.lastWorkerResult());
     before.exact(*f.curve);
 }
 
@@ -499,6 +589,10 @@ TEST_CASE("Native field Return followed by focus out does not submit twice",
     widget.show(); widget.activateWindow(); QApplication::processEvents();
     auto& editor = edit(widget, "leDistance");
     type(editor, ".3"); key(editor, Qt::Key_Return);
+    REQUIRE(widget.isPreparing());
+    key(editor, Qt::Key_Tab);
+    CHECK(widget.editAttemptCount() == 1);
+    awaitPreparation(widget);
     REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
     CHECK(widget.editAttemptCount() == 1); const Snapshot after(*f.curve);
     key(editor, Qt::Key_Tab); QApplication::processEvents();
@@ -513,8 +607,11 @@ TEST_CASE("Native dialog refresh preserves another unfinished field",
     // Toggling by a keyboard event does not need to steal the dirty editor's focus.
     auto* side = widget.findChild<QCheckBox*>("cbTowardCentre"); REQUIRE(side);
     key(*side, Qt::Key_Space);
+    REQUIRE(widget.isPreparing());
+    awaitPreparation(widget);
     CHECK(distance.isModified()); CHECK(distance.text() == ".3");
     key(distance, Qt::Key_Tab);
+    awaitPreparation(widget);
     CHECK(f.curve->definition().distance == .3);
     CHECK(f.curve->definition().towardCentre); CHECK(widget.editAttemptCount() == 2);
 }
@@ -586,6 +683,364 @@ TEST_CASE("Native dialog rechecks a cache invalidated after population",
     CHECK(widget.lastEditResult()->refusal == LC_OffsetCurveRefusal::Inconsistent);
     CHECK(widget.lastEditResult()->engineRuns == 0); before.exact(*f.curve);
     CHECK_FALSE(edit(widget, "leDistance").isEnabled());
+}
+
+TEST_CASE("Native dialog real helper preparation keeps the Qt heartbeat alive and seals its clone",
+          "[gui][dialog][offsetcurve][async][worker][heartbeat]") {
+    Fixture f; requireNativeHelper();
+    const Snapshot original(*f.curve);
+    auto clone = std::unique_ptr<LC_OffsetCurve>(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    REQUIRE(clone);
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort()); widget.setEntity(clone.get());
+    widget.show(); widget.activateWindow(); QApplication::processEvents();
+    const Snapshot before(*clone);
+    std::vector<bool> busyChanges;
+    QObject observer;
+    QObject::connect(&widget, &NativeWidget::preparationBusyChanged, &observer,
+        [&](bool busy) { busyChanges.push_back(busy); });
+    unsigned heartbeats = 0, busyHeartbeats = 0;
+    QTimer heartbeat;
+    QObject::connect(&heartbeat, &QTimer::timeout, &observer, [&] {
+        ++heartbeats;
+        if (widget.isPreparing()) ++busyHeartbeats;
+    });
+    heartbeat.start(0);
+    submitInput(widget, "leDistance", ".3");
+    REQUIRE(widget.isPreparing()); CHECK_FALSE(widget.lastEditResult());
+    CHECK(widget.editAttemptCount() == 1);
+    before.exact(*clone); original.exact(*f.curve);
+    awaitPreparation(widget);
+    heartbeat.stop();
+    CHECK(heartbeats > 0); CHECK(busyHeartbeats > 0);
+    CHECK((busyChanges == std::vector<bool>{true, false}));
+    REQUIRE(widget.lastEditResult()); const auto& result = *widget.lastEditResult();
+    REQUIRE(result); CHECK(result.changed); CHECK(result.engineRuns == 1);
+    REQUIRE(result.engineStatus); CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
+    REQUIRE(result.checkReason); CHECK(*result.checkReason == LC_OffsetCheckResult::Reason::None);
+    CHECK(result.checkWork.cacheSpans > 0); CHECK(result.checkWork.vertices > 0);
+    checkGeneratedWorkerStages(widget);
+    CHECK(clone->definition().distance == .3); CHECK(clone->hasEditableDefinition());
+    CHECK(clone->getId() == before.id); CHECK(clone->getParent() == before.parent);
+    CHECK(clone->sourceHandle() == before.handle); CHECK(clone->getFlags() == before.flags);
+    CHECK(clone->getPen(false) == before.pen); CHECK(clone->getLayer() == before.layer);
+    original.exact(*f.curve);
+}
+
+TEST_CASE("Native dialog exact translations remain immediate without a preparation job",
+          "[gui][dialog][offsetcurve][async][noop]") {
+    Fixture f; f.curve = makeDyadicRing(f.graphic); f.show(); auto& widget = native(*f.dialog);
+    std::vector<bool> busyChanges;
+    QObject observer;
+    QObject::connect(&widget, &NativeWidget::preparationBusyChanged, &observer,
+        [&](bool busy) { busyChanges.push_back(busy); });
+    const Snapshot before(*f.curve);
+    submitInput(widget, "leCenterX", "4");
+    CHECK_FALSE(widget.isPreparing()); CHECK(busyChanges.empty());
+    CHECK_FALSE(widget.lastWorkerResult());
+    REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+    CHECK(widget.lastEditResult()->changed); CHECK(widget.lastEditResult()->engineRuns == 0);
+    CHECK(widget.editAttemptCount() == 1);
+    CHECK(f.curve->definition().basis.center.x == 4);
+    CHECK(f.curve->getId() == before.id); CHECK(f.curve->hasEditableDefinition());
+    REQUIRE(f.curve->getData().controlPoints.size() == before.spline.controlPoints.size());
+    for (std::size_t i = 0; i < before.spline.controlPoints.size(); ++i)
+        pointEqual(f.curve->getData().controlPoints[i], before.spline.controlPoints[i] + RS_Vector{4, 0});
+    CHECK(f.curve->getData().knotslist == before.spline.knotslist);
+    CHECK(f.curve->getData().weights == before.spline.weights);
+    REQUIRE(f.curve->cachedDefinitionGrips().size() == before.grips.size());
+    for (std::size_t i = 0; i < before.grips.size(); ++i)
+        pointEqual(f.curve->cachedDefinitionGrips()[i], before.grips[i] + RS_Vector{4, 0});
+    auto expected = before.definition; expected.basis.center = RS_Vector{4, 0};
+    definitionEqual(f.curve->definition(), expected);
+    CHECK(bits(f.curve->checkedWorldTolerance()) == bits(before.tolerance));
+    CHECK(f.curve->getParent() == before.parent); CHECK(f.curve->getPen(false) == before.pen);
+    CHECK(f.curve->sourceHandle() == before.handle); CHECK(f.curve->getLayer() == before.layer);
+}
+
+TEST_CASE("Native dialog explicit cancellation and rejection suppress late helper replies and recover",
+          "[gui][dialog][offsetcurve][async][cancel]") {
+    for (const bool reject : {false, true}) {
+        CAPTURE(reject);
+        Fixture f; requireNativeHelper(); f.show(); auto& widget = native(*f.dialog);
+        const Snapshot before(*f.curve);
+        submitInput(widget, "leDistance", ".3");
+        REQUIRE(widget.isPreparing()); before.exact(*f.curve);
+        if (reject) f.dialog->reject();
+        else widget.cancelPreparation();
+        CHECK_FALSE(widget.isPreparing());
+        if (reject) CHECK_FALSE(f.dialog->isVisible());
+        observeCancelledReplies();
+        before.exact(*f.curve);
+        if (reject) {
+            f.dialog->show(); f.dialog->activateWindow(); QApplication::processEvents();
+        }
+        enter(widget, "leDistance", ".4");
+        REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+        CHECK(widget.lastEditResult()->changed); CHECK(widget.lastEditResult()->engineRuns == 1);
+        CHECK(widget.editAttemptCount() == 2); CHECK(f.curve->definition().distance == .4);
+        CHECK(f.curve->hasEditableDefinition()); CHECK(f.curve->getId() == before.id);
+    }
+}
+
+TEST_CASE("Native widget rebinding or clearing its target cancels the old helper generation",
+          "[gui][dialog][offsetcurve][async][rebind]") {
+    for (const bool clear : {false, true}) {
+        CAPTURE(clear);
+        Fixture f; requireNativeHelper(); f.show(); auto& widget = native(*f.dialog);
+        auto replacement = makeArc(f.graphic);
+        const auto detachTarget = qScopeGuard([&] { widget.setEntity(nullptr); });
+        const Snapshot before(*f.curve), other(*replacement);
+        submitInput(widget, "leDistance", ".3");
+        REQUIRE(widget.isPreparing());
+        widget.setEntity(clear ? nullptr : replacement.get());
+        CHECK_FALSE(widget.isPreparing()); CHECK_FALSE(widget.lastEditResult());
+        CHECK(widget.editAttemptCount() == 0);
+        CHECK(widget.editedEntity() == (clear ? nullptr : replacement.get()));
+        observeCancelledReplies();
+        before.exact(*f.curve); other.exact(*replacement);
+        widget.setEntity(replacement.get());
+        enter(widget, "leDistance", ".4");
+        REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+        CHECK(widget.lastEditResult()->engineRuns == 1); CHECK(widget.editAttemptCount() == 1);
+        CHECK(replacement->definition().distance == .4); CHECK(replacement->hasEditableDefinition());
+        before.exact(*f.curve);
+    }
+}
+
+TEST_CASE("Native widget destruction cancels an outstanding real helper without applying its reply",
+          "[gui][dialog][offsetcurve][async][destruction]") {
+    Fixture f; requireNativeHelper(); const Snapshot before(*f.curve);
+    auto widget = std::make_unique<NativeWidget>();
+    widget->setGraphicViewport(f.view.getViewPort()); widget->setEntity(f.curve.get());
+    widget->show(); widget->activateWindow(); QApplication::processEvents();
+    const QPointer<NativeWidget> live(widget.get());
+    submitInput(*widget, "leDistance", ".3");
+    REQUIRE(widget->isPreparing()); before.exact(*f.curve);
+    QElapsedTimer elapsed; elapsed.start();
+    widget.reset();
+    CHECK(live.isNull()); CHECK(elapsed.elapsed() < preparationWatchdogMs);
+    observeCancelledReplies(); before.exact(*f.curve);
+    f.show(); enter(native(*f.dialog), "leDistance", ".4");
+    REQUIRE(native(*f.dialog).lastEditResult()); REQUIRE(*native(*f.dialog).lastEditResult());
+    CHECK(native(*f.dialog).lastEditResult()->engineRuns == 1);
+    CHECK(f.curve->definition().distance == .4); CHECK(f.curve->hasEditableDefinition());
+}
+
+TEST_CASE("Native dialog rapid proposals coalesce pending scalars and traversal before applying only the latest",
+          "[gui][dialog][offsetcurve][async][supersession]") {
+    Fixture f; requireNativeHelper(); f.show(); auto& widget = native(*f.dialog);
+    const Snapshot before(*f.curve);
+    submitInput(widget, "leDistance", ".3"); REQUIRE(widget.isPreparing());
+    submitInput(widget, "leMajor", "1.25");
+    submitInput(widget, "leMinor", ".875");
+    submitInput(widget, "leDistance", ".4");
+    auto* reversed = widget.findChild<QCheckBox*>("cbReversed"); REQUIRE(reversed);
+    key(*reversed, Qt::Key_Space);
+    REQUIRE(widget.isPreparing()); CHECK_FALSE(widget.lastEditResult());
+    CHECK(widget.editAttemptCount() == 5); before.exact(*f.curve);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+    CHECK(widget.lastEditResult()->changed); CHECK(widget.lastEditResult()->engineRuns == 1);
+    CHECK(widget.lastEditResult()->checkWork.cacheSpans > 0);
+    auto expected = before.definition;
+    expected.distance = .4; expected.basis.majorP = RS_Vector{1.25, 0};
+    expected.basis.ratio = .875 / 1.25; expected.basis.reversed = true;
+    std::swap(expected.basis.angle1, expected.basis.angle2);
+    const RS_Ellipse expectedSource{nullptr, expected.basis};
+    expected.basis = expectedSource.getData();
+    definitionEqual(f.curve->definition(), expected);
+    CHECK(f.curve->hasEditableDefinition()); CHECK(f.curve->getId() == before.id);
+    const Snapshot latest(*f.curve);
+    observeCancelledReplies(); latest.exact(*f.curve);
+    CHECK(widget.editAttemptCount() == 5);
+}
+
+TEST_CASE("Native dialog an invalid latest proposal cancels older valid preparation",
+          "[gui][dialog][offsetcurve][async][supersession][refusal]") {
+    struct Case { const char* field; const char* input; bool nativeRefusal; };
+    for (const auto& test : {Case{"leDistance", "not_a_number(", false},
+                            Case{"leMajor", "-1", false}, Case{"leDistance", "0", true}}) {
+        CAPTURE(test.field, test.input);
+        Fixture f; requireNativeHelper(); f.show(); auto& widget = native(*f.dialog);
+        const Snapshot before(*f.curve);
+        submitInput(widget, "leDistance", ".3"); REQUIRE(widget.isPreparing());
+        submitInput(widget, test.field, test.input);
+        CHECK_FALSE(widget.isPreparing()); before.exact(*f.curve);
+        if (test.nativeRefusal) {
+            REQUIRE(widget.lastEditResult());
+            CHECK(widget.lastEditResult()->refusal == LC_OffsetCurveRefusal::InvalidInput);
+            CHECK(widget.lastEditResult()->engineRuns == 0);
+        } else CHECK_FALSE(widget.lastEditResult());
+        CHECK_FALSE(widget.findChild<QLabel*>("lRefusal")->text().isEmpty());
+        const auto attempts = widget.editAttemptCount();
+        CHECK(attempts == (test.nativeRefusal ? 2u : 1u));
+        observeCancelledReplies(); before.exact(*f.curve);
+        CHECK(widget.editAttemptCount() == attempts);
+        enter(widget, "leDistance", ".4");
+        REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+        CHECK(widget.lastEditResult()->engineRuns == 1);
+        CHECK(f.curve->definition().distance == .4); CHECK(f.curve->hasEditableDefinition());
+    }
+}
+
+TEST_CASE("Native dialog direct Accept and field Return veto pending preparation then accept once",
+          "[gui][dialog][offsetcurve][async][accept][return]") {
+    for (const bool returnKey : {false, true}) {
+        CAPTURE(returnKey);
+        Fixture f; requireNativeHelper(); f.show(); auto& widget = native(*f.dialog);
+        const Snapshot before(*f.curve);
+        unsigned accepted = 0;
+        QObject observer;
+        QObject::connect(f.dialog.get(), &QDialog::accepted, &observer, [&] { ++accepted; });
+        auto& editor = edit(widget, "leDistance"); type(editor, ".3");
+        if (returnKey) key(editor, Qt::Key_Return);
+        else f.dialog->accept();
+        CHECK(f.dialog->isVisible()); REQUIRE(widget.isPreparing());
+        CHECK(accepted == 0); CHECK(widget.editAttemptCount() == 1);
+        CHECK_FALSE(widget.lastEditResult()); before.exact(*f.curve);
+        key(editor, Qt::Key_Return);
+        CHECK(f.dialog->isVisible()); CHECK(accepted == 0); CHECK(widget.editAttemptCount() == 1);
+        awaitPreparation(widget);
+        REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+        CHECK(widget.lastEditResult()->engineRuns == 1);
+        const Snapshot prepared(*f.curve);
+        if (returnKey) key(editor, Qt::Key_Return);
+        else f.dialog->accept();
+        CHECK_FALSE(f.dialog->isVisible()); CHECK(f.dialog->result() == QDialog::Accepted);
+        CHECK(accepted == 1); CHECK(widget.editAttemptCount() == 1);
+        prepared.exact(*f.curve);
+    }
+}
+
+TEST_CASE("Native dialog point picker closure is vetoed until focused pending input finishes",
+          "[gui][dialog][offsetcurve][async][picker]") {
+    Fixture f; requireNativeHelper(); f.show(); auto& widget = native(*f.dialog);
+    auto* picker = widget.findChild<LC_PointPickButton*>("wPickPointCenter"); REQUIRE(picker);
+    const Snapshot before(*f.curve);
+    type(edit(widget, "leDistance"), ".3");
+    click(*picker->getButton());
+    REQUIRE(widget.isPreparing()); CHECK(f.dialog->isVisible());
+    CHECK(f.dialog->isInteractiveInputRequested() == Input::NOTNEEDED);
+    CHECK(f.dialog->getInteractiveInputTag().isEmpty());
+    before.exact(*f.curve);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+    CHECK(widget.lastEditResult()->engineRuns == 1); CHECK(widget.editAttemptCount() == 1);
+    const Snapshot prepared(*f.curve);
+    click(*picker->getButton());
+    CHECK_FALSE(f.dialog->isVisible()); CHECK(f.dialog->result() == QDialog::Accepted);
+    CHECK(f.dialog->isInteractiveInputRequested() == Input::POINT);
+    CHECK(f.dialog->getInteractiveInputTag() == "center");
+    prepared.exact(*f.curve);
+}
+
+TEST_CASE("Native dialog helper replies cannot overwrite a changed input snapshot",
+          "[gui][dialog][offsetcurve][async][snapshot][stale]") {
+    for (unsigned change = 0; change < 4; ++change) {
+        CAPTURE(change);
+        Fixture f; requireNativeHelper(); f.show(); auto& widget = native(*f.dialog);
+        submitInput(widget, "leDistance", ".3"); REQUIRE(widget.isPreparing());
+        if (change == 0) f.curve->getData().controlPoints.front().x += .125;
+        if (change == 1) {
+            auto basis = f.curve->definition().basis; basis.center = RS_Vector{2, -3};
+            const auto translated = f.curve->setBasis(basis);
+            REQUIRE(translated); REQUIRE(translated.changed); CHECK(translated.engineRuns <= 1);
+        }
+        if (change == 2) f.curve->setSourceHandle(0x99);
+        if (change == 3) {
+            auto* line = dynamic_cast<RS_Line*>(f.curve->entityAt(0)); REQUIRE(line);
+            line->setEndpoint(line->getEndpoint() + RS_Vector{.125, 0});
+        }
+        const Snapshot changed(*f.curve);
+        awaitPreparation(widget);
+        changed.exact(*f.curve); CHECK(f.curve->definition().distance == .25);
+        CHECK_FALSE(widget.lastEditResult()); checkGeneratedWorkerStages(widget);
+        CHECK(widget.editAttemptCount() == 1);
+        observeCancelledReplies(); changed.exact(*f.curve);
+        CHECK_FALSE(widget.lastEditResult()); checkGeneratedWorkerStages(widget);
+    }
+}
+
+TEST_CASE("Native dialog revoked preparation guards retain child stages without adopting the reply",
+          "[gui][dialog][offsetcurve][async][context][guard][worker]") {
+    for (const bool constructorGuard : {false, true}) {
+        CAPTURE(constructorGuard);
+        Fixture f; requireNativeHelper();
+        bool current = true;
+        unsigned guardCalls = 0;
+        const auto guard = [&] {
+            ++guardCalls;
+            return current;
+        };
+        if (constructorGuard) f.show(guard);
+        else f.show();
+        auto& widget = native(*f.dialog);
+        if (!constructorGuard) widget.setPreparationGuard(guard);
+        const auto clearGuard = qScopeGuard([&] {
+            widget.cancelPreparation(); widget.setPreparationGuard({});
+        });
+        const Snapshot before(*f.curve);
+        submitInput(widget, "leDistance", ".3");
+        REQUIRE(widget.isPreparing()); CHECK_FALSE(widget.lastEditResult());
+        CHECK_FALSE(widget.lastWorkerResult()); before.exact(*f.curve);
+        const auto admittedCalls = guardCalls; REQUIRE(admittedCalls > 0);
+        current = false; // Revoke owner authority before Qt can deliver the real child's reply.
+        awaitPreparation(widget);
+        CHECK(guardCalls > admittedCalls);
+        CHECK_FALSE(widget.lastEditResult()); checkGeneratedWorkerStages(widget);
+        CHECK(widget.editAttemptCount() == 1); CHECK(widget.editedEntity() == f.curve.get());
+        CHECK_FALSE(widget.findChild<QLabel*>("lRefusal")->text().isEmpty());
+        CHECK(f.graphic.countUndoCycles() == 0); before.exact(*f.curve);
+        observeCancelledReplies();
+        CHECK_FALSE(widget.lastEditResult()); checkGeneratedWorkerStages(widget);
+        before.exact(*f.curve);
+        current = true;
+        submitInput(widget, "leDistance", ".3");
+        REQUIRE(widget.isPreparing()); CHECK_FALSE(widget.lastEditResult());
+        CHECK_FALSE(widget.lastWorkerResult()); before.exact(*f.curve);
+        awaitPreparation(widget);
+        REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+        CHECK(widget.lastEditResult()->changed); CHECK(widget.lastEditResult()->engineRuns == 1);
+        checkGeneratedWorkerStages(widget);
+        CHECK(widget.editAttemptCount() == 2); CHECK(widget.editedEntity() == f.curve.get());
+        CHECK(f.curve->definition().distance == .3); CHECK(f.curve->hasEditableDefinition());
+        CHECK(f.curve->getId() == before.id); CHECK(f.curve->getParent() == before.parent);
+        CHECK(f.curve->getLayer() == before.layer); CHECK(f.curve->getPen(false) == before.pen);
+        CHECK(f.curve->sourceHandle() == before.handle); CHECK(f.curve->getFlags() == before.flags);
+        CHECK(widget.findChild<QLabel*>("lRefusal")->text().isEmpty());
+        CHECK(f.graphic.countUndoCycles() == 0);
+    }
+}
+
+TEST_CASE("Native widget viewport or document context swaps invalidate pending helper replies",
+          "[gui][dialog][offsetcurve][async][context][stale]") {
+    for (const bool viewportSwap : {false, true}) {
+        CAPTURE(viewportSwap);
+        Fixture f; requireNativeHelper();
+        Graphic other; other.initForNewDocument(); other.onLoadingCompleted();
+        lc::test::TestGraphicView otherView; otherView.setDocument(&other);
+        auto* currentView = &f.view;
+        f.show([&] { return currentView == &f.view && currentView->getDocument() == &f.graphic; });
+        auto& widget = native(*f.dialog);
+        const auto restoreContext = qScopeGuard([&] {
+            widget.cancelPreparation(); widget.setPreparationGuard({});
+            widget.setGraphicViewport(f.view.getViewPort());
+            f.view.setDocument(&f.graphic);
+        });
+        const Snapshot before(*f.curve);
+        submitInput(widget, "leDistance", ".3"); REQUIRE(widget.isPreparing());
+        if (viewportSwap) {
+            currentView = &otherView; widget.setGraphicViewport(currentView->getViewPort());
+        }
+        else f.view.setDocument(&other);
+        awaitPreparation(widget);
+        before.exact(*f.curve); CHECK(other.isEmpty());
+        CHECK_FALSE(widget.lastEditResult()); checkGeneratedWorkerStages(widget);
+        CHECK(f.graphic.countUndoCycles() == 0); CHECK(other.countUndoCycles() == 0);
+        observeCancelledReplies(); before.exact(*f.curve);
+        CHECK_FALSE(widget.lastEditResult()); checkGeneratedWorkerStages(widget);
+    }
 }
 
 TEST_CASE("Actual native Edit Properties commits once and undo redo preserve native state",
@@ -857,7 +1312,9 @@ TEST_CASE("Actual center picker closes and reopens native dialog with one atomic
             CHECK(dialog.getInteractiveInputTag() == "center");
         }
         else {
-            REQUIRE(opening == 2); REQUIRE(widget.lastEditResult());
+            REQUIRE(opening == 2);
+            awaitPreparation(widget);
+            REQUIRE(widget.lastEditResult());
             REQUIRE(*widget.lastEditResult()); CHECK(widget.editAttemptCount() == 1);
             CHECK(widget.lastEditResult()->engineRuns <= 1);
             CHECK(edit(widget, "leCenterX").text() != QString{});
@@ -882,6 +1339,7 @@ TEST_CASE("Native scalar picker replay uses the same bounded field setter",
         f.view.getViewPort()->createUCS(RS_Vector{10, 20}, RS_Math::deg2rad(90.));
         LC_DlgEntityProperties dialog(nullptr, f.view.getViewPort(), f.curve.get(), test.type, test.tag, test.value, 0);
         dialog.show(); QApplication::processEvents(); auto& widget = native(dialog);
+        awaitPreparation(widget);
         REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
         CHECK(widget.editAttemptCount() == 1); CHECK(widget.lastEditResult()->engineRuns == 1);
         CHECK(widget.lastEditResult()->checkWork.cacheSpans > 0);
@@ -922,9 +1380,15 @@ TEST_CASE("Actual native Accept completes its focused dirty field exactly once",
         auto& widget = native(dialog);
         type(edit(widget, "leDistance"), ".3"); // no Tab/Return before clicking OK
         button(dialog, QDialogButtonBox::Ok);
+        CHECK(dialog.isVisible()); REQUIRE(widget.isPreparing());
+        CHECK_FALSE(widget.lastEditResult());
+        CHECK(f.graphic.countUndoCycles() == 0); CHECK(&f.current() == f.original);
+        awaitPreparation(widget);
         REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
         CHECK(widget.editAttemptCount() == 1); CHECK(widget.lastEditResult()->engineRuns == 1);
         REQUIRE(widget.editedEntity()); edited = std::make_unique<Snapshot>(*widget.editedEntity());
+        button(dialog, QDialogButtonBox::Ok);
+        CHECK(widget.editAttemptCount() == 1);
     });
     CHECK(f.current().definition().distance == .3); CHECK(f.graphic.countUndoCycles() == 1);
     REQUIRE(edited); edited->geometry(f.current());
@@ -1759,4 +2223,194 @@ TEST_CASE("R03 native modal Accept rechecks undo epoch after a successful final 
             CHECK(f.graphic.countUndoCycles() == cycles + 1); before.geometry(*f.original);
         }
     }
+}
+
+namespace {
+class GuardCompletionRequestor final : public QObject, public LC_LateCompletionRequestor {
+public:
+    explicit GuardCompletionRequestor(unsigned& callbacks) : m_callbacks(callbacks) {}
+    void onLateRequestCompleted(bool) override { ++m_callbacks; }
+private:
+    unsigned& m_callbacks;
+};
+
+enum class EditorGuardStage { Initial, Final, Late };
+enum class EditorGuardMutation { Cancel, DestroyEditor, DestroyRequestor };
+
+void exerciseEditorGuardReentry(EditorGuardStage stage, EditorGuardMutation mutation,
+    bool guardResult, bool acceptedOrSkipped = false) {
+    Fixture f;
+    Context context;
+    context.setDocumentAndView(&f.graphic, &f.view);
+    const Snapshot before(*f.curve);
+    unsigned callbacks = 0, unrelatedCallbacks = 0;
+    auto requestor = std::make_unique<GuardCompletionRequestor>(callbacks);
+    GuardCompletionRequestor unrelated(unrelatedCallbacks);
+    QPointer<LC_EntityPropertiesEditor> editor = new LC_EntityPropertiesEditor(&context, requestor.get());
+    editor->setParent(requestor.get());
+    auto session = std::make_shared<LC_EntityPropertiesEditSession>();
+    session->entity.reset(f.curve->clone());
+    REQUIRE(session->entity);
+    auto token = std::make_shared<unsigned>(1);
+    const std::weak_ptr<unsigned> captureLifetime(token);
+    bool armed = stage != EditorGuardStage::Final;
+    bool guardReturned = false, captureRetained = false;
+    unsigned guardCalls = 0, mutations = 0;
+    const auto input = context.getInteractiveInputInfo();
+    const auto clearInput = qScopeGuard([&] {
+        input->requestor = nullptr; input->state = Input::NONE;
+    });
+    const auto start = [&] {
+        editor->editEntity(nullptr, session->entity.get(), f.view.getViewPort(),
+            [&, keep = std::move(token)] {
+                ++guardCalls;
+                if (!armed) return true;
+                ++mutations;
+                switch (mutation) {
+                case EditorGuardMutation::Cancel: editor->cancelGuardedEdit(); break;
+                case EditorGuardMutation::DestroyEditor: delete editor.data(); break;
+                case EditorGuardMutation::DestroyRequestor: requestor.reset(); break;
+                }
+                // The executing callable must survive clearing its owning editor's guard.
+                captureRetained = !captureLifetime.expired() && *keep == 1;
+                guardReturned = true;
+                return guardResult;
+            }, session);
+    };
+    if (stage == EditorGuardStage::Final) {
+        observeModalLifetime(start, [&](LC_DlgEntityProperties& dialog) {
+            REQUIRE(guardCalls == 1);
+            armed = true;
+            if (acceptedOrSkipped) dialog.accept();
+            else dialog.reject();
+        });
+    } else {
+        CHECK_FALSE(modalOpensDuringDelay([&] {
+            start();
+            if (stage == EditorGuardStage::Late) {
+                // Cancellation must not clear another live requestor's input state.
+                input->requestor = &unrelated; input->state = Input::REQUESTED;
+                editor->onLateRequestCompleted(acceptedOrSkipped);
+            }
+        }));
+    }
+    CHECK(guardCalls == (stage == EditorGuardStage::Final ? 2u : 1u));
+    CHECK(mutations == 1); CHECK(guardReturned); CHECK(captureRetained);
+    CHECK(captureLifetime.expired());
+    CHECK(editor.isNull() == (mutation != EditorGuardMutation::Cancel));
+    CHECK(bool(requestor) == (mutation != EditorGuardMutation::DestroyRequestor));
+    CHECK(callbacks == 0); CHECK(unrelatedCallbacks == 0);
+    if (stage == EditorGuardStage::Late) {
+        CHECK(input->requestor == &unrelated); CHECK(input->state == Input::REQUESTED);
+    }
+    before.exact(*f.curve);
+    CHECK(f.graphic.countUndoCycles() == 0);
+}
+}
+
+TEST_CASE("Native editor initial guard reentry abandons cancelled or destroyed owners",
+          "[gui][dialog][offsetcurve][review-regression][guard-reentry][editor-guard-initial]") {
+    for (const auto mutation : {EditorGuardMutation::Cancel, EditorGuardMutation::DestroyEditor,
+                               EditorGuardMutation::DestroyRequestor}) {
+        for (const bool guardResult : {false, true}) {
+            CAPTURE(static_cast<int>(mutation), guardResult);
+            exerciseEditorGuardReentry(EditorGuardStage::Initial, mutation, guardResult);
+        }
+    }
+}
+
+TEST_CASE("Native editor final modal guard reentry suppresses stale Accept and Cancel completion",
+          "[gui][dialog][offsetcurve][review-regression][guard-reentry][editor-guard-final]") {
+    for (const auto mutation : {EditorGuardMutation::Cancel, EditorGuardMutation::DestroyEditor,
+                               EditorGuardMutation::DestroyRequestor}) {
+        for (const bool guardResult : {false, true}) for (const bool accepted : {false, true}) {
+            CAPTURE(static_cast<int>(mutation), guardResult, accepted);
+            exerciseEditorGuardReentry(EditorGuardStage::Final, mutation, guardResult, accepted);
+        }
+    }
+}
+
+TEST_CASE("Native editor late input guard reentry preserves unrelated input and suppresses reopening",
+          "[gui][dialog][offsetcurve][review-regression][guard-reentry][editor-guard-late]") {
+    for (const auto mutation : {EditorGuardMutation::Cancel, EditorGuardMutation::DestroyEditor,
+                               EditorGuardMutation::DestroyRequestor}) {
+        for (const bool guardResult : {false, true}) for (const bool skipped : {false, true}) {
+            CAPTURE(static_cast<int>(mutation), guardResult, skipped);
+            exerciseEditorGuardReentry(EditorGuardStage::Late, mutation, guardResult, skipped);
+        }
+    }
+}
+
+TEST_CASE("Native widget false busy reentry preserves its newest bound target",
+          "[gui][dialog][offsetcurve][review-regression][async][reentrant-rebind]") {
+    for (const bool clear : {false, true}) {
+        CAPTURE(clear);
+        Fixture f; requireNativeHelper(); f.show(); auto& widget = native(*f.dialog);
+        auto outerTarget = makeArc(f.graphic), newestTarget = makeArc(f.graphic);
+        REQUIRE(newestTarget->setDistance(.4));
+        const Snapshot original(*f.curve), outer(*outerTarget), newest(*newestTarget);
+        const auto detachTarget = qScopeGuard([&] { widget.setEntity(nullptr); });
+        QObject observer;
+        unsigned rebound = 0;
+        QObject::connect(&widget, &NativeWidget::preparationBusyChanged, &observer, [&](bool busy) {
+            if (!busy && !rebound) {
+                ++rebound;
+                widget.setEntity(newestTarget.get());
+            }
+        });
+        submitInput(widget, "leDistance", ".3");
+        REQUIRE(widget.isPreparing());
+        widget.setEntity(clear ? nullptr : outerTarget.get());
+        REQUIRE(rebound == 1); REQUIRE(widget.editedEntity() == newestTarget.get());
+        CHECK_FALSE(widget.isPreparing()); CHECK_FALSE(widget.lastEditResult());
+        CHECK(widget.editAttemptCount() == 0);
+        observeCancelledReplies();
+        REQUIRE(widget.editedEntity() == newestTarget.get());
+        original.exact(*f.curve); outer.exact(*outerTarget); newest.exact(*newestTarget);
+        enter(widget, "leDistance", ".5");
+        REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+        CHECK(widget.lastEditResult()->changed); CHECK(widget.editAttemptCount() == 1);
+        CHECK(newestTarget->definition().distance == .5);
+        CHECK(widget.editedEntity() == newestTarget.get());
+        original.exact(*f.curve); outer.exact(*outerTarget);
+    }
+}
+
+TEST_CASE("Native field completion keeps committed text after a valid viewport context refusal",
+          "[gui][dialog][offsetcurve][review-regression][context-refusal-field]") {
+    Fixture f;
+    Graphic other; other.initForNewDocument(); other.onLoadingCompleted();
+    lc::test::TestGraphicView otherView; otherView.setDocument(&other);
+    otherView.getViewPort()->createUCS(RS_Vector{10, 20}, RS_Math::deg2rad(90.));
+    f.show(); auto& widget = native(*f.dialog);
+    const Snapshot before(*f.curve);
+    const std::array<const char*, 8> fields{{"leDistance", "leCenterX", "leCenterY", "leMajor",
+        "leMinor", "leRotation", "leAngle1", "leAngle2"}};
+    std::array<QString, 8> committed;
+    for (std::size_t i = 0; i < fields.size(); ++i) committed[i] = edit(widget, fields[i]).text();
+    const auto restoreContext = qScopeGuard([&] {
+        widget.cancelPreparation(); widget.setPreparationGuard({});
+        widget.setGraphicViewport(f.view.getViewPort());
+    });
+    unsigned guardCalls = 0;
+    widget.setPreparationGuard([&] {
+        ++guardCalls;
+        widget.setGraphicViewport(otherView.getViewPort());
+        return false;
+    });
+    submitInput(widget, "leDistance", ".3");
+    REQUIRE(guardCalls == 1);
+    CHECK(widget.editAttemptCount() == 1); CHECK_FALSE(widget.isPreparing());
+    CHECK_FALSE(widget.lastEditResult()); CHECK_FALSE(widget.lastWorkerResult());
+    CHECK_FALSE(widget.findChild<QLabel*>("lRefusal")->text().isEmpty());
+    for (std::size_t i = 0; i < fields.size(); ++i) {
+        CAPTURE(fields[i]);
+        CHECK(edit(widget, fields[i]).text() == committed[i]);
+        CHECK_FALSE(edit(widget, fields[i]).isModified());
+    }
+    auto& distance = edit(widget, "leDistance");
+    distance.setFocus(); key(distance, Qt::Key_Tab);
+    CHECK(guardCalls == 1); CHECK(widget.editAttemptCount() == 1);
+    before.exact(*f.curve);
+    CHECK(f.graphic.countUndoCycles() == 0); CHECK(other.countUndoCycles() == 0);
 }

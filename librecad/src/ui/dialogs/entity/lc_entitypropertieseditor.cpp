@@ -69,9 +69,12 @@ void LC_EntityPropertiesEditor::scheduleDialog(int delay) {
 
 void LC_EntityPropertiesEditor::cancelGuardedEdit() {
     if (!m_editGuard) return;
+    const QPointer<LC_EntityPropertiesEditor> alive(this);
+    const auto previousGeneration = m_editGeneration;
     if (m_actionContext && m_actionContext->getInteractiveInputInfo()->requestor == this)
         m_actionContext->interactiveInputRequestCancel();
-    ++m_editGeneration;
+    if (!alive || previousGeneration != m_editGeneration) return;
+    const auto generation = ++m_editGeneration;
     m_editGuard = {};
     m_entity = nullptr;
     m_viewport = nullptr;
@@ -79,16 +82,25 @@ void LC_EntityPropertiesEditor::cancelGuardedEdit() {
     const auto dialog = m_activeGuardedDialog;
     m_activeGuardedDialog.clear();
     if (dialog) {
+        if (auto* native = qobject_cast<LC_DlgEntityProperties*>(dialog.data())) native->detachNativePreparation();
+        if (!alive || generation != m_editGeneration) return;
+        if (!dialog) { m_guardedSession.reset(); return; }
         // Close before another paint/focus callback can visit stale layer/document pointers.
         silenceGuardedDialog(*dialog);
         dialog->QDialog::reject();
+        if (!alive || generation != m_editGeneration) return;
     }
     m_guardedSession.reset();
 }
 
 void LC_EntityPropertiesEditor::showEntityPropertiesDialog() {
     if (!m_entity) return;
-    if (m_editGuard && !m_editGuard()) {
+    const QPointer<LC_EntityPropertiesEditor> self(this);
+    const auto generation = m_editGeneration;
+    const auto guard = m_editGuard;
+    const bool current = !guard || guard();
+    if (!self || generation != self->m_editGeneration) return;
+    if (!current) {
         m_lateCompletionRequestor->onLateRequestCompleted(false); // native guard reports and owns cleanup
         return;
     }
@@ -123,20 +135,21 @@ void LC_EntityPropertiesEditor::showEntityPropertiesDialog() {
         inputType = LC_ActionContext::InteractiveInputInfo::NOTNEEDED;
     }
 
-    const bool guarded = bool(m_editGuard);
-    const auto generation = m_editGeneration;
-    const QPointer<LC_EntityPropertiesEditor> self(this);
+    const bool guarded = bool(guard);
     // Declare before dlg: the native clone is released only AFTER all its widgets are destroyed.
     const auto session = m_guardedSession;
     auto dlg = LC_DlgEntityProperties(m_parent, m_viewport, m_entity, inputType, interactiveInputTag,
-                                           interactiveInputValueOne, interactiveInputValueTwo);
+                                           interactiveInputValueOne, interactiveInputValueTwo, m_editGuard);
 
     if (guarded) m_activeGuardedDialog = &dlg;
     const int result = dlg.exec();
     // exec() may have destroyed this editor AND its requesting action. Do not read this first.
-    if (guarded && (!self || generation != self->m_editGeneration)) return;
+    if (!self || generation != self->m_editGeneration) return;
     if (guarded) m_activeGuardedDialog.clear();
-    if (m_editGuard && !m_editGuard()) {
+    const auto finalGuard = m_editGuard;
+    const bool stillCurrent = !finalGuard || finalGuard();
+    if (!self || generation != self->m_editGeneration) return;
+    if (!stillCurrent) {
         m_lateCompletionRequestor->onLateRequestCompleted(false);
         return;
     }
@@ -158,7 +171,12 @@ void LC_EntityPropertiesEditor::showEntityPropertiesDialog() {
 
 void LC_EntityPropertiesEditor::onLateRequestCompleted(const bool shouldBeSkipped) {
     if (!m_entity) return;
-    if (m_editGuard && !m_editGuard()) {
+    const QPointer<LC_EntityPropertiesEditor> self(this);
+    const auto generation = m_editGeneration;
+    const auto guard = m_editGuard;
+    const bool current = !guard || guard();
+    if (!self || generation != self->m_editGeneration) return;
+    if (!current) {
         m_lateCompletionRequestor->onLateRequestCompleted(false);
         return;
     }

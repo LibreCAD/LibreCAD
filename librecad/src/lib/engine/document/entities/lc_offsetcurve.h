@@ -139,6 +139,7 @@ protected:
 private:
     friend class LC_OffsetWorkerKernel;
     friend class LC_OffsetWorkerCompletion;
+    friend class LC_OffsetWorkerEdit;
     struct ValidatedCache {};
     LC_OffsetCurve(const RS_Entity &source, const RS_SplineData &cache,
         const LC_EllipseOffsetDefinition &definition, double tolerance,

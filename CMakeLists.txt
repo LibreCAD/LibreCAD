@@ -902,6 +902,8 @@ set (SHARED_SOURCES
      librecad/src/lib/offset_worker/lc_offsetworkerclient.cpp
      librecad/src/lib/offset_worker/lc_offsetworkerclient.h
      librecad/src/lib/offset_worker/lc_offsetworkercompletion.cpp
+     librecad/src/lib/offset_worker/lc_offsetworkeredit.cpp
+     librecad/src/lib/offset_worker/lc_offsetworkeredit.h
      librecad/src/lib/engine/document/entities/lc_offsetcurvereadutils.h
      librecad/src/lib/engine/document/entities/lc_offsetcurvegrips.cpp
      librecad/src/lib/engine/document/entities/lc_offsetcurvegrips.h
@@ -2954,6 +2956,20 @@ if (BUILD_TESTS)
     # compiling time defines
     target_compile_definitions(librecad_tests PRIVATE BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}" LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata" LIBRECAD_TEST_TRANSLATION_DIR="${CMAKE_CURRENT_BINARY_DIR}")
 
+    # GUI tests use the product's fixed sibling-helper resolution too. macOS
+    # test executables are outside the application bundle; copy the real built
+    # helper there rather than injecting a configurable command into the client.
+    if(APPLE)
+        add_custom_target(librecad_offset_test_helper
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "$<TARGET_FILE:librecad_offset_worker>"
+                "$<TARGET_FILE_DIR:librecad_tests>/$<TARGET_FILE_NAME:librecad_offset_worker>"
+            DEPENDS librecad_offset_worker VERBATIM)
+    else()
+        add_custom_target(librecad_offset_test_helper DEPENDS librecad_offset_worker)
+    endif()
+    add_dependencies(librecad_tests librecad_offset_test_helper)
+
     add_executable(librecad_text_bidi_tests EXCLUDE_FROM_ALL
         ${LIBRECAD_TEST_SETTINGS_ISOLATION_SOURCE}
         ${LIBRECAD_TEST_TEMP_DIRECTORY_SOURCE}
@@ -3491,6 +3507,18 @@ if (BUILD_TESTS)
     add_librecad_filter_micro_test(
         librecad_offset_native_edit_tests
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_edit_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_offset_properties_dialog_tests
+        librecad/src/ui/dialogs/entity/tests/lc_offsetcurve_propertiesdialog_tests.cpp)
+    target_include_directories(librecad_offset_properties_dialog_tests PRIVATE
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include"
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include_$<CONFIG>")
+    target_sources(librecad_offset_properties_dialog_tests PRIVATE ${LIBRECAD_RES})
+    set_target_properties(librecad_offset_properties_dialog_tests PROPERTIES AUTORCC ON)
+    add_dependencies(librecad_offset_properties_dialog_tests librecad_offset_test_helper)
+    add_librecad_filter_micro_test(
+        librecad_offset_worker_edit_tests
+        librecad/src/lib/offset_worker/tests/lc_offsetworkeredit_tests.cpp)
     add_librecad_filter_micro_test(
         librecad_offset_worker_kernel_tests
         librecad/src/lib/offset_worker/tests/lc_offsetworkerkernel_tests.cpp)

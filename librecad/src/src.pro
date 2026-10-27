@@ -454,6 +454,7 @@ HEADERS += \
     lib/offset_worker/lc_offsetworkerrequest.h \
     lib/offset_worker/lc_offsetworkerresult.h \
     lib/offset_worker/lc_offsetworkerclient.h \
+    lib/offset_worker/lc_offsetworkeredit.h \
     lib/engine/document/entities/lc_offsetcurvereadutils.h \
     lib/engine/document/entities/lc_offsetcurvegrips.h \
     lib/engine/document/entities/lc_offsetcurvetransform.h \
@@ -1059,6 +1060,7 @@ SOURCES += \
     lib/offset_worker/lc_offsetworkerresult.cpp \
     lib/offset_worker/lc_offsetworkerclient.cpp \
     lib/offset_worker/lc_offsetworkercompletion.cpp \
+    lib/offset_worker/lc_offsetworkeredit.cpp \
     lib/engine/document/entities/lc_offsetcurvegrips.cpp \
     lib/engine/document/entities/lc_offsetcurvesnaps.cpp \
     lib/engine/document/entities/lc_offsetcurvetransform.cpp \

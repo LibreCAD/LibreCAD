@@ -24,6 +24,7 @@
 #include "lc_dlg_entityproperties.h"
 
 #include <QToolButton>
+#include <QPushButton>
 
 #include "lc_dlg_dimension.h"
 #include "lc_hatchpropertieseditingwidget.h"
@@ -51,7 +52,7 @@ class LC_Dialog;
 
 LC_DlgEntityProperties::LC_DlgEntityProperties(QWidget* parent, LC_GraphicViewport* viewport, RS_Entity* entity,
                                                const LC_ActionContext::InteractiveInputInfo::InputType inputType, const QString& tag,
-                                               const double valueOne, const double valueTwo)
+                                               const double valueOne, const double valueTwo, std::function<bool()> nativeGuard)
     : LC_Dialog(parent, ""), ui(new Ui::LC_DlgEntityProperties) {
     ui->setupUi(this);
 
@@ -63,6 +64,14 @@ LC_DlgEntityProperties::LC_DlgEntityProperties(QWidget* parent, LC_GraphicViewpo
     const RS2::EntityType entityType = entity->rtti();
 
     prepareTypeSpecificUI(primaryEditingWidget, secondaryEditingWidget, dlgName, windowTitle, entityType);
+    if (m_offsetEditor) {
+        m_offsetEditor->setPreparationGuard(std::move(nativeGuard));
+        connect(m_offsetEditor, &LC_PropertiesEditingWidgetOffsetCurve::preparationBusyChanged, this,
+            [this](bool busy) {
+                if (auto* ok = ui->buttonBox->button(QDialogButtonBox::Ok)) ok->setEnabled(!busy);
+                ui->cbLayer->setEnabled(!busy); ui->wPen->setEnabled(!busy);
+            });
+    }
 
     if (primaryEditingWidget != nullptr) {
         primaryEditingWidget->setGraphicViewport(viewport);
@@ -125,11 +134,41 @@ LC_DlgEntityProperties::LC_DlgEntityProperties(QWidget* parent, LC_GraphicViewpo
 }
 
 LC_DlgEntityProperties::~LC_DlgEntityProperties() {
+    detachNativePreparation();
     delete ui;
+}
+
+void LC_DlgEntityProperties::detachNativePreparation() {
+    if (m_offsetEditor) m_offsetEditor->detachPreparation();
+}
+
+void LC_DlgEntityProperties::accept() {
+    const QPointer<LC_DlgEntityProperties> alive(this);
+    const auto editor = m_offsetEditor;
+    if (editor) {
+        if (editor->isPreparing()) return;
+        editor->finishPendingInput();
+        if (!alive || !editor || editor->isPreparing()) return;
+    }
+    detachNativePreparation();
+    LC_Dialog::accept();
+}
+
+void LC_DlgEntityProperties::reject() {
+    const QPointer<LC_DlgEntityProperties> alive(this);
+    if (m_offsetEditor) m_offsetEditor->cancelPreparation();
+    if (alive) LC_Dialog::reject();
 }
 
 void LC_DlgEntityProperties::onInteractiveInputRequested(const LC_ActionContext::InteractiveInputInfo::InputType inputType,
                                                          const QString& tag) {
+    const QPointer<LC_DlgEntityProperties> alive(this);
+    const auto editor = m_offsetEditor;
+    if (editor) {
+        if (editor->isPreparing()) return;
+        editor->finishPendingInput();
+        if (!alive || !editor || editor->isPreparing()) return;
+    }
     m_interactiveInputRequested = inputType;
     m_inputTag = tag;
     accept();
@@ -202,7 +241,8 @@ void LC_DlgEntityProperties::prepareTypeSpecificUI(LC_EntityPropertiesEditorWidg
             break;
         }
         case RS2::EntityOffsetCurve: {
-            primaryWidget = new LC_PropertiesEditingWidgetOffsetCurve(this);
+            m_offsetEditor = new LC_PropertiesEditingWidgetOffsetCurve(this);
+            primaryWidget = m_offsetEditor;
             windowTitle = tr("Offset Curve Properties");
             dlgName = "DlgOffsetCurveProperties";
             break;
