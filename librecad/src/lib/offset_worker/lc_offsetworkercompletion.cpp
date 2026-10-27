@@ -76,6 +76,83 @@ LC_OffsetWorkerCompletion::ordinary(const RS_Entity& attributes) const {
     return entities;
 }
 
+std::optional<LC_OffsetWorkerCompletion::PreparedSource>
+LC_OffsetWorkerCompletion::produced(const RS_Entity& attributes) const {
+    const auto* result = std::get_if<LC_OffsetWorkerResult::Produced>(&m_reply.result);
+    const auto* input = std::get_if<LC_OffsetWorkerRequest::Produce>(&m_request.operation);
+    if (!input || !result || result->outputStatus == LC_OffsetWorkerResult::OrdinaryStatus::Unsupported)
+        return std::nullopt;
+    PreparedSource prepared;
+    const auto& s = result->source;
+    auto& out = prepared.outcome;
+    out.status = s.status; out.engineStatus = s.engineStatus; out.detail = s.detail;
+    out.stoppedBy = s.stoppedBy; out.usage = s.usage;
+    out.copiesMade = s.copiesMade; out.copiesRequested = s.copiesRequested;
+    out.copyOutputCounts = result->copyOutputCounts; out.resolvedSide = s.resolvedSide;
+    out.copiesKeptPlain = s.copiesKeptPlain; out.keptPlain = result->keptPlain;
+    out.rebaseEngineRuns = s.rebaseEngineRuns; out.cacheEngineRuns = s.cacheEngineRuns;
+    out.reusedCacheCopies = s.reusedCacheCopies; out.sampleUnits = s.sampleUnits;
+    out.intersectionPairAllowance = s.intersectionPairAllowance;
+    out.attemptedOutputUsage = s.attemptedOutputUsage;
+    out.attemptedDeepCountComplete = s.attemptedDeepCountComplete;
+    out.adoptionAttempts = s.adoptionAttempts; out.adoptionCheckWork = s.adoptionCheckWork;
+    out.rebases = result->rebases;
+    if (s.status != LC_OffsetSourceStatus::Succeeded) return prepared;
+
+    const bool copyMetadata = input->asOffsetCurve && !input->preview &&
+        (input->source.index() == 0 || input->context.nativeSource);
+    LC_OffsetCurveXData::ParseResult foreign;
+    if (copyMetadata) {
+        if (!attributes.cloneMetadataFits(1024, std::size_t{1} << 20, 4096)) return std::nullopt;
+        LC_OffsetCurveXData::Options limits;
+        limits.maximumItems = 4096; limits.maximumBytes = std::size_t{1} << 20;
+        foreign = LC_OffsetCurveXData::parseAndStrip(attributes.getDrwExtData(), limits);
+        if (!foreign.remaining) return std::nullopt;
+    }
+    const auto deepCap = std::min({input->limits.perSource.maxDeepEntities,
+        input->limits.maxDeepEntitiesPerRequest, makeDefaultOffsetSourceBudget().maxDeepEntities});
+    prepared.entities.reserve(result->outputs.size());
+    std::size_t deep = 0;
+    for (const auto& value : result->outputs) {
+        std::unique_ptr<RS_Entity> entity;
+        if (const auto* line = std::get_if<LC_OffsetWorkerRequest::Segment>(&value)) {
+            if (deep == deepCap) return std::nullopt;
+            entity = std::make_unique<RS_Line>(nullptr, RS_LineData{line->start, line->end});
+        } else {
+            const auto* native = std::get_if<LC_OffsetWorkerResult::Curve>(&value);
+            const auto& cache = native ? native->cache : std::get<RS_SplineData>(value);
+            const auto display = RS_Spline::displayEntityUpperBound(cache);
+            if (!display || *display > deepCap - deep) return std::nullopt;
+            if (native) {
+                // Only this joined, request-bound completion can use ReceivedCache.
+                entity.reset(new LC_OffsetCurve(attributes, cache, native->definition,
+                    native->worldTolerance, native->closed, native->grips,
+                    native->midpoint, LC_OffsetCurve::ReceivedCache{}));
+            } else entity = std::make_unique<RS_Spline>(nullptr, cache);
+            const auto& spline = static_cast<const RS_Spline&>(*entity);
+            if (!spline.validate() || RS_Spline::geometryFingerprint(spline.getData()) !=
+                RS_Spline::geometryFingerprint(cache)) return std::nullopt;
+            if (native && !static_cast<const LC_OffsetCurve&>(*entity).hasEditableDefinition()) return std::nullopt;
+        }
+        if (copyMetadata) {
+            entity->RS_Entity::operator=(attributes);
+            entity->setDrwExtData(*foreign.remaining);
+        }
+        entity->setParent(nullptr);
+        entity->setPen(attributes.getPen(false)); entity->setLayer(attributes.getLayer(false));
+        entity->clearDwgProvenance(RS_Entity::Identity);
+        entity->setLineage(RS_Entity::newLineage()); entity->setOwnerLineage(0);
+        entity->delFlag(RS2::FlagHatchChild);
+        entity->calculateBorders();
+        const auto cost = measureOffsetOutput({entity.get()}, deepCap - deep);
+        if (cost.status != LC_OffsetTreeStatus::Ok) return std::nullopt;
+        deep += cost.deepEntities;
+        prepared.entities.push_back(std::move(entity));
+    }
+    out.usage.deepEntities = deep;
+    return prepared;
+}
+
 LC_OffsetCurveEditResult LC_OffsetWorkerCompletion::apply(LC_OffsetCurve& clone) const {
     const auto* result = std::get_if<LC_OffsetWorkerResult::Native>(&m_reply.result);
     if (!result) return {};

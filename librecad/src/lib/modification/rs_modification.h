@@ -267,6 +267,10 @@ struct LC_OffsetSourceOutcome {
      */
     int copiesMade = 0;
     int copiesRequested = 0;
+    /** One nonzero root count per completed copy, in source/copy order. */
+    std::vector<std::size_t> copyOutputCounts;
+    /** Actual engine side resolution; retained even if a later attempt refuses. */
+    std::optional<LC_CurveOffsetSide> resolvedSide;
     /**
      * The source goes from the drawing with this offset. One that succeeded
      * and stays (originals kept, copies short, a polyline's segment) is left
@@ -279,6 +283,12 @@ struct LC_OffsetSourceOutcome {
     /** Attempted work remains observable even if a later copy discards this source's outputs. */
     std::size_t rebaseEngineRuns = 0, cacheEngineRuns = 0, reusedCacheCopies = 0;
     std::size_t sampleUnits = 0, intersectionPairAllowance = 0;
+    /** Actual adopt() invocations and their returned C work, including refusals.
+     * Additive counters sum across copies; depth is the maximum, not a sum.
+     * An exception can lose the current check prefix: callers retain reservations.
+     */
+    std::size_t adoptionAttempts = 0;
+    LC_EllipseOffsetGeometry::CheckWork adoptionCheckWork{};
     LC_OffsetOutputUsage attemptedOutputUsage{};
     bool attemptedDeepCountComplete = true;
     /** At most one structural proposal and producer attempt per requested copy. */

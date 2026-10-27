@@ -5,6 +5,7 @@
  */
 #include "../lc_offsetworkerresult.h"
 #include "lc_offsetworkerwire.h"
+#include "rs_ellipse.h"
 
 #include <catch2/catch_test_macros.hpp>
 #include <QCborValue>
@@ -88,7 +89,7 @@ public:
     }
 
     Completion exchange(const QByteArray& input,
-                        const QStringList& arguments = {QStringLiteral("--protocol=3")},
+                        const QStringList& arguments = {QStringLiteral("--protocol=4")},
                         bool partial = false) {
         REQUIRE(input.size() <= InputCap);
         ScopedProcess child;
@@ -147,7 +148,7 @@ public:
         REQUIRE(fields);
         const auto input = Wire::encode(*fields);
         REQUIRE_FALSE(input.isEmpty());
-        const auto completed = exchange(input, {QStringLiteral("--protocol=3")}, partial);
+        const auto completed = exchange(input, {QStringLiteral("--protocol=4")}, partial);
         INFO("helper stderr: " << completed.diagnostic.toStdString());
         REQUIRE(completed.status == QProcess::NormalExit);
         REQUIRE(completed.code == 0);
@@ -170,7 +171,7 @@ public:
     }
 
     void reject(const QByteArray& input,
-                const QStringList& arguments = {QStringLiteral("--protocol=3")}) {
+                const QStringList& arguments = {QStringLiteral("--protocol=4")}) {
         INFO("rejected bytes=" << input.size() << " arguments=" << arguments.join(' ').toStdString());
         const auto completed = exchange(input, arguments);
         INFO("helper stderr: " << completed.diagnostic.toStdString());
@@ -523,6 +524,7 @@ TEST_CASE("Built native offset helper qualifies computations and one-request pro
         helper.reject(header(1) + QByteArray(1, char(0x81)));
         helper.rejectFields(patched(*fields, {0}, qint64(1)));
         helper.rejectFields(patched(*fields, {0}, qint64(2)));
+        helper.rejectFields(patched(*fields, {0}, qint64(3)));
         helper.rejectFields(patched(*fields, {1, 0}, 7.0));
         helper.rejectFields(patched(*fields, {2}, qint64(5)));
         helper.rejectFields(patched(*fields, {3, 0, 1}, qint64(1)));
@@ -530,7 +532,8 @@ TEST_CASE("Built native offset helper qualifies computations and one-request pro
         helper.reject({}, QStringList{});
         helper.reject(frame, {QStringLiteral("--protocol=1")});
         helper.reject(frame, {QStringLiteral("--protocol=2")});
-        helper.reject({}, {QStringLiteral("--protocol=3"), QStringLiteral("extra")});
+        helper.reject(frame, {QStringLiteral("--protocol=3")});
+        helper.reject({}, {QStringLiteral("--protocol=4"), QStringLiteral("extra")});
     }
 }
 
@@ -603,4 +606,50 @@ TEST_CASE("Built native offset helper preserves same-invocation ordinary fallbac
             else CHECK(value.ordinaryUsage.deepEntities == 0);
         }
     }
+}
+
+
+TEST_CASE("Built helper transports Produce series grouping native admission work and ordinary native-off cache offsets",
+          "[lc-offsetcurve][worker-process][produce]") {
+    int argc = 1; char name[] = "offset-worker-produce-tests"; char* argv[] = {name, nullptr};
+    std::unique_ptr<QCoreApplication> application;
+    if (!QCoreApplication::instance()) application = std::make_unique<QCoreApplication>(argc, argv);
+    Helper helper;
+    RS_Ellipse source{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
+    Req::Produce op; op.source = source.getData(); op.minimum = source.getMin(); op.maximum = source.getMax();
+    op.context.topLevel = true; op.coordinate = {3, 2}; op.distance = .25; op.copies = 2; op.asOffsetCurve = true;
+    const auto reply = helper.run({Token, op}, true);
+    REQUIRE(std::holds_alternative<Reply::Produced>(reply.result));
+    const auto& value = std::get<Reply::Produced>(reply.result);
+    REQUIRE(value.source.status == LC_OffsetSourceStatus::Succeeded);
+    REQUIRE(value.outputStatus == Reply::OrdinaryStatus::Complete);
+    CHECK(value.copyOutputCounts == std::vector<std::size_t>{1, 1});
+    CHECK(value.source.adoptionAttempts == 2); CHECK(value.source.adoptionCheckWork.vertices > 0);
+    REQUIRE(value.source.resolvedSide);
+    REQUIRE(value.outputs.size() == 2);
+    for (std::size_t i = 0; i < value.outputs.size(); ++i) {
+        REQUIRE(std::holds_alternative<Reply::Curve>(value.outputs[i]));
+        const auto& curve = std::get<Reply::Curve>(value.outputs[i]);
+        CHECK(curve.definition.distance == double(i + 1) * op.distance);
+        REQUIRE(Geo::checkCache(curve.cache, curve.definition, curve.worldTolerance));
+    }
+    RS_Spline cache{nullptr, std::get<Reply::Curve>(value.outputs[0]).cache};
+    op.source = cache.getData(); op.minimum = cache.getMin(); op.maximum = cache.getMax();
+    op.context.nativeSource = true; op.context.nativeDefinition = std::get<Reply::Curve>(value.outputs[0]).definition;
+    op.asOffsetCurve = false;
+    const auto ordinary = helper.run({Token, op});
+    REQUIRE(std::holds_alternative<Reply::Produced>(ordinary.result));
+    const auto& plain = std::get<Reply::Produced>(ordinary.result);
+    REQUIRE(plain.source.status == LC_OffsetSourceStatus::Succeeded);
+    CHECK(plain.source.rebaseEngineRuns == 0); CHECK(plain.source.adoptionAttempts == 0);
+    CHECK(plain.rebases.empty()); REQUIRE(plain.outputStatus == Reply::OrdinaryStatus::Complete);
+    for (const auto& output : plain.outputs) CHECK_FALSE(std::holds_alternative<Reply::Curve>(output));
+    op.asOffsetCurve = true; op.limits.maxSamples = 1;
+    const auto failed = helper.run({Token, op});
+    REQUIRE(std::holds_alternative<Reply::Produced>(failed.result));
+    const auto& refusal = std::get<Reply::Produced>(failed.result);
+    CHECK(refusal.source.status == LC_OffsetSourceStatus::LimitExceeded);
+    CHECK(refusal.copyOutputCounts.empty()); CHECK(refusal.outputs.empty());
+    CHECK(refusal.outputStatus == Reply::OrdinaryStatus::None);
+    CHECK(refusal.source.sampleUnits > 1); CHECK(refusal.source.rebaseEngineRuns == 1);
 }

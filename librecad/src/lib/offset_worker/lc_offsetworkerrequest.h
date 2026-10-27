@@ -8,6 +8,7 @@
 
 #include "lc_offsetcachetrim.h"
 #include "lc_offsetcurve.h"
+#include "rs_modification.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 
@@ -56,9 +57,23 @@ struct CheckThrough {
     RS_Vector point;
     LC_OffsetCheckLimits limits;
 };
+/** Geometry-only source series. Bounds preserve the original drawn-curve side
+ * policy without repairing raw input or constructing a synthetic document.
+ */
+struct Produce {
+    std::variant<RS_EllipseData, RS_SplineData> source;
+    LC_OffsetSourceContext context;
+    std::optional<RS_Vector> minimum, maximum;
+    RS_Vector coordinate;
+    std::optional<RS_Vector> fallback;
+    double distance = 0;
+    int copies = 1;
+    bool asOffsetCurve = false, preview = false;
+    LC_OffsetBatchLimits limits;
+};
 struct Request {
     Token token;
-    std::variant<Generate, ValidateCache, TrimCache, TrimConic, CheckThrough> operation;
+    std::variant<Generate, ValidateCache, TrimCache, TrimConic, CheckThrough, Produce> operation;
 };
 
 /** Shared strict value syntax, NOT C certificates or geometric proof.
@@ -76,10 +91,16 @@ std::optional<QCborArray> encodeCutter(const Cutter&);
 std::optional<Cutter> decodeCutter(const QCborArray&);
 }
 
-/** Envelope [3, [requestId,generation,sourceRevision,undoEpoch], op, body].
+/** Envelope [4, [requestId,generation,sourceRevision,undoEpoch], op, body].
  * Bodies: [definition,run,throughPoint-or-null], [cache,definition,worldTolerance,check],
  * [cache,cutter,pick,trim], [cache,conic,conicPick,cachePick-or-null,trim].
  * CheckThrough (op 4): [cache,definition,worldTolerance,point,check].
+ * Produce (op 5): [source,context,bounds,coordinate,fallback-or-null,distance,
+ * copies,asOffsetCurve,preview,batchLimits].
+ * Source [0 ellipse / 1 raw spline,record]; context [topLevel,nativeSource,definition-or-null];
+ * bounds [minimum-or-null,maximum-or-null]; batchLimits [outputBudget,samples,pairs,requestDeep].
+ * Copies are 1..100. Signed distances are finite; zero/overflow are typed kernel refusals.
+ * No attributes, document identity, cache import or publication authority is transported.
  * Cutter [ordinal 0..4,record]; vector [x,y,z,valid]; pick [point,hint-or-null,seed-or-null].
  * Definition [basis,distance,towardCentre,cacheReversed,relTolerance].
  * Spline [controls,knots,weights,fit,degree,type,savedOpenType,savedOpenKnots,closed,periodic].

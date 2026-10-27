@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstring>
+#include <stdexcept>
 #include <type_traits>
 
 namespace req = LC_OffsetWorkerRequest;
@@ -207,6 +208,110 @@ result::Native LC_OffsetWorkerKernel::checkThrough(const req::CheckThrough& inpu
     return output;
 }
 
+
+result::Produced LC_OffsetWorkerKernel::produce(const req::Produce& input, Trace& trace) {
+    // Empty shells first: no update()/constructor may repair the transported raw arrays.
+    class ProduceEllipse final : public RS_Ellipse {
+    public:
+        explicit ProduceEllipse(const req::Produce& in) {
+            m_data = std::get<RS_EllipseData>(in.source);
+            m_minV = in.minimum.value_or(RS_Vector{false});
+            m_maxV = in.maximum.value_or(RS_Vector{false});
+        }
+    };
+    class ProduceSpline final : public RS_Spline {
+    public:
+        explicit ProduceSpline(const req::Produce& in) : RS_Spline(nullptr, RS_SplineData{}) {
+            getData() = std::get<RS_SplineData>(in.source);
+            m_minV = in.minimum.value_or(RS_Vector{false});
+            m_maxV = in.maximum.value_or(RS_Vector{false});
+        }
+    };
+    std::unique_ptr<RS_Entity> source;
+    if (input.source.index() == 0) source = std::make_unique<ProduceEllipse>(input);
+    else source = std::make_unique<ProduceSpline>(input);
+    RS_OffsetData data;
+    data.coord = input.coordinate; data.sideFallback = input.fallback.value_or(RS_Vector{false});
+    data.distance = input.distance; data.number = input.copies; data.multipleCopies = true;
+    data.asOffsetCurve = input.asOffsetCurve; data.keepOriginals = true;
+    LC_OffsetSourceOutcome observed;
+    observed.copiesRequested = input.copies;
+    std::vector<std::unique_ptr<RS_Entity>> roots;
+    bool finite = true;
+    for (int i = 1; i <= input.copies; ++i) finite &= std::isfinite(double(i) * input.distance);
+    if (!finite || !isValidOffsetBudget(input.limits.perSource))
+        observed.status = LC_OffsetSourceStatus::OffsetFailed;
+    else if (std::abs(input.distance) <= RS_TOLERANCE) {
+        observed.status = LC_OffsetSourceStatus::OffsetFailed; observed.detail = LC_OffsetFailureDetail::InvalidDistance;
+    } else if (!input.limits.maxDeepEntitiesPerRequest)
+        observed.status = LC_OffsetSourceStatus::LimitExceeded;
+    else observed.status = RS_Modification::prepareOffsetSource(data, *source, input.preview,
+        input.limits, input.limits.maxDeepEntitiesPerRequest, input.context, roots, observed);
+    result::Produced output;
+    auto& s = output.source;
+    s.status = observed.status; s.engineStatus = observed.engineStatus; s.detail = observed.detail;
+    s.stoppedBy = observed.stoppedBy; s.usage = observed.usage; s.copiesMade = observed.copiesMade;
+    s.copiesRequested = observed.copiesRequested; s.sourceRemoved = observed.sourceRemoved;
+    s.copiesKeptPlain = observed.copiesKeptPlain; s.rebaseEngineRuns = observed.rebaseEngineRuns;
+    s.cacheEngineRuns = observed.cacheEngineRuns; s.reusedCacheCopies = observed.reusedCacheCopies;
+    s.sampleUnits = observed.sampleUnits; s.intersectionPairAllowance = observed.intersectionPairAllowance;
+    s.attemptedOutputUsage = observed.attemptedOutputUsage; s.attemptedDeepCountComplete = observed.attemptedDeepCountComplete;
+    s.adoptionAttempts = observed.adoptionAttempts; s.adoptionCheckWork = observed.adoptionCheckWork;
+    s.resolvedSide = observed.resolvedSide;
+    output.copyOutputCounts = std::move(observed.copyOutputCounts);
+    output.keptPlain = std::move(observed.keptPlain); output.rebases = std::move(observed.rebases);
+    trace.checkWork = s.adoptionCheckWork;
+    for (const auto& r : output.rebases) {
+        trace.checkWork.cacheSpans += r.checkWork.cacheSpans; trace.checkWork.vertices += r.checkWork.vertices;
+        trace.checkWork.distancePairs += r.checkWork.distancePairs;
+        trace.checkWork.orderingComparisons += r.checkWork.orderingComparisons;
+        trace.checkWork.deepest = std::max(trace.checkWork.deepest, r.checkWork.deepest);
+    }
+    trace.checkEntered = trace.checkWork.cacheSpans || trace.checkWork.vertices ||
+        trace.checkWork.distancePairs || trace.checkWork.orderingComparisons || trace.checkWork.deepest;
+    trace.nativePrepareEntered = s.rebaseEngineRuns || s.adoptionAttempts;
+    if (s.status == LC_OffsetSourceStatus::Succeeded) output.outputStatus = result::OrdinaryStatus::Unsupported;
+    // This checks diagnostics/grouping even when no output representation can be transported.
+    if (!result::admittedProduced(output, input)) throw std::logic_error("Invalid source preparation receipt");
+    if (s.status != LC_OffsetSourceStatus::Succeeded) return output;
+    if (roots.size() != s.usage.outputEntities) throw std::logic_error("Invalid source output grouping");
+    const auto hard = makeDefaultOffsetSourceBudget();
+    const auto spanCap = std::min(input.limits.perSource.maxCubicPieces, hard.maxCubicPieces);
+    std::size_t spans = 0, controls = 0, knots = 0;
+    const auto take = [](std::size_t& total, std::size_t n, std::size_t cap) {
+        if (total > cap || n > cap - total) return false;
+        total += n; return true;
+    };
+    output.outputs.reserve(roots.size());
+    for (const auto& entity : roots) {
+        std::size_t n = 0, c = 0, k = 0;
+        const auto* native = dynamic_cast<const LC_OffsetCurve*>(entity.get());
+        const auto* spline = dynamic_cast<const RS_Spline*>(entity.get());
+        const auto* line = dynamic_cast<const RS_Line*>(entity.get());
+        bool supported = false;
+        if (spline && ordinarySpline(spline->getData())) {
+            const auto& raw = spline->getData();
+            n = (raw.controlPoints.size() - 1) / raw.degree; c = raw.controlPoints.size(); k = raw.knotslist.size();
+            supported = !native || (native->hasEditableDefinition() &&
+                !native->cachedDefinitionGrips().empty() && native->cachedDefinitionGrips().size() <= 256);
+        } else if (line) {
+            n = 1; c = 2;
+            supported = geo::isFinite2D(line->getStartpoint()) && geo::isFinite2D(line->getEndpoint());
+        }
+        if (!supported || !take(spans, n, spanCap) || !take(controls, c, 16384) || !take(knots, k, 32768)) {
+            output.outputs.clear(); return output;
+        }
+        if (native) output.outputs.emplace_back(value(*native));
+        else if (spline) output.outputs.emplace_back(spline->getData());
+        else output.outputs.emplace_back(req::Segment{line->getStartpoint(), line->getEndpoint()});
+    }
+    output.outputStatus = result::OrdinaryStatus::Complete;
+    if (!result::admittedProduced(output, input)) {
+        output.outputs.clear(); output.outputStatus = result::OrdinaryStatus::Unsupported;
+    }
+    return output;
+}
+
 result::Reply LC_OffsetWorkerKernel::run(const req::Request& input, Trace* observed) noexcept {
     Trace local;
     Trace& trace = observed ? *observed : local;
@@ -235,6 +340,7 @@ result::Reply LC_OffsetWorkerKernel::run(const req::Request& input, Trace* obser
             break;
         }
         case 4: reply.result = checkThrough(std::get<req::CheckThrough>(input.operation), trace); break;
+        case 5: reply.result = produce(std::get<req::Produce>(input.operation), trace); break;
         default: return reply;
         }
         trace.computationCompleted = true;

@@ -38,6 +38,7 @@
 #include <array>
 #include <cstdint>
 #include <new>
+#include <stdexcept>
 
 #include "lc_containertraverser.h"
 #include "lc_curveoffset.h"
@@ -1487,7 +1488,7 @@ LC_OffsetSourceStatus RS_Modification::prepareOffsetSource(const RS_OffsetData& 
     result.copiesRequested = numberOfCopies;
     const auto discard = [&]() noexcept {
         roots.clear(); result.copiesMade = result.copiesKeptPlain = 0;
-        result.keptPlain.clear(); result.usage = {};
+        result.copyOutputCounts.clear(); result.keptPlain.clear(); result.usage = {};
     };
     try {
         const auto status = prepareOffsetSourceImpl(data, e, forPreviewOnly, limits, requestDeepLeft, roots, result,
@@ -1563,7 +1564,26 @@ LC_OffsetSourceStatus RS_Modification::prepareOffsetSourceImpl(const RS_OffsetDa
         const double tolerance = LC_CurveOffset::toleranceFor(e, magnitude, definition.relTolerance);
         LC_OffsetCheckResult checked;
         LC_OffsetCurveRefusal refusal;
+        if (result.adoptionAttempts == std::size_t(RS_OffsetData::kMaximumOffsetCopies))
+            throw std::overflow_error("Offset adoption attempt count exceeded");
+        ++result.adoptionAttempts;
         auto native = LC_OffsetCurve::adopt(*copy.entities.front(), definition, tolerance, &checked, {}, &refusal);
+        auto total = result.adoptionCheckWork;
+        const LC_OffsetCheckLimits hard;
+        const auto add = [&](std::size_t& value, std::size_t more, std::size_t perCheck) {
+            const auto cap = result.adoptionAttempts * perCheck;
+            if (value > cap || more > cap - value)
+                throw std::overflow_error("Offset adoption work exceeded");
+            value += more;
+        };
+        add(total.cacheSpans, checked.work.cacheSpans, hard.maxCacheSpans);
+        add(total.vertices, checked.work.vertices, hard.maxVertices);
+        add(total.distancePairs, checked.work.distancePairs, hard.maxDistancePairs);
+        add(total.orderingComparisons, checked.work.orderingComparisons, hard.maxOrderingComparisons);
+        if (checked.work.deepest > hard.maxDepth)
+            throw std::overflow_error("Offset adoption depth exceeded");
+        total.deepest = std::max(total.deepest, checked.work.deepest);
+        result.adoptionCheckWork = total;
         if (!native) {
             const auto reason = refusal == LC_OffsetCurveRefusal::CheckFailed || checked ?
                 std::optional<LC_OffsetCheckResult::Reason>{checked.reason} : std::nullopt;
@@ -1609,6 +1629,7 @@ LC_OffsetSourceStatus RS_Modification::prepareOffsetSourceImpl(const RS_OffsetDa
             result.engineStatus = side.status;
             return engineFailure(side.status);
         }
+        result.resolvedSide = side.side;
         for (int num = 1; num <= numberOfCopies; ++num) {
             const LC_OffsetSourceBudget left = remainingBudget(budget, usage);
             if (!isValidOffsetBudget(left)) {
@@ -1724,6 +1745,7 @@ LC_OffsetSourceStatus RS_Modification::prepareOffsetSourceImpl(const RS_OffsetDa
             for (std::unique_ptr<RS_Entity>& entity : copy.entities) {
                 roots.push_back(std::move(entity));
             }
+            result.copyOutputCounts.push_back(copy.entities.size());
             ++result.copiesMade;
         }
     }
@@ -1814,6 +1836,7 @@ LC_OffsetSourceStatus RS_Modification::prepareOffsetSourceImpl(const RS_OffsetDa
             for (std::unique_ptr<RS_Entity>& entity : copy) {
                 roots.push_back(std::move(entity));
             }
+            result.copyOutputCounts.push_back(copy.size());
             ++result.copiesMade;
         }
     }
@@ -1934,6 +1957,7 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
                 roots, result, cache, nullptr, numberOfCopies);
             if (!result.succeeded()) {
                 result.copiesMade = 0; // none is handed over
+                result.copyOutputCounts.clear();
                 result.copiesKeptPlain = 0; result.keptPlain.clear();
                 result.usage = {}; // committed output only; attempted work stays separate
             }

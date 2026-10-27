@@ -482,6 +482,107 @@ TEST_CASE("Worker ordinary completions materialize exact plain output with fresh
     }
 }
 
+TEST_CASE("Worker Produce completions materialize ordered native copies without publication authority", Tags) {
+    auto& rt = runtime(); OwnedClient owned{rt}; Receipts receipts;
+    RS_EntityContainer owner; RS_Layer layer{QStringLiteral("produce local")};
+    RS_Ellipse attributes{&owner, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
+    attributes.setLayer(&layer); attributes.setSourceHandle(91); attributes.setXDictHandle(92);
+    attributes.setReactorHandles({93}); attributes.setOwnerLineage(94);
+    attributes.setUserDefVar(QStringLiteral("produce-local"), QStringLiteral("retained"));
+    const LC_OffsetCurveXData::XData foreign{
+        std::make_shared<DRW_Variant>(1001, std::string("PRODUCE_FOREIGN")),
+        std::make_shared<DRW_Variant>(1000, std::string("keep exactly"))};
+    auto stale = LC_OffsetCurveXData::forExport(foreign,
+        LC_OffsetCurveXData::Definition{definition(), 0x10, {{1000, QStringLiteral("stale tail")}}});
+    REQUIRE(stale); attributes.setDrwExtData(*stale);
+    Req::Produce op; op.source = attributes.getData(); op.minimum = attributes.getMin(); op.maximum = attributes.getMax();
+    op.context.topLevel = true; op.coordinate = {3, 2}; op.distance = .25;
+    op.copies = 2; op.asOffsetCurve = true;
+    REQUIRE(owned.get().submit({token(1), op}, Client::Mode::Commit, receipts.into(0)));
+    rt.until([&] { return receipts.calls[0] != 0; });
+    const auto& completion = completed(receipts.at(0), 1, 5);
+    CHECK_FALSE(completion.native(attributes)); CHECK_FALSE(completion.ordinary(attributes));
+    auto materialized = completion.produced(attributes); REQUIRE(materialized);
+    const auto& receipt = std::get<Reply::Produced>(completion.reply().result);
+    const auto& outcome = materialized->outcome;
+    REQUIRE(outcome.succeeded()); CHECK(outcome.complete()); CHECK_FALSE(outcome.source);
+    CHECK_FALSE(outcome.sourceRemoved); CHECK(outcome.createdEntities.empty());
+    CHECK(outcome.copyOutputCounts == std::vector<std::size_t>{1, 1});
+    CHECK(outcome.cacheEngineRuns == 2); CHECK(outcome.adoptionAttempts == 2);
+    CHECK(outcome.adoptionCheckWork.vertices == receipt.source.adoptionCheckWork.vertices);
+    CHECK(outcome.adoptionCheckWork.vertices > 0);
+    REQUIRE(materialized->entities.size() == 2);
+    std::size_t actualDeep = 0;
+    for (std::size_t i = 0; i < materialized->entities.size(); ++i) {
+        const auto* curve = dynamic_cast<const LC_OffsetCurve*>(materialized->entities[i].get()); REQUIRE(curve);
+        CHECK(curve->getParent() == nullptr); CHECK(curve->getLayer(false) == &layer);
+        CHECK(curve->getPen(false) == attributes.getPen(false));
+        CHECK(curve->getUserDefVar("produce-local") == "retained");
+        CHECK(curve->sourceHandle() == 0); CHECK(curve->xDictHandle() == 0);
+        CHECK(curve->reactorHandles().empty()); CHECK(curve->ownerLineage() == 0);
+        CHECK(curve->lineage() != attributes.lineage()); CHECK(curve->getId() != attributes.getId());
+        CHECK(curve->unknownOwnedFlags() == 0); CHECK(curve->unknownOwnedTail().empty());
+        auto stripped = LC_OffsetCurveXData::parseAndStrip(curve->getDrwExtData());
+        REQUIRE(stripped.remaining); CHECK(stripped.knownCandidates == 0);
+        REQUIRE(stripped.remaining->size() >= 2);
+        CHECK((*stripped.remaining)[0] == foreign[0]); CHECK((*stripped.remaining)[1] == foreign[1]);
+        CHECK(curve->definition().distance == double(i + 1) * op.distance);
+        const auto& value = std::get<Reply::Curve>(receipt.outputs[i]);
+        exactCache(curve->getData(), value.cache);
+        const auto checked = Geo::checkCache(curve->getData(), curve->definition(), curve->checkedWorldTolerance());
+        REQUIRE(checked); // Independent test proof, not parent materialization.
+        const auto cost = measureOffsetOutput({curve}, makeDefaultOffsetSourceBudget().maxDeepEntities);
+        REQUIRE(cost.status == LC_OffsetTreeStatus::Ok); actualDeep += cost.deepEntities;
+    }
+    CHECK(outcome.usage.deepEntities == actualDeep); CHECK(owner.count() == 0);
+    CHECK(attributes.sourceHandle() == 91);
+    CHECK(LC_OffsetCurveXData::parseAndStrip(attributes.getDrwExtData()).knownCandidates == 1);
+    auto again = completion.produced(attributes); REQUIRE(again);
+    CHECK(again->entities[0]->getId() != materialized->entities[0]->getId());
+    CHECK(outcome.cacheEngineRuns == receipt.source.cacheEngineRuns);
+}
+
+TEST_CASE("Worker Produce plain and preview copies retain only their original drawing attributes", Tags) {
+    auto& rt = runtime(); OwnedClient owned{rt}; Receipts receipts;
+    RS_Layer layer{QStringLiteral("plain produce")};
+    RS_Ellipse source{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
+    source.setLayer(&layer); source.setUserDefVar("not ordinary", "not copied"); source.setSourceHandle(67);
+    for (int mode = 0; mode < 2; ++mode) {
+        Req::Produce op; op.source = source.getData(); op.minimum = source.getMin(); op.maximum = source.getMax();
+        op.context.topLevel = true; op.coordinate = {3, 2}; op.distance = .25;
+        op.asOffsetCurve = mode == 1; op.preview = mode == 1;
+        REQUIRE(owned.get().submit({token(mode + 1), op}, Client::Mode::Commit, receipts.into(std::size_t(mode))));
+        rt.until([&] { return receipts.calls[std::size_t(mode)] != 0; });
+        const auto& completion = completed(receipts.at(std::size_t(mode)), mode + 1, 5);
+        auto made = completion.produced(source); REQUIRE(made); REQUIRE(made->outcome.succeeded());
+        CHECK(made->outcome.adoptionAttempts == 0); REQUIRE(made->entities.size() == 1);
+        const auto& entity = *made->entities[0]; CHECK_FALSE(dynamic_cast<const LC_OffsetCurve*>(&entity));
+        CHECK(entity.getParent() == nullptr); CHECK(entity.getLayer(false) == &layer);
+        CHECK(entity.getPen(false) == source.getPen(false)); CHECK(entity.getDrwExtData().empty());
+        CHECK(entity.getUserDefVar("not ordinary").isEmpty()); CHECK(entity.sourceHandle() == 0);
+        const auto& value = std::get<Reply::Produced>(completion.reply().result).outputs[0];
+        if (const auto* spline = std::get_if<RS_SplineData>(&value))
+            exactCache(static_cast<const RS_Spline&>(entity).getData(), *spline);
+        else { const auto& line = std::get<Req::Segment>(value);
+            CHECK(exact(entity.getStartpoint(), line.start)); CHECK(exact(entity.getEndpoint(), line.end)); }
+    }
+}
+
+TEST_CASE("Worker Produce typed refusals materialize no prefix and cannot create native entities", Tags) {
+    auto& rt = runtime(); OwnedClient owned{rt}; Receipts receipts;
+    RS_Ellipse source{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
+    Req::Produce op; op.source = source.getData(); op.context.topLevel = true;
+    op.coordinate = {3, 2}; op.distance = 0; op.copies = 2; op.asOffsetCurve = true;
+    REQUIRE(owned.get().submit({token(1), op}, Client::Mode::Commit, receipts.into(0)));
+    rt.until([&] { return receipts.calls[0] != 0; });
+    const auto& completion = completed(receipts.at(0), 1, 5);
+    auto refused = completion.produced(source); REQUIRE(refused);
+    CHECK_FALSE(refused->outcome.succeeded()); CHECK(refused->entities.empty());
+    CHECK(refused->outcome.copyOutputCounts.empty()); CHECK(refused->outcome.cacheEngineRuns == 0);
+    CHECK(refused->outcome.detail == LC_OffsetFailureDetail::InvalidDistance);
+    CHECK_FALSE(completion.native(source)); CHECK_FALSE(completion.ordinary(source));
+}
+
 TEST_CASE("Worker membership receipts acknowledge only their unchanged raw native cache", Tags) {
     auto& rt = runtime(); Receipts receipts; OwnedClient owned(rt);
     REQUIRE(owned.get().submit(validate(1), Client::Mode::Commit, receipts.into(0)));

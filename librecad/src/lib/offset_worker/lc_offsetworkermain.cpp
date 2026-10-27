@@ -84,7 +84,7 @@ void prefix(const LC_OffsetWorkerKernel::Trace& trace) noexcept {
 }
 
 int main(int argc, char** argv) {
-    if (argc != 2 || std::strcmp(argv[1], "--protocol=3") != 0) {
+    if (argc != 2 || std::strcmp(argv[1], "--protocol=4") != 0) {
         std::fputs("offset-worker: invalid invocation\n", stderr);
         return 2;
     }

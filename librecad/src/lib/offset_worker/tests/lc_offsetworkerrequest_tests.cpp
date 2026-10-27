@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <array>
 #include <cstdint>
+#include <cmath>
 #include <cstring>
 #include <limits>
 #include <type_traits>
@@ -178,6 +179,25 @@ void same(const request::CheckThrough& a, const request::CheckThrough& b) {
     same(a.cache, b.cache); same(a.definition, b.definition); same(a.worldTolerance, b.worldTolerance);
     same(a.point, b.point); same(a.limits, b.limits);
 }
+void same(const request::Produce& a, const request::Produce& b) {
+    REQUIRE(a.source.index() == b.source.index());
+    std::visit([&](const auto& d) { same(d, std::get<std::decay_t<decltype(d)>>(b.source)); }, a.source);
+    CHECK(a.context.topLevel == b.context.topLevel); CHECK(a.context.nativeSource == b.context.nativeSource);
+    REQUIRE(a.context.nativeDefinition.has_value() == b.context.nativeDefinition.has_value());
+    if (a.context.nativeDefinition) same(*a.context.nativeDefinition, *b.context.nativeDefinition);
+    const auto point = [](const std::optional<RS_Vector>& x, const std::optional<RS_Vector>& y) {
+        REQUIRE(x.has_value() == y.has_value()); if (x) same(*x, *y);
+    };
+    point(a.minimum, b.minimum); point(a.maximum, b.maximum); point(a.fallback, b.fallback);
+    same(a.coordinate, b.coordinate); same(a.distance, b.distance);
+    CHECK(a.copies == b.copies); CHECK(a.asOffsetCurve == b.asOffsetCurve); CHECK(a.preview == b.preview);
+    CHECK(a.limits.perSource.maxCubicPieces == b.limits.perSource.maxCubicPieces);
+    CHECK(a.limits.perSource.maxOutputEntities == b.limits.perSource.maxOutputEntities);
+    CHECK(a.limits.perSource.maxDeepEntities == b.limits.perSource.maxDeepEntities);
+    CHECK(a.limits.maxSamples == b.limits.maxSamples);
+    CHECK(a.limits.maxIntersectionPairs == b.limits.maxIntersectionPairs);
+    CHECK(a.limits.maxDeepEntitiesPerRequest == b.limits.maxDeepEntitiesPerRequest);
+}
 void same(const request::Request& a, const request::Request& b) {
     CHECK(a.token.requestId == b.token.requestId); CHECK(a.token.generation == b.token.generation);
     CHECK(a.token.sourceRevision == b.token.sourceRevision); CHECK(a.token.undoEpoch == b.token.undoEpoch);
@@ -322,7 +342,7 @@ TEST_CASE("offset worker request has exact version two positional shapes",
           "[lc-offsetcurve][worker-protocol][request]") {
     for (const auto& value : fixtures()) {
         const auto root = encoded(value);
-        REQUIRE(root.size() == 4); CHECK(root.at(0).isInteger()); CHECK(root.at(0).toInteger() == 3);
+        REQUIRE(root.size() == 4); CHECK(root.at(0).isInteger()); CHECK(root.at(0).toInteger() == 4);
         const auto t = root.at(1).toArray();
         REQUIRE(t.size() == 4); CHECK(t.at(0).toInteger() == value.token.requestId);
         CHECK(t.at(1).toInteger() == value.token.generation);
@@ -344,7 +364,8 @@ TEST_CASE("offset worker request has exact version two positional shapes",
             REQUIRE(body.at(0).toArray().size() == 10);
             const auto& source = value.operation;
             std::visit([&](const auto& op) {
-                if constexpr (!std::is_same_v<std::decay_t<decltype(op)>, request::Generate>) {
+                if constexpr (!std::is_same_v<std::decay_t<decltype(op)>, request::Generate> &&
+                    !std::is_same_v<std::decay_t<decltype(op)>, request::Produce>) {
                     CHECK(at(root, {3, 0, 0}).toArray().size() == qsizetype(op.cache.controlPoints.size()));
                     CHECK(at(root, {3, 0, 1}).toArray().size() == qsizetype(op.cache.knotslist.size()));
                     CHECK(at(root, {3, 0, 2}).toArray().size() == qsizetype(op.cache.weights.size()));
@@ -419,7 +440,7 @@ TEST_CASE("offset worker request rejects invalid tokens versions operations enum
           "[lc-offsetcurve][worker-protocol][request]") {
     auto value = fixtures().front();
     const auto root = encoded(value);
-    for (qint64 bad : std::array<qint64, 5>{-1, 0, 1, 2, std::numeric_limits<qint64>::max()})
+    for (qint64 bad : std::array<qint64, 6>{-1, 0, 1, 2, 3, std::numeric_limits<qint64>::max()})
         CHECK_FALSE(request::decode(changed(root, {0}, bad)));
     for (qint64 bad : std::array<qint64, 3>{-1, 5, std::numeric_limits<qint64>::max()})
         CHECK_FALSE(request::decode(changed(root, {2}, bad)));
@@ -761,4 +782,59 @@ TEST_CASE("offset worker CheckThrough owns raw values and bounds every membershi
     auto body = root.at(3).toArray();
     const auto pointFields = body.at(3); body[3] = body.at(4); body[4] = pointFields;
     CHECK_FALSE(request::decode(changed(root, {3}, body)));
+}
+
+
+TEST_CASE("Produce requests freeze protocol four raw sources context bounds and copy-series limits",
+          "[lc-offsetcurve][worker-protocol][request][produce]") {
+    request::Produce op;
+    op.source = ellipse(); op.context.topLevel = true;
+    op.minimum = point(-3, -4); op.maximum = point(5, 6); op.coordinate = point();
+    op.fallback = point(8, 9); op.distance = -.125; op.copies = 100; op.asOffsetCurve = true;
+    const request::Request input{{71, 73, 79, 83}, op};
+    const auto wire = request::encode(input); REQUIRE(wire);
+    CHECK(wire->at(0).toInteger() == 4); CHECK(wire->at(2).toInteger() == 5);
+    REQUIRE(wire->at(3).toArray().size() == 10);
+    const auto decoded = request::decode(*wire); REQUIRE(decoded);
+    CHECK(request::encode(*decoded) == wire); same(input, *decoded);
+    const auto& owned = std::get<request::Produce>(decoded->operation);
+    CHECK(owned.distance == -.125); CHECK(owned.copies == 100); REQUIRE(owned.minimum);
+    CHECK(owned.minimum->z == 0); CHECK(std::signbit(owned.minimum->z));
+    for (qint64 old : {1, 2, 3}) CHECK_FALSE(request::decode(changed(*wire, {0}, old)));
+    for (const auto& bad : {
+            changed(*wire, {2}, 6), changed(*wire, {3, 0, 0}, 2), changed(*wire, {3, 1, 1}, true),
+            changed(*wire, {3, 6}, 0), changed(*wire, {3, 6}, 101), changed(*wire, {3, 6}, 1.0),
+            changed(*wire, {3, 5}, 1), changed(*wire, {3, 5}, std::numeric_limits<double>::infinity()),
+            changed(*wire, {3, 8}, 1), changed(*wire, {3, 2, 0, 2}, 1.0),
+            changed(*wire, {3, 9, 3}, qint64(kDefaultOffsetDeepEntitiesPerRequest) + 1),
+            changed(*wire, {3, 9, 1}, qint64(LC_CurveOffset::kDefaultMaxSamples) + 1),
+            changed(*wire, {3, 9, 2}, qint64(LC_CurveOffset::kDefaultMaxIntersectionPairs) + 1)})
+        CHECK_FALSE(request::decode(bad));
+    auto extra = wire->at(3).toArray(); extra.append(nullptr);
+    CHECK_FALSE(request::decode(changed(*wire, {3}, extra)));
+    op.source = RS_SplineData{1, false};
+    auto& raw = std::get<RS_SplineData>(op.source);
+    raw.controlPoints = {{0, 0}, {2, 0}}; raw.knotslist = {0, 0, 1, 1}; raw.weights = {1, 1};
+    raw.fitPoints = {{1, 0}}; raw.savedOpenKnots = {-0.0, 2.5}; raw.m_periodicFlag = true;
+    op.context.nativeSource = true;
+    op.context.nativeDefinition = LC_EllipseOffsetDefinition{{{0, 0}, {1, 0}, 1, 0, .1, false}, .25, false, false, 1e-4};
+    auto spline = request::encode({input.token, op}); REQUIRE(spline);
+    const auto retained = request::decode(*spline); REQUIRE(retained);
+    CHECK(request::encode(*retained) == spline); // Includes latent raw arrays/flags, without repair.
+    const auto definition = spline->at(3).toArray().at(1).toArray().at(2);
+    CHECK_FALSE(request::decode(changed(*spline, {3, 1, 1}, false)));
+    auto contradiction = input;
+    std::get<request::Produce>(contradiction.operation).context.nativeDefinition = op.context.nativeDefinition;
+    CHECK_FALSE(request::encode(contradiction)); // Ellipse cannot be a native-cache source.
+    CHECK_FALSE(request::decode(changed(*wire, {3, 1, 2}, definition)));
+    for (int field = 0; field < 5; ++field) {
+        auto huge = op;
+        auto& d = std::get<RS_SplineData>(huge.source);
+        if (field == 0) d.controlPoints.assign(16385, point());
+        if (field == 1) d.knotslist.assign(32769, 0.0);
+        if (field == 2) d.weights.assign(16385, 1.0);
+        if (field == 3) d.fitPoints.assign(4097, point());
+        if (field == 4) d.savedOpenKnots.assign(32769, 0.0);
+        CHECK_FALSE(request::encode({input.token, huge}));
+    }
 }

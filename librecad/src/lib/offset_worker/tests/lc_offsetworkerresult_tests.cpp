@@ -318,7 +318,7 @@ TEST_CASE("Worker ordinary fallback retains exact raw values outside lowered C a
         }
         const auto decoded = roundtrip(r, reply(r, n));
         const auto wire = Reply::encode(decoded, r); REQUIRE(wire);
-        CHECK(wire->at(0).toInteger() == 3);
+        CHECK(wire->at(0).toInteger() == 4);
         const auto body = wire->at(4).toArray(); REQUIRE(body.size() == 15);
         CHECK(body.at(12).toInteger() == qint64(Reply::OrdinaryStatus::Complete));
         REQUIRE(body.at(13).toArray().size() == 3);
@@ -514,7 +514,7 @@ TEST_CASE("Worker replies match all four token fields and the exact request oper
         CHECK_FALSE(Reply::encode(other, r));
     }
     for (qint64 i : {-1, 1, 2, 3, 4}) CHECK_FALSE(Reply::decode(patched(*encoded, {2}, i), r));
-    for (qint64 i : {-1, 0, 1, 2}) CHECK_FALSE(Reply::decode(patched(*encoded, {0}, i), r));
+    for (qint64 i : {-1, 0, 1, 2, 3}) CHECK_FALSE(Reply::decode(patched(*encoded, {0}, i), r));
     for (qint64 i : {-1, 3, 99}) CHECK_FALSE(Reply::decode(patched(*encoded, {3}, i), r));
     auto other = d; other.operation = 1; CHECK_FALSE(Reply::encode(other, r));
     other = d; other.operation = std::numeric_limits<std::size_t>::max(); CHECK_FALSE(Reply::encode(other, r));
@@ -574,7 +574,7 @@ TEST_CASE("Worker CheckThrough receipts contain only bounded membership work and
     roundtrip(r, reply(r, n));
     n.refusal = Refusal::ThroughNotOnCache; roundtrip(r, reply(r, n));
     const auto encoded = Reply::encode(reply(r, n), r); REQUIRE(encoded);
-    CHECK(encoded->at(0).toInteger() == 3); CHECK(encoded->at(2).toInteger() == 4);
+    CHECK(encoded->at(0).toInteger() == 4); CHECK(encoded->at(2).toInteger() == 4);
     REQUIRE(encoded->at(4).toArray().size() == 15);
     CHECK_FALSE(Reply::decode(patched(*encoded, {0}, 1), r));
     CHECK_FALSE(Reply::decode(patched(*encoded, {2}, 5), r));
@@ -986,4 +986,170 @@ TEST_CASE("Worker reply storage is owned after caller and CBOR buffers change or
     t.roots.clear(); wire.reset(); same(std::get<Trim::Result>(retained->result), before);
     auto temporary = Reply::decode(*Reply::encode(reply(tr, before), tr), tr);
     REQUIRE(temporary); same(std::get<Trim::Result>(temporary->result), before);
+}
+
+
+namespace {
+Req::Request producedRequest(bool native = false, int copies = 1) {
+    Req::Produce op; op.distance = .25; op.copies = copies; op.coordinate = {2, 2};
+    op.context.topLevel = true; op.asOffsetCurve = native;
+    if (native) op.source = definition().basis;
+    else op.source = cache();
+    return {token(), op};
+}
+Reply::Produced producedValue(const Req::Request& request) {
+    const auto& op = std::get<Req::Produce>(request.operation);
+    Reply::Produced d;
+    auto& s = d.source;
+    s.status = LC_OffsetSourceStatus::Succeeded; s.copiesRequested = s.copiesMade = op.copies;
+    s.usage = s.attemptedOutputUsage = {std::size_t(op.copies), std::size_t(op.copies), std::size_t(op.copies)};
+    s.cacheEngineRuns = std::size_t(op.copies); s.sampleUnits = 7;
+    s.intersectionPairAllowance = std::size_t(op.copies) * LC_CurveOffset::kDefaultMaxIntersectionPairs;
+    s.resolvedSide = LC_CurveOffsetSide::Right;
+    d.copyOutputCounts.assign(std::size_t(op.copies), 1);
+    d.outputStatus = Reply::OrdinaryStatus::Complete;
+    for (int i = 1; i <= op.copies; ++i) {
+        if (!op.asOffsetCurve) d.outputs.emplace_back(Req::Segment{{0, double(i)}, {1, double(i)}});
+        else {
+            auto c = *nativeValue().curve;
+            c.definition.basis = std::get<RS_EllipseData>(op.source);
+            c.definition.distance = std::abs(double(i) * op.distance);
+            c.definition.towardCentre = (*s.resolvedSide == LC_CurveOffsetSide::Left) != c.definition.basis.reversed;
+            c.definition.cacheReversed = false;
+            c.definition.relTolerance = LC_CurveOffset::kEllipseRelativeOffsetTolerance;
+            REQUIRE(Geo::normaliseBasis(c.definition.basis));
+            d.outputs.emplace_back(c);
+        }
+    }
+    if (op.asOffsetCurve) {
+        s.adoptionAttempts = std::size_t(op.copies);
+        s.adoptionCheckWork = {2, 3, 5, 2, 7};
+        s.usage.deepEntities = s.attemptedOutputUsage.deepEntities = 32 * std::size_t(op.copies);
+    }
+    return d; // Synthetic protocol values, NOT native entities or a geometric certificate.
+}
+Reply::Reply producedReply(const Req::Request& r, Reply::Produced d) {
+    return {r.token, 5, Reply::Failure::None, std::move(d)};
+}
+QCborArray producedRoundtrip(const Req::Request& r, const Reply::Produced& d) {
+    const auto encoded = Reply::encode(producedReply(r, d), r); REQUIRE(encoded);
+    const auto frame = Wire::encode(*encoded); REQUIRE_FALSE(frame.isEmpty());
+    const auto owned = Wire::decode(frame.mid(4)); REQUIRE(owned);
+    const auto decoded = Reply::decode(owned.fields, r); REQUIRE(decoded);
+    REQUIRE(std::holds_alternative<Reply::Produced>(decoded->result));
+    CHECK(Reply::encode(*decoded, r) == encoded);
+    return *encoded;
+}
+}
+
+TEST_CASE("Produced receipts retain pointer-free diagnostics grouping and successful stopped prefixes", tags) {
+    auto r = producedRequest(false, 2); auto d = producedValue(r);
+    producedRoundtrip(r, d);
+    d.source.copiesMade = 1; d.source.usage = {1, 1, 1}; d.copyOutputCounts = {1}; d.outputs.resize(1);
+    d.source.stoppedBy = LC_OffsetSourceStatus::OffsetFailed; d.source.engineStatus = Status::FitFailed;
+    producedRoundtrip(r, d); // A later ordinary non-limit refusal keeps the first visible copy.
+    d.source.stoppedBy = LC_OffsetSourceStatus::Vanished; d.source.engineStatus = Status::Ok;
+    producedRoundtrip(r, d);
+    const auto wire = producedRoundtrip(r, d);
+    CHECK(wire.at(0).toInteger() == 4); CHECK(wire.at(2).toInteger() == 5);
+    REQUIRE(wire.at(4).toArray().size() == 6);
+    REQUIRE(wire.at(4).toArray().at(0).toArray().size() == 19);
+    for (const auto& bad : {
+            patched(wire, {0}, 3), patched(wire, {2}, 4), patched(wire, {1, 1}, 1),
+            patched(wire, {4, 0, 0}, qint64(LC_OffsetSourceStatus::LimitExceeded)),
+            patched(wire, {4, 0, 1}, qint64(Status::LimitExceeded)),
+            patched(wire, {4, 0, 3}, qint64(LC_OffsetSourceStatus::Succeeded)),
+            patched(wire, {4, 0, 6}, 1), patched(wire, {4, 0, 7}, true),
+            patched(wire, {4, 0, 11}, 1), patched(wire, {4, 0, 13}, 0),
+            patched(wire, {4, 0, 18}, qint64(LC_CurveOffsetSide::FromDirectionPoint)),
+            patched(wire, {4, 1, 0}, 0), patched(wire, {4, 1, 0}, 2),
+            patched(wire, {4, 1, 0}, 1.0), patched(wire, {4, 4}, 0),
+            patched(wire, {4, 5, 0, 0}, 3), patched(wire, {4, 5, 0, 1, 0, 0}, 0)})
+        CHECK_FALSE(Reply::decode(bad, r));
+    auto failed = d; failed.source.status = LC_OffsetSourceStatus::LimitExceeded;
+    failed.source.engineStatus = Status::LimitExceeded; failed.source.stoppedBy = LC_OffsetSourceStatus::Succeeded;
+    failed.source.copiesMade = 0; failed.source.usage = {}; failed.copyOutputCounts.clear();
+    failed.outputs.clear(); failed.outputStatus = Reply::OrdinaryStatus::None;
+    producedRoundtrip(r, failed);
+    failed.outputStatus = Reply::OrdinaryStatus::Complete; CHECK_FALSE(Reply::encode(producedReply(r, failed), r));
+    auto fatal = producedReply(r, d); fatal.failure = Reply::Failure::InternalFailure;
+    CHECK_FALSE(Reply::encode(fatal, r)); fatal.result = std::monostate{};
+    REQUIRE(Reply::encode(fatal, r)); // Lost work has null payload, never a zero-work Produced receipt.
+}
+
+TEST_CASE("Produced native curves bind exact copy ordinals definitions modes and rebase proposals", tags) {
+    auto r = producedRequest(true, 2); auto d = producedValue(r);
+    const auto wire = producedRoundtrip(r, d);
+    auto swapped = wire.at(4).toArray().at(5).toArray();
+    const auto first = swapped.at(0); swapped[0] = swapped.at(1); swapped[1] = first;
+    CHECK_FALSE(Reply::decode(patched(wire, {4, 5}, swapped), r));
+    for (const auto& bad : {
+            patched(wire, {4, 1}, QCborArray{2}), patched(wire, {4, 1}, QCborArray{0, 2}),
+            patched(wire, {4, 5, 0, 1, 1, 1}, .5),
+            patched(wire, {4, 5, 0, 1, 1, 2}, false),
+            patched(wire, {4, 5, 0, 1, 1, 3}, true),
+            patched(wire, {4, 0, 16}, 0), patched(wire, {4, 0, 17, 4}, 1000000000)})
+        CHECK_FALSE(Reply::decode(bad, r));
+    for (int mode = 0; mode < 3; ++mode) {
+        auto request = r; auto& op = std::get<Req::Produce>(request.operation);
+        if (mode == 0) op.asOffsetCurve = false;
+        if (mode == 1) op.preview = true;
+        if (mode == 2) op.context.topLevel = false;
+        CHECK_FALSE(Reply::decode(wire, request));
+    }
+    auto mixed = producedValue(r);
+    mixed.copyOutputCounts = {2, 1}; mixed.keptPlain = {{1, LC_OffsetPlainReason::SeveralPieces, std::nullopt}};
+    mixed.source.copiesKeptPlain = 1; mixed.source.adoptionAttempts = 1;
+    mixed.source.usage = mixed.source.attemptedOutputUsage = {3, 3, 34};
+    mixed.outputs = {Req::Segment{{0, 1}, {1, 1}}, Req::Segment{{1, 1}, {2, 1}}, d.outputs[1]};
+    const auto grouped = producedRoundtrip(r, mixed);
+    CHECK_FALSE(Reply::decode(patched(grouped, {4, 1}, QCborArray{1, 2}), r));
+    CHECK_FALSE(Reply::decode(patched(grouped, {4, 5, 2, 1, 1, 1}, .25), r));
+    auto noAdoption = d; noAdoption.source.adoptionAttempts = 0; noAdoption.source.adoptionCheckWork = {};
+    CHECK_FALSE(Reply::encode(producedReply(r, noAdoption), r));
+    r = producedRequest(false); auto& op = std::get<Req::Produce>(r.operation);
+    op.asOffsetCurve = true; op.context.nativeSource = true;
+    op.context.nativeDefinition = LC_EllipseOffsetDefinition{{{0, 0}, {1, 0}, 1, 0, .1, false}, 1, false, false, 1e-4};
+    op.context.nativeDefinition->basis.isArc = true;
+    op.asOffsetCurve = false; d = producedValue(r); op.asOffsetCurve = true;
+    // Replace ordinary synthetic values with a raw-definition rebase; no entity is constructed.
+    d.source.adoptionAttempts = 0; d.source.adoptionCheckWork = {};
+    d.source.rebaseEngineRuns = 1; d.source.cacheEngineRuns = 0; d.source.sampleUnits = 2;
+    d.source.intersectionPairAllowance = LC_CurveOffset::kDefaultMaxIntersectionPairs / 2;
+    LC_OffsetRebaseOutcome rebase;
+    rebase.copy = 1; rebase.proposalRefusal = LC_OffsetCurveAgain::Refusal::None;
+    rebase.nativeRefusal = Refusal::None; rebase.engineStatus = Status::Ok; rebase.checkReason = Reason::None;
+    rebase.engineRuns = 1; rebase.sampleUnits = 2; rebase.intersectionPairAllowance = d.source.intersectionPairAllowance;
+    rebase.checkWork = {1, 2, 3, 1, 4}; rebase.adopted = true; d.rebases = {rebase};
+    auto curve = *nativeValue().curve;
+    const auto proposal = LC_OffsetCurveAgain::propose(*op.context.nativeDefinition, *d.source.resolvedSide, op.distance);
+    REQUIRE(proposal); curve.definition = proposal.proposal->definition; REQUIRE(Geo::normaliseBasis(curve.definition.basis));
+    d.outputs = {curve}; d.source.usage = d.source.attemptedOutputUsage = {1, 1, 32};
+    const auto bound = producedRoundtrip(r, d);
+    CHECK_FALSE(Reply::decode(patched(bound, {4, 3, 0, 9}, false), r));
+    CHECK_FALSE(Reply::decode(patched(bound, {4, 3, 0, 1}, qint64(LC_OffsetCurveAgain::Refusal::ZeroSum)), r));
+    CHECK_FALSE(Reply::decode(patched(bound, {4, 5, 0, 1, 1, 1}, .25), r));
+}
+
+TEST_CASE("Produced geometry has independent producer and serialized aggregate bounds with no supported prefix", tags) {
+    auto r = producedRequest(); auto d = producedValue(r);
+    d.source.usage.deepEntities = d.source.attemptedOutputUsage.deepEntities = 32;
+    d.outputs = {cache({{0, 0}, {1, 0}, {2, 0}})};
+    auto wire = producedRoundtrip(r, d); // One producer piece, two stored spans is permitted.
+    auto& op = std::get<Req::Produce>(r.operation); op.limits.perSource.maxCubicPieces = 1;
+    CHECK_FALSE(Reply::encode(producedReply(r, d), r)); CHECK_FALSE(Reply::decode(wire, r));
+    d.outputs.clear(); d.outputStatus = Reply::OrdinaryStatus::Unsupported;
+    producedRoundtrip(r, d); // Usage/grouping retained, never a truncated geometry vector.
+    d.outputs.emplace_back(Req::Segment{{0, 0}, {1, 0}});
+    CHECK_FALSE(Reply::encode(producedReply(r, d), r));
+    d = producedValue(r); ++d.source.attemptedOutputUsage.cubicPieces;
+    CHECK_FALSE(Reply::encode(producedReply(r, d), r));
+    d = producedValue(r); d.source.usage.deepEntities = d.source.attemptedOutputUsage.deepEntities = 32;
+    d.outputs = {cache()}; wire = producedRoundtrip(r, d);
+    for (const auto& bad : {
+            patched(wire, {4, 5, 0, 1, 4}, 2), patched(wire, {4, 5, 0, 1, 5}, 0),
+            patched(wire, {4, 5, 0, 1, 6}, 2), patched(wire, {4, 5, 0, 1, 2, 0}, 2.0),
+            patched(wire, {4, 5, 0, 1, 3}, QCborArray{QCborArray{0.0, 0.0, 0.0, true}}),
+            patched(wire, {4, 5, 0, 1, 7}, QCborArray{0.0}), patched(wire, {4, 5, 0, 1, 8}, 0)})
+        CHECK_FALSE(Reply::decode(bad, r));
 }

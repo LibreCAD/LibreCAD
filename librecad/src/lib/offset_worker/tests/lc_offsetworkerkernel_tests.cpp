@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "../lc_offsetworkerkernel.h"
+#include "rs_ellipse.h"
+#include "rs_line.h"
 #include <catch2/catch_test_macros.hpp>
 #include <algorithm>
 #include <cmath>
@@ -417,4 +419,202 @@ TEST_CASE("offset child serializes actual lowered-budget refusal prefixes withou
         CHECK(retained.attemptedDeepCountComplete == output.attemptedDeepCountComplete);
         CHECK(retained.attemptedOutputUsage.deepEntities == output.attemptedOutputUsage.deepEntities);
     }
+}
+
+
+namespace {
+req::Produce seriesInput(const RS_Entity& source, bool native = false) {
+    req::Produce op;
+    if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&source)) op.source = ellipse->getData();
+    else op.source = dynamic_cast<const RS_Spline&>(source).getData();
+    if (source.getMin().valid) op.minimum = source.getMin();
+    if (source.getMax().valid) op.maximum = source.getMax();
+    op.context.topLevel = true; op.coordinate = {3, 2}; op.distance = .25;
+    op.copies = 2; op.asOffsetCurve = native;
+    return op;
+}
+void sameProducedWork(const result::Produced& value, const LC_OffsetSourceOutcome& expected) {
+    const auto& s = value.source;
+    CHECK(s.status == expected.status); CHECK(s.engineStatus == expected.engineStatus); CHECK(s.detail == expected.detail);
+    CHECK(s.stoppedBy == expected.stoppedBy); CHECK(s.copiesMade == expected.copiesMade);
+    CHECK(s.copiesRequested == expected.copiesRequested); CHECK(s.sourceRemoved == expected.sourceRemoved);
+    CHECK(s.copiesKeptPlain == expected.copiesKeptPlain); CHECK(s.resolvedSide == expected.resolvedSide);
+    CHECK(value.copyOutputCounts == expected.copyOutputCounts);
+    CHECK(s.rebaseEngineRuns == expected.rebaseEngineRuns); CHECK(s.cacheEngineRuns == expected.cacheEngineRuns);
+    CHECK(s.reusedCacheCopies == expected.reusedCacheCopies); CHECK(s.sampleUnits == expected.sampleUnits);
+    CHECK(s.intersectionPairAllowance == expected.intersectionPairAllowance);
+    CHECK(s.adoptionAttempts == expected.adoptionAttempts); work(s.adoptionCheckWork, expected.adoptionCheckWork);
+    CHECK(s.usage.cubicPieces == expected.usage.cubicPieces); CHECK(s.usage.outputEntities == expected.usage.outputEntities);
+    CHECK(s.usage.deepEntities == expected.usage.deepEntities);
+    CHECK(s.attemptedOutputUsage.cubicPieces == expected.attemptedOutputUsage.cubicPieces);
+    CHECK(s.attemptedOutputUsage.outputEntities == expected.attemptedOutputUsage.outputEntities);
+    CHECK(s.attemptedOutputUsage.deepEntities == expected.attemptedOutputUsage.deepEntities);
+    CHECK(s.attemptedDeepCountComplete == expected.attemptedDeepCountComplete);
+    REQUIRE(value.keptPlain.size() == expected.keptPlain.size());
+    for (std::size_t i = 0; i < value.keptPlain.size(); ++i) {
+        CHECK(value.keptPlain[i].copy == expected.keptPlain[i].copy);
+        CHECK(value.keptPlain[i].reason == expected.keptPlain[i].reason);
+        CHECK(value.keptPlain[i].checkReason == expected.keptPlain[i].checkReason);
+    }
+    REQUIRE(value.rebases.size() == expected.rebases.size());
+    for (std::size_t i = 0; i < value.rebases.size(); ++i) {
+        const auto& a = value.rebases[i]; const auto& b = expected.rebases[i];
+        CHECK(a.copy == b.copy); CHECK(a.proposalRefusal == b.proposalRefusal); CHECK(a.nativeRefusal == b.nativeRefusal);
+        CHECK(a.engineStatus == b.engineStatus); CHECK(a.checkReason == b.checkReason); work(a.checkWork, b.checkWork);
+        CHECK(a.engineRuns == b.engineRuns); CHECK(a.sampleUnits == b.sampleUnits);
+        CHECK(a.intersectionPairAllowance == b.intersectionPairAllowance); CHECK(a.adopted == b.adopted);
+    }
+}
+result::Produced seriesParity(RS_Entity& source, const req::Produce& op) {
+    RS_OffsetData data; data.coord = op.coordinate; data.sideFallback = op.fallback.value_or(RS_Vector{false});
+    data.distance = op.distance; data.number = op.copies; data.multipleCopies = true; data.keepOriginals = true;
+    data.asOffsetCurve = op.asOffsetCurve;
+    LC_OffsetSourceOutcome expected;
+    std::vector<std::unique_ptr<RS_Entity>> roots;
+    expected.status = RS_Modification::prepareOffsetSource(data, source, op.preview, op.limits,
+        op.limits.maxDeepEntitiesPerRequest, op.context, roots, expected);
+    const req::Request input{token, op}; const auto before = req::encode(input); REQUIRE(before);
+    const auto reply = LC_OffsetWorkerKernel::run(input);
+    REQUIRE(reply.failure == result::Failure::None); REQUIRE(std::holds_alternative<result::Produced>(reply.result));
+    const auto& value = std::get<result::Produced>(reply.result);
+    sameProducedWork(value, expected); CHECK(req::encode(input) == before);
+    if (value.outputStatus == result::OrdinaryStatus::Complete) {
+        REQUIRE(value.outputs.size() == roots.size());
+        for (std::size_t i = 0; i < roots.size(); ++i) {
+            const auto& output = value.outputs[i];
+            if (const auto* curve = std::get_if<result::Curve>(&output)) {
+                const auto* native = dynamic_cast<const LC_OffsetCurve*>(roots[i].get()); REQUIRE(native);
+                CHECK(req::Values::encodeCache(curve->cache) == req::Values::encodeCache(native->getData()));
+                CHECK(req::Values::encodeDefinition(curve->definition) == req::Values::encodeDefinition(native->definition()));
+                CHECK(curve->worldTolerance == native->checkedWorldTolerance());
+                CHECK(curve->closed == native->cacheFormsClosedChain());
+                CHECK(curve->grips == native->cachedDefinitionGrips()); CHECK(curve->midpoint == native->getMiddlePoint());
+            } else if (const auto* line = std::get_if<req::Segment>(&output)) {
+                REQUIRE(dynamic_cast<const RS_Line*>(roots[i].get()));
+                CHECK(line->start == roots[i]->getStartpoint()); CHECK(line->end == roots[i]->getEndpoint());
+            } else {
+                const auto* spline = dynamic_cast<const RS_Spline*>(roots[i].get()); REQUIRE(spline);
+                CHECK_FALSE(dynamic_cast<const LC_OffsetCurve*>(roots[i].get()));
+                CHECK(req::Values::encodeCache(std::get<RS_SplineData>(output)) == req::Values::encodeCache(spline->getData()));
+            }
+        }
+    } else CHECK(value.outputs.empty());
+    const auto encoded = result::encode(reply, input); REQUIRE(encoded);
+    const auto decoded = result::decode(*encoded, input); REQUIRE(decoded);
+    CHECK(result::encode(*decoded, input) == encoded);
+    return value;
+}
+}
+
+TEST_CASE("Produce kernel matches shared ellipse source series and records actual adoption C work",
+          "[lc-offsetcurve][worker-kernel][produce]") {
+    RS_Ellipse source{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
+    for (bool native : {false, true}) for (bool preview : {false, true}) {
+        auto op = seriesInput(source, native); op.preview = preview;
+        const auto value = seriesParity(source, op);
+        REQUIRE(value.source.status == LC_OffsetSourceStatus::Succeeded);
+        REQUIRE(value.outputStatus == result::OrdinaryStatus::Complete);
+        CHECK(value.copyOutputCounts == std::vector<std::size_t>{1, 1});
+        if (native && !preview) {
+            CHECK(value.source.adoptionAttempts == 2);
+            geo::CheckWork actual;
+            for (const auto& output : value.outputs) {
+                REQUIRE(std::holds_alternative<result::Curve>(output));
+                const auto& c = std::get<result::Curve>(output);
+                const auto checked = geo::checkCache(c.cache, c.definition, c.worldTolerance); REQUIRE(checked);
+                actual.cacheSpans += checked.work.cacheSpans; actual.vertices += checked.work.vertices;
+                actual.distancePairs += checked.work.distancePairs; actual.orderingComparisons += checked.work.orderingComparisons;
+                actual.deepest = std::max(actual.deepest, checked.work.deepest);
+            }
+            work(value.source.adoptionCheckWork, actual); CHECK(actual.vertices > 0);
+        } else {
+            CHECK(value.source.adoptionAttempts == 0); work(value.source.adoptionCheckWork, {});
+            for (const auto& output : value.outputs) CHECK_FALSE(std::holds_alternative<result::Curve>(output));
+        }
+    }
+    auto op = seriesInput(source, true); op.context.topLevel = false;
+    const auto plain = seriesParity(source, op);
+    CHECK(plain.source.adoptionAttempts == 0); CHECK(plain.source.copiesKeptPlain == plain.source.copiesMade);
+}
+
+TEST_CASE("Produce kernel repeats actual stored caches using raw definition context without native input shells",
+          "[lc-offsetcurve][worker-kernel][produce]") {
+    RS_Ellipse original{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
+    auto made = LC_OffsetCurve::create(original, 1, false); REQUIRE(made);
+    for (bool native : {false, true}) for (bool preview : {false, true}) {
+        auto op = seriesInput(*made.entity, native); op.preview = preview;
+        op.context.nativeSource = true; op.context.nativeDefinition = made.entity->definition();
+        const auto value = seriesParity(*made.entity, op);
+        REQUIRE(value.source.status == LC_OffsetSourceStatus::Succeeded);
+        CHECK(value.source.adoptionAttempts == 0);
+        if (!native || preview) {
+            CHECK(value.rebases.empty()); CHECK(value.source.rebaseEngineRuns == 0);
+            for (const auto& output : value.outputs) CHECK_FALSE(std::holds_alternative<result::Curve>(output));
+        } else {
+            REQUIRE(value.rebases.size() == 2);
+            CHECK(value.source.rebaseEngineRuns == 2); CHECK(value.source.cacheEngineRuns == 0);
+        }
+    }
+    auto op = seriesInput(*made.entity, true);
+    op.context.nativeSource = true; op.context.nativeDefinition = made.entity->definition();
+    op.coordinate = {0, 0}; op.distance = 1; op.copies = 1;
+    const auto zero = seriesParity(*made.entity, op);
+    REQUIRE(zero.rebases.size() == 1); CHECK(zero.rebases[0].proposalRefusal == LC_OffsetCurveAgain::Refusal::ZeroSum);
+    CHECK(zero.source.rebaseEngineRuns == 0); CHECK(zero.source.cacheEngineRuns == 1);
+    auto ineligible = seriesInput(*made.entity, true); ineligible.copies = 1;
+    ineligible.context.nativeSource = true;
+    const auto undefined = seriesParity(*made.entity, ineligible);
+    REQUIRE(undefined.keptPlain.size() == 1);
+    CHECK(undefined.keptPlain[0].reason == LC_OffsetPlainReason::UndefinedDefinition);
+    ineligible.context.nativeDefinition = made.entity->definition(); ineligible.context.topLevel = false;
+    const auto nested = seriesParity(*made.entity, ineligible);
+    REQUIRE(nested.keptPlain.size() == 1); CHECK(nested.keptPlain[0].reason == LC_OffsetPlainReason::NotTopLevel);
+    for (const auto& output : nested.outputs) CHECK_FALSE(std::holds_alternative<result::Curve>(output));
+    op.coordinate = {3, 2}; op.distance = .25; op.limits.maxSamples = 1;
+    const auto refused = seriesParity(*made.entity, op);
+    CHECK(refused.source.status == LC_OffsetSourceStatus::LimitExceeded);
+    CHECK(refused.copyOutputCounts.empty()); CHECK(refused.outputs.empty());
+    CHECK(refused.outputStatus == result::OrdinaryStatus::None);
+    CHECK(refused.source.rebaseEngineRuns == 1); CHECK(refused.source.sampleUnits > 1);
+}
+
+TEST_CASE("Produce kernel preserves real vanished prefixes and aggregate cap unsupported receipts",
+          "[lc-offsetcurve][worker-kernel][produce]") {
+    RS_Ellipse circle{nullptr, RS_EllipseData{{0, 0}, {5, 0}, 1}};
+    auto op = seriesInput(circle); op.coordinate = {0, 0}; op.distance = 2; op.copies = 3;
+    const auto prefix = seriesParity(circle, op);
+    REQUIRE(prefix.source.status == LC_OffsetSourceStatus::Succeeded);
+    CHECK(prefix.source.copiesMade == 2); CHECK(prefix.source.stoppedBy == LC_OffsetSourceStatus::Vanished);
+    CHECK(prefix.copyOutputCounts == std::vector<std::size_t>{1, 1});
+    op.distance = 1; op.copies = 1;
+    const auto baseline = seriesParity(circle, op);
+    REQUIRE(baseline.outputStatus == result::OrdinaryStatus::Complete);
+    op.limits.perSource.maxCubicPieces = baseline.source.usage.cubicPieces;
+    const auto seam = seriesParity(circle, op);
+    REQUIRE(seam.source.status == LC_OffsetSourceStatus::Succeeded);
+    CHECK(seam.source.usage.cubicPieces == baseline.source.usage.cubicPieces);
+    CHECK(seam.outputStatus == result::OrdinaryStatus::Unsupported); CHECK(seam.outputs.empty());
+    CHECK(seam.copyOutputCounts == baseline.copyOutputCounts);
+}
+
+TEST_CASE("Produce raw ellipse adapters preserve captured bounds and do not repair source angles",
+          "[lc-offsetcurve][worker-kernel][produce][raw]") {
+    class RawSource final : public RS_Ellipse {
+    public:
+        RawSource(const RS_EllipseData& d, const RS_Vector& lo, const RS_Vector& hi) {
+            m_data = d; m_minV = lo; m_maxV = hi;
+        }
+    };
+    RS_Ellipse normal{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
+    // Captured bounds are values, not a request to calculateBorders() and repair raw data.
+    RawSource captured{normal.getData(), {-1e9, -1e9}, {1e9, 1e9}};
+    auto op = seriesInput(captured); op.copies = 1; op.coordinate = {1.1, .05}; op.fallback = RS_Vector{0, 0};
+    const auto fallback = seriesParity(captured, op);
+    REQUIRE(fallback.source.resolvedSide);
+    CHECK(*fallback.source.resolvedSide == LC_CurveOffsetSide::Left);
+    op.distance = -.25; seriesParity(captured, op);
+    auto tiny = normal.getData(); tiny.angle1 = 0; tiny.angle2 = 1e-12; tiny.isArc = true;
+    RawSource unmodified{tiny, normal.getMin(), normal.getMax()};
+    op = seriesInput(unmodified); op.copies = 1;
+    seriesParity(unmodified, op); // Compare the raw source, not its constructor-normalized whole ellipse.
 }

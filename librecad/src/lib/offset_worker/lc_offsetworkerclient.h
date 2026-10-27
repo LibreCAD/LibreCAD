@@ -37,6 +37,15 @@ public:
      * no native definition, generation, or C admission in the parent.
      */
     std::optional<std::vector<std::unique_ptr<RS_Entity>>> ordinary(const RS_Entity& attributes) const;
+    struct PreparedSource {
+        LC_OffsetSourceOutcome outcome;
+        std::vector<std::unique_ptr<RS_Entity>> entities;
+    };
+    /** Complete Produce receipt and owned outputs, or no value for unsupported
+     * representation/display expansion. Identity and publication stay local;
+     * outcome has no source/created-entity pointers or deletion authority.
+     */
+    std::optional<PreparedSource> produced(const RS_Entity& attributes) const;
     /** Apply to a caller-owned clone only after its retained input seal matches.
      * Live document publication/undo remains the caller's separate transaction.
      */

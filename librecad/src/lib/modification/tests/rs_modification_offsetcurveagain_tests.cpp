@@ -326,6 +326,7 @@ void plainOutput(const LC_OffsetSourceOutcome &result, int ordinal, LC_OffsetPla
 }
 void noPublication(const LC_OffsetSourceOutcome &result, const Pending &pending) {
     CHECK(result.copiesMade == 0); CHECK(result.copiesKeptPlain == 0); CHECK(result.keptPlain.empty());
+    CHECK(result.copyOutputCounts.empty());
     CHECK(result.createdEntities.empty()); CHECK_FALSE(result.sourceRemoved);
     CHECK(pending.ctx.entitiesToAdd.empty()); CHECK(pending.ctx.entitiesToDelete.empty());
 }
@@ -667,6 +668,7 @@ SharedSourcePreparation prepareSharedSource(RS_Entity& source, const RS_OffsetDa
     if (!result.succeeded()) {
         CHECK(prepared.roots.empty()); CHECK(result.copiesMade == 0);
         CHECK(result.copiesKeptPlain == 0); CHECK(result.keptPlain.empty());
+        CHECK(result.copyOutputCounts.empty());
         CHECK(result.usage.cubicPieces == 0); CHECK(result.usage.outputEntities == 0);
         CHECK(result.usage.deepEntities == 0);
     } else {
@@ -686,6 +688,13 @@ void sameSharedPreparation(const LC_OffsetSourceOutcome& actual, const LC_Offset
     CHECK(actual.engineStatus == expected.engineStatus); CHECK(actual.detail == expected.detail);
     CHECK(actual.stoppedBy == expected.stoppedBy); CHECK(actual.copiesMade == expected.copiesMade);
     CHECK(actual.copiesRequested == expected.copiesRequested);
+    CHECK(actual.copyOutputCounts == expected.copyOutputCounts); CHECK(actual.resolvedSide == expected.resolvedSide);
+    CHECK(actual.adoptionAttempts == expected.adoptionAttempts);
+    CHECK(actual.adoptionCheckWork.cacheSpans == expected.adoptionCheckWork.cacheSpans);
+    CHECK(actual.adoptionCheckWork.vertices == expected.adoptionCheckWork.vertices);
+    CHECK(actual.adoptionCheckWork.distancePairs == expected.adoptionCheckWork.distancePairs);
+    CHECK(actual.adoptionCheckWork.deepest == expected.adoptionCheckWork.deepest);
+    CHECK(actual.adoptionCheckWork.orderingComparisons == expected.adoptionCheckWork.orderingComparisons);
     CHECK(actual.copiesKeptPlain == expected.copiesKeptPlain);
     CHECK(actual.sourceRemoved == expected.sourceRemoved);
     sameSharedUsage(actual.usage, expected.usage);
@@ -785,6 +794,7 @@ TEST_CASE("Shared offset source preparation discards a provisional prefix on an 
         kDefaultOffsetDeepEntitiesPerRequest, {}, roots, result), std::bad_alloc);
     CHECK(source.copies == 2); CHECK(roots.empty()); CHECK(result.copiesRequested == 2);
     CHECK(result.copiesMade == 0); CHECK(result.copiesKeptPlain == 0); CHECK(result.keptPlain.empty());
+    CHECK(result.copyOutputCounts.empty());
     CHECK(result.usage.cubicPieces == 0); CHECK(result.usage.outputEntities == 0);
     CHECK(result.usage.deepEntities == 0); CHECK(result.rebaseEngineRuns == 0);
     CHECK(result.cacheEngineRuns == 0); CHECK(result.sampleUnits == 0);

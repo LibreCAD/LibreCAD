@@ -8,6 +8,7 @@
 
 #include <QCborValue>
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <cstdint>
 #include <limits>
@@ -60,12 +61,29 @@ auto members(Trim::Work& d) {
     return std::tie(d.inputSpans, d.inputRecords, d.rootRecords, d.kernelItems,
         d.kernelComparisons, d.outputSpans, d.outputControls, d.outputKnots, d.intersections);
 }
+auto members(SourceDiagnostics& d) {
+    return std::tie(d.status, d.engineStatus, d.detail, d.stoppedBy, d.usage,
+        d.copiesMade, d.copiesRequested, d.sourceRemoved, d.copiesKeptPlain,
+        d.rebaseEngineRuns, d.cacheEngineRuns, d.reusedCacheCopies, d.sampleUnits,
+        d.intersectionPairAllowance, d.attemptedOutputUsage, d.attemptedDeepCountComplete,
+        d.adoptionAttempts, d.adoptionCheckWork, d.resolvedSide);
+}
+auto members(LC_OffsetPlainOutcome& d) { return std::tie(d.copy, d.reason, d.checkReason); }
+auto members(LC_OffsetRebaseOutcome& d) {
+    return std::tie(d.copy, d.proposalRefusal, d.nativeRefusal, d.engineStatus, d.checkReason,
+        d.checkWork, d.engineRuns, d.sampleUnits, d.intersectionPairAllowance, d.adopted);
+}
 template<class T> struct IsOptional : std::false_type {};
 template<class T> struct IsOptional<std::optional<T>> : std::true_type {};
 template<class T> constexpr qint64 enumMax() {
     if constexpr (std::is_same_v<T, Refusal>) return qint64(Refusal::ThroughNotOnCache);
     else if constexpr (std::is_same_v<T, Reason>) return qint64(Reason::LimitExceeded);
     else if constexpr (std::is_same_v<T, Status>) return qint64(Status::LimitExceeded);
+    else if constexpr (std::is_same_v<T, LC_OffsetSourceStatus>) return qint64(LC_OffsetSourceStatus::LimitExceeded);
+    else if constexpr (std::is_same_v<T, LC_OffsetFailureDetail>) return qint64(LC_OffsetFailureDetail::AmbiguousSide);
+    else if constexpr (std::is_same_v<T, LC_OffsetPlainReason>) return qint64(LC_OffsetPlainReason::UndefinedDefinition);
+    else if constexpr (std::is_same_v<T, LC_OffsetCurveAgain::Refusal>) return qint64(LC_OffsetCurveAgain::Refusal::FinalNotProvedUntrimmed);
+    else if constexpr (std::is_same_v<T, LC_CurveOffsetSide>) return qint64(LC_CurveOffsetSide::Right);
     else if constexpr (std::is_same_v<T, Failure>) return qint64(Failure::InternalFailure);
     else if constexpr (std::is_same_v<T, OrdinaryStatus>) return qint64(OrdinaryStatus::Unsupported);
     else if constexpr (std::is_same_v<T, Trim::Refusal>) return qint64(Trim::Refusal::AllocationFailure);
@@ -332,6 +350,321 @@ bool readOrdinary(const QCborValue& v, Native& n, const Req::Request& r, bool ma
     }
     return true;
 }
+
+LC_OffsetSourceBudget produceBudget(const Req::Produce& op) {
+    auto cap = op.limits.perSource;
+    const auto hard = makeDefaultOffsetSourceBudget();
+    cap.maxCubicPieces = std::min(cap.maxCubicPieces, hard.maxCubicPieces);
+    cap.maxOutputEntities = std::min(cap.maxOutputEntities, hard.maxOutputEntities);
+    cap.maxDeepEntities = std::min({cap.maxDeepEntities, hard.maxDeepEntities, op.limits.maxDeepEntitiesPerRequest});
+    return cap;
+}
+std::size_t produceSamples(const Req::Produce& op) {
+    return op.limits.maxSamples ? std::min(op.limits.maxSamples, LC_CurveOffset::kDefaultMaxSamples) :
+        LC_CurveOffset::kDefaultMaxSamples;
+}
+std::size_t producePairs(const Req::Produce& op) {
+    return op.limits.maxIntersectionPairs ? std::min(op.limits.maxIntersectionPairs, LC_CurveOffset::kDefaultMaxIntersectionPairs) :
+        LC_CurveOffset::kDefaultMaxIntersectionPairs;
+}
+bool checkWorkBound(const Geo::CheckWork& w, std::size_t checks) {
+    const LC_OffsetCheckLimits cap;
+    return admitted(w) && w.cacheSpans <= checks * cap.maxCacheSpans &&
+        w.vertices <= checks * cap.maxVertices && w.distancePairs <= checks * cap.maxDistancePairs &&
+        w.orderingComparisons <= checks * cap.maxOrderingComparisons &&
+        w.deepest <= (checks ? cap.maxDepth : 0);
+}
+struct ProductionScan {
+    std::array<std::size_t, RS_OffsetData::kMaximumOffsetCopies> copies{};
+    std::array<bool, RS_OffsetData::kMaximumOffsetCopies> plain{}, adopted{};
+    std::array<LC_OffsetPlainOutcome, RS_OffsetData::kMaximumOffsetCopies> plainOutcomes{};
+    std::size_t requiredAdoptions = 0, optionalAdoptions = 0;
+    std::size_t roots = 0, rebaseRuns = 0, rebaseSamples = 0, rebasePairs = 0;
+    std::size_t cacheRuns = 0, pairAllowance = 0;
+    std::size_t previousPlain = 0, previousRebase = 0;
+    Counts geometry;
+    std::size_t minimumDeep = 0;
+};
+bool productionHeader(const Produced& d, const Req::Produce& op, std::size_t groups,
+    std::size_t plain, std::size_t rebases, std::size_t outputs) {
+    const auto& s = d.source;
+    const auto cap = produceBudget(op);
+    const std::size_t copies = std::size_t(op.copies);
+    if (!admitted(s) || !admitted(d.outputStatus) || s.copiesRequested != op.copies ||
+        s.copiesMade > op.copies || s.sourceRemoved || groups != std::size_t(s.copiesMade) ||
+        s.copiesKeptPlain != int(plain) || plain > groups || rebases > copies ||
+        s.rebaseEngineRuns > rebases || s.cacheEngineRuns > copies || s.reusedCacheCopies ||
+        s.sampleUnits > copies * (produceSamples(op) + 1) ||
+        s.intersectionPairAllowance > copies * producePairs(op) ||
+        s.adoptionAttempts > copies || !checkWorkBound(s.adoptionCheckWork, s.adoptionAttempts) ||
+        !usage(s.usage, cap)) return false;
+    if (s.resolvedSide && *s.resolvedSide != LC_CurveOffsetSide::Left &&
+        *s.resolvedSide != LC_CurveOffsetSide::Right) return false;
+    const bool wrap = op.asOffsetCurve && !op.preview;
+    if (plain && op.source.index() == 1 && !op.context.nativeSource) return false;
+    if (s.status == LC_OffsetSourceStatus::Succeeded && s.adoptionAttempts > std::size_t(s.copiesMade)) return false;
+    if ((!wrap && (plain || rebases || s.adoptionAttempts)) ||
+        (s.adoptionAttempts && (op.source.index() != 0 || !op.context.topLevel)) ||
+        (rebases && (op.source.index() != 1 || !op.context.nativeSource))) return false;
+    const auto runs = s.rebaseEngineRuns + s.cacheEngineRuns;
+    LC_OffsetSourceBudget attempted{runs * cap.maxCubicPieces, runs * cap.maxOutputEntities, runs * cap.maxDeepEntities};
+    if (!usage(s.attemptedOutputUsage, attempted) ||
+        (!s.attemptedDeepCountComplete && !s.attemptedOutputUsage.outputEntities)) return false;
+    const bool success = s.status == LC_OffsetSourceStatus::Succeeded;
+    if (success) {
+        const auto completedOrStopped = std::size_t(s.copiesMade) + (s.copiesMade < op.copies ? 1 : 0);
+        if (wrap && op.source.index() == 1 && op.context.nativeSource) {
+            if (rebases != completedOrStopped) return false;
+        } else if (s.cacheEngineRuns != completedOrStopped) return false;
+        if (!s.copiesMade || !s.resolvedSide || !s.usage.outputEntities ||
+            s.usage.outputEntities < std::size_t(s.copiesMade) || s.usage.cubicPieces < s.usage.outputEntities ||
+            s.usage.deepEntities < s.usage.outputEntities ||
+            s.usage.cubicPieces > s.attemptedOutputUsage.cubicPieces ||
+            s.usage.outputEntities > s.attemptedOutputUsage.outputEntities) return false;
+        if (s.copiesMade == op.copies) {
+            if (s.stoppedBy != LC_OffsetSourceStatus::Succeeded || s.engineStatus != Status::Ok) return false;
+        } else if (s.stoppedBy == LC_OffsetSourceStatus::Vanished) {
+            if (s.engineStatus != Status::Ok) return false;
+        } else if (s.stoppedBy != LC_OffsetSourceStatus::OffsetFailed ||
+            s.engineStatus == Status::Ok || s.engineStatus == Status::LimitExceeded) return false;
+        if (d.outputStatus == OrdinaryStatus::None) return false;
+        if (d.outputStatus == OrdinaryStatus::Complete) {
+            if (outputs != s.usage.outputEntities) return false;
+        } else if (outputs) return false;
+    } else {
+        if (s.copiesMade || groups || plain || !zero(s.usage) ||
+            d.outputStatus != OrdinaryStatus::None || outputs) return false;
+        if (s.status == LC_OffsetSourceStatus::Vanished &&
+            (s.stoppedBy != LC_OffsetSourceStatus::Vanished || s.engineStatus != Status::Ok || !s.resolvedSide)) return false;
+        if (s.status == LC_OffsetSourceStatus::LimitExceeded &&
+            s.engineStatus != Status::Ok && s.engineStatus != Status::LimitExceeded) return false;
+        if (s.status == LC_OffsetSourceStatus::OffsetFailed && s.engineStatus == Status::LimitExceeded) return false;
+    }
+    return (!runs && !rebases && !s.adoptionAttempts) || s.resolvedSide.has_value();
+}
+bool productionCopy(std::size_t n, std::size_t index, ProductionScan& scan, const Req::Produce& op) {
+    if (!n || index >= scan.copies.size() || !add(scan.roots, n, produceBudget(op).maxOutputEntities)) return false;
+    scan.copies[index] = n; return true;
+}
+bool productionPlain(const LC_OffsetPlainOutcome& p, ProductionScan& scan, const Produced& d, const Req::Produce& op) {
+    if (!admitted(p) || p.copy <= int(scan.previousPlain) || p.copy > d.source.copiesMade ||
+        (p.reason == LC_OffsetPlainReason::CheckFailed && (!p.checkReason || *p.checkReason == Reason::None))) return false;
+    const auto ordinal = std::size_t(p.copy - 1);
+    if (!op.context.topLevel) {
+        if (p.reason != LC_OffsetPlainReason::NotTopLevel || p.checkReason) return false;
+    } else if (scan.copies[ordinal] != 1) {
+        if (p.reason != LC_OffsetPlainReason::SeveralPieces || p.checkReason) return false;
+    } else if (op.source.index() == 0) {
+        if (p.reason == LC_OffsetPlainReason::CheckFailed || p.reason == LC_OffsetPlainReason::NotCacheRepresentable)
+            ++scan.requiredAdoptions;
+        else if (p.reason == LC_OffsetPlainReason::OutputBudget) ++scan.optionalAdoptions;
+        else return false;
+    }
+    scan.plainOutcomes[ordinal] = p;
+    scan.previousPlain = std::size_t(p.copy); scan.plain[ordinal] = true;
+    return true;
+}
+bool productionRebase(const LC_OffsetRebaseOutcome& a, ProductionScan& scan,
+    const Produced& d, const Req::Produce& op) {
+    if (!admitted(a) || a.copy != int(scan.previousRebase + 1) || a.copy > op.copies ||
+        a.engineRuns > 1 || a.sampleUnits > produceSamples(op) + 1 || !checkWorkBound(a.checkWork, 1)) return false;
+    scan.previousRebase = std::size_t(a.copy);
+    const bool eligible = op.context.topLevel && op.context.nativeDefinition.has_value();
+    if (eligible) {
+        if (!d.source.resolvedSide) return false;
+        const auto proposal = LC_OffsetCurveAgain::propose(*op.context.nativeDefinition,
+            *d.source.resolvedSide, std::abs(double(a.copy) * op.distance));
+        if (a.proposalRefusal != proposal.refusal) return false;
+    } else if (a.proposalRefusal) return false;
+    const bool called = a.nativeRefusal.has_value();
+    if (called != (eligible && a.proposalRefusal == LC_OffsetCurveAgain::Refusal::None && producePairs(op) >= 2)) return false;
+    if (called && (!eligible || a.proposalRefusal != LC_OffsetCurveAgain::Refusal::None)) return false;
+    if (!called) {
+        if (a.engineStatus || a.checkReason || a.engineRuns || a.sampleUnits ||
+            a.intersectionPairAllowance || !zero(a.checkWork) || a.adopted) return false;
+    } else {
+        if (bool(a.engineStatus) != bool(a.engineRuns) ||
+            a.intersectionPairAllowance != (a.engineRuns ? producePairs(op) / 2 : 0)) return false;
+        if (!a.engineStatus) {
+            if ((*a.nativeRefusal != Refusal::InvalidInput && *a.nativeRefusal != Refusal::TooSmall) ||
+                a.checkReason || !zero(a.checkWork) || a.sampleUnits || a.adopted) return false;
+        } else if (*a.engineStatus != Status::Ok) {
+            if (*a.nativeRefusal != Refusal::Engine || a.checkReason || !zero(a.checkWork) || a.adopted) return false;
+        } else {
+            if (*a.nativeRefusal != Refusal::None && *a.nativeRefusal != Refusal::NothingLeft &&
+                *a.nativeRefusal != Refusal::SeveralPieces && *a.nativeRefusal != Refusal::NotCacheRepresentable &&
+                *a.nativeRefusal != Refusal::CheckFailed) return false;
+            if (a.sampleUnits > produceSamples(op) || a.adopted != (*a.nativeRefusal == Refusal::None) ||
+                (a.adopted && a.checkReason != Reason::None) ||
+                (*a.nativeRefusal == Refusal::CheckFailed && (!a.checkReason || *a.checkReason == Reason::None)) ||
+                (a.checkReason && *a.checkReason != Reason::None && *a.nativeRefusal != Refusal::CheckFailed) ||
+                (!a.checkReason && !zero(a.checkWork)) ||
+                ((*a.nativeRefusal == Refusal::NothingLeft || *a.nativeRefusal == Refusal::SeveralPieces) && a.checkReason)) return false;
+        }
+    }
+    if (d.source.status == LC_OffsetSourceStatus::Succeeded && a.copy <= d.source.copiesMade && !a.adopted) {
+        const auto ordinal = std::size_t(a.copy - 1);
+        if (!scan.plain[ordinal]) return false;
+        const auto expected = !op.context.topLevel ? LC_OffsetPlainReason::NotTopLevel :
+            scan.copies[ordinal] != 1 ? LC_OffsetPlainReason::SeveralPieces :
+            !op.context.nativeDefinition ? LC_OffsetPlainReason::UndefinedDefinition :
+            a.proposalRefusal == LC_OffsetCurveAgain::Refusal::ZeroSum ? LC_OffsetPlainReason::ZeroSum :
+            LC_OffsetPlainReason::RebaseRefused;
+        const auto checked = op.context.topLevel && scan.copies[ordinal] == 1 ? a.checkReason : std::nullopt;
+        if (scan.plainOutcomes[ordinal].reason != expected || scan.plainOutcomes[ordinal].checkReason != checked) return false;
+    }
+    if (!add(scan.rebaseRuns, a.engineRuns, std::size_t(op.copies)) ||
+        !add(scan.rebaseSamples, a.sampleUnits, d.source.sampleUnits) ||
+        !add(scan.rebasePairs, a.intersectionPairAllowance, d.source.intersectionPairAllowance)) return false;
+    if (!add(scan.pairAllowance, a.intersectionPairAllowance, d.source.intersectionPairAllowance)) return false;
+    if (!a.adopted && a.sampleUnits < produceSamples(op)) {
+        ++scan.cacheRuns;
+        if (!add(scan.pairAllowance, producePairs(op) - a.intersectionPairAllowance,
+            d.source.intersectionPairAllowance)) return false;
+    }
+    if (a.adopted) {
+        if (d.source.status == LC_OffsetSourceStatus::Succeeded && a.copy > d.source.copiesMade) return false;
+        scan.adopted[std::size_t(a.copy - 1)] = true;
+    }
+    return true;
+}
+bool nativeForCopy(const ProductionScan& scan, const Produced& d, const Req::Produce& op, std::size_t copy) {
+    if (!op.asOffsetCurve || op.preview || !op.context.topLevel) return false;
+    if (op.source.index() == 0) return !scan.plain[copy];
+    return op.context.nativeSource && scan.adopted[copy];
+}
+bool productionDefinition(const Curve& curve, std::size_t ordinal, const Produced& d, const Req::Produce& op) {
+    if (!d.source.resolvedSide) return false;
+    LC_EllipseOffsetDefinition expected;
+    const double magnitude = std::abs(double(ordinal + 1) * op.distance);
+    if (op.source.index() == 0) {
+        expected.basis = std::get<RS_EllipseData>(op.source); expected.distance = magnitude;
+        expected.towardCentre = (*d.source.resolvedSide == LC_CurveOffsetSide::Left) != expected.basis.reversed;
+        expected.relTolerance = LC_CurveOffset::kEllipseRelativeOffsetTolerance;
+    } else {
+        if (!op.context.nativeSource || !op.context.nativeDefinition) return false;
+        const auto proposal = LC_OffsetCurveAgain::propose(*op.context.nativeDefinition, *d.source.resolvedSide, magnitude);
+        if (!proposal) return false;
+        expected = proposal.proposal->definition;
+    }
+    if (!Geo::normaliseBasis(expected.basis)) return false;
+    return Req::Values::encodeDefinition(expected) == Req::Values::encodeDefinition(curve.definition);
+}
+bool productionTail(const ProductionScan& scan, const Produced& d, const Req::Produce& op) {
+    if (scan.roots != d.source.usage.outputEntities || scan.rebaseRuns != d.source.rebaseEngineRuns) return false;
+    if (op.source.index() == 1 && op.context.nativeSource && op.asOffsetCurve && !op.preview) {
+        if (scan.cacheRuns != d.source.cacheEngineRuns || scan.pairAllowance != d.source.intersectionPairAllowance) return false;
+    } else if (d.source.intersectionPairAllowance != d.source.cacheEngineRuns * producePairs(op)) return false;
+    std::size_t adopted = 0;
+    for (std::size_t i = 0; i < std::size_t(d.source.copiesMade); ++i) {
+        if (scan.plain[i] && scan.adopted[i]) return false;
+        adopted += scan.adopted[i] ? 1 : 0;
+    }
+    if (d.source.status == LC_OffsetSourceStatus::Succeeded && op.asOffsetCurve && !op.preview &&
+        op.source.index() == 1 && op.context.nativeSource &&
+        adopted + std::size_t(d.source.copiesKeptPlain) != std::size_t(d.source.copiesMade)) return false;
+    if (d.source.status == LC_OffsetSourceStatus::Succeeded && op.asOffsetCurve && !op.preview &&
+        op.source.index() == 0 && op.context.topLevel) {
+        const auto required = std::size_t(d.source.copiesMade - d.source.copiesKeptPlain) + scan.requiredAdoptions;
+        if (d.source.adoptionAttempts < required || d.source.adoptionAttempts > required + scan.optionalAdoptions) return false;
+    }
+    return true;
+}
+bool produced(const Produced& d, const Req::Produce& op) {
+    if (!productionHeader(d, op, d.copyOutputCounts.size(), d.keptPlain.size(), d.rebases.size(), d.outputs.size())) return false;
+    ProductionScan scan;
+    for (std::size_t i = 0; i < d.copyOutputCounts.size(); ++i)
+        if (!productionCopy(d.copyOutputCounts[i], i, scan, op)) return false;
+    for (const auto& p : d.keptPlain) if (!productionPlain(p, scan, d, op)) return false;
+    for (const auto& a : d.rebases) if (!productionRebase(a, scan, d, op)) return false;
+    std::size_t ordinal = 0, end = scan.copies[0];
+    const auto cap = produceBudget(op);
+    for (std::size_t i = 0; i < d.outputs.size(); ++i) {
+        while (i >= end && ordinal + 1 < d.copyOutputCounts.size()) end += scan.copies[++ordinal];
+        const auto& item = d.outputs[i];
+        const bool nativeExpected = nativeForCopy(scan, d, op, ordinal);
+        Counts c;
+        if (const auto* line = std::get_if<Req::Segment>(&item)) {
+            if (nativeExpected || !admitted(line->start) || !admitted(line->end)) return false;
+            c = {1, 2, 0};
+        } else if (const auto* data = std::get_if<RS_SplineData>(&item)) {
+            if (nativeExpected || !cache(*data, c, cap.maxCubicPieces)) return false;
+        } else if (const auto* value = std::get_if<Curve>(&item)) {
+            if (!nativeExpected || scan.copies[ordinal] != 1 ||
+                !curve(*value, c, cap.maxCubicPieces) || !productionDefinition(*value, ordinal, d, op)) return false;
+        } else return false;
+        if (!ordinaryCount(scan.geometry, c, cap.maxCubicPieces) ||
+            !add(scan.minimumDeep, item.index() == 0 ? 1 : kOffsetDeepEntitiesPerOutputSpline - 1,
+                d.source.usage.deepEntities)) return false;
+    }
+    return productionTail(scan, d, op);
+}
+bool readProduced(const QCborValue& v, Produced& d, const Req::Produce& op, bool materialize) {
+    QCborArray a, groups, plain, rebases, outputs;
+    if (!array(v, 6, a) || !read(a.at(0), d.source) ||
+        !bounded(a.at(1), RS_OffsetData::kMaximumOffsetCopies, groups) ||
+        !bounded(a.at(2), RS_OffsetData::kMaximumOffsetCopies, plain) ||
+        !bounded(a.at(3), RS_OffsetData::kMaximumOffsetCopies, rebases) ||
+        !read(a.at(4), d.outputStatus) || !bounded(a.at(5), produceBudget(op).maxOutputEntities, outputs) ||
+        !productionHeader(d, op, std::size_t(groups.size()), std::size_t(plain.size()),
+            std::size_t(rebases.size()), std::size_t(outputs.size()))) return false;
+    ProductionScan scan;
+    for (qsizetype i = 0; i < groups.size(); ++i) {
+        std::size_t count;
+        if (!read(groups.at(i), count) || !productionCopy(count, std::size_t(i), scan, op)) return false;
+    }
+    if (materialize) {
+        d.copyOutputCounts.reserve(std::size_t(groups.size())); d.keptPlain.reserve(std::size_t(plain.size()));
+        d.rebases.reserve(std::size_t(rebases.size())); d.outputs.reserve(std::size_t(outputs.size()));
+        for (qsizetype i = 0; i < groups.size(); ++i) d.copyOutputCounts.push_back(scan.copies[std::size_t(i)]);
+    }
+    for (const auto& item : plain) {
+        LC_OffsetPlainOutcome p;
+        if (!read(item, p) || !productionPlain(p, scan, d, op)) return false;
+        if (materialize) d.keptPlain.push_back(p);
+    }
+    for (const auto& item : rebases) {
+        LC_OffsetRebaseOutcome r;
+        if (!read(item, r) || !productionRebase(r, scan, d, op)) return false;
+        if (materialize) d.rebases.push_back(r);
+    }
+    std::size_t ordinal = 0, end = scan.copies[0], index = 0;
+    const auto cap = produceBudget(op);
+    for (const auto& item : outputs) {
+        while (index >= end && ordinal + 1 < std::size_t(groups.size())) end += scan.copies[++ordinal];
+        QCborArray output, segment;
+        std::size_t type;
+        Counts c;
+        const bool nativeExpected = nativeForCopy(scan, d, op, ordinal);
+        if (!array(item, 2, output) || !read(output.at(0), type)) return false;
+        if (type == 0) {
+            Req::Segment line;
+            if (nativeExpected || !array(output.at(1), 2, segment) ||
+                !read(segment.at(0), line.start) || !read(segment.at(1), line.end)) return false;
+            c = {1, 2, 0};
+            if (materialize) d.outputs.emplace_back(line);
+        } else if (type == 1) {
+            if (nativeExpected || !scanCache(output.at(1), c, cap.maxCubicPieces)) return false;
+            if (materialize) {
+                auto data = Req::Values::decodeCache(output.at(1).toArray());
+                if (!data) return false;
+                d.outputs.emplace_back(std::move(*data));
+            }
+        } else if (type == 2) {
+            Curve value;
+            if (!nativeExpected || scan.copies[ordinal] != 1 ||
+                !readCurve(output.at(1), value, c, cap.maxCubicPieces, materialize) ||
+                !productionDefinition(value, ordinal, d, op)) return false;
+            if (materialize) d.outputs.emplace_back(std::move(value));
+        } else return false;
+        if (!ordinaryCount(scan.geometry, c, cap.maxCubicPieces) ||
+            !add(scan.minimumDeep, type == 0 ? 1 : kOffsetDeepEntitiesPerOutputSpline - 1,
+                d.source.usage.deepEntities)) return false;
+        ++index;
+    }
+    return productionTail(scan, d, op);
+}
+
 bool native(const Native& n, const Req::Request& r) {
     if ((r.operation.index() > 1 && r.operation.index() != 4) || !admitted(n.refusal) || !admitted(n.engineStatus) ||
         !admitted(n.checkReason) || !admitted(n.checkWork) || !admitted(n.throughWork)) return false;
@@ -602,6 +935,21 @@ QCborArray fields(const Native& n) {
         n.attemptedDeepCountComplete, fields(n.outputUsage), fields(n.sampleUnits),
         fields(n.ordinaryStatus), ordinary, fields(n.ordinaryUsage)};
 }
+QCborArray fields(const Produced& d) {
+    QCborArray copies, plain, rebases, outputs;
+    for (auto n : d.copyOutputCounts) copies.append(fields(n));
+    for (const auto& p : d.keptPlain) plain.append(fields(p));
+    for (const auto& r : d.rebases) rebases.append(fields(r));
+    for (const auto& item : d.outputs) {
+        QCborValue value;
+        if (const auto* line = std::get_if<Req::Segment>(&item))
+            value = QCborArray{fields(line->start), fields(line->end)};
+        else if (const auto* data = std::get_if<RS_SplineData>(&item)) value = *Req::Values::encodeCache(*data);
+        else value = fields(std::get<Curve>(item));
+        outputs.append(QCborArray{qint64(item.index()), value});
+    }
+    return {fields(d.source), copies, plain, rebases, fields(d.outputStatus), outputs};
+}
 QCborArray fields(const Trim::Result& d) {
     QCborArray fragments, conics, roots;
     for (const auto& f : d.fragments) {
@@ -624,7 +972,7 @@ bool token(const Req::Token& a, const Req::Token& b) {
         a.sourceRevision == b.sourceRevision && a.undoEpoch == b.undoEpoch;
 }
 bool envelope(const Reply& d, const Req::Request& r) {
-    return !r.operation.valueless_by_exception() && d.operation <= 4 && d.operation == r.operation.index() &&
+    return !r.operation.valueless_by_exception() && d.operation <= 5 && d.operation == r.operation.index() &&
         token(d.token, r.token) && admitted(d.failure) && !d.result.valueless_by_exception();
 }
 
@@ -638,6 +986,17 @@ template<class T> std::size_t itemCount(const T& d) {
         return 11 + 5 * d.controlPoints.size() + d.knotslist.size() + d.weights.size();
     else if constexpr (std::is_same_v<T, Curve>)
         return 1 + itemCount(d.cache) + itemCount(d.definition) + 2 + 1 + 5 * d.grips.size() + itemCount(d.midpoint);
+    else if constexpr (std::is_same_v<T, Produced>) {
+        std::size_t n = 1 + itemCount(d.source) + 1 + d.copyOutputCounts.size() + 1 + 1 + 1 + 1;
+        for (const auto& p : d.keptPlain) n += itemCount(p);
+        for (const auto& r : d.rebases) n += itemCount(r);
+        for (const auto& item : d.outputs) n += 2 + std::visit([](const auto& value) {
+            using V = std::decay_t<decltype(value)>;
+            if constexpr (std::is_same_v<V, Req::Segment>) return std::size_t{11};
+            else return itemCount(value);
+        }, item);
+        return n;
+    }
     else if constexpr (std::is_same_v<T, Native>) {
         std::size_t ordinary = 1;
         for (const auto& item : d.ordinary) ordinary += 2 + std::visit([](const auto& value) {
@@ -677,11 +1036,19 @@ bool wireValue(const QCborValue& v, std::size_t& count, unsigned depth = 1) {
 }
 }
 
+bool admittedProduced(const Produced& d, const Req::Produce& op) {
+    return op.copies >= 1 && op.copies <= RS_OffsetData::kMaximumOffsetCopies &&
+        produced(d, op) && itemCount(d) <= LC_OffsetWorkerWire::Limits{}.items - 9;
+}
+
 std::optional<QCborArray> encode(const Reply& d, const Req::Request& r) {
     if (!envelope(d, r)) return std::nullopt;
     // The complete caller-owned payload is checked before constructing CBOR.
     if (d.failure != Failure::None) {
         if (!std::holds_alternative<std::monostate>(d.result)) return std::nullopt;
+    } else if (d.operation == 5) {
+        const auto* value = std::get_if<Produced>(&d.result);
+        if (!Req::admitted(r) || !value || !admittedProduced(*value, std::get<Req::Produce>(r.operation))) return std::nullopt;
     } else if (d.operation <= 1 || d.operation == 4) {
         const auto* n = std::get_if<Native>(&d.result);
         Counts c;
@@ -692,10 +1059,13 @@ std::optional<QCborArray> encode(const Reply& d, const Req::Request& r) {
         if (!t || !trim(*t, r) || itemCount(*t) > LC_OffsetWorkerWire::Limits{}.items - 9) return std::nullopt;
     }
     QCborValue payload(nullptr);
-    if (d.failure == Failure::None) payload = d.operation <= 1 || d.operation == 4 ?
-        fields(std::get<Native>(d.result)) : fields(std::get<Trim::Result>(d.result));
+    if (d.failure == Failure::None) {
+        if (d.operation == 5) payload = fields(std::get<Produced>(d.result));
+        else payload = d.operation <= 1 || d.operation == 4 ?
+            fields(std::get<Native>(d.result)) : fields(std::get<Trim::Result>(d.result));
+    }
     const auto& t = d.token;
-    return QCborArray{3, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
+    return QCborArray{4, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
         qint64(d.operation), fields(d.failure), payload};
 }
 
@@ -704,14 +1074,20 @@ std::optional<Reply> decode(const QCborArray& a, const Req::Request& r) {
     QCborArray t;
     std::size_t version;
     std::size_t items = 0;
-    if (a.size() != 5 || !wireValue(a, items) || !read(a.at(0), version) || version != 3 || !array(a.at(1), 4, t) ||
+    if (a.size() != 5 || !wireValue(a, items) || !read(a.at(0), version) || version != 4 || !array(a.at(1), 4, t) ||
         !read(t.at(0), d.token.requestId) || !read(t.at(1), d.token.generation) ||
         !read(t.at(2), d.token.sourceRevision) || !read(t.at(3), d.token.undoEpoch) ||
         !read(a.at(2), d.operation) || !read(a.at(3), d.failure) || !envelope(d, r)) return std::nullopt;
     if (d.failure != Failure::None) return a.at(4).isNull() ? std::optional<Reply>(std::move(d)) : std::nullopt;
     // First pass admits every nested collection, scalar and aggregate without
     // allocating native arrays. Only then may shared value readers copy them.
-    if (d.operation <= 1 || d.operation == 4) {
+    if (d.operation == 5) {
+        if (!Req::admitted(r)) return std::nullopt;
+        Produced scan, value;
+        const auto& op = std::get<Req::Produce>(r.operation);
+        if (!readProduced(a.at(4), scan, op, false) || !readProduced(a.at(4), value, op, true)) return std::nullopt;
+        d.result = std::move(value);
+    } else if (d.operation <= 1 || d.operation == 4) {
         Native scan, value;
         if (!readNative(a.at(4), scan, r, false) || !readNative(a.at(4), value, r, true)) return std::nullopt;
         d.result = std::move(value);

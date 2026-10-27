@@ -296,6 +296,81 @@ bool valid(const CheckThrough& op) {
         valid(op.point) && valid(op.limits);
 }
 
+bool valid(const LC_OffsetBatchLimits& l) {
+    LC_OffsetRunLimits run;
+    run.outputBudget = l.perSource; run.maxSamples = l.maxSamples;
+    run.maxIntersectionPairs = l.maxIntersectionPairs;
+    return valid(run) && l.maxDeepEntitiesPerRequest <= kDefaultOffsetDeepEntitiesPerRequest;
+}
+bool valid(const Produce& op) {
+    if (op.source.valueless_by_exception() ||
+        !std::visit([](const auto& d) { return valid(d); }, op.source) ||
+        !valid(op.coordinate) || (op.minimum && !valid(*op.minimum)) ||
+        (op.maximum && !valid(*op.maximum)) || (op.fallback && !valid(*op.fallback)) ||
+        !std::isfinite(op.distance) || op.copies < 1 ||
+        op.copies > RS_OffsetData::kMaximumOffsetCopies || !valid(op.limits)) return false;
+    if (op.source.index() == 0 && (op.context.nativeSource || op.context.nativeDefinition)) return false;
+    return (!op.context.nativeDefinition || (op.context.nativeSource && valid(*op.context.nativeDefinition)));
+}
+bool optionalPoint(const QCborValue& v, std::optional<RS_Vector>& out) {
+    out.reset();
+    if (v.isNull()) return true;
+    RS_Vector p;
+    if (!read(v, p)) return false;
+    out = p; return true;
+}
+bool scanProduceSpline(const QCborValue& value) {
+    QCborArray a, controls, knots, weights, fit, saved;
+    std::size_t degree;
+    RS_SplineData::SplineType type, savedType;
+    bool closed, periodic;
+    if (!array(value, 10, a) || !boundedArray(a.at(0), ControlCap, controls) ||
+        !boundedArray(a.at(1), KnotCap, knots) || !boundedArray(a.at(2), ControlCap, weights) ||
+        !boundedArray(a.at(3), FitCap, fit) || !boundedArray(a.at(7), KnotCap, saved) ||
+        !count(a.at(4), std::numeric_limits<std::size_t>::max(), degree) ||
+        !splineType(a.at(5), type) || !splineType(a.at(6), savedType) ||
+        !boolean(a.at(8), closed) || !boolean(a.at(9), periodic)) return false;
+    RS_Vector p; double n;
+    for (const auto& values : {controls, fit}) for (const auto& item : values) if (!read(item, p)) return false;
+    for (const auto& values : {knots, weights, saved}) for (const auto& item : values) if (!number(item, n)) return false;
+    return true;
+}
+bool readProduce(const QCborArray& a, Produce& op) {
+    QCborArray source, context, bounds, limits, output;
+    std::size_t tag, copies;
+    const auto hard = makeDefaultOffsetSourceBudget();
+    if (a.size() != 10 || !array(a.at(0), 2, source) || !count(source.at(0), 1, tag) ||
+        !array(a.at(1), 3, context) || !boolean(context.at(0), op.context.topLevel) ||
+        !boolean(context.at(1), op.context.nativeSource) || !array(a.at(2), 2, bounds) ||
+        !optionalPoint(bounds.at(0), op.minimum) || !optionalPoint(bounds.at(1), op.maximum) ||
+        !read(a.at(3), op.coordinate) || !optionalPoint(a.at(4), op.fallback) ||
+        !number(a.at(5), op.distance) || !count(a.at(6), RS_OffsetData::kMaximumOffsetCopies, copies) || !copies ||
+        !boolean(a.at(7), op.asOffsetCurve) || !boolean(a.at(8), op.preview) ||
+        !array(a.at(9), 4, limits) || !array(limits.at(0), 3, output) ||
+        !count(output.at(0), hard.maxCubicPieces, op.limits.perSource.maxCubicPieces) ||
+        !count(output.at(1), hard.maxOutputEntities, op.limits.perSource.maxOutputEntities) ||
+        !count(output.at(2), hard.maxDeepEntities, op.limits.perSource.maxDeepEntities) ||
+        !count(limits.at(1), LC_CurveOffset::kDefaultMaxSamples, op.limits.maxSamples) ||
+        !count(limits.at(2), LC_CurveOffset::kDefaultMaxIntersectionPairs, op.limits.maxIntersectionPairs) ||
+        !count(limits.at(3), kDefaultOffsetDeepEntitiesPerRequest, op.limits.maxDeepEntitiesPerRequest)) return false;
+    op.copies = int(copies);
+    if (!context.at(2).isNull()) {
+        LC_EllipseOffsetDefinition definition;
+        if (!read(context.at(2), definition)) return false;
+        op.context.nativeDefinition = definition;
+    }
+    if ((tag == 0 && (op.context.nativeSource || op.context.nativeDefinition)) ||
+        (!op.context.nativeSource && op.context.nativeDefinition)) return false;
+    // Admit the complete raw source before constructing any native array.
+    if (tag == 0) {
+        RS_EllipseData d; if (!read(source.at(1), d)) return false; op.source = d;
+    } else {
+        if (!scanProduceSpline(source.at(1))) return false;
+        RS_SplineData d; if (!read(source.at(1), d)) return false; op.source = std::move(d);
+    }
+    return valid(op);
+}
+
 QCborArray fields(const RS_Vector& p) { return {p.x, p.y, p.z, p.valid}; }
 QCborArray fields(const RS_ArcData& d) {
     return {fields(d.center), d.radius, d.angle1, d.angle2, d.reversed,
@@ -362,6 +437,18 @@ QCborArray fields(const TrimConic& op) {
     return {fields(op.cache), fields(op.conic), fields(op.conicPick),
         op.cachePick ? QCborValue(fields(*op.cachePick)) : QCborValue(nullptr), fields(op.limits)};
 }
+QCborArray fields(const Produce& op) {
+    const auto point = [](const std::optional<RS_Vector>& p) {
+        return p ? QCborValue(fields(*p)) : QCborValue(nullptr);
+    };
+    const auto& c = op.context; const auto& l = op.limits; const auto& b = l.perSource;
+    return {QCborArray{qint64(op.source.index()), std::visit([](const auto& d) { return fields(d); }, op.source)},
+        QCborArray{c.topLevel, c.nativeSource, c.nativeDefinition ? QCborValue(fields(*c.nativeDefinition)) : QCborValue(nullptr)},
+        QCborArray{point(op.minimum), point(op.maximum)}, fields(op.coordinate), point(op.fallback),
+        op.distance, op.copies, op.asOffsetCurve, op.preview,
+        QCborArray{QCborArray{qint64(b.maxCubicPieces), qint64(b.maxOutputEntities), qint64(b.maxDeepEntities)},
+            qint64(l.maxSamples), qint64(l.maxIntersectionPairs), qint64(l.maxDeepEntitiesPerRequest)}};
+}
 QCborArray fields(const CheckThrough& op) {
     return {fields(op.cache), fields(op.definition), op.worldTolerance, fields(op.point), fields(op.limits)};
 }
@@ -415,14 +502,14 @@ std::optional<QCborArray> encode(const Request& request) {
     // No CBOR arrays are populated until the entire caller-owned value is admitted.
     if (!admitted(request)) return std::nullopt;
     const auto& t = request.token;
-    return QCborArray{3, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
+    return QCborArray{4, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
         qint64(request.operation.index()), std::visit([](const auto& op) { return fields(op); }, request.operation)};
 }
 
 std::optional<Request> decode(const QCborArray& a) {
     qint64 version, tag;
     Token token;
-    if (a.size() != 4 || !integer(a.at(0), version) || version != 3 ||
+    if (a.size() != 4 || !integer(a.at(0), version) || version != 4 ||
         !read(a.at(1), token) || !integer(a.at(2), tag) || !a.at(3).isArray()) return std::nullopt;
     const auto body = a.at(3).toArray();
     switch (tag) {
@@ -461,6 +548,11 @@ std::optional<Request> decode(const QCborArray& a) {
             op.cachePick = pick;
         }
         return Request{token, std::move(op)};
+    }
+    case 5: {
+        Produce op;
+        if (readProduce(body, op)) return Request{token, std::move(op)};
+        break;
     }
     case 4: {
         CheckThrough op;
