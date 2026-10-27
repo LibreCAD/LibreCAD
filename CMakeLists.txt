@@ -890,6 +890,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/lc_rect.cpp
      librecad/src/lib/engine/document/entities/lc_rect.h
      librecad/src/lib/engine/document/entities/lc_secondmoment.h
+     librecad/src/lib/engine/document/entities/lc_momentquadrature.cpp
+     librecad/src/lib/engine/document/entities/lc_momentquadrature.h
      librecad/src/lib/engine/document/entities/lc_curvejet.h
      librecad/src/lib/engine/document/entities/lc_curveoffset.cpp
      librecad/src/lib/engine/document/entities/lc_curveoffset.h

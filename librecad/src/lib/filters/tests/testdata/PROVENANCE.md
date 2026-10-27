@@ -86,6 +86,8 @@ scene whose moments are read by the hatch-moment regression tests.
 
 | File | SHA-256 |
 | --- | --- |
+| `dxf/hatch_moments_half_ellipse_10_5.dxf` | `e3a10523a3dedd8eee0ee3297fbf1424b3e6f0544c4087c632f1008a8d61999b` |
+| `dxf/hatch_moments_half_ellipse_rot30_10_5.dxf` | `929bfc5e1f5539c4470bf2e73a0126e2346327a1ebc6dc78a7af05c92d332fed` |
 | `dxf/hatch_moments_spline_lens_10_5.dxf` | `0237038997a1d12aca93a441e06a12985976b7dd0615bba9715e8976145f6345` |
 
 ## Generated DXF (hatch density)

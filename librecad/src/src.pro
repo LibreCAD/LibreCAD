@@ -601,6 +601,7 @@ HEADERS += \
     lib/engine/document/entities/rs_spline.h \
     lib/engine/document/entities/lc_splinepoints.h \
     lib/engine/document/entities/lc_secondmoment.h \
+    lib/engine/document/entities/lc_momentquadrature.h \
     lib/engine/rs_system.h \
     lib/engine/document/entities/rs_text.h \
     lib/engine/undo/lc_undoablerelzero.h \
@@ -1277,6 +1278,7 @@ SOURCES += \
     lib/engine/document/entities/rs_solid.cpp \
     lib/engine/document/entities/rs_spline.cpp \
     lib/engine/document/entities/lc_splinepoints.cpp \
+    lib/engine/document/entities/lc_momentquadrature.cpp \
     lib/engine/rs_system.cpp \
     lib/engine/document/entities/rs_text.cpp \
     lib/engine/undo/rs_undo.cpp \

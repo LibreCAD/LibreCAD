@@ -331,10 +331,14 @@ double RS_Entity::areaLineIntegral() const {
 
 LC_FirstMoment RS_Entity::firstMomentLineIntegral() const
 {
-    return {};
+    return momentLineIntegrals(RS_Vector{0.0, 0.0}).first;
 }
 
 LC_SecondMoment RS_Entity::secondMomentLineIntegral() const {
+    return momentLineIntegrals(RS_Vector{0.0, 0.0}).second;
+}
+
+LC_AreaMoments RS_Entity::momentLineIntegrals(const RS_Vector& /*origin*/) const {
     return {};
 }
 
