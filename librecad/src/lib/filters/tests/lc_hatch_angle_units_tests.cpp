@@ -216,10 +216,13 @@ TEST_CASE("libdxfrw reads and writes DXF 52 and 53 in degrees",
         }
         // Even without any HATCH written, the version-comment line records
         // the current library version: catch a revert of the DRW_VERSION bump.
-        std::ifstream in(path);
         std::string line1, line2;
-        std::getline(in, line1);
-        std::getline(in, line2);
+        {
+            // Close the stream before removing the file: Windows cannot delete an open file.
+            std::ifstream in(path);
+            std::getline(in, line1);
+            std::getline(in, line2);
+        }
         if (!line1.empty() && line1.back() == '\r') line1.pop_back();
         if (!line2.empty() && line2.back() == '\r') line2.pop_back();
         CHECK(line1 == "999");
