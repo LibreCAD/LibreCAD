@@ -1341,12 +1341,26 @@ committed independent fixtures still match. `W10-S0-reconciliation.md` in the du
 evidence root has SHA256
 `24fb7623c0d306bf29f4ffad996a0d1caa0c6db128bb0b12c0da59faad8dcf4b`.
 
-S0 finds one scope correction: inherited `b05fb541df651dd9cb55a222dee4563e6127c436`
-(#3140 default shortcuts/translations) changes four shortcut initializers, one Chinese
-shortcut test and its test-only CMake translation setup. Remove ONLY those reviewed
-hunks in a separate tested slice; retain the same files' offset changes, the bounded
-entity-coverage workflow triggers and all protected main/recovery changes. The audit
-also confirms that the old14 disposable receipts, inspection clone, attic draft and
+The target-relative S0 addendum corrects the earlier removal disposition: inherited
+`b05fb541df651dd9cb55a222dee4563e6127c436` (#3140 shortcuts/translations) is
+ALREADY an ancestor of local `origin/master` at
+`f37ef6b10f96434f505715841cd3712513c9365d`, and is the feature/target merge base.
+Retain its shortcut initializers, Chinese test and test-only translation setup.
+Only the parent's uncommitted removal experiment was restored; no upstream fix
+was reverted or removal committed. Its W11-scope-qualified-* receipts describe
+the abandoned candidate, not retained-source qualification. W10 remains the last
+product qualification on the identical retained source.
+
+At feature HEAD `83ca73f99`, the actual merge-base diff has317 fully classified
+paths (101 modified/216 added); HEAD...origin/master has391 feature-only/31
+origin-only commits. The109 upstream-only changed paths have not been merged,
+copied or reverted. This is a read-only local tracking-pin audit, not a network
+freshness, mergeability or integrated-upstream build claim.
+`W11-origin-scope-reconciliation.md` SHA256 is
+`e59acbe4b576d6729a41f04bd30ee3392dbe116f69459ed4273d16b19a8e86be`.
+It supersedes only W10's shortcut-removal disposition and preserves that report's
+historical classifications/hash. The audit also confirms that the old14
+disposable receipts, inspection clone, attic draft and
 both old plan-only JSON reports are absent. Earlier hash checks remain historical
 claims, not present availability or new PASS. Do not reconstruct lost bytes from
 hashes. Current acceptance must use new scoped durable receipts; missing old evidence
@@ -1354,7 +1368,7 @@ does not waive any current runtime/manual gate. Both protected index hashes stil
 
 Remaining creation/repeat steps:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
-   Before broader integration, apply the narrow S0 inherited-shortcut scope correction.
+   Target-relative source accounting is recorded above; retain upstream #3140.
 2. Add a typed child Produce path for ellipse/native stored-cache source values,
    complete pointer-free diagnostics and bounded outputs. Preserve side-once,
    copy-series prefixes/rollback, samples, pair reservations and output limits.
@@ -1385,8 +1399,9 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   and currently unavailable. This is provenance, not runtime/interoperability evidence.
 - [ ] S0: finish the source/target reconciliation on the durable tree. Fresh
   baseline, ordinary DWG2007 correction, evidence links and broad offset/failure
-  executions and full path/link classification are recorded above. Narrow inherited
-  shortcut-scope removal remains; do not redo implemented geometry as missing work.
+  executions and full path/link classification are recorded above. The target-relative
+  addendum retains already-upstream #3140; final source/runtime reconciliation remains.
+  Do not redo implemented geometry as missing work.
 - [ ] A-core through C-check: review/requalify existing code and patch only proven
   accounting, ownership, occurrence or global-topology gaps. No duplicate checker.
 - [ ] W0-W2: finish typed Produce, cache portability, import ownership and remaining GUI
@@ -1397,8 +1412,8 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** narrowly remove inherited #3140
-shortcut hunks, then typed Produce and cache portability/GUI routing in the remaining
+**Next concrete action on implementation resume:** typed Produce and cache
+portability/GUI routing in the remaining
 4.2 caller adapters. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
 Nothing is automatically copied into the dirty main tree. Native caller routing,
