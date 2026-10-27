@@ -350,6 +350,7 @@ protected:
 
 private:
     friend class LC_DockLayoutTests;
+    friend class LC_MdiCloseTests;
     struct CollapsedDockGroup {
         QStringList names;
         QString selected;
