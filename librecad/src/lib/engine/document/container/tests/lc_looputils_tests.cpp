@@ -200,6 +200,75 @@ TEST_CASE("Hyperbola island is parented", "[lc-hatchfix][nesting]") {
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Circle island inside a rotated half-ellipse nests on a SOLID hatch",
+          "[lc-hatchfix][nesting]") {
+    // Boundary: rotated half-ellipse a = 3, b = 2 at (10, 5), phi = 30 deg
+    // (one loop with an elliptic-arc edge plus the diametric chord), with a
+    // circle island r = 0.5 centred at (9.6, 5.7). The CW variant exercises
+    // the extractor's reversal path (revertDirection swaps angles and flips
+    // isReversed), where the LoopGeometry piece-boundary vertices used to
+    // bind to the wrong endpoint on the reversed elliptic arc and overcount
+    // the right-crossings through the island centre; both loops came back as
+    // roots and the SOLID area was ellipse + circle = 10.21 instead of
+    // 8.639379797...
+    const double phi = 30.0 * M_PI / 180.0;
+    const RS_Vector majorP(3.0 * std::cos(phi), 3.0 * std::sin(phi));
+
+    auto buildEllipseLoop = [&](bool cwChordFirst) {
+        auto cont = std::make_unique<RS_EntityContainer>(nullptr, true);
+        RS_EllipseData ed;
+        ed.center = RS_Vector(10, 5);
+        ed.majorP = majorP;
+        ed.ratio = 2.0 / 3.0;
+        ed.angle1 = 0.0;
+        ed.angle2 = M_PI;
+        ed.reversed = false;
+        const RS_Vector low  = RS_Vector(10, 5) - majorP;
+        const RS_Vector high = RS_Vector(10, 5) + majorP;
+        if (cwChordFirst) {
+            // Chord then ellipse — gives negative area so the extractor must
+            // reverse the whole loop (revertDirection on both edges).
+            cont->addEntity(new RS_Line(cont.get(), low, high));
+            cont->addEntity(new RS_Ellipse(cont.get(), ed));
+        } else {
+            cont->addEntity(new RS_Ellipse(cont.get(), ed));
+            cont->addEntity(new RS_Line(cont.get(), low, high));
+        }
+        return cont;
+    };
+    auto buildIsland = []() {
+        auto cont = std::make_unique<RS_EntityContainer>(nullptr, true);
+        cont->addEntity(new RS_Circle(cont.get(),
+            RS_CircleData{RS_Vector(9.6, 5.7), 0.5}));
+        return cont;
+    };
+
+    const double expectedArea = M_PI * 3.0 * 2.0 / 2.0 - M_PI * 0.25;
+
+    SECTION("ellipse first, line second (positive area, no reversal)") {
+        std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+        loops.push_back(buildEllipseLoop(false));
+        loops.push_back(buildIsland());
+        auto hatch = makeHatch(std::move(loops),
+            RS_HatchData(true, 1.0, 0.0, QStringLiteral("SOLID")));
+        REQUIRE(hatch->countLoops() == 1);
+        REQUIRE(hatch->countAllLoops() == 2);
+        REQUIRE_THAT(hatch->getTotalArea(), WithinAbs(expectedArea, 1e-9));
+    }
+
+    SECTION("line first, ellipse second (negative area, reversed by extractor)") {
+        std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+        loops.push_back(buildEllipseLoop(true));
+        loops.push_back(buildIsland());
+        auto hatch = makeHatch(std::move(loops),
+            RS_HatchData(true, 1.0, 0.0, QStringLiteral("SOLID")));
+        REQUIRE(hatch->countLoops() == 1);
+        REQUIRE(hatch->countAllLoops() == 2);
+        REQUIRE_THAT(hatch->getTotalArea(), WithinAbs(expectedArea, 1e-9));
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("Collinear pattern pieces: bottom and right drawn, top and left not",
           "[lc-hatchfix][pattern]") {
     // Rectangle [0,30] x [0,20]. Two synthetic patterns:

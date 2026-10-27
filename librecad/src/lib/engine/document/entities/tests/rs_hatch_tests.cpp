@@ -1972,35 +1972,21 @@ TEST_CASE("RS_Hatch moments: polyline D-shape with a nearly flat bulge",
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
-TEST_CASE("RS_Hatch moments: pattern hatch equals the solid hatch on a curved loop",
+TEST_CASE("RS_Hatch moments: pattern hatch equals the solid hatch with curved edges",
           "[lc-hatchfix][moments]") {
     lc::test::SourcePatterns patterns;
-    // Rotated half-ellipse at (10, 5), phi = 30 degrees. One loop with
-    // an elliptic-arc edge plus the diametric chord. The solid and the
-    // ANSI31 pattern must give the same WCS area, centroid and tensor at
-    // every pattern angle (the rotation mapping back to WCS).
+    // Boundary: rotated half-ellipse at (10, 5), phi = 30 degrees (one
+    // loop with an elliptic-arc edge plus the diametric chord), with an
+    // r = 0.5 circle island at (9.6, 5.7). The circle sits strictly inside
+    // the half-disc (local offset (0.0036, 0.806), clearance >= 0.3 from
+    // the chord and the arc). The solid and the ANSI31 pattern must agree
+    // on WCS area, centroid and central tensor at every pattern angle.
     const double phi = 30.0 * M_PI / 180.0;
-    auto buildHatch = [phi](const RS_HatchData& data) {
-        return std::unique_ptr<RS_Hatch>(
-            makeHalfEllipseHatch(3.0, 2.0, RS_Vector(10.0, 5.0), phi));
-    };
-    auto solid = buildHatch(RS_HatchData(true, 1.0, 0.0, "SOLID"));
-    REQUIRE(solid->getUpdateError() == RS_Hatch::HATCH_OK);
-    const double area = solid->getTotalArea();
-    const RS_Vector centroid = solid->getCentroid();
-    const LC_SecondMoment central = solid->getMomentOfInertia();
-
-    const double angles[] = {0.0, M_PI / 6.0, 37.0 * M_PI / 180.0,
-                              M_PI / 2.0, 123.0 * M_PI / 180.0};
-    for (double a : angles) {
-        INFO("pattern angle " << a);
-        // makeHalfEllipseHatch uses a SOLID data; override to ANSI31 at
-        // angle a to drive updatePatternHatch and the loop frame rotation.
-        auto h = std::unique_ptr<RS_Hatch>(new RS_Hatch(
-            nullptr, RS_HatchData(false, 1.0, a, "ANSI31")));
+    const RS_Vector majorP(3.0 * std::cos(phi), 3.0 * std::sin(phi));
+    auto buildHatch = [&](const RS_HatchData& data) {
+        auto h = std::unique_ptr<RS_Hatch>(new RS_Hatch(nullptr, data));
         auto* loop = new RS_EntityContainer(h.get());
         h->addEntity(loop);
-        const RS_Vector majorP(3.0 * std::cos(phi), 3.0 * std::sin(phi));
         RS_EllipseData ed;
         ed.center = RS_Vector(10.0, 5.0);
         ed.majorP = majorP;
@@ -2011,9 +1997,31 @@ TEST_CASE("RS_Hatch moments: pattern hatch equals the solid hatch on a curved lo
         loop->addEntity(new RS_Ellipse(loop, ed));
         loop->addEntity(new RS_Line(loop,
             RS_Vector(10.0, 5.0) - majorP, RS_Vector(10.0, 5.0) + majorP));
+        auto* island = new RS_EntityContainer(h.get());
+        h->addEntity(island);
+        island->addEntity(new RS_Circle(island,
+            RS_CircleData{RS_Vector(9.6, 5.7), 0.5}));
         h->update();
+        return h;
+    };
+    auto solid = buildHatch(RS_HatchData(true, 1.0, 0.0, "SOLID"));
+    REQUIRE(solid->getUpdateError() == RS_Hatch::HATCH_OK);
+    // Oracle: area 8.63937979737193;
+    // centroid (9.57336743827812, 5.73829657515897);
+    // central 16.513256532916 / 7.22691961323573 / 8.04246578862691.
+    const double area = 8.63937979737193;
+    const RS_Vector centroid(9.57336743827812, 5.73829657515897);
+    const LC_SecondMoment central{16.513256532916, 7.22691961323573,
+                                  8.04246578862691};
+    checkHatchMoments(*solid, area, centroid, central, 7.0, 1e-11);
+
+    const double angles[] = {0.0, M_PI / 6.0, 37.0 * M_PI / 180.0,
+                              M_PI / 2.0, 123.0 * M_PI / 180.0};
+    for (double a : angles) {
+        INFO("pattern angle " << a);
+        auto h = buildHatch(RS_HatchData(false, 1.0, a, "ANSI31"));
         REQUIRE(h->getUpdateError() == RS_Hatch::HATCH_OK);
-        checkHatchMoments(*h, area, centroid, central, 7.0, 1e-10);
+        checkHatchMoments(*h, area, centroid, central, 7.0, 1e-11);
     }
 }
 
