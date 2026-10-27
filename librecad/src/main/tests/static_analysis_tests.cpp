@@ -16,6 +16,7 @@
 #include "picfile.h"
 #include "qc_applicationwindow.h"
 #include "qg_dlghatch.h"
+#include "qg_dlgoptionsdrawing.h"
 #include "rs_block.h"
 #include "rs_circle.h"
 #include "rs_commands.h"
@@ -102,6 +103,38 @@ const RS_Line* libraryLine(RS_Insert* insert, unsigned depth)
     }
     return entity && entity->rtti() == RS2::EntityLine ? static_cast<RS_Line*>(entity) : nullptr;
 }
+
+// The unit of a new drawing and the paper size remembered for it, pinned for a
+// test and put back afterwards.
+class PaperDefaults {
+public:
+    explicit PaperDefaults(const QString& unit)
+        : saved{entry("/Defaults", "/Unit"), entry("/Print", "/PaperSizeX"), entry("/Print", "/PaperSizeY")}
+    {
+        set(unit, "210", "297");
+    }
+    ~PaperDefaults() { set(saved[0], saved[1], saved[2]); }
+
+    static QString entry(const QString& group, const QString& key)
+    {
+        auto guard = RS_SETTINGS->beginGroupGuard(group);
+        return RS_SETTINGS->readEntry(key);
+    }
+
+private:
+    static void set(const QString& unit, const QString& width, const QString& height)
+    {
+        {
+            auto guard = RS_SETTINGS->beginGroupGuard("/Defaults");
+            RS_SETTINGS->writeEntry("/Unit", unit);
+        }
+        auto guard = RS_SETTINGS->beginGroupGuard("/Print");
+        RS_SETTINGS->writeEntry("/PaperSizeX", width);
+        RS_SETTINGS->writeEntry("/PaperSizeY", height);
+    }
+
+    const QStringList saved;
+};
 
 } // namespace
 
@@ -727,6 +760,72 @@ private slots:
         QTest::addColumn<unsigned>("lineCount");
         QTest::newRow("truncated") << QByteArray("box invis fill 0.000 with .sw at (1,2) width 3 height\n") << 0u;
         QTest::newRow("complete") << QByteArray("box invis fill 0.000 with .sw at (1,2) width 3 height 4\n") << 4u;
+    }
+
+    // Issue #3187: a drawing's unit gives its paper new numbers, not a paper to
+    // remember for new drawings. Read in the old unit, they changed the
+    // remembered size with every new drawing in inches, and with every copy
+    // between drawings of different units, which sets the clipboard's unit.
+    void unitKeepsRememberedPaper()
+    {
+        const PaperDefaults defaults("Inch");
+        RS_Graphic inches;
+        RS_Graphic feet;
+        feet.setUnit(RS2::Foot);
+        for (RS_Graphic* source : {&feet, &inches}) {
+            source->newDoc();
+            auto* line = new RS_Line(source, RS_LineData({0, 0}, {10, 0}));
+            source->addEntity(line);
+            line->setSelected(true);
+            RS_Modification(*source).copy({0, 0}, false);
+        }
+        RS_Graphic next;
+        QCOMPARE(next.getPaperSize().x, 210.0 / 25.4);
+        QCOMPARE(next.getPaperSize().y, 297.0 / 25.4);
+        QCOMPARE(PaperDefaults::entry("/Print", "/PaperSizeX").toDouble(), 210.0);
+    }
+
+    // Issue #3187: when the unit changed on the Units tab of Drawing Preferences,
+    // the Paper tab kept a custom size and the margins in the old unit, which OK
+    // took in the new one, and a paper format chosen reached the drawing at once,
+    // even if the dialog was cancelled.
+    void paperTabFollowsUnit()
+    {
+        const PaperDefaults defaults("Inch");
+        enum Step { Cancel, Keep, Type };
+        for (const Step step : {Cancel, Keep, Type}) {
+            // a drawing in inches on a custom 30 x 15 in paper, margins of 10 mm
+            RS_Graphic graphic;
+            graphic.setPaperSize(RS_Vector(30.0, 15.0));
+            graphic.setMargins(10.0, 10.0, 10.0, 10.0);
+            QG_DlgOptionsDrawing dialog;
+            dialog.setGraphic(&graphic);
+            const auto choose = [&dialog](const char* name, const int index) {
+                auto* box = dialog.findChild<QComboBox*>(name);
+                box->setCurrentIndex(index);
+                emit box->activated(index);
+            };
+            choose("cbUnit", RS2::Foot);
+            auto* buttons = dialog.findChild<QDialogButtonBox*>("buttonBox");
+            if (step == Cancel) {
+                choose("cbPaperFormat", RS2::Letter);
+                buttons->button(QDialogButtonBox::Cancel)->click();
+                QCOMPARE(graphic.getUnit(), RS2::Inch);
+                QCOMPARE(graphic.getPaperSize().x, 30.0);
+                QCOMPARE(graphic.getPaperSize().y, 15.0);
+                QCOMPARE(PaperDefaults::entry("/Print", "/PaperSizeX").toDouble(), 762.0);
+                continue;
+            }
+            if (step == Type) {
+                dialog.findChild<QLineEdit*>("lePaperWidth")->setText("1.5");
+                dialog.findChild<QLineEdit*>("lePaperHeight")->setText("1");
+            }
+            buttons->button(QDialogButtonBox::Ok)->click();
+            QCOMPARE(graphic.getUnit(), RS2::Foot);
+            QCOMPARE(graphic.getPaperSize().x, step == Type ? 1.5 : 2.5);
+            QCOMPARE(graphic.getPaperSize().y, step == Type ? 1.0 : 1.25);
+            QVERIFY(std::abs(graphic.getMarginLeft() - 10.0) < 1e-3);
+        }
     }
 
     void picBoxFieldCount()

@@ -111,6 +111,7 @@ void QG_DlgOptionsDrawing::init() {
     for (int i=RS2::None; i<RS2::LastUnit; i++) {
 		cbUnit->addItem(RS_Units::unitToString(static_cast<RS2::Unit>(i)));
     }
+    connect(cbUnit, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updatePaperUnit);
 
     // init units combobox:
     QStringList unitList;
@@ -159,6 +160,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g)
     }
 
     // main drawing unit:
+    paperUnit = graphic->getUnit();
     int insunits = graphic->getVariableInt("$INSUNITS", 0);
     cbUnit->setCurrentIndex( cbUnit->findText(
                                  RS_Units::unitToString(RS_FilterDXFRW::numberToUnit(insunits))));
@@ -932,7 +934,6 @@ void  QG_DlgOptionsDrawing::updatePaperSize() {
     if (rbLandscape->isChecked() != (s.x > s.y)) {
 		std::swap(s.x, s.y);
 	}
-	graphic->setPaperSize(s);
 
     lePaperWidth->blockSignals(true);
     lePaperWidth->setText(QString("%1").setNum(s.x,'g',5));
@@ -954,6 +955,26 @@ void  QG_DlgOptionsDrawing::updatePaperSize() {
 }
 
 
+
+/**
+ * Shows the paper size and margins in the unit chosen, the unit OK applies them
+ * in. The paper keeps its size, as it does when the drawing's unit changes.
+ */
+void QG_DlgOptionsDrawing::updatePaperUnit() {
+    auto unit = static_cast<RS2::Unit>(cbUnit->currentIndex());
+    auto convert = [this, unit](QLineEdit* edit) {
+        return RS_Units::convert(RS_Math::eval(edit->text()), paperUnit, unit);
+    };
+    if (cbPaperFormat->currentIndex() == RS2::Custom) {
+        lePaperWidth->setText(QString("%1").setNum(convert(lePaperWidth), 'g', 5));
+        lePaperHeight->setText(QString("%1").setNum(convert(lePaperHeight), 'g', 5));
+    }
+    for (QLineEdit* margin : {leMarginLeft, leMarginTop, leMarginRight, leMarginBottom}) {
+        margin->setText(QString::number(convert(margin)));
+    }
+    paperUnit = unit;
+    updatePaperSize();
+}
 
 /**
  * Updates all unit labels that depend on the global unit.

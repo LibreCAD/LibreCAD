@@ -648,7 +648,10 @@ RS2::CrosshairType RS_Graphic::getCrosshairType() const {
  */
 void RS_Graphic::setUnit(RS2::Unit u) {
 
-    setPaperSize(RS_Units::convert(getPaperSize(), getUnit(), u));
+    // The paper keeps its size. setPaperSize() would also remember these numbers
+    // for new drawings, read in the old unit (#3187).
+    addVariable("$PLIMMIN", RS_Vector(0.0,0.0), 10);
+    addVariable("$PLIMMAX", RS_Units::convert(getPaperSize(), getUnit(), u), 10);
 
     addVariable("$INSUNITS", (int)u, 70);
 
