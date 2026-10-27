@@ -2938,7 +2938,10 @@ void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
 bool QC_ApplicationWindow::slotFileCloseAll()
 {
 	bool cancel(false), closeAll(false), hasParent(false);
-	for (auto w : window_list) if (w) {
+	// doClose() removes windows from window_list, a drawing's block editors too:
+	// iterate over a copy, and skip a window once it is no longer listed.
+	const QList<QC_MDIWindow*> windows = window_list;
+	for (auto w : windows) if (w && window_list.contains(w)) {
 
 		hasParent = w->getParentWindow() != nullptr;
 
@@ -2950,6 +2953,7 @@ bool QC_ApplicationWindow::slotFileCloseAll()
 				break;
 			case QG_ExitDialog::SaveAll:
 				closeAll = slotFileSaveAll();
+				cancel = !closeAll; // a cancelled or failed save keeps the drawing open
 				break;
 			case QG_ExitDialog::Save:
 				cancel = !doSave(w);
