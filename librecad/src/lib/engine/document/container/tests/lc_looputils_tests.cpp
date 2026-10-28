@@ -39,6 +39,7 @@
 #include <catch2/generators/catch_generators_range.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 
+#include "lc_containertraverser.h"
 #include "lc_hatchtestsupport.h"
 #include "lc_hyperbola.h"
 #include "lc_loopclassifier.h"
@@ -52,6 +53,7 @@
 #include "rs_line.h"
 #include "rs_pattern.h"
 #include "rs_patternlist.h"
+#include "rs_polyline.h"
 #include "rs_vector.h"
 
 using Catch::Matchers::WithinAbs;
@@ -1276,5 +1278,84 @@ TEST_CASE("Pinched lobes in an L room: triangle lobe outside, square lobe a hole
     for (const auto& r : *roots) totArea += r.getTotalArea();
     // L_room (210000) - square lobe (10000) + triangle lobe (3750) = 203750.
     REQUIRE_THAT(totArea, WithinAbs(203750.0, 1e-6));
+}
+
+namespace {
+
+// Builds a loop container that mirrors how the filter writes a HATCH boundary
+// with the polyline-boundary path type (bit 2): construct a transient RS_Polyline,
+// addVertex every (point, bulge), setClosed, and clone each generated atomic
+// entity into a fresh container that owns them.
+std::unique_ptr<RS_EntityContainer> makePolylineLoopContainer(
+    const std::vector<std::pair<RS_Vector, double>>& vertsWithBulge) {
+    RS_PolylineData pd{RS_Vector(false), RS_Vector(false), 1};
+    RS_Polyline polyline{nullptr, pd};
+    for (const auto& vb : vertsWithBulge) {
+        polyline.addVertex(vb.first, vb.second);
+    }
+    polyline.setClosed(true);
+    auto cont = std::make_unique<RS_EntityContainer>(nullptr, true);
+    for (const RS_Entity* e :
+         lc::LC_ContainerTraverser{polyline, RS2::ResolveNone}.entities()) {
+        RS_Entity* copy = e->clone();
+        copy->setParent(cont.get());
+        copy->setLayer(nullptr);
+        cont->addEntity(copy);
+    }
+    return cont;
+}
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A bulge-1e-9 edge is a line and keeps its loop",
+          "[lc-hatchfix][nesting]") {
+    // A 10x10 polyline square at the origin; the right edge carries a tiny
+    // bulge. 4*atan(1e-9) is below RS_TOLERANCE_ANGLE, so RS_Polyline::createVertex
+    // must emit an RS_Line for that edge; the square keeps its four edges and
+    // nests the thin bar at (2,2)-(8,2.00015) as its hole.
+    //
+    // On the parent build the near-flat bulge becomes an RS_Arc of radius
+    // ~2.5e9; RS_ArcData::getAngleLength() rounds its sweep to 2*pi and
+    // isClosed() takes it as a loop of its own (area ~pi*r^2 ~ 1.96e19) while
+    // the remaining three edges fail to close.
+    auto buildHatch = [](double bulge) {
+        const std::vector<std::pair<RS_Vector, double>> verts{
+            {RS_Vector(0.0, 0.0), 0.0},
+            {RS_Vector(10.0, 0.0), bulge},  // right edge carries the bulge
+            {RS_Vector(10.0, 10.0), 0.0},
+            {RS_Vector(0.0, 10.0), 0.0},
+        };
+        auto outer = makePolylineLoopContainer(verts);
+        auto bar = makeLoopContainer({
+            RS_Vector(2.0, 2.0),           RS_Vector(8.0, 2.0),
+            RS_Vector(8.0, 2.0 + 1.5e-4),  RS_Vector(2.0, 2.0 + 1.5e-4)});
+        std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+        loops.push_back(std::move(outer));
+        loops.push_back(std::move(bar));
+        RS_HatchData data{true, 1.0, 0.0, QStringLiteral("SOLID")};
+        return makeHatch(std::move(loops), data);
+    };
+
+    auto a = buildHatch(1.0e-9);
+    auto b = buildHatch(0.0);
+
+    REQUIRE(a->getUpdateError() == RS_Hatch::HATCH_OK);
+    REQUIRE(b->getUpdateError() == RS_Hatch::HATCH_OK);
+    REQUIRE(a->countAllLoops() == 2);
+    REQUIRE(b->countAllLoops() == 2);
+    // The outer container of the bulge hatch must come out as four line edges,
+    // never as a nearly-full RS_Arc that gets taken for a closed loop.
+    const RS_EntityContainer* aRoot = a->getBoundaryContainer(0);
+    REQUIRE(aRoot != nullptr);
+    REQUIRE(aRoot->count() == 4u);
+    for (unsigned i = 0; i < aRoot->count(); ++i) {
+        REQUIRE(aRoot->entityAt(i)->rtti() == RS2::EntityLine);
+    }
+    REQUIRE_THAT(a->getTolerance(), WithinRel(b->getTolerance(), 1e-12));
+    // Square area 100 minus bar area 6 * 1.5e-4 = 9e-4.
+    const double expected = 100.0 - 9.0e-4;
+    REQUIRE_THAT(a->getTotalArea(), WithinAbs(expected, 1e-6));
+    REQUIRE_THAT(b->getTotalArea(), WithinAbs(expected, 1e-6));
 }
 
