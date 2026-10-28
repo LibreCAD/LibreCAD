@@ -354,18 +354,15 @@ TEST_CASE("An insert array never blanks its block and never exceeds the hatch bu
     block->addEntity(hatch);
     REQUIRE(graphic.addBlock(block));
 
-    // 3 x 3 MINSERT with spacing (80, 40), scale (2, 1): a non-uniform
-    // scale forces the hatch to regenerate per clone (shared geometry is
-    // a later step). 9 clones is enough to exercise the shared budget's
-    // OK -> dense transition under ASan without taking minutes.
-    RS_InsertData idata{"cell", {0.0, 0.0}, {2.0, 1.0}, 0.0, 3, 3, {80.0, 40.0}};
+    // 10 x 10 MINSERT with spacing (80, 40), scale (2, 1): the non-uniform
+    // scale forces every clone's hatch to regenerate (shared geometry is a
+    // later step). 100 clones is enough to exercise the shared budget's
+    // OK -> dense transition and the all-tint fallback.
+    RS_InsertData idata{"cell", {0.0, 0.0}, {2.0, 1.0}, 0.0, 10, 10, {80.0, 40.0}};
     RS_Insert insert{&graphic, idata};
-    RS_InsertExpansionBudget budget{};
-    // Budget sized for about 4 hatch clones' worth of pieces.
-    budget.maxHatchPieces = 4U * n1;
-    insert.update(budget);
-    // 9 lines + 9 hatch clones = 18 derived entities.
-    CHECK(insert.count() == 18);
+    insert.update(RS_InsertExpansionBudget{256U, 1000000U, 1000000U, 5U * n1});
+    // 100 lines + 100 hatch clones = 200 derived entities.
+    CHECK(insert.count() == 200);
     // Walk the children, totalling hatch-piece counts and checking the
     // mixture.
     std::size_t totalHatchPieces = 0;
@@ -383,14 +380,12 @@ TEST_CASE("An insert array never blanks its block and never exceeds the hatch bu
     }
     CHECK(okHatches >= 1);
     CHECK(denseHatches >= 1);
-    CHECK(totalHatchPieces <= 4U * n1);
+    CHECK(totalHatchPieces <= 5U * n1);
 
     // With maxHatchPieces = 0: every hatch tints.
     RS_Insert zero{&graphic, idata};
-    RS_InsertExpansionBudget zeroBudget{};
-    zeroBudget.maxHatchPieces = 0U;
-    zero.update(zeroBudget);
-    CHECK(zero.count() == 18);
+    zero.update(RS_InsertExpansionBudget{256U, 1000000U, 1000000U, 0U});
+    CHECK(zero.count() == 200);
     int zeroDense = 0;
     for (RS_Entity* child : zero) {
         if (child != nullptr && child->rtti() == RS2::EntityHatch) {
@@ -399,7 +394,7 @@ TEST_CASE("An insert array never blanks its block and never exceeds the hatch bu
             CHECK(patternPieceCount(*h) == 0);
         }
     }
-    CHECK(zeroDense == 9);
+    CHECK(zeroDense == 100);
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
