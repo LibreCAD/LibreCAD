@@ -74,7 +74,16 @@ public:
         QMouseEvent cancel(QEvent::MouseButtonRelease, QPointF{1, 1}, QPointF{1, 1}, Qt::RightButton, Qt::NoButton, Qt::NoModifier);
         mouseReleaseEvent(&cancel);
     }
-    void click(RS_Vector p) { auto e = lc::test::eventAt(p.x, p.y); onMouseLeftButtonRelease(getStatus(), &e); }
+    bool pending() const { return hasPendingNativeTrim(); }
+    void waitForTrim() {
+        QElapsedTimer elapsed; elapsed.start();
+        while (pending()) {
+            REQUIRE(elapsed.elapsed() < 35000);
+            QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1);
+        }
+    }
+    void clickAsync(RS_Vector p) { auto e = lc::test::eventAt(p.x, p.y); onMouseLeftButtonRelease(getStatus(), &e); }
+    void click(RS_Vector p) { clickAsync(p); waitForTrim(); }
     void hover(RS_Vector p) {
         deletePreviewAndHighlights(); auto e = lc::test::eventAt(p.x, p.y);
         onMouseMoveEvent(getStatus(), &e); drawPreviewAndHighlights();
@@ -483,7 +492,7 @@ TEST_CASE("T conic Trim Two real mouse events share preview commit and exact one
             QMouseEvent event(type, pos, pos, type == QEvent::MouseMove ? Qt::NoButton : Qt::LeftButton,
                 type == QEvent::MouseButtonRelease ? Qt::NoButton : Qt::LeftButton, Qt::NoModifier);
             if (type == QEvent::MouseButtonPress) f.action->mousePressEvent(&event);
-            else if (type == QEvent::MouseButtonRelease) f.action->mouseReleaseEvent(&event);
+            else if (type == QEvent::MouseButtonRelease) { f.action->mouseReleaseEvent(&event); f.action->waitForTrim(); }
             else f.action->mouseMoveEvent(&event);
         };
         const RS_Vector first = nativeFirst ? RS_Vector{2, 0} : RS_Vector{-1, 0};
@@ -1154,6 +1163,75 @@ TEST_CASE("Async trim worker owns detached inputs and returns only a complete jo
     sameTrimWork(result.cacheWork, sync.cacheWork); CHECK_FALSE(canUndo(f.graphic));
 }
 
+TEST_CASE("Native Trim action commits asynchronously with a responsive event loop",
+          "[gui][lc-offsetcurve][trim-action][trim-worker-commit]") {
+    Drawing<true> f; auto* native = addNative(f.graphic); auto* ordinary = line(f.graphic);
+    f.action->click({2, 0});
+    int ticks = 0; QTimer heartbeat; QObject::connect(&heartbeat, &QTimer::timeout, [&] { ++ticks; }); heartbeat.start(0);
+    f.action->clickAsync({0, .3}); REQUIRE(f.action->pending());
+    CHECK_FALSE(native->isDeleted()); CHECK_FALSE(ordinary->isDeleted()); CHECK_FALSE(canUndo(f.graphic));
+    f.action->waitForTrim(); heartbeat.stop(); CHECK(ticks > 0);
+    REQUIRE(native->isDeleted()); REQUIRE(ordinary->isDeleted());
+    REQUIRE(f.graphic.undo()); CHECK_FALSE(native->isDeleted()); CHECK_FALSE(ordinary->isDeleted());
+    CHECK_FALSE(f.graphic.undo()); REQUIRE(f.graphic.redo()); CHECK(native->isDeleted()); CHECK(ordinary->isDeleted());
+}
+
+TEST_CASE("Native Trim action refuses changed inputs while a worker is pending",
+          "[gui][lc-offsetcurve][trim-action][trim-worker-commit][stale]") {
+    for (unsigned change = 0; change < 6; ++change) {
+        CAPTURE(change);
+        Drawing<true> f; auto* native = addNative(f.graphic); auto* ordinary = line(f.graphic);
+        native->setLayer(f.graphic.getActiveLayer()); ordinary->setLayer(f.graphic.getActiveLayer());
+        f.action->click({2, 0}); f.action->clickAsync({0, .3}); REQUIRE(f.action->pending());
+        const auto epoch = f.graphic.undoStateEpoch();
+        if (change == 0) ordinary->move({0, .1});
+        else if (change == 1) RS_Selection::selectEntitiesList(&f.graphic, f.view.getViewPort(), {ordinary}, true);
+        else if (change == 2) f.view.getViewPort()->setOffsetAndFactor(100, 100, 3);
+        else if (change == 3) f.action->options.maxOutputEntities = 1;
+        else if (change == 4) f.graphic.getActiveLayer()->lock(true);
+        else *native->getDrwExtData()[1]->content.s = "changed";
+        f.action->waitForTrim();
+        CHECK_FALSE(native->isDeleted()); CHECK_FALSE(ordinary->isDeleted()); CHECK_FALSE(canUndo(f.graphic));
+        CHECK(f.graphic.undoStateEpoch() == epoch);
+        REQUIRE(f.context.messages.size() == 1); CHECK(f.context.messages.front().contains("nothing changed"));
+    }
+}
+
+TEST_CASE("Native Trim action cancels a pending worker and can retry",
+          "[gui][lc-offsetcurve][trim-action][trim-worker-commit][cancel]") {
+    Drawing<false> f; auto* native = addNative(f.graphic); auto* ordinary = line(f.graphic);
+    f.action->click({2, 0}); f.action->clickAsync({0, .3}); REQUIRE(f.action->pending());
+    QKeyEvent escape(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier); f.action->keyPressEvent(&escape);
+    CHECK_FALSE(f.action->pending()); CHECK_FALSE(native->isDeleted()); CHECK_FALSE(ordinary->isDeleted());
+    CHECK_FALSE(canUndo(f.graphic));
+    f.action->click({0, .3}); REQUIRE(ordinary->isDeleted()); CHECK_FALSE(native->isDeleted());
+    REQUIRE(f.graphic.undo()); CHECK_FALSE(ordinary->isDeleted()); CHECK_FALSE(f.graphic.undo());
+}
+
+TEST_CASE("Native Trim action suppresses late delivery after action or document destruction",
+          "[gui][lc-offsetcurve][trim-action][trim-worker-commit][lifetime][asan]") {
+    SECTION("action") {
+        Drawing<true> f; auto* native = addNative(f.graphic); auto* ordinary = line(f.graphic);
+        f.action->click({2, 0}); f.action->clickAsync({0, .3}); REQUIRE(f.action->pending());
+        f.action.reset();
+        QElapsedTimer elapsed; elapsed.start();
+        while (elapsed.elapsed() < 150) { QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+        CHECK_FALSE(native->isDeleted()); CHECK_FALSE(ordinary->isDeleted()); CHECK_FALSE(canUndo(f.graphic));
+    }
+    SECTION("document") {
+        Drawing<true> f; f.action.reset();
+        auto document = std::make_unique<RS_Graphic>(); document->initForNewDocument();
+        f.view.setDocument(document.get()); f.context.setDocumentAndView(document.get(), &f.view);
+        f.action = std::make_unique<CacheTrim<true>>(&f.context);
+        addNative(*document); line(*document);
+        f.action->click({2, 0}); f.action->clickAsync({0, .3}); REQUIRE(f.action->pending());
+        document.reset(); CHECK(f.action->isFinished()); CHECK_FALSE(f.action->pending());
+        f.action.reset(); f.view.setDocument(&f.graphic); f.context.setDocumentAndView(&f.graphic, &f.view);
+        QElapsedTimer elapsed; elapsed.start();
+        while (elapsed.elapsed() < 150) { QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    }
+}
+
 TEST_CASE("Async trim worker consumes sealed detached limit snapshots",
           "[lc-offsetcurve][trim-action][trim-worker-async][trim-sources]") {
     Drawing<false> f; auto* native = addNative(f.graphic);
@@ -1532,7 +1610,7 @@ template<bool Both> void ownTrimUndoCycleRetry() {
         QMouseEvent event(type, pos, pos, type == QEvent::MouseMove ? Qt::NoButton : Qt::LeftButton,
             type == QEvent::MouseButtonRelease ? Qt::NoButton : Qt::LeftButton, Qt::NoModifier);
         if (type == QEvent::MouseButtonPress) f.action->mousePressEvent(&event);
-        else if (type == QEvent::MouseButtonRelease) f.action->mouseReleaseEvent(&event);
+        else if (type == QEvent::MouseButtonRelease) { f.action->mouseReleaseEvent(&event); f.action->waitForTrim(); }
         else f.action->mouseMoveEvent(&event);
     };
     const auto click = [&](RS_Vector point) { send(QEvent::MouseButtonPress, point); send(QEvent::MouseButtonRelease, point); };
@@ -1541,8 +1619,8 @@ template<bool Both> void ownTrimUndoCycleRetry() {
     f.action->options.maxOutputEntities = 0;
     const auto beforeEpoch = f.graphic.undoStateEpoch();
     std::ostringstream before; before << static_cast<const RS_Undo&>(f.graphic);
-    click({0, .3}); // Real core budget refusal, after the action opens its own empty cycle.
-    REQUIRE(f.graphic.undoStateEpoch() == beforeEpoch + 1);
+    click({0, .3}); // Refused worker output must not open an undo cycle.
+    REQUIRE(f.graphic.undoStateEpoch() == beforeEpoch);
     REQUIRE_FALSE(native->isDeleted()); REQUIRE_FALSE(ordinary->isDeleted());
     CHECK(native->isSelected()); CHECK(ordinary->isSelected()); REQUIRE(nativeBefore->matches(*native));
     REQUIRE(f.action->retainedLimit() == native);

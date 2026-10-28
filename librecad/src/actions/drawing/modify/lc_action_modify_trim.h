@@ -45,6 +45,8 @@ public:
     ~LC_ActionModifyTrim() override;
     void init(int status) override;
     void finish() override;
+    void suspend() override;
+    void keyPressEvent(QKeyEvent* event) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void mousePressEvent(QMouseEvent* event) override;
@@ -68,6 +70,12 @@ protected:
     bool validateCapturedTrimInputs();
     bool hasNativeTrimPartner() const;
     bool currentTrimContext() const;
+    bool hasPendingNativeTrim() const noexcept;
+    void cancelNativeTrim();
+    void beginNativeTrim();
+    struct NativeTrimWork;
+    bool currentNativeTrim(const std::shared_ptr<NativeTrimWork>& work) const;
+    void completeNativeTrim(const std::shared_ptr<NativeTrimWork>& work);
     RS_Entity* mappedTrimPick(const RS_Entity* address, bool allowNestedLimit) const;
     void abandonTrimContext(bool viewportMayBeAlive);
     void selectionChanged() override {}
