@@ -674,7 +674,8 @@ respect the already-landed #3113 ownership protection; do not reimplement it.
 
 ## 5. Required Validation Matrix
 
-All product executions are **not run for this plan revision**. Historical logs
+These are acceptance requirements, not a blanket execution claim. Fresh results
+are limited to the exact source pins and scoped ledgers below; historical logs
 and verified fixture/receipt identities stay distinct from fresh product results.
 Each future receipt identifies source SHA/dirty diff, target, selector and discovered
 case names, command, toolchain, exit status, XML/assertions and relevant fixture hashes.
@@ -741,12 +742,33 @@ RECEIPTS="$(mktemp -d "${TMPDIR:-/tmp}/lc2961-validation.XXXXXX")"
 git rev-parse HEAD > "$RECEIPTS/source.txt"
 cmake -S . -B build-offset -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=ON
 cmake --build build-offset --target librecad_tests librecad_dxf_fast_tests librecad_dwg_fast_tests librecad_offset_adapter_tests librecad_offset_persistence_tests librecad_offset_hostilefile_tests librecad_offset_matrix_tests librecad_xdata_appid_tests librecad_xdata_codec_tests librecad_eed_packet_tests librecad_offsetcurve_batch_failure_tests librecad_offset_cache_trim_failure_tests --parallel 4
-build-offset/librecad_tests --list-tests "[lc-offsetcurve]"
-build-offset/librecad_tests --list-tests "[curve-offset]"
-build-offset/librecad_tests --list-tests "[entity-coverage]"
-QT_QPA_PLATFORM=offscreen build-offset/librecad_tests "[lc-offsetcurve]" --order decl --reporter junit --out "$RECEIPTS/offset.xml"
-QT_QPA_PLATFORM=offscreen build-offset/librecad_tests "[curve-offset]" --order decl --reporter junit --out "$RECEIPTS/adjacent.xml"
-QT_QPA_PLATFORM=offscreen build-offset/librecad_tests "[entity-coverage]" --order decl --reporter junit --out "$RECEIPTS/types.xml"
+selectors=("[lc-offsetcurve]" "[offsetcurve]" "[curve-offset]" "[entity-coverage]")
+lanes=(native ui-source adjacent types)
+for i in "${!selectors[@]}"; do
+    QT_QPA_PLATFORM=offscreen build-offset/librecad_tests "${selectors[$i]}" --list-tests --reporter xml --out "$RECEIPTS/${lanes[$i]}-discovery.xml"
+    QT_QPA_PLATFORM=offscreen build-offset/librecad_tests "${selectors[$i]}" --order decl --reporter junit --out "$RECEIPTS/${lanes[$i]}.xml"
+done
+python3 - "$RECEIPTS" <<'PY'
+import sys
+import xml.etree.ElementTree as ET
+from pathlib import Path
+root = Path(sys.argv[1])
+for lane in ("native", "ui-source", "adjacent", "types"):
+    declared = [n.text for n in ET.parse(root / (lane + "-discovery.xml")).findall(".//TestCase/Name")]
+    report = ET.parse(root / (lane + ".xml"))
+    executed = [n.get("name") for n in report.findall(".//testcase")]
+    assert declared and len(declared) == len(set(declared)), (lane, "empty/duplicate discovery")
+    assert len(executed) == len(set(executed)), (lane, "duplicate execution")
+    assert not set(declared) - set(executed), (lane, "missing execution")
+    assert all(n in declared or any(n.startswith(d + "/") for d in declared) for n in executed), (lane, "undeclared case")
+    suites = report.findall(".//testsuite")
+    assert suites and all(int(s.get("errors", "0")) == int(s.get("failures", "0")) == 0 for s in suites), lane
+    skipped = sum(int(s.get("skipped", "0")) for s in suites)
+    print(lane, "declarations", len(declared), "JUnit cases", len(executed), "skipped", skipped)
+    for case in report.findall(".//testcase"):
+        if case.find("skipped") is not None:
+            print("NOT QUALIFIED:", case.get("name"), ET.tostring(case.find("skipped"), encoding="unicode"))
+PY
 ```
 
 These are future commands, not executed evidence. The receipt directory is unique;
@@ -755,6 +777,11 @@ S0 records actual discovery, including any zero future selector;
 after registration, every required new slice selector must discover and execute
 nonzero cases with its planned assertions. Catch2 registered cases, generated
 assertions and JUnit entries are different counts. Use a structured XML parser.
+Both offset spellings are intentional: at the PR review baseline `[offsetcurve]`
+adds168 declarations from sheet, dialog, option-enable, UI-helper, plugin and
+modification tests which carry none of the other three selectors. Do not rename
+tags or substitute `[lc-offsetcurve]` for this lane. Report overlaps without
+double-counting them. A skipped external-tool row is not PASS even if Catch exits0.
 
 The listed micro/fault targets are present on the pinned candidate, not the
 older attached tree. Build failures caused by using that older tree are not a
@@ -766,15 +793,44 @@ linked into the normal application/Catch target. Retain observed fault counts,
 exit statuses, diagnostic prefixes and later recovery checks, not invented
 expected assertion counts. At R also build the CMake application explicitly.
 
-Current additional native targets are `librecad_offset_worker_wire_tests`,
-`librecad_offset_worker_request_tests` and the explicit opt-in
-`librecad_offset_worker_probe_tests` (`[worker-probe]`). The first two selectors
-are `[lc-offsetcurve][worker-protocol][wire]` and
-`[lc-offsetcurve][worker-protocol][request]`; reject zero discovery. The probe
-is hidden from ordinary suites and reports measurements/refusals, not GUI timing
-acceptance. After W1 adds its named native helper/lifecycle targets, add them to
-both build and execution manifests and test the packaged helper launch. Merely
-building the application or optional Node validation scripts cannot cover them.
+The native targets below are implemented, not future W1 registrations. Build
+them explicitly: `EXCLUDE_FROM_ALL` means neither the app nor main test target
+alone produces these binaries. Keep default CTest registration opt-in so a
+normal build does not register absent executables. In this dedicated build:
+
+```bash
+cmake -S . -B build-offset -DLIBRECAD_REGISTER_OFFSET_WORKER_TESTS=ON
+worker_targets=(librecad_offset_worker_wire_tests librecad_offset_worker_request_tests librecad_offset_worker_result_tests librecad_offset_worker_kernel_tests librecad_offset_worker_process_tests librecad_offset_worker_client_tests librecad_offset_worker_fault_tests librecad_offset_worker_geometry_timeout_tests librecad_offset_worker_edit_tests)
+caller_targets=(librecad_offset_native_edit_tests librecad_offset_properties_dialog_tests librecad_offset_properties_sheet_tests librecad_offset_grip_tests librecad_offset_update_source_tests librecad_offset_trim_tests librecad_offset_source_preparation_tests)
+cmake --build build-offset --target librecad librecad_offset_worker librecad_offset_test_helper "${worker_targets[@]}" "${caller_targets[@]}" --parallel 4
+ctest --test-dir build-offset -N -R '^offset_worker_'
+ctest --test-dir build-offset -V --output-on-failure --output-junit "$RECEIPTS/native-ctest.xml" -R '^offset_worker_'
+for target in librecad_offset_worker_edit_tests "${caller_targets[@]}"; do
+    QT_QPA_PLATFORM=offscreen "build-offset/$target" --list-tests --reporter xml --out "$RECEIPTS/$target-discovery.xml"
+    QT_QPA_PLATFORM=offscreen "build-offset/$target" --order decl --reporter junit --out "$RECEIPTS/$target.xml"
+done
+```
+
+Require all nine named CTest entries: `offset_worker_wire`, `offset_worker_request`,
+`offset_worker_result`, `offset_worker_kernel`, `offset_worker_process`,
+`offset_worker_process_ordinary`, `offset_worker_client`, `offset_worker_fault`
+and `offset_worker_geometry_timeout`. The ordinary process lane is a separate
+execution, not filtered away. CTest resolves the platform/configuration-specific
+client/fault/timeout executable paths and the real sibling helpers; never replace
+the app helper with a fault fixture. Capture CTest's test inventory, commands,
+exit status and per-test output. Also discover the eight worker binaries with
+their actual `[lc-offsetcurve]` selector and compare executed identities (collect
+JUnit reports with the CTest-recorded executable/selector for that purpose).
+Apply the same nonzero/unique/SECTION checks above to every caller/edit micro
+report; CTest success or building a target alone is not a discovery receipt.
+Multi-config generators require explicit build/CTest configuration and adjusted
+manual binary paths. On Windows include the executable suffix.
+
+The separate `librecad_offset_worker_probe_tests` (`[worker-probe]`) remains an
+explicit opt-in diagnostic, not GUI timing acceptance. Packaged helper discovery
+still needs deployed execution; source-tree sibling success does not close it.
+Merely building the application or running Node validation cannot cover native
+worker execution, publication fault processes or those deployment gates.
 
 Configure a separate ASan tree with C/C++ and linker sanitizer flags, matching
 the selected source and toolchain. Run focused plus adjacent tags and failure
