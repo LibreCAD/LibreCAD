@@ -1960,6 +1960,31 @@ Files are `W18b-qualified-{creation,sheet}-{release,asan}.xml` and
 but are not acceptance receipts. Next W19: bounded owned source graphs and seals,
 then Modify Offset preview/commit continuations; test/commit/checkpoint each slice.
 
+W19a owned inputs `fd71915ab`: `LC_OffsetCreationSources` freezes bounded built-in
+geometry, polyline/native parent-child identity, metadata values and independent
+layer copies before ordered numeric work. It resolves live top-level/child
+membership before retained-address reads and promotes native display children
+once. Stored geometry, active metadata payloads, provenance, selected flags,
+layer registry/visibility/lock and parent-list seals reject changed inputs.
+Qualified built-in clones avoid root callbacks; child clones are admitted only
+for owned built-in line/arc leaves. Oversized arrays/metadata, borrowed graphs,
+unknown child implementations and stale sources refuse before cloning. This is
+bounded creation input admission, not a new supported entity type or C proof.
+Ordinary-only tool routing remains unchanged at this checkpoint.
+
+Fresh Release/ASan `librecad_offset_creation_publication_tests` discovers/executes
+11/11 cases,139 assertions, zero failures/errors/skips, including all7 W18b cases
+and4 owned-source cases. Tests destroy the live document and continue reading
+the owned numeric graph, reject geometry/active-XDATA/layer/provenance mutations,
+preserve polyline aliases, localize only private output layers and refuse stale
+or oversized inputs. `W19a-qualified-release.xml` SHA256
+`294bbd3384b9862800989e75aebc4a995dd9c044682891ace81fc16b2f72adaa`;
+ASan `W19a-qualified-asan.xml`
+`a7d56b906df4e76d7b61b29fc361a0647438f95f89d5379f7f029b7e24b18dd3`.
+ASan leak detection remains disabled. Next W19b wires Modify Offset preview and
+commit to owned continuations, joined cached Produce and prepared publication;
+source snapshots alone do not close GUI routing, cancellation or final R.
+
 Remaining creation/repeat steps after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
