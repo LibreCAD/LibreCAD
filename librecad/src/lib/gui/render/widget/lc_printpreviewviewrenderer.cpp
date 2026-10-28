@@ -225,7 +225,9 @@ void LC_PrintPreviewViewRenderer::setPenForPrintingEntity(RS_Painter *painter, R
     RS_Pen pen = e->getPenResolved();
 
     double patternOffset = painter->currentDashOffset();
-    if (m_lastPaintEntityPen.isSameAs(pen, patternOffset, m_lastPaintedPattern)) {
+    // A named and an unnamed pen of one enum may draw different dashes.
+    if (m_lastPaintEntityPen.isSameAs(pen, patternOffset, m_lastPaintedPattern) &&
+        m_lastPaintEntityPen.hasLineTypeName() == pen.hasLineTypeName()) {
         return;
     }
     m_lastPaintEntityPen.updateBy(pen);
