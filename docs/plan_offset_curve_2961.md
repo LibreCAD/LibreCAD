@@ -2326,6 +2326,31 @@ Report SHA256 values, Release then ASan:
 | creation publication | `e1dd6a5c93c633b9ab9d5a640806566deeec456521d5c934ef55770fdc7e03ee` | `96d4a1056f733ef573c99b6cfa4f3c8d4ad37f355f56bce57437baec0983f597` |
 | source preparation | `78dcf4d47ddac6ad0e69275cc0544f2d6a9875107ae95c14e9facbbfb1dcc7b0` | `670fcb2bb03e537b967738d3edb774d56501e2359e6c22c22be2a9440dfdbd9b` |
 
+W28 partial-import decision `3de2cb13b` prepares the unpublished session for
+the existing GUI's explicit partial-read choice. A decision callback sees the
+parser error and whether the private graphic has entities; acceptance continues
+with the same parsed drawing and sets its format to unknown, preventing an
+ordinary save from silently overwriting the incomplete input. Rejection publishes
+no document. Cancellation or destruction during the callback suppresses delivery.
+Successful imports initialize the format before parsing, matching `RS_FileIO`;
+the filter may still narrow it to the actual version. This callback is not wired
+to the GUI yet and does not change the policy of existing synchronous callers.
+
+Release/ASan hostile-file suites each discover and execute 46 declarations with
+zero errors, failures or skips (52730 / 53399 assertions); worker-client suites
+execute all 16 previously discovered declarations (7271 / 10750 assertions).
+Polling counts vary and ASan uses `detect_leaks=0`. The new sections cover accept
+without reparsing, reject, cancellation and session destruction during the decision;
+the existing fixture lanes compare successful format state with synchronous
+import. These are offscreen tests, not GUI dialog or deployed-platform acceptance.
+In the same evidence root, `offset-W28-{hostile,client}-{release,asan}.xml` have
+the following SHA256 values:
+
+| Suite | Release SHA256 | ASan SHA256 |
+| --- | --- | --- |
+| hostile | `48c092b785eb8f3618760086a9a3416bbf7e2152a56317ef169e1009c67e056c` | `69dd633ff097188d5a3d36e23866ef9f19c15b61c29f24cc871f30b27f5b09a0` |
+| client | `78b14dbb9e19acb0f784053042cbbe799cc37719a6ebe113f9e25556d85de32a` | `e7de03ab9c409b87745beeb51f1ee5c9eb223219cb2f6d795434719d46fd0f0e` |
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
