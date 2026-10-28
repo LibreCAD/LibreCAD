@@ -460,6 +460,26 @@ struct LC_StoredCacheTrimCompletions {
     std::uint64_t publicationUndoEpoch = 0;
 };
 
+/** Owns the matched worker sequence only. Inputs must be privately owned and
+ * remain alive and unchanged until this object is destroyed; the caller still
+ * seals live document inputs and performs atomic publication independently.
+ */
+class LC_StoredCacheTrimPreparation final {
+public:
+    LC_StoredCacheTrimPreparation(const RS_Entity& target, const RS_Vector& targetPick,
+        const RS_Entity& cutter, const RS_Vector& cutterPick, bool both,
+        const LC_OffsetCacheTrim::Limits& limits);
+    ~LC_StoredCacheTrimPreparation();
+    std::unique_ptr<LC_OffsetWorkerRequest::Request> request(const LC_OffsetWorkerRequest::Token&);
+    bool accept(std::unique_ptr<LC_OffsetWorkerCompletion>);
+    bool ready() const noexcept;
+    /** Borrowed receipt remains valid while this preparation is alive. */
+    std::optional<LC_StoredCacheTrimCompletions> completions(std::uint64_t publicationUndoEpoch) const;
+private:
+    struct Data;
+    std::unique_ptr<Data> m_data;
+};
+
 struct LC_BevelResult {
     RS_Vector intersectionPoint = RS_Vector(false);
     RS_Line* bevel = nullptr;

@@ -2825,6 +2825,59 @@ std::unique_ptr<trimRequest::Request> RS_Modification::storedCacheTrimRequest(
     return trimRequest::admitted(*request) ? std::move(request) : nullptr;
 }
 
+struct LC_StoredCacheTrimPreparation::Data {
+    const RS_Entity& target;
+    RS_Vector targetPick;
+    const RS_Entity& cutter;
+    RS_Vector cutterPick;
+    bool both, finished = false;
+    storedTrim::Limits limits;
+    std::unique_ptr<trimRequest::Request> firstRequest, secondRequest, pending;
+    std::unique_ptr<LC_OffsetWorkerCompletion> first, second;
+};
+
+LC_StoredCacheTrimPreparation::LC_StoredCacheTrimPreparation(const RS_Entity& target,
+    const RS_Vector& targetPick, const RS_Entity& cutter, const RS_Vector& cutterPick,
+    bool both, const storedTrim::Limits& limits)
+    : m_data(std::make_unique<Data>(Data{target, targetPick, cutter, cutterPick, both, false, limits})) {}
+LC_StoredCacheTrimPreparation::~LC_StoredCacheTrimPreparation() = default;
+
+std::unique_ptr<trimRequest::Request> LC_StoredCacheTrimPreparation::request(const trimRequest::Token& token) {
+    auto& d = *m_data;
+    if (d.finished || d.pending) return {};
+    auto value = RS_Modification::storedCacheTrimRequest(d.target, d.targetPick, d.cutter, d.cutterPick,
+        d.both, token, d.limits, d.firstRequest.get(), d.first.get());
+    if (!value) return {};
+    d.pending = std::make_unique<trimRequest::Request>(*value);
+    return value;
+}
+
+bool LC_StoredCacheTrimPreparation::accept(std::unique_ptr<LC_OffsetWorkerCompletion> completion) {
+    auto& d = *m_data;
+    if (d.finished || !d.pending || !completion) return false;
+    const auto* result = matchedStoredTrim(*d.pending, *completion);
+    if (!result) return false;
+    if (!d.first) {
+        d.firstRequest = std::move(d.pending); d.first = std::move(completion);
+        // A refusal is final and is consumed as such; it cannot grant a second
+        // job. A conic pair is already a single complete op3 query.
+        d.finished = result->refusal != storedTrim::Refusal::None || !d.both ||
+            std::holds_alternative<trimRequest::TrimConic>(d.firstRequest->operation);
+    } else {
+        d.secondRequest = std::move(d.pending); d.second = std::move(completion); d.finished = true;
+    }
+    return true;
+}
+
+bool LC_StoredCacheTrimPreparation::ready() const noexcept { return m_data->finished; }
+std::optional<LC_StoredCacheTrimCompletions> LC_StoredCacheTrimPreparation::completions(
+    std::uint64_t publicationUndoEpoch) const {
+    const auto& d = *m_data;
+    if (!d.finished || !d.first || !d.firstRequest) return std::nullopt;
+    return LC_StoredCacheTrimCompletions{*d.firstRequest, *d.first,
+        d.secondRequest.get(), d.second.get(), publicationUndoEpoch};
+}
+
 LC_TrimResult RS_Modification::trimStoredCache(RS_Document& document, RS_Entity& target,
     const RS_Vector& targetPick, RS_Entity& cutter, const RS_Vector& cutterPick, const bool both,
     LC_DocumentModificationBatch& ctx, const LC_StoredCacheTrimOptions& options) {

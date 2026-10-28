@@ -1037,6 +1037,85 @@ TEST_CASE("Stored trim request builder matches original inputs and binds the sec
     }
 }
 
+TEST_CASE("Stored trim preparation owns complete joined sequences without exposing a prefix",
+          "[lc-offsetcurve][trim-action][trim-worker-preparation]") {
+    Drawing<true> f; auto* native = addNative(f.graphic); auto* ordinary = line(f.graphic);
+    LC_StoredCacheTrimOptions options;
+    const trimWorkerRequest::Token token{1, 3, 17, qint64(f.graphic.undoStateEpoch())};
+    LC_StoredCacheTrimPreparation preparation(*native, {2, 0}, *ordinary, {0, .3}, true, options.kernel);
+    CHECK_FALSE(preparation.ready()); CHECK_FALSE(preparation.completions(f.graphic.undoStateEpoch()));
+    auto firstRequest = preparation.request(token); REQUIRE(firstRequest);
+    CHECK_FALSE(preparation.request(token));
+    auto wrongRequest = *firstRequest; ++wrongRequest.token.requestId;
+    auto wrong = joinedTrimWorker(wrongRequest);
+    CHECK_FALSE(preparation.accept(std::move(wrong))); CHECK_FALSE(preparation.ready());
+    auto first = joinedTrimWorker(*firstRequest); REQUIRE(preparation.accept(std::move(first)));
+    CHECK_FALSE(preparation.ready()); CHECK_FALSE(preparation.completions(f.graphic.undoStateEpoch()));
+    auto nextToken = token; ++nextToken.requestId;
+    auto secondRequest = preparation.request(nextToken); REQUIRE(secondRequest);
+    auto second = joinedTrimWorker(*secondRequest); REQUIRE(preparation.accept(std::move(second)));
+    REQUIRE(preparation.ready()); CHECK_FALSE(preparation.request(nextToken));
+    auto received = preparation.completions(f.graphic.undoStateEpoch()); REQUIRE(received);
+    WorkerTrimBatch expected, actual;
+    const auto sync = RS_Modification::trimStoredCache(f.graphic, *native, {2, 0}, *ordinary, {0, .3}, true,
+        expected.value, options);
+    const auto result = RS_Modification::trimStoredCachePrepared(f.graphic, *native, {2, 0}, *ordinary, {0, .3}, true,
+        actual.value, *received, options);
+    REQUIRE(sync.result); REQUIRE(result.result); sameTrimWork(result.cacheWork, sync.cacheWork);
+    sameTrimOutputs(actual.value, expected.value);
+    CHECK_FALSE(native->isDeleted()); CHECK_FALSE(ordinary->isDeleted()); CHECK_FALSE(canUndo(f.graphic));
+}
+
+TEST_CASE("Stored trim preparation completes a conic pair with one matched job",
+          "[lc-offsetcurve][trim-action][trim-worker-preparation]") {
+    Drawing<true> f; auto* native = addNative(f.graphic);
+    auto* circle = new RS_Circle(&f.graphic, RS_CircleData{{1, 0}, 2}); f.graphic.addEntity(circle);
+    LC_StoredCacheTrimOptions options;
+    LC_StoredCacheTrimPreparation preparation(*native, {2, 0}, *circle, {-1, 0}, true, options.kernel);
+    auto request = preparation.request({1, 3, 17, qint64(f.graphic.undoStateEpoch())}); REQUIRE(request);
+    REQUIRE(std::holds_alternative<trimWorkerRequest::TrimConic>(request->operation));
+    auto completion = joinedTrimWorker(*request); REQUIRE(preparation.accept(std::move(completion)));
+    REQUIRE(preparation.ready()); auto received = preparation.completions(f.graphic.undoStateEpoch()); REQUIRE(received);
+    CHECK(received->secondRequest == nullptr); CHECK(received->second == nullptr);
+    WorkerTrimBatch actual;
+    const auto result = RS_Modification::trimStoredCachePrepared(f.graphic, *native, {2, 0}, *circle, {-1, 0}, true,
+        actual.value, *received, options);
+    CHECK(result.result); CHECK(result.nativeDemotions == 1); CHECK_FALSE(canUndo(f.graphic));
+}
+
+TEST_CASE("Stored trim preparation completes one-sided cache trim with one matched job",
+          "[lc-offsetcurve][trim-action][trim-worker-preparation]") {
+    Drawing<false> f; auto* native = addNative(f.graphic); auto* cutter = line(f.graphic);
+    LC_StoredCacheTrimOptions options;
+    LC_StoredCacheTrimPreparation preparation(*native, {2, 0}, *cutter, {0, .3}, false, options.kernel);
+    auto request = preparation.request({1, 3, 17, qint64(f.graphic.undoStateEpoch())}); REQUIRE(request);
+    REQUIRE(std::holds_alternative<trimWorkerRequest::TrimCache>(request->operation));
+    auto completion = joinedTrimWorker(*request); REQUIRE(preparation.accept(std::move(completion)));
+    REQUIRE(preparation.ready()); auto received = preparation.completions(f.graphic.undoStateEpoch()); REQUIRE(received);
+    CHECK(received->secondRequest == nullptr); CHECK(received->second == nullptr);
+    WorkerTrimBatch actual;
+    const auto result = RS_Modification::trimStoredCachePrepared(f.graphic, *native, {2, 0}, *cutter, {0, .3}, false,
+        actual.value, *received, options);
+    CHECK(result.result); CHECK(result.nativeDemotions == 1); CHECK_FALSE(canUndo(f.graphic));
+}
+
+TEST_CASE("Stored trim preparation retains a first-job refusal without starting a second job",
+          "[lc-offsetcurve][trim-action][trim-worker-preparation]") {
+    Drawing<true> f; auto* native = addNative(f.graphic);
+    auto* distant = new RS_Line(&f.graphic, RS_Vector{-3, 100}, RS_Vector{3, 100}); f.graphic.addEntity(distant);
+    LC_StoredCacheTrimOptions options;
+    LC_StoredCacheTrimPreparation preparation(*native, {2, 0}, *distant, {0, 100}, true, options.kernel);
+    auto request = preparation.request({1, 3, 17, qint64(f.graphic.undoStateEpoch())}); REQUIRE(request);
+    auto completion = joinedTrimWorker(*request); REQUIRE(preparation.accept(std::move(completion)));
+    REQUIRE(preparation.ready()); CHECK_FALSE(preparation.request({2, 3, 17, qint64(f.graphic.undoStateEpoch())}));
+    auto received = preparation.completions(f.graphic.undoStateEpoch()); REQUIRE(received);
+    WorkerTrimBatch actual;
+    const auto result = RS_Modification::trimStoredCachePrepared(f.graphic, *native, {2, 0}, *distant, {0, 100}, true,
+        actual.value, *received, options);
+    CHECK_FALSE(result.result); CHECK(result.cacheRefusal == LC_OffsetCacheTrim::Refusal::NoUsableRoots);
+    CHECK(actual.value.entitiesToAdd.empty()); CHECK(actual.value.entitiesToDelete.empty()); CHECK_FALSE(canUndo(f.graphic));
+}
+
 TEST_CASE("Prepared nonconic Trim Two uses two original operands and the exact shared remaining limits",
           "[lc-offsetcurve][trim-action][trim-worker-consumption]") {
     for (bool nativeFirst : {false, true}) {
