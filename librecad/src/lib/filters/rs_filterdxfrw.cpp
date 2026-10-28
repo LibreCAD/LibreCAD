@@ -32617,21 +32617,18 @@ makeDrwSplineFromSplinePoints(const LC_SplinePoints *sp) {
 // drw->weightlist[i] AND drw->controllist[i]->z so both DXF and DWG
 // consumers can read it correctly.
 //
-// A closed RS_Spline wraps its control-point and weight buffers (degree extra
-// values at the end) while its knot vector is the full periodic one; writing
-// those storage buffers verbatim gives libdxfrw a knot/control count pair
-// that validateHatchPayload rejects (unwrapped controls paired with wrapped
-// knots). Match the standalone SPLINE writer's shape instead: emit the
-// unwrapped control points and the unwrapped knot vector, both of length
-// controls + degree + 1 after accounting for the clamped head/tail. The
-// close/periodic flags still mark the curve as closed on the reader side.
+// A closed RS_Spline repeats its first degree control points and weights at
+// the end of its data, with a knot vector to match, so that the data draws
+// the closed curve over [knots[degree], knots[count]] in any reader. Write it
+// as it is: getControlPoints() and getWeights() leave the repeats out, and
+// with the whole knot vector they gave an edge with degree knots too many.
 std::shared_ptr<DRW_Spline> makeDrwSplineFromRSSpline(const RS_Spline *sp) {
   auto drw = std::make_shared<DRW_Spline>();
   const auto &sd = sp->getData();
   drw->degree = static_cast<std::int32_t>(sd.degree);
 
-  const auto cps = sp->getUnwrappedControlPoints();
-  const auto ws = sp->getUnwrappedWeights();
+  const auto &cps = sd.controlPoints;
+  const auto &ws = sd.weights;
   const bool weightsAlign = (ws.size() == cps.size());
   const bool isRational =
       weightsAlign && std::any_of(ws.begin(), ws.end(), [](double w) {
@@ -32650,8 +32647,8 @@ std::shared_ptr<DRW_Spline> makeDrwSplineFromRSSpline(const RS_Spline *sp) {
   if (isRational) {
     drw->weightlist = ws;
   }
-  drw->knotslist = sp->getUnwrappedKnotVector();
-  drw->nknots = static_cast<std::int32_t>(drw->knotslist.size());
+  drw->knotslist = sd.knotslist;
+  drw->nknots = static_cast<std::int32_t>(sd.knotslist.size());
   if (drw->knotslist.empty())
     fillClampedUniformKnots(*drw);
   return drw;
