@@ -30,11 +30,15 @@
 #include <memory>
 #include <vector>
 
+#include "lc_filtertestsupport.h"
 #include "lc_hatchdensity.h"
 #include "lc_hatchdensitytext.h"
 #include "lc_hatchtestsupport.h"
 #include "rs_block.h"
+#include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_entitycontainer.h"
+#include "rs_fileio.h"
 #include "rs_graphic.h"
 #include "rs_hatch.h"
 #include "rs_insert.h"
@@ -493,4 +497,124 @@ TEST_CASE("Density texts carry the numbers",
     const QString r12 = LC_HatchDensityText::r12Warning(1);
     CHECK(r12.contains(QStringLiteral("R12")));
     CHECK(r12.contains(QStringLiteral("1")));
+}
+
+namespace {
+
+// A dialog-factory stub that captures every commandMessage. The previous
+// factory object is restored when the guard goes out of scope.
+class CapturingFactory : public RS_DialogFactoryInterface {
+public:
+    CapturingFactory()
+        : m_previous(RS_DialogFactory::instance()->getFactoryObject()) {
+        RS_DialogFactory::instance()->setFactoryObject(this);
+    }
+    ~CapturingFactory() override {
+        RS_DialogFactory::instance()->setFactoryObject(m_previous);
+    }
+    CapturingFactory(const CapturingFactory&) = delete;
+    CapturingFactory& operator=(const CapturingFactory&) = delete;
+
+    void commandMessage(const QString& message) override {
+        m_messages.append(message);
+    }
+
+    const QStringList& messages() const { return m_messages; }
+
+private:
+    RS_DialogFactoryInterface* m_previous = nullptr;
+    QStringList m_messages;
+};
+
+// Builds a graphic that holds exactly one over-dense ANSI31 hatch over a
+// 10500 x 10500 square. With the default policy the estimate is above the
+// cap, so the hatch imports back as HATCH_TOO_DENSE.
+std::unique_ptr<RS_Graphic> buildOverdenseSquareGraphic() {
+    auto graphic = std::make_unique<RS_Graphic>();
+    graphic->initForNewDocument();
+    auto* hatch = new RS_Hatch(graphic.get(),
+                               RS_HatchData(false, 1.0, 0.0, "ANSI31"));
+    auto* loop = new RS_EntityContainer(hatch);
+    loop->setPen(RS_Pen(RS2::FlagInvalid));
+    loop->addEntity(new RS_Line(loop, {0.0, 0.0}, {10500.0, 0.0}));
+    loop->addEntity(new RS_Line(loop, {10500.0, 0.0}, {10500.0, 10500.0}));
+    loop->addEntity(new RS_Line(loop, {10500.0, 10500.0}, {0.0, 10500.0}));
+    loop->addEntity(new RS_Line(loop, {0.0, 10500.0}, {0.0, 0.0}));
+    hatch->addEntity(loop);
+    hatch->update();
+    graphic->addEntity(hatch);
+    return graphic;
+}
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("An opened drawing keeps the over-dense hatch and reports it once",
+          "[lc-hatchfix][density]") {
+    SourcePatterns patterns;
+    lc::test::QuietLog quiet;
+    lc::test::OutputDirectory dir{"lc_hatchdensity_import"};
+    const std::filesystem::path path = dir.file("square.dxf");
+
+    // Author side: write a DXF with the over-dense square hatch.
+    {
+        auto author = buildOverdenseSquareGraphic();
+        REQUIRE(lc::test::exportDrawing(*author, path, RS2::FormatDXFRW));
+    }
+
+    // Reader side: install the capture stub, then import through RS_FileIO
+    // so RS_FilterDXFRW::fileImport runs its tail (where the summary is sent).
+    CapturingFactory capture;
+    RS_Graphic reader;
+    REQUIRE(RS_FileIO::instance()->fileImport(
+        reader, QString::fromStdString(path.string()), RS2::FormatDXFRW));
+
+    // Walk model space: exactly one HATCH_TOO_DENSE pattern hatch, with its
+    // area intact.
+    int hatches = 0;
+    const RS_Hatch* dense = nullptr;
+    for (RS_Entity* e : reader) {
+        if (e != nullptr && e->rtti() == RS2::EntityHatch) {
+            ++hatches;
+            dense = static_cast<const RS_Hatch*>(e);
+        }
+    }
+    REQUIRE(hatches == 1);
+    REQUIRE(dense != nullptr);
+    CHECK(dense->getUpdateError() == RS_Hatch::HATCH_TOO_DENSE);
+    CHECK_THAT(dense->getTotalArea(), WithinRel(1.1025e8, 1e-9));
+    CHECK(patternPieceCount(*dense) == 0u);
+
+    // Exactly one import summary line, equal to importSummary(1).
+    int summaries = 0;
+    const QString expected = LC_HatchDensityText::importSummary(1);
+    for (const QString& m : capture.messages()) {
+        if (m == expected) ++summaries;
+    }
+    CHECK(summaries == 1);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("R12 export warns that the hatch is empty there",
+          "[lc-hatchfix][density]") {
+    SourcePatterns patterns;
+    lc::test::QuietLog quiet;
+    lc::test::OutputDirectory dir{"lc_hatchdensity_r12"};
+    const std::filesystem::path path = dir.file("square_r12.dxf");
+
+    auto author = buildOverdenseSquareGraphic();
+
+    CapturingFactory capture;
+    REQUIRE(lc::test::exportDrawing(*author, path, RS2::FormatDXFRW12));
+
+    // Exactly one R12 warning, equal to r12Warning(1).
+    int warnings = 0;
+    const QString expected = LC_HatchDensityText::r12Warning(1);
+    for (const QString& m : capture.messages()) {
+        if (m == expected) ++warnings;
+    }
+    CHECK(warnings == 1);
+
+    // The R12 file has no LINE records: the pattern was not written.
+    CHECK(lc::test::dxfRecords(path, "LINE").empty());
 }
