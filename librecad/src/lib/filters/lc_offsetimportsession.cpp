@@ -46,12 +46,12 @@ struct LC_OffsetImportSession::Work {
     QString file, error;
     RS2::FormatType type = RS2::FormatUnknown;
     RS2::DxfTextEncoding encoding = RS2::DxfTextEncoding::Declared;
-    bool partial = false, expired = false;
+    bool partial = false, expired = false, awaitingDecision = false;
     qint64 generation = 0;
     std::size_t index = 0, admitted = 0, downgraded = 0;
     std::optional<Status> terminal;
     Callback callback;
-    PartialDecision partialDecision;
+    PartialRequest partialRequest;
     std::unique_ptr<RS_Graphic> graphic;
     std::shared_ptr<LC_OffsetImportBudget> budget;
     std::vector<ImportCandidate> candidates;
@@ -145,12 +145,20 @@ bool LC_OffsetImportSession::start(const QString& file, RS2::FormatType type,
 
 bool LC_OffsetImportSession::start(const QString& file, RS2::FormatType type,
     RS2::DxfTextEncoding encoding, PartialDecision decision, Callback callback) {
+    return startWithDecision(file, type, encoding,
+        [decision = std::move(decision)](bool hasEntities, const QString& error, PartialReply reply) {
+            reply(decision && decision(hasEntities, error));
+        }, std::move(callback));
+}
+
+bool LC_OffsetImportSession::startWithDecision(const QString& file, RS2::FormatType type,
+    RS2::DxfTextEncoding encoding, PartialRequest request, Callback callback) {
     if (!QCoreApplication::instance() || QThread::currentThread() != thread() || busy() || !m_worker.healthyAndIdle() || !callback || file.isEmpty() ||
         m_generation == std::numeric_limits<qint64>::max()) return false;
     const QPointer<LC_OffsetImportSession> alive(this);
     try {
         auto work = std::make_shared<Work>();
-        work->file = file; work->type = type; work->encoding = encoding; work->partialDecision = std::move(decision);
+        work->file = file; work->type = type; work->encoding = encoding; work->partialRequest = std::move(request);
         work->generation = ++m_generation; work->callback = std::move(callback);
         work->graphic = std::make_unique<RS_Graphic>(); work->graphic->initForNewDocument();
         if (!alive) return false;
@@ -173,11 +181,35 @@ void LC_OffsetImportSession::parse(const std::shared_ptr<Work>& work) {
         if (!alive || m_work != work) return;
         if (!read) { work->error = filter.lastError(); work->partial = true; }
         if (!read) {
-            const bool accepted = work->partialDecision && work->partialDecision(!work->graphic->isEmpty(), work->error);
-            if (!alive || m_work != work) return;
-            if (!accepted) { finish(work, Status::ReadFailed); return; }
-            work->graphic->setFormatType(RS2::FormatUnknown);
+            if (!work->partialRequest) { finish(work, Status::ReadFailed); return; }
+            work->awaitingDecision = true;
+            std::weak_ptr<Work> weak = work;
+            try {
+                work->partialRequest(!work->graphic->isEmpty(), work->error, [alive, weak](bool accepted) {
+                    if (!alive || QThread::currentThread() != alive->thread()) return;
+                    if (auto pending = weak.lock()) alive->resolvePartial(pending, accepted);
+                });
+            } catch (...) {
+                if (alive && m_work == work && work->awaitingDecision) finish(work, Status::ResourceLimit);
+            }
+            return;
         }
+        beginValidation(work);
+    } catch (...) { if (alive && m_work == work) finish(work, Status::ResourceLimit); }
+}
+
+void LC_OffsetImportSession::resolvePartial(const std::shared_ptr<Work>& work, bool accepted) {
+    if (m_work != work || !work->awaitingDecision) return;
+    work->awaitingDecision = false;
+    if (!accepted) { finish(work, Status::ReadFailed); return; }
+    work->graphic->setFormatType(RS2::FormatUnknown);
+    beginValidation(work);
+}
+
+void LC_OffsetImportSession::beginValidation(const std::shared_ptr<Work>& work) {
+    if (m_work != work) return;
+    const QPointer<LC_OffsetImportSession> alive(this);
+    try {
         if (!collectCandidates(*work->graphic, work->candidates)) { finish(work, Status::ResourceLimit); return; }
         work->downgraded = work->budget->refused;
         m_deadline.start(int(LC_OffsetWorkerClient::Deadlines::commit));

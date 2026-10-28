@@ -71,18 +71,25 @@ public:
     // Called on the owning thread after a failed parse. Cancellation or session
     // destruction during this callback suppresses delivery.
     using PartialDecision = std::function<bool(bool hasEntities, const QString& error)>;
+    using PartialReply = std::function<void(bool)>;
+    // Reply on the session's owning thread. Repeated or late replies are ignored.
+    using PartialRequest = std::function<void(bool hasEntities, const QString& error, PartialReply reply)>;
     explicit LC_OffsetImportSession(QObject* parent = nullptr);
     ~LC_OffsetImportSession() override;
     bool start(const QString& file, RS2::FormatType type, RS2::DxfTextEncoding encoding,
         bool acceptPartial, Callback callback);
     bool start(const QString& file, RS2::FormatType type, RS2::DxfTextEncoding encoding,
         PartialDecision decision, Callback callback);
+    bool startWithDecision(const QString& file, RS2::FormatType type, RS2::DxfTextEncoding encoding,
+        PartialRequest request, Callback callback);
     void cancel();
     bool busy() const noexcept;
 private:
     friend class LC_OffsetImportSessionTestAccess;
     struct Work;
     void parse(const std::shared_ptr<Work>&);
+    void resolvePartial(const std::shared_ptr<Work>&, bool accepted);
+    void beginValidation(const std::shared_ptr<Work>&);
     void advance(const std::shared_ptr<Work>&);
     void consume(const std::shared_ptr<Work>&, std::unique_ptr<LC_OffsetWorkerCompletion>);
     void finish(const std::shared_ptr<Work>&, Status);

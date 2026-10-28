@@ -778,6 +778,77 @@ TEST_CASE("Staged offset import asks for partial-read acceptance without reparsi
     }
 }
 
+TEST_CASE("Staged offset import waits for a one-shot asynchronous partial decision",
+          "[lc-offsetcurve][import-session][partial][lifetime][async]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-async-decision");
+    const auto input = directory.file("input.dxf");
+    auto text = f::ascii(f::raw(3));
+    const auto end = text.rfind("0\nENDSEC\n0\nEOF\n"); REQUIRE(end != std::string::npos);
+    text.replace(end, std::string::npos, "0\nLINE\n8\n0\n10\n0.0\n"); f::put(input, text);
+    auto session = std::make_unique<LC_OffsetImportSession>();
+    LC_OffsetImportSession::PartialReply reply;
+    std::optional<LC_OffsetImportSession::Outcome> outcome;
+    int deliveries = 0, ticks = 0;
+    REQUIRE(session->startWithDecision(QString::fromStdString(input.string()), format(Lane::Ascii),
+        RS2::DxfTextEncoding::Declared,
+        [&](bool hasEntities, const QString&, LC_OffsetImportSession::PartialReply decide) {
+            CHECK(hasEntities); reply = std::move(decide);
+        }, [&](LC_OffsetImportSession::Outcome result) { ++deliveries; outcome.emplace(std::move(result)); }));
+    QElapsedTimer elapsed; elapsed.start();
+    while (!reply) { REQUIRE(elapsed.elapsed() < 5000); QCoreApplication::processEvents(QEventLoop::AllEvents); }
+    REQUIRE(session->busy()); CHECK_FALSE(outcome);
+    QTimer::singleShot(0, [&] { ++ticks; });
+    QCoreApplication::processEvents(QEventLoop::AllEvents); CHECK(ticks == 1); CHECK_FALSE(outcome);
+    SECTION("accept once without reparsing") {
+        REQUIRE(std::filesystem::remove(input)); reply(true); reply(false);
+        while (!outcome) { REQUIRE(elapsed.elapsed() < 35000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+        REQUIRE(outcome->status == LC_OffsetImportSession::Status::Complete); REQUIRE(outcome->graphic);
+        CHECK(outcome->graphic->getFormatType() == RS2::FormatUnknown);
+        CHECK(f::native(*outcome->graphic, 3) != nullptr); CHECK(deliveries == 1);
+    }
+    SECTION("reject once") {
+        reply(false); reply(true); REQUIRE(outcome);
+        CHECK(outcome->status == LC_OffsetImportSession::Status::ReadFailed); CHECK_FALSE(outcome->graphic);
+        CHECK(deliveries == 1);
+    }
+    SECTION("cancel then reply") {
+        session->cancel(); reply(true); QCoreApplication::processEvents(QEventLoop::AllEvents);
+        CHECK_FALSE(session->busy()); CHECK_FALSE(outcome); CHECK(deliveries == 0);
+    }
+    SECTION("stale reply cannot affect a new import") {
+        session->cancel();
+        REQUIRE(session->start(QString::fromStdString(input.string()), format(Lane::Ascii),
+            RS2::DxfTextEncoding::Declared, true,
+            [&](LC_OffsetImportSession::Outcome result) { ++deliveries; outcome.emplace(std::move(result)); }));
+        reply(false);
+        while (!outcome) { REQUIRE(elapsed.elapsed() < 35000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+        REQUIRE(outcome->status == LC_OffsetImportSession::Status::Complete); REQUIRE(outcome->graphic);
+        CHECK(f::native(*outcome->graphic, 3) != nullptr); CHECK(deliveries == 1);
+    }
+    SECTION("destroy then reply") {
+        session.reset(); reply(true); QCoreApplication::processEvents(QEventLoop::AllEvents);
+        CHECK_FALSE(outcome); CHECK(deliveries == 0);
+    }
+}
+
+TEST_CASE("A partial decision callback cannot revoke its own accepted reply by throwing",
+          "[lc-offsetcurve][import-session][partial][async]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-decision-throw");
+    const auto input = directory.file("input.dxf"); auto text = f::ascii(f::raw(3));
+    const auto end = text.rfind("0\nENDSEC\n0\nEOF\n"); REQUIRE(end != std::string::npos);
+    text.replace(end, std::string::npos, "0\nLINE\n8\n0\n10\n0.0\n"); f::put(input, text);
+    LC_OffsetImportSession session; std::optional<LC_OffsetImportSession::Outcome> outcome;
+    REQUIRE(session.startWithDecision(QString::fromStdString(input.string()), format(Lane::Ascii),
+        RS2::DxfTextEncoding::Declared,
+        [](bool, const QString&, LC_OffsetImportSession::PartialReply reply) {
+            reply(true); throw std::runtime_error("after reply");
+        }, [&](LC_OffsetImportSession::Outcome result) { outcome.emplace(std::move(result)); }));
+    QElapsedTimer elapsed; elapsed.start();
+    while (!outcome) { REQUIRE(elapsed.elapsed() < 35000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    REQUIRE(outcome->status == LC_OffsetImportSession::Status::Complete); REQUIRE(outcome->graphic);
+    CHECK(f::native(*outcome->graphic, 3) != nullptr);
+}
+
 TEST_CASE("Staged offset import refuses formats outside its DXF and DWG contract",
           "[lc-offsetcurve][import-session][refusal]") {
     Setup setup; lc::test::OutputDirectory directory("offset-staged-format");
