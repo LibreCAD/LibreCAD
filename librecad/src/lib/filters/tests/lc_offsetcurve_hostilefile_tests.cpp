@@ -601,6 +601,7 @@ TEST_CASE("Staged offset import resolves a private drawing through the real help
         CHECK(native->unknownOwnedFlags() == 0x40); CHECK(native->unknownOwnedTail().size() == 5);
         f::foreign(*native);
         RS_Graphic synchronous; REQUIRE(lc::test::importDrawing(synchronous, input, format(lane)));
+        CHECK(outcome.graphic->getFormatType() == synchronous.getFormatType());
         auto* expected = f::native(synchronous, 3); REQUIRE(expected);
         CHECK(RS_Spline::geometryFingerprint(native->getData()) == RS_Spline::geometryFingerprint(expected->getData()));
         CHECK(f::tagsState(native->getDrwExtData()) == f::tagsState(expected->getDrwExtData()));
@@ -734,7 +735,47 @@ TEST_CASE("Staged offset import requires explicit partial-read acceptance",
     auto accepted = stagedImport(input, Lane::Ascii, true);
     REQUIRE(accepted.status == LC_OffsetImportSession::Status::Complete); REQUIRE(accepted.graphic);
     CHECK(accepted.partial); CHECK(accepted.admitted == 1); CHECK(accepted.downgraded == 0);
+    CHECK(accepted.graphic->getFormatType() == RS2::FormatUnknown);
     CHECK(f::native(*accepted.graphic, 3) != nullptr);
+}
+
+TEST_CASE("Staged offset import asks for partial-read acceptance without reparsing",
+          "[lc-offsetcurve][import-session][partial][lifetime]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-decision");
+    const auto input = directory.file("input.dxf");
+    auto text = f::ascii(f::raw(3));
+    const auto end = text.rfind("0\nENDSEC\n0\nEOF\n"); REQUIRE(end != std::string::npos);
+    text.replace(end, std::string::npos, "0\nLINE\n8\n0\n10\n0.0\n"); f::put(input, text);
+    auto session = std::make_unique<LC_OffsetImportSession>();
+    std::optional<LC_OffsetImportSession::Outcome> outcome;
+    bool asked = false;
+    bool accept = false, cancel = false, destroy = false;
+    SECTION("accept") { accept = true; }
+    SECTION("reject") {}
+    SECTION("cancel during decision") { cancel = true; }
+    SECTION("destroy during decision") { destroy = true; }
+    REQUIRE(session->start(QString::fromStdString(input.string()), format(Lane::Ascii), RS2::DxfTextEncoding::Declared,
+        [&](bool hasEntities, const QString&) {
+            asked = true; CHECK(hasEntities);
+            if (accept) CHECK(std::filesystem::remove(input));
+            if (cancel) session->cancel();
+            if (destroy) session.reset();
+            return accept;
+        }, [&](LC_OffsetImportSession::Outcome result) { outcome.emplace(std::move(result)); }));
+    QElapsedTimer elapsed; elapsed.start();
+    while (!asked || (!cancel && !destroy && !outcome)) {
+        REQUIRE(elapsed.elapsed() < 35000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1);
+    }
+    if (cancel || destroy) {
+        QCoreApplication::processEvents(QEventLoop::AllEvents);
+        CHECK_FALSE(outcome); if (session) CHECK_FALSE(session->busy());
+    } else if (accept) {
+        REQUIRE(outcome->status == LC_OffsetImportSession::Status::Complete); REQUIRE(outcome->graphic);
+        CHECK(outcome->partial); CHECK(outcome->graphic->getFormatType() == RS2::FormatUnknown);
+        CHECK(f::native(*outcome->graphic, 3) != nullptr);
+    } else {
+        CHECK(outcome->status == LC_OffsetImportSession::Status::ReadFailed); CHECK_FALSE(outcome->graphic);
+    }
 }
 
 TEST_CASE("Staged offset import refuses formats outside its DXF and DWG contract",

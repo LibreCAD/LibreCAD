@@ -46,11 +46,12 @@ struct LC_OffsetImportSession::Work {
     QString file, error;
     RS2::FormatType type = RS2::FormatUnknown;
     RS2::DxfTextEncoding encoding = RS2::DxfTextEncoding::Declared;
-    bool acceptPartial = false, partial = false, expired = false;
+    bool partial = false, expired = false;
     qint64 generation = 0;
     std::size_t index = 0, admitted = 0, downgraded = 0;
     std::optional<Status> terminal;
     Callback callback;
+    PartialDecision partialDecision;
     std::unique_ptr<RS_Graphic> graphic;
     std::shared_ptr<LC_OffsetImportBudget> budget;
     std::vector<ImportCandidate> candidates;
@@ -138,12 +139,18 @@ void LC_OffsetImportSession::cancel() { m_deadline.stop(); m_work.reset(); m_wor
 
 bool LC_OffsetImportSession::start(const QString& file, RS2::FormatType type,
     RS2::DxfTextEncoding encoding, bool acceptPartial, Callback callback) {
+    return start(file, type, encoding, [acceptPartial](bool, const QString&) { return acceptPartial; },
+                 std::move(callback));
+}
+
+bool LC_OffsetImportSession::start(const QString& file, RS2::FormatType type,
+    RS2::DxfTextEncoding encoding, PartialDecision decision, Callback callback) {
     if (!QCoreApplication::instance() || QThread::currentThread() != thread() || busy() || !m_worker.healthyAndIdle() || !callback || file.isEmpty() ||
         m_generation == std::numeric_limits<qint64>::max()) return false;
     const QPointer<LC_OffsetImportSession> alive(this);
     try {
         auto work = std::make_shared<Work>();
-        work->file = file; work->type = type; work->encoding = encoding; work->acceptPartial = acceptPartial;
+        work->file = file; work->type = type; work->encoding = encoding; work->partialDecision = std::move(decision);
         work->generation = ++m_generation; work->callback = std::move(callback);
         work->graphic = std::make_unique<RS_Graphic>(); work->graphic->initForNewDocument();
         if (!alive) return false;
@@ -161,10 +168,16 @@ void LC_OffsetImportSession::parse(const std::shared_ptr<Work>& work) {
         filter.setDxfTextEncoding(work->encoding);
         const auto type = work->type == RS2::FormatUnknown ? RS_FileIO::detectFormat(work->file) : work->type;
         if (!supportedImportType(type)) { work->error = tr("Unsupported offset import format"); finish(work, Status::ReadFailed); return; }
+        work->graphic->setFormatType(type);
         const bool read = filter.fileImport(*work->graphic, work->file, type);
         if (!alive || m_work != work) return;
         if (!read) { work->error = filter.lastError(); work->partial = true; }
-        if (!read && !work->acceptPartial) { finish(work, Status::ReadFailed); return; }
+        if (!read) {
+            const bool accepted = work->partialDecision && work->partialDecision(!work->graphic->isEmpty(), work->error);
+            if (!alive || m_work != work) return;
+            if (!accepted) { finish(work, Status::ReadFailed); return; }
+            work->graphic->setFormatType(RS2::FormatUnknown);
+        }
         if (!collectCandidates(*work->graphic, work->candidates)) { finish(work, Status::ResourceLimit); return; }
         work->downgraded = work->budget->refused;
         m_deadline.start(int(LC_OffsetWorkerClient::Deadlines::commit));

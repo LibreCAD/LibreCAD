@@ -68,10 +68,15 @@ public:
         std::vector<LC_OffsetImportDiagnostic> diagnostics;
     };
     using Callback = std::function<void(Outcome)>;
+    // Called on the owning thread after a failed parse. Cancellation or session
+    // destruction during this callback suppresses delivery.
+    using PartialDecision = std::function<bool(bool hasEntities, const QString& error)>;
     explicit LC_OffsetImportSession(QObject* parent = nullptr);
     ~LC_OffsetImportSession() override;
     bool start(const QString& file, RS2::FormatType type, RS2::DxfTextEncoding encoding,
         bool acceptPartial, Callback callback);
+    bool start(const QString& file, RS2::FormatType type, RS2::DxfTextEncoding encoding,
+        PartialDecision decision, Callback callback);
     void cancel();
     bool busy() const noexcept;
 private:
