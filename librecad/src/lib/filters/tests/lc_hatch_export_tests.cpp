@@ -46,6 +46,7 @@
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_settings.h"
+#include "rs_spline.h"
 
 namespace {
 
@@ -587,7 +588,344 @@ TEST_CASE("A hatch with a missing pattern still writes one line",
     CHECK(hasTag);
 }
 
+namespace {
+
+// A Draw-Hatch island: one container holding the outer rectangle followed
+// by the inner rectangle, with 8 lines total. The hatch is pattern or solid
+// per the caller's choice. Mirrors how RS_ActionDrawHatch builds a boundary.
+void addIslandBoundary(RS_Hatch& hatch,
+                        double ox1, double oy1, double ox2, double oy2,
+                        double ix1, double iy1, double ix2, double iy2) {
+    auto* loop = new RS_EntityContainer(&hatch);
+    loop->setLayer(nullptr);
+    loop->addEntity(new RS_Line(loop, RS_LineData(RS_Vector(ox1, oy1), RS_Vector(ox2, oy1))));
+    loop->addEntity(new RS_Line(loop, RS_LineData(RS_Vector(ox2, oy1), RS_Vector(ox2, oy2))));
+    loop->addEntity(new RS_Line(loop, RS_LineData(RS_Vector(ox2, oy2), RS_Vector(ox1, oy2))));
+    loop->addEntity(new RS_Line(loop, RS_LineData(RS_Vector(ox1, oy2), RS_Vector(ox1, oy1))));
+    loop->addEntity(new RS_Line(loop, RS_LineData(RS_Vector(ix1, iy1), RS_Vector(ix2, iy1))));
+    loop->addEntity(new RS_Line(loop, RS_LineData(RS_Vector(ix2, iy1), RS_Vector(ix2, iy2))));
+    loop->addEntity(new RS_Line(loop, RS_LineData(RS_Vector(ix2, iy2), RS_Vector(ix1, iy2))));
+    loop->addEntity(new RS_Line(loop, RS_LineData(RS_Vector(ix1, iy2), RS_Vector(ix1, iy1))));
+    hatch.addEntity(loop);
+}
+
+std::vector<int> sortedInts(std::vector<std::string> xs) {
+    std::vector<int> out;
+    out.reserve(xs.size());
+    for (auto& s : xs) out.push_back(std::stoi(s));
+    std::sort(out.begin(), out.end());
+    return out;
+}
+
+std::vector<std::string> sortedStrings(std::vector<std::string> xs) {
+    std::sort(xs.begin(), xs.end());
+    return xs;
+}
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A Draw Hatch island exports two boundary paths flagged External "
+          "and Outermost",
+          "[lc-hatchfix][hatch-export]") {
+    lc::test::QuietLog quiet;
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::SettingGuard patterns{RS_SETTINGS, "Paths", "Patterns"};
+    patterns.set(QStringLiteral(LIBRECAD_SOURCE_DIR "/librecad/support/patterns"));
+
+    const lc::test::OutputDirectory out("lc_hatch_export_island");
+    const auto file = out.file("island.dxf");
+
+    auto graphic = std::make_unique<RS_Graphic>();
+    graphic->initForNewDocument();
+    auto* hatch = new RS_Hatch(graphic.get(),
+                               RS_HatchData(false, 1.0, 0.0,
+                                            QStringLiteral("ANSI31")));
+    addIslandBoundary(*hatch, 0, 0, 100, 60, 30, 20, 70, 40);
+    graphic->addEntity(hatch);
+    hatch->update();
+    REQUIRE(lc::test::exportDrawing(*graphic, file, RS2::FormatDXFRW2013));
+
+    const auto record = firstHatchRecord(file);
+    CHECK(record.own(91) == std::vector<std::string>{"2"});
+    CHECK(sortedInts(record.own(92)) == std::vector<int>{1, 16});
+    CHECK(sortedStrings(record.own(93)) == std::vector<std::string>{"4", "4"});
+    CHECK(record.own(75) == std::vector<std::string>{"0"});
+
+    // Re-import gives one container, two loops in it, area 100*60 - 40*20 = 5200.
+    RS_Graphic back;
+    REQUIRE(lc::test::importDrawing(back, file, RS2::FormatDXFRW));
+    RS_Hatch* reHatch = nullptr;
+    for (RS_Entity* e : back) {
+        if (e && e->rtti() == RS2::EntityHatch) {
+            reHatch = static_cast<RS_Hatch*>(e);
+            break;
+        }
+    }
+    REQUIRE(reHatch != nullptr);
+    reHatch->update();
+    CHECK(reHatch->countLoops() == 1);
+    CHECK(reHatch->countAllLoops() == 2);
+    CHECK(reHatch->getTotalArea() == Catch::Approx(5200.0).epsilon(1e-9));
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A three-level nest exports flags 1, 16 and 0",
+          "[lc-hatchfix][hatch-export]") {
+    lc::test::QuietLog quiet;
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::SettingGuard patterns{RS_SETTINGS, "Paths", "Patterns"};
+    patterns.set(QStringLiteral(LIBRECAD_SOURCE_DIR "/librecad/support/patterns"));
+
+    const lc::test::OutputDirectory out("lc_hatch_export_nest3");
+    const auto file = out.file("nest3.dxf");
+
+    auto graphic = std::make_unique<RS_Graphic>();
+    graphic->initForNewDocument();
+    auto* hatch = new RS_Hatch(graphic.get(),
+                               RS_HatchData(false, 1.0, 0.0,
+                                            QStringLiteral("ANSI31")));
+    // Three containers, one each per nest level.
+    auto make = [&](double x1, double y1, double x2, double y2) {
+        auto* loop = new RS_EntityContainer(hatch);
+        loop->setLayer(nullptr);
+        loop->addEntity(new RS_Line(loop, RS_LineData(RS_Vector(x1, y1), RS_Vector(x2, y1))));
+        loop->addEntity(new RS_Line(loop, RS_LineData(RS_Vector(x2, y1), RS_Vector(x2, y2))));
+        loop->addEntity(new RS_Line(loop, RS_LineData(RS_Vector(x2, y2), RS_Vector(x1, y2))));
+        loop->addEntity(new RS_Line(loop, RS_LineData(RS_Vector(x1, y2), RS_Vector(x1, y1))));
+        hatch->addEntity(loop);
+    };
+    make(0, 0, 100, 60);
+    make(20, 10, 80, 50);
+    make(40, 20, 60, 40);
+    graphic->addEntity(hatch);
+    hatch->update();
+    REQUIRE(lc::test::exportDrawing(*graphic, file, RS2::FormatDXFRW2013));
+
+    const auto record = firstHatchRecord(file);
+    CHECK(record.own(91) == std::vector<std::string>{"3"});
+    CHECK(sortedInts(record.own(92)) == std::vector<int>{0, 1, 16});
+    CHECK(record.own(75) == std::vector<std::string>{"0"});
+
+    // Re-import area: outer 100*60 - mid 60*40 + inner 20*20 = 6000-2400+400 = 4000.
+    RS_Graphic back;
+    REQUIRE(lc::test::importDrawing(back, file, RS2::FormatDXFRW));
+    RS_Hatch* reHatch = nullptr;
+    for (RS_Entity* e : back) {
+        if (e && e->rtti() == RS2::EntityHatch) {
+            reHatch = static_cast<RS_Hatch*>(e);
+            break;
+        }
+    }
+    REQUIRE(reHatch != nullptr);
+    reHatch->update();
+    CHECK(reHatch->getTotalArea() == Catch::Approx(4000.0).epsilon(1e-9));
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Disjoint roots are both External",
+          "[lc-hatchfix][hatch-export]") {
+    lc::test::QuietLog quiet;
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::SettingGuard patterns{RS_SETTINGS, "Paths", "Patterns"};
+    patterns.set(QStringLiteral(LIBRECAD_SOURCE_DIR "/librecad/support/patterns"));
+
+    const lc::test::OutputDirectory out("lc_hatch_export_disjoint");
+    const auto file = out.file("disjoint.dxf");
+
+    auto graphic = std::make_unique<RS_Graphic>();
+    graphic->initForNewDocument();
+    auto* hatch = new RS_Hatch(graphic.get(),
+                               RS_HatchData(false, 1.0, 0.0,
+                                            QStringLiteral("ANSI31")));
+    auto make = [&](double x1, double y1, double x2, double y2) {
+        auto* loop = new RS_EntityContainer(hatch);
+        loop->setLayer(nullptr);
+        loop->addEntity(new RS_Line(loop, RS_LineData(RS_Vector(x1, y1), RS_Vector(x2, y1))));
+        loop->addEntity(new RS_Line(loop, RS_LineData(RS_Vector(x2, y1), RS_Vector(x2, y2))));
+        loop->addEntity(new RS_Line(loop, RS_LineData(RS_Vector(x2, y2), RS_Vector(x1, y2))));
+        loop->addEntity(new RS_Line(loop, RS_LineData(RS_Vector(x1, y2), RS_Vector(x1, y1))));
+        hatch->addEntity(loop);
+    };
+    make(0, 0, 10, 10);
+    make(50, 50, 60, 60);
+    graphic->addEntity(hatch);
+    hatch->update();
+    REQUIRE(lc::test::exportDrawing(*graphic, file, RS2::FormatDXFRW2013));
+
+    const auto record = firstHatchRecord(file);
+    CHECK(record.own(91) == std::vector<std::string>{"2"});
+    CHECK(sortedInts(record.own(92)) == std::vector<int>{1, 1});
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A rotated pattern hatch writes its boundary in WCS",
+          "[lc-hatchfix][hatch-export]") {
+    lc::test::QuietLog quiet;
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::SettingGuard patterns{RS_SETTINGS, "Paths", "Patterns"};
+    patterns.set(QStringLiteral(LIBRECAD_SOURCE_DIR "/librecad/support/patterns"));
+
+    const lc::test::OutputDirectory out("lc_hatch_export_rotated");
+    const auto file = out.file("rotated.dxf");
+
+    auto graphic = std::make_unique<RS_Graphic>();
+    graphic->initForNewDocument();
+    const double angle = 37.0 * kPi / 180.0;
+    auto* hatch = new RS_Hatch(graphic.get(),
+                               RS_HatchData(false, 1.0, angle,
+                                            QStringLiteral("ANSI31")));
+    addIslandBoundary(*hatch, 0, 0, 100, 60, 30, 20, 70, 40);
+    graphic->addEntity(hatch);
+    hatch->update();
+    REQUIRE(lc::test::exportDrawing(*graphic, file, RS2::FormatDXFRW2013));
+
+    const auto record = firstHatchRecord(file);
+    // 10/20 at the HATCH level is the hatch base point (0,0); the per-edge
+    // 10/20 and 11/21 pairs come from the exported boundary edges, each one
+    // of which must match one of the 8 WCS source corners within 1e-9.
+    const auto xs = record.own(10);
+    const auto ys = record.own(20);
+    const auto xs2 = record.own(11);
+    const auto ys2 = record.own(21);
+    REQUIRE(xs.size() == 9u);  // 1 base + 8 edge starts
+    REQUIRE(ys.size() == 9u);
+    REQUIRE(xs2.size() == 8u);
+    REQUIRE(ys2.size() == 8u);
+
+    const RS_Vector sourceCorners[] = {
+        RS_Vector(0.0, 0.0), RS_Vector(100.0, 0.0),
+        RS_Vector(100.0, 60.0), RS_Vector(0.0, 60.0),
+        RS_Vector(30.0, 20.0), RS_Vector(70.0, 20.0),
+        RS_Vector(70.0, 40.0), RS_Vector(30.0, 40.0),
+    };
+    const auto matchesACorner = [&](double x, double y) {
+        for (const auto& c : sourceCorners) {
+            if (std::fabs(c.x - x) < 1e-9 && std::fabs(c.y - y) < 1e-9)
+                return true;
+        }
+        return false;
+    };
+    for (std::size_t i = 1; i < xs.size(); ++i) {
+        CAPTURE(xs[i], ys[i]);
+        CHECK(matchesACorner(std::stod(xs[i]), std::stod(ys[i])));
+    }
+    for (std::size_t i = 0; i < xs2.size(); ++i) {
+        CAPTURE(xs2[i], ys2[i]);
+        CHECK(matchesACorner(std::stod(xs2[i]), std::stod(ys2[i])));
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A solid hatch with an island is flagged 1 and 16",
+          "[lc-hatchfix][hatch-export]") {
+    lc::test::QuietLog quiet;
+    REQUIRE(lc::test::ensureSettings());
+
+    const lc::test::OutputDirectory out("lc_hatch_export_solid_island");
+    const auto file = out.file("solid_island.dxf");
+
+    auto graphic = std::make_unique<RS_Graphic>();
+    graphic->initForNewDocument();
+    auto* hatch = new RS_Hatch(graphic.get(),
+                               RS_HatchData(true, 1.0, 0.0,
+                                            QStringLiteral("SOLID")));
+    addIslandBoundary(*hatch, 0, 0, 100, 60, 30, 20, 70, 40);
+    graphic->addEntity(hatch);
+    hatch->update();
+    REQUIRE(lc::test::exportDrawing(*graphic, file, RS2::FormatDXFRW2013));
+
+    const auto record = firstHatchRecord(file);
+    CHECK(record.own(91) == std::vector<std::string>{"2"});
+    CHECK(sortedInts(record.own(92)) == std::vector<int>{1, 16});
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("exportLoops hands a single-spline boundary back as one SPLINE "
+          "edge instead of chord lines",
+          "[lc-hatchfix][hatch-export]") {
+    // Exercise RS_Hatch::exportLoops()'s single-spline exception without
+    // round-tripping the write path. A pre-existing mismatch in
+    // makeDrwSplineFromRSSpline (unwrapped controls vs wrapped knots on a
+    // closed RS_Spline) refuses the HATCH payload at validateHatchPayload;
+    // that lives outside this step's scope.
+    lc::test::QuietLog quiet;
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::SettingGuard patterns{RS_SETTINGS, "Paths", "Patterns"};
+    patterns.set(QStringLiteral(LIBRECAD_SOURCE_DIR "/librecad/support/patterns"));
+
+    auto graphic = std::make_unique<RS_Graphic>();
+    graphic->initForNewDocument();
+    auto* hatch = new RS_Hatch(graphic.get(),
+                               RS_HatchData(false, 1.0, 0.0,
+                                            QStringLiteral("ANSI31")));
+    auto* loop = new RS_EntityContainer(hatch);
+    loop->setLayer(nullptr);
+    auto* spline = new RS_Spline(loop, RS_SplineData(3, false));
+    spline->addControlPoint(RS_Vector(0.0, 0.0));
+    spline->addControlPoint(RS_Vector(60.0, 0.0));
+    spline->addControlPoint(RS_Vector(60.0, 40.0));
+    spline->addControlPoint(RS_Vector(0.0, 40.0));
+    spline->setClosed(true);
+    spline->update();
+    loop->addEntity(spline);
+    hatch->addEntity(loop);
+    graphic->addEntity(hatch);
+    hatch->update();
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    const auto exported = hatch->exportLoops();
+    REQUIRE(exported.size() == 1u);
+    REQUIRE(exported.front().edges != nullptr);
+    REQUIRE(exported.front().depth == 0);
+    int nSpline = 0, nLine = 0, nOther = 0;
+    for (RS_Entity* e : *exported.front().edges) {
+        if (!e) continue;
+        if (e->rtti() == RS2::EntitySpline) ++nSpline;
+        else if (e->rtti() == RS2::EntityLine) ++nLine;
+        else ++nOther;
+    }
+    CHECK(nSpline == 1);
+    CHECK(nLine == 0);
+    CHECK(nOther == 0);
+}
+
 #ifdef DWGSUPPORT
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("The DWG export carries the boundary flags",
+          "[lc-hatchfix][hatch-export]") {
+    lc::test::QuietLog quiet;
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::SettingGuard patterns{RS_SETTINGS, "Paths", "Patterns"};
+    patterns.set(QStringLiteral(LIBRECAD_SOURCE_DIR "/librecad/support/patterns"));
+
+    const lc::test::OutputDirectory out("lc_hatch_export_dwg_island");
+    const auto file = out.file("dwg_island.dwg");
+
+    auto graphic = std::make_unique<RS_Graphic>();
+    graphic->initForNewDocument();
+    auto* hatch = new RS_Hatch(graphic.get(),
+                               RS_HatchData(false, 1.0, 0.0,
+                                            QStringLiteral("ANSI31")));
+    addIslandBoundary(*hatch, 0, 0, 100, 60, 30, 20, 70, 40);
+    graphic->addEntity(hatch);
+    hatch->update();
+    REQUIRE(lc::test::exportDrawing(*graphic, file, RS2::FormatDWG2018));
+
+    HatchCapture cap;
+    {
+        dwgR reader(file.string().c_str());
+        REQUIRE(reader.read(&cap, /*ext=*/true));
+    }
+    REQUIRE(cap.m_hatchCount == 1);
+    REQUIRE(cap.m_hatch.looplist.size() == 2u);
+    std::vector<int> types;
+    for (const auto& l : cap.m_hatch.looplist) {
+        types.push_back(l->type);
+    }
+    std::sort(types.begin(), types.end());
+    CHECK(types == std::vector<int>{1, 16});
+}
+
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("The DWG export carries the line, pattern type 2 and the tag",
           "[lc-hatchfix][hatch-export]") {

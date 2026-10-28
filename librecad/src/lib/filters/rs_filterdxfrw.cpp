@@ -32648,6 +32648,89 @@ std::shared_ptr<DRW_Spline> makeDrwSplineFromRSSpline(const RS_Spline *sp) {
   return drw;
 }
 
+// Convert every atomic edge of `source` into a DRW boundary-edge object and
+// append it to `loop`. Shared by every path written by the hatch exporter
+// so the per-edge layout stays in one place. The container that encloses
+// an RS_Spline is handled by caller lookup: it reaches here as the
+// (chord-flattened or clone-preserving) container `exportLoops()` built.
+void appendHatchLoopEdges(DRW_HatchLoop& loop,
+                          const RS_EntityContainer& source) {
+  std::vector<const RS_Entity*> edges;
+  for (const RS_Entity* ed :
+       lc::LC_ContainerTraverser{source, RS2::ResolveNone}.entities()) {
+    if (ed == nullptr) continue;
+    if (ed->isContainer() && ed->rtti() != RS2::EntitySpline) {
+      const auto parts = lc::LC_ContainerTraverser{
+          *static_cast<const RS_EntityContainer*>(ed),
+          RS2::ResolveAll}.entities();
+      edges.insert(edges.end(), parts.begin(), parts.end());
+    } else {
+      edges.push_back(ed);
+    }
+  }
+  for (const RS_Entity* ed : edges) {
+    if (ed->rtti() == RS2::EntityLine) {
+      const auto* ln = static_cast<const RS_Line*>(ed);
+      auto line = std::make_shared<DRW_Line>();
+      line->basePoint.x = ln->getStartpoint().x;
+      line->basePoint.y = ln->getStartpoint().y;
+      line->secPoint.x = ln->getEndpoint().x;
+      line->secPoint.y = ln->getEndpoint().y;
+      loop.objlist.push_back(line);
+    } else if (ed->rtti() == RS2::EntityArc) {
+      const auto* ar = static_cast<const RS_Arc*>(ed);
+      auto arc = std::make_shared<DRW_Arc>();
+      arc->basePoint.x = ar->getCenter().x;
+      arc->basePoint.y = ar->getCenter().y;
+      arc->radious = ar->getRadius();
+      if (!ar->isReversed()) {
+        arc->staangle = ar->getAngle1();
+        arc->endangle = ar->getAngle2();
+        arc->isccw = true;
+      } else {
+        arc->staangle = 2 * M_PI - ar->getAngle1();
+        arc->endangle = 2 * M_PI - ar->getAngle2();
+        arc->isccw = false;
+      }
+      loop.objlist.push_back(arc);
+    } else if (ed->rtti() == RS2::EntityCircle) {
+      const auto* ci = static_cast<const RS_Circle*>(ed);
+      auto arc = std::make_shared<DRW_Arc>();
+      arc->basePoint.x = ci->getCenter().x;
+      arc->basePoint.y = ci->getCenter().y;
+      arc->radious = ci->getRadius();
+      arc->staangle = 0.0;
+      arc->endangle = 2 * M_PI;
+      arc->isccw = true;
+      loop.objlist.push_back(arc);
+    } else if (ed->rtti() == RS2::EntityEllipse) {
+      const auto* el = static_cast<const RS_Ellipse*>(ed);
+      auto ell = std::make_shared<DRW_Ellipse>();
+      ell->basePoint.x = el->getCenter().x;
+      ell->basePoint.y = el->getCenter().y;
+      ell->secPoint.x = el->getMajorP().x;
+      ell->secPoint.y = el->getMajorP().y;
+      ell->ratio = el->getRatio();
+      double rot = el->getMajorP().angle();
+      double startAng =
+          el->getCenter().angleTo(el->getStartpoint()) - rot;
+      double endAng = el->getCenter().angleTo(el->getEndpoint()) - rot;
+      if (startAng < 0) startAng = M_PI * 2 + startAng;
+      if (endAng < 0) endAng = M_PI * 2 + endAng;
+      ell->staparam = startAng;
+      ell->endparam = endAng;
+      ell->isccw = !el->isReversed();
+      loop.objlist.push_back(ell);
+    } else if (ed->rtti() == RS2::EntitySplinePoints) {
+      loop.objlist.push_back(makeDrwSplineFromSplinePoints(
+          static_cast<const LC_SplinePoints*>(ed)));
+    } else if (ed->rtti() == RS2::EntitySpline) {
+      loop.objlist.push_back(makeDrwSplineFromRSSpline(
+          static_cast<const RS_Spline*>(ed)));
+    }
+  }
+}
+
 } // namespace
 
 /**
@@ -32672,22 +32755,12 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch *h) {
     return;
   }
 
-  bool writeIt = true;
-  if (h->countLoops() > 0) {
-    // check if all of the loops contain entities:
-    for (RS_Entity *l :
-         lc::LC_ContainerTraverser{*h, RS2::ResolveNone}.entities()) {
-      if (l->isContainer() && !l->getFlag(RS2::FlagTemp)) {
-        if (l->count() == 0) {
-          writeIt = false;
-        }
-      }
-    }
-  } else {
-    writeIt = false;
-  }
-
-  if (!writeIt) {
+  // Build one boundary path per extracted loop, in WCS, flagged by the
+  // loop's depth in the extracted tree. Dropped hatches are those whose
+  // validate() never produced an ordered tree; exportLoops() returns
+  // empty for them.
+  auto loops = h->exportLoops();
+  if (loops.empty()) {
     RS_DEBUG->print(RS_Debug::D_WARNING,
                     "RS_FilterDXF::writeHatch: Dropping Hatch");
     return;
@@ -32708,7 +32781,6 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch *h) {
   } else {
     ha.name = h->getPattern().toUtf8().data();
   }
-  ha.loopsnum = h->countLoops();
 
   // Realized definition lines, pattern type 2, and the approximate XDATA tag.
   // ODA File Converter 27.1 deletes every non-solid HATCH written with 78 = 0
@@ -32736,94 +32808,15 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch *h) {
                                                definition.approximate);
   }
 
-  for (RS_Entity *l = h->firstEntity(RS2::ResolveNone); l;
-       l = h->nextEntity(RS2::ResolveNone)) {
-    // Write hatch loops:
-    if (l->isContainer() && !l->getFlag(RS2::FlagTemp)) {
-      auto loop = static_cast<RS_EntityContainer *>(l);
-      std::shared_ptr<DRW_HatchLoop> lData = std::make_shared<DRW_HatchLoop>(0);
-
-      // a container other than a spline, such as a polyline, is written as its edges
-      std::vector<RS_Entity *> edges;
-      for (RS_Entity *ed :
-           lc::LC_ContainerTraverser{*loop, RS2::ResolveNone}.entities()) {
-        if (ed->isContainer() && ed->rtti() != RS2::EntitySpline) {
-          const auto parts = lc::LC_ContainerTraverser{
-              *static_cast<RS_EntityContainer *>(ed), RS2::ResolveAll}.entities();
-          edges.insert(edges.end(), parts.begin(), parts.end());
-        } else {
-          edges.push_back(ed);
-        }
-      }
-      for (RS_Entity *ed : edges) {
-        // Write hatch loop edges:
-        if (ed->rtti() == RS2::EntityLine) {
-          auto *ln = static_cast<RS_Line *>(ed);
-          std::shared_ptr<DRW_Line> line = std::make_shared<DRW_Line>();
-          line->basePoint.x = ln->getStartpoint().x;
-          line->basePoint.y = ln->getStartpoint().y;
-          line->secPoint.x = ln->getEndpoint().x;
-          line->secPoint.y = ln->getEndpoint().y;
-          lData->objlist.push_back(line);
-        } else if (ed->rtti() == RS2::EntityArc) {
-          auto ar = static_cast<RS_Arc *>(ed);
-          std::shared_ptr<DRW_Arc> arc = std::make_shared<DRW_Arc>();
-          arc->basePoint.x = ar->getCenter().x;
-          arc->basePoint.y = ar->getCenter().y;
-          arc->radious = ar->getRadius();
-          if (!ar->isReversed()) {
-            arc->staangle = ar->getAngle1();
-            arc->endangle = ar->getAngle2();
-            arc->isccw = true;
-          } else {
-            arc->staangle = 2 * M_PI - ar->getAngle1();
-            arc->endangle = 2 * M_PI - ar->getAngle2();
-            arc->isccw = false;
-          }
-          lData->objlist.push_back(arc);
-        } else if (ed->rtti() == RS2::EntityCircle) {
-          auto ci = static_cast<RS_Circle *>(ed);
-          std::shared_ptr<DRW_Arc> arc = std::make_shared<DRW_Arc>();
-          arc->basePoint.x = ci->getCenter().x;
-          arc->basePoint.y = ci->getCenter().y;
-          arc->radious = ci->getRadius();
-          arc->staangle = 0.0;
-          arc->endangle = 2 * M_PI; // 2*M_PI;
-          arc->isccw = true;
-          lData->objlist.push_back(arc);
-        } else if (ed->rtti() == RS2::EntityEllipse) {
-          auto el = static_cast<RS_Ellipse *>(ed);
-          std::shared_ptr<DRW_Ellipse> ell = std::make_shared<DRW_Ellipse>();
-          ell->basePoint.x = el->getCenter().x;
-          ell->basePoint.y = el->getCenter().y;
-          ell->secPoint.x = el->getMajorP().x;
-          ell->secPoint.y = el->getMajorP().y;
-          ell->ratio = el->getRatio();
-          double rot = el->getMajorP().angle();
-          double startAng = el->getCenter().angleTo(el->getStartpoint()) - rot;
-          double endAng = el->getCenter().angleTo(el->getEndpoint()) - rot;
-          if (startAng < 0) {
-            startAng = M_PI * 2 + startAng;
-          }
-          if (endAng < 0) {
-            endAng = M_PI * 2 + endAng;
-          }
-          ell->staparam = startAng;
-          ell->endparam = endAng;
-          ell->isccw = !el->isReversed();
-          lData->objlist.push_back(ell);
-        } else if (ed->rtti() == RS2::EntitySplinePoints) {
-          lData->objlist.push_back(makeDrwSplineFromSplinePoints(
-              static_cast<LC_SplinePoints *>(ed)));
-        } else if (ed->rtti() == RS2::EntitySpline) {
-          lData->objlist.push_back(
-              makeDrwSplineFromRSSpline(static_cast<RS_Spline *>(ed)));
-        }
-      }
-      lData->update(); // change to DRW_HatchLoop
-      ha.appendLoop(lData);
-    }
+  for (const auto& loop : loops) {
+    if (!loop.edges) continue;
+    auto lData = std::make_shared<DRW_HatchLoop>(
+        LC_HatchDefinitionLines::boundaryPathFlags(loop.depth));
+    appendHatchLoopEdges(*lData, *loop.edges);
+    lData->update();
+    ha.appendLoop(lData);
   }
+  ha.loopsnum = static_cast<int>(ha.looplist.size());
   if (m_dwgW) {
     if (!m_dwgW->writeHatch(&ha))
       m_writeFailed = true;

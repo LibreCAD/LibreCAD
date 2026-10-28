@@ -230,6 +230,25 @@ public:
      */
     RS_HatchPatternFrame patternFrame() const;
 
+    /// One boundary path handed to the exporter: a WCS entity container of
+    /// atomic edges, and the loop's depth in the extracted tree (0 = root).
+    struct ExportLoop {
+        std::unique_ptr<RS_EntityContainer> edges;
+        int depth = 0;
+    };
+
+    /**
+     * @return One ExportLoop per extracted loop in the hatch tree, in
+     * pre-order (every root is followed by its own descendants). The
+     * entities inside each container are atomic WCS clones of the loop's
+     * boundary edges, in the order LoopExtractor produced them. One narrow
+     * exception: when the hatch has exactly one source container that
+     * holds a single RS_Spline, that container is cloned verbatim so the
+     * writer keeps the SPLINE edge instead of flattening it to chord
+     * lines. Empty when the hatch was never validated.
+     */
+    std::vector<ExportLoop> exportLoops() const;
+
     void draw(RS_Painter* painter) override;
     void move(const RS_Vector& offset) override;
     void rotate(const RS_Vector& center, double angle) override;

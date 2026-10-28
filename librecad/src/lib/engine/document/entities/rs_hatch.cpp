@@ -333,6 +333,103 @@ RS_HatchPatternFrame RS_Hatch::patternFrame() const {
     return frame;
 }
 
+namespace {
+
+// Clones every atomic edge of `node.getOuterLoop()` into a fresh WCS
+// container and recurses depth-first.
+void appendExportLoops(const LC_LoopUtils::LC_Loops& node,
+                       int depth,
+                       const RS_Vector& pivot,
+                       double loopAngle,
+                       std::vector<RS_Hatch::ExportLoop>& out) {
+    auto edges = std::make_unique<RS_EntityContainer>(nullptr, true);
+    auto source = node.getOuterLoop();
+    if (source) {
+        for (RS_Entity* e : *source) {
+            if (e == nullptr) continue;
+            RS_Entity* copy = e->clone();
+            copy->setParent(nullptr);
+            copy->setLayer(nullptr);
+            edges->addEntity(copy);
+        }
+    }
+    // The loops live in the frame rotated by -loopAngle about pivot (see
+    // validate()). Rotating by +loopAngle maps them back into WCS. The
+    // identity case stays bit-identical, so a solid hatch (loopAngle = 0)
+    // reaches the writer with the same coordinates as before.
+    if (loopAngle != 0.0)
+        edges->rotate(pivot, RS_Vector{loopAngle});
+    out.push_back({std::move(edges), depth});
+    for (const auto& child : node.getChildren())
+        appendExportLoops(child, depth + 1, pivot, loopAngle, out);
+}
+
+// True when the given extracted container holds exactly one RS_Spline
+// anywhere in it. validate() flattens source entities with ResolveAll, so
+// an RS_Spline reaches the sorter as its chord lines; the writer wants to
+// write the SPLINE edge back for the single-spline draw-hatch input.
+bool holdsSingleRsSpline(const RS_EntityContainer& container) {
+    bool found = false;
+    lc::LC_ContainerTraverser traverser{container, RS2::ResolveNone};
+    for (const RS_Entity* entity : traverser.entities()) {
+        if (entity == nullptr) continue;
+        if (entity->rtti() == RS2::EntitySpline) {
+            if (found) return false;
+            found = true;
+            continue;
+        }
+        // A nested container is explored by the traverser already; any
+        // non-spline atomic entity rules the single-spline case out.
+        if (entity->isAtomic())
+            return false;
+    }
+    return found;
+}
+
+std::unique_ptr<RS_EntityContainer> cloneSourceWithChildren(
+    const RS_EntityContainer& source) {
+    auto owned = std::make_unique<RS_EntityContainer>(nullptr, true);
+    for (RS_Entity* e : source) {
+        if (e == nullptr) continue;
+        RS_Entity* copy = e->clone();
+        copy->setParent(owned.get());
+        copy->setLayer(nullptr);
+        owned->addEntity(copy);
+    }
+    return owned;
+}
+
+}  // namespace
+
+std::vector<RS_Hatch::ExportLoop> RS_Hatch::exportLoops() const {
+    std::vector<ExportLoop> out;
+    if (!m_orderedLoops || m_orderedLoops->empty())
+        return out;
+    for (const auto& root : *m_orderedLoops)
+        appendExportLoops(root, 0, m_pivot, m_loopAngle, out);
+
+    // One narrow exception: validate() flattens source entities with
+    // ResolveAll, so an RS_Spline reaches the tree as its chord lines.
+    // When the hatch's own source has exactly one container and it holds
+    // one RS_Spline (any level), hand the writer the source container
+    // instead so the SPLINE edge survives the round trip.
+    if (out.size() == 1u) {
+        const RS_EntityContainer* onlySource = nullptr;
+        int containerCount = 0;
+        for (RS_Entity* e : *this) {
+            if (e != nullptr && e->isContainer() && !e->getFlag(RS2::FlagTemp)) {
+                ++containerCount;
+                onlySource = static_cast<const RS_EntityContainer*>(e);
+            }
+        }
+        if (containerCount == 1 && onlySource != nullptr &&
+            holdsSingleRsSpline(*onlySource)) {
+            out[0].edges = cloneSourceWithChildren(*onlySource);
+        }
+    }
+    return out;
+}
+
 /**
  * Calculates the bounding box as update() does. The contour bounds the hatch
  * even while the layer its edges were picked from is hidden.
