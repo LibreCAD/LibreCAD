@@ -1625,6 +1625,7 @@ TEST_CASE("RS_Hatch area: left-branch hyperbola segment (#2559)",
     }
 }
 
+
 // Regression: picking a rotated pattern hatch tested the WCS click against
 // the loops validate() had rotated by -angle, so a 30-degree ANSI31 hatch on
 // (0,0)-(10,0)-(0,10) was unpickable at interior points and pickable just
@@ -1813,6 +1814,115 @@ TEST_CASE("RS_Hatch moments: pattern hatch equals the solid hatch at any angle",
         // use the same boundary so their centroids and tensors agree in WCS.
         checkHatchMoments(*h, area, centroid, central, 22.4, 1e-10);
     }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: hyperbola segment on both branches",
+          "[lc-hatchfix][moments]") {
+    // Same construction as #2559 (hyperbola from phi=-0.5 to phi=1.2 with
+    // a=2, b=1, theta=25deg, c=(3,-2), closed by a chord). Both branches
+    // have the same area 0.945631933837233 (checked above) but different
+    // centroids and central tensors; the WCS answer must come from the GL
+    // integrator through momentLineIntegrals, not the stale closed form.
+    const double th = 25.0 * M_PI / 180.0;
+    SECTION("right branch (reversed=false)") {
+        LC_HyperbolaData d(RS_Vector(3, -2),
+                           RS_Vector(2.0 * std::cos(th), 2.0 * std::sin(th)),
+                           0.5, -0.5, 1.2, false);
+        RS_Hatch hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+        auto* loop = new RS_EntityContainer(&hatch);
+        hatch.addEntity(loop);
+        auto* hb = new LC_Hyperbola(loop, d);
+        loop->addEntity(hb);
+        loop->addEntity(new RS_Line(loop, hb->getEndpoint(), hb->getStartpoint()));
+        hatch.update();
+        REQUIRE(hatch.getUpdateError() == RS_Hatch::HATCH_OK);
+        checkHatchMoments(hatch, 0.945631933837233,
+                          RS_Vector(5.18604044469351, -0.494928732544125),
+                          {0.0363376945360846, 0.280534794376385,
+                           0.0623564313990398},
+                          5.0, 1e-10);
+    }
+    SECTION("left branch (reversed=true)") {
+        LC_HyperbolaData d(RS_Vector(3, -2),
+                           RS_Vector(2.0 * std::cos(th), 2.0 * std::sin(th)),
+                           0.5, -0.5, 1.2, true);
+        RS_Hatch hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+        auto* loop = new RS_EntityContainer(&hatch);
+        hatch.addEntity(loop);
+        auto* hb = new LC_Hyperbola(loop, d);
+        loop->addEntity(hb);
+        loop->addEntity(new RS_Line(loop, hb->getEndpoint(), hb->getStartpoint()));
+        hatch.update();
+        REQUIRE(hatch.getUpdateError() == RS_Hatch::HATCH_OK);
+        checkHatchMoments(hatch, 0.945631933837233,
+                          RS_Vector(0.441888806944747, -2.70716297267495),
+                          {0.241047532237592, 0.0758249566748777,
+                           -0.109415517914656},
+                          5.0, 1e-10);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: closed spline diamond off the origin",
+          "[lc-hatchfix][moments]") {
+    // makeClosedSplineHatch((10, 5)): a closed quadratic B-spline diamond of
+    // radius 1 centred on (10, 5). Enclosed area 5/3, central tensor is
+    // isotropic with Ixx=Iyy=31/140 and Ixy=0. Before the full GL pipeline
+    // the moments came out about the world origin, not the centroid, so
+    // the central tensor on an off-origin diamond was wildly wrong.
+    std::unique_ptr<RS_Hatch> hatch(makeClosedSplineHatch(RS_Vector(10, 5)));
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    checkHatchMoments(*hatch, 5.0 / 3.0, RS_Vector(10, 5),
+                      {31.0 / 140.0, 31.0 / 140.0, 0.0}, 3.0, 1e-10);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: open spline lens off the origin",
+          "[lc-hatchfix][moments]") {
+    // Lens with the open control net (9,5),(9.5,6.2),(10.5,6.2),(11,5) and
+    // a closing chord from (11, 5) back to (9, 5). Area 1.6, centroid
+    // (10, 5.48); the open spline contributes to centroid/tensor through
+    // the GL quadrature on each quadratic segment plus the closing chord.
+    RS_Hatch hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+    auto* loop = new RS_EntityContainer(&hatch);
+    hatch.addEntity(loop);
+    LC_SplinePointsData sd(/*closed=*/false, /*cut=*/false);
+    sd.useControlPoints = true;
+    sd.controlPoints = {{9.0, 5.0}, {9.5, 6.2}, {10.5, 6.2}, {11.0, 5.0}};
+    loop->addEntity(new LC_SplinePoints(loop, std::move(sd)));
+    loop->addEntity(new RS_Line(loop, RS_Vector(11.0, 5.0), RS_Vector(9.0, 5.0)));
+    hatch.update();
+    REQUIRE(hatch.getUpdateError() == RS_Hatch::HATCH_OK);
+    checkHatchMoments(hatch, 1.6, RS_Vector(10.0, 5.48),
+                      {0.32, 0.157988571428571, 0.0}, 2.5, 1e-10);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_FilterDXFRW: spline lens hatch fixture imports with exact moments",
+          "[lc-hatchfix][moments]") {
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::QuietLog quiet;
+    RS_Graphic g;
+    REQUIRE(lc::test::importDrawing(
+        g,
+        std::filesystem::path(LIBRECAD_TEST_DIR) / "dxf" /
+            "hatch_moments_spline_lens_10_5.dxf",
+        RS2::FormatDXFRW));
+    RS_Hatch* hatch = nullptr;
+    int count = 0;
+    for (RS_Entity* e :
+         lc::LC_ContainerTraverser{g, RS2::ResolveAll}.entities()) {
+        if (e && e->rtti() == RS2::EntityHatch) {
+            ++count;
+            if (!hatch) hatch = static_cast<RS_Hatch*>(e);
+        }
+    }
+    REQUIRE(count == 1);
+    REQUIRE(hatch != nullptr);
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    checkHatchMoments(*hatch, 1.6, RS_Vector(10.0, 5.48),
+                      {0.32, 0.157988571428571, 0.0}, 2.5, 1e-10);
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
