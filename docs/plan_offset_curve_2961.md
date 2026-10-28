@@ -33,6 +33,10 @@ Implementation owner: `/Users/dli/.codex/worktrees/offset-2961-runtime/LibreCAD`
 branch `codex/offset-2961-native-worker`, initially pinned to
 `df0c891ad5a0bb5b0d0e864f4cd9cdd8036d5f83`. Build/evidence root:
 `/Users/dli/dev/LibreCAD/tmp/offset-2961-native-20261026`.
+Latest upstream integration: merge `c2100eaff` includes freshly fetched
+`origin/master` at `fb45503b8c10541958983230c0e5a633e83cb215`.
+The W15 ledger below records the merged source, conflict resolutions and selected
+Release qualification; earlier tracking-pin audits remain historical.
 The isolated qmake6 helper build is retained at
 `tmp/offset-2961-qmake-native` inside this implementation worktree; it uses a
 private SDK cache, not the shared checkout's stash.
@@ -1355,10 +1359,12 @@ W10 was the last product qualification on the identical retained source; W12
 qualification on the later source is recorded below.
 
 At feature HEAD `83ca73f99`, the actual merge-base diff has317 fully classified
-paths (101 modified/216 added); HEAD...origin/master has391 feature-only/31
-origin-only commits. The109 upstream-only changed paths have not been merged,
-copied or reverted. This is a read-only local tracking-pin audit, not a network
+paths (101 modified/216 added); HEAD...origin/master had391 feature-only/31
+origin-only commits. At that pin the109 upstream-only changed paths had not been
+merged, copied or reverted. This is a read-only local tracking-pin audit, not a network
 freshness, mergeability or integrated-upstream build claim.
+The later user-requested W15 merge below supersedes that unmerged status, not the
+historical qualification boundaries or this audit's recorded classifications.
 `W11-origin-scope-reconciliation.md` SHA256 is
 `e59acbe4b576d6729a41f04bd30ee3392dbe116f69459ed4273d16b19a8e86be`.
 It supersedes only W10's shortcut-removal disposition and preserves that report's
@@ -1515,6 +1521,63 @@ W14 does not implement asynchronous Trim action routing or close remaining creat
 preview-cache, import, packaging, current-source full GUI/file or final R gates.
 The later user-requested upstream merge must have its own source pin and verification;
 pre-merge receipts above do not qualify a different merged tree.
+
+User-requested upstream update (W15):
+`c2100eaff697f92937f170df087944964434dc14` merges freshly fetched
+`origin/master` at `fb45503b8c10541958983230c0e5a633e83cb215` into
+`7dbec029dad15bbb4bdfed5b0b0f5130206724d1`, preserving both parents and the
+feature history. Immediately before merging there were398 feature-only and32
+upstream-only commits. The merged source tree is
+`0059193937519ffa7621b2fdd9578aac9fb3ea32`; this checkpoint changes documentation
+only. The upstream update was explicitly requested, not unrelated feature work.
+Both other checkouts and their protected indexes remain unchanged; nothing was
+pushed or copied into the dirty main checkout.
+
+Only two files required manual conflict resolution. `CMakeLists.txt` retains both
+local offset/XDATA/coverage test registrations and the upstream modifier,
+language, drawing-options and linetype tests. `LC_CopyUtils::copy()` retains the
+local successful-copy result list and refusal accounting, then imports the
+upstream referenced linetypes after `endCopy()`. Upstream copy/paste, document
+linetype, shortcut/translation, font/license and packaging changes are retained;
+the merge itself changes no offset-worker sources. No additional integration
+code fixes were needed.
+
+CMake Release successfully builds `librecad`, `librecad_tests`,
+`librecad_offset_trim_tests`, `librecad_offset_worker_client_tests`,
+`librecad_offset_source_preparation_tests` and `librecad_offset_test_helper`.
+Fresh offscreen discovery/execution on that exact merged tree passes:
+
+| Suite / selector | TEST_CASE declarations | JUnit cases | Assertions |
+|---|---|---|---|
+| copy: `[copy]~[.slow]` | 78 | 83 | 4597 |
+| linetype: `[linetype]` | 109 | 133 | 3846 |
+| geometry: `[lc-offsetcurve][geometry]` | 372 | 444 | 1576253 |
+| clipboard: `[lc-offsetcurve][g-fixtures][clipboard]` | 1 | 1 | 1054 |
+| trim: full micro target | 98 | 98 | 50254 |
+| client: full micro target | 14 | 14 | 7715 |
+| source_preparation: full micro target | 75 | 81 | 83385 |
+
+Every discovered identity executes, there are no duplicate identities or missing
+tests, and additional JUnit cases are named SECTION entries under discovered
+declarations. In particular, source preparation has75 declarations plus six
+section entries, not81 independent declarations. Every report has zero errors,
+failures and skips; overlapping selectors are not summed as unique coverage.
+Worker polling assertion totals remain scheduling-dependent.
+`W15-<suite>-discovery-release.xml` and `W15-qualified-<suite>-release.xml` are
+preserved in the evidence root. `W15-merge-evidence.sha256` binds all14 XML files
+and the successful build log; its SHA256 is
+`a2f12aa85d8cbd012e428c5b5ba412b5d3aab846a3a4a1670050fe4e8eb06e5a`.
+`W15-merge-build-release.log` SHA256 is
+`34e682d2bfabf1e653d1cd51d0ef4b7d51f7bf4d6421e287b2869d3d557eb0a1`.
+Fresh H6 roadmap parser/inventory checks pass6/6 with no production mismatch or
+pending declaration, preserving71 original identities and93 executable obligations.
+These are document/tool checks, not completion of those runtime obligations.
+
+This is selected Release/offscreen merge qualification, not execution of the
+entire application test suite, slow copy corpus, or complete file/version matrix.
+ASan, qmake6, deployed packaging and visible GUI acceptance were not rerun on the
+merged tree; earlier receipts retain their original source limits. The merge
+does not close native caller routing, source reconciliation, A-C review or final R.
 
 Remaining creation/repeat steps:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
