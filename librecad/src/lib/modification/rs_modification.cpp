@@ -1452,7 +1452,7 @@ bool LC_OffsetPreviewSnapshot::admitted() const noexcept {
             return false;
         for (const auto& value : e.geometry) {
             if (const auto* line = std::get_if<RS_LineData>(&value)) {
-                if (!point(line->startpoint) || !point(line->endpoint) || !take(12)) return false;
+                if (!point(line->startpoint) || !point(line->endpoint) || !take(13)) return false;
             } else {
                 const auto& d = std::get<RS_SplineData>(value);
                 const auto controls = d.controlPoints.size();
@@ -1460,7 +1460,7 @@ bool LC_OffsetPreviewSnapshot::admitted() const noexcept {
                     (controls - 1) % d.degree || d.type != RS_SplineData::SplineType::ClampedOpen ||
                     d.savedOpenType != d.type || !d.fitPoints.empty() || !d.savedOpenKnots.empty() ||
                     d.weights.size() != controls || d.knotslist.size() != controls + d.degree + 1 ||
-                    d.knotslist.size() > 32768 || !take(12 + 6 * controls + d.knotslist.size())) return false;
+                    d.knotslist.size() > 32768 || !take(13 + 6 * controls + d.knotslist.size())) return false;
                 for (const auto& p : d.controlPoints) if (!point(p)) return false;
                 for (double w : d.weights) if (w != 1) return false;
                 std::size_t index = 0;
@@ -1559,13 +1559,13 @@ std::unique_ptr<LC_OffsetPreviewSnapshot> LC_OffsetPreviewCache::snapshot(const 
         if (!std::isnan(entry.maxObservedError)) value.observedError = entry.maxObservedError;
         for (const auto& entity : entry.entities) {
             if (entity->rtti() == RS2::EntityLine) {
-                if (!take(12)) return {};
+                if (!take(13)) return {};
                 value.geometry.emplace_back(static_cast<const RS_Line&>(*entity).getData());
             } else if (entity->rtti() == RS2::EntitySpline) {
                 const auto& d = static_cast<const RS_Spline&>(*entity).getData();
                 if (d.controlPoints.size() > 16384 || d.knotslist.size() > 32768 ||
                     d.weights.size() != d.controlPoints.size() || !d.fitPoints.empty() || !d.savedOpenKnots.empty() ||
-                    !take(12 + 6 * d.controlPoints.size() + d.knotslist.size())) return {};
+                    !take(13 + 6 * d.controlPoints.size() + d.knotslist.size())) return {};
                 value.geometry.emplace_back(d);
             } else return {}; // Never transport an editable native cache as authority.
         }
@@ -1852,7 +1852,7 @@ LC_OffsetSourceStatus RS_Modification::prepareOffsetSourceImpl(const RS_OffsetDa
                 // A preview refusal carries no sample/pair allowance provenance.
                 // Native retries may reuse geometry, never an effort-based refusal.
                 if (reused && nativeRequested && copy.status != LC_CurveOffsetStatus::Ok) reused = false;
-                if (reused) ++result.reusedCacheCopies;
+                if (reused) { ++result.reusedCacheCopies; result.reusedCopies.push_back({num, left}); }
                 else {
                     copy = LC_CurveOffsetMaterializationResult{};
                     if (!samplesLeft || !pairsLeft) copy.status = LC_CurveOffsetStatus::LimitExceeded;

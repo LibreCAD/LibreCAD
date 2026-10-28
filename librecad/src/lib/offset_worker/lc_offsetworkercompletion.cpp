@@ -96,6 +96,8 @@ LC_OffsetWorkerCompletion::produced(const RS_Entity& attributes) const {
     if (!m_joined) return std::nullopt;
     const auto* result = std::get_if<LC_OffsetWorkerResult::Produced>(&m_reply.result);
     const auto* input = std::get_if<LC_OffsetWorkerRequest::Produce>(&m_request.operation);
+    if (const auto* cached = std::get_if<LC_OffsetWorkerRequest::CachedProduce>(&m_request.operation))
+        input = &cached->produce;
     if (!input || !result || result->outputStatus == LC_OffsetWorkerResult::OrdinaryStatus::Unsupported)
         return std::nullopt;
     PreparedSource prepared;
@@ -108,6 +110,7 @@ LC_OffsetWorkerCompletion::produced(const RS_Entity& attributes) const {
     out.copiesKeptPlain = s.copiesKeptPlain; out.keptPlain = result->keptPlain;
     out.rebaseEngineRuns = s.rebaseEngineRuns; out.cacheEngineRuns = s.cacheEngineRuns;
     out.reusedCacheCopies = s.reusedCacheCopies; out.sampleUnits = s.sampleUnits;
+    out.reusedCopies = result->reusedCopies;
     out.intersectionPairAllowance = s.intersectionPairAllowance;
     out.attemptedOutputUsage = s.attemptedOutputUsage;
     out.attemptedDeepCountComplete = s.attemptedDeepCountComplete;
@@ -167,6 +170,13 @@ LC_OffsetWorkerCompletion::produced(const RS_Entity& attributes) const {
     }
     out.usage.deepEntities = deep;
     return prepared;
+}
+
+bool LC_OffsetWorkerCompletion::updatePreviewCache(LC_OffsetPreviewCache& cache, const RS_Entity* source) const {
+    if (!m_joined) return false;
+    const auto* input = std::get_if<LC_OffsetWorkerRequest::CachedProduce>(&m_request.operation);
+    const auto* output = std::get_if<LC_OffsetWorkerResult::Produced>(&m_reply.result);
+    return input && output && output->previewCache && cache.merge(source, input->cache, *output->previewCache);
 }
 
 LC_OffsetCurveEditResult LC_OffsetWorkerCompletion::apply(LC_OffsetCurve& clone) const {

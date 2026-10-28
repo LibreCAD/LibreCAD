@@ -61,9 +61,14 @@ struct Produced {
     std::vector<LC_OffsetRebaseOutcome> rebases;
     OrdinaryStatus outputStatus = OrdinaryStatus::None;
     std::vector<ProducedEntity> outputs;
+    /** Operation6 only. Ordinary entries, not native certificates. */
+    std::optional<LC_OffsetPreviewSnapshot> previewCache;
+    std::vector<LC_OffsetCacheReuse> reusedCopies;
 };
 /** Bounded value admission only, never native materialization authority. */
 bool admittedProduced(const Produced&, const LC_OffsetWorkerRequest::Produce&);
+bool admittedProduced(const Produced&, const LC_OffsetWorkerRequest::CachedProduce&);
+bool admittedProduced(const Produced&, const LC_OffsetWorkerRequest::Produce&, const LC_OffsetPreviewSnapshot&);
 
 /** A failed computation/serialization may have lost its exact work snapshot.
  * Such a reply has no result and must not refund an operation's reservation.
@@ -93,6 +98,9 @@ struct Reply {
  * [copy,reason,checkReason]; rebase records retain LC_OffsetRebaseOutcome order.
  * Each output is [0 Segment / 1 raw Spline / 2 native Curve,record]. Copy counts
  * partition outputs exactly; native records bind to that ordinal and actual side.
+ * CachedProduce (op 6) payload [Produce-payload,preview-snapshot,reusedCopies],
+ * reuse [copy,remainingOutputBudget]. Native creation still performs its normal
+ * adoption/rebase checks; cached ordinary geometry cannot bypass them.
  * None is failed-source output only; Unsupported retains all diagnostics/counts
  * but no output prefix. Work lost to a fatal failure never refunds reservations.
  * Strict value/status/count validation only, never geometric certification.

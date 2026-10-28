@@ -11,6 +11,7 @@
 #include "rs_modification.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
+#include "lc_offsetpreviewsnapshot.h"
 
 #include <QCborArray>
 #include <optional>
@@ -71,9 +72,13 @@ struct Produce {
     bool asOffsetCurve = false, preview = false;
     LC_OffsetBatchLimits limits;
 };
+struct CachedProduce {
+    Produce produce;
+    LC_OffsetPreviewSnapshot cache;
+};
 struct Request {
     Token token;
-    std::variant<Generate, ValidateCache, TrimCache, TrimConic, CheckThrough, Produce> operation;
+    std::variant<Generate, ValidateCache, TrimCache, TrimConic, CheckThrough, Produce, CachedProduce> operation;
 };
 
 /** Shared strict value syntax, NOT C certificates or geometric proof.
@@ -89,6 +94,9 @@ std::optional<QCborArray> encodePick(const LC_OffsetCacheTrim::Pick&);
 std::optional<LC_OffsetCacheTrim::Pick> decodePick(const QCborArray&);
 std::optional<QCborArray> encodeCutter(const Cutter&);
 std::optional<Cutter> decodeCutter(const QCborArray&);
+std::optional<QCborArray> encodePreview(const LC_OffsetPreviewSnapshot&);
+std::optional<LC_OffsetPreviewSnapshot> decodePreview(const QCborArray&);
+bool scanPreview(const QCborArray&);
 }
 
 /** Envelope [4, [requestId,generation,sourceRevision,undoEpoch], op, body].
@@ -97,6 +105,10 @@ std::optional<Cutter> decodeCutter(const QCborArray&);
  * CheckThrough (op 4): [cache,definition,worldTolerance,point,check].
  * Produce (op 5): [source,context,bounds,coordinate,fallback-or-null,distance,
  * copies,asOffsetCurve,preview,batchLimits].
+ * CachedProduce (op 6): [Produce-body,preview-snapshot]. Snapshot
+ * [revision,otherEntries,cleared,entries], entry [side,magnitude,budget,status,
+ * usage,validation,error-or-null,ordinary-Cutter-values]. Only LINE and raw
+ * normalized nonrational spline geometry is admitted; it is not a C certificate.
  * Source [0 ellipse / 1 raw spline,record]; context [topLevel,nativeSource,definition-or-null];
  * bounds [minimum-or-null,maximum-or-null]; batchLimits [outputBudget,samples,pairs,requestDeep].
  * Copies are 1..100. Signed distances are finite; zero/overflow are typed kernel refusals.

@@ -48,6 +48,8 @@ public:
      * outcome has no source/created-entity pointers or deletion authority.
      */
     std::optional<PreparedSource> produced(const RS_Entity& attributes) const;
+    /** Joined operation6 only; the caller still seals source/job lifetime. */
+    bool updatePreviewCache(LC_OffsetPreviewCache&, const RS_Entity* source) const;
     /** Apply to a caller-owned clone only after its retained input seal matches.
      * Live document publication/undo remains the caller's separate transaction.
      */

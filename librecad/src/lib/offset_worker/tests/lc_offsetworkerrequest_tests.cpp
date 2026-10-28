@@ -198,6 +198,10 @@ void same(const request::Produce& a, const request::Produce& b) {
     CHECK(a.limits.maxIntersectionPairs == b.limits.maxIntersectionPairs);
     CHECK(a.limits.maxDeepEntitiesPerRequest == b.limits.maxDeepEntitiesPerRequest);
 }
+void same(const request::CachedProduce& a, const request::CachedProduce& b) {
+    same(a.produce, b.produce);
+    CHECK(request::Values::encodePreview(a.cache) == request::Values::encodePreview(b.cache));
+}
 void same(const request::Request& a, const request::Request& b) {
     CHECK(a.token.requestId == b.token.requestId); CHECK(a.token.generation == b.token.generation);
     CHECK(a.token.sourceRevision == b.token.sourceRevision); CHECK(a.token.undoEpoch == b.token.undoEpoch);
@@ -365,7 +369,8 @@ TEST_CASE("offset worker request has exact version two positional shapes",
             const auto& source = value.operation;
             std::visit([&](const auto& op) {
                 if constexpr (!std::is_same_v<std::decay_t<decltype(op)>, request::Generate> &&
-                    !std::is_same_v<std::decay_t<decltype(op)>, request::Produce>) {
+                    !std::is_same_v<std::decay_t<decltype(op)>, request::Produce> &&
+                    !std::is_same_v<std::decay_t<decltype(op)>, request::CachedProduce>) {
                     CHECK(at(root, {3, 0, 0}).toArray().size() == qsizetype(op.cache.controlPoints.size()));
                     CHECK(at(root, {3, 0, 1}).toArray().size() == qsizetype(op.cache.knotslist.size()));
                     CHECK(at(root, {3, 0, 2}).toArray().size() == qsizetype(op.cache.weights.size()));
@@ -837,4 +842,37 @@ TEST_CASE("Produce requests freeze protocol four raw sources context bounds and 
         if (field == 4) d.savedOpenKnots.assign(32769, 0.0);
         CHECK_FALSE(request::encode({input.token, huge}));
     }
+}
+
+TEST_CASE("Cached Produce appends operation six with owned bounded ordinary preview values",
+          "[lc-offsetcurve][worker-protocol][request][preview-portable]") {
+    request::CachedProduce op;
+    op.produce.source = ellipse(); op.produce.coordinate = point(); op.produce.distance = .25;
+    op.cache.revision = 17; op.cache.otherEntries = 255;
+    LC_OffsetPreviewSnapshot::Entry entry;
+    entry.magnitude = .25; entry.budget = makeDefaultOffsetSourceBudget();
+    entry.status = LC_CurveOffsetStatus::Ok; entry.usage = {1, 1, 1};
+    entry.geometry.emplace_back(RS_LineData{{0, 1}, {1, 1}});
+    op.cache.entries.push_back(entry);
+    const request::Request input{token(), op};
+    const auto wire = request::encode(input); REQUIRE(wire);
+    CHECK(wire->at(0).toInteger() == 4); CHECK(wire->at(2).toInteger() == 6);
+    REQUIRE(wire->at(3).toArray().size() == 2);
+    CHECK(at(*wire, {3, 0}).toArray().size() == 10);
+    CHECK(at(*wire, {3, 1}).toArray().size() == 4);
+    auto decoded = request::decode(*wire); REQUIRE(decoded); same(input, *decoded);
+    CHECK(request::encode(*decoded) == wire);
+    op.cache.entries[0].geometry.clear(); op.produce.coordinate.x = 123;
+    CHECK(std::get<request::CachedProduce>(decoded->operation).cache.entries[0].geometry.size() == 1);
+    for (const auto& bad : {
+        changed(*wire, {2}, 5), changed(*wire, {3, 1, 0}, -1), changed(*wire, {3, 1, 1}, 256),
+        changed(*wire, {3, 1, 2}, 1), changed(*wire, {3, 1, 3, 0, 0}, 0),
+        changed(*wire, {3, 1, 3, 0, 1}, 1),
+        changed(*wire, {3, 1, 3, 0, 1}, std::numeric_limits<double>::infinity()),
+        changed(*wire, {3, 1, 3, 0, 3}, 99), changed(*wire, {3, 1, 3, 0, 5}, 99),
+        changed(*wire, {3, 1, 3, 0, 7, 0, 0}, 2)}) CHECK_FALSE(request::decode(bad));
+    auto duplicate = input;
+    auto& cache = std::get<request::CachedProduce>(duplicate.operation).cache;
+    cache.otherEntries = 0; cache.entries.push_back(cache.entries[0]);
+    CHECK_FALSE(request::admitted(duplicate)); CHECK_FALSE(request::encode(duplicate));
 }

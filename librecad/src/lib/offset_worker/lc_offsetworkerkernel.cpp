@@ -209,7 +209,8 @@ result::Native LC_OffsetWorkerKernel::checkThrough(const req::CheckThrough& inpu
 }
 
 
-result::Produced LC_OffsetWorkerKernel::produce(const req::Produce& input, Trace& trace) {
+result::Produced LC_OffsetWorkerKernel::produce(const req::Produce& input, Trace& trace,
+    const LC_OffsetPreviewSnapshot* seed) {
     // Empty shells first: no update()/constructor may repair the transported raw arrays.
     class ProduceEllipse final : public RS_Ellipse {
     public:
@@ -230,6 +231,8 @@ result::Produced LC_OffsetWorkerKernel::produce(const req::Produce& input, Trace
     std::unique_ptr<RS_Entity> source;
     if (input.source.index() == 0) source = std::make_unique<ProduceEllipse>(input);
     else source = std::make_unique<ProduceSpline>(input);
+    LC_OffsetPreviewCache cache;
+    if (seed && !cache.restore(source.get(), *seed)) throw std::logic_error("Invalid ordinary preview cache");
     RS_OffsetData data;
     data.coord = input.coordinate; data.sideFallback = input.fallback.value_or(RS_Vector{false});
     data.distance = input.distance; data.number = input.copies; data.multipleCopies = true;
@@ -246,7 +249,7 @@ result::Produced LC_OffsetWorkerKernel::produce(const req::Produce& input, Trace
     } else if (!input.limits.maxDeepEntitiesPerRequest)
         observed.status = LC_OffsetSourceStatus::LimitExceeded;
     else observed.status = RS_Modification::prepareOffsetSource(data, *source, input.preview,
-        input.limits, input.limits.maxDeepEntitiesPerRequest, input.context, roots, observed);
+        input.limits, input.limits.maxDeepEntitiesPerRequest, input.context, roots, observed, seed ? &cache : nullptr);
     result::Produced output;
     auto& s = output.source;
     s.status = observed.status; s.engineStatus = observed.engineStatus; s.detail = observed.detail;
@@ -260,6 +263,12 @@ result::Produced LC_OffsetWorkerKernel::produce(const req::Produce& input, Trace
     s.resolvedSide = observed.resolvedSide;
     output.copyOutputCounts = std::move(observed.copyOutputCounts);
     output.keptPlain = std::move(observed.keptPlain); output.rebases = std::move(observed.rebases);
+    output.reusedCopies = std::move(observed.reusedCopies);
+    if (seed) {
+        auto snapshot = cache.snapshot(source.get());
+        if (!snapshot) throw std::overflow_error("Ordinary preview cache exceeds transport bounds");
+        output.previewCache = std::move(*snapshot);
+    }
     trace.checkWork = s.adoptionCheckWork;
     for (const auto& r : output.rebases) {
         trace.checkWork.cacheSpans += r.checkWork.cacheSpans; trace.checkWork.vertices += r.checkWork.vertices;
@@ -272,7 +281,11 @@ result::Produced LC_OffsetWorkerKernel::produce(const req::Produce& input, Trace
     trace.nativePrepareEntered = s.rebaseEngineRuns || s.adoptionAttempts;
     if (s.status == LC_OffsetSourceStatus::Succeeded) output.outputStatus = result::OrdinaryStatus::Unsupported;
     // This checks diagnostics/grouping even when no output representation can be transported.
-    if (!result::admittedProduced(output, input)) throw std::logic_error("Invalid source preparation receipt");
+    const auto admitted = [&] {
+        return seed ? result::admittedProduced(output, input, *seed) :
+            result::admittedProduced(output, input);
+    };
+    if (!admitted()) throw std::logic_error("Invalid source preparation receipt");
     if (s.status != LC_OffsetSourceStatus::Succeeded) return output;
     if (roots.size() != s.usage.outputEntities) throw std::logic_error("Invalid source output grouping");
     const auto hard = makeDefaultOffsetSourceBudget();
@@ -306,7 +319,7 @@ result::Produced LC_OffsetWorkerKernel::produce(const req::Produce& input, Trace
         else output.outputs.emplace_back(req::Segment{line->getStartpoint(), line->getEndpoint()});
     }
     output.outputStatus = result::OrdinaryStatus::Complete;
-    if (!result::admittedProduced(output, input)) {
+    if (!admitted()) {
         output.outputs.clear(); output.outputStatus = result::OrdinaryStatus::Unsupported;
     }
     return output;
@@ -341,6 +354,10 @@ result::Reply LC_OffsetWorkerKernel::run(const req::Request& input, Trace* obser
         }
         case 4: reply.result = checkThrough(std::get<req::CheckThrough>(input.operation), trace); break;
         case 5: reply.result = produce(std::get<req::Produce>(input.operation), trace); break;
+        case 6: {
+            const auto& cached = std::get<req::CachedProduce>(input.operation);
+            reply.result = produce(cached.produce, trace, &cached.cache); break;
+        }
         default: return reply;
         }
         trace.computationCompleted = true;

@@ -40,6 +40,8 @@ auto members(Geo::CheckWork& d) {
     return std::tie(d.cacheSpans, d.vertices, d.distancePairs, d.deepest, d.orderingComparisons);
 }
 auto members(LC_OffsetOutputUsage& d) { return std::tie(d.cubicPieces, d.outputEntities, d.deepEntities); }
+auto members(LC_OffsetSourceBudget& d) { return std::tie(d.maxCubicPieces, d.maxOutputEntities, d.maxDeepEntities); }
+auto members(LC_OffsetCacheReuse& d) { return std::tie(d.copy, d.budget); }
 auto members(Trim::Location& d) { return std::tie(d.rawSpan, d.localParameter); }
 auto members(Trim::Endpoint& d) { return std::tie(d.labels, d.source, d.rootId, d.imageX, d.imageY); }
 auto members(Trim::Section& d) { return std::tie(d.rawSpan, d.from, d.to, d.originalDomain); }
@@ -385,15 +387,56 @@ struct ProductionScan {
     Counts geometry;
     std::size_t minimumDeep = 0;
 };
+struct ReuseAdmission {
+    std::array<bool, RS_OffsetData::kMaximumOffsetCopies> copies{};
+    std::size_t count = 0;
+    LC_OffsetOutputUsage usage{};
+};
+bool admitReuse(ReuseAdmission& out, const SourceDiagnostics& source, const Req::Produce& op,
+    const LC_OffsetPreviewSnapshot& seed,
+    const LC_OffsetCacheReuse* records, std::size_t count) {
+    if (count != source.reusedCacheCopies || count > std::size_t(op.copies) ||
+        (count && !source.resolvedSide)) return false;
+    const auto cap = produceBudget(op);
+    int previous = 0;
+    for (std::size_t i = 0; i < count; ++i) {
+        const auto& r = records[i]; const auto& b = r.budget;
+        if (r.copy <= previous || r.copy > op.copies || !isValidOffsetBudget(b) ||
+            b.maxCubicPieces > cap.maxCubicPieces || b.maxOutputEntities > cap.maxOutputEntities ||
+            b.maxDeepEntities > cap.maxDeepEntities) return false;
+        previous = r.copy;
+        const double magnitude = std::abs(double(r.copy) * op.distance);
+        const LC_OffsetPreviewSnapshot::Entry* found = nullptr;
+        for (const auto& e : seed.entries)
+            if (e.side == *source.resolvedSide && e.magnitude == magnitude) { found = &e; break; }
+        if (!found) return false;
+        const auto& e = *found;
+        if (e.status == Status::Ok) {
+            if (!usage(e.usage, b)) return false;
+        } else {
+            if (op.asOffsetCurve && !op.preview && op.context.nativeSource) return false;
+            if (e.status == Status::LimitExceeded && (b.maxCubicPieces > e.budget.maxCubicPieces ||
+                b.maxOutputEntities > e.budget.maxOutputEntities || b.maxDeepEntities > e.budget.maxDeepEntities)) return false;
+        }
+        out.copies[std::size_t(r.copy - 1)] = true;
+        const auto copies = std::size_t(op.copies);
+        if (!add(out.usage.cubicPieces, e.usage.cubicPieces, copies * cap.maxCubicPieces) ||
+            !add(out.usage.outputEntities, e.usage.outputEntities, copies * cap.maxOutputEntities) ||
+            !add(out.usage.deepEntities, e.usage.deepEntities, copies * cap.maxDeepEntities)) return false;
+    }
+    out.count = count;
+    return true;
+}
 bool productionHeader(const Produced& d, const Req::Produce& op, std::size_t groups,
-    std::size_t plain, std::size_t rebases, std::size_t outputs) {
+    std::size_t plain, std::size_t rebases, std::size_t outputs, const ReuseAdmission* reused = nullptr) {
     const auto& s = d.source;
     const auto cap = produceBudget(op);
     const std::size_t copies = std::size_t(op.copies);
     if (!admitted(s) || !admitted(d.outputStatus) || s.copiesRequested != op.copies ||
         s.copiesMade > op.copies || s.sourceRemoved || groups != std::size_t(s.copiesMade) ||
         s.copiesKeptPlain != int(plain) || plain > groups || rebases > copies ||
-        s.rebaseEngineRuns > rebases || s.cacheEngineRuns > copies || s.reusedCacheCopies ||
+        s.rebaseEngineRuns > rebases || s.cacheEngineRuns > copies ||
+        s.reusedCacheCopies != (reused ? reused->count : 0) || s.reusedCacheCopies > copies - s.cacheEngineRuns ||
         s.sampleUnits > copies * (produceSamples(op) + 1) ||
         s.intersectionPairAllowance > copies * producePairs(op) ||
         s.adoptionAttempts > copies || !checkWorkBound(s.adoptionCheckWork, s.adoptionAttempts) ||
@@ -415,12 +458,12 @@ bool productionHeader(const Produced& d, const Req::Produce& op, std::size_t gro
         const auto completedOrStopped = std::size_t(s.copiesMade) + (s.copiesMade < op.copies ? 1 : 0);
         if (wrap && op.source.index() == 1 && op.context.nativeSource) {
             if (rebases != completedOrStopped) return false;
-        } else if (s.cacheEngineRuns != completedOrStopped) return false;
+        } else if (s.cacheEngineRuns + s.reusedCacheCopies != completedOrStopped) return false;
         if (!s.copiesMade || !s.resolvedSide || !s.usage.outputEntities ||
             s.usage.outputEntities < std::size_t(s.copiesMade) || s.usage.cubicPieces < s.usage.outputEntities ||
             s.usage.deepEntities < s.usage.outputEntities ||
-            s.usage.cubicPieces > s.attemptedOutputUsage.cubicPieces ||
-            s.usage.outputEntities > s.attemptedOutputUsage.outputEntities) return false;
+            s.usage.cubicPieces > s.attemptedOutputUsage.cubicPieces + (reused ? reused->usage.cubicPieces : 0) ||
+            s.usage.outputEntities > s.attemptedOutputUsage.outputEntities + (reused ? reused->usage.outputEntities : 0)) return false;
         if (s.copiesMade == op.copies) {
             if (s.stoppedBy != LC_OffsetSourceStatus::Succeeded || s.engineStatus != Status::Ok) return false;
         } else if (s.stoppedBy == LC_OffsetSourceStatus::Vanished) {
@@ -465,7 +508,7 @@ bool productionPlain(const LC_OffsetPlainOutcome& p, ProductionScan& scan, const
     return true;
 }
 bool productionRebase(const LC_OffsetRebaseOutcome& a, ProductionScan& scan,
-    const Produced& d, const Req::Produce& op) {
+    const Produced& d, const Req::Produce& op, const ReuseAdmission* reused = nullptr) {
     if (!admitted(a) || a.copy != int(scan.previousRebase + 1) || a.copy > op.copies ||
         a.engineRuns > 1 || a.sampleUnits > produceSamples(op) + 1 || !checkWorkBound(a.checkWork, 1)) return false;
     scan.previousRebase = std::size_t(a.copy);
@@ -517,7 +560,7 @@ bool productionRebase(const LC_OffsetRebaseOutcome& a, ProductionScan& scan,
         !add(scan.rebaseSamples, a.sampleUnits, d.source.sampleUnits) ||
         !add(scan.rebasePairs, a.intersectionPairAllowance, d.source.intersectionPairAllowance)) return false;
     if (!add(scan.pairAllowance, a.intersectionPairAllowance, d.source.intersectionPairAllowance)) return false;
-    if (!a.adopted && a.sampleUnits < produceSamples(op)) {
+    if (!a.adopted && !(reused && reused->copies[std::size_t(a.copy - 1)]) && a.sampleUnits < produceSamples(op)) {
         ++scan.cacheRuns;
         if (!add(scan.pairAllowance, producePairs(op) - a.intersectionPairAllowance,
             d.source.intersectionPairAllowance)) return false;
@@ -570,13 +613,13 @@ bool productionTail(const ProductionScan& scan, const Produced& d, const Req::Pr
     }
     return true;
 }
-bool produced(const Produced& d, const Req::Produce& op) {
-    if (!productionHeader(d, op, d.copyOutputCounts.size(), d.keptPlain.size(), d.rebases.size(), d.outputs.size())) return false;
+bool produced(const Produced& d, const Req::Produce& op, const ReuseAdmission* reused = nullptr) {
+    if (!productionHeader(d, op, d.copyOutputCounts.size(), d.keptPlain.size(), d.rebases.size(), d.outputs.size(), reused)) return false;
     ProductionScan scan;
     for (std::size_t i = 0; i < d.copyOutputCounts.size(); ++i)
         if (!productionCopy(d.copyOutputCounts[i], i, scan, op)) return false;
     for (const auto& p : d.keptPlain) if (!productionPlain(p, scan, d, op)) return false;
-    for (const auto& a : d.rebases) if (!productionRebase(a, scan, d, op)) return false;
+    for (const auto& a : d.rebases) if (!productionRebase(a, scan, d, op, reused)) return false;
     std::size_t ordinal = 0, end = scan.copies[0];
     const auto cap = produceBudget(op);
     for (std::size_t i = 0; i < d.outputs.size(); ++i) {
@@ -599,7 +642,8 @@ bool produced(const Produced& d, const Req::Produce& op) {
     }
     return productionTail(scan, d, op);
 }
-bool readProduced(const QCborValue& v, Produced& d, const Req::Produce& op, bool materialize) {
+bool readProduced(const QCborValue& v, Produced& d, const Req::Produce& op, bool materialize,
+    const ReuseAdmission* reused = nullptr) {
     QCborArray a, groups, plain, rebases, outputs;
     if (!array(v, 6, a) || !read(a.at(0), d.source) ||
         !bounded(a.at(1), RS_OffsetData::kMaximumOffsetCopies, groups) ||
@@ -607,7 +651,7 @@ bool readProduced(const QCborValue& v, Produced& d, const Req::Produce& op, bool
         !bounded(a.at(3), RS_OffsetData::kMaximumOffsetCopies, rebases) ||
         !read(a.at(4), d.outputStatus) || !bounded(a.at(5), produceBudget(op).maxOutputEntities, outputs) ||
         !productionHeader(d, op, std::size_t(groups.size()), std::size_t(plain.size()),
-            std::size_t(rebases.size()), std::size_t(outputs.size()))) return false;
+            std::size_t(rebases.size()), std::size_t(outputs.size()), reused)) return false;
     ProductionScan scan;
     for (qsizetype i = 0; i < groups.size(); ++i) {
         std::size_t count;
@@ -625,7 +669,7 @@ bool readProduced(const QCborValue& v, Produced& d, const Req::Produce& op, bool
     }
     for (const auto& item : rebases) {
         LC_OffsetRebaseOutcome r;
-        if (!read(item, r) || !productionRebase(r, scan, d, op)) return false;
+        if (!read(item, r) || !productionRebase(r, scan, d, op, reused)) return false;
         if (materialize) d.rebases.push_back(r);
     }
     std::size_t ordinal = 0, end = scan.copies[0], index = 0;
@@ -950,6 +994,11 @@ QCborArray fields(const Produced& d) {
     }
     return {fields(d.source), copies, plain, rebases, fields(d.outputStatus), outputs};
 }
+QCborArray cachedFields(const Produced& d) {
+    QCborArray reused;
+    for (const auto& r : d.reusedCopies) reused.append(fields(r));
+    return {fields(d), *Req::Values::encodePreview(*d.previewCache), reused};
+}
 QCborArray fields(const Trim::Result& d) {
     QCborArray fragments, conics, roots;
     for (const auto& f : d.fragments) {
@@ -972,7 +1021,7 @@ bool token(const Req::Token& a, const Req::Token& b) {
         a.sourceRevision == b.sourceRevision && a.undoEpoch == b.undoEpoch;
 }
 bool envelope(const Reply& d, const Req::Request& r) {
-    return !r.operation.valueless_by_exception() && d.operation <= 5 && d.operation == r.operation.index() &&
+    return !r.operation.valueless_by_exception() && d.operation <= 6 && d.operation == r.operation.index() &&
         token(d.token, r.token) && admitted(d.failure) && !d.result.valueless_by_exception();
 }
 
@@ -986,6 +1035,18 @@ template<class T> std::size_t itemCount(const T& d) {
         return 11 + 5 * d.controlPoints.size() + d.knotslist.size() + d.weights.size();
     else if constexpr (std::is_same_v<T, Curve>)
         return 1 + itemCount(d.cache) + itemCount(d.definition) + 2 + 1 + 5 * d.grips.size() + itemCount(d.midpoint);
+    else if constexpr (std::is_same_v<T, LC_OffsetPreviewSnapshot>) {
+        std::size_t n = 5;
+        for (const auto& e : d.entries) {
+            n += 15;
+            for (const auto& geometry : e.geometry) n += 2 + std::visit([](const auto& value) {
+                using V = std::decay_t<decltype(value)>;
+                if constexpr (std::is_same_v<V, RS_LineData>) return std::size_t{11};
+                else return itemCount(value);
+            }, geometry);
+        }
+        return n;
+    }
     else if constexpr (std::is_same_v<T, Produced>) {
         std::size_t n = 1 + itemCount(d.source) + 1 + d.copyOutputCounts.size() + 1 + 1 + 1 + 1;
         for (const auto& p : d.keptPlain) n += itemCount(p);
@@ -995,6 +1056,10 @@ template<class T> std::size_t itemCount(const T& d) {
             if constexpr (std::is_same_v<V, Req::Segment>) return std::size_t{11};
             else return itemCount(value);
         }, item);
+        if (d.previewCache) {
+            n += 2 + itemCount(*d.previewCache);
+            for (const auto& r : d.reusedCopies) n += itemCount(r);
+        }
         return n;
     }
     else if constexpr (std::is_same_v<T, Native>) {
@@ -1038,7 +1103,25 @@ bool wireValue(const QCborValue& v, std::size_t& count, unsigned depth = 1) {
 
 bool admittedProduced(const Produced& d, const Req::Produce& op) {
     return op.copies >= 1 && op.copies <= RS_OffsetData::kMaximumOffsetCopies &&
-        produced(d, op) && itemCount(d) <= LC_OffsetWorkerWire::Limits{}.items - 9;
+        !d.previewCache && d.reusedCopies.empty() && produced(d, op) &&
+        itemCount(d) <= LC_OffsetWorkerWire::Limits{}.items - 9;
+}
+bool admittedProduced(const Produced& d, const Req::CachedProduce& op) {
+    return admittedProduced(d, op.produce, op.cache);
+}
+bool admittedProduced(const Produced& d, const Req::Produce& op, const LC_OffsetPreviewSnapshot& seed) {
+    if (op.copies < 1 || op.copies > RS_OffsetData::kMaximumOffsetCopies ||
+        !seed.admitted() || !d.previewCache || !d.previewCache->admitted()) return false;
+    const auto& after = *d.previewCache;
+    const bool nativeRequested = op.asOffsetCurve && !op.preview && op.context.nativeSource;
+    const auto keeps = nativeRequested ? 0 : d.source.cacheEngineRuns;
+    if (after.revision < seed.revision || after.revision - seed.revision != keeps ||
+        after.otherEntries != (after.cleared ? 0 : seed.otherEntries) ||
+        (after.cleared && (!keeps || seed.entries.size() + seed.otherEntries + keeps <=
+            LC_OffsetPreviewSnapshot::maximumEntries))) return false;
+    ReuseAdmission reused;
+    return admitReuse(reused, d.source, op, seed, d.reusedCopies.data(), d.reusedCopies.size()) &&
+        produced(d, op, &reused) && itemCount(d) <= LC_OffsetWorkerWire::Limits{}.items - 9;
 }
 
 std::optional<QCborArray> encode(const Reply& d, const Req::Request& r) {
@@ -1046,9 +1129,11 @@ std::optional<QCborArray> encode(const Reply& d, const Req::Request& r) {
     // The complete caller-owned payload is checked before constructing CBOR.
     if (d.failure != Failure::None) {
         if (!std::holds_alternative<std::monostate>(d.result)) return std::nullopt;
-    } else if (d.operation == 5) {
+    } else if (d.operation == 5 || d.operation == 6) {
         const auto* value = std::get_if<Produced>(&d.result);
-        if (!Req::admitted(r) || !value || !admittedProduced(*value, std::get<Req::Produce>(r.operation))) return std::nullopt;
+        if (!Req::admitted(r) || !value) return std::nullopt;
+        if (d.operation == 5 ? !admittedProduced(*value, std::get<Req::Produce>(r.operation)) :
+            !admittedProduced(*value, std::get<Req::CachedProduce>(r.operation))) return std::nullopt;
     } else if (d.operation <= 1 || d.operation == 4) {
         const auto* n = std::get_if<Native>(&d.result);
         Counts c;
@@ -1061,6 +1146,7 @@ std::optional<QCborArray> encode(const Reply& d, const Req::Request& r) {
     QCborValue payload(nullptr);
     if (d.failure == Failure::None) {
         if (d.operation == 5) payload = fields(std::get<Produced>(d.result));
+        else if (d.operation == 6) payload = cachedFields(std::get<Produced>(d.result));
         else payload = d.operation <= 1 || d.operation == 4 ?
             fields(std::get<Native>(d.result)) : fields(std::get<Trim::Result>(d.result));
     }
@@ -1081,7 +1167,29 @@ std::optional<Reply> decode(const QCborArray& a, const Req::Request& r) {
     if (d.failure != Failure::None) return a.at(4).isNull() ? std::optional<Reply>(std::move(d)) : std::nullopt;
     // First pass admits every nested collection, scalar and aggregate without
     // allocating native arrays. Only then may shared value readers copy them.
-    if (d.operation == 5) {
+    if (d.operation == 6) {
+        if (!Req::admitted(r)) return std::nullopt;
+        const auto& op = std::get<Req::CachedProduce>(r.operation);
+        QCborArray payload, body, reuse;
+        SourceDiagnostics source;
+        if (!array(a.at(4), 3, payload) || !array(payload.at(0), 6, body) ||
+            !payload.at(1).isArray() || !Req::Values::scanPreview(payload.at(1).toArray()) ||
+            !bounded(payload.at(2), std::size_t(op.produce.copies), reuse) || !read(body.at(0), source)) return std::nullopt;
+        std::array<LC_OffsetCacheReuse, RS_OffsetData::kMaximumOffsetCopies> records;
+        for (qsizetype i = 0; i < reuse.size(); ++i)
+            if (!read(reuse.at(i), records[std::size_t(i)])) return std::nullopt;
+        ReuseAdmission reused;
+        if (!admitReuse(reused, source, op.produce, op.cache, records.data(), std::size_t(reuse.size()))) return std::nullopt;
+        Produced scan, value;
+        if (!readProduced(payload.at(0), scan, op.produce, false, &reused)) return std::nullopt;
+        // Every variable collection/scalar has been scanned before native arrays.
+        auto cache = Req::Values::decodePreview(payload.at(1).toArray());
+        if (!cache || !readProduced(payload.at(0), value, op.produce, true, &reused)) return std::nullopt;
+        value.previewCache = std::move(*cache);
+        value.reusedCopies.assign(records.begin(), records.begin() + reuse.size());
+        if (!admittedProduced(value, op)) return std::nullopt;
+        d.result = std::move(value);
+    } else if (d.operation == 5) {
         if (!Req::admitted(r)) return std::nullopt;
         Produced scan, value;
         const auto& op = std::get<Req::Produce>(r.operation);

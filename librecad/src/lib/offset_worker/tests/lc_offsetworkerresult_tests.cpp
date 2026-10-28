@@ -1153,3 +1153,49 @@ TEST_CASE("Produced geometry has independent producer and serialized aggregate b
             patched(wire, {4, 5, 0, 1, 7}, QCborArray{0.0}), patched(wire, {4, 5, 0, 1, 8}, 0)})
         CHECK_FALSE(Reply::decode(bad, r));
 }
+
+TEST_CASE("Cached Produced replies bind reuse ordinals budgets and cache updates without invented producer work",
+          "[lc-offsetcurve][worker-protocol][result][preview-portable]") {
+    const auto original = producedRequest(false, 2);
+    Req::CachedProduce op{std::get<Req::Produce>(original.operation), {}};
+    op.cache.revision = 2;
+    auto value = producedValue(original);
+    auto& source = value.source;
+    source.cacheEngineRuns = 0; source.reusedCacheCopies = 2; source.sampleUnits = 0;
+    source.intersectionPairAllowance = 0; source.attemptedOutputUsage = {};
+    for (int copy = 1; copy <= 2; ++copy) {
+        LC_OffsetPreviewSnapshot::Entry entry;
+        entry.side = *source.resolvedSide; entry.magnitude = double(copy) * op.produce.distance;
+        entry.budget = makeDefaultOffsetSourceBudget(); entry.status = Status::Ok; entry.usage = {1, 1, 1};
+        const auto& line = std::get<Req::Segment>(value.outputs[std::size_t(copy - 1)]);
+        entry.geometry.emplace_back(RS_LineData{line.start, line.end});
+        op.cache.entries.push_back(entry);
+        auto left = entry.budget;
+        left.maxCubicPieces -= std::size_t(copy - 1); left.maxOutputEntities -= std::size_t(copy - 1);
+        left.maxDeepEntities -= std::size_t(copy - 1);
+        value.reusedCopies.push_back({copy, left});
+    }
+    value.previewCache = op.cache;
+    const Req::Request request{token(), op};
+    const Reply::Reply reply{request.token, 6, Reply::Failure::None, value};
+    const auto encoded = Reply::encode(reply, request); REQUIRE(encoded);
+    REQUIRE(encoded->at(4).toArray().size() == 3);
+    CHECK(Reply::decode(*encoded, request));
+    const auto decoded = Reply::decode(*encoded, request); REQUIRE(decoded);
+    CHECK(Reply::encode(*decoded, request) == encoded);
+    for (const auto& bad : {
+        patched(*encoded, {4, 2, 0, 0}, 2), patched(*encoded, {4, 2, 1, 0}, 1),
+        patched(*encoded, {4, 2, 0, 1, 0}, 0),
+        patched(*encoded, {4, 2, 0, 1, 0}, qint64(makeDefaultOffsetSourceBudget().maxCubicPieces) + 1),
+        patched(*encoded, {4, 1, 0}, 3), patched(*encoded, {4, 1, 1}, 1),
+        patched(*encoded, {4, 1, 2}, true), patched(*encoded, {4, 1, 3, 0, 7, 0, 0}, 2),
+        patched(*encoded, {4, 0, 0, 11}, 1)}) CHECK_FALSE(Reply::decode(bad, request));
+    auto empty = request; std::get<Req::CachedProduce>(empty.operation).cache.entries.clear();
+    CHECK_FALSE(Reply::decode(*encoded, empty));
+    auto duplicate = reply;
+    std::get<Reply::Produced>(duplicate.result).reusedCopies[1].copy = 1;
+    CHECK_FALSE(Reply::encode(duplicate, request));
+    CHECK_FALSE(Reply::encode(reply, original));
+    auto claimedOldOperation = reply; claimedOldOperation.operation = 5;
+    CHECK_FALSE(Reply::encode(claimedOldOperation, original));
+}

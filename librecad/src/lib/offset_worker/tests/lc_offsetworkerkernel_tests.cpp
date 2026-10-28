@@ -618,3 +618,124 @@ TEST_CASE("Produce raw ellipse adapters preserve captured bounds and do not repa
     op = seriesInput(unmodified); op.copies = 1;
     seriesParity(unmodified, op); // Compare the raw source, not its constructor-normalized whole ellipse.
 }
+
+namespace {
+result::Produced cachedSeries(const req::CachedProduce& op) {
+    const req::Request input{token, op};
+    const auto request = req::encode(input); REQUIRE(request);
+    const auto reply = LC_OffsetWorkerKernel::run(input);
+    INFO("cached Produce failure=" << int(reply.failure));
+    REQUIRE(reply.failure == result::Failure::None);
+    REQUIRE(std::holds_alternative<result::Produced>(reply.result));
+    const auto wire = result::encode(reply, input); REQUIRE(wire);
+    const auto decoded = result::decode(*wire, input); REQUIRE(decoded);
+    CHECK(result::encode(*decoded, input) == wire);
+    CHECK(req::encode(input) == request);
+    return std::get<result::Produced>(decoded->result);
+}
+}
+
+TEST_CASE("Cached Produce reuses per-copy geometry with zero producer effort and preserves side and eviction",
+          "[lc-offsetcurve][worker-kernel][preview-portable]") {
+    RS_Ellipse source{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
+    req::CachedProduce op{seriesInput(source), {}}; op.produce.preview = true;
+    auto first = cachedSeries(op);
+    REQUIRE(first.source.status == LC_OffsetSourceStatus::Succeeded);
+    CHECK(first.source.cacheEngineRuns == 2); REQUIRE(first.previewCache);
+    CHECK(first.previewCache->entries.size() == 2);
+    op.cache = *first.previewCache;
+    op.produce.limits.maxSamples = 1; op.produce.limits.maxIntersectionPairs = 1;
+    const auto reused = cachedSeries(op);
+    CHECK(reused.source.status == LC_OffsetSourceStatus::Succeeded);
+    CHECK(reused.source.cacheEngineRuns == 0); CHECK(reused.source.sampleUnits == 0);
+    CHECK(reused.source.intersectionPairAllowance == 0); CHECK(reused.source.reusedCacheCopies == 2);
+    REQUIRE(reused.reusedCopies.size() == 2);
+    CHECK(reused.reusedCopies[0].copy == 1); CHECK(reused.reusedCopies[1].copy == 2);
+    CHECK(reused.previewCache->revision == op.cache.revision);
+    op.produce.limits = {}; op.produce.coordinate = {0, 0};
+    const auto opposite = cachedSeries(op);
+    REQUIRE(opposite.source.resolvedSide); REQUIRE(first.source.resolvedSide);
+    CHECK(opposite.source.resolvedSide != first.source.resolvedSide);
+    CHECK(opposite.source.reusedCacheCopies == 0); CHECK(opposite.source.cacheEngineRuns == 2);
+    op.produce.coordinate = {3, 2}; op.produce.distance = .5;
+    op.cache.otherEntries = 254;
+    const auto evicted = cachedSeries(op);
+    CHECK(evicted.source.reusedCacheCopies == 1); CHECK(evicted.source.cacheEngineRuns == 1);
+    REQUIRE(evicted.previewCache); CHECK(evicted.previewCache->cleared);
+    CHECK(evicted.previewCache->otherEntries == 0); CHECK(evicted.previewCache->entries.size() == 1);
+}
+
+TEST_CASE("Cached Produce refusal budgets grow correctly and cached ellipse adoption still runs C",
+          "[lc-offsetcurve][worker-kernel][preview-portable]") {
+    RS_Ellipse source{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
+    req::CachedProduce op{seriesInput(source), {}}; op.produce.preview = true; op.produce.copies = 1;
+    const auto initial = cachedSeries(op); REQUIRE(initial.previewCache);
+    op.cache = *initial.previewCache;
+    op.produce.preview = false; op.produce.asOffsetCurve = true;
+    const auto native = cachedSeries(op);
+    REQUIRE(native.source.status == LC_OffsetSourceStatus::Succeeded);
+    CHECK(native.source.reusedCacheCopies == 1); CHECK(native.source.cacheEngineRuns == 0);
+    CHECK(native.source.adoptionAttempts == 1); CHECK(native.source.adoptionCheckWork.vertices > 0);
+    REQUIRE(native.outputs.size() == 1); REQUIRE(std::holds_alternative<result::Curve>(native.outputs[0]));
+    auto& shape = op.cache.entries[0].geometry[0];
+    if (auto* line = std::get_if<RS_LineData>(&shape)) line->endpoint.x += 100;
+    else std::get<RS_SplineData>(shape).controlPoints[0].x += 100;
+    const auto unchecked = cachedSeries(op);
+    CHECK(unchecked.source.adoptionAttempts == 1);
+    REQUIRE(unchecked.outputs.size() == 1); CHECK_FALSE(std::holds_alternative<result::Curve>(unchecked.outputs[0]));
+    REQUIRE(unchecked.keptPlain.size() == 1);
+    CHECK(unchecked.keptPlain[0].reason == LC_OffsetPlainReason::CheckFailed);
+    auto& e = op.cache.entries[0]; e.geometry.clear(); e.usage = {};
+    e.status = LC_CurveOffsetStatus::LimitExceeded; e.budget = {1, 1, 1};
+    op.produce.asOffsetCurve = false; op.produce.preview = true; op.produce.limits.perSource = e.budget;
+    const auto refused = cachedSeries(op);
+    CHECK(refused.source.status == LC_OffsetSourceStatus::LimitExceeded);
+    CHECK(refused.source.cacheEngineRuns == 0); CHECK(refused.source.reusedCacheCopies == 1);
+    op.produce.limits = {};
+    const auto grown = cachedSeries(op);
+    CHECK(grown.source.status == LC_OffsetSourceStatus::Succeeded);
+    CHECK(grown.source.cacheEngineRuns == 1); CHECK(grown.source.reusedCacheCopies == 0);
+}
+
+TEST_CASE("Cached Produce native zero-sum repeats use the distinct stored-cache fallback",
+          "[lc-offsetcurve][worker-kernel][preview-portable]") {
+    RS_Ellipse original{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
+    auto source = LC_OffsetCurve::create(original, 1, false); REQUIRE(source);
+    auto input = seriesInput(*source.entity, true); input.context.nativeSource = true;
+    input.context.nativeDefinition = source.entity->definition();
+    input.coordinate = {0, 0}; input.distance = 1; input.copies = 1; input.preview = true;
+    req::CachedProduce op{input, {}};
+    const auto preview = cachedSeries(op); REQUIRE(preview.previewCache);
+    op.cache = *preview.previewCache; op.produce.preview = false;
+    const auto fallback = cachedSeries(op);
+    REQUIRE(fallback.source.status == LC_OffsetSourceStatus::Succeeded);
+    CHECK(fallback.source.reusedCacheCopies == 1); CHECK(fallback.source.cacheEngineRuns == 0);
+    CHECK(fallback.source.rebaseEngineRuns == 0); CHECK(fallback.source.sampleUnits == 0);
+    REQUIRE(fallback.rebases.size() == 1);
+    CHECK(fallback.rebases[0].proposalRefusal == LC_OffsetCurveAgain::Refusal::ZeroSum);
+    REQUIRE(fallback.keptPlain.size() == 1); CHECK(fallback.keptPlain[0].reason == LC_OffsetPlainReason::ZeroSum);
+    for (const auto& output : fallback.outputs) CHECK_FALSE(std::holds_alternative<result::Curve>(output));
+}
+
+TEST_CASE("Cached Produce transports real cubic spline records without geometry repair",
+          "[lc-offsetcurve][worker-kernel][preview-portable]") {
+    RS_Ellipse source{nullptr, RS_EllipseData{{0, 0}, {3, 0}, .7, 0, 1.5, false}};
+    req::CachedProduce op{seriesInput(source), {}}; op.produce.copies = 1; op.produce.preview = true;
+    op.produce.coordinate = {8, 8};
+    const auto first = cachedSeries(op); REQUIRE(first.source.status == LC_OffsetSourceStatus::Succeeded);
+    REQUIRE(first.previewCache); REQUIRE(first.previewCache->entries.size() == 1);
+    REQUIRE_FALSE(first.previewCache->entries[0].geometry.empty());
+    bool spline = false;
+    for (const auto& value : first.previewCache->entries[0].geometry) spline |= std::holds_alternative<RS_SplineData>(value);
+    REQUIRE(spline);
+    op.cache = *first.previewCache; op.produce.limits.maxSamples = 1;
+    const auto reused = cachedSeries(op);
+    CHECK(reused.source.status == LC_OffsetSourceStatus::Succeeded);
+    CHECK(reused.source.cacheEngineRuns == 0); CHECK(reused.source.reusedCacheCopies == 1);
+    REQUIRE(reused.outputs.size() == first.outputs.size());
+    for (std::size_t i = 0; i < reused.outputs.size(); ++i) {
+        const auto& a = std::get<RS_SplineData>(reused.outputs[i]);
+        const auto& b = std::get<RS_SplineData>(first.outputs[i]);
+        CHECK(req::Values::encodeCache(a) == req::Values::encodeCache(b));
+    }
+}

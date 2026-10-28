@@ -653,3 +653,40 @@ TEST_CASE("Built helper transports Produce series grouping native admission work
     CHECK(refusal.outputStatus == Reply::OrdinaryStatus::None);
     CHECK(refusal.source.sampleUnits > 1); CHECK(refusal.source.rebaseEngineRuns == 1);
 }
+
+TEST_CASE("Fresh helper processes preserve cached preview hits while native adoption remains checked",
+          "[lc-offsetcurve][worker-process][preview-portable]") {
+    int argc = 1; char name[] = "offset-worker-cached-produce-tests"; char* argv[] = {name, nullptr};
+    std::unique_ptr<QCoreApplication> application;
+    if (!QCoreApplication::instance()) application = std::make_unique<QCoreApplication>(argc, argv);
+    Helper helper;
+    RS_Ellipse source{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
+    Req::CachedProduce op;
+    op.produce.source = source.getData(); op.produce.minimum = source.getMin(); op.produce.maximum = source.getMax();
+    op.produce.context.topLevel = true; op.produce.coordinate = {3, 2};
+    op.produce.distance = .25; op.produce.copies = 2; op.produce.asOffsetCurve = true; op.produce.preview = true;
+    const auto first = helper.run({Token, op}, true);
+    const auto& preview = std::get<Reply::Produced>(first.result);
+    REQUIRE(preview.previewCache); REQUIRE(preview.source.status == LC_OffsetSourceStatus::Succeeded);
+    CHECK(preview.source.cacheEngineRuns == 2);
+    op.cache = *preview.previewCache; op.produce.preview = false;
+    op.produce.limits.maxSamples = 1; op.produce.limits.maxIntersectionPairs = 1;
+    const auto second = helper.run({Token, op}); // A different process, not a persistent child cache.
+    const auto& committed = std::get<Reply::Produced>(second.result);
+    REQUIRE(committed.source.status == LC_OffsetSourceStatus::Succeeded);
+    CHECK(committed.source.reusedCacheCopies == 2); CHECK(committed.source.cacheEngineRuns == 0);
+    CHECK(committed.source.sampleUnits == 0); CHECK(committed.source.intersectionPairAllowance == 0);
+    CHECK(committed.source.adoptionAttempts == 2); CHECK(committed.source.adoptionCheckWork.vertices > 0);
+    REQUIRE(committed.outputs.size() == 2);
+    for (const auto& output : committed.outputs) {
+        REQUIRE(std::holds_alternative<Reply::Curve>(output));
+        const auto& curve = std::get<Reply::Curve>(output);
+        REQUIRE(Geo::checkCache(curve.cache, curve.definition, curve.worldTolerance));
+    }
+    const auto wire = Req::encode({Token, op}); REQUIRE(wire);
+    auto bytes = Wire::encode(*wire); REQUIRE(bytes.size() > 8);
+    bytes.chop(1); helper.reject(bytes);
+    op.produce.limits = {}; op.produce.coordinate = {0, 0};
+    const auto opposite = helper.run({Token, op});
+    CHECK(std::get<Reply::Produced>(opposite.result).source.reusedCacheCopies == 0);
+}

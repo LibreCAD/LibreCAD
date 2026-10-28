@@ -244,6 +244,11 @@ struct LC_OffsetRebaseOutcome {
     bool adopted = false;
 };
 
+struct LC_OffsetCacheReuse {
+    int copy = 0;
+    LC_OffsetSourceBudget budget{};
+};
+
 struct LC_OffsetSourceOutcome {
     /** Identity only: a source removed by a destructive offset must not be dereferenced. */
     const RS_Entity* source = nullptr;
@@ -286,6 +291,7 @@ struct LC_OffsetSourceOutcome {
     std::vector<LC_OffsetPlainOutcome> keptPlain;
     /** Attempted work remains observable even if a later copy discards this source's outputs. */
     std::size_t rebaseEngineRuns = 0, cacheEngineRuns = 0, reusedCacheCopies = 0;
+    std::vector<LC_OffsetCacheReuse> reusedCopies;
     std::size_t sampleUnits = 0, intersectionPairAllowance = 0;
     /** Actual adopt() invocations and their returned C work, including refusals.
      * Additive counters sum across copies; depth is the maximum, not a sum.

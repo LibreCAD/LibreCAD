@@ -766,3 +766,46 @@ TEST_CASE("Worker client owner destruction drops active queued and deferred call
         CHECK(receipts.calls[2] == 0);
     }
 }
+
+TEST_CASE("Joined cached Produce completions update only current caches and revoke moved-from authority",
+          "[lc-offsetcurve][worker-client][preview-portable]") {
+    auto& rt = runtime(); OwnedClient owned{rt}; Receipts receipts;
+    RS_Ellipse source{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
+    source.setSourceHandle(91); source.setUserDefVar("cached-local", "retained");
+    LC_OffsetPreviewCache parent;
+    Req::CachedProduce op;
+    op.produce.source = source.getData(); op.produce.minimum = source.getMin(); op.produce.maximum = source.getMax();
+    op.produce.context.topLevel = true; op.produce.coordinate = {3, 2}; op.produce.distance = .25;
+    op.produce.copies = 2; op.produce.preview = true; op.produce.asOffsetCurve = true;
+    auto snapshot = parent.snapshot(&source); REQUIRE(snapshot); op.cache = *snapshot;
+    REQUIRE(owned.get().submit({token(1), op}, Client::Mode::Preview, receipts.into(0)));
+    rt.until([&] { return receipts.calls[0] != 0; });
+    const auto& first = completed(receipts.at(0), 1, 6);
+    REQUIRE(first.updatePreviewCache(parent, &source));
+    CHECK_FALSE(first.updatePreviewCache(parent, &source)); // Its original revision is stale now.
+    snapshot = parent.snapshot(&source); REQUIRE(snapshot); REQUIRE(snapshot->entries.size() == 2);
+    op.cache = *snapshot; op.produce.preview = false;
+    op.produce.limits.maxSamples = 1; op.produce.limits.maxIntersectionPairs = 1;
+    REQUIRE(owned.get().submit({token(2), op}, Client::Mode::Commit, receipts.into(1)));
+    rt.until([&] { return receipts.calls[1] != 0; });
+    completed(receipts.at(1), 2, 6);
+    auto& original = *receipts.outcomes[1]->completed;
+    Completion moved{std::move(original)};
+    CHECK_FALSE(original.updatePreviewCache(parent, &source)); CHECK_FALSE(original.produced(source));
+    auto prepared = moved.produced(source); REQUIRE(prepared); REQUIRE(prepared->outcome.complete());
+    CHECK(prepared->outcome.cacheEngineRuns == 0); CHECK(prepared->outcome.sampleUnits == 0);
+    CHECK(prepared->outcome.reusedCacheCopies == 2); CHECK(prepared->outcome.reusedCopies.size() == 2);
+    CHECK(prepared->outcome.adoptionAttempts == 2); CHECK(prepared->outcome.adoptionCheckWork.vertices > 0);
+    for (const auto& entity : prepared->entities) {
+        const auto* curve = dynamic_cast<const LC_OffsetCurve*>(entity.get()); REQUIRE(curve);
+        CHECK(curve->getParent() == nullptr); CHECK(curve->sourceHandle() == 0);
+        CHECK(curve->getUserDefVar("cached-local") == "retained");
+        REQUIRE(Geo::checkCache(curve->getData(), curve->definition(), curve->checkedWorldTolerance()));
+    }
+    RS_Line other;
+    LC_CurveOffsetMaterializationResult refused; refused.status = LC_CurveOffsetStatus::SingularOffset;
+    parent.keep(&other, LC_CurveOffsetSide::Left, 1, makeDefaultOffsetSourceBudget(), refused);
+    CHECK_FALSE(moved.updatePreviewCache(parent, &source));
+    CHECK(parent.snapshot(&source)->otherEntries == 1);
+    CHECK(source.sourceHandle() == 91);
+}

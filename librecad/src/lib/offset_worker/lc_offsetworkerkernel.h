@@ -28,7 +28,8 @@ public:
      */
     static LC_OffsetWorkerResult::Reply run(const LC_OffsetWorkerRequest::Request&, Trace* = nullptr) noexcept;
 private:
-    static LC_OffsetWorkerResult::Produced produce(const LC_OffsetWorkerRequest::Produce&, Trace&);
+    static LC_OffsetWorkerResult::Produced produce(const LC_OffsetWorkerRequest::Produce&, Trace&,
+        const LC_OffsetPreviewSnapshot* = nullptr);
     static LC_OffsetWorkerResult::Native generate(const LC_OffsetWorkerRequest::Generate&, Trace&);
     static LC_OffsetWorkerResult::Native validate(const LC_OffsetWorkerRequest::ValidateCache&, Trace&);
     static LC_OffsetWorkerResult::Native checkThrough(const LC_OffsetWorkerRequest::CheckThrough&, Trace&);
