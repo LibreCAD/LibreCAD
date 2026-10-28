@@ -2247,7 +2247,7 @@ All have zero errors, failures or skips and checked discovery identities. ASan u
 | `offset-W26-final2-worker_fault-release.xml` | `df704c754215d737eec06266ed70e3bfd940a4698c710cdf62a1b83577b303b6` |
 | `offset-W26-final2-worker_fault-asan.xml` | `37f7aa095241eaf371a1014ab2ce17f044d5b26381983b027b51034f32d354ad` |
 
-Import ownership trace after W26: `RS_FilterDXFRW::addSpline` currently constructs
+Import ownership trace after W26: `RS_FilterDXFRW::addSpline` normally constructs
 and validates an offset carrier synchronously using a transient `DRW_Spline` and
 `m_currentContainer`; that container may be model space, a block, an XREF child,
 or a scratch container. `RS_FileIO::fileImport` is synchronous and can explicitly
@@ -2262,6 +2262,45 @@ the exact raw-cache fallback/diagnostic contract. It must account separately for
 GUI open/template, XREF, direct synchronous and console callers; do not silently
 disable editable imports or introduce nested GUI event loops. Cancellation and
 owner destruction must destroy the private document/jobs without late delivery.
+
+W27 unpublished import session `bf8171912`: an opt-in session owns a private
+graphic while the helper validates bounded offset carriers and replaces each
+placeholder in order with a native entity or ordinary spline fallback. It keeps
+bounded structured diagnostics, explicitly permits or rejects partial reads,
+propagates staging through the tested one-level XREF clone path, refreshes inserts
+after resolution, and refuses publication if placeholders remain or the helper
+cannot be reaped. Cancellation and destruction suppress delivery. The deadline
+begins after parsing; parsing itself remains synchronous on the owning Qt thread.
+The session is not yet connected to GUI open/templates, existing direct `RS_FileIO`
+or console callers; the caller must finalize document state before publication.
+It introduces no nested GUI event loop and does not change existing synchronous
+import semantics.
+
+Release/ASan focused suites discover and execute every named case, with no errors,
+failures or skips (extra Trim cases are named sections):
+
+| W27 suite | Declarations | Cases | Assertions Release / ASan |
+| --- | ---: | ---: | ---: |
+| hostile file and staged import | 45 | 45 | 52746 / 53798 |
+| persistence | 55 | 55 | 40876 / 40876 |
+| worker client | 16 | 16 | 7413 / 10956 |
+| Trim | 123 | 133 | 60638 / 68244 |
+
+Polling counts vary; ASan used `detect_leaks=0`. Tests cover actual helper
+validation, cancellation, retry, partial-read policy, invalid caches, ordered
+replacement, one-level XREF cloning and owner destruction. The timeout fixture
+suspends the helper before numeric work; it is not a naturally hung numerical
+primitive or Windows qualification. Fresh qmake6 configuration and three scoped
+object compilations passed; a full qmake6 application link is not claimed.
+Evidence is in `tmp/offset-2961-native-20261026/` in the normal checkout;
+the qualified XML files are `offset-W27-final-{suite}-{release,asan}.xml`:
+
+| W27 suite | Release SHA256 | ASan SHA256 |
+| --- | --- | --- |
+| hostilefile | `6e5ec412fe0e0ce9075843e813029ad67dce89815f3bf7ea4f97a0c871aeaf91` | `22656429b1851e0819d4ed4c4143daaf64cf8652cbe8b9736ebc3739c2c02617` |
+| persistence | `b8c2aae8416e85609d841e2c2f9bfa7b9821115e29f6c91bfb45cb30650f8478` | `5b50757c38656e52fe3fdd17f4648404f277c80546cad1f5b3468fbf06892144` |
+| worker_client | `6fd7f752d7be76642b2fb3ff72d8a6700437e202c9f69a1cd251851183771d2b` | `c32c8dd415bfad4b02c6f48de1ef2155ab581e6adfd5fe29767caf5df674d51c` |
+| trim | `ddca521366c1ba2f26b0d9aa099a39997a3c815ede4305a86fbb06bec257760d` | `a0b288d3f5e59992049a862860ab7b2f790f578e67171acb83c6541c68497db5` |
 
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
@@ -2310,12 +2349,14 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** trace DXF/DWG offset import
-ownership and design the unpublished-document handoff so synchronous callbacks do
-not retain pending work or publish a partial document. Implement and test the
-actual import integration, including cancellation, owner destruction, malformed
-records, refusal diagnostics and no stale delivery. Preserve partial-import, XREF,
-template and synchronous/console behavior, and qualify remaining platform faults
+**Next concrete action on implementation resume:** integrate actual GUI open and
+template paths with the W27 unpublished session. Transfer the resolved graphic
+into an owning MDI document only after all carriers resolve, preserve explicit
+partial-import decisions, filename/saved/autosave state and document ownership,
+and cancel on window death without stale delivery or nested event loops. Existing
+`QC_MDIWindow` does not own a supplied document; establish ownership explicitly.
+Design and test direct synchronous, console, nested-XREF and error-dialog contracts
+without silently weakening editable imports. Qualify remaining platform faults
 without weakening the existing worker tests.
 W16-W19 cache portability and local creation/repeat GUI
 routing are qualified; do not restart them as absent. The ordinary DWG2007 correction and fresh broad
