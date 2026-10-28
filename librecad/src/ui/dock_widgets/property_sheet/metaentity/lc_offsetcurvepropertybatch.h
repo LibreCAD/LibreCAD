@@ -3,6 +3,7 @@
 #define LC_OFFSETCURVEPROPERTYBATCH_H
 
 #include "lc_offsetcurve.h"
+#include "lc_offsetcurvepublication.h"
 #include "rs_document.h"
 #include <cstdint>
 #include <limits>
@@ -13,23 +14,26 @@
 
 /** Native-only preparation. Candidate owners must outlive this object; moving
  * their std::map preserves node/reference addresses. No document changes occur
- * until execute(). This does NOT make generic undo publication allocation-atomic.
+ * until execute(). Native publication is fully staged independently of the
+ * generic undo API; observers run only after ownership and history are installed.
  */
 class LC_OffsetCurvePropertyBatch final {
 public:
-    enum class Outcome { Committed, AllocationBeforeHandoff, AllocationAfterHandoff };
+    enum class Outcome { Committed, Refused };
     template <typename Pending>
     static std::unique_ptr<LC_OffsetCurvePropertyBatch> tryPrepare(Pending& pending,
-                                                                 std::uint64_t& epoch) noexcept {
+        std::uint64_t& epoch, RS_Document& document, LC_GraphicViewport& viewport) noexcept {
         if (pending.empty() || pending.size() > std::size_t(std::numeric_limits<qsizetype>::max()) ||
             pending.size() > std::vector<Owner*>{}.max_size()) return {};
         for (const auto& entry : pending) if (!entry.first || !entry.second.candidate) return {};
         try {
             auto result = std::unique_ptr<LC_OffsetCurvePropertyBatch>(
                 new LC_OffsetCurvePropertyBatch(pending, epoch));
-            result->prepareCallbacks(); // std::function construction is also pre-undo
+            result->m_publication = LC_OffsetCurvePublication::prepare(document, viewport,
+                result->m_remove, result->m_add, result->m_selected);
+            if (!result->m_publication) return {};
             return result;
-        } catch (const std::bad_alloc&) { return {}; }
+        } catch (...) { return {}; }
     }
 
     template <typename Pending>
@@ -51,58 +55,24 @@ public:
     LC_OffsetCurvePropertyBatch(LC_OffsetCurvePropertyBatch&&) = delete;
     LC_OffsetCurvePropertyBatch& operator=(LC_OffsetCurvePropertyBatch&&) = delete;
 
-    void prepareCallbacks() {
-        m_modify = [this](LC_DocumentModificationBatch& batch) noexcept {
-            handoff(batch);
-            return true;
-        };
-        m_select = [this](LC_DocumentModificationBatch&, RS_Document* document) {
-            document->select(m_selected);
-        };
+    Outcome execute() noexcept {
+        if (m_handedOff || !m_publication || !m_publication->commit()) return Outcome::Refused;
+        ++m_epoch;
+        for (auto* owner : m_owners) owner->release();
+        m_handedOff = true;
+        m_publication->notify();
+        return Outcome::Committed;
     }
-    Outcome execute(RS_Document& document, LC_GraphicViewport* viewport) {
-        try {
-            document.undoableModify(viewport, m_modify, m_select);
-            return Outcome::Committed;
-        } catch (const std::bad_alloc&) {
-            if (m_handedOff) {
-                // No rollback claim: generic deletion/addition/selection and
-                // undo-cycle completion can allocate after ownership transfer.
-                return Outcome::AllocationAfterHandoff;
-            }
-            // Undo entry allocates before changing nesting or listener state.
-            // No cycle began, and every candidate is still uniquely owned.
-            return Outcome::AllocationBeforeHandoff;
-        }
-    }
-    const RS_Document::FunUndoable& modification() const { return m_modify; }
     bool handedOff() const noexcept { return m_handedOff; }
     qsizetype size() const noexcept { return m_add.size(); }
     qsizetype selectedCount() const noexcept { return m_selected.size(); }
 
 private:
     using Owner = std::unique_ptr<LC_OffsetCurve>;
-    void handoff(LC_DocumentModificationBatch& batch) noexcept {
-        Q_ASSERT(!m_handedOff && batch.entitiesToAdd.empty() && batch.entitiesToDelete.empty());
-        static_assert(noexcept(batch.entitiesToAdd.swap(m_add)));
-        static_assert(noexcept(batch.entitiesToDelete.swap(m_remove)));
-        static_assert(noexcept(std::declval<Owner&>().release()));
-        batch.dontSetActiveLayerAndPen();
-        ++m_epoch; // Retire getters only at the nonthrowing ownership boundary.
-        for (auto* owner : m_owners) {
-            // Qualified base flag operation: no recursive/virtual callbacks.
-            (*owner)->RS_Entity::setSelectionFlag(false);
-        }
-        batch.entitiesToAdd.swap(m_add);
-        batch.entitiesToDelete.swap(m_remove);
-        for (auto* owner : m_owners) owner->release();
-        m_handedOff = true;
-    }
     std::uint64_t& m_epoch;
     std::vector<Owner*> m_owners;
     QList<RS_Entity*> m_add, m_remove, m_selected;
-    RS_Document::FunUndoable m_modify;
-    RS_Document::FunSelection m_select;
     bool m_handedOff = false;
+    std::unique_ptr<LC_OffsetCurvePublication> m_publication;
 };
 #endif

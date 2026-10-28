@@ -81,6 +81,7 @@ protected:
     virtual void removeUndoable(RS_Undoable* u) = 0;
 
 private:
+    friend class LC_OffsetCurvePublication;
     std::uint64_t m_undoStateEpoch = 0;
     void addUndoCycle(std::shared_ptr<RS_UndoCycle> undoCycle);
     void pruneRedoCycles();

@@ -1051,6 +1051,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/layers/rs_layerlistlistener.h
      librecad/src/lib/engine/document/lc_graphicvariables.cpp
      librecad/src/lib/engine/document/lc_graphicvariables.h
+     librecad/src/lib/engine/document/lc_offsetcurvepublication.cpp
+     librecad/src/lib/engine/document/lc_offsetcurvepublication.h
      librecad/src/lib/engine/document/lc_trackedlistener.h
      librecad/src/lib/engine/document/linetypes/lc_linetype.cpp
      librecad/src/lib/engine/document/linetypes/lc_linetype.h

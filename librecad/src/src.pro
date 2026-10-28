@@ -494,6 +494,7 @@ HEADERS += \
     lib/engine/document/entities/support/lc_dimarrowblock.h \
     lib/engine/document/entities/support/lc_dimarrowblockpoly.h \
     lib/engine/document/lc_graphicvariables.h \
+    lib/engine/document/lc_offsetcurvepublication.h \
     lib/engine/document/lc_trackedlistener.h \
     lib/engine/document/selection/lc_selectedset.h \
     lib/engine/document/selection/lc_selectedsetlistener.h \
@@ -1102,6 +1103,7 @@ SOURCES += \
     lib/engine/document/entities/support/lc_dimarrowblock.cpp \
     lib/engine/document/entities/support/lc_dimarrowblockpoly.cpp \
     lib/engine/document/lc_graphicvariables.cpp \
+    lib/engine/document/lc_offsetcurvepublication.cpp \
     lib/engine/document/selection/lc_selectedset.cpp \
     lib/engine/document/textstyles/lc_textstyle.cpp \
     lib/engine/document/textstyles/lc_textstylelist.cpp \

@@ -786,7 +786,7 @@ void LC_OffsetCurvePropertyQueue::commit(Epoch contextSerial) {
             if (m_pending.empty()) { notifyLateCancellation(); return; }
             collectInputs();
         }
-        prepared = LC_OffsetCurvePropertyBatch::tryPrepare(m_pending, m_epoch);
+        prepared = LC_OffsetCurvePropertyBatch::tryPrepare(m_pending, m_epoch, *m_document, *m_view->getViewPort());
         if (!alive || contextSerial != m_contextSerial || !currentContext() || isPreparing() ||
             m_document != admittedDocument || m_view != admittedView ||
             m_document->undoStateEpoch() != admittedUndoEpoch) return;
@@ -827,13 +827,13 @@ void LC_OffsetCurvePropertyQueue::commit(Epoch contextSerial) {
     static_assert(std::is_nothrow_move_constructible_v<decltype(m_pending)>);
     auto pending = std::move(m_pending);
     m_pending.clear();
-    const auto outcome = prepared->execute(*m_document, m_view->getViewPort());
-    if (outcome == LC_OffsetCurvePropertyBatch::Outcome::AllocationBeforeHandoff) {
+    const auto outcome = prepared->execute();
+    if (outcome == LC_OffsetCurvePropertyBatch::Outcome::Refused && alive) {
         static_assert(noexcept(m_pending.swap(pending)));
         m_pending.swap(pending);
-        reportFailure("Offset Curve: allocation failed before publication; accepted edits remain pending.");
-    } else if (outcome == LC_OffsetCurvePropertyBatch::Outcome::AllocationAfterHandoff) {
-        reportFailure("Offset Curve: allocation failed after handoff; generic undo publication is not allocation-atomic.");
+        reportFailure("Offset Curve: the document changed before publication; accepted edits remain pending.");
     }
+    try { if (alive && currentContext()) m_view->getViewPort()->notifyChanged(); }
+    catch (const std::bad_alloc&) { reportFailure("Offset Curve: the drawing could not be refreshed after publication."); }
     notifyLateCancellation();
 }
