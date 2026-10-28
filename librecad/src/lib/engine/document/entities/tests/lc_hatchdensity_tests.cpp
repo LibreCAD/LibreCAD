@@ -22,6 +22,8 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 
+#include <QColor>
+
 #include <cmath>
 #include <cstddef>
 #include <limits>
@@ -30,7 +32,13 @@
 
 #include "lc_hatchdensity.h"
 #include "lc_hatchtestsupport.h"
+#include "rs_block.h"
+#include "rs_entitycontainer.h"
+#include "rs_graphic.h"
 #include "rs_hatch.h"
+#include "rs_insert.h"
+#include "rs_line.h"
+#include "rs_pen.h"
 #include "rs_vector.h"
 
 using Catch::Approx;
@@ -240,4 +248,203 @@ TEST_CASE("Raising the limit generates the 9,990 square",
     const std::size_t a = h->getDensityReport().attempted;
     CHECK(a >= 970000u);
     CHECK(a <= 1010000u);
+}
+
+// -----------------------------------------------------------------------
+// Tinted fill, shared insert-expansion budget.
+// -----------------------------------------------------------------------
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A hatch over the old area limit is not invisible",
+          "[lc-hatchfix][density]") {
+    SourcePatterns patterns;
+    // 10,500 unit square. Previously would have hit HATCH_AREA_TOO_BIG; now
+    // it exceeds the 1e6 soft piece cap and tints instead of staying empty.
+    std::vector<Ring> rings = {rectRing(0.0, 0.0, 10500.0, 10500.0)};
+    auto h = makePatternHatch("ANSI31", 1.0, 0.0, rings);
+    REQUIRE(h);
+    REQUIRE(h->getUpdateError() == RS_Hatch::HATCH_TOO_DENSE);
+    REQUIRE(h->getDensityReport().reason == LC_HatchDensityReport::Reason::Estimate);
+    CHECK(patternPieceCount(*h) == 0);
+
+    // Render the hatch into a 256x256 raster with a cosmetic black pen.
+    // The TestPainter default is factor 1 at origin (0, 0) with the y-axis
+    // flipped; the square (0,0)-(10500,10500) covers the whole canvas, so
+    // the centre pixel must be filled by the tint.
+    lc::test::TestPainter canvas;
+    canvas.painter.setPen(RS_Color(0, 0, 0));
+    h->draw(&canvas.painter);
+    canvas.painter.end();
+
+    const QRgb centre = canvas.image.pixel(canvas.W / 2, canvas.H / 2);
+    // Non-white: tint drew at least some ink here. The estimate (~1.1M) is
+    // large so the tint is dense: red/green/blue must each be <= 10.
+    CHECK(qRed(centre) <= 10);
+    CHECK(qGreen(centre) <= 10);
+    CHECK(qBlue(centre) <= 10);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("The tint follows the pattern's coverage",
+          "[lc-hatchfix][density]") {
+    SourcePatterns patterns;
+    // Shrink the piece cap so a tiny region trips the estimate predictably.
+    LC_HatchDensityPolicy policy;
+    policy.maxPieces = 10;
+    LC_HatchDensity::ScopedPolicy guard{policy};
+
+    std::vector<Ring> rings = {rectRing(20.0, 20.0, 220.0, 220.0)};
+    auto h = makePatternHatch("BRICK", 1.0, 0.0, rings);
+    REQUIRE(h);
+    REQUIRE(h->getUpdateError() == RS_Hatch::HATCH_TOO_DENSE);
+
+    // Factor 1, DPR 1, cosmetic pen: wPhys = 1, kPhys = 1 so f = L/A + E/A^2.
+    // BRICK has 2 lines per 100 x 100 tile = 100 units of ink over A_t = 10,000
+    // and E = 2 pieces per tile. For the 200x200 region: lineDensity = 100/10000
+    // = 0.01, pieceDensity = 2/10000 = 2e-4. tintAlpha = 1 - exp(-(0.01 + 2e-4))
+    // ~= 1 - exp(-0.0102) ~= 0.01015. The centre pixel is approximately
+    // 255 * (1 - 0.01015) ~ 252.
+    const double a = LC_HatchDensity::tintAlpha(h->getDensityReport(), 1.0, 1.0);
+    CHECK(a > 0.0);
+    CHECK(a < 0.1);
+
+    lc::test::TestPainter canvas;
+    canvas.painter.setPen(RS_Color(0, 0, 0));
+    h->draw(&canvas.painter);
+    canvas.painter.end();
+
+    // Centre pixel of the region at image coords (120, 256-120) is tinted,
+    // but only lightly (alpha << 1).
+    const int px = 120;
+    const int py = canvas.H - 120;
+    const QRgb centre = canvas.image.pixel(px, py);
+    CHECK(qRed(centre) < 255);
+    CHECK(qRed(centre) > 230);
+    // A pixel well outside the region stays unpainted (255, 255, 255).
+    const QRgb outside = canvas.image.pixel(240, 240);
+    CHECK(qRed(outside) == 255);
+    CHECK(qGreen(outside) == 255);
+    CHECK(qBlue(outside) == 255);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("An insert array never blanks its block and never exceeds the hatch budget",
+          "[lc-hatchfix][density]") {
+    SourcePatterns patterns;
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+
+    // Build a block "cell" with a non-hatch LINE plus one ANSI31 hatch over
+    // (0, 0) - (30, 30). The hatch is pattern (non-solid) scale 1.
+    auto* block = new RS_Block(&graphic, RS_BlockData("cell", {0, 0}, false));
+    auto* edge = new RS_Line(block, {0.0, 0.0}, {30.0, 0.0});
+    block->addEntity(edge);
+    auto* hatch = new RS_Hatch(block, RS_HatchData(false, 1.0, 0.0, "ANSI31"));
+    auto* loop = new RS_EntityContainer(hatch);
+    loop->addEntity(new RS_Line(loop, {0.0, 0.0}, {30.0, 0.0}));
+    loop->addEntity(new RS_Line(loop, {30.0, 0.0}, {30.0, 30.0}));
+    loop->addEntity(new RS_Line(loop, {30.0, 30.0}, {0.0, 30.0}));
+    loop->addEntity(new RS_Line(loop, {0.0, 30.0}, {0.0, 0.0}));
+    hatch->addEntity(loop);
+    hatch->update();
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    const std::size_t n1 = hatch->getDensityReport().attempted;
+    REQUIRE(n1 > 0u);
+    block->addEntity(hatch);
+    REQUIRE(graphic.addBlock(block));
+
+    // 3 x 3 MINSERT with spacing (80, 40), scale (2, 1): a non-uniform
+    // scale forces the hatch to regenerate per clone (shared geometry is
+    // a later step). 9 clones is enough to exercise the shared budget's
+    // OK -> dense transition under ASan without taking minutes.
+    RS_InsertData idata{"cell", {0.0, 0.0}, {2.0, 1.0}, 0.0, 3, 3, {80.0, 40.0}};
+    RS_Insert insert{&graphic, idata};
+    RS_InsertExpansionBudget budget{};
+    // Budget sized for about 4 hatch clones' worth of pieces.
+    budget.maxHatchPieces = 4U * n1;
+    insert.update(budget);
+    // 9 lines + 9 hatch clones = 18 derived entities.
+    CHECK(insert.count() == 18);
+    // Walk the children, totalling hatch-piece counts and checking the
+    // mixture.
+    std::size_t totalHatchPieces = 0;
+    int okHatches = 0;
+    int denseHatches = 0;
+    for (RS_Entity* child : insert) {
+        if (child != nullptr && child->rtti() == RS2::EntityHatch) {
+            auto* h = static_cast<RS_Hatch*>(child);
+            if (h->getUpdateError() == RS_Hatch::HATCH_OK) ++okHatches;
+            if (h->getUpdateError() == RS_Hatch::HATCH_TOO_DENSE) ++denseHatches;
+            totalHatchPieces += patternPieceCount(*h);
+            // Every clone keeps its area 1800 (30 x 60 after x-scale 2).
+            CHECK_THAT(h->getTotalArea(), WithinRel(1800.0, 1e-9));
+        }
+    }
+    CHECK(okHatches >= 1);
+    CHECK(denseHatches >= 1);
+    CHECK(totalHatchPieces <= 4U * n1);
+
+    // With maxHatchPieces = 0: every hatch tints.
+    RS_Insert zero{&graphic, idata};
+    RS_InsertExpansionBudget zeroBudget{};
+    zeroBudget.maxHatchPieces = 0U;
+    zero.update(zeroBudget);
+    CHECK(zero.count() == 18);
+    int zeroDense = 0;
+    for (RS_Entity* child : zero) {
+        if (child != nullptr && child->rtti() == RS2::EntityHatch) {
+            auto* h = static_cast<RS_Hatch*>(child);
+            if (h->getUpdateError() == RS_Hatch::HATCH_TOO_DENSE) ++zeroDense;
+            CHECK(patternPieceCount(*h) == 0);
+        }
+    }
+    CHECK(zeroDense == 9);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("tintAlpha clamps and returns opaque on non-finite inputs",
+          "[lc-hatchfix][density]") {
+    LC_HatchDensityReport r;
+    r.lineDensity = 1.0;
+    r.pieceDensity = 1.0;
+    r.finite = true;
+    // Finite inputs: alpha is in (0, 1).
+    const double a = LC_HatchDensity::tintAlpha(r, 1.0, 1.0);
+    CHECK(a > 0.0);
+    CHECK(a < 1.0);
+    // Very large f -> alpha saturates below 1.
+    const double big = LC_HatchDensity::tintAlpha(r, 1e-6, 1.0);
+    CHECK(big <= 1.0);
+    CHECK(big > 0.99);
+    // Non-finite report -> opaque fallback.
+    LC_HatchDensityReport bad;
+    bad.finite = false;
+    CHECK(LC_HatchDensity::tintAlpha(bad, 1.0, 1.0) == 1.0);
+    // Non-positive kPhys -> opaque (defensive; a sane painter never produces
+    // this but we must stay safe).
+    CHECK(LC_HatchDensity::tintAlpha(r, 0.0, 1.0) == 1.0);
+    // Zero densities -> no tint.
+    LC_HatchDensityReport zero;
+    zero.lineDensity = 0.0;
+    zero.pieceDensity = 0.0;
+    zero.finite = true;
+    CHECK(LC_HatchDensity::tintAlpha(zero, 1.0, 1.0) == 0.0);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("ScopedSharedBudget restores the previous shared budget",
+          "[lc-hatchfix][density]") {
+    CHECK(LC_HatchDensity::sharedBudget() == nullptr);
+    LC_HatchPieceBudget outer{100U};
+    {
+        LC_HatchDensity::ScopedSharedBudget s1{outer};
+        CHECK(LC_HatchDensity::sharedBudget() == &outer);
+        LC_HatchPieceBudget inner{10U};
+        {
+            LC_HatchDensity::ScopedSharedBudget s2{inner};
+            CHECK(LC_HatchDensity::sharedBudget() == &inner);
+        }
+        CHECK(LC_HatchDensity::sharedBudget() == &outer);
+    }
+    CHECK(LC_HatchDensity::sharedBudget() == nullptr);
 }

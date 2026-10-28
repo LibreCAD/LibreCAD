@@ -30,6 +30,7 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <limits>
 #include <memory>
 #include <unordered_set>
 #include <vector>
@@ -499,7 +500,21 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
         *pattern, *m_orderedLoops, /*patternTurn*/ 0.0);
     const double softCap = dpolicy.forced ? dpolicy.hardMax : dpolicy.maxPieces;
     const double hardCap = dpolicy.hardMax;
-    const double effectiveCap = std::min(softCap, hardCap);
+    double effectiveCap = std::min(softCap, hardCap);
+
+    // Insert expansion installs a shared budget that every hatch clone of
+    // the expansion draws from. Shrink our local cap by the remaining room
+    // so the first clones do not exhaust the shared pool; the "SharedBudget"
+    // trip reason flags clones the pool refused.
+    LC_HatchPieceBudget* shared = LC_HatchDensity::sharedBudget();
+    std::size_t sharedRemaining = std::numeric_limits<std::size_t>::max();
+    if (shared != nullptr) {
+        sharedRemaining = shared->limit > shared->taken
+            ? shared->limit - shared->taken
+            : 0U;
+        const double rem = static_cast<double>(sharedRemaining);
+        if (rem < effectiveCap) effectiveCap = rem;
+    }
     report.limit = effectiveCap;
 
     auto tripTooDense = [&](LC_HatchDensityReport::Reason why) {
@@ -519,6 +534,12 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
     }
     if (!dpolicy.forced && report.estimatedPieces > softCap) {
         tripTooDense(LC_HatchDensityReport::Reason::Estimate);
+        return;
+    }
+    // The shared pool is a hard cap even in forced mode: insert expansion must
+    // never produce more hatch pieces than the budget it was called with.
+    if (shared != nullptr && report.estimatedPieces > static_cast<double>(sharedRemaining)) {
+        tripTooDense(LC_HatchDensityReport::Reason::SharedBudget);
         return;
     }
 
@@ -575,6 +596,19 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
         parts.push_back((*m_orderedLoops)[i].trimPatternEntities(
             *pattern, tiles[i], budget));
         if (budget.tripped) break;
+    }
+    // Charge the shared pool for every piece this clone tried, tripped or not.
+    // The next hatch clone in the same expansion sees a smaller remaining
+    // budget; its sharedBudget comparison and softCap adjustment above keep
+    // the pool bounded even when every clone would independently fit.
+    if (shared != nullptr) {
+        const std::size_t charge = budget.tripped ? budget.taken + 1 : budget.taken;
+        if (shared->limit - shared->taken >= charge) {
+            shared->taken += charge;
+        } else {
+            shared->taken = shared->limit;
+            shared->tripped = true;
+        }
     }
     if (budget.tripped) {
         report.attempted = budget.taken + 1;  // the piece that tripped
@@ -638,6 +672,9 @@ void RS_Hatch::draw(RS_Painter* painter) {
     if (isSolid()) {
         drawSolidFill(painter);
     }
+    else if (m_updateError == HATCH_TOO_DENSE) {
+        drawDensityTint(painter);
+    }
     else {
         drawPatternLines(painter);
     }
@@ -647,13 +684,33 @@ void RS_Hatch::draw(RS_Painter* painter) {
  * Helper: Draws solid fill using cached QPainterPaths.
  */
 void RS_Hatch::drawSolidFill(RS_Painter* painter) const {
+    drawFill(painter, 1.0);
+}
+
+/**
+ * Helper: Fills every loop with the resolved pen colour at the given alpha
+ * channel. Shared by the solid fill (alpha = 1) and the HATCH_TOO_DENSE tint,
+ * so print, print preview, and image export paths produce the same ink as the
+ * screen for both outputs.
+ */
+void RS_Hatch::drawFill(RS_Painter* painter, double alpha) const {
     if (m_orderedLoops->empty()){
         return;
     }
+    if (!std::isfinite(alpha) || alpha <= 0.0) {
+        return;
+    }
+    if (alpha > 1.0) alpha = 1.0;
 
     painter->save();
     QBrush fillBrush = painter->brush();
-    fillBrush.setColor(painter->getPen().getColor());
+    QColor fillColor = painter->getPen().getColor();
+    // Fold the requested alpha into the pen's existing alpha so a pre-tinted
+    // pen still contributes.
+    const int penA = fillColor.alpha();
+    const int a = static_cast<int>(std::lround(static_cast<double>(penA) * alpha));
+    fillColor.setAlpha(std::clamp(a, 0, 255));
+    fillBrush.setColor(fillColor);
     fillBrush.setStyle(Qt::SolidPattern);
     painter->setBrush(fillBrush);
 
@@ -663,6 +720,33 @@ void RS_Hatch::drawSolidFill(RS_Painter* painter) const {
     }
 
     painter->restore();
+}
+
+/**
+ * Helper: Draws the HATCH_TOO_DENSE tint. The alpha comes from
+ * LC_HatchDensity::tintAlpha, which turns the saved line/piece densities
+ * into a coverage estimate at the current zoom/stroke width.
+ */
+void RS_Hatch::drawDensityTint(RS_Painter* painter) const {
+    // Physical pixels per UCS unit (one unit mapped through the view, then
+    // through the device pixel ratio).
+    double dpr = 1.0;
+    if (painter != nullptr && painter->device() != nullptr) {
+        dpr = painter->device()->devicePixelRatioF();
+    }
+    if (!std::isfinite(dpr) || dpr <= 0.0) dpr = 1.0;
+    const double kPhys = painter != nullptr
+        ? painter->toGuiDX(1.0) * dpr
+        : dpr;
+    // Pen width in physical pixels: a non-positive stored width means a
+    // cosmetic pen (1 logical pixel).
+    double wPhys = 1.0 * dpr;
+    if (painter != nullptr) {
+        const double sw = painter->getPen().getScreenWidth();
+        if (std::isfinite(sw) && sw > 0.0) wPhys = sw * dpr;
+    }
+    const double alpha = LC_HatchDensity::tintAlpha(m_densityReport, kPhys, wPhys);
+    drawFill(painter, alpha);
 }
 
 /**

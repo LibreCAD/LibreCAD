@@ -49,6 +49,10 @@ std::uint64_t& currentRevision() noexcept {
     return s_rev;
 }
 
+// Thread-local pointer to the budget shared by every hatch clone of one
+// insert expansion. nullptr outside a ScopedSharedBudget scope.
+thread_local LC_HatchPieceBudget* t_sharedBudget = nullptr;
+
 // -------- helpers for the P⊥ computation ----------
 
 /** Total variation of n . p along an atomic entity (line / arc / ellipse arc).
@@ -392,6 +396,39 @@ double minimumScale(const LC_HatchDensityReport& r,
         return std::numeric_limits<double>::quiet_NaN();
     }
     return currentScale / x;
+}
+
+double tintAlpha(const LC_HatchDensityReport& r,
+                 double kPhys,
+                 double wPhys) noexcept {
+    // Non-finite report: fall back to opaque fill rather than leave the hatch
+    // invisible on screen. The caller then draws the whole region.
+    if (!r.finite) return 1.0;
+    if (!std::isfinite(kPhys) || kPhys <= 0.0) return 1.0;
+    if (!std::isfinite(wPhys) || wPhys <= 0.0) wPhys = 1.0;
+    // Coverage predictor from the density note: f = w/k * line density
+    // + (w/k)^2 * piece density. clamp(1 - exp(-f), 0, 1).
+    const double rk = wPhys / kPhys;
+    const double f = rk * r.lineDensity + rk * rk * r.pieceDensity;
+    if (!std::isfinite(f) || f <= 0.0) return 0.0;
+    const double a = 1.0 - std::exp(-f);
+    if (!std::isfinite(a)) return 1.0;
+    if (a <= 0.0) return 0.0;
+    if (a >= 1.0) return 1.0;
+    return a;
+}
+
+LC_HatchPieceBudget* sharedBudget() noexcept {
+    return t_sharedBudget;
+}
+
+ScopedSharedBudget::ScopedSharedBudget(LC_HatchPieceBudget& b) noexcept
+    : m_previous(t_sharedBudget) {
+    t_sharedBudget = &b;
+}
+
+ScopedSharedBudget::~ScopedSharedBudget() {
+    t_sharedBudget = m_previous;
 }
 
 } // namespace LC_HatchDensity

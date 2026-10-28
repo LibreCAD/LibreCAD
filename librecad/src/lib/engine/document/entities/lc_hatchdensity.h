@@ -172,6 +172,38 @@ double minimumScale(const LC_HatchDensityReport& r,
                     double currentScale,
                     double maxPieces);
 
+/**
+ * Tint alpha used when a hatch tripped the density guard. The result is a
+ * coverage estimate in [0, 1] that reproduces the pattern's visible density
+ * at zooms where every tile is smaller than a stroke width. kPhys is one
+ * UCS unit expressed in physical pixels (toGuiDX(1) * DPR) and wPhys is the
+ * stroke width in physical pixels (>= 1 when the pen is cosmetic).
+ */
+double tintAlpha(const LC_HatchDensityReport& r,
+                 double kPhys,
+                 double wPhys) noexcept;
+
+/**
+ * Shared piece budget for an insert expansion. The pointer is thread-local
+ * and nullptr outside a ScopedSharedBudget scope. updatePatternHatch() of
+ * every hatch clone generated during an insert expansion reads it, clamps
+ * its own cap by the remaining room, and after generation adds its taken
+ * count back so the next clone sees the smaller budget.
+ */
+LC_HatchPieceBudget* sharedBudget() noexcept;
+
+class ScopedSharedBudget {
+public:
+    explicit ScopedSharedBudget(LC_HatchPieceBudget& b) noexcept;
+    ~ScopedSharedBudget();
+
+    ScopedSharedBudget(const ScopedSharedBudget&) = delete;
+    ScopedSharedBudget& operator=(const ScopedSharedBudget&) = delete;
+
+private:
+    LC_HatchPieceBudget* m_previous = nullptr;
+};
+
 } // namespace LC_HatchDensity
 
 #endif // LC_HATCHDENSITY_H

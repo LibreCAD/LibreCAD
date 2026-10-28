@@ -220,6 +220,13 @@ protected:
 private:
     void drawPatternLines(RS_Painter* painter) const;
     void drawSolidFill(RS_Painter* painter) const;
+    /// Fills the region with the resolved pen colour and the given alpha
+    /// channel; shared by drawSolidFill (alpha = 1) and drawDensityTint
+    /// (alpha derived from the density report), so paper matches screen.
+    void drawFill(RS_Painter* painter, double alpha) const;
+    /// Draws the HATCH_TOO_DENSE tint. Called by draw() when the pattern
+    /// generation ran out of budget and the pattern pieces were discarded.
+    void drawDensityTint(RS_Painter* painter) const;
     void updatePatternHatch(RS_Layer* layer, const RS_Pen& pen);
     void updateSolidHatch(RS_Layer* layer, const RS_Pen& pen) const;
     mutable double m_area = RS_MAXDOUBLE;
