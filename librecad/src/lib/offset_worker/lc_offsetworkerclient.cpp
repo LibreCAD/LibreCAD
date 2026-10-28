@@ -208,6 +208,7 @@ QString LC_OffsetWorkerClient::helperPath() {
 }
 
 bool LC_OffsetWorkerClient::busy() const noexcept { return bool(m_active) || bool(m_queued); }
+bool LC_OffsetWorkerClient::healthyAndIdle() const noexcept { return !busy() && !m_poisoned; }
 
 QByteArray LC_OffsetWorkerClient::diagnosticPrefix() const {
     return m_active ? m_active->diagnostics : QByteArray{};
@@ -272,6 +273,7 @@ void LC_OffsetWorkerClient::start() {
             if (!m_active) return;
             try {
                 auto hook = std::move(m_testStarted);
+                m_testStarted = {};
                 if (hook) hook(*m_process);
             } catch (...) { stop(Status::AllocationFailed); return; }
             if (!m_active || !m_process) return;

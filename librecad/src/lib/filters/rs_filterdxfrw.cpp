@@ -74,6 +74,7 @@
 #include "intern/drw_textcodec.h"
 #include "lc_offsetcurve.h"
 #include "lc_offsetcurvecarrier.h"
+#include "lc_offsetimportsession.h"
 #include "lc_colornumbers.h"
 #include "lc_containertraverser.h"
 #include "lc_defaults.h"
@@ -4353,6 +4354,10 @@ void updateImportedInserts(RS_Graphic &graphic) {
 
 } // namespace
 
+void RS_FilterDXFRW::refreshDeferredOffsetInserts(RS_Graphic &graphic) {
+  updateImportedInserts(graphic);
+}
+
 /**
  * Implementation of the method used for RS_Import to communicate
  * with this filter.
@@ -4564,7 +4569,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
       RS_DEBUG->print(RS_Debug::D_WARNING, "Cannot open DWG file '%s'.",
                       (const char *)QFile::encodeName(file));
       m_errorCode = dwgr.getError();
-      updateImportedInserts(*m_graphic);
+      if (!m_deferOffsetAdmission) updateImportedInserts(*m_graphic);
       return false;
     }
     m_graphic->dwgAdvancedMetadata().markVportsImported();
@@ -4619,7 +4624,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
                       (const char *)QFile::encodeName(file));
       m_errorCode = m_dxfR->getError();
       delete m_dxfR;
-      updateImportedInserts(*m_graphic);
+      if (!m_deferOffsetAdmission) updateImportedInserts(*m_graphic);
       return false;
     } else {
       delete m_dxfR;
@@ -4636,7 +4641,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
   }
   RS_DEBUG->print("RS_FilterDXFRW::fileImport: updating inserts");
   const auto updateInsertsStart = std::chrono::steady_clock::now();
-  updateImportedInserts(*m_graphic);
+  if (!m_deferOffsetAdmission) updateImportedInserts(*m_graphic);
   if (std::getenv("LC_IMPORT_BENCH") != nullptr) {
     const auto updateInsertsMs =
         std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -5140,6 +5145,8 @@ bool RS_FilterDXFRW::embedXref(RS_Block *block, const QString &xrefPath,
 
   RS_Graphic ext;
   RS_FilterDXFRW xrefFilter;
+  xrefFilter.m_deferOffsetAdmission = m_deferOffsetAdmission;
+  xrefFilter.m_offsetImportBudget = m_offsetImportBudget;
   xrefFilter.m_xrefStack = m_xrefStack; // propagate cycle guard
   const bool isDwg =
       resolved.endsWith(QStringLiteral(".dwg"), Qt::CaseInsensitive);
@@ -8344,6 +8351,14 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
   const auto parsed = xd::parseAndStrip(data->extData,
       context ? context->options : xd::Options{});
   reportOffsetXDataDiagnostics("import", parsed.diagnostics);
+  if (m_deferOffsetAdmission && m_offsetImportBudget) {
+    for (const auto &diagnostic : parsed.diagnostics)
+      m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::XData,
+          int(diagnostic.reason), diagnostic.item);
+    if (parsed.knownCandidates && !(context && parsed.status == xd::Status::Schema1 &&
+        parsed.definition && parsed.remaining && parsed.knownCandidates == 1 && data->eType == DRW::SPLINE))
+      ++m_offsetImportBudget->refused;
+  }
   const auto *remaining = parsed.remaining ? &*parsed.remaining : nullptr;
   if (context && parsed.status == xd::Status::Schema1 && parsed.definition &&
       parsed.remaining && parsed.knownCandidates == 1 && data->eType == DRW::SPLINE) {
@@ -8354,7 +8369,32 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
       const double tolerance = LC_CurveOffset::toleranceFor(
           source, definition.distance, definition.relTolerance);
       if (std::isfinite(tolerance) && tolerance > 0) {
-        try {
+        if (m_deferOffsetAdmission) {
+          try {
+            if (m_offsetImportBudget && m_offsetImportBudget->admit(*raw.data, *parsed.definition, remaining->size())) {
+              auto fallback = makeSplineFromDrw(m_currentContainer, *data, data->weightlist);
+              applyImportedSplineAttributes(fallback.get(), data, remaining);
+              if (!fallback->cloneMetadataFits(1024, std::size_t{1} << 20, 4096)) {
+                ++m_offsetImportBudget->refused;
+                m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::Budget, 1);
+                m_currentContainer->addEntity(fallback.get()); fallback.release();
+                return;
+              }
+              auto carrier = std::make_shared<LC_OffsetImportPlaceholder::Carrier>();
+              carrier->cache = *raw.data; carrier->definition = *parsed.definition; carrier->tolerance = tolerance;
+              auto pending = std::make_unique<LC_OffsetImportPlaceholder>(*fallback, std::move(carrier));
+              m_currentContainer->addEntity(pending.get()); pending.release();
+              return;
+            }
+          } catch (const std::bad_alloc &) {
+            if (m_offsetImportBudget) {
+              ++m_offsetImportBudget->refused;
+              m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::Budget, 2);
+            }
+          }
+          RS_DEBUG->print(RS_Debug::D_WARNING,
+              "RS_FilterDXFRW: deferred offset admission refused; keeping ordinary geometry");
+        } else try {
           RS_Spline cache{m_currentContainer, *raw.data};
           LC_OffsetCheckResult checked;
           LC_OffsetCurveRefusal refusal = LC_OffsetCurveRefusal::InvalidInput;
@@ -8378,8 +8418,16 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
           RS_DEBUG->print(RS_Debug::D_WARNING,
               "RS_FilterDXFRW: offset adoption allocation refused");
         }
+      } else if (m_deferOffsetAdmission && m_offsetImportBudget) {
+        ++m_offsetImportBudget->refused;
+        m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::Carrier, -1);
       }
     } else {
+      if (m_deferOffsetAdmission && m_offsetImportBudget) {
+        ++m_offsetImportBudget->refused;
+        m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::Carrier,
+            int(raw.refusal), raw.item.value_or(0));
+      }
       RS_DEBUG->print(RS_Debug::D_WARNING,
           "RS_FilterDXFRW: raw offset carrier refused reason=%d item=%zu",
           static_cast<int>(raw.refusal), raw.item.value_or(0));

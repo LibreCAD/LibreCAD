@@ -98,6 +98,8 @@ public:
     bool submit(const LC_OffsetWorkerRequest::Request&, Mode, Callback);
     void cancel();
     bool busy() const noexcept;
+    /** True only after all children were reaped and the client was not poisoned. */
+    bool healthyAndIdle() const noexcept;
     static QString helperPath();
 private:
     friend class LC_OffsetWorkerClientTestAccess;

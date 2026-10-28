@@ -8,10 +8,34 @@
 #include <type_traits>
 
 #include "lc_offsetcurve_persistence_fixture.h"
+#include "lc_offsetimportsession.h"
 #include "intern/dwg_dxf_output_transaction.h"
+#include <QElapsedTimer>
+#include <QEventLoop>
+#include <QProcess>
+#include <QThread>
+#ifdef Q_OS_UNIX
+#include <cerrno>
+#include <csignal>
+#include <unistd.h>
+#endif
 #include "rs_layer.h"
+#include "rs_block.h"
 #include "rs_undo.h"
 #include "rs_variable.h"
+
+class LC_OffsetWorkerClientTestAccess {
+public:
+    static void onStarted(LC_OffsetWorkerClient& worker, std::function<void(QProcess&)> hook) {
+        worker.m_testStarted = std::move(hook);
+    }
+    static bool hasStartHook(const LC_OffsetWorkerClient& worker) { return bool(worker.m_testStarted); }
+};
+class LC_OffsetImportSessionTestAccess {
+public:
+    static LC_OffsetWorkerClient& worker(LC_OffsetImportSession& session) { return session.m_worker; }
+    static QTimer& deadline(LC_OffsetImportSession& session) { return session.m_deadline; }
+};
 
 namespace {
 namespace f = lc::test::offset_persistence;
@@ -49,6 +73,25 @@ void writeInput(const std::filesystem::path& path, Lane lane, const DRW_Spline& 
     default: FAIL("DWG fixture requested in a build without DWGSUPPORT");
 #endif
     }
+}
+
+LC_OffsetImportSession::Outcome stagedImport(const std::filesystem::path& path, Lane lane, bool acceptPartial = false) {
+    LC_OffsetImportSession session;
+    std::optional<LC_OffsetImportSession::Outcome> outcome;
+    int ticks = 0; QTimer heartbeat; QObject::connect(&heartbeat, &QTimer::timeout, [&] { ++ticks; }); heartbeat.start(0);
+    REQUIRE(session.start(QString::fromStdString(path.string()), format(lane), RS2::DxfTextEncoding::Declared,
+        acceptPartial, [&](LC_OffsetImportSession::Outcome result) {
+            CHECK(LC_OffsetImportSessionTestAccess::worker(session).healthyAndIdle()); outcome.emplace(std::move(result));
+        }));
+    REQUIRE(session.busy());
+    QElapsedTimer elapsed; elapsed.start();
+    while (!outcome) {
+        REQUIRE(elapsed.elapsed() < 35000);
+        QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1);
+    }
+    heartbeat.stop();
+    if (outcome->admitted) CHECK(ticks > 0);
+    CHECK_FALSE(session.busy()); return std::move(*outcome);
 }
 std::shared_ptr<DRW_Variant> text(int code, const std::string& value) {
     return std::make_shared<DRW_Variant>(code, value);
@@ -540,3 +583,263 @@ TEST_CASE("G hostile existing publisher stream failure cannot publish real nativ
         if (existing) CHECK(lc::test::fileBytes(target) == sentinel); else CHECK_FALSE(std::filesystem::exists(target));
     }
 }
+
+TEST_CASE("Staged offset import resolves a private drawing through the real helper",
+          "[lc-offsetcurve][import-session][worker]") {
+    Setup setup;
+    for (const auto lane : lanes()) {
+        CAPTURE(static_cast<int>(lane));
+        lc::test::OutputDirectory directory("offset-staged-import");
+        const auto input = directory.file(isDwg(lane) ? "input.dwg" : "input.dxf");
+        writeInput(input, lane, f::raw(3));
+        auto outcome = stagedImport(input, lane);
+        REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(outcome.graphic); CHECK_FALSE(outcome.partial);
+        CHECK(outcome.admitted == 1); CHECK(outcome.downgraded == 0);
+        CHECK(outcome.diagnostics.empty()); CHECK(outcome.suppressedDiagnostics == 0);
+        auto* native = f::native(*outcome.graphic, 3); REQUIRE(native);
+        CHECK(native->unknownOwnedFlags() == 0x40); CHECK(native->unknownOwnedTail().size() == 5);
+        f::foreign(*native);
+        RS_Graphic synchronous; REQUIRE(lc::test::importDrawing(synchronous, input, format(lane)));
+        auto* expected = f::native(synchronous, 3); REQUIRE(expected);
+        CHECK(RS_Spline::geometryFingerprint(native->getData()) == RS_Spline::geometryFingerprint(expected->getData()));
+        CHECK(f::tagsState(native->getDrwExtData()) == f::tagsState(expected->getDrwExtData()));
+        CHECK(native->getPen(false) == expected->getPen(false));
+        REQUIRE(native->getLayer(false)); REQUIRE(expected->getLayer(false));
+        CHECK(native->getLayer(false)->getName() == expected->getLayer(false)->getName());
+        CHECK(native->checkedWorldTolerance() == expected->checkedWorldTolerance());
+    }
+}
+
+TEST_CASE("Staged offset import keeps ordinary fallback when cache validation refuses",
+          "[lc-offsetcurve][import-session][worker][refusal]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-staged-refusal");
+    const auto input = directory.file("input.dxf");
+    auto raw = f::raw(3); raw.controllist[1]->x += 8;
+    writeInput(input, Lane::Ascii, raw);
+    auto outcome = stagedImport(input, Lane::Ascii);
+    REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete); REQUIRE(outcome.graphic);
+    CHECK(outcome.admitted == 0); CHECK(outcome.downgraded == 1);
+    REQUIRE(outcome.diagnostics.size() == 1);
+    CHECK(outcome.diagnostics.front().kind == LC_OffsetImportDiagnostic::Kind::Validation);
+    auto* entity = f::sole(*outcome.graphic); REQUIRE(entity);
+    CHECK(entity->rtti() == RS2::EntitySpline); CHECK(dynamic_cast<LC_OffsetCurve*>(entity) == nullptr);
+    CHECK(dynamic_cast<LC_OffsetImportPlaceholder*>(entity) == nullptr); f::foreign(*entity);
+}
+
+TEST_CASE("Staged offset import reports malformed schema and raw carrier refusals",
+          "[lc-offsetcurve][import-session][refusal]") {
+    Setup setup;
+    for (bool malformedSchema : {false, true}) {
+        CAPTURE(malformedSchema); lc::test::OutputDirectory directory("offset-staged-malformed");
+        const auto input = directory.file("input.dxf"); auto raw = f::raw(3);
+        if (malformedSchema) { auto payload = f::owned(); f::append(payload, f::owned()); raw.extData = f::metadata(payload); }
+        else raw.knotslist[1] = .125;
+        writeInput(input, Lane::Ascii, raw);
+        auto outcome = stagedImport(input, Lane::Ascii);
+        REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete); REQUIRE(outcome.graphic);
+        CHECK(outcome.admitted == 0); CHECK(outcome.downgraded == 1);
+        REQUIRE_FALSE(outcome.diagnostics.empty());
+        const auto wanted = malformedSchema ? LC_OffsetImportDiagnostic::Kind::XData : LC_OffsetImportDiagnostic::Kind::Carrier;
+        CHECK(std::any_of(outcome.diagnostics.begin(), outcome.diagnostics.end(),
+            [&](const LC_OffsetImportDiagnostic& diagnostic) { return diagnostic.kind == wanted; }));
+        auto* entity = f::sole(*outcome.graphic); REQUIRE(entity);
+        CHECK(dynamic_cast<LC_OffsetImportPlaceholder*>(entity) == nullptr);
+    }
+}
+
+TEST_CASE("Staged offset import cancels without delivering a private drawing",
+          "[lc-offsetcurve][import-session][lifetime][asan]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-cancel");
+    const auto input = directory.file("input.dxf"); writeInput(input, Lane::Ascii, f::raw(3));
+    bool delivered = false;
+    {
+        LC_OffsetImportSession session;
+        REQUIRE(session.start(QString::fromStdString(input.string()), RS2::FormatDXFRW2018,
+            RS2::DxfTextEncoding::Declared, false, [&](LC_OffsetImportSession::Outcome) { delivered = true; }));
+        REQUIRE(session.busy()); session.cancel(); CHECK_FALSE(session.busy());
+    }
+    QElapsedTimer elapsed; elapsed.start();
+    while (elapsed.elapsed() < 100) { QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    CHECK_FALSE(delivered);
+}
+
+TEST_CASE("Staged offset import handles a killed helper without exposing its carrier",
+          "[lc-offsetcurve][import-session][worker][fault]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-worker-fault");
+    const auto input = directory.file("input.dxf"); writeInput(input, Lane::Ascii, f::raw(3));
+    LC_OffsetImportSession session; bool started = false;
+    LC_OffsetWorkerClientTestAccess::onStarted(LC_OffsetImportSessionTestAccess::worker(session),
+        [&](QProcess& process) { started = process.processId() > 0; process.kill(); });
+    std::optional<LC_OffsetImportSession::Outcome> outcome;
+    REQUIRE(session.start(QString::fromStdString(input.string()), RS2::FormatDXFRW2018,
+        RS2::DxfTextEncoding::Declared, false, [&](LC_OffsetImportSession::Outcome result) { outcome.emplace(std::move(result)); }));
+    QElapsedTimer elapsed; elapsed.start();
+    while (!outcome) { REQUIRE(elapsed.elapsed() < 35000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    REQUIRE(started); REQUIRE(outcome->status == LC_OffsetImportSession::Status::Complete); REQUIRE(outcome->graphic);
+    CHECK(outcome->admitted == 0); CHECK(outcome->downgraded == 1);
+    REQUIRE(outcome->diagnostics.size() == 1);
+    CHECK(outcome->diagnostics.front().kind == LC_OffsetImportDiagnostic::Kind::Worker);
+    auto* entity = f::sole(*outcome->graphic); REQUIRE(entity);
+    CHECK(entity->rtti() == RS2::EntitySpline); CHECK(dynamic_cast<LC_OffsetImportPlaceholder*>(entity) == nullptr);
+}
+
+TEST_CASE("Staged offset import bounds its aggregate carrier allowance",
+          "[lc-offsetcurve][import-session][quota]") {
+    LC_OffsetImportBudget budget; RS_SplineData cache;
+    LC_OffsetCurveXData::Definition definition;
+    for (std::size_t i = 0; i < LC_OffsetImportBudget::MaximumCarriers; ++i) REQUIRE(budget.admit(cache, definition, 0));
+    CHECK_FALSE(budget.admit(cache, definition, 0)); CHECK(budget.refused == 1);
+    LC_OffsetImportBudget bytes; cache.controlPoints.resize(LC_OffsetImportBudget::MaximumBytes / (3 * sizeof(RS_Vector)) + 1);
+    CHECK_FALSE(bytes.admit(cache, definition, 0)); CHECK(bytes.carriers == 0); CHECK(bytes.refused == 1);
+    LC_OffsetImportBudget metadata; RS_SplineData small;
+    CHECK_FALSE(metadata.admit(small, definition, LC_OffsetImportBudget::MaximumBytes / sizeof(std::shared_ptr<DRW_Variant>)));
+    for (unsigned i = 0; i < 40; ++i) metadata.report(LC_OffsetImportDiagnostic::Kind::Carrier, int(i), i);
+    CHECK(metadata.diagnostics.size() == 32); CHECK(metadata.suppressedDiagnostics == 9);
+}
+
+TEST_CASE("Staged offset import cancellation after helper start suppresses delivery",
+          "[lc-offsetcurve][import-session][worker][lifetime][asan]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-active-cancel");
+    const auto input = directory.file("input.dxf"); writeInput(input, Lane::Ascii, f::raw(3));
+    LC_OffsetImportSession session; bool started = false, delivered = false;
+    auto& worker = LC_OffsetImportSessionTestAccess::worker(session);
+    LC_OffsetWorkerClientTestAccess::onStarted(worker, [&](QProcess& process) { started = process.processId() > 0; session.cancel(); });
+    REQUIRE(session.start(QString::fromStdString(input.string()), RS2::FormatDXFRW2018,
+        RS2::DxfTextEncoding::Declared, false, [&](LC_OffsetImportSession::Outcome) { delivered = true; }));
+    QElapsedTimer elapsed; elapsed.start();
+    while (!started || worker.busy()) {
+        REQUIRE(elapsed.elapsed() < 5000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1);
+    }
+    CHECK_FALSE(session.busy()); CHECK_FALSE(delivered); CHECK_FALSE(LC_OffsetWorkerClientTestAccess::hasStartHook(worker));
+    std::optional<LC_OffsetImportSession::Outcome> retry;
+    REQUIRE(session.start(QString::fromStdString(input.string()), RS2::FormatDXFRW2018,
+        RS2::DxfTextEncoding::Declared, false, [&](LC_OffsetImportSession::Outcome result) { retry.emplace(std::move(result)); }));
+    elapsed.restart();
+    while (!retry) { REQUIRE(elapsed.elapsed() < 35000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    REQUIRE(retry->status == LC_OffsetImportSession::Status::Complete); REQUIRE(retry->graphic);
+    CHECK(retry->admitted == 1); CHECK_FALSE(delivered);
+}
+
+TEST_CASE("Staged offset import requires explicit partial-read acceptance",
+          "[lc-offsetcurve][import-session][partial]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-partial");
+    const auto input = directory.file("input.dxf");
+    auto text = f::ascii(f::raw(3));
+    const auto end = text.rfind("0\nENDSEC\n0\nEOF\n"); REQUIRE(end != std::string::npos);
+    text.replace(end, std::string::npos, "0\nLINE\n8\n0\n10\n0.0\n"); f::put(input, text);
+    auto refused = stagedImport(input, Lane::Ascii);
+    CHECK(refused.status == LC_OffsetImportSession::Status::ReadFailed); CHECK_FALSE(refused.graphic);
+    auto accepted = stagedImport(input, Lane::Ascii, true);
+    REQUIRE(accepted.status == LC_OffsetImportSession::Status::Complete); REQUIRE(accepted.graphic);
+    CHECK(accepted.partial); CHECK(accepted.admitted == 1); CHECK(accepted.downgraded == 0);
+    CHECK(f::native(*accepted.graphic, 3) != nullptr);
+}
+
+TEST_CASE("Staged offset import refuses formats outside its DXF and DWG contract",
+          "[lc-offsetcurve][import-session][refusal]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-format");
+    const auto input = directory.file("input.dxf"); writeInput(input, Lane::Ascii, f::raw(3));
+    LC_OffsetImportSession session; std::optional<LC_OffsetImportSession::Outcome> outcome;
+    REQUIRE(session.start(QString::fromStdString(input.string()), RS2::FormatSHP,
+        RS2::DxfTextEncoding::Declared, true, [&](LC_OffsetImportSession::Outcome result) { outcome.emplace(std::move(result)); }));
+    QElapsedTimer elapsed; elapsed.start();
+    while (!outcome) { REQUIRE(elapsed.elapsed() < 5000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    CHECK(outcome->status == LC_OffsetImportSession::Status::ReadFailed); CHECK_FALSE(outcome->graphic);
+    CHECK_FALSE(outcome->error.isEmpty()); CHECK_FALSE(outcome->partial);
+}
+
+TEST_CASE("Staged offset import follows XREF clones into the host block",
+          "[lc-offsetcurve][import-session][xref][worker]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-xref");
+    const auto external = directory.file("external.dxf"), host = directory.file("host.dxf");
+    writeInput(external, Lane::Ascii, f::raw(3));
+    auto prefix = f::ascii(f::raw(3));
+    const auto entities = prefix.find("0\nSECTION\n2\nENTITIES\n"); REQUIRE(entities != std::string::npos);
+    prefix.resize(entities);
+    f::put(host, prefix + "0\nSECTION\n2\nBLOCKS\n0\nBLOCK\n5\nB1\n8\n0\n2\nREF\n70\n4\n1\nexternal.dxf\n"
+        "10\n0\n20\n0\n30\n0\n0\nENDBLK\n5\nB2\n8\n0\n0\nENDSEC\n"
+        "0\nSECTION\n2\nENTITIES\n0\nINSERT\n5\nB3\n8\n0\n2\nREF\n10\n0\n20\n0\n30\n0\n"
+        "0\nENDSEC\n0\nEOF\n");
+    auto outcome = stagedImport(host, Lane::Ascii);
+    INFO(outcome.error.toStdString());
+    REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete); REQUIRE(outcome.graphic);
+    CHECK(outcome.admitted == 1); CHECK(outcome.downgraded == 0);
+    auto* block = outcome.graphic->findBlock("REF"); REQUIRE(block); REQUIRE(block->count() == 1);
+    auto* native = dynamic_cast<LC_OffsetCurve*>(block->entityAt(0)); REQUIRE(native);
+    CHECK(native->hasEditableDefinition()); CHECK(native->getParent() == block);
+    REQUIRE(native->getLayer(false)); CHECK(native->getLayer(false)->getName() == "REF|FixtureOffsets");
+    auto* insert = outcome.graphic->entityAt(0); REQUIRE(insert); REQUIRE(insert->isContainer());
+    CHECK(static_cast<RS_EntityContainer*>(insert)->count() > 0);
+}
+
+TEST_CASE("Staged offset import preserves carrier order around ordinary entities",
+          "[lc-offsetcurve][import-session][worker][order]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-order");
+    const auto input = directory.file("input.dxf");
+    auto text = f::ascii(f::raw(3));
+    const auto first = text.find("0\nSPLINE\n"); const auto end = text.rfind("0\nENDSEC\n0\nEOF\n");
+    REQUIRE(first != std::string::npos); REQUIRE(end != std::string::npos); REQUIRE(end > first);
+    auto second = text.substr(first, end - first);
+    const auto handle = second.find("5\nA1\n"); REQUIRE(handle != std::string::npos);
+    second.replace(handle, 5, "5\nA2\n");
+    text.insert(end, "0\nLINE\n5\nA3\n8\n0\n10\n0\n20\n0\n11\n1\n21\n0\n" + second);
+    f::put(input, text);
+    auto outcome = stagedImport(input, Lane::Ascii);
+    REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete); REQUIRE(outcome.graphic);
+    CHECK(outcome.admitted == 2); CHECK(outcome.downgraded == 0); REQUIRE(outcome.graphic->count() == 3);
+    CHECK(dynamic_cast<LC_OffsetCurve*>(outcome.graphic->entityAt(0)) != nullptr);
+    CHECK(outcome.graphic->entityAt(1)->rtti() == RS2::EntityLine);
+    CHECK(dynamic_cast<LC_OffsetCurve*>(outcome.graphic->entityAt(2)) != nullptr);
+}
+
+#ifdef Q_OS_UNIX
+TEST_CASE("Staged offset import waits for a timed-out helper to be reaped before delivery",
+          "[lc-offsetcurve][import-session][worker][timeout][asan]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-timeout");
+    const auto input = directory.file("input.dxf"); writeInput(input, Lane::Ascii, f::raw(3));
+    LC_OffsetImportSession session; auto& worker = LC_OffsetImportSessionTestAccess::worker(session);
+    qint64 child = 0; bool stopped = false, reapedAtDelivery = false;
+    LC_OffsetWorkerClientTestAccess::onStarted(worker, [&](QProcess& process) {
+        child = process.processId(); stopped = ::kill(static_cast<pid_t>(child), SIGSTOP) == 0;
+        LC_OffsetImportSessionTestAccess::deadline(session).start(500);
+    });
+    std::optional<LC_OffsetImportSession::Outcome> outcome;
+    REQUIRE(session.start(QString::fromStdString(input.string()), RS2::FormatDXFRW2018,
+        RS2::DxfTextEncoding::Declared, false, [&](LC_OffsetImportSession::Outcome result) {
+            errno = 0; reapedAtDelivery = worker.healthyAndIdle() && ::kill(static_cast<pid_t>(child), 0) == -1 && errno == ESRCH;
+            outcome.emplace(std::move(result));
+        }));
+    QElapsedTimer elapsed; elapsed.start();
+    while (!outcome) { REQUIRE(elapsed.elapsed() < 5000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    REQUIRE(child > 0); REQUIRE(stopped); REQUIRE(reapedAtDelivery);
+    REQUIRE(outcome->status == LC_OffsetImportSession::Status::Complete); REQUIRE(outcome->graphic);
+    CHECK(outcome->admitted == 0); CHECK(outcome->downgraded == 1);
+    REQUIRE(outcome->diagnostics.size() == 1);
+    CHECK(outcome->diagnostics.front().kind == LC_OffsetImportDiagnostic::Kind::Timeout);
+    auto* entity = f::sole(*outcome->graphic); REQUIRE(entity);
+    CHECK(dynamic_cast<LC_OffsetImportPlaceholder*>(entity) == nullptr);
+}
+
+TEST_CASE("Staged offset import owner destruction reaps an active stopped helper",
+          "[lc-offsetcurve][import-session][worker][lifetime][asan]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-owner-death");
+    const auto input = directory.file("input.dxf"); writeInput(input, Lane::Ascii, f::raw(3));
+    auto session = std::make_unique<LC_OffsetImportSession>();
+    qint64 child = 0; bool stopped = false, delivered = false;
+    LC_OffsetWorkerClientTestAccess::onStarted(LC_OffsetImportSessionTestAccess::worker(*session),
+        [&](QProcess& process) {
+            child = process.processId(); stopped = ::kill(static_cast<pid_t>(child), SIGSTOP) == 0;
+            QTimer::singleShot(0, [&] { session.reset(); });
+        });
+    REQUIRE(session->start(QString::fromStdString(input.string()), RS2::FormatDXFRW2018,
+        RS2::DxfTextEncoding::Declared, false, [&](LC_OffsetImportSession::Outcome) { delivered = true; }));
+    QElapsedTimer elapsed; elapsed.start();
+    while (session) { REQUIRE(elapsed.elapsed() < 5000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    REQUIRE(child > 0); REQUIRE(stopped); CHECK_FALSE(delivered);
+    errno = 0; CHECK(::kill(static_cast<pid_t>(child), 0) == -1); CHECK(errno == ESRCH);
+    elapsed.restart(); while (elapsed.elapsed() < 100) { QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    CHECK_FALSE(delivered);
+}
+#endif

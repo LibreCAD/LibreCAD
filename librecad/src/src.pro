@@ -637,6 +637,7 @@ HEADERS += \
     lib/filters/rs_filtercxf.h \
     lib/filters/rs_filterdxfrw.h \
     lib/filters/lc_offsetcurvecarrier.h \
+    lib/filters/lc_offsetimportsession.h \
     lib/filters/lc_offsetcurvexdata.h \
     lib/filters/lc_shxshapenames.h \
     lib/filters/rs_filterdxf1.h \
@@ -1336,6 +1337,7 @@ SOURCES += \
     lib/filters/rs_filtercxf.cpp \
     lib/filters/rs_filterdxfrw.cpp \
     lib/filters/lc_offsetcurvecarrier.cpp \
+    lib/filters/lc_offsetimportsession.cpp \
     lib/filters/lc_offsetcurvexdata.cpp \
     lib/filters/rs_filterdxf1.cpp \
     lib/filters/rs_filterjww.cpp \

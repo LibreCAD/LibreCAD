@@ -1960,6 +1960,7 @@ class RsFilterDxfRwExposureTestAccess;
  *
  * @author Rallaz
  */
+struct LC_OffsetImportBudget;
 class RS_FilterDXFRW : public RS_FilterInterface,
                        DRW_Interface
 #ifdef DWGSUPPORT
@@ -1969,6 +1970,7 @@ class RS_FilterDXFRW : public RS_FilterInterface,
 {
   friend class RsFilterDxfRwHeaderTestAccess;
   friend class RsFilterDxfRwExposureTestAccess;
+  friend class LC_OffsetImportSession;
 #ifdef DWGSUPPORT
   friend class DwgWriteFailureTestAccess;
 #endif
@@ -3110,6 +3112,9 @@ private:
   QString m_file;
   /** Pointer to current entity container (either block or graphic) */
   RS_EntityContainer *m_currentContainer = nullptr;
+  bool m_deferOffsetAdmission = false;
+  std::shared_ptr<LC_OffsetImportBudget> m_offsetImportBudget;
+  static void refreshDeferredOffsetInserts(RS_Graphic &graphic);
   /** MLINESTYLE cache: name → style data. Populated by addMLineStyle as
    *  the OBJECTS section is decoded; consumed by addMLine to compute
    *  per-element offsets when decomposing the MLINE into N polylines. */

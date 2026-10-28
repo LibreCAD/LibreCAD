@@ -1171,6 +1171,8 @@ set (SHARED_SOURCES
      librecad/src/lib/filters/lc_hyperbolaspline.h
      librecad/src/lib/filters/lc_offsetcurvecarrier.cpp
      librecad/src/lib/filters/lc_offsetcurvecarrier.h
+     librecad/src/lib/filters/lc_offsetimportsession.cpp
+     librecad/src/lib/filters/lc_offsetimportsession.h
      librecad/src/lib/filters/lc_offsetcurvexdata.cpp
      librecad/src/lib/filters/lc_offsetcurvexdata.h
         librecad/src/lib/filters/lc_parabolaspline.cpp
@@ -3723,6 +3725,9 @@ if (BUILD_TESTS)
     add_librecad_filter_micro_test(
         librecad_offset_hostilefile_tests
         librecad/src/lib/filters/tests/lc_offsetcurve_hostilefile_tests.cpp)
+    if(TARGET librecad_offset_worker)
+        add_dependencies(librecad_offset_hostilefile_tests librecad_offset_worker)
+    endif()
     add_librecad_filter_micro_test(
         librecad_offset_matrix_tests
         librecad/src/lib/filters/tests/lc_offsetcurve_matrix_tests.cpp)
