@@ -1202,6 +1202,8 @@ set (SHARED_SOURCES
      librecad/src/lib/gui/rs_dialogfactory.cpp
      librecad/src/lib/gui/rs_dialogfactory.h
      librecad/src/lib/gui/rs_dialogfactoryinterface.h
+     librecad/src/lib/gui/lc_hatchdensitytext.cpp
+     librecad/src/lib/gui/lc_hatchdensitytext.h
      librecad/src/lib/gui/rs_graphicview.cpp
      librecad/src/lib/gui/rs_graphicview.h
      librecad/src/lib/gui/rs_linetypepattern.cpp

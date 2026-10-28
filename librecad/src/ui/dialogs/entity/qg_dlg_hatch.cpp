@@ -26,6 +26,8 @@
 #include "qg_dlg_hatch.h"
 
 #include "lc_graphicviewport.h"
+#include "lc_hatchdensity.h"
+#include "lc_hatchdensitytext.h"
 #include "rs_document.h"
 #include "rs_hatch.h"
 #include "rs_line.h"
@@ -141,6 +143,16 @@ void QG_DlgHatch::showArea() const {
     } else {
         leHatchArea->setText({});
     }
+    if (lDensity != nullptr) {
+        if (m_entity->getUpdateError() == RS_Hatch::HATCH_TOO_DENSE) {
+            lDensity->setText(
+                LC_HatchDensityText::tooDenseMessage(
+                    m_entity->getDensityReport(),
+                    m_entity->getScale()));
+        } else {
+            lDensity->clear();
+        }
+    }
 }
 
 void QG_DlgHatch::setPattern(const QString& p) {
@@ -194,6 +206,18 @@ void QG_DlgHatch::updatePreview() {
     prevHatch->addEntity(loop);
     m_previewDocument->addEntity(prevHatch);
     prevHatch->update();
+
+    if (lDensity != nullptr) {
+        if (prevHatch->getUpdateError() == RS_Hatch::HATCH_TOO_DENSE) {
+            lDensity->setText(
+                tr("Preview: ") +
+                LC_HatchDensityText::tooDenseMessage(
+                    prevHatch->getDensityReport(), scale));
+        } else if (m_entity != nullptr
+                   && m_entity->getUpdateError() != RS_Hatch::HATCH_TOO_DENSE) {
+            lDensity->clear();
+        }
+    }
 
     gvPreview->zoomAuto();
 }

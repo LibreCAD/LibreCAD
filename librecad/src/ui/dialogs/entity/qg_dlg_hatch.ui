@@ -128,6 +128,16 @@
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QLabel" name="lDensity">
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string notr="true"/>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
         </item>

@@ -31,6 +31,7 @@
 #include <vector>
 
 #include "lc_hatchdensity.h"
+#include "lc_hatchdensitytext.h"
 #include "lc_hatchtestsupport.h"
 #include "rs_block.h"
 #include "rs_entitycontainer.h"
@@ -447,4 +448,54 @@ TEST_CASE("ScopedSharedBudget restores the previous shared budget",
         CHECK(LC_HatchDensity::sharedBudget() == &outer);
     }
     CHECK(LC_HatchDensity::sharedBudget() == nullptr);
+}
+
+// -----------------------------------------------------------------------
+// Density texts: numbers carried through the user-visible strings.
+// -----------------------------------------------------------------------
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Density texts carry the numbers",
+          "[lc-hatchfix][density]") {
+    // A report that tripped by estimate.
+    LC_HatchDensityReport r;
+    r.reason = LC_HatchDensityReport::Reason::Estimate;
+    r.areaTerm = 988020.0;
+    r.boundaryTerm = 9990.0;
+    r.estimatedPieces = 998010.0;
+    r.limit = 1000000.0;
+    r.finite = true;
+
+    const QString msg = LC_HatchDensityText::tooDenseMessage(r, 1.0);
+    // Estimate branch: pieces come from estimatedPieces (998010).
+    CHECK(msg.contains(QStringLiteral("998010")));
+    // Limit.
+    CHECK(msg.contains(QStringLiteral("1000000")));
+    // Suggested scale: minimumScale returns about 1.0100 for M = 1e6
+    // (close to current, since estimate is already just under cap).
+    CHECK(msg.contains(QStringLiteral("too dense")));
+
+    // Budget branch: pieces come from attempted.
+    r.reason = LC_HatchDensityReport::Reason::Budget;
+    r.attempted = 42U;
+    const QString msg2 = LC_HatchDensityText::tooDenseMessage(r, 1.0);
+    CHECK(msg2.contains(QStringLiteral("42")));
+    CHECK(msg2.contains(QStringLiteral("1000000")));
+
+    // patternLinesStatus: tripped vs OK.
+    CHECK(LC_HatchDensityText::patternLinesStatus(r).contains(
+        QStringLiteral("not generated")));
+    LC_HatchDensityReport ok;
+    ok.reason = LC_HatchDensityReport::Reason::None;
+    ok.finite = true;
+    const QString okStatus = LC_HatchDensityText::patternLinesStatus(ok);
+    CHECK(okStatus.contains(QStringLiteral("generated")));
+    CHECK_FALSE(okStatus.contains(QStringLiteral("not generated")));
+
+    // importSummary/r12Warning: carry the count.
+    const QString iSum = LC_HatchDensityText::importSummary(3);
+    CHECK(iSum.contains(QStringLiteral("3")));
+    const QString r12 = LC_HatchDensityText::r12Warning(1);
+    CHECK(r12.contains(QStringLiteral("R12")));
+    CHECK(r12.contains(QStringLiteral("1")));
 }

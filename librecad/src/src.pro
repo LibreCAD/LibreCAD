@@ -781,6 +781,7 @@ HEADERS += \
     lib/gui/rs_coordinateevent.h \
     lib/gui/rs_dialogfactory.h \
     lib/gui/rs_dialogfactoryinterface.h \
+    lib/gui/lc_hatchdensitytext.h \
     lib/gui/rs_graphicview.h \
     lib/gui/grid/rs_grid.h \
     lib/gui/rs_linetypepattern.h \
@@ -1331,6 +1332,7 @@ SOURCES += \
     lib/gui/grid/lc_lattice.cpp \
     lib/gui/grid/lc_orthogonalgrid.cpp \
     lib/gui/rs_dialogfactory.cpp \
+    lib/gui/lc_hatchdensitytext.cpp \
     #lib/gui/rs_eventhandler.cpp \
     lib/gui/rs_graphicview.cpp \
     lib/gui/grid/rs_grid.cpp \

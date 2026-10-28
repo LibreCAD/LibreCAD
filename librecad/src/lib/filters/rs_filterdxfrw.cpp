@@ -96,6 +96,8 @@
 #include "rs_block.h"
 #include "rs_blocklist.h"
 #include "rs_circle.h"
+#include "lc_hatchdensity.h"
+#include "lc_hatchdensitytext.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_dimaligned.h"
@@ -4556,6 +4558,39 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
               .arg(orphans.size())
               .arg(orphans.join(QStringLiteral(", "))));
     }
+  }
+
+  // Count pattern hatches whose density guard tripped and tint-fill them in
+  // model-space, every block and every top-level insert's direct children.
+  // One summary message per import, so the user is told that some fills are
+  // shown as tints rather than pattern lines.
+  const auto denseFromHatch = [](const RS_Entity* e) -> bool {
+    if (e == nullptr || e->rtti() != RS2::EntityHatch) return false;
+    const auto* h = static_cast<const RS_Hatch*>(e);
+    return h->getUpdateError() == RS_Hatch::HATCH_TOO_DENSE;
+  };
+  int tooDenseCount = 0;
+  if (m_graphic != nullptr) {
+    for (const RS_Entity* en : std::as_const(*m_graphic)) {
+      if (denseFromHatch(en)) ++tooDenseCount;
+      if (en != nullptr && en->rtti() == RS2::EntityInsert) {
+        const auto* ins = static_cast<const RS_EntityContainer*>(en);
+        for (const RS_Entity* child : std::as_const(*ins)) {
+          if (denseFromHatch(child)) ++tooDenseCount;
+        }
+      }
+    }
+    for (unsigned i = 0; i < m_graphic->countBlocks(); ++i) {
+      const RS_Block* blk = m_graphic->blockAt(i);
+      if (blk == nullptr) continue;
+      for (const RS_Entity* en : std::as_const(*blk)) {
+        if (denseFromHatch(en)) ++tooDenseCount;
+      }
+    }
+  }
+  if (tooDenseCount > 0) {
+    RS_DIALOGFACTORY->commandMessage(
+        LC_HatchDensityText::importSummary(tooDenseCount));
   }
 
   RS_DEBUG->print("RS_FilterDXFRW::fileImport OK");
@@ -12894,6 +12929,26 @@ void RS_FilterDXFRW::prepareBlocks() {
         break;
       } // end switch
     } // end if !RS2::FlagUndone
+  }
+  // R12 writes every pattern hatch into a *U block of its own. When the
+  // density guard tripped the hatch has no pattern pieces, so the *U block
+  // and its INSERT end up empty. Warn the user once per export.
+  if (m_version == 1009) {
+    int r12DenseCount = 0;
+    for (RS_Entity *e :
+         lc::LC_ContainerTraverser{*m_graphic, RS2::ResolveNone}.entities()) {
+      if (e != nullptr && e->isAlive() && e->rtti() == RS2::EntityHatch) {
+        const auto *h = static_cast<const RS_Hatch *>(e);
+        if (!h->isSolid()
+            && h->getUpdateError() == RS_Hatch::HATCH_TOO_DENSE) {
+          ++r12DenseCount;
+        }
+      }
+    }
+    if (r12DenseCount > 0) {
+      RS_DIALOGFACTORY->commandMessage(
+          LC_HatchDensityText::r12Warning(r12DenseCount));
+    }
   }
 }
 

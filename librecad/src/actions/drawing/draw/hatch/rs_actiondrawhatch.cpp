@@ -23,6 +23,7 @@
 #include "rs_actiondrawhatch.h"
 
 #include "lc_containertraverser.h"
+#include "lc_hatchdensitytext.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
@@ -142,6 +143,15 @@ bool RS_ActionDrawHatch::doTriggerModifications(LC_DocumentModificationBatch& ct
                     break;
                 case RS_Hatch::HATCH_AREA_TOO_BIG:
                     commandMessage(tr("Hatch Error: Contour too big!"));
+                    break;
+                case RS_Hatch::HATCH_TOO_DENSE:
+                    // Density guard tripped: keep the hatch and tint its
+                    // region. The report carries estimate, limit and the
+                    // scale hint for the user.
+                    ctx += hatch;
+                    ok = true;
+                    commandMessage(LC_HatchDensityText::tooDenseMessage(
+                        hatch->getDensityReport(), hatch->getScale()));
                     break;
                 default:
                     commandMessage(tr("Hatch Error: Undefined Error!"));
