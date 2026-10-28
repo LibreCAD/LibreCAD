@@ -2132,6 +2132,29 @@ In the receipt root, the final JUnit SHA256 values are:
 Matching discovery XML and build logs use the same prefixes. Asynchronous Trim
 GUI routing and atomic document publication are not implemented by W22.
 
+W23 detached Trim inputs `77d569295` extends the existing bounded creation-source
+snapshot to seal a document-root target with a detached, action-owned limit. The
+caller must retain and verify the exact limit object before matching it; ordinary
+document-only snapshots retain their existing matching contract. Independently
+owned worker copies have no parent or layer pointers, and extended-data values
+are deeply copied with a bounded aggregate allowance. Neither this API nor W22
+routes a GUI action or authorizes document publication.
+
+Fresh Release/ASan source/publication tests discover16 declarations and execute17
+JUnit cases with376 assertions each; Trim tests discover108 declarations and
+execute110 cases with51038/54408 assertions. All have zero errors, failures or
+skips and checked discovery identities. Coverage includes detached-limit changes,
+replacement and admission refusal, metadata isolation, source/snapshot death,
+and a real-helper detached-limit result compared with synchronous Trim geometry.
+ASan uses `detect_leaks=0`. Final JUnit receipts in the same evidence root:
+
+| W23 artifact | SHA256 |
+| --- | --- |
+| `offset-W23-final2-release.xml` | `8232f6ecf9047ef61e7e44d846ae83e874a8c77c09a056c9300248313d25d805` |
+| `offset-W23-final2-asan.xml` | `f7d6b19885deed59a37ac20908a31befc17045bf5e0a2d02717f1485b2909c1c` |
+| `offset-W23-trim-release.xml` | `7b79e2d0fc35a1651273b4f23df0c67479a1f0668a31fa7b2d9d1f6127608614` |
+| `offset-W23-trim-asan.xml` | `f7658684c651a279ea663a1cefafeef73a0dc88b58e01fb085ff89c8083382c6` |
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
@@ -2179,9 +2202,9 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** integrate W22 into
-`LC_ActionModifyTrim` preview and commit, including owned snapshots of detached
-limit copies; document, source, selection, viewport, UCS, option and undo seals;
+**Next concrete action on implementation resume:** integrate W22 and W23 into
+`LC_ActionModifyTrim` preview and commit, including its detached limit copies;
+document, source, selection, viewport, UCS, option and undo seals;
 cancellation on action/context death; and one atomic prepared publication for
 both one-sided Trim and Trim Two. Exercise stale inputs, helper failure, retry,
 undo/redo and real GUI lifecycle without a synchronous numeric fallback. Then
