@@ -227,6 +227,81 @@ TEST_CASE("Offset creation source capture rejects stale addresses and oversized 
     CHECK_FALSE(LC_OffsetCreationSources::capture(f.graphic, {spline}));
 }
 
+TEST_CASE("Trim snapshots own detached limits and reject stale source values",
+          "[lc-offsetcurve][creation-sources][trim-sources][asan]") {
+    Fixture f; auto* target = f.line();
+    auto limit = std::make_unique<RS_Line>(nullptr, RS_Vector{1, -1}, RS_Vector{1, 1});
+    auto targetTag = std::make_shared<DRW_Variant>(1000, std::string("target"));
+    auto limitTag = std::make_shared<DRW_Variant>(1000, std::string("limit"));
+    target->setDrwExtData({targetTag}); limit->setDrwExtData({limitTag});
+    auto inputs = LC_OffsetCreationSources::captureDetachedLimit(f.graphic, *target, *limit);
+    REQUIRE(inputs); REQUIRE(inputs->sources().size() == 2);
+    CHECK(inputs->roots() == QList<RS_Entity*>{target});
+    CHECK_FALSE(inputs->matches(f.graphic));
+    CHECK_FALSE(inputs->matchesDetached(f.graphic, nullptr));
+    CHECK(inputs->matchesDetached(f.graphic, limit.get()));
+    auto frozenTarget = inputs->cloneWorkerSource(0);
+    auto frozenLimit = inputs->cloneWorkerSource(1);
+    REQUIRE(frozenTarget); REQUIRE(frozenLimit);
+    CHECK_FALSE(inputs->cloneWorkerSource(2));
+    CHECK(frozenTarget->getParent() == nullptr); CHECK(frozenTarget->getLayer(false) == nullptr);
+    CHECK(frozenLimit->getParent() == nullptr); CHECK(frozenLimit->getLayer(false) == nullptr);
+    REQUIRE(frozenTarget->getDrwExtData().size() == 1); REQUIRE(frozenLimit->getDrwExtData().size() == 1);
+    CHECK(frozenTarget->getDrwExtData()[0] != targetTag);
+    CHECK(frozenLimit->getDrwExtData()[0] != limitTag);
+    SECTION("detached geometry changes") { limit->move({3, 0}); }
+    SECTION("document source changes") { target->move({3, 0}); }
+    SECTION("detached metadata changes") { limit->setSourceHandle(99); }
+    SECTION("shared extended-data value changes") { *targetTag->content.s = "changed"; }
+    SECTION("owned limit replaced") {
+        auto replacement = std::make_unique<RS_Line>(nullptr, RS_Vector{1, -1}, RS_Vector{1, 1});
+        CHECK_FALSE(inputs->matchesDetached(f.graphic, replacement.get()));
+        return;
+    }
+    CHECK_FALSE(inputs->matchesDetached(f.graphic, limit.get()));
+    CHECK(dynamic_cast<RS_Line*>(frozenTarget.get())->getData().startpoint == RS_Vector(0, 0));
+    CHECK(dynamic_cast<RS_Line*>(frozenLimit.get())->getData().startpoint == RS_Vector(1, -1));
+    CHECK(*frozenTarget->getDrwExtData()[0]->content.s == "target");
+}
+
+TEST_CASE("Trim snapshots refuse non-detached limits and non-root targets",
+          "[lc-offsetcurve][creation-sources][trim-sources]") {
+    Fixture f; auto* target = f.line(); auto* other = f.line({1, -1}, {1, 1});
+    CHECK_FALSE(LC_OffsetCreationSources::captureDetachedLimit(f.graphic, *target, *other));
+    auto detached = std::make_unique<RS_Line>(nullptr, RS_Vector{1, -1}, RS_Vector{1, 1});
+    detached->setLayer(f.graphic.getActiveLayer());
+    CHECK_FALSE(LC_OffsetCreationSources::captureDetachedLimit(f.graphic, *target, *detached));
+    detached->setLayer(nullptr);
+    auto* polyline = f.polyline();
+    CHECK_FALSE(LC_OffsetCreationSources::captureDetachedLimit(f.graphic, *polyline->entityAt(0), *detached));
+    CHECK_FALSE(LC_OffsetCreationSources::captureDetachedLimit(f.graphic, *target, *target));
+}
+
+TEST_CASE("Trim worker clones outlive both source drawing and snapshot",
+          "[lc-offsetcurve][creation-sources][trim-sources][lifetime][asan]") {
+    REQUIRE(lc::test::application());
+    std::unique_ptr<RS_Entity> workerTarget, workerLimit;
+    {
+        auto graphic = std::make_unique<Graphic>(); graphic->initForNewDocument();
+        auto* ellipse = new RS_Ellipse(graphic.get(), RS_EllipseData{{0, 0}, {4, 0}, .5, 0, 0, false});
+        ellipse->setLayer(graphic->getActiveLayer()); graphic->addEntity(ellipse);
+        auto native = LC_OffsetCurve::create(*ellipse, .25, false); REQUIRE(native);
+        auto* target = native.entity.get(); target->setParent(graphic.get());
+        target->setLayer(graphic->getActiveLayer()); graphic->addEntity(target); native.entity.release();
+        auto limit = std::make_unique<RS_Line>(nullptr, RS_Vector{1, -5}, RS_Vector{1, 5});
+        auto inputs = LC_OffsetCreationSources::captureDetachedLimit(*graphic, *target, *limit); REQUIRE(inputs);
+        workerTarget = inputs->cloneWorkerSource(0); workerLimit = inputs->cloneWorkerSource(1);
+        REQUIRE(workerTarget); REQUIRE(workerLimit);
+        inputs.reset(); limit.reset(); graphic.reset();
+    }
+    auto* native = dynamic_cast<LC_OffsetCurve*>(workerTarget.get()); REQUIRE(native);
+    CHECK(native->hasEditableDefinition()); CHECK(native->getParent() == nullptr);
+    CHECK(native->getLayer(false) == nullptr);
+    for (auto* child : *native) CHECK(child->getLayer(false) == nullptr);
+    auto* line = dynamic_cast<RS_Line*>(workerLimit.get()); REQUIRE(line);
+    CHECK(line->getData().startpoint == RS_Vector(1, -5)); CHECK(line->getLayer(false) == nullptr);
+}
+
 TEST_CASE("Offset creation publication resolves a larger document inventory without changing unrelated members",
           "[lc-offsetcurve][creation-publication][inventory]") {
     Fixture f; QList<RS_Entity*> sources;

@@ -45,8 +45,18 @@ public:
     static constexpr std::size_t MaximumNodes = 16384;
     static constexpr std::size_t MaximumBytes = 16*1024*1024;
     static std::shared_ptr<LC_OffsetCreationSources> capture(RS_Document&, const QList<RS_Entity*>&);
+    /** Capture a direct document target and a detached, action-owned limit.
+     * The caller must keep the exact detached object alive until the snapshot is
+     * destroyed, and prove that ownership before calling matchesDetached().
+     */
+    static std::shared_ptr<LC_OffsetCreationSources> captureDetachedLimit(
+        RS_Document&, RS_Entity& target, RS_Entity& detachedLimit);
     ~LC_OffsetCreationSources();
     bool matches(const RS_Document&) const;
+    bool matchesDetached(const RS_Document&, const RS_Entity* ownedLimit) const;
+    /** Return an independently owned root for a worker, detached from the
+     * snapshot's private document. Index follows sources() order. */
+    std::unique_ptr<RS_Entity> cloneWorkerSource(std::size_t index) const;
     const QList<RS_Entity*>& sources() const noexcept;
     const QList<RS_Entity*>& originals() const noexcept;
     const QList<RS_Entity*>& roots() const noexcept;
@@ -56,6 +66,7 @@ public:
     bool localize(const QList<RS_Entity*>& outputs, RS_Layer* activeLayer, bool useActiveLayer) const;
 private:
     struct Data;
+    bool matchesImpl(const RS_Document&, const RS_Entity* ownedLimit) const;
     explicit LC_OffsetCreationSources(std::unique_ptr<Data>);
     std::unique_ptr<Data> m_data;
 };

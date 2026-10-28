@@ -1154,6 +1154,30 @@ TEST_CASE("Async trim worker owns detached inputs and returns only a complete jo
     sameTrimWork(result.cacheWork, sync.cacheWork); CHECK_FALSE(canUndo(f.graphic));
 }
 
+TEST_CASE("Async trim worker consumes sealed detached limit snapshots",
+          "[lc-offsetcurve][trim-action][trim-worker-async][trim-sources]") {
+    Drawing<false> f; auto* native = addNative(f.graphic);
+    auto limit = std::make_unique<RS_Line>(nullptr, RS_Vector{-3, .3}, RS_Vector{3, .3});
+    auto inputs = LC_OffsetCreationSources::captureDetachedLimit(f.graphic, *native, *limit); REQUIRE(inputs);
+    LC_OffsetTrimWorker worker; LC_StoredCacheTrimOptions options;
+    std::optional<LC_OffsetTrimWorker::Outcome> outcome;
+    REQUIRE(worker.start(inputs->cloneWorkerSource(0), {2, 0}, inputs->cloneWorkerSource(1), {0, .3},
+        false, options.kernel, 17, qint64(f.graphic.undoStateEpoch()), LC_OffsetWorkerClient::Mode::Commit,
+        [&](LC_OffsetTrimWorker::Outcome value) { outcome.emplace(std::move(value)); }));
+    QElapsedTimer elapsed; elapsed.start();
+    while (!outcome) { REQUIRE(elapsed.elapsed() < 35000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    REQUIRE(outcome->status == LC_OffsetTrimWorker::Status::Completed); REQUIRE(outcome->prepared);
+    REQUIRE(inputs->matchesDetached(f.graphic, limit.get()));
+    auto receipt = outcome->prepared->completions(f.graphic.undoStateEpoch()); REQUIRE(receipt);
+    WorkerTrimBatch actual, expected;
+    const auto result = RS_Modification::trimStoredCachePrepared(f.graphic, *native, {2, 0}, *limit, {0, .3},
+        false, actual.value, *receipt, options);
+    const auto synchronous = RS_Modification::trimStoredCache(f.graphic, *native, {2, 0}, *limit, {0, .3},
+        false, expected.value, options);
+    REQUIRE(result.result); REQUIRE(synchronous.result); sameTrimOutputs(actual.value, expected.value);
+    sameTrimWork(result.cacheWork, synchronous.cacheWork); CHECK_FALSE(canUndo(f.graphic));
+}
+
 TEST_CASE("Async trim worker cancels without delivery and recovers after a shared deadline",
           "[lc-offsetcurve][trim-action][trim-worker-async][timeout]") {
     Drawing<false> f; auto* native = addNative(f.graphic); auto* cutter = line(f.graphic);

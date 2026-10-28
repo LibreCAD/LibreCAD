@@ -438,6 +438,7 @@ struct LC_OffsetCreationSources::Data {
     std::map<const RS_Entity*, RS_Entity*> addresses;
     std::map<const RS_Entity*, RS_Entity*> reverse;
     std::set<const RS_Entity*> seen;
+    const RS_Entity* detachedLimit = nullptr;
     bool worker = false;
     std::size_t bytes = 0;
     explicit Data(RS_Document& doc) : document(&doc) {
@@ -579,9 +580,37 @@ std::shared_ptr<LC_OffsetCreationSources> LC_OffsetCreationSources::capture(RS_D
     return result;
 }
 
+std::shared_ptr<LC_OffsetCreationSources> LC_OffsetCreationSources::captureDetachedLimit(
+    RS_Document& document, RS_Entity& target, RS_Entity& detachedLimit) {
+    if (&target == &detachedLimit || detachedLimit.getParent() || detachedLimit.getLayer(false)) return {};
+    auto result = capture(document, {&target});
+    if (!result || result->m_data->originals.size() != 1 || result->m_data->originals.front() != &target ||
+        result->m_data->roots.size() != 1 || result->m_data->roots.front() != &target) return {};
+    auto& d = *result->m_data;
+    if (!d.captureNode(detachedLimit, 0)) return {};
+    auto clone = creationClone(detachedLimit);
+    if (!clone) return {};
+    clone->setParent(&d.frozen); d.bind(detachedLimit, *clone);
+    auto* copy = clone.get();
+    d.frozen.addEntity(copy); clone.release();
+    d.detachedLimit = &detachedLimit;
+    d.originals.append(&detachedLimit); d.sources.append(copy);
+    d.worker |= dynamic_cast<RS_Ellipse*>(&detachedLimit) || dynamic_cast<LC_OffsetCurve*>(&detachedLimit);
+    if (!result->matchesDetached(document, &detachedLimit)) return {};
+    return result;
+}
+
 bool LC_OffsetCreationSources::matches(const RS_Document& document) const {
+    return matchesImpl(document, nullptr);
+}
+
+bool LC_OffsetCreationSources::matchesDetached(const RS_Document& document, const RS_Entity* ownedLimit) const {
+    return ownedLimit && matchesImpl(document, ownedLimit);
+}
+
+bool LC_OffsetCreationSources::matchesImpl(const RS_Document& document, const RS_Entity* ownedLimit) const {
     const auto& d = *m_data;
-    if (&document != d.document || !document.isOwner() || document.count() != d.topLevel.size() ||
+    if (ownedLimit != d.detachedLimit || &document != d.document || !document.isOwner() || document.count() != d.topLevel.size() ||
         document.getLayer(false) != d.documentLayer || d.graphic->getActiveLayer() != d.activeLayer) return false;
     int index = 0; for (auto* member : document) if (member != d.topLevel[index++]) return false;
     for (const auto& layer : d.layers) {
@@ -610,6 +639,41 @@ bool LC_OffsetCreationSources::matches(const RS_Document& document) const {
         }
     }
     return true;
+}
+std::unique_ptr<RS_Entity> LC_OffsetCreationSources::cloneWorkerSource(std::size_t index) const {
+    if (index >= std::size_t(m_data->sources.size())) return {};
+    auto copy = creationClone(*m_data->sources[qsizetype(index)]);
+    if (!copy) return {};
+    copy->setParent(nullptr);
+    std::vector<RS_Entity*> pending{copy.get()};
+    std::set<RS_Entity*> seen;
+    std::size_t metadataBytes = 0;
+    for (std::size_t i = 0; i < pending.size(); ++i) {
+        auto* entity = pending[i];
+        if (!entity || !seen.insert(entity).second || pending.size() > MaximumNodes) return {};
+        entity->RS_Entity::setLayer(nullptr);
+        std::vector<std::shared_ptr<DRW_Variant>> tags;
+        const auto& existing = entity->getDrwExtData();
+        if (!boundedExtData(existing)) return {};
+        tags.reserve(existing.size());
+        for (const auto& tag : existing) {
+            std::size_t size = sizeof(DRW_Variant);
+            if (tag->type() == DRW_Variant::STRING) size += tag->content.s->size();
+            if (tag->type() == DRW_Variant::BINARY) size += tag->binary()->size();
+            if (size > MaximumBytes - metadataBytes) return {};
+            metadataBytes += size;
+            tags.push_back(std::make_shared<DRW_Variant>(*tag));
+        }
+        entity->setDrwExtData(std::move(tags));
+        if (auto* container = dynamic_cast<RS_EntityContainer*>(entity)) {
+            if (!container->isOwner() || container->size() > MaximumNodes - pending.size()) return {};
+            for (auto* child : *container) {
+                if (!child || child->getParent() != container) return {};
+                pending.push_back(child);
+            }
+        }
+    }
+    return copy;
 }
 const QList<RS_Entity*>& LC_OffsetCreationSources::sources() const noexcept { return m_data->sources; }
 const QList<RS_Entity*>& LC_OffsetCreationSources::originals() const noexcept { return m_data->originals; }
