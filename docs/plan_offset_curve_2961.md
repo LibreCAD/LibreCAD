@@ -1785,6 +1785,68 @@ not complete #2961 or the entire roadmap. The next product work remains preview-
 cache portability/parity before creation/repeat routing, then the remaining4.2
 caller/import work and final acceptance below.
 
+Creation/repeat continuation W16:
+`7bfe70ac2` implements pointer-free, owned ordinary preview-cache snapshots.
+Entries retain side/magnitude, original output budget, status, validation/error
+metadata and ordinary LINE/raw normalized spline values. Restore binds them to
+the helper-owned source, not a transported pointer. Zero new producer/sample/pair
+effort on a hit and the existing budget-sensitive refusal policy are preserved.
+An external-entry count preserves the action-wide256-entry clearing threshold,
+including overwrite at capacity; revision-checked merge rejects stale updates
+and propagates a helper's global clear to other sources. Cache node allocation
+precedes clearing/overwriting. Snapshot scanning caps record/value/array copies;
+it refuses native objects, malformed layouts and oversized latent arrays.
+These are ordinary cache values, never native admission authority.
+
+Fresh Release/ASan `librecad_offset_source_preparation_tests` discovery/execution
+on W16 passes79 declarations/85 JUnit cases/83452 assertions in each configuration,
+zero errors/failures/skips, complete identity coverage and only named SECTION
+extras. Four new cases cover real source rebinding/zero-effort reuse, refusal
+budget/side/distance rules, cross-source eviction and stale/malformed updates.
+Both build systems register the new header; a fresh qmake6 app build is not
+claimed. ASan remains `detect_leaks=0`. Evidence root is unchanged:
+
+| W16 artifact | SHA256 |
+|---|---|
+| `W16-qualified-source-release.xml` | `bd1d8db09a9a59799a9f16a8dbf28cd8e02cf5901c6e1c90b74f91aa496c3186` |
+| `W16-qualified-source-asan.xml` | `ad71e393aa98634aaa32b4df90be9679b2f556930193aeb5d5fa00c130f3212f` |
+
+W16 completes the value/lifetime prerequisite only, not worker transport or GUI
+routing. Implement the remaining bounded slices before closing creation/repeat:
+
+1. W17, cached Produce transport: append a new operation to protocol4, preserving
+   existing operation0-5 body layouts. Carry a bounded ordinary snapshot into the
+   existing shared Produce preparation and return its updated snapshot. Preserve
+   side-once, per-copy effort/output limits, diagnostic prefixes and the distinct
+   native-rebase/stored-cache fallback. Only a joined private completion may
+   update the parent's cache. Admit all counts/scalars/geometry before native
+   copying; raw cache values cannot mint native entities or bypass C. Test fresh
+   real helper processes, opposite sides, hits under smaller effort/output budgets,
+   refusal growth rules, eviction, stale merge, malformed/truncated frames and
+   ordinary/native fallback parity. Oversized cache transport is an explicit
+   refusal, never silent regeneration with fresh numeric limits.
+2. W18, ordered preparation: retain owned per-source numeric results while the
+   batch advances through worker and ordinary sources. Preserve original source
+   order, deduplication, polyline segment runs, request-wide remaining display
+   allowance, copy grouping and partial-series diagnostics. Rebuilding cheap
+   dispatch must not rerun numeric preparation. Add allocation-safe creation
+   publication at the existing prepared-model boundary; preserve the strict
+   native replacement entry used by the property sheet. Stage complete entity,
+   selection, undo/redo and relative-zero changes before ownership handoff.
+3. W19, creation/repeat GUI continuations: integrate that preparation with Modify
+   Offset preview/commit for eligible ellipses and native sources, without nested
+   GUI event loops or changing ordinary-only tools. Use owned action continuations
+   and fixed helper discovery. Seal source geometry/metadata/layer, document/view,
+   selection, undo epoch, UCS, options and target attributes through final
+   publication; cancel/reap superseded preview, Escape, suspension, context death,
+   stale source and viewport changes. Preserve bounded detail previews, one-step
+   undo/redo, current/source attribute policy, plain fallbacks and retry after
+   failure. Test heartbeat, preview/cache parity, repeated offsets and mixed
+   source batches plus allocation/cancellation/late-reply failure safety. Update
+   existing async-facing tests without weakening their geometry/undo assertions.
+
+Test/commit each slice, immediately checkpoint this file and push PR #3193.
+
 Remaining creation/repeat steps after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
@@ -1793,9 +1855,10 @@ Remaining creation/repeat steps after these review follow-ups:
    An original-definition rebase followed by the existing stored-cache fallback
    intentionally uses DIFFERENT inputs/remaining allowances; do not replace that
    fallback with ordinary geometry from the rebase invocation.
-3. Preserve budget-sensitive preview-cache reuse, zero new producer effort on
-   hits and its256-entry clearing policy across worker lifetimes. Qualify parity
-   before GUI routing. Leave unrelated ordinary source tools unchanged.
+3. W16 qualifies owned cache snapshot/rebinding/merge and cross-source clearing.
+   Complete W17 transport before claiming preview-cache portability across real
+   helper processes. Preserve budget-sensitive reuse and zero new producer effort
+   on hits; leave unrelated ordinary source tools unchanged.
 4. Route preview/commit through owned continuations, complete context/source/undo/
    selection/UCS seals, cancellation/death handling and one atomic publication.
    Parent materialization must use the correct existing local attribute policy
@@ -1830,8 +1893,8 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** preview-cache portability/parity,
-then creation/repeat GUI routing in the remaining
+**Next concrete action on implementation resume:** W17 cached Produce transport
+and real-process cache parity, then W18/W19 creation/repeat GUI routing in the remaining
 4.2 caller adapters. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
 Nothing is automatically copied into the dirty main tree. Native caller routing,
