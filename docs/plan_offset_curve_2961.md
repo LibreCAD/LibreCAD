@@ -2368,6 +2368,30 @@ root, `offset-W29-storage-{release,asan}.xml` have SHA256 respectively
 `52ebd0d11986696d27652468ba53f4408807213f0b39e81cddda174a1382db43` and
 `d31d4c154576cbdd3722f1ea4505c98fcd666ad5667a0596117567db0805de2c`.
 
+W30 asynchronous partial decision `b2de24054` adds a request/reply API for
+GUI callers: the private import waits without a nested event loop until a reply
+arrives on the session's owning thread. A reply is one-shot; duplicates, late
+replies after cancellation/destruction, and replies from an earlier cancelled
+import cannot affect a later import. Existing synchronous-decision overloads
+remain supported. Accepted replies retain the same drawing and format-unknown
+overwrite protection; a callback throwing after its reply cannot revoke it.
+The validation deadline begins after the decision, not while the user is deciding.
+This API is not yet connected to a GUI dialog or document publication.
+
+Release/ASan full hostile-file suites each discover 48 declarations and execute
+53 cases with zero errors, failures or skips (53377 / 54215 assertions). They
+exercise delayed accept/reject, duplicate reply, cancellation, destruction,
+retry with an old reply, and a throw after acceptance. Worker-client suites each
+execute all 16 previously discovered declarations (7319 / 10736 assertions),
+also without errors, failures or skips. Polling counts vary; ASan uses
+`detect_leaks=0`. qmake6 rebuilt the two affected objects, not the full app.
+Reports in the same evidence root are `offset-W30-{hostile,client}-{release,asan}.xml`:
+
+| Suite | Release SHA256 | ASan SHA256 |
+| --- | --- | --- |
+| hostile | `b573da61e7cdd6d8b55c13612916345b002d07be4e5976d28dc468b0bba90ba0` | `0702591a0a8bddf7da80017c3038efd0b1df408d3c13414a47044f750e32e895` |
+| client | `bcd6d4ffd7608f14dc963b130bbbb28ad73572397c4e37f00e79e8f62b59d4f6` | `16057201446687d91c2d74a04fa7610b0840c9e6c8b3011109cfe924ff3a50c1` |
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
