@@ -57,11 +57,13 @@ template<bool Both> class CacheTrim final : public LC_ActionModifyTrim {
 public:
     explicit CacheTrim(LC_ActionContext* c) : LC_ActionModifyTrim(c, Both) {}
     LC_StoredCacheTrimOptions options;
+    mutable std::function<void()> onOptionsRead;
     using LC_ActionModifyTrim::ChooseLimitEntity;
     using LC_ActionModifyTrim::ChooseTrimEntity;
     using RS_PreviewActionInterface::m_preview;
     void contextTarget(RS_Entity* e, RS_Vector p) { doInitWithContextEntity(e, p); }
-    void guardedHover(RS_Vector p) { auto e = lc::test::eventAt(p.x, p.y); onMouseMoveEvent(getStatus(), &e); }
+    void guardedHoverAsync(RS_Vector p) { auto e = lc::test::eventAt(p.x, p.y); onMouseMoveEvent(getStatus(), &e); }
+    void guardedHover(RS_Vector p) { guardedHoverAsync(p); waitForTrim(); }
     void cancel() { auto e = lc::test::eventAt(0, 0); onMouseRightButtonRelease(getStatus(), &e); }
     RS_Entity* retainedLimit() const { return m_limitEntity; }
     void stalePublicEvents() {
@@ -75,6 +77,7 @@ public:
         mouseReleaseEvent(&cancel);
     }
     bool pending() const { return hasPendingNativeTrim(); }
+    void togglePreviewRefs() { m_showRefEntitiesOnPreview = !m_showRefEntitiesOnPreview; }
     void waitForTrim() {
         QElapsedTimer elapsed; elapsed.start();
         while (pending()) {
@@ -84,12 +87,17 @@ public:
     }
     void clickAsync(RS_Vector p) { auto e = lc::test::eventAt(p.x, p.y); onMouseLeftButtonRelease(getStatus(), &e); }
     void click(RS_Vector p) { clickAsync(p); waitForTrim(); }
-    void hover(RS_Vector p) {
+    void hoverAsync(RS_Vector p) {
         deletePreviewAndHighlights(); auto e = lc::test::eventAt(p.x, p.y);
         onMouseMoveEvent(getStatus(), &e); drawPreviewAndHighlights();
     }
+    void hover(RS_Vector p) { hoverAsync(p); waitForTrim(); }
 protected:
-    LC_StoredCacheTrimOptions storedCacheTrimOptions() const override { return options; }
+    LC_StoredCacheTrimOptions storedCacheTrimOptions() const override {
+        const auto value = options;
+        if (onOptionsRead) { auto callback = std::move(onOptionsRead); callback(); }
+        return value;
+    }
 };
 template<bool Both> struct Drawing {
     const bool ready = lc::test::application() != nullptr;
@@ -493,7 +501,7 @@ TEST_CASE("T conic Trim Two real mouse events share preview commit and exact one
                 type == QEvent::MouseButtonRelease ? Qt::NoButton : Qt::LeftButton, Qt::NoModifier);
             if (type == QEvent::MouseButtonPress) f.action->mousePressEvent(&event);
             else if (type == QEvent::MouseButtonRelease) { f.action->mouseReleaseEvent(&event); f.action->waitForTrim(); }
-            else f.action->mouseMoveEvent(&event);
+            else { f.action->mouseMoveEvent(&event); f.action->waitForTrim(); }
         };
         const RS_Vector first = nativeFirst ? RS_Vector{2, 0} : RS_Vector{-1, 0};
         const RS_Vector second = nativeFirst ? RS_Vector{-1, 0} : RS_Vector{2, 0};
@@ -1176,6 +1184,178 @@ TEST_CASE("Native Trim action commits asynchronously with a responsive event loo
     CHECK_FALSE(f.graphic.undo()); REQUIRE(f.graphic.redo()); CHECK(native->isDeleted()); CHECK(ordinary->isDeleted());
 }
 
+TEST_CASE("Native Trim preview supersedes an earlier hover and matches the final commit",
+          "[gui][lc-offsetcurve][trim-action][trim-worker-preview]") {
+    Drawing<false> f; auto* native = addNative(f.graphic); auto* limit = line(f.graphic);
+    f.action->click({-2.8, .3});
+    int ticks = 0; QTimer heartbeat; QObject::connect(&heartbeat, &QTimer::timeout, [&] { ++ticks; }); heartbeat.start(0);
+    f.action->hoverAsync({2, 0}); REQUIRE(f.action->pending());
+    f.action->hoverAsync({-2, 0}); REQUIRE(f.action->pending());
+    CHECK_FALSE(native->isDeleted()); CHECK_FALSE(canUndo(f.graphic));
+    f.action->waitForTrim(); heartbeat.stop(); CHECK(ticks > 0);
+    const auto preview = trimPreview(*f.action->m_preview); REQUIRE_FALSE(preview.empty());
+    WorkerTrimBatch expected;
+    const auto synchronous = RS_Modification::trimStoredCache(f.graphic, *native, {-2, 0}, *limit, {-2.8, .3}, false, expected.value);
+    REQUIRE(synchronous.result);
+    std::vector<std::string> expectedGeometry;
+    for (auto* entity : std::as_const(expected.value.entitiesToAdd)) expectedGeometry.push_back(trimGeometry(*entity));
+    CHECK(preview == expectedGeometry);
+    f.action->click({-2, 0}); REQUIRE(native->isDeleted());
+    std::vector<std::string> committed;
+    for (auto* entity : live(f.graphic)) if (entity != limit) committed.push_back(trimGeometry(*entity));
+    CHECK(committed == preview); REQUIRE(f.graphic.undo()); CHECK_FALSE(native->isDeleted());
+}
+
+TEST_CASE("Native context-target preview seals a nested limit and cancels on replacement",
+          "[gui][lc-offsetcurve][trim-action][trim-worker-preview][nested][asan]") {
+    for (unsigned removal = 0; removal < 6; ++removal) {
+        CAPTURE(removal);
+        Drawing<false> f; auto* native = addNative(f.graphic); auto* limit = polylineLimit(f.graphic, false);
+        limit->setLayer(f.graphic.getActiveLayer());
+        f.action->contextTarget(native, {2, 0});
+        f.action->hoverAsync({-2.8, .3}); REQUIRE(f.action->pending());
+        if (removal) {
+            if (removal == 1) REQUIRE(limit->removeEntity(limit->entityAt(0)));
+            else if (removal == 2) REQUIRE(f.graphic.removeEntity(limit));
+            else if (removal == 3) limit->entityAt(0)->move({0, .1});
+            else if (removal == 4) limit->setVisible(false);
+            else f.graphic.getActiveLayer()->freeze(true);
+            f.action->waitForTrim(); CHECK(f.action->m_preview->isEmpty());
+            CHECK_FALSE(native->isDeleted()); CHECK_FALSE(canUndo(f.graphic));
+        } else {
+            f.action->waitForTrim(); const auto preview = trimPreview(*f.action->m_preview); REQUIRE_FALSE(preview.empty());
+            f.action->click({-2.8, .3}); REQUIRE(native->isDeleted());
+            std::vector<std::string> committed;
+            for (auto* entity : live(f.graphic)) if (entity != limit) committed.push_back(trimGeometry(*entity));
+            CHECK(committed == preview); REQUIRE(f.graphic.undo()); CHECK_FALSE(native->isDeleted());
+        }
+    }
+}
+
+TEST_CASE("Native Trim preview cancels on Escape and suppresses late delivery on destruction",
+          "[gui][lc-offsetcurve][trim-action][trim-worker-preview][lifetime][asan]") {
+    SECTION("Escape and retry") {
+        Drawing<false> f; auto* native = addNative(f.graphic); line(f.graphic);
+        f.action->click({-2.8, .3}); f.action->hoverAsync({2, 0}); REQUIRE(f.action->pending());
+        QKeyEvent escape(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier); f.action->keyPressEvent(&escape);
+        CHECK_FALSE(f.action->pending()); CHECK(f.action->m_preview->isEmpty()); CHECK_FALSE(canUndo(f.graphic));
+        f.action->hover({2, 0}); CHECK_FALSE(trimPreview(*f.action->m_preview).empty()); CHECK_FALSE(native->isDeleted());
+    }
+    SECTION("action") {
+        Drawing<false> f; auto* native = addNative(f.graphic); auto* limit = line(f.graphic);
+        f.action->click({-2.8, .3}); f.action->hoverAsync({2, 0}); REQUIRE(f.action->pending());
+        f.action.reset();
+        QElapsedTimer elapsed; elapsed.start();
+        while (elapsed.elapsed() < 150) { QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+        CHECK_FALSE(native->isDeleted()); CHECK_FALSE(limit->isDeleted()); CHECK_FALSE(canUndo(f.graphic));
+    }
+    SECTION("document") {
+        Drawing<false> f; f.action.reset();
+        auto document = std::make_unique<RS_Graphic>(); document->initForNewDocument();
+        f.view.setDocument(document.get()); f.context.setDocumentAndView(document.get(), &f.view);
+        f.action = std::make_unique<CacheTrim<false>>(&f.context);
+        addNative(*document); line(*document);
+        f.action->click({-2.8, .3}); f.action->hoverAsync({2, 0}); REQUIRE(f.action->pending());
+        document.reset(); CHECK(f.action->isFinished()); CHECK_FALSE(f.action->pending());
+        f.action.reset(); f.view.setDocument(&f.graphic); f.context.setDocumentAndView(&f.graphic, &f.view);
+        QElapsedTimer elapsed; elapsed.start();
+        while (elapsed.elapsed() < 150) { QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    }
+}
+
+TEST_CASE("Native Trim public mouse move tolerates action destruction during preview admission",
+          "[gui][lc-offsetcurve][trim-action][trim-worker-preview][lifetime][asan]") {
+    Drawing<false> f; auto* native = addNative(f.graphic); auto* limit = line(f.graphic);
+    f.view.getViewPort()->setSize(640, 480); f.view.getViewPort()->setOffsetAndFactor(192, 240, 64);
+    f.action->init(0); f.action->click({-2.8, .3});
+    f.action->onOptionsRead = [&] { f.action.reset(); };
+    const QPointF pos(f.view.getViewPort()->toGuiX(2), f.view.getViewPort()->toGuiY(0));
+    QMouseEvent event(QEvent::MouseMove, pos, pos, Qt::NoButton, Qt::NoButton, Qt::NoModifier);
+    auto* action = f.action.get(); action->mouseMoveEvent(&event);
+    CHECK_FALSE(f.action); CHECK_FALSE(native->isDeleted()); CHECK_FALSE(limit->isDeleted()); CHECK_FALSE(canUndo(f.graphic));
+}
+
+TEST_CASE("Native Trim preview rechecks sources after option callbacks",
+          "[gui][lc-offsetcurve][trim-action][trim-worker-preview][stale][asan]") {
+    SECTION("hovered target removed") {
+        Drawing<false> f; auto* native = addNative(f.graphic); auto* limit = line(f.graphic);
+        f.action->click({-2.8, .3});
+        f.action->onOptionsRead = [&] { REQUIRE(f.graphic.removeEntity(native)); };
+        f.action->hoverAsync({2, 0});
+        CHECK_FALSE(f.action->pending()); CHECK(trimPreview(*f.action->m_preview).empty());
+        CHECK_FALSE(limit->isDeleted()); CHECK_FALSE(canUndo(f.graphic));
+    }
+    SECTION("nested limit removed") {
+        Drawing<false> f; auto* native = addNative(f.graphic); auto* limit = polylineLimit(f.graphic, false);
+        f.action->contextTarget(native, {2, 0});
+        f.action->onOptionsRead = [&] { REQUIRE(limit->removeEntity(limit->entityAt(0))); };
+        f.action->hoverAsync({-2.8, .3});
+        CHECK_FALSE(f.action->pending()); CHECK(trimPreview(*f.action->m_preview).empty());
+        CHECK_FALSE(native->isDeleted()); CHECK_FALSE(canUndo(f.graphic));
+    }
+    SECTION("source changed without undo") {
+        Drawing<false> f; auto* native = addNative(f.graphic); auto* limit = line(f.graphic);
+        f.action->click({-2.8, .3});
+        f.action->onOptionsRead = [&] { limit->move({0, .1}); };
+        f.action->hoverAsync({2, 0});
+        CHECK_FALSE(f.action->pending()); CHECK(trimPreview(*f.action->m_preview).empty());
+        CHECK_FALSE(native->isDeleted()); CHECK_FALSE(canUndo(f.graphic));
+    }
+}
+
+TEST_CASE("Native Trim commit rejects source changes from option callbacks before publication",
+          "[gui][lc-offsetcurve][trim-action][trim-worker-commit][stale]") {
+    Drawing<false> f; auto* native = addNative(f.graphic); auto* target = line(f.graphic);
+    f.action->click({2, 0});
+    f.action->onOptionsRead = [&] { target->move({0, .1}); };
+    f.action->clickAsync({0, .3});
+    CHECK_FALSE(f.action->pending()); CHECK_FALSE(native->isDeleted()); CHECK_FALSE(target->isDeleted());
+    CHECK_FALSE(canUndo(f.graphic)); REQUIRE(f.context.messages.size() == 1);
+    CHECK(f.context.messages.front().contains("nothing changed"));
+}
+
+TEST_CASE("Native Trim preview clears a refused worker result and recovers",
+          "[gui][lc-offsetcurve][trim-action][trim-worker-preview][refusal]") {
+    Drawing<false> f; auto* native = addNative(f.graphic); auto* limit = line(f.graphic);
+    f.action->click({-2.8, .3}); f.action->options.kernel.maxBoxPairs = 0;
+    f.action->hoverAsync({2, 0}); REQUIRE(f.action->pending()); f.action->waitForTrim();
+    CHECK(f.action->m_preview->isEmpty());
+    CHECK_FALSE(native->isDeleted()); CHECK_FALSE(limit->isDeleted()); CHECK_FALSE(canUndo(f.graphic));
+    CHECK(f.context.messages.isEmpty());
+    f.action->options = {}; f.action->hover({2, 0});
+    CHECK_FALSE(trimPreview(*f.action->m_preview).empty()); CHECK_FALSE(canUndo(f.graphic));
+}
+
+TEST_CASE("Native Trim preview discards undrawn private content on cancellation",
+          "[gui][lc-offsetcurve][trim-action][trim-worker-preview][stale]") {
+    Drawing<false> f; addNative(f.graphic); auto* limit = line(f.graphic);
+    f.action->click({-2.8, .3});
+    f.action->m_preview->addEntity(new RS_Line(nullptr, {10, 10}, {11, 10}));
+    f.action->guardedHoverAsync({2, 0}); REQUIRE(f.action->pending());
+    limit->move({0, .1}); f.action->waitForTrim();
+    CHECK(f.action->m_preview->isEmpty()); CHECK_FALSE(canUndo(f.graphic));
+}
+
+TEST_CASE("Native Trim preview cancels after action and document changes",
+          "[gui][lc-offsetcurve][trim-action][trim-worker-preview][stale]") {
+    for (unsigned change = 0; change < 5; ++change) {
+        CAPTURE(change);
+        Drawing<false> f; auto* native = addNative(f.graphic); auto* limit = line(f.graphic);
+        f.action->click({-2.8, .3}); f.action->hoverAsync({2, 0}); REQUIRE(f.action->pending());
+        if (change == 0) {
+            const auto before = limit->getStartpoint(); limit->move({0, .1});
+            REQUIRE(limit->getStartpoint() != before);
+        }
+        else if (change == 1) RS_Selection::selectEntitiesList(&f.graphic, f.view.getViewPort(), {native}, true);
+        else if (change == 2) f.view.getViewPort()->setOffsetAndFactor(100, 100, 3);
+        else if (change == 3) f.action->options.maxOutputEntities = 1;
+        else f.action->togglePreviewRefs();
+        f.action->waitForTrim(); CHECK(f.action->m_preview->isEmpty());
+        CHECK_FALSE(native->isDeleted()); CHECK_FALSE(limit->isDeleted()); CHECK_FALSE(canUndo(f.graphic));
+        CHECK(f.context.messages.isEmpty());
+    }
+}
+
 TEST_CASE("Native Trim action refuses changed inputs while a worker is pending",
           "[gui][lc-offsetcurve][trim-action][trim-worker-commit][stale]") {
     for (unsigned change = 0; change < 6; ++change) {
@@ -1611,7 +1791,7 @@ template<bool Both> void ownTrimUndoCycleRetry() {
             type == QEvent::MouseButtonRelease ? Qt::NoButton : Qt::LeftButton, Qt::NoModifier);
         if (type == QEvent::MouseButtonPress) f.action->mousePressEvent(&event);
         else if (type == QEvent::MouseButtonRelease) { f.action->mouseReleaseEvent(&event); f.action->waitForTrim(); }
-        else f.action->mouseMoveEvent(&event);
+        else { f.action->mouseMoveEvent(&event); f.action->waitForTrim(); }
     };
     const auto click = [&](RS_Vector point) { send(QEvent::MouseButtonPress, point); send(QEvent::MouseButtonRelease, point); };
     click({2, 0}); REQUIRE(f.action->retainedLimit() == native);

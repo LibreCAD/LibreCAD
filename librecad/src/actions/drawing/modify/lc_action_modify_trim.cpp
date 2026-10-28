@@ -97,16 +97,19 @@ namespace {
 struct LC_ActionModifyTrim::NativeTrimWork {
     RS_Document* document = nullptr;
     RS_Entity *target = nullptr, *limit = nullptr;
+    RS_Entity *savedTarget = nullptr, *savedLimit = nullptr;
     RS_Vector targetPick, limitPick, zero, markedZero;
+    RS_Vector savedTargetPick, savedLimitPick;
     std::array<RS_Vector, 3> world, screen;
     double angle = 0;
-    bool counterClockwise = true, detached = false;
+    bool counterClockwise = true, detached = false, nested = false, preview = false, showRefs = false;
     int status = 0;
     std::uint64_t epoch = 0;
     QList<RS_Entity*> selection;
     LC_StoredCacheTrimOptions options;
     QElapsedTimer elapsed;
     std::shared_ptr<LC_OffsetCreationSources> inputs;
+    std::unique_ptr<RS_Entity> nestedOperand;
     std::unique_ptr<LC_OffsetTrimWorker::Prepared> prepared;
 };
 
@@ -140,14 +143,17 @@ LC_ActionModifyTrim::LC_ActionModifyTrim(LC_ActionContext* actionContext, const 
         if (!work) return;
         const QPointer<LC_ActionModifyTrim> alive(this);
         try {
-            const bool timedOut = work->elapsed.elapsed() >= LC_OffsetWorkerClient::Deadlines::commit;
+            const bool timedOut = work->elapsed.elapsed() >= (work->preview ? LC_OffsetWorkerClient::Deadlines::preview : LC_OffsetWorkerClient::Deadlines::commit);
             const bool current = !timedOut && currentNativeTrim(work);
             if (alive && !current) {
-                cancelNativeTrim();
-                if (currentTrimContext()) commandMessage(timedOut ? tr("Trim worker timed out; nothing changed") :
+                if (work->preview) cancelNativePreview(work);
+                else if (m_actionData->work == work) {
+                    cancelNativeTrim();
+                    if (currentTrimContext()) commandMessage(timedOut ? tr("Trim worker timed out; nothing changed") :
                     tr("Trim inputs changed; nothing changed"));
+                }
             }
-        } catch (...) { if (alive) cancelNativeTrim(); }
+        } catch (...) { if (alive && m_actionData->work == work) { if (work->preview) cancelNativePreview(work); else cancelNativeTrim(); } }
     });
     m_liveTrimView = m_graphicView;
     if (m_document) m_document->getSelection()->addListener(this);
@@ -246,19 +252,25 @@ RS_Entity* LC_ActionModifyTrim::mappedTrimPick(const RS_Entity* address, const b
 }
 
 void LC_ActionModifyTrim::mouseMoveEvent(QMouseEvent* event) {
-    if (hasPendingNativeTrim()) return;
+    if (hasPendingNativeTrim()) {
+        if (!m_actionData->work->preview) return;
+        cancelNativeTrim();
+    }
     if (!validateCapturedTrimInputs()) return;
     RS_PreviewActionInterface::mouseMoveEvent(event);
 }
 
 void LC_ActionModifyTrim::mousePressEvent(QMouseEvent* event) {
-    if (hasPendingNativeTrim()) return;
+    if (hasPendingNativeTrim()) {
+        if (!m_actionData->work->preview) return;
+        cancelNativeTrim();
+    }
     if (!validateCapturedTrimInputs()) return;
     RS_ActionInterface::mousePressEvent(event);
 }
 
 void LC_ActionModifyTrim::mouseReleaseEvent(QMouseEvent* event) {
-    if (hasPendingNativeTrim() && event->button() != Qt::RightButton) return;
+    if (hasPendingNativeTrim() && !m_actionData->work->preview && event->button() != Qt::RightButton) return;
     if (hasPendingNativeTrim()) cancelNativeTrim();
     if (!validateCapturedTrimInputs()) return;
     RS_ActionInterface::mouseReleaseEvent(event);
@@ -305,7 +317,9 @@ void LC_ActionModifyTrim::suspend() {
 
 void LC_ActionModifyTrim::keyPressEvent(QKeyEvent* event) {
     if (hasPendingNativeTrim() && event->key() == Qt::Key_Escape) {
-        cancelNativeTrim(); event->accept(); return;
+        const auto work = m_actionData->work;
+        if (work->preview) cancelNativePreview(work); else cancelNativeTrim();
+        event->accept(); return;
     }
     if (currentTrimContext()) RS_PreviewActionInterface::keyPressEvent(event);
     else event->accept();
@@ -398,16 +412,26 @@ void LC_ActionModifyTrim::cancelNativeTrim() {
     if (m_actionData->worker) m_actionData->worker->cancel();
 }
 
+void LC_ActionModifyTrim::cancelNativePreview(const std::shared_ptr<NativeTrimWork>& work) {
+    if (m_actionData->work != work) return;
+    const QPointer<LC_ActionModifyTrim> alive(this);
+    cancelNativeTrim();
+    if (currentTrimContext()) deletePreviewAndHighlights();
+    if (alive && !m_actionData->work && m_preview) { m_preview->clear(); m_hasPreview = false; }
+    if (alive && !m_actionData->work && currentTrimContext()) m_graphicView->redraw(RS2::RedrawOverlay);
+}
+
 bool LC_ActionModifyTrim::currentNativeTrim(const std::shared_ptr<NativeTrimWork>& work) const {
     if (m_actionData->work != work || !currentTrimContext() || m_document != work->document ||
         !capturedTrimInputsLive() || m_document->undoStateEpoch() != work->epoch ||
-        work->elapsed.elapsed() >= LC_OffsetWorkerClient::Deadlines::commit ||
-        m_trimEntity != work->target || m_limitEntity != work->limit || getStatus() != work->status ||
-        !sameTrimValue(m_actionData->trimCoord, work->targetPick) ||
-        !sameTrimValue(m_actionData->limitCoord, work->limitPick)) return false;
+        work->elapsed.elapsed() >= (work->preview ? LC_OffsetWorkerClient::Deadlines::preview : LC_OffsetWorkerClient::Deadlines::commit) ||
+        m_trimEntity != work->savedTarget || m_limitEntity != work->savedLimit || getStatus() != work->status ||
+        (work->preview && m_showRefEntitiesOnPreview != work->showRefs) ||
+        !sameTrimValue(m_actionData->trimCoord, work->savedTargetPick) ||
+        !sameTrimValue(m_actionData->limitCoord, work->savedLimitPick)) return false;
     const QPointer<const LC_ActionModifyTrim> alive(this);
     const auto options = storedCacheTrimOptions();
-    if (!alive || !sameTrimOptions(options, work->options) ||
+    if (!alive || m_actionData->work != work || !sameTrimOptions(options, work->options) ||
         (options.cancellation.requested && options.cancellation.requested->load(std::memory_order_relaxed))) return false;
     auto selection = m_document->getSelection()->begin();
     for (auto* entity : work->selection) {
@@ -427,22 +451,41 @@ bool LC_ActionModifyTrim::currentNativeTrim(const std::shared_ptr<NativeTrimWork
         if (m_actionData->limitCopy.get() != work->limit) return false;
         return work->inputs->matchesDetached(*m_document, m_actionData->limitCopy.get());
     }
+    if (work->nested) {
+        if (mappedTrimPick(work->limit, true) != work->limit) return false;
+        return work->inputs->matchesNested(*m_document, work->limit);
+    }
     return work->inputs->matches(*m_document);
 }
 
 void LC_ActionModifyTrim::beginNativeTrim() {
+    beginNativeTrimWork(m_trimEntity, m_limitEntity, m_actionData->trimCoord, m_actionData->limitCoord, false);
+}
+
+void LC_ActionModifyTrim::beginNativeTrimWork(RS_Entity* target, RS_Entity* limit,
+    const RS_Vector& targetPick, const RS_Vector& limitPick, const bool preview) {
     const QPointer<LC_ActionModifyTrim> alive(this);
+    std::shared_ptr<NativeTrimWork> initiated;
     try {
         QElapsedTimer elapsed; elapsed.start();
-        if (!validateCapturedTrimInputs() || !m_trimEntity || !m_limitEntity || m_trimEntity == m_limitEntity ||
+        if (!validateCapturedTrimInputs() || !target || !limit || target == limit ||
             m_document->undoStateEpoch() >= std::uint64_t(std::numeric_limits<qint64>::max())) return;
+        target = mappedTrimPick(target, false);
+        const bool detached = limit == m_actionData->limitCopy.get();
+        if (!detached) limit = mappedTrimPick(limit, preview && !m_both);
+        if (!target || !limit || target == limit) return;
+        const bool nested = !detached && limit->getParent() != m_document;
+        if (nested && (!preview || m_both)) return;
         auto work = std::make_shared<NativeTrimWork>();
+        initiated = work;
         work->elapsed = elapsed;
-        work->document = m_document; work->target = m_trimEntity; work->limit = m_limitEntity;
-        work->targetPick = m_actionData->trimCoord; work->limitPick = m_actionData->limitCoord;
+        work->document = m_document; work->target = target; work->limit = limit;
+        work->targetPick = targetPick; work->limitPick = limitPick;
+        work->savedTarget = m_trimEntity; work->savedLimit = m_limitEntity;
+        work->savedTargetPick = m_actionData->trimCoord; work->savedLimitPick = m_actionData->limitCoord;
         work->status = getStatus(); work->epoch = m_document->undoStateEpoch();
-        work->detached = m_actionData->limitCopy.get() == m_limitEntity;
-        work->options = storedCacheTrimOptions(); if (!alive) return;
+        work->detached = detached; work->nested = nested; work->preview = preview;
+        work->showRefs = m_showRefEntitiesOnPreview;
         for (auto* selected : *m_document->getSelection()) {
             if (work->selection.size() == 4096) throw std::length_error("Trim selection exceeded");
             work->selection.append(selected);
@@ -452,42 +495,102 @@ void LC_ActionModifyTrim::beginNativeTrim() {
         work->zero = m_viewport->getRelativeZero(); work->markedZero = m_viewport->getMarkedRelativeZero();
         work->angle = m_viewport->toWorldAngle(m_viewport->toAbsUCSAngle(0));
         work->counterClockwise = m_viewport->areAnglesCounterClockwise();
-        work->inputs = work->detached ? LC_OffsetCreationSources::captureDetachedLimit(*m_document, *work->target, *work->limit) :
-            LC_OffsetCreationSources::capture(*m_document, {work->target, work->limit});
+        if (work->detached) work->inputs = LC_OffsetCreationSources::captureDetachedLimit(*m_document, *work->target, *work->limit);
+        else if (work->nested) work->inputs = LC_OffsetCreationSources::captureNestedLimit(*m_document, *work->target, *work->limit);
+        else work->inputs = LC_OffsetCreationSources::capture(*m_document, {work->target, work->limit});
         if (!work->inputs || work->inputs->sources().size() != 2 || work->inputs->originals().size() != 2 ||
             work->inputs->originals()[0] != work->target || work->inputs->originals()[1] != work->limit)
             throw std::runtime_error("Trim input snapshot refused");
+        work->options = storedCacheTrimOptions();
+        if (!alive || m_actionData->work || !currentTrimContext() || m_trimEntity != work->savedTarget ||
+            m_limitEntity != work->savedLimit || getStatus() != work->status) return;
+        if (!capturedTrimInputsLive() || m_document->undoStateEpoch() != work->epoch ||
+            mappedTrimPick(work->target, false) != work->target ||
+            (work->detached ? m_actionData->limitCopy.get() != work->limit :
+             mappedTrimPick(work->limit, work->nested) != work->limit))
+            throw std::runtime_error("Trim input changed after capture");
         m_actionData->work = work;
         if (!currentNativeTrim(work)) throw std::runtime_error("Trim input changed");
-        auto target = work->inputs->cloneWorkerSource(0), limit = work->inputs->cloneWorkerSource(1);
-        if (!target || !limit || !m_actionData->worker->start(std::move(target), work->targetPick,
-            std::move(limit), work->limitPick, m_both, work->options.kernel, qint64(work->epoch), qint64(work->epoch),
-            LC_OffsetWorkerClient::Mode::Commit, [alive, work](LC_OffsetTrimWorker::Outcome result) {
+        if (work->nested) work->nestedOperand = work->inputs->cloneWorkerSource(1);
+        auto targetCopy = work->inputs->cloneWorkerSource(0), limitCopy = work->inputs->cloneWorkerSource(1);
+        if (!targetCopy || !limitCopy || (work->nested && !work->nestedOperand) ||
+            !m_actionData->worker->start(std::move(targetCopy), work->targetPick,
+            std::move(limitCopy), work->limitPick, m_both, work->options.kernel, qint64(work->epoch), qint64(work->epoch),
+            preview ? LC_OffsetWorkerClient::Mode::Preview : LC_OffsetWorkerClient::Mode::Commit, [alive, work](LC_OffsetTrimWorker::Outcome result) {
                 if (!alive || alive->m_actionData->work != work) return;
                 if (result.status != LC_OffsetTrimWorker::Status::Completed || !result.prepared) {
+                    if (work->preview) { alive->cancelNativePreview(work); return; }
                     alive->cancelNativeTrim();
-                    if (alive->currentTrimContext()) alive->commandMessage(result.status == LC_OffsetTrimWorker::Status::TimedOut ?
+                    if (!work->preview && alive->currentTrimContext()) alive->commandMessage(result.status == LC_OffsetTrimWorker::Status::TimedOut ?
                         tr("Trim worker timed out; nothing changed") : tr("Offset cache trim worker failed; nothing changed"));
                     return;
                 }
                 work->prepared = std::move(result.prepared);
-                try { alive->completeNativeTrim(work); }
+                try { if (work->preview) alive->completeNativePreview(work); else alive->completeNativeTrim(work); }
                 catch (...) {
-                    if (alive) { alive->cancelNativeTrim(); if (alive->currentTrimContext()) alive->commandMessage(tr("Offset cache trim preparation failed; nothing changed")); }
+                    if (alive && alive->m_actionData->work == work) {
+                        if (work->preview) alive->cancelNativePreview(work);
+                        else { alive->cancelNativeTrim(); if (alive->currentTrimContext()) alive->commandMessage(tr("Offset cache trim preparation failed; nothing changed")); }
+                    }
                 }
             })) throw std::runtime_error("Trim worker admission refused");
         m_actionData->guard->start();
     } catch (...) {
         if (!alive) return;
-        cancelNativeTrim();
-        if (currentTrimContext()) commandMessage(tr("Offset cache trim preparation failed; nothing changed"));
+        if (initiated && m_actionData->work == initiated) {
+            if (preview) cancelNativePreview(initiated); else cancelNativeTrim();
+        }
+        if (!alive) return;
+        if (!preview && currentTrimContext()) commandMessage(tr("Offset cache trim preparation failed; nothing changed"));
     }
+}
+
+void LC_ActionModifyTrim::completeNativePreview(const std::shared_ptr<NativeTrimWork>& work) {
+    const QPointer<LC_ActionModifyTrim> alive(this);
+    if (!currentNativeTrim(work)) { if (alive) cancelNativePreview(work); return; }
+    const auto receipt = work->prepared->completions(work->epoch);
+    if (!receipt) throw std::runtime_error("Trim preview completion missing");
+    LC_DocumentModificationBatch batch;
+    auto* limit = work->nested ? work->nestedOperand.get() : work->limit;
+    const auto result = RS_Modification::trimStoredCachePrepared(*m_document, *work->target, work->targetPick,
+        *limit, work->limitPick, m_both, batch, *receipt, work->options);
+    std::array<std::unique_ptr<RS_Entity>, 4> owners;
+    if (batch.entitiesToAdd.size() > qsizetype(owners.size())) {
+        for (auto* entity : std::as_const(batch.entitiesToAdd)) delete entity;
+        throw std::runtime_error("Trim preview output exceeded");
+    }
+    for (qsizetype i = 0; i < batch.entitiesToAdd.size(); ++i) owners[std::size_t(i)].reset(batch.entitiesToAdd[i]);
+    if (!alive) return;
+    if (!result.result || !currentNativeTrim(work)) { if (alive) cancelNativePreview(work); return; }
+    deletePreviewAndHighlights();
+    if (!alive || !currentNativeTrim(work)) { if (alive) cancelNativePreview(work); return; }
+    m_preview->clear();
+    for (auto& entity : owners) if (entity) { m_preview->addEntity(entity.get()); entity.release(); }
+    if (m_showRefEntitiesOnPreview) {
+        if (result.intersection1.valid) previewRefPoint(result.intersection1);
+        if (result.intersection2.valid) previewRefPoint(result.intersection2);
+    }
+    if (!alive || m_actionData->work != work) return;
+    highlightHover(work->target);
+    if (!alive || m_actionData->work != work) return;
+    if (!currentNativeTrim(work)) {
+        if (alive) cancelNativePreview(work);
+        return;
+    }
+    m_actionData->guard->stop();
+    drawPreviewAndHighlights();
+    if (!alive || m_actionData->work != work) return;
+    if (!currentNativeTrim(work)) {
+        if (alive) cancelNativePreview(work);
+        return;
+    }
+    m_actionData->work.reset();
 }
 
 void LC_ActionModifyTrim::completeNativeTrim(const std::shared_ptr<NativeTrimWork>& work) {
     const QPointer<LC_ActionModifyTrim> alive(this);
     if (!currentNativeTrim(work)) {
-        if (alive) { cancelNativeTrim(); if (currentTrimContext()) commandMessage(tr("Trim inputs changed; nothing changed")); }
+        if (alive && m_actionData->work == work) { cancelNativeTrim(); if (currentTrimContext()) commandMessage(tr("Trim inputs changed; nothing changed")); }
         return;
     }
     const auto receipt = work->prepared->completions(work->epoch);
@@ -502,6 +605,7 @@ void LC_ActionModifyTrim::completeNativeTrim(const std::shared_ptr<NativeTrimWor
     }
     for (qsizetype i = 0; i < batch.entitiesToAdd.size(); ++i) owners[std::size_t(i)].reset(batch.entitiesToAdd[i]);
     if (!alive) return;
+    if (m_actionData->work != work) return;
     if (!result.result) {
         QString reason;
         using Refusal = LC_OffsetCacheTrim::Refusal;
@@ -520,7 +624,7 @@ void LC_ActionModifyTrim::completeNativeTrim(const std::shared_ptr<NativeTrimWor
         if (currentTrimContext()) commandMessage(tr("Offset cache trim refused: %1; nothing changed").arg(reason));
         return;
     }
-    if (!currentNativeTrim(work)) { if (alive) cancelNativeTrim(); return; }
+    if (!currentNativeTrim(work)) { if (alive && m_actionData->work == work) cancelNativeTrim(); return; }
     std::set<quint32> handles;
     std::set<unsigned long long> lineages;
     for (auto* entity : std::as_const(batch.entitiesToDelete)) {
@@ -545,7 +649,7 @@ void LC_ActionModifyTrim::completeNativeTrim(const std::shared_ptr<NativeTrimWor
     auto publication = LC_OffsetCurvePublication::prepareCreation(*m_document, *m_viewport, batch.entitiesToDelete,
         batch.entitiesToAdd, {}, batch.entitiesToDelete, work->inputs->roots());
     if (!publication || !alive || !currentNativeTrim(work) || !publication->commit()) {
-        if (alive) { cancelNativeTrim(); if (currentTrimContext()) commandMessage(tr("Trim inputs changed before publication; nothing changed")); }
+        if (alive && m_actionData->work == work) { cancelNativeTrim(); if (currentTrimContext()) commandMessage(tr("Trim inputs changed before publication; nothing changed")); }
         return;
     }
     for (auto& owner : owners) owner.release();
@@ -682,26 +786,14 @@ void LC_ActionModifyTrim::doTriggerCompletion(const bool success) {
 }
 
 void LC_ActionModifyTrim::previewTrim(RS_Entity* entityToTrimCandidate, RS_Entity* limitingEntity, const RS_Vector& trimCoordinates,
-                                      const RS_Vector& limitCoordinates, bool& trimInvalid) const {
+                                      const RS_Vector& limitCoordinates, bool& trimInvalid) {
     entityToTrimCandidate = nativeLimitOwner(entityToTrimCandidate);
     limitingEntity = nativeLimitOwner(limitingEntity);
     if (entityToTrimCandidate && limitingEntity && entityToTrimCandidate != limitingEntity &&
         (entityToTrimCandidate->rtti() == RS2::EntityOffsetCurve || limitingEntity->rtti() == RS2::EntityOffsetCurve)) {
-        LC_DocumentModificationBatch prepared;
-        const auto result = RS_Modification::trimStoredCache(*m_document, *entityToTrimCandidate, trimCoordinates,
-            *limitingEntity, limitCoordinates, m_both, prepared, storedCacheTrimOptions());
-        if (!result.result) return;
-        trimInvalid = false;
-        // The fresh preparation is identical to commit, but only private
-        // outputs enter the owning preview. Originals/selection stay untouched.
-        std::array<std::unique_ptr<RS_Entity>, 4> owned;
-        for (qsizetype i = 0; i < prepared.entitiesToAdd.size(); ++i) owned[std::size_t(i)].reset(prepared.entitiesToAdd[i]);
-        for (auto& e : owned) if (e) { m_preview->addEntity(e.get()); e.release(); }
-        if (m_showRefEntitiesOnPreview) {
-            if (result.intersection1.valid) previewRefPoint(result.intersection1);
-            if (result.intersection2.valid) previewRefPoint(result.intersection2);
-        }
-        highlightHover(entityToTrimCandidate);
+        const QPointer<LC_ActionModifyTrim> alive(this);
+        beginNativeTrimWork(entityToTrimCandidate, limitingEntity, trimCoordinates, limitCoordinates, true);
+        if (alive) trimInvalid = !hasPendingNativeTrim();
         return;
     }
     if (limitingEntity != nullptr && entityToTrimCandidate != limitingEntity) {
@@ -751,8 +843,12 @@ void LC_ActionModifyTrim::previewTrim(RS_Entity* entityToTrimCandidate, RS_Entit
 }
 
 void LC_ActionModifyTrim::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
-    if (hasPendingNativeTrim()) return;
+    if (hasPendingNativeTrim()) {
+        if (!m_actionData->work->preview) return;
+        cancelNativeTrim();
+    }
     if (!validateCapturedTrimInputs()) return;
+    const QPointer<LC_ActionModifyTrim> alive(this);
     const RS_Vector mouse = e->graphPoint;
     bool trimInvalid = true;
     switch (status) {
@@ -763,6 +859,7 @@ void LC_ActionModifyTrim::onMouseMoveEvent(const int status, const LC_MouseEvent
             }
             if (m_trimEntity != nullptr && se != nullptr) {
                 previewTrim(m_trimEntity, se, m_actionData->trimCoord, mouse, trimInvalid);
+                if (!alive) return;
                 if (trimInvalid) {
                     highlightSelected(m_trimEntity);
                 }
@@ -776,6 +873,7 @@ void LC_ActionModifyTrim::onMouseMoveEvent(const int status, const LC_MouseEvent
         case ChooseTrimEntity: {
             RS_Entity* entityToTrimCandidate = catchAndDescribe(e, RS2::ResolveNone);
             previewTrim(entityToTrimCandidate, m_limitEntity, mouse, m_actionData->limitCoord, trimInvalid);
+            if (!alive) return;
             if (trimInvalid) {
                 highlightSelected(m_limitEntity);
             }
@@ -787,7 +885,10 @@ void LC_ActionModifyTrim::onMouseMoveEvent(const int status, const LC_MouseEvent
 }
 
 void LC_ActionModifyTrim::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
-    if (hasPendingNativeTrim()) return;
+    if (hasPendingNativeTrim()) {
+        if (!m_actionData->work->preview) return;
+        cancelNativeTrim();
+    }
     if (!validateCapturedTrimInputs()) return;
     const RS_Vector mouse = e->graphPoint;
     switch (status) {

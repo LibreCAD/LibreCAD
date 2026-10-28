@@ -426,6 +426,13 @@ struct LC_OffsetCreationSources::Data {
         bool owner = false;
     };
     struct Layer { RS_Layer* live; RS_Layer* frozen; QString name; RS_Pen pen; bool locked, hidden; };
+    struct NestedOwner {
+        RS_EntityContainer* address;
+        unsigned long long id;
+        RS_Layer* layer;
+        RS_Pen pen;
+        unsigned flags;
+    };
     RS_Document* document;
     RS_Graphic* graphic = nullptr;
     RS_Layer* activeLayer = nullptr;
@@ -435,10 +442,12 @@ struct LC_OffsetCreationSources::Data {
     QList<RS_Entity*> topLevel, roots, sources, originals;
     std::vector<Node> nodes;
     std::vector<Layer> layers;
+    std::vector<NestedOwner> nestedOwners;
     std::map<const RS_Entity*, RS_Entity*> addresses;
     std::map<const RS_Entity*, RS_Entity*> reverse;
     std::set<const RS_Entity*> seen;
     const RS_Entity* detachedLimit = nullptr;
+    bool nestedLimit = false;
     bool worker = false;
     std::size_t bytes = 0;
     explicit Data(RS_Document& doc) : document(&doc) {
@@ -463,6 +472,17 @@ struct LC_OffsetCreationSources::Data {
         auto* result = owned.get(); frozen.addLayer(result); owned.release();
         layers.push_back({actual, result, actual->getName(), actual->getPen(), actual->isLocked(), actual->isFrozen()});
         return result;
+    }
+    bool captureNestedOwners(RS_Entity& entity) {
+        auto* owner = entity.getParent();
+        while (owner && owner != document) {
+            if (nestedOwners.size() == 64 || !charge(1024) || !boundedPen(owner->getPen(false))) return false;
+            auto* ownerLayer = owner->getLayer(false);
+            layer(ownerLayer);
+            nestedOwners.push_back({owner, owner->getId(), ownerLayer, owner->getPen(false), creationFlags(*owner)});
+            owner = owner->getParent();
+        }
+        return owner == document && !nestedOwners.empty();
     }
     bool captureNode(RS_Entity& entity, unsigned depth) {
         if (nodes.size() == MaximumNodes || depth > 64 || !charge(1024) ||
@@ -586,18 +606,36 @@ std::shared_ptr<LC_OffsetCreationSources> LC_OffsetCreationSources::captureDetac
     auto result = capture(document, {&target});
     if (!result || result->m_data->originals.size() != 1 || result->m_data->originals.front() != &target ||
         result->m_data->roots.size() != 1 || result->m_data->roots.front() != &target) return {};
-    auto& d = *result->m_data;
-    if (!d.captureNode(detachedLimit, 0)) return {};
-    auto clone = creationClone(detachedLimit);
-    if (!clone) return {};
-    clone->setParent(&d.frozen); d.bind(detachedLimit, *clone);
+    if (!result->appendLimit(detachedLimit, false) || !result->matchesDetached(document, &detachedLimit)) return {};
+    return result;
+}
+
+std::shared_ptr<LC_OffsetCreationSources> LC_OffsetCreationSources::captureNestedLimit(
+    RS_Document& document, RS_Entity& target, RS_Entity& nestedLimit) {
+    if (&target == &nestedLimit || !nestedLimit.getParent() || nestedLimit.getParent() == &document ||
+        (typeid(nestedLimit) != typeid(RS_Line) && typeid(nestedLimit) != typeid(RS_Arc) &&
+         typeid(nestedLimit) != typeid(RS_Circle) && typeid(nestedLimit) != typeid(RS_Ellipse) &&
+         typeid(nestedLimit) != typeid(RS_Spline))) return {};
+    auto result = capture(document, {&target});
+    if (!result || result->m_data->originals.size() != 1 || result->m_data->originals.front() != &target ||
+        result->m_data->roots.size() != 1 || result->m_data->roots.front() != &target) return {};
+    if (!result->m_data->captureNestedOwners(nestedLimit) || !result->appendLimit(nestedLimit, true) ||
+        !result->matchesNested(document, &nestedLimit)) return {};
+    return result;
+}
+
+bool LC_OffsetCreationSources::appendLimit(RS_Entity& limit, bool nested) {
+    auto& d = *m_data;
+    if (!d.captureNode(limit, 0)) return false;
+    auto clone = creationClone(limit);
+    if (!clone) return false;
+    clone->setParent(&d.frozen); d.bind(limit, *clone);
     auto* copy = clone.get();
     d.frozen.addEntity(copy); clone.release();
-    d.detachedLimit = &detachedLimit;
-    d.originals.append(&detachedLimit); d.sources.append(copy);
-    d.worker |= dynamic_cast<RS_Ellipse*>(&detachedLimit) || dynamic_cast<LC_OffsetCurve*>(&detachedLimit);
-    if (!result->matchesDetached(document, &detachedLimit)) return {};
-    return result;
+    d.detachedLimit = &limit; d.nestedLimit = nested;
+    d.originals.append(&limit); d.sources.append(copy);
+    d.worker |= dynamic_cast<RS_Ellipse*>(&limit) || dynamic_cast<LC_OffsetCurve*>(&limit);
+    return true;
 }
 
 bool LC_OffsetCreationSources::matches(const RS_Document& document) const {
@@ -605,7 +643,11 @@ bool LC_OffsetCreationSources::matches(const RS_Document& document) const {
 }
 
 bool LC_OffsetCreationSources::matchesDetached(const RS_Document& document, const RS_Entity* ownedLimit) const {
-    return ownedLimit && matchesImpl(document, ownedLimit);
+    return ownedLimit && !m_data->nestedLimit && matchesImpl(document, ownedLimit);
+}
+
+bool LC_OffsetCreationSources::matchesNested(const RS_Document& document, const RS_Entity* liveLimit) const {
+    return liveLimit && m_data->nestedLimit && matchesImpl(document, liveLimit);
 }
 
 bool LC_OffsetCreationSources::matchesImpl(const RS_Document& document, const RS_Entity* ownedLimit) const {
@@ -617,6 +659,16 @@ bool LC_OffsetCreationSources::matchesImpl(const RS_Document& document, const RS
         if (!d.graphic->RS_Graphic::getLayerList()->contains(layer.live) || layer.live->getName() != layer.name ||
             !samePen(layer.live->getPen(), layer.pen) || layer.live->isLocked() != layer.locked ||
             layer.live->isFrozen() != layer.hidden) return false;
+    }
+    if (d.nestedLimit) {
+        const auto* owner = ownedLimit->getParent();
+        for (const auto& saved : d.nestedOwners) {
+            if (owner != saved.address) return false;
+            if (owner->getId() != saved.id || owner->getLayer(false) != saved.layer ||
+                !samePen(owner->getPen(false), saved.pen) || creationFlags(*owner) != saved.flags) return false;
+            owner = owner->getParent();
+        }
+        if (owner != &document) return false;
     }
     for (const auto& node : d.nodes) {
         // Preorder parent lists are checked before any child address is read.

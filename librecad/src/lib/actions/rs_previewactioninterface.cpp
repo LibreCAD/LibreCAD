@@ -27,6 +27,7 @@
 #include <cmath>
 
 #include <QMouseEvent>
+#include <QPointer>
 
 #include "rs_previewactioninterface.h"
 
@@ -913,8 +914,9 @@ void RS_PreviewActionInterface::mouseMoveEvent(QMouseEvent* event) {
             m_visualSnapManager->visualizeOrdinaryRestrictions(m_preview.get(), m_highlight.get());
         }
     }
+    const QPointer<RS_PreviewActionInterface> alive(this);
     onMouseMoveEvent(status, &lcEvent);
-    drawPreviewAndHighlights();
+    if (alive) drawPreviewAndHighlights();
 }
 
 // fixme - check and ensure that coordinate is properly set if it is specified by command line

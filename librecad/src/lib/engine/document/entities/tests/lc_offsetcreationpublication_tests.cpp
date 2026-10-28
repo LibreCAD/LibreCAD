@@ -302,6 +302,37 @@ TEST_CASE("Trim worker clones outlive both source drawing and snapshot",
     CHECK(line->getData().startpoint == RS_Vector(1, -5)); CHECK(line->getLayer(false) == nullptr);
 }
 
+TEST_CASE("Trim nested limit snapshots seal their live child before worker copying",
+          "[lc-offsetcurve][creation-sources][trim-sources][nested]") {
+    Fixture f; auto* target = f.line({0, -2}, {0, 2}); auto* polyline = f.polyline();
+    polyline->setLayer(f.graphic.getActiveLayer());
+    auto* limit = polyline->entityAt(0); REQUIRE(limit);
+    auto inputs = LC_OffsetCreationSources::captureNestedLimit(f.graphic, *target, *limit); REQUIRE(inputs);
+    CHECK_FALSE(inputs->matches(f.graphic)); CHECK_FALSE(inputs->matchesDetached(f.graphic, limit));
+    CHECK(inputs->matchesNested(f.graphic, limit));
+    auto copy = inputs->cloneWorkerSource(1); REQUIRE(copy);
+    CHECK(copy->getParent() == nullptr); CHECK(copy->getLayer(false) == nullptr);
+    SECTION("child geometry") { limit->move({0, 1}); }
+    SECTION("owner visibility") { polyline->setVisible(false); }
+    SECTION("inherited layer") { f.graphic.getActiveLayer()->freeze(true); }
+    CHECK_FALSE(inputs->matchesNested(f.graphic, limit));
+    CHECK(dynamic_cast<RS_Line*>(copy.get())->getData().startpoint == RS_Vector(0, 0));
+    CHECK_FALSE(LC_OffsetCreationSources::captureNestedLimit(f.graphic, *target, *target));
+}
+
+TEST_CASE("Trim nested limit snapshot refuses overridden geometry types",
+          "[lc-offsetcurve][creation-sources][trim-sources][nested]") {
+    class CustomLine final : public RS_Line {
+    public:
+        explicit CustomLine(RS_EntityContainer* parent) : RS_Line(parent, {0, 0}, {2, 0}) {}
+        RS_Vector getStartpoint() const override { return {5, 5}; }
+    };
+    Fixture f; auto* target = f.line({0, -2}, {0, 2});
+    auto* owner = new RS_EntityContainer(&f.graphic, true); f.graphic.addEntity(owner);
+    auto* nested = new CustomLine(owner); owner->addEntity(nested);
+    CHECK_FALSE(LC_OffsetCreationSources::captureNestedLimit(f.graphic, *target, *nested));
+}
+
 TEST_CASE("Offset creation publication resolves a larger document inventory without changing unrelated members",
           "[lc-offsetcurve][creation-publication][inventory]") {
     Fixture f; QList<RS_Entity*> sources;

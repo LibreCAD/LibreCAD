@@ -73,9 +73,13 @@ protected:
     bool hasPendingNativeTrim() const noexcept;
     void cancelNativeTrim();
     void beginNativeTrim();
+    void beginNativeTrimWork(RS_Entity* target, RS_Entity* limit,
+        const RS_Vector& targetPick, const RS_Vector& limitPick, bool preview);
     struct NativeTrimWork;
+    void cancelNativePreview(const std::shared_ptr<NativeTrimWork>& work);
     bool currentNativeTrim(const std::shared_ptr<NativeTrimWork>& work) const;
     void completeNativeTrim(const std::shared_ptr<NativeTrimWork>& work);
+    void completeNativePreview(const std::shared_ptr<NativeTrimWork>& work);
     RS_Entity* mappedTrimPick(const RS_Entity* address, bool allowNestedLimit) const;
     void abandonTrimContext(bool viewportMayBeAlive);
     void selectionChanged() override {}
@@ -91,7 +95,7 @@ protected:
     void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
     void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
     void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
-    void previewTrim(RS_Entity* entityToTrimCandidate, RS_Entity* limitingEntity, const RS_Vector& trimCoordinates, const RS_Vector& limitCoordinates, bool& trimInvalid) const;
+    void previewTrim(RS_Entity* entityToTrimCandidate, RS_Entity* limitingEntity, const RS_Vector& trimCoordinates, const RS_Vector& limitCoordinates, bool& trimInvalid);
     bool doTriggerModifications(LC_DocumentModificationBatch& ctx) override;
     void doTriggerCompletion(bool success) override;
 };

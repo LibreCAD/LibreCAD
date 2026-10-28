@@ -51,9 +51,14 @@ public:
      */
     static std::shared_ptr<LC_OffsetCreationSources> captureDetachedLimit(
         RS_Document&, RS_Entity& target, RS_Entity& detachedLimit);
+    /** The caller must prove the nested limit is a live owned document child
+     * before capture and before every matchesNested() call. */
+    static std::shared_ptr<LC_OffsetCreationSources> captureNestedLimit(
+        RS_Document&, RS_Entity& target, RS_Entity& nestedLimit);
     ~LC_OffsetCreationSources();
     bool matches(const RS_Document&) const;
     bool matchesDetached(const RS_Document&, const RS_Entity* ownedLimit) const;
+    bool matchesNested(const RS_Document&, const RS_Entity* liveLimit) const;
     /** Return an independently owned root for a worker, detached from the
      * snapshot's private document. Index follows sources() order. */
     std::unique_ptr<RS_Entity> cloneWorkerSource(std::size_t index) const;
@@ -66,6 +71,7 @@ public:
     bool localize(const QList<RS_Entity*>& outputs, RS_Layer* activeLayer, bool useActiveLayer) const;
 private:
     struct Data;
+    bool appendLimit(RS_Entity&, bool nested);
     bool matchesImpl(const RS_Document&, const RS_Entity* ownedLimit) const;
     explicit LC_OffsetCreationSources(std::unique_ptr<Data>);
     std::unique_ptr<Data> m_data;
