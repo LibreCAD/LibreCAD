@@ -19,6 +19,7 @@
 #include <QEventLoop>
 #include <QFileInfo>
 #include <QThread>
+#include <QProcess>
 #include "lc_actiontestsupport.h"
 #include "lc_graphicviewport.h"
 #include "lc_offsetcurve.h"
@@ -35,6 +36,16 @@
 #include "rs_polyline.h"
 #include "lc_undosection.h"
 #include "rs_selection.h"
+
+class LC_OffsetTrimWorkerTestAccess {
+public:
+    static void deadline(LC_OffsetTrimWorker& worker, qint64 value) { worker.m_commitLimit = value; }
+    static bool clientBusy(const LC_OffsetTrimWorker& worker) { return worker.m_client.busy(); }
+    static bool processRunning(const LC_OffsetTrimWorker& worker) {
+        const auto& process = worker.m_client.m_process;
+        return process && process->state() == QProcess::Running && process->processId() > 0;
+    }
+};
 
 namespace {
 class Messages final : public LC_ActionContext {
@@ -1114,6 +1125,104 @@ TEST_CASE("Stored trim preparation retains a first-job refusal without starting 
         actual.value, *received, options);
     CHECK_FALSE(result.result); CHECK(result.cacheRefusal == LC_OffsetCacheTrim::Refusal::NoUsableRoots);
     CHECK(actual.value.entitiesToAdd.empty()); CHECK(actual.value.entitiesToDelete.empty()); CHECK_FALSE(canUndo(f.graphic));
+}
+
+TEST_CASE("Async trim worker owns detached inputs and returns only a complete joined sequence",
+          "[lc-offsetcurve][trim-action][trim-worker-async]") {
+    Drawing<true> f; auto* native = addNative(f.graphic); auto* ordinary = line(f.graphic);
+    const auto copy = [](RS_Entity* source) { std::unique_ptr<RS_Entity> value(source->clone()); value->setParent(nullptr); return value; };
+    LC_OffsetTrimWorker worker; std::optional<LC_OffsetTrimWorker::Outcome> outcome;
+    int ticks = 0; QTimer heartbeat; QObject::connect(&heartbeat, &QTimer::timeout, [&] { ++ticks; }); heartbeat.start(0);
+    LC_StoredCacheTrimOptions options;
+    REQUIRE(worker.start(copy(native), {2, 0}, copy(ordinary), {0, .3}, true, options.kernel, 17,
+        qint64(f.graphic.undoStateEpoch()), LC_OffsetWorkerClient::Mode::Commit,
+        [&](LC_OffsetTrimWorker::Outcome value) { outcome.emplace(std::move(value)); }));
+    CHECK(f.graphic.count() == 2); CHECK_FALSE(canUndo(f.graphic));
+    QElapsedTimer elapsed; elapsed.start();
+    while (!outcome) { REQUIRE(elapsed.elapsed() < 35000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    heartbeat.stop(); CHECK(ticks > 0); REQUIRE(outcome->status == LC_OffsetTrimWorker::Status::Completed);
+    REQUIRE(outcome->clientStatus); CHECK(*outcome->clientStatus == LC_OffsetWorkerClient::Status::Completed);
+    REQUIRE(outcome->prepared); CHECK(outcome->prepared->target().getParent() == nullptr);
+    CHECK(outcome->prepared->target().getLayer(false) == nullptr);
+    auto received = outcome->prepared->completions(f.graphic.undoStateEpoch()); REQUIRE(received);
+    REQUIRE(received->second); WorkerTrimBatch actual, expected;
+    const auto result = RS_Modification::trimStoredCachePrepared(f.graphic, *native, {2, 0}, *ordinary, {0, .3}, true,
+        actual.value, *received, options);
+    const auto sync = RS_Modification::trimStoredCache(f.graphic, *native, {2, 0}, *ordinary, {0, .3}, true,
+        expected.value, options);
+    REQUIRE(result.result); REQUIRE(sync.result); sameTrimOutputs(actual.value, expected.value);
+    sameTrimWork(result.cacheWork, sync.cacheWork); CHECK_FALSE(canUndo(f.graphic));
+}
+
+TEST_CASE("Async trim worker cancels without delivery and recovers after a shared deadline",
+          "[lc-offsetcurve][trim-action][trim-worker-async][timeout]") {
+    Drawing<false> f; auto* native = addNative(f.graphic); auto* cutter = line(f.graphic);
+    const auto copy = [](RS_Entity* source) { std::unique_ptr<RS_Entity> value(source->clone()); value->setParent(nullptr); return value; };
+    LC_OffsetTrimWorker worker; LC_StoredCacheTrimOptions options;
+    std::optional<LC_OffsetTrimWorker::Outcome> outcome; int deliveries = 0;
+    const auto start = [&] { return worker.start(copy(native), {2, 0}, copy(cutter), {0, .3}, false, options.kernel,
+        17, qint64(f.graphic.undoStateEpoch()), LC_OffsetWorkerClient::Mode::Commit,
+        [&](LC_OffsetTrimWorker::Outcome value) { ++deliveries; outcome.emplace(std::move(value)); }); };
+    const auto wait = [&](const std::function<bool()>& ready) {
+        QElapsedTimer elapsed; elapsed.start();
+        while (!ready()) { REQUIRE(elapsed.elapsed() < 35000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    };
+    REQUIRE(start()); wait([&] { return LC_OffsetTrimWorkerTestAccess::processRunning(worker) || bool(outcome); });
+    REQUIRE(LC_OffsetTrimWorkerTestAccess::processRunning(worker));
+    worker.cancel(); wait([&] { return !worker.busy(); }); CHECK(deliveries == 0);
+    LC_OffsetTrimWorkerTestAccess::deadline(worker, 500); REQUIRE(start());
+    wait([&] { return LC_OffsetTrimWorkerTestAccess::processRunning(worker) || bool(outcome); });
+    REQUIRE(LC_OffsetTrimWorkerTestAccess::processRunning(worker)); QThread::msleep(600);
+    wait([&] { return bool(outcome); }); REQUIRE(outcome->status == LC_OffsetTrimWorker::Status::TimedOut);
+    CHECK_FALSE(outcome->prepared); CHECK(deliveries == 1); outcome.reset();
+    LC_OffsetTrimWorkerTestAccess::deadline(worker, LC_OffsetWorkerClient::Deadlines::commit);
+    REQUIRE(start()); wait([&] { return bool(outcome); }); REQUIRE(outcome->status == LC_OffsetTrimWorker::Status::Completed);
+    REQUIRE(outcome->prepared); CHECK(deliveries == 2); CHECK(f.graphic.count() == 2); CHECK_FALSE(canUndo(f.graphic));
+}
+
+TEST_CASE("Async trim worker survives source-document death and suppresses delivery after owner death",
+          "[lc-offsetcurve][trim-action][trim-worker-async][lifetime][asan]") {
+    REQUIRE(lc::test::application());
+    auto graphic = std::make_unique<RS_Graphic>(); graphic->initForNewDocument();
+    auto* native = addNative(*graphic); auto* cutter = line(*graphic);
+    const auto copy = [](RS_Entity* source) { std::unique_ptr<RS_Entity> value(source->clone()); value->setParent(nullptr); return value; };
+    auto worker = std::make_unique<LC_OffsetTrimWorker>(); LC_StoredCacheTrimOptions options;
+    std::optional<LC_OffsetTrimWorker::Outcome> outcome; int deliveries = 0;
+    REQUIRE(worker->start(copy(native), {2, 0}, copy(cutter), {0, .3}, false, options.kernel,
+        17, qint64(graphic->undoStateEpoch()), LC_OffsetWorkerClient::Mode::Commit,
+        [&](LC_OffsetTrimWorker::Outcome value) { ++deliveries; outcome.emplace(std::move(value)); }));
+    QElapsedTimer elapsed; elapsed.start();
+    while (!LC_OffsetTrimWorkerTestAccess::clientBusy(*worker)) {
+        REQUIRE(elapsed.elapsed() < 35000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1);
+    }
+    SECTION("document dies") {
+        graphic.reset();
+        while (!outcome) { REQUIRE(elapsed.elapsed() < 35000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+        REQUIRE(outcome->status == LC_OffsetTrimWorker::Status::Completed); REQUIRE(outcome->prepared);
+        CHECK(outcome->prepared->target().getParent() == nullptr);
+        CHECK(outcome->prepared->target().getLayer(false) == nullptr); CHECK(deliveries == 1);
+    }
+    SECTION("worker dies") {
+        worker.reset();
+        QElapsedTimer settle; settle.start();
+        while (settle.elapsed() < 100) { QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+        CHECK(deliveries == 0); CHECK_FALSE(outcome); CHECK(graphic->count() == 2); CHECK_FALSE(canUndo(*graphic));
+    }
+}
+
+TEST_CASE("Async trim worker can be destroyed by its completion callback",
+          "[lc-offsetcurve][trim-action][trim-worker-async][lifetime][asan]") {
+    Drawing<false> f; auto* native = addNative(f.graphic); auto* cutter = line(f.graphic);
+    const auto copy = [](RS_Entity* source) { std::unique_ptr<RS_Entity> value(source->clone()); value->setParent(nullptr); return value; };
+    auto worker = std::make_unique<LC_OffsetTrimWorker>(); LC_StoredCacheTrimOptions options;
+    std::optional<LC_OffsetTrimWorker::Outcome> outcome;
+    REQUIRE(worker->start(copy(native), {2, 0}, copy(cutter), {0, .3}, false, options.kernel,
+        17, qint64(f.graphic.undoStateEpoch()), LC_OffsetWorkerClient::Mode::Commit,
+        [&](LC_OffsetTrimWorker::Outcome value) { outcome.emplace(std::move(value)); worker.reset(); }));
+    QElapsedTimer elapsed; elapsed.start();
+    while (!outcome) { REQUIRE(elapsed.elapsed() < 35000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    CHECK_FALSE(worker); REQUIRE(outcome->status == LC_OffsetTrimWorker::Status::Completed);
+    REQUIRE(outcome->prepared); CHECK(outcome->prepared->ready()); CHECK_FALSE(canUndo(f.graphic));
 }
 
 TEST_CASE("Prepared nonconic Trim Two uses two original operands and the exact shared remaining limits",

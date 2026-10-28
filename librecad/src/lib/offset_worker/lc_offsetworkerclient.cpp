@@ -10,6 +10,13 @@
 #include <QThread>
 #include <algorithm>
 #include <limits>
+#include <set>
+#include <typeinfo>
+#include "rs_line.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
+#include "rs_ellipse.h"
+#include <QPointer>
 
 namespace {
 constexpr qsizetype Chunk = 65536, DiagnosticCap = 65536;
@@ -32,6 +39,121 @@ bool matchesInputs(const LC_OffsetWorkerResult::Reply& reply, const LC_OffsetWor
     const RS_Ellipse source{nullptr, definition.basis};
     return curve.worldTolerance == LC_CurveOffset::toleranceFor(source, definition.distance, definition.relTolerance);
 }
+}
+
+struct LC_OffsetTrimWorker::Work {
+    std::unique_ptr<Prepared> prepared;
+    LC_OffsetWorkerClient::Mode mode;
+    Callback callback;
+    QElapsedTimer elapsed;
+    std::optional<LC_OffsetWorkerClient::Status> clientStatus;
+    QByteArray diagnostics;
+    qint64 generation, revision, epoch, limit;
+};
+
+namespace {
+bool detachTrimGeometry(RS_Entity& root) {
+    if (root.getParent()) return false;
+    std::vector<RS_Entity*> nodes{&root}; std::set<RS_Entity*> seen;
+    for (std::size_t i = 0; i < nodes.size(); ++i) {
+        auto* entity = nodes[i];
+        if (!entity || !seen.insert(entity).second || nodes.size() > 16384) return false;
+        if (i == 0 && typeid(*entity) != typeid(RS_Line) && typeid(*entity) != typeid(RS_Arc) &&
+            typeid(*entity) != typeid(RS_Circle) && typeid(*entity) != typeid(RS_Ellipse) &&
+            typeid(*entity) != typeid(RS_Spline) && typeid(*entity) != typeid(LC_OffsetCurve)) return false;
+        if (i && typeid(*entity) != typeid(RS_Line)) return false;
+        auto* container = dynamic_cast<RS_EntityContainer*>(entity);
+        if (container) {
+            if (!container->isOwner() || container->size() > 16384 - nodes.size()) return false;
+            for (auto* child : *container) {
+                if (!child || child->getParent() != container) return false;
+                nodes.push_back(child);
+            }
+        }
+    }
+    for (auto* entity : nodes) entity->RS_Entity::setLayer(nullptr);
+    return true;
+}
+}
+
+LC_OffsetTrimWorker::LC_OffsetTrimWorker(QObject* parent) : QObject(parent) {
+    m_client.setParent(this); m_deadline.setParent(this);
+    m_deadline.setSingleShot(true); m_deadline.setTimerType(Qt::PreciseTimer);
+    connect(&m_deadline, &QTimer::timeout, this, [this] {
+        const auto work = m_work;
+        if (work) { m_client.cancel(); finish(work, Status::TimedOut); }
+    });
+}
+LC_OffsetTrimWorker::~LC_OffsetTrimWorker() { cancel(); }
+bool LC_OffsetTrimWorker::busy() const noexcept { return bool(m_work) || m_client.busy(); }
+void LC_OffsetTrimWorker::cancel() {
+    m_deadline.stop(); m_work.reset(); m_client.cancel();
+}
+
+bool LC_OffsetTrimWorker::start(std::unique_ptr<RS_Entity> target, RS_Vector targetPick,
+    std::unique_ptr<RS_Entity> cutter, RS_Vector cutterPick, bool both,
+    const LC_OffsetCacheTrim::Limits& limits, qint64 revision, qint64 epoch,
+    LC_OffsetWorkerClient::Mode mode, Callback callback) {
+    if (!QCoreApplication::instance() || QThread::currentThread() != thread() ||
+        m_work || !target || !cutter || !callback || revision < 0 || epoch < 0 ||
+        m_generation == std::numeric_limits<qint64>::max() ||
+        m_requestId >= std::numeric_limits<qint64>::max() - 1) return false;
+    try {
+        QElapsedTimer elapsed; elapsed.start();
+        if (!detachTrimGeometry(*target) || !detachTrimGeometry(*cutter)) return false;
+        auto work = std::make_shared<Work>(); work->prepared = std::make_unique<Prepared>();
+        work->prepared->m_target = std::move(target); work->prepared->m_cutter = std::move(cutter);
+        work->prepared->m_sequence = std::make_unique<LC_StoredCacheTrimPreparation>(
+            *work->prepared->m_target, targetPick, *work->prepared->m_cutter, cutterPick, both, limits);
+        work->mode = mode; work->callback = std::move(callback); work->generation = ++m_generation;
+        work->revision = revision; work->epoch = epoch;
+        work->limit = mode == LC_OffsetWorkerClient::Mode::Preview ? m_previewLimit : m_commitLimit;
+        if (work->limit <= 0 || work->limit > std::numeric_limits<int>::max()) return false;
+        work->elapsed = elapsed; m_work = work;
+        m_deadline.start(int(std::max<qint64>(1, work->limit - work->elapsed.elapsed())));
+        QPointer<LC_OffsetTrimWorker> alive(this);
+        QTimer::singleShot(0, this, [alive, work] { if (alive) alive->advance(work); });
+        return true;
+    } catch (...) { m_deadline.stop(); m_work.reset(); return false; }
+}
+
+void LC_OffsetTrimWorker::advance(const std::shared_ptr<Work>& work) {
+    if (m_work != work) return;
+    if (work->elapsed.elapsed() >= work->limit) { m_client.cancel(); finish(work, Status::TimedOut); return; }
+    try {
+        if (m_requestId == std::numeric_limits<qint64>::max()) { finish(work, Status::InvalidInput); return; }
+        auto request = work->prepared->m_sequence->request({++m_requestId, work->generation, work->revision, work->epoch});
+        if (!request) { finish(work, Status::InvalidInput); return; }
+        if (work->elapsed.elapsed() >= work->limit) { finish(work, Status::TimedOut); return; }
+        QPointer<LC_OffsetTrimWorker> alive(this);
+        if (!m_client.submit(*request, work->mode, [alive, work](LC_OffsetWorkerClient::Outcome result) {
+            if (!alive || alive->m_work != work) return;
+            work->clientStatus = result.status; work->diagnostics = std::move(result.diagnostics);
+            if (work->elapsed.elapsed() >= work->limit) { alive->finish(work, Status::TimedOut); return; }
+            try {
+                if (result.status != LC_OffsetWorkerClient::Status::Completed || !result.reaped ||
+                    !result.exactGeometryWorkKnown || !result.completed ||
+                    !work->prepared->m_sequence->accept(std::move(result.completed))) {
+                    alive->finish(work, result.status == LC_OffsetWorkerClient::Status::TimedOut ? Status::TimedOut : Status::WorkerFailed);
+                    return;
+                }
+                if (work->prepared->m_sequence->ready()) alive->finish(work, Status::Completed);
+                else QTimer::singleShot(0, alive.data(), [alive, work] { if (alive) alive->advance(work); });
+            } catch (...) { if (alive) alive->finish(work, Status::AllocationFailed); }
+        })) finish(work, Status::WorkerFailed);
+    } catch (...) { finish(work, Status::AllocationFailed); }
+}
+
+void LC_OffsetTrimWorker::finish(const std::shared_ptr<Work>& work, Status status) {
+    if (m_work != work) return;
+    m_deadline.stop(); m_work.reset();
+    auto callback = std::move(work->callback);
+    Outcome result; result.status = status; result.clientStatus = work->clientStatus;
+    result.diagnostics = std::move(work->diagnostics);
+    if (status == Status::Completed) result.prepared = std::move(work->prepared);
+    try { callback(std::move(result)); } catch (...) {}
+}
+namespace {
 void quarantine(std::unique_ptr<QProcess>& process) {
     // An OS that has not reaped after kill must not block the GUI destructor.
     // Retain only the process notifier, with no client/document/callback links.

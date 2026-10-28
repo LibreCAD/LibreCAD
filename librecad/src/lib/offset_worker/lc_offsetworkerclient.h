@@ -102,6 +102,7 @@ public:
 private:
     friend class LC_OffsetWorkerClientTestAccess;
     friend class LC_OffsetCreationActionTestAccess;
+    friend class LC_OffsetTrimWorkerTestAccess;
     struct Job;
     void start();
     void pump();
@@ -128,5 +129,58 @@ private:
     qint64 m_startupLimit = Deadlines::startup;
     qint64 m_previewLimit = Deadlines::preview;
     qint64 m_commitLimit = Deadlines::commit;
+};
+
+/** Owns detached geometry and the complete asynchronous Trim query. All calls
+ * and callbacks run on its owning Qt thread. Completion
+ * is not publication authority: the caller must revalidate its document and
+ * source seals before consuming the borrowed receipt on the live document.
+ */
+class LC_OffsetTrimWorker final : public QObject {
+public:
+    enum class Status { Completed, TimedOut, WorkerFailed, InvalidInput, AllocationFailed };
+    class Prepared {
+    public:
+        const RS_Entity& target() const noexcept { return *m_target; }
+        const RS_Entity& cutter() const noexcept { return *m_cutter; }
+        bool ready() const noexcept { return m_sequence && m_sequence->ready(); }
+        std::optional<LC_StoredCacheTrimCompletions> completions(std::uint64_t epoch) const {
+            return m_sequence ? m_sequence->completions(epoch) : std::nullopt;
+        }
+    private:
+        friend class LC_OffsetTrimWorker;
+        std::unique_ptr<RS_Entity> m_target, m_cutter;
+        std::unique_ptr<LC_StoredCacheTrimPreparation> m_sequence;
+    };
+    struct Outcome {
+        Status status = Status::WorkerFailed;
+        std::optional<LC_OffsetWorkerClient::Status> clientStatus;
+        QByteArray diagnostics;
+        std::unique_ptr<Prepared> prepared;
+    };
+    using Callback = std::function<void(Outcome)>;
+    explicit LC_OffsetTrimWorker(QObject* parent = nullptr);
+    ~LC_OffsetTrimWorker() override;
+    /** Takes ownership of detached operands even on refusal. They must already
+     * be bounded private copies; no document or layer pointer is retained.
+     * Cancellation suppresses delivery and kills/reaps through the client.
+     */
+    bool start(std::unique_ptr<RS_Entity> target, RS_Vector targetPick,
+        std::unique_ptr<RS_Entity> cutter, RS_Vector cutterPick, bool both,
+        const LC_OffsetCacheTrim::Limits&, qint64 sourceRevision, qint64 undoEpoch,
+        LC_OffsetWorkerClient::Mode, Callback);
+    void cancel();
+    bool busy() const noexcept;
+private:
+    friend class LC_OffsetTrimWorkerTestAccess;
+    struct Work;
+    void advance(const std::shared_ptr<Work>&);
+    void finish(const std::shared_ptr<Work>&, Status);
+    LC_OffsetWorkerClient m_client;
+    QTimer m_deadline;
+    std::shared_ptr<Work> m_work;
+    qint64 m_generation = 0, m_requestId = 0;
+    qint64 m_previewLimit = LC_OffsetWorkerClient::Deadlines::preview;
+    qint64 m_commitLimit = LC_OffsetWorkerClient::Deadlines::commit;
 };
 #endif
