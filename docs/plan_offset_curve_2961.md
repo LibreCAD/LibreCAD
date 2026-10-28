@@ -1587,9 +1587,11 @@ PR #3193 review follow-ups (execute before the remaining creation/cache work):
   only after commit. Post-commit observer failure cannot erase the undo cycle.
   Generic modification/undo callers outside this native property publisher are
   unchanged. Listener registration now rolls back partial allocation failure.
-- [ ] Async source-action regressions: wait for the actual queued Update result
-  within existing bounded test deadlines before checking reports, undo or R2018
-  DXF/DWG persistence. Preserve all persistence and refusal assertions.
+- [x] Async source-action regressions: `ed9d23944` shares the existing test-only
+  Update waiter with the registered R2018 DXF/DWG persistence and hidden-context
+  tests. It retains3500ms per-peer and shared30000ms bounds, cancellation on
+  assertion unwind, and every existing persistence/refusal/undo assertion.
+  No production event loop or deadline changes.
 - [ ] Invalid-viewport grip regression: retain invalid-coordinate rejection for
   the remainder of a native gesture cancelled by viewport redraw, without
   disabling ordinary neutral snapping introduced upstream.
@@ -1623,9 +1625,26 @@ reports remain retained as red evidence. Final artifact SHA256 values:
 | `PR3193-P1-listener-release.xml` | `f9058d314bad69c565ead06c4e0332e54416a7a764f73920ee693cfa3ad439b2` |
 | `PR3193-P1-qualified-sheet-asan.xml` | `1aee2cd131c5c037a63507bc79ff4403e33ecbea30143060f1410ac70002e7f3` |
 
-Immediate next slice: bounded async source-action test waits, then the native
-grip cancellation regression, then the complete selector/target recipe. Test and
-commit each slice, immediately checkpoint this plan, and push to draft PR #3193.
+P2 fresh Release/ASan qualification on `ed9d23944`: the union of `[lc-offsetcurve]`
+with `[i-update]`, `[i-restore]` or `[i-ui]` discovers81 declarations (34 Update,
+35 Restore,12 UI) and executes83 JUnit cases in both builds, with14548/15346
+assertions respectively. Release's standalone Update micro target also passes
+34 declarations/36 cases/4930 assertions. Every discovered identity executes;
+additional cases are named SECTION entries; every report has zero errors,
+failures and skips. Worker polling assertion totals are scheduling-dependent.
+ASan again uses `detect_leaks=0`. The main test executables and real helper build
+in both configurations. Final artifacts in the same evidence root:
+
+| PR3193 P2 artifact | SHA256 |
+|---|---|
+| `PR3193-P2-qualified-release.xml` | `4279e31d8a89602b2520f31a00fa0e5e6d85a4f9d1479a8a21d834cbe2773da1` |
+| `PR3193-P2-qualified-asan.xml` | `b4ca23ee8217270ef96ea81cf17f8cce270b585d21ecb1b3b777f6d58926408c` |
+| `PR3193-P2-qualified-update-release.xml` | `4edda5cb5360008682bf4096fa54ff74f12a90e3c12e030cfe5e266268e0de20` |
+
+Immediate next slice: the native grip cancellation regression, then the complete
+selector/target recipe. A fresh pre-fix `PR3193-P3-viewport-red.xml` reproduces
+the stale snapper overlay failure; it is red evidence, not qualification. Test
+and commit each slice, immediately checkpoint this plan, and push to draft PR #3193.
 
 Remaining creation/repeat steps after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
