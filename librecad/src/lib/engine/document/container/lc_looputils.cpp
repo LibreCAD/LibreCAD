@@ -25,6 +25,7 @@
 // File: lc_looputils.cpp
 
 #include <algorithm>
+#include <cfloat>
 #include <cmath>
 #include <functional>
 #include <unordered_map>
@@ -104,17 +105,32 @@ namespace {
 
 // Returns true if the entity forms a closed loop by itself (circle, full ellipse,
 // full-circle arc, closed spline, or zero-length line).
-bool isClosed(const RS_Entity& en) {
+//
+// For an RS_Arc or an elliptic arc, "closed" means the stored sweep rounds to
+// a full turn AND the start/end points of the stored geometry coincide within
+// eps. The second check guards against polyline bulges whose sweep tolerance
+// snaps to 2*pi but whose endpoints are far apart in model space; callers that
+// want today's angle-only behaviour pass eps = 0 and only an exact start/end
+// match is accepted.
+bool isClosed(const RS_Entity& en, double eps = 0.0) {
   switch (en.rtti()) {
   case RS2::EntityCircle:
     return true;
   case RS2::EntityEllipse: {
     const auto& ell = static_cast<const RS_Ellipse&>(en);
-    return !ell.isArc() || std::abs(ell.getAngleLength() - 2.0 * M_PI) < RS_TOLERANCE_ANGLE;
+    // RS_Entity::isArc() returns true for every ellipse; the m_data.isArc
+    // flag — exposed through isEllipticArc() — says whether this is actually
+    // an arc rather than a full ellipse.
+    if (!ell.isEllipticArc()) return true;
+    if (std::abs(ell.getAngleLength() - 2.0 * M_PI) >= RS_TOLERANCE_ANGLE)
+      return false;
+    return ell.getStartpoint().distanceTo(ell.getEndpoint()) <= eps;
   }
   case RS2::EntityArc: {
     const auto& arc = static_cast<const RS_Arc&>(en);
-    return std::abs(arc.getAngleLength() - 2.0 * M_PI) < RS_TOLERANCE_ANGLE;
+    if (std::abs(arc.getAngleLength() - 2.0 * M_PI) >= RS_TOLERANCE_ANGLE)
+      return false;
+    return arc.getStartpoint().distanceTo(arc.getEndpoint()) <= eps;
   }
   case RS2::EntitySplinePoints: {
     // Only LC_SplinePoints is atomic and reaches here. RS_Spline (rtti
@@ -144,64 +160,54 @@ void debugPath(const QPainterPath &path) {
   }
 }
 
-// Tolerance-aware integer key for RS_Vector endpoints, rounded to 1e-8 precision.
-struct VectorKey {
-  long long x, y;
-  bool operator==(const VectorKey& other) const { return x == other.x && y == other.y; }
-};
-
-struct VectorKeyHash {
-  std::size_t operator()(const VectorKey& k) const {
-    std::hash<long long> h;
-    std::size_t seed = h(k.x);
-    seed ^= h(k.y) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
-    return seed;
-  }
-};
-
-VectorKey makeVectorKey(const RS_Vector& v) {
-  constexpr double SCALE = 1e8;
-  return {static_cast<long long>(std::round(v.x * SCALE)),
-          static_cast<long long>(std::round(v.y * SCALE))};
-}
-
 /**
  * One sub-loop produced by splitAtRepeatedVertices: the owned cloned edges and
- * their start-vertex table in traversal order. The returned clones keep the
- * traversal direction of the input chain; a caller orients each sub-loop to
- * CCW before storing it.
+ * their start-vertex table (coordinates and welded ids) in traversal order.
+ * The returned clones keep the traversal direction of the input chain; a
+ * caller orients each sub-loop to CCW before storing it.
  */
 struct SplitSubLoop {
     std::unique_ptr<RS_EntityContainer> edges;
     std::vector<RS_Vector> vertices;
+    std::vector<int> vertexIds;
 };
 
 /**
  * Splits a closed chain at every repeated start-vertex into simple sub-loops.
  *
- * Edges share a vertex id (a 1e-8-quantised position) whenever they begin
- * within ENDPOINT_TOLERANCE of the same point. When an edge whose start id
- * matches an earlier entry on the current stack arrives, the stack is
- * truncated at that earlier entry and the popped edges form their own closed
- * sub-loop; the remainder closes at the initial start vertex when the chain
- * is traversed to the end. Each sub-loop's edges are cloned into its own
- * container, preserving the input traversal order.
+ * Two edges share a start-vertex id when their welded representative is the
+ * same (edgeStartIds carries one id per input edge, parallel to the
+ * loop.entityAt() order; vertexCoords carries the matching welded coordinate).
+ * When an edge whose start id matches an earlier entry on the current stack
+ * arrives, the stack is truncated at that earlier entry and the popped edges
+ * form their own closed sub-loop; the remainder closes at the initial start
+ * vertex when the chain is traversed to the end. Each sub-loop's edges are
+ * cloned into its own container, preserving the input traversal order.
  */
 std::vector<SplitSubLoop> splitAtRepeatedVertices(
-    const RS_EntityContainer& loop) {
+    const RS_EntityContainer& loop,
+    const std::vector<int>& edgeStartIds,
+    const std::vector<RS_Vector>& vertexCoords) {
     std::vector<SplitSubLoop> out;
     const unsigned n = loop.count();
     if (n == 0) return out;
-
-    // Build start-vertex ids keyed by quantised position.
-    std::vector<VectorKey> keys;
-    keys.reserve(n);
-    for (unsigned i = 0; i < n; ++i) {
-        keys.push_back(makeVectorKey(loop.entityAt(i)->getStartpoint()));
+    // If the id table is missing or short, treat the whole chain as one loop.
+    const bool haveIds = (edgeStartIds.size() == n) && (vertexCoords.size() == n);
+    if (!haveIds) {
+        auto cont = std::make_unique<RS_EntityContainer>(nullptr, true);
+        for (unsigned i = 0; i < n; ++i) {
+            RS_Entity* copy = loop.entityAt(i)->clone();
+            copy->setParent(nullptr);
+            copy->setLayer(nullptr);
+            cont->addEntity(copy);
+        }
+        out.push_back({std::move(cont), {}, {}});
+        return out;
     }
 
     auto flush = [&](const std::vector<unsigned>& edgeIdx,
-                     const std::vector<RS_Vector>& vs) {
+                     const std::vector<RS_Vector>& vs,
+                     const std::vector<int>& ids) {
         if (edgeIdx.empty()) return;
         auto cont = std::make_unique<RS_EntityContainer>(nullptr, true);
         for (unsigned i : edgeIdx) {
@@ -210,33 +216,38 @@ std::vector<SplitSubLoop> splitAtRepeatedVertices(
             copy->setLayer(nullptr);
             cont->addEntity(copy);
         }
-        out.push_back({std::move(cont), vs});
+        out.push_back({std::move(cont), vs, ids});
     };
 
-    std::unordered_map<VectorKey, unsigned, VectorKeyHash> pos;
+    std::unordered_map<int, unsigned> pos;
     std::vector<unsigned> stackEdge;
     std::vector<RS_Vector> stackV;
+    std::vector<int> stackIds;
 
     for (unsigned i = 0; i < n; ++i) {
-        auto it = pos.find(keys[i]);
+        const int idHere = edgeStartIds[i];
+        auto it = pos.find(idHere);
         if (it != pos.end()) {
             const unsigned k = it->second;
             std::vector<unsigned> subEdge(stackEdge.begin() + k, stackEdge.end());
             std::vector<RS_Vector> subV(stackV.begin() + k, stackV.end());
-            flush(subEdge, subV);
+            std::vector<int> subIds(stackIds.begin() + k, stackIds.end());
+            flush(subEdge, subV, subIds);
             // Pop the sub-loop's positions out of the stack and the map.
-            for (unsigned j = k; j < stackV.size(); ++j) {
-                pos.erase(makeVectorKey(stackV[j]));
+            for (unsigned j = k; j < stackIds.size(); ++j) {
+                pos.erase(stackIds[j]);
             }
             stackEdge.resize(k);
             stackV.resize(k);
+            stackIds.resize(k);
         }
-        pos[keys[i]] = static_cast<unsigned>(stackEdge.size());
+        pos[idHere] = static_cast<unsigned>(stackEdge.size());
         stackEdge.push_back(i);
-        stackV.push_back(loop.entityAt(i)->getStartpoint());
+        stackV.push_back(vertexCoords[i]);
+        stackIds.push_back(idHere);
     }
-    // The leftover stack closes at stackV[0].
-    flush(stackEdge, stackV);
+    // The leftover stack closes at stackIds[0].
+    flush(stackEdge, stackV, stackIds);
     return out;
 }
 
@@ -249,41 +260,143 @@ struct LoopExtractor::LoopData {
   std::vector<RS_Entity*> unprocessed;
   std::map<RS_Entity*, bool> processed;
   RS_Entity* current = nullptr;
-  RS_Vector endPoint;
-  RS_Vector targetPoint;
-  std::unordered_map<VectorKey, std::vector<RS_Entity*>, VectorKeyHash> endpointToEdges;
+  // Per-hatch tolerance in effect for this extractor. Reused for the length
+  // filter, join welding, the near-flat arc rule, isClosed() ends, chain
+  // validation and the degenerate-area cut.
+  double eps = 0.0;
+  // Welded vertex ids per original edge. endId[e] and startId[e] exist only
+  // for non-closed-atomic edges.
+  std::unordered_map<const RS_Entity*, int> startId;
+  std::unordered_map<const RS_Entity*, int> endId;
+  // adjacency[v] lists every edge whose startId or endId equals v, in input
+  // (container) order; an edge is listed twice when it has startId == endId.
+  std::vector<std::vector<RS_Entity*>> adjacency;
+  // Welded coordinate per representative vertex id.
+  WeldResult weld;
+  // Chain walk state: the welded id of the target (the chain's start) and of
+  // the chain's current end. -1 while a chain is a single closed atomic.
+  int targetId = -1;
+  int curId = -1;
   // Stable container-order index, filled in the ctor. Used by findFirst() and
   // findOutermost() for a deterministic tie-break between candidate edges.
   std::unordered_map<const RS_Entity*, std::size_t> order;
 };
 
 /**
- * @brief Constructs LoopExtractor and initializes unprocessed edges.
- * Filters to atomic entities with length > ENDPOINT_TOLERANCE.
- * Builds endpoint adjacency map upfront for O(1) graph traversal.
- * Closed entities (circles, full ellipses) are excluded from the map since
- * their start/end points are invalid.
+ * @brief Constructs LoopExtractor and initialises its welded adjacency.
+ *
+ * Keeps every atomic edge whose stored length exceeds eps. For non-closed-atomic
+ * edges the start and end point enter a joint endpoint list; near-flat arcs
+ * carry a locally-loose tolerance max(eps, 64*u*(|c|+r)) so a tiny arc
+ * whose chord ends sit above eps still welds. The resulting WeldResult
+ * assigns each endpoint a representative id; startId/endId map every kept
+ * edge to its two ids, and adjacency[v] lists the edges that touch vertex v.
+ * Closed-atomic edges are kept in unprocessed with no id entries; they are
+ * emitted as single-entity loops by extractLoops().
+ *
+ * eps > 0 overrides any computation; eps <= 0 asks the extractor to compute
+ * its own per-hatch tolerance from the input bbox and endpoint extrema (the
+ * form used by LoopOptimizer and the test harness).
  */
-LoopExtractor::LoopExtractor(const RS_EntityContainer& edges) :
+LoopExtractor::LoopExtractor(const RS_EntityContainer& edges, double eps) :
                                                                 m_data(std::make_unique<LoopData>())
 {
-  std::size_t idx = 0;
-  for (RS_Entity* e : edges) {
-    if (e->isAtomic() && e->getLength() > ENDPOINT_TOLERANCE) {  // Skip degenerate zero-length edges
-      m_data->unprocessed.push_back(e);
-      m_data->processed[e] = false;
-      m_data->order[e] = idx;
+  // First pass: record container-order index and gather candidate atomic edges.
+  std::vector<RS_Entity*> candidates;
+  {
+    std::size_t idx = 0;
+    for (RS_Entity* e : edges) {
+      if (e && e->isAtomic()) {
+        candidates.push_back(e);
+        m_data->order[e] = idx;
+      }
+      ++idx;
+    }
+  }
 
-             // Closed entities (circles, full ellipses) have no valid endpoints — skip adjacency map
-      if (!isClosed(*e)) {
-        VectorKey k1 = makeVectorKey(e->getStartpoint());
-        m_data->endpointToEdges[k1].push_back(e);
-
-        VectorKey k2 = makeVectorKey(e->getEndpoint());
-        m_data->endpointToEdges[k2].push_back(e);
+  // Derive eps from the input geometry when the caller did not provide one.
+  if (!(eps > 0.0) || !std::isfinite(eps)) {
+    RS_Vector bbMin(RS_MAXDOUBLE, RS_MAXDOUBLE);
+    RS_Vector bbMax(-RS_MAXDOUBLE, -RS_MAXDOUBLE);
+    double maxAbs = 0.0;
+    bool anyBox = false;
+    for (RS_Entity* e : candidates) {
+      const RS_Vector mn = e->getMin();
+      const RS_Vector mx = e->getMax();
+      if (mn.valid && mx.valid) {
+        bbMin.x = std::min(bbMin.x, mn.x);
+        bbMin.y = std::min(bbMin.y, mn.y);
+        bbMax.x = std::max(bbMax.x, mx.x);
+        bbMax.y = std::max(bbMax.y, mx.y);
+        anyBox = true;
+      }
+      if (isClosed(*e, 0.0)) {
+        if (mn.valid && mx.valid) {
+          maxAbs = std::max({maxAbs, std::abs(mn.x), std::abs(mn.y),
+                                       std::abs(mx.x), std::abs(mx.y)});
+        }
+      } else {
+        const RS_Vector s = e->getStartpoint();
+        const RS_Vector t = e->getEndpoint();
+        if (s.valid)
+          maxAbs = std::max({maxAbs, std::abs(s.x), std::abs(s.y)});
+        if (t.valid)
+          maxAbs = std::max({maxAbs, std::abs(t.x), std::abs(t.y)});
       }
     }
-    ++idx;
+    const double diag = anyBox ? (bbMax - bbMin).magnitude() : 0.0;
+    eps = hatchTolerance(diag, maxAbs);
+  }
+  m_data->eps = eps;
+
+  // Second pass: filter by length, keep track of each kept edge's endpoint
+  // slots in the global list, and record per-edge arc tolerance.
+  std::vector<RS_Vector> endpoints;
+  std::vector<double> looseTol;
+  std::unordered_map<const RS_Entity*, std::pair<int, int>> endpointIdx;
+  constexpr double u = DBL_EPSILON / 2.0;
+  for (RS_Entity* e : candidates) {
+    if (!(e->getLength() > eps)) continue;
+    m_data->unprocessed.push_back(e);
+    m_data->processed[e] = false;
+    if (isClosed(*e, eps)) {
+      // Closed atomic has no vertex ids and never enters adjacency.
+      continue;
+    }
+    const int sSlot = static_cast<int>(endpoints.size());
+    const int eSlot = sSlot + 1;
+    endpoints.push_back(e->getStartpoint());
+    endpoints.push_back(e->getEndpoint());
+    double tol = eps;
+    if (e->rtti() == RS2::EntityArc) {
+      const auto& arc = static_cast<const RS_Arc&>(*e);
+      const double absR = std::abs(arc.getRadius());
+      const double absC = std::abs(arc.getCenter().x) + std::abs(arc.getCenter().y);
+      tol = std::max(eps, 64.0 * u * (absC + absR));
+    }
+    looseTol.push_back(tol);
+    looseTol.push_back(tol);
+    endpointIdx[e] = {sSlot, eSlot};
+  }
+
+  // Weld coincident endpoints using the per-edge arc tolerance where set.
+  m_data->weld = weldPoints(endpoints, eps, looseTol);
+
+  // Build the id → edges adjacency.
+  m_data->adjacency.assign(m_data->weld.rep.size(), {});
+  for (RS_Entity* e : m_data->unprocessed) {
+    auto it = endpointIdx.find(e);
+    if (it == endpointIdx.end()) continue;  // closed-atomic
+    const int sId = m_data->weld.id[it->second.first];
+    const int eId = m_data->weld.id[it->second.second];
+    m_data->startId[e] = sId;
+    m_data->endId[e] = eId;
+    if (sId >= 0 && sId < static_cast<int>(m_data->adjacency.size())) {
+      m_data->adjacency[sId].push_back(e);
+    }
+    if (eId != sId && eId >= 0 && eId < static_cast<int>(m_data->adjacency.size())) {
+      m_data->adjacency[eId].push_back(e);
+    }
   }
 }
 
@@ -291,98 +404,180 @@ LoopExtractor::~LoopExtractor() = default;
 
 /**
  * @brief Extracts closed loops iteratively until no unprocessed edges remain.
- * Builds each loop by chaining connected edges, clones and orients for
- * positive area, and records the per-edge start-point vertex table used by
- * the half-open monotone classifier.
+ * Builds each loop by chaining connected edges through the welded vertex ids,
+ * clones and orients each sub-loop for positive area, snaps RS_Line endpoints
+ * to their welded representatives (curves keep their geometry), and records
+ * both the per-edge start-point coordinate and its welded id for use by the
+ * monotone classifier and splitter.
  */
 std::vector<ExtractedLoop> LoopExtractor::extractLoops() const {
   std::vector<ExtractedLoop> results;
+  const double eps = m_data->eps;
   while (!m_data->unprocessed.empty()) {
     m_loop = std::make_unique<RS_EntityContainer>();
     const FirstEdge choice = findFirst();
     RS_Entity* first = choice.edge;
-    if (first) {
-      RS_Entity* cloned_first = first->clone();
-      // Walk the first edge in the direction we chose. For a closed atomic
-      // entity (circle, full ellipse, closed spline) revertDirection() is a
-      // no-op; for a line/arc/ellipse arc it swaps the stored traversal.
-      if (choice.reverse) {
-        cloned_first->revertDirection();
-      }
-      m_loop->addEntity(cloned_first);
-      m_data->processed[first] = true;
-      m_data->current = cloned_first;
-      const RS_Vector start = cloned_first->getStartpoint();
-      const RS_Vector end = cloned_first->getEndpoint();
-      m_data->targetPoint = start;
-      m_data->endPoint = end;
-      m_data->unprocessed.erase(std::remove(m_data->unprocessed.begin(), m_data->unprocessed.end(), first), m_data->unprocessed.end());
-      size_t iteration = 0;
-      const size_t maxIterations = m_data->unprocessed.size() + 2;  // cap based on remaining edges at loop start
-      // Closed entities (circles, full ellipses) are already complete loops — no chaining needed
-      while (!isClosed(*first) && m_data->endPoint.distanceTo(m_data->targetPoint) > ENDPOINT_TOLERANCE) {  // Continue until closure within tolerance
-        if (++iteration > maxIterations) {
-          RS_DEBUG->print(RS_Debug::D_WARNING, "LoopExtractor: possible degenerate loop detected");
-          break;
-        }
-        if (findNext()) {
-          if (m_data->endPoint.distanceTo(m_data->targetPoint) <= ENDPOINT_TOLERANCE) {
-              break;
-          }
-        } else {
-          break;
-        }
-      }
-      if (validate()) {
-        // Split pinched loops at any repeated start vertex: a 7-edge figure-8
-        // chain in one container must come back as two simple sub-loops.
-        const unsigned chainN = m_loop->count();
-        std::vector<SplitSubLoop> subLoops;
-        if (chainN <= 1) {
-          SplitSubLoop single;
-          single.edges = std::move(m_loop);
-          if (chainN == 1 && !isClosed(*single.edges->entityAt(0))) {
-            single.vertices.push_back(single.edges->entityAt(0)->getStartpoint());
-          }
-          subLoops.push_back(std::move(single));
-        } else {
-          subLoops = splitAtRepeatedVertices(*m_loop);
-          m_loop.reset();
-        }
+    if (!first) break;
 
-        for (SplitSubLoop& sub : subLoops) {
-          if (!sub.edges || sub.edges->count() == 0) continue;
-          const double area = sub.edges->areaLineIntegral();
-          // Drop degenerate zero-area sub-loops (as validate's MIN_AREA cut).
-          constexpr double kMinArea = ENDPOINT_TOLERANCE * ENDPOINT_TOLERANCE;
-          if (std::abs(area) < kMinArea) continue;
-          if (area < 0.0) {
-            auto new_loop = std::make_unique<RS_EntityContainer>(nullptr, true);
-            const unsigned m = sub.edges->count();
-            for (int i = static_cast<int>(m) - 1; i >= 0; --i) {
-              RS_Entity* e = sub.edges->entityAt(static_cast<unsigned>(i))->clone();
-              e->setParent(nullptr);
-              e->setLayer(nullptr);
-              e->revertDirection();
-              new_loop->addEntity(e);
-            }
-            sub.edges = std::move(new_loop);
-            sub.vertices.clear();
-          }
-          ExtractedLoop el;
-          const unsigned m = sub.edges->count();
-          if (m > 1 || (m == 1 && !isClosed(*sub.edges->entityAt(0)))) {
-            el.vertices.reserve(m);
-            for (unsigned k = 0; k < m; ++k) {
-              el.vertices.push_back(sub.edges->entityAt(k)->getStartpoint());
-            }
-          }
-          el.edges = std::move(sub.edges);
-          results.push_back(std::move(el));
+    RS_Entity* cloned_first = first->clone();
+    // Walk the first edge in the direction we chose. For a closed atomic
+    // entity (circle, full ellipse, closed spline) revertDirection() is a
+    // no-op; for a line/arc/ellipse arc it swaps the stored traversal.
+    if (choice.reverse) {
+      cloned_first->revertDirection();
+    }
+    m_loop->addEntity(cloned_first);
+    m_data->processed[first] = true;
+    m_data->current = cloned_first;
+    m_data->unprocessed.erase(std::remove(m_data->unprocessed.begin(), m_data->unprocessed.end(), first), m_data->unprocessed.end());
+
+    // Chain-walk ids for this loop. For a closed-atomic single-edge loop both
+    // walk ids stay at the sentinel -1 and the ids table stays empty.
+    std::vector<int> walkStartIds;
+    const bool firstClosed = isClosed(*first, eps);
+    if (!firstClosed) {
+      const auto sIt = m_data->startId.find(first);
+      const auto eIt = m_data->endId.find(first);
+      if (sIt != m_data->startId.end() && eIt != m_data->endId.end()) {
+        const int sId = sIt->second;
+        const int eId = eIt->second;
+        if (choice.reverse) {
+          m_data->targetId = eId;
+          m_data->curId = sId;
+        } else {
+          m_data->targetId = sId;
+          m_data->curId = eId;
         }
+        walkStartIds.push_back(m_data->targetId);
       } else {
-        RS_DEBUG->print("LoopExtractor: Invalid loop discarded");  // Log invalid loops
+        m_data->targetId = -1;
+        m_data->curId = -1;
       }
+    } else {
+      m_data->targetId = -1;
+      m_data->curId = -1;
+    }
+
+    size_t iteration = 0;
+    const size_t maxIterations = m_data->unprocessed.size() + 2;
+    while (!firstClosed && m_data->curId >= 0 && m_data->curId != m_data->targetId) {
+      if (++iteration > maxIterations) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "LoopExtractor: possible degenerate loop detected");
+        break;
+      }
+      const int before = m_data->curId;
+      if (findNext()) {
+        walkStartIds.push_back(before);
+        if (m_data->curId == m_data->targetId) break;
+      } else {
+        break;
+      }
+    }
+
+    if (!validate()) {
+      RS_DEBUG->print("LoopExtractor: Invalid loop discarded");
+      continue;
+    }
+
+    // Build the per-edge welded coordinate table from the walk ids.
+    std::vector<RS_Vector> walkCoords;
+    walkCoords.reserve(walkStartIds.size());
+    for (int id : walkStartIds) {
+      if (id >= 0 && id < static_cast<int>(m_data->weld.rep.size())) {
+        walkCoords.push_back(m_data->weld.rep[static_cast<std::size_t>(id)]);
+      } else {
+        walkCoords.push_back(RS_Vector(false));
+      }
+    }
+
+    // Split pinched loops at any repeated start vertex: a 7-edge figure-8
+    // chain in one container must come back as two simple sub-loops.
+    const unsigned chainN = m_loop->count();
+    std::vector<SplitSubLoop> subLoops;
+    if (chainN <= 1) {
+      SplitSubLoop single;
+      single.edges = std::move(m_loop);
+      if (chainN == 1 && !isClosed(*single.edges->entityAt(0), eps)) {
+        if (!walkCoords.empty()) {
+          single.vertices.push_back(walkCoords.front());
+          single.vertexIds.push_back(walkStartIds.front());
+        } else {
+          single.vertices.push_back(single.edges->entityAt(0)->getStartpoint());
+          single.vertexIds.push_back(-1);
+        }
+      }
+      subLoops.push_back(std::move(single));
+    } else {
+      subLoops = splitAtRepeatedVertices(*m_loop, walkStartIds, walkCoords);
+      m_loop.reset();
+    }
+
+    for (SplitSubLoop& sub : subLoops) {
+      if (!sub.edges || sub.edges->count() == 0) continue;
+      const double area = sub.edges->areaLineIntegral();
+      // Drop degenerate sub-loops: |A| <= eps * perimeter.
+      double perimeter = 0.0;
+      for (unsigned k = 0; k < sub.edges->count(); ++k) {
+        perimeter += sub.edges->entityAt(k)->getLength();
+      }
+      if (std::abs(area) <= eps * perimeter) continue;
+      if (area < 0.0) {
+        auto new_loop = std::make_unique<RS_EntityContainer>(nullptr, true);
+        const unsigned m = sub.edges->count();
+        for (int i = static_cast<int>(m) - 1; i >= 0; --i) {
+          RS_Entity* e = sub.edges->entityAt(static_cast<unsigned>(i))->clone();
+          e->setParent(nullptr);
+          e->setLayer(nullptr);
+          e->revertDirection();
+          new_loop->addEntity(e);
+        }
+        sub.edges = std::move(new_loop);
+        // Reverse the vertex table so vertices[i] still names the start of
+        // edge i. Chain is v0 -> e0 -> v1 -> e1 -> ... -> v_{n-1} -> e_{n-1} -> v0;
+        // reversed chain starts at v0 (the old last end = the old chain start),
+        // so the new vertex table is v0, v_{n-1}, v_{n-2}, ..., v_1.
+        if (!sub.vertices.empty()) {
+          std::vector<RS_Vector> rv;
+          std::vector<int> rids;
+          rv.reserve(sub.vertices.size());
+          rids.reserve(sub.vertexIds.size());
+          rv.push_back(sub.vertices.front());
+          rids.push_back(sub.vertexIds.empty() ? -1 : sub.vertexIds.front());
+          for (int k = static_cast<int>(sub.vertices.size()) - 1; k >= 1; --k) {
+            rv.push_back(sub.vertices[static_cast<std::size_t>(k)]);
+            if (!sub.vertexIds.empty()) {
+              rids.push_back(sub.vertexIds[static_cast<std::size_t>(k)]);
+            }
+          }
+          sub.vertices = std::move(rv);
+          sub.vertexIds = std::move(rids);
+        }
+      }
+
+      // Snap RS_Line endpoints to their welded representatives: this is the
+      // one place line-only chains collapse their 1e-10 noise to exact equal
+      // vertices, without touching curved edge geometry.
+      const unsigned m = sub.edges->count();
+      if (!sub.vertices.empty() && m == sub.vertices.size()) {
+        for (unsigned k = 0; k < m; ++k) {
+          RS_Entity* e = sub.edges->entityAt(k);
+          if (e && e->rtti() == RS2::EntityLine) {
+            auto* line = static_cast<RS_Line*>(e);
+            const RS_Vector& v0 = sub.vertices[k];
+            const RS_Vector& v1 = sub.vertices[(k + 1) % m];
+            if (v0.valid) line->setStartpoint(v0);
+            if (v1.valid) line->setEndpoint(v1);
+          }
+        }
+        // Recompute borders after snapping.
+        sub.edges->forcedCalculateBorders();
+      }
+
+      ExtractedLoop el;
+      el.vertices = std::move(sub.vertices);
+      el.vertexIds = std::move(sub.vertexIds);
+      el.edges = std::move(sub.edges);
+      results.push_back(std::move(el));
     }
   }
   return results;
@@ -403,10 +598,11 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract() const 
 }
 
 /**
- * @brief Validates loop closure and connectivity.
- * For multi-entity loops: checks each adjacent pair connects within ENDPOINT_TOLERANCE,
- * and that the last entity's end reaches the first entity's start.
- * Single closed entities (circles, full ellipses, closed splines) pass unconditionally.
+ * @brief Validates loop closure and connectivity using the extractor's eps.
+ * Multi-entity chains must connect end-to-start within eps and close within
+ * eps; single-entity loops must be a recognised closed-atomic primitive or a
+ * degenerate self-closing line. Loops with |A| <= eps * perimeter are
+ * rejected as geometrically zero-area.
  */
 bool LoopExtractor::validate() const {
   const size_t n = m_loop->count();
@@ -414,6 +610,7 @@ bool LoopExtractor::validate() const {
     RS_DEBUG->print(RS_Debug::D_WARNING, "LoopExtractor::validate: Empty loop");
     return false;
   }
+  const double eps = m_data->eps;
 
          // Special case: single closed entity (no chain to check)
   if (n == 1) {
@@ -424,7 +621,9 @@ bool LoopExtractor::validate() const {
     }
     if (type == RS2::EntityEllipse) {
         const auto* ell = static_cast<RS_Ellipse*>(e);
-        return ell->getAngleLength() >= 2 * M_PI - RS_TOLERANCE;
+        if (!ell->isEllipticArc()) return true;  // full ellipse: closed by construction
+        if (ell->getAngleLength() < 2 * M_PI - RS_TOLERANCE) return false;
+        return ell->getStartpoint().distanceTo(ell->getEndpoint()) <= eps;
     }
     if (type ==
         RS2::EntitySplinePoints) { // Closed spline (LC_SplinePoints only)
@@ -436,52 +635,36 @@ bool LoopExtractor::validate() const {
       return para->getData().m_valid;
     }
     // Fallback: check self-closure
-    return e->getStartpoint().distanceTo(e->getEndpoint()) <= ENDPOINT_TOLERANCE;
+    return e->getStartpoint().distanceTo(e->getEndpoint()) <= eps;
   }
 
-         // Full multi-entity chain validation (ensures consistent forward directions)
-  const RS_Entity* prev = m_loop->entityAt(0);
-  for (size_t i = 1; i < n; ++i) {
-    RS_Entity* curr = m_loop->entityAt(i);
-    const double dist = prev->getEndpoint().distanceTo(curr->getStartpoint());
-    if (dist > ENDPOINT_TOLERANCE) {
-      RS_DEBUG->print(RS_Debug::D_WARNING,
-                      "LoopExtractor::validate: Broken connection at entity %zu (dist=%.2e)", i, dist);
-      return false;
-    }
-    prev = curr;
-  }
-
-         // Final closure: last end → first start
-  const RS_Entity* first = m_loop->entityAt(0);
-  const RS_Entity* last = m_loop->last();
-  const double closeDist = last->getEndpoint().distanceTo(first->getStartpoint());
-  if (closeDist > ENDPOINT_TOLERANCE) {
+  // Multi-entity chain: trust the id-based walk. The extractor only appends
+  // edges whose vertex ids match the current chain head, and the main loop
+  // exits only when curId reaches targetId. A chain this validate sees is
+  // therefore guaranteed to connect edge-by-edge on ids; adjacent clones'
+  // raw endpoints may differ by up to the per-edge welded tolerance (a
+  // near-flat arc's local tolerance can exceed eps), so we do not reject
+  // on raw distance. Line endpoints get snapped to the welded coordinates
+  // after validation so the stored chain is id-consistent on export.
+  if (m_data->curId != m_data->targetId) {
     RS_DEBUG->print(RS_Debug::D_WARNING,
-                    "LoopExtractor::validate: Loop does not close (dist=%.2e)", closeDist);
+                    "LoopExtractor::validate: Chain did not close (curId=%d, targetId=%d)",
+                    m_data->curId, m_data->targetId);
     return false;
   }
 
-  // Reject geometrically degenerate loops. Threshold is (ENDPOINT_TOLERANCE)^2 — any
-  // loop whose entities are all distinguishable by endpoint keys will exceed this.
+  // Reject geometrically degenerate loops: |A| <= eps * perimeter.
+  double perimeter = 0.0;
+  for (size_t i = 0; i < n; ++i) {
+    const RS_Entity* en = m_loop->entityAt(i);
+    if (en) perimeter += en->getLength();
+  }
   const double area = m_loop->areaLineIntegral();
-  constexpr double MIN_AREA = ENDPOINT_TOLERANCE * ENDPOINT_TOLERANCE;
-  if (std::abs(area) < MIN_AREA) {
+  if (std::abs(area) <= eps * perimeter) {
     RS_DEBUG->print(RS_Debug::D_WARNING,
                     "LoopExtractor::validate: Degenerate zero-area loop "
-                    "(n=%zu, area=%.4e, MIN=%.4e)",
-                    n, area, MIN_AREA);
-    for (size_t i = 0; i < n; ++i) {
-      RS_Entity *e = m_loop->entityAt(i);
-      if (!e)
-        continue;
-      RS_Vector s = e->getStartpoint();
-      RS_Vector ep = e->getEndpoint();
-      RS_DEBUG->print(
-          RS_Debug::D_WARNING,
-          "  entity[%zu] type=%d start=(%.8f,%.8f) end=(%.8f,%.8f) len=%.4e", i,
-          static_cast<int>(e->rtti()), s.x, s.y, ep.x, ep.y, e->getLength());
-    }
+                    "(n=%zu, area=%.4e, limit=%.4e)",
+                    n, area, eps * perimeter);
     return false;
   }
 
@@ -549,9 +732,29 @@ LoopExtractor::FirstEdge LoopExtractor::findFirst() const
     return result;
   }
 
-  // The leftmost point is a vertex: collect every edge attached there (within
-  // ENDPOINT_TOLERANCE) and pick the one whose travel direction leaving the
-  // vertex has the smallest CCW angle measured from -y.
+  // The leftmost point is a vertex: resolve its welded id from best.edge's
+  // own startId/endId, then collect every edge attached at that id and pick
+  // the one whose travel direction leaving the vertex has the smallest CCW
+  // angle measured from -y.
+  int idP = -1;
+  {
+    const double epsAttach = (m_data->eps > 0.0 ? m_data->eps : 1e-8);
+    const RS_Vector s = best.edge->getStartpoint();
+    const RS_Vector e = best.edge->getEndpoint();
+    const auto sIt = m_data->startId.find(best.edge);
+    const auto eIt = m_data->endId.find(best.edge);
+    if (sIt != m_data->startId.end() && s.valid && s.distanceTo(best.point) <= epsAttach) {
+      idP = sIt->second;
+    } else if (eIt != m_data->endId.end() && e.valid && e.distanceTo(best.point) <= epsAttach) {
+      idP = eIt->second;
+    }
+  }
+  if (idP < 0 || idP >= static_cast<int>(m_data->adjacency.size())) {
+    result.edge = best.edge;
+    result.reverse = false;
+    return result;
+  }
+
   struct Attach {
     RS_Entity* edge = nullptr;
     bool atStart = false;
@@ -560,27 +763,31 @@ LoopExtractor::FirstEdge LoopExtractor::findFirst() const
     std::size_t idx = 0;
   };
   std::vector<Attach> attached;
-  attached.reserve(all.size());
-  for (const Candidate& c : all) {
-    const RS_Vector s = c.edge->getStartpoint();
-    const RS_Vector e = c.edge->getEndpoint();
-    const bool atStart = (s.valid && s.distanceTo(best.point) <= ENDPOINT_TOLERANCE);
-    const bool atEnd = (e.valid && e.distanceTo(best.point) <= ENDPOINT_TOLERANCE);
+  attached.reserve(m_data->adjacency[idP].size());
+  for (RS_Entity* ae : m_data->adjacency[idP]) {
+    auto pit = m_data->processed.find(ae);
+    if (pit != m_data->processed.end() && pit->second) continue;
+    const int sId = m_data->startId.count(ae) ? m_data->startId.at(ae) : -1;
+    const int eId = m_data->endId.count(ae) ? m_data->endId.at(ae) : -1;
+    const bool atStart = (sId == idP);
+    const bool atEnd = (eId == idP);
     if (!atStart && !atEnd) continue;
-    // Prefer start attachment if the vertex matches both ends (zero-length
-    // after tolerance): we still want a deterministic choice.
+    // Prefer start attachment if both ends land at this vertex.
     const bool pickStart = atStart;
-    RS_Vector h = LC_LoopUtils::travelDirection(*c.edge, pickStart);
+    RS_Vector h = LC_LoopUtils::travelDirection(*ae, pickStart);
     if (!(h.valid && (std::abs(h.x) + std::abs(h.y) > 0.0))) continue;
-    if (!pickStart) h = h * (-1.0);  // heading at an end becomes -travelDir
+    if (!pickStart) h = h * (-1.0);
     const double a = std::atan2(h.y, h.x);
-    // CCW angle from -y: the heading -y has atan2 = -pi/2 and we want 0 for it.
     double ccw = a + M_PI_2;
     while (ccw < 0.0) ccw += 2.0 * M_PI;
     while (ccw >= 2.0 * M_PI) ccw -= 2.0 * M_PI;
-    double curv = LC_LoopUtils::signedCurvature(*c.edge, pickStart);
-    if (!pickStart) curv = -curv;  // leaving an end flips the sign
-    attached.push_back({c.edge, pickStart, ccw, curv, c.idx});
+    double curv = LC_LoopUtils::signedCurvature(*ae, pickStart);
+    if (!pickStart) curv = -curv;
+    const auto it = m_data->order.find(ae);
+    const std::size_t idx = (it != m_data->order.end())
+                               ? it->second
+                               : static_cast<std::size_t>(-1);
+    attached.push_back({ae, pickStart, ccw, curv, idx});
   }
   if (attached.empty()) {
     result.edge = best.edge;
@@ -630,8 +837,8 @@ RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
   candidates.reserve(edges.size());
 
   for (RS_Entity* e : edges) {
-    const bool attachAtStart =
-        e->getStartpoint().distanceTo(m_data->endPoint) <= ENDPOINT_TOLERANCE;
+    const int sId = m_data->startId.count(e) ? m_data->startId.at(e) : -1;
+    const bool attachAtStart = (sId == m_data->curId);
 
     RS_Vector doutV = LC_LoopUtils::travelDirection(*e, attachAtStart);
     if (!attachAtStart) {
@@ -664,20 +871,17 @@ RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
 }
 
 /**
- * @brief Returns unprocessed entities whose endpoint matches the current endpoint.
- * O(degree) via the precomputed adjacency map.
+ * @brief Returns unprocessed entities attached at the current welded vertex id.
+ * O(degree) via the id-based adjacency.
  */
 std::vector<RS_Entity*> LoopExtractor::getConnected() const {
   std::vector<RS_Entity*> ret;
-  const VectorKey k = makeVectorKey(m_data->endPoint);
-
-  const auto it = m_data->endpointToEdges.find(k);
-  if (it != m_data->endpointToEdges.end()) {
-    for (RS_Entity* e : it->second) {
-      auto pit = m_data->processed.find(e);
-      if (pit != m_data->processed.end() && !pit->second) {
-        ret.push_back(e);
-      }
+  const int v = m_data->curId;
+  if (v < 0 || v >= static_cast<int>(m_data->adjacency.size())) return ret;
+  for (RS_Entity* e : m_data->adjacency[v]) {
+    auto pit = m_data->processed.find(e);
+    if (pit != m_data->processed.end() && !pit->second) {
+      ret.push_back(e);
     }
   }
   return ret;
@@ -685,6 +889,9 @@ std::vector<RS_Entity*> LoopExtractor::getConnected() const {
 
 /**
  * @brief Finds and appends the next connected edge to the current loop.
+ * Chooses by id-based attach: a candidate whose startId matches curId is
+ * walked forward, else the clone is reversed. Updates curId to the other
+ * welded id of the chosen edge.
  * @return true if an edge was found.
  */
 bool LoopExtractor::findNext() const {
@@ -700,10 +907,16 @@ bool LoopExtractor::findNext() const {
     m_loop->addEntity(cloned);
     m_data->processed[next] = true;
     m_data->unprocessed.erase(std::remove(m_data->unprocessed.begin(), m_data->unprocessed.end(), next), m_data->unprocessed.end());
-    if (cloned->getStartpoint().distanceTo(m_data->endPoint) > ENDPOINT_TOLERANCE) {
+    const int sId = m_data->startId.count(next) ? m_data->startId.at(next) : -1;
+    const int eId = m_data->endId.count(next) ? m_data->endId.at(next) : -1;
+    if (sId == m_data->curId) {
+      // startId already matches: walk forward; new end is eId.
+      m_data->curId = eId;
+    } else {
+      // endId matches: reverse the clone so its start is at curId; new end is sId.
       cloned->revertDirection();
+      m_data->curId = sId;
     }
-    m_data->endPoint = cloned->getEndpoint();
     m_data->current = cloned;
     return true;
   }
@@ -763,6 +976,9 @@ struct LoopSorter::Data {
         RS_Vector bbMin(RS_MAXDOUBLE, RS_MAXDOUBLE);
         RS_Vector bbMax(-RS_MAXDOUBLE, -RS_MAXDOUBLE);
         double maxAbs = 0.0;
+        // Interim classifier isClosed(): no ends-match band yet; the sorter
+        // only skips closed-type atomics while gathering the vertex table.
+        constexpr double kInterimEps = 0.0;
         for (auto& p : m_data->loops) {
             p->forcedCalculateBorders();
             bbMin.x = std::min(bbMin.x, p->getMin().x);
@@ -771,7 +987,7 @@ struct LoopSorter::Data {
             bbMax.y = std::max(bbMax.y, p->getMax().y);
             std::vector<RS_Vector> vs;
             const unsigned n = p->count();
-            if (n > 1 || (n == 1 && !isClosed(*p->entityAt(0)))) {
+            if (n > 1 || (n == 1 && !isClosed(*p->entityAt(0), kInterimEps))) {
                 vs.reserve(n);
                 for (unsigned k = 0; k < n; ++k) {
                     const RS_Vector s = p->entityAt(k)->getStartpoint();
@@ -839,11 +1055,14 @@ struct LoopSorter::Data {
         }
 
         // Keep only non-degenerate loops in the parent-search order; the walk
-        // visits every candidate in ascending (|area|, extraction index).
+        // visits every candidate in ascending (|area|, extraction index). A
+        // loop is degenerate when |A| <= eps * perimeter (the one tolerance
+        // welded the vertices; the same cut filters near-zero signed area).
         m_data->order.clear();
         m_data->order.reserve(n);
+        const double eps = m_data->eps;
         for (std::size_t i = 0; i < n; ++i) {
-            if (m_data->absArea[i] < RS_TOLERANCE) {
+            if (m_data->absArea[i] <= eps * m_data->perimeter[i]) {
                 RS_DEBUG->print("LoopSorter: Skipping degenerate zero-area loop");
                 continue;
             }
@@ -1012,7 +1231,7 @@ void LoopSorter::findParent(std::size_t child) {
             std::vector<RS_Vector> vs;
             const unsigned n = m_loop->count();
             double maxAbs = 0.0;
-            if (n > 1 || (n == 1 && !isClosed(*m_loop->entityAt(0)))) {
+            if (n > 1 || (n == 1 && !isClosed(*m_loop->entityAt(0), m_eps))) {
                 vs.reserve(n);
                 for (unsigned k = 0; k < n; ++k) {
                     const RS_Vector s = m_loop->entityAt(k)->getStartpoint();
@@ -1186,7 +1405,7 @@ void LoopSorter::findParent(std::size_t child) {
 
         // single closed entities may not have defined start/end points
         RS_Entity* first = cont.first();
-        if (isClosed(*first)) {
+        if (isClosed(*first, m_eps)) {
             builder.append(first);
             builder.closeSubpath();
             return path;
@@ -1259,7 +1478,7 @@ void LoopSorter::findParent(std::size_t child) {
     }
 
 bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
-  return isClosed(*e);
+  return isClosed(*e, m_eps);
 }
 
     /**

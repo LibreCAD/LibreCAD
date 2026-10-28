@@ -54,11 +54,11 @@
 
 namespace {
 
-// Removes zero-length entities from the vector in place.
-void avoidZeroLength(std::vector<RS_Entity*>& container) {
+// Removes entities whose length is at or below the per-hatch tolerance.
+void avoidZeroLength(std::vector<RS_Entity*>& container, double eps) {
     container.erase(std::remove_if(container.begin(), container.end(),
-                                   [](RS_Entity* e) {
-                                       return e != nullptr && RS_Math::equal(e->getLength(), 0.);
+                                   [eps](RS_Entity* e) {
+                                       return e == nullptr || !(e->getLength() > eps);
                                    }),
                     container.end());
 }
@@ -181,6 +181,40 @@ bool RS_Hatch::validate() {
         }
         const RS_Vector rotCenter = (preMin + preMax) * 0.5;
 
+        // Pre-eps: a quick scale-relative tolerance computed from the raw
+        // bbox and endpoint extrema BEFORE rotation. Rotation is rigid, so
+        // the diagonal is identical post-rotation and M differs by at most
+        // sqrt(2); the resulting pre-eps shares the magnitude of the final
+        // tolerance and only drives avoidZeroLength (the length filter is
+        // rotation-invariant). The final tolerance is recomputed after
+        // rotation and is what the extractor and sorter see.
+        double preMaxAbs = 0.0;
+        for (RS_Entity *en : loops) {
+          lc::LC_ContainerTraverser t{
+              *static_cast<RS_EntityContainer *>(en), RS2::ResolveAll};
+          for (RS_Entity *entity : t.entities()) {
+            if (!entity || !entity->isAtomic()) continue;
+            if (isClosedAtomic(*entity)) {
+              const RS_Vector mn = entity->getMin();
+              const RS_Vector mx = entity->getMax();
+              if (mn.valid && mx.valid) {
+                preMaxAbs = std::max({preMaxAbs,
+                                        std::abs(mn.x), std::abs(mn.y),
+                                        std::abs(mx.x), std::abs(mx.y)});
+              }
+            } else {
+              const RS_Vector s = entity->getStartpoint();
+              const RS_Vector tp = entity->getEndpoint();
+              if (s.valid)
+                preMaxAbs = std::max({preMaxAbs, std::abs(s.x), std::abs(s.y)});
+              if (tp.valid)
+                preMaxAbs = std::max({preMaxAbs, std::abs(tp.x), std::abs(tp.y)});
+            }
+          }
+        }
+        const double preDiag = (preMax - preMin).magnitude();
+        const double preEps = LC_LoopUtils::hatchTolerance(preDiag, preMaxAbs);
+
         // Pass 1: per-container clone+rotate, accumulate the post-rotation
         // bbox D and the endpoint extremum M for the per-hatch tolerance.
         // Closed atomic curves (circle, full ellipse, closed spline) have
@@ -199,7 +233,7 @@ bool RS_Hatch::validate() {
               edges.push_back(entity);
             }
           }
-          avoidZeroLength(edges);
+          avoidZeroLength(edges, preEps);
           if (edges.empty())
             continue;
 
@@ -253,7 +287,7 @@ bool RS_Hatch::validate() {
         // and run them through the geometry-aware LoopSorter.
         std::vector<LC_LoopUtils::ExtractedLoop> allExtracted;
         for (auto &cont : perContainerClones) {
-          LC_LoopUtils::LoopExtractor extractor{*cont};
+          LC_LoopUtils::LoopExtractor extractor{*cont, tolerance};
           auto extracted = extractor.extractLoops();
           for (auto &el : extracted)
             allExtracted.push_back(std::move(el));

@@ -380,9 +380,16 @@ class LoopExtractor {
 public:
   /**
    * @brief Constructor for LoopExtractor.
+   *
+   * eps > 0 forces that per-hatch tolerance; eps <= 0 (the default) asks the
+   * extractor to compute its own tolerance from the input bbox and endpoint
+   * extrema. The tolerance drives the length filter, the welded adjacency,
+   * the chain closure test and the degenerate-area cut.
+   *
    * @param edges Container of edges to process.
+   * @param eps   Per-hatch tolerance; <=0 means compute from the input.
    */
-  LoopExtractor(const RS_EntityContainer& edges);
+  LoopExtractor(const RS_EntityContainer& edges, double eps = -1.0);
   ~LoopExtractor();
 
   /**
@@ -447,12 +454,6 @@ private:
    * @return Selected entity.
    */
   RS_Entity* findOutermost(std::vector<RS_Entity*> edges) const;
-
-  // Endpoint matching tolerance: must be consistent with VectorKey resolution
-  // (SCALE=1e8 → ~5e-9). Real-world DWG files can have boundary segment
-  // endpoints that differ by ~1e-10 due to floating-point arithmetic in
-  // AutoCAD, so 1e-10 is too tight.
-  static constexpr double ENDPOINT_TOLERANCE = 1e-8;
 
   mutable std::unique_ptr<RS_EntityContainer> m_loop;  ///< Current loop being built
 
