@@ -1592,9 +1592,11 @@ PR #3193 review follow-ups (execute before the remaining creation/cache work):
   tests. It retains3500ms per-peer and shared30000ms bounds, cancellation on
   assertion unwind, and every existing persistence/refusal/undo assertion.
   No production event loop or deadline changes.
-- [ ] Invalid-viewport grip regression: retain invalid-coordinate rejection for
-  the remainder of a native gesture cancelled by viewport redraw, without
-  disabling ordinary neutral snapping introduced upstream.
+- [x] Invalid-viewport grip regression: `0df6469db` retains invalid-coordinate
+  and viewport-factor rejection while the cancelled-native-gesture release
+  latch remains set. A redraw can retire the active grip but cannot route its
+  next zero-factor move into the ordinary snapper. Matching release and a new
+  drag recover; ordinary neutral snapping introduced upstream is unchanged.
 - [ ] Validation recipe completeness: discover/execute `[offsetcurve]` as well
   as `[lc-offsetcurve]`, and list the implemented worker/micro/fault targets.
 
@@ -1641,10 +1643,26 @@ in both configurations. Final artifacts in the same evidence root:
 | `PR3193-P2-qualified-asan.xml` | `b4ca23ee8217270ef96ea81cf17f8cce270b585d21ecb1b3b777f6d58926408c` |
 | `PR3193-P2-qualified-update-release.xml` | `4edda5cb5360008682bf4096fa54ff74f12a90e3c12e030cfe5e266268e0de20` |
 
-Immediate next slice: the native grip cancellation regression, then the complete
-selector/target recipe. A fresh pre-fix `PR3193-P3-viewport-red.xml` reproduces
-the stale snapper overlay failure; it is red evidence, not qualification. Test
-and commit each slice, immediately checkpoint this plan, and push to draft PR #3193.
+P3 fresh Release/ASan qualification on `0df6469db`: the union of
+`[lc-offsetcurve][h-drag]`, `[snap][drag][issue3127]` and `[tracked][listener]`
+discovers/executes81 declarations/cases in each build (44 native grip, two
+upstream ordinary-snap and35 listener cases). Reports have126233/144585
+assertions respectively and zero errors, failures or skips. Discovered/executed
+identities match exactly. The strengthened regression checks cleanup immediately
+after redraw and invalid motion, unchanged geometry/metadata/selection/history,
+matching release and a subsequent successful gesture start. App/main/grip/helper
+Release targets and main/grip/helper ASan targets build; ASan uses `detect_leaks=0`.
+The pre-fix report retains its one stale-overlay assertion failure.
+
+| PR3193 P3 artifact | SHA256 |
+|---|---|
+| `PR3193-P3-qualified-release.xml` | `9fcd85c5fd36d1b736c04c032d77fe6c12c8b426c83011807ecf7645f61061f5` |
+| `PR3193-P3-qualified-asan.xml` | `dc29f269f0f7f544b303d53942e912ef6fe64ed8c0850c2e6356420207802a5e` |
+| `PR3193-P3-viewport-red.xml` (red, not acceptance) | `065bd59e45eccab104b65b052a456d631913b0472d51900831e8ebfa66206ede` |
+
+Immediate next slice: the complete selector/target recipe, with fresh broad
+Release discovery/execution and explicit skipped external-tool accounting. Test
+and commit the slice, immediately checkpoint this plan, and push to draft PR #3193.
 
 Remaining creation/repeat steps after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
