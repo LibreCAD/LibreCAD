@@ -863,6 +863,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/container/lc_loopclassifier.h
      librecad/src/lib/engine/document/container/lc_looputils.cpp
      librecad/src/lib/engine/document/container/lc_looputils.h
+     librecad/src/lib/engine/document/container/lc_patternlinededup.cpp
+     librecad/src/lib/engine/document/container/lc_patternlinededup.h
      librecad/src/lib/engine/document/container/lc_pathbuilder.h
      librecad/src/lib/engine/document/container/lc_pathbuilder.cpp
      librecad/src/lib/engine/document/container/rs_entitycontainer.cpp

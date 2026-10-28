@@ -525,6 +525,7 @@ HEADERS += \
     lib/engine/overlays/crosshair/lc_crosshair.h \
     lib/engine/document/container/lc_loopclassifier.h \
     lib/engine/document/container/lc_looputils.h \
+    lib/engine/document/container/lc_patternlinededup.h \
     lib/engine/document/entities/lc_parabola.h \
     lib/engine/overlays/references/lc_refarc.h \
     lib/engine/overlays/references/lc_refcircle.h \
@@ -1222,6 +1223,7 @@ SOURCES += \
     lib/engine/overlays/crosshair/lc_crosshair.cpp \
     lib/engine/document/container/lc_loopclassifier.cpp \
     lib/engine/document/container/lc_looputils.cpp \
+    lib/engine/document/container/lc_patternlinededup.cpp \
     lib/engine/document/entities/lc_parabola.cpp \
     lib/engine/overlays/references/lc_refarc.cpp \
     lib/engine/overlays/references/lc_refcircle.cpp \

@@ -39,6 +39,7 @@
 #include "lc_hatchdensity.h"
 #include "lc_loopclassifier.h"
 #include "lc_looputils.h"
+#include "lc_patternlinededup.h"
 #include "lc_splinepoints.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
@@ -618,20 +619,48 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
     }
     report.attempted = budget.taken;
 
-    const RS_Vector rotationVector{m_loopAngle};
-    int addedCount = 0;
+    // Collect every produced piece from every root while it is still in the
+    // loop frame. The LINE pieces of all roots feed one tile-relative de-dup
+    // (tolerance 1e-6 x the scaled tile size), which merges touching tile
+    // borders so no ink is drawn twice. Non-LINE pieces (arcs, circles,
+    // ellipses, ...) pass through unchanged.
+    std::vector<RS_LineData> lineData;
+    std::vector<std::unique_ptr<RS_Entity>> otherPieces;
     for (auto& part : parts) {
         if (!part) continue;
         for (auto& owned : part->takeEntities()) {
-            RS_Entity* entity = owned.release();
-            entity->setPen(pen);
-            entity->setLayer(layer);
-            entity->reparent(this);
-            entity->setFlag(RS2::FlagHatchChild);
-            entity->rotate(m_pivot, rotationVector);
-            addEntity(entity);
-            ++addedCount;
+            if (owned && owned->rtti() == RS2::EntityLine) {
+                const auto* line = static_cast<const RS_Line*>(owned.get());
+                lineData.push_back(line->getData());
+                owned.reset();
+            } else if (owned) {
+                otherPieces.push_back(std::move(owned));
+            }
         }
+    }
+    const double tolOffset = 1e-6 * std::max(patternSize.x, patternSize.y);
+    std::vector<RS_LineData> mergedLines =
+        LC_LoopUtils::deduplicatePatternLines(std::move(lineData), tolOffset);
+
+    const RS_Vector rotationVector{m_loopAngle};
+    int addedCount = 0;
+    auto emitEntity = [&](RS_Entity* entity) {
+        entity->setPen(pen);
+        entity->setLayer(layer);
+        entity->reparent(this);
+        entity->setFlag(RS2::FlagHatchChild);
+        entity->rotate(m_pivot, rotationVector);
+        addEntity(entity);
+        ++addedCount;
+    };
+    for (const RS_LineData& ld : mergedLines) {
+        auto* line = new RS_Line(nullptr, ld);
+        line->setVisible(true);
+        emitEntity(line);
+    }
+    for (auto& owned : otherPieces) {
+        RS_Entity* entity = owned.release();
+        emitEntity(entity);
     }
     m_densityReport = report;
 

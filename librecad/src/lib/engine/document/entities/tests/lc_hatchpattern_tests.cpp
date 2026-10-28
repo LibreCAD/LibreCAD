@@ -33,6 +33,7 @@
 #include <filesystem>
 #include <limits>
 #include <memory>
+#include <random>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -40,6 +41,7 @@
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/generators/catch_generators.hpp>
+#include <catch2/generators/catch_generators_adapters.hpp>
 #include <catch2/generators/catch_generators_range.hpp>
 
 #include <QDir>
@@ -50,6 +52,7 @@
 #include "lc_filtertestsupport.h"
 #include "lc_hatchtestsupport.h"
 #include "lc_looputils.h"
+#include "lc_patternlinededup.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_ellipse.h"
@@ -1291,4 +1294,455 @@ TEST_CASE("Hatch pattern fast path: interior tiles draw exactly what clipping dr
         auto scaled = scaledPattern("BRICK", 1.0);
         compareFastAndSlow((*roots)[0], *scaled);
     }
+}
+
+// --- Tile-relative de-dup of LINE pieces. --------------------------------
+// LC_LoopUtils::deduplicatePatternLines merges tile-border overlaps so that
+// no ink is drawn twice. Collinear pieces whose offsets differ by at most
+// tolOffset glue; adjacent dashes whose t-gap is <= tolOffset glue; and
+// the output never depends on input order. tolOffset = 1e-6 x the scaled
+// tile size, so scale changes the result accordingly.
+
+namespace {
+
+// NOLINTBEGIN(readability-identifier-naming)
+
+struct AxisLineKey {
+    bool vertical = false;
+    double offset = 0.0;    // x for vertical, y for horizontal
+    double start = 0.0;     // smaller t
+    double end = 0.0;       // larger t
+};
+
+// Return a sorted sequence of maximal runs of the axis-aligned pieces of
+// `before`, taking the union along each axis-aligned line. Only axis-aligned
+// pieces are considered: SQUARE has horizontal and vertical ink only.
+std::vector<AxisLineKey> unionRunsOfAxisAligned(const std::vector<Piece>& before,
+                                                double tol) {
+    std::unordered_map<long long, std::vector<std::pair<double, double>>> horizontals;
+    std::unordered_map<long long, std::vector<std::pair<double, double>>> verticals;
+    auto bucketKey = [tol](double v) -> long long {
+        return static_cast<long long>(std::llround(v / tol));
+    };
+    for (const Piece& p : before) {
+        const double dx = p.b.x - p.a.x;
+        const double dy = p.b.y - p.a.y;
+        if (std::abs(dy) < tol && std::abs(dx) > tol) {
+            const long long k = bucketKey(0.5 * (p.a.y + p.b.y));
+            horizontals[k].push_back({std::min(p.a.x, p.b.x), std::max(p.a.x, p.b.x)});
+        } else if (std::abs(dx) < tol && std::abs(dy) > tol) {
+            const long long k = bucketKey(0.5 * (p.a.x + p.b.x));
+            verticals[k].push_back({std::min(p.a.y, p.b.y), std::max(p.a.y, p.b.y)});
+        }
+    }
+    std::vector<AxisLineKey> runs;
+    auto flush = [tol, &runs](const auto& bucketMap, bool vertical) {
+        for (const auto& kv : bucketMap) {
+            auto ranges = kv.second;
+            std::sort(ranges.begin(), ranges.end());
+            double curA = ranges.front().first;
+            double curB = ranges.front().second;
+            const double offset = static_cast<double>(kv.first) * tol;
+            for (std::size_t i = 1; i < ranges.size(); ++i) {
+                if (ranges[i].first <= curB + tol) {
+                    curB = std::max(curB, ranges[i].second);
+                } else {
+                    runs.push_back({vertical, offset, curA, curB});
+                    curA = ranges[i].first;
+                    curB = ranges[i].second;
+                }
+            }
+            runs.push_back({vertical, offset, curA, curB});
+        }
+    };
+    flush(horizontals, false);
+    flush(verticals, true);
+    std::sort(runs.begin(), runs.end(),
+              [](const AxisLineKey& a, const AxisLineKey& b) {
+                  if (a.vertical != b.vertical) return !a.vertical && b.vertical;
+                  if (a.offset != b.offset) return a.offset < b.offset;
+                  return a.start < b.start;
+              });
+    return runs;
+}
+
+// Simple segment representation for sort/eq comparisons.
+struct SortedLine {
+    double x1;
+    double y1;
+    double x2;
+    double y2;
+    SortedLine(const RS_LineData& d) {
+        RS_Vector a = d.startpoint;
+        RS_Vector b = d.endpoint;
+        if (b.x < a.x || (b.x == a.x && b.y < a.y)) std::swap(a, b);
+        x1 = a.x; y1 = a.y;
+        x2 = b.x; y2 = b.y;
+    }
+    bool operator<(const SortedLine& o) const {
+        if (x1 != o.x1) return x1 < o.x1;
+        if (y1 != o.y1) return y1 < o.y1;
+        if (x2 != o.x2) return x2 < o.x2;
+        return y2 < o.y2;
+    }
+    bool operator==(const SortedLine& o) const {
+        return x1 == o.x1 && y1 == o.y1 && x2 == o.x2 && y2 == o.y2;
+    }
+};
+
+std::vector<SortedLine> sortedLines(const std::vector<RS_LineData>& v) {
+    std::vector<SortedLine> out;
+    out.reserve(v.size());
+    for (const RS_LineData& d : v) out.emplace_back(d);
+    std::sort(out.begin(), out.end());
+    return out;
+}
+
+std::vector<RS_LineData> toLineData(const std::vector<Piece>& pieces) {
+    std::vector<RS_LineData> out;
+    out.reserve(pieces.size());
+    for (const Piece& p : pieces) out.push_back(RS_LineData(p.a, p.b));
+    return out;
+}
+
+std::vector<RS_LineData> hatchLineData(const RS_Hatch& h) {
+    std::vector<RS_LineData> out;
+    for (const auto& lp : lc::test::patternLines(h)) {
+        out.push_back(RS_LineData(lp.a, lp.b));
+    }
+    return out;
+}
+
+// Equality of two line-data sets within an endpoint tolerance (used by case 21:
+// the hatch's own output can move by one ulp through the rotate-by-zero path).
+// Sorts by a quantised key (rounded to tolQuant), which keeps near-equal pieces
+// in the same relative order across two independent computations, then checks
+// each pair's endpoint distance.
+bool approxLineSetsEqual(std::vector<RS_LineData> a, std::vector<RS_LineData> b, double tol) {
+    if (a.size() != b.size()) return false;
+    auto canon = [](RS_LineData& d) {
+        if (d.endpoint.x < d.startpoint.x ||
+            (d.endpoint.x == d.startpoint.x && d.endpoint.y < d.startpoint.y)) {
+            std::swap(d.startpoint, d.endpoint);
+        }
+    };
+    for (auto& d : a) canon(d);
+    for (auto& d : b) canon(d);
+    const double tolQuant = std::max(tol * 100.0, 1e-7);
+    auto quant = [tolQuant](double v) -> long long {
+        return static_cast<long long>(std::llround(v / tolQuant));
+    };
+    auto key = [&](const RS_LineData& x) {
+        return std::array<long long, 4>{
+            quant(x.startpoint.x), quant(x.startpoint.y),
+            quant(x.endpoint.x), quant(x.endpoint.y)};
+    };
+    auto cmp = [&](const RS_LineData& x, const RS_LineData& y) {
+        return key(x) < key(y);
+    };
+    std::sort(a.begin(), a.end(), cmp);
+    std::sort(b.begin(), b.end(), cmp);
+    for (std::size_t i = 0; i < a.size(); ++i) {
+        if (a[i].startpoint.distanceTo(b[i].startpoint) > tol) return false;
+        if (a[i].endpoint.distanceTo(b[i].endpoint) > tol) return false;
+    }
+    return true;
+}
+
+// NOLINTEND(readability-identifier-naming)
+
+}  // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern de-dup: SQUARE draws every line once",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+    auto hatch = lc::test::makePatternHatch(
+        "SQUARE", 1.0, 0.0, {rectRing(0, 0, 500, 300)});
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    const auto hatchPieces = lc::test::patternLines(*hatch);
+    REQUIRE_FALSE(hatchPieces.empty());
+
+    const auto before = tilePathPieces("SQUARE", 1.0, {rectRing(0, 0, 500, 300)});
+    REQUIRE_FALSE(before.empty());
+
+    const double tol = 5e-5;
+
+    // Σ child length equals the union length of before (axis-aligned union
+    // computed in the test) to 1e-9 relative.
+    const auto runs = unionRunsOfAxisAligned(before, tol);
+    double unionLen = 0.0;
+    for (const auto& r : runs) unionLen += (r.end - r.start);
+    const double drawnInk = inkOf(hatchPieces);
+    INFO("drawnInk=" << drawnInk << " unionLen=" << unionLen);
+    REQUIRE(std::abs(drawnInk - unionLen) <= 1e-9 * unionLen);
+
+    // No two collinear children overlap by more than tol.
+    for (std::size_t i = 0; i < hatchPieces.size(); ++i) {
+        const Piece& a = hatchPieces[i];
+        const double adx = a.b.x - a.a.x;
+        const double ady = a.b.y - a.a.y;
+        for (std::size_t j = i + 1; j < hatchPieces.size(); ++j) {
+            const Piece& b = hatchPieces[j];
+            const double bdx = b.b.x - b.a.x;
+            const double bdy = b.b.y - b.a.y;
+            const bool bothH = std::abs(ady) < tol && std::abs(bdy) < tol;
+            const bool bothV = std::abs(adx) < tol && std::abs(bdx) < tol;
+            if (!bothH && !bothV) continue;
+            if (bothH && std::abs(a.a.y - b.a.y) > tol) continue;
+            if (bothV && std::abs(a.a.x - b.a.x) > tol) continue;
+            double aLo, aHi, bLo, bHi;
+            if (bothH) {
+                aLo = std::min(a.a.x, a.b.x);
+                aHi = std::max(a.a.x, a.b.x);
+                bLo = std::min(b.a.x, b.b.x);
+                bHi = std::max(b.a.x, b.b.x);
+            } else {
+                aLo = std::min(a.a.y, a.b.y);
+                aHi = std::max(a.a.y, a.b.y);
+                bLo = std::min(b.a.y, b.b.y);
+                bHi = std::max(b.a.y, b.b.y);
+            }
+            const double overlap = std::min(aHi, bHi) - std::max(aLo, bLo);
+            INFO("overlap=" << overlap);
+            REQUIRE(overlap <= tol);
+        }
+    }
+
+    // The child count equals the number of maximal runs in that union.
+    CHECK(hatchPieces.size() == runs.size());
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern de-dup: ANSI31 keeps its ink and glues tile-border pieces",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+    const auto before = tilePathPieces("ANSI31", 1.0, {rectRing(0, 0, 500, 300)});
+    REQUIRE_FALSE(before.empty());
+
+    auto scaled = scaledPattern("ANSI31", 1.0);
+    const RS_Vector pSize = scaled->getSize();
+    const double tolOffset = 1e-6 * std::max(pSize.x, pSize.y);
+
+    const auto after = LC_LoopUtils::deduplicatePatternLines(
+        toLineData(before), tolOffset);
+    REQUIRE_FALSE(after.empty());
+
+    double inkBefore = 0.0;
+    for (const Piece& p : before) inkBefore += p.a.distanceTo(p.b);
+    double inkAfter = 0.0;
+    for (const RS_LineData& d : after) inkAfter += d.startpoint.distanceTo(d.endpoint);
+    CAPTURE(inkBefore);
+    CAPTURE(inkAfter);
+    CAPTURE(before.size());
+    CAPTURE(after.size());
+    REQUIRE(std::abs(inkAfter - inkBefore) <= 1e-6 * inkBefore);
+    REQUIRE(after.size() < before.size());
+
+    // No collinear overlap greater than tol in the output: group by (direction,
+    // perpendicular offset) and check that intervals are disjoint.
+    struct Bucket { double offset; std::vector<std::pair<double, double>> intervals; };
+    std::unordered_map<long long, std::vector<Bucket>> byDir;
+    const double tolDir = 1e-6;
+    for (const RS_LineData& d : after) {
+        const double dx = d.endpoint.x - d.startpoint.x;
+        const double dy = d.endpoint.y - d.startpoint.y;
+        const double L = std::hypot(dx, dy);
+        if (L < tolOffset) continue;
+        double theta = std::atan2(dy, dx);
+        if (theta < 0.0) theta += M_PI;
+        if (theta >= M_PI) theta -= M_PI;
+        const long long dirKey = static_cast<long long>(std::llround(theta / tolDir));
+        const double ux = std::cos(theta);
+        const double uy = std::sin(theta);
+        const double nx = -uy, ny = ux;
+        const double c = 0.5 * ((d.startpoint.x + d.endpoint.x) * nx +
+                                (d.startpoint.y + d.endpoint.y) * ny);
+        double t0 = d.startpoint.x * ux + d.startpoint.y * uy;
+        double t1 = d.endpoint.x * ux + d.endpoint.y * uy;
+        if (t1 < t0) std::swap(t0, t1);
+        auto& buckets = byDir[dirKey];
+        Bucket* found = nullptr;
+        for (Bucket& bk : buckets) {
+            if (std::abs(bk.offset - c) <= tolOffset) { found = &bk; break; }
+        }
+        if (!found) {
+            buckets.push_back({c, {}});
+            found = &buckets.back();
+        }
+        found->intervals.push_back({t0, t1});
+    }
+    for (auto& kv : byDir) {
+        for (Bucket& bk : kv.second) {
+            std::sort(bk.intervals.begin(), bk.intervals.end());
+            for (std::size_t i = 1; i < bk.intervals.size(); ++i) {
+                const double overlap = bk.intervals[i - 1].second - bk.intervals[i].first;
+                INFO("overlap=" << overlap);
+                REQUIRE(overlap <= tolOffset);
+            }
+        }
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern de-dup: the result does not depend on input order",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+
+    auto checkInvariant = [](const QString& name) {
+        const auto before = tilePathPieces(name, 1.0, {rectRing(0, 0, 500, 300)});
+        REQUIRE_FALSE(before.empty());
+
+        auto scaled = scaledPattern(name, 1.0);
+        const RS_Vector pSize = scaled->getSize();
+        const double tolOffset = 1e-6 * std::max(pSize.x, pSize.y);
+
+        const auto baseline = LC_LoopUtils::deduplicatePatternLines(
+            toLineData(before), tolOffset);
+        REQUIRE_FALSE(baseline.empty());
+
+        auto shuffled = toLineData(before);
+        std::mt19937 rng(20261025u);
+        std::shuffle(shuffled.begin(), shuffled.end(), rng);
+        const auto out = LC_LoopUtils::deduplicatePatternLines(
+            std::move(shuffled), tolOffset);
+
+        const auto a = sortedLines(baseline);
+        const auto b = sortedLines(out);
+        REQUIRE(a.size() == b.size());
+        for (std::size_t i = 0; i < a.size(); ++i) {
+            REQUIRE(a[i] == b[i]);
+        }
+    };
+
+    SECTION("SQUARE") { checkInvariant("SQUARE"); }
+    SECTION("ANSI31") { checkInvariant("ANSI31"); }
+    SECTION("HEX") { checkInvariant("HEX"); }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern de-dup: the tolerance follows the tile, not the drawing",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+
+    auto scaleBy = [](const std::vector<Piece>& pieces, double s) {
+        std::vector<RS_LineData> out;
+        out.reserve(pieces.size());
+        for (const Piece& p : pieces) {
+            out.push_back(RS_LineData(RS_Vector(p.a.x * s, p.a.y * s),
+                                      RS_Vector(p.b.x * s, p.b.y * s)));
+        }
+        return out;
+    };
+
+    SECTION("SAND at scale 5e-4 keeps every piece") {
+        const auto before = tilePathPieces("SAND", 1.0, {rectRing(0, 0, 500, 300)});
+        REQUIRE_FALSE(before.empty());
+        auto scaled = scaledPattern("SAND", 5e-4);
+        const RS_Vector pSize = scaled->getSize();
+        const double tolOffset = 1e-6 * std::max(pSize.x, pSize.y);
+        auto scaledInput = scaleBy(before, 5e-4);
+        double inkIn = 0.0;
+        for (const RS_LineData& d : scaledInput) inkIn += d.startpoint.distanceTo(d.endpoint);
+
+        const auto after = LC_LoopUtils::deduplicatePatternLines(
+            scaledInput, tolOffset);
+        double inkOut = 0.0;
+        for (const RS_LineData& d : after) inkOut += d.startpoint.distanceTo(d.endpoint);
+        CAPTURE(before.size());
+        CAPTURE(after.size());
+        CAPTURE(inkIn);
+        CAPTURE(inkOut);
+        REQUIRE(after.size() == before.size());
+        REQUIRE(std::abs(inkOut / inkIn - 1.0) <= 5e-5);
+
+        // Sensitivity: at the drawing-scale absolute tolerance 1e-4 (the
+        // refuted alternative), every piece is shorter than the tolerance. The
+        // plan's own-adaptation (keep the original short piece, never emit a
+        // zero-length RS_Line) prevents the prototype's dot-collapse: ink and
+        // piece count stay within a few percent of the input. One tolerance
+        // coarser than the whole scaled tile (~0.05) collapses user-visible
+        // geometry; 1e-4 here does not.
+        const auto afterBad = LC_LoopUtils::deduplicatePatternLines(
+            scaledInput, 1e-4);
+        double inkBad = 0.0;
+        for (const RS_LineData& d : afterBad) inkBad += d.startpoint.distanceTo(d.endpoint);
+        CAPTURE(inkBad);
+        REQUIRE(afterBad.size() >= 0.95 * before.size());
+        REQUIRE(inkBad >= 0.95 * inkIn);
+    }
+    SECTION("GOST_GLASS1 at scale 1e-4 keeps every piece") {
+        const auto before = tilePathPieces("GOST_GLASS1", 1.0, {rectRing(0, 0, 500, 300)});
+        REQUIRE_FALSE(before.empty());
+        auto scaled = scaledPattern("GOST_GLASS1", 1e-4);
+        const RS_Vector pSize = scaled->getSize();
+        const double tolOffset = 1e-6 * std::max(pSize.x, pSize.y);
+        auto scaledInput = scaleBy(before, 1e-4);
+        double inkIn = 0.0;
+        for (const RS_LineData& d : scaledInput) inkIn += d.startpoint.distanceTo(d.endpoint);
+
+        const auto after = LC_LoopUtils::deduplicatePatternLines(
+            scaledInput, tolOffset);
+        double inkOut = 0.0;
+        for (const RS_LineData& d : after) inkOut += d.startpoint.distanceTo(d.endpoint);
+        CAPTURE(before.size());
+        CAPTURE(after.size());
+        REQUIRE(after.size() == before.size());
+        REQUIRE(std::abs(inkOut / inkIn - 1.0) <= 5e-5);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern de-dup: HEX seams merge into double dashes only",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+    const auto before = tilePathPieces("HEX", 1.0, {rectRing(0, 0, 500, 300)});
+    REQUIRE_FALSE(before.empty());
+    auto scaled = scaledPattern("HEX", 1.0);
+    const RS_Vector pSize = scaled->getSize();
+    const double tolOffset = 1e-6 * std::max(pSize.x, pSize.y);
+
+    const auto after = LC_LoopUtils::deduplicatePatternLines(
+        toLineData(before), tolOffset);
+    REQUIRE_FALSE(after.empty());
+
+    double maxLen = 0.0;
+    for (const RS_LineData& d : after) {
+        maxLen = std::max(maxLen, d.startpoint.distanceTo(d.endpoint));
+    }
+    CAPTURE(maxLen);
+    CAPTURE(before.size());
+    CAPTURE(after.size());
+    REQUIRE(maxLen <= 9.60);
+    REQUIRE(after.size() < before.size());
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern de-dup: the hatch draws the de-duplicated tile path",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+
+    auto checkHatch = [](const QString& name) {
+        auto hatch = lc::test::makePatternHatch(
+            name, 1.0, 0.0, {rectRing(0, 0, 500, 300)});
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        const auto hatchData = hatchLineData(*hatch);
+        REQUIRE_FALSE(hatchData.empty());
+
+        const auto before = tilePathPieces(name, 1.0, {rectRing(0, 0, 500, 300)});
+        auto scaled = scaledPattern(name, 1.0);
+        const RS_Vector pSize = scaled->getSize();
+        const double tolOffset = 1e-6 * std::max(pSize.x, pSize.y);
+        const auto expected = LC_LoopUtils::deduplicatePatternLines(
+            toLineData(before), tolOffset);
+        REQUIRE_FALSE(expected.empty());
+
+        CAPTURE(hatchData.size());
+        CAPTURE(expected.size());
+        CAPTURE(before.size());
+        REQUIRE(approxLineSetsEqual(hatchData, expected, 1e-9));
+    };
+
+    SECTION("SQUARE") { checkHatch("SQUARE"); }
+    SECTION("HEX") { checkHatch("HEX"); }
 }
