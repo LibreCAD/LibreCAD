@@ -374,6 +374,7 @@ public:
   bool tryStroke(double tolerance, size_t maxVertices, std::vector<RS_Vector> &vertices) const;
 
   friend class RS_FilterDXFRW;
+  friend class LC_OffsetCreationSources;
 protected:
     /** Publish staged data/display children without invoking update() or listeners midcommit. */
     OwnedReplacement replacePreparedSpline(RS_Spline &prepared);

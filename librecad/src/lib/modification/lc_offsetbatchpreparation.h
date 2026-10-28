@@ -21,6 +21,10 @@ public:
         LC_OffsetPreviewCache* = nullptr);
     bool accept(const LC_OffsetWorkerCompletion&);
     const LC_OffsetBatchOutcome& outcome() const noexcept;
+    /** Preview ownership transfer, in final dispatch order. Allocation precedes
+     * every move; a refused/throwing transfer retains the complete owned batch.
+     */
+    std::vector<std::unique_ptr<RS_Entity>> take();
     /** After allocation-free publication, relinquish only the final added set. */
     void release() noexcept;
 private:

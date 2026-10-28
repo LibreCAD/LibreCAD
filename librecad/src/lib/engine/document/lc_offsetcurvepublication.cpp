@@ -190,6 +190,18 @@ std::unique_ptr<LC_OffsetCurvePublication> LC_OffsetCurvePublication::prepareImp
     data->selectionBefore = document.m_selectedSet->m_entitiesList;
     data->removed = removed;
     data->added = added;
+    // Large creation batches must not rescan the whole document per source.
+    // Keep the strict replacement path and small allocation censuses unchanged.
+    std::vector<RS_Entity*> members;
+    if (creation && data->before.size() > 32) {
+        members.assign(data->before.begin(), data->before.end());
+        std::sort(members.begin(), members.end(), std::less<RS_Entity*>{});
+        if (std::adjacent_find(members.begin(), members.end()) != members.end()) return {};
+    }
+    const auto contains = [&](RS_Entity* entity) {
+        return members.empty() ? data->before.contains(entity) :
+            std::binary_search(members.begin(), members.end(), entity, std::less<RS_Entity*>{});
+    };
     if (added.size() > std::numeric_limits<qsizetype>::max() - data->before.size()) return {};
     std::set<RS_Entity*> originals, replacements, selectedReplacements;
     auto cycle = std::make_shared<RS_UndoCycle>();
@@ -205,12 +217,12 @@ std::unique_ptr<LC_OffsetCurvePublication> LC_OffsetCurvePublication::prepareImp
     }
     if (creation) {
         for (auto* original : removed) {
-            if (!data->before.contains(original) || !original || original->getParent() != &document ||
+            if (!contains(original) || !original || original->getParent() != &document ||
                 original->isDeleted() || !originals.insert(original).second) return {};
             cycle->addUndoable(original);
         }
         for (auto* replacement : added) {
-            if (!replacement || data->before.contains(replacement) || replacement->isDeleted() ||
+            if (!replacement || contains(replacement) || replacement->isDeleted() ||
                 (replacement->getParent() && replacement->getParent() != &document) ||
                 !replacements.insert(replacement).second) return {};
             cycle->addUndoable(replacement);
@@ -254,11 +266,11 @@ std::unique_ptr<LC_OffsetCurvePublication> LC_OffsetCurvePublication::prepareImp
     if (creation) {
         std::set<RS_Entity*> inputRoots;
         for (auto* root : roots) {
-            if (!data->before.contains(root) || !root || root->getParent() != &document) return {};
+            if (!contains(root) || !root || root->getParent() != &document) return {};
             inputRoots.insert(root);
         }
         for (auto* root : removed) inputRoots.insert(root);
-        for (auto* node : deselected) if (data->before.contains(node)) inputRoots.insert(node);
+        for (auto* node : deselected) if (contains(node)) inputRoots.insert(node);
         QList<RS_Entity*> inputs;
         for (auto* root : inputRoots) inputs.append(root);
         if (!data->captureGraphs(inputs, sourceNodes) || !data->captureGraphs(added, addedNodes)) return {};

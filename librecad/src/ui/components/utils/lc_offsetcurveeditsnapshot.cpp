@@ -473,7 +473,14 @@ struct LC_OffsetCreationSources::Data {
             creationFlags(entity), entity.getMin(), entity.getMax(), metadata(entity), entity.reactorHandles(),
             entity.getDrwExtData(), {}, {}, std::move(*geometry), {}, {}, false};
         layer(node.layer);
-        if (!charge(node.reactors.size(), 3*sizeof(quint32))) return false;
+        if (!charge(node.reactors.size(), 3*sizeof(quint32)) ||
+            !charge(std::size_t(node.pen.getColor().colorName().size()), 6)) return false;
+        if (const auto* spline = dynamic_cast<const RS_Spline*>(&entity)) {
+            // Copy constructors retain latent arc-length tables too. Do not
+            // rebuild/evaluate them just to admit a bounded owned input.
+            if (!charge(spline->m_arcLength.t.size(), 3*sizeof(double)) ||
+                !charge(spline->m_arcLength.length.size(), 3*sizeof(double))) return false;
+        }
         for (const auto& tag : node.tags) {
             std::size_t size = sizeof(TagSnapshot);
             if (tag->type() == DRW_Variant::STRING) size += tag->content.s->size();
@@ -491,15 +498,23 @@ struct LC_OffsetCreationSources::Data {
                 !charge(container->size(), 3*sizeof(RS_Entity*))) return false;
             node.owner = true;
             for (auto* child : *container) {
-                // Qualified root clones still invoke child clone(); allow only
-                // built-in leaf storage so no callback can retire a live source.
+                // Qualified root clones still invoke child clone(). Admit only
+                // built-in implementations, with every descendant preflighted.
                 if (!child || child->getParent() != container ||
-                    (typeid(*child) != typeid(RS_Line) && typeid(*child) != typeid(RS_Arc))) return false;
+                    (typeid(*child) != typeid(RS_Line) && typeid(*child) != typeid(RS_Arc) &&
+                     typeid(*child) != typeid(RS_Ellipse) && typeid(*child) != typeid(RS_Circle) &&
+                     typeid(*child) != typeid(RS_Polyline) && typeid(*child) != typeid(RS_Spline) &&
+                     typeid(*child) != typeid(LC_OffsetCurve) && typeid(*child) != typeid(LC_SplinePoints) &&
+                     typeid(*child) != typeid(LC_Parabola) && typeid(*child) != typeid(LC_Hyperbola))) return false;
                 node.children.append(child);
             }
         }
         const auto children = node.children;
         if (const auto* native = dynamic_cast<const LC_OffsetCurve*>(&entity)) {
+            if (!charge(native->unknownOwnedTail().size(), 3*sizeof(LC_OffsetCurveExtension)) ||
+                !charge(256, 3*sizeof(RS_Vector))) return false; // Existing native grip hard cap.
+            for (const auto& item : native->unknownOwnedTail()) if (const auto* text = std::get_if<QString>(&item.value))
+                if (!charge(std::size_t(text->size()), 6)) return false;
             node.native = LC_OffsetCurveEditSnapshot::capture(*native); if (!node.native) return false;
         }
         nodes.push_back(std::move(node));
@@ -524,17 +539,23 @@ std::shared_ptr<LC_OffsetCreationSources> LC_OffsetCreationSources::capture(RS_D
     const QList<RS_Entity*>& selection) {
     if (selection.isEmpty() || selection.size() > 4096 || !document.isOwner() || document.size() > 262144) return {};
     auto d = std::make_unique<Data>(document); if (!d->graphic) return {};
+    std::set<RS_Entity*> missing(selection.begin(), selection.end());
+    std::map<RS_Entity*, RS_Entity*> rootOf;
+    for (auto* root : d->topLevel) if (missing.erase(root)) rootOf.emplace(root, root);
+    std::size_t searchedChildren = 0;
+    for (auto* candidate : d->topLevel) {
+        if (missing.empty()) break;
+        const auto* container = dynamic_cast<const RS_EntityContainer*>(candidate);
+        if (!container || (!dynamic_cast<const RS_Polyline*>(candidate) && !dynamic_cast<const LC_OffsetCurve*>(candidate))) continue;
+        if (container->size() > MaximumNodes - searchedChildren) return {};
+        searchedChildren += container->size();
+        for (auto* child : *container) if (missing.erase(child)) rootOf.emplace(child, candidate);
+    }
+    if (!missing.empty()) return {};
     std::set<RS_Entity*> chosen;
     for (auto* address : selection) {
         if (!address) return {};
-        RS_Entity* root = nullptr;
-        if (d->topLevel.contains(address)) root = address;
-        else for (auto* candidate : d->topLevel) {
-            auto* container = dynamic_cast<RS_EntityContainer*>(candidate);
-            if (!container || (!dynamic_cast<RS_Polyline*>(candidate) && !dynamic_cast<LC_OffsetCurve*>(candidate))) continue;
-            if (container->size() > MaximumNodes) return {};
-            if (container->findEntityIndex(address) >= 0) { root = candidate; break; }
-        }
+        auto* root = rootOf.at(address);
         if (!root || root->getParent() != &document) return {};
         auto* source = dynamic_cast<LC_OffsetCurve*>(root) ? root : address;
         if (std::find(d->originals.begin(), d->originals.end(), source) == d->originals.end()) d->originals.append(source);

@@ -16,6 +16,7 @@
 #include <vector>
 #include "lc_action_modify_offset.h"
 #include "lc_actiontestsupport.h"
+#include "lc_offsetcurveactiontestsupport.h"
 #include "lc_offset_options_filler.h"
 #include "lc_offset_options_widget.h"
 #include "lc_offsetcurve.h"
@@ -165,11 +166,13 @@ struct Fixture {
         action->deletePreviewAndHighlights();
         const auto event = lc::test::eventAt(point.x, point.y);
         action->onMouseMoveEventSelected(Probe::SetReferencePoint, &event);
+        lc::test::awaitCreation(*action);
         action->drawPreviewAndHighlights();
     }
     void commit(const RS_Vector& point) {
         const auto event = lc::test::eventAt(point.x, point.y);
         action->onMouseLeftButtonReleaseSelected(Probe::SetReferencePoint, &event);
+        lc::test::awaitCreation(*action);
     }
     std::vector<std::uint64_t> previewFingerprints() const {
         std::vector<std::uint64_t> result;
@@ -327,8 +330,9 @@ TEST_CASE("Loaded native option does not change hover geometry or produce previe
     CHECK_FALSE(source->isDeleted()); CHECK(source->rtti() == RS2::EntityEllipse);
     f.commit(RS_Vector{20, 20});
     REQUIRE(f.action->committed); const auto& result = f.action->committed->sources.front();
-    // Commit discards the hover cache after source promotion; adoption uses the real committed producer.
-    REQUIRE(result.complete()); CHECK(result.reusedCacheCopies == 0); CHECK(result.cacheEngineRuns == 1);
+    // The joined commit reuses ordinary hover geometry, then performs native
+    // admission in the child; a cache hit does not mint native authority.
+    REQUIRE(result.complete()); CHECK(result.reusedCacheCopies == 1); CHECK(result.cacheEngineRuns == 0);
     CHECK(result.rebaseEngineRuns == 0);
     REQUIRE(result.createdEntities.size() == 1);
     CHECK(result.createdEntities.front()->rtti() == RS2::EntityOffsetCurve);

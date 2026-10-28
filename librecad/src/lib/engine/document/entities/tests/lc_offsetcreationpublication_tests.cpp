@@ -226,3 +226,30 @@ TEST_CASE("Offset creation source capture rejects stale addresses and oversized 
     spline->getData().savedOpenKnots.resize(4*LC_OffsetCreationSources::MaximumNodes + 1);
     CHECK_FALSE(LC_OffsetCreationSources::capture(f.graphic, {spline}));
 }
+
+TEST_CASE("Offset creation publication resolves a larger document inventory without changing unrelated members",
+          "[lc-offsetcurve][creation-publication][inventory]") {
+    Fixture f; QList<RS_Entity*> sources;
+    for (int i = 0; i < 40; ++i) sources.append(f.line({double(i), 0}, {double(i), 2}));
+    auto added = f.added(); auto* address = added.get();
+    auto publication = LC_OffsetCurvePublication::prepareCreation(f.graphic, f.viewport,
+        {sources[35]}, {address}, {}, {sources[35]}, {sources[35]});
+    REQUIRE(publication); REQUIRE(publication->commit()); added.release(); publication->notify();
+    CHECK(f.graphic.count() == 41); CHECK(sources[35]->isDeleted());
+    for (int i = 0; i < sources.size(); ++i) if (i != 35) CHECK_FALSE(sources[i]->isDeleted());
+    REQUIRE(f.graphic.undo()); CHECK_FALSE(sources[35]->isDeleted()); CHECK(address->isDeleted());
+}
+
+TEST_CASE("Offset creation source metadata shares a bounded clone allowance across sources",
+          "[lc-offsetcurve][creation-sources][quota]") {
+    Fixture f; QList<RS_Entity*> sources;
+    for (int i = 0; i < 6; ++i) {
+        auto* line = f.line({double(i), 0}, {double(i), 2});
+        line->setDrwExtData({std::make_shared<DRW_Variant>(1000,
+            std::string(LC_OffsetCurveEditSnapshot::MaximumSnapshotBytes, 'a'))});
+        sources.append(line);
+    }
+    REQUIRE(LC_OffsetCreationSources::capture(f.graphic, {sources[0]}));
+    CHECK_FALSE(LC_OffsetCreationSources::capture(f.graphic, sources));
+    CHECK(f.graphic.count() == 6); CHECK(f.graphic.countUndoCycles() == 0);
+}

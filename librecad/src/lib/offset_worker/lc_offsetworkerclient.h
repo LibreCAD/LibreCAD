@@ -101,6 +101,7 @@ public:
     static QString helperPath();
 private:
     friend class LC_OffsetWorkerClientTestAccess;
+    friend class LC_OffsetCreationActionTestAccess;
     struct Job;
     void start();
     void pump();

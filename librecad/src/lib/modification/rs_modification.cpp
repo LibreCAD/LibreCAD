@@ -2020,6 +2020,7 @@ struct LC_OffsetBatchPreparation::Data {
     std::unique_ptr<LC_OffsetWorkerRequest::Request> expected;
     LC_OffsetBatchOutcome outcome;
     std::vector<RS_Entity*> finalAdded;
+    QList<RS_Entity*> finalOrder;
 };
 
 LC_OffsetBatchPreparation::LC_OffsetBatchPreparation(const RS_OffsetData& data,
@@ -2038,6 +2039,7 @@ bool LC_OffsetBatchPreparation::advance(LC_DocumentModificationBatch& batch, LC_
     d.outcome = RS_Modification::offsetWithOutcomeImpl(d.data, d.sources, d.preview, d.limits, batch, cache, this);
     if (d.pending) { batch = {}; return false; }
     d.finalAdded.assign(batch.entitiesToAdd.begin(), batch.entitiesToAdd.end());
+    d.finalOrder = batch.entitiesToAdd;
     std::sort(d.finalAdded.begin(), d.finalAdded.end(), std::less<RS_Entity*>{});
     if (std::adjacent_find(d.finalAdded.begin(), d.finalAdded.end()) != d.finalAdded.end())
         throw std::logic_error("Offset staging shares an output root");
@@ -2096,6 +2098,19 @@ bool LC_OffsetBatchPreparation::accept(const LC_OffsetWorkerCompletion& completi
     d.rows.insert(staged.extract(staged.begin()));
     d.pending = nullptr; d.expected.reset(); d.pendingCache = nullptr;
     return true;
+}
+
+std::vector<std::unique_ptr<RS_Entity>> LC_OffsetBatchPreparation::take() {
+    auto& d = *m_data;
+    if (!d.ready || d.released) throw std::logic_error("Offset batch is not privately ready");
+    std::map<RS_Entity*, std::unique_ptr<RS_Entity>*> owners;
+    for (auto& row : d.rows) for (auto& root : row.second.roots) owners.emplace(root.get(), &root);
+    std::vector<std::unique_ptr<RS_Entity>> result; result.reserve(d.finalOrder.size());
+    for (auto* address : std::as_const(d.finalOrder)) if (!owners.count(address))
+        throw std::logic_error("Offset output owner is missing");
+    for (auto* address : std::as_const(d.finalOrder)) result.push_back(std::move(*owners.at(address)));
+    d.released = true;
+    return result;
 }
 
 void LC_OffsetBatchPreparation::release() noexcept {
