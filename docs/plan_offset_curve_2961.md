@@ -2155,6 +2155,38 @@ ASan uses `detect_leaks=0`. Final JUnit receipts in the same evidence root:
 | `offset-W23-trim-release.xml` | `7b79e2d0fc35a1651273b4f23df0c67479a1f0668a31fa7b2d9d1f6127608614` |
 | `offset-W23-trim-asan.xml` | `f7658684c651a279ea663a1cefafeef73a0dc88b58e01fb085ff89c8083382c6` |
 
+W24 native Trim commit routing `77c382799` sends native-involved action commits
+through W22/W23 before opening an undo cycle. It checks document/source, picked
+coordinates, selection, viewport/UCS, options and undo epoch across the callback,
+and installs prepared one- or two-sided results in one publication transaction.
+It preserves detached one-sided limits, ordinary-only synchronous Trim, provenance
+policy and post-commit observer handling. Pending commits cancel on Escape,
+right-click, suspend, action destruction or context death. No numeric fallback is
+used for native commits. Refusal leaves the undo epoch and redo history unchanged.
+
+Fresh Release/ASan Trim tests discover112 declarations and execute116 JUnit cases,
+with55695/61560 assertions. Adjacent creation-action tests discover85 declarations
+and execute132 cases with90217 assertions each; creation-publication tests discover16
+declarations and execute17 cases with376 assertions each. Discovery identities were
+checked, with zero errors/failures/skips. Coverage includes real-helper heartbeat,
+stale geometry/selection/view/options/layer/extended data, cancellation and retry,
+action/document destruction, mixed and detached limits, and one-step undo/redo.
+ASan uses `detect_leaks=0`. Final JUnit receipts in the evidence root:
+
+| W24 artifact | SHA256 |
+| --- | --- |
+| `offset-W24-final2-release.xml` | `e0f50b5148a4b2dde84683b0b1458d2a26186d1ceb4656638519df7841d5129e` |
+| `offset-W24-final2-asan.xml` | `72abcb32c0b3ad3d79b8d6f6bb0fc7dd69ff181797095b448628a1b1c9f912b6` |
+| `offset-W24-creation_action-release.xml` | `ebb8f62023eeede3e0d6e38d8932a9218cb1d364c9a7ed1313825bba3b10c469` |
+| `offset-W24-creation_action-asan.xml` | `caa97c168ff7042674a4aaec46bfa188ece33cbc1ab5e46f04cac0571aeba6b3` |
+| `offset-W24-creation_publication-release.xml` | `988978698cbd36bf16f2488f87d12eb31f05e94842c5bb904da908684d1fa073` |
+| `offset-W24-creation_publication-asan.xml` | `efe3b0fa8bec5ad006f15d5fc699321d4786f46818fa4c32b3665c996f737628` |
+
+This does not migrate native Trim preview: `previewTrim` still computes native
+queries synchronously. Preview cancellation/replacement, context-menu first-target
+hover and nested one-sided limit hover must be routed and qualified before W2 can
+close. Import ownership, qmake6, deployed/visible and final acceptance remain open.
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
@@ -2203,11 +2235,11 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   review scoped commits, preserve reproducible evidence and close every required gap.
 
 **Next concrete action on implementation resume:** integrate W22 and W23 into
-`LC_ActionModifyTrim` preview and commit, including its detached limit copies;
-document, source, selection, viewport, UCS, option and undo seals;
-cancellation on action/context death; and one atomic prepared publication for
-both one-sided Trim and Trim Two. Exercise stale inputs, helper failure, retry,
-undo/redo and real GUI lifecycle without a synchronous numeric fallback. Then
+`LC_ActionModifyTrim` native preview, including detached and hovered nested limits,
+context-menu first-target hover, latest-request cancellation, document/source/view/
+options seals and preview ownership. Exercise real-helper heartbeat, preview/commit
+geometry parity, stale inputs, failure, rapid pointer changes and context death;
+remove the synchronous native preview path without changing ordinary Trim. Then
 continue unpublished import ownership in4.2 order. W16-W19 cache portability and local creation/repeat GUI
 routing are qualified; do not restart them as absent. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
