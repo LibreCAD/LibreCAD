@@ -105,7 +105,7 @@ This inventory compares the older attached tree with the later candidate.
 | Type/UI/source actions | Entity enum/coverage, property queue/dialog, default drag, Update/Restore actions | Candidate present. Property queue defers publication with a timer, but prepares geometry synchronously in `apply`; a deferred commit is not background computation. |
 | Stored-cache Trim | `lc_offsetcachetrim`, contacts/matching helpers, Modify Trim action and file tests | Candidate present: pure preparation, exact fragments, two-operand publication and plain-fragment persistence. Recheck precision/ownership/undo guarantees. |
 | Validation workers | `scripts/offset-curve-validation/`, X-H1 through X-H7 | Candidate has Node developer/test workers and recorded timeout fixes. These tools are not a shipped isolated geometry worker. Do not confuse their deadlines with GUI computation limits. |
-| Native geometry-worker path | Real seven-operation protocol4 helper/client, cached source-copy production, same-producer ordinary fallback, plus dialog, sheet, grip, Update and Modify Offset preview/creation/repeat GUI routing committed/qualified | W16-W19 qualify cache portability and creation/repeat locally. Asynchronous Trim, import and packaged/final acceptance remain mandatory W0-W2 work. |
+| Native geometry-worker path | Real seven-operation protocol4 helper/client, cached source-copy production, same-producer ordinary fallback, plus dialog, sheet, grip, Update, Modify Offset and native Trim preview/commit GUI routing committed/qualified locally | W16-W19 qualify cache portability and creation/repeat; W24/W25 qualify local Trim routing. Import, action-level fault injection and packaged/final acceptance remain mandatory W0-W2 work. |
 | Tests/build targets | Main Catch target, filter micro targets and two standalone offset allocation-failure targets | Candidate present; source registration is not discovery/execution. Use the actual targets in section5.3, not just the old grouped fast lanes. |
 | Surviving test defect | `spline_offset_representation_tests.cpp` lines205 and668 in candidate still use DWG enum ranges | `FormatDWG2007` is outside the range; those ordinary representation loops also omit it. Fix classification and add an executed R2007 regression in S0. The separate candidate matrix already lists all six DWG versions. |
 
@@ -312,7 +312,7 @@ candidate except the explicitly proposed native-worker tags.
 | C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a` plus later search; audit/retest | `[lc-offsetcurve][cache-topology-chain]` |
 | W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and initial deadline/authority policy implemented; finish caller/fallback/import ownership freeze before routing | operation/cap/deadline/call-site table |
 | W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; full app/deployed-package gates remain | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
-| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat and geometry-entry timeout receipts qualified; asynchronous Trim/import and final gates open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining integration and runner regression |
+| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit and geometry-entry timeout receipts qualified locally; import, action-level fault injection and final gates open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining integration and runner regression |
 | E1 | Guarded entity/factories, RTTI, stamp, clone, downgrade and transforms | C-check | candidate `92758859c` and later fixes; audit/retest | `[lc-offsetcurve][native]`, `[entity-coverage]` |
 | U1 | Type/INSERT/selection/SVG/menu/info dispatch and safe properties | E1 | candidate `49c9b328b`, `f0fb28fab`; audit/retest | native type/name/dispatch TUs, `[entity-coverage]` |
 | E2 | Cached grips/snaps, through proposal and transactional mutators | E1 | candidate `4300c1031`, `47e14c74b`; audit/retest | native edit/grip/transform TUs |
@@ -2182,10 +2182,45 @@ ASan uses `detect_leaks=0`. Final JUnit receipts in the evidence root:
 | `offset-W24-creation_publication-release.xml` | `988978698cbd36bf16f2488f87d12eb31f05e94842c5bb904da908684d1fa073` |
 | `offset-W24-creation_publication-asan.xml` | `efe3b0fa8bec5ad006f15d5fc699321d4786f46818fa4c32b3665c996f737628` |
 
-This does not migrate native Trim preview: `previewTrim` still computes native
-queries synchronously. Preview cancellation/replacement, context-menu first-target
-hover and nested one-sided limit hover must be routed and qualified before W2 can
-close. Import ownership, qmake6, deployed/visible and final acceptance remain open.
+At W24 native Trim preview was still synchronous. W25 below supersedes that
+limitation; import ownership, qmake6, deployed/visible and final acceptance remain open.
+
+W25 native Trim preview routing `b9f288033` removes the synchronous native query
+from `previewTrim`, retaining ordinary-only behavior. Each native hover uses a
+replaceable worker request with bounded document, source, selection, view, UCS,
+options and display-setting seals. Context-target hover supports built-in nested
+limits through a detached numeric copy and a live child/owner-chain seal; callers
+must prove membership before reading the nested source. Custom overridden nested
+geometry is refused rather than represented as a different built-in curve. Stale,
+cancelled and failed jobs clear private/overlay preview content and cannot cancel a
+newer request. The shared preview mouse-move wrapper now checks action lifetime
+after its action-specific callback. Option callbacks are bracketed by source
+snapshot and membership rechecks for both preview and commit.
+
+Fresh Release/ASan suites have zero errors, failures or skips and checked
+discovery identities. Trim discovers121 declarations and executes131 JUnit cases
+(59490/67723 assertions); source/publication discovers18 and executes19 (414/414);
+creation action discovers85 and executes132 (90217/90217); grip discovers44 and
+executes44 (80176/91832); Update from Source discovers34 and executes36
+(3016/3694). Coverage includes real-helper hover/commit parity, rapid hover
+replacement, nested child/owner removal and mutation, inherited-layer changes,
+worker-result refusal/retry, Escape, action/document destruction and option-callback
+reentrancy. ASan uses `detect_leaks=0`. The new action tests do not inject a helper
+crash or a naturally hung numeric primitive; worker-level lifecycle evidence remains
+separate. Final JUnit receipts in the existing evidence root:
+
+| W25 artifact | SHA256 |
+| --- | --- |
+| `offset-W25-final7-trim-release.xml` | `0e67d50ad0b0ffefbf7ccec72f44f88dd952b838e95bd58a68ab15025a16d677` |
+| `offset-W25-final7-trim-asan.xml` | `1c4879915a8fb5978ebbad443212d6886e727359e368c75355b3963e46056256` |
+| `offset-W25-final7-creation_publication-release.xml` | `666f5a1ddca83c3779f8a69307cfa3ebabfaa02da2961ac401f77bacc3894b41` |
+| `offset-W25-final7-creation_publication-asan.xml` | `6a74431fe1f52478924c9070e5ae445f4a5e172db586a78a36c7e60feb2d87d3` |
+| `offset-W25-final7-creation_action-release.xml` | `cfcd4ef027b63fff7f67633e4c831c0f26179827142bb169d147e7cc51242a2e` |
+| `offset-W25-final7-creation_action-asan.xml` | `a6e88a2aac44e35ea0c47a108f7dc41516dcda009bd09d97d97fca4888d7ca35` |
+| `offset-W25-final7-grip-release.xml` | `461641281c70eb4f762e3fa8f08784e54d1ee061657daa97ea992d741fb1819c` |
+| `offset-W25-final7-grip-asan.xml` | `c29c1c634329c43706a8777c52a681ad476c47875e38fc2e943debc98ffe15c1` |
+| `offset-W25-final7-update_source-release.xml` | `5ceeaeb2f5eb3a2c5a7c38e658d878317ad0d8ff4f0972571204efb4fdb49ada` |
+| `offset-W25-final7-update_source-asan.xml` | `309d2aa4731a950334081e3fe33a23164b81f173e72bc5a71ac9cf4416e82f3a` |
 
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
@@ -2204,7 +2239,7 @@ Creation/repeat status after these review follow-ups:
    during remaining caller integration; this closes local creation/repeat routing,
    not platform/deployed/visible acceptance.
 
-Then continue stored-cache/conic trim and unpublished import ownership in4.2 order.
+Then continue action-level fault injection and unpublished import ownership in4.2 order.
 Full current-source application/deployed builds, complete file/version matrix,
 visible acceptance, source reconciliation/A-C audit and final R remain open.
 
@@ -2225,8 +2260,8 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   Do not redo implemented geometry as missing work.
 - [ ] A-core through C-check: review/requalify existing code and patch only proven
   accounting, ownership, occurrence or global-topology gaps. No duplicate checker.
-- [ ] W0-W2: typed/cached Produce and creation/repeat GUI routing are qualified;
-  finish asynchronous Trim, import ownership and remaining caller/final
+- [ ] W0-W2: typed/cached Produce, creation/repeat and local native Trim GUI routing are qualified;
+  finish import ownership, Trim action-level failure injection and remaining caller/final
   adoption/failure acceptance. Reuse the qualified geometry-entry timeout/helper/client/
   reply modules; do not redo them as absent. Keep Node runner scope separate.
 - [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
@@ -2234,16 +2269,16 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** integrate W22 and W23 into
-`LC_ActionModifyTrim` native preview, including detached and hovered nested limits,
-context-menu first-target hover, latest-request cancellation, document/source/view/
-options seals and preview ownership. Exercise real-helper heartbeat, preview/commit
-geometry parity, stale inputs, failure, rapid pointer changes and context death;
-remove the synchronous native preview path without changing ordinary Trim. Then
-continue unpublished import ownership in4.2 order. W16-W19 cache portability and local creation/repeat GUI
+**Next concrete action on implementation resume:** trace DXF/DWG offset import
+ownership and design the unpublished-document handoff so synchronous callbacks do
+not retain pending work or publish a partial document. Implement and test the
+actual import integration, including cancellation, owner destruction, malformed
+records, refusal diagnostics and no stale delivery. Also qualify Trim action-level
+helper crash/timeout and retry without weakening the existing worker tests.
+W16-W19 cache portability and local creation/repeat GUI
 routing are qualified; do not restart them as absent. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
-Nothing is automatically copied into the dirty main tree. Native caller routing,
+Nothing is automatically copied into the dirty main tree. Native import routing,
 the remaining lifecycle/packaging gates and final UI/file acceptance are open.
 
 Completion requires every required deliverable and validation row on the selected
