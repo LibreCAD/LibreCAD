@@ -802,7 +802,7 @@ normal build does not register absent executables. In this dedicated build:
 ```bash
 cmake -S . -B build-offset -DLIBRECAD_REGISTER_OFFSET_WORKER_TESTS=ON
 worker_targets=(librecad_offset_worker_wire_tests librecad_offset_worker_request_tests librecad_offset_worker_result_tests librecad_offset_worker_kernel_tests librecad_offset_worker_process_tests librecad_offset_worker_client_tests librecad_offset_worker_fault_tests librecad_offset_worker_geometry_timeout_tests librecad_offset_worker_edit_tests)
-caller_targets=(librecad_offset_native_edit_tests librecad_offset_properties_dialog_tests librecad_offset_properties_sheet_tests librecad_offset_grip_tests librecad_offset_update_source_tests librecad_offset_trim_tests librecad_offset_source_preparation_tests)
+caller_targets=(librecad_offset_native_edit_tests librecad_offset_properties_dialog_tests librecad_offset_properties_sheet_tests librecad_offset_grip_tests librecad_offset_update_source_tests librecad_offset_trim_tests librecad_offset_source_preparation_tests librecad_offset_creation_publication_tests)
 cmake --build build-offset --target librecad librecad_offset_worker librecad_offset_test_helper "${worker_targets[@]}" "${caller_targets[@]}" --parallel 4
 ctest --test-dir build-offset -N -R '^offset_worker_'
 ctest --test-dir build-offset -V --output-on-failure --output-junit "$RECEIPTS/native-ctest.xml" -R '^offset_worker_'
@@ -1929,11 +1929,36 @@ The initial test-probe signature build and zero-match pre-build reports are not
 qualification; the final reports above discover and execute every named case.
 The W17 ledger's new-case count is corrected to eight, matching its suite table.
 
-W18 is split for review/commit isolation: W18a ordered staging is implemented;
-W18b allocation-safe creation publication remains next, then W19 GUI routing.
-Reuse the prepared model transaction, preserve the strict property replacement
-entry/census, and cover add-only/delete-source/mixed selection, relative zero,
-redo pruning, stale input and allocation failures before handing off any owner.
+W18 is complete at its preparation/publication boundary, not at the GUI caller.
+W18b `328422713` adds `prepareCreation` to the existing prepared model transaction,
+preserving the strict property replacement entry and original allocation guards.
+It stages unequal add/remove lists, source/child selection, complete undo/redo,
+relative zero and bounds before allocation-free ownership handoff. Parent-list
+seals precede retained child reads, including obsolete redo subtrees. Enclosing
+graphic destruction invalidates a transaction for a surviving block document.
+
+Fresh Release/ASan discovery and execution in the same receipt root:
+creation publication7 declarations/7 JUnit cases/100 assertions; property sheet41
+declarations/53 JUnit cases/9367 assertions. All identities execute, zero failures,
+errors or skips. Both standalone fault processes exit0 with35 normal and113 redo
+replacement allocation failures (unchanged64/128 guards),38 add-only and42
+source-removal creation failures; actual creation/replacement commit allocates
+zero C++ new/new[]. Every refused preparation retains all owners and document
+state; retry has one undo/redo cycle. Qt malloc/aligned-new injection is not
+claimed. ASan uses `detect_leaks=0`.
+
+| W18b qualified report | SHA256 |
+| --- | --- |
+| creation Release | `66683e7fc76157c1bac9f617e39be09442a3e7023069cab986f59e63672b9660` |
+| creation ASan | `7495a80c7b5d3966f236319a30fdeb85be5a278350595d8b071d467f7fdbfd93` |
+| sheet Release | `21aa963bf76b4461cd2fa3b3a32d76f03b6e8219c6b0a479f9f3ca5a9c7f5b44` |
+| sheet ASan | `daf36cccb8428c4adcbd21e3f2972dd4db664a11a92444f4f84c72794f6e8a4f` |
+| fault log, both builds | `0d18815831628849d5ff3620226586105c4aa5a203d16ce34bbaae15912e7e05` |
+
+Files are `W18b-qualified-{creation,sheet}-{release,asan}.xml` and
+`W18b-qualified-fault-{release,asan}.log`. Initial probe/build errors are retained
+but are not acceptance receipts. Next W19: bounded owned source graphs and seals,
+then Modify Offset preview/commit continuations; test/commit/checkpoint each slice.
 
 Remaining creation/repeat steps after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
@@ -1980,8 +2005,8 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** W18b allocation-safe creation
-publication, then W19 creation/repeat GUI routing in the remaining
+**Next concrete action on implementation resume:** W19 owned source/context seals
+and creation/repeat GUI routing, using W18's qualified preparation/publication in the remaining
 4.2 caller adapters. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
 Nothing is automatically copied into the dirty main tree. Native caller routing,
