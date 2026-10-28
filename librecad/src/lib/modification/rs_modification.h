@@ -64,7 +64,7 @@ class LC_GraphicViewport;
 class LC_OffsetWorkerCompletion;
 class LC_OffsetBatchPreparation;
 struct LC_OffsetPreviewSnapshot;
-namespace LC_OffsetWorkerRequest { struct Request; }
+namespace LC_OffsetWorkerRequest { struct Request; struct Token; }
 class LC_SelectedSet;
 class LC_UndoSection;
 struct LC_DocumentModificationBatch;
@@ -620,6 +620,18 @@ public:
      */
     static std::optional<LC_OffsetCacheTrim::Limits> storedCacheTrimRemainingLimits(
         const LC_OffsetCacheTrim::Limits& limits, const LC_OffsetWorkerCompletion* previous = nullptr) noexcept;
+
+    /** Bounded geometry-only request for asynchronous stored-cache Trim. The
+     * caller owns and seals source/document lifetime and publication. For a
+     * second nonconic Trim Two request, supply the retained first request and
+     * its joined completion; no failed or mismatched reply grants fresh work.
+     */
+    static std::unique_ptr<LC_OffsetWorkerRequest::Request> storedCacheTrimRequest(
+        const RS_Entity& target, const RS_Vector& targetPick, const RS_Entity& cutter,
+        const RS_Vector& cutterPick, bool both, const LC_OffsetWorkerRequest::Token& token,
+        const LC_OffsetCacheTrim::Limits& limits,
+        const LC_OffsetWorkerRequest::Request* previousRequest = nullptr,
+        const LC_OffsetWorkerCompletion* previous = nullptr);
 
     static RS_Entity* trimAmount(const RS_Vector& trimCoord, RS_AtomicEntity* entityToTrim, double dist, bool trimBoth, bool& trimStart,
                                  bool& trimEnd, LC_DocumentModificationBatch& ctx);

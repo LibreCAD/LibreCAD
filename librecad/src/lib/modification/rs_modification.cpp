@@ -2766,6 +2766,65 @@ std::optional<LC_OffsetCacheTrim::Limits> RS_Modification::storedCacheTrimRemain
     return remaining;
 }
 
+std::unique_ptr<trimRequest::Request> RS_Modification::storedCacheTrimRequest(
+    const RS_Entity& target, const RS_Vector& targetPick, const RS_Entity& cutter,
+    const RS_Vector& cutterPick, bool both, const trimRequest::Token& token,
+    const storedTrim::Limits& limits, const trimRequest::Request* previousRequest,
+    const LC_OffsetWorkerCompletion* previous) {
+    if (&target == &cutter || bool(previousRequest) != bool(previous)) return {};
+    const auto* nativeA = dynamic_cast<const LC_OffsetCurve*>(&target);
+    const auto* nativeB = dynamic_cast<const LC_OffsetCurve*>(&cutter);
+    if (!nativeA && !nativeB) return {};
+    const auto isConic = [](const RS_Entity& e) {
+        return dynamic_cast<const RS_Circle*>(&e) || dynamic_cast<const RS_Arc*>(&e) ||
+            dynamic_cast<const RS_Ellipse*>(&e);
+    };
+    const bool conicReplacement = isConic(target) || (both && isConic(cutter));
+    auto remaining = storedCacheTrimRemainingLimits(limits);
+    if (!remaining) return {};
+    if (previous) {
+        if (!both || conicReplacement) return {};
+        auto first = storedCacheTrimRequest(target, targetPick, cutter, cutterPick, both,
+            previousRequest->token, limits);
+        if (!first || !matchedStoredTrim(*first, *previous) ||
+            !sameStoredTrimValue(trimRequest::encode(*first), trimRequest::encode(*previousRequest))) return {};
+        const auto& prior = previousRequest->token;
+        if (token.requestId <= prior.requestId ||
+            std::tie(token.generation, token.sourceRevision, token.undoEpoch) !=
+                std::tie(prior.generation, prior.sourceRevision, prior.undoEpoch)) return {};
+        remaining = storedCacheTrimRemainingLimits(limits, previous);
+        if (!remaining) return {};
+    }
+    auto request = std::make_unique<trimRequest::Request>(); request->token = token;
+    if (conicReplacement) {
+        const bool targetConic = isConic(target);
+        const auto* native = targetConic ? nativeB : nativeA;
+        if (!native || !trimRequest::Values::encodeCache(native->getData())) return {};
+        const auto conicValue = storedTrimCutter(targetConic ? target : cutter);
+        if (!conicValue) return {};
+        std::optional<storedTrim::Pick> cachePick;
+        if (both) cachePick = storedTrim::Pick{targetConic ? cutterPick : targetPick};
+        request->operation = trimRequest::TrimConic{native->getData(), *conicValue,
+            {targetConic ? targetPick : cutterPick}, cachePick, *remaining};
+    } else {
+        const auto& source = previous ? cutter : target;
+        const auto& limit = previous ? target : cutter;
+        RS_SplineData cache{1, false};
+        if (const auto* spline = dynamic_cast<const RS_Spline*>(&source)) {
+            if (!trimRequest::Values::encodeCache(spline->getData())) return {};
+            cache = spline->getData();
+        } else if (const auto* line = dynamic_cast<const RS_Line*>(&source)) {
+            const auto data = line->RS_Line::getData();
+            cache.controlPoints = {data.startpoint, data.endpoint};
+            cache.knotslist = {0, 0, 1, 1}; cache.weights = {1, 1};
+        } else return {};
+        const auto value = storedTrimCutter(limit); if (!value) return {};
+        request->operation = trimRequest::TrimCache{std::move(cache), *value,
+            {previous ? cutterPick : targetPick}, *remaining};
+    }
+    return trimRequest::admitted(*request) ? std::move(request) : nullptr;
+}
+
 LC_TrimResult RS_Modification::trimStoredCache(RS_Document& document, RS_Entity& target,
     const RS_Vector& targetPick, RS_Entity& cutter, const RS_Vector& cutterPick, const bool both,
     LC_DocumentModificationBatch& ctx, const LC_StoredCacheTrimOptions& options) {

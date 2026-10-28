@@ -1005,6 +1005,38 @@ TEST_CASE("Prepared trim consumption matches synchronous output attributes and e
     CHECK_FALSE(native->isDeleted()); CHECK_FALSE(cutter->isDeleted()); CHECK_FALSE(canUndo(f.graphic));
 }
 
+TEST_CASE("Stored trim request builder matches original inputs and binds the second job to joined work",
+          "[lc-offsetcurve][trim-action][trim-worker-request]") {
+    Drawing<true> f; auto* native = addNative(f.graphic); auto* ordinary = line(f.graphic);
+    LC_StoredCacheTrimOptions options;
+    const trimWorkerRequest::Token token{1, 3, 17, qint64(f.graphic.undoStateEpoch())};
+    for (bool nativeFirst : {false, true}) {
+        RS_Entity& a = nativeFirst ? static_cast<RS_Entity&>(*native) : *ordinary;
+        RS_Entity& b = nativeFirst ? static_cast<RS_Entity&>(*ordinary) : *native;
+        const RS_Vector ap = nativeFirst ? RS_Vector{2, 0} : RS_Vector{0, .3};
+        const RS_Vector bp = nativeFirst ? RS_Vector{0, .3} : RS_Vector{2, 0};
+        auto first = RS_Modification::storedCacheTrimRequest(a, ap, b, bp, true, token, options.kernel);
+        REQUIRE(first); REQUIRE(std::holds_alternative<trimWorkerRequest::TrimCache>(first->operation));
+        auto completion = joinedTrimWorker(*first);
+        auto nextToken = token; ++nextToken.requestId;
+        auto second = RS_Modification::storedCacheTrimRequest(a, ap, b, bp, true, nextToken,
+            options.kernel, first.get(), completion.get());
+        REQUIRE(second);
+        auto remaining = RS_Modification::storedCacheTrimRemainingLimits(options.kernel, completion.get()); REQUIRE(remaining);
+        auto expected = cacheTrimJob(f.graphic, b, a, bp, *remaining, 2);
+        CHECK(trimWorkerRequest::encode(*second) == trimWorkerRequest::encode(expected));
+        auto changed = *first; std::get<trimWorkerRequest::TrimCache>(changed.operation).pick.worldPoint.x += 1;
+        CHECK_FALSE(RS_Modification::storedCacheTrimRequest(a, ap, b, bp, true, nextToken,
+            options.kernel, &changed, completion.get()));
+        CHECK_FALSE(RS_Modification::storedCacheTrimRequest(a, ap, b, bp, false, nextToken,
+            options.kernel, first.get(), completion.get()));
+        CHECK_FALSE(RS_Modification::storedCacheTrimRequest(a, ap, b, bp, true, token,
+            options.kernel, first.get(), completion.get()));
+        CHECK_FALSE(RS_Modification::storedCacheTrimRequest(a, ap, b, bp, true, nextToken,
+            options.kernel, first.get(), nullptr));
+    }
+}
+
 TEST_CASE("Prepared nonconic Trim Two uses two original operands and the exact shared remaining limits",
           "[lc-offsetcurve][trim-action][trim-worker-consumption]") {
     for (bool nativeFirst : {false, true}) {
@@ -1101,6 +1133,8 @@ TEST_CASE("Prepared trim consumes all conic operand modes without changing the p
         if (mode != 0) request.operation = trimWorkerRequest::TrimConic{native->getData(),
             workerTrimCutter(*conic), {{-1, 0}}, both ? std::optional<LC_OffsetCacheTrim::Pick>{{{2, 0}}} : std::nullopt,
             *limits};
+        const auto built = RS_Modification::storedCacheTrimRequest(a, ap, b, bp, both, request.token, options.kernel);
+        REQUIRE(built); CHECK(trimWorkerRequest::encode(*built) == trimWorkerRequest::encode(request));
         const auto completion = joinedTrimWorker(request);
         WorkerTrimBatch expected, actual;
         const auto sync = RS_Modification::trimStoredCache(f.graphic, a, ap, b, bp, both, expected.value, options);
