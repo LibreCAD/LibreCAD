@@ -125,26 +125,14 @@ public:
    */
   double getTotalArea() const;
   /**
-   * @brief getTotalFirstMoment - recursively computes the first moments of area
-   * (∬ x dA, ∬ y dA) for this loop hierarchy using the same hole-subtraction
-   * logic as getTotalArea():
+   * @brief getTotalMoments - recursively computes the Green's theorem line
+   * integrals of (P - origin) summed around this loop and subtracted around
+   * every child, feeding one LC_AreaMoments accumulator per hatch update.
    *
-   *   totalMoment = outerMoment - ∑(child.getTotalFirstMoment())
-   *
-   * Divide by getTotalArea() to get the centroid (cx, cy).
+   *   totalMoment = outer.momentLineIntegrals(origin)
+   *                 - sum(child.getTotalMoments(origin))
    */
-  LC_FirstMoment getTotalFirstMoment() const;
-  /**
-   * @brief getTotalSecondMoment - recursively computes the three second moments
-   * of area for this loop hierarchy using the same hole-subtraction logic as
-   * getTotalArea():
-   *
-   *   totalMoment = outerMoment - ∑(child.getTotalSecondMoment())
-   *
-   * @return LC_SecondMoment with ixx=∬x²dA, iyy=∬y²dA, ixy=∬xydA for the
-   *         net region (outer shape minus holes, plus islands, etc.)
-   */
-  LC_SecondMoment getTotalSecondMoment() const;
+  LC_AreaMoments getTotalMoments(const RS_Vector& origin) const;
   /**
    * @brief Checks if this loop overlaps with a given rectangle.
    * @param other The rectangle to check against.

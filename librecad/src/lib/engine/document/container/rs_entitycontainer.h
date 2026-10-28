@@ -202,19 +202,15 @@ public:
      * returns absolute value
      */
     double areaLineIntegral() const override;
+
     /**
-  * @brief firstMomentLineIntegral - aggregates the first-moment line integrals
-     * of all boundary entities, with the same orientation correction as areaLineIntegral().
-     * Returns (∬ x dA, ∬ y dA) for use in centroid computation.
+     * @brief momentLineIntegrals - aggregates the six Green's theorem line
+     *        integrals of (P - origin) over all boundary entities in the
+     *        same traversal as areaLineIntegral(). The returned
+     *        LC_AreaMoments carries the net area/first/second so one pass
+     *        feeds both the centroid and the central tensor.
      */
-    LC_FirstMoment firstMomentLineIntegral() const override;
-    /**
-     * @brief secondMomentLineIntegral - aggregates the second-moment line integrals
-     * of all boundary entities in this container, applying the same orientation
-     * correction as areaLineIntegral().  Returns absolute-value-convention moments
-     * suitable for use in LC_Loops::getTotalSecondMoment().
-     */
-    LC_SecondMoment secondMomentLineIntegral() const override;
+    LC_AreaMoments momentLineIntegrals(const RS_Vector& origin) const override;
     /**
 	 * @brief ignoreForModification ignore this entity for entity catch for certain actions
      * like catching circles to create tangent circles

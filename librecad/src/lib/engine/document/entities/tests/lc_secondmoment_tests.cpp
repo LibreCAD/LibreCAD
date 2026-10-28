@@ -42,6 +42,7 @@
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_ellipse.h"
+#include "rs_entitycontainer.h"
 #include "rs_line.h"
 #include "rs_vector.h"
 
@@ -503,6 +504,62 @@ TEST_CASE("LC_Hyperbola moments: both branches in world coordinates",
         REQUIRE(std::isfinite(m.second.ixx));
         REQUIRE(std::isfinite(m.second.iyy));
         REQUIRE(std::isfinite(m.second.ixy));
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_EntityContainer moments about an origin survive a junction gap",
+          "[lc-hatchfix][moments]") {
+    // 10x4 rectangle rotated by 0.3 rad about centre C = (5e5, 5e6); the
+    // last edge ends 5e-9 off the first vertex (within RS_TOLERANCE15's
+    // sqrt). The container's momentLineIntegrals follows the areaLineIntegral
+    // traversal, so the gap feeds the "run" branch and the signed area +
+    // moments add up. About the bbox centre, the centroid lands within
+    // 1e-8 of C; about (0, 0), the catastrophic cancellation of A * C * C
+    // in the central tensor shifts the centroid off by more than 1.
+    const double rot = 0.3;
+    const double c = std::cos(rot);
+    const double s = std::sin(rot);
+    const RS_Vector C(5e5, 5e6);
+    const RS_Vector offs[] = {RS_Vector(-5, +2), RS_Vector(+5, +2),
+                              RS_Vector(+5, -2), RS_Vector(-5, -2)};
+    RS_Vector corners[4];
+    for (int i = 0; i < 4; ++i) {
+        corners[i] = RS_Vector(C.x + c * offs[i].x - s * offs[i].y,
+                               C.y + s * offs[i].x + c * offs[i].y);
+    }
+    // Nudge the last end point by 5e-9 along the next-edge direction so a
+    // gap exists; the traversal's RS_TOLERANCE15 is sqrt(RS_TOLERANCE), so
+    // 5e-9^2 = 2.5e-17 passes through the "same vertex" branch.
+    const RS_Vector lastEnd = corners[0]
+        + RS_Vector(5e-9 * (corners[0].x - corners[3].x),
+                    5e-9 * (corners[0].y - corners[3].y));
+    RS_EntityContainer cont(nullptr, true);
+    cont.addEntity(new RS_Line(&cont, corners[0], corners[1]));
+    cont.addEntity(new RS_Line(&cont, corners[1], corners[2]));
+    cont.addEntity(new RS_Line(&cont, corners[2], corners[3]));
+    cont.addEntity(new RS_Line(&cont, corners[3], lastEnd));
+
+    SECTION("about the bbox centre") {
+        const auto m = cont.momentLineIntegrals(C);
+        REQUIRE(m.area > 0.0);
+        // Centroid offset from C in the integration frame; a small gap
+        // leaves at most sub-ULP residuals in m.first.
+        REQUIRE_THAT(m.first.mx / m.area, WithinAbs(0.0, 1e-8));
+        REQUIRE_THAT(m.first.my / m.area, WithinAbs(0.0, 1e-8));
+    }
+    SECTION("about (0, 0): catastrophic cancellation shifts the centroid") {
+        // The reason to integrate about the pivot is that getCentral(A, cg)
+        // subtracts A * cg * cg from m.second, which here is a sum of order
+        // 1e18 (= 40 * 5e6^2 + others) — well beyond the integral's own 1e-9
+        // relative accuracy. The centroid itself is already off by more than
+        // 1 unit from C once the small-origin frame runs through
+        // momentLineIntegrals and the quotient first/area is formed.
+        const auto m = cont.momentLineIntegrals(RS_Vector(0.0, 0.0));
+        REQUIRE(m.area > 0.0);
+        const RS_Vector cg{m.first.mx / m.area, m.first.my / m.area};
+        const double shift = std::hypot(cg.x - C.x, cg.y - C.y);
+        REQUIRE(shift > 1.0);
     }
 }
 

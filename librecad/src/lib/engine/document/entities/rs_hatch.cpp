@@ -385,24 +385,26 @@ void RS_Hatch::update() {
         updatePatternHatch(layer, pen);
     }
 
-    // Compute 0th, 1st, and 2nd moments from loops. The loops live in the
-    // frame rotated by -m_loopAngle about m_pivot; map the centroid and the
-    // central tensor back to WCS once their frame-local values are known.
-    m_area = 0.0;
-    LC_FirstMoment first;    // raw first moment of the loop frame about (0, 0)
-    LC_SecondMoment second;  // raw second moment of the loop frame about (0, 0)
+    // Compute area and the central tensor from the moment integrator in one
+    // traversal about the stored pivot. The loops live in the frame rotated by
+    // -m_loopAngle about m_pivot; the integrator returns the moments in that
+    // frame relative to the pivot, and we map the centroid and the central
+    // tensor back to WCS once the frame-local values are known.
+    LC_AreaMoments total;
     for (const auto& loop : *m_orderedLoops) {
-        m_area += loop.getTotalArea();
-        first  += loop.getTotalFirstMoment();
-        second += loop.getTotalSecondMoment();
+        total += loop.getTotalMoments(m_pivot);
     }
+    m_area = total.area;
     m_centroid = RS_Vector(false);
     m_centralMoment = {};
     if (m_area >= RS_TOLERANCE) {
-        RS_Vector centroid{first.mx / m_area, first.my / m_area};
-        LC_SecondMoment central = second.getCentral(m_area, centroid.x, centroid.y);
+        // In the loop frame, moments are about m_pivot; d is the centroid
+        // offset from the pivot in that frame.
+        const RS_Vector d{total.first.mx / m_area, total.first.my / m_area};
+        LC_SecondMoment central =
+            total.second.getCentral(m_area, d.x, d.y);
+        RS_Vector centroid = m_pivot + d.rotated(m_loopAngle);
         if (m_loopAngle != 0.0) {
-            centroid.rotate(m_pivot, m_loopAngle);
             central = central.regionRotated(m_loopAngle);
         }
         m_centroid = centroid;
