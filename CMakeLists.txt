@@ -2751,6 +2751,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_edit_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcreationpublication_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_grips_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_grip_order_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurvetransform_tests.cpp
@@ -3563,6 +3564,9 @@ if (BUILD_TESTS)
     add_librecad_filter_micro_test(
         librecad_offset_native_edit_tests
         librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_edit_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_offset_creation_publication_tests
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcreationpublication_tests.cpp)
     add_librecad_filter_micro_test(
         librecad_offset_properties_dialog_tests
         librecad/src/ui/dialogs/entity/tests/lc_offsetcurve_propertiesdialog_tests.cpp)

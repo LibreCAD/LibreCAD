@@ -1,6 +1,7 @@
 /* Copyright (C) 2026 LibreCAD.org. SPDX-License-Identifier: GPL-2.0-or-later */
 // Dedicated executable ONLY. Never link this main/global new into Catch/app.
 #include "lc_offsetcurvepropertybatch.h"
+#include "lc_offsetcurvepublication.h"
 #include "lc_graphicviewport.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
@@ -53,6 +54,34 @@ private:
     int m_observedNesting = 0;
 };
 struct Entry { std::unique_ptr<LC_OffsetCurve> candidate; };
+struct CreationFixture {
+    Graphic graphic;
+    LC_GraphicViewport viewport;
+    RS_Line* source = nullptr;
+    std::array<std::unique_ptr<RS_Line>, 2> owners;
+    QList<RS_Entity*> added, removed, selected, deselected, roots;
+    std::uint64_t epoch;
+    explicit CreationFixture(bool erase) {
+        graphic.initForNewDocument();
+        source = new RS_Line(&graphic, RS_Vector{0, 0}, RS_Vector{2, 0});
+        source->setLayer(graphic.getActiveLayer()); graphic.addEntity(source); graphic.select(QList<RS_Entity*>{source});
+        for (unsigned i = 0; i < owners.size(); ++i) {
+            owners[i] = std::make_unique<RS_Line>(nullptr, RS_Vector{0, 1. + i}, RS_Vector{2, 1. + i});
+            owners[i]->setLayer(graphic.getActiveLayer()); added.append(owners[i].get());
+        }
+        if (erase) removed.append(source);
+        selected = added; deselected.append(source); roots.append(source);
+        epoch = graphic.undoStateEpoch(); graphic.setModified(false);
+    }
+    std::unique_ptr<LC_OffsetCurvePublication> prepare() {
+        return LC_OffsetCurvePublication::prepareCreation(graphic, viewport, removed, added, selected, deselected, roots);
+    }
+    bool untouched() const {
+        return graphic.size() == 1 && graphic.undoStateEpoch() == epoch && !graphic.isModified() &&
+            !source->isDeleted() && source->isSelected() && graphic.getSelection()->listenerCount() == 0 &&
+            owners[0] && owners[1] && !owners[0]->getParent() && !owners[1]->getParent();
+    }
+};
 struct Fixture {
     Graphic graphic;
     LC_GraphicViewport viewport;
@@ -168,7 +197,10 @@ int main(int argc, char** argv) {
         auto redoObserved = Batch::tryPrepare(next, f.epoch, f.graphic, f.viewport);
         armed = false;
         const auto redoAllocations = allocations;
-        if (!redoObserved || redoAllocations == 0 || redoAllocations > 128) return error(22, "redo preparation census");
+        if (!redoObserved || redoAllocations == 0 || redoAllocations > 128) {
+            std::fprintf(stderr, "redo_prepare_allocations=%zu observed=%d\n", redoAllocations, int(bool(redoObserved)));
+            return error(22, "redo preparation census");
+        }
         redoObserved.reset();
         for (std::size_t ordinal = 1; ordinal <= redoAllocations; ++ordinal) {
             Fixture fresh;
@@ -272,8 +304,37 @@ int main(int argc, char** argv) {
             locked.candidates[0]->getLayer(false) != lockedLayer)
             return error(35, "locked replacement selection follows document policy");
 
-        std::printf("prepare_std_new_failures=%zu redo_prepare_failures=%zu publication_std_new=0 former_failure_ordinals=8 stale=1 throwing_observer=1 relative_zero=1 locked_target=1\n",
-            prepareAllocations, redoAllocations);
+        std::array<std::size_t, 2> creationAllocations{};
+        for (unsigned erase = 0; erase < 2; ++erase) {
+            CreationFixture creation(erase);
+            arm(); auto ready = creation.prepare(); armed = false;
+            const auto census = allocations; creationAllocations[erase] = census;
+            if (!ready || !census || census > 128) return error(41, "creation preparation census");
+            ready.reset();
+            if (!creation.untouched()) return error(42, "creation preparation mutated document");
+            for (std::size_t ordinal = 1; ordinal <= census; ++ordinal) {
+                CreationFixture fresh(erase);
+                std::unique_ptr<LC_OffsetCurvePublication> refused;
+                arm(ordinal);
+                try { refused = fresh.prepare(); } catch (const std::bad_alloc&) {}
+                armed = false;
+                if (!hit || refused || !fresh.untouched()) return error(43, "creation failure must retain all owners");
+            }
+            ready = creation.prepare();
+            if (!ready) return error(44, "creation retry preparation");
+            arm(1); const bool committed = ready->commit(); armed = false;
+            if (!committed || hit || allocations) return error(45, "creation allocation-free commit");
+            for (auto& owner : creation.owners) owner.release();
+            ready->notify();
+            if (creation.graphic.countUndoCycles() != 1 || creation.source->isSelected() ||
+                creation.source->isDeleted() != bool(erase) || !creation.added[0]->isSelected() ||
+                !creation.graphic.undo() || creation.source->isDeleted() || !creation.added[0]->isDeleted() ||
+                !creation.graphic.redo() || creation.source->isDeleted() != bool(erase))
+                return error(46, "creation one-step ownership selection undo redo");
+        }
+
+        std::printf("prepare_std_new_failures=%zu redo_prepare_failures=%zu publication_std_new=0 former_failure_ordinals=8 stale=1 throwing_observer=1 relative_zero=1 locked_target=1 creation_add_failures=%zu creation_remove_failures=%zu creation_commit_std_new=0\n",
+            prepareAllocations, redoAllocations, creationAllocations[0], creationAllocations[1]);
         // C++ new/new[] only. Qt/private malloc and aligned-new injection remain separate coverage limits.
         return 0;
     } catch (...) { return error(30, "unexpected exception"); }
