@@ -322,7 +322,7 @@ candidate except the explicitly proposed native-worker tags.
 | O1 | Transactional Update from legal live ellipse; no-op/refusal counts | U4 | worker batch `075038088` qualified Release/ASan; final R remains | `lc_action_offsetcurve_source_tests.cpp` |
 | O2 | Restore Original, same-container dedup, attributes and all entry points | O1 | candidate `0d3fed653`, `4a231d243` plus final fixes; audit/retest | Restore/source-UI TUs |
 | T1 | Pure bounded trim prep and exact stored-cache fragments | C-check,E1,F2 | candidate `04c712069`; audit/retest | `[lc-offsetcurve][trim-kernel]`, standalone trim fault target |
-| T2 | Trim/Trim Two, owner mapping, common prep and atomic undo | T1,U1,W2 | candidate `49bb7755f` plus final fixes; audit/integrate worker | `[lc-offsetcurve][trim-action]` |
+| T2 | Trim/Trim Two, owner mapping, common prep and atomic undo | T1,U1,W2 | candidate `49bb7755f` plus final fixes; prepared worker consumption `3e4401990` qualified; async action routing remains open | `[lc-offsetcurve][trim-action]` |
 | T3 | Plain-fragment metadata and trim/downgrade save/reopen/conversion | T2,F3,O2 | candidate `905158174`; audit/retest | `[lc-offsetcurve][trim-files]` |
 | R | Exact-source cross-feature, Release/ASan/qmake6/visible checks and delivery closeout | T3 | open; older scoped COMPLETE is not this plan's closure | all required rows, scoped receipts and exclusions |
 
@@ -1464,6 +1464,57 @@ it unchanged and prevent unpublished imports from becoming clipboard sources.
 Do not add an unrelated plugin API or use nested event loops to simulate async
 completion. Existing parser/ordinary finalization latency and bounded client
 destructor/reap behavior remain separately stated limitations, not worker success.
+
+`3e440199097bc0ce2778f08262af68d752cbe456` qualifies prepared trim consumption
+(W14), without changing the existing synchronous numeric path. The shared wrapper
+accepts only private joined completions, binds complete original request bytes,
+raw caches/cutters, picks, all14 remaining limits and the caller-validated publication
+epoch, and preserves the existing attribute/output/final-seal/atomic handoff path.
+One paired op3 serves conic Trim Two; nonconic Trim Two consumes two op2 jobs using
+the exact shared debited remainder. Missing, stale or mismatched receipts never
+cause parent-side numeric fallback. Original pre-dispatch source/context seals and
+dispatch reservation accounting still belong to the future asynchronous action.
+
+Review reproduced a moved-from completion bug: after moving geometry away, the old
+receipt could still materialize a successful empty copy series or ordinary result.
+Custom noexcept moves now revoke the old joined state. All materializers and trim
+payload consumption reject revoked owners; the moved-to owner retains the valid
+receipt. `isJoined()` reports ownership/lifetime, not a geometric certificate.
+The preserved red `W14-moved-red.xml` has five failed assertions (SHA256
+`5a507c177df3511e0f8c6d10efc5aece11036cd051970b268a1eeaf8bf3f58b1`).
+
+Release and ASan both pass the full98-case trim micro target (55 kernel +35 prior
+action +8 new prepared cases),14-case client target and standalone trim failure
+process. Trim assertions are59345/59964 and client assertions14813/17714 (R/A);
+polling counts vary with scheduling. The standalone process verifies1616 observed
+ordinary-new staging failures,20 late cancellations, four conic failures and four
+conic cancellations, plus its three unchanged-input positive controls. This is not
+an allocation sweep of the entire public C checker. ASan is `detect_leaks=0`.
+Additional retained Release passes are kernel14/2572, source preparation81/83385
+and fault7/28348. Strict XML has zero errors/failures/skips. No caps/deadlines or
+watchdogs changed. One earlier fault run hit the unchanged aggregate24000ms watchdog
+during concurrent external compilation; preserve its red receipt rather than
+relabeling it PASS. A subsequent unchanged full run passed in20.664s. A separate
+new-fixture red was corrected by actually replacing an insert-only user variable
+(delete then set); final native-seal refusal assertions were not relaxed.
+
+| W14 Artifact | SHA256 |
+|---|---|
+| `W14-qualified-client-release.xml` | `fedc3bb8e928ffb71c4f71095a5108d58eae7978276726d17726173243efe468` |
+| `W14-qualified-client-asan.xml` | `17ef6ccc1309417a8b210919d8b53e134dc8cc46cbe403565702d90cebba710c` |
+| `W14-qualified-trim-release.xml` | `ae23846a160c6ce894e4cc66672c6d4229c8f54d8b70af8f3f023879c6d5cab3` |
+| `W14-qualified-trim-asan.xml` | `9f4551046ec354b839987bf60f7629e75f2208a4796ffcc06abd20b902a33c93` |
+| `W14-trim_failure-release.log` / `W14-trim_failure-asan.log` | `4f9da7d2c23debf6b70aabf992d6eeb18499ed18f73612fbfa2ac1e83ddde5e6` (identical bytes) |
+| `W14-qualified-kernel-release.xml` | `f6460ea12a606b9dbbf1ab8dbdddae229190f041fb24113aeb8d66e4a4e5e867` |
+| `W14-qualified-source_preparation-release.xml` | `2950a0037072366fbb3e08b93dae5062cb24be31c0a2c4c7cfd99305070ae5ec` |
+| `W14-qualified-fault-release.xml` | `72f78915b67432b12afa5df76bb56d96b14b1d4c147740a5a4d712c7da80623f` |
+| `W14-fault-watchdog-red-release.xml` | `552cf9782dff93e30ad7ca6903c9a7d9967a722b24091ead891c9cc2ec74fa47` |
+| `W14-trim-fixture-red.xml` | `2e88ec54cded58890d7c92280943e271765ba4c21789ef58dbee8dcd74d29bad` |
+
+W14 does not implement asynchronous Trim action routing or close remaining creation,
+preview-cache, import, packaging, current-source full GUI/file or final R gates.
+The later user-requested upstream merge must have its own source pin and verification;
+pre-merge receipts above do not qualify a different merged tree.
 
 Remaining creation/repeat steps:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
