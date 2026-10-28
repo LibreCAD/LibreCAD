@@ -27,6 +27,8 @@
 #include "rs_modification.h"
 #include "lc_offsetcurveeditsnapshot.h"
 #include "lc_offsetcurvefinalinput.h"
+#include "../offset_worker/lc_offsetworkerclient.h"
+#include <QCborValue>
 
 #include <algorithm>
 #include <cmath>
@@ -2335,9 +2337,165 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord, RS_AtomicEntity*
     return result;
 }
 
+namespace {
+namespace storedTrim = LC_OffsetCacheTrim;
+namespace trimRequest = LC_OffsetWorkerRequest;
+
+storedTrim::Limits lowerStoredTrimLimits(storedTrim::Limits remaining) noexcept {
+    const storedTrim::Limits hard;
+#define LC_TRIM_LOWER(f) remaining.f = std::min(remaining.f, hard.f)
+    LC_TRIM_LOWER(maxSpansPerCurve); LC_TRIM_LOWER(maxInputSpans); LC_TRIM_LOWER(maxInputRecords);
+    LC_TRIM_LOWER(maxBoxPairs); LC_TRIM_LOWER(maxLeaves); LC_TRIM_LOWER(maxGeneratedItems);
+    LC_TRIM_LOWER(maxOrderingComparisons); LC_TRIM_LOWER(maxRoots); LC_TRIM_LOWER(maxDepth);
+    LC_TRIM_LOWER(maxLeafDepth); LC_TRIM_LOWER(maxFragments); LC_TRIM_LOWER(maxOutputSpans);
+    LC_TRIM_LOWER(maxOutputControls); LC_TRIM_LOWER(maxOutputKnots);
+#undef LC_TRIM_LOWER
+    return remaining;
+}
+
+bool debitStoredTrimWork(storedTrim::Limits& remaining, storedTrim::Work& total,
+                         const storedTrim::Work& work) noexcept {
+#define LC_TRIM_DEBIT(f, amount) if ((amount) > remaining.f) return false; remaining.f -= (amount)
+    LC_TRIM_DEBIT(maxInputSpans, work.inputSpans); LC_TRIM_DEBIT(maxInputRecords, work.inputRecords);
+    LC_TRIM_DEBIT(maxRoots, work.rootRecords); LC_TRIM_DEBIT(maxBoxPairs, work.intersections.totalBoxPairs);
+    LC_TRIM_DEBIT(maxLeaves, work.intersections.generatedLeaves);
+    LC_TRIM_DEBIT(maxGeneratedItems, work.kernelItems + work.intersections.generatedItems);
+    LC_TRIM_DEBIT(maxOrderingComparisons, work.kernelComparisons + work.intersections.orderingComparisons);
+    LC_TRIM_DEBIT(maxOutputSpans, work.outputSpans); LC_TRIM_DEBIT(maxOutputControls, work.outputControls);
+    LC_TRIM_DEBIT(maxOutputKnots, work.outputKnots);
+#undef LC_TRIM_DEBIT
+#define LC_TRIM_SUM(f) total.f += work.f
+    LC_TRIM_SUM(inputSpans); LC_TRIM_SUM(inputRecords); LC_TRIM_SUM(rootRecords); LC_TRIM_SUM(kernelItems);
+    LC_TRIM_SUM(kernelComparisons); LC_TRIM_SUM(outputSpans); LC_TRIM_SUM(outputControls); LC_TRIM_SUM(outputKnots);
+#undef LC_TRIM_SUM
+    auto& s = total.intersections; const auto& d = work.intersections;
+#define LC_TRIM_SUM(f) s.f += d.f
+    LC_TRIM_SUM(candidateBoxPairs); LC_TRIM_SUM(refinementBoxPairs); LC_TRIM_SUM(certificateBoxPairs);
+    LC_TRIM_SUM(totalBoxPairs); LC_TRIM_SUM(generatedLeaves); LC_TRIM_SUM(generatedItems);
+    LC_TRIM_SUM(orderingComparisons); LC_TRIM_SUM(validationSegmentVisits); LC_TRIM_SUM(validationNextCalls);
+#undef LC_TRIM_SUM
+#define LC_TRIM_MAX(f) s.f = std::max(s.f, d.f)
+    LC_TRIM_MAX(deepestPreparation); LC_TRIM_MAX(deepestPairRefinement);
+    LC_TRIM_MAX(deepestOrderingRefinement); LC_TRIM_MAX(deepestRootRefinement);
+#undef LC_TRIM_MAX
+    return true;
+}
+
+bool sameStoredTrimLimits(const storedTrim::Limits& a, const storedTrim::Limits& b) noexcept {
+#define LC_TRIM_FIELDS(v) std::tie(v.maxSpansPerCurve, v.maxInputSpans, v.maxInputRecords, \
+    v.maxBoxPairs, v.maxLeaves, v.maxGeneratedItems, v.maxOrderingComparisons, v.maxRoots, \
+    v.maxDepth, v.maxLeafDepth, v.maxFragments, v.maxOutputSpans, v.maxOutputControls, v.maxOutputKnots)
+    return LC_TRIM_FIELDS(a) == LC_TRIM_FIELDS(b);
+#undef LC_TRIM_FIELDS
+}
+
+const storedTrim::Result* storedTrimPayload(const LC_OffsetWorkerCompletion& completion) noexcept {
+    if (!completion.isJoined()) return nullptr;
+    const auto& request = completion.request(); const auto& reply = completion.reply();
+    const auto& a = request.token; const auto& b = reply.token;
+    if ((request.operation.index() != 2 && request.operation.index() != 3) ||
+        reply.operation != request.operation.index() || reply.failure != LC_OffsetWorkerResult::Failure::None ||
+        std::tie(a.requestId, a.generation, a.sourceRevision, a.undoEpoch) !=
+            std::tie(b.requestId, b.generation, b.sourceRevision, b.undoEpoch)) return nullptr;
+    return std::get_if<storedTrim::Result>(&reply.result);
+}
+
+bool sameStoredTrimValue(const std::optional<QCborArray>& a, const std::optional<QCborArray>& b) {
+    // Compare the complete admitted typed value, including latent fields and
+    // signed zero, rather than a lossy geometry fingerprint or CBOR numeric equality.
+    return a && b && QCborValue(*a).toCbor() == QCborValue(*b).toCbor();
+}
+
+std::optional<trimRequest::Cutter> storedTrimCutter(const RS_Entity& source) {
+    if (const auto* line = dynamic_cast<const RS_Line*>(&source))
+        return trimRequest::Cutter{trimRequest::Segment{line->getStartpoint(), line->getEndpoint()}};
+    if (const auto* arc = dynamic_cast<const RS_Arc*>(&source)) return trimRequest::Cutter{arc->getData()};
+    if (const auto* circle = dynamic_cast<const RS_Circle*>(&source)) return trimRequest::Cutter{circle->getData()};
+    if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&source)) return trimRequest::Cutter{ellipse->getData()};
+    if (const auto* spline = dynamic_cast<const RS_Spline*>(&source)) {
+        // The one-sided ordinary limit was not replacement-admitted. Bound its
+        // raw arrays before copying, just as the kernel does on the sync path.
+        if (!trimRequest::Values::encodeCache(spline->getData())) return std::nullopt;
+        return trimRequest::Cutter{spline->getData()};
+    }
+    return std::nullopt;
+}
+
+const storedTrim::Result* matchedStoredTrim(const trimRequest::Request& retained,
+                                            const LC_OffsetWorkerCompletion& completion) {
+    const auto* result = storedTrimPayload(completion);
+    if (!result || retained.operation.index() != completion.request().operation.index() ||
+        !sameStoredTrimValue(trimRequest::encode(retained), trimRequest::encode(completion.request()))) return nullptr;
+    return result;
+}
+
+std::optional<storedTrim::Result> consumeStoredTrimCache(const trimRequest::Request& retained,
+    const LC_OffsetWorkerCompletion& completion, const RS_SplineData& cache, const RS_Entity& cutter,
+    const storedTrim::Pick& pick, const storedTrim::Limits& remaining) {
+    const auto* result = matchedStoredTrim(retained, completion);
+    const auto* request = std::get_if<trimRequest::TrimCache>(&completion.request().operation);
+    if (!result || !request || !sameStoredTrimLimits(request->limits, remaining) ||
+        !sameStoredTrimValue(trimRequest::Values::encodeCache(cache),
+            trimRequest::Values::encodeCache(request->cache)) ||
+        !sameStoredTrimValue(trimRequest::Values::encodePick(pick),
+            trimRequest::Values::encodePick(request->pick))) return std::nullopt;
+    const auto value = storedTrimCutter(cutter);
+    if (!value || !sameStoredTrimValue(trimRequest::Values::encodeCutter(*value),
+        trimRequest::Values::encodeCutter(request->cutter))) return std::nullopt;
+    return *result;
+}
+
+std::optional<storedTrim::Result> consumeStoredTrimConic(const trimRequest::Request& retained,
+    const LC_OffsetWorkerCompletion& completion, const RS_SplineData& cache, const RS_Entity& conic,
+    const storedTrim::Pick& conicPick, const std::optional<storedTrim::Pick>& cachePick,
+    const storedTrim::Limits& remaining) {
+    const auto* result = matchedStoredTrim(retained, completion);
+    const auto* request = std::get_if<trimRequest::TrimConic>(&completion.request().operation);
+    if (!result || !request || !sameStoredTrimLimits(request->limits, remaining) ||
+        !sameStoredTrimValue(trimRequest::Values::encodeCache(cache),
+            trimRequest::Values::encodeCache(request->cache)) ||
+        !sameStoredTrimValue(trimRequest::Values::encodePick(conicPick),
+            trimRequest::Values::encodePick(request->conicPick)) ||
+        cachePick.has_value() != request->cachePick.has_value() ||
+        (cachePick && !sameStoredTrimValue(trimRequest::Values::encodePick(*cachePick),
+            trimRequest::Values::encodePick(*request->cachePick)))) return std::nullopt;
+    const auto value = storedTrimCutter(conic);
+    if (!value || !sameStoredTrimValue(trimRequest::Values::encodeCutter(*value),
+        trimRequest::Values::encodeCutter(request->conic))) return std::nullopt;
+    return *result;
+}
+} // namespace
+
+std::optional<LC_OffsetCacheTrim::Limits> RS_Modification::storedCacheTrimRemainingLimits(
+    const LC_OffsetCacheTrim::Limits& limits, const LC_OffsetWorkerCompletion* previous) noexcept {
+    auto remaining = lowerStoredTrimLimits(limits);
+    if (!previous) return remaining;
+    const auto* request = std::get_if<trimRequest::TrimCache>(&previous->request().operation);
+    const auto* result = storedTrimPayload(*previous);
+    if (!request || !result || result->refusal != storedTrim::Refusal::None ||
+        !sameStoredTrimLimits(request->limits, remaining)) return std::nullopt;
+    storedTrim::Work ignored;
+    if (!debitStoredTrimWork(remaining, ignored, result->work)) return std::nullopt;
+    return remaining;
+}
+
 LC_TrimResult RS_Modification::trimStoredCache(RS_Document& document, RS_Entity& target,
     const RS_Vector& targetPick, RS_Entity& cutter, const RS_Vector& cutterPick, const bool both,
     LC_DocumentModificationBatch& ctx, const LC_StoredCacheTrimOptions& options) {
+    return trimStoredCacheImpl(document, target, targetPick, cutter, cutterPick, both, ctx, options, nullptr);
+}
+
+LC_TrimResult RS_Modification::trimStoredCachePrepared(RS_Document& document, RS_Entity& target,
+    const RS_Vector& targetPick, RS_Entity& cutter, const RS_Vector& cutterPick, const bool both,
+    LC_DocumentModificationBatch& ctx, const LC_StoredCacheTrimCompletions& completed,
+    const LC_StoredCacheTrimOptions& options) {
+    return trimStoredCacheImpl(document, target, targetPick, cutter, cutterPick, both, ctx, options, &completed);
+}
+
+LC_TrimResult RS_Modification::trimStoredCacheImpl(RS_Document& document, RS_Entity& target,
+    const RS_Vector& targetPick, RS_Entity& cutter, const RS_Vector& cutterPick, const bool both,
+    LC_DocumentModificationBatch& ctx, const LC_StoredCacheTrimOptions& options,
+    const LC_StoredCacheTrimCompletions* completed) {
     namespace trim = LC_OffsetCacheTrim;
     LC_TrimResult result;
     result.cacheRefusal = trim::Refusal::InvalidInput;
@@ -2400,6 +2558,22 @@ LC_TrimResult RS_Modification::trimStoredCache(RS_Document& document, RS_Entity&
     };
     try {
         if (checkCancel()) return refuse(trim::Refusal::Cancelled);
+        if (completed) {
+            if (completed->publicationUndoEpoch != admittedUndoEpoch ||
+                bool(completed->secondRequest) != bool(completed->second) ||
+                !trimRequest::admitted(completed->firstRequest)) return refuse(trim::Refusal::InvalidInput);
+            const auto& first = completed->firstRequest.token;
+            const auto submittedEpoch = static_cast<std::uint64_t>(first.undoEpoch);
+            if (admittedUndoEpoch != submittedEpoch && admittedUndoEpoch != submittedEpoch + 1)
+                return refuse(trim::Refusal::InvalidInput);
+            if (completed->secondRequest) {
+                const auto& second = completed->secondRequest->token;
+                if (second.requestId <= first.requestId ||
+                    std::tie(second.generation, second.sourceRevision, second.undoEpoch) !=
+                        std::tie(first.generation, first.sourceRevision, first.undoEpoch))
+                    return refuse(trim::Refusal::InvalidInput);
+            }
+        }
         if (&target == &cutter || !outputCap || !displayCap || document.size() > memberCap ||
             ctx.entitiesToAdd.size() > qsizetype(memberCap) || ctx.entitiesToDelete.size() > qsizetype(memberCap))
             return refuse(trim::Refusal::LimitExceeded);
@@ -2463,44 +2637,14 @@ LC_TrimResult RS_Modification::trimStoredCache(RS_Document& document, RS_Entity&
             if (!parsed.remaining) return refuse(trim::Refusal::LimitExceeded);
             foreign[i] = std::move(*parsed.remaining); stamps[i] = stamp(*sources[i]);
         }
-        trim::Limits remaining = options.kernel;
-        const trim::Limits hard;
-#define LC_TRIM_LOWER(f) remaining.f = std::min(remaining.f, hard.f)
-        LC_TRIM_LOWER(maxSpansPerCurve); LC_TRIM_LOWER(maxInputSpans); LC_TRIM_LOWER(maxInputRecords);
-        LC_TRIM_LOWER(maxBoxPairs); LC_TRIM_LOWER(maxLeaves); LC_TRIM_LOWER(maxGeneratedItems);
-        LC_TRIM_LOWER(maxOrderingComparisons); LC_TRIM_LOWER(maxRoots); LC_TRIM_LOWER(maxDepth);
-        LC_TRIM_LOWER(maxLeafDepth); LC_TRIM_LOWER(maxFragments); LC_TRIM_LOWER(maxOutputSpans);
-        LC_TRIM_LOWER(maxOutputControls); LC_TRIM_LOWER(maxOutputKnots);
-#undef LC_TRIM_LOWER
+        auto remaining = lowerStoredTrimLimits(options.kernel);
         const auto debit = [&](const trim::Work& work) {
-#define LC_TRIM_DEBIT(f, amount) if ((amount) > remaining.f) return false; remaining.f -= (amount)
-            LC_TRIM_DEBIT(maxInputSpans, work.inputSpans); LC_TRIM_DEBIT(maxInputRecords, work.inputRecords);
-            LC_TRIM_DEBIT(maxRoots, work.rootRecords); LC_TRIM_DEBIT(maxBoxPairs, work.intersections.totalBoxPairs);
-            LC_TRIM_DEBIT(maxLeaves, work.intersections.generatedLeaves);
-            LC_TRIM_DEBIT(maxGeneratedItems, work.kernelItems + work.intersections.generatedItems);
-            LC_TRIM_DEBIT(maxOrderingComparisons, work.kernelComparisons + work.intersections.orderingComparisons);
-            LC_TRIM_DEBIT(maxOutputSpans, work.outputSpans); LC_TRIM_DEBIT(maxOutputControls, work.outputControls);
-            LC_TRIM_DEBIT(maxOutputKnots, work.outputKnots);
-#undef LC_TRIM_DEBIT
-            auto& total = result.cacheWork;
-#define LC_TRIM_SUM(f) total.f += work.f
-            LC_TRIM_SUM(inputSpans); LC_TRIM_SUM(inputRecords); LC_TRIM_SUM(rootRecords); LC_TRIM_SUM(kernelItems);
-            LC_TRIM_SUM(kernelComparisons); LC_TRIM_SUM(outputSpans); LC_TRIM_SUM(outputControls); LC_TRIM_SUM(outputKnots);
-#undef LC_TRIM_SUM
-            auto& s = total.intersections; const auto& d = work.intersections;
-#define LC_TRIM_SUM(f) s.f += d.f
-            LC_TRIM_SUM(candidateBoxPairs); LC_TRIM_SUM(refinementBoxPairs); LC_TRIM_SUM(certificateBoxPairs);
-            LC_TRIM_SUM(totalBoxPairs); LC_TRIM_SUM(generatedLeaves); LC_TRIM_SUM(generatedItems);
-            LC_TRIM_SUM(orderingComparisons); LC_TRIM_SUM(validationSegmentVisits); LC_TRIM_SUM(validationNextCalls);
-#undef LC_TRIM_SUM
-#define LC_TRIM_MAX(f) s.f = std::max(s.f, d.f)
-            LC_TRIM_MAX(deepestPreparation); LC_TRIM_MAX(deepestPairRefinement);
-            LC_TRIM_MAX(deepestOrderingRefinement); LC_TRIM_MAX(deepestRootRefinement);
-#undef LC_TRIM_MAX
-            return true;
+            return debitStoredTrimWork(remaining, result.cacheWork, work);
         };
         std::array<trim::Result, 2> prepared;
         const bool conicReplacement = conic(&target) || (both && conic(&cutter));
+        if (completed && completed->second && (conicReplacement || !both))
+            return refuse(trim::Refusal::InvalidInput);
         if (conicReplacement) {
             const std::size_t ci = conic(&target) ? 0 : 1, ni = 1 - ci;
             const auto* cache = ci == 0 ? nativeB : nativeA;
@@ -2508,7 +2652,13 @@ LC_TrimResult RS_Modification::trimStoredCache(RS_Document& document, RS_Entity&
             const trim::Pick cp{ci == 0 ? targetPick : cutterPick};
             std::optional<trim::Pick> np;
             if (both) np = trim::Pick{ni == 0 ? targetPick : cutterPick};
-            auto pair = trim::prepareConic(cache->getData(), *sources[ci], cp, np, remaining, options.cancellation);
+            trim::Result pair;
+            if (completed) {
+                auto received = consumeStoredTrimConic(completed->firstRequest, completed->first,
+                    cache->getData(), *sources[ci], cp, np, remaining);
+                if (!received) return refuse(trim::Refusal::InvalidInput);
+                pair = std::move(*received);
+            } else pair = trim::prepareConic(cache->getData(), *sources[ci], cp, np, remaining, options.cancellation);
             if (!debit(pair.work)) return refuse(trim::Refusal::LimitExceeded);
             if (pair.refusal != trim::Refusal::None) return refuse(pair.refusal);
             if (pair.conicFragments.empty() || (both && pair.fragments.empty())) return refuse(trim::Refusal::Arithmetic);
@@ -2524,7 +2674,16 @@ LC_TrimResult RS_Modification::trimStoredCache(RS_Document& document, RS_Entity&
                     line.controlPoints = {sources[i]->getStartpoint(), sources[i]->getEndpoint()};
                     line.knotslist = {0, 0, 1, 1}; line.weights = {1, 1}; raw = &line;
                 }
-                prepared[i] = trim::prepare(*raw, i == 0 ? cutter : target, {i == 0 ? targetPick : cutterPick}, remaining, options.cancellation);
+                if (completed) {
+                    const auto* retained = i == 0 ? &completed->firstRequest : completed->secondRequest;
+                    const auto* receipt = i == 0 ? &completed->first : completed->second;
+                    if (!retained || !receipt) return refuse(trim::Refusal::InvalidInput);
+                    auto received = consumeStoredTrimCache(*retained, *receipt, *raw,
+                        i == 0 ? cutter : target, {i == 0 ? targetPick : cutterPick}, remaining);
+                    if (!received) return refuse(trim::Refusal::InvalidInput);
+                    prepared[i] = std::move(*received);
+                } else prepared[i] = trim::prepare(*raw, i == 0 ? cutter : target,
+                    {i == 0 ? targetPick : cutterPick}, remaining, options.cancellation);
                 if (!debit(prepared[i].work)) return refuse(trim::Refusal::LimitExceeded);
                 if (prepared[i].refusal != trim::Refusal::None) return refuse(prepared[i].refusal);
                 if (prepared[i].fragments.empty()) return refuse(trim::Refusal::Arithmetic);

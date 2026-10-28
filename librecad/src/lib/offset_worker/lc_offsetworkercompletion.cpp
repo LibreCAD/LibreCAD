@@ -8,11 +8,25 @@
 #include "rs_line.h"
 
 #include <algorithm>
+#include <utility>
 
 LC_OffsetWorkerCompletion::LC_OffsetWorkerCompletion(LC_OffsetWorkerRequest::Request&& request,
     LC_OffsetWorkerResult::Reply&& reply) : m_request(std::move(request)), m_reply(std::move(reply)) {}
 
+LC_OffsetWorkerCompletion::LC_OffsetWorkerCompletion(LC_OffsetWorkerCompletion&& other) noexcept
+    : m_request(std::move(other.m_request)), m_reply(std::move(other.m_reply)),
+      m_joined(std::exchange(other.m_joined, false)) {}
+
+LC_OffsetWorkerCompletion& LC_OffsetWorkerCompletion::operator=(LC_OffsetWorkerCompletion&& other) noexcept {
+    if (this != &other) {
+        m_request = std::move(other.m_request); m_reply = std::move(other.m_reply);
+        m_joined = std::exchange(other.m_joined, false);
+    }
+    return *this;
+}
+
 std::unique_ptr<LC_OffsetCurve> LC_OffsetWorkerCompletion::native(const RS_Entity& attributes) const {
+    if (!m_joined) return {};
     const auto* result = std::get_if<LC_OffsetWorkerResult::Native>(&m_reply.result);
     if (!result || !*result || !result->curve) return {};
     const auto& c = *result->curve;
@@ -30,6 +44,7 @@ std::unique_ptr<LC_OffsetCurve> LC_OffsetWorkerCompletion::native(const RS_Entit
 
 std::optional<std::vector<std::unique_ptr<RS_Entity>>>
 LC_OffsetWorkerCompletion::ordinary(const RS_Entity& attributes) const {
+    if (!m_joined) return std::nullopt;
     const auto* result = std::get_if<LC_OffsetWorkerResult::Native>(&m_reply.result);
     const auto* generate = std::get_if<LC_OffsetWorkerRequest::Generate>(&m_request.operation);
     if (!generate || generate->throughPoint || !result ||
@@ -78,6 +93,7 @@ LC_OffsetWorkerCompletion::ordinary(const RS_Entity& attributes) const {
 
 std::optional<LC_OffsetWorkerCompletion::PreparedSource>
 LC_OffsetWorkerCompletion::produced(const RS_Entity& attributes) const {
+    if (!m_joined) return std::nullopt;
     const auto* result = std::get_if<LC_OffsetWorkerResult::Produced>(&m_reply.result);
     const auto* input = std::get_if<LC_OffsetWorkerRequest::Produce>(&m_request.operation);
     if (!input || !result || result->outputStatus == LC_OffsetWorkerResult::OrdinaryStatus::Unsupported)
@@ -154,6 +170,7 @@ LC_OffsetWorkerCompletion::produced(const RS_Entity& attributes) const {
 }
 
 LC_OffsetCurveEditResult LC_OffsetWorkerCompletion::apply(LC_OffsetCurve& clone) const {
+    if (!m_joined) return {};
     const auto* result = std::get_if<LC_OffsetWorkerResult::Native>(&m_reply.result);
     if (!result) return {};
     auto outcome = static_cast<const LC_OffsetCurveEditResult&>(*result);

@@ -583,6 +583,42 @@ TEST_CASE("Worker Produce typed refusals materialize no prefix and cannot create
     CHECK_FALSE(completion.native(source)); CHECK_FALSE(completion.ordinary(source));
 }
 
+TEST_CASE("Moved worker completions cannot materialize vacated successful receipts", Tags) {
+    auto& rt = runtime(); OwnedClient owned{rt}; Receipts receipts;
+    RS_Ellipse attributes{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
+    Req::Produce op; op.source = attributes.getData(); op.minimum = attributes.getMin(); op.maximum = attributes.getMax();
+    op.context.topLevel = true; op.coordinate = {3, 2}; op.distance = .25;
+    op.copies = 2; op.asOffsetCurve = true;
+    REQUIRE(owned.get().submit({token(1), op}, Client::Mode::Commit, receipts.into(0)));
+    rt.until([&] { return receipts.calls[0] != 0; });
+    const auto& original = completed(receipts.at(0), 1, 5);
+    CHECK(original.isJoined());
+    REQUIRE(original.produced(attributes));
+    Completion moved{std::move(*receipts.outcomes[0]->completed)};
+    CHECK_FALSE(original.isJoined()); CHECK(moved.isJoined());
+    const auto stale = original.produced(attributes);
+    CHECK_FALSE(stale.has_value());
+    if (stale) { CHECK_FALSE(stale->outcome.succeeded()); CHECK_FALSE(stale->outcome.complete()); }
+    auto valid = moved.produced(attributes); REQUIRE(valid); REQUIRE(valid->outcome.complete());
+    REQUIRE(valid->entities.size() == 2);
+
+    auto ordinary = generate(2); std::get<Req::Generate>(ordinary.operation).limits.checkLimits.maxVertices = 1;
+    REQUIRE(owned.get().submit(ordinary, Client::Mode::Commit, receipts.into(1)));
+    rt.until([&] { return receipts.calls[1] != 0; });
+    const auto& source = completed(receipts.at(1), 2, 0);
+    const auto before = source.ordinary(attributes); REQUIRE(before); REQUIRE_FALSE(before->empty());
+    Completion transferred{std::move(*receipts.outcomes[1]->completed)};
+    CHECK_FALSE(source.isJoined()); CHECK(transferred.isJoined());
+    CHECK_FALSE(source.ordinary(attributes));
+    CHECK_FALSE(source.native(attributes)); CHECK_FALSE(source.produced(attributes));
+    CHECK_FALSE(transferred.produced(attributes));
+    const auto retained = transferred.ordinary(attributes); REQUIRE(retained); CHECK(retained->size() == before->size());
+    moved = std::move(transferred);
+    CHECK(moved.isJoined()); CHECK_FALSE(transferred.isJoined());
+    CHECK_FALSE(transferred.ordinary(attributes)); CHECK_FALSE(transferred.produced(attributes));
+    REQUIRE(moved.ordinary(attributes));
+}
+
 TEST_CASE("Worker membership receipts acknowledge only their unchanged raw native cache", Tags) {
     auto& rt = runtime(); Receipts receipts; OwnedClient owned(rt);
     REQUIRE(owned.get().submit(validate(1), Client::Mode::Commit, receipts.into(0)));

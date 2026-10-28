@@ -29,6 +29,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <cstdint>
 #include <map>
 #include <memory>
 #include <optional>
@@ -60,6 +61,8 @@ class RS_Document;
 class RS_Graphic;
 class RS_GraphicView;
 class LC_GraphicViewport;
+class LC_OffsetWorkerCompletion;
+namespace LC_OffsetWorkerRequest { struct Request; }
 class LC_SelectedSet;
 class LC_UndoSection;
 struct LC_DocumentModificationBatch;
@@ -420,6 +423,22 @@ struct LC_StoredCacheTrimOptions {
     std::size_t maxDisplayEntities = kDefaultOffsetDeepEntitiesPerSource;
 };
 
+/** Synchronous borrow for consuming already joined helper jobs, never stored.
+ * Retain the original submitted requests and their owning Completion values.
+ * The caller must first validate its captured document/source/view/action seal,
+ * including whether publicationUndoEpoch is unchanged or its own one-cycle
+ * increment. This record cannot authorize a document or an external undo.
+ * One op3 result serves a conic Trim Two; nonconic Trim Two consumes op2 twice
+ * in source order, the second request using the exact debited remainder.
+ */
+struct LC_StoredCacheTrimCompletions {
+    const LC_OffsetWorkerRequest::Request& firstRequest;
+    const LC_OffsetWorkerCompletion& first;
+    const LC_OffsetWorkerRequest::Request* secondRequest = nullptr;
+    const LC_OffsetWorkerCompletion* second = nullptr;
+    std::uint64_t publicationUndoEpoch = 0;
+};
+
 struct LC_BevelResult {
     RS_Vector intersectionPoint = RS_Vector(false);
     RS_Line* bevel = nullptr;
@@ -565,6 +584,22 @@ public:
         RS_Entity& cutter, const RS_Vector& cutterPick, bool both, LC_DocumentModificationBatch& ctx,
         const LC_StoredCacheTrimOptions& options = {});
 
+    /** Same admissions, attributes and final atomic handoff as trimStoredCache;
+     * never calls the numeric kernel, including on missing/mismatched receipts.
+     * Public decoded wire Result values are deliberately not accepted.
+     */
+    static LC_TrimResult trimStoredCachePrepared(RS_Document& document, RS_Entity& target,
+        const RS_Vector& targetPick, RS_Entity& cutter, const RS_Vector& cutterPick, bool both,
+        LC_DocumentModificationBatch& ctx, const LC_StoredCacheTrimCompletions& completed,
+        const LC_StoredCacheTrimOptions& options = {});
+
+    /** Initial lowered limits, or the exact remainder after a successful op2.
+     * Numeric diagnostics only: this grants no publication or geometry authority.
+     * A failed/fatal/timed-out job cannot supply a remainder for a second job.
+     */
+    static std::optional<LC_OffsetCacheTrim::Limits> storedCacheTrimRemainingLimits(
+        const LC_OffsetCacheTrim::Limits& limits, const LC_OffsetWorkerCompletion* previous = nullptr) noexcept;
+
     static RS_Entity* trimAmount(const RS_Vector& trimCoord, RS_AtomicEntity* entityToTrim, double dist, bool trimBoth, bool& trimStart,
                                  bool& trimEnd, LC_DocumentModificationBatch& ctx);
 
@@ -641,6 +676,10 @@ public:
                          LC_DocumentModificationBatch& ctx);
 
 private:
+    static LC_TrimResult trimStoredCacheImpl(RS_Document& document, RS_Entity& target,
+        const RS_Vector& targetPick, RS_Entity& cutter, const RS_Vector& cutterPick, bool both,
+        LC_DocumentModificationBatch& ctx, const LC_StoredCacheTrimOptions& options,
+        const LC_StoredCacheTrimCompletions* completed);
     static bool trimAtomicByEnding(RS_AtomicEntity* atomicToTrim, const RS_Vector& trimPoint, RS2::Ending ending);
     static bool doExplodeTextIntoLetters(const RS_MText* text, LC_DocumentModificationBatch& ctx);
     static bool doExplodeTextIntoLetters(RS_Text* text, LC_DocumentModificationBatch& ctx);

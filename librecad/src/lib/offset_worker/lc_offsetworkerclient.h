@@ -24,12 +24,14 @@ class LC_OffsetWorkerClientTestAccess;
  */
 class LC_OffsetWorkerCompletion final {
 public:
-    LC_OffsetWorkerCompletion(LC_OffsetWorkerCompletion&&) noexcept = default;
-    LC_OffsetWorkerCompletion& operator=(LC_OffsetWorkerCompletion&&) noexcept = default;
+    LC_OffsetWorkerCompletion(LC_OffsetWorkerCompletion&&) noexcept;
+    LC_OffsetWorkerCompletion& operator=(LC_OffsetWorkerCompletion&&) noexcept;
     LC_OffsetWorkerCompletion(const LC_OffsetWorkerCompletion&) = delete;
     LC_OffsetWorkerCompletion& operator=(const LC_OffsetWorkerCompletion&) = delete;
     const LC_OffsetWorkerRequest::Request& request() const noexcept { return m_request; }
     const LC_OffsetWorkerResult::Reply& reply() const noexcept { return m_reply; }
+    /** Ownership/lifetime only, not a public geometric certificate. */
+    bool isJoined() const noexcept { return m_joined; }
     /** No generation/C/grip proof is repeated in the parent. Attributes stay local. */
     std::unique_ptr<LC_OffsetCurve> native(const RS_Entity& attributes) const;
     /** Complete ordinary output, including an intentional empty result, or no
@@ -55,6 +57,7 @@ private:
     LC_OffsetWorkerCompletion(LC_OffsetWorkerRequest::Request&&, LC_OffsetWorkerResult::Reply&&);
     LC_OffsetWorkerRequest::Request m_request;
     LC_OffsetWorkerResult::Reply m_reply;
+    bool m_joined = true;
 };
 
 /** Per editing context: one active child and one replaceable queued request.
