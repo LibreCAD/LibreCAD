@@ -409,7 +409,9 @@ void RS_ActionDefault::dispatchOffsetMouse(QMouseEvent* event, int kind) {
     // Event conversion calls snapPoint before onMouseMoveEvent can begin the gesture.
     // Recognize a native grip from the stored press before crossing that dispatch boundary.
     const bool native = m_actionData->offsetGrip.has_value() || (kind == 0 && hasPendingOffsetGrip());
-    if (native &&
+    // A viewport redraw can retire the grip before the next mouse event. Keep
+    // guarding that cancelled gesture until its matching release is consumed.
+    if ((native || m_actionData->ignoreOffsetRelease) &&
         (!std::isfinite(event->position().x()) || !std::isfinite(event->position().y()) ||
          event->position().x() < std::numeric_limits<int>::min() || event->position().x() > std::numeric_limits<int>::max() ||
          event->position().y() < std::numeric_limits<int>::min() || event->position().y() > std::numeric_limits<int>::max() ||

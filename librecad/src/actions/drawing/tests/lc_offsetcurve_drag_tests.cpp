@@ -1007,9 +1007,13 @@ TEST_CASE("H drag thrown staging preparation unwinds its clone cursor and previe
 TEST_CASE("H drag nonfinite or unrepresentable viewport input cancels before the snapper",
           "[gui][lc-offsetcurve][h-drag][invalid]") {
     Fixture f; const bool viewport = GENERATE(false, true); const State before{*f.source, f.graphic}; f.begin();
+    CAPTURE(viewport);
     if (viewport) {
         f.view.getViewPort()->setOffsetAndFactor(100, 240, 0);
+        // The viewport redraw cancels the grip before this invalid-factor move.
+        f.clean(); before.unchanged(f.graphic);
         f.mouse(QEvent::MouseMove, {1.5, 0});
+        f.clean(); before.unchanged(f.graphic);
         f.view.getViewPort()->setOffsetAndFactor(100, 240, 128);
     } else {
         const QPointF huge(std::numeric_limits<double>::max(), 1);
@@ -1017,6 +1021,11 @@ TEST_CASE("H drag nonfinite or unrepresentable viewport input cancels before the
         f.action->mouseMoveEvent(&event);
     }
     f.clean(); CHECK(f.action->lastOffsetGripResult() == nullptr); before.unchanged(f.graphic);
+    f.mouse(QEvent::MouseButtonRelease, {1.5, 0});
+    f.clean(); before.unchanged(f.graphic);
+    f.begin();
+    f.mouse(QEvent::MouseButtonPress, {1.5, 0}, Qt::RightButton);
+    f.clean(); before.unchanged(f.graphic);
 }
 
 TEST_CASE("H drag ordinary spline control points still use the established default action",
