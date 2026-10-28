@@ -36,11 +36,13 @@
 
 #include <QApplication>
 #include <QCheckBox>
+#include <QComboBox>
 #include <QDateTime>
 #include <QFile>
 #include <QFileInfo>
 #include <QGridLayout>
 #include <QTemporaryDir>
+#include <QTranslator>
 
 #include "jwwdoc.h"
 #include "lc_actiontestsupport.h"
@@ -1020,6 +1022,7 @@ TEST_CASE("Backup visibility can retain legacy names and custom affixes", "[docu
     QTemporaryDir dir;
     TestStorage storage;
     SettingGuard prefix{RS_SETTINGS, "Defaults", "AutosaveFilePrefix"};
+    SettingGuard suffix{RS_SETTINGS, "Defaults", "BackupFileSuffix"};
     SettingGuard hidden{RS_SETTINGS, "Defaults", "HideBackupFiles"};
     const QString path = dir.filePath("drawing space.dxf");
     writeDxf(path);
@@ -1072,6 +1075,21 @@ TEST_CASE("Backup visibility can retain legacy names and custom affixes", "[docu
         CHECK_FALSE(storage.backupDrawingFile(path, QString()));
         CHECK(contents(path) == original);
     }
+    SECTION("an empty stored backup suffix still disables backups") {
+        suffix.set(QString());
+        CHECK_FALSE(storage.backupDrawingFile(path));
+        CHECK(contents(path) == original);
+    }
+    SECTION("valid custom Unicode affixes are retained") {
+        const QString customPrefix = QStringLiteral("\u81ea\u52d5_");
+        const QString customSuffix = QStringLiteral("_\u526f\u672c");
+        prefix.set(customPrefix);
+        suffix.set(customSuffix);
+        CHECK(storage.createAutoSaveFileName(QFileInfo(path)) == dir.filePath(customPrefix + QFileInfo(path).fileName()));
+        REQUIRE(storage.backupDrawingFile(path));
+        CHECK(contents(path + customSuffix) == original);
+        CHECK(contents(path) == original);
+    }
 }
 
 TEST_CASE("Backup visibility preference defaults to hidden and reflects stored settings", "[documentsstorage][backup-visibility]") {
@@ -1104,6 +1122,83 @@ TEST_CASE("Backup visibility preference defaults to hidden and reflects stored s
     const auto* visibleCheckbox = reopened.findChild<QCheckBox*>("cbHideBackupFiles");
     REQUIRE(visibleCheckbox != nullptr);
     CHECK_FALSE(visibleCheckbox->isChecked());
+}
+
+TEST_CASE("Backup filename affixes stay literal in translated preferences", "[documentsstorage][autosave][translation][3150]") {
+    (void)lc::test::application();
+    TestStorage storage;
+    const QStringList prefixes{"#", "~", "_", "__", "lcauto_", "autosaved_"};
+    const QStringList suffixes{"~", "$$", "_", "_backup", "_bak", ".bak", ".backup", ".lcb"};
+    for (const auto* locale : {"zh_cn", "zh_tw"}) {
+        INFO(locale);
+        QTranslator translator;
+        REQUIRE(translator.load("librecad_" + QString::fromLatin1(locale) + ".qm",
+                                QStringLiteral(LIBRECAD_TEST_TRANSLATION_DIR)));
+        REQUIRE(QApplication::installTranslator(&translator));
+        QG_DlgOptionsGeneral preferences;
+        for (const auto* combo : {preferences.cbAutoSaveFileNamePrefix, preferences.cbBackupFileSuffix}) {
+            const auto& expected = combo == preferences.cbAutoSaveFileNamePrefix ? prefixes : suffixes;
+            REQUIRE(combo->count() == expected.size());
+            for (int i = 0; i < combo->count(); ++i) {
+                CHECK(combo->itemText(i) == expected.at(i));
+            }
+        }
+        CHECK(preferences.cbAutoSaveFileNamePrefix->currentText() == "#");
+        CHECK(preferences.cbBackupFileSuffix->currentText() == "~");
+    }
+}
+
+TEST_CASE("Invalid stored affixes recover without opening preferences", "[documentsstorage][autosave][3150]") {
+    ensureApp();
+    TestStorage storage;
+    SettingGuard prefix{RS_SETTINGS, "Defaults", "AutosaveFilePrefix"};
+    SettingGuard suffix{RS_SETTINGS, "Defaults", "BackupFileSuffix"};
+    SettingGuard hidden{RS_SETTINGS, "Defaults", "HideBackupFiles"};
+    QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    const QString path = dir.filePath("drawing.dxf");
+    writeDxf(path);
+    const QByteArray original = contents(path);
+    QStringList invalidAffixes{
+        QStringLiteral("{\\fn\u65b9\u6b63\u7c97\u5029\u7b80\u4f53"
+                       "\\fs12\\an8\\1cHFFFF00\\b0}"),
+        QStringLiteral("../escape_"), QString(QChar(u'\0')), QString(QChar(u'\x1f'))};
+    for (const QChar character : QStringLiteral("<>:\"/\\|?*")) {
+        invalidAffixes.append(QStringLiteral("bad") + character);
+    }
+    for (const bool hideFiles : {false, true}) {
+        hidden.set(hideFiles);
+#ifdef Q_OS_WIN
+        const QString expectedAutosave = dir.filePath("#drawing.dxf");
+        const QString expectedBackup = path + "~";
+#else
+        const QString expectedAutosave = dir.filePath(hideFiles ? ".#drawing.dxf" : "#drawing.dxf");
+        const QString expectedBackup = dir.filePath(hideFiles ? ".drawing.dxf~" : "drawing.dxf~");
+#endif
+        for (const QString& affix : invalidAffixes) {
+            INFO(affix.toStdString());
+            CAPTURE(hideFiles);
+            prefix.set(affix);
+            suffix.set(affix);
+            RS_Graphic graphic;
+            open(storage, graphic, path);
+            REQUIRE(graphic.getAutoSaveFileName() == expectedAutosave);
+            edit(graphic);
+            QString written;
+            REQUIRE(storage.autoSaveDocument(&graphic, nullptr, written));
+            CHECK(written == expectedAutosave);
+            CHECK(isDxf(contents(written)));
+            CHECK(graphic.isModified());
+            RS_Graphic recovered;
+            open(storage, recovered, written);
+            CHECK(hasEditedLine(recovered));
+            REQUIRE(storage.backupDrawingFile(path));
+            CHECK(contents(expectedBackup) == original);
+            CHECK(contents(path) == original);
+            REQUIRE(QFile::remove(written));
+            REQUIRE(QFile::remove(expectedBackup));
+        }
+    }
 }
 
 TEST_CASE("Autosave writes DXF to a file named *.dxf", "[documentsstorage][autosave]") {

@@ -249,10 +249,11 @@ static void setupPrinterAndPaper(const RS_Graphic* graphic, QPrinter& printer,
                            ps->getMarginTopMm(),
                            ps->getMarginBottomMm()};
 
+    // PDF before the page: a system printer refuses a page size it does not have
+    printer.setOutputFormat(QPrinter::PdfFormat);
     LC_Printing::setupPageLayout(printer, landscape, paperSizeName, paperSize, graphic->getUnit(), paperMargins);
 
     printer.setOutputFileName(params.outFile);
-    printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setResolution(params.resolution);
     printer.setFullPage(true);
 

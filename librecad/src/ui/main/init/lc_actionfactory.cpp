@@ -872,7 +872,9 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
     map["LockRelativeZero"]->setProperty("_SetAsCurrentActionInView", false);
     map["SelectionModeToggle"]->setProperty("_SetAsCurrentActionInView", false);
 
-    connect(RS_SETTINGS, &RS_Settings::optionChanged, [map](const QString& groupName, const QString &propertyName, [[maybe_unused]]QVariant oldValue, const QVariant& newValue) -> void {
+    // RS_SETTINGS outlives the window, so these connections end with the factory,
+    // which the window owns along with the actions and their map.
+    connect(RS_SETTINGS, &RS_Settings::optionChanged, this, [map](const QString& groupName, const QString &propertyName, [[maybe_unused]]QVariant oldValue, const QVariant& newValue) -> void {
         if (groupName == "Selection" && propertyName == "Additivity") {
             const auto action = map["SelectionModeToggle"];
             const bool value = newValue.toBool();
@@ -897,7 +899,7 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
         }
     });
 
-    connect(RS_SETTINGS, &RS_Settings::optionsChanged, [this, &map]() {
+    connect(RS_SETTINGS, &RS_Settings::optionsChanged, this, [this, &map]() {
         updateSnapActionsBySettings(map);
     });
 

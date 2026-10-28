@@ -23,6 +23,7 @@
 
 #include <QAction>
 #include <QDir>
+#include <QLibrary>
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QPluginLoader>
@@ -53,18 +54,14 @@ void LC_PluginInvoker::loadPlugins(){
     for (int i = 0; i < lst.size(); ++i) {
         QDir pluginsDir(lst.at(i));
         for (const QString &fileName: pluginsDir.entryList(QDir::Files)) {
-            // Skip loading a plugin if a plugin with the same
-            // filename has already been loaded.
-#ifdef Q_OS_MAC
-            if (!fileName.contains(".dylib"))
-                continue;
-#endif
-#if (defined (_WIN32) || defined (_WIN32) || defined (_WIN64))
-            if (!fileName.contains(".dll")) {
+            // Only library files are plugin candidates: a build tree's
+            // cmake_install.cmake or a stray file would otherwise fail to
+            // load and raise the "Info" box below.
+            if (!QLibrary::isLibrary(fileName)) {
                 continue;
             }
-#endif
-
+            // Skip loading a plugin if a plugin with the same
+            // filename has already been loaded.
             if (loadedPluginFileNames.contains(fileName)) {
                 continue;
             }

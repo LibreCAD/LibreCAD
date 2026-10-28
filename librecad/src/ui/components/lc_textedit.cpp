@@ -202,6 +202,7 @@ const LC_TextEdit::BlockLayout &LC_TextEdit::layoutForBlock(const QTextBlock &bl
 QRect LC_TextEdit::cursorRect(const QTextCursor &cursor) const {
     if (!hasChineseRtl()) return QTextEdit::cursorRect(cursor);
     const auto block = cursor.block();
+    if (!block.isValid()) return QTextEdit::cursorRect(cursor);
     const auto &view = layoutForBlock(block);
     int position = displayCursorPosition(cursor, view);
     if (view.preeditLength && cursor == textCursor()) {

@@ -130,9 +130,9 @@ bool RS_ActionPrintPreview::isPortrait() const {
 void RS_ActionPrintPreview::setPaperOrientation(const bool portrait) const {
     bool landscape = false;
     LC_PlotSettings* ps = m_graphic->getPlotSettings();
-    const RS2::PaperFormat format = ps->getPaperFormat(&landscape);
+    ps->getPaperFormat(&landscape);
     if (landscape != !portrait) {
-        ps->setPaperFormat(format, !portrait);
+        ps->setPaperLandscape(!portrait);
         zoomToPage();
     }
 }

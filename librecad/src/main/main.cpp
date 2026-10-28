@@ -68,6 +68,14 @@
 #include "rs_settings.h"
 #include "rs_system.h"
 
+#ifdef Q_OS_WIN
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <io.h>
+#include <windows.h>
+#endif
+
 // default version: if not supplied by during building
 #ifndef LC_VERSION
 #define LC_VERSION "2.2.2-alpha"
@@ -85,6 +93,65 @@ const std::string g_lcVersion{"LC_VISION=" XSTR(LC_VERSION)};
 
 // update splash for alpha/beta names)
     void updateSplash(const std::unique_ptr<QSplashScreen>& splash);
+
+#ifdef Q_OS_WIN
+/**
+ * On Windows LibreCAD is a GUI program with no console of its own. A converter
+ * (librecad dxf2pdf ...) or --help started from a terminal writes its messages
+ * to that terminal; output redirected to a file or a pipe stays where it was
+ * sent. Call it before the first Qt message.
+ */
+void attachToParentConsole() {
+    // Without a console window Qt logs to OutputDebugString, even when stderr
+    // is a file or a pipe, unless told otherwise before its first message.
+    const HANDLE errorHandle = GetStdHandle(STD_ERROR_HANDLE);
+    if (errorHandle != nullptr && errorHandle != INVALID_HANDLE_VALUE) {
+        const DWORD errorType = GetFileType(errorHandle);
+        if (errorType == FILE_TYPE_DISK || errorType == FILE_TYPE_PIPE) {
+            qputenv("QT_FORCE_STDERR_LOGGING", "1");
+        }
+    }
+    if (!AttachConsole(ATTACH_PARENT_PROCESS)) {
+        return; // started from Explorer, or a console build that has its own
+    }
+    FILE* reopened = nullptr;
+    if (_fileno(stdout) < 0) {
+        freopen_s(&reopened, "CONOUT$", "w", stdout);
+    }
+    if (_fileno(stderr) < 0) {
+        freopen_s(&reopened, "CONOUT$", "w", stderr);
+    }
+}
+
+/**
+ * Whether main() will print --help or the list of debug levels (--debug?)
+ * and exit. It reads the arguments exactly as main() does, which only parses
+ * them after the application, and its first messages, exist.
+ */
+bool printsHelpText(int argc, char** argv) {
+    for (int i = 1; i < argc; ++i) {
+        QString argument = QString::fromLocal8Bit(argv[i]);
+        if (argument == "--") {
+            return false;
+        }
+        if (argument.compare("-h", Qt::CaseInsensitive) == 0
+            || argument.compare("--help", Qt::CaseInsensitive) == 0) {
+            return true;
+        }
+        if (argument.startsWith("-d", Qt::CaseInsensitive) || argument.startsWith("--debug", Qt::CaseInsensitive)) {
+            argument.remove(QRegularExpression("^-d"));
+            argument.remove(QRegularExpression("^--debug"));
+            if (argument.isEmpty() && i + 1 < argc) {
+                argument = QString::fromLocal8Bit(argv[++i]); // the level as its own argument
+            }
+            if (argument.startsWith('?')) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+#endif
 }
 
 void showFirstLoadSetupDialog(const bool firstLoad) {
@@ -295,6 +362,9 @@ int main(int argc, char** argv) {
     const LC_Console::CommandContext consoleCommand =
         LC_Console::detectCommand(argc, argv, consoleCommands);
     if (!consoleCommand.commandName.isEmpty()) {
+#ifdef Q_OS_WIN
+        attachToParentConsole();
+#endif
         const QString& command = consoleCommand.commandName;
         if (command == "dxf2pdf")
             return console_dxf2pdf(argc, argv);
@@ -315,6 +385,12 @@ int main(int argc, char** argv) {
         if (command == "dwg-admission-report")
             return consoleDwgAdmissionReport(argc, argv);
     }
+
+#ifdef Q_OS_WIN
+    if (printsHelpText(argc, argv)) {
+        attachToParentConsole();
+    }
+#endif
 
     RS_DEBUG->setLevel(RS_Debug::D_WARNING);
 

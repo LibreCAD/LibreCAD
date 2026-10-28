@@ -381,21 +381,17 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* actionHandler){
     m_appWin->tabifyDockWidget(dock_quick_info, dock_property_sheet);
     m_appWin->tabifyDockWidget(dock_property_sheet, dock_ucss);
     m_appWin->tabifyDockWidget(dock_ucss, dock_views);
-    m_appWin->tabifyDockWidget(dock_views, dock_command);
+    // Below the tabs, so that the Command Line and the Layer List are both shown (as in 2.2.x)
+    m_appWin->addDockWidget(Qt::RightDockWidgetArea, dock_command, Qt::Vertical);
+    dock_layer->raise();
 
     updateDockWidgetsTitleBarType(m_appWin, verticalTitle);
 
-    // Only resize when the app is opened for the first time
+    // Widths before the window is shown; a restored layout or the first fit to the window replaces them
     initializeRightDockWidgets();
 }
 
 void LC_WidgetFactory::initializeRightDockWidgets() const {
-    LC_GROUP_GUARD("Geometry");
-    if (!LC_GET_STR("WindowGeometry").isEmpty()) {
-        // No-op, if previous Window geometry is found
-        return;
-    }
-
     int preferredWidth = 390;
     if (const auto* screen = QGuiApplication::primaryScreen()) {
         int leftWidth = 0;

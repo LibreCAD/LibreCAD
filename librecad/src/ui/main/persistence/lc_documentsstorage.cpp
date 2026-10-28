@@ -41,6 +41,15 @@
 #include "rs_settings.h"
 
 namespace {
+    QString validatedFileAffix(const QString& affix, const QString& fallback) {
+        for (const QChar character : affix) {
+            if (character.unicode() < 0x20 || QStringLiteral("<>:\"/\\|?*").contains(character)) {
+                return fallback;
+            }
+        }
+        return affix;
+    }
+
     QString backupFilePath(const QString& path) {
 #ifndef Q_OS_WIN
         const QFileInfo info(path);
@@ -429,8 +438,9 @@ bool LC_DocumentsStorage::backupDrawingFile(const QString &drawingFileName, cons
 bool LC_DocumentsStorage::backupDrawingFile(const QString &drawingFileName, const QString& backupSuffix,
                                            const RS_Graphic* graphic) {
     bool ret = false;
-    if (!drawingFileName.isEmpty() && !backupSuffix.isEmpty()) {
-        const auto backupFileName = backupFilePath(drawingFileName + backupSuffix);
+    const QString suffix = validatedFileAffix(backupSuffix, QStringLiteral("~"));
+    if (!drawingFileName.isEmpty() && !suffix.isEmpty()) {
+        const auto backupFileName = backupFilePath(drawingFileName + suffix);
         if (graphic != nullptr && graphic->isDxfRecoverySourceFile(backupFileName)) {
             RS_DIALOGFACTORY->commandMessage(
                 tr("Skipped a backup that would replace the protected original legacy DXF."));
@@ -466,6 +476,7 @@ QString LC_DocumentsStorage::createAutoSaveFileName(const QFileInfo &fileInfo, c
 }
 
 QString LC_DocumentsStorage::createAutoSaveFileName(const QString& path, const QString &filePrefix,  const QString& fileName) const {
-    const QString prefix = filePrefix.isEmpty() ? QStringLiteral("#") : filePrefix;
+    const QString prefix = validatedFileAffix(filePrefix.isEmpty() ? QStringLiteral("#") : filePrefix,
+                                            QStringLiteral("#"));
     return backupFilePath(QDir(path).filePath(prefix + fileName));
 }

@@ -47,7 +47,9 @@ protected:
     virtual bool isShowRefPointsOnHighlight();
     void deselectAll() const;
     virtual void doSelectEntity(RS_Entity* entityToSelect, bool selectContour) const;
-    QString getSelectionCompletionHintMsg() const {return tr(" (Enter or CTRL+LMB click to complete)");}
+    QString getSelectionCompletionHintMsg() const {
+        return LC_ModifiersInfo::withNativeCtrlKey(tr(" (Enter or CTRL+LMB click to complete)"));
+    }
     virtual bool isAllowSelectionFinishByEnterForEmptySelection() {return false;}
 };
 

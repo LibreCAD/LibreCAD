@@ -284,7 +284,7 @@ const LC_CommandItem g_commandList[] = {
         {
             {{"gapline", LC_CommandText QT_TRANSLATE_NOOP3("QObject", "gapline", "line gap")}},
             {{"gl", LC_CommandText QT_TRANSLATE_NOOP3("QObject", "gl", "line gap")}},
-            RS2::ActionModifyBreakDivide
+            RS2::ActionModifyLineGap
         },
         // draw parallel line
         {

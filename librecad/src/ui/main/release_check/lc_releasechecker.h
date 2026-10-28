@@ -101,6 +101,9 @@ class LC_ReleaseChecker: public QObject{
     Q_OBJECT
 public:
     LC_ReleaseChecker(const QString& ownTagName, bool ownPreRelease);
+    /** Whether the Microsoft Store installed this copy and so updates it;
+     *  other MSIX installs report another package origin. */
+    static bool runsFromStorePackage();
     void checkForNewVersion(bool forceCheck = false);
     const LC_ReleaseInfo &getLatestRelease() const;
     const LC_ReleaseInfo &getLatestPreRelease() const;

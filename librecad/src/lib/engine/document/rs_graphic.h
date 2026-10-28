@@ -27,6 +27,7 @@
 #include <array>
 #include <cstdint>
 #include <memory>
+#include <vector>
 #include <QDateTime>
 #include <memory>
 
@@ -35,6 +36,7 @@
 #include "lc_plot_settings.h"
 #include "lc_textstylelist.h"
 #include "lc_dwgadvancedmetadata.h"
+#include "lc_linetypelist.h"
 #include "lc_ucslist.h"
 #include "lc_viewslist.h"
 #include "rs_blocklist.h"
@@ -178,6 +180,20 @@ public:
     void removeLayerListListener(RS_LayerListListener* listener) {m_layerList.removeListener(listener);}
     void addViewListListener(LC_ViewListListener* listener) { m_namedViewsList.addListener(listener);}
     void removeViewListListener(LC_ViewListListener* listener) { m_namedViewsList.removeListener(listener);}
+
+    // Wrappers for line type functions:
+    void clearLineTypes() {m_lineTypeList.clear();}
+    unsigned countLineTypes() const {return m_lineTypeList.count();}
+    LC_LineType* lineTypeAt(const unsigned i) const {return m_lineTypeList.at(i);}
+    LC_LineType* addLineType(LC_LineType* lineType) {return m_lineTypeList.add(lineType);}
+    LC_LineType* findLineType(const QString& name) const {return m_lineTypeList.find(name);}
+    void mergeLineTypes(const RS_Graphic& source) {m_lineTypeList.merge(source.m_lineTypeList);}
+    /// every line type name the drawing gives as a string, each once
+    std::vector<QString> referencedLineTypeNames() const;
+    /// takes from another drawing the definitions of the names this one gives
+    void importReferencedLineTypes(const RS_Graphic& source) {
+        m_lineTypeList.merge(source.m_lineTypeList, referencedLineTypeNames());
+    }
 
     // Wrapper for block functions:
     void clearBlocks() {m_blockList.clear();}
@@ -362,6 +378,7 @@ private:
 
     // fixme - sand - files - change to unique_ptrs?
     RS_LayerList m_layerList;
+    LC_LineTypeList m_lineTypeList;
     RS_BlockList m_blockList{true};
     RS_VariableDict m_variableDict;
     RS_VariableDict m_customVariablesDict;

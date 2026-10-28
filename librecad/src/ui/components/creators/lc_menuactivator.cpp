@@ -25,6 +25,8 @@
 
 #include <QMouseEvent>
 
+#include "lc_modifiersinfo.h"
+
 LC_MenuActivator::LC_MenuActivator()
     : m_button{RIGHT}{
     update();
@@ -428,7 +430,7 @@ QString LC_MenuActivator::getShortcut() const {
 QString LC_MenuActivator::getEventView() const {
     QString result;
     if (m_keyModifiers & CTRL) {
-        result.append("CTRL+");
+        result.append(LC_ModifiersInfo::withNativeCtrlKey("CTRL+"));
     }
     if (m_keyModifiers & ALT) {
         result.append("ALT+");

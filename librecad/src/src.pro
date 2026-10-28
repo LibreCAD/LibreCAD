@@ -81,6 +81,11 @@ DESTDIR = $${INSTALLDIR}
 # Unquoted: main.cpp stringifies it with XSTR(), as CMakeLists.txt does.
 DEFINES += QC_APPDIR=librecad
 
+# Let RS_System find plugins installed to LIBRECAD_PLUGIN_INSTALL_DIR.
+!isEmpty(LIBRECAD_PLUGIN_INSTALL_DIR) {
+    DEFINES += "LC_PLUGIN_INSTALL_DIR=\"\\\"$$LIBRECAD_PLUGIN_INSTALL_DIR\\\"\""
+}
+
 # Make translations at the end of the process
 unix {
     LC_VERSION=$$system([ "$(which git)x" != "x" -a -d ../../.git ] && echo "$(git describe --always)" || echo "$${LC_VERSION}")
@@ -120,7 +125,9 @@ unix {
 win32 {
     TARGET = LibreCAD
 
-    CONFIG += console
+    # A GUI program, as in the 2.2.1 releases (no console window behind the
+    # main window). For a console window with the debug output, run qmake with
+    # CONFIG+=console.
 
     # add MSYSGIT_DIR = PathToGitBinFolder (without quotes) in custom.pro file, for commit hash in about dialog
     !isEmpty( MSYSGIT_DIR ) {
@@ -144,6 +151,11 @@ win32 {
 
 DEFINES += LC_VERSION=\"$$LC_VERSION\"
 DEFINES += LC_PRERELEASE=\"$$LC_PRERELEASE\"
+
+# Pass NO_TIMESTAMP=true to qmake to omit the build date (reproducible builds).
+isEmpty(NO_TIMESTAMP): NO_TIMESTAMP = false
+!contains(NO_TIMESTAMP, ^(true|false)$): error("NO_TIMESTAMP must be true or false")
+equals(NO_TIMESTAMP, true): DEFINES += NO_TIMESTAMP
 
 # Additional libraries to load
 LIBS += -L../../generated/lib  \
@@ -175,6 +187,7 @@ INCLUDEPATH += \
     lib/engine/document/fonts \
     lib/engine/document/io \
     lib/engine/document/layers \
+    lib/engine/document/linetypes \
     lib/engine/document/patterns \
     lib/engine/document/selection \
     lib/engine/document/textstyles \
@@ -581,6 +594,8 @@ HEADERS += \
     lib/engine/document/layers/rs_layer.h \
     lib/engine/document/layers/rs_layerlist.h \
     lib/engine/document/layers/rs_layerlistlistener.h \
+    lib/engine/document/linetypes/lc_linetype.h \
+    lib/engine/document/linetypes/lc_linetypelist.h \
     lib/engine/document/entities/rs_leader.h \
     lib/engine/document/entities/rs_line.h \
     lib/engine/document/entities/rs_mtext.h \
@@ -1289,6 +1304,8 @@ SOURCES += \
     lib/engine/document/entities/lc_wipeout.cpp \
     lib/engine/document/layers/rs_layer.cpp \
     lib/engine/document/layers/rs_layerlist.cpp \
+    lib/engine/document/linetypes/lc_linetype.cpp \
+    lib/engine/document/linetypes/lc_linetypelist.cpp \
     lib/engine/document/entities/rs_leader.cpp \
     lib/engine/document/entities/rs_line.cpp \
     lib/engine/document/entities/rs_mtext.cpp \

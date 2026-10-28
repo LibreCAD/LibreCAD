@@ -23,6 +23,7 @@
 
 #include "lc_releasechecker.h"
 
+#include <QDesktopServices>
 #include <QJsonArray>
 #include <qjsondocument.h>
 
@@ -30,6 +31,13 @@
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_settings.h"
+
+#ifdef Q_OS_WIN
+#include <vector>
+#include <qt_windows.h>
+// <appmodel.h> is missing before MinGW-w64 v11; kernel32 exports this.
+extern "C" WINBASEAPI LONG WINAPI GetCurrentPackageFullName(UINT32 *packageFullNameLength, PWSTR packageFullName);
+#endif
 
 namespace {
 // A failed update check must never interrupt the user with a modal dialog.
@@ -95,6 +103,31 @@ LC_ReleaseChecker::LC_ReleaseChecker(const QString& ownTagName, const bool ownPr
     connect(&m_webCtrl, &QNetworkAccessManager::finished, this, &LC_ReleaseChecker::infoReceived);
 }
 
+bool LC_ReleaseChecker::runsFromStorePackage() {
+#ifdef Q_OS_WIN
+    UINT32 length = 0;
+    if (GetCurrentPackageFullName(&length, nullptr) != ERROR_INSUFFICIENT_BUFFER) {
+        return false; // no package identity
+    }
+    std::vector<wchar_t> fullName(length);
+    if (GetCurrentPackageFullName(&length, fullName.data()) != ERROR_SUCCESS) {
+        return false;
+    }
+    // kernel32.dll does not export GetStagedPackageOrigin, and MinGW-w64
+    // before v12 has no import library for it.
+    const HMODULE kernelbase = GetModuleHandleW(L"kernelbase.dll");
+    using OriginQuery = LONG (WINAPI *)(PCWSTR, int *);
+    // void (*)() converts to any function type without -Wcast-function-type
+    const auto query = kernelbase == nullptr ? nullptr
+        : reinterpret_cast<OriginQuery>(reinterpret_cast<void (*)()>(GetProcAddress(kernelbase, "GetStagedPackageOrigin")));
+    // 3 is PackageOrigin_Store: installed from the Microsoft Store.
+    int origin = 0;
+    return query != nullptr && query(fullName.data(), &origin) == ERROR_SUCCESS && origin == 3;
+#else
+    return false;
+#endif
+}
+
 LC_ReleaseInfo LC_ReleaseChecker::getOwnReleaseInfo(const QString& tagName, const bool preRelease) const {
     constexpr bool draft = false;
     const LC_TagInfo ownTagInfo = parseTagInfo(tagName);
@@ -106,6 +139,13 @@ LC_ReleaseInfo LC_ReleaseChecker::getOwnReleaseInfo(const QString& tagName, cons
 #define TEST_JSON_PARSING_
 
 void LC_ReleaseChecker::checkForNewVersion(const bool forceCheck) {
+    if (runsFromStorePackage()) {
+        // the Store updates this copy; its Updates and downloads page checks
+        if (forceCheck) {
+            QDesktopServices::openUrl(QUrl(QStringLiteral("ms-windows-store://downloadsandupdates")));
+        }
+        return;
+    }
 #ifndef TEST_JSON_PARSING
     m_emitSignalIfNoNewVersion = forceCheck;
     const QUrl gitHubReleasesUrl("https://api.github.com/repos/LibreCAD/LibreCAD/releases");

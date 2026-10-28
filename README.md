@@ -71,6 +71,13 @@ librecad dxf2pdf -a -o drawing.pdf drawing.dxf
 Use `librecad <command> -h` for the full list of options. On systems without a
 display, set `QT_QPA_PLATFORM=offscreen` for PDF, PNG, and SVG conversion.
 
+On Windows, `LibreCAD.exe` is a GUI program: at an interactive cmd or
+PowerShell prompt, and in PowerShell scripts, the prompt returns before the
+conversion ends and no exit code is set, while cmd batch files wait for it. To
+wait and get the exit code, use `start /wait "" LibreCAD.exe dxf2pdf ...` in
+cmd (it sets `%ERRORLEVEL%`), or `Start-Process` with `-Wait -PassThru` in
+PowerShell.
+
 ## Releases and Milestones
 
 ### Quick Downloads
@@ -144,15 +151,17 @@ More information: [Build from source](https://github.com/LibreCAD/LibreCAD/wiki/
 
 CMake accepts `-DLIBRECAD_PLUGIN_INSTALL_DIR=lib/librecad/plugins` to override
 the plugin installation directory. Relative destinations use `CMAKE_INSTALL_PREFIX`;
-absolute destinations are also accepted. This option does not change runtime
-plugin discovery: use an existing search location, such as `<prefix>/lib/librecad/plugins`
-when the executable is installed in `<prefix>/bin` on Linux. macOS packaging
-expects plugins in `LibreCAD.app/Contents/PlugIns/LibreCAD`.
+absolute destinations are also accepted. The resulting absolute path is compiled
+into LibreCAD and added to the runtime plugin search locations, so plugins are
+found there in addition to the default locations. macOS packaging expects
+plugins in `LibreCAD.app/Contents/PlugIns/LibreCAD`.
 
 With qmake, pass an absolute destination, for example
 `qmake6 librecad.pro "LIBRECAD_PLUGIN_INSTALL_DIR=/usr/lib/librecad/plugins"`.
 This enables plugin installation with `make -C plugins install` without changing
-the build-output directories. Omitting the variable keeps the existing behavior.
+the build-output directories. As with CMake, the destination is also added to
+the runtime plugin search locations. Omitting the variable keeps the existing
+behavior.
 
 Pixi CI runs `pixi run check-plugin-install`, reusing the compiled sample plugin
 to check default and custom destinations. qmake checks run on Linux and macOS;

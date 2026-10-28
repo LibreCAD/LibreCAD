@@ -60,6 +60,8 @@ public:
 
     static LC_ModifiersInfo SHIFT(const QString &msg);
     static LC_ModifiersInfo SHIFT_AND_CTRL(const QString &shiftMsg, const QString &ctrlMsg);
+    // a hint naming CTRL, with CTRL changed to the key the Ctrl modifier is on
+    static QString withNativeCtrlKey(QString hint);
     const QString&  getShiftMessage() const;
     const QString&  getCtrlMessage() const;
 protected:
