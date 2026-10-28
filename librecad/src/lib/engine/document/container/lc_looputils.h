@@ -111,65 +111,6 @@ public:
    */
   int getContainingDepth(const RS_Vector& point) const;
   /**
-   * @brief Trims pattern entities against this loop hierarchy using the
-   * caller-supplied tile slots, charging every emitted piece to a shared
-   * budget. Aborts and returns an empty container as soon as the budget
-   * trips; the caller discards partial buffered output in that case.
-   *
-   * @param pattern The scaled pattern (every atomic entity is used, copied
-   *        at each tile offset, intersected with the boundary, and the
-   *        in-side sub-pieces are kept).
-   * @param tiles  The tile slots to use (as returned by createTiles with
-   *        the same pattern and lattice anchor). Slots whose interior flag
-   *        is true emit their clones whole, without intersecting any
-   *        boundary; non-interior slots run the clip-and-split pass.
-   * @param budget Shared piece budget consumed by every produced piece.
-   * @param interiorFastPath When true (default), slots marked interior emit
-   *        their whole clones without clipping. Set false to run the slow
-   *        intersect-and-split pass on every slot: the result is identical
-   *        to the fast path on an interior slot, so this is only for the
-   *        slot-level equivalence oracle.
-   * @return Unique pointer to a container of trimmed entities; may be empty
-   *         after a budget trip.
-   */
-  std::unique_ptr<RS_EntityContainer> trimPatternEntities(const RS_Pattern& pattern,
-                                                          const std::vector<LC_TileSlot>& tiles,
-                                                          LC_HatchPieceBudget& budget,
-                                                          bool interiorFastPath = true) const;
-  /**
-   * @brief Generates tile slots for pattern repetition over this loop
-   * hierarchy's bounding box, anchored at latticeAnchor.
-   *
-   * Tile indices are half-open [floor((bbMin - a)/P), ceil((bbMax - a)/P));
-   * every tile whose rect intersects the bounding box and either overlaps the
-   * loop or contains the pattern's centre is kept. Each returned slot's
-   * interior flag is set true when no boundary edge comes within two
-   * per-hatch tolerances of the tile rect.
-   */
-  std::vector<LC_TileSlot> createTiles(const RS_Pattern& pattern,
-                                       const RS_Vector& latticeAnchor) const;
-
-  /**
-   * @brief Upper bound on the number of (grid cell, boundary edge) overlap
-   * tests createTiles will perform for the same arguments. Does not run
-   * createTiles; used by the density guard to charge the grid walk's cost
-   * before any tile is built.
-   */
-  double gridWork(const RS_Pattern& pattern,
-                  const RS_Vector& latticeAnchor) const;
-
-  /**
-   * @brief Returns Σ_tile (E * B(tile)) where E is the number of atomic
-   * pattern entities and B(tile) the number of boundary edges whose bbox
-   * overlaps the pattern rect translated by tile.offset. Returns as soon as
-   * the running sum exceeds stopAbove, so callers can bound the cost of this
-   * measurement itself. Slots marked interior still contribute zero to B(tile)
-   * because the slot already proved no boundary bbox overlaps the tile.
-   */
-  double tileWork(const RS_Pattern& pattern,
-                  const std::vector<LC_TileSlot>& tiles,
-                  double stopAbove) const;
-  /**
    * @brief Computes the total area of this loop, adding islands and subtracting holes.
    * @return The net area as a double.
    */
@@ -230,6 +171,17 @@ public:
   PointClass classify(const RS_Vector& point) const;
 
 private:
+  friend PointClass classifyAll(const RS_Vector&, const std::vector<LC_Loops>&);
+  friend std::vector<LC_TileSlot> createTiles(const std::vector<LC_Loops>&,
+                                              const RS_Pattern&,
+                                              const RS_Vector&);
+  friend std::unique_ptr<RS_EntityContainer> trimPatternEntities(
+      const std::vector<LC_Loops>&, const RS_Pattern&,
+      const std::vector<LC_TileSlot>&, LC_HatchPieceBudget&, bool);
+  friend double gridWork(const std::vector<LC_Loops>&, const RS_Pattern&,
+                         const RS_Vector&);
+  friend double tileWork(const std::vector<LC_Loops>&, const RS_Pattern&,
+                         const std::vector<LC_TileSlot>&, double);
   /**
    * @brief Checks if a point is inside the outer loop only (non-recursive).
    * @param point The point to test.
@@ -545,6 +497,68 @@ private:
  */
 QPainterPath buildLoopPath(RS_Painter* painter, const RS_EntityContainer& cont,
                            double eps = 0.0);
+
+/**
+ * @brief Half-open crossing-parity classifier against all nodes of all roots.
+ *
+ * Returns On when the point sits within tolerance of any boundary edge in any
+ * node of any root (used as the ON band of the collinear-safe keep rule).
+ * Otherwise sums crossingsRight(point) over every node's LoopGeometry and
+ * returns Inside/Outside by odd parity.
+ */
+PointClass classifyAll(const RS_Vector& point,
+                       const std::vector<LC_Loops>& roots);
+
+/**
+ * @brief Tile slots over the union of the roots' bounding boxes.
+ *
+ * The lattice is one WCS lattice through latticeAnchor; tile indices are
+ * half-open [floor, ceil) on each axis. A tile is kept when its rect
+ * intersects the union bbox and at least one root either overlaps the tile or
+ * contains the pattern's centre. Slots are de-duplicated across roots by
+ * (i, k). A slot's interior flag is true when no root's boundary comes within
+ * one ON band of the tile rect; the trimmer emits those slots' clones whole.
+ */
+std::vector<LC_TileSlot> createTiles(const std::vector<LC_Loops>& roots,
+                                     const RS_Pattern& pattern,
+                                     const RS_Vector& latticeAnchor);
+
+/**
+ * @brief Clips every tile copy of every atomic pattern entity to the union of
+ * the roots' boundaries in a single pass.
+ *
+ * The classifier is classifyAll(roots), so holes and islands fall out of the
+ * global parity rule and overlapping roots trim as XOR. Pieces whose
+ * midpoint falls inside the overall odd-even region are kept. Every emitted
+ * piece is charged to budget; a trip returns the partial container (the
+ * caller discards buffered output). Slots marked interior emit their clones
+ * whole when interiorFastPath is true.
+ */
+std::unique_ptr<RS_EntityContainer> trimPatternEntities(
+    const std::vector<LC_Loops>& roots,
+    const RS_Pattern& pattern,
+    const std::vector<LC_TileSlot>& tiles,
+    LC_HatchPieceBudget& budget,
+    bool interiorFastPath = true);
+
+/**
+ * @brief Upper bound on the overlap-test cost createTiles(roots, ...) runs:
+ * (grid cells over the union bbox) * (total boundary edges of all roots).
+ */
+double gridWork(const std::vector<LC_Loops>& roots,
+                const RS_Pattern& pattern,
+                const RS_Vector& latticeAnchor);
+
+/**
+ * @brief Σ_tile (E * B(tile)) over the given tile slots, where B(tile) is the
+ * number of boundary edges (from any root) whose bbox overlaps the pattern
+ * rect translated by tile.offset. Returns as soon as the running sum exceeds
+ * stopAbove so the measurement itself is bounded.
+ */
+double tileWork(const std::vector<LC_Loops>& roots,
+                const RS_Pattern& pattern,
+                const std::vector<LC_TileSlot>& tiles,
+                double stopAbove);
 
 /**
  * @brief Counts the loops in roots that duplicate an earlier one.

@@ -1454,221 +1454,309 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
         return true;
     }
 
-    /**
-     * @brief Generates tile slots for pattern repetition over this tree's
-     * bounding box, anchored at latticeAnchor.
-     *
-     * Tile indices are half-open [floor((bbMin - a)/P), ceil((bbMax - a)/P))
-     * on each axis; the pattern's minimum corner sits on the lattice points
-     * latticeAnchor + (i*W, k*H), as in 2.2.1. Each tile is kept when its
-     * rect intersects bbox *and* either overlaps the loop or contains the
-     * pattern's centre. A tile whose expanded rect (one slack per side) does
-     * not overlap any boundary edge is marked interior so the trimmer can
-     * emit its clones whole.
-     */
-    std::vector<LC_TileSlot> LC_Loops::createTiles(const RS_Pattern& pattern,
-                                                   const RS_Vector& latticeAnchor) const {
-        double iFirst = 0.0, iEnd = 0.0, kFirst = 0.0, kEnd = 0.0;
-        if (!tileIndexRange(pattern, latticeAnchor, iFirst, iEnd, kFirst, kEnd)) {
-            return {};
-        }
-        const LC_Rect bBox = getBoundingBox();
-        const LC_Rect pBox{pattern.getMin(), pattern.getMax()};
-        const double pWidth = pBox.width();
-        const double pHeight = pBox.height();
-        // Use pattern center for inside check
-        const RS_Vector pCenter = (pBox.lowerLeftCorner() + pBox.upperRightCorner()) / 2.0;
-        const long long nIx = static_cast<long long>(iEnd - iFirst);
-        const long long nIy = static_cast<long long>(kEnd - kFirst);
-        // Interior-slot slack: two per-hatch ON tolerances, so a tile whose
-        // border lies within one ON band of a boundary edge whose bbox does
-        // not touch the tile is still treated as near-boundary. Without this,
-        // a line collinear with the region's top or left edge would be
-        // emitted whole by the fast path even though keepPiece says the top
-        // and left are not drawn.
-        const double slack = 2.0 * ((m_eps > 0.0) ? m_eps : RS_TOLERANCE);
-        std::vector<LC_TileSlot> tiles;
-        for (long long ci = 0; ci < nIx; ++ci) {
-            for (long long ck = 0; ck < nIy; ++ck) {
-                const RS_Vector tile = latticeAnchor
-                    + RS_Vector{(iFirst + static_cast<double>(ci)) * pWidth,
-                                (kFirst + static_cast<double>(ck)) * pHeight}
-                    - pBox.lowerLeftCorner();
-                LC_Rect tileRect{pBox.lowerLeftCorner() + tile, pBox.upperRightCorner() + tile};
-                // Quick bbox intersection
-                if (!tileRect.intersects(bBox)) {
-                    continue;
-                }
-                // Include if overlaps or center inside
-                const bool crossed = overlap(tileRect);
-                if (!(crossed || isPointInside(tile + pCenter))) {
-                    continue;
-                }
-                const LC_Rect expandedRect{tileRect.minP() - RS_Vector{slack, slack},
-                                           tileRect.maxP() + RS_Vector{slack, slack}};
-                const bool nearBoundary = crossed || overlap(expandedRect);
-                tiles.push_back({tile, !nearBoundary});
+    namespace {
+        // Collects (bbMin, bbMax, epsMax) over all roots' outer loops; returns
+        // true when at least one root's loop has a finite bbox.
+        bool unionLoopBox(const std::vector<LC_Loops>& roots,
+                          RS_Vector& bbMin, RS_Vector& bbMax, double& epsMax) {
+            bool have = false;
+            bbMin = RS_Vector(RS_MAXDOUBLE, RS_MAXDOUBLE);
+            bbMax = RS_Vector(-RS_MAXDOUBLE, -RS_MAXDOUBLE);
+            epsMax = 0.0;
+            for (const LC_Loops& r : roots) {
+                auto outer = r.getOuterLoop();
+                if (!outer) continue;
+                outer->calculateBorders();
+                const RS_Vector mn = outer->getMin();
+                const RS_Vector mx = outer->getMax();
+                if (!mn.valid || !mx.valid) continue;
+                bbMin.x = std::min(bbMin.x, mn.x);
+                bbMin.y = std::min(bbMin.y, mn.y);
+                bbMax.x = std::max(bbMax.x, mx.x);
+                bbMax.y = std::max(bbMax.y, mx.y);
+                epsMax = std::max(epsMax, r.tolerance());
+                have = true;
             }
+            return have;
         }
-        return tiles;
-    }
 
-    /**
-     * @brief Upper bound on the number of (grid cell, boundary edge) overlap
-     * tests createTiles will run: nIx * nIy * boundaries.size(). Charged by
-     * the density guard before createTiles.
-     */
-    double LC_Loops::gridWork(const RS_Pattern& pattern,
-                              const RS_Vector& latticeAnchor) const {
-        double iFirst = 0.0, iEnd = 0.0, kFirst = 0.0, kEnd = 0.0;
-        if (!tileIndexRange(pattern, latticeAnchor, iFirst, iEnd, kFirst, kEnd)) {
-            return 0.0;
-        }
-        const double cells = (iEnd - iFirst) * (kEnd - kFirst);
-        const double edges = static_cast<double>(getAllBoundaries().size());
-        if (!std::isfinite(cells) || !std::isfinite(edges) || cells <= 0.0) {
-            return 0.0;
-        }
-        return cells * edges;
-    }
-
-    /**
-     * @brief Measures the per-tile edge-pair work: Σ_tile E * B(tile) where
-     * B(tile) is the number of boundary edges whose bbox overlaps the tile
-     * rect. Returns early once the running sum exceeds stopAbove.
-     */
-    double LC_Loops::tileWork(const RS_Pattern& pattern,
-                              const std::vector<LC_TileSlot>& tiles,
-                              double stopAbove) const {
-        const LC_Rect pBox{pattern.getMin(), pattern.getMax()};
-        double E = 0.0;
-        for (const RS_Entity* e : pattern) {
-            if (e != nullptr && e->isAtomic()) E += 1.0;
-        }
-        if (E <= 0.0 || tiles.empty()) return 0.0;
-        auto boundaries = getAllBoundaries();
-        if (boundaries.empty()) return 0.0;
-        double total = 0.0;
-        for (const LC_TileSlot& slot : tiles) {
-            const LC_Rect tileRect{pBox.lowerLeftCorner() + slot.offset,
-                                   pBox.upperRightCorner() + slot.offset};
-            double B = 0.0;
-            for (const RS_Entity* b : boundaries) {
-                if (b == nullptr) continue;
-                if (tileRect.overlaps(LC_Rect{b->getMin(), b->getMax()})) {
-                    B += 1.0;
+        // Walks every node of every root in pre-order and collects atomic
+        // boundary entities. Pointers remain valid for the lifetime of the
+        // tree.
+        std::vector<RS_Entity*> allBoundaryEntities(
+            const std::vector<LC_Loops>& roots) {
+            std::vector<RS_Entity*> out;
+            std::function<void(const LC_Loops&)> walk = [&](const LC_Loops& n) {
+                auto outer = n.getOuterLoop();
+                if (outer) {
+                    for (RS_Entity* e : *outer) {
+                        if (e != nullptr && e->isAtomic()) out.push_back(e);
+                    }
                 }
-            }
-            total += E * B;
-            if (std::isfinite(stopAbove) && total > stopAbove) return total;
+                for (const LC_Loops& c : n.getChildren()) walk(c);
+            };
+            for (const LC_Loops& r : roots) walk(r);
+            return out;
         }
-        return total;
-    }
 
-    /**
-     * @brief Clips every tile copy of every atomic pattern entity to this loop
-     * hierarchy: intersect with all boundary edges, sort, split, and keep the
-     * sub-pieces whose midpoint is inside. Copies are never extended.
-     */
-    std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Pattern& pattern,
-                                                                      const std::vector<LC_TileSlot>& tiles,
-                                                                      LC_HatchPieceBudget& budget,
-                                                                      bool interiorFastPath) const {
-        auto trimmed = std::make_unique<RS_EntityContainer>();
-        auto boundaries = getAllBoundaries();
-        PointClassifier classifier = [this](const RS_Vector& q) {
-            return this->classify(q);
-        };
-        const double epsOn = (m_eps > 0.0) ? m_eps : RS_TOLERANCE;
-        // emitPiece() takes ownership of ent and charges the shared piece
-        // budget. Returns false after the budget trips so the caller aborts
-        // the generation deterministically and the caller discards partial
-        // output. (Not named `emit` to avoid Qt's moc macro.)
-        auto emitPiece = [&](std::unique_ptr<RS_Entity> ent) -> bool {
-            if (!budget.take()) {
-                return false;
-            }
-            ent->setVisible(true);
-            trimmed->addEntity(ent.release());
+        // Half-open [floor, ceil) tile index range over the union bbox.
+        bool unionTileIndexRange(const std::vector<LC_Loops>& roots,
+                                 const RS_Pattern& pattern,
+                                 const RS_Vector& latticeAnchor,
+                                 double& iFirst, double& iEnd,
+                                 double& kFirst, double& kEnd) {
+            RS_Vector bbMin, bbMax;
+            double epsMax = 0.0;
+            if (!unionLoopBox(roots, bbMin, bbMax, epsMax)) return false;
+            const LC_Rect pBox{pattern.getMin(), pattern.getMax()};
+            const double pWidth = pBox.width();
+            const double pHeight = pBox.height();
+            if (pWidth < 1e-6 || pHeight < 1e-6) return false;
+            iFirst = std::floor((bbMin.x - latticeAnchor.x) / pWidth);
+            iEnd = std::ceil((bbMax.x - latticeAnchor.x) / pWidth);
+            kFirst = std::floor((bbMin.y - latticeAnchor.y) / pHeight);
+            kEnd = std::ceil((bbMax.y - latticeAnchor.y) / pHeight);
             return true;
-        };
-        for (const LC_TileSlot& slot : tiles) {
-            for (RS_Entity* e : pattern) {
-                if (!e->isAtomic()) {
-                    continue;
-                }
-                auto cloned = std::unique_ptr<RS_Entity>(e->clone());
-                cloned->move(slot.offset);
+        }
+    }  // anonymous namespace
 
-                // Interior fast path: no boundary edge comes within one ON
-                // band of this tile, so every clone of a pattern entity at
-                // this offset is inside the loop. Emit it whole; the slow
-                // path's no-intersection branch would do the same.
-                if (interiorFastPath && slot.interior) {
-                    if (!emitPiece(std::move(cloned))) return trimmed;
-                    continue;
-                }
-
-      std::vector<RS_Vector> all_inters;
-      for (auto* b : boundaries) {
-        RS_VectorSolutions sol = RS_Information::getIntersection(cloned.get(), b, true);
-        for (RS_Vector v : sol) {
-          all_inters.push_back(v);
+PointClass classifyAll(const RS_Vector& point,
+                       const std::vector<LC_Loops>& roots) {
+    // ON band of any root's edges wins over parity, matching per-node classify().
+    for (const LC_Loops& r : roots) {
+        const double eps = r.tolerance();
+        if (eps > 0.0) {
+            std::vector<const RS_EntityContainer*> conts;
+            r.getAllLoops(conts);
+            if (isNearAnyEdge(point, conts, eps)) {
+                return PointClass::On;
+            }
         }
-      }
-      // Remove duplicates
-      std::sort(all_inters.begin(), all_inters.end(), [](const RS_Vector& a, const RS_Vector& b){
-        return a.x < b.x || (RS_Math::equal(a.x, b.x) && a.y < b.y);
-      });
-      auto last = std::unique(all_inters.begin(), all_inters.end(), [](const RS_Vector& a, const RS_Vector& b){
-        return a.distanceTo(b) < RS_TOLERANCE;
-      });
-      all_inters.erase(last, all_inters.end());
-      auto sorted_inters = sortPointsAlongEntity(cloned.get(), all_inters);
-      bool closed = isEntityClosed(cloned.get());
-      if (sorted_inters.empty()) {
-        if (keepPiece(*cloned, classifier, epsOn)) {
-          if (!emitPiece(std::move(cloned))) return trimmed;
-        }
-        continue;
-      }
-      if (closed && sorted_inters.size() % 2 != 0) {
-        RS_DEBUG->print("LC_Loops::trimPatternEntities: Odd intersections for closed entity, skipping");
-        continue;
-      }
-      std::vector<RS_Vector> points;
-      if (!closed) {
-        points.push_back(cloned->getStartpoint());
-        points.insert(points.end(), sorted_inters.begin(), sorted_inters.end());
-        points.push_back(cloned->getEndpoint());
-      } else {
-        points = sorted_inters;
-      }
-      for (size_t i = 0; i < points.size() - 1; ++i) {
-        RS_Vector p1 = points[i];
-        RS_Vector p2 = points[i + 1];
-        if (p1.distanceTo(p2) < RS_TOLERANCE) {
-            continue;
-        }
-        auto sub = std::unique_ptr<RS_Entity>(createSubEntity(cloned.get(), p1, p2));
-        // Filter short subs and add if the collinear-safe keepPiece says yes.
-        if (sub && sub->getLength() > RS_TOLERANCE && keepPiece(*sub, classifier, epsOn)) {
-          if (!emitPiece(std::move(sub))) return trimmed;
-        }
-      }
-      if (closed && sorted_inters.size() > 0) {
-        RS_Vector pw1 = points.back();
-        RS_Vector pw2 = points[0];
-        if (pw1.distanceTo(pw2) >= RS_TOLERANCE) {
-          auto sub = std::unique_ptr<RS_Entity>(createSubEntity(cloned.get(), pw1, pw2));
-          if (sub && sub->getLength() > RS_TOLERANCE && keepPiece(*sub, classifier, epsOn)) {
-            if (!emitPiece(std::move(sub))) return trimmed;
-          }
-        }
-      }
     }
-  }
-  return trimmed;
+    // Global even-odd parity: sum crossingsRight over every node of every root.
+    long long crossings = 0;
+    std::function<void(const LC_Loops&)> walk = [&](const LC_Loops& n) {
+        crossings += n.geometry().crossingsRight(point);
+        for (const LC_Loops& c : n.getChildren()) walk(c);
+    };
+    for (const LC_Loops& r : roots) walk(r);
+    return (crossings & 1) ? PointClass::Inside : PointClass::Outside;
+}
+
+std::vector<LC_TileSlot> createTiles(const std::vector<LC_Loops>& roots,
+                                     const RS_Pattern& pattern,
+                                     const RS_Vector& latticeAnchor) {
+    double iFirst = 0.0, iEnd = 0.0, kFirst = 0.0, kEnd = 0.0;
+    if (!unionTileIndexRange(roots, pattern, latticeAnchor,
+                             iFirst, iEnd, kFirst, kEnd)) {
+        return {};
+    }
+    RS_Vector bbMin, bbMax;
+    double epsMax = 0.0;
+    unionLoopBox(roots, bbMin, bbMax, epsMax);
+    const LC_Rect bBox{bbMin, bbMax};
+    const LC_Rect pBox{pattern.getMin(), pattern.getMax()};
+    const double pWidth = pBox.width();
+    const double pHeight = pBox.height();
+    const RS_Vector pCenter = (pBox.lowerLeftCorner() + pBox.upperRightCorner()) / 2.0;
+    const long long nIx = static_cast<long long>(iEnd - iFirst);
+    const long long nIy = static_cast<long long>(kEnd - kFirst);
+    const double slack = 2.0 * ((epsMax > 0.0) ? epsMax : RS_TOLERANCE);
+    std::vector<LC_TileSlot> tiles;
+    tiles.reserve(static_cast<std::size_t>(std::max<long long>(0, nIx * nIy)));
+    for (long long ci = 0; ci < nIx; ++ci) {
+        for (long long ck = 0; ck < nIy; ++ck) {
+            const RS_Vector tile = latticeAnchor
+                + RS_Vector{(iFirst + static_cast<double>(ci)) * pWidth,
+                            (kFirst + static_cast<double>(ck)) * pHeight}
+                - pBox.lowerLeftCorner();
+            LC_Rect tileRect{pBox.lowerLeftCorner() + tile,
+                             pBox.upperRightCorner() + tile};
+            if (!tileRect.intersects(bBox)) {
+                continue;
+            }
+            bool crossed = false;
+            for (const LC_Loops& r : roots) {
+                if (r.overlap(tileRect)) { crossed = true; break; }
+            }
+            const bool centreInside =
+                classifyAll(tile + pCenter, roots) != PointClass::Outside;
+            if (!(crossed || centreInside)) {
+                continue;
+            }
+            const LC_Rect expandedRect{tileRect.minP() - RS_Vector{slack, slack},
+                                       tileRect.maxP() + RS_Vector{slack, slack}};
+            bool nearBoundary = crossed;
+            if (!nearBoundary) {
+                for (const LC_Loops& r : roots) {
+                    if (r.overlap(expandedRect)) { nearBoundary = true; break; }
+                }
+            }
+            tiles.push_back({tile, !nearBoundary});
+        }
+    }
+    return tiles;
+}
+
+double gridWork(const std::vector<LC_Loops>& roots,
+                const RS_Pattern& pattern,
+                const RS_Vector& latticeAnchor) {
+    double iFirst = 0.0, iEnd = 0.0, kFirst = 0.0, kEnd = 0.0;
+    if (!unionTileIndexRange(roots, pattern, latticeAnchor,
+                             iFirst, iEnd, kFirst, kEnd)) {
+        return 0.0;
+    }
+    const double cells = (iEnd - iFirst) * (kEnd - kFirst);
+    const double edges = static_cast<double>(allBoundaryEntities(roots).size());
+    if (!std::isfinite(cells) || !std::isfinite(edges) || cells <= 0.0) {
+        return 0.0;
+    }
+    return cells * edges;
+}
+
+double tileWork(const std::vector<LC_Loops>& roots,
+                const RS_Pattern& pattern,
+                const std::vector<LC_TileSlot>& tiles,
+                double stopAbove) {
+    const LC_Rect pBox{pattern.getMin(), pattern.getMax()};
+    double E = 0.0;
+    for (const RS_Entity* e : pattern) {
+        if (e != nullptr && e->isAtomic()) E += 1.0;
+    }
+    if (E <= 0.0 || tiles.empty()) return 0.0;
+    auto boundaries = allBoundaryEntities(roots);
+    if (boundaries.empty()) return 0.0;
+    double total = 0.0;
+    for (const LC_TileSlot& slot : tiles) {
+        const LC_Rect tileRect{pBox.lowerLeftCorner() + slot.offset,
+                               pBox.upperRightCorner() + slot.offset};
+        double B = 0.0;
+        for (const RS_Entity* b : boundaries) {
+            if (b == nullptr) continue;
+            if (tileRect.overlaps(LC_Rect{b->getMin(), b->getMax()})) {
+                B += 1.0;
+            }
+        }
+        total += E * B;
+        if (std::isfinite(stopAbove) && total > stopAbove) return total;
+    }
+    return total;
+}
+
+std::unique_ptr<RS_EntityContainer> trimPatternEntities(
+    const std::vector<LC_Loops>& roots,
+    const RS_Pattern& pattern,
+    const std::vector<LC_TileSlot>& tiles,
+    LC_HatchPieceBudget& budget,
+    bool interiorFastPath) {
+    auto trimmed = std::make_unique<RS_EntityContainer>();
+    auto boundaries = allBoundaryEntities(roots);
+    PointClassifier classifier = [&roots](const RS_Vector& q) {
+        return classifyAll(q, roots);
+    };
+    double epsOn = 0.0;
+    for (const LC_Loops& r : roots) {
+        epsOn = std::max(epsOn, r.tolerance());
+    }
+    if (epsOn <= 0.0) epsOn = RS_TOLERANCE;
+    // emitPiece() takes ownership of ent and charges the shared piece
+    // budget. Returns false after the budget trips so the caller aborts
+    // deterministically and discards partial output. Not named `emit` to
+    // avoid Qt's moc macro.
+    auto emitPiece = [&](std::unique_ptr<RS_Entity> ent) -> bool {
+        if (!budget.take()) {
+            return false;
+        }
+        ent->setVisible(true);
+        trimmed->addEntity(ent.release());
+        return true;
+    };
+    // One sort/sub helper per entity kind. Reuse the first root's helpers:
+    // these methods on LC_Loops do not depend on `this`'s own state and the
+    // free function stays stateless.
+    auto sortAlong = [&](RS_Entity* e, std::vector<RS_Vector> inters) {
+        return roots.empty() ? std::vector<RS_Vector>{}
+                             : roots.front().sortPointsAlongEntity(e, std::move(inters));
+    };
+    auto subEntity = [&](RS_Entity* e, const RS_Vector& p1, const RS_Vector& p2) {
+        return roots.empty() ? static_cast<RS_Entity*>(nullptr)
+                             : roots.front().createSubEntity(e, p1, p2);
+    };
+    auto entityIsClosed = [&](const RS_Entity* e) {
+        return !roots.empty() && roots.front().isEntityClosed(e);
+    };
+
+    for (const LC_TileSlot& slot : tiles) {
+        for (RS_Entity* e : pattern) {
+            if (!e->isAtomic()) {
+                continue;
+            }
+            auto cloned = std::unique_ptr<RS_Entity>(e->clone());
+            cloned->move(slot.offset);
+
+            if (interiorFastPath && slot.interior) {
+                if (!emitPiece(std::move(cloned))) return trimmed;
+                continue;
+            }
+
+            std::vector<RS_Vector> all_inters;
+            for (auto* b : boundaries) {
+                RS_VectorSolutions sol = RS_Information::getIntersection(cloned.get(), b, true);
+                for (RS_Vector v : sol) {
+                    all_inters.push_back(v);
+                }
+            }
+            std::sort(all_inters.begin(), all_inters.end(), [](const RS_Vector& a, const RS_Vector& b){
+                return a.x < b.x || (RS_Math::equal(a.x, b.x) && a.y < b.y);
+            });
+            auto last = std::unique(all_inters.begin(), all_inters.end(), [](const RS_Vector& a, const RS_Vector& b){
+                return a.distanceTo(b) < RS_TOLERANCE;
+            });
+            all_inters.erase(last, all_inters.end());
+            auto sorted_inters = sortAlong(cloned.get(), all_inters);
+            const bool closed = entityIsClosed(cloned.get());
+            if (sorted_inters.empty()) {
+                if (keepPiece(*cloned, classifier, epsOn)) {
+                    if (!emitPiece(std::move(cloned))) return trimmed;
+                }
+                continue;
+            }
+            if (closed && sorted_inters.size() % 2 != 0) {
+                RS_DEBUG->print("trimPatternEntities: Odd intersections for closed entity, skipping");
+                continue;
+            }
+            std::vector<RS_Vector> points;
+            if (!closed) {
+                points.push_back(cloned->getStartpoint());
+                points.insert(points.end(), sorted_inters.begin(), sorted_inters.end());
+                points.push_back(cloned->getEndpoint());
+            } else {
+                points = sorted_inters;
+            }
+            for (size_t i = 0; i < points.size() - 1; ++i) {
+                RS_Vector p1 = points[i];
+                RS_Vector p2 = points[i + 1];
+                if (p1.distanceTo(p2) < RS_TOLERANCE) {
+                    continue;
+                }
+                auto sub = std::unique_ptr<RS_Entity>(subEntity(cloned.get(), p1, p2));
+                if (sub && sub->getLength() > RS_TOLERANCE && keepPiece(*sub, classifier, epsOn)) {
+                    if (!emitPiece(std::move(sub))) return trimmed;
+                }
+            }
+            if (closed && sorted_inters.size() > 0) {
+                RS_Vector pw1 = points.back();
+                RS_Vector pw2 = points[0];
+                if (pw1.distanceTo(pw2) >= RS_TOLERANCE) {
+                    auto sub = std::unique_ptr<RS_Entity>(subEntity(cloned.get(), pw1, pw2));
+                    if (sub && sub->getLength() > RS_TOLERANCE && keepPiece(*sub, classifier, epsOn)) {
+                        if (!emitPiece(std::move(sub))) return trimmed;
+                    }
+                }
+            }
+        }
+    }
+    return trimmed;
 }
 
 /**

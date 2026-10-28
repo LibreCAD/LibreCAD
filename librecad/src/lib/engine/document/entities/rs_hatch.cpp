@@ -725,10 +725,7 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
     // createTiles. Charge it before any tile is built so a thin diagonal
     // strip with a small tile does not run its O(B) grid walk inside the
     // density guard.
-    double gridWorkTotal = 0.0;
-    for (const auto& loop : *m_orderedLoops) {
-        gridWorkTotal += loop.gridWork(*pattern, anchor);
-    }
+    const double gridWorkTotal = LC_LoopUtils::gridWork(*m_orderedLoops, *pattern, anchor);
     if (gridWorkTotal > 10.0 * dpolicy.workCap
         || (!dpolicy.forced && gridWorkTotal > dpolicy.workCap)) {
         report.work = gridWorkTotal;
@@ -736,18 +733,13 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
         return;
     }
 
-    // Build tiles per root; measure per-tile pair work with an early stop.
-    std::vector<std::vector<LC_LoopUtils::LC_TileSlot>> tiles;
-    tiles.reserve(m_orderedLoops->size());
-    double pairWorkTotal = 0.0;
+    // One tile set over the union of the roots' bounding boxes, de-duplicated
+    // by (i, k); measure per-tile pair work with an early stop.
+    const std::vector<LC_LoopUtils::LC_TileSlot> tiles =
+        LC_LoopUtils::createTiles(*m_orderedLoops, *pattern, anchor);
     const double pairStop = 10.0 * dpolicy.workCap;
-    for (const auto& loop : *m_orderedLoops) {
-        tiles.push_back(loop.createTiles(*pattern, anchor));
-        if (pairWorkTotal <= pairStop) {
-            pairWorkTotal += loop.tileWork(*pattern, tiles.back(),
-                                           pairStop - pairWorkTotal);
-        }
-    }
+    const double pairWorkTotal =
+        LC_LoopUtils::tileWork(*m_orderedLoops, *pattern, tiles, pairStop);
     report.work = gridWorkTotal + pairWorkTotal;
     if (report.work > 10.0 * dpolicy.workCap
         || (!dpolicy.forced && report.work > dpolicy.workCap)) {
@@ -759,13 +751,8 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
     // the whole buffer, keeping the hatch empty of FlagHatchChild children.
     const std::size_t cap = static_cast<std::size_t>(effectiveCap);
     LC_HatchPieceBudget budget{cap};
-    std::vector<std::unique_ptr<RS_EntityContainer>> parts;
-    parts.reserve(m_orderedLoops->size());
-    for (size_t i = 0; i < m_orderedLoops->size(); ++i) {
-        parts.push_back((*m_orderedLoops)[i].trimPatternEntities(
-            *pattern, tiles[i], budget));
-        if (budget.tripped) break;
-    }
+    std::unique_ptr<RS_EntityContainer> trimmed =
+        LC_LoopUtils::trimPatternEntities(*m_orderedLoops, *pattern, tiles, budget);
     // Charge the shared pool for every piece this clone tried, tripped or not.
     // The next hatch clone in the same expansion sees a smaller remaining
     // budget; its sharedBudget comparison and softCap adjustment above keep
@@ -781,22 +768,21 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
     }
     if (budget.tripped) {
         report.attempted = budget.taken + 1;  // the piece that tripped
-        parts.clear();
+        trimmed.reset();
         tripTooDense(LC_HatchDensityReport::Reason::Budget);
         return;
     }
     report.attempted = budget.taken;
 
-    // Collect every produced piece from every root while it is still in the
-    // loop frame. The LINE pieces of all roots feed one tile-relative de-dup
-    // (tolerance 1e-6 x the scaled tile size), which merges touching tile
-    // borders so no ink is drawn twice. Non-LINE pieces (arcs, circles,
+    // Collect every produced piece from the single trimmer run while they
+    // are still in the loop frame. The LINE pieces feed one tile-relative
+    // de-dup (tolerance 1e-6 x the scaled tile size), which merges touching
+    // tile borders so no ink is drawn twice. Non-LINE pieces (arcs, circles,
     // ellipses, ...) pass through unchanged.
     std::vector<RS_LineData> lineData;
     std::vector<std::unique_ptr<RS_Entity>> otherPieces;
-    for (auto& part : parts) {
-        if (!part) continue;
-        for (auto& owned : part->takeEntities()) {
+    if (trimmed) {
+        for (auto& owned : trimmed->takeEntities()) {
             if (owned && owned->rtti() == RS2::EntityLine) {
                 const auto* line = static_cast<const RS_Line*>(owned.get());
                 lineData.push_back(line->getData());
@@ -999,14 +985,13 @@ double RS_Hatch::doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity
     if (m_loopAngle != 0.0) {
         query.rotate(m_pivot, -m_loopAngle);
     }
-    // Check if point is on the solid fill/hatch
-    for (const auto& loop : *m_orderedLoops) {
-        if (loop.isInside(query)) {
-            if (entity != nullptr) {
-                *entity = const_cast<RS_Hatch*>(this);
-            }
-            return 0.0;
+    // Global even-odd parity: a point is inside the hatch region iff
+    // classifyAll says so, matching one-path odd-even fill and the trimmer.
+    if (LC_LoopUtils::classifyAll(query, *m_orderedLoops) != LC_LoopUtils::PointClass::Outside) {
+        if (entity != nullptr) {
+            *entity = const_cast<RS_Hatch*>(this);
         }
+        return 0.0;
     }
     return RS_MAXDOUBLE;
 }

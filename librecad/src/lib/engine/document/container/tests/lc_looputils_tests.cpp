@@ -319,10 +319,9 @@ TEST_CASE("Collinear pattern pieces: bottom and right drawn, top and left not",
         auto results = opt.getResults();
         REQUIRE(results);
         REQUIRE_FALSE(results->empty());
-        const auto& loop = (*results)[0];
-        auto tiles = loop.createTiles(*pattern, RS_Vector(0.0, 0.0));
+        auto tiles = LC_LoopUtils::createTiles(*results, *pattern, RS_Vector(0.0, 0.0));
         LC_HatchPieceBudget budget{std::numeric_limits<std::size_t>::max()};
-        auto trimmed = loop.trimPatternEntities(*pattern, tiles, budget);
+        auto trimmed = LC_LoopUtils::trimPatternEntities(*results, *pattern, tiles, budget);
         REQUIRE(trimmed != nullptr);
 
         int bottom = 0, top = 0;
@@ -344,10 +343,9 @@ TEST_CASE("Collinear pattern pieces: bottom and right drawn, top and left not",
         auto results = opt.getResults();
         REQUIRE(results);
         REQUIRE_FALSE(results->empty());
-        const auto& loop = (*results)[0];
-        auto tiles = loop.createTiles(*pattern, RS_Vector(0.0, 0.0));
+        auto tiles = LC_LoopUtils::createTiles(*results, *pattern, RS_Vector(0.0, 0.0));
         LC_HatchPieceBudget budget{std::numeric_limits<std::size_t>::max()};
-        auto trimmed = loop.trimPatternEntities(*pattern, tiles, budget);
+        auto trimmed = LC_LoopUtils::trimPatternEntities(*results, *pattern, tiles, budget);
         REQUIRE(trimmed != nullptr);
 
         int left = 0, right = 0;
