@@ -23,7 +23,7 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-10-27. Project: **LibreCAD**, not LibreCAD_3.
+Updated: 2026-10-28. Project: **LibreCAD**, not LibreCAD_3.
 Status: **S0/W0-W2 partially implemented; helper/client, dialog/sheet/grip/Update routing and typed Produce qualified; creation/cache/trim/import integration remains open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
@@ -1579,7 +1579,55 @@ ASan, qmake6, deployed packaging and visible GUI acceptance were not rerun on th
 merged tree; earlier receipts retain their original source limits. The merge
 does not close native caller routing, source reconciliation, A-C review or final R.
 
-Remaining creation/repeat steps:
+PR #3193 review follow-ups (execute before the remaining creation/cache work):
+
+- [x] Publication allocation safety: `d320a0eea` stages native property-sheet
+  entity/selection/history/bounds changes and a complete undo cycle before final
+  input seals. Commit performs no C++ allocation or callback; ownership transfers
+  only after commit. Post-commit observer failure cannot erase the undo cycle.
+  Generic modification/undo callers outside this native property publisher are
+  unchanged. Listener registration now rolls back partial allocation failure.
+- [ ] Async source-action regressions: wait for the actual queued Update result
+  within existing bounded test deadlines before checking reports, undo or R2018
+  DXF/DWG persistence. Preserve all persistence and refusal assertions.
+- [ ] Invalid-viewport grip regression: retain invalid-coordinate rejection for
+  the remainder of a native gesture cancelled by viewport redraw, without
+  disabling ordinary neutral snapping introduced upstream.
+- [ ] Validation recipe completeness: discover/execute `[offsetcurve]` as well
+  as `[lc-offsetcurve]`, and list the implemented worker/micro/fault targets.
+
+P1 fresh Release/ASan qualification on `d320a0eea`: the standalone fault target
+passes35 fresh preparation allocation ordinals and113 redo-tail ordinals, with
+zero C++ `new` calls during publication; former failure ordinals1-8, stale
+selection, throwing observers, relative-zero undo and locked-layer selection
+also pass. Both builds emit the same diagnostic. The initial census of100
+allocations exceeded the existing64 guard; replacing per-child set allocations
+with a sorted pointer vector reduced it to35 without raising guards or production
+limits. A real undefined-native attribute-only sheet regression was fixed by
+removing an unnecessary editable-definition prerequisite, not weakening tests.
+The property-sheet micro target passes41 declarations/53 JUnit cases/9367
+assertions in each build. Release `[tracked][listener]` passes35 declarations/
+35 cases/150 assertions. Every report has zero errors, failures or skips.
+ASan uses `detect_leaks=0`; this is not a Qt-private allocation or leak-free claim.
+The Release app and main tests also build. Broader suites await the remaining
+review fixes; these results do not close creation/cache/trim/import, final R,
+qmake6/deployment, visible UI or full interoperability acceptance.
+
+Evidence is in the build/evidence root above. The earlier red census and sheet
+reports remain retained as red evidence. Final artifact SHA256 values:
+
+| PR3193 P1 artifact | SHA256 |
+|---|---|
+| `PR3193-P1-qualified-fault-release.log` / `PR3193-P1-qualified-fault-asan.log` | `ca8ccb96179e1baed01a1c346e7d7b0444d7d7156870251b77e323590d1d57ed` (identical bytes) |
+| `PR3193-P1-qualified-sheet-release.xml` | `fc8927d8a4225b4ad9138862295a5777dfb1b95a5484db149af02e02b68297de` |
+| `PR3193-P1-listener-release.xml` | `f9058d314bad69c565ead06c4e0332e54416a7a764f73920ee693cfa3ad439b2` |
+| `PR3193-P1-qualified-sheet-asan.xml` | `1aee2cd131c5c037a63507bc79ff4403e33ecbea30143060f1410ac70002e7f3` |
+
+Immediate next slice: bounded async source-action test waits, then the native
+grip cancellation regression, then the complete selector/target recipe. Test and
+commit each slice, immediately checkpoint this plan, and push to draft PR #3193.
+
+Remaining creation/repeat steps after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
 2. Typed child Produce is implemented/qualified at `558c3bba2`, including private
