@@ -136,11 +136,8 @@ void LC_PropertiesProviderGraphicPaper::createPrintOrientation(LC_PropertyContai
         return result;
     };
 
-    auto funSetValue = [this]([[maybe_unused]] const LC_PropertyEnumValueType& v,  LC_PlotSettings* e) -> void {
-        bool landscape = false;
-        [[maybe_unused]] const RS2::PaperFormat format = e->getPaperFormat(&landscape);
-        const bool newLandscape = v == 0;
-        e->setPaperFormat(format, newLandscape);
+    auto funSetValue = [this](const LC_PropertyEnumValueType& v, LC_PlotSettings* e) -> void {
+        e->setPaperLandscape(v == 0);
         notifyDrawingOptionsChanged();
     };
 

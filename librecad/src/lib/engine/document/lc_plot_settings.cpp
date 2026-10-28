@@ -76,6 +76,17 @@ void LC_PlotSettings::setPaperFormat(const RS2::PaperFormat format, const bool l
 }
 
 /**
+ * Turns the paper to landscape or portrait. Its size is swapped rather than looked
+ * up again by format: a custom paper has no size of its own (#3187).
+ */
+void LC_PlotSettings::setPaperLandscape(const bool landscape) {
+    const RS_Vector size = getPaperSize();
+    if (landscape != (size.x > size.y)) {
+        setPaperSize(RS_Vector(size.y, size.x));
+    }
+}
+
+/**
  * @return Paper space scaling (DXF: $PSVPSCALE).
  */
 double LC_PlotSettings::getPaperScale() const {

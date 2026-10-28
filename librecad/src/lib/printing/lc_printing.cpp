@@ -206,6 +206,11 @@ void LC_Printing::print(QC_MDIWindow &mdiWindow, PrinterType printerType) {
     }
 
     QPrinter printer(QPrinter::HighResolution);
+    if (printerType == PrinterType::PDF) {
+        // Issue #3187: PDF before the page. A system printer refuses a page size it
+        // does not have, and a PDF started from it keeps the printer's page.
+        printer.setOutputFormat(QPrinter::PdfFormat);
+    }
     // fullPage must be set to true to get full width and height
     // (without counting margins).
     printer.setFullPage(true);
@@ -234,7 +239,6 @@ void LC_Printing::print(QC_MDIWindow &mdiWindow, PrinterType printerType) {
     // printer setup:
     bool bStartPrinting = false;
     if (printerType == PrinterType::PDF) {
-        printer.setOutputFormat(QPrinter::PdfFormat);
         printer.setResolution(1200);
         // Issue #1897, exporting PDF margins to to follow the drawing settings
         QPageLayout pdfLayout = printer.pageLayout();
