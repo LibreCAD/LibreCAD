@@ -4609,7 +4609,7 @@ std::vector<std::uint8_t> makeMalformedMPolygonGradientBody() {
     dwgBufferW body;
     if (!polygon.encodeDwgCommon(DRW::AC1018, &body))
         return {};
-    body.putBitShort(0); // leading style
+    body.putBitShort(0); // version (DXF 70)
     body.putBitLong(0); // gradient enabled
     body.putBitLong(0); // gradient reserved
     body.putBitDouble(0.0); // gradient angle
@@ -12656,6 +12656,8 @@ TEST_CASE("DWG HATCH and MPOLYGON clear reused body state",
     polygon.xDirX = 4.0;
     polygon.xDirY = 5.0;
     polygon.degenerateLoops = 6;
+    polygon.mpVersion = 9;
+    polygon.annotatedBoundary = 5;
     polygon.looplist.push_back(std::make_shared<DRW_HatchLoop>(2));
     dwgBuffer polygonBuffer(empty.data(), empty.size());
     CHECK_FALSE(polygon.parseDwg(DRW::AC1027, &polygonBuffer, 0));
@@ -12665,6 +12667,8 @@ TEST_CASE("DWG HATCH and MPOLYGON clear reused body state",
     CHECK(polygon.xDirX == 0.0);
     CHECK(polygon.xDirY == 0.0);
     CHECK(polygon.degenerateLoops == 0);
+    CHECK(polygon.mpVersion == 1);
+    CHECK(polygon.annotatedBoundary == 0);
     CHECK(polygon.looplist.empty());
 }
 
@@ -13415,11 +13419,12 @@ TEST_CASE("DWG HATCH variable counts honor the object body",
     REQUIRE_FALSE(polygonBytes.empty());
     dwgBuffer polygonBuffer(polygonBytes.data(), polygonBytes.size());
     DwgMPolygonProbe polygon;
-    polygon.hstyle = 9;
+    polygon.mpVersion = 9;
     polygon.fillColorAci = 7;
     CHECK_FALSE(polygon.parseDwg(DRW::AC1018, &polygonBuffer, 0));
     CHECK(polygonBuffer.getPosition() == 0);
     CHECK(polygonBuffer.getBitPos() == 0);
+    CHECK(polygon.mpVersion == 1);
     CHECK(polygon.hstyle == 0);
     CHECK(polygon.fillColorAci == 0);
     CHECK(polygon.gradColors.empty());

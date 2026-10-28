@@ -2591,6 +2591,11 @@ protected:
                            dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 private:
+    /// Clear every MPOLYGON-only carrier before reusing the entity. The base
+    /// DRW_Hatch::resetDwgState clears HATCH's own fields but leaves these
+    /// MPOLYGON additions untouched.
+    void resetMPolygonState();
+
     bool m_loopsDone {false};  /*!< code 76 or last 91 count flips this */
 };
 

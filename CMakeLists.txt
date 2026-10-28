@@ -2763,6 +2763,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/mpolygon_tests.cpp
         librecad/src/lib/filters/tests/mpolygon_dwg_tests.cpp
         librecad/src/lib/filters/tests/lc_mpolygon_dxf_tests.cpp
+        librecad/src/lib/filters/tests/lc_mpolygon_dwg_tests.cpp
         librecad/src/lib/filters/tests/mesh_tests.cpp
         librecad/src/lib/filters/tests/acis_wireframe_tests.cpp
         librecad/src/lib/filters/tests/helix_tests.cpp
@@ -3223,6 +3224,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/eed_tests.cpp
         librecad/src/lib/filters/tests/datastorage_tests.cpp
         librecad/src/lib/filters/tests/lc_export_commit_tests.cpp
+        librecad/src/lib/filters/tests/lc_mpolygon_dwg_tests.cpp
     )
     add_executable(librecad_dwg_fast_tests
         EXCLUDE_FROM_ALL
