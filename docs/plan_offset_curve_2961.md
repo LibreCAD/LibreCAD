@@ -1877,7 +1877,7 @@ failures/skips, complete identities and only named SECTION extras:
 | worker edit | 15 | 15 | 101553 / 101553 |
 | source preparation | 79 | 85 | 83452 / 83452 |
 
-Seven new cases cover request/reply corruption, real cubic value round trips,
+Eight new cases cover request/reply corruption, real cubic value round trips,
 fresh-process zero-effort reuse, opposite-side misses, refusal growth, cross-source
 eviction, mandatory native C, zero-sum fallback and private/stale/moved completion
 behavior. Existing generic fault/timeout tests also pass; these are not newly
@@ -1893,6 +1893,47 @@ W16/W17 complete preview-cache value/process portability, not creation/repeat GU
 routing. Next implement W18 ordered preparation/publication and W19 GUI ownership
 and cancellation as specified above. Retain ordinary-only behavior and all
 existing option/geometry/selection/undo assertions.
+
+Ordered preparation continuation W18a:
+`c213a6c2a` adds `LC_OffsetBatchPreparation` around the existing modification
+dispatcher. Owned per-source numeric rows survive asynchronous turns. Advancing
+rebuilds only bounded dispatch/grouping and never regenerates an accepted row.
+Ellipse/native rows wait for exact token/body-bound private completions; ordinary
+prefixes remain private. Each helper receives the actual request allowance left
+after earlier parent-materialized output. The final batch retains original source
+order, deduplication, polyline runs/whole-parent aliases, copy groups, failure and
+short-series diagnostics and source-removal policy. Nothing is published by this
+class. Its final ownership release is allocation-free and limited to the staged
+added set. The synchronous API still uses the same dispatcher with no continuation.
+The caller must own source/context seals across turns; W19 will supply owned
+numeric source graphs so live-document death cannot interrupt numeric staging.
+
+Full Release/ASan micro discovery/execution passes with complete identities,
+zero errors/failures/skips and only named SECTION extras:
+
+| W18a suite | Declarations | JUnit cases | Assertions Release / ASan |
+|---|---|---|---|
+| source preparation | 82 | 88 | 83527 / 83527 |
+| client | 16 | 16 | 8122 / 12666 |
+| kernel | 18 | 18 | 2728 / 2728 |
+| real process | 4 | 4 | 2756 / 3162 |
+
+Four new cases verify ordinary no-rerun ownership, request exhaustion before
+dispatch, polyline aliases/whole-source parity, and mixed ordered real-helper
+completion with exact request-token rejection. Header registration is present in
+CMake/qmake6; no fresh qmake6 application/deployment/visible claim. ASan uses
+`detect_leaks=0`; process polling counts vary. `W18a-evidence.sha256` binds24
+qualified XML/log files plus two final build logs, SHA256
+`8d16113e9cf65b8d61a24081ae6c15c006dc616a3168a1301570519fa4d8a8f9`.
+The initial test-probe signature build and zero-match pre-build reports are not
+qualification; the final reports above discover and execute every named case.
+The W17 ledger's new-case count is corrected to eight, matching its suite table.
+
+W18 is split for review/commit isolation: W18a ordered staging is implemented;
+W18b allocation-safe creation publication remains next, then W19 GUI routing.
+Reuse the prepared model transaction, preserve the strict property replacement
+entry/census, and cover add-only/delete-source/mixed selection, relative zero,
+redo pruning, stale input and allocation failures before handing off any owner.
 
 Remaining creation/repeat steps after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
@@ -1939,8 +1980,8 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** W18 ordered preparation and
-allocation-safe creation publication, then W19 creation/repeat GUI routing in the remaining
+**Next concrete action on implementation resume:** W18b allocation-safe creation
+publication, then W19 creation/repeat GUI routing in the remaining
 4.2 caller adapters. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
 Nothing is automatically copied into the dirty main tree. Native caller routing,
