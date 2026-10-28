@@ -1299,20 +1299,6 @@ void LoopSorter::findParent(std::size_t child) {
     }
 
     /**
-     * @brief Builds hierarchical QPainterPath: Outer path (reversed if odd level), add children recursively.
-     * Applies OddEvenFill for holes.
-     */
-    QPainterPath LC_Loops::getPainterPath(RS_Painter* painter, int level) const {
-        QPainterPath path = buildPathFromLoop(painter, *m_loop);
-        for (const auto& child : m_children) {
-            const QPainterPath childPath = child.getPainterPath(painter, level + 1);
-            path -= childPath;
-        }
-        path.setFillRule(Qt::OddEvenFill);
-        return path;
-    }
-
-    /**
      * @brief Computes net area: Outer area minus children's total areas (subtracts holes, adds islands).
      */
     double LC_Loops::getTotalArea() const {
@@ -1391,44 +1377,6 @@ void LoopSorter::findParent(std::size_t child) {
             current_t = t1;
         }
     }
-
-    /**
-     * @brief Converts container entities to QPainterPath, handling lines, arcs, circles, ellipses, splines, and parabolas.
-     * Closes the subpath; skips unsupported types.
-     */
-    QPainterPath LC_Loops::buildPathFromLoop(RS_Painter* painter, const RS_EntityContainer& cont) const {
-        PathBuilder builder{painter};
-        QPainterPath& path = builder.getPath();
-        if (cont.empty()) {
-            return path;
-        }
-
-        // single closed entities may not have defined start/end points
-        RS_Entity* first = cont.first();
-        if (isClosed(*first, m_eps)) {
-            builder.append(first);
-            builder.closeSubpath();
-            return path;
-        }
-
-         //builder.moveTo(cont.first()->getStartpoint());
-  for (RS_Entity* e : cont) {
-    if (e->isAtomic()) {
-      RS_Vector start = e->getStartpoint();
-      if (!path.isEmpty() && RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL) {
-        if ((path.currentPosition() - builder.toGuiPoint({start.x, start.y})).manhattanLength() >= 3.) {
-            LC_ERR << __func__ << "(): gap before (" << start.x << ", " << start.y << ")";
-        }
-      }
-      builder.append(e);
-    }
-  }
-  builder.closeSubpath();
-  if (RS_DEBUG->getLevel() > RS_Debug::D_WARNING) {
-      debugPath(path);
-  }
-  return path;
-}
 
     /**
      * @brief Recursively collects all descendant loop containers.
@@ -1927,4 +1875,177 @@ std::vector<RS_Vector> LC_Loops::sortPointsAlongEntity(RS_Entity* e, std::vector
             return loop.overlap(other);
         });
     }
+
+QPainterPath buildLoopPath(RS_Painter* painter, const RS_EntityContainer& cont,
+                           double eps) {
+    PathBuilder builder{painter};
+    QPainterPath& path = builder.getPath();
+    if (cont.empty()) {
+        return path;
+    }
+
+    // single closed entities may not have defined start/end points
+    RS_Entity* first = cont.first();
+    if (isClosed(*first, eps)) {
+        builder.append(first);
+        builder.closeSubpath();
+        return path;
+    }
+
+    for (RS_Entity* e : cont) {
+        if (e->isAtomic()) {
+            RS_Vector start = e->getStartpoint();
+            if (!path.isEmpty() && RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL) {
+                if ((path.currentPosition() - builder.toGuiPoint({start.x, start.y})).manhattanLength() >= 3.) {
+                    LC_ERR << __func__ << "(): gap before (" << start.x << ", " << start.y << ")";
+                }
+            }
+            builder.append(e);
+        }
+    }
+    builder.closeSubpath();
+    if (RS_DEBUG->getLevel() > RS_Debug::D_WARNING) {
+        debugPath(path);
+    }
+    return path;
+}
+
+namespace {
+
+// A boundary candidate pulled from one node of the loop tree. The vertex
+// table and edges are read-only views; the owning LC_Loops must outlive
+// the countDuplicateLoops call.
+struct DupCandidate {
+    const RS_EntityContainer* loop = nullptr;
+    const std::vector<RS_Vector>* vertices = nullptr;
+    std::vector<RS_Entity*> edges;
+    const RS_Entity* closed = nullptr;  // non-null only for a single-closed loop
+    double area = 0.0;
+    double perimeter = 0.0;
+    double eps = 0.0;
+};
+
+void collectDupCandidates(const LC_Loops& node,
+                          std::vector<DupCandidate>& out) {
+    DupCandidate c;
+    c.loop = node.getOuterLoop().get();
+    c.vertices = &node.geometry().vertices();
+    c.eps = node.tolerance();
+    if (c.loop != nullptr) {
+        for (RS_Entity* e : *c.loop) {
+            if (e != nullptr && e->isAtomic()) {
+                c.edges.push_back(e);
+                c.perimeter += e->getLength();
+            }
+        }
+        c.area = std::abs(c.loop->areaLineIntegral());
+        if (c.edges.size() == 1 && isClosed(*c.edges.front(), c.eps)) {
+            c.closed = c.edges.front();
+        }
+    }
+    out.push_back(std::move(c));
+    for (const auto& child : node.getChildren()) {
+        collectDupCandidates(child, out);
+    }
+}
+
+bool matchClosed(const RS_Entity& a, const RS_Entity& b, double eps) {
+    if (a.rtti() != b.rtti()) return false;
+    switch (a.rtti()) {
+    case RS2::EntityCircle: {
+        const auto& ca = static_cast<const RS_Circle&>(a);
+        const auto& cb = static_cast<const RS_Circle&>(b);
+        if ((ca.getCenter() - cb.getCenter()).magnitude() > eps) return false;
+        return std::abs(ca.getRadius() - cb.getRadius()) <= eps;
+    }
+    case RS2::EntityEllipse: {
+        const auto& ea = static_cast<const RS_Ellipse&>(a);
+        const auto& eb = static_cast<const RS_Ellipse&>(b);
+        if ((ea.getCenter() - eb.getCenter()).magnitude() > eps) return false;
+        // Compare the major axis vectors and ratios directly; ellipses with
+        // reversed major-axis directions still describe the same curve.
+        const RS_Vector pA = ea.getMajorP();
+        const RS_Vector pB = eb.getMajorP();
+        const bool axisSame = (pA - pB).magnitude() <= eps
+                              || (pA + pB).magnitude() <= eps;
+        if (!axisSame) return false;
+        return std::abs(ea.getRatio() - eb.getRatio()) <= eps;
+    }
+    case RS2::EntitySplinePoints: {
+        const auto& sa = static_cast<const LC_SplinePoints&>(a);
+        const auto& sb = static_cast<const LC_SplinePoints&>(b);
+        const auto& pa = sa.getPoints();
+        const auto& pb = sb.getPoints();
+        if (pa.size() != pb.size() || pa.empty()) return false;
+        // Closed spline control polygons can rotate: try every start.
+        const std::size_t n = pa.size();
+        for (std::size_t k = 0; k < n; ++k) {
+            bool ok = true;
+            for (std::size_t i = 0; i < n && ok; ++i) {
+                if ((pa[i] - pb[(i + k) % n]).magnitude() > eps) ok = false;
+            }
+            if (ok) return true;
+        }
+        return false;
+    }
+    default:
+        return false;
+    }
+}
+
+bool duplicateMatch(const DupCandidate& a, const DupCandidate& b) {
+    // Single closed curves on both sides.
+    if (a.closed != nullptr && b.closed != nullptr) {
+        const double eps = std::max(a.eps, b.eps);
+        return matchClosed(*a.closed, *b.closed, eps);
+    }
+    if (a.closed != nullptr || b.closed != nullptr) return false;
+    if (a.vertices == nullptr || b.vertices == nullptr) return false;
+    const std::size_t n = a.vertices->size();
+    if (n == 0 || n != b.vertices->size()) return false;
+    if (a.edges.size() != n || b.edges.size() != n) return false;
+    const double eps = std::max(a.eps, b.eps);
+    for (std::size_t k = 0; k < n; ++k) {
+        bool ok = true;
+        for (std::size_t i = 0; i < n && ok; ++i) {
+            const std::size_t j = (i + k) % n;
+            if (((*a.vertices)[i] - (*b.vertices)[j]).magnitude() > eps) { ok = false; break; }
+            if (a.edges[i]->rtti() != b.edges[j]->rtti()) { ok = false; break; }
+            const RS_Vector midA = a.edges[i]->getMiddlePoint();
+            const RS_Vector midB = b.edges[j]->getMiddlePoint();
+            if (!midA.valid || !midB.valid) { ok = false; break; }
+            if ((midA - midB).magnitude() > eps) { ok = false; break; }
+        }
+        if (ok) return true;
+    }
+    return false;
+}
+
+}  // namespace
+
+int countDuplicateLoops(const std::vector<LC_Loops>& roots) {
+    std::vector<DupCandidate> cands;
+    for (const auto& r : roots) {
+        collectDupCandidates(r, cands);
+    }
+    std::vector<char> isDup(cands.size(), 0);
+    int count = 0;
+    for (std::size_t i = 0; i < cands.size(); ++i) {
+        if (isDup[i] != 0) continue;
+        for (std::size_t j = i + 1; j < cands.size(); ++j) {
+            if (isDup[j] != 0) continue;
+            const double maxP = std::max(cands[i].perimeter, cands[j].perimeter);
+            const double eps = std::max(cands[i].eps, cands[j].eps);
+            if (std::abs(cands[i].area - cands[j].area) > eps * std::max(maxP, 1.0)) {
+                continue;
+            }
+            if (duplicateMatch(cands[i], cands[j])) {
+                isDup[j] = 1;
+                ++count;
+            }
+        }
+    }
+    return count;
+}
+
 } // namespace LC_LoopUtils

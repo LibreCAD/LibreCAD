@@ -42,6 +42,7 @@
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 
 #include "lc_containertraverser.h"
+#include "lc_hatchdensity.h"
 #include "lc_hatchtestsupport.h"
 #include "lc_hyperbola.h"
 #include "lc_loopclassifier.h"
@@ -1823,5 +1824,117 @@ TEST_CASE("Welding at large D merges near-touching contours safely",
     REQUIRE(hatch->countLoops() == 2);
     const double expected = 2.0 * side * side;
     REQUIRE_THAT(hatch->getTotalArea(), WithinRel(expected, 1e-6));
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Crossing loops fill as XOR", "[lc-hatchfix][classifier]") {
+    using lc::test::TestPainter;
+
+    // Two overlapping squares in two containers: (0,0)-(200,200) and
+    // (100,100)-(300,300). The sorter leaves both as roots because neither
+    // encloses the other, so the one-path odd-even fill paints the two
+    // squares as XOR: the overlap region (100,100)-(200,200) draws empty.
+    auto makeCrossingLoops = []() {
+        std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+        loops.push_back(makeLoopContainer(lc::test::rectRing(0, 0, 200, 200)));
+        loops.push_back(makeLoopContainer(lc::test::rectRing(100, 100, 300, 300)));
+        return loops;
+    };
+
+    SECTION("Solid hatch draws the XOR region") {
+        auto loops = makeCrossingLoops();
+        RS_HatchData data{true, 1.0, 0.0, QStringLiteral("SOLID")};
+        auto hatch = makeHatch(std::move(loops), data);
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        REQUIRE(hatch->countLoops() == 2);
+
+        LC_Rect box{RS_Vector(-10, -10), RS_Vector(310, 310)};
+        auto tp = TestPainter::fitting(box, 600);
+        hatch->draw(&tp.painter);
+
+        // Overlap region (150, 150) is inside both subpaths, so the odd-even
+        // fill leaves it blank. The two non-overlap regions remain filled.
+        REQUIRE_FALSE(tp.filledAt(150.0, 150.0));
+        REQUIRE(tp.filledAt(50.0, 50.0));
+        REQUIRE(tp.filledAt(250.0, 250.0));
+    }
+
+    SECTION("TOO_DENSE pattern hatch tints the XOR region") {
+        lc::test::SourcePatterns patterns;
+        LC_HatchDensityPolicy policy;
+        policy.maxPieces = 0;
+        LC_HatchDensity::ScopedPolicy guard{policy};
+
+        auto loops = makeCrossingLoops();
+        RS_HatchData data{false, 1.0, 0.0, QStringLiteral("ANSI31")};
+        auto hatch = makeHatch(std::move(loops), data);
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_TOO_DENSE);
+
+        LC_Rect box{RS_Vector(-10, -10), RS_Vector(310, 310)};
+        auto tp = TestPainter::fitting(box, 600);
+        hatch->draw(&tp.painter);
+
+        // The density tint rides the same drawFill path, so the overlap
+        // region is untinted and the two non-overlap regions are tinted.
+        REQUIRE_FALSE(tp.filledAt(150.0, 150.0));
+        REQUIRE(tp.filledAt(50.0, 50.0));
+        REQUIRE(tp.filledAt(250.0, 250.0));
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Duplicate loops are counted and cancel",
+          "[lc-hatchfix][nesting]") {
+    using lc::test::TestPainter;
+
+    SECTION("N2: two identical squares count one duplicate and cancel") {
+        std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+        loops.push_back(makeLoopContainer(lc::test::rectRing(0, 0, 300, 300)));
+        loops.push_back(makeLoopContainer(lc::test::rectRing(0, 0, 300, 300)));
+        RS_HatchData data{true, 1.0, 0.0, QStringLiteral("SOLID")};
+        auto hatch = makeHatch(std::move(loops), data);
+
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        REQUIRE(hatch->countDuplicateLoops() == 1);
+        REQUIRE_THAT(hatch->getTotalArea(), WithinAbs(0.0, 1e-9));
+
+        // The duplicate's subpath cancels the root's in the odd-even fill:
+        // the interior probe sits inside two subpaths and draws empty.
+        LC_Rect box{RS_Vector(-10, -10), RS_Vector(310, 310)};
+        auto tp = TestPainter::fitting(box, 600);
+        hatch->draw(&tp.painter);
+        REQUIRE_FALSE(tp.filledAt(150.0, 150.0));
+    }
+
+    SECTION("Reversed and start-rotated copy still counts as one duplicate") {
+        auto cont1 = makeLoopContainer(lc::test::rectRing(0, 0, 300, 300));
+
+        // Same square, reversed (CW) and starting at the opposite corner.
+        auto cont2 = std::make_unique<RS_EntityContainer>(nullptr, true);
+        cont2->addEntity(new RS_Line(cont2.get(), RS_Vector(300, 300), RS_Vector(0, 300)));
+        cont2->addEntity(new RS_Line(cont2.get(), RS_Vector(0, 300),   RS_Vector(0, 0)));
+        cont2->addEntity(new RS_Line(cont2.get(), RS_Vector(0, 0),     RS_Vector(300, 0)));
+        cont2->addEntity(new RS_Line(cont2.get(), RS_Vector(300, 0),   RS_Vector(300, 300)));
+
+        std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+        loops.push_back(std::move(cont1));
+        loops.push_back(std::move(cont2));
+        RS_HatchData data{true, 1.0, 0.0, QStringLiteral("SOLID")};
+        auto hatch = makeHatch(std::move(loops), data);
+
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        REQUIRE(hatch->countDuplicateLoops() == 1);
+    }
+
+    SECTION("Equal but disjoint squares count zero duplicates") {
+        std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+        loops.push_back(makeLoopContainer(lc::test::rectRing(0, 0, 100, 100)));
+        loops.push_back(makeLoopContainer(lc::test::rectRing(200, 0, 300, 100)));
+        RS_HatchData data{true, 1.0, 0.0, QStringLiteral("SOLID")};
+        auto hatch = makeHatch(std::move(loops), data);
+
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        REQUIRE(hatch->countDuplicateLoops() == 0);
+    }
 }
 

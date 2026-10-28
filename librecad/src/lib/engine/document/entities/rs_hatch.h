@@ -147,6 +147,14 @@ public:
      */
     int countAllLoops() const;
 
+    /**
+     * @return The number of boundary loops the last successful validate()
+     * found to duplicate an earlier loop in the hierarchy. A duplicate loop
+     * cancels in the one-path odd-even fill, so the duplicated region draws
+     * empty. Zero before validate() has run or after a failed validate().
+     */
+    int countDuplicateLoops() const { return m_duplicateLoops; }
+
     /** @return true if solid hatch (either flag set or pattern name is "SOLID"). */
     bool isSolid() const { return m_data.solid || m_data.pattern.compare("SOLID", Qt::CaseInsensitive) == 0; }
     // validate() turns the loops of a pattern hatch by its angle: these need the loops again
@@ -303,6 +311,7 @@ private:
     RS_Vector m_pivot{0.0, 0.0};  ///< WCS centre of the combined bbox of the loop containers.
     double m_loopAngle = 0.0;     ///< isSolid() ? 0 : m_data.angle at the last successful validate().
     double m_tolerance = 0.0;     ///< Per-hatch ε cached by validate().
+    int m_duplicateLoops = 0;     ///< Number of loops that duplicate an earlier one; cached by validate().
     /// Pattern tile bounding box captured by the last successful
     /// updatePatternHatch, before scaling. Invalid for solid hatches or when
     /// the pattern was not found or had a degenerate size. Read through

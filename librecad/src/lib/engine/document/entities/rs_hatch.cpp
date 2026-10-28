@@ -311,6 +311,12 @@ bool RS_Hatch::validate() {
         m_pivot = rotCenter;
         m_loopAngle = isSolid() ? 0.0 : m_data.angle;
         m_tolerance = tolerance;
+        m_duplicateLoops = LC_LoopUtils::countDuplicateLoops(*results);
+        if (m_duplicateLoops > 0) {
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                "RS_Hatch::validate(): %d duplicate boundary loop(s); duplicated areas draw empty",
+                m_duplicateLoops);
+        }
         m_needOptimization = false;
 
         // Collect all loops (outer + holes) into flat boundary container list
@@ -318,6 +324,7 @@ bool RS_Hatch::validate() {
     } catch (const std::exception& e) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "Hatch validation error: %s", e.what());
         m_updateError = HATCH_INVALID_CONTOUR;
+        m_duplicateLoops = 0;
         success = false;
     }
 
@@ -878,13 +885,16 @@ void RS_Hatch::drawSolidFill(RS_Painter* painter) const {
 }
 
 /**
- * Helper: Fills every loop with the resolved pen colour at the given alpha
- * channel. Shared by the solid fill (alpha = 1) and the HATCH_TOO_DENSE tint,
- * so print, print preview, and image export paths produce the same ink as the
- * screen for both outputs.
+ * Helper: Fills the hatch region with the resolved pen colour at the given
+ * alpha channel. One QPainterPath carries every loop in the hierarchy as a
+ * subpath and is drawn with Qt::OddEvenFill, so holes and islands fall out
+ * of the odd-even rule naturally and crossing boundaries draw as XOR. Shared
+ * by the solid fill (alpha = 1) and the HATCH_TOO_DENSE tint, so print,
+ * print preview, and image export paths produce the same ink as the screen
+ * for both outputs.
  */
 void RS_Hatch::drawFill(RS_Painter* painter, double alpha) const {
-    if (m_orderedLoops->empty()){
+    if (m_boundaryContainers.empty()) {
         return;
     }
     if (!std::isfinite(alpha) || alpha <= 0.0) {
@@ -904,10 +914,14 @@ void RS_Hatch::drawFill(RS_Painter* painter, double alpha) const {
     fillBrush.setStyle(Qt::SolidPattern);
     painter->setBrush(fillBrush);
 
-    for (const LC_LoopUtils::LC_Loops& loop : *m_orderedLoops) {
-        QPainterPath path = loop.getPainterPath(painter);
-        painter->drawPath(path);
+    QPainterPath path;
+    path.setFillRule(Qt::OddEvenFill);
+    for (const auto& cont : m_boundaryContainers) {
+        if (cont) {
+            path.addPath(LC_LoopUtils::buildLoopPath(painter, *cont, m_tolerance));
+        }
     }
+    painter->drawPath(path);
 
     painter->restore();
 }

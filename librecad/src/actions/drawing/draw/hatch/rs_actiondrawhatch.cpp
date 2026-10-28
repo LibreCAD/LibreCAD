@@ -130,6 +130,10 @@ bool RS_ActionDrawHatch::doTriggerModifications(LC_DocumentModificationBatch& ct
                     ctx += hatch;
                     ok = true;
                     commandMessage(tr("Hatch created successfully."));
+                    if (const int n = hatch->countDuplicateLoops(); n > 0) {
+                        commandMessage(tr("Hatch has %n duplicate boundary loop(s); duplicates cancel each other and leave that area empty.",
+                                          "", n));
+                    }
                     break;
                 case RS_Hatch::HATCH_INVALID_CONTOUR:
                     commandMessage(tr("Hatch Error: Invalid contour found!"));

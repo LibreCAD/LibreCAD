@@ -111,12 +111,6 @@ public:
    */
   int getContainingDepth(const RS_Vector& point) const;
   /**
-   * @brief Generates a QPainterPath for this loop and its children up to the specified level.
-   * @param level Recursion level for path building (default: 0).
-   * @return The combined QPainterPath with OddEvenFill rule.
-   */
-  QPainterPath getPainterPath(RS_Painter* painter, int level = 0) const;
-  /**
    * @brief Trims pattern entities against this loop hierarchy using the
    * caller-supplied tile slots, charging every emitted piece to a shared
    * budget. Aborts and returns an empty container as soon as the budget
@@ -242,13 +236,6 @@ private:
    * @return True if inside the outer contour.
    */
   bool isInsideOuter(const RS_Vector& point) const;
-  /**
-   * @brief Builds a QPainterPath from the entities in a container.
-   * @param painter
-   * @param cont The entity container.
-   * @return The resulting path.
-   */
-  QPainterPath buildPathFromLoop(RS_Painter* painter, const RS_EntityContainer& cont) const;
   /**
    * @brief Collects all descendant loops recursively.
    * @param loops Output vector of loop pointers.
@@ -546,6 +533,35 @@ private:
   struct Data;
   std::shared_ptr<Data> m_data;  ///< Private data for optimization results
 };
+
+/**
+ * @brief Builds a QPainterPath from the atomic edges of a boundary container.
+ *
+ * A single closed atomic entity (circle, full ellipse, closed spline) is drawn
+ * as its own closed subpath; otherwise the atomic edges are appended in order
+ * and the subpath is closed at the end. The eps parameter is the per-hatch ON
+ * tolerance used by the "is this one closed curve" test for the single-entity
+ * case; callers that do not have a hatch tolerance may pass 0.
+ */
+QPainterPath buildLoopPath(RS_Painter* painter, const RS_EntityContainer& cont,
+                           double eps = 0.0);
+
+/**
+ * @brief Counts the loops in roots that duplicate an earlier one.
+ *
+ * Walks every node of every root in pre-order. Two nodes are duplicates when
+ * both are CCW, have the same vertex count n >= 1, there is a rotation k with
+ * |V2[(i+k) % n] - V1[i]| <= eps for every i, the two edge sequences have the
+ * same rtti in the same order, and the edge midpoints match within eps. A loop
+ * made of a single closed atomic entity (circle, full ellipse, closed spline)
+ * matches a candidate with the same rtti and the same centre, major axis,
+ * ratio or radius within eps. Candidate pairs are prefiltered by
+ * |area_a - area_b| <= eps * max(perimeter). The returned count is the number
+ * of nodes whose match
+ * carries a lower pre-order index: three identical loops count as two.
+ */
+int countDuplicateLoops(const std::vector<LC_Loops>& roots);
+
 }
 
 #endif // LC_LOOPUTILS_H
