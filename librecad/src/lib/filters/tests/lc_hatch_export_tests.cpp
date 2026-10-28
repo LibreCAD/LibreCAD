@@ -841,18 +841,15 @@ TEST_CASE("A solid hatch with an island is flagged 1 and 16",
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
-TEST_CASE("exportLoops hands a single-spline boundary back as one SPLINE "
-          "edge instead of chord lines",
+TEST_CASE("A boundary drawn as one RS_Spline keeps its SPLINE edge",
           "[lc-hatchfix][hatch-export]") {
-    // Exercise RS_Hatch::exportLoops()'s single-spline exception without
-    // round-tripping the write path. A pre-existing mismatch in
-    // makeDrwSplineFromRSSpline (unwrapped controls vs wrapped knots on a
-    // closed RS_Spline) refuses the HATCH payload at validateHatchPayload;
-    // that lives outside this step's scope.
     lc::test::QuietLog quiet;
     REQUIRE(lc::test::ensureSettings());
     lc::test::SettingGuard patterns{RS_SETTINGS, "Paths", "Patterns"};
     patterns.set(QStringLiteral(LIBRECAD_SOURCE_DIR "/librecad/support/patterns"));
+
+    const lc::test::OutputDirectory out("lc_hatch_export_spline_edge");
+    const auto file = out.file("spline_edge.dxf");
 
     auto graphic = std::make_unique<RS_Graphic>();
     graphic->initForNewDocument();
@@ -873,6 +870,8 @@ TEST_CASE("exportLoops hands a single-spline boundary back as one SPLINE "
     graphic->addEntity(hatch);
     hatch->update();
     REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+
+    // exportLoops() hands the single-container case back as one SPLINE edge.
     const auto exported = hatch->exportLoops();
     REQUIRE(exported.size() == 1u);
     REQUIRE(exported.front().edges != nullptr);
@@ -887,6 +886,14 @@ TEST_CASE("exportLoops hands a single-spline boundary back as one SPLINE "
     CHECK(nSpline == 1);
     CHECK(nLine == 0);
     CHECK(nOther == 0);
+
+    // Round trip: the SPLINE edge survives through the DXF writer.
+    REQUIRE(lc::test::exportDrawing(*graphic, file, RS2::FormatDXFRW2013));
+    const auto record = firstHatchRecord(file);
+    CHECK(record.own(91) == std::vector<std::string>{"1"});
+    CHECK(record.own(92) == std::vector<std::string>{"1"});
+    // 72 is the boundary edge type, 4 means SPLINE.
+    CHECK(record.own(72) == std::vector<std::string>{"4"});
 }
 
 #ifdef DWGSUPPORT
