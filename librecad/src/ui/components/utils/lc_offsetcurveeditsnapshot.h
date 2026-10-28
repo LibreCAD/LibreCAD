@@ -4,8 +4,12 @@
 
 #include <cstddef>
 #include <memory>
+#include <QList>
 
 class LC_OffsetCurve;
+class RS_Document;
+class RS_Entity;
+class RS_Layer;
 
 /** Bounded source-value baseline, shared by native sheet and dialog edits.
  * Capture before cloning. Callers must prove live membership/owner/context
@@ -28,6 +32,31 @@ public:
 private:
     struct Data;
     explicit LC_OffsetCurveEditSnapshot(std::unique_ptr<Data> data) noexcept;
+    std::unique_ptr<Data> m_data;
+};
+
+/** Offset creation's owned numeric inputs. Live membership is proved before
+ * every retained address is read; no live entity/layer is owned by this value.
+ * Keep this object alive for the whole ordered preparation, including preview
+ * cache entries bound to its frozen sources. Never publish those source copies.
+ */
+class LC_OffsetCreationSources final {
+public:
+    static constexpr std::size_t MaximumNodes = 16384;
+    static constexpr std::size_t MaximumBytes = 16*1024*1024;
+    static std::shared_ptr<LC_OffsetCreationSources> capture(RS_Document&, const QList<RS_Entity*>&);
+    ~LC_OffsetCreationSources();
+    bool matches(const RS_Document&) const;
+    const QList<RS_Entity*>& sources() const noexcept;
+    const QList<RS_Entity*>& originals() const noexcept;
+    const QList<RS_Entity*>& roots() const noexcept;
+    RS_Entity* original(const RS_Entity* frozen) const noexcept;
+    bool needsWorker() const noexcept;
+    /** Rebind only private output layers, not source copies/cache identities. */
+    bool localize(const QList<RS_Entity*>& outputs, RS_Layer* activeLayer, bool useActiveLayer) const;
+private:
+    struct Data;
+    explicit LC_OffsetCreationSources(std::unique_ptr<Data>);
     std::unique_ptr<Data> m_data;
 };
 #endif

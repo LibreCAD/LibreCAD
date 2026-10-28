@@ -9,11 +9,22 @@
 #include <type_traits>
 #include <utility>
 #include <variant>
+#include <map>
+#include <set>
+#include <stdexcept>
+#include <typeinfo>
 #include "drw_base.h"
 #include "lc_offsetcurve.h"
 #include "lc_offsetcurvereadutils.h"
 #include "rs_pen.h"
 #include "rs_line.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
+#include "rs_polyline.h"
+#include "lc_parabola.h"
+#include "lc_hyperbola.h"
+#include "rs_graphic.h"
+#include "rs_layer.h"
 
 namespace {
 unsigned stableFlags(const RS_Entity& entity) {
@@ -304,4 +315,305 @@ bool LC_OffsetCurveEditSnapshot::matches(const LC_OffsetCurve& curve) const {
 }
 bool LC_OffsetCurveEditSnapshot::matchesStoredState(const LC_OffsetCurve& curve) const {
     return m_data->matchesStoredState(curve);
+}
+
+namespace {
+// Exact stored values, including dormant spline arrays/rendering fields. No
+// virtual geometry reads or normalization may change a creation source seal.
+unsigned creationFlags(const RS_Entity& entity) {
+    return stableFlags(entity) | (entity.getFlags() & RS2::FlagSelected);
+}
+std::optional<std::vector<std::uint64_t>> creationGeometry(const RS_Entity& entity) {
+    std::vector<std::uint64_t> key;
+    const auto number = [&](double value) { std::uint64_t bits; std::memcpy(&bits, &value, sizeof(bits)); key.push_back(bits); };
+    const auto point = [&](const RS_Vector& p) { number(p.x); number(p.y); number(p.z); key.push_back(p.valid); };
+    const auto points = [&](const auto& values) {
+        if (values.size() > LC_OffsetCreationSources::MaximumNodes) return false;
+        key.push_back(values.size()); for (const auto& p : values) point(p); return true;
+    };
+    const auto numbers = [&](const auto& values) {
+        if (values.size() > 4*LC_OffsetCreationSources::MaximumNodes) return false;
+        key.push_back(values.size()); for (const auto value : values) number(value); return true;
+    };
+    if (const auto* native = dynamic_cast<const LC_OffsetCurve*>(&entity)) {
+        key.push_back(0); const auto& d = native->getData();
+        if (!points(d.controlPoints) || !points(d.fitPoints) || !numbers(d.knotslist) ||
+            !numbers(d.weights) || !numbers(d.savedOpenKnots)) return {};
+        key.insert(key.end(), {std::uint64_t(d.degree), std::uint64_t(d.type), std::uint64_t(d.savedOpenType),
+            d.m_closedFlag, d.m_periodicFlag});
+        const auto& def = native->definition(); point(def.basis.center); point(def.basis.majorP);
+        for (auto value : {def.basis.ratio, def.basis.angle1, def.basis.angle2, def.basis.angleDegrees,
+            def.basis.startAngleDegrees, def.basis.otherAngleDegrees, def.basis.angularLength,
+            def.distance, def.relTolerance, native->checkedWorldTolerance()}) number(value);
+        key.insert(key.end(), {def.basis.reversed, def.basis.isArc, def.towardCentre, def.cacheReversed,
+            native->isDefined(), native->isConsistent(), native->unknownOwnedFlags()});
+        if (native->unknownOwnedTail().size() > LC_OffsetCurve::MaximumOwnedTailItems) return {};
+        // Tail values are sealed by the existing native snapshot below.
+    } else if (const auto* spline = dynamic_cast<const RS_Spline*>(&entity)) {
+        key.push_back(1); const auto& d = spline->RS_Spline::getData();
+        if (!points(d.controlPoints) || !points(d.fitPoints) || !numbers(d.knotslist) ||
+            !numbers(d.weights) || !numbers(d.savedOpenKnots)) return {};
+        key.insert(key.end(), {std::uint64_t(d.degree), std::uint64_t(d.type), std::uint64_t(d.savedOpenType),
+            d.m_closedFlag, d.m_periodicFlag});
+    } else if (const auto* parabola = dynamic_cast<const LC_Parabola*>(&entity)) {
+        key.push_back(2); const auto& d = parabola->LC_Parabola::getData();
+        for (const auto& p : d.m_controlPoints) point(p);
+        point(d.m_focus); point(d.m_axis); point(d.m_vertex); key.push_back(d.m_valid);
+        const auto& base = parabola->LC_SplinePoints::getData();
+        if (!points(base.controlPoints) || !points(base.splinePoints)) return {};
+        key.insert(key.end(), {base.closed, base.cut, base.useControlPoints});
+    } else if (const auto* spline = dynamic_cast<const LC_SplinePoints*>(&entity)) {
+        key.push_back(3); const auto& d = spline->LC_SplinePoints::getData();
+        if (!points(d.controlPoints) || !points(d.splinePoints)) return {};
+        key.insert(key.end(), {d.closed, d.cut, d.useControlPoints});
+    } else if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&entity)) {
+        key.push_back(4); const auto& d = ellipse->RS_Ellipse::getData();
+        point(d.center); point(d.majorP);
+        for (const auto value : {d.ratio, d.angle1, d.angle2, d.angleDegrees, d.startAngleDegrees,
+            d.otherAngleDegrees, d.angularLength}) number(value);
+        key.insert(key.end(), {d.reversed, d.isArc});
+    } else if (const auto* hyperbola = dynamic_cast<const LC_Hyperbola*>(&entity)) {
+        key.push_back(5); const auto& d = hyperbola->LC_Hyperbola::getData();
+        point(d.center); point(d.majorP); number(d.ratio); number(d.angle1); number(d.angle2);
+        key.insert(key.end(), {d.reversed, hyperbola->isValid()});
+    } else if (const auto* line = dynamic_cast<const RS_Line*>(&entity)) {
+        key.push_back(6); const auto d = line->RS_Line::getData(); point(d.startpoint); point(d.endpoint);
+    } else if (const auto* arc = dynamic_cast<const RS_Arc*>(&entity)) {
+        key.push_back(7); const auto& d = arc->RS_Arc::getData(); point(d.center);
+        for (const auto value : {d.radius, d.angle1, d.angle2, d.startAngleDegrees, d.otherAngleDegrees, d.angularLength}) number(value);
+        key.push_back(d.reversed);
+    } else if (const auto* circle = dynamic_cast<const RS_Circle*>(&entity)) {
+        key.push_back(8); const auto& d = circle->RS_Circle::getData(); point(d.center); number(d.radius);
+    } else if (const auto* polyline = dynamic_cast<const RS_Polyline*>(&entity)) {
+        key.push_back(9); const auto d = polyline->RS_Polyline::getData();
+        point(d.startpoint); point(d.endpoint); key.push_back(d.getFlags());
+    } else return {};
+    return key;
+}
+
+std::unique_ptr<RS_Entity> creationClone(const RS_Entity& entity) {
+    if (const auto* e = dynamic_cast<const LC_OffsetCurve*>(&entity)) return std::unique_ptr<RS_Entity>(e->LC_OffsetCurve::clone());
+    if (const auto* e = dynamic_cast<const RS_Spline*>(&entity)) return std::unique_ptr<RS_Entity>(e->RS_Spline::clone());
+    if (const auto* e = dynamic_cast<const LC_Parabola*>(&entity)) return std::unique_ptr<RS_Entity>(e->LC_Parabola::clone());
+    if (const auto* e = dynamic_cast<const LC_SplinePoints*>(&entity)) return std::unique_ptr<RS_Entity>(e->LC_SplinePoints::clone());
+    if (const auto* e = dynamic_cast<const RS_Ellipse*>(&entity)) return std::unique_ptr<RS_Entity>(e->RS_Ellipse::clone());
+    if (const auto* e = dynamic_cast<const LC_Hyperbola*>(&entity)) return std::unique_ptr<RS_Entity>(e->LC_Hyperbola::clone());
+    if (const auto* e = dynamic_cast<const RS_Line*>(&entity)) return std::unique_ptr<RS_Entity>(e->RS_Line::clone());
+    if (const auto* e = dynamic_cast<const RS_Arc*>(&entity)) return std::unique_ptr<RS_Entity>(e->RS_Arc::clone());
+    if (const auto* e = dynamic_cast<const RS_Circle*>(&entity)) return std::unique_ptr<RS_Entity>(e->RS_Circle::clone());
+    if (const auto* e = dynamic_cast<const RS_Polyline*>(&entity)) return std::unique_ptr<RS_Entity>(e->RS_Polyline::clone());
+    return {};
+}
+}
+
+struct LC_OffsetCreationSources::Data {
+    struct Node {
+        RS_Entity* address;
+        unsigned long long id;
+        RS_EntityContainer* parent;
+        RS_Layer* layer;
+        RS_Pen pen;
+        unsigned flags;
+        RS_Vector minimum, maximum;
+        decltype(metadata(std::declval<const RS_Entity&>())) provenance;
+        std::vector<quint32> reactors;
+        std::vector<std::shared_ptr<DRW_Variant>> tags;
+        std::vector<TagSnapshot> values;
+        std::vector<std::pair<QString, QString>> variables;
+        std::vector<std::uint64_t> geometry;
+        QList<RS_Entity*> children;
+        std::unique_ptr<LC_OffsetCurveEditSnapshot> native;
+        bool owner = false;
+    };
+    struct Layer { RS_Layer* live; RS_Layer* frozen; QString name; RS_Pen pen; bool locked, hidden; };
+    RS_Document* document;
+    RS_Graphic* graphic = nullptr;
+    RS_Layer* activeLayer = nullptr;
+    RS_Layer* documentLayer = nullptr;
+    // Destroy frozen entities before their privately owned layer registry.
+    RS_Graphic frozen;
+    QList<RS_Entity*> topLevel, roots, sources, originals;
+    std::vector<Node> nodes;
+    std::vector<Layer> layers;
+    std::map<const RS_Entity*, RS_Entity*> addresses;
+    std::map<const RS_Entity*, RS_Entity*> reverse;
+    std::set<const RS_Entity*> seen;
+    bool worker = false;
+    std::size_t bytes = 0;
+    explicit Data(RS_Document& doc) : document(&doc) {
+        const RS_Entity* ancestor = &doc;
+        for (unsigned i = 0; ancestor && i < 64; ++i, ancestor = ancestor->getParent())
+            if ((graphic = const_cast<RS_Graphic*>(dynamic_cast<const RS_Graphic*>(ancestor)))) break;
+        activeLayer = graphic ? graphic->getActiveLayer() : nullptr; documentLayer = doc.getLayer(false);
+        for (auto* root : doc) topLevel.append(root);
+    }
+    bool charge(std::size_t count, std::size_t width = 1) {
+        if (count > (MaximumBytes - bytes)/width) return false;
+        bytes += count*width; return true;
+    }
+    RS_Layer* layer(RS_Layer* actual) {
+        if (!actual) return nullptr;
+        for (const auto& value : layers) if (value.live == actual) return value.frozen;
+        if (!graphic || !graphic->RS_Graphic::getLayerList()->contains(actual) ||
+            !charge(std::size_t(actual->getName().size()), 2) || !boundedPen(actual->getPen()))
+            throw std::runtime_error("Unregistered or oversized offset source layer");
+        auto owned = std::make_unique<RS_Layer>(QStringLiteral("offset-input-%1").arg(layers.size()));
+        owned->setPen(actual->getPen()); owned->lock(actual->isLocked()); owned->freeze(actual->isFrozen());
+        auto* result = owned.get(); frozen.addLayer(result); owned.release();
+        layers.push_back({actual, result, actual->getName(), actual->getPen(), actual->isLocked(), actual->isFrozen()});
+        return result;
+    }
+    bool captureNode(RS_Entity& entity, unsigned depth) {
+        if (nodes.size() == MaximumNodes || depth > 64 || !charge(1024) ||
+            !seen.insert(&entity).second ||
+            !boundedExtData(entity.getDrwExtData()) || !boundedPen(entity.getPen(false)) ||
+            entity.reactorHandles().size() > MaximumNodes || entity.userDefVarCount() > MaximumNodes) return false;
+        auto geometry = creationGeometry(entity); if (!geometry || !charge(geometry->size(), 3*sizeof(std::uint64_t))) return false;
+        Node node{&entity, entity.getId(), entity.getParent(), entity.getLayer(false), entity.getPen(false),
+            creationFlags(entity), entity.getMin(), entity.getMax(), metadata(entity), entity.reactorHandles(),
+            entity.getDrwExtData(), {}, {}, std::move(*geometry), {}, {}, false};
+        layer(node.layer);
+        if (!charge(node.reactors.size(), 3*sizeof(quint32))) return false;
+        for (const auto& tag : node.tags) {
+            std::size_t size = sizeof(TagSnapshot);
+            if (tag->type() == DRW_Variant::STRING) size += tag->content.s->size();
+            if (tag->type() == DRW_Variant::BINARY) size += tag->binary()->size();
+            if (!charge(size, 3)) return false;
+            node.values.emplace_back(*tag);
+        }
+        for (const auto& key : entity.getAllKeys()) {
+            auto value = entity.getUserDefVar(key);
+            if (!charge(std::size_t(key.size()) + std::size_t(value.size()), 6)) return false;
+            node.variables.emplace_back(key, std::move(value));
+        }
+        if (auto* container = dynamic_cast<RS_EntityContainer*>(&entity)) {
+            if (!container->isOwner() || container->size() > MaximumNodes - nodes.size() ||
+                !charge(container->size(), 3*sizeof(RS_Entity*))) return false;
+            node.owner = true;
+            for (auto* child : *container) {
+                // Qualified root clones still invoke child clone(); allow only
+                // built-in leaf storage so no callback can retire a live source.
+                if (!child || child->getParent() != container ||
+                    (typeid(*child) != typeid(RS_Line) && typeid(*child) != typeid(RS_Arc))) return false;
+                node.children.append(child);
+            }
+        }
+        const auto children = node.children;
+        if (const auto* native = dynamic_cast<const LC_OffsetCurve*>(&entity)) {
+            node.native = LC_OffsetCurveEditSnapshot::capture(*native); if (!node.native) return false;
+        }
+        nodes.push_back(std::move(node));
+        for (auto* child : children) if (!captureNode(*child, depth + 1)) return false;
+        return true;
+    }
+    void bind(RS_Entity& actual, RS_Entity& copy) {
+        addresses.emplace(&actual, &copy); reverse.emplace(&copy, &actual);
+        copy.RS_Entity::setLayer(layer(actual.getLayer(false)));
+        copy.setFlags(actual.getFlags() & ~RS2::FlagHighlighted);
+        auto* a = dynamic_cast<RS_EntityContainer*>(&actual); auto* b = dynamic_cast<RS_EntityContainer*>(&copy);
+        if (!a || !b) return;
+        if (a->count() != b->count()) throw std::runtime_error("Offset source clone membership changed");
+        for (int i = 0; i < a->count(); ++i) bind(*a->entityAt(i), *b->entityAt(i));
+    }
+};
+
+LC_OffsetCreationSources::LC_OffsetCreationSources(std::unique_ptr<Data> data) : m_data(std::move(data)) {}
+LC_OffsetCreationSources::~LC_OffsetCreationSources() = default;
+
+std::shared_ptr<LC_OffsetCreationSources> LC_OffsetCreationSources::capture(RS_Document& document,
+    const QList<RS_Entity*>& selection) {
+    if (selection.isEmpty() || selection.size() > 4096 || !document.isOwner() || document.size() > 262144) return {};
+    auto d = std::make_unique<Data>(document); if (!d->graphic) return {};
+    std::set<RS_Entity*> chosen;
+    for (auto* address : selection) {
+        if (!address) return {};
+        RS_Entity* root = nullptr;
+        if (d->topLevel.contains(address)) root = address;
+        else for (auto* candidate : d->topLevel) {
+            auto* container = dynamic_cast<RS_EntityContainer*>(candidate);
+            if (!container || (!dynamic_cast<RS_Polyline*>(candidate) && !dynamic_cast<LC_OffsetCurve*>(candidate))) continue;
+            if (container->size() > MaximumNodes) return {};
+            if (container->findEntityIndex(address) >= 0) { root = candidate; break; }
+        }
+        if (!root || root->getParent() != &document) return {};
+        auto* source = dynamic_cast<LC_OffsetCurve*>(root) ? root : address;
+        if (std::find(d->originals.begin(), d->originals.end(), source) == d->originals.end()) d->originals.append(source);
+        if (chosen.insert(root).second) d->roots.append(root);
+    }
+    // All counts/active metadata/children are bounded BEFORE the first clone.
+    for (auto* root : d->roots) if (!d->captureNode(*root, 0)) return {};
+    d->frozen.RS_Entity::setLayer(d->layer(document.getLayer(false)));
+    d->frozen.activateLayer(d->layer(d->graphic->getActiveLayer()));
+    for (auto* root : d->roots) {
+        auto clone = creationClone(*root); if (!clone) return {};
+        clone->setParent(&d->frozen); d->bind(*root, *clone);
+        d->frozen.addEntity(clone.get()); clone.release();
+    }
+    for (auto* source : d->originals) {
+        auto* copy = d->addresses.at(source); d->sources.append(copy);
+        d->worker |= dynamic_cast<RS_Ellipse*>(source) || dynamic_cast<LC_OffsetCurve*>(source);
+    }
+    auto result = std::shared_ptr<LC_OffsetCreationSources>(new LC_OffsetCreationSources(std::move(d)));
+    if (!result->matches(document)) return {};
+    return result;
+}
+
+bool LC_OffsetCreationSources::matches(const RS_Document& document) const {
+    const auto& d = *m_data;
+    if (&document != d.document || !document.isOwner() || document.count() != d.topLevel.size() ||
+        document.getLayer(false) != d.documentLayer || d.graphic->getActiveLayer() != d.activeLayer) return false;
+    int index = 0; for (auto* member : document) if (member != d.topLevel[index++]) return false;
+    for (const auto& layer : d.layers) {
+        if (!d.graphic->RS_Graphic::getLayerList()->contains(layer.live) || layer.live->getName() != layer.name ||
+            !samePen(layer.live->getPen(), layer.pen) || layer.live->isLocked() != layer.locked ||
+            layer.live->isFrozen() != layer.hidden) return false;
+    }
+    for (const auto& node : d.nodes) {
+        // Preorder parent lists are checked before any child address is read.
+        const auto& entity = *node.address;
+        if (entity.getId() != node.id || entity.getParent() != node.parent || entity.getLayer(false) != node.layer ||
+            !samePen(entity.getPen(false), node.pen) || creationFlags(entity) != node.flags ||
+            !samePoint(entity.getMin(), node.minimum) || !samePoint(entity.getMax(), node.maximum) ||
+            metadata(entity) != node.provenance || entity.reactorHandles() != node.reactors ||
+            entity.getDrwExtData() != node.tags || !boundedExtData(entity.getDrwExtData())) return false;
+        auto geometry = creationGeometry(entity); if (!geometry || *geometry != node.geometry) return false;
+        if (node.native && !node.native->matchesStoredState(static_cast<const LC_OffsetCurve&>(entity))) return false;
+        for (std::size_t i = 0; i < node.values.size(); ++i) if (!node.values[i].matches(*node.tags[i])) return false;
+        const auto keys = entity.getAllKeys(); if (keys.size() != node.variables.size()) return false;
+        for (std::size_t i = 0; i < keys.size(); ++i)
+            if (keys[i] != node.variables[i].first || entity.getUserDefVar(keys[i]) != node.variables[i].second) return false;
+        if (node.owner) {
+            const auto& container = static_cast<const RS_EntityContainer&>(entity);
+            if (!container.isOwner() || container.count() != node.children.size()) return false;
+            for (int i = 0; i < container.count(); ++i) if (container.entityAt(i) != node.children[i]) return false;
+        }
+    }
+    return true;
+}
+const QList<RS_Entity*>& LC_OffsetCreationSources::sources() const noexcept { return m_data->sources; }
+const QList<RS_Entity*>& LC_OffsetCreationSources::originals() const noexcept { return m_data->originals; }
+const QList<RS_Entity*>& LC_OffsetCreationSources::roots() const noexcept { return m_data->roots; }
+RS_Entity* LC_OffsetCreationSources::original(const RS_Entity* frozen) const noexcept {
+    const auto found = m_data->reverse.find(frozen); return found == m_data->reverse.end() ? nullptr : found->second;
+}
+bool LC_OffsetCreationSources::needsWorker() const noexcept { return m_data->worker; }
+bool LC_OffsetCreationSources::localize(const QList<RS_Entity*>& outputs, RS_Layer* active, bool useActive) const {
+    std::vector<RS_Entity*> pending(outputs.begin(), outputs.end()); std::set<RS_Entity*> seen;
+    for (std::size_t i = 0; i < pending.size(); ++i) {
+        auto* entity = pending[i];
+        if (!entity || !seen.insert(entity).second || pending.size() > 4*MaximumNodes) return false;
+        auto* target = entity->getLayer(false);
+        if (target) {
+            const auto found = std::find_if(m_data->layers.begin(), m_data->layers.end(),
+                [&](const Data::Layer& layer) { return layer.frozen == target; });
+            if (found == m_data->layers.end()) return false;
+            entity->RS_Entity::setLayer(found->live);
+        }
+        if (i < std::size_t(outputs.size()) && useActive) entity->RS_Entity::setLayer(active);
+        if (auto* container = dynamic_cast<RS_EntityContainer*>(entity)) {
+            if (!container->isOwner()) return false;
+            for (auto* child : *container) pending.push_back(child);
+        }
+    }
+    return true;
 }

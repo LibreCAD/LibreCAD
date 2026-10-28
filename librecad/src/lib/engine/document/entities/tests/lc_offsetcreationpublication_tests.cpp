@@ -5,6 +5,9 @@
 #include "lc_graphicviewport.h"
 #include "lc_offsetcurve.h"
 #include "lc_offsetcurvepublication.h"
+#include "lc_offsetcurveeditsnapshot.h"
+#include "lc_offsetbatchpreparation.h"
+#include "drw_base.h"
 #include "rs_block.h"
 #include "rs_ellipse.h"
 #include "rs_graphic.h"
@@ -45,7 +48,7 @@ TEST_CASE("Offset creation publication adds unequal native and ordinary outputs 
     Fixture f;
     auto* source = new RS_Ellipse(&f.graphic, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
     source->setLayer(f.graphic.getActiveLayer()); f.graphic.addEntity(source);
-    f.graphic.select({source}, true); f.graphic.setModified(false);
+    f.graphic.select(QList<RS_Entity*>{source}, true); f.graphic.setModified(false);
     auto line = f.added(); auto native = LC_OffsetCurve::create(*source, .25, false); REQUIRE(native);
     native.entity->setParent(nullptr);
     auto* lineAddress = line.get(); auto* curveAddress = native.entity.get();
@@ -99,7 +102,7 @@ TEST_CASE("Offset creation publication deselects a polyline child without touchi
 
 TEST_CASE("Offset creation publication rejects changed child membership before reading retired addresses",
           "[lc-offsetcurve][creation-publication][stale][asan]") {
-    Fixture f; auto* source = f.polyline(); f.graphic.select({source}, true);
+    Fixture f; auto* source = f.polyline(); f.graphic.select(QList<RS_Entity*>{source}, true);
     auto added = f.added();
     auto transaction = LC_OffsetCurvePublication::prepareCreation(f.graphic, f.viewport, {}, {added.get()},
         {added.get()}, {source}, {source});
@@ -163,4 +166,63 @@ TEST_CASE("Offset creation publication tracks an enclosing graphic independently
     auto transaction = LC_OffsetCurvePublication::prepareCreation(block, viewport, {}, {added.get()}, {}, {}, {});
     REQUIRE(transaction); graphic.reset(); CHECK_FALSE(transaction->commit());
     source->setLayer(nullptr); added->setLayer(nullptr); block.setParent(nullptr);
+}
+
+TEST_CASE("Offset creation sources own ellipse and native inputs without retaining live layers",
+          "[lc-offsetcurve][creation-sources][asan]") {
+    REQUIRE(lc::test::application());
+    auto graphic = std::make_unique<Graphic>(); graphic->initForNewDocument();
+    auto* ellipse = new RS_Ellipse(graphic.get(), RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
+    ellipse->setLayer(graphic->getActiveLayer()); graphic->addEntity(ellipse);
+    auto native = LC_OffsetCurve::create(*ellipse, .25, false); REQUIRE(native);
+    auto* curve = native.entity.get(); curve->setParent(graphic.get()); curve->setLayer(graphic->getActiveLayer());
+    graphic->addEntity(curve); native.entity.release();
+    auto inputs = LC_OffsetCreationSources::capture(*graphic, {ellipse, curve->entityAt(0), curve});
+    REQUIRE(inputs); REQUIRE(inputs->needsWorker()); REQUIRE(inputs->sources().size() == 2);
+    CHECK(inputs->originals() == QList<RS_Entity*>{ellipse, curve});
+    CHECK(inputs->original(inputs->sources()[0]) == ellipse);
+    CHECK(inputs->sources()[0]->getLayer(false) != ellipse->getLayer(false));
+    CHECK(inputs->matches(*graphic));
+    graphic.reset();
+    CHECK(dynamic_cast<RS_Ellipse*>(inputs->sources()[0])->getData().ratio == 1);
+    CHECK(dynamic_cast<LC_OffsetCurve*>(inputs->sources()[1])->hasEditableDefinition());
+    CHECK_FALSE(inputs->sources()[0]->isLocked());
+}
+
+TEST_CASE("Offset creation source seals cover stored geometry metadata and layer changes",
+          "[lc-offsetcurve][creation-sources]") {
+    Fixture f;
+    auto* ellipse = new RS_Ellipse(&f.graphic, RS_EllipseData{{0, 0}, {4, 0}, .5, 0, 0, false});
+    ellipse->setLayer(f.graphic.getActiveLayer()); f.graphic.addEntity(ellipse);
+    auto tag = std::make_shared<DRW_Variant>(1000, std::string("before")); ellipse->setDrwExtData({tag});
+    auto inputs = LC_OffsetCreationSources::capture(f.graphic, {ellipse}); REQUIRE(inputs);
+    SECTION("geometry") { ellipse->setRatio(.75); }
+    SECTION("active metadata payload") { *tag->content.s = "after"; }
+    SECTION("layer") { ellipse->getLayer(false)->lock(true); }
+    SECTION("provenance") { ellipse->setSourceHandle(77); }
+    CHECK_FALSE(inputs->matches(f.graphic));
+}
+
+TEST_CASE("Offset creation source ownership preserves polyline grouping and localizes only private outputs",
+          "[lc-offsetcurve][creation-sources]") {
+    Fixture f; auto* polyline = f.polyline();
+    auto* first = polyline->entityAt(0); auto* second = polyline->entityAt(1);
+    auto inputs = LC_OffsetCreationSources::capture(f.graphic, {first, second, polyline}); REQUIRE(inputs);
+    REQUIRE(inputs->sources().size() == 3); CHECK_FALSE(inputs->needsWorker());
+    CHECK(inputs->sources()[0]->getParent() == inputs->sources()[2]);
+    auto clone = std::unique_ptr<RS_Entity>(inputs->sources()[0]->clone()); clone->setParent(nullptr);
+    REQUIRE(inputs->localize({clone.get()}, f.graphic.getActiveLayer(), false));
+    CHECK(clone->getLayer(false) == first->getLayer(false)); CHECK(inputs->matches(f.graphic));
+    REQUIRE(polyline->removeEntity(second)); CHECK_FALSE(inputs->matches(f.graphic));
+    CHECK(inputs->sources()[2]->isVisible()); // Its private children still exist.
+}
+
+TEST_CASE("Offset creation source capture rejects stale addresses and oversized dormant spline arrays",
+          "[lc-offsetcurve][creation-sources][asan]") {
+    Fixture f; auto* source = f.line();
+    REQUIRE(f.graphic.removeEntity(source));
+    CHECK_FALSE(LC_OffsetCreationSources::capture(f.graphic, {source}));
+    auto* spline = new RS_Spline(&f.graphic, RS_SplineData{1, false}); f.graphic.addEntity(spline);
+    spline->getData().savedOpenKnots.resize(4*LC_OffsetCreationSources::MaximumNodes + 1);
+    CHECK_FALSE(LC_OffsetCreationSources::capture(f.graphic, {spline}));
 }
