@@ -105,7 +105,7 @@ This inventory compares the older attached tree with the later candidate.
 | Type/UI/source actions | Entity enum/coverage, property queue/dialog, default drag, Update/Restore actions | Candidate present. Property queue defers publication with a timer, but prepares geometry synchronously in `apply`; a deferred commit is not background computation. |
 | Stored-cache Trim | `lc_offsetcachetrim`, contacts/matching helpers, Modify Trim action and file tests | Candidate present: pure preparation, exact fragments, two-operand publication and plain-fragment persistence. Recheck precision/ownership/undo guarantees. |
 | Validation workers | `scripts/offset-curve-validation/`, X-H1 through X-H7 | Candidate has Node developer/test workers and recorded timeout fixes. These tools are not a shipped isolated geometry worker. Do not confuse their deadlines with GUI computation limits. |
-| Native geometry-worker path | Real seven-operation protocol4 helper/client, cached source-copy production, same-producer ordinary fallback, plus dialog, sheet, grip and Update GUI routing committed/qualified | W16/W17 qualify preview-cache portability. Creation/repeat routing, trim, import and packaged/final acceptance remain mandatory W0-W2 work. |
+| Native geometry-worker path | Real seven-operation protocol4 helper/client, cached source-copy production, same-producer ordinary fallback, plus dialog, sheet, grip, Update and Modify Offset preview/creation/repeat GUI routing committed/qualified | W16-W19 qualify cache portability and creation/repeat locally. Asynchronous Trim, import and packaged/final acceptance remain mandatory W0-W2 work. |
 | Tests/build targets | Main Catch target, filter micro targets and two standalone offset allocation-failure targets | Candidate present; source registration is not discovery/execution. Use the actual targets in section5.3, not just the old grouped fast lanes. |
 | Surviving test defect | `spline_offset_representation_tests.cpp` lines205 and668 in candidate still use DWG enum ranges | `FormatDWG2007` is outside the range; those ordinary representation loops also omit it. Fix classification and add an executed R2007 regression in S0. The separate candidate matrix already lists all six DWG versions. |
 
@@ -312,11 +312,11 @@ candidate except the explicitly proposed native-worker tags.
 | C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a` plus later search; audit/retest | `[lc-offsetcurve][cache-topology-chain]` |
 | W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and initial deadline/authority policy implemented; finish caller/fallback/import ownership freeze before routing | operation/cap/deadline/call-site table |
 | W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; full app/deployed-package gates remain | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
-| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update and geometry-entry timeout receipts qualified; creation/trim/import and final gates open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`; remaining integration and runner regression |
+| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat and geometry-entry timeout receipts qualified; asynchronous Trim/import and final gates open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining integration and runner regression |
 | E1 | Guarded entity/factories, RTTI, stamp, clone, downgrade and transforms | C-check | candidate `92758859c` and later fixes; audit/retest | `[lc-offsetcurve][native]`, `[entity-coverage]` |
 | U1 | Type/INSERT/selection/SVG/menu/info dispatch and safe properties | E1 | candidate `49c9b328b`, `f0fb28fab`; audit/retest | native type/name/dispatch TUs, `[entity-coverage]` |
 | E2 | Cached grips/snaps, through proposal and transactional mutators | E1 | candidate `4300c1031`, `47e14c74b`; audit/retest | native edit/grip/transform TUs |
-| G | Eligible creation, repeated offset and bounded ordinary fallback/reporting | E2,U1,W2 | candidate `a37982bd6`, `bf7b512cf`; shared preparation `ef40eecad` and typed Produce `558c3bba2` qualified; cache/GUI integration open | creation/repeat/modification TUs and existing Offset tests |
+| G | Eligible creation, repeated offset and bounded ordinary fallback/reporting | E2,U1,W2 | shared preparation `ef40eecad`, typed Produce `558c3bba2`, W16/W17 cache and W18/W19 GUI/publication qualified through `f035d983e`; final platform/visible acceptance remains | creation/repeat/modification TUs, `[creation-worker]`, `[creation-publication]`, `[creation-sources]` and existing Offset tests |
 | F1 | Shared typed schema, raw-carrier eligibility, ownership and byte limits | E1 | candidate `305042903`; audit/retest | `lc_offsetcurvexdata_tests.cpp`, `lc_offsetcurvecarrier_tests.cpp` |
 | F2 | Actual DXF/DWG SPLINE writer/adoption and transactional errors | F1,G | candidate `32597762b`, `7e46b2de8`; audit/retest | offset adapter/persistence/hostile-file TUs |
 | F3 | Version/read/write/conversion, clipboard, independent fixtures and output inspection | F2 | candidate `79ae1930b`; fixtures present, rerun scope required | `[lc-offsetcurve][g-matrix]`, explicit per-row evidence |
@@ -802,7 +802,7 @@ normal build does not register absent executables. In this dedicated build:
 ```bash
 cmake -S . -B build-offset -DLIBRECAD_REGISTER_OFFSET_WORKER_TESTS=ON
 worker_targets=(librecad_offset_worker_wire_tests librecad_offset_worker_request_tests librecad_offset_worker_result_tests librecad_offset_worker_kernel_tests librecad_offset_worker_process_tests librecad_offset_worker_client_tests librecad_offset_worker_fault_tests librecad_offset_worker_geometry_timeout_tests librecad_offset_worker_edit_tests)
-caller_targets=(librecad_offset_native_edit_tests librecad_offset_properties_dialog_tests librecad_offset_properties_sheet_tests librecad_offset_grip_tests librecad_offset_update_source_tests librecad_offset_trim_tests librecad_offset_source_preparation_tests librecad_offset_creation_publication_tests)
+caller_targets=(librecad_offset_native_edit_tests librecad_offset_properties_dialog_tests librecad_offset_properties_sheet_tests librecad_offset_grip_tests librecad_offset_update_source_tests librecad_offset_trim_tests librecad_offset_source_preparation_tests librecad_offset_creation_publication_tests librecad_offset_creation_action_tests)
 cmake --build build-offset --target librecad librecad_offset_worker librecad_offset_test_helper "${worker_targets[@]}" "${caller_targets[@]}" --parallel 4
 ctest --test-dir build-offset -N -R '^offset_worker_'
 ctest --test-dir build-offset -V --output-on-failure --output-junit "$RECEIPTS/native-ctest.xml" -R '^offset_worker_'
@@ -1812,8 +1812,9 @@ claimed. ASan remains `detect_leaks=0`. Evidence root is unchanged:
 | `W16-qualified-source-release.xml` | `bd1d8db09a9a59799a9f16a8dbf28cd8e02cf5901c6e1c90b74f91aa496c3186` |
 | `W16-qualified-source-asan.xml` | `ad71e393aa98634aaa32b4df90be9679b2f556930193aeb5d5fa00c130f3212f` |
 
-W16 completes the value/lifetime prerequisite only, not worker transport or GUI
-routing. Implement the remaining bounded slices before closing creation/repeat:
+W16 completed the value/lifetime prerequisite only. The original continuation
+split below is now implemented/locally qualified through W19b; retain its acceptance
+contracts, with the ledgers and current remaining list below authoritative:
 
 1. W17, cached Produce transport: append a new operation to protocol4, preserving
    existing operation0-5 body layouts. Carry a bounded ordinary snapshot into the
@@ -1981,11 +1982,83 @@ or oversized inputs. `W19a-qualified-release.xml` SHA256
 `294bbd3384b9862800989e75aebc4a995dd9c044682891ace81fc16b2f72adaa`;
 ASan `W19a-qualified-asan.xml`
 `a7d56b906df4e76d7b61b29fc361a0647438f95f89d5379f7f029b7e24b18dd3`.
-ASan leak detection remains disabled. Next W19b wires Modify Offset preview and
-commit to owned continuations, joined cached Produce and prepared publication;
-source snapshots alone do not close GUI routing, cancellation or final R.
+ASan leak detection remains disabled. Source snapshots alone did not close GUI
+routing or cancellation; W19b below supplies that caller integration. Final R
+is still separate.
 
-Remaining creation/repeat steps after these review follow-ups:
+W19b creation/repeat GUI routing `f035d983e`:
+Modify Offset now prepares eligible ellipse/native previews and committed copy
+series through owned, ordered continuations and joined CachedProduce6 jobs.
+There is no nested production event loop or synchronous geometry retry after
+helper failure. Ordinary-only selections keep the existing dispatcher. Mixed
+batches preserve order, grouping, source/target attributes, per-copy provenance,
+partial failures, remaining output limits and the native rebase versus distinct
+stored-cache fallback. Preview values remain ordinary; committed native outputs
+still require the child checks. A click retains eligible hover-cache values.
+
+Source geometry/active metadata/layers, document/view/context, selection, undo
+epoch, options, target attributes, UCS, pan/zoom and relative zero are sealed
+through allocation-safe model publication. Supersession, Escape, suspension,
+right-click, stale inputs and context death cancel/reap without publishing a
+prefix. Owned input copies survive source-document death; qualified built-in
+descendant clones and latent spline tables/tails are bounded before copying.
+Unknown/borrowed/oversized source graphs refuse explicitly, never regenerate
+with fresh limits in the GUI. Membership admission is indexed/bounded rather
+than a full document scan per source. Detailed/bounding-box previews transfer
+ownership in dispatch order; two-click guides and one-cycle relative-zero undo
+are preserved. Output ownership transfers before any publication notification.
+
+Fresh Release application/full-test/helper builds and Release/ASan full-test,
+helper and micro builds pass. Offscreen qualification, with complete discovered
+identity execution and zero errors/failures/skips in these focused suites:
+
+| W19b caller suite | Declarations | JUnit cases | Assertions, Release / ASan |
+| --- | ---: | ---: | ---: |
+| Creation action, options factory and existing offset matrix | 85 | 132 | 90217 / 90217 |
+| Creation publication and owned-source admission | 13 | 13 | 191 / 191 |
+| Complete source preparation | 82 | 88 | 83527 / 83527 |
+
+The11 new GUI cases cover cache-hit/no-producer commit, native repeat/zero-sum
+fallback, mixed copies/failed selection, current/source attributes, stale input/
+option/selection/layer/UCS/pan/relative-zero rejection, cancellation, actual lowered-
+deadline process timeout and later recovery, destruction, postcommit observer
+death, two-click geometry and per-copy DWG identity policy. The existing hover
+test now requires one reused copy/zero producer calls, preserving its native
+geometry/check assertions. Production deadlines and original allocation guards
+are unchanged. Both standalone fault processes exit0 with35 normal/113 redo and
+38 add-only/42 source-removal failures; actual publication allocates zero C++
+new/new[]. Qt malloc/aligned-new injection and a full GUI allocation census are
+not claimed. ASan uses `detect_leaks=0`, not a leak-free claim.
+
+Fresh serial broad Release runs also pass:
+
+| Selector | Declarations | JUnit cases | Assertions | Skips |
+| --- | ---: | ---: | ---: | ---: |
+| `[lc-offsetcurve]` | 960 | 1267 | 3926535 | 1 |
+| `[offsetcurve]` | 168 | 180 | 131450 | 0 |
+| `[curve-offset]` | 218 | 274 | 1021413 | 0 |
+| `[entity-coverage]` | 15 | 15 | 1680 | 0 |
+
+The single legacy `RS_FilterDXF`/`dl_dxf.h`/`FormatDXFOLD` dispatch skip remains
+NOT QUALIFIED; no surrogate writer or skipped PASS is substituted. Overlapping
+selectors are not summed. Release native-worker CTest discovers/passes exactly
+9/9 named entries. All9 separate ASan worker micro suites (wire, request, result,
+kernel, process, client, edit, fault, geometry-timeout) discover/execute completely
+with zero errors/failures/skips. This is focused ASan, not a full-ASan-suite claim.
+
+In the same receipt root, acceptance uses `W19b-final3-{action,source}-*.xml`,
+`W19b-final2-publication-*.xml`, `W19b-final3-native-*-release.xml`, serial
+`W19b-final4-{ui-source,adjacent,types}-*.xml`, `W19b-final3-*-asan.xml` worker
+reports, `W19b-final4-native-ctest-release.xml`, the two final3 publication-fault
+logs and build4/build5 logs. `W19b-evidence.sha256` binds46 unique artifacts
+(39 XML reports and7 build/fault/discovery logs), SHA256
+`3b4db125beb436985e7075f37d560dbf00903cd65f192d6d08603041eff45a4c`;
+all entries verify. Earlier probes, obsolete-cache expectation failures,
+incorrect initial native-provenance assertions and overlapping preliminary
+broad runs are retained, not acceptance evidence. Both protected indexes and
+the main checkout HEAD retain their recorded identities.
+
+Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
 2. Typed child Produce is implemented/qualified at `558c3bba2`, including private
@@ -1996,10 +2069,11 @@ Remaining creation/repeat steps after these review follow-ups:
 3. W16/W17 qualify owned cache snapshot/rebinding/merge, cross-source clearing
    and transport across fresh helpers. Retain this budget/side/effort parity during
    GUI integration; leave unrelated ordinary source tools unchanged.
-4. Route preview/commit through owned continuations, complete context/source/undo/
-   selection/UCS seals, cancellation/death handling and one atomic publication.
-   Parent materialization must use the correct existing local attribute policy
-   and charge actual display expansion before settling output reservations.
+4. W18/W19 qualify preview/commit continuations, complete input/context seals,
+   cancellation/death handling, local attribute/provenance policy and one atomic
+   publication. Preserve actual display-expansion charging and these regressions
+   during remaining caller integration; this closes local creation/repeat routing,
+   not platform/deployed/visible acceptance.
 
 Then continue stored-cache/conic trim and unpublished import ownership in4.2 order.
 Full current-source application/deployed builds, complete file/version matrix,
@@ -2022,7 +2096,8 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   Do not redo implemented geometry as missing work.
 - [ ] A-core through C-check: review/requalify existing code and patch only proven
   accounting, ownership, occurrence or global-topology gaps. No duplicate checker.
-- [ ] W0-W2: typed Produce is qualified; finish cache portability, import ownership and remaining GUI
+- [ ] W0-W2: typed/cached Produce and creation/repeat GUI routing are qualified;
+  finish asynchronous Trim, import ownership and remaining caller/final
   adoption/failure acceptance. Reuse the qualified geometry-entry timeout/helper/client/
   reply modules; do not redo them as absent. Keep Node runner scope separate.
 - [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
@@ -2030,9 +2105,10 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** W19 owned source/context seals
-and creation/repeat GUI routing, using W18's qualified preparation/publication in the remaining
-4.2 caller adapters. The ordinary DWG2007 correction and fresh broad
+**Next concrete action on implementation resume:** asynchronous Trim action
+routing using the existing joined prepared trim values, then unpublished import
+ownership in4.2 order. W16-W19 cache portability and local creation/repeat GUI
+routing are qualified; do not restart them as absent. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
 Nothing is automatically copied into the dirty main tree. Native caller routing,
 the remaining lifecycle/packaging gates and final UI/file acceptance are open.
