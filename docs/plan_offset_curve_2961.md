@@ -2105,6 +2105,33 @@ remains intact. ASan uses `detect_leaks=0`. In the receipt root,
 Matching discovery/build logs use the same prefix. GUI callbacks, ownership
 on cancellation/context death, atomic handoff and visible acceptance remain open.
 
+W22 asynchronous Trim controller `c1710e254` owns bounded, detached built-in
+operand copies and the W21 joined sequence under one elapsed deadline across all
+helper jobs. It retains the receipt with its operands, reports worker status and
+bounded diagnostics, suppresses callbacks on cancellation, and never retries
+numeric work automatically. Calls and callbacks use the owning Qt thread. A
+timeout requests cancellation immediately; the client may remain busy while it
+reaps the helper. This controller neither owns a document nor publishes geometry.
+
+Fresh Release/ASan Trim tests discover107 declarations and execute109 JUnit
+cases, with56490/59434 assertions; worker-client tests discover and execute16
+cases, with7722/11401 assertions. All have zero errors, failures or skips, and
+discovery identities were checked against execution. The tests cover a running
+helper's cancellation, lifecycle and retry, and a test-only event-loop stall that
+forces the deadline; the latter is not a naturally hung geometry primitive. The
+existing geometry-entry timeout lane is separate. ASan uses `detect_leaks=0`.
+In the receipt root, the final JUnit SHA256 values are:
+
+| W22 artifact | SHA256 |
+| --- | --- |
+| `offset-W22-owned-release.xml` | `5496c94cdb4f27755e3c7c1bff24b604766cb725afdb92968d32ecf7255cce1e` |
+| `offset-W22-owned-asan.xml` | `4e7b7c89dc5ea048aa3f1ee0e047acaef0e861730d977f400855fffdcab45b56` |
+| `offset-W22-owned-client-release.xml` | `8d5dbf9496b51bebf59804b1bba5fef0de008fb7283e48e7b8471020a4928993` |
+| `offset-W22-owned-client-asan.xml` | `5009b95dc75fa94932d45b9ef551a6110de1c72b5837a1b237c710332bc96199` |
+
+Matching discovery XML and build logs use the same prefixes. Asynchronous Trim
+GUI routing and atomic document publication are not implemented by W22.
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
@@ -2152,9 +2179,13 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** asynchronous Trim action
-routing using the W20 request builder and W21 owned sequence, then unpublished import
-ownership in4.2 order. W16-W19 cache portability and local creation/repeat GUI
+**Next concrete action on implementation resume:** integrate W22 into
+`LC_ActionModifyTrim` preview and commit, including owned snapshots of detached
+limit copies; document, source, selection, viewport, UCS, option and undo seals;
+cancellation on action/context death; and one atomic prepared publication for
+both one-sided Trim and Trim Two. Exercise stale inputs, helper failure, retry,
+undo/redo and real GUI lifecycle without a synchronous numeric fallback. Then
+continue unpublished import ownership in4.2 order. W16-W19 cache portability and local creation/repeat GUI
 routing are qualified; do not restart them as absent. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
 Nothing is automatically copied into the dirty main tree. Native caller routing,
