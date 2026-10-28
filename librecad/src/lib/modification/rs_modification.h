@@ -62,6 +62,7 @@ class RS_Graphic;
 class RS_GraphicView;
 class LC_GraphicViewport;
 class LC_OffsetWorkerCompletion;
+class LC_OffsetBatchPreparation;
 struct LC_OffsetPreviewSnapshot;
 namespace LC_OffsetWorkerRequest { struct Request; }
 class LC_SelectedSet;
@@ -696,6 +697,10 @@ public:
                          LC_DocumentModificationBatch& ctx);
 
 private:
+    friend class LC_OffsetBatchPreparation;
+    static LC_OffsetBatchOutcome offsetWithOutcomeImpl(const RS_OffsetData&, const QList<RS_Entity*>&,
+        bool, const LC_OffsetBatchLimits&, LC_DocumentModificationBatch&, LC_OffsetPreviewCache*,
+        LC_OffsetBatchPreparation*);
     static LC_TrimResult trimStoredCacheImpl(RS_Document& document, RS_Entity& target,
         const RS_Vector& targetPick, RS_Entity& cutter, const RS_Vector& cutterPick, bool both,
         LC_DocumentModificationBatch& ctx, const LC_StoredCacheTrimOptions& options,

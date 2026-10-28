@@ -26,6 +26,7 @@
 #include <type_traits>
 #include <utility>
 #include <vector>
+#include "lc_offsetbatchpreparation.h"
 
 // The declared friend changes deadlines only, never process paths or completion values.
 class LC_OffsetWorkerClientTestAccess {
@@ -808,4 +809,49 @@ TEST_CASE("Joined cached Produce completions update only current caches and revo
     CHECK_FALSE(moved.updatePreviewCache(parent, &source));
     CHECK(parent.snapshot(&source)->otherEntries == 1);
     CHECK(source.sourceHandle() == 91);
+}
+
+TEST_CASE("Ordered mixed offset batches retain numeric prefixes and bind exact helper requests",
+          "[lc-offsetcurve][worker-client][ordered-preparation]") {
+    auto& rt = runtime(); OwnedClient client{rt}; Receipts receipts;
+    class CountedLine final : public RS_Line {
+    public:
+        using RS_Line::RS_Line;
+        mutable unsigned calls = 0;
+        std::vector<RS_Entity*> createOffset(const RS_Vector& point, const double& distance) const override {
+            ++calls; return RS_Line::createOffset(point, distance);
+        }
+    };
+    CountedLine line{nullptr, {0, 0}, {2, 0}}, last{nullptr, {0, 4}, {2, 4}};
+    RS_Ellipse source{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
+    RS_OffsetData data; data.coord = {3, 2}; data.distance = .25; data.number = 2;
+    data.multipleCopies = true; data.keepOriginals = false; data.asOffsetCurve = true;
+    LC_OffsetBatchLimits limits;
+    LC_OffsetPreviewCache cache;
+    LC_OffsetBatchPreparation prepared{data, {&line, &source, &last}, false, limits};
+    LC_DocumentModificationBatch batch;
+    REQUIRE_FALSE(prepared.advance(batch, &cache)); CHECK(batch.entitiesToAdd.empty());
+    CHECK(line.calls == 2); CHECK(last.calls == 0); CHECK(prepared.pendingSource() == &source);
+    auto request = prepared.request(token(1), &cache); REQUIRE(request);
+    REQUIRE(std::holds_alternative<Req::CachedProduce>(request->operation));
+    const auto& op = std::get<Req::CachedProduce>(request->operation).produce;
+    CHECK(op.limits.maxDeepEntitiesPerRequest == limits.maxDeepEntitiesPerRequest - 2);
+    REQUIRE(client.get().submit(*request, Client::Mode::Commit, receipts.into(0)));
+    rt.until([&] { return receipts.calls[0] != 0; });
+    const auto& completion = completed(receipts.at(0), 1, 6);
+    auto otherToken = prepared.request(token(2), &cache); REQUIRE(otherToken);
+    CHECK_FALSE(prepared.accept(completion));
+    request = prepared.request(token(1), &cache); REQUIRE(request);
+    REQUIRE(prepared.accept(completion));
+    REQUIRE(prepared.advance(batch, &cache)); CHECK_FALSE(prepared.pendingSource());
+    REQUIRE(prepared.outcome().sources.size() == 3);
+    CHECK(prepared.outcome().sources[0].source == &line);
+    CHECK(prepared.outcome().sources[1].source == &source);
+    CHECK(prepared.outcome().sources[2].source == &last);
+    CHECK(batch.entitiesToAdd.size() == 6); CHECK(batch.entitiesToDelete.size() == 3);
+    CHECK(line.calls == 2); CHECK(last.calls == 2);
+    const auto outputs = batch.entitiesToAdd;
+    REQUIRE(prepared.advance(batch, &cache)); CHECK(batch.entitiesToAdd == outputs);
+    CHECK(line.calls == 2); CHECK(last.calls == 2);
+    CHECK_FALSE(source.isDeleted()); CHECK_FALSE(line.isDeleted()); CHECK_FALSE(last.isDeleted());
 }

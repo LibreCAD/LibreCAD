@@ -39,6 +39,7 @@
 #include "lc_hyperbola.h"
 #include "lc_offsetresultcheck.h"
 #include "lc_offsetpreviewsnapshot.h"
+#include "lc_offsetbatchpreparation.h"
 #include "lc_splinepoints.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
@@ -722,6 +723,48 @@ TEST_CASE("Portable preview updates refuse stale revisions and malformed records
     CHECK_FALSE(parent.find(&source, LC_CurveOffsetSide::Right, 1, budget, found));
 }
 
+TEST_CASE("Ordered offset staging retains ordinary ownership without rerunning numeric preparation",
+          "[modification][offset][ordered-preparation]") {
+    class CountedLine final : public RS_Line {
+    public:
+        using RS_Line::RS_Line;
+        mutable unsigned calls = 0;
+        std::vector<RS_Entity*> createOffset(const RS_Vector& point, const double& distance) const override {
+            ++calls; return RS_Line::createOffset(point, distance);
+        }
+    };
+    CountedLine first{nullptr, {0, 0}, {2, 0}}, second{nullptr, {0, 2}, {2, 2}};
+    auto data = towards({4, 4}, .25); data.number = 2; data.multipleCopies = true;
+    LC_DocumentModificationBatch batch;
+    LC_OffsetBatchPreparation prepared{data, {&first, &first, &second}, false, {}};
+    REQUIRE(prepared.advance(batch)); REQUIRE(batch.entitiesToAdd.size() == 4);
+    REQUIRE(prepared.outcome().sources.size() == 2);
+    CHECK(prepared.outcome().sources[0].source == &first); CHECK(prepared.outcome().sources[1].source == &second);
+    CHECK(first.calls == 2); CHECK(second.calls == 2);
+    const auto outputs = batch.entitiesToAdd;
+    REQUIRE(prepared.advance(batch)); CHECK(batch.entitiesToAdd == outputs);
+    CHECK(first.calls == 2); CHECK(second.calls == 2);
+    CHECK_FALSE(first.isDeleted()); CHECK_FALSE(second.isDeleted());
+    prepared.release(); qDeleteAll(batch.entitiesToAdd); batch.entitiesToAdd.clear();
+}
+
+TEST_CASE("Ordered offset staging observes request exhaustion before dispatching a later ellipse",
+          "[modification][offset][ordered-preparation]") {
+    RS_Line line{nullptr, {0, 0}, {2, 0}};
+    RS_Ellipse ellipse{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
+    auto data = towards({3, 2}, .25); data.number = 2; data.multipleCopies = true;
+    LC_OffsetBatchLimits limits; limits.maxDeepEntitiesPerRequest = 2;
+    LC_OffsetBatchPreparation prepared{data, {&line, &ellipse}, false, limits};
+    LC_DocumentModificationBatch batch;
+    REQUIRE(prepared.advance(batch)); CHECK_FALSE(prepared.pendingSource());
+    REQUIRE(prepared.outcome().sources.size() == 2);
+    CHECK(prepared.outcome().sources[0].complete());
+    CHECK(prepared.outcome().sources[1].status == LC_OffsetSourceStatus::LimitExceeded);
+    CHECK(prepared.outcome().sources[1].cacheEngineRuns == 0);
+    CHECK(batch.entitiesToAdd.size() == 2);
+    CHECK_FALSE(line.isDeleted()); CHECK_FALSE(ellipse.isDeleted());
+}
+
 // ---------------------------------------------------------------------------
 // Polylines: RS_Polyline::offset() joins neighbouring offsets and never trims,
 // so what it makes is checked before it is used.
@@ -751,6 +794,40 @@ std::unique_ptr<RS_Polyline> rectangle() {
     return polylineThrough({{0, 0}, {10, 0}, {10, 4}, {0, 4}}, true);
 }
 } // namespace
+
+TEST_CASE("Ordered offset staging preserves polyline run aliases and whole-source coverage",
+          "[modification][offset][ordered-preparation]") {
+    for (bool whole : {false, true}) {
+        const auto source = polylineThrough({{0, 0}, {10, 0}, {10, 10}}, false);
+        QList<RS_Entity*> selected{source->entityAt(0), source->entityAt(1)};
+        if (whole) selected.append(source.get());
+        const auto data = towards({5, -1}, 1);
+        BatchGuard expected;
+        const auto outcome = RS_Modification::offsetWithOutcome(data, selected, false, {}, expected.ctx);
+        LC_OffsetBatchPreparation prepared{data, selected, false, {}};
+        LC_DocumentModificationBatch batch;
+        REQUIRE(prepared.advance(batch)); REQUIRE(batch.success);
+        REQUIRE(prepared.outcome().sources.size() == outcome.sources.size());
+        REQUIRE(batch.entitiesToAdd.size() == expected.ctx.entitiesToAdd.size());
+        for (qsizetype i = 0; i < outcome.sources.size(); ++i) {
+            const auto& a = prepared.outcome().sources[i]; const auto& b = outcome.sources[i];
+            CHECK(a.source == b.source); CHECK(a.status == b.status); CHECK(a.complete() == b.complete());
+            CHECK(a.createdEntities.size() == b.createdEntities.size()); CHECK(a.sourceRemoved == b.sourceRemoved);
+        }
+        for (qsizetype i = 0; i < batch.entitiesToAdd.size(); ++i) {
+            const auto* a = dynamic_cast<const RS_Polyline*>(batch.entitiesToAdd[i]); REQUIRE(a);
+            const auto* b = dynamic_cast<const RS_Polyline*>(expected.ctx.entitiesToAdd[i]); REQUIRE(b);
+            REQUIRE(a->count() == b->count());
+            for (std::size_t j = 0; j < a->count(); ++j) {
+                CHECK(a->entityAt(int(j))->getStartpoint() == b->entityAt(int(j))->getStartpoint());
+                CHECK(a->entityAt(int(j))->getEndpoint() == b->entityAt(int(j))->getEndpoint());
+            }
+        }
+        const auto outputs = batch.entitiesToAdd;
+        REQUIRE(prepared.advance(batch)); CHECK(batch.entitiesToAdd == outputs);
+        CHECK(batch.entitiesToDelete == expected.ctx.entitiesToDelete);
+    }
+}
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("A polyline whose offset would cross itself is kept, and nothing is made", "[modification][offset]") {

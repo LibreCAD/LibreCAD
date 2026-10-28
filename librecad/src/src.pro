@@ -820,6 +820,7 @@ HEADERS += \
     lib/math/lc_formatter.h \
     lib/modification/lc_offsetcachetrim.h \
     lib/modification/lc_offsetpreviewsnapshot.h \
+    lib/modification/lc_offsetbatchpreparation.h \
     lib/modification/rs_modification.h \
     lib/selection/rs_selection.h \
     lib/selection/lc_selectionpredicate.h \

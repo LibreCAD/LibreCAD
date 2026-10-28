@@ -1270,6 +1270,7 @@ set (SHARED_SOURCES
      librecad/src/lib/modification/lc_offsetcachetrim.cpp
      librecad/src/lib/modification/lc_offsetcachetrim.h
      librecad/src/lib/modification/lc_offsetpreviewsnapshot.h
+     librecad/src/lib/modification/lc_offsetbatchpreparation.h
      librecad/src/lib/modification/rs_modification.cpp
      librecad/src/lib/modification/rs_modification.h
      librecad/src/lib/printing/lc_printing.cpp
