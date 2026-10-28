@@ -2302,6 +2302,30 @@ the qualified XML files are `offset-W27-final-{suite}-{release,asan}.xml`:
 | worker_client | `6fd7f752d7be76642b2fb3ff72d8a6700437e202c9f69a1cd251851183771d2b` | `c32c8dd415bfad4b02c6f48de1ef2155ab581e6adfd5fe29767caf5df674d51c` |
 | trim | `ddca521366c1ba2f26b0d9aa099a39997a3c815ede4305a86fbb06bec257760d` | `a0b288d3f5e59992049a862860ab7b2f790f578e67171acb83c6541c68497db5` |
 
+Current-source requalification at `bf8171912` rebuilt creation action,
+publication, source preparation and worker-client targets in Release and ASan.
+The previously completed preview-cache and creation/repeat routing remains in
+place; no second implementation was necessary. The following offscreen suites
+executed every freshly discovered Release identity in both configurations with
+zero errors, failures or skips; ASan used `detect_leaks=0`:
+
+| Suite | Declarations | Cases | Assertions per build |
+| --- | ---: | ---: | ---: |
+| creation action | 85 | 132 | 90217 |
+| creation publication | 18 | 19 | 414 |
+| source preparation | 82 | 88 | 83527 |
+
+The six XML reports and three discovery files are in the same evidence root,
+named `offset-current-{creation-action,publication,source}-{release,asan}.xml`
+and `offset-current-{action,publication,source}-discovery.xml` respectively.
+Report SHA256 values, Release then ASan:
+
+| Suite | Release SHA256 | ASan SHA256 |
+| --- | --- | --- |
+| creation action | `1d30efbd3d46a6c0925b3a5fba4fb1f5996cb6f7d434d613ba01a7e3e3e00954` | `4382ff0dd7b02443ac88b62608f0e745e367f37589e10f395c3358e1386793ae` |
+| creation publication | `e1dd6a5c93c633b9ab9d5a640806566deeec456521d5c934ef55770fdc7e03ee` | `96d4a1056f733ef573c99b6cfa4f3c8d4ad37f355f56bce57437baec0983f597` |
+| source preparation | `78dcf4d47ddac6ad0e69275cc0544f2d6a9875107ae95c14e9facbbfb1dcc7b0` | `670fcb2bb03e537b967738d3edb774d56501e2359e6c22c22be2a9440dfdbd9b` |
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
